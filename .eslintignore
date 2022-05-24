@@ -1,0 +1,4 @@
+node_modules/
+dist/
+index.html
+prettier.config.js

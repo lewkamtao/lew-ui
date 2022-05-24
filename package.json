@@ -1,0 +1,33 @@
+{
+    "name": "lew-ui",
+    "private": true,
+    "version": "0.0.0",
+    "scripts": {
+        "dev": "vite",
+        "build": "vue-tsc --noEmit && vite build",
+        "preview": "vite preview",
+        "eslint:comment": "使用 ESLint 检查并自动修复 src 目录下所有扩展名为 .js 和 .vue 的文件",
+        "eslint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
+        "prettier:comment": "自动格式化当前目录下的所有文件",
+        "prettier": "prettier --write"
+    },
+    "dependencies": {
+        "vue": "^3.2.25",
+        "vue-router": "^4.0.13"
+    },
+    "devDependencies": {
+        "@types/node": "^17.0.35",
+        "@typescript-eslint/eslint-plugin": "^5.26.0",
+        "@typescript-eslint/parser": "^5.26.0",
+        "@vitejs/plugin-vue": "^2.3.3",
+        "eslint": "^8.16.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-vue": "^9.0.1",
+        "prettier": "^2.6.2",
+        "sass": "^1.52.1",
+        "typescript": "^4.5.4",
+        "vite": "^2.9.9",
+        "vue-tsc": "^0.34.7"
+    }
+}
