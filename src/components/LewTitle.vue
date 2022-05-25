@@ -23,6 +23,6 @@ defineProps({
 
 <style lang="scss" scoped>
 .title {
-    color: var(--text-color);
+    color: var(--color-title);
 }
 </style>

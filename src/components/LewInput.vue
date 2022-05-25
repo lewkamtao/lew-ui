@@ -20,7 +20,7 @@ watch(
 );
 const emit = defineEmits(['update:modelValue']);
 
-const input = (e) => {
+const input = (e: any) => {
     let { value } = e.target;
     emit('update:modelValue', value);
 };

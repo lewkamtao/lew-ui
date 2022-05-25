@@ -3,13 +3,13 @@ import { LewTitle, LewAvatar } from '../../../components';
 import { ref } from 'vue';
 
 let avatarUrl = ref(
-    'https://flowbite.com/docs/images/people/profile-picture-4.jpg',
+    ' https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg',
 );
 </script>
 
 <template>
     <div class="main">
-        <LewTitle bold>头像</LewTitle>
+        <LewTitle bold>Avatar</LewTitle>
         <div>
             <div style="margin-bottom: 50px">
                 <LewTitle style="margin-bottom: 20px" size="16px"
@@ -71,7 +71,7 @@ let avatarUrl = ref(
 
 <style lang="scss" scoped>
 .main {
-    width: 800px;
+    width: 100%;
     margin: 0 auto;
     > div {
         margin: 30px 0px;

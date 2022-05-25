@@ -81,7 +81,7 @@ input::after {
     cursor: pointer;
 }
 input:checked::before {
-    background: var(--primary-color);
+    background: var(--color-primary-1);
 }
 input:checked::after {
     left: 22px;

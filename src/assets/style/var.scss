@@ -1,79 +1,65 @@
-html {
-    --primary-color: #0071de;
-    --primary-color-2: #0460b6;
-    --primary-text-color: rgb(30 66 159 / 1);
-    // 
-    --danger-color: #c44740;
-    --danger-color-2: #a7342d;
-    // 
-    --success-color: #86a361;
-    --success-color-2: #598b4d;
-    // 
-    --warning-color: #f5f0c6;
-    --warning-color-2: #d6d19f;
-    //  
-    --gray-color: rgb(239, 239, 239);
-    --gray-color-2: rgb(219, 219, 219);
-    //   
-    --text-color: rgb(0, 0, 0);
-    --text-color-2: rgba(102, 102, 102, 0.9);
-    --invert-text-color: rgb(255, 255, 255);
-    --background: #ffffff;
-    --background-2: #f5f5f5;
-    --background-3: #e9e9e9;
-    --invert-background: rgb(46, 45, 45);
-    //   
-    --hover-text-color: rgba(68, 68, 68, 0.9);
-    --hover-invert-text-color: rgba(221, 221, 221, 0.9);
-    --hover-background: #d4d3d3;
-    --hover-invert-background: rgb(48, 48, 48);
-    // 
-    --active-text-color: rgba(63, 63, 63, 0.9);
-    --active-invert-text-color: rgba(228, 228, 228, 0.9);
-    --active-background: #f8f8f8;
-    --active-invert-background: rgb(46, 46, 46);
-    // 
-    --border-color: rgb(233, 232, 232);
-    --hover-bg-color: rgb(233, 232, 232);
-    --hover-border-color: rgb(207, 207, 207);
-    --active-bg-color: rgb(243, 243, 243);
-    --active-border-color: rgb(190, 190, 190);
-    --border-width: 1px;
+:root {
+    // 通用样式
+    --border: 1px rgba(255, 255, 255, 0.12) solid;
     --border-radius: 8px;
-    --bold: 800
+    --font-bold: 800;
+    // 颜色
+    --bgcolor-body: #fff; // body背景
+    --color-text: rgb(33, 33, 33); // 全局文字颜色
+    --color-title: rgb(33, 33, 33); // 标题颜色
+    // 按钮
+    --button-border-radius: 8px;
+    --button-bgcolor: #eee;
+    --button-text-color: #000;
+    --button-border: 1px rgba(0, 0, 0, 0.02) solid;
+    //
+    --button-primary-bgcolor: rgb(59, 121, 208);
+    --button-primary-text-color: rgb(255, 255, 255);
+    --button-primary-bgcolor-hover: rgb(54, 109, 187);
+    --button-primary-bgcolor-active: rgb(33, 73, 116);
+    //     
+    --button-danger-bgcolor: rgb(249, 128, 128);
+    --button-danger-text-color: rgb(255, 255, 255);
+    --button-danger-bgcolor-hover: rgb(231, 113, 113);
+    --button-danger-bgcolor-active: rgb(204, 92, 92);
+    //
+    --button-success-bgcolor: rgb(108, 176, 119);
+    --button-success-text-color: #fff;
+    --button-success-bgcolor-hover: rgb(75, 155, 88);
+    --button-success-bgcolor-active: rgb(42, 104, 52);
+    //
+    --button-warning-bgcolor: rgb(227, 160, 8);
+    --button-warning-text-color: #fff;
+    --button-warning-bgcolor-hover: rgb(211, 150, 8);
+    --button-warning-bgcolor-active: rgb(187, 133, 7);
+    //  
+    --button-gray-bgcolor: rgb(236, 235, 235);
+    --button-gray-text-color: #000;
+    --button-gray-bgcolor-hover: rgb(224, 223, 223);
+    --button-gray-bgcolor-active: rgb(165, 161, 161);
 }
 
 .dark {
-    --primary-color: #0071de;
-    --primary-color-2: #0460b6;
+    // 通用样式
+    --border: 1px #eee solid;
+    --border-radius: 8px;
+    --font-bold: 800;
+    // 颜色
+    --bgcolor-body: #fff; // body背景
+    --color-text: rgb(33, 33, 33); // 全局文字颜色
+    --color-title: rgb(33, 33, 33); // 标题颜色
+    // 主题色
+    --color-primary-1: rgb(30 66 159 / 0.6);
+    --color-primary-2: rgb(30 66 159 / 0.8);
+    --color-primary-3: rgb(30 66 159 / 1);
+    --color-primary-1-hover: rgb(30 66 159 / 0.6);
+    --color-primary-2-active: rgb(30 66 159 / 0.8);
+    --color-primary-3-foucs: rgb(30 66 159 / 1);
     // 
-    --warning-color: #bdaa58;
-    --warning-color-2: #d6d19f;
-    //  
-    --gray-color: rgb(133, 133, 133);
-    --gray-color-2: rgb(118, 118, 118);
-    // 
-    --text-color: rgba(233, 233, 233, 0.9);
-    --text-color-2: rgba(233, 233, 233, 0.9);
-    --invert-text-color: rgba(241, 241, 241, 0.9);
-    --background: #000000;
-    --background-2: #1f1e1e;
-    --background-3: #363636;
-    --invert-background: rgb(100, 100, 100);
-    //     
-    --hover-text-color: rgba(194, 194, 194, 0.9);
-    --hover-invert-text-color: rgba(221, 221, 221, 0.9);
-    --hover-background: #696969;
-    --hover-invert-background: rgb(185, 185, 185);
-    //      
-    --active-text-color: rgba(199, 198, 198, 0.9);
-    --active-invert-text-color: rgba(80, 80, 80, 0.9);
-    --active-background: #636262;
-    --active-invert-background: rgb(180, 179, 179);
-    //   
-    --border-color: rgb(49, 49, 49);
-    --hover-bg-color: rgb(56, 56, 56);
-    --hover-border-color: rgb(56, 56, 56);
-    --active-bg-color: rgb(83, 83, 83);
-    --active-border-color: rgb(230, 230, 230);
+    --color-danger-1: rgb(159, 30, 30, 0.6);
+    --color-danger-2: rgb(159, 30, 30, 0.8);
+    --color-danger-3: rgb(159, 30, 30, 1);
+    --color-danger-1-hover: rgb(159, 30, 30, 0.6);
+    --color-danger-2-active: rgb(159, 30, 30, 0.8);
+    --color-danger-3-foucs: rgb(159, 30, 30, 1);
 }

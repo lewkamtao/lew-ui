@@ -1,3 +1,8 @@
+body {
+    color: var(--color-text);
+    background-color: var(--bgcolor-body);
+}
+
 #alert-box {
     position: fixed;
     display: flex;
@@ -60,19 +65,4 @@
 
 .lew-bold {
     font-weight: var(--bold);
-}
-
-::-webkit-scrollbar {
-    background-color: rgb(243 244 246 / 1);
-    height: 6px;
-    width: 6px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-color: rgb(126, 126, 126);
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: rgb(209 213 219 / 1);
-    border-radius: 5px;
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LewBadge } from './index.ts';
+import { LewBadge } from './index';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -11,7 +11,7 @@ defineProps({
     },
 });
 
-const toPath = (item) => {
+const toPath = (item: any) => {
     router.push(item.path);
 };
 </script>
@@ -36,8 +36,9 @@ const toPath = (item) => {
 <style lang="scss" scoped>
 .siderbar {
     width: 250px;
-    height: 100vh;
+    height: 100%;
     overflow-y: scroll;
+    border-right: 2px #eee solid;
     .group {
         .title {
             padding: 10px 20px;
@@ -60,6 +61,18 @@ const toPath = (item) => {
             background: #eee;
         }
     }
+}
+.siderbar::-webkit-scrollbar {
+    background-color: rgb(126, 126, 126, 0);
+}
+
+.siderbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(126, 126, 126);
+}
+
+.siderbar::-webkit-scrollbar-thumb {
+    background-color: rgb(209 213 219 / 1);
+    border-radius: 5px;
 }
 .title {
     color: var(--text-color);

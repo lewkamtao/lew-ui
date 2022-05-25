@@ -4,7 +4,7 @@ import { LewTitle, LewBadge } from '../../../components';
 
 <template>
     <div class="main">
-        <LewTitle bold>Badge</LewTitle>
+        <LewTitle bold>Dialog</LewTitle>
         <div>
             <LewBadge type="primary">Github</LewBadge>
             <LewBadge type="primary">Vue</LewBadge>
@@ -15,7 +15,7 @@ import { LewTitle, LewBadge } from '../../../components';
 
 <style lang="scss" scoped>
 .main {
-    width: 800px;
+    width: 100%;
     margin: 0 auto;
     > div {
         margin: 30px 0px;

@@ -2,9 +2,17 @@
 defineProps({
     type: {
         type: String,
-        default: 'default',
+        default: 'primary',
     },
     loading: {
+        type: Boolean,
+        default: false,
+    },
+    rounded: {
+        type: Boolean,
+        default: false,
+    },
+    disabled: {
         type: Boolean,
         default: false,
     },
@@ -14,7 +22,10 @@ defineProps({
 <template>
     <button
         class="button"
-        :class="`button-${type}  ${loading ? 'button-loading' : ''}`"
+        :class="`button-${type} ${rounded ? 'button-rounded' : ''} ${
+            disabled ? 'button-disabled' : ''
+        }  ${loading ? 'button-loading' : ''}`"
+        :disabled="disabled"
     >
         <slot></slot>
     </button>
@@ -23,81 +34,40 @@ defineProps({
 <style lang="scss" scoped>
 .button {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    user-select: none;
     width: auto;
     min-width: 80px;
     height: 35px;
     margin-bottom: 7px;
-    border-radius: var(--border-radius);
     box-sizing: border-box;
-    transition: all 0.05s;
+    transition: all 0.15s;
     font-size: 14px;
     border: none;
     cursor: pointer;
-    color: var(--text-color);
+    padding: 0px 15px;
+    border-radius: var(--button-border-radius);
+}
+.button-rounded {
+    border-radius: 50px;
 }
 .button::before {
     position: absolute;
     left: 0px;
     top: 0px;
-    border-radius: var(--border-radius);
+    border-radius: var(--button-border-radius);
     width: 100%;
     height: 100%;
-    border: 1px rgba(0, 0, 0, 0.07) solid;
+    border: var(--button-border);
     box-sizing: border-box;
     content: '';
-}
-
-.button-default {
-    background: var(--background);
-    color: var(--text-color-2);
-}
-.button:active {
-    opacity: 0.5;
-}
-.button-danger {
-    background-color: var(--danger-color);
-    color: var(--invert-text-color);
-}
-.button-gray {
-    background-color: var(--gray-color);
-}
-.button-primary {
-    background-color: var(--primary-color);
-    color: var(--invert-text-color);
-}
-.button-warning {
-    background-color: var(--warning-color);
-}
-
-.button:hover {
-    color: var(--text-color);
-    background: var(--hover-bg-color);
-}
-
-.button-danger:hover {
-    background-color: var(--danger-color-2);
-    color: var(--invert-text-color);
-}
-.button-warning:hover {
-    background-color: var(--warning-color-2);
-}
-.button-primary:hover {
-    background-color: var(--primary-color-2);
-    color: var(--invert-text-color);
-}
-.button-gray:hover {
-    background-color: var(--gray-color-2);
 }
 .button::after {
     position: absolute;
     top: 50%;
     left: 50%;
     content: '';
-    border: 4px solid rgba(194, 194, 194, 0.4);
-    border-left-color: var(--primary-color);
+    border: 3px solid rgba(0, 0, 0, 0.25);
+    border-left-color: rgba(255, 255, 255, 0.85);
     border-radius: 50%;
     width: 14px;
     height: 14px;
@@ -106,6 +76,62 @@ defineProps({
     transition: all 0.15s;
     transform: translate(-50%, -50%);
 }
+
+.button-primary {
+    background: var(--button-primary-bgcolor);
+    color: var(--button-primary-text-color);
+}
+.button-primary:hover {
+    background-color: var(--button-primary-bgcolor-hover);
+}
+.button-primary:active {
+    background-color: var(--button-primary-bgcolor-active);
+}
+
+.button-success {
+    background: var(--button-success-bgcolor);
+    color: var(--button-success-text-color);
+}
+.button-success:hover {
+    background-color: var(--button-success-bgcolor-hover);
+}
+.button-success:active {
+    background-color: var(--button-success-bgcolor-active);
+}
+
+.button-danger {
+    background: var(--button-danger-bgcolor);
+    color: var(--button-danger-text-color);
+}
+.button-danger:hover {
+    background-color: var(--button-danger-bgcolor-hover);
+}
+.button-danger:active {
+    background-color: var(--button-danger-bgcolor-active);
+}
+
+.button-gray {
+    background: var(--button-gray-bgcolor);
+    color: var(--button-grey-text-color);
+}
+.button-gray:hover {
+    background-color: var(--button-gray-bgcolor-hover);
+}
+.button-gray:active {
+    background-color: var(--button-gray-bgcolor-active);
+}
+
+.button-warning {
+    background: var(--button-warning-bgcolor);
+    color: var(--button-warning-text-color);
+}
+.button-warning:hover {
+    background-color: var(--button-warning-bgcolor-hover);
+}
+.button-warning:active {
+    background-color: var(--button-warning-bgcolor-active);
+}
+
 @keyframes donut-spin {
     0% {
         transform: translate(-50%, -50%) rotate(0deg);
@@ -115,12 +141,26 @@ defineProps({
     }
 }
 .button-loading {
-    color: rgba(0, 0, 0, 0);
+    font-size: 0px;
 }
 .button-loading:hover {
-    color: rgba(0, 0, 0, 0);
+    font-size: 0px;
 }
 .button-loading::after {
     opacity: 1;
+}
+
+.button-disabled {
+    cursor: not-allowed;
+    font-size: 14px;
+    background: #eee;
+    color: #999;
+}
+.button-disabled:hover {
+    font-size: 14px;
+    background: #eee;
+}
+.button-disabled::after {
+    opacity: 0;
 }
 </style>

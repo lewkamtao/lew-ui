@@ -15,7 +15,7 @@ import { LewTitle, LewBadge } from '../../../components';
 
 <style lang="scss" scoped>
 .main {
-    width: 800px;
+    width: 100%;
     margin: 0 auto;
     > div {
         margin: 30px 0px;

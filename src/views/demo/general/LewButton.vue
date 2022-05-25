@@ -4,19 +4,45 @@ import { LewTitle, LewButton } from '../../../components';
 
 <template>
     <div class="main">
-        <LewTitle bold>Badge</LewTitle>
+        <LewTitle bold>Button</LewTitle>
         <div>
+            <LewTitle style="margin-bottom: 20px" size="16px">普通</LewTitle>
             <LewButton type="primary">确定</LewButton>
+            <LewButton type="danger">危险</LewButton>
+            <LewButton type="warning">警告</LewButton>
+            <LewButton type="gray">这是一个长按钮</LewButton>
+            <LewButton type="success">确定</LewButton>
+            <LewTitle style="margin-top: 50px; margin-bottom: 20px" size="16px"
+                >圆型</LewTitle
+            >
+            <LewButton rounded type="primary">确定</LewButton>
+            <LewButton rounded type="danger">危险</LewButton>
+            <LewButton rounded type="warning">警告</LewButton>
+            <LewButton rounded type="gray">这是一个长按钮</LewButton>
+            <LewButton rounded type="success">确定</LewButton>
+            <LewTitle style="margin-top: 50px; margin-bottom: 20px" size="16px"
+                >加载</LewTitle
+            >
+            <LewButton type="primary" loading>确定</LewButton>
+            <LewButton type="success" rounded loading>确定</LewButton>
+
+            <LewTitle style="margin-top: 50px; margin-bottom: 20px" size="16px"
+                >禁用</LewTitle
+            >
+            <LewButton type="success" loading disabled>确定</LewButton>
         </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
 .main {
-    width: 800px;
+    width: 100%;
     margin: 0 auto;
     > div {
         margin: 30px 0px;
+        button {
+            margin-right: 20px;
+        }
     }
 }
 </style>
