@@ -20,7 +20,7 @@ watch(
 );
 const emit = defineEmits(['update:modelValue']);
 
-const input = (e) => {
+const input = (e: any) => {
     let { value } = e.target;
     emit('update:modelValue', value);
 };
@@ -34,17 +34,19 @@ const input = (e) => {
 input {
     width: 250px;
     height: 35px;
-    border-radius: var(--border-radius);
-    padding: 5px 10px;
-    border: var(--border-width) solid var(--border-color);
+    padding: 5px 7px;
     font-size: 14px;
     line-height: 24px;
-    background: var(--background-3);
-    color: var(--text-color);
+    border: var(--form-border);
+    border-radius: var(--form-border-radius);
+    background-color: var(--form-bgcolor);
+    color: var(--form-text-color);
     box-sizing: border-box;
-    color: var(--text-color);
+    transition: all 0.25s;
+    outline: 2px solid rgba($color: #000000, $alpha: 0);
 }
 input:focus {
-    background: var(--background-2);
+    background-color: var(--form-bgcolor-focus);
+    outline: var(--form-outline-focus);
 }
 </style>

@@ -1,13 +1,24 @@
 :root {
-    // 通用样式
-    --border: 1px rgba(255, 255, 255, 0.12) solid;
+    // 全局
+    --body-bgcolor: #fff; // body背景 
+    --gray-color: rgb(235, 235, 235);
+    --primary-color: rgb(59, 121, 208);
+    --primary-color-hover: rgb(52, 109, 187);
+    --primary-color-active: rgb(41, 92, 165);
+    --text-color: rgb(33, 33, 33); // 全局文字颜色
+    --text-color-2: rgb(92, 92, 92); // 全局文字颜色
     --border-radius: 8px;
-    --font-bold: 800;
-    // 颜色
-    --bgcolor-body: #fff; // body背景
-    --color-text: rgb(33, 33, 33); // 全局文字颜色
-    --color-title: rgb(33, 33, 33); // 标题颜色
-    // 按钮
+    // 标题
+    --title-bold: 800;
+    --title-color: rgb(33, 33, 33); // 标题颜色
+    // 表单样式  
+    --form-border: 1px rgba(0, 0, 0, 0.05) solid;
+    --form-border-radius: 8px;
+    --form-bgcolor: rgb(244, 244, 244);
+    --form-outline-focus: 2px solid rgb(26, 84, 177);
+    --form-bgcolor-focus: rgb(255, 255, 255);
+    --form-text-color: #333;
+    // 按钮   
     --button-border-radius: 8px;
     --button-bgcolor: #eee;
     --button-text-color: #000;
@@ -37,6 +48,30 @@
     --button-gray-text-color: #000;
     --button-gray-bgcolor-hover: rgb(224, 223, 223);
     --button-gray-bgcolor-active: rgb(165, 161, 161);
+    // 徽章
+    --badge-blue-bgcolor: rgb(220, 231, 244);
+    --badge-blue-text-color: rgb(35, 88, 162);
+    //    
+    --badge-gray-bgcolor: rgb(237, 237, 237);
+    --badge-gray-text-color: rgb(0, 0, 0);
+    //     
+    --badge-red-bgcolor: rgb(251, 228, 228);
+    --badge-red-text-color: rgb(172, 46, 46);
+    // 
+    --badge-green-bgcolor: rgb(227, 255, 225);
+    --badge-green-text-color: rgb(19, 123, 11);
+    //     
+    --badge-yellow-bgcolor: rgb(251, 241, 166);
+    --badge-yellow-text-color: rgb(91, 79, 10);
+    //       
+    --badge-indigo-bgcolor: rgb(219, 219, 255);
+    --badge-indigo-text-color: rgb(32, 48, 166);
+    //     
+    --badge-purple-bgcolor: rgb(229, 209, 255);
+    --badge-purple-text-color: rgb(96, 0, 148);
+    //   
+    --badge-pink-bgcolor: rgb(255, 225, 245);
+    --badge-pink-text-color: rgb(120, 0, 94);
 }
 
 .dark {

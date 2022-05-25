@@ -27,24 +27,32 @@ const input = (e: any) => {
 </script>
 
 <template>
-    <input v-model="v" :disabled="props.disabled" @input="input" />
+    <textarea
+        v-model="v"
+        rows="3"
+        cols="3"
+        :disabled="props.disabled"
+        @input="input"
+    ></textarea>
 </template>
 
 <style lang="scss" scoped>
-input {
+textarea {
+    font-family: '微软雅黑';
     width: 250px;
-    height: 35px;
-    border-radius: var(--border-radius);
-    padding: 5px 10px;
-    border: var(--border-width) solid var(--border-color);
+    padding: 5px 7px;
     font-size: 14px;
     line-height: 24px;
-    background: var(--background-3);
-    color: var(--text-color);
+    border: var(--form-border);
+    border-radius: var(--form-border-radius);
+    background-color: var(--form-bgcolor);
+    color: var(--form-text-color);
     box-sizing: border-box;
-    color: var(--text-color);
+    transition: all 0.25s;
+    outline: 2px solid rgba($color: #000000, $alpha: 0);
 }
-input:focus {
-    background: var(--background-2);
+textarea:focus {
+    background-color: var(--form-bgcolor-focus);
+    outline: var(--form-outline-focus);
 }
 </style>

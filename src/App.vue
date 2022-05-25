@@ -1,35 +1,59 @@
 <script setup lang="ts">
-import TheSiderbar from './components/LewSiderbar.vue';
+import TheSiderbar from './components/general/LewSiderbar.vue';
 import { ref } from 'vue';
 
-let group = ref([
+type Item = {
+    name: string;
+    path: string;
+    label: string;
+    labelColor: string;
+};
+
+type Group = {
+    title: string;
+    items: Item[];
+};
+
+let group = ref<Group[]>([]);
+group.value = [
     {
         title: '通用',
         items: [
             {
                 name: 'Avatar',
                 path: '/Avatar',
-                label: 'Bate',
+                label: 'New',
+                labelColor: 'blue',
             },
             {
                 name: 'Button',
                 path: '/Button',
+                label: 'New',
+                labelColor: 'blue',
             },
             {
-                name: 'Tag',
-                path: '/Tag',
+                name: 'Badge',
+                path: '/Badge',
+                label: 'New',
+                labelColor: 'blue',
             },
             {
-                name: 'Time',
-                path: '/Time',
+                name: 'Title',
+                path: '/Title',
+                label: '',
+                labelColor: '',
             },
             {
                 name: 'SiderBar',
                 path: '/SiderBar',
+                label: '',
+                labelColor: '',
             },
             {
                 name: 'Tabs',
                 path: '/Tabs',
+                label: '',
+                labelColor: '',
             },
         ],
     },
@@ -40,32 +64,50 @@ let group = ref([
                 name: 'Input',
                 path: '/Input',
                 label: 'New',
+                labelColor: '',
             },
+
             {
                 name: 'Textarea',
                 path: '/Textarea',
                 label: 'New',
+                labelColor: '',
             },
             {
                 name: 'Checkbox',
                 path: '/Checkbox',
-                label: 'New',
+                label: '',
+                labelColor: '',
             },
             {
                 name: 'Radio',
                 path: '/Radio',
+                label: '',
+                labelColor: '',
             },
             {
                 name: 'Select',
                 path: '/Select',
+                label: '',
+                labelColor: '',
             },
             {
                 name: 'Cascader',
                 path: '/Cascader',
+                label: '',
+                labelColor: '',
             },
             {
                 name: 'Switch',
                 path: '/Switch',
+                label: 'New',
+                labelColor: '',
+            },
+            {
+                name: 'InputTag',
+                path: '/InputTag',
+                label: '',
+                labelColor: '',
             },
         ],
     },
@@ -75,34 +117,43 @@ let group = ref([
             {
                 name: 'Alert',
                 path: '/Alert',
+                label: '',
+                labelColor: '',
             },
-            {
-                name: 'Badge',
-                path: '/Badge',
-            },
+
             {
                 name: 'Dialog',
                 path: '/Dialog',
+                label: '',
+                labelColor: '',
             },
             {
                 name: 'Message',
                 path: '/Message',
+                label: '',
+                labelColor: '',
             },
             {
                 name: 'Modal',
                 path: '/Modal',
+                label: '',
+                labelColor: '',
             },
             {
                 name: 'Popover',
                 path: '/Popover',
+                label: '',
+                labelColor: '',
             },
             {
                 name: 'Result',
                 path: '/Result',
+                label: '',
+                labelColor: '',
             },
         ],
     },
-]);
+];
 </script>
 
 <template>
@@ -115,7 +166,9 @@ let group = ref([
             </div>
         </div>
         <div class="container">
-            <TheSiderbar :group="group" />
+            <div class="sider">
+                <TheSiderbar :group="group" />
+            </div>
             <div class="app-main"><router-view></router-view></div>
         </div>
     </div>
@@ -123,12 +176,21 @@ let group = ref([
 
 <style lang="scss" scoped>
 .wrapper {
+    overflow: hidden;
     .container {
         height: calc(100vh - 60px);
         display: flex;
     }
+    .sider {
+        position: fixed;
+        height: calc(100vh - 60px);
+    }
     .app-main {
+        margin-left: 250px;
         width: calc(100% - 250px);
+        height: calc(100vh - 60px);
+        overflow-y: scroll;
+        box-sizing: border-box;
         padding: 20px 20px 20px 50px;
     }
     .Header {
@@ -140,6 +202,7 @@ let group = ref([
         height: 60px;
         box-sizing: border-box;
         border-bottom: 2px #eee solid;
+        background: var(--body-bgcolor);
         .logo {
             font-size: 20px;
             font-weight: bold;

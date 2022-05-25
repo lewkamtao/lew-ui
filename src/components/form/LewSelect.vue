@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, PropType, watch } from 'vue';
+
+type Options = {
+    label: string;
+    value: string;
+};
 
 const props = defineProps({
     modelValue: {
@@ -7,9 +12,11 @@ const props = defineProps({
         type: String || Number,
         default: '',
     },
-    option: {
-        type: Array,
-        default: [] as unknown,
+    options: {
+        type: Array as PropType<Options[]>,
+        default() {
+            return [];
+        },
     },
     label: { type: String || Number, default: '' },
     value: { type: String || Number, default: '' },
@@ -24,7 +31,7 @@ watch(
 );
 const emit = defineEmits(['update:modelValue']);
 
-const change = (e) => {
+const change = (e: any) => {
     let { value } = e.target;
     emit('update:modelValue', value);
 };
@@ -34,11 +41,11 @@ const change = (e) => {
     <select v-model="v" @change="change">
         <option value="" hidden>未选择</option>
         <option
-            v-for="item in props.option"
-            :key="item[label]"
-            :value="item[value]"
+            v-for="(item, index) in options"
+            :key="`select${index}`"
+            :value="item.value"
         >
-            {{ item[label] }}
+            {{ item.label }}
         </option>
     </select>
 </template>

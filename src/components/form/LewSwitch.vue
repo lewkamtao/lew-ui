@@ -7,6 +7,10 @@ const props = defineProps({
             return false;
         },
     },
+    round: {
+        type: Boolean,
+        default: true,
+    },
     disabled: {
         type: Boolean,
         default: false,
@@ -29,6 +33,7 @@ const change = () => {
 <template>
     <input
         v-model="v"
+        :class="{ round: round }"
         type="checkbox"
         :disabled="props.disabled"
         @change="change"
@@ -38,8 +43,8 @@ const change = () => {
 <style lang="scss" scoped>
 input {
     position: relative;
-    width: 50px;
-    height: 30px;
+    width: 46px;
+    height: 28px;
     border: none;
     outline: none;
     box-sizing: border-box;
@@ -55,35 +60,38 @@ input::before {
     left: 0px;
     top: 0px;
     content: '';
-    width: 50px;
-    height: 30px;
-    background: var(--background-3);
-    border-radius: 50px;
-    transition: all 0.25s;
+    width: 46px;
+    height: 28px;
+    background: var(--gray-color);
+    border-radius: 4px;
+    transition: all 0.15s ease-in-out;
     cursor: pointer;
 }
-
-input:hover::before {
-    background: var(--hover-background);
+.round::before {
+    border-radius: 50px;
 }
 
 input::after {
     position: absolute;
-    left: 4px;
+    left: 5px;
     top: 50%;
     transform: translateY(-50%);
-    width: 23px;
-    height: 23px;
+    width: 20px;
+    height: 20px;
     content: '';
-    border-radius: 50px;
+    border-radius: 2px;
     background: #fff;
-    transition: all 0.25s ease-in-out;
+    transition: all 0.15s ease-in-out;
     cursor: pointer;
 }
+
+.round::after {
+    border-radius: 50px;
+}
 input:checked::before {
-    background: var(--color-primary-1);
+    background: var(--primary-color);
 }
 input:checked::after {
-    left: 22px;
+    left: 20px;
 }
 </style>

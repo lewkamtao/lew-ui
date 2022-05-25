@@ -1,12 +1,14 @@
-import LewButton from './LewButton.vue';
-import LewFormItem from './LewFormItem.vue';
-import LewInput from './LewInput.vue';
-import LewSelect from './LewSelect.vue';
-import LewSwitch from './LewSwitch.vue';
-import LewTitle from './LewTitle.vue';
-import LewBadge from './LewBadge.vue';
-import LewSiderbar from './LewSiderbar.vue';
-import LewAvatar from './LewAvatar.vue';
+import LewAvatar from './general/LewAvatar.vue';
+import LewButton from './general/LewButton.vue';
+import LewBadge from './general/LewBadge.vue';
+import LewSiderbar from './general/LewSiderbar.vue';
+import LewTitle from './general/LewTitle.vue';
+
+import LewFormItem from './form/LewFormItem.vue';
+import LewInput from './form/LewInput.vue';
+import LewSelect from './form/LewSelect.vue';
+import LewSwitch from './form/LewSwitch.vue';
+import LewTextarea from './form/LewTextarea.vue';
 
 export {
     LewButton,
@@ -18,4 +20,5 @@ export {
     LewBadge,
     LewSiderbar,
     LewAvatar,
+    LewTextarea,
 };

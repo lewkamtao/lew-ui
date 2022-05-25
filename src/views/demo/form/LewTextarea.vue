@@ -1,14 +1,23 @@
 <script setup lang="ts">
-import { LewTitle, LewBadge } from '../../../components';
+import { LewTitle, LewFormItem, LewTextarea } from '../../../components';
 </script>
 
 <template>
     <div class="main">
         <LewTitle bold>Textera</LewTitle>
         <div>
-            <LewBadge type="primary">Github</LewBadge>
-            <LewBadge type="primary">Vue</LewBadge>
-            <LewBadge type="primary">Golang</LewBadge>
+            <div style="margin-bottom: 50px">
+                <LewTitle style="margin-bottom: 20px" size="16px"
+                    >Y 布局</LewTitle
+                >
+                <LewFormItem title="账号"> <LewTextarea /></LewFormItem>
+            </div>
+            <div style="margin-bottom: 50px">
+                <LewTitle style="margin-bottom: 20px" size="16px"
+                    >X 布局</LewTitle
+                >
+                <LewFormItem row title="账号"> <LewTextarea /></LewFormItem>
+            </div>
         </div>
     </div>
 </template>

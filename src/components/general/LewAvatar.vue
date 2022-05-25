@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps({
-    rounded: {
+    round: {
         type: Boolean,
         default: false,
     },
@@ -25,7 +25,7 @@ defineProps({
 
 <template>
     <div class="lew-avatar">
-        <img :src="src" :class="{ rounded: rounded }" :alt="alt" />
+        <img :src="src" :class="{ round: round }" :alt="alt" />
         <span
             v-if="status"
             class="dot"
@@ -47,7 +47,7 @@ defineProps({
         height: 100%;
         border-radius: 5px;
     }
-    .rounded {
+    .round {
         border-radius: 50%;
     }
     .dot {

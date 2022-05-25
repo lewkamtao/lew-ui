@@ -1,6 +1,6 @@
 body {
-    color: var(--color-text);
-    background-color: var(--bgcolor-body);
+    color: var( --text-color);
+    background-color: var(--body-bgcolor);
 }
 
 #alert-box {
@@ -61,8 +61,4 @@ body {
         opacity: 0;
         margin-top: -60px;
     }
-}
-
-.lew-bold {
-    font-weight: var(--bold);
 }

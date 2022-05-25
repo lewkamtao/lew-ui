@@ -50,6 +50,7 @@ const props = defineProps({
         display: block;
         width: 100%;
         margin: 0px 0px 5px 10px;
+        color: var(--text-color-2);
         a {
             text-decoration: underline;
             margin-left: 10px;
@@ -65,9 +66,11 @@ const props = defineProps({
 }
 .lew-row {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     label {
+        white-space: nowrap;
         width: auto;
+        padding-top: 7px;
         padding-right: 10px;
         display: inline-block;
     }

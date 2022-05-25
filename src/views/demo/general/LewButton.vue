@@ -15,16 +15,16 @@ import { LewTitle, LewButton } from '../../../components';
             <LewTitle style="margin-top: 50px; margin-bottom: 20px" size="16px"
                 >圆型</LewTitle
             >
-            <LewButton rounded type="primary">确定</LewButton>
-            <LewButton rounded type="danger">危险</LewButton>
-            <LewButton rounded type="warning">警告</LewButton>
-            <LewButton rounded type="gray">这是一个长按钮</LewButton>
-            <LewButton rounded type="success">确定</LewButton>
+            <LewButton round type="primary">确定</LewButton>
+            <LewButton round type="danger">危险</LewButton>
+            <LewButton round type="warning">警告</LewButton>
+            <LewButton round type="gray">这是一个长按钮</LewButton>
+            <LewButton round type="success">确定</LewButton>
             <LewTitle style="margin-top: 50px; margin-bottom: 20px" size="16px"
                 >加载</LewTitle
             >
             <LewButton type="primary" loading>确定</LewButton>
-            <LewButton type="success" rounded loading>确定</LewButton>
+            <LewButton type="success" round loading>确定</LewButton>
 
             <LewTitle style="margin-top: 50px; margin-bottom: 20px" size="16px"
                 >禁用</LewTitle

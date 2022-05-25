@@ -8,7 +8,7 @@ defineProps({
         type: Boolean,
         default: false,
     },
-    rounded: {
+    round: {
         type: Boolean,
         default: false,
     },
@@ -22,7 +22,7 @@ defineProps({
 <template>
     <button
         class="button"
-        :class="`button-${type} ${rounded ? 'button-rounded' : ''} ${
+        :class="`button-${type} ${round ? 'button-round' : ''} ${
             disabled ? 'button-disabled' : ''
         }  ${loading ? 'button-loading' : ''}`"
         :disabled="disabled"
@@ -47,7 +47,7 @@ defineProps({
     padding: 0px 15px;
     border-radius: var(--button-border-radius);
 }
-.button-rounded {
+.button-round {
     border-radius: 50px;
 }
 .button::before {
