@@ -50,6 +50,7 @@ const props = defineProps({
         display: block;
         width: 100%;
         margin: 0px 0px 5px 10px;
+        font-size: 14px;
         color: var(--text-color-2);
         a {
             text-decoration: underline;
@@ -70,7 +71,7 @@ const props = defineProps({
     label {
         white-space: nowrap;
         width: auto;
-        padding-top: 7px;
+        padding-top: 6px;
         padding-right: 10px;
         display: inline-block;
     }

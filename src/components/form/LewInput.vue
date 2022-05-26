@@ -42,7 +42,7 @@ input {
     background-color: var(--form-bgcolor);
     color: var(--form-text-color);
     box-sizing: border-box;
-    transition: all 0.25s;
+    transition: outline 0.25s, background-color 0.25s;
     outline: 2px solid rgba($color: #000000, $alpha: 0);
 }
 input:focus {
