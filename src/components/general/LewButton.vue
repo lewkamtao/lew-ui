@@ -36,17 +36,18 @@ defineProps({
     position: relative;
     user-select: none;
     width: auto;
-    min-width: 80px;
-    height: 35px;
+    min-width: 76px;
+    height: 32px;
     margin-bottom: 7px;
     box-sizing: border-box;
     transition: all 0.15s;
     font-size: 14px;
     border: none;
     cursor: pointer;
-    padding: 0px 15px;
+    padding: 0px 13px;
     border-radius: var(--button-border-radius);
 }
+
 .button-round {
     border-radius: 50px;
 }

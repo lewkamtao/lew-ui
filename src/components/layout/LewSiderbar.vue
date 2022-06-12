@@ -62,6 +62,7 @@ const toPath = (item: Item) => {
 
         .title {
             padding: 10px 20px;
+            font-size: 14px;
             color: #999;
         }
         .item {

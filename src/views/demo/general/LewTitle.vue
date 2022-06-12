@@ -9,62 +9,42 @@ let avatarUrl = ref(
 
 <template>
     <div class="main">
-        <LewTitle bold>Avatar</LewTitle>
+        <LewTitle bold>标题</LewTitle>
         <div>
             <div style="margin-bottom: 50px">
+                <LewTitle style="margin-bottom: 20px" size="14px"
+                    >14px 普通</LewTitle
+                >
                 <LewTitle style="margin-bottom: 20px" size="16px"
-                    >普通</LewTitle
+                    >16px 普通</LewTitle
                 >
-                <LewAvatar
-                    style="margin-right: 20px"
-                    :src="avatarUrl"
-                    alt="avatar"
+                <LewTitle style="margin-bottom: 20px" size="18px"
+                    >18px 普通</LewTitle
                 >
-                </LewAvatar>
-                <LewAvatar
-                    style="margin-right: 20px"
-                    round
-                    :src="avatarUrl"
-                    alt="avatar"
+                <LewTitle style="margin-bottom: 20px" size="22px"
+                    >22px 普通</LewTitle
                 >
-                </LewAvatar>
+                <LewTitle style="margin-bottom: 20px" size="26px"
+                    >26px 普通</LewTitle
+                >
             </div>
-            <LewTitle style="margin-bottom: 20px" size="16px"
-                >带状态头像</LewTitle
-            >
-            <LewAvatar
-                style="margin-right: 20px"
-                :src="avatarUrl"
-                status="online"
-                status-position="top-left"
-                alt="avatar"
-            >
-            </LewAvatar>
-            <LewAvatar
-                style="margin-right: 20px"
-                :src="avatarUrl"
-                status="busy"
-                status-position="top-right"
-                alt="avatar"
-            >
-            </LewAvatar>
-            <LewAvatar
-                style="margin-right: 20px"
-                :src="avatarUrl"
-                round
-                status="away"
-                status-position="bottom-left"
-                alt="avatar"
-            >
-            </LewAvatar>
-            <LewAvatar
-                :src="avatarUrl"
-                round
-                status="offline"
-                status-position="bottom-right"
-                alt="avatar"
-            >
-            </LewAvatar>
+            <div style="margin-bottom: 50px">
+                <LewTitle style="margin-bottom: 20px" size="14px" bold
+                    >14px 粗体
+                </LewTitle>
+                <LewTitle style="margin-bottom: 20px" size="16px" bold
+                    >16px 粗体</LewTitle
+                >
+                <LewTitle style="margin-bottom: 20px" size="18px" bold
+                    >18px 粗体</LewTitle
+                >
+                <LewTitle style="margin-bottom: 20px" size="22px" bold
+                    >22px 粗体</LewTitle
+                >
+                <LewTitle style="margin-bottom: 20px" size="26px" bold
+                    >26px 粗体</LewTitle
+                >
+            </div>
         </div>
     </div>
 </template>

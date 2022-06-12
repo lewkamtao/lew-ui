@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TheSiderbar from './components/general/LewSiderbar.vue';
+import TheSiderbar from './components/layout/LewSiderbar.vue';
 import { ref } from 'vue';
 
 type Item = {
@@ -40,12 +40,6 @@ group.value = [
             {
                 name: 'Title',
                 path: '/Title',
-                label: '',
-                labelColor: '',
-            },
-            {
-                name: 'SiderBar',
-                path: '/SiderBar',
                 label: '',
                 labelColor: '',
             },

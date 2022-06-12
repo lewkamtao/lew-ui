@@ -6,6 +6,10 @@ const props = defineProps({
         type: String,
         default: '',
     },
+    resize: {
+        type: String,
+        default: '',
+    },
     disabled: {
         type: Boolean,
         default: false,
@@ -29,6 +33,7 @@ const input = (e: any) => {
 <template>
     <textarea
         v-model="v"
+        :class="`resize-${resize}`"
         rows="3"
         cols="3"
         :disabled="props.disabled"
@@ -54,5 +59,21 @@ textarea {
 textarea:focus {
     background-color: var(--form-bgcolor-focus);
     outline: var(--form-outline-focus);
+}
+
+.resize-none {
+    resize: none;
+}
+.resize-horizontal {
+    resize: horizontal;
+}
+.resize-vertical {
+    resize: vertical;
+}
+.resize-both {
+    resize: both;
+}
+.resize-inline {
+    resize: inline;
 }
 </style>

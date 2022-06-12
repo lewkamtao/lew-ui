@@ -18,6 +18,14 @@ import { LewTitle, LewFormItem, LewTextarea } from '../../../components';
                 >
                 <LewFormItem row title="账号"> <LewTextarea /></LewFormItem>
             </div>
+            <div style="margin-bottom: 50px">
+                <LewTitle style="margin-bottom: 20px" size="16px"
+                    >禁止缩放大小</LewTitle
+                >
+                <LewFormItem row title="账号">
+                    <LewTextarea resize="none"
+                /></LewFormItem>
+            </div>
         </div>
     </div>
 </template>

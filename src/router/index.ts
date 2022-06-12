@@ -2,7 +2,6 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 const LewAvatar = () => import('../views/demo/general/LewAvatar.vue');
 const LewBadge = () => import('../views/demo/general/LewBadge.vue');
 const LewButton = () => import('../views/demo/general/LewButton.vue');
-const LewSiderBar = () => import('../views/demo/general/LewSiderBar.vue');
 const LewTabs = () => import('../views/demo/general/LewTabs.vue');
 const LewTitle = () => import('../views/demo/general/LewTitle.vue');
 
@@ -27,7 +26,6 @@ const routes: Array<RouteRecordRaw> = [
     { path: '/Badge', name: 'LewBadge', component: LewBadge },
     { path: '/Title', name: 'LewTitle', component: LewTitle },
     { path: '/Button', name: 'LewButton', component: LewButton },
-    { path: '/SiderBar', name: 'LewSiderBar', component: LewSiderBar },
     { path: '/Tabs', name: 'LewTabs', component: LewTabs },
 
     { path: '/Cascader', name: 'LewCascader', component: LewCascader },

@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { LewTitle, LewBadge } from '../../../components';
+import { LewTitle, LewTabs } from '../../../components';
 </script>
 
 <template>
     <div class="main">
         <LewTitle bold>Tabs</LewTitle>
         <div>
-            <LewBadge type="primary">Github</LewBadge>
-            <LewBadge type="primary">Vue</LewBadge>
-            <LewBadge type="primary">Golang</LewBadge>
+            <LewTabs>Github</LewTabs>
         </div>
     </div>
 </template>
