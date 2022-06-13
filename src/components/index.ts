@@ -9,6 +9,8 @@ import LewInput from './form/LewInput.vue';
 import LewSelect from './form/LewSelect.vue';
 import LewSwitch from './form/LewSwitch.vue';
 import LewTextarea from './form/LewTextarea.vue';
+import LewCheckbox from './form/LewCheckbox.vue';
+import LewCheckboxGroup from './form/LewCheckboxGroup.vue';
 
 export {
     LewButton,
@@ -21,4 +23,6 @@ export {
     LewBadge,
     LewAvatar,
     LewTextarea,
+    LewCheckbox,
+    LewCheckboxGroup,
 };

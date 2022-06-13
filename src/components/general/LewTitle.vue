@@ -13,8 +13,8 @@ defineProps({
 
 <template>
     <div
-        class="title"
-        :class="`${bold ? 'title-bold' : ''}`"
+        class="lew-title"
+        :class="`${bold ? 'lew-title-bold' : ''}`"
         :style="`font-size:${size}`"
     >
         <slot></slot>
@@ -22,10 +22,11 @@ defineProps({
 </template>
 
 <style lang="scss" scoped>
-.title {
+.lew-title {
     color: var(--title-color);
 }
-.title-bold {
+
+.lew-title-bold {
     font-weight: var(--title-bold);
 }
 </style>

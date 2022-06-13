@@ -21,10 +21,10 @@ defineProps({
 
 <template>
     <button
-        class="button"
-        :class="`button-${type} ${round ? 'button-round' : ''} ${
-            disabled ? 'button-disabled' : ''
-        }  ${loading ? 'button-loading' : ''}`"
+        class="lew-button"
+        :class="`lew-button-${type} ${round ? 'lew-button-round' : ''} ${
+            disabled ? 'lew-button-disabled' : ''
+        }  ${loading ? 'lew-button-loading' : ''}`"
         :disabled="disabled"
     >
         <slot></slot>
@@ -32,7 +32,7 @@ defineProps({
 </template>
 
 <style lang="scss" scoped>
-.button {
+.lew-button {
     position: relative;
     user-select: none;
     width: auto;
@@ -48,10 +48,7 @@ defineProps({
     border-radius: var(--button-border-radius);
 }
 
-.button-round {
-    border-radius: 50px;
-}
-.button::before {
+.lew-button::before {
     position: absolute;
     left: 0px;
     top: 0px;
@@ -62,7 +59,8 @@ defineProps({
     box-sizing: border-box;
     content: '';
 }
-.button::after {
+
+.lew-button::after {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -77,59 +75,74 @@ defineProps({
     transition: all 0.15s;
     transform: translate(-50%, -50%);
 }
-
-.button-primary {
+.lew-button-round {
+    border-radius: 50px;
+}
+.lew-button-round::before {
+    border-radius: 50px;
+}
+.lew-button-primary {
     background: var(--button-primary-bgcolor);
     color: var(--button-primary-text-color);
 }
-.button-primary:hover {
+
+.lew-button-primary:hover {
     background-color: var(--button-primary-bgcolor-hover);
 }
-.button-primary:active {
+
+.lew-button-primary:active {
     background-color: var(--button-primary-bgcolor-active);
 }
 
-.button-success {
+.lew-button-success {
     background: var(--button-success-bgcolor);
     color: var(--button-success-text-color);
 }
-.button-success:hover {
+
+.lew-button-success:hover {
     background-color: var(--button-success-bgcolor-hover);
 }
-.button-success:active {
+
+.lew-button-success:active {
     background-color: var(--button-success-bgcolor-active);
 }
 
-.button-danger {
+.lew-button-danger {
     background: var(--button-danger-bgcolor);
     color: var(--button-danger-text-color);
 }
-.button-danger:hover {
+
+.lew-button-danger:hover {
     background-color: var(--button-danger-bgcolor-hover);
 }
-.button-danger:active {
+
+.lew-button-danger:active {
     background-color: var(--button-danger-bgcolor-active);
 }
 
-.button-gray {
+.lew-button-gray {
     background: var(--button-gray-bgcolor);
     color: var(--button-grey-text-color);
 }
-.button-gray:hover {
+
+.lew-button-gray:hover {
     background-color: var(--button-gray-bgcolor-hover);
 }
-.button-gray:active {
+
+.lew-button-gray:active {
     background-color: var(--button-gray-bgcolor-active);
 }
 
-.button-warning {
+.lew-button-warning {
     background: var(--button-warning-bgcolor);
     color: var(--button-warning-text-color);
 }
-.button-warning:hover {
+
+.lew-button-warning:hover {
     background-color: var(--button-warning-bgcolor-hover);
 }
-.button-warning:active {
+
+.lew-button-warning:active {
     background-color: var(--button-warning-bgcolor-active);
 }
 
@@ -137,31 +150,37 @@ defineProps({
     0% {
         transform: translate(-50%, -50%) rotate(0deg);
     }
+
     100% {
         transform: translate(-50%, -50%) rotate(360deg);
     }
 }
-.button-loading {
+
+.lew-button-loading {
     font-size: 0px;
 }
-.button-loading:hover {
+
+.lew-button-loading:hover {
     font-size: 0px;
 }
-.button-loading::after {
+
+.lew-button-loading::after {
     opacity: 1;
 }
 
-.button-disabled {
+.lew-button-disabled {
     cursor: not-allowed;
     font-size: 14px;
     background: #eee;
     color: #999;
 }
-.button-disabled:hover {
+
+.lew-button-disabled:hover {
     font-size: 14px;
     background: #eee;
 }
-.button-disabled::after {
+
+.lew-button-disabled::after {
     opacity: 0;
 }
 </style>

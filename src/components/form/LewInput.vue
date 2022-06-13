@@ -27,11 +27,16 @@ const input = (e: any) => {
 </script>
 
 <template>
-    <input v-model="v" :disabled="props.disabled" @input="input" />
+    <input
+        v-model="v"
+        class="lew-input"
+        :disabled="props.disabled"
+        @input="input"
+    />
 </template>
 
 <style lang="scss" scoped>
-input {
+.lew-input {
     width: 250px;
     height: 35px;
     padding: 5px 7px;
@@ -45,7 +50,7 @@ input {
     transition: outline 0.25s, background-color 0.25s;
     outline: 2px solid rgba($color: #000000, $alpha: 0);
 }
-input:focus {
+.lew-input:focus {
     background-color: var(--form-bgcolor-focus);
     outline: var(--form-outline-focus);
 }

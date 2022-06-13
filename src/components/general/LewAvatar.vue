@@ -47,9 +47,11 @@ defineProps({
         height: 100%;
         border-radius: 5px;
     }
+
     .round {
         border-radius: 50%;
     }
+
     .dot {
         position: absolute;
         top: -0.25rem;
@@ -65,12 +67,15 @@ defineProps({
     .dot-online {
         background-color: rgb(49 196 141 / 1);
     }
+
     .dot-busy {
         background-color: rgb(249 128 128 / 1);
     }
+
     .dot-offline {
         background-color: rgb(156 163 175 / 1);
     }
+
     .dot-away {
         background-color: rgb(227 160 8 / 1);
     }
@@ -79,16 +84,19 @@ defineProps({
         top: -0.25rem;
         left: -0.25rem;
     }
+
     .dot-top-right {
         top: -0.25rem;
         left: auto;
         right: -0.25rem;
     }
+
     .dot-bottom-left {
         top: auto;
         bottom: -0.25rem;
         left: -0.25rem;
     }
+
     .dot-bottom-right {
         top: auto;
         bottom: -0.25rem;

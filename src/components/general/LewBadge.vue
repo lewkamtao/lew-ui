@@ -28,10 +28,10 @@ const toLink = () => {
 
 <template>
     <span
-        class="badge"
-        :class="`${round ? 'badge-round' : ''} ${
-            href ? 'badge-href' : ''
-        } badge-${color}`"
+        class="lew-badge"
+        :class="`${round ? 'lew-badge-round' : ''} ${
+            href ? 'lew-badge-href' : ''
+        } lew-badge-${color}`"
         @click="toLink()"
     >
         <slot></slot>
@@ -39,7 +39,7 @@ const toLink = () => {
 </template>
 
 <style lang="scss" scoped>
-.badge {
+.lew-badge {
     border-radius: 0.25rem;
     padding: 2px 8px 3px 8px;
     font-size: 0.75rem;
@@ -49,42 +49,51 @@ const toLink = () => {
     color: var(--badge-blue-text-color);
     background-color: var(--badge-blue-bgcolor);
 }
-.badge-round {
+
+.lew-badge-round {
     border-radius: 10px;
 }
-.badge-href {
+
+.lew-badge-href {
     cursor: pointer;
 }
 
-.badge-blue {
+.lew-badge-blue {
     color: var(--badge-blue-text-color);
     background-color: var(--badge-blue-bgcolor);
 }
-.badge-gray {
+
+.lew-badge-gray {
     color: var(--badge-gray-text-color);
     background-color: var(--badge-gray-bgcolor);
 }
-.badge-red {
+
+.lew-badge-red {
     color: var(--badge-red-text-color);
     background-color: var(--badge-red-bgcolor);
 }
-.badge-green {
+
+.lew-badge-green {
     color: var(--badge-green-text-color);
     background-color: var(--badge-green-bgcolor);
 }
-.badge-yellow {
+
+.lew-badge-yellow {
     color: var(--badge-yellow-text-color);
     background-color: var(--badge-yellow-bgcolor);
 }
-.badge-purple {
+
+.lew-badge-purple {
     color: var(--badge-purple-text-color);
     background-color: var(--badge-purple-bgcolor);
 }
-.badge-indigo {
+
+.lew-badge-indigo {
     color: var(--badge-indigo-text-color);
     background-color: var(--badge-indigo-bgcolor);
 }
-.badge-pink {
+
+.lew-badge-pink {
     color: var(--badge-pink-text-color);
     background-color: var(--badge-pink-bgcolor);
 }

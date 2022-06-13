@@ -8,36 +8,13 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-    small_title: {
-        type: String,
-        default: '',
-    },
-    small_title_link: {
-        type: String,
-        default: '',
-    },
-    tips: {
-        type: String,
-        default: '',
-    },
 });
 </script>
 
 <template>
     <div class="form-item" :class="row ? 'lew-row' : ''">
-        <label class="title-label"
-            >{{ props.title }}
-            <a
-                v-if="props.small_title"
-                target="_blank"
-                :href="props.small_title_link"
-                >{{ props.small_title }}</a
-            ></label
-        >
-        <div>
-            <slot />
-            <p class="tips" v-if="tips" v-html="tips"></p>
-        </div>
+        <label class="title-label">{{ props.title }} </label>
+        <slot />
     </div>
 </template>
 
@@ -52,17 +29,6 @@ const props = defineProps({
         margin: 0px 0px 5px 10px;
         font-size: 14px;
         color: var(--text-color-2);
-        a {
-            text-decoration: underline;
-            margin-left: 10px;
-            color: var(--text-color-2);
-        }
-    }
-    .tips {
-        font-size: 12px;
-        color: var(--text-color-2);
-        padding: 10px;
-        line-height: 18px;
     }
 }
 .lew-row {

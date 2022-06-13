@@ -64,7 +64,7 @@ input::before {
     height: 28px;
     background: var(--gray-color);
     border-radius: 4px;
-    transition: all 0.15s ease-in-out;
+    transition: all 0.35s cubic-bezier(0.65, 0, 0.35, 1);
     cursor: pointer;
 }
 .round::before {
@@ -73,15 +73,15 @@ input::before {
 
 input::after {
     position: absolute;
-    left: 5px;
+    left: 3px;
     top: 50%;
     transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     content: '';
     border-radius: 2px;
     background: #fff;
-    transition: all 0.15s ease-in-out;
+    transition: all 0.35s cubic-bezier(0.65, 0, 0.35, 1);
     cursor: pointer;
 }
 
