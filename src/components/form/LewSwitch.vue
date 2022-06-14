@@ -81,7 +81,7 @@ input::after {
     content: '';
     border-radius: 2px;
     background: #fff;
-    transition: all 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+    transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
     transform: translate(4px, 4px);
     cursor: pointer;
 }

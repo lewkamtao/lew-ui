@@ -22,31 +22,31 @@ group.value = [
             {
                 name: 'Avatar',
                 path: '/Avatar',
-                label: 'complete',
+                label: '',
                 labelColor: 'blue',
             },
             {
                 name: 'Button',
                 path: '/Button',
-                label: 'complete',
+                label: '',
                 labelColor: 'blue',
             },
             {
                 name: 'Badge',
                 path: '/Badge',
-                label: 'complete',
+                label: '',
                 labelColor: 'blue',
             },
             {
                 name: 'Title',
                 path: '/Title',
-                label: 'complete',
+                label: '',
                 labelColor: '',
             },
             {
                 name: 'Tabs',
                 path: '/Tabs',
-                label: 'complete',
+                label: '',
                 labelColor: '',
             },
         ],
@@ -57,32 +57,32 @@ group.value = [
             {
                 name: 'Form',
                 path: '/Form',
-                label: 'complete',
+                label: '',
                 labelColor: '',
             },
             {
                 name: 'Input',
                 path: '/Input',
-                label: 'complete',
+                label: '',
                 labelColor: '',
             },
 
             {
                 name: 'Textarea',
                 path: '/Textarea',
-                label: 'complete',
+                label: '',
                 labelColor: '',
             },
             {
                 name: 'Checkbox',
                 path: '/Checkbox',
-                label: 'complete',
+                label: '',
                 labelColor: '',
             },
             {
                 name: 'Radio',
                 path: '/Radio',
-                label: 'complete',
+                label: '',
                 labelColor: '',
             },
             {
@@ -100,7 +100,7 @@ group.value = [
             {
                 name: 'Switch',
                 path: '/Switch',
-                label: 'complete',
+                label: '',
                 labelColor: '',
             },
             {
