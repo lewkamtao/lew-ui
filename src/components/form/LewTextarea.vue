@@ -33,6 +33,7 @@ const input = (e: any) => {
 <template>
     <textarea
         v-model="v"
+        class="lew-textarea"
         :class="`resize-${resize}`"
         rows="3"
         cols="3"
@@ -42,7 +43,7 @@ const input = (e: any) => {
 </template>
 
 <style lang="scss" scoped>
-textarea {
+.lew-textarea {
     font-family: '微软雅黑';
     width: 250px;
     padding: 5px 7px;
@@ -56,7 +57,13 @@ textarea {
     transition: outline 0.25s, background-color 0.25s;
     outline: 2px solid rgba($color: #000000, $alpha: 0);
 }
-textarea:focus {
+.lew-textarea:hover {
+    background-color: var(--form-bgcolor-hover);
+}
+.lew-textarea:active {
+    background-color: var(--form-bgcolor-active);
+}
+.lew-textarea:focus {
     background-color: var(--form-bgcolor-focus);
     outline: var(--form-outline-focus);
 }

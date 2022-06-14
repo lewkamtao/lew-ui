@@ -22,31 +22,31 @@ group.value = [
             {
                 name: 'Avatar',
                 path: '/Avatar',
-                label: 'New',
+                label: 'complete',
                 labelColor: 'blue',
             },
             {
                 name: 'Button',
                 path: '/Button',
-                label: 'New',
+                label: 'complete',
                 labelColor: 'blue',
             },
             {
                 name: 'Badge',
                 path: '/Badge',
-                label: 'New',
+                label: 'complete',
                 labelColor: 'blue',
             },
             {
                 name: 'Title',
                 path: '/Title',
-                label: '',
+                label: 'complete',
                 labelColor: '',
             },
             {
                 name: 'Tabs',
                 path: '/Tabs',
-                label: '',
+                label: 'complete',
                 labelColor: '',
             },
         ],
@@ -55,28 +55,34 @@ group.value = [
         title: '表单',
         items: [
             {
+                name: 'Form',
+                path: '/Form',
+                label: 'complete',
+                labelColor: '',
+            },
+            {
                 name: 'Input',
                 path: '/Input',
-                label: 'New',
+                label: 'complete',
                 labelColor: '',
             },
 
             {
                 name: 'Textarea',
                 path: '/Textarea',
-                label: 'New',
+                label: 'complete',
                 labelColor: '',
             },
             {
                 name: 'Checkbox',
                 path: '/Checkbox',
-                label: '',
+                label: 'complete',
                 labelColor: '',
             },
             {
                 name: 'Radio',
                 path: '/Radio',
-                label: '',
+                label: 'complete',
                 labelColor: '',
             },
             {
@@ -94,7 +100,7 @@ group.value = [
             {
                 name: 'Switch',
                 path: '/Switch',
-                label: 'New',
+                label: 'complete',
                 labelColor: '',
             },
             {

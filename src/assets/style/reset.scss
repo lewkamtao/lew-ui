@@ -13,8 +13,8 @@ td,
 a,
 button,
 select {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 h1,
@@ -23,35 +23,35 @@ h3,
 h4,
 h4,
 h5 {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 select {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 table {
-    border-collapse: collapse;
+  border-collapse: collapse;
 }
 
 fieldset,
 img {
-    border: 0 none;
+  border: 0 none;
 }
 
 fieldset {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 fieldset p {
-    margin: 0;
-    padding: 0 0 0 8px;
+  margin: 0;
+  padding: 0 0 0 8px;
 }
 
 legend {
-    display: none;
+  display: none;
 }
 
 address,
@@ -59,86 +59,84 @@ caption,
 em,
 th,
 i {
-    font-style: normal;
-    font-weight: 400;
+  font-style: normal;
+  font-weight: 400;
 }
 
 table caption {
-    margin-left: -var(--border-width);
+  margin-left: -var(--border-width);
 }
 
 hr {
-    border-bottom: var(--border-width) solid #ffffff;
-    border-top: var(--border-width) solid #e4e4e4;
-    border-width: var(--border-width) 0;
-    clear: both;
-    height: 2px;
-    margin: 5px 0;
-    overflow: hidden;
+  border-bottom: var(--border-width) solid #ffffff;
+  border-top: var(--border-width) solid #e4e4e4;
+  border-width: var(--border-width) 0;
+  clear: both;
+  height: 2px;
+  margin: 5px 0;
+  overflow: hidden;
 }
 
 ol,
 ul {
-    list-style-image: none;
-    list-style-position: outside;
+  list-style-image: none;
+  list-style-position: outside;
 }
 
 caption,
 th {
-    text-align: left;
+  text-align: left;
 }
 
 q:before,
 q:after,
 blockquote:before,
 blockquote:after {
-    content: '';
+  content: '';
 }
 
 a {
-    color: #000;
-    text-decoration: none;
-    position: relative;
+  color: #000;
+  text-decoration: none;
+  position: relative;
 }
-
 
 /* fade-transform */
 
 .fade-transform-leave-active,
 .fade-transform-enter-active {
-    transition: all 0.2s;
+  transition: all 0.2s;
 }
 
 .fade-transform-enter-from {
-    opacity: 0;
-    transform: translateX(-30px);
-    transition: all 0.2s;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.2s;
 }
 
 .fade-transform-leave-to {
-    opacity: 0;
-    transform: translateX(30px);
-    transition: all 0.2s;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: all 0.2s;
 }
-
 
 /* breadcrumb transition */
 
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
-    transition: all 0.2s;
+  transition: all 0.2s;
 }
 
 .breadcrumb-enter,
 .breadcrumb-leave-active {
-    opacity: 0;
-    transform: translateX(80px);
+  opacity: 0;
+  transform: translateX(80px);
 }
 
 .breadcrumb-move {
-    transition: all 0.5s;
+  transition: all 0.5s;
 }
 
 .breadcrumb-leave-active {
-    position: absolute;
+  position: absolute;
 }

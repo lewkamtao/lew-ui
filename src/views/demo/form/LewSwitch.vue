@@ -26,8 +26,9 @@ const haha = () => {
 .main {
     width: 100%;
     margin: 0 auto;
+
     > div {
-        margin: 30px 0px;
+        margin: 30px 0;
     }
 }
 </style>

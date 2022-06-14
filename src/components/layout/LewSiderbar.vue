@@ -35,15 +35,10 @@ const toPath = (item: Item) => {
     <div class="siderbar">
         <div v-for="(list, i) in group" :key="`group${i}`" class="group">
             <div v-if="list.title" class="title">{{ list.title }}</div>
-            <div
-                v-for="(item, j) in list.items"
-                :key="`siderbar${j}`"
-                class="item"
-                @click="toPath(item)"
-            >
+            <div v-for="(item, j) in list.items" :key="`siderbar${j}`" class="item" @click="toPath(item)">
                 {{ item.name }}
-                <LewBadge :color="item.labelColor" v-if="item.label">{{
-                    item.label
+                <LewBadge v-if="item.label" :color="item.labelColor">{{
+                        item.label
                 }}</LewBadge>
             </div>
         </div>
@@ -65,6 +60,7 @@ const toPath = (item: Item) => {
             font-size: 14px;
             color: #999;
         }
+
         .item {
             position: relative;
             height: 40px;
@@ -78,16 +74,21 @@ const toPath = (item: Item) => {
             cursor: pointer;
             font-size: 16px;
         }
+
         .item:hover {
             background: #eee;
         }
     }
+
     .group:last-child {
         padding-bottom: 100px;
     }
 }
+
 .siderbar::-webkit-scrollbar {
     background-color: rgb(126, 126, 126, 0);
+    width: 5px;
+    height: 5px;
 }
 
 .siderbar::-webkit-scrollbar-thumb:hover {
@@ -98,6 +99,7 @@ const toPath = (item: Item) => {
     background-color: rgb(209 213 219 / 1);
     border-radius: 5px;
 }
+
 .title {
     color: var(--text-color);
 }

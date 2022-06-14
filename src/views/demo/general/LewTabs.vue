@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { LewTitle, LewTabs } from '../../../components';
 
-let LewTabsOptions = ref([
+const LewTabsOptions = ref([
     { label: '北京', value: '1' },
     { label: '上海', value: '2' },
     { label: '广州', value: '3' },
@@ -10,16 +10,16 @@ let LewTabsOptions = ref([
     { label: '乌鲁木齐', value: '4' },
 ]);
 
-const change = (e) => {
-    console.log(e.item.label);
+const change = (e: unknown) => {
+    console.log((e as any).item.label);
 };
-</script>
+</script>  
 
 <template>
     <div class="main">
         <LewTitle bold>Tabs</LewTitle>
         <div>
-            <LewTabs :options="LewTabsOptions" @change="change"></LewTabs>
+            <LewTabs :options="LewTabsOptions" @update:change="change"></LewTabs>
         </div>
     </div>
 </template>
@@ -28,7 +28,8 @@ const change = (e) => {
 .main {
     width: 100%;
     margin: 0 auto;
-    > div {
+
+    >div {
         margin: 30px 0px;
     }
 }

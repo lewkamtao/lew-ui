@@ -27,12 +27,7 @@ const input = (e: any) => {
 </script>
 
 <template>
-    <input
-        v-model="v"
-        class="lew-input"
-        :disabled="props.disabled"
-        @input="input"
-    />
+    <input v-model="v" class="lew-input" :disabled="props.disabled" @input="input" />
 </template>
 
 <style lang="scss" scoped>
@@ -50,6 +45,15 @@ const input = (e: any) => {
     transition: outline 0.25s, background-color 0.25s;
     outline: 2px solid rgba($color: #000000, $alpha: 0);
 }
+
+.lew-input:hover {
+    background-color: var(--form-bgcolor-hover);
+}
+
+.lew-input:active {
+    background-color: var(--form-bgcolor-active);
+}
+
 .lew-input:focus {
     background-color: var(--form-bgcolor-focus);
     outline: var(--form-outline-focus);

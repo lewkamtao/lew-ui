@@ -1,12 +1,9 @@
 <template>
-    <label class="lew-checkbox">
-        <div class="icon-checkbox-box" :class="{ 'icon-checked-box': checked }">
-            <svg class="icon-checkbox" :class="{ 'icon-checked': checked }" viewBox="0 0 24 24" width="24" height="24"
-                stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
+    <label class="lew-radio">
+        <div class="icon-radio-box" :class="{ 'icon-checked-box': checked }">
+            <div class="icon-radio"></div>
         </div>
-        <input v-show="false" type="checkbox" :checked="checked" @input="setChecked" />
+        <input v-show="false" type="radio" :checked="checked" @input="setChecked" />
         {{ label }}
     </label>
 </template>
@@ -24,13 +21,13 @@ defineProps({
 
 const emit = defineEmits(['update:checked']);
 
-const setChecked = (event: Event) => {
-    emit('update:checked', (event.target as HTMLInputElement).checked);
+const setChecked = () => {
+    emit('update:checked');
 };
 </script>
 
 <style lang="scss" scoped>
-.lew-checkbox {
+.lew-radio {
     display: inline-flex;
     align-items: center;
     user-select: none;
@@ -39,7 +36,7 @@ const setChecked = (event: Event) => {
     color: var(--text-color);
     font-size: 14px;
 
-    .icon-checkbox-box {
+    .icon-radio-box {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -47,15 +44,19 @@ const setChecked = (event: Event) => {
         height: 18px;
         border: 2px rgba($color: #000000, $alpha: 0.1) solid;
         box-sizing: border-box;
-        border-radius: 5px;
+        border-radius: 50px;
         margin-right: 5px;
         transition: all 0.25s ease;
+        overflow: hidden;
 
-        .icon-checkbox {
-            transform: scale(0.6) translateY(50%);
-            transition: all 0.25s ease;
+        .icon-radio {
+            width: 7px;
+            height: 7px;
+            background-color: #fff;
+            transform: translateY(100%);
             opacity: 0;
-            color: #fff;
+            border-radius: 50px;
+            transition: all 0.25s ease;
             font-size: 12px;
         }
     }
@@ -64,15 +65,15 @@ const setChecked = (event: Event) => {
         border: 2px var(--primary-bgcolor) solid;
         background: var(--primary-bgcolor);
 
-        .icon-checkbox {
-            transform: scale(0.9) translateY(0px);
+        .icon-radio {
+            transform: translateY(0%);
             opacity: 1;
         }
     }
 }
 
-.lew-checkbox:hover {
-    .icon-checkbox-box {
+.lew-radio:hover {
+    .icon-radio-box {
         border: 2px rgba($color: #000000, $alpha: 0.2) solid;
     }
 

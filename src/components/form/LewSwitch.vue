@@ -31,20 +31,14 @@ const change = () => {
 </script>
 
 <template>
-    <input
-        v-model="v"
-        :class="{ round: round }"
-        type="checkbox"
-        :disabled="props.disabled"
-        @change="change"
-    />
+    <input v-model="v" :class="{ round: round }" type="checkbox" :disabled="props.disabled" @change="change" />
 </template>
 
 <style lang="scss" scoped>
 input {
     position: relative;
-    width: 46px;
-    height: 28px;
+    width: 38px;
+    height: 24px;
     border: none;
     outline: none;
     box-sizing: border-box;
@@ -60,38 +54,47 @@ input::before {
     left: 0px;
     top: 0px;
     content: '';
-    width: 46px;
-    height: 28px;
-    background: var(--gray-color);
+    width: 38px;
+    height: 24px;
+    background: var(--form-bgcolor-high);
     border-radius: 4px;
-    transition: all 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+    transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
     cursor: pointer;
 }
+
+input:hover::before {
+    background: var(--form-bgcolor-high-hover);
+}
+
+input:active::before {
+    background: var(--form-bgcolor-high-active);
+}
+
 .round::before {
     border-radius: 50px;
 }
 
 input::after {
     position: absolute;
-    left: 3px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 22px;
-    height: 22px;
+    width: 16px;
+    height: 16px;
     content: '';
     border-radius: 2px;
     background: #fff;
-    transition: all 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+    transform: translate(4px, 4px);
     cursor: pointer;
 }
 
 .round::after {
     border-radius: 50px;
 }
+
 input:checked::before {
-    background: var(--primary-color);
+    background: var(--primary-bgcolor);
 }
+
 input:checked::after {
-    left: 20px;
+    transform: translate(18px, 4px);
 }
 </style>

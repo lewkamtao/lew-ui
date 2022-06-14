@@ -6,7 +6,7 @@ type Options = {
     value: string;
 };
 let activeIndex = ref(0);
-let itemRef = ref([]);
+let itemRef: any = ref([]);
 
 let activeItemStyle = ref('');
 defineProps({
@@ -19,16 +19,16 @@ defineProps({
 });
 
 const init = () => {
-    activeItemStyle.value = `width:${itemRef.value[0].offsetWidth}px;height:${itemRef.value[0].offsetHeight}px;transform: translateX(${itemRef.value[0].offsetLeft}px);`;
+    activeItemStyle.value = `width:${itemRef.value[0].offsetWidth}px;transform: translateX(${itemRef.value[0].offsetLeft}px);`;
 };
 
-const emit = defineEmits(['change']);
+const emit = defineEmits(['update:change']);
 
-const changeIndex = (item, index) => {
+const changeIndex = (item: Options, index: number) => {
     activeIndex.value = index;
     let activeRef = itemRef.value[index];
-    activeItemStyle.value = `width:${activeRef.offsetWidth}px;height:${activeRef.offsetHeight}px;transform: translateX(${activeRef.offsetLeft}px);`;
-    emit('change', { item, index });
+    activeItemStyle.value = `width:${activeRef.offsetWidth}px;transform: translateX(${activeRef.offsetLeft}px);`;
+    emit('update:change', { item, index });
 };
 
 onMounted(() => {
@@ -56,20 +56,26 @@ onMounted(() => {
 .lew-tabs {
     position: relative;
     display: inline-flex;
-    background: #eee;
-    padding: 1.5px;
-    border-radius: 8px;
+    align-items: center;
+    background: rgb(239, 239, 239);
+    height: 34px;
+    border-radius: 10px;
     overflow: hidden;
+
     .lew-tabs-item {
         position: relative;
         z-index: 9;
-        border-radius: 4px;
-        padding: 5px 25px;
-        margin: 1.5px;
+        height: 28px;
+        line-height: 28px;
+        border-radius: 6px;
+        padding: 0px 25px;
+        margin: 3px;
+        color: #000;
+        white-space: nowrap;
         cursor: pointer;
-        color: #999;
         transition: all 0.45s cubic-bezier(0.65, 0, 0.35, 1);
         font-size: 14px;
+        color: #999;
     }
     .active {
         color: #000;
@@ -79,11 +85,12 @@ onMounted(() => {
         top: 3px;
         left: 0px;
         z-index: 9;
-        border-radius: 5px;
+        height: 28px;
+        border-radius: 7px;
         transition: all 0.45s cubic-bezier(0.65, 0, 0.35, 1);
         background: #fff;
-        transform: translateX(4px);
-        box-shadow: 0px 0px 10px rgba($color: #000000, $alpha: 0.05);
+        transform: translateX(3px);
+        box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);
     }
 }
 </style>

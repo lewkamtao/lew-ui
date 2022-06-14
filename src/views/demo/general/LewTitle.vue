@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import { LewTitle, LewAvatar } from '../../../components';
-import { ref } from 'vue';
-
-let avatarUrl = ref(
-    ' https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg',
-);
+import { LewTitle } from '../../../components';
 </script>
 
 <template>
@@ -30,9 +25,8 @@ let avatarUrl = ref(
             </div>
             <div style="margin-bottom: 50px">
                 <LewTitle style="margin-bottom: 20px" size="14px" bold
-                    >14px 粗体
-                </LewTitle>
-                <LewTitle style="margin-bottom: 20px" size="16px" bold
+                    >14px 粗体</LewTitle
+                ><LewTitle style="margin-bottom: 20px" size="16px" bold
                     >16px 粗体</LewTitle
                 >
                 <LewTitle style="margin-bottom: 20px" size="18px" bold
@@ -53,8 +47,9 @@ let avatarUrl = ref(
 .main {
     width: 100%;
     margin: 0 auto;
+
     > div {
-        margin: 30px 0px;
+        margin: 30px 0;
     }
 }
 </style>
