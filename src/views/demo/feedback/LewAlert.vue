@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { LewTitle, LewBadge } from '../../../components';
+import { LewTitle, LewAlert } from '../../../components';
 </script>
 
 <template>
     <div class="main">
         <LewTitle bold>Alert</LewTitle>
         <div>
-            <LewBadge type="primary">Github</LewBadge>
-            <LewBadge type="primary">Vue</LewBadge>
-            <LewBadge type="primary">Golang</LewBadge>
+            <LewAlert type="primary" message="尚未设置个人信息"></LewAlert>
+            <LewAlert type="success" message="尚未设置个人信息"></LewAlert>
+            <LewAlert type="danger" message="尚未设置个人信息"></LewAlert>
+            <LewAlert type="gray" message="尚未设置个人信息"></LewAlert>
+            <LewAlert type="warning" message="尚未设置个人信息"></LewAlert>
         </div>
     </div>
 </template>

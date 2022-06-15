@@ -45,17 +45,17 @@ defineProps({
     border: none;
     cursor: pointer;
     padding: 0px 13px;
-    border-radius: var(--button-border-radius);
+    border-radius: var(--border-radius);
 }
 
 .lew-button::before {
     position: absolute;
     left: 0px;
     top: 0px;
-    border-radius: var(--button-border-radius);
+    border-radius: var(--border-radius);
     width: 100%;
     height: 100%;
-    border: var(--button-border);
+    border: var(--border);
     box-sizing: border-box;
     content: '';
 }
@@ -82,68 +82,68 @@ defineProps({
     border-radius: 50px;
 }
 .lew-button-primary {
-    background: var(--button-primary-bgcolor);
-    color: var(--button-primary-text-color);
+    background: var(--primary-color);
+    color: var(--text-color-invert);
 }
 
 .lew-button-primary:hover {
-    background-color: var(--button-primary-bgcolor-hover);
+    background-color: var(--primary-color-hover);
 }
 
 .lew-button-primary:active {
-    background-color: var(--button-primary-bgcolor-active);
+    background-color: var(--primary-color-active);
 }
 
 .lew-button-success {
-    background: var(--button-success-bgcolor);
-    color: var(--button-success-text-color);
+    background: var(--success-color);
+    color: var(--text-color-invert);
 }
 
 .lew-button-success:hover {
-    background-color: var(--button-success-bgcolor-hover);
+    background-color: var(--success-color-hover);
 }
 
 .lew-button-success:active {
-    background-color: var(--button-success-bgcolor-active);
+    background-color: var(--success-color-active);
 }
 
 .lew-button-danger {
-    background: var(--button-danger-bgcolor);
-    color: var(--button-danger-text-color);
+    background: var(--danger-color);
+    color: var(--text-color-invert);
 }
 
 .lew-button-danger:hover {
-    background-color: var(--button-danger-bgcolor-hover);
+    background-color: var(--danger-color-hover);
 }
 
 .lew-button-danger:active {
-    background-color: var(--button-danger-bgcolor-active);
+    background-color: var(--danger-color-active);
 }
 
 .lew-button-gray {
-    background: var(--button-gray-bgcolor);
-    color: var(--button-grey-text-color);
+    background: var(--gray-color);
+    color: var(--text-color);
 }
 
 .lew-button-gray:hover {
-    background-color: var(--button-gray-bgcolor-hover);
+    background-color: var(--gray-color-hover);
 }
 
 .lew-button-gray:active {
-    background-color: var(--button-gray-bgcolor-active);
+    background-color: var(--gray-color-active);
 }
 
 .lew-button-warning {
-    background: var(--button-warning-bgcolor);
-    color: var(--button-warning-text-color);
+    background: var(--warning-color);
+    color: var(--text-color-invert);
 }
 
 .lew-button-warning:hover {
-    background-color: var(--button-warning-bgcolor-hover);
+    background-color: var(--warning-color-hover);
 }
 
 .lew-button-warning:active {
-    background-color: var(--button-warning-bgcolor-active);
+    background-color: var(--warning-color-active);
 }
 
 @keyframes donut-spin {

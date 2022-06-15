@@ -97,7 +97,7 @@ input::after {
 }
 
 input:checked::before {
-    background: var(--primary-bgcolor);
+    background: var(--primary-color);
 }
 
 input:checked::after {

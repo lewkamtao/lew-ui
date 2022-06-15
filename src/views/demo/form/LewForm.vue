@@ -32,7 +32,7 @@ let user = ref({
             <LewFormItem direction="y" title="密码" style="margin-bottom: 20px">
                 <LewInput v-model="user.password" style="width: 350px" />
             </LewFormItem>
-            <LewFormItem direction="y" title="简介" style="margin-bottom: 10px">
+            <LewFormItem direction="y" title="简介" style="margin-bottom: 20px">
                 <LewTextarea
                     v-model="user.password"
                     style="width: 350px"

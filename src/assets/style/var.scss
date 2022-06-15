@@ -1,83 +1,65 @@
 :root {
     // 全局
     --body-bgcolor: #fff; // body背景
-    --gray-color: rgb(235, 235, 235);
-    --primary-color: rgb(59, 121, 208);
-    --primary-bgcolor: rgb(59, 121, 208);
-    --primary-color-hover: rgb(52, 109, 187);
-    --primary-color-active: rgb(41, 92, 165);
     --text-color: rgb(51, 54, 57); // 全局文字颜色
-    --text-color-2: rgb(92, 92, 92); // 全局文字颜色
+    --text-color-invert: rgb(255, 255, 255);
     --border-radius: 8px;
+    // 主题色
+    --primary-color: rgb(59, 121, 208);
+    --primary-color-light: rgb(59, 121, 208, 0.2);
+    --primary-text-color: rgb(47, 88, 146);
+    --primary-color-hover: rgb(54, 109, 187);
+    --primary-color-active: rgb(33, 73, 116);
+    //
+    --success-color: rgb(49, 196, 141);
+    --success-color-dark: rgb(35, 153, 110);
+    --success-color-light: rgb(108, 176, 119, 0.2);
+    --success-text-color: rgb(30, 107, 41);
+    --success-color-hover: rgb(40, 176, 126);
+    --success-color-active: rgb(28, 157, 110);
+    //
+    --danger-color: rgb(249, 128, 128);
+    --danger-color-dark: rgb(197, 88, 88);
+    --danger-color-light: rgb(249, 128, 128, 0.2);
+    --danger-text-color: #d10000;
+    --danger-color-hover: rgb(231, 113, 113);
+    --danger-color-active: rgb(204, 92, 92);
+    //
+    --warning-color: rgb(255, 217, 130);
+    --warning-color-dark: rgb(186, 132, 7);
+    --warning-color-light: rgb(227, 160, 8, 0.2);
+    --warning-text-color: rgb(255, 170, 0);
+    --warning-color-hover: rgb(211, 150, 8);
+    --warning-color-active: rgb(187, 133, 7);
+    //
+    --gray-color: rgb(236, 235, 235);
+    --gray-color-dark: rgb(177, 176, 176);
+    --gray-color-light: rgba(154, 154, 154, 0.2);
+    --gray-text-color: rgb(66, 66, 66);
+    --gray-color-hover: rgb(224, 223, 223);
+    --gray-color-active: rgb(165, 161, 161);
     // 标题
     --title-bold: 800;
     --title-color: rgb(33, 33, 33); // 标题颜色
     // 表单样式
     --form-border: 1px rgba(0, 0, 0, 0.05) solid;
     --form-border-radius: 8px;
+    --form-outline-focus: 2px solid var(--primary-color);
+    --form-bgcolor-focus: rgb(255, 255, 255);
+    --form-text-color: #333;
+    // 表单背景
     --form-bgcolor: rgba(6, 57, 88, 0.022);
     --form-bgcolor-hover: rgba(6, 57, 88, 0.06);
     --form-bgcolor-active: rgba(6, 57, 88, 0.08);
+    // 表单背景2
     --form-bgcolor-high: rgba(6, 57, 88, 0.1);
     --form-bgcolor-high-hover: rgba(6, 57, 88, 0.16);
     --form-bgcolor-high-active: rgba(6, 57, 88, 0.2);
-    --form-outline-focus: 2px solid rgb(26, 84, 177);
-    --form-bgcolor-focus: rgb(255, 255, 255);
-    --form-text-color: #333;
-    // 按钮
+    // 按钮样式
     --button-border-radius: 8px;
     --button-bgcolor: rgba(0, 0, 0, 0.022);
     --button-text-color: #000;
     --button-border: 1px rgba(0, 0, 0, 0.05) solid;
-    //
-    --button-primary-bgcolor: rgb(59, 121, 208);
-    --button-primary-text-color: rgb(255, 255, 255);
-    --button-primary-bgcolor-hover: rgb(54, 109, 187);
-    --button-primary-bgcolor-active: rgb(33, 73, 116);
-    //
-    --button-danger-bgcolor: rgb(249, 128, 128);
-    --button-danger-text-color: rgb(255, 255, 255);
-    --button-danger-bgcolor-hover: rgb(231, 113, 113);
-    --button-danger-bgcolor-active: rgb(204, 92, 92);
-    //
-    --button-success-bgcolor: rgb(108, 176, 119);
-    --button-success-text-color: #fff;
-    --button-success-bgcolor-hover: rgb(75, 155, 88);
-    --button-success-bgcolor-active: rgb(42, 104, 52);
-    //
-    --button-warning-bgcolor: rgb(227, 160, 8);
-    --button-warning-text-color: #fff;
-    --button-warning-bgcolor-hover: rgb(211, 150, 8);
-    --button-warning-bgcolor-active: rgb(187, 133, 7);
-    //
-    --button-gray-bgcolor: rgb(236, 235, 235);
-    --button-gray-text-color: #000;
-    --button-gray-bgcolor-hover: rgb(224, 223, 223);
-    --button-gray-bgcolor-active: rgb(165, 161, 161);
-    // 徽章
-    --badge-blue-bgcolor: rgb(220, 231, 244);
-    --badge-blue-text-color: rgb(35, 88, 162);
-    //
-    --badge-gray-bgcolor: rgb(237, 237, 237);
-    --badge-gray-text-color: rgb(0, 0, 0);
-    //
-    --badge-red-bgcolor: rgb(251, 228, 228);
-    --badge-red-text-color: rgb(172, 46, 46);
-    //
-    --badge-green-bgcolor: rgb(227, 255, 225);
-    --badge-green-text-color: rgb(19, 123, 11);
-    //
-    --badge-yellow-bgcolor: rgb(251, 241, 166);
-    --badge-yellow-text-color: rgb(91, 79, 10);
-    //
-    --badge-indigo-bgcolor: rgb(219, 219, 255);
-    --badge-indigo-text-color: rgb(32, 48, 166);
-    //
-    --badge-purple-bgcolor: rgb(229, 209, 255);
-    --badge-purple-text-color: rgb(96, 0, 148);
-    //
-    --badge-pink-bgcolor: rgb(255, 225, 245);
-    --badge-pink-text-color: rgb(120, 0, 94);
 }
 
 .dark {

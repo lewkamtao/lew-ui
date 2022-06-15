@@ -67,8 +67,8 @@ const setChecked = () => {
     }
 
     .icon-checked-box {
-        border: 2px var(--primary-bgcolor) solid;
-        background: var(--primary-bgcolor);
+        border: 2px var(--primary-color) solid;
+        background: var(--primary-color);
 
         .icon-radio {
             transform: translateY(0%);
@@ -83,8 +83,8 @@ const setChecked = () => {
     }
 
     .icon-checked-box {
-        border: 2px var(--primary-bgcolor) solid;
-        background: var(--primary-bgcolor);
+        border: 2px var(--primary-color) solid;
+        background: var(--primary-color);
     }
 }
 </style>

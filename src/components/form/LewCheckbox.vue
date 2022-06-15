@@ -76,8 +76,8 @@ const setChecked = (event: Event) => {
     }
 
     .icon-checked-box {
-        border: 2px var(--primary-bgcolor) solid;
-        background: var(--primary-bgcolor);
+        border: 2px var(--primary-color) solid;
+        background: var(--primary-color);
 
         .icon-checkbox {
             transform: scale(0.9) translateY(0px);
@@ -92,8 +92,8 @@ const setChecked = (event: Event) => {
     }
 
     .icon-checked-box {
-        border: 2px var(--primary-bgcolor) solid;
-        background: var(--primary-bgcolor);
+        border: 2px var(--primary-color) solid;
+        background: var(--primary-color);
     }
 }
 </style>

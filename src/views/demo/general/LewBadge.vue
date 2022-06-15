@@ -7,32 +7,24 @@ import { LewTitle, LewBadge } from '../../../components';
         <LewTitle bold>Badge</LewTitle>
         <div>
             <LewTitle style="margin-bottom: 20px" size="16px">普通</LewTitle>
-            <LewBadge color="blue">blue</LewBadge>
-            <LewBadge color="gray">gray</LewBadge>
-            <LewBadge color="red">red</LewBadge>
-            <LewBadge color="green">green</LewBadge>
-            <LewBadge color="yellow">yellow</LewBadge>
-            <LewBadge color="indigo">indigo</LewBadge>
-            <LewBadge color="purple">purple</LewBadge>
-            <LewBadge color="pink">pink</LewBadge>
+            <LewBadge type="primary">primary</LewBadge>
+            <LewBadge type="success">success</LewBadge>
+            <LewBadge type="danger">danger</LewBadge>
+            <LewBadge type="warning">waning</LewBadge>
+            <LewBadge type="gray">gray</LewBadge>
         </div>
         <LewTitle style="margin-bottom: 20px" size="16px">圆形</LewTitle>
         <div>
-            <LewBadge round color="blue">blue</LewBadge>
-            <LewBadge round color="gray">gray</LewBadge>
-            <LewBadge round color="red">red</LewBadge>
-            <LewBadge round color="green">green</LewBadge>
-            <LewBadge round color="yellow">yellow</LewBadge>
-            <LewBadge round color="indigo">indigo</LewBadge>
-            <LewBadge round color="purple">purple</LewBadge>
-            <LewBadge round color="pink">pink</LewBadge>
+            <LewBadge round type="primary">primary</LewBadge>
+            <LewBadge round type="success">success</LewBadge>
+            <LewBadge round type="danger">danger</LewBadge>
+            <LewBadge round type="warning">waning</LewBadge>
+            <LewBadge round type="gray">gray</LewBadge>
         </div>
         <LewTitle style="margin-bottom: 20px" size="16px">链接</LewTitle>
         <div>
-            <LewBadge round color="blue" href="/button">BUTTON</LewBadge>
-            <LewBadge round color="gray" href="https://vuejs.org/"
-                >Vue</LewBadge
-            >
+            <LewBadge round type="primary" href="/button">BUTTON</LewBadge>
+            <LewBadge round type="gray" href="https://vuejs.org/">Vue</LewBadge>
         </div>
     </div>
 </template>

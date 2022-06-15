@@ -65,19 +65,19 @@ defineProps({
     }
 
     .dot-online {
-        background-color: rgb(49 196 141 / 1);
+        background-color: var(--success-color);
     }
 
     .dot-busy {
-        background-color: rgb(249 128 128 / 1);
+        background-color: var(--danger-color);
     }
 
     .dot-offline {
-        background-color: rgb(156 163 175 / 1);
+        background-color: var(--gray-color-dark);
     }
 
     .dot-away {
-        background-color: rgb(227 160 8 / 1);
+        background-color: var(--warning-color);
     }
 
     .dot-top-left {
