@@ -20,5 +20,7 @@
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "settingsSync.ignoredSettings": []
+    "settingsSync.ignoredSettings": [],
+    "git.enableSmartCommit": true,
+    "editor.codeActionsOnSave": {}
 }
