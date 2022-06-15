@@ -31,7 +31,13 @@ const change = () => {
 </script>
 
 <template>
-    <input v-model="v" :class="{ round: round }" type="checkbox" :disabled="props.disabled" @change="change" />
+    <input
+        v-model="v"
+        :class="{ round: round }"
+        type="checkbox"
+        :disabled="props.disabled"
+        @change="change"
+    />
 </template>
 
 <style lang="scss" scoped>

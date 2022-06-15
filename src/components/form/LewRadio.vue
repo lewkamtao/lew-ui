@@ -3,7 +3,12 @@
         <div class="icon-radio-box" :class="{ 'icon-checked-box': checked }">
             <div class="icon-radio"></div>
         </div>
-        <input v-show="false" type="radio" :checked="checked" @input="setChecked" />
+        <input
+            v-show="false"
+            type="radio"
+            :checked="checked"
+            @input="setChecked"
+        />
         {{ label }}
     </label>
 </template>

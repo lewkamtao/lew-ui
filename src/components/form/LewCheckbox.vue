@@ -1,12 +1,27 @@
 <template>
     <label class="lew-checkbox">
         <div class="icon-checkbox-box" :class="{ 'icon-checked-box': checked }">
-            <svg class="icon-checkbox" :class="{ 'icon-checked': checked }" viewBox="0 0 24 24" width="24" height="24"
-                stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <svg
+                class="icon-checkbox"
+                :class="{ 'icon-checked': checked }"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                stroke="currentColor"
+                stroke-width="4"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
                 <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
         </div>
-        <input v-show="false" type="checkbox" :checked="checked" @input="setChecked" />
+        <input
+            v-show="false"
+            type="checkbox"
+            :checked="checked"
+            @input="setChecked"
+        />
         {{ label }}
     </label>
 </template>

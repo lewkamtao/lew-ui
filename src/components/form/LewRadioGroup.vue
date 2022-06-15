@@ -1,7 +1,12 @@
 <template>
     <div class="lew-radio-group" :class="`lew-radio-group-${direction}`">
-        <lew-radio v-for="option in options" :key="option.id" :label="option.name" :checked="value == option.id"
-            @update:checked="check(option.id)" />
+        <lew-radio
+            v-for="option in options"
+            :key="option.id"
+            :label="option.name"
+            :checked="value == option.id"
+            @update:checked="check(option.id)"
+        />
     </div>
 </template>
 
@@ -22,7 +27,7 @@ defineProps({
     },
     direction: {
         type: String,
-        default: "x",
+        default: 'x',
     },
     options: {
         type: Array as PropType<Options[]>,

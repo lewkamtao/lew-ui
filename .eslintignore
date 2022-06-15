@@ -1,4 +1,5 @@
 node_modules/
 dist/
 index.html
-prettier.config.js
+prettier.config.js 
+.eslintrc.js

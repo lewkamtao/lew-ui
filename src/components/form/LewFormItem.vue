@@ -6,7 +6,7 @@ const props = defineProps({
     },
     direction: {
         type: String,
-        default: "x",
+        default: 'x',
     },
 });
 </script>
@@ -46,5 +46,6 @@ const props = defineProps({
     }
 }
 
-.lew-form-item-y {}
+.lew-form-item-y {
+}
 </style>

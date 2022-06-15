@@ -13,13 +13,16 @@ const LewTabsOptions = ref([
 const change = (e: unknown) => {
     console.log((e as any).item.label);
 };
-</script>  
+</script>
 
 <template>
     <div class="main">
         <LewTitle bold>Tabs</LewTitle>
         <div>
-            <LewTabs :options="LewTabsOptions" @update:change="change"></LewTabs>
+            <LewTabs
+                :options="LewTabsOptions"
+                @update:change="change"
+            ></LewTabs>
         </div>
     </div>
 </template>
@@ -29,7 +32,7 @@ const change = (e: unknown) => {
     width: 100%;
     margin: 0 auto;
 
-    >div {
+    > div {
         margin: 30px 0px;
     }
 }

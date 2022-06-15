@@ -1,10 +1,15 @@
 <template>
     <div class="lew-checkbox-group" :class="`lew-checkbox-group-${direction}`">
-        <lew-checkbox v-for="option in options" :key="option.id" :label="option.name" :checked="getChecked(option.id)"
-            @update:checked="check(option.id, $event)" />
+        <lew-checkbox
+            v-for="option in options"
+            :key="option.id"
+            :label="option.name"
+            :checked="getChecked(option.id)"
+            @update:checked="check(option.id, $event)"
+        />
     </div>
-</template>  
-  
+</template>
+
 <script lang="ts" setup>
 import { PropType } from 'vue';
 import LewCheckbox from './LewCheckbox.vue';
@@ -22,7 +27,7 @@ const props = defineProps({
     },
     direction: {
         type: String,
-        default: "x",
+        default: 'x',
     },
     options: {
         type: Array as PropType<Options[]>,

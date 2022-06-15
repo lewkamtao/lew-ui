@@ -35,10 +35,15 @@ const toPath = (item: Item) => {
     <div class="siderbar">
         <div v-for="(list, i) in group" :key="`group${i}`" class="group">
             <div v-if="list.title" class="title">{{ list.title }}</div>
-            <div v-for="(item, j) in list.items" :key="`siderbar${j}`" class="item" @click="toPath(item)">
+            <div
+                v-for="(item, j) in list.items"
+                :key="`siderbar${j}`"
+                class="item"
+                @click="toPath(item)"
+            >
                 {{ item.name }}
                 <LewBadge v-if="item.label" :color="item.labelColor">{{
-                        item.label
+                    item.label
                 }}</LewBadge>
             </div>
         </div>

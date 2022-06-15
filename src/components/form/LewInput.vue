@@ -27,7 +27,12 @@ const input = (e: any) => {
 </script>
 
 <template>
-    <input v-model="v" class="lew-input" :disabled="props.disabled" @input="input" />
+    <input
+        v-model="v"
+        class="lew-input"
+        :disabled="props.disabled"
+        @input="input"
+    />
 </template>
 
 <style lang="scss" scoped>
