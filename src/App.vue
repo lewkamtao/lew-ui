@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import TheSiderbar from './components/layout/LewSiderbar.vue';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 type Item = {
     name: string;
@@ -154,6 +157,10 @@ group.value = [
         ],
     },
 ];
+
+const toPath = (path: string) => {
+    router.push(path);
+};
 </script>
 
 <template>
@@ -161,8 +168,10 @@ group.value = [
         <div class="Header">
             <div class="logo">Lew Design</div>
             <div class="menu">
-                <a href="#">起步</a>
-                <a href="#">组件</a>
+                <div @click="toPath(`/`)">组件库</div>
+                <a target="_blank" href="https://github.com/lewkamtao/Lew-UI"
+                    >Github</a
+                >
             </div>
         </div>
         <div class="container">
@@ -208,12 +217,16 @@ group.value = [
             font-weight: bold;
         }
         .menu {
-            a {
+            a,
+            div {
+                display: inline-block;
                 margin: 10px;
                 padding: 10px;
                 opacity: 0.6;
+                cursor: pointer;
             }
-            a:hover {
+            a:hover,
+            div:hover {
                 opacity: 1;
             }
         }

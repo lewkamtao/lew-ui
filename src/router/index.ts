@@ -24,6 +24,7 @@ const LewPopover = () => import('../views/demo/feedback/LewPopover.vue');
 const LewResult = () => import('../views/demo/feedback/LewResult.vue');
 
 const routes: Array<RouteRecordRaw> = [
+    { path: '/', name: 'Home', component: LewAvatar },
     { path: '/Avatar', name: 'LewAvatar', component: LewAvatar },
     { path: '/Badge', name: 'LewBadge', component: LewBadge },
     { path: '/Title', name: 'LewTitle', component: LewTitle },
