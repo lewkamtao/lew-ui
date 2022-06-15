@@ -44,7 +44,7 @@ const input = (e: any) => {
 
 <style lang="scss" scoped>
 .lew-textarea {
-    font-family: '微软雅黑';
+    font-family: 'Noto Sans SC';
     width: 250px;
     padding: 5px 7px;
     font-size: 14px;

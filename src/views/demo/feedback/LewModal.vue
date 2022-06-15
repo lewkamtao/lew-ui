@@ -5,11 +5,7 @@ import { LewTitle, LewBadge } from '../../../components';
 <template>
     <div class="main">
         <LewTitle bold>Modal</LewTitle>
-        <div>
-            <LewBadge type="primary">Github</LewBadge>
-            <LewBadge type="primary">Vue</LewBadge>
-            <LewBadge type="primary">Golang</LewBadge>
-        </div>
+        <div>开发中···</div>
     </div>
 </template>
 

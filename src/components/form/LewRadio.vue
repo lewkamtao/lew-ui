@@ -50,7 +50,7 @@ const setChecked = () => {
         border: 2px rgba($color: #000000, $alpha: 0.1) solid;
         box-sizing: border-box;
         border-radius: 50px;
-        margin-right: 5px;
+        margin-right: 7px;
         transition: all 0.25s ease;
         overflow: hidden;
 

@@ -8,6 +8,7 @@ import {
     LewRadioboxGroup,
     LewSwitch,
     LewTextarea,
+    LewSelect,
 } from '../../../components';
 
 let user = ref({
@@ -17,8 +18,72 @@ let user = ref({
     sex: 0,
     hobby: [],
     school: '',
-    dark: 2,
+    home: '',
+    dark: true,
 });
+
+let options = ref([
+    {
+        label: '广东',
+        value: '1',
+    },
+    {
+        label: '深圳',
+        value: '2',
+    },
+    {
+        label: '杭州',
+        value: '3',
+    },
+    {
+        label: '上海',
+        value: '4',
+    },
+    {
+        label: '北京',
+        value: '5',
+    },
+    {
+        label: '广东',
+        value: '1',
+    },
+    {
+        label: '深圳',
+        value: '2',
+    },
+    {
+        label: '杭州',
+        value: '3',
+    },
+    {
+        label: '上海',
+        value: '4',
+    },
+    {
+        label: '北京',
+        value: '5',
+    },
+    {
+        label: '广东',
+        value: '1',
+    },
+    {
+        label: '深圳',
+        value: '2',
+    },
+    {
+        label: '杭州',
+        value: '3',
+    },
+    {
+        label: '上海',
+        value: '4',
+    },
+    {
+        label: '北京',
+        value: '5',
+    },
+]);
 </script>
 
 <template>
@@ -39,6 +104,15 @@ let user = ref({
                     resize="none"
                 />
             </LewFormItem>
+            <LewTitle style="margin-bottom: 10px" size="14px"
+                >选择地址</LewTitle
+            >
+            <LewSelect
+                v-model="user.home"
+                style="width: 350px; margin-bottom: 20px"
+                :options="options"
+                >Github</LewSelect
+            >
             <LewTitle size="14px" style="margin-bottom: 10px">性别</LewTitle>
             <LewRadioboxGroup
                 v-model:value="user.sex"
@@ -64,10 +138,11 @@ let user = ref({
                 >是否订阅</LewTitle
             >
             <LewSwitch
-                v-model:value="user.dark"
+                v-model="user.dark"
                 style="margin-bottom: 20px"
             ></LewSwitch>
         </div>
+        <pre>{{ user }}</pre>
     </div>
 </template>
 

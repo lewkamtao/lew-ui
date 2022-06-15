@@ -1,16 +1,93 @@
 <script setup lang="ts">
-import { LewTitle, LewAlert } from '../../../components';
+import { ref } from 'vue';
+import { LewTitle, LewAlert, LewButton } from '../../../components';
+let alertList = ref([] as any);
+
+const addAlert = (e: any) => {
+    alertList.value.unshift(e);
+};
+const close = (e: any) => {
+    alertList.value.splice(e, 1);
+};
 </script>
 
 <template>
     <div class="main">
         <LewTitle bold>Alert</LewTitle>
-        <div>
-            <LewAlert type="primary" message="尚未设置个人信息"></LewAlert>
-            <LewAlert type="success" message="尚未设置个人信息"></LewAlert>
-            <LewAlert type="danger" message="尚未设置个人信息"></LewAlert>
-            <LewAlert type="gray" message="尚未设置个人信息"></LewAlert>
-            <LewAlert type="warning" message="尚未设置个人信息"></LewAlert>
+        <div style="width: 600px">
+            <LewButton
+                type="primary"
+                style="margin-right: 10px"
+                @click="
+                    addAlert({
+                        type: 'primary',
+                        title: '成功发送一条消息',
+                        content: `Well the Ukraine girls really knock me out
+                                    They leave the West behind
+                                    And Moscow girls make me sing and shout
+                                    That Georgia's always on my mind
+                                    Aw come on!`,
+                    })
+                "
+                >发送</LewButton
+            >
+            <LewButton
+                type="danger"
+                style="margin-right: 10px"
+                @click="
+                    addAlert({
+                        type: 'danger',
+                        title: '成功发送一条消息',
+                        content: `Well the Ukraine girls really knock me out
+                                    They leave the West behind
+                                    And Moscow girls make me sing and shout
+                                    That Georgia's always on my mind
+                                    Aw come on!`,
+                    })
+                "
+                >发送</LewButton
+            >
+            <LewButton
+                type="warning"
+                style="margin-right: 10px"
+                @click="
+                    addAlert({
+                        type: 'warning',
+                        title: '成功发送一条消息',
+                        content: ``,
+                    })
+                "
+                >发送</LewButton
+            >
+            <LewButton
+                type="success"
+                style="margin-right: 10px"
+                @click="
+                    addAlert({
+                        type: 'success',
+                        title: '成功发送一条消息',
+                        content: ``,
+                    })
+                "
+                >发送</LewButton
+            >
+            <LewButton
+                type="gray"
+                style="margin-right: 10px"
+                @click="
+                    addAlert({
+                        type: 'gray',
+                        title: '成功发送一条消息',
+                        content: `Well the Ukraine girls really knock me out
+                                    They leave the West behind
+                                    And Moscow girls make me sing and shout
+                                    That Georgia's always on my mind
+                                    Aw come on!`,
+                    })
+                "
+                >发送</LewButton
+            >
+            <LewAlert :alert-list="alertList" @close="close"></LewAlert>
         </div>
     </div>
 </template>

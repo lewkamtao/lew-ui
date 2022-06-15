@@ -9,7 +9,7 @@ const getValue = (e: any) => {
 
 <template>
     <div class="main">
-        <LewTitle bold>Checkbox</LewTitle>
+        <LewTitle bold>Radio</LewTitle>
         <div>
             <LewTitle style="margin-bottom: 20px" size="16px">x 布局</LewTitle>
             <LewRadioboxGroup

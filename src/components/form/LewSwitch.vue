@@ -17,12 +17,14 @@ const props = defineProps({
     },
 });
 const v = ref(props.modelValue);
+
 watch(
     () => props.modelValue,
     () => {
         v.value = props.modelValue;
     },
 );
+
 const emit = defineEmits(['update:modelValue']);
 
 const change = () => {

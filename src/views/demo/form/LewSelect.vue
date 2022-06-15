@@ -1,14 +1,76 @@
 <script setup lang="ts">
-import { LewTitle, LewBadge } from '../../../components';
+import { ref } from 'vue';
+import { LewTitle, LewSelect } from '../../../components';
+let v = ref('');
+let options = ref([
+    {
+        label: '广东',
+        value: '1',
+    },
+    {
+        label: '深深圳深圳深圳深圳深圳深圳深圳深圳深圳深圳深圳圳',
+        value: '2',
+    },
+    {
+        label: '杭州',
+        value: '3',
+    },
+    {
+        label: '上海',
+        value: '4',
+    },
+    {
+        label: '北京',
+        value: '5',
+    },
+    {
+        label: '广东',
+        value: '1',
+    },
+    {
+        label: '深圳',
+        value: '2',
+    },
+    {
+        label: '杭州',
+        value: '3',
+    },
+    {
+        label: '上海',
+        value: '4',
+    },
+    {
+        label: '北京',
+        value: '5',
+    },
+    {
+        label: '广东',
+        value: '1',
+    },
+    {
+        label: '深圳',
+        value: '2',
+    },
+    {
+        label: '杭州',
+        value: '3',
+    },
+    {
+        label: '上海',
+        value: '4',
+    },
+    {
+        label: '北京',
+        value: '5',
+    },
+]);
 </script>
 
 <template>
     <div class="main">
         <LewTitle bold>Select</LewTitle>
         <div>
-            <LewBadge type="primary">Github</LewBadge>
-            <LewBadge type="primary">Vue</LewBadge>
-            <LewBadge type="primary">Golang</LewBadge>
+            <LewSelect v-model="v" :options="options">Github</LewSelect>
         </div>
     </div>
 </template>
