@@ -23,10 +23,10 @@ const props = defineProps({
 });
 
 let isShow = ref(false);
-let isShowTimer = null;
-let onresizeTimer = null;
-let lewTooltipRef = ref(null);
-let lewTooltipWraRef = ref(null);
+let isShowTimer: any = null;
+let onresizeTimer: any = null;
+let lewTooltipRef: any = ref(null);
+let lewTooltipWraRef: any = ref(null);
 
 let lewTooltipStyle = ref('');
 let lewTooltipIconStyle = ref('');
@@ -39,7 +39,7 @@ const init = () => {
     switch (placement) {
         case 'top':
             x =
-                lewTooltipWraDom.offsetLeft +
+                lewTooltipWraDom?.offsetLeft +
                 lewTooltipWraDom.offsetWidth * 0.5 -
                 lewTooltipDom.offsetWidth * 0.5;
             y =

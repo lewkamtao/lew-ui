@@ -5,10 +5,7 @@ type Options = {
     label: string;
     value: string;
 };
-let v = ref(props.modelValue);
-let itemRef: any = ref([]);
 
-let activeItemStyle = ref('');
 const props = defineProps({
     modelValue: {
         // 父组件 v-model 没有指定参数名，则默认是 modelValue
@@ -22,6 +19,9 @@ const props = defineProps({
         },
     },
 });
+let activeItemStyle = ref('');
+let v = ref(props.modelValue);
+let itemRef: any = ref([]);
 
 const init = () => {
     let index = props.options.findIndex((e) => e.value == v.value);
