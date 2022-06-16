@@ -45,7 +45,7 @@ const input = (e: any) => {
 <style lang="scss" scoped>
 .lew-textarea {
     font-family: 'Noto Sans SC';
-    width: 250px;
+    width: 100%;
     padding: 5px 7px;
     font-size: 14px;
     line-height: 24px;

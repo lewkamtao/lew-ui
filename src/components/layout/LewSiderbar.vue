@@ -9,7 +9,7 @@ type Item = {
     name: string;
     path: string;
     label: string;
-    labelColor: string;
+    type: string;
 };
 
 type Group = {
@@ -42,7 +42,7 @@ const toPath = (item: Item) => {
                 @click="toPath(item)"
             >
                 {{ item.name }}
-                <LewBadge v-if="item.label" :color="item.labelColor">{{
+                <LewBadge v-if="item.label" bold :type="item.type">{{
                     item.label
                 }}</LewBadge>
             </div>

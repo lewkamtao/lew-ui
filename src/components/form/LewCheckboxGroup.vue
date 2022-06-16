@@ -3,6 +3,8 @@
         <lew-checkbox
             v-for="option in options"
             :key="option.id"
+            :block="block"
+            :round="round"
             :label="option.name"
             :checked="getChecked(option.id)"
             @update:checked="check(option.id, $event)"
@@ -18,12 +20,24 @@ type Options = {
     id: string | number;
 };
 const props = defineProps({
-    value: {
+    modelValue: {
         type: Array,
         default: () => {
             return [];
         },
         required: true,
+    },
+    block: {
+        type: Boolean,
+        default: () => {
+            return false;
+        },
+    },
+    round: {
+        type: Boolean,
+        default: () => {
+            return false;
+        },
     },
     direction: {
         type: String,
@@ -47,10 +61,10 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(['update:value']);
+const emit = defineEmits(['update:modelValue']);
 
 const check = (optionId: number | string, checked: boolean) => {
-    let updatedValue = [...props.value];
+    let updatedValue = [...props.modelValue];
     optionId = Number(optionId);
 
     if (checked) {
@@ -58,12 +72,12 @@ const check = (optionId: number | string, checked: boolean) => {
     } else {
         updatedValue.splice(updatedValue.indexOf(optionId), 1);
     }
-    emit('update:value', updatedValue);
+    emit('update:modelValue', updatedValue);
 };
 
 const getChecked = (optionId: string | number) => {
     optionId = Number(optionId);
-    return props.value.includes(optionId);
+    return props.modelValue.includes(optionId);
 };
 </script>
 <style lang="scss" scoped>

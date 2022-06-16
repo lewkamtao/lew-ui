@@ -9,7 +9,7 @@ type Item = {
     name: string;
     path: string;
     label: string;
-    labelColor: string;
+    type: string;
 };
 
 type Group = {
@@ -26,31 +26,25 @@ group.value = [
                 name: 'Avatar',
                 path: '/Avatar',
                 label: '',
-                labelColor: 'blue',
+                type: 'blue',
             },
             {
                 name: 'Button',
                 path: '/Button',
                 label: '',
-                labelColor: 'blue',
+                type: 'blue',
             },
             {
                 name: 'Badge',
                 path: '/Badge',
                 label: '',
-                labelColor: 'blue',
+                type: 'blue',
             },
             {
                 name: 'Title',
                 path: '/Title',
                 label: '',
-                labelColor: '',
-            },
-            {
-                name: 'Tabs',
-                path: '/Tabs',
-                label: '',
-                labelColor: '',
+                type: '',
             },
         ],
     },
@@ -61,56 +55,62 @@ group.value = [
                 name: 'Form',
                 path: '/Form',
                 label: '',
-                labelColor: '',
+                type: '',
             },
             {
                 name: 'Input',
                 path: '/Input',
                 label: '',
-                labelColor: '',
+                type: '',
             },
 
             {
                 name: 'Textarea',
                 path: '/Textarea',
                 label: '',
-                labelColor: '',
+                type: '',
             },
             {
                 name: 'Checkbox',
                 path: '/Checkbox',
                 label: '',
-                labelColor: '',
+                type: '',
             },
             {
                 name: 'Radio',
                 path: '/Radio',
                 label: '',
-                labelColor: '',
+                type: '',
+            },
+            {
+                name: 'Tabs',
+                path: '/Tabs',
+                label: 'New',
+                type: '',
             },
             {
                 name: 'Select',
                 path: '/Select',
                 label: '',
-                labelColor: '',
+                type: '',
             },
             // {
             //     name: 'Cascader',
             //     path: '/Cascader',
             //     label: '',
-            //     labelColor: '',
+            //     type: '',
             // },
             {
                 name: 'Switch',
                 path: '/Switch',
                 label: '',
-                labelColor: '',
+                type: '',
             },
             // {
             //     name: 'InputTag',
             //     path: '/InputTag',
             //     label: '',
-            //     labelColor: '',
+            //     type: '',
             // },
         ],
     },
@@ -121,38 +121,38 @@ group.value = [
                 name: 'Alert',
                 path: '/Alert',
                 label: '',
-                labelColor: '',
+                type: '',
             },
 
             {
                 name: 'Dialog',
                 path: '/Dialog',
                 label: '',
-                labelColor: '',
+                type: '',
             },
             {
                 name: 'Message',
                 path: '/Message',
                 label: '',
-                labelColor: '',
+                type: '',
             },
             {
                 name: 'Modal',
                 path: '/Modal',
                 label: '',
-                labelColor: '',
+                type: '',
             },
             {
                 name: 'Popover',
                 path: '/Popover',
                 label: '',
-                labelColor: '',
+                type: '',
             },
             {
                 name: 'Result',
                 path: '/Result',
                 label: '',
-                labelColor: '',
+                type: '',
             },
         ],
     },

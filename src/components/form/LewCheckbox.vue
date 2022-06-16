@@ -1,5 +1,10 @@
 <template>
-    <label class="lew-checkbox">
+    <label
+        class="lew-checkbox"
+        :class="`${block ? 'lew-checkbox-block' : ''} ${
+            round ? 'lew-checkbox-round' : ''
+        }`"
+    >
         <div class="icon-checkbox-box" :class="{ 'icon-checked-box': checked }">
             <svg
                 class="icon-checkbox"
@@ -32,6 +37,18 @@ defineProps({
         type: String,
         required: true,
     },
+    block: {
+        type: Boolean,
+        default: () => {
+            return false;
+        },
+    },
+    round: {
+        type: Boolean,
+        default: () => {
+            return false;
+        },
+    },
     checked: {
         type: Boolean,
     },
@@ -53,7 +70,7 @@ const setChecked = (event: Event) => {
     cursor: pointer;
     color: var(--text-color);
     font-size: 14px;
-
+    transition: all 0.25s ease;
     .icon-checkbox-box {
         display: inline-flex;
         align-items: center;
@@ -95,5 +112,29 @@ const setChecked = (event: Event) => {
         border: 2px var(--primary-color) solid;
         background: var(--primary-color);
     }
+}
+
+.lew-checkbox-block {
+    background: var(--form-bgcolor);
+    padding: 4px 8px 4px 6px;
+    border: var(--form-border);
+    border-radius: 8px;
+}
+
+.lew-checkbox-round {
+    border-radius: 50px;
+    .icon-checkbox-box {
+        border-radius: 50%;
+    }
+}
+
+.lew-checkbox-block:hover {
+    background: var(--form-bgcolor-hover);
+    border: var(--form-border-hover);
+}
+
+.lew-checkbox-block:active {
+    background: var(--form-bgcolor-active);
+    border: var(--form-border-active);
 }
 </style>

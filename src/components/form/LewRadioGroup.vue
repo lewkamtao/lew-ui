@@ -3,8 +3,10 @@
         <lew-radio
             v-for="option in options"
             :key="option.id"
+            :block="block"
+            :round="round"
             :label="option.name"
-            :checked="value == option.id"
+            :checked="modelValue == option.id"
             @update:checked="check(option.id)"
         />
     </div>
@@ -18,13 +20,26 @@ type Options = {
     id: string | number;
 };
 defineProps({
-    value: {
+    modelValue: {
         type: Number,
         default: () => {
             return 0;
         },
         required: true,
     },
+    block: {
+        type: Boolean,
+        default: () => {
+            return false;
+        },
+    },
+    round: {
+        type: Boolean,
+        default: () => {
+            return false;
+        },
+    },
+
     direction: {
         type: String,
         default: 'x',
@@ -47,10 +62,10 @@ defineProps({
     },
 });
 
-const emit = defineEmits(['update:value']);
+const emit = defineEmits(['update:modelValue']);
 
 const check = (optionId: number | string) => {
-    emit('update:value', Number(optionId));
+    emit('update:modelValue', Number(optionId));
 };
 </script>
 

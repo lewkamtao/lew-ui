@@ -73,7 +73,7 @@ const emit = defineEmits(['update:modelValue']);
 <style lang="scss" scoped>
 .lew-select {
     position: relative;
-    width: 250px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     .lew-input {

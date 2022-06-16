@@ -23,6 +23,11 @@ defineProps({
 
 <style lang="scss" scoped>
 .lew-title {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     color: var(--title-color);
 }
 

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 const LewAvatar = () => import('../views/demo/general/LewAvatar.vue');
 const LewBadge = () => import('../views/demo/general/LewBadge.vue');
 const LewButton = () => import('../views/demo/general/LewButton.vue');
-const LewTabs = () => import('../views/demo/general/LewTabs.vue');
+
 const LewTitle = () => import('../views/demo/general/LewTitle.vue');
 
 const LewCascader = () => import('../views/demo/form/LewCascader.vue');
@@ -14,7 +14,7 @@ const LewSwitch = () => import('../views/demo/form/LewSwitch.vue');
 const LewTextarea = () => import('../views/demo/form/LewTextarea.vue');
 const LewInput = () => import('../views/demo/form/LewInput.vue');
 const LewForm = () => import('../views/demo/form/LewForm.vue');
-
+const LewTabs = () => import('../views/demo/form/LewTabs.vue');
 const LewAlert = () => import('../views/demo/feedback/LewAlert.vue');
 
 const LewDialog = () => import('../views/demo/feedback/LewDialog.vue');

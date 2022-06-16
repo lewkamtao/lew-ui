@@ -5,11 +5,16 @@ type Options = {
     label: string;
     value: string;
 };
-let activeIndex = ref(0);
+let v = ref(props.modelValue);
 let itemRef: any = ref([]);
 
 let activeItemStyle = ref('');
-defineProps({
+const props = defineProps({
+    modelValue: {
+        // 父组件 v-model 没有指定参数名，则默认是 modelValue
+        type: String,
+        default: '',
+    },
     options: {
         type: Array as PropType<Options[]>,
         default() {
@@ -19,16 +24,26 @@ defineProps({
 });
 
 const init = () => {
-    activeItemStyle.value = `width:${itemRef.value[0].offsetWidth}px;transform: translateX(${itemRef.value[0].offsetLeft}px);`;
+    let index = props.options.findIndex((e) => e.value == v.value);
+    if (index < 0) index = 0;
+    activeItemStyle.value = `width:${itemRef.value[index].offsetWidth}px;transform: translateX(${itemRef.value[index].offsetLeft}px);`;
 };
 
-const emit = defineEmits(['update:change']);
+const emit = defineEmits(['update:change', 'update:modelValue']);
 
 const changeIndex = (item: Options, index: number) => {
-    activeIndex.value = index;
+    if (item.value == props.modelValue) {
+        return;
+    }
+    v.value = props.options[index].value;
     let activeRef = itemRef.value[index];
     activeItemStyle.value = `width:${activeRef.offsetWidth}px;transform: translateX(${activeRef.offsetLeft}px);`;
-    emit('update:change', { item, index });
+    emit('update:change', {
+        label: item.label,
+        value: item.value,
+        activeIndex: index,
+    });
+    emit('update:modelValue', item.value);
 };
 
 onMounted(() => {
@@ -44,7 +59,6 @@ onMounted(() => {
             :key="item.value"
             :ref="(el) => itemRef.push(el)"
             class="lew-tabs-item"
-            :class="{ active: activeIndex == index }"
             @click="changeIndex(item, index)"
         >
             {{ item.label }}
@@ -55,8 +69,9 @@ onMounted(() => {
 <style lang="scss" scoped>
 .lew-tabs {
     position: relative;
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    width: 100%;
     background: rgb(239, 239, 239);
     height: 34px;
     border-radius: 10px;
@@ -65,21 +80,20 @@ onMounted(() => {
     .lew-tabs-item {
         position: relative;
         z-index: 9;
+        flex: 1;
+        text-align: center;
         height: 28px;
         line-height: 28px;
         border-radius: 6px;
         padding: 0px 25px;
         margin: 3px;
-        color: #000;
+        color: var(--text-color);
         white-space: nowrap;
         cursor: pointer;
         transition: all 0.45s cubic-bezier(0.65, 0, 0.35, 1);
         font-size: 14px;
-        color: #999;
     }
-    .active {
-        color: #000;
-    }
+
     .activeItem {
         position: absolute;
         top: 3px;

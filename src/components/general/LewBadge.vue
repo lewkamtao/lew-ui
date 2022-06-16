@@ -10,6 +10,10 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    bold: {
+        type: Boolean,
+        default: false,
+    },
     href: {
         type: String,
         default: '',
@@ -30,8 +34,8 @@ const toLink = () => {
     <span
         class="lew-badge"
         :class="`${round ? 'lew-badge-round' : ''} ${
-            href ? 'lew-badge-href' : ''
-        } lew-badge-${type}`"
+            bold ? 'lew-badge-bold' : ''
+        } ${href ? 'lew-badge-href' : ''} lew-badge-${type}`"
         @click="toLink()"
     >
         <slot></slot>
@@ -43,11 +47,14 @@ const toLink = () => {
     border-radius: 0.25rem;
     padding: 2px 8px 3px 8px;
     font-size: 0.75rem;
-    font-weight: 600;
+
     margin-right: 10px;
     cursor: default;
     color: var(--primary-text-color);
     background-color: var(--primary-color-light);
+}
+.lew-badge-bold {
+    font-weight: 600;
 }
 
 .lew-badge-round {

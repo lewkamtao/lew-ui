@@ -37,11 +37,14 @@ const input = (e: any) => {
 
 <style lang="scss" scoped>
 .lew-input {
-    width: 250px;
+    width: 100%;
     height: 35px;
     padding: 5px 7px;
     font-size: 14px;
     line-height: 24px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     border: var(--form-border);
     border-radius: var(--form-border-radius);
     background-color: var(--form-bgcolor);

@@ -24,7 +24,7 @@
     --danger-text-color: #d10000;
     --danger-color-hover: rgb(231, 113, 113);
     --danger-color-active: rgb(204, 92, 92);
-    // 
+    //
     --warning-color: rgb(227, 179, 68);
     --warning-color-dark: rgb(186, 132, 7);
     --warning-color-light: rgb(227, 160, 8, 0.2);
@@ -43,6 +43,8 @@
     --title-color: rgb(33, 33, 33); // 标题颜色
     // 表单样式
     --form-border: 1px rgba(0, 0, 0, 0.05) solid;
+    --form-border-hover: 1px rgba(0, 0, 0, 0.08) solid;
+    --form-border-active: 1px rgba(0, 0, 0, 0.12) solid;
     --form-border-radius: 8px;
     --form-outline-focus: 2px solid var(--primary-color);
     --form-bgcolor-focus: rgb(255, 255, 255);
@@ -50,7 +52,7 @@
     // 表单背景
     --form-bgcolor: rgba(6, 57, 88, 0.022);
     --form-bgcolor-hover: rgba(6, 57, 88, 0.06);
-    --form-bgcolor-active: rgba(6, 57, 88, 0.08);
+    --form-bgcolor-active: rgba(6, 57, 88, 0.12);
     // 表单背景2
     --form-bgcolor-high: rgba(6, 57, 88, 0.1);
     --form-bgcolor-high-hover: rgba(6, 57, 88, 0.16);

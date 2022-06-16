@@ -9,6 +9,7 @@ import {
     LewSwitch,
     LewTextarea,
     LewSelect,
+    LewTabs,
 } from '../../../components';
 
 let user = ref({
@@ -20,7 +21,14 @@ let user = ref({
     school: '',
     home: '',
     dark: true,
+    pay: '',
 });
+
+const LewTabsOptions = ref([
+    { label: '微信', value: '1' },
+    { label: '支付宝', value: '2' },
+    { label: 'Apple Pay', value: '3' },
+]);
 
 let options = ref([
     {
@@ -90,32 +98,28 @@ let options = ref([
     <div class="main">
         <LewTitle bold>Form</LewTitle>
 
-        <div style="margin-bottom: 50px">
+        <div style="margin-bottom: 50px; width: 350px">
             <LewFormItem direction="y" title="账号">
-                <LewInput v-model="user.username" style="width: 350px" />
+                <LewInput v-model="user.username" />
             </LewFormItem>
             <LewFormItem direction="y" title="密码" style="margin-bottom: 20px">
-                <LewInput v-model="user.password" style="width: 350px" />
+                <LewInput v-model="user.password" />
             </LewFormItem>
             <LewFormItem direction="y" title="简介" style="margin-bottom: 20px">
-                <LewTextarea
-                    v-model="user.password"
-                    style="width: 350px"
-                    resize="none"
-                />
+                <LewTextarea v-model="user.password" resize="none" />
             </LewFormItem>
             <LewTitle style="margin-bottom: 10px" size="14px"
                 >选择地址</LewTitle
             >
             <LewSelect
                 v-model="user.home"
-                style="width: 350px; margin-bottom: 20px"
+                style="margin-bottom: 20px"
                 :options="options"
                 >Github</LewSelect
             >
             <LewTitle size="14px" style="margin-bottom: 10px">性别</LewTitle>
             <LewRadioboxGroup
-                v-model:value="user.sex"
+                v-model="user.sex"
                 style="margin-bottom: 20px"
                 :options="[
                     { name: '未知', id: 0 },
@@ -125,7 +129,7 @@ let options = ref([
             ></LewRadioboxGroup>
             <LewTitle style="margin-bottom: 10px" size="14px">爱好</LewTitle>
             <LewCheckboxGroup
-                v-model:value="user.hobby"
+                v-model="user.hobby"
                 style="margin-bottom: 20px"
                 :options="[
                     { name: '唱歌', id: 1 },
@@ -141,6 +145,15 @@ let options = ref([
                 v-model="user.dark"
                 style="margin-bottom: 20px"
             ></LewSwitch>
+
+            <LewTitle style="margin-bottom: 10px" size="14px"
+                >支付方式</LewTitle
+            >
+            <LewTabs
+                v-model="user.pay"
+                :options="LewTabsOptions"
+                style="margin-bottom: 20px"
+            ></LewTabs>
         </div>
         <pre>{{ user }}</pre>
     </div>
@@ -150,7 +163,6 @@ let options = ref([
 .main {
     width: 100%;
     margin: 0 auto;
-
     > div {
         margin: 30px 0;
     }
