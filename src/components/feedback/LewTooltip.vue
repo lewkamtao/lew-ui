@@ -135,6 +135,7 @@ onMounted(() => {
             :class="`${lewTooltipIconStyle ? 'lew-tooltip-' + placement : ''} ${
                 isShow ? 'lew-tooltip-box-show' : ''
             }`"
+            @click.stop
         >
             <div :style="lewTooltipIconStyle" class="lew-tooltip-icon"></div>
             <div

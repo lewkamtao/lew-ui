@@ -87,7 +87,9 @@ const close = (e: any) => {
                 "
                 >发送</LewButton
             >
-            <LewAlert :alert-list="alertList" @close="close"></LewAlert>
+            <div style="margin-top: 20px">
+                <LewAlert :alert-list="alertList" @close="close"></LewAlert>
+            </div>
         </div>
     </div>
 </template>
