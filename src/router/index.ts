@@ -22,6 +22,7 @@ const LewMessage = () => import('../views/demo/feedback/LewMessage.vue');
 const LewModal = () => import('../views/demo/feedback/LewModal.vue');
 const LewPopover = () => import('../views/demo/feedback/LewPopover.vue');
 const LewResult = () => import('../views/demo/feedback/LewResult.vue');
+const LewTooltip = () => import('../views/demo/feedback/LewTooltip.vue');
 
 const routes: Array<RouteRecordRaw> = [
     { path: '/', name: 'Home', component: LewAvatar },
@@ -45,6 +46,7 @@ const routes: Array<RouteRecordRaw> = [
     { path: '/Result', name: 'LewResult', component: LewResult },
     { path: '/Dialog', name: 'LewDialog', component: LewDialog },
     { path: '/Popover', name: 'LewPopover', component: LewPopover },
+    { path: '/Tooltip', name: 'LewTooltip', component: LewTooltip },
 
     { path: '/Modal', name: 'LewModal', component: LewModal },
     { path: '/Message', name: 'LewMessage', component: LewMessage },

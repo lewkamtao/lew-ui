@@ -14,13 +14,13 @@ const change = (e: unknown) => {
     console.log(v.value);
 };
 
-let v = ref('3');
+let v = ref('1');
 </script>
 
 <template>
     <div class="main">
         <LewTitle bold>Tabs</LewTitle>
-        <div>
+        <div style="width: 450px">
             <LewTabs
                 v-model="v"
                 :options="LewTabsOptions"

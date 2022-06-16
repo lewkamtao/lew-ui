@@ -10,6 +10,7 @@ import {
     LewTextarea,
     LewSelect,
     LewTabs,
+    LewTooltip,
 } from '../../../components';
 
 let user = ref({
@@ -100,7 +101,13 @@ let options = ref([
 
         <div style="margin-bottom: 50px; width: 350px">
             <LewFormItem direction="y" title="账号">
-                <LewInput v-model="user.username" />
+                <LewTooltip
+                    style="width: 100%"
+                    placement="bottom"
+                    tips="请输入账号"
+                >
+                    <LewInput v-model="user.username"
+                /></LewTooltip>
             </LewFormItem>
             <LewFormItem direction="y" title="密码" style="margin-bottom: 20px">
                 <LewInput v-model="user.password" />

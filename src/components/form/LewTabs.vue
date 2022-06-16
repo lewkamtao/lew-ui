@@ -69,14 +69,13 @@ onMounted(() => {
 <style lang="scss" scoped>
 .lew-tabs {
     position: relative;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     width: 100%;
     background: rgb(239, 239, 239);
     height: 34px;
     border-radius: 10px;
     overflow: hidden;
-
     .lew-tabs-item {
         position: relative;
         z-index: 9;
@@ -85,7 +84,6 @@ onMounted(() => {
         height: 28px;
         line-height: 28px;
         border-radius: 6px;
-        padding: 0px 25px;
         margin: 3px;
         color: var(--text-color);
         white-space: nowrap;

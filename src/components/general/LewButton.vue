@@ -38,7 +38,6 @@ defineProps({
     width: auto;
     min-width: 76px;
     height: 32px;
-    margin-bottom: 7px;
     box-sizing: border-box;
     transition: all 0.15s;
     font-size: 14px;

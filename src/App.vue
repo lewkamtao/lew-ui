@@ -149,6 +149,12 @@ group.value = [
                 type: '',
             },
             {
+                name: 'Tooltip',
+                path: '/Tooltip',
+                label: '',
+                type: '',
+            },
+            {
                 name: 'Result',
                 path: '/Result',
                 label: '',

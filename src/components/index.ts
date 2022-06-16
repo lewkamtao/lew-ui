@@ -15,6 +15,7 @@ import LewRadioboxGroup from './form/LewRadioGroup.vue';
 import LewTabs from './form/LewTabs.vue';
 
 import LewAlert from './feedback/LewAlert.vue';
+import LewTooltip from './feedback/LewTooltip.vue';
 
 export {
     LewButton,
@@ -32,4 +33,5 @@ export {
     LewRadiobox,
     LewRadioboxGroup,
     LewAlert,
+    LewTooltip,
 };

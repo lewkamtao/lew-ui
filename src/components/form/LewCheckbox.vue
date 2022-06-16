@@ -97,7 +97,7 @@ const setChecked = (event: Event) => {
         background: var(--primary-color);
 
         .icon-checkbox {
-            transform: scale(0.9) translateY(0px);
+            transform: scale(0.85) translateY(0px);
             opacity: 1;
         }
     }
