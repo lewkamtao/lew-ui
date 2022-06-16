@@ -36,7 +36,7 @@ defineProps({
     round: {
         type: Boolean,
         default: () => {
-            return false;
+            return true;
         },
     },
 
