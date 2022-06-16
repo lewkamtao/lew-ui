@@ -5,23 +5,29 @@ import { LewTitle, LewInput, LewFormItem } from '../../../components';
 <template>
     <div class="main">
         <LewTitle bold>Input</LewTitle>
-        <div style="margin-bottom: 50px">
-            <LewTitle style="margin-bottom: 20px" size="16px">x 布局</LewTitle>
-            <LewFormItem title="账号">
-                <LewInput />
-            </LewFormItem>
-            <LewFormItem title="密码">
-                <LewInput />
-            </LewFormItem>
-        </div>
-        <div style="margin-bottom: 50px">
-            <LewTitle style="margin-bottom: 20px" size="16px">y 布局</LewTitle>
-            <LewFormItem title="账号" direction="y">
-                <LewInput />
-            </LewFormItem>
-            <LewFormItem title="密码" direction="y">
-                <LewInput />
-            </LewFormItem>
+        <div style="width: 350px">
+            <div style="margin-bottom: 50px">
+                <LewTitle style="margin-bottom: 20px" size="16px"
+                    >x 布局</LewTitle
+                >
+                <LewFormItem title="账号">
+                    <LewInput />
+                </LewFormItem>
+                <LewFormItem title="密码">
+                    <LewInput />
+                </LewFormItem>
+            </div>
+            <div style="margin-bottom: 50px">
+                <LewTitle style="margin-bottom: 20px" size="16px"
+                    >y 布局</LewTitle
+                >
+                <LewFormItem title="账号" direction="y">
+                    <LewInput />
+                </LewFormItem>
+                <LewFormItem title="密码" direction="y">
+                    <LewInput />
+                </LewFormItem>
+            </div>
         </div>
     </div>
 </template>
