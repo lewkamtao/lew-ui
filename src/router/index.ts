@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 const LewAvatar = () => import('../views/demo/general/LewAvatar.vue');
 const LewBadge = () => import('../views/demo/general/LewBadge.vue');
 const LewButton = () => import('../views/demo/general/LewButton.vue');
@@ -52,7 +52,7 @@ const routes: Array<RouteRecordRaw> = [
     { path: '/Message', name: 'LewMessage', component: LewMessage },
 ];
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes,
 });
 
