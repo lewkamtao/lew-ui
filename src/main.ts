@@ -8,12 +8,14 @@ import './assets/style/main.scss';
 import './assets/style/hljs.scss';
 const app = createApp(App);
 
-//自定义一个代码高亮指令
-app.directive('highlight', function (el) {
-    const blocks = el.querySelectorAll('pre code');
-    blocks.forEach((block: any) => {
-        hljs.highlightBlock(block);
-    });
+// 自定义一个代码高亮指令
+app.directive('highlight', {
+    mounted(el) {
+        const blocks = el.querySelectorAll('pre code');
+        blocks.forEach((block: any) => {
+            hljs.highlightBlock(block);
+        });
+    },
 });
 
 app.use(router).mount('#app');
