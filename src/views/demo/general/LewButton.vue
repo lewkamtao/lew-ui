@@ -1,48 +1,66 @@
 <script setup lang="ts">
+import DemoBox from '../../../components/demo/DemoBox.vue';
 import { LewTitle, LewButton } from '../../../components';
+import { ref } from 'vue';
+let pre1 = ref(`<template>
+    <lew-button type="primary">确定</lew-button>
+    <lew-button type="danger">危险</lew-button>
+    <lew-button type="warning">警告</lew-button>
+    <lew-button type="normal">这是一个长按钮</lew-button>
+    <lew-button type="success">确定</lew-button>
+</template>
+`);
+let pre2 = ref(`<template>
+    <lew-button round type="primary">确定</lew-button>
+    <lew-button round type="danger">危险</lew-button>
+    <lew-button round type="warning">警告</lew-button>
+    <lew-button round type="normal">这是一个长按钮</lew-button>
+    <lew-button round type="success">确定</lew-button>
+</template>
+`);
+let pre3 = ref(`<template>
+    <lew-button type="primary" loading>确定</lew-button>
+    <lew-button type="success" round loading>确定</lew-button>
+</template>
+`);
+let pre4 = ref(`<template>
+    <lew-button type="success" loading disabled>确定</lew-button>
+</template>
+`);
 </script>
 
 <template>
-    <div class="main">
-        <LewTitle>Button</LewTitle>
-        <div>
-            <LewTitle style="margin-bottom: 20px" size="16px">普通</LewTitle>
-            <LewButton type="primary">确定</LewButton>
-            <LewButton type="danger">危险</LewButton>
-            <LewButton type="warning">警告</LewButton>
-            <LewButton type="normal">这是一个长按钮</LewButton>
-            <LewButton type="success">确定</LewButton>
-            <LewTitle style="margin-top: 50px; margin-bottom: 20px" size="16px"
-                >圆型</LewTitle
-            >
-            <LewButton round type="primary">确定</LewButton>
-            <LewButton round type="danger">危险</LewButton>
-            <LewButton round type="warning">警告</LewButton>
-            <LewButton round type="normal">这是一个长按钮</LewButton>
-            <LewButton round type="success">确定</LewButton>
-            <LewTitle style="margin-top: 50px; margin-bottom: 20px" size="16px"
-                >加载</LewTitle
-            >
-            <LewButton type="primary" loading>确定</LewButton>
-            <LewButton type="success" round loading>确定</LewButton>
+    <div class="demo-wrapper">
+        <lew-title>Button</lew-title>
 
-            <LewTitle style="margin-top: 50px; margin-bottom: 20px" size="16px"
-                >禁用</LewTitle
-            >
-            <LewButton type="success" loading disabled>确定</LewButton>
-        </div>
+        <demo-box title="普通" :code="pre1">
+            <lew-button type="primary">确定</lew-button>
+            <lew-button type="danger">危险</lew-button>
+            <lew-button type="warning">警告</lew-button>
+            <lew-button type="normal">这是一个长按钮</lew-button>
+            <lew-button type="success">确定</lew-button></demo-box
+        >
+        <demo-box title="圆型" :code="pre2">
+            <lew-button round type="primary">确定</lew-button>
+            <lew-button round type="danger">危险</lew-button>
+            <lew-button round type="warning">警告</lew-button>
+            <lew-button round type="normal">这是一个长按钮</lew-button>
+            <lew-button round type="success">确定</lew-button></demo-box
+        >
+        <demo-box title="加载" :code="pre3">
+            <lew-button type="primary" loading>确定</lew-button>
+            <lew-button type="success" round loading>确定</lew-button></demo-box
+        >
+        <demo-box title="禁用" :code="pre4">
+            <lew-button type="success" loading disabled
+                >确定</lew-button
+            ></demo-box
+        >
     </div>
 </template>
 
 <style lang="scss" scoped>
-.main {
-    width: 100%;
-    margin: 0 auto;
-    > div {
-        margin: 30px 0px;
-        button {
-            margin-right: 20px;
-        }
-    }
+.lew-button {
+    margin: 10px;
 }
 </style>

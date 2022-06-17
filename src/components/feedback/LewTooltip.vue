@@ -177,9 +177,9 @@ onMounted(() => {
         content: '';
         width: 14px;
         height: 14px;
-        z-index: 999;
+        box-sizing: border-box;
+        z-index: 99;
         background: var(--body-bgcolor);
-        border-radius: 3px;
         transition: all 0.15s cubic-bezier(0.65, 0, 0.35, 1);
         transform: rotate(-45deg) translate(0px, 0px);
     }
@@ -194,6 +194,7 @@ onMounted(() => {
             transform: translate(5px, 0px);
         }
         .lew-tooltip-icon {
+            border-radius: 30px 0px 5px 0px;
             transform: rotate(-45deg) translate(5px, 5px);
         }
     }
@@ -202,6 +203,8 @@ onMounted(() => {
             transform: translate(-5px, 0px);
         }
         .lew-tooltip-icon {
+            border-radius: 5px 0px 30px 0px;
+
             transform: rotate(-45deg) translate(-5px, -5px);
         }
     }
@@ -210,6 +213,7 @@ onMounted(() => {
             transform: translate(0, 5px);
         }
         .lew-tooltip-icon {
+            border-radius: 0px 30px 0px 5px;
             transform: rotate(-45deg) translate(-5px, 5px);
         }
     }
@@ -218,6 +222,7 @@ onMounted(() => {
             transform: translate(0px, -5px);
         }
         .lew-tooltip-icon {
+            border-radius: 0px 5px 0px 30px;
             transform: rotate(-45deg) translate(5px, -5px);
         }
     }
@@ -230,6 +235,11 @@ onMounted(() => {
         }
         .lew-tooltip-icon {
             transform: rotate(-45deg) translate(0px, 0px);
+        }
+    }
+    .lew-tooltip-box-show.lew-tooltip-left {
+        .lew-tooltip-icon {
+            transform: rotate(-45deg) translate(-1px, -1px);
         }
     }
 }

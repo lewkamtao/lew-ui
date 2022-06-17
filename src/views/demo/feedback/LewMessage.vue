@@ -3,8 +3,8 @@ import { LewTitle } from '../../../components';
 </script>
 
 <template>
-    <div class="main">
-        <LewTitle>Message</LewTitle>
+    <div class="demo-wrapper">
+        <lew-title>Message</lew-title>
         <div>开发中···</div>
     </div>
 </template>

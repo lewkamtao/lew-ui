@@ -21,7 +21,7 @@ const props = defineProps({
 });
 let activeItemStyle = ref('');
 let v = ref(props.modelValue);
-let itemRef = ref();
+let itemRef = ref([] as any);
 
 const init = () => {
     let index = props.options.findIndex((e) => e.value == v.value);

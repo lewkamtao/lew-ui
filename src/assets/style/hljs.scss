@@ -6,8 +6,9 @@ Original One Light Syntax theme from https://github.com/atom/one-light-syntax
 .hljs {
     color: #383a42;
     background: #edf2f4;
-    padding: 15px;
-    font-family: 'Monaco';
+    padding: 25px;
+    font-family: 'Monaco' !important;
+    letter-spacing: 0.5px;
     font-size: 14px;
 }
 

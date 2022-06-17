@@ -5,12 +5,12 @@ let check = ref([]);
 </script>
 
 <template>
-    <div class="main">
-        <LewTitle>Checkbox</LewTitle>
+    <div class="demo-wrapper">
+        <lew-title>Checkbox</lew-title>
         <div>
-            <LewTitle style="margin-bottom: 20px" size="16px"
+            <lew-title style="margin-bottom: 20px" size="16px"
                 >x 布局 <LewBadge style="margin-left: 5px">方的</LewBadge>
-            </LewTitle>
+            </lew-title>
             <LewCheckboxGroup
                 v-model="check"
                 direction="x"
@@ -24,9 +24,9 @@ let check = ref([]);
         </div>
 
         <div>
-            <LewTitle style="margin-bottom: 20px" size="16px"
+            <lew-title style="margin-bottom: 20px" size="16px"
                 >x 布局
-                <LewBadge style="margin-left: 5px">圆的</LewBadge></LewTitle
+                <LewBadge style="margin-left: 5px">圆的</LewBadge></lew-title
             >
             <LewCheckboxGroup
                 v-model="check"
@@ -42,9 +42,9 @@ let check = ref([]);
         </div>
 
         <div style="margin-bottom: 20px">
-            <LewTitle style="margin-bottom: 20px" size="16px"
+            <lew-title style="margin-bottom: 20px" size="16px"
                 >y 布局
-                <LewBadge style="margin-left: 5px">方的</LewBadge></LewTitle
+                <LewBadge style="margin-left: 5px">方的</LewBadge></lew-title
             >
             <LewCheckboxGroup
                 v-model="check"
@@ -59,9 +59,9 @@ let check = ref([]);
         </div>
 
         <div style="margin-bottom: 20px">
-            <LewTitle style="margin-bottom: 20px" size="16px"
+            <lew-title style="margin-bottom: 20px" size="16px"
                 >y 布局
-                <LewBadge style="margin-left: 5px">圆的</LewBadge></LewTitle
+                <LewBadge style="margin-left: 5px">圆的</LewBadge></lew-title
             >
             <LewCheckboxGroup
                 v-model="check"
@@ -77,9 +77,9 @@ let check = ref([]);
         </div>
 
         <div>
-            <LewTitle style="margin-bottom: 20px" size="16px"
+            <lew-title style="margin-bottom: 20px" size="16px"
                 >块类型
-                <LewBadge style="margin-left: 5px">方的</LewBadge></LewTitle
+                <LewBadge style="margin-left: 5px">方的</LewBadge></lew-title
             >
             <LewCheckboxGroup
                 v-model="check"
@@ -95,9 +95,9 @@ let check = ref([]);
         </div>
 
         <div>
-            <LewTitle style="margin-bottom: 20px" size="16px"
+            <lew-title style="margin-bottom: 20px" size="16px"
                 >块类型
-                <LewBadge style="margin-left: 5px">圆的</LewBadge></LewTitle
+                <LewBadge style="margin-left: 5px">圆的</LewBadge></lew-title
             >
             <LewCheckboxGroup
                 v-model="check"

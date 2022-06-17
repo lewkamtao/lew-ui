@@ -19,8 +19,8 @@ const close = (e: number) => {
 </script>
 
 <template>
-    <div class="main">
-        <LewTitle>Alert</LewTitle>
+    <div class="demo-wrapper">
+        <lew-title>Alert</lew-title>
         <div style="width: 600px">
             <LewButton
                 type="primary"

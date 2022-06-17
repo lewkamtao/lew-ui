@@ -5,10 +5,10 @@ let check = ref(0);
 </script>
 
 <template>
-    <div class="main">
-        <LewTitle>Radio</LewTitle>
+    <div class="demo-wrapper">
+        <lew-title>Radio</lew-title>
         <div>
-            <LewTitle style="margin-bottom: 20px" size="16px">x 布局 </LewTitle>
+            <lew-title style="margin-bottom: 20px" size="16px">x 布局 </lew-title>
             <LewRadioboxGroup
                 v-model="check"
                 direction="x"
@@ -22,7 +22,7 @@ let check = ref(0);
             ></LewRadioboxGroup>
         </div>
         <div style="margin-bottom: 20px">
-            <LewTitle style="margin-bottom: 20px" size="16px">y 布局 </LewTitle>
+            <lew-title style="margin-bottom: 20px" size="16px">y 布局 </lew-title>
             <LewRadioboxGroup
                 v-model="check"
                 direction="y"
@@ -36,7 +36,7 @@ let check = ref(0);
         </div>
 
         <div style="margin-bottom: 20px">
-            <LewTitle style="margin-bottom: 20px" size="16px">块布局 </LewTitle>
+            <lew-title style="margin-bottom: 20px" size="16px">块布局 </lew-title>
             <LewRadioboxGroup
                 v-model="check"
                 direction="y"

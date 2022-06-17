@@ -22,8 +22,8 @@ const change = (e: Options) => {
 </script>
 
 <template>
-    <div class="main">
-        <LewTitle>Tabs</LewTitle>
+    <div class="demo-wrapper">
+        <lew-title>Tabs</lew-title>
         <div style="width: 450px">
             <LewTabs
                 v-model="v"

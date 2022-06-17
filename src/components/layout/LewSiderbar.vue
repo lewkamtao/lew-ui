@@ -73,7 +73,7 @@ const toPath = (item: Item) => {
             padding-left: 25px;
             box-sizing: border-box;
             list-style: none;
-            width: calc(100% - 20px);
+            width: calc(100% - 30px);
             margin-left: 17px;
             border-radius: var(--border-radius);
             cursor: pointer;

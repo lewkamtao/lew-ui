@@ -3,12 +3,12 @@ import { LewTitle, LewInput, LewFormItem } from '../../../components';
 </script>
 
 <template>
-    <div class="main">
-        <LewTitle>Input</LewTitle>
+    <div class="demo-wrapper">
+        <lew-title>Input</lew-title>
         <div style="width: 350px">
             <div style="margin-bottom: 50px">
-                <LewTitle style="margin-bottom: 20px" size="16px"
-                    >x 布局</LewTitle
+                <lew-title style="margin-bottom: 20px" size="16px"
+                    >x 布局</lew-title
                 >
                 <LewFormItem title="账号">
                     <LewInput />
@@ -18,8 +18,8 @@ import { LewTitle, LewInput, LewFormItem } from '../../../components';
                 </LewFormItem>
             </div>
             <div style="margin-bottom: 50px">
-                <LewTitle style="margin-bottom: 20px" size="16px"
-                    >y 布局</LewTitle
+                <lew-title style="margin-bottom: 20px" size="16px"
+                    >y 布局</lew-title
                 >
                 <LewFormItem title="账号" direction="y">
                     <LewInput />

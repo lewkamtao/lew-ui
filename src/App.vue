@@ -25,25 +25,25 @@ group.value = [
             {
                 name: 'Avatar',
                 path: '/Avatar',
-                label: '',
+                label: 'complete',
                 type: 'blue',
             },
             {
                 name: 'Button',
                 path: '/Button',
-                label: '',
+                label: 'complete',
                 type: 'blue',
             },
             {
                 name: 'Badge',
                 path: '/Badge',
-                label: '',
+                label: 'complete',
                 type: 'blue',
             },
             {
                 name: 'Title',
                 path: '/Title',
-                label: '',
+                label: 'complete',
                 type: '',
             },
         ],
@@ -226,6 +226,7 @@ const toPath = (path: string) => {
         overflow-y: scroll;
         box-sizing: border-box;
         padding: 50px;
+        background-color: rgb(242, 242, 242);
     }
 
     .Header {

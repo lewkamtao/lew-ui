@@ -9,14 +9,14 @@ const haha = () => {
 </script>
 
 <template>
-    <div class="main">
-        <LewTitle>Switch</LewTitle>
+    <div class="demo-wrapper">
+        <lew-title>Switch</lew-title>
         <div>
-            <LewTitle style="margin-bottom: 20px" size="16px">圆的</LewTitle>
+            <lew-title style="margin-bottom: 20px" size="16px">圆的</lew-title>
             <LewSwitch v-model="val" @change="haha"></LewSwitch>
         </div>
         <div>
-            <LewTitle style="margin-bottom: 20px" size="16px">方的</LewTitle>
+            <lew-title style="margin-bottom: 20px" size="16px">方的</lew-title>
             <LewSwitch v-model="val" :round="false" @change="haha"></LewSwitch>
         </div>
     </div>

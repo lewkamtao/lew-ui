@@ -3,14 +3,14 @@ import { LewTitle, LewTooltip, LewButton, LewBadge } from '../../../components';
 </script>
 
 <template>
-    <div class="main">
-        <LewTitle>Result</LewTitle>
+    <div class="demo-wrapper">
+        <lew-title>Result</lew-title>
         <div>
-            <LewTitle style="margin-bottom: 20px" size="16px"
+            <lew-title style="margin-bottom: 20px" size="16px"
                 >悬浮
                 <LewBadge type="success" style="margin-left: 5px"
                     >推荐</LewBadge
-                ></LewTitle
+                ></lew-title
             >
             <LewTooltip
                 placement="top"
@@ -43,7 +43,7 @@ import { LewTitle, LewTooltip, LewButton, LewBadge } from '../../../components';
         </div>
 
         <div>
-            <LewTitle style="margin-bottom: 20px" size="16px">点击 </LewTitle>
+            <lew-title style="margin-bottom: 20px" size="16px">点击 </lew-title>
             <LewTooltip
                 placement="top"
                 trigger="click"

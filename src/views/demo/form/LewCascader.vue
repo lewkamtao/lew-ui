@@ -3,8 +3,8 @@ import { LewTitle, LewBadge } from '../../../components';
 </script>
 
 <template>
-    <div class="main">
-        <LewTitle>Cascader</LewTitle>
+    <div class="demo-wrapper">
+        <lew-title>Cascader</lew-title>
         <div>
             <LewBadge type="primary">Github</LewBadge>
             <LewBadge type="primary">Vue</LewBadge>

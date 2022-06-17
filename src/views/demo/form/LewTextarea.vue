@@ -3,28 +3,28 @@ import { LewTitle, LewFormItem, LewTextarea } from '../../../components';
 </script>
 
 <template>
-    <div class="main">
-        <LewTitle>Textera</LewTitle>
+    <div class="demo-wrapper">
+        <lew-title>Textera</lew-title>
         <div style="width: 350px">
             <div style="margin-bottom: 50px">
-                <LewTitle style="margin-bottom: 20px" size="16px"
-                    >Y 布局</LewTitle
+                <lew-title style="margin-bottom: 20px" size="16px"
+                    >Y 布局</lew-title
                 >
                 <LewFormItem title="账号">
                     <LewTextarea></LewTextarea>
                 </LewFormItem>
             </div>
             <div style="margin-bottom: 50px">
-                <LewTitle style="margin-bottom: 20px" size="16px"
-                    >X 布局</LewTitle
+                <lew-title style="margin-bottom: 20px" size="16px"
+                    >X 布局</lew-title
                 >
                 <LewFormItem direction="y" title="账号">
                     <LewTextarea></LewTextarea>
                 </LewFormItem>
             </div>
             <div style="margin-bottom: 50px">
-                <LewTitle style="margin-bottom: 20px" size="16px"
-                    >禁止缩放大小</LewTitle
+                <lew-title style="margin-bottom: 20px" size="16px"
+                    >禁止缩放大小</lew-title
                 >
                 <LewFormItem direction="y" title="账号">
                     <LewTextarea resize="none"></LewTextarea>
