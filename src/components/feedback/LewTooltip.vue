@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps({
     tips: {
@@ -111,14 +111,20 @@ const closeFn = () => {
     }, 250);
 };
 
+const check = () => {
+    clearTimeout(onresizeTimer);
+    onresizeTimer = setTimeout(() => {
+        init();
+    }, 150);
+};
+
 onMounted(() => {
     init();
-    window.addEventListener('resize', function () {
-        clearTimeout(onresizeTimer);
-        onresizeTimer = setTimeout(() => {
-            init();
-        }, 150);
-    });
+    window.addEventListener('resize', check);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('resize', check);
 });
 </script>
 
