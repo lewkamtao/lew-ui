@@ -195,14 +195,22 @@ const toPath = (path: string) => {
             <div class="sider">
                 <TheSiderbar :group="group" />
             </div>
-            <div class="app-main"><router-view></router-view></div>
+            <div class="app-main btf-scrollbar">
+                <router-view></router-view>
+            </div>
         </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
 .wrapper {
+    max-width: 1280px;
+    margin: 0 auto;
     overflow: hidden;
+    background: var(--body-bgcolor);
+    border-left: 1px #eee solid;
+    border-right: 1px #eee solid;
+
     .container {
         height: calc(100vh - 60px);
         display: flex;
@@ -217,8 +225,9 @@ const toPath = (path: string) => {
         height: calc(100vh - 60px);
         overflow-y: scroll;
         box-sizing: border-box;
-        padding: 20px 20px 20px 50px;
+        padding: 50px;
     }
+
     .Header {
         display: flex;
         align-items: center;
@@ -227,7 +236,7 @@ const toPath = (path: string) => {
         width: 100%;
         height: 60px;
         box-sizing: border-box;
-        border-bottom: 2px #eee solid;
+        border-bottom: 1px #eee solid;
         background: var(--body-bgcolor);
         .logo {
             font-size: 20px;

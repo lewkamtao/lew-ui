@@ -12,9 +12,7 @@
         "prettier": "prettier --write"
     },
     "dependencies": {
-        "highlight.js": "^11.5.1",
         "vue": "^3.2.25",
-        "vue-highlight-code": "^0.1.9",
         "vue-router": "^4.0.13"
     },
     "devDependencies": {

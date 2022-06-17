@@ -34,10 +34,14 @@ defineProps({
 <style lang="scss" scoped>
 .lew-button {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     user-select: none;
     width: auto;
     min-width: 76px;
     height: 32px;
+    white-space: nowrap;
     box-sizing: border-box;
     transition: all 0.15s;
     font-size: 14px;
@@ -45,6 +49,11 @@ defineProps({
     cursor: pointer;
     padding: 0px 13px;
     border-radius: var(--border-radius);
+    svg {
+        font-size: 15px;
+        width: 20px;
+        height: 20px;
+    }
 }
 
 .lew-button::before {

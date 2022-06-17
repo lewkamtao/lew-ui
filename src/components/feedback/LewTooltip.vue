@@ -175,12 +175,13 @@ onMounted(() => {
     .lew-tooltip-icon {
         position: fixed;
         content: '';
-        width: 12px;
-        height: 12px;
+        width: 14px;
+        height: 14px;
         z-index: 999;
         background: var(--body-bgcolor);
         border-radius: 3px;
         transition: all 0.15s cubic-bezier(0.65, 0, 0.35, 1);
+        transform: rotate(-45deg) translate(0px, 0px);
     }
     .lew-tooltip-box {
         opacity: 0;
@@ -193,7 +194,7 @@ onMounted(() => {
             transform: translate(5px, 0px);
         }
         .lew-tooltip-icon {
-            transform: rotate(-45deg) translate(5px, 0px);
+            transform: rotate(-45deg) translate(5px, 5px);
         }
     }
     .lew-tooltip-right {
@@ -201,7 +202,7 @@ onMounted(() => {
             transform: translate(-5px, 0px);
         }
         .lew-tooltip-icon {
-            transform: rotate(-45deg) translate(-5px, 0px);
+            transform: rotate(-45deg) translate(-5px, -5px);
         }
     }
     .lew-tooltip-top {
@@ -209,7 +210,7 @@ onMounted(() => {
             transform: translate(0, 5px);
         }
         .lew-tooltip-icon {
-            transform: rotate(-45deg) translate(0px, 5px);
+            transform: rotate(-45deg) translate(-5px, 5px);
         }
     }
     .lew-tooltip-bottom {
@@ -217,7 +218,7 @@ onMounted(() => {
             transform: translate(0px, -5px);
         }
         .lew-tooltip-icon {
-            transform: rotate(-45deg) translate(0px, -5px);
+            transform: rotate(-45deg) translate(5px, -5px);
         }
     }
 

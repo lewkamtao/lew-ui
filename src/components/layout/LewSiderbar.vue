@@ -32,7 +32,7 @@ const toPath = (item: Item) => {
 </script>
 
 <template>
-    <div class="siderbar">
+    <div class="siderbar btf-scrollbar">
         <div v-for="(list, i) in group" :key="`group${i}`" class="group">
             <div v-if="list.title" class="title">{{ list.title }}</div>
             <div
@@ -55,7 +55,7 @@ const toPath = (item: Item) => {
     width: 250px;
     height: 100%;
     overflow-y: scroll;
-    border-right: 2px #eee solid;
+    border-right: 1px #eee solid;
 
     .group {
         white-space: nowrap;
@@ -88,21 +88,6 @@ const toPath = (item: Item) => {
     .group:last-child {
         padding-bottom: 100px;
     }
-}
-
-.siderbar::-webkit-scrollbar {
-    background-color: rgb(126, 126, 126, 0);
-    width: 5px;
-    height: 5px;
-}
-
-.siderbar::-webkit-scrollbar-thumb:hover {
-    background-color: rgb(126, 126, 126);
-}
-
-.siderbar::-webkit-scrollbar-thumb {
-    background-color: rgb(209 213 219 / 1);
-    border-radius: 5px;
 }
 
 .title {
