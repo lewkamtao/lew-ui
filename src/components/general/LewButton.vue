@@ -67,8 +67,8 @@ defineProps({
     border: 3px solid rgba(0, 0, 0, 0.25);
     border-left-color: rgba(255, 255, 255, 0.85);
     border-radius: 50%;
-    width: 14px;
-    height: 14px;
+    width: 11px;
+    height: 11px;
     opacity: 0;
     animation: donut-spin 0.8s linear infinite;
     transition: all 0.15s;
