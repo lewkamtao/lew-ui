@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import LewButton from '../general/LewButton';
+import LewButton from '../general/LewButton.vue';
 defineProps({
     code: {
         type: String,

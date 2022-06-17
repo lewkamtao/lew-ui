@@ -23,10 +23,10 @@ const props = defineProps({
 });
 
 let isShow = ref(false);
-let isShowTimer: setTimeout = null;
-let onresizeTimer: setTimeout = null;
-let lewTooltipRef: Element = ref(null);
-let lewTooltipWraRef: Element = ref(null);
+let isShowTimer: any = null;
+let onresizeTimer: any = null;
+let lewTooltipRef = ref();
+let lewTooltipWraRef = ref();
 
 let lewTooltipStyle = ref('');
 let lewTooltipIconStyle = ref('');

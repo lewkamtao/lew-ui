@@ -11,7 +11,12 @@ const LewTabsOptions = ref([
 ]);
 let v = ref('1');
 let ve = ref(LewTabsOptions.value.find((e) => e.value == v.value));
-const change = (e: unknown) => {
+type Options = {
+    label: string;
+    value: string;
+};
+
+const change = (e: Options) => {
     ve.value = e;
 };
 </script>

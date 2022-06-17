@@ -8,9 +8,9 @@ type Options = {
     content: string;
 };
 
-let alertList = ref([] as Options);
+let alertList = ref<Options[]>([]);
 
-const addAlert = (e: number) => {
+const addAlert = (e: Options) => {
     alertList.value.unshift(e);
 };
 const close = (e: number) => {

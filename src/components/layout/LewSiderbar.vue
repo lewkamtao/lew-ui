@@ -56,7 +56,7 @@ const toPath = (item: Item) => {
     height: 100%;
     overflow-y: scroll;
     border-right: 1px #eee solid;
-
+    padding-top: 10px;
     .group {
         white-space: nowrap;
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HlPre from '../../../components/demo/HlPre';
+import HlPre from '../../../components/demo/HlPre.vue';
 import { LewTitle, LewAvatar } from '../../../components';
 
 import { ref } from 'vue';
