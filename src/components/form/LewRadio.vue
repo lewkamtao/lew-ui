@@ -102,7 +102,7 @@ const setChecked = () => {
     border-radius: 30px;
     .icon-radio-box {
         border: 2px rgba(0, 0, 0, 0) solid;
-        background: var(--form-bgcolor-active);
+        background: var(--form-bgcolor-hover);
     }
     .icon-checked-box {
         border: 2px var(--primary-color) solid;

@@ -121,7 +121,7 @@ const setChecked = (event: Event) => {
     border-radius: 8px;
     .icon-checkbox-box {
         border: 2px rgba(0, 0, 0, 0) solid;
-        background: var(--form-bgcolor-active);
+        background: var(--form-bgcolor-hover);
     }
     .icon-checked-box {
         border: 2px var(--primary-color) solid;
