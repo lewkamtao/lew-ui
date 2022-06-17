@@ -4,7 +4,7 @@ import { LewTitle, LewBadge } from '../../../components';
 
 <template>
     <div class="main">
-        <LewTitle bold>Cascader</LewTitle>
+        <LewTitle>Cascader</LewTitle>
         <div>
             <LewBadge type="primary">Github</LewBadge>
             <LewBadge type="primary">Vue</LewBadge>

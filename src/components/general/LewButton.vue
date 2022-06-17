@@ -119,17 +119,17 @@ defineProps({
     background-color: var(--danger-color-active);
 }
 
-.lew-button-gray {
-    background: var(--gray-color);
+.lew-button-normal {
+    background: var(--normal-color);
     color: var(--text-color);
 }
 
-.lew-button-gray:hover {
-    background-color: var(--gray-color-hover);
+.lew-button-normal:hover {
+    background-color: var(--normal-color-hover);
 }
 
-.lew-button-gray:active {
-    background-color: var(--gray-color-active);
+.lew-button-normal:active {
+    background-color: var(--normal-color-active);
 }
 
 .lew-button-warning {

@@ -24,7 +24,7 @@ watch(
 );
 const emit = defineEmits(['update:modelValue']);
 
-const input = (e: any) => {
+const input = (e: HTMLInputElement) => {
     let { value } = e.target;
     emit('update:modelValue', value);
 };

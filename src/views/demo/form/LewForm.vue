@@ -97,7 +97,7 @@ let options = ref([
 
 <template>
     <div class="main">
-        <LewTitle bold>Form</LewTitle>
+        <LewTitle>Form</LewTitle>
 
         <div style="margin-bottom: 50px; width: 350px">
             <LewFormItem direction="y" title="账号">
@@ -115,7 +115,7 @@ let options = ref([
             <LewFormItem direction="y" title="简介" style="margin-bottom: 20px">
                 <LewTextarea v-model="user.password" resize="none" />
             </LewFormItem>
-            <LewTitle style="margin-bottom: 10px" size="14px"
+            <LewTitle :bold="false" style="margin-bottom: 10px" size="14px"
                 >选择地址</LewTitle
             >
             <LewSelect
@@ -124,7 +124,9 @@ let options = ref([
                 :options="options"
                 >Github</LewSelect
             >
-            <LewTitle size="14px" style="margin-bottom: 10px">性别</LewTitle>
+            <LewTitle :bold="false" size="14px" style="margin-bottom: 10px"
+                >性别</LewTitle
+            >
             <LewRadioboxGroup
                 v-model="user.sex"
                 style="margin-bottom: 20px"
@@ -134,7 +136,9 @@ let options = ref([
                     { name: '女', id: 2 },
                 ]"
             ></LewRadioboxGroup>
-            <LewTitle style="margin-bottom: 10px" size="14px">爱好</LewTitle>
+            <LewTitle :bold="false" style="margin-bottom: 10px" size="14px"
+                >爱好</LewTitle
+            >
             <LewCheckboxGroup
                 v-model="user.hobby"
                 style="margin-bottom: 20px"
@@ -145,7 +149,7 @@ let options = ref([
                     { name: '打篮球', id: 44 },
                 ]"
             ></LewCheckboxGroup>
-            <LewTitle style="margin-bottom: 10px" size="14px"
+            <LewTitle :bold="false" style="margin-bottom: 10px" size="14px"
                 >是否订阅</LewTitle
             >
             <LewSwitch
@@ -153,7 +157,7 @@ let options = ref([
                 style="margin-bottom: 20px"
             ></LewSwitch>
 
-            <LewTitle style="margin-bottom: 10px" size="14px"
+            <LewTitle :bold="false" style="margin-bottom: 10px" size="14px"
                 >支付方式</LewTitle
             >
             <LewTabs

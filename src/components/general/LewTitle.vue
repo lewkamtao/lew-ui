@@ -2,7 +2,7 @@
 defineProps({
     bold: {
         type: Boolean,
-        default: false,
+        default: true,
     },
     size: {
         type: String,
@@ -29,9 +29,10 @@ defineProps({
     white-space: nowrap;
     text-overflow: ellipsis;
     color: var(--title-color);
+    margin-bottom: 10px;
 }
 
 .lew-title-bold {
-    font-weight: var(--title-bold);
+    font-weight: 500;
 }
 </style>

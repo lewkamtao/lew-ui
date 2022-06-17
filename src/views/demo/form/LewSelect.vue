@@ -68,7 +68,7 @@ let options = ref([
 
 <template>
     <div class="main">
-        <LewTitle bold>Select</LewTitle>
+        <LewTitle>Select</LewTitle>
         <div style="width: 350px">
             <LewSelect v-model="v" :options="options">Github</LewSelect>
         </div>

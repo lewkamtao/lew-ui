@@ -162,6 +162,17 @@ group.value = [
             },
         ],
     },
+    {
+        title: '其他',
+        items: [
+            {
+                name: 'Alert',
+                path: '/Alert',
+                label: '',
+                type: '',
+            },
+        ],
+    },
 ];
 
 const toPath = (path: string) => {

@@ -23,10 +23,10 @@ const props = defineProps({
 });
 
 let isShow = ref(false);
-let isShowTimer: any = null;
-let onresizeTimer: any = null;
-let lewTooltipRef: any = ref(null);
-let lewTooltipWraRef: any = ref(null);
+let isShowTimer: setTimeout = null;
+let onresizeTimer: setTimeout = null;
+let lewTooltipRef: Element = ref(null);
+let lewTooltipWraRef: Element = ref(null);
 
 let lewTooltipStyle = ref('');
 let lewTooltipIconStyle = ref('');
@@ -163,13 +163,13 @@ onMounted(() => {
         max-width: 250px;
         box-shadow: 0 2px 50px rgba(0, 0, 0, 0.25);
         border-radius: 8px;
-        padding: 12px;
+        padding: 6px 12px;
         box-sizing: border-box;
         background: var(--body-bgcolor);
         z-index: 9;
         font-size: 13px;
         color: var(--text-color);
-        transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+        transition: all 0.15s cubic-bezier(0.65, 0, 0.35, 1);
     }
 
     .lew-tooltip-icon {
@@ -190,34 +190,34 @@ onMounted(() => {
     }
     .lew-tooltip-left {
         .lew-tooltip {
-            transform: translate(10px, 0px);
+            transform: translate(5px, 0px);
         }
         .lew-tooltip-icon {
-            transform: rotate(-45deg) translate(10px, 0px);
+            transform: rotate(-45deg) translate(5px, 0px);
         }
     }
     .lew-tooltip-right {
         .lew-tooltip {
-            transform: translate(-10px, 0px);
+            transform: translate(-5px, 0px);
         }
         .lew-tooltip-icon {
-            transform: rotate(-45deg) translate(-10px, 0px);
+            transform: rotate(-45deg) translate(-5px, 0px);
         }
     }
     .lew-tooltip-top {
         .lew-tooltip {
-            transform: translate(0, 10px);
+            transform: translate(0, 5px);
         }
         .lew-tooltip-icon {
-            transform: rotate(-45deg) translate(0px, 10px);
+            transform: rotate(-45deg) translate(0px, 5px);
         }
     }
     .lew-tooltip-bottom {
         .lew-tooltip {
-            transform: translate(0px, -10px);
+            transform: translate(0px, -5px);
         }
         .lew-tooltip-icon {
-            transform: rotate(-45deg) translate(0px, -10px);
+            transform: rotate(-45deg) translate(0px, -5px);
         }
     }
 

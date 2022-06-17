@@ -4,7 +4,7 @@ import { LewTitle, LewFormItem, LewTextarea } from '../../../components';
 
 <template>
     <div class="main">
-        <LewTitle bold>Textera</LewTitle>
+        <LewTitle>Textera</LewTitle>
         <div style="width: 350px">
             <div style="margin-bottom: 50px">
                 <LewTitle style="margin-bottom: 20px" size="16px"

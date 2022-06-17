@@ -4,23 +4,23 @@ import { LewTitle } from '../../../components';
 
 <template>
     <div class="main">
-        <LewTitle bold>标题</LewTitle>
+        <LewTitle>标题</LewTitle>
         <div>
             <div style="margin-bottom: 50px">
-                <LewTitle style="margin-bottom: 20px" size="14px"
-                    >14px 普通</LewTitle
+                <LewTitle :bold="false" style="margin-bottom: 20px" size="14px"
+                    >14px 常规</LewTitle
                 >
-                <LewTitle style="margin-bottom: 20px" size="16px"
-                    >16px 普通</LewTitle
+                <LewTitle :bold="false" style="margin-bottom: 20px" size="16px"
+                    >16px 常规</LewTitle
                 >
-                <LewTitle style="margin-bottom: 20px" size="18px"
-                    >18px 普通</LewTitle
+                <LewTitle :bold="false" style="margin-bottom: 20px" size="18px"
+                    >18px 常规</LewTitle
                 >
-                <LewTitle style="margin-bottom: 20px" size="22px"
-                    >22px 普通</LewTitle
+                <LewTitle :bold="false" style="margin-bottom: 20px" size="22px"
+                    >22px 常规</LewTitle
                 >
-                <LewTitle style="margin-bottom: 20px" size="26px"
-                    >26px 普通</LewTitle
+                <LewTitle :bold="false" style="margin-bottom: 20px" size="26px"
+                    >26px 常规</LewTitle
                 >
             </div>
             <div style="margin-bottom: 50px">

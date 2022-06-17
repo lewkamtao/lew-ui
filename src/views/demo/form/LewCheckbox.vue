@@ -2,15 +2,11 @@
 import { ref } from 'vue';
 import { LewTitle, LewCheckboxGroup, LewBadge } from '../../../components';
 let check = ref([]);
-const getValue = (e: any) => {
-    console.log(e);
-    console.log(check.value);
-};
 </script>
 
 <template>
     <div class="main">
-        <LewTitle bold>Checkbox</LewTitle>
+        <LewTitle>Checkbox</LewTitle>
         <div>
             <LewTitle style="margin-bottom: 20px" size="16px"
                 >x 布局 <LewBadge style="margin-left: 5px">方的</LewBadge>

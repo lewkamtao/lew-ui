@@ -4,7 +4,7 @@ import { LewTitle, LewTooltip, LewButton, LewBadge } from '../../../components';
 
 <template>
     <div class="main">
-        <LewTitle bold>Result</LewTitle>
+        <LewTitle>Result</LewTitle>
         <div>
             <LewTitle style="margin-bottom: 20px" size="16px"
                 >悬浮
@@ -15,7 +15,7 @@ import { LewTitle, LewTooltip, LewButton, LewBadge } from '../../../components';
             <LewTooltip
                 placement="top"
                 style="margin-right: 50px"
-                tips="哈士奇是北方地区雪橇型狗的总称，他们的快速拉动的风格与其他雪橇犬不同。 他们是由速度最快的雪橇犬不断交配的品种。"
+                tips="哈士奇是北方地区雪橇型狗的总称"
             >
                 <LewButton>上方</LewButton>
             </LewTooltip>

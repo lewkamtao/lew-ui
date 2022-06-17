@@ -10,7 +10,7 @@ const haha = () => {
 
 <template>
     <div class="main">
-        <LewTitle bold>Switch</LewTitle>
+        <LewTitle>Switch</LewTitle>
         <div>
             <LewTitle style="margin-bottom: 20px" size="16px">圆的</LewTitle>
             <LewSwitch v-model="val" @change="haha"></LewSwitch>

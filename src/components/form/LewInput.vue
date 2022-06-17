@@ -20,7 +20,7 @@ watch(
 );
 const emit = defineEmits(['update:modelValue']);
 
-const input = (e: any) => {
+const input = (e: HTMLInputElement) => {
     let { value } = e.target;
     emit('update:modelValue', value);
 };
@@ -39,7 +39,7 @@ const input = (e: any) => {
 .lew-input {
     width: 100%;
     height: 35px;
-    padding: 5px 7px;
+    padding: 5px 12px;
     font-size: 14px;
     line-height: 24px;
     overflow: hidden;

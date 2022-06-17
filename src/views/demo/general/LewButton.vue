@@ -4,13 +4,13 @@ import { LewTitle, LewButton } from '../../../components';
 
 <template>
     <div class="main">
-        <LewTitle bold>Button</LewTitle>
+        <LewTitle>Button</LewTitle>
         <div>
             <LewTitle style="margin-bottom: 20px" size="16px">普通</LewTitle>
             <LewButton type="primary">确定</LewButton>
             <LewButton type="danger">危险</LewButton>
             <LewButton type="warning">警告</LewButton>
-            <LewButton type="gray">这是一个长按钮</LewButton>
+            <LewButton type="normal">这是一个长按钮</LewButton>
             <LewButton type="success">确定</LewButton>
             <LewTitle style="margin-top: 50px; margin-bottom: 20px" size="16px"
                 >圆型</LewTitle
@@ -18,7 +18,7 @@ import { LewTitle, LewButton } from '../../../components';
             <LewButton round type="primary">确定</LewButton>
             <LewButton round type="danger">危险</LewButton>
             <LewButton round type="warning">警告</LewButton>
-            <LewButton round type="gray">这是一个长按钮</LewButton>
+            <LewButton round type="normal">这是一个长按钮</LewButton>
             <LewButton round type="success">确定</LewButton>
             <LewTitle style="margin-top: 50px; margin-bottom: 20px" size="16px"
                 >加载</LewTitle

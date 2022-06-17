@@ -1,19 +1,26 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { LewTitle, LewAlert, LewButton } from '../../../components';
-let alertList = ref([] as any);
 
-const addAlert = (e: any) => {
+type Options = {
+    type: string;
+    title: string;
+    content: string;
+};
+
+let alertList = ref([] as Options);
+
+const addAlert = (e: number) => {
     alertList.value.unshift(e);
 };
-const close = (e: any) => {
+const close = (e: number) => {
     alertList.value.splice(e, 1);
 };
 </script>
 
 <template>
     <div class="main">
-        <LewTitle bold>Alert</LewTitle>
+        <LewTitle>Alert</LewTitle>
         <div style="width: 600px">
             <LewButton
                 type="primary"
@@ -72,11 +79,11 @@ const close = (e: any) => {
                 >发送</LewButton
             >
             <LewButton
-                type="gray"
+                type="normal"
                 style="margin-right: 10px"
                 @click="
                     addAlert({
-                        type: 'gray',
+                        type: 'normal',
                         title: '成功发送一条消息',
                         content: `Well the Ukraine girls really knock me out
                                     They leave the West behind

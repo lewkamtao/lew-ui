@@ -1,10 +1,5 @@
 <template>
-    <label
-        class="lew-radio"
-        :class="`${block ? 'lew-radio-block' : ''} ${
-            round ? 'lew-radio-round' : ''
-        }`"
-    >
+    <label class="lew-radio" :class="`${block ? 'lew-radio-block' : ''} `">
         <div class="icon-radio-box" :class="{ 'icon-checked-box': checked }">
             <div class="icon-radio"></div>
         </div>
@@ -30,12 +25,7 @@ defineProps({
             return false;
         },
     },
-    round: {
-        type: Boolean,
-        default: () => {
-            return true;
-        },
-    },
+
     checked: {
         type: Boolean,
     },
@@ -53,11 +43,11 @@ const setChecked = () => {
     display: inline-flex;
     align-items: center;
     user-select: none;
-    margin: 0px 20px 20px 0px;
+    margin: 0px 20px 15px 0px;
     cursor: pointer;
     color: var(--text-color);
     font-size: 14px;
-
+    border-radius: 50px;
     .icon-radio-box {
         display: inline-flex;
         align-items: center;
@@ -66,11 +56,10 @@ const setChecked = () => {
         height: 18px;
         border: 2px rgba($color: #000000, $alpha: 0.1) solid;
         box-sizing: border-box;
-        border-radius: 5px;
         margin-right: 7px;
         transition: all 0.25s ease;
         overflow: hidden;
-
+        border-radius: 50px;
         .icon-radio {
             width: 7px;
             height: 7px;
@@ -80,6 +69,7 @@ const setChecked = () => {
             border-radius: 2px;
             transition: all 0.25s ease;
             font-size: 12px;
+            border-radius: 50px;
         }
     }
 
@@ -109,19 +99,21 @@ const setChecked = () => {
     background: var(--form-bgcolor);
     padding: 4px 8px 4px 6px;
     border: var(--form-border);
-    border-radius: 8px;
-}
-
-.lew-radio-round {
-    border-radius: 50px;
+    border-radius: 30px;
     .icon-radio-box {
-        border-radius: 50%;
-        .icon-radio {
-            border-radius: 50%;
-        }
+        border: 2px rgba(0, 0, 0, 0) solid;
+        background: var(--form-bgcolor-active);
+    }
+    .icon-checked-box {
+        border: 2px var(--primary-color) solid;
+        background: var(--primary-color);
     }
 }
-
+.lew-radio-block:hover {
+    .icon-radio-box {
+        border: 2px rgba(0, 0, 0, 0) solid;
+    }
+}
 .lew-radio-block:hover {
     background: var(--form-bgcolor-hover);
     border: var(--form-border-hover);

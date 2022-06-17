@@ -27,7 +27,7 @@ const props = defineProps({
     label {
         display: block;
         width: 100%;
-        margin: 0px 0px 5px 8px;
+        margin: 0px 0px 10px 0px;
         font-size: 14px;
         color: var(--text-color);
     }

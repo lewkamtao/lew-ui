@@ -73,7 +73,7 @@ defineProps({
     }
 
     .dot-offline {
-        background-color: var(--gray-color-dark);
+        background-color: var(--normal-color-dark);
     }
 
     .dot-away {

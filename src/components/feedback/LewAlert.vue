@@ -56,7 +56,7 @@ const emit = defineEmits(['close']);
         align-items: flex-start;
         width: 100%;
         min-height: 40px;
-        background-color: var(--gray-color);
+        background-color: var(--normal-color);
         border-radius: 8px;
         margin-bottom: 10px;
         padding: 12px;
@@ -115,10 +115,10 @@ const emit = defineEmits(['close']);
             }
         }
     }
-    .lew-alert-gray {
-        color: var(--gray-text-color);
-        background-color: var(--gray-color-light);
-        border: 2px var(--gray-color-dark) solid;
+    .lew-alert-normal {
+        color: var(--normal-text-color);
+        background-color: var(--normal-color-light);
+        border: 2px var(--normal-color-dark) solid;
     }
     .lew-alert-success {
         color: var(--success-text-color);

@@ -119,6 +119,19 @@ const setChecked = (event: Event) => {
     padding: 4px 8px 4px 6px;
     border: var(--form-border);
     border-radius: 8px;
+    .icon-checkbox-box {
+        border: 2px rgba(0, 0, 0, 0) solid;
+        background: var(--form-bgcolor-active);
+    }
+    .icon-checked-box {
+        border: 2px var(--primary-color) solid;
+        background: var(--primary-color);
+    }
+}
+.lew-checkbox-block:hover {
+    .icon-checkbox-box {
+        border: 2px rgba(0, 0, 0, 0) solid;
+    }
 }
 
 .lew-checkbox-round {

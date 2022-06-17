@@ -9,17 +9,16 @@ const LewTabsOptions = ref([
     { label: '深圳', value: '4' },
     { label: '乌鲁木齐', value: '5' },
 ]);
-
-const change = (e: unknown) => {
-    console.log(v.value);
-};
-
 let v = ref('1');
+let ve = ref(LewTabsOptions.value.find((e) => e.value == v.value));
+const change = (e: unknown) => {
+    ve.value = e;
+};
 </script>
 
 <template>
     <div class="main">
-        <LewTitle bold>Tabs</LewTitle>
+        <LewTitle>Tabs</LewTitle>
         <div style="width: 450px">
             <LewTabs
                 v-model="v"
@@ -27,6 +26,7 @@ let v = ref('1');
                 @update:change="change"
             ></LewTabs>
         </div>
+        <div>{{ ve }}</div>
     </div>
 </template>
 

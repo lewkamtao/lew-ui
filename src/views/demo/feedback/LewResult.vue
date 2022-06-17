@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { LewTitle, LewBadge } from '../../../components';
+import { LewTitle } from '../../../components';
 </script>
 
 <template>
     <div class="main">
-        <LewTitle bold>Result</LewTitle>
+        <LewTitle>Result</LewTitle>
         <div>开发中···</div>
     </div>
 </template>

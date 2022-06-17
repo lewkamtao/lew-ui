@@ -1,9 +1,12 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router/index'
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router/index';
 
-import './assets/style/reset.scss'
-import './assets/style/var.scss'
-import './assets/style/main.scss'
+import './assets/style/reset.scss';
+import './assets/style/var.scss';
+import './assets/style/main.scss';
+import 'vue-highlight-code/dist/style.css';
 
-createApp(App).use(router).mount('#app')
+const app = createApp(App);
+
+app.use(router).mount('#app');

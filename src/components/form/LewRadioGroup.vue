@@ -4,7 +4,6 @@
             v-for="option in options"
             :key="option.id"
             :block="block"
-            :round="round"
             :label="option.name"
             :checked="modelValue == option.id"
             @update:checked="check(option.id)"
@@ -31,12 +30,6 @@ defineProps({
         type: Boolean,
         default: () => {
             return false;
-        },
-    },
-    round: {
-        type: Boolean,
-        default: () => {
-            return true;
         },
     },
 
