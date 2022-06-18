@@ -33,7 +33,7 @@ const input = (e: Event) => {
 <template>
     <textarea
         v-model="v"
-        class="lew-textarea"
+        class="lew-textarea btf-scrollbar"
         :class="`resize-${resize}`"
         rows="3"
         cols="3"
@@ -49,6 +49,7 @@ const input = (e: Event) => {
     padding: 5px 7px;
     font-size: 14px;
     line-height: 24px;
+    min-height: 35px;
     border: var(--form-border);
     border-radius: var(--form-border-radius);
     background-color: var(--form-bgcolor);

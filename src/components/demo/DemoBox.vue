@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import LewTitle from '../general/LewTitle.vue';
+import { LewTitle, LewBadge } from '../../components';
 import { ref } from 'vue';
 defineProps({
     title: {
+        type: String,
+        default() {
+            return '';
+        },
+    },
+    badge: {
         type: String,
         default() {
             return '';
@@ -21,7 +27,12 @@ let isShowCode = ref(false);
 
 <template>
     <div class="demo-box">
-        <lew-title size="16px">{{ title }}</lew-title>
+        <lew-title size="16px"
+            >{{ title }}
+            <lew-badge style="margin: 2px 0px 0px 5px" v-if="badge">{{
+                badge
+            }}</lew-badge>
+        </lew-title>
         <div class="demo-item">
             <div class="demo-cp"><slot></slot></div>
             <div v-show="isShowCode" v-highlight class="hl-pre">
@@ -61,7 +72,7 @@ let isShowCode = ref(false);
                         d="M112 328l144-144l144 144"
                     ></path>
                 </svg>
-                {{ isShowCode ? '关闭' : '查看代码' }}
+                {{ isShowCode ? '关闭' : '显示源码' }}
             </div>
         </div>
     </div>
@@ -102,7 +113,7 @@ let isShowCode = ref(false);
         }
     }
     .show-bar:hover {
-        background-color: rgb(250, 246, 246);
+        background-color: rgb(244, 244, 244);
     }
     .show-bar:active {
         background-color: rgb(236, 236, 236);

@@ -9,7 +9,7 @@ let check = ref(0);
         <lew-title>Radio</lew-title>
         <div>
             <lew-title style="margin-bottom: 20px" size="16px">x 布局 </lew-title>
-            <LewRadioboxGroup
+            <lew-radiobox-group
                 v-model="check"
                 direction="x"
                 :options="[
@@ -19,11 +19,11 @@ let check = ref(0);
                     { name: '科比', id: 4 },
                     { name: '乔丹', id: 5 },
                 ]"
-            ></LewRadioboxGroup>
+            ></lew-radiobox-group>
         </div>
         <div style="margin-bottom: 20px">
             <lew-title style="margin-bottom: 20px" size="16px">y 布局 </lew-title>
-            <LewRadioboxGroup
+            <lew-radiobox-group
                 v-model="check"
                 direction="y"
                 :options="[
@@ -32,12 +32,12 @@ let check = ref(0);
                     { name: '詹姆斯', id: 9 },
                     { name: '伊戈达拉', id: 10 },
                 ]"
-            ></LewRadioboxGroup>
+            ></lew-radiobox-group>
         </div>
 
         <div style="margin-bottom: 20px">
             <lew-title style="margin-bottom: 20px" size="16px">块布局 </lew-title>
-            <LewRadioboxGroup
+            <lew-radiobox-group
                 v-model="check"
                 direction="y"
                 block
@@ -47,7 +47,7 @@ let check = ref(0);
                     { name: '詹姆斯', id: 9 },
                     { name: '伊戈达拉', id: 10 },
                 ]"
-            ></LewRadioboxGroup>
+            ></lew-radiobox-group>
         </div>
     </div>
 </template>

@@ -25,25 +25,25 @@ group.value = [
             {
                 name: 'Avatar',
                 path: '/Avatar',
-                label: 'complete',
+                label: '',
                 type: 'blue',
             },
             {
                 name: 'Button',
                 path: '/Button',
-                label: 'complete',
+                label: '',
                 type: 'blue',
             },
             {
                 name: 'Badge',
                 path: '/Badge',
-                label: 'complete',
+                label: '',
                 type: 'blue',
             },
             {
                 name: 'Title',
                 path: '/Title',
-                label: 'complete',
+                label: '',
                 type: '',
             },
         ],
@@ -85,7 +85,7 @@ group.value = [
             {
                 name: 'Tabs',
                 path: '/Tabs',
-                label: 'New',
+                label: '',
                 type: '',
             },
             {

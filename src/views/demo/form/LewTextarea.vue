@@ -1,45 +1,58 @@
 <script setup lang="ts">
+import DemoBox from '../../../components/demo/DemoBox.vue';
+import { ref } from 'vue';
 import { LewTitle, LewFormItem, LewTextarea } from '../../../components';
+let pre1 = ref(`<template>
+    <div style="width: 300px">
+        <lew-form-item title="账号">
+            <LewTextarea resize="vertical"/>
+        </lew-form-item>
+    </div>
+</template>
+`);
+let pre2 = ref(`<template>
+    <div style="width: 300px">
+        <lew-form-item title="账号">
+            <LewTextarea resize="vertical" />
+        </lew-form-item>
+    </div>
+</template>
+`);
+let pre3 = ref(`<template>
+    <div style="width: 300px">
+        <lew-form-item title="账号">
+            <LewTextarea resize="none" />
+        </lew-form-item>
+    </div>
+</template>
+`);
 </script>
 
 <template>
     <div class="demo-wrapper">
         <lew-title>Textera</lew-title>
-        <div style="width: 350px">
-            <div style="margin-bottom: 50px">
-                <lew-title style="margin-bottom: 20px" size="16px"
-                    >Y 布局</lew-title
-                >
-                <LewFormItem title="账号">
-                    <LewTextarea></LewTextarea>
-                </LewFormItem>
+        <demo-box title="x 布局" :code="pre1">
+            <div style="width: 300px">
+                <lew-form-item title="账号">
+                    <LewTextarea />
+                </lew-form-item>
             </div>
-            <div style="margin-bottom: 50px">
-                <lew-title style="margin-bottom: 20px" size="16px"
-                    >X 布局</lew-title
-                >
-                <LewFormItem direction="y" title="账号">
-                    <LewTextarea></LewTextarea>
-                </LewFormItem>
+        </demo-box>
+        <demo-box title="y 布局" :code="pre2">
+            <div style="width: 300px">
+                <lew-form-item title="账号" direction="y">
+                    <LewTextarea resize="vertical" />
+                </lew-form-item>
             </div>
-            <div style="margin-bottom: 50px">
-                <lew-title style="margin-bottom: 20px" size="16px"
-                    >禁止缩放大小</lew-title
-                >
-                <LewFormItem direction="y" title="账号">
-                    <LewTextarea resize="none"></LewTextarea>
-                </LewFormItem>
+        </demo-box>
+        <demo-box title="禁止缩放" :code="pre3">
+            <div style="width: 300px">
+                <lew-form-item title="账号">
+                    <LewTextarea resize="none" />
+                </lew-form-item>
             </div>
-        </div>
+        </demo-box>
     </div>
 </template>
 
-<style lang="scss" scoped>
-.main {
-    width: 100%;
-    margin: 0 auto;
-    > div {
-        margin: 30px 0;
-    }
-}
-</style>
+<style lang="scss" scoped></style>

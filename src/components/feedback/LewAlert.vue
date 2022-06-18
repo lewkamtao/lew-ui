@@ -118,27 +118,22 @@ const emit = defineEmits(['close']);
     .lew-alert-normal {
         color: var(--normal-text-color);
         background-color: var(--normal-color-light);
-        border: 2px var(--normal-color-dark) solid;
     }
     .lew-alert-success {
         color: var(--success-text-color);
         background-color: var(--success-color-light);
-        border: 2px var(--success-color) solid;
     }
     .lew-alert-warning {
         color: var(--warning-text-color);
         background-color: var(--warning-color-light);
-        border: 2px var(--warning-color) solid;
     }
     .lew-alert-danger {
         color: var(--danger-text-color);
         background-color: var(--danger-color-light);
-        border: 2px var(--danger-color) solid;
     }
     .lew-alert-primary {
         color: var(--primary-text-color);
         background-color: var(--primary-color-light);
-        border: 2px var(--primary-color) solid;
     }
     .lew-alert:hover {
         opacity: 1;
