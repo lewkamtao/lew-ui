@@ -42,9 +42,11 @@ const toPath = (item: Item) => {
                 @click="toPath(item)"
             >
                 {{ item.name }}
-                <LewBadge v-if="item.label" bold :type="item.type">{{
-                    item.label
-                }}</LewBadge>
+                <LewBadge
+                    style="margin-left: 10px"
+                    dot
+                    :type="item.type"
+                ></LewBadge>
             </div>
         </div>
     </div>

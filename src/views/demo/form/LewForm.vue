@@ -136,7 +136,14 @@ let home_options = ref([
 <template>
     <div class="form-box">
         <lew-form-item direction="y" title="账号">
-            <LewInput v-model="user.username" />
+            <LewInput 
+                v-tooltip="{
+                    content: "输入账号",
+                    placement: "top",
+                    trigger: "focus",
+                }" 
+                v-model="user.username" 
+            /> 
         </lew-form-item>
         <lew-form-item direction="y" title="密码">
             <LewInput v-model="user.password" />
@@ -177,7 +184,14 @@ let home_options = ref([
         <demo-box title="表单总览" :code="pre1">
             <div class="form-box">
                 <lew-form-item direction="y" title="账号">
-                    <LewInput v-model="user.username" />
+                    <LewInput
+                        v-tooltip="{
+                            content: `输入账号`,
+                            placement: `top`,
+                            trigger: `focus`,
+                        }"
+                        v-model="user.username"
+                    />
                 </lew-form-item>
                 <lew-form-item direction="y" title="密码">
                     <LewInput v-model="user.password" />

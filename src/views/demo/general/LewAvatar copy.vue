@@ -1,103 +1,90 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import {
-    LewInput,
-    LewFormItem,
-    LewCheckboxGroup,
-    LewRadioboxGroup,
-    LewSwitch,
-    LewTextarea,
-    LewSelect,
-    LewTabs,
-} from '../../../components';
+import { LewAlert, LewButton } from '../../../components';
 
-let user = ref({
-    username: '',
-    password: '',
-    age: '',
-    sex: 0,
-    hobby: [],
-    school: '',
-    home: '',
-    dark: true,
-    pay: '',
-});
+type Options = {
+    type: string;
+    title: string;
+    content: string;
+};
 
-let sex_options = ref([
-    { name: '未知', id: 0 },
-    { name: '男', id: 1 },
-    { name: '女', id: 2 },
-]);
+let alertList = ref<Options[]>([]);
 
-let pay_options = ref([
-    { label: '微信', value: '1' },
-    { label: '支付宝', value: '2' },
-    { label: 'Apple Pay', value: '3' },
-]);
+const addAlert = (e: Options) => {
+    alertList.value.unshift(e);
+};
+const close = (e: number) => {
+    alertList.value.splice(e, 1);
+};
 
-let hobby_options = ref([
-    { name: '唱歌', id: 1 },
-    { name: '跳舞', id: 2 },
-    { name: 'rap', id: 3 },
-    { name: '打篮球', id: 44 },
-]);
-
-let home_options = ref([
-    {
-        label: '广东',
-        value: '1',
-    },
-    {
-        label: '深圳',
-        value: '2',
-    },
-    {
-        label: '杭州',
-        value: '3',
-    },
-    {
-        label: '上海',
-        value: '4',
-    },
-    {
-        label: '北京',
-        value: '5',
-    },
-]);
 </script>
 
 <template>
-    <div class="form-box">
-        <lew-form-item direction="y" title="账号">
-            <LewInput v-model="user.username" />
-        </lew-form-item>
-        <lew-form-item direction="y" title="密码">
-            <LewInput v-model="user.password" />
-        </lew-form-item>
-        <lew-form-item direction="y" title="简介">
-            <LewTextarea v-model="user.password" resize="none" />
-        </lew-form-item>
-        <lew-form-item direction="y" title="家地址">
-            <LewSelect v-model="user.home" :options="home_options" />
-        </lew-form-item>
-        <lew-form-item direction="y" title="性别">
-            <lew-radiobox-group v-model="user.sex" :options="sex_options" />
-        </lew-form-item>
-        <lew-form-item direction="y" title="爱好">
-            <lew-checkbox-group v-model="user.hobby" :options="hobby_options" />
-        </lew-form-item>
-        <lew-form-item direction="y" title="订阅">
-            <LewSwitch v-model="user.dark" />
-        </lew-form-item>
-        <lew-form-item direction="y" title="爱好">
-            <LewTabs v-model="user.pay" :options="pay_options" />
-        </lew-form-item>
+    <LewButton
+        type="primary"
+        style="margin-right: 10px"
+        @click="
+            addAlert({
+                type: 'primary',
+                title: '成功发送一条消息',
+                content: ``,
+            })
+        "
+        >点我</LewButton
+    >
+    <LewButton
+        type="danger"
+        style="margin-right: 10px"
+        @click="
+            addAlert({
+                type: 'danger',
+                title: '成功发送一条消息',
+                content: ``,
+            })
+        "
+        >点我</LewButton
+    >
+    <LewButton
+        type="warning"
+        style="margin-right: 10px"
+        @click="
+            addAlert({
+                type: 'warning',
+                title: '成功发送一条消息',
+                content: ``,
+            })
+        "
+        >点我</LewButton
+    >
+    <LewButton
+        type="success"
+        style="margin-right: 10px"
+        @click="
+            addAlert({
+                type: 'success',
+                title: '成功发送一条消息',
+                content: ``,
+            })
+        "
+        >点我</LewButton
+    >
+    <LewButton
+        type="normal"
+        style="margin-right: 10px"
+        @click="
+            addAlert({
+                type: 'normal',
+                title: '成功发送一条消息',
+                content: `Well the Ukraine girls really knock me out
+                                    They leave the West behind
+                                    And Moscow girls make me sing and shout
+                                    That Georgia's always on my mind
+                                    Aw come on!`,
+            })
+        "
+        >点我</LewButton
+    >
+    <div style="margin-top: 20px">
+        <LewAlert :alert-list="alertList" @close="close"></LewAlert>
     </div>
 </template>
-
-<style lang="scss" scoped>
-.form-box {
-    width: 500px;
-    margin: 50px auto;
-}
-</style>

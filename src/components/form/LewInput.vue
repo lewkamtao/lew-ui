@@ -52,6 +52,7 @@ const input = (e: Event) => {
     box-sizing: border-box;
     transition: outline 0.25s, background-color 0.25s;
     outline: 2px solid rgba($color: #000000, $alpha: 0);
+    font-family: 'Noto Sans SC';
 }
 
 .lew-input:hover {
