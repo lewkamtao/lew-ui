@@ -51,8 +51,8 @@ const maskClick = () => {
     left: 0px;
     width: 100%;
     height: 100%;
-    background-color: rgba($color: #000000, $alpha: 0.24);
-    outline: 1000000px solid rgba($color: #000000, $alpha: 0.24);
+    background-color: rgba($color: #000000, $alpha: 0.35);
+    outline: 1000000px solid rgba($color: #000000, $alpha: 0.35);
     display: flex;
     justify-content: center;
     align-items: center;

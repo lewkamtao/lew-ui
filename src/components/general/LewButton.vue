@@ -51,6 +51,7 @@ defineProps({
     cursor: pointer;
     padding: 0px 13px;
     border-radius: var(--border-radius);
+    
 
     svg {
         font-size: 15px;

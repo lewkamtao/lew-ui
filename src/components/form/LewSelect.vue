@@ -116,7 +116,7 @@ const emit = defineEmits(['update:modelValue']);
     }
     .isShowOptions {
         width: 100%;
-        z-index: 9;
+        z-index: 99;
         opacity: 1;
         transform: translateY(45px);
     }

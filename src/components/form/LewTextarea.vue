@@ -39,6 +39,7 @@ const input = (e: Event) => {
         cols="3"
         :disabled="props.disabled"
         @input="input"
+        placeholder="请输入"
     ></textarea>
 </template>
 
@@ -46,7 +47,7 @@ const input = (e: Event) => {
 .lew-textarea {
     font-family: 'Noto Sans SC';
     width: 100%;
-    padding: 5px 7px;
+    padding: 5px 12px;
     font-size: 14px;
     line-height: 24px;
     min-height: 35px;
@@ -58,6 +59,9 @@ const input = (e: Event) => {
     transition: outline 0.25s, background-color 0.25s;
     outline: 2px solid rgba($color: #000000, $alpha: 0);
 }
+.lew-textarea::placeholder {
+    color: rgb(165, 165, 165);
+}
 .lew-textarea:hover {
     background-color: var(--form-bgcolor-hover);
 }
@@ -65,6 +69,7 @@ const input = (e: Event) => {
     background-color: var(--form-bgcolor-active);
 }
 .lew-textarea:focus {
+    border: 1px rgba($color: #000000, $alpha: 0) solid;
     background-color: var(--form-bgcolor-focus);
     outline: var(--form-outline-focus);
 }

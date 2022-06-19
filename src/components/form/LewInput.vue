@@ -32,6 +32,7 @@ const input = (e: Event) => {
         class="lew-input"
         :disabled="props.disabled"
         @input="input"
+        placeholder="请输入"
     />
 </template>
 
@@ -54,7 +55,9 @@ const input = (e: Event) => {
     outline: 2px solid rgba($color: #000000, $alpha: 0);
     font-family: 'Noto Sans SC';
 }
-
+.lew-input::placeholder {
+    color: rgb(165, 165, 165);
+}
 .lew-input:hover {
     background-color: var(--form-bgcolor-hover);
 }
@@ -64,6 +67,7 @@ const input = (e: Event) => {
 }
 
 .lew-input:focus {
+    border: 1px rgba($color: #000000, $alpha: 0) solid;
     background-color: var(--form-bgcolor-focus);
     outline: var(--form-outline-focus);
 }

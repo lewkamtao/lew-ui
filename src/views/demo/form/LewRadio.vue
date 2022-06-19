@@ -1,64 +1,104 @@
 <script setup lang="ts">
+import DemoBox from '../../../components/demo/DemoBox.vue';
 import { ref } from 'vue';
 import { LewTitle, LewRadioboxGroup } from '../../../components/index';
-let check = ref(0);
+let value = ref();
+
+let options = ref([
+    { name: '宋朝', id: 1 },
+    { name: '唐朝', id: 2 },
+    { name: '明朝', id: 3 },
+    { name: '清朝', id: 4 },
+]);
+
+let pre1 = ref(`<script setup lang="ts">
+import { ref } from 'vue';
+import { LewRadioboxGroup } from '../../../components';
+let value = ref();
+
+let options = ref([
+    { name: '宋朝', id: 1 },
+    { name: '唐朝', id: 2 },
+    { name: '明朝', id: 3 },
+    { name: '清朝', id: 4 },
+]);
+<\/script>
+
+<template>
+    <lew-radiobox-group
+        v-model="value"
+        direction="x"
+        :options="options"
+    ></lew-radiobox-group>
+</template>
+`);
+let pre2 = ref(`<script setup lang="ts">
+import { ref } from 'vue';
+import { LewRadioboxGroup } from '../../../components';
+let value = ref();
+
+let options = ref([
+    { name: '宋朝', id: 1 },
+    { name: '唐朝', id: 2 },
+    { name: '明朝', id: 3 },
+    { name: '清朝', id: 4 },
+]);
+<\/script>
+
+<template>
+    <lew-radiobox-group
+        v-model="value"
+        direction="y"
+        :options="options"
+    ></lew-radiobox-group>
+</template>
+`);
+let pre3 = ref(`<script setup lang="ts">
+import { ref } from 'vue';
+import { LewRadioboxGroup } from '../../../components';
+let value = ref();
+
+let options = ref([
+    { name: '宋朝', id: 1 },
+    { name: '唐朝', id: 2 },
+    { name: '明朝', id: 3 },
+    { name: '清朝', id: 4 },
+]);
+<\/script>
+
+<template>
+    <lew-radiobox-group
+        v-model="value"
+        block
+        :options="options"
+    ></lew-radiobox-group>
+</template>
+`);
 </script>
 
 <template>
     <div class="demo-wrapper">
         <lew-title>Radio</lew-title>
-        <div>
-            <lew-title style="margin-bottom: 20px" size="16px">x 布局 </lew-title>
+        <demo-box title="x 布局" :code="pre1">
             <lew-radiobox-group
-                v-model="check"
+                v-model="value"
                 direction="x"
-                :options="[
-                    { name: '库里', id: '1' },
-                    { name: '杜兰特', id: '2' },
-                    { name: '保罗', id: 3 },
-                    { name: '科比', id: 4 },
-                    { name: '乔丹', id: 5 },
-                ]"
+                :options="options"
             ></lew-radiobox-group>
-        </div>
-        <div style="margin-bottom: 20px">
-            <lew-title style="margin-bottom: 20px" size="16px">y 布局 </lew-title>
+        </demo-box>
+        <demo-box title="y 布局" :code="pre2">
             <lew-radiobox-group
-                v-model="check"
+                v-model="value"
                 direction="y"
-                :options="[
-                    { name: '加内特', id: 7 },
-                    { name: '奥尼尔', id: 8 },
-                    { name: '詹姆斯', id: 9 },
-                    { name: '伊戈达拉', id: 10 },
-                ]"
+                :options="options"
             ></lew-radiobox-group>
-        </div>
-
-        <div style="margin-bottom: 20px">
-            <lew-title style="margin-bottom: 20px" size="16px">块布局 </lew-title>
+        </demo-box>
+        <demo-box title="块" :code="pre3">
             <lew-radiobox-group
-                v-model="check"
-                direction="y"
+                v-model="value"
                 block
-                :options="[
-                    { name: '加内特', id: 7 },
-                    { name: '奥尼尔', id: 8 },
-                    { name: '詹姆斯', id: 9 },
-                    { name: '伊戈达拉', id: 10 },
-                ]"
+                :options="options"
             ></lew-radiobox-group>
-        </div>
+        </demo-box>
     </div>
 </template>
-
-<style lang="scss" scoped>
-.main {
-    width: 100%;
-    margin: 0 auto;
-
-    > div {
-        margin: 30px 0;
-    }
-}
-</style>

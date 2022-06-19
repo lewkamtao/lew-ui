@@ -86,7 +86,6 @@ let isShowCode = ref(false);
         background-color: #fff;
         box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.08);
         border-radius: 8px;
-        overflow: hidden;
     }
     .hl-pre {
         position: relative;
@@ -102,6 +101,7 @@ let isShowCode = ref(false);
         border-top: 2px rgb(236, 236, 236) solid;
         width: 100%;
         height: 30px;
+        border-radius:0px 0px 8px 8px;
         font-size: 14px;
         cursor: pointer;
         transition: all 0.15s;

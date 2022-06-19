@@ -164,7 +164,7 @@ let home_options = ref([
             <LewSwitch v-model="user.dark" />
         </lew-form-item>
         <lew-form-item direction="y" title="爱好">
-            <LewTabs v-model="user.pay" :options="pay_options" />
+            <lew-tabs v-model="user.pay" :options="pay_options" />
         </lew-form-item>
     </div>
 </template>
@@ -218,7 +218,7 @@ let home_options = ref([
                     <LewSwitch v-model="user.dark" />
                 </lew-form-item>
                 <lew-form-item direction="y" title="爱好">
-                    <LewTabs v-model="user.pay" :options="pay_options" />
+                    <lew-tabs v-model="user.pay" :options="pay_options" />
                 </lew-form-item>
             </div>
         </demo-box>

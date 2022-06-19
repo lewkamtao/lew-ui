@@ -19,14 +19,14 @@ let pre2 = ref(`<template>
 </template>
 `);
 let pre3 = ref(`<template>
-    <lew-badge round bold type="primary">primary</lew-badge>
-    <lew-badge round bold type="success">success</lew-badge>
-    <lew-badge round bold type="danger">danger</lew-badge>
-    <lew-badge round bold type="warning">waning</lew-badge>
-    <lew-badge round bold type="normal">normal</lew-badge> 
-    <lew-badge round bold type="primary">15</lew-badge>
-    <lew-badge round bold type="danger">99+</lew-badge>
-    <lew-badge round bold type="success">3</lew-badge>
+    <lew-badge round :bold="700" type="primary">primary</lew-badge>
+    <lew-badge round :bold="700" type="success">success</lew-badge>
+    <lew-badge round :bold="700" type="danger">danger</lew-badge>
+    <lew-badge round :bold="700" type="warning">waning</lew-badge>
+    <lew-badge round :bold="700" type="normal">normal</lew-badge> 
+    <lew-badge round :bold="700" type="primary">15</lew-badge>
+    <lew-badge round :bold="700" type="danger">99+</lew-badge>
+    <lew-badge round :bold="700" type="success">3</lew-badge>
 </template>
 `);
 let pre4 = ref(`<template>

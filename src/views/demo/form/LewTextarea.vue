@@ -34,7 +34,7 @@ let pre3 = ref(`<template>
         <demo-box title="x 布局" :code="pre1">
             <div style="width: 300px">
                 <lew-form-item title="账号">
-                    <LewTextarea />
+                    <LewTextarea resize="vertical" />
                 </lew-form-item>
             </div>
         </demo-box>
@@ -54,5 +54,3 @@ let pre3 = ref(`<template>
         </demo-box>
     </div>
 </template>
-
-<style lang="scss" scoped></style>

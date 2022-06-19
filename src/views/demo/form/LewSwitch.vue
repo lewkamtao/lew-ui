@@ -1,34 +1,61 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import DemoBox from '../../../components/demo/DemoBox.vue';
 import { LewTitle, LewSwitch } from '../../../components';
 
-let val = ref(false);
-const haha = () => {
-    console.log(val.value);
+let value = ref(false);
+
+const change = (e: any) => {
+    console.log(e);
+    console.log(value.value);
 };
+
+let pre1 = ref(`<script setup lang="ts">
+import { ref } from 'vue';
+import { LewSwitch } from '../../../components';
+
+let value = ref(false);
+
+const change = (e: any) => {
+    console.log(e);
+    console.log(value.value);
+};
+<\/script>
+
+<template>
+    <LewSwitch v-model="value" @change="change"></LewSwitch>
+</template>
+`);
+let pre2 = ref(`<script setup lang="ts">
+import { ref } from 'vue';
+import { LewSwitch } from '../../../components';
+
+let value = ref(false);
+
+const change = (e: any) => {
+    console.log(e);
+    console.log(value.value);
+};
+<\/script>
+
+<template>
+    <LewSwitch v-model="value" :round="false" @change="change"></LewSwitch>
+</template>
+`);
 </script>
 
 <template>
     <div class="demo-wrapper">
         <lew-title>Switch</lew-title>
-        <div>
-            <lew-title style="margin-bottom: 20px" size="16px">圆的</lew-title>
-            <LewSwitch v-model="val" @change="haha"></LewSwitch>
-        </div>
-        <div>
-            <lew-title style="margin-bottom: 20px" size="16px">方的</lew-title>
-            <LewSwitch v-model="val" :round="false" @change="haha"></LewSwitch>
-        </div>
+        <demo-box title="圆的" :code="pre1">
+            <LewSwitch v-model="value" @change="change"></LewSwitch>
+        </demo-box>
+        <demo-box title="方的" :code="pre2">
+            <LewSwitch
+                v-model="value"
+                :round="false"
+                @change="change"
+            ></LewSwitch>
+        </demo-box>
     </div>
 </template>
-
-<style lang="scss" scoped>
-.main {
-    width: 100%;
-    margin: 0 auto;
-
-    > div {
-        margin: 30px 0;
-    }
-}
-</style>

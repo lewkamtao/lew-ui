@@ -58,6 +58,7 @@ const toLink = () => {
     color: var(--primary-text-color);
     background-color: var(--primary-color-light);
     font-weight: normal;
+    
 }
 .lew-badge-bold {
     font-weight: 600;

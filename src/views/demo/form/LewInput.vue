@@ -53,14 +53,3 @@ let pre2 = ref(`<template>
         </demo-box>
     </div>
 </template>
-
-<style lang="scss" scoped>
-.main {
-    width: 100%;
-    margin: 0 auto;
-
-    > div {
-        margin: 30px 0;
-    }
-}
-</style>

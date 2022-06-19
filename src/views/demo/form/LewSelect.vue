@@ -1,48 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { LewTitle, LewSelect } from '../../../components';
-let v = ref('');
+import DemoBox from '../../../components/demo/DemoBox.vue';
+import { LewTitle, LewFormItem, LewSelect } from '../../../components';
+
+let value = ref('');
+
 let options = ref([
-    {
-        label: '广东',
-        value: '1',
-    },
-    {
-        label: '深深圳深圳深圳深圳深圳深圳深圳深圳深圳深圳深圳圳',
-        value: '2',
-    },
-    {
-        label: '杭州',
-        value: '3',
-    },
-    {
-        label: '上海',
-        value: '4',
-    },
-    {
-        label: '北京',
-        value: '5',
-    },
-    {
-        label: '广东',
-        value: '1',
-    },
-    {
-        label: '深圳',
-        value: '2',
-    },
-    {
-        label: '杭州',
-        value: '3',
-    },
-    {
-        label: '上海',
-        value: '4',
-    },
-    {
-        label: '北京',
-        value: '5',
-    },
     {
         label: '广东',
         value: '1',
@@ -64,23 +27,57 @@ let options = ref([
         value: '5',
     },
 ]);
+
+let pre1 = ref(`<script setup lang="ts">
+import { ref } from 'vue';
+import { LewFormItem, LewSelect } from '../../../components';
+
+let value = ref('');
+
+let options = ref([
+    {
+        label: '广东',
+        value: '1',
+    },
+    {
+        label: '深圳',
+        value: '2',
+    },
+    {
+        label: '杭州',
+        value: '3',
+    },
+    {
+        label: '上海',
+        value: '4',
+    },
+    {
+        label: '北京',
+        value: '5',
+    },
+]);
+<\/script>
+
+<template>
+    <lew-form-item direction="y" title="选择城市">
+        <div style="width: 350px">
+            <LewSelect v-model="value" :options="options"></LewSelect></div
+    ></lew-form-item>
+</template>
+`);
 </script>
 
 <template>
     <div class="demo-wrapper">
         <lew-title>Select</lew-title>
-        <div style="width: 350px">
-            <LewSelect v-model="v" :options="options">Github</LewSelect>
-        </div>
+        <demo-box title="选择器" :code="pre1">
+            <lew-form-item direction="y" title="选择城市">
+                <div style="width: 350px">
+                    <LewSelect
+                        v-model="value"
+                        :options="options"
+                    ></LewSelect></div
+            ></lew-form-item>
+        </demo-box>
     </div>
 </template>
-
-<style lang="scss" scoped>
-.main {
-    width: 100%;
-    margin: 0 auto;
-    > div {
-        margin: 30px 0px;
-    }
-}
-</style>

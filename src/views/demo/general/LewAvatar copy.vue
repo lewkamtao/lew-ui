@@ -1,90 +1,58 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { LewAlert, LewButton } from '../../../components';
+import {
+    LewTitle,
+    LewButton,
+    LewModal,
+    LewInput,
+    LewFormItem,
+} from '../../../components';
 
-type Options = {
-    type: string;
-    title: string;
-    content: string;
-};
-
-let alertList = ref<Options[]>([]);
-
-const addAlert = (e: Options) => {
-    alertList.value.unshift(e);
-};
-const close = (e: number) => {
-    alertList.value.splice(e, 1);
-};
-
+const modalVisible = ref(false);
 </script>
 
 <template>
-    <LewButton
-        type="primary"
-        style="margin-right: 10px"
-        @click="
-            addAlert({
-                type: 'primary',
-                title: '成功发送一条消息',
-                content: ``,
-            })
-        "
-        >点我</LewButton
+    <lew-button @click="modalVisible = true">登录</lew-button>
+    <lew-modal
+        :visible="modalVisible"
+        @mask-click="modalVisible = false"
+        width="350px"
     >
-    <LewButton
-        type="danger"
-        style="margin-right: 10px"
-        @click="
-            addAlert({
-                type: 'danger',
-                title: '成功发送一条消息',
-                content: ``,
-            })
-        "
-        >点我</LewButton
-    >
-    <LewButton
-        type="warning"
-        style="margin-right: 10px"
-        @click="
-            addAlert({
-                type: 'warning',
-                title: '成功发送一条消息',
-                content: ``,
-            })
-        "
-        >点我</LewButton
-    >
-    <LewButton
-        type="success"
-        style="margin-right: 10px"
-        @click="
-            addAlert({
-                type: 'success',
-                title: '成功发送一条消息',
-                content: ``,
-            })
-        "
-        >点我</LewButton
-    >
-    <LewButton
-        type="normal"
-        style="margin-right: 10px"
-        @click="
-            addAlert({
-                type: 'normal',
-                title: '成功发送一条消息',
-                content: `Well the Ukraine girls really knock me out
-                                    They leave the West behind
-                                    And Moscow girls make me sing and shout
-                                    That Georgia's always on my mind
-                                    Aw come on!`,
-            })
-        "
-        >点我</LewButton
-    >
-    <div style="margin-top: 20px">
-        <LewAlert :alert-list="alertList" @close="close"></LewAlert>
-    </div>
+        <div class="modal-body">
+            <lew-title :bold="700" style="margin-bottom: 20px"
+                >登录你的账户</lew-title
+            >
+            <lew-form-item direction="y" title="账号">
+                <lew-input
+            /></lew-form-item>
+            <lew-form-item
+                style="margin-bottom: 30px"
+                direction="y"
+                title="密码"
+            >
+                <lew-input
+            /></lew-form-item>
+
+            <div>
+                <lew-button
+                    type="normal"
+                    style="margin-right: 20px"
+                    @click="modalVisible = false"
+                    >关闭</lew-button
+                >
+                <lew-button @click="modalVisible = false">立即登录</lew-button>
+            </div>
+        </div>
+    </lew-modal>
 </template>
+
+<style lang="scss" scoped>
+.modal-body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    box-sizing: border-box;
+}
+</style>

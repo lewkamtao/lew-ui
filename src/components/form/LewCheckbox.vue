@@ -80,7 +80,7 @@ const setChecked = (event: Event) => {
         border: 2px rgba($color: #000000, $alpha: 0.1) solid;
         box-sizing: border-box;
         border-radius: 5px;
-        margin-right: 7px;
+        margin-right: 5px;
         transition: all 0.25s ease;
 
         .icon-checkbox {
