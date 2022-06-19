@@ -11,8 +11,8 @@ const props = defineProps({
         default: false,
     },
     bold: {
-        type: Boolean,
-        default: false,
+        type: Number,
+        default: 400,
     },
     dot: {
         type: Boolean,
@@ -39,9 +39,8 @@ const toLink = () => {
         class="lew-badge"
         :class="`${dot ? 'lew-badge-dot' : ''} ${
             round ? 'lew-badge-round' : ''
-        } ${bold ? 'lew-badge-bold' : ''} ${
-            href ? 'lew-badge-href' : ''
-        } lew-badge-${type} `"
+        } ${href ? 'lew-badge-href' : ''} lew-badge-${type} `"
+        :style="` font-weight:${bold}`"
         @click="toLink()"
     >
         <slot></slot>
@@ -58,6 +57,7 @@ const toLink = () => {
     cursor: default;
     color: var(--primary-text-color);
     background-color: var(--primary-color-light);
+    font-weight: normal;
 }
 .lew-badge-bold {
     font-weight: 600;

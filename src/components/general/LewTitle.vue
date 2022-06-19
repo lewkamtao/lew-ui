@@ -1,8 +1,8 @@
 <script setup lang="ts">
 defineProps({
     bold: {
-        type: Boolean,
-        default: true,
+        type: Number,
+        default: 600,
     },
     size: {
         type: String,
@@ -15,7 +15,7 @@ defineProps({
     <div
         class="lew-title"
         :class="`${bold ? 'lew-title-bold' : ''}`"
-        :style="`font-size:${size}`"
+        :style="`font-weight:${bold};font-size:${size}`"
     >
         <slot></slot>
     </div>
@@ -30,9 +30,5 @@ defineProps({
     text-overflow: ellipsis;
     color: var(--title-color);
     margin-bottom: 10px;
-}
-
-.lew-title-bold {
-    font-weight: 500;
 }
 </style>

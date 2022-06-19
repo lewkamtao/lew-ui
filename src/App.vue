@@ -140,7 +140,7 @@ group.value = [
                 name: 'Modal',
                 path: '/Modal',
                 label: '',
-                type: 'danger',
+                type: 'success',
             },
             {
                 name: 'Popover',

@@ -23,7 +23,7 @@ let pre3 = ref(`<template>
     <lew-badge round bold type="success">success</lew-badge>
     <lew-badge round bold type="danger">danger</lew-badge>
     <lew-badge round bold type="warning">waning</lew-badge>
-    <lew-badge round bold type="normal">normal</lew-badge>
+    <lew-badge round bold type="normal">normal</lew-badge> 
     <lew-badge round bold type="primary">15</lew-badge>
     <lew-badge round bold type="danger">99+</lew-badge>
     <lew-badge round bold type="success">3</lew-badge>
@@ -62,14 +62,14 @@ let pre5 = ref(`<template>
             <lew-badge round type="normal">normal</lew-badge>
         </demo-box>
         <demo-box title="粗的" :code="pre3">
-            <lew-badge round bold type="primary">primary</lew-badge>
-            <lew-badge round bold type="success">success</lew-badge>
-            <lew-badge round bold type="danger">danger</lew-badge>
-            <lew-badge round bold type="warning">waning</lew-badge>
-            <lew-badge round bold type="normal">normal</lew-badge>
-            <lew-badge round bold type="primary">15</lew-badge>
-            <lew-badge round bold type="danger">99+</lew-badge>
-            <lew-badge round bold type="success">3</lew-badge>
+            <lew-badge round :bold="700" type="primary">primary</lew-badge>
+            <lew-badge round :bold="700" type="success">success</lew-badge>
+            <lew-badge round :bold="700" type="danger">danger</lew-badge>
+            <lew-badge round :bold="700" type="warning">waning</lew-badge>
+            <lew-badge round :bold="700" type="normal">normal</lew-badge>
+            <lew-badge round :bold="700" type="primary">15</lew-badge>
+            <lew-badge round :bold="700" type="danger">99+</lew-badge>
+            <lew-badge round :bold="700" type="success">3</lew-badge>
         </demo-box>
         <demo-box title="链接" :code="pre4">
             <lew-badge round type="primary" href="/button">BUTTON</lew-badge>
