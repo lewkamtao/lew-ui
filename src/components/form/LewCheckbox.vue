@@ -66,7 +66,7 @@ const setChecked = (event: Event) => {
     display: inline-flex;
     align-items: center;
     user-select: none;
-    margin: 0px 20px 20px 0px;
+    margin: 0px 20px 15px 0px;
     cursor: pointer;
     color: var(--text-color);
     font-size: 14px;
