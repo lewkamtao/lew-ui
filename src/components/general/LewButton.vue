@@ -51,7 +51,6 @@ defineProps({
     cursor: pointer;
     padding: 0px 13px;
     border-radius: var(--border-radius);
-    
 
     svg {
         font-size: 15px;
@@ -59,17 +58,7 @@ defineProps({
         height: 20px;
     }
 }
-.lew-button::before {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    border-radius: var(--button-border-radius);
-    width: 100%;
-    height: 100%;
-    border: var(--form-border);
-    box-sizing: border-box;
-    content: '';
-}
+
 .lew-button::after {
     position: absolute;
     top: 50%;

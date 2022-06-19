@@ -51,14 +51,15 @@ const input = (e: Event) => {
     background-color: var(--form-bgcolor);
     color: var(--form-text-color);
     box-sizing: border-box;
-    transition: outline 0.25s, background-color 0.25s;
-    outline: 2px solid rgba($color: #000000, $alpha: 0);
+    transition: all 0.25s ease;
+    outline: none;
     font-family: 'Noto Sans SC';
 }
 .lew-input::placeholder {
     color: rgb(165, 165, 165);
 }
 .lew-input:hover {
+    border: var(--form-border-hover);
     background-color: var(--form-bgcolor-hover);
 }
 
@@ -67,8 +68,7 @@ const input = (e: Event) => {
 }
 
 .lew-input:focus {
-    border: 1px rgba($color: #000000, $alpha: 0) solid;
     background-color: var(--form-bgcolor-focus);
-    outline: var(--form-outline-focus);
+    border: var(--form-border-focus);
 }
 </style>

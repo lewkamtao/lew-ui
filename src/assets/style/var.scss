@@ -42,11 +42,11 @@
     --title-bold: 800;
     --title-color: rgb(33, 33, 33); // 标题颜色
     // 表单样式
-    --form-border: 1px rgba(0, 0, 0, 0.05) solid;
-    --form-border-hover: 1px rgba(0, 0, 0, 0.08) solid;
-    --form-border-active: 1px rgba(0, 0, 0, 0.12) solid;
+    --form-border: 1.5px rgba(0, 0, 0, 0.03) solid;
+    --form-border-hover: 1.5px rgba(0, 0, 0, 0.08) solid;
+    --form-border-active: 1.5px rgba(0, 0, 0, 0.12) solid;
     --form-border-radius: 8px;
-    --form-outline-focus: 2px solid var(--primary-color);
+    --form-border-focus: 1.5px solid var(--primary-color);
     --form-bgcolor-focus: rgb(255, 255, 255);
     --form-text-color: #333;
     // 表单背景

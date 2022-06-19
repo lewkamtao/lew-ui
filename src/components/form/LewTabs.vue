@@ -72,7 +72,7 @@ onMounted(() => {
     display: inline-flex;
     align-items: center;
     width: 100%;
-    background: rgb(239, 239, 239);
+    background: var(--form-bgcolor-hover);
     height: 34px;
     border-radius: 10px;
     overflow: hidden;

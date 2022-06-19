@@ -56,8 +56,8 @@ const input = (e: Event) => {
     background-color: var(--form-bgcolor);
     color: var(--form-text-color);
     box-sizing: border-box;
-    transition: outline 0.25s, background-color 0.25s;
-    outline: 2px solid rgba($color: #000000, $alpha: 0);
+    transition: all 0.25s ease;
+    outline: none;
 }
 .lew-textarea::placeholder {
     color: rgb(165, 165, 165);
@@ -69,9 +69,8 @@ const input = (e: Event) => {
     background-color: var(--form-bgcolor-active);
 }
 .lew-textarea:focus {
-    border: 1px rgba($color: #000000, $alpha: 0) solid;
     background-color: var(--form-bgcolor-focus);
-    outline: var(--form-outline-focus);
+    border: var(--form-border-focus);
 }
 
 .resize-none {
