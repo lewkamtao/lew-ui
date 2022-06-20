@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TheSiderbar from './components/TheSiderbar.vue';
+import TheSiderbar from './layout/TheSiderbar.vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 

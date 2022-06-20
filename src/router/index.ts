@@ -1,28 +1,28 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
-const LewAvatar = () => import('../views/demo/general/LewAvatar.vue');
-const LewBadge = () => import('../views/demo/general/LewBadge.vue');
-const LewButton = () => import('../views/demo/general/LewButton.vue');
+const LewAvatar = () => import('../views/general/LewAvatar.vue');
+const LewBadge = () => import('../views/general/LewBadge.vue');
+const LewButton = () => import('../views/general/LewButton.vue');
 
-const LewTitle = () => import('../views/demo/general/LewTitle.vue');
+const LewTitle = () => import('../views/general/LewTitle.vue');
 
-const LewCascader = () => import('../views/demo/form/LewCascader.vue');
-const LewCheckbox = () => import('../views/demo/form/LewCheckbox.vue');
-const LewInputTag = () => import('../views/demo/form/LewInputTag.vue');
-const LewRadio = () => import('../views/demo/form/LewRadio.vue');
-const LewSelect = () => import('../views/demo/form/LewSelect.vue');
-const LewSwitch = () => import('../views/demo/form/LewSwitch.vue');
-const LewTextarea = () => import('../views/demo/form/LewTextarea.vue');
-const LewInput = () => import('../views/demo/form/LewInput.vue');
-const LewForm = () => import('../views/demo/form/LewForm.vue');
-const LewTabs = () => import('../views/demo/form/LewTabs.vue');
-const LewAlert = () => import('../views/demo/feedback/LewAlert.vue');
+const LewCascader = () => import('../views/form/LewCascader.vue');
+const LewCheckbox = () => import('../views/form/LewCheckbox.vue');
+const LewInputTag = () => import('../views/form/LewInputTag.vue');
+const LewRadio = () => import('../views/form/LewRadio.vue');
+const LewSelect = () => import('../views/form/LewSelect.vue');
+const LewSwitch = () => import('../views/form/LewSwitch.vue');
+const LewTextarea = () => import('../views/form/LewTextarea.vue');
+const LewInput = () => import('../views/form/LewInput.vue');
+const LewForm = () => import('../views/form/LewForm.vue');
+const LewTabs = () => import('../views/form/LewTabs.vue');
+const LewAlert = () => import('../views/feedback/LewAlert.vue');
 
-const LewDialog = () => import('../views/demo/feedback/LewDialog.vue');
-const LewMessage = () => import('../views/demo/feedback/LewMessage.vue');
-const LewModal = () => import('../views/demo/feedback/LewModal.vue');
-const LewPopover = () => import('../views/demo/feedback/LewPopover.vue');
-const LewResult = () => import('../views/demo/feedback/LewResult.vue');
-const LewTooltip = () => import('../views/demo/feedback/LewTooltip.vue');
+const LewDialog = () => import('../views/feedback/LewDialog.vue');
+const LewMessage = () => import('../views/feedback/LewMessage.vue');
+const LewModal = () => import('../views/feedback/LewModal.vue');
+const LewPopover = () => import('../views/feedback/LewPopover.vue');
+const LewResult = () => import('../views/feedback/LewResult.vue');
+const LewTooltip = () => import('../views/feedback/LewTooltip.vue');
 
 const routes: Array<RouteRecordRaw> = [
     { path: '/', name: 'Home', component: LewAvatar },
