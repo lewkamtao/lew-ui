@@ -24,7 +24,7 @@ watch(
 );
 const emit = defineEmits(['update:modelValue']);
 
-const input = (e: unknown) => {
+const input = (e: any) => {
     let value = e.target.value;
     emit('update:modelValue', value);
 };
@@ -45,7 +45,6 @@ const input = (e: unknown) => {
 
 <style lang="scss" scoped>
 .lew-textarea {
-    font-family: 'Noto Sans SC';
     width: 100%;
     padding: 5px 12px;
     font-size: 14px;

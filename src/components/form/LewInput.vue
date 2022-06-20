@@ -20,7 +20,7 @@ watch(
 );
 const emit = defineEmits(['update:modelValue']);
 
-const input = (e: unknown) => {
+const input = (e: any) => {
     let value = e.target.value;
     emit('update:modelValue', value);
 };
@@ -53,7 +53,6 @@ const input = (e: unknown) => {
     box-sizing: border-box;
     transition: all 0.25s ease;
     outline: none;
-    font-family: 'Noto Sans SC';
 }
 .lew-input::placeholder {
     color: rgb(165, 165, 165);
