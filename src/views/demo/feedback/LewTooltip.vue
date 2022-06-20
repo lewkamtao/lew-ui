@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import DemoBox from '../../../components/demo/DemoBox.vue';
-import { LewTitle, LewButton, LewBadge } from '../../../components';
+import { LewTitle, LewButton } from '../../../components';
 import { ref } from 'vue';
 let pre1 = ref(`<template>
     <LewButton
@@ -37,7 +37,6 @@ let pre1 = ref(`<template>
     >
 </template>
 `);
-
 
 let pre2 = ref(`<template>
     <LewButton
@@ -77,7 +76,7 @@ let pre2 = ref(`<template>
         >右方</LewButton
     >
 </template>
-`)
+`);
 </script>
 
 <template>

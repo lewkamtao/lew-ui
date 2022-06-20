@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
-import LewIcon from '../icon/icon';
-
+import {
+    Info24Regular,
+    Warning24Regular,
+    CheckmarkCircle24Regular,
+    ErrorCircle24Regular,
+    Alert24Regular,
+    Dismiss20Filled,
+} from '@vicons/fluent';
+import { Icon } from '@vicons/utils';
 type Alert = {
     type: string;
     title: string;
@@ -28,18 +35,33 @@ const emit = defineEmits(['close']);
             class="lew-alert"
             :class="`lew-alert-${item.type}`"
         >
-            <div class="icon" v-html="LewIcon[item.type]"></div>
+            <div class="alert-icon">
+                <Icon v-if="item.type == `normal`" size="24">
+                    <Info24Regular />
+                </Icon>
+                <Icon v-if="item.type == `warning`" size="24">
+                    <Warning24Regular />
+                </Icon>
+                <Icon v-if="item.type == `success`" size="24">
+                    <CheckmarkCircle24Regular />
+                </Icon>
+                <Icon v-if="item.type == `danger`" size="24">
+                    <ErrorCircle24Regular />
+                </Icon>
+                <Icon v-if="item.type == `primary`" size="24">
+                    <Alert24Regular />
+                </Icon>
+            </div>
+
             <div class="message">
                 <div class="title">{{ item.title }}</div>
                 <div v-show="item.content" class="content">
                     {{ item.content }}
                 </div>
             </div>
-            <div
-                class="close"
-                @click="emit('close', i)"
-                v-html="LewIcon.close"
-            ></div>
+            <div class="close" @click="emit('close', i)">
+                <Icon size="20"> <Dismiss20Filled /> </Icon>
+            </div>
         </div>
     </div>
 </template>
@@ -65,18 +87,8 @@ const emit = defineEmits(['close']);
         box-sizing: border-box;
         opacity: 0.8;
         transition: all 0.25s ease;
-
-        .icon {
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 1px 10px 0px 10px;
-            svg {
-                width: 18px;
-                height: 18px;
-            }
+        .alert-icon {
+            margin-right: 5px;
         }
         .close {
             position: absolute;
@@ -91,10 +103,6 @@ const emit = defineEmits(['close']);
             box-sizing: border-box;
             cursor: pointer;
             user-select: none;
-            svg {
-                width: 18px;
-                height: 18px;
-            }
         }
         .close:hover {
             background: rgba($color: #000000, $alpha: 0.05);

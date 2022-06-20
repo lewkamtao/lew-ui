@@ -13,7 +13,7 @@ import tooltip from './components/feedback/lewTooltips';
 app.directive('highlight', {
     mounted(el) {
         const blocks = el.querySelectorAll('pre code');
-        blocks.forEach((block: any) => {
+        blocks.forEach((block: unknown) => {
             hljs.highlightBlock(block);
         });
     },

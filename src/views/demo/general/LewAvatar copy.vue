@@ -15,8 +15,8 @@ const modalVisible = ref(false);
     <lew-button @click="modalVisible = true">登录</lew-button>
     <lew-modal
         :visible="modalVisible"
-        @mask-click="modalVisible = false"
         width="350px"
+        @mask-click="modalVisible = false"
     >
         <div class="modal-body">
             <lew-title :bold="700" style="margin-bottom: 20px"

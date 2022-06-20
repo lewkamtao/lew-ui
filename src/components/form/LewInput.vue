@@ -20,8 +20,8 @@ watch(
 );
 const emit = defineEmits(['update:modelValue']);
 
-const input = (e: Event) => {
-    let value = (<HTMLInputElement>e.target).value;
+const input = (e: unknown) => {
+    let value = e.target.value;
     emit('update:modelValue', value);
 };
 </script>
@@ -31,8 +31,8 @@ const input = (e: Event) => {
         v-model="v"
         class="lew-input"
         :disabled="props.disabled"
-        @input="input"
         placeholder="请输入"
+        @input="input"
     />
 </template>
 

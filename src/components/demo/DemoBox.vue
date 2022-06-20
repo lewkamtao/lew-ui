@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ChevronUp24Regular, Code24Regular } from '@vicons/fluent';
+import { Icon } from '@vicons/utils';
 import { LewTitle, LewBadge } from '../../components';
 import { ref } from 'vue';
 defineProps({
@@ -29,7 +31,7 @@ let isShowCode = ref(false);
     <div class="demo-box">
         <lew-title size="16px"
             >{{ title }}
-            <lew-badge style="margin: 2px 0px 0px 5px" v-if="badge">{{
+            <lew-badge v-if="badge" style="margin: 2px 0px 0px 5px">{{
                 badge
             }}</lew-badge>
         </lew-title>
@@ -41,37 +43,15 @@ let isShowCode = ref(false);
                 </div>
             </div>
             <div class="show-bar" @click="isShowCode = !isShowCode">
-                <svg
-                    v-show="!isShowCode"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    viewBox="0 0 512 512"
-                >
-                    <path
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="square"
-                        stroke-miterlimit="10"
-                        stroke-width="48"
-                        d="M112 184l144 144l144-144"
-                    ></path>
-                </svg>
+                <div class="icon">
+                    <Icon v-if="!isShowCode" size="20">
+                        <Code24Regular />
+                    </Icon>
+                    <Icon v-if="isShowCode" size="20">
+                        <ChevronUp24Regular />
+                    </Icon>
+                </div>
 
-                <svg
-                    v-show="isShowCode"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    viewBox="0 0 512 512"
-                >
-                    <path
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="48"
-                        d="M112 328l144-144l144 144"
-                    ></path>
-                </svg>
                 {{ isShowCode ? '关闭' : '显示源码' }}
             </div>
         </div>
@@ -101,15 +81,15 @@ let isShowCode = ref(false);
         border-top: 2px rgb(236, 236, 236) solid;
         width: 100%;
         height: 30px;
-        border-radius:0px 0px 8px 8px;
+        border-radius: 0px 0px 8px 8px;
         font-size: 14px;
         cursor: pointer;
         transition: all 0.15s;
-        svg {
-            width: 18px;
-            height: 18px;
-            font-size: 15px;
-            margin-right: 10px;
+        .icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 5px;
         }
     }
     .show-bar:hover {

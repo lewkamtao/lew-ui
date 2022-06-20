@@ -1,12 +1,12 @@
 <template>
     <teleport to="#lew-modal">
         <transition name="fade">
-            <div class="lew-modal" @click="maskClick" v-if="visible">
+            <div v-if="visible" class="lew-modal" @click="maskClick">
                 <div
                     v-if="visible"
-                    @click.stop
                     class="lew-modal-box"
                     :style="`width:${width};height:${height}`"
+                    @click.stop
                 >
                     <slot></slot>
                 </div>
@@ -18,7 +18,7 @@
 import useDOMCreate from '../hooks/useDOMCreate';
 useDOMCreate('lew-modal');
 
-const props = defineProps({
+defineProps({
     title: {
         type: String,
         default: '',

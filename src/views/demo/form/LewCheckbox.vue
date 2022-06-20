@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DemoBox from '../../../components/demo/DemoBox.vue';
 import { ref } from 'vue';
-import { LewTitle, LewCheckboxGroup, LewBadge } from '../../../components';
+import { LewTitle, LewCheckboxGroup } from '../../../components';
 
 let options = ref([
     { name: '宋朝', id: 1 },

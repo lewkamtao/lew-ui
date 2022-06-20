@@ -5,7 +5,7 @@ import { LewTitle, LewSwitch } from '../../../components';
 
 let value = ref(false);
 
-const change = (e: any) => {
+const change = (e: unknown) => {
     console.log(e);
     console.log(value.value);
 };
