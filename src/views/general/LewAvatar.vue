@@ -29,8 +29,7 @@ let avatarUrl = ref(
 }
 <\/style>
 `);
-let pre2 = ref(`
-<script setup lang="ts">
+let pre2 = ref(`<script setup lang="ts">
 import { LewAvatar } from '../../../../packages';
 import { ref } from 'vue';
 
@@ -40,8 +39,20 @@ let avatarUrl = ref(
 <\/script>
 
 <template>
-    <lew-avatar :src="avatarUrl" alt="avatar" />
-    <lew-avatar round :src="avatarUrl" alt="avatar" />
+    <lew-avatar :src="avatarUrl" status="online" status-position="top-left" />
+    <lew-avatar :src="avatarUrl" status="busy" status-position="top-right" />
+    <lew-avatar
+        :src="avatarUrl"
+        round
+        status="away"
+        status-position="bottom-left"
+    />
+    <lew-avatar
+        :src="avatarUrl"
+        round
+        status="offline"
+        status-position="bottom-right"
+    />
 </template>
 
 <style lang="scss" scoped>
