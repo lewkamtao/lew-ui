@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import DemoBox from '../../../components/demo/DemoBox.vue';
-import { LewTitle } from '../../../components';
+import DemoBox from '../../../components/DemoBox.vue';
+import { LewTitle } from '../../../../packages';
 import { ref } from 'vue';
 let pre1 = ref(`<template>
     <lew-title :bold="400" size="14px">14px 常规</lew-title>

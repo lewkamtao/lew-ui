@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import DemoBox from '../../../components/demo/DemoBox.vue';
-import { LewTitle, LewFormItem, LewSelect } from '../../../components';
+import DemoBox from '../../../components/DemoBox.vue';
+import { LewTitle, LewFormItem, LewSelect } from '../../../../packages';
 
 let value = ref('');
 
@@ -30,7 +30,7 @@ let options = ref([
 
 let pre1 = ref(`<script setup lang="ts">
 import { ref } from 'vue';
-import { LewFormItem, LewSelect } from '../../../components';
+import { LewFormItem, LewSelect } from '../../../../packages';
 
 let value = ref('');
 

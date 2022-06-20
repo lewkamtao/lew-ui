@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import DemoBox from '../../../components/demo/DemoBox.vue';
-import { LewTitle, LewButton } from '../../../components';
+import DemoBox from '../../../components/DemoBox.vue';
+import { LewTitle, LewButton } from '../../../../packages';
 import { ref } from 'vue';
 let pre1 = ref(`<template>
     <lew-button type="primary">确定</lew-button>

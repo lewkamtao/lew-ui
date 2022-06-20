@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LewTitle } from '../../../components';
+import { LewTitle } from '../../../../packages';
 </script>
 
 <template>

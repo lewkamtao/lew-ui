@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import DemoBox from '../../../components/demo/DemoBox.vue';
+import DemoBox from '../../../components/DemoBox.vue';
 import { ref } from 'vue';
-import { LewTitle, LewCheckboxGroup } from '../../../components';
+import { LewTitle, LewCheckboxGroup } from '../../../../packages';
 
 let options = ref([
     { name: '宋朝', id: 1 },
@@ -14,7 +14,7 @@ let value = ref([]);
 
 let pre1 = ref(`<script setup lang="ts">
 import { ref } from 'vue';
-import { LewCheckboxGroup } from '../../../components';
+import { LewCheckboxGroup } from '../../../../packages';
 // 定义选项
 let options = ref([
     { name: '宋朝', id: 1 },
@@ -36,7 +36,7 @@ let value = ref([]);
 `);
 let pre2 = ref(`<script setup lang="ts">
 import { ref } from 'vue';
-import { LewCheckboxGroup } from '../../../components';
+import { LewCheckboxGroup } from '../../../../packages';
 // 定义选项
 let options = ref([
     { name: '宋朝', id: 1 },
@@ -59,7 +59,7 @@ let value = ref([]);
 `);
 let pre3 = ref(`<script setup lang="ts">
 import { ref } from 'vue';
-import { LewCheckboxGroup } from '../../../components';
+import { LewCheckboxGroup } from '../../../../packages';
 // 定义选项
 let options = ref([
     { name: '宋朝', id: 1 },
@@ -82,7 +82,7 @@ let value = ref([]);
 `);
 let pre4 = ref(`<script setup lang="ts">
 import { ref } from 'vue';
-import { LewCheckboxGroup } from '../../../components';
+import { LewCheckboxGroup } from '../../../../packages';
 // 定义选项
 let options = ref([
     { name: '宋朝', id: 1 },

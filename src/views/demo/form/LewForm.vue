@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DemoBox from '../../../components/demo/DemoBox.vue';
+import DemoBox from '../../../components/DemoBox.vue';
 import { ref } from 'vue';
 import {
     LewTitle,
@@ -11,7 +11,7 @@ import {
     LewTextarea,
     LewSelect,
     LewTabs,
-} from '../../../components';
+} from '../../../../packages';
 
 let user = ref({
     username: '',
@@ -76,7 +76,7 @@ import {
     LewTextarea,
     LewSelect,
     LewTabs,
-} from '../../../components';
+} from '../../../../packages';
 
 let user = ref({
     username: '',

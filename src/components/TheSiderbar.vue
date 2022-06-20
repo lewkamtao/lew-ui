@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
-import { LewBadge } from '../index';
+import { LewBadge } from '../../packages';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

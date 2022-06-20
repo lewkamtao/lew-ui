@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import DemoBox from '../../../components/demo/DemoBox.vue';
+import DemoBox from '../../../components/DemoBox.vue';
 import { ref } from 'vue';
-import { LewTitle, LewFormItem, LewTextarea } from '../../../components';
+import { LewTitle, LewFormItem, LewTextarea } from '../../../../packages';
 let pre1 = ref(`<template>
     <div style="width: 300px">
         <lew-form-item title="账号">

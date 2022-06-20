@@ -1,17 +1,37 @@
 {
     "name": "lew-ui",
-    "private": true,
-    "version": "0.0.0",
+    "version": "1.0.13",
+    "description": "A Component Library for Vue3.js.",
+    "keywords": [
+        "vue3",
+        "components"
+    ],
+    "author": "lewkamtao",
+    "license": "MIT",
     "scripts": {
         "dev": "vite",
         "build": "vue-tsc --noEmit && vite build",
         "preview": "vite preview",
-        "eslint:comment": "使用 ESLint 检查并自动修复 src 目录下所有扩展名为 .js 和 .vue 的文件",
         "eslint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-        "prettier:comment": "自动格式化当前目录下的所有文件",
         "prettier": "prettier --write"
     },
+    "files": [
+        "dist"
+    ],
+    "module": "./dist/lew.es.ts",
+    "main": "./dist/lew.umd.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/lew.es.ts",
+            "require": "./dist/lew.umd.ts"
+        },
+        "./dist/style.css": {
+            "import": "./dist/style.css",
+            "require": "./dist/style.css"
+        }
+    },
     "dependencies": {
+        "lew-ui": "^1.0.5",
         "tippy.js": "^6.3.7",
         "vue": "^3.2.25",
         "vue-router": "^4.0.13"

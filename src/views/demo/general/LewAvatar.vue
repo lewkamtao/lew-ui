@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import DemoBox from '../../../components/demo/DemoBox.vue';
-import { LewTitle, LewAvatar } from '../../../components';
+import DemoBox from '../../../components/DemoBox.vue';
+import { LewTitle, LewAvatar } from '../../../../packages';
 
 import { ref } from 'vue';
 
@@ -18,9 +18,9 @@ let pre2 = ref(`<template>
     <lew-avatar :src="avatarUrl" status="busy" status-position="top-right" />
     <lew-avatar
         :src="avatarUrl" 
-        round
+        round 
         status="away"
-        status-position="bottom-left"
+        status-position="bottom-left" 
     />
     <lew-avatar
         :src="avatarUrl"

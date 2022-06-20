@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ChevronUp24Regular, Code24Regular } from '@vicons/fluent';
 import { Icon } from '@vicons/utils';
-import { LewTitle, LewBadge } from '../../components';
+import { LewTitle, LewBadge } from '../../packages';
 import { ref } from 'vue';
 defineProps({
     title: {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import DemoBox from '../../../components/demo/DemoBox.vue';
-import { LewTitle, LewSwitch } from '../../../components';
+import DemoBox from '../../../components/DemoBox.vue';
+import { LewTitle, LewSwitch } from '../../../../packages';
 
 let value = ref(false);
 
@@ -12,7 +12,7 @@ const change = (e: unknown) => {
 
 let pre1 = ref(`<script setup lang="ts">
 import { ref } from 'vue';
-import { LewSwitch } from '../../../components';
+import { LewSwitch } from '../../../../packages';
 
 let value = ref(false);
 
@@ -28,7 +28,7 @@ const change = (e: any) => {
 `);
 let pre2 = ref(`<script setup lang="ts">
 import { ref } from 'vue';
-import { LewSwitch } from '../../../components';
+import { LewSwitch } from '../../../../packages';
 
 let value = ref(false);
 

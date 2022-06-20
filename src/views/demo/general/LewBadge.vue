@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import DemoBox from '../../../components/demo/DemoBox.vue';
-import { LewTitle, LewBadge } from '../../../components';
+import DemoBox from '../../../components/DemoBox.vue';
+import { LewTitle, LewBadge } from '../../../../packages';
 import { ref } from 'vue';
 let pre1 = ref(`<template>
     <lew-badge type="primary">primary</lew-badge>

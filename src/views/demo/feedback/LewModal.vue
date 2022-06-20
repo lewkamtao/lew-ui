@@ -6,20 +6,20 @@ import {
     LewModal,
     LewInput,
     LewFormItem,
-} from '../../../components';
-import DemoBox from '../../../components/demo/DemoBox.vue';
+} from '../../../../packages';
+import DemoBox from '../../../components/DemoBox.vue';
 
 const modalVisible = ref(false);
 
 let pre1 = ref(`<script setup lang="ts">
 import { ref } from 'vue';
 import {
-    LewTitle,
+    LewTitle, 
     LewButton,
     LewModal,
     LewInput,
     LewFormItem,
-} from '../../../components';
+} from '../../../../packages';
 
 const modalVisible = ref(false);
 <\/script>
@@ -29,7 +29,7 @@ const modalVisible = ref(false);
     <lew-modal
         :visible="modalVisible"
         @mask-click="modalVisible = false"
-        width="350px"
+        width="350px" 
     >
         <div class="modal-body">
             <lew-title :bold="700" style="margin-bottom: 20px"

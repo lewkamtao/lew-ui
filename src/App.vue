@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TheSiderbar from './components/layout/LewSiderbar.vue';
+import TheSiderbar from './components/TheSiderbar.vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -182,7 +182,7 @@ const toPath = (path: string) => {
         </div>
         <div class="container">
             <div class="sider">
-                <TheSiderbar :group="group" />
+                <the-siderbar :group="group" />
             </div>
             <div class="app-main btf-scrollbar">
                 <router-view></router-view>

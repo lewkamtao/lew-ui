@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import DemoBox from '../../../components/demo/DemoBox.vue';
+import DemoBox from '../../../components/DemoBox.vue';
 import { ref } from 'vue';
-import { LewTitle, LewRadioboxGroup } from '../../../components/index';
+import { LewTitle, LewRadioboxGroup } from '../../../../packages/index';
 let value = ref();
 
 let options = ref([
@@ -13,7 +13,7 @@ let options = ref([
 
 let pre1 = ref(`<script setup lang="ts">
 import { ref } from 'vue';
-import { LewRadioboxGroup } from '../../../components';
+import { LewRadioboxGroup } from '../../../../packages';
 let value = ref();
 
 let options = ref([
@@ -34,7 +34,7 @@ let options = ref([
 `);
 let pre2 = ref(`<script setup lang="ts">
 import { ref } from 'vue';
-import { LewRadioboxGroup } from '../../../components';
+import { LewRadioboxGroup } from '../../../../packages';
 let value = ref();
 
 let options = ref([
@@ -55,7 +55,7 @@ let options = ref([
 `);
 let pre3 = ref(`<script setup lang="ts">
 import { ref } from 'vue';
-import { LewRadioboxGroup } from '../../../components';
+import { LewRadioboxGroup } from '../../../../packages';
 let value = ref();
 
 let options = ref([

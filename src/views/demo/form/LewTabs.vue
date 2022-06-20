@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import DemoBox from '../../../components/demo/DemoBox.vue';
-import { LewTitle, LewTabs } from '../../../components';
+import DemoBox from '../../../components/DemoBox.vue';
+import { LewTitle, LewTabs } from '../../../../packages';
 
 const options = ref([
     { label: '北京', value: '1' },
@@ -25,7 +25,7 @@ const change = (e: Options) => {
 
 let pre1 = ref(`<script setup lang="ts">
 import { ref } from 'vue';
-import { LewTabs } from '../../../components';
+import { LewTabs } from '../../../../packages';
 
 const options = ref([
     { label: '北京', value: '1' },

@@ -6,7 +6,7 @@ import {
     LewModal,
     LewInput,
     LewFormItem,
-} from '../../../components';
+} from '../../../../packages';
 
 const modalVisible = ref(false);
 </script>

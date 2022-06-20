@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import DemoBox from '../../../components/demo/DemoBox.vue';
+import DemoBox from '../../../components/DemoBox.vue';
 import { ref } from 'vue';
-import { LewTitle, LewAlert, LewButton } from '../../../components';
+import { LewTitle, LewAlert, LewButton } from '../../../../packages';
 
 type Options = {
     type: string;
@@ -20,7 +20,7 @@ const close = (e: number) => {
 
 let pre1 = ref(`<script setup lang="ts">
 import { ref } from 'vue';
-import { LewAlert, LewButton } from '../../../components';
+import { LewAlert, LewButton } from '../../../../packages';
 
 type Options = {
     type: string;
