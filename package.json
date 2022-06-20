@@ -10,7 +10,8 @@
     "license": "MIT",
     "scripts": {
         "dev": "vite",
-        "build": "vue-tsc --noEmit && vite build",
+        "build": "vue-tsc --noEmit && vite build --mode demo",
+        "build:package": "vue-tsc --noEmit && vite build --mode package",
         "preview": "vite preview",
         "eslint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
         "prettier": "prettier --write"
