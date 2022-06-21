@@ -34,8 +34,9 @@ const dialog = (type: string, options: Options) => {
     const div: any = document.createElement('div');
     document.body.appendChild(div);
     const close = () => {
+        // @ts-ignore
         app.unmount(div);
-        div.remove(); 
+        div.remove();
     };
     const app = createApp({
         render() {
