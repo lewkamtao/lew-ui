@@ -43,10 +43,11 @@ const toPath = (item: Item) => {
             >
                 {{ item.name }}
                 <LewBadge
+                    v-if="item.label"
                     style="margin-left: 10px"
-                    dot
                     :type="item.type"
-                ></LewBadge>
+                    >{{ item.label }}</LewBadge
+                >
             </div>
         </div>
     </div>
@@ -79,7 +80,7 @@ const toPath = (item: Item) => {
             margin-left: 17px;
             border-radius: var(--border-radius);
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .item:hover {

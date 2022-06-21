@@ -1,6 +1,6 @@
 <template>
     <teleport to="#lew-modal">
-        <transition name="fade">
+        <transition name="lew-modal">
             <div v-if="visible" class="lew-modal" @click="maskClick">
                 <div
                     v-if="visible"
@@ -63,12 +63,12 @@ const maskClick = () => {
         box-shadow: 0px 15px 50px rgba($color: #000000, $alpha: 0.05);
     }
 }
-.fade-enter-active,
-.fade-leave-active {
-    transition: all 0.2s ease;
+.lew-modal-enter-active,
+.lew-modal-leave-active {
+    transition: all 0.25s ease;
 }
-.fade-enter-from,
-.fade-leave-to {
+.lew-modal-enter-from,
+.lew-modal-leave-to {
     opacity: 0;
     transform: translateY(10px);
 }

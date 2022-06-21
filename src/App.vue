@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import TheSiderbar from './layout/TheSiderbar.vue';
+
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -123,19 +124,20 @@ group.value = [
                 label: '',
                 type: 'success',
             },
+            {
+                name: 'Tooltip',
+                path: '/Tooltip',
+                label: '',
+                type: 'success',
+            },
 
             {
                 name: 'Dialog',
                 path: '/Dialog',
-                label: '',
-                type: 'danger',
+                label: 'new',
+                type: 'success',
             },
-            {
-                name: 'Message',
-                path: '/Message',
-                label: '',
-                type: 'danger',
-            },
+
             {
                 name: 'Modal',
                 path: '/Modal',
@@ -143,22 +145,23 @@ group.value = [
                 type: 'success',
             },
             {
-                name: 'Popover',
-                path: '/Popover',
-                label: '',
-                type: 'danger',
-            },
-            {
-                name: 'Tooltip',
-                path: '/Tooltip',
-                label: '',
+                name: 'Message',
+                path: '/Message',
+                label: 'new',
                 type: 'success',
             },
+            // {
+            //     name: 'Popover',
+            //     path: '/Popover',
+            //     label: '',
+            //     type: 'danger',
+            // },
+
             {
                 name: 'Result',
                 path: '/Result',
-                label: '',
-                type: 'danger',
+                label: 'coding',
+                type: 'primary',
             },
         ],
     },
@@ -239,6 +242,7 @@ const toPath = (path: string) => {
                 margin: 10px;
                 padding: 10px;
                 opacity: 0.6;
+                font-size: 14px;
                 cursor: pointer;
             }
             a:hover,

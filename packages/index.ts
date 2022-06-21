@@ -18,6 +18,8 @@ import LewAlert from './components/feedback/LewAlert.vue';
 import LewModal from './components/feedback/LewModal.vue';
 
 import LewTooltips from './components/feedback/LewTooltips';
+import LewDialog from './components/feedback/LewDialog';
+import LewMessage from './components/feedback/LewMessage';
 
 // 引入样式
 import './styles/reset.scss';
@@ -42,4 +44,6 @@ export {
     LewAlert,
     LewModal,
     LewTooltips,
+    LewDialog,
+    LewMessage,
 };

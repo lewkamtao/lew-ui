@@ -18,6 +18,6 @@ export default {
                     placement: binding.value.placement,
                 });
             },
-        });
+        }); 
     },
 };

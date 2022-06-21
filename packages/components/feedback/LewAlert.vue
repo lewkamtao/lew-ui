@@ -88,7 +88,7 @@ const emit = defineEmits(['close']);
         opacity: 0.8;
         transition: all 0.25s ease;
         .alert-icon {
-            margin-right: 5px;
+            margin: -1px 5px 0px 0px;
         }
         .close {
             position: absolute;
@@ -113,6 +113,7 @@ const emit = defineEmits(['close']);
         .message {
             width: calc(100% - 100px);
             .title {
+                margin-top: 1px;
                 font-size: 15px;
                 width: 100%;
             }
