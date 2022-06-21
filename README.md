@@ -12,6 +12,13 @@ npm install lew-ui -save
 
 ## How to use
 
+引入css
+```js
+// main.ts
+import "lew-ui/dist/style.css";
+```
+
+页面
 ```vue
 <script setup lang="ts">
 import { LewButton } from 'lew-ui';
