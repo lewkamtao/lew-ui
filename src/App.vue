@@ -119,18 +119,11 @@ group.value = [
         title: '反馈',
         items: [
             {
-                name: 'Alert',
-                path: '/Alert',
-                label: '',
+                name: 'Message',
+                path: '/Message',
+                label: 'new',
                 type: 'success',
             },
-            {
-                name: 'Tooltip',
-                path: '/Tooltip',
-                label: '',
-                type: 'success',
-            },
-
             {
                 name: 'Dialog',
                 path: '/Dialog',
@@ -144,10 +137,17 @@ group.value = [
                 label: '',
                 type: 'success',
             },
+
             {
-                name: 'Message',
-                path: '/Message',
-                label: 'new',
+                name: 'Alert',
+                path: '/Alert',
+                label: '',
+                type: 'success',
+            },
+            {
+                name: 'Tooltip',
+                path: '/Tooltip',
+                label: '',
                 type: 'success',
             },
             // {
@@ -157,12 +157,12 @@ group.value = [
             //     type: 'danger',
             // },
 
-            {
-                name: 'Result',
-                path: '/Result',
-                label: 'coding',
-                type: 'primary',
-            },
+            // {
+            //     name: 'Result',
+            //     path: '/Result',
+            //     label: 'coding',
+            //     type: 'primary',
+            // },
         ],
     },
 ];
