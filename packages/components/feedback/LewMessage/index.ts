@@ -1,13 +1,4 @@
-import LewMessage from './LewMessage.vue';
 import './LewMessage.scss';
-import {
-    Info24Regular,
-    Warning24Regular,
-    CheckmarkCircle24Regular,
-    ErrorCircle24Regular,
-    Alert24Regular,
-    Dismiss20Filled,
-} from '@vicons/fluent';
 
 const warning = (content: string) => {
     dialog('warning', content);
@@ -56,7 +47,7 @@ const addMessage = (type: string, text: string) => {
         info: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none"><path d="M12 1.996a7.49 7.49 0 0 1 7.496 7.25l.004.25v4.097l1.38 3.156a1.249 1.249 0 0 1-1.145 1.75L15 18.502a3 3 0 0 1-5.995.177L9 18.499H4.275a1.251 1.251 0 0 1-1.147-1.747L4.5 13.594V9.496c0-4.155 3.352-7.5 7.5-7.5zM13.5 18.5l-3 .002a1.5 1.5 0 0 0 2.993.145l.007-.147zM12 3.496c-3.32 0-6 2.674-6 6v4.41L4.656 17h14.697L18 13.907V9.509l-.003-.225A5.988 5.988 0 0 0 12 3.496z" fill="currentColor"></path></g></svg>`,
     };
     newMessage.innerHTML = `${svgArr[type]}<span>${text}</span>`;
-    LewMessageDom.appendChild(newMessage, LewMessageDom.childNodes[0]);
+    LewMessageDom?.appendChild(newMessage, LewMessageDom?.childNodes[0]);
     newMessage.setAttribute('class', `message message-${type}`);
     setTimeout(() => {
         newMessage.setAttribute(
@@ -69,7 +60,7 @@ const addMessage = (type: string, text: string) => {
                 `message message-${type} message-hidden`,
             );
             setTimeout(() => {
-                LewMessageDom.removeChild(newMessage);
+                LewMessageDom?.removeChild(newMessage);
             }, 250);
         }, 3000);
     }, 10);

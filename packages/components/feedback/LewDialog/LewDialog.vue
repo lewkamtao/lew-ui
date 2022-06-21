@@ -1,6 +1,6 @@
 <script lang="ts" setup name="dialog">
 import { ref } from 'vue';
-import { LewButton } from '../../../index.ts';
+import { LewButton } from '../../../../packages';
 const props = defineProps({
     visible: {
         type: Boolean,

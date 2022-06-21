@@ -35,7 +35,7 @@ const dialog = (type: string, options: Options) => {
     document.body.appendChild(div);
     const close = () => {
         app.unmount(div);
-        div.remove();
+        div.remove(); 
     };
     const app = createApp({
         render() {

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { LewTitle } from '../../../packages';
-import DemoMessage1 from '../../demo/feedback/message/DemoMessage1';
-import DemoBox from '../../layout/DemoBox';
+import DemoMessage1 from '../../demo/feedback/message/DemoMessage1.vue';
+import DemoBox from '../../layout/DemoBox.vue';
 
 let pre1 = ref(``);
 </script>
