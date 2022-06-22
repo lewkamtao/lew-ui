@@ -58,7 +58,7 @@ const maskClick = () => {
     align-items: center;
     z-index: 2001;
     .lew-modal-box {
-        border-radius: 8px;
+        border-radius: var(--lew-border-radius);
         background-color: #fff;
         box-shadow: 0px 15px 50px rgba($color: #000000, $alpha: 0.05);
     }

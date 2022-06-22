@@ -72,10 +72,11 @@ onMounted(() => {
     display: inline-flex;
     align-items: center;
     width: 100%;
-    background: var(--form-bgcolor-hover);
+    background: var(--lew-form-bgcolor);
     height: 34px;
-    border-radius: 10px;
+    border-radius: var(--lew-form-border-radius);
     overflow: hidden;
+    transition: all 0.25s;
     .lew-tabs-item {
         position: relative;
         z-index: 9;
@@ -83,9 +84,9 @@ onMounted(() => {
         text-align: center;
         height: 28px;
         line-height: 28px;
-        border-radius: 6px;
+        border-radius: var(--lew-form-border-radius);
         margin: 3px;
-        color: var(--text-color);
+        color: var(--lew-text-color-1);
         white-space: nowrap;
         cursor: pointer;
         transition: all 0.45s cubic-bezier(0.65, 0, 0.35, 1);
@@ -98,11 +99,14 @@ onMounted(() => {
         left: 0px;
         z-index: 9;
         height: 28px;
-        border-radius: 7px;
+        border-radius: 3px;
         transition: all 0.45s cubic-bezier(0.65, 0, 0.35, 1);
-        background: #fff;
+        background: var(--lew-bgcolor-0);
         transform: translateX(3px);
         box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);
     }
+}
+.lew-tabs:hover {
+    background: var(--lew-form-bgcolor-hover);
 }
 </style>

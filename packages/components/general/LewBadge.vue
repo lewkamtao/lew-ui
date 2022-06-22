@@ -55,8 +55,8 @@ const toLink = () => {
     font-size: 0.75rem;
     margin-right: 10px;
     cursor: default;
-    color: var(--primary-text-color);
-    background-color: var(--primary-color-light);
+    color: var(--lew-primary-text-color);
+    background-color: var(--lew-primary-color-light);
     font-weight: normal;
 }
 .lew-badge-bold {
@@ -83,44 +83,44 @@ const toLink = () => {
 }
 
 .lew-badge-dot.lew-badge-primary {
-    background-color: var(--primary-color-hover);
+    background-color: var(--lew-primary-color-hover);
 }
 
 .lew-badge-dot.lew-badge-success {
-    background-color: var(--success-color-hover);
+    background-color: var(--lew-success-color-hover);
 }
 
 .lew-badge-dot.lew-badge-warning {
-    background-color: var(--warning-color-hover);
+    background-color: var(--lew-warning-color-hover);
 }
 
 .lew-badge-dot.lew-badge-danger {
-    background-color: var(--danger-color-hover);
+    background-color: var(--lew-danger-color-hover);
 }
 
 .lew-badge-dot.lew-badge-normal {
-    background-color: var(--normal-color-hover);
+    background-color: var(--lew-normal-color-hover);
 }
 
 .lew-badge-primary {
-    color: var(--primary-text-color);
-    background-color: var(--primary-color-light);
+    color: var(--lew-primary-text-color);
+    background-color: var(--lew-primary-color-light);
 }
 .lew-badge-success {
-    color: var(--success-text-color);
-    background-color: var(--success-color-light);
+    color: var(--lew-success-text-color);
+    background-color: var(--lew-success-color-light);
 }
 
 .lew-badge-warning {
-    color: var(--warning-text-color);
-    background-color: var(--warning-color-light);
+    color: var(--lew-warning-text-color);
+    background-color: var(--lew-warning-color-light);
 }
 .lew-badge-danger {
-    color: var(--danger-text-color);
-    background-color: var(--danger-color-light);
+    color: var(--lew-danger-text-color);
+    background-color: var(--lew-danger-color-light);
 }
 .lew-badge-normal {
-    color: var(--normal-text-color);
-    background-color: var(--normal-color-light);
+    color: var(--lew-normal-text-color);
+    background-color: var(--lew-normal-color-light);
 }
 </style>

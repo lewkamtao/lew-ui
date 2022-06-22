@@ -28,7 +28,7 @@ defineProps({
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: var(--title-color);
+    color: var(--lew-text-color-3);
     margin-bottom: 10px;
 }
 </style>

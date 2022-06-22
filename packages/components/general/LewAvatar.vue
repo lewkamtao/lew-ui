@@ -45,7 +45,7 @@ defineProps({
     img {
         width: 100%;
         height: 100%;
-        border-radius: 5px;
+        border-radius: var(--lew-border-radius);
     }
 
     .round {
@@ -65,19 +65,19 @@ defineProps({
     }
 
     .dot-online {
-        background-color: var(--success-color);
+        background-color: var(--lew-success-color);
     }
 
     .dot-busy {
-        background-color: var(--danger-color);
+        background-color: var(--lew-danger-color);
     }
 
     .dot-offline {
-        background-color: var(--normal-color-dark);
+        background-color: var(--lew-normal-color-dark);
     }
 
     .dot-away {
-        background-color: var(--warning-color);
+        background-color: var(--lew-warning-color);
     }
 
     .dot-top-left {

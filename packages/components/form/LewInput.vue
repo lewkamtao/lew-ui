@@ -46,10 +46,10 @@ const input = (e: any) => {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    border: var(--form-border);
-    border-radius: var(--form-border-radius);
-    background-color: var(--form-bgcolor);
-    color: var(--form-text-color);
+    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    border-radius: var(--lew-form-border-radius);
+    background-color: var(--lew-form-bgcolor);
+    color: var(--lew-text-color);
     box-sizing: border-box;
     transition: all 0.25s ease;
     outline: none;
@@ -58,16 +58,18 @@ const input = (e: any) => {
     color: rgb(165, 165, 165);
 }
 .lew-input:hover {
-    border: var(--form-border-hover);
-    background-color: var(--form-bgcolor-hover);
+    border: var(--lew-form-border-width) var(--lew-form-border-color-hover)
+        solid;
+    background-color: var(--lew-form-bgcolor-hover);
 }
 
 .lew-input:active {
-    background-color: var(--form-bgcolor-active);
+    background-color: var(--lew-form-bgcolor-active);
 }
 
 .lew-input:focus {
-    background-color: var(--form-bgcolor-focus);
-    border: var(--form-border-focus);
+    background-color: var(--lew-form-bgcolor-focus);
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+        solid;
 }
 </style>

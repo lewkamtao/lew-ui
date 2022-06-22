@@ -1,5 +1,10 @@
 <template>
-    <label class="lew-radio" :class="`${block ? 'lew-radio-block' : ''} `">
+    <label
+        class="lew-radio"
+        :class="`${block ? 'lew-radio-block' : ''}  ${
+            checked ? 'lew-radio-checked' : ''
+        } `"
+    >
         <div class="icon-radio-box" :class="{ 'icon-checked-box': checked }">
             <div class="icon-radio"></div>
         </div>
@@ -45,37 +50,61 @@ const setChecked = () => {
     user-select: none;
     margin: 0px 20px 15px 0px;
     cursor: pointer;
-    color: var(--text-color);
+    color: var(--lew-text-color-1);
     font-size: 14px;
     border-radius: 50px;
+    transition: all 0.25s ease;
     .icon-radio-box {
         display: inline-flex;
         align-items: center;
         justify-content: center;
         width: 18px;
         height: 18px;
-        border: 2px rgba($color: #000000, $alpha: 0.1) solid;
+        border: 2px var(--lew-form-border-color-hover) solid;
         box-sizing: border-box;
         margin-right: 5px;
         transition: all 0.25s ease;
         overflow: hidden;
-        border-radius: 50px;
+        border-radius: 50%;
+        background-color: var(--lew-bgcolor-0);
         .icon-radio {
             width: 7px;
             height: 7px;
             background-color: #fff;
             transform: translateY(100%);
             opacity: 0;
-            border-radius: 2px;
             transition: all 0.25s ease;
             font-size: 12px;
-            border-radius: 50px;
+            border-radius: 50%;
         }
     }
+}
+.lew-radio:hover {
+    .icon-radio-box {
+        border: 2px var(--lew-form-border-color-active) solid;
+    }
+}
+.lew-radio-block {
+    background: var(--lew-form-bgcolor);
+    padding: 3px 8px 3px 4px;
+    border: 2px var(--lew-form-border-color) solid;
+    border-radius: 50px;
+}
 
-    .icon-checked-box {
-        border: 2px var(--primary-color) solid;
-        background: var(--primary-color);
+.lew-radio-block:hover {
+    background: var(--lew-form-bgcolor-hover);
+    border: 2px var(--lew-form-border-color-hover) solid;
+}
+
+.lew-radio-block:active {
+    background: var(--lew-form-bgcolor-active);
+    border: 2px var(--lew-form-border-color-active) solid;
+}
+
+.lew-radio-checked {
+    .icon-radio-box {
+        border: 2px var(--lew-primary-color) solid;
+        background: var(--lew-primary-color);
 
         .icon-radio {
             transform: translateY(0%);
@@ -83,44 +112,10 @@ const setChecked = () => {
         }
     }
 }
-
-.lew-radio:hover {
+.lew-radio-checked:hover {
     .icon-radio-box {
-        border: 2px rgba($color: #000000, $alpha: 0.2) solid;
+        border: 2px var(--lew-primary-color) solid;
+        background: var(--lew-primary-color);
     }
-
-    .icon-checked-box {
-        border: 2px var(--primary-color) solid;
-        background: var(--primary-color);
-    }
-}
-
-.lew-radio-block {
-    background: var(--form-bgcolor);
-    padding: 4px 8px 4px 6px;
-    border: var(--form-border);
-    border-radius: 30px;
-    .icon-radio-box {
-        border: 2px rgba(0, 0, 0, 0) solid;
-        background: var(--form-bgcolor-hover);
-    }
-    .icon-checked-box {
-        border: 2px var(--primary-color) solid;
-        background: var(--primary-color);
-    }
-}
-.lew-radio-block:hover {
-    .icon-radio-box {
-        border: 2px rgba(0, 0, 0, 0) solid;
-    }
-}
-.lew-radio-block:hover {
-    background: var(--form-bgcolor-hover);
-    border: var(--form-border-hover);
-}
-
-.lew-radio-block:active {
-    background: var(--form-bgcolor-active);
-    border: var(--form-border-active);
 }
 </style>

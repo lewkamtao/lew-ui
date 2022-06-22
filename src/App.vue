@@ -3,7 +3,8 @@ import TheSiderbar from './layout/TheSiderbar.vue';
 
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-
+import { LogoGithub, MoonOutline, SunnyOutline } from '@vicons/ionicons5';
+import { Icon } from '@vicons/utils';
 const router = useRouter();
 
 type Item = {
@@ -167,9 +168,17 @@ group.value = [
     },
 ];
 
-const toPath = (path: string) => {
-    router.push(path);
+const changeMode = () => {
+    isDark.value = !isDark.value;
+
+    if (isDark.value) {
+        document.getElementsByTagName('html')[0].classList.add('lew-dark');
+    } else {
+        document.getElementsByTagName('html')[0].classList.remove('lew-dark');
+    }
 };
+
+let isDark = ref(false);
 </script>
 
 <template>
@@ -177,10 +186,14 @@ const toPath = (path: string) => {
         <div class="Header">
             <div class="logo">Lew Design</div>
             <div class="menu">
-                <div @click="toPath(`/`)">组件库</div>
-                <a target="_blank" href="https://github.com/lewkamtao/Lew-UI"
-                    >Github</a
-                >
+                <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
+                    <Icon size="24"> <LogoGithub /> </Icon
+                ></a>
+
+                <Icon @click="changeMode" size="24">
+                    <MoonOutline v-if="isDark" />
+                    <SunnyOutline v-if="!isDark" />
+                </Icon>
             </div>
         </div>
         <div class="container">
@@ -199,9 +212,9 @@ const toPath = (path: string) => {
     max-width: 1280px;
     margin: 0 auto;
     overflow: hidden;
-    background: var(--body-bgcolor);
-    border-left: 1px #eee solid;
-    border-right: 1px #eee solid;
+    background: var(--lew-bgcolor-0);
+    border-left: var(--lew-border-2);
+    border-right: var(--lew-border-2);
 
     .container {
         height: calc(100vh - 60px);
@@ -218,7 +231,7 @@ const toPath = (path: string) => {
         overflow-y: scroll;
         box-sizing: border-box;
         padding: 50px;
-        background-color: rgb(242, 242, 242);
+        background: var(--lew-bgcolor-1);
     }
 
     .Header {
@@ -229,24 +242,29 @@ const toPath = (path: string) => {
         width: 100%;
         height: 60px;
         box-sizing: border-box;
-        border-bottom: 1px #eee solid;
-        background: var(--body-bgcolor);
+        background: var(--lew-bgcolor-0);
+        border-bottom: var(--lew-border-1);
+        user-select: none;
         .logo {
             font-size: 20px;
             font-weight: bold;
         }
         .menu {
+            display: flex;
+            align-items: center;
             a,
-            div {
+            span {
                 display: inline-block;
-                margin: 10px;
-                padding: 10px;
-                opacity: 0.6;
+                padding: 5px;
+                opacity: 0.8;
                 font-size: 14px;
                 cursor: pointer;
+                margin-right: 10px;
+                transition: all 0.5s;
+                color: var(--lew-text-color-1);
             }
             a:hover,
-            div:hover {
+            span:hover {
                 opacity: 1;
             }
         }

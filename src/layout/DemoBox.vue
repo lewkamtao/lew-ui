@@ -61,30 +61,33 @@ let isShowCode = ref(false);
 <style lang="scss">
 .demo-box {
     margin: 50px 0px 50px 0px;
+
     .demo-item {
         margin: 10px 0px;
-        background-color: #fff;
-        box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.08);
-        border-radius: 8px;
+        background-color: var(--lew-bgcolor-0);
+        border-radius: var(--lew-border-radius);
+        border: var(--lew-border-1);
     }
     .hl-pre {
         position: relative;
         .pre-box {
             margin-top: 10px;
-            border-radius: 8px;
+            border-radius: var(--lew-border-radius);
         }
     }
     .show-bar {
         display: flex;
         justify-content: center;
         align-items: center;
-        border-top: 2px rgb(236, 236, 236) solid;
+        border-top: var(--lew-border-1);
         width: 100%;
         height: 30px;
-        border-radius: 0px 0px 8px 8px;
+        border-radius: 0px 0px var(--lew-border-radius) var(--lew-border-radius);
         font-size: 14px;
         cursor: pointer;
-        transition: all 0.15s;
+        transition: all 0.25s;
+        color: #999;
+        background-color: var(--lew-bgcolor-0);
         .icon {
             display: flex;
             justify-content: center;
@@ -93,7 +96,8 @@ let isShowCode = ref(false);
         }
     }
     .show-bar:hover {
-        background-color: rgb(244, 244, 244);
+        background-color: var(--lew-bgcolor-1);
+        color: var(--lew-text-color-3);
     }
     .show-bar:active {
         background-color: rgb(236, 236, 236);

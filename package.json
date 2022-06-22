@@ -32,10 +32,13 @@
         }
     },
     "dependencies": {
+        "@vicons/ionicons5": "^0.12.0",
         "lew-ui": "^1.0.13",
         "tippy.js": "^6.3.7",
         "vue": "^3.2.25",
-        "vue-router": "^4.0.13"
+        "vue-router": "^4.0.13",
+        "vxe-table": "^4.2.8",
+        "xe-utils": "^3.5.4"
     },
     "devDependencies": {
         "@types/node": "^17.0.35",

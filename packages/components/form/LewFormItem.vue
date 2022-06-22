@@ -29,7 +29,7 @@ const props = defineProps({
         width: 100%;
         margin: 0px 0px 10px 0px;
         font-size: 14px;
-        color: var(--text-color);
+        color: var(--lew-text-color-1);
     }
 }
 

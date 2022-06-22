@@ -58,7 +58,7 @@ const toPath = (item: Item) => {
     width: 250px;
     height: 100%;
     overflow-y: scroll;
-    border-right: 1px #eee solid;
+    border-right: var(--lew-border-1);
     padding-top: 10px;
     .group {
         white-space: nowrap;
@@ -66,7 +66,7 @@ const toPath = (item: Item) => {
         .title {
             padding: 10px 20px;
             font-size: 14px;
-            color: #999;
+            color: var(--lew-text-color-9);
         }
 
         .item {
@@ -78,22 +78,20 @@ const toPath = (item: Item) => {
             list-style: none;
             width: calc(100% - 30px);
             margin-left: 17px;
-            border-radius: var(--border-radius);
+            border-radius: var(--lew-border-radius);
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px;
+            color: var(--lew-text-color-5);
         }
 
         .item:hover {
-            background: #eee;
+            color: var(--lew-text-color-0);
+            background: var(--lew-bgcolor-3);
         }
     }
 
     .group:last-child {
         padding-bottom: 100px;
     }
-}
-
-.title {
-    color: var(--text-color);
 }
 </style>

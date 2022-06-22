@@ -1,7 +1,11 @@
 body {
-    color: var(--text-color);
-    background-color: rgb(214, 214, 214);
+    color: var(--lew-text-color-1);
+    background-color: var(--lew-bgcolor-2);
     overflow: hidden;
+}
+
+a {
+    color: var(--lew-text-color-2);
 }
 
 .btf-scrollbar::-webkit-scrollbar {

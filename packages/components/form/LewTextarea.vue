@@ -50,10 +50,10 @@ const input = (e: any) => {
     font-size: 14px;
     line-height: 24px;
     min-height: 35px;
-    border: var(--form-border);
-    border-radius: var(--form-border-radius);
-    background-color: var(--form-bgcolor);
-    color: var(--form-text-color);
+    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    border-radius: var(--lew-form-border-radius);
+    background-color: var(--lew-form-bgcolor);
+    color: var(--lew-text-color);
     box-sizing: border-box;
     transition: all 0.25s ease;
     outline: none;
@@ -62,14 +62,15 @@ const input = (e: any) => {
     color: rgb(165, 165, 165);
 }
 .lew-textarea:hover {
-    background-color: var(--form-bgcolor-hover);
+    background-color: var(--lew-form-bgcolor-hover);
 }
 .lew-textarea:active {
-    background-color: var(--form-bgcolor-active);
+    background-color: var(--lew-form-bgcolor-active);
 }
 .lew-textarea:focus {
-    background-color: var(--form-bgcolor-focus);
-    border: var(--form-border-focus);
+    background-color: var(--lew-form-bgcolor-focus);
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+        solid;
 }
 
 .resize-none {

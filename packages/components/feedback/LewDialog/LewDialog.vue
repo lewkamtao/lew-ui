@@ -101,7 +101,7 @@ const emit = defineEmits(['update:visible']);
         width: 350px;
         height: auto;
         padding: 20px;
-        border-radius: 8px;
+        border-radius: var(--lew-border-radius);
         background-color: #fff;
         box-shadow: 0px 15px 50px rgba($color: #000000, $alpha: 0.05);
 

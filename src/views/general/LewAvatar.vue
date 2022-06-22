@@ -18,7 +18,7 @@ let avatarUrl = ref(
     <lew-avatar :src="avatarUrl" alt="avatar" />
     <lew-avatar round :src="avatarUrl" alt="avatar" />
 </template>
- 
+
 <style lang="scss" scoped>
 .lew-avatar {
     margin-right: 20px;
@@ -57,6 +57,20 @@ let avatarUrl = ref(
 }
 <\/style>
 `);
+const tableData1 = ref([
+    {
+        param: 'src',
+        description: '头像链接',
+        type: 'string',
+        default: `''`,
+    },
+    {
+        param: 'round',
+        description: '头像形状，是否为圆形。',
+        type: 'boolean',
+        default: 'false',
+    },
+]);
 </script>
 
 <template>
@@ -68,6 +82,13 @@ let avatarUrl = ref(
         <demo-box title="普通" :code="pre2">
             <demo-avatar2 />
         </demo-box>
+        <lew-title size="16px">Props</lew-title>
+        <vxe-table :data="tableData1">
+            <vxe-column field="param" title="参数名"></vxe-column>
+            <vxe-column field="description" title="描述"></vxe-column>
+            <vxe-column field="type" title="类型"></vxe-column>
+            <vxe-column field="default" title="默认值"></vxe-column>
+        </vxe-table>
     </div>
 </template>
 

@@ -64,18 +64,18 @@ input::before {
     content: '';
     width: 38px;
     height: 24px;
-    background: var(--form-bgcolor-high);
+    background: var(--lew-form-bgcolor-high);
     border-radius: 4px;
     transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
     cursor: pointer;
 }
 
 input:hover::before {
-    background: var(--form-bgcolor-high-hover);
+    background: var(--lew-form-bgcolor-high-hover);
 }
 
 input:active::before {
-    background: var(--form-bgcolor-high-active);
+    background: var(--lew-form-bgcolor-high-active);
 }
 
 .round::before {
@@ -99,7 +99,7 @@ input::after {
 }
 
 input:checked::before {
-    background: var(--primary-color);
+    background: var(--lew-primary-color);
 }
 
 input:checked::after {

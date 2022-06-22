@@ -78,8 +78,8 @@ const emit = defineEmits(['close']);
         align-items: flex-start;
         width: 100%;
         min-height: 40px;
-        background-color: var(--normal-color);
-        border-radius: 8px;
+        background-color: var(--lew-normal-color);
+        border-radius: var(--lew-border-radius);
         margin-bottom: 10px;
         padding: 12px;
         box-shadow: 0 5px 15px -3px rgba(0, 0, 0, 0.1),
@@ -99,7 +99,7 @@ const emit = defineEmits(['close']);
             width: 25px;
             height: 25px;
             right: 10px;
-            border-radius: 8px;
+            border-radius: var(--lew-border-radius);
             box-sizing: border-box;
             cursor: pointer;
             user-select: none;
@@ -125,24 +125,24 @@ const emit = defineEmits(['close']);
         }
     }
     .lew-alert-normal {
-        color: var(--normal-text-color);
-        background-color: var(--normal-color-light);
+        color: var(--lew-normal-text-color);
+        background-color: var(--lew-normal-color-light);
     }
     .lew-alert-success {
-        color: var(--success-text-color);
-        background-color: var(--success-color-light);
+        color: var(--lew-success-text-color);
+        background-color: var(--lew-success-color-light);
     }
     .lew-alert-warning {
-        color: var(--warning-text-color);
-        background-color: var(--warning-color-light);
+        color: var(--lew-warning-text-color);
+        background-color: var(--lew-warning-color-light);
     }
     .lew-alert-danger {
-        color: var(--danger-text-color);
-        background-color: var(--danger-color-light);
+        color: var(--lew-danger-text-color);
+        background-color: var(--lew-danger-color-light);
     }
     .lew-alert-primary {
-        color: var(--primary-text-color);
-        background-color: var(--primary-color-light);
+        color: var(--lew-primary-text-color);
+        background-color: var(--lew-primary-color-light);
     }
     .lew-alert:hover {
         opacity: 1;
