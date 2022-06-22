@@ -9,7 +9,7 @@ import { LewBadge } from '../packages';
 
 const route = useRoute();
 const router = useRouter();
-let mainRef = ref(null);
+let mainRef: any = ref(null);
 watch(route, () => {
     setTimeout(() => {
         mainRef.value.scrollTop = 0;
