@@ -46,20 +46,19 @@ const input = (e: any) => {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     border-radius: var(--lew-form-border-radius);
     background-color: var(--lew-form-bgcolor);
     color: var(--lew-text-color);
     box-sizing: border-box;
-    transition: all 0.25s ease;
+    transition: all 0.15s ease;
     outline: none;
 }
 .lew-input::placeholder {
     color: rgb(165, 165, 165);
 }
 .lew-input:hover {
-    border: var(--lew-form-border-width) var(--lew-form-border-color-hover)
-        solid;
+    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor-hover);
 }
 

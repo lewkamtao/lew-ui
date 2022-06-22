@@ -86,19 +86,21 @@ const setChecked = () => {
 }
 .lew-radio-block {
     background: var(--lew-form-bgcolor);
+    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     padding: 3px 8px 3px 4px;
-    border: 2px var(--lew-form-border-color) solid;
     border-radius: 50px;
 }
 
 .lew-radio-block:hover {
     background: var(--lew-form-bgcolor-hover);
-    border: 2px var(--lew-form-border-color-hover) solid;
 }
 
 .lew-radio-block:active {
     background: var(--lew-form-bgcolor-active);
-    border: 2px var(--lew-form-border-color-active) solid;
+}
+
+.lew-radio-checked.lew-radio-block {
+    border: var(--lew-form-border-width) var(--lew-primary-color) solid;
 }
 
 .lew-radio-checked {

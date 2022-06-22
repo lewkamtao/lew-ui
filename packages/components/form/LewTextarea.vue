@@ -50,23 +50,26 @@ const input = (e: any) => {
     font-size: 14px;
     line-height: 24px;
     min-height: 35px;
-    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     border-radius: var(--lew-form-border-radius);
     background-color: var(--lew-form-bgcolor);
     color: var(--lew-text-color);
     box-sizing: border-box;
-    transition: all 0.25s ease;
+    transition: all 0.15s ease;
     outline: none;
 }
 .lew-textarea::placeholder {
     color: rgb(165, 165, 165);
 }
 .lew-textarea:hover {
+    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor-hover);
 }
+
 .lew-textarea:active {
     background-color: var(--lew-form-bgcolor-active);
 }
+
 .lew-textarea:focus {
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)

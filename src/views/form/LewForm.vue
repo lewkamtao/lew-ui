@@ -22,7 +22,7 @@ let user = ref({
     school: '',
     home: '',
     dark: true,
-    pay: '',
+    pay: '2',
 });
 
 let sex_options = ref([
@@ -171,8 +171,8 @@ let home_options = ref([
 
 <style lang="scss" scoped>
 .form-box {
-    width: 500px;
-    margin: 50px auto;
+    width: 400px;
+    margin: 50px auto; 
 }
 </style>
 `);
@@ -226,7 +226,7 @@ let home_options = ref([
 </template>
 <style scoped lang="scss">
 .form-box {
-    width: 500px;
+    width: 400px;
     margin: 50px auto;
 }
 </style>

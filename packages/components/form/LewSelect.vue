@@ -85,10 +85,10 @@ const emit = defineEmits(['update:modelValue']);
         overflow-x: hidden;
         height: 300px;
         width: 100%;
-        border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+        border: 1px var(--lew-form-border-color-hover) solid;
         border-radius: var(--lew-form-border-radius);
-        background-color: #fff;
-        box-shadow: 0px 10px 20px rgba($color: #000000, $alpha: 0.1);
+        background-color: var(--lew-form-select-bgcolor);
+        box-shadow: 0px 5px 10px rgba($color: #000000, $alpha: 0.25);
         box-sizing: border-box;
         transition: all 0.25s ease;
         transform: translateY(60px);
@@ -104,14 +104,14 @@ const emit = defineEmits(['update:modelValue']);
             white-space: nowrap;
             text-overflow: ellipsis;
             cursor: pointer;
-            color: #666;
+            color: var(--lew-text-color-5);
             box-sizing: border-box;
             border-radius: var(--lew-form-border-radius);
             padding-left: 15px;
         }
         .item:hover {
-            color: #000;
-            background-color: var(--lew-form-bgcolor-hover);
+            color: var(--lew-text-color-0);
+            background-color: var(--lew-form-select-bgcolor-hover);
         }
     }
     .isShowOptions {

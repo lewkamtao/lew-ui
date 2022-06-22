@@ -104,14 +104,16 @@
     // 表单样式
     --lew-form-border-radius: 4px;
     --lew-form-border-width: 1.5px;
-    --lew-form-border-color: rgb(243, 243, 243);
+    --lew-form-border-color: rgb(245, 245, 245);
     --lew-form-border-color-hover: rgba(0, 0, 0, 0.08);
     --lew-form-border-color-active: rgba(0, 0, 0, 0.22);
     --lew-form-border-color-focus: var(--lew-primary-color);
     // 表单背景
-    --lew-form-bgcolor: rgba(240, 243, 245, 0.5);
-    --lew-form-bgcolor-hover: rgb(232, 236, 238);
-    --lew-form-bgcolor-active: rgba(240, 243, 245, 0.1);
+    --lew-form-bgcolor: rgb(245, 245, 245);
+    --lew-form-select-bgcolor: rgb(255, 255, 255);
+    --lew-form-select-bgcolor-hover: rgb(243, 243, 243);
+    --lew-form-bgcolor-hover: rgb(228, 228, 228);
+    --lew-form-bgcolor-active: rgb(215, 215, 215);
     --lew-form-bgcolor-focus: rgb(255, 255, 255);
     // 表单背景2
     --lew-form-bgcolor-high: rgba(6, 57, 88, 0.1);
@@ -209,7 +211,7 @@
     --lew-warning-color-dark: rgb(186, 132, 7);
     --lew-warning-color-light: rgb(233, 217, 185);
     --lew-warning-color-light2: rgb(255, 237, 194);
-    --lew-warning-text-color: rgb(112, 75, 0);
+    --lew-warning-text-color: rgb(152, 101, 0);
     --lew-warning-color-hover: rgb(190, 154, 70);
     --lew-warning-color-active: rgb(187, 133, 7);
     //
@@ -227,7 +229,10 @@
     --lew-form-border-color-active: rgba(96, 96, 96, 0.8);
     --lew-form-border-color-focus: var(--lew-primary-color);
     // 表单背景
-    --lew-form-bgcolor: rgba(51, 51, 51, 0.5);
+    --lew-form-bgcolor: rgb(35, 35, 35);
+    --lew-form-select-bgcolor: rgb(50, 50, 50);
+    --lew-form-select-bgcolor-hover: rgb(41, 41, 41);
+    --lew-form-select-bgcolor-active: rgb(28, 28, 28);
     --lew-form-bgcolor-hover: rgba(51, 51, 51, 1);
     --lew-form-bgcolor-active: rgb(32, 32, 32);
     --lew-form-bgcolor-focus: rgb(45, 45, 45);
