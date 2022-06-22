@@ -72,7 +72,7 @@ onMounted(() => {
     display: inline-flex;
     align-items: center;
     width: 100%;
-    background: var(--lew-form-bgcolor);
+    background: var(--lew-form-bgcolor-hover);
     height: 34px;
     border-radius: var(--lew-form-border-radius);
     overflow: hidden;
@@ -105,8 +105,5 @@ onMounted(() => {
         transform: translateX(3px);
         box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);
     }
-}
-.lew-tabs:hover {
-    background: var(--lew-form-bgcolor-hover);
 }
 </style>

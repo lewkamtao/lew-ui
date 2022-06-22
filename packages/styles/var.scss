@@ -11,6 +11,7 @@
     --lew-bgcolor-7: rgb(185, 185, 185);
     --lew-bgcolor-8: rgb(175, 175, 175);
     --lew-bgcolor-9: rgb(165, 165, 165);
+    --lew-bgcolor-mask: rgb(0, 0, 0, 0.5);
     // 背景反相
     --lew-bgcolor-0-invert: rgb(20, 20, 20);
     --lew-bgcolor-1-invert: rgb(30, 30, 30);
@@ -61,39 +62,39 @@
     --lew-border-9: 1px solid rgb(155, 155, 155);
     // 主题色
     --lew-primary-color: rgb(59, 121, 208);
-    --lew-primary-color-light: rgb(59, 121, 208, 0.2);
-    --lew-primary-color-light2: rgb(59, 121, 208, 0.4);
+    --lew-primary-color-light: rgb(217, 233, 255);
+    --lew-primary-color-light2: rgb(169, 201, 245);
     --lew-primary-text-color: rgb(47, 88, 146);
     --lew-primary-color-hover: rgb(54, 109, 187);
     --lew-primary-color-active: rgb(42, 94, 149);
     //
     --lew-success-color: rgb(49, 196, 141);
     --lew-success-color-dark: rgb(35, 153, 110);
-    --lew-success-color-light: rgb(108, 176, 119, 0.2);
-    --lew-success-color-light2: rgb(108, 176, 119, 0.4);
+    --lew-success-color-light: rgb(216, 236, 219);
+    --lew-success-color-light2: rgb(108, 176, 119);
     --lew-success-text-color: rgb(30, 107, 41);
     --lew-success-color-hover: rgb(40, 176, 126);
     --lew-success-color-active: rgb(28, 157, 110);
     //
     --lew-danger-color: rgb(249, 128, 128);
     --lew-danger-color-dark: rgb(197, 88, 88);
-    --lew-danger-color-light: rgb(249, 128, 128, 0.2);
-    --lew-danger-color-light2: rgb(249, 128, 128, 0.4);
+    --lew-danger-color-light: rgb(255, 234, 234);
+    --lew-danger-color-light2: rgb(218, 173, 173);
     --lew-danger-text-color: #d10000;
     --lew-danger-color-hover: rgb(231, 113, 113);
     --lew-danger-color-active: rgb(204, 92, 92);
     //
     --lew-warning-color: rgb(227, 179, 68);
     --lew-warning-color-dark: rgb(186, 132, 7);
-    --lew-warning-color-light: rgb(227, 160, 8, 0.2);
-    --lew-warning-color-light2: rgb(227, 160, 8, 0.4);
+    --lew-warning-color-light: rgb(255, 240, 209);
+    --lew-warning-color-light2: rgb(255, 237, 194);
     --lew-warning-text-color: rgb(187, 128, 9);
     --lew-warning-color-hover: rgb(211, 150, 8);
     --lew-warning-color-active: rgb(187, 133, 7);
     //
     --lew-normal-color: rgb(236, 235, 235);
     --lew-normal-color-dark: rgb(177, 176, 176);
-    --lew-normal-color-light: rgba(154, 154, 154, 0.2);
+    --lew-normal-color-light: rgb(219, 219, 219);
     --lew-normal-color-light2: rgba(154, 154, 154, 0.4);
     --lew-normal-text-color: rgb(66, 66, 66);
     --lew-normal-color-hover: rgb(225, 225, 225);
@@ -103,7 +104,7 @@
     // 表单样式
     --lew-form-border-radius: 4px;
     --lew-form-border-width: 1.5px;
-    --lew-form-border-color: rgba(177, 177, 177, 0.03);
+    --lew-form-border-color: rgb(243, 243, 243);
     --lew-form-border-color-hover: rgba(0, 0, 0, 0.08);
     --lew-form-border-color-active: rgba(0, 0, 0, 0.22);
     --lew-form-border-color-focus: var(--lew-primary-color);
@@ -131,6 +132,7 @@
     --lew-bgcolor-7: rgb(90, 90, 90);
     --lew-bgcolor-8: rgb(100, 100, 100);
     --lew-bgcolor-9: rgb(110, 110, 110);
+    --lew-bgcolor-mask: rgb(255, 255, 255, 0.3);
     // 背景反相
     --lew-bgcolor-0-invert: rgb(255, 255, 255);
     --lew-bgcolor-1-invert: rgb(245, 245, 245);
@@ -180,44 +182,44 @@
     // 圆角
     --lew-border-radius: 6px;
     // 主题色
-    --lew-primary-color: rgb(59, 121, 208);
-    --lew-primary-color-light: rgb(59, 121, 208, 0.2);
-    --lew-primary-color-light2: rgb(59, 121, 208, 0.4);
+    --lew-primary-color: rgb(81, 131, 200);
+    --lew-primary-color-light: rgb(181, 195, 216);
+    --lew-primary-color-light2: rgb(169, 201, 245);
     --lew-primary-text-color: rgb(47, 88, 146);
     --lew-primary-color-hover: rgb(54, 109, 187);
     --lew-primary-color-active: rgb(42, 94, 149);
     //
-    --lew-success-color: rgb(49, 196, 141);
+    --lew-success-color: rgb(37, 150, 109);
     --lew-success-color-dark: rgb(35, 153, 110);
-    --lew-success-color-light: rgb(108, 176, 119, 0.2);
-    --lew-success-color-light2: rgb(108, 176, 119, 0.4);
+    --lew-success-color-light: rgb(186, 213, 190);
+    --lew-success-color-light2: rgb(108, 176, 119);
     --lew-success-text-color: rgb(30, 107, 41);
     --lew-success-color-hover: rgb(40, 176, 126);
     --lew-success-color-active: rgb(28, 157, 110);
     //
-    --lew-danger-color: rgb(249, 128, 128);
+    --lew-danger-color: rgb(211, 104, 104);
     --lew-danger-color-dark: rgb(197, 88, 88);
-    --lew-danger-color-light: rgb(249, 128, 128, 0.2);
-    --lew-danger-color-light2: rgb(249, 128, 128, 0.4);
+    --lew-danger-color-light: rgb(226, 201, 201);
+    --lew-danger-color-light2: rgb(218, 173, 173);
     --lew-danger-text-color: #d10000;
     --lew-danger-color-hover: rgb(231, 113, 113);
     --lew-danger-color-active: rgb(204, 92, 92);
     //
-    --lew-warning-color: rgb(227, 179, 68);
+    --lew-warning-color: rgb(186, 157, 90);
     --lew-warning-color-dark: rgb(186, 132, 7);
-    --lew-warning-color-light: rgb(227, 160, 8, 0.2);
-    --lew-warning-color-light2: rgb(227, 160, 8, 0.4);
-    --lew-warning-text-color: rgb(187, 128, 9);
-    --lew-warning-color-hover: rgb(211, 150, 8);
+    --lew-warning-color-light: rgb(233, 217, 185);
+    --lew-warning-color-light2: rgb(255, 237, 194);
+    --lew-warning-text-color: rgb(112, 75, 0);
+    --lew-warning-color-hover: rgb(190, 154, 70);
     --lew-warning-color-active: rgb(187, 133, 7);
     //
-    --lew-normal-color: rgb(236, 235, 235);
+    --lew-normal-color: rgb(212, 207, 207);
     --lew-normal-color-dark: rgb(177, 176, 176);
-    --lew-normal-color-light: rgba(154, 154, 154, 0.2);
+    --lew-normal-color-light: rgb(185, 185, 185);
     --lew-normal-color-light2: rgba(154, 154, 154, 0.4);
     --lew-normal-text-color: rgb(66, 66, 66);
-    --lew-normal-color-hover: rgb(224, 223, 223);
-    --lew-normal-color-active: rgb(165, 161, 161);
+    --lew-normal-color-hover: rgb(225, 225, 225);
+    --lew-normal-color-active: rgb(189, 188, 188);
     // 表单样式
     --lew-form-border-width: 1.5px;
     --lew-form-border-color: rgba(177, 177, 177, 0.03);

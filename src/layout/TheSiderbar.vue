@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
 import { LewBadge } from '../../packages';
-import { useRouter } from 'vue-router';
-
+import { useRouter, useRoute } from 'vue-router';
+const route = useRoute();
 const router = useRouter();
 
 type Item = {
@@ -39,6 +39,7 @@ const toPath = (item: Item) => {
                 v-for="(item, j) in list.items"
                 :key="`siderbar${j}`"
                 class="item"
+                :class="{ active: route.path == item.path }"
                 @click="toPath(item)"
             >
                 {{ item.name }}
@@ -86,7 +87,15 @@ const toPath = (item: Item) => {
 
         .item:hover {
             color: var(--lew-text-color-0);
-            background: var(--lew-bgcolor-3);
+            background: var(--lew-bgcolor-2);
+        }
+        .active {
+            color: var(--lew-text-color-0);
+            background: var(--lew-bgcolor-4);
+        }
+        .active:hover {
+            color: var(--lew-text-color-0);
+            background: var(--lew-bgcolor-4);
         }
     }
 

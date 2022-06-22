@@ -57,7 +57,7 @@ let avatarUrl = ref(
 }
 <\/style>
 `);
-const tableData1 = ref([
+const docsTable = ref([
     {
         param: 'src',
         description: '头像链接',
@@ -83,7 +83,7 @@ const tableData1 = ref([
             <demo-avatar2 />
         </demo-box>
         <lew-title size="16px">Props</lew-title>
-        <vxe-table :data="tableData1">
+        <vxe-table :data="docsTable">
             <vxe-column field="param" title="参数名"></vxe-column>
             <vxe-column field="description" title="描述"></vxe-column>
             <vxe-column field="type" title="类型"></vxe-column>

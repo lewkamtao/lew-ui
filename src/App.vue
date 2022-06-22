@@ -1,11 +1,20 @@
 <script setup lang="ts">
 import TheSiderbar from './layout/TheSiderbar.vue';
 
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { LogoGithub, MoonOutline, SunnyOutline } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
+import { LewBadge } from '../packages';
+
+const route = useRoute();
 const router = useRouter();
+let mainRef = ref(null);
+watch(route, () => {
+    setTimeout(() => {
+        mainRef.value.scrollTop = 0;
+    }, 500);
+});
 
 type Item = {
     name: string;
@@ -184,7 +193,9 @@ let isDark = ref(false);
 <template>
     <div class="wrapper">
         <div class="Header">
-            <div class="logo">Lew Design</div>
+            <div class="logo">
+                Lew Design <lew-badge>develop ｜ 文档完善中···</lew-badge>
+            </div>
             <div class="menu">
                 <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
                     <Icon size="24"> <LogoGithub /> </Icon
@@ -200,8 +211,8 @@ let isDark = ref(false);
             <div class="sider">
                 <the-siderbar :group="group" />
             </div>
-            <div class="app-main btf-scrollbar">
-                <router-view></router-view>
+            <div ref="mainRef" class="app-main btf-scrollbar">
+                <router-view />
             </div>
         </div>
     </div>
@@ -230,7 +241,7 @@ let isDark = ref(false);
         height: calc(100vh - 60px);
         overflow-y: scroll;
         box-sizing: border-box;
-        padding: 50px;
+        padding: 50px 50px 150px 50px;
         background: var(--lew-bgcolor-1);
     }
 
@@ -246,8 +257,13 @@ let isDark = ref(false);
         border-bottom: var(--lew-border-1);
         user-select: none;
         .logo {
+            display: flex;
+            align-items: center;
             font-size: 20px;
             font-weight: bold;
+            .lew-badge {
+                margin-left: 10px;
+            }
         }
         .menu {
             display: flex;

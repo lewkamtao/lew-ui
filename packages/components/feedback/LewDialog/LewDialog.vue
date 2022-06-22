@@ -113,6 +113,7 @@ const emit = defineEmits(['update:visible']);
         main {
             height: auto;
             font-size: 14px;
+            color: var(--lew-text-color-5);
             padding: 10px 0px 20px 0px;
         }
         footer {

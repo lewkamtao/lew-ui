@@ -51,3 +51,18 @@ pre code.hljs:hover::-webkit-scrollbar-thumb {
     opacity: 1;
     border-radius: 5px;
 }
+
+.vxe-table {
+    border-radius: 6px !important;
+    overflow: hidden;
+    border: 1px solid rgb(235, 235, 235);
+    * {
+        border: none !important;
+    }
+}
+
+.lew-dark {
+    .vxe-table {
+        filter: invert(85%) !important;
+    }
+}

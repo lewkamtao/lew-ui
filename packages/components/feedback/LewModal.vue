@@ -51,15 +51,16 @@ const maskClick = () => {
     left: 0px;
     width: 100%;
     height: 100%;
-    background-color: rgba($color: #000000, $alpha: 0.35);
-    outline: 1000000px solid rgba($color: #000000, $alpha: 0.35);
+    background-color: var(--lew-bgcolor-mask);
+    backdrop-filter: blur(5px);
+    outline: 1000000px solid var(--lew-bgcolor-mask);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 2001;
     .lew-modal-box {
         border-radius: var(--lew-border-radius);
-        background-color: #fff;
+        background-color: var(--lew-bgcolor-0);
         box-shadow: 0px 15px 50px rgba($color: #000000, $alpha: 0.05);
     }
 }

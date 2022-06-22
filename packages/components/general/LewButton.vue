@@ -41,8 +41,8 @@ defineProps({
     flex-shrink: 0;
     user-select: none;
     width: auto;
-    min-width: 76px;
-    height: 32px;
+    min-width: 70px;
+    height: 30px;
     white-space: nowrap;
     box-sizing: border-box;
     transition: all 0.15s;

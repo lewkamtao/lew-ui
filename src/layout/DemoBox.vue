@@ -92,16 +92,14 @@ let isShowCode = ref(false);
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-right: 5px;
+            margin-right: 10px;
         }
     }
     .show-bar:hover {
         background-color: var(--lew-bgcolor-1);
         color: var(--lew-text-color-3);
     }
-    .show-bar:active {
-        background-color: rgb(236, 236, 236);
-    }
+
     .demo-cp {
         padding: 30px;
     }
