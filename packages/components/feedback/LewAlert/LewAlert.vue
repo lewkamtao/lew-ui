@@ -72,11 +72,10 @@ const emit = defineEmits(['close']);
         width: 100%;
         min-height: 40px;
         background-color: var(--lew-normal-color);
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-form-border-radius);
         margin-bottom: 10px;
         padding: 12px;
-        box-shadow: 0 5px 15px -3px rgba(0, 0, 0, 0.1),
-            0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
         box-sizing: border-box;
         opacity: 0.8;
         transition: all 0.25s ease;

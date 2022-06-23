@@ -3,7 +3,6 @@ import LewAvatar from './components/general/LewAvatar.vue';
 import LewButton from './components/general/LewButton.vue';
 import LewBadge from './components/general/LewBadge.vue';
 import LewTitle from './components/general/LewTitle.vue';
-import LewImage from './components/general/LewImage';
 
 // 表单
 import LewFormItem from './components/form/LewFormItem.vue';
@@ -26,18 +25,26 @@ import LewPopok from './components/feedback/LewPopok/LewPopok.vue';
 import LewTooltips from './components/feedback/LewTooptips';
 import LewDialog from './components/feedback/LewDialog';
 import LewMessage from './components/feedback/LewMessage';
+
+// 其他
+import LewFancybox from './components/other/LewFancybox';
+import LewFancyImg from './components/other/LewFancybox/LewFancyImg.vue';
+import LewPlyrVideo from './components/other/LewPlyrVideo/LewPlyrVideo.vue';
+
 // 引入样式
 import './styles/reset.scss';
 import './styles/main.scss';
 import './styles/var.scss';
+
 // fancybox
 import '@fancyapps/ui/dist/fancybox.css';
+// plyr
+import 'plyr/dist/plyr.css';
 
 export {
     LewAvatar,
     LewButton,
     LewFormItem,
-    LewImage,
     LewInput,
     LewSelect,
     LewSwitch,
@@ -56,4 +63,7 @@ export {
     LewMessage,
     LewPopover,
     LewPopok,
+    LewFancybox,
+    LewFancyImg,
+    LewPlyrVideo,
 };

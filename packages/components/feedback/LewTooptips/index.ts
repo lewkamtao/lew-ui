@@ -3,6 +3,8 @@ import 'tippy.js/dist/tippy.css'; // optional for styling
 import 'tippy.js/animations/shift-away-subtle.css';
 import 'tippy.js/themes/light.css';
 
+let instance: any;
+
 export default {
     install(app: any) {
         app.directive('tooltip', {
@@ -11,7 +13,7 @@ export default {
                 if (trigger == 'hover') {
                     trigger = 'mouseenter';
                 }
-                tippy(el, {
+                instance = tippy(el, {
                     trigger: trigger || 'mouseenter',
                     content: binding.value.content,
                     animation: 'shift-away-subtle',
@@ -34,6 +36,11 @@ export default {
                         }
                     },
                 });
+            },
+            unmounted() {
+                if (instance) {
+                    instance.destroy();
+                }
             },
         });
     },

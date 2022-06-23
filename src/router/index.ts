@@ -25,15 +25,18 @@ const LewResult = () => import('../views/feedback/LewResult.vue');
 const LewTooltip = () => import('../views/feedback/LewTooltip.vue');
 const LewPopok = () => import('../views/feedback/LewPopok.vue');
 
+const LewFancyImg = () => import('../views/other/LewFancyImg.vue');
+const LewPlyrVideo = () => import('../views/other/LewPlyrVideo.vue');
+
 const routes: Array<RouteRecordRaw> = [
     { path: '/', name: 'Home', component: LewAvatar },
     { path: '/Avatar', name: 'LewAvatar', component: LewAvatar },
     { path: '/Badge', name: 'LewBadge', component: LewBadge },
     { path: '/Title', name: 'LewTitle', component: LewTitle },
     { path: '/Button', name: 'LewButton', component: LewButton },
-    { path: '/Tabs', name: 'LewTabs', component: LewTabs },
 
     { path: '/Form', name: 'LewForm', component: LewForm },
+    { path: '/Tabs', name: 'LewTabs', component: LewTabs },
     { path: '/Cascader', name: 'LewCascader', component: LewCascader },
     { path: '/Checkbox', name: 'LewCheckbox', component: LewCheckbox },
     { path: '/Input', name: 'LewInput', component: LewInput },
@@ -52,6 +55,9 @@ const routes: Array<RouteRecordRaw> = [
 
     { path: '/Modal', name: 'LewModal', component: LewModal },
     { path: '/Message', name: 'LewMessage', component: LewMessage },
+
+    { path: '/FancyImg', name: 'LewFancyImg', component: LewFancyImg },
+    { path: '/PlyrVideo', name: 'LewPlyrVideo', component: LewPlyrVideo },
 ];
 const router = createRouter({
     history: createWebHashHistory(),

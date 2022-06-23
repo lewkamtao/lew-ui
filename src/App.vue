@@ -181,6 +181,23 @@ group.value = [
             },
         ],
     },
+    {
+        title: '其他',
+        items: [
+            {
+                name: 'FancyImg',
+                path: '/FancyImg',
+                label: '',
+                type: 'success',
+            },
+            {
+                name: 'PlyrVideo',
+                path: '/PlyrVideo',
+                label: '',
+                type: 'success',
+            },
+        ],
+    },
 ];
 
 const changeMode = () => {
@@ -218,7 +235,12 @@ let isDark = ref(false);
                 <the-siderbar :group="group" />
             </div>
             <div ref="mainRef" class="app-main btf-scrollbar">
-                <router-view />
+                <router-view v-slot="{ Component }">
+                    <keep-alive>
+                        <component :is="Component" />
+                    </keep-alive>
+                </router-view>
+                <!-- <router-view /> -->
             </div>
         </div>
     </div>

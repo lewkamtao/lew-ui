@@ -131,6 +131,8 @@
     --lew-modal-bgcolor: rgb(0, 0, 0, 0.5);
     // povpoer
     --lew-povpoer-bgcolor: rgba(255, 255, 255);
+    // plyr
+    --plyr-color-main: var(--lew-primary-color);
 }
 
 .lew-dark {
@@ -264,4 +266,6 @@
     --lew-modal-bgcolor: rgba(175, 175, 175, 0.05);
     // povpoer
     --lew-povpoer-bgcolor: #333;
+    // plyr
+    --plyr-color-main: var(--lew-primary-color);
 }

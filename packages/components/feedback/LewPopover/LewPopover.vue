@@ -1,6 +1,6 @@
 <!-- filename: Popover.vue -->
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; // optional for styling
 import 'tippy.js/animations/shift-away-subtle.css';
@@ -52,6 +52,12 @@ let hide = () => {
 };
 
 defineExpose({ show, hide });
+
+onUnmounted(() => {
+    if (instance) {
+        instance.destroy();
+    }
+});
 </script>
 
 <template>
