@@ -4,6 +4,8 @@ import router from './router/index';
 import '../packages/styles/reset.scss';
 import '../packages/styles/var.scss';
 import '../packages/styles/main.scss';
+import '@fancyapps/ui/dist/fancybox.css';
+
 import './assets/style/main.scss';
 import './assets/style/hljs.scss';
 
@@ -14,7 +16,7 @@ import 'xe-utils';
 import { Column, Table } from 'vxe-table';
 
 // 安装tooltip
-import { LewTooltips } from '../packages';
+import { LewTooltips, LewImage } from '../packages';
 
 const app = createApp(AppVue);
 // 自定义一个代码高亮指令
@@ -32,4 +34,5 @@ function useTable(app: App) {
 }
 app.use(useTable);
 app.use(LewTooltips);
+app.use(LewImage);
 app.use(router).mount('#app');

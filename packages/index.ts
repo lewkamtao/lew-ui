@@ -1,8 +1,11 @@
+// 通用
 import LewAvatar from './components/general/LewAvatar.vue';
 import LewButton from './components/general/LewButton.vue';
 import LewBadge from './components/general/LewBadge.vue';
 import LewTitle from './components/general/LewTitle.vue';
+import LewImage from './components/general/LewImage';
 
+// 表单
 import LewFormItem from './components/form/LewFormItem.vue';
 import LewInput from './components/form/LewInput.vue';
 import LewSelect from './components/form/LewSelect.vue';
@@ -27,11 +30,14 @@ import LewMessage from './components/feedback/LewMessage';
 import './styles/reset.scss';
 import './styles/main.scss';
 import './styles/var.scss';
+// fancybox
+import '@fancyapps/ui/dist/fancybox.css';
 
 export {
     LewAvatar,
     LewButton,
     LewFormItem,
+    LewImage,
     LewInput,
     LewSelect,
     LewSwitch,

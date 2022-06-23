@@ -10,6 +10,24 @@ let avatarUrl = ref(
 <template>
     <lew-avatar :src="avatarUrl" alt="avatar" />
     <lew-avatar round :src="avatarUrl" alt="avatar" />
+    <a
+        data-fancybox="gallery"
+        href="https://gist.lipsum.app/static/product_2_1.jpg"
+    >
+        <img width="200" src="https://gist.lipsum.app/static/product_2_1.jpg" />
+    </a>
+    <a
+        data-fancybox="gallery"
+        href="https://gist.lipsum.app/static/product_2_1.jpg"
+    >
+        <img width="200" src="https://gist.lipsum.app/static/product_2_1.jpg" />
+    </a>
+    <a
+        data-fancybox="gallery"
+        href="https://gist.lipsum.app/static/product_2_1.jpg"
+    >
+        <img width="200" src="https://gist.lipsum.app/static/product_2_1.jpg" />
+    </a>
 </template>
 
 <style lang="scss" scoped>
