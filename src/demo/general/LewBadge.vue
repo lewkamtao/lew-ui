@@ -5,7 +5,7 @@ import { ref } from 'vue';
 let pre1 = ref(`<template>
     <lew-badge type="primary">primary</lew-badge>
     <lew-badge type="success">success</lew-badge>
-    <lew-badge type="danger">danger</lew-badge>
+    <lew-badge type="error">error</lew-badge>
     <lew-badge type="warning">waning</lew-badge>
     <lew-badge type="normal">normal</lew-badge>
 </template>
@@ -13,7 +13,7 @@ let pre1 = ref(`<template>
 let pre2 = ref(`<template>
     <lew-badge round type="primary">primary</lew-badge>
     <lew-badge round type="success">success</lew-badge>
-    <lew-badge round type="danger">danger</lew-badge>
+    <lew-badge round type="error">error</lew-badge>
     <lew-badge round type="warning">waning</lew-badge>
     <lew-badge round type="normal">normal</lew-badge>
 </template>
@@ -21,11 +21,11 @@ let pre2 = ref(`<template>
 let pre3 = ref(`<template>
     <lew-badge round :bold="700" type="primary">primary</lew-badge>
     <lew-badge round :bold="700" type="success">success</lew-badge>
-    <lew-badge round :bold="700" type="danger">danger</lew-badge>
+    <lew-badge round :bold="700" type="error">error</lew-badge>
     <lew-badge round :bold="700" type="warning">waning</lew-badge>
     <lew-badge round :bold="700" type="normal">normal</lew-badge> 
     <lew-badge round :bold="700" type="primary">15</lew-badge>
-    <lew-badge round :bold="700" type="danger">99+</lew-badge>
+    <lew-badge round :bold="700" type="error">99+</lew-badge>
     <lew-badge round :bold="700" type="success">3</lew-badge>
 </template>
 `);
@@ -39,7 +39,7 @@ let pre5 = ref(`<template>
     <lew-badge round dot type="primary"></lew-badge>
     <lew-badge round dot type="success"></lew-badge>
     <lew-badge round dot type="warning"></lew-badge>
-    <lew-badge round dot type="danger"></lew-badge>
+    <lew-badge round dot type="error"></lew-badge>
 </template>
 `);
 </script>
@@ -50,25 +50,25 @@ let pre5 = ref(`<template>
         <demo-box title="普通" :code="pre1">
             <lew-badge type="primary">primary</lew-badge>
             <lew-badge type="success">success</lew-badge>
-            <lew-badge type="danger">danger</lew-badge>
+            <lew-badge type="error">error</lew-badge>
             <lew-badge type="warning">waning</lew-badge>
             <lew-badge type="normal">normal</lew-badge>
         </demo-box>
         <demo-box title="圆形" :code="pre2">
             <lew-badge round type="primary">primary</lew-badge>
             <lew-badge round type="success">success</lew-badge>
-            <lew-badge round type="danger">danger</lew-badge>
+            <lew-badge round type="error">error</lew-badge>
             <lew-badge round type="warning">waning</lew-badge>
             <lew-badge round type="normal">normal</lew-badge>
         </demo-box>
         <demo-box title="粗的" :code="pre3">
             <lew-badge round :bold="700" type="primary">primary</lew-badge>
             <lew-badge round :bold="700" type="success">success</lew-badge>
-            <lew-badge round :bold="700" type="danger">danger</lew-badge>
+            <lew-badge round :bold="700" type="error">error</lew-badge>
             <lew-badge round :bold="700" type="warning">waning</lew-badge>
             <lew-badge round :bold="700" type="normal">normal</lew-badge>
             <lew-badge round :bold="700" type="primary">15</lew-badge>
-            <lew-badge round :bold="700" type="danger">99+</lew-badge>
+            <lew-badge round :bold="700" type="error">99+</lew-badge>
             <lew-badge round :bold="700" type="success">3</lew-badge>
         </demo-box>
         <demo-box title="链接" :code="pre4">
@@ -82,7 +82,7 @@ let pre5 = ref(`<template>
             <lew-badge round dot type="primary"></lew-badge>
             <lew-badge round dot type="success"></lew-badge>
             <lew-badge round dot type="warning"></lew-badge>
-            <lew-badge round dot type="danger"></lew-badge>
+            <lew-badge round dot type="error"></lew-badge>
         </demo-box>
     </div>
 </template>

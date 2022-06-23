@@ -109,7 +109,7 @@ group.value = [
             //     name: 'Cascader',
             //     path: '/Cascader',
             //     label: '',
-            //     type: 'danger',
+            //     type: 'error',
             // },
             {
                 name: 'Switch',
@@ -121,13 +121,19 @@ group.value = [
             //     name: 'InputTag',
             //     path: '/InputTag',
             //     label: '',
-            //     type: 'danger',
+            //     type: 'error',
             // },
         ],
     },
     {
         title: '反馈',
         items: [
+            {
+                name: 'Alert',
+                path: '/Alert',
+                label: '',
+                type: 'success',
+            },
             {
                 name: 'Message',
                 path: '/Message',
@@ -147,32 +153,32 @@ group.value = [
                 label: '',
                 type: 'success',
             },
-
             {
-                name: 'Alert',
-                path: '/Alert',
+                name: 'Popok',
+                path: '/Popok',
                 label: '',
                 type: 'success',
             },
+            {
+                name: 'Popover',
+                path: '/Popover',
+                label: '',
+                type: 'error',
+            },
+
             {
                 name: 'Tooltip',
                 path: '/Tooltip',
                 label: '',
                 type: 'success',
             },
-            // {
-            //     name: 'Popover',
-            //     path: '/Popover',
-            //     label: '',
-            //     type: 'danger',
-            // },
 
-            // {
-            //     name: 'Result',
-            //     path: '/Result',
-            //     label: 'coding',
-            //     type: 'primary',
-            // },
+            {
+                name: 'Result',
+                path: '/Result',
+                label: '',
+                type: 'success',
+            },
         ],
     },
 ];

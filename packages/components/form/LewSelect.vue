@@ -88,7 +88,7 @@ const emit = defineEmits(['update:modelValue']);
         border: 1px var(--lew-form-border-color-hover) solid;
         border-radius: var(--lew-form-border-radius);
         background-color: var(--lew-form-select-bgcolor);
-        box-shadow: 0px 5px 10px rgba($color: #000000, $alpha: 0.25);
+        box-shadow: 0px 2px 3px rgba($color: #000000, $alpha: 0.25);
         box-sizing: border-box;
         transition: all 0.25s ease;
         transform: translateY(60px);

@@ -85,6 +85,8 @@ blockquote:after {
     content: '';
 }
 
-html {
+html,
+input,
+textarea {
     font-family: “lucida grande”, “lucida sans unicode”, lucida, helvetica, “Hiragino Sans GB”, “Microsoft YaHei”, “WenQuanYi Micro Hei”, sans-serif;
 }

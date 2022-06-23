@@ -14,13 +14,15 @@ import LewRadiobox from './components/form/LewRadio.vue';
 import LewRadioboxGroup from './components/form/LewRadioGroup.vue';
 import LewTabs from './components/form/LewTabs.vue';
 
-import LewAlert from './components/feedback/LewAlert.vue';
-import LewModal from './components/feedback/LewModal.vue';
+// 反馈
+import LewAlert from './components/feedback/LewAlert/LewAlert.vue';
+import LewModal from './components/feedback/LewModal/LewModal.vue';
+import LewPopover from './components/feedback/LewPopover/LewPopover.vue';
+import LewPopok from './components/feedback/LewPopok/LewPopok.vue';
 
-import LewTooltips from './components/feedback/LewTooltips';
+import LewTooltips from './components/feedback/LewTooptips';
 import LewDialog from './components/feedback/LewDialog';
 import LewMessage from './components/feedback/LewMessage';
-
 // 引入样式
 import './styles/reset.scss';
 import './styles/main.scss';
@@ -46,4 +48,6 @@ export {
     LewTooltips,
     LewDialog,
     LewMessage,
+    LewPopover,
+    LewPopok,
 };

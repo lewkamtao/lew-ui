@@ -85,7 +85,9 @@ const toLink = () => {
 .lew-badge-dot.lew-badge-primary {
     background-color: var(--lew-primary-color-hover);
 }
-
+.lew-badge-dot.lew-badge-info {
+    background-color: var(--lew-info-color-hover);
+}
 .lew-badge-dot.lew-badge-success {
     background-color: var(--lew-success-color-hover);
 }
@@ -94,8 +96,8 @@ const toLink = () => {
     background-color: var(--lew-warning-color-hover);
 }
 
-.lew-badge-dot.lew-badge-danger {
-    background-color: var(--lew-danger-color-hover);
+.lew-badge-dot.lew-badge-error {
+    background-color: var(--lew-error-color-hover);
 }
 
 .lew-badge-dot.lew-badge-normal {
@@ -106,6 +108,10 @@ const toLink = () => {
     color: var(--lew-primary-text-color);
     background-color: var(--lew-primary-color-light);
 }
+.lew-badge-info {
+    color: var(--lew-info-text-color);
+    background-color: var(--lew-info-color-light);
+}
 .lew-badge-success {
     color: var(--lew-success-text-color);
     background-color: var(--lew-success-color-light);
@@ -115,9 +121,9 @@ const toLink = () => {
     color: var(--lew-warning-text-color);
     background-color: var(--lew-warning-color-light);
 }
-.lew-badge-danger {
-    color: var(--lew-danger-text-color);
-    background-color: var(--lew-danger-color-light);
+.lew-badge-error {
+    color: var(--lew-error-text-color);
+    background-color: var(--lew-error-color-light);
 }
 .lew-badge-normal {
     color: var(--lew-normal-text-color);

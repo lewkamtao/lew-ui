@@ -23,6 +23,7 @@ const LewModal = () => import('../views/feedback/LewModal.vue');
 const LewPopover = () => import('../views/feedback/LewPopover.vue');
 const LewResult = () => import('../views/feedback/LewResult.vue');
 const LewTooltip = () => import('../views/feedback/LewTooltip.vue');
+const LewPopok = () => import('../views/feedback/LewPopok.vue');
 
 const routes: Array<RouteRecordRaw> = [
     { path: '/', name: 'Home', component: LewAvatar },
@@ -45,6 +46,7 @@ const routes: Array<RouteRecordRaw> = [
     { path: '/Alert', name: 'LewAlert', component: LewAlert },
     { path: '/Result', name: 'LewResult', component: LewResult },
     { path: '/Dialog', name: 'LewDialog', component: LewDialog },
+    { path: '/Popok', name: 'LewPopok', component: LewPopok },
     { path: '/Popover', name: 'LewPopover', component: LewPopover },
     { path: '/Tooltip', name: 'LewTooltip', component: LewTooltip },
 

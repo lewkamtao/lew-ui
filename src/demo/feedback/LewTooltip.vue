@@ -83,14 +83,17 @@ let pre2 = ref(`<template>
     <div class="demo-wrapper">
         <lew-title>Tooltip</lew-title>
         <DemoBox title="悬浮显示" badge="推荐" :code="pre1">
-            <LewButton
+            <div
                 v-tooltip="{
-                    content: '西伯利亚雪橇犬',
+                    content: '<h1>西伯利亚<br>雪橇犬</h1>',
                     placement: 'top',
                     trigger: 'mouseenter',
+                    allowHTML: true,
                 }"
-                >上方</LewButton
             >
+                <div>测试测测试测试测试测试测试测试测试测试试</div>
+                上方
+            </div>
             <LewButton
                 v-tooltip="{
                     content: '西伯利亚雪橇犬',

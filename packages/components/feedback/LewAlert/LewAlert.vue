@@ -6,9 +6,10 @@ import {
     CheckmarkCircle24Regular,
     ErrorCircle24Regular,
     Alert24Regular,
-    Dismiss20Filled,
+    Dismiss24Filled,
 } from '@vicons/fluent';
 import { Icon } from '@vicons/utils';
+// alert type
 type Alert = {
     type: string;
     title: string;
@@ -36,20 +37,12 @@ const emit = defineEmits(['close']);
             :class="`lew-alert-${item.type}`"
         >
             <div class="alert-icon">
-                <Icon v-if="item.type == `normal`" size="24">
-                    <Info24Regular />
-                </Icon>
-                <Icon v-if="item.type == `warning`" size="24">
-                    <Warning24Regular />
-                </Icon>
-                <Icon v-if="item.type == `success`" size="24">
-                    <CheckmarkCircle24Regular />
-                </Icon>
-                <Icon v-if="item.type == `danger`" size="24">
-                    <ErrorCircle24Regular />
-                </Icon>
-                <Icon v-if="item.type == `primary`" size="24">
-                    <Alert24Regular />
+                <Icon size="24">
+                    <Info24Regular v-if="item.type == `normal`" />
+                    <Warning24Regular v-if="item.type == `warning`" />
+                    <CheckmarkCircle24Regular v-if="item.type == `success`" />
+                    <ErrorCircle24Regular v-if="item.type == `error`" />
+                    <Alert24Regular v-if="item.type == `info`" />
                 </Icon>
             </div>
 
@@ -59,8 +52,8 @@ const emit = defineEmits(['close']);
                     {{ item.content }}
                 </div>
             </div>
-            <div class="close" @click="emit('close', i)">
-                <Icon size="20"> <Dismiss20Filled /> </Icon>
+            <div class="btn-close" @click="emit('close', i)">
+                <Icon size="18"> <Dismiss24Filled /> </Icon>
             </div>
         </div>
     </div>
@@ -90,7 +83,7 @@ const emit = defineEmits(['close']);
         .alert-icon {
             margin: -1px 5px 0px 0px;
         }
-        .close {
+        .btn-close {
             position: absolute;
             top: 8px;
             display: flex;
@@ -104,10 +97,10 @@ const emit = defineEmits(['close']);
             cursor: pointer;
             user-select: none;
         }
-        .close:hover {
+        .btn-close:hover {
             background: rgba($color: #000000, $alpha: 0.05);
         }
-        .close:active {
+        .btn-close:active {
             background: rgba($color: #000000, $alpha: 0.15);
         }
         .message {
@@ -136,13 +129,13 @@ const emit = defineEmits(['close']);
         color: var(--lew-warning-text-color);
         background-color: var(--lew-warning-color-light);
     }
-    .lew-alert-danger {
-        color: var(--lew-danger-text-color);
-        background-color: var(--lew-danger-color-light);
+    .lew-alert-error {
+        color: var(--lew-error-text-color);
+        background-color: var(--lew-error-color-light);
     }
-    .lew-alert-primary {
-        color: var(--lew-primary-text-color);
-        background-color: var(--lew-primary-color-light);
+    .lew-alert-info {
+        color: var(--lew-info-text-color);
+        background-color: var(--lew-info-color-light);
     }
     .lew-alert:hover {
         opacity: 1;

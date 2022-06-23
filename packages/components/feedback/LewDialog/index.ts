@@ -34,6 +34,7 @@ const dialog = (type: string, options: Options) => {
     const div: any = document.createElement('div');
     document.body.appendChild(div);
     const close = () => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         app.unmount(div);
         div.remove();
@@ -44,6 +45,7 @@ const dialog = (type: string, options: Options) => {
                 LewDialog,
                 {
                     closeOnClickOverlay: false,
+                    type: type,
                     visible: true,
                     'onUpdate:visible': (newVisible: any) => {
                         if (newVisible === false) {

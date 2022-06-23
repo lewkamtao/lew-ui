@@ -53,11 +53,11 @@ const close = (e: number) => {
         >点我</LewButton
     >
     <LewButton
-        type="danger"
+        type="error"
         style="margin-right: 10px"
         @click="
             addAlert({
-                type: 'danger',
+                type: 'error',
                 title: '成功发送一条消息',
                 content: '',
             })
@@ -128,11 +128,11 @@ const close = (e: number) => {
                 >点我</LewButton
             >
             <LewButton
-                type="danger"
+                type="error"
                 style="margin-right: 10px"
                 @click="
                     addAlert({
-                        type: 'danger',
+                        type: 'error',
                         title: '成功发送一条消息',
                         content: '',
                     })

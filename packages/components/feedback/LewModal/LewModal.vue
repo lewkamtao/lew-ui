@@ -15,7 +15,7 @@
     </teleport>
 </template>
 <script lang="ts" setup name="Modal">
-import useDOMCreate from '../../hooks/useDOMCreate';
+import { useDOMCreate } from '../../../hooks';
 useDOMCreate('lew-modal');
 
 defineProps({
@@ -51,9 +51,9 @@ const maskClick = () => {
     left: 0px;
     width: 100%;
     height: 100%;
-    background-color: var(--lew-bgcolor-mask);
+    background-color: var(--lew-modal-bgcolor);
     backdrop-filter: blur(5px);
-    outline: 1000000px solid var(--lew-bgcolor-mask);
+    outline: 1000000px solid var(--lew-modal-bgcolor);
     display: flex;
     justify-content: center;
     align-items: center;

@@ -1,10 +1,4 @@
 <script setup lang="ts">
-import DemoBox from '../../layout/DemoBox.vue';
-import DemoPopover1 from '../../demo/feedback/popover/DemoPopover1.vue';
-
-import { LewTitle } from '../../../packages';
-import { ref } from 'vue';
-let pre1 = ref(`<script setup lang="ts">
 import {
     LewFormItem,
     LewInput,
@@ -15,12 +9,12 @@ import {
 import { ref } from 'vue';
 
 let v = ref('');
-const popRef = ref(null);
+const popRef: any = ref(null);
 const submit = () => {
     LewMessage.error(v.value || '密码不可为空');
-    popRef1.value.hide();
+    popRef.value.hide();
 };
-<\/script>
+</script>
 
 <template>
     <lew-popover ref="popRef" trigger="click">
@@ -41,33 +35,6 @@ const submit = () => {
             </div>
         </template>
     </lew-popover>
-</template>
-
-<style lang="scss" scoped>
-.popover-body {
-    padding: 15px;
-    box-sizing: border-box;
-    .footer {
-        display: flex;
-        justify-content: end;
-        margin-top: -10px;
-        .lew-button {
-            margin-left: 10px;
-        }
-    }
-}
-</style>
-`);
-</script>
-
-<template>
-    <div class="demo-wrapper">
-        <lew-title>Popover</lew-title>
-
-        <demo-box title="询问校验" badge="自定义 HTML" :code="pre1">
-            <demo-popover-1></demo-popover-1>
-        </demo-box>
-    </div>
 </template>
 
 <style lang="scss" scoped>

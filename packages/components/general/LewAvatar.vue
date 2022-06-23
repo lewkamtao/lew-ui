@@ -69,7 +69,7 @@ defineProps({
     }
 
     .dot-busy {
-        background-color: var(--lew-danger-color);
+        background-color: var(--lew-error-color);
     }
 
     .dot-offline {

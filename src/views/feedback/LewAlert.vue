@@ -53,11 +53,11 @@ const close = (e: number) => {
         >点我</LewButton
     >
     <LewButton
-        type="danger"
+        type="error"
         style="margin-right: 10px"
         @click="
             addAlert({
-                type: 'danger',
+                type: 'error',
                 title: '成功发送一条消息',
                 content: '',
             })
@@ -116,28 +116,41 @@ const close = (e: number) => {
         <lew-title>Alert</lew-title>
         <demo-box title="警报" :code="pre1">
             <LewButton
+                type="normal"
+                style="margin-right: 10px"
+                @click="
+                    addAlert({
+                        type: 'normal',
+                        title: '成功发送一条消息',
+                        content:
+                            'Well the Ukraine girls really knock me out They leave the West behind And Moscow girls make me sing and shout That Georgia s always on my mind Aw come on!',
+                    })
+                "
+                >normal</LewButton
+            >
+            <LewButton
                 type="primary"
                 style="margin-right: 10px"
                 @click="
                     addAlert({
-                        type: 'primary',
+                        type: 'info',
                         title: '成功发送一条消息',
                         content: '',
                     })
                 "
-                >点我</LewButton
+                >info</LewButton
             >
             <LewButton
-                type="danger"
+                type="error"
                 style="margin-right: 10px"
                 @click="
                     addAlert({
-                        type: 'danger',
+                        type: 'error',
                         title: '成功发送一条消息',
                         content: '',
                     })
                 "
-                >点我</LewButton
+                >error</LewButton
             >
             <LewButton
                 type="warning"
@@ -149,7 +162,7 @@ const close = (e: number) => {
                         content: '',
                     })
                 "
-                >点我</LewButton
+                >warning</LewButton
             >
             <LewButton
                 type="success"
@@ -161,21 +174,9 @@ const close = (e: number) => {
                         content: '',
                     })
                 "
-                >点我</LewButton
+                >success</LewButton
             >
-            <LewButton
-                type="normal"
-                style="margin-right: 10px"
-                @click="
-                    addAlert({
-                        type: 'normal',
-                        title: '成功发送一条消息',
-                        content:
-                            'Well the Ukraine girls really knock me out They leave the West behind And Moscow girls make me sing and shout That Georgia s always on my mind Aw come on!',
-                    })
-                "
-                >点我</LewButton
-            >
+
             <div style="margin-top: 20px">
                 <LewAlert :alert-list="alertList" @close="close"></LewAlert>
             </div>

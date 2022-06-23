@@ -4,6 +4,10 @@ defineProps({
         type: String,
         default: 'primary',
     },
+    size: {
+        type: String,
+        default: 'medium',
+    },
     loading: {
         type: Boolean,
         default: false,
@@ -22,9 +26,11 @@ defineProps({
 <template>
     <button
         class="lew-button"
-        :class="`lew-button-${type} ${round ? 'lew-button-round' : ''} ${
-            disabled ? 'lew-button-disabled' : ''
-        }  ${loading ? 'lew-button-loading' : ''}`"
+        :class="`lew-button-${type} lew-button-${size} ${
+            round ? 'lew-button-round' : ''
+        } ${disabled ? 'lew-button-disabled' : ''}  ${
+            loading ? 'lew-button-loading' : ''
+        }`"
         :disabled="disabled"
     >
         <slot></slot>
@@ -41,17 +47,13 @@ defineProps({
     flex-shrink: 0;
     user-select: none;
     width: auto;
-    min-width: 70px;
-    height: 30px;
     white-space: nowrap;
     box-sizing: border-box;
     transition: all 0.15s;
-    font-size: 14px;
+
     border: none;
     cursor: pointer;
-    padding: 0px 13px;
     border-radius: var(--lew-form-border-radius);
-
     svg {
         font-size: 15px;
         width: 20px;
@@ -59,12 +61,33 @@ defineProps({
     }
 }
 
+.lew-button-small {
+    min-width: 50px;
+    min-height: 24px;
+    padding: 3px 6px;
+    font-size: 13px;
+}
+
+.lew-button-medium {
+    min-width: 60px;
+    min-height: 28px;
+    padding: 5px 12px;
+    font-size: 14px;
+}
+
+.lew-button-large {
+    height: 34px;
+    min-height: 36px;
+    padding: 8px 20px;
+    font-size: 15px;
+}
+
 .lew-button::after {
     position: absolute;
     top: 50%;
     left: 50%;
     content: '';
-    border: 3px solid rgba(0, 0, 0, 0.25);
+    border: 2.5px solid rgba(0, 0, 0, 0.25);
     border-left-color: rgba(255, 255, 255, 0.85);
     border-radius: 50%;
     width: 11px;
@@ -80,6 +103,16 @@ defineProps({
 .lew-button-round::before {
     border-radius: 50px;
 }
+.lew-button-blank {
+    background: none;
+    color: var(--lew-text-color-5);
+}
+.lew-button-blank:hover {
+    color: var(--lew-text-color-3);
+}
+.lew-button-active:hover {
+    color: var(--lew-text-color-0);
+}
 .lew-button-primary {
     background: var(--lew-primary-color);
     color: var(--lew-text-color-0-invert);
@@ -91,6 +124,19 @@ defineProps({
 
 .lew-button-primary:active {
     background-color: var(--lew-primary-color-active);
+}
+
+.lew-button-info:hover {
+    background-color: var(--lew-info-color-hover);
+}
+
+.lew-button-info {
+    background: var(--lew-info-color);
+    color: var(--lew-text-color-0-invert);
+}
+
+.lew-button-info:active {
+    background-color: var(--lew-info-color-active);
 }
 
 .lew-button-success {
@@ -106,17 +152,17 @@ defineProps({
     background-color: var(--lew-success-color-active);
 }
 
-.lew-button-danger {
-    background: var(--lew-danger-color);
+.lew-button-error {
+    background: var(--lew-error-color);
     color: var(--lew-text-color-0-invert);
 }
 
-.lew-button-danger:hover {
-    background-color: var(--lew-danger-color-hover);
+.lew-button-error:hover {
+    background-color: var(--lew-error-color-hover);
 }
 
-.lew-button-danger:active {
-    background-color: var(--lew-danger-color-active);
+.lew-button-error:active {
+    background-color: var(--lew-error-color-active);
 }
 
 .lew-button-normal {

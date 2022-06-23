@@ -9,7 +9,7 @@ import { LewButton, LewMessage } from '../../../../packages';
 <\/script>
 
 <template> 
-    <lew-button type="danger" @click="LewMessage.error('这是一个demo信息')"
+    <lew-button type="error" @click="LewMessage.error('这是一个demo信息')"
         >error</lew-button
     >
     <lew-button type="success" @click="LewMessage.success('这是一个demo信息')"
