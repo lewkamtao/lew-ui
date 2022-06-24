@@ -17,12 +17,12 @@ import 'plyr/dist/plyr.css';
 // 全局 => 定义 install 方法
 import * as components from './components';
 
-const install = function (Vue: App): void {
+const install: any = function (Vue: App): void {
     if (install.installed) return;
     let _components = Object.keys(components).map(
         (key) => components[key as keyof typeof components],
     );
-    _components.forEach((component) => {
+    _components.forEach((component: any) => {
         if (
             component.hasOwnProperty('name') &&
             component.hasOwnProperty('setup')
