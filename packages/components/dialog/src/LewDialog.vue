@@ -1,6 +1,6 @@
 <script lang="ts" setup name="dialog">
 import { ref } from 'vue';
-import { LewButton } from '../../../../../packages';
+import { LewButton } from '../../../../packages';
 import {
     Info24Regular,
     Warning24Regular,

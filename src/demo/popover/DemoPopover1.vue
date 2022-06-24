@@ -11,7 +11,7 @@ const submit = () => {
 </script>
 
 <template>
-    <lew-popover ref="popRef" trigger="click">
+    <lew-popover ref="popRef" trigger="click" placement="bottom-start">
         <template #trigger>
             <lew-button>进入保险箱</lew-button>
         </template>
@@ -20,6 +20,7 @@ const submit = () => {
                 <lew-form-item direction="y" title="请输入密码">
                     <lew-input v-model="v" />
                 </lew-form-item>
+
                 <div class="footer">
                     <lew-button type="blank" size="small" @click="popRef.hide()"
                         >取消

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ChevronUp24Regular, Code24Regular } from '@vicons/fluent';
 import { Icon } from '@vicons/utils';
-import { LewTitle, LewBadge } from '../../../../../packages';
+import { LewTitle, LewBadge } from '../../../../packages';
 import { ref } from 'vue';
 defineProps({
     title: {
@@ -96,7 +96,7 @@ let isShowCode = ref(false);
         }
     }
     .show-bar:hover {
-        background-color: var(--lew-bgcolor-1);
+        background-color: var(--lew-bgcolor-3);
         color: var(--lew-text-color-3);
     }
 

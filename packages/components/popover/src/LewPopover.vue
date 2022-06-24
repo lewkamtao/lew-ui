@@ -14,10 +14,15 @@ const props = defineProps({
         type: String,
         default: 'click',
     },
+    placement: {
+        type: String,
+        default: 'top',
+    },
 });
 
 onMounted(() => {
     let trigger = props.trigger;
+    let placement = props.placement;
     if (trigger == 'hover') {
         trigger = 'mouseenter';
     }
@@ -26,10 +31,12 @@ onMounted(() => {
     // @ts-ignore
     instance = tippy(triggerRef.value, {
         theme: 'light',
-        trigger: trigger || 'click',
+        trigger: trigger,
         content: bodyRef.value,
         animation: 'shift-away-subtle',
         interactive: true,
+        placement: placement,
+        appendTo: () => document.body,
         allowHTML: true,
         maxWidth: 'none',
         onShow(instance) {
@@ -63,7 +70,7 @@ onUnmounted(() => {
 <template>
     <div class="lew-popover">
         <div ref="triggerRef"><slot name="trigger" /></div>
-        <div ref="bodyRef" class="popover-body">
+        <div ref="bodyRef" class="lew-popover-body">
             <slot name="popover-body" />
         </div>
     </div>
@@ -75,7 +82,7 @@ onUnmounted(() => {
 }
 </style>
 <style lang="scss">
-.lew-popover {
+.lew-popover-body {
     .tippy-content {
         padding: 0px;
     }

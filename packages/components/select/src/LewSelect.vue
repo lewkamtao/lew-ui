@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LewInput } from '../../../../../packages';
+import { LewInput } from '../../../../packages';
 import { ref, PropType, onMounted } from 'vue';
 
 type Options = {

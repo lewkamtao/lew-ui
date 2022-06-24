@@ -7,6 +7,7 @@ const router = useRouter();
 
 type Item = {
     name: string;
+    cname: string;
     path: string;
     label: string;
     type: string;
@@ -41,14 +42,21 @@ const toPath = (item: Item) => {
                 class="item"
                 :class="{ active: route.path == item.path }"
                 @click="toPath(item)"
+                v-tooltip="{
+                    content: item.cname,
+                    placement: 'left',
+                    trigger: 'mouseenter',
+                }"
             >
-                {{ item.name }}
+                <span class="name">
+                    {{ item.name }}
+                </span>
                 <LewBadge
                     v-if="item.label"
                     style="margin-left: 10px"
                     :type="item.type"
-                    >{{ item.label }}</LewBadge
-                >
+                    >{{ item.label }}
+                </LewBadge>
             </div>
         </div>
     </div>
@@ -56,32 +64,33 @@ const toPath = (item: Item) => {
 
 <style lang="scss" scoped>
 .siderbar {
-    width: 250px;
+    width: 230px;
     height: 100%;
     overflow-y: scroll;
     border-right: var(--lew-border-1);
-    padding-top: 10px;
     .group {
         white-space: nowrap;
+        margin-top: 20px;
+        padding: 10px 0px 10px 20px;
 
         .title {
             padding: 10px 20px;
             font-size: 14px;
+            font-weight: lighter;
             color: var(--lew-text-color-9);
         }
 
         .item {
             position: relative;
-            height: 40px;
-            line-height: 40px;
-            padding-left: 25px;
+            height: 36px;
+            line-height: 36px;
+            padding-left: 20px;
             box-sizing: border-box;
             list-style: none;
-            width: calc(100% - 30px);
-            margin-left: 17px;
-            border-radius: var(--lew-border-radius);
+            width: calc(100% - 20px);
+            border-radius: var(--lew-form-border-radius);
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
             color: var(--lew-text-color-5);
         }
 
@@ -89,18 +98,19 @@ const toPath = (item: Item) => {
             color: var(--lew-text-color-0);
             background: var(--lew-bgcolor-2);
         }
+
         .active {
-            color: var(--lew-text-color-0);
-            background: var(--lew-bgcolor-4);
+            color: var(--lew-text-color-0-invert);
+            background: var(--lew-primary-color);
         }
         .active:hover {
-            color: var(--lew-text-color-0);
-            background: var(--lew-bgcolor-4);
+            color: var(--lew-text-color-0-invert);
+            background: var(--lew-primary-color);
         }
     }
 
     .group:last-child {
-        padding-bottom: 100px;
+        padding-bottom: 150px;
     }
 }
 </style>

@@ -18,7 +18,7 @@ export default {
                     content: binding.value.content,
                     animation: 'shift-away-subtle',
                     interactive: true,
-                    appendTo: 'parent',
+                    appendTo: () => document.body,
                     placement: binding.value.placement,
                     allowHTML: binding.value.allowHTML,
                     onShow(instance) {

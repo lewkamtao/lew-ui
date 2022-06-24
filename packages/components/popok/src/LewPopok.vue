@@ -1,7 +1,7 @@
 <!-- filename: Popover.vue -->
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
-import { LewButton } from '../../../../../packages';
+import { LewButton } from '../../../../packages';
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; // optional for styling
 import 'tippy.js/animations/shift-away-subtle.css';
@@ -32,6 +32,10 @@ const props = defineProps({
         type: String,
         default: '',
     },
+    placement: {
+        type: String,
+        default: 'top',
+    },
 });
 
 let triggerRef = ref(null);
@@ -42,6 +46,8 @@ let instance: any;
 
 onMounted(() => {
     let trigger = props.trigger;
+    let placement = props.placement;
+
     if (trigger == 'hover') {
         trigger = 'mouseenter';
     }
@@ -53,6 +59,8 @@ onMounted(() => {
         content: bodyRef.value,
         animation: 'shift-away-subtle',
         interactive: true,
+        placement: placement,
+        appendTo: () => document.body,
         allowHTML: true,
         maxWidth: 'none',
         onShow(instance) {
@@ -85,11 +93,11 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="lew-povpoer">
+    <div class="lew-popok">
         <div ref="triggerRef">
             <slot />
         </div>
-        <div ref="bodyRef" class="popok-body">
+        <div ref="bodyRef" class="lew-popok-body">
             <div class="left">
                 <Icon size="22" :class="`icon-${type}`">
                     <Info24Regular v-if="type == `normal`" />
@@ -119,57 +127,57 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss" scoped>
-.lew-povpoer {
+.lew-popok {
     display: inline-block;
-    .popok-body {
-        width: 280px;
-        display: flex;
-        padding: 10px;
-        .left {
-            width: 30px;
-            margin-right: 5px;
-            .icon-success {
-                color: var(--lew-success-color-dark);
-            }
-            .icon-warning {
-                color: var(--lew-warning-color-dark);
-            }
-            .icon-normal {
-                color: var(--lew-normal-color-dark);
-            }
-            .icon-info {
-                color: var(--lew-info-color-dark);
-            }
-            .icon-error {
-                color: var(--lew-error-color-dark);
-            }
+}
+.lew-popok-body {
+    width: 280px;
+    display: flex;
+    padding: 10px;
+    .left {
+        width: 30px;
+        margin-right: 5px;
+        .icon-success {
+            color: var(--lew-success-color-dark);
         }
-        .right {
-            width: 250px;
-            .title {
-                width: 100%;
-                font-weight: 600;
-                margin-bottom: 5px;
-            }
-            .content {
-                width: 100%;
-                font-size: 14px;
-                margin-bottom: 10px;
-            }
-            .footer {
-                width: 100%;
-                display: flex;
-                justify-content: end;
-                .lew-button {
-                    margin-left: 10px;
-                }
+        .icon-warning {
+            color: var(--lew-warning-color-dark);
+        }
+        .icon-normal {
+            color: var(--lew-normal-color-dark);
+        }
+        .icon-info {
+            color: var(--lew-info-color-dark);
+        }
+        .icon-error {
+            color: var(--lew-error-color-dark);
+        }
+    }
+    .right {
+        width: 250px;
+        .title {
+            width: 100%;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .content {
+            width: 100%;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .footer {
+            width: 100%;
+            display: flex;
+            justify-content: end;
+            .lew-button {
+                margin-left: 10px;
             }
         }
     }
 }
 </style>
 <style lang="scss">
-.lew-popvpoer {
+.lew-popok-body {
     .tippy-content {
         padding: 0px;
     }

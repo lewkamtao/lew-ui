@@ -15,6 +15,7 @@ watch(route, () => {
 });
 
 type Item = {
+    cname: string;
     name: string;
     path: string;
     label: string;
@@ -32,30 +33,35 @@ group.value = [
         title: '通用',
         items: [
             {
+                cname: '头像',
                 name: 'Avatar',
                 path: '/Avatar',
                 label: '',
                 type: 'success',
             },
             {
+                cname: '按钮',
                 name: 'Button',
                 path: '/Button',
                 label: '',
                 type: 'success',
             },
             {
+                cname: '徽章',
                 name: 'Badge',
                 path: '/Badge',
                 label: '',
                 type: 'success',
             },
             {
+                cname: '标题',
                 name: 'Title',
                 path: '/Title',
                 label: '',
                 type: 'success',
             },
             {
+                cname: '选项卡',
                 name: 'Tabs',
                 path: '/Tabs',
                 label: '',
@@ -67,12 +73,14 @@ group.value = [
         title: '表单',
         items: [
             {
+                cname: '表单',
                 name: 'Form',
                 path: '/Form',
                 label: '',
                 type: 'success',
             },
             {
+                cname: '输入框',
                 name: 'Input',
                 path: '/Input',
                 label: '',
@@ -80,18 +88,21 @@ group.value = [
             },
 
             {
+                cname: '多行文本框',
                 name: 'Textarea',
                 path: '/Textarea',
                 label: '',
                 type: 'success',
             },
             {
+                cname: '多选框',
                 name: 'Checkbox',
                 path: '/Checkbox',
                 label: '',
                 type: 'success',
             },
             {
+                cname: '单选框',
                 name: 'Radio',
                 path: '/Radio',
                 label: '',
@@ -99,25 +110,27 @@ group.value = [
             },
 
             {
+                cname: '选择器',
                 name: 'Select',
                 path: '/Select',
                 label: '',
                 type: 'success',
             },
             // {
-            //     name: 'Cascader',
+            //     cname:"",name: 'Cascader',
             //     path: '/Cascader',
             //     label: '',
             //     type: 'error',
             // },
             {
+                cname: '开关',
                 name: 'Switch',
                 path: '/Switch',
                 label: '',
                 type: 'success',
             },
             // {
-            //     name: 'InputTag',
+            //     cname:"",name: 'InputTag',
             //     path: '/InputTag',
             //     label: '',
             //     type: 'error',
@@ -128,18 +141,21 @@ group.value = [
         title: '反馈',
         items: [
             {
+                cname: '警告提醒',
                 name: 'Alert',
                 path: '/Alert',
                 label: '',
                 type: 'success',
             },
             {
+                cname: '全局提示',
                 name: 'Message',
                 path: '/Message',
                 label: 'new',
                 type: 'success',
             },
             {
+                cname: '对话框',
                 name: 'Dialog',
                 path: '/Dialog',
                 label: 'new',
@@ -147,18 +163,21 @@ group.value = [
             },
 
             {
+                cname: '模态框',
                 name: 'Modal',
                 path: '/Modal',
                 label: '',
                 type: 'success',
             },
             {
+                cname: '确认气泡',
                 name: 'Popok',
                 path: '/Popok',
                 label: '',
                 type: 'success',
             },
             {
+                cname: '信息气泡',
                 name: 'Popover',
                 path: '/Popover',
                 label: '',
@@ -166,6 +185,7 @@ group.value = [
             },
 
             {
+                cname: '文字提示',
                 name: 'Tooltip',
                 path: '/Tooltip',
                 label: '',
@@ -173,6 +193,7 @@ group.value = [
             },
 
             {
+                cname: '结果',
                 name: 'Result',
                 path: '/Result',
                 label: '',
@@ -184,12 +205,14 @@ group.value = [
         title: '其他',
         items: [
             {
+                cname: '灯箱',
                 name: 'FancyImg',
                 path: '/FancyImg',
                 label: '',
                 type: 'success',
             },
             {
+                cname: '播放器',
                 name: 'PlyrVideo',
                 path: '/PlyrVideo',
                 label: '',
@@ -261,8 +284,8 @@ let isDark = ref(false);
         height: calc(100vh - 60px);
     }
     .app-main {
-        margin-left: 250px;
-        width: calc(100% - 250px);
+        margin-left: 230px;
+        width: calc(100% - 230px);
         height: calc(100vh - 60px);
         overflow-y: scroll;
         box-sizing: border-box;

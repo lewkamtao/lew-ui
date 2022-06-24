@@ -15,7 +15,7 @@
     </teleport>
 </template>
 <script lang="ts" setup name="Modal">
-import { useDOMCreate } from '../../../../hooks';
+import { useDOMCreate } from '../../../hooks';
 useDOMCreate('lew-modal');
 
 defineProps({
