@@ -53,7 +53,7 @@ const emit = defineEmits(['close']);
                 </div>
             </div>
             <div class="btn-close" @click="emit('close', i)">
-                <Icon size="18"> <Dismiss24Filled /> </Icon>
+                <Icon size="16"> <Dismiss24Filled /> </Icon>
             </div>
         </div>
     </div>
@@ -83,13 +83,13 @@ const emit = defineEmits(['close']);
         }
         .btn-close {
             position: absolute;
-            top: 8px;
+            top: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
             width: 25px;
             height: 25px;
-            right: 10px;
+            right: 8px;
             border-radius: var(--lew-border-radius);
             box-sizing: border-box;
             cursor: pointer;
