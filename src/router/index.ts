@@ -25,7 +25,7 @@ const LewResult = () => import('../views/feedback/LewResult.vue');
 const LewTooltip = () => import('../views/feedback/LewTooltip.vue');
 const LewPopok = () => import('../views/feedback/LewPopok.vue');
 
-const LewFancyImg = () => import('../views/other/LewFancyImg.vue');
+const LewFancyImage = () => import('../views/other/LewFancyImage.vue');
 const LewPlyrVideo = () => import('../views/other/LewPlyrVideo.vue');
 
 const routes: Array<RouteRecordRaw> = [
@@ -56,7 +56,7 @@ const routes: Array<RouteRecordRaw> = [
     { path: '/Modal', name: 'LewModal', component: LewModal },
     { path: '/Message', name: 'LewMessage', component: LewMessage },
 
-    { path: '/FancyImg', name: 'LewFancyImg', component: LewFancyImg },
+    { path: '/FancyImg', name: 'LewFancyImage', component: LewFancyImage },
     { path: '/PlyrVideo', name: 'LewPlyrVideo', component: LewPlyrVideo },
 ];
 const router = createRouter({

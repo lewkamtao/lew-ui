@@ -14,7 +14,7 @@
         "build:package": "vue-tsc --noEmit && vite build --mode package",
         "preview": "vite preview",
         "eslint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-        "prettier": "prettier --write"
+        "format": "prettier --write './*.{js,ts,json,vue,css,scss}' './*/*.{js,ts,json,vue,css,scss}' './*/*/*.{js,ts,json,vue,css,scss}' './*/*/*/*.{js,ts,json,vue,css,scss}' './*/*/*/*/*.{js,ts,json,vue,css,scss}' './*/*/*/*/*/*.{js,ts,json,vue,css,scss}'"
     },
     "files": [
         "dist"

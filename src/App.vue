@@ -224,7 +224,7 @@ let isDark = ref(false);
                     <Icon size="24"> <LogoGithub /> </Icon
                 ></a>
 
-                <Icon @click="changeMode" size="24">
+                <Icon size="24" @click="changeMode">
                     <MoonOutline v-if="isDark" />
                     <SunnyOutline v-if="!isDark" />
                 </Icon>
