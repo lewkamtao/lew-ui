@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { DemoFancyImage1 } from '../../demo';
-
 import { ref } from 'vue';
+import { DemoFancyImage1, DemoFancyImage1_code } from '../../demo';
 
-let pre1 = ref(``);
-let pre2 = ref(``);
 const docsTable = ref([
     {
         param: 'src',
@@ -24,7 +21,7 @@ const docsTable = ref([
 <template>
     <div class="demo-wrapper">
         <lew-title>Avatar</lew-title>
-        <lew-demo-box title="普通" :code="`待完善`">
+        <lew-demo-box title="普通" :code="DemoFancyImage1_code">
             <demo-fancy-image1 />
         </lew-demo-box>
 

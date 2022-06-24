@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { DemoPlyrVideo1 } from '../../demo';
 import { ref } from 'vue';
+import { DemoPlyrVideo1, DemoPlyrVideo1_code } from '../../demo';
 
-let pre1 = ref(``);
 const docsTable = ref([
     {
         param: 'src',
@@ -22,7 +21,7 @@ const docsTable = ref([
 <template>
     <div class="demo-wrapper">
         <lew-title>Avatar</lew-title>
-        <lew-demo-box title="普通" :code="`待完善`">
+        <lew-demo-box title="普通" :code="DemoPlyrVideo1_code">
             <demo-plyr-video1 />
         </lew-demo-box>
 

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { DemoAvatar1, DemoAvatar2 } from '../../demo';
-
-let pre1 = ref(``);
-let pre2 = ref(``);
+import {
+    DemoAvatar1,
+    DemoAvatar2,
+    DemoAvatar1_code,
+    DemoAvatar2_code,
+} from '../../demo';
 
 const docsTable = ref([
     {
@@ -24,10 +26,10 @@ const docsTable = ref([
 <template>
     <div class="demo-wrapper">
         <lew-title>Avatar</lew-title>
-        <lew-demo-box title="普通" :code="pre1">
+        <lew-demo-box title="普通" :code="DemoAvatar1_code">
             <demo-avatar1 />
         </lew-demo-box>
-        <lew-demo-box title="普通" :code="pre2">
+        <lew-demo-box title="普通" :code="DemoAvatar2_code">
             <demo-avatar2 />
         </lew-demo-box>
         <lew-title size="16px">Props</lew-title>

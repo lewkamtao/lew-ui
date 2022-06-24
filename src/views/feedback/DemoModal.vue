@@ -1,17 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { DemoModal1 } from '../../demo';
-
-const modalVisible = ref(false);
-
-let pre1 = ref(``);
+import { DemoModal1, DemoModal1_code } from '../../demo';
 </script>
 
 <template>
     <div class="demo-wrapper">
         <lew-title>Modal</lew-title>
 
-        <lew-demo-box title="模态框" :code="pre1">
+        <lew-demo-box title="模态框" :code="DemoModal1_code">
             <demo-modal1 />
         </lew-demo-box>
     </div>

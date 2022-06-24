@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-type Options = {
-    label: string;
-    value: string;
-    activeIndex: number;
-};
+
 const options = ref([
     { label: '北京', value: '1' },
     { label: '上海', value: '2' },
@@ -15,7 +11,7 @@ const options = ref([
 
 let value = ref('');
 
-const change = (e: Options) => {
+const change = (e) => {
     console.log(e);
 };
 </script>

@@ -1,7 +1,4 @@
 <template>
-    <lew-badge round dot type="normal"></lew-badge>
-    <lew-badge round dot type="primary"></lew-badge>
-    <lew-badge round dot type="success"></lew-badge>
-    <lew-badge round dot type="warning"></lew-badge>
-    <lew-badge round dot type="error"></lew-badge>
+    <lew-badge round type="primary" href="/button">BUTTON</lew-badge>
+    <lew-badge round type="normal" href="https://vuejs.org/">Vue</lew-badge>
 </template>

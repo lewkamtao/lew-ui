@@ -5,9 +5,3 @@
     <lew-title size="22px" :bold="800">22px 粗体</lew-title>
     <lew-title size="26px" :bold="800">26px 粗体</lew-title>
 </template>
-
-<style lang="scss" scoped>
-.lew-title {
-    margin-bottom: 20px;
-}
-</style>

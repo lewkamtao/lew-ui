@@ -11,9 +11,7 @@ const route = useRoute();
 const router = useRouter();
 let mainRef: any = ref(null);
 watch(route, () => {
-    setTimeout(() => {
-        mainRef.value.scrollTop = 0;
-    }, 500);
+    mainRef.value.scrollTop = 0;
 });
 
 type Item = {

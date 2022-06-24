@@ -83,13 +83,3 @@ const close = (e: number) => {
         <LewAlert :alert-list="alertList" @close="close"></LewAlert>
     </div>
 </template>
-
-<style lang="scss" scoped>
-.main {
-    width: 100%;
-    margin: 0 auto;
-    > div {
-        margin: 30px 0px;
-    }
-}
-</style>

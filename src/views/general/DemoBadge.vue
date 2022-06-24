@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { DemoBadge1, DemoBadge2, DemoBadge3, DemoBadge4 } from '../../demo';
-
-let pre1 = ref(``);
-let pre2 = ref(``);
-let pre3 = ref(``);
-let pre4 = ref(``);
-let pre5 = ref(``);
+import {
+    DemoBadge1,
+    DemoBadge2,
+    DemoBadge3,
+    DemoBadge4,
+    DemoBadge5,
+    DemoBadge1_code,
+    DemoBadge2_code,
+    DemoBadge3_code,
+    DemoBadge4_code,
+    DemoBadge5_code,
+} from '../../demo';
 
 const docsTable = ref([
     {
@@ -27,17 +32,20 @@ const docsTable = ref([
 <template>
     <div class="demo-wrapper">
         <lew-title>Badge</lew-title>
-        <lew-demo-box title="普通" :code="pre1">
+        <lew-demo-box title="普通" :code="DemoBadge1_code">
             <demo-badge1 />
         </lew-demo-box>
-        <lew-demo-box title="粗的" :code="pre3">
+        <lew-demo-box title="圆的" :code="DemoBadge2_code">
             <demo-badge2 />
         </lew-demo-box>
-        <lew-demo-box title="链接" :code="pre4">
+        <lew-demo-box title="粗的" :code="DemoBadge3_code">
             <demo-badge3 />
         </lew-demo-box>
-        <lew-demo-box title="点" :code="pre5">
+        <lew-demo-box title="链接" :code="DemoBadge4_code">
             <demo-badge4 />
+        </lew-demo-box>
+        <lew-demo-box title="点" :code="DemoBadge5_code">
+            <demo-badge5 />
         </lew-demo-box>
         <lew-title size="16px">Props</lew-title>
         <vxe-table :data="docsTable">

@@ -1,31 +1,29 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import {
     DemoCheckbox1,
     DemoCheckbox2,
     DemoCheckbox3,
     DemoCheckbox4,
+    DemoCheckbox1_code,
+    DemoCheckbox2_code,
+    DemoCheckbox3_code,
+    DemoCheckbox4_code,
 } from '../../demo';
-
-let pre1 = ref(``);
-let pre2 = ref(``);
-let pre3 = ref(``);
-let pre4 = ref(``);
 </script>
 
 <template>
     <div class="demo-wrapper">
         <lew-title>Checkbox</lew-title>
-        <lew-demo-box title="x 布局" badge="方的" :code="pre1">
+        <lew-demo-box title="x 布局" badge="方的" :code="DemoCheckbox1_code">
             <demo-checkbox1 />
         </lew-demo-box>
-        <lew-demo-box title="y 布局" badge="圆的" :code="pre2">
+        <lew-demo-box title="y 布局" badge="圆的" :code="DemoCheckbox2_code">
             <demo-checkbox2
         /></lew-demo-box>
-        <lew-demo-box title="块" :code="pre3" badge="方的">
+        <lew-demo-box title="块" :code="DemoCheckbox3_code" badge="方的">
             <demo-checkbox3 />
         </lew-demo-box>
-        <lew-demo-box title="块" :code="pre4" badge="圆的">
+        <lew-demo-box title="块" :code="DemoCheckbox4_code" badge="圆的">
             <demo-checkbox4 />
         </lew-demo-box>
     </div>

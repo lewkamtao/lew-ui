@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { DemoAlert1 } from '../../demo';
-
-let pre1 = ref(``);
+import { DemoAlert1, DemoAlert1_code } from '../../demo';
 </script>
 
 <template>
     <div class="demo-wrapper">
         <lew-title>Alert</lew-title>
-        <lew-demo-box title="警报" :code="pre1">
+        <lew-demo-box title="警报" :code="DemoAlert1_code">
             <demo-alert1 />
         </lew-demo-box>
     </div>

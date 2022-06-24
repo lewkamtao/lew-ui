@@ -1,3 +1,5 @@
 import DemoFancyImage1 from './DemoFancyImage1.vue';
 
-export { DemoFancyImage1 };
+import DemoFancyImage1_code from './DemoFancyImage1.vue?raw';
+
+export { DemoFancyImage1, DemoFancyImage1_code };
