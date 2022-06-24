@@ -7,7 +7,7 @@ Doc address: https://lew.kamtao.com
 ## Install
 
 ```bash
-npm install lew-ui -save
+npm install lew-ui --save
 ```
 
 ## How to use
