@@ -23,7 +23,7 @@ const close = (e: number) => {
         style="margin-right: 10px"
         @click="
             addAlert({
-                type: 'primary',
+                type: 'info',
                 title: '成功发送一条消息',
                 content: '',
             })
