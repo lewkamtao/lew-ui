@@ -1,3 +1,3 @@
-import LewTooltips from './tooltip';
+import LewTooltip from './tooltip';
 
-export { LewTooltips };
+export { LewTooltip };

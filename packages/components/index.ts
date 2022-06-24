@@ -21,3 +21,4 @@ export * from './feedback/popover';
 
 export * from './other/fancybox';
 export * from './other/plyr';
+export * from './other/demobox';

@@ -1,63 +1,62 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
-const LewAvatar = () => import('../views/general/LewAvatar.vue');
-const LewBadge = () => import('../views/general/LewBadge.vue');
-const LewButton = () => import('../views/general/LewButton.vue');
+const DemoAvatar = () => import('../views/general/DemoAvatar.vue');
+const DemoBadge = () => import('../views/general/DemoBadge.vue');
+const DemoButton = () => import('../views/general/DemoButton.vue');
+const DemoTitle = () => import('../views/general/DemoTitle.vue');
+const DemoTabs = () => import('../views/general/DemoTabs.vue');
 
-const LewTitle = () => import('../views/general/LewTitle.vue');
+const DemoCascader = () => import('../views/form/DemoCascader.vue');
+const DemoCheckbox = () => import('../views/form/DemoCheckbox.vue');
+const DemoInputTag = () => import('../views/form/DemoInputTag.vue');
+const DemoRadio = () => import('../views/form/DemoRadio.vue');
+const DemoSelect = () => import('../views/form/DemoSelect.vue');
+const DemoSwitch = () => import('../views/form/DemoSwitch.vue');
+const DemoTextarea = () => import('../views/form/DemoTextarea.vue');
+const DemoInput = () => import('../views/form/DemoInput.vue');
+const DemoForm = () => import('../views/form/DemoForm.vue');
+const DemoAlert = () => import('../views/feedback/DemoAlert.vue');
 
-const LewCascader = () => import('../views/form/LewCascader.vue');
-const LewCheckbox = () => import('../views/form/LewCheckbox.vue');
-const LewInputTag = () => import('../views/form/LewInputTag.vue');
-const LewRadio = () => import('../views/form/LewRadio.vue');
-const LewSelect = () => import('../views/form/LewSelect.vue');
-const LewSwitch = () => import('../views/form/LewSwitch.vue');
-const LewTextarea = () => import('../views/form/LewTextarea.vue');
-const LewInput = () => import('../views/form/LewInput.vue');
-const LewForm = () => import('../views/form/LewForm.vue');
-const LewTabs = () => import('../views/form/LewTabs.vue');
-const LewAlert = () => import('../views/feedback/LewAlert.vue');
+const DemoDialog = () => import('../views/feedback/DemoDialog.vue');
+const DemoMessage = () => import('../views/feedback/DemoMessage.vue');
+const DemoModal = () => import('../views/feedback/DemoModal.vue');
+const DemoPopover = () => import('../views/feedback/DemoPopover.vue');
+const DemoResult = () => import('../views/feedback/DemoResult.vue');
+const DemoTooltip = () => import('../views/feedback/DemoTooltip.vue');
+const DemoPopok = () => import('../views/feedback/DemoPopok.vue');
 
-const LewDialog = () => import('../views/feedback/LewDialog.vue');
-const LewMessage = () => import('../views/feedback/LewMessage.vue');
-const LewModal = () => import('../views/feedback/LewModal.vue');
-const LewPopover = () => import('../views/feedback/LewPopover.vue');
-const LewResult = () => import('../views/feedback/LewResult.vue');
-const LewTooltip = () => import('../views/feedback/LewTooltip.vue');
-const LewPopok = () => import('../views/feedback/LewPopok.vue');
-
-const LewFancyImage = () => import('../views/other/LewFancyImage.vue');
-const LewPlyrVideo = () => import('../views/other/LewPlyrVideo.vue');
+const DemoFancyImage = () => import('../views/other/DemoFancyImage.vue');
+const DemoPlyrVideo = () => import('../views/other/DemoPlyrVideo.vue');
 
 const routes: Array<RouteRecordRaw> = [
-    { path: '/', name: 'Home', component: LewAvatar },
-    { path: '/Avatar', name: 'LewAvatar', component: LewAvatar },
-    { path: '/Badge', name: 'LewBadge', component: LewBadge },
-    { path: '/Title', name: 'LewTitle', component: LewTitle },
-    { path: '/Button', name: 'LewButton', component: LewButton },
+    { path: '/', name: 'Home', component: DemoAvatar },
+    { path: '/Avatar', name: 'R-LewAvatar', component: DemoAvatar },
+    { path: '/Badge', name: 'R-LewBadge', component: DemoBadge },
+    { path: '/Title', name: 'R-LewTitle', component: DemoTitle },
+    { path: '/Button', name: 'R-LewButton', component: DemoButton },
+    { path: '/Tabs', name: 'R-LewTabs', component: DemoTabs },
 
-    { path: '/Form', name: 'LewForm', component: LewForm },
-    { path: '/Tabs', name: 'LewTabs', component: LewTabs },
-    { path: '/Cascader', name: 'LewCascader', component: LewCascader },
-    { path: '/Checkbox', name: 'LewCheckbox', component: LewCheckbox },
-    { path: '/Input', name: 'LewInput', component: LewInput },
-    { path: '/Radio', name: 'LewRadio', component: LewRadio },
-    { path: '/Select', name: 'LewSelect', component: LewSelect },
-    { path: '/Switch', name: 'LewSwitch', component: LewSwitch },
-    { path: '/Textarea', name: 'LewTextarea', component: LewTextarea },
-    { path: '/InputTag', name: 'LewInputTag', component: LewInputTag },
+    { path: '/Form', name: 'R-LewForm', component: DemoForm },
+    { path: '/Cascader', name: 'R-LewCascader', component: DemoCascader },
+    { path: '/Checkbox', name: 'R-LewCheckbox', component: DemoCheckbox },
+    { path: '/Input', name: 'R-LewInput', component: DemoInput },
+    { path: '/Radio', name: 'R-LewRadio', component: DemoRadio },
+    { path: '/Select', name: 'R-LewSelect', component: DemoSelect },
+    { path: '/Switch', name: 'R-LewSwitch', component: DemoSwitch },
+    { path: '/Textarea', name: 'R-LewTextarea', component: DemoTextarea },
+    { path: '/InputTag', name: 'R-LewInputTag', component: DemoInputTag },
 
-    { path: '/Alert', name: 'LewAlert', component: LewAlert },
-    { path: '/Result', name: 'LewResult', component: LewResult },
-    { path: '/Dialog', name: 'LewDialog', component: LewDialog },
-    { path: '/Popok', name: 'LewPopok', component: LewPopok },
-    { path: '/Popover', name: 'LewPopover', component: LewPopover },
-    { path: '/Tooltip', name: 'LewTooltip', component: LewTooltip },
+    { path: '/Alert', name: 'R-LewAlert', component: DemoAlert },
+    { path: '/Result', name: 'R-LewResult', component: DemoResult },
+    { path: '/Dialog', name: 'R-LewDialog', component: DemoDialog },
+    { path: '/Popok', name: 'R-LewPopok', component: DemoPopok },
+    { path: '/Popover', name: 'R-LewPopover', component: DemoPopover },
+    { path: '/Tooltip', name: 'R-LewTooltip', component: DemoTooltip },
 
-    { path: '/Modal', name: 'LewModal', component: LewModal },
-    { path: '/Message', name: 'LewMessage', component: LewMessage },
+    { path: '/Modal', name: 'R-LewModal', component: DemoModal },
+    { path: '/Message', name: 'R-LewMessage', component: DemoMessage },
 
-    { path: '/FancyImg', name: 'LewFancyImage', component: LewFancyImage },
-    { path: '/PlyrVideo', name: 'LewPlyrVideo', component: LewPlyrVideo },
+    { path: '/FancyImg', name: 'R-LewFancyImage', component: DemoFancyImage },
+    { path: '/PlyrVideo', name: 'R-LewPlyrVideo', component: DemoPlyrVideo },
 ];
 const router = createRouter({
     history: createWebHashHistory(),

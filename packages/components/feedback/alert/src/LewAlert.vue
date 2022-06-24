@@ -37,7 +37,7 @@ const emit = defineEmits(['close']);
             :class="`lew-alert-${item.type}`"
         >
             <div class="alert-icon">
-                <Icon size="24">
+                <Icon size="20">
                     <Info24Regular v-if="item.type == `normal`" />
                     <Warning24Regular v-if="item.type == `warning`" />
                     <CheckmarkCircle24Regular v-if="item.type == `success`" />
@@ -59,7 +59,7 @@ const emit = defineEmits(['close']);
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .lew-alert-group {
     width: 100%;
     display: flex;
@@ -70,17 +70,16 @@ const emit = defineEmits(['close']);
         display: flex;
         align-items: flex-start;
         width: 100%;
-        min-height: 40px;
+        min-height: 32px;
         background-color: var(--lew-normal-color);
         border-radius: var(--lew-form-border-radius);
         margin-bottom: 10px;
-        padding: 12px;
-
+        padding: 8px 12px;
         box-sizing: border-box;
         opacity: 0.8;
         transition: all 0.25s ease;
         .alert-icon {
-            margin: -1px 5px 0px 0px;
+            margin: 1px 5px 0px 0px;
         }
         .btn-close {
             position: absolute;

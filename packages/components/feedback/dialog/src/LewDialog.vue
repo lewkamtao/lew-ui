@@ -83,7 +83,7 @@ const emit = defineEmits(['update:visible']);
                     <Icon size="18"> <Dismiss24Filled /></Icon>
                 </div>
                 <div class="left">
-                    <Icon size="42" :class="`icon-${type}`">
+                    <Icon size="32" :class="`icon-${type}`">
                         <Info24Regular v-if="type == `normal`" />
                         <Warning24Regular v-if="type == `warning`" />
                         <CheckmarkCircle24Regular v-if="type == `success`" />
@@ -132,16 +132,16 @@ const emit = defineEmits(['update:visible']);
         display: flex;
         width: 350px;
         height: auto;
-        padding: 25px;
+        padding: 20px;
         border-radius: var(--lew-border-radius);
         background-color: var(--lew-bgcolor-0);
         box-shadow: 0px 15px 50px rgba($color: #000000, $alpha: 0.05);
         .left {
-            width: 50px;
+            width: 30px;
             margin-right: 10px;
         }
         .right {
-            width: 300px;
+            width: 310px;
         }
         .icon-success {
             color: var(--lew-success-color-dark);

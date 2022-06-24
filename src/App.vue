@@ -57,6 +57,12 @@ group.value = [
                 label: '',
                 type: 'success',
             },
+            {
+                name: 'Tabs',
+                path: '/Tabs',
+                label: '',
+                type: 'success',
+            },
         ],
     },
     {
@@ -93,12 +99,7 @@ group.value = [
                 label: '',
                 type: 'success',
             },
-            {
-                name: 'Tabs',
-                path: '/Tabs',
-                label: '',
-                type: 'success',
-            },
+
             {
                 name: 'Select',
                 path: '/Select',
@@ -216,9 +217,7 @@ let isDark = ref(false);
 <template>
     <div class="wrapper">
         <div class="Header">
-            <div class="logo">
-                Lew Design <lew-badge>develop ｜ 文档完善中···</lew-badge>
-            </div>
+            <div class="logo">Lew Design <lew-badge>dev </lew-badge></div>
             <div class="menu">
                 <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
                     <Icon size="24"> <LogoGithub /> </Icon

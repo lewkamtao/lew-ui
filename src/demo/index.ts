@@ -1,6 +1,24 @@
-import DemoAvatar1 from './general/avatar/DemoAvatar1.vue';
-import DemoAvatar2 from './general/avatar/DemoAvatar2.vue';
-import DemoFancyImage1 from './other/fancy-image/DemoFancyImage1.vue';
-import DemoPlyrVideo1 from './other/plyr-video/DemoPlyrVideo1.vue';
+export * from './avatar';
+export * from './badge';
+export * from './button';
+export * from './tabs';
+export * from './title';
 
-export { DemoAvatar1, DemoAvatar2, DemoFancyImage1, DemoPlyrVideo1 };
+export * from './form';
+export * from './input';
+export * from './textarea';
+export * from './checkbox';
+export * from './radio';
+export * from './select';
+export * from './switch';
+
+export * from './alert';
+export * from './message';
+export * from './tooltip';
+export * from './modal';
+export * from './popok';
+export * from './popover';
+export * from './dialog';
+
+export * from './fancy-image';
+export * from './plyr-video';

@@ -1,7 +1,7 @@
 <!-- filename: Popover.vue -->
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
-import { LewButton } from '/packages';
+import { LewButton } from '../../../../../packages';
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; // optional for styling
 import 'tippy.js/animations/shift-away-subtle.css';
@@ -103,14 +103,14 @@ onUnmounted(() => {
                 <div v-if="title" class="title">{{ title }}</div>
                 <div v-if="content" class="content">{{ content }}</div>
                 <div class="footer">
-                    <LewButton
+                    <lew-button
                         size="small"
                         type="blank"
                         @click="hide(), emit('cancel')"
                         >取消
-                    </LewButton>
-                    <LewButton @click="hide(), emit('ok')" size="small"
-                        >确定</LewButton
+                    </lew-button>
+                    <lew-button @click="hide(), emit('ok')" size="small"
+                        >确定</lew-button
                     >
                 </div>
             </div>
