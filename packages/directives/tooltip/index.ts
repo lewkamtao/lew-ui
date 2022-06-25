@@ -21,6 +21,7 @@ export default {
                     appendTo: () => document.body,
                     placement: binding.value.placement,
                     allowHTML: binding.value.allowHTML,
+                    maxWidth: 250,
                     onShow(instance) {
                         const node = document.getElementsByTagName('html')[0];
                         if (node.classList.contains('lew-dark')) {

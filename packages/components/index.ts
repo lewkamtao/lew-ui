@@ -1,3 +1,7 @@
+export * from './flex';
+export * from './space';
+export * from './layout';
+
 export * from './input';
 export * from './form-item';
 export * from './checkbox';

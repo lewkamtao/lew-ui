@@ -53,9 +53,10 @@ const toPath = (item: Item) => {
                 </span>
                 <LewBadge
                     v-if="item.label"
-                    style="margin-left: 10px"
                     :type="item.type"
-                    >{{ item.label }}
+                    :value="item.label"
+                    style="margin-left: 30px"
+                >
                 </LewBadge>
             </div>
         </div>
@@ -68,10 +69,11 @@ const toPath = (item: Item) => {
     height: 100%;
     overflow-y: scroll;
     border-right: var(--lew-border-1);
+    user-select: none;
     .group {
         white-space: nowrap;
         margin-top: 20px;
-        padding: 10px 0px 10px 20px;
+        padding: 5px 0px 5px 20px;
 
         .title {
             padding: 10px 20px;
@@ -81,6 +83,8 @@ const toPath = (item: Item) => {
         }
 
         .item {
+            display: flex;
+            align-items: center;
             position: relative;
             height: 36px;
             line-height: 36px;
@@ -91,7 +95,7 @@ const toPath = (item: Item) => {
             border-radius: var(--lew-form-border-radius);
             cursor: pointer;
             font-size: 14px;
-            color: var(--lew-text-color-5);
+            color: var(--lew-text-color-6);
         }
 
         .item:hover {
@@ -100,11 +104,11 @@ const toPath = (item: Item) => {
         }
 
         .active {
-            color: var(--lew-text-color-0-invert);
+            color: var(--lew-white-color);
             background: var(--lew-primary-color);
         }
         .active:hover {
-            color: var(--lew-text-color-0-invert);
+            color: var(--lew-white-color);
             background: var(--lew-primary-color);
         }
     }

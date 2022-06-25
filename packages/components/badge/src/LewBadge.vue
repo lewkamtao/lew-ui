@@ -1,132 +1,119 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-const router = useRouter();
-const props = defineProps({
+defineProps({
     type: {
         type: String,
-        default: 'primary',
+        default: 'default',
     },
     round: {
         type: Boolean,
         default: false,
     },
-    bold: {
-        type: Number,
-        default: 400,
-    },
-    dot: {
-        type: Boolean,
-        default: false,
-    },
-    href: {
+    value: {
         type: String,
         default: '',
     },
 });
-const toLink = () => {
-    if (props.href) {
-        if (props.href.includes('http')) {
-            window.open(props.href, '_blank');
-        } else {
-            router.push(props.href);
-        }
-    }
-};
 </script>
 
 <template>
-    <span
+    <div
         class="lew-badge"
-        :class="`${dot ? 'lew-badge-dot' : ''} ${
-            round ? 'lew-badge-round' : ''
-        } ${href ? 'lew-badge-href' : ''} lew-badge-${type} `"
-        :style="` font-weight:${bold}`"
-        @click="toLink()"
+        :class="`lew-badge-${type} ${round ? 'lew-badge-round' : ''}`"
     >
+        <div v-if="value" class="lew-badge-value">
+            {{ value }}
+        </div>
+        <div v-if="!value" class="lew-badge-dot"></div>
+
         <slot></slot>
-    </span>
+    </div>
 </template>
 
 <style lang="scss">
 .lew-badge {
-    min-width: 14px;
-    border-radius: 0.25rem;
-    padding: 2px 8px 3px 8px;
-    font-size: 0.75rem;
-    margin-right: 10px;
-    cursor: default;
-    color: var(--lew-primary-text-color);
-    background-color: var(--lew-primary-color-light);
-    font-weight: normal;
-}
-.lew-badge-bold {
-    font-weight: 600;
+    position: relative;
+    .lew-badge-dot {
+        position: absolute;
+        left: 100%;
+        width: 10px;
+        height: 10px;
+        bottom: calc(100% - 5px);
+        transform: translateX(-50%);
+        z-index: 1;
+        cursor: default;
+        border-radius: 3px;
+    }
+    .lew-badge-value {
+        position: absolute;
+        left: 100%;
+        bottom: calc(100% - 9px);
+        transform: translateX(-50%);
+        border-radius: 3px;
+        min-width: 18px;
+        height: 18px;
+        line-height: 18px;
+        text-align: center;
+        padding: 0px 5px;
+        font-size: 12px;
+        cursor: default;
+        z-index: 1;
+        font-weight: normal;
+        box-sizing: border-box;
+        color: var(--lew-white-color);
+        background-color: var(--lew-error-color-dark);
+    }
 }
 
 .lew-badge-round {
-    border-radius: 30px;
-}
-
-.lew-badge-href {
-    cursor: pointer;
-}
-
-.lew-badge-dot {
-    display: inline-block;
-    max-width: 4px;
-    max-height: 4px;
-    min-width: 4px;
-    min-height: 4px;
-    width: 4px;
-    height: 4px;
-    padding: 2px;
-}
-
-.lew-badge-dot.lew-badge-primary {
-    background-color: var(--lew-primary-color-hover);
-}
-.lew-badge-dot.lew-badge-info {
-    background-color: var(--lew-info-color-hover);
-}
-.lew-badge-dot.lew-badge-success {
-    background-color: var(--lew-success-color-hover);
-}
-
-.lew-badge-dot.lew-badge-warning {
-    background-color: var(--lew-warning-color-hover);
-}
-
-.lew-badge-dot.lew-badge-error {
-    background-color: var(--lew-error-color-hover);
-}
-
-.lew-badge-dot.lew-badge-normal {
-    background-color: var(--lew-normal-color-hover);
+    .lew-badge-value {
+        border-radius: 25px;
+    }
+    .lew-badge-dot {
+        border-radius: 50%;
+    }
 }
 
 .lew-badge-primary {
-    color: var(--lew-primary-text-color);
-    background-color: var(--lew-primary-color-light);
+    .lew-badge-value,
+    .lew-badge-dot {
+        color: var(--lew-white-color);
+        background-color: var(--lew-primary-color);
+    }
 }
 .lew-badge-info {
-    color: var(--lew-info-text-color);
-    background-color: var(--lew-info-color-light);
+    .lew-badge-value,
+    .lew-badge-dot {
+        color: var(--lew-white-color);
+        background-color: var(--lew-info-color);
+    }
 }
 .lew-badge-success {
-    color: var(--lew-success-text-color);
-    background-color: var(--lew-success-color-light);
+    .lew-badge-value,
+    .lew-badge-dot {
+        color: var(--lew-white-color);
+        background-color: var(--lew-success-color);
+    }
 }
 
 .lew-badge-warning {
-    color: var(--lew-warning-text-color);
-    background-color: var(--lew-warning-color-light);
+    .lew-badge-value,
+    .lew-badge-dot {
+        color: var(--lew-white-color);
+        background-color: var(--lew-warning-color);
+    }
 }
 .lew-badge-error {
-    color: var(--lew-error-text-color);
-    background-color: var(--lew-error-color-light);
+    .lew-badge-value,
+    .lew-badge-dot {
+        color: var(--lew-white-color);
+        background-color: var(--lew-error-color);
+    }
 }
-.lew-badge-normal {
-    color: var(--lew-normal-text-color);
-    background-color: var(--lew-normal-color-light);
+.lew-badge-default {
+    .lew-badge-value,
+    .lew-badge-dot {
+        color: var(--lew-white-color);
+        background-color: var(--lew-error-color-dark);
+    }
 }
 </style>

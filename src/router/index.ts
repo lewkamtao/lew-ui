@@ -1,52 +1,54 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
-const DemoAvatar = () => import('../views/general/DemoAvatar.vue');
-const DemoBadge = () => import('../views/general/DemoBadge.vue');
-const DemoButton = () => import('../views/general/DemoButton.vue');
-const DemoTitle = () => import('../views/general/DemoTitle.vue');
-const DemoTabs = () => import('../views/general/DemoTabs.vue');
-
-const DemoCascader = () => import('../views/form/DemoCascader.vue');
-const DemoCheckbox = () => import('../views/form/DemoCheckbox.vue');
-const DemoInputTag = () => import('../views/form/DemoInputTag.vue');
-const DemoRadio = () => import('../views/form/DemoRadio.vue');
-const DemoSelect = () => import('../views/form/DemoSelect.vue');
-const DemoSwitch = () => import('../views/form/DemoSwitch.vue');
-const DemoTextarea = () => import('../views/form/DemoTextarea.vue');
-const DemoInput = () => import('../views/form/DemoInput.vue');
-const DemoForm = () => import('../views/form/DemoForm.vue');
-const DemoAlert = () => import('../views/feedback/DemoAlert.vue');
-
-const DemoDialog = () => import('../views/feedback/DemoDialog.vue');
-const DemoMessage = () => import('../views/feedback/DemoMessage.vue');
-const DemoModal = () => import('../views/feedback/DemoModal.vue');
-const DemoPopover = () => import('../views/feedback/DemoPopover.vue');
-const DemoResult = () => import('../views/feedback/DemoResult.vue');
-const DemoTooltip = () => import('../views/feedback/DemoTooltip.vue');
-const DemoPopok = () => import('../views/feedback/DemoPopok.vue');
-
-const DemoFancyImage = () => import('../views/other/DemoFancyImage.vue');
-const DemoPlyrVideo = () => import('../views/other/DemoPlyrVideo.vue');
+import {
+    DemoFlex,
+    DemoSpace,
+    DemoLayout,
+    DemoAvatar,
+    DemoBadge,
+    DemoTag,
+    DemoTitle,
+    DemoButton,
+    DemoTabs,
+    DemoCheckbox,
+    DemoRadio,
+    DemoSelect,
+    DemoSwitch,
+    DemoTextarea,
+    DemoInput,
+    DemoForm,
+    DemoAlert,
+    DemoDialog,
+    DemoMessage,
+    DemoModal,
+    DemoPopover,
+    DemoTooltip,
+    DemoPopok,
+    DemoFancyImage,
+    DemoPlyrVideo,
+} from '../docs';
 
 const routes: Array<RouteRecordRaw> = [
+    { path: '/Flex', name: 'R-LewFlex', component: DemoFlex },
+    { path: '/Layout', name: 'R-LewLayout', component: DemoLayout },
+    { path: '/Space', name: 'R-LewSpace', component: DemoSpace },
+
     { path: '/', name: 'Home', component: DemoAvatar },
     { path: '/Avatar', name: 'R-LewAvatar', component: DemoAvatar },
     { path: '/Badge', name: 'R-LewBadge', component: DemoBadge },
+    { path: '/Tag', name: 'R-LewTag', component: DemoTag },
     { path: '/Title', name: 'R-LewTitle', component: DemoTitle },
     { path: '/Button', name: 'R-LewButton', component: DemoButton },
     { path: '/Tabs', name: 'R-LewTabs', component: DemoTabs },
 
     { path: '/Form', name: 'R-LewForm', component: DemoForm },
-    { path: '/Cascader', name: 'R-LewCascader', component: DemoCascader },
     { path: '/Checkbox', name: 'R-LewCheckbox', component: DemoCheckbox },
     { path: '/Input', name: 'R-LewInput', component: DemoInput },
     { path: '/Radio', name: 'R-LewRadio', component: DemoRadio },
     { path: '/Select', name: 'R-LewSelect', component: DemoSelect },
     { path: '/Switch', name: 'R-LewSwitch', component: DemoSwitch },
     { path: '/Textarea', name: 'R-LewTextarea', component: DemoTextarea },
-    { path: '/InputTag', name: 'R-LewInputTag', component: DemoInputTag },
 
     { path: '/Alert', name: 'R-LewAlert', component: DemoAlert },
-    { path: '/Result', name: 'R-LewResult', component: DemoResult },
     { path: '/Dialog', name: 'R-LewDialog', component: DemoDialog },
     { path: '/Popok', name: 'R-LewPopok', component: DemoPopok },
     { path: '/Popover', name: 'R-LewPopover', component: DemoPopover },

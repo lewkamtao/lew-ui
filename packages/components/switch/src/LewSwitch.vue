@@ -89,7 +89,7 @@ input::after {
     height: 16px;
     content: '';
     border-radius: 2px;
-    background: #fff;
+    background: var(--lew-white-color);
     transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
     transform: translate(4px, 4px);
     cursor: pointer;

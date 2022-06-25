@@ -61,7 +61,7 @@ defineProps({
         height: 0.6rem;
         border-radius: 50%;
         z-index: 99;
-        border: 2px #fff solid;
+        border: 2px var(--lew-white-color) solid;
     }
 
     .dot-online {
@@ -76,6 +76,9 @@ defineProps({
         background-color: var(--lew-normal-color-dark);
     }
 
+    .dot-processing {
+        background-color: var(--lew-info-color);
+    }
     .dot-away {
         background-color: var(--lew-warning-color);
     }

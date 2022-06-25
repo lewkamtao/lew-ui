@@ -76,8 +76,6 @@ const emit = defineEmits(['close']);
         margin-bottom: 10px;
         padding: 8px 12px;
         box-sizing: border-box;
-        opacity: 0.8;
-        transition: all 0.25s ease;
         .alert-icon {
             margin: 1px 5px 0px 0px;
         }
@@ -134,9 +132,6 @@ const emit = defineEmits(['close']);
     .lew-alert-info {
         color: var(--lew-info-text-color);
         background-color: var(--lew-info-color-light);
-    }
-    .lew-alert:hover {
-        opacity: 1;
     }
 }
 </style>

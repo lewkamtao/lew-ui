@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType, ref, onMounted } from 'vue';
+import { PropType, ref, onMounted, onUnmounted } from 'vue';
 
 type Options = {
     label: string;
@@ -47,11 +47,25 @@ const changeIndex = (item: Options, index: number) => {
     emit('update:modelValue', item.value);
 };
 
+let timer: any;
+const debounce = () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+        console.log(1);
+        init();
+    }, 250);
+};
+
 onMounted(() => {
     if (props.modelValue == '') {
         v.value = props.options[0].value;
     }
     init();
+    window.addEventListener('resize', debounce, false);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('resize', debounce);
 });
 </script>
 

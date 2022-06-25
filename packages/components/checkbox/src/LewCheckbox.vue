@@ -86,7 +86,7 @@ const setChecked = (event: Event) => {
             transform: scale(0.6) translateY(50%);
             transition: all 0.25s ease;
             opacity: 0;
-            color: #fff;
+            color: var(--lew-white-color);
             font-size: 12px;
         }
     }

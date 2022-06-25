@@ -70,13 +70,13 @@ defineProps({
 
 .lew-button-medium {
     min-width: 60px;
-    min-height: 28px;
-    padding: 5px 12px;
+    min-height: 30px;
+    padding: 5px 14px;
     font-size: 14px;
 }
 
 .lew-button-large {
-    height: 34px;
+    height: 36px;
     min-height: 36px;
     padding: 8px 20px;
     font-size: 15px;

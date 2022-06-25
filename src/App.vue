@@ -30,7 +30,66 @@ type Group = {
 let group = ref<Group[]>([]);
 group.value = [
     {
-        title: '通用',
+        title: '布局',
+        items: [
+            {
+                cname: '布局',
+                name: 'Layout',
+                path: '/Layout',
+                label: '',
+                type: '',
+            },
+            {
+                cname: '弹性布局',
+                name: 'Flex',
+                path: '/Flex',
+                label: '',
+                type: '',
+            },
+            {
+                cname: '弹性布局',
+                name: 'Space',
+                path: '/Space',
+                label: '',
+                type: '',
+            },
+        ],
+    },
+    {
+        title: '导航',
+        items: [
+            {
+                cname: '步骤',
+                name: 'Steps',
+                path: '/Steps',
+                label: '',
+                type: '',
+            },
+            {
+                cname: '下拉菜单',
+                name: 'Dropdown',
+                path: '/Dropdown',
+                label: '',
+                type: '',
+            },
+            {
+                cname: '面包屑',
+                name: 'Breadcrumb',
+                path: '/Breadcrumb',
+                label: '',
+                type: '',
+            },
+            {
+                cname: '选项卡',
+                name: 'Tabs',
+                path: '/Tabs',
+                label: '',
+                type: '',
+            },
+        ],
+    },
+    {
+        title: '基础',
         items: [
             {
                 cname: '头像',
@@ -46,24 +105,25 @@ group.value = [
                 label: '',
                 type: 'success',
             },
+
+            {
+                cname: '标签',
+                name: 'Tag',
+                path: '/Tag',
+                label: '',
+                type: 'info',
+            },
             {
                 cname: '徽章',
                 name: 'Badge',
                 path: '/Badge',
                 label: '',
-                type: 'success',
+                type: 'info',
             },
             {
                 cname: '标题',
                 name: 'Title',
                 path: '/Title',
-                label: '',
-                type: 'success',
-            },
-            {
-                cname: '选项卡',
-                name: 'Tabs',
-                path: '/Tabs',
                 label: '',
                 type: 'success',
             },
@@ -192,13 +252,13 @@ group.value = [
                 type: 'success',
             },
 
-            {
-                cname: '结果',
-                name: 'Result',
-                path: '/Result',
-                label: '',
-                type: 'success',
-            },
+            // {
+            //     cname: '结果',
+            //     name: 'Result',
+            //     path: '/Result',
+            //     label: '',
+            //     type: 'success',
+            // },
         ],
     },
     {
@@ -238,7 +298,7 @@ let isDark = ref(false);
 <template>
     <div class="wrapper">
         <div class="Header">
-            <div class="logo">Lew Design <lew-badge>dev </lew-badge></div>
+            <div class="logo">Lew Design <lew-badge style="margin-left:20px" type="info" value="dev" /></div>
             <div class="menu">
                 <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
                     <Icon size="24"> <LogoGithub /> </Icon
@@ -255,12 +315,12 @@ let isDark = ref(false);
                 <the-siderbar :group="group" />
             </div>
             <div ref="mainRef" class="app-main btf-scrollbar">
-                <router-view v-slot="{ Component }">
+                <!-- <router-view v-slot="{ Component }">
                     <keep-alive>
                         <component :is="Component" />
                     </keep-alive>
-                </router-view>
-                <!-- <router-view /> -->
+                </router-view> -->
+                <router-view />
             </div>
         </div>
     </div>
@@ -288,6 +348,7 @@ let isDark = ref(false);
         width: calc(100% - 230px);
         height: calc(100vh - 60px);
         overflow-y: scroll;
+        overflow-x: hidden;
         box-sizing: border-box;
         padding: 50px 50px 150px 50px;
         background: var(--lew-bgcolor-1);

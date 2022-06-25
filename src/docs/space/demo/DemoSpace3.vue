@@ -1,0 +1,10 @@
+<template>
+    <div>
+        <lew-space
+            ><lew-button>测试</lew-button><lew-button>测试</lew-button
+            ><lew-button>测3试</lew-button><lew-button>测试</lew-button
+            ><lew-button>测3试</lew-button><lew-button>测试</lew-button
+            ><lew-button>测试</lew-button></lew-space
+        >
+    </div>
+</template>

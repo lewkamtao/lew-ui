@@ -70,7 +70,7 @@ const setChecked = () => {
         .icon-radio {
             width: 7px;
             height: 7px;
-            background-color: #fff;
+            background-color: var(--lew-white-color);
             transform: translateY(100%);
             opacity: 0;
             transition: all 0.25s ease;

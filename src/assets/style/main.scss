@@ -1,7 +1,9 @@
+@import 'https://30sec.oss-cn-guangzhou.aliyuncs.com/public/SanCFont.css';
 body {
     color: var(--lew-text-color-1);
     background-color: var(--lew-bgcolor-2);
     overflow: hidden;
+    font-family: 'Noto Sans SC', '微软雅黑';
 }
 
 a {
