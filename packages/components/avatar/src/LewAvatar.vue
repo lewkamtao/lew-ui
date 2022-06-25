@@ -45,7 +45,7 @@ defineProps({
     img {
         width: 100%;
         height: 100%;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-form-border-radius);
     }
 
     .round {
@@ -54,8 +54,8 @@ defineProps({
 
     .dot {
         position: absolute;
-        top: -0.25rem;
-        left: -0.25rem;
+        top: -0.3rem;
+        left: -0.3rem;
         content: '';
         width: 0.6rem;
         height: 0.6rem;
