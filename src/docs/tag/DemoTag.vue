@@ -5,12 +5,10 @@ import {
     DemoTag2,
     DemoTag3,
     DemoTag4,
-    DemoTag5,
     DemoTag1_code,
     DemoTag2_code,
     DemoTag3_code,
     DemoTag4_code,
-    DemoTag5_code,
 } from './demo';
 
 const docsTable = ref([
@@ -32,20 +30,17 @@ const docsTable = ref([
 <template>
     <div class="demo-wrapper">
         <lew-title>Tag</lew-title>
-        <lew-demo-box title="普通" :code="DemoTag1_code">
-            <demo-Tag1 />
+        <lew-demo-box title="基础" :code="DemoTag1_code">
+            <demo-tag1 />
         </lew-demo-box>
-        <lew-demo-box title="圆的" :code="DemoTag2_code">
-            <demo-Tag2 />
+        <lew-demo-box title="尺寸" :code="DemoTag2_code">
+            <demo-tag2 />
         </lew-demo-box>
-        <lew-demo-box title="粗的" :code="DemoTag3_code">
-            <demo-Tag3 />
+        <lew-demo-box title="可关闭的" :code="DemoTag3_code">
+            <demo-tag3 />
         </lew-demo-box>
-        <lew-demo-box title="链接" :code="DemoTag4_code">
-            <demo-Tag4 />
-        </lew-demo-box>
-        <lew-demo-box title="点" :code="DemoTag5_code">
-            <demo-Tag5 />
+        <lew-demo-box title="插槽" :code="DemoTag3_code">
+            <demo-tag4 />
         </lew-demo-box>
         <lew-title size="16px">Props</lew-title>
         <vxe-table size="mini" :data="docsTable">

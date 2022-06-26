@@ -15,6 +15,7 @@ export * from './tabs';
 export * from './title';
 export * from './button';
 export * from './badge';
+export * from './tag';
 
 export * from './alert';
 export * from './dialog';
@@ -25,4 +26,4 @@ export * from './popover';
 
 export * from './fancybox';
 export * from './plyr';
-export * from './demobox';
+export * from './demo-box';

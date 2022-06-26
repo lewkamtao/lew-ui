@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ChevronUp24Regular, Code24Regular } from '@vicons/fluent';
 import { Icon } from '@vicons/utils';
-import { LewTitle, LewBadge } from '../../../../packages';
 import { ref } from 'vue';
 defineProps({
     title: {
@@ -10,7 +9,7 @@ defineProps({
             return '';
         },
     },
-    badge: {
+    tag: {
         type: String,
         default() {
             return '';
@@ -31,9 +30,9 @@ let isShowCode = ref(false);
     <div class="demo-box">
         <lew-title size="16px"
             >{{ title }}
-            <lew-badge v-if="badge" style="margin: 2px 0px 0px 5px">{{
-                badge
-            }}</lew-badge>
+            <lew-tag v-if="tag" type="info" style="margin: 2px 0px 0px 5px">
+                {{ tag }}</lew-tag
+            >
         </lew-title>
         <div class="demo-item">
             <div class="demo-cp"><slot></slot></div>

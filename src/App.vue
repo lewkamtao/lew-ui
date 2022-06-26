@@ -298,7 +298,9 @@ let isDark = ref(false);
 <template>
     <div class="wrapper">
         <div class="Header">
-            <div class="logo">Lew Design <lew-badge style="margin-left:20px" type="info" value="dev" /></div>
+            <div class="logo">
+                Lew Design <lew-tag style="margin-left: 10px" type="info" >dev</lew-tag>
+            </div>
             <div class="menu">
                 <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
                     <Icon size="24"> <LogoGithub /> </Icon

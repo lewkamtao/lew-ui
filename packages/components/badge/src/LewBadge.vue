@@ -35,13 +35,15 @@ defineProps({
     .lew-badge-dot {
         position: absolute;
         left: 100%;
-        width: 10px;
-        height: 10px;
-        bottom: calc(100% - 5px);
+        width: 14px;
+        height: 14px;
+        bottom: calc(100% - 7px);
         transform: translateX(-50%);
         z-index: 1;
         cursor: default;
         border-radius: 3px;
+        border: 2px var(--lew-white-color) solid;
+        box-sizing: border-box;
     }
     .lew-badge-value {
         position: absolute;

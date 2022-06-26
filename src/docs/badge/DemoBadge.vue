@@ -24,7 +24,7 @@ const docsTable = ref([
     },
     {
         param: 'round',
-        description: '头像形状，是否为圆形。',
+        description: '形状，是否为圆形。',
         type: 'boolean',
         default: 'false',
     },

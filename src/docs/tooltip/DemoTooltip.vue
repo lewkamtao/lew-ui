@@ -10,7 +10,7 @@ import {
 <template>
     <div class="demo-wrapper">
         <lew-title>Tooltip</lew-title>
-        <lew-demo-box title="悬浮显示" badge="推荐" :code="DemoTooltip1_code">
+        <lew-demo-box title="悬浮显示" tag="推荐" :code="DemoTooltip1_code">
             <demo-tooltip1 />
         </lew-demo-box>
         <lew-demo-box title="点击事件触发" :code="DemoTooltip2_code">
