@@ -8,7 +8,7 @@ type Options = {
 };
 
 defineProps({
-    list: {
+    options: {
         type: Array as PropType<Options[]>,
         default() {
             return [];
@@ -26,7 +26,7 @@ defineProps({
 <template>
     <div class="lew-breadcrumb">
         <div
-            v-for="(item, index) in list"
+            v-for="(item, index) in options"
             :key="index"
             class="lew-breadcrumb-item"
             :class="{ 'lew-breadcrumb-active': item.active }"
@@ -34,7 +34,10 @@ defineProps({
             <span :class="{ 'lew-breadcrumb-isPath': !!item.path }">{{
                 item.label
             }}</span>
-            <div v-if="index != list.length - 1" class="lew-breadcrumb-parting">
+            <div
+                v-if="index != options.length - 1"
+                class="lew-breadcrumb-parting"
+            >
                 <svg
                     v-if="iconType == 'sprit'"
                     viewBox="0 0 48 48"

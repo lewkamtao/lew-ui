@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 
-const list = ref([
+const options = ref([
     {
         label: 'Home',
         path: '/',
@@ -28,5 +28,5 @@ const list = ref([
 </script>
 
 <template>
-    <lew-breadcrumb :list="list"> </lew-breadcrumb>
+    <lew-breadcrumb :options="options"> </lew-breadcrumb>
 </template>
