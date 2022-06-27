@@ -18,7 +18,7 @@ import 'vxe-table/lib/style.css';
 
 // 引入vxe
 import 'xe-utils';
-import { Column, Table } from 'vxe-table';
+import { Column, Tooltip, Table } from 'vxe-table';
 
 // 安装tooltip
 import { LewTooltip, LewFancybox } from '../packages';
@@ -37,7 +37,7 @@ app.directive('highlight', {
 });
 
 function useTable(app: App) {
-    app.use(Table).use(Column);
+    app.use(Table).use(Tooltip).use(Column);
 }
 app.use(lew);
 app.use(useTable);

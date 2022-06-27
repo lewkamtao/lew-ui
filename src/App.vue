@@ -30,65 +30,6 @@ type Group = {
 let group = ref<Group[]>([]);
 group.value = [
     {
-        title: '布局',
-        items: [
-            {
-                cname: '布局',
-                name: 'Layout',
-                path: '/Layout',
-                label: '',
-                type: '',
-            },
-            {
-                cname: '弹性布局',
-                name: 'Flex',
-                path: '/Flex',
-                label: '',
-                type: '',
-            },
-            {
-                cname: '弹性布局',
-                name: 'Space',
-                path: '/Space',
-                label: '',
-                type: '',
-            },
-        ],
-    },
-    {
-        title: '导航',
-        items: [
-            {
-                cname: '步骤',
-                name: 'Steps',
-                path: '/Steps',
-                label: '',
-                type: '',
-            },
-            {
-                cname: '下拉菜单',
-                name: 'Dropdown',
-                path: '/Dropdown',
-                label: '',
-                type: '',
-            },
-            {
-                cname: '面包屑',
-                name: 'Breadcrumb',
-                path: '/Breadcrumb',
-                label: '',
-                type: '',
-            },
-            {
-                cname: '选项卡',
-                name: 'Tabs',
-                path: '/Tabs',
-                label: '',
-                type: '',
-            },
-        ],
-    },
-    {
         title: '基础',
         items: [
             {
@@ -126,6 +67,53 @@ group.value = [
                 path: '/Title',
                 label: '',
                 type: 'success',
+            },
+            {
+                cname: '弹性布局',
+                name: 'Flex',
+                path: '/Flex',
+                label: '',
+                type: '',
+            },
+            {
+                cname: '标记',
+                name: 'Mark',
+                path: '/Mark',
+                label: '',
+                type: '',
+            },
+        ],
+    },
+    {
+        title: '导航',
+        items: [
+            // {
+            //     cname: '步骤',
+            //     name: 'Steps',
+            //     path: '/Steps',
+            //     label: '',
+            //     type: '',
+            // },
+            {
+                cname: '下拉菜单',
+                name: 'Dropdown',
+                path: '/Dropdown',
+                label: '',
+                type: '',
+            },
+            {
+                cname: '面包屑',
+                name: 'Breadcrumb',
+                path: '/Breadcrumb',
+                label: '',
+                type: '',
+            },
+            {
+                cname: '选项卡',
+                name: 'Tabs',
+                path: '/Tabs',
+                label: '',
+                type: '',
             },
         ],
     },
@@ -299,7 +287,8 @@ let isDark = ref(false);
     <div class="wrapper">
         <div class="Header">
             <div class="logo">
-                Lew Design <lew-tag style="margin-left: 10px" type="info" >dev</lew-tag>
+                Lew Design
+                <lew-tag style="margin-left: 10px" type="info">dev</lew-tag>
             </div>
             <div class="menu">
                 <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">

@@ -2,7 +2,7 @@
 defineProps({
     bold: {
         type: Number,
-        default: 600,
+        default: 500,
     },
     size: {
         type: String,
@@ -12,11 +12,7 @@ defineProps({
 </script>
 
 <template>
-    <div
-        class="lew-title"
-        :class="`${bold ? 'lew-title-bold' : ''}`"
-        :style="`font-weight:${bold};font-size:${size}`"
-    >
+    <div class="lew-title" :style="`font-weight:${bold};font-size:${size}`">
         <slot></slot>
     </div>
 </template>

@@ -26,11 +26,24 @@ const docsTable = ref([
         </lew-demo-box>
 
         <lew-title size="16px">Props</lew-title>
-        <vxe-table size="mini" :data="docsTable">
-            <vxe-column field="param" title="参数名"></vxe-column>
-            <vxe-column field="description" title="描述"></vxe-column>
-            <vxe-column field="type" title="类型"></vxe-column>
-            <vxe-column field="default" title="默认值"></vxe-column>
+        <vxe-table :data="docsTable">
+            <vxe-column
+                show-overflow
+                field="param"
+                width="140px"
+                title="参数名"
+            ></vxe-column>
+            <vxe-column
+                show-overflow
+                field="description"
+                title="描述"
+            ></vxe-column>
+            <vxe-column show-overflow field="type" title="类型"></vxe-column>
+            <vxe-column
+                show-overflow
+                field="default"
+                title="默认值"
+            ></vxe-column>
         </vxe-table>
     </div>
 </template>

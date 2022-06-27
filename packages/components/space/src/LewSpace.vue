@@ -9,7 +9,7 @@ defineProps({
 </script>
 
 <template>
-    <div class="lew-space" >
+    <div class="lew-space">
         <slot />
     </div>
 </template>

@@ -19,7 +19,7 @@ import * as components from './components';
 
 const install: any = function (Vue: App): void {
     if (install.installed) return;
-    let _components = Object.keys(components).map(
+    const _components = Object.keys(components).map(
         (key) => components[key as keyof typeof components],
     );
     _components.forEach((component: any) => {

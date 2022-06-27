@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import {
     DemoBadge1,
     DemoBadge2,
@@ -8,23 +7,24 @@ import {
     DemoBadge2_code,
     DemoBadge3_code,
 } from './demo';
-
+import { ref } from 'vue';
 const docsTable = ref([
     {
         param: 'value',
-        description: '显示内容',
+        description:
+            '显示内容，如果无内容，则默认显示一个点，round可以控制其为圆点。',
         type: 'string | number',
         default: 'undefined',
     },
     {
         param: 'type',
-        description: '显示类型',
-        type: `default | success | error | warning | info`,
-        default: 'default',
+        description: '显示色彩类型',
+        type: `normal | success | error | warning | info`,
+        default: 'normal',
     },
     {
         param: 'round',
-        description: '形状，是否为圆形。',
+        description: '是否为圆形。',
         type: 'boolean',
         default: 'false',
     },
@@ -44,11 +44,29 @@ const docsTable = ref([
             <demo-badge3 />
         </lew-demo-box>
         <lew-title size="16px">Props</lew-title>
-        <vxe-table size="mini" :data="docsTable">
-            <vxe-column field="param" title="参数名"></vxe-column>
-            <vxe-column field="description" title="描述"></vxe-column>
-            <vxe-column width="300" field="type" title="类型"></vxe-column>
-            <vxe-column field="default" title="默认值"></vxe-column>
+        <vxe-table :data="docsTable">
+            <vxe-column
+                show-overflow
+                field="param"
+                width="140px"
+                title="参数名"
+            ></vxe-column>
+            <vxe-column
+                show-overflow
+                field="description"
+                title="描述"
+            ></vxe-column>
+            <vxe-column
+                show-overflow
+                width="300"
+                field="type"
+                title="类型"
+            ></vxe-column>
+            <vxe-column
+                show-overflow
+                field="default"
+                title="默认值"
+            ></vxe-column>
         </vxe-table>
     </div>
 </template>

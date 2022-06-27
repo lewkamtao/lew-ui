@@ -3,12 +3,15 @@ import {
     DemoFlex,
     DemoSpace,
     DemoLayout,
+    DemoSteps,
+    DemoDropdown,
+    DemoBreadcrumb,
+    DemoTabs,
     DemoAvatar,
     DemoBadge,
     DemoTag,
     DemoTitle,
     DemoButton,
-    DemoTabs,
     DemoCheckbox,
     DemoRadio,
     DemoSelect,
@@ -25,6 +28,7 @@ import {
     DemoPopok,
     DemoFancyImage,
     DemoPlyrVideo,
+    DemoMark,
 } from '../docs';
 
 const routes: Array<RouteRecordRaw> = [
@@ -32,13 +36,18 @@ const routes: Array<RouteRecordRaw> = [
     { path: '/Layout', name: 'R-LewLayout', component: DemoLayout },
     { path: '/Space', name: 'R-LewSpace', component: DemoSpace },
 
+    { path: '/Steps', name: 'R-LewSteps', component: DemoSteps },
+    { path: '/Breadcrumb', name: 'R-LewBreadcrumb', component: DemoBreadcrumb },
+    { path: '/Dropdown', name: 'R-LewDropdown', component: DemoDropdown },
+    { path: '/Tabs', name: 'R-LewTabs', component: DemoTabs },
+
     { path: '/', name: 'Home', component: DemoAvatar },
     { path: '/Avatar', name: 'R-LewAvatar', component: DemoAvatar },
     { path: '/Badge', name: 'R-LewBadge', component: DemoBadge },
     { path: '/Tag', name: 'R-LewTag', component: DemoTag },
     { path: '/Title', name: 'R-LewTitle', component: DemoTitle },
+    { path: '/Mark', name: 'R-LewMark', component: DemoMark },
     { path: '/Button', name: 'R-LewButton', component: DemoButton },
-    { path: '/Tabs', name: 'R-LewTabs', component: DemoTabs },
 
     { path: '/Form', name: 'R-LewForm', component: DemoForm },
     { path: '/Checkbox', name: 'R-LewCheckbox', component: DemoCheckbox },

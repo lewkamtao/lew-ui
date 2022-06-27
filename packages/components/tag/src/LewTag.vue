@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import { Dismiss24Filled } from '@vicons/fluent';
 import { Icon } from '@vicons/utils';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const props = defineProps({
     type: {
@@ -23,6 +26,10 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    link: {
+        type: String,
+        default: '',
+    },
 });
 
 const emit = defineEmits(['close']);
@@ -32,6 +39,16 @@ const close = () => {
     }
     emit('close');
 };
+
+const toPath = () => {
+    if (props.link) {
+        if (props.link.startsWith('http')) {
+            window.open(props.link);
+        } else {
+            router.push(props.link);
+        }
+    }
+};
 </script>
 
 <template>
@@ -39,7 +56,8 @@ const close = () => {
         class="lew-tag"
         :class="`lew-tag-${size} lew-tag-${type} ${
             round ? 'lew-tag-round' : ''
-        } ${disabled ? 'lew-tag-disabled' : ''}`"
+        } ${disabled ? 'lew-tag-disabled' : ''} ${link ? 'lew-tag-link' : ''}`"
+        @click="toPath"
     >
         <div class="lew-tag-left"><slot name="left"></slot></div>
         <div class="lew-tag-value">
@@ -56,8 +74,10 @@ const close = () => {
 .lew-tag {
     display: inline-flex;
     align-items: center;
+    vertical-align: bottom;
     border-radius: 3px;
     user-select: none;
+
     .lew-tag-value {
         display: inline;
         font-weight: normal;
@@ -78,6 +98,9 @@ const close = () => {
     .lew-tag-close:hover {
         background-color: rgba($color: #000, $alpha: 0.1);
     }
+    .lew-tag-close:active {
+        background-color: rgba($color: #000, $alpha: 0.2);
+    }
     .lew-tag-left {
         margin-left: 3px;
         display: inline-flex;
@@ -90,7 +113,10 @@ const close = () => {
         align-items: center;
     }
 }
-.lew-tag-mini {
+.lew-tag-link {
+    cursor: pointer;
+}
+.lew-tag-small {
     height: 18px;
     line-height: 12px;
     padding: 0px 2px 0px 2px;

@@ -1,9 +1,9 @@
-@import 'https://30sec.oss-cn-guangzhou.aliyuncs.com/public/SanCFont.css';
+// @import 'https://30sec.oss-cn-guangzhou.aliyuncs.com/public/SanCFont.css';
 body {
     color: var(--lew-text-color-1);
-    background-color: var(--lew-bgcolor-2);
+    background-color: var(--lew-bgcolor-4);
     overflow: hidden;
-    font-family: 'Noto Sans SC', '微软雅黑';
+    // font-family: 'Noto Sans SC', '微软雅黑';
 }
 
 a {
@@ -67,4 +67,17 @@ pre code.hljs:hover::-webkit-scrollbar-thumb {
     .vxe-table {
         filter: invert(85%) !important;
     }
+}
+
+.sub-title {
+    font-size: 14px;
+    color: var(--lew-text-color-6);
+    font-weight: 400;
+}
+
+.demo-tips {
+    font-size: 14px;
+    color: var(--lew-text-color-6);
+    font-weight: 400;
+    margin: 20px 0px;
 }

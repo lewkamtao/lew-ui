@@ -39,14 +39,14 @@ const toPath = (item: Item) => {
             <div
                 v-for="(item, j) in list.items"
                 :key="`siderbar${j}`"
-                class="item"
-                :class="{ active: route.path == item.path }"
-                @click="toPath(item)"
                 v-tooltip="{
                     content: item.cname,
                     placement: 'left',
                     trigger: 'mouseenter',
                 }"
+                class="item"
+                :class="{ active: route.path == item.path }"
+                @click="toPath(item)"
             >
                 <span class="name">
                     {{ item.name }}
@@ -78,7 +78,7 @@ const toPath = (item: Item) => {
         .title {
             padding: 10px 20px;
             font-size: 14px;
-            font-weight: lighter;
+            font-weight: 400;
             color: var(--lew-text-color-9);
         }
 

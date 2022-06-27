@@ -176,10 +176,3 @@ onUnmounted(() => {
     }
 }
 </style>
-<style lang="scss">
-.lew-popok-body {
-    .tippy-content {
-        padding: 0px;
-    }
-}
-</style>

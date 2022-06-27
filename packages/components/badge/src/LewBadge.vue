@@ -2,7 +2,7 @@
 defineProps({
     type: {
         type: String,
-        default: 'default',
+        default: 'normal',
     },
     round: {
         type: Boolean,
@@ -40,7 +40,7 @@ defineProps({
         bottom: calc(100% - 7px);
         transform: translateX(-50%);
         z-index: 1;
-        cursor: default;
+        cursor: normal;
         border-radius: 3px;
         border: 2px var(--lew-white-color) solid;
         box-sizing: border-box;
@@ -57,7 +57,7 @@ defineProps({
         text-align: center;
         padding: 0px 5px;
         font-size: 12px;
-        cursor: default;
+        cursor: normal;
         z-index: 1;
         font-weight: normal;
         box-sizing: border-box;
@@ -111,7 +111,7 @@ defineProps({
         background-color: var(--lew-error-color);
     }
 }
-.lew-badge-default {
+.lew-badge-normal {
     .lew-badge-value,
     .lew-badge-dot {
         color: var(--lew-white-color);

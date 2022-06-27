@@ -81,10 +81,3 @@ onUnmounted(() => {
     display: inline-block;
 }
 </style>
-<style lang="scss">
-.lew-popover-body {
-    .tippy-content {
-        padding: 0px;
-    }
-}
-</style>
