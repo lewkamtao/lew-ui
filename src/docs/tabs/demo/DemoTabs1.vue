@@ -24,6 +24,7 @@ const change = (e: Options) => {
 
 <template>
     <lew-tabs
+        style="width: 400px"
         v-model="value"
         :options="options"
         @update:change="change"

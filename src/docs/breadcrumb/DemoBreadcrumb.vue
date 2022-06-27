@@ -48,9 +48,7 @@ const optionsTable = ref([
 <template>
     <div class="demo-wrapper">
         <lew-title>Breadcrumb</lew-title>
-        <p class="sub-title">
-            面包屑导航，用于展示页面层次结构，并根据情况向上返回。
-        </p>
+
         <lew-demo-box title="常规" :code="DemoBreadcrumb1_code">
             <demo-breadcrumb1 />
         </lew-demo-box>
@@ -65,7 +63,7 @@ const optionsTable = ref([
             <vxe-column
                 show-overflow
                 field="param"
-                width="140px"
+                width="220px"
                 title="参数名"
             ></vxe-column>
             <vxe-column
@@ -90,7 +88,7 @@ const optionsTable = ref([
             <vxe-column
                 show-overflow
                 field="param"
-                width="140px"
+                width="220px"
                 title="参数名"
             ></vxe-column>
             <vxe-column

@@ -48,7 +48,7 @@ const docsTable = ref([
             <vxe-column
                 show-overflow
                 field="param"
-                width="140px"
+                width="220px"
                 title="参数名"
             ></vxe-column>
             <vxe-column

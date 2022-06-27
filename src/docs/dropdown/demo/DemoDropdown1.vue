@@ -20,7 +20,7 @@ let options = ref([
     },
 ]);
 
-const change = (e) => {
+const change = (e: any) => {
     console.log(e);
 };
 </script>

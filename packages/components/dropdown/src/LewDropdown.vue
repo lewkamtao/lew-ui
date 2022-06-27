@@ -1,6 +1,5 @@
-<!-- filename: Popover.vue -->
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, PropType } from 'vue';
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; // optional for styling
 import 'tippy.js/animations/shift-away-subtle.css';
@@ -89,7 +88,7 @@ let hide = () => {
 const emit = defineEmits(['change']);
 defineExpose({ show, hide });
 
-const change = (item) => {
+const change = (item: Options) => {
     emit('change', item);
     setTimeout(() => {
         hide();

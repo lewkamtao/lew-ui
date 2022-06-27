@@ -48,7 +48,6 @@ const docsTable = ref([
 <template>
     <div class="demo-wrapper">
         <lew-title>Tag</lew-title>
-        <p class="sub-title">标签是一种更为灵活、有趣的日志分类方式</p>
         <lew-demo-box title="基础" :code="DemoTag1_code">
             <demo-tag1 />
         </lew-demo-box>
@@ -66,7 +65,7 @@ const docsTable = ref([
             <vxe-column
                 show-overflow
                 field="param"
-                width="140px"
+                width="220px"
                 title="参数名"
             ></vxe-column>
             <vxe-column

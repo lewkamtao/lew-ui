@@ -20,12 +20,12 @@ let options = ref([
     },
 ]);
 
-const change = (e) => {
+const change = (e: any) => {
     console.log(e);
 };
 </script>
 <template>
-    <lew-flex gap="30px" x="start">
+    <lew-flex gap="50px" x="start">
         <lew-dropdown :arrow="false" :options="options" @change="change">
             <lew-tag type="success">hover</lew-tag>
         </lew-dropdown>

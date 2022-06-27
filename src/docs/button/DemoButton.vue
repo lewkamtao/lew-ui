@@ -51,7 +51,7 @@ const docsTable = ref([
     <div class="demo-wrapper">
         <lew-title>Button</lew-title>
         <p class="sub-title">
-            按钮，这里我仅用了一个元素来实现这个组件，我希望Lew是极简的。
+            这里仅用了一个元素来实现这个组件，我希望Lew是极简的。
         </p>
         <lew-demo-box title="普通" :code="DemoButton1_code"
             ><demo-button1 />
@@ -73,7 +73,7 @@ const docsTable = ref([
             <vxe-column
                 show-overflow
                 field="param"
-                width="140px"
+                width="220px"
                 title="参数名"
             ></vxe-column>
             <vxe-column

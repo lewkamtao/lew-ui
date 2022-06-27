@@ -5,6 +5,28 @@ import {
     DemoTooltip1_code,
     DemoTooltip2_code,
 } from './demo';
+import { ref } from 'vue';
+
+const docsTable = ref([
+    {
+        param: 'content',
+        description: '内容',
+        type: 'string',
+        default: "''",
+    },
+    {
+        param: 'placement',
+        description: '位置',
+        type: 'string',
+        default: "''",
+    },
+    {
+        param: 'trigger',
+        description: '触发方式',
+        type: 'hover | click',
+        default: 'hover',
+    },
+]);
 </script>
 
 <template>
@@ -16,5 +38,30 @@ import {
         <lew-demo-box title="点击事件触发" :code="DemoTooltip2_code">
             <demo-tooltip2 />
         </lew-demo-box>
+        <lew-title size="16px">v-tooltip</lew-title>
+        <vxe-table :data="docsTable">
+            <vxe-column
+                show-overflow
+                field="param"
+                width="220px"
+                title="参数名"
+            ></vxe-column>
+            <vxe-column
+                show-overflow
+                field="description"
+                title="描述"
+            ></vxe-column>
+            <vxe-column
+                show-overflow
+                width="300"
+                field="type"
+                title="类型"
+            ></vxe-column>
+            <vxe-column
+                show-overflow
+                field="default"
+                title="默认值"
+            ></vxe-column>
+        </vxe-table>
     </div>
 </template>

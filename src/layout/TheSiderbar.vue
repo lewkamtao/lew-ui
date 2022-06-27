@@ -39,11 +39,6 @@ const toPath = (item: Item) => {
             <div
                 v-for="(item, j) in list.items"
                 :key="`siderbar${j}`"
-                v-tooltip="{
-                    content: item.cname,
-                    placement: 'left',
-                    trigger: 'mouseenter',
-                }"
                 class="item"
                 :class="{ active: route.path == item.path }"
                 @click="toPath(item)"

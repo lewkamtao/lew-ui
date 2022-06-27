@@ -20,7 +20,7 @@ const docsTable = ref([
 
 <template>
     <div class="demo-wrapper">
-        <lew-title>Avatar</lew-title>
+        <lew-title>FancyImage</lew-title>
         <lew-demo-box title="普通" :code="DemoFancyImage1_code">
             <demo-fancy-image1 />
         </lew-demo-box>
@@ -30,7 +30,7 @@ const docsTable = ref([
             <vxe-column
                 show-overflow
                 field="param"
-                width="140px"
+                width="220px"
                 title="参数名"
             ></vxe-column>
             <vxe-column

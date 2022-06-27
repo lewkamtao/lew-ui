@@ -39,8 +39,7 @@ const docsTable = ref([
     <div class="demo-wrapper">
         <lew-title>Avatar</lew-title>
         <p class="sub-title">
-            Lew
-            也为你提供了简单的头像组件，以及状态展示，但如果你需要为你的头像加上消息的数量，你可以移步
+            如果你需要为你的头像加上消息的数量，你可以移步
             <lew-mark type="info" link="/Badge">Badge</lew-mark>
         </p>
         <lew-demo-box title="普通" :code="DemoAvatar1_code">
@@ -54,7 +53,7 @@ const docsTable = ref([
             <vxe-column
                 show-overflow
                 field="param"
-                width="140px"
+                width="220px"
                 title="参数名"
             ></vxe-column>
             <vxe-column

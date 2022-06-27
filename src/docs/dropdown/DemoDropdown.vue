@@ -47,9 +47,9 @@ const docsTable = ref([
     <div class="demo-wrapper">
         <lew-title>Dropdown</lew-title>
         <p class="sub-title">
-            这是一个简单的下拉菜单，如果你需要高度定制你需要的下拉菜单，可以使用
+            你可以使用
             <lew-mark link="/Popover" type="info">Popover</lew-mark>
-            进行高度自定义
+            进行高度自定义下拉菜单
         </p>
         <lew-demo-box title="常规" :code="DemoDropdown1_code">
             <demo-dropdown1 />
@@ -66,7 +66,7 @@ const docsTable = ref([
             <vxe-column
                 show-overflow
                 field="param"
-                width="140px"
+                width="220px"
                 title="参数名"
             ></vxe-column>
             <vxe-column
