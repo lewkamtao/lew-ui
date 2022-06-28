@@ -31,8 +31,8 @@ const optionsTable = ref([
         default: "''",
     },
     {
-        param: 'value',
-        description: '值',
+        param: 'to',
+        description: '绑定跳转链接',
         type: `string`,
         default: "''",
     },

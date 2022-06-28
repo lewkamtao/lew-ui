@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { Dismiss24Filled } from '@vicons/fluent';
 import { Icon } from '@vicons/utils';
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
+import { useLewTo } from '../../../hooks/index.ts';
+const { lewTo } = useLewTo();
 
 const props = defineProps({
     type: {
@@ -26,7 +25,7 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-    link: {
+    to: {
         type: String,
         default: '',
     },
@@ -39,16 +38,6 @@ const close = () => {
     }
     emit('close');
 };
-
-const toPath = () => {
-    if (props.link) {
-        if (props.link.startsWith('http')) {
-            window.open(props.link);
-        } else {
-            router.push(props.link);
-        }
-    }
-};
 </script>
 
 <template>
@@ -56,8 +45,8 @@ const toPath = () => {
         class="lew-tag"
         :class="`lew-tag-${size} lew-tag-${type} ${
             round ? 'lew-tag-round' : ''
-        } ${disabled ? 'lew-tag-disabled' : ''} ${link ? 'lew-tag-link' : ''}`"
-        @click="toPath"
+        } ${disabled ? 'lew-tag-disabled' : ''} ${to ? 'lew-tag-to' : ''}`"
+        @click="lewTo(to)"
     >
         <div class="lew-tag-left"><slot name="left"></slot></div>
         <div class="lew-tag-value">
@@ -113,7 +102,7 @@ const toPath = () => {
         align-items: center;
     }
 }
-.lew-tag-link {
+.lew-tag-to {
     cursor: pointer;
 }
 .lew-tag-small {

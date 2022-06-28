@@ -37,7 +37,7 @@ const docsTable = ref([
         default: 'false',
     },
     {
-        param: 'link',
+        param: 'to',
         description: '跳转链接',
         type: 'string',
         default: "''",

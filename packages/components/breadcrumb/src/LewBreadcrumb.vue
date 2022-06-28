@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
-import { useRouter } from 'vue-router';
-const router = useRouter();
+import { useLewTo } from '../../../hooks/index.ts';
+const { lewTo } = useLewTo();
 
 type Options = {
     label: string;
-    path: string;
+    to: string;
     active: boolean;
 };
 
-const props = defineProps({
+defineProps({
     options: {
         type: Array as PropType<Options[]>,
         default() {
@@ -23,15 +23,6 @@ const props = defineProps({
         },
     },
 });
-const toPath = (path: string) => {
-    if (path) {
-        if (path.startsWith('http')) {
-            window.open(path);
-        } else {
-            router.push(path);
-        }
-    }
-};
 </script>
 
 <template>
@@ -43,8 +34,8 @@ const toPath = (path: string) => {
             :class="{ 'lew-breadcrumb-active': item.active }"
         >
             <span
-                :class="{ 'lew-breadcrumb-isPath': !!item.path }"
-                @click="toPath(item.path)"
+                :class="{ 'lew-breadcrumb-isPath': !!item.to }"
+                @click="lewTo(item.to)"
                 >{{ item.label }}</span
             >
             <div

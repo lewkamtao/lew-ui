@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { useRouter } from 'vue-router';
-const router = useRouter();
+import { useLewTo } from '../../../hooks/index.ts';
+const { lewTo } = useLewTo();
 
-const props = defineProps({
+defineProps({
     type: {
         type: String,
         default: 'normal',
@@ -11,7 +11,7 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-    link: {
+    to: {
         type: String,
         default: '',
     },
@@ -20,25 +20,16 @@ const props = defineProps({
         default: 400,
     },
 });
-const toPath = () => {
-    if (props.link) {
-        if (props.link.startsWith('http')) {
-            window.open(props.link);
-        } else {
-            router.push(props.link);
-        }
-    }
-};
 </script>
 
 <template>
     <span
         class="lew-mark"
         :class="`lew-mark-${type} ${round ? 'lew-mark-round' : ''} ${
-            link ? 'lew-mark-link' : ''
+            to ? 'lew-mark-to' : ''
         }`"
         :style="`font-weight:${bold};`"
-        @click="toPath"
+        @click="lewTo(to)"
     >
         <slot />
     </span>
@@ -51,7 +42,7 @@ const toPath = () => {
     padding: 2px 6px;
 }
 
-.lew-mark-link {
+.lew-mark-to {
     cursor: pointer;
 }
 

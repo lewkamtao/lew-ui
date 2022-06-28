@@ -1,3 +1,4 @@
-import useDOMCreate from './useDOMCreate';
+import useDOMCreate from './src/useDOMCreate';
+import useLewTo from './src/useLewTo';
 
-export { useDOMCreate };
+export { useDOMCreate, useLewTo };

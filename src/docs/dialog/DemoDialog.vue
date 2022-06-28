@@ -17,7 +17,7 @@ const docsTable = ref([
         <lew-title>Dialog</lew-title>
         <p class="sub-title">
             如果你需要更简单的询问框，请可以尝试一下
-            <lew-mark type="info" link="/Popok">Popok</lew-mark>
+            <lew-mark type="info" to="/Popok">Popok</lew-mark>
         </p>
         <lew-demo-box title="快捷唤起" :code="DemoDialog1_code">
             <demo-dialog1>删除</demo-dialog1></lew-demo-box

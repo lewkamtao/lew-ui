@@ -48,7 +48,7 @@ const docsTable = ref([
         <lew-title>Dropdown</lew-title>
         <p class="sub-title">
             你可以使用
-            <lew-mark link="/Popover" type="info">Popover</lew-mark>
+            <lew-mark to="/Popover" type="info">Popover</lew-mark>
             进行高度自定义下拉菜单
         </p>
         <lew-demo-box title="常规" :code="DemoDropdown1_code">
@@ -88,7 +88,7 @@ const docsTable = ref([
         </vxe-table>
         <p class="demo-tips">
             你可以在
-            <lew-mark link="/Tooltip" type="info">Tooltip</lew-mark>
+            <lew-mark to="/Tooltip" type="info">Tooltip</lew-mark>
             找到你需要的位置参数。
         </p>
     </div>

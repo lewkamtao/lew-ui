@@ -4,19 +4,19 @@ import { ref } from 'vue';
 const options = ref([
     {
         label: '首页',
-        path: '/',
+        to: '/',
     },
     {
-        label: '商品分类',
-        path: '',
+        label: 'Vue',
+        to: 'https://vuejs.org/',
     },
     {
         label: '商品列表',
-        path: '',
+        to: '',
     },
     {
         label: '商品详情',
-        path: '/',
+        to: '',
         active: true,
     },
 ]);

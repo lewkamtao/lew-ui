@@ -11,7 +11,8 @@
         <lew-mark :bold="600" type="info">金钱是天使</lew-mark
         >；金钱让你感到是一堆麻烦时，便成了魔鬼。
         金钱是流动着的财富。有的人挣了钱对朋友不吝啬，有的人钱多了对自己
-        <lew-mark type="success">不慷慨</lew-mark>，这里面都有天使的点化。
+        <lew-mark to="https://vuejs.org/" type="success">不慷慨</lew-mark
+        >，这里面都有天使的点化。
     </p>
 </template>
 

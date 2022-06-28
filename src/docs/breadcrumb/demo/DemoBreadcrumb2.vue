@@ -4,24 +4,24 @@ import { ref } from 'vue';
 const options = ref([
     {
         label: 'Avatar',
-        path: '/Avatar',
+        to: '/Avatar',
     },
     {
         label: 'Breadcrumb',
-        path: '/Breadcrumb',
+        to: '/Breadcrumb',
         active: true,
     },
     {
         label: 'Input',
-        path: '/Input',
+        to: '/Input',
     },
     {
         label: 'Dialog',
-        path: '/Dialog',
+        to: '/Dialog',
     },
     {
         label: 'Flex',
-        path: '/Flex',
+        to: '/Flex',
     },
 ]);
 </script>

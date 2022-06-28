@@ -4,15 +4,15 @@ import { ref } from 'vue';
 const options = ref([
     {
         label: 'Home',
-        path: '/',
+        to: '/',
     },
     {
         label: 'Brand',
-        path: '/',
+        to: '/',
     },
     {
         label: 'Detail',
-        path: '/',
+        to: '/',
         active: true,
     },
 ]);
