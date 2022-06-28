@@ -23,7 +23,7 @@ const props = defineProps({
         },
     },
 });
-const toPath = (path) => {
+const toPath = (path: string) => {
     if (path) {
         if (path.startsWith('http')) {
             window.open(path);
