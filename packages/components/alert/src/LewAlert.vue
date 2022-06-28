@@ -67,7 +67,7 @@ const emit = defineEmits(['close']);
     font-size: 0px;
     .lew-alert {
         position: relative;
-        display: flex;
+        display: inline-flex;
         align-items: flex-start;
         width: 100%;
         min-height: 32px;
@@ -81,12 +81,12 @@ const emit = defineEmits(['close']);
         }
         .btn-close {
             position: absolute;
-            top: 6px;
+            top: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 25px;
-            height: 25px;
+            width: 20px;
+            height: 20px;
             right: 8px;
             border-radius: var(--lew-border-radius);
             box-sizing: border-box;
@@ -103,7 +103,7 @@ const emit = defineEmits(['close']);
             width: calc(100% - 100px);
             .title {
                 margin-top: 1px;
-                font-size: 15px;
+                font-size: 14px;
                 width: 100%;
             }
             .content {

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 type Options = {
     label: string;
@@ -7,7 +9,7 @@ type Options = {
     active: boolean;
 };
 
-defineProps({
+const props = defineProps({
     options: {
         type: Array as PropType<Options[]>,
         default() {
@@ -21,6 +23,15 @@ defineProps({
         },
     },
 });
+const toPath = (path) => {
+    if (path) {
+        if (path.startsWith('http')) {
+            window.open(path);
+        } else {
+            router.push(path);
+        }
+    }
+};
 </script>
 
 <template>
@@ -31,9 +42,11 @@ defineProps({
             class="lew-breadcrumb-item"
             :class="{ 'lew-breadcrumb-active': item.active }"
         >
-            <span :class="{ 'lew-breadcrumb-isPath': !!item.path }">{{
-                item.label
-            }}</span>
+            <span
+                :class="{ 'lew-breadcrumb-isPath': !!item.path }"
+                @click="toPath(item.path)"
+                >{{ item.label }}</span
+            >
             <div
                 v-if="index != options.length - 1"
                 class="lew-breadcrumb-parting"

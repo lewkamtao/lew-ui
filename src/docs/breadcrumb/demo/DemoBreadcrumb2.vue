@@ -3,26 +3,25 @@ import { ref } from 'vue';
 
 const options = ref([
     {
-        label: 'Home',
-        path: '/',
+        label: 'Avatar',
+        path: '/Avatar',
     },
     {
-        label: 'Brand',
-        path: '/',
+        label: 'Breadcrumb',
+        path: '/Breadcrumb',
         active: true,
     },
     {
-        label: 'User',
-        path: '/',
-        active: true,
+        label: 'Input',
+        path: '/Input',
     },
     {
-        label: 'Topics',
-        path: '/',
+        label: 'Dialog',
+        path: '/Dialog',
     },
     {
-        label: 'Detail',
-        path: '/',
+        label: 'Flex',
+        path: '/Flex',
     },
 ]);
 </script>
