@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-    <div class="wrapper">开发中···</div>
+    <div class="wrapper">待完善···</div>
 </template>
 
 <style lang="scss" scoped>

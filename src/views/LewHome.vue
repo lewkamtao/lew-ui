@@ -375,7 +375,7 @@ let alertList = ref([
     .home {
         min-height: 100vh;
         box-sizing: border-box;
-        animation: demo 4s ease;
+        animation: demo 3s ease;
         transform: scale(1) rotateX(0deg) rotateY(0deg);
         animation-fill-mode: forwards;
         animation-delay: 0.5s;
@@ -397,11 +397,11 @@ let alertList = ref([
     @keyframes start {
         from {
             opacity: 0;
-            transform: translateX(-5%);
+            transform: translateY(15%);
         }
         to {
             opacity: 1;
-            transform: translateX(0%);
+            transform: translateY(0%);
         }
     }
 }

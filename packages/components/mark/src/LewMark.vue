@@ -69,7 +69,7 @@ defineProps({
     background-color: var(--lew-error-color-light);
 }
 .lew-mark-normal {
-    color: var(--lew-normal-text-color);
-    background-color: var(--lew-normal-color-light);
+    color: var(--lew-text-color-2);
+    background-color: var(--lew-normal-color-light2);
 }
 </style>

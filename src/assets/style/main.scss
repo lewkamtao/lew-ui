@@ -79,3 +79,19 @@ pre code.hljs:hover::-webkit-scrollbar-thumb {
     font-weight: 400;
     margin: 20px 0px;
 }
+
+.guide-wrapper {
+    p {
+        line-height: 30px;
+        font-size: 14px;
+        margin: 10px 0px 20px 0px;
+        color: var(--lew-text-color-5);
+    }
+    .pre-box {
+        margin-top: 10px;
+        code {
+            border-radius: var(--lew-border-radius);
+            overflow: hidden;
+        }
+    }
+}

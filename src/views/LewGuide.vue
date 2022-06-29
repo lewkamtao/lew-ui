@@ -83,8 +83,8 @@ group.value = [
 
 <style lang="scss" scoped>
 .container {
-    height: calc(100vh - 60px);
     display: flex;
+    min-height: 100vh;
 }
 .sider {
     position: fixed;
