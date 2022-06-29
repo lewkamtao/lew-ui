@@ -32,7 +32,7 @@ import { LewButton } from 'lew-ui';
 
 ## Thanks
 
-https://github.com/TuSimple/naive-ui
-https://github.com/atomiks/tippyjs
-https://github.com/fancyapps/ui
-https://github.com/sampotts/plyr
+- https://github.com/TuSimple/naive-ui
+- https://github.com/atomiks/tippyjs
+- https://github.com/fancyapps/ui
+- https://github.com/sampotts/plyr
