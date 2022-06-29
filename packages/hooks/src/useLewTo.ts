@@ -1,7 +1,7 @@
 // hooks/useDOMCreate.ts
 import { ComponentInternalInstance, getCurrentInstance, onMounted } from 'vue';
 import type { Router } from 'vue-router';
-let instance: any = null;
+let instance: ComponentInternalInstance;
 
 export default function useLewTo() {
     const lewTo = (path: string) => {
