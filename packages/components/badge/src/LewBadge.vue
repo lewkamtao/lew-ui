@@ -24,7 +24,6 @@ defineProps({
             {{ value }}
         </div>
         <div v-if="!value" class="lew-badge-dot"></div>
-
         <slot></slot>
     </div>
 </template>

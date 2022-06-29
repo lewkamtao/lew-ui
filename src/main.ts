@@ -21,7 +21,7 @@ import 'xe-utils';
 import { Column, Tooltip, Table } from 'vxe-table';
 
 // 安装tooltip
-import { LewTooltip, LewFancybox } from '../packages';
+import { LewTooltip } from '../packages';
 
 import lew from '../packages';
 
@@ -42,5 +42,4 @@ function useTable(app: App) {
 app.use(lew);
 app.use(useTable);
 app.use(LewTooltip);
-app.use(LewFancybox);
 app.use(router).mount('#app');

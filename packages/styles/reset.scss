@@ -82,12 +82,15 @@ q:before,
 q:after,
 blockquote:before,
 blockquote:after {
-    content: '';
+    content: "";
 }
 
 html,
 input,
 textarea {
-    font-family: “lucida grande”, “lucida sans unicode”, lucida, helvetica,
-        “Hiragino Sans GB”, “Microsoft YaHei”, “WenQuanYi Micro Hei”, sans-serif;
+    font-family: “lucida grande”, “lucida sans unicode”, lucida, helvetica, “Hiragino Sans GB”, “Microsoft YaHei”,
+        “WenQuanYi Micro Hei”, sans-serif;
+}
+a {
+    text-decoration: none;
 }

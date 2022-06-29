@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useLewTo } from '../../../hooks/index.ts';
+import { useLewTo } from '../../../hooks';
 const { lewTo } = useLewTo();
 
 defineProps({
@@ -38,8 +38,9 @@ defineProps({
 <style lang="scss">
 .lew-mark {
     display: inline;
-    border-radius: 3px;
-    padding: 2px 6px;
+    border-radius: 2px;
+    padding: 0px 6px;
+    margin: 0px 4px;
 }
 
 .lew-mark-to {

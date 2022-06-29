@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Dismiss24Filled } from '@vicons/fluent';
 import { Icon } from '@vicons/utils';
-import { useLewTo } from '../../../hooks/index.ts';
+import { useLewTo } from '../../../hooks';
 const { lewTo } = useLewTo();
 
 const props = defineProps({

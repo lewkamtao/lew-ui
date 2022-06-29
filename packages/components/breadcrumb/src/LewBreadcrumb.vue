@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
-import { useLewTo } from '../../../hooks/index.ts';
+import { useLewTo } from '../../../hooks';
 const { lewTo } = useLewTo();
 
 type Options = {

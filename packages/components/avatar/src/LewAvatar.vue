@@ -25,7 +25,7 @@ defineProps({
 
 <template>
     <div class="lew-avatar">
-        <img :src="src" :class="{ round: round }" :alt="alt" />
+        <img :src="src" :alt="alt" :class="round ? 'lew-avarar-round' : ''" />
         <span
             v-if="status"
             class="dot"
@@ -45,13 +45,12 @@ defineProps({
     img {
         width: 100%;
         height: 100%;
+        background-color: var(--lew-bgcolor-2);
         border-radius: var(--lew-form-border-radius);
     }
-
-    .round {
+    .lew-avarar-round {
         border-radius: 50%;
     }
-
     .dot {
         position: absolute;
         top: -0.3rem;

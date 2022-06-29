@@ -3,7 +3,7 @@ import { LewMessage } from '../../../../packages';
 </script>
 
 <template>
-    <lew-flex wrap direction="column" x="start" gap="20px">
+    <lew-flex wrap x="start" gap="20px">
         <lew-button type="error" @click="LewMessage.error('这是一个demo信息')"
             >error</lew-button
         >

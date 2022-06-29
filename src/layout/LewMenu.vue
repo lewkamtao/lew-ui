@@ -65,7 +65,6 @@ const toPath = (item: Item) => {
 .siderbar {
     width: 230px;
     height: 100%;
-    min-height: 100vh;
     overflow-y: scroll;
     border-right: var(--lew-border-1);
     user-select: none;
@@ -85,6 +84,22 @@ const toPath = (item: Item) => {
             overflow: hidden;
             span {
                 display: inline-block;
+                animation: fadeIn 1s ease;
+                animation-fill-mode: forwards;
+                animation-delay: 0.55s;
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(100px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0px);
+                }
             }
         }
 
@@ -101,7 +116,7 @@ const toPath = (item: Item) => {
             border-radius: var(--lew-form-border-radius);
             cursor: pointer;
             font-size: 14px;
-            transform: translateX(20px);
+            transform: translateX(50px);
             opacity: 0;
             color: var(--lew-text-color-6);
             animation: slideIn 0.75s ease;
@@ -109,7 +124,7 @@ const toPath = (item: Item) => {
         }
         @keyframes slideIn {
             from {
-                transform: translateX(20px);
+                transform: translateX(50px);
                 opacity: 0;
             }
 
