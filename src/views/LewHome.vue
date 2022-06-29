@@ -355,8 +355,6 @@ let alertList = ref([
             display: flex;
             font-size: 50px;
             font-weight: 900;
-
-            background-color: #fff;
             cursor: pointer;
             .dm {
                 width: 50px;
