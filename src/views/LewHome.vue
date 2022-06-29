@@ -242,34 +242,34 @@ let alertList = ref([
 
                 <lew-flex class="item" direction="column">
                     <lew-flex direction="column" class="form-box">
-                        <lew-form-item direction="y" title="账号">
+                        <lew-form-item direction="y" title="Input">
                             <LewInput v-model="user.username" />
                         </lew-form-item>
-                        <lew-form-item direction="y" title="密码">
-                            <LewInput type="password" resize="none" />
+                        <lew-form-item direction="y" title="Input">
+                            <LewInput resize="none" />
                         </lew-form-item>
-                        <lew-form-item direction="y" title="简介">
+                        <lew-form-item direction="y" title="Textarea">
                             <LewTextarea resize="none" />
                         </lew-form-item>
-                        <lew-form-item direction="y" title="家地址">
+                        <lew-form-item direction="y" title="Select">
                             <LewSelect
                                 v-model="user.home"
                                 :options="home_options"
                             />
                         </lew-form-item>
-                        <lew-form-item direction="y" title="性别">
+                        <lew-form-item direction="y" title="Radio">
                             <lew-radiobox-group
                                 v-model="user.sex"
                                 :options="sex_options"
                             />
                         </lew-form-item>
-                        <lew-form-item direction="y" title="爱好">
+                        <lew-form-item direction="y" title="Checkbox">
                             <lew-checkbox-group
                                 v-model="user.hobby"
                                 :options="hobby_options"
                             />
                         </lew-form-item>
-                        <lew-form-item direction="y" title="订阅">
+                        <lew-form-item direction="y" title="Switch">
                             <LewSwitch v-model="user.dark" />
                         </lew-form-item>
                     </lew-flex>
@@ -280,7 +280,7 @@ let alertList = ref([
                         <lew-button
                             type="normal"
                             @click="LewMessage.error('这是一个demo信息')"
-                            >Cancel</lew-button
+                            >Message</lew-button
                         >
                         <lew-button
                             type="success"
@@ -290,10 +290,10 @@ let alertList = ref([
                     </lew-flex>
                     <lew-flex wrap x="start" gap="20px">
                         <lew-button type="error" @click="open('normal')"
-                            >click here</lew-button
+                            >Dialog</lew-button
                         >
-                        <lew-button type="info" @click="open('success')"
-                            >click here</lew-button
+                        <lew-button type="warning" @click="open('success')"
+                            >Cancal</lew-button
                         >
                     </lew-flex>
                     <lew-flex x="start" gap="20px">
@@ -303,7 +303,7 @@ let alertList = ref([
                             placement="bottom-start"
                         >
                             <template #trigger>
-                                <lew-button>点击唤起 Popover</lew-button>
+                                <lew-button>Popover</lew-button>
                             </template>
                             <template #popover-body>
                                 <div class="popover-body">
@@ -353,13 +353,13 @@ let alertList = ref([
         opacity: 0;
         .slogan {
             display: flex;
-            font-size: 60px;
+            font-size: 50px;
             font-weight: 900;
 
             background-color: #fff;
             cursor: pointer;
             .dm {
-                width: 60px;
+                width: 50px;
                 overflow: hidden;
 
                 .text {
@@ -377,7 +377,7 @@ let alertList = ref([
     .home {
         min-height: 100vh;
         box-sizing: border-box;
-        animation: demo 3s ease;
+        animation: demo 4s ease;
         transform: scale(1) rotateX(0deg) rotateY(0deg);
         animation-fill-mode: forwards;
         animation-delay: 0.5s;
@@ -399,7 +399,7 @@ let alertList = ref([
     @keyframes start {
         from {
             opacity: 0;
-            transform: translateX(-10%);
+            transform: translateX(-5%);
         }
         to {
             opacity: 1;
