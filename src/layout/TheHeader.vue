@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { LogoGithub, MoonOutline, SunnyOutline } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
+import { LewMessage } from '../../packages';
 
 const router = useRouter();
+const route = useRoute();
 
 const changeMode = () => {
     isDark.value = !isDark.value;
@@ -17,11 +19,19 @@ const changeMode = () => {
 };
 
 let isDark = ref(false);
+
+const gohome = () => {
+    if (route.name == 'R-LewHome') {
+        LewMessage.warning('你已经在首页了！');
+    } else {
+        router.push(`/`);
+    }
+};
 </script>
 
 <template>
     <div class="Header">
-        <div class="logo" @click="router.push(`/`)">
+        <div class="logo" @click="gohome">
             Lew Design
             <lew-tag style="margin-left: 10px" type="info">dev</lew-tag>
         </div>
@@ -65,6 +75,7 @@ let isDark = ref(false);
         align-items: center;
         font-size: 20px;
         font-weight: bold;
+        cursor: pointer;
         .lew-badge {
             margin-left: 10px;
         }
