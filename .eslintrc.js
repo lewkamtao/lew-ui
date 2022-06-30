@@ -14,5 +14,5 @@ module.exports = {
         'prettier',
         'plugin:prettier/recommended',
     ],
-    rules: {},
+    rules: { 'prettier/prettier': 'error' },
 };

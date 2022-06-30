@@ -8,7 +8,7 @@ const options = ref([
     },
     {
         label: 'Vue',
-        to: 'https://vuejs.org/',
+        to: 'https://vuejs.org',
     },
     {
         label: '商品列表',

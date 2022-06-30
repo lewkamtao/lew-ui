@@ -16,7 +16,9 @@ const props = defineProps({
         default: false,
     },
 });
+
 const v = ref(props.modelValue);
+
 watch(
     () => props.modelValue,
     () => {
@@ -25,8 +27,8 @@ watch(
 );
 const emit = defineEmits(['update:modelValue']);
 
-const input = (e: any) => {
-    let value = e.target.value;
+const input = (e: Event) => {
+    let value = (e.target as HTMLInputElement).value;
     emit('update:modelValue', value);
 };
 </script>
@@ -56,7 +58,7 @@ const input = (e: any) => {
     background-color: var(--lew-form-bgcolor);
     color: var(--lew-text-color);
     box-sizing: border-box;
-    transition: all 0.15s ease;
+    transition: border 0.15s ease, background-color 0.15s ease;
     outline: none;
 }
 .lew-textarea::placeholder {

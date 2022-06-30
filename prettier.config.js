@@ -1,5 +1,4 @@
 module.exports = {
-    // 一行最多 80 字符
     printWidth: 80,
     // 使用 4 个空格缩进
     tabWidth: 4,
