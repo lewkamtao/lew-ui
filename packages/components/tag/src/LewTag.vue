@@ -108,18 +108,21 @@ const close = () => {
 }
 .lew-tag-small {
     height: 18px;
+    line-height: 18px;
     padding: 0px 2px 0px 2px;
-    font-size: 12px;
+    font-size: 10px;
 }
 .lew-tag-medium {
     height: 22px;
-    padding: 0px 4px 0px 3px;
-    font-size: 14px;
+    line-height: 22px;
+    padding: 0px 4px;
+    font-size: 12px;
 }
 .lew-tag-large {
     height: 26px;
-    padding: 0px 5px 0px 4px;
-    font-size: 16px;
+    line-height: 26px;
+    padding: 0px 5px;
+    font-size: 14px;
 }
 
 .lew-tag-round {
