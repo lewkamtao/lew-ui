@@ -63,6 +63,7 @@ const close = () => {
 .lew-tag {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     vertical-align: bottom;
     border-radius: 3px;
     user-select: none;
@@ -107,21 +108,18 @@ const close = () => {
 }
 .lew-tag-small {
     height: 18px;
-    line-height: 12px;
     padding: 0px 2px 0px 2px;
     font-size: 12px;
 }
 .lew-tag-medium {
     height: 22px;
-    line-height: 13px;
     padding: 0px 4px 0px 3px;
-    font-size: 13px;
+    font-size: 14px;
 }
 .lew-tag-large {
     height: 26px;
-    line-height: 14px;
     padding: 0px 5px 0px 4px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .lew-tag-round {
