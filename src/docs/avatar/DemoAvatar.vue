@@ -29,8 +29,8 @@ const docsTable = ref([
     {
         param: 'statusPosition',
         description: '状态标记位置',
-        type: 'boolean',
-        default: 'false',
+        type: 'string',
+        default: "''",
     },
 ]);
 </script>
