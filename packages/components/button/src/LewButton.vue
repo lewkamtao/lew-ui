@@ -16,10 +16,6 @@ defineProps({
         type: Boolean,
         default: false,
     },
-    disabled: {
-        type: Boolean,
-        default: false,
-    },
 });
 </script>
 
@@ -28,10 +24,7 @@ defineProps({
         class="lew-button"
         :class="`lew-button-${type} lew-button-${size} ${
             round ? 'lew-button-round' : ''
-        } ${disabled ? 'lew-button-disabled' : ''}  ${
-            loading ? 'lew-button-loading' : ''
-        }`"
-        :disabled="disabled"
+        }   ${loading ? 'lew-button-loading' : ''}`"
     >
         <slot></slot>
     </button>
@@ -215,17 +208,17 @@ defineProps({
     opacity: 1;
 }
 
-.lew-button-disabled {
+.lew-button[disabled] {
     font-size: 14px;
     pointer-events: none;
     opacity: var(--lew-opacity-disabled);
 }
 
-.lew-button-disabled:hover {
+.lew-button[disabled]:hover {
     font-size: 14px;
 }
 
-.lew-button-disabled::after {
+.lew-button[disabled]::after {
     opacity: 0;
 }
 </style>

@@ -7,10 +7,6 @@ const props = defineProps({
         type: String,
         default: '',
     },
-    disabled: {
-        type: Boolean,
-        default: false,
-    },
 });
 const v = ref(props.modelValue);
 watch(
@@ -28,13 +24,7 @@ const input = (e: Event) => {
 </script>
 
 <template>
-    <input
-        v-model="v"
-        class="lew-input"
-        :disabled="props.disabled"
-        placeholder="请输入"
-        @input="input"
-    />
+    <input v-model="v" class="lew-input" placeholder="请输入" @input="input" />
 </template>
 
 <style lang="scss" scoped>
