@@ -75,7 +75,7 @@ onMounted(() => {
 });
 
 let show = () => {
-    instance.hide();
+    instance.show();
 };
 
 let hide = () => {
