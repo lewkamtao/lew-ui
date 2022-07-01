@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { DemoSelect1, DemoSelect1_code } from './demo';
+import {
+    DemoSelect1,
+    DemoSelect1_code,
+    DemoSelect2,
+    DemoSelect2_code,
+} from './demo';
 import { ref } from 'vue';
 const docsTable = ref([
     {
@@ -13,6 +18,12 @@ const docsTable = ref([
         description: '配置表',
         type: 'options',
         default: '[]',
+    },
+    {
+        param: 'trigger',
+        description: '触发方式',
+        type: 'click | hover',
+        default: 'click',
     },
 ]);
 
@@ -35,8 +46,11 @@ const optionsTable = ref([
 <template>
     <div class="demo-wrapper">
         <lew-title>Select</lew-title>
-        <lew-demo-box title="选择器" :code="DemoSelect1_code">
+        <lew-demo-box title="触发方式" :code="DemoSelect1_code">
             <demo-select1 />
+        </lew-demo-box>
+        <lew-demo-box title="多选" :code="DemoSelect2_code">
+            <demo-select2 />
         </lew-demo-box>
         <lew-title size="16px">Props</lew-title>
         <vxe-table :data="docsTable">

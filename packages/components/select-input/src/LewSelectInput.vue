@@ -28,57 +28,27 @@ const props = defineProps({
         type: String,
         default: 'click',
     },
-    multiple: {
-        type: Boolean,
-        default: false,
-    },
 });
 
-const v = props.multiple ? ref<Array<String>>([]) : ref<String>('');
-const isSelectLabel = props.multiple ? ref<Array<String>>([]) : ref<String>('');
+const v = ref<string | undefined>('');
+const label = ref<string | undefined>('');
+
 onMounted(() => {
-    // 如果是多选
-    if (props.multiple) {
-        isSelectLabel.value = filterSelect(props.modelValue, props.options);
-    } else {
-        isSelectLabel.value =
-            filterSelect([props.modelValue], props.options)[0] || '';
-    }
+    label.value = props.options.find((e) => e.value == props.modelValue)?.label;
 });
-
-const filterSelect = (v, options: Options[]) => {
-    let _v: Array<String> = [];
-    if (v && options) {
-        v.map((e) => {
-            options.map((o) => {
-                if (e == o.value) {
-                    _v.push(o.label);
-                }
-            });
-        });
-    }
-
-    return _v;
-};
 
 const changeFn = (item: Options) => {
-    if (props.multiple) {
-        isSelectLabel.value.push(item.label);
-        v.value.push(item.value);
-        emit('update:modelValue', item.value);
-    } else {
-        isSelectLabel.value = item.label;
-        v.value = item.value;
-        hide();
-        emit('update:modelValue', item.value);
-    }
+    label.value = item.label;
+    v.value == item.value;
+    hide();
+    emit('update:modelValue', item.value);
 };
 
 const emit = defineEmits(['update:modelValue']);
 
 let triggerRef = ref(null);
 let bodyRef = ref(null);
-let isShowOptions = ref(false);
+let isShow = ref(false);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let instance: any;
@@ -105,7 +75,7 @@ onMounted(() => {
         allowHTML: true, // @ts-ignore
         maxWidth: triggerRef.value?.offsetWidth,
         onShow(instance) {
-            isShowOptions.value = true;
+            isShow.value = true;
             const node = document.getElementsByTagName('html')[0];
             if (node.classList.contains('lew-dark')) {
                 instance.popper.children[0].setAttribute('data-theme', 'dark');
@@ -114,7 +84,7 @@ onMounted(() => {
             }
         },
         onHide() {
-            isShowOptions.value = false;
+            isShow.value = false;
         },
     });
 });
@@ -138,37 +108,11 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div
-        class="lew-select"
-        :class="{ 'lew-select-isShow': isShowOptions }"
-        ref="triggerRef"
-    >
-        <icon size="16" class="lew-select-icon">
+    <div class="lew-select" ref="triggerRef">
+        <icon size="16" class="lew-select-icon" :class="{ isShow: isShow }">
             <ChevronDown />
         </icon>
-        <div v-if="isSelectLabel.length == 0" class="lew-select-placeholder">
-            请选择
-        </div>
-        <div v-if="!multiple" class="lew-select-label-single">
-            {{ isSelectLabel }}
-        </div>
-        <div v-if="multiple" class="lew-select-label-multiple">
-            <lew-tag v-show="isSelectLabel.length > 0">
-                {{ isSelectLabel[0] }}</lew-tag
-            >
-            <lew-tag
-                style="margin-left: 5px"
-                v-show="isSelectLabel.length > 1"
-                v-tooltip="{
-                    // @ts-ignore
-                    content: isSelectLabel.join(' / '),
-                    placement: 'top',
-                    trigger: 'mouseenter',
-                }"
-            >
-                +{{ isSelectLabel.length - 1 }}</lew-tag
-            >
-        </div>
+        <lew-input v-model="label" placeholder="请选择"></lew-input>
         <div ref="bodyRef" class="lew-select-body">
             <div class="options-box">
                 <div
@@ -186,25 +130,10 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .lew-select {
-    display: inline-flex;
-    align-items: center;
     position: relative;
     width: 100%;
-    width: 100%;
-    height: 35px;
-    padding: 5px 12px;
-    font-size: 14px;
-    line-height: 24px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
-    border-radius: var(--lew-form-border-radius);
-    background-color: var(--lew-form-bgcolor);
-    color: var(--lew-text-color);
-    box-sizing: border-box;
-    transition: all 0.15s ease;
-    cursor: pointer;
+    display: flex;
+    flex-direction: column;
     .lew-select-icon {
         position: absolute;
         top: 50%;
@@ -213,36 +142,12 @@ onUnmounted(() => {
         transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
         color: var(--lew-text-color-7);
     }
-
-    .lew-select {
-        width: 100%;
-    }
-    .lew-select-label-multiple {
-        display: inline-flex;
-        align-items: center;
-    }
-    .lew-tag {
-        background-color: var(--lew-form-bgcolor);
-    }
-}
-
-.lew-select-placeholder {
-    color: rgb(165, 165, 165);
-}
-.lew-select:hover {
-    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
-    background-color: var(--lew-form-bgcolor-hover);
-}
-.lew-select:active {
-    background-color: var(--lew-form-bgcolor-active);
-}
-.lew-select.lew-select-isShow {
-    background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-        solid;
-    .lew-select-icon {
+    .isShow {
         transform: translateY(-50%) rotate(180deg);
         color: var(--lew-text-color-2);
+    }
+    .lew-input {
+        width: 100%;
     }
 }
 </style>

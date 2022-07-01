@@ -157,7 +157,7 @@ group.value = [
                 cname: '选择器',
                 name: 'Select',
                 path: '/Select',
-                label: '',
+                label: '有更新',
                 type: 'success',
             },
             // {
@@ -195,14 +195,14 @@ group.value = [
                 cname: '全局提示',
                 name: 'Message',
                 path: '/Message',
-                label: 'new',
+                label: '',
                 type: 'success',
             },
             {
                 cname: '对话框',
                 name: 'Dialog',
                 path: '/Dialog',
-                label: 'new',
+                label: '',
                 type: 'success',
             },
 

@@ -38,6 +38,9 @@ export default {
                     },
                 });
             },
+            updated(el: any, binding: any) {
+                instance.setContent(binding.value.content);
+            },
             unmounted() {
                 if (instance) {
                     instance.destroy();
