@@ -2,8 +2,10 @@
 import {
     DemoInput1,
     DemoInput2,
+    DemoInput3,
     DemoInput1_code,
     DemoInput2_code,
+    DemoInput3_code,
 } from './demo';
 
 import { ref } from 'vue';
@@ -14,6 +16,18 @@ const docsTable = ref([
         description: '绑定值',
         type: 'string',
         default: "''",
+    },
+    {
+        param: 'clearable',
+        description: '是否可清空',
+        type: 'boolean',
+        default: false,
+    },
+    {
+        param: 'clear',
+        description: '清空按钮',
+        type: 'event',
+        default: '',
     },
 ]);
 </script>
@@ -26,6 +40,9 @@ const docsTable = ref([
         </lew-demo-box>
         <lew-demo-box title="y 布局" :code="DemoInput2_code">
             <demo-input2 />
+        </lew-demo-box>
+        <lew-demo-box title="可清空" :code="DemoInput3_code">
+            <demo-input3 />
         </lew-demo-box>
         <lew-title size="16px">Props</lew-title>
         <vxe-table :data="docsTable">

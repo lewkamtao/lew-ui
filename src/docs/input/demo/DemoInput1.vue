@@ -6,5 +6,8 @@
         <lew-form-item title="密码">
             <lew-input />
         </lew-form-item>
+        <lew-form-item title="密码">
+            <lew-input clearable />
+        </lew-form-item>
     </div>
 </template>
