@@ -5,14 +5,14 @@ const _props = {
     type: {
         type: String,
         default: 'normal',
-        validator(value) {
+        validator(value: string) {
             return typeRules.includes(value);
         },
     },
     size: {
         type: String,
         default: 'medium',
-        validator(value) {
+        validator(value: string) {
             return sizeRules.includes(value);
         },
     },

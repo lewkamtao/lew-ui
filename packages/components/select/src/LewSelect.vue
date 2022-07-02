@@ -35,10 +35,10 @@ onMounted(() => {
     initOptionsTippy();
 });
 
-const filterSelect = (v, options: Options[]) => {
+const filterSelect = (v: any, options: Options[]) => {
     let _v: Array<String> = [];
     if (v && options) {
-        v.map((e) => {
+        v.map((e: string) => {
             options.map((o) => {
                 if (e == o.value) {
                     _v.push(o.label);
@@ -160,7 +160,7 @@ const hide = () => {
     instance1.hide();
 };
 
-const delTag = (i) => {
+const delTag = (i: number) => {
     multipleV.value.splice(i, 1);
     multipleLabelStr.value.splice(i, 1);
     emit('update:modelValue', multipleV.value);

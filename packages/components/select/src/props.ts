@@ -15,14 +15,14 @@ const _props = {
             return [];
         },
         required: true,
-        validator(value) {
+        validator(value: PropType<Options[]>) {
             return value.length > 0;
         },
     },
     trigger: {
         type: String,
         default: 'click',
-        validator(value) {
+        validator(value: string) {
             return ['click', 'hover'].includes(value);
         },
     },
