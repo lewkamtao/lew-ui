@@ -1,6 +1,5 @@
 export * from './flex';
 export * from './Space';
-export * from './layout';
 
 export * from './steps';
 export * from './breadcrumb';

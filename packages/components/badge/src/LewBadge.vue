@@ -34,8 +34,8 @@ defineProps({
     .lew-badge-dot {
         position: absolute;
         left: 100%;
-        width: 14px;
-        height: 14px;
+        width: 12px;
+        height: 12px;
         bottom: calc(100% - 7px);
         transform: translateX(-50%);
         z-index: 1;

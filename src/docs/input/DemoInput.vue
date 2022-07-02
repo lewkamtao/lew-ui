@@ -4,15 +4,17 @@ import {
     DemoInput2,
     DemoInput3,
     DemoInput4,
+    DemoInput5,
     DemoInput1_code,
     DemoInput2_code,
     DemoInput3_code,
     DemoInput4_code,
+    DemoInput5_code,
 } from './demo';
 
 import { ref } from 'vue';
 
-const docsTable = ref([
+const docsTable1 = ref([
     {
         param: 'type',
         description: '输入框类型',
@@ -57,6 +59,32 @@ const docsTable = ref([
         default: '-',
     },
 ]);
+const docsTable2 = ref([
+    {
+        param: 'input',
+        description: '输入',
+        type: '() => void',
+        default: 'false',
+    },
+    {
+        param: 'change',
+        description: '值变化',
+        type: '() => void',
+        default: 'false',
+    },
+    {
+        param: 'blur',
+        description: '失焦',
+        type: '() => void',
+        default: 'false',
+    },
+    {
+        param: 'focus',
+        description: '聚焦',
+        type: '() => void',
+        default: 'false',
+    },
+]);
 </script>
 
 <template>
@@ -71,11 +99,14 @@ const docsTable = ref([
         <lew-demo-box title="可清空" :code="DemoInput3_code">
             <demo-input3 />
         </lew-demo-box>
-        <lew-demo-box title="只读" :code="DemoInput4_code">
+        <lew-demo-box title="显示密码" :code="DemoInput4_code">
             <demo-input4 />
         </lew-demo-box>
+        <lew-demo-box title="其他" :code="DemoInput5_code">
+            <demo-input5 />
+        </lew-demo-box>
         <lew-title size="16px">Props</lew-title>
-        <vxe-table :data="docsTable">
+        <vxe-table :data="docsTable1">
             <vxe-column
                 show-overflow
                 field="param"
@@ -97,6 +128,26 @@ const docsTable = ref([
                 show-overflow
                 field="default"
                 title="默认值"
+            ></vxe-column>
+        </vxe-table>
+        <lew-title style="margin-top: 40px" size="16px">Event</lew-title>
+        <vxe-table :data="docsTable2">
+            <vxe-column
+                show-overflow
+                field="param"
+                width="220px"
+                title="参数名"
+            ></vxe-column>
+            <vxe-column
+                show-overflow
+                field="description"
+                title="描述"
+            ></vxe-column>
+            <vxe-column
+                show-overflow
+                width="300"
+                field="type"
+                title="类型"
             ></vxe-column>
         </vxe-table>
     </div>

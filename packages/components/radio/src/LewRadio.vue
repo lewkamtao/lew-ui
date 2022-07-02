@@ -14,7 +14,7 @@
             :checked="checked"
             @input="setChecked"
         />
-        {{ label }}
+        <span> {{ label }}</span>
     </label>
 </template>
 

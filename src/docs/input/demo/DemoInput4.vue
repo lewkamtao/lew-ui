@@ -6,11 +6,8 @@ let pwd = ref('123456');
 
 <template>
     <div style="width: 300px">
-        <lew-form-item title="账号">
-            <lew-input v-model="username" readonly />
-        </lew-form-item>
         <lew-form-item title="密码">
-            <lew-input type="password" v-model="pwd" readonly />
+            <lew-input type="password" show-password clearable v-model="pwd" />
         </lew-form-item>
     </div>
 </template>

@@ -15,11 +15,6 @@ const _props = {
         type: Boolean,
         default: false,
     },
-    // 是否使用清空按钮
-    clearable: {
-        type: Boolean,
-        default: false,
-    },
     // 默认提示语
     placeholder: {
         type: String,
@@ -30,8 +25,20 @@ const _props = {
         type: Boolean,
         default: false,
     },
-    // 对齐方式
-    showPassword: {
+    // 缩放模式
+    resize: {
+        type: String,
+        default: 'none',
+    },
+    maxLength: {
+        type: Number,
+        default: null,
+    },
+    showCount: {
+        type: Boolean,
+        default: false,
+    },
+    niceCount: {
         type: Boolean,
         default: false,
     },

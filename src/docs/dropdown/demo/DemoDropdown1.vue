@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { LewMessage } from '../../../../packages';
 
 let options = ref([
     {
@@ -22,6 +23,7 @@ let options = ref([
 
 const change = (e: any) => {
     console.log(e);
+    LewMessage.info(e.label);
 };
 </script>
 <template>
@@ -31,6 +33,6 @@ const change = (e: any) => {
         </lew-dropdown>
         <lew-dropdown :options="options" trigger="click" @change="change">
             <lew-button>click</lew-button>
-        </lew-dropdown></lew-flex
-    >
+        </lew-dropdown>
+    </lew-flex>
 </template>

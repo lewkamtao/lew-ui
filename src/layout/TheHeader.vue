@@ -39,9 +39,7 @@ const gohome = () => {
                 width="30"
                 height="30"
             />
-            <span style="margin-left: 10px"> Lew Design</span>
-
-            <lew-tag style="margin-left: 10px" type="info">dev</lew-tag>
+            <span style="margin-left: 10px"> Lew UI</span>
         </div>
         <div class="menu">
             <div class="menu-item" @click="router.push(`/`)">首页</div>

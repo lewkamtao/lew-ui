@@ -2,7 +2,6 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import {
     DemoFlex,
     DemoSpace,
-    DemoLayout,
     DemoSteps,
     DemoDropdown,
     DemoBreadcrumb,
@@ -56,7 +55,6 @@ const routes: Array<RouteRecordRaw> = [
         component: LewComponents,
         children: [
             { path: '/Flex', name: 'R-LewFlex', component: DemoFlex },
-            { path: '/Layout', name: 'R-LewLayout', component: DemoLayout },
             { path: '/Space', name: 'R-LewSpace', component: DemoSpace },
 
             { path: '/Steps', name: 'R-LewSteps', component: DemoSteps },

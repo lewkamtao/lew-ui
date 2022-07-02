@@ -24,8 +24,6 @@ export * from './badge';
 export * from './tag';
 
 export * from './alert';
-export * from './dialog';
-export * from './message';
 export * from './modal';
 export * from './popok';
 export * from './popover';

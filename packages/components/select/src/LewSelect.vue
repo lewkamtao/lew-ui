@@ -60,6 +60,7 @@ const changeFn = (item: Options) => {
             multipleLabelStr.value.push(item.label);
             multipleV.value.push(item.value);
         }
+
         emit('update:modelValue', multipleV.value);
         emit('change', multipleV.value);
     } else {
@@ -165,6 +166,9 @@ const delTag = (i: number) => {
     multipleLabelStr.value.splice(i, 1);
     emit('update:modelValue', multipleV.value);
     emit('change', multipleV.value);
+    if (i == 0 && multipleV.value.length == 0) {
+        instance2.hide();
+    }
 };
 
 defineExpose({ show, hide });
@@ -203,7 +207,11 @@ onUnmounted(() => {
         </div>
         <!-- 多选 -->
         <div v-show="multiple" class="lew-select-label-multiple">
-            <lew-tag v-show="multipleLabelStr.length > 0">
+            <lew-tag
+                v-show="multipleLabelStr.length > 0"
+                @close="delTag(0)"
+                closable
+            >
                 {{ multipleLabelStr[0] }}</lew-tag
             >
             <div ref="tagRef" class="lew-isSelect-label-num">

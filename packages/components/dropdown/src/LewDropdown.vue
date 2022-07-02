@@ -105,7 +105,7 @@ onUnmounted(() => {
 
 <template>
     <div class="lew-dropdown">
-        <div ref="triggerRef">
+        <div class="lew-dropdown-trigger" ref="triggerRef">
             <slot />
         </div>
         <div ref="bodyRef" class="lew-dropdown-body" :style="`width:${width}`">
@@ -124,7 +124,12 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .lew-dropdown {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    .lew-dropdown-trigger {
+        display: inline-flex;
+        align-items: center;
+    }
 }
 .lew-dropdown-body {
     display: flex;

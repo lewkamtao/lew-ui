@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import { CloseCircleOutline } from '@vicons/ionicons5';
+import { ref, watch, computed } from 'vue';
+import {
+    CloseCircleOutline,
+    EyeOutline,
+    EyeOffOutline,
+} from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
 import _props from './props';
 
@@ -12,16 +16,42 @@ watch(
         v.value = props.modelValue;
     },
 );
-const emit = defineEmits(['update:modelValue', 'clear']);
+const emit = defineEmits([
+    'update:modelValue',
+    'clear',
+    'blur',
+    'focus',
+    'change',
+    'input',
+]);
 
 const input = (e: Event) => {
     let value = (e.target as HTMLInputElement).value;
+    emit('input', v);
     emit('update:modelValue', value);
 };
 const clear = (): void => {
     emit('clear', v.value);
+    _type.value = 'password';
     v.value = '';
 };
+let _type = ref(props.type);
+const showPasswordFn = (): void => {
+    _type.value == 'text' ? (_type.value = 'password') : (_type.value = 'text');
+};
+
+let getPaddingRight = computed(() => {
+    switch (true) {
+        case props.clearable && props.showPassword:
+            return 55;
+        case props.clearable:
+            return 30;
+        case props.showPassword:
+            return 30;
+        default:
+            break;
+    }
+});
 </script>
 
 <template>
@@ -31,19 +61,40 @@ const clear = (): void => {
             class="lew-input"
             :disabled="disabled"
             :placeholder="placeholder"
-            :type="type"
+            :type="_type"
             :readonly="readonly"
-            :style="{ paddingRight: clearable ? '30px' : '' }"
+            :style="`padding-right:${getPaddingRight}px`"
             @input="input"
+            @change="emit('change', v)"
+            @blur="emit('blur', v)"
+            @focus="emit('focus', v)"
         />
-        <Icon
-            class="close-icon-view"
-            :class="{ 'close-icon-view-show': v && clearable }"
-            size="18"
-            @click="clear"
+        <div
+            class="lew-input-controls"
+            :class="{
+                'lew-input-controls-show':
+                    (v && showPassword) || (v && clearable),
+            }"
         >
-            <CloseCircleOutline />
-        </Icon>
+            <Icon
+                v-if="showPassword"
+                class="eye-icon-view"
+                size="18"
+                @click="showPasswordFn"
+            >
+                <EyeOutline v-show="_type == 'text'" />
+                <EyeOffOutline v-show="_type == 'password'" />
+            </Icon>
+
+            <Icon
+                v-if="clearable"
+                class="close-icon-view"
+                size="18"
+                @click="clear"
+            >
+                <CloseCircleOutline />
+            </Icon>
+        </div>
     </div>
 </template>
 
@@ -52,27 +103,54 @@ const clear = (): void => {
     position: relative;
     overflow: hidden;
     width: 100%;
-    .close-icon-view {
+
+    .lew-input-controls {
         position: absolute;
-        right: 7px;
         top: 0;
-        display: flex;
-        justify-content: center;
+        right: 5px;
+        display: inline-flex;
         align-items: center;
         height: 100%;
-        cursor: pointer;
-        user-select: none;
-        transition: all 0.35s ease;
-        transform: translateX(30px);
         opacity: 0;
-    }
-    .close-icon-view-show {
-        opacity: 0.5;
-        transform: translateX(0px);
-    }
+        transform: translateX(100%);
+        transition: all 0.35s ease;
+        .close-icon-view {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 25px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.25s ease;
+            opacity: 0.5;
+        }
 
-    .close-icon-view:hover {
+        .close-icon-view:hover {
+            opacity: 1;
+        }
+
+        .eye-icon-view {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 25px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.25s ease;
+            opacity: 0.5;
+        }
+
+        .eye-icon-view:hover {
+            opacity: 1;
+        }
+
+        svg {
+            flex-shrink: 0;
+        }
+    }
+    .lew-input-controls-show {
         opacity: 0.8;
+        transform: translateX(0px);
     }
 
     .lew-input {

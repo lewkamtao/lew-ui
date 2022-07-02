@@ -1,7 +1,6 @@
 import { createApp, App } from 'vue';
 import AppVue from './App.vue';
 import router from './router/index';
-// import 'lew-ui/dist/style.css';
 import '../packages/styles/reset.scss';
 import '../packages/styles/var.scss';
 import '../packages/styles/main.scss';
