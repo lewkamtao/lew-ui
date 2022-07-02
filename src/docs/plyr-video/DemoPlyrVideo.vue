@@ -4,16 +4,10 @@ import { DemoPlyrVideo1, DemoPlyrVideo1_code } from './demo';
 
 const docsTable = ref([
     {
-        param: 'src',
-        description: '头像链接',
+        param: 'url',
+        description: '视频链接',
         type: 'string',
         default: `''`,
-    },
-    {
-        param: 'round',
-        description: '头像形状，是否为圆形。',
-        type: 'boolean',
-        default: 'false',
     },
 ]);
 </script>

@@ -17,7 +17,7 @@ defineProps({
 
 <template>
     <a class="lew-fancy-img" data-fancybox="gallery" :href="src">
-        <img :src="src" />
+        <img :round="round" :src="src" />
     </a>
 </template>
 
@@ -31,7 +31,8 @@ defineProps({
     img {
         width: 100%;
         height: 100%;
-        border-radius: var(--lew-border-radius);
+        object-fit: cover;
+        border-radius: var(--lew-form-border-radius);
     }
 
     .round {
