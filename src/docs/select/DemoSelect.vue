@@ -10,12 +10,12 @@ const docsTable = ref([
     {
         param: 'model-value (v-model)',
         description: '绑定值',
-        type: 'string',
+        type: 'string | array',
         default: "''",
     },
     {
         param: 'options',
-        description: '配置表',
+        description: '选项',
         type: 'options',
         default: '[]',
     },
@@ -24,6 +24,12 @@ const docsTable = ref([
         description: '触发方式',
         type: 'click | hover',
         default: 'click',
+    },
+    {
+        param: 'multiple',
+        description: '多选模式，开启后，v-model需要是数组类型',
+        type: 'boolean',
+        default: 'false',
     },
 ]);
 
