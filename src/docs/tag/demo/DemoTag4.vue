@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LewMessage } from 'lew-ui';
+import { LewMessage } from '../../../../packages';
 const close = () => {
     LewMessage.success('你点击了关闭');
 };

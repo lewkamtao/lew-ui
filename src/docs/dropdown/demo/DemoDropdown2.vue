@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { LewMessage } from 'lew-ui';
+import { LewMessage } from '../../../../packages';
 
 let options = ref([
     {

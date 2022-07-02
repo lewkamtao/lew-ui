@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { LewMessage } from 'lew-ui';
+import { LewMessage } from '../../../../packages';
 let username = ref('lew-ui');
 let pwd = ref('123456');
 

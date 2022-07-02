@@ -47,7 +47,7 @@ let getCheckNumStr = computed(() => {
  * @param val
  */
 
-const getTextLength = (val) => {
+const getTextLength = (val: string) => {
     if (!props.niceCount) {
         return val.length;
     } else {

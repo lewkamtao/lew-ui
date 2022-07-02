@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LewMessage } from 'lew-ui';
+import { LewMessage } from '../../../../packages';
 // 确认
 const ok = () => {
     LewMessage.success('确定');
