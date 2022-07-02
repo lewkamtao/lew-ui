@@ -72,6 +72,7 @@ onMounted(() => {
             }
         },
     });
+    instance.popper.children[0].setAttribute('data-lew', 'popok');
 });
 
 let show = () => {

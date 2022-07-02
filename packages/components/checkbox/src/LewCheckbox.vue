@@ -34,7 +34,9 @@
 defineProps({
     label: {
         type: String,
-        required: true,
+        default: () => {
+            return '';
+        },
     },
     block: {
         type: Boolean,
@@ -65,7 +67,6 @@ const setChecked = (event: Event) => {
     display: inline-flex;
     align-items: center;
     user-select: none;
-    margin: 0px 20px 15px 0px;
     cursor: pointer;
     color: var(--lew-text-color-1);
     font-size: 14px;

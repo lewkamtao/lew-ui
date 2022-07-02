@@ -2,34 +2,10 @@
 import { Dismiss24Filled } from '@vicons/fluent';
 import { Icon } from '@vicons/utils';
 import { useLewTo } from '../../../hooks';
+import _props from './props';
 const { lewTo } = useLewTo();
 
-const props = defineProps({
-    type: {
-        type: String,
-        default: 'normal',
-    },
-    size: {
-        type: String,
-        default: 'medium',
-    },
-    round: {
-        type: Boolean,
-        default: false,
-    },
-    closable: {
-        type: Boolean,
-        default: false,
-    },
-    disabled: {
-        type: Boolean,
-        default: false,
-    },
-    to: {
-        type: String,
-        default: '',
-    },
-});
+const props = defineProps(_props);
 
 const emit = defineEmits(['close']);
 const close = () => {
@@ -158,7 +134,7 @@ const close = () => {
     background-color: var(--lew-normal-color-light);
 }
 .lew-tag-disabled {
-    opacity: var(--lew-opacity-disabled);
+    opacity: var(--lew-disabled-opacity);
     cursor: not-allowed;
     .lew-tag-close {
         cursor: not-allowed;

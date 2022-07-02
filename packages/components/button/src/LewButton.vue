@@ -211,7 +211,7 @@ defineProps({
 .lew-button[disabled] {
     font-size: 14px;
     cursor: no-drop;
-    opacity: var(--lew-opacity-disabled);
+    opacity: var(--lew-disabled-opacity);
 }
 .lew-button[disabled] {
     background: var(--lew-normal-color);

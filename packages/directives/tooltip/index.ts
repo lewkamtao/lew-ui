@@ -37,6 +37,7 @@ export default {
                         }
                     },
                 });
+                instance.popper.children[0].setAttribute('data-lew', 'tooltip');
             },
             updated(el: any, binding: any) {
                 instance.setContent(binding.value.content);

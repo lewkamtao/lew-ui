@@ -32,7 +32,15 @@ const gohome = () => {
 <template>
     <div class="Header">
         <div class="logo" @click="gohome">
-            Lew Design
+            <img
+                src="../assets/images/logo.png"
+                alt="logo"
+                srcset=""
+                width="30"
+                height="30"
+            />
+            <span style="margin-left: 10px"> Lew Design</span>
+
             <lew-tag style="margin-left: 10px" type="info">dev</lew-tag>
         </div>
         <div class="menu">
@@ -73,8 +81,7 @@ const gohome = () => {
     .logo {
         display: flex;
         align-items: center;
-        font-size: 20px;
-        font-weight: bold;
+        font-size: 22px;
         cursor: pointer;
         .lew-badge {
             margin-left: 10px;

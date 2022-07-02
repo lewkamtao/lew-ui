@@ -48,6 +48,7 @@ onMounted(() => {
             }
         },
     });
+    instance.popper.children[0].setAttribute('data-lew', 'popover');
 });
 
 let show = () => {

@@ -75,6 +75,7 @@ onMounted(() => {
             }
         },
     });
+    instance.popper.children[0].setAttribute('data-lew', 'dropdown');
 });
 
 let show = () => {

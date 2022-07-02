@@ -3,19 +3,46 @@ import {
     DemoInput1,
     DemoInput2,
     DemoInput3,
+    DemoInput4,
     DemoInput1_code,
     DemoInput2_code,
     DemoInput3_code,
+    DemoInput4_code,
 } from './demo';
 
 import { ref } from 'vue';
 
 const docsTable = ref([
     {
+        param: 'type',
+        description: '输入框类型',
+        type: 'string',
+        default: 'text',
+    },
+    {
         param: 'model-value (v-model)',
         description: '绑定值',
         type: 'string',
         default: "''",
+    },
+
+    {
+        param: 'disabled',
+        description: '禁用',
+        type: 'boolean',
+        default: 'false',
+    },
+    {
+        param: 'placeholder',
+        description: '默认提示',
+        type: 'string',
+        default: '请输入',
+    },
+    {
+        param: 'readonly',
+        description: '是否只读',
+        type: 'boolean',
+        default: 'false',
     },
     {
         param: 'clearable',
@@ -25,9 +52,9 @@ const docsTable = ref([
     },
     {
         param: 'clear',
-        description: '清空按钮',
-        type: 'event',
-        default: '',
+        description: '清空触发的回调方法',
+        type: '(e: value) => void',
+        default: '-',
     },
 ]);
 </script>
@@ -43,6 +70,9 @@ const docsTable = ref([
         </lew-demo-box>
         <lew-demo-box title="可清空" :code="DemoInput3_code">
             <demo-input3 />
+        </lew-demo-box>
+        <lew-demo-box title="只读" :code="DemoInput4_code">
+            <demo-input4 />
         </lew-demo-box>
         <lew-title size="16px">Props</lew-title>
         <vxe-table :data="docsTable">

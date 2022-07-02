@@ -56,7 +56,10 @@ let options = ref([
     },
 ]);
 
-let value = ref('');
+let v = ref('');
+const get = () => {
+    console.log(v.value);
+};
 </script>
 
 <template>
@@ -64,9 +67,10 @@ let value = ref('');
         <lew-flex style="width: 250px" direction="column" gap="30px">
             <lew-form-item direction="y" title="帝王">
                 <LewSelect
-                    v-model="value"
+                    v-model="v"
                     :options="options"
                     multiple
+                    @change="get"
                 ></LewSelect
             ></lew-form-item>
         </lew-flex>
