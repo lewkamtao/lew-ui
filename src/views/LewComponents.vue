@@ -263,8 +263,8 @@ group.value = [
         items: [
             {
                 cname: '灯箱',
-                name: 'FancyImg',
-                path: '/FancyImg',
+                name: 'FancyImage',
+                path: '/FancyImage',
                 label: '',
                 type: 'success',
             },
