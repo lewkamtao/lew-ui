@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { LogoGithub, MoonOutline, SunnyOutline } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
-import { LewMessage } from '../../packages';
+import { LewMessage } from 'lew-ui';
 
 const router = useRouter();
 const route = useRoute();

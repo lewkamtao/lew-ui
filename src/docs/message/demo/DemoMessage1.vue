@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LewMessage } from '../../../../packages';
+import { LewMessage } from 'lew-ui';
 </script>
 
 <template>

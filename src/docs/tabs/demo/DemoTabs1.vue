@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { LewMessage } from '../../../../packages';
+import { LewMessage } from 'lew-ui';
 
 type Options = {
     label: string;

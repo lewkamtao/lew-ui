@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LewDialog } from '../../../../packages'; // lew-ui
+import { LewDialog } from 'lew-ui'; 
 const open = (type: any) => {
     // @ts-ignore
     LewDialog[type]({

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { LewMessage } from '../../packages';
-import { LewDialog } from '../../packages';
+import { LewMessage } from 'lew-ui';
+import { LewDialog } from 'lew-ui';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

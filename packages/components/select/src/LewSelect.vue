@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LewInput } from '../../../../packages';
+import { LewInput } from 'lew-ui';
 import { ref, PropType, onMounted, onUnmounted } from 'vue';
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; // optional for styling

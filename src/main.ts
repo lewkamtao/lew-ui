@@ -20,9 +20,9 @@ import 'xe-utils';
 import { Column, Tooltip, Table } from 'vxe-table';
 
 // 安装tooltip
-import { LewTooltip } from '../packages';
+import { LewTooltip } from 'lew-ui';
 
-import lew from '../packages';
+import lew from 'lew-ui';
 
 const app = createApp(AppVue);
 // 自定义一个代码高亮指令
