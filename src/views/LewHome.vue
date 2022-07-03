@@ -5,7 +5,7 @@ import { LewDialog } from 'lew-ui';
 import { useRouter } from 'vue-router';
 
 onMounted(() => {
-    var duration = 7 * 1000;
+    var duration = 3 * 1000;
     var animationEnd = Date.now() + duration;
     var defaults = {
         startVelocity: 30,

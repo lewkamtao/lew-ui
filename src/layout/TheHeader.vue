@@ -114,11 +114,17 @@ const gohome = () => {
             padding: 5px;
             opacity: 0.6;
             font-size: 14px;
-            cursor: pointer;
             margin-right: 10px;
             transition: all 0.5s;
             color: var(--lew-text-color-1);
+            svg {
+                cursor: pointer;
+            }
         }
+        .menu-item {
+            cursor: pointer;
+        }
+
         a:hover,
         span:hover,
         .menu-item:hover {

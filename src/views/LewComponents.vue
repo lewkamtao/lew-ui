@@ -286,11 +286,6 @@ group.value = [
             <the-siderbar :group="group" />
         </div>
         <div ref="mainRef" class="app-main btf-scrollbar">
-            <!-- <router-view v-slot="{ Component }">
-                    <keep-alive>
-                        <component :is="Component" />
-                    </keep-alive>
-                </router-view> -->
             <router-view />
         </div>
     </div>
