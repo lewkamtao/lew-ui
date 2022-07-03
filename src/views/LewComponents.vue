@@ -286,7 +286,11 @@ group.value = [
             <the-siderbar :group="group" />
         </div>
         <div ref="mainRef" class="app-main btf-scrollbar">
-            <router-view />
+            <router-view v-slot="{ Component }">
+                <transition name="fade-transform" mode="out-in">
+                    <component :is="Component" />
+                </transition>
+            </router-view>
         </div>
     </div>
 </template>

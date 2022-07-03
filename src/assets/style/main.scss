@@ -96,3 +96,23 @@ pre code.hljs:hover::-webkit-scrollbar-thumb {
         }
     }
 }
+
+
+/* fade-transform */
+
+.fade-transform-leave-active,
+.fade-transform-enter-active {
+    transition: all 0.25s ease;
+}
+
+.fade-transform-enter-from {
+    opacity: 0;
+    transform: translateX(-15px);
+    transition: all 0.25s ease;
+}
+
+.fade-transform-leave-to {
+    opacity: 0;
+    transform: translateX(15px);
+    transition: all 0.25s ease;
+}
