@@ -28,6 +28,7 @@ import {
     DemoFancyImage,
     DemoPlyrVideo,
     DemoMark,
+    DemoTable,
 } from '../docs';
 
 import LewHome from '../views/LewHome.vue';
@@ -91,7 +92,11 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'R-LewTextarea',
                 component: DemoTextarea,
             },
-
+            {
+                path: '/Table',
+                name: 'R-LewTable',
+                component: DemoTable,
+            },
             { path: '/Alert', name: 'R-LewAlert', component: DemoAlert },
             { path: '/Dialog', name: 'R-LewDialog', component: DemoDialog },
             { path: '/Popok', name: 'R-LewPopok', component: DemoPopok },

@@ -16,6 +16,8 @@ export * from './radio';
 export * from './select';
 export * from './switch';
 
+export * from './table';
+
 export * from './avatar';
 
 export * from './title';

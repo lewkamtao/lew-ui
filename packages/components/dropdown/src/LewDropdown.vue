@@ -97,9 +97,7 @@ const change = (item: Options) => {
 };
 
 onUnmounted(() => {
-    if (instance) {
-        instance.destroy();
-    }
+    instance = null;
 });
 </script>
 

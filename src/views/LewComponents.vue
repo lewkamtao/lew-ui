@@ -80,6 +80,7 @@ group.value = [
             },
         ],
     },
+
     {
         title: '导航',
         items: [
@@ -181,6 +182,18 @@ group.value = [
             // },
         ],
     },
+    // {
+    //     title: '数据展示',
+    //     items: [
+    //         {
+    //             cname: '表格',
+    //             name: 'Table',
+    //             path: '/Table',
+    //             label: '',
+    //             type: '',
+    //         },
+    //     ],
+    // },
     {
         title: '反馈',
         items: [

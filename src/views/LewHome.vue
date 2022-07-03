@@ -1,8 +1,52 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { LewMessage } from 'lew-ui';
 import { LewDialog } from 'lew-ui';
 import { useRouter } from 'vue-router';
+
+onMounted(() => {
+    var duration = 7 * 1000;
+    var animationEnd = Date.now() + duration;
+    var defaults = {
+        startVelocity: 30,
+        spread: 360,
+        ticks: 60,
+        zIndex: 0,
+    };
+
+    function randomInRange(min: number, max: number) {
+        return Math.random() * (max - min) + min;
+    }
+    const interval: any = setInterval(function () {
+        var timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+            return clearInterval(interval);
+        }
+
+        var particleCount = 50 * (timeLeft / duration);
+        // @ts-ignore
+        confetti(
+            Object.assign({}, defaults, {
+                particleCount,
+                origin: {
+                    x: randomInRange(0.1, 0.3),
+                    y: Math.random() - 0.2,
+                },
+            }),
+        );
+        // @ts-ignore
+        confetti(
+            Object.assign({}, defaults, {
+                particleCount,
+                origin: {
+                    x: randomInRange(0.7, 0.9),
+                    y: Math.random() - 0.2,
+                },
+            }),
+        );
+    }, 300);
+});
 
 const router = useRouter();
 let v = ref('');
@@ -336,6 +380,11 @@ let alertList = ref([
 </template>
 
 <style lang="scss" scoped>
+.popover-body {
+    padding: 15px;
+    box-sizing: border-box;
+}
+
 .home-wrapper {
     width: 100%;
     min-height: 100vh;

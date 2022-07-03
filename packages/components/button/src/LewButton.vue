@@ -162,7 +162,7 @@ defineProps({
 
 .lew-button-normal {
     background: var(--lew-normal-color);
-    color: var(--lew-color-block);
+    color: var(--lew-black-color);
 }
 
 .lew-button-normal:hover {

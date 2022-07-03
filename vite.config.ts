@@ -31,6 +31,14 @@ export default defineConfig(({ mode }: ConfigEnv) => {
                           name: 'lew-ui',
                           fileName: (format) => `lew.${format}.ts`,
                       },
+                      minify: 'terser',
+                      terserOptions: {
+                          compress: {
+                              //生产环境时移除console
+                              drop_console: true,
+                              drop_debugger: true,
+                          },
+                      },
                       rollupOptions: {
                           // 确保外部化处理那些你不想打包进库的依赖
                           external: ['vue'],
@@ -60,6 +68,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
                               },
                           },
                       },
+                      minify: 'terser',
                       terserOptions: {
                           compress: {
                               drop_console: true,

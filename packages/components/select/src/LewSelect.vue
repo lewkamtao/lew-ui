@@ -174,12 +174,8 @@ const delTag = (i: number) => {
 defineExpose({ show, hide });
 
 onUnmounted(() => {
-    if (instance1) {
-        instance1.destroy();
-    }
-    if (instance2) {
-        instance2.destroy();
-    }
+    instance1 = null;
+    instance2 = null;
 });
 </script>
 

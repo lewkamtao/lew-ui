@@ -87,9 +87,7 @@ const emit = defineEmits(['ok', 'cancel']);
 defineExpose({ show, hide });
 
 onUnmounted(() => {
-    if (instance) {
-        instance.destroy();
-    }
+    instance = null;
 });
 </script>
 

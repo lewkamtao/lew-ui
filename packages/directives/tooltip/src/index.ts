@@ -43,9 +43,7 @@ export default {
                 instance.setContent(binding.value.content);
             },
             unmounted() {
-                if (instance) {
-                    instance.destroy();
-                }
+                instance = null;
             },
         });
     },

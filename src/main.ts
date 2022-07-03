@@ -1,17 +1,17 @@
 import { createApp, App } from 'vue';
 import AppVue from './App.vue';
 import router from './router/index';
-import '../packages/styles/reset.scss';
-import '../packages/styles/var.scss';
-import '../packages/styles/main.scss';
+import 'lew-ui/styles/reset.scss';
+import 'lew-ui/styles/var.scss';
+import 'lew-ui/styles/main.scss';
 
 // fancybox
 import '@fancyapps/ui/dist/fancybox.css';
 // plyr
 import 'plyr/dist/plyr.css';
 
-import './assets/style/main.scss';
-import './assets/style/hljs.scss';
+import '@/assets/style/main.scss';
+import '@/assets/style/hljs.scss';
 
 import 'vxe-table/lib/style.css';
 
@@ -38,6 +38,7 @@ app.directive('highlight', {
 function useTable(app: App) {
     app.use(Table).use(Tooltip).use(Column);
 }
+
 app.use(lew);
 app.use(useTable);
 app.use(LewTooltip);

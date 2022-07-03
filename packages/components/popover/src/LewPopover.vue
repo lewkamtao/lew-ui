@@ -62,9 +62,7 @@ let hide = () => {
 defineExpose({ show, hide });
 
 onUnmounted(() => {
-    if (instance) {
-        instance.destroy();
-    }
+    instance = null;
 });
 </script>
 

@@ -20,6 +20,8 @@ export * from './radio';
 export * from './select';
 export * from './switch';
 
+export * from './table';
+
 export * from './alert';
 export * from './message';
 export * from './mark';
