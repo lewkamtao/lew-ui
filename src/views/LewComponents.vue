@@ -7,7 +7,9 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 let mainRef: any = ref(null);
 watch(route, () => {
-    mainRef.value.scrollTop = 0;
+    setTimeout(() => {
+        mainRef.value.scrollTop = 0;
+    }, 250);
 });
 
 type Item = {
