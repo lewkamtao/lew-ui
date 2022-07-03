@@ -19,5 +19,5 @@ const options = ref([
 </script>
 
 <template>
-    <lew-breadcrumb :options="options" icon-type="shoulder"> </lew-breadcrumb>
+    <lew-breadcrumb :options="options" icon-type="shoulder" />
 </template>

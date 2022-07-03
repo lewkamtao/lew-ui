@@ -14,7 +14,7 @@
             :checked="checked"
             @input="setChecked"
         />
-        {{ label }}
+        <span> {{ label }}</span>
     </label>
 </template>
 
@@ -48,7 +48,6 @@ const setChecked = () => {
     display: inline-flex;
     align-items: center;
     user-select: none;
-    margin: 0px 20px 15px 0px;
     cursor: pointer;
     color: var(--lew-text-color-1);
     font-size: 14px;

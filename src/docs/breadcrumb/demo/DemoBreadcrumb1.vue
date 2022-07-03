@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-
-const options = ref([
+let options = ref([
     {
         label: '首页',
         to: '/',
@@ -23,5 +22,5 @@ const options = ref([
 </script>
 
 <template>
-    <lew-breadcrumb :options="options"> </lew-breadcrumb>
+    <lew-breadcrumb :options="options" />
 </template>

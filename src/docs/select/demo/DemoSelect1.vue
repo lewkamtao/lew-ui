@@ -28,7 +28,18 @@ let value = ref('');
 </script>
 
 <template>
-    <div style="width: 350px">
-        <LewSelect v-model="value" :options="options"></LewSelect>
+    <div>
+        <lew-flex style="width: 250px" direction="column" gap="30px">
+            <lew-form-item direction="y" title="Click">
+                <LewSelect v-model="value" :options="options"></LewSelect
+            ></lew-form-item>
+            <lew-form-item direction="y" title="Hover">
+                <LewSelect
+                    v-model="value"
+                    :options="options"
+                    trigger="hover"
+                ></LewSelect
+            ></lew-form-item>
+        </lew-flex>
     </div>
 </template>

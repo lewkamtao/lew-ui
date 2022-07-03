@@ -11,7 +11,7 @@
         <lew-tag type="warning" round>waning</lew-tag>
         <lew-tag type="normal" round>normal</lew-tag>
         <lew-tag type="error" round to="https://vuejs.org/"
-            >这是一个链接</lew-tag
-        ></lew-flex
-    >
+            >这是一个链接
+        </lew-tag>
+    </lew-flex>
 </template>

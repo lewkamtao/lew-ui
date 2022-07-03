@@ -1,7 +1,28 @@
 <template>
     <lew-flex wrap x="start" gap="20px">
-        <lew-fancy-image src="https://dpurl.org/Oqmw8" alt="avatar" />
-        <lew-fancy-image src="https://dpurl.org/Oqmw8" alt="avatar" />
-        <lew-fancy-image src="https://dpurl.org/Oqmw8" alt="avatar"
-    /></lew-flex>
+        <lew-fancy-image
+            src="https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/public/images/pexels/4.jpg"
+            alt="avatar"
+        />
+        <lew-fancy-image
+            src="https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/public/images/pexels/5.jpg"
+            alt="avatar"
+        />
+        <lew-fancy-image
+            src="https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/public/images/pexels/6.jpg"
+            alt="avatar"
+        />
+        <lew-fancy-image
+            src="https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/public/images/pexels/7.jpg"
+            alt="avatar"
+        />
+        <lew-fancy-image
+            src="https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/public/images/pexels/8.jpg"
+            alt="avatar"
+        />
+        <lew-fancy-image
+            src="https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/public/images/pexels/9.jpg"
+            alt="avatar"
+        />
+    </lew-flex>
 </template>

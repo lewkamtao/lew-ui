@@ -16,6 +16,8 @@ export * from './radio';
 export * from './select';
 export * from './switch';
 
+export * from './table';
+
 export * from './avatar';
 
 export * from './title';
@@ -24,8 +26,6 @@ export * from './badge';
 export * from './tag';
 
 export * from './alert';
-export * from './dialog';
-export * from './message';
 export * from './modal';
 export * from './popok';
 export * from './popover';

@@ -4,7 +4,7 @@
             <lew-input />
         </lew-form-item>
         <lew-form-item direction="y" title="密码">
-            <lew-input />
+            <lew-input type="password" show-password />
         </lew-form-item>
     </div>
 </template>

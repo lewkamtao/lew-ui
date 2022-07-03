@@ -85,12 +85,17 @@ blockquote:after {
     content: '';
 }
 
-html,
-input,
-textarea {
-    font-family: “lucida grande”, “lucida sans unicode”, lucida, helvetica,
-        “Hiragino Sans GB”, “Microsoft YaHei”, “WenQuanYi Micro Hei”, sans-serif;
-}
 a {
     text-decoration: none;
+}
+
+@font-face {
+    font-family: HarmonyOS_Sans_SC_Medium;
+    font-style: normal;
+    font-display: swap;
+    src: url('https://cdn.jsdelivr.net/gh/irozhi/HarmonyOS-Sans/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.woff2') format('woff2'), url('https://cdn.jsdelivr.net/gh/irozhi/HarmonyOS-Sans/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.woff') format('woff');
+}
+
+* {
+    font-family: HarmonyOS_Sans_SC_Medium;
 }

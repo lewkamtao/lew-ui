@@ -1,34 +1,21 @@
-export * from './flex';
-export * from './Space';
-export * from './layout';
+import { RouteRecordRaw } from 'vue-router';
+const modules = import.meta.glob('./*/index.ts');
+const capitalizeRegex = /(?:^|[\s_-]+)\w/g;
+const routes: RouteRecordRaw[] = [];
+let tempName = '';
 
-export * from './steps';
-export * from './breadcrumb';
-export * from './dropdown';
-export * from './tabs';
+for (const [path, module] of Object.entries(modules)) {
+    tempName = path.replace(/^\.\/(.*)\/index.ts$/, '$1');
 
-export * from './avatar';
-export * from './badge';
-export * from './tag';
-export * from './button';
-export * from './title';
+    tempName = tempName
+        .replace(capitalizeRegex, (match) => match.toUpperCase())
+        .replace('-', '');
 
-export * from './form';
-export * from './input';
-export * from './textarea';
-export * from './checkbox';
-export * from './radio';
-export * from './select';
-export * from './switch';
+    routes.push({
+        name: 'R-Lew' + tempName,
+        path: '/' + tempName,
+        component: module,
+    });
+}
 
-export * from './alert';
-export * from './message';
-export * from './mark';
-export * from './tooltip';
-export * from './modal';
-export * from './popok';
-export * from './popover';
-export * from './dialog';
-
-export * from './fancy-image';
-export * from './plyr-video';
+export default routes;

@@ -162,7 +162,7 @@ defineProps({
 
 .lew-button-normal {
     background: var(--lew-normal-color);
-    color: #000;
+    color: var(--lew-black-color);
 }
 
 .lew-button-normal:hover {
@@ -210,11 +210,17 @@ defineProps({
 
 .lew-button[disabled] {
     font-size: 14px;
-    pointer-events: none;
-    opacity: var(--lew-opacity-disabled);
+    cursor: no-drop;
+    opacity: var(--lew-disabled-opacity);
 }
-
+.lew-button[disabled] {
+    background: var(--lew-normal-color);
+    color: var(--lew-color-block);
+    font-size: 14px;
+}
 .lew-button[disabled]:hover {
+    background: var(--lew-normal-color);
+
     font-size: 14px;
 }
 

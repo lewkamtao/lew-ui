@@ -48,6 +48,7 @@ onMounted(() => {
             }
         },
     });
+    instance.popper.children[0].setAttribute('data-lew', 'popover');
 });
 
 let show = () => {
@@ -61,9 +62,7 @@ let hide = () => {
 defineExpose({ show, hide });
 
 onUnmounted(() => {
-    if (instance) {
-        instance.destroy();
-    }
+    instance = null;
 });
 </script>
 

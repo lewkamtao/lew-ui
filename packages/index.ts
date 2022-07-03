@@ -2,6 +2,7 @@ import type { App } from 'vue';
 
 export * from './components';
 export * from './directives';
+export * from './directives';
 
 // 引入样式
 import './styles/reset.scss';

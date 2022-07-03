@@ -1,8 +1,8 @@
 :root {
     // 全局
     --lew-white-color: #fff;
-    --lew-block-color: #000;
-    --lew-opacity-disabled: 0.5;
+    --lew-black-color: #000;
+    --lew-disabled-opacity: 0.5;
     // 背景
     --lew-bgcolor-0: rgb(255, 255, 255);
     --lew-bgcolor-1: rgb(250, 250, 250);
@@ -204,7 +204,7 @@
     --lew-primary-color-dark: rgb(49, 86, 137);
     --lew-primary-color-light: rgb(181, 195, 216);
     --lew-primary-color-light2: rgb(169, 201, 245);
-    --lew-primary-text-color: rgb(47, 88, 146);
+    --lew-primary-text-color: rgb(81, 131, 200);
     --lew-primary-color-hover: rgb(54, 109, 187);
     --lew-primary-color-active: rgb(42, 94, 149);
     // success

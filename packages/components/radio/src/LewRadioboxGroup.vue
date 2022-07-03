@@ -1,5 +1,10 @@
 <template>
-    <div class="lew-radio-group" :class="`lew-radio-group-${direction}`">
+    <lew-flex
+        x="start"
+        gap="15px"
+        class="lew-radio-group"
+        :class="`lew-radio-group-${direction}`"
+    >
         <lew-radio
             v-for="option in options"
             :key="option.id"
@@ -8,7 +13,7 @@
             :checked="modelValue == option.id"
             @update:checked="check(option.id)"
         />
-    </div>
+    </lew-flex>
 </template>
 
 <script lang="ts" setup>

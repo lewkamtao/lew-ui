@@ -1,24 +1,25 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { LogoGithub, MoonOutline, SunnyOutline } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
-import { LewMessage } from '../../packages';
+import { LewMessage } from 'lew-ui';
 
 const router = useRouter();
 const route = useRoute();
-
-const changeMode = () => {
-    isDark.value = !isDark.value;
-
-    if (isDark.value) {
+const changeMode = (mode: string) => {
+    if (mode == 'dark') {
         document.getElementsByTagName('html')[0].classList.add('lew-dark');
+        localStorage.setItem('mode', 'dark');
     } else {
         document.getElementsByTagName('html')[0].classList.remove('lew-dark');
+        localStorage.setItem('mode', 'light');
     }
 };
 
-let isDark = ref(false);
+onMounted(() => {
+    changeMode(localStorage.getItem('mode') || 'light');
+});
 
 const gohome = () => {
     if (route.name == 'R-LewHome') {
@@ -32,8 +33,25 @@ const gohome = () => {
 <template>
     <div class="Header">
         <div class="logo" @click="gohome">
-            Lew Design
-            <lew-tag style="margin-left: 10px" type="info">dev</lew-tag>
+            <img
+                src="../assets/images/logo.png"
+                alt="logo"
+                srcset=""
+                width="30"
+                height="30"
+            />
+            <span style="margin-left: 10px"> Lew UI</span>
+            <lew-tag
+                type="info"
+                size="small"
+                style="margin-left: 10px"
+                v-tooltip="{
+                    content: '开发中，请勿在正式环境中使用。',
+                    placement: 'top-start',
+                    trigger: 'mouseenter',
+                }"
+                >dev</lew-tag
+            >
         </div>
         <div class="menu">
             <div class="menu-item" @click="router.push(`/`)">首页</div>
@@ -50,9 +68,15 @@ const gohome = () => {
                 <Icon size="24"> <LogoGithub /> </Icon
             ></a>
 
-            <Icon size="24" @click="changeMode">
-                <MoonOutline v-if="isDark" />
-                <SunnyOutline v-if="!isDark" />
+            <Icon size="22">
+                <MoonOutline
+                    @click="changeMode('dark')"
+                    class="icon-mode-moon"
+                />
+                <SunnyOutline
+                    @click="changeMode('light')"
+                    class="icon-mode-sunny"
+                />
             </Icon>
         </div>
     </div>
@@ -73,8 +97,7 @@ const gohome = () => {
     .logo {
         display: flex;
         align-items: center;
-        font-size: 20px;
-        font-weight: bold;
+        font-size: 22px;
         cursor: pointer;
         .lew-badge {
             margin-left: 10px;
@@ -86,15 +109,22 @@ const gohome = () => {
         a,
         span,
         .menu-item {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
             padding: 5px;
             opacity: 0.6;
             font-size: 14px;
-            cursor: pointer;
             margin-right: 10px;
             transition: all 0.5s;
             color: var(--lew-text-color-1);
+            svg {
+                cursor: pointer;
+            }
         }
+        .menu-item {
+            cursor: pointer;
+        }
+
         a:hover,
         span:hover,
         .menu-item:hover {
@@ -103,6 +133,27 @@ const gohome = () => {
         .menu-item {
             padding: 10px;
         }
+    }
+}
+</style>
+<style lang="scss">
+.icon-mode-sunny {
+    display: none;
+}
+.icon-mode-moon {
+    display: block;
+}
+.lew-dark {
+    .logo {
+        img {
+            filter: invert(100%);
+        }
+    }
+    .icon-mode-sunny {
+        display: block;
+    }
+    .icon-mode-moon {
+        display: none;
     }
 }
 </style>

@@ -80,6 +80,7 @@ group.value = [
             },
         ],
     },
+
     {
         title: '导航',
         items: [
@@ -157,7 +158,7 @@ group.value = [
                 cname: '选择器',
                 name: 'Select',
                 path: '/Select',
-                label: '',
+                label: '有更新',
                 type: 'success',
             },
             // {
@@ -181,6 +182,18 @@ group.value = [
             // },
         ],
     },
+    // {
+    //     title: '数据展示',
+    //     items: [
+    //         {
+    //             cname: '表格',
+    //             name: 'Table',
+    //             path: '/Table',
+    //             label: '',
+    //             type: '',
+    //         },
+    //     ],
+    // },
     {
         title: '反馈',
         items: [
@@ -195,14 +208,14 @@ group.value = [
                 cname: '全局提示',
                 name: 'Message',
                 path: '/Message',
-                label: 'new',
+                label: '',
                 type: 'success',
             },
             {
                 cname: '对话框',
                 name: 'Dialog',
                 path: '/Dialog',
-                label: 'new',
+                label: '',
                 type: 'success',
             },
 
@@ -250,8 +263,8 @@ group.value = [
         items: [
             {
                 cname: '灯箱',
-                name: 'FancyImg',
-                path: '/FancyImg',
+                name: 'FancyImage',
+                path: '/FancyImage',
                 label: '',
                 type: 'success',
             },
@@ -273,11 +286,6 @@ group.value = [
             <the-siderbar :group="group" />
         </div>
         <div ref="mainRef" class="app-main btf-scrollbar">
-            <!-- <router-view v-slot="{ Component }">
-                    <keep-alive>
-                        <component :is="Component" />
-                    </keep-alive>
-                </router-view> -->
             <router-view />
         </div>
     </div>

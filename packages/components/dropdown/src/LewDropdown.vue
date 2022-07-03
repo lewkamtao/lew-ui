@@ -75,6 +75,7 @@ onMounted(() => {
             }
         },
     });
+    instance.popper.children[0].setAttribute('data-lew', 'dropdown');
 });
 
 let show = () => {
@@ -96,15 +97,13 @@ const change = (item: Options) => {
 };
 
 onUnmounted(() => {
-    if (instance) {
-        instance.destroy();
-    }
+    instance = null;
 });
 </script>
 
 <template>
     <div class="lew-dropdown">
-        <div ref="triggerRef">
+        <div class="lew-dropdown-trigger" ref="triggerRef">
             <slot />
         </div>
         <div ref="bodyRef" class="lew-dropdown-body" :style="`width:${width}`">
@@ -123,7 +122,12 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .lew-dropdown {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    .lew-dropdown-trigger {
+        display: inline-flex;
+        align-items: center;
+    }
 }
 .lew-dropdown-body {
     display: flex;

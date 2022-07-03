@@ -1,5 +1,10 @@
 <template>
-    <div class="lew-checkbox-group" :class="`lew-checkbox-group-${direction}`">
+    <lew-flex
+        x="start"
+        gap="15px"
+        class="lew-checkbox-group"
+        :class="`lew-checkbox-group-${direction}`"
+    >
         <lew-checkbox
             v-for="option in options"
             :key="option.id"
@@ -9,7 +14,7 @@
             :checked="getChecked(option.id)"
             @update:checked="check(option.id, $event)"
         />
-    </div>
+    </lew-flex>
 </template>
 
 <script lang="ts" setup>

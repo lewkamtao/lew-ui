@@ -1,3 +1,3 @@
-import LewTooltip from './tooltip';
-
-export { LewTooltip };
+export * from './message';
+export * from './dialog';
+export * from './tooltip';

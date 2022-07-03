@@ -9,6 +9,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
         resolve: {
             //设置别名
             alias: {
+                'lew-ui': path.resolve(__dirname, 'packages'),
                 '@': path.resolve(__dirname, 'src'),
             },
             // 忽略后缀名的配置选项, 添加 .vue 选项时要记得原本默认忽略的选项也要手动写入
@@ -29,6 +30,14 @@ export default defineConfig(({ mode }: ConfigEnv) => {
                           entry: path.resolve(__dirname, './packages/index.ts'),
                           name: 'lew-ui',
                           fileName: (format) => `lew.${format}.ts`,
+                      },
+                      minify: 'terser',
+                      terserOptions: {
+                          compress: {
+                              //生产环境时移除console
+                              drop_console: true,
+                              drop_debugger: true,
+                          },
                       },
                       rollupOptions: {
                           // 确保外部化处理那些你不想打包进库的依赖
@@ -59,6 +68,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
                               },
                           },
                       },
+                      minify: 'terser',
                       terserOptions: {
                           compress: {
                               drop_console: true,

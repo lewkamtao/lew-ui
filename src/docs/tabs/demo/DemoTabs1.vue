@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { LewMessage } from 'lew-ui';
 
 type Options = {
     label: string;
@@ -19,6 +20,7 @@ let value = ref('');
 
 const change = (e: Options) => {
     console.log(e);
+    LewMessage.info(e.label);
 };
 </script>
 
@@ -28,5 +30,5 @@ const change = (e: Options) => {
         v-model="value"
         :options="options"
         @update:change="change"
-    ></lew-tabs>
+    />
 </template>

@@ -25,15 +25,12 @@ const modalVisible = ref(false);
                 <lew-input
             /></lew-form-item>
 
-            <div>
-                <lew-button
-                    type="normal"
-                    style="margin-right: 20px"
-                    @click="modalVisible = false"
+            <lew-flex x="end">
+                <lew-button type="normal" @click="modalVisible = false"
                     >关闭</lew-button
                 >
                 <lew-button @click="modalVisible = false">立即登录</lew-button>
-            </div>
+            </lew-flex>
         </div>
     </lew-modal>
 </template>

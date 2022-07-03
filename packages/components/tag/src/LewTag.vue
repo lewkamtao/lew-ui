@@ -2,34 +2,10 @@
 import { Dismiss24Filled } from '@vicons/fluent';
 import { Icon } from '@vicons/utils';
 import { useLewTo } from '../../../hooks';
+import _props from './props';
 const { lewTo } = useLewTo();
 
-const props = defineProps({
-    type: {
-        type: String,
-        default: 'normal',
-    },
-    size: {
-        type: String,
-        default: 'medium',
-    },
-    round: {
-        type: Boolean,
-        default: false,
-    },
-    closable: {
-        type: Boolean,
-        default: false,
-    },
-    disabled: {
-        type: Boolean,
-        default: false,
-    },
-    to: {
-        type: String,
-        default: '',
-    },
-});
+const props = defineProps(_props);
 
 const emit = defineEmits(['close']);
 const close = () => {
@@ -53,8 +29,8 @@ const close = () => {
             <slot></slot>
         </div>
         <div class="lew-tag-right"><slot name="right"></slot></div>
-        <div v-if="closable" class="lew-tag-close" @click="close">
-            <Icon size="13"><Dismiss24Filled /></Icon>
+        <div v-if="closable" class="lew-tag-close" @click.stop="close">
+            <Icon><Dismiss24Filled /></Icon>
         </div>
     </div>
 </template>
@@ -64,7 +40,6 @@ const close = () => {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    vertical-align: bottom;
     border-radius: 3px;
     user-select: none;
 
@@ -73,6 +48,7 @@ const close = () => {
         font-weight: normal;
         padding: 0px 3px;
         box-sizing: border-box;
+        white-space: nowrap;
     }
 
     .lew-tag-close {
@@ -82,6 +58,7 @@ const close = () => {
         width: 8px;
         height: 8px;
         border-radius: 3px;
+        margin-left: -3px;
         padding: 5px;
         cursor: pointer;
     }
@@ -111,18 +88,34 @@ const close = () => {
     line-height: 18px;
     padding: 0px 2px 0px 2px;
     font-size: 10px;
+    .lew-tag-close {
+        border-radius: 2px;
+        padding: 2px;
+        font-size: 12px;
+        margin-right: 1px;
+    }
 }
 .lew-tag-medium {
     height: 22px;
     line-height: 22px;
     padding: 0px 4px;
-    font-size: 12px;
+    font-size: 13px;
+    .lew-tag-close {
+        border-radius: 3px;
+        padding: 4px;
+        font-size: 13px;
+    }
 }
 .lew-tag-large {
     height: 26px;
     line-height: 26px;
     padding: 0px 5px;
     font-size: 14px;
+    .lew-tag-close {
+        border-radius: 4px;
+        padding: 6px;
+        font-size: 14px;
+    }
 }
 
 .lew-tag-round {
@@ -158,7 +151,7 @@ const close = () => {
     background-color: var(--lew-normal-color-light);
 }
 .lew-tag-disabled {
-    opacity: var(--lew-opacity-disabled);
+    opacity: var(--lew-disabled-opacity);
     cursor: not-allowed;
     .lew-tag-close {
         cursor: not-allowed;

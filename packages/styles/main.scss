@@ -19,3 +19,39 @@
     opacity: 1;
     border-radius: 5px;
 }
+
+.tippy-box[data-lew~='tooltip'] {
+    .tippy-content {
+        padding: 5px 8px;
+    }
+}
+
+.tippy-box[data-lew~='dropdown'] {
+    .tippy-content {
+        padding: 5px 8px;
+    }
+}
+
+.tippy-box[data-lew~='popok'] {
+    .tippy-content {
+        padding: 5px;
+    }
+}
+
+.tippy-box[data-lew~='popover'] {
+    .tippy-content {
+        padding: 5px;
+    }
+}
+
+.tippy-box[data-lew~='select'] {
+    .tippy-content {
+        padding: 0px;
+    }
+}
+
+.tippy-box[data-lew~='select-multiple'] {
+    .tippy-content {
+        padding: 5px 7px;
+    }
+}

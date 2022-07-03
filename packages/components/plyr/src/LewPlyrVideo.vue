@@ -3,7 +3,7 @@ import Plyr from 'plyr';
 import { ref, onMounted, onUnmounted } from 'vue';
 
 defineProps({
-    src: {
+    url: {
         type: String,
         default:
             'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4',
@@ -44,8 +44,8 @@ onUnmounted(() => {
         controls
         data-poster="/path/to/poster.jpg"
     >
-        <source :src="src" type="video/mp4" />
-        <source :src="src" type="video/webm" />
+        <source :src="url" type="video/mp4" />
+        <source :src="url" type="video/webm" />
         <!-- Captions are optional -->
         <track
             kind="captions"

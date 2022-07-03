@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { LewMessage } from 'lew-ui';
 
 let options = ref([
     {
@@ -22,6 +23,7 @@ let options = ref([
 
 const change = (e: any) => {
     console.log(e);
+    LewMessage.info(e.label);
 };
 </script>
 <template>
@@ -33,9 +35,11 @@ const change = (e: any) => {
         >
             <lew-avatar src="https://dpurl.org/Oqmw8">hover</lew-avatar>
         </lew-dropdown>
+
         <lew-dropdown :options="options" placement="top-start" @change="change">
             <lew-avatar src="https://dpurl.org/Oqmw8">hover</lew-avatar>
         </lew-dropdown>
+
         <lew-dropdown
             :options="options"
             placement="left-start"
@@ -43,6 +47,7 @@ const change = (e: any) => {
         >
             <lew-avatar src="https://dpurl.org/Oqmw8">hover</lew-avatar>
         </lew-dropdown>
+
         <lew-dropdown
             :options="options"
             placement="right-start"

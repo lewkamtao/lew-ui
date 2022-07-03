@@ -8,6 +8,7 @@ let user = ref({
     hobby: [],
     school: '',
     home: '',
+    intro: '',
     dark: true,
     pay: '',
 });
@@ -62,7 +63,7 @@ let home_options = ref([
             <LewInput v-model="user.password" />
         </lew-form-item>
         <lew-form-item direction="y" title="简介">
-            <LewTextarea v-model="user.password" resize="none" />
+            <LewTextarea v-model="user.intro" resize="none" />
         </lew-form-item>
         <lew-form-item direction="y" title="家地址">
             <LewSelect v-model="user.home" :options="home_options" />

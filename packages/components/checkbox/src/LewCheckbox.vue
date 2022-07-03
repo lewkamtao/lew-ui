@@ -26,7 +26,7 @@
             :checked="checked"
             @input="setChecked"
         />
-        {{ label }}
+        <span> {{ label }}</span>
     </label>
 </template>
 
@@ -34,7 +34,9 @@
 defineProps({
     label: {
         type: String,
-        required: true,
+        default: () => {
+            return '';
+        },
     },
     block: {
         type: Boolean,
@@ -65,11 +67,11 @@ const setChecked = (event: Event) => {
     display: inline-flex;
     align-items: center;
     user-select: none;
-    margin: 0px 20px 15px 0px;
     cursor: pointer;
     color: var(--lew-text-color-1);
     font-size: 14px;
     transition: all 0.25s ease;
+    white-space: nowrap;
     .icon-checkbox-box {
         display: inline-flex;
         align-items: center;

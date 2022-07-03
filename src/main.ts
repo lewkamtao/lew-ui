@@ -1,18 +1,17 @@
 import { createApp, App } from 'vue';
 import AppVue from './App.vue';
 import router from './router/index';
-// import 'lew-ui/dist/style.css';
-import '../packages/styles/reset.scss';
-import '../packages/styles/var.scss';
-import '../packages/styles/main.scss';
+import 'lew-ui/styles/reset.scss';
+import 'lew-ui/styles/var.scss';
+import 'lew-ui/styles/main.scss';
 
 // fancybox
 import '@fancyapps/ui/dist/fancybox.css';
 // plyr
 import 'plyr/dist/plyr.css';
 
-import './assets/style/main.scss';
-import './assets/style/hljs.scss';
+import '@/assets/style/main.scss';
+import '@/assets/style/hljs.scss';
 
 import 'vxe-table/lib/style.css';
 
@@ -21,9 +20,9 @@ import 'xe-utils';
 import { Column, Tooltip, Table } from 'vxe-table';
 
 // 安装tooltip
-import { LewTooltip } from '../packages';
+import { LewTooltip } from 'lew-ui';
 
-import lew from '../packages';
+import lew from 'lew-ui';
 
 const app = createApp(AppVue);
 // 自定义一个代码高亮指令
@@ -39,6 +38,7 @@ app.directive('highlight', {
 function useTable(app: App) {
     app.use(Table).use(Tooltip).use(Column);
 }
+
 app.use(lew);
 app.use(useTable);
 app.use(LewTooltip);

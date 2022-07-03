@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { LewMessage } from '../../../../packages';
+import { LewMessage } from 'lew-ui';
 import { ref } from 'vue';
 
 let v = ref('');
@@ -20,13 +20,12 @@ const submit = () => {
                 <lew-form-item direction="y" title="请输入密码">
                     <lew-input v-model="v" />
                 </lew-form-item>
-
-                <div class="footer">
+                <lew-flex x="end">
                     <lew-button type="blank" size="small" @click="popRef.hide()"
                         >取消
                     </lew-button>
                     <lew-button size="small" @click="submit">提交</lew-button>
-                </div>
+                </lew-flex>
             </div>
         </template>
     </lew-popover>
@@ -36,13 +35,5 @@ const submit = () => {
 .popover-body {
     padding: 15px;
     box-sizing: border-box;
-    .footer {
-        display: flex;
-        justify-content: end;
-        margin-top: -10px;
-        .lew-button {
-            margin-left: 10px;
-        }
-    }
 }
 </style>

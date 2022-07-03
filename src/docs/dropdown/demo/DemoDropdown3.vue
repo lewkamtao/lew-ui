@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { LewMessage } from 'lew-ui';
 
 let options = ref([
     {
@@ -22,6 +23,7 @@ let options = ref([
 
 const change = (e: any) => {
     console.log(e);
+    LewMessage.info(e.label);
 };
 </script>
 <template>
@@ -36,6 +38,6 @@ const change = (e: any) => {
             @change="change"
         >
             <div>纯文本</div>
-        </lew-dropdown></lew-flex
-    >
+        </lew-dropdown>
+    </lew-flex>
 </template>
