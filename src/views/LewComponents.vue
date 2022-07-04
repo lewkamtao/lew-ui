@@ -8,7 +8,7 @@ const route = useRoute();
 let mainRef: any = ref(null);
 watch(route, () => {
     setTimeout(() => {
-        mainRef.value.scrollTop = 0;
+        if (mainRef.value) mainRef.value.scrollTop = 0;
     }, 250);
 });
 
