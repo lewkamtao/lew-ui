@@ -3,7 +3,10 @@ export type TableColumns = {
     title: string;
     content: string;
     field: string;
-    width: number;
+    isTips: boolean;
+    width: string;
     columnStyle: string;
     sticky: string;
+    align: string;
+    offsetX: string;
 };

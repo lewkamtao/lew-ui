@@ -16,15 +16,22 @@ defineProps({
         type: Boolean,
         default: false,
     },
+    isText: {
+        type: Boolean,
+        default: false,
+    },
 });
 </script>
 
 <template>
     <button
         class="lew-button"
-        :class="`lew-button-${type} lew-button-${size} ${
+        :class="`
+        ${isText ? 'lew-button-text' : ''}
+        lew-button-${type} lew-button-${size} ${
             round ? 'lew-button-round' : ''
-        }   ${loading ? 'lew-button-loading' : ''}`"
+        }   
+        ${loading ? 'lew-button-loading' : ''}`"
     >
         <slot></slot>
     </button>
@@ -42,7 +49,7 @@ defineProps({
     width: auto;
     white-space: nowrap;
     box-sizing: border-box;
-    transition: all 0.15s;
+    transition: all 0.18s;
     border: none;
     cursor: pointer;
     border-radius: var(--lew-form-border-radius);
@@ -53,6 +60,10 @@ defineProps({
     }
 }
 
+.lew-button:active {
+    transform: scale(0.98);
+    transform: translateY(0.5px);
+}
 .lew-button-small {
     min-width: 50px;
     height: 24px;
@@ -226,6 +237,34 @@ defineProps({
 
 .lew-button[disabled]::after {
     opacity: 0;
+}
+
+.lew-button-text {
+    background: none;
+}
+.lew-button-text.lew-button-info {
+    color: var(--lew-info-text-color);
+}
+.lew-button-text.lew-button-primary {
+    color: var(--lew-primary-text-color);
+}
+.lew-button-text.lew-button-error {
+    color: var(--lew-error-text-color);
+}
+.lew-button-text.lew-button-warning {
+    color: var(--lew-warning-text-color);
+}
+.lew-button-text.lew-button-success {
+    color: var(--lew-success-text-color);
+}
+.lew-button-text.lew-button-normal {
+    color: var(--lew-normal-text-color);
+}
+.lew-button-text:hover {
+    background: none;
+}
+.lew-button-text:active {
+    background: none;
 }
 </style>
 <style>

@@ -81,9 +81,9 @@
     // success
     --lew-success-color: rgb(49, 196, 141);
     --lew-success-color-dark: rgb(35, 153, 110);
-    --lew-success-color-light: rgb(216, 236, 219);
+    --lew-success-color-light: rgb(229, 246, 235);
     --lew-success-color-light2: rgb(108, 176, 119);
-    --lew-success-text-color: rgb(30, 107, 41);
+    --lew-success-text-color: rgb(32, 161, 113);
     --lew-success-color-hover: rgb(40, 176, 126);
     --lew-success-color-active: rgb(28, 157, 110);
     // info
@@ -136,6 +136,7 @@
     --lew-povpoer-bgcolor: rgba(255, 255, 255);
     // plyr
     --plyr-color-main: var(--lew-primary-color);
+    // table
 }
 
 .lew-dark {
@@ -271,4 +272,5 @@
     --lew-povpoer-bgcolor: #333;
     // plyr
     --plyr-color-main: var(--lew-primary-color);
+    // table
 }
