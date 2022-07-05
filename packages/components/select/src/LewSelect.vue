@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { LewInput } from 'lew-ui';
-import { ref, PropType, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css'; // optional for styling
-import 'tippy.js/animations/shift-away-subtle.css';
-import 'tippy.js/themes/light.css';
+
 import { ChevronDown } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
 import _props from './props';
@@ -17,11 +14,11 @@ type Options = {
 
 const props = defineProps(_props);
 
-const v = ref<String>('');
-const labelStr = ref<String>('');
+const v = ref<string>('');
+const labelStr = ref<string>('');
 
-const multipleV = ref<Array<String>>([]);
-const multipleLabelStr = ref<Array<String>>([]);
+const multipleV = ref<Array<string>>([]);
+const multipleLabelStr = ref<Array<string>>([]);
 
 onMounted(() => {
     // 如果是多选
@@ -36,7 +33,7 @@ onMounted(() => {
 });
 
 const filterSelect = (v: any, options: Options[]) => {
-    let _v: Array<String> = [];
+    let _v: Array<string> = [];
     if (v && options) {
         v.map((e: string) => {
             options.map((o) => {
@@ -89,6 +86,7 @@ const initOptionsTippy = () => {
     if (trigger == 'hover') {
         trigger = 'mouseenter';
     }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     bodyRef.value.style.width = `${triggerRef.value?.offsetWidth}px`;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -103,7 +101,9 @@ const initOptionsTippy = () => {
         arrow: false,
         interactiveBorder: 10,
         appendTo: () => document.body,
-        allowHTML: true, // @ts-ignore
+        allowHTML: true,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         maxWidth: triggerRef.value?.offsetWidth,
         onShow(instance) {
             isShowOptions.value = true;
@@ -126,6 +126,7 @@ let tagRef = ref(null);
 let multipleRef = ref(null);
 let instance2: any;
 const initMultipleTippy = () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     instance2 = tippy(tagRef.value, {
         theme: 'light',
@@ -136,7 +137,9 @@ const initMultipleTippy = () => {
         placement: 'top',
         interactiveBorder: 10,
         appendTo: () => document.body,
-        allowHTML: true, // @ts-ignore
+        allowHTML: true,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         maxWidth: 250,
         onShow(instance) {
             hide();

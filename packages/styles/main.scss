@@ -1,5 +1,5 @@
 .btf-scrollbar::-webkit-scrollbar {
-    background-color: rgb(126, 126, 126, 0);
+    background-color: rgb(209 213 219 / 0);
     width: 5px;
     height: 5px;
 }
@@ -15,42 +15,42 @@
 }
 
 .btf-scrollbar:hover::-webkit-scrollbar-thumb {
-    background-color: rgb(209 213 219 / 0.3);
+    background-color: var(--lew-bgcolor-3);
     opacity: 1;
     border-radius: 5px;
 }
 
-.tippy-box[data-lew~='tooltip'] {
+.tippy-box[data-lew~="tooltip"] {
     .tippy-content {
         padding: 5px 8px;
     }
 }
 
-.tippy-box[data-lew~='dropdown'] {
+.tippy-box[data-lew~="dropdown"] {
     .tippy-content {
         padding: 5px 8px;
     }
 }
 
-.tippy-box[data-lew~='popok'] {
+.tippy-box[data-lew~="popok"] {
     .tippy-content {
         padding: 5px;
     }
 }
 
-.tippy-box[data-lew~='popover'] {
+.tippy-box[data-lew~="popover"] {
     .tippy-content {
         padding: 5px;
     }
 }
 
-.tippy-box[data-lew~='select'] {
+.tippy-box[data-lew~="select"] {
     .tippy-content {
         padding: 0px;
     }
 }
 
-.tippy-box[data-lew~='select-multiple'] {
+.tippy-box[data-lew~="select-multiple"] {
     .tippy-content {
         padding: 5px 7px;
     }

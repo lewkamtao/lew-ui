@@ -6,10 +6,11 @@ import {
     EyeOffOutline,
 } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
-import _props from './props';
+import { _props } from './props';
 
 const props = defineProps(_props);
 const v = ref(props.modelValue);
+
 watch(
     () => props.modelValue,
     () => {
@@ -49,6 +50,7 @@ let getPaddingRight = computed(() => {
         case props.showPassword:
             return 30;
         default:
+            return '';
             break;
     }
 });

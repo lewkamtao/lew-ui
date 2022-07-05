@@ -1,34 +1,12 @@
 body {
     color: var(--lew-text-color-1);
     background-color: var(--lew-bgcolor-4);
-    overflow: hidden;
+    overflow: auto;
     font-size: 14px;
 }
 
 a {
     color: var(--lew-text-color-2);
-}
-
-.btf-scrollbar::-webkit-scrollbar {
-    background-color: rgb(126, 126, 126, 0);
-    width: 5px;
-    height: 5px;
-}
-
-.btf-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: rgb(126, 126, 126);
-}
-
-.btf-scrollbar::-webkit-scrollbar-thumb {
-    background-color: rgb(209 213 219 / 0);
-    opacity: 0;
-    border-radius: 5px;
-}
-
-.btf-scrollbar:hover::-webkit-scrollbar-thumb {
-    background-color: rgb(209 213 219 / 0.3);
-    opacity: 1;
-    border-radius: 5px;
 }
 
 pre code.hljs::-webkit-scrollbar {
@@ -96,7 +74,6 @@ pre code.hljs:hover::-webkit-scrollbar-thumb {
         }
     }
 }
-
 
 /* fade-transform */
 

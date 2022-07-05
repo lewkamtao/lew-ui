@@ -3,9 +3,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { LewButton } from 'lew-ui';
 import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css'; // optional for styling
-import 'tippy.js/animations/shift-away-subtle.css';
-import 'tippy.js/themes/light.css';
+
 import {
     Info24Regular,
     Warning24Regular,

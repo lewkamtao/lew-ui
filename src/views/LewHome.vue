@@ -25,6 +25,8 @@ onMounted(() => {
         }
 
         var particleCount = 50 * (timeLeft / duration);
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         confetti(
             Object.assign({}, defaults, {
@@ -35,6 +37,7 @@ onMounted(() => {
                 },
             }),
         );
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         confetti(
             Object.assign({}, defaults, {
@@ -388,8 +391,8 @@ let alertList = ref([
 .home-wrapper {
     width: 100%;
     min-height: 100vh;
-    overflow: hidden;
     perspective: 800;
+    overflow: hidden;
     -webkit-perspective: 800;
     .startbox {
         position: fixed;
@@ -400,6 +403,7 @@ let alertList = ref([
         animation-fill-mode: forwards;
         animation-delay: 0.5s;
         opacity: 0;
+
         .slogan {
             display: flex;
             font-size: 50px;

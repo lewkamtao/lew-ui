@@ -1,4 +1,4 @@
-const _props = {
+export const _props = {
     // 类型
     type: {
         type: String,
@@ -36,5 +36,3 @@ const _props = {
         default: false,
     },
 };
-
-export default _props;

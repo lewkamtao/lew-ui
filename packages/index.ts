@@ -4,16 +4,21 @@ export * from './components';
 export * from './directives';
 export * from './directives';
 
-// 引入样式
-import './styles/reset.scss';
-import './styles/main.scss';
-import './styles/var.scss';
+// tippy 样式
+import 'tippy.js/dist/tippy.css'; // optional for styling
+import 'tippy.js/animations/shift-away-subtle.css';
+import 'tippy.js/themes/light.css';
 
 // fancybox
 import '@fancyapps/ui/dist/fancybox.css';
 
 // plyr
 import 'plyr/dist/plyr.css';
+
+// 引入样式
+import './styles/reset.scss';
+import './styles/main.scss';
+import './styles/var.scss';
 
 // 全局 => 定义 install 方法
 import * as components from './components';

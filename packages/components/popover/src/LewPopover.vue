@@ -2,9 +2,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css'; // optional for styling
-import 'tippy.js/animations/shift-away-subtle.css';
-import 'tippy.js/themes/light.css';
+
 let triggerRef = ref(null);
 let bodyRef = ref(null);
 let instance: any;
