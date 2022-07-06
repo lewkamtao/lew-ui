@@ -47,7 +47,6 @@ let alertClose: any = ref([]);
                     {
                         type: 'warning',
                         title: '注意，你必须在 columns 中设置每一列的宽度',
-                        content: '',
                     },
                 ]"
                 @close="alertClose[0] = true"
@@ -62,7 +61,6 @@ let alertClose: any = ref([]);
                     {
                         type: 'info',
                         title: '你可以调整 offsetX 来设置横向偏移量',
-                        content: '',
                     },
                 ]"
                 @close="alertClose[2] = true"
@@ -78,14 +76,13 @@ let alertClose: any = ref([]);
                     {
                         type: 'info',
                         title: '插槽里面有你需要的任何的信息',
-                        content: '',
                     },
                 ]"
                 size="16px"
                 @close="alertClose[3] = true"
             />
         </lew-demo-box>
-        <lew-demo-box title="这可是插槽" :code="DemoTable4_code">
+        <lew-demo-box title="插槽" :code="DemoTable4_code">
             <demo-table4 />
             <lew-alert
                 v-if="!alertClose[4]"
@@ -94,14 +91,13 @@ let alertClose: any = ref([]);
                 :list="[
                     {
                         type: 'success',
-                        title: '！！！请注意，这可是插槽\n！！！可能你还不知道这意味着什么\n！！！意味着你可以使用任何组件，甚至你可以使用 popover + input 这种高度自定义的方式录入信息',
-                        content: '',
+                        title: '你可以使用任何组件，甚至你可以使用 popover + input 这种高度自定义的方式录入信息',
                     },
                 ]"
                 @close="alertClose[4] = true"
             />
         </lew-demo-box>
-        <lew-demo-box v-if="false" title="固定列" :code="DemoTable5_code">
+        <lew-demo-box v-if="false" title="自定义样式" :code="DemoTable5_code">
             <demo-table5 />
         </lew-demo-box>
         <lew-demo-box v-if="false" title="固定列" :code="DemoTable6_code">
@@ -112,42 +108,8 @@ let alertClose: any = ref([]);
         </lew-demo-box>
         <lew-demo-box title="完整功能" :code="DemoTable8_code">
             <demo-table8 />
-            <lew-flex wrap x="start" style="margin-top: 20px">
-                <lew-tag type="info">高亮某个单元格</lew-tag>
-                <lew-tag type="info">高亮某一列</lew-tag>
-                <lew-tag type="info">高亮某一行</lew-tag>
-                <lew-tag type="info">固定某一列</lew-tag>
-                <lew-tag type="info"
-                    >对齐方式（x / y）：start center end
-                </lew-tag>
-                <lew-tag type="info">高亮某个单元格</lew-tag>
-            </lew-flex>
         </lew-demo-box>
 
-        <vxe-table :data="docsTable">
-            <vxe-column
-                show-overflow
-                field="param"
-                width="220px"
-                title="参数名"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                field="description"
-                title="描述"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                width="300"
-                field="type"
-                title="类型"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                field="default"
-                title="默认值"
-            ></vxe-column>
-        </vxe-table>
         <br />
         <lew-title>持续更新中···</lew-title>
     </div>

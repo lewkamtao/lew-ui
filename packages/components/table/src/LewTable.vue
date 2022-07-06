@@ -192,11 +192,11 @@ onMounted(() => {
     overflow: auto;
     font-size: 14px;
     line-height: 28px;
+
     .lew-table-head {
         position: sticky;
         top: 0;
         z-index: 9;
-        height: 50px;
         display: flex;
         align-items: center;
         .lew-table-td {
@@ -262,7 +262,7 @@ onMounted(() => {
         justify-content: start;
         flex-shrink: 0;
         text-align: left;
-        padding: 10px;
+        padding: 5px;
         box-sizing: border-box;
         background-color: var(--lew-bgcolor-0);
         border-bottom: 1.5px var(--lew-form-border-color) solid;

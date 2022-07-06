@@ -122,6 +122,7 @@ const del = (row: any, column: any) => {
                     v-for="(item, index) in row.hobby"
                     :key="index"
                     type="info"
+                    size="small"
                     >{{ item }}</lew-tag
                 ></lew-flex
             >

@@ -3,18 +3,17 @@ import { ref } from 'vue';
 import { LewMessage } from 'lew-ui';
 import mvJson from './movie_hot_gaia.json';
 
-const data: any = mvJson;
+const data: any = ref(mvJson);
 
 const columns = [
     {
         type: 'template',
-        title: '全选',
+        title: '选择',
         field: 'checkbox',
         width: '50px',
         align: 'center',
         sticky: 'left',
         offsetX: '0px',
-
         x: 'center',
     },
     {
@@ -32,8 +31,6 @@ const columns = [
         title: '名称',
         field: 'title',
         width: '180px',
-        sticky: 'left',
-        offsetX: '150px',
     },
 
     {
@@ -41,7 +38,6 @@ const columns = [
         title: '上线日期',
         field: 'release_date',
         width: '100px',
-        columnStyle: 'background:var(--lew-primary-color-light)',
         x: 'center',
     },
     {
@@ -104,7 +100,7 @@ const change = (e: any, row: any, column: any) => {
 </script>
 
 <template>
-    <lew-table :data="data" :columns="columns" height="500px">
+    <lew-table :data="data" :columns="columns" height="auto">
         <template #id="{ row }"> {{ row.id }} </template>
         <template #title="{ row }">
             <div class="title">{{ row.title }}</div>

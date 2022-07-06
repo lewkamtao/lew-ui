@@ -98,7 +98,6 @@ const setChecked = (e: Event) => {
         border: 2px var(--lew-form-border-color-hover) solid;
         box-sizing: border-box;
         border-radius: var(--lew-form-border-radius);
-
         transition: all 0.25s ease;
         background-color: var(--lew-bgcolor-0);
 

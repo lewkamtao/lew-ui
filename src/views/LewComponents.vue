@@ -194,6 +194,13 @@ group.value = [
                 label: '全新',
                 type: 'success',
             },
+            {
+                cname: '分页',
+                name: 'Pagination',
+                path: '/Pagination',
+                label: '全新',
+                type: 'success',
+            },
         ],
     },
     {
@@ -290,7 +297,9 @@ group.value = [
         <div ref="mainRef" class="app-main btf-scrollbar">
             <router-view v-slot="{ Component }">
                 <transition name="fade-transform" mode="out-in">
-                    <component :is="Component" />
+                    <keep-alive>
+                        <component :is="Component"> </component>
+                    </keep-alive>
                 </transition>
             </router-view>
         </div>
