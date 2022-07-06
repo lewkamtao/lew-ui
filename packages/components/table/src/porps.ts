@@ -8,6 +8,19 @@ export const _props = {
             return [];
         },
     },
+    width: {
+        type: String,
+        default: () => {
+            return '';
+        },
+    },
+    height: {
+        type: String,
+        default: () => {
+            return '';
+        },
+    },
+
     data: {
         type: Array as any,
         default: () => {

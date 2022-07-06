@@ -17,7 +17,7 @@ type Alert = {
 };
 
 defineProps({
-    alertList: {
+    list: {
         type: Array as PropType<Alert[]>,
         default() {
             return [];
@@ -31,7 +31,7 @@ const emit = defineEmits(['close']);
 <template>
     <div class="lew-alert-group">
         <div
-            v-for="(item, i) in alertList"
+            v-for="(item, i) in list"
             :key="i"
             class="lew-alert"
             :class="`lew-alert-${item.type}`"
@@ -105,11 +105,15 @@ const emit = defineEmits(['close']);
                 margin-top: 1px;
                 font-size: 14px;
                 width: 100%;
+                word-wrap: break-word;
+                white-space: pre-line;
             }
             .content {
                 margin-top: 7px;
                 font-size: 14px;
                 width: 100%;
+                word-wrap: break-word;
+                white-space: pre-line;
             }
         }
     }

@@ -1,12 +1,10 @@
 export type TableColumns = {
-    type: string;
     title: string;
-    content: string;
     field: string;
-    isTips: boolean;
+    sticky: string;
+    offsetX: string;
+    x: string;
+    y: string;
     width: string;
     columnStyle: string;
-    sticky: string;
-    align: string;
-    offsetX: string;
 };

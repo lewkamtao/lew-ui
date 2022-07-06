@@ -7,6 +7,9 @@
             "value": 6.4,
             "star_count": 3
         },
+        "rcStyle": {
+            "id": "background:var(--lew-error-color-light);color:#000"
+        },
         "cover": {
             "url": "https://img9.doubanio.com/view/photo/m_ratio_poster/public/p2872533452.jpg",
             "width": 1711,
@@ -240,6 +243,7 @@
             "value": 6.2,
             "star_count": 3
         },
+        "rowStyle": "background:var(--lew-success-color-light);color:#000",
         "actions": [],
         "year": "2022",
         "card_subtitle": "2022 / 日本 / 剧情 犯罪 惊悚 / 广木隆一 / 松山研一 藤原龙也",

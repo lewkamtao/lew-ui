@@ -18,6 +18,7 @@ const props = defineProps({
         type: String,
         default: 'warning',
     },
+    width: { type: String, default: '250px' },
     trigger: {
         type: String,
         default: 'click',
@@ -94,7 +95,7 @@ onUnmounted(() => {
         <div ref="triggerRef">
             <slot />
         </div>
-        <div ref="bodyRef" class="lew-popok-body">
+        <div ref="bodyRef" class="lew-popok-body" :style="`width:${width}`">
             <div class="left">
                 <Icon size="22" :class="`icon-${type}`">
                     <Info24Regular v-if="type == `normal`" />
@@ -128,7 +129,6 @@ onUnmounted(() => {
     display: inline-block;
 }
 .lew-popok-body {
-    width: 280px;
     display: flex;
     padding: 10px;
     .left {
@@ -151,7 +151,7 @@ onUnmounted(() => {
         }
     }
     .right {
-        width: 250px;
+        width: calc(100% - 30px);
         .title {
             width: 100%;
             font-weight: 600;

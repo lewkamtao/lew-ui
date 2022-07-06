@@ -241,6 +241,8 @@ defineProps({
 
 .lew-button-text {
     background: none;
+    min-width: auto;
+    padding: 5px;
 }
 .lew-button-text.lew-button-info {
     color: var(--lew-info-text-color);

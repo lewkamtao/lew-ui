@@ -1,57 +1,9 @@
 <script lang="ts" setup>
 import { _props } from './porps';
 import { ref, onMounted, nextTick } from 'vue';
-import tippy from 'tippy.js';
-
 const props = defineProps(_props);
 
-let tipsTdRefs = ref<any>([]); // 每一个单元格的 ref
 let lewTableRef: any = ref(null); // 表格的 ref
-let tableData: any = ref(props.data); // 表格数据
-
-let instances: any = []; // 气泡
-let curShowTipsIndex = 0; // 当前显示气泡
-
-// 气泡
-const setTooltip = () => {
-    let els = tipsTdRefs.value;
-    els.forEach((el, index) => {
-        if (el && el.scrollWidth > el.offsetWidth) {
-            instances[index] = tippy(el, {
-                content: el.innerHTML,
-                animation: 'shift-away-subtle',
-                interactive: true,
-                appendTo: () => document.body,
-                placement: 'left',
-                maxWidth: 250,
-                onShow(instance) {
-                    curShowTipsIndex = index;
-                    const node = document.getElementsByTagName('html')[0];
-                    if (node.classList.contains('lew-dark')) {
-                        instance.popper.children[0].setAttribute(
-                            'data-theme',
-                            'dark',
-                        );
-                    } else {
-                        instance.popper.children[0].setAttribute(
-                            'data-theme',
-                            'light',
-                        );
-                    }
-                },
-            });
-        }
-    });
-};
-
-const emit = defineEmits(['tclick']);
-
-const tclick = (row, column) => {
-    emit('tclick', {
-        row,
-        column,
-    });
-};
 
 // 设置左右线
 let leftIndex = ref<number>(-1);
@@ -63,18 +15,26 @@ const setSubLine = () => {
             leftIndex.value = i;
         } else if (e.sticky == 'right' && rightIndex.value == -1) {
             rightIndex.value = i;
+            if (
+                lewTableRef.value.scrollWidth != lewTableRef.value.offsetWidth
+            ) {
+                isShowRightLine.value = true;
+            }
         }
     });
 };
 
 // 设置展示线 过渡
 let isShowLeftLine = ref(false);
-let isShowRightLine = ref(true);
+let isShowRightLine = ref(false);
 
 const setShowLine = (e) => {
-    isShowLeftLine.value = e.target.scrollLeft != 0;
-    isShowRightLine.value =
-        e.target.scrollLeft <= e.target.scrollWidth - e.target.offsetWidth;
+    if (e.target.scrollWidth != e.target.offsetWidth) {
+        isShowLeftLine.value = e.target.scrollLeft >= 5;
+        isShowRightLine.value =
+            e.target.scrollLeft <=
+            e.target.scrollWidth - e.target.offsetWidth - 5;
+    }
 };
 
 // 设置粘住左右
@@ -91,6 +51,7 @@ let niceWidth = ref<string>('');
 const setWidth = () => {
     let sw = lewTableRef.value?.scrollWidth;
     let w = lewTableRef.value?.offsetWidth;
+
     if (w >= sw) {
         let autoLen = props.columns.filter((e) => e.width == 'auto').length;
         let wTotal = 0;
@@ -100,21 +61,19 @@ const setWidth = () => {
             .map((e) => {
                 wTotal += parseFloat(e.width);
             });
-        niceWidth.value = `${(w - wTotal) / autoLen - 2}px`;
+        niceWidth.value = `${(w - wTotal) / autoLen - 4}px`;
     }
 };
 
 // 防抖
 let lock = false;
 const throttle = (e, delay) => {
-    // 判断是否锁
+    if (leftIndex.value == -1 && rightIndex.value == -1) {
+        return;
+    }
     if (!lock) {
+        // 判断是否锁
         lock = true; // 锁住
-        if (instances[curShowTipsIndex]) {
-            // 滚动时隐藏气泡
-            instances[curShowTipsIndex].hide();
-        }
-
         setTimeout(() => {
             setShowLine(e);
             lock = false; // 开锁
@@ -122,28 +81,22 @@ const throttle = (e, delay) => {
     }
 };
 
-// 添加节点
-const pushRefs = (el) => {
-    // 判断节点是否push完 进push 需要气泡的单元格，判断长度防止重复push
-    if (
-        tipsTdRefs.value.length <
-        props.columns.filter((e) => e.isTips).length * props.data.length
-    ) {
-        tipsTdRefs.value.push(el);
-    }
-};
-
 onMounted(() => {
     setWidth();
     nextTick(() => {
-        setTooltip();
+        // 设置固定单元格的阴影
         setSubLine();
     });
 });
 </script>
 
 <template>
-    <div class="lew-table" ref="lewTableRef" @scroll="throttle($event, 200)">
+    <div
+        ref="lewTableRef"
+        class="lew-table"
+        :style="`height:${height};width:${width};`"
+        @scroll="throttle($event, 200)"
+    >
         <div class="lew-table-head">
             <div
                 class="lew-table-tr"
@@ -153,7 +106,7 @@ onMounted(() => {
                         : ''
                 }px`"
             >
-                <div
+                <lew-flex
                     v-for="(column, index) in columns"
                     :key="`columns${index}`"
                     class="lew-table-td"
@@ -167,22 +120,23 @@ onMounted(() => {
                     }"
                     :style="`
                     ${column.columnStyle ? column.columnStyle : ''};
-                    ${setSticky(column)};
+                    ${setSticky(column)};   
                     width:${
                         column.width != 'auto'
                             ? column.width
                             : niceWidth || '100px'
                     };
-                    justify-content:${column.align};
                     `"
+                    :x="column.x || 'start'"
+                    :y="column.y"
                 >
                     {{ column.title }}
-                </div>
+                </lew-flex>
             </div>
         </div>
         <div class="lew-table-body">
             <div
-                v-for="(row, i) in tableData"
+                v-for="(row, i) in data"
                 :key="`data${i}`"
                 class="lew-table-tr"
                 :style="`width:${
@@ -191,7 +145,7 @@ onMounted(() => {
                         : ''
                 }px`"
             >
-                <div
+                <lew-flex
                     v-for="(column, j) in columns"
                     :key="`col${j}`"
                     class="lew-table-td"
@@ -217,38 +171,13 @@ onMounted(() => {
                             ? column.width
                             : niceWidth || '100px'
                     };
-                    justify-content:${column.align};
                     `"
-                    @click="tclick(row, column)"
+                    :x="column.x || 'start'"
+                    :y="column.y"
                 >
-                    <!-- html模式 -->
-                    <div
-                        v-if="column.type == 'html'"
-                        :ref="(el) => (column.isTips ? pushRefs(el) : '')"
-                        class="lew-table-html"
-                        v-html="row[column.field]"
-                    ></div>
-                    <!-- 纯文本 -->
-                    <div
-                        v-if="column.type == 'text'"
-                        :ref="(el) => (column.isTips ? pushRefs(el) : '')"
-                        class="lew-table-text"
-                    >
-                        {{ row[column.field] }}
-                    </div>
                     <!-- 模板 -->
-                    <div
-                        v-if="column.type == 'template'"
-                        class="lew-table-template"
-                        :style="`justify-content:${column.align};`"
-                    >
-                        <slot
-                            :name="column.field"
-                            :row="row"
-                            :column="column"
-                        />
-                    </div>
-                </div>
+                    <slot :name="column.field" :row="row" :column="column" />
+                </lew-flex>
             </div>
         </div>
     </div>
@@ -258,12 +187,11 @@ onMounted(() => {
 .lew-table {
     display: flex;
     flex-direction: column;
-    height: 800px;
+    height: 500px;
     width: 100%;
     overflow: auto;
     font-size: 14px;
     line-height: 28px;
-    border: 1.5px var(--lew-form-border-color) solid;
     .lew-table-head {
         position: sticky;
         top: 0;
@@ -338,21 +266,12 @@ onMounted(() => {
         box-sizing: border-box;
         background-color: var(--lew-bgcolor-0);
         border-bottom: 1.5px var(--lew-form-border-color) solid;
-
-        .lew-table-text {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-        .lew-table-html {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-        .lew-table-template {
-            display: inline-flex;
-            align-items: center;
-        }
+    }
+    .lew-table-td:first-child {
+        border-left: 1.5px var(--lew-form-border-color) solid;
+    }
+    .lew-table-td:last-child {
+        border-right: 1.5px var(--lew-form-border-color) solid;
     }
     .lew-table-body {
         width: 100%;
