@@ -3,7 +3,7 @@
         class="lew-checkbox"
         :class="`${block ? 'lew-checkbox-block' : ''} ${
             round ? 'lew-checkbox-round' : ''
-        } ${checked ? 'lew-checkbox-checked' : ''} `"
+        } ${_checked ? 'lew-checkbox-checked' : ''} `"
     >
         <div class="icon-checkbox-box">
             <svg
@@ -23,15 +23,16 @@
         <input
             v-show="false"
             type="checkbox"
-            :checked="checked"
+            :checked="_checked"
             @input="setChecked"
         />
-        <span> {{ label }}</span>
+        <span v-if="label" class="lew-checkbox-label"> {{ label }}</span>
     </label>
 </template>
 
 <script lang="ts" setup>
-defineProps({
+import { ref, watch } from 'vue';
+const props = defineProps({
     label: {
         type: String,
         default: () => {
@@ -52,13 +53,29 @@ defineProps({
     },
     checked: {
         type: Boolean,
+        default: () => {
+            return false;
+        },
     },
 });
 
-const emit = defineEmits(['update:checked']);
+watch(
+    () => props.checked,
+    (v) => {
+        console.log(1);
+        if (v != _checked.value) {
+            _checked.value = v;
+        }
+    },
+);
 
-const setChecked = (event: Event) => {
-    emit('update:checked', (event.target as HTMLInputElement).checked);
+let _checked = ref(props.checked || false);
+
+const emit = defineEmits(['change']);
+
+const setChecked = (e: Event) => {
+    _checked.value = (e.target as HTMLInputElement).checked;
+    emit('change', _checked.value);
 };
 </script>
 
@@ -81,9 +98,10 @@ const setChecked = (event: Event) => {
         border: 2px var(--lew-form-border-color-hover) solid;
         box-sizing: border-box;
         border-radius: var(--lew-form-border-radius);
-        margin-right: 6px;
+
         transition: all 0.25s ease;
         background-color: var(--lew-bgcolor-0);
+
         .icon-checkbox {
             transform: scale(0.6) translateY(50%);
             transition: all 0.25s ease;
@@ -91,6 +109,9 @@ const setChecked = (event: Event) => {
             color: var(--lew-white-color);
             font-size: 12px;
         }
+    }
+    .lew-checkbox-label {
+        margin-left: 6px;
     }
 }
 

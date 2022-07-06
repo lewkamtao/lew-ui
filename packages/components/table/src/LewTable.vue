@@ -10,7 +10,7 @@ let lewTableRef: any = ref(null); // 表格的 ref
 let tableData: any = ref(props.data); // 表格数据
 
 let instances: any = []; // 气泡
-let curShowTipsIndex: number = 0; // 当前显示气泡
+let curShowTipsIndex = 0; // 当前显示气泡
 
 // 气泡
 const setTooltip = () => {
@@ -69,7 +69,7 @@ const setSubLine = () => {
 
 // 设置展示线 过渡
 let isShowLeftLine = ref(false);
-let isShowRightLine = ref(false);
+let isShowRightLine = ref(true);
 
 const setShowLine = (e) => {
     isShowLeftLine.value = e.target.scrollLeft != 0;
@@ -93,7 +93,7 @@ const setWidth = () => {
     let w = lewTableRef.value?.offsetWidth;
     if (w >= sw) {
         let autoLen = props.columns.filter((e) => e.width == 'auto').length;
-        let wTotal: number = 0;
+        let wTotal = 0;
 
         props.columns
             .filter((e) => e.width != 'auto')
@@ -225,7 +225,7 @@ onMounted(() => {
                     <div
                         v-if="column.type == 'html'"
                         :ref="(el) => (column.isTips ? pushRefs(el) : '')"
-                        class="lew-table-text"
+                        class="lew-table-html"
                         v-html="row[column.field]"
                     ></div>
                     <!-- 纯文本 -->
@@ -237,7 +237,11 @@ onMounted(() => {
                         {{ row[column.field] }}
                     </div>
                     <!-- 模板 -->
-                    <div v-if="column.type == 'template'">
+                    <div
+                        v-if="column.type == 'template'"
+                        class="lew-table-template"
+                        :style="`justify-content:${column.align};`"
+                    >
                         <slot
                             :name="column.field"
                             :row="row"
@@ -254,7 +258,7 @@ onMounted(() => {
 .lew-table {
     display: flex;
     flex-direction: column;
-    height: 500px;
+    height: 800px;
     width: 100%;
     overflow: auto;
     font-size: 14px;
@@ -333,12 +337,21 @@ onMounted(() => {
         padding: 10px;
         box-sizing: border-box;
         background-color: var(--lew-bgcolor-0);
-        border-bottom: 1px var(--lew-form-border-color) solid;
+        border-bottom: 1.5px var(--lew-form-border-color) solid;
 
         .lew-table-text {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+        }
+        .lew-table-html {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .lew-table-template {
+            display: inline-flex;
+            align-items: center;
         }
     }
     .lew-table-body {

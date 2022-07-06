@@ -14,7 +14,7 @@
             :checked="checked"
             @input="setChecked"
         />
-        <span> {{ label }}</span>
+        <span v-if="label" class="lew-radio-label"> {{ label }}</span>
     </label>
 </template>
 
@@ -61,7 +61,6 @@ const setChecked = () => {
         height: 18px;
         border: 2px var(--lew-form-border-color-hover) solid;
         box-sizing: border-box;
-        margin-right: 5px;
         transition: all 0.25s ease;
         overflow: hidden;
         border-radius: 50%;
@@ -76,6 +75,9 @@ const setChecked = () => {
             font-size: 12px;
             border-radius: 50%;
         }
+    }
+    .lew-radio-label {
+        margin-left: 6px;
     }
 }
 .lew-radio:hover {

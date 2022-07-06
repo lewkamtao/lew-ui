@@ -26,6 +26,18 @@ const docsTable = ref([
         type: 'hover | click',
         default: 'hover',
     },
+    {
+        param: 'allowHTML',
+        description: '是否支持HTML',
+        type: 'boolean',
+        default: 'false',
+    },
+    {
+        param: 'arrow',
+        description: '是否需要箭头',
+        type: 'boolean',
+        default: 'true',
+    },
 ]);
 </script>
 
