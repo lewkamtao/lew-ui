@@ -8,9 +8,32 @@ import {
     DemoBackTop3,
     DemoBackTop3_code,
 } from './demo';
+
 const docsTable = reactive([
     {
         desc: 'Props',
+        columns: [
+            {
+                title: '参数名',
+                width: '200px',
+                field: 'param',
+            },
+            {
+                title: '描述',
+                width: '320px',
+                field: 'description',
+            },
+            {
+                title: '类型',
+                width: 'auto',
+                field: 'type',
+            },
+            {
+                title: '默认值',
+                width: '200px',
+                field: 'default',
+            },
+        ],
         data: [
             {
                 param: 'right',
@@ -40,6 +63,28 @@ const docsTable = reactive([
     },
     {
         desc: '触发事件',
+        columns: [
+            {
+                title: '参数名',
+                width: '200px',
+                field: 'param',
+            },
+            {
+                title: '描述',
+                width: '320px',
+                field: 'description',
+            },
+            {
+                title: '类型',
+                width: 'auto',
+                field: 'type',
+            },
+            {
+                title: '默认值',
+                width: '200px',
+                field: 'default',
+            },
+        ],
         data: [
             {
                 param: 'click',
@@ -51,6 +96,28 @@ const docsTable = reactive([
     },
     {
         desc: '自定义内容',
+        columns: [
+            {
+                title: '参数名',
+                width: '200px',
+                field: 'param',
+            },
+            {
+                title: '描述',
+                width: '320px',
+                field: 'description',
+            },
+            {
+                title: '类型',
+                width: 'auto',
+                field: 'type',
+            },
+            {
+                title: '默认值',
+                width: '200px',
+                field: 'default',
+            },
+        ],
         data: [
             {
                 param: 'default',
@@ -66,125 +133,30 @@ const docsTable = reactive([
 <template>
     <div class="demo-wrapper">
         <lew-title>BackTop</lew-title>
-        <lew-demo-box title="示例" :code="DemoBackTop1_code">
-            基础用法
-            <demo-back-top-1 />
+        <lew-demo-box title="基础用法" :code="DemoBackTop1_code">
+            <demo-back-top1 />
         </lew-demo-box>
-        <lew-demo-box title="示例" :code="DemoBackTop2_code">
-            触发事件
-            <demo-back-top-2 />
-        </lew-demo-box>
-        <lew-demo-box title="示例" :code="DemoBackTop3_code">
-            自定义内容
-            <demo-back-top-3 />
+        <lew-demo-box title="自定义内容" :code="DemoBackTop2_code">
+            <demo-back-top2 />
         </lew-demo-box>
 
         <div v-for="(item, index) in docsTable" :key="index">
-            <div style="margin-top: 20px"></div>
+            <br />
+            <br />
             <lew-title size="16px">{{ item.desc }}</lew-title>
-            <vxe-table :data="item.data" style="margin-top: 20px">
-                <vxe-column
-                    show-overflow
-                    field="param"
-                    width="220px"
-                    title="参数名"
-                ></vxe-column>
-                <vxe-column
-                    show-overflow
-                    field="description"
-                    title="描述"
-                ></vxe-column>
-                <vxe-column
-                    show-overflow
-                    width="300"
-                    field="type"
-                    title="类型"
-                ></vxe-column>
-                <vxe-column
-                    show-overflow
-                    field="default"
-                    title="默认值"
-                ></vxe-column>
-            </vxe-table>
+            <lew-table :data="item.data" :columns="item.columns" height="auto">
+                <template #param="{ row }"> {{ row.param }} </template>
+                <template #description="{ row }">
+                    {{ row.description }}
+                </template>
+                <template #type="{ row }"> {{ row.type }} </template>
+                <template #default="{ row }"> {{ row.default }} </template>
+            </lew-table>
         </div>
-        <!-- <lew-title size="16px">Props</lew-title>
-        <vxe-table :data="docsTable" style="margin-top: 20px">
-            <vxe-column
-                show-overflow
-                field="param"
-                width="220px"
-                title="参数名"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                field="description"
-                title="描述"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                width="300"
-                field="type"
-                title="类型"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                field="default"
-                title="默认值"
-            ></vxe-column>
-        </vxe-table>
-        <div style="margin-top: 20px"></div>
-        <lew-title size="16px">触发事件</lew-title>
-        <vxe-table :data="docsTable1" style="margin-top: 20px">
-            <vxe-column
-                show-overflow
-                field="param"
-                width="220px"
-                title="参数名"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                field="description"
-                title="描述"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                width="300"
-                field="type"
-                title="类型"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                field="default"
-                title="默认值"
-            ></vxe-column>
-        </vxe-table>
 
-        <div style="margin-top: 20px"></div>
-        <lew-title size="16px">自定义内容</lew-title>
-        <vxe-table :data="docsTable2" style="margin-top: 20px">
-            <vxe-column
-                show-overflow
-                field="param"
-                width="220px"
-                title="参数名"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                field="description"
-                title="描述"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                width="300"
-                field="type"
-                title="类型"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                field="default"
-                title="默认值"
-            ></vxe-column>
-        </vxe-table> -->
+        <lew-demo-box title="指令" :code="DemoBackTop3_code">
+            <demo-back-top3 />
+        </lew-demo-box>
     </div>
 </template>
 

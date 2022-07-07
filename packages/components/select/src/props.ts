@@ -1,9 +1,18 @@
+/*
+ * @Author: Kamtao
+ * @Date: 2022-07-04 12:15:55
+ * @LastEditTime: 2022-07-07 16:55:35
+ * @Description:
+ */
+
 import { PropType } from 'vue';
+
 type Options = {
     label: string;
     value: string;
 };
-const _props = {
+
+export const selectProps = {
     modelValue: {
         // 父组件 v-model 没有指定参数名，则默认是 modelValue
         type: [String, Array],
@@ -31,5 +40,3 @@ const _props = {
         default: false,
     },
 };
-
-export default _props;

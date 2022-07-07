@@ -4,7 +4,7 @@ import tippy from 'tippy.js';
 
 import { ChevronDown } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
-import _props from './props';
+import { selectProps } from './props';
 import LewCheckbox from '../../checkbox/src/LewCheckbox.vue';
 
 type Options = {
@@ -12,7 +12,7 @@ type Options = {
     value: string;
 };
 
-const props = defineProps(_props);
+const props = defineProps(selectProps);
 
 const v = ref<string>('');
 const labelStr = ref<string>('');

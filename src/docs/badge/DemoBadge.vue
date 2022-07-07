@@ -1,3 +1,9 @@
+<!--
+ * @Author: Kamtao
+ * @Date: 2022-06-28 09:42:26
+ * @LastEditTime: 2022-07-07 17:42:59
+ * @Description: 
+-->
 <script setup lang="ts">
 import {
     DemoBadge1,
@@ -8,6 +14,7 @@ import {
     DemoBadge3_code,
 } from './demo';
 import { ref } from 'vue';
+
 const columns = [
     {
         title: '参数名',
@@ -30,6 +37,7 @@ const columns = [
         field: 'default',
     },
 ];
+
 const docsTable = ref([
     {
         param: 'value',

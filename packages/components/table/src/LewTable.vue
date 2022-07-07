@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { _props } from './porps';
+import { tableProps } from './porps';
 import { ref, onMounted, nextTick } from 'vue';
-const props = defineProps(_props);
+const props = defineProps(tableProps);
 
 let lewTableRef: any = ref(null); // 表格的 ref
 let lewTableBodyRef: any = ref(null); // 表格的 body ref

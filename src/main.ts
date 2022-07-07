@@ -1,3 +1,9 @@
+/*
+ * @Author: Kamtao
+ * @Date: 2022-07-04 12:15:55
+ * @LastEditTime: 2022-07-07 17:20:50
+ * @Description:
+ */
 import { createApp, App } from 'vue';
 import AppVue from './App.vue';
 import router from './router/index';
@@ -20,7 +26,7 @@ import 'xe-utils';
 import { Column, Tooltip, Table } from 'vxe-table';
 
 // 安装tooltip
-import { LewTooltip } from 'lew-ui';
+import { LewVTooltip, LewVBacktop } from 'lew-ui';
 
 import lew from 'lew-ui';
 
@@ -41,5 +47,6 @@ function useTable(app: App) {
 
 app.use(lew);
 app.use(useTable);
-app.use(LewTooltip);
+app.use(LewVTooltip);
+app.use(LewVBacktop);
 app.use(router).mount('#app');

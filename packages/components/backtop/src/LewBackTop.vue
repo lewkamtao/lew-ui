@@ -3,14 +3,18 @@ import { computed, ref, onMounted, shallowRef } from 'vue';
 import { backtopProps, useEventListener } from './props';
 import { CaretUp } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
+
 const dom = shallowRef<HTMLElement>();
 const showBackTop = ref(false);
 const props = defineProps(backtopProps);
+
 const emit = defineEmits(['click']);
+
 const backTopStyle = computed(() => ({
     right: `${props.right}px`,
     bottom: `${props.bottom}px`,
 }));
+
 const toBackUp = () => {
     if (!dom.value) return;
     emit('click');
@@ -23,10 +27,13 @@ const toBackUp = () => {
         }
     }, 20);
 };
+
 const handleScroll = () => {
     if (dom.value) showBackTop.value = dom.value.scrollTop >= props.valveHeight;
 };
+
 useEventListener(window, 'scroll', handleScroll);
+
 onMounted(() => {
     dom.value = document.documentElement;
     if (props.target) {
@@ -39,6 +46,7 @@ onMounted(() => {
     }
 });
 </script>
+
 <template>
     <transition name="fade">
         <div
