@@ -12,7 +12,7 @@
             :round="round"
             :label="option.name"
             :checked="getChecked(option.id)"
-            @update:checked="check(option.id, $event)"
+            @change="check(option.id, $event)"
         />
     </lew-flex>
 </template>

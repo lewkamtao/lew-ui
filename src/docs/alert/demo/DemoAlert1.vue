@@ -7,13 +7,13 @@ type Options = {
     content: string;
 };
 
-let alertList = ref<Options[]>([]);
+let list = ref<Options[]>([]);
 
 const addAlert = (e: Options) => {
-    alertList.value.unshift(e);
+    list.value.unshift(e);
 };
 const close = (e: number) => {
-    alertList.value.splice(e, 1);
+    list.value.splice(e, 1);
 };
 </script>
 
@@ -77,6 +77,6 @@ const close = (e: number) => {
         ></lew-flex
     >
     <div style="margin-top: 20px">
-        <LewAlert :alert-list="alertList" @close="close"></LewAlert>
+        <LewAlert :list="list" @close="close"></LewAlert>
     </div>
 </template>

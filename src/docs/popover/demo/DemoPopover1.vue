@@ -3,28 +3,32 @@ import { LewMessage } from 'lew-ui';
 import { ref } from 'vue';
 
 let v = ref('');
-const popRef: any = ref(null);
-const submit = () => {
+const submit = (instance: any) => {
     LewMessage.error(v.value || '密码不可为空');
-    popRef.value.hide();
+    instance.hide();
 };
 </script>
 
 <template>
-    <lew-popover ref="popRef" trigger="click" placement="bottom-start">
+    <lew-popover trigger="click" placement="bottom-start">
         <template #trigger>
             <lew-button>进入保险箱</lew-button>
         </template>
-        <template #popover-body>
-            <div class="popover-body">
+        <template #popover-body="{ instance }">
+            <div class="popover-body" style="width: 300px">
                 <lew-form-item direction="y" title="请输入密码">
                     <lew-input v-model="v" />
                 </lew-form-item>
                 <lew-flex x="end">
-                    <lew-button type="blank" size="small" @click="popRef.hide()"
+                    <lew-button
+                        type="blank"
+                        size="small"
+                        @click="instance.hide()"
                         >取消
                     </lew-button>
-                    <lew-button size="small" @click="submit">提交</lew-button>
+                    <lew-button size="small" @click="submit(instance)"
+                        >提交
+                    </lew-button>
                 </lew-flex>
             </div>
         </template>

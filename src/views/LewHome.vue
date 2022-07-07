@@ -25,6 +25,8 @@ onMounted(() => {
         }
 
         var particleCount = 50 * (timeLeft / duration);
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         confetti(
             Object.assign({}, defaults, {
@@ -35,6 +37,7 @@ onMounted(() => {
                 },
             }),
         );
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         confetti(
             Object.assign({}, defaults, {
@@ -163,7 +166,7 @@ let dropdown_options = ref([
     },
 ]);
 
-let alertList = ref([
+let list = ref([
     {
         type: 'info',
         title: '成功发送一条消息',
@@ -319,7 +322,7 @@ let alertList = ref([
                     </lew-flex>
                 </lew-flex>
                 <lew-flex class="item" direction="column" gap="20px">
-                    <LewAlert :alert-list="alertList"></LewAlert>
+                    <LewAlert :list="list"></LewAlert>
                     <lew-flex wrap x="start" gap="20px">
                         <lew-button
                             type="normal"
@@ -388,8 +391,8 @@ let alertList = ref([
 .home-wrapper {
     width: 100%;
     min-height: 100vh;
-    overflow: hidden;
     perspective: 800;
+    overflow: hidden;
     -webkit-perspective: 800;
     .startbox {
         position: fixed;
@@ -400,6 +403,7 @@ let alertList = ref([
         animation-fill-mode: forwards;
         animation-delay: 0.5s;
         opacity: 0;
+
         .slogan {
             display: flex;
             font-size: 50px;

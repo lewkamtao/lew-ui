@@ -65,7 +65,7 @@ const docsTable = ref([
         <lew-demo-box title="加载" :code="DemoButton4_code"
             ><demo-button4 />
         </lew-demo-box>
-        <lew-demo-box title="禁用" :code="DemoButton5_code"
+        <lew-demo-box title="其他" :code="DemoButton5_code"
             ><demo-button5 />
         </lew-demo-box>
         <lew-title size="16px">Props</lew-title>

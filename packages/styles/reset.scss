@@ -82,7 +82,7 @@ q:before,
 q:after,
 blockquote:before,
 blockquote:after {
-    content: '';
+    content: "";
 }
 
 a {
@@ -90,12 +90,10 @@ a {
 }
 
 @font-face {
-    font-family: HarmonyOS_Sans_SC_Medium;
-    font-style: normal;
-    font-display: swap;
-    src: url('https://cdn.jsdelivr.net/gh/irozhi/HarmonyOS-Sans/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.woff2') format('woff2'), url('https://cdn.jsdelivr.net/gh/irozhi/HarmonyOS-Sans/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.woff') format('woff');
+    font-family: HarmonyOS_Sans;
+    src: url("../font/HarmonyOS_Sans_Regular.ttf");
 }
 
 * {
-    font-family: HarmonyOS_Sans_SC_Medium;
+    font-family: HarmonyOS_Sans;
 }

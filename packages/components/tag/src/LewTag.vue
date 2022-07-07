@@ -84,20 +84,20 @@ const close = () => {
     cursor: pointer;
 }
 .lew-tag-small {
-    height: 18px;
-    line-height: 18px;
-    padding: 0px 2px 0px 2px;
-    font-size: 10px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0px 2px;
+    font-size: 12px;
     .lew-tag-close {
         border-radius: 2px;
         padding: 2px;
         font-size: 12px;
-        margin-right: 1px;
+        margin-right: 2px;
     }
 }
 .lew-tag-medium {
-    height: 22px;
-    line-height: 22px;
+    height: 24px;
+    line-height: 24px;
     padding: 0px 4px;
     font-size: 13px;
     .lew-tag-close {
@@ -107,8 +107,8 @@ const close = () => {
     }
 }
 .lew-tag-large {
-    height: 26px;
-    line-height: 26px;
+    height: 28px;
+    line-height: 28px;
     padding: 0px 5px;
     font-size: 14px;
     .lew-tag-close {

@@ -1,56 +1,44 @@
 <script setup lang="ts">
 import {
-    DemoTooltip1,
-    DemoTooltip2,
-    DemoTooltip1_code,
-    DemoTooltip2_code,
+    DemoPagination1,
+    DemoPagination2,
+    DemoPagination1_code,
+    DemoPagination2_code,
 } from './demo';
 import { ref } from 'vue';
 
 const docsTable = ref([
     {
-        param: 'content',
-        description: '内容',
-        type: 'string',
-        default: "''",
-    },
-    {
-        param: 'placement',
-        description: '位置',
-        type: 'string',
-        default: "''",
-    },
-    {
-        param: 'trigger',
-        description: '触发方式',
-        type: 'hover | click',
-        default: 'hover',
-    },
-    {
-        param: 'allowHTML',
-        description: '是否支持HTML',
+        param: 'model-value (v-model)',
+        description: '绑定值',
         type: 'boolean',
         default: 'false',
     },
     {
-        param: 'arrow',
-        description: '是否需要箭头',
+        param: 'round',
+        description: '是否是圆角',
         type: 'boolean',
         default: 'true',
+    },
+    {
+        param: '@change',
+        description: '组件值发生变化的回调',
+        type: '(value: boolean) => void	',
+        default: "''",
     },
 ]);
 </script>
 
 <template>
     <div class="demo-wrapper">
-        <lew-title>Tooltip</lew-title>
-        <lew-demo-box title="悬浮显示" tag="推荐" :code="DemoTooltip1_code">
-            <demo-tooltip1 />
+        <lew-title>Switch</lew-title>
+        <lew-demo-box title="圆的" :code="DemoPagination1_code">
+            <demo-pagination1 />
         </lew-demo-box>
-        <lew-demo-box title="点击事件触发" :code="DemoTooltip2_code">
-            <demo-tooltip2 />
+        <lew-demo-box title="方的" :code="DemoPagination2_code">
+            <demo-pagination2 />
         </lew-demo-box>
-        <lew-title size="16px">v-tooltip</lew-title>
+        <lew-title size="16px">Props</lew-title>
         <vxe-table :data="docsTable">
             <vxe-column
                 show-overflow

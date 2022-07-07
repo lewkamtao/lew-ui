@@ -8,12 +8,12 @@ let options = ref([
     { name: '清朝', id: 4 },
 ]);
 
-let value = ref([]);
+let v = ref([1]);
 </script>
 
 <template>
     <lew-checkbox-group
-        v-model="value"
+        v-model="v"
         direction="y"
         round
         :options="options"

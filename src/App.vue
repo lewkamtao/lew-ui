@@ -11,9 +11,8 @@ import TheHeader from './layout/TheHeader.vue';
 
 <style lang="scss" scoped>
 .wrapper {
-    max-width: 1280px;
+    max-width: 1480px;
     margin: 0 auto;
-    overflow: hidden;
     background: var(--lew-bgcolor-0);
     border-left: var(--lew-border-2);
     border-right: var(--lew-border-2);

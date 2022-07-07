@@ -42,19 +42,19 @@ const toPath = (item: Item) => {
                 :key="`siderbar${j}`"
                 class="item"
                 :class="{ active: route.path == item.path }"
-                :style="`animation-delay: ${(i * 5 + j) * 25}ms;`"
+                :style="`animation-delay: ${(i * 5 + j) * 35}ms;`"
                 @click="toPath(item)"
             >
                 <span class="name">
                     {{ item.name }}
                 </span>
-                <LewBadge
+                <Lew-tag
                     v-if="item.label"
                     :type="item.type"
-                    :value="item.label"
-                    style="margin-left: 30px"
-                >
-                </LewBadge>
+                    size="small"
+                    style="margin-left: 10px"
+                    >{{ item.label }}
+                </Lew-tag>
             </div>
         </div>
     </div>

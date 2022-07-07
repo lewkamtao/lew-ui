@@ -8,7 +8,7 @@ const route = useRoute();
 let mainRef: any = ref(null);
 watch(route, () => {
     setTimeout(() => {
-        mainRef.value.scrollTop = 0;
+        if (mainRef.value) mainRef.value.scrollTop = 0;
     }, 250);
 });
 
@@ -168,7 +168,7 @@ group.value = [
                 name: 'Select',
                 path: '/Select',
                 label: '有更新',
-                type: 'success',
+                type: 'info',
             },
             // {
             //     cname:"",name: 'Cascader',
@@ -191,18 +191,25 @@ group.value = [
             // },
         ],
     },
-    // {
-    //     title: '数据展示',
-    //     items: [
-    //         {
-    //             cname: '表格',
-    //             name: 'Table',
-    //             path: '/Table',
-    //             label: '',
-    //             type: '',
-    //         },
-    //     ],
-    // },
+    {
+        title: '数据展示',
+        items: [
+            {
+                cname: '表格',
+                name: 'Table',
+                path: '/Table',
+                label: '全新',
+                type: 'success',
+            },
+            {
+                cname: '分页',
+                name: 'Pagination',
+                path: '/Pagination',
+                label: '全新',
+                type: 'success',
+            },
+        ],
+    },
     {
         title: '反馈',
         items: [
@@ -297,7 +304,9 @@ group.value = [
         <div ref="mainRef" class="app-main btf-scrollbar">
             <router-view v-slot="{ Component }">
                 <transition name="fade-transform" mode="out-in">
-                    <component :is="Component" />
+                    <keep-alive>
+                        <component :is="Component"> </component>
+                    </keep-alive>
                 </transition>
             </router-view>
         </div>
