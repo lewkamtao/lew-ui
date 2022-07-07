@@ -113,30 +113,30 @@ const emit = defineEmits(['close']);
                 margin-top: 7px;
                 font-size: 14px;
                 width: 100%;
-                font-weight: 600;
+                font-weight: 400;
                 word-wrap: break-word;
                 white-space: pre-line;
             }
         }
     }
     .lew-alert-normal {
-        color: var(--lew-normal-color);
+        color: var(--lew-text-color-5);
         background-color: var(--lew-normal-color-light);
     }
     .lew-alert-success {
-        color: var(--lew-success-color);
+        color: var(--lew-success-color-dark);
         background-color: var(--lew-success-color-light);
     }
     .lew-alert-warning {
-        color: var(--lew-warning-color);
+        color: var(--lew-warning-color-dark);
         background-color: var(--lew-warning-color-light);
     }
     .lew-alert-error {
-        color: var(--lew-error-color);
+        color: var(--lew-error-color-dark);
         background-color: var(--lew-error-color-light);
     }
     .lew-alert-info {
-        color: var(--lew-info-color);
+        color: var(--lew-info-color-dark);
         background-color: var(--lew-info-color-light);
     }
 }
