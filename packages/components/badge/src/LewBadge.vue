@@ -60,7 +60,7 @@ defineProps({
         z-index: 1;
         font-weight: normal;
         box-sizing: border-box;
-        color: var(--lew-white-color);
+        color: var(--lew-white-text-color);
         background-color: var(--lew-error-color-dark);
     }
 }

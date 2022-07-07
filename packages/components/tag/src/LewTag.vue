@@ -127,27 +127,27 @@ const close = () => {
 
 .lew-tag-primary {
     background-color: var(--lew-primary-color-light);
-    color: var(--lew-primary-text-color);
+    color: var(--lew-primary-color-dark);
 }
 .lew-tag-info {
-    color: var(--lew-info-text-color);
+    color: var(--lew-info-color-dark);
     background-color: var(--lew-info-color-light);
 }
 .lew-tag-success {
-    color: var(--lew-success-text-color);
+    color: var(--lew-success-color-dark);
     background-color: var(--lew-success-color-light);
 }
 
 .lew-tag-warning {
-    color: var(--lew-warning-text-color);
+    color: var(--lew-warning-color-dark);
     background-color: var(--lew-warning-color-light);
 }
 .lew-tag-error {
-    color: var(--lew-error-text-color);
+    color: var(--lew-error-color-dark);
     background-color: var(--lew-error-color-light);
 }
 .lew-tag-normal {
-    color: var(--lew-normal-text-color);
+    color: var(--lew-text-color-5);
     background-color: var(--lew-normal-color-light);
 }
 .lew-tag-disabled {

@@ -25,6 +25,7 @@ const setSubLine = () => {
     });
 };
 
+// 设置高度
 const setBodyHeight = () => {
     let children = lewTableBodyRef.value.children;
     children = Array.from(children);
@@ -203,7 +204,6 @@ onMounted(() => {
     overflow: auto;
     width: 100%;
     font-size: 14px;
-    line-height: 28px;
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     border-radius: var(--lew-form-border-radius);
     .lew-table-head {

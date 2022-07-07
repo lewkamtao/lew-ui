@@ -375,10 +375,10 @@ onUnmounted(() => {
         }
         .lew-select-checked {
             font-weight: bold;
-            color: var(--lew-primary-text-color);
+            color: var(--lew-text-color);
         }
         .lew-select-checked:hover {
-            color: var(--lew-primary-text-color);
+            color: var(--lew-text-color);
         }
         .lew-selcet-checkbox {
             position: absolute;

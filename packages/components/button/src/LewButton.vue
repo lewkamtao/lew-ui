@@ -173,7 +173,7 @@ defineProps({
 
 .lew-button-normal {
     background: var(--lew-normal-color);
-    color: var(--lew-black-color);
+    color: var(--lew-text-color-3);
 }
 
 .lew-button-normal:hover {
@@ -245,22 +245,22 @@ defineProps({
     padding: 5px;
 }
 .lew-button-text.lew-button-info {
-    color: var(--lew-info-text-color);
+    color: var(--lew-info-color-dark);
 }
 .lew-button-text.lew-button-primary {
-    color: var(--lew-primary-text-color);
+    color: var(--lew-primary-color-dark);
 }
 .lew-button-text.lew-button-error {
-    color: var(--lew-error-text-color);
+    color: var(--lew-error-color-dark);
 }
 .lew-button-text.lew-button-warning {
-    color: var(--lew-warning-text-color);
+    color: var(--lew-warning-color-dark);
 }
 .lew-button-text.lew-button-success {
-    color: var(--lew-success-text-color);
+    color: var(--lew-success-color-dark);
 }
 .lew-button-text.lew-button-normal {
-    color: var(--lew-normal-text-color);
+    color: var(--lew-text-color-5);
 }
 .lew-button-text:hover {
     background: none;
