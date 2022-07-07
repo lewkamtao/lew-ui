@@ -109,6 +109,12 @@ const submit = (instance: any) => {
     v.value = '';
     instance.hide();
 };
+const success = () => {
+    LewMessage.success('删除成功');
+};
+const error = () => {
+    LewMessage.error('取消');
+};
 </script>
 
 <template>
@@ -161,8 +167,8 @@ const submit = (instance: any) => {
                     content="删除之后无法恢复，请确认！"
                     placement="top"
                     width="200px"
-                    @ok="LewMessage.success('删除成功')"
-                    @cancel="LewMessage.error('已取消')"
+                    @ok="success"
+                    @cancel="error"
                 >
                     <lew-button is-text type="error">删除</lew-button>
                 </lew-popok></lew-flex
