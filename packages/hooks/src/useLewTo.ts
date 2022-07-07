@@ -3,7 +3,7 @@ import { ComponentInternalInstance, getCurrentInstance, onMounted } from 'vue';
 import type { Router } from 'vue-router';
 let instance: ComponentInternalInstance;
 
-export default function useLewTo() {
+export function useLewTo() {
     const lewTo = (path: string) => {
         const router = instance.appContext.config?.globalProperties
             .$router as Router;

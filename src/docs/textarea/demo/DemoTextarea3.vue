@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LewMessage } from 'lew-ui';
+
 const blur = () => {
     LewMessage.info('触发blur');
 };

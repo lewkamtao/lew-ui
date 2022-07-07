@@ -3,8 +3,8 @@ import { ref } from 'vue';
 let pre1 = ref(`import { LewTooltip } from 'lew-ui';
 
 app.use(LewTooltip);`);
-let pre2 = ref(`import { LewDialog } from 'lew-ui';
-import { LewMessage } from 'lew-ui';
+let pre2 = ref(`
+
 
 const open = () => {
     LewDialog.error({

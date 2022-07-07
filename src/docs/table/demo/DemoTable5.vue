@@ -94,7 +94,7 @@ const columns = [
     },
     {
         title: '介绍',
-        width: '450px',
+        width: '400px',
         field: 'intro',
     },
     {

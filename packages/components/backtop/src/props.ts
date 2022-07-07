@@ -1,5 +1,3 @@
-import { onMounted, onUnmounted } from 'vue';
-
 export const backtopProps = {
     right: {
         type: Number,
@@ -18,8 +16,3 @@ export const backtopProps = {
         default: '',
     },
 };
-
-export function useEventListener(target, event, callback) {
-    onMounted(() => target.addEventListener(event, callback, true));
-    onUnmounted(() => target.removeEventListener(event, callback, true));
-}

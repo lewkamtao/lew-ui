@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { computed, ref, onMounted, shallowRef } from 'vue';
-import { backtopProps, useEventListener } from './props';
+import { backtopProps } from './props';
+import { useEventListener } from '../../../hooks';
 import { CaretUp } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
 

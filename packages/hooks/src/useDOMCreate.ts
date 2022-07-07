@@ -1,7 +1,6 @@
-// hooks/useDOMCreate.ts
 import { onUnmounted } from 'vue';
 
-function useDOMCreate(nodeId: string): void {
+export function useDOMCreate(nodeId: string): void {
     const node = document.createElement('div');
     node.id = nodeId;
     document.body.appendChild(node);
@@ -9,5 +8,3 @@ function useDOMCreate(nodeId: string): void {
         document.body.removeChild(node);
     });
 }
-
-export default useDOMCreate;

@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { LewMessage } from 'lew-ui';
-import { LewDialog } from 'lew-ui';
 import { useRouter } from 'vue-router';
 
 onMounted(() => {
@@ -53,10 +51,9 @@ onMounted(() => {
 
 const router = useRouter();
 let v = ref('');
-const popRef: any = ref(null);
-const submit = () => {
+const submit = (instance: any) => {
     LewMessage.error(v.value || '密码不可为空');
-    popRef.value.hide();
+    instance.hide();
 };
 const open = (type: any) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -194,6 +191,10 @@ let list = ref([
         content: '',
     },
 ]);
+
+const message = (type: string) => {
+    LewMessage[type]('这是一条demo消息');
+};
 </script>
 
 <template>
@@ -324,14 +325,10 @@ let list = ref([
                 <lew-flex class="item" direction="column" gap="20px">
                     <LewAlert :list="list"></LewAlert>
                     <lew-flex wrap x="start" gap="20px">
-                        <lew-button
-                            type="normal"
-                            @click="LewMessage.error('这是一个demo信息')"
+                        <lew-button type="normal" @click="message('error')"
                             >Message</lew-button
                         >
-                        <lew-button
-                            type="success"
-                            @click="LewMessage.success('这是一个demo信息')"
+                        <lew-button type="success" @click="message('success')"
                             >Save</lew-button
                         >
                     </lew-flex>
@@ -344,15 +341,11 @@ let list = ref([
                         >
                     </lew-flex>
                     <lew-flex x="start" gap="20px">
-                        <lew-popover
-                            ref="popRef"
-                            trigger="click"
-                            placement="bottom-start"
-                        >
+                        <lew-popover trigger="click" placement="bottom-start">
                             <template #trigger>
                                 <lew-button>Popover</lew-button>
                             </template>
-                            <template #popover-body>
+                            <template #popover-body="{ instance }">
                                 <div class="popover-body">
                                     <lew-form-item
                                         direction="y"
@@ -365,10 +358,12 @@ let list = ref([
                                         <lew-button
                                             type="blank"
                                             size="small"
-                                            @click="popRef.hide()"
+                                            @click="instance.hide()"
                                             >取消
                                         </lew-button>
-                                        <lew-button size="small" @click="submit"
+                                        <lew-button
+                                            size="small"
+                                            @click="submit(instance)"
                                             >提交</lew-button
                                         >
                                     </div>

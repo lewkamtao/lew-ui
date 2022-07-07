@@ -19,9 +19,6 @@ import 'plyr/dist/plyr.css';
 import '@/assets/style/main.scss';
 import '@/assets/style/hljs.scss';
 
-// 安装tooltip
-import { LewVTooltip, LewVBacktop } from 'lew-ui';
-
 import lew from 'lew-ui';
 
 const app = createApp(AppVue);
@@ -36,6 +33,4 @@ app.directive('highlight', {
 });
 
 app.use(lew);
-app.use(LewVTooltip);
-app.use(LewVBacktop);
 app.use(router).mount('#app');

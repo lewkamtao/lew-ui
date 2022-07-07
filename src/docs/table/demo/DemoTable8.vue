@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
-import { LewMessage } from 'lew-ui';
+
 import mvJson from './movie_hot_gaia.json';
 
 const data: any = ref(mvJson);
@@ -66,7 +66,7 @@ const columns = [
         type: 'text',
         title: '简介',
         field: 'info',
-        width: '200px',
+        width: 'auto',
     },
     {
         type: 'template',
@@ -152,7 +152,11 @@ const getChecked = computed(() => (id: any) => {
         </template>
         <template #release_date="{ row }"> {{ row.release_date }} </template>
         <template #directors="{ row }">
-            <lew-tag v-for="(item, index) in row.directors" :key="index">
+            <lew-tag
+                type="warning"
+                v-for="(item, index) in row.directors"
+                :key="index"
+            >
                 {{ item }}</lew-tag
             >
         </template>

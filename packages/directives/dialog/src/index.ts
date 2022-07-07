@@ -1,4 +1,4 @@
-import LewDialog from './LewDialog.vue';
+import _LewDialog from './LewDialog.vue';
 import { h, createApp } from 'vue';
 type Options = {
     title: string;
@@ -42,7 +42,7 @@ const dialog = (type: string, options: Options) => {
     const app = createApp({
         render() {
             return h(
-                LewDialog,
+                _LewDialog,
                 {
                     closeOnClickOverlay: false,
                     type: type,
@@ -64,5 +64,11 @@ const dialog = (type: string, options: Options) => {
     });
     app.mount(div);
 };
-
-export default { warning, info, normal, success, error };
+export default {
+    name: 'LewDialog',
+    warning,
+    info,
+    normal,
+    success,
+    error,
+};

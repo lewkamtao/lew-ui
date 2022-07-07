@@ -17,6 +17,7 @@ export * from './select';
 export * from './switch';
 
 export * from './table';
+export * from './pagination';
 
 export * from './avatar';
 

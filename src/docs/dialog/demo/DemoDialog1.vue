@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { LewDialog } from 'lew-ui';
 const open = (type: any) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore

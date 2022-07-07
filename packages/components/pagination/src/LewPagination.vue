@@ -3,10 +3,9 @@ import { _props } from './porps';
 </script>
 
 <template>
-    <div class="lew-pagination"></div>
+    <div class="lew-pagination">
+        <slot />
+    </div>
 </template>
 
-<style lang="scss">
-.lew-pagination {
-}
-</style>
+<style lang="scss"></style>

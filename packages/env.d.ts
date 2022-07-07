@@ -12,5 +12,3 @@ declare const hljs;
 declare module 'lew-ui';
 declare module '@vicons/fluent';
 declare module '@fancyapps/ui';
-declare const LewMessage;
-declare const LewDialog;

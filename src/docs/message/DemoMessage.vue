@@ -23,7 +23,8 @@ const columns = [
         width: '200px',
         field: 'default',
     },
-];const docsTable = ref([
+];
+const docsTable = ref([
     {
         param: 'options',
         description: '列表配置',
@@ -31,33 +32,14 @@ const columns = [
         default: '[]',
     },
 ]);
-
-let pre1 = ref(`import { LewMessage } from 'lew-ui';
-
-const open = () => {
-    LewMessage.info('这是一个demo信息');
-};`);
 </script>
 
 <template>
     <div class="demo-wrapper">
         <lew-title>Message</lew-title>
-        <div class="guide-wrapper">
-            <p>
-                无论是<lew-mark>按需加载</lew-mark>还是<lew-mark>全局安装</lew-mark>，你都需要在<lew-mark>setup</lew-mark>中引入
-                LewMessage
-            </p>
-
-            <div v-highlight class="hl-pre">
-                <div class="pre-box">
-                    <pre><code v-text="pre1"></code></pre>
-                </div>
-            </div>
-        </div>
         <lew-demo-box title="快捷唤起" :code="DemoMessage1_code">
             <demo-message1>删除</demo-message1></lew-demo-box
         >
-
         <lew-title size="16px">Props</lew-title>
         <lew-table :data="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>

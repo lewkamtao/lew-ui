@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LewMessage } from 'lew-ui';
+
 
 const data: any = [
     {
@@ -80,7 +80,7 @@ const columns = [
     },
     {
         title: '介绍',
-        width: '450px',
+        width: '400px',
         field: 'intro',
     },
     {

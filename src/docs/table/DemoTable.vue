@@ -201,7 +201,7 @@ const docsTable2 = ref([
                 @close="alertClose[4] = true"
             />
         </lew-demo-box>
-        <br />
+        <!-- <br />
         <lew-title size="16px">Props</lew-title>
         <lew-table :data="docsTable1" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
@@ -217,6 +217,6 @@ const docsTable2 = ref([
             <template #description="{ row }"> {{ row.description }} </template>
             <template #type="{ row }"> {{ row.type }} </template>
             <template #default="{ row }"> {{ row.default }} </template>
-        </lew-table>
+        </lew-table> -->
     </div>
 </template>

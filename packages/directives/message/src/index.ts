@@ -1,23 +1,23 @@
 import '../styles/index.scss';
 
 const warning = (content: string) => {
-    dialog('warning', content);
+    message('warning', content);
 };
 
 const error = (content: string) => {
-    dialog('error', content);
+    message('error', content);
 };
 
 const info = (content: string) => {
-    dialog('info', content);
+    message('info', content);
 };
 
 const normal = (content: string) => {
-    dialog('normal', content);
+    message('normal', content);
 };
 
 const success = (content: string) => {
-    dialog('success', content);
+    message('success', content);
 };
 
 const createMessageList = () => {
@@ -26,10 +26,10 @@ const createMessageList = () => {
     document.body.appendChild(div);
 };
 
-const dialog = (type: string, content: string) => {
+const message = (type: string, content: string) => {
     if (!document.getElementById('lew-message')) {
         createMessageList();
-        dialog(type, content);
+        message(type, content);
     } else {
         addMessage(type, content);
     }
@@ -69,4 +69,11 @@ const addMessage = (type: string, text: string) => {
     }, 10);
 };
 
-export default { warning, info, normal, success, error };
+export default {
+    name: 'LewMessage',
+    warning,
+    info,
+    normal,
+    success,
+    error,
+};
