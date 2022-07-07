@@ -33,3 +33,5 @@ export * from './popover';
 export * from './fancybox';
 export * from './plyr';
 export * from './demo-box';
+
+export * from './backtop';
