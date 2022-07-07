@@ -1,16 +1,21 @@
+<!--
+ * @Author: Kamtao
+ * @Date: 2022-06-27 10:04:45
+ * @LastEditTime: 2022-07-07 15:40:10
+ * @Description: 
+-->
 <script lang="ts" setup>
 import { ref } from 'vue';
-let colors = ref(['info', 'error', 'warning', 'normal', 'success']);
+let colors = ref(['primary', 'normal', 'info', 'warning', 'error', 'success']);
 </script>
 
 <template>
-    <lew-flex x="start">
+    <lew-flex x="start" class="color">
         <lew-flex
             v-for="(item, index) in colors"
             :key="index"
             direction="column"
-            class="color"
-            gap="30px"
+            gap="10px"
         >
             <lew-flex
                 class="item"
@@ -43,7 +48,7 @@ let colors = ref(['info', 'error', 'warning', 'normal', 'success']);
 .color {
     .item {
         width: 100%;
-        height: 30px;
+        height: 40px;
         white-space: nowrap;
     }
 }

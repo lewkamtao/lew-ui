@@ -14,7 +14,28 @@ import {
 
 import { ref } from 'vue';
 
-const docsTable1 = ref([
+const columns = [
+    {
+        title: '参数名',
+        width: '200px',
+        field: 'param',
+    },
+    {
+        title: '描述',
+        width: '320px',
+        field: 'description',
+    },
+    {
+        title: '类型',
+        width: 'auto',
+        field: 'type',
+    },
+    {
+        title: '默认值',
+        width: '200px',
+        field: 'default',
+    },
+];const docsTable1 = ref([
     {
         param: 'type',
         description: '输入框类型',
@@ -59,7 +80,28 @@ const docsTable1 = ref([
         default: '-',
     },
 ]);
-const docsTable2 = ref([
+const columns = [
+    {
+        title: '参数名',
+        width: '200px',
+        field: 'param',
+    },
+    {
+        title: '描述',
+        width: '320px',
+        field: 'description',
+    },
+    {
+        title: '类型',
+        width: 'auto',
+        field: 'type',
+    },
+    {
+        title: '默认值',
+        width: '200px',
+        field: 'default',
+    },
+];const docsTable2 = ref([
     {
         param: 'input',
         description: '输入',

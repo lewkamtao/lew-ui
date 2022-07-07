@@ -19,16 +19,71 @@ import {
 } from './demo';
 import { ref } from 'vue';
 
-const docsTable = ref([
+let alertClose: any = ref([]);
+
+const columns = [
     {
-        param: 'type',
-        description: '配色类型',
-        type: `normal | success | error | warning | info`,
-        default: 'normal',
+        title: '参数名',
+        width: '200px',
+        field: 'param',
+    },
+    {
+        title: '描述',
+        width: '320px',
+        field: 'description',
+    },
+    {
+        title: '类型',
+        width: 'auto',
+        field: 'type',
+    },
+    {
+        title: '默认值',
+        width: '200px',
+        field: 'default',
+    },
+];
+
+const docsTable1 = ref([
+    {
+        param: 'model-value (v-model)',
+        description: '绑定值',
+        type: 'boolean',
+        default: 'false',
+    },
+    {
+        param: 'round',
+        description: '是否是圆角',
+        type: 'boolean',
+        default: 'true',
+    },
+    {
+        param: '@change',
+        description: '组件值发生变化的回调',
+        type: '(value: boolean) => void	',
+        default: "''",
     },
 ]);
-
-let alertClose: any = ref([]);
+const docsTable2 = ref([
+    {
+        param: 'model-value (v-model)',
+        description: '绑定值',
+        type: 'boolean',
+        default: 'false',
+    },
+    {
+        param: 'round',
+        description: '是否是圆角',
+        type: 'boolean',
+        default: 'true',
+    },
+    {
+        param: '@change',
+        description: '组件值发生变化的回调',
+        type: '(value: boolean) => void	',
+        default: "''",
+    },
+]);
 </script>
 
 <template>
@@ -146,8 +201,22 @@ let alertClose: any = ref([]);
                 @close="alertClose[4] = true"
             />
         </lew-demo-box>
-
         <br />
-        <lew-title>持续更新中···</lew-title>
+        <lew-title size="16px">Props</lew-title>
+        <lew-table :data="docsTable1" :columns="columns" height="auto">
+            <template #param="{ row }"> {{ row.param }} </template>
+            <template #description="{ row }"> {{ row.description }} </template>
+            <template #type="{ row }"> {{ row.type }} </template>
+            <template #default="{ row }"> {{ row.default }} </template>
+        </lew-table>
+        <br />
+        <br />
+        <lew-title size="16px">columns</lew-title>
+        <lew-table :data="docsTable2" :columns="columns" height="auto">
+            <template #param="{ row }"> {{ row.param }} </template>
+            <template #description="{ row }"> {{ row.description }} </template>
+            <template #type="{ row }"> {{ row.type }} </template>
+            <template #default="{ row }"> {{ row.default }} </template>
+        </lew-table>
     </div>
 </template>

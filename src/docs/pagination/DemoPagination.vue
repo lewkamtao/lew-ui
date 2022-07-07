@@ -1,3 +1,9 @@
+<!--
+ * @Author: Kamtao
+ * @Date: 2022-07-07 09:22:34
+ * @LastEditTime: 2022-07-07 16:36:26
+ * @Description: 
+-->
 <script setup lang="ts">
 import {
     DemoPagination1,
@@ -7,6 +13,28 @@ import {
 } from './demo';
 import { ref } from 'vue';
 
+const columns = [
+    {
+        title: '参数名',
+        width: '200px',
+        field: 'param',
+    },
+    {
+        title: '描述',
+        width: '320px',
+        field: 'description',
+    },
+    {
+        title: '类型',
+        width: 'auto',
+        field: 'type',
+    },
+    {
+        title: '默认值',
+        width: '200px',
+        field: 'default',
+    },
+];
 const docsTable = ref([
     {
         param: 'model-value (v-model)',
@@ -31,37 +59,25 @@ const docsTable = ref([
 
 <template>
     <div class="demo-wrapper">
-        <lew-title>Switch</lew-title>
-        <lew-demo-box title="圆的" :code="DemoPagination1_code">
+        <lew-title>Pagination</lew-title>
+        <lew-demo-box v-if="false" title="圆的" :code="DemoPagination1_code">
             <demo-pagination1 />
         </lew-demo-box>
-        <lew-demo-box title="方的" :code="DemoPagination2_code">
+        <lew-demo-box v-if="false" title="方的" :code="DemoPagination2_code">
             <demo-pagination2 />
         </lew-demo-box>
-        <lew-title size="16px">Props</lew-title>
-        <vxe-table :data="docsTable">
-            <vxe-column
-                show-overflow
-                field="param"
-                width="220px"
-                title="参数名"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                field="description"
-                title="描述"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                width="300"
-                field="type"
-                title="类型"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                field="default"
-                title="默认值"
-            ></vxe-column>
-        </vxe-table>
+        <br />
+        <lew-title size="16px">coming soon···</lew-title>
+        <lew-table
+            v-if="false"
+            :data="docsTable"
+            :columns="columns"
+            height="auto"
+        >
+            <template #param="{ row }"> {{ row.param }} </template>
+            <template #description="{ row }"> {{ row.description }} </template>
+            <template #type="{ row }"> {{ row.type }} </template>
+            <template #default="{ row }"> {{ row.default }} </template>
+        </lew-table>
     </div>
 </template>

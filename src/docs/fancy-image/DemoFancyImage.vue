@@ -1,7 +1,35 @@
+<!--
+ * @Author: Kamtao
+ * @Date: 2022-07-04 12:15:55
+ * @LastEditTime: 2022-07-07 16:23:20
+ * @Description: 
+-->
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DemoFancyImage1, DemoFancyImage1_code } from './demo';
 
+const columns = [
+    {
+        title: '参数名',
+        width: '200px',
+        field: 'param',
+    },
+    {
+        title: '描述',
+        width: '320px',
+        field: 'description',
+    },
+    {
+        title: '类型',
+        width: 'auto',
+        field: 'type',
+    },
+    {
+        title: '默认值',
+        width: '200px',
+        field: 'default',
+    },
+];
 const docsTable = ref([
     {
         param: 'src',
@@ -24,27 +52,13 @@ const docsTable = ref([
         <lew-demo-box title="普通" :code="DemoFancyImage1_code">
             <demo-fancy-image1 />
         </lew-demo-box>
-
         <lew-title size="16px">Props</lew-title>
-        <vxe-table :data="docsTable">
-            <vxe-column
-                show-overflow
-                field="param"
-                width="220px"
-                title="参数名"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                field="description"
-                title="描述"
-            ></vxe-column>
-            <vxe-column show-overflow field="type" title="类型"></vxe-column>
-            <vxe-column
-                show-overflow
-                field="default"
-                title="默认值"
-            ></vxe-column>
-        </vxe-table>
+        <lew-table :data="docsTable" :columns="columns" height="auto">
+            <template #param="{ row }"> {{ row.param }} </template>
+            <template #description="{ row }"> {{ row.description }} </template>
+            <template #type="{ row }"> {{ row.type }} </template>
+            <template #default="{ row }"> {{ row.default }} </template>
+        </lew-table>
     </div>
 </template>
 
