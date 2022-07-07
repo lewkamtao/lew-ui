@@ -7,6 +7,10 @@ const data: any = [
         sex: 1,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+        // 定义这一单元格的样式
+        tdStyle: {
+            age: 'background:var(--lew-primary-color-dark);color:#fff',
+        },
     },
     {
         id: 2,
@@ -15,6 +19,8 @@ const data: any = [
         sex: 1,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+        // 定义这一行的样式
+        rowStyle: 'background:var(--lew-error-color-light)',
     },
     {
         id: 3,
@@ -23,6 +29,11 @@ const data: any = [
         sex: 0,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+        // 定义这一单元格的样式
+        tdStyle: {
+            sex: 'color:var(--lew-warning-color-dark);',
+            intro: 'background:var(--lew-warning-color-dark);color:#fff',
+        },
     },
     {
         id: 4,
@@ -31,6 +42,9 @@ const data: any = [
         sex: 0,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+        tdStyle: {
+            sex: 'background:var(--lew-error-color-dark);color:#fff',
+        },
     },
     {
         id: 5,
@@ -58,6 +72,8 @@ const columns = [
         x: 'center',
         sticky: 'left',
         offsetX: '50px',
+        // 定义这一列的样式
+        columnStyle: 'background:var(--lew-success-color-light)',
     },
     {
         title: '年龄',

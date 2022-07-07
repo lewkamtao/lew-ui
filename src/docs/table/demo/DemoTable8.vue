@@ -1,3 +1,11 @@
+<!--
+ * @Author: Kamtao
+ * @Date: 2022-07-07 09:22:34
+ * @LastEditors: lew 68851669+lewkamtao@users.noreply.github.com
+ * @LastEditTime: 2022-07-07 12:36:22
+ * @Description: 
+-->
+
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { LewMessage } from 'lew-ui';
@@ -86,7 +94,7 @@ const columns = [
     },
 ];
 
-let isCheckeds = ref(['35341588']);
+let isCheckeds = ref([]);
 
 const get = (e: any) => {
     if (e.column.field == 'action') {
@@ -100,7 +108,38 @@ const change = (e: any, row: any, column: any) => {
 </script>
 
 <template>
-    <lew-table :data="data" :columns="columns" height="auto">
+    <lew-flex x="start">
+        <lew-button
+            v-if="isCheckeds.length > 0"
+            type="error"
+            @click="isCheckeds = []"
+            >取消所有选择</lew-button
+        >
+        <lew-button
+            v-if="isCheckeds.length == 0"
+            @click="
+                isCheckeds = data
+                    .filter((e: any, i: number) => i <= 4)
+                    .map((e: any) => e.id)
+            "
+            >选中前五个</lew-button
+        >
+        <lew-button
+            v-if="isCheckeds.length != data.length"
+            @click="isCheckeds = data.map((e: any) => e.id)"
+            >全选</lew-button
+        >
+    </lew-flex>
+    <br />
+    <lew-table :data="data" :columns="columns" height="600px">
+        <template #checkbox="{ row, column }">
+            <lew-checkbox
+                :checked="isCheckeds.includes(row.id)"
+                :label="''"
+                @change="change($event, row, column)"
+                @click.stop
+            ></lew-checkbox>
+        </template>
         <template #id="{ row }"> {{ row.id }} </template>
         <template #title="{ row }">
             <div class="title">{{ row.title }}</div>
@@ -123,14 +162,6 @@ const change = (e: any, row: any, column: any) => {
             ></div>
         </template>
 
-        <template #checkbox="{ row, column }">
-            <lew-checkbox
-                :checked="isCheckeds.includes(row.id)"
-                :label="''"
-                @change="change($event, row, column)"
-                @click.stop
-            ></lew-checkbox>
-        </template>
         <template #action="{ row, column }">
             <lew-button is-text @click.stop="get({ row, column })"
                 >管理</lew-button

@@ -46,7 +46,8 @@ let alertClose: any = ref([]);
                 :list="[
                     {
                         type: 'warning',
-                        title: '注意，你必须在 columns 中设置每一列的宽度',
+                        title: '注意',
+                        content: '你必须在「columns」中设置每一列的宽度',
                     },
                 ]"
                 @close="alertClose[0] = true"
@@ -57,14 +58,16 @@ let alertClose: any = ref([]);
             <lew-alert
                 v-if="!alertClose[2]"
                 style="margin-top: 20px"
+                size="16px"
                 :list="[
                     {
                         type: 'info',
-                        title: '你可以调整 offsetX 来设置横向偏移量',
+                        title: '提示',
+                        content:
+                            '为了高度自定义，你需要调整「offsetX」来设置横向偏移量，不设置，默认是 0px',
                     },
                 ]"
                 @close="alertClose[2] = true"
-                size="16px"
             />
         </lew-demo-box>
         <lew-demo-box title="自定义操作" :code="DemoTable3_code">
@@ -75,7 +78,8 @@ let alertClose: any = ref([]);
                 :list="[
                     {
                         type: 'info',
-                        title: '插槽里面有你需要的任何的信息',
+                        title: '提示',
+                        content: '插槽为你提供了整列和整行的数据以及参数。',
                     },
                 ]"
                 size="16px"
@@ -90,15 +94,30 @@ let alertClose: any = ref([]);
                 size="16px"
                 :list="[
                     {
-                        type: 'success',
-                        title: '你可以使用任何组件，甚至你可以使用 popover + input 这种高度自定义的方式录入信息',
+                        type: 'info',
+                        title: '提示',
+                        content: `你可以使用任何组件;
+                            甚至你可以使用 popover + input 这种高度自定义的方式录入信息。`,
                     },
                 ]"
                 @close="alertClose[4] = true"
             />
         </lew-demo-box>
-        <lew-demo-box v-if="false" title="自定义样式" :code="DemoTable5_code">
+        <lew-demo-box title="自定义样式" :code="DemoTable5_code">
             <demo-table5 />
+            <lew-alert
+                v-if="!alertClose[4]"
+                style="margin-top: 20px"
+                size="16px"
+                :list="[
+                    {
+                        type: 'info',
+                        title: '提示',
+                        content: `你可以根据自己的实际情况来自定义某一行，某一列，某一个单元格的样式;`,
+                    },
+                ]"
+                @close="alertClose[4] = true"
+            />
         </lew-demo-box>
         <lew-demo-box v-if="false" title="固定列" :code="DemoTable6_code">
             <demo-table6 />
@@ -108,6 +127,24 @@ let alertClose: any = ref([]);
         </lew-demo-box>
         <lew-demo-box title="完整功能" :code="DemoTable8_code">
             <demo-table8 />
+            <lew-alert
+                v-if="!alertClose[4]"
+                style="margin-top: 20px"
+                size="16px"
+                :list="[
+                    {
+                        type: 'success',
+                        title: '功能介绍',
+                        content: `1、可选择，你可以在插槽内安置一个「Checkbox」。
+                        2、固定列，你可以固定某一列。
+                        3、自定义结构，你可以在单元格内自由自定义，例如：「按钮」、「头像」、「标签」等
+                        4、插槽，高度的便利性，你可以使用「计算属性」给文本转格式。
+                        5、适用「tooltip」，对于长文本，你可以省略号隐藏起来，通过「气泡」的形式展现。
+                        `,
+                    },
+                ]"
+                @close="alertClose[4] = true"
+            />
         </lew-demo-box>
 
         <br />

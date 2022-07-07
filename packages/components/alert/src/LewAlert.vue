@@ -107,11 +107,13 @@ const emit = defineEmits(['close']);
                 width: 100%;
                 word-wrap: break-word;
                 white-space: pre-line;
+                font-weight: 500;
             }
             .content {
                 margin-top: 7px;
                 font-size: 14px;
                 width: 100%;
+                font-weight: 400;
                 word-wrap: break-word;
                 white-space: pre-line;
             }

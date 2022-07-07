@@ -80,6 +80,13 @@ group.value = [
                 label: '',
                 type: '',
             },
+            {
+                cname: '颜色',
+                name: 'Color',
+                path: '/Color',
+                label: '',
+                type: 'success',
+            },
         ],
     },
 

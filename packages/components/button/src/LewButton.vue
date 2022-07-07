@@ -121,7 +121,7 @@ defineProps({
 }
 .lew-button-primary {
     background: var(--lew-primary-color);
-    color: var(--lew-white-color);
+    color: var(--lew-white-text-color);
 }
 
 .lew-button-primary:hover {
@@ -138,7 +138,7 @@ defineProps({
 
 .lew-button-info {
     background: var(--lew-info-color);
-    color: var(--lew-white-color);
+    color: var(--lew-white-text-color);
 }
 
 .lew-button-info:active {
@@ -147,7 +147,7 @@ defineProps({
 
 .lew-button-success {
     background: var(--lew-success-color);
-    color: var(--lew-white-color);
+    color: var(--lew-white-text-color);
 }
 
 .lew-button-success:hover {
@@ -160,7 +160,7 @@ defineProps({
 
 .lew-button-error {
     background: var(--lew-error-color);
-    color: var(--lew-white-color);
+    color: var(--lew-white-text-color);
 }
 
 .lew-button-error:hover {
@@ -186,7 +186,7 @@ defineProps({
 
 .lew-button-warning {
     background: var(--lew-warning-color);
-    color: var(--lew-white-color);
+    color: var(--lew-white-text-color);
 }
 
 .lew-button-warning:hover {

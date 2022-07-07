@@ -62,7 +62,6 @@ const props = defineProps({
 watch(
     () => props.checked,
     (v) => {
-        console.log(1);
         if (v != _checked.value) {
             _checked.value = v;
         }

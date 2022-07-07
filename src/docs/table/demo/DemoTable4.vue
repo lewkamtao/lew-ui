@@ -107,6 +107,7 @@ const formatSex = (sex: number) => {
 let v = ref('');
 const submit = (instance: any) => {
     LewMessage.error(v.value || '密码不可为空');
+    v.value = '';
     instance.hide();
 };
 </script>

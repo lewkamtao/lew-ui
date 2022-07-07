@@ -28,7 +28,7 @@
         font-size: 14px;
         border-radius: 4px;
         overflow: hidden;
-        background-color: rgba(255, 255, 255, 0.8);
+        background-color: var(--lew-message-bgcolor);
         backdrop-filter: blur(10px);
         span {
             opacity: 0;
@@ -43,7 +43,7 @@
         }
     }
     .message-normal {
-        color: #000;
+        color: var(--lew-normal-text-color);
     }
     .message-error {
         color: var(--lew-error-text-color);

@@ -4,6 +4,7 @@ import { ref, onMounted, nextTick } from 'vue';
 const props = defineProps(_props);
 
 let lewTableRef: any = ref(null); // 表格的 ref
+let lewTableBodyRef: any = ref(null); // 表格的 body ref
 
 // 设置左右线
 let leftIndex = ref<number>(-1);
@@ -22,6 +23,16 @@ const setSubLine = () => {
             }
         }
     });
+};
+
+const setBodyHeight = () => {
+    let children = lewTableBodyRef.value.children;
+    children = Array.from(children);
+    let h = 0.0;
+    children.map((e) => {
+        h += e.offsetHeight;
+    });
+    lewTableBodyRef.value.style.height = h + 'px';
 };
 
 // 设置展示线 过渡
@@ -61,7 +72,7 @@ const setWidth = () => {
             .map((e) => {
                 wTotal += parseFloat(e.width);
             });
-        niceWidth.value = `${(w - wTotal) / autoLen - 4}px`;
+        niceWidth.value = `${(w - wTotal) / autoLen - 3}px`;
     }
 };
 
@@ -86,6 +97,7 @@ onMounted(() => {
     nextTick(() => {
         // 设置固定单元格的阴影
         setSubLine();
+        setBodyHeight();
     });
 });
 </script>
@@ -134,7 +146,7 @@ onMounted(() => {
                 </lew-flex>
             </div>
         </div>
-        <div class="lew-table-body">
+        <div ref="lewTableBodyRef" class="lew-table-body">
             <div
                 v-for="(row, i) in data"
                 :key="`data${i}`"
@@ -158,11 +170,11 @@ onMounted(() => {
                             j == rightIndex && isShowRightLine,
                     }"
                     :style="`  
-                    ${row.rowStyle};
                     ${column.columnStyle ? column.columnStyle : ''};
+                    ${row.rowStyle};
                     ${
-                        row.rcStyle?.[column.field]
-                            ? row.rcStyle[column.field]
+                        row.tdStyle?.[column.field]
+                            ? row.tdStyle[column.field]
                             : ''
                     };
                     ${setSticky(column)};
@@ -187,12 +199,13 @@ onMounted(() => {
 .lew-table {
     display: flex;
     flex-direction: column;
-    height: 500px;
-    width: 100%;
+    height: auto;
     overflow: auto;
+    width: 100%;
     font-size: 14px;
     line-height: 28px;
-
+    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    border-radius: var(--lew-form-border-radius);
     .lew-table-head {
         position: sticky;
         top: 0;
@@ -202,7 +215,7 @@ onMounted(() => {
         .lew-table-td {
             font-weight: 600;
             color: var(--lew-text-color-3);
-            background-color: var(--lew-bgcolor-2);
+            background-color: var(--lew-bgcolor-1);
         }
     }
 
@@ -249,11 +262,6 @@ onMounted(() => {
     .lew-table-right-subline-show::after {
         opacity: 1;
     }
-    .lew-table-tr:last-child {
-        td {
-            border-bottom: 0px var(--lew-form-border-color) solid;
-        }
-    }
 
     .lew-table-td {
         position: relative;
@@ -262,19 +270,30 @@ onMounted(() => {
         justify-content: start;
         flex-shrink: 0;
         text-align: left;
-        padding: 5px;
+        padding: 8px;
         box-sizing: border-box;
         background-color: var(--lew-bgcolor-0);
-        border-bottom: 1.5px var(--lew-form-border-color) solid;
+        border-bottom: var(--lew-form-border-width) var(--lew-form-border-color)
+            solid;
     }
-    .lew-table-td:first-child {
-        border-left: 1.5px var(--lew-form-border-color) solid;
+    .lew-table-tr:last-child {
+        .lew-table-td {
+            border-bottom: 0px var(--lew-form-border-color) solid;
+        }
     }
-    .lew-table-td:last-child {
-        border-right: 1.5px var(--lew-form-border-color) solid;
+    .lew-table-head {
+        .lew-table-tr:last-child {
+            .lew-table-td {
+                border-bottom: var(--lew-form-border-width)
+                    var(--lew-form-border-color) solid;
+            }
+        }
     }
+
     .lew-table-body {
         width: 100%;
+        height: auto;
+
         .lew-table-td {
             color: var(--lew-text-color-5);
         }
@@ -282,11 +301,6 @@ onMounted(() => {
     .lew-table-tr:hover {
         .lew-table-td {
             background-color: var(--lew-bgcolor-1);
-        }
-    }
-    .lew-table-head:hover {
-        .lew-table-td {
-            background-color: var(--lew-bgcolor-2);
         }
     }
 }
