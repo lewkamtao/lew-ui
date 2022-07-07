@@ -86,6 +86,13 @@ group.value = [
     {
         title: '导航',
         items: [
+            {
+                cname: '回到顶部',
+                name: 'BackTop',
+                path: '/BackTop',
+                label: '',
+                type: '',
+            },
             // {
             //     cname: '步骤',
             //     name: 'Steps',
