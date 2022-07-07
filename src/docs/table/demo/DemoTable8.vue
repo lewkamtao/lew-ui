@@ -1,13 +1,13 @@
 <!--
  * @Author: Kamtao
  * @Date: 2022-07-07 09:22:34
- * @LastEditors: lew 68851669+lewkamtao@users.noreply.github.com
- * @LastEditTime: 2022-07-07 12:36:22
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-07-07 17:56:15
  * @Description: 
 -->
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { LewMessage } from 'lew-ui';
 import mvJson from './movie_hot_gaia.json';
 
@@ -105,6 +105,12 @@ const get = (e: any) => {
 const change = (e: any, row: any, column: any) => {
     console.log('===>', e, '===>', row.id, '===>', column.field);
 };
+
+const getChecked = computed(() => (id: any) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return isCheckeds.value.includes(id);
+});
 </script>
 
 <template>
@@ -134,7 +140,7 @@ const change = (e: any, row: any, column: any) => {
     <lew-table :data="data" :columns="columns" height="600px">
         <template #checkbox="{ row, column }">
             <lew-checkbox
-                :checked="isCheckeds.includes(row.id)"
+                :checked="getChecked(row.id)"
                 :label="''"
                 @change="change($event, row, column)"
                 @click.stop

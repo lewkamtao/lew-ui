@@ -31,7 +31,7 @@ const setBodyHeight = () => {
     children = Array.from(children);
     let h = 0.0;
     children.map((e) => {
-        h += e.offsetHeight;
+        h += e.offsetHeight - 0.3;
     });
     lewTableBodyRef.value.style.height = h + 'px';
 };
