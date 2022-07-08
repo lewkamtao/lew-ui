@@ -1,15 +1,15 @@
 export const backtopProps = {
     right: {
-        type: Number,
-        default: 40,
+        type: String,
+        default: '40px',
     },
     bottom: {
-        type: Number,
-        default: 40,
+        type: String,
+        default: '40px',
     },
     valveHeight: {
-        type: Number,
-        default: 50,
+        type: String,
+        default: '50px',
     },
     target: {
         type: String,

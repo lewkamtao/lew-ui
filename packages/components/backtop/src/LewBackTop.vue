@@ -12,8 +12,8 @@ const props = defineProps(backtopProps);
 const emit = defineEmits(['click']);
 
 const backTopStyle = computed(() => ({
-    right: `${props.right}px`,
-    bottom: `${props.bottom}px`,
+    right: `${props.right}`,
+    bottom: `${props.bottom}`,
 }));
 
 const toBackUp = () => {
@@ -30,7 +30,9 @@ const toBackUp = () => {
 };
 
 const handleScroll = () => {
-    if (dom.value) showBackTop.value = dom.value.scrollTop >= props.valveHeight;
+    if (dom.value)
+        showBackTop.value =
+            dom.value.scrollTop >= parseFloat(props.valveHeight);
 };
 
 useEventListener(window, 'scroll', handleScroll);

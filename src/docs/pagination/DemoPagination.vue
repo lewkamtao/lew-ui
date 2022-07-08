@@ -1,7 +1,7 @@
 <!--
  * @Author: Kamtao
  * @Date: 2022-07-07 09:22:34
- * @LastEditTime: 2022-07-08 10:57:30
+ * @LastEditTime: 2022-07-08 16:19:33
  * @Description: 
 -->
 <script setup lang="ts">
@@ -37,22 +37,40 @@ const columns = [
 ];
 const docsTable = ref([
     {
-        param: 'model-value (v-model)',
-        description: '绑定值',
-        type: 'boolean',
-        default: 'false',
+        param: 'total',
+        description: '总数',
+        type: 'number',
+        default: '100',
     },
     {
-        param: 'round',
-        description: '是否是圆角',
+        param: 'pageNum',
+        description: '当前页码',
+        type: 'number',
+        default: '1',
+    },
+    {
+        param: 'pageSize',
+        description: '页大小',
+        type: 'number',
+        default: '20',
+    },
+    {
+        param: 'pageShowSize',
+        description: '展示页码长度',
+        type: 'number',
+        default: '3',
+    },
+    {
+        param: 'background',
+        description: '是否显示背景',
         type: 'boolean',
         default: 'true',
     },
     {
-        param: '@change',
-        description: '组件值发生变化的回调',
-        type: '(value: boolean) => void	',
-        default: "''",
+        param: 'round',
+        description: '是否是圆形',
+        type: 'boolean',
+        default: 'true',
     },
 ]);
 </script>
@@ -67,13 +85,8 @@ const docsTable = ref([
             <demo-pagination2 />
         </lew-demo-box>
         <br />
-        <lew-title size="16px">coming soon···</lew-title>
-        <lew-table
-            v-if="false"
-            :data="docsTable"
-            :columns="columns"
-            height="auto"
-        >
+        <lew-title size="16px">props</lew-title>
+        <lew-table :data="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>
             <template #type="{ row }"> {{ row.type }} </template>

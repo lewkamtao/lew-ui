@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import { CheckmarkSharp, CloseSharp } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
-const data: any = [
+import { ref } from 'vue';
+
+let data: any = ref([
     {
         id: 1,
         name: '小明',
@@ -52,7 +54,7 @@ const data: any = [
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
     },
-];
+]);
 
 const columns = [
     {
@@ -130,6 +132,9 @@ const formatSex = (sex: number) => {
         <template #sex="{ row }"> {{ formatSex(row.sex) }} </template>
         <template #intro="{ row }"> {{ row.intro }} </template>
     </lew-table>
+    <div style="margin-top: 20px">
+        <lew-pagination :page-num="1" :total="200" />
+    </div>
 </template>
 
 <style lang="scss" scoped>

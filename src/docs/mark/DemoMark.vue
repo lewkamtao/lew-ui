@@ -1,3 +1,9 @@
+<!--
+ * @Author: Kamtao
+ * @Date: 2022-06-28 09:42:26
+ * @LastEditTime: 2022-07-08 15:41:00
+ * @Description: 
+-->
 <script setup lang="ts">
 import { DemoMark1, DemoMark1_code } from './demo';
 import { ref } from 'vue';
@@ -23,7 +29,8 @@ const columns = [
         width: '200px',
         field: 'default',
     },
-];const docsTable = ref([
+];
+const docsTable = ref([
     {
         param: 'type',
         description: '配色类型',
@@ -42,6 +49,7 @@ const columns = [
         <lew-demo-box title="文本标记" :code="DemoMark1_code">
             <demo-mark1>删除</demo-mark1></lew-demo-box
         >
+        <lew-title size="16px">props</lew-title>
         <lew-table :data="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>
