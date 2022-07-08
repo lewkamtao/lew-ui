@@ -32,11 +32,11 @@ const change = (e: any) => {
             placement="bottom-start"
             @change="change"
         >
-            <lew-avatar src="https://dpurl.org/Oqmw8">hover</lew-avatar>
+            <lew-avatar src="https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/media/images/2022782251430.jpeg">hover</lew-avatar>
         </lew-dropdown>
 
         <lew-dropdown :options="options" placement="top-start" @change="change">
-            <lew-avatar src="https://dpurl.org/Oqmw8">hover</lew-avatar>
+            <lew-avatar src="https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/media/images/2022782251430.jpeg">hover</lew-avatar>
         </lew-dropdown>
 
         <lew-dropdown
@@ -44,7 +44,7 @@ const change = (e: any) => {
             placement="left-start"
             @change="change"
         >
-            <lew-avatar src="https://dpurl.org/Oqmw8">hover</lew-avatar>
+            <lew-avatar src="https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/media/images/2022782251430.jpeg">hover</lew-avatar>
         </lew-dropdown>
 
         <lew-dropdown
@@ -52,7 +52,7 @@ const change = (e: any) => {
             placement="right-start"
             @change="change"
         >
-            <lew-avatar src="https://dpurl.org/Oqmw8">hover</lew-avatar>
+            <lew-avatar src="https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/media/images/2022782251430.jpeg">hover</lew-avatar>
         </lew-dropdown>
     </lew-flex>
 </template>
