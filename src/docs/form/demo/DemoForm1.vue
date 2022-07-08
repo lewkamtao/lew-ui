@@ -84,7 +84,12 @@ let home_options = ref([
 </template>
 <style scoped lang="scss">
 .form-box {
-    width: 500px;
+    width: 350px;
     margin: 50px auto;
+}
+@media (max-width: 767px) {
+    .form-box {
+        width: 100%;
+    }
 }
 </style>

@@ -102,5 +102,10 @@ let isShowCode = ref(false);
     .demo-cp {
         padding: 30px;
     }
+    @media (max-width: 767px) {
+        .demo-cp {
+            overflow-x: auto;
+        }
+    }
 }
 </style>

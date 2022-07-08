@@ -23,7 +23,8 @@ const columns = [
         width: '200px',
         field: 'default',
     },
-];const docsTable = ref([
+];
+const docsTable = ref([
     {
         param: 'title',
         description: '表单标题',
@@ -53,9 +54,3 @@ const columns = [
         </lew-table>
     </div>
 </template>
-<style scoped lang="scss">
-.form-box {
-    width: 400px;
-    margin: 50px auto;
-}
-</style>
