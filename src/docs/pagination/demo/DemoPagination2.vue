@@ -1,14 +1,9 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-
-let value = ref(false);
-
-const change = (e: unknown) => {
-    console.log(e);
-    console.log(value.value);
-};
-</script>
-
+<!--
+ * @Author: Kamtao
+ * @Date: 2022-07-07 09:22:34
+ * @LastEditTime: 2022-07-08 10:54:13
+ * @Description: 
+-->
 <template>
-    <lew-switch v-model="value" @change="change"></lew-switch>
+    <lew-pagination :total="100"></lew-pagination>
 </template>

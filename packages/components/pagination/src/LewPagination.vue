@@ -1,5 +1,13 @@
+<!--
+ * @Author: Kamtao
+ * @Date: 2022-07-07 09:22:34
+ * @LastEditTime: 2022-07-08 10:59:33
+ * @Description: 
+-->
 <script lang="ts" setup>
-import { _props } from './porps';
+import { paginationProps } from './porps';
+
+defineProps(paginationProps);
 </script>
 
 <template>

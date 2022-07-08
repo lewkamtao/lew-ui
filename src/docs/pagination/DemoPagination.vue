@@ -1,7 +1,7 @@
 <!--
  * @Author: Kamtao
  * @Date: 2022-07-07 09:22:34
- * @LastEditTime: 2022-07-07 16:36:26
+ * @LastEditTime: 2022-07-08 10:57:30
  * @Description: 
 -->
 <script setup lang="ts">
@@ -60,7 +60,7 @@ const docsTable = ref([
 <template>
     <div class="demo-wrapper">
         <lew-title>Pagination</lew-title>
-        <lew-demo-box v-if="false" title="圆的" :code="DemoPagination1_code">
+        <lew-demo-box title="常规" :code="DemoPagination1_code">
             <demo-pagination1 />
         </lew-demo-box>
         <lew-demo-box v-if="false" title="方的" :code="DemoPagination2_code">
