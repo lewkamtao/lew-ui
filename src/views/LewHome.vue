@@ -385,10 +385,10 @@ const message = (type: string) => {
 
 .home-wrapper {
     width: 100%;
-    min-height: 100vh;
     perspective: 800;
     overflow: hidden;
     -webkit-perspective: 800;
+
     .startbox {
         position: fixed;
         left: 50px;
@@ -429,6 +429,8 @@ const message = (type: string) => {
         animation-delay: 0.5s;
         opacity: 0;
         .item {
+            flex-shrink: 0;
+            width: 400px;
             height: calc(100vh - 70px);
         }
     }
@@ -450,6 +452,46 @@ const message = (type: string) => {
         to {
             opacity: 1;
             transform: translateY(0%);
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .home-wrapper {
+        .startbox {
+            left: 50%;
+            top: 25px;
+            text-align: center;
+            white-space: nowrap;
+        }
+        @keyframes start {
+            from {
+                opacity: 0;
+                transform: translate(-50%, 100%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 50%);
+            }
+        }
+        @keyframes demo {
+            from {
+                opacity: 0;
+                transform: scale(0.3) translate(-320px, 200px) rotateX(0deg)
+                    rotateY(0deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(0.5) translate(-320px, 200px) rotateX(15deg)
+                    rotateY(-15deg);
+            }
+        }
+        .home {
+            .item {
+                flex-shrink: 0;
+                width: 300px;
+                height: calc(100vh - 70px);
+            }
         }
     }
 }

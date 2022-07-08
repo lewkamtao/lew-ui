@@ -55,13 +55,7 @@ const gohome = () => {
         <div class="menu">
             <div class="menu-item" @click="router.push(`/`)">首页</div>
             <div class="menu-item" @click="router.push(`/Install`)">指南</div>
-            <div
-                style="margin-right: 60px"
-                class="menu-item"
-                @click="router.push(`/Avatar`)"
-            >
-                组件
-            </div>
+            <div class="menu-item" @click="router.push(`/Avatar`)">组件</div>
 
             <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
                 <Icon size="24"> <LogoGithub /> </Icon
@@ -93,6 +87,7 @@ const gohome = () => {
     background: var(--lew-bgcolor-0);
     border-bottom: var(--lew-border-1);
     user-select: none;
+    white-space: nowrap;
     .logo {
         display: flex;
         align-items: center;
@@ -131,6 +126,28 @@ const gohome = () => {
         }
         .menu-item {
             padding: 10px;
+        }
+    }
+}
+@media (max-width: 767px) {
+    .Header {
+        padding: 0px 15px;
+        .logo {
+            span {
+                display: none;
+            }
+        }
+        .menu {
+            .menu-item {
+                margin-right: 5px;
+                padding: 5px;
+            }
+            span {
+                margin-right: 0px;
+            }
+            a {
+                margin-right: 5px;
+            }
         }
     }
 }

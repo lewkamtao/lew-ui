@@ -100,7 +100,7 @@ const emit = defineEmits(['close']);
             background: rgba($color: #000000, $alpha: 0.15);
         }
         .message {
-            width: calc(100% - 100px);
+            width: calc(100% - 40px);
             .title {
                 margin-top: 1px;
                 font-size: 14px;

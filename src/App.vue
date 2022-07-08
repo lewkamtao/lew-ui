@@ -12,10 +12,16 @@ import TheHeader from './layout/TheHeader.vue';
 <style lang="scss" scoped>
 .wrapper {
     max-width: 1380px;
+    height: 100%; 
     margin: 0 auto;
     background: var(--lew-bgcolor-0);
     border-left: var(--lew-border-2);
     border-right: var(--lew-border-2);
-    transition: all 0.5s ease;
+}
+
+@media (max-width: 767px) {
+    .wrapper {
+        width: 100vw;
+    }
 }
 </style>
