@@ -46,13 +46,14 @@ defineProps({
     }
     .lew-badge-value {
         position: absolute;
+        display: inline-flex;
+        align-items: center;
         left: 100%;
         bottom: calc(100% - 9px);
         transform: translateX(-50%);
         border-radius: 3px;
         min-width: 18px;
         height: 18px;
-        line-height: 18px;
         text-align: center;
         padding: 0px 5px;
         font-size: 12px;

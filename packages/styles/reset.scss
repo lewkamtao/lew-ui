@@ -82,18 +82,9 @@ q:before,
 q:after,
 blockquote:before,
 blockquote:after {
-    content: "";
+    content: '';
 }
 
 a {
     text-decoration: none;
-}
-
-@font-face {
-    font-family: HarmonyOS_Sans;
-    src: url("../font/HarmonyOS_Sans_Regular.ttf");
-}
-
-* {
-    font-family: HarmonyOS_Sans;
 }

@@ -35,6 +35,7 @@
         "@vicons/ionicons5": "^0.12.0",
         "plyr": "^3.7.2",
         "tippy.js": "^6.3.7",
+        "vfonts": "^0.0.3",
         "vue": "^3.2.25",
         "vue-router": "^4.0.13"
     },

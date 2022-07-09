@@ -98,11 +98,12 @@ onUnmounted(() => {
     transition: all 0.25s;
     .lew-tabs-item {
         position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         z-index: 9;
         flex: 1;
-        text-align: center;
         height: 28px;
-        line-height: 28px;
         border-radius: var(--lew-form-border-radius);
         margin: 3px;
         color: var(--lew-text-color-5);

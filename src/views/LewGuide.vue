@@ -118,6 +118,9 @@ group.value = [
     padding: 50px 50px 150px 50px;
     background: var(--lew-bgcolor-1);
 }
+.mb-btn {
+    display: none;
+}
 @media (max-width: 767px) {
     .mb-btn {
         position: fixed;

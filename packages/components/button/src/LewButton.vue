@@ -67,7 +67,6 @@ defineProps({
 .lew-button-small {
     min-width: 50px;
     height: 24px;
-    line-height: 24px;
     padding: 0px 8px;
     font-size: 12px;
 }
@@ -75,7 +74,6 @@ defineProps({
 .lew-button-medium {
     min-width: 60px;
     height: 30px;
-    line-height: 30px;
     padding: 0px 14px;
     font-size: 14px;
 }
@@ -83,7 +81,6 @@ defineProps({
 .lew-button-large {
     min-width: 70px;
     height: 36px;
-    line-height: 36px;
     padding: 0px 20px;
     font-size: 16px;
 }

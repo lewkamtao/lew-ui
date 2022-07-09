@@ -108,7 +108,6 @@ const close = () => {
 }
 .lew-tag-large {
     height: 28px;
-    line-height: 28px;
     padding: 0px 5px;
     font-size: 14px;
     .lew-tag-close {
