@@ -106,7 +106,6 @@ group.value = [
     top: 59px;
     height: calc(100vh - 58px);
     background-color: var(--lew-bgcolor-0);
-    z-index: 9999;
 }
 .app-main {
     margin-left: 230px;
@@ -140,6 +139,7 @@ group.value = [
     .sider {
         transform: translateX(-100%);
         transition: transform 0.85s cubic-bezier(0.65, 0, 0.35, 1);
+        z-index: 99;
     }
     .sider-open {
         transform: translateX(0%);
