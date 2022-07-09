@@ -125,7 +125,7 @@ group.value = [
         position: fixed;
         left: 0px;
         top: 59px;
-        z-index: 9999;
+        z-index: 99;
         display: inline-flex;
         align-items: center;
         background-color: var(--lew-primary-color);
