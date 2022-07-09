@@ -102,8 +102,14 @@ const setChecked = () => {
 
 .lew-radio-checked.lew-radio-block {
     border: var(--lew-form-border-width) var(--lew-primary-color) solid;
+    background: var(--lew-primary-color-light);
+    color: var(--lew-primary-color-dark);
 }
-
+.lew-radio-checked.lew-radio-block:hover {
+    border: var(--lew-form-border-width) var(--lew-primary-color) solid;
+    background: var(--lew-primary-color-light);
+    color: var(--lew-primary-color-dark);
+}
 .lew-radio-checked {
     .icon-radio-box {
         border: 2px var(--lew-primary-color) solid;
