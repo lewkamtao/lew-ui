@@ -164,7 +164,7 @@ let getPaddingRight = computed(() => {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
+        border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
         border-radius: var(--lew-form-border-radius);
         background-color: var(--lew-form-bgcolor);
         color: var(--lew-text-color);
@@ -177,7 +177,8 @@ let getPaddingRight = computed(() => {
     }
 
     .lew-input:hover {
-        border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
+        border: var(--lew-form-border-width) var(--lew-form-border-color-hover)
+            solid;
         background-color: var(--lew-form-bgcolor-hover);
     }
 

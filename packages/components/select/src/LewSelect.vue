@@ -207,6 +207,7 @@ onUnmounted(() => {
         <!-- 多选 -->
         <div v-show="multiple" class="lew-select-label-multiple">
             <lew-tag
+                type="primary"
                 v-show="multipleLabelStr.length > 0"
                 @close="delTag(0)"
                 closable
@@ -215,6 +216,7 @@ onUnmounted(() => {
             >
             <div ref="tagRef" class="lew-isSelect-label-num">
                 <lew-tag
+                    type="primary"
                     style="margin-left: 5px"
                     v-show="multipleLabelStr.length > 1"
                 >
@@ -226,6 +228,7 @@ onUnmounted(() => {
         <div ref="multipleRef">
             <lew-flex wrap gap="5px" x="start" class="lew-isSelect-label-box">
                 <lew-tag
+                    type="primary"
                     v-for="(item, i) in multipleLabelStr"
                     :key="`multipleLabelStr${i}`"
                     @close="delTag(i)"
@@ -345,7 +348,8 @@ onUnmounted(() => {
     .options-box {
         overflow-y: auto;
         overflow-x: hidden;
-        height: 220px;
+        max-height: 300px;
+        height: auto;
         box-sizing: border-box;
         transition: all 0.25s ease;
         padding-right: 6px;
@@ -371,7 +375,7 @@ onUnmounted(() => {
         }
         .item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-select-bgcolor-hover);
+            background-color: var(--lew-form-bgcolor);
         }
         .lew-select-checked {
             font-weight: bold;

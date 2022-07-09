@@ -119,15 +119,11 @@ const formatSex = (sex: number) => {
         </template>
         <template #age="{ row }"> {{ row.age }} </template>
         <template #fraction="{ row }">
-            <lew-tag :type="row.fraction >= 60 ? 'success' : 'error'">
-                <template #left
-                    ><icon
-                        ><CheckmarkSharp v-if="row.fraction >= 60" />
-                        <CloseSharp v-if="row.fraction < 60"
-                    /></icon>
-                </template>
-                {{ row.fraction >= 60 ? '良好' : '很差' }}
-            </lew-tag>
+            <lew-flex>
+                <lew-badge v-if="row.fraction >= 60" round type="success" />
+                <lew-badge v-else round type="error" />
+                <span>{{ row.fraction >= 60 ? '良好' : '很差' }}</span>
+            </lew-flex>
         </template>
         <template #sex="{ row }"> {{ formatSex(row.sex) }} </template>
         <template #intro="{ row }"> {{ row.intro }} </template>

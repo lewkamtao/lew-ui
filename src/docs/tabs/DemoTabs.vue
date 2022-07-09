@@ -5,7 +5,7 @@
  * @Description: 
 -->
 <script setup lang="ts">
-import { DemoTabs1, DemoTabs1_code } from './demo';
+import { DemoTabs1, DemoTabs2, DemoTabs1_code, DemoTabs2_code } from './demo';
 import { ref, reactive } from 'vue';
 
 const docsTable = reactive([
@@ -101,6 +101,9 @@ const docsTable = reactive([
         <lew-title>Tabs</lew-title>
         <lew-demo-box title="常规" :code="DemoTabs1_code">
             <demo-tabs1
+        /></lew-demo-box>
+        <lew-demo-box title="圆形" :code="DemoTabs2_code">
+            <demo-tabs2
         /></lew-demo-box>
         <div v-for="(item, index) in docsTable" :key="index">
             <br />

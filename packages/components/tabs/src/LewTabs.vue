@@ -1,24 +1,13 @@
 <script setup lang="ts">
-import { PropType, ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { tabsProps } from './props';
 
 type Options = {
     label: string;
     value: string;
 };
 
-const props = defineProps({
-    modelValue: {
-        // 父组件 v-model 没有指定参数名，则默认是 modelValue
-        type: String,
-        default: '',
-    },
-    options: {
-        type: Array as PropType<Options[]>,
-        default() {
-            return [];
-        },
-    },
-});
+const props = defineProps(tabsProps);
 let activeItemStyle = ref('');
 let v = ref(props.modelValue);
 let itemRef = ref([] as any);
@@ -70,7 +59,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="lew-tabs">
+    <div class="lew-tabs" :class="{ 'lew-tabs-round': round }">
         <div :style="activeItemStyle" class="activeItem"></div>
         <div
             v-for="(item, index) in options"
@@ -123,20 +112,20 @@ onUnmounted(() => {
         z-index: 9;
         height: 28px;
         border-radius: 3px;
-        transition: all 0.45s cubic-bezier(0.65, 0, 0.35, 1);
-
+        transition: all 0.55s cubic-bezier(0.65, 0, 0.35, 1);
         background: var(--lew-bgcolor-0);
         transform: translateX(3px);
         box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);
     }
 }
-</style>
-<style lang="scss">
-.lew-dark {
-    .lew-tabs {
-        .activeItem {
-            background: var(--lew-bgcolor-5);
-        }
+
+.lew-tabs-round {
+    border-radius: 35px;
+    .lew-tabs-item {
+        border-radius: 35px;
+    }
+    .activeItem {
+        border-radius: 35px;
     }
 }
 </style>

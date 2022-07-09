@@ -216,6 +216,7 @@ onMounted(() => {
             font-weight: 600;
             color: var(--lew-text-color-3);
             background-color: var(--lew-bgcolor-1);
+            white-space: nowrap;
         }
     }
 
@@ -270,7 +271,7 @@ onMounted(() => {
         justify-content: start;
         flex-shrink: 0;
         text-align: left;
-        padding: 8px;
+        padding: 14px 18px;
         box-sizing: border-box;
         background-color: var(--lew-bgcolor-0);
         border-bottom: var(--lew-form-border-width) var(--lew-form-border-color)
