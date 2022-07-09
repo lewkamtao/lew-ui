@@ -376,7 +376,7 @@ group.value = [
     .sider {
         transform: translateX(-100%);
         transition: transform 0.85s cubic-bezier(0.65, 0, 0.35, 1);
-        z-index: 99;
+        z-index: 99999;
     }
     .sider-open {
         transform: translateX(0%);
