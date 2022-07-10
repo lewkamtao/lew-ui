@@ -7,7 +7,7 @@ let data: any = ref([
     {
         id: 1,
         name: '小明',
-        avatar: 'https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/media/images/2022782251430.jpeg',
+        avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
         age: '14',
         fraction: 63,
         mail: 'div@kamtao.com',
@@ -17,7 +17,7 @@ let data: any = ref([
     {
         id: 2,
         name: '小卢',
-        avatar: 'https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/media/images/2022782251430.jpeg',
+        avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
         age: '24',
         fraction: 82,
         mail: 'div@kamtao.com',
@@ -27,7 +27,7 @@ let data: any = ref([
     {
         id: 3,
         name: '小娟',
-        avatar: 'https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/media/images/2022782251430.jpeg',
+        avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
         age: '25',
         fraction: 91,
         mail: 'div@kamtao.com',
@@ -37,7 +37,7 @@ let data: any = ref([
     {
         id: 4,
         name: '小贝',
-        avatar: 'https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/media/images/2022782251430.jpeg',
+        avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
         age: '22',
         mail: 'div@kamtao.com',
         fraction: 31,
@@ -47,7 +47,7 @@ let data: any = ref([
     {
         id: 5,
         name: '小飞',
-        avatar: 'https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/media/images/2022782251430.jpeg',
+        avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
         age: '13',
         fraction: 54,
         mail: 'div@kamtao.com',

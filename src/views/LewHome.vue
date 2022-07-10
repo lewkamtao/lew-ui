@@ -231,21 +231,21 @@ const message = (type: string) => {
                     <lew-flex x="end" gap="20px">
                         <lew-badge round value="99+">
                             <lew-avatar
-                                src="https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/media/images/2022782251430.jpeg"
+                                src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
                             ></lew-avatar>
                         </lew-badge>
                         <lew-badge type="info" round value="99+">
                             <lew-avatar
-                                src="https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/media/images/2022782251430.jpeg"
+                                src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
                             ></lew-avatar>
                         </lew-badge>
                         <lew-avatar
-                            src="https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/media/images/2022782251430.jpeg"
+                            src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
                             status="online"
                             status-position="bottom-left"
                         />
                         <lew-avatar
-                            src="https://tngeek-mall-1255310647.cos.ap-guangzhou.myqcloud.com/media/images/2022782251430.jpeg"
+                            src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
                             status="processing"
                             status-position="bottom-right"
                         />
