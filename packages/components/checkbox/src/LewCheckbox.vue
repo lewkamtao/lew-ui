@@ -3,9 +3,11 @@
         class="lew-checkbox"
         :class="`${block ? 'lew-checkbox-block' : ''} ${
             round ? 'lew-checkbox-round' : ''
-        } ${_checked ? 'lew-checkbox-checked' : ''} `"
+        } ${_checked ? 'lew-checkbox-checked' : ''} 
+        ${!iconable ? 'lew-checkbox-unicon' : ''}
+        `"
     >
-        <div class="icon-checkbox-box">
+        <div class="icon-checkbox-box" v-if="iconable">
             <svg
                 class="icon-checkbox"
                 viewBox="0 0 24 24"
@@ -50,6 +52,10 @@ const props = defineProps({
         default: () => {
             return false;
         },
+    },
+    iconable: {
+        type: Boolean,
+        default: true,
     },
     checked: {
         type: Boolean,
@@ -113,6 +119,19 @@ const setChecked = (e: Event) => {
     }
 }
 
+.lew-checkbox-unicon.lew-checkbox-block {
+    padding: 4px 12px;
+    .lew-checkbox-label {
+        color: var(--lew-text-color-6);
+    }
+}
+
+.lew-checkbox-unicon.lew-checkbox-checked.lew-checkbox-block {
+    .lew-checkbox-label {
+        color: var(--lew-primary-color-dark);
+    }
+}
+
 .lew-checkbox:hover {
     .icon-checkbox-box {
         border: 2px var(--lew-form-border-color-active) solid;
@@ -159,7 +178,7 @@ const setChecked = (e: Event) => {
         background: var(--lew-primary-color);
 
         .icon-checkbox {
-            transform: scale(0.85) translateY(0px);
+            transform: scale(0.9) translateY(0px);
             opacity: 1;
         }
     }

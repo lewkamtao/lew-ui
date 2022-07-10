@@ -88,7 +88,6 @@ onUnmounted(() => {
     height: 34px;
     border-radius: var(--lew-form-border-radius);
     overflow: hidden;
-    transition: all 0.25s;
     .lew-tabs-item {
         position: relative;
         display: inline-flex;
@@ -103,7 +102,7 @@ onUnmounted(() => {
         color: var(--lew-text-color-5);
         white-space: nowrap;
         cursor: pointer;
-        transition: all 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+        transition: all 0.35s cubic-bezier(0.65, 0, 0.35, 1);
         font-size: 14px;
     }
     .active {
@@ -117,7 +116,7 @@ onUnmounted(() => {
         z-index: 9;
         height: 28px;
         border-radius: 3px;
-        transition: all 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+        transition: all 0.35s cubic-bezier(0.65, 0, 0.35, 1);
         background: var(--lew-bgcolor-0);
         transform: translateX(3px);
         box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);

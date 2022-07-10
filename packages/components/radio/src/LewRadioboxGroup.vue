@@ -9,6 +9,7 @@
             v-for="option in options"
             :key="option.id"
             :block="block"
+            :iconable="iconable"
             :label="option.name"
             :checked="modelValue == option.id"
             @update:checked="check(option.id)"
@@ -38,7 +39,10 @@ defineProps({
             return false;
         },
     },
-
+    iconable: {
+        type: Boolean,
+        default: true,
+    },
     direction: {
         type: String,
         default: 'x',

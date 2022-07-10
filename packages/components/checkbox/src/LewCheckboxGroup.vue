@@ -9,6 +9,7 @@
             v-for="option in options"
             :key="option.id"
             :block="block"
+            :iconable="iconable"
             :round="round"
             :label="option.name"
             :checked="getChecked(option.id)"
@@ -48,6 +49,10 @@ const props = defineProps({
     direction: {
         type: String,
         default: 'x',
+    },
+    iconable: {
+        type: Boolean,
+        default: true,
     },
     options: {
         type: Array as PropType<Options[]>,

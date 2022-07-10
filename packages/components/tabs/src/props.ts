@@ -38,4 +38,5 @@ export const tabsProps = {
         type: Boolean,
         default: false,
     },
+    
 };

@@ -12,9 +12,21 @@ let value = ref();
 </script>
 
 <template>
-    <lew-radiobox-group
-        v-model="value"
-        block
-        :options="options"
-    ></lew-radiobox-group>
+    <lew-flex direction="column" x="start">
+        <lew-title size="14px">无图标</lew-title>
+        <lew-radiobox-group
+            v-model="value"
+            block
+            :iconable="false"
+            :options="options"
+        ></lew-radiobox-group>
+        <br />
+        <br />
+        <lew-title size="14px">有图标</lew-title>
+        <lew-radiobox-group
+            v-model="value"
+            block
+            :options="options"
+        ></lew-radiobox-group>
+    </lew-flex>
 </template>
