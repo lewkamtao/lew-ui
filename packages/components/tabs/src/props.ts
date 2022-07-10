@@ -24,6 +24,16 @@ export const tabsProps = {
             return [];
         },
     },
+    width: {
+        type: String,
+        default: '',
+    },
+    itemWidth: {
+        type: Array,
+        default() {
+            return [];
+        },
+    },
     round: {
         type: Boolean,
         default: false,

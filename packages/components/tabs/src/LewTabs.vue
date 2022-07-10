@@ -14,7 +14,6 @@ let itemRef = ref([] as any);
 
 const init = () => {
     let index = props.options.findIndex((e) => e.value == v.value);
-
     if (index < 0) index = 0;
     activeItemStyle.value = `width:${itemRef.value[index].offsetWidth}px;transform: translateX(${itemRef.value[index].offsetLeft}px);`;
 };
@@ -59,13 +58,18 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="lew-tabs" :class="{ 'lew-tabs-round': round }">
+    <div
+        class="lew-tabs"
+        :class="{ 'lew-tabs-round': round }"
+        :style="`width:${width}`"
+    >
         <div :style="activeItemStyle" class="activeItem"></div>
         <div
             v-for="(item, index) in options"
             :key="item.value"
             :ref="(el) => itemRef.push(el)"
             class="lew-tabs-item"
+            :style="`width:${itemWidth[index]}`"
             :class="{ active: v == item.value }"
             @click="changeIndex(item, index)"
         >
@@ -79,7 +83,7 @@ onUnmounted(() => {
     position: relative;
     display: inline-flex;
     align-items: center;
-    width: 100%;
+    width: auto;
     background: var(--lew-form-bgcolor);
     height: 34px;
     border-radius: var(--lew-form-border-radius);
@@ -90,9 +94,10 @@ onUnmounted(() => {
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        width: 100%;
         z-index: 9;
-        flex: 1;
         height: 28px;
+        padding: 0px 12px;
         border-radius: var(--lew-form-border-radius);
         margin: 3px;
         color: var(--lew-text-color-5);

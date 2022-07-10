@@ -16,6 +16,10 @@ const _props = {
             return sizeRules.includes(value);
         },
     },
+    maxWidth: {
+        type: String,
+        default: '120px',
+    },
     round: {
         type: Boolean,
         default: false,

@@ -22,12 +22,11 @@ const close = () => {
         :class="`lew-tag-${size} lew-tag-${type} ${
             round ? 'lew-tag-round' : ''
         } ${disabled ? 'lew-tag-disabled' : ''} ${to ? 'lew-tag-to' : ''}`"
+        :style="`max-width:${maxWidth}`"
         @click="lewTo(to)"
     >
         <div class="lew-tag-left"><slot name="left"></slot></div>
-        <div class="lew-tag-value">
-            <slot></slot>
-        </div>
+        <div class="lew-tag-value"><slot></slot></div>
         <div class="lew-tag-right"><slot name="right"></slot></div>
         <div v-if="closable" class="lew-tag-close" @click.stop="close">
             <Icon><Dismiss24Filled /></Icon>
@@ -42,13 +41,13 @@ const close = () => {
     justify-content: center;
     border-radius: 3px;
     user-select: none;
-
     .lew-tag-value {
-        display: inline;
         font-weight: normal;
         padding: 0px 3px;
         box-sizing: border-box;
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .lew-tag-close {

@@ -214,13 +214,13 @@ onUnmounted(() => {
             >
                 {{ multipleLabelStr[0] }}</lew-tag
             >
-            <div ref="tagRef" class="lew-isSelect-label-num">
-                <lew-tag
-                    type="primary"
-                    style="margin-left: 5px"
-                    v-show="multipleLabelStr.length > 1"
-                >
-                    +{{ multipleLabelStr.length - 1 }}</lew-tag
+            <div
+                ref="tagRef"
+                style="margin-left: 5px"
+                class="lew-isSelect-label-num"
+            >
+                <lew-tag type="primary" v-show="multipleLabelStr.length > 1">
+                    + {{ multipleLabelStr.length - 1 }}</lew-tag
                 >
             </div>
         </div>
@@ -306,6 +306,7 @@ onUnmounted(() => {
         margin-left: 7px;
     }
     .lew-select-label-multiple {
+        width: 100%;
         display: inline-flex;
         align-items: center;
     }

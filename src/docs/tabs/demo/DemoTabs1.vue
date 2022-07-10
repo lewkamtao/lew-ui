@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-
 type Options = {
     label: string;
     value: string;
@@ -16,6 +15,8 @@ const options = ref([
     { label: '乌鲁木齐', value: '5' },
 ]);
 
+const itemWidth = ref(['50px', '50px', '120px', '50px', '120px']);
+
 let value = ref('');
 
 const change = (e: Options) => {
@@ -25,10 +26,26 @@ const change = (e: Options) => {
 </script>
 
 <template>
-    <lew-tabs
-        style="width: 400px"
-        v-model="value"
-        :options="options"
-        @update:change="change"
-    />
+    <lew-flex direction="column" x="start">
+        <lew-title size="14px">限制整体宽度</lew-title>
+        <lew-tabs
+            width="500px"
+            v-model="value"
+            :options="options"
+            @update:change="change"
+        />
+        <br />
+        <br />
+        <lew-title size="14px">根据内容自适应宽度</lew-title>
+        <lew-tabs v-model="value" :options="options" @update:change="change" />
+        <br />
+        <br />
+        <lew-title size="14px">自定义单个item宽度</lew-title>
+        <lew-tabs
+            v-model="value"
+            :options="options"
+            :itemWidth="itemWidth"
+            @update:change="change"
+        />
+    </lew-flex>
 </template>
