@@ -39,9 +39,6 @@ defineProps({
 
 <style lang="scss" scoped>
 .lew-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     position: relative;
     text-align: center;
     flex-shrink: 0;
@@ -49,10 +46,12 @@ defineProps({
     width: auto;
     white-space: nowrap;
     box-sizing: border-box;
-    transition: all 0.18s;
+    transition: all 0.1s;
     border: none;
     cursor: pointer;
     border-radius: var(--lew-form-border-radius);
+    box-sizing: border-box;
+
     svg {
         font-size: 15px;
         width: 20px;
@@ -61,8 +60,7 @@ defineProps({
 }
 
 .lew-button:active {
-    transform: scale(0.98);
-    transform: translateY(0.5px);
+    transform: scale(0.96);
 }
 .lew-button-small {
     min-width: 50px;
@@ -84,7 +82,6 @@ defineProps({
     padding: 0px 20px;
     font-size: 16px;
 }
-
 .lew-button::after {
     position: absolute;
     top: 50%;
@@ -103,9 +100,7 @@ defineProps({
 .lew-button-round {
     border-radius: 50px;
 }
-.lew-button-round::before {
-    border-radius: 50px;
-}
+
 .lew-button-blank {
     background: none;
     color: var(--lew-text-color-5);
@@ -239,7 +234,7 @@ defineProps({
 .lew-button-text {
     background: none;
     min-width: auto;
-    padding: 5px;
+    padding: 0px 5px;
 }
 .lew-button-text.lew-button-info {
     color: var(--lew-info-color-dark);
