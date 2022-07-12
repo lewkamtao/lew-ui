@@ -1,72 +1,92 @@
-#lew-message {
+#lew-notification {
     position: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    z-index: 99;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 80px;
-    .message {
+    right: 20px;
+    top: 70px;
+    z-index: 999;
+
+    .notification {
+        position: relative;
         width: auto;
         display: flex;
         flex-shrink: 0;
-        align-items: center;
-        justify-content: center;
+        justify-content: space-between;
         box-sizing: border-box;
-        height: 35px;
-        line-height: 35px;
-        padding: 15px 25px;
-        transition: all ease 0.25s;
+        height: auto;
+        width: 300px;
+        padding: 15px 15px 15px 20px;
+        transition: all 0.45s ease;
         opacity: 0;
         margin-top: 0px;
         margin-bottom: 10px;
-        transform: translateY(-5px);
+        transform: translateX(100%);
         white-space: nowrap;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
         font-size: 14px;
         border-radius: 4px;
         overflow: hidden;
-        background-color: var(--lew-message-bgcolor);
+        background-color: var(--lew-notification-bgcolor);
         backdrop-filter: blur(10px);
-        span {
-            opacity: 0;
-            transition: all ease 0.25s;
+        .left {
+            width: 25px;
+            svg {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+                color: var(--lew-text-color-4);
+            }
         }
-        svg {
-            width: 20px;
-            height: 20px;
-            margin-right: 10px;
-            opacity: 0;
-            transition: all ease 0.25s;
+        .right {
+            width: calc(100% - 25px);
+            .lew-notification-title {
+                font-size: 14px;
+                font-weight: bold;
+                color: var(--lew-text-color-4);
+            }
+            .lew-notification-content {
+                width: 100%;
+                margin-top: 5px;
+                font-size: 14px;
+                color: var(--lew-text-color-6);
+                white-space: pre-wrap;
+                word-wrap: break-word;
+            }
         }
     }
-    .message-normal {
-        color: var(--lew-text-color-5);
+    .notification::after {
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        width: 4px;
+        transform: translateY(-50%);
+        height: calc(100% - 10px);
+        content: "";
+        border-radius: 2px;
     }
-    .message-error {
-        color: var(--lew-error-color-dark);
+    .notification-normal::after {
+        background-color: var(--lew-normal-color);
     }
-    .message-success {
-        color: var(--lew-success-color-dark);
+
+    .notification-error::after {
+        background-color: var(--lew-error-color);
     }
-    .message-info {
-        color: var(--lew-info-color-dark);
+    .notification-success::after {
+        background-color: var(--lew-success-color);
     }
-    .message-warning {
-        color: var(--lew-warning-color-dark);
+    .notification-info::after {
+        background-color: var(--lew-info-color);
     }
-    .message-show {
+    .notification-warning::after {
+        background-color: var(--lew-warning-color);
+    }
+    .notification-show {
         opacity: 1;
         transform: translateY(0px);
-        span,
-        svg {
-            opacity: 1;
-        }
     }
-    .message-hidden {
+    .notification-hidden {
         opacity: 0;
-        margin-top: -40px;
     }
 }

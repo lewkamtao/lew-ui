@@ -23,23 +23,23 @@
         margin-top: 0px;
         margin-bottom: 10px;
         transform: translateY(-5px);
-        white-space: nowrap;
+
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
         font-size: 14px;
         border-radius: 4px;
-        overflow: hidden;
+
         background-color: var(--lew-message-bgcolor);
         backdrop-filter: blur(10px);
-        span {
-            opacity: 0;
-            transition: all ease 0.25s;
+        .content {
+            max-width: 500px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
         }
         svg {
             width: 20px;
             height: 20px;
             margin-right: 10px;
-            opacity: 0;
-            transition: all ease 0.25s;
         }
     }
     .message-normal {
@@ -60,10 +60,6 @@
     .message-show {
         opacity: 1;
         transform: translateY(0px);
-        span,
-        svg {
-            opacity: 1;
-        }
     }
     .message-hidden {
         opacity: 0;

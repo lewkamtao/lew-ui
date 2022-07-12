@@ -239,6 +239,13 @@ group.value = [
                 type: 'success',
             },
             {
+                cname: '通知',
+                name: 'Notification',
+                path: '/Notification',
+                label: '',
+                type: 'success',
+            },
+            {
                 cname: '对话框',
                 name: 'Dialog',
                 path: '/Dialog',

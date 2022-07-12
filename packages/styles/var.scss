@@ -141,6 +141,8 @@
     --plyr-color-main: var(--lew-primary-color);
     // message
     --lew-message-bgcolor: rgba(255, 255, 255, 0.8);
+    // notification
+    --lew-notification-bgcolor: rgba(255, 255, 255, 0.8);
 }
 
 .lew-dark {
@@ -275,4 +277,6 @@
     --plyr-color-main: var(--lew-primary-color);
     // message
     --lew-message-bgcolor: rgba(128, 128, 128, 0.231);
+    // notification
+    --lew-notification-bgcolor: rgba(128, 128, 128, 0.231);
 }
