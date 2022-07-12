@@ -1,7 +1,7 @@
 <!--
  * @Author: Kamtao
  * @Date: 2022-07-08 10:58:24
- * @LastEditTime: 2022-07-12 17:15:03
+ * @LastEditTime: 2022-07-12 17:29:10
  * @Descript
 -->
 <script setup lang="ts">
@@ -141,7 +141,7 @@ const formatSex = (sex: number) => {
             <template #trigger>
                 <lew-button>展示表格</lew-button>
             </template>
-            <template #popover-body>
+            <template #popover-body="{ instance }">
                 <div class="popover-body" style="width: 800px">
                     <lew-table :data="data" :columns="columns" height="auto">
                         <template #id="{ row }"> {{ row.id }} </template>
