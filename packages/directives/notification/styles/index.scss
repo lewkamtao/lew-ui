@@ -30,16 +30,8 @@
         overflow: hidden;
         background-color: var(--lew-notification-bgcolor);
         backdrop-filter: blur(10px);
-        .left {
-            width: 25px;
-            svg {
-                width: 20px;
-                height: 20px;
-                margin-right: 10px;
-                color: var(--lew-text-color-4);
-            }
-        }
-        .right {
+
+        .main {
             width: calc(100% - 25px);
             .lew-notification-title {
                 font-size: 14px;
@@ -69,7 +61,6 @@
     .notification-normal::after {
         background-color: var(--lew-normal-color);
     }
-
     .notification-error::after {
         background-color: var(--lew-error-color);
     }
