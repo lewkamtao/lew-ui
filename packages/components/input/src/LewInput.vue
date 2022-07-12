@@ -32,7 +32,6 @@ const input = (e: Event) => {
 };
 const clear = (): void => {
     emit('clear', v.value);
-    _type.value = 'password';
     v.value = '';
 };
 let _type = ref(props.type);
@@ -90,6 +89,7 @@ let getPaddingRight = computed(() => {
                 v-if="clearable"
                 class="close-icon-view"
                 size="18"
+                @mousedown.prevent
                 @click="clear"
             >
                 <CloseCircleOutline />

@@ -16,12 +16,17 @@ const change = () => {
 const input = () => {
     LewMessage.success('触发input');
 };
+const clear = () => {
+    LewMessage.success('触发clear');
+};
 </script>
 
 <template>
     <div style="width: 300px">
         <lew-form-item title="事件" direction="y">
             <lew-input
+                clearable
+                @clear="clear"
                 @focus="focus"
                 @change="change"
                 @input="input"
@@ -32,7 +37,7 @@ const input = () => {
             <lew-input v-model="username" readonly />
         </lew-form-item>
         <lew-form-item title="禁用" direction="y">
-            <lew-input type="password" v-model="pwd" disabled />
+            <lew-input v-model="pwd" type="password" disabled />
         </lew-form-item>
     </div>
 </template>
