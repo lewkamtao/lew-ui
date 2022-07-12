@@ -39,6 +39,8 @@ defineProps({
 
 <style lang="scss" scoped>
 .lew-button {
+    display: inline-flex;
+    align-items: center;
     position: relative;
     text-align: center;
     flex-shrink: 0;
