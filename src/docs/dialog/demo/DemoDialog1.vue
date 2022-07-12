@@ -1,3 +1,9 @@
+<!--
+ * @Author: Kamtao
+ * @Date: 2022-07-12 10:10:59
+ * @LastEditTime: 2022-07-12 12:22:12
+ * @Description: 
+-->
 <script setup lang="ts">
 const open = (type: any, layout: string) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

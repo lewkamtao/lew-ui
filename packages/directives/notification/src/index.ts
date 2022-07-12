@@ -1,3 +1,9 @@
+/*
+ * @Author: Kamtao
+ * @Date: 2022-07-12 10:10:59
+ * @LastEditTime: 2022-07-12 12:42:38
+ * @Description:
+ */
 import '../styles/index.scss';
 
 const warning = (content: string) => {
@@ -31,11 +37,11 @@ const notification = (type: string, content: string) => {
         createMessageList();
         notification(type, content);
     } else {
-        addMessage(type, content);
+        add(type, content);
     }
 };
 
-const addMessage = (type: string, text: string) => {
+const add = (type: string, text: string) => {
     const LewMessageDom = document.getElementById('lew-notification');
     const newMessage = document.createElement('div');
 

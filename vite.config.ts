@@ -1,3 +1,9 @@
+/*
+ * @Author: Kamtao
+ * @Date: 2022-07-04 12:15:55
+ * @LastEditTime: 2022-07-12 10:12:53
+ * @Description: 
+ */
 import { defineConfig, ConfigEnv } from 'vite';
 import compressPlugin from 'vite-plugin-compression';
 import vue from '@vitejs/plugin-vue';
@@ -42,7 +48,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
                       rollupOptions: {
                           // 确保外部化处理那些你不想打包进库的依赖
                           external: ['vue'],
-                          output: {
+                          output: { 
                               // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
                               globals: {
                                   vue: 'Vue',
