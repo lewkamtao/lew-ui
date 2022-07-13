@@ -31,6 +31,7 @@ export * from './alert';
 export * from './modal';
 export * from './popok';
 export * from './popover';
+export * from './drawer';
 
 export * from './fancybox';
 export * from './plyr';
