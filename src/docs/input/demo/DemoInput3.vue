@@ -10,7 +10,7 @@ const clear = (e: any) => {
             <lew-input clearable @clear="clear" />
         </lew-form-item>
         <lew-form-item title="密码">
-            <lew-input clearable />
+            <lew-input type="password" clearable />
         </lew-form-item>
     </div>
 </template>
