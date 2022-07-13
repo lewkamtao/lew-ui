@@ -1,11 +1,18 @@
+/*
+ * @Author: Kamtao
+ * @Date: 2022-07-13 12:13:00
+ * @LastEditTime: 2022-07-13 17:20:33
+ * @Description:
+ */
+
 export const getHeadDate = ['一', '二', '三', '四', '五', '六', '日'];
 
 export const getMonthDate = (year?: number, month?: number) => {
-    let ret: any = [];
+    const ret: any = [];
 
     if (!year && !month) {
         // 获取当天日期对象
-        let today = new Date();
+        const today = new Date();
         // 获取当前年份
         year = today.getFullYear();
         // 获取当前月份
@@ -13,8 +20,7 @@ export const getMonthDate = (year?: number, month?: number) => {
     }
 
     // 这个月第一天的Date对象
-    // @ts-ignore
-    let firstDay = new Date(year, month - 1, 1);
+    const firstDay = new Date(year, month - 1, 1);
     // 那个这个月第一天具体是星期几
     let firstDayWeekDay = firstDay.getDay();
     // 0的话就是星期天
@@ -24,19 +30,19 @@ export const getMonthDate = (year?: number, month?: number) => {
     // 拿到当前的月份
     month = firstDay.getMonth() + 1;
     // 上个月的最后一天
-    let lastDayofLastMonth = new Date(year, month - 1, 0);
+    const lastDayofLastMonth = new Date(year, month - 1, 0);
     // 上个月的具体日期
-    let lastDateofLastMonth = lastDayofLastMonth.getDate();
+    const lastDateofLastMonth = lastDayofLastMonth.getDate();
     // 上个月在第一行要显示几天
-    let preMonthDayCount = firstDayWeekDay - 1;
+    const preMonthDayCount = firstDayWeekDay - 1;
     // 这个月的最后一天
-    let lastDay = new Date(year, month, 0);
+    const lastDay = new Date(year, month, 0);
     // 这个月的最后一天具体日期
-    let lastData = lastDay.getDate();
+    const lastData = lastDay.getDate();
 
     for (let i = 0; i < 6 * 7; i++) {
         // 赋值date的值，这里上个月的最后一天为0
-        let date = i + 1 - preMonthDayCount;
+        const date = i + 1 - preMonthDayCount;
         // 赋值showDate，上下月份，下面再做判断
         let showDate = date;
         // 赋值月份

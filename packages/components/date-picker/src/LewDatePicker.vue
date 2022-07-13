@@ -1,137 +1,110 @@
+<!--
+ * @Author: Kamtao
+ * @Date: 2022-07-13 12:13:00
+ * @LastEditTime: 2022-07-13 17:31:47
+ * @Description: 
+-->
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
-import { ChevronBack, ChevronForward } from '@vicons/ionicons5';
-import { getMonthDate, getHeadDate } from './date';
-// 获取当天日期对象
-let today = new Date();
-// 获取当前年份
-let year = ref(today.getFullYear());
-// 获取当前月份
-let month = ref(today.getMonth() + 1);
+import { ref } from 'vue';
+import { datePickerProps } from './props';
+const props = defineProps(datePickerProps);
 
-let dateData = ref(getMonthDate());
+let _instance: any;
+let isShowPicker = ref(false);
+let dateValue = ref<string | undefined>(props.modelValue);
 
-const prveMonth = () => {
-    if (month.value > 1) {
-        month.value -= 1;
-    } else {
-        year.value -= 1;
-        month.value = 12;
-    }
-    dateData.value = getMonthDate(year.value, month.value);
+const getInstance = (instance) => {
+    _instance = instance;
 };
-const nextMonth = () => {
-    if (month.value < 12) {
-        month.value += 1;
-    } else {
-        year.value += 1;
-        month.value = 1;
-    }
-    dateData.value = getMonthDate(year.value, month.value);
+const emit = defineEmits(['change', 'update:modelValue']);
+
+const change = (date) => {
+    LewMessage.success(date.value);
+    emit('update:modelValue', date.value);
+    emit('change', date);
+    setTimeout(() => {
+        _instance.hide();
+    }, 100);
 };
 </script>
 <template>
-    <div class="lew-date-picker">
-        <lew-flex x="start" mode="between" class="lew-date-picker-control">
-            <div class="cur-date">
-                {{ year }} / {{ month < 10 ? '0' + month : month }}
-            </div>
-            <div class="lew-date-picker-control-right">
-                <lew-button type="normal" size="small" @click="prveMonth">
-                    <ChevronBack />
-                </lew-button>
-                <lew-button type="normal" size="small" @click="nextMonth">
-                    <ChevronForward />
-                </lew-button>
-            </div>
-        </lew-flex>
-        <div class="lew-date-picker-box">
+    <lew-popover
+        trigger="click"
+        placement="bottom-start"
+        :arrow="false"
+        @get-instance="getInstance"
+        @on-show="isShowPicker = true"
+        @on-hide="isShowPicker = false"
+    >
+        <template #trigger>
             <div
-                class="lew-date-picker-item"
-                v-for="(item, index) in getHeadDate"
+                class="lew-date-picker-input"
+                :class="{ 'lew-date-picker-foucs': isShowPicker }"
             >
-                <div class="lew-date-num">{{ item }}</div>
+                <div v-show="!dateValue" class="lew-date-picker-placeholder">
+                    请选择日期
+                </div>
+                <div v-show="dateValue" class="lew-date-picker-dateValue">
+                    {{ dateValue }}
+                </div>
             </div>
-            <div
-                class="lew-date-picker-item"
-                :class="{
-                    'lew-date-picker-item-e':
-                        item.date > 0 && item.date <= item.showDate,
-                }"
-                v-for="(item, index) in dateData"
-                :key="index"
-            >
-                <div class="lew-date-num">{{ item.showDate }}</div>
-            </div>
-        </div>
-    </div>
+        </template>
+        <template #popover-body>
+            <Lew-date
+                v-model="dateValue"
+                :multiple="multiple"
+                @change="change"
+            />
+        </template>
+    </lew-popover>
 </template>
 
 <style lang="scss" scoped>
-.lew-date-picker {
-    width: 260px;
+.lew-popover {
+    width: 273px;
+}
+.lew-date-picker-input {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 35px;
+    padding: 5px;
+    font-size: 14px;
+    line-height: 24px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
+    border-radius: var(--lew-form-border-radius);
+    background-color: var(--lew-form-bgcolor);
+    color: var(--lew-text-color);
+    box-sizing: border-box;
+    transition: all 0.15s ease;
+    cursor: pointer;
     user-select: none;
-    .lew-date-picker-control {
-        width: 100%;
-        padding: 0px 3px;
-        box-sizing: border-box;
-        height: 30px;
-
-        .cur-date {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            font-weight: bold;
-            color: var(--lew-text-color-0);
-            padding-left: 8px;
-        }
-
-        .lew-button {
-            margin-left: 5px;
-            min-width: auto;
-            padding: 2px 8px;
-            svg {
-                width: 14px;
-                margin-right: 0px;
-            }
-        }
+    .lew-date-picker-placeholder {
+        color: rgb(165, 165, 165);
+        margin-left: 7px;
     }
-
-    .lew-date-picker-box {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        // border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-
-        .lew-date-picker-item {
-            width: calc(100% / 7);
-            height: 36px;
-            padding: 3px;
-
-            box-sizing: border-box;
-            .lew-date-num {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: var(--lew-form-border-radius);
-                font-size: 14px;
-                width: 100%;
-                height: 100%;
-                color: var(--lew-text-color-9);
-            }
-        }
-        .lew-date-picker-item-e {
-            cursor: pointer;
-            .lew-date-num {
-                color: var(--lew-text-color-4);
-            }
-        }
-
-        .lew-date-picker-item-e:hover {
-            .lew-date-num {
-                background-color: #eee;
-            }
-        }
+    .lew-date-picker-dateValue {
+        margin-left: 7px;
+    }
+}
+.lew-date-picker-input:hover {
+    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
+    background-color: var(--lew-form-bgcolor-hover);
+}
+.lew-date-picker-input:active {
+    background-color: var(--lew-form-bgcolor-active);
+}
+.lew-date-picker-input.lew-date-picker-foucs {
+    background-color: var(--lew-form-bgcolor-focus);
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+        solid;
+    .lew-select-icon {
+        transform: translateY(-50%) rotate(180deg);
+        color: var(--lew-text-color-2);
     }
 }
 </style>

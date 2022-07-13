@@ -1,3 +1,9 @@
+<!--
+ * @Author: Kamtao
+ * @Date: 2022-07-04 12:15:55
+ * @LastEditTime: 2022-07-13 15:58:13
+ * @Description: 
+-->
 <!-- filename: Popover.vue -->
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
@@ -15,6 +21,10 @@ const props = defineProps({
     placement: {
         type: String,
         default: 'top',
+    },
+    arrow: {
+        type: Boolean,
+        default: true,
     },
 });
 
@@ -34,6 +44,7 @@ onMounted(() => {
         animation: 'shift-away-subtle',
         interactive: true,
         placement: placement,
+        arrow: props.arrow,
         appendTo: () => document.body,
         allowHTML: true,
         maxWidth: 'none',
@@ -44,10 +55,17 @@ onMounted(() => {
             } else {
                 instance.popper.children[0].setAttribute('data-theme', 'light');
             }
+            emit('onShow');
+        },
+        onHide() {
+            emit('onHide');
         },
     });
     instance.value.popper.children[0].setAttribute('data-lew', 'popover');
+    emit('getInstance', instance.value);
 });
+
+const emit = defineEmits(['getInstance', 'onShow', 'onHide']);
 
 onUnmounted(() => {
     instance = null;
@@ -56,7 +74,9 @@ onUnmounted(() => {
 
 <template>
     <div class="lew-popover">
-        <div ref="triggerRef"><slot name="trigger" /></div>
+        <div ref="triggerRef">
+            <slot name="trigger" />
+        </div>
         <div ref="bodyRef" class="lew-popover-body">
             <slot name="popover-body" :instance="instance" />
         </div>
@@ -66,5 +86,8 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .lew-popover {
     display: inline-block;
+    > div {
+        font-size: 0px;
+    }
 }
 </style>
