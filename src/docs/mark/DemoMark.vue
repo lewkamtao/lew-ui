@@ -1,9 +1,3 @@
-<!--
- * @Author: Kamtao
- * @Date: 2022-06-28 09:42:26
- * @LastEditTime: 2022-07-08 15:41:00
- * @Description: 
--->
 <script setup lang="ts">
 import { DemoMark1, DemoMark1_code } from './demo';
 import { ref } from 'vue';

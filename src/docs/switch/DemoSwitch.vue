@@ -1,9 +1,3 @@
-<!--
- * @Author: Kamtao
- * @Date: 2022-06-28 09:42:26
- * @LastEditTime: 2022-07-07 16:18:33
- * @Description: LewSwitch
--->
 <script setup lang="ts">
 import {
     DemoSwitch1,

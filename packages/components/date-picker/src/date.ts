@@ -1,10 +1,3 @@
-/*
- * @Author: Kamtao
- * @Date: 2022-07-13 12:13:00
- * @LastEditTime: 2022-07-13 17:20:33
- * @Description:
- */
-
 export const getHeadDate = ['一', '二', '三', '四', '五', '六', '日'];
 
 export const getMonthDate = (year?: number, month?: number) => {

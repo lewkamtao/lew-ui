@@ -64,11 +64,7 @@
             }
         ],
         "label": null,
-        "actors": [
-            "本尼迪克特·康伯巴奇",
-            "伊丽莎白·奥尔森",
-            "切瓦特·埃加福"
-        ],
+        "actors": ["本尼迪克特·康伯巴奇", "伊丽莎白·奥尔森", "切瓦特·埃加福"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -78,11 +74,8 @@
         "info": "美国 / 动作 奇幻 冒险 / 山姆·雷米 / 本尼迪克特·康伯巴奇 伊丽莎白·奥尔森",
         "rating_data": {
             "stats": [
-                0.027072094163805786,
-                0.14565963707699853,
-                0.4968121628249142,
-                0.26660127513487003,
-                0.06385483079941148
+                0.027072094163805786, 0.14565963707699853, 0.4968121628249142,
+                0.26660127513487003, 0.06385483079941148
             ],
             "type_ranks": [
                 {
@@ -100,9 +93,7 @@
         "original_title": "Doctor Strange in the Multiverse of Madness",
         "uri": "douban://douban.com/movie/30304994",
         "subtype": "",
-        "directors": [
-            "山姆·雷米"
-        ],
+        "directors": ["山姆·雷米"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -120,11 +111,7 @@
         "id": "35235813",
         "title": "祝你好运，里奥·格兰德",
         "label": null,
-        "actors": [
-            "艾玛·汤普森",
-            "达利尔·麦克科马克",
-            "伊莎贝拉·拉夫兰德"
-        ],
+        "actors": ["艾玛·汤普森", "达利尔·麦克科马克", "伊莎贝拉·拉夫兰德"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -142,9 +129,7 @@
         },
         "uri": "douban://douban.com/movie/35235813",
         "subtype": "",
-        "directors": [
-            "苏菲·海德"
-        ],
+        "directors": ["苏菲·海德"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -162,11 +147,7 @@
         "id": "35192111",
         "title": "掮客",
         "label": null,
-        "actors": [
-            "宋康昊",
-            "姜栋元",
-            "裴斗娜"
-        ],
+        "actors": ["宋康昊", "姜栋元", "裴斗娜"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -184,9 +165,7 @@
         },
         "uri": "douban://douban.com/movie/35192111",
         "subtype": "",
-        "directors": [
-            "是枝裕和"
-        ],
+        "directors": ["是枝裕和"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -204,11 +183,7 @@
         "id": "35503077",
         "title": "杰瑞和玛姬生活阔绰",
         "label": null,
-        "actors": [
-            "布莱恩·科兰斯顿",
-            "安妮特·贝宁",
-            "拉里·威尔莫"
-        ],
+        "actors": ["布莱恩·科兰斯顿", "安妮特·贝宁", "拉里·威尔莫"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -226,9 +201,7 @@
         },
         "uri": "douban://douban.com/movie/35503077",
         "subtype": "",
-        "directors": [
-            "大卫·弗兰科尔"
-        ],
+        "directors": ["大卫·弗兰科尔"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -246,10 +219,7 @@
         "id": "35248699",
         "title": "噪音",
         "label": null,
-        "actors": [
-            "松山研一",
-            "藤原龙也"
-        ],
+        "actors": ["松山研一", "藤原龙也"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -267,9 +237,7 @@
         },
         "uri": "douban://douban.com/movie/35248699",
         "subtype": "",
-        "directors": [
-            "广木隆一"
-        ],
+        "directors": ["广木隆一"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -287,11 +255,7 @@
         "id": "35341588",
         "title": "男人",
         "label": null,
-        "actors": [
-            "杰西·巴克利",
-            "罗里·金尼尔",
-            "帕帕·厄希度"
-        ],
+        "actors": ["杰西·巴克利", "罗里·金尼尔", "帕帕·厄希度"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -309,9 +273,7 @@
         },
         "uri": "douban://douban.com/movie/35341588",
         "subtype": "",
-        "directors": [
-            "亚历克斯·加兰"
-        ],
+        "directors": ["亚历克斯·加兰"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -329,11 +291,7 @@
         "id": "35448536",
         "title": "未来罪行",
         "label": null,
-        "actors": [
-            "维果·莫腾森",
-            "蕾雅·赛杜",
-            "克里斯汀·斯图尔特"
-        ],
+        "actors": ["维果·莫腾森", "蕾雅·赛杜", "克里斯汀·斯图尔特"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -351,9 +309,7 @@
         },
         "uri": "douban://douban.com/movie/35448536",
         "subtype": "",
-        "directors": [
-            "大卫·柯南伯格"
-        ],
+        "directors": ["大卫·柯南伯格"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -393,9 +349,7 @@
         },
         "uri": "douban://douban.com/movie/35882880",
         "subtype": "",
-        "directors": [
-            "Dijo Jose Antony"
-        ],
+        "directors": ["Dijo Jose Antony"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -413,11 +367,7 @@
         "id": "35418583",
         "title": "余命10年",
         "label": null,
-        "actors": [
-            "小松菜奈",
-            "坂口健太郎",
-            "山田裕贵"
-        ],
+        "actors": ["小松菜奈", "坂口健太郎", "山田裕贵"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -435,9 +385,7 @@
         },
         "uri": "douban://douban.com/movie/35418583",
         "subtype": "",
-        "directors": [
-            "藤井道人"
-        ],
+        "directors": ["藤井道人"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -455,11 +403,7 @@
         "id": "35212079",
         "title": "谁是超级英雄",
         "label": null,
-        "actors": [
-            "菲利普·拉肖",
-            "阿马尔·维克德",
-            "让·雨果·安格拉德"
-        ],
+        "actors": ["菲利普·拉肖", "阿马尔·维克德", "让·雨果·安格拉德"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -477,9 +421,7 @@
         },
         "uri": "douban://douban.com/movie/35212079",
         "subtype": "",
-        "directors": [
-            "菲利普·拉肖"
-        ],
+        "directors": ["菲利普·拉肖"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -497,11 +439,7 @@
         "id": "34959527",
         "title": "多伦多来的男人",
         "label": null,
-        "actors": [
-            "凯文·哈特",
-            "伍迪·哈里森",
-            "凯莉·库柯"
-        ],
+        "actors": ["凯文·哈特", "伍迪·哈里森", "凯莉·库柯"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -519,9 +457,7 @@
         },
         "uri": "douban://douban.com/movie/34959527",
         "subtype": "",
-        "directors": [
-            "帕特里克·休斯"
-        ],
+        "directors": ["帕特里克·休斯"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -539,11 +475,7 @@
         "id": "30314848",
         "title": "瞬息全宇宙",
         "label": null,
-        "actors": [
-            "杨紫琼",
-            "许玮伦",
-            "关继威"
-        ],
+        "actors": ["杨紫琼", "许玮伦", "关继威"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -561,9 +493,7 @@
         },
         "uri": "douban://douban.com/movie/30314848",
         "subtype": "",
-        "directors": [
-            "关家永"
-        ],
+        "directors": ["关家永"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -581,11 +511,7 @@
         "id": "35008440",
         "title": "唐顿庄园2",
         "label": null,
-        "actors": [
-            "米歇尔·道克瑞",
-            "休·博纳维尔",
-            "伊丽莎白·麦戈文"
-        ],
+        "actors": ["米歇尔·道克瑞", "休·博纳维尔", "伊丽莎白·麦戈文"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -603,9 +529,7 @@
         },
         "uri": "douban://douban.com/movie/35008440",
         "subtype": "",
-        "directors": [
-            "西蒙·柯蒂斯"
-        ],
+        "directors": ["西蒙·柯蒂斯"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -623,11 +547,7 @@
         "id": "35295405",
         "title": "目中无人",
         "label": null,
-        "actors": [
-            "谢苗",
-            "高维蔓",
-            "向皓"
-        ],
+        "actors": ["谢苗", "高维蔓", "向皓"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -645,9 +565,7 @@
         },
         "uri": "douban://douban.com/movie/35295405",
         "subtype": "",
-        "directors": [
-            "杨秉佳"
-        ],
+        "directors": ["杨秉佳"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -665,11 +583,7 @@
         "id": "35073914",
         "title": "必胜球探",
         "label": null,
-        "actors": [
-            "亚当·桑德勒",
-            "胡安乔·埃尔南戈麦斯",
-            "罗伯特·杜瓦尔"
-        ],
+        "actors": ["亚当·桑德勒", "胡安乔·埃尔南戈麦斯", "罗伯特·杜瓦尔"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -687,9 +601,7 @@
         },
         "uri": "douban://douban.com/movie/35073914",
         "subtype": "",
-        "directors": [
-            "杰里米·撒加"
-        ],
+        "directors": ["杰里米·撒加"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -707,11 +619,7 @@
         "id": "34890458",
         "title": "天才不能承受之重",
         "label": null,
-        "actors": [
-            "尼古拉斯·凯奇",
-            "佩德罗·帕斯卡",
-            "蒂凡尼·哈迪斯"
-        ],
+        "actors": ["尼古拉斯·凯奇", "佩德罗·帕斯卡", "蒂凡尼·哈迪斯"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -729,9 +637,7 @@
         },
         "uri": "douban://douban.com/movie/34890458",
         "subtype": "",
-        "directors": [
-            "汤姆·戈米肯"
-        ],
+        "directors": ["汤姆·戈米肯"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -749,11 +655,7 @@
         "id": "35354759",
         "title": "巴黎夜旅人",
         "label": null,
-        "actors": [
-            "夏洛特·甘斯布",
-            "基多·雷昂-里希特",
-            "诺亚·阿比塔"
-        ],
+        "actors": ["夏洛特·甘斯布", "基多·雷昂-里希特", "诺亚·阿比塔"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -771,9 +673,7 @@
         },
         "uri": "douban://douban.com/movie/35354759",
         "subtype": "",
-        "directors": [
-            "米夏埃尔·艾斯"
-        ],
+        "directors": ["米夏埃尔·艾斯"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -791,11 +691,7 @@
         "id": "26825482",
         "title": "月球陨落",
         "label": null,
-        "actors": [
-            "哈莉·贝瑞",
-            "帕特里克·威尔森",
-            "约翰·布莱德利"
-        ],
+        "actors": ["哈莉·贝瑞", "帕特里克·威尔森", "约翰·布莱德利"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -813,9 +709,7 @@
         },
         "uri": "douban://douban.com/movie/26825482",
         "subtype": "",
-        "directors": [
-            "罗兰·艾默里奇"
-        ],
+        "directors": ["罗兰·艾默里奇"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -833,11 +727,7 @@
         "id": "35743103",
         "title": "小说家的电影",
         "label": null,
-        "actors": [
-            "李慧英",
-            "金敏喜",
-            "徐永嬅"
-        ],
+        "actors": ["李慧英", "金敏喜", "徐永嬅"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -855,9 +745,7 @@
         },
         "uri": "douban://douban.com/movie/35743103",
         "subtype": "",
-        "directors": [
-            "洪常秀"
-        ],
+        "directors": ["洪常秀"],
         "reviewer_name": "",
         "null_rating_reason": ""
     },
@@ -875,11 +763,7 @@
         "id": "35182979",
         "title": "远山淡影",
         "label": null,
-        "actors": [
-            "叶硕",
-            "周楚濋",
-            "杨骏"
-        ],
+        "actors": ["叶硕", "周楚濋", "杨骏"],
         "interest": null,
         "type": "movie",
         "description": "",
@@ -897,9 +781,7 @@
         },
         "uri": "douban://douban.com/movie/35182979",
         "subtype": "",
-        "directors": [
-            "贺泉"
-        ],
+        "directors": ["贺泉"],
         "reviewer_name": "",
         "null_rating_reason": ""
     }

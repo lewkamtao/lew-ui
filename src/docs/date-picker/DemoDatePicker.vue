@@ -30,14 +30,20 @@ const docsTable = ref([
         type: 'string',
         default: "''",
     },
+    {
+        param: 'auto-close',
+        description: '是否在选择日期后自动关闭气泡',
+        type: 'boolean',
+        default: "''",
+    },
 ]);
 </script>
 
 <template>
     <div class="demo-wrapper">
-        <lew-title>Checkbox</lew-title>
-        <p class="sub-title">通过复选框选择一个或多个数据。</p>
-        <lew-demo-box title="x 布局" tag="方的" :code="DemoDatePicker1_code">
+        <lew-title>DatePicker</lew-title>
+        <p class="sub-title">一个很漂亮的、支持双向绑定的日期选择器。</p>
+        <lew-demo-box title="常规" :code="DemoDatePicker1_code">
             <demo-date-picker1 />
         </lew-demo-box>
 

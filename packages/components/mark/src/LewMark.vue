@@ -1,9 +1,3 @@
-<!--
- * @Author: Kamtao
- * @Date: 2022-06-29 09:46:42
- * @LastEditTime: 2022-07-07 16:42:49
- * @Description: 
--->
 <script lang="ts" setup>
 import { useLewTo } from '../../../hooks';
 const { lewTo } = useLewTo();

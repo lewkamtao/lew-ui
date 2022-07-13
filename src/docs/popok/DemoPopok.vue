@@ -28,7 +28,8 @@ const columns = [
         width: '200px',
         field: 'default',
     },
-];const docsTable = ref([
+];
+const docsTable = ref([
     {
         param: 'options',
         description: '列表配置',

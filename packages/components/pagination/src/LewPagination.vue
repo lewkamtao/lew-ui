@@ -1,9 +1,3 @@
-<!--
- * @Author: Kamtao
- * @Date: 2022-07-07 09:22:34
- * @LastEditTime: 2022-07-08 15:57:53
- * @Description: 
--->
 <script lang="ts" setup>
 import { paginationProps } from './porps';
 import { ref, computed, watch } from 'vue';

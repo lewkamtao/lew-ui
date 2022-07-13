@@ -1,9 +1,3 @@
-<!--
- * @Author: Kamtao
- * @Date: 2022-07-12 15:36:19
- * @LastEditTime: 2022-07-12 15:37:07
- * @Description: 
--->
 <script setup lang="ts">
 import { DemoNotification1, DemoNotification1_code } from './demo';
 import { ref } from 'vue';

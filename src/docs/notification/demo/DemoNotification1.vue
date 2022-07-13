@@ -1,9 +1,3 @@
-<!--
- * @Author: Kamtao
- * @Date: 2022-07-12 15:36:19
- * @LastEditTime: 2022-07-12 16:17:50
- * @Description:  
--->
 <script lang="ts" setup>
 const open = (type: any) => {
     LewNotification[type]({

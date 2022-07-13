@@ -118,7 +118,8 @@ const getTextLength = (val: string) => {
         color: rgb(165, 165, 165);
     }
     .lew-textarea:hover {
-        border: var(--lew-form-border-width) var(--lew-form-border-color-hover) solid;
+        border: var(--lew-form-border-width) var(--lew-form-border-color-hover)
+            solid;
         background-color: var(--lew-form-bgcolor-hover);
     }
 

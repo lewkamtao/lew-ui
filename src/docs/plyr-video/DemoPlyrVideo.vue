@@ -1,9 +1,3 @@
-<!--
- * @Author: Kamtao
- * @Date: 2022-07-04 12:15:55
- * @LastEditTime: 2022-07-07 16:23:27
- * @Description: 
--->
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DemoPlyrVideo1, DemoPlyrVideo1_code } from './demo';

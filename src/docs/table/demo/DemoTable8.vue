@@ -1,11 +1,3 @@
-<!--
- * @Author: Kamtao
- * @Date: 2022-07-07 09:22:34
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-07-07 17:56:15
- * @Description: 
--->
-
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 

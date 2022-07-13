@@ -1,9 +1,3 @@
-/*
- * @Author: Kamtao
- * @Date: 2022-07-12 10:10:59
- * @LastEditTime: 2022-07-12 16:30:51
- * @Description:
- */
 import '../styles/index.scss';
 
 const warning = ({ title, content }) => {

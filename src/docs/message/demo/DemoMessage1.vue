@@ -1,9 +1,3 @@
-<!--
- * @Author: Kamtao
- * @Date: 2022-07-08 10:58:24
- * @LastEditTime: 2022-07-12 16:25:04
- * @Description: 
--->
 <script lang="ts" setup>
 const open = (type: any) => {
     LewMessage[type]('这是一个demo信息');

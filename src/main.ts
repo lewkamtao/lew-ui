@@ -1,9 +1,3 @@
-/*
- * @Author: Kamtao
- * @Date: 2022-07-04 12:15:55
- * @LastEditTime: 2022-07-07 17:57:21
- * @Description:
- */
 import { createApp, App } from 'vue';
 import AppVue from './App.vue';
 import router from './router/index';

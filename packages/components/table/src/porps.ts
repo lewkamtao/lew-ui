@@ -1,10 +1,3 @@
-/*
- * @Author: Kamtao
- * @Date: 2022-07-05 10:05:34
- * @LastEditTime: 2022-07-07 16:54:51
- * @Description:
- */
-
 import { PropType } from 'vue';
 import { TableColumns } from './types';
 

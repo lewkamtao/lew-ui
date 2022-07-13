@@ -1,10 +1,3 @@
-/*
- * @Author: Kamtao
- * @Date: 2022-07-04 12:15:55
- * @LastEditTime: 2022-07-07 16:55:35
- * @Description:
- */
-
 import { PropType } from 'vue';
 
 type Options = {

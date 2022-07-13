@@ -1,14 +1,11 @@
-<!--
- * @Author: Kamtao
- * @Date: 2022-07-13 12:13:00
- * @LastEditTime: 2022-07-13 17:31:47
- * @Description: 
--->
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { datePickerProps } from './props';
-const props = defineProps(datePickerProps);
 
+import { CalendarLtr12Regular } from '@vicons/fluent';
+import { Icon } from '@vicons/utils';
+
+const props = defineProps(datePickerProps);
 let _instance: any;
 let isShowPicker = ref(false);
 let dateValue = ref<string | undefined>(props.modelValue);
@@ -19,12 +16,11 @@ const getInstance = (instance) => {
 const emit = defineEmits(['change', 'update:modelValue']);
 
 const change = (date) => {
-    LewMessage.success(date.value);
     emit('update:modelValue', date.value);
-    emit('change', date);
-    setTimeout(() => {
+    emit('change', { date, instance: _instance });
+    if (props.autoClose) {
         _instance.hide();
-    }, 100);
+    }
 };
 </script>
 <template>
@@ -47,6 +43,9 @@ const change = (date) => {
                 <div v-show="dateValue" class="lew-date-picker-dateValue">
                     {{ dateValue }}
                 </div>
+                <icon size="18px" class="lew-date-picker-icon">
+                    <CalendarLtr12Regular />
+                </icon>
             </div>
         </template>
         <template #popover-body>
@@ -83,6 +82,14 @@ const change = (date) => {
     transition: all 0.15s ease;
     cursor: pointer;
     user-select: none;
+    .lew-date-picker-icon {
+        position: absolute;
+        top: 50%;
+        right: 7px;
+        transform: translateY(-50%);
+        transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+        color: var(--lew-text-color-7);
+    }
     .lew-date-picker-placeholder {
         color: rgb(165, 165, 165);
         margin-left: 7px;
@@ -102,9 +109,5 @@ const change = (date) => {
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
-    .lew-select-icon {
-        transform: translateY(-50%) rotate(180deg);
-        color: var(--lew-text-color-2);
-    }
 }
 </style>

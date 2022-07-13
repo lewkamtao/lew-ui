@@ -1,9 +1,3 @@
-<!--
- * @Author: Kamtao
- * @Date: 2022-06-28 09:42:26
- * @LastEditTime: 2022-07-07 16:26:50
- * @Description: 
--->
 <script setup lang="ts">
 import { DemoAlert1, DemoAlert1_code } from './demo';
 import { ref } from 'vue';

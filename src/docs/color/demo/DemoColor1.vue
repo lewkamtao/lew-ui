@@ -1,9 +1,3 @@
-<!--
- * @Author: Kamtao
- * @Date: 2022-06-27 10:04:45
- * @LastEditTime: 2022-07-07 15:40:10
- * @Description: 
--->
 <script lang="ts" setup>
 import { ref } from 'vue';
 let colors = ref(['primary', 'normal', 'info', 'warning', 'error', 'success']);

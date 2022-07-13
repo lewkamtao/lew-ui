@@ -1,9 +1,3 @@
-<!--
- * @Author: Kamtao
- * @Date: 2022-07-08 10:58:24
- * @LastEditTime: 2022-07-12 17:29:10
- * @Descript
--->
 <script setup lang="ts">
 import { ref } from 'vue';
 

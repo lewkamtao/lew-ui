@@ -1,10 +1,3 @@
-<!--
- * @Author: Kamtao
- * @Date: 2022-07-04 12:15:55
- * @LastEditTime: 2022-07-13 15:58:13
- * @Description: 
--->
-<!-- filename: Popover.vue -->
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import tippy from 'tippy.js';

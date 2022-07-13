@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const close = () => {
     LewMessage.success('你点击了关闭');
 };

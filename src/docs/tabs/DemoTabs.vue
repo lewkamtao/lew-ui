@@ -1,9 +1,3 @@
-<!--
- * @Author: Kamtao
- * @Date: 2022-06-28 09:42:26
- * @LastEditTime: 2022-07-07 17:59:36
- * @Description: 
--->
 <script setup lang="ts">
 import { DemoTabs1, DemoTabs2, DemoTabs1_code, DemoTabs2_code } from './demo';
 import { ref, reactive } from 'vue';

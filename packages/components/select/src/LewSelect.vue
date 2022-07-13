@@ -133,7 +133,7 @@ defineExpose({ show, hide });
                 class="lew-select"
                 :class="{ 'lew-select-foucs': isShowOptions }"
             >
-                <icon size="16" class="lew-select-icon">
+                <icon size="16px" class="lew-select-icon">
                     <ChevronDown />
                 </icon>
                 <div
@@ -174,7 +174,7 @@ defineExpose({ show, hide });
                                     v-show="multipleLabelStr.length > 1"
                                     type="primary"
                                 >
-                                    + {{ multipleLabelStr.length - 1 }}</lew-tag
+                                    +{{ multipleLabelStr.length - 1 }}</lew-tag
                                 >
                             </div></template
                         >
