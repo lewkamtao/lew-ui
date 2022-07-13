@@ -181,6 +181,13 @@ group.value = [
                 label: '有更新',
                 type: 'info',
             },
+            {
+                cname: '日期选择器',
+                name: 'DatePicker',
+                path: '/DatePicker',
+                label: '新增',
+                type: 'info',
+            },
             // {
             //     cname:"",name: 'Cascader',
             //     path: '/Cascader',
