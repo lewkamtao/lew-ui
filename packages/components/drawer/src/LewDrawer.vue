@@ -1,91 +1,55 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { ref, watch, nextTick } from 'vue';
+import { useDOMCreate } from '../../../hooks';
+import { DrawerProps, getClass, getStyle } from './index';
+
+useDOMCreate('lew-drawer');
 const emit = defineEmits(['update:visible']);
-import { DrawerProps, getSize, getPosition, getClass } from './index';
-let width = ref(0);
-let height = ref(0);
+
 const props = defineProps(DrawerProps);
-let visible = ref(props.visible);
-const styleObj = computed(() => getSize(width.value, height.value));
-const classObj = computed(() => getClass(props.position));
+let _visible = ref(props.visible);
+let isShowMain = ref(false);
+
 watch(
     () => props.visible,
     (val) => {
-        visible.value = val;
-        if (val) {
-            const timer = setInterval(() => {
-                if (!getPosition(props.position)) {
-                    width.value += 5;
-                    if (width.value === props.width) {
-                        width.value = props.width;
-                        clearInterval(timer);
-                    }
-                }
-                if (getPosition(props.position)) {
-                    height.value += 5;
-                    if (height.value === props.height) {
-                        height.value = props.height;
-                        clearInterval(timer);
-                    }
-                }
-            }, 10);
-        }
+        _visible.value = val;
+        setTimeout(() => {
+            // 设置固定单元格的阴影
+            isShowMain.value = val;
+        }, 200);
     },
 );
-watch(
-    () => visible.value,
-    (val) => {
-        emit('update:visible', val);
-    },
-);
+
 const close = () => {
-    const timer = setInterval(() => {
-        if (!getPosition(props.position)) {
-            width.value -= 5;
-            if (width.value === 0) {
-                width.value = 0;
-                visible.value = false;
-                clearInterval(timer);
-            }
-        }
-        if (getPosition(props.position)) {
-            height.value -= 5;
-            if (height.value === 0) {
-                height.value = 0;
-                visible.value = false;
-                clearInterval(timer);
-            }
-        }
-    }, 10);
+    isShowMain.value = false;
+    setTimeout(() => {
+        emit('update:visible', false);
+    }, 200);
 };
-onMounted(() => {
-    if (!getPosition(props.position)) {
-        width.value = 0;
-        height.value = 100;
-    }
-    if (getPosition(props.position)) {
-        width.value = 100;
-        height.value = 0;
-    }
-});
 </script>
 <template>
-    <transition name="fade">
-        <div v-if="visible" class="LewDrawer" @click="close">
+    <teleport to="#lew-drawer">
+        <transition name="fade">
             <div
-                :style="styleObj"
-                class="LewDrawerMain"
-                :class="classObj"
-                @click.stop
+                v-if="_visible"
+                class="lew-drawer"
+                :class="{ 'lew-drawer-show': isShowMain }"
+                @click="close"
             >
-                <slot></slot>
-            </div>
-        </div>
-    </transition>
-    <!-- </lew-modal> -->
+                <div
+                    :style="getStyle(position, width, height)"
+                    class="lew-drawer-main"
+                    :class="getClass(position)"
+                    @click.stop
+                >
+                    <slot></slot>
+                </div>
+            </div> </transition
+    ></teleport>
 </template>
-<style lang="scss" scoped>
-.LewDrawer {
+<style lang="scss">
+.lew-drawer {
     position: fixed;
     top: 0px;
     left: 0px;
@@ -94,37 +58,47 @@ onMounted(() => {
     background-color: var(--lew-modal-bgcolor);
     backdrop-filter: blur(5px);
     outline: 1000000px solid var(--lew-modal-bgcolor);
-    z-index: 9999;
+    z-index: 999;
 }
-.LewDrawerMain {
+.lew-drawer-main {
+    position: fixed;
     width: 100%;
     height: 100%;
     transition: all 0.5s ease;
     background: #fff;
-    position: fixed;
+    z-index: 9999;
 }
-.LewDrawerMain-right {
+.lew-drawer-main-right {
     right: 0;
     top: 0;
+    transform: translateX(100%);
 }
-.LewDrawerMain-top {
+.lew-drawer-main-top {
     width: 100%;
     height: 20%;
     left: 0;
     top: 0;
+    transform: translateY(-100%);
 }
-.LewDrawerMain-left {
+.lew-drawer-main-left {
     left: 0;
     top: 0;
+    transform: translateX(-100%);
 }
-.LewDrawerMain-bottom {
+.lew-drawer-main-bottom {
     left: 0;
     bottom: 0;
+    transform: translateY(100%);
+}
+.lew-drawer-show {
+    .lew-drawer-main {
+        transform: translate(0, 0);
+    }
 }
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.5s ease;
+    transition: all 0.5s ease;
 }
 
 .fade-enter-from,

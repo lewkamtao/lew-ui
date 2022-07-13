@@ -24,12 +24,29 @@ export const DrawerProps = {
         default: '',
     },
 };
-export const getSize = (width: number, height: number) => {
-    return {
-        width: `${width}%`,
-        height: `${height}%`,
-    };
+
+export const getStyle = (position: string, width: number, height: number) => {
+    switch (true) {
+        case !position:
+            return `width:30%;height:100%`;
+
+        case position == 'left':
+            return `width:${width}%;height:100%`;
+
+        case position == 'right':
+            return `width:${width}%;height:100%`;
+
+        case position == 'top':
+            return `width:100%;height:${height}%`;
+
+        case position == 'height':
+            return `width:100%;height:${height}%`;
+
+        default:
+            break;
+    }
 };
+
 export const getPosition = (position: string) => {
     switch (position) {
         case 'left':
@@ -44,6 +61,7 @@ export const getPosition = (position: string) => {
             return 0;
     }
 };
+
 export const getClass = (position: string) => {
-    return position ? 'LewDrawerMain-' + position : 'LewDrawerMain-right';
+    return position ? 'lew-drawer-main-' + position : 'lew-drawer-main-right';
 };
