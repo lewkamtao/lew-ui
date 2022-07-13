@@ -246,13 +246,19 @@ group.value = [
                 type: 'success',
             },
             {
+                cname: '抽屉',
+                name: 'Drawer',
+                path: '/Drawer',
+                label: '全新',
+                type: 'success',
+            },
+            {
                 cname: '对话框',
                 name: 'Dialog',
                 path: '/Dialog',
                 label: '',
                 type: 'success',
             },
-
             {
                 cname: '模态框',
                 name: 'Modal',
