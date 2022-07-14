@@ -6,29 +6,38 @@ import { CalendarLtr12Regular } from '@vicons/fluent';
 import { Icon } from '@vicons/utils';
 
 const props = defineProps(datePickerProps);
-let _instance: any;
+
 let isShowPicker = ref(false);
 let dateValue = ref<string | undefined>(props.modelValue);
 
-const getInstance = (instance) => {
-    _instance = instance;
-};
+let lewPopoverRef = ref();
+
 const emit = defineEmits(['change', 'update:modelValue']);
+
+const show = () => {
+    lewPopoverRef.value.show();
+};
+
+const hide = () => {
+    lewPopoverRef.value.hide();
+};
 
 const change = (date) => {
     emit('update:modelValue', date.value);
-    emit('change', { date, instance: _instance });
+    emit('change', date);
     if (props.autoClose) {
-        _instance.hide();
+        hide();
     }
 };
+
+defineExpose({ show, hide });
 </script>
 <template>
     <lew-popover
+        ref="lewPopoverRef"
         trigger="click"
         placement="bottom-start"
         :arrow="false"
-        @get-instance="getInstance"
         @on-show="isShowPicker = true"
         @on-hide="isShowPicker = false"
     >

@@ -52,6 +52,7 @@ let home_options = ref([
         value: '5',
     },
 ]);
+let d = ref('2020-12-12');
 </script>
 
 <template>
@@ -68,6 +69,15 @@ let home_options = ref([
         <lew-form-item direction="y" title="家地址">
             <LewSelect v-model="user.home" :options="home_options" />
         </lew-form-item>
+
+        <lew-form-item direction="y" title="生日">
+            <lew-date-picker
+                v-model="d"
+                style="width: 100%"
+                auto-close
+            ></lew-date-picker>
+        </lew-form-item>
+
         <lew-form-item direction="y" title="性别">
             <lew-radiobox-group v-model="user.sex" :options="sex_options" />
         </lew-form-item>

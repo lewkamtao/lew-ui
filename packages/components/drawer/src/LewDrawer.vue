@@ -17,7 +17,7 @@ watch(
         setTimeout(() => {
             // 设置固定单元格的阴影
             isShowMain.value = val;
-        }, 200);
+        }, 100);
     },
 );
 
@@ -25,7 +25,7 @@ const close = () => {
     isShowMain.value = false;
     setTimeout(() => {
         emit('update:visible', false);
-    }, 200);
+    }, 100);
 };
 </script>
 <template>
@@ -74,8 +74,6 @@ const close = () => {
     transform: translateX(100%);
 }
 .lew-drawer-main-top {
-    width: 100%;
-    height: 20%;
     left: 0;
     top: 0;
     transform: translateY(-100%);

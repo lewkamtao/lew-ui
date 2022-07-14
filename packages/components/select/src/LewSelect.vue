@@ -75,8 +75,8 @@ const changeFn = (item: Options) => {
 
 let isShowOptions = ref(false);
 
-let instance1: any;
-let instance2: any;
+let lewPopverRef1 = ref();
+let lewPopverRef2 = ref();
 
 const emit = defineEmits(['update:modelValue', 'change']);
 
@@ -86,7 +86,7 @@ const delTag = (i: number) => {
     emit('update:modelValue', multipleV.value);
     emit('change', multipleV.value);
     if (i == 0 && multipleV.value.length == 0) {
-        instance2.hide();
+        lewPopverRef2.value.hide();
     }
 };
 
@@ -94,36 +94,24 @@ const lewSelectWidth = computed(
     () => lewSelectRef.value?.offsetWidth - 12 + 'px',
 );
 
-const getInstance1 = (instance) => {
-    instance1 = instance;
-};
-const getInstance2 = (instance) => {
-    instance2 = instance;
-};
-
 const show = () => {
-    instance1.show();
+    lewPopverRef1.value.show();
 };
 
 const hide = () => {
-    instance1.hide();
+    lewPopverRef1.value.hide();
 };
-
-onUnmounted(() => {
-    instance1 = null;
-    instance2 = null;
-});
 
 defineExpose({ show, hide });
 </script>
 
 <template>
     <lew-popover
+        ref="lewPopverRef1"
         :trigger="trigger"
         placement="bottom-start"
         :arrow="false"
         style="width: 100%"
-        @get-instance="getInstance1"
         @on-show="isShowOptions = true"
         @on-hide="isShowOptions = false"
     >
@@ -161,9 +149,9 @@ defineExpose({ show, hide });
                     >
                     <lew-popover
                         v-show="multipleLabelStr.length > 1"
+                        ref="lewPopverRef2"
                         trigger="hover"
                         placement="top"
-                        @get-instance="getInstance2"
                     >
                         <template #trigger>
                             <div

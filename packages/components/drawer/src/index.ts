@@ -39,7 +39,7 @@ export const getStyle = (position: string, width: number, height: number) => {
         case position == 'top':
             return `width:100%;height:${height}%`;
 
-        case position == 'height':
+        case position == 'bottom':
             return `width:100%;height:${height}%`;
 
         default:

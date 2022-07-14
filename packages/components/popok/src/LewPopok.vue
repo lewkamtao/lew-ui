@@ -37,91 +37,61 @@ const props = defineProps({
     },
 });
 
-let triggerRef = ref(null);
-let bodyRef = ref(null);
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-let instance: any;
-
-onMounted(() => {
-    let trigger = props.trigger;
-    let placement = props.placement;
-
-    if (trigger == 'hover') {
-        trigger = 'mouseenter';
-    }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    instance = tippy(triggerRef.value, {
-        theme: 'light',
-        trigger: trigger || 'click',
-        content: bodyRef.value,
-        animation: 'shift-away-subtle',
-        interactive: true,
-        placement: placement,
-        appendTo: () => document.body,
-        allowHTML: true,
-        maxWidth: 'none',
-        onShow(instance) {
-            const node = document.getElementsByTagName('html')[0];
-            if (node.classList.contains('lew-dark')) {
-                instance.popper.children[0].setAttribute('data-theme', 'dark');
-            } else {
-                instance.popper.children[0].setAttribute('data-theme', 'light');
-            }
-        },
-    });
-    instance.popper.children[0].setAttribute('data-lew', 'popok');
-});
+let lewPopoverRef = ref();
 
 let show = () => {
-    instance.show();
+    lewPopoverRef.value.show();
 };
 
 let hide = () => {
-    instance.hide();
+    lewPopoverRef.value.hide();
 };
 
 const emit = defineEmits(['ok', 'cancel']);
-defineExpose({ show, hide });
 
-onUnmounted(() => {
-    instance = null;
-});
+defineExpose({ show, hide });
 </script>
 
 <template>
-    <div class="lew-popok">
-        <div ref="triggerRef">
-            <slot />
-        </div>
-        <div ref="bodyRef" class="lew-popok-body" :style="`width:${width}`">
-            <div class="left">
-                <Icon size="22" :class="`icon-${type}`">
-                    <Info24Regular v-if="type == `normal`" />
-                    <Warning24Regular v-if="type == `warning`" />
-                    <CheckmarkCircle24Regular v-if="type == `success`" />
-                    <ErrorCircle24Regular v-if="type == `error`" />
-                    <Alert24Regular v-if="type == `info`" />
-                </Icon>
-            </div>
-            <div class="right">
-                <div v-if="title" class="title">{{ title }}</div>
-                <div v-if="content" class="content">{{ content }}</div>
-                <div class="footer">
-                    <lew-button
-                        size="small"
-                        type="blank"
-                        @click="hide(), emit('cancel')"
-                        >取消
-                    </lew-button>
-                    <lew-button @click="hide(), emit('ok')" size="small"
-                        >确定</lew-button
-                    >
+    <lew-popover
+        ref="lewPopoverRef"
+        class="lew-popok"
+        :trigger="trigger"
+        placement="bottom-start"
+    >
+        <template #trigger>
+            <lew-button>进入保险箱</lew-button>
+        </template>
+        <template #popover-body>
+            <div class="lew-popok-body" :style="`width:${width}`">
+                <div class="left">
+                    <Icon size="22" :class="`icon-${type}`">
+                        <Info24Regular v-if="type == `normal`" />
+                        <Warning24Regular v-if="type == `warning`" />
+                        <CheckmarkCircle24Regular v-if="type == `success`" />
+                        <ErrorCircle24Regular v-if="type == `error`" />
+                        <Alert24Regular v-if="type == `info`" />
+                    </Icon>
+                </div>
+                <div class="right">
+                    <div v-if="title" class="title">{{ title }}</div>
+                    <div v-if="content" class="content">{{ content }}</div>
+                    <div class="footer">
+                        <lew-button
+                            size="small"
+                            type="blank"
+                            @click="emit('cancel')"
+                            >取消
+                        </lew-button>
+                        <lew-button size="small" @click="emit('ok')"
+                            >确定</lew-button
+                        >
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </template>
+    </lew-popover>
 </template>
 
 <style lang="scss" scoped>

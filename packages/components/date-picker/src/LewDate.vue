@@ -11,7 +11,6 @@ let dateValue = ref<string | undefined>(props.modelValue);
 
 let dateArr: any = dateValue.value?.split('-');
 
-console.log();
 // 获取当天日期对象
 let today = new Date();
 // 获取当前年份

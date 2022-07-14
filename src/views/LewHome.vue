@@ -51,9 +51,10 @@ onMounted(() => {
 
 const router = useRouter();
 let v = ref('');
-const submit = (instance: any) => {
+let lewPopoverRef = ref();
+const submit = () => {
     LewMessage.error(v.value || '密码不可为空');
-    instance.hide();
+    lewPopoverRef.value.hide();
 };
 const open = (type: any) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -345,7 +346,7 @@ const message = (type: string) => {
                             <template #trigger>
                                 <lew-button>Popover</lew-button>
                             </template>
-                            <template #popover-body="{ instance }">
+                            <template #popover-body>
                                 <div class="popover-body">
                                     <lew-form-item
                                         direction="y"
@@ -358,12 +359,12 @@ const message = (type: string) => {
                                         <lew-button
                                             type="blank"
                                             size="small"
-                                            @click="instance.hide()"
+                                            @click="lewPopoverRef.hide()"
                                             >取消
                                         </lew-button>
                                         <lew-button
                                             size="small"
-                                            @click="submit(instance)"
+                                            @click="submit()"
                                             >提交</lew-button
                                         >
                                     </div>

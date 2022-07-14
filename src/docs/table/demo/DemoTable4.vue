@@ -104,10 +104,11 @@ const formatSex = (sex: number) => {
 };
 
 let v = ref('');
-const submit = (instance: any) => {
+let lewPopoverRef = ref();
+const submit = () => {
     LewMessage.error(v.value || '密码不可为空');
     v.value = '';
-    instance.hide();
+    lewPopoverRef.value.hide();
 };
 const success = () => {
     LewMessage.success('删除成功');
@@ -141,7 +142,7 @@ const error = () => {
                     <template #trigger>
                         <lew-button is-text>录入</lew-button>
                     </template>
-                    <template #popover-body="{ instance }">
+                    <template #popover-body>
                         <div class="popover-body">
                             <lew-form-item direction="y" title="请输入密码">
                                 <lew-input v-model="v" />
@@ -150,12 +151,10 @@ const error = () => {
                                 <lew-button
                                     type="blank"
                                     size="small"
-                                    @click="instance.hide()"
+                                    @click="lewPopoverRef.hide()"
                                     >取消
                                 </lew-button>
-                                <lew-button
-                                    size="small"
-                                    @click="submit(instance)"
+                                <lew-button size="small" @click="submit()"
                                     >提交</lew-button
                                 >
                             </lew-flex>

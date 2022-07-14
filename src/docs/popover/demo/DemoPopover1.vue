@@ -2,9 +2,12 @@
 import { ref } from 'vue';
 
 let v = ref('');
-const submit = (instance: any) => {
+let lewPopoverRef1 = ref();
+let lewPopoverRef2 = ref();
+const submit = () => {
     LewMessage.error(v.value || '密码不可为空');
-    instance.hide();
+    lewPopoverRef1.value.hide();
+    lewPopoverRef2.value.hide();
 };
 
 const data: any = [
@@ -107,11 +110,15 @@ const formatSex = (sex: number) => {
 
 <template>
     <lew-flex gap="20px" x="start">
-        <lew-popover trigger="click" placement="bottom-start">
+        <lew-popover
+            ref="lewPopoverRef1"
+            trigger="click"
+            placement="bottom-start"
+        >
             <template #trigger>
                 <lew-button>进入保险箱</lew-button>
             </template>
-            <template #popover-body="{ instance }">
+            <template #popover-body>
                 <div class="popover-body" style="width: 300px">
                     <lew-form-item direction="y" title="请输入密码">
                         <lew-input v-model="v" />
@@ -120,10 +127,10 @@ const formatSex = (sex: number) => {
                         <lew-button
                             type="blank"
                             size="small"
-                            @click="instance.hide()"
+                            @click="lewPopoverRef1.hide()"
                             >取消
                         </lew-button>
-                        <lew-button size="small" @click="submit(instance)"
+                        <lew-button size="small" @click="submit()"
                             >提交
                         </lew-button>
                     </lew-flex>
@@ -131,11 +138,15 @@ const formatSex = (sex: number) => {
             </template>
         </lew-popover>
 
-        <lew-popover trigger="click" placement="bottom-start">
+        <lew-popover
+            ref="lewPopoverRef2"
+            trigger="click"
+            placement="bottom-start"
+        >
             <template #trigger>
                 <lew-button>展示表格</lew-button>
             </template>
-            <template #popover-body="{ instance }">
+            <template #popover-body>
                 <div class="popover-body" style="width: 800px">
                     <lew-table :data="data" :columns="columns" height="auto">
                         <template #id="{ row }"> {{ row.id }} </template>
@@ -162,10 +173,10 @@ const formatSex = (sex: number) => {
                         <lew-button
                             type="blank"
                             size="small"
-                            @click="instance.hide()"
+                            @click="lewPopoverRef2.hide()"
                             >取消
                         </lew-button>
-                        <lew-button size="small" @click="submit(instance)"
+                        <lew-button size="small" @click="submit()"
                             >提交
                         </lew-button>
                     </lew-flex>

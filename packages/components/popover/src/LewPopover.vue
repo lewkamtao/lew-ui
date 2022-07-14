@@ -4,7 +4,7 @@ import tippy from 'tippy.js';
 
 let triggerRef = ref(null);
 let bodyRef = ref(null);
-let instance: any = ref();
+let instance: any;
 
 const props = defineProps({
     trigger: {
@@ -30,7 +30,7 @@ onMounted(() => {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    instance.value = tippy(triggerRef.value, {
+    instance = tippy(triggerRef.value, {
         theme: 'light',
         trigger: trigger,
         content: bodyRef.value,
@@ -54,15 +54,20 @@ onMounted(() => {
             emit('onHide');
         },
     });
-    instance.value.popper.children[0].setAttribute('data-lew', 'popover');
-    emit('getInstance', instance.value);
+    instance.popper.children[0].setAttribute('data-lew', 'popover');
 });
 
-const emit = defineEmits(['getInstance', 'onShow', 'onHide']);
+const emit = defineEmits(['onShow', 'onHide']);
 
-onUnmounted(() => {
-    instance = null;
-});
+const show = () => {
+    instance.show();
+};
+
+const hide = () => {
+    instance.hide();
+};
+
+defineExpose({ show, hide });
 </script>
 
 <template>
@@ -71,7 +76,7 @@ onUnmounted(() => {
             <slot name="trigger" />
         </div>
         <div ref="bodyRef" class="lew-popover-body">
-            <slot name="popover-body" :instance="instance" />
+            <slot name="popover-body" />
         </div>
     </div>
 </template>
