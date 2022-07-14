@@ -21,6 +21,10 @@ export const selectProps = {
             return value.length > 0;
         },
     },
+    placement: {
+        type: String,
+        default: 'bottom-start',
+    },
     trigger: {
         type: String,
         default: 'click',

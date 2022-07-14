@@ -13,6 +13,7 @@ export const getMonthDate = (year?: number, month?: number) => {
     }
 
     // 这个月第一天的Date对象
+    // @ts-ignore
     const firstDay = new Date(year, month - 1, 1);
     // 那个这个月第一天具体是星期几
     let firstDayWeekDay = firstDay.getDay();

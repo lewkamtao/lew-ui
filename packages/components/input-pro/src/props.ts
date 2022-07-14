@@ -30,15 +30,10 @@ export const _props = {
         type: Boolean,
         default: false,
     },
-    // 对齐方式
+    // 展示密码
     showPassword: {
         type: Boolean,
         default: false,
-    },
-    // 缩放模式
-    resize: {
-        type: String,
-        default: 'none',
     },
     maxLength: {
         type: Number,

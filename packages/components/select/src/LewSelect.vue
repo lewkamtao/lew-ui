@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { ChevronDown } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
 import { selectProps } from './props';
@@ -109,7 +109,7 @@ defineExpose({ show, hide });
     <lew-popover
         ref="lewPopverRef1"
         :trigger="trigger"
-        placement="bottom-start"
+        :placement="placement"
         :arrow="false"
         style="width: 100%"
         @on-show="isShowOptions = true"
@@ -304,7 +304,7 @@ defineExpose({ show, hide });
 }
 .lew-select-body {
     width: 100%;
-    padding: 6px 0px 6px 6px;
+
     box-sizing: border-box;
     .options-box {
         overflow-y: auto;
@@ -312,15 +312,17 @@ defineExpose({ show, hide });
         max-height: 300px;
         height: auto;
         box-sizing: border-box;
+        padding: 3px;
         transition: all 0.25s ease;
-        padding-right: 6px;
+        font-size: 0px;
+
         .item {
             position: relative;
             display: inline-flex;
             align-items: center;
             width: 100%;
-            height: 35px;
-            line-height: 35px;
+            height: 32px;
+            line-height: 32px;
             font-size: 14px;
             overflow: hidden;
             white-space: nowrap;
@@ -350,7 +352,7 @@ defineExpose({ show, hide });
             z-index: 0;
             top: 50%;
             transform: translateY(-50%);
-            left: 9px;
+            left: 12px;
         }
     }
 
@@ -374,13 +376,17 @@ defineExpose({ show, hide });
 }
 .lew-select-multiple-body {
     .options-box {
+        .item {
+            height: 36px;
+            line-height: 36px;
+        }
         .lew-selcet-label {
             position: absolute;
             left: 0px;
             top: 50%;
             z-index: 9;
             transform: translateY(-50%);
-            padding-left: 35px;
+            padding-left: 40px;
         }
     }
 }

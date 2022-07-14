@@ -9,6 +9,7 @@ export * from './breadcrumb';
 export * from './dropdown';
 
 export * from './input';
+export * from './input-pro';
 export * from './form-item';
 export * from './checkbox';
 export * from './textarea';

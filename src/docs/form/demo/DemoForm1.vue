@@ -58,13 +58,18 @@ let d = ref('2020-12-12');
 <template>
     <div class="form-box">
         <lew-form-item direction="y" title="账号">
-            <LewInput v-model="user.username" />
+            <LewInput v-model="user.username" clearable />
         </lew-form-item>
         <lew-form-item direction="y" title="密码">
             <LewInput v-model="user.password" />
         </lew-form-item>
         <lew-form-item direction="y" title="简介">
-            <LewTextarea v-model="user.intro" resize="none" />
+            <LewTextarea
+                show-count
+                :max-length="30"
+                v-model="user.intro"
+                resize="none"
+            />
         </lew-form-item>
         <lew-form-item direction="y" title="家地址">
             <LewSelect v-model="user.home" :options="home_options" />

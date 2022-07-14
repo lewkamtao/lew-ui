@@ -52,7 +52,7 @@ defineExpose({ show, hide });
                 <div v-show="dateValue" class="lew-date-picker-dateValue">
                     {{ dateValue }}
                 </div>
-                <icon size="18px" class="lew-date-picker-icon">
+                <icon size="16px" class="lew-date-picker-icon">
                     <CalendarLtr12Regular />
                 </icon>
             </div>

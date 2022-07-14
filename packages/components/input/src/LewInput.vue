@@ -53,6 +53,38 @@ let getPaddingRight = computed(() => {
             break;
     }
 });
+
+let getCheckNumStr = computed(() => {
+    if (props.showCount && props.maxLength) {
+        return getTextLength(v.value) + ' / ' + props.maxLength;
+    } else if (props.showCount) {
+        return getTextLength(v.value);
+    } else {
+        return false;
+    }
+});
+
+/**
+ * 获取字符长度
+ * @param val
+ */
+
+const getTextLength = (val: string) => {
+    if (!props.niceCount) {
+        return val.length;
+    } else {
+        let len = 0;
+        for (let i = 0; i <= val.length - 1; i++) {
+            let length = val.charCodeAt(i);
+            if (length >= 0 && length <= 128) {
+                len += 1;
+            } else {
+                len += 2;
+            }
+        }
+        return Math.trunc(len);
+    }
+};
 </script>
 
 <template>
@@ -74,9 +106,12 @@ let getPaddingRight = computed(() => {
             class="lew-input-controls"
             :class="{
                 'lew-input-controls-show':
-                    (v && showPassword) || (v && clearable),
+                    (v && showPassword) || (v && clearable) || showCount,
             }"
         >
+            <div v-if="getCheckNumStr" class="lew-input-checkNum">
+                {{ getCheckNumStr }}
+            </div>
             <Icon
                 v-if="showPassword"
                 class="eye-icon-view"
@@ -91,7 +126,7 @@ let getPaddingRight = computed(() => {
                 v-if="clearable"
                 class="close-icon-view"
                 size="18"
-                @mousedown.prevent
+                @mousedown.prevent=""
                 @click="clear"
             >
                 <CloseCircleOutline />
@@ -116,6 +151,12 @@ let getPaddingRight = computed(() => {
         opacity: 0;
         transform: translateX(100%);
         transition: all 0.35s ease;
+        .lew-input-checkNum {
+            width: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         .close-icon-view {
             display: flex;
             justify-content: center;

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { paginationProps } from './porps';
 import { ref, computed, watch } from 'vue';
+import { LewDropdown } from 'lew-ui';
 import {
     ChevronForwardOutline,
     ChevronBackOutline,
@@ -62,6 +63,28 @@ const changePage = (type, num) => {
         pageShowSize: props.pageShowSize,
     });
 };
+let options = ref([
+    {
+        label: '西游记',
+        value: '1',
+    },
+    {
+        label: '水浒传',
+        value: '2',
+    },
+    {
+        label: '三国演义',
+        value: '3',
+    },
+    {
+        label: '红楼梦',
+        value: '4',
+    },
+]);
+
+const change = (e: any) => {
+    LewMessage.info(e.value.label);
+};
 </script>
 
 <template>
@@ -114,6 +137,14 @@ const changePage = (type, num) => {
                     <ChevronForwardOutline />
                 </icon>
             </lew-flex>
+            <lew-dropdown
+                :arrow="false"
+                :options="options"
+                placement="top-start"
+                @change="change"
+            >
+                <lew-tag type="success">{{ 5 }} / 页</lew-tag>
+            </lew-dropdown>
         </lew-flex>
     </div>
 </template>

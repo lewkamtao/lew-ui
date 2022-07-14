@@ -151,7 +151,13 @@ group.value = [
                 label: '',
                 type: 'success',
             },
-
+            {
+                cname: '高级输入框',
+                name: 'InputPro',
+                path: '/InputPro',
+                label: '',
+                type: 'success',
+            },
             {
                 cname: '多行文本框',
                 name: 'Textarea',

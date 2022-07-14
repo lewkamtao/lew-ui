@@ -5,10 +5,7 @@ let v = ref('');
 <template>
     <div style="width: 300px">
         <lew-form-item title="账号">
-            <lew-input v-model="v" />
-        </lew-form-item>
-        <lew-form-item title="账号">
-            <lew-input v-model="v" show-count />
+            <lew-input-pro v-model="v" />
         </lew-form-item>
         <p>值：{{ v }}</p>
     </div>

@@ -58,7 +58,7 @@ defineExpose({ show, hide });
         ref="lewPopoverRef"
         class="lew-popok"
         :trigger="trigger"
-        placement="bottom-start"
+        :placement="placement"
     >
         <template #trigger>
             <slot />
