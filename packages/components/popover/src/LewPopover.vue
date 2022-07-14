@@ -73,19 +73,23 @@ defineExpose({ show, hide });
 <template>
     <div class="lew-popover">
         <div ref="triggerRef">
-            <slot name="trigger" />
+            <div class="trigger"><slot name="trigger" /></div>
         </div>
         <div ref="bodyRef" class="lew-popover-body">
-            <slot name="popover-body" />
+            <slot name="popover-body" :show="show" :hide="hide" />
         </div>
     </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .lew-popover {
     display: inline-block;
-    > div {
+
+    .trigger {
         font-size: 0px;
+        > div {
+            font-size: 14px;
+        }
     }
 }
 </style>

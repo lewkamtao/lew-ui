@@ -84,7 +84,7 @@ const delTag = (i: number) => {
     multipleV.value.splice(i, 1);
     multipleLabelStr.value.splice(i, 1);
     emit('update:modelValue', multipleV.value);
-    emit('change', multipleV.value);
+    emit('change', { value: multipleV.value, show, hide });
     if (i == 0 && multipleV.value.length == 0) {
         lewPopverRef2.value.hide();
     }

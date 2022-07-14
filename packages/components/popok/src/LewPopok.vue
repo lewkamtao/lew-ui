@@ -81,10 +81,12 @@ defineExpose({ show, hide });
                         <lew-button
                             size="small"
                             type="blank"
-                            @click="emit('cancel')"
+                            @click="emit('cancel', { show, hide })"
                             >取消
                         </lew-button>
-                        <lew-button size="small" @click="emit('ok')"
+                        <lew-button
+                            size="small"
+                            @click="emit('ok', { show, hide })"
                             >确定</lew-button
                         >
                     </div>

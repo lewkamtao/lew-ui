@@ -21,8 +21,7 @@ let options = ref([
 ]);
 
 const change = (e: any) => {
-    console.log(e);
-    LewMessage.info(e.label);
+    LewMessage.info(e.value.label);
 };
 </script>
 <template>

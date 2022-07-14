@@ -51,7 +51,7 @@ const emit = defineEmits(['change']);
 defineExpose({ show, hide });
 
 const change = (item: Options) => {
-    emit('change', item);
+    emit('change', { show, hide, value: item });
     setTimeout(() => {
         lewPopoverRef.value.hide();
     }, 80);
@@ -62,6 +62,7 @@ const change = (item: Options) => {
     <lew-popover
         ref="lewPopoverRef"
         :trigger="trigger"
+        :arrow="arrow"
         placement="bottom-start"
     >
         <template #trigger>

@@ -104,16 +104,17 @@ const formatSex = (sex: number) => {
 };
 
 let v = ref('');
-let lewPopoverRef = ref();
+
 const submit = () => {
     LewMessage.error(v.value || '密码不可为空');
     v.value = '';
-    lewPopoverRef.value.hide();
 };
-const success = () => {
+const success = (e: any) => {
+    e.hide();
     LewMessage.success('删除成功');
 };
-const error = () => {
+const error = (e: any) => {
+    e.hide();
     LewMessage.error('取消');
 };
 </script>
@@ -138,15 +139,11 @@ const error = () => {
         <template #intro="{ row }"> {{ row.intro }} </template>
         <template #action>
             <lew-flex>
-                <lew-popover
-                    ref="lewPopoverRef"
-                    trigger="click"
-                    placement="top"
-                >
+                <lew-popover trigger="click" placement="top">
                     <template #trigger>
                         <lew-button is-text>录入</lew-button>
                     </template>
-                    <template #popover-body>
+                    <template #popover-body="{ hide }">
                         <div class="popover-body">
                             <lew-form-item direction="y" title="请输入密码">
                                 <lew-input v-model="v" />
@@ -155,10 +152,12 @@ const error = () => {
                                 <lew-button
                                     type="blank"
                                     size="small"
-                                    @click="lewPopoverRef.hide()"
+                                    @click="hide()"
                                     >取消
                                 </lew-button>
-                                <lew-button size="small" @click="submit()"
+                                <lew-button
+                                    size="small"
+                                    @click="hide(), submit()"
                                     >提交
                                 </lew-button>
                             </lew-flex>
@@ -172,9 +171,10 @@ const error = () => {
                     width="200px"
                     @ok="success"
                     @cancel="error"
+                    ><lew-button is-text type="error"
+                        >删除</lew-button
+                    ></lew-popok
                 >
-                    <lew-button is-text type="error">删除</lew-button>
-                </lew-popok>
             </lew-flex>
         </template>
     </lew-table>

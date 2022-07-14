@@ -24,7 +24,7 @@ const hide = () => {
 
 const change = (date) => {
     emit('update:modelValue', date.value);
-    emit('change', date);
+    emit('change', { date: date, show, hide });
     if (props.autoClose) {
         hide();
     }

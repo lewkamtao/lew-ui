@@ -21,8 +21,7 @@ let options = ref([
 ]);
 
 const change = (e: any) => {
-    console.log(e);
-    LewMessage.info(e.label);
+    LewMessage.info(e.value.label);
 };
 </script>
 <template>
@@ -30,6 +29,7 @@ const change = (e: any) => {
         <lew-dropdown :arrow="false" :options="options" @change="change">
             <lew-tag type="success">hover</lew-tag>
         </lew-dropdown>
+
         <lew-dropdown
             :arrow="false"
             placement="bottom-start"
