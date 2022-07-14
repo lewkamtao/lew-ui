@@ -138,7 +138,11 @@ const error = () => {
         <template #intro="{ row }"> {{ row.intro }} </template>
         <template #action>
             <lew-flex>
-                <lew-popover trigger="click" placement="top">
+                <lew-popover
+                    ref="lewPopoverRef"
+                    trigger="click"
+                    placement="top"
+                >
                     <template #trigger>
                         <lew-button is-text>录入</lew-button>
                     </template>
@@ -155,8 +159,8 @@ const error = () => {
                                     >取消
                                 </lew-button>
                                 <lew-button size="small" @click="submit()"
-                                    >提交</lew-button
-                                >
+                                    >提交
+                                </lew-button>
                             </lew-flex>
                         </div>
                     </template>
@@ -170,8 +174,8 @@ const error = () => {
                     @cancel="error"
                 >
                     <lew-button is-text type="error">删除</lew-button>
-                </lew-popok></lew-flex
-            >
+                </lew-popok>
+            </lew-flex>
         </template>
     </lew-table>
 </template>

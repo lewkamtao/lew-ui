@@ -124,8 +124,8 @@ const del = (row: any, column: any) => {
                     :key="index"
                     type="info"
                     size="small"
-                    >{{ item }}</lew-tag
-                ></lew-flex
+                    >{{ item }}
+                </lew-tag></lew-flex
             >
         </template>
         <template #intro="{ row }"> {{ row.intro }} </template>
@@ -133,8 +133,8 @@ const del = (row: any, column: any) => {
             <lew-flex>
                 <lew-button is-text @click="set(row, column)">管理</lew-button
                 ><lew-button type="error" is-text @click="del(row, column)"
-                    >删除</lew-button
-                ></lew-flex
+                    >删除
+                </lew-button></lew-flex
             >
         </template>
     </lew-table>

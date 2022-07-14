@@ -61,7 +61,7 @@ defineExpose({ show, hide });
         placement="bottom-start"
     >
         <template #trigger>
-            <lew-button>进入保险箱</lew-button>
+            <slot />
         </template>
         <template #popover-body>
             <div class="lew-popok-body" :style="`width:${width}`">

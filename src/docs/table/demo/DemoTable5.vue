@@ -117,13 +117,6 @@ const formatSex = (sex: number) => {
             return '未知';
     }
 };
-
-const set = (row: any, column: any) => {
-    console.log(row, column);
-};
-const del = (row: any, column: any) => {
-    console.log(row, column);
-};
 </script>
 
 <template>
@@ -139,18 +132,16 @@ const del = (row: any, column: any) => {
                     :key="index"
                     type="info"
                     size="small"
-                    >{{ item }}</lew-tag
-                ></lew-flex
-            >
+                    >{{ item }}
+                </lew-tag>
+            </lew-flex>
         </template>
         <template #intro="{ row }"> {{ row.intro }} </template>
-        <template #action="{ row, column }">
+        <template #action>
             <lew-flex>
-                <lew-button is-text @click="set(row, column)">管理</lew-button
-                ><lew-button is-text @click="del(row, column)"
-                    >删除</lew-button
-                ></lew-flex
-            >
+                <lew-button is-text>管理</lew-button
+                ><lew-button is-text>删除</lew-button>
+            </lew-flex>
         </template>
     </lew-table>
 </template>

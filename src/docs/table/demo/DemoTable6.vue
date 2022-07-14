@@ -122,17 +122,17 @@ const del = (row: any, column: any) => {
                     v-for="(item, index) in row.hobby"
                     :key="index"
                     type="info"
-                    >{{ item }}</lew-tag
-                ></lew-flex
-            >
+                    >{{ item }}
+                </lew-tag>
+            </lew-flex>
         </template>
         <template #intro="{ row }"> {{ row.intro }} </template>
         <template #action="{ row, column }">
             <lew-flex>
                 <lew-button is-text @click="set(row, column)">管理</lew-button
                 ><lew-button is-text @click="del(row, column)"
-                    >删除</lew-button
-                ></lew-flex
+                    >删除
+                </lew-button></lew-flex
             >
         </template>
     </lew-table>
