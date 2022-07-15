@@ -136,7 +136,7 @@ const docsTable = reactive([
 <template>
     <div class="demo-wrapper">
         <lew-title>InputPro</lew-title>
-        <p class="sub-title">这是一个增强版的输入框，新增功能：预选择、</p>
+        <p class="sub-title">这是一个增强版的输入框，新增：预选择</p>
         <lew-demo-box title="x 布局" :code="DemoInputPro1_code">
             <demo-input-pro1 />
         </lew-demo-box>
