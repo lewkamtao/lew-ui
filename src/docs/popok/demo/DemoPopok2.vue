@@ -22,6 +22,6 @@ const cancel = () => {
         @ok="ok"
         @cancel="cancel"
     >
-        <lew-button>click 触发</lew-button>
+        <lew-button>hover 触发</lew-button>
     </lew-popok>
 </template>

@@ -107,6 +107,8 @@ defineExpose({ show, hide });
         border-radius: var(--lew-form-border-radius);
         color: var(--lew-text-color-7);
         cursor: pointer;
+        white-space: nowrap;
+        box-sizing: border-box;
     }
     .lew-dropdown-option:hover {
         color: var(--lew-text-color-2);

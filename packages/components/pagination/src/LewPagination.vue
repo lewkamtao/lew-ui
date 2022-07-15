@@ -137,14 +137,13 @@ const change = (e: any) => {
                     <ChevronForwardOutline />
                 </icon>
             </lew-flex>
-            <lew-dropdown
-                :arrow="false"
+            <lew-input-pro
+                style="width: 120px; text-align: center"
                 :options="options"
                 placement="top-start"
                 @change="change"
             >
-                <lew-tag type="success">{{ 5 }} / 页</lew-tag>
-            </lew-dropdown>
+            </lew-input-pro>
         </lew-flex>
     </div>
 </template>

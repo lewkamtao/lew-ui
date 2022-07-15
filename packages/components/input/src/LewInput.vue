@@ -315,11 +315,3 @@ const getTextLength = (val: string) => {
     background-color: var(--lew-form-bgcolor);
 }
 </style>
-<style>
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-    -webkit-transition-delay: 9999999999999999s;
-}
-</style>

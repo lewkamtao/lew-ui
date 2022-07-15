@@ -82,9 +82,16 @@ q:before,
 q:after,
 blockquote:before,
 blockquote:after {
-    content: '';
+    content: "";
 }
 
 a {
     text-decoration: none;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition-delay: 9999999s;
+    -webkit-transition: color 9999999s ease-out, background-color 9999999s ease-out;
 }
