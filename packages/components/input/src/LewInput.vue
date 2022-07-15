@@ -87,11 +87,13 @@ const getTextLength = (val: string) => {
 <template>
     <div
         class="lew-input-view"
-        :class="{
-            'lew-input-view-textarea': _type == 'textarea',
-            'lew-input-view-readonly': readonly,
-            'lew-input-view-disabled': disabled,
-        }"
+        :class="`
+            lew-input-view-${size} 
+            ${_type == 'textarea' ? 'lew-input-view-textarea' : ''}
+            ${readonly ? 'lew-input-view-readonly' : ''} 
+            ${disabled ? 'lew-input-view-disabled' : ''}
+            ${align ? 'lew-input-view-align-' + align : ''}
+            `"
     >
         <textarea
             v-if="_type == 'textarea'"
@@ -135,7 +137,12 @@ const getTextLength = (val: string) => {
                 {{ getCheckNumStr }}
             </div>
             <div v-if="showPassword" class="lew-input-show-password">
-                <Icon class="eye-icon-view" size="18" @click="showPasswordFn">
+                <Icon
+                    class="eye-icon-view"
+                    size="18"
+                    @mousedown.prevent=""
+                    @click="showPasswordFn"
+                >
                     <EyeOutline v-show="_type == 'text'" />
                     <EyeOffOutline v-show="_type == 'password'" />
                 </Icon>
@@ -166,20 +173,16 @@ const getTextLength = (val: string) => {
     border-radius: var(--lew-form-border-radius);
     background-color: var(--lew-form-bgcolor);
     transition: all 0.15s ease;
-
+    box-sizing: border-box;
     input,
     textarea {
         width: 100%;
-        padding: 5px 0px 5px 12px;
-        font-size: 14px;
-        line-height: 24px;
-
         text-overflow: ellipsis;
         border: none;
         background: none;
-        color: var(--lew-text-color);
-        box-sizing: border-box;
+        color: var(--lew-text-color-2);
         outline: none;
+        box-sizing: border-box;
     }
     input {
         height: 35px;
@@ -189,7 +192,8 @@ const getTextLength = (val: string) => {
         min-height: 35px;
     }
 
-    input::placeholder {
+    input::placeholder,
+    textarea::placeholder {
         color: rgb(165, 165, 165);
     }
 
@@ -226,6 +230,75 @@ const getTextLength = (val: string) => {
     .lew-input-controls-show {
         opacity: 0.8;
         transform: translateX(0px);
+    }
+}
+.lew-input-view-align-left {
+    input,
+    textarea {
+        text-align: left;
+    }
+}
+.lew-input-view-align-center {
+    input,
+    textarea {
+        text-align: center;
+    }
+}
+.lew-input-view-align-right {
+    input,
+    textarea {
+        text-align: right;
+    }
+}
+.lew-input-view-small {
+    input,
+    textarea {
+        padding: var(--lew-form-input-padding-small);
+        font-size: var(--lew-form-font-size-small);
+        line-height: var(--lew-form-input-line-height-small);
+    }
+    input {
+        height: var(--lew-form-input-height-small);
+    }
+    textarea {
+        min-height: var(--lew-form-input-height-small);
+    }
+    .lew-input-controls {
+        height: var(--lew-form-input-height-small);
+    }
+}
+.lew-input-view-medium {
+    input,
+    textarea {
+        padding: var(--lew-form-input-padding-medium);
+        font-size: var(--lew-form-font-size-medium);
+        line-height: var(--lew-form-input-line-height-medium);
+    }
+    input {
+        height: var(--lew-form-input-height-medium);
+    }
+    textarea {
+        min-height: var(--lew-form-input-height-medium);
+    }
+    .lew-input-controls {
+        height: var(--lew-form-input-height-medium);
+    }
+}
+.lew-input-view-large {
+    input,
+    textarea {
+        padding: var(--lew-form-input-padding-large);
+        font-size: var(--lew-form-font-size-large);
+        line-height: var(--lew-form-input-line-height-large);
+    }
+    input {
+        height: var(--lew-form-input-height-large);
+    }
+    textarea {
+        min-height: var(--lew-form-input-height-large);
+    }
+    .lew-input-controls {
+        height: var(--lew-form-input-height-large);
     }
 }
 
@@ -278,7 +351,11 @@ const getTextLength = (val: string) => {
     cursor: default;
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor);
+    input {
+        user-select: auto;
+    }
 }
+
 .lew-input-view-readonly:hover {
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor);
@@ -289,7 +366,7 @@ const getTextLength = (val: string) => {
     background-color: var(--lew-form-bgcolor);
 }
 
-.lew-input-view-readonly:focus {
+.lew-input-view-readonly:focus-within {
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor);
 }
@@ -310,7 +387,7 @@ const getTextLength = (val: string) => {
     background-color: var(--lew-form-bgcolor);
 }
 
-.lew-input-view-disabled:focus {
+.lew-input-view-disabled:focus-within {
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor);
 }

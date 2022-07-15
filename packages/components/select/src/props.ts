@@ -36,4 +36,8 @@ export const selectProps = {
         type: Boolean,
         default: false,
     },
+    size: {
+        type: String,
+        default: 'medium',
+    },
 };

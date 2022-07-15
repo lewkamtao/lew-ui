@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue';
-import { _props } from './props';
+import { inputProProps } from './props';
 
-const props = defineProps(_props);
+const props = defineProps(inputProProps);
 const v = ref(props.modelValue);
 watch(
     () => props.modelValue,
@@ -21,25 +21,6 @@ const emit = defineEmits([
 let lewDropdownRef = ref();
 let lewInputProRef = ref();
 
-let options = ref([
-    {
-        label: '红楼梦',
-        value: '4',
-    },
-    {
-        label: '水浒传',
-        value: '2',
-    },
-    {
-        label: '三国演义',
-        value: '3',
-    },
-    {
-        label: '红楼梦',
-        value: '4',
-    },
-]);
-
 const input = (e) => {
     emit('input', e.value);
     emit('update:modelValue', e.value);
@@ -51,30 +32,35 @@ const selectFn = (e: any) => {
     hide();
 };
 const open = () => {
+    if (props.options.length == 0) return;
     lewDropdownRef.value.show();
 };
 const hide = () => {
     lewDropdownRef.value.hide();
 };
-
-const lewInputProWidth = computed(
-    () => lewInputProRef.value?.offsetWidth - 12 + 'px',
-);
 </script>
 
 <template>
-    <div ref="lewInputProRef" class="lew-input-pro">
+    <div class="lew-input-pro">
+        <slot name="left" />
         <lew-dropdown
             ref="lewDropdownRef"
             style="width: 100%"
-            :arrow="false"
-            trigger="click"
-            :width="lewInputProWidth"
+            :trigger="trigger"
+            :arrow="arrow"
+            :placement="placement"
+            :align="align"
+            :width="parseFloat(popoverWidth) - 12 + 'px'"
             :options="options"
             @change="selectFn"
         >
             <lew-input
+                ref="lewInputProRef"
                 v-model="v"
+                :size="size"
+                :align="align"
+                :placeholder="placeholder"
+                :clearable="clearable"
                 @click.stop
                 @input="input"
                 @change="emit('change', v)"
@@ -82,12 +68,16 @@ const lewInputProWidth = computed(
                 @focus="open(), emit('focus', v)"
             />
         </lew-dropdown>
+        <slot name="right" />
     </div>
 </template>
 
 <style lang="scss" scoped>
 .lew-input-pro {
+    display: inline-flex;
+    align-items: center;
     width: 100%;
+
     .lew-input {
         width: 100%;
     }

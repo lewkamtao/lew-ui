@@ -6,11 +6,33 @@ const clear = (e: any) => {
 
 <template>
     <div style="width: 300px">
-        <lew-form-item title="账号">
-            <lew-input-pro clearable @clear="clear" />
+        <lew-form-item direction="y" title="预输入">
+            <lew-input-pro
+                style="width: 250px"
+                :options="['梁山伯与朱丽叶', '小城故事多']"
+                clearable
+                placement="left"
+                @clear="clear"
+            />
         </lew-form-item>
-        <lew-form-item title="密码">
-            <lew-input-pro type="password" clearable />
+        <lew-form-item direction="y" title="预输入">
+            <lew-input-pro
+                style="width: 250px"
+                :options="['梁山伯与朱丽叶', '小城故事多']"
+                clearable
+                placement="right-start"
+                @clear="clear"
+            />
+        </lew-form-item>
+        <lew-form-item direction="y" title="气泡方向自定义">
+            <lew-input-pro
+                style="width: 250px"
+                popover-width="250px"
+                :options="['詹姆斯', '库里', '汤普森', '利拉德']"
+                type="password"
+                :arrow="false"
+                clearable
+            />
         </lew-form-item>
     </div>
 </template>

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { paginationProps } from './porps';
 import { ref, computed, watch } from 'vue';
-import { LewDropdown } from 'lew-ui';
 import {
     ChevronForwardOutline,
     ChevronBackOutline,
@@ -23,6 +22,7 @@ watch(
     },
 );
 let maxLen = Math.floor(props.total / props.pageSize);
+
 let pageInterval = computed(() => {
     let start = curPage.value - props.pageShowSize;
     let end = curPage.value + props.pageShowSize;
@@ -63,24 +63,6 @@ const changePage = (type, num) => {
         pageShowSize: props.pageShowSize,
     });
 };
-let options = ref([
-    {
-        label: '西游记',
-        value: '1',
-    },
-    {
-        label: '水浒传',
-        value: '2',
-    },
-    {
-        label: '三国演义',
-        value: '3',
-    },
-    {
-        label: '红楼梦',
-        value: '4',
-    },
-]);
 
 const change = (e: any) => {
     LewMessage.info(e.value.label);
@@ -138,11 +120,19 @@ const change = (e: any) => {
                 </icon>
             </lew-flex>
             <lew-input-pro
-                style="width: 120px; text-align: center"
-                :options="options"
-                placement="top-start"
-                @change="change"
+                v-model="curPage"
+                size="small"
+                style="width: 130px"
+                align="center"
+                placeholder=""
+                :options="[5, 10, 20, 50, 100]"
             >
+                <template #left>
+                    <div class="page-label">第</div>
+                </template>
+                <template #right>
+                    <div class="page-label">页</div>
+                </template>
             </lew-input-pro>
         </lew-flex>
     </div>
@@ -152,11 +142,11 @@ const change = (e: any) => {
 .lew-pagination {
     display: inline-block;
     box-sizing: border-box;
-    height: 34px;
+    height: 40px;
     border-radius: var(--lew-form-border-radius);
     user-select: none;
     font-size: 14px;
-    padding: 0px 6px;
+    padding: 0px 12px;
     .lew-pagination-control {
         height: 100%;
         color: var(--lew-text-color-7);
@@ -194,6 +184,10 @@ const change = (e: any) => {
         .lew-pagination-control-btn {
             padding: 0px;
         }
+    }
+    .page-label {
+        width: 40px;
+        text-align: center;
     }
 }
 .lew-pagination-background {

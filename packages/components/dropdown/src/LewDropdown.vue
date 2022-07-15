@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, PropType } from 'vue';
+import { ref, PropType, computed } from 'vue';
 
 type Options = {
     label: string;
@@ -12,6 +12,10 @@ const props = defineProps({
         default() {
             return [];
         },
+        required: true,
+        validator(value: PropType<Options[]>) {
+            return value.length > 0;
+        },
     },
     trigger: {
         type: String,
@@ -21,6 +25,10 @@ const props = defineProps({
         type: String,
         default: 'bottom',
     },
+    arrow: {
+        type: Boolean,
+        default: true,
+    },
     width: {
         type: String,
         default: '',
@@ -29,10 +37,7 @@ const props = defineProps({
         type: String,
         default: '300px',
     },
-    arrow: {
-        type: Boolean,
-        default: true,
-    },
+
     align: {
         type: String,
         default: 'left',
@@ -52,7 +57,7 @@ let hide = () => {
 
 const emit = defineEmits(['change']);
 
-const change = (item: Options) => {
+const change = (item) => {
     emit('change', { show, hide, value: item });
     setTimeout(() => {
         lewPopoverRef.value.hide();
@@ -60,6 +65,22 @@ const change = (item: Options) => {
 };
 
 defineExpose({ show, hide });
+
+const _options = computed(() => {
+    if (
+        Array.isArray(props.options) &&
+        Object.prototype.toString.call(props.options[0]) != '[object Object]'
+    ) {
+        return props.options.map((e) => {
+            return {
+                label: e,
+                value: e,
+            };
+        });
+    } else {
+        return props.options;
+    }
+});
 </script>
 
 <template>
@@ -74,11 +95,12 @@ defineExpose({ show, hide });
         </template>
         <template #popover-body>
             <div
+                v-if="_options.length > 0"
                 class="lew-dropdown-body"
                 :style="`width:${width};max-height:${maxHeight}`"
             >
                 <div
-                    v-for="(item, index) in options"
+                    v-for="(item, index) in _options"
                     :key="index"
                     class="lew-dropdown-option"
                     :style="`text-align:${align}`"
@@ -100,7 +122,7 @@ defineExpose({ show, hide });
     padding: 3px;
     box-sizing: border-box;
     .lew-dropdown-option {
-        padding: 0px 15px;
+        padding: 0px 10px;
         height: 32px;
         line-height: 32px;
         font-size: 14px;

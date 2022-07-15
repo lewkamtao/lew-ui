@@ -1,22 +1,43 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { ChevronDown } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
 import { selectProps } from './props';
 import { LewCheckbox, LewPopover } from 'lew-ui';
+const props = defineProps(selectProps);
+
+const v = ref<string>('');
+const multipleV = ref<Array<string>>([]);
+const labelStr = ref<string>('');
+const multipleLabelStr = ref<Array<string>>([]);
+
+watch(
+    () => props.modelValue,
+    () => {
+        // 如果是多选
+        if (props.multiple) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            multipleV.value = props.modelValue;
+            multipleLabelStr.value = filterSelect(
+                props.modelValue,
+                props.options,
+            );
+        } else {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            v.value = props.modelValue;
+            labelStr.value =
+                filterSelect([props.modelValue], props.options)[0] || '';
+        }
+    },
+    { deep: true },
+);
 
 type Options = {
     label: string;
     value: string;
 };
-
-const props = defineProps(selectProps);
-
-const v = ref<string>('');
-const labelStr = ref<string>('');
-
-const multipleV = ref<Array<string>>([]);
-const multipleLabelStr = ref<Array<string>>([]);
 
 let lewSelectRef = ref();
 
@@ -44,6 +65,8 @@ const filterSelect = (v: any, options: Options[]) => {
 
     return _v;
 };
+
+const emit = defineEmits(['update:modelValue', 'change']);
 
 const changeFn = (item: Options) => {
     if (props.multiple) {
@@ -78,8 +101,6 @@ let isShowOptions = ref(false);
 let lewPopverRef1 = ref();
 let lewPopverRef2 = ref();
 
-const emit = defineEmits(['update:modelValue', 'change']);
-
 const delTag = (i: number) => {
     multipleV.value.splice(i, 1);
     multipleLabelStr.value.splice(i, 1);
@@ -108,6 +129,8 @@ defineExpose({ show, hide });
 <template>
     <lew-popover
         ref="lewPopverRef1"
+        class="lew-select-view"
+        :class="{ 'lew-select-foucs': isShowOptions }"
         :trigger="trigger"
         :placement="placement"
         :arrow="false"
@@ -119,7 +142,7 @@ defineExpose({ show, hide });
             <div
                 ref="lewSelectRef"
                 class="lew-select"
-                :class="{ 'lew-select-foucs': isShowOptions }"
+                :class="`lew-select-${size}`"
             >
                 <icon size="16px" class="lew-select-icon">
                     <ChevronDown />
@@ -142,6 +165,7 @@ defineExpose({ show, hide });
                     <lew-tag
                         v-show="multipleLabelStr.length > 0"
                         type="primary"
+                        :size="size"
                         closable
                         @close="delTag(0)"
                     >
@@ -160,6 +184,7 @@ defineExpose({ show, hide });
                             >
                                 <lew-tag
                                     v-show="multipleLabelStr.length > 1"
+                                    :size="size"
                                     type="primary"
                                 >
                                     +{{ multipleLabelStr.length - 1 }}</lew-tag
@@ -178,6 +203,7 @@ defineExpose({ show, hide });
                                     :key="`multipleLabelStr${i}`"
                                     type="primary"
                                     closable
+                                    :size="size"
                                     @close="delTag(i)"
                                 >
                                     {{ item }}</lew-tag
@@ -221,74 +247,101 @@ defineExpose({ show, hide });
 </template>
 
 <style lang="scss" scoped>
-.lew-select {
-    display: inline-flex;
-    align-items: center;
-    position: relative;
+.lew-select-view {
     width: 100%;
-    height: 35px;
-    padding: 5px;
-    font-size: 14px;
-    line-height: 24px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     border-radius: var(--lew-form-border-radius);
     background-color: var(--lew-form-bgcolor);
-    color: var(--lew-text-color);
-    box-sizing: border-box;
     transition: all 0.15s ease;
-    cursor: pointer;
-    user-select: none;
-    .lew-select-icon {
-        position: absolute;
-        top: 50%;
-        right: 7px;
-        transform: translateY(-50%) rotate(0deg);
-        transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
-        color: var(--lew-text-color-7);
-    }
+    box-sizing: border-box;
 
-    background-color: var(--lew-form-bgcolor);
+    > div {
+        width: 100%;
+    }
     .lew-select {
-        width: 100%;
-    }
-    .lew-select-label-single {
-        margin-left: 7px;
-    }
-    .lew-select-label-multiple {
-        width: 100%;
         display: flex;
         align-items: center;
-        .lew-popover {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: var(--lew-text-color);
+        cursor: pointer;
+        user-select: none;
+        box-sizing: border-box;
+        .lew-select-icon {
+            position: absolute;
+            top: 50%;
+            right: 7px;
+            transform: translateY(-50%) rotate(0deg);
+            transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+            color: var(--lew-text-color-7);
+        }
+
+        .lew-select {
+            width: 100%;
+        }
+        .lew-select-label-multiple {
+            width: 100%;
             display: flex;
             align-items: center;
-            > div {
+            .lew-popover {
                 display: flex;
                 align-items: center;
+                > div {
+                    display: flex;
+                    align-items: center;
+                }
             }
+        }
+
+        .lew-isSelect-label-num {
+            display: inline-flex;
+            align-items: center;
         }
     }
 
-    .lew-isSelect-label-num {
-        display: inline-flex;
-        align-items: center;
+    .lew-select-placeholder {
+        color: rgb(165, 165, 165);
+    }
+
+    .lew-select-small {
+        padding: var(--lew-form-input-padding-small);
+        height: var(--lew-form-input-height-small);
+        line-height: var(--lew-form-input-line-height-small);
+        .lew-select-label-single,
+        .lew-select-placeholder {
+            font-size: var(--lew-form-font-size-small);
+        }
+    }
+    .lew-select-medium {
+        padding: var(--lew-form-input-padding-medium);
+        line-height: var(--lew-form-input-line-height-medium);
+        height: var(--lew-form-input-height-medium);
+        .lew-select-label-single,
+        .lew-select-placeholder {
+            font-size: var(--lew-form-font-size-medium);
+        }
+    }
+    .lew-select-large {
+        padding: var(--lew-form-input-padding-large);
+        line-height: var(--lew-form-input-line-height-large);
+        height: var(--lew-form-input-height-large);
+        .lew-select-label-single,
+        .lew-select-placeholder {
+            font-size: var(--lew-form-font-size-large);
+        }
     }
 }
-
-.lew-select-placeholder {
-    color: rgb(165, 165, 165);
-    margin-left: 7px;
-}
-.lew-select:hover {
+.lew-select-view:hover {
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor-hover);
 }
-.lew-select:active {
+.lew-select-view:active {
     background-color: var(--lew-form-bgcolor-active);
 }
-.lew-select.lew-select-foucs {
+.lew-select-view.lew-select-foucs {
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;

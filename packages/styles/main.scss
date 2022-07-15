@@ -29,6 +29,7 @@
 .tippy-box[data-lew~="popover"] {
     .tippy-content {
         padding: 6px;
+        box-sizing: border-box !important;
     }
 }
 

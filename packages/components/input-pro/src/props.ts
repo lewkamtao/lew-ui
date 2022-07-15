@@ -1,4 +1,9 @@
-export const _props = {
+type Options = {
+    label: string;
+    value: string;
+};
+
+export const inputProProps = {
     // 类型
     type: {
         type: String,
@@ -9,6 +14,16 @@ export const _props = {
         // 父组件 v-model 没有指定参数名，则默认是 modelValue
         type: String,
         default: '',
+    },
+    options: {
+        type: Array as PropType<Options[]>,
+        default() {
+            return [];
+        },
+    },
+    align: {
+        type: String,
+        default: 'left',
     },
     // 禁用
     disabled: {
@@ -46,5 +61,29 @@ export const _props = {
     niceCount: {
         type: Boolean,
         default: false,
+    },
+    size: {
+        type: String,
+        default: 'medium',
+    },
+
+    popoverWidth: {
+        type: String,
+        default: 'auto',
+    },
+
+    trigger: {
+        type: String,
+        default: 'click',
+    },
+
+    placement: {
+        type: String,
+        default: 'bottom-start',
+    },
+
+    arrow: {
+        type: Boolean,
+        default: true,
     },
 };

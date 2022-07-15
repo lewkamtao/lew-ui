@@ -13,6 +13,7 @@ const change = (e: any) => {
     </div>
     <div style="margin-top: 20px">
         <lew-pagination
+            :page-size-options="[5, 10, 20, 30]"
             background
             :page-num="pageNum"
             :total="2000"

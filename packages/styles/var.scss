@@ -122,6 +122,22 @@
     --lew-form-border-color-hover: rgb(228, 228, 228);
     --lew-form-border-color-active: rgba(0, 0, 0, 0.22);
     --lew-form-border-color-focus: var(--lew-primary-color);
+    // 表单尺寸
+    --lew-form-input-padding-small: 2px 8px;
+    --lew-form-input-padding-medium: 4px 10px;
+    --lew-form-input-padding-large: 6px 12px;
+
+    --lew-form-input-height-small: 26px;
+    --lew-form-input-height-medium: 32px;
+    --lew-form-input-height-large: 36px;
+
+    --lew-form-input-line-height-small: 24px;
+    --lew-form-input-line-height-medium: 24px;
+    --lew-form-input-line-height-large: 28px;
+
+    --lew-form-font-size-small: 14px;
+    --lew-form-font-size-medium: 14px;
+    --lew-form-font-size-large: 16px;
     // 表单背景
     --lew-form-bgcolor: rgb(245, 245, 245);
     --lew-form-bgcolor-hover: rgb(228, 228, 228);

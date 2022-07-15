@@ -10,6 +10,14 @@ export const inputProps = {
         type: String,
         default: '',
     },
+    size: {
+        type: String,
+        default: 'medium',
+    },
+    align: {
+        type: String,
+        default: 'left',
+    },
     // 禁用
     disabled: {
         type: Boolean,

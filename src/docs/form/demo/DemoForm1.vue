@@ -58,7 +58,7 @@ let d = ref('2020-12-12');
 <template>
     <div class="form-box">
         <lew-form-item direction="y" title="账号">
-            <LewInput v-model="user.username" clearable />
+            <LewInput v-model="user.username" />
         </lew-form-item>
         <lew-form-item direction="y" title="密码">
             <LewInput v-model="user.password" />

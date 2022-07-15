@@ -155,8 +155,8 @@ group.value = [
                 cname: '高级输入框',
                 name: 'InputPro',
                 path: '/InputPro',
-                label: '',
-                type: 'success',
+                label: '开发中',
+                type: 'warning',
             },
             {
                 cname: '多选框',
