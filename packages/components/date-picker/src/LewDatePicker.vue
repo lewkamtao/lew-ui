@@ -86,7 +86,6 @@ defineExpose({ show, hide });
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     border-radius: var(--lew-form-border-radius);
     background-color: var(--lew-form-bgcolor);
-    color: var(--lew-text-color);
     box-sizing: border-box;
     transition: all 0.15s ease;
     cursor: pointer;

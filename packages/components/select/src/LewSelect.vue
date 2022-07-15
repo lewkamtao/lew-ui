@@ -266,7 +266,6 @@ defineExpose({ show, hide });
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        color: var(--lew-text-color);
         cursor: pointer;
         user-select: none;
         box-sizing: border-box;

@@ -12,7 +12,6 @@ export * from './input';
 export * from './input-pro';
 export * from './form-item';
 export * from './checkbox';
-export * from './textarea';
 export * from './radio';
 export * from './select';
 export * from './switch';

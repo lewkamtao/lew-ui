@@ -126,15 +126,12 @@
     --lew-form-input-padding-small: 2px 8px;
     --lew-form-input-padding-medium: 4px 10px;
     --lew-form-input-padding-large: 6px 12px;
-
     --lew-form-input-height-small: 26px;
     --lew-form-input-height-medium: 32px;
     --lew-form-input-height-large: 36px;
-
     --lew-form-input-line-height-small: 24px;
     --lew-form-input-line-height-medium: 24px;
     --lew-form-input-line-height-large: 28px;
-
     --lew-form-font-size-small: 14px;
     --lew-form-font-size-medium: 14px;
     --lew-form-font-size-large: 16px;
@@ -270,8 +267,8 @@
     --lew-normal-color-active: rgb(75, 75, 75);
     // 表单样式
     --lew-form-border-width: 1.5px;
-    --lew-form-border-color: rgba(177, 177, 177, 0.03);
-    --lew-form-border-color-hover: rgba(194, 194, 194, 0.08);
+    --lew-form-border-color: rgb(35, 35, 35);
+    --lew-form-border-color-hover: rgb(40, 40, 40);
     --lew-form-border-color-active: rgba(96, 96, 96, 0.8);
     --lew-form-border-color-focus: var(--lew-primary-color);
     // 表单背景
