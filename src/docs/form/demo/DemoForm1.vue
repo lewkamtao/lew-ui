@@ -64,10 +64,11 @@ let d = ref('2020-12-12');
             <LewInput v-model="user.password" />
         </lew-form-item>
         <lew-form-item direction="y" title="简介">
-            <LewTextarea
-                show-count
-                :max-length="30"
+            <LewInput
                 v-model="user.intro"
+                type="textarea"
+                show-count
+                :max-length="250"
                 resize="none"
             />
         </lew-form-item>

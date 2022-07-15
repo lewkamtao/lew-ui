@@ -74,12 +74,12 @@ const lewInputProWidth = computed(
             @change="selectFn"
         >
             <lew-input
+                v-model="v"
                 @click.stop
                 @input="input"
                 @change="emit('change', v)"
                 @blur="emit('blur', v)"
                 @focus="open(), emit('focus', v)"
-                v-model="v"
             />
         </lew-dropdown>
     </div>

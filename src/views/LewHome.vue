@@ -298,7 +298,7 @@ const message = (type: string) => {
                             <LewInput resize="none" />
                         </lew-form-item>
                         <lew-form-item direction="y" title="Textarea">
-                            <LewTextarea resize="none" />
+                            <LewInput type="textarea" resize="none" />
                         </lew-form-item>
                         <lew-form-item direction="y" title="Select">
                             <LewSelect

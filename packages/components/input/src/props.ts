@@ -1,4 +1,4 @@
-export const _props = {
+export const inputProps = {
     // 类型
     type: {
         type: String,

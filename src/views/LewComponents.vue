@@ -159,13 +159,6 @@ group.value = [
                 type: 'success',
             },
             {
-                cname: '多行文本框',
-                name: 'Textarea',
-                path: '/Textarea',
-                label: '',
-                type: 'success',
-            },
-            {
                 cname: '多选框',
                 name: 'Checkbox',
                 path: '/Checkbox',

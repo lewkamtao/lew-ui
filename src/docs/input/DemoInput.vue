@@ -2,14 +2,8 @@
 import {
     DemoInput1,
     DemoInput2,
-    DemoInput3,
-    DemoInput4,
-    DemoInput5,
     DemoInput1_code,
     DemoInput2_code,
-    DemoInput3_code,
-    DemoInput4_code,
-    DemoInput5_code,
 } from './demo';
 
 import { reactive } from 'vue';
@@ -42,7 +36,7 @@ const docsTable = reactive([
         data: [
             {
                 param: 'type',
-                description: '输入框类型',
+                description: '输入框类型（textarea：多行文本）',
                 type: 'string',
                 default: 'text',
             },
@@ -82,6 +76,12 @@ const docsTable = reactive([
                 description: '清空触发的回调方法',
                 type: '(e: value) => void',
                 default: '-',
+            },
+            {
+                param: 'resize',
+                description: '缩放模式（只对多行文本框生效）',
+                type: 'string',
+                default: 'none',
             },
         ],
     },
@@ -142,20 +142,11 @@ const docsTable = reactive([
 <template>
     <div class="demo-wrapper">
         <lew-title>Input</lew-title>
-        <lew-demo-box title="x 布局" :code="DemoInput1_code">
+        <lew-demo-box title="单行文本框" :code="DemoInput1_code">
             <demo-input1 />
         </lew-demo-box>
-        <lew-demo-box title="y 布局" :code="DemoInput2_code">
+        <lew-demo-box title="多行文本框" :code="DemoInput2_code">
             <demo-input2 />
-        </lew-demo-box>
-        <lew-demo-box title="可清空" :code="DemoInput3_code">
-            <demo-input3 />
-        </lew-demo-box>
-        <lew-demo-box title="显示密码" :code="DemoInput4_code">
-            <demo-input4 />
-        </lew-demo-box>
-        <lew-demo-box title="其他" :code="DemoInput5_code">
-            <demo-input5 />
         </lew-demo-box>
         <div v-for="(item, index) in docsTable" :key="index">
             <br />
