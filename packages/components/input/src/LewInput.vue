@@ -43,6 +43,7 @@ const input = () => {
 const clear = (): void => {
     emit('clear', v.value);
     v.value = '';
+    emit('update:modelValue', v.value);
 };
 
 let _type = ref(props.type);

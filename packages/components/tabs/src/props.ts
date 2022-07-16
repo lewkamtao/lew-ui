@@ -31,4 +31,8 @@ export const tabsProps = {
         type: Boolean,
         default: false,
     },
+    type: {
+        type: String,
+        default: 'block',
+    },
 };

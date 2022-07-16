@@ -26,6 +26,6 @@ const change = (e: Options) => {
         style="width: 150px"
         v-model="value"
         :options="options"
-        @update:change="change"
+        @change="change"
     />
 </template>

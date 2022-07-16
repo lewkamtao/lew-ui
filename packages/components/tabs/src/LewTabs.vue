@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { tabsProps } from './props';
 
 type Options = {
@@ -12,27 +12,44 @@ let activeItemStyle = ref('');
 let v = ref(props.modelValue);
 let itemRef = ref([] as any);
 
+watch(
+    () => props.modelValue,
+    () => {
+        v.value = props.modelValue;
+        setStyle(v.value);
+    },
+);
+
 const init = () => {
     let index = props.options.findIndex((e) => e.value == v.value);
     if (index < 0) index = 0;
     activeItemStyle.value = `width:${itemRef.value[index].offsetWidth}px;transform: translateX(${itemRef.value[index].offsetLeft}px);`;
 };
 
-const emit = defineEmits(['update:change', 'update:modelValue']);
+const emit = defineEmits(['change', 'update:modelValue']);
+let curIndex = props.options.findIndex((e: any) => v.value == e.value);
+const setStyle = (value) => {
+    let index = props.options.findIndex((e: any) => value == e.value);
+    if (curIndex != index) {
+        let _item = props.options[index];
 
-const changeIndex = (item: Options, index: number) => {
-    if (item.value == props.modelValue) {
-        return;
+        if (v.value != _item.value) {
+            v.value = _item.value;
+        }
+
+        let activeRef = itemRef.value[index];
+        activeItemStyle.value = `width:${activeRef.offsetWidth}px;transform: translate(${activeRef.offsetLeft}px);`;
+
+        if (v.value != props.modelValue) {
+            emit('change', {
+                label: _item.label,
+                value: _item.value,
+                activeIndex: index,
+            });
+            emit('update:modelValue', v.value);
+        }
+        curIndex = index;
     }
-    v.value = props.options[index].value;
-    let activeRef = itemRef.value[index];
-    activeItemStyle.value = `width:${activeRef.offsetWidth}px;transform: translateX(${activeRef.offsetLeft}px);`;
-    emit('update:change', {
-        label: item.label,
-        value: item.value,
-        activeIndex: index,
-    });
-    emit('update:modelValue', item.value);
 };
 
 let timer: any;
@@ -60,18 +77,24 @@ onUnmounted(() => {
 <template>
     <div
         class="lew-tabs"
-        :class="{ 'lew-tabs-round': round }"
+        :class="`
+               ${type ? 'lew-tabs-' + type : ''}     
+               ${round ? 'lew-tabs-round' : ''}
+        `"
         :style="`width:${width}`"
     >
-        <div :style="activeItemStyle" class="activeItem"></div>
+        <div
+            :style="activeItemStyle"
+            class="lew-tabs-item-animation-active"
+        ></div>
         <div
             v-for="(item, index) in options"
             :key="item.value"
             :ref="(el) => itemRef.push(el)"
             class="lew-tabs-item"
             :style="`width:${itemWidth[index]}`"
-            :class="{ active: v == item.value }"
-            @click="changeIndex(item, index)"
+            :class="{ 'lew-tabs-item-active': v == item.value }"
+            @click="setStyle(item.value)"
         >
             {{ item.label }}
         </div>
@@ -85,7 +108,6 @@ onUnmounted(() => {
     align-items: center;
     width: auto;
     background: var(--lew-form-bgcolor);
-    height: 34px;
     border-radius: var(--lew-form-border-radius);
     overflow: hidden;
     .lew-tabs-item {
@@ -97,27 +119,57 @@ onUnmounted(() => {
         z-index: 9;
         height: 28px;
         padding: 0px 12px;
+        box-sizing: border-box;
         border-radius: var(--lew-form-border-radius);
         margin: 3px;
         color: var(--lew-text-color-5);
         white-space: nowrap;
         cursor: pointer;
-        transition: all 0.35s cubic-bezier(0.65, 0, 0.35, 1);
         font-size: 14px;
     }
-    .active {
-        color: var(--lew-text-color-0);
+    .lew-tabs-item-active {
+        color: var(--lew-primary-color-dark);
     }
 
-    .activeItem {
+    .lew-tabs-item-animation-active {
         position: absolute;
         top: 3px;
         left: 0px;
         z-index: 9;
         height: 28px;
         border-radius: 3px;
-        transition: all 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+        transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
         background: var(--lew-bgcolor-0);
+        transform: translateX(3px);
+        box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);
+    }
+}
+
+.lew-tabs-line {
+    background: none;
+    border-bottom: var(--lew-form-border-width) var(--lew-form-border-color)
+        solid;
+    padding-bottom: 5px;
+    .lew-tabs-item:hover {
+        background: var(--lew-bgcolor-2);
+    }
+    .lew-tabs-item-active {
+        background: var(--lew-primary-color-light);
+    }
+    .lew-tabs-item-active:hover {
+        transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+        background: var(--lew-primary-color-light);
+    }
+    .lew-tabs-item-animation-active {
+        position: absolute;
+        top: auto;
+        bottom: 0px;
+        left: 0px;
+        z-index: 9;
+        height: 2px;
+        border-radius: 2px;
+        transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+        background: var(--lew-primary-color);
         transform: translateX(3px);
         box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);
     }
@@ -128,7 +180,7 @@ onUnmounted(() => {
     .lew-tabs-item {
         border-radius: 35px;
     }
-    .activeItem {
+    .lew-tabs-item-animation-active {
         border-radius: 35px;
     }
 }

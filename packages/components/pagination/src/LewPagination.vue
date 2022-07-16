@@ -21,8 +21,7 @@ watch(
         changePage(false, v);
     },
 );
-let maxLen = Math.floor(props.total / props.pageSize);
-
+let maxLen = ref(Math.floor(props.total / props.pageSize));
 let pageInterval = computed(() => {
     let start = curPage.value - props.pageShowSize;
     let end = curPage.value + props.pageShowSize;
@@ -32,11 +31,10 @@ let pageInterval = computed(() => {
         end = props.pageShowSize * 2 + 1;
     }
 
-    if (curPage.value >= maxLen - props.pageShowSize) {
-        start = maxLen - props.pageShowSize * 2;
-        end = maxLen;
+    if (curPage.value >= maxLen.value - props.pageShowSize) {
+        start = maxLen.value - props.pageShowSize * 2;
+        end = maxLen.value;
     }
-
     return generateArray(start, end);
 });
 
@@ -54,7 +52,7 @@ const changePage = (type, num) => {
     if (curPage.value < 1) {
         curPage.value = 1;
     } else if (curPage.value > props.total / props.pageSize) {
-        curPage.value = maxLen;
+        curPage.value = maxLen.value;
     }
     emit('change', {
         pageNum: curPage.value,
@@ -86,6 +84,13 @@ const change = (e: any) => {
                 >
                     <ChevronBackOutline />
                 </icon>
+                <div
+                    v-show="curPage > pageShowSize"
+                    class="lew-pagination-page-btn"
+                    @click="changePage(false, 1)"
+                >
+                    1
+                </div>
                 <icon
                     v-show="curPage > pageShowSize"
                     size="14"
@@ -94,6 +99,7 @@ const change = (e: any) => {
                 >
                     <EllipsisHorizontal />
                 </icon>
+
                 <div
                     v-for="(item, index) in pageInterval"
                     :key="index"
@@ -111,6 +117,13 @@ const change = (e: any) => {
                 >
                     <EllipsisHorizontal />
                 </icon>
+                <div
+                    v-show="curPage < total / pageSize - pageShowSize"
+                    class="lew-pagination-page-btn"
+                    @click="changePage(false, maxLen)"
+                >
+                    {{ maxLen }}
+                </div>
                 <icon
                     size="14"
                     class="lew-pagination-page-btn lew-pagination-control-btn"
@@ -122,16 +135,13 @@ const change = (e: any) => {
             <lew-input-pro
                 v-model="curPage"
                 size="small"
-                style="width: 130px"
+                style="width: auto"
                 align="center"
                 placeholder=""
                 :options="[5, 10, 20, 50, 100]"
             >
                 <template #left>
-                    <div class="page-label">第</div>
-                </template>
-                <template #right>
-                    <div class="page-label">页</div>
+                    <div class="page-label">跳转至</div>
                 </template>
             </lew-input-pro>
         </lew-flex>
@@ -146,12 +156,12 @@ const change = (e: any) => {
     border-radius: var(--lew-form-border-radius);
     user-select: none;
     font-size: 14px;
-    padding: 0px 12px;
     .lew-pagination-control {
         height: 100%;
         color: var(--lew-text-color-7);
     }
     .lew-pagination-page-box {
+        width: auto;
         position: relative;
         height: 100%;
 
@@ -186,8 +196,8 @@ const change = (e: any) => {
         }
     }
     .page-label {
-        width: 40px;
-        text-align: center;
+        white-space: nowrap;
+        padding: 0px 5px;
     }
 }
 .lew-pagination-background {

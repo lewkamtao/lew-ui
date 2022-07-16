@@ -24,7 +24,7 @@ export const paginationProps = {
     },
     pageShowSize: {
         type: Number,
-        default: 3,
+        default: 2,
     },
     background: {
         type: Boolean,

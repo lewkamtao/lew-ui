@@ -25,8 +25,16 @@ const input = (e) => {
     emit('input', e.value);
     emit('update:modelValue', e.value);
 };
+
+const clear = () => {
+    emit('clear', v.value);
+    v.value = '';
+    emit('update:modelValue', v.value);
+};
+
 const selectFn = (e: any) => {
     v.value = e.value.label;
+    console.log(v.value);
     emit('input', v.value);
     emit('update:modelValue', v.value);
     hide();
@@ -66,6 +74,7 @@ const hide = () => {
                 @change="emit('change', v)"
                 @blur="emit('blur', v)"
                 @focus="open(), emit('focus', v)"
+                @clear="clear"
             />
         </lew-dropdown>
         <slot name="right" />

@@ -75,7 +75,7 @@ const docsTable = ref([
         <lew-demo-box title="常规" :code="DemoPagination1_code">
             <demo-pagination1 />
         </lew-demo-box>
-        <lew-demo-box v-if="false" title="方的" :code="DemoPagination2_code">
+        <lew-demo-box title="巨量" :code="DemoPagination2_code">
             <demo-pagination2 />
         </lew-demo-box>
         <br />

@@ -1,3 +1,3 @@
 <template>
-    <lew-pagination :total="100"></lew-pagination>
+    <lew-pagination :total="50000000"></lew-pagination>
 </template>
