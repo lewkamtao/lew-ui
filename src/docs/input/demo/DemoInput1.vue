@@ -39,5 +39,8 @@
         <lew-form-item direction="y" title="字数限制">
             <lew-input show-count :max-length="30" />
         </lew-form-item>
+        <lew-form-item direction="y" title="宽度自适应">
+            <lew-input auto-width />
+        </lew-form-item>
     </div>
 </template>

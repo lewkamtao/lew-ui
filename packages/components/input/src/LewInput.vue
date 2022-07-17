@@ -30,14 +30,18 @@ const emit = defineEmits([
 
 const input = () => {
     if (props.maxLength) {
+        // @ts-ignore
         for (let i = 0; i <= v.value.length - 1; i++) {
+            // @ts-ignore
             if (getTextLength(v.value.slice(0, i)) >= props.maxLength) {
+                // @ts-ignore
                 v.value = v.value.slice(0, i);
             }
         }
     }
-    emit('input', v.value);
+
     emit('update:modelValue', v.value);
+    emit('input', v.value);
 };
 
 const clear = (): void => {
@@ -54,8 +58,10 @@ const showPasswordFn = (): void => {
 
 let getCheckNumStr = computed(() => {
     if (props.showCount && props.maxLength) {
+        // @ts-ignore
         return getTextLength(v.value) + ' / ' + props.maxLength;
     } else if (props.showCount) {
+        // @ts-ignore
         return getTextLength(v.value);
     } else {
         return false;
@@ -94,6 +100,7 @@ const getTextLength = (val: string) => {
             ${readonly ? 'lew-input-view-readonly' : ''} 
             ${disabled ? 'lew-input-view-disabled' : ''}
             ${align ? 'lew-input-view-align-' + align : ''}
+            ${autoWidth ? 'lew-input-view-auto-width' : ''}
             `"
     >
         <textarea
@@ -111,6 +118,7 @@ const getTextLength = (val: string) => {
             @blur="emit('blur', v)"
             @focus="emit('focus', v)"
         ></textarea>
+
         <input
             v-else
             v-model="v"
@@ -118,11 +126,13 @@ const getTextLength = (val: string) => {
             :placeholder="placeholder"
             :type="_type"
             :readonly="readonly"
+            onkeypress="if(window.event.keyCode==13) this.blur()"
             @input="input"
             @change="emit('change', v)"
             @blur="emit('blur', v)"
             @focus="emit('focus', v)"
         />
+        <label v-if="autoWidth" class="input-auto-width">{{ v }}</label>
         <div
             v-if="showPassword || clearable || showCount"
             class="lew-input-controls"
@@ -251,7 +261,29 @@ const getTextLength = (val: string) => {
         text-align: right;
     }
 }
+
+.lew-input-view-auto-width {
+    position: relative;
+    width: auto;
+
+    input {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0px;
+        display: inline-block;
+        width: 100%;
+    }
+    .input-auto-width {
+        width: auto;
+        min-width: 50px;
+        height: 100%;
+        visibility: hidden;
+        box-sizing: border-box;
+    }
+}
 .lew-input-view-small {
+    height: var(--lew-form-input-height-small);
     input,
     textarea {
         padding: var(--lew-form-input-padding-small);
@@ -267,8 +299,15 @@ const getTextLength = (val: string) => {
     .lew-input-controls {
         height: var(--lew-form-input-height-small);
     }
+    .input-auto-width {
+        height: var(--lew-form-input-height-small);
+        padding: var(--lew-form-input-padding-small);
+        font-size: var(--lew-form-font-size-small);
+        line-height: var(--lew-form-input-line-height-small);
+    }
 }
 .lew-input-view-medium {
+    height: var(--lew-form-input-height-medium);
     input,
     textarea {
         padding: var(--lew-form-input-padding-medium);
@@ -284,8 +323,15 @@ const getTextLength = (val: string) => {
     .lew-input-controls {
         height: var(--lew-form-input-height-medium);
     }
+    .input-auto-width {
+        height: var(--lew-form-input-height-medium);
+        font-size: var(--lew-form-font-size-medium);
+        line-height: var(--lew-form-input-line-height-medium);
+        padding: var(--lew-form-input-padding-medium);
+    }
 }
 .lew-input-view-large {
+    height: var(--lew-form-input-height-large);
     input,
     textarea {
         padding: var(--lew-form-input-padding-large);
@@ -300,6 +346,12 @@ const getTextLength = (val: string) => {
     }
     .lew-input-controls {
         height: var(--lew-form-input-height-large);
+    }
+    .input-auto-width {
+        height: var(--lew-form-input-height-large);
+        padding: var(--lew-form-input-padding-large);
+        font-size: var(--lew-form-font-size-large);
+        line-height: var(--lew-form-input-line-height-large);
     }
 }
 

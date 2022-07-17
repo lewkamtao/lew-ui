@@ -16,6 +16,10 @@ export const inputProProps = {
         type: [Number, String],
         default: '',
     },
+    autoWidth: {
+        type: Boolean,
+        default: false,
+    },
     options: {
         type: Array as PropType<Options[]>,
         default() {

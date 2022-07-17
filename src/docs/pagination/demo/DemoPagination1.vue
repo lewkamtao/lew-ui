@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 
 let pageNum = ref(1);
+let pageSize = ref(20);
 const change = (e: any) => {
     console.log(e);
 };
@@ -9,10 +10,18 @@ const change = (e: any) => {
 
 <template>
     <div>
-        <lew-pagination :page-num="pageNum" :total="1000" @change="change" />
+        <lew-pagination
+            v-model:page-num="pageNum"
+            v-model:page-size="pageSize"
+            :page-num="pageNum"
+            :total="1000"
+            @change="change"
+        />
     </div>
     <div style="margin-top: 20px">
         <lew-pagination
+            v-model:page-num="pageNum"
+            v-model:page-size="pageSize"
             :page-size-options="[5, 10, 20, 30]"
             background
             :page-num="pageNum"
@@ -22,6 +31,8 @@ const change = (e: any) => {
     </div>
     <div style="margin-top: 20px">
         <lew-pagination
+            v-model:page-num="pageNum"
+            v-model:page-size="pageSize"
             round
             :page-num="pageNum"
             :page-show-size="5"

@@ -15,7 +15,7 @@ const options = ref([
     { label: '乌鲁木齐', value: '5' },
 ]);
 
-const itemWidth = ref(['50px', '50px', '120px', '50px', '120px']);
+const itemWidth = ref('120px');
 
 let value = ref('2');
 
@@ -28,19 +28,14 @@ const change = (e: Options) => {
 <template>
     <lew-flex direction="column" x="start">
         <lew-title size="14px">限制整体宽度</lew-title>
-        <lew-tabs
-            width="500px"
-            v-model="value"
-            :options="options"
-            @change="change"
-        />
+        <lew-tabs v-model="value" :options="options" @change="change" />
         <br />
         <br />
         <lew-title size="14px">根据内容自适应宽度</lew-title>
         <lew-tabs v-model="value" :options="options" @change="change" />
         <br />
         <br />
-        <lew-title size="14px">自定义单个item宽度</lew-title>
+        <lew-title size="14px">自定义item宽度</lew-title>
         <lew-tabs
             v-model="value"
             :options="options"
@@ -51,6 +46,7 @@ const change = (e: Options) => {
         <br />
         <lew-title size="14px">线</lew-title>
         <lew-tabs
+            style="width: 100%"
             type="line"
             v-model="value"
             :options="options"

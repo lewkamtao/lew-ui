@@ -92,7 +92,7 @@ onUnmounted(() => {
             :key="item.value"
             :ref="(el) => itemRef.push(el)"
             class="lew-tabs-item"
-            :style="`width:${itemWidth[index]}`"
+            :style="`width:${itemWidth}`"
             :class="{ 'lew-tabs-item-active': v == item.value }"
             @click="setStyle(item.value)"
         >
@@ -115,7 +115,6 @@ onUnmounted(() => {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 100%;
         z-index: 9;
         height: 28px;
         padding: 0px 12px;
@@ -154,11 +153,11 @@ onUnmounted(() => {
         background: var(--lew-bgcolor-2);
     }
     .lew-tabs-item-active {
-        background: var(--lew-primary-color-light);
+        background: none;
     }
     .lew-tabs-item-active:hover {
         transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
-        background: var(--lew-primary-color-light);
+        background: none;
     }
     .lew-tabs-item-animation-active {
         position: absolute;

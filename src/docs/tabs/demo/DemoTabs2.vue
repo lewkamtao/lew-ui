@@ -8,8 +8,8 @@ type Options = {
 };
 
 const options = ref([
-    { label: 'light', value: '1' },
-    { label: 'dark', value: '2' },
+    { label: 'Light', value: '1' },
+    { label: 'Dark', value: '2' },
 ]);
 
 let value = ref('');
@@ -23,7 +23,6 @@ const change = (e: Options) => {
 <template>
     <lew-tabs
         round
-        style="width: 150px"
         v-model="value"
         :options="options"
         @change="change"

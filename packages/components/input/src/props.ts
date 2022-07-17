@@ -48,6 +48,10 @@ export const inputProps = {
         type: String,
         default: 'none',
     },
+    autoWidth: {
+        type: Boolean,
+        default: false,
+    },
     maxLength: {
         type: Number,
         default: null,

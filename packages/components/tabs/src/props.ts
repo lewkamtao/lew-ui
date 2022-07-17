@@ -22,9 +22,9 @@ export const tabsProps = {
         default: '',
     },
     itemWidth: {
-        type: Array,
+        type: String,
         default() {
-            return [];
+            return '';
         },
     },
     round: {

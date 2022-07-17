@@ -22,8 +22,8 @@ let lewDropdownRef = ref();
 let lewInputProRef = ref();
 
 const input = (e) => {
-    emit('input', e.value);
-    emit('update:modelValue', e.value);
+    emit('update:modelValue', e);
+    emit('input', e);
 };
 
 const clear = () => {
@@ -33,11 +33,13 @@ const clear = () => {
 };
 
 const selectFn = (e: any) => {
-    v.value = e.value.label;
-    console.log(v.value);
-    emit('input', v.value);
+    v.value = e.value.value;
     emit('update:modelValue', v.value);
-    hide();
+    emit('input', v.value);
+    emit('change', v.value);
+    setTimeout(() => {
+        hide();
+    }, 120);
 };
 const open = () => {
     if (props.options.length == 0) return;
@@ -45,6 +47,11 @@ const open = () => {
 };
 const hide = () => {
     lewDropdownRef.value.hide();
+};
+const delayHide = () => {
+    setTimeout(() => {
+        hide();
+    }, 120);
 };
 </script>
 
@@ -65,6 +72,8 @@ const hide = () => {
             <lew-input
                 ref="lewInputProRef"
                 v-model="v"
+                :type="type"
+                :autoWidth="autoWidth"
                 :size="size"
                 :align="align"
                 :placeholder="placeholder"
@@ -72,7 +81,7 @@ const hide = () => {
                 @click.stop
                 @input="input"
                 @change="emit('change', v)"
-                @blur="emit('blur', v)"
+                @blur="emit('blur', v), delayHide()"
                 @focus="open(), emit('focus', v)"
                 @clear="clear"
             />

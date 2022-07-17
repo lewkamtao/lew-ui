@@ -13,7 +13,9 @@ const generateArray = (start, end) => {
     return Array.from(new Array(end + 1).keys()).slice(start);
 };
 
-let curPage = ref(props.pageNum);
+let pageNum = ref(props.pageNum);
+let pageSize = ref(props.pageSize);
+let total = ref(props.total);
 
 watch(
     () => props.pageNum,
@@ -21,49 +23,70 @@ watch(
         changePage(false, v);
     },
 );
-let maxLen = ref(Math.floor(props.total / props.pageSize));
-let pageInterval = computed(() => {
-    let start = curPage.value - props.pageShowSize;
-    let end = curPage.value + props.pageShowSize;
+watch(
+    () => props.pageSize,
+    (v) => {
+        pageSize.value = v;
+    },
+);
 
-    if (curPage.value <= props.pageShowSize) {
+let maxLen = computed(() => {
+    return Math.floor(total.value / pageSize.value);
+});
+
+let pageInterval = computed(() => {
+    let start = pageNum.value - props.pageShowSize;
+    let end = pageNum.value + props.pageShowSize;
+
+    if (pageNum.value <= props.pageShowSize) {
         start = 1;
         end = props.pageShowSize * 2 + 1;
     }
 
-    if (curPage.value >= maxLen.value - props.pageShowSize) {
+    if (pageNum.value >= maxLen.value - props.pageShowSize) {
         start = maxLen.value - props.pageShowSize * 2;
         end = maxLen.value;
     }
     return generateArray(start, end);
 });
 
-const emit = defineEmits(['change']);
+const emit = defineEmits([
+    'update:pageNum',
+    'update:pageSize',
+    'update:pageTotal',
+    'change',
+]);
 
 const changePage = (type, num) => {
     if (type == 'next') {
-        curPage.value += num;
+        pageNum.value += num;
     } else if (type == 'prve') {
-        curPage.value -= num;
+        pageNum.value -= num;
     } else {
-        curPage.value = num;
+        pageNum.value = num;
     }
 
-    if (curPage.value < 1) {
-        curPage.value = 1;
-    } else if (curPage.value > props.total / props.pageSize) {
-        curPage.value = maxLen.value;
+    if (pageNum.value < 1) {
+        pageNum.value = 1;
+    } else if (pageNum.value > total.value / pageSize.value) {
+        pageNum.value = maxLen.value;
     }
+    pageNumbackup.value = pageNum.value;
     emit('change', {
-        pageNum: curPage.value,
-        pageSize: props.pageSize,
-        total: props.total,
+        pageNum: pageNum.value,
+        pageSize: pageSize.value,
+        total: total.value,
         pageShowSize: props.pageShowSize,
     });
+    emit('update:pageNum', pageNum.value);
 };
 
-const change = (e: any) => {
-    LewMessage.info(e.value.label);
+let pageNumbackup = ref(1);
+
+const checkPageNum = (e) => {
+    e = String(e);
+    pageNumbackup.value = Number(e.replace(/[^\d]/g, ''));
+    changePage(false, pageNumbackup.value);
 };
 </script>
 
@@ -71,7 +94,6 @@ const change = (e: any) => {
     <div
         class="lew-pagination"
         :class="{
-            'lew-pagination-background': background,
             'lew-pagination-round': round,
         }"
     >
@@ -85,14 +107,14 @@ const change = (e: any) => {
                     <ChevronBackOutline />
                 </icon>
                 <div
-                    v-show="curPage > pageShowSize"
+                    v-show="pageNum - 1 > pageShowSize"
                     class="lew-pagination-page-btn"
                     @click="changePage(false, 1)"
                 >
                     1
                 </div>
                 <icon
-                    v-show="curPage > pageShowSize"
+                    v-show="pageNum - 1 > pageShowSize"
                     size="14"
                     class="lew-pagination-page-btn lew-pagination-control-btn"
                     @click="changePage('prve', pageShowSize * 2)"
@@ -104,13 +126,13 @@ const change = (e: any) => {
                     v-for="(item, index) in pageInterval"
                     :key="index"
                     class="lew-pagination-page-btn"
-                    :class="{ active: item == curPage }"
+                    :class="{ active: item == pageNum }"
                     @click="changePage(false, item)"
                 >
                     {{ item }}
                 </div>
                 <icon
-                    v-show="curPage < total / pageSize - pageShowSize"
+                    v-show="pageNum < total / pageSize - pageShowSize"
                     size="14"
                     class="lew-pagination-page-btn lew-pagination-control-btn"
                     @click="changePage('next', pageShowSize * 2)"
@@ -118,7 +140,7 @@ const change = (e: any) => {
                     <EllipsisHorizontal />
                 </icon>
                 <div
-                    v-show="curPage < total / pageSize - pageShowSize"
+                    v-show="pageNum < total / pageSize - pageShowSize"
                     class="lew-pagination-page-btn"
                     @click="changePage(false, maxLen)"
                 >
@@ -133,15 +155,47 @@ const change = (e: any) => {
                 </icon>
             </lew-flex>
             <lew-input-pro
-                v-model="curPage"
                 size="small"
-                style="width: auto"
+                align="center"
+                v-model="pageSize"
+                placeholder=""
+                :arrow="false"
+                :options="[
+                    {
+                        label: '10 / 页',
+                        value: 10,
+                    },
+                    {
+                        label: '20 / 页',
+                        value: 20,
+                    },
+                    {
+                        label: '30 / 页',
+                        value: 30,
+                    },
+                ]"
+                auto-width
+            >
+                <template #right>
+                    <div class="page-label">/ 页</div>
+                </template>
+            </lew-input-pro>
+            <lew-input-pro
+                style="margin-left: 20px"
+                v-model="pageNumbackup"
+                @blur="checkPageNum"
+                @change="checkPageNum"
+                size="small"
                 align="center"
                 placeholder=""
-                :options="[5, 10, 20, 50, 100]"
+                :arrow="false"
+                auto-width
             >
                 <template #left>
                     <div class="page-label">跳转至</div>
+                </template>
+                <template #right>
+                    <div class="page-label">页</div>
                 </template>
             </lew-input-pro>
         </lew-flex>
@@ -199,9 +253,6 @@ const change = (e: any) => {
         white-space: nowrap;
         padding: 0px 5px;
     }
-}
-.lew-pagination-background {
-    background-color: var(--lew-bgcolor-2);
 }
 
 .lew-pagination-round {
