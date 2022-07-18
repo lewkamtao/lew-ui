@@ -282,8 +282,8 @@ const getTextLength = (val: string) => {
         box-sizing: border-box;
     }
 }
+
 .lew-input-view-small {
-    height: var(--lew-form-input-height-small);
     input,
     textarea {
         padding: var(--lew-form-input-padding-small);
@@ -307,7 +307,6 @@ const getTextLength = (val: string) => {
     }
 }
 .lew-input-view-medium {
-    // height: var(--lew-form-input-height-medium);
     input,
     textarea {
         padding: var(--lew-form-input-padding-medium);
@@ -331,7 +330,6 @@ const getTextLength = (val: string) => {
     }
 }
 .lew-input-view-large {
-    height: var(--lew-form-input-height-large);
     input,
     textarea {
         padding: var(--lew-form-input-padding-large);

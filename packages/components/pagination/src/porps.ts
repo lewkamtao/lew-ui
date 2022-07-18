@@ -38,7 +38,28 @@ export const paginationProps = {
     options: {
         type: Array as PropType<Options[]>,
         default() {
-            return [];
+            return [
+                {
+                    label: '10 / 页',
+                    value: 10,
+                },
+                {
+                    label: '20 / 页',
+                    value: 20,
+                },
+                {
+                    label: '30 / 页',
+                    value: 30,
+                },
+                {
+                    label: '50 / 页',
+                    value: 30,
+                },
+                {
+                    label: '100 / 页',
+                    value: 100,
+                },
+            ];
         },
     },
 };

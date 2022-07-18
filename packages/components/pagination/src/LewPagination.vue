@@ -155,41 +155,30 @@ const checkPageNum = (e) => {
                 </icon>
             </lew-flex>
             <lew-input-pro
+                v-model="pageSize"
                 size="small"
                 align="center"
-                v-model="pageSize"
                 placeholder=""
                 :arrow="false"
-                :options="[
-                    {
-                        label: '10 / 页',
-                        value: 10,
-                    },
-                    {
-                        label: '20 / 页',
-                        value: 20,
-                    },
-                    {
-                        label: '30 / 页',
-                        value: 30,
-                    },
-                ]"
+                :options="options"
                 auto-width
+                @blur="changePage(false, pageNumbackup)"
+                @change="changePage(false, pageNumbackup)"
             >
                 <template #right>
                     <div class="page-label">/ 页</div>
                 </template>
             </lew-input-pro>
             <lew-input-pro
-                style="margin-left: 20px"
                 v-model="pageNumbackup"
-                @blur="checkPageNum"
-                @change="checkPageNum"
+                style="margin-left: 20px"
                 size="small"
                 align="center"
                 placeholder=""
                 :arrow="false"
                 auto-width
+                @blur="checkPageNum"
+                @change="checkPageNum"
             >
                 <template #left>
                     <div class="page-label">跳转至</div>
