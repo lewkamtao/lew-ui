@@ -8,7 +8,7 @@
     <div class="demo-wrapper">
         <lew-title>Icon-Carbon</lew-title>
 
-        <lew-demo-box title="色彩" :code="DemoIcon1_code">
+        <lew-demo-box title="图标" :code="DemoIcon1_code">
             <demo-icon1 />
         </lew-demo-box>
         <lew-title size="16px">Props</lew-title>

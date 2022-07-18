@@ -17,7 +17,7 @@ function copyHandler(e: MouseEvent) {
     const target = e.target as HTMLElement;
     const icon = target?.dataset?.icon;
     if (navigator.clipboard && icon) {
-        navigator.clipboard.writeText(icon);
+        navigator.clipboard.writeText(`<div ${icon}></div>`);
         LewMessage.success('复制成功');
     }
 }
