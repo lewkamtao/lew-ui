@@ -307,7 +307,7 @@ const getTextLength = (val: string) => {
     }
 }
 .lew-input-view-medium {
-    height: var(--lew-form-input-height-medium);
+    // height: var(--lew-form-input-height-medium);
     input,
     textarea {
         padding: var(--lew-form-input-padding-medium);
