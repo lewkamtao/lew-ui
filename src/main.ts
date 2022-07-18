@@ -12,6 +12,8 @@ import 'plyr/dist/plyr.css';
 
 import '@/assets/style/main.scss';
 import '@/assets/style/hljs.scss';
+// unocss
+import 'uno.css';
 
 import lew from 'lew-ui';
 

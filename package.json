@@ -32,6 +32,8 @@
     },
     "dependencies": {
         "@fancyapps/ui": "^4.0.27",
+        "@iconify-json/carbon": "^1.1.6",
+        "@iconify-json/mdi": "^1.1.29",
         "@vicons/ionicons5": "^0.12.0",
         "plyr": "^3.7.2",
         "tippy.js": "^6.3.7",
@@ -41,6 +43,7 @@
     },
     "devDependencies": {
         "@types/node": "^17.0.35",
+        "unocss-preset-scrollbar": "^0.2.1",
         "@typescript-eslint/eslint-plugin": "^5.26.0",
         "@typescript-eslint/parser": "^5.26.0",
         "@vicons/fluent": "^0.12.0",
@@ -53,6 +56,7 @@
         "prettier": "^2.6.2",
         "sass": "^1.52.1",
         "typescript": "^4.5.4",
+        "unocss": "^0.44.3",
         "vite": "^2.9.9",
         "vite-plugin-compression": "^0.5.1",
         "vite-plugin-style-import": "^2.0.0",
