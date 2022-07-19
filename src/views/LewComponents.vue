@@ -91,6 +91,13 @@ group.value = [
                 label: '',
                 type: 'success',
             },
+            {
+                cname: '图标',
+                name: 'Icon',
+                path: '/icon',
+                label: '',
+                type: 'success',
+            },
         ],
     },
 
