@@ -94,7 +94,12 @@ let d = ref('2020-12-12');
             <LewSwitch v-model="user.dark" />
         </lew-form-item>
         <lew-form-item direction="y" title="爱好">
-            <lew-tabs width="100%" v-model="user.pay" :options="pay_options" />
+            <lew-tabs
+                width="100%"
+                item-width="100%"
+                v-model="user.pay"
+                :options="pay_options"
+            />
         </lew-form-item>
     </div>
 </template>
