@@ -2,7 +2,6 @@ import { defineConfig, ConfigEnv } from 'vite';
 import compressPlugin from 'vite-plugin-compression';
 import vue from '@vitejs/plugin-vue';
 import * as path from 'path';
-import Unocss from 'unocss/vite';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv) => {
@@ -19,7 +18,6 @@ export default defineConfig(({ mode }: ConfigEnv) => {
         // compressPlugin开启gzip压缩
         plugins: [
             vue(),
-            Unocss(),
             compressPlugin({
                 ext: '.gz',
                 deleteOriginFile: false, // 是否删除原始文件

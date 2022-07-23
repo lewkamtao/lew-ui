@@ -1,7 +1,8 @@
 import { PropType } from 'vue';
+
 type Options = {
-    label: string;
-    value: string;
+    label: number | string;
+    value: number | string;
 };
 
 export const inputProProps = {

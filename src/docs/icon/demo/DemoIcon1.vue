@@ -1,26 +1,18 @@
-<template>
-    <div flex flex-wrap gap-4 class="icon p-4" @click="copyHandler">
-        <div
-            v-for="(i, index) in iconList"
-            :key="index"
-            w-8
-            h-8
-            :data-icon="i"
-            :class="i"
-        ></div>
-    </div>
-</template>
-
 <script setup lang="ts">
-import { iconList } from '../util';
-function copyHandler(e: MouseEvent) {
-    const target = e.target as HTMLElement;
-    const icon = target?.dataset?.icon;
-    if (navigator.clipboard && icon) {
-        navigator.clipboard.writeText(`<div ${icon}></div>`);
-        LewMessage.success('复制成功');
-    }
-}
+import {
+    Info24Regular,
+    Warning24Regular,
+    CheckmarkCircle24Regular,
+    ErrorCircle24Regular,
+    Alert24Regular,
+} from '@vicons/fluent';
+import { Icon } from '@vicons/utils';
 </script>
 
-<style scoped lang="scss"></style>
+<template>
+    <icon size="24"> <Info24Regular /></icon>
+    <icon size="28"> <Warning24Regular /></icon>
+    <icon size="32"> <CheckmarkCircle24Regular /></icon>
+    <icon size="36"> <ErrorCircle24Regular /></icon>
+    <icon size="40"> <Alert24Regular /></icon>
+</template>

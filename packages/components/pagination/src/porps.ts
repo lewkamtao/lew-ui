@@ -1,8 +1,8 @@
 import { PropType } from 'vue';
 
 type Options = {
-    label: string;
-    value: string;
+    label: number | string;
+    value: number | string;
 };
 
 export const paginationProps = {
@@ -22,10 +22,7 @@ export const paginationProps = {
         type: Number,
         default: 20,
     },
-    pageSizeOptions: {
-        type: Array,
-        default: [5, 10, 20, 30],
-    },
+
     pageShowSize: {
         type: Number,
         default: 2,
@@ -35,7 +32,7 @@ export const paginationProps = {
         type: Boolean,
         default: false,
     },
-    options: {
+    pageSizeOptions: {
         type: Array as PropType<Options[]>,
         default() {
             return [

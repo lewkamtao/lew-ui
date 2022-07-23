@@ -160,7 +160,7 @@ const checkPageNum = (e) => {
                 align="center"
                 placeholder=""
                 :arrow="false"
-                :options="options"
+                :options="pageSizeOptions"
                 auto-width
                 @blur="changePage(false, pageNumbackup)"
                 @change="changePage(false, pageNumbackup)"

@@ -45,7 +45,7 @@ const gohome = () => {
                 size="small"
                 style="margin-left: 10px"
                 v-tooltip="{
-                    content: '开发中，请勿在正式环境中使用。',
+                    content: '组件仍再开发中，请勿在正式环境中使用。',
                     placement: 'top-start',
                     trigger: 'mouseenter',
                 }"

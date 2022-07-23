@@ -2,8 +2,8 @@
 import { ref, PropType, computed } from 'vue';
 
 type Options = {
-    label: string;
-    value: string;
+    label: number | string;
+    value: number | string;
 };
 
 const props = defineProps({
@@ -14,7 +14,7 @@ const props = defineProps({
         },
         required: true,
         validator(value: PropType<Options[]>) {
-            return value.length > 0;
+            return value.length >= 0;
         },
     },
     trigger: {

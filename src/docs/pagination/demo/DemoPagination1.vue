@@ -22,7 +22,20 @@ const change = (e: any) => {
         <lew-pagination
             v-model:page-num="pageNum"
             v-model:page-size="pageSize"
-            :page-size-options="[5, 10, 20, 30]"
+            :page-size-options="[
+                {
+                    label: '10 / 页',
+                    value: 10,
+                },
+                {
+                    label: '20 / 页',
+                    value: 20,
+                },
+                {
+                    label: '30 / 页',
+                    value: 30,
+                },
+            ]"
             background
             :page-num="pageNum"
             :total="2000"
