@@ -92,7 +92,7 @@ const setChecked = (e: Event) => {
     cursor: pointer;
     color: var(--lew-text-color-1);
     font-size: 14px;
-    transition: all 0.25s ease;
+    transition: var(--lew-form-transition);
     white-space: nowrap;
     .icon-checkbox-box {
         display: inline-flex;
@@ -103,12 +103,12 @@ const setChecked = (e: Event) => {
         border: 2px var(--lew-form-border-color-hover) solid;
         box-sizing: border-box;
         border-radius: var(--lew-form-border-radius);
-        transition: all 0.25s ease;
+        transition: var(--lew-form-transition);
         background-color: var(--lew-bgcolor-0);
 
         .icon-checkbox {
-            transform: scale(0.6) translateY(50%);
-            transition: all 0.25s ease;
+            transform: scale(0.7) translateY(50%);
+            transition: var(--lew-form-transition);
             opacity: 0;
             color: var(--lew-white-color);
             font-size: 12px;
@@ -144,7 +144,7 @@ const setChecked = (e: Event) => {
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     border-radius: var(--lew-form-border-radius);
     .lew-checkbox-label {
-        margin-left: 3px;
+        margin-left: 2px;
     }
 }
 .lew-checkbox-checked.lew-checkbox-block {
@@ -178,7 +178,7 @@ const setChecked = (e: Event) => {
         background: var(--lew-primary-color);
 
         .icon-checkbox {
-            transform: scale(0.9) translateY(0px);
+            transform: scale(0.85) translateY(0px);
             opacity: 1;
         }
     }

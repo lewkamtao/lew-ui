@@ -56,7 +56,7 @@ const setChecked = () => {
     color: var(--lew-text-color-1);
     font-size: 14px;
     border-radius: 50px;
-    transition: all 0.25s ease;
+    transition: var(--lew-form-transition);
     .icon-radio-box {
         display: inline-flex;
         align-items: center;
@@ -65,7 +65,7 @@ const setChecked = () => {
         height: 18px;
         border: 2px var(--lew-form-border-color-hover) solid;
         box-sizing: border-box;
-        transition: all 0.25s ease;
+        transition: var(--lew-form-transition);
         overflow: hidden;
         border-radius: 50%;
         background-color: var(--lew-bgcolor-0);
@@ -75,7 +75,7 @@ const setChecked = () => {
             background-color: var(--lew-white-color);
             transform: translateY(100%);
             opacity: 0;
-            transition: all 0.25s ease;
+            transition: var(--lew-form-transition);
             font-size: 12px;
             border-radius: 50%;
         }
@@ -107,7 +107,7 @@ const setChecked = () => {
     padding: 3px 8px 3px 4px;
     border-radius: 50px;
     .lew-radio-label {
-        margin-left: 3px;
+        margin-left: 2px;
     }
 }
 
@@ -154,7 +154,7 @@ const setChecked = () => {
         .icon-radio {
             background-color: var(--lew-primary-color-dark);
             opacity: 1;
-            transform: translateY(0%) scale(1.3);
+            transform: translateY(0%) scale(1.15);
         }
     }
 }
@@ -167,7 +167,7 @@ const setChecked = () => {
     .icon-radio {
         background-color: var(--lew-primary-color-dark);
         opacity: 1;
-        transform: translateY(0%) scale(1.3);
+        transform: translateY(0%) scale(1.15);
     }
 }
 </style>

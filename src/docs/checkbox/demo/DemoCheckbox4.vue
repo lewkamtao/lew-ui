@@ -24,6 +24,13 @@ let value = ref([]);
             direction="x"
             :options="options"
         ></lew-checkbox-group>
+        <lew-checkbox-group
+            v-model="value"
+            block
+            :iconable="false"
+            direction="x"
+            :options="options"
+        ></lew-checkbox-group>
         <br />
         <br />
         <lew-title size="14px">有图标</lew-title>

@@ -183,7 +183,7 @@ const getTextLength = (val: string) => {
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     border-radius: var(--lew-form-border-radius);
     background-color: var(--lew-form-bgcolor);
-    transition: all 0.15s ease;
+    transition: var(--lew-form-transition);
     box-sizing: border-box;
     input,
     textarea {
@@ -214,7 +214,7 @@ const getTextLength = (val: string) => {
         height: 35px;
         opacity: 0;
         transform: translateX(100%);
-        transition: all 0.35s ease;
+        transition: var(--lew-form-transition);
         > div {
             display: inline-flex;
             justify-content: center;
@@ -225,7 +225,7 @@ const getTextLength = (val: string) => {
             box-sizing: border-box;
             user-select: none;
             opacity: 0.5;
-            transition: all 0.25s ease;
+            transition: var(--lew-form-transition);
         }
         .lew-input-clear {
             cursor: pointer;

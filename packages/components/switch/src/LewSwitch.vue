@@ -67,7 +67,7 @@ input::before {
     height: 24px;
     background: var(--lew-form-bgcolor);
     border-radius: 4px;
-    transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+    transition: var(--lew-form-transition);
     cursor: pointer;
 }
 
@@ -90,7 +90,7 @@ input::after {
     content: '';
     border-radius: 2px;
     background: var(--lew-white-color);
-    transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+    transition: var(--lew-form-transition);
     transform: translate(4px, 4px);
     cursor: pointer;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.08);
