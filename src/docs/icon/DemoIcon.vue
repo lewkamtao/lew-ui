@@ -6,7 +6,7 @@
 -->
 <template>
     <div class="demo-wrapper">
-        <lew-title>Icon-Carbon</lew-title>
+        <lew-title>Icon</lew-title>
         <p class="sub-title">
             这里强烈建议您可以使用
             <lew-mark to="https://www.xicons.org" type="info">xicons</lew-mark
