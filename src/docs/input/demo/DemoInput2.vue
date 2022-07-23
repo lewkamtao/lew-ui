@@ -24,10 +24,10 @@
         <lew-form-item direction="y" title="字数限制">
             <lew-input type="textarea" show-count :max-length="30" />
         </lew-form-item>
-        <lew-form-item direction="y" title="字数计算方式（中文=2，字母=1）">
+        <lew-form-item direction="y" title="字数计算方式（中文=1，字母=0.5）">
             <lew-input
                 type="textarea"
-                placeholder="中文作为2个字符，而英文作为1个"
+                placeholder="1个中文作为1个字符，而2个英文作为1个"
                 show-count
                 nice-count
                 :max-length="30"

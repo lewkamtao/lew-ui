@@ -7,13 +7,13 @@
     >
         <lew-checkbox
             v-for="option in options"
-            :key="option.id"
+            :key="option.value"
             :block="block"
             :iconable="iconable"
             :round="round"
-            :label="option.name"
-            :checked="getChecked(option.id)"
-            @change="check(option.id, $event)"
+            :label="option.label"
+            :checked="getChecked(option.value)"
+            @change="check(option.value, $event)"
         />
     </lew-flex>
 </template>
@@ -23,8 +23,8 @@ import { PropType } from 'vue';
 import LewCheckbox from './LewCheckbox.vue';
 
 type Options = {
-    name: string;
-    id: string | number;
+    label: string;
+    value: string;
 };
 const props = defineProps({
     modelValue: {
@@ -62,10 +62,10 @@ const props = defineProps({
         required: true,
         validator: (value: Array<number>) => {
             const hasNameKey = value.every((option) =>
-                Object.keys(option).includes('name'),
+                Object.keys(option).includes('label'),
             );
             const hasIdKey = value.every((option) =>
-                Object.keys(option).includes('id'),
+                Object.keys(option).includes('value'),
             );
             return hasNameKey && hasIdKey;
         },
@@ -74,21 +74,19 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
-const check = (optionId: number | string, checked: boolean) => {
+const check = (_value: string, checked: boolean) => {
     let updatedValue = [...props.modelValue];
-    optionId = Number(optionId);
 
     if (checked) {
-        updatedValue.push(optionId);
+        updatedValue.push(_value);
     } else {
-        updatedValue.splice(updatedValue.indexOf(optionId), 1);
+        updatedValue.splice(updatedValue.indexOf(_value), 1);
     }
     emit('update:modelValue', updatedValue);
 };
 
-const getChecked = (optionId: string | number) => {
-    optionId = Number(optionId);
-    return props.modelValue.includes(optionId);
+const getChecked = (_value: string | number) => {
+    return props.modelValue.includes(_value);
 };
 </script>
 <style lang="scss" scoped>

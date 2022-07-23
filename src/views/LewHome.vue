@@ -83,16 +83,16 @@ let user = ref({
 });
 
 let sex_options = ref([
-    { name: '未知', id: 0 },
-    { name: '男', id: 1 },
-    { name: '女', id: 2 },
+    { label: '未知', value: 0 },
+    { label: '男', value: 1 },
+    { label: '女', value: 2 },
 ]);
 
 let hobby_options = ref([
-    { name: '唱歌', id: 1 },
-    { name: '跳舞', id: 2 },
-    { name: 'rap', id: 3 },
-    { name: '打篮球', id: 44 },
+    { label: '唱歌', value: 1 },
+    { label: '跳舞', value: 2 },
+    { label: 'rap', value: 3 },
+    { label: '打篮球', value: 44 },
 ]);
 let home_options = ref([
     {

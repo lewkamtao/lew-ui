@@ -81,9 +81,9 @@ const getTextLength = (val: string) => {
         for (let i = 0; i <= val.length - 1; i++) {
             let length = val.charCodeAt(i);
             if (length >= 0 && length <= 128) {
-                len += 1;
+                len += 0.5;
             } else {
-                len += 2;
+                len += 1;
             }
         }
         return Math.trunc(len);

@@ -7,12 +7,12 @@
     >
         <lew-radio
             v-for="option in options"
-            :key="option.id"
+            :key="option.value"
             :block="block"
             :iconable="iconable"
-            :label="option.name"
-            :checked="modelValue == option.id"
-            @update:checked="check(option.id)"
+            :label="option.label"
+            :checked="modelValue == option.value"
+            @update:checked="check(option.value)"
         />
     </lew-flex>
 </template>
@@ -22,14 +22,15 @@ import { PropType } from 'vue';
 import LewRadio from './LewRadio.vue';
 
 type Options = {
-    name: string;
-    id: string | number;
+    label: string;
+    value: string;
 };
+
 defineProps({
     modelValue: {
-        type: Number,
+        type: String,
         default: () => {
-            return 0;
+            return '';
         },
         required: true,
     },
@@ -55,10 +56,10 @@ defineProps({
         required: true,
         validator: (value: Array<number>) => {
             const hasNameKey = value.every((option) =>
-                Object.keys(option).includes('name'),
+                Object.keys(option).includes('label'),
             );
             const hasIdKey = value.every((option) =>
-                Object.keys(option).includes('id'),
+                Object.keys(option).includes('value'),
             );
             return hasNameKey && hasIdKey;
         },
@@ -67,8 +68,8 @@ defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
-const check = (optionId: number | string) => {
-    emit('update:modelValue', Number(optionId));
+const check = (_value: string) => {
+    emit('update:modelValue', _value);
 };
 </script>
 
