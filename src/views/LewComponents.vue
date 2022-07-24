@@ -349,11 +349,9 @@ group.value = [
         </div>
         <div ref="mainRef" class="app-main btf-scrollbar">
             <router-view v-slot="{ Component }">
-                <transition name="fade-transform" mode="out-in">
-                    <keep-alive>
-                        <component :is="Component"> </component>
-                    </keep-alive>
-                </transition>
+                <keep-alive>
+                    <component :is="Component"> </component>
+                </keep-alive>
             </router-view>
         </div>
     </div>
