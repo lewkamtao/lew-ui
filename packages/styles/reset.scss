@@ -82,20 +82,16 @@ q:before,
 q:after,
 blockquote:before,
 blockquote:after {
-    content: '';
+    content: "";
 }
 
 a {
     text-decoration: none;
 }
-
-@font-face {
-    font-family: HarmonyOS_Sans_SC_Medium;
-    font-style: normal;
-    font-display: swap;
-    src: url('https://cdn.jsdelivr.net/gh/irozhi/HarmonyOS-Sans/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.woff2') format('woff2'), url('https://cdn.jsdelivr.net/gh/irozhi/HarmonyOS-Sans/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.woff') format('woff');
-}
-
-* {
-    font-family: HarmonyOS_Sans_SC_Medium;
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition-delay: 9999999s;
+    -webkit-transition: color 9999999s ease-out, background-color 9999999s ease-out;
 }

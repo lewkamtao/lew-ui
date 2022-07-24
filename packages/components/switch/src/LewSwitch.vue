@@ -65,18 +65,18 @@ input::before {
     content: '';
     width: 38px;
     height: 24px;
-    background: var(--lew-form-bgcolor-high);
+    background: var(--lew-form-bgcolor);
     border-radius: 4px;
-    transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+    transition: var(--lew-form-transition);
     cursor: pointer;
 }
 
 input:hover::before {
-    background: var(--lew-form-bgcolor-high-hover);
+    background: var(--lew-form-bgcolor-hover);
 }
 
 input:active::before {
-    background: var(--lew-form-bgcolor-high-active);
+    background: var(--lew-form-bgcolor-active);
 }
 
 .round::before {
@@ -90,9 +90,10 @@ input::after {
     content: '';
     border-radius: 2px;
     background: var(--lew-white-color);
-    transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+    transition: var(--lew-form-transition);
     transform: translate(4px, 4px);
     cursor: pointer;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.08);
 }
 
 .round::after {

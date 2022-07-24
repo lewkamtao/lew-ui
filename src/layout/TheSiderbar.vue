@@ -42,19 +42,18 @@ const toPath = (item: Item) => {
                 :key="`siderbar${j}`"
                 class="item"
                 :class="{ active: route.path == item.path }"
-                :style="`animation-delay: ${(i * 5 + j) * 25}ms;`"
                 @click="toPath(item)"
             >
                 <span class="name">
                     {{ item.name }}
                 </span>
-                <LewBadge
+                <Lew-tag
                     v-if="item.label"
                     :type="item.type"
-                    :value="item.label"
-                    style="margin-left: 30px"
-                >
-                </LewBadge>
+                    size="small"
+                    style="margin-left: 10px"
+                    >{{ item.label }}
+                </Lew-tag>
             </div>
         </div>
     </div>
@@ -100,34 +99,20 @@ const toPath = (item: Item) => {
             border-radius: var(--lew-form-border-radius);
             cursor: pointer;
             font-size: 14px;
-            transform: translateX(20px);
-            opacity: 0;
             color: var(--lew-text-color-6);
-            animation: slideIn 0.75s ease;
-            animation-fill-mode: forwards;
         }
-        @keyframes slideIn {
-            from {
-                transform: translateX(20px);
-                opacity: 0;
-            }
 
-            to {
-                transform: translateX(0px);
-                opacity: 1;
-            }
-        }
         .item:hover {
             color: var(--lew-text-color-0);
             background: var(--lew-bgcolor-2);
         }
 
         .active {
-            color: var(--lew-white-color);
+            color: var(--lew-white-text-color);
             background: var(--lew-primary-color);
         }
         .active:hover {
-            color: var(--lew-white-color);
+            color: var(--lew-white-text-color);
             background: var(--lew-primary-color);
         }
     }

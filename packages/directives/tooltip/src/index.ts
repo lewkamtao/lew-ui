@@ -1,8 +1,4 @@
 import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css'; // optional for styling
-import 'tippy.js/animations/shift-away-subtle.css';
-import 'tippy.js/themes/light.css';
-
 let instance: any;
 
 export default {
@@ -21,6 +17,7 @@ export default {
                     appendTo: () => document.body,
                     placement: binding.value.placement,
                     allowHTML: binding.value.allowHTML,
+                    arrow: binding.value.arrow,
                     maxWidth: 250,
                     onShow(instance) {
                         const node = document.getElementsByTagName('html')[0];

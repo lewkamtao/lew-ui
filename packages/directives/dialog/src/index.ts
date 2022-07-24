@@ -1,4 +1,4 @@
-import LewDialog from './LewDialog.vue';
+import _LewDialog from './LewDialog.vue';
 import { h, createApp } from 'vue';
 type Options = {
     title: string;
@@ -7,6 +7,7 @@ type Options = {
     ok: Function;
     // eslint-disable-next-line @typescript-eslint/ban-types
     cancel: Function;
+    layout: string;
 };
 
 const warning = (options: Options) => {
@@ -30,7 +31,7 @@ const success = (options: Options) => {
 };
 
 const dialog = (type: string, options: Options) => {
-    const { title, content, ok, cancel } = options;
+    const { title, content, ok, cancel, layout } = options;
     const div: any = document.createElement('div');
     document.body.appendChild(div);
     const close = () => {
@@ -42,10 +43,11 @@ const dialog = (type: string, options: Options) => {
     const app = createApp({
         render() {
             return h(
-                LewDialog,
+                _LewDialog,
                 {
                     closeOnClickOverlay: false,
                     type: type,
+                    layout: layout,
                     visible: true,
                     'onUpdate:visible': (newVisible: any) => {
                         if (newVisible === false) {
@@ -64,5 +66,11 @@ const dialog = (type: string, options: Options) => {
     });
     app.mount(div);
 };
-
-export default { warning, info, normal, success, error };
+export default {
+    name: 'LewDialog',
+    warning,
+    info,
+    normal,
+    success,
+    error,
+};

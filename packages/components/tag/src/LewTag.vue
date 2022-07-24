@@ -22,12 +22,11 @@ const close = () => {
         :class="`lew-tag-${size} lew-tag-${type} ${
             round ? 'lew-tag-round' : ''
         } ${disabled ? 'lew-tag-disabled' : ''} ${to ? 'lew-tag-to' : ''}`"
+        :style="`max-width:${maxWidth}`"
         @click="lewTo(to)"
     >
         <div class="lew-tag-left"><slot name="left"></slot></div>
-        <div class="lew-tag-value">
-            <slot></slot>
-        </div>
+        <div class="lew-tag-value"><slot></slot></div>
         <div class="lew-tag-right"><slot name="right"></slot></div>
         <div v-if="closable" class="lew-tag-close" @click.stop="close">
             <Icon><Dismiss24Filled /></Icon>
@@ -42,13 +41,13 @@ const close = () => {
     justify-content: center;
     border-radius: 3px;
     user-select: none;
-
     .lew-tag-value {
-        display: inline;
         font-weight: normal;
         padding: 0px 3px;
         box-sizing: border-box;
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .lew-tag-close {
@@ -84,20 +83,20 @@ const close = () => {
     cursor: pointer;
 }
 .lew-tag-small {
-    height: 18px;
-    line-height: 18px;
-    padding: 0px 2px 0px 2px;
-    font-size: 10px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0px 2px;
+    font-size: 12px;
     .lew-tag-close {
         border-radius: 2px;
         padding: 2px;
         font-size: 12px;
-        margin-right: 1px;
+        margin-right: 2px;
     }
 }
 .lew-tag-medium {
-    height: 22px;
-    line-height: 22px;
+    height: 24px;
+    line-height: 24px;
     padding: 0px 4px;
     font-size: 13px;
     .lew-tag-close {
@@ -107,8 +106,7 @@ const close = () => {
     }
 }
 .lew-tag-large {
-    height: 26px;
-    line-height: 26px;
+    height: 28px;
     padding: 0px 5px;
     font-size: 14px;
     .lew-tag-close {
@@ -127,27 +125,27 @@ const close = () => {
 
 .lew-tag-primary {
     background-color: var(--lew-primary-color-light);
-    color: var(--lew-primary-text-color);
+    color: var(--lew-primary-color-dark);
 }
 .lew-tag-info {
-    color: var(--lew-info-text-color);
+    color: var(--lew-info-color-dark);
     background-color: var(--lew-info-color-light);
 }
 .lew-tag-success {
-    color: var(--lew-success-text-color);
+    color: var(--lew-success-color-dark);
     background-color: var(--lew-success-color-light);
 }
 
 .lew-tag-warning {
-    color: var(--lew-warning-text-color);
+    color: var(--lew-warning-color-dark);
     background-color: var(--lew-warning-color-light);
 }
 .lew-tag-error {
-    color: var(--lew-error-text-color);
+    color: var(--lew-error-color-dark);
     background-color: var(--lew-error-color-light);
 }
 .lew-tag-normal {
-    color: var(--lew-normal-text-color);
+    color: var(--lew-text-color-5);
     background-color: var(--lew-normal-color-light);
 }
 .lew-tag-disabled {

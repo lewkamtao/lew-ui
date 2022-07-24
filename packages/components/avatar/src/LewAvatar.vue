@@ -48,9 +48,11 @@ defineProps({
         background-color: var(--lew-bgcolor-2);
         border-radius: var(--lew-form-border-radius);
     }
+
     .lew-avarar-round {
         border-radius: 50%;
     }
+
     .dot {
         position: absolute;
         top: -0.3rem;
@@ -78,6 +80,7 @@ defineProps({
     .dot-processing {
         background-color: var(--lew-info-color);
     }
+
     .dot-away {
         background-color: var(--lew-warning-color);
     }

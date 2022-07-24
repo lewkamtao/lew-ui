@@ -13,14 +13,6 @@ import 'plyr/dist/plyr.css';
 import '@/assets/style/main.scss';
 import '@/assets/style/hljs.scss';
 
-import 'vxe-table/lib/style.css';
-
-// 引入vxe
-import 'xe-utils';
-import { Column, Tooltip, Table } from 'vxe-table';
-
-// 安装tooltip
-import { LewTooltip } from 'lew-ui';
 
 import lew from 'lew-ui';
 
@@ -35,11 +27,5 @@ app.directive('highlight', {
     },
 });
 
-function useTable(app: App) {
-    app.use(Table).use(Tooltip).use(Column);
-}
-
 app.use(lew);
-app.use(useTable);
-app.use(LewTooltip);
 app.use(router).mount('#app');

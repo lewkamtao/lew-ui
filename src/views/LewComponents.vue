@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import TheSiderbar from '../layout/TheSiderbar.vue';
-
+import { Menu } from '@vicons/ionicons5';
+import { Icon } from '@vicons/utils';
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+
+let isShowSider = ref(false);
 
 const route = useRoute();
 let mainRef: any = ref(null);
 watch(route, () => {
-    mainRef.value.scrollTop = 0;
+    setTimeout(() => {
+        if (mainRef.value) mainRef.value.scrollTop = 0;
+    }, 250);
+    isShowSider.value = false;
 });
 
 type Item = {
@@ -78,12 +84,33 @@ group.value = [
                 label: '',
                 type: '',
             },
+            {
+                cname: '颜色',
+                name: 'Color',
+                path: '/Color',
+                label: '',
+                type: 'success',
+            },
+            {
+                cname: '图标',
+                name: 'Icon',
+                path: '/icon',
+                label: '',
+                type: 'success',
+            },
         ],
     },
 
     {
         title: '导航',
         items: [
+            {
+                cname: '回到顶部',
+                name: 'BackTop',
+                path: '/BackTop',
+                label: '',
+                type: '',
+            },
             // {
             //     cname: '步骤',
             //     name: 'Steps',
@@ -131,13 +158,12 @@ group.value = [
                 label: '',
                 type: 'success',
             },
-
             {
-                cname: '多行文本框',
-                name: 'Textarea',
-                path: '/Textarea',
+                cname: '高级输入框',
+                name: 'InputPro',
+                path: '/InputPro',
                 label: '',
-                type: 'success',
+                type: 'warning',
             },
             {
                 cname: '多选框',
@@ -158,8 +184,15 @@ group.value = [
                 cname: '选择器',
                 name: 'Select',
                 path: '/Select',
-                label: '有更新',
-                type: 'success',
+                label: '',
+                type: 'info',
+            },
+            {
+                cname: '日期选择器',
+                name: 'DatePicker',
+                path: '/DatePicker',
+                label: '',
+                type: 'warning',
             },
             // {
             //     cname:"",name: 'Cascader',
@@ -182,18 +215,25 @@ group.value = [
             // },
         ],
     },
-    // {
-    //     title: '数据展示',
-    //     items: [
-    //         {
-    //             cname: '表格',
-    //             name: 'Table',
-    //             path: '/Table',
-    //             label: '',
-    //             type: '',
-    //         },
-    //     ],
-    // },
+    {
+        title: '数据展示',
+        items: [
+            {
+                cname: '表格',
+                name: 'Table',
+                path: '/Table',
+                label: '',
+                type: 'success',
+            },
+            {
+                cname: '分页',
+                name: 'Pagination',
+                path: '/Pagination',
+                label: '',
+                type: 'warning',
+            },
+        ],
+    },
     {
         title: '反馈',
         items: [
@@ -212,13 +252,26 @@ group.value = [
                 type: 'success',
             },
             {
+                cname: '通知',
+                name: 'Notification',
+                path: '/Notification',
+                label: '',
+                type: 'success',
+            },
+            {
+                cname: '抽屉',
+                name: 'Drawer',
+                path: '/Drawer',
+                label: '',
+                type: 'success',
+            },
+            {
                 cname: '对话框',
                 name: 'Dialog',
                 path: '/Dialog',
                 label: '',
                 type: 'success',
             },
-
             {
                 cname: '模态框',
                 name: 'Modal',
@@ -282,11 +335,26 @@ group.value = [
 
 <template>
     <div class="container">
-        <div class="sider">
+        <div
+            class="mb-btn"
+            :class="{ 'mb-btn-open': isShowSider }"
+            @click="isShowSider = !isShowSider"
+        >
+            <icon size="24">
+                <Menu></Menu>
+            </icon>
+        </div>
+        <div class="sider" :class="{ 'sider-open': isShowSider }">
             <the-siderbar :group="group" />
         </div>
         <div ref="mainRef" class="app-main btf-scrollbar">
-            <router-view />
+            <router-view v-slot="{ Component }">
+                <transition name="fade-transform" mode="out-in">
+                    <keep-alive>
+                        <component :is="Component"> </component>
+                    </keep-alive>
+                </transition>
+            </router-view>
         </div>
     </div>
 </template>
@@ -298,7 +366,9 @@ group.value = [
 }
 .sider {
     position: fixed;
-    height: calc(100vh - 60px);
+    top: 59px;
+    height: calc(100vh - 58px);
+    background-color: var(--lew-bgcolor-0);
 }
 .app-main {
     margin-left: 230px;
@@ -309,5 +379,38 @@ group.value = [
     box-sizing: border-box;
     padding: 50px 50px 150px 50px;
     background: var(--lew-bgcolor-1);
+}
+.mb-btn {
+    display: none;
+}
+@media (max-width: 767px) {
+    .mb-btn {
+        position: fixed;
+        left: 0px;
+        top: 59px;
+        z-index: 99;
+        display: inline-flex;
+        align-items: center;
+        background-color: var(--lew-primary-color);
+        padding: 5px 7px;
+        color: #fff;
+        transition: all 0.85s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+    .mb-btn-open {
+        transform: translateX(230px);
+    }
+    .sider {
+        transform: translateX(-100%);
+        transition: transform 0.85s cubic-bezier(0.65, 0, 0.35, 1);
+        z-index: 99999;
+    }
+    .sider-open {
+        transform: translateX(0%);
+    }
+    .app-main {
+        width: 100%;
+        margin-left: 0px;
+        padding: 50px 15px;
+    }
 }
 </style>

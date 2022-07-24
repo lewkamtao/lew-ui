@@ -1,4 +1,4 @@
-const _props = {
+export const inputProps = {
     // 类型
     type: {
         type: String,
@@ -7,8 +7,16 @@ const _props = {
     // 绑定值
     modelValue: {
         // 父组件 v-model 没有指定参数名，则默认是 modelValue
-        type: String,
+        type: [Number, String],
         default: '',
+    },
+    size: {
+        type: String,
+        default: 'medium',
+    },
+    align: {
+        type: String,
+        default: 'left',
     },
     // 禁用
     disabled: {
@@ -35,6 +43,25 @@ const _props = {
         type: Boolean,
         default: false,
     },
+    // 缩放模式
+    resize: {
+        type: String,
+        default: 'none',
+    },
+    autoWidth: {
+        type: Boolean,
+        default: false,
+    },
+    maxLength: {
+        type: Number,
+        default: null,
+    },
+    showCount: {
+        type: Boolean,
+        default: false,
+    },
+    niceCount: {
+        type: Boolean,
+        default: false,
+    },
 };
-
-export default _props;

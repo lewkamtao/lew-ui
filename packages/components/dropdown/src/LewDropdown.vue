@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, PropType } from 'vue';
-import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css'; // optional for styling
-import 'tippy.js/animations/shift-away-subtle.css';
-import 'tippy.js/themes/light.css';
+import { ref, PropType, computed } from 'vue';
 
 type Options = {
-    label: string;
-    value: string;
+    label: number | string;
+    value: number | string;
 };
 
 const props = defineProps({
@@ -15,6 +11,10 @@ const props = defineProps({
         type: Array as PropType<Options[]>,
         default() {
             return [];
+        },
+        required: true,
+        validator(value: PropType<Options[]>) {
+            return value.length >= 0;
         },
     },
     trigger: {
@@ -25,124 +25,133 @@ const props = defineProps({
         type: String,
         default: 'bottom',
     },
-    width: {
-        type: String,
-        default: '',
-    },
     arrow: {
         type: Boolean,
         default: true,
     },
+    width: {
+        type: String,
+        default: '',
+    },
+    maxHeight: {
+        type: String,
+        default: '300px',
+    },
+
     align: {
         type: String,
         default: 'left',
     },
 });
 
-let triggerRef = ref(null);
-let bodyRef = ref(null);
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-let instance: any;
-
-onMounted(() => {
-    let trigger = props.trigger;
-    let placement = props.placement;
-
-    if (trigger == 'hover') {
-        trigger = 'mouseenter';
-    }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    instance = tippy(triggerRef.value, {
-        theme: 'light',
-        trigger: trigger,
-        content: bodyRef.value,
-        animation: 'shift-away-subtle',
-        interactive: true,
-        arrow: props.arrow,
-        placement: placement,
-        interactiveBorder: 30,
-        appendTo: () => document.body,
-        allowHTML: true,
-        maxWidth: 'none',
-        onShow(instance) {
-            const node = document.getElementsByTagName('html')[0];
-            if (node.classList.contains('lew-dark')) {
-                instance.popper.children[0].setAttribute('data-theme', 'dark');
-            } else {
-                instance.popper.children[0].setAttribute('data-theme', 'light');
-            }
-        },
-    });
-    instance.popper.children[0].setAttribute('data-lew', 'dropdown');
-});
+let lewPopoverRef = ref();
 
 let show = () => {
-    instance.hide();
+    lewPopoverRef.value.show();
 };
 
 let hide = () => {
-    instance.hide();
+    lewPopoverRef.value.hide();
 };
 
 const emit = defineEmits(['change']);
-defineExpose({ show, hide });
 
-const change = (item: Options) => {
-    emit('change', item);
+const change = (item) => {
+    emit('change', { show, hide, value: item });
     setTimeout(() => {
-        hide();
+        lewPopoverRef.value.hide();
     }, 80);
 };
 
-onUnmounted(() => {
-    instance = null;
+defineExpose({ show, hide });
+
+const _options = computed(() => {
+    if (
+        Array.isArray(props.options) &&
+        Object.prototype.toString.call(props.options[0]) != '[object Object]'
+    ) {
+        return props.options.map((e) => {
+            return {
+                label: e,
+                value: e,
+            };
+        });
+    } else {
+        return props.options;
+    }
 });
 </script>
 
 <template>
-    <div class="lew-dropdown">
-        <div class="lew-dropdown-trigger" ref="triggerRef">
+    <lew-popover
+        ref="lewPopoverRef"
+        :trigger="trigger"
+        :arrow="arrow"
+        :placement="placement"
+    >
+        <template #trigger>
             <slot />
-        </div>
-        <div ref="bodyRef" class="lew-dropdown-body" :style="`width:${width}`">
+        </template>
+        <template #popover-body>
             <div
-                v-for="(item, index) in options"
-                :key="index"
-                class="lew-dropdown-option"
-                :style="`text-align:${align}`"
-                @click="change(item)"
+                v-if="_options.length > 0"
+                class="lew-dropdown-body"
+                :style="`width:${width};max-height:${maxHeight}`"
             >
-                {{ item.label }}
+                <div
+                    v-for="(item, index) in _options"
+                    :key="index"
+                    class="lew-dropdown-option"
+                    :style="`text-align:${align}`"
+                    @click="change(item)"
+                >
+                    {{ item.label }}
+                </div>
             </div>
-        </div>
-    </div>
+        </template>
+    </lew-popover>
 </template>
 
 <style lang="scss" scoped>
-.lew-dropdown {
-    display: inline-flex;
-    align-items: center;
-    .lew-dropdown-trigger {
-        display: inline-flex;
-        align-items: center;
-    }
-}
 .lew-dropdown-body {
     display: flex;
     flex-direction: column;
-    padding: 4px 0px;
+    user-select: none;
+    overflow: auto;
+    padding: 3px;
+    box-sizing: border-box;
     .lew-dropdown-option {
-        padding: 5px 15px;
+        padding: 0px 10px;
+        height: 32px;
+        line-height: 32px;
         font-size: 14px;
         border-radius: var(--lew-form-border-radius);
         color: var(--lew-text-color-7);
         cursor: pointer;
+        white-space: nowrap;
+        box-sizing: border-box;
     }
     .lew-dropdown-option:hover {
         color: var(--lew-text-color-2);
         background-color: var(--lew-bgcolor-2);
     }
+}
+.lew-dropdown-body::-webkit-scrollbar {
+    background-color: rgb(126, 126, 126, 0);
+    width: 5px;
+    height: 5px;
+}
+
+.lew-dropdown-body::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(126, 126, 126);
+}
+.lew-dropdown-body::-webkit-scrollbar-thumb {
+    background-color: rgb(209 213 219 / 0);
+    border-radius: 5px;
+}
+.lew-dropdown-body:hover::-webkit-scrollbar-thumb {
+    background-color: rgb(209 213 219 / 1);
+    border-radius: 5px;
 }
 </style>

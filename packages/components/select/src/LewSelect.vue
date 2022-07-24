@@ -1,42 +1,58 @@
 <script setup lang="ts">
-import { LewInput } from 'lew-ui';
-import { ref, PropType, onMounted, onUnmounted } from 'vue';
-import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css'; // optional for styling
-import 'tippy.js/animations/shift-away-subtle.css';
-import 'tippy.js/themes/light.css';
+import { ref, onMounted, computed, watch } from 'vue';
 import { ChevronDown } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
-import _props from './props';
-import LewCheckbox from '../../checkbox/src/LewCheckbox.vue';
+import { selectProps } from './props';
+import { LewCheckbox, LewPopover } from 'lew-ui';
+const props = defineProps(selectProps);
+
+const v = ref<string>('');
+const multipleV = ref<Array<string>>([]);
+const labelStr = ref<string>('');
+const multipleLabelStr = ref<Array<string>>([]);
+
+watch(
+    () => props.modelValue,
+    () => {
+        // 如果是多选
+        if (props.multiple) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            multipleV.value = props.modelValue;
+            multipleLabelStr.value = filterSelect(
+                props.modelValue,
+                props.options,
+            );
+        } else {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            v.value = props.modelValue;
+            labelStr.value =
+                filterSelect([props.modelValue], props.options)[0] || '';
+        }
+    },
+    { deep: true },
+);
 
 type Options = {
     label: string;
     value: string;
 };
 
-const props = defineProps(_props);
-
-const v = ref<String>('');
-const labelStr = ref<String>('');
-
-const multipleV = ref<Array<String>>([]);
-const multipleLabelStr = ref<Array<String>>([]);
+let lewSelectRef = ref();
 
 onMounted(() => {
     // 如果是多选
     if (props.multiple) {
         multipleLabelStr.value = filterSelect(props.modelValue, props.options);
-        initMultipleTippy();
     } else {
         labelStr.value =
             filterSelect([props.modelValue], props.options)[0] || '';
     }
-    initOptionsTippy();
 });
 
 const filterSelect = (v: any, options: Options[]) => {
-    let _v: Array<String> = [];
+    let _v: Array<string> = [];
     if (v && options) {
         v.map((e: string) => {
             options.map((o) => {
@@ -50,6 +66,8 @@ const filterSelect = (v: any, options: Options[]) => {
     return _v;
 };
 
+const emit = defineEmits(['update:modelValue', 'change']);
+
 const changeFn = (item: Options) => {
     if (props.multiple) {
         let index = multipleV.value.indexOf(item.value);
@@ -60,7 +78,6 @@ const changeFn = (item: Options) => {
             multipleLabelStr.value.push(item.label);
             multipleV.value.push(item.value);
         }
-
         emit('update:modelValue', multipleV.value);
         emit('change', multipleV.value);
     } else {
@@ -79,249 +96,251 @@ const changeFn = (item: Options) => {
     }
 };
 
-let triggerRef = ref(null);
-let bodyRef = ref(null);
 let isShowOptions = ref(false);
-let instance1: any;
 
-const initOptionsTippy = () => {
-    let trigger = props.trigger;
-    if (trigger == 'hover') {
-        trigger = 'mouseenter';
-    }
-    // @ts-ignore
-    bodyRef.value.style.width = `${triggerRef.value?.offsetWidth}px`;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    instance1 = tippy(triggerRef.value, {
-        theme: 'light',
-        trigger: trigger || 'click',
-        content: bodyRef.value,
-        animation: 'shift-away-subtle',
-        interactive: true,
-        placement: 'bottom-start',
-        arrow: false,
-        interactiveBorder: 10,
-        appendTo: () => document.body,
-        allowHTML: true, // @ts-ignore
-        maxWidth: triggerRef.value?.offsetWidth,
-        onShow(instance) {
-            isShowOptions.value = true;
-            const node = document.getElementsByTagName('html')[0];
-            const tippyContent = instance.popper.children[0];
-            if (node.classList.contains('lew-dark')) {
-                tippyContent.setAttribute('data-theme', 'dark');
-            } else {
-                tippyContent.setAttribute('data-theme', 'light');
-            }
-        },
-        onHide() {
-            isShowOptions.value = false;
-        },
-    });
-    instance1.popper.children[0].setAttribute('data-lew', 'select');
-};
-
-let tagRef = ref(null);
-let multipleRef = ref(null);
-let instance2: any;
-const initMultipleTippy = () => {
-    // @ts-ignore
-    instance2 = tippy(tagRef.value, {
-        theme: 'light',
-        trigger: 'mouseenter',
-        content: multipleRef.value,
-        animation: 'shift-away-subtle',
-        interactive: true,
-        placement: 'top',
-        interactiveBorder: 10,
-        appendTo: () => document.body,
-        allowHTML: true, // @ts-ignore
-        maxWidth: 250,
-        onShow(instance) {
-            hide();
-            const node = document.getElementsByTagName('html')[0];
-            const tippyContent = instance.popper.children[0];
-            if (node.classList.contains('lew-dark')) {
-                tippyContent.setAttribute('data-theme', 'dark');
-            } else {
-                tippyContent.setAttribute('data-theme', 'light');
-            }
-        },
-    });
-    instance2.popper.children[0].setAttribute('data-lew', 'select-multiple');
-};
-const emit = defineEmits(['update:modelValue', 'change']);
-
-const show = () => {
-    instance1.show();
-};
-
-const hide = () => {
-    instance1.hide();
-};
+let lewPopverRef1 = ref();
+let lewPopverRef2 = ref();
 
 const delTag = (i: number) => {
     multipleV.value.splice(i, 1);
     multipleLabelStr.value.splice(i, 1);
     emit('update:modelValue', multipleV.value);
-    emit('change', multipleV.value);
+    emit('change', { value: multipleV.value, show, hide });
     if (i == 0 && multipleV.value.length == 0) {
-        instance2.hide();
+        lewPopverRef2.value.hide();
     }
 };
 
-defineExpose({ show, hide });
+const lewSelectWidth = computed(
+    () => lewSelectRef.value?.offsetWidth - 12 + 'px',
+);
 
-onUnmounted(() => {
-    instance1 = null;
-    instance2 = null;
-});
+const show = () => {
+    lewPopverRef1.value.show();
+};
+
+const hide = () => {
+    lewPopverRef1.value.hide();
+};
+
+defineExpose({ show, hide });
 </script>
 
 <template>
-    <div
-        class="lew-select"
-        :class="{ 'lew-select-isShow': isShowOptions }"
-        ref="triggerRef"
+    <lew-popover
+        ref="lewPopverRef1"
+        class="lew-select-view"
+        :class="{ 'lew-select-foucs': isShowOptions }"
+        :trigger="trigger"
+        :placement="placement"
+        :arrow="false"
+        style="width: 100%"
+        @on-show="isShowOptions = true"
+        @on-hide="isShowOptions = false"
     >
-        <icon size="16" class="lew-select-icon">
-            <ChevronDown />
-        </icon>
-        <div
-            v-if="
-                (!multiple && labelStr.length == 0) ||
-                (multiple && multipleLabelStr.length == 0)
-            "
-            class="lew-select-placeholder"
-        >
-            请选择
-        </div>
-        <!-- 单选 -->
-        <div v-show="!multiple" class="lew-select-label-single">
-            {{ labelStr }}
-        </div>
-        <!-- 多选 -->
-        <div v-show="multiple" class="lew-select-label-multiple">
-            <lew-tag
-                v-show="multipleLabelStr.length > 0"
-                @close="delTag(0)"
-                closable
+        <template #trigger>
+            <div
+                ref="lewSelectRef"
+                class="lew-select"
+                :class="`lew-select-${size}`"
             >
-                {{ multipleLabelStr[0] }}</lew-tag
-            >
-            <div ref="tagRef" class="lew-isSelect-label-num">
-                <lew-tag
-                    style="margin-left: 5px"
-                    v-show="multipleLabelStr.length > 1"
-                >
-                    +{{ multipleLabelStr.length - 1 }}</lew-tag
-                >
-            </div>
-        </div>
-        <!-- 多选气泡 -->
-        <div ref="multipleRef">
-            <lew-flex wrap gap="5px" x="start" class="lew-isSelect-label-box">
-                <lew-tag
-                    v-for="(item, i) in multipleLabelStr"
-                    :key="`multipleLabelStr${i}`"
-                    @close="delTag(i)"
-                    closable
-                >
-                    {{ item }}</lew-tag
-                >
-            </lew-flex>
-        </div>
-        <div
-            ref="bodyRef"
-            class="lew-select-body"
-            :class="{ 'lew-select-multiple-body': multiple }"
-        >
-            <div class="options-box">
+                <icon size="16px" class="lew-select-icon">
+                    <ChevronDown />
+                </icon>
                 <div
-                    @click="changeFn(item)"
-                    v-for="item in options"
-                    :key="item.value"
-                    class="item"
-                    :class="{
-                        'lew-select-checked': multiple
-                            ? multipleV.includes(item.value)
-                            : v == item.value,
-                    }"
+                    v-if="
+                        (!multiple && labelStr.length == 0) ||
+                        (multiple && multipleLabelStr.length == 0)
+                    "
+                    class="lew-select-placeholder"
                 >
-                    <lew-checkbox
-                        class="lew-selcet-checkbox"
-                        v-if="multiple"
-                        label=""
-                        :checked="multipleV.includes(item.value)"
-                    />
-                    <div class="lew-selcet-label">{{ item.label }}</div>
+                    请选择
+                </div>
+                <!-- 单选 -->
+                <div v-show="!multiple" class="lew-select-label-single">
+                    {{ labelStr }}
+                </div>
+                <!-- 多选 -->
+                <div v-show="multiple" class="lew-select-label-multiple">
+                    <lew-tag
+                        v-show="multipleLabelStr.length > 0"
+                        type="primary"
+                        :size="size"
+                        closable
+                        @close="delTag(0)"
+                    >
+                        {{ multipleLabelStr[0] }}</lew-tag
+                    >
+                    <lew-popover
+                        v-show="multipleLabelStr.length > 1"
+                        ref="lewPopverRef2"
+                        trigger="hover"
+                        placement="top"
+                    >
+                        <template #trigger>
+                            <div
+                                style="margin-left: 5px"
+                                class="lew-isSelect-label-num"
+                            >
+                                <lew-tag
+                                    v-show="multipleLabelStr.length > 1"
+                                    :size="size"
+                                    type="primary"
+                                >
+                                    +{{ multipleLabelStr.length - 1 }}</lew-tag
+                                >
+                            </div></template
+                        >
+                        <template #popover-body>
+                            <lew-flex
+                                wrap
+                                gap="5px"
+                                x="start"
+                                class="lew-isSelect-label-box"
+                            >
+                                <lew-tag
+                                    v-for="(item, i) in multipleLabelStr"
+                                    :key="`multipleLabelStr${i}`"
+                                    type="primary"
+                                    closable
+                                    :size="size"
+                                    @close="delTag(i)"
+                                >
+                                    {{ item }}</lew-tag
+                                >
+                            </lew-flex></template
+                        ></lew-popover
+                    >
                 </div>
             </div>
-        </div>
-    </div>
+        </template>
+        <template #popover-body>
+            <div
+                class="lew-select-body"
+                :class="{ 'lew-select-multiple-body': multiple }"
+                :style="`width:${lewSelectWidth}`"
+            >
+                <div class="options-box">
+                    <div
+                        v-for="item in options"
+                        :key="item.value"
+                        class="item"
+                        :class="{
+                            'lew-select-checked': multiple
+                                ? multipleV.includes(item.value)
+                                : v == item.value,
+                        }"
+                        @click="changeFn(item)"
+                    >
+                        <lew-checkbox
+                            v-if="multiple"
+                            class="lew-selcet-checkbox"
+                            label=""
+                            :checked="multipleV.includes(item.value)"
+                        />
+                        <div class="lew-selcet-label">{{ item.label }}</div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </lew-popover>
 </template>
 
 <style lang="scss" scoped>
-.lew-select {
-    display: inline-flex;
-    align-items: center;
-    position: relative;
+.lew-select-view {
     width: 100%;
-    width: 100%;
-    height: 35px;
-    padding: 5px;
-    font-size: 14px;
-    line-height: 24px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     border-radius: var(--lew-form-border-radius);
     background-color: var(--lew-form-bgcolor);
-    color: var(--lew-text-color);
-    box-sizing: border-box;
     transition: all 0.15s ease;
-    cursor: pointer;
-    .lew-select-icon {
-        position: absolute;
-        top: 50%;
-        right: 7px;
-        transform: translateY(-50%) rotate(0deg);
-        transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
-        color: var(--lew-text-color-7);
-    }
+    box-sizing: border-box;
 
-    background-color: var(--lew-form-bgcolor);
-    .lew-select {
+    > div {
         width: 100%;
     }
-    .lew-select-label-single {
-        margin-left: 7px;
-    }
-    .lew-select-label-multiple {
-        display: inline-flex;
+    .lew-select {
+        display: flex;
         align-items: center;
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        cursor: pointer;
+        user-select: none;
+        box-sizing: border-box;
+        .lew-select-icon {
+            position: absolute;
+            top: 50%;
+            right: 7px;
+            transform: translateY(-50%) rotate(0deg);
+            transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+            color: var(--lew-text-color-7);
+        }
+
+        .lew-select {
+            width: 100%;
+        }
+        .lew-select-label-multiple {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            .lew-popover {
+                display: flex;
+                align-items: center;
+                > div {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+
+        .lew-isSelect-label-num {
+            display: inline-flex;
+            align-items: center;
+        }
     }
 
-    .lew-isSelect-label-num {
-        display: inline-flex;
-        align-items: center;
+    .lew-select-placeholder {
+        color: rgb(165, 165, 165);
+    }
+
+    .lew-select-small {
+        padding: var(--lew-form-input-padding-small);
+        height: var(--lew-form-input-height-small);
+        line-height: var(--lew-form-input-line-height-small);
+        .lew-select-label-single,
+        .lew-select-placeholder {
+            font-size: var(--lew-form-font-size-small);
+        }
+    }
+    .lew-select-medium {
+        padding: var(--lew-form-input-padding-medium);
+        line-height: var(--lew-form-input-line-height-medium);
+        height: var(--lew-form-input-height-medium);
+        .lew-select-label-single,
+        .lew-select-placeholder {
+            font-size: var(--lew-form-font-size-medium);
+        }
+    }
+    .lew-select-large {
+        padding: var(--lew-form-input-padding-large);
+        line-height: var(--lew-form-input-line-height-large);
+        height: var(--lew-form-input-height-large);
+        .lew-select-label-single,
+        .lew-select-placeholder {
+            font-size: var(--lew-form-font-size-large);
+        }
     }
 }
-
-.lew-select-placeholder {
-    color: rgb(165, 165, 165);
-    margin-left: 7px;
-}
-.lew-select:hover {
+.lew-select-view:hover {
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor-hover);
 }
-.lew-select:active {
+.lew-select-view:active {
     background-color: var(--lew-form-bgcolor-active);
 }
-.lew-select.lew-select-isShow {
+.lew-select-view.lew-select-foucs {
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
@@ -333,32 +352,35 @@ onUnmounted(() => {
 </style>
 <style lang="scss">
 .lew-isSelect-label-box {
-    padding: 3px 0px !important;
+    max-width: 250px;
 }
 .lew-select-body {
     width: 100%;
-    padding: 6px 0px 6px 6px;
+
     box-sizing: border-box;
     .options-box {
         overflow-y: auto;
         overflow-x: hidden;
-        height: 220px;
+        max-height: 300px;
+        height: auto;
         box-sizing: border-box;
+        padding: 3px;
         transition: all 0.25s ease;
-        padding-right: 6px;
+        font-size: 0px;
+
         .item {
             position: relative;
             display: inline-flex;
             align-items: center;
             width: 100%;
-            height: 35px;
-            line-height: 35px;
+            height: 32px;
+            line-height: 32px;
             font-size: 14px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
             cursor: pointer;
-            color: var(--lew-text-color-5);
+            color: var(--lew-text-color-7);
             box-sizing: border-box;
             border-radius: var(--lew-form-border-radius);
             padding-left: 10px;
@@ -368,21 +390,21 @@ onUnmounted(() => {
         }
         .item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-select-bgcolor-hover);
+            background-color: var(--lew-form-bgcolor);
         }
         .lew-select-checked {
             font-weight: bold;
-            color: var(--lew-primary-text-color);
+            color: var(--lew-primary-color-dark);
         }
         .lew-select-checked:hover {
-            color: var(--lew-primary-text-color);
+            color: var(--lew-primary-color-dark);
         }
         .lew-selcet-checkbox {
             position: absolute;
             z-index: 0;
             top: 50%;
             transform: translateY(-50%);
-            left: 9px;
+            left: 12px;
         }
     }
 
@@ -406,13 +428,17 @@ onUnmounted(() => {
 }
 .lew-select-multiple-body {
     .options-box {
+        .item {
+            height: 36px;
+            line-height: 36px;
+        }
         .lew-selcet-label {
             position: absolute;
             left: 0px;
             top: 50%;
             z-index: 9;
             transform: translateY(-50%);
-            padding-left: 35px;
+            padding-left: 40px;
         }
     }
 }

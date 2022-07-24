@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { LewMessage } from 'lew-ui';
-import { LewDialog } from 'lew-ui';
 import { useRouter } from 'vue-router';
 
 onMounted(() => {
@@ -25,6 +23,8 @@ onMounted(() => {
         }
 
         var particleCount = 50 * (timeLeft / duration);
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         confetti(
             Object.assign({}, defaults, {
@@ -35,6 +35,7 @@ onMounted(() => {
                 },
             }),
         );
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         confetti(
             Object.assign({}, defaults, {
@@ -50,10 +51,10 @@ onMounted(() => {
 
 const router = useRouter();
 let v = ref('');
-const popRef: any = ref(null);
+let lewPopoverRef = ref();
 const submit = () => {
     LewMessage.error(v.value || '密码不可为空');
-    popRef.value.hide();
+    lewPopoverRef.value.hide();
 };
 const open = (type: any) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -82,16 +83,16 @@ let user = ref({
 });
 
 let sex_options = ref([
-    { name: '未知', id: 0 },
-    { name: '男', id: 1 },
-    { name: '女', id: 2 },
+    { label: '未知', value: 0 },
+    { label: '男', value: 1 },
+    { label: '女', value: 2 },
 ]);
 
 let hobby_options = ref([
-    { name: '唱歌', id: 1 },
-    { name: '跳舞', id: 2 },
-    { name: 'rap', id: 3 },
-    { name: '打篮球', id: 44 },
+    { label: '唱歌', value: 1 },
+    { label: '跳舞', value: 2 },
+    { label: 'rap', value: 3 },
+    { label: '打篮球', value: 44 },
 ]);
 let home_options = ref([
     {
@@ -163,7 +164,7 @@ let dropdown_options = ref([
     },
 ]);
 
-let alertList = ref([
+let list = ref([
     {
         type: 'info',
         title: '成功发送一条消息',
@@ -191,6 +192,10 @@ let alertList = ref([
         content: '',
     },
 ]);
+
+const message = (type: string) => {
+    LewMessage[type]('这是一条demo消息');
+};
 </script>
 
 <template>
@@ -227,21 +232,21 @@ let alertList = ref([
                     <lew-flex x="end" gap="20px">
                         <lew-badge round value="99+">
                             <lew-avatar
-                                src="https://dpurl.org/Oqmw8"
+                                src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
                             ></lew-avatar>
                         </lew-badge>
                         <lew-badge type="info" round value="99+">
                             <lew-avatar
-                                src="https://dpurl.org/Oqmw8"
+                                src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
                             ></lew-avatar>
                         </lew-badge>
                         <lew-avatar
-                            src="https://dpurl.org/Oqmw8"
+                            src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
                             status="online"
                             status-position="bottom-left"
                         />
                         <lew-avatar
-                            src="https://dpurl.org/Oqmw8"
+                            src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
                             status="processing"
                             status-position="bottom-right"
                         />
@@ -293,7 +298,7 @@ let alertList = ref([
                             <LewInput resize="none" />
                         </lew-form-item>
                         <lew-form-item direction="y" title="Textarea">
-                            <LewTextarea resize="none" />
+                            <LewInput type="textarea" resize="none" />
                         </lew-form-item>
                         <lew-form-item direction="y" title="Select">
                             <LewSelect
@@ -319,16 +324,12 @@ let alertList = ref([
                     </lew-flex>
                 </lew-flex>
                 <lew-flex class="item" direction="column" gap="20px">
-                    <LewAlert :alert-list="alertList"></LewAlert>
+                    <LewAlert :list="list"></LewAlert>
                     <lew-flex wrap x="start" gap="20px">
-                        <lew-button
-                            type="normal"
-                            @click="LewMessage.error('这是一个demo信息')"
+                        <lew-button type="normal" @click="message('error')"
                             >Message</lew-button
                         >
-                        <lew-button
-                            type="success"
-                            @click="LewMessage.success('这是一个demo信息')"
+                        <lew-button type="success" @click="message('success')"
                             >Save</lew-button
                         >
                     </lew-flex>
@@ -341,11 +342,7 @@ let alertList = ref([
                         >
                     </lew-flex>
                     <lew-flex x="start" gap="20px">
-                        <lew-popover
-                            ref="popRef"
-                            trigger="click"
-                            placement="bottom-start"
-                        >
+                        <lew-popover trigger="click" placement="bottom-start">
                             <template #trigger>
                                 <lew-button>Popover</lew-button>
                             </template>
@@ -362,10 +359,12 @@ let alertList = ref([
                                         <lew-button
                                             type="blank"
                                             size="small"
-                                            @click="popRef.hide()"
+                                            @click="lewPopoverRef.hide()"
                                             >取消
                                         </lew-button>
-                                        <lew-button size="small" @click="submit"
+                                        <lew-button
+                                            size="small"
+                                            @click="submit()"
                                             >提交</lew-button
                                         >
                                     </div>
@@ -387,10 +386,10 @@ let alertList = ref([
 
 .home-wrapper {
     width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
     perspective: 800;
+    overflow: hidden;
     -webkit-perspective: 800;
+
     .startbox {
         position: fixed;
         left: 50px;
@@ -400,6 +399,7 @@ let alertList = ref([
         animation-fill-mode: forwards;
         animation-delay: 0.5s;
         opacity: 0;
+
         .slogan {
             display: flex;
             font-size: 50px;
@@ -430,6 +430,8 @@ let alertList = ref([
         animation-delay: 0.5s;
         opacity: 0;
         .item {
+            flex-shrink: 0;
+            width: 400px;
             height: calc(100vh - 70px);
         }
     }
@@ -451,6 +453,46 @@ let alertList = ref([
         to {
             opacity: 1;
             transform: translateY(0%);
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .home-wrapper {
+        .startbox {
+            left: 50%;
+            top: 25px;
+            text-align: center;
+            white-space: nowrap;
+        }
+        @keyframes start {
+            from {
+                opacity: 0;
+                transform: translate(-50%, 100%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 50%);
+            }
+        }
+        @keyframes demo {
+            from {
+                opacity: 0;
+                transform: scale(0.3) translate(-320px, 200px) rotateX(0deg)
+                    rotateY(0deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(0.5) translate(-320px, 200px) rotateX(15deg)
+                    rotateY(-15deg);
+            }
+        }
+        .home {
+            .item {
+                flex-shrink: 0;
+                width: 300px;
+                height: calc(100vh - 70px);
+            }
         }
     }
 }

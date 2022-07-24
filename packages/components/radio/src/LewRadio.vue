@@ -1,11 +1,12 @@
 <template>
     <label
         class="lew-radio"
-        :class="`${block ? 'lew-radio-block' : ''}  ${
-            checked ? 'lew-radio-checked' : ''
-        } `"
+        :class="`
+        ${block ? 'lew-radio-block' : ''}  
+        ${checked ? 'lew-radio-checked' : ''}   
+        ${!iconable ? 'lew-radio-unicon' : ''}`"
     >
-        <div class="icon-radio-box" :class="{ 'icon-checked-box': checked }">
+        <div class="icon-radio-box" v-if="iconable">
             <div class="icon-radio"></div>
         </div>
         <input
@@ -14,7 +15,7 @@
             :checked="checked"
             @input="setChecked"
         />
-        <span> {{ label }}</span>
+        <span v-if="label" class="lew-radio-label"> {{ label }}</span>
     </label>
 </template>
 
@@ -30,7 +31,10 @@ defineProps({
             return false;
         },
     },
-
+    iconable: {
+        type: Boolean,
+        default: true,
+    },
     checked: {
         type: Boolean,
     },
@@ -52,7 +56,7 @@ const setChecked = () => {
     color: var(--lew-text-color-1);
     font-size: 14px;
     border-radius: 50px;
-    transition: all 0.25s ease;
+    transition: var(--lew-form-transition);
     .icon-radio-box {
         display: inline-flex;
         align-items: center;
@@ -61,8 +65,7 @@ const setChecked = () => {
         height: 18px;
         border: 2px var(--lew-form-border-color-hover) solid;
         box-sizing: border-box;
-        margin-right: 5px;
-        transition: all 0.25s ease;
+        transition: var(--lew-form-transition);
         overflow: hidden;
         border-radius: 50%;
         background-color: var(--lew-bgcolor-0);
@@ -72,10 +75,25 @@ const setChecked = () => {
             background-color: var(--lew-white-color);
             transform: translateY(100%);
             opacity: 0;
-            transition: all 0.25s ease;
+            transition: var(--lew-form-transition);
             font-size: 12px;
             border-radius: 50%;
         }
+    }
+    .lew-radio-label {
+        margin-left: 6px;
+    }
+}
+.lew-radio-unicon.lew-radio-block {
+    padding: 4px 12px;
+    .lew-radio-label {
+        color: var(--lew-text-color-6);
+    }
+}
+
+.lew-radio-unicon.lew-radio-checked.lew-radio-block {
+    .lew-radio-label {
+        color: var(--lew-primary-color-dark);
     }
 }
 .lew-radio:hover {
@@ -88,6 +106,9 @@ const setChecked = () => {
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     padding: 3px 8px 3px 4px;
     border-radius: 50px;
+    .lew-radio-label {
+        margin-left: 2px;
+    }
 }
 
 .lew-radio-block:hover {
@@ -100,8 +121,14 @@ const setChecked = () => {
 
 .lew-radio-checked.lew-radio-block {
     border: var(--lew-form-border-width) var(--lew-primary-color) solid;
+    background: var(--lew-primary-color-light);
+    color: var(--lew-primary-color-dark);
 }
-
+.lew-radio-checked.lew-radio-block:hover {
+    border: var(--lew-form-border-width) var(--lew-primary-color) solid;
+    background: var(--lew-primary-color-light);
+    color: var(--lew-primary-color-dark);
+}
 .lew-radio-checked {
     .icon-radio-box {
         border: 2px var(--lew-primary-color) solid;
@@ -117,6 +144,30 @@ const setChecked = () => {
     .icon-radio-box {
         border: 2px var(--lew-primary-color) solid;
         background: var(--lew-primary-color);
+    }
+}
+.lew-radio-block.lew-radio-checked {
+    .icon-radio-box {
+        border: 2px var(--lew-primary-color-light) solid;
+        background: var(--lew-primary-color-light);
+
+        .icon-radio {
+            background-color: var(--lew-primary-color-dark);
+            opacity: 1;
+            transform: translateY(0%) scale(1.15);
+        }
+    }
+}
+
+.lew-radio-block.lew-radio-checked:hover {
+    background: var(--lew-primary-color-light);
+    .icon-radio-box {
+        border: 2px var(--lew-primary-color-light) solid;
+    }
+    .icon-radio {
+        background-color: var(--lew-primary-color-dark);
+        opacity: 1;
+        transform: translateY(0%) scale(1.15);
     }
 }
 </style>

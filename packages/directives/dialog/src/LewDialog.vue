@@ -33,6 +33,10 @@ const props = defineProps({
     cancel: {
         type: Function,
     },
+    layout: {
+        type: String,
+        default: 'normal',
+    },
 });
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const OnClickOverlay = () => {
@@ -78,7 +82,10 @@ const emit = defineEmits(['update:visible']);
             "
             @click="OnClickOverlay"
         >
-            <div class="lew-dialog-box">
+            <div
+                v-if="layout == 'normal'"
+                class="lew-dialog-box lew-dialog-box-normal"
+            >
                 <div class="btn-close" @click="cancelFn">
                     <Icon size="18"> <Dismiss24Filled /></Icon>
                 </div>
@@ -105,6 +112,34 @@ const emit = defineEmits(['update:visible']);
                         >
                         <lew-button size="small" @click="okFn">确认</lew-button>
                     </footer>
+                </div>
+            </div>
+
+            <div
+                v-if="layout == 'easy'"
+                class="lew-dialog-box lew-dialog-box-easy"
+            >
+                <div class="left">
+                    <Icon size="22" :class="`icon-${type}`">
+                        <Info24Regular v-if="type == `normal`" />
+                        <Warning24Regular v-if="type == `warning`" />
+                        <CheckmarkCircle24Regular v-if="type == `success`" />
+                        <ErrorCircle24Regular v-if="type == `error`" />
+                        <Alert24Regular v-if="type == `info`" />
+                    </Icon>
+                </div>
+                <div class="right">
+                    <main>
+                        <slot name="content" />
+                    </main>
+                    <lew-Button
+                        style="margin-right: 10px"
+                        type="normal"
+                        size="small"
+                        @click="cancelFn"
+                        >取消</lew-Button
+                    >
+                    <lew-button size="small" @click="okFn">确认</lew-button>
                 </div>
             </div>
         </div>
@@ -136,13 +171,7 @@ const emit = defineEmits(['update:visible']);
         border-radius: var(--lew-border-radius);
         background-color: var(--lew-bgcolor-0);
         box-shadow: 0px 15px 50px rgba($color: #000000, $alpha: 0.05);
-        .left {
-            width: 30px;
-            margin-right: 10px;
-        }
-        .right {
-            width: 310px;
-        }
+
         .icon-success {
             color: var(--lew-success-color-dark);
         }
@@ -168,7 +197,6 @@ const emit = defineEmits(['update:visible']);
             height: auto;
             font-size: 14px;
             color: var(--lew-text-color-5);
-            padding: 10px 0px 20px 0px;
         }
         footer {
             display: flex;
@@ -200,6 +228,38 @@ const emit = defineEmits(['update:visible']);
         .btn-close:active {
             background: rgba($color: #000000, $alpha: 0.15);
             color: var(--lew-text-color-0);
+        }
+    }
+    .lew-dialog-box-normal {
+        .left {
+            margin-right: 10px;
+            width: 30px;
+        }
+        .right {
+            width: 310px;
+        }
+        main {
+            padding: 10px 0px 20px 0px;
+        }
+    }
+    .lew-dialog-box-easy {
+        .left {
+            margin-right: 10px;
+            display: flex;
+        }
+        .right {
+            width: 320px;
+        }
+        .right {
+            display: flex;
+            justify-content: space-between;
+            main {
+                width: 200px;
+                margin-right: 10px;
+            }
+            footer {
+                width: 80px;
+            }
         }
     }
 }

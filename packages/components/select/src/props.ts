@@ -1,9 +1,11 @@
 import { PropType } from 'vue';
+
 type Options = {
     label: string;
     value: string;
 };
-const _props = {
+
+export const selectProps = {
     modelValue: {
         // 父组件 v-model 没有指定参数名，则默认是 modelValue
         type: [String, Array],
@@ -19,6 +21,10 @@ const _props = {
             return value.length > 0;
         },
     },
+    placement: {
+        type: String,
+        default: 'bottom-start',
+    },
     trigger: {
         type: String,
         default: 'click',
@@ -30,6 +36,8 @@ const _props = {
         type: Boolean,
         default: false,
     },
+    size: {
+        type: String,
+        default: 'medium',
+    },
 };
-
-export default _props;

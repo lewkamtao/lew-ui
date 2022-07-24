@@ -30,8 +30,22 @@ let value = ref('');
 <template>
     <div>
         <lew-flex style="width: 250px" direction="column" gap="30px">
-            <lew-form-item direction="y" title="Click">
+            <lew-form-item direction="y" title="小的">
+                <LewSelect
+                    v-model="value"
+                    size="small"
+                    :options="options"
+                ></LewSelect
+            ></lew-form-item>
+            <lew-form-item direction="y" title="常规">
                 <LewSelect v-model="value" :options="options"></LewSelect
+            ></lew-form-item>
+            <lew-form-item direction="y" title="大的">
+                <LewSelect
+                    v-model="value"
+                    size="large"
+                    :options="options"
+                ></LewSelect
             ></lew-form-item>
             <lew-form-item direction="y" title="Hover">
                 <LewSelect

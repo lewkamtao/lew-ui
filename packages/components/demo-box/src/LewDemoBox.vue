@@ -28,7 +28,7 @@ let isShowCode = ref(false);
 
 <template>
     <div class="demo-box">
-        <lew-title size="16px"
+        <lew-title size="16px" :bold="800"
             >{{ title }}
             <lew-tag v-if="tag" type="info" style="margin: 2px 0px 0px 5px">
                 {{ tag }}</lew-tag
@@ -101,6 +101,11 @@ let isShowCode = ref(false);
 
     .demo-cp {
         padding: 30px;
+    }
+    @media (max-width: 767px) {
+        .demo-cp {
+            overflow-x: auto;
+        }
     }
 }
 </style>

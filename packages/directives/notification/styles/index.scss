@@ -1,0 +1,83 @@
+#lew-notification {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    right: 20px;
+    top: 20px;
+    z-index: 999;
+
+    .notification {
+        position: relative;
+        width: auto;
+        display: flex;
+        flex-shrink: 0;
+        justify-content: space-between;
+        box-sizing: border-box;
+        height: auto;
+        width: 300px;
+        padding: 15px 15px 15px 20px;
+        transition: all 0.45s ease;
+        opacity: 0;
+        margin-top: 0px;
+        margin-bottom: 10px;
+        transform: translateX(100%);
+        white-space: nowrap;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        font-size: 14px;
+        border-radius: 4px;
+        overflow: hidden;
+        background-color: var(--lew-notification-bgcolor);
+        backdrop-filter: blur(10px);
+
+        .main {
+            width: calc(100% - 25px);
+            .lew-notification-title {
+                font-size: 14px;
+                font-weight: bold;
+                color: var(--lew-text-color-4);
+            }
+            .lew-notification-content {
+                width: 100%;
+                margin-top: 5px;
+                font-size: 14px;
+                color: var(--lew-text-color-6);
+                white-space: pre-wrap;
+                word-wrap: break-word;
+            }
+        }
+    }
+    .notification::after {
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        width: 4px;
+        transform: translateY(-50%);
+        height: calc(100% - 10px);
+        content: '';
+        border-radius: 2px;
+    }
+    .notification-normal::after {
+        background-color: var(--lew-normal-color);
+    }
+    .notification-error::after {
+        background-color: var(--lew-error-color);
+    }
+    .notification-success::after {
+        background-color: var(--lew-success-color);
+    }
+    .notification-info::after {
+        background-color: var(--lew-info-color);
+    }
+    .notification-warning::after {
+        background-color: var(--lew-warning-color);
+    }
+    .notification-show {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    .notification-hidden {
+        opacity: 0;
+    }
+}

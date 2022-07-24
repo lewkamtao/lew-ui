@@ -12,13 +12,13 @@ defineProps({
         type: String,
         default: 'center', // start center end
     },
-    mode: {
-        type: String,
-        default: '', // around / between
-    },
     wrap: {
         type: Boolean,
         default: false, // around / between
+    },
+    mode: {
+        type: String,
+        default: '', // around / between
     },
     gap: { type: String, default: '10px' },
     width: { type: String, default: '' },

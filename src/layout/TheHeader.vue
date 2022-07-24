@@ -3,7 +3,6 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { LogoGithub, MoonOutline, SunnyOutline } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
-import { LewMessage } from 'lew-ui';
 
 const router = useRouter();
 const route = useRoute();
@@ -46,23 +45,17 @@ const gohome = () => {
                 size="small"
                 style="margin-left: 10px"
                 v-tooltip="{
-                    content: '开发中，请勿在正式环境中使用。',
+                    content: 'Beta 阶段，请勿在正式环境使用。',
                     placement: 'top-start',
                     trigger: 'mouseenter',
                 }"
-                >dev</lew-tag
+                >Beta v1.0.24</lew-tag
             >
         </div>
         <div class="menu">
             <div class="menu-item" @click="router.push(`/`)">首页</div>
             <div class="menu-item" @click="router.push(`/Install`)">指南</div>
-            <div
-                style="margin-right: 60px"
-                class="menu-item"
-                @click="router.push(`/Avatar`)"
-            >
-                组件
-            </div>
+            <div class="menu-item" @click="router.push(`/Avatar`)">组件</div>
 
             <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
                 <Icon size="24"> <LogoGithub /> </Icon
@@ -84,6 +77,8 @@ const gohome = () => {
 
 <style lang="scss" scoped>
 .Header {
+    position: relative;
+    z-index: 101;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -94,6 +89,7 @@ const gohome = () => {
     background: var(--lew-bgcolor-0);
     border-bottom: var(--lew-border-1);
     user-select: none;
+    white-space: nowrap;
     .logo {
         display: flex;
         align-items: center;
@@ -132,6 +128,28 @@ const gohome = () => {
         }
         .menu-item {
             padding: 10px;
+        }
+    }
+}
+@media (max-width: 767px) {
+    .Header {
+        padding: 0px 15px;
+        .logo {
+            span {
+                display: none;
+            }
+        }
+        .menu {
+            .menu-item {
+                margin-right: 5px;
+                padding: 5px;
+            }
+            span {
+                margin-right: 0px;
+            }
+            a {
+                margin-right: 5px;
+            }
         }
     }
 }

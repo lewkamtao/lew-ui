@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { LewMessage } from 'lew-ui';
 
 type Options = {
     label: string;
@@ -16,7 +15,9 @@ const options = ref([
     { label: '乌鲁木齐', value: '5' },
 ]);
 
-let value = ref('');
+const itemWidth = ref('120px');
+
+let value = ref('2');
 
 const change = (e: Options) => {
     console.log(e);
@@ -25,10 +26,31 @@ const change = (e: Options) => {
 </script>
 
 <template>
-    <lew-tabs
-        style="width: 400px"
-        v-model="value"
-        :options="options"
-        @update:change="change"
-    />
+    <lew-flex direction="column" x="start">
+        <lew-title size="14px">限制整体宽度</lew-title>
+        <lew-tabs v-model="value" :options="options" @change="change" />
+        <br />
+        <br />
+        <lew-title size="14px">根据内容自适应宽度</lew-title>
+        <lew-tabs v-model="value" :options="options" @change="change" />
+        <br />
+        <br />
+        <lew-title size="14px">自定义item宽度</lew-title>
+        <lew-tabs
+            v-model="value"
+            :options="options"
+            :itemWidth="itemWidth"
+            @change="change"
+        />
+        <br />
+        <br />
+        <lew-title size="14px">线</lew-title>
+        <lew-tabs
+            style="width: 100%"
+            type="line"
+            v-model="value"
+            :options="options"
+            @change="change"
+        />
+    </lew-flex>
 </template>

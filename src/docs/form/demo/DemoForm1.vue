@@ -14,9 +14,9 @@ let user = ref({
 });
 
 let sex_options = ref([
-    { name: '未知', id: 0 },
-    { name: '男', id: 1 },
-    { name: '女', id: 2 },
+    { label: '未知', value: 0 },
+    { label: '男', value: 1 },
+    { label: '女', value: 2 },
 ]);
 
 let pay_options = ref([
@@ -25,10 +25,10 @@ let pay_options = ref([
     { label: 'Apple Pay', value: '3' },
 ]);
 let hobby_options = ref([
-    { name: '唱歌', id: 1 },
-    { name: '跳舞', id: 2 },
-    { name: 'rap', id: 3 },
-    { name: '打篮球', id: 44 },
+    { label: '唱歌', value: 1 },
+    { label: '跳舞', value: 2 },
+    { label: 'rap', value: 3 },
+    { label: '打篮球', value: 44 },
 ]);
 let home_options = ref([
     {
@@ -52,6 +52,7 @@ let home_options = ref([
         value: '5',
     },
 ]);
+let d = ref('2020-12-12');
 </script>
 
 <template>
@@ -63,11 +64,26 @@ let home_options = ref([
             <LewInput v-model="user.password" />
         </lew-form-item>
         <lew-form-item direction="y" title="简介">
-            <LewTextarea v-model="user.intro" resize="none" />
+            <LewInput
+                v-model="user.intro"
+                type="textarea"
+                show-count
+                :max-length="250"
+                resize="none"
+            />
         </lew-form-item>
         <lew-form-item direction="y" title="家地址">
             <LewSelect v-model="user.home" :options="home_options" />
         </lew-form-item>
+
+        <lew-form-item direction="y" title="生日">
+            <lew-date-picker
+                v-model="d"
+                style="width: 100%"
+                auto-close
+            ></lew-date-picker>
+        </lew-form-item>
+
         <lew-form-item direction="y" title="性别">
             <lew-radiobox-group v-model="user.sex" :options="sex_options" />
         </lew-form-item>
@@ -78,13 +94,23 @@ let home_options = ref([
             <LewSwitch v-model="user.dark" />
         </lew-form-item>
         <lew-form-item direction="y" title="爱好">
-            <lew-tabs v-model="user.pay" :options="pay_options" />
+            <lew-tabs
+                width="100%"
+                item-width="100%"
+                v-model="user.pay"
+                :options="pay_options"
+            />
         </lew-form-item>
     </div>
 </template>
 <style scoped lang="scss">
 .form-box {
-    width: 500px;
+    width: 350px;
     margin: 50px auto;
+}
+@media (max-width: 767px) {
+    .form-box {
+        width: 100%;
+    }
 }
 </style>

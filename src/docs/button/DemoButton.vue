@@ -13,6 +13,28 @@ import {
 } from './demo';
 import { ref } from 'vue';
 
+const columns = [
+    {
+        title: '参数名',
+        width: '200px',
+        field: 'param',
+    },
+    {
+        title: '描述',
+        width: '320px',
+        field: 'description',
+    },
+    {
+        title: '类型',
+        width: 'auto',
+        field: 'type',
+    },
+    {
+        title: '默认值',
+        width: '200px',
+        field: 'default',
+    },
+];
 const docsTable = ref([
     {
         param: 'type',
@@ -65,34 +87,16 @@ const docsTable = ref([
         <lew-demo-box title="加载" :code="DemoButton4_code"
             ><demo-button4 />
         </lew-demo-box>
-        <lew-demo-box title="禁用" :code="DemoButton5_code"
+        <lew-demo-box title="其他" :code="DemoButton5_code"
             ><demo-button5 />
         </lew-demo-box>
         <lew-title size="16px">Props</lew-title>
-        <vxe-table :data="docsTable">
-            <vxe-column
-                show-overflow
-                field="param"
-                width="220px"
-                title="参数名"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                field="description"
-                title="描述"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                width="300"
-                field="type"
-                title="类型"
-            ></vxe-column>
-            <vxe-column
-                show-overflow
-                field="default"
-                title="默认值"
-            ></vxe-column>
-        </vxe-table>
+        <lew-table :data="docsTable" :columns="columns" height="auto">
+            <template #param="{ row }"> {{ row.param }} </template>
+            <template #description="{ row }"> {{ row.description }} </template>
+            <template #type="{ row }"> {{ row.type }} </template>
+            <template #default="{ row }"> {{ row.default }} </template>
+        </lew-table>
     </div>
 </template>
 

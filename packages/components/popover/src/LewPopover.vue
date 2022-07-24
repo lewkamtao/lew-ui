@@ -1,10 +1,7 @@
-<!-- filename: Popover.vue -->
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css'; // optional for styling
-import 'tippy.js/animations/shift-away-subtle.css';
-import 'tippy.js/themes/light.css';
+
 let triggerRef = ref(null);
 let bodyRef = ref(null);
 let instance: any;
@@ -17,6 +14,10 @@ const props = defineProps({
     placement: {
         type: String,
         default: 'top',
+    },
+    arrow: {
+        type: Boolean,
+        default: true,
     },
 });
 
@@ -36,6 +37,7 @@ onMounted(() => {
         animation: 'shift-away-subtle',
         interactive: true,
         placement: placement,
+        arrow: props.arrow,
         appendTo: () => document.body,
         allowHTML: true,
         maxWidth: 'none',
@@ -46,37 +48,48 @@ onMounted(() => {
             } else {
                 instance.popper.children[0].setAttribute('data-theme', 'light');
             }
+            emit('onShow');
+        },
+        onHide() {
+            emit('onHide');
         },
     });
     instance.popper.children[0].setAttribute('data-lew', 'popover');
 });
 
-let show = () => {
-    instance.hide();
+const emit = defineEmits(['onShow', 'onHide']);
+
+const show = () => {
+    instance.show();
 };
 
-let hide = () => {
+const hide = () => {
     instance.hide();
 };
 
 defineExpose({ show, hide });
-
-onUnmounted(() => {
-    instance = null;
-});
 </script>
 
 <template>
     <div class="lew-popover">
-        <div ref="triggerRef"><slot name="trigger" /></div>
+        <div ref="triggerRef">
+            <div class="trigger"><slot name="trigger" /></div>
+        </div>
         <div ref="bodyRef" class="lew-popover-body">
-            <slot name="popover-body" />
+            <slot name="popover-body" :show="show" :hide="hide" />
         </div>
     </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .lew-popover {
     display: inline-block;
+
+    .trigger {
+        font-size: 0px;
+        > div {
+            font-size: 14px;
+        }
+    }
 }
 </style>

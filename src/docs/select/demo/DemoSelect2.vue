@@ -65,9 +65,27 @@ const get = () => {
 <template>
     <div>
         <lew-flex style="width: 250px" direction="column" gap="30px">
-            <lew-form-item direction="y" title="帝王">
+            <lew-form-item direction="y" title="小的">
                 <LewSelect
                     v-model="v"
+                    size="small"
+                    :options="options"
+                    multiple
+                    @change="get"
+                ></LewSelect
+            ></lew-form-item>
+            <lew-form-item direction="y" title="常规">
+                <LewSelect
+                    v-model="v"
+                    :options="options"
+                    multiple
+                    @change="get"
+                ></LewSelect
+            ></lew-form-item>
+            <lew-form-item direction="y" title="大的">
+                <LewSelect
+                    v-model="v"
+                    size="large"
                     :options="options"
                     multiple
                     @change="get"

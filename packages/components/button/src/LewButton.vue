@@ -16,15 +16,22 @@ defineProps({
         type: Boolean,
         default: false,
     },
+    isText: {
+        type: Boolean,
+        default: false,
+    },
 });
 </script>
 
 <template>
     <button
         class="lew-button"
-        :class="`lew-button-${type} lew-button-${size} ${
+        :class="`
+        ${isText ? 'lew-button-text' : ''}
+        lew-button-${type} lew-button-${size} ${
             round ? 'lew-button-round' : ''
-        }   ${loading ? 'lew-button-loading' : ''}`"
+        }   
+        ${loading ? 'lew-button-loading' : ''}`"
     >
         <slot></slot>
     </button>
@@ -33,19 +40,21 @@ defineProps({
 <style lang="scss" scoped>
 .lew-button {
     display: inline-flex;
-    align-items: center;
     justify-content: center;
-    position: relative;
+    align-items: center;
     text-align: center;
+    position: relative;
     flex-shrink: 0;
     user-select: none;
     width: auto;
     white-space: nowrap;
     box-sizing: border-box;
-    transition: all 0.15s;
+    transition: all 0.1s;
     border: none;
     cursor: pointer;
     border-radius: var(--lew-form-border-radius);
+    box-sizing: border-box;
+
     svg {
         font-size: 15px;
         width: 20px;
@@ -53,10 +62,12 @@ defineProps({
     }
 }
 
+.lew-button:active {
+    transform: scale(0.96);
+}
 .lew-button-small {
     min-width: 50px;
     height: 24px;
-    line-height: 24px;
     padding: 0px 8px;
     font-size: 12px;
 }
@@ -64,7 +75,6 @@ defineProps({
 .lew-button-medium {
     min-width: 60px;
     height: 30px;
-    line-height: 30px;
     padding: 0px 14px;
     font-size: 14px;
 }
@@ -72,11 +82,9 @@ defineProps({
 .lew-button-large {
     min-width: 70px;
     height: 36px;
-    line-height: 36px;
     padding: 0px 20px;
     font-size: 16px;
 }
-
 .lew-button::after {
     position: absolute;
     top: 50%;
@@ -95,9 +103,7 @@ defineProps({
 .lew-button-round {
     border-radius: 50px;
 }
-.lew-button-round::before {
-    border-radius: 50px;
-}
+
 .lew-button-blank {
     background: none;
     color: var(--lew-text-color-5);
@@ -110,7 +116,7 @@ defineProps({
 }
 .lew-button-primary {
     background: var(--lew-primary-color);
-    color: var(--lew-white-color);
+    color: var(--lew-white-text-color);
 }
 
 .lew-button-primary:hover {
@@ -127,7 +133,7 @@ defineProps({
 
 .lew-button-info {
     background: var(--lew-info-color);
-    color: var(--lew-white-color);
+    color: var(--lew-white-text-color);
 }
 
 .lew-button-info:active {
@@ -136,7 +142,7 @@ defineProps({
 
 .lew-button-success {
     background: var(--lew-success-color);
-    color: var(--lew-white-color);
+    color: var(--lew-white-text-color);
 }
 
 .lew-button-success:hover {
@@ -149,7 +155,7 @@ defineProps({
 
 .lew-button-error {
     background: var(--lew-error-color);
-    color: var(--lew-white-color);
+    color: var(--lew-white-text-color);
 }
 
 .lew-button-error:hover {
@@ -162,7 +168,7 @@ defineProps({
 
 .lew-button-normal {
     background: var(--lew-normal-color);
-    color: var(--lew-black-color);
+    color: var(--lew-text-color-3);
 }
 
 .lew-button-normal:hover {
@@ -175,7 +181,7 @@ defineProps({
 
 .lew-button-warning {
     background: var(--lew-warning-color);
-    color: var(--lew-white-color);
+    color: var(--lew-white-text-color);
 }
 
 .lew-button-warning:hover {
@@ -226,6 +232,36 @@ defineProps({
 
 .lew-button[disabled]::after {
     opacity: 0;
+}
+
+.lew-button-text {
+    background: none;
+    min-width: auto;
+    padding: 0px 5px;
+}
+.lew-button-text.lew-button-info {
+    color: var(--lew-info-color-dark);
+}
+.lew-button-text.lew-button-primary {
+    color: var(--lew-primary-color-dark);
+}
+.lew-button-text.lew-button-error {
+    color: var(--lew-error-color-dark);
+}
+.lew-button-text.lew-button-warning {
+    color: var(--lew-warning-color-dark);
+}
+.lew-button-text.lew-button-success {
+    color: var(--lew-success-color-dark);
+}
+.lew-button-text.lew-button-normal {
+    color: var(--lew-text-color-5);
+}
+.lew-button-text:hover {
+    background: none;
+}
+.lew-button-text:active {
+    background: none;
 }
 </style>
 <style>

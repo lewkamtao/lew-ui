@@ -17,7 +17,7 @@ type Alert = {
 };
 
 defineProps({
-    alertList: {
+    list: {
         type: Array as PropType<Alert[]>,
         default() {
             return [];
@@ -31,7 +31,7 @@ const emit = defineEmits(['close']);
 <template>
     <div class="lew-alert-group">
         <div
-            v-for="(item, i) in alertList"
+            v-for="(item, i) in list"
             :key="i"
             class="lew-alert"
             :class="`lew-alert-${item.type}`"
@@ -100,37 +100,43 @@ const emit = defineEmits(['close']);
             background: rgba($color: #000000, $alpha: 0.15);
         }
         .message {
-            width: calc(100% - 100px);
+            width: calc(100% - 40px);
             .title {
                 margin-top: 1px;
                 font-size: 14px;
                 width: 100%;
+                word-wrap: break-word;
+                white-space: pre-line;
+                font-weight: 400;
             }
             .content {
                 margin-top: 7px;
                 font-size: 14px;
                 width: 100%;
+                font-weight: 300;
+                word-wrap: break-word;
+                white-space: pre-line;
             }
         }
     }
     .lew-alert-normal {
-        color: var(--lew-normal-text-color);
+        color: var(--lew-text-color-5);
         background-color: var(--lew-normal-color-light);
     }
     .lew-alert-success {
-        color: var(--lew-success-text-color);
+        color: var(--lew-success-color-dark);
         background-color: var(--lew-success-color-light);
     }
     .lew-alert-warning {
-        color: var(--lew-warning-text-color);
+        color: var(--lew-warning-color-dark);
         background-color: var(--lew-warning-color-light);
     }
     .lew-alert-error {
-        color: var(--lew-error-text-color);
+        color: var(--lew-error-color-dark);
         background-color: var(--lew-error-color-light);
     }
     .lew-alert-info {
-        color: var(--lew-info-text-color);
+        color: var(--lew-info-color-dark);
         background-color: var(--lew-info-color-light);
     }
 }
