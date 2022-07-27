@@ -88,9 +88,7 @@ group.value = [
         </div>
         <div ref="mainRef" class="app-main btf-scrollbar">
             <router-view v-slot="{ Component }">
-                <transition name="fade-transform" mode="out-in">
-                    <component :is="Component" />
-                </transition>
+                <component :is="Component" />
             </router-view>
         </div>
     </div>

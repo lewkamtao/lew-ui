@@ -113,12 +113,14 @@ const gohome = () => {
             margin-right: 10px;
             transition: all 0.5s;
             color: var(--lew-text-color-1);
+            cursor: pointer;
             svg {
                 cursor: pointer;
             }
         }
-        .menu-item {
-            cursor: pointer;
+
+        .menu-item:nth-child(3) {
+            margin-right: 50px;
         }
 
         a:hover,
@@ -143,6 +145,9 @@ const gohome = () => {
             .menu-item {
                 margin-right: 5px;
                 padding: 5px;
+            }
+            .menu-item:nth-child(3) {
+                margin-right: 0px;
             }
             span {
                 margin-right: 0px;
