@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { paginationProps } from './porps';
+import { paginationProps } from './props';
 import { ref, computed, watch } from 'vue';
 import {
     ChevronForwardOutline,
@@ -60,7 +60,7 @@ const emit = defineEmits([
 const changePage = (type, num) => {
     if (type == 'next') {
         pageNum.value += num;
-    } else if (type == 'prve') {
+    } else if (type == 'prev') {
         pageNum.value -= num;
     } else {
         pageNum.value = num;
@@ -102,7 +102,7 @@ const checkPageNum = (e) => {
                 <icon
                     size="14"
                     class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('prve', 1)"
+                    @click="changePage('prev', 1)"
                 >
                     <ChevronBackOutline />
                 </icon>
@@ -117,7 +117,7 @@ const checkPageNum = (e) => {
                     v-show="pageNum - 1 > pageShowSize"
                     size="14"
                     class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('prve', pageShowSize * 2)"
+                    @click="changePage('prev', pageShowSize * 2)"
                 >
                     <EllipsisHorizontal />
                 </icon>
