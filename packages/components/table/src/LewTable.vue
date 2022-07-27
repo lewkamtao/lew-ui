@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { tableProps } from './porps';
+import { tableProps } from './props';
 import { ref, onMounted, nextTick } from 'vue';
 const props = defineProps(tableProps);
 
