@@ -342,7 +342,11 @@ const message = (type: string) => {
                         >
                     </lew-flex>
                     <lew-flex x="start" gap="20px">
-                        <lew-popover trigger="click" placement="bottom-start">
+                        <lew-popover
+                            ref="lewPopoverRef"
+                            trigger="click"
+                            placement="bottom-start"
+                        >
                             <template #trigger>
                                 <lew-button>Popover</lew-button>
                             </template>
