@@ -27,9 +27,9 @@ const init = () => {
 };
 
 const emit = defineEmits(['change', 'update:modelValue']);
-let curIndex = props.options.findIndex(e => v.value == e.value);
+let curIndex = props.options.findIndex((e) => v.value == e.value);
 const setStyle = (value) => {
-    let index = props.options.findIndex(e => value == e.value);
+    let index = props.options.findIndex((e) => value == e.value);
     if (curIndex != index) {
         let _item = props.options[index];
 
@@ -110,6 +110,7 @@ onUnmounted(() => {
     background: var(--lew-form-bgcolor);
     border-radius: var(--lew-form-border-radius);
     overflow: hidden;
+    user-select: none;
     .lew-tabs-item {
         position: relative;
         display: inline-flex;

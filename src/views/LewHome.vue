@@ -338,7 +338,7 @@ const message = (type: string) => {
                             >Dialog</lew-button
                         >
                         <lew-button type="warning" @click="open('success')"
-                            >cancel</lew-button
+                            >Cancel</lew-button
                         >
                     </lew-flex>
                     <lew-flex x="start" gap="20px">

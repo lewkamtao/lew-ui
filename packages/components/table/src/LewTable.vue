@@ -307,8 +307,8 @@ onMounted(() => {
 
 .lew-table::-webkit-scrollbar {
     background-color: var(--lew-bgcolor-3);
-    width: 0px;
-    height: 0px;
+    width: 6px;
+    height: 6px;
 }
 
 .lew-table::-webkit-scrollbar-thumb:hover {
