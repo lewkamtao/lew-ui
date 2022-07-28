@@ -131,7 +131,7 @@ const emit = defineEmits(['update:visible']);
                 <div class="right">
                     <main>
                         <slot name="content" />
-                    </main>
+                    </main> 
                     <lew-Button
                         style="margin-right: 10px"
                         type="normal"
