@@ -255,7 +255,7 @@ const message = (type: string) => {
                         <lew-tag type="primary">primary</lew-tag>
                         <lew-tag type="success">success</lew-tag>
                         <lew-tag type="error">error</lew-tag>
-                        <lew-tag type="warning">waning</lew-tag>
+                        <lew-tag type="warning">warning</lew-tag>
                         <lew-tag type="normal">normal</lew-tag>
                     </lew-flex>
 
@@ -338,7 +338,7 @@ const message = (type: string) => {
                             >Dialog</lew-button
                         >
                         <lew-button type="warning" @click="open('success')"
-                            >Cancal</lew-button
+                            >cancel</lew-button
                         >
                     </lew-flex>
                     <lew-flex x="start" gap="20px">
