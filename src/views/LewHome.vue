@@ -74,7 +74,7 @@ let user = ref({
     username: '',
     password: '',
     age: '',
-    sex: 0,
+    sex: '1',
     hobby: [],
     school: '',
     home: '',
@@ -83,9 +83,9 @@ let user = ref({
 });
 
 let sex_options = ref([
-    { label: '未知', value: 0 },
-    { label: '男', value: 1 },
-    { label: '女', value: 2 },
+    { label: '未知', value: '0' },
+    { label: '男', value: '1' },
+    { label: '女', value: '2' },
 ]);
 
 let hobby_options = ref([
