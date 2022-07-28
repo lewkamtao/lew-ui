@@ -14,4 +14,4 @@ declare module '@vicons/fluent';
 declare module '@fancyapps/ui';
 declare const LewMessage;
 declare const LewDialog;
-declare const LewNotification;
+declare const LewNotification: typeof import('../packages/directives')['LewNotification'];

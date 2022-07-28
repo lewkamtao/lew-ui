@@ -32,7 +32,7 @@ const success = (options: Options) => {
 
 const dialog = (type: string, options: Options) => {
     const { title, content, ok, cancel, layout } = options;
-    const div: any = document.createElement('div');
+    const div: HTMLDivElement = document.createElement('div');
     document.body.appendChild(div);
     const close = () => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
