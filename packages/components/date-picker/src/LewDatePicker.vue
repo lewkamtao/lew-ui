@@ -44,7 +44,7 @@ defineExpose({ show, hide });
         <template #trigger>
             <div
                 class="lew-date-picker-input"
-                :class="{ 'lew-date-picker-foucs': isShowPicker }"
+                :class="{ 'lew-date-picker-focus': isShowPicker }"
             >
                 <div v-show="!dateValue" class="lew-date-picker-placeholder">
                     请选择日期
@@ -113,7 +113,7 @@ defineExpose({ show, hide });
 .lew-date-picker-input:active {
     background-color: var(--lew-form-bgcolor-active);
 }
-.lew-date-picker-input.lew-date-picker-foucs {
+.lew-date-picker-input.lew-date-picker-focus {
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;

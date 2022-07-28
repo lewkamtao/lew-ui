@@ -27,9 +27,9 @@ const init = () => {
 };
 
 const emit = defineEmits(['change', 'update:modelValue']);
-let curIndex = props.options.findIndex((e: any) => v.value == e.value);
+let curIndex = props.options.findIndex(e => v.value == e.value);
 const setStyle = (value) => {
-    let index = props.options.findIndex((e: any) => value == e.value);
+    let index = props.options.findIndex(e => value == e.value);
     if (curIndex != index) {
         let _item = props.options[index];
 
@@ -52,7 +52,7 @@ const setStyle = (value) => {
     }
 };
 
-let timer: any;
+let timer: ReturnType<typeof setTimeout> | undefined;
 const debounce = () => {
     clearTimeout(timer);
     timer = setTimeout(() => {

@@ -130,7 +130,7 @@ defineExpose({ show, hide });
     <lew-popover
         ref="lewPopverRef1"
         class="lew-select-view"
-        :class="{ 'lew-select-foucs': isShowOptions }"
+        :class="{ 'lew-select-focus': isShowOptions }"
         :trigger="trigger"
         :placement="placement"
         :arrow="false"
@@ -234,11 +234,11 @@ defineExpose({ show, hide });
                     >
                         <lew-checkbox
                             v-if="multiple"
-                            class="lew-selcet-checkbox"
+                            class="lew-select-checkbox"
                             label=""
                             :checked="multipleV.includes(item.value)"
                         />
-                        <div class="lew-selcet-label">{{ item.label }}</div>
+                        <div class="lew-select-label">{{ item.label }}</div>
                     </div>
                 </div>
             </div>
@@ -340,7 +340,7 @@ defineExpose({ show, hide });
 .lew-select-view:active {
     background-color: var(--lew-form-bgcolor-active);
 }
-.lew-select-view.lew-select-foucs {
+.lew-select-view.lew-select-focus {
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
@@ -385,7 +385,7 @@ defineExpose({ show, hide });
             border-radius: var(--lew-form-border-radius);
             padding-left: 10px;
         }
-        .lew-selcet-label {
+        .lew-select-label {
             user-select: none;
         }
         .item:hover {
@@ -399,7 +399,7 @@ defineExpose({ show, hide });
         .lew-select-checked:hover {
             color: var(--lew-primary-color-dark);
         }
-        .lew-selcet-checkbox {
+        .lew-select-checkbox {
             position: absolute;
             z-index: 0;
             top: 50%;
@@ -432,7 +432,7 @@ defineExpose({ show, hide });
             height: 36px;
             line-height: 36px;
         }
-        .lew-selcet-label {
+        .lew-select-label {
             position: absolute;
             left: 0px;
             top: 50%;

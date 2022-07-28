@@ -1,10 +1,11 @@
 import { shallowRef } from 'vue';
+import type { App as Application, DirectiveBinding } from 'vue';
 
 let _toBackUp;
 export default {
-    install(app: any) {
+    install(app: Application) {
         app.directive('backtop', {
-            mounted(el: any, binding: any) {
+            mounted(el: HTMLElement, binding: DirectiveBinding) {
                 const _target = binding.value;
                 const dom = shallowRef<HTMLElement>();
                 dom.value = document.documentElement;
@@ -22,9 +23,9 @@ export default {
                     console.log(1);
                     if (!dom.value) return;
                     const timer = setInterval(() => {
-                        const scrollDom: any = dom.value;
+                        const scrollDom = dom.value as HTMLElement;
                         const ispeed = Math.floor(-scrollDom.scrollTop / 5);
-                        scrollDom.scrollTop = scrollDom.scrollTop + ispeed;
+                        scrollDom.scrollTop = scrollDom!.scrollTop + ispeed;
                         if (scrollDom.scrollTop === 0) {
                             clearInterval(timer);
                         }

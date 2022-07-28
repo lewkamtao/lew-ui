@@ -60,14 +60,12 @@ const props = defineProps({
             return [];
         },
         required: true,
-        validator: (value: Array<number>) => {
-            const hasNameKey = value.every((option) =>
-                Object.keys(option).includes('label'),
+        validator: (value: Array<Options>) => {
+            return value.every(
+                (option) =>
+                    Object.prototype.hasOwnProperty.call(option, 'label') &&
+                    Object.prototype.hasOwnProperty.call(option, 'value'),
             );
-            const hasIdKey = value.every((option) =>
-                Object.keys(option).includes('value'),
-            );
-            return hasNameKey && hasIdKey;
         },
     },
 });

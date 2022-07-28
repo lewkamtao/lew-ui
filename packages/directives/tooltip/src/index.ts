@@ -1,10 +1,11 @@
 import tippy from 'tippy.js';
-let instance: any;
+import type { App as Application, DirectiveBinding } from 'vue';
+let instance;
 
 export default {
-    install(app: any) {
+    install(app: Application) {
         app.directive('tooltip', {
-            mounted(el: any, binding: any) {
+            mounted(el: HTMLElement, binding: DirectiveBinding) {
                 let trigger = binding.value.trigger;
                 if (trigger == 'hover') {
                     trigger = 'mouseenter';
@@ -36,7 +37,7 @@ export default {
                 });
                 instance.popper.children[0].setAttribute('data-lew', 'tooltip');
             },
-            updated(el: any, binding: any) {
+            updated(el: HTMLElement, binding: DirectiveBinding) {
                 instance.setContent(binding.value.content);
             },
             unmounted() {
