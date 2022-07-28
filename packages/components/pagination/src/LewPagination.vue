@@ -60,7 +60,7 @@ const emit = defineEmits([
 const changePage = (type, num) => {
     if (type == 'next') {
         pageNum.value += num;
-    } else if (type == 'prev') {
+    } else if (type == 'prve') {
         pageNum.value -= num;
     } else {
         pageNum.value = num;
@@ -82,10 +82,23 @@ const changePage = (type, num) => {
 };
 
 let pageNumbackup = ref(1);
+let pageSizebackup = ref(20);
 
 const checkPageNum = (e) => {
     e = String(e);
     pageNumbackup.value = Number(e.replace(/[^\d]/g, ''));
+    changePage(false, pageNumbackup.value);
+};
+const checkPageSize = (e) => {
+    e = String(e);
+    pageSizebackup.value = Number(e.replace(/[^\d]/g, ''));
+    if (pageSizebackup.value < 1) {
+        pageSizebackup.value = 1;
+    }
+    if (pageSizebackup.value > total.value) {
+        pageSizebackup.value = total.value;
+    }
+    pageSize.value = pageSizebackup.value;
     changePage(false, pageNumbackup.value);
 };
 </script>
@@ -102,7 +115,7 @@ const checkPageNum = (e) => {
                 <icon
                     size="14"
                     class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('prev', 1)"
+                    @click="changePage('prve', 1)"
                 >
                     <ChevronBackOutline />
                 </icon>
@@ -117,7 +130,7 @@ const checkPageNum = (e) => {
                     v-show="pageNum - 1 > pageShowSize"
                     size="14"
                     class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('prev', pageShowSize * 2)"
+                    @click="changePage('prve', pageShowSize * 2)"
                 >
                     <EllipsisHorizontal />
                 </icon>
@@ -155,15 +168,15 @@ const checkPageNum = (e) => {
                 </icon>
             </lew-flex>
             <lew-input-pro
-                v-model="pageSize"
+                v-model="pageSizebackup"
                 size="small"
                 align="center"
                 placeholder=""
                 :arrow="false"
                 :options="pageSizeOptions"
                 auto-width
-                @blur="changePage(false, pageNumbackup)"
-                @change="changePage(false, pageNumbackup)"
+                @blur="checkPageSize"
+                @change="checkPageSize"
             >
                 <template #right>
                     <div class="page-label">/ 页</div>
@@ -216,7 +229,7 @@ const checkPageNum = (e) => {
             justify-content: center;
             height: 26px;
             min-width: 26px;
-            padding: 0px 4px;
+            padding: 0px 8px;
             box-sizing: border-box;
             border-radius: var(--lew-form-border-radius);
             text-align: center;

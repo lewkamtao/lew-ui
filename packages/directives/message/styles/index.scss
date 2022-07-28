@@ -17,17 +17,15 @@
         box-sizing: border-box;
         height: 35px;
         line-height: 35px;
-        padding: 15px 25px;
+        padding: 15px;
         transition: all ease 0.25s;
         opacity: 0;
         margin-top: 0px;
         margin-bottom: 10px;
         transform: translateY(-5px);
-
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         font-size: 14px;
         border-radius: 4px;
-
         background-color: var(--lew-message-bgcolor);
         backdrop-filter: blur(10px);
         .content {

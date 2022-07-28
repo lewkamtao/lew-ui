@@ -26,7 +26,7 @@ let _month = ref(parseInt(dateArr[1]) || today.getMonth() + 1);
 
 let dateData = ref(getMonthDate());
 
-const prevMonth = () => {
+const prveMonth = () => {
     if (_month.value > 1) {
         _month.value -= 1;
     } else {
@@ -80,7 +80,7 @@ const checkDateSelect = computed(() => (item) => {
         <lew-flex x="start" mode="between" class="lew-date-control">
             <div class="cur-date">{{ _year }} / {{ formatZero(_month) }}</div>
             <div class="lew-date-control-right">
-                <lew-button type="normal" size="small" @click="prevMonth">
+                <lew-button type="normal" size="small" @click="prveMonth">
                     <ChevronBack />
                 </lew-button>
                 <lew-button type="normal" size="small" @click="nextMonth">
