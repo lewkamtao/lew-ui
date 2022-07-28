@@ -3,8 +3,8 @@ import { tableProps } from './props';
 import { ref, onMounted, nextTick } from 'vue';
 const props = defineProps(tableProps);
 
-let lewTableRef: any = ref(null); // 表格的 ref
-let lewTableBodyRef: any = ref(null); // 表格的 body ref
+let lewTableRef = ref<HTMLElement | null>(null); // 表格的 ref
+let lewTableBodyRef = ref<HTMLElement | null>(null); // 表格的 body ref
 
 // 设置左右线
 let leftIndex = ref<number>(-1);
@@ -17,7 +17,7 @@ const setSubLine = () => {
         } else if (e.sticky == 'right' && rightIndex.value == -1) {
             rightIndex.value = i;
             if (
-                lewTableRef.value.scrollWidth != lewTableRef.value.offsetWidth
+                lewTableRef.value!.scrollWidth != lewTableRef.value!.offsetWidth
             ) {
                 isShowRightLine.value = true;
             }
@@ -27,13 +27,12 @@ const setSubLine = () => {
 
 // 设置高度
 const setBodyHeight = () => {
-    let children = lewTableBodyRef.value.children;
-    children = Array.from(children);
+    let children = Array.from(lewTableBodyRef.value!.children) as HTMLElement[];
     let h = 0.0;
     children.map((e) => {
         h += e.offsetHeight - 0.3;
     });
-    lewTableBodyRef.value.style.height = h + 'px';
+    lewTableBodyRef.value!.style.height = h + 'px';
 };
 
 // 设置展示线 过渡
@@ -61,8 +60,8 @@ const setSticky = (column) => {
 // 设置单元格宽度
 let niceWidth = ref<string>('');
 const setWidth = () => {
-    let sw = lewTableRef.value?.scrollWidth;
-    let w = lewTableRef.value?.offsetWidth;
+    let sw = lewTableRef.value!.scrollWidth;
+    let w = lewTableRef.value!.offsetWidth;
 
     if (w >= sw) {
         let autoLen = props.columns.filter((e) => e.width == 'auto').length;
