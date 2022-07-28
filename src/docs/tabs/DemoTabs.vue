@@ -82,7 +82,7 @@ const docsTable = reactive([
             {
                 param: 'activeIndex',
                 description: '选中的索引',
-                type: `nubmer`,
+                type: `number`,
                 default: "''",
             },
         ],
