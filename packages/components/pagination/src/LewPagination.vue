@@ -229,7 +229,7 @@ const checkPageSize = (e) => {
             justify-content: center;
             height: 26px;
             min-width: 26px;
-            padding: 0px 8px;
+            padding: 0px 4px;
             box-sizing: border-box;
             border-radius: var(--lew-form-border-radius);
             text-align: center;
