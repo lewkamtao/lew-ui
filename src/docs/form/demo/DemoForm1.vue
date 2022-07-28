@@ -26,7 +26,7 @@ let pay_options = ref([
 ]);
 let hobby_options = ref([
     { label: '唱歌', value: 1 },
-    { label: '跳舞', value: 2 },
+    { label: '跳', value: 2 },
     { label: 'rap', value: 3 },
     { label: '打篮球', value: 44 },
 ]);
