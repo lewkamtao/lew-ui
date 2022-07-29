@@ -1,26 +1,14 @@
 <script setup lang="ts">
-defineProps({
-    type: {
-        type: String,
-        default: 'primary',
-    },
-    size: {
-        type: String,
-        default: 'medium',
-    },
-    loading: {
-        type: Boolean,
-        default: false,
-    },
-    round: {
-        type: Boolean,
-        default: false,
-    },
-    isText: {
-        type: Boolean,
-        default: false,
-    },
-});
+import LewLoading from '../../loading/src/LewLoading';
+import { buttonProps } from './props';
+
+const emit = defineEmits(['click']);
+const props = defineProps(buttonProps);
+
+const handleClick = (e) => {
+    if (props.disabled) return;
+    emit('click', e);
+};
 </script>
 
 <template>
@@ -28,12 +16,15 @@ defineProps({
         class="lew-button"
         :class="`
         ${isText ? 'lew-button-text' : ''}
-        lew-button-${type} lew-button-${size} ${
-            round ? 'lew-button-round' : ''
-        }   
-        ${loading ? 'lew-button-loading' : ''}`"
+        lew-button-${type} lew-button-${size}
+        ${round ? 'lew-button-round' : ''}
+        ${loading ? 'lew-button-loading' : ''}
+        `"
+        :disabled="disabled"
+        @click="handleClick"
     >
         <slot></slot>
+        <LewLoading v-show="loading && !disabled" :size="size"></LewLoading>
     </button>
 </template>
 
@@ -85,21 +76,7 @@ defineProps({
     padding: 0px 20px;
     font-size: 16px;
 }
-.lew-button::after {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    content: '';
-    border: 2.5px solid rgba(0, 0, 0, 0.25);
-    border-left-color: rgba(255, 255, 255, 0.85);
-    border-radius: 50%;
-    width: 11px;
-    height: 11px;
-    opacity: 0;
-    animation: donut-spin 0.8s linear infinite;
-    transition: all 0.15s;
-    transform: translate(-50%, -50%);
-}
+
 .lew-button-round {
     border-radius: 50px;
 }
@@ -192,26 +169,12 @@ defineProps({
     background-color: var(--lew-warning-color-active);
 }
 
-@keyframes donut-spin {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
-}
-
 .lew-button-loading {
     font-size: 0px;
 }
 
 .lew-button-loading:hover {
     font-size: 0px;
-}
-
-.lew-button-loading::after {
-    opacity: 1;
 }
 
 .lew-button[disabled] {
@@ -228,10 +191,6 @@ defineProps({
     background: var(--lew-normal-color);
 
     font-size: 14px;
-}
-
-.lew-button[disabled]::after {
-    opacity: 0;
 }
 
 .lew-button-text {
