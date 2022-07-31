@@ -62,13 +62,13 @@ group.value = [
                 label: '',
                 type: '',
             },
-            {
-                cname: 'Chat',
-                name: '交流群',
-                path: '/chat',
-                label: '',
-                type: '',
-            },
+            // {
+            //     cname: 'Chat',
+            //     name: '交流群',
+            //     path: '/chat',
+            //     label: '',
+            //     type: '',
+            // },
         ],
     },
     {
