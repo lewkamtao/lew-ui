@@ -32,22 +32,6 @@ import { LewButton } from 'lew-ui';
 </template>
 ```
 
-## TodoList
-
-计划新增：
-+ Table 简易表格
-+ Tag 新增标签功能收到
-+ InputNumber 数字输入框
-+ BackTop 回到顶部
-+ Notification 通知
-+ Rate 评分
-+ DatePicker 日期选择器
-
-计划迭代：
-+ Select
-  + 多选功能
-  + 多级选择
-
 ## Thanks
 
 - https://github.com/TuSimple/naive-ui
