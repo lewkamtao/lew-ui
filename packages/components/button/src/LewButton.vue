@@ -20,6 +20,10 @@ defineProps({
         type: Boolean,
         default: false,
     },
+    isIcon: {
+        type: Boolean,
+        default: false,
+    },
 });
 </script>
 
@@ -28,12 +32,11 @@ defineProps({
         class="lew-button"
         :class="`
         ${isText ? 'lew-button-text' : ''}
-        lew-button-${type} lew-button-${size} ${
-            round ? 'lew-button-round' : ''
-        }   
+        lew-button-${type} lew-button-${size} ${round ? 'lew-button-round' : ''}
+        ${isIcon ? 'lew-button-icon' : ''}   
         ${loading ? 'lew-button-loading' : ''}`"
     >
-        <slot></slot>
+        <slot> </slot>
     </button>
 </template>
 
@@ -263,6 +266,144 @@ defineProps({
 .lew-button-text:active {
     background: none;
 }
+
+.lew-button-icon {
+    background: none;
+    padding: 6px;
+}
+
+.lew-button-icon[disabled] {
+    &,
+    &:hover,
+    &:active {
+        background: none;
+    }
+}
+
+.lew-button-icon.lew-button-medium {
+    min-width: 32px;
+    min-height: 32px;
+    font-size: 20px;
+}
+.lew-button-icon.lew-button-large {
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 24px;
+}
+.lew-button-icon.lew-button-small {
+    min-width: 28px;
+    min-height: 28px;
+    font-size: 16px;
+}
+
+.lew-button-icon.lew-button-info {
+    background: none;
+    color: var(--lew-info-color);
+    &:hover {
+        color: var(--lew-info-color-hover);
+        background-color: var(--lew-info-color-light);
+    }
+    &:active {
+        color: var(--lew-info-color-active);
+        background-color: var(--lew-info-color-light2);
+    }
+    &,
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:active {
+        background: none;
+        color: var(--lew-info-color);
+    }
+}
+
+.lew-button-icon.lew-button-warning {
+    &:hover {
+        color: var(--lew-warning-color-hover);
+        background-color: var(--lew-warning-color-light);
+    }
+    &:active {
+        color: var(--lew-warning-color-active);
+        background-color: var(--lew-warning-color-light2);
+    }
+
+    &,
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:active {
+        background: none;
+        color: var(--lew-warning-color);
+    }
+}
+.lew-button-icon.lew-button-primary {
+    &:hover {
+        color: var(--lew-primary-color-hover);
+        background-color: var(--lew-primary-color-light);
+    }
+    &:active {
+        color: var(--lew-primary-color-active);
+        background-color: var(--lew-primary-color-light2);
+    }
+
+    &,
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:active {
+        background: none;
+        color: var(--lew-text-color-3);
+    }
+}
+.lew-button-icon.lew-button-error {
+    &:hover {
+        color: var(--lew-error-color-hover);
+        background-color: var(--lew-error-color-light);
+    }
+    &:active {
+        color: var(--lew-error-color-active);
+        background-color: var(--lew-error-color-light2);
+    }
+    &,
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:active {
+        background: none;
+        color: var(--lew-error-color);
+    }
+}
+.lew-button-icon.lew-button-normal {
+    &:hover {
+        color: var(--lew-normal-color-hover);
+        background-color: var(--lew-normal-color-light);
+    }
+    &:active {
+        color: var(--lew-normal-color-active);
+        background-color: var(--lew-normal-color-light2);
+    }
+
+    &,
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:active {
+        background: none;
+        color: var(--lew-normal-color);
+    }
+}
+.lew-button-icon.lew-button-success {
+    &:hover {
+        color: var(--lew-success-color-hover);
+        background-color: var(--lew-success-color-light);
+    }
+    &:active {
+        color: var(--lew-success-color-active);
+        background-color: var(--lew-success-color-light2);
+    }
+    &,
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:active {
+        background: none;
+        color: var(--lew-success-color);
+    }
+}
 </style>
 <style>
 .lew-button svg {
@@ -270,5 +411,10 @@ defineProps({
     width: 18px;
     height: 18px;
     margin-right: 5px;
+}
+.lew-button-icon svg {
+    margin-right: 0;
+    width: auto;
+    height: auto;
 }
 </style>
