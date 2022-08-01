@@ -32,7 +32,9 @@ defineProps({
         class="lew-button"
         :class="`
         ${isText ? 'lew-button-text' : ''}
-        lew-button-${type} lew-button-${size} ${round ? 'lew-button-round' : ''}
+        ${type ? 'lew-button-' + type : ''}
+        ${size ? 'lew-button-' + size : ''}
+        ${round ? 'lew-button-round' : ''}
         ${isIcon ? 'lew-button-icon' : ''}   
         ${loading ? 'lew-button-loading' : ''}`"
     >
@@ -297,14 +299,10 @@ defineProps({
 }
 
 .lew-button-icon.lew-button-info {
-    background: none;
-    color: var(--lew-info-color);
     &:hover {
-        color: var(--lew-info-color-hover);
         background-color: var(--lew-info-color-light);
     }
     &:active {
-        color: var(--lew-info-color-active);
         background-color: var(--lew-info-color-light2);
     }
     &,
@@ -312,17 +310,15 @@ defineProps({
     &:disabled:hover,
     &:disabled:active {
         background: none;
-        color: var(--lew-info-color);
+        color: var(--lew-info-text-color);
     }
 }
 
 .lew-button-icon.lew-button-warning {
     &:hover {
-        color: var(--lew-warning-color-hover);
         background-color: var(--lew-warning-color-light);
     }
     &:active {
-        color: var(--lew-warning-color-active);
         background-color: var(--lew-warning-color-light2);
     }
 
@@ -331,16 +327,14 @@ defineProps({
     &:disabled:hover,
     &:disabled:active {
         background: none;
-        color: var(--lew-warning-color);
+        color: var(--lew-warning-text-color);
     }
 }
 .lew-button-icon.lew-button-primary {
     &:hover {
-        color: var(--lew-primary-color-hover);
         background-color: var(--lew-primary-color-light);
     }
     &:active {
-        color: var(--lew-primary-color-active);
         background-color: var(--lew-primary-color-light2);
     }
 
@@ -349,16 +343,14 @@ defineProps({
     &:disabled:hover,
     &:disabled:active {
         background: none;
-        color: var(--lew-text-color-3);
+        color: var(--lew-primary-text-color);
     }
 }
 .lew-button-icon.lew-button-error {
     &:hover {
-        color: var(--lew-error-color-hover);
         background-color: var(--lew-error-color-light);
     }
     &:active {
-        color: var(--lew-error-color-active);
         background-color: var(--lew-error-color-light2);
     }
     &,
@@ -366,16 +358,14 @@ defineProps({
     &:disabled:hover,
     &:disabled:active {
         background: none;
-        color: var(--lew-error-color);
+        color: var(--lew-error-text-color);
     }
 }
 .lew-button-icon.lew-button-normal {
     &:hover {
-        color: var(--lew-normal-color-hover);
         background-color: var(--lew-normal-color-light);
     }
     &:active {
-        color: var(--lew-normal-color-active);
         background-color: var(--lew-normal-color-light2);
     }
 
@@ -384,16 +374,14 @@ defineProps({
     &:disabled:hover,
     &:disabled:active {
         background: none;
-        color: var(--lew-normal-color);
+        color: var(--lew-normal-text-color);
     }
 }
 .lew-button-icon.lew-button-success {
     &:hover {
-        color: var(--lew-success-color-hover);
         background-color: var(--lew-success-color-light);
     }
     &:active {
-        color: var(--lew-success-color-active);
         background-color: var(--lew-success-color-light2);
     }
     &,
@@ -401,7 +389,7 @@ defineProps({
     &:disabled:hover,
     &:disabled:active {
         background: none;
-        color: var(--lew-success-color);
+        color: var(--lew-success-text-color);
     }
 }
 </style>
