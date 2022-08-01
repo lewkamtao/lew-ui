@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref, onMounted, shallowRef } from 'vue';
+import throttle from 'lodash/throttle';
 import { backtopProps } from './props';
 import { useEventListener } from '../../../hooks';
 import { CaretUp } from '@vicons/ionicons5';
@@ -35,7 +36,9 @@ const handleScroll = () => {
             dom.value.scrollTop >= parseFloat(props.valveHeight);
 };
 
-useEventListener(window, 'scroll', handleScroll);
+const throttledScrollHandler = throttle(handleScroll, 250);
+
+useEventListener(window, 'scroll', throttledScrollHandler);
 
 onMounted(() => {
     dom.value = document.documentElement;
