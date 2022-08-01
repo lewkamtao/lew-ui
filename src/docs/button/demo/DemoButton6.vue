@@ -16,7 +16,7 @@
         <lew-button type="success" is-icon size="small">
             <AlertUrgent20Regular />
         </lew-button>
-        <lew-button type="normal" is-icon size="small">
+        <lew-button type="normal" is-icon loading size="small">
             <Alert24Regular />
         </lew-button>
     </lew-flex>

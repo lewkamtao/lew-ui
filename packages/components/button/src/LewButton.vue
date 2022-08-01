@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import LewLoading from '../../loading/src/LewLoading';
 import { buttonProps } from './props';
 
 const emit = defineEmits(['click']);
@@ -14,22 +13,26 @@ const handleClick = (e) => {
 <template>
     <button
         class="lew-button"
-        :class="`
-        ${isText ? 'lew-button-text' : ''}
-        lew-button-${type} lew-button-${size}
-        ${round ? 'lew-button-round' : ''}
+        :class="` 
+        ${isText ? 'lew-button-text' : ''}  
+        ${size ? 'lew-button-' + size : ''}
+        ${type ? 'lew-button-' + type : ''}
+        ${round ? 'lew-button-round' : ''}  
+        ${isIcon ? 'lew-button-icon' : ''}
         ${loading ? 'lew-button-loading' : ''}
         `"
         :disabled="disabled"
         @click="handleClick"
     >
         <slot></slot>
-        <LewLoading v-show="loading && !disabled" :size="size"></LewLoading>
+
+        <div v-show="loading && !disabled" :class="`lew-loading-icon`"></div>
     </button>
 </template>
 
 <style lang="scss" scoped>
 .lew-button {
+    position: relative;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -45,11 +48,22 @@ const handleClick = (e) => {
     cursor: pointer;
     border-radius: var(--lew-form-border-radius);
     box-sizing: border-box;
-
-    svg {
-        font-size: 15px;
-        width: 20px;
-        height: 20px;
+    .lew-loading-icon {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+    }
+    .lew-loading-icon::after {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        user-select: none;
+        transform: translate(-50%, -50%);
+        content: '';
+        animation: lew-loading-spinner-spin 0.8s linear infinite;
+        border-radius: 50%;
     }
 }
 
@@ -61,6 +75,12 @@ const handleClick = (e) => {
     height: 24px;
     padding: 0px 8px;
     font-size: 12px;
+    .lew-loading-icon::after {
+        border: 2px solid rgba(0, 0, 0, 0.25);
+        border-left: 2px solid rgba(255, 255, 255, 0.85);
+        width: 9px;
+        height: 9px;
+    }
 }
 
 .lew-button-medium {
@@ -68,6 +88,12 @@ const handleClick = (e) => {
     height: 30px;
     padding: 0px 14px;
     font-size: 14px;
+    .lew-loading-icon::after {
+        border: 2.5px solid rgba(0, 0, 0, 0.25);
+        border-left: 2.5px solid rgba(255, 255, 255, 0.85);
+        width: 11px;
+        height: 11px;
+    }
 }
 
 .lew-button-large {
@@ -75,6 +101,20 @@ const handleClick = (e) => {
     height: 36px;
     padding: 0px 20px;
     font-size: 16px;
+    .lew-loading-icon::after {
+        border: 3px solid rgba(0, 0, 0, 0.25);
+        border-left: 3px solid rgba(255, 255, 255, 0.85);
+        width: 13px;
+        height: 13px;
+    }
+}
+@keyframes lew-loading-spinner-spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
 }
 
 .lew-button-round {
@@ -170,27 +210,13 @@ const handleClick = (e) => {
 }
 
 .lew-button-loading {
-    font-size: 0px;
-}
-
-.lew-button-loading:hover {
-    font-size: 0px;
+    color: rgba($color: #000000, $alpha: 0);
 }
 
 .lew-button[disabled] {
     font-size: 14px;
     cursor: no-drop;
     opacity: var(--lew-disabled-opacity);
-}
-.lew-button[disabled] {
-    background: var(--lew-normal-color);
-    color: var(--lew-color-block);
-    font-size: 14px;
-}
-.lew-button[disabled]:hover {
-    background: var(--lew-normal-color);
-
-    font-size: 14px;
 }
 
 .lew-button-text {
@@ -229,9 +255,7 @@ const handleClick = (e) => {
 }
 
 .lew-button-icon[disabled] {
-    &,
-    &:hover,
-    &:active {
+    & {
         background: none;
     }
 }
@@ -260,9 +284,7 @@ const handleClick = (e) => {
         background-color: var(--lew-info-color-light2);
     }
     &,
-    &:disabled,
-    &:disabled:hover,
-    &:disabled:active {
+    &:disabled {
         background: none;
         color: var(--lew-info-text-color);
     }
@@ -277,9 +299,7 @@ const handleClick = (e) => {
     }
 
     &,
-    &:disabled,
-    &:disabled:hover,
-    &:disabled:active {
+    &:disabled {
         background: none;
         color: var(--lew-warning-text-color);
     }
@@ -293,9 +313,7 @@ const handleClick = (e) => {
     }
 
     &,
-    &:disabled,
-    &:disabled:hover,
-    &:disabled:active {
+    &:disabled {
         background: none;
         color: var(--lew-primary-text-color);
     }
@@ -308,9 +326,7 @@ const handleClick = (e) => {
         background-color: var(--lew-error-color-light2);
     }
     &,
-    &:disabled,
-    &:disabled:hover,
-    &:disabled:active {
+    &:disabled {
         background: none;
         color: var(--lew-error-text-color);
     }
@@ -324,9 +340,7 @@ const handleClick = (e) => {
     }
 
     &,
-    &:disabled,
-    &:disabled:hover,
-    &:disabled:active {
+    &:disabled {
         background: none;
         color: var(--lew-normal-text-color);
     }
@@ -339,12 +353,13 @@ const handleClick = (e) => {
         background-color: var(--lew-success-color-light2);
     }
     &,
-    &:disabled,
-    &:disabled:hover,
-    &:disabled:active {
+    &:disabled {
         background: none;
         color: var(--lew-success-text-color);
     }
+}
+.lew-button-icon.lew-button-loading {
+    color: rgba($color: #000000, $alpha: 0);
 }
 </style>
 <style>

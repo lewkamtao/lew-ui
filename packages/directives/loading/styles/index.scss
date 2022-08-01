@@ -1,0 +1,47 @@
+.lew-loading {
+    position: relative;
+    .lew-loading-box {
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        background-color: var(--lew-loading-bgcolor);
+        z-index: -9;
+        transition: all 0.25s;
+        overflow: hidden;
+    }
+    .lew-loading-box::before {
+        border-radius: 50%;
+        border: 3px solid rgba(0, 0, 0, 0.25);
+        border-left: 3px solid rgba(255, 255, 255, 0.85);
+        content: '';
+        width: 20px;
+        height: 20px;
+        animation: lew-loading-spinner-spin 0.8s linear infinite;
+    }
+    .lew-loading-box::after {
+        content: attr(data-after);
+        font-size: 14px;
+    }
+    @keyframes lew-loading-spinner-spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+}
+
+.lew-loading-show {
+    .lew-loading-box {
+        opacity: 1;
+        z-index: 99;
+    }
+}

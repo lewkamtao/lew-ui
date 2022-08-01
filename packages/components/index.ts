@@ -36,5 +36,8 @@ export * from './drawer';
 export * from './fancybox';
 export * from './plyr';
 export * from './demo-box';
+export * from './loading';
+
+
 
 export * from './backtop';

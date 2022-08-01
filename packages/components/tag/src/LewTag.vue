@@ -88,6 +88,7 @@ const close = () => {
     padding: 0px 2px;
     font-size: 12px;
     .lew-tag-close {
+        margin-left: 1px;
         border-radius: 2px;
         padding: 2px;
         font-size: 12px;
@@ -100,6 +101,7 @@ const close = () => {
     padding: 0px 4px;
     font-size: 13px;
     .lew-tag-close {
+        margin-left: 1px;
         border-radius: 3px;
         padding: 4px;
         font-size: 13px;
@@ -110,6 +112,7 @@ const close = () => {
     padding: 0px 5px;
     font-size: 14px;
     .lew-tag-close {
+        margin-left: 1px;
         border-radius: 4px;
         padding: 6px;
         font-size: 14px;

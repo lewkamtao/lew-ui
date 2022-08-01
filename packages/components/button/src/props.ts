@@ -15,6 +15,10 @@ export const buttonProps = {
         type: Boolean,
         default: false,
     },
+    isIcon: {
+        type: Boolean,
+        default: false,
+    },
     round: {
         type: Boolean,
         default: false,

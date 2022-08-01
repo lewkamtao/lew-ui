@@ -64,7 +64,7 @@ const close = () => {
     position: fixed;
     width: 100%;
     height: 100%;
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
     background: #fff;
     z-index: 9999;
 }
@@ -96,7 +96,7 @@ const close = () => {
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
 }
 
 .fade-enter-from,

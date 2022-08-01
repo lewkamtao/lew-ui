@@ -32,7 +32,7 @@ const setBodyHeight = () => {
     children.map((e) => {
         h += e.offsetHeight - 0.3;
     });
-    lewTableBodyRef.value!.style.height = h + 'px';
+    lewTableBodyRef.value!.style.height = h + 2 + 'px';
 };
 
 // 设置展示线 过渡

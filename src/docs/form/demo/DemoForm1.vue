@@ -4,7 +4,7 @@ let user = ref({
     username: '',
     password: '',
     age: '',
-    sex: 0,
+    sex: '0',
     hobby: [],
     school: '',
     home: '',
@@ -14,9 +14,9 @@ let user = ref({
 });
 
 let sex_options = ref([
-    { label: '未知', value: 0 },
-    { label: '男', value: 1 },
-    { label: '女', value: 2 },
+    { label: '未知', value: '0' },
+    { label: '男', value: '1' },
+    { label: '女', value: '2' },
 ]);
 
 let pay_options = ref([
@@ -25,10 +25,10 @@ let pay_options = ref([
     { label: 'Apple Pay', value: '3' },
 ]);
 let hobby_options = ref([
-    { label: '唱歌', value: 1 },
-    { label: '跳', value: 2 },
-    { label: 'rap', value: 3 },
-    { label: '打篮球', value: 44 },
+    { label: '唱歌', value: '1' },
+    { label: '跳', value: '2' },
+    { label: 'rap', value: '3' },
+    { label: '打篮球', value: '44' },
 ]);
 let home_options = ref([
     {
@@ -87,7 +87,11 @@ let d = ref('2020-12-12');
         <lew-form-item direction="y" title="性别">
             <lew-radiobox-group v-model="user.sex" :options="sex_options" />
         </lew-form-item>
-        <lew-form-item direction="y" title="爱好">
+        <lew-form-item
+            direction="y"
+            title="爱好"
+          
+        >
             <lew-checkbox-group v-model="user.hobby" :options="hobby_options" />
         </lew-form-item>
         <lew-form-item direction="y" title="订阅">

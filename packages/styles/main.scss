@@ -20,13 +20,7 @@
     border-radius: 5px;
 }
 
-.tippy-box[data-lew~="tooltip"] {
-    .tippy-content {
-        padding: 8px;
-    }
-}
-
-.tippy-box[data-lew~="popover"] {
+.tippy-box[data-lew~='popover'] {
     .tippy-content {
         padding: 6px;
         box-sizing: border-box !important;
