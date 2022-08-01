@@ -222,6 +222,130 @@ const handleClick = (e) => {
 .lew-button-text:active {
     background: none;
 }
+
+.lew-button-icon {
+    background: none;
+    padding: 6px;
+}
+
+.lew-button-icon[disabled] {
+    &,
+    &:hover,
+    &:active {
+        background: none;
+    }
+}
+
+.lew-button-icon.lew-button-medium {
+    min-width: 32px;
+    min-height: 32px;
+    font-size: 20px;
+}
+.lew-button-icon.lew-button-large {
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 24px;
+}
+.lew-button-icon.lew-button-small {
+    min-width: 28px;
+    min-height: 28px;
+    font-size: 16px;
+}
+
+.lew-button-icon.lew-button-info {
+    &:hover {
+        background-color: var(--lew-info-color-light);
+    }
+    &:active {
+        background-color: var(--lew-info-color-light2);
+    }
+    &,
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:active {
+        background: none;
+        color: var(--lew-info-text-color);
+    }
+}
+
+.lew-button-icon.lew-button-warning {
+    &:hover {
+        background-color: var(--lew-warning-color-light);
+    }
+    &:active {
+        background-color: var(--lew-warning-color-light2);
+    }
+
+    &,
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:active {
+        background: none;
+        color: var(--lew-warning-text-color);
+    }
+}
+.lew-button-icon.lew-button-primary {
+    &:hover {
+        background-color: var(--lew-primary-color-light);
+    }
+    &:active {
+        background-color: var(--lew-primary-color-light2);
+    }
+
+    &,
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:active {
+        background: none;
+        color: var(--lew-primary-text-color);
+    }
+}
+.lew-button-icon.lew-button-error {
+    &:hover {
+        background-color: var(--lew-error-color-light);
+    }
+    &:active {
+        background-color: var(--lew-error-color-light2);
+    }
+    &,
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:active {
+        background: none;
+        color: var(--lew-error-text-color);
+    }
+}
+.lew-button-icon.lew-button-normal {
+    &:hover {
+        background-color: var(--lew-normal-color-light);
+    }
+    &:active {
+        background-color: var(--lew-normal-color-light2);
+    }
+
+    &,
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:active {
+        background: none;
+        color: var(--lew-normal-text-color);
+    }
+}
+.lew-button-icon.lew-button-success {
+    &:hover {
+        background-color: var(--lew-success-color-light);
+    }
+    &:active {
+        background-color: var(--lew-success-color-light2);
+    }
+    &,
+    &:disabled,
+    &:disabled:hover,
+    &:disabled:active {
+        background: none;
+        color: var(--lew-success-text-color);
+    }
+}
 </style>
 <style>
 .lew-button svg {
@@ -229,5 +353,10 @@ const handleClick = (e) => {
     width: 18px;
     height: 18px;
     margin-right: 5px;
+}
+.lew-button-icon svg {
+    margin-right: 0;
+    width: auto;
+    height: auto;
 }
 </style>

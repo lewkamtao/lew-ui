@@ -145,7 +145,7 @@ const close = () => {
     background-color: var(--lew-error-color-light);
 }
 .lew-tag-normal {
-    color: var(--lew-text-color-5);
+    color: var(--lew-text-color-3);
     background-color: var(--lew-normal-color-light);
 }
 .lew-tag-disabled {

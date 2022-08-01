@@ -1,7 +1,7 @@
 import { shallowRef } from 'vue';
 import type { App as Application, DirectiveBinding } from 'vue';
 
-let _toBackUp;
+let _toBackUp: any;
 export default {
     install(app: Application) {
         app.directive('backtop', {
@@ -20,7 +20,6 @@ export default {
                 }
 
                 _toBackUp = () => {
-                    console.log(1);
                     if (!dom.value) return;
                     const timer = setInterval(() => {
                         const scrollDom = dom.value as HTMLElement;

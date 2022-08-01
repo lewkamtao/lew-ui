@@ -5,11 +5,13 @@ import {
     DemoButton3,
     DemoButton4,
     DemoButton5,
+    DemoButton6,
     DemoButton1_code,
     DemoButton2_code,
     DemoButton3_code,
     DemoButton4_code,
     DemoButton5_code,
+    DemoButton6_code,
 } from './demo';
 import { ref } from 'vue';
 
@@ -66,6 +68,18 @@ const docsTable = ref([
         type: 'boolean',
         default: 'false',
     },
+    {
+        param: 'isText',
+        description: '文字按钮',
+        type: 'boolean',
+        default: 'false',
+    },
+    {
+        param: 'isIcon',
+        description: '图标按钮',
+        type: 'boolean',
+        default: 'false',
+    },
 ]);
 </script>
 
@@ -89,6 +103,9 @@ const docsTable = ref([
         </lew-demo-box>
         <lew-demo-box title="其他" :code="DemoButton5_code"
             ><demo-button5 />
+        </lew-demo-box>
+        <lew-demo-box title="图标" :code="DemoButton6_code"
+            ><demo-button6 />
         </lew-demo-box>
         <lew-title size="16px">Props</lew-title>
         <lew-table :data="docsTable" :columns="columns" height="auto">

@@ -1,6 +1,6 @@
 import tippy from 'tippy.js';
 import type { App as Application, DirectiveBinding } from 'vue';
-let instance;
+let instance: any;
 
 export default {
     install(app: Application) {
