@@ -236,6 +236,8 @@ const emit = defineEmits(['update:visible']);
             width: 30px;
         }
         .right {
+            position: relative;
+            top: 5px;
             width: 310px;
         }
         main {
@@ -248,6 +250,8 @@ const emit = defineEmits(['update:visible']);
             display: flex;
         }
         .right {
+            position: relative;
+            top: 1px;
             width: 320px;
         }
         .right {

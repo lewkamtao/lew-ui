@@ -1,44 +1,41 @@
 <script setup lang="ts">
-defineProps({
-    type: {
-        type: String,
-        default: 'primary',
-    },
-    size: {
-        type: String,
-        default: 'medium',
-    },
-    loading: {
-        type: Boolean,
-        default: false,
-    },
-    round: {
-        type: Boolean,
-        default: false,
-    },
-    isText: {
-        type: Boolean,
-        default: false,
-    },
-});
+import { buttonProps } from './props';
+
+const emit = defineEmits(['click']);
+const props = defineProps(buttonProps);
+
+const handleClick = (e) => {
+    if (props.disabled) return;
+    emit('click', e);
+};
 </script>
 
 <template>
     <button
         class="lew-button"
-        :class="`
-        ${isText ? 'lew-button-text' : ''}
-        lew-button-${type} lew-button-${size} ${
-            round ? 'lew-button-round' : ''
-        }   
-        ${loading ? 'lew-button-loading' : ''}`"
+        :class="` 
+        ${isText ? 'lew-button-text' : ''}  
+        ${size ? 'lew-button-' + size : ''}
+        ${type ? 'lew-button-' + type : ''}
+        ${round ? 'lew-button-round' : ''}  
+        ${isIcon ? 'lew-button-icon' : ''}
+        ${loading ? 'lew-button-loading' : ''}
+        `"
+        :disabled="disabled"
+        @click="handleClick"
     >
         <slot></slot>
+
+        <div
+            class="lew-loading-icon"
+            :class="{ 'lew-loading-icon-show': loading && !disabled }"
+        ></div>
     </button>
 </template>
 
 <style lang="scss" scoped>
 .lew-button {
+    position: relative;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -49,16 +46,36 @@ defineProps({
     width: auto;
     white-space: nowrap;
     box-sizing: border-box;
-    transition: all 0.1s;
+    transition: background-color 0.1s, transform 0.1s,
+        color 0.35s cubic-bezier(0.65, 0, 0.25, 1);
     border: none;
     cursor: pointer;
     border-radius: var(--lew-form-border-radius);
     box-sizing: border-box;
-
-    svg {
-        font-size: 15px;
-        width: 20px;
-        height: 20px;
+    overflow: hidden;
+    .lew-loading-icon {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        transition: all 0.35s cubic-bezier(0.65, 0, 0.25, 1);
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    .lew-loading-icon-show {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    .lew-loading-icon::after {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        user-select: none;
+        transform: translate(-50%, -50%);
+        content: '';
+        animation: lew-loading-spinner-spin 0.65s linear infinite;
+        border-radius: 50%;
     }
 }
 
@@ -70,6 +87,12 @@ defineProps({
     height: 24px;
     padding: 0px 8px;
     font-size: 12px;
+    .lew-loading-icon::after {
+        border: 2px solid rgba(0, 0, 0, 0.25);
+        border-left: 2px solid rgba(255, 255, 255, 0.85);
+        width: 9px;
+        height: 9px;
+    }
 }
 
 .lew-button-medium {
@@ -77,6 +100,12 @@ defineProps({
     height: 30px;
     padding: 0px 14px;
     font-size: 14px;
+    .lew-loading-icon::after {
+        border: 2.5px solid rgba(0, 0, 0, 0.25);
+        border-left: 2.5px solid rgba(255, 255, 255, 0.85);
+        width: 11px;
+        height: 11px;
+    }
 }
 
 .lew-button-large {
@@ -84,22 +113,22 @@ defineProps({
     height: 36px;
     padding: 0px 20px;
     font-size: 16px;
+    .lew-loading-icon::after {
+        border: 3px solid rgba(0, 0, 0, 0.25);
+        border-left: 3px solid rgba(255, 255, 255, 0.85);
+        width: 13px;
+        height: 13px;
+    }
 }
-.lew-button::after {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    content: '';
-    border: 2.5px solid rgba(0, 0, 0, 0.25);
-    border-left-color: rgba(255, 255, 255, 0.85);
-    border-radius: 50%;
-    width: 11px;
-    height: 11px;
-    opacity: 0;
-    animation: donut-spin 0.8s linear infinite;
-    transition: all 0.15s;
-    transform: translate(-50%, -50%);
+@keyframes lew-loading-spinner-spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
 }
+
 .lew-button-round {
     border-radius: 50px;
 }
@@ -192,46 +221,14 @@ defineProps({
     background-color: var(--lew-warning-color-active);
 }
 
-@keyframes donut-spin {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
-}
-
 .lew-button-loading {
-    font-size: 0px;
-}
-
-.lew-button-loading:hover {
-    font-size: 0px;
-}
-
-.lew-button-loading::after {
-    opacity: 1;
+    color: rgba($color: #000000, $alpha: 0);
 }
 
 .lew-button[disabled] {
     font-size: 14px;
     cursor: no-drop;
     opacity: var(--lew-disabled-opacity);
-}
-.lew-button[disabled] {
-    background: var(--lew-normal-color);
-    color: var(--lew-color-block);
-    font-size: 14px;
-}
-.lew-button[disabled]:hover {
-    background: var(--lew-normal-color);
-
-    font-size: 14px;
-}
-
-.lew-button[disabled]::after {
-    opacity: 0;
 }
 
 .lew-button-text {
@@ -263,6 +260,119 @@ defineProps({
 .lew-button-text:active {
     background: none;
 }
+
+.lew-button-icon {
+    background: none;
+    padding: 6px;
+}
+
+.lew-button-icon[disabled] {
+    & {
+        background: none;
+    }
+}
+
+.lew-button-icon.lew-button-medium {
+    min-width: 32px;
+    min-height: 32px;
+    font-size: 20px;
+}
+.lew-button-icon.lew-button-large {
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 24px;
+}
+.lew-button-icon.lew-button-small {
+    min-width: 28px;
+    min-height: 28px;
+    font-size: 16px;
+}
+
+.lew-button-icon.lew-button-info {
+    &:hover {
+        background-color: var(--lew-info-color-light);
+    }
+    &:active {
+        background-color: var(--lew-info-color-light2);
+    }
+    &,
+    &:disabled {
+        background: none;
+        color: var(--lew-info-text-color);
+    }
+}
+
+.lew-button-icon.lew-button-warning {
+    &:hover {
+        background-color: var(--lew-warning-color-light);
+    }
+    &:active {
+        background-color: var(--lew-warning-color-light2);
+    }
+
+    &,
+    &:disabled {
+        background: none;
+        color: var(--lew-warning-text-color);
+    }
+}
+.lew-button-icon.lew-button-primary {
+    &:hover {
+        background-color: var(--lew-primary-color-light);
+    }
+    &:active {
+        background-color: var(--lew-primary-color-light2);
+    }
+
+    &,
+    &:disabled {
+        background: none;
+        color: var(--lew-primary-text-color);
+    }
+}
+.lew-button-icon.lew-button-error {
+    &:hover {
+        background-color: var(--lew-error-color-light);
+    }
+    &:active {
+        background-color: var(--lew-error-color-light2);
+    }
+    &,
+    &:disabled {
+        background: none;
+        color: var(--lew-error-text-color);
+    }
+}
+.lew-button-icon.lew-button-normal {
+    &:hover {
+        background-color: var(--lew-normal-color-light);
+    }
+    &:active {
+        background-color: var(--lew-normal-color-light2);
+    }
+
+    &,
+    &:disabled {
+        background: none;
+        color: var(--lew-normal-text-color);
+    }
+}
+.lew-button-icon.lew-button-success {
+    &:hover {
+        background-color: var(--lew-success-color-light);
+    }
+    &:active {
+        background-color: var(--lew-success-color-light2);
+    }
+    &,
+    &:disabled {
+        background: none;
+        color: var(--lew-success-text-color);
+    }
+}
+.lew-button-icon.lew-button-loading {
+    color: rgba($color: #000000, $alpha: 0);
+}
 </style>
 <style>
 .lew-button svg {
@@ -270,5 +380,10 @@ defineProps({
     width: 18px;
     height: 18px;
     margin-right: 5px;
+}
+.lew-button-icon svg {
+    margin-right: 0;
+    width: auto;
+    height: auto;
 }
 </style>

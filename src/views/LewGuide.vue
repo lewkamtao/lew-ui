@@ -36,25 +36,39 @@ group.value = [
         items: [
             {
                 cname: '安装',
-                name: '安装',
+                name: '',
                 path: '/Install',
                 label: '',
                 type: 'success',
             },
             {
                 cname: '如何使用',
-                name: '如何使用',
+                name: '',
                 path: '/Start',
                 label: '',
                 type: 'success',
             },
             {
-                cname: 'Q&A',
-                name: 'Q&A',
+                cname: '常见问题',
+                name: '',
                 path: '/QA',
                 label: '',
                 type: 'success',
             },
+            {
+                cname: '未来计划',
+                name: '',
+                path: '/TodoList',
+                label: '',
+                type: '',
+            },
+            // {
+            //     cname: 'Chat',
+            //     name: '交流群',
+            //     path: '/chat',
+            //     label: '',
+            //     type: '',
+            // },
         ],
     },
     {
@@ -62,7 +76,7 @@ group.value = [
         items: [
             {
                 cname: '更新日志',
-                name: '更新日志',
+                name: '',
                 path: '/Log',
                 label: 'new',
                 type: 'success',
@@ -106,8 +120,8 @@ group.value = [
     background-color: var(--lew-bgcolor-0);
 }
 .app-main {
-    margin-left: 230px;
-    width: calc(100% - 230px);
+    margin-left: var(--lew-siderbar-width);
+    width: calc(100% - var(--lew-siderbar-width));
     height: calc(100vh - 60px);
     overflow-y: scroll;
     overflow-x: hidden;
@@ -132,7 +146,7 @@ group.value = [
         transition: all 0.85s cubic-bezier(0.65, 0, 0.35, 1);
     }
     .mb-btn-open {
-        transform: translateX(230px);
+        transform: translateX(var(--lew-siderbar-width));
     }
     .sider {
         transform: translateX(-100%);

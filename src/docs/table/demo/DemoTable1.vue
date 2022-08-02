@@ -106,7 +106,14 @@ const formatSex = (sex: number) => {
 </script>
 
 <template>
-    <lew-table :data="data" :columns="columns" height="auto">
+    <lew-table
+        :data="data"
+        :columns="columns"
+        height="auto"
+        v-loading="{
+            isShow: true,
+        }"
+    >
         <template #id="{ row }"> {{ row.id }} </template>
         <template #info="{ row }">
             <lew-flex class="info">

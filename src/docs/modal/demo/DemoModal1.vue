@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 const modalVisible1 = ref(false);
 const modalVisible2 = ref(false);
 
@@ -113,15 +113,24 @@ const set = (row: any, column: any) => {
 const del = (row: any, column: any) => {
     LewMessage.warning('你也可以拿到这一列的数据，例如：field=' + column.field);
 };
+
+onMounted(() => {
+    document.onkeydown = function (event) {
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if (e && e.keyCode == 27) {
+            // 按 Esc
+            modalVisible1.value = false;
+            modalVisible2.value = false;
+        }
+    };
+});
 </script>
 
 <template>
     <lew-flex x="start">
         <lew-button @click="modalVisible1 = true">登录</lew-button>
-        <lew-button @click="modalVisible2 = true"
-            >展示表格</lew-button
-        ></lew-flex
-    >
+        <lew-button @click="modalVisible2 = true">展示表格</lew-button>
+    </lew-flex>
 
     <lew-modal
         :visible="modalVisible1"
@@ -130,23 +139,23 @@ const del = (row: any, column: any) => {
     >
         <div class="modal-body">
             <lew-title :bold="700" style="margin-bottom: 20px"
-                >登录你的账户</lew-title
-            >
+                >登录你的账户
+            </lew-title>
             <lew-form-item direction="y" title="账号">
-                <lew-input
-            /></lew-form-item>
+                <lew-input />
+            </lew-form-item>
             <lew-form-item
                 style="margin-bottom: 30px"
                 direction="y"
                 title="密码"
             >
-                <lew-input
-            /></lew-form-item>
+                <lew-input />
+            </lew-form-item>
 
             <lew-flex x="end">
                 <lew-button type="normal" @click="modalVisible1 = false"
-                    >关闭</lew-button
-                >
+                    >关闭
+                </lew-button>
                 <lew-button @click="modalVisible1 = false">立即登录</lew-button>
             </lew-flex>
         </div>
@@ -170,8 +179,8 @@ const del = (row: any, column: any) => {
                             type="info"
                             size="small"
                             >{{ item }}
-                        </lew-tag></lew-flex
-                    >
+                        </lew-tag>
+                    </lew-flex>
                 </template>
                 <template #intro="{ row }"> {{ row.intro }} </template>
                 <template #action="{ row, column }">
@@ -183,20 +192,20 @@ const del = (row: any, column: any) => {
                             is-text
                             @click="del(row, column)"
                             >删除
-                        </lew-button></lew-flex
-                    >
+                        </lew-button>
+                    </lew-flex>
                 </template>
             </lew-table>
             <br />
 
             <lew-flex x="end">
                 <lew-button type="normal" @click="modalVisible2 = false"
-                    >关闭</lew-button
-                >
+                    >关闭
+                </lew-button>
                 <lew-button @click="modalVisible2 = false">提交</lew-button>
             </lew-flex>
-        </div></lew-modal
-    >
+        </div>
+    </lew-modal>
 </template>
 
 <style lang="scss" scoped>

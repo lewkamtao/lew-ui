@@ -62,7 +62,7 @@ const toPath = (item: Item) => {
 
 <style lang="scss" scoped>
 .siderbar {
-    width: 230px;
+    width: var(--lew-siderbar-width);
     height: 100%;
     overflow-y: scroll;
     border-right: var(--lew-border-1);

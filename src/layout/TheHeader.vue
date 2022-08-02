@@ -49,7 +49,7 @@ const gohome = () => {
                     placement: 'top-start',
                     trigger: 'mouseenter',
                 }"
-                >Beta v1.0.24</lew-tag
+                >Beta v1.0.25</lew-tag
             >
         </div>
         <div class="menu">

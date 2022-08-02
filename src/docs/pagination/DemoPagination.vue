@@ -50,9 +50,10 @@ const docsTable = ref([
     },
     {
         param: 'pageShowSize',
-        description: '展示页码长度',
+        description:
+            '展示页码长度，这里有一定特殊性，比如长度是2，如果超出相应长度，就会只展示5个页码。',
         type: 'number',
-        default: '3',
+        default: '2',
     },
     {
         param: 'background',
@@ -72,6 +73,7 @@ const docsTable = ref([
 <template>
     <div class="demo-wrapper">
         <lew-title>Pagination</lew-title>
+        <p class="sub-title">一个高颜值的、支持双向绑定的分页器</p>
         <lew-demo-box title="常规" :code="DemoPagination1_code">
             <demo-pagination1 />
         </lew-demo-box>

@@ -32,7 +32,7 @@ const setBodyHeight = () => {
     children.map((e) => {
         h += e.offsetHeight - 0.3;
     });
-    lewTableBodyRef.value!.style.height = h + 'px';
+    lewTableBodyRef.value!.style.height = h + 2 + 'px';
 };
 
 // 设置展示线 过渡
@@ -307,8 +307,8 @@ onMounted(() => {
 
 .lew-table::-webkit-scrollbar {
     background-color: var(--lew-bgcolor-3);
-    width: 0px;
-    height: 0px;
+    width: 6px;
+    height: 6px;
 }
 
 .lew-table::-webkit-scrollbar-thumb:hover {

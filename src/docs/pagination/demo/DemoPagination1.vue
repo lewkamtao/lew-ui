@@ -13,15 +13,6 @@ const change = (e: any) => {
         <lew-pagination
             v-model:page-num="pageNum"
             v-model:page-size="pageSize"
-            :page-num="pageNum"
-            :total="1000"
-            @change="change"
-        />
-    </div>
-    <div style="margin-top: 20px">
-        <lew-pagination
-            v-model:page-num="pageNum"
-            v-model:page-size="pageSize"
             :page-size-options="[
                 {
                     label: '10 / 页',
@@ -36,21 +27,11 @@ const change = (e: any) => {
                     value: 30,
                 },
             ]"
-            background
             :page-num="pageNum"
-            :total="2000"
+            :total="10000"
             @change="change"
         />
-    </div>
-    <div style="margin-top: 20px">
-        <lew-pagination
-            v-model:page-num="pageNum"
-            v-model:page-size="pageSize"
-            round
-            :page-num="pageNum"
-            :page-show-size="5"
-            :total="3000"
-            @change="change"
-        />
+        <div>pageNum:{{ pageNum }}</div>
+        <div>pageSize:{{ pageSize }}</div>
     </div>
 </template>

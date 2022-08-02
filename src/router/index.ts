@@ -1,11 +1,11 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
-import docs from '../docs';
 
 import LewHome from '../views/LewHome.vue';
 import LewGuide from '../views/LewGuide.vue';
-import { LewInstall, LewQA, LewStart, LewLog } from '../views/guide';
-
 import LewComponents from '../views/LewComponents.vue';
+
+import docs from '../docs';
+import guide from '../guide';
 
 const routes: Array<RouteRecordRaw> = [
     { path: '/', name: 'R-LewHome', component: LewHome },
@@ -13,12 +13,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/Guide',
         name: 'R-LewGuide',
         component: LewGuide,
-        children: [
-            { path: '/Install', name: 'R-LewInstall', component: LewInstall },
-            { path: '/QA', name: 'R-LewQA', component: LewQA },
-            { path: '/Start', name: 'R-LewStart', component: LewStart },
-            { path: '/Log', name: 'R-LewLog', component: LewLog },
-        ],
+        children: guide,
     },
     {
         path: '/Components',
