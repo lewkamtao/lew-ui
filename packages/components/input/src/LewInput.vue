@@ -95,9 +95,9 @@ const getTextLength = (val: string) => {
     <div
         class="lew-input-view"
         :class="`
-            lew-input-view-${size} 
+            lew-input-view-${size}
             ${_type == 'textarea' ? 'lew-input-view-textarea' : ''}
-            ${readonly ? 'lew-input-view-readonly' : ''} 
+            ${readonly ? 'lew-input-view-readonly' : ''}
             ${disabled ? 'lew-input-view-disabled' : ''}
             ${align ? 'lew-input-view-align-' + align : ''}
             ${autoWidth ? 'lew-input-view-auto-width' : ''}
@@ -423,7 +423,6 @@ const getTextLength = (val: string) => {
 }
 
 .lew-input-view-disabled {
-    cursor: no-drop;
     opacity: var(--lew-disabled-opacity);
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor);
