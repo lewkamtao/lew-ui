@@ -27,10 +27,11 @@ const change = (e: any) => {
                     value: 30,
                 },
             ]"
-            background
             :page-num="pageNum"
-            :total="5000"
+            :total="10000"
             @change="change"
         />
+        <div>pageNum:{{ pageNum }}</div>
+        <div>pageSize:{{ pageSize }}</div>
     </div>
 </template>

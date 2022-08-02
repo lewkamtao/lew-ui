@@ -26,7 +26,10 @@ const handleClick = (e) => {
     >
         <slot></slot>
 
-        <div v-show="loading && !disabled" :class="`lew-loading-icon`"></div>
+        <div
+            class="lew-loading-icon"
+            :class="{ 'lew-loading-icon-show': loading && !disabled }"
+        ></div>
     </button>
 </template>
 
@@ -43,17 +46,26 @@ const handleClick = (e) => {
     width: auto;
     white-space: nowrap;
     box-sizing: border-box;
-    transition: all 0.1s;
+    transition: background-color 0.1s, transform 0.1s,
+        color 0.35s cubic-bezier(0.65, 0, 0.25, 1);
     border: none;
     cursor: pointer;
     border-radius: var(--lew-form-border-radius);
     box-sizing: border-box;
+    overflow: hidden;
     .lew-loading-icon {
         position: absolute;
         width: 100%;
         height: 100%;
         left: 0;
         top: 0;
+        transition: all 0.35s cubic-bezier(0.65, 0, 0.25, 1);
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    .lew-loading-icon-show {
+        opacity: 1;
+        transform: translateY(0px);
     }
     .lew-loading-icon::after {
         position: absolute;
@@ -62,7 +74,7 @@ const handleClick = (e) => {
         user-select: none;
         transform: translate(-50%, -50%);
         content: '';
-        animation: lew-loading-spinner-spin 0.8s linear infinite;
+        animation: lew-loading-spinner-spin 0.65s linear infinite;
         border-radius: 50%;
     }
 }

@@ -47,6 +47,11 @@ let pageInterval = computed(() => {
         start = maxLen.value - props.pageShowSize * 2;
         end = maxLen.value;
     }
+
+    if (start <= 0) {
+        start = 1;
+    }
+
     return generateArray(start, end);
 });
 
@@ -79,6 +84,7 @@ const changePage = (type, num) => {
         pageShowSize: props.pageShowSize,
     });
     emit('update:pageNum', pageNum.value);
+    emit('update:pageSize', pageSize.value);
 };
 
 let pageNumbackup = ref(1);
@@ -177,6 +183,7 @@ const checkPageSize = (e) => {
                 auto-width
                 @blur="checkPageSize"
                 @change="checkPageSize"
+                disabled
             >
                 <template #right>
                     <div class="page-label">/ 页</div>

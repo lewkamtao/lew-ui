@@ -36,28 +36,28 @@ group.value = [
         items: [
             {
                 cname: '安装',
-                name: '安装',
+                name: '',
                 path: '/Install',
                 label: '',
                 type: 'success',
             },
             {
                 cname: '如何使用',
-                name: '如何使用',
+                name: '',
                 path: '/Start',
                 label: '',
                 type: 'success',
             },
             {
                 cname: '常见问题',
-                name: '常见问题',
+                name: '',
                 path: '/QA',
                 label: '',
                 type: 'success',
             },
             {
                 cname: '未来计划',
-                name: '未来计划',
+                name: '',
                 path: '/TodoList',
                 label: '',
                 type: '',
@@ -76,7 +76,7 @@ group.value = [
         items: [
             {
                 cname: '更新日志',
-                name: '更新日志',
+                name: '',
                 path: '/Log',
                 label: 'new',
                 type: 'success',

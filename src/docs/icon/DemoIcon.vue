@@ -19,13 +19,6 @@
         <lew-demo-box title="图标" :code="DemoIcon1_code">
             <demo-icon1 />
         </lew-demo-box>
-        <lew-title size="16px">Props</lew-title>
-        <lew-table :data="docsTable" :columns="columns" height="auto">
-            <template #param="{ row }"> {{ row.param }} </template>
-            <template #description="{ row }"> {{ row.description }} </template>
-            <template #type="{ row }"> {{ row.type }} </template>
-            <template #default="{ row }"> {{ row.default }} </template>
-        </lew-table>
     </div>
 </template>
 

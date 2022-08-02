@@ -45,7 +45,7 @@ const toPath = (item: Item) => {
                 @click="toPath(item)"
             >
                 <span class="name">
-                    {{ item.name }}
+                    {{ item.name }} {{item.cname}}
                 </span>
                 <Lew-tag
                     v-if="item.label"
