@@ -229,8 +229,8 @@ group.value = [
                 cname: '分页',
                 name: 'Pagination',
                 path: '/Pagination',
-                label: '',
-                type: 'warning',
+                label: 'new',
+                type: 'success',
             },
         ],
     },
@@ -369,8 +369,8 @@ group.value = [
     background-color: var(--lew-bgcolor-0);
 }
 .app-main {
-    margin-left: 230px;
-    width: calc(100% - 230px);
+    margin-left: var(--lew-siderbar-width);
+    width: calc(100% - var(--lew-siderbar-width));
     height: calc(100vh - 60px);
     overflow-y: scroll;
     overflow-x: hidden;
@@ -395,7 +395,7 @@ group.value = [
         transition: all 0.85s cubic-bezier(0.65, 0, 0.35, 1);
     }
     .mb-btn-open {
-        transform: translateX(230px);
+        transform: translateX(var(--lew-siderbar-width));
     }
     .sider {
         transform: translateX(-100%);

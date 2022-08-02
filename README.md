@@ -32,9 +32,19 @@ import { LewButton } from 'lew-ui';
 </template>
 ```
 
+## Todo List
+
+-   Step 步骤
+-   Upload 上传
+-   Date Picker 日期选择器
+-   Card 卡片
+-   Collapse 评论
+-   Progress 进度条
+-   Loading 加载
+
 ## Thanks
 
-- https://github.com/TuSimple/naive-ui
-- https://github.com/atomiks/tippyjs
-- https://github.com/fancyapps/ui
-- https://github.com/sampotts/plyr
+-   https://github.com/TuSimple/naive-ui
+-   https://github.com/atomiks/tippyjs
+-   https://github.com/fancyapps/ui
+-   https://github.com/sampotts/plyr
