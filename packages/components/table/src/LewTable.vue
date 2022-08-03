@@ -29,9 +29,11 @@ const setSubLine = () => {
 const setBodyHeight = () => {
     let children = Array.from(lewTableBodyRef.value!.children) as HTMLElement[];
     let h = 0.0;
+
     children.map((e) => {
         h += e.offsetHeight - 0.3;
     });
+
     lewTableBodyRef.value!.style.height = h + 2 + 'px';
 };
 
@@ -94,11 +96,9 @@ const throttle = (e, delay) => {
 
 onMounted(() => {
     setWidth();
-    nextTick(() => {
-        // 设置固定单元格的阴影
-        setSubLine();
-        setBodyHeight();
-    });
+    // 设置固定单元格的阴影
+    setSubLine();
+    setBodyHeight();
 });
 </script>
 
