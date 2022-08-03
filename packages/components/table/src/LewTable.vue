@@ -25,18 +25,6 @@ const setSubLine = () => {
     });
 };
 
-// 设置高度
-const setBodyHeight = () => {
-    let children = Array.from(lewTableBodyRef.value!.children) as HTMLElement[];
-    let h = 0.0;
-
-    children.map((e) => {
-        h += e.offsetHeight - 0.3;
-    });
-
-    lewTableBodyRef.value!.style.height = h + 2 + 'px';
-};
-
 // 设置展示线 过渡
 let isShowLeftLine = ref(false);
 let isShowRightLine = ref(false);
@@ -98,7 +86,6 @@ onMounted(() => {
     setWidth();
     // 设置固定单元格的阴影
     setSubLine();
-    setBodyHeight();
 });
 </script>
 
@@ -106,7 +93,8 @@ onMounted(() => {
     <div
         ref="lewTableRef"
         class="lew-table"
-        :style="`height:${height};width:${width};`"
+        :style="`max-height:${maxHeight};width:${width};overflow-x: auto;
+    overflow-y:${maxHeight ? 'auto' : 'hidden'};`"
         @scroll="throttle($event, 200)"
     >
         <div class="lew-table-head">
@@ -200,7 +188,7 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     height: auto;
-    overflow: auto;
+
     width: 100%;
     font-size: 14px;
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
