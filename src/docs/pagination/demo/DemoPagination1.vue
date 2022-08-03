@@ -28,7 +28,7 @@ const change = (e: any) => {
                 },
             ]"
             :page-num="pageNum"
-            :total="10000"
+            :total="20"
             @change="change"
         />
         <div>pageNum:{{ pageNum }}</div>

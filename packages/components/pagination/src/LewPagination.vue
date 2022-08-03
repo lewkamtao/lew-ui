@@ -40,7 +40,7 @@ let pageInterval = computed(() => {
 
     if (pageNum.value <= props.pageShowSize) {
         start = 1;
-        end = props.pageShowSize * 2 + 1;
+        end = props.pageShowSize * 2;
     }
 
     if (pageNum.value >= maxLen.value - props.pageShowSize) {
@@ -52,7 +52,18 @@ let pageInterval = computed(() => {
         start = 1;
     }
 
-    return generateArray(start, end);
+    if (maxLen.value <= props.pageShowSize * 2 + 7) {
+        start = 1;
+        end = maxLen.value;
+    }
+
+    let pageArr = generateArray(start, end);
+
+    if (pageArr.length < 1) {
+        pageArr = [1];
+    }
+
+    return pageArr;
 });
 
 const emit = defineEmits([
@@ -126,14 +137,21 @@ const checkPageSize = (e) => {
                     <ChevronBackOutline />
                 </icon>
                 <div
-                    v-show="pageNum - 1 > pageShowSize"
+                    v-show="
+                        pageNum - 1 > pageShowSize &&
+                        maxLen > pageShowSize * 2 + 7
+                    "
                     class="lew-pagination-page-btn"
                     @click="changePage(false, 1)"
                 >
                     1
                 </div>
                 <icon
-                    v-show="pageNum - 1 > pageShowSize"
+                    v-show="
+                        pageNum - 1 > pageShowSize &&
+                        maxLen > pageShowSize * 2 + 7 &&
+                        pageInterval[0] != 1 + 1
+                    "
                     size="14"
                     class="lew-pagination-page-btn lew-pagination-control-btn"
                     @click="changePage('prve', pageShowSize * 2)"
@@ -151,7 +169,11 @@ const checkPageSize = (e) => {
                     {{ item }}
                 </div>
                 <icon
-                    v-show="pageNum < total / pageSize - pageShowSize"
+                    v-show="
+                        pageNum < maxLen - pageShowSize &&
+                        maxLen > pageShowSize * 2 + 7 &&
+                        pageInterval[pageInterval.length - 1] + 1 != maxLen
+                    "
                     size="14"
                     class="lew-pagination-page-btn lew-pagination-control-btn"
                     @click="changePage('next', pageShowSize * 2)"
@@ -159,7 +181,10 @@ const checkPageSize = (e) => {
                     <EllipsisHorizontal />
                 </icon>
                 <div
-                    v-show="pageNum < total / pageSize - pageShowSize"
+                    v-show="
+                        pageNum < maxLen - pageShowSize &&
+                        maxLen > pageShowSize * 2 + 7
+                    "
                     class="lew-pagination-page-btn"
                     @click="changePage(false, maxLen)"
                 >
