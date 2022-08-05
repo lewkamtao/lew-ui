@@ -86,7 +86,7 @@ let d = ref('2020-12-12');
         </lew-form-item>
 
         <lew-form-item direction="y" title="性别">
-            <lew-radiobox-group v-model="user.sex" :options="sex_options" />
+            <lew-radio-group v-model="user.sex" :options="sex_options" />
         </lew-form-item>
         <lew-form-item direction="y" title="爱好">
             <lew-checkbox-group v-model="user.hobby" :options="hobby_options" />
