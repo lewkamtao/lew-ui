@@ -84,7 +84,7 @@ const handleClick = (e) => {
 }
 .lew-button-small {
     min-width: 50px;
-    height: 24px;
+    height: 26px;
     padding: 0px 8px;
     font-size: 12px;
     .lew-loading-icon::after {
@@ -97,7 +97,7 @@ const handleClick = (e) => {
 
 .lew-button-medium {
     min-width: 60px;
-    height: 30px;
+    height: 32px;
     padding: 0px 14px;
     font-size: 14px;
     .lew-loading-icon::after {

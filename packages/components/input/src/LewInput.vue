@@ -11,6 +11,8 @@ import { inputProps } from './props';
 
 const props = defineProps(inputProps);
 const v = ref(props.modelValue);
+const lewInputRef = ref();
+const lewTextareaRef = ref();
 
 watch(
     () => props.modelValue,
@@ -49,6 +51,16 @@ const clear = (): void => {
     v.value = '';
     emit('update:modelValue', v.value);
 };
+
+const focusFn = () => {
+    if (props.type == 'textarea') {
+        lewTextareaRef.value?.focus();
+    } else {
+        lewInputRef.value?.focus();
+    }
+};
+
+defineExpose({ focusFn });
 
 let _type = ref(props.type);
 
@@ -104,6 +116,7 @@ const getTextLength = (val: string) => {
             `"
     >
         <textarea
+            ref="lewTextareaRef"
             v-if="_type == 'textarea'"
             v-model="v"
             class="btf-scrollbar"
@@ -120,6 +133,7 @@ const getTextLength = (val: string) => {
         ></textarea>
 
         <input
+            ref="lewInputRef"
             v-else
             v-model="v"
             :disabled="disabled"

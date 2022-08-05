@@ -166,6 +166,13 @@ group.value = [
                 type: 'warning',
             },
             {
+                cname: '标签输入框',
+                name: 'InputTag',
+                path: '/InputTag',
+                label: 'New',
+                type: 'success',
+            },
+            {
                 cname: '多选框',
                 name: 'Checkbox',
                 path: '/Checkbox',
@@ -229,7 +236,7 @@ group.value = [
                 cname: '分页',
                 name: 'Pagination',
                 path: '/Pagination',
-                label: 'new',
+                label: 'New',
                 type: 'success',
             },
         ],

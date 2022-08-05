@@ -15,7 +15,6 @@ const generateArray = (start, end) => {
 
 let pageNum = ref(props.pageNum);
 let pageSize = ref(props.pageSize);
-let total = ref(props.total);
 
 watch(
     () => props.pageNum,
@@ -31,7 +30,7 @@ watch(
 );
 
 let maxLen = computed(() => {
-    return Math.floor(total.value / pageSize.value);
+    return Math.floor(props.total / pageSize.value);
 });
 
 let pageInterval = computed(() => {
@@ -57,6 +56,10 @@ let pageInterval = computed(() => {
         end = maxLen.value;
     }
 
+    if (end == 1 && props.total > pageSize.value) {
+        end += 1;
+    }
+
     let pageArr = generateArray(start, end);
 
     if (pageArr.length < 1) {
@@ -66,12 +69,7 @@ let pageInterval = computed(() => {
     return pageArr;
 });
 
-const emit = defineEmits([
-    'update:pageNum',
-    'update:pageSize',
-    'update:pageTotal',
-    'change',
-]);
+const emit = defineEmits(['update:pageNum', 'update:pageSize', 'change']);
 
 const changePage = (type, num) => {
     if (type == 'next') {
@@ -84,14 +82,14 @@ const changePage = (type, num) => {
 
     if (pageNum.value < 1) {
         pageNum.value = 1;
-    } else if (pageNum.value > total.value / pageSize.value) {
+    } else if (pageNum.value > props.total / pageSize.value) {
         pageNum.value = maxLen.value;
     }
     pageNumbackup.value = pageNum.value;
     emit('change', {
         pageNum: pageNum.value,
         pageSize: pageSize.value,
-        total: total.value,
+        total: props.total,
         pageShowSize: props.pageShowSize,
     });
     emit('update:pageNum', pageNum.value);
@@ -112,8 +110,8 @@ const checkPageSize = (e) => {
     if (pageSizebackup.value < 1) {
         pageSizebackup.value = 1;
     }
-    if (pageSizebackup.value > total.value) {
-        pageSizebackup.value = total.value;
+    if (pageSizebackup.value > props.total) {
+        pageSizebackup.value = props.total;
     }
     pageSize.value = pageSizebackup.value;
     changePage(false, pageNumbackup.value);

@@ -101,7 +101,7 @@ const toPath = (item: Item) => {
             font-size: 14px;
             color: var(--lew-text-color-6);
             .ename {
-                margin-right: 10px;
+                margin-right: 5px;
             }
         }
 
