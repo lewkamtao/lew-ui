@@ -99,7 +99,6 @@ const delTag = (index) => {
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: -5px;
 }
 .lew-input-tag-button {
     display: inline-flex;
