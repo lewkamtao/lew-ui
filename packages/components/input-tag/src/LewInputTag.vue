@@ -10,6 +10,7 @@ const inputValue = ref();
 const tagsValue = ref(props.modelValue);
 const isInput = ref(false);
 const lewInputRef = ref();
+let isEnter = false;
 
 let delDownTimer;
 let delDownCheck = 0;
@@ -39,20 +40,27 @@ const openInput = () => {
                     delDownCheck = 0;
                 }
             }
+        } else {
+            if (event.keyCode == 13) {
+                isEnter = true;
+            }
         }
     };
 };
 
-const closeInput = (e) => {
+const blurFn = (e) => {
     isInput.value = false;
     document.onkeydown = null;
-    addTag(e);
+    addTag();
+    if (isEnter) {
+        openInput();
+    }
+    isEnter = false;
 };
 
-const addTag = (value) => {
-    if (!!value) {
-        tagsValue.value.push(value);
-        openInput();
+const addTag = () => {
+    if (!!inputValue.value) {
+        tagsValue.value.push(inputValue.value);
     }
 
     inputValue.value = '';
@@ -83,7 +91,7 @@ const delTag = (index) => {
             ref="lewInputRef"
             v-model="inputValue"
             v-show="isInput"
-            @blur="closeInput"
+            @blur="blurFn"
             @focus="addTag"
             size="small"
             auto-width
