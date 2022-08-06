@@ -117,7 +117,7 @@ const delTag = (index) => {
     width: 50px;
     box-sizing: border-box;
     border-radius: var(--lew-form-border-radius);
-    background-color: #fff;
+    background-color: var(--lew-bgcolor-0);
     color: var(--lew-text-color-5);
     border: var(--lew-bgcolor-5) var(--lew-form-border-width) dashed;
 }
