@@ -30,7 +30,7 @@ watch(
 );
 
 let maxLen = computed(() => {
-    return Math.floor(props.total / pageSize.value);
+    return Math.ceil(props.total / pageSize.value);
 });
 
 let pageInterval = computed(() => {
@@ -82,7 +82,7 @@ const changePage = (type, num) => {
 
     if (pageNum.value < 1) {
         pageNum.value = 1;
-    } else if (pageNum.value > props.total / pageSize.value) {
+    } else if (pageNum.value > maxLen.value) {
         pageNum.value = maxLen.value;
     }
     pageNumbackup.value = pageNum.value;
