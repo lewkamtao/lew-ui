@@ -14,7 +14,7 @@ export const tableProps = {
             return '';
         },
     },
-    height: {
+    maxHeight: {
         type: String,
         default: () => {
             return '';

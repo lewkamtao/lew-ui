@@ -39,7 +39,7 @@ const selectFn = (e: any) => {
     emit('change', v.value);
     setTimeout(() => {
         hide();
-    }, 120);
+    }, 500);
 };
 const open = () => {
     if (props.options.length == 0) return;
@@ -47,11 +47,6 @@ const open = () => {
 };
 const hide = () => {
     lewDropdownRef.value.hide();
-};
-const delayHide = () => {
-    setTimeout(() => {
-        hide();
-    }, 120);
 };
 </script>
 
@@ -81,7 +76,7 @@ const delayHide = () => {
                 @click.stop
                 @input="input"
                 @change="emit('change', v)"
-                @blur="emit('blur', v), delayHide()"
+                @blur="emit('blur', v)"
                 @focus="open(), emit('focus', v)"
                 @clear="clear"
             />

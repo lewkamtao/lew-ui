@@ -7,8 +7,7 @@
     right: 20px;
     top: 20px;
     z-index: 999;
-
-    .notification {
+    .lew-notification {
         position: relative;
         width: auto;
         display: flex;
@@ -30,54 +29,52 @@
         overflow: hidden;
         background-color: var(--lew-notification-bgcolor);
         backdrop-filter: blur(10px);
-
-        .main {
-            width: calc(100% - 25px);
-            .lew-notification-title {
-                font-size: 14px;
-                font-weight: bold;
-                color: var(--lew-text-color-4);
+        .lew-notification-box {
+            width: 100%;
+            display: flex;
+            .lew-notification-icon {
+                width: 30px;
+                height: 30px;
+                margin-right: 10px;
             }
-            .lew-notification-content {
-                width: 100%;
-                margin-top: 5px;
-                font-size: 14px;
-                color: var(--lew-text-color-6);
-                white-space: pre-wrap;
-                word-wrap: break-word;
+            .lew-notification-body {
+                width: calc(100% - 40px);
+                .lew-notification-title {
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: var(--lew-text-color-4);
+                }
+                .lew-notification-content {
+                    width: 100%;
+                    margin-top: 5px;
+                    font-size: 14px;
+                    color: var(--lew-text-color-6);
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
             }
         }
     }
-    .notification::after {
-        position: absolute;
-        left: 5px;
-        top: 50%;
-        width: 4px;
-        transform: translateY(-50%);
-        height: calc(100% - 10px);
-        content: '';
-        border-radius: 2px;
+    .lew-notification-normal .lew-notification-icon {
+        color: var(--lew-normal-color-dark);
     }
-    .notification-normal::after {
-        background-color: var(--lew-normal-color);
+    .lew-notification-error .lew-notification-icon {
+        color: var(--lew-error-color-dark);
     }
-    .notification-error::after {
-        background-color: var(--lew-error-color);
+    .lew-notification-success .lew-notification-icon {
+        color: var(--lew-success-color-dark);
     }
-    .notification-success::after {
-        background-color: var(--lew-success-color);
+    .lew-notification-info .lew-notification-icon {
+        color: var(--lew-info-color-dark);
     }
-    .notification-info::after {
-        background-color: var(--lew-info-color);
+    .lew-notification-warning .lew-notification-icon {
+        color: var(--lew-warning-color-dark);
     }
-    .notification-warning::after {
-        background-color: var(--lew-warning-color);
-    }
-    .notification-show {
+    .lew-notification-show {
         opacity: 1;
         transform: translateY(0px);
     }
-    .notification-hidden {
+    .lew-notification-hidden {
         opacity: 0;
     }
 }

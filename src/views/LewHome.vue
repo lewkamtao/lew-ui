@@ -307,7 +307,7 @@ const message = (type: string) => {
                             />
                         </lew-form-item>
                         <lew-form-item direction="y" title="Radio">
-                            <lew-radiobox-group
+                            <lew-radio-group
                                 v-model="user.sex"
                                 :options="sex_options"
                             />

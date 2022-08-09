@@ -10,6 +10,7 @@ let user = ref({
     home: '',
     intro: '',
     dark: true,
+    tags: [],
     pay: '',
 });
 
@@ -85,17 +86,16 @@ let d = ref('2020-12-12');
         </lew-form-item>
 
         <lew-form-item direction="y" title="性别">
-            <lew-radiobox-group v-model="user.sex" :options="sex_options" />
+            <lew-radio-group v-model="user.sex" :options="sex_options" />
         </lew-form-item>
-        <lew-form-item
-            direction="y"
-            title="爱好"
-          
-        >
+        <lew-form-item direction="y" title="爱好">
             <lew-checkbox-group v-model="user.hobby" :options="hobby_options" />
         </lew-form-item>
         <lew-form-item direction="y" title="订阅">
             <LewSwitch v-model="user.dark" />
+        </lew-form-item>
+        <lew-form-item direction="y" title="标签输入框">
+            <lew-input-tag v-model="user.tags" />
         </lew-form-item>
         <lew-form-item direction="y" title="爱好">
             <lew-tabs

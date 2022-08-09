@@ -129,7 +129,7 @@ const getChecked = computed(() => (id: any) => {
         >
     </lew-flex>
     <br />
-    <lew-table :data="data" :columns="columns" height="600px">
+    <lew-table :data="data" :columns="columns" max-height="600px">
         <template #checkbox="{ row, column }">
             <lew-checkbox
                 :checked="getChecked(row.id)"

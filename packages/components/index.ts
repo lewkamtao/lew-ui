@@ -10,6 +10,8 @@ export * from './dropdown';
 
 export * from './input';
 export * from './input-pro';
+export * from './input-tag';
+
 export * from './form-item';
 export * from './checkbox';
 export * from './radio';
@@ -37,7 +39,5 @@ export * from './fancybox';
 export * from './plyr';
 export * from './demo-box';
 export * from './loading';
-
-
 
 export * from './backtop';
