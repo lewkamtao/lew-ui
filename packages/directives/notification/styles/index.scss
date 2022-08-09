@@ -54,15 +54,27 @@
                 }
             }
             .lew-notification-close-icon {
-                width: 16px;
-                height: 16px;
                 position: absolute;
-                top: 16px;
-                right: 15px;
-                color: var(--lew-text-color-8);
+                top: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 20px;
+                height: 20px;
+                right: 12px;
+                padding: 2px;
+                border-radius: var(--lew-border-radius);
+                box-sizing: border-box;
                 cursor: pointer;
+                user-select: none;
+                color: var(--lew-text-color-5);
                 &:hover {
-                    color: var(--lew-text-color-5);
+                    color: var(--lew-text-color-2);
+                    background: rgba($color: #000000, $alpha: 0.05);
+                }
+                &:active {
+                    color: var(--lew-text-color-0);
+                    background: rgba($color: #000000, $alpha: 0.15);
                 }
             }
         }

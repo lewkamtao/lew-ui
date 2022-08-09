@@ -262,7 +262,7 @@ group.value = [
                 cname: '通知',
                 name: 'Notification',
                 path: '/Notification',
-                label: '',
+                label: 'New',
                 type: 'success',
             },
             {

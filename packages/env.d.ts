@@ -13,4 +13,4 @@ declare module 'lew-ui';
 declare module '@vicons/fluent';
 declare module '@fancyapps/ui';
 declare module 'lodash/throttle';
-
+declare module '@vueuse/core';
