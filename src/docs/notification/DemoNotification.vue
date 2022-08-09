@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { DemoNotification1, DemoNotification1_code } from './demo';
+import {
+    DemoNotification1,
+    DemoNotification1_code,
+    DemoNotification2,
+    DemoNotification2_code,
+} from './demo';
 import { ref } from 'vue';
 
 const columns = [
@@ -31,6 +36,12 @@ const docsTable = ref([
         type: 'array',
         default: '[]',
     },
+    {
+        param: 'delay',
+        description: '通知的展示时长，设为0时则不会自动关闭',
+        type: 'number',
+        default: '3000',
+    },
 ]);
 </script>
 
@@ -40,6 +51,9 @@ const docsTable = ref([
         <lew-demo-box title="快捷唤起" :code="DemoNotification1_code">
             <demo-notification1>删除</demo-notification1></lew-demo-box
         >
+        <lew-demo-box title="自定义展示时间" :code="DemoNotification2_code">
+            <demo-notification2></demo-notification2
+        ></lew-demo-box>
         <lew-title size="16px">Props</lew-title>
         <lew-table :data="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
