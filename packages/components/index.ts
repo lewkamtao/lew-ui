@@ -23,7 +23,7 @@ export * from './table';
 export * from './pagination';
 
 export * from './avatar';
-
+export * from './comment';
 export * from './title';
 export * from './button';
 export * from './badge';
