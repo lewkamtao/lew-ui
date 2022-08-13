@@ -13,7 +13,9 @@
         "build": "vue-tsc --noEmit && vite build --mode demo",
         "build:package": "vue-tsc --noEmit && vite build --mode package",
         "eslint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-        "format": "prettier --write './*.{js,ts,json,vue,css,scss}' './*/*.{js,ts,json,vue,css,scss}' './*/*/*.{js,ts,json,vue,css,scss}' './*/*/*/*.{js,ts,json,vue,css,scss}' './*/*/*/*/*.{js,ts,json,vue,css,scss}'"
+        "format": "prettier --write './*.{js,ts,json,vue,css,scss}' './*/*.{js,ts,json,vue,css,scss}' './*/*/*.{js,ts,json,vue,css,scss}' './*/*/*/*.{js,ts,json,vue,css,scss}' './*/*/*/*/*.{js,ts,json,vue,css,scss}'",
+        "test": "vitest",
+        "test:coverage": "vitest --coverage"
     },
     "files": [
         "dist"
@@ -32,8 +34,8 @@
     },
     "dependencies": {
         "@fancyapps/ui": "^4.0.27",
-        "@vicons/ionicons5": "^0.12.0",
         "@vicons/fluent": "^0.12.0",
+        "@vicons/ionicons5": "^0.12.0",
         "@vueuse/core": "^9.1.0",
         "lodash": "^4.17.21",
         "plyr": "^3.7.2",
@@ -48,16 +50,20 @@
         "@typescript-eslint/parser": "^5.26.0",
         "@vicons/utils": "^0.1.4",
         "@vitejs/plugin-vue": "^2.3.3",
+        "@vue/test-utils": "^2.0.2",
+        "c8": "^7.12.0",
         "eslint": "^8.16.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-vue": "^9.0.1",
+        "jsdom": "^20.0.0",
         "prettier": "^2.6.2",
         "sass": "^1.52.1",
         "typescript": "^4.5.4",
         "vite": "^2.9.9",
         "vite-plugin-compression": "^0.5.1",
         "vite-plugin-style-import": "^2.0.0",
+        "vitest": "^0.21.1",
         "vue-tsc": "^0.34.7"
     }
 }
