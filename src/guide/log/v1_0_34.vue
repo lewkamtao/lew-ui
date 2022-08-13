@@ -1,6 +1,6 @@
 <template>
     <lew-title size="18px">
-        1.0.34 Beta
+        1.0.35 Beta
         <lew-mark style="margin-left: 20px" type="primary">2022-08</lew-mark>
     </lew-title>
     <br />
