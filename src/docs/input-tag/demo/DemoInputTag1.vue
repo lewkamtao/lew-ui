@@ -5,7 +5,7 @@ let v = ref([]);
 <template>
     <div>
         <lew-form-item direction="y" title="标签输入框">
-            <lew-input-tag v-model="v" />
+            <lew-input-tag v-model="v" type="normal" />
         </lew-form-item>
         <p>值：{{ v }}</p>
     </div>

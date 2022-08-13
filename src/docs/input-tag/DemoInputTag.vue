@@ -35,6 +35,12 @@ const docsTable = reactive([
                 type: 'Array',
                 default: "''",
             },
+            {
+                param: 'type',
+                description: '类型(参考Tag 标签)',
+                type: 'String',
+                default: 'normal',
+            },
         ],
     },
 ]);
