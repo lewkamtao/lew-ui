@@ -36,6 +36,10 @@ const _props = {
         type: String,
         default: '',
     },
+    bold: {
+        type: Boolean,
+        default: false,
+    },
 };
 
 export default _props;

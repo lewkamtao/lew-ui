@@ -263,7 +263,7 @@ const handleClick = (e) => {
 
 .lew-button-icon {
     background: none;
-    padding: 6px;
+    padding: 4px;
 }
 
 .lew-button-icon[disabled] {
@@ -272,20 +272,20 @@ const handleClick = (e) => {
     }
 }
 
+.lew-button-icon.lew-button-small {
+    min-width: 24px;
+    min-height: 24px;
+    font-size: 14px;
+}
 .lew-button-icon.lew-button-medium {
-    min-width: 32px;
-    min-height: 32px;
+    min-width: 30px;
+    min-height: 30px;
     font-size: 20px;
 }
 .lew-button-icon.lew-button-large {
     min-width: 36px;
     min-height: 36px;
-    font-size: 24px;
-}
-.lew-button-icon.lew-button-small {
-    min-width: 28px;
-    min-height: 28px;
-    font-size: 16px;
+    font-size: 26px;
 }
 
 .lew-button-icon.lew-button-info {

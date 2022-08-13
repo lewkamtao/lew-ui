@@ -19,9 +19,11 @@ const close = () => {
 <template>
     <div
         class="lew-tag"
-        :class="`lew-tag-${size} lew-tag-${type} ${
-            round ? 'lew-tag-round' : ''
-        } ${disabled ? 'lew-tag-disabled' : ''} ${to ? 'lew-tag-to' : ''}`"
+        :class="`lew-tag-${size} 
+        lew-tag-${type} 
+        ${round ? 'lew-tag-round' : ''}       
+        ${bold ? 'lew-tag-bold' : ''} 
+        ${disabled ? 'lew-tag-disabled' : ''} ${to ? 'lew-tag-to' : ''}`"
         :style="`max-width:${maxWidth}`"
         @click="lewTo(to)"
     >
@@ -83,41 +85,56 @@ const close = () => {
     cursor: pointer;
 }
 .lew-tag-small {
-    height: 22px;
-    line-height: 22px;
-    padding: 0px 2px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0px;
     font-size: 12px;
     .lew-tag-close {
         margin-left: 1px;
         border-radius: 2px;
         padding: 2px;
         font-size: 12px;
-        margin-right: 2px;
+        margin-right: 4px;
+    }
+    .lew-tag-value {
+        padding: 0px 2px;
+    }
+}
+.lew-tag-bold {
+    font-weight: bold;
+    .lew-tag-value {
+        font-weight: bold;
     }
 }
 .lew-tag-medium {
-    height: 26px;
-    line-height: 26px;
-    padding: 0px 4px;
+    height: 24px;
+    line-height: 24px;
+    padding: 0px 2px;
     font-size: 13px;
     .lew-tag-close {
         margin-left: 1px;
         border-radius: 3px;
         padding: 4px;
         font-size: 13px;
+        margin-right: 2px;
+    }
+    .lew-tag-value {
+        padding: 0px 4px;
     }
 }
 .lew-tag-large {
-    height: 30px;
-    line-height: 30px;
-
-    padding: 0px 5px;
+    height: 28px;
+    line-height: 28px;
+    padding: 0px 4px;
     font-size: 14px;
     .lew-tag-close {
         margin-left: 1px;
         border-radius: 4px;
         padding: 6px;
         font-size: 14px;
+    }
+    .lew-tag-value {
+        padding: 0px 6px;
     }
 }
 

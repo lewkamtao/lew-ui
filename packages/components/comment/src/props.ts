@@ -3,16 +3,8 @@ export const commentProps = {
         type: String,
         default: 'normal',
     },
-    round: {
-        type: Boolean,
-        default: false,
-    },
-    to: {
+    type: {
         type: String,
-        default: '',
-    },
-    bold: {
-        type: Number,
-        default: 400,
+        default: 'normal',
     },
 };

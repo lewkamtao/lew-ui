@@ -25,12 +25,7 @@ const columns = [
     },
 ];
 const docsTable = ref([
-    {
-        param: 'type',
-        description: '配色类型',
-        type: `normal | success | error | warning | info`,
-        default: 'normal',
-    },
+ 
 ]);
 </script>
 
