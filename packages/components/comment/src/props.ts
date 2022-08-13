@@ -3,8 +3,4 @@ export const commentProps = {
         type: String,
         default: 'normal',
     },
-    type: {
-        type: String,
-        default: 'normal',
-    },
 };
