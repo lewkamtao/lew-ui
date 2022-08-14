@@ -57,8 +57,7 @@ const close = () => {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 8px;
-        height: 8px;
+
         border-radius: 3px;
         margin-left: -3px;
         padding: 5px;
@@ -92,14 +91,16 @@ const close = () => {
     padding: 0px;
     font-size: 12px;
     .lew-tag-close {
-        margin-left: 1px;
+        width: 10px;
+        height: 10px;
+        margin-left: -2px;
         border-radius: 2px;
         padding: 2px;
         font-size: 12px;
         margin-right: 4px;
     }
     .lew-tag-value {
-        padding: 0px 2px;
+        padding: 0px 4px;
     }
 }
 .lew-tag-bold {
@@ -115,7 +116,9 @@ const close = () => {
     padding: 0px 2px;
     font-size: 13px;
     .lew-tag-close {
-        margin-left: 1px;
+        width: 10px;
+        height: 10px;
+        margin-left: -3px;
         border-radius: 3px;
         padding: 4px;
         font-size: 13px;
@@ -132,13 +135,15 @@ const close = () => {
     padding: 0px 4px;
     font-size: 14px;
     .lew-tag-close {
-        margin-left: 1px;
+        width: 10px;
+        height: 10px;
+        margin-left: -4px;
         border-radius: 4px;
         padding: 6px;
         font-size: 14px;
     }
     .lew-tag-value {
-        padding: 0px 6px;
+        padding: 0px 4px;
     }
 }
 
