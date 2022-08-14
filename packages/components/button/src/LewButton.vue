@@ -275,16 +275,22 @@ const handleClick = (e) => {
 .lew-button-icon.lew-button-small {
     min-width: 24px;
     min-height: 24px;
+    width: 24px;
+    height: 24px;
     font-size: 14px;
 }
 .lew-button-icon.lew-button-medium {
     min-width: 30px;
     min-height: 30px;
+    width: 30px;
+    height: 30px;
     font-size: 20px;
 }
 .lew-button-icon.lew-button-large {
     min-width: 36px;
     min-height: 36px;
+    width: 36px;
+    height: 36px;
     font-size: 26px;
 }
 
