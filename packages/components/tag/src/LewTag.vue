@@ -43,6 +43,7 @@ const close = () => {
     justify-content: center;
     border-radius: 3px;
     user-select: none;
+    box-sizing: border-box;
     .lew-tag-value {
         font-weight: normal;
         padding: 0px 3px;
@@ -86,6 +87,7 @@ const close = () => {
 }
 .lew-tag-small {
     height: 20px;
+    min-width: 20px;
     line-height: 20px;
     padding: 0px;
     font-size: 12px;
@@ -108,6 +110,7 @@ const close = () => {
 }
 .lew-tag-medium {
     height: 24px;
+    min-width: 24px;
     line-height: 24px;
     padding: 0px 2px;
     font-size: 13px;
@@ -124,6 +127,7 @@ const close = () => {
 }
 .lew-tag-large {
     height: 28px;
+    min-width: 28px;
     line-height: 28px;
     padding: 0px 4px;
     font-size: 14px;

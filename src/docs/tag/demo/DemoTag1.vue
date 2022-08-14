@@ -13,5 +13,8 @@
         <lew-tag type="error" round to="https://vuejs.org/"
             >这是一个链接
         </lew-tag>
+        <lew-tag size="small" round type="primary">1</lew-tag>
+        <lew-tag type="success">2</lew-tag>
+        <lew-tag size="large" type="error">3</lew-tag>
     </lew-flex>
 </template>
