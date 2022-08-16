@@ -26,10 +26,46 @@ const columns = [
 ];
 const docsTable = ref([
     {
-        param: 'options',
-        description: '列表配置',
-        type: 'array',
-        default: '[]',
+        param: 'type',
+        description: '消息类型',
+        type: "'success' | 'warning' | 'info' | 'error' | 'normal'",
+        default: "' '",
+    },
+    {
+        param: 'title',
+        description: '标题',
+        type: 'string',
+        default: "' '",
+    },
+    {
+        param: 'content',
+        description: '内容',
+        type: 'string',
+        default: "' '",
+    },
+    {
+        param: 'closeOnClickOverlay',
+        description: '点击遮罩层关闭弹窗',
+        type: 'boolean',
+        default: 'true',
+    },
+    {
+        param: 'layout',
+        description: '布局',
+        type: "'normal' | 'easy'",
+        default: 'normal',
+    },
+    {
+        param: 'ok',
+        description: '确认回调',
+        type: 'function',
+        default: '',
+    },
+    {
+        param: 'cancel',
+        description: '取消回调',
+        type: 'function',
+        default: '',
     },
 ]);
 </script>
