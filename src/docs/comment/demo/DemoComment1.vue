@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Chat24Regular } from '@vicons/fluent';
-import { Icon } from '@vicons/utils';
 </script>
 
 <template>
@@ -27,9 +26,9 @@ import { Icon } from '@vicons/utils';
             </template>
             <template #footer>
                 <div style="margin-top: 10px">
-                    <lew-button size="small" is-icon type="normal">
-                        <Icon size="16"><Chat24Regular /></Icon>
-                        <span style="margin-left: 3px">回复</span>
+                    <lew-button size="small" is-text type="normal">
+                        <Chat24Regular style="width: 14px" />
+                        <span>回复</span>
                     </lew-button>
                 </div>
             </template>
@@ -56,9 +55,9 @@ import { Icon } from '@vicons/utils';
             </template>
             <template #footer>
                 <div style="margin-top: 10px">
-                    <lew-button size="small" is-icon type="normal">
-                        <Icon size="16"><Chat24Regular /></Icon>
-                        <span style="margin-left: 3px">回复</span>
+                    <lew-button size="small" is-text type="normal">
+                        <Chat24Regular style="width: 14px" />
+                        <span>回复</span>
                     </lew-button>
                 </div>
             </template>
@@ -85,9 +84,9 @@ import { Icon } from '@vicons/utils';
             </template>
             <template #footer>
                 <div style="margin-top: 10px">
-                    <lew-button size="small" is-icon type="normal">
-                        <Icon size="16"><Chat24Regular /></Icon>
-                        <span style="margin-left: 3px">回复</span>
+                    <lew-button size="small" is-text type="normal">
+                        <Chat24Regular style="width: 14px" />
+                        <span>回复</span>
                     </lew-button>
                 </div>
             </template>
@@ -114,9 +113,9 @@ import { Icon } from '@vicons/utils';
             </template>
             <template #footer>
                 <div style="margin-top: 10px">
-                    <lew-button size="small" is-icon type="normal">
-                        <Icon size="16"><Chat24Regular /></Icon>
-                        <span style="margin-left: 3px">回复</span>
+                    <lew-button size="small" is-text type="normal">
+                        <Chat24Regular style="width: 14px" />
+                        <span>回复</span>
                     </lew-button>
                 </div>
             </template>

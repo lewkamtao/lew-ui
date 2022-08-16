@@ -234,31 +234,44 @@ const handleClick = (e) => {
 .lew-button-text {
     background: none;
     min-width: auto;
-    padding: 0px 5px;
+    height: auto;
+    padding: 4px 8px;
 }
 .lew-button-text.lew-button-info {
     color: var(--lew-info-color-dark);
+    &:hover {
+        background-color: var(--lew-info-color-light2);
+    }
 }
 .lew-button-text.lew-button-primary {
     color: var(--lew-primary-color-dark);
+    &:hover {
+        background-color: var(--lew-info-color-light2);
+    }
 }
 .lew-button-text.lew-button-error {
     color: var(--lew-error-color-dark);
+    &:hover {
+        background-color: var(--lew-error-color-light2);
+    }
 }
 .lew-button-text.lew-button-warning {
     color: var(--lew-warning-color-dark);
+    &:hover {
+        background-color: var(--lew-warning-color-light2);
+    }
 }
 .lew-button-text.lew-button-success {
     color: var(--lew-success-color-dark);
+    &:hover {
+        background-color: var(--lew-success-color-light2);
+    }
 }
 .lew-button-text.lew-button-normal {
     color: var(--lew-text-color-5);
-}
-.lew-button-text:hover {
-    background: none;
-}
-.lew-button-text:active {
-    background: none;
+    &:hover {
+        background-color: var(--lew-normal-color-light2);
+    }
 }
 
 .lew-button-icon {
