@@ -220,6 +220,7 @@ const emit = defineEmits(['update:visible']);
             box-sizing: border-box;
             cursor: pointer;
             user-select: none;
+            z-index: 2051;
             color: var(--lew-text-color-5);
         }
         .btn-close:hover {
