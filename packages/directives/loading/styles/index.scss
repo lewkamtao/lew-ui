@@ -28,6 +28,7 @@
     .lew-loading-box::after {
         content: attr(data-after);
         font-size: 14px;
+        margin-top: 5px;
     }
     @keyframes lew-loading-spinner-spin {
         0% {

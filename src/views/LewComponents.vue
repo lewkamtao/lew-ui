@@ -315,6 +315,13 @@ group.value = [
                 label: '',
                 type: 'success',
             },
+            {
+                cname: '加载',
+                name: 'Loading',
+                path: '/Loading',
+                label: '',
+                type: 'success',
+            },
 
             // {
             //     cname: '结果',
