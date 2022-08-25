@@ -85,6 +85,7 @@ const emit = defineEmits(['update:visible']);
             <div
                 v-if="layout == 'normal'"
                 class="lew-dialog-box lew-dialog-box-normal"
+                @click.stop
             >
                 <div class="btn-close" @click="cancelFn">
                     <Icon size="18"> <Dismiss24Filled /></Icon>
@@ -131,7 +132,7 @@ const emit = defineEmits(['update:visible']);
                 <div class="right">
                     <main>
                         <slot name="content" />
-                    </main> 
+                    </main>
                     <lew-Button
                         style="margin-right: 10px"
                         type="normal"
@@ -219,6 +220,7 @@ const emit = defineEmits(['update:visible']);
             box-sizing: border-box;
             cursor: pointer;
             user-select: none;
+            z-index: 2051;
             color: var(--lew-text-color-5);
         }
         .btn-close:hover {

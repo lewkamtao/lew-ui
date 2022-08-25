@@ -5,14 +5,8 @@ import 'lew-ui/styles/reset.scss';
 import 'lew-ui/styles/var.scss';
 import 'lew-ui/styles/main.scss';
 
-// fancybox
-import '@fancyapps/ui/dist/fancybox.css';
-// plyr
-import 'plyr/dist/plyr.css';
-
 import '@/assets/style/main.scss';
 import '@/assets/style/hljs.scss';
-
 
 import lew from 'lew-ui';
 

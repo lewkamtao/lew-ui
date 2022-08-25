@@ -8,6 +8,7 @@ type Options = {
     // eslint-disable-next-line @typescript-eslint/ban-types
     cancel: Function;
     layout: string;
+    closeOnClickOverlay?: boolean;
 };
 
 const warning = (options: Options) => {
@@ -31,7 +32,14 @@ const success = (options: Options) => {
 };
 
 const dialog = (type: string, options: Options) => {
-    const { title, content, ok, cancel, layout } = options;
+    const {
+        title,
+        content,
+        ok,
+        cancel,
+        layout,
+        closeOnClickOverlay = true,
+    } = options;
     const div: HTMLDivElement = document.createElement('div');
     document.body.appendChild(div);
     const close = () => {
@@ -45,11 +53,11 @@ const dialog = (type: string, options: Options) => {
             return h(
                 _LewDialog,
                 {
-                    closeOnClickOverlay: false,
+                    closeOnClickOverlay: closeOnClickOverlay,
                     type: type,
                     layout: layout,
                     visible: true,
-                    'onUpdate:visible': (newVisible: any) => {
+                    'onUpdate:visible': (newVisible: boolean) => {
                         if (newVisible === false) {
                             close();
                         }

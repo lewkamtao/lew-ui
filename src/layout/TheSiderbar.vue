@@ -44,7 +44,7 @@ const toPath = (item: Item) => {
                 :class="{ active: route.path == item.path }"
                 @click="toPath(item)"
             >
-                <span class="ename"> {{ item.name }} </span>
+                <span v-if="item.name" class="ename"> {{ item.name }} </span>
                 <span class="cname"> {{ item.cname }}</span>
 
                 <Lew-tag
@@ -101,7 +101,7 @@ const toPath = (item: Item) => {
             font-size: 14px;
             color: var(--lew-text-color-6);
             .ename {
-                margin-right: 10px;
+                margin-right: 5px;
             }
         }
 

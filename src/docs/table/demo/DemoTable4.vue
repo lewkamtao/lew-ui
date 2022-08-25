@@ -120,7 +120,7 @@ const error = (e: any) => {
 </script>
 
 <template>
-    <lew-table :data="data" :columns="columns" height="auto">
+    <lew-table :data="data" :columns="columns">
         <template #id="{ row }"> {{ row.id }} </template>
         <template #name="{ row }"> {{ row.name }} </template>
         <template #age="{ row }"> {{ row.age }} </template>

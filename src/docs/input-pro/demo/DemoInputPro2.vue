@@ -29,7 +29,6 @@ const clear = (e: any) => {
                 style="width: 250px"
                 popover-width="250px"
                 :options="['詹姆斯', '库里', '汤普森', '利拉德']"
-                type="password"
                 :arrow="false"
                 clearable
             />

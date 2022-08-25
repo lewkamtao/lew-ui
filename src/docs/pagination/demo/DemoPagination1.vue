@@ -6,6 +6,7 @@ let pageSize = ref(20);
 const change = (e: any) => {
     console.log(e);
 };
+let total = ref(2000);
 </script>
 
 <template>
@@ -28,7 +29,7 @@ const change = (e: any) => {
                 },
             ]"
             :page-num="pageNum"
-            :total="10000"
+            :total="total"
             @change="change"
         />
         <div>pageNum:{{ pageNum }}</div>

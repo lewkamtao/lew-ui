@@ -15,7 +15,6 @@ const generateArray = (start, end) => {
 
 let pageNum = ref(props.pageNum);
 let pageSize = ref(props.pageSize);
-let total = ref(props.total);
 
 watch(
     () => props.pageNum,
@@ -31,7 +30,7 @@ watch(
 );
 
 let maxLen = computed(() => {
-    return Math.floor(total.value / pageSize.value);
+    return Math.ceil(props.total / pageSize.value);
 });
 
 let pageInterval = computed(() => {
@@ -40,7 +39,7 @@ let pageInterval = computed(() => {
 
     if (pageNum.value <= props.pageShowSize) {
         start = 1;
-        end = props.pageShowSize * 2 + 1;
+        end = props.pageShowSize * 2;
     }
 
     if (pageNum.value >= maxLen.value - props.pageShowSize) {
@@ -52,15 +51,25 @@ let pageInterval = computed(() => {
         start = 1;
     }
 
-    return generateArray(start, end);
+    if (maxLen.value <= props.pageShowSize * 2 + 7) {
+        start = 1;
+        end = maxLen.value;
+    }
+
+    if (end == 1 && props.total > pageSize.value) {
+        end += 1;
+    }
+
+    let pageArr = generateArray(start, end);
+
+    if (pageArr.length < 1) {
+        pageArr = [1];
+    }
+
+    return pageArr;
 });
 
-const emit = defineEmits([
-    'update:pageNum',
-    'update:pageSize',
-    'update:pageTotal',
-    'change',
-]);
+const emit = defineEmits(['update:pageNum', 'update:pageSize', 'change']);
 
 const changePage = (type, num) => {
     if (type == 'next') {
@@ -73,14 +82,14 @@ const changePage = (type, num) => {
 
     if (pageNum.value < 1) {
         pageNum.value = 1;
-    } else if (pageNum.value > total.value / pageSize.value) {
+    } else if (pageNum.value > maxLen.value) {
         pageNum.value = maxLen.value;
     }
     pageNumbackup.value = pageNum.value;
     emit('change', {
         pageNum: pageNum.value,
         pageSize: pageSize.value,
-        total: total.value,
+        total: props.total,
         pageShowSize: props.pageShowSize,
     });
     emit('update:pageNum', pageNum.value);
@@ -101,8 +110,8 @@ const checkPageSize = (e) => {
     if (pageSizebackup.value < 1) {
         pageSizebackup.value = 1;
     }
-    if (pageSizebackup.value > total.value) {
-        pageSizebackup.value = total.value;
+    if (pageSizebackup.value > props.total) {
+        pageSizebackup.value = props.total;
     }
     pageSize.value = pageSizebackup.value;
     changePage(false, pageNumbackup.value);
@@ -126,14 +135,21 @@ const checkPageSize = (e) => {
                     <ChevronBackOutline />
                 </icon>
                 <div
-                    v-show="pageNum - 1 > pageShowSize"
+                    v-show="
+                        pageNum - 1 > pageShowSize &&
+                        maxLen > pageShowSize * 2 + 7
+                    "
                     class="lew-pagination-page-btn"
                     @click="changePage(false, 1)"
                 >
                     1
                 </div>
                 <icon
-                    v-show="pageNum - 1 > pageShowSize"
+                    v-show="
+                        pageNum - 1 > pageShowSize &&
+                        maxLen > pageShowSize * 2 + 7 &&
+                        pageInterval[0] != 1 + 1
+                    "
                     size="14"
                     class="lew-pagination-page-btn lew-pagination-control-btn"
                     @click="changePage('prve', pageShowSize * 2)"
@@ -151,7 +167,11 @@ const checkPageSize = (e) => {
                     {{ item }}
                 </div>
                 <icon
-                    v-show="pageNum < total / pageSize - pageShowSize"
+                    v-show="
+                        pageNum < maxLen - pageShowSize &&
+                        maxLen > pageShowSize * 2 + 7 &&
+                        pageInterval[pageInterval.length - 1] + 1 != maxLen
+                    "
                     size="14"
                     class="lew-pagination-page-btn lew-pagination-control-btn"
                     @click="changePage('next', pageShowSize * 2)"
@@ -159,7 +179,10 @@ const checkPageSize = (e) => {
                     <EllipsisHorizontal />
                 </icon>
                 <div
-                    v-show="pageNum < total / pageSize - pageShowSize"
+                    v-show="
+                        pageNum < maxLen - pageShowSize &&
+                        maxLen > pageShowSize * 2 + 7
+                    "
                     class="lew-pagination-page-btn"
                     @click="changePage(false, maxLen)"
                 >

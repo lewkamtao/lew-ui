@@ -18,7 +18,7 @@ const _props = {
     },
     maxWidth: {
         type: String,
-        default: '120px',
+        default: '220px',
     },
     round: {
         type: Boolean,
@@ -35,6 +35,10 @@ const _props = {
     to: {
         type: String,
         default: '',
+    },
+    bold: {
+        type: Boolean,
+        default: false,
     },
 };
 

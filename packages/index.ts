@@ -8,12 +8,6 @@ import 'tippy.js/dist/tippy.css'; // optional for styling
 import 'tippy.js/animations/shift-away-subtle.css';
 import 'tippy.js/themes/light.css';
 
-// fancybox
-import '@fancyapps/ui/dist/fancybox.css';
-
-// plyr
-import 'plyr/dist/plyr.css';
-
 // 引入样式
 import './styles/reset.scss';
 import './styles/main.scss';

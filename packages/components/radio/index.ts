@@ -1,1 +1,1 @@
-export { default as LewRadioboxGroup } from './src/LewRadioboxGroup.vue';
+export { default as LewRadioGroup } from './src/LewRadioGroup.vue';
