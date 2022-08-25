@@ -331,26 +331,8 @@ group.value = [
             //     type: 'success',
             // },
         ],
-    },
-    {
-        title: '其他',
-        items: [
-            {
-                cname: '灯箱',
-                name: 'FancyImage',
-                path: '/FancyImage',
-                label: '',
-                type: 'success',
-            },
-            {
-                cname: '播放器',
-                name: 'PlyrVideo',
-                path: '/PlyrVideo',
-                label: '',
-                type: 'success',
-            },
-        ],
-    },
+    }
+   
 ];
 </script>
 

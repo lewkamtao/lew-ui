@@ -33,12 +33,10 @@
         }
     },
     "dependencies": {
-        "@fancyapps/ui": "^4.0.27",
         "@vicons/fluent": "^0.12.0",
         "@vicons/ionicons5": "^0.12.0",
         "@vueuse/core": "^9.1.0",
         "lodash": "^4.17.21",
-        "plyr": "^3.7.2",
         "tippy.js": "^6.3.7",
         "vue": "^3.2.25",
         "vue-router": "^4.0.13"
