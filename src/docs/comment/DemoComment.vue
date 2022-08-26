@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { DemoComment1, DemoComment1_code } from './demo';
 import { ref } from 'vue';
-import { DemoPlyrVideo1, DemoPlyrVideo1_code } from './demo';
 
 const columns = [
     {
@@ -25,23 +25,20 @@ const columns = [
     },
 ];
 const docsTable = ref([
-    {
-        param: 'url',
-        description: '视频链接',
-        type: 'string',
-        default: `''`,
-    },
+ 
 ]);
 </script>
 
 <template>
     <div class="demo-wrapper">
-        <lew-title>PlyrVideo</lew-title>
-        <lew-demo-box title="普通" :code="DemoPlyrVideo1_code">
-            <demo-plyr-video1 />
-        </lew-demo-box>
-
-        <lew-title size="16px">Props</lew-title>
+        <lew-title>Comment</lew-title>
+        <p class="sub-title">
+            这是一个简单评论列表
+        </p>
+        <lew-demo-box title="常规" :code="DemoComment1_code">
+            <demo-comment1>删除</demo-comment1></lew-demo-box
+        >
+        <lew-title size="16px">props</lew-title>
         <lew-table :data="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>
@@ -50,9 +47,3 @@ const docsTable = ref([
         </lew-table>
     </div>
 </template>
-
-<style lang="scss" scoped>
-.lew-avatar {
-    margin: 10px;
-}
-</style>

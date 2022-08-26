@@ -36,9 +36,7 @@ import { LewButton } from 'lew-ui';
 
 -   Step 步骤
 -   Upload 上传
--   Date Picker 日期选择器
 -   Card 卡片
--   Collapse 评论
 -   Progress 进度条
 -   Loading 加载
 

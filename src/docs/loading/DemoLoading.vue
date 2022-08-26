@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { DemoLoading1, DemoLoading1_code } from './demo';
 import { ref } from 'vue';
-import { DemoFancyImage1, DemoFancyImage1_code } from './demo';
 
 const columns = [
     {
@@ -26,25 +26,24 @@ const columns = [
 ];
 const docsTable = ref([
     {
-        param: 'src',
-        description: '图片链接',
-        type: 'string',
-        default: `''`,
-    },
-    {
-        param: 'round',
-        description: '形状，是否为圆形。',
+        param: 'isShow',
+        description: '是否展示',
         type: 'boolean',
         default: 'false',
     },
+    {
+        param: 'title',
+        description: '加载文字提示',
+        type: `string`,
+        default: '""',
+    },
 ]);
 </script>
-
 <template>
     <div class="demo-wrapper">
-        <lew-title>FancyImage</lew-title>
-        <lew-demo-box title="普通" :code="DemoFancyImage1_code">
-            <demo-fancy-image1 />
+        <lew-title>Loading</lew-title>
+        <lew-demo-box title="普通" :code="DemoLoading1_code">
+            <demo-loading1 />
         </lew-demo-box>
         <lew-title size="16px">Props</lew-title>
         <lew-table :data="docsTable" :columns="columns" height="auto">
@@ -55,9 +54,3 @@ const docsTable = ref([
         </lew-table>
     </div>
 </template>
-
-<style lang="scss" scoped>
-.lew-avatar {
-    margin: 10px;
-}
-</style>

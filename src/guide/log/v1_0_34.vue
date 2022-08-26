@@ -1,6 +1,6 @@
 <template>
     <lew-title size="18px">
-        1.0.25 Beta
+        1.0.35 Beta
         <lew-mark style="margin-left: 20px" type="primary">2022-08</lew-mark>
     </lew-title>
     <br />
@@ -8,6 +8,11 @@
         <lew-title size="14px"> 新特性 </lew-title>
         <ul>
             <li>新增<lew-mark>Button</lew-mark>的 Icon 模式。</li>
+            <li>新增<lew-mark>InputTag</lew-mark></li>
+            <li>新增<lew-mark>Comment</lew-mark></li>
+            <li>
+                新增<lew-mark>Notification</lew-mark>关闭按钮，自定义关闭时间。
+            </li>
         </ul>
         <lew-title size="14px"> 修复 </lew-title>
         <ul>
@@ -22,6 +27,7 @@
             <li>优化全局颜色的显示问题</li>
             <li>优化 Alert 的图标对齐问题</li>
             <li>优化多处文档的规范</li>
+            <li>优化标签输入框</li>
         </ul>
     </div>
 </template>

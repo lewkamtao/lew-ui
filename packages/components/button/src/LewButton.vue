@@ -234,36 +234,49 @@ const handleClick = (e) => {
 .lew-button-text {
     background: none;
     min-width: auto;
-    padding: 0px 5px;
+    height: auto;
+    padding: 4px 8px;
 }
 .lew-button-text.lew-button-info {
     color: var(--lew-info-color-dark);
+    &:hover {
+        background-color: var(--lew-info-color-light2);
+    }
 }
 .lew-button-text.lew-button-primary {
     color: var(--lew-primary-color-dark);
+    &:hover {
+        background-color: var(--lew-info-color-light2);
+    }
 }
 .lew-button-text.lew-button-error {
     color: var(--lew-error-color-dark);
+    &:hover {
+        background-color: var(--lew-error-color-light2);
+    }
 }
 .lew-button-text.lew-button-warning {
     color: var(--lew-warning-color-dark);
+    &:hover {
+        background-color: var(--lew-warning-color-light2);
+    }
 }
 .lew-button-text.lew-button-success {
     color: var(--lew-success-color-dark);
+    &:hover {
+        background-color: var(--lew-success-color-light2);
+    }
 }
 .lew-button-text.lew-button-normal {
     color: var(--lew-text-color-5);
-}
-.lew-button-text:hover {
-    background: none;
-}
-.lew-button-text:active {
-    background: none;
+    &:hover {
+        background-color: var(--lew-normal-color-light2);
+    }
 }
 
 .lew-button-icon {
     background: none;
-    padding: 6px;
+    padding: 4px;
 }
 
 .lew-button-icon[disabled] {
@@ -272,20 +285,26 @@ const handleClick = (e) => {
     }
 }
 
+.lew-button-icon.lew-button-small {
+    min-width: 24px;
+    min-height: 24px;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+}
 .lew-button-icon.lew-button-medium {
-    min-width: 32px;
-    min-height: 32px;
+    min-width: 30px;
+    min-height: 30px;
+    width: 30px;
+    height: 30px;
     font-size: 20px;
 }
 .lew-button-icon.lew-button-large {
     min-width: 36px;
     min-height: 36px;
-    font-size: 24px;
-}
-.lew-button-icon.lew-button-small {
-    min-width: 28px;
-    min-height: 28px;
-    font-size: 16px;
+    width: 36px;
+    height: 36px;
+    font-size: 26px;
 }
 
 .lew-button-icon.lew-button-info {

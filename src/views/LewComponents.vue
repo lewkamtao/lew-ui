@@ -239,6 +239,13 @@ group.value = [
                 label: 'New',
                 type: 'success',
             },
+            {
+                cname: '评论',
+                name: 'Comment',
+                path: '/Comment',
+                label: 'New',
+                type: 'success',
+            },
         ],
     },
     {
@@ -308,6 +315,13 @@ group.value = [
                 label: '',
                 type: 'success',
             },
+            {
+                cname: '加载',
+                name: 'Loading',
+                path: '/Loading',
+                label: '',
+                type: 'success',
+            },
 
             // {
             //     cname: '结果',
@@ -317,26 +331,8 @@ group.value = [
             //     type: 'success',
             // },
         ],
-    },
-    {
-        title: '其他',
-        items: [
-            {
-                cname: '灯箱',
-                name: 'FancyImage',
-                path: '/FancyImage',
-                label: '',
-                type: 'success',
-            },
-            {
-                cname: '播放器',
-                name: 'PlyrVideo',
-                path: '/PlyrVideo',
-                label: '',
-                type: 'success',
-            },
-        ],
-    },
+    }
+   
 ];
 </script>
 

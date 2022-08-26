@@ -9,4 +9,9 @@ export const inputTagProps = {
             return [];
         },
     },
+    // tag类型
+    type: {
+        type: String,
+        default: 'normal',
+    },
 };

@@ -45,6 +45,7 @@ defineProps({
     width: 100%;
     display: flex;
     flex-wrap: nowrap;
+    box-sizing: border-box;
 }
 .lew-flex-wrap {
     flex-wrap: wrap;
