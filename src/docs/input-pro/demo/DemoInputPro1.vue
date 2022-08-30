@@ -4,7 +4,7 @@ let v = ref('');
 </script>
 <template>
     <div style="width: 300px">
-        <lew-form-item direction="y" title="预输入">
+        <lew-form-item direction="x" title="预输入">
             <lew-input-pro
                 v-model="v"
                 style="width: 250px"
@@ -19,6 +19,6 @@ let v = ref('');
             >
             </lew-input-pro>
         </lew-form-item>
-        <p>值：{{ v }}</p>
+        <!-- <p>值：{{ v }}</p> -->
     </div>
 </template>
