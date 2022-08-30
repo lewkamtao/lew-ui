@@ -1,7 +1,9 @@
 import { defineConfig } from 'vitest/config';
-import vue from '@vitejs/plugin-vue';
+import Vue from '@vitejs/plugin-vue';
+import VueJsx from '@vitejs/plugin-vue-jsx';
+
 export default defineConfig({
-    plugins: [vue()],
+    plugins: [Vue(), VueJsx()],
     optimizeDeps: {
         disabled: true,
     },
