@@ -14,3 +14,4 @@ declare module '@vicons/fluent';
 declare module '@fancyapps/ui';
 declare module 'lodash/throttle';
 declare module '@vueuse/core';
+declare module 'moment';

@@ -13,6 +13,7 @@ export const getMonthDate = (year?: number, month?: number) => {
     }
 
     // 这个月第一天的Date对象
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const firstDay = new Date(year, month - 1, 1);
     // 那个这个月第一天具体是星期几
@@ -57,6 +58,7 @@ export const getMonthDate = (year?: number, month?: number) => {
         // 最后塞入到我们的ret中去
         ret.push({
             date: date,
+            year: year,
             month: thisMonth,
             showDate: showDate,
         });

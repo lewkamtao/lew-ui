@@ -58,7 +58,7 @@ defineExpose({ show, hide });
             </div>
         </template>
         <template #popover-body>
-            <lew-date
+            <Lew-date-range
                 v-model="dateValue"
                 :multiple="multiple"
                 @change="change"

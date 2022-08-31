@@ -32,7 +32,6 @@ let total = ref(2000);
             :total="total"
             @change="change"
         />
-        <div>pageNum:{{ pageNum }}</div>
-        <div>pageSize:{{ pageSize }}</div>
+  
     </div>
 </template>
