@@ -14,12 +14,11 @@
         "skipLibCheck": true
     },
     "include": [
-        "packages/**/*.ts",
-        "packages/**/*.vue",
         "src/**/*.ts",
         "src/**/*.d.ts",
         "src/**/*.tsx",
-        "src/**/*.vue"
+        "src/**/*.vue",
+        "packages"
     ],
     "references": [{ "path": "./tsconfig.node.json" }]
 }
