@@ -26,10 +26,28 @@ const columns = [
 ];
 const docsTable = ref([
     {
-        param: 'options',
-        description: '列表配置',
-        type: 'array',
-        default: '[]',
+        param: 'message',
+        description: '消息文字',
+        type: 'string  |  VNode',
+        default: '--',
+    },
+    {
+        param: 'type',
+        description: '消息类型',
+        type: `'success' | 'warning' | 'error' | 'info' | 'normal'`,
+        default: `'normal'`,
+    },
+    {
+        param: 'appendTo',
+        description: '挂载位置',
+        type: 'string',
+        default: 'body',
+    },
+    {
+        param: 'duration',
+        description: '时长',
+        type: 'number',
+        default: 3000,
     },
 ]);
 </script>

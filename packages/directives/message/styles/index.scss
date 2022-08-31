@@ -55,6 +55,9 @@
     .message-warning {
         color: var(--lew-warning-color-dark);
     }
+    .message-icon {
+        display: flex;
+    }
     .message-show {
         opacity: 1;
         transform: translateY(0px);
