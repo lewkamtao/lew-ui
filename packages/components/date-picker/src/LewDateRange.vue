@@ -12,28 +12,34 @@ import moment from 'moment';
 
 // const props = defineProps(dateProps);
 
-let dateValue = {
+let dateValue = ref({
     start: '2022-1-01',
     end: '2022-1-31',
-};
+});
+let _dateValue = ref({
+    start: Number(moment(dateValue.value.start).format('X')),
+    end: Number(moment(dateValue.value.end).format('X')),
+});
 
 // 获取当天日期对象
 let today = new Date();
 // 获取当前年份
-let curYear = ref(today.getFullYear());
+let curYear = today.getFullYear();
 // 获取当前月份
-let curMonth = ref(today.getMonth() + 1);
-let curDay = ref(today.getDate());
+let curMonth = today.getMonth() + 1;
+let curDay = today.getDate();
+let curDate = `${curYear}-${curMonth}-${curDay}`;
+let _curDate = Number(moment(`${curYear}-${curMonth}-${curDay}`).format('X'));
 
 // 年
-let _year1 = ref(moment(dateValue.start).year());
+let _year1 = ref(moment(dateValue.value.start).year());
 // 月
-let _month1 = ref(moment(dateValue.start).month() + 1);
+let _month1 = ref(moment(dateValue.value.start).month() + 1);
 
 // 年
-let _year2 = ref(moment(dateValue.end).year());
+let _year2 = ref(moment(dateValue.value.end).year());
 // 月
-let _month2 = ref(moment(dateValue.end).month() + 2);
+let _month2 = ref(moment(dateValue.value.end).month() + 2);
 
 if (_month2.value >= 12) {
     _year2.value += 1;
@@ -165,12 +171,112 @@ const setMonthDate = (type: number) => {
 
 const emit = defineEmits(['change', 'update:modelValue']);
 
-const checkToday = computed(() => (item: any) => {
-    return (
-        curDay.value == item.showDate &&
-        curYear.value == item.year &&
-        curMonth.value == item.month
-    );
+let i = 0;
+
+const hoverValue = (item: any) => {
+    if (item.date != item.showDate || i % 2 == 0) {
+        return;
+    }
+    let value = `${item.year}-${item.month}-${item.showDate}`;
+    let start = dateValue.value.start;
+    let end = dateValue.value.end;
+    end = value;
+    dateValue.value = {
+        start: start,
+        end: end,
+    };
+
+    _dateValue.value = {
+        start: Number(moment(start).format('X')),
+        end: Number(moment(end).format('X')),
+    };
+};
+
+const setValue = (item: any) => {
+    if (item.date != item.showDate) {
+        return;
+    }
+    let value = `${item.year}-${item.month}-${item.showDate}`;
+    let _value = Number(moment(value).format('X'));
+    let start = dateValue.value.start;
+    let end = dateValue.value.end;
+
+    if (i % 2 == 0) {
+        start = value;
+        end = '';
+    } else {
+        if (_value < _dateValue.value.start) {
+            start = value;
+            end = dateValue.value.start;
+        } else {
+            end = value;
+        }
+    }
+    dateValue.value = {
+        start: start,
+        end: end,
+    };
+
+    _dateValue.value = {
+        start: Number(moment(start).format('X')),
+        end: Number(moment(end).format('X')),
+    };
+
+    i += 1;
+};
+
+const getClass = computed(() => (type: string, item: any) => {
+    let dateStr = `${item.year}-${item.month}-${item.showDate}`;
+    let _date = Number(moment(dateStr).format('X'));
+    switch (type) {
+        case 'today':
+            if (_curDate == _date) {
+                return true;
+            }
+            break;
+        case 'rangeMonth':
+            if (item.date == item.showDate) {
+                return 'lew-date-item-curMonth';
+            }
+            break;
+        case 'selected':
+            if (
+                _dateValue.value?.start == _date ||
+                _dateValue.value?.end == _date
+            ) {
+                return 'lew-date-value-selected';
+            }
+            break;
+        case 'rangeSelected':
+            let _start = _dateValue.value?.start;
+            let _end = _dateValue.value?.end;
+            if (_start == _date) {
+                return 'lew-date-label-selected-start';
+            }
+            if (_end == _date) {
+                return 'lew-date-label-selected-end';
+            }
+            if (_start < _end) {
+                if (
+                    _start < _date &&
+                    _end > _date &&
+                    item.date == item.showDate
+                ) {
+                    return 'lew-date-label-selected';
+                }
+            } else {
+                if (
+                    _end < _date &&
+                    _start > _date &&
+                    item.date == item.showDate
+                ) {
+                    return 'lew-date-label-selected';
+                }
+            }
+            break;
+        default:
+            return '';
+    }
 });
 </script>
 <template>
@@ -215,17 +321,22 @@ const checkToday = computed(() => (item: any) => {
                     v-for="(item, index) in dateData1"
                     :key="`d${index}`"
                     class="lew-date-item"
-                    :class="{
-                        'lew-date-item-e':
-                            item.date > 0 && item.date <= item.showDate,
-                    }"
+                    :class="getClass('rangeMonth', item)"
+                    @click="setValue(item)"
+                    @mouseenter="hoverValue(item)"
                 >
-                    <div class="lew-date-label">
+                    <div
+                        class="lew-date-label"
+                        :class="getClass('rangeSelected', item)"
+                    >
                         <div
-                            v-if="checkToday(item)"
+                            v-if="getClass('today', item)"
                             class="lew-date-item-cur"
                         ></div>
-                        <div class="lew-date-value">
+                        <div
+                            class="lew-date-value"
+                            :class="getClass('selected', item)"
+                        >
                             {{ item.showDate }}
                         </div>
                     </div>
@@ -272,17 +383,22 @@ const checkToday = computed(() => (item: any) => {
                     v-for="(item, index) in dateData2"
                     :key="`d${index}`"
                     class="lew-date-item"
-                    :class="{
-                        'lew-date-item-e':
-                            item.date > 0 && item.date <= item.showDate,
-                    }"
+                    :class="getClass('rangeMonth', item)"
+                    @click="setValue(item)"
+                    @mouseenter="hoverValue(item)"
                 >
-                    <div class="lew-date-label">
+                    <div
+                        class="lew-date-label"
+                        :class="getClass('rangeSelected', item)"
+                    >
                         <div
-                            v-if="checkToday(item)"
+                            v-if="getClass('today', item)"
                             class="lew-date-item-cur"
                         ></div>
-                        <div class="lew-date-value">
+                        <div
+                            class="lew-date-value"
+                            :class="getClass('selected', item)"
+                        >
                             {{ item.showDate }}
                         </div>
                     </div>
@@ -373,7 +489,12 @@ const checkToday = computed(() => (item: any) => {
                     width: 24px;
                     height: 24px;
                     color: var(--lew-text-color-9);
-                    border-radius: var(--lew-form-border-radius);
+                    border-radius: 2px;
+                }
+
+                .lew-date-value-selected {
+                    background: var(--lew-primary-color);
+                    color: var(--lew-white-text-color);
                 }
 
                 .lew-date-item-cur {
@@ -387,14 +508,31 @@ const checkToday = computed(() => (item: any) => {
                     box-shadow: 0px 0px 12px #0e7346;
                 }
             }
+
+            .lew-date-label-selected-start {
+                background: var(--lew-primary-color-light);
+            }
+            .lew-date-label-selected-end {
+                background: var(--lew-primary-color-light);
+            }
         }
 
-        .lew-date-item-e {
+        .lew-date-item-curMonth {
             cursor: pointer;
 
             .lew-date-label {
                 .lew-date-value {
                     color: var(--lew-text-color-4);
+                }
+                .lew-date-value-selected {
+                    background: var(--lew-primary-color);
+                    color: var(--lew-white-text-color);
+                }
+            }
+            .lew-date-label-selected {
+                background: var(--lew-primary-color-light);
+                .lew-date-value {
+                    color: var(--lew-text-color-0);
                 }
             }
         }
@@ -407,19 +545,27 @@ const checkToday = computed(() => (item: any) => {
                     font-weight: 900;
                     background-color: var(--lew-success-color-light);
                 }
+                .lew-date-value-selected {
+                    background: var(--lew-primary-color);
+                    color: var(--lew-white-text-color);
+                }
             }
         }
 
-        .lew-date-item-e:hover {
+        .lew-date-item-curMonth:hover {
             .lew-date-label {
                 .lew-date-value {
                     background-color: var(--lew-primary-color-light);
                     color: var(--lew-primary-color-dark);
                 }
+                .lew-date-value-selected {
+                    background: var(--lew-primary-color);
+                    color: var(--lew-white-text-color);
+                }
             }
         }
 
-        .lew-date-item-e:active {
+        .lew-date-item-curMonth:active {
             .lew-date-label {
                 .lew-date-value {
                     transform: scale(0.9);

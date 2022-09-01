@@ -87,7 +87,9 @@ const checkToday = computed(() => (item: any) => {
     return (
         curDay.value == item.showDate &&
         curYear.value == item.year &&
-        curMonth.value == item.month
+        curMonth.value == item.month &&
+        item.date > 0 &&
+        item.date == item.showDate
     );
 });
 </script>
@@ -133,8 +135,7 @@ const checkToday = computed(() => (item: any) => {
                 :key="`d${index}`"
                 class="lew-date-item"
                 :class="{
-                    'lew-date-item-e':
-                        item.date > 0 && item.date <= item.showDate,
+                    'lew-date-item-e': item.date == item.showDate,
                     'lew-date-item-select': checkDateSelect(item),
                 }"
                 @click="selectDateFn(item)"
