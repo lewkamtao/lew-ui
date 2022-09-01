@@ -1,15 +1,18 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
-import { ChevronBack, ChevronForward } from '@vicons/ionicons5';
+import { ref, computed, onMounted } from 'vue';
+import {
+    ChevronDoubleLeft16Filled,
+    ChevronDoubleRight16Filled,
+    ChevronLeft16Filled,
+    ChevronRight16Filled,
+} from '@vicons/fluent';
 import { getMonthDate, getHeadDate } from './date';
-
 import { dateProps } from './props';
+import moment from 'moment';
 
 const props = defineProps(dateProps);
 
-let dateValue = ref<string | undefined>(props.modelValue);
-
-let dateArr: any = dateValue.value?.split('-');
+let dateValue = ref<string>(props.modelValue || '');
 
 // 获取当天日期对象
 let today = new Date();
@@ -19,12 +22,16 @@ let curYear = ref(today.getFullYear());
 let curMonth = ref(today.getMonth() + 1);
 let curDay = ref(today.getDate());
 
-// 年份
-let _year = ref(parseInt(dateArr[0]) || today.getFullYear());
-// 月份
-let _month = ref(parseInt(dateArr[1]) || today.getMonth() + 1);
+// 年
+let _year = ref(moment(dateValue.value).year());
+// 月
+let _month = ref(moment(dateValue.value).month() + 1);
 
 let dateData = ref(getMonthDate());
+
+onMounted(() => {
+    setMonthDate();
+});
 
 const prveMonth = () => {
     if (_month.value > 1) {
@@ -33,7 +40,7 @@ const prveMonth = () => {
         _year.value -= 1;
         _month.value = 12;
     }
-    dateData.value = getMonthDate(_year.value, _month.value);
+    setMonthDate();
 };
 
 const nextMonth = () => {
@@ -43,52 +50,75 @@ const nextMonth = () => {
         _year.value += 1;
         _month.value = 1;
     }
+    setMonthDate();
+};
+
+const prveYear = () => {
+    _year.value -= 1;
+    setMonthDate();
+};
+
+const nextYear = () => {
+    _year.value += 1;
+    setMonthDate();
+};
+
+const setMonthDate = () => {
     dateData.value = getMonthDate(_year.value, _month.value);
 };
 
 const emit = defineEmits(['change', 'update:modelValue']);
 
-const selectDateFn = (item) => {
-    let v = {
-        year: _year.value,
-        month: _month.value,
-        day: item.showDate,
-        value: `${_year.value}-${formatZero(_month.value)}-${formatZero(
-            item.showDate,
-        )}`,
-    };
-    dateValue.value = v.value;
+const selectDateFn = (item: any) => {
+    let v = `${item.year}-${item.month}-${item.showDate}`;
+    dateValue.value = v;
     emit('update:modelValue', dateValue.value);
     emit('change', v);
 };
 
-const formatZero = (num) => {
-    return num < 10 ? '0' + num : num;
-};
-
-const checkDateSelect = computed(() => (item) => {
+const checkDateSelect = computed(() => (item: any) => {
     if (item.date > 0 && item.date <= item.showDate) {
-        let c = `${_year.value}-${formatZero(_month.value)}-${formatZero(
-            item.showDate,
-        )}`;
-        return dateValue.value == c;
+        let v = `${_year.value}-${_month.value}-${item.showDate}`;
+        return dateValue.value == v;
     }
+});
+
+const checkToday = computed(() => (item: any) => {
+    return (
+        curDay.value == item.showDate &&
+        curYear.value == item.year &&
+        curMonth.value == item.month
+    );
 });
 </script>
 <template>
     <div class="lew-date">
         <lew-flex x="start" mode="between" class="lew-date-control">
-            <div class="cur-date">{{ _year }} / {{ formatZero(_month) }}</div>
-            <div class="lew-date-control-right">
-                <lew-button type="normal" size="small" @click="prveMonth">
-                    <ChevronBack />
+            <div class="lew-date-control-left">
+                <!-- 上一年 -->
+                <lew-button type="normal" size="small" @click="prveYear">
+                    <ChevronDoubleLeft16Filled />
                 </lew-button>
+                <!-- 上一月 -->
+                <lew-button type="normal" size="small" @click="prveMonth">
+                    <ChevronLeft16Filled />
+                </lew-button>
+            </div>
+            <!-- 日期 -->
+            <div class="cur-date">{{ _year }} 年 {{ _month }} 月</div>
+            <div class="lew-date-control-right">
+                <!-- 下一月 -->
                 <lew-button type="normal" size="small" @click="nextMonth">
-                    <ChevronForward />
+                    <ChevronRight16Filled />
+                </lew-button>
+                <!-- 下一年 -->
+                <lew-button type="normal" size="small" @click="nextYear">
+                    <ChevronDoubleRight16Filled />
                 </lew-button>
             </div>
         </lew-flex>
         <div class="lew-date-box">
+            <!-- 表头 周 -->
             <div
                 v-for="(item, index) in getHeadDate"
                 :key="`h${index}`"
@@ -96,6 +126,8 @@ const checkDateSelect = computed(() => (item) => {
             >
                 <div class="lew-date-num">{{ item }}</div>
             </div>
+
+            <!-- 表格 -->
             <div
                 v-for="(item, index) in dateData"
                 :key="`d${index}`"
@@ -103,15 +135,19 @@ const checkDateSelect = computed(() => (item) => {
                 :class="{
                     'lew-date-item-e':
                         item.date > 0 && item.date <= item.showDate,
-                    'lew-date-item-cur':
-                        curDay == item.showDate &&
-                        curYear == _year &&
-                        curMonth == _month,
                     'lew-date-item-select': checkDateSelect(item),
                 }"
                 @click="selectDateFn(item)"
             >
-                <div class="lew-date-num">{{ item.showDate }}</div>
+                <div class="lew-date-label">
+                    <div
+                        v-if="checkToday(item)"
+                        class="lew-date-item-cur"
+                    ></div>
+                    <div class="lew-date-value">
+                        {{ item.showDate }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -119,16 +155,19 @@ const checkDateSelect = computed(() => (item) => {
 
 <style lang="scss" scoped>
 .lew-date {
-    width: 260px;
+    width: 273px;
     user-select: none;
-    padding: 8px;
+    padding: 15px;
     box-sizing: border-box;
 
     .lew-date-control {
+        display: flex;
+        align-items: center;
         width: 100%;
-        padding: 0px 3px;
+        padding: 10px 5px;
         box-sizing: border-box;
         height: 30px;
+        margin-bottom: 10px;
 
         .cur-date {
             display: flex;
@@ -138,14 +177,26 @@ const checkDateSelect = computed(() => (item) => {
             color: var(--lew-text-color-0);
             padding-left: 8px;
         }
+        .lew-date-control-left,
+        .lew-date-control-right {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
 
         .lew-button {
-            margin-left: 5px;
             min-width: auto;
-            padding: 2px 8px;
+            padding: 2px;
+            width: 24px;
+            height: 24px;
+            opacity: 0.7;
+
             svg {
-                width: 14px;
+                width: 16px;
                 margin-right: 0px;
+            }
+            &:hover {
+                opacity: 1;
             }
         }
     }
@@ -157,61 +208,86 @@ const checkDateSelect = computed(() => (item) => {
         // border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
 
         .lew-date-item {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             width: calc(100% / 7);
             height: 36px;
-            padding: 3px;
 
-            box-sizing: border-box;
-            .lew-date-num {
+            .lew-date-label {
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
-                border-radius: var(--lew-form-border-radius);
                 font-size: 14px;
                 width: 100%;
-                height: 100%;
-                color: var(--lew-text-color-9);
+                height: 24px;
                 box-sizing: border-box;
                 transition: all 0.1s ease;
+                .lew-date-value {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 24px;
+                    height: 24px;
+                    color: var(--lew-text-color-9);
+                    border-radius: var(--lew-form-border-radius);
+                }
             }
         }
+
         .lew-date-item-e {
             cursor: pointer;
-            .lew-date-num {
-                color: var(--lew-text-color-4);
+
+            .lew-date-label {
+                .lew-date-value {
+                    color: var(--lew-text-color-4);
+                }
             }
         }
+
         .lew-date-item-cur {
-            .lew-date-num {
+            .lew-date-label {
                 position: relative;
                 color: var(--lew-success-color-dark);
                 font-weight: 900;
                 background-color: var(--lew-success-color-light);
             }
         }
+
         .lew-date-item-cur:hover {
-            .lew-date-num {
-                position: relative;
-                color: var(--lew-success-color-dark);
-                font-weight: 900;
-                background-color: var(--lew-success-color-light);
+            .lew-date-label {
+                .lew-date-value {
+                    position: relative;
+                    color: var(--lew-success-color-dark);
+                    font-weight: 900;
+                    background-color: var(--lew-success-color-light);
+                }
             }
         }
+
         .lew-date-item-e:hover {
-            .lew-date-num {
-                background-color: var(--lew-primary-color-light);
-                color: var(--lew-primary-color-dark);
+            .lew-date-label {
+                .lew-date-value {
+                    background-color: var(--lew-primary-color-light);
+                    color: var(--lew-primary-color-dark);
+                }
             }
         }
+
         .lew-date-item-e:active {
-            .lew-date-num {
-                transform: scale(0.9);
+            .lew-date-label {
+                .lew-date-value {
+                    transform: scale(0.9);
+                }
             }
         }
+
         .lew-date-item-select {
-            .lew-date-num {
-                background-color: var(--lew-primary-color-light);
-                color: var(--lew-primary-color-dark);
+            .lew-date-label {
+                .lew-date-value {
+                    background-color: var(--lew-primary-color-light);
+                    color: var(--lew-primary-color-dark);
+                }
             }
         }
     }
