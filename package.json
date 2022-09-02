@@ -10,6 +10,7 @@
     "license": "MIT",
     "scripts": {
         "dev": "vite",
+        "build:noemit": "vite build --mode demo",
         "build": "vue-tsc --noEmit && vite build --mode demo",
         "build:package": "vue-tsc --noEmit && vite build --mode package",
         "eslint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
