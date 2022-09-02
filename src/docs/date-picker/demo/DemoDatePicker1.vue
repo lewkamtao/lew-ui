@@ -15,7 +15,8 @@ const change2 = (e: any) => {
     }, 1000);
 };
 const change3 = (e: any) => {
-    LewMessage.info(e.date);
+    console.log(e);
+    LewMessage.info(`${e.date.start} 至 ${e.date.end}`);
 };
 </script>
 

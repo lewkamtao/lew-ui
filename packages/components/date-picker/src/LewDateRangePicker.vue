@@ -19,9 +19,9 @@ const hide = () => {
     lewPopoverRef.value.hide();
 };
 
-const change = (date: any, _date: any) => {
-    emit('update:modelValue', date);
-    emit('change', { date, _date, show, hide });
+const change = (e: any) => {
+    emit('update:modelValue', e.date);
+    emit('change', { ...e, show, hide });
     if (props.autoClose) {
         hide();
     }

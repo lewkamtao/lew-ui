@@ -5,12 +5,12 @@ import { ref } from 'vue';
 const columns = [
     {
         title: '参数名',
-        width: '200px',
+        width: '120px',
         field: 'param',
     },
     {
         title: '描述',
-        width: '320px',
+        width: '120px',
         field: 'description',
     },
     {
@@ -28,7 +28,7 @@ const docsTable = ref([
     {
         param: 'message',
         description: '消息文字',
-        type: 'string  |  VNode',
+        type: 'string',
         default: '--',
     },
     {
@@ -36,18 +36,6 @@ const docsTable = ref([
         description: '消息类型',
         type: `'success' | 'warning' | 'error' | 'info' | 'normal'`,
         default: `'normal'`,
-    },
-    {
-        param: 'appendTo',
-        description: '挂载位置',
-        type: 'string',
-        default: 'body',
-    },
-    {
-        param: 'duration',
-        description: '时长',
-        type: 'number',
-        default: 3000,
     },
 ]);
 </script>

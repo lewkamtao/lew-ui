@@ -28,8 +28,6 @@ const install: any = function (Vue: App): void {
         (key) => directives[key as keyof typeof directives],
     );
 
-    console.log(_directives, 'directives');
-
     _components.forEach((component: any) => {
         if (
             (component.hasOwnProperty('name') ||
@@ -44,12 +42,8 @@ const install: any = function (Vue: App): void {
         if (directive.hasOwnProperty('install')) {
             Vue.use(directive);
         } else if (directive.hasOwnProperty('name')) {
-            const compName = directive.name.includes('Lew')
-                ? directive.name
-                : `Lew${directive.name}`;
-            window[compName] = directive;
-            Vue.config.globalProperties[compName] = directive;
-            console.log(Vue.config.globalProperties, 'props');
+            window[directive.name] = directive;
+            Vue.config.globalProperties[directive.name] = directive;
         }
     });
 };

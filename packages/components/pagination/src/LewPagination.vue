@@ -9,7 +9,7 @@ import {
 import { Icon } from '@vicons/utils';
 const props = defineProps(paginationProps);
 
-const generateArray = (start, end) => {
+const generateArray = (start: any, end: any) => {
     return Array.from(new Array(end + 1).keys()).slice(start);
 };
 
@@ -71,7 +71,7 @@ let pageInterval = computed(() => {
 
 const emit = defineEmits(['update:pageNum', 'update:pageSize', 'change']);
 
-const changePage = (type, num) => {
+const changePage = (type: any, num: number) => {
     if (type == 'next') {
         pageNum.value += num;
     } else if (type == 'prve') {
@@ -99,12 +99,12 @@ const changePage = (type, num) => {
 let pageNumbackup = ref(1);
 let pageSizebackup = ref(20);
 
-const checkPageNum = (e) => {
+const checkPageNum = (e: any) => {
     e = String(e);
     pageNumbackup.value = Number(e.replace(/[^\d]/g, ''));
     changePage(false, pageNumbackup.value);
 };
-const checkPageSize = (e) => {
+const checkPageSize = (e: any) => {
     e = String(e);
     pageSizebackup.value = Number(e.replace(/[^\d]/g, ''));
     if (pageSizebackup.value < 1) {

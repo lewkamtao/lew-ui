@@ -57,7 +57,7 @@ let hide = () => {
 
 const emit = defineEmits(['change']);
 
-const change = (item) => {
+const change = (item: any) => {
     emit('change', { show, hide, value: item });
     setTimeout(() => {
         lewPopoverRef.value.hide();

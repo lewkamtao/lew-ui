@@ -21,9 +21,9 @@ const emit = defineEmits([
 let lewDropdownRef = ref();
 let lewInputProRef = ref();
 
-const input = (e) => {
-    emit('update:modelValue', e);
-    emit('input', e);
+const input = (value: string) => {
+    emit('update:modelValue', value);
+    emit('input', value);
 };
 
 const clear = () => {

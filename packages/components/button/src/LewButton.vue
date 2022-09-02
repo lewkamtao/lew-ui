@@ -4,7 +4,7 @@ import { buttonProps } from './props';
 const emit = defineEmits(['click']);
 const props = defineProps(buttonProps);
 
-const handleClick = (e) => {
+const handleClick = (e: any) => {
     if (props.disabled) return;
     emit('click', e);
 };

@@ -227,7 +227,11 @@ const setValue = (item: any) => {
     };
     if (i % 2 != 0) {
         emit('update:modelValue', [dateValue.value.start, dateValue.value.end]);
-        emit('change', { _dateValue, dateValue });
+        emit('change', {
+            _date: _dateValue.value,
+            date: dateValue.value,
+            dateValue: [dateValue.value.start, dateValue.value.end],
+        });
     }
 
     i += 1;

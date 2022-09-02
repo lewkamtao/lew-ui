@@ -12,7 +12,7 @@ const isInput = ref(false);
 const lewInputRef = ref();
 let isEnter = false;
 
-let delDownTimer;
+let delDownTimer: any;
 let delDownCheck = 0;
 watch(
     () => props.modelValue,
@@ -48,7 +48,7 @@ const openInput = () => {
     };
 };
 
-const blurFn = (e) => {
+const blurFn = (e: any) => {
     isInput.value = false;
     document.onkeydown = null;
     addTag();
@@ -66,7 +66,7 @@ const addTag = () => {
     inputValue.value = '';
 };
 
-const delTag = (index) => {
+const delTag = (index: number) => {
     tagsValue.value.splice(index, 1);
 };
 </script>
