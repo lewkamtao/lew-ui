@@ -1,14 +1,12 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { datePickerProps } from './props';
+import { dateRangePickerProps } from './props';
 import { CalendarLtr12Regular } from '@vicons/fluent';
 import { Icon } from '@vicons/utils';
-
-const props = defineProps(datePickerProps);
+const props = defineProps(dateRangePickerProps);
 
 let isShowPicker = ref(false);
-let dateValue = ref<string | undefined>(props.modelValue);
-
+let dateValue = ref(props.modelValue as any);
 let lewPopoverRef = ref();
 
 const emit = defineEmits(['change', 'update:modelValue']);
@@ -21,10 +19,9 @@ const hide = () => {
     lewPopoverRef.value.hide();
 };
 
-const change = (date: string) => {
-    console.log(date);
+const change = (date: any, _date: any) => {
     emit('update:modelValue', date);
-    emit('change', { date: date, show, hide });
+    emit('change', { date, _date, show, hide });
     if (props.autoClose) {
         hide();
     }
@@ -49,8 +46,12 @@ defineExpose({ show, hide });
                 <div v-show="!dateValue" class="lew-date-picker-placeholder">
                     请选择日期
                 </div>
-                <div v-show="dateValue" class="lew-date-picker-dateValue">
-                    {{ dateValue }}
+                <div class="lew-date-picker-dateValue lew-date-picker-start">
+                    {{ dateValue[0] }}
+                </div>
+                <div class="lew-date-picker-mid">-</div>
+                <div class="lew-date-picker-dateValue lew-date-picker-end">
+                    {{ dateValue[1] }}
                 </div>
                 <icon size="16px" class="lew-date-picker-icon">
                     <CalendarLtr12Regular />
@@ -73,11 +74,13 @@ defineExpose({ show, hide });
 }
 .lew-date-picker-input {
     display: inline-flex;
+    justify-content: space-around;
     align-items: center;
     position: relative;
+
     width: 100%;
     height: 35px;
-    padding: 5px;
+    padding: 5px 45px 5px 10px;
     font-size: 14px;
     line-height: 24px;
     overflow: hidden;
@@ -90,6 +93,7 @@ defineExpose({ show, hide });
     transition: all 0.15s ease;
     cursor: pointer;
     user-select: none;
+
     .lew-date-picker-icon {
         position: absolute;
         top: 50%;
@@ -100,9 +104,6 @@ defineExpose({ show, hide });
     }
     .lew-date-picker-placeholder {
         color: rgb(165, 165, 165);
-        margin-left: 7px;
-    }
-    .lew-date-picker-dateValue {
         margin-left: 7px;
     }
 }

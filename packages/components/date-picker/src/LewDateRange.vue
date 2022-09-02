@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, defineEmits } from 'vue';
 import {
     ChevronDoubleLeft16Filled,
     ChevronDoubleRight16Filled,
@@ -10,12 +10,13 @@ import { getMonthDate, getHeadDate } from './date';
 import { dateProps } from './props';
 import moment from 'moment';
 
-// const props = defineProps(dateProps);
+const props = defineProps(dateProps);
 
 let dateValue = ref({
-    start: '2022-1-01',
-    end: '2022-1-31',
+    start: props.modelValue[0],
+    end: props.modelValue[1],
 });
+
 let _dateValue = ref({
     start: Number(moment(dateValue.value.start).format('X')),
     end: Number(moment(dateValue.value.end).format('X')),
@@ -39,8 +40,11 @@ let _month1 = ref(moment(dateValue.value.start).month() + 1);
 // 年
 let _year2 = ref(moment(dateValue.value.end).year());
 // 月
-let _month2 = ref(moment(dateValue.value.end).month() + 2);
+let _month2 = ref(moment(dateValue.value.end).month() + 1);
 
+if (_year1.value == _year2.value && _month1.value == _month2.value) {
+    _month2.value += 1;
+}
 if (_month2.value >= 12) {
     _year2.value += 1;
     _month2.value = 1;
@@ -221,6 +225,10 @@ const setValue = (item: any) => {
         start: Number(moment(start).format('X')),
         end: Number(moment(end).format('X')),
     };
+    if (i % 2 != 0) {
+        emit('update:modelValue', [dateValue.value.start, dateValue.value.end]);
+        emit('change', { _dateValue, dateValue });
+    }
 
     i += 1;
 };
@@ -239,6 +247,11 @@ const getClass = computed(() => (type: string, item: any) => {
                 return 'lew-date-item-curMonth';
             }
             break;
+        case 'notRangeMonth':
+            if (item.date != item.showDate) {
+                return '';
+            }
+            break;
         case 'selected':
             if (
                 _dateValue.value?.start == _date ||
@@ -251,10 +264,18 @@ const getClass = computed(() => (type: string, item: any) => {
             let _start = _dateValue.value?.start;
             let _end = _dateValue.value?.end;
             if (_start == _date) {
-                return 'lew-date-label-selected-start';
+                if (_start > _end) {
+                    return 'lew-date-label-selected-end';
+                } else {
+                    return 'lew-date-label-selected-start';
+                }
             }
             if (_end == _date) {
-                return 'lew-date-label-selected-end';
+                if (_start > _end) {
+                    return 'lew-date-label-selected-start';
+                } else {
+                    return 'lew-date-label-selected-end';
+                }
             }
             if (_start < _end) {
                 if (
@@ -510,10 +531,22 @@ const getClass = computed(() => (type: string, item: any) => {
             }
 
             .lew-date-label-selected-start {
-                background: var(--lew-primary-color-light);
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 0, 0, 0) 0%,
+                    rgba(0, 0, 0, 0) 50%,
+                    var(--lew-primary-color-light) 51%,
+                    var(--lew-primary-color-light) 100%
+                );
             }
             .lew-date-label-selected-end {
-                background: var(--lew-primary-color-light);
+                background: linear-gradient(
+                    to right,
+                    var(--lew-primary-color-light) 0%,
+                    var(--lew-primary-color-light) 50%,
+                    rgba(0, 0, 0, 0) 51%,
+                    rgba(0, 0, 0, 0) 100%
+                );
             }
         }
 

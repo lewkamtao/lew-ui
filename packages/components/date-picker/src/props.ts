@@ -1,8 +1,8 @@
 export const datePickerProps = {
     modelValue: {
-        // 父组件 v-model 没有指定参数名，则默认是 modelValue
         type: String,
-        required: true,
+        required: false,
+        default: '2022-9-2',
     },
     multiple: {
         type: Boolean,
@@ -10,15 +10,30 @@ export const datePickerProps = {
     },
     autoClose: {
         type: Boolean,
+        default: true,
+    },
+};
+
+export const dateRangePickerProps = {
+    modelValue: {
+        type: Array,
+        required: false,
+    },
+    multiple: {
+        type: Boolean,
         default: false,
+    },
+    autoClose: {
+        type: Boolean,
+        default: true,
     },
 };
 
 export const dateProps = {
     modelValue: {
-        // 父组件 v-model 没有指定参数名，则默认是 modelValue
         type: String,
         required: true,
+        default: ['2022-9-2', '2022-9-30'],
     },
     multiple: {
         type: Boolean,
