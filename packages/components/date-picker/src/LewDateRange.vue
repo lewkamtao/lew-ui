@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted, defineEmits } from 'vue';
+import { ref, computed, onMounted, defineEmits, watch } from 'vue';
 import {
     ChevronDoubleLeft16Filled,
     ChevronDoubleRight16Filled,
@@ -21,6 +21,16 @@ let _dateValue = ref({
     start: Number(moment(dateValue.value.start).format('X')),
     end: Number(moment(dateValue.value.end).format('X')),
 });
+
+watch(
+    () => props.modelValue,
+    () => {
+        dateValue.value = {
+            start: props.modelValue[0],
+            end: props.modelValue[1],
+        };
+    },
+);
 
 // 获取当天日期对象
 let today = new Date();

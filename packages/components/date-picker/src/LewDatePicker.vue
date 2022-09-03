@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { datePickerProps } from './props';
 import { CalendarLtr12Regular } from '@vicons/fluent';
 import { Icon } from '@vicons/utils';
@@ -10,6 +10,13 @@ let isShowPicker = ref(false);
 let dateValue = ref<string | undefined>(props.modelValue);
 
 let lewPopoverRef = ref();
+
+watch(
+    () => props.modelValue,
+    () => {
+        dateValue.value = props.modelValue;
+    },
+);
 
 const emit = defineEmits(['change', 'update:modelValue']);
 
@@ -22,7 +29,6 @@ const hide = () => {
 };
 
 const change = (date: string) => {
-    console.log(date);
     emit('update:modelValue', date);
     emit('change', { date: date, show, hide });
     if (props.autoClose) {
