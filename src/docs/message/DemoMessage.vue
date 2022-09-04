@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { DemoMessage1, DemoMessage1_code } from './demo';
 import { ref } from 'vue';
-
 const columns = [
     {
         title: '参数名',
-        width: '120px',
+        width: '200px',
         field: 'param',
     },
     {
         title: '描述',
-        width: '120px',
+        width: '320px',
         field: 'description',
     },
     {
@@ -28,7 +27,7 @@ const docsTable = ref([
     {
         param: 'message',
         description: '消息文字',
-        type: 'string',
+        type: 'string  |  VNode',
         default: '--',
     },
     {
@@ -36,6 +35,18 @@ const docsTable = ref([
         description: '消息类型',
         type: `'success' | 'warning' | 'error' | 'info' | 'normal'`,
         default: `'normal'`,
+    },
+    {
+        param: 'appendTo',
+        description: '挂载位置',
+        type: 'string',
+        default: 'body',
+    },
+    {
+        param: 'duration',
+        description: '时长',
+        type: 'number',
+        default: 3000,
     },
 ]);
 </script>
