@@ -42,8 +42,13 @@ const install: any = function (Vue: App): void {
         if (directive.hasOwnProperty('install')) {
             Vue.use(directive);
         } else if (directive.hasOwnProperty('name')) {
-            window[directive.name] = directive;
-            Vue.config.globalProperties[directive.name] = directive;
+            const compName = directive.name.includes('Lew')
+                ? directive.name
+                : `Lew${directive.name}`;
+            console.log(compName, 'compName');
+            window[compName] = directive;
+            Vue.config.globalProperties[compName] = directive;
+            console.log(Vue.config.globalProperties, 'props');
         }
     });
 };

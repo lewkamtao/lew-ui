@@ -1,3 +1,7 @@
+import { h, render, shallowReactive, VNode } from 'vue';
+import { isString } from 'lodash';
+
+import messageContructor from './message.vue';
 import '../styles/index.scss';
 
 const warning = (content: string) => {
