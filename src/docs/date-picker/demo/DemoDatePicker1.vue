@@ -15,7 +15,6 @@ const change2 = (e: any) => {
     }, 1000);
 };
 const change3 = (e: any) => {
-    console.log(e);
     LewMessage.info(`${e.date.start} 至 ${e.date.end}`);
 };
 </script>
@@ -24,13 +23,11 @@ const change3 = (e: any) => {
     <lew-flex direction="column" x="start">
         <lew-title size="14px">自动关闭</lew-title>
         <lew-date-picker v-model="value" @change="change1" />
-        {{ value }}
         <br /><br />
         <lew-title size="14px">非自动关闭</lew-title>
         <lew-date-picker v-model="value" :autoClose="false" @change="change2" />
         <br /><br />
         <lew-title size="14px">范围选择</lew-title>
         <lew-date-range-picker v-model="dateRangeValue" @change="change3" />
-        {{ dateRangeValue }}
     </lew-flex>
 </template>

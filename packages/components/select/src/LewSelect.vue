@@ -111,9 +111,7 @@ const delTag = (i: number) => {
     }
 };
 
-const lewSelectWidth = computed(
-    () => lewSelectRef.value?.offsetWidth - 12 + 'px',
-);
+const lewSelectWidth = computed(() => lewSelectRef.value?.offsetWidth + 'px');
 
 const show = () => {
     lewPopverRef1.value.show();
@@ -356,8 +354,8 @@ defineExpose({ show, hide });
 }
 .lew-select-body {
     width: 100%;
-
     box-sizing: border-box;
+    padding: 5px;
     .options-box {
         overflow-y: auto;
         overflow-x: hidden;
