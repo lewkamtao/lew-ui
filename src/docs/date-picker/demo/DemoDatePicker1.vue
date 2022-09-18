@@ -25,7 +25,11 @@ const change3 = (e: any) => {
         <lew-date-picker v-model="value" @change="change1" />
         <br /><br />
         <lew-title size="14px">非自动关闭</lew-title>
-        <lew-date-picker v-model="value" :autoClose="false" @change="change2" />
+        <lew-date-picker
+            v-model="value"
+            :auto-close="false"
+            @change="change2"
+        />
         <br /><br />
         <lew-title size="14px">范围选择</lew-title>
         <lew-date-range-picker v-model="dateRangeValue" @change="change3" />

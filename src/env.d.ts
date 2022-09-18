@@ -13,4 +13,5 @@ declare module 'lew-ui';
 declare module '@vicons/fluent';
 declare const LewMessage;
 declare const LewDialog;
+
 declare const LewNotification: typeof import('../packages/directives')['LewNotification'];

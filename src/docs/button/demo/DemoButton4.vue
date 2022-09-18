@@ -10,9 +10,9 @@ let loading = ref(false);
         <lew-button type="success" round loading>确定</lew-button>
         <lew-button
             size="large"
-            @click="loading = !loading"
             type="error"
             :loading="loading"
+            @click="loading = !loading"
             >点击触发</lew-button
         >
     </lew-flex>

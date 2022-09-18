@@ -24,17 +24,13 @@ const columns = [
         field: 'default',
     },
 ];
-const docsTable = ref([
- 
-]);
+const docsTable = ref([]);
 </script>
 
 <template>
     <div class="demo-wrapper">
         <lew-title>Comment</lew-title>
-        <p class="sub-title">
-            这是一个简单评论列表
-        </p>
+        <p class="sub-title">这是一个简单评论列表</p>
         <lew-demo-box title="常规" :code="DemoComment1_code">
             <demo-comment1>删除</demo-comment1></lew-demo-box
         >

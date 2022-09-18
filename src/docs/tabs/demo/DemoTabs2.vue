@@ -21,10 +21,5 @@ const change = (e: Options) => {
 </script>
 
 <template>
-    <lew-tabs
-        round
-        v-model="value"
-        :options="options"
-        @change="change"
-    />
+    <lew-tabs v-model="value" round :options="options" @change="change" />
 </template>

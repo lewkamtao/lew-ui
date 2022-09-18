@@ -8,9 +8,9 @@ let title = ref('加载中');
     <div style="width: 300px">
         <lew-title size="14px">常规</lew-title>
         <lew-flex
+            v-loading="{ isShow: true }"
             direction="column"
             style="padding: 20px"
-            v-loading="{ isShow: true }"
         >
             <lew-title :bold="700" style="margin-bottom: 20px"
                 >登录你的账户
@@ -37,9 +37,9 @@ let title = ref('加载中');
         <lew-title size="14px">自定义文字</lew-title>
 
         <lew-flex
+            v-loading="{ isShow: isShow, title: title }"
             direction="column"
             style="margin-bottom: 20px; padding: 20px"
-            v-loading="{ isShow: isShow, title: title }"
         >
             <lew-title :bold="700" style="margin-bottom: 20px"
                 >登录你的账户

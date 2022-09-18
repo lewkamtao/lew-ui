@@ -85,6 +85,7 @@ onMounted(() => {
     cursor: pointer;
     color: var(--lew-primary-color);
 }
+
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.5s ease;

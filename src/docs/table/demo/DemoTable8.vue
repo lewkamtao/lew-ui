@@ -145,9 +145,9 @@ const getChecked = computed(() => (id: any) => {
         <template #release_date="{ row }"> {{ row.release_date }} </template>
         <template #directors="{ row }">
             <lew-tag
-                type="warning"
                 v-for="(item, index) in row.directors"
                 :key="index"
+                type="warning"
             >
                 {{ item }}</lew-tag
             >

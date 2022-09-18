@@ -32,6 +32,5 @@ let total = ref(2000);
             :total="total"
             @change="change"
         />
-  
     </div>
 </template>

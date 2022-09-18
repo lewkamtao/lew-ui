@@ -101,6 +101,7 @@ const add = (type: string, title: string, content: string, delay: number) => {
     );
 
     let timer: (() => void) | undefined = undefined;
+    let lock = false; // 加上锁 避免 点击关闭和鼠标移出事件重叠 bug
 
     function startTimer() {
         if (delay > 0) {
@@ -115,12 +116,17 @@ const add = (type: string, title: string, content: string, delay: number) => {
     }
 
     function handleClose() {
+        if (lock) {
+            return;
+        }
+        lock = true;
+
         newMessage.setAttribute(
             'class',
             `lew-notification lew-notification-${type} lew-notification-hidden`,
         );
         setTimeout(() => {
-            LewMessageDom?.removeChild(newMessage);
+            if (newMessage) LewMessageDom?.removeChild(newMessage);
         }, 250);
     }
 
@@ -129,6 +135,7 @@ const add = (type: string, title: string, content: string, delay: number) => {
     newMessage.addEventListener('mouseleave', startTimer);
 
     setTimeout(() => {
+        lock = false;
         newMessage.setAttribute(
             'class',
             `lew-notification lew-notification-${type} lew-notification-show`,

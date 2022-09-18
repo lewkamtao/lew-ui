@@ -208,7 +208,7 @@ const message = (type: string) => {
                 </div>
             </div>
             <p>一个 Vue 3 组件库</p>
-            <lew-button @click="router.push('/Avatar')" style="margin-top: 10px"
+            <lew-button style="margin-top: 10px" @click="router.push('/Avatar')"
                 >开始使用</lew-button
             >
         </div>

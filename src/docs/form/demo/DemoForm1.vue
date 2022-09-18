@@ -99,9 +99,9 @@ let d = ref('2020-12-12');
         </lew-form-item>
         <lew-form-item direction="y" title="爱好">
             <lew-tabs
+                v-model="user.pay"
                 width="100%"
                 item-width="100%"
-                v-model="user.pay"
                 :options="pay_options"
             />
         </lew-form-item>

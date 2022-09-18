@@ -63,7 +63,7 @@ const addMessage = (type: string, content: string) => {
                 `message message-${type} message-hidden`,
             );
             setTimeout(() => {
-                LewMessageDom?.removeChild(newMessage);
+                if (newMessage) LewMessageDom?.removeChild(newMessage);
             }, 250);
         }, 3000);
     }, 10);

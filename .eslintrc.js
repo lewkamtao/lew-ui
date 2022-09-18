@@ -1,3 +1,5 @@
+const { tabWidth } = require("./prettier.config")
+
 module.exports = {
     parser: 'vue-eslint-parser',
     parserOptions: {
@@ -14,5 +16,13 @@ module.exports = {
         'prettier',
         'plugin:prettier/recommended',
     ],
-    rules: { 'prettier/prettier': 'error' },
+    rules: {
+        'prettier/prettier': ['error',
+            {
+                userTabs: true,
+                tabWidth: 4,
+            },
+        ]
+
+    },
 };
