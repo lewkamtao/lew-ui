@@ -7,7 +7,12 @@ const open = (type: any, layout: string) => {
         content: '你是否要删除该账号',
         layout: layout,
         ok: () => {
-            console.log('确认删除');
+            return new Promise((resolve) => {
+                console.log(1);
+                setTimeout(() => {
+                    resolve(200);
+                }, 1000);
+            });
         },
         cancel: () => {
             console.log('取消');

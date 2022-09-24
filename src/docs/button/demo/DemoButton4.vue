@@ -1,7 +1,16 @@
 <script setup lang="ts">
+import { resolve } from 'path';
 import { ref } from 'vue';
 
 let loading = ref(false);
+
+const mockFn = () => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(true);
+        }, 1000);
+    });
+};
 </script>
 
 <template>
@@ -14,6 +23,10 @@ let loading = ref(false);
             :loading="loading"
             @click="loading = !loading"
             >点击触发</lew-button
+        >
+
+        <lew-button size="small" type="success" :request="mockFn"
+            >模拟请求</lew-button
         >
     </lew-flex>
 </template>

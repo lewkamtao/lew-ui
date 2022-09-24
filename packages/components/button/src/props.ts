@@ -11,6 +11,9 @@ export const buttonProps = {
         type: Boolean,
         default: false,
     },
+    request: {
+        type: Function,
+    },
     disabled: {
         type: Boolean,
         default: false,

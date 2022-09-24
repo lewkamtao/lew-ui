@@ -12,7 +12,7 @@ let mainRef: any = ref(null);
 watch(route, () => {
     setTimeout(() => {
         if (mainRef.value) mainRef.value.scrollTop = 0;
-    }, 250);
+    }, 50);
     isShowSider.value = false;
 });
 

@@ -119,7 +119,6 @@ const _options = computed(() => {
     flex-direction: column;
     user-select: none;
     overflow: auto;
-    padding: 3px;
     box-sizing: border-box;
     .lew-dropdown-option {
         padding: 0px 10px;

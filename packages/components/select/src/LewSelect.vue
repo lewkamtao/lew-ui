@@ -111,7 +111,9 @@ const delTag = (i: number) => {
     }
 };
 
-const lewSelectWidth = computed(() => lewSelectRef.value?.offsetWidth + 'px');
+const lewSelectWidth = computed(
+    () => lewSelectRef.value?.offsetWidth - 12 + 'px',
+);
 
 const show = () => {
     lewPopverRef1.value.show();
@@ -215,29 +217,40 @@ defineExpose({ show, hide });
         <template #popover-body>
             <div
                 class="lew-select-body"
-                :class="{ 'lew-select-multiple-body': multiple }"
+                :class="`
+                    ${size ? 'lew-select-body-' + size : ''} 
+                    ${multiple ? 'lew-select-multiple-body' : ''}  
+                    `"
                 :style="`width:${lewSelectWidth}`"
             >
                 <div class="options-box">
-                    <div
-                        v-for="item in options"
-                        :key="item.value"
-                        class="item"
-                        :class="{
-                            'lew-select-checked': multiple
-                                ? multipleV.includes(item.value)
-                                : v == item.value,
-                        }"
-                        @click="changeFn(item)"
-                    >
-                        <lew-checkbox
-                            v-if="multiple"
-                            class="lew-select-checkbox"
-                            label=""
-                            :checked="multipleV.includes(item.value)"
-                        />
-                        <div class="lew-select-label">{{ item.label }}</div>
-                    </div>
+                    <template v-for="item in options" :key="item.value">
+                        <label class="item" v-if="multiple">
+                            <lew-checkbox
+                                :size="size"
+                                class="lew-select-checkbox"
+                                :label="item.label"
+                                :checked="multipleV.includes(item.value)"
+                            />
+                        </label>
+                    </template>
+
+                    <template v-for="item in options" :key="item.value">
+                        <label
+                            v-if="!multiple"
+                            class="item"
+                            :class="{
+                                'lew-select-checked': multiple
+                                    ? multipleV.includes(item.value)
+                                    : v == item.value,
+                            }"
+                            @click="changeFn(item)"
+                        >
+                            <div class="lew-select-label">
+                                {{ item.label }}
+                            </div>
+                        </label>
+                    </template>
                 </div>
             </div>
         </template>
@@ -312,6 +325,7 @@ defineExpose({ show, hide });
             font-size: var(--lew-form-font-size-small);
         }
     }
+
     .lew-select-medium {
         padding: var(--lew-form-input-padding-medium);
         line-height: var(--lew-form-input-line-height-medium);
@@ -355,14 +369,12 @@ defineExpose({ show, hide });
 .lew-select-body {
     width: 100%;
     box-sizing: border-box;
-    padding: 5px;
     .options-box {
         overflow-y: auto;
         overflow-x: hidden;
         max-height: 300px;
         height: auto;
         box-sizing: border-box;
-        padding: 3px;
         transition: all 0.25s ease;
         font-size: 0px;
 
@@ -371,8 +383,6 @@ defineExpose({ show, hide });
             display: inline-flex;
             align-items: center;
             width: 100%;
-            height: 32px;
-            line-height: 32px;
             font-size: 14px;
             overflow: hidden;
             white-space: nowrap;
@@ -424,12 +434,9 @@ defineExpose({ show, hide });
         border-radius: 5px;
     }
 }
+
 .lew-select-multiple-body {
     .options-box {
-        .item {
-            height: 36px;
-            line-height: 36px;
-        }
         .lew-select-label {
             position: absolute;
             left: 0px;
@@ -437,6 +444,33 @@ defineExpose({ show, hide });
             z-index: 9;
             transform: translateY(-50%);
             padding-left: 40px;
+        }
+    }
+}
+
+.lew-select-body-small {
+    .options-box {
+        .item {
+            height: 28px;
+            line-height: 28px;
+        }
+    }
+}
+
+.lew-select-body-medium {
+    .options-box {
+        .item {
+            height: 30px;
+            line-height: 30px;
+        }
+    }
+}
+
+.lew-select-body-large {
+    .options-box {
+        .item {
+            height: 32px;
+            line-height: 32px;
         }
     }
 }

@@ -4,7 +4,9 @@
         :class="`
         ${block ? 'lew-radio-block' : ''}  
         ${checked ? 'lew-radio-checked' : ''}   
-        ${!iconable ? 'lew-radio-unicon' : ''}`"
+        ${!iconable ? 'lew-radio-unicon' : ''}
+        ${size ? 'lew-radio-' + size : ''} 
+        `"
     >
         <div class="icon-radio-box" v-if="iconable">
             <div class="icon-radio"></div>
@@ -37,6 +39,10 @@ defineProps({
     },
     checked: {
         type: Boolean,
+    },
+    size: {
+        type: String,
+        default: 'medium',
     },
 });
 
@@ -84,6 +90,31 @@ const setChecked = () => {
         margin-left: 6px;
     }
 }
+
+.lew-radio-small {
+    font-size: 13px;
+    .icon-radio-box {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+.lew-radio-medium {
+    font-size: 14px;
+    .icon-radio-box {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.lew-radio-large {
+    font-size: 15px;
+    .icon-radio-box {
+        width: 18px;
+        height: 18px;
+    }
+}
+
 .lew-radio-unicon.lew-radio-block {
     padding: 4px 12px;
     .lew-radio-label {

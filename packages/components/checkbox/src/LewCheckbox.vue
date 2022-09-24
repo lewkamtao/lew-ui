@@ -1,10 +1,12 @@
 <template>
     <label
         class="lew-checkbox"
-        :class="`${block ? 'lew-checkbox-block' : ''} ${
-            round ? 'lew-checkbox-round' : ''
-        } ${_checked ? 'lew-checkbox-checked' : ''} 
+        :class="`
+        ${block ? 'lew-checkbox-block' : ''} 
+        ${round ? 'lew-checkbox-round' : ''} 
+        ${_checked ? 'lew-checkbox-checked' : ''} 
         ${!iconable ? 'lew-checkbox-unicon' : ''}
+        ${size ? 'lew-checkbox-' + size : ''}
         `"
     >
         <div class="icon-checkbox-box" v-if="iconable">
@@ -63,6 +65,10 @@ const props = defineProps({
             return false;
         },
     },
+    size: {
+        type: String,
+        default: 'medium',
+    },
 });
 
 watch(
@@ -102,7 +108,7 @@ const setChecked = (e: Event) => {
         height: 18px;
         border: 2px var(--lew-form-border-color-hover) solid;
         box-sizing: border-box;
-        border-radius: var(--lew-form-border-radius);
+        border-radius: 3px;
         transition: var(--lew-form-transition);
         background-color: var(--lew-bgcolor-0);
 
@@ -116,6 +122,32 @@ const setChecked = (e: Event) => {
     }
     .lew-checkbox-label {
         margin-left: 6px;
+    }
+}
+
+.lew-checkbox-small {
+    font-size: 13px;
+    .icon-checkbox-box {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+.lew-checkbox-medium {
+    font-size: 14px;
+
+    .icon-checkbox-box {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.lew-checkbox-large {
+    font-size: 15px;
+
+    .icon-checkbox-box {
+        width: 18px;
+        height: 18px;
     }
 }
 

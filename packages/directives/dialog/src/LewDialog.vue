@@ -16,9 +16,9 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-    closeOnClickOverlay: {
+    closeonClickOverlay: {
         type: Boolean,
-        default: true,
+        default: false,
     },
     // eslint-disable-next-line vue/require-default-prop
     type: {
@@ -38,9 +38,12 @@ const props = defineProps({
         default: 'normal',
     },
 });
+
+let loading = ref<Boolean>(false);
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const OnClickOverlay = () => {
-    if (props.closeOnClickOverlay) {
+const onClickOverlay = () => {
+    if (props?.closeonClickOverlay) {
         close();
     }
 };
@@ -54,9 +57,11 @@ const close = () => {
     }, 245);
 };
 
-const okFn = () => {
+const okFn = async () => {
     if (typeof props.ok === 'function') {
-        props.ok();
+        loading.value = true;
+        await props.ok();
+        loading.value = false;
     }
     close();
 };
@@ -71,80 +76,102 @@ const cancelFn = () => {
 const emit = defineEmits(['update:visible']);
 </script>
 <template>
-    <teleport to="body">
-        <div
-            v-if="visible"
-            class="lew-dialog"
-            :style="
-                isShowDialog
-                    ? 'animation: lewDialogOpen 0.25s;'
-                    : 'animation: lewDialogClose 0.25s;'
-            "
-            @click="OnClickOverlay"
-        >
+    <div>
+        <teleport to="body">
             <div
-                v-if="layout == 'normal'"
-                class="lew-dialog-box lew-dialog-box-normal"
-                @click.stop
+                v-if="visible"
+                class="lew-dialog"
+                :style="
+                    isShowDialog
+                        ? 'animation: lewDialogOpen 0.25s;'
+                        : 'animation: lewDialogClose 0.25s;'
+                "
+                @click="onClickOverlay"
             >
-                <div class="btn-close" @click="cancelFn">
-                    <Icon size="18"> <Dismiss24Filled /></Icon>
+                <div
+                    v-if="layout == 'normal'"
+                    class="lew-dialog-box lew-dialog-box-normal"
+                    @click.stop
+                >
+                    <div class="btn-close" @click="cancelFn">
+                        <Icon size="18"> <Dismiss24Filled /></Icon>
+                    </div>
+                    <div class="left">
+                        <Icon size="32" :class="`icon-${type}`">
+                            <Info24Regular v-if="type == `normal`" />
+                            <Warning24Regular v-if="type == `warning`" />
+                            <CheckmarkCircle24Regular
+                                v-if="type == `success`"
+                            />
+                            <ErrorCircle24Regular v-if="type == `error`" />
+                            <Alert24Regular v-if="type == `info`" />
+                        </Icon>
+                    </div>
+                    <div class="right">
+                        <header>
+                            <slot name="title" />
+                            <span
+                                class="gulu-dialog-close"
+                                @click="close"
+                            ></span>
+                        </header>
+                        <main>
+                            <slot name="content" />
+                        </main>
+                        <footer>
+                            <lew-Button
+                                size="small"
+                                type="blank"
+                                @click="cancelFn"
+                                >取消</lew-Button
+                            >
+                            <lew-button
+                                size="small"
+                                :loading="loading"
+                                @click="okFn"
+                                >确认</lew-button
+                            >
+                        </footer>
+                    </div>
                 </div>
-                <div class="left">
-                    <Icon size="32" :class="`icon-${type}`">
-                        <Info24Regular v-if="type == `normal`" />
-                        <Warning24Regular v-if="type == `warning`" />
-                        <CheckmarkCircle24Regular v-if="type == `success`" />
-                        <ErrorCircle24Regular v-if="type == `error`" />
-                        <Alert24Regular v-if="type == `info`" />
-                    </Icon>
-                </div>
-                <div class="right">
-                    <header>
-                        <slot name="title" />
-                        <span class="gulu-dialog-close" @click="close"></span>
-                    </header>
-                    <main>
-                        <slot name="content" />
-                    </main>
-                    <footer>
-                        <lew-Button size="small" type="blank" @click="cancelFn"
+
+                <div
+                    v-if="layout == 'easy'"
+                    class="lew-dialog-box lew-dialog-box-easy"
+                >
+                    <div class="left">
+                        <Icon size="22" :class="`icon-${type}`">
+                            <Info24Regular v-if="type == `normal`" />
+                            <Warning24Regular v-if="type == `warning`" />
+                            <CheckmarkCircle24Regular
+                                v-if="type == `success`"
+                            />
+                            <ErrorCircle24Regular v-if="type == `error`" />
+                            <Alert24Regular v-if="type == `info`" />
+                        </Icon>
+                    </div>
+                    <div class="right">
+                        <main>
+                            <slot name="content" />
+                        </main>
+                        <lew-Button
+                            style="margin-right: 10px"
+                            type="normal"
+                            size="small"
+                            @click="cancelFn"
                             >取消</lew-Button
                         >
-                        <lew-button size="small" @click="okFn">确认</lew-button>
-                    </footer>
+                        <lew-button
+                            size="small"
+                            :loading="loading"
+                            @click="okFn"
+                            >确认</lew-button
+                        >
+                    </div>
                 </div>
             </div>
-
-            <div
-                v-if="layout == 'easy'"
-                class="lew-dialog-box lew-dialog-box-easy"
-            >
-                <div class="left">
-                    <Icon size="22" :class="`icon-${type}`">
-                        <Info24Regular v-if="type == `normal`" />
-                        <Warning24Regular v-if="type == `warning`" />
-                        <CheckmarkCircle24Regular v-if="type == `success`" />
-                        <ErrorCircle24Regular v-if="type == `error`" />
-                        <Alert24Regular v-if="type == `info`" />
-                    </Icon>
-                </div>
-                <div class="right">
-                    <main>
-                        <slot name="content" />
-                    </main>
-                    <lew-Button
-                        style="margin-right: 10px"
-                        type="normal"
-                        size="small"
-                        @click="cancelFn"
-                        >取消</lew-Button
-                    >
-                    <lew-button size="small" @click="okFn">确认</lew-button>
-                </div>
-            </div>
-        </div>
-    </teleport>
+        </teleport>
+    </div>
 </template>
 
 <style lang="scss" scoped>

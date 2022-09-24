@@ -14,7 +14,22 @@ let value = ref('');
 <template>
     <lew-radio-group
         v-model="value"
+        size="small"
         direction="x"
         :options="options"
-    ></lew-radio-group>
+    />
+    <br />
+    <lew-radio-group
+        v-model="value"
+        size="medium"
+        direction="x"
+        :options="options"
+    />
+    <br />
+    <lew-radio-group
+        v-model="value"
+        size="large"
+        direction="x"
+        :options="options"
+    />
 </template>

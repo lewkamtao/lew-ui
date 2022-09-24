@@ -1,12 +1,27 @@
 <script setup lang="ts">
 import { buttonProps } from './props';
+import { ref } from 'vue';
 
 const emit = defineEmits(['click']);
 const props = defineProps(buttonProps);
 
-const handleClick = (e: any) => {
+let _loading = ref<Boolean>(false);
+
+if (props.request && props.loading) {
+    throw new Error('request 和 loading 不能同时设置');
+}
+
+const handleClick = async (e: any) => {
     if (props.disabled) return;
     emit('click', e);
+    if (typeof props.request === 'function') {
+        if (_loading.value) {
+            return;
+        }
+        _loading.value = true;
+        await props.request();
+        _loading.value = false;
+    }
 };
 </script>
 
@@ -19,7 +34,7 @@ const handleClick = (e: any) => {
         ${type ? 'lew-button-' + type : ''}
         ${round ? 'lew-button-round' : ''}  
         ${isIcon ? 'lew-button-icon' : ''}
-        ${loading ? 'lew-button-loading' : ''}
+        ${_loading || loading ? 'lew-button-loading' : ''}
         `"
         :disabled="disabled"
         @click="handleClick"
@@ -28,7 +43,9 @@ const handleClick = (e: any) => {
 
         <div
             class="lew-loading-icon"
-            :class="{ 'lew-loading-icon-show': loading && !disabled }"
+            :class="{
+                'lew-loading-icon-show': (_loading || loading) && !disabled,
+            }"
         ></div>
     </button>
 </template>
@@ -59,7 +76,7 @@ const handleClick = (e: any) => {
         height: 100%;
         left: 0;
         top: 0;
-        transition: all 0.35s cubic-bezier(0.65, 0, 0.25, 1);
+        transition: all 0.15s cubic-bezier(0.65, 0, 0.25, 1);
         opacity: 0;
         transform: translateY(100%);
     }
@@ -223,11 +240,13 @@ const handleClick = (e: any) => {
 
 .lew-button-loading {
     color: rgba($color: #000000, $alpha: 0);
+
+    pointer-events: none; //鼠标点击不可修改
 }
 
 .lew-button[disabled] {
     font-size: 14px;
-    cursor: no-drop;
+    pointer-events: none; //鼠标点击不可修改
     opacity: var(--lew-disabled-opacity);
 }
 

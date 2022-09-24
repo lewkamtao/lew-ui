@@ -56,7 +56,7 @@ let options = ref([
     },
 ]);
 
-let v = ref('');
+let v = ref([]);
 const get = () => {
     console.log(v.value);
 };
@@ -64,6 +64,7 @@ const get = () => {
 
 <template>
     <div>
+        {{ v }}
         <lew-flex style="width: 250px" direction="column" gap="30px">
             <lew-form-item direction="y" title="小的">
                 <LewSelect

@@ -11,6 +11,7 @@
             :block="block"
             :iconable="iconable"
             :round="round"
+            :size="size"
             :label="option.label"
             :checked="getChecked(option.value)"
             @change="check(option.value, $event)"
@@ -53,6 +54,10 @@ const props = defineProps({
     iconable: {
         type: Boolean,
         default: true,
+    },
+    size: {
+        type: String,
+        default: 'medium',
     },
     options: {
         type: Array as PropType<Options[]>,

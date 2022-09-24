@@ -11,6 +11,7 @@
             :block="block"
             :iconable="iconable"
             :label="option.label"
+            :size="size"
             :checked="modelValue == option.value"
             @update:checked="check(option.value)"
         />
@@ -47,6 +48,10 @@ defineProps({
     direction: {
         type: String,
         default: 'x',
+    },
+    size: {
+        type: String,
+        default: 'medium',
     },
     options: {
         type: Array as PropType<Options[]>,
