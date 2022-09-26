@@ -9,7 +9,7 @@
         ${size ? 'lew-checkbox-' + size : ''}
         `"
     >
-        <div class="icon-checkbox-box" v-if="iconable">
+        <div v-if="iconable" class="icon-checkbox-box">
             <svg
                 class="icon-checkbox"
                 viewBox="0 0 24 24"
@@ -59,6 +59,10 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
     checked: {
         type: Boolean,
         default: () => {
@@ -85,6 +89,9 @@ let _checked = ref(props.checked || false);
 const emit = defineEmits(['change']);
 
 const setChecked = (e: Event) => {
+    if (props.disabled) {
+        return;
+    }
     _checked.value = (e.target as HTMLInputElement).checked;
     emit('change', _checked.value);
 };

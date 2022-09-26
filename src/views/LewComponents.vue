@@ -337,7 +337,11 @@ group.value = [
 
 <template>
     <div class="container">
-        <div class="mb-btn" :class="{ 'mb-btn-open': isShowSider }" @click="isShowSider = !isShowSider">
+        <div
+            class="mb-btn"
+            :class="{ 'mb-btn-open': isShowSider }"
+            @click="isShowSider = !isShowSider"
+        >
             <icon size="24">
                 <Menu></Menu>
             </icon>

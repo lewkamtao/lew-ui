@@ -34,6 +34,7 @@ let value = ref('');
                 <LewSelect
                     v-model="value"
                     size="small"
+                    :show-icon="false"
                     :options="options"
                 ></LewSelect
             ></lew-form-item>

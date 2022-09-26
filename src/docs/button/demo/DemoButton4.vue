@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { resolve } from 'path';
 import { ref } from 'vue';
 
 let loading = ref(false);
@@ -8,6 +7,7 @@ const mockFn = () => {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve(true);
+            LewMessage.success('发送成功');
         }, 1000);
     });
 };

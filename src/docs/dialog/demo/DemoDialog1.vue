@@ -8,9 +8,9 @@ const open = (type: any, layout: string) => {
         layout: layout,
         ok: () => {
             return new Promise((resolve) => {
-                console.log(1);
                 setTimeout(() => {
-                    resolve(200);
+                    resolve(true);
+                    LewMessage.success('删除成功');
                 }, 1000);
             });
         },
