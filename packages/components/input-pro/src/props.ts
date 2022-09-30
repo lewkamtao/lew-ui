@@ -1,11 +1,11 @@
 import { PropType } from 'vue';
 
-type Options = {
+export type Options = {
     label: number | string;
     value: number | string;
 };
 
-export const inputProProps = {
+export const _props = {
     // 类型
     type: {
         type: String,

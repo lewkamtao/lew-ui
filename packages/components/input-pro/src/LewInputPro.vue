@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue';
-import { inputProProps } from './props';
+import { ref, watch } from 'vue';
+import { _props, Options } from './props';
+const props = defineProps(_props);
 
-const props = defineProps(inputProProps);
 const v = ref(props.modelValue);
+
 watch(
     () => props.modelValue,
     () => {
         v.value = props.modelValue;
     },
 );
+
 const emit = defineEmits([
     'update:modelValue',
     'clear',
@@ -18,8 +20,8 @@ const emit = defineEmits([
     'change',
     'input',
 ]);
+
 let lewDropdownRef = ref();
-let lewInputProRef = ref();
 
 const input = (value: string) => {
     emit('update:modelValue', value);
@@ -32,21 +34,25 @@ const clear = () => {
     emit('update:modelValue', v.value);
 };
 
-const selectFn = (e: any) => {
-    v.value = e.value.value;
+const selectFn = (e: Options) => {
+    v.value = e.value;
     emit('update:modelValue', v.value);
     emit('input', v.value);
     emit('change', v.value);
-    setTimeout(() => {
-        hide();
-    }, 500);
+    hide();
 };
-const open = () => {
+
+let timer: ReturnType<typeof setTimeout>;
+
+const show = () => {
+    clearTimeout(timer);
     if (props.options.length == 0) return;
     lewDropdownRef.value.show();
 };
 const hide = () => {
-    lewDropdownRef.value.hide();
+    timer = setTimeout(() => {
+        lewDropdownRef.value.hide();
+    }, 250);
 };
 </script>
 
@@ -56,7 +62,7 @@ const hide = () => {
         <lew-dropdown
             ref="lewDropdownRef"
             style="width: 100%"
-            :trigger="trigger"
+            trigger="focusin"
             :arrow="arrow"
             :placement="placement"
             :align="align"
@@ -65,19 +71,18 @@ const hide = () => {
             @change="selectFn"
         >
             <lew-input
-                ref="lewInputProRef"
                 v-model="v"
                 :type="type"
-                :autoWidth="autoWidth"
                 :size="size"
                 :align="align"
                 :placeholder="placeholder"
                 :clearable="clearable"
+                :auto-width="autoWidth"
                 @click.stop
                 @input="input"
                 @change="emit('change', v)"
-                @blur="emit('blur', v)"
-                @focus="open(), emit('focus', v)"
+                @blur="emit('blur', v), hide()"
+                @focus="emit('focus', v), show()"
                 @clear="clear"
             />
         </lew-dropdown>

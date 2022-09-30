@@ -238,7 +238,7 @@ const checkToday = computed(() => (item: any) => {
                     width: 24px;
                     height: 24px;
                     color: var(--lew-text-color-9);
-                    border-radius: var(--lew-form-border-radius);
+                    border-radius: 2px;
                 }
             }
         }

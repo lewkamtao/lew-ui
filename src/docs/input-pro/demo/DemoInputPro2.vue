@@ -2,6 +2,28 @@
 const clear = (e: any) => {
     console.log(e);
 };
+let options = [
+    {
+        label: '愚不可及',
+        value: '愚不可及',
+    },
+    {
+        label: '有教无类',
+        value: '有教无类',
+    },
+    {
+        label: '欲罢不能',
+        value: '欲罢不能',
+    },
+    {
+        label: '用行舍藏',
+        value: '用行舍藏',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+];
 </script>
 
 <template>
@@ -9,7 +31,7 @@ const clear = (e: any) => {
         <lew-form-item direction="y" title="预输入">
             <lew-input-pro
                 style="width: 250px"
-                :options="['梁山伯与朱丽叶', '小城故事多']"
+                :options="options"
                 clearable
                 placement="left"
                 @clear="clear"
@@ -18,7 +40,7 @@ const clear = (e: any) => {
         <lew-form-item direction="y" title="预输入">
             <lew-input-pro
                 style="width: 250px"
-                :options="['梁山伯与朱丽叶', '小城故事多']"
+                :options="options"
                 clearable
                 placement="right-start"
                 @clear="clear"
@@ -28,7 +50,7 @@ const clear = (e: any) => {
             <lew-input-pro
                 style="width: 250px"
                 popover-width="250px"
-                :options="['詹姆斯', '库里', '汤普森', '利拉德']"
+                :options="options"
                 :arrow="false"
                 clearable
             />

@@ -32,11 +32,8 @@ const emit = defineEmits([
 
 const input = () => {
     if (props.maxLength) {
-        // @ts-ignore
         for (let i = 0; i <= v.value.length - 1; i++) {
-            // @ts-ignore
             if (getTextLength(v.value.slice(0, i)) >= props.maxLength) {
-                // @ts-ignore
                 v.value = v.value.slice(0, i);
             }
         }
@@ -60,8 +57,6 @@ const focusFn = () => {
     }
 };
 
-defineExpose({ focusFn });
-
 let _type = ref(props.type);
 
 const showPasswordFn = (): void => {
@@ -70,9 +65,11 @@ const showPasswordFn = (): void => {
 
 let getCheckNumStr = computed(() => {
     if (props.showCount && props.maxLength) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         return getTextLength(v.value) + ' / ' + props.maxLength;
     } else if (props.showCount) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         return getTextLength(v.value);
     } else {
@@ -101,6 +98,16 @@ const getTextLength = (val: string) => {
         return Math.trunc(len);
     }
 };
+
+const getEl = () => {
+    if (props.type == 'textarea') {
+        return lewTextareaRef.value;
+    } else {
+        return lewInputRef.value;
+    }
+};
+
+defineExpose({ getEl, focusFn });
 </script>
 
 <template>
@@ -116,8 +123,8 @@ const getTextLength = (val: string) => {
             `"
     >
         <textarea
-            ref="lewTextareaRef"
             v-if="_type == 'textarea'"
+            ref="lewTextareaRef"
             v-model="v"
             class="btf-scrollbar"
             :class="`lew-textarea-resize-${resize}`"

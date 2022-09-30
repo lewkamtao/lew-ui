@@ -146,6 +146,7 @@ const get = () => {
     margin-bottom: 4px;
     padding: 6px 8px;
     user-select: none;
+    cursor: pointer;
     .label {
         color: var(--lew-text-color-1);
         font-size: 14px;
