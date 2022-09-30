@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { _props, Options } from './props';
-const props = defineProps(_props);
 
+const props = defineProps(_props);
 const v = ref(props.modelValue);
 
 watch(
@@ -42,15 +42,12 @@ const selectFn = (e: Options) => {
     hide();
 };
 
-let timer: ReturnType<typeof setTimeout>;
-
-const show = () => {
-    clearTimeout(timer);
+const open = () => {
     if (props.options.length == 0) return;
     lewDropdownRef.value.show();
 };
 const hide = () => {
-    timer = setTimeout(() => {
+    setTimeout(() => {
         lewDropdownRef.value.hide();
     }, 250);
 };
@@ -62,7 +59,7 @@ const hide = () => {
         <lew-dropdown
             ref="lewDropdownRef"
             style="width: 100%"
-            trigger="focusin"
+            :trigger="trigger"
             :arrow="arrow"
             :placement="placement"
             :align="align"
@@ -73,23 +70,22 @@ const hide = () => {
             <lew-input
                 v-model="v"
                 :type="type"
+                :auto-width="autoWidth"
                 :size="size"
                 :align="align"
                 :placeholder="placeholder"
                 :clearable="clearable"
-                :auto-width="autoWidth"
                 @click.stop
                 @input="input"
                 @change="emit('change', v)"
                 @blur="emit('blur', v), hide()"
-                @focus="emit('focus', v), show()"
+                @focus="emit('focus', v), open()"
                 @clear="clear"
             />
         </lew-dropdown>
         <slot name="right" />
     </div>
 </template>
-
 <style lang="scss" scoped>
 .lew-input-pro {
     display: inline-flex;
