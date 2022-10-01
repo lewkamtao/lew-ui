@@ -14,7 +14,6 @@ const multipleLabelStr = ref<Array<string>>([]);
 watch(
     () => props.modelValue,
     () => {
-        hide();
         // 如果是多选
         if (!props.modelValue) {
             return;
@@ -28,6 +27,7 @@ watch(
                 props.options,
             );
         } else if (typeof props.modelValue == 'string') {
+            hide();
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             v.value = props.modelValue;
