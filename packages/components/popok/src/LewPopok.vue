@@ -1,8 +1,9 @@
 <!-- filename: Popover.vue -->
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref } from 'vue';
 import { LewButton } from 'lew-ui';
 import tippy from 'tippy.js';
+import { _props } from './props';
 
 import {
     Info24Regular,
@@ -13,44 +14,37 @@ import {
 } from '@vicons/fluent';
 import { Icon } from '@vicons/utils';
 
-const props = defineProps({
-    type: {
-        type: String,
-        default: 'warning',
-    },
-    width: { type: String, default: '250px' },
-    trigger: {
-        type: String,
-        default: 'click',
-    },
-    title: {
-        type: String,
-        default: '',
-    },
-    content: {
-        type: String,
-        default: '',
-    },
-    placement: {
-        type: String,
-        default: 'top',
-    },
-});
+const props = defineProps(_props);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let lewPopoverRef = ref();
 
-let show = () => {
-    lewPopoverRef.value.show();
-};
+let okLoading = ref(false);
+let cancelLoading = ref(false);
 
 let hide = () => {
     lewPopoverRef.value.hide();
 };
 
-const emit = defineEmits(['ok', 'cancel']);
+const okHandle = async () => {
+    if (typeof props.ok === 'function') {
+        okLoading.value = true;
+        await props.ok();
+        okLoading.value = false;
+    }
+    hide();
+};
 
-defineExpose({ show, hide });
+const cancelHandle = async () => {
+    if (typeof props.cancel === 'function') {
+        cancelLoading.value = true;
+        await props.cancel();
+        cancelLoading.value = false;
+    }
+    hide();
+};
+
+const emit = defineEmits(['onShow', 'cancel']);
 </script>
 
 <template>
@@ -59,6 +53,7 @@ defineExpose({ show, hide });
         class="lew-popok"
         :trigger="trigger"
         :placement="placement"
+        @onShow="emit('onShow')"
     >
         <template #trigger>
             <slot />
@@ -81,12 +76,14 @@ defineExpose({ show, hide });
                         <lew-button
                             size="small"
                             type="blank"
-                            @click="emit('cancel', { show, hide })"
+                            @click="cancelHandle"
+                            :loading="cancelLoading"
                             >取消
                         </lew-button>
                         <lew-button
                             size="small"
-                            @click="emit('ok', { show, hide })"
+                            @click="okHandle"
+                            :loading="okLoading"
                             >确定</lew-button
                         >
                     </div>

@@ -322,14 +322,13 @@ group.value = [
                 label: '',
                 type: 'success',
             },
-
-            // {
-            //     cname: '结果',
-            //     name: 'Result',
-            //     path: '/Result',
-            //     label: '',
-            //     type: 'success',
-            // },
+            {
+                cname: '结果',
+                name: 'Result',
+                path: '/Result',
+                label: '',
+                type: 'success',
+            },
         ],
     },
 ];

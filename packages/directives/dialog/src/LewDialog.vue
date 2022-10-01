@@ -11,35 +11,12 @@ import {
 } from '@vicons/fluent';
 import { Icon } from '@vicons/utils';
 
-const props = defineProps({
-    visible: {
-        type: Boolean,
-        default: false,
-    },
-    closeonClickOverlay: {
-        type: Boolean,
-        default: false,
-    },
-    // eslint-disable-next-line vue/require-default-prop
-    type: {
-        type: String,
-        default: '',
-    },
-    // eslint-disable-next-line vue/require-default-prop
-    ok: {
-        type: Function,
-    },
-    // eslint-disable-next-line vue/require-default-prop
-    cancel: {
-        type: Function,
-    },
-    layout: {
-        type: String,
-        default: 'normal',
-    },
-});
+import { _props } from './props';
 
-let loading = ref<Boolean>(false);
+const props = defineProps(_props);
+
+let okLoading = ref<Boolean>(false);
+let cancelLoading = ref<Boolean>(false);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const onClickOverlay = () => {
@@ -57,18 +34,20 @@ const close = () => {
     }, 245);
 };
 
-const okFn = async () => {
+const okHandle = async () => {
     if (typeof props.ok === 'function') {
-        loading.value = true;
+        okLoading.value = true;
         await props.ok();
-        loading.value = false;
+        okLoading.value = false;
     }
     close();
 };
 
-const cancelFn = () => {
+const cancelHandle = async () => {
     if (typeof props.cancel === 'function') {
-        props.cancel();
+        cancelLoading.value = true;
+        await props.cancel();
+        cancelLoading.value = false;
     }
     close();
 };
@@ -93,7 +72,7 @@ const emit = defineEmits(['update:visible']);
                     class="lew-dialog-box lew-dialog-box-normal"
                     @click.stop
                 >
-                    <div class="btn-close" @click="cancelFn">
+                    <div class="btn-close" @click="cancelHandle">
                         <Icon size="18"> <Dismiss24Filled /></Icon>
                     </div>
                     <div class="left">
@@ -119,10 +98,13 @@ const emit = defineEmits(['update:visible']);
                             <slot name="content" />
                         </main>
                         <footer>
-                            <lew-Button type="blank" @click="cancelFn"
+                            <lew-Button
+                                :loading="cancelLoading"
+                                type="blank"
+                                @click="cancelHandle"
                                 >取消
                             </lew-Button>
-                            <lew-button :loading="loading" @click="okFn"
+                            <lew-button :loading="okLoading" @click="okHandle"
                                 >确认
                             </lew-button>
                         </footer>
@@ -152,12 +134,13 @@ const emit = defineEmits(['update:visible']);
                             style="margin-right: 10px"
                             type="normal"
                             size="small"
-                            @click="cancelFn"
+                            :loading="cancelLoading"
+                            @click="cancelHandle"
                             >取消
                         </lew-Button>
                         <lew-button
-                            @click="okFn"
-                            :loading="loading"
+                            :loading="okLoading"
+                            @click="okHandle"
                             size="small"
                             >确认
                         </lew-button>
