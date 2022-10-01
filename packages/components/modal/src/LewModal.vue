@@ -52,7 +52,6 @@ const maskClick = () => {
     width: 100%;
     height: 100%;
     background-color: var(--lew-modal-bgcolor);
-    backdrop-filter: blur(5px);
     outline: 1000000px solid var(--lew-modal-bgcolor);
     display: flex;
     justify-content: center;

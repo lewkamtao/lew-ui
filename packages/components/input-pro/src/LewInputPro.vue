@@ -9,6 +9,7 @@ watch(
     () => props.modelValue,
     () => {
         v.value = props.modelValue;
+        hide();
     },
 );
 
@@ -39,7 +40,6 @@ const selectFn = (e: Options) => {
     emit('update:modelValue', v.value);
     emit('input', v.value);
     emit('change', v.value);
-    hide();
 };
 
 const open = () => {
@@ -47,9 +47,7 @@ const open = () => {
     lewDropdownRef.value.show();
 };
 const hide = () => {
-    setTimeout(() => {
-        lewDropdownRef.value.hide();
-    }, 250);
+    lewDropdownRef.value.hide();
 };
 </script>
 
@@ -78,7 +76,7 @@ const hide = () => {
                 @click.stop
                 @input="input"
                 @change="emit('change', v)"
-                @blur="emit('blur', v), hide()"
+                @blur="emit('blur', v)"
                 @focus="emit('focus', v), open()"
                 @clear="clear"
             />

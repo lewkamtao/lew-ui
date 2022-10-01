@@ -55,6 +55,5 @@ const docsTable = ref([]);
     --bg-color: rgba(255, 255, 255);
     background-image: radial-gradient(transparent 1px, var(--bg-color) 1px);
     background-size: 4px 4px;
-    backdrop-filter: saturate(50%) blur(4px);
 }
 </style>

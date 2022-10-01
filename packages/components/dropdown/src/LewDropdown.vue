@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { _props, Options } from './props';
+import { _props } from './props';
+import type { LewDropdownOptions } from '../index';
 
 defineProps(_props);
 
@@ -17,12 +18,8 @@ let hide = () => {
 
 const emit = defineEmits(['change']);
 
-const change = (item: Options) => {
-    emit('change', item, show, hide);
-
-    setTimeout(() => {
-        lewPopoverRef.value.hide();
-    }, 80);
+const change = (item: LewDropdownOptions) => {
+    emit('change', item, { show, hide });
 };
 
 defineExpose({ show, hide });

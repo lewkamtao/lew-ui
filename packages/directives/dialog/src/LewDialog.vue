@@ -119,18 +119,12 @@ const emit = defineEmits(['update:visible']);
                             <slot name="content" />
                         </main>
                         <footer>
-                            <lew-Button
-                                size="small"
-                                type="blank"
-                                @click="cancelFn"
-                                >取消</lew-Button
-                            >
-                            <lew-button
-                                size="small"
-                                :loading="loading"
-                                @click="okFn"
-                                >确认</lew-button
-                            >
+                            <lew-Button type="blank" @click="cancelFn"
+                                >取消
+                            </lew-Button>
+                            <lew-button :loading="loading" @click="okFn"
+                                >确认
+                            </lew-button>
                         </footer>
                     </div>
                 </div>
@@ -159,14 +153,14 @@ const emit = defineEmits(['update:visible']);
                             type="normal"
                             size="small"
                             @click="cancelFn"
-                            >取消</lew-Button
-                        >
+                            >取消
+                        </lew-Button>
                         <lew-button
-                            size="small"
-                            :loading="loading"
                             @click="okFn"
-                            >确认</lew-button
-                        >
+                            :loading="loading"
+                            size="small"
+                            >确认
+                        </lew-button>
                     </div>
                 </div>
             </div>
@@ -182,7 +176,6 @@ const emit = defineEmits(['update:visible']);
     width: 100%;
     height: 100%;
     background-color: var(--lew-modal-bgcolor);
-    backdrop-filter: blur(5px);
     outline: 1000000px solid var(--lew-modal-bgcolor);
     display: flex;
     justify-content: center;

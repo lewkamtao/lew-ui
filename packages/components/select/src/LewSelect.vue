@@ -14,6 +14,7 @@ const multipleLabelStr = ref<Array<string>>([]);
 watch(
     () => props.modelValue,
     () => {
+        hide();
         // 如果是多选
         if (!props.modelValue) {
             return;
@@ -96,9 +97,7 @@ const check = (_value: string, checked: boolean) => {
             labelStr.value = _value;
             v.value = _value;
         }
-        setTimeout(() => {
-            hide();
-        }, 250);
+
         emit('update:modelValue', v.value);
         emit('change', v.value);
     }
@@ -189,8 +188,8 @@ onMounted(() => {
                                 >
                                     +{{ multipleLabelStr.length - 1 }}</lew-tag
                                 >
-                            </div></template
-                        >
+                            </div>
+                        </template>
                         <template #popover-body>
                             <lew-flex
                                 wrap
@@ -340,6 +339,9 @@ onMounted(() => {
         .lew-select-placeholder {
             font-size: var(--lew-form-font-size-small);
         }
+        .lew-select-label-multiple {
+            margin-left: -4px;
+        }
     }
 
     .lew-select-medium {
@@ -350,6 +352,9 @@ onMounted(() => {
         .lew-select-placeholder {
             font-size: var(--lew-form-font-size-medium);
         }
+        .lew-select-label-multiple {
+            margin-left: -6px;
+        }
     }
     .lew-select-large {
         padding: var(--lew-form-input-padding-large);
@@ -358,6 +363,9 @@ onMounted(() => {
         .lew-select-label-single,
         .lew-select-placeholder {
             font-size: var(--lew-form-font-size-large);
+        }
+        .lew-select-label-multiple {
+            margin-left: -8px;
         }
     }
 }
@@ -393,9 +401,7 @@ onMounted(() => {
         box-sizing: border-box;
         transition: all 0.25s ease;
         font-size: 0px;
-        label {
-            font-size: 14px;
-        }
+
         .lew-select-item {
             position: relative;
             display: inline-flex;

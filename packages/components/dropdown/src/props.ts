@@ -1,18 +1,14 @@
 import { PropType } from 'vue';
-
-export type Options = {
-    label: number | string;
-    value: number | string;
-};
+import { LewDropdownOptions } from './type';
 
 export const _props = {
     options: {
-        type: Array as PropType<Options[]>,
+        type: Array as PropType<LewDropdownOptions[]>,
         default() {
             return [];
         },
         required: true,
-        validator(value: PropType<Options[]>) {
+        validator(value: PropType<LewDropdownOptions[]>) {
             return value.length >= 0;
         },
     },

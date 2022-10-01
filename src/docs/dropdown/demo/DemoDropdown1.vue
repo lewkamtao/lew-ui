@@ -20,8 +20,9 @@ let options = ref([
     },
 ]);
 
-const change = (e: any) => {
-    LewMessage.info(e.value.label);
+const change = (e: any, handle: any) => {
+    LewMessage.info(e.label);
+    handle.hide();
 };
 </script>
 <template>
