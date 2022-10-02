@@ -107,6 +107,13 @@ const getEl = () => {
     }
 };
 
+const focus = (e: any) => {
+    if (v.value.length < 100) {
+        e.currentTarget.select();
+    }
+    emit('focus');
+};
+
 defineExpose({ getEl, focusFn });
 </script>
 
@@ -136,7 +143,7 @@ defineExpose({ getEl, focusFn });
             @input="input"
             @change="emit('change', v)"
             @blur="emit('blur', v)"
-            @focus="emit('focus', v)"
+            @focus="focus"
         ></textarea>
 
         <input
@@ -152,7 +159,7 @@ defineExpose({ getEl, focusFn });
             @input="input"
             @change="emit('change', v)"
             @blur="emit('blur', v)"
-            @focus="(e:any) => (e.currentTarget.select(), emit('focus', v))"
+            @focus="focus"
         />
         <label v-if="autoWidth" class="input-auto-width">{{ v }}</label>
         <div
