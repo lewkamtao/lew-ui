@@ -333,7 +333,7 @@ onMounted(() => {
 
     .lew-select-small {
         padding: var(--lew-form-input-padding-small);
-        height: var(--lew-form-input-height-small);
+        height: var(--lew-form-item-height-small);
         line-height: var(--lew-form-input-line-height-small);
         .lew-select-label-single,
         .lew-select-placeholder {
@@ -347,7 +347,7 @@ onMounted(() => {
     .lew-select-medium {
         padding: var(--lew-form-input-padding-medium);
         line-height: var(--lew-form-input-line-height-medium);
-        height: var(--lew-form-input-height-medium);
+        height: var(--lew-form-item-height-medium);
         .lew-select-label-single,
         .lew-select-placeholder {
             font-size: var(--lew-form-font-size-medium);
@@ -359,7 +359,7 @@ onMounted(() => {
     .lew-select-large {
         padding: var(--lew-form-input-padding-large);
         line-height: var(--lew-form-input-line-height-large);
-        height: var(--lew-form-input-height-large);
+        height: var(--lew-form-item-height-large);
         .lew-select-label-single,
         .lew-select-placeholder {
             font-size: var(--lew-form-font-size-large);

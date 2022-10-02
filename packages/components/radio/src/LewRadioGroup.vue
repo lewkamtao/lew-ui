@@ -3,7 +3,7 @@
         x="start"
         gap="15px"
         class="lew-radio-group"
-        :class="`lew-radio-group-${direction}`"
+        :class="`lew-radio-group-${direction} lew-radio-group-${size}`"
     >
         <lew-radio
             v-for="option in options"
@@ -86,6 +86,17 @@ const check = (_value: string) => {
     font-size: 0px;
 }
 
+.lew-radio-small {
+    min-height: var(--lew-form-item-height-small);
+}
+
+.lew-radio-medium {
+    min-height: var(--lew-form-item-height-medium);
+}
+
+.lew-radio-large {
+    min-height: var(--lew-form-item-height-large);
+}
 .lew-radio-group.lew-radio-group-x {
     flex-direction: row;
 }

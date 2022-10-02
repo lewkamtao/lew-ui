@@ -3,7 +3,7 @@
         x="start"
         gap="15px"
         class="lew-checkbox-group"
-        :class="`lew-checkbox-group-${direction}`"
+        :class="`lew-checkbox-group-${direction} lew-checkbox-group-${size}`"
     >
         <lew-checkbox
             v-for="option in options"
@@ -100,6 +100,18 @@ const getChecked = (_value: string | number) => {
     align-items: center;
     font-size: 0px;
     flex-wrap: wrap;
+}
+
+.lew-checkbox-small {
+    min-height: var(--lew-form-item-height-small);
+}
+
+.lew-checkbox-medium {
+    min-height: var(--lew-form-item-height-medium);
+}
+
+.lew-checkbox-large {
+    min-height: var(--lew-form-item-height-large);
 }
 
 .lew-checkbox-group.lew-checkbox-group-x {

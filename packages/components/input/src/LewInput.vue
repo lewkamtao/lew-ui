@@ -225,11 +225,7 @@ defineExpose({ getEl, focusFn });
         box-sizing: border-box;
     }
     input {
-        height: 35px;
         overflow: hidden;
-    }
-    textarea {
-        min-height: 35px;
     }
 
     input::placeholder,
@@ -240,7 +236,6 @@ defineExpose({ getEl, focusFn });
     .lew-input-controls {
         display: inline-flex;
         align-items: center;
-        height: 35px;
         opacity: 0;
         transform: translateX(100%);
         transition: var(--lew-form-transition);
@@ -253,7 +248,7 @@ defineExpose({ getEl, focusFn });
             padding: 0px 5px;
             box-sizing: border-box;
             user-select: none;
-            opacity: 0.5;
+            opacity: 0.7;
             transition: var(--lew-form-transition);
         }
         .lew-input-clear {
@@ -320,16 +315,16 @@ defineExpose({ getEl, focusFn });
         line-height: var(--lew-form-input-line-height-small);
     }
     input {
-        height: var(--lew-form-input-height-small);
+        height: var(--lew-form-item-height-small);
     }
     textarea {
-        min-height: var(--lew-form-input-height-small);
+        min-height: var(--lew-form-item-height-small);
     }
     .lew-input-controls {
-        height: var(--lew-form-input-height-small);
+        height: var(--lew-form-item-height-small);
     }
     .input-auto-width {
-        height: var(--lew-form-input-height-small);
+        height: var(--lew-form-item-height-small);
         padding: var(--lew-form-input-padding-small);
         font-size: var(--lew-form-font-size-small);
         line-height: var(--lew-form-input-line-height-small);
@@ -343,16 +338,16 @@ defineExpose({ getEl, focusFn });
         line-height: var(--lew-form-input-line-height-medium);
     }
     input {
-        height: var(--lew-form-input-height-medium);
+        height: var(--lew-form-item-height-medium);
     }
     textarea {
-        min-height: var(--lew-form-input-height-medium);
+        min-height: var(--lew-form-item-height-medium);
     }
     .lew-input-controls {
-        height: var(--lew-form-input-height-medium);
+        height: var(--lew-form-item-height-medium);
     }
     .input-auto-width {
-        height: var(--lew-form-input-height-medium);
+        height: var(--lew-form-item-height-medium);
         font-size: var(--lew-form-font-size-medium);
         line-height: var(--lew-form-input-line-height-medium);
         padding: var(--lew-form-input-padding-medium);
@@ -366,16 +361,16 @@ defineExpose({ getEl, focusFn });
         line-height: var(--lew-form-input-line-height-large);
     }
     input {
-        height: var(--lew-form-input-height-large);
+        height: var(--lew-form-item-height-large);
     }
     textarea {
-        min-height: var(--lew-form-input-height-large);
+        min-height: var(--lew-form-item-height-large);
     }
     .lew-input-controls {
-        height: var(--lew-form-input-height-large);
+        height: var(--lew-form-item-height-large);
     }
     .input-auto-width {
-        height: var(--lew-form-input-height-large);
+        height: var(--lew-form-item-height-large);
         padding: var(--lew-form-input-padding-large);
         font-size: var(--lew-form-font-size-large);
         line-height: var(--lew-form-input-line-height-large);
@@ -383,14 +378,15 @@ defineExpose({ getEl, focusFn });
 }
 
 .lew-input-view-textarea {
+    position: relative;
     flex-direction: column;
     justify-content: center;
     .lew-input-controls {
-        width: 100%;
-        justify-content: end;
-        height: 25px;
-        box-sizing: border-box;
-        transform: translateY(100%);
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        background: var(--lew-form-bgcolor);
+        height: 20px;
     }
     .lew-input-controls-show {
         transform: translateY(0px);
@@ -416,6 +412,9 @@ defineExpose({ getEl, focusFn });
     border: var(--lew-form-border-width) var(--lew-form-border-color-hover)
         solid;
     background-color: var(--lew-form-bgcolor-hover);
+    .lew-input-controls {
+        background: var(--lew-form-bgcolor-hover);
+    }
 }
 
 .lew-input-view:active {
@@ -426,6 +425,9 @@ defineExpose({ getEl, focusFn });
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
+    .lew-input-controls {
+        background: var(--lew-form-bgcolor-focus);
+    }
 }
 .lew-input-view-readonly {
     cursor: default;

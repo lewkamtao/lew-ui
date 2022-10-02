@@ -12,7 +12,7 @@ export * from './input';
 export * from './input-pro';
 export * from './input-tag';
 
-export * from './form-item';
+export * from './form';
 export * from './checkbox';
 export * from './radio';
 export * from './select';
