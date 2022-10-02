@@ -140,18 +140,19 @@ defineExpose({ getEl, focusFn });
         ></textarea>
 
         <input
-            ref="lewInputRef"
             v-else
+            ref="lewInputRef"
             v-model="v"
             :disabled="disabled"
             :placeholder="placeholder"
             :type="_type"
             :readonly="readonly"
             onkeypress="if(window.event.keyCode==13) this.blur()"
+            οnfοcus="this.select()"
             @input="input"
             @change="emit('change', v)"
             @blur="emit('blur', v)"
-            @focus="emit('focus', v)"
+            @focus="(e:any) => (e.currentTarget.select(), emit('focus', v))"
         />
         <label v-if="autoWidth" class="input-auto-width">{{ v }}</label>
         <div
