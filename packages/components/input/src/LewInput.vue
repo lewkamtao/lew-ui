@@ -109,7 +109,7 @@ const getEl = () => {
 
 const focus = (e: any) => {
     if (v.value.length < 100) {
-        e.currentTarget.select();
+        e?.currentTarget?.select();
     }
     emit('focus');
 };
@@ -155,7 +155,6 @@ defineExpose({ getEl, focusFn });
             :type="_type"
             :readonly="readonly"
             onkeypress="if(window.event.keyCode==13) this.blur()"
-            οnfοcus="this.select()"
             @input="input"
             @change="emit('change', v)"
             @blur="emit('blur', v)"

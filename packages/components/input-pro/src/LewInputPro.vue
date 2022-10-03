@@ -49,6 +49,12 @@ const open = () => {
 const hide = () => {
     lewDropdownRef.value.hide();
 };
+
+const focus = (e: any) => {
+    open();
+    e?.currentTarget?.select();
+    emit('focus', v);
+};
 </script>
 
 <template>
@@ -77,7 +83,7 @@ const hide = () => {
                 @input="input"
                 @change="emit('change', v)"
                 @blur="emit('blur', v)"
-                @focus="emit('focus', v), open()"
+                @focus="focus"
                 @clear="clear"
             />
         </lew-dropdown>

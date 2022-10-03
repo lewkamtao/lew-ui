@@ -85,7 +85,7 @@ const changePage = (type: any, num: number) => {
     } else if (pageNum.value > maxLen.value) {
         pageNum.value = maxLen.value;
     }
-    pageNumbackup.value = pageNum.value;
+    pageNumbackup.value = String(pageNum.value);
     emit('change', {
         pageNum: pageNum.value,
         pageSize: pageSize.value,
@@ -96,25 +96,22 @@ const changePage = (type: any, num: number) => {
     emit('update:pageSize', pageSize.value);
 };
 
-let pageNumbackup = ref(1);
-let pageSizebackup = ref(20);
+let pageNumbackup = ref('1');
+let pageSizebackup = ref('20');
 
 const checkPageNum = (e: any) => {
     e = String(e);
-    pageNumbackup.value = Number(e.replace(/[^\d]/g, ''));
-    changePage(false, pageNumbackup.value);
+    pageNumbackup.value = e.replace(/[^\d]/g, '');
+    changePage(false, Number(pageNumbackup.value));
 };
 const checkPageSize = (e: any) => {
     e = String(e);
-    pageSizebackup.value = Number(e.replace(/[^\d]/g, ''));
-    if (pageSizebackup.value < 1) {
-        pageSizebackup.value = 1;
+    pageSizebackup.value = e.replace(/[^\d]/g, '');
+    if (Number(pageSizebackup.value) < 1) {
+        pageSizebackup.value = String(1);
     }
-    if (pageSizebackup.value > props.total) {
-        pageSizebackup.value = props.total;
-    }
-    pageSize.value = pageSizebackup.value;
-    changePage(false, pageNumbackup.value);
+    pageSize.value = Number(pageSizebackup.value);
+    changePage(false, Number(pageNumbackup.value));
 };
 </script>
 
@@ -197,7 +194,7 @@ const checkPageSize = (e: any) => {
                 </icon>
             </lew-flex>
             <lew-input-pro
-                v-model="pageSizebackup"
+                v-model.number="pageSizebackup"
                 size="small"
                 align="center"
                 placeholder=""

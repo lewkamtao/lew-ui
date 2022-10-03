@@ -6,7 +6,7 @@ let pageSize = ref(20);
 const change = (e: any) => {
     console.log(e);
 };
-let total = ref(2000);
+let total = ref(24);
 </script>
 
 <template>
@@ -17,18 +17,17 @@ let total = ref(2000);
             :page-size-options="[
                 {
                     label: '10 / 页',
-                    value: 10,
+                    value: '10',
                 },
                 {
                     label: '20 / 页',
-                    value: 20,
+                    value: '20',
                 },
                 {
                     label: '30 / 页',
-                    value: 30,
+                    value: '30',
                 },
             ]"
-            :page-num="pageNum"
             :total="total"
             @change="change"
         />
