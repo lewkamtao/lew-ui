@@ -13,7 +13,7 @@ watch(
     },
 );
 
-const emit = defineEmits(['update:modelValue', 'click']);
+const emit = defineEmits(['update:modelValue', 'click', 'change']);
 
 const handleClick = async (e: any) => {
     if (props.disabled || _loading.value || props.loading) return;
@@ -32,10 +32,8 @@ const handleClick = async (e: any) => {
     } else {
         v.value = !v.value;
     }
-};
-
-const change = () => {
     emit('update:modelValue', v.value);
+    emit('change', v.value);
 };
 </script>
 
@@ -47,7 +45,7 @@ const change = () => {
         ${v ? 'lew-switch-checked' : ''}
         ${_loading || loading ? 'lew-switch-loading' : ''}
         ${request ? 'lew-switch-request' : ''}
-s        `"
+       `"
         @click="handleClick"
     >
         <input
@@ -55,7 +53,6 @@ s        `"
             v-model="v"
             type="checkbox"
             :disabled="disabled"
-            @change="change"
         />
         <div class="lew-switch-dot"></div>
     </div>

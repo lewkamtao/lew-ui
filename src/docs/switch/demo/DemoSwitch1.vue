@@ -18,5 +18,16 @@ const change = (e: boolean) => {
 </script>
 
 <template>
-    <lew-switch v-model="value" @change="change" :request="mockFn"></lew-switch>
+    <lew-form>
+        <lew-form-item label="常规" direction="y">
+            <lew-switch v-model="value" @change="change"></lew-switch>
+        </lew-form-item>
+        <lew-form-item label="模拟请求" direction="y">
+            <lew-switch
+                v-model="value"
+                @change="change"
+                :request="mockFn"
+            ></lew-switch>
+        </lew-form-item>
+    </lew-form>
 </template>
