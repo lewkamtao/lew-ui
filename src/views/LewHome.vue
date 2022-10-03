@@ -76,6 +76,7 @@ let user = ref({
     age: '',
     sex: '1',
     hobby: [],
+    tags: ['美丽', '大方'],
     school: '',
     home: '',
     dark: true,
@@ -289,40 +290,41 @@ const message = (type: string) => {
                     >
                 </lew-flex>
 
-                <lew-flex class="item" direction="column">
-                    <lew-flex direction="column" class="form-box">
-                        <lew-form-item direction="y" title="Input">
-                            <LewInput v-model="user.username" />
-                        </lew-form-item>
-                        <lew-form-item direction="y" title="Input">
-                            <LewInput resize="none" />
-                        </lew-form-item>
-                        <lew-form-item direction="y" title="Textarea">
-                            <LewInput type="textarea" resize="none" />
-                        </lew-form-item>
-                        <lew-form-item direction="y" title="Select">
-                            <LewSelect
-                                v-model="user.home"
-                                :options="home_options"
-                            />
-                        </lew-form-item>
-                        <lew-form-item direction="y" title="Radio">
-                            <lew-radio-group
-                                v-model="user.sex"
-                                :options="sex_options"
-                            />
-                        </lew-form-item>
-                        <lew-form-item direction="y" title="Checkbox">
-                            <lew-checkbox-group
-                                v-model="user.hobby"
-                                :options="hobby_options"
-                            />
-                        </lew-form-item>
-                        <lew-form-item direction="y" title="Switch">
-                            <LewSwitch v-model="user.dark" />
-                        </lew-form-item>
-                    </lew-flex>
-                </lew-flex>
+                <lew-form direction="column" style="width: 100%">
+                    <lew-form-item label="Input">
+                        <LewInput v-model="user.username" />
+                    </lew-form-item>
+                    <lew-form-item label="Input">
+                        <LewInput resize="none" />
+                    </lew-form-item>
+                    <lew-form-item label="Textarea">
+                        <LewInput type="textarea" resize="none" />
+                    </lew-form-item>
+                    <lew-form-item label="Select">
+                        <LewSelect
+                            v-model="user.home"
+                            :options="home_options"
+                        />
+                    </lew-form-item>
+                    <lew-form-item label="Radio">
+                        <lew-radio-group
+                            v-model="user.sex"
+                            :options="sex_options"
+                        />
+                    </lew-form-item>
+                    <lew-form-item label="Checkbox">
+                        <lew-checkbox-group
+                            v-model="user.hobby"
+                            :options="hobby_options"
+                        />
+                    </lew-form-item>
+                    <lew-form-item label="InputTag">
+                        <lew-input-tag v-model="user.tags" />
+                    </lew-form-item>
+                    <lew-form-item label="Switch">
+                        <LewSwitch v-model="user.dark" />
+                    </lew-form-item>
+                </lew-form>
                 <lew-flex class="item" direction="column" gap="20px">
                     <LewAlert :list="list"></LewAlert>
                     <lew-flex wrap x="start" gap="20px">
@@ -334,10 +336,10 @@ const message = (type: string) => {
                         >
                     </lew-flex>
                     <lew-flex wrap x="start" gap="20px">
-                        <lew-button type="error" @click="open('normal')"
+                        <lew-button type="error" @click="open('warning')"
                             >Dialog</lew-button
                         >
-                        <lew-button type="warning" @click="open('success')"
+                        <lew-button type="warning" @click="open('error')"
                             >Cancel</lew-button
                         >
                     </lew-flex>
@@ -351,15 +353,16 @@ const message = (type: string) => {
                                 <lew-button>Popover</lew-button>
                             </template>
                             <template #popover-body>
-                                <div class="popover-body">
-                                    <lew-form-item
-                                        direction="y"
-                                        title="请输入密码"
-                                    >
+                                <lew-form
+                                    direction="y"
+                                    class="popover-body"
+                                    style="width: 250px"
+                                >
+                                    <lew-form-item label="请输入密码">
                                         <lew-input v-model="v" />
                                     </lew-form-item>
 
-                                    <div class="footer">
+                                    <lew-flex x="end">
                                         <lew-button
                                             type="blank"
                                             size="small"
@@ -371,8 +374,8 @@ const message = (type: string) => {
                                             @click="submit()"
                                             >提交</lew-button
                                         >
-                                    </div>
-                                </div>
+                                    </lew-flex>
+                                </lew-form>
                             </template>
                         </lew-popover></lew-flex
                     >
@@ -384,7 +387,7 @@ const message = (type: string) => {
 
 <style lang="scss" scoped>
 .popover-body {
-    padding: 15px;
+    padding: 10px;
     box-sizing: border-box;
 }
 

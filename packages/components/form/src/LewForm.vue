@@ -2,7 +2,7 @@
 defineProps({
     width: {
         type: String,
-        default: 'auto',
+        default: '',
     },
     labelWidth: {
         type: String,

@@ -57,7 +57,7 @@ let d = ref('2020-12-12');
 </script>
 
 <template>
-    <lew-form class="form-box" width="500px" label-width="70px">
+    <lew-form class="form-box" label-width="70px">
         <lew-form-item label="账号">
             <LewInput v-model="user.username" />
         </lew-form-item>
@@ -101,6 +101,7 @@ let d = ref('2020-12-12');
                 width="100%"
                 item-width="100%"
                 :options="pay_options"
+                round
             />
         </lew-form-item>
     </lew-form>
@@ -109,7 +110,7 @@ let d = ref('2020-12-12');
     <br />
     <br />
 
-    <lew-form width="500px" class="form-box">
+    <lew-form class="form-box">
         <lew-form-item direction="y" label="账号">
             <LewInput v-model="user.username" />
         </lew-form-item>
@@ -160,7 +161,6 @@ let d = ref('2020-12-12');
 <style scoped lang="scss">
 .form-box {
     width: 450px;
-    margin: 50px auto;
 }
 @media (max-width: 767px) {
     .form-box {

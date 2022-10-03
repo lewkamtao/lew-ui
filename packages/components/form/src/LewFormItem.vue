@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { getCurrentInstance, ref } from 'vue';
-const { labelWidth, direction, labelAlign } =
-    getCurrentInstance()?.parent?.props;
+const parentProps: any = getCurrentInstance()?.parent?.props;
+const { labelWidth, direction, labelAlign } = parentProps;
 
 const props = defineProps({
     label: {

@@ -86,15 +86,15 @@ const check = (_value: string) => {
     font-size: 0px;
 }
 
-.lew-radio-small {
+.lew-radio-group-small {
     min-height: var(--lew-form-item-height-small);
 }
 
-.lew-radio-medium {
+.lew-radio-group-medium {
     min-height: var(--lew-form-item-height-medium);
 }
 
-.lew-radio-large {
+.lew-radio-group-large {
     min-height: var(--lew-form-item-height-large);
 }
 .lew-radio-group.lew-radio-group-x {

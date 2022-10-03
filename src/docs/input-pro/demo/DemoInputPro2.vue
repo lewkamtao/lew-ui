@@ -27,7 +27,7 @@ let options = [
 </script>
 
 <template>
-    <div style="width: 300px">
+    <lew-form style="width: 300px">
         <lew-form-item direction="y" title="预输入">
             <lew-input-pro
                 style="width: 250px"
@@ -55,5 +55,5 @@ let options = [
                 clearable
             />
         </lew-form-item>
-    </div>
+    </lew-form>
 </template>

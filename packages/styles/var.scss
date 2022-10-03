@@ -132,8 +132,8 @@
     --lew-form-item-height-medium: 34px;
     --lew-form-item-height-large: 40px;
     --lew-form-input-line-height-small: 24px;
-    --lew-form-input-line-height-medium: 24px;
-    --lew-form-input-line-height-large: 28px;
+    --lew-form-input-line-height-medium: 28px;
+    --lew-form-input-line-height-large: 32px;
     --lew-form-font-size-small: 14px;
     --lew-form-font-size-medium: 14px;
     --lew-form-font-size-large: 16px;
@@ -155,7 +155,7 @@
     // message
     --lew-message-bgcolor: rgba(255, 255, 255, 1);
     // notification
-    --lew-notification-bgcolor: rgba(255, 255, 255, 0.8);
+    --lew-notification-bgcolor: rgba(255, 255, 255, 1);
 }
 
 .lew-dark {
@@ -289,5 +289,5 @@
     // message
     --lew-message-bgcolor: rgb(59, 59, 59);
     // notification
-    --lew-notification-bgcolor: rgba(128, 128, 128, 0.231);
+    --lew-notification-bgcolor: rgb(50, 50, 50);
 }

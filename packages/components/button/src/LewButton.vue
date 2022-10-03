@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { buttonProps } from './props';
+import { _props } from './props';
 import { ref } from 'vue';
 
 const emit = defineEmits(['click']);
-const props = defineProps(buttonProps);
+const props = defineProps(_props);
 
-let _loading = ref<Boolean>(false);
+let _loading = ref(false);
 
 if (props.request && props.loading) {
     throw new Error('request 和 loading 不能同时设置');
 }
 
 const handleClick = async (e: any) => {
-    if (props.disabled) return;
+    if (props.disabled || _loading.value || props.loading) return;
     emit('click', e);
     if (typeof props.request === 'function') {
         if (_loading.value) {
@@ -101,9 +101,9 @@ const handleClick = async (e: any) => {
 }
 .lew-button-small {
     min-width: 50px;
-    height: 26px;
+    height: var(--lew-form-item-height-small);
     padding: 0px 8px;
-    font-size: 12px;
+    font-size: var(--lew-form-font-size-small);
     .lew-loading-icon::after {
         border: 2px solid rgba(0, 0, 0, 0.25);
         border-left: 2px solid rgba(255, 255, 255, 0.85);
@@ -114,9 +114,9 @@ const handleClick = async (e: any) => {
 
 .lew-button-medium {
     min-width: 60px;
-    height: 32px;
+    height: var(--lew-form-item-height-medium);
     padding: 0px 14px;
-    font-size: 14px;
+    font-size: var(--lew-form-font-size-medium);
     .lew-loading-icon::after {
         border: 2.5px solid rgba(0, 0, 0, 0.25);
         border-left: 2.5px solid rgba(255, 255, 255, 0.85);
@@ -127,9 +127,9 @@ const handleClick = async (e: any) => {
 
 .lew-button-large {
     min-width: 70px;
-    height: 36px;
+    height: var(--lew-form-item-height-large);
     padding: 0px 20px;
-    font-size: 16px;
+    font-size: var(--lew-form-font-size-large);
     .lew-loading-icon::after {
         border: 3px solid rgba(0, 0, 0, 0.25);
         border-left: 3px solid rgba(255, 255, 255, 0.85);
@@ -240,8 +240,11 @@ const handleClick = async (e: any) => {
 
 .lew-button-loading {
     color: rgba($color: #000000, $alpha: 0);
+    cursor: progress;
+}
 
-    pointer-events: none; //鼠标点击不可修改
+.lew-button-loading:active {
+    transform: scale(1);
 }
 
 .lew-button[disabled] {

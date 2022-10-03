@@ -96,8 +96,8 @@ const get = () => {
 
 <template>
     <div>
-        <lew-flex style="width: 250px" direction="column" gap="30px">
-            <lew-form-item direction="y" title="小的">
+        <lew-form style="width: 350px" direction="x" label-width="80px">
+            <lew-form-item label="小的">
                 <LewSelect
                     v-model="v"
                     size="small"
@@ -119,7 +119,7 @@ const get = () => {
                     </template>
                 </LewSelect>
             </lew-form-item>
-            <lew-form-item direction="y" title="常规">
+            <lew-form-item label="常规">
                 <LewSelect
                     v-model="v"
                     :options="options"
@@ -127,7 +127,7 @@ const get = () => {
                     @change="get"
                 ></LewSelect
             ></lew-form-item>
-            <lew-form-item direction="y" title="大的">
+            <lew-form-item label="大的">
                 <LewSelect
                     v-model="v"
                     size="large"
@@ -136,7 +136,7 @@ const get = () => {
                     @change="get"
                 ></LewSelect
             ></lew-form-item>
-        </lew-flex>
+        </lew-form>
     </div>
 </template>
 

@@ -383,10 +383,11 @@ defineExpose({ getEl, focusFn });
     justify-content: center;
     .lew-input-controls {
         position: absolute;
-        right: 0px;
-        bottom: 0px;
+        right: 5px;
+        bottom: 5px;
         background: var(--lew-form-bgcolor);
-        height: 20px;
+        height: 18px;
+        border-radius: 2px;
     }
     .lew-input-controls-show {
         transform: translateY(0px);

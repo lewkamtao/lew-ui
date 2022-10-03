@@ -102,15 +102,15 @@ const getChecked = (_value: string | number) => {
     flex-wrap: wrap;
 }
 
-.lew-checkbox-small {
+.lew-checkbox-group-small {
     min-height: var(--lew-form-item-height-small);
 }
 
-.lew-checkbox-medium {
+.lew-checkbox-group-medium {
     min-height: var(--lew-form-item-height-medium);
 }
 
-.lew-checkbox-large {
+.lew-checkbox-group-large {
     min-height: var(--lew-form-item-height-large);
 }
 
