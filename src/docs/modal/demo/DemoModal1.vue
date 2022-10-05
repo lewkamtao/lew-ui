@@ -141,17 +141,18 @@ onMounted(() => {
             <lew-title :bold="700" style="margin-bottom: 20px"
                 >登录你的账户
             </lew-title>
-            <lew-form-item direction="y" title="账号">
-                <lew-input />
-            </lew-form-item>
-            <lew-form-item
-                style="margin-bottom: 30px"
-                direction="y"
-                title="密码"
-            >
-                <lew-input />
-            </lew-form-item>
-
+            <lew-form>
+                <lew-form-item direction="y" label="账号">
+                    <lew-input />
+                </lew-form-item>
+                <lew-form-item
+                    style="margin-bottom: 30px"
+                    direction="y"
+                    label="密码"
+                >
+                    <lew-input />
+                </lew-form-item>
+            </lew-form>
             <lew-flex x="end">
                 <lew-button type="normal" @click="modalVisible1 = false"
                     >关闭
