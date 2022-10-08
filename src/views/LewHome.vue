@@ -197,6 +197,7 @@ const message = (type: string) => {
 };
 
 const notification = (type: string) => {
+    // @ts-ignore
     LewNotification[type]({
         title: "提示",
         content: "这是一条demo消息"
