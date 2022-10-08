@@ -1,6 +1,14 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-let colors = ref(['primary', 'normal', 'info', 'warning', 'error', 'success']);
+
+const colors = ref([
+    'primary',
+    'normal',
+    'info',
+    'warning',
+    'error',
+    'success',
+]);
 </script>
 
 <template>

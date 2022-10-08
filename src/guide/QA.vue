@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-let pre1 = ref(`import { LewTooltip } from 'lew-ui';
+const pre1 = ref(`import { LewTooltip } from 'lew-ui';
 
 app.use(LewTooltip);`);
-let pre2 = ref(`import { LewDialog, LewMessage } from 'lew-ui';
+const pre2 = ref(`import { LewDialog, LewMessage } from 'lew-ui';
 
 const open = () => {
     LewDialog.error({

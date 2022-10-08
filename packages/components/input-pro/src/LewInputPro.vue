@@ -9,7 +9,7 @@ watch(
     () => props.modelValue,
     () => {
         v.value = props.modelValue;
-    },
+    }
 );
 
 const emit = defineEmits([
@@ -40,7 +40,6 @@ const selectFn = (e: Options) => {
     emit('input', v.value);
     emit('change', v.value);
     hide();
-
 };
 
 const open = () => {
@@ -61,11 +60,32 @@ const focus = (e: any) => {
 <template>
     <div class="lew-input-pro">
         <slot name="left" />
-        <lew-dropdown ref="lewDropdownRef" style="width: 100%" :trigger="trigger" :arrow="arrow" :placement="placement"
-            :align="align" :width="parseFloat(popoverWidth) - 12 + 'px'" :options="options" @change="selectFn">
-            <lew-input v-model="v" :type="type" :auto-width="autoWidth" :size="size" :align="align"
-                :placeholder="placeholder" :clearable="clearable" @click.stop @input="input" @change="emit('change', v)"
-                @blur="emit('blur', v)" @focus="focus" @clear="clear" />
+        <lew-dropdown
+            ref="lewDropdownRef"
+            style="width: 100%"
+            :trigger="trigger"
+            :arrow="arrow"
+            :placement="placement"
+            :align="align"
+            :width="parseFloat(popoverWidth) - 12 + 'px'"
+            :options="options"
+            @change="selectFn"
+        >
+            <lew-input
+                v-model="v"
+                :type="type"
+                :auto-width="autoWidth"
+                :size="size"
+                :align="align"
+                :placeholder="placeholder"
+                :clearable="clearable"
+                @click.stop
+                @input="input"
+                @change="emit('change', v)"
+                @blur="emit('blur', v)"
+                @focus="focus"
+                @clear="clear"
+            />
         </lew-dropdown>
         <slot name="right" />
     </div>

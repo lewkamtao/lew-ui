@@ -18,7 +18,7 @@ watch(
     () => props.modelValue,
     () => {
         tagsValue.value = props.modelValue;
-    },
+    }
 );
 
 const openInput = () => {

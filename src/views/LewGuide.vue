@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import TheSiderbar from '../layout/TheSiderbar.vue';
 import { Menu } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import TheSiderbar from '../layout/TheSiderbar.vue';
 
 const route = useRoute();
-let mainRef: any = ref(null);
-let isShowSider = ref(false);
+const mainRef: any = ref(null);
+const isShowSider = ref(false);
 
 watch(route, () => {
     setTimeout(() => {
@@ -29,7 +29,7 @@ type Group = {
     items: Item[];
 };
 
-let group = ref<Group[]>([]);
+const group = ref<Group[]>([]);
 group.value = [
     {
         title: '快速上手',

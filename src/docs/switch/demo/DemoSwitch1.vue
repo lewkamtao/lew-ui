@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-let value = ref(false);
+const value = ref(false);
 
 const mockFn = (v: boolean) => {
     return new Promise((resolve) => {
@@ -25,8 +25,8 @@ const change = (e: boolean) => {
         <lew-form-item label="模拟请求" direction="y">
             <lew-switch
                 v-model="value"
-                @change="change"
                 :request="mockFn"
+                @change="change"
             ></lew-switch>
         </lew-form-item>
     </lew-form>

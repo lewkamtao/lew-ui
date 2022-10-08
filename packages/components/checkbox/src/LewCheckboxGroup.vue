@@ -67,10 +67,10 @@ const props = defineProps({
         required: true,
         validator: (value: Array<Options>) => {
             const hasNameKey = value.every((option) =>
-                Object.keys(option).includes('label'),
+                Object.keys(option).includes('label')
             );
             const hasIdKey = value.every((option) =>
-                Object.keys(option).includes('value'),
+                Object.keys(option).includes('value')
             );
             return hasNameKey && hasIdKey;
         },

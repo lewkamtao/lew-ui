@@ -48,7 +48,7 @@ const notification = (
     type: string,
     title: string,
     content: string,
-    delay: number,
+    delay: number
 ) => {
     if (!document.getElementById('lew-notification')) {
         createMessageList();
@@ -97,7 +97,7 @@ const add = (type: string, title: string, content: string, delay: number) => {
 
     newMessage.setAttribute(
         'class',
-        `lew-notification lew-notification-${type}`,
+        `lew-notification lew-notification-${type}`
     );
 
     let timer: (() => void) | undefined = undefined;
@@ -123,7 +123,7 @@ const add = (type: string, title: string, content: string, delay: number) => {
 
         newMessage.setAttribute(
             'class',
-            `lew-notification lew-notification-${type} lew-notification-hidden`,
+            `lew-notification lew-notification-${type} lew-notification-hidden`
         );
         setTimeout(() => {
             if (newMessage) LewMessageDom?.removeChild(newMessage);
@@ -138,7 +138,7 @@ const add = (type: string, title: string, content: string, delay: number) => {
         lock = false;
         newMessage.setAttribute(
             'class',
-            `lew-notification lew-notification-${type} lew-notification-show`,
+            `lew-notification lew-notification-${type} lew-notification-show`
         );
         delay > 0 && startTimer();
     }, 10);

@@ -10,6 +10,7 @@ import {
 } from '@vicons/fluent';
 import { Icon } from '@vicons/utils';
 // alert type
+
 type Alert = {
     type: string;
     title: string;
@@ -53,7 +54,9 @@ const emit = defineEmits(['close']);
                 </div>
             </div>
             <div class="btn-close" @click="emit('close', i)">
-                <Icon size="16"> <Dismiss24Filled /> </Icon>
+                <Icon size="16">
+                    <Dismiss24Filled />
+                </Icon>
             </div>
         </div>
     </div>
@@ -65,6 +68,7 @@ const emit = defineEmits(['close']);
     display: flex;
     flex-direction: column;
     font-size: 0px;
+
     .lew-alert {
         position: relative;
         display: inline-flex;
@@ -76,9 +80,11 @@ const emit = defineEmits(['close']);
         margin-bottom: 10px;
         padding: 8px 12px;
         box-sizing: border-box;
+
         .alert-icon {
             margin: 1px 5px 0px 0px;
         }
+
         .btn-close {
             position: absolute;
             top: 8px;
@@ -93,14 +99,18 @@ const emit = defineEmits(['close']);
             cursor: pointer;
             user-select: none;
         }
+
         .btn-close:hover {
             background: rgba($color: #000000, $alpha: 0.05);
         }
+
         .btn-close:active {
             background: rgba($color: #000000, $alpha: 0.15);
         }
+
         .message {
             width: calc(100% - 40px);
+
             .title {
                 margin-top: 1px;
                 font-size: 14px;
@@ -109,6 +119,7 @@ const emit = defineEmits(['close']);
                 white-space: pre-line;
                 font-weight: 400;
             }
+
             .content {
                 margin-top: 7px;
                 font-size: 14px;
@@ -119,22 +130,27 @@ const emit = defineEmits(['close']);
             }
         }
     }
+
     .lew-alert-normal {
         color: var(--lew-text-color-5);
         background-color: var(--lew-normal-color-light);
     }
+
     .lew-alert-success {
         color: var(--lew-success-color-dark);
         background-color: var(--lew-success-color-light);
     }
+
     .lew-alert-warning {
         color: var(--lew-warning-color-dark);
         background-color: var(--lew-warning-color-light);
     }
+
     .lew-alert-error {
         color: var(--lew-error-color-dark);
         background-color: var(--lew-error-color-light);
     }
+
     .lew-alert-info {
         color: var(--lew-info-color-dark);
         background-color: var(--lew-info-color-light);

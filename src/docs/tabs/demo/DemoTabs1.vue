@@ -17,7 +17,7 @@ const options = ref([
 
 const itemWidth = ref('120px');
 
-let value = ref('2');
+const value = ref('2');
 
 const change = (e: Options) => {
     console.log(e);

@@ -3,7 +3,7 @@ import { CheckmarkSharp, CloseSharp } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
 import { ref } from 'vue';
 
-let data: any = ref([
+const data: any = ref([
     {
         id: 1,
         name: '小明',

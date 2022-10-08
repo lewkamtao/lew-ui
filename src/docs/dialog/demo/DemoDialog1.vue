@@ -5,7 +5,7 @@ const open = (type: any, layout: string) => {
     LewDialog[type]({
         title: '删除确认',
         content: '你是否要删除该账号',
-        layout: layout,
+        layout,
         ok: () => {
             return new Promise((resolve) => {
                 setTimeout(() => {

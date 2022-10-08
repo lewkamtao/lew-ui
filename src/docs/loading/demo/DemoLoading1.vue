@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-let isShow = ref(false);
-let title = ref('加载中');
+
+const isShow = ref(false);
+const title = ref('加载中');
 </script>
 
 <template>

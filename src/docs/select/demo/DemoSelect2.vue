@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-let options = ref([
+const options = ref([
     {
         label: '宋太宗',
         value: '1',
@@ -65,7 +65,7 @@ let options = ref([
     },
 ]);
 
-let options2 = ref([
+const options2 = ref([
     {
         label: '宋太宗',
         value: '1',
@@ -88,7 +88,7 @@ let options2 = ref([
     },
 ]);
 
-let v = ref([]);
+const v = ref([]);
 const get = () => {
     console.log(v.value);
 };

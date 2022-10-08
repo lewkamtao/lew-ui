@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
     DemoPagination1,
     DemoPagination2,
     DemoPagination1_code,
     DemoPagination2_code,
 } from './demo';
-import { ref } from 'vue';
 
 const columns = [
     {

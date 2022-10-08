@@ -86,11 +86,11 @@ const columns = [
     },
 ];
 
-let isCheckeds = ref([]);
+const isCheckeds = ref([]);
 
 const get = (e: any) => {
     if (e.column.field == 'action') {
-        LewMessage.info('点击了 id=>' + e.row.id);
+        LewMessage.info(`点击了 id=>${e.row.id}`);
     }
 };
 

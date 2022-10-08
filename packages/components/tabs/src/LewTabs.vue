@@ -17,7 +17,7 @@ watch(
     () => {
         v.value = props.modelValue;
         setStyle(v.value);
-    },
+    }
 );
 
 const init = () => {

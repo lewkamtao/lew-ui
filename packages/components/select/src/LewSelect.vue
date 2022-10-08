@@ -24,10 +24,9 @@ watch(
             multipleV.value = props.modelValue;
             multipleLabelStr.value = filterSelect(
                 props.modelValue,
-                props.options,
+                props.options
             );
         } else if (typeof props.modelValue == 'string') {
-
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             v.value = props.modelValue;
@@ -36,7 +35,7 @@ watch(
                     ?.label || '';
         }
     },
-    { deep: true },
+    { deep: true }
 );
 
 let lewSelectRef = ref();
@@ -77,7 +76,7 @@ const delTag = (i: number) => {
 };
 
 const lewSelectWidth = computed(
-    () => lewSelectRef.value?.offsetWidth - 12 + 'px',
+    () => lewSelectRef.value?.offsetWidth - 12 + 'px'
 );
 
 const check = (item: LewSelectOptions, checked: boolean) => {
@@ -178,16 +177,12 @@ onMounted(() => {
                         <label>
                             <!-- 原生 -->
                             <div v-if="!labelSlot" class="lew-select-item" :class="`
-                            ${
-                                item.disabled
-                                    ? 'lew-select-item-disabled'
-                                    : ''
-                            } 
+                            ${item.disabled ? 'lew-select-item-disabled' : ''} 
                             `">
-                                <lew-checkbox v-show="showIcon" :size="size" class="lew-select-checkbox"
+                                <lew-checkbox v-show="showIcon && multiple" :size="size" class="lew-select-checkbox"
                                     :label="item.label" :disabled="item.disabled" :checked="getChecked(item.value)"
                                     @change="check(item, $event)" />
-                                <div v-if="!showIcon" class="lew-select-label">
+                                <div v-if="!multiple" class="lew-select-label">
                                     {{ item.label }}
                                 </div>
                             </div>
@@ -239,7 +234,6 @@ onMounted(() => {
             color: var(--lew-text-color-7);
         }
 
-
         .lew-select-label-multiple {
             width: 100%;
             display: flex;
@@ -261,9 +255,6 @@ onMounted(() => {
             align-items: center;
         }
     }
-
-
-
 
     .lew-select-placeholder {
         color: rgb(165, 165, 165);
@@ -333,16 +324,12 @@ onMounted(() => {
         transform: translateY(-50%) rotate(180deg);
         color: var(--lew-text-color-2);
     }
-
-
-
 }
 </style>
 <style lang="scss">
 .lew-isSelect-label-box {
     max-width: 250px;
 }
-
 
 .lew-select-align-left,
 .lew-select-body-align-left {
@@ -462,8 +449,6 @@ onMounted(() => {
         .lew-select-checkbox {
             left: 8px;
         }
-
-
     }
 }
 
@@ -477,7 +462,6 @@ onMounted(() => {
         .lew-select-checkbox {
             left: 8px;
         }
-
     }
 }
 

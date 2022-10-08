@@ -2,7 +2,7 @@
 const clear = (e: any) => {
     console.log(e);
 };
-let options = [
+const options = [
     {
         label: '愚不可及',
         value: '愚不可及',

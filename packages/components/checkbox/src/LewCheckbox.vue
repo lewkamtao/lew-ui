@@ -81,7 +81,7 @@ watch(
         if (v != _checked.value) {
             _checked.value = v;
         }
-    },
+    }
 );
 
 let _checked = ref(props.checked || false);

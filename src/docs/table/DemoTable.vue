@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
     DemoTable1,
     DemoTable2,
@@ -17,9 +18,8 @@ import {
     DemoTable7_code,
     DemoTable8_code,
 } from './demo';
-import { ref } from 'vue';
 
-let alertClose: any = ref([]);
+const alertClose: any = ref([]);
 
 const columns = [
     {

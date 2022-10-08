@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-let value = ref('2020-12-12');
 
-let dateRangeValue = ref(['2020-12-1', '2020-12-12']);
+const value = ref('2020-12-12');
+
+const dateRangeValue = ref(['2020-12-1', '2020-12-12']);
 
 const change1 = (e: any) => {
     LewMessage.info(e.date);

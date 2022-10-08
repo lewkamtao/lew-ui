@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { DemoMessage1, DemoMessage1_code } from './demo';
 import { ref } from 'vue';
+import { DemoMessage1, DemoMessage1_code } from './demo';
 
 const columns = [
     {

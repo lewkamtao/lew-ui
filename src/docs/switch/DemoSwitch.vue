@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
     DemoSwitch1,
     DemoSwitch2,
     DemoSwitch1_code,
     DemoSwitch2_code,
 } from './demo';
-import { ref } from 'vue';
 
 const columns = [
     {

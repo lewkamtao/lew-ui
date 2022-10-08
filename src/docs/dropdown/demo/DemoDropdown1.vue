@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-let options = ref([
+const options = ref([
     {
         label: '西游记',
         value: '1',

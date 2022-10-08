@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-let user = ref({
+
+const user = ref({
     username: '',
     password: '',
     age: '',
@@ -14,24 +15,24 @@ let user = ref({
     pay: '',
 });
 
-let sex_options = ref([
+const sex_options = ref([
     { label: '未知', value: '0' },
     { label: '男', value: '1' },
     { label: '女', value: '2' },
 ]);
 
-let pay_options = ref([
+const pay_options = ref([
     { label: '微信', value: '1' },
     { label: '支付宝', value: '2' },
     { label: 'Apple Pay', value: '3' },
 ]);
-let hobby_options = ref([
+const hobby_options = ref([
     { label: '唱歌', value: '1' },
     { label: '跳', value: '2' },
     { label: 'rap', value: '3' },
     { label: '打篮球', value: '44' },
 ]);
-let home_options = ref([
+const home_options = ref([
     {
         label: '广东',
         value: '1',
@@ -53,7 +54,7 @@ let home_options = ref([
         value: '5',
     },
 ]);
-let d = ref('2020-12-12');
+const d = ref('2020-12-12');
 </script>
 
 <template>

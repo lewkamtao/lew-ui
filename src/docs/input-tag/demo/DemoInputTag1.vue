@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-let v = ref([]);
+
+const v = ref([]);
 </script>
 <template>
     <div>

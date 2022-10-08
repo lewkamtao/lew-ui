@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-let options = ref([
+const options = ref([
     {
         label: '西游记',
         value: '1',
@@ -21,7 +21,7 @@ let options = ref([
 ]);
 
 const change = (e: any) => {
-    LewMessage.info(e.value.label);
+    LewMessage.info(e.label);
 };
 </script>
 <template>
@@ -30,12 +30,7 @@ const change = (e: any) => {
             <lew-tag type="success">hover</lew-tag>
         </lew-dropdown>
 
-        <lew-dropdown
-            :arrow="false"
-            placement="bottom-start"
-            :options="options"
-            @change="change"
-        >
+        <lew-dropdown :arrow="false" placement="bottom-start" :options="options" @change="change">
             <div>纯文本</div>
         </lew-dropdown>
     </lew-flex>

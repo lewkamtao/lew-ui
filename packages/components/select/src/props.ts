@@ -22,7 +22,7 @@ export const selectProps = {
             const _options = toRaw(options);
             if (_options.length == 0) {
                 throw new Error(
-                    'lew-select：options 必须为长度大于 0 的 Array',
+                    'lew-select：options 必须为长度大于 0 的 Array'
                 );
             }
             const arr = _options.map((e) => e.value);

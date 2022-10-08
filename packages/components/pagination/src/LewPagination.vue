@@ -20,13 +20,13 @@ watch(
     () => props.pageNum,
     (v) => {
         changePage(false, v);
-    },
+    }
 );
 watch(
     () => props.pageSize,
     (v) => {
         pageSize.value = v;
-    },
+    }
 );
 
 let maxLen = computed(() => {
@@ -99,12 +99,12 @@ let pageSizebackup = ref('20');
 
 const checkPageSize = (e: any) => {
     if (!e) {
-        return
+        return;
     }
 
-    let pageSizeStr = e
+    let pageSizeStr = e;
     pageSizeStr = e.replace(/[^\d]/g, '');
-    let pageSizeNum = Number(pageSizeStr)
+    let pageSizeNum = Number(pageSizeStr);
     if (pageSizeNum < 1) {
         pageSizeNum = 1;
     }
@@ -114,55 +114,92 @@ const checkPageSize = (e: any) => {
 </script>
 
 <template>
-    <div class="lew-pagination" :class="{
-        'lew-pagination-round': round,
-    }">
+    <div
+        class="lew-pagination"
+        :class="{
+            'lew-pagination-round': round,
+        }"
+    >
         <lew-flex class="lew-pagination-control" gap="5px">
             <lew-flex class="lew-pagination-page-box" gap="5px">
-                <icon size="14" class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('prve', 1)">
+                <icon
+                    size="14"
+                    class="lew-pagination-page-btn lew-pagination-control-btn"
+                    @click="changePage('prve', 1)"
+                >
                     <ChevronBackOutline />
                 </icon>
-                <div v-show="
-                    pageNum - 1 > pageShowSize &&
-                    maxLen > pageShowSize * 2 + 7
-                " class="lew-pagination-page-btn" @click="changePage(false, 1)">
+                <div
+                    v-show="
+                        pageNum - 1 > pageShowSize &&
+                        maxLen > pageShowSize * 2 + 7
+                    "
+                    class="lew-pagination-page-btn"
+                    @click="changePage(false, 1)"
+                >
                     1
                 </div>
-                <icon v-show="
-                    pageNum - 1 > pageShowSize &&
-                    maxLen > pageShowSize * 2 + 7 &&
-                    pageInterval[0] != 1 + 1
-                " size="14" class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('prve', pageShowSize * 2)">
+                <icon
+                    v-show="
+                        pageNum - 1 > pageShowSize &&
+                        maxLen > pageShowSize * 2 + 7 &&
+                        pageInterval[0] != 1 + 1
+                    "
+                    size="14"
+                    class="lew-pagination-page-btn lew-pagination-control-btn"
+                    @click="changePage('prve', pageShowSize * 2)"
+                >
                     <EllipsisHorizontal />
                 </icon>
 
-                <div v-for="(item, index) in pageInterval" :key="index" class="lew-pagination-page-btn"
-                    :class="{ active: item == pageNum }" @click="changePage(false, item)">
+                <div
+                    v-for="(item, index) in pageInterval"
+                    :key="index"
+                    class="lew-pagination-page-btn"
+                    :class="{ active: item == pageNum }"
+                    @click="changePage(false, item)"
+                >
                     {{ item }}
                 </div>
-                <icon v-show="
-                    pageNum < maxLen - pageShowSize &&
-                    maxLen > pageShowSize * 2 + 7 &&
-                    pageInterval[pageInterval.length - 1] + 1 != maxLen
-                " size="14" class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('next', pageShowSize * 2)">
+                <icon
+                    v-show="
+                        pageNum < maxLen - pageShowSize &&
+                        maxLen > pageShowSize * 2 + 7 &&
+                        pageInterval[pageInterval.length - 1] + 1 != maxLen
+                    "
+                    size="14"
+                    class="lew-pagination-page-btn lew-pagination-control-btn"
+                    @click="changePage('next', pageShowSize * 2)"
+                >
                     <EllipsisHorizontal />
                 </icon>
-                <div v-show="
-                    pageNum < maxLen - pageShowSize &&
-                    maxLen > pageShowSize * 2 + 7
-                " class="lew-pagination-page-btn" @click="changePage(false, maxLen)">
+                <div
+                    v-show="
+                        pageNum < maxLen - pageShowSize &&
+                        maxLen > pageShowSize * 2 + 7
+                    "
+                    class="lew-pagination-page-btn"
+                    @click="changePage(false, maxLen)"
+                >
                     {{ maxLen }}
                 </div>
-                <icon size="14" class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('next', 1)">
+                <icon
+                    size="14"
+                    class="lew-pagination-page-btn lew-pagination-control-btn"
+                    @click="changePage('next', 1)"
+                >
                     <ChevronForwardOutline />
                 </icon>
             </lew-flex>
-            <lew-select style="width:100px;" align="center" v-model="pageSizebackup" @change="checkPageSize"
-                size="small" :show-icon="false" :options="pageSizeOptions">
+            <lew-select
+                style="width: 100px"
+                align="center"
+                v-model="pageSizebackup"
+                @change="checkPageSize"
+                size="small"
+                :show-icon="false"
+                :options="pageSizeOptions"
+            >
             </lew-select>
         </lew-flex>
     </div>

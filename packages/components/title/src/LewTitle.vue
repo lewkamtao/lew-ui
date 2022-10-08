@@ -9,7 +9,7 @@ defineProps({
         default: '24px',
     },
 });
-</script>   
+</script>
 
 <template>
     <div class="lew-title" :style="`font-weight:${bold};font-size:${size}`">

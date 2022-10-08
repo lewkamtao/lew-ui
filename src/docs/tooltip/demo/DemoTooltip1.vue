@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-let ha = ref(0);
+
+const ha = ref(0);
 setInterval(() => {
     ha.value += 1;
 }, 500);

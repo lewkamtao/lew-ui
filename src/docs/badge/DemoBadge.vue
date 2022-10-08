@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
     DemoBadge1,
     DemoBadge2,
@@ -7,7 +8,6 @@ import {
     DemoBadge2_code,
     DemoBadge3_code,
 } from './demo';
-import { ref } from 'vue';
 
 const columns = [
     {

@@ -13,7 +13,7 @@ watch(
     () => props.modelValue,
     () => {
         dateValue.value = props.modelValue;
-    },
+    }
 );
 
 const emit = defineEmits(['change', 'update:modelValue']);

@@ -12,7 +12,7 @@ const options = ref([
     { label: 'Dark', value: '2' },
 ]);
 
-let value = ref('');
+const value = ref('');
 
 const change = (e: Options) => {
     console.log(e);

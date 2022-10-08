@@ -18,7 +18,7 @@ watch(
     () => props.modelValue,
     () => {
         v.value = props.modelValue;
-    },
+    }
 );
 
 const emit = defineEmits([

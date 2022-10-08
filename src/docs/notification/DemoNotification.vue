@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
     DemoNotification1,
     DemoNotification1_code,
     DemoNotification2,
     DemoNotification2_code,
 } from './demo';
-import { ref } from 'vue';
 
 const columns = [
     {

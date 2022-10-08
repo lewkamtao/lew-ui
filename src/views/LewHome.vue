@@ -3,9 +3,9 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 onMounted(() => {
-    var duration = 3 * 1000;
-    var animationEnd = Date.now() + duration;
-    var defaults = {
+    const duration = 3 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = {
         startVelocity: 30,
         spread: 360,
         ticks: 60,
@@ -16,42 +16,40 @@ onMounted(() => {
         return Math.random() * (max - min) + min;
     }
     const interval: any = setInterval(function () {
-        var timeLeft = animationEnd - Date.now();
+        const timeLeft = animationEnd - Date.now();
 
         if (timeLeft <= 0) {
             return clearInterval(interval);
         }
 
-        var particleCount = 50 * (timeLeft / duration);
+        const particleCount = 50 * (timeLeft / duration);
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        confetti(
-            Object.assign({}, defaults, {
-                particleCount,
-                origin: {
-                    x: randomInRange(0.1, 0.3),
-                    y: Math.random() - 0.2,
-                },
-            }),
-        );
+        confetti({
+            ...defaults,
+            particleCount,
+            origin: {
+                x: randomInRange(0.1, 0.3),
+                y: Math.random() - 0.2,
+            },
+        });
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        confetti(
-            Object.assign({}, defaults, {
-                particleCount,
-                origin: {
-                    x: randomInRange(0.7, 0.9),
-                    y: Math.random() - 0.2,
-                },
-            }),
-        );
+        confetti({
+            ...defaults,
+            particleCount,
+            origin: {
+                x: randomInRange(0.7, 0.9),
+                y: Math.random() - 0.2,
+            },
+        });
     }, 300);
 });
 
 const router = useRouter();
-let v = ref('');
-let lewPopoverRef = ref();
+const v = ref('');
+const lewPopoverRef = ref();
 const submit = () => {
     LewMessage.error(v.value || '密码不可为空');
     lewPopoverRef.value.hide();
@@ -70,7 +68,7 @@ const open = (type: any) => {
         },
     });
 };
-let user = ref({
+const user = ref({
     username: '',
     password: '',
     age: '',
@@ -83,19 +81,19 @@ let user = ref({
     pay: '',
 });
 
-let sex_options = ref([
+const sex_options = ref([
     { label: '未知', value: '0' },
     { label: '男', value: '1' },
     { label: '女', value: '2' },
 ]);
 
-let hobby_options = ref([
+const hobby_options = ref([
     { label: '唱歌', value: 1 },
     { label: '跳', value: 2 },
     { label: 'rap', value: 3 },
     { label: '打篮球', value: 44 },
 ]);
-let home_options = ref([
+const home_options = ref([
     {
         label: '广东',
         value: '1',
@@ -146,7 +144,7 @@ const tab_soptions = ref([
     { label: '乌鲁木齐', value: '5' },
 ]);
 
-let dropdown_options = ref([
+const dropdown_options = ref([
     {
         label: '西游记',
         value: '1',
@@ -165,7 +163,7 @@ let dropdown_options = ref([
     },
 ]);
 
-let list = ref([
+const list = ref([
     {
         type: 'info',
         title: '成功发送一条消息',
@@ -209,28 +207,48 @@ const message = (type: string) => {
                 </div>
             </div>
             <p>一个 Vue 3 组件库</p>
-            <lew-button style="margin-top: 10px" @click="router.push('/Avatar')">开始使用</lew-button>
+            <lew-button style="margin-top: 10px" @click="router.push('/Avatar')"
+                >开始使用</lew-button
+            >
         </div>
         <div class="home">
             <lew-flex direction="y" gap="40px">
                 <lew-flex class="item" direction="column" x="end" gap="40px">
                     <lew-flex direction="column" x="end" gap="0px">
-                        <lew-title size="16px" :bold="200">Lew Design</lew-title>
-                        <lew-title size="24px" :bold="400">Lew Design</lew-title>
-                        <lew-title size="32px" :bold="600">Lew Design</lew-title>
-                        <lew-title size="40px" :bold="900">Lew Design</lew-title>
+                        <lew-title size="16px" :bold="200"
+                            >Lew Design</lew-title
+                        >
+                        <lew-title size="24px" :bold="400"
+                            >Lew Design</lew-title
+                        >
+                        <lew-title size="32px" :bold="600"
+                            >Lew Design</lew-title
+                        >
+                        <lew-title size="40px" :bold="900"
+                            >Lew Design</lew-title
+                        >
                     </lew-flex>
                     <lew-flex x="end" gap="20px">
                         <lew-badge round value="99+">
-                            <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"></lew-avatar>
+                            <lew-avatar
+                                src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                            ></lew-avatar>
                         </lew-badge>
                         <lew-badge type="info" round value="99+">
-                            <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"></lew-avatar>
+                            <lew-avatar
+                                src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                            ></lew-avatar>
                         </lew-badge>
-                        <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" status="online"
-                            status-position="bottom-left" />
-                        <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" status="processing"
-                            status-position="bottom-right" />
+                        <lew-avatar
+                            src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                            status="online"
+                            status-position="bottom-left"
+                        />
+                        <lew-avatar
+                            src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                            status="processing"
+                            status-position="bottom-right"
+                        />
                     </lew-flex>
                     <lew-flex x="end" gap="20px">
                         <lew-tag type="primary">primary</lew-tag>
@@ -260,13 +278,17 @@ const message = (type: string) => {
                         <lew-dropdown :options="dropdown_options">
                             <lew-button type="normal">trigger hover</lew-button>
                         </lew-dropdown>
-                        <lew-dropdown :options="dropdown_options" trigger="click" placement="top">
+                        <lew-dropdown
+                            :options="dropdown_options"
+                            trigger="click"
+                            placement="top"
+                        >
                             <lew-button type="normal">trigger click</lew-button>
                         </lew-dropdown>
                     </lew-flex>
                 </lew-flex>
                 <lew-flex class="item">
-                    <lew-form direction="column" style="width:100%">
+                    <lew-form direction="column" style="width: 100%">
                         <lew-form-item label="Input">
                             <LewInput v-model="user.username" />
                         </lew-form-item>
@@ -277,13 +299,22 @@ const message = (type: string) => {
                             <LewInput type="textarea" resize="none" />
                         </lew-form-item>
                         <lew-form-item label="Select">
-                            <LewSelect v-model="user.home" :options="home_options" />
+                            <LewSelect
+                                v-model="user.home"
+                                :options="home_options"
+                            />
                         </lew-form-item>
                         <lew-form-item label="Radio">
-                            <lew-radio-group v-model="user.sex" :options="sex_options" />
+                            <lew-radio-group
+                                v-model="user.sex"
+                                :options="sex_options"
+                            />
                         </lew-form-item>
                         <lew-form-item label="Checkbox">
-                            <lew-checkbox-group v-model="user.hobby" :options="hobby_options" />
+                            <lew-checkbox-group
+                                v-model="user.hobby"
+                                :options="hobby_options"
+                            />
                         </lew-form-item>
                         <lew-form-item label="InputTag">
                             <lew-input-tag v-model="user.tags" />
@@ -296,28 +327,52 @@ const message = (type: string) => {
                 <lew-flex class="item" direction="column" gap="20px">
                     <LewAlert :list="list"></LewAlert>
                     <lew-flex wrap x="start" gap="20px">
-                        <lew-button type="normal" @click="message('error')">Message</lew-button>
-                        <lew-button type="success" @click="message('success')">Save</lew-button>
+                        <lew-button type="normal" @click="message('error')"
+                            >Message</lew-button
+                        >
+                        <lew-button type="success" @click="message('success')"
+                            >Save</lew-button
+                        >
                     </lew-flex>
                     <lew-flex wrap x="start" gap="20px">
-                        <lew-button type="error" @click="open('warning')">Dialog</lew-button>
-                        <lew-button type="warning" @click="open('error')">Cancel</lew-button>
+                        <lew-button type="error" @click="open('warning')"
+                            >Dialog</lew-button
+                        >
+                        <lew-button type="warning" @click="open('error')"
+                            >Cancel</lew-button
+                        >
                     </lew-flex>
                     <lew-flex x="start" gap="20px">
-                        <lew-popover ref="lewPopoverRef" trigger="click" placement="bottom-start">
+                        <lew-popover
+                            ref="lewPopoverRef"
+                            trigger="click"
+                            placement="bottom-start"
+                        >
                             <template #trigger>
                                 <lew-button>Popover</lew-button>
                             </template>
                             <template #popover-body>
-                                <lew-form direction="y" class="popover-body" style="width: 250px">
+                                <lew-form
+                                    direction="y"
+                                    class="popover-body"
+                                    style="width: 250px"
+                                >
                                     <lew-form-item label="请输入密码">
                                         <lew-input v-model="v" />
                                     </lew-form-item>
 
                                     <lew-flex x="end">
-                                        <lew-button type="blank" size="small" @click="lewPopoverRef.hide()">取消
+                                        <lew-button
+                                            type="blank"
+                                            size="small"
+                                            @click="lewPopoverRef.hide()"
+                                            >取消
                                         </lew-button>
-                                        <lew-button size="small" @click="submit()">提交</lew-button>
+                                        <lew-button
+                                            size="small"
+                                            @click="submit()"
+                                            >提交</lew-button
+                                        >
                                     </lew-flex>
                                 </lew-form>
                             </template>
@@ -440,12 +495,14 @@ const message = (type: string) => {
         @keyframes demo {
             from {
                 opacity: 0;
-                transform: scale(0.3) translate(-320px, 200px) rotateX(0deg) rotateY(0deg);
+                transform: scale(0.3) translate(-320px, 200px) rotateX(0deg)
+                    rotateY(0deg);
             }
 
             to {
                 opacity: 1;
-                transform: scale(0.5) translate(-320px, 200px) rotateX(15deg) rotateY(-15deg);
+                transform: scale(0.5) translate(-320px, 200px) rotateX(15deg)
+                    rotateY(-15deg);
             }
         }
 

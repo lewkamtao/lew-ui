@@ -68,7 +68,7 @@ const dialog = (type: string, options: Options) => {
                 {
                     title: () => title,
                     content: () => content,
-                },
+                }
             );
         },
     });

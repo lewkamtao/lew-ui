@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
     DemoFlex1,
     DemoFlex1_code,
@@ -7,8 +8,6 @@ import {
     DemoFlex3,
     DemoFlex3_code,
 } from './demo';
-
-import { ref } from 'vue';
 
 const columns = [
     {

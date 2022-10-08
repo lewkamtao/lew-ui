@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
     DemoPopok1,
     DemoPopok2,
     DemoPopok1_code,
     DemoPopok2_code,
 } from './demo';
-import { ref } from 'vue';
 
 const columns = [
     {

@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
     DemoSelect1,
     DemoSelect1_code,
     DemoSelect2,
     DemoSelect2_code,
 } from './demo';
-import { ref } from 'vue';
+
 const columns = [
     {
         title: '参数名',

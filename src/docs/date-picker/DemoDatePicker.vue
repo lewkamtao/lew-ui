@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { DemoDatePicker1, DemoDatePicker1_code } from './demo';
 import { ref } from 'vue';
+import { DemoDatePicker1, DemoDatePicker1_code } from './demo';
+
 const columns = [
     {
         title: '参数名',

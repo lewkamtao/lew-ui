@@ -18,7 +18,7 @@ watch(
     () => props.modelValue,
     () => {
         dateValue.value = props.modelValue;
-    },
+    }
 );
 
 // 获取当天日期对象

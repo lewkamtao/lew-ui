@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
+
 const data: any = [
     {
         id: 1,
@@ -103,7 +104,7 @@ const formatSex = (sex: number) => {
     }
 };
 
-let v = ref('');
+const v = ref('');
 
 const submit = () => {
     LewMessage.error(v.value || '密码不可为空');
@@ -127,7 +128,13 @@ const error = (e: any) => {
         <template #sex="{ row }"> {{ formatSex(row.sex) }} </template>
         <template #hobby="{ row }">
             <lew-flex gap="5px" x="start">
-                <lew-tag v-for="(item, index) in row.hobby" :key="index" type="info" size="small">{{ item }}</lew-tag>
+                <lew-tag
+                    v-for="(item, index) in row.hobby"
+                    :key="index"
+                    type="info"
+                    size="small"
+                    >{{ item }}</lew-tag
+                >
             </lew-flex>
         </template>
         <template #intro="{ row }"> {{ row.intro }} </template>
@@ -143,16 +150,29 @@ const error = (e: any) => {
                                 <lew-input v-model="v" />
                             </lew-form-item>
                             <lew-flex x="end">
-                                <lew-button type="blank" size="small" @click="hide()">取消
+                                <lew-button
+                                    type="blank"
+                                    size="small"
+                                    @click="hide()"
+                                    >取消
                                 </lew-button>
-                                <lew-button size="small" @click="hide(), submit()">提交
+                                <lew-button
+                                    size="small"
+                                    @click="hide(), submit()"
+                                    >提交
                                 </lew-button>
                             </lew-flex>
                         </div>
                     </template>
                 </lew-popover>
-                <lew-popok title="删除确认" content="删除之后无法恢复，请确认！" placement="top" width="200px" @ok="success"
-                    @cancel="error">
+                <lew-popok
+                    title="删除确认"
+                    content="删除之后无法恢复，请确认！"
+                    placement="top"
+                    width="200px"
+                    @ok="success"
+                    @cancel="error"
+                >
                     <lew-button is-text type="error">删除</lew-button>
                 </lew-popok>
             </lew-flex>

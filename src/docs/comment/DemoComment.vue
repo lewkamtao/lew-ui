@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { DemoComment1, DemoComment1_code } from './demo';
 import { ref } from 'vue';
+import { DemoComment1, DemoComment1_code } from './demo';
 
 const columns = [
     {

@@ -29,7 +29,7 @@ watch(
             start: props.modelValue[0],
             end: props.modelValue[1],
         };
-    },
+    }
 );
 
 // 获取当天日期对象

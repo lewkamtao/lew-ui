@@ -25,19 +25,19 @@ export default {
                         if (node.classList.contains('lew-dark')) {
                             instance.popper.children[0].setAttribute(
                                 'data-theme',
-                                'dark',
+                                'dark'
                             );
                         } else {
                             instance.popper.children[0].setAttribute(
                                 'data-theme',
-                                'light',
+                                'light'
                             );
                         }
                     },
                 });
                 el.instance.popper.children[0].setAttribute(
                     'data-lew',
-                    'tooltip',
+                    'tooltip'
                 );
             },
             updated(el: any, binding: DirectiveBinding) {

@@ -18,7 +18,7 @@ watch(
             // 设置固定单元格的阴影
             isShowMain.value = val;
         }, 100);
-    },
+    }
 );
 
 const close = () => {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-let loading = ref(false);
+const loading = ref(false);
 
 const mockFn = () => {
     return new Promise((resolve) => {

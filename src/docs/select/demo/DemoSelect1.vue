@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-let options = ref([
+const options = ref([
     {
         label: '广东',
         value: '1',
@@ -24,14 +24,14 @@ let options = ref([
     },
 ]);
 
-let value = ref('');
+const value = ref('');
 </script>
 
 <template>
     <div>
         <lew-form style="width: 350px" direction="x" label-width="80px">
             <lew-form-item label="小的">
-                <LewSelect v-model="value" size="small" :show-icon="false" :options="options"></LewSelect>
+                <LewSelect v-model="value" size="small" :options="options"></LewSelect>
             </lew-form-item>
             <lew-form-item label="常规">
                 <LewSelect v-model="value" :options="options"></LewSelect>

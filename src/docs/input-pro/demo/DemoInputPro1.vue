@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-let v = ref('');
-let options = [
+
+const v = ref('');
+const options = [
     {
         label: '愚不可及',
         value: '愚不可及',
