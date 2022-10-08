@@ -1,48 +1,9 @@
 <script setup lang="ts">
-import { ref, PropType, computed } from 'vue';
+import { ref } from 'vue';
+import { _props } from './props';
+import type { LewDropdownOptions } from '../index';
 
-type Options = {
-    label: number | string;
-    value: number | string;
-};
-
-const props = defineProps({
-    options: {
-        type: Array as PropType<Options[]>,
-        default() {
-            return [];
-        },
-        required: true,
-        validator(value: PropType<Options[]>) {
-            return value.length >= 0;
-        },
-    },
-    trigger: {
-        type: String,
-        default: 'hover',
-    },
-    placement: {
-        type: String,
-        default: 'bottom',
-    },
-    arrow: {
-        type: Boolean,
-        default: true,
-    },
-    width: {
-        type: String,
-        default: '',
-    },
-    maxHeight: {
-        type: String,
-        default: '300px',
-    },
-
-    align: {
-        type: String,
-        default: 'left',
-    },
-});
+defineProps(_props);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let lewPopoverRef = ref();
@@ -57,30 +18,11 @@ let hide = () => {
 
 const emit = defineEmits(['change']);
 
-const change = (item) => {
-    emit('change', { show, hide, value: item });
-    setTimeout(() => {
-        lewPopoverRef.value.hide();
-    }, 80);
+const change = (item: LewDropdownOptions) => {
+    emit('change', item, { show, hide });
 };
 
 defineExpose({ show, hide });
-
-const _options = computed(() => {
-    if (
-        Array.isArray(props.options) &&
-        Object.prototype.toString.call(props.options[0]) != '[object Object]'
-    ) {
-        return props.options.map((e) => {
-            return {
-                label: e,
-                value: e,
-            };
-        });
-    } else {
-        return props.options;
-    }
-});
 </script>
 
 <template>
@@ -95,12 +37,12 @@ const _options = computed(() => {
         </template>
         <template #popover-body>
             <div
-                v-if="_options.length > 0"
+                v-if="options.length > 0"
                 class="lew-dropdown-body"
                 :style="`width:${width};max-height:${maxHeight}`"
             >
                 <div
-                    v-for="(item, index) in _options"
+                    v-for="(item, index) in options"
                     :key="index"
                     class="lew-dropdown-option"
                     :style="`text-align:${align}`"
@@ -119,7 +61,6 @@ const _options = computed(() => {
     flex-direction: column;
     user-select: none;
     overflow: auto;
-    padding: 3px;
     box-sizing: border-box;
     .lew-dropdown-option {
         padding: 0px 10px;

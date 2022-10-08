@@ -5,6 +5,6 @@ export function useDOMCreate(nodeId: string): void {
     node.id = nodeId;
     document.body.appendChild(node);
     onUnmounted(() => {
-        document.body.removeChild(node);
+        if (node) document.body.removeChild(node);
     });
 }

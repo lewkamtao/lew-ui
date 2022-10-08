@@ -41,15 +41,15 @@ const gohome = () => {
             />
             <span style="margin-left: 10px"> Lew UI</span>
             <lew-tag
-                type="info"
-                size="small"
-                style="margin-left: 10px"
                 v-tooltip="{
                     content: 'Beta 阶段，请勿在正式环境使用。',
                     placement: 'top-start',
                     trigger: 'mouseenter',
                 }"
-                >Beta v1.0.39</lew-tag
+                type="info"
+                size="small"
+                style="margin-left: 10px"
+                >Beta v1.1.7</lew-tag
             >
         </div>
         <div class="menu">
@@ -63,12 +63,12 @@ const gohome = () => {
 
             <Icon size="22">
                 <MoonOutline
-                    @click="changeMode('dark')"
                     class="icon-mode-moon"
+                    @click="changeMode('dark')"
                 />
                 <SunnyOutline
-                    @click="changeMode('light')"
                     class="icon-mode-sunny"
+                    @click="changeMode('light')"
                 />
             </Icon>
         </div>

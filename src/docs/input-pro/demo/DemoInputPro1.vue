@@ -1,24 +1,49 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-let v = ref('');
+
+const v = ref('');
+const options = [
+    {
+        label: '愚不可及',
+        value: '愚不可及',
+    },
+    {
+        label: '有教无类',
+        value: '有教无类',
+    },
+    {
+        label: '欲罢不能',
+        value: '欲罢不能',
+    },
+    {
+        label: '用行舍藏',
+        value: '用行舍藏',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+];
 </script>
 <template>
-    <div style="width: 300px">
-        <lew-form-item direction="y" title="预输入">
+    <lew-form direction="x" style="width: 300px">
+        <lew-form-item label="预输入">
             <lew-input-pro
                 v-model="v"
                 style="width: 250px"
                 placement="top"
-                :options="[
-                    '愚不可及',
-                    '欲罢不能',
-                    '有教无类',
-                    '用行舍藏',
-                    '择善而从',
-                ]"
+                :options="options"
             >
             </lew-input-pro>
         </lew-form-item>
-        <p>值：{{ v }}</p>
-    </div>
+        <lew-form-item label="预输入">
+            <lew-input-pro
+                v-model="v"
+                style="width: 250px"
+                placement="bottom-start"
+                :options="options"
+            >
+            </lew-input-pro>
+        </lew-form-item>
+    </lew-form>
 </template>

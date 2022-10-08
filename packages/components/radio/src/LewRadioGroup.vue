@@ -3,7 +3,7 @@
         x="start"
         gap="15px"
         class="lew-radio-group"
-        :class="`lew-radio-group-${direction}`"
+        :class="`lew-radio-group-${direction} lew-radio-group-${size}`"
     >
         <lew-radio
             v-for="option in options"
@@ -11,6 +11,7 @@
             :block="block"
             :iconable="iconable"
             :label="option.label"
+            :size="size"
             :checked="modelValue == option.value"
             @update:checked="check(option.value)"
         />
@@ -48,6 +49,10 @@ defineProps({
         type: String,
         default: 'x',
     },
+    size: {
+        type: String,
+        default: 'medium',
+    },
     options: {
         type: Array as PropType<Options[]>,
         default: () => {
@@ -56,10 +61,10 @@ defineProps({
         required: true,
         validator: (value: Array<number>) => {
             const hasNameKey = value.every((option) =>
-                Object.keys(option).includes('label'),
+                Object.keys(option).includes('label')
             );
             const hasIdKey = value.every((option) =>
-                Object.keys(option).includes('value'),
+                Object.keys(option).includes('value')
             );
             return hasNameKey && hasIdKey;
         },
@@ -81,6 +86,17 @@ const check = (_value: string) => {
     font-size: 0px;
 }
 
+.lew-radio-group-small {
+    min-height: var(--lew-form-item-height-small);
+}
+
+.lew-radio-group-medium {
+    min-height: var(--lew-form-item-height-medium);
+}
+
+.lew-radio-group-large {
+    min-height: var(--lew-form-item-height-large);
+}
 .lew-radio-group.lew-radio-group-x {
     flex-direction: row;
 }

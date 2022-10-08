@@ -5,9 +5,14 @@ const open = (type: any, layout: string) => {
     LewDialog[type]({
         title: '删除确认',
         content: '你是否要删除该账号',
-        layout: layout,
+        layout,
         ok: () => {
-            console.log('确认删除');
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(true);
+                    LewMessage.success('删除成功');
+                }, 1000);
+            });
         },
         cancel: () => {
             console.log('取消');

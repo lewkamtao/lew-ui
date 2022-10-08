@@ -1,4 +1,4 @@
-export const buttonProps = {
+export const _props = {
     type: {
         type: String,
         default: 'primary',
@@ -10,6 +10,9 @@ export const buttonProps = {
     loading: {
         type: Boolean,
         default: false,
+    },
+    request: {
+        type: Function,
     },
     disabled: {
         type: Boolean,

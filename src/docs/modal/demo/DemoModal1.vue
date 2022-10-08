@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+
 const modalVisible1 = ref(false);
 const modalVisible2 = ref(false);
 
@@ -107,16 +108,16 @@ const formatSex = (sex: number) => {
 };
 
 const set = (row: any, column: any) => {
-    LewMessage.info('你可以拿到这一行的数据，例如：id=' + row.id);
+    LewMessage.info(`你可以拿到这一行的数据，例如：id=${row.id}`);
     console.log(row, column);
 };
 const del = (row: any, column: any) => {
-    LewMessage.warning('你也可以拿到这一列的数据，例如：field=' + column.field);
+    LewMessage.warning(`你也可以拿到这一列的数据，例如：field=${column.field}`);
 };
 
 onMounted(() => {
     document.onkeydown = function (event) {
-        var e = event || window.event || arguments.callee.caller.arguments[0];
+        const e = event || window.event || arguments.callee.caller.arguments[0];
         if (e && e.keyCode == 27) {
             // 按 Esc
             modalVisible1.value = false;
@@ -141,17 +142,18 @@ onMounted(() => {
             <lew-title :bold="700" style="margin-bottom: 20px"
                 >登录你的账户
             </lew-title>
-            <lew-form-item direction="y" title="账号">
-                <lew-input />
-            </lew-form-item>
-            <lew-form-item
-                style="margin-bottom: 30px"
-                direction="y"
-                title="密码"
-            >
-                <lew-input />
-            </lew-form-item>
-
+            <lew-form>
+                <lew-form-item direction="y" label="账号">
+                    <lew-input />
+                </lew-form-item>
+                <lew-form-item
+                    style="margin-bottom: 30px"
+                    direction="y"
+                    label="密码"
+                >
+                    <lew-input />
+                </lew-form-item>
+            </lew-form>
             <lew-flex x="end">
                 <lew-button type="normal" @click="modalVisible1 = false"
                     >关闭

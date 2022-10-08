@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { reactive, } from 'vue';
 import {
     DemoBackTop1,
     DemoBackTop1_code,
@@ -164,7 +164,8 @@ const docsTable = reactive([
 .main {
     width: 100%;
     margin: 0 auto;
-    > div {
+
+    >div {
         margin-bottom: 40px;
     }
 }

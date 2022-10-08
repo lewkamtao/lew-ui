@@ -14,8 +14,6 @@ const open = (type: string) => {
         <lew-button type="success" @click="open('success')">success</lew-button>
         <lew-button type="normal" @click="open('normal')">normal</lew-button>
         <lew-button type="info" @click="open('info')">info</lew-button>
-        <lew-button type="warning" @click="open('warning')"
-            >warning
-        </lew-button></lew-flex
-    >
+        <lew-button type="warning" @click="open('warning')">warning</lew-button>
+    </lew-flex>
 </template>

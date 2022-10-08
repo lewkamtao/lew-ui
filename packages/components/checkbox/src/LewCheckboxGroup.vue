@@ -3,7 +3,7 @@
         x="start"
         gap="15px"
         class="lew-checkbox-group"
-        :class="`lew-checkbox-group-${direction}`"
+        :class="`lew-checkbox-group-${direction} lew-checkbox-group-${size}`"
     >
         <lew-checkbox
             v-for="option in options"
@@ -11,6 +11,7 @@
             :block="block"
             :iconable="iconable"
             :round="round"
+            :size="size"
             :label="option.label"
             :checked="getChecked(option.value)"
             @change="check(option.value, $event)"
@@ -54,6 +55,10 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
+    size: {
+        type: String,
+        default: 'medium',
+    },
     options: {
         type: Array as PropType<Options[]>,
         default: () => {
@@ -62,10 +67,10 @@ const props = defineProps({
         required: true,
         validator: (value: Array<Options>) => {
             const hasNameKey = value.every((option) =>
-                Object.keys(option).includes('label'),
+                Object.keys(option).includes('label')
             );
             const hasIdKey = value.every((option) =>
-                Object.keys(option).includes('value'),
+                Object.keys(option).includes('value')
             );
             return hasNameKey && hasIdKey;
         },
@@ -95,6 +100,18 @@ const getChecked = (_value: string | number) => {
     align-items: center;
     font-size: 0px;
     flex-wrap: wrap;
+}
+
+.lew-checkbox-group-small {
+    min-height: var(--lew-form-item-height-small);
+}
+
+.lew-checkbox-group-medium {
+    min-height: var(--lew-form-item-height-medium);
+}
+
+.lew-checkbox-group-large {
+    min-height: var(--lew-form-item-height-large);
 }
 
 .lew-checkbox-group.lew-checkbox-group-x {

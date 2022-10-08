@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { DemoColor1, DemoColor1_code } from './demo';
 import { ref } from 'vue';
+import { DemoColor1, DemoColor1_code } from './demo';
+
 const columns = [
     {
         title: '参数名',

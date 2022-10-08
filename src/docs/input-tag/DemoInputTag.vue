@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { DemoInputTag1, DemoInputTag1_code } from './demo';
-
 import { reactive } from 'vue';
+import { DemoInputTag1, DemoInputTag1_code } from './demo';
 
 const docsTable = reactive([
     {

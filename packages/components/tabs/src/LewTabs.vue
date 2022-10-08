@@ -17,7 +17,7 @@ watch(
     () => {
         v.value = props.modelValue;
         setStyle(v.value);
-    },
+    }
 );
 
 const init = () => {
@@ -28,7 +28,7 @@ const init = () => {
 
 const emit = defineEmits(['change', 'update:modelValue']);
 let curIndex = props.options.findIndex((e) => v.value == e.value);
-const setStyle = (value) => {
+const setStyle = (value: string) => {
     let index = props.options.findIndex((e) => value == e.value);
     if (curIndex != index) {
         let _item = props.options[index];
@@ -88,7 +88,7 @@ onUnmounted(() => {
             class="lew-tabs-item-animation-active"
         ></div>
         <div
-            v-for="(item, index) in options"
+            v-for="item in options"
             :key="item.value"
             :ref="(el) => itemRef.push(el)"
             class="lew-tabs-item"

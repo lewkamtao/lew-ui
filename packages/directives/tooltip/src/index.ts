@@ -1,16 +1,15 @@
 import tippy from 'tippy.js';
 import type { App as Application, DirectiveBinding } from 'vue';
-let instance: any;
 
 export default {
     install(app: Application) {
         app.directive('tooltip', {
-            mounted(el: HTMLElement, binding: DirectiveBinding) {
+            mounted(el: any, binding: DirectiveBinding) {
                 let trigger = binding.value.trigger;
                 if (trigger == 'hover') {
                     trigger = 'mouseenter';
                 }
-                instance = tippy(el, {
+                el.instance = tippy(el, {
                     trigger: trigger || 'mouseenter',
                     content: binding.value.content,
                     animation: 'shift-away-subtle',
@@ -21,27 +20,31 @@ export default {
                     arrow: binding.value.arrow,
                     maxWidth: 250,
                     onShow(instance) {
+                        instance.setContent(el.instanceContent);
                         const node = document.getElementsByTagName('html')[0];
                         if (node.classList.contains('lew-dark')) {
                             instance.popper.children[0].setAttribute(
                                 'data-theme',
-                                'dark',
+                                'dark'
                             );
                         } else {
                             instance.popper.children[0].setAttribute(
                                 'data-theme',
-                                'light',
+                                'light'
                             );
                         }
                     },
                 });
-                instance.popper.children[0].setAttribute('data-lew', 'tooltip');
+                el.instance.popper.children[0].setAttribute(
+                    'data-lew',
+                    'tooltip'
+                );
             },
-            updated(el: HTMLElement, binding: DirectiveBinding) {
-                instance.setContent(binding.value.content);
+            updated(el: any, binding: DirectiveBinding) {
+                el.instanceContent = binding.value.content;
             },
-            unmounted() {
-                instance = null;
+            unmounted(el: any) {
+                el.instance = null;
             },
         });
     },

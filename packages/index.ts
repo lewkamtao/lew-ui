@@ -21,11 +21,11 @@ const install: any = function (Vue: App): void {
     if (install.installed) return;
 
     const _components = Object.keys(components).map(
-        (key) => components[key as keyof typeof components],
+        (key) => components[key as keyof typeof components]
     );
 
     const _directives = Object.keys(directives).map(
-        (key) => directives[key as keyof typeof directives],
+        (key) => directives[key as keyof typeof directives]
     );
 
     _components.forEach((component: any) => {

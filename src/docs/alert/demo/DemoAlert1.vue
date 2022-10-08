@@ -7,7 +7,7 @@ type Options = {
     content: string;
 };
 
-let list = ref<Options[]>([]);
+const list = ref<Options[]>([]);
 
 const addAlert = (e: Options) => {
     list.value.unshift(e);
@@ -28,8 +28,8 @@ const close = (e: number) => {
                     content: '',
                 })
             "
-            >点我</lew-button
-        >
+            >点我
+        </lew-button>
         <lew-button
             type="error"
             @click="
@@ -39,8 +39,8 @@ const close = (e: number) => {
                     content: '',
                 })
             "
-            >点我</lew-button
-        >
+            >点我
+        </lew-button>
         <lew-button
             type="warning"
             @click="
@@ -50,8 +50,8 @@ const close = (e: number) => {
                     content: '',
                 })
             "
-            >点我</lew-button
-        >
+            >点我
+        </lew-button>
         <lew-button
             type="success"
             @click="
@@ -61,8 +61,8 @@ const close = (e: number) => {
                     content: '',
                 })
             "
-            >点我</lew-button
-        >
+            >点我
+        </lew-button>
         <lew-button
             type="normal"
             @click="
@@ -73,9 +73,9 @@ const close = (e: number) => {
                         'Well the Ukraine girls really knock me out They leave the West behind And Moscow girls make me sing and shout That Georgia s always on my mind Aw come on!',
                 })
             "
-            >点我</lew-button
-        ></lew-flex
-    >
+            >点我
+        </lew-button>
+    </lew-flex>
     <div style="margin-top: 20px">
         <LewAlert :list="list" @close="close"></LewAlert>
     </div>

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-let options = ref([
+
+const options = ref([
     {
         label: '首页',
         to: '/',

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
     DemoRadio1,
     DemoRadio2,
@@ -7,7 +8,7 @@ import {
     DemoRadio2_code,
     DemoRadio3_code,
 } from './demo';
-import { ref } from 'vue';
+
 const columns = [
     {
         title: '参数名',

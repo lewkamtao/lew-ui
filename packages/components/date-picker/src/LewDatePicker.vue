@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { datePickerProps } from './props';
-
 import { CalendarLtr12Regular } from '@vicons/fluent';
 import { Icon } from '@vicons/utils';
 
@@ -11,6 +10,13 @@ let isShowPicker = ref(false);
 let dateValue = ref<string | undefined>(props.modelValue);
 
 let lewPopoverRef = ref();
+
+watch(
+    () => props.modelValue,
+    () => {
+        dateValue.value = props.modelValue;
+    }
+);
 
 const emit = defineEmits(['change', 'update:modelValue']);
 
@@ -22,8 +28,8 @@ const hide = () => {
     lewPopoverRef.value.hide();
 };
 
-const change = (date) => {
-    emit('update:modelValue', date.value);
+const change = (date: string) => {
+    emit('update:modelValue', date);
     emit('change', { date: date, show, hide });
     if (props.autoClose) {
         hide();
@@ -58,7 +64,7 @@ defineExpose({ show, hide });
             </div>
         </template>
         <template #popover-body>
-            <Lew-date
+            <lew-date
                 v-model="dateValue"
                 :multiple="multiple"
                 @change="change"

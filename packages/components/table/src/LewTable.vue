@@ -3,8 +3,8 @@ import { tableProps } from './props';
 import { ref, onMounted, nextTick } from 'vue';
 const props = defineProps(tableProps);
 
-let lewTableRef = ref<HTMLElement | null>(null); // 表格的 ref
-let lewTableBodyRef = ref<HTMLElement | null>(null); // 表格的 body ref
+let lewTableRef = ref<HTMLElement | any>(null); // 表格的 ref
+let lewTableBodyRef = ref<HTMLElement | any>(null); // 表格的 body ref
 
 // 设置左右线
 let leftIndex = ref<number>(-1);
@@ -29,7 +29,7 @@ const setSubLine = () => {
 let isShowLeftLine = ref(false);
 let isShowRightLine = ref(false);
 
-const setShowLine = (e) => {
+const setShowLine = (e: any) => {
     if (e.target.scrollWidth != e.target.offsetWidth) {
         isShowLeftLine.value = e.target.scrollLeft >= 5;
         isShowRightLine.value =
@@ -39,7 +39,7 @@ const setShowLine = (e) => {
 };
 
 // 设置粘住左右
-const setSticky = (column) => {
+const setSticky = (column: any) => {
     if (column.sticky == 'left') {
         return `position: sticky;left:${column.offsetX || '0px'};z-index:1;`;
     } else if (column.sticky == 'right') {
@@ -68,7 +68,7 @@ const setWidth = () => {
 
 // 防抖
 let lock = false;
-const throttle = (e, delay) => {
+const throttle = (e: any, delay: any) => {
     if (leftIndex.value == -1 && rightIndex.value == -1) {
         return;
     }

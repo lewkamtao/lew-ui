@@ -1,12 +1,27 @@
 <script setup lang="ts">
-import { buttonProps } from './props';
+import { _props } from './props';
+import { ref } from 'vue';
 
 const emit = defineEmits(['click']);
-const props = defineProps(buttonProps);
+const props = defineProps(_props);
 
-const handleClick = (e) => {
-    if (props.disabled) return;
+let _loading = ref(false);
+
+if (props.request && props.loading) {
+    throw new Error('request 和 loading 不能同时设置');
+}
+
+const handleClick = async (e: any) => {
+    if (props.disabled || _loading.value || props.loading) return;
     emit('click', e);
+    if (typeof props.request === 'function') {
+        if (_loading.value) {
+            return;
+        }
+        _loading.value = true;
+        await props.request();
+        _loading.value = false;
+    }
 };
 </script>
 
@@ -19,7 +34,7 @@ const handleClick = (e) => {
         ${type ? 'lew-button-' + type : ''}
         ${round ? 'lew-button-round' : ''}  
         ${isIcon ? 'lew-button-icon' : ''}
-        ${loading ? 'lew-button-loading' : ''}
+        ${_loading || loading ? 'lew-button-loading' : ''}
         `"
         :disabled="disabled"
         @click="handleClick"
@@ -28,7 +43,9 @@ const handleClick = (e) => {
 
         <div
             class="lew-loading-icon"
-            :class="{ 'lew-loading-icon-show': loading && !disabled }"
+            :class="{
+                'lew-loading-icon-show': (_loading || loading) && !disabled,
+            }"
         ></div>
     </button>
 </template>
@@ -59,7 +76,7 @@ const handleClick = (e) => {
         height: 100%;
         left: 0;
         top: 0;
-        transition: all 0.35s cubic-bezier(0.65, 0, 0.25, 1);
+        transition: all 0.15s cubic-bezier(0.65, 0, 0.25, 1);
         opacity: 0;
         transform: translateY(100%);
     }
@@ -84,9 +101,9 @@ const handleClick = (e) => {
 }
 .lew-button-small {
     min-width: 50px;
-    height: 26px;
+    height: var(--lew-form-item-height-small);
     padding: 0px 8px;
-    font-size: 12px;
+    font-size: var(--lew-form-font-size-small);
     .lew-loading-icon::after {
         border: 2px solid rgba(0, 0, 0, 0.25);
         border-left: 2px solid rgba(255, 255, 255, 0.85);
@@ -97,9 +114,9 @@ const handleClick = (e) => {
 
 .lew-button-medium {
     min-width: 60px;
-    height: 32px;
+    height: var(--lew-form-item-height-medium);
     padding: 0px 14px;
-    font-size: 14px;
+    font-size: var(--lew-form-font-size-medium);
     .lew-loading-icon::after {
         border: 2.5px solid rgba(0, 0, 0, 0.25);
         border-left: 2.5px solid rgba(255, 255, 255, 0.85);
@@ -110,9 +127,9 @@ const handleClick = (e) => {
 
 .lew-button-large {
     min-width: 70px;
-    height: 36px;
+    height: var(--lew-form-item-height-large);
     padding: 0px 20px;
-    font-size: 16px;
+    font-size: var(--lew-form-font-size-large);
     .lew-loading-icon::after {
         border: 3px solid rgba(0, 0, 0, 0.25);
         border-left: 3px solid rgba(255, 255, 255, 0.85);
@@ -223,11 +240,16 @@ const handleClick = (e) => {
 
 .lew-button-loading {
     color: rgba($color: #000000, $alpha: 0);
+    cursor: progress;
+}
+
+.lew-button-loading:active {
+    transform: scale(1);
 }
 
 .lew-button[disabled] {
     font-size: 14px;
-    cursor: no-drop;
+    pointer-events: none; //鼠标点击不可修改
     opacity: var(--lew-disabled-opacity);
 }
 

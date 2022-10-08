@@ -7,7 +7,7 @@ export const inputProps = {
     // 绑定值
     modelValue: {
         // 父组件 v-model 没有指定参数名，则默认是 modelValue
-        type: [Number, String],
+        type: String,
         default: '',
     },
     size: {

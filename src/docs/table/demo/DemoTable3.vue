@@ -103,11 +103,11 @@ const formatSex = (sex: number) => {
 };
 
 const set = (row: any, column: any) => {
-    LewMessage.info('你可以拿到这一行的数据，例如：id=' + row.id);
+    LewMessage.info(`你可以拿到这一行的数据，例如：id=${row.id}`);
     console.log(row, column);
 };
 const del = (row: any, column: any) => {
-    LewMessage.warning('你也可以拿到这一列的数据，例如：field=' + column.field);
+    LewMessage.warning(`你也可以拿到这一列的数据，例如：field=${column.field}`);
 };
 </script>
 

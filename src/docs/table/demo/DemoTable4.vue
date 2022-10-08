@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
+
 const data: any = [
     {
         id: 1,
@@ -103,7 +104,7 @@ const formatSex = (sex: number) => {
     }
 };
 
-let v = ref('');
+const v = ref('');
 
 const submit = () => {
     LewMessage.error(v.value || '密码不可为空');
@@ -133,8 +134,8 @@ const error = (e: any) => {
                     type="info"
                     size="small"
                     >{{ item }}</lew-tag
-                ></lew-flex
-            >
+                >
+            </lew-flex>
         </template>
         <template #intro="{ row }"> {{ row.intro }} </template>
         <template #action>
@@ -145,7 +146,7 @@ const error = (e: any) => {
                     </template>
                     <template #popover-body="{ hide }">
                         <div class="popover-body">
-                            <lew-form-item direction="y" title="请输入密码">
+                            <lew-form-item direction="y" label="请输入密码">
                                 <lew-input v-model="v" />
                             </lew-form-item>
                             <lew-flex x="end">
@@ -171,10 +172,9 @@ const error = (e: any) => {
                     width="200px"
                     @ok="success"
                     @cancel="error"
-                    ><lew-button is-text type="error"
-                        >删除</lew-button
-                    ></lew-popok
                 >
+                    <lew-button is-text type="error">删除</lew-button>
+                </lew-popok>
             </lew-flex>
         </template>
     </lew-table>

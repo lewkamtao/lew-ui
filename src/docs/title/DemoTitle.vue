@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
     DemoTitle1,
     DemoTitle2,
     DemoTitle1_code,
     DemoTitle2_code,
 } from './demo';
-import { ref } from 'vue';
 
 const columns = [
     {

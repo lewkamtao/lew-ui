@@ -17,7 +17,7 @@ const options = ref([
 
 const itemWidth = ref('120px');
 
-let value = ref('2');
+const value = ref('2');
 
 const change = (e: Options) => {
     console.log(e);
@@ -39,16 +39,16 @@ const change = (e: Options) => {
         <lew-tabs
             v-model="value"
             :options="options"
-            :itemWidth="itemWidth"
+            :item-width="itemWidth"
             @change="change"
         />
         <br />
         <br />
         <lew-title size="14px">线</lew-title>
         <lew-tabs
+            v-model="value"
             style="width: 100%"
             type="line"
-            v-model="value"
             :options="options"
             @change="change"
         />

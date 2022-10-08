@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-let visible1 = ref(false);
-let visible2 = ref(false);
-let visible3 = ref(false);
-let visible4 = ref(false);
+
+const visible1 = ref(false);
+const visible2 = ref(false);
+const visible3 = ref(false);
+const visible4 = ref(false);
 const open1 = (): void => {
     visible1.value = true;
 };

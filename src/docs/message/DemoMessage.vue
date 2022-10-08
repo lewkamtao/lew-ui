@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { DemoMessage1, DemoMessage1_code } from './demo';
 import { ref } from 'vue';
+import { DemoMessage1, DemoMessage1_code } from './demo';
 
 const columns = [
     {
         title: '参数名',
-        width: '200px',
+        width: '120px',
         field: 'param',
     },
     {
         title: '描述',
-        width: '320px',
+        width: '120px',
         field: 'description',
     },
     {
@@ -26,10 +26,16 @@ const columns = [
 ];
 const docsTable = ref([
     {
-        param: 'options',
-        description: '列表配置',
-        type: 'array',
-        default: '[]',
+        param: 'message',
+        description: '消息文字',
+        type: 'string',
+        default: '--',
+    },
+    {
+        param: 'type',
+        description: '消息类型',
+        type: `'success' | 'warning' | 'error' | 'info' | 'normal'`,
+        default: `'normal'`,
     },
 ]);
 </script>

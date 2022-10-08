@@ -1,30 +1,15 @@
 <script setup lang="ts">
-defineProps({
-    round: {
-        type: Boolean,
-        default: false,
-    },
-    status: {
-        type: String,
-        default: '',
-    },
-    statusPosition: {
-        type: String,
-        default: '',
-    },
-    src: {
-        type: String,
-        default: '',
-    },
-    alt: {
-        type: String,
-        default: '',
-    },
+import { avatarProps } from './props';
+import { computed } from 'vue';
+const props = defineProps(avatarProps);
+
+const getAvatarStyle = computed(() => {
+    return `width:${props.width};height:${props.height}`;
 });
 </script>
 
 <template>
-    <div class="lew-avatar">
+    <div class="lew-avatar" :style="getAvatarStyle">
         <img :src="src" :alt="alt" :class="round ? 'lew-avatar-round' : ''" />
         <span
             v-if="status"
@@ -39,8 +24,6 @@ defineProps({
 .lew-avatar {
     position: relative;
     display: inline-block;
-    width: 40px;
-    height: 40px;
 
     img {
         width: 100%;
@@ -84,7 +67,6 @@ defineProps({
     .dot-away {
         background-color: var(--lew-warning-color);
     }
-
     .dot-top-left {
         top: -0.25rem;
         left: -0.25rem;

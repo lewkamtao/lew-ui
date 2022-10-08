@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-let options = ref([
+const options = ref([
     {
         label: '广东',
         value: '1',
@@ -24,36 +24,24 @@ let options = ref([
     },
 ]);
 
-let value = ref('');
+const value = ref('');
 </script>
 
 <template>
     <div>
-        <lew-flex style="width: 250px" direction="column" gap="30px">
-            <lew-form-item direction="y" title="小的">
-                <LewSelect
-                    v-model="value"
-                    size="small"
-                    :options="options"
-                ></LewSelect
-            ></lew-form-item>
-            <lew-form-item direction="y" title="常规">
-                <LewSelect v-model="value" :options="options"></LewSelect
-            ></lew-form-item>
-            <lew-form-item direction="y" title="大的">
-                <LewSelect
-                    v-model="value"
-                    size="large"
-                    :options="options"
-                ></LewSelect
-            ></lew-form-item>
-            <lew-form-item direction="y" title="Hover">
-                <LewSelect
-                    v-model="value"
-                    :options="options"
-                    trigger="hover"
-                ></LewSelect
-            ></lew-form-item>
-        </lew-flex>
+        <lew-form style="width: 350px" direction="x" label-width="80px">
+            <lew-form-item label="小的">
+                <LewSelect v-model="value" size="small" :options="options"></LewSelect>
+            </lew-form-item>
+            <lew-form-item label="常规">
+                <LewSelect v-model="value" :options="options"></LewSelect>
+            </lew-form-item>
+            <lew-form-item label="大的">
+                <LewSelect v-model="value" size="large" :options="options"></LewSelect>
+            </lew-form-item>
+            <lew-form-item label="Hover">
+                <LewSelect v-model="value" :options="options" trigger="hover"></LewSelect>
+            </lew-form-item>
+        </lew-form>
     </div>
 </template>

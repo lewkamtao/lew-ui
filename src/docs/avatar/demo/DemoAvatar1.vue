@@ -5,7 +5,14 @@
             alt="avatar"
         />
         <lew-avatar
-            round
+            width="50px"
+            height="50px"
+            src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+            alt="avatar"
+        />
+        <lew-avatar
+            width="80px"
+            height="80px"
             src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
             alt="avatar"
         />

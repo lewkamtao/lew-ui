@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-let options = ref([
+const options = ref([
     {
         label: '西游记',
         value: '1',
@@ -20,8 +20,9 @@ let options = ref([
     },
 ]);
 
-const change = (e: any) => {
-    LewMessage.info(e.value.label);
+const change = (e: any, handle: any) => {
+    LewMessage.info(e.label);
+    handle.hide();
 };
 </script>
 <template>

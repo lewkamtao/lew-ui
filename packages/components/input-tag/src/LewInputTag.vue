@@ -12,13 +12,13 @@ const isInput = ref(false);
 const lewInputRef = ref();
 let isEnter = false;
 
-let delDownTimer;
+let delDownTimer: any;
 let delDownCheck = 0;
 watch(
     () => props.modelValue,
     () => {
         tagsValue.value = props.modelValue;
-    },
+    }
 );
 
 const openInput = () => {
@@ -48,7 +48,7 @@ const openInput = () => {
     };
 };
 
-const blurFn = (e) => {
+const blurFn = (e: any) => {
     isInput.value = false;
     document.onkeydown = null;
     addTag();
@@ -66,49 +66,63 @@ const addTag = () => {
     inputValue.value = '';
 };
 
-const delTag = (index) => {
+const delTag = (index: number) => {
     tagsValue.value.splice(index, 1);
 };
 </script>
 
 <template>
-    <div class="lew-input-tag">
+    <div class="lew-input-tag-view">
+        <div style="margin-left: -10px; height: 26px"></div>
         <lew-tag
-            closable
             v-for="(item, index) in tagsValue"
             :key="index"
+            closable
             :type="type"
             @close="delTag(index)"
             >{{ item }}</lew-tag
         >
+
         <label
             v-show="!isInput"
-            @click="openInput"
             class="lew-input-tag-button"
+            @click="openInput"
         >
             <Icon size="18px"> <Add16Regular /></Icon>
         </label>
+
         <lew-input
+            v-show="isInput"
             ref="lewInputRef"
             v-model="inputValue"
-            v-show="isInput"
-            @blur="blurFn"
-            @focus="addTag"
+            class="lew-input-tag"
             size="small"
             auto-width
             placeholder=""
+            @blur="blurFn"
+            @focus="addTag"
         ></lew-input>
     </div>
 </template>
 
 <style lang="scss" scoped>
-.lew-input-tag {
-    min-height: 40px;
+.lew-input-tag-view {
+    min-height: 36px;
     display: inline-flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
+    padding: 5px 0px;
+    box-sizing: border-box;
+    .lew-input-tag {
+        height: 26px;
+        flex-shrink: 1;
+        ::v-deep input {
+            height: 26px;
+        }
+    }
 }
+
 .lew-input-tag-button {
     display: inline-flex;
     align-items: center;

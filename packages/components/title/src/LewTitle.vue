@@ -2,7 +2,7 @@
 defineProps({
     bold: {
         type: Number,
-        default: 800,
+        default: 500,
     },
     size: {
         type: String,

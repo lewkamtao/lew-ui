@@ -12,7 +12,7 @@ const options = ref([
     { label: 'Dark', value: '2' },
 ]);
 
-let value = ref('');
+const value = ref('');
 
 const change = (e: Options) => {
     console.log(e);
@@ -21,10 +21,5 @@ const change = (e: Options) => {
 </script>
 
 <template>
-    <lew-tabs
-        round
-        v-model="value"
-        :options="options"
-        @change="change"
-    />
+    <lew-tabs v-model="value" round :options="options" @change="change" />
 </template>

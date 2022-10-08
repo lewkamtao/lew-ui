@@ -27,7 +27,6 @@
         font-size: 14px;
         border-radius: 4px;
         background-color: var(--lew-message-bgcolor);
-        backdrop-filter: blur(10px);
         .content {
             max-width: 500px;
             text-overflow: ellipsis;
@@ -54,6 +53,9 @@
     }
     .message-warning {
         color: var(--lew-warning-color-dark);
+    }
+    .message-icon {
+        display: flex;
     }
     .message-show {
         opacity: 1;

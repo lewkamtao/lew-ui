@@ -18,7 +18,7 @@ watch(
     () => props.modelValue,
     () => {
         v.value = props.modelValue;
-    },
+    }
 );
 
 const emit = defineEmits([
@@ -32,11 +32,8 @@ const emit = defineEmits([
 
 const input = () => {
     if (props.maxLength) {
-        // @ts-ignore
         for (let i = 0; i <= v.value.length - 1; i++) {
-            // @ts-ignore
             if (getTextLength(v.value.slice(0, i)) >= props.maxLength) {
-                // @ts-ignore
                 v.value = v.value.slice(0, i);
             }
         }
@@ -60,8 +57,6 @@ const focusFn = () => {
     }
 };
 
-defineExpose({ focusFn });
-
 let _type = ref(props.type);
 
 const showPasswordFn = (): void => {
@@ -70,9 +65,11 @@ const showPasswordFn = (): void => {
 
 let getCheckNumStr = computed(() => {
     if (props.showCount && props.maxLength) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         return getTextLength(v.value) + ' / ' + props.maxLength;
     } else if (props.showCount) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         return getTextLength(v.value);
     } else {
@@ -101,6 +98,23 @@ const getTextLength = (val: string) => {
         return Math.trunc(len);
     }
 };
+
+const getEl = () => {
+    if (props.type == 'textarea') {
+        return lewTextareaRef.value;
+    } else {
+        return lewInputRef.value;
+    }
+};
+
+const focus = (e: any) => {
+    if (v.value.length < 100) {
+        e?.currentTarget?.select();
+    }
+    emit('focus');
+};
+
+defineExpose({ getEl, focusFn });
 </script>
 
 <template>
@@ -116,8 +130,8 @@ const getTextLength = (val: string) => {
             `"
     >
         <textarea
-            ref="lewTextareaRef"
             v-if="_type == 'textarea'"
+            ref="lewTextareaRef"
             v-model="v"
             class="btf-scrollbar"
             :class="`lew-textarea-resize-${resize}`"
@@ -129,12 +143,12 @@ const getTextLength = (val: string) => {
             @input="input"
             @change="emit('change', v)"
             @blur="emit('blur', v)"
-            @focus="emit('focus', v)"
+            @focus="focus"
         ></textarea>
 
         <input
-            ref="lewInputRef"
             v-else
+            ref="lewInputRef"
             v-model="v"
             :disabled="disabled"
             :placeholder="placeholder"
@@ -144,7 +158,7 @@ const getTextLength = (val: string) => {
             @input="input"
             @change="emit('change', v)"
             @blur="emit('blur', v)"
-            @focus="emit('focus', v)"
+            @focus="focus"
         />
         <label v-if="autoWidth" class="input-auto-width">{{ v }}</label>
         <div
@@ -210,11 +224,7 @@ const getTextLength = (val: string) => {
         box-sizing: border-box;
     }
     input {
-        height: 35px;
         overflow: hidden;
-    }
-    textarea {
-        min-height: 35px;
     }
 
     input::placeholder,
@@ -225,7 +235,6 @@ const getTextLength = (val: string) => {
     .lew-input-controls {
         display: inline-flex;
         align-items: center;
-        height: 35px;
         opacity: 0;
         transform: translateX(100%);
         transition: var(--lew-form-transition);
@@ -238,7 +247,7 @@ const getTextLength = (val: string) => {
             padding: 0px 5px;
             box-sizing: border-box;
             user-select: none;
-            opacity: 0.5;
+            opacity: 0.7;
             transition: var(--lew-form-transition);
         }
         .lew-input-clear {
@@ -305,16 +314,16 @@ const getTextLength = (val: string) => {
         line-height: var(--lew-form-input-line-height-small);
     }
     input {
-        height: var(--lew-form-input-height-small);
+        height: var(--lew-form-item-height-small);
     }
     textarea {
-        min-height: var(--lew-form-input-height-small);
+        min-height: var(--lew-form-item-height-small);
     }
     .lew-input-controls {
-        height: var(--lew-form-input-height-small);
+        height: var(--lew-form-item-height-small);
     }
     .input-auto-width {
-        height: var(--lew-form-input-height-small);
+        height: var(--lew-form-item-height-small);
         padding: var(--lew-form-input-padding-small);
         font-size: var(--lew-form-font-size-small);
         line-height: var(--lew-form-input-line-height-small);
@@ -328,16 +337,16 @@ const getTextLength = (val: string) => {
         line-height: var(--lew-form-input-line-height-medium);
     }
     input {
-        height: var(--lew-form-input-height-medium);
+        height: var(--lew-form-item-height-medium);
     }
     textarea {
-        min-height: var(--lew-form-input-height-medium);
+        min-height: var(--lew-form-item-height-medium);
     }
     .lew-input-controls {
-        height: var(--lew-form-input-height-medium);
+        height: var(--lew-form-item-height-medium);
     }
     .input-auto-width {
-        height: var(--lew-form-input-height-medium);
+        height: var(--lew-form-item-height-medium);
         font-size: var(--lew-form-font-size-medium);
         line-height: var(--lew-form-input-line-height-medium);
         padding: var(--lew-form-input-padding-medium);
@@ -351,16 +360,16 @@ const getTextLength = (val: string) => {
         line-height: var(--lew-form-input-line-height-large);
     }
     input {
-        height: var(--lew-form-input-height-large);
+        height: var(--lew-form-item-height-large);
     }
     textarea {
-        min-height: var(--lew-form-input-height-large);
+        min-height: var(--lew-form-item-height-large);
     }
     .lew-input-controls {
-        height: var(--lew-form-input-height-large);
+        height: var(--lew-form-item-height-large);
     }
     .input-auto-width {
-        height: var(--lew-form-input-height-large);
+        height: var(--lew-form-item-height-large);
         padding: var(--lew-form-input-padding-large);
         font-size: var(--lew-form-font-size-large);
         line-height: var(--lew-form-input-line-height-large);
@@ -368,14 +377,16 @@ const getTextLength = (val: string) => {
 }
 
 .lew-input-view-textarea {
+    position: relative;
     flex-direction: column;
     justify-content: center;
     .lew-input-controls {
-        width: 100%;
-        justify-content: end;
-        height: 25px;
-        box-sizing: border-box;
-        transform: translateY(100%);
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+        background: var(--lew-form-bgcolor);
+        height: 18px;
+        border-radius: 2px;
     }
     .lew-input-controls-show {
         transform: translateY(0px);
@@ -401,6 +412,9 @@ const getTextLength = (val: string) => {
     border: var(--lew-form-border-width) var(--lew-form-border-color-hover)
         solid;
     background-color: var(--lew-form-bgcolor-hover);
+    .lew-input-controls {
+        background: var(--lew-form-bgcolor-hover);
+    }
 }
 
 .lew-input-view:active {
@@ -411,6 +425,9 @@ const getTextLength = (val: string) => {
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
+    .lew-input-controls {
+        background: var(--lew-form-bgcolor-focus);
+    }
 }
 .lew-input-view-readonly {
     cursor: default;

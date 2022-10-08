@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-let pre1 = ref(`<script setup>
+
+const pre1 = ref(`<script setup>
   import { LewButton } from 'lew-ui'
 <\/script>`);
-let pre2 = ref(`import "lew-ui/dist/style.css";`);
-let pre3 = ref(`import { createApp } from 'vue'
+const pre2 = ref(`import "lew-ui/dist/style.css";`);
+const pre3 = ref(`import { createApp } from 'vue'
 import Lew from "lew-ui";
 import "lew-ui/dist/style.css";
 

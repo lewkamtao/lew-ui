@@ -8,11 +8,11 @@ const close = () => {
     <lew-flex x="start">
         <lew-tag type="primary" closable @close="close">primary</lew-tag>
         <lew-tag type="primary" round closable @close="close">primary</lew-tag>
-        <lew-tag type="primary" size="large" closable @close="close"
-            >primary</lew-tag
-        >
-        <lew-tag type="primary" size="large" round closable @close="close"
-            >primary</lew-tag
-        >
+        <lew-tag type="primary" size="large" closable @close="close">
+            primary
+        </lew-tag>
+        <lew-tag type="primary" size="large" round closable @close="close">
+            primary
+        </lew-tag>
     </lew-flex>
 </template>

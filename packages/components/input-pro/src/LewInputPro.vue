@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue';
-import { inputProProps } from './props';
+import { ref, watch } from 'vue';
+import { _props, Options } from './props';
 
-const props = defineProps(inputProProps);
+const props = defineProps(_props);
 const v = ref(props.modelValue);
+
 watch(
     () => props.modelValue,
     () => {
         v.value = props.modelValue;
-    },
+    }
 );
+
 const emit = defineEmits([
     'update:modelValue',
     'clear',
@@ -18,12 +20,12 @@ const emit = defineEmits([
     'change',
     'input',
 ]);
-let lewDropdownRef = ref();
-let lewInputProRef = ref();
 
-const input = (e) => {
-    emit('update:modelValue', e);
-    emit('input', e);
+let lewDropdownRef = ref();
+
+const input = (value: string) => {
+    emit('update:modelValue', value);
+    emit('input', value);
 };
 
 const clear = () => {
@@ -32,21 +34,26 @@ const clear = () => {
     emit('update:modelValue', v.value);
 };
 
-const selectFn = (e: any) => {
-    v.value = e.value.value;
+const selectFn = (e: Options) => {
+    v.value = e.value;
     emit('update:modelValue', v.value);
     emit('input', v.value);
     emit('change', v.value);
-    setTimeout(() => {
-        hide();
-    }, 500);
+    hide();
 };
+
 const open = () => {
     if (props.options.length == 0) return;
     lewDropdownRef.value.show();
 };
 const hide = () => {
     lewDropdownRef.value.hide();
+};
+
+const focus = (e: any) => {
+    open();
+    e?.currentTarget?.select();
+    emit('focus', v);
 };
 </script>
 
@@ -65,10 +72,9 @@ const hide = () => {
             @change="selectFn"
         >
             <lew-input
-                ref="lewInputProRef"
                 v-model="v"
                 :type="type"
-                :autoWidth="autoWidth"
+                :auto-width="autoWidth"
                 :size="size"
                 :align="align"
                 :placeholder="placeholder"
@@ -77,14 +83,13 @@ const hide = () => {
                 @input="input"
                 @change="emit('change', v)"
                 @blur="emit('blur', v)"
-                @focus="open(), emit('focus', v)"
+                @focus="focus"
                 @clear="clear"
             />
         </lew-dropdown>
         <slot name="right" />
     </div>
 </template>
-
 <style lang="scss" scoped>
 .lew-input-pro {
     display: inline-flex;

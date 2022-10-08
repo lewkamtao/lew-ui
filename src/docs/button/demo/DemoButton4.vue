@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-let loading = ref(false);
+const loading = ref(false);
+
+const mockFn = () => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(true);
+            LewMessage.success('发送成功');
+        }, 1000);
+    });
+};
 </script>
 
 <template>
@@ -10,10 +19,14 @@ let loading = ref(false);
         <lew-button type="success" round loading>确定</lew-button>
         <lew-button
             size="large"
-            @click="loading = !loading"
             type="error"
             :loading="loading"
-            >点击触发</lew-button
-        >
+            @click="loading = !loading"
+            >点击触发
+        </lew-button>
+
+        <lew-button size="small" type="success" :request="mockFn"
+            >模拟请求
+        </lew-button>
     </lew-flex>
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-let options = ref([
+const options = ref([
     { label: '宋朝', value: 1 },
     { label: '唐朝', value: 2 },
     { label: '明朝', value: 3 },
@@ -10,7 +10,7 @@ let options = ref([
     { label: '秦朝', value: 6 },
 ]);
 
-let value = ref([]);
+const value = ref([]);
 </script>
 
 <template>

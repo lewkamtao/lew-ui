@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
     DemoButton1,
     DemoButton2,
@@ -13,7 +14,6 @@ import {
     DemoButton5_code,
     DemoButton6_code,
 } from './demo';
-import { ref } from 'vue';
 
 const columns = [
     {

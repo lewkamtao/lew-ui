@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { DemoLoading1, DemoLoading1_code } from './demo';
 import { ref } from 'vue';
+import { DemoLoading1, DemoLoading1_code } from './demo';
 
 const columns = [
     {

@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import TheSiderbar from '../layout/TheSiderbar.vue';
 import { Menu } from '@vicons/ionicons5';
 import { Icon } from '@vicons/utils';
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import TheSiderbar from '../layout/TheSiderbar.vue';
 
-let isShowSider = ref(false);
+const isShowSider = ref(false);
 
 const route = useRoute();
-let mainRef: any = ref(null);
+const mainRef: any = ref(null);
 watch(route, () => {
     setTimeout(() => {
         if (mainRef.value) mainRef.value.scrollTop = 0;
-    }, 250);
+    }, 50);
     isShowSider.value = false;
 });
 
@@ -29,7 +29,7 @@ type Group = {
     items: Item[];
 };
 
-let group = ref<Group[]>([]);
+const group = ref<Group[]>([]);
 group.value = [
     {
         title: '基础',
@@ -322,17 +322,15 @@ group.value = [
                 label: '',
                 type: 'success',
             },
-
-            // {
-            //     cname: '结果',
-            //     name: 'Result',
-            //     path: '/Result',
-            //     label: '',
-            //     type: 'success',
-            // },
+            {
+                cname: '结果',
+                name: 'Result',
+                path: '/Result',
+                label: '',
+                type: 'success',
+            },
         ],
-    }
-   
+    },
 ];
 </script>
 
@@ -365,12 +363,14 @@ group.value = [
     height: calc(100vh - 60px);
     display: flex;
 }
+
 .sider {
     position: fixed;
     top: 59px;
     height: calc(100vh - 58px);
     background-color: var(--lew-bgcolor-0);
 }
+
 .app-main {
     margin-left: var(--lew-siderbar-width);
     width: calc(100% - var(--lew-siderbar-width));
@@ -381,9 +381,11 @@ group.value = [
     padding: 50px 50px 150px 50px;
     background: var(--lew-bgcolor-1);
 }
+
 .mb-btn {
     display: none;
 }
+
 @media (max-width: 767px) {
     .mb-btn {
         position: fixed;
@@ -397,17 +399,21 @@ group.value = [
         color: #fff;
         transition: all 0.85s cubic-bezier(0.65, 0, 0.35, 1);
     }
+
     .mb-btn-open {
         transform: translateX(var(--lew-siderbar-width));
     }
+
     .sider {
         transform: translateX(-100%);
         transition: transform 0.85s cubic-bezier(0.65, 0, 0.35, 1);
         z-index: 99999;
     }
+
     .sider-open {
         transform: translateX(0%);
     }
+
     .app-main {
         width: 100%;
         margin-left: 0px;

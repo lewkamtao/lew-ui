@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-let v = ref('');
-let lewPopoverRef1 = ref();
-let lewPopoverRef2 = ref();
+const v = ref('');
+const lewPopoverRef1 = ref();
+const lewPopoverRef2 = ref();
 const submit = () => {
     LewMessage.error(v.value || '密码不可为空');
     lewPopoverRef1.value.hide();
@@ -120,7 +120,7 @@ const formatSex = (sex: number) => {
             </template>
             <template #popover-body>
                 <div class="popover-body" style="width: 300px">
-                    <lew-form-item direction="y" title="请输入密码">
+                    <lew-form-item direction="y" label="请输入密码">
                         <lew-input v-model="v" />
                     </lew-form-item>
                     <lew-flex x="end">
@@ -163,8 +163,8 @@ const formatSex = (sex: number) => {
                                     size="small"
                                     type="info"
                                     >{{ item }}</lew-tag
-                                ></lew-flex
-                            >
+                                >
+                            </lew-flex>
                         </template>
                         <template #intro="{ row }"> {{ row.intro }} </template>
                     </lew-table>

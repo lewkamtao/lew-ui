@@ -55,15 +55,15 @@ const addMessage = (type: string, content: string) => {
     setTimeout(() => {
         newMessage.setAttribute(
             'class',
-            `message message-${type} message-show`,
+            `message message-${type} message-show`
         );
         setTimeout(() => {
             newMessage.setAttribute(
                 'class',
-                `message message-${type} message-hidden`,
+                `message message-${type} message-hidden`
             );
             setTimeout(() => {
-                LewMessageDom?.removeChild(newMessage);
+                if (newMessage) LewMessageDom?.removeChild(newMessage);
             }, 250);
         }, 3000);
     }, 10);

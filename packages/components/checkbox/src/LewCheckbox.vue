@@ -1,13 +1,15 @@
 <template>
     <label
         class="lew-checkbox"
-        :class="`${block ? 'lew-checkbox-block' : ''} ${
-            round ? 'lew-checkbox-round' : ''
-        } ${_checked ? 'lew-checkbox-checked' : ''} 
+        :class="`
+        ${block ? 'lew-checkbox-block' : ''} 
+        ${round ? 'lew-checkbox-round' : ''} 
+        ${_checked ? 'lew-checkbox-checked' : ''} 
         ${!iconable ? 'lew-checkbox-unicon' : ''}
+        ${size ? 'lew-checkbox-' + size : ''}
         `"
     >
-        <div class="icon-checkbox-box" v-if="iconable">
+        <div v-if="iconable" class="icon-checkbox-box">
             <svg
                 class="icon-checkbox"
                 viewBox="0 0 24 24"
@@ -57,11 +59,19 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
     checked: {
         type: Boolean,
         default: () => {
             return false;
         },
+    },
+    size: {
+        type: String,
+        default: 'medium',
     },
 });
 
@@ -71,7 +81,7 @@ watch(
         if (v != _checked.value) {
             _checked.value = v;
         }
-    },
+    }
 );
 
 let _checked = ref(props.checked || false);
@@ -79,6 +89,9 @@ let _checked = ref(props.checked || false);
 const emit = defineEmits(['change']);
 
 const setChecked = (e: Event) => {
+    if (props.disabled) {
+        return;
+    }
     _checked.value = (e.target as HTMLInputElement).checked;
     emit('change', _checked.value);
 };
@@ -102,7 +115,7 @@ const setChecked = (e: Event) => {
         height: 18px;
         border: 2px var(--lew-form-border-color-hover) solid;
         box-sizing: border-box;
-        border-radius: var(--lew-form-border-radius);
+        border-radius: 3px;
         transition: var(--lew-form-transition);
         background-color: var(--lew-bgcolor-0);
 
@@ -116,6 +129,32 @@ const setChecked = (e: Event) => {
     }
     .lew-checkbox-label {
         margin-left: 6px;
+    }
+}
+
+.lew-checkbox-small {
+    font-size: 13px;
+    .icon-checkbox-box {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+.lew-checkbox-medium {
+    font-size: 14px;
+
+    .icon-checkbox-box {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+.lew-checkbox-large {
+    font-size: 15px;
+
+    .icon-checkbox-box {
+        width: 18px;
+        height: 18px;
     }
 }
 

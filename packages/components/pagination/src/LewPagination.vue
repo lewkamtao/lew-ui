@@ -9,7 +9,7 @@ import {
 import { Icon } from '@vicons/utils';
 const props = defineProps(paginationProps);
 
-const generateArray = (start, end) => {
+const generateArray = (start: any, end: any) => {
     return Array.from(new Array(end + 1).keys()).slice(start);
 };
 
@@ -20,13 +20,13 @@ watch(
     () => props.pageNum,
     (v) => {
         changePage(false, v);
-    },
+    }
 );
 watch(
     () => props.pageSize,
     (v) => {
         pageSize.value = v;
-    },
+    }
 );
 
 let maxLen = computed(() => {
@@ -71,7 +71,7 @@ let pageInterval = computed(() => {
 
 const emit = defineEmits(['update:pageNum', 'update:pageSize', 'change']);
 
-const changePage = (type, num) => {
+const changePage = (type: any, num: number) => {
     if (type == 'next') {
         pageNum.value += num;
     } else if (type == 'prve') {
@@ -85,7 +85,6 @@ const changePage = (type, num) => {
     } else if (pageNum.value > maxLen.value) {
         pageNum.value = maxLen.value;
     }
-    pageNumbackup.value = pageNum.value;
     emit('change', {
         pageNum: pageNum.value,
         pageSize: pageSize.value,
@@ -96,25 +95,21 @@ const changePage = (type, num) => {
     emit('update:pageSize', pageSize.value);
 };
 
-let pageNumbackup = ref(1);
-let pageSizebackup = ref(20);
+let pageSizebackup = ref('20');
 
-const checkPageNum = (e) => {
-    e = String(e);
-    pageNumbackup.value = Number(e.replace(/[^\d]/g, ''));
-    changePage(false, pageNumbackup.value);
-};
-const checkPageSize = (e) => {
-    e = String(e);
-    pageSizebackup.value = Number(e.replace(/[^\d]/g, ''));
-    if (pageSizebackup.value < 1) {
-        pageSizebackup.value = 1;
+const checkPageSize = (e: any) => {
+    if (!e) {
+        return;
     }
-    if (pageSizebackup.value > props.total) {
-        pageSizebackup.value = props.total;
+
+    let pageSizeStr = e;
+    pageSizeStr = e.replace(/[^\d]/g, '');
+    let pageSizeNum = Number(pageSizeStr);
+    if (pageSizeNum < 1) {
+        pageSizeNum = 1;
     }
-    pageSize.value = pageSizebackup.value;
-    changePage(false, pageNumbackup.value);
+    pageSize.value = pageSizeNum;
+    changePage(false, pageNum.value);
 };
 </script>
 
@@ -196,40 +191,16 @@ const checkPageSize = (e) => {
                     <ChevronForwardOutline />
                 </icon>
             </lew-flex>
-            <lew-input-pro
+            <lew-select
+                style="width: 100px"
+                align="center"
                 v-model="pageSizebackup"
-                size="small"
-                align="center"
-                placeholder=""
-                :arrow="false"
-                :options="pageSizeOptions"
-                auto-width
-                @blur="checkPageSize"
                 @change="checkPageSize"
-                disabled
-            >
-                <template #right>
-                    <div class="page-label">/ 页</div>
-                </template>
-            </lew-input-pro>
-            <lew-input-pro
-                v-model="pageNumbackup"
-                style="margin-left: 20px"
                 size="small"
-                align="center"
-                placeholder=""
-                :arrow="false"
-                auto-width
-                @blur="checkPageNum"
-                @change="checkPageNum"
+                :show-icon="false"
+                :options="pageSizeOptions"
             >
-                <template #left>
-                    <div class="page-label">跳转至</div>
-                </template>
-                <template #right>
-                    <div class="page-label">页</div>
-                </template>
-            </lew-input-pro>
+            </lew-select>
         </lew-flex>
     </div>
 </template>
@@ -242,10 +213,12 @@ const checkPageSize = (e) => {
     border-radius: var(--lew-form-border-radius);
     user-select: none;
     font-size: 14px;
+
     .lew-pagination-control {
         height: 100%;
         color: var(--lew-text-color-7);
     }
+
     .lew-pagination-page-box {
         width: auto;
         position: relative;
@@ -265,22 +238,27 @@ const checkPageSize = (e) => {
             text-align: center;
             cursor: pointer;
         }
+
         .lew-pagination-page-btn:hover {
             background-color: var(--lew-primary-color-light);
             color: var(--lew-primary-color-dark);
         }
+
         .active {
             background-color: var(--lew-primary-color);
             color: var(--lew-white-text-color);
         }
+
         .active:hover {
             background-color: var(--lew-primary-color);
             color: var(--lew-white-text-color);
         }
+
         .lew-pagination-control-btn {
             padding: 0px;
         }
     }
+
     .page-label {
         white-space: nowrap;
         padding: 0px 5px;

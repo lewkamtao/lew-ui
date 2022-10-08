@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import tippy from 'tippy.js';
 
 let triggerRef = ref(null);
@@ -15,6 +15,11 @@ const props = defineProps({
         type: String,
         default: 'top',
     },
+    triggerTarget: {
+        type: Element,
+        default: null,
+        required: false,
+    },
     arrow: {
         type: Boolean,
         default: true,
@@ -23,6 +28,8 @@ const props = defineProps({
 
 onMounted(() => {
     let trigger = props.trigger;
+    let triggerTarget = props.triggerTarget;
+
     let placement = props.placement;
     if (trigger == 'hover') {
         trigger = 'mouseenter';
@@ -33,6 +40,7 @@ onMounted(() => {
     instance = tippy(triggerRef.value, {
         theme: 'light',
         trigger: trigger,
+        triggerTarget: triggerTarget,
         content: bodyRef.value,
         animation: 'shift-away-subtle',
         interactive: true,
@@ -54,6 +62,7 @@ onMounted(() => {
             emit('onHide');
         },
     });
+
     instance.popper.children[0].setAttribute('data-lew', 'popover');
 });
 
@@ -72,9 +81,9 @@ defineExpose({ show, hide });
 
 <template>
     <div class="lew-popover">
-        <div ref="triggerRef">
+        <label ref="triggerRef">
             <div class="trigger"><slot name="trigger" /></div>
-        </div>
+        </label>
         <div ref="bodyRef" class="lew-popover-body">
             <slot name="popover-body" :show="show" :hide="hide" />
         </div>

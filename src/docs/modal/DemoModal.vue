@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { DemoModal1, DemoModal1_code } from './demo';
 import { ref } from 'vue';
+import { DemoModal1, DemoModal1_code } from './demo';
 
 const columns = [
     {

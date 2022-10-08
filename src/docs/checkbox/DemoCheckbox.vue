@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import {
     DemoCheckbox1,
     DemoCheckbox2,
@@ -9,7 +10,7 @@ import {
     DemoCheckbox3_code,
     DemoCheckbox4_code,
 } from './demo';
-import { ref } from 'vue';
+
 const columns = [
     {
         title: '参数名',

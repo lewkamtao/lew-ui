@@ -12,7 +12,7 @@ export * from './input';
 export * from './input-pro';
 export * from './input-tag';
 
-export * from './form-item';
+export * from './form';
 export * from './checkbox';
 export * from './radio';
 export * from './select';
@@ -34,6 +34,7 @@ export * from './modal';
 export * from './popok';
 export * from './popover';
 export * from './drawer';
+export * from './result';
 
 export * from './demo-box';
 export * from './backtop';

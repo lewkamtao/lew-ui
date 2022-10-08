@@ -26,3 +26,10 @@
         box-sizing: border-box !important;
     }
 }
+
+.tippy-box[data-lew~='custom'] {
+    .tippy-content {
+        padding: 0px;
+        box-sizing: border-box !important;
+    }
+}
