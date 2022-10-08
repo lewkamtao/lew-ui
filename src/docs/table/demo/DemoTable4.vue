@@ -127,14 +127,8 @@ const error = (e: any) => {
         <template #sex="{ row }"> {{ formatSex(row.sex) }} </template>
         <template #hobby="{ row }">
             <lew-flex gap="5px" x="start">
-                <lew-tag
-                    v-for="(item, index) in row.hobby"
-                    :key="index"
-                    type="info"
-                    size="small"
-                    >{{ item }}</lew-tag
-                ></lew-flex
-            >
+                <lew-tag v-for="(item, index) in row.hobby" :key="index" type="info" size="small">{{ item }}</lew-tag>
+            </lew-flex>
         </template>
         <template #intro="{ row }"> {{ row.intro }} </template>
         <template #action>
@@ -145,36 +139,22 @@ const error = (e: any) => {
                     </template>
                     <template #popover-body="{ hide }">
                         <div class="popover-body">
-                            <lew-form-item direction="y" title="请输入密码">
+                            <lew-form-item direction="y" label="请输入密码">
                                 <lew-input v-model="v" />
                             </lew-form-item>
                             <lew-flex x="end">
-                                <lew-button
-                                    type="blank"
-                                    size="small"
-                                    @click="hide()"
-                                    >取消
+                                <lew-button type="blank" size="small" @click="hide()">取消
                                 </lew-button>
-                                <lew-button
-                                    size="small"
-                                    @click="hide(), submit()"
-                                    >提交
+                                <lew-button size="small" @click="hide(), submit()">提交
                                 </lew-button>
                             </lew-flex>
                         </div>
                     </template>
                 </lew-popover>
-                <lew-popok
-                    title="删除确认"
-                    content="删除之后无法恢复，请确认！"
-                    placement="top"
-                    width="200px"
-                    @ok="success"
-                    @cancel="error"
-                    ><lew-button is-text type="error"
-                        >删除</lew-button
-                    ></lew-popok
-                >
+                <lew-popok title="删除确认" content="删除之后无法恢复，请确认！" placement="top" width="200px" @ok="success"
+                    @cancel="error">
+                    <lew-button is-text type="error">删除</lew-button>
+                </lew-popok>
             </lew-flex>
         </template>
     </lew-table>

@@ -49,6 +49,10 @@ export const selectProps = {
         type: Boolean,
         default: false,
     },
+    align: {
+        type: String,
+        default: 'left',
+    },
     showIcon: {
         type: Boolean,
         default: true,

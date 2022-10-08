@@ -2,14 +2,14 @@
 defineProps({
     bold: {
         type: Number,
-        default: 800,
+        default: 500,
     },
     size: {
         type: String,
         default: '24px',
     },
 });
-</script>
+</script>   
 
 <template>
     <div class="lew-title" :style="`font-weight:${bold};font-size:${size}`">

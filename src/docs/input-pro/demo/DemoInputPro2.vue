@@ -28,7 +28,7 @@ let options = [
 
 <template>
     <lew-form style="width: 300px">
-        <lew-form-item direction="y" title="预输入">
+        <lew-form-item direction="y" label="预输入">
             <lew-input-pro
                 style="width: 250px"
                 :options="options"
@@ -37,7 +37,7 @@ let options = [
                 @clear="clear"
             />
         </lew-form-item>
-        <lew-form-item direction="y" title="预输入">
+        <lew-form-item direction="y" label="预输入">
             <lew-input-pro
                 style="width: 250px"
                 :options="options"
@@ -46,7 +46,7 @@ let options = [
                 @clear="clear"
             />
         </lew-form-item>
-        <lew-form-item direction="y" title="气泡方向自定义">
+        <lew-form-item direction="y" label="气泡方向自定义">
             <lew-input-pro
                 style="width: 250px"
                 popover-width="250px"

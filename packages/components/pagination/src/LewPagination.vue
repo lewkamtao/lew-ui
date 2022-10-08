@@ -85,7 +85,6 @@ const changePage = (type: any, num: number) => {
     } else if (pageNum.value > maxLen.value) {
         pageNum.value = maxLen.value;
     }
-    pageNumbackup.value = String(pageNum.value);
     emit('change', {
         pageNum: pageNum.value,
         pageSize: pageSize.value,
@@ -96,137 +95,75 @@ const changePage = (type: any, num: number) => {
     emit('update:pageSize', pageSize.value);
 };
 
-let pageNumbackup = ref('1');
 let pageSizebackup = ref('20');
 
-const checkPageNum = (e: any) => {
-    e = String(e);
-    pageNumbackup.value = e.replace(/[^\d]/g, '');
-    changePage(false, Number(pageNumbackup.value));
-};
 const checkPageSize = (e: any) => {
-    e = String(e);
-    pageSizebackup.value = e.replace(/[^\d]/g, '');
-    if (Number(pageSizebackup.value) < 1) {
-        pageSizebackup.value = String(1);
+    if (!e) {
+        return
     }
-    pageSize.value = Number(pageSizebackup.value);
-    changePage(false, Number(pageNumbackup.value));
+
+    let pageSizeStr = e
+    pageSizeStr = e.replace(/[^\d]/g, '');
+    let pageSizeNum = Number(pageSizeStr)
+    if (pageSizeNum < 1) {
+        pageSizeNum = 1;
+    }
+    pageSize.value = pageSizeNum;
+    changePage(false, pageNum.value);
 };
 </script>
 
 <template>
-    <div
-        class="lew-pagination"
-        :class="{
-            'lew-pagination-round': round,
-        }"
-    >
+    <div class="lew-pagination" :class="{
+        'lew-pagination-round': round,
+    }">
         <lew-flex class="lew-pagination-control" gap="5px">
             <lew-flex class="lew-pagination-page-box" gap="5px">
-                <icon
-                    size="14"
-                    class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('prve', 1)"
-                >
+                <icon size="14" class="lew-pagination-page-btn lew-pagination-control-btn"
+                    @click="changePage('prve', 1)">
                     <ChevronBackOutline />
                 </icon>
-                <div
-                    v-show="
-                        pageNum - 1 > pageShowSize &&
-                        maxLen > pageShowSize * 2 + 7
-                    "
-                    class="lew-pagination-page-btn"
-                    @click="changePage(false, 1)"
-                >
+                <div v-show="
+                    pageNum - 1 > pageShowSize &&
+                    maxLen > pageShowSize * 2 + 7
+                " class="lew-pagination-page-btn" @click="changePage(false, 1)">
                     1
                 </div>
-                <icon
-                    v-show="
-                        pageNum - 1 > pageShowSize &&
-                        maxLen > pageShowSize * 2 + 7 &&
-                        pageInterval[0] != 1 + 1
-                    "
-                    size="14"
-                    class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('prve', pageShowSize * 2)"
-                >
+                <icon v-show="
+                    pageNum - 1 > pageShowSize &&
+                    maxLen > pageShowSize * 2 + 7 &&
+                    pageInterval[0] != 1 + 1
+                " size="14" class="lew-pagination-page-btn lew-pagination-control-btn"
+                    @click="changePage('prve', pageShowSize * 2)">
                     <EllipsisHorizontal />
                 </icon>
 
-                <div
-                    v-for="(item, index) in pageInterval"
-                    :key="index"
-                    class="lew-pagination-page-btn"
-                    :class="{ active: item == pageNum }"
-                    @click="changePage(false, item)"
-                >
+                <div v-for="(item, index) in pageInterval" :key="index" class="lew-pagination-page-btn"
+                    :class="{ active: item == pageNum }" @click="changePage(false, item)">
                     {{ item }}
                 </div>
-                <icon
-                    v-show="
-                        pageNum < maxLen - pageShowSize &&
-                        maxLen > pageShowSize * 2 + 7 &&
-                        pageInterval[pageInterval.length - 1] + 1 != maxLen
-                    "
-                    size="14"
-                    class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('next', pageShowSize * 2)"
-                >
+                <icon v-show="
+                    pageNum < maxLen - pageShowSize &&
+                    maxLen > pageShowSize * 2 + 7 &&
+                    pageInterval[pageInterval.length - 1] + 1 != maxLen
+                " size="14" class="lew-pagination-page-btn lew-pagination-control-btn"
+                    @click="changePage('next', pageShowSize * 2)">
                     <EllipsisHorizontal />
                 </icon>
-                <div
-                    v-show="
-                        pageNum < maxLen - pageShowSize &&
-                        maxLen > pageShowSize * 2 + 7
-                    "
-                    class="lew-pagination-page-btn"
-                    @click="changePage(false, maxLen)"
-                >
+                <div v-show="
+                    pageNum < maxLen - pageShowSize &&
+                    maxLen > pageShowSize * 2 + 7
+                " class="lew-pagination-page-btn" @click="changePage(false, maxLen)">
                     {{ maxLen }}
                 </div>
-                <icon
-                    size="14"
-                    class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('next', 1)"
-                >
+                <icon size="14" class="lew-pagination-page-btn lew-pagination-control-btn"
+                    @click="changePage('next', 1)">
                     <ChevronForwardOutline />
                 </icon>
             </lew-flex>
-            <lew-input-pro
-                v-model.number="pageSizebackup"
-                size="small"
-                align="center"
-                placeholder=""
-                :arrow="false"
-                :options="pageSizeOptions"
-                auto-width
-                @blur="checkPageSize"
-                @change="checkPageSize"
-                disabled
-            >
-                <template #right>
-                    <div class="page-label">/ 页</div>
-                </template>
-            </lew-input-pro>
-            <lew-input-pro
-                v-model="pageNumbackup"
-                style="margin-left: 20px"
-                size="small"
-                align="center"
-                placeholder=""
-                :arrow="false"
-                auto-width
-                @blur="checkPageNum"
-                @change="checkPageNum"
-            >
-                <template #left>
-                    <div class="page-label">跳转至</div>
-                </template>
-                <template #right>
-                    <div class="page-label">页</div>
-                </template>
-            </lew-input-pro>
+            <lew-select style="width:100px;" align="center" v-model="pageSizebackup" @change="checkPageSize"
+                size="small" :show-icon="false" :options="pageSizeOptions">
+            </lew-select>
         </lew-flex>
     </div>
 </template>
@@ -239,10 +176,12 @@ const checkPageSize = (e: any) => {
     border-radius: var(--lew-form-border-radius);
     user-select: none;
     font-size: 14px;
+
     .lew-pagination-control {
         height: 100%;
         color: var(--lew-text-color-7);
     }
+
     .lew-pagination-page-box {
         width: auto;
         position: relative;
@@ -262,22 +201,27 @@ const checkPageSize = (e: any) => {
             text-align: center;
             cursor: pointer;
         }
+
         .lew-pagination-page-btn:hover {
             background-color: var(--lew-primary-color-light);
             color: var(--lew-primary-color-dark);
         }
+
         .active {
             background-color: var(--lew-primary-color);
             color: var(--lew-white-text-color);
         }
+
         .active:hover {
             background-color: var(--lew-primary-color);
             color: var(--lew-white-text-color);
         }
+
         .lew-pagination-control-btn {
             padding: 0px;
         }
     }
+
     .page-label {
         white-space: nowrap;
         padding: 0px 5px;

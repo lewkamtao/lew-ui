@@ -26,7 +26,7 @@ let options = [
 </script>
 <template>
     <lew-form direction="x" style="width: 300px">
-        <lew-form-item title="预输入">
+        <lew-form-item label="预输入">
             <lew-input-pro
                 v-model="v"
                 style="width: 250px"
@@ -35,7 +35,7 @@ let options = [
             >
             </lew-input-pro>
         </lew-form-item>
-        <lew-form-item title="预输入">
+        <lew-form-item label="预输入">
             <lew-input-pro
                 v-model="v"
                 style="width: 250px"

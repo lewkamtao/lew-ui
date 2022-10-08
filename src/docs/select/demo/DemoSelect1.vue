@@ -31,30 +31,17 @@ let value = ref('');
     <div>
         <lew-form style="width: 350px" direction="x" label-width="80px">
             <lew-form-item label="小的">
-                <LewSelect
-                    v-model="value"
-                    size="small"
-                    :show-icon="false"
-                    :options="options"
-                ></LewSelect
-            ></lew-form-item>
+                <LewSelect v-model="value" size="small" :show-icon="false" :options="options"></LewSelect>
+            </lew-form-item>
             <lew-form-item label="常规">
-                <LewSelect v-model="value" :options="options"></LewSelect
-            ></lew-form-item>
+                <LewSelect v-model="value" :options="options"></LewSelect>
+            </lew-form-item>
             <lew-form-item label="大的">
-                <LewSelect
-                    v-model="value"
-                    size="large"
-                    :options="options"
-                ></LewSelect
-            ></lew-form-item>
+                <LewSelect v-model="value" size="large" :options="options"></LewSelect>
+            </lew-form-item>
             <lew-form-item label="Hover">
-                <LewSelect
-                    v-model="value"
-                    :options="options"
-                    trigger="hover"
-                ></LewSelect
-            ></lew-form-item>
+                <LewSelect v-model="value" :options="options" trigger="hover"></LewSelect>
+            </lew-form-item>
         </lew-form>
     </div>
 </template>

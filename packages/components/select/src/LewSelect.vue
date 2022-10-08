@@ -27,7 +27,7 @@ watch(
                 props.options,
             );
         } else if (typeof props.modelValue == 'string') {
-            hide();
+
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             v.value = props.modelValue;
@@ -80,26 +80,23 @@ const lewSelectWidth = computed(
     () => lewSelectRef.value?.offsetWidth - 12 + 'px',
 );
 
-const check = (_value: string, checked: boolean) => {
+const check = (item: LewSelectOptions, checked: boolean) => {
     if (props.modelValue instanceof Array) {
         let updatedValue = [...props.modelValue];
         if (checked) {
-            updatedValue.push(_value);
+            updatedValue.push(item.value);
         } else {
-            updatedValue.splice(updatedValue.indexOf(_value), 1);
+            updatedValue.splice(updatedValue.indexOf(item.value), 1);
         }
         emit('update:modelValue', updatedValue);
     } else {
-        if (v.value == _value) {
-            labelStr.value = '';
-            v.value = '';
-        } else {
-            labelStr.value = _value;
-            v.value = _value;
+        if (v.value != item.value) {
+            labelStr.value = item.label;
+            v.value = item.value;
+            emit('change', item.value);
         }
-
-        emit('update:modelValue', v.value);
-        emit('change', v.value);
+        emit('update:modelValue', item.value);
+        hide();
     }
 };
 
@@ -126,33 +123,18 @@ onMounted(() => {
 </script>
 
 <template>
-    <lew-popover
-        ref="lewPopverRef1"
-        class="lew-select-view"
-        :class="{ 'lew-select-focus': isShowOptions }"
-        :trigger="trigger"
-        :placement="placement"
-        :arrow="false"
-        style="width: 100%"
-        @on-show="isShowOptions = true"
-        @on-hide="isShowOptions = false"
-    >
+    <lew-popover ref="lewPopverRef1" class="lew-select-view" :class="{ 'lew-select-focus': isShowOptions }"
+        :trigger="trigger" :placement="placement" :arrow="false" style="width: 100%" @on-show="isShowOptions = true"
+        @on-hide="isShowOptions = false">
         <template #trigger>
-            <div
-                ref="lewSelectRef"
-                class="lew-select"
-                :class="`lew-select-${size}`"
-            >
+            <div ref="lewSelectRef" class="lew-select" :class="`lew-select-${size} lew-select-align-${align}`">
                 <icon size="16px" class="lew-select-icon">
                     <ChevronDown />
                 </icon>
-                <div
-                    v-if="
-                        (!multiple && labelStr.length == 0) ||
-                        (multiple && multipleLabelStr.length == 0)
-                    "
-                    class="lew-select-placeholder"
-                >
+                <div v-if="
+                    (!multiple && labelStr.length == 0) ||
+                    (multiple && multipleLabelStr.length == 0)
+                " class="lew-select-placeholder">
                     请选择
                 </div>
                 <!-- 单选 -->
@@ -161,50 +143,21 @@ onMounted(() => {
                 </div>
                 <!-- 多选 -->
                 <div v-show="multiple" class="lew-select-label-multiple">
-                    <lew-tag
-                        v-show="multipleLabelStr.length > 0"
-                        type="primary"
-                        :size="size"
-                        closable
-                        @close="delTag(0)"
-                    >
-                        {{ multipleLabelStr[0] }}</lew-tag
-                    >
-                    <lew-popover
-                        v-show="multipleLabelStr.length > 1"
-                        ref="lewPopverRef2"
-                        trigger="hover"
-                        placement="top"
-                    >
+                    <lew-tag v-show="multipleLabelStr.length > 0" type="primary" :size="size" closable
+                        @close="delTag(0)">
+                        {{ multipleLabelStr[0] }}</lew-tag>
+                    <lew-popover v-show="multipleLabelStr.length > 1" ref="lewPopverRef2" trigger="hover"
+                        placement="top">
                         <template #trigger>
-                            <div
-                                style="margin-left: 5px"
-                                class="lew-isSelect-label-num"
-                            >
-                                <lew-tag
-                                    v-show="multipleLabelStr.length > 1"
-                                    :size="size"
-                                    type="primary"
-                                >
-                                    +{{ multipleLabelStr.length - 1 }}</lew-tag
-                                >
+                            <div style="margin-left: 5px" class="lew-isSelect-label-num">
+                                <lew-tag v-show="multipleLabelStr.length > 1" :size="size" type="primary">
+                                    +{{ multipleLabelStr.length - 1 }}</lew-tag>
                             </div>
                         </template>
                         <template #popover-body>
-                            <lew-flex
-                                wrap
-                                gap="5px"
-                                x="start"
-                                class="lew-isSelect-label-box"
-                            >
-                                <lew-tag
-                                    v-for="(item, index) in multipleLabelStr"
-                                    :key="index"
-                                    type="primary"
-                                    closable
-                                    :size="size"
-                                    @close="delTag(index)"
-                                >
+                            <lew-flex wrap gap="5px" x="start" class="lew-isSelect-label-box">
+                                <lew-tag v-for="(item, index) in multipleLabelStr" :key="index" type="primary" closable
+                                    :size="size" @close="delTag(index)">
                                     {{ item }}
                                 </lew-tag>
                             </lew-flex>
@@ -214,54 +167,34 @@ onMounted(() => {
             </div>
         </template>
         <template #popover-body>
-            <div
-                class="lew-select-body"
-                :class="`
-                    ${size ? 'lew-select-body-' + size : ''} 
-                    ${multiple ? 'lew-select-multiple-body' : ''}  
-                    `"
-                :style="`width:${lewSelectWidth}`"
-            >
+            <div class="lew-select-body" :class="`
+            ${size ? 'lew-select-body-' + size : ''} 
+            ${multiple ? 'lew-select-multiple-body' : ''}  
+            ${align ? 'lew-select-body-align-' + align : ''}  
+            `" :style="`width:${lewSelectWidth}`">
                 <slot name="header"></slot>
                 <div class="lew-select-options-box">
                     <template v-for="item in options" :key="item.value">
                         <label>
                             <!-- 原生 -->
-                            <div
-                                v-if="!labelSlot"
-                                class="lew-select-item"
-                                :class="`
-                                ${
-                                    item.disabled
-                                        ? 'lew-select-item-disabled'
-                                        : ''
-                                } 
-                                `"
-                            >
-                                <lew-checkbox
-                                    v-show="showIcon"
-                                    :size="size"
-                                    class="lew-select-checkbox"
-                                    :label="item.label"
-                                    :disabled="item.disabled"
-                                    :checked="getChecked(item.value)"
-                                    @change="check(item.value, $event)"
-                                />
+                            <div v-if="!labelSlot" class="lew-select-item" :class="`
+                            ${
+                                item.disabled
+                                    ? 'lew-select-item-disabled'
+                                    : ''
+                            } 
+                            `">
+                                <lew-checkbox v-show="showIcon" :size="size" class="lew-select-checkbox"
+                                    :label="item.label" :disabled="item.disabled" :checked="getChecked(item.value)"
+                                    @change="check(item, $event)" />
                                 <div v-if="!showIcon" class="lew-select-label">
                                     {{ item.label }}
                                 </div>
                             </div>
                             <div v-else class="lew-select-slot-item">
-                                <slot
-                                    name="label"
-                                    :item="item"
-                                    :checked="getChecked(item.value)"
-                                ></slot>
-                                <lew-checkbox
-                                    v-show="false"
-                                    :checked="getChecked(item.value)"
-                                    @change="check(item.value, $event)"
-                                />
+                                <slot name="label" :item="item" :checked="getChecked(item.value)"></slot>
+                                <lew-checkbox v-show="false" :checked="getChecked(item.value)"
+                                    @change="check(item, $event)" />
                             </div>
                         </label>
                     </template>
@@ -281,9 +214,10 @@ onMounted(() => {
     transition: all 0.15s ease;
     box-sizing: border-box;
 
-    > div {
+    >div {
         width: 100%;
     }
+
     .lew-select {
         display: flex;
         align-items: center;
@@ -295,6 +229,7 @@ onMounted(() => {
         cursor: pointer;
         user-select: none;
         box-sizing: border-box;
+
         .lew-select-icon {
             position: absolute;
             top: 50%;
@@ -304,17 +239,17 @@ onMounted(() => {
             color: var(--lew-text-color-7);
         }
 
-        .lew-select {
-            width: 100%;
-        }
+
         .lew-select-label-multiple {
             width: 100%;
             display: flex;
             align-items: center;
+
             .lew-popover {
                 display: flex;
                 align-items: center;
-                > div {
+
+                >div {
                     display: flex;
                     align-items: center;
                 }
@@ -327,6 +262,9 @@ onMounted(() => {
         }
     }
 
+
+
+
     .lew-select-placeholder {
         color: rgb(165, 165, 165);
     }
@@ -335,10 +273,13 @@ onMounted(() => {
         padding: var(--lew-form-input-padding-small);
         height: var(--lew-form-item-height-small);
         line-height: var(--lew-form-input-line-height-small);
+
         .lew-select-label-single,
         .lew-select-placeholder {
+            width: calc(100% - 20px);
             font-size: var(--lew-form-font-size-small);
         }
+
         .lew-select-label-multiple {
             margin-left: -4px;
         }
@@ -348,51 +289,80 @@ onMounted(() => {
         padding: var(--lew-form-input-padding-medium);
         line-height: var(--lew-form-input-line-height-medium);
         height: var(--lew-form-item-height-medium);
+
         .lew-select-label-single,
         .lew-select-placeholder {
             font-size: var(--lew-form-font-size-medium);
         }
+
         .lew-select-label-multiple {
             margin-left: -6px;
         }
     }
+
     .lew-select-large {
         padding: var(--lew-form-input-padding-large);
         line-height: var(--lew-form-input-line-height-large);
         height: var(--lew-form-item-height-large);
+
         .lew-select-label-single,
         .lew-select-placeholder {
             font-size: var(--lew-form-font-size-large);
         }
+
         .lew-select-label-multiple {
             margin-left: -8px;
         }
     }
 }
+
 .lew-select-view:hover {
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor-hover);
 }
+
 .lew-select-view:active {
     background-color: var(--lew-form-bgcolor-active);
 }
+
 .lew-select-view.lew-select-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-        solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+
     .lew-select-icon {
         transform: translateY(-50%) rotate(180deg);
         color: var(--lew-text-color-2);
     }
+
+
+
 }
 </style>
 <style lang="scss">
 .lew-isSelect-label-box {
     max-width: 250px;
 }
+
+
+.lew-select-align-left,
+.lew-select-body-align-left {
+    text-align: left;
+}
+
+.lew-select-align-center,
+.lew-select-body-align-center {
+    text-align: center;
+}
+
+.lew-select-align-right,
+.lew-select-body-align-right {
+    text-align: right;
+}
+
 .lew-select-body {
     width: 100%;
     box-sizing: border-box;
+
     .lew-select-options-box {
         overflow-y: auto;
         overflow-x: hidden;
@@ -423,23 +393,31 @@ onMounted(() => {
         }
 
         .lew-select-label {
+            width: 100%;
             user-select: none;
             font-size: 14px;
+            padding: 0px 8px;
+            box-sizing: border-box;
         }
+
         .lew-select-item:hover {
             color: var(--lew-text-color-0);
             background-color: var(--lew-form-bgcolor);
         }
+
         .lew-select-checked {
             font-weight: bold;
             color: var(--lew-primary-color-dark);
         }
+
         .lew-select-checked:hover {
             color: var(--lew-primary-color-dark);
         }
+
         .lew-select-slot-item {
             border-radius: var(--lew-form-border-radius);
         }
+
         .lew-select-slot-item:hover {
             color: var(--lew-text-color-0);
             background-color: var(--lew-form-bgcolor);
@@ -462,10 +440,12 @@ onMounted(() => {
     .lew-select-options-box::-webkit-scrollbar-thumb:hover {
         background-color: rgb(126, 126, 126);
     }
+
     .lew-select-options-box::-webkit-scrollbar-thumb {
         background-color: rgb(209 213 219 / 0);
         border-radius: 5px;
     }
+
     .lew-select-options-box:hover::-webkit-scrollbar-thumb {
         background-color: rgb(209 213 219 / 1);
         border-radius: 5px;
@@ -478,12 +458,12 @@ onMounted(() => {
             height: 28px;
             line-height: 28px;
         }
+
         .lew-select-checkbox {
             left: 8px;
         }
-        .lew-select-label {
-            padding-left: 8px;
-        }
+
+
     }
 }
 
@@ -493,12 +473,11 @@ onMounted(() => {
             height: 30px;
             line-height: 30px;
         }
+
         .lew-select-checkbox {
             left: 8px;
         }
-        .lew-select-label {
-            padding-left: 8px;
-        }
+
     }
 }
 
@@ -508,11 +487,9 @@ onMounted(() => {
             height: 32px;
             line-height: 32px;
         }
+
         .lew-select-checkbox {
             left: 8px;
-        }
-        .lew-select-label {
-            padding-left: 8px;
         }
     }
 }
