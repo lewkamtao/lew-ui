@@ -20,6 +20,10 @@
     border-radius: 5px;
 }
 
+.tippy-box {
+    border-radius: var(--lew-form-border-radius) !important;
+}
+
 .tippy-box[data-lew~='popover'] {
     .tippy-content {
         padding: 6px;
