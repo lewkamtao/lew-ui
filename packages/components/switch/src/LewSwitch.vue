@@ -38,22 +38,13 @@ const handleClick = async (e: any) => {
 </script>
 
 <template>
-    <div
-        class="lew-switch-view"
-        :class="`
-        ${round ? 'lew-switch-round' : ''} 
-        ${v ? 'lew-switch-checked' : ''}
-        ${_loading || loading ? 'lew-switch-loading' : ''}
-        ${request ? 'lew-switch-request' : ''}
-       `"
-        @click="handleClick"
-    >
-        <input
-            v-show="false"
-            v-model="v"
-            type="checkbox"
-            :disabled="disabled"
-        />
+    <div class="lew-switch-view" :class="`
+     ${round ? 'lew-switch-round' : ''} 
+     ${v ? 'lew-switch-checked' : ''}
+     ${_loading || loading ? 'lew-switch-loading' : ''}
+     ${request ? 'lew-switch-request' : ''}
+    `" @click="handleClick">
+        <input v-show="false" v-model="v" type="checkbox" :disabled="disabled" />
         <div class="lew-switch-dot"></div>
     </div>
 </template>
@@ -65,9 +56,10 @@ const handleClick = async (e: any) => {
     width: 38px;
     height: 24px;
     background: var(--lew-form-bgcolor);
-    border-radius: 4px;
+    border-radius: var(--lew-border-radius);
     transition: var(--lew-form-transition);
     cursor: pointer;
+
     .lew-switch-dot {
         position: absolute;
         width: 16px;
@@ -92,12 +84,12 @@ const handleClick = async (e: any) => {
         border-radius: 50%;
     }
 
-    input:checked + .lew-switch-dot {
+    input:checked+.lew-switch-dot {
         background: #fff;
         transform: translate(18px, 4px);
     }
 
-    input:checked + .lew-switch-dot:after {
+    input:checked+.lew-switch-dot:after {
         transform: translateX(-100%);
     }
 }
@@ -106,10 +98,12 @@ const handleClick = async (e: any) => {
     0% {
         transform: translate(-50%, -50%) rotate(0deg);
     }
+
     100% {
         transform: translate(-50%, -50%) rotate(360deg);
     }
 }
+
 .lew-switch-loading {
     cursor: progress;
 
@@ -123,6 +117,7 @@ const handleClick = async (e: any) => {
 
 .lew-switch-round {
     border-radius: 20px;
+
     .lew-switch-dot {
         border-radius: 50px;
     }
@@ -131,8 +126,10 @@ const handleClick = async (e: any) => {
 .lew-switch-view:hover {
     background: var(--lew-form-bgcolor-hover);
 }
+
 .lew-switch-view:active {
     background: var(--lew-form-bgcolor-active);
+
     .lew-switch-dot {
         width: 20px;
     }
@@ -141,11 +138,14 @@ const handleClick = async (e: any) => {
 .lew-switch-view.lew-switch-checked {
     background: var(--lew-primary-color);
 }
+
 .lew-switch-view.lew-switch-checked:hover {
     background: var(--lew-primary-color);
 }
+
 .lew-switch-view.lew-switch-checked:active {
     background: var(--lew-primary-color);
+
     .lew-switch-dot {
         width: 20px;
         transform: translate(14px, 4px);

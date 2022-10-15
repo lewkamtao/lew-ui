@@ -10,7 +10,6 @@ declare module '*.vue' {
 declare module 'highlight.js';
 declare const hljs;
 declare module 'lew-ui';
-declare module '@vicons/fluent';
 declare module 'lodash/throttle';
 declare module '@vueuse/core';
 declare module 'moment';

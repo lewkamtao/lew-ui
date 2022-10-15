@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { CheckmarkSharp, CloseSharp } from '@vicons/ionicons5';
-import { Icon } from '@vicons/utils';
 import { ref } from 'vue';
 
 const data: any = ref([
@@ -137,18 +135,22 @@ const formatSex = (sex: number) => {
 .info {
     line-height: 22px;
     padding: 10px 0px;
+
     .lew-avatar {
         flex-shrink: 0;
         width: 35px;
         height: 35px;
     }
+
     .right {
         flex-shrink: 0;
         width: calc(100% - 50px);
     }
+
     .name {
         font-weight: bold;
     }
+
     .mail {
         width: 100%;
         overflow: hidden;

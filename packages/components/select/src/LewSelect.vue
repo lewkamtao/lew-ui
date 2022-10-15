@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue';
-import { ChevronDown } from '@vicons/ionicons5';
-import { Icon } from '@vicons/utils';
 import { selectProps, LewSelectOptions } from './props';
 import { LewCheckbox, LewPopover } from 'lew-ui';
 
@@ -127,9 +125,7 @@ onMounted(() => {
         @on-hide="isShowOptions = false">
         <template #trigger>
             <div ref="lewSelectRef" class="lew-select" :class="`lew-select-${size} lew-select-align-${align}`">
-                <icon size="16px" class="lew-select-icon">
-                    <ChevronDown />
-                </icon>
+                <lew-icon size="16px" type="chevron-down" class="lew-select-icon" />
                 <div v-if="
                     (!multiple && labelStr.length == 0) ||
                     (multiple && multipleLabelStr.length == 0)
@@ -204,7 +200,7 @@ onMounted(() => {
 .lew-select-view {
     width: 100%;
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
-    border-radius: var(--lew-form-border-radius);
+    border-radius: var(--lew-border-radius);
     background-color: var(--lew-form-bgcolor);
     transition: all 0.15s ease;
     box-sizing: border-box;
@@ -371,7 +367,7 @@ onMounted(() => {
             cursor: pointer;
             color: var(--lew-text-color-7);
             box-sizing: border-box;
-            border-radius: var(--lew-form-border-radius);
+            border-radius: var(--lew-border-radius);
         }
 
         .lew-select-item-disabled {
@@ -402,7 +398,7 @@ onMounted(() => {
         }
 
         .lew-select-slot-item {
-            border-radius: var(--lew-form-border-radius);
+            border-radius: var(--lew-border-radius);
         }
 
         .lew-select-slot-item:hover {

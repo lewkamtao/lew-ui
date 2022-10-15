@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ChevronUp24Regular, Code24Regular } from '@vicons/fluent';
-import { Icon } from '@vicons/utils';
 import { ref } from 'vue';
 defineProps({
     title: {
@@ -28,14 +26,14 @@ let isShowCode = ref(false);
 
 <template>
     <div class="demo-box">
-        <lew-title size="16px"
-            >{{ title }}
+        <lew-title size="16px">{{ title }}
             <lew-tag v-if="tag" type="info" style="margin: 2px 0px 0px 5px">
-                {{ tag }}</lew-tag
-            >
+                {{ tag }}</lew-tag>
         </lew-title>
         <div class="demo-item">
-            <div class="demo-cp"><slot></slot></div>
+            <div class="demo-cp">
+                <slot></slot>
+            </div>
             <div v-show="isShowCode" v-highlight class="hl-pre">
                 <div class="pre-box">
                     <pre><code v-text="code"></code></pre>
@@ -43,12 +41,8 @@ let isShowCode = ref(false);
             </div>
             <div class="show-bar" @click="isShowCode = !isShowCode">
                 <div class="icon">
-                    <Icon v-if="!isShowCode" size="20">
-                        <Code24Regular />
-                    </Icon>
-                    <Icon v-if="isShowCode" size="20">
-                        <ChevronUp24Regular />
-                    </Icon>
+                    <lew-icon size="16" v-if="!isShowCode" type="chevron-down" />
+                    <lew-icon size="16" v-else type="chevron-up" />
                 </div>
 
                 {{ isShowCode ? '关闭' : '显示源码' }}
@@ -67,13 +61,16 @@ let isShowCode = ref(false);
         border-radius: var(--lew-border-radius);
         border: var(--lew-border-1);
     }
+
     .hl-pre {
         position: relative;
+
         .pre-box {
             margin-top: 10px;
             border-radius: var(--lew-border-radius);
         }
     }
+
     .show-bar {
         display: flex;
         justify-content: center;
@@ -87,6 +84,7 @@ let isShowCode = ref(false);
         transition: all 0.25s;
         color: #999;
         background-color: var(--lew-bgcolor-0);
+
         .icon {
             display: flex;
             justify-content: center;
@@ -94,6 +92,7 @@ let isShowCode = ref(false);
             margin-right: 10px;
         }
     }
+
     .show-bar:hover {
         background-color: var(--lew-bgcolor-3);
         color: var(--lew-text-color-3);
@@ -102,6 +101,7 @@ let isShowCode = ref(false);
     .demo-cp {
         padding: 30px;
     }
+
     @media (max-width: 767px) {
         .demo-cp {
             overflow-x: auto;

@@ -3,8 +3,6 @@ import { computed, ref, onMounted, shallowRef } from 'vue';
 import throttle from 'lodash/throttle';
 import { backtopProps } from './props';
 import { useEventListener } from '../../../hooks';
-import { CaretUp } from '@vicons/ionicons5';
-import { Icon } from '@vicons/utils';
 
 const dom = shallowRef<HTMLElement>();
 const showBackTop = ref(false);
@@ -55,16 +53,9 @@ onMounted(() => {
 
 <template>
     <transition name="fade">
-        <div
-            v-if="showBackTop"
-            class="backTop"
-            :style="backTopStyle"
-            @click="toBackUp"
-        >
+        <div v-if="showBackTop" class="backTop" :style="backTopStyle" @click="toBackUp">
             <slot>
-                <Icon size="20">
-                    <CaretUp />
-                </Icon>
+                <lew-icon size="20" type="chevron-up" />
             </slot>
         </div>
     </transition>

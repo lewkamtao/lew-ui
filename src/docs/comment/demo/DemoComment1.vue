@@ -1,16 +1,11 @@
 <script setup lang="ts">
-import { Chat24Regular } from '@vicons/fluent';
 </script>
 
 <template>
     <div style="width: 600px; margin: 0 auto">
         <lew-comment>
             <template #avatar>
-                <lew-avatar
-                    src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
-                    alt="avatar"
-                    round
-                />
+                <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" alt="avatar" round />
             </template>
             <template #header>
                 <lew-flex x="start">
@@ -27,7 +22,7 @@ import { Chat24Regular } from '@vicons/fluent';
             <template #footer>
                 <div style="margin-top: 10px">
                     <lew-button size="small" is-text type="normal">
-                        <Chat24Regular style="width: 14px" />
+                        <lew-icon size="14" style="margin-right:5px" type="message-square" />
                         <span>回复</span>
                     </lew-button>
                 </div>
@@ -35,11 +30,7 @@ import { Chat24Regular } from '@vicons/fluent';
         </lew-comment>
         <lew-comment style="padding: 20px 0px 0px 50px">
             <template #avatar>
-                <lew-avatar
-                    src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
-                    alt="avatar"
-                    round
-                />
+                <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" alt="avatar" round />
             </template>
             <template #header>
                 <lew-flex x="start">
@@ -56,7 +47,7 @@ import { Chat24Regular } from '@vicons/fluent';
             <template #footer>
                 <div style="margin-top: 10px">
                     <lew-button size="small" is-text type="normal">
-                        <Chat24Regular style="width: 14px" />
+                        <lew-icon size="14" style="margin-right:5px" type="message-square" />
                         <span>回复</span>
                     </lew-button>
                 </div>
@@ -64,11 +55,7 @@ import { Chat24Regular } from '@vicons/fluent';
         </lew-comment>
         <lew-comment style="padding: 20px 0px 0px 50px">
             <template #avatar>
-                <lew-avatar
-                    src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
-                    alt="avatar"
-                    round
-                />
+                <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" alt="avatar" round />
             </template>
             <template #header>
                 <lew-flex x="start">
@@ -85,7 +72,7 @@ import { Chat24Regular } from '@vicons/fluent';
             <template #footer>
                 <div style="margin-top: 10px">
                     <lew-button size="small" is-text type="normal">
-                        <Chat24Regular style="width: 14px" />
+                        <lew-icon size="14" style="margin-right:5px" type="message-square" />
                         <span>回复</span>
                     </lew-button>
                 </div>
@@ -93,11 +80,7 @@ import { Chat24Regular } from '@vicons/fluent';
         </lew-comment>
         <lew-comment style="padding: 20px 0px 0px 50px">
             <template #avatar>
-                <lew-avatar
-                    src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
-                    alt="avatar"
-                    round
-                />
+                <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" alt="avatar" round />
             </template>
             <template #header>
                 <lew-flex x="start">
@@ -114,7 +97,7 @@ import { Chat24Regular } from '@vicons/fluent';
             <template #footer>
                 <div style="margin-top: 10px">
                     <lew-button size="small" is-text type="normal">
-                        <Chat24Regular style="width: 14px" />
+                        <lew-icon size="14" style="margin-right:5px" type="message-square" />
                         <span>回复</span>
                     </lew-button>
                 </div>
@@ -122,11 +105,7 @@ import { Chat24Regular } from '@vicons/fluent';
         </lew-comment>
         <lew-comment style="padding: 20px 0px 0px 50px">
             <template #avatar>
-                <lew-avatar
-                    src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
-                    alt="avatar"
-                    round
-                />
+                <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" alt="avatar" round />
             </template>
             <template #header>
                 <lew-flex x="start">
@@ -156,11 +135,13 @@ import { Chat24Regular } from '@vicons/fluent';
     color: var(--lew-text-color-4);
     white-space: nowrap;
 }
+
 .datetime {
     font-size: 12px;
     color: var(--lew-text-color-7);
     white-space: nowrap;
 }
+
 .content {
     margin-top: 10px;
 }

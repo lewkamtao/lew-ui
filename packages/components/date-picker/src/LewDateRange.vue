@@ -1,11 +1,5 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, defineEmits, watch } from 'vue';
-import {
-    ChevronDoubleLeft16Filled,
-    ChevronDoubleRight16Filled,
-    ChevronLeft16Filled,
-    ChevronRight16Filled,
-} from '@vicons/fluent';
 import { getMonthDate, getHeadDate } from './date';
 import { dateProps } from './props';
 import moment from 'moment';
@@ -321,11 +315,11 @@ const getClass = computed(() => (type: string, item: any) => {
                 <div class="lew-date-control-left">
                     <!-- 上一年 -->
                     <lew-button type="normal" size="small" @click="prveYear1">
-                        <ChevronDoubleLeft16Filled />
+                        <lew-icon size="16" type="chevrons-left" />
                     </lew-button>
                     <!-- 上一月 -->
                     <lew-button type="normal" size="small" @click="prveMonth1">
-                        <ChevronLeft16Filled />
+                        <lew-icon size="16" type="chevron-left" />
                     </lew-button>
                 </div>
                 <!-- 日期 -->
@@ -333,45 +327,26 @@ const getClass = computed(() => (type: string, item: any) => {
                 <div class="lew-date-control-right">
                     <!-- 下一月 -->
                     <lew-button type="normal" size="small" @click="nextMonth1">
-                        <ChevronRight16Filled />
+                        <lew-icon size="16" type="chevron-right" />
                     </lew-button>
                     <!-- 下一年 -->
                     <lew-button type="normal" size="small" @click="nextYear1">
-                        <ChevronDoubleRight16Filled />
+                        <lew-icon size="16" type="chevrons-right" />
                     </lew-button>
                 </div>
             </lew-flex>
             <div class="lew-date-box">
                 <!-- 表头 周 -->
-                <div
-                    v-for="(item, index) in getHeadDate"
-                    :key="`h${index}`"
-                    class="lew-date-item"
-                >
+                <div v-for="(item, index) in getHeadDate" :key="`h${index}`" class="lew-date-item">
                     <div class="lew-date-num">{{ item }}</div>
                 </div>
 
                 <!-- 表格 -->
-                <div
-                    v-for="(item, index) in dateData1"
-                    :key="`d${index}`"
-                    class="lew-date-item"
-                    :class="getClass('rangeMonth', item)"
-                    @click="setValue(item)"
-                    @mouseenter="hoverValue(item)"
-                >
-                    <div
-                        class="lew-date-label"
-                        :class="getClass('rangeSelected', item)"
-                    >
-                        <div
-                            v-if="getClass('today', item)"
-                            class="lew-date-item-cur"
-                        ></div>
-                        <div
-                            class="lew-date-value"
-                            :class="getClass('selected', item)"
-                        >
+                <div v-for="(item, index) in dateData1" :key="`d${index}`" class="lew-date-item"
+                    :class="getClass('rangeMonth', item)" @click="setValue(item)" @mouseenter="hoverValue(item)">
+                    <div class="lew-date-label" :class="getClass('rangeSelected', item)">
+                        <div v-if="getClass('today', item)" class="lew-date-item-cur"></div>
+                        <div class="lew-date-value" :class="getClass('selected', item)">
                             {{ item.showDate }}
                         </div>
                     </div>
@@ -383,11 +358,11 @@ const getClass = computed(() => (type: string, item: any) => {
                 <div class="lew-date-control-left">
                     <!-- 上一年 -->
                     <lew-button type="normal" size="small" @click="prveYear2">
-                        <ChevronDoubleLeft16Filled />
+                        <lew-icon size="16" type="chevrons-left" />
                     </lew-button>
                     <!-- 上一月 -->
                     <lew-button type="normal" size="small" @click="prveMonth2">
-                        <ChevronLeft16Filled />
+                        <lew-icon size="16" type="chevron-left" />
                     </lew-button>
                 </div>
                 <!-- 日期 -->
@@ -395,45 +370,26 @@ const getClass = computed(() => (type: string, item: any) => {
                 <div class="lew-date-control-right">
                     <!-- 下一月 -->
                     <lew-button type="normal" size="small" @click="nextMonth2">
-                        <ChevronRight16Filled />
+                        <lew-icon size="16" type="chevron-right" />
                     </lew-button>
                     <!-- 下一年 -->
                     <lew-button type="normal" size="small" @click="nextYear2">
-                        <ChevronDoubleRight16Filled />
+                        <lew-icon size="16" type="chevrons-right" />
                     </lew-button>
                 </div>
             </lew-flex>
             <div class="lew-date-box">
                 <!-- 表头 周 -->
-                <div
-                    v-for="(item, index) in getHeadDate"
-                    :key="`h${index}`"
-                    class="lew-date-item"
-                >
+                <div v-for="(item, index) in getHeadDate" :key="`h${index}`" class="lew-date-item">
                     <div class="lew-date-num">{{ item }}</div>
                 </div>
 
                 <!-- 表格 -->
-                <div
-                    v-for="(item, index) in dateData2"
-                    :key="`d${index}`"
-                    class="lew-date-item"
-                    :class="getClass('rangeMonth', item)"
-                    @click="setValue(item)"
-                    @mouseenter="hoverValue(item)"
-                >
-                    <div
-                        class="lew-date-label"
-                        :class="getClass('rangeSelected', item)"
-                    >
-                        <div
-                            v-if="getClass('today', item)"
-                            class="lew-date-item-cur"
-                        ></div>
-                        <div
-                            class="lew-date-value"
-                            :class="getClass('selected', item)"
-                        >
+                <div v-for="(item, index) in dateData2" :key="`d${index}`" class="lew-date-item"
+                    :class="getClass('rangeMonth', item)" @click="setValue(item)" @mouseenter="hoverValue(item)">
+                    <div class="lew-date-label" :class="getClass('rangeSelected', item)">
+                        <div v-if="getClass('today', item)" class="lew-date-item-cur"></div>
+                        <div class="lew-date-value" :class="getClass('selected', item)">
                             {{ item.showDate }}
                         </div>
                     </div>
@@ -447,6 +403,7 @@ const getClass = computed(() => (type: string, item: any) => {
 .lew-date-range {
     display: flex;
 }
+
 .lew-date {
     width: 273px;
     user-select: none;
@@ -470,6 +427,7 @@ const getClass = computed(() => (type: string, item: any) => {
             color: var(--lew-text-color-0);
             padding-left: 8px;
         }
+
         .lew-date-control-left,
         .lew-date-control-right {
             display: flex;
@@ -488,6 +446,7 @@ const getClass = computed(() => (type: string, item: any) => {
                 width: 16px;
                 margin-right: 0px;
             }
+
             &:hover {
                 opacity: 1;
             }
@@ -517,6 +476,7 @@ const getClass = computed(() => (type: string, item: any) => {
                 height: 24px;
                 box-sizing: border-box;
                 transition: all 0.1s ease;
+
                 .lew-date-value {
                     display: inline-flex;
                     align-items: center;
@@ -545,22 +505,19 @@ const getClass = computed(() => (type: string, item: any) => {
             }
 
             .lew-date-label-selected-start {
-                background: linear-gradient(
-                    to right,
-                    rgba(0, 0, 0, 0) 0%,
-                    rgba(0, 0, 0, 0) 50%,
-                    var(--lew-primary-color-light) 51%,
-                    var(--lew-primary-color-light) 100%
-                );
+                background: linear-gradient(to right,
+                        rgba(0, 0, 0, 0) 0%,
+                        rgba(0, 0, 0, 0) 50%,
+                        var(--lew-primary-color-light) 51%,
+                        var(--lew-primary-color-light) 100%);
             }
+
             .lew-date-label-selected-end {
-                background: linear-gradient(
-                    to right,
-                    var(--lew-primary-color-light) 0%,
-                    var(--lew-primary-color-light) 50%,
-                    rgba(0, 0, 0, 0) 51%,
-                    rgba(0, 0, 0, 0) 100%
-                );
+                background: linear-gradient(to right,
+                        var(--lew-primary-color-light) 0%,
+                        var(--lew-primary-color-light) 50%,
+                        rgba(0, 0, 0, 0) 51%,
+                        rgba(0, 0, 0, 0) 100%);
             }
         }
 
@@ -571,13 +528,16 @@ const getClass = computed(() => (type: string, item: any) => {
                 .lew-date-value {
                     color: var(--lew-text-color-4);
                 }
+
                 .lew-date-value-selected {
                     background: var(--lew-primary-color);
                     color: var(--lew-white-text-color);
                 }
             }
+
             .lew-date-label-selected {
                 background: var(--lew-primary-color-light);
+
                 .lew-date-value {
                     color: var(--lew-text-color-0);
                 }
@@ -592,6 +552,7 @@ const getClass = computed(() => (type: string, item: any) => {
                     font-weight: 900;
                     background-color: var(--lew-success-color-light);
                 }
+
                 .lew-date-value-selected {
                     background: var(--lew-primary-color);
                     color: var(--lew-white-text-color);
@@ -605,6 +566,7 @@ const getClass = computed(() => (type: string, item: any) => {
                     background-color: var(--lew-primary-color-light);
                     color: var(--lew-primary-color-dark);
                 }
+
                 .lew-date-value-selected {
                     background: var(--lew-primary-color);
                     color: var(--lew-white-text-color);
@@ -630,6 +592,7 @@ const getClass = computed(() => (type: string, item: any) => {
         }
     }
 }
+
 .lew-date:first-child {
     border-right: 1px #eee solid;
 }

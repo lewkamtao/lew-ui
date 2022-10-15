@@ -1,12 +1,6 @@
 <script lang="ts" setup>
 import { paginationProps } from './props';
 import { ref, computed, watch } from 'vue';
-import {
-    ChevronForwardOutline,
-    ChevronBackOutline,
-    EllipsisHorizontal,
-} from '@vicons/ionicons5';
-import { Icon } from '@vicons/utils';
 const props = defineProps(paginationProps);
 
 const generateArray = (start: any, end: any) => {
@@ -114,92 +108,57 @@ const checkPageSize = (e: any) => {
 </script>
 
 <template>
-    <div
-        class="lew-pagination"
-        :class="{
-            'lew-pagination-round': round,
-        }"
-    >
+    <div class="lew-pagination" :class="{
+        'lew-pagination-round': round,
+    }">
         <lew-flex class="lew-pagination-control" gap="5px">
             <lew-flex class="lew-pagination-page-box" gap="5px">
-                <icon
-                    size="14"
-                    class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('prve', 1)"
-                >
-                    <ChevronBackOutline />
-                </icon>
-                <div
-                    v-show="
-                        pageNum - 1 > pageShowSize &&
-                        maxLen > pageShowSize * 2 + 7
-                    "
-                    class="lew-pagination-page-btn"
-                    @click="changePage(false, 1)"
-                >
+                <div @click="changePage('prve', 1)" class="lew-pagination-page-btn lew-pagination-control-btn">
+                    <lew-icon size="14" type="chevron-left" />
+                </div>
+                <div v-show="
+                    pageNum - 1 > pageShowSize &&
+                    maxLen > pageShowSize * 2 + 7
+                " class="lew-pagination-page-btn" @click="changePage(false, 1)">
                     1
                 </div>
-                <icon
-                    v-show="
-                        pageNum - 1 > pageShowSize &&
-                        maxLen > pageShowSize * 2 + 7 &&
-                        pageInterval[0] != 1 + 1
-                    "
-                    size="14"
-                    class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('prve', pageShowSize * 2)"
-                >
-                    <EllipsisHorizontal />
-                </icon>
+                <div v-show="
+                    pageNum - 1 > pageShowSize &&
+                    maxLen > pageShowSize * 2 + 7 &&
+                    pageInterval[0] != 1 + 1
+                " class="lew-pagination-page-btn lew-pagination-control-btn"
+                    @click="changePage('prve', pageShowSize * 2)">
+                    <lew-icon size="14" type="more-horizontal" />
+                </div>
 
-                <div
-                    v-for="(item, index) in pageInterval"
-                    :key="index"
-                    class="lew-pagination-page-btn"
-                    :class="{ active: item == pageNum }"
-                    @click="changePage(false, item)"
-                >
+                <div v-for="(item, index) in pageInterval" :key="index" class="lew-pagination-page-btn"
+                    :class="{ active: item == pageNum }" @click="changePage(false, item)">
                     {{ item }}
                 </div>
-                <icon
-                    v-show="
-                        pageNum < maxLen - pageShowSize &&
-                        maxLen > pageShowSize * 2 + 7 &&
-                        pageInterval[pageInterval.length - 1] + 1 != maxLen
-                    "
-                    size="14"
-                    class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('next', pageShowSize * 2)"
-                >
-                    <EllipsisHorizontal />
-                </icon>
-                <div
-                    v-show="
-                        pageNum < maxLen - pageShowSize &&
-                        maxLen > pageShowSize * 2 + 7
-                    "
-                    class="lew-pagination-page-btn"
-                    @click="changePage(false, maxLen)"
-                >
+
+                <div v-show="
+                    pageNum < maxLen - pageShowSize &&
+                    maxLen > pageShowSize * 2 + 7 &&
+                    pageInterval[pageInterval.length - 1] + 1 != maxLen
+                " class="lew-pagination-page-btn lew-pagination-control-btn"
+                    @click="changePage('next', pageShowSize * 2)">
+                    <lew-icon size="14" type="more-horizontal" />
+                </div>
+
+                <div v-show="
+                    pageNum < maxLen - pageShowSize &&
+                    maxLen > pageShowSize * 2 + 7
+                " class="lew-pagination-page-btn" @click="changePage(false, maxLen)">
                     {{ maxLen }}
                 </div>
-                <icon
-                    size="14"
-                    class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('next', 1)"
-                >
-                    <ChevronForwardOutline />
-                </icon>
+                <div class="lew-pagination-page-btn lew-pagination-control-btn" @click="changePage('next', 1)">
+                    <lew-icon size="14" type="chevron-right" />
+                </div>
+
+
             </lew-flex>
-            <lew-select
-                style="width: 100px"
-                align="center"
-                v-model="pageSizebackup"
-                @change="checkPageSize"
-                size="small"
-                :show-icon="false"
-                :options="pageSizeOptions"
-            >
+            <lew-select style="width: 100px" align="center" v-model="pageSizebackup" @change="checkPageSize"
+                size="small" :show-icon="false" :options="pageSizeOptions">
             </lew-select>
         </lew-flex>
     </div>
@@ -210,7 +169,7 @@ const checkPageSize = (e: any) => {
     display: inline-block;
     box-sizing: border-box;
     height: 40px;
-    border-radius: var(--lew-form-border-radius);
+    border-radius: var(--lew-border-radius);
     user-select: none;
     font-size: 14px;
 
@@ -234,7 +193,7 @@ const checkPageSize = (e: any) => {
             min-width: 26px;
             padding: 0px 4px;
             box-sizing: border-box;
-            border-radius: var(--lew-form-border-radius);
+            border-radius: var(--lew-border-radius);
             text-align: center;
             cursor: pointer;
         }

@@ -29,7 +29,7 @@ const getAvatarStyle = computed(() => {
         width: 100%;
         height: 100%;
         background-color: var(--lew-bgcolor-2);
-        border-radius: var(--lew-form-border-radius);
+        border-radius: var(--lew-border-radius);
     }
 
     .lew-avatar-round {

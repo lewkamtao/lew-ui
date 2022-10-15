@@ -1,14 +1,6 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
-import {
-    Info24Regular,
-    Warning24Regular,
-    CheckmarkCircle24Regular,
-    ErrorCircle24Regular,
-    Alert24Regular,
-    Dismiss24Filled,
-} from '@vicons/fluent';
-import { Icon } from '@vicons/utils';
+
 // alert type
 
 type Alert = {
@@ -31,20 +23,13 @@ const emit = defineEmits(['close']);
 
 <template>
     <div class="lew-alert-group">
-        <div
-            v-for="(item, i) in list"
-            :key="i"
-            class="lew-alert"
-            :class="`lew-alert-${item.type}`"
-        >
+        <div v-for="(item, i) in list" :key="i" class="lew-alert" :class="`lew-alert-${item.type}`">
             <div class="alert-icon">
-                <Icon size="20">
-                    <Info24Regular v-if="item.type == `normal`" />
-                    <Warning24Regular v-if="item.type == `warning`" />
-                    <CheckmarkCircle24Regular v-if="item.type == `success`" />
-                    <ErrorCircle24Regular v-if="item.type == `error`" />
-                    <Alert24Regular v-if="item.type == `info`" />
-                </Icon>
+                <lew-icon v-if="item.type == `normal`" size="16" type="info"></lew-icon>
+                <lew-icon v-if="item.type == `warning`" size="16" type="alert-triangle"></lew-icon>
+                <lew-icon v-if="item.type == `success`" size="16" type="check"></lew-icon>
+                <lew-icon v-if="item.type == `error`" size="16" type="alert-circle"></lew-icon>
+                <lew-icon v-if="item.type == `info`" size="16" type="bell"></lew-icon>
             </div>
 
             <div class="message">
@@ -53,10 +38,8 @@ const emit = defineEmits(['close']);
                     {{ item.content }}
                 </div>
             </div>
-            <div class="btn-close" @click="emit('close', i)">
-                <Icon size="16">
-                    <Dismiss24Filled />
-                </Icon>
+            <div>
+                <lew-icon size="16" class="btn-close" type="x" @click="emit('close', i)" />
             </div>
         </div>
     </div>
@@ -76,7 +59,7 @@ const emit = defineEmits(['close']);
         width: 100%;
         min-height: 32px;
         background-color: var(--lew-normal-color);
-        border-radius: var(--lew-form-border-radius);
+        border-radius: var(--lew-border-radius);
         margin-bottom: 10px;
         padding: 8px 12px;
         box-sizing: border-box;
@@ -91,8 +74,6 @@ const emit = defineEmits(['close']);
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 20px;
-            height: 20px;
             right: 8px;
             border-radius: var(--lew-border-radius);
             box-sizing: border-box;
@@ -109,10 +90,10 @@ const emit = defineEmits(['close']);
         }
 
         .message {
-            width: calc(100% - 40px);
+            width: calc(100% - 80px);
+            margin-left: 5px;
 
             .title {
-                margin-top: 1px;
                 font-size: 14px;
                 width: 100%;
                 word-wrap: break-word;
@@ -121,7 +102,7 @@ const emit = defineEmits(['close']);
             }
 
             .content {
-                margin-top: 7px;
+                margin-top: 8px;
                 font-size: 14px;
                 width: 100%;
                 font-weight: 300;

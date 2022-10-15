@@ -5,7 +5,7 @@ const close = () => {
 </script>
 
 <template>
-    <lew-flex x="start">
+    <lew-flex x="start" wrap>
         <lew-tag type="primary" closable @close="close">primary</lew-tag>
         <lew-tag type="primary" round closable @close="close">primary</lew-tag>
         <lew-tag type="primary" size="large" closable @close="close">

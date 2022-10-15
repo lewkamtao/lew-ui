@@ -108,7 +108,7 @@ onUnmounted(() => {
     align-items: center;
     width: auto;
     background: var(--lew-form-bgcolor);
-    border-radius: var(--lew-form-border-radius);
+    border-radius: var(--lew-border-radius);
     overflow: hidden;
     user-select: none;
     .lew-tabs-item {
@@ -120,7 +120,7 @@ onUnmounted(() => {
         height: 28px;
         padding: 0px 12px;
         box-sizing: border-box;
-        border-radius: var(--lew-form-border-radius);
+        border-radius: var(--lew-border-radius);
         margin: 3px;
         color: var(--lew-text-color-5);
         white-space: nowrap;

@@ -142,7 +142,7 @@ const get = () => {
 
 <style lang="scss">
 .custom-select-box {
-    border-radius: var(--lew-form-border-radius);
+    border-radius: var(--lew-border-radius);
     margin-bottom: 4px;
     padding: 6px 8px;
     user-select: none;

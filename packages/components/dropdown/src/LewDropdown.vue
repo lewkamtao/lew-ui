@@ -67,7 +67,7 @@ defineExpose({ show, hide });
         height: 32px;
         line-height: 32px;
         font-size: 14px;
-        border-radius: var(--lew-form-border-radius);
+        border-radius: var(--lew-border-radius);
         color: var(--lew-text-color-7);
         cursor: pointer;
         white-space: nowrap;

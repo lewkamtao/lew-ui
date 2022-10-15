@@ -2,6 +2,7 @@ export * from './flex';
 export * from './space';
 export * from './layout';
 export * from './mark';
+export * from './icon';
 
 export * from './tabs';
 export * from './steps';

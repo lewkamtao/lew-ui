@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Menu } from '@vicons/ionicons5';
-import { Icon } from '@vicons/utils';
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import TheSiderbar from '../layout/TheSiderbar.vue';
@@ -95,7 +93,7 @@ group.value = [
                 cname: '图标',
                 name: 'Icon',
                 path: '/icon',
-                label: '',
+                label: 'New',
                 type: 'success',
             },
         ],
@@ -336,14 +334,8 @@ group.value = [
 
 <template>
     <div class="container">
-        <div
-            class="mb-btn"
-            :class="{ 'mb-btn-open': isShowSider }"
-            @click="isShowSider = !isShowSider"
-        >
-            <icon size="24">
-                <Menu></Menu>
-            </icon>
+        <div class="mb-btn" :class="{ 'mb-btn-open': isShowSider }" @click="isShowSider = !isShowSider">
+            <lew-icon type="menu" size="24px" />
         </div>
         <div class="sider" :class="{ 'sider-open': isShowSider }">
             <the-siderbar :group="group" />

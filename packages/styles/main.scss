@@ -1,27 +1,5 @@
-.btf-scrollbar::-webkit-scrollbar {
-    background-color: rgb(209 213 219 / 0);
-    width: 5px;
-    height: 5px;
-}
-
-.btf-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: rgb(126, 126, 126);
-}
-
-.btf-scrollbar::-webkit-scrollbar-thumb {
-    background-color: rgb(209 213 219 / 0);
-    opacity: 0;
-    border-radius: 5px;
-}
-
-.btf-scrollbar:hover::-webkit-scrollbar-thumb {
-    background-color: var(--lew-bgcolor-3);
-    opacity: 1;
-    border-radius: 5px;
-}
-
 .tippy-box {
-    border-radius: var(--lew-form-border-radius) !important;
+    border-radius: var(--lew-border-radius) !important;
 }
 
 .tippy-box[data-lew~='popover'] {

@@ -181,7 +181,7 @@ const setChecked = (e: Event) => {
     background: var(--lew-form-bgcolor);
     padding: 3px 8px 3px 4px;
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
-    border-radius: var(--lew-form-border-radius);
+    border-radius: var(--lew-border-radius);
     .lew-checkbox-label {
         margin-left: 2px;
     }

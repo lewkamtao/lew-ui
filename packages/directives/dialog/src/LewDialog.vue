@@ -1,16 +1,6 @@
 <script lang="ts" setup name="dialog">
 import { ref } from 'vue';
-import { LewButton } from 'lew-ui';
-import {
-    Info24Regular,
-    Warning24Regular,
-    CheckmarkCircle24Regular,
-    ErrorCircle24Regular,
-    Alert24Regular,
-    Dismiss24Filled,
-} from '@vicons/fluent';
-import { Icon } from '@vicons/utils';
-
+import { LewButton, LewIcon } from 'lew-ui';
 import { _props } from './props';
 
 const props = defineProps(_props);
@@ -57,92 +47,57 @@ const emit = defineEmits(['update:visible']);
 <template>
     <div>
         <teleport to="body">
-            <div
-                v-if="visible"
-                class="lew-dialog"
-                :style="
-                    isShowDialog
-                        ? 'animation: lewDialogOpen 0.25s;'
-                        : 'animation: lewDialogClose 0.25s;'
-                "
-                @click="onClickOverlay"
-            >
-                <div
-                    v-if="layout == 'normal'"
-                    class="lew-dialog-box lew-dialog-box-normal"
-                    @click.stop
-                >
+            <div v-if="visible" class="lew-dialog" :style="
+                isShowDialog
+                    ? 'animation: lewDialogOpen 0.25s;'
+                    : 'animation: lewDialogClose 0.25s;'
+            " @click="onClickOverlay">
+                <div v-if="layout == 'normal'" class="lew-dialog-box lew-dialog-box-normal" @click.stop>
                     <div class="btn-close" @click="cancelHandle">
-                        <Icon size="18"> <Dismiss24Filled /></Icon>
+                        <lew-icon v-if="type == `normal`" size="18" type="x"></lew-icon>
                     </div>
                     <div class="left">
-                        <Icon size="32" :class="`icon-${type}`">
-                            <Info24Regular v-if="type == `normal`" />
-                            <Warning24Regular v-if="type == `warning`" />
-                            <CheckmarkCircle24Regular
-                                v-if="type == `success`"
-                            />
-                            <ErrorCircle24Regular v-if="type == `error`" />
-                            <Alert24Regular v-if="type == `info`" />
-                        </Icon>
+                        <div :class="`icon-${type}`">
+                            <lew-icon v-if="type == `normal`" size="30" type="info"></lew-icon>
+                            <lew-icon v-if="type == `warning`" size="30" type="alert-triangle"></lew-icon>
+                            <lew-icon v-if="type == `success`" size="30" type="check"></lew-icon>
+                            <lew-icon v-if="type == `error`" size="30" type="alert-circle"></lew-icon>
+                            <lew-icon v-if="type == `info`" size="30" type="bell"></lew-icon>
+                        </div>
                     </div>
                     <div class="right">
                         <header>
                             <slot name="title" />
-                            <span
-                                class="gulu-dialog-close"
-                                @click="close"
-                            ></span>
+                            <span class="gulu-dialog-close" @click="close"></span>
                         </header>
                         <main>
                             <slot name="content" />
                         </main>
                         <footer>
-                            <lew-Button
-                                :loading="cancelLoading"
-                                type="blank"
-                                @click="cancelHandle"
-                                >取消
-                            </lew-Button>
-                            <lew-button :loading="okLoading" @click="okHandle"
-                                >确认
-                            </lew-button>
+                            <lew-Button :loading="cancelLoading" type="blank" @click="cancelHandle">取消</lew-Button>
+                            <lew-button :loading="okLoading" @click="okHandle">确认</lew-button>
                         </footer>
                     </div>
                 </div>
 
-                <div
-                    v-if="layout == 'easy'"
-                    class="lew-dialog-box lew-dialog-box-easy"
-                >
+                <div v-if="layout == 'easy'" class="lew-dialog-box lew-dialog-box-easy">
                     <div class="left">
-                        <Icon size="22" :class="`icon-${type}`">
-                            <Info24Regular v-if="type == `normal`" />
-                            <Warning24Regular v-if="type == `warning`" />
-                            <CheckmarkCircle24Regular
-                                v-if="type == `success`"
-                            />
-                            <ErrorCircle24Regular v-if="type == `error`" />
-                            <Alert24Regular v-if="type == `info`" />
-                        </Icon>
+                        <div :class="`icon-${type}`">
+                            <lew-icon v-if="type == `normal`" size="20" type="info"></lew-icon>
+                            <lew-icon v-if="type == `warning`" size="20" type="alert-triangle"></lew-icon>
+                            <lew-icon v-if="type == `success`" size="20" type="check"></lew-icon>
+                            <lew-icon v-if="type == `error`" size="20" type="alert-circle"></lew-icon>
+                            <lew-icon v-if="type == `info`" size="20" type="bell"></lew-icon>
+                        </div>
                     </div>
                     <div class="right">
                         <main>
                             <slot name="content" />
                         </main>
-                        <lew-Button
-                            style="margin-right: 10px"
-                            type="normal"
-                            size="small"
-                            :loading="cancelLoading"
-                            @click="cancelHandle"
-                            >取消
+                        <lew-Button style="margin-right: 10px" type="normal" size="small" :loading="cancelLoading"
+                            @click="cancelHandle">取消
                         </lew-Button>
-                        <lew-button
-                            :loading="okLoading"
-                            @click="okHandle"
-                            size="small"
-                            >确认
+                        <lew-button :loading="okLoading" @click="okHandle" size="small">确认
                         </lew-button>
                     </div>
                 </div>
@@ -179,15 +134,19 @@ const emit = defineEmits(['update:visible']);
         .icon-success {
             color: var(--lew-success-color-dark);
         }
+
         .icon-warning {
             color: var(--lew-warning-color-dark);
         }
+
         .icon-normal {
             color: var(--lew-normal-color-dark);
         }
+
         .icon-info {
             color: var(--lew-info-color-dark);
         }
+
         .icon-error {
             color: var(--lew-error-color-dark);
         }
@@ -197,19 +156,23 @@ const emit = defineEmits(['update:visible']);
             font-size: 16px;
             font-weight: 600;
         }
+
         main {
             height: auto;
             font-size: 14px;
             color: var(--lew-text-color-5);
         }
+
         footer {
             display: flex;
             justify-content: end;
             width: 100%;
+
             .lew-button {
                 margin-left: 10px;
             }
         }
+
         .btn-close {
             position: absolute;
             top: 8px;
@@ -226,46 +189,56 @@ const emit = defineEmits(['update:visible']);
             z-index: 2051;
             color: var(--lew-text-color-5);
         }
+
         .btn-close:hover {
             background: rgba($color: #000000, $alpha: 0.05);
             color: var(--lew-text-color-3);
         }
+
         .btn-close:active {
             background: rgba($color: #000000, $alpha: 0.15);
             color: var(--lew-text-color-0);
         }
     }
+
     .lew-dialog-box-normal {
         .left {
             margin-right: 10px;
             width: 30px;
         }
+
         .right {
             position: relative;
             top: 5px;
             width: 310px;
         }
+
         main {
             padding: 10px 0px 20px 0px;
         }
     }
+
     .lew-dialog-box-easy {
         .left {
             margin-right: 10px;
             display: flex;
         }
+
         .right {
             position: relative;
             top: 1px;
             width: 320px;
         }
+
         .right {
             display: flex;
             justify-content: space-between;
+
             main {
                 width: 200px;
                 margin-right: 10px;
             }
+
             footer {
                 width: 80px;
             }
@@ -280,16 +253,19 @@ const emit = defineEmits(['update:visible']);
         opacity: 0;
         transform: translateY(15px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0px);
     }
 }
+
 @keyframes lewDialogClose {
     from {
         opacity: 1;
         transform: translateY(0px);
     }
+
     to {
         opacity: 0;
         transform: translateY(15px);

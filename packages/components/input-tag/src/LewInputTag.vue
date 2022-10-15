@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue';
 import { inputTagProps } from './props';
-import { Icon } from '@vicons/utils';
-import { Add16Regular } from '@vicons/fluent';
 
 const props = defineProps(inputTagProps);
 
@@ -74,34 +72,15 @@ const delTag = (index: number) => {
 <template>
     <div class="lew-input-tag-view">
         <div style="margin-left: -10px; height: 26px"></div>
-        <lew-tag
-            v-for="(item, index) in tagsValue"
-            :key="index"
-            closable
-            :type="type"
-            @close="delTag(index)"
-            >{{ item }}</lew-tag
-        >
+        <lew-tag v-for="(item, index) in tagsValue" :key="index" closable :type="type" @close="delTag(index)">{{ item }}
+        </lew-tag>
 
-        <label
-            v-show="!isInput"
-            class="lew-input-tag-button"
-            @click="openInput"
-        >
-            <Icon size="18px"> <Add16Regular /></Icon>
+        <label v-show="!isInput" class="lew-input-tag-button" @click="openInput">
+            <lew-icon size="16" type="plus" />
         </label>
 
-        <lew-input
-            v-show="isInput"
-            ref="lewInputRef"
-            v-model="inputValue"
-            class="lew-input-tag"
-            size="small"
-            auto-width
-            placeholder=""
-            @blur="blurFn"
-            @focus="addTag"
-        ></lew-input>
+        <lew-input v-show="isInput" ref="lewInputRef" v-model="inputValue" class="lew-input-tag" size="small" auto-width
+            placeholder="" @blur="blurFn" @focus="addTag"></lew-input>
     </div>
 </template>
 
@@ -114,9 +93,11 @@ const delTag = (index: number) => {
     gap: 10px;
     padding: 5px 0px;
     box-sizing: border-box;
+
     .lew-input-tag {
         height: 26px;
         flex-shrink: 1;
+
         ::v-deep input {
             height: 26px;
         }
@@ -129,15 +110,16 @@ const delTag = (index: number) => {
     justify-content: center;
     cursor: pointer;
     height: 26px;
-    width: 50px;
+    width: 65px;
     box-sizing: border-box;
-    border-radius: var(--lew-form-border-radius);
+    border-radius: var(--lew-border-radius);
     background-color: var(--lew-bgcolor-0);
-    color: var(--lew-text-color-5);
-    border: var(--lew-bgcolor-5) var(--lew-form-border-width) dashed;
+    color: var(--lew-text-color-8);
+    border: var(--lew-text-color-8) var(--lew-form-border-width) dashed;
 }
+
 .lew-input-tag-button:hover {
-    color: var(--lew-primary-color-dark);
+    color: var(--lew-primary-color);
     border: var(--lew-primary-color) var(--lew-form-border-width) dashed;
 }
 </style>
