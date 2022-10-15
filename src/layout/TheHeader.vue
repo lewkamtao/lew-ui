@@ -49,7 +49,7 @@ const gohome = () => {
                 type="info"
                 size="small"
                 style="margin-left: 10px"
-                >Beta v1.1.7</lew-tag
+                >Beta v1.1.10</lew-tag
             >
         </div>
         <div class="menu">
