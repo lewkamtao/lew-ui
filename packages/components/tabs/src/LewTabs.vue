@@ -141,7 +141,7 @@ onUnmounted(() => {
         transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
         background: var(--lew-bgcolor-0);
         transform: translateX(3px);
-        box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);
+        box-shadow: 0px 0px 30px rgba($color: #000000, $alpha: 0.15);
     }
 }
 
