@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted, defineEmits, watch } from 'vue';
 import { getMonthDate, getHeadDate } from './date';
 import { dateProps } from './props';
 import moment from 'moment';
@@ -337,16 +336,35 @@ const getClass = computed(() => (type: string, item: any) => {
             </lew-flex>
             <div class="lew-date-box">
                 <!-- 表头 周 -->
-                <div v-for="(item, index) in getHeadDate" :key="`h${index}`" class="lew-date-item">
+                <div
+                    v-for="(item, index) in getHeadDate"
+                    :key="`h${index}`"
+                    class="lew-date-item"
+                >
                     <div class="lew-date-num">{{ item }}</div>
                 </div>
 
                 <!-- 表格 -->
-                <div v-for="(item, index) in dateData1" :key="`d${index}`" class="lew-date-item"
-                    :class="getClass('rangeMonth', item)" @click="setValue(item)" @mouseenter="hoverValue(item)">
-                    <div class="lew-date-label" :class="getClass('rangeSelected', item)">
-                        <div v-if="getClass('today', item)" class="lew-date-item-cur"></div>
-                        <div class="lew-date-value" :class="getClass('selected', item)">
+                <div
+                    v-for="(item, index) in dateData1"
+                    :key="`d${index}`"
+                    class="lew-date-item"
+                    :class="getClass('rangeMonth', item)"
+                    @click="setValue(item)"
+                    @mouseenter="hoverValue(item)"
+                >
+                    <div
+                        class="lew-date-label"
+                        :class="getClass('rangeSelected', item)"
+                    >
+                        <div
+                            v-if="getClass('today', item)"
+                            class="lew-date-item-cur"
+                        ></div>
+                        <div
+                            class="lew-date-value"
+                            :class="getClass('selected', item)"
+                        >
                             {{ item.showDate }}
                         </div>
                     </div>
@@ -380,16 +398,35 @@ const getClass = computed(() => (type: string, item: any) => {
             </lew-flex>
             <div class="lew-date-box">
                 <!-- 表头 周 -->
-                <div v-for="(item, index) in getHeadDate" :key="`h${index}`" class="lew-date-item">
+                <div
+                    v-for="(item, index) in getHeadDate"
+                    :key="`h${index}`"
+                    class="lew-date-item"
+                >
                     <div class="lew-date-num">{{ item }}</div>
                 </div>
 
                 <!-- 表格 -->
-                <div v-for="(item, index) in dateData2" :key="`d${index}`" class="lew-date-item"
-                    :class="getClass('rangeMonth', item)" @click="setValue(item)" @mouseenter="hoverValue(item)">
-                    <div class="lew-date-label" :class="getClass('rangeSelected', item)">
-                        <div v-if="getClass('today', item)" class="lew-date-item-cur"></div>
-                        <div class="lew-date-value" :class="getClass('selected', item)">
+                <div
+                    v-for="(item, index) in dateData2"
+                    :key="`d${index}`"
+                    class="lew-date-item"
+                    :class="getClass('rangeMonth', item)"
+                    @click="setValue(item)"
+                    @mouseenter="hoverValue(item)"
+                >
+                    <div
+                        class="lew-date-label"
+                        :class="getClass('rangeSelected', item)"
+                    >
+                        <div
+                            v-if="getClass('today', item)"
+                            class="lew-date-item-cur"
+                        ></div>
+                        <div
+                            class="lew-date-value"
+                            :class="getClass('selected', item)"
+                        >
                             {{ item.showDate }}
                         </div>
                     </div>
@@ -505,19 +542,23 @@ const getClass = computed(() => (type: string, item: any) => {
             }
 
             .lew-date-label-selected-start {
-                background: linear-gradient(to right,
-                        rgba(0, 0, 0, 0) 0%,
-                        rgba(0, 0, 0, 0) 50%,
-                        var(--lew-primary-color-light) 51%,
-                        var(--lew-primary-color-light) 100%);
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 0, 0, 0) 0%,
+                    rgba(0, 0, 0, 0) 50%,
+                    var(--lew-primary-color-light) 51%,
+                    var(--lew-primary-color-light) 100%
+                );
             }
 
             .lew-date-label-selected-end {
-                background: linear-gradient(to right,
-                        var(--lew-primary-color-light) 0%,
-                        var(--lew-primary-color-light) 50%,
-                        rgba(0, 0, 0, 0) 51%,
-                        rgba(0, 0, 0, 0) 100%);
+                background: linear-gradient(
+                    to right,
+                    var(--lew-primary-color-light) 0%,
+                    var(--lew-primary-color-light) 50%,
+                    rgba(0, 0, 0, 0) 51%,
+                    rgba(0, 0, 0, 0) 100%
+                );
             }
         }
 

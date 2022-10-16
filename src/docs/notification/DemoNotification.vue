@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import {
     DemoNotification1,
     DemoNotification1_code,

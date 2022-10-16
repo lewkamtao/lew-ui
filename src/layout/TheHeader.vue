@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -30,13 +29,25 @@ const gohome = () => {
 <template>
     <div class="Header">
         <div class="logo" @click="gohome">
-            <img src="../assets/images/logo.png" alt="logo" srcset="" width="30" height="30" />
+            <img
+                src="../assets/images/logo.png"
+                alt="logo"
+                srcset=""
+                width="30"
+                height="30"
+            />
             <span style="margin-left: 10px"> Lew UI</span>
-            <lew-tag v-tooltip="{
-                content: 'Beta 阶段，请勿在正式环境使用。',
-                placement: 'top-start',
-                trigger: 'mouseenter',
-            }" type="info" size="small" style="margin-left: 10px">Beta v1.1.10</lew-tag>
+            <lew-tag
+                v-tooltip="{
+                    content: 'Beta 阶段，请勿在正式环境使用。',
+                    placement: 'top-start',
+                    trigger: 'mouseenter',
+                }"
+                type="info"
+                size="small"
+                style="margin-left: 10px"
+                >Beta v1.1.10</lew-tag
+            >
         </div>
         <lew-flex gap="15px" x="end" class="menu">
             <div class="menu-item" @click="router.push(`/`)">首页</div>
@@ -45,8 +56,18 @@ const gohome = () => {
             <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
                 <lew-icon size="18" type="github" />
             </a>
-            <lew-icon class="menu-item icon-mode-sunny" type="sun" @click="changeMode('light')" size="18" />
-            <lew-icon class="menu-item icon-mode-moon" type="moon" @click="changeMode('dark')" size="18" />
+            <lew-icon
+                class="menu-item icon-mode-sunny"
+                type="sun"
+                size="18"
+                @click="changeMode('light')"
+            />
+            <lew-icon
+                class="menu-item icon-mode-moon"
+                type="moon"
+                size="18"
+                @click="changeMode('dark')"
+            />
         </lew-flex>
     </div>
 </template>

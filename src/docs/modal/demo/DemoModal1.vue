@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-
 const modalVisible1 = ref(false);
 const modalVisible2 = ref(false);
 

@@ -1,4 +1,4 @@
-export const commentProps = {
+export const _props = {
     type: {
         type: String,
         default: 'normal',

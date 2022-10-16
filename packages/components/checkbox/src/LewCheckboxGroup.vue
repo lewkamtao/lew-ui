@@ -1,3 +1,26 @@
+<script lang="ts" setup>
+import { group_props } from './props';
+import LewCheckbox from './LewCheckbox.vue';
+
+const props = defineProps(group_props);
+
+const emit = defineEmits(['update:modelValue']);
+
+const check = (_value: string, checked: boolean) => {
+    let updatedValue = [...props.modelValue];
+
+    if (checked) {
+        updatedValue.push(_value);
+    } else {
+        updatedValue.splice(updatedValue.indexOf(_value), 1);
+    }
+    emit('update:modelValue', updatedValue);
+};
+
+const getChecked = (_value: string | number) => {
+    return props.modelValue.includes(_value);
+};
+</script>
 <template>
     <lew-flex
         x="start"
@@ -19,81 +42,6 @@
     </lew-flex>
 </template>
 
-<script lang="ts" setup>
-import { PropType } from 'vue';
-import LewCheckbox from './LewCheckbox.vue';
-
-type Options = {
-    label: string;
-    value: string;
-};
-const props = defineProps({
-    modelValue: {
-        type: Array,
-        default: () => {
-            return [];
-        },
-        required: true,
-    },
-    block: {
-        type: Boolean,
-        default: () => {
-            return false;
-        },
-    },
-    round: {
-        type: Boolean,
-        default: () => {
-            return false;
-        },
-    },
-    direction: {
-        type: String,
-        default: 'x',
-    },
-    iconable: {
-        type: Boolean,
-        default: true,
-    },
-    size: {
-        type: String,
-        default: 'medium',
-    },
-    options: {
-        type: Array as PropType<Options[]>,
-        default: () => {
-            return [];
-        },
-        required: true,
-        validator: (value: Array<Options>) => {
-            const hasNameKey = value.every((option) =>
-                Object.keys(option).includes('label')
-            );
-            const hasIdKey = value.every((option) =>
-                Object.keys(option).includes('value')
-            );
-            return hasNameKey && hasIdKey;
-        },
-    },
-});
-
-const emit = defineEmits(['update:modelValue']);
-
-const check = (_value: string, checked: boolean) => {
-    let updatedValue = [...props.modelValue];
-
-    if (checked) {
-        updatedValue.push(_value);
-    } else {
-        updatedValue.splice(updatedValue.indexOf(_value), 1);
-    }
-    emit('update:modelValue', updatedValue);
-};
-
-const getChecked = (_value: string | number) => {
-    return props.modelValue.includes(_value);
-};
-</script>
 <style lang="scss" scoped>
 .lew-checkbox-group {
     display: flex;

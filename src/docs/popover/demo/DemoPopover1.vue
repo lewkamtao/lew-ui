@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 const v = ref('');
 const lewPopoverRef1 = ref();
 const lewPopoverRef2 = ref();
@@ -110,7 +108,11 @@ const formatSex = (sex: number) => {
 
 <template>
     <lew-flex gap="20px" x="start">
-        <lew-popover ref="lewPopoverRef1" trigger="click" placement="bottom-start">
+        <lew-popover
+            ref="lewPopoverRef1"
+            trigger="click"
+            placement="bottom-start"
+        >
             <template #trigger>
                 <lew-button>进入保险箱</lew-button>
             </template>
@@ -120,16 +122,25 @@ const formatSex = (sex: number) => {
                         <lew-input v-model="v" />
                     </lew-form-item>
                     <lew-flex x="end" style="margin-top: 15px">
-                        <lew-button type="blank" size="small" @click="lewPopoverRef1.hide()">取消
+                        <lew-button
+                            type="blank"
+                            size="small"
+                            @click="lewPopoverRef1.hide()"
+                            >取消
                         </lew-button>
-                        <lew-button size="small" @click="submit()">提交
+                        <lew-button size="small" @click="submit()"
+                            >提交
                         </lew-button>
                     </lew-flex>
                 </div>
             </template>
         </lew-popover>
 
-        <lew-popover ref="lewPopoverRef2" trigger="click" placement="bottom-start">
+        <lew-popover
+            ref="lewPopoverRef2"
+            trigger="click"
+            placement="bottom-start"
+        >
             <template #trigger>
                 <lew-button>展示表格</lew-button>
             </template>
@@ -144,7 +155,12 @@ const formatSex = (sex: number) => {
                         </template>
                         <template #hobby="{ row }">
                             <lew-flex gap="5px" x="start">
-                                <lew-tag v-for="(item, index) in row.hobby" :key="index" size="small" type="info">
+                                <lew-tag
+                                    v-for="(item, index) in row.hobby"
+                                    :key="index"
+                                    size="small"
+                                    type="info"
+                                >
                                     {{ item }}
                                 </lew-tag>
                             </lew-flex>
@@ -153,9 +169,14 @@ const formatSex = (sex: number) => {
                     </lew-table>
                     <br />
                     <lew-flex x="end">
-                        <lew-button type="blank" size="small" @click="lewPopoverRef2.hide()">取消
+                        <lew-button
+                            type="blank"
+                            size="small"
+                            @click="lewPopoverRef2.hide()"
+                            >取消
                         </lew-button>
-                        <lew-button size="small" @click="submit()">提交
+                        <lew-button size="small" @click="submit()"
+                            >提交
                         </lew-button>
                     </lew-flex>
                 </div>

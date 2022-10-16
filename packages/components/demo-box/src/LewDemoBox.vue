@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 defineProps({
     title: {
         type: String,
@@ -26,9 +25,11 @@ let isShowCode = ref(false);
 
 <template>
     <div class="demo-box">
-        <lew-title size="16px">{{ title }}
+        <lew-title size="16px"
+            >{{ title }}
             <lew-tag v-if="tag" type="info" style="margin: 2px 0px 0px 5px">
-                {{ tag }}</lew-tag>
+                {{ tag }}</lew-tag
+            >
         </lew-title>
         <div class="demo-item">
             <div class="demo-cp">
@@ -41,7 +42,11 @@ let isShowCode = ref(false);
             </div>
             <div class="show-bar" @click="isShowCode = !isShowCode">
                 <div class="icon">
-                    <lew-icon size="16" v-if="!isShowCode" type="chevron-down" />
+                    <lew-icon
+                        size="16"
+                        v-if="!isShowCode"
+                        type="chevron-down"
+                    />
                     <lew-icon size="16" v-else type="chevron-up" />
                 </div>
 

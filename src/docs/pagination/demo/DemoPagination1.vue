@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-
-const pageNum = ref(1);
+const pageNum = ref(2);
 const pageSize = ref(20);
 const change = (e: any) => {
     console.log(e);

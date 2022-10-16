@@ -72,15 +72,34 @@ const delTag = (index: number) => {
 <template>
     <div class="lew-input-tag-view">
         <div style="margin-left: -10px; height: 26px"></div>
-        <lew-tag v-for="(item, index) in tagsValue" :key="index" closable :type="type" @close="delTag(index)">{{ item }}
+        <lew-tag
+            v-for="(item, index) in tagsValue"
+            :key="index"
+            closable
+            :type="type"
+            @close="delTag(index)"
+            >{{ item }}
         </lew-tag>
 
-        <label v-show="!isInput" class="lew-input-tag-button" @click="openInput">
+        <label
+            v-show="!isInput"
+            class="lew-input-tag-button"
+            @click="openInput"
+        >
             <lew-icon size="16" type="plus" />
         </label>
 
-        <lew-input v-show="isInput" ref="lewInputRef" v-model="inputValue" class="lew-input-tag" size="small" auto-width
-            placeholder="" @blur="blurFn" @focus="addTag"></lew-input>
+        <lew-input
+            v-show="isInput"
+            ref="lewInputRef"
+            v-model="inputValue"
+            class="lew-input-tag"
+            size="small"
+            auto-width
+            placeholder=""
+            @blur="blurFn"
+            @focus="addTag"
+        ></lew-input>
     </div>
 </template>
 

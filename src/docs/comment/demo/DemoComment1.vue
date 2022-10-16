@@ -1,11 +1,14 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
     <div style="width: 600px; margin: 0 auto">
         <lew-comment>
             <template #avatar>
-                <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" alt="avatar" round />
+                <lew-avatar
+                    src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                    alt="avatar"
+                    round
+                />
             </template>
             <template #header>
                 <lew-flex x="start">
@@ -22,7 +25,11 @@
             <template #footer>
                 <div style="margin-top: 10px">
                     <lew-button size="small" is-text type="normal">
-                        <lew-icon size="14" style="margin-right:5px" type="message-square" />
+                        <lew-icon
+                            size="14"
+                            style="margin-right: 5px"
+                            type="message-square"
+                        />
                         <span>回复</span>
                     </lew-button>
                 </div>
@@ -30,7 +37,11 @@
         </lew-comment>
         <lew-comment style="padding: 20px 0px 0px 50px">
             <template #avatar>
-                <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" alt="avatar" round />
+                <lew-avatar
+                    src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                    alt="avatar"
+                    round
+                />
             </template>
             <template #header>
                 <lew-flex x="start">
@@ -47,7 +58,11 @@
             <template #footer>
                 <div style="margin-top: 10px">
                     <lew-button size="small" is-text type="normal">
-                        <lew-icon size="14" style="margin-right:5px" type="message-square" />
+                        <lew-icon
+                            size="14"
+                            style="margin-right: 5px"
+                            type="message-square"
+                        />
                         <span>回复</span>
                     </lew-button>
                 </div>
@@ -55,7 +70,11 @@
         </lew-comment>
         <lew-comment style="padding: 20px 0px 0px 50px">
             <template #avatar>
-                <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" alt="avatar" round />
+                <lew-avatar
+                    src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                    alt="avatar"
+                    round
+                />
             </template>
             <template #header>
                 <lew-flex x="start">
@@ -72,7 +91,11 @@
             <template #footer>
                 <div style="margin-top: 10px">
                     <lew-button size="small" is-text type="normal">
-                        <lew-icon size="14" style="margin-right:5px" type="message-square" />
+                        <lew-icon
+                            size="14"
+                            style="margin-right: 5px"
+                            type="message-square"
+                        />
                         <span>回复</span>
                     </lew-button>
                 </div>
@@ -80,7 +103,11 @@
         </lew-comment>
         <lew-comment style="padding: 20px 0px 0px 50px">
             <template #avatar>
-                <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" alt="avatar" round />
+                <lew-avatar
+                    src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                    alt="avatar"
+                    round
+                />
             </template>
             <template #header>
                 <lew-flex x="start">
@@ -97,7 +124,11 @@
             <template #footer>
                 <div style="margin-top: 10px">
                     <lew-button size="small" is-text type="normal">
-                        <lew-icon size="14" style="margin-right:5px" type="message-square" />
+                        <lew-icon
+                            size="14"
+                            style="margin-right: 5px"
+                            type="message-square"
+                        />
                         <span>回复</span>
                     </lew-button>
                 </div>
@@ -105,7 +136,11 @@
         </lew-comment>
         <lew-comment style="padding: 20px 0px 0px 50px">
             <template #avatar>
-                <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" alt="avatar" round />
+                <lew-avatar
+                    src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                    alt="avatar"
+                    round
+                />
             </template>
             <template #header>
                 <lew-flex x="start">

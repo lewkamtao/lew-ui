@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
-
 import { useLewTo } from '../../../hooks';
 import _props from './props';
 const { lewTo } = useLewTo();
@@ -15,30 +13,31 @@ const close = () => {
     emit('close');
 };
 
-
 const getSize = computed(() => {
     switch (props.size) {
-        case "small":
-            return "12"
-        case "medium":
-            return "14"
-        case "large":
-            return "16"
+        case 'small':
+            return '12';
+        case 'medium':
+            return '14';
+        case 'large':
+            return '16';
         default:
-            return "14"
+            return '14';
     }
-
-})
-
+});
 </script>
 
 <template>
-    <div class="lew-tag" :class="`lew-tag-${size} 
+    <div
+        class="lew-tag"
+        :class="`lew-tag-${size} 
     lew-tag-${type} 
     ${round ? 'lew-tag-round' : ''}       
     ${bold ? 'lew-tag-bold' : ''} 
-    ${disabled ? 'lew-tag-disabled' : ''} ${to ? 'lew-tag-to' : ''}`" :style="`max-width:${maxWidth}`"
-        @click="lewTo(to)">
+    ${disabled ? 'lew-tag-disabled' : ''} ${to ? 'lew-tag-to' : ''}`"
+        :style="`max-width:${maxWidth}`"
+        @click="lewTo(to)"
+    >
         <div class="lew-tag-left">
             <slot name="left"></slot>
         </div>
@@ -49,9 +48,13 @@ const getSize = computed(() => {
             <slot name="right"></slot>
         </div>
         <div class="lew-tag-close">
-            <lew-icon v-if="closable" @click.stop="close" :size="getSize" type="x" />
+            <lew-icon
+                v-if="closable"
+                @click.stop="close"
+                :size="getSize"
+                type="x"
+            />
         </div>
-
     </div>
 </template>
 

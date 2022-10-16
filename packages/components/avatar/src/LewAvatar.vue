@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { avatarProps } from './props';
-import { computed } from 'vue';
-const props = defineProps(avatarProps);
+import { _props } from './props';
+
+const props = defineProps(_props);
 
 const getAvatarStyle = computed(() => {
     return `width:${props.width};height:${props.height}`;

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { DemoColor1, DemoColor1_code } from './demo';
 
 const columns = [

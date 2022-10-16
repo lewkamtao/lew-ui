@@ -1,28 +1,7 @@
 <script setup lang="ts">
-defineProps({
-    direction: {
-        type: String,
-        default: 'row',
-    },
-    x: {
-        type: String,
-        default: 'center', // start center end
-    },
-    y: {
-        type: String,
-        default: 'center', // start center end
-    },
-    wrap: {
-        type: Boolean,
-        default: false, // around / between
-    },
-    mode: {
-        type: String,
-        default: '', // around / between
-    },
-    gap: { type: String, default: '10px' },
-    width: { type: String, default: '' },
-});
+import { _props } from './props';
+
+defineProps(_props);
 </script>
 
 <template>

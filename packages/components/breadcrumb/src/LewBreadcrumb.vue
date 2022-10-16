@@ -1,28 +1,10 @@
 <script setup lang="ts">
-import { PropType } from 'vue';
+import { _props } from './props';
 import { useLewTo } from '../../../hooks';
+
 const { lewTo } = useLewTo();
 
-type Options = {
-    label: string;
-    to: string;
-    active: boolean;
-};
-
-defineProps({
-    options: {
-        type: Array as PropType<Options[]>,
-        default() {
-            return [];
-        },
-    },
-    iconType: {
-        type: String,
-        default() {
-            return 'sprit'; // shoulder ｜ sprit
-        },
-    },
-});
+defineProps(_props);
 </script>
 
 <template>

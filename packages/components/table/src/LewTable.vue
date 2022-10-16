@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { tableProps } from './props';
-import { ref, onMounted, nextTick } from 'vue';
 const props = defineProps(tableProps);
 
 let lewTableRef = ref<HTMLElement | any>(null); // 表格的 ref

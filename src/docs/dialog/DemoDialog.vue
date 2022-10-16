@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { DemoDialog1, DemoDialog1_code } from './demo';
 
 const columns = [

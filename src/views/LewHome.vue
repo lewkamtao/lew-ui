@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 onMounted(() => {
@@ -199,10 +198,10 @@ const message = (type: string) => {
 const notification = (type: string) => {
     // @ts-ignore
     LewNotification[type]({
-        title: "提示",
-        content: "这是一条demo消息"
-    })
-}
+        title: '提示',
+        content: '这是一条demo消息',
+    });
+};
 </script>
 
 <template>
@@ -215,28 +214,48 @@ const notification = (type: string) => {
                 </div>
             </div>
             <p>一个 Vue 3 组件库</p>
-            <lew-button style="margin-top: 10px" @click="router.push('/Avatar')">开始使用</lew-button>
+            <lew-button style="margin-top: 10px" @click="router.push('/Avatar')"
+                >开始使用</lew-button
+            >
         </div>
         <div class="home">
             <lew-flex direction="y" gap="40px">
                 <lew-flex class="item" direction="column" x="end" gap="40px">
                     <lew-flex direction="column" x="end" gap="0px">
-                        <lew-title size="16px" :bold="200">Lew Design</lew-title>
-                        <lew-title size="24px" :bold="400">Lew Design</lew-title>
-                        <lew-title size="32px" :bold="600">Lew Design</lew-title>
-                        <lew-title size="40px" :bold="900">Lew Design</lew-title>
+                        <lew-title size="16px" :bold="200"
+                            >Lew Design</lew-title
+                        >
+                        <lew-title size="24px" :bold="400"
+                            >Lew Design</lew-title
+                        >
+                        <lew-title size="32px" :bold="600"
+                            >Lew Design</lew-title
+                        >
+                        <lew-title size="40px" :bold="900"
+                            >Lew Design</lew-title
+                        >
                     </lew-flex>
                     <lew-flex x="end" gap="20px">
                         <lew-badge round value="99+">
-                            <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"></lew-avatar>
+                            <lew-avatar
+                                src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                            ></lew-avatar>
                         </lew-badge>
                         <lew-badge type="info" round value="99+">
-                            <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"></lew-avatar>
+                            <lew-avatar
+                                src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                            ></lew-avatar>
                         </lew-badge>
-                        <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" status="online"
-                            status-position="bottom-left" />
-                        <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" status="processing"
-                            status-position="bottom-right" />
+                        <lew-avatar
+                            src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                            status="online"
+                            status-position="bottom-left"
+                        />
+                        <lew-avatar
+                            src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                            status="processing"
+                            status-position="bottom-right"
+                        />
                     </lew-flex>
                     <lew-flex x="end" gap="20px">
                         <lew-tag type="primary">primary</lew-tag>
@@ -266,7 +285,11 @@ const notification = (type: string) => {
                         <lew-dropdown :options="dropdown_options">
                             <lew-button type="normal">trigger hover</lew-button>
                         </lew-dropdown>
-                        <lew-dropdown :options="dropdown_options" trigger="click" placement="top">
+                        <lew-dropdown
+                            :options="dropdown_options"
+                            trigger="click"
+                            placement="top"
+                        >
                             <lew-button type="normal">trigger click</lew-button>
                         </lew-dropdown>
                     </lew-flex>
@@ -280,13 +303,22 @@ const notification = (type: string) => {
                             <LewInput type="textarea" resize="none" />
                         </lew-form-item>
                         <lew-form-item label="Select">
-                            <LewSelect v-model="user.home" :options="home_options" />
+                            <LewSelect
+                                v-model="user.home"
+                                :options="home_options"
+                            />
                         </lew-form-item>
                         <lew-form-item label="Radio">
-                            <lew-radio-group v-model="user.sex" :options="sex_options" />
+                            <lew-radio-group
+                                v-model="user.sex"
+                                :options="sex_options"
+                            />
                         </lew-form-item>
                         <lew-form-item label="Checkbox">
-                            <lew-checkbox-group v-model="user.hobby" :options="hobby_options" />
+                            <lew-checkbox-group
+                                v-model="user.hobby"
+                                :options="hobby_options"
+                            />
                         </lew-form-item>
                         <lew-form-item label="InputTag">
                             <lew-input-tag v-model="user.tags" />
@@ -299,32 +331,64 @@ const notification = (type: string) => {
                 <lew-flex class="item" direction="column" gap="20px">
                     <LewAlert :list="list"></LewAlert>
                     <lew-flex wrap x="start" gap="20px">
-                        <lew-button type="normal" @click="message('error')">Message</lew-button>
-                        <lew-button type="success" @click="message('success')">Save</lew-button>
+                        <lew-button type="normal" @click="message('error')"
+                            >Message</lew-button
+                        >
+                        <lew-button type="success" @click="message('success')"
+                            >Save</lew-button
+                        >
                     </lew-flex>
                     <lew-flex wrap x="start" gap="20px">
-                        <lew-button type="error" @click="notification('success')">Notification</lew-button>
-                        <lew-button type="warning" @click="notification('error')">Notification</lew-button>
+                        <lew-button
+                            type="error"
+                            @click="notification('success')"
+                            >Notification</lew-button
+                        >
+                        <lew-button
+                            type="warning"
+                            @click="notification('error')"
+                            >Notification</lew-button
+                        >
                     </lew-flex>
                     <lew-flex wrap x="start" gap="20px">
-                        <lew-button type="error" @click="open('warning')">Dialog</lew-button>
-                        <lew-button type="warning" @click="open('error')">Cancel</lew-button>
+                        <lew-button type="error" @click="open('warning')"
+                            >Dialog</lew-button
+                        >
+                        <lew-button type="warning" @click="open('error')"
+                            >Cancel</lew-button
+                        >
                     </lew-flex>
                     <lew-flex x="start" gap="20px">
-                        <lew-popover ref="lewPopoverRef" trigger="click" placement="bottom-start">
+                        <lew-popover
+                            ref="lewPopoverRef"
+                            trigger="click"
+                            placement="bottom-start"
+                        >
                             <template #trigger>
                                 <lew-button>Popover</lew-button>
                             </template>
                             <template #popover-body>
-                                <lew-form direction="y" class="popover-body" style="width: 250px">
+                                <lew-form
+                                    direction="y"
+                                    class="popover-body"
+                                    style="width: 250px"
+                                >
                                     <lew-form-item label="请输入密码">
                                         <lew-input v-model="v" />
                                     </lew-form-item>
 
                                     <lew-flex x="end">
-                                        <lew-button type="blank" size="small" @click="lewPopoverRef.hide()">取消
+                                        <lew-button
+                                            type="blank"
+                                            size="small"
+                                            @click="lewPopoverRef.hide()"
+                                            >取消
                                         </lew-button>
-                                        <lew-button size="small" @click="submit()">提交</lew-button>
+                                        <lew-button
+                                            size="small"
+                                            @click="submit()"
+                                            >提交</lew-button
+                                        >
                                     </lew-flex>
                                 </lew-form>
                             </template>
@@ -448,12 +512,14 @@ const notification = (type: string) => {
         @keyframes demo {
             from {
                 opacity: 0;
-                transform: scale(0.3) translate(-320px, 200px) rotateX(0deg) rotateY(0deg);
+                transform: scale(0.3) translate(-320px, 200px) rotateX(0deg)
+                    rotateY(0deg);
             }
 
             to {
                 opacity: 1;
-                transform: scale(0.5) translate(-320px, 200px) rotateX(15deg) rotateY(-15deg);
+                transform: scale(0.5) translate(-320px, 200px) rotateX(15deg)
+                    rotateY(-15deg);
             }
         }
 

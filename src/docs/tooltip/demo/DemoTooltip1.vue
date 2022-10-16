@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-</script>
-
 <template>
     <lew-flex direction="column">
         <lew-flex width="320px" direction="row" mode="between">

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { _props } from './props';
-import { ref } from 'vue';
 
 const emit = defineEmits(['click']);
 const props = defineProps(_props);
@@ -26,19 +25,27 @@ const handleClick = async (e: any) => {
 </script>
 
 <template>
-    <button class="lew-button" :class="` 
+    <button
+        class="lew-button"
+        :class="` 
     ${isText ? 'lew-button-text' : ''}  
     ${size ? 'lew-button-' + size : ''}
     ${type ? 'lew-button-' + type : ''}
     ${round ? 'lew-button-round' : ''}  
     ${isIcon ? 'lew-button-icon' : ''}
     ${_loading || loading ? 'lew-button-loading' : ''}
-    `" :disabled="disabled" @click="handleClick">
+    `"
+        :disabled="disabled"
+        @click="handleClick"
+    >
         <slot></slot>
 
-        <div class="lew-loading-icon" :class="{
-            'lew-loading-icon-show': (_loading || loading) && !disabled,
-        }"></div>
+        <div
+            class="lew-loading-icon"
+            :class="{
+                'lew-loading-icon-show': (_loading || loading) && !disabled,
+            }"
+        ></div>
     </button>
 </template>
 

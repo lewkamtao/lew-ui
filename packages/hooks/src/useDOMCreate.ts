@@ -1,5 +1,3 @@
-import { onUnmounted } from 'vue';
-
 export function useDOMCreate(nodeId: string): void {
     const node = document.createElement('div');
     node.id = nodeId;
