@@ -1,6 +1,6 @@
 {
     "name": "lew-ui",
-    "version": "1.1.10",
+    "version": "1.1.11",
     "description": "A Component Library for Vue3.js.",
     "keywords": [
         "vue3",
@@ -12,7 +12,7 @@
         "dev": "vite",
         "build:noemit": "vite build --mode demo",
         "build": "vite build --mode demo",
-        "build:package": "vue-tsc --noEmit && vite build --mode package",
+        "build:package": "vite build --mode package",
         "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
         "format": "prettier --write './*.{js,ts,json,vue,css,scss}' './*/*.{js,ts,json,vue,css,scss}' './*/*/*.{js,ts,json,vue,css,scss}' './*/*/*/*.{js,ts,json,vue,css,scss}' './*/*/*/*/*.{js,ts,json,vue,css,scss}'",
         "test": "vitest",
