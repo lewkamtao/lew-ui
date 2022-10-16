@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { getCurrentInstance, ref } from 'vue';
 const parentProps: any = getCurrentInstance()?.parent?.props;
 const { labelWidth, direction, labelAlign } = parentProps;
 

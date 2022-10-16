@@ -38,12 +38,22 @@ const toPath = (item: Item) => {
             <div v-if="list.title" class="title">
                 <span> {{ list.title }}</span>
             </div>
-            <div v-for="(item, j) in list.items" :key="`siderbar${j}`" class="item"
-                :class="{ active: route.path == item.path }" @click="toPath(item)">
+            <div
+                v-for="(item, j) in list.items"
+                :key="`siderbar${j}`"
+                class="item"
+                :class="{ active: route.path == item.path }"
+                @click="toPath(item)"
+            >
                 <span v-if="item.name" class="ename"> {{ item.name }} </span>
                 <span class="cname"> {{ item.cname }}</span>
 
-                <Lew-tag v-if="item.label" :type="item.type" size="small" style="margin-left: 10px">{{ item.label }}
+                <Lew-tag
+                    v-if="item.label"
+                    :type="item.type"
+                    size="small"
+                    style="margin-left: 10px"
+                    >{{ item.label }}
                 </Lew-tag>
             </div>
         </div>

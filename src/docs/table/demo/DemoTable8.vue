@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
-
 import mvJson from './movie_hot_gaia.json';
 
 const data: any = ref(mvJson);
@@ -117,7 +115,7 @@ const getChecked = computed(() => (id: any) => {
             v-if="isCheckeds.length == 0"
             @click="
                 isCheckeds = data
-                    .filter((e: any, i: number) => i <= 4)
+                    .filter((_e: any, i: number) => i <= 4)
                     .map((e: any) => e.id)
             "
             >选中前五个</lew-button

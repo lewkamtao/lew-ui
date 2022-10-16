@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 const options = ref([
     {
         label: '西游记',

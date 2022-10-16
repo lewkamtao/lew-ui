@@ -2,7 +2,12 @@
     <div class="demo-wrapper">
         <lew-title>Icon</lew-title>
         <p class="sub-title">
-            由 <lew-mark type="info" to="https://github.com/fengyuanchen/vue-feather">vue-feather </lew-mark>
+            由
+            <lew-mark
+                type="info"
+                to="https://fengyuanchen.github.io/vue-feather/"
+                >vue-feather
+            </lew-mark>
             强力驱动
         </p>
         <lew-demo-box title="图标" :code="DemoIcon1_code">

@@ -2,7 +2,11 @@ import { defineConfig, ConfigEnv } from 'vite';
 import compressPlugin from 'vite-plugin-compression';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
+import AutoImport from 'unplugin-auto-import/vite';
 import * as path from 'path';
+// 路径
+const pathSrc = path.resolve(__dirname, 'src');
+const pathPackage = path.resolve(__dirname, 'packages');
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv) => {
@@ -10,8 +14,8 @@ export default defineConfig(({ mode }: ConfigEnv) => {
         resolve: {
             //设置别名
             alias: {
-                'lew-ui': path.resolve(__dirname, 'packages'),
-                '@': path.resolve(__dirname, 'src'),
+                'lew-ui': pathPackage,
+                '@': pathSrc,
             },
             // 忽略后缀名的配置选项, 添加 .vue 选项时要记得原本默认忽略的选项也要手动写入
             extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
@@ -23,6 +27,14 @@ export default defineConfig(({ mode }: ConfigEnv) => {
             compressPlugin({
                 ext: '.gz',
                 deleteOriginFile: false, // 是否删除原始文件
+            }),
+            AutoImport({
+                imports: ['vue'],
+                dts: path.resolve(pathSrc, 'auto-imports.d.ts'),
+            }),
+            AutoImport({
+                imports: ['vue'],
+                dts: path.resolve(pathPackage, 'auto-imports.d.ts'),
             }),
         ],
         build:

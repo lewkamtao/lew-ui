@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 const value = ref('2020-12-12');
 
 const dateRangeValue = ref(['2020-12-1', '2020-12-12']);

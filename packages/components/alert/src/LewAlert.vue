@@ -1,33 +1,43 @@
 <script setup lang="ts">
-import { PropType } from 'vue';
-// alert type
-type Alert = {
-    type: string;
-    title: string;
-    content: string;
-};
-
-defineProps({
-    list: {
-        type: Array as PropType<Alert[]>,
-        default() {
-            return [];
-        },
-    },
-});
-
+import { _props } from './props';
+defineProps(_props);
 const emit = defineEmits(['close']);
 </script>
- 
+
 <template>
     <div class="lew-alert-group">
-        <div v-for="(item, i) in list" :key="i" class="lew-alert" :class="`lew-alert-${item.type}`">
+        <div
+            v-for="(item, i) in list"
+            :key="i"
+            class="lew-alert"
+            :class="`lew-alert-${item.type}`"
+        >
             <div class="alert-icon">
-                <lew-icon v-if="item.type == `normal`" size="16" type="info"></lew-icon>
-                <lew-icon v-if="item.type == `warning`" size="16" type="alert-triangle"></lew-icon>
-                <lew-icon v-if="item.type == `success`" size="16" type="check"></lew-icon>
-                <lew-icon v-if="item.type == `error`" size="16" type="alert-circle"></lew-icon>
-                <lew-icon v-if="item.type == `info`" size="16" type="bell"></lew-icon>
+                <lew-icon
+                    v-if="item.type == `normal`"
+                    size="16"
+                    type="info"
+                ></lew-icon>
+                <lew-icon
+                    v-if="item.type == `warning`"
+                    size="16"
+                    type="alert-triangle"
+                ></lew-icon>
+                <lew-icon
+                    v-if="item.type == `success`"
+                    size="16"
+                    type="check"
+                ></lew-icon>
+                <lew-icon
+                    v-if="item.type == `error`"
+                    size="16"
+                    type="alert-circle"
+                ></lew-icon>
+                <lew-icon
+                    v-if="item.type == `info`"
+                    size="16"
+                    type="bell"
+                ></lew-icon>
             </div>
 
             <div class="message">
@@ -37,7 +47,12 @@ const emit = defineEmits(['close']);
                 </div>
             </div>
             <div>
-                <lew-icon size="16" class="btn-close" type="x" @click="emit('close', i)" />
+                <lew-icon
+                    size="16"
+                    class="btn-close"
+                    type="x"
+                    @click="emit('close', i)"
+                />
             </div>
         </div>
     </div>

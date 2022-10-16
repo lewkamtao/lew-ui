@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted, watch } from 'vue';
-
 import { getMonthDate, getHeadDate } from './date';
 import { dateProps } from './props';
 import moment from 'moment';
@@ -123,17 +121,30 @@ const checkToday = computed(() => (item: any) => {
         </lew-flex>
         <div class="lew-date-box">
             <!-- 表头 周 -->
-            <div v-for="(item, index) in getHeadDate" :key="`h${index}`" class="lew-date-item">
+            <div
+                v-for="(item, index) in getHeadDate"
+                :key="`h${index}`"
+                class="lew-date-item"
+            >
                 <div class="lew-date-num">{{ item }}</div>
             </div>
 
             <!-- 表格 -->
-            <div v-for="(item, index) in dateData" :key="`d${index}`" class="lew-date-item" :class="{
-                'lew-date-item-e': item.date == item.showDate,
-                'lew-date-item-select': checkDateSelect(item),
-            }" @click="selectDateFn(item)">
+            <div
+                v-for="(item, index) in dateData"
+                :key="`d${index}`"
+                class="lew-date-item"
+                :class="{
+                    'lew-date-item-e': item.date == item.showDate,
+                    'lew-date-item-select': checkDateSelect(item),
+                }"
+                @click="selectDateFn(item)"
+            >
                 <div class="lew-date-label">
-                    <div v-if="checkToday(item)" class="lew-date-item-cur"></div>
+                    <div
+                        v-if="checkToday(item)"
+                        class="lew-date-item-cur"
+                    ></div>
                     <div class="lew-date-value">
                         {{ item.showDate }}
                     </div>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
 import tippy from 'tippy.js';
 
 let triggerRef = ref(null);

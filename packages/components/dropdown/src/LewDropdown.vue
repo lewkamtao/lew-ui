@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { _props } from './props';
 import type { LewDropdownOptions } from '../index';
 

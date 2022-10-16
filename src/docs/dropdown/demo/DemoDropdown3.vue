@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 const options = ref([
     {
         label: '西游记',
@@ -30,7 +28,12 @@ const change = (e: any) => {
             <lew-tag type="success">hover</lew-tag>
         </lew-dropdown>
 
-        <lew-dropdown :arrow="false" placement="bottom-start" :options="options" @change="change">
+        <lew-dropdown
+            :arrow="false"
+            placement="bottom-start"
+            :options="options"
+            @change="change"
+        >
             <div>纯文本</div>
         </lew-dropdown>
     </lew-flex>

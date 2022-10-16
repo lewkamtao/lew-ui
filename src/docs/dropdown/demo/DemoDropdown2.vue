@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 const options = ref([
     {
         label: '修改头像',
@@ -26,21 +24,40 @@ const change = (e: any) => {
 </script>
 <template>
     <lew-flex gap="30px" x="start">
-        <lew-dropdown :options="options" placement="bottom-start" @change="change">
-            <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668">hover</lew-avatar>
+        <lew-dropdown
+            :options="options"
+            placement="bottom-start"
+            @change="change"
+        >
+            <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                >hover</lew-avatar
+            >
         </lew-dropdown>
 
         <lew-dropdown :options="options" placement="top-start" @change="change">
-            <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668">hover</lew-avatar>
+            <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                >hover</lew-avatar
+            >
         </lew-dropdown>
 
-        <lew-dropdown :options="options" placement="left-start" @change="change">
-            <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668">hover</lew-avatar>
+        <lew-dropdown
+            :options="options"
+            placement="left-start"
+            @change="change"
+        >
+            <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                >hover</lew-avatar
+            >
         </lew-dropdown>
 
-        <lew-dropdown :options="options" placement="right-start" @change="change">
-            <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668">hover</lew-avatar>
+        <lew-dropdown
+            :options="options"
+            placement="right-start"
+            @change="change"
+        >
+            <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                >hover</lew-avatar
+            >
         </lew-dropdown>
     </lew-flex>
 </template>
- 

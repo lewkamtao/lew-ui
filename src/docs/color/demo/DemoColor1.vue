@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-
 const colors = ref([
     'primary',
     'normal',
@@ -13,17 +11,34 @@ const colors = ref([
 
 <template>
     <lew-flex x="start" class="color">
-        <lew-flex v-for="(item, index) in colors" :key="index" direction="column" gap="10px">
-            <lew-flex class="item" :style="`background: var(--lew-${item}-color-light)`">
+        <lew-flex
+            v-for="(item, index) in colors"
+            :key="index"
+            direction="column"
+            gap="10px"
+        >
+            <lew-flex
+                class="item"
+                :style="`background: var(--lew-${item}-color-light)`"
+            >
                 {{ item }}-color-light
             </lew-flex>
-            <lew-flex class="item" :style="`background: var(--lew-${item}-color-light2)`">
+            <lew-flex
+                class="item"
+                :style="`background: var(--lew-${item}-color-light2)`"
+            >
                 {{ item }}-color-light2
             </lew-flex>
-            <lew-flex class="item" :style="`background: var(--lew-${item}-color)`">
+            <lew-flex
+                class="item"
+                :style="`background: var(--lew-${item}-color)`"
+            >
                 {{ item }}-color
             </lew-flex>
-            <lew-flex class="item" :style="`background: var(--lew-${item}-color-dark)`">
+            <lew-flex
+                class="item"
+                :style="`background: var(--lew-${item}-color-dark)`"
+            >
                 {{ item }}-color-dark
             </lew-flex>
         </lew-flex>

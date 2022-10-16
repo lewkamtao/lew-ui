@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import {
     DemoCheckbox1,
     DemoCheckbox2,

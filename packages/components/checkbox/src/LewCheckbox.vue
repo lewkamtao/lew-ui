@@ -1,3 +1,29 @@
+<script lang="ts" setup>
+import { _props } from './props';
+
+const props = defineProps(_props);
+
+watch(
+    () => props.checked,
+    (v) => {
+        if (v != _checked.value) {
+            _checked.value = v;
+        }
+    }
+);
+
+let _checked = ref(props.checked || false);
+
+const emit = defineEmits(['change']);
+
+const setChecked = (e: Event) => {
+    if (props.disabled) {
+        return;
+    }
+    _checked.value = (e.target as HTMLInputElement).checked;
+    emit('change', _checked.value);
+};
+</script>
 <template>
     <label
         class="lew-checkbox"
@@ -33,69 +59,6 @@
         <span v-if="label" class="lew-checkbox-label"> {{ label }}</span>
     </label>
 </template>
-
-<script lang="ts" setup>
-import { ref, watch } from 'vue';
-const props = defineProps({
-    label: {
-        type: String,
-        default: () => {
-            return '';
-        },
-    },
-    block: {
-        type: Boolean,
-        default: () => {
-            return false;
-        },
-    },
-    round: {
-        type: Boolean,
-        default: () => {
-            return false;
-        },
-    },
-    iconable: {
-        type: Boolean,
-        default: true,
-    },
-    disabled: {
-        type: Boolean,
-        default: false,
-    },
-    checked: {
-        type: Boolean,
-        default: () => {
-            return false;
-        },
-    },
-    size: {
-        type: String,
-        default: 'medium',
-    },
-});
-
-watch(
-    () => props.checked,
-    (v) => {
-        if (v != _checked.value) {
-            _checked.value = v;
-        }
-    }
-);
-
-let _checked = ref(props.checked || false);
-
-const emit = defineEmits(['change']);
-
-const setChecked = (e: Event) => {
-    if (props.disabled) {
-        return;
-    }
-    _checked.value = (e.target as HTMLInputElement).checked;
-    emit('change', _checked.value);
-};
-</script>
 
 <style lang="scss" scoped>
 .lew-checkbox {

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import TheSiderbar from '../layout/TheSiderbar.vue';
 
@@ -86,9 +85,12 @@ group.value = [
 
 <template>
     <div class="container">
-        <div class="mb-btn" :class="{ 'mb-btn-open': isShowSider }" @click="isShowSider = !isShowSider">
+        <div
+            class="mb-btn"
+            :class="{ 'mb-btn-open': isShowSider }"
+            @click="isShowSider = !isShowSider"
+        >
             <lew-icon type="menu" size="24px" />
-
         </div>
         <div class="sider" :class="{ 'sider-open': isShowSider }">
             <the-siderbar :group="group" />

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 // 确认
 const ok = () => {
     return new Promise((resolve) => {

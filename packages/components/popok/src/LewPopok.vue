@@ -1,9 +1,7 @@
 <!-- filename: Popover.vue -->
 <script setup lang="ts">
-import { ref } from 'vue';
 import { LewButton } from 'lew-ui';
 import { _props } from './props';
-
 
 const props = defineProps(_props);
 
@@ -39,8 +37,13 @@ const emit = defineEmits(['onShow', 'cancel']);
 </script>
 
 <template>
-    <lew-popover ref="lewPopoverRef" class="lew-popok" :trigger="trigger" :placement="placement"
-        @onShow="emit('onShow')">
+    <lew-popover
+        ref="lewPopoverRef"
+        class="lew-popok"
+        :trigger="trigger"
+        :placement="placement"
+        @onShow="emit('onShow')"
+    >
         <template #trigger>
             <slot />
         </template>
@@ -48,20 +51,50 @@ const emit = defineEmits(['onShow', 'cancel']);
             <div class="lew-popok-body" :style="`width:${width}`">
                 <div class="left">
                     <div :class="`icon-${type}`">
-                        <lew-icon v-if="type == `normal`" size="22" type="info"></lew-icon>
-                        <lew-icon v-if="type == `warning`" size="22" type="alert-triangle"></lew-icon>
-                        <lew-icon v-if="type == `success`" size="22" type="check"></lew-icon>
-                        <lew-icon v-if="type == `error`" size="22" type="alert-circle"></lew-icon>
-                        <lew-icon v-if="type == `info`" size="22" type="bell"></lew-icon>
+                        <lew-icon
+                            v-if="type == `normal`"
+                            size="22"
+                            type="info"
+                        ></lew-icon>
+                        <lew-icon
+                            v-if="type == `warning`"
+                            size="22"
+                            type="alert-triangle"
+                        ></lew-icon>
+                        <lew-icon
+                            v-if="type == `success`"
+                            size="22"
+                            type="check"
+                        ></lew-icon>
+                        <lew-icon
+                            v-if="type == `error`"
+                            size="22"
+                            type="alert-circle"
+                        ></lew-icon>
+                        <lew-icon
+                            v-if="type == `info`"
+                            size="22"
+                            type="bell"
+                        ></lew-icon>
                     </div>
                 </div>
                 <div class="right">
                     <div v-if="title" class="title">{{ title }}</div>
                     <div v-if="content" class="content">{{ content }}</div>
                     <div class="footer">
-                        <lew-button size="small" type="blank" @click="cancelHandle" :loading="cancelLoading">取消
+                        <lew-button
+                            size="small"
+                            type="blank"
+                            @click="cancelHandle"
+                            :loading="cancelLoading"
+                            >取消
                         </lew-button>
-                        <lew-button size="small" @click="okHandle" :loading="okLoading">确定</lew-button>
+                        <lew-button
+                            size="small"
+                            @click="okHandle"
+                            :loading="okLoading"
+                            >确定</lew-button
+                        >
                     </div>
                 </div>
             </div>

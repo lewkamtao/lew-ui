@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import {
     DemoBreadcrumb1,
     DemoBreadcrumb2,

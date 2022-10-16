@@ -1,5 +1,4 @@
 import _LewDialog from './LewDialog.vue';
-import { h, createApp } from 'vue';
 type Options = {
     title: string;
     content: string;
