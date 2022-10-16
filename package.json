@@ -11,7 +11,7 @@
     "scripts": {
         "dev": "vite",
         "build:noemit": "vite build --mode demo",
-        "build": "vue-tsc --noEmit && vite build --mode demo",
+        "build": "vite build --mode demo",
         "build:package": "vue-tsc --noEmit && vite build --mode package",
         "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
         "format": "prettier --write './*.{js,ts,json,vue,css,scss}' './*/*.{js,ts,json,vue,css,scss}' './*/*/*.{js,ts,json,vue,css,scss}' './*/*/*/*.{js,ts,json,vue,css,scss}' './*/*/*/*/*.{js,ts,json,vue,css,scss}'",

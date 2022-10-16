@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
-
 // alert type
-
 type Alert = {
     type: string;
     title: string;
@@ -20,7 +18,7 @@ defineProps({
 
 const emit = defineEmits(['close']);
 </script>
-
+ 
 <template>
     <div class="lew-alert-group">
         <div v-for="(item, i) in list" :key="i" class="lew-alert" :class="`lew-alert-${item.type}`">
