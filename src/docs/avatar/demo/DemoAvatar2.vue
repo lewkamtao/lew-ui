@@ -1,28 +1,28 @@
 <template>
     <lew-flex wrap x="start" gap="20px">
         <lew-avatar
-            src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+            src="https://adm.blog.kamtao.com/api/app/common/avatar/550/杨"
             status="online"
             status-position="top-left"
         />
         <lew-avatar
-            src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+            src="https://adm.blog.kamtao.com/api/app/common/avatar/550/陶"
             status="processing"
             status-position="top-left"
         />
         <lew-avatar
-            src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+            src="https://adm.blog.kamtao.com/api/app/common/avatar/550/卢"
             status="busy"
             status-position="top-right"
         />
         <lew-avatar
-            src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+            src="https://adm.blog.kamtao.com/api/app/common/avatar/550/黄"
             round
             status="away"
             status-position="bottom-left"
         />
         <lew-avatar
-            src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+            src="https://adm.blog.kamtao.com/api/app/common/avatar/550/王"
             round
             status="offline"
             status-position="bottom-right"
