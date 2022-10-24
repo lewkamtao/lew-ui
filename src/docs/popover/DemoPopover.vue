@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { DemoPopover1, DemoPopover1_code } from './demo';
 
 const columns = [

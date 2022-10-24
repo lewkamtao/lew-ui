@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 onMounted(() => {
@@ -195,6 +194,14 @@ const list = ref([
 const message = (type: string) => {
     LewMessage[type]('这是一条demo消息');
 };
+
+const notification = (type: string) => {
+    // @ts-ignore
+    LewNotification[type]({
+        title: '提示',
+        content: '这是一条demo消息',
+    });
+};
 </script>
 
 <template>
@@ -292,9 +299,6 @@ const message = (type: string) => {
                         <lew-form-item label="Input">
                             <LewInput v-model="user.username" />
                         </lew-form-item>
-                        <lew-form-item label="Input">
-                            <LewInput resize="none" />
-                        </lew-form-item>
                         <lew-form-item label="Textarea">
                             <LewInput type="textarea" resize="none" />
                         </lew-form-item>
@@ -332,6 +336,18 @@ const message = (type: string) => {
                         >
                         <lew-button type="success" @click="message('success')"
                             >Save</lew-button
+                        >
+                    </lew-flex>
+                    <lew-flex wrap x="start" gap="20px">
+                        <lew-button
+                            type="error"
+                            @click="notification('success')"
+                            >Notification</lew-button
+                        >
+                        <lew-button
+                            type="warning"
+                            @click="notification('error')"
+                            >Notification</lew-button
                         >
                     </lew-flex>
                     <lew-flex wrap x="start" gap="20px">
@@ -438,10 +454,11 @@ const message = (type: string) => {
         animation-fill-mode: forwards;
         animation-delay: 0.5s;
         opacity: 0;
+        margin-top: -50px;
 
         .item {
             flex-shrink: 0;
-            width: 400px;
+            width: 420px;
             height: calc(100vh - 70px);
         }
     }

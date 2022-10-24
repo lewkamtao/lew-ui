@@ -7,7 +7,6 @@
  * 
 -->
 <script setup lang="ts">
-import { ref } from 'vue';
 import { DemoDrawer1, DemoDrawer1_code } from './demo';
 
 const columns = [

@@ -1,12 +1,4 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue';
-
-import {
-    CloseCircleOutline,
-    EyeOutline,
-    EyeOffOutline,
-} from '@vicons/ionicons5';
-import { Icon } from '@vicons/utils';
 import { inputProps } from './props';
 
 const props = defineProps(inputProps);
@@ -121,13 +113,13 @@ defineExpose({ getEl, focusFn });
     <div
         class="lew-input-view"
         :class="`
-            lew-input-view-${size} 
-            ${_type == 'textarea' ? 'lew-input-view-textarea' : ''}
-            ${readonly ? 'lew-input-view-readonly' : ''} 
-            ${disabled ? 'lew-input-view-disabled' : ''}
-            ${align ? 'lew-input-view-align-' + align : ''}
-            ${autoWidth ? 'lew-input-view-auto-width' : ''}
-            `"
+    lew-input-view-${size} 
+    ${_type == 'textarea' ? 'lew-input-view-textarea' : ''}
+    ${readonly ? 'lew-input-view-readonly' : ''} 
+    ${disabled ? 'lew-input-view-disabled' : ''}
+    ${align ? 'lew-input-view-align-' + align : ''}
+    ${autoWidth ? 'lew-input-view-auto-width' : ''}
+    `"
     >
         <textarea
             v-if="_type == 'textarea'"
@@ -175,26 +167,26 @@ defineExpose({ getEl, focusFn });
             <div v-if="getCheckNumStr" class="lew-input-show-count">
                 {{ getCheckNumStr }}
             </div>
-            <div v-if="showPassword" class="lew-input-show-password">
-                <Icon
-                    class="eye-icon-view"
-                    size="18"
-                    @mousedown.prevent=""
-                    @click="showPasswordFn"
-                >
-                    <EyeOutline v-show="_type == 'text'" />
-                    <EyeOffOutline v-show="_type == 'password'" />
-                </Icon>
+            <div
+                v-if="showPassword"
+                @mousedown.prevent=""
+                @click="showPasswordFn"
+                class="lew-input-show-password"
+            >
+                <lew-icon size="16" v-show="_type == 'text'" type="eye" />
+                <lew-icon
+                    size="16"
+                    v-show="_type == 'password'"
+                    type="eye-off"
+                />
             </div>
-            <div v-if="clearable" class="lew-input-clear">
-                <Icon
-                    class="close-icon-view"
-                    size="18"
-                    @mousedown.prevent=""
-                    @click="clear"
-                >
-                    <CloseCircleOutline />
-                </Icon>
+            <div
+                v-if="clearable"
+                @mousedown.prevent=""
+                @click="clear"
+                class="lew-input-clear"
+            >
+                <lew-icon size="16" type="x-circle" />
             </div>
         </div>
     </div>
@@ -209,10 +201,11 @@ defineExpose({ getEl, focusFn });
     overflow: hidden;
     width: 100%;
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-    border-radius: var(--lew-form-border-radius);
+    border-radius: var(--lew-border-radius);
     background-color: var(--lew-form-bgcolor);
     transition: var(--lew-form-transition);
     box-sizing: border-box;
+
     input,
     textarea {
         width: 100%;
@@ -223,6 +216,7 @@ defineExpose({ getEl, focusFn });
         outline: none;
         box-sizing: border-box;
     }
+
     input {
         overflow: hidden;
     }
@@ -238,6 +232,7 @@ defineExpose({ getEl, focusFn });
         opacity: 0;
         transform: translateX(100%);
         transition: var(--lew-form-transition);
+
         > div {
             display: inline-flex;
             justify-content: center;
@@ -250,9 +245,11 @@ defineExpose({ getEl, focusFn });
             opacity: 0.7;
             transition: var(--lew-form-transition);
         }
+
         .lew-input-clear {
             cursor: pointer;
         }
+
         .lew-input-show-password {
             cursor: pointer;
         }
@@ -261,23 +258,27 @@ defineExpose({ getEl, focusFn });
             opacity: 1;
         }
     }
+
     .lew-input-controls-show {
         opacity: 0.8;
         transform: translateX(0px);
     }
 }
+
 .lew-input-view-align-left {
     input,
     textarea {
         text-align: left;
     }
 }
+
 .lew-input-view-align-center {
     input,
     textarea {
         text-align: center;
     }
 }
+
 .lew-input-view-align-right {
     input,
     textarea {
@@ -297,9 +298,10 @@ defineExpose({ getEl, focusFn });
         display: inline-block;
         width: 100%;
     }
+
     .input-auto-width {
         width: auto;
-        min-width: 50px;
+        min-width: 65px;
         height: 100%;
         visibility: hidden;
         box-sizing: border-box;
@@ -313,15 +315,19 @@ defineExpose({ getEl, focusFn });
         font-size: var(--lew-form-font-size-small);
         line-height: var(--lew-form-input-line-height-small);
     }
+
     input {
         height: var(--lew-form-item-height-small);
     }
+
     textarea {
         min-height: var(--lew-form-item-height-small);
     }
+
     .lew-input-controls {
         height: var(--lew-form-item-height-small);
     }
+
     .input-auto-width {
         height: var(--lew-form-item-height-small);
         padding: var(--lew-form-input-padding-small);
@@ -329,6 +335,7 @@ defineExpose({ getEl, focusFn });
         line-height: var(--lew-form-input-line-height-small);
     }
 }
+
 .lew-input-view-medium {
     input,
     textarea {
@@ -336,15 +343,19 @@ defineExpose({ getEl, focusFn });
         font-size: var(--lew-form-font-size-medium);
         line-height: var(--lew-form-input-line-height-medium);
     }
+
     input {
         height: var(--lew-form-item-height-medium);
     }
+
     textarea {
         min-height: var(--lew-form-item-height-medium);
     }
+
     .lew-input-controls {
         height: var(--lew-form-item-height-medium);
     }
+
     .input-auto-width {
         height: var(--lew-form-item-height-medium);
         font-size: var(--lew-form-font-size-medium);
@@ -352,6 +363,7 @@ defineExpose({ getEl, focusFn });
         padding: var(--lew-form-input-padding-medium);
     }
 }
+
 .lew-input-view-large {
     input,
     textarea {
@@ -359,15 +371,19 @@ defineExpose({ getEl, focusFn });
         font-size: var(--lew-form-font-size-large);
         line-height: var(--lew-form-input-line-height-large);
     }
+
     input {
         height: var(--lew-form-item-height-large);
     }
+
     textarea {
         min-height: var(--lew-form-item-height-large);
     }
+
     .lew-input-controls {
         height: var(--lew-form-item-height-large);
     }
+
     .input-auto-width {
         height: var(--lew-form-item-height-large);
         padding: var(--lew-form-input-padding-large);
@@ -380,6 +396,7 @@ defineExpose({ getEl, focusFn });
     position: relative;
     flex-direction: column;
     justify-content: center;
+
     .lew-input-controls {
         position: absolute;
         right: 5px;
@@ -388,21 +405,27 @@ defineExpose({ getEl, focusFn });
         height: 18px;
         border-radius: 2px;
     }
+
     .lew-input-controls-show {
         transform: translateY(0px);
     }
+
     .lew-textarea-resize-none {
         resize: none;
     }
+
     .lew-textarea-resize-horizontal {
         resize: horizontal;
     }
+
     .lew-textarea-resize-vertical {
         resize: vertical;
     }
+
     .lew-textarea-resize-both {
         resize: both;
     }
+
     .lew-textarea-resize-inline {
         resize: inline;
     }
@@ -412,6 +435,7 @@ defineExpose({ getEl, focusFn });
     border: var(--lew-form-border-width) var(--lew-form-border-color-hover)
         solid;
     background-color: var(--lew-form-bgcolor-hover);
+
     .lew-input-controls {
         background: var(--lew-form-bgcolor-hover);
     }
@@ -425,14 +449,17 @@ defineExpose({ getEl, focusFn });
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
+
     .lew-input-controls {
         background: var(--lew-form-bgcolor-focus);
     }
 }
+
 .lew-input-view-readonly {
     cursor: default;
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor);
+
     input {
         user-select: auto;
     }
@@ -459,6 +486,7 @@ defineExpose({ getEl, focusFn });
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor);
 }
+
 .lew-input-view-disabled:hover {
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor);

@@ -1,20 +1,13 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted, defineEmits, watch } from 'vue';
-import {
-    ChevronDoubleLeft16Filled,
-    ChevronDoubleRight16Filled,
-    ChevronLeft16Filled,
-    ChevronRight16Filled,
-} from '@vicons/fluent';
 import { getMonthDate, getHeadDate } from './date';
-import { dateProps } from './props';
+import { dateRangeProps } from './props';
 import moment from 'moment';
 
-const props = defineProps(dateProps);
+const props = defineProps(dateRangeProps);
 
 let dateValue = ref({
-    start: props.modelValue[0],
-    end: props.modelValue[1],
+    start: props.modelValue?.[0],
+    end: props.modelValue?.[1],
 });
 
 let _dateValue = ref({
@@ -26,8 +19,8 @@ watch(
     () => props.modelValue,
     () => {
         dateValue.value = {
-            start: props.modelValue[0],
-            end: props.modelValue[1],
+            start: props.modelValue?.[0],
+            end: props.modelValue?.[1],
         };
     }
 );
@@ -236,11 +229,17 @@ const setValue = (item: any) => {
         end: Number(moment(end).format('X')),
     };
     if (i % 2 != 0) {
-        emit('update:modelValue', [dateValue.value.start, dateValue.value.end]);
+        emit('update:modelValue', [
+            moment(dateValue.value.start).format('YYYY-MM-DD'),
+            moment(dateValue.value.end).format('YYYY-MM-DD'),
+        ]);
         emit('change', {
             _date: _dateValue.value,
             date: dateValue.value,
-            dateValue: [dateValue.value.start, dateValue.value.end],
+            dateValue: [
+                moment(dateValue.value.start).format('YYYY-MM-DD'),
+                moment(dateValue.value.end).format('YYYY-MM-DD'),
+            ],
         });
     }
 
@@ -248,8 +247,17 @@ const setValue = (item: any) => {
 };
 
 const getClass = computed(() => (type: string, item: any) => {
-    let dateStr = `${item.year}-${item.month}-${item.showDate}`;
+    if (!item.year || !item.month || !item.showDate) {
+        return;
+    }
+
+    let dateStr = moment(
+        `${item.year}-${item.month}-${item.showDate}`,
+        'YYYY-MM-DD'
+    );
+
     let _date = Number(moment(dateStr).format('X'));
+
     switch (type) {
         case 'today':
             if (_curDate == _date) {
@@ -321,11 +329,11 @@ const getClass = computed(() => (type: string, item: any) => {
                 <div class="lew-date-control-left">
                     <!-- 上一年 -->
                     <lew-button type="normal" size="small" @click="prveYear1">
-                        <ChevronDoubleLeft16Filled />
+                        <lew-icon size="16" type="chevrons-left" />
                     </lew-button>
                     <!-- 上一月 -->
                     <lew-button type="normal" size="small" @click="prveMonth1">
-                        <ChevronLeft16Filled />
+                        <lew-icon size="16" type="chevron-left" />
                     </lew-button>
                 </div>
                 <!-- 日期 -->
@@ -333,11 +341,11 @@ const getClass = computed(() => (type: string, item: any) => {
                 <div class="lew-date-control-right">
                     <!-- 下一月 -->
                     <lew-button type="normal" size="small" @click="nextMonth1">
-                        <ChevronRight16Filled />
+                        <lew-icon size="16" type="chevron-right" />
                     </lew-button>
                     <!-- 下一年 -->
                     <lew-button type="normal" size="small" @click="nextYear1">
-                        <ChevronDoubleRight16Filled />
+                        <lew-icon size="16" type="chevrons-right" />
                     </lew-button>
                 </div>
             </lew-flex>
@@ -383,11 +391,11 @@ const getClass = computed(() => (type: string, item: any) => {
                 <div class="lew-date-control-left">
                     <!-- 上一年 -->
                     <lew-button type="normal" size="small" @click="prveYear2">
-                        <ChevronDoubleLeft16Filled />
+                        <lew-icon size="16" type="chevrons-left" />
                     </lew-button>
                     <!-- 上一月 -->
                     <lew-button type="normal" size="small" @click="prveMonth2">
-                        <ChevronLeft16Filled />
+                        <lew-icon size="16" type="chevron-left" />
                     </lew-button>
                 </div>
                 <!-- 日期 -->
@@ -395,11 +403,11 @@ const getClass = computed(() => (type: string, item: any) => {
                 <div class="lew-date-control-right">
                     <!-- 下一月 -->
                     <lew-button type="normal" size="small" @click="nextMonth2">
-                        <ChevronRight16Filled />
+                        <lew-icon size="16" type="chevron-right" />
                     </lew-button>
                     <!-- 下一年 -->
                     <lew-button type="normal" size="small" @click="nextYear2">
-                        <ChevronDoubleRight16Filled />
+                        <lew-icon size="16" type="chevrons-right" />
                     </lew-button>
                 </div>
             </lew-flex>
@@ -447,6 +455,7 @@ const getClass = computed(() => (type: string, item: any) => {
 .lew-date-range {
     display: flex;
 }
+
 .lew-date {
     width: 273px;
     user-select: none;
@@ -470,6 +479,7 @@ const getClass = computed(() => (type: string, item: any) => {
             color: var(--lew-text-color-0);
             padding-left: 8px;
         }
+
         .lew-date-control-left,
         .lew-date-control-right {
             display: flex;
@@ -488,6 +498,7 @@ const getClass = computed(() => (type: string, item: any) => {
                 width: 16px;
                 margin-right: 0px;
             }
+
             &:hover {
                 opacity: 1;
             }
@@ -517,6 +528,7 @@ const getClass = computed(() => (type: string, item: any) => {
                 height: 24px;
                 box-sizing: border-box;
                 transition: all 0.1s ease;
+
                 .lew-date-value {
                     display: inline-flex;
                     align-items: center;
@@ -553,6 +565,7 @@ const getClass = computed(() => (type: string, item: any) => {
                     var(--lew-primary-color-light) 100%
                 );
             }
+
             .lew-date-label-selected-end {
                 background: linear-gradient(
                     to right,
@@ -571,13 +584,16 @@ const getClass = computed(() => (type: string, item: any) => {
                 .lew-date-value {
                     color: var(--lew-text-color-4);
                 }
+
                 .lew-date-value-selected {
                     background: var(--lew-primary-color);
                     color: var(--lew-white-text-color);
                 }
             }
+
             .lew-date-label-selected {
                 background: var(--lew-primary-color-light);
+
                 .lew-date-value {
                     color: var(--lew-text-color-0);
                 }
@@ -592,6 +608,7 @@ const getClass = computed(() => (type: string, item: any) => {
                     font-weight: 900;
                     background-color: var(--lew-success-color-light);
                 }
+
                 .lew-date-value-selected {
                     background: var(--lew-primary-color);
                     color: var(--lew-white-text-color);
@@ -605,6 +622,7 @@ const getClass = computed(() => (type: string, item: any) => {
                     background-color: var(--lew-primary-color-light);
                     color: var(--lew-primary-color-dark);
                 }
+
                 .lew-date-value-selected {
                     background: var(--lew-primary-color);
                     color: var(--lew-white-text-color);
@@ -630,6 +648,7 @@ const getClass = computed(() => (type: string, item: any) => {
         }
     }
 }
+
 .lew-date:first-child {
     border-right: 1px #eee solid;
 }

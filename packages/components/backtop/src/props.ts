@@ -1,4 +1,4 @@
-export const backtopProps = {
+export const _props = {
     right: {
         type: String,
         default: '40px',

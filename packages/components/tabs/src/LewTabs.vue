@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { tabsProps } from './props';
 
 type Options = {
@@ -108,7 +107,7 @@ onUnmounted(() => {
     align-items: center;
     width: auto;
     background: var(--lew-form-bgcolor);
-    border-radius: var(--lew-form-border-radius);
+    border-radius: var(--lew-border-radius);
     overflow: hidden;
     user-select: none;
     .lew-tabs-item {
@@ -120,7 +119,7 @@ onUnmounted(() => {
         height: 28px;
         padding: 0px 12px;
         box-sizing: border-box;
-        border-radius: var(--lew-form-border-radius);
+        border-radius: var(--lew-border-radius);
         margin: 3px;
         color: var(--lew-text-color-5);
         white-space: nowrap;
@@ -141,7 +140,7 @@ onUnmounted(() => {
         transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
         background: var(--lew-bgcolor-0);
         transform: translateX(3px);
-        box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);
+        box-shadow: 0px 0px 30px rgba($color: #000000, $alpha: 0.15);
     }
 }
 

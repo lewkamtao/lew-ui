@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { LogoGithub, MoonOutline, SunnyOutline } from '@vicons/ionicons5';
-import { Icon } from '@vicons/utils';
 
 const router = useRouter();
 const route = useRoute();
@@ -49,29 +46,29 @@ const gohome = () => {
                 type="info"
                 size="small"
                 style="margin-left: 10px"
-                >Beta v1.1.7</lew-tag
+                >Beta v1.1.14</lew-tag
             >
         </div>
-        <div class="menu">
+        <lew-flex gap="15px" x="end" class="menu">
             <div class="menu-item" @click="router.push(`/`)">首页</div>
             <div class="menu-item" @click="router.push(`/Install`)">指南</div>
             <div class="menu-item" @click="router.push(`/Avatar`)">组件</div>
-
             <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
-                <Icon size="24"> <LogoGithub /> </Icon
-            ></a>
-
-            <Icon size="22">
-                <MoonOutline
-                    class="icon-mode-moon"
-                    @click="changeMode('dark')"
-                />
-                <SunnyOutline
-                    class="icon-mode-sunny"
-                    @click="changeMode('light')"
-                />
-            </Icon>
-        </div>
+                <lew-icon size="18" type="github" />
+            </a>
+            <lew-icon
+                class="menu-item icon-mode-sunny"
+                type="sun"
+                size="18"
+                @click="changeMode('light')"
+            />
+            <lew-icon
+                class="menu-item icon-mode-moon"
+                type="moon"
+                size="18"
+                @click="changeMode('dark')"
+            />
+        </lew-flex>
     </div>
 </template>
 
@@ -90,18 +87,22 @@ const gohome = () => {
     border-bottom: var(--lew-border-1);
     user-select: none;
     white-space: nowrap;
+
     .logo {
         display: flex;
         align-items: center;
         font-size: 22px;
         cursor: pointer;
+
         .lew-badge {
             margin-left: 10px;
         }
     }
+
     .menu {
         display: flex;
         align-items: center;
+
         a,
         span,
         .menu-item {
@@ -110,10 +111,10 @@ const gohome = () => {
             padding: 5px;
             opacity: 0.6;
             font-size: 14px;
-            margin-right: 10px;
             transition: all 0.5s;
             color: var(--lew-text-color-1);
             cursor: pointer;
+
             svg {
                 cursor: pointer;
             }
@@ -128,30 +129,38 @@ const gohome = () => {
         .menu-item:hover {
             opacity: 1;
         }
+
         .menu-item {
             padding: 10px;
         }
     }
 }
+
 @media (max-width: 767px) {
     .Header {
         padding: 0px 15px;
+
         .logo {
             span {
                 display: none;
             }
         }
+
         .menu {
+            gap: 5px !important;
             .menu-item {
                 margin-right: 5px;
                 padding: 5px;
             }
+
             .menu-item:nth-child(3) {
                 margin-right: 0px;
             }
+
             span {
                 margin-right: 0px;
             }
+
             a {
                 margin-right: 5px;
             }
@@ -161,22 +170,26 @@ const gohome = () => {
 </style>
 <style lang="scss">
 .icon-mode-sunny {
-    display: none;
+    display: none !important;
 }
+
 .icon-mode-moon {
-    display: block;
+    display: block !important;
 }
+
 .lew-dark {
     .logo {
         img {
             filter: invert(100%);
         }
     }
+
     .icon-mode-sunny {
-        display: block;
+        display: block !important;
     }
+
     .icon-mode-moon {
-        display: none;
+        display: none !important;
     }
 }
 </style>

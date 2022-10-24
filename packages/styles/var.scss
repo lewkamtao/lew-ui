@@ -50,10 +50,9 @@
     --lew-text-color-8-invert: rgb(95, 95, 95);
     --lew-text-color-9-invert: rgb(75, 75, 75);
     // 阴影
-    --lew-box-shadow: 0px 1px 2px rgba(61, 109, 178, 0.15),
-        0px 4px 16px rgba(61, 109, 179, 0.2);
+    --lew-box-shadow: 0px 1px 2px rgba(61, 109, 178, 0.15), 0px 4px 16px rgba(61, 109, 179, 0.2);
     // 圆角
-    --lew-border-radius: 6px;
+    --lew-border-radius: 3px;
     // 边界
     --lew-border-0: 1px solid rgb(245, 245, 245);
     --lew-border-1: 1px solid rgb(235, 235, 235);
@@ -117,7 +116,6 @@
     --lew-title-bold: 800;
     // 表单样式
     --lew-form-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
-    --lew-form-border-radius: 4px;
     --lew-form-border-width: 1.5px;
     --lew-form-transition: all 0.2s ease;
     --lew-form-border-color: rgb(245, 245, 245);
@@ -134,7 +132,7 @@
     --lew-form-input-line-height-small: 24px;
     --lew-form-input-line-height-medium: 28px;
     --lew-form-input-line-height-large: 32px;
-    --lew-form-font-size-small: 14px;
+    --lew-form-font-size-small: 13px;
     --lew-form-font-size-medium: 14px;
     --lew-form-font-size-large: 16px;
     // 表单背景
@@ -217,8 +215,6 @@
     --lew-border-9: 1px solid rgb(120, 120, 120);
     // 阴影
     --lew-box-shadow: 0px 3px 15px rgba(243, 243, 243, 0.08);
-    // 圆角
-    --lew-border-radius: 6px;
     // 主题色
     --lew-primary-color: rgb(50, 86, 136);
     --lew-primary-color-dark: rgb(75, 126, 198);

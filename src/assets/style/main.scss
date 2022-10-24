@@ -1,3 +1,8 @@
+@import url('https://s1.hdslb.com/bfs/static/jinkela/long/font/regular.css');
+* {
+    font-family: HarmonyOS_Regular, Helvetica Neue, Microsoft YaHei, sans-serif;
+}
+
 body {
     color: var(--lew-text-color-1);
     background-color: var(--lew-bgcolor-4);
@@ -6,13 +11,12 @@ body {
 }
 
 :root {
-    --lew-siderbar-width: 260px;
+    --lew-siderbar-width: 300px;
 }
 
-* {
-    font-family: 'Noto Sans SC';
-}
-
+// * {
+//     font-family: 'Noto Sans SC';
+// }
 a {
     color: var(--lew-text-color-2);
 }

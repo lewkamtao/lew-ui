@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 const visible1 = ref(false);
 const visible2 = ref(false);
 const visible3 = ref(false);

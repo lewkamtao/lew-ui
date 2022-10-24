@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { Menu } from '@vicons/ionicons5';
-import { Icon } from '@vicons/utils';
-import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import TheSiderbar from '../layout/TheSiderbar.vue';
 
@@ -93,9 +90,7 @@ group.value = [
             :class="{ 'mb-btn-open': isShowSider }"
             @click="isShowSider = !isShowSider"
         >
-            <icon size="24">
-                <Menu></Menu>
-            </icon>
+            <lew-icon type="menu" size="24px" />
         </div>
         <div class="sider" :class="{ 'sider-open': isShowSider }">
             <the-siderbar :group="group" />
@@ -113,12 +108,14 @@ group.value = [
     display: flex;
     min-height: 100vh;
 }
+
 .sider {
     position: fixed;
     top: 59px;
     height: calc(100vh - 58px);
     background-color: var(--lew-bgcolor-0);
 }
+
 .app-main {
     margin-left: var(--lew-siderbar-width);
     width: calc(100% - var(--lew-siderbar-width));
@@ -129,9 +126,11 @@ group.value = [
     padding: 50px 50px 150px 50px;
     background: var(--lew-bgcolor-1);
 }
+
 .mb-btn {
     display: none;
 }
+
 @media (max-width: 767px) {
     .mb-btn {
         position: fixed;
@@ -145,17 +144,21 @@ group.value = [
         color: #fff;
         transition: all 0.85s cubic-bezier(0.65, 0, 0.35, 1);
     }
+
     .mb-btn-open {
         transform: translateX(var(--lew-siderbar-width));
     }
+
     .sider {
         transform: translateX(-100%);
         transition: transform 0.85s cubic-bezier(0.65, 0, 0.35, 1);
         z-index: 99999;
     }
+
     .sider-open {
         transform: translateX(0%);
     }
+
     .app-main {
         width: 100%;
         margin-left: 0px;

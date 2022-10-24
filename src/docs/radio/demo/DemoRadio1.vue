@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 const options = ref([
     { label: '宋朝', value: '1' },
     { label: '唐朝', value: '2' },

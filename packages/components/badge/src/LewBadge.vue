@@ -1,18 +1,6 @@
 <script setup lang="ts">
-defineProps({
-    type: {
-        type: String,
-        default: 'normal',
-    },
-    round: {
-        type: Boolean,
-        default: false,
-    },
-    value: {
-        type: String,
-        default: '',
-    },
-});
+import { _props } from './props';
+defineProps(_props);
 </script>
 
 <template>

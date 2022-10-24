@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 const v = ref('');
 const lewPopoverRef1 = ref();
 const lewPopoverRef2 = ref();
@@ -123,7 +121,7 @@ const formatSex = (sex: number) => {
                     <lew-form-item direction="y" label="请输入密码">
                         <lew-input v-model="v" />
                     </lew-form-item>
-                    <lew-flex x="end">
+                    <lew-flex x="end" style="margin-top: 15px">
                         <lew-button
                             type="blank"
                             size="small"
@@ -162,8 +160,9 @@ const formatSex = (sex: number) => {
                                     :key="index"
                                     size="small"
                                     type="info"
-                                    >{{ item }}</lew-tag
                                 >
+                                    {{ item }}
+                                </lew-tag>
                             </lew-flex>
                         </template>
                         <template #intro="{ row }"> {{ row.intro }} </template>

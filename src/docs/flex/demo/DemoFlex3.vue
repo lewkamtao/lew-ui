@@ -45,7 +45,7 @@
 }
 .lew-flex {
     border: 1px var(--lew-bgcolor-2) solid;
-    border-radius: var(--lew-form-border-radius);
+    border-radius: var(--lew-border-radius);
     background-color: var(--lew-bgcolor-1);
     margin-bottom: 20px;
     width: 200px;
@@ -59,7 +59,7 @@
             display: inline-block;
             padding: 10px;
             font-size: 14px;
-            border-radius: var(--lew-form-border-radius);
+            border-radius: var(--lew-border-radius);
             background-color: var(--lew-primary-color);
         }
     }

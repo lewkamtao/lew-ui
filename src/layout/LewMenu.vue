@@ -113,7 +113,7 @@ const toPath = (item: Item) => {
             box-sizing: border-box;
             list-style: none;
             width: calc(100% - 20px);
-            border-radius: var(--lew-form-border-radius);
+            border-radius: var(--lew-border-radius);
             cursor: pointer;
             font-size: 14px;
             transform: translateX(50px);

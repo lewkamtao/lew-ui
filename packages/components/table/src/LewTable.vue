@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { tableProps } from './props';
-import { ref, onMounted, nextTick } from 'vue';
 const props = defineProps(tableProps);
 
 let lewTableRef = ref<HTMLElement | any>(null); // 表格的 ref
@@ -192,7 +191,7 @@ onMounted(() => {
     width: 100%;
     font-size: 14px;
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-    border-radius: var(--lew-form-border-radius);
+    border-radius: var(--lew-border-radius);
     .lew-table-head {
         position: sticky;
         top: 0;

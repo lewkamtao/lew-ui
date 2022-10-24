@@ -1,28 +1,10 @@
 <script setup lang="ts">
-import { PropType } from 'vue';
+import { _props } from './props';
 import { useLewTo } from '../../../hooks';
+
 const { lewTo } = useLewTo();
 
-type Options = {
-    label: string;
-    to: string;
-    active: boolean;
-};
-
-defineProps({
-    options: {
-        type: Array as PropType<Options[]>,
-        default() {
-            return [];
-        },
-    },
-    iconType: {
-        type: String,
-        default() {
-            return 'sprit'; // shoulder ｜ sprit
-        },
-    },
-});
+defineProps(_props);
 </script>
 
 <template>
@@ -48,7 +30,6 @@ defineProps({
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                     stroke="currentColor"
-                    class="arco-icon arco-icon-oblique-line"
                     stroke-width="4"
                     stroke-linecap="butt"
                     stroke-linejoin="miter"
@@ -62,7 +43,6 @@ defineProps({
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                     stroke="currentColor"
-                    class="arco-icon arco-icon-right"
                     stroke-width="4"
                     stroke-linecap="butt"
                     stroke-linejoin="miter"

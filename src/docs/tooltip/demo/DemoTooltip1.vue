@@ -1,18 +1,10 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-
-const ha = ref(0);
-setInterval(() => {
-    ha.value += 1;
-}, 500);
-</script>
-
 <template>
     <lew-flex direction="column">
         <lew-flex width="320px" direction="row" mode="between">
             <lew-button
                 v-tooltip="{
-                    content: ha,
+                    content:
+                        '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
                     placement: 'top-start',
                     trigger: 'mouseenter',
                 }"

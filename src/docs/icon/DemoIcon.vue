@@ -2,19 +2,26 @@
     <div class="demo-wrapper">
         <lew-title>Icon</lew-title>
         <p class="sub-title">
-            这里强烈建议您可以使用
-            <lew-mark to="https://www.xicons.org" type="info">xicons</lew-mark>，这是
-            <lew-mark to="https://www.xicons.org" type="info">Naive UI</lew-mark>
-            官方推荐使用的图标库，非常棒。
+            由
+            <lew-mark
+                type="info"
+                to="https://fengyuanchen.github.io/vue-feather/"
+                >vue-feather
+            </lew-mark>
+            强力驱动
         </p>
         <lew-demo-box title="图标" :code="DemoIcon1_code">
             <demo-icon1 />
+        </lew-demo-box>
+
+        <lew-demo-box title="旋转动画" :code="DemoIcon2_code">
+            <demo-icon2 />
         </lew-demo-box>
     </div>
 </template>
 
 <script setup lang="ts">
-import { DemoIcon1, DemoIcon1_code } from './demo';
+import { DemoIcon1, DemoIcon1_code, DemoIcon2, DemoIcon2_code } from './demo';
 </script>
 
 <style scoped lang="scss">

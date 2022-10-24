@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
 import { _props, Options } from './props';
 
 const props = defineProps(_props);

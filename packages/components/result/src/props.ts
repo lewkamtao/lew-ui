@@ -1,5 +1,5 @@
 export const _props = {
-    status: {
+    type: {
         type: String,
         default: 'info',
     },

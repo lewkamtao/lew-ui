@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 const pre1 = ref(`<script setup>
   import { LewButton } from 'lew-ui'
 <\/script>`);

@@ -1,4 +1,4 @@
-export const avatarProps = {
+export const _props = {
     round: {
         type: Boolean,
         default: false,

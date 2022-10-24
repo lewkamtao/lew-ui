@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 import LewAlert from '../src/LewAlert.vue';
-import { reactive } from 'vue';
 
 describe('LewAlert', () => {
     it('props', () => {

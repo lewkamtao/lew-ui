@@ -2,7 +2,7 @@ export const datePickerProps = {
     modelValue: {
         type: String,
         required: false,
-        default: '2022-9-2',
+        default: '2022-09-02',
     },
     multiple: {
         type: Boolean,
@@ -29,11 +29,21 @@ export const dateRangePickerProps = {
     },
 };
 
+export const dateRangeProps = {
+    modelValue: {
+        type: Array,
+        required: true,
+    },
+    multiple: {
+        type: Boolean,
+        default: false,
+    },
+};
+
 export const dateProps = {
     modelValue: {
         type: String,
         required: true,
-        default: ['2022-9-2', '2022-9-30'],
     },
     multiple: {
         type: Boolean,

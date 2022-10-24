@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
 import { DemoTabs1, DemoTabs2, DemoTabs1_code, DemoTabs2_code } from './demo';
 
 const docsTable = reactive([

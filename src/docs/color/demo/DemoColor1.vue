@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
-
 const colors = ref([
     'primary',
     'normal',
@@ -23,28 +21,28 @@ const colors = ref([
                 class="item"
                 :style="`background: var(--lew-${item}-color-light)`"
             >
-                {{ item }}-color-light</lew-flex
-            >
+                {{ item }}-color-light
+            </lew-flex>
             <lew-flex
                 class="item"
                 :style="`background: var(--lew-${item}-color-light2)`"
             >
-                {{ item }}-color-light2</lew-flex
-            >
+                {{ item }}-color-light2
+            </lew-flex>
             <lew-flex
                 class="item"
                 :style="`background: var(--lew-${item}-color)`"
             >
-                {{ item }}-color</lew-flex
-            >
+                {{ item }}-color
+            </lew-flex>
             <lew-flex
                 class="item"
                 :style="`background: var(--lew-${item}-color-dark)`"
             >
-                {{ item }}-color-dark</lew-flex
-            >
-        </lew-flex></lew-flex
-    >
+                {{ item }}-color-dark
+            </lew-flex>
+        </lew-flex>
+    </lew-flex>
 </template>
 <style lang="scss" style>
 .color {

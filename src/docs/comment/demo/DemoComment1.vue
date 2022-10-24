@@ -1,6 +1,4 @@
-<script setup lang="ts">
-import { Chat24Regular } from '@vicons/fluent';
-</script>
+<script setup lang="ts"></script>
 
 <template>
     <div style="width: 600px; margin: 0 auto">
@@ -27,7 +25,11 @@ import { Chat24Regular } from '@vicons/fluent';
             <template #footer>
                 <div style="margin-top: 10px">
                     <lew-button size="small" is-text type="normal">
-                        <Chat24Regular style="width: 14px" />
+                        <lew-icon
+                            size="14"
+                            style="margin-right: 5px"
+                            type="message-square"
+                        />
                         <span>回复</span>
                     </lew-button>
                 </div>
@@ -56,7 +58,11 @@ import { Chat24Regular } from '@vicons/fluent';
             <template #footer>
                 <div style="margin-top: 10px">
                     <lew-button size="small" is-text type="normal">
-                        <Chat24Regular style="width: 14px" />
+                        <lew-icon
+                            size="14"
+                            style="margin-right: 5px"
+                            type="message-square"
+                        />
                         <span>回复</span>
                     </lew-button>
                 </div>
@@ -85,7 +91,11 @@ import { Chat24Regular } from '@vicons/fluent';
             <template #footer>
                 <div style="margin-top: 10px">
                     <lew-button size="small" is-text type="normal">
-                        <Chat24Regular style="width: 14px" />
+                        <lew-icon
+                            size="14"
+                            style="margin-right: 5px"
+                            type="message-square"
+                        />
                         <span>回复</span>
                     </lew-button>
                 </div>
@@ -114,7 +124,11 @@ import { Chat24Regular } from '@vicons/fluent';
             <template #footer>
                 <div style="margin-top: 10px">
                     <lew-button size="small" is-text type="normal">
-                        <Chat24Regular style="width: 14px" />
+                        <lew-icon
+                            size="14"
+                            style="margin-right: 5px"
+                            type="message-square"
+                        />
                         <span>回复</span>
                     </lew-button>
                 </div>
@@ -156,11 +170,13 @@ import { Chat24Regular } from '@vicons/fluent';
     color: var(--lew-text-color-4);
     white-space: nowrap;
 }
+
 .datetime {
     font-size: 12px;
     color: var(--lew-text-color-7);
     white-space: nowrap;
 }
+
 .content {
     margin-top: 10px;
 }

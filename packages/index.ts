@@ -30,9 +30,8 @@ const install: any = function (Vue: App): void {
 
     _components.forEach((component: any) => {
         if (
-            (component.hasOwnProperty('name') ||
-                component.hasOwnProperty('__name')) &&
-            component.hasOwnProperty('setup')
+            component.hasOwnProperty('name') ||
+            component.hasOwnProperty('__name')
         ) {
             Vue.component(component.name || component.__name, component);
         }

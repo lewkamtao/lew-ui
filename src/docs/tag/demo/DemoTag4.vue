@@ -4,7 +4,7 @@ const close = () => {
 };
 </script>
 <template>
-    <lew-flex x="start">
+    <lew-flex x="start" wrap>
         <lew-tag type="normal" closable @close="close">
             <template #left> 🦄 </template>
             <template #right> 🎉 </template>

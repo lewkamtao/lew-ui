@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
 const user = ref({
     username: '',
     password: '',
@@ -161,7 +159,7 @@ const d = ref('2020-12-12');
 </template>
 <style scoped lang="scss">
 .form-box {
-    width: 450px;
+    width: 380px;
 }
 @media (max-width: 767px) {
     .form-box {

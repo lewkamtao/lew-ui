@@ -63,8 +63,8 @@ const toPath = (item: Item) => {
 <style lang="scss" scoped>
 .siderbar {
     width: var(--lew-siderbar-width);
-    height: 100%;
-    min-height: 100vh;
+    height: calc(100vh - 60px);
+    min-height: calc(100vh - 60px);
     overflow-y: scroll;
     border-right: var(--lew-border-1);
     user-select: none;
@@ -82,6 +82,7 @@ const toPath = (item: Item) => {
             height: 20px;
             color: var(--lew-text-color-9);
             overflow: hidden;
+
             span {
                 display: inline-block;
             }
@@ -97,10 +98,11 @@ const toPath = (item: Item) => {
             box-sizing: border-box;
             list-style: none;
             width: calc(100% - 20px);
-            border-radius: var(--lew-form-border-radius);
+            border-radius: var(--lew-border-radius);
             cursor: pointer;
             font-size: 14px;
             color: var(--lew-text-color-6);
+
             .ename {
                 margin-right: 5px;
             }
@@ -115,6 +117,7 @@ const toPath = (item: Item) => {
             color: var(--lew-white-text-color);
             background: var(--lew-primary-color);
         }
+
         .active:hover {
             color: var(--lew-white-text-color);
             background: var(--lew-primary-color);

@@ -1,16 +1,15 @@
 <script lang="ts" setup>
-import { computed, ref, onMounted, shallowRef } from 'vue';
 import throttle from 'lodash/throttle';
-import { backtopProps } from './props';
+import { _props } from './props';
 import { useEventListener } from '../../../hooks';
-import { CaretUp } from '@vicons/ionicons5';
-import { Icon } from '@vicons/utils';
 
-const dom = shallowRef<HTMLElement>();
-const showBackTop = ref(false);
-const props = defineProps(backtopProps);
+const props = defineProps(_props);
 
 const emit = defineEmits(['click']);
+
+const dom = shallowRef<HTMLElement>();
+
+const showBackTop = ref(false);
 
 const backTopStyle = computed(() => ({
     right: `${props.right}`,
@@ -62,13 +61,12 @@ onMounted(() => {
             @click="toBackUp"
         >
             <slot>
-                <Icon size="20">
-                    <CaretUp />
-                </Icon>
+                <lew-icon size="20" type="chevron-up" />
             </slot>
         </div>
     </transition>
 </template>
+
 <style lang="scss" scoped>
 .backTop {
     position: fixed;

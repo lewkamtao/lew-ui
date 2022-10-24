@@ -10,7 +10,6 @@ declare module '*.vue' {
 declare module 'highlight.js';
 declare const hljs;
 declare module 'lew-ui';
-declare module '@vicons/fluent';
 declare const LewMessage;
 declare const LewDialog;
 

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { commentProps } from './props';
-defineProps(commentProps);
+import { _props } from './props';
+defineProps(_props);
 </script>
 
 <template>

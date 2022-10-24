@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { DemoColor1, DemoColor1_code } from './demo';
 
 const columns = [
@@ -30,10 +29,8 @@ const docsTable = ref([]);
 <template>
     <div class="demo-wrapper">
         <lew-title>Color</lew-title>
-
         <lew-demo-box title="色彩" :code="DemoColor1_code">
             <demo-color1 />
         </lew-demo-box>
-        <lew-title size="16px">Props</lew-title>
     </div>
 </template>

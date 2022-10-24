@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue';
 import { inputTagProps } from './props';
-import { Icon } from '@vicons/utils';
-import { Add16Regular } from '@vicons/fluent';
 
 const props = defineProps(inputTagProps);
 
@@ -80,15 +78,15 @@ const delTag = (index: number) => {
             closable
             :type="type"
             @close="delTag(index)"
-            >{{ item }}</lew-tag
-        >
+            >{{ item }}
+        </lew-tag>
 
         <label
             v-show="!isInput"
             class="lew-input-tag-button"
             @click="openInput"
         >
-            <Icon size="18px"> <Add16Regular /></Icon>
+            <lew-icon size="16" type="plus" />
         </label>
 
         <lew-input
@@ -114,9 +112,11 @@ const delTag = (index: number) => {
     gap: 10px;
     padding: 5px 0px;
     box-sizing: border-box;
+
     .lew-input-tag {
         height: 26px;
         flex-shrink: 1;
+
         ::v-deep input {
             height: 26px;
         }
@@ -129,15 +129,16 @@ const delTag = (index: number) => {
     justify-content: center;
     cursor: pointer;
     height: 26px;
-    width: 50px;
+    width: 65px;
     box-sizing: border-box;
-    border-radius: var(--lew-form-border-radius);
+    border-radius: var(--lew-border-radius);
     background-color: var(--lew-bgcolor-0);
-    color: var(--lew-text-color-5);
-    border: var(--lew-bgcolor-5) var(--lew-form-border-width) dashed;
+    color: var(--lew-text-color-8);
+    border: var(--lew-text-color-8) var(--lew-form-border-width) dashed;
 }
+
 .lew-input-tag-button:hover {
-    color: var(--lew-primary-color-dark);
+    color: var(--lew-primary-color);
     border: var(--lew-primary-color) var(--lew-form-border-width) dashed;
 }
 </style>

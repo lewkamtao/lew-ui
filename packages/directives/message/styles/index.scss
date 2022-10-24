@@ -22,10 +22,10 @@
         opacity: 0;
         margin-top: 0px;
         margin-bottom: 10px;
-        transform: translateY(-5px);
+        transform: translateY(-3px);
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         font-size: 14px;
-        border-radius: 4px;
+        border-radius: var(--lew-border-radius);
         background-color: var(--lew-message-bgcolor);
         .content {
             max-width: 500px;
@@ -34,8 +34,8 @@
             overflow: hidden;
         }
         svg {
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             margin-right: 10px;
         }
     }

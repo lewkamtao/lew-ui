@@ -5,7 +5,7 @@ type Options = {
     value: number | string;
 };
 
-export const paginationProps = {
+export const _props = {
     total: {
         type: Number,
         default: 100,

@@ -1,18 +1,11 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted, watch } from 'vue';
-import {
-    ChevronDoubleLeft16Filled,
-    ChevronDoubleRight16Filled,
-    ChevronLeft16Filled,
-    ChevronRight16Filled,
-} from '@vicons/fluent';
 import { getMonthDate, getHeadDate } from './date';
 import { dateProps } from './props';
 import moment from 'moment';
 
 const props = defineProps(dateProps);
 
-let dateValue = ref<string>(props.modelValue || '');
+let dateValue = ref<string | undefined>(props.modelValue || '');
 
 watch(
     () => props.modelValue,
@@ -106,11 +99,11 @@ const checkToday = computed(() => (item: any) => {
             <div class="lew-date-control-left">
                 <!-- 上一年 -->
                 <lew-button type="normal" size="small" @click="prveYear">
-                    <ChevronDoubleLeft16Filled />
+                    <lew-icon size="16" type="chevrons-left" />
                 </lew-button>
                 <!-- 上一月 -->
                 <lew-button type="normal" size="small" @click="prveMonth">
-                    <ChevronLeft16Filled />
+                    <lew-icon size="16" type="chevron-left" />
                 </lew-button>
             </div>
             <!-- 日期 -->
@@ -118,11 +111,11 @@ const checkToday = computed(() => (item: any) => {
             <div class="lew-date-control-right">
                 <!-- 下一月 -->
                 <lew-button type="normal" size="small" @click="nextMonth">
-                    <ChevronRight16Filled />
+                    <lew-icon size="16" type="chevron-right" />
                 </lew-button>
                 <!-- 下一年 -->
                 <lew-button type="normal" size="small" @click="nextYear">
-                    <ChevronDoubleRight16Filled />
+                    <lew-icon size="16" type="chevrons-right" />
                 </lew-button>
             </div>
         </lew-flex>
@@ -185,6 +178,7 @@ const checkToday = computed(() => (item: any) => {
             color: var(--lew-text-color-0);
             padding-left: 8px;
         }
+
         .lew-date-control-left,
         .lew-date-control-right {
             display: flex;
@@ -203,6 +197,7 @@ const checkToday = computed(() => (item: any) => {
                 width: 16px;
                 margin-right: 0px;
             }
+
             &:hover {
                 opacity: 1;
             }
@@ -231,6 +226,7 @@ const checkToday = computed(() => (item: any) => {
                 height: 24px;
                 box-sizing: border-box;
                 transition: all 0.1s ease;
+
                 .lew-date-value {
                     display: inline-flex;
                     align-items: center;
