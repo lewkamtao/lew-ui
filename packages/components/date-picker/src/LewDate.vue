@@ -5,7 +5,7 @@ import moment from 'moment';
 
 const props = defineProps(dateProps);
 
-let dateValue = ref<string>(props.modelValue || '');
+let dateValue = ref<string | undefined>(props.modelValue || '');
 
 watch(
     () => props.modelValue,

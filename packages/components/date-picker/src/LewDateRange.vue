@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { getMonthDate, getHeadDate } from './date';
-import { dateProps } from './props';
+import { dateRangeProps } from './props';
 import moment from 'moment';
 
-const props = defineProps(dateProps);
+const props = defineProps(dateRangeProps);
 
 let dateValue = ref({
-    start: props.modelValue[0],
-    end: props.modelValue[1],
+    start: props.modelValue?.[0],
+    end: props.modelValue?.[1],
 });
 
 let _dateValue = ref({
@@ -19,8 +19,8 @@ watch(
     () => props.modelValue,
     () => {
         dateValue.value = {
-            start: props.modelValue[0],
-            end: props.modelValue[1],
+            start: props.modelValue?.[0],
+            end: props.modelValue?.[1],
         };
     }
 );
@@ -229,11 +229,17 @@ const setValue = (item: any) => {
         end: Number(moment(end).format('X')),
     };
     if (i % 2 != 0) {
-        emit('update:modelValue', [dateValue.value.start, dateValue.value.end]);
+        emit('update:modelValue', [
+            moment(dateValue.value.start).format('YYYY-MM-DD'),
+            moment(dateValue.value.end).format('YYYY-MM-DD'),
+        ]);
         emit('change', {
             _date: _dateValue.value,
             date: dateValue.value,
-            dateValue: [dateValue.value.start, dateValue.value.end],
+            dateValue: [
+                moment(dateValue.value.start).format('YYYY-MM-DD'),
+                moment(dateValue.value.end).format('YYYY-MM-DD'),
+            ],
         });
     }
 
@@ -241,8 +247,17 @@ const setValue = (item: any) => {
 };
 
 const getClass = computed(() => (type: string, item: any) => {
-    let dateStr = `${item.year}-${item.month}-${item.showDate}`;
+    if (!item.year || !item.month || !item.showDate) {
+        return;
+    }
+
+    let dateStr = moment(
+        `${item.year}-${item.month}-${item.showDate}`,
+        'YYYY-MM-DD'
+    );
+
     let _date = Number(moment(dateStr).format('X'));
+
     switch (type) {
         case 'today':
             if (_curDate == _date) {

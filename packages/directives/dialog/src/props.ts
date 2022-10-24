@@ -1,9 +1,11 @@
 export const _props = {
     visible: {
         type: Boolean,
-        default: false,
+        default: () => {
+            return false;
+        },
     },
-    closeonClickOverlay: {
+    closeOnClickOverlay: {
         type: Boolean,
         default: false,
     },

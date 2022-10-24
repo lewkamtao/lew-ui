@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { datePickerProps } from './props';
+import moment from 'moment';
 
 const props = defineProps(datePickerProps);
 
@@ -26,7 +27,7 @@ const hide = () => {
 };
 
 const change = (date: string) => {
-    emit('update:modelValue', date);
+    emit('update:modelValue', moment(date).format('YYYY-MM-DD'));
     emit('change', { date: date, show, hide });
     if (props.autoClose) {
         hide();

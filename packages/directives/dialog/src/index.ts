@@ -31,14 +31,7 @@ const success = (options: Options) => {
 };
 
 const dialog = (type: string, options: Options) => {
-    const {
-        title,
-        content,
-        ok,
-        cancel,
-        layout,
-        closeOnClickOverlay = true,
-    } = options;
+    const { title, content, ok, cancel, layout, closeOnClickOverlay } = options;
     const div: HTMLDivElement = document.createElement('div');
     document.body.appendChild(div);
     const close = () => {
@@ -47,6 +40,8 @@ const dialog = (type: string, options: Options) => {
         app.unmount(div);
         div.remove();
     };
+    console.log(closeOnClickOverlay);
+
     const app = createApp({
         render() {
             return h(
@@ -56,11 +51,6 @@ const dialog = (type: string, options: Options) => {
                     type: type,
                     layout: layout,
                     visible: true,
-                    'onUpdate:visible': (newVisible: boolean) => {
-                        if (newVisible === false) {
-                            close();
-                        }
-                    },
                     ok: ok,
                     cancel: cancel,
                 },

@@ -46,7 +46,7 @@ const gohome = () => {
                 type="info"
                 size="small"
                 style="margin-left: 10px"
-                >Beta v1.1.10</lew-tag
+                >Beta v1.1.14</lew-tag
             >
         </div>
         <lew-flex gap="15px" x="end" class="menu">
@@ -147,6 +147,7 @@ const gohome = () => {
         }
 
         .menu {
+            gap: 5px !important;
             .menu-item {
                 margin-right: 5px;
                 padding: 5px;
