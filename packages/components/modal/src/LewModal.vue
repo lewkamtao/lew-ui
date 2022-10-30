@@ -42,33 +42,20 @@ watch(
 
 const maskClick = () => {
     emit('maskClick');
-    setTimeout(() => {
-        _visible.value = false;
-    }, 250);
-};
-</script>
+}; 
+</script> 
 
 <template>
     <teleport to="#lew-modal">
-        <div
-            v-if="_visible"
-            class="lew-modal"
-            :style="
-                visible
-                    ? 'animation: lewModalOpen 0.25s;'
-                    : 'animation: lewModalClose 0.25s;'
-            "
-            @click="maskClick"
-        >
-            <div
-                class="lew-modal-box"
-                :style="`width:${width};height:${height};${
-                    visible
-                        ? 'animation: lewModalBoxOpen 0.25s;'
-                        : 'animation: lewModalBoxClose 0.25s;'
-                }`"
-                @click.stop
-            >
+        <div v-if="_visible" class="lew-modal" :style="
+            visible
+                ? 'animation: lewModalOpen 0.25s;'
+                : 'animation: lewModalClose 0.25s;'
+        " @click="maskClick">
+            <div class="lew-modal-box" :style="`width:${width};height:${height};${visible
+            ? 'animation: lewModalBoxOpen 0.25s;'
+            : 'animation: lewModalBoxClose 0.25s;'
+            }`" @click.stop>
                 <slot></slot>
             </div>
         </div>
@@ -96,10 +83,12 @@ const maskClick = () => {
         animation-fill-mode: forwards;
     }
 }
+
 .lew-modal-enter-active,
 .lew-modal-leave-active {
     transition: all 0.25s;
 }
+
 .lew-modal-enter-from,
 .lew-modal-leave-to {
     opacity: 0;
@@ -109,6 +98,7 @@ const maskClick = () => {
 .lew-modal-box-leave-active {
     transition: all 0.25s;
 }
+
 .lew-modal-box-enter-from,
 .lew-modal-box-leave-to {
     opacity: 0;
