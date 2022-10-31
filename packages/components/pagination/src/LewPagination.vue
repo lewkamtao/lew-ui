@@ -94,13 +94,11 @@ const changePage = (type: any, num: number) => {
     emit('update:pageSize', pageSize.value);
 };
 
-let pageSizebackup = ref('20');
 
 const checkPageSize = (e: any) => {
     if (!e) {
         return;
     }
-
     let pageSizeStr = e;
     pageSizeStr = e.replace(/[^\d]/g, '');
     let pageSizeNum = Number(pageSizeStr);
@@ -160,8 +158,8 @@ const checkPageSize = (e: any) => {
                     <lew-icon size="14" type="chevron-right" />
                 </div>
             </lew-flex>
-            <lew-select style="width: 100px" align="center" v-model="pageSizebackup" @change="checkPageSize"
-                size="small" :show-icon="false" :options="pageSizeOptions">
+            <lew-select style="width: 100px" align="center" v-model="pageSize" @change="checkPageSize" size="small"
+                :show-icon="false" :options="pageSizeOptions">
             </lew-select>
         </lew-flex>
     </div>
