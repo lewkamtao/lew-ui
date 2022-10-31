@@ -6,16 +6,17 @@ const generateArray = (start: any, end: any) => {
     return Array.from(new Array(end + 1).keys()).slice(start);
 };
 
-let pageNum = ref(props.pageNum);
-let pageSize = ref(props.pageSize);
+let _pageNum = ref(props.pageNum);
+let _pageSize = ref(props.pageSize);
+let backPageSize = ref(String(_pageSize.value));
 
 watch(
     () => props.pageNum,
     (v) => {
         changePage(false, v);
         emit('change', {
-            pageNum: pageNum.value,
-            pageSize: pageSize.value,
+            pageNum: _pageNum.value,
+            pageSize: _pageSize.value,
             total: props.total,
             pageShowSize: props.pageShowSize,
         });
@@ -25,24 +26,25 @@ watch(
 watch(
     () => props.pageSize,
     (v) => {
-        pageSize.value = v;
+        _pageSize.value = v;
+        backPageSize.value = String(v)
     }
 );
 
 let maxLen = computed(() => {
-    return Math.ceil(props.total / pageSize.value);
+    return Math.ceil(props.total / _pageSize.value);
 });
 
 let pageInterval = computed(() => {
-    let start = pageNum.value - props.pageShowSize;
-    let end = pageNum.value + props.pageShowSize;
+    let start = _pageNum.value - props.pageShowSize;
+    let end = _pageNum.value + props.pageShowSize;
 
-    if (pageNum.value <= props.pageShowSize) {
+    if (_pageNum.value <= props.pageShowSize) {
         start = 1;
         end = props.pageShowSize * 2;
     }
 
-    if (pageNum.value >= maxLen.value - props.pageShowSize) {
+    if (_pageNum.value >= maxLen.value - props.pageShowSize) {
         start = maxLen.value - props.pageShowSize * 2;
         end = maxLen.value;
     }
@@ -56,7 +58,7 @@ let pageInterval = computed(() => {
         end = maxLen.value;
     }
 
-    if (end == 1 && props.total > pageSize.value) {
+    if (end == 1 && props.total > _pageSize.value) {
         end += 1;
     }
 
@@ -77,21 +79,21 @@ const changePage = (type: any, num: number) => {
     }
 
     if (type == 'next') {
-        pageNum.value += num;
+        _pageNum.value += num;
     } else if (type == 'prve') {
-        pageNum.value -= num;
+        _pageNum.value -= num;
     } else {
-        pageNum.value = num;
+        _pageNum.value = num;
     }
 
-    if (pageNum.value < 1) {
-        pageNum.value = 1;
-    } else if (pageNum.value > maxLen.value) {
-        pageNum.value = maxLen.value;
+    if (_pageNum.value < 1) {
+        _pageNum.value = 1;
+    } else if (_pageNum.value > maxLen.value) {
+        _pageNum.value = maxLen.value;
     }
 
-    emit('update:pageNum', pageNum.value);
-    emit('update:pageSize', pageSize.value);
+    emit('update:pageNum', _pageNum.value);
+    emit('update:pageSize', _pageSize.value);
 };
 
 
@@ -105,9 +107,9 @@ const checkPageSize = (e: any) => {
     if (pageSizeNum < 1) {
         pageSizeNum = 1;
     }
-    pageSize.value = pageSizeNum;
-    changePage(false, pageNum.value);
-};
+    _pageSize.value = pageSizeNum;
+    changePage(false, _pageNum.value);
+}; 
 </script>
 
 <template>
@@ -158,7 +160,7 @@ const checkPageSize = (e: any) => {
                     <lew-icon size="14" type="chevron-right" />
                 </div>
             </lew-flex>
-            <lew-select style="width: 100px" align="center" v-model="pageSize" @change="checkPageSize" size="small"
+            <lew-select style="width: 100px" align="center" v-model="backPageSize" @change="checkPageSize" size="small"
                 :show-icon="false" :options="pageSizeOptions">
             </lew-select>
         </lew-flex>
