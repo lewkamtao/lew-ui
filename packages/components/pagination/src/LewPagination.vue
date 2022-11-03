@@ -58,7 +58,7 @@ let pageInterval = computed(() => {
         end = maxLen.value;
     }
 
-    if (end == 1 && props.total > _pageSize.value) {
+    if (end === 1 && props.total > _pageSize.value) {
         end += 1;
     }
 
@@ -74,13 +74,13 @@ let pageInterval = computed(() => {
 const emit = defineEmits(['update:pageNum', 'update:pageSize', 'change']);
 
 const changePage = (type: any, num: number) => {
-    if (props?.total == 0) {
+    if (props?.total === 0) {
         return
     }
 
-    if (type == 'next') {
+    if (type === 'next') {
         _pageNum.value += num;
-    } else if (type == 'prve') {
+    } else if (type === 'prve') {
         _pageNum.value -= num;
     } else {
         _pageNum.value = num;
@@ -117,6 +117,7 @@ const checkPageSize = (e: any) => {
         'lew-pagination-round': round,
     }">
         <lew-flex class="lew-pagination-control" gap="5px">
+            <slot name="left" />
             <lew-flex class="lew-pagination-page-box" gap="5px">
                 <div @click="changePage('prve', 1)" class="lew-pagination-page-btn lew-pagination-control-btn">
                     <lew-icon size="14" type="chevron-left" />
@@ -137,7 +138,7 @@ const checkPageSize = (e: any) => {
                 </div>
 
                 <div v-for="(item, index) in pageInterval" :key="index" class="lew-pagination-page-btn"
-                    :class="{ active: item == pageNum }" @click="changePage(false, item)">
+                    :class="{ active: item === pageNum }" @click="changePage(false, item)">
                     {{ item }}
                 </div>
 
@@ -163,6 +164,7 @@ const checkPageSize = (e: any) => {
             <lew-select style="width: 100px" align="center" v-model="backPageSize" @change="checkPageSize" size="small"
                 :show-icon="false" :options="pageSizeOptions">
             </lew-select>
+            <slot name="right" />
         </lew-flex>
     </div>
 </template>

@@ -6,23 +6,23 @@ defineProps(_props);
 <template>
     <lew-flex direction="column" class="lew-result">
         <lew-flex class="lew-result-icon" :class="`lew-result-icon-${type}`">
-            <lew-icon v-if="type == `normal`" size="60" type="info"></lew-icon>
+            <lew-icon v-if="type===`normal`" size="60" type="info"></lew-icon>
             <lew-icon
-                v-if="type == `warning`"
+                v-if="type===`warning`"
                 size="60"
                 type="alert-triangle"
             ></lew-icon>
             <lew-icon
-                v-if="type == `success`"
+                v-if="type===`success`"
                 size="60"
                 type="smile"
             ></lew-icon>
             <lew-icon
-                v-if="type == `error`"
+                v-if="type===`error`"
                 size="60"
                 type="alert-circle"
             ></lew-icon>
-            <lew-icon v-if="type == `info`" size="60" type="bell"></lew-icon>
+            <lew-icon v-if="type===`info`" size="60" type="bell"></lew-icon>
         </lew-flex>
         <lew-title class="lew-result-title">{{ title }}</lew-title>
         <div class="lew-result-content">{{ content }}</div>

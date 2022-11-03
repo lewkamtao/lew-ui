@@ -38,7 +38,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
             }),
         ],
         build:
-            mode == 'package'
+            mode === 'package'
                 ? {
                       lib: {
                           entry: path.resolve(__dirname, './packages/index.ts'),

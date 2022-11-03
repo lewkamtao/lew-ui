@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
 const changeMode = (mode: string) => {
-    if (mode == 'dark') {
+    if (mode==='dark') {
         document.getElementsByTagName('html')[0].classList.add('lew-dark');
         localStorage.setItem('mode', 'dark');
     } else {
@@ -18,7 +18,7 @@ onMounted(() => {
 });
 
 const gohome = () => {
-    if (route.name == 'R-LewHome') {
+    if (route.name==='R-LewHome') {
         LewMessage.warning('你已经在首页了！');
     } else {
         router.push(`/`);

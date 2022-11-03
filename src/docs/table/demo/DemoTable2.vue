@@ -87,9 +87,9 @@ const columns = [
 
 const formatSex = (sex: number) => {
     switch (true) {
-        case sex == 0:
+        case sex===0:
             return '女';
-        case sex == 1:
+        case sex===1:
             return '男';
         default:
             return '未知';

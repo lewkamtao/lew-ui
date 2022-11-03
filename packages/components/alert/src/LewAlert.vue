@@ -1,58 +1,30 @@
 <script setup lang="ts">
 import { _props } from './props';
+import type { Alert } from './props';
+import { getIconType } from "../../../utils";
 defineProps(_props);
+
 const emit = defineEmits(['close']);
-</script>
+
+const getAlertClass = (item: Alert) => {
+    return `lew-alert-${item.type}`
+};    
+</script>   
 
 <template>
     <div class="lew-alert-group">
-        <div
-            v-for="(item, i) in list"
-            :key="i"
-            class="lew-alert"
-            :class="`lew-alert-${item.type}`"
-        >
+        <div v-for="(item, i) in list" :key="i" class="lew-alert" :class="getAlertClass(item)">
             <div class="alert-icon">
-                <lew-icon
-                    v-if="item.type == `normal`"
-                    size="16"
-                    type="info"
-                ></lew-icon>
-                <lew-icon
-                    v-if="item.type == `warning`"
-                    size="16"
-                    type="alert-triangle"
-                ></lew-icon>
-                <lew-icon
-                    v-if="item.type == `success`"
-                    size="16"
-                    type="check"
-                ></lew-icon>
-                <lew-icon
-                    v-if="item.type == `error`"
-                    size="16"
-                    type="alert-circle"
-                ></lew-icon>
-                <lew-icon
-                    v-if="item.type == `info`"
-                    size="16"
-                    type="bell"
-                ></lew-icon>
+                <lew-icon size="16" :type="getIconType(item.type)"></lew-icon>
             </div>
-
             <div class="message">
                 <div class="title">{{ item.title }}</div>
                 <div v-show="item.content" class="content">
                     {{ item.content }}
                 </div>
             </div>
-            <div>
-                <lew-icon
-                    size="16"
-                    class="btn-close"
-                    type="x"
-                    @click="emit('close', i)"
-                />
+            <div v-if="item.isShowCloseBtn">
+                <lew-icon size="16" class="btn-close" type="x" @click="emit('close', i)" />
             </div>
         </div>
     </div>
@@ -63,7 +35,6 @@ const emit = defineEmits(['close']);
     width: 100%;
     display: flex;
     flex-direction: column;
-    font-size: 0px;
 
     .lew-alert {
         position: relative;

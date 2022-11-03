@@ -11,9 +11,9 @@ let rightIndex = ref<number>(-1);
 
 const setSubLine = () => {
     props.columns.map((e, i) => {
-        if (e.sticky == 'left') {
+        if (e.sticky==='left') {
             leftIndex.value = i;
-        } else if (e.sticky == 'right' && rightIndex.value == -1) {
+        } else if (e.sticky==='right' && rightIndex.value===-1) {
             rightIndex.value = i;
             if (
                 lewTableRef.value!.scrollWidth != lewTableRef.value!.offsetWidth
@@ -39,9 +39,9 @@ const setShowLine = (e: any) => {
 
 // 设置粘住左右
 const setSticky = (column: any) => {
-    if (column.sticky == 'left') {
+    if (column.sticky==='left') {
         return `position: sticky;left:${column.offsetX || '0px'};z-index:1;`;
-    } else if (column.sticky == 'right') {
+    } else if (column.sticky==='right') {
         return `position: sticky;right:${column.offsetX || '0px'};z-index:1;`;
     }
 };
@@ -53,7 +53,7 @@ const setWidth = () => {
     let w = lewTableRef.value!.offsetWidth;
 
     if (w >= sw) {
-        let autoLen = props.columns.filter((e) => e.width == 'auto').length;
+        let autoLen = props.columns.filter((e) => e.width==='auto').length;
         let wTotal = 0;
 
         props.columns
@@ -61,14 +61,14 @@ const setWidth = () => {
             .map((e) => {
                 wTotal += parseFloat(e.width);
             });
-        niceWidth.value = `${(w - wTotal) / autoLen - 3}px`;
+        niceWidth.value = `${(w - wTotal) / autoLen}px`;
     }
 };
 
 // 防抖
 let lock = false;
 const throttle = (e: any, delay: any) => {
-    if (leftIndex.value == -1 && rightIndex.value == -1) {
+    if (leftIndex.value===-1 && rightIndex.value===-1) {
         return;
     }
     if (!lock) {
@@ -89,91 +89,57 @@ onMounted(() => {
 </script>
 
 <template>
-    <div
-        ref="lewTableRef"
-        class="lew-table"
-        :style="`max-height:${maxHeight};width:${width};overflow-x: auto;
-    overflow-y:${maxHeight ? 'auto' : 'hidden'};`"
-        @scroll="throttle($event, 200)"
-    >
+    <div ref="lewTableRef" class="lew-table" :style="`max-height:${maxHeight};width:${width};overflow-x: ${niceWidth ? 'hidden' : 'auto'};
+    overflow-y:${maxHeight ? 'auto' : 'hidden'};`" @scroll="throttle($event, 200)">
         <div class="lew-table-head">
-            <div
-                class="lew-table-tr"
-                :style="`width:${
-                    lewTableRef?.scrollWidth > lewTableRef?.offsetWidth
-                        ? lewTableRef?.scrollWidth
-                        : ''
-                }px`"
-            >
-                <lew-flex
-                    v-for="(column, index) in columns"
-                    :key="`columns${index}`"
-                    class="lew-table-td"
-                    :class="{
-                        'lew-table-left-subline': index == leftIndex,
-                        'lew-table-right-subline': index == rightIndex,
-                        'lew-table-left-subline-show':
-                            index == leftIndex && isShowLeftLine,
-                        'lew-table-right-subline-show':
-                            index == rightIndex && isShowRightLine,
-                    }"
-                    :style="`
-                    ${column.columnStyle ? column.columnStyle : ''};
-                    ${setSticky(column)};   
-                    width:${
-                        column.width != 'auto'
-                            ? column.width
-                            : niceWidth || '100px'
-                    };
-                    `"
-                    :x="column.x || 'start'"
-                    :y="column.y"
-                >
+            <div class="lew-table-tr" :style="`width:${lewTableRef?.scrollWidth > lewTableRef?.offsetWidth
+            ? lewTableRef?.scrollWidth
+            : ''
+            }px`">
+                <lew-flex v-for="(column, index) in columns" :key="`columns${index}`" class="lew-table-td" :class="{
+                    'lew-table-left-subline': index===leftIndex,
+                    'lew-table-right-subline': index===rightIndex,
+                    'lew-table-left-subline-show':
+                        index===leftIndex && isShowLeftLine,
+                    'lew-table-right-subline-show':
+                        index===rightIndex && isShowRightLine,
+                }" :style="`
+${column.columnStyle ? column.columnStyle : ''};
+${setSticky(column)};   
+width:${column.width != 'auto'
+        ? column.width
+        : niceWidth || '100px'
+    };
+`" :x="column.x || 'start'" :y="column.y">
                     {{ column.title }}
                 </lew-flex>
             </div>
         </div>
         <div ref="lewTableBodyRef" class="lew-table-body">
-            <div
-                v-for="(row, i) in data"
-                :key="`data${i}`"
-                class="lew-table-tr"
-                :style="`width:${
-                    lewTableRef?.scrollWidth > lewTableRef?.offsetWidth
-                        ? lewTableRef?.scrollWidth
-                        : ''
-                }px`"
-            >
-                <lew-flex
-                    v-for="(column, j) in columns"
-                    :key="`col${j}`"
-                    class="lew-table-td"
-                    :class="{
-                        'lew-table-left-subline': j == leftIndex,
-                        'lew-table-right-subline': j == rightIndex,
-                        'lew-table-left-subline-show':
-                            j == leftIndex && isShowLeftLine,
-                        'lew-table-right-subline-show':
-                            j == rightIndex && isShowRightLine,
-                    }"
-                    :style="`  
-                    ${column.columnStyle ? column.columnStyle : ''};
-                    ${row.rowStyle};
-                    ${
-                        row.tdStyle?.[column.field]
-                            ? row.tdStyle[column.field]
-                            : ''
-                    };
-                    ${setSticky(column)};
-                    width:${
-                        column.width != 'auto'
-                            ? column.width
-                            : niceWidth || '100px'
-                    };
-                    `"
-                    :x="column.x || 'start'"
-                    :y="column.y"
-                >
+            <div v-for="(row, i) in data" :key="`data${i}`" class="lew-table-tr" :style="`width:${lewTableRef?.scrollWidth > lewTableRef?.offsetWidth
+            ? lewTableRef?.scrollWidth
+            : ''
+            }px`">
+                <lew-flex v-for="(column, j) in columns" :key="`col${j}`" class="lew-table-td" :class="{
+                    'lew-table-left-subline': j===leftIndex,
+                    'lew-table-right-subline': j===rightIndex,
+                    'lew-table-left-subline-show':
+                        j===leftIndex && isShowLeftLine,
+                    'lew-table-right-subline-show':
+                        j===rightIndex && isShowRightLine,
+                }" :style="`  
+${column.columnStyle ? column.columnStyle : ''};
+${row.rowStyle};
+${row.tdStyle?.[column.field]
+        ? row.tdStyle[column.field]
+        : ''
+    };
+${setSticky(column)};
+width:${column.width != 'auto'
+        ? column.width
+        : niceWidth || '100px'
+    };
+`" :x="column.x || 'start'" :y="column.y">
                     <!-- 模板 -->
                     <slot :name="column.field" :row="row" :column="column" />
                 </lew-flex>
@@ -192,12 +158,14 @@ onMounted(() => {
     font-size: 14px;
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     border-radius: var(--lew-border-radius);
+
     .lew-table-head {
         position: sticky;
         top: 0;
         z-index: 9;
         display: flex;
         align-items: center;
+
         .lew-table-td {
             font-weight: 600;
             color: var(--lew-text-color-3);
@@ -220,14 +188,13 @@ onMounted(() => {
         height: calc(100% + 2px);
         opacity: 0;
         transition: all 0.25s ease;
-        background: linear-gradient(
-            to right,
-            rgba(0, 0, 0, 0.08),
-            rgba(0, 0, 0, 0.03),
-            rgba(0, 0, 0, 0.01),
-            rgba(0, 0, 0, 0)
-        );
+        background: linear-gradient(to right,
+                rgba(0, 0, 0, 0.08),
+                rgba(0, 0, 0, 0.03),
+                rgba(0, 0, 0, 0.01),
+                rgba(0, 0, 0, 0));
     }
+
     .lew-table-right-subline::after {
         position: absolute;
         left: -12px;
@@ -237,14 +204,13 @@ onMounted(() => {
         opacity: 0;
         transition: all 0.25s ease;
         height: calc(100% + 2px);
-        background: linear-gradient(
-            to left,
-            rgba(0, 0, 0, 0.08),
-            rgba(0, 0, 0, 0.03),
-            rgba(0, 0, 0, 0.01),
-            rgba(0, 0, 0, 0)
-        );
+        background: linear-gradient(to left,
+                rgba(0, 0, 0, 0.08),
+                rgba(0, 0, 0, 0.03),
+                rgba(0, 0, 0, 0.01),
+                rgba(0, 0, 0, 0));
     }
+
     .lew-table-left-subline-show::after,
     .lew-table-right-subline-show::after {
         opacity: 1;
@@ -260,19 +226,19 @@ onMounted(() => {
         padding: 14px 18px;
         box-sizing: border-box;
         background-color: var(--lew-bgcolor-0);
-        border-bottom: var(--lew-form-border-width) var(--lew-form-border-color)
-            solid;
+        border-bottom: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     }
+
     .lew-table-tr:last-child {
         .lew-table-td {
             border-bottom: 0px var(--lew-form-border-color) solid;
         }
     }
+
     .lew-table-head {
         .lew-table-tr:last-child {
             .lew-table-td {
-                border-bottom: var(--lew-form-border-width)
-                    var(--lew-form-border-color) solid;
+                border-bottom: var(--lew-form-border-width) var(--lew-form-border-color) solid;
             }
         }
     }
@@ -285,6 +251,7 @@ onMounted(() => {
             color: var(--lew-text-color-5);
         }
     }
+
     .lew-table-tr:hover {
         .lew-table-td {
             background-color: var(--lew-bgcolor-1);

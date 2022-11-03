@@ -66,19 +66,19 @@ const columns = [
     },
     {
         title: '年龄',
-        width: '80px',
+        width: 'auto',
         field: 'age',
         x: 'center',
     },
     {
         title: '性别',
-        width: '80px',
+        width: 'auto',
         field: 'sex',
         x: 'center',
     },
     {
         title: '成绩',
-        width: '100px',
+        width: 'auto',
         field: 'fraction',
         x: 'center',
     },
@@ -91,9 +91,9 @@ const columns = [
 
 const formatSex = (sex: number) => {
     switch (true) {
-        case sex == 0:
+        case sex === 0:
             return '女';
-        case sex == 1:
+        case sex === 1:
             return '男';
         default:
             return '未知';

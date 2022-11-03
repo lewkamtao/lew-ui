@@ -1,6 +1,7 @@
 <script lang="ts" setup name="dialog">
 import { LewButton, LewIcon } from 'lew-ui';
 import { _props } from './props';
+import { getIconType } from '../../../utils';
 
 const props = defineProps(_props);
 
@@ -51,141 +52,55 @@ const emit = defineEmits(['update:visible']);
 <template>
     <div>
         <teleport to="body">
-            <div
-                v-if="_visible"
-                class="lew-dialog"
-                :style="
+            <div v-if="_visible" class="lew-dialog" :style="
+                visible
+                    ? 'animation: lewDialogOpen 0.25s;'
+                    : 'animation: lewDialogClose 0.25s;'
+            " @click="onClickOverlay">
+                <div :style="
                     visible
-                        ? 'animation: lewDialogOpen 0.25s;'
-                        : 'animation: lewDialogClose 0.25s;'
-                "
-                @click="onClickOverlay"
-            >
-                <div
-                    :style="
-                        visible
-                            ? 'animation: lewDialogBoxOpen 0.25s;'
-                            : 'animation: lewDialogBoxClose 0.25s;'
-                    "
-                >
-                    <div
-                        v-if="layout == 'normal'"
-                        class="lew-dialog-box lew-dialog-box-normal"
-                        @click.stop
-                    >
+                        ? 'animation: lewDialogBoxOpen 0.25s;'
+                        : 'animation: lewDialogBoxClose 0.25s;'
+                ">
+                    <div v-if="layout === 'normal'" class="lew-dialog-box lew-dialog-box-normal" @click.stop>
                         <div class="btn-close" @click="cancelHandle">
-                            <lew-icon
-                                v-if="type == `normal`"
-                                size="18"
-                                type="x"
-                            ></lew-icon>
+                            <lew-icon v-if="type === `normal`" size="18" type="x"></lew-icon>
                         </div>
                         <div class="left">
                             <div :class="`icon-${type}`">
-                                <lew-icon
-                                    v-if="type == `normal`"
-                                    size="30"
-                                    type="info"
-                                ></lew-icon>
-                                <lew-icon
-                                    v-if="type == `warning`"
-                                    size="30"
-                                    type="alert-triangle"
-                                ></lew-icon>
-                                <lew-icon
-                                    v-if="type == `success`"
-                                    size="30"
-                                    type="check"
-                                ></lew-icon>
-                                <lew-icon
-                                    v-if="type == `error`"
-                                    size="30"
-                                    type="alert-circle"
-                                ></lew-icon>
-                                <lew-icon
-                                    v-if="type == `info`"
-                                    size="30"
-                                    type="bell"
-                                ></lew-icon>
+                                <lew-icon size="20" :type="getIconType(type)"></lew-icon>
                             </div>
                         </div>
                         <div class="right">
                             <header>
                                 <slot name="title" />
-                                <span
-                                    class="gulu-dialog-close"
-                                    @click="close"
-                                ></span>
+                                <span class="gulu-dialog-close" @click="close"></span>
                             </header>
                             <main>
                                 <slot name="content" />
                             </main>
                             <footer>
-                                <lew-Button
-                                    :loading="cancelLoading"
-                                    type="blank"
-                                    @click.stop="cancelHandle"
-                                    >取消</lew-Button
-                                >
-                                <lew-button
-                                    :loading="okLoading"
-                                    @click.stop="okHandle"
-                                    >确认</lew-button
-                                >
+                                <lew-button :loading="cancelLoading" type="blank" @click.stop="cancelHandle">取消
+                                </lew-button>
+                                <lew-button :loading="okLoading" @click.stop="okHandle">确认</lew-button>
                             </footer>
                         </div>
                     </div>
 
-                    <div
-                        v-if="layout == 'easy'"
-                        class="lew-dialog-box lew-dialog-box-easy"
-                    >
+                    <div v-if="layout === 'easy'" class="lew-dialog-box lew-dialog-box-easy">
                         <div class="left">
                             <div :class="`icon-${type}`">
-                                <lew-icon
-                                    v-if="type == `normal`"
-                                    size="20"
-                                    type="info"
-                                ></lew-icon>
-                                <lew-icon
-                                    v-if="type == `warning`"
-                                    size="20"
-                                    type="alert-triangle"
-                                ></lew-icon>
-                                <lew-icon
-                                    v-if="type == `success`"
-                                    size="20"
-                                    type="check"
-                                ></lew-icon>
-                                <lew-icon
-                                    v-if="type == `error`"
-                                    size="20"
-                                    type="alert-circle"
-                                ></lew-icon>
-                                <lew-icon
-                                    v-if="type == `info`"
-                                    size="20"
-                                    type="bell"
-                                ></lew-icon>
+                                <lew-icon size="20" :type="getIconType(type)"></lew-icon>
                             </div>
                         </div>
                         <div class="right">
                             <main>
                                 <slot name="content" />
                             </main>
-                            <lew-Button
-                                style="margin-right: 10px"
-                                type="normal"
-                                size="small"
-                                :loading="cancelLoading"
-                                @click.stop="cancelHandle"
-                                >取消
-                            </lew-Button>
-                            <lew-button
-                                :loading="okLoading"
-                                @click.stop="okHandle"
-                                size="small"
-                                >确认
+                            <lew-button style="margin-right: 10px" type="normal" size="small" :loading="cancelLoading"
+                                @click.stop="cancelHandle">取消
+                            </lew-button>
+                            <lew-button :loading="okLoading" @click.stop="okHandle" size="small">确认
                             </lew-button>
                         </div>
                     </div>
@@ -219,6 +134,7 @@ const emit = defineEmits(['update:visible']);
         background-color: var(--lew-bgcolor-0);
         box-shadow: 0px 15px 50px rgba($color: #000000, $alpha: 0.05);
         animation-fill-mode: forwards;
+
         .icon-success {
             color: var(--lew-success-color-dark);
         }

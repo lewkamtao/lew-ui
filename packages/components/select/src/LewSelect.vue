@@ -23,12 +23,12 @@ watch(
                 props.modelValue,
                 props.options
             );
-        } else if (typeof props.modelValue == 'string') {
+        } else if (typeof props.modelValue==='string') {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             v.value = props.modelValue;
             labelStr.value =
-                props.options?.find((e) => e.value == props.modelValue)
+                props.options?.find((e) => e.value===props.modelValue)
                     ?.label || '';
         }
     },
@@ -42,7 +42,7 @@ const filterSelect = (v: string[], options: LewSelectOptions[]) => {
     if (v && options) {
         v.map((e: string) => {
             options.map((o) => {
-                if (e == o.value) {
+                if (e===o.value) {
                     _v.push(o.label);
                 }
             });
@@ -67,7 +67,7 @@ const delTag = (i: number) => {
     multipleLabelStr.value.splice(i, 1);
     emit('update:modelValue', multipleV.value);
     emit('change', { value: multipleV.value, show, hide });
-    if (i == 0 && multipleV.value.length == 0) {
+    if (i===0 && multipleV.value.length===0) {
         lewPopverRef2.value.hide();
     }
 };
@@ -110,9 +110,9 @@ onMounted(() => {
     // 如果是多选
     if (props.multiple && props.modelValue instanceof Array) {
         multipleLabelStr.value = filterSelect(props.modelValue, props.options);
-    } else if (typeof props.modelValue == 'string') {
+    } else if (typeof props.modelValue==='string') {
         labelStr.value = labelStr.value =
-            props.options?.find((e) => e.value == props.modelValue)?.label ||
+            props.options?.find((e) => e.value===props.modelValue)?.label ||
             '';
     }
 });
@@ -143,8 +143,8 @@ onMounted(() => {
                 />
                 <div
                     v-if="
-                        (!multiple && labelStr.length == 0) ||
-                        (multiple && multipleLabelStr.length == 0)
+                        (!multiple && labelStr.length===0) ||
+                        (multiple && multipleLabelStr.length===0)
                     "
                     class="lew-select-placeholder"
                 >
@@ -422,7 +422,6 @@ onMounted(() => {
         height: auto;
         box-sizing: border-box;
         transition: all 0.25s ease;
-        font-size: 0px;
 
         .lew-select-item {
             position: relative;

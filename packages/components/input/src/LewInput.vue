@@ -42,7 +42,7 @@ const clear = (): void => {
 };
 
 const focusFn = () => {
-    if (props.type == 'textarea') {
+    if (props.type==='textarea') {
         lewTextareaRef.value?.focus();
     } else {
         lewInputRef.value?.focus();
@@ -52,7 +52,7 @@ const focusFn = () => {
 let _type = ref(props.type);
 
 const showPasswordFn = (): void => {
-    _type.value == 'text' ? (_type.value = 'password') : (_type.value = 'text');
+    _type.value==='text' ? (_type.value = 'password') : (_type.value = 'text');
 };
 
 let getCheckNumStr = computed(() => {
@@ -92,7 +92,7 @@ const getTextLength = (val: string) => {
 };
 
 const getEl = () => {
-    if (props.type == 'textarea') {
+    if (props.type==='textarea') {
         return lewTextareaRef.value;
     } else {
         return lewInputRef.value;
@@ -114,7 +114,7 @@ defineExpose({ getEl, focusFn });
         class="lew-input-view"
         :class="`
     lew-input-view-${size} 
-    ${_type == 'textarea' ? 'lew-input-view-textarea' : ''}
+    ${_type==='textarea' ? 'lew-input-view-textarea' : ''}
     ${readonly ? 'lew-input-view-readonly' : ''} 
     ${disabled ? 'lew-input-view-disabled' : ''}
     ${align ? 'lew-input-view-align-' + align : ''}
@@ -122,7 +122,7 @@ defineExpose({ getEl, focusFn });
     `"
     >
         <textarea
-            v-if="_type == 'textarea'"
+            v-if="_type==='textarea'"
             ref="lewTextareaRef"
             v-model="v"
             class="btf-scrollbar"
@@ -173,10 +173,10 @@ defineExpose({ getEl, focusFn });
                 @click="showPasswordFn"
                 class="lew-input-show-password"
             >
-                <lew-icon size="16" v-show="_type == 'text'" type="eye" />
+                <lew-icon size="16" v-show="_type==='text'" type="eye" />
                 <lew-icon
                     size="16"
-                    v-show="_type == 'password'"
+                    v-show="_type==='password'"
                     type="eye-off"
                 />
             </div>

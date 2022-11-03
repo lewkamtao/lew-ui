@@ -30,7 +30,7 @@ onMounted(() => {
     let triggerTarget = props.triggerTarget;
 
     let placement = props.placement;
-    if (trigger == 'hover') {
+    if (trigger==='hover') {
         trigger = 'mouseenter';
     }
 
@@ -94,7 +94,6 @@ defineExpose({ show, hide });
     display: inline-block;
 
     .trigger {
-        font-size: 0px;
         > div {
             font-size: 14px;
         }

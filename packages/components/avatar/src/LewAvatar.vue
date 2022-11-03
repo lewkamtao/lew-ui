@@ -6,16 +6,21 @@ const props = defineProps(_props);
 const getAvatarStyle = computed(() => {
     return `width:${props.width};height:${props.height}`;
 });
-</script>
 
+const getAvatarClass = computed(() => {
+    return `${props.round ? 'lew-avatar-round' : ''}`;
+});
+
+const getAvatarDotClass = computed(() => {
+    return `dot-${props.status} dot-${props.statusPosition}`;
+});
+
+</script>
+ 
 <template>
     <div class="lew-avatar" :style="getAvatarStyle">
-        <img :src="src" :alt="alt" :class="round ? 'lew-avatar-round' : ''" />
-        <span
-            v-if="status"
-            class="dot"
-            :class="`dot-${status} dot-${statusPosition}`"
-        >
+        <img :src="src" :alt="alt" :class="getAvatarClass" />
+        <span v-if="status" class="dot" :class="getAvatarDotClass">
         </span>
     </div>
 </template>
@@ -67,6 +72,7 @@ const getAvatarStyle = computed(() => {
     .dot-away {
         background-color: var(--lew-warning-color);
     }
+
     .dot-top-left {
         top: -0.25rem;
         left: -0.25rem;

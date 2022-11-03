@@ -30,16 +30,16 @@ export const getStyle = (position: string, width: number, height: number) => {
         case !position:
             return `width:30%;height:100%`;
 
-        case position == 'left':
+        case position==='left':
             return `width:${width}%;height:100%`;
 
-        case position == 'right':
+        case position==='right':
             return `width:${width}%;height:100%`;
 
-        case position == 'top':
+        case position==='top':
             return `width:100%;height:${height}%`;
 
-        case position == 'bottom':
+        case position==='bottom':
             return `width:100%;height:${height}%`;
 
         default:

@@ -46,7 +46,6 @@ const getChecked = (_value: string | number) => {
 .lew-checkbox-group {
     display: flex;
     align-items: center;
-    font-size: 0px;
     flex-wrap: wrap;
 }
 
