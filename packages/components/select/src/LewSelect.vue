@@ -23,12 +23,12 @@ watch(
                 props.modelValue,
                 props.options
             );
-        } else if (typeof props.modelValue==='string') {
+        } else if (typeof props.modelValue === 'string') {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             v.value = props.modelValue;
             labelStr.value =
-                props.options?.find((e) => e.value===props.modelValue)
+                props.options?.find((e) => e.value === props.modelValue)
                     ?.label || '';
         }
     },
@@ -42,7 +42,7 @@ const filterSelect = (v: string[], options: LewSelectOptions[]) => {
     if (v && options) {
         v.map((e: string) => {
             options.map((o) => {
-                if (e===o.value) {
+                if (e === o.value) {
                     _v.push(o.label);
                 }
             });
@@ -67,7 +67,7 @@ const delTag = (i: number) => {
     multipleLabelStr.value.splice(i, 1);
     emit('update:modelValue', multipleV.value);
     emit('change', { value: multipleV.value, show, hide });
-    if (i===0 && multipleV.value.length===0) {
+    if (i === 0 && multipleV.value.length === 0) {
         lewPopverRef2.value.hide();
     }
 };
@@ -110,44 +110,25 @@ onMounted(() => {
     // 如果是多选
     if (props.multiple && props.modelValue instanceof Array) {
         multipleLabelStr.value = filterSelect(props.modelValue, props.options);
-    } else if (typeof props.modelValue==='string') {
+    } else if (typeof props.modelValue === 'string') {
         labelStr.value = labelStr.value =
-            props.options?.find((e) => e.value===props.modelValue)?.label ||
+            props.options?.find((e) => e.value === props.modelValue)?.label ||
             '';
     }
 });
 </script>
 
 <template>
-    <lew-popover
-        ref="lewPopverRef1"
-        class="lew-select-view"
-        :class="{ 'lew-select-focus': isShowOptions }"
-        :trigger="trigger"
-        :placement="placement"
-        :arrow="false"
-        style="width: 100%"
-        @on-show="isShowOptions = true"
-        @on-hide="isShowOptions = false"
-    >
+    <lew-popover ref="lewPopverRef1" class="lew-select-view" :class="{ 'lew-select-focus': isShowOptions }"
+        :trigger="trigger" :placement="placement" :arrow="false" style="width: 100%" @on-show="isShowOptions = true"
+        @on-hide="isShowOptions = false">
         <template #trigger>
-            <div
-                ref="lewSelectRef"
-                class="lew-select"
-                :class="`lew-select-${size} lew-select-align-${align}`"
-            >
-                <lew-icon
-                    size="16px"
-                    type="chevron-down"
-                    class="lew-select-icon"
-                />
-                <div
-                    v-if="
-                        (!multiple && labelStr.length===0) ||
-                        (multiple && multipleLabelStr.length===0)
-                    "
-                    class="lew-select-placeholder"
-                >
+            <div ref="lewSelectRef" class="lew-select" :class="`lew-select-${size} lew-select-align-${align}`">
+                <lew-icon size="16px" type="chevron-down" class="lew-select-icon" />
+                <div v-if="
+                    (!multiple && labelStr.length === 0) ||
+                    (multiple && multipleLabelStr.length === 0)
+                " class="lew-select-placeholder">
                     请选择
                 </div>
                 <!-- 单选 -->
@@ -156,50 +137,21 @@ onMounted(() => {
                 </div>
                 <!-- 多选 -->
                 <div v-show="multiple" class="lew-select-label-multiple">
-                    <lew-tag
-                        v-show="multipleLabelStr.length > 0"
-                        type="primary"
-                        :size="size"
-                        closable
-                        @close="delTag(0)"
-                    >
-                        {{ multipleLabelStr[0] }}</lew-tag
-                    >
-                    <lew-popover
-                        v-show="multipleLabelStr.length > 1"
-                        ref="lewPopverRef2"
-                        trigger="hover"
-                        placement="top"
-                    >
+                    <lew-tag v-show="multipleLabelStr.length > 0" type="primary" :size="size" closable
+                        @close="delTag(0)">
+                        {{ multipleLabelStr[0] }}</lew-tag>
+                    <lew-popover v-show="multipleLabelStr.length > 1" ref="lewPopverRef2" trigger="hover"
+                        placement="top">
                         <template #trigger>
-                            <div
-                                style="margin-left: 5px"
-                                class="lew-isSelect-label-num"
-                            >
-                                <lew-tag
-                                    v-show="multipleLabelStr.length > 1"
-                                    :size="size"
-                                    type="primary"
-                                >
-                                    +{{ multipleLabelStr.length - 1 }}</lew-tag
-                                >
+                            <div style="margin-left: 5px" class="lew-isSelect-label-num">
+                                <lew-tag v-show="multipleLabelStr.length > 1" :size="size" type="primary">
+                                    +{{ multipleLabelStr.length - 1 }}</lew-tag>
                             </div>
                         </template>
                         <template #popover-body>
-                            <lew-flex
-                                wrap
-                                gap="5px"
-                                x="start"
-                                class="lew-isSelect-label-box"
-                            >
-                                <lew-tag
-                                    v-for="(item, index) in multipleLabelStr"
-                                    :key="index"
-                                    type="primary"
-                                    closable
-                                    :size="size"
-                                    @close="delTag(index)"
-                                >
+                            <lew-flex wrap gap="5px" x="start" class="lew-isSelect-label-box">
+                                <lew-tag v-for="(item, index) in multipleLabelStr" :key="index" type="primary" closable
+                                    :size="size" @close="delTag(index)">
                                     {{ item }}
                                 </lew-tag>
                             </lew-flex>
@@ -209,51 +161,30 @@ onMounted(() => {
             </div>
         </template>
         <template #popover-body>
-            <div
-                class="lew-select-body"
-                :class="`
+            <div class="lew-select-body" :class="`
             ${size ? 'lew-select-body-' + size : ''} 
             ${multiple ? 'lew-select-multiple-body' : ''}  
             ${align ? 'lew-select-body-align-' + align : ''}  
-            `"
-                :style="`width:${lewSelectWidth}`"
-            >
+            `" :style="`width:${lewSelectWidth}`">
                 <slot name="header"></slot>
                 <div class="lew-select-options-box">
                     <template v-for="item in options" :key="item.value">
                         <label>
                             <!-- 原生 -->
-                            <div
-                                v-if="!labelSlot"
-                                class="lew-select-item"
-                                :class="`
+                            <div v-if="!labelSlot" class="lew-select-item" :class="`
                             ${item.disabled ? 'lew-select-item-disabled' : ''} 
-                            `"
-                            >
-                                <lew-checkbox
-                                    v-show="showIcon && multiple"
-                                    :size="size"
-                                    class="lew-select-checkbox"
-                                    :label="item.label"
-                                    :disabled="item.disabled"
-                                    :checked="getChecked(item.value)"
-                                    @change="check(item, $event)"
-                                />
+                            `">
+                                <lew-checkbox v-show="showIcon && multiple" :size="size" class="lew-select-checkbox"
+                                    :label="item.label" :disabled="item.disabled" :checked="getChecked(item.value)"
+                                    @change="check(item, $event)" />
                                 <div v-if="!multiple" class="lew-select-label">
                                     {{ item.label }}
                                 </div>
                             </div>
                             <div v-else class="lew-select-slot-item">
-                                <slot
-                                    name="label"
-                                    :item="item"
-                                    :checked="getChecked(item.value)"
-                                ></slot>
-                                <lew-checkbox
-                                    v-show="false"
-                                    :checked="getChecked(item.value)"
-                                    @change="check(item, $event)"
-                                />
+                                <slot name="label" :item="item" :checked="getChecked(item.value)"></slot>
+                                <lew-checkbox v-show="false" :checked="getChecked(item.value)"
+                                    @change="check(item, $event)" />
                             </div>
                         </label>
                     </template>
@@ -272,8 +203,8 @@ onMounted(() => {
     background-color: var(--lew-form-bgcolor);
     transition: all 0.15s ease;
     box-sizing: border-box;
-
-    > div {
+    outline: 0px var(--lew-primary-color-light) solid;
+    >div {
         width: 100%;
     }
 
@@ -307,7 +238,7 @@ onMounted(() => {
                 display: flex;
                 align-items: center;
 
-                > div {
+                >div {
                     display: flex;
                     align-items: center;
                 }
@@ -382,8 +313,8 @@ onMounted(() => {
 
 .lew-select-view.lew-select-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-        solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+    outline: 4px var(--lew-primary-color-light) solid;
 
     .lew-select-icon {
         transform: translateY(-50%) rotate(180deg);

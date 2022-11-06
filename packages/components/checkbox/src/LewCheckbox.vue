@@ -66,6 +66,7 @@ const setChecked = (e: Event) => {
         border-radius: 3px;
         transition: var(--lew-form-transition);
         background-color: var(--lew-bgcolor-0);
+        outline: 0px var(--lew-primary-color-light);
 
         .icon-checkbox {
             transform: scale(0.7) translateY(50%);
@@ -125,6 +126,7 @@ const setChecked = (e: Event) => {
 .lew-checkbox:hover {
     .icon-checkbox-box {
         border: 2px var(--lew-form-border-color-active) solid;
+        outline: 4px var(--lew-primary-color-light) solid;
     }
 }
 

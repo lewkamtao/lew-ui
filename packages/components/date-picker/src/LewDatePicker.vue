@@ -37,38 +37,21 @@ const change = (date: string) => {
 defineExpose({ show, hide });
 </script>
 <template>
-    <lew-popover
-        ref="lewPopoverRef"
-        trigger="click"
-        placement="bottom-start"
-        :arrow="false"
-        @on-show="isShowPicker = true"
-        @on-hide="isShowPicker = false"
-    >
+    <lew-popover ref="lewPopoverRef" trigger="click" placement="bottom-start" :arrow="false"
+        @on-show="isShowPicker = true" @on-hide="isShowPicker = false">
         <template #trigger>
-            <div
-                class="lew-date-picker-input"
-                :class="{ 'lew-date-picker-focus': isShowPicker }"
-            >
+            <div class="lew-date-picker-input" :class="{ 'lew-date-picker-focus': isShowPicker }">
                 <div v-show="!dateValue" class="lew-date-picker-placeholder">
                     请选择日期
                 </div>
                 <div v-show="dateValue" class="lew-date-picker-dateValue">
                     {{ dateValue }}
                 </div>
-                <lew-icon
-                    class="lew-date-picker-icon"
-                    size="16px"
-                    type="calendar"
-                />
+                <lew-icon class="lew-date-picker-icon" size="16px" type="calendar" />
             </div>
         </template>
         <template #popover-body>
-            <lew-date
-                v-model="dateValue"
-                :multiple="multiple"
-                @change="change"
-            />
+            <lew-date v-model="dateValue" :multiple="multiple" @change="change" />
         </template>
     </lew-popover>
 </template>
@@ -97,6 +80,7 @@ defineExpose({ show, hide });
     transition: all 0.15s ease;
     cursor: pointer;
     user-select: none;
+    outline: 0px var(--lew-primary-color-light) solid;
 
     .lew-date-picker-icon {
         position: absolute;
@@ -128,7 +112,7 @@ defineExpose({ show, hide });
 
 .lew-date-picker-input.lew-date-picker-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-        solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+    outline: 4px var(--lew-primary-color-light) solid;
 }
 </style>
