@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
 const changeMode = (mode: string) => {
-    if (mode==='dark') {
+    if (mode === 'dark') {
         document.getElementsByTagName('html')[0].classList.add('lew-dark');
         localStorage.setItem('mode', 'dark');
     } else {
@@ -14,11 +14,11 @@ const changeMode = (mode: string) => {
 };
 
 onMounted(() => {
-    changeMode(localStorage.getItem('mode') || 'light');
+    changeMode(localStorage.getItem('mode') || window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : 'light');
 });
 
 const gohome = () => {
-    if (route.name==='R-LewHome') {
+    if (route.name === 'R-LewHome') {
         LewMessage.warning('你已经在首页了！');
     } else {
         router.push(`/`);
@@ -29,25 +29,13 @@ const gohome = () => {
 <template>
     <div class="Header">
         <div class="logo" @click="gohome">
-            <img
-                src="../assets/images/logo.png"
-                alt="logo"
-                srcset=""
-                width="30"
-                height="30"
-            />
+            <img src="../assets/images/logo.png" alt="logo" srcset="" width="30" height="30" />
             <span style="margin-left: 10px"> Lew UI</span>
-            <lew-tag
-                v-tooltip="{
-                    content: 'Beta 阶段，请勿在正式环境使用。',
-                    placement: 'top-start',
-                    trigger: 'mouseenter',
-                }"
-                type="info"
-                size="small"
-                style="margin-left: 10px"
-                >Beta v1.1.19</lew-tag
-            >
+            <lew-tag v-tooltip="{
+                content: 'Beta 阶段，请勿在正式环境使用。',
+                placement: 'top-start',
+                trigger: 'mouseenter',
+            }" type="info" size="small" style="margin-left: 10px">Beta v1.1.19</lew-tag>
         </div>
         <lew-flex gap="15px" x="end" class="menu">
             <div class="menu-item" @click="router.push(`/`)">首页</div>
@@ -56,18 +44,8 @@ const gohome = () => {
             <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
                 <lew-icon size="18" type="github" />
             </a>
-            <lew-icon
-                class="menu-item icon-mode-sunny"
-                type="sun"
-                size="18"
-                @click="changeMode('light')"
-            />
-            <lew-icon
-                class="menu-item icon-mode-moon"
-                type="moon"
-                size="18"
-                @click="changeMode('dark')"
-            />
+            <lew-icon class="menu-item icon-mode-sunny" type="sun" size="18" @click="changeMode('light')" />
+            <lew-icon class="menu-item icon-mode-moon" type="moon" size="18" @click="changeMode('dark')" />
         </lew-flex>
     </div>
 </template>
@@ -148,6 +126,7 @@ const gohome = () => {
 
         .menu {
             gap: 5px !important;
+
             .menu-item {
                 margin-right: 5px;
                 padding: 5px;

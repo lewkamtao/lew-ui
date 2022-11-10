@@ -68,7 +68,7 @@ const setChecked = () => {
         overflow: hidden;
         border-radius: 50%;
         background-color: var(--lew-bgcolor-0);
-        outline: 0px var(--lew-primary-color-light);
+        outline: 0px var(--lew-primary-color-light) solid;
         .icon-radio {
             width: 50%;
             height: 50%;
