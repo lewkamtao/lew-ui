@@ -12,7 +12,22 @@ const changeMode = (mode: string) => {
 };
 
 onMounted(() => {
-    changeMode(window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : 'light')
+    changeMode(window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : 'light');
+    let media = window.matchMedia('(prefers-color-scheme: dark)');
+    let callback = (e: any) => {
+        let prefersDarkMode = e.matches;
+        if (prefersDarkMode) {
+            changeMode("dark")
+        } else {
+            changeMode("light")
+        }
+    };
+    if (typeof media.addEventListener === 'function') {
+        media.addEventListener('change', callback);
+    } else if (typeof media.addListener === 'function') {
+        media.addListener(callback);
+    }
+
 });
 
 const gohome = () => {
