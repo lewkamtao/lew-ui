@@ -86,7 +86,6 @@ let isShowCode = ref(false);
         border-radius: 0px 0px var(--lew-border-radius) var(--lew-border-radius);
         font-size: 14px;
         cursor: pointer;
-        transition: all 0.25s;
         color: #999;
         background-color: var(--lew-bgcolor-0);
 
