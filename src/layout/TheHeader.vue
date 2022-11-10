@@ -6,15 +6,13 @@ const route = useRoute();
 const changeMode = (mode: string) => {
     if (mode === 'dark') {
         document.getElementsByTagName('html')[0].classList.add('lew-dark');
-        localStorage.setItem('mode', 'dark');
     } else {
         document.getElementsByTagName('html')[0].classList.remove('lew-dark');
-        localStorage.setItem('mode', 'light');
     }
 };
 
 onMounted(() => {
-    changeMode(localStorage.getItem('mode') || window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : 'light');
+    changeMode(window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : 'light')
 });
 
 const gohome = () => {
