@@ -54,14 +54,6 @@ legend {
     display: none;
 }
 
-address,
-caption,
-em,
-th,
-i {
-    font-style: normal;
-    font-weight: 400;
-}
 
 table caption {
     margin-left: -var(--lew-border-width);
@@ -88,6 +80,7 @@ blockquote:after {
 a {
     text-decoration: none;
 }
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
