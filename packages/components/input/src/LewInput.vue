@@ -410,7 +410,7 @@ defineExpose({ getEl, focusFn });
 .lew-input-view:focus-within {
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-    outline: 4px var(--lew-primary-color-light) solid;
+    outline: 3px var(--lew-primary-color-light) solid;
 
     .lew-input-controls {
         background: var(--lew-form-bgcolor-focus);

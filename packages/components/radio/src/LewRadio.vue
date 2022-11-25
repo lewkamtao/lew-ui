@@ -130,7 +130,7 @@ const setChecked = () => {
 .lew-radio:hover {
     .icon-radio-box {
         border: 2px var(--lew-form-border-color-active) solid;
-        outline: 4px var(--lew-primary-color-light) solid;
+        outline: 3px var(--lew-primary-color-light) solid;
     }
 }
 

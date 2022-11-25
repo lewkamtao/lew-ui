@@ -83,6 +83,7 @@ const getAlertClass = (item: Alert) => {
                 word-wrap: break-word;
                 white-space: pre-line;
                 font-weight: 400;
+                margin-top: 2px;
             }
 
             .content {

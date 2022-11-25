@@ -7,6 +7,7 @@
     right: 20px;
     top: 20px;
     z-index: 999;
+
     .lew-notification {
         position: relative;
         width: auto;
@@ -17,7 +18,7 @@
         height: auto;
         width: 300px;
         padding: 15px 18px 15px 20px;
-        transition: all 0.25s ease;
+        transition: all 0.45s ease;
         opacity: 0;
         margin-top: 0px;
         margin-bottom: 10px;
@@ -25,24 +26,29 @@
         white-space: nowrap;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
         font-size: 14px;
-        border-radius: 4px;
+        border-radius: var(--lew-border-radius);
         overflow: hidden;
         background-color: var(--lew-notification-bgcolor);
+
         .lew-notification-box {
             width: 100%;
             display: flex;
+
             .lew-notification-icon {
                 width: 18px;
                 height: 18px;
                 margin-right: 10px;
             }
+
             .lew-notification-body {
                 width: calc(100% - 40px);
+
                 .lew-notification-title {
                     font-size: 14px;
                     font-weight: bold;
                     color: var(--lew-text-color-4);
                 }
+
                 .lew-notification-content {
                     width: 100%;
                     margin-top: 5px;
@@ -52,6 +58,7 @@
                     word-wrap: break-word;
                 }
             }
+
             .lew-notification-close-icon {
                 position: absolute;
                 top: 12px;
@@ -67,10 +74,12 @@
                 cursor: pointer;
                 user-select: none;
                 color: var(--lew-text-color-5);
+
                 &:hover {
                     color: var(--lew-text-color-2);
                     background: rgba($color: #000000, $alpha: 0.05);
                 }
+
                 &:active {
                     color: var(--lew-text-color-0);
                     background: rgba($color: #000000, $alpha: 0.15);
@@ -78,25 +87,32 @@
             }
         }
     }
+
     .lew-notification-normal .lew-notification-icon {
         color: var(--lew-normal-color-dark);
     }
+
     .lew-notification-error .lew-notification-icon {
         color: var(--lew-error-color-dark);
     }
+
     .lew-notification-success .lew-notification-icon {
         color: var(--lew-success-color-dark);
     }
+
     .lew-notification-info .lew-notification-icon {
         color: var(--lew-info-color-dark);
     }
+
     .lew-notification-warning .lew-notification-icon {
         color: var(--lew-warning-color-dark);
     }
+
     .lew-notification-show {
         opacity: 1;
         transform: translateY(0px);
     }
+
     .lew-notification-hidden {
         opacity: 0;
     }
