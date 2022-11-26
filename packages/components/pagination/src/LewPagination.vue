@@ -28,6 +28,12 @@ watch(
     (v) => {
         _pageSize.value = v;
         backPageSize.value = String(v)
+        emit('change', {
+            pageNum: _pageNum.value,
+            pageSize: _pageSize.value,
+            total: props.total,
+            pageShowSize: props.pageShowSize,
+        });
     }
 );
 
