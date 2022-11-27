@@ -68,7 +68,7 @@ const emit = defineEmits(['update:visible']);
                         </div>
                         <div class="left">
                             <div :class="`icon-${type}`">
-                                <lew-icon size="20" :type="getIconType(type)"></lew-icon>
+                                <lew-icon size="30" :type="getIconType(type)"></lew-icon>
                             </div>
                         </div>
                         <div class="right">
