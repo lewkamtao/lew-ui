@@ -263,7 +263,6 @@ const handleClick = async (e: any) => {
 }
 
 .lew-button[disabled] {
-    font-size: 14px;
     pointer-events: none; //鼠标点击不可修改
     opacity: var(--lew-disabled-opacity);
 }

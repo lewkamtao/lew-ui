@@ -28,16 +28,12 @@ const getSize = computed(() => {
 </script>
 
 <template>
-    <div
-        class="lew-tag"
-        :class="`lew-tag-${size} 
+    <div class="lew-tag" :class="`lew-tag-${size} 
     lew-tag-${type} 
     ${round ? 'lew-tag-round' : ''}       
     ${bold ? 'lew-tag-bold' : ''} 
-    ${disabled ? 'lew-tag-disabled' : ''} ${to ? 'lew-tag-to' : ''}`"
-        :style="`max-width:${maxWidth}`"
-        @click="lewTo(to)"
-    >
+    ${disabled ? 'lew-tag-disabled' : ''} ${to ? 'lew-tag-to' : ''}`" :style="`max-width:${maxWidth}`"
+        @click="lewTo(to)">
         <div class="lew-tag-left">
             <slot name="left"></slot>
         </div>
@@ -47,13 +43,8 @@ const getSize = computed(() => {
         <div class="lew-tag-right">
             <slot name="right"></slot>
         </div>
-        <div class="lew-tag-close">
-            <lew-icon
-                v-if="closable"
-                @click.stop="close"
-                :size="getSize"
-                type="x"
-            />
+        <div class="lew-tag-close" v-if="closable">
+            <lew-icon @click.stop="close" :size="getSize" type="x" />
         </div>
     </div>
 </template>
