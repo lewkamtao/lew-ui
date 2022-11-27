@@ -63,9 +63,6 @@ const emit = defineEmits(['update:visible']);
                         : 'animation: lewDialogBoxClose 0.25s;'
                 ">
                     <div v-if="layout === 'normal'" class="lew-dialog-box lew-dialog-box-normal" @click.stop>
-                        <div class="btn-close" @click="cancelHandle">
-                            <lew-icon v-if="type === `normal`" size="18" type="x"></lew-icon>
-                        </div>
                         <div class="left">
                             <div :class="`icon-${type}`">
                                 <lew-icon size="30" :type="getIconType(type)"></lew-icon>
