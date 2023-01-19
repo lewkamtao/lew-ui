@@ -4,7 +4,7 @@ defineProps(_props);
 </script>
 
 <template>
-    <lew-flex direction="column" class="lew-result">
+    <lew-flex direction="y" class="lew-result">
         <lew-flex class="lew-result-icon" :class="`lew-result-icon-${type}`">
             <lew-icon v-if="type===`normal`" size="60" type="info"></lew-icon>
             <lew-icon

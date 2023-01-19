@@ -136,7 +136,7 @@ onUnmounted(() => {
         left: 0px;
         z-index: 9;
         height: 28px;
-        border-radius: 3px;
+        border-radius: 4px;
         transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
         background: var(--lew-bgcolor-0);
         transform: translateX(3px);

@@ -34,7 +34,7 @@ const change = (e: any) => {
 defineExpose({ show, hide });
 </script>
 <template>
-    <lew-popover ref="lewPopoverRef" trigger="click" placement="bottom-start" :arrow="false"
+    <lew-popover ref="lewPopoverRef" trigger="click" placement="bottom-start" 
         @on-show="isShowPicker = true" @on-hide="isShowPicker = false">
         <template #trigger>
             <div class="lew-date-picker-input" :class="{ 'lew-date-picker-focus': isShowPicker }">

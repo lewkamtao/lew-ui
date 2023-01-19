@@ -107,7 +107,7 @@ const formatSex = (sex: number) => {
         <template #info="{ row }">
             <lew-flex class="info">
                 <lew-avatar :src="row.avatar" round />
-                <lew-flex class="right" direction="column" x="start" gap="0px">
+                <lew-flex class="right" direction="y" x="start" gap="0px">
                     <div class="name">{{ row.name }}</div>
                     <div class="mail">{{ row.mail }}</div>
                 </lew-flex>

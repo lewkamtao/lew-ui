@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { round, size } from 'lodash';
 import { _props } from './props';
 
 const emit = defineEmits(['click']);
@@ -22,24 +23,27 @@ const handleClick = async (e: any) => {
         _loading.value = false;
     }
 };
+
+const classObject = computed(() => {
+    return {
+        'lew-button-text': props.isText,
+        [`lew-button-${props.size}`]: props.size,
+        [`lew-button-${props.type}`]: props.type,
+        'lew-button-round': props.round,
+        'lew-button-icon': props.isIcon,
+        'lew-button-loading': _loading.value || props.loading,
+    };
+});
 </script>
 
 <template>
     <button
         class="lew-button"
-        :class="` 
-    ${isText ? 'lew-button-text' : ''}  
-    ${size ? 'lew-button-' + size : ''}
-    ${type ? 'lew-button-' + type : ''}
-    ${round ? 'lew-button-round' : ''}  
-    ${isIcon ? 'lew-button-icon' : ''}
-    ${_loading || loading ? 'lew-button-loading' : ''}
-    `"
+        :class="classObject"
         :disabled="disabled"
         @click="handleClick"
     >
-        <slot></slot>
-
+        <slot />
         <div
             class="lew-loading-icon"
             :class="{
@@ -63,7 +67,8 @@ const handleClick = async (e: any) => {
     white-space: nowrap;
     box-sizing: border-box;
     transition: background-color 0.1s, transform 0.1s,
-        color 0.35s cubic-bezier(0.65, 0, 0.25, 1);
+        color 0.35s cubic-bezier(0.65, 0, 0.25, 1),
+        padding 0.25s cubic-bezier(0.65, 0, 0.25, 1);
     border: none;
     cursor: pointer;
     border-radius: var(--lew-border-radius);
@@ -78,20 +83,18 @@ const handleClick = async (e: any) => {
         top: 0;
         transition: all 0.15s cubic-bezier(0.65, 0, 0.25, 1);
         opacity: 0;
-        transform: translateY(100%);
+        transform: translateX(0%);
     }
 
     .lew-loading-icon-show {
         opacity: 1;
-        transform: translateY(0px);
     }
 
     .lew-loading-icon::after {
         position: absolute;
-        left: 50%;
         top: 50%;
         user-select: none;
-        transform: translate(-50%, -50%);
+        transform: translateY(-50%);
         content: '';
         animation: lew-loading-spinner-spin 0.65s linear infinite;
         border-radius: 50%;
@@ -109,8 +112,10 @@ const handleClick = async (e: any) => {
     font-size: var(--lew-form-font-size-small);
 
     .lew-loading-icon::after {
-        border: 2px solid rgba(0, 0, 0, 0.25);
-        border-left: 2px solid rgba(255, 255, 255, 0.85);
+        left: 13px;
+
+        border: 1.5px solid rgba(0, 0, 0, 0.25);
+        border-left: 1.5px solid rgba(255, 255, 255, 0.85);
         width: 9px;
         height: 9px;
     }
@@ -123,10 +128,11 @@ const handleClick = async (e: any) => {
     font-size: var(--lew-form-font-size-medium);
 
     .lew-loading-icon::after {
-        border: 2.5px solid rgba(0, 0, 0, 0.25);
-        border-left: 2.5px solid rgba(255, 255, 255, 0.85);
-        width: 11px;
-        height: 11px;
+        left: 14px;
+        border: 2px solid rgba(0, 0, 0, 0.25);
+        border-left: 2px solid rgba(255, 255, 255, 0.85);
+        width: 10px;
+        height: 10px;
     }
 }
 
@@ -137,10 +143,11 @@ const handleClick = async (e: any) => {
     font-size: var(--lew-form-font-size-large);
 
     .lew-loading-icon::after {
-        border: 3px solid rgba(0, 0, 0, 0.25);
-        border-left: 3px solid rgba(255, 255, 255, 0.85);
-        width: 13px;
-        height: 13px;
+        left: 18px;
+        border: 2.5px solid rgba(0, 0, 0, 0.25);
+        border-left: 2.5px solid rgba(255, 255, 255, 0.85);
+        width: 12px;
+        height: 12px;
     }
 }
 
@@ -148,7 +155,6 @@ const handleClick = async (e: any) => {
     0% {
         transform: translate(-50%, -50%) rotate(0deg);
     }
-
     100% {
         transform: translate(-50%, -50%) rotate(360deg);
     }
@@ -250,12 +256,17 @@ const handleClick = async (e: any) => {
 }
 
 .lew-button-loading {
-    color: rgba($color: #000000, $alpha: 0);
     cursor: progress;
+    padding-left: 0px;
 }
-
-.lew-button-loading:hover {
-    color: rgba($color: #000000, $alpha: 0);
+.lew-button-small.lew-button-loading {
+    padding-left: 24px;
+}
+.lew-button-medium.lew-button-loading {
+    padding-left: 26px;
+}
+.lew-button-large.lew-button-loading {
+    padding-left: 32px;
 }
 
 .lew-button-loading:active {
@@ -328,9 +339,7 @@ const handleClick = async (e: any) => {
 }
 
 .lew-button-icon[disabled] {
-    & {
-        background: none;
-    }
+    background: none;
 }
 
 .lew-button-icon.lew-button-small {
@@ -455,5 +464,10 @@ const handleClick = async (e: any) => {
 
 .lew-button-icon.lew-button-loading {
     color: rgba($color: #000000, $alpha: 0);
+    padding-left: 0px;
+    &::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }
 </style>

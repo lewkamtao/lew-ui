@@ -63,7 +63,6 @@ const focus = (e: any) => {
             ref="lewDropdownRef"
             style="width: 100%"
             :trigger="trigger"
-            :arrow="arrow"
             :placement="placement"
             :align="align"
             :width="parseFloat(popoverWidth) - 12 + 'px'"

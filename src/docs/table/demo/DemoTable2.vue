@@ -87,9 +87,9 @@ const columns = [
 
 const formatSex = (sex: number) => {
     switch (true) {
-        case sex===0:
+        case sex === 0:
             return '女';
-        case sex===1:
+        case sex === 1:
             return '男';
         default:
             return '未知';
@@ -104,15 +104,15 @@ const formatSex = (sex: number) => {
         <template #age="{ row }"> {{ row.age }} </template>
         <template #sex="{ row }"> {{ formatSex(row.sex) }} </template>
         <template #hobby="{ row }">
-            <lew-flex gap="5px" x="start">
+            <lew-flex :gap="5" x="start">
                 <lew-tag
                     v-for="(item, index) in row.hobby"
                     :key="index"
                     size="small"
                     type="info"
                     >{{ item }}</lew-tag
-                ></lew-flex
-            >
+                >
+            </lew-flex>
         </template>
         <template #intro="{ row }"> {{ row.intro }} </template>
     </lew-table>

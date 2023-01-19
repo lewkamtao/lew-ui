@@ -34,18 +34,18 @@ const docsTable = ref([
     {
         param: 'direction',
         description: '排列方向',
-        type: 'row | column',
-        default: 'row',
+        type: 'x | y',
+        default: 'x',
     },
     {
         param: 'x',
-        description: 'x轴的对齐方向',
+        description: '横向对齐方向',
         type: `start | center | end`,
         default: 'center',
     },
     {
         param: 'y',
-        description: 'x轴的对齐方向',
+        description: '垂直对齐方向',
         type: `start | center | end`,
         default: 'center',
     },
@@ -65,13 +65,13 @@ const docsTable = ref([
     {
         param: 'gap',
         description: '元素之间的空隙',
-        type: `string(px)`,
-        default: '10px',
+        type: `number`,
+        default: '10',
     },
     {
         param: 'width',
         description: '父元素宽度',
-        type: `string(px)`,
+        type: `number`,
         default: "''",
     },
 ]);

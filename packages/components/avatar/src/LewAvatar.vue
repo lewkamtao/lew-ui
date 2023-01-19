@@ -1,27 +1,78 @@
 <script setup lang="ts">
 import { _props } from './props';
+import { getPx } from 'lew-ui/utils';
 
 const props = defineProps(_props);
 
-const getAvatarStyle = computed(() => {
-    return `width:${props.width};height:${props.height}`;
+const { round, width, height, status, statusPosition } = props;
+
+let loading = ref(true);
+let imgRef = ref<HTMLImageElement>();
+let count = 8000;
+let speed = 50;
+let loadErr = ref(false);
+let imgSrc = ref(props.src);
+
+var timer = setInterval(function () {
+    // console.log('img.complete',img.complete)
+    count -= speed;
+    if (count < 0) {
+        loading.value = false;
+        loadErr.value = true;
+        clearInterval(timer);
+    }
+    if (imgRef.value?.complete) {
+        loading.value = false;
+        //判断图片是否加载完成
+        clearInterval(timer);
+        //图片加载完成，写入对应的请求
+    }
+}, speed);
+
+const imgOnError = () => {
+    imgSrc.value =
+        'https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png';
+};
+
+const imageClassObject = computed(() => {
+    return {
+        'lew-avatar-round': round,
+        skeletons: loading.value && !loadErr.value,
+    };
 });
 
-const getAvatarClass = computed(() => {
-    return `${props.round ? 'lew-avatar-round' : ''}`;
+const styleObject = computed(() => {
+    return {
+        width: getPx(width),
+        height: getPx(height),
+    };
 });
 
-const getAvatarDotClass = computed(() => {
-    return `dot-${props.status} dot-${props.statusPosition}`;
+const dotClassObject = computed(() => {
+    return {
+        [`dot-${status}`]: status,
+        [`dot-${statusPosition}`]: statusPosition,
+    };
 });
 
+const slotDefault = !!useSlots().default;
 </script>
- 
+
 <template>
-    <div class="lew-avatar" :style="getAvatarStyle">
-        <img :src="src" :alt="alt" :class="getAvatarClass" />
-        <span v-if="status" class="dot" :class="getAvatarDotClass">
-        </span>
+    <div class="lew-avatar" :style="styleObject">
+        <div class="lew-avatar-box" :class="imageClassObject">
+            <slot v-if="slotDefault" />
+            <img
+                ref="imgRef"
+                v-else
+                v-show="!loading"
+                :src="imgSrc"
+                :onerror="imgOnError"
+                :alt="alt"
+                lazy
+            />
+        </div>
+        <span v-if="status" class="dot" :class="dotClassObject"> </span>
     </div>
 </template>
 
@@ -30,15 +81,19 @@ const getAvatarDotClass = computed(() => {
     position: relative;
     display: inline-block;
 
+    .lew-avatar-box {
+        width: 100%;
+        height: 100%;
+        border-radius: var(--lew-border-radius);
+        overflow: hidden;
+        background-color: #eee;
+    }
+
     img {
         width: 100%;
         height: 100%;
         background-color: var(--lew-bgcolor-2);
         border-radius: var(--lew-border-radius);
-    }
-
-    .lew-avatar-round {
-        border-radius: 50%;
     }
 
     .dot {
@@ -96,5 +151,8 @@ const getAvatarDotClass = computed(() => {
         left: auto;
         right: -0.25rem;
     }
+}
+.lew-avatar-round {
+    border-radius: 50%;
 }
 </style>

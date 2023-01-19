@@ -1,7 +1,7 @@
 export const _props = {
     direction: {
         type: String,
-        default: 'row',
+        default: 'x',
     },
     x: {
         type: String,
@@ -19,6 +19,11 @@ export const _props = {
         type: String,
         default: '', // around / between
     },
-    gap: { type: String, default: '10px' },
-    width: { type: String, default: '' },
+    gap: {
+        type: [String, Number],
+        default: () => {
+            return 10;
+        },
+    },
+    width: { type: [String, Number] },
 };

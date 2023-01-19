@@ -19,10 +19,7 @@ const props = defineProps({
         default: null,
         required: false,
     },
-    arrow: {
-        type: Boolean,
-        default: true,
-    },
+   
 });
 
 onMounted(() => {
@@ -30,7 +27,7 @@ onMounted(() => {
     let triggerTarget = props.triggerTarget;
 
     let placement = props.placement;
-    if (trigger==='hover') {
+    if (trigger === 'hover') {
         trigger = 'mouseenter';
     }
 
@@ -44,7 +41,7 @@ onMounted(() => {
         animation: 'shift-away-subtle',
         interactive: true,
         placement: placement,
-        arrow: props.arrow,
+        arrow: false,
         appendTo: () => document.body,
         allowHTML: true,
         maxWidth: 'none',
@@ -80,7 +77,7 @@ defineExpose({ show, hide });
 
 <template>
     <div class="lew-popover">
-        <label ref="triggerRef">
+        <label ref="triggerRef" style="font-size: 0px">
             <div class="trigger"><slot name="trigger" /></div>
         </label>
         <div ref="bodyRef" class="lew-popover-body">

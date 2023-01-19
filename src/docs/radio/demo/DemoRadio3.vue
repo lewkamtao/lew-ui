@@ -10,7 +10,7 @@ const value = ref('');
 </script>
 
 <template>
-    <lew-flex direction="column" x="start">
+    <lew-flex direction="y" x="start">
         <lew-title size="14px">无图标</lew-title>
         <lew-radio-group
             v-model="value"

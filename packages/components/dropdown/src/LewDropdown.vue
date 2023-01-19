@@ -28,7 +28,6 @@ defineExpose({ show, hide });
     <lew-popover
         ref="lewPopoverRef"
         :trigger="trigger"
-        :arrow="arrow"
         :placement="placement"
     >
         <template #trigger>

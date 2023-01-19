@@ -51,7 +51,6 @@ const options = [
                 style="width: 250px"
                 popover-width="250px"
                 :options="options"
-                :arrow="false"
                 clearable
             />
         </lew-form-item>

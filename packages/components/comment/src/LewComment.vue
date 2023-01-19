@@ -9,7 +9,7 @@ defineProps(_props);
             <slot name="avatar"> </slot>
         </div>
         <lew-flex
-            direction="column"
+            direction="y"
             gap="0px"
             x="start"
             class="lew-comment-body"

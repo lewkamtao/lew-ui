@@ -1,20 +1,29 @@
 <script setup lang="ts">
 import { _props } from './props';
+import { getPx } from 'lew-ui/utils';
 
-defineProps(_props);
+const props = defineProps(_props);
+
+const classObject = computed(() => {
+    return {
+        [`lew-flex-${props.direction}`]: props.direction,
+        'lew-flex-wrap': props.wrap,
+        [`lew-flex-x-${props.x}`]: props.x,
+        [`lew-flex-y-${props.y}`]: props.y,
+        [`lew-flex-mode-${props.mode}`]: props.mode,
+    };
+});
+
+const styleObject = computed(() => {
+    return {
+        gap: getPx(props.gap),
+        width: getPx(props.width),
+    };
+});
 </script>
 
 <template>
-    <div
-        class="lew-flex"
-        :class="`${direction ? 'lew-flex-' + direction : ''} ${
-            wrap ? 'lew-flex-wrap' : ''
-        } ${x ? 'lew-flex-x-' + x : ''} ${y ? 'lew-flex-y-' + y : ''} ${
-            mode ? 'lew-flex-mode-' + mode : ''
-        }  
-        `"
-        :style="`gap: ${gap}; width:${width}`"
-    >
+    <div class="lew-flex" :class="classObject" :style="styleObject">
         <slot />
     </div>
 </template>
@@ -29,62 +38,62 @@ defineProps(_props);
 .lew-flex-wrap {
     flex-wrap: wrap;
 }
-.lew-flex-row {
+.lew-flex-x {
     flex-direction: row;
 }
-.lew-flex-column {
+.lew-flex-y {
     flex-direction: column;
 }
-.lew-flex-row.lew-flex-x-start {
+.lew-flex-x.lew-flex-x-start {
     justify-content: flex-start;
 }
-.lew-flex-row.lew-flex-x-center {
+.lew-flex-x.lew-flex-x-center {
     justify-content: center;
 }
-.lew-flex-row.lew-flex-x-end {
+.lew-flex-x.lew-flex-x-end {
     justify-content: flex-end;
 }
 
-.lew-flex-row.lew-flex-y-start {
+.lew-flex-x.lew-flex-y-start {
     align-items: flex-start;
 }
-.lew-flex-row.lew-flex-y-center {
+.lew-flex-x.lew-flex-y-center {
     align-items: center;
 }
-.lew-flex-row.lew-flex-y-end {
+.lew-flex-x.lew-flex-y-end {
     align-items: flex-end;
 }
 
-.lew-flex-column.lew-flex-x-start {
+.lew-flex-y.lew-flex-x-start {
     align-items: flex-start;
 }
-.lew-flex-column.lew-flex-x-center {
+.lew-flex-y.lew-flex-x-center {
     align-items: center;
 }
-.lew-flex-column.lew-flex-x-end {
+.lew-flex-y.lew-flex-x-end {
     align-items: flex-end;
 }
 
-.lew-flex-column.lew-flex-y-start {
+.lew-flex-y.lew-flex-y-start {
     justify-content: flex-start;
 }
-.lew-flex-column.lew-flex-y-center {
+.lew-flex-y.lew-flex-y-center {
     justify-content: center;
 }
-.lew-flex-column.lew-flex-y-end {
+.lew-flex-y.lew-flex-y-end {
     justify-content: flex-end;
 }
 
-.lew-flex-row.lew-flex-mode-between {
+.lew-flex-x.lew-flex-mode-between {
     justify-content: space-between;
 }
-.lew-flex-row.lew-flex-mode-around {
+.lew-flex-x.lew-flex-mode-around {
     justify-content: space-around;
 }
-.lew-flex-column.lew-flex-mode-between {
+.lew-flex-y.lew-flex-mode-between {
     justify-content: space-between;
 }
-.lew-flex-column.lew-flex-mode-around {
+.lew-flex-y.lew-flex-mode-around {
     justify-content: space-around;
 }
 </style>

@@ -24,7 +24,7 @@ const handleCopy = (text: string) => {
                 placement: 'bottom',
                 trigger: 'mouseenter',
             }"
-            direction="column"
+            direction="y"
             class="icon-box"
             @click="handleCopy(item)"
         >

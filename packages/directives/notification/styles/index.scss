@@ -14,15 +14,12 @@
         display: flex;
         flex-shrink: 0;
         justify-content: space-between;
-        box-sizing: border-box;
-        height: auto;
         width: 300px;
-        padding: 15px 18px 15px 20px;
-        transition: all 0.45s ease;
+        max-height: 0px;
+        transition: all 0.25s ease, max-height 1s, opacity 0.45s;
         opacity: 0;
         margin-top: 0px;
         margin-bottom: 10px;
-        transform: translateX(100%);
         white-space: nowrap;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
         font-size: 14px;
@@ -31,8 +28,10 @@
         background-color: var(--lew-notification-bgcolor);
 
         .lew-notification-box {
-            width: 100%;
             display: flex;
+            width: 100%;
+            padding: 15px 18px 15px 20px;
+            box-sizing: border-box;
 
             .lew-notification-icon {
                 width: 18px;
@@ -109,11 +108,12 @@
     }
 
     .lew-notification-show {
+        max-height: 100vh;
         opacity: 1;
-        transform: translateY(0px);
     }
 
     .lew-notification-hidden {
+        max-height: 100vh;
         opacity: 0;
     }
 }

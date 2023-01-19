@@ -19,7 +19,7 @@ const change3 = (e: any) => {
 </script>
 
 <template>
-    <lew-flex direction="column" x="start">
+    <lew-flex direction="y" x="start">
         <lew-title size="14px">自动关闭</lew-title>
         <lew-date-picker v-model="value" @change="change1" />
         <br /><br />

@@ -24,7 +24,7 @@ const change = (e: Options) => {
 </script>
 
 <template>
-    <lew-flex direction="column" x="start">
+    <lew-flex direction="y" x="start">
         <lew-title size="14px">限制整体宽度</lew-title>
         <lew-tabs v-model="value" :options="options" @change="change" />
         <br />

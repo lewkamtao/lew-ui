@@ -88,8 +88,5 @@ export const _props = {
         default: 'bottom-start',
     },
 
-    arrow: {
-        type: Boolean,
-        default: true,
-    },
+   
 };

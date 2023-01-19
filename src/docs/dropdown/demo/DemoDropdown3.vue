@@ -24,12 +24,11 @@ const change = (e: any) => {
 </script>
 <template>
     <lew-flex gap="50px" x="start">
-        <lew-dropdown :arrow="false" :options="options" @change="change">
+        <lew-dropdown :options="options" @change="change">
             <lew-tag type="success">hover</lew-tag>
         </lew-dropdown>
 
         <lew-dropdown
-            :arrow="false"
             placement="bottom-start"
             :options="options"
             @change="change"
