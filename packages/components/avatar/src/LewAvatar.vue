@@ -4,7 +4,7 @@ import { getPx } from 'lew-ui/utils';
 
 const props = defineProps(_props);
 
-const { round, width, height, status, statusPosition } = props;
+const { round, width, height, status, statusPosition, src } = props;
 
 let loading = ref(true);
 let imgRef = ref<HTMLImageElement>();
@@ -13,21 +13,36 @@ let speed = 50;
 let loadErr = ref(false);
 let imgSrc = ref(props.src);
 
-var timer = setInterval(function () {
-    // console.log('img.complete',img.complete)
-    count -= speed;
-    if (count < 0) {
-        loading.value = false;
-        loadErr.value = true;
-        clearInterval(timer);
+watch(
+    () => props.src,
+    () => {
+        if (props.src) {
+            imgSrc.value = props.src;
+            setImg();
+        }
     }
-    if (imgRef.value?.complete) {
-        loading.value = false;
-        //判断图片是否加载完成
-        clearInterval(timer);
-        //图片加载完成，写入对应的请求
-    }
-}, speed);
+);
+
+onMounted(() => {
+    setImg();
+});
+
+const setImg = () => {
+    var timer = setInterval(function () {
+        count -= speed;
+        if (count < 0) {
+            loading.value = false;
+            loadErr.value = true;
+            clearInterval(timer);
+        }
+        if (imgRef.value?.complete) {
+            loading.value = false;
+            //判断图片是否加载完成
+            clearInterval(timer);
+            //图片加载完成，写入对应的请求
+        }
+    }, speed);
+};
 
 const imgOnError = () => {
     imgSrc.value =
@@ -54,14 +69,13 @@ const dotClassObject = computed(() => {
         [`dot-${statusPosition}`]: statusPosition,
     };
 });
-
-const slotDefault = !!useSlots().default;
 </script>
 
 <template>
     <div class="lew-avatar" :style="styleObject">
         <div class="lew-avatar-box" :class="imageClassObject">
             <img
+                v-if="imgSrc"
                 ref="imgRef"
                 v-show="!loading"
                 :src="imgSrc"
@@ -150,7 +164,7 @@ const slotDefault = !!useSlots().default;
         right: -0.25rem;
     }
 }
-.lew-avatar-round {
+.lew-avatar-round.lew-avatar-box {
     border-radius: 50%;
 }
 </style>
