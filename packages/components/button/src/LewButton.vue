@@ -96,7 +96,7 @@ const classObject = computed(() => {
         user-select: none;
         transform: translateY(-50%);
         content: '';
-        animation: lew-loading-spinner-spin 0.65s linear infinite;
+        animation: lew-loading-spinner-spin 1s linear infinite;
         border-radius: 50%;
     }
 }
@@ -112,7 +112,7 @@ const classObject = computed(() => {
     font-size: var(--lew-form-font-size-small);
 
     .lew-loading-icon::after {
-        left: 13px;
+        left: 14px;
 
         border: 1.5px solid rgba(0, 0, 0, 0.25);
         border-left: 1.5px solid rgba(255, 255, 255, 0.85);
@@ -128,7 +128,7 @@ const classObject = computed(() => {
     font-size: var(--lew-form-font-size-medium);
 
     .lew-loading-icon::after {
-        left: 14px;
+        left: 16px;
         border: 2px solid rgba(0, 0, 0, 0.25);
         border-left: 2px solid rgba(255, 255, 255, 0.85);
         width: 10px;
@@ -143,7 +143,7 @@ const classObject = computed(() => {
     font-size: var(--lew-form-font-size-large);
 
     .lew-loading-icon::after {
-        left: 18px;
+        left: 20px;
         border: 2.5px solid rgba(0, 0, 0, 0.25);
         border-left: 2.5px solid rgba(255, 255, 255, 0.85);
         width: 12px;
@@ -263,10 +263,10 @@ const classObject = computed(() => {
     padding-left: 24px;
 }
 .lew-button-medium.lew-button-loading {
-    padding-left: 26px;
+    padding-left: 30px;
 }
 .lew-button-large.lew-button-loading {
-    padding-left: 32px;
+    padding-left: 36px;
 }
 
 .lew-button-loading:active {

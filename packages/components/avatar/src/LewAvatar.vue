@@ -61,10 +61,8 @@ const slotDefault = !!useSlots().default;
 <template>
     <div class="lew-avatar" :style="styleObject">
         <div class="lew-avatar-box" :class="imageClassObject">
-            <slot v-if="slotDefault" />
             <img
                 ref="imgRef"
-                v-else
                 v-show="!loading"
                 :src="imgSrc"
                 :onerror="imgOnError"
