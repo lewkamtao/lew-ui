@@ -49,18 +49,20 @@ const setSticky = (column: any) => {
 // 设置单元格宽度
 let niceWidth = ref<string>('');
 const setWidth = () => {
-    let sw = lewTableRef.value!.scrollWidth;
-    let w = lewTableRef.value!.offsetWidth;
+    let sw = lewTableRef.value.scrollWidth;
+    let w = lewTableRef.value.offsetWidth;
     niceWidth.value = '';
-    let autoLen = props.columns.filter((e) => e.width === 'auto').length;
-    let wTotal = 0;
+    if (w >= sw) {
+        let autoLen = props.columns.filter((e) => e.width === 'auto').length;
+        let wTotal = 0;
 
-    props.columns
-        .filter((e) => e.width != 'auto')
-        .map((e) => {
-            wTotal += parseFloat(e.width);
-        });
-    niceWidth.value = `${(w - wTotal) / autoLen}px`;
+        props.columns
+            .filter((e) => e.width != 'auto')
+            .map((e) => {
+                wTotal += parseFloat(e.width);
+            });
+        niceWidth.value = `${(w - wTotal) / autoLen}px`;
+    }
 };
 
 // 防抖
