@@ -55,7 +55,6 @@ const docsTable = ref([
         type: 'string(px)',
         default: "''",
     },
-  
 ]);
 </script>
 

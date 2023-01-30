@@ -42,7 +42,7 @@ const selectFn = (e: Options) => {
 };
 
 const open = () => {
-    if (props.options.length===0) return;
+    if (props.options.length === 0) return;
     lewDropdownRef.value.show();
 };
 const hide = () => {

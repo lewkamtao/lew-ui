@@ -51,18 +51,16 @@ let niceWidth = ref<string>('');
 const setWidth = () => {
     let sw = lewTableRef.value!.scrollWidth;
     let w = lewTableRef.value!.offsetWidth;
+    niceWidth.value = '';
+    let autoLen = props.columns.filter((e) => e.width === 'auto').length;
+    let wTotal = 0;
 
-    if (w >= sw) {
-        let autoLen = props.columns.filter((e) => e.width === 'auto').length;
-        let wTotal = 0;
-
-        props.columns
-            .filter((e) => e.width != 'auto')
-            .map((e) => {
-                wTotal += parseFloat(e.width);
-            });
-        niceWidth.value = `${(w - wTotal) / autoLen}px`;
-    }
+    props.columns
+        .filter((e) => e.width != 'auto')
+        .map((e) => {
+            wTotal += parseFloat(e.width);
+        });
+    niceWidth.value = `${(w - wTotal) / autoLen}px`;
 };
 
 // 防抖
@@ -102,7 +100,9 @@ onUnmounted(() => {
         ref="lewTableRef"
         class="lew-table"
         :style="`max-height:${maxHeight};width:${width};
-    overflow-y:${maxHeight ? 'auto' : 'hidden'};`"
+    overflow-y:${maxHeight ? 'auto' : 'hidden'};overflow-x:${
+            niceWidth ? 'hidden' : 'auto'
+        };`"
         @scroll="throttle($event, 200)"
     >
         <div class="lew-table-head">
@@ -130,6 +130,7 @@ onUnmounted(() => {
 ${column.columnStyle ? column.columnStyle : ''};
 ${setSticky(column)};   
 width:${column.width != 'auto' ? column.width : niceWidth || '100px'};
+
 `"
                     :x="column.x || 'start'"
                     :y="column.y"

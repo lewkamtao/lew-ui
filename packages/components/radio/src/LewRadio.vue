@@ -1,14 +1,22 @@
 <template>
-    <label class="lew-radio" :class="`
+    <label
+        class="lew-radio"
+        :class="`
     ${block ? 'lew-radio-block' : ''}  
     ${checked ? 'lew-radio-checked' : ''}   
     ${!iconable ? 'lew-radio-unicon' : ''}
     ${size ? 'lew-radio-' + size : ''} 
-    `">
+    `"
+    >
         <div class="icon-radio-box" v-if="iconable">
             <div class="icon-radio"></div>
         </div>
-        <input v-show="false" type="radio" :checked="checked" @input="setChecked" />
+        <input
+            v-show="false"
+            type="radio"
+            :checked="checked"
+            @input="setChecked"
+        />
         <span v-if="label" class="lew-radio-label"> {{ label }}</span>
     </label>
 </template>

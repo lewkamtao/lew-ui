@@ -12,14 +12,18 @@ const changeMode = (mode: string) => {
 };
 
 onMounted(() => {
-    changeMode(window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : 'light');
+    changeMode(
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light'
+    );
     let media = window.matchMedia('(prefers-color-scheme: dark)');
     let callback = (e: any) => {
         let prefersDarkMode = e.matches;
         if (prefersDarkMode) {
-            changeMode("dark")
+            changeMode('dark');
         } else {
-            changeMode("light")
+            changeMode('light');
         }
     };
     if (typeof media.addEventListener === 'function') {
@@ -27,7 +31,6 @@ onMounted(() => {
     } else if (typeof media.addListener === 'function') {
         media.addListener(callback);
     }
-
 });
 
 const gohome = () => {
@@ -42,13 +45,25 @@ const gohome = () => {
 <template>
     <div class="Header">
         <div class="logo" @click="gohome">
-            <img src="../assets/images/logo.png" alt="logo" srcset="" width="30" height="30" />
+            <img
+                src="../assets/images/logo.png"
+                alt="logo"
+                srcset=""
+                width="30"
+                height="30"
+            />
             <span style="margin-left: 10px"> Lew UI</span>
-            <lew-tag v-tooltip="{
-                content: 'Beta 阶段，请勿在正式环境使用。',
-                placement: 'top-start',
-                trigger: 'mouseenter',
-            }" type="info" size="small" style="margin-left: 10px">Beta v1.1.19</lew-tag>
+            <lew-tag
+                v-tooltip="{
+                    content: 'Beta 阶段，请勿在正式环境使用。',
+                    placement: 'top-start',
+                    trigger: 'mouseenter',
+                }"
+                type="info"
+                size="small"
+                style="margin-left: 10px"
+                >Beta v1.1.19</lew-tag
+            >
         </div>
         <lew-flex gap="15px" x="end" class="menu">
             <div class="menu-item" @click="router.push(`/`)">首页</div>
@@ -57,8 +72,18 @@ const gohome = () => {
             <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
                 <lew-icon size="18" type="github" />
             </a>
-            <lew-icon class="menu-item icon-mode-sunny" type="sun" size="18" @click="changeMode('light')" />
-            <lew-icon class="menu-item icon-mode-moon" type="moon" size="18" @click="changeMode('dark')" />
+            <lew-icon
+                class="menu-item icon-mode-sunny"
+                type="sun"
+                size="18"
+                @click="changeMode('light')"
+            />
+            <lew-icon
+                class="menu-item icon-mode-moon"
+                type="moon"
+                size="18"
+                @click="changeMode('dark')"
+            />
         </lew-flex>
     </div>
 </template>

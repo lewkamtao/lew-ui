@@ -42,7 +42,7 @@ const toPath = (item: Item) => {
                 v-for="(item, j) in list.items"
                 :key="`siderbar${j}`"
                 class="item"
-                :class="{ active: route.path===item.path }"
+                :class="{ active: route.path === item.path }"
                 @click="toPath(item)"
             >
                 <span v-if="item.name" class="ename"> {{ item.name }} </span>

@@ -26,20 +26,37 @@ const setChecked = (e: Event) => {
 };
 </script>
 <template>
-    <label class="lew-checkbox" :class="`
+    <label
+        class="lew-checkbox"
+        :class="`
     ${block ? 'lew-checkbox-block' : ''} 
     ${round ? 'lew-checkbox-round' : ''} 
     ${_checked ? 'lew-checkbox-checked' : ''} 
     ${!iconable ? 'lew-checkbox-unicon' : ''}
     ${size ? 'lew-checkbox-' + size : ''}
-    `">
+    `"
+    >
         <div v-if="iconable" class="icon-checkbox-box">
-            <svg class="icon-checkbox" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="4"
-                fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <svg
+                class="icon-checkbox"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                stroke="currentColor"
+                stroke-width="4"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
                 <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
         </div>
-        <input v-show="false" type="checkbox" :checked="_checked" @input="setChecked" />
+        <input
+            v-show="false"
+            type="checkbox"
+            :checked="_checked"
+            @input="setChecked"
+        />
         <span v-if="label" class="lew-checkbox-label"> {{ label }}</span>
     </label>
 </template>

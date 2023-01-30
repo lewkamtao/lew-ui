@@ -115,7 +115,7 @@ const classObject = computed(() => {
         left: 14px;
 
         border: 1.5px solid rgba(0, 0, 0, 0.25);
-        border-left: 1.5px solid rgba(255, 255, 255, 0.85);
+        border-left: 1.5px solid rgba(255, 255, 255, 1);
         width: 9px;
         height: 9px;
     }
@@ -130,7 +130,7 @@ const classObject = computed(() => {
     .lew-loading-icon::after {
         left: 16px;
         border: 2px solid rgba(0, 0, 0, 0.25);
-        border-left: 2px solid rgba(255, 255, 255, 0.85);
+        border-left: 2px solid rgba(255, 255, 255, 1);
         width: 10px;
         height: 10px;
     }
@@ -145,9 +145,28 @@ const classObject = computed(() => {
     .lew-loading-icon::after {
         left: 20px;
         border: 2.5px solid rgba(0, 0, 0, 0.25);
-        border-left: 2.5px solid rgba(255, 255, 255, 0.85);
+        border-left: 2.5px solid rgba(255, 255, 255, 1);
         width: 12px;
         height: 12px;
+    }
+}
+
+.lew-button-normal.lew-button-small {
+    .lew-loading-icon::after {
+        border-left: 1.5px solid var(--lew-primary-color-dark);
+    }
+}
+.lew-button-normal.lew-button-medium {
+    .lew-loading-icon::after {
+        border: 2px solid rgba(0, 0, 0, 0.25);
+        border-left: 2px solid var(--lew-primary-color-dark);
+    }
+}
+
+.lew-button-normal.lew-button-large {
+    .lew-loading-icon::after {
+        border: 2.5px solid rgba(0, 0, 0, 0.25);
+        border-left: 2.5px solid var(--lew-primary-color-dark);
     }
 }
 

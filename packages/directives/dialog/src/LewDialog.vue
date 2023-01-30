@@ -52,52 +52,92 @@ const emit = defineEmits(['update:visible']);
 <template>
     <div>
         <teleport to="body">
-            <div v-if="_visible" class="lew-dialog" :style="
-                visible
-                    ? 'animation: lewDialogOpen 0.25s;'
-                    : 'animation: lewDialogClose 0.25s;'
-            " @click="onClickOverlay">
-                <div :style="
+            <div
+                v-if="_visible"
+                class="lew-dialog"
+                :style="
                     visible
-                        ? 'animation: lewDialogBoxOpen 0.25s;'
-                        : 'animation: lewDialogBoxClose 0.25s;'
-                ">
-                    <div v-if="layout === 'normal'" class="lew-dialog-box lew-dialog-box-normal" @click.stop>
+                        ? 'animation: lewDialogOpen 0.25s;'
+                        : 'animation: lewDialogClose 0.25s;'
+                "
+                @click="onClickOverlay"
+            >
+                <div
+                    :style="
+                        visible
+                            ? 'animation: lewDialogBoxOpen 0.25s;'
+                            : 'animation: lewDialogBoxClose 0.25s;'
+                    "
+                >
+                    <div
+                        v-if="layout === 'normal'"
+                        class="lew-dialog-box lew-dialog-box-normal"
+                        @click.stop
+                    >
                         <div class="left">
                             <div :class="`icon-${type}`">
-                                <lew-icon size="30" :type="getIconType(type)"></lew-icon>
+                                <lew-icon
+                                    size="30"
+                                    :type="getIconType(type)"
+                                ></lew-icon>
                             </div>
                         </div>
                         <div class="right">
                             <header>
                                 <slot name="title" />
-                                <span class="gulu-dialog-close" @click="close"></span>
+                                <span
+                                    class="gulu-dialog-close"
+                                    @click="close"
+                                ></span>
                             </header>
                             <main>
                                 <slot name="content" />
                             </main>
                             <footer>
-                                <lew-button :loading="cancelLoading" type="blank" @click.stop="cancelHandle">取消
+                                <lew-button
+                                    :loading="cancelLoading"
+                                    type="blank"
+                                    @click.stop="cancelHandle"
+                                    >取消
                                 </lew-button>
-                                <lew-button :loading="okLoading" @click.stop="okHandle">确认</lew-button>
+                                <lew-button
+                                    :loading="okLoading"
+                                    @click.stop="okHandle"
+                                    >确认</lew-button
+                                >
                             </footer>
                         </div>
                     </div>
 
-                    <div v-if="layout === 'easy'" class="lew-dialog-box lew-dialog-box-easy">
+                    <div
+                        v-if="layout === 'easy'"
+                        class="lew-dialog-box lew-dialog-box-easy"
+                    >
                         <div class="left">
                             <div :class="`icon-${type}`">
-                                <lew-icon size="20" :type="getIconType(type)"></lew-icon>
+                                <lew-icon
+                                    size="20"
+                                    :type="getIconType(type)"
+                                ></lew-icon>
                             </div>
                         </div>
                         <div class="right">
                             <main>
                                 <slot name="content" />
                             </main>
-                            <lew-button style="margin-right: 10px" type="normal" size="small" :loading="cancelLoading"
-                                @click.stop="cancelHandle">取消
+                            <lew-button
+                                style="margin-right: 10px"
+                                type="normal"
+                                size="small"
+                                :loading="cancelLoading"
+                                @click.stop="cancelHandle"
+                                >取消
                             </lew-button>
-                            <lew-button :loading="okLoading" @click.stop="okHandle" size="small">确认
+                            <lew-button
+                                :loading="okLoading"
+                                @click.stop="okHandle"
+                                size="small"
+                                >确认
                             </lew-button>
                         </div>
                     </div>

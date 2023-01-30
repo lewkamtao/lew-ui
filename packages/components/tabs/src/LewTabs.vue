@@ -20,15 +20,15 @@ watch(
 );
 
 const init = () => {
-    let index = props.options.findIndex((e) => e.value===v.value);
+    let index = props.options.findIndex((e) => e.value === v.value);
     if (index < 0) index = 0;
     activeItemStyle.value = `width:${itemRef.value[index].offsetWidth}px;transform: translateX(${itemRef.value[index].offsetLeft}px);`;
 };
 
 const emit = defineEmits(['change', 'update:modelValue']);
-let curIndex = props.options.findIndex((e) => v.value===e.value);
+let curIndex = props.options.findIndex((e) => v.value === e.value);
 const setStyle = (value: string) => {
-    let index = props.options.findIndex((e) => value===e.value);
+    let index = props.options.findIndex((e) => value === e.value);
     if (curIndex != index) {
         let _item = props.options[index];
 
@@ -61,7 +61,7 @@ const debounce = () => {
 };
 
 onMounted(() => {
-    if (props.modelValue==='') {
+    if (props.modelValue === '') {
         v.value = props.options[0].value;
     }
     init();
@@ -92,7 +92,7 @@ onUnmounted(() => {
             :ref="(el) => itemRef.push(el)"
             class="lew-tabs-item"
             :style="`width:${itemWidth}`"
-            :class="{ 'lew-tabs-item-active': v===item.value }"
+            :class="{ 'lew-tabs-item-active': v === item.value }"
             @click="setStyle(item.value)"
         >
             {{ item.label }}

@@ -87,6 +87,4 @@ export const _props = {
         type: String,
         default: 'bottom-start',
     },
-
-   
 };

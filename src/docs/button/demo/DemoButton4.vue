@@ -1,6 +1,5 @@
 <script setup lang="ts">
-const loading = ref(false);
-
+const loading = ref<Boolean>(false);
 const mockFn = () => {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -12,19 +11,12 @@ const mockFn = () => {
 </script>
 
 <template>
-    <lew-flex wrap x="start" gap="20px">
-        <lew-button type="primary" loading>确定</lew-button>
-        <lew-button type="success" round loading>确定</lew-button>
-        <lew-button
-            size="large"
-            type="error"
-            :loading="loading"
-            @click="loading = !loading"
-            >点击触发
-        </lew-button>
-
-        <lew-button size="small" type="success" :request="mockFn"
-            >模拟请求
+    <lew-flex wrap x="start" y="end" gap="20px">
+        <lew-button round size="small" :request="mockFn">模拟请求 </lew-button>
+        <lew-button size="small" type="normal" loading>确定</lew-button>
+        <lew-button size="medium" loading>确定</lew-button>
+        <lew-button size="large" :loading="loading" @click="loading = !loading">
+            点击触发
         </lew-button>
     </lew-flex>
 </template>

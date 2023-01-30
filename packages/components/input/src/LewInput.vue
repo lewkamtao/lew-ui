@@ -52,7 +52,9 @@ const focusFn = () => {
 let _type = ref(props.type);
 
 const showPasswordFn = (): void => {
-    _type.value === 'text' ? (_type.value = 'password') : (_type.value = 'text');
+    _type.value === 'text'
+        ? (_type.value = 'password')
+        : (_type.value = 'text');
 };
 
 let getCheckNumStr = computed(() => {
@@ -110,38 +112,82 @@ defineExpose({ getEl, focusFn });
 </script>
 
 <template>
-    <div class="lew-input-view" :class="`
+    <div
+        class="lew-input-view"
+        :class="`
     lew-input-view-${size} 
     ${_type === 'textarea' ? 'lew-input-view-textarea' : ''}
     ${readonly ? 'lew-input-view-readonly' : ''} 
     ${disabled ? 'lew-input-view-disabled' : ''}
     ${align ? 'lew-input-view-align-' + align : ''}
     ${autoWidth ? 'lew-input-view-auto-width' : ''}
-    `">
-        <textarea v-if="_type === 'textarea'" ref="lewTextareaRef" v-model="v" class="btf-scrollbar"
-            :class="`lew-textarea-resize-${resize}`" rows="3" cols="3" :disabled="disabled" :readonly="readonly"
-            :placeholder="placeholder" @input="input" @change="emit('change', v)" @blur="emit('blur', v)"
-            @focus="focus"></textarea>
+    `"
+    >
+        <textarea
+            v-if="_type === 'textarea'"
+            ref="lewTextareaRef"
+            v-model="v"
+            class="btf-scrollbar"
+            :class="`lew-textarea-resize-${resize}`"
+            rows="3"
+            cols="3"
+            :disabled="disabled"
+            :readonly="readonly"
+            :placeholder="placeholder"
+            @input="input"
+            @change="emit('change', v)"
+            @blur="emit('blur', v)"
+            @focus="focus"
+        ></textarea>
 
-        <input v-else ref="lewInputRef" v-model="v" :disabled="disabled" :placeholder="placeholder" :type="_type"
-            :readonly="readonly" onkeypress="if(window.event.keyCode==13) this.blur()" @input="input"
-            @change="emit('change', v)" @blur="emit('blur', v)" @focus="focus" />
+        <input
+            v-else
+            ref="lewInputRef"
+            v-model="v"
+            :disabled="disabled"
+            :placeholder="placeholder"
+            :type="_type"
+            :readonly="readonly"
+            onkeypress="if(window.event.keyCode==13) this.blur()"
+            @input="input"
+            @change="emit('change', v)"
+            @blur="emit('blur', v)"
+            @focus="focus"
+        />
         <label v-if="autoWidth" class="input-auto-width">{{ v }}</label>
-        <div v-if="showPassword || clearable || showCount" class="lew-input-controls" :class="{
-            'lew-input-controls-show':
-                (v && showPassword) ||
-                (v && clearable) ||
-                (showCount && !clearable && !showPassword) ||
-                (showCount && maxLength),
-        }">
+        <div
+            v-if="showPassword || clearable || showCount"
+            class="lew-input-controls"
+            :class="{
+                'lew-input-controls-show':
+                    (v && showPassword) ||
+                    (v && clearable) ||
+                    (showCount && !clearable && !showPassword) ||
+                    (showCount && maxLength),
+            }"
+        >
             <div v-if="getCheckNumStr" class="lew-input-show-count">
                 {{ getCheckNumStr }}
             </div>
-            <div v-if="showPassword" @mousedown.prevent="" @click="showPasswordFn" class="lew-input-show-password">
+            <div
+                v-if="showPassword"
+                @mousedown.prevent=""
+                @click="showPasswordFn"
+                class="lew-input-show-password"
+            >
                 <lew-icon size="16" v-show="_type === 'text'" type="eye" />
-                <lew-icon size="16" v-show="_type === 'password'" type="eye-off" />
+                <lew-icon
+                    size="16"
+                    v-show="_type === 'password'"
+                    type="eye-off"
+                />
             </div>
-            <div v-if="clearable" @mousedown.prevent="" @click="clear" class="lew-input-clear">
+            <div
+                v-if="clearable"
+                @mousedown.prevent=""
+                @click="clear"
+                class="lew-input-clear"
+            >
                 <lew-icon size="16" type="x-circle" />
             </div>
         </div>
@@ -190,7 +236,7 @@ defineExpose({ getEl, focusFn });
         transform: translateX(100%);
         transition: var(--lew-form-transition);
 
-        >div {
+        > div {
             display: inline-flex;
             justify-content: center;
             align-items: center;
@@ -211,7 +257,7 @@ defineExpose({ getEl, focusFn });
             cursor: pointer;
         }
 
-        >div:hover {
+        > div:hover {
             opacity: 1;
         }
     }
@@ -223,7 +269,6 @@ defineExpose({ getEl, focusFn });
 }
 
 .lew-input-view-align-left {
-
     input,
     textarea {
         text-align: left;
@@ -231,7 +276,6 @@ defineExpose({ getEl, focusFn });
 }
 
 .lew-input-view-align-center {
-
     input,
     textarea {
         text-align: center;
@@ -239,7 +283,6 @@ defineExpose({ getEl, focusFn });
 }
 
 .lew-input-view-align-right {
-
     input,
     textarea {
         text-align: right;
@@ -269,7 +312,6 @@ defineExpose({ getEl, focusFn });
 }
 
 .lew-input-view-small {
-
     input,
     textarea {
         padding: var(--lew-form-input-padding-small);
@@ -298,7 +340,6 @@ defineExpose({ getEl, focusFn });
 }
 
 .lew-input-view-medium {
-
     input,
     textarea {
         padding: var(--lew-form-input-padding-medium);
@@ -327,7 +368,6 @@ defineExpose({ getEl, focusFn });
 }
 
 .lew-input-view-large {
-
     input,
     textarea {
         padding: var(--lew-form-input-padding-large);
@@ -395,7 +435,8 @@ defineExpose({ getEl, focusFn });
 }
 
 .lew-input-view:hover {
-    border: var(--lew-form-border-width) var(--lew-form-border-color-hover) solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-hover)
+        solid;
     background-color: var(--lew-form-bgcolor-hover);
 
     .lew-input-controls {
@@ -409,7 +450,8 @@ defineExpose({ getEl, focusFn });
 
 .lew-input-view:focus-within {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+        solid;
     outline: 3px var(--lew-primary-color-light) solid;
 
     .lew-input-controls {

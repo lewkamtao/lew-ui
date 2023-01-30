@@ -4,12 +4,12 @@ import { getPx } from 'lew-ui/utils';
 
 const props = defineProps(_props);
 
-const { round, width, height, status, statusPosition, src } = props;
+const { round, width, height, status, statusPosition, errorSrc } = props;
 
 let loading = ref(true);
 let imgRef = ref<HTMLImageElement>();
 let count = 8000;
-let speed = 50;
+let speed = 500;
 let loadErr = ref(false);
 let imgSrc = ref(props.src);
 
@@ -45,8 +45,7 @@ const setImg = () => {
 };
 
 const imgOnError = () => {
-    imgSrc.value =
-        'https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png';
+    imgSrc.value = errorSrc;
 };
 
 const imageClassObject = computed(() => {

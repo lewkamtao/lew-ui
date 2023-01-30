@@ -20,7 +20,7 @@ export const _props = {
         type: String,
         default: 'bottom',
     },
-  
+
     width: {
         type: String,
         default: '',

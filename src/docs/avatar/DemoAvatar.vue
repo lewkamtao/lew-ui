@@ -36,6 +36,12 @@ const docsTable = ref([
         default: `''`,
     },
     {
+        param: 'alt',
+        description: '原生属性',
+        type: 'string',
+        default: "''",
+    },
+    {
         param: 'round',
         description: '形状，是否为圆形。',
         type: 'boolean',
@@ -44,13 +50,25 @@ const docsTable = ref([
     {
         param: 'status',
         description: '状态',
-        type: 'online | processing | away | offline | busy',
+        type: 'online｜processing｜away｜offline｜busy',
         default: "''",
     },
     {
-        param: 'statusPosition',
+        param: 'status-position',
         description: '状态标记位置',
-        type: 'string',
+        type: 'top-left｜top-right｜bottom-left｜bottom-right',
+        default: 'bottom-right',
+    },
+    {
+        param: 'width',
+        description: '宽度',
+        type: 'string｜number',
+        default: "''",
+    },
+    {
+        param: 'height',
+        description: '高度',
+        type: 'string｜number',
         default: "''",
     },
 ]);

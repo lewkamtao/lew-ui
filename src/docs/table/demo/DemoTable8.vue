@@ -87,7 +87,7 @@ const columns = [
 const isCheckeds = ref([]);
 
 const get = (e: any) => {
-    if (e.column.field==='action') {
+    if (e.column.field === 'action') {
         LewMessage.info(`点击了 id=>${e.row.id}`);
     }
 };
@@ -112,7 +112,7 @@ const getChecked = computed(() => (id: any) => {
             >取消所有选择</lew-button
         >
         <lew-button
-            v-if="isCheckeds.length===0"
+            v-if="isCheckeds.length === 0"
             @click="
                 isCheckeds = data
                     .filter((_e: any, i: number) => i <= 4)
@@ -178,7 +178,7 @@ const getChecked = computed(() => (id: any) => {
         </template>
         <template #type="{ row }">
             <lew-tag type="success"
-                >{{ row.type==='movie' ? '电影' : '电视剧' }}
+                >{{ row.type === 'movie' ? '电影' : '电视剧' }}
             </lew-tag>
         </template>
         <template #has_linewatch="{ row }">

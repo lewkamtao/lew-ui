@@ -1,18 +1,20 @@
 <template>
-    <lew-flex wrap x="start" gap="20px">
+    <lew-flex wrap x="start" y="end" gap="20px">
         <lew-avatar
+            width="30px"
+            height="30px"
             src="https://api.lew.kamtao.com/manage/common/avatar/350/4B78CA/王"
+            alt="avatar"
+        />
+        <lew-avatar
+            width="40px"
+            height="40px"
+            src="https://api.lew.kamtao.com/manage/common/avatar/350/4B78CA/李"
             alt="avatar"
         />
         <lew-avatar
             width="50px"
             height="50px"
-            src="https://api.lew.kamtao.com/manage/common/avatar/350/4B78CA/李"
-            alt="avatar"
-        />
-        <lew-avatar
-            width="80px"
-            height="80px"
             src="https://api.lew.kamtao.com/manage/common/avatar/1000/4B78CA/张"
             alt="avatar"
         />

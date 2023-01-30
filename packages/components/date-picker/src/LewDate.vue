@@ -79,17 +79,17 @@ const selectDateFn = (item: any) => {
 const checkDateSelect = computed(() => (item: any) => {
     if (item.date > 0 && item.date <= item.showDate) {
         let v = `${_year.value}-${_month.value}-${item.showDate}`;
-        return dateValue.value===v;
+        return dateValue.value === v;
     }
 });
 
 const checkToday = computed(() => (item: any) => {
     return (
-        curDay.value===item.showDate &&
-        curYear.value===item.year &&
-        curMonth.value===item.month &&
+        curDay.value === item.showDate &&
+        curYear.value === item.year &&
+        curMonth.value === item.month &&
         item.date > 0 &&
-        item.date===item.showDate
+        item.date === item.showDate
     );
 });
 </script>
@@ -135,7 +135,7 @@ const checkToday = computed(() => (item: any) => {
                 :key="`d${index}`"
                 class="lew-date-item"
                 :class="{
-                    'lew-date-item-e': item.date===item.showDate,
+                    'lew-date-item-e': item.date === item.showDate,
                     'lew-date-item-select': checkDateSelect(item),
                 }"
                 @click="selectDateFn(item)"

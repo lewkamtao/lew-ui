@@ -37,7 +37,7 @@ let isShowCode = ref(false);
             </div>
             <div v-show="isShowCode" v-highlight class="hl-pre">
                 <div class="pre-box">
-                    <pre><code v-text="code"></code></pre>
+                    <pre><code>{{ code }}</code></pre>
                 </div>
             </div>
             <div class="show-bar" @click="isShowCode = !isShowCode">

@@ -6,7 +6,7 @@ export default {
         app.directive('tooltip', {
             mounted(el: any, binding: DirectiveBinding) {
                 let trigger = binding.value.trigger;
-                if (trigger==='hover') {
+                if (trigger === 'hover') {
                     trigger = 'mouseenter';
                 }
                 el.instance = tippy(el, {

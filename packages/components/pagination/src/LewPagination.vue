@@ -27,7 +27,7 @@ watch(
     () => props.pageSize,
     (v) => {
         _pageSize.value = v;
-        backPageSize.value = String(v)
+        backPageSize.value = String(v);
         emit('change', {
             pageNum: _pageNum.value,
             pageSize: _pageSize.value,
@@ -81,7 +81,7 @@ const emit = defineEmits(['update:pageNum', 'update:pageSize', 'change']);
 
 const changePage = (type: any, num: number) => {
     if (props?.total === 0) {
-        return
+        return;
     }
 
     if (type === 'next') {
@@ -102,7 +102,6 @@ const changePage = (type: any, num: number) => {
     emit('update:pageSize', _pageSize.value);
 };
 
-
 const checkPageSize = (e: any) => {
     if (!e) {
         return;
@@ -115,60 +114,95 @@ const checkPageSize = (e: any) => {
     }
     _pageSize.value = pageSizeNum;
     changePage(false, _pageNum.value);
-}; 
+};
 </script>
 
 <template>
-    <div class="lew-pagination" :class="{
-        'lew-pagination-round': round,
-    }">
+    <div
+        class="lew-pagination"
+        :class="{
+            'lew-pagination-round': round,
+        }"
+    >
         <lew-flex class="lew-pagination-control" gap="5px">
             <slot name="left" />
             <lew-flex class="lew-pagination-page-box" gap="5px">
-                <div @click="changePage('prve', 1)" class="lew-pagination-page-btn lew-pagination-control-btn">
+                <div
+                    @click="changePage('prve', 1)"
+                    class="lew-pagination-page-btn lew-pagination-control-btn"
+                >
                     <lew-icon size="14" type="chevron-left" />
                 </div>
-                <div v-show="
-                    pageNum - 1 > pageShowSize &&
-                    maxLen > pageShowSize * 2 + 7
-                " class="lew-pagination-page-btn" @click="changePage(false, 1)">
+                <div
+                    v-show="
+                        pageNum - 1 > pageShowSize &&
+                        maxLen > pageShowSize * 2 + 7
+                    "
+                    class="lew-pagination-page-btn"
+                    @click="changePage(false, 1)"
+                >
                     1
                 </div>
-                <div v-show="
-                    pageNum - 1 > pageShowSize &&
-                    maxLen > pageShowSize * 2 + 7 &&
-                    pageInterval[0] != 1 + 1
-                " class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('prve', pageShowSize * 2)">
+                <div
+                    v-show="
+                        pageNum - 1 > pageShowSize &&
+                        maxLen > pageShowSize * 2 + 7 &&
+                        pageInterval[0] != 1 + 1
+                    "
+                    class="lew-pagination-page-btn lew-pagination-control-btn"
+                    @click="changePage('prve', pageShowSize * 2)"
+                >
                     <lew-icon size="14" type="more-horizontal" />
                 </div>
 
-                <div v-for="(item, index) in pageInterval" :key="index" class="lew-pagination-page-btn"
-                    :class="{ active: item === pageNum }" @click="changePage(false, item)">
+                <div
+                    v-for="(item, index) in pageInterval"
+                    :key="index"
+                    class="lew-pagination-page-btn"
+                    :class="{ active: item === pageNum }"
+                    @click="changePage(false, item)"
+                >
                     {{ item }}
                 </div>
 
-                <div v-show="
-                    pageNum < maxLen - pageShowSize &&
-                    maxLen > pageShowSize * 2 + 7 &&
-                    pageInterval[pageInterval.length - 1] + 1 != maxLen
-                " class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('next', pageShowSize * 2)">
+                <div
+                    v-show="
+                        pageNum < maxLen - pageShowSize &&
+                        maxLen > pageShowSize * 2 + 7 &&
+                        pageInterval[pageInterval.length - 1] + 1 != maxLen
+                    "
+                    class="lew-pagination-page-btn lew-pagination-control-btn"
+                    @click="changePage('next', pageShowSize * 2)"
+                >
                     <lew-icon size="14" type="more-horizontal" />
                 </div>
 
-                <div v-show="
-                    pageNum < maxLen - pageShowSize &&
-                    maxLen > pageShowSize * 2 + 7
-                " class="lew-pagination-page-btn" @click="changePage(false, maxLen)">
+                <div
+                    v-show="
+                        pageNum < maxLen - pageShowSize &&
+                        maxLen > pageShowSize * 2 + 7
+                    "
+                    class="lew-pagination-page-btn"
+                    @click="changePage(false, maxLen)"
+                >
                     {{ maxLen }}
                 </div>
-                <div class="lew-pagination-page-btn lew-pagination-control-btn" @click="changePage('next', 1)">
+                <div
+                    class="lew-pagination-page-btn lew-pagination-control-btn"
+                    @click="changePage('next', 1)"
+                >
                     <lew-icon size="14" type="chevron-right" />
                 </div>
             </lew-flex>
-            <lew-select style="width: 100px" align="center" v-model="backPageSize" @change="checkPageSize" size="small"
-                :show-icon="false" :options="pageSizeOptions">
+            <lew-select
+                style="width: 100px"
+                align="center"
+                v-model="backPageSize"
+                @change="checkPageSize"
+                size="small"
+                :show-icon="false"
+                :options="pageSizeOptions"
+            >
             </lew-select>
             <slot name="right" />
         </lew-flex>

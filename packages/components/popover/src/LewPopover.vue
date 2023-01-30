@@ -19,7 +19,6 @@ const props = defineProps({
         default: null,
         required: false,
     },
-   
 });
 
 onMounted(() => {

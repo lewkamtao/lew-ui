@@ -1,6 +1,6 @@
 <template>
     <lew-flex direction="y">
-        <lew-flex width="320px"  mode="between">
+        <lew-flex width="320px" mode="between">
             <lew-button
                 v-tooltip="{
                     content:
@@ -29,7 +29,7 @@
                 >top-end</lew-button
             ></lew-flex
         >
-        <lew-flex width="320px"  mode="between">
+        <lew-flex width="320px" mode="between">
             <lew-button
                 v-tooltip="{
                     content:
@@ -50,7 +50,7 @@
                 >right-start</lew-button
             ></lew-flex
         >
-        <lew-flex width="320px"  mode="between">
+        <lew-flex width="320px" mode="between">
             <lew-button
                 v-tooltip="{
                     content:
@@ -71,7 +71,7 @@
                 >right</lew-button
             ></lew-flex
         >
-        <lew-flex width="320px"  mode="between">
+        <lew-flex width="320px" mode="between">
             <lew-button
                 v-tooltip="{
                     content:
@@ -92,7 +92,7 @@
                 >right-end</lew-button
             ></lew-flex
         >
-        <lew-flex width="320px"  mode="between">
+        <lew-flex width="320px" mode="between">
             <lew-button
                 v-tooltip="{
                     content:

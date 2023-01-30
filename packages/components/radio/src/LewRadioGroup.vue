@@ -12,7 +12,7 @@
             :iconable="iconable"
             :label="option.label"
             :size="size"
-            :checked="modelValue===option.value"
+            :checked="modelValue === option.value"
             @update:checked="check(option.value)"
         />
     </lew-flex>

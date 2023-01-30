@@ -9,24 +9,28 @@ const total = ref(24);
 
 <template>
     <div>
-        <lew-pagination v-model:page-num="pageNum" v-model:page-size="pageSize" :page-size-options="[
-            {
-                label: '10 / 页',
-                value: '10',
-            },
-            {
-                label: '20 / 页',
-                value: '20',
-            },
-            {
-                label: '30 / 页',
-                value: '30',
-            },
-        ]" :total="total" @change="change">
+        <lew-pagination
+            v-model:page-num="pageNum"
+            v-model:page-size="pageSize"
+            :page-size-options="[
+                {
+                    label: '10 / 页',
+                    value: '10',
+                },
+                {
+                    label: '20 / 页',
+                    value: '20',
+                },
+                {
+                    label: '30 / 页',
+                    value: '30',
+                },
+            ]"
+            :total="total"
+            @change="change"
+        >
             <template #right>
-                <div style="margin-left:20px">
-                    共 {{ total }} 条
-                </div>
+                <div style="margin-left: 20px">共 {{ total }} 条</div>
             </template>
         </lew-pagination>
     </div>

@@ -96,9 +96,9 @@ const columns = [
 
 const formatSex = (sex: number) => {
     switch (true) {
-        case sex===0:
+        case sex === 0:
             return '女';
-        case sex===1:
+        case sex === 1:
             return '男';
         default:
             return '未知';
@@ -116,7 +116,7 @@ const del = (row: any, column: any) => {
 onMounted(() => {
     document.onkeydown = function (event) {
         const e = event || window.event || arguments.callee.caller.arguments[0];
-        if (e && e.keyCode===27) {
+        if (e && e.keyCode === 27) {
             // 按 Esc
             modalVisible1.value = false;
             modalVisible2.value = false;

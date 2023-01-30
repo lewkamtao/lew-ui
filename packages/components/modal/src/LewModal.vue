@@ -42,20 +42,30 @@ watch(
 
 const maskClick = () => {
     emit('maskClick');
-}; 
-</script> 
+};
+</script>
 
 <template>
     <teleport to="#lew-modal">
-        <div v-if="_visible" class="lew-modal" :style="
-            visible
-                ? 'animation: lewModalOpen 0.25s;'
-                : 'animation: lewModalClose 0.25s;'
-        " @click="maskClick">
-            <div class="lew-modal-box" :style="`width:${width};height:${height};${visible
-            ? 'animation: lewModalBoxOpen 0.25s;'
-            : 'animation: lewModalBoxClose 0.25s;'
-            }`" @click.stop>
+        <div
+            v-if="_visible"
+            class="lew-modal"
+            :style="
+                visible
+                    ? 'animation: lewModalOpen 0.25s;'
+                    : 'animation: lewModalClose 0.25s;'
+            "
+            @click="maskClick"
+        >
+            <div
+                class="lew-modal-box"
+                :style="`width:${width};height:${height};${
+                    visible
+                        ? 'animation: lewModalBoxOpen 0.25s;'
+                        : 'animation: lewModalBoxClose 0.25s;'
+                }`"
+                @click.stop
+            >
                 <slot></slot>
             </div>
         </div>
