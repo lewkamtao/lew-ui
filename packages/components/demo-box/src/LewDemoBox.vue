@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { CSSProperties } from 'vue';
+
 defineProps({
     title: {
         type: String,
@@ -21,6 +23,15 @@ defineProps({
 });
 
 let isShowCode = ref(false);
+
+const outCodeRef = shallowRef<HTMLElement | null>(null);
+const style = computed<CSSProperties>(() => {
+    if (isShowCode.value) {
+        const height = outCodeRef.value?.firstElementChild?.clientHeight;
+        return { height: height ? `${height}px` : 'auto' };
+    }
+    return { height: 0 };
+});
 </script>
 
 <template>
@@ -35,7 +46,13 @@ let isShowCode = ref(false);
             <div class="demo-cp">
                 <slot></slot>
             </div>
-            <div v-show="isShowCode" v-highlight class="hl-pre">
+            <div
+                v-show="code"
+                ref="outCodeRef"
+                v-highlight
+                class="hl-pre"
+                :style="style"
+            >
                 <div class="pre-box">
                     <pre><code>{{ code }}</code></pre>
                 </div>
@@ -69,6 +86,8 @@ let isShowCode = ref(false);
 
     .hl-pre {
         position: relative;
+        transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
 
         .pre-box {
             margin-top: 10px;
