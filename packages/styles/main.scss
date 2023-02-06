@@ -1,3 +1,13 @@
+html,
+body {
+    font-family: v-sans, system-ui, -apple-system, BlinkMacSystemFont,
+        'Segoe UI', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol';
+}
+
+textarea {
+    font-family: inherit;
+}
 .tippy-box {
     border-radius: var(--lew-border-radius) !important;
 }

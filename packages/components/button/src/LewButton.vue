@@ -489,4 +489,9 @@ const classObject = computed(() => {
         transform: translateX(-50%);
     }
 }
+.lew-button-icon.lew-button-loading {
+    .lew-loading-icon::after {
+        left: auto;
+    }
+}
 </style>

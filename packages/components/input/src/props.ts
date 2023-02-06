@@ -14,6 +14,10 @@ export const inputProps = {
         type: String,
         default: 'medium',
     },
+    focusSelect: {
+        type: Boolean,
+        default: false,
+    },
     align: {
         type: String,
         default: 'left',

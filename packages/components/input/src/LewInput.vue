@@ -102,7 +102,7 @@ const getEl = () => {
 };
 
 const focus = (e: any) => {
-    if (v.value.length < 100) {
+    if (props.focusSelect) {
         e?.currentTarget?.select();
     }
     emit('focus');
@@ -220,6 +220,18 @@ defineExpose({ getEl, focusFn });
         box-sizing: border-box;
     }
 
+    textarea::-webkit-scrollbar {
+        background-color: var(--lew-bgcolor-2);
+    }
+
+    textarea::-webkit-scrollbar-thumb:hover {
+        background-color: var(--lew-bgcolor-9);
+    }
+
+    textarea::-webkit-scrollbar-thumb {
+        background-color: var(--lew-bgcolor-6);
+    }
+
     input {
         overflow: hidden;
     }
@@ -318,6 +330,9 @@ defineExpose({ getEl, focusFn });
         font-size: var(--lew-form-font-size-small);
         line-height: var(--lew-form-input-line-height-small);
     }
+    textarea::-webkit-scrollbar {
+        width: 4px;
+    }
 
     input {
         height: var(--lew-form-item-height-small);
@@ -346,7 +361,9 @@ defineExpose({ getEl, focusFn });
         font-size: var(--lew-form-font-size-medium);
         line-height: var(--lew-form-input-line-height-medium);
     }
-
+    textarea::-webkit-scrollbar {
+        width: 6px;
+    }
     input {
         height: var(--lew-form-item-height-medium);
     }
@@ -374,7 +391,9 @@ defineExpose({ getEl, focusFn });
         font-size: var(--lew-form-font-size-large);
         line-height: var(--lew-form-input-line-height-large);
     }
-
+    textarea::-webkit-scrollbar {
+        width: 8px;
+    }
     input {
         height: var(--lew-form-item-height-large);
     }

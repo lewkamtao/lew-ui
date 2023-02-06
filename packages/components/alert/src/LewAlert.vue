@@ -59,7 +59,7 @@ const getAlertClass = (item: Alert) => {
         box-sizing: border-box;
 
         .alert-icon {
-            margin: 2.5px 5px 0px 0px;
+            margin: 2px 5px 0px 0px;
             display: inline-flex;
             align-items: center;
         }
