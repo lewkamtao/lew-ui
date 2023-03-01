@@ -1,6 +1,6 @@
 <template>
     <lew-pagination
-        :total="50000000"
+        :total="10000"
         round
         :page-show-size="3"
     ></lew-pagination>

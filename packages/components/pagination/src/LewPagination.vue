@@ -2,69 +2,88 @@
 import { _props } from './props';
 const props = defineProps(_props);
 
+const emit = defineEmits(['update:pageNum', 'update:pageSize', 'change']);
+
 const generateArray = (start: any, end: any) => {
     return Array.from(new Array(end + 1).keys()).slice(start);
 };
-
-let _pageNum = ref(props.pageNum);
-let _pageSize = ref(props.pageSize);
-let backPageSize = ref(String(_pageSize.value));
+let state = reactive({
+    pageNum: props.pageNum,
+    pageSize: props.pageSize,
+    total: props.total,
+    pageShowSize: props.pageShowSize,
+    pageSizeOptions: props.pageSizeOptions,
+});
 
 watch(
     () => props.pageNum,
     (v) => {
         changePage(false, v);
-        emit('change', {
-            pageNum: _pageNum.value,
-            pageSize: _pageSize.value,
-            total: props.total,
-            pageShowSize: props.pageShowSize,
-        });
+        state.pageNum = v;
     }
 );
 
 watch(
     () => props.pageSize,
     (v) => {
-        _pageSize.value = v;
-        backPageSize.value = String(v);
-        emit('change', {
-            pageNum: _pageNum.value,
-            pageSize: _pageSize.value,
-            total: props.total,
-            pageShowSize: props.pageShowSize,
-        });
+        state.pageSize = v;
     }
 );
 
-let maxLen = computed(() => {
-    return Math.ceil(props.total / _pageSize.value);
+watch(
+    () => props.total,
+    (v) => {
+        state.total = v;
+    }
+);
+
+watch(
+    () => props.pageShowSize,
+    (v) => {
+        state.pageShowSize = v;
+    }
+);
+
+watch(
+    () => props.pageSizeOptions,
+    (v) => {
+        state.pageSizeOptions = v;
+    }
+);
+
+let getMaxLen = computed(() => {
+    return Math.ceil(props.total / state.pageSize);
 });
 
 let pageInterval = computed(() => {
-    let start = _pageNum.value - props.pageShowSize;
-    let end = _pageNum.value + props.pageShowSize;
+    let page = state.pageNum;
+    let size = state.pageSize;
+    let showSize = state.pageShowSize;
+    let total = state.total;
+    let maxLen = getMaxLen.value;
+    let start = page - showSize;
+    let end = page + showSize;
 
-    if (_pageNum.value <= props.pageShowSize) {
+    if (page <= showSize) {
         start = 1;
-        end = props.pageShowSize * 2;
+        end = showSize * 2;
     }
 
-    if (_pageNum.value >= maxLen.value - props.pageShowSize) {
-        start = maxLen.value - props.pageShowSize * 2;
-        end = maxLen.value;
+    if (page >= maxLen - showSize) {
+        start = maxLen - showSize * 2;
+        end = maxLen;
     }
 
     if (start <= 0) {
         start = 1;
     }
 
-    if (maxLen.value <= props.pageShowSize * 2 + 7) {
+    if (maxLen <= showSize * 2 + 7) {
         start = 1;
-        end = maxLen.value;
+        end = maxLen;
     }
 
-    if (end === 1 && props.total > _pageSize.value) {
+    if (end === 1 && total > size) {
         end += 1;
     }
 
@@ -77,127 +96,94 @@ let pageInterval = computed(() => {
     return pageArr;
 });
 
-const emit = defineEmits(['update:pageNum', 'update:pageSize', 'change']);
-
 const changePage = (type: any, num: number) => {
-    if (props?.total === 0) {
-        return;
-    }
+    let page = state.pageNum;
 
     if (type === 'next') {
-        _pageNum.value += num;
+        page += num;
     } else if (type === 'prve') {
-        _pageNum.value -= num;
+        page -= num;
     } else {
-        _pageNum.value = num;
+        page = num;
     }
 
-    if (_pageNum.value < 1) {
-        _pageNum.value = 1;
-    } else if (_pageNum.value > maxLen.value) {
-        _pageNum.value = maxLen.value;
+    if (page <= 0) {
+        page = 1;
+    } else if (page > getMaxLen.value) {
+        page = getMaxLen.value;
     }
 
-    emit('update:pageNum', _pageNum.value);
-    emit('update:pageSize', _pageSize.value);
+    state.pageNum = page;
 };
 
-const checkPageSize = (e: any) => {
-    if (!e) {
-        return;
-    }
-    let pageSizeStr = e;
-    pageSizeStr = e.replace(/[^\d]/g, '');
-    let pageSizeNum = Number(pageSizeStr);
-    if (pageSizeNum < 1) {
-        pageSizeNum = 1;
-    }
-    _pageSize.value = pageSizeNum;
-    changePage(false, _pageNum.value);
+let checkShowOnePage = computed(() => {
+    return Math.ceil(props.total / state.pageSize);
+});
+
+let checkShowLeftMore = computed(() => {
+    return Math.ceil(props.total / state.pageSize);
+});
+
+let checkShowRightMore = computed(() => {
+    return Math.ceil(props.total / state.pageSize);
+});
+
+let checkShowMaxPage = computed(() => {
+    return Math.ceil(props.total / state.pageSize);
+});
+
+const checkPageSize = () => {
+    changePage(false, state.pageNum);
 };
 </script>
 
 <template>
-    <div
-        class="lew-pagination"
-        :class="{
-            'lew-pagination-round': round,
-        }"
-    >
-        <lew-flex class="lew-pagination-control" gap="5px">
+    <div class="lew-pagination">
+        <lew-flex class="control" gap="10px">
             <slot name="left" />
+            <div class="btn" @click="changePage('prve', 1)">
+                <lew-icon size="14" type="chevron-left" />
+            </div>
+            <div
+                v-if="checkShowOnePage"
+                @click="changePage(false, 1)"
+                class="btn"
+            >
+                1
+            </div>
+            <div
+                v-if="checkShowLeftMore"
+                class="btn control-btn"
+                @click="changePage('prve', state.pageShowSize * 2)"
+            >
+                <lew-icon size="14" type="more-horizontal" />
+            </div>
             <lew-flex class="lew-pagination-page-box" gap="5px">
-                <div
-                    @click="changePage('prve', 1)"
-                    class="lew-pagination-page-btn lew-pagination-control-btn"
-                >
-                    <lew-icon size="14" type="chevron-left" />
-                </div>
-                <div
-                    v-show="
-                        pageNum - 1 > pageShowSize &&
-                        maxLen > pageShowSize * 2 + 7
-                    "
-                    class="lew-pagination-page-btn"
-                    @click="changePage(false, 1)"
-                >
-                    1
-                </div>
-                <div
-                    v-show="
-                        pageNum - 1 > pageShowSize &&
-                        maxLen > pageShowSize * 2 + 7 &&
-                        pageInterval[0] != 1 + 1
-                    "
-                    class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('prve', pageShowSize * 2)"
-                >
-                    <lew-icon size="14" type="more-horizontal" />
-                </div>
-
                 <div
                     v-for="(item, index) in pageInterval"
                     :key="index"
-                    class="lew-pagination-page-btn"
-                    :class="{ active: item === pageNum }"
+                    class="btn"
+                    :class="{ active: item === state.pageNum }"
                     @click="changePage(false, item)"
                 >
                     {{ item }}
                 </div>
-
-                <div
-                    v-show="
-                        pageNum < maxLen - pageShowSize &&
-                        maxLen > pageShowSize * 2 + 7 &&
-                        pageInterval[pageInterval.length - 1] + 1 != maxLen
-                    "
-                    class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('next', pageShowSize * 2)"
-                >
-                    <lew-icon size="14" type="more-horizontal" />
-                </div>
-
-                <div
-                    v-show="
-                        pageNum < maxLen - pageShowSize &&
-                        maxLen > pageShowSize * 2 + 7
-                    "
-                    class="lew-pagination-page-btn"
-                    @click="changePage(false, maxLen)"
-                >
-                    {{ maxLen }}
-                </div>
-                <div
-                    class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('next', 1)"
-                >
-                    <lew-icon size="14" type="chevron-right" />
-                </div>
             </lew-flex>
+            <div
+                v-if="checkShowRightMore"
+                class="btn control-btn"
+                @click="changePage('prve', state.pageShowSize * 2)"
+            >
+                <lew-icon size="14" type="more-horizontal" />
+            </div>
+            <div v-if="checkShowMaxPage" class="btn">{{ getMaxLen }}</div>
+            <div class="btn" @click="changePage('next', 1)">
+                <lew-icon size="14" type="chevron-right" />
+            </div>
             <lew-select
                 style="width: 100px"
                 align="center"
-                v-model="backPageSize"
+                v-model="state.pageSize"
                 @change="checkPageSize"
                 size="small"
                 :show-icon="false"
@@ -218,35 +204,34 @@ const checkPageSize = (e: any) => {
     user-select: none;
     font-size: 14px;
 
-    .lew-pagination-control {
+    .control {
         height: 100%;
         color: var(--lew-text-color-7);
     }
 
+    .btn {
+        position: relative;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 26px;
+        min-width: 26px;
+        padding: 0px 4px;
+        box-sizing: border-box;
+        border-radius: var(--lew-border-radius);
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: var(--lew-primary-color-light);
+        color: var(--lew-primary-color-dark);
+    }
     .lew-pagination-page-box {
         width: auto;
         position: relative;
         height: 100%;
-
-        .lew-pagination-page-btn {
-            position: relative;
-            z-index: 2;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            height: 26px;
-            min-width: 26px;
-            padding: 0px 4px;
-            box-sizing: border-box;
-            border-radius: var(--lew-border-radius);
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .lew-pagination-page-btn:hover {
-            background-color: var(--lew-primary-color-light);
-            color: var(--lew-primary-color-dark);
-        }
 
         .active {
             background-color: var(--lew-primary-color);
@@ -258,7 +243,7 @@ const checkPageSize = (e: any) => {
             color: var(--lew-white-text-color);
         }
 
-        .lew-pagination-control-btn {
+        .control-btn {
             padding: 0px;
         }
     }
@@ -271,7 +256,7 @@ const checkPageSize = (e: any) => {
 
 .lew-pagination-round {
     .lew-pagination-page-box {
-        .lew-pagination-page-btn {
+        .btn {
             border-radius: 30px;
         }
     }

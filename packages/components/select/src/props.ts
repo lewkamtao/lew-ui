@@ -9,7 +9,7 @@ export type LewSelectOptions = {
 export const selectProps = {
     modelValue: {
         // 父组件 v-model 没有指定参数名，则默认是 modelValue
-        type: [String, Array<string>],
+        type: [String, Number, Array<string>],
         required: true,
     },
     options: {
