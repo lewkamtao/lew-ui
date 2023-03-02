@@ -57,14 +57,14 @@ const changePage = (page: number) => {
 // 是否显示省略号
 const startEllipsis = computed(() => visiblePages.value[0] > 2);
 const endEllipsis = computed(
-    () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value
+    () =>
+        visiblePages.value[visiblePages.value.length - 1] < totalPages.value - 1
 );
 
 // 是否显示最大和最小页码
 const showOne = computed(() => visiblePages.value[0] > 1);
 const showMax = computed(
-    () =>
-        visiblePages.value[visiblePages.value.length - 1] < totalPages.value - 1
+    () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value
 );
 
 const checkPageSize = (value: any) => {
