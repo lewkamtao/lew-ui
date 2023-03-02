@@ -76,9 +76,13 @@ const checkPageSize = (value: any) => {
 };
 
 const checkPageNum = (value: any) => {
-    state.currentPage = Number(value);
-    changePage(value);
+    let page = Number(value);
     state.toPage = undefined;
+    if (page > totalPages.value || page < 1) {
+        return;
+    }
+    state.currentPage = page;
+    changePage(value);
 };
 </script>
 
