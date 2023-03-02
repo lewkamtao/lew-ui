@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { json } from 'stream/consumers';
+import { stat } from 'fs';
 import { _props } from './props';
 const props = defineProps(_props);
 
-const emit = defineEmits(['update:currentPage', 'update:pageSize']);
+const emit = defineEmits(['update:currentPage', 'update:pageSize', 'change']);
 
 const state = reactive({
     currentPage: props.currentPage,
@@ -50,7 +50,10 @@ const changePage = (page: number) => {
     if (page < 1 || page > totalPages.value || page === state.currentPage) {
         return;
     }
-
+    emit('change', {
+        currentPage: state.currentPage,
+        pageSize: state.pageSize,
+    });
     state.currentPage = page;
 };
 
@@ -218,14 +221,6 @@ const checkPageNum = (value: any) => {
     .page-label {
         white-space: nowrap;
         padding: 0px 5px;
-    }
-}
-
-.lew-pagination-round {
-    .lew-pagination-page-box {
-        .btn {
-            border-radius: 30px;
-        }
     }
 }
 </style>

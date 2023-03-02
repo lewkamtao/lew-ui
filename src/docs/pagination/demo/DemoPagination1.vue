@@ -10,7 +10,7 @@ const total = ref(24);
 <template>
     <div>
         <lew-pagination
-            v-model:page-num="pageNum"
+            v-model:current-page="pageNum"
             v-model:page-size="pageSize"
             :page-size-options="[
                 {

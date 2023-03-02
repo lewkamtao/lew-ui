@@ -36,7 +36,7 @@ const docsTable = ref([
         default: '100',
     },
     {
-        param: 'pageNum',
+        param: 'currentPage',
         description: '当前页码',
         type: 'number',
         default: '1',
@@ -48,23 +48,17 @@ const docsTable = ref([
         default: '20',
     },
     {
-        param: 'pageShowSize',
+        param: 'visiblePagesCount',
         description:
             '展示页码长度，这里有一定特殊性，比如长度是2，如果超出相应长度，就会只展示5个页码。',
         type: 'number',
-        default: '2',
+        default: '5',
     },
     {
-        param: 'background',
-        description: '是否显示背景',
-        type: 'boolean',
-        default: 'true',
-    },
-    {
-        param: 'round',
-        description: '是否是圆形',
-        type: 'boolean',
-        default: 'true',
+        param: 'pageSizeOptions',
+        description: '页码配置',
+        type: 'Options',
+        default: '-',
     },
 ]);
 </script>
