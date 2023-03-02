@@ -12,7 +12,7 @@ export const _props = {
     },
 
     // 绑定值
-    pageNum: {
+    currentPage: {
         // 父组件 v-model 没有指定参数名，则默认是 modelValue
         type: Number,
         default: 1,
@@ -22,12 +22,12 @@ export const _props = {
     pageSize: {
         // 父组件 v-model 没有指定参数名，则默认是 modelValue
         type: Number,
-        default: 20,
+        default: 10,
     },
 
-    pageShowSize: {
+    visiblePagesCount: {
         type: Number,
-        default: 6,
+        default: 5,
     },
 
     pageSizeOptions: {

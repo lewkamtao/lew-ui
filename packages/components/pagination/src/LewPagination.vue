@@ -1,139 +1,81 @@
 <script lang="ts" setup>
+import { json } from 'stream/consumers';
 import { _props } from './props';
 const props = defineProps(_props);
 
-const emit = defineEmits(['update:pageNum', 'update:pageSize', 'change']);
+const emit = defineEmits(['update:currentPage', 'update:pageSize']);
 
-const generateArray = (start: any, end: any) => {
-    return Array.from(new Array(end + 1).keys()).slice(start);
-};
-let state = reactive({
-    pageNum: props.pageNum,
+const state = reactive({
+    currentPage: props.currentPage,
     pageSize: props.pageSize,
     total: props.total,
-    pageShowSize: props.pageShowSize,
+    visiblePagesCount: props.visiblePagesCount,
     pageSizeOptions: props.pageSizeOptions,
+    toPage: undefined,
 });
 
-watch(
-    () => props.pageNum,
-    (v) => {
-        changePage(false, v);
-        state.pageNum = v;
-    }
-);
-
-watch(
-    () => props.pageSize,
-    (v) => {
-        state.pageSize = v;
-    }
-);
-
-watch(
-    () => props.total,
-    (v) => {
-        state.total = v;
-    }
-);
-
-watch(
-    () => props.pageShowSize,
-    (v) => {
-        state.pageShowSize = v;
-    }
-);
-
-watch(
-    () => props.pageSizeOptions,
-    (v) => {
-        state.pageSizeOptions = v;
-    }
-);
-
-let getMaxLen = computed(() => {
-    return Math.ceil(props.total / state.pageSize);
+watchEffect(() => {
+    emit('update:currentPage', state.currentPage);
+    emit('update:pageSize', state.pageSize);
+    state.total = props.total;
 });
 
-let pageInterval = computed(() => {
-    let page = state.pageNum;
-    let size = state.pageSize;
-    let showSize = state.pageShowSize;
-    let total = state.total;
-    let maxLen = getMaxLen.value;
-    let start = page - showSize;
-    let end = page + showSize;
+const totalPages = computed(() => Math.ceil(state.total / state.pageSize));
 
-    if (page <= showSize) {
-        start = 1;
-        end = showSize * 2;
+const visiblePages = computed(() => {
+    const visiblePagesCount = props.visiblePagesCount;
+    const currentPage = state.currentPage;
+    const totalPages = Math.ceil(state.total / state.pageSize);
+
+    let startPage = currentPage - Math.floor(visiblePagesCount / 2);
+    if (startPage < 1) {
+        startPage = 1;
     }
-
-    if (page >= maxLen - showSize) {
-        start = maxLen - showSize * 2;
-        end = maxLen;
+    let endPage = startPage + visiblePagesCount - 1;
+    if (endPage > totalPages) {
+        endPage = totalPages;
+        startPage = endPage - visiblePagesCount + 1;
+        if (startPage < 1) {
+            startPage = 1;
+        }
     }
-
-    if (start <= 0) {
-        start = 1;
+    const visiblePages = [];
+    for (let i = startPage; i <= endPage; i++) {
+        visiblePages.push(i);
     }
-
-    if (maxLen <= showSize * 2 + 7) {
-        start = 1;
-        end = maxLen;
-    }
-
-    if (end === 1 && total > size) {
-        end += 1;
-    }
-
-    let pageArr = generateArray(start, end);
-
-    if (pageArr.length < 1) {
-        pageArr = [1];
-    }
-
-    return pageArr;
+    return visiblePages;
 });
 
-const changePage = (type: any, num: number) => {
-    let page = state.pageNum;
-
-    if (type === 'next') {
-        page += num;
-    } else if (type === 'prve') {
-        page -= num;
-    } else {
-        page = num;
+const changePage = (page: number) => {
+    if (page < 1 || page > totalPages.value || page === state.currentPage) {
+        return;
     }
 
-    if (page <= 0) {
-        page = 1;
-    } else if (page > getMaxLen.value) {
-        page = getMaxLen.value;
-    }
-
-    state.pageNum = page;
+    state.currentPage = page;
 };
 
-let checkShowOnePage = computed(() => {
-    return Math.ceil(props.total / state.pageSize);
-});
+// 是否显示省略号
+const startEllipsis = computed(() => visiblePages.value[0] > 2);
+const endEllipsis = computed(
+    () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value
+);
 
-let checkShowLeftMore = computed(() => {
-    return Math.ceil(props.total / state.pageSize);
-});
+// 是否显示最大和最小页码
+const showOne = computed(() => visiblePages.value[0] > 1);
+const showMax = computed(
+    () =>
+        visiblePages.value[visiblePages.value.length - 1] < totalPages.value - 1
+);
 
-let checkShowRightMore = computed(() => {
-    return Math.ceil(props.total / state.pageSize);
-});
+const checkPageSize = (value: any) => {
+    state.pageSize = value;
+    changePage(state.currentPage);
+};
 
-let checkShowMaxPage = computed(() => {
-    return Math.ceil(props.total / state.pageSize);
-});
-
-const checkPageSize = () => {
-    changePage(false, state.pageNum);
+const checkPageNum = (value: any) => {
+    state.currentPage = Number(value);
+    changePage(value);
+    state.toPage = undefined;
 };
 </script>
 
@@ -141,45 +83,62 @@ const checkPageSize = () => {
     <div class="lew-pagination">
         <lew-flex class="control" gap="10px">
             <slot name="left" />
-            <div class="btn" @click="changePage('prve', 1)">
-                <lew-icon size="14" type="chevron-left" />
-            </div>
-            <div
-                v-if="checkShowOnePage"
-                @click="changePage(false, 1)"
-                class="btn"
-            >
-                1
-            </div>
-            <div
-                v-if="checkShowLeftMore"
-                class="btn control-btn"
-                @click="changePage('prve', state.pageShowSize * 2)"
-            >
-                <lew-icon size="14" type="more-horizontal" />
-            </div>
+
             <lew-flex class="lew-pagination-page-box" gap="5px">
+                <div class="btn" @click="changePage(state.currentPage - 1)">
+                    <lew-icon size="14" type="chevron-left" />
+                </div>
                 <div
-                    v-for="(item, index) in pageInterval"
+                    v-if="showOne"
+                    class="btn lew-pagination-page-btn"
+                    @click="changePage(1)"
+                >
+                    1
+                </div>
+                <div
+                    v-if="startEllipsis"
+                    @click="
+                        changePage(
+                            state.currentPage - state.visiblePagesCount + 1
+                        )
+                    "
+                    class="btn control-btn"
+                >
+                    <lew-icon size="14" type="more-horizontal" />
+                </div>
+                <div
+                    v-for="(page, index) in visiblePages"
                     :key="index"
                     class="btn"
-                    :class="{ active: item === state.pageNum }"
-                    @click="changePage(false, item)"
+                    :class="{
+                        active: Number(page) === Number(state.currentPage),
+                    }"
+                    @click="changePage(page)"
                 >
-                    {{ item }}
+                    {{ page }}
+                </div>
+                <div
+                    v-if="endEllipsis"
+                    @click="
+                        changePage(
+                            state.currentPage + state.visiblePagesCount - 1
+                        )
+                    "
+                    class="btn control-btn"
+                >
+                    <lew-icon size="14" type="more-horizontal" />
+                </div>
+                <div
+                    v-if="showMax"
+                    class="btn lew-pagination-page-btn"
+                    @click="changePage(totalPages)"
+                >
+                    {{ totalPages }}
+                </div>
+                <div class="btn" @click="changePage(state.currentPage + 1)">
+                    <lew-icon size="14" type="chevron-right" />
                 </div>
             </lew-flex>
-            <div
-                v-if="checkShowRightMore"
-                class="btn control-btn"
-                @click="changePage('prve', state.pageShowSize * 2)"
-            >
-                <lew-icon size="14" type="more-horizontal" />
-            </div>
-            <div v-if="checkShowMaxPage" class="btn">{{ getMaxLen }}</div>
-            <div class="btn" @click="changePage('next', 1)">
-                <lew-icon size="14" type="chevron-right" />
-            </div>
             <lew-select
                 style="width: 100px"
                 align="center"
@@ -190,6 +149,14 @@ const checkPageSize = () => {
                 :options="pageSizeOptions"
             >
             </lew-select>
+            <lew-input
+                size="small"
+                align="center"
+                placeholder="跳转至"
+                auto-width
+                v-model="state.toPage"
+                @change="checkPageNum"
+            />
             <slot name="right" />
         </lew-flex>
     </div>
