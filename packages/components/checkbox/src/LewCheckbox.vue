@@ -5,12 +5,12 @@ const props = defineProps(_props);
 
 watch(
     () => props.checked,
-    (v) => {
+    (v:boolean) => {
         if (v != _checked.value) {
             _checked.value = v;
         }
     }
-);
+); 
 
 let _checked = ref(props.checked || false);
 

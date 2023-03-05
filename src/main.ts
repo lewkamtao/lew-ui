@@ -8,11 +8,6 @@ import 'lew-ui/styles/main.scss';
 import '@/assets/style/main.scss';
 import '@/assets/style/hljs.scss';
 
-// 通用字体
-import 'vfonts/Lato.css';
-// 等宽字体
-import 'vfonts/FiraCode.css';
-
 import lew from '../packages';
 
 const app = createApp(AppVue);

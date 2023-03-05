@@ -11,19 +11,30 @@ const state = reactive({
     total: props.total,
     visiblePagesCount: props.visiblePagesCount,
     pageSizeOptions: props.pageSizeOptions,
-    toPage: undefined,
+    toPage: undefined, 
 });
 
 watchEffect(() => {
     emit('update:currentPage', state.currentPage);
     emit('update:pageSize', state.pageSize);
     state.total = props.total;
+    let _visiblePagesCount= props.visiblePagesCount
+     if(_visiblePagesCount<5){
+            _visiblePagesCount =  5   
+    } 
+    if(_visiblePagesCount>12){ 
+        _visiblePagesCount = 12       
+    } 
+    console.log(_visiblePagesCount);
+    
+    state.visiblePagesCount = _visiblePagesCount;
+
 });
 
 const totalPages = computed(() => Math.ceil(state.total / state.pageSize));
 
 const visiblePages = computed(() => {
-    const visiblePagesCount = props.visiblePagesCount;
+    let visiblePagesCount = state.visiblePagesCount;
     const currentPage = state.currentPage;
     const totalPages = Math.ceil(state.total / state.pageSize);
 
@@ -47,6 +58,8 @@ const visiblePages = computed(() => {
 });
 
 const changePage = (page: number) => {
+    page = Math.floor(page)  
+ 
     if (page < 1 || page > totalPages.value || page === state.currentPage) {
         return;
     }
@@ -128,9 +141,9 @@ const checkPageNum = (value: any) => {
                     v-if="endEllipsis"
                     @click="
                         changePage(
-                            state.currentPage + state.visiblePagesCount - 1
-                        )
-                    "
+                               state.currentPage + state.visiblePagesCount - 1
+                        )  
+                    " 
                     class="btn control-btn"
                 >
                     <lew-icon size="14" type="more-horizontal" />
@@ -190,6 +203,7 @@ const checkPageNum = (value: any) => {
         align-items: center;
         justify-content: center;
         height: 26px;
+        line-height: 1;
         min-width: 26px;
         padding: 0px 4px;
         box-sizing: border-box;
