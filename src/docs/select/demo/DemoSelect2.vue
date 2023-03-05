@@ -94,7 +94,7 @@ const get = () => {
 
 <template>
     <div>
-        <lew-form style="width: 350px" direction="x" label-width="80px">
+        <lew-form style="width: 350px" direction="y" label-width="80px">
             <lew-form-item label="小的">
                 <LewSelect
                     v-model="v"

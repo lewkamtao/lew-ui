@@ -9,7 +9,7 @@ export type LewSelectOptions = {
 export const selectProps = {
     modelValue: {
         // 父组件 v-model 没有指定参数名，则默认是 modelValue
-        type: [String, Array<string>],
+        type: [String, Number, Array<string>],
         required: true,
     },
     options: {
@@ -20,11 +20,6 @@ export const selectProps = {
         required: true,
         validator(options: LewSelectOptions[]) {
             const _options = toRaw(options);
-            if (_options.length == 0) {
-                throw new Error(
-                    'lew-select：options 必须为长度大于 0 的 Array'
-                );
-            }
             const arr = _options.map((e) => e.value);
             const newSet = new Set(arr);
             // 检查重复

@@ -1,3 +1,7 @@
+textarea {
+    font-family: inherit;
+}
+
 .tippy-box {
     border-radius: var(--lew-border-radius) !important;
 }
@@ -13,5 +17,42 @@
     .tippy-content {
         padding: 0px;
         box-sizing: border-box !important;
+    }
+}
+
+.skeletons {
+    width: 200%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.skeletons {
+    /* 内容区域空状态时的样式 */
+    background-color: #f2f2f2;
+}
+
+.skeletons::after {
+    /* 内容区域空状态时追加骨架屏样式 */
+    content: '';
+    display: block;
+    width: 200%;
+    height: 100%;
+    background-size: 400% 100%;
+    background-position: 100% 50%;
+    background-image: linear-gradient( 90deg, rgb(214, 214, 214) 25%, #fff 37%, rgb(203, 203, 203) 63%);
+    animation: skeleton-loading 1.5s ease infinite;
+}
+
+.lew-dark .skeletons::after {
+    /* 内容区域空状态时追加骨架屏样式 */
+    background-image: linear-gradient( 90deg, rgb(84, 84, 84) 25%, rgb(116, 116, 116) 37%, rgb(58, 58, 58) 63%);
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0 50%;
     }
 }

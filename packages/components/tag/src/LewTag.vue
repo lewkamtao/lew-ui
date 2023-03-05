@@ -47,13 +47,8 @@ const getSize = computed(() => {
         <div class="lew-tag-right">
             <slot name="right"></slot>
         </div>
-        <div class="lew-tag-close">
-            <lew-icon
-                v-if="closable"
-                @click.stop="close"
-                :size="getSize"
-                type="x"
-            />
+        <div class="lew-tag-close" v-if="closable">
+            <lew-icon @click.stop="close" :size="getSize" type="x" />
         </div>
     </div>
 </template>

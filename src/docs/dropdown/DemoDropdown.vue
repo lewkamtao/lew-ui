@@ -55,12 +55,6 @@ const docsTable = ref([
         type: 'string(px)',
         default: "''",
     },
-    {
-        param: 'arrow',
-        description: '是否显示箭头',
-        type: 'boolean',
-        default: 'false',
-    },
 ]);
 </script>
 

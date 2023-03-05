@@ -4,7 +4,8 @@ import { PropType } from 'vue';
 export type Alert = {
     type: string;
     title: string;
-    content: string;
+    content?: string;
+    isShowCloseBtn?: boolean;
 };
 
 export const _props = {

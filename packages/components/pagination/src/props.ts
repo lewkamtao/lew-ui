@@ -10,28 +10,26 @@ export const _props = {
         type: Number,
         default: 100,
     },
+
     // 绑定值
-    pageNum: {
+    currentPage: {
         // 父组件 v-model 没有指定参数名，则默认是 modelValue
         type: Number,
         default: 1,
     },
+
     // 绑定值
     pageSize: {
         // 父组件 v-model 没有指定参数名，则默认是 modelValue
         type: Number,
-        default: 20,
+        default: 10,
     },
 
-    pageShowSize: {
+    visiblePagesCount: {
         type: Number,
-        default: 2,
+        default: 5,
     },
 
-    round: {
-        type: Boolean,
-        default: false,
-    },
     pageSizeOptions: {
         type: Array as PropType<Options[]>,
         default() {

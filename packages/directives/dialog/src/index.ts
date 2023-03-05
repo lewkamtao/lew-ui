@@ -2,9 +2,7 @@ import _LewDialog from './LewDialog.vue';
 type Options = {
     title: string;
     content: string;
-    // eslint-disable-next-line @typescript-eslint/ban-types
     ok: Function;
-    // eslint-disable-next-line @typescript-eslint/ban-types
     cancel: Function;
     layout: string;
     closeOnClickOverlay?: boolean;

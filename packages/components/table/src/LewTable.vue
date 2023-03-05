@@ -11,9 +11,9 @@ let rightIndex = ref<number>(-1);
 
 const setSubLine = () => {
     props.columns.map((e, i) => {
-        if (e.sticky == 'left') {
+        if (e.sticky === 'left') {
             leftIndex.value = i;
-        } else if (e.sticky == 'right' && rightIndex.value == -1) {
+        } else if (e.sticky === 'right' && rightIndex.value === -1) {
             rightIndex.value = i;
             if (
                 lewTableRef.value!.scrollWidth != lewTableRef.value!.offsetWidth
@@ -39,9 +39,9 @@ const setShowLine = (e: any) => {
 
 // 设置粘住左右
 const setSticky = (column: any) => {
-    if (column.sticky == 'left') {
+    if (column.sticky === 'left') {
         return `position: sticky;left:${column.offsetX || '0px'};z-index:1;`;
-    } else if (column.sticky == 'right') {
+    } else if (column.sticky === 'right') {
         return `position: sticky;right:${column.offsetX || '0px'};z-index:1;`;
     }
 };
@@ -49,11 +49,11 @@ const setSticky = (column: any) => {
 // 设置单元格宽度
 let niceWidth = ref<string>('');
 const setWidth = () => {
-    let sw = lewTableRef.value!.scrollWidth;
-    let w = lewTableRef.value!.offsetWidth;
-
+    let sw = lewTableRef.value.scrollWidth;
+    let w = lewTableRef.value.offsetWidth;
+    niceWidth.value = '';
     if (w >= sw) {
-        let autoLen = props.columns.filter((e) => e.width == 'auto').length;
+        let autoLen = props.columns.filter((e) => e.width === 'auto').length;
         let wTotal = 0;
 
         props.columns
@@ -61,14 +61,14 @@ const setWidth = () => {
             .map((e) => {
                 wTotal += parseFloat(e.width);
             });
-        niceWidth.value = `${(w - wTotal) / autoLen - 3}px`;
+        niceWidth.value = `${(w - wTotal) / autoLen}px`;
     }
 };
 
 // 防抖
 let lock = false;
 const throttle = (e: any, delay: any) => {
-    if (leftIndex.value == -1 && rightIndex.value == -1) {
+    if (leftIndex.value === -1 && rightIndex.value === -1) {
         return;
     }
     if (!lock) {
@@ -81,10 +81,19 @@ const throttle = (e: any, delay: any) => {
     }
 };
 
-onMounted(() => {
+const init = () => {
     setWidth();
     // 设置固定单元格的阴影
     setSubLine();
+};
+
+onMounted(() => {
+    init();
+    window.addEventListener('resize', init);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('resize', init);
 });
 </script>
 
@@ -92,8 +101,10 @@ onMounted(() => {
     <div
         ref="lewTableRef"
         class="lew-table"
-        :style="`max-height:${maxHeight};width:${width};overflow-x: auto;
-    overflow-y:${maxHeight ? 'auto' : 'hidden'};`"
+        :style="`max-height:${maxHeight};width:${width};
+    overflow-y:${maxHeight ? 'auto' : 'hidden'};overflow-x:${
+            niceWidth ? 'hidden' : 'auto'
+        };`"
         @scroll="throttle($event, 200)"
     >
         <div class="lew-table-head">
@@ -110,22 +121,19 @@ onMounted(() => {
                     :key="`columns${index}`"
                     class="lew-table-td"
                     :class="{
-                        'lew-table-left-subline': index == leftIndex,
-                        'lew-table-right-subline': index == rightIndex,
+                        'lew-table-left-subline': index === leftIndex,
+                        'lew-table-right-subline': index === rightIndex,
                         'lew-table-left-subline-show':
-                            index == leftIndex && isShowLeftLine,
+                            index === leftIndex && isShowLeftLine,
                         'lew-table-right-subline-show':
-                            index == rightIndex && isShowRightLine,
+                            index === rightIndex && isShowRightLine,
                     }"
                     :style="`
-                    ${column.columnStyle ? column.columnStyle : ''};
-                    ${setSticky(column)};   
-                    width:${
-                        column.width != 'auto'
-                            ? column.width
-                            : niceWidth || '100px'
-                    };
-                    `"
+${column.columnStyle ? column.columnStyle : ''};
+${setSticky(column)};   
+width:${column.width != 'auto' ? column.width : niceWidth || '100px'};
+
+`"
                     :x="column.x || 'start'"
                     :y="column.y"
                 >
@@ -149,28 +157,20 @@ onMounted(() => {
                     :key="`col${j}`"
                     class="lew-table-td"
                     :class="{
-                        'lew-table-left-subline': j == leftIndex,
-                        'lew-table-right-subline': j == rightIndex,
+                        'lew-table-left-subline': j === leftIndex,
+                        'lew-table-right-subline': j === rightIndex,
                         'lew-table-left-subline-show':
-                            j == leftIndex && isShowLeftLine,
+                            j === leftIndex && isShowLeftLine,
                         'lew-table-right-subline-show':
-                            j == rightIndex && isShowRightLine,
+                            j === rightIndex && isShowRightLine,
                     }"
                     :style="`  
-                    ${column.columnStyle ? column.columnStyle : ''};
-                    ${row.rowStyle};
-                    ${
-                        row.tdStyle?.[column.field]
-                            ? row.tdStyle[column.field]
-                            : ''
-                    };
-                    ${setSticky(column)};
-                    width:${
-                        column.width != 'auto'
-                            ? column.width
-                            : niceWidth || '100px'
-                    };
-                    `"
+${column.columnStyle ? column.columnStyle : ''};
+${row.rowStyle};
+${row.tdStyle?.[column.field] ? row.tdStyle[column.field] : ''};
+${setSticky(column)};
+width:${column.width != 'auto' ? column.width : niceWidth || '100px'};
+`"
                     :x="column.x || 'start'"
                     :y="column.y"
                 >
@@ -192,12 +192,14 @@ onMounted(() => {
     font-size: 14px;
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     border-radius: var(--lew-border-radius);
+
     .lew-table-head {
         position: sticky;
         top: 0;
         z-index: 9;
         display: flex;
         align-items: center;
+
         .lew-table-td {
             font-weight: 600;
             color: var(--lew-text-color-3);
@@ -228,6 +230,7 @@ onMounted(() => {
             rgba(0, 0, 0, 0)
         );
     }
+
     .lew-table-right-subline::after {
         position: absolute;
         left: -12px;
@@ -245,6 +248,7 @@ onMounted(() => {
             rgba(0, 0, 0, 0)
         );
     }
+
     .lew-table-left-subline-show::after,
     .lew-table-right-subline-show::after {
         opacity: 1;
@@ -263,11 +267,13 @@ onMounted(() => {
         border-bottom: var(--lew-form-border-width) var(--lew-form-border-color)
             solid;
     }
+
     .lew-table-tr:last-child {
         .lew-table-td {
             border-bottom: 0px var(--lew-form-border-color) solid;
         }
     }
+
     .lew-table-head {
         .lew-table-tr:last-child {
             .lew-table-td {
@@ -285,6 +291,7 @@ onMounted(() => {
             color: var(--lew-text-color-5);
         }
     }
+
     .lew-table-tr:hover {
         .lew-table-td {
             background-color: var(--lew-bgcolor-1);

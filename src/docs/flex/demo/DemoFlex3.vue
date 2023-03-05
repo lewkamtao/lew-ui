@@ -1,34 +1,34 @@
 <template>
     <div>
         <div class="demo">
-            <lew-flex direction="row" x="start" y="start" mode="between">
+            <lew-flex direction="x" x="start" y="center" mode="between">
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
             </lew-flex>
-            <lew-flex direction="row" x="center" y="start" mode="around">
+            <lew-flex direction="x" x="center" y="center" mode="around">
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
             </lew-flex>
-            <lew-flex direction="row" x="center" y="start">
+            <lew-flex direction="x" x="center" y="center">
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
             </lew-flex>
         </div>
         <div class="demo">
-            <lew-flex direction="column" x="start" y="start" mode="between">
+            <lew-flex direction="y" x="start" y="start" mode="between">
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
             </lew-flex>
-            <lew-flex direction="column" x="center" y="start" mode="around">
+            <lew-flex direction="y" x="center" y="start" mode="around">
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
             </lew-flex>
-            <lew-flex direction="column" x="center" y="start">
+            <lew-flex direction="y" x="center" y="center">
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>

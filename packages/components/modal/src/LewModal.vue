@@ -42,9 +42,6 @@ watch(
 
 const maskClick = () => {
     emit('maskClick');
-    setTimeout(() => {
-        _visible.value = false;
-    }, 250);
 };
 </script>
 
@@ -96,10 +93,12 @@ const maskClick = () => {
         animation-fill-mode: forwards;
     }
 }
+
 .lew-modal-enter-active,
 .lew-modal-leave-active {
     transition: all 0.25s;
 }
+
 .lew-modal-enter-from,
 .lew-modal-leave-to {
     opacity: 0;
@@ -109,6 +108,7 @@ const maskClick = () => {
 .lew-modal-box-leave-active {
     transition: all 0.25s;
 }
+
 .lew-modal-box-enter-from,
 .lew-modal-box-leave-to {
     opacity: 0;

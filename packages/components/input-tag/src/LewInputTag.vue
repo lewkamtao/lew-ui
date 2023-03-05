@@ -26,8 +26,8 @@ const openInput = () => {
     });
 
     document.onkeydown = function (event) {
-        if (inputValue.value == '') {
-            if (event.keyCode == 8 || event.keyCode == 46) {
+        if (inputValue.value === '') {
+            if (event.keyCode === 8 || event.keyCode === 46) {
                 clearTimeout(delDownTimer);
                 delDownTimer = setTimeout(() => {
                     delDownCheck = 0;
@@ -39,7 +39,7 @@ const openInput = () => {
                 }
             }
         } else {
-            if (event.keyCode == 13) {
+            if (event.keyCode === 13) {
                 isEnter = true;
             }
         }

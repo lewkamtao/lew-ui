@@ -1,5 +1,5 @@
 <template>
-    <lew-flex direction="column">
+    <lew-flex direction="y">
         <lew-flex wrap x="start" gap="20px">
             <lew-button type="blank">小</lew-button>
             <lew-button type="primary" is-icon size="small" disabled>

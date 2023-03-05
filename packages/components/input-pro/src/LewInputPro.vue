@@ -42,7 +42,7 @@ const selectFn = (e: Options) => {
 };
 
 const open = () => {
-    if (props.options.length == 0) return;
+    if (props.options.length === 0) return;
     lewDropdownRef.value.show();
 };
 const hide = () => {
@@ -63,7 +63,6 @@ const focus = (e: any) => {
             ref="lewDropdownRef"
             style="width: 100%"
             :trigger="trigger"
-            :arrow="arrow"
             :placement="placement"
             :align="align"
             :width="parseFloat(popoverWidth) - 12 + 'px'"

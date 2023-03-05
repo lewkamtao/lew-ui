@@ -66,19 +66,19 @@ const columns = [
     },
     {
         title: '年龄',
-        width: '80px',
+        width: 'auto',
         field: 'age',
         x: 'center',
     },
     {
         title: '性别',
-        width: '80px',
+        width: 'auto',
         field: 'sex',
         x: 'center',
     },
     {
         title: '成绩',
-        width: '100px',
+        width: 'auto',
         field: 'fraction',
         x: 'center',
     },
@@ -91,9 +91,9 @@ const columns = [
 
 const formatSex = (sex: number) => {
     switch (true) {
-        case sex == 0:
+        case sex === 0:
             return '女';
-        case sex == 1:
+        case sex === 1:
             return '男';
         default:
             return '未知';
@@ -107,7 +107,7 @@ const formatSex = (sex: number) => {
         <template #info="{ row }">
             <lew-flex class="info">
                 <lew-avatar :src="row.avatar" round />
-                <lew-flex class="right" direction="column" x="start" gap="0px">
+                <lew-flex class="right" direction="y" x="start" gap="0px">
                     <div class="name">{{ row.name }}</div>
                     <div class="mail">{{ row.mail }}</div>
                 </lew-flex>

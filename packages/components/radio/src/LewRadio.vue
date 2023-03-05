@@ -2,11 +2,11 @@
     <label
         class="lew-radio"
         :class="`
-        ${block ? 'lew-radio-block' : ''}  
-        ${checked ? 'lew-radio-checked' : ''}   
-        ${!iconable ? 'lew-radio-unicon' : ''}
-        ${size ? 'lew-radio-' + size : ''} 
-        `"
+    ${block ? 'lew-radio-block' : ''}  
+    ${checked ? 'lew-radio-checked' : ''}   
+    ${!iconable ? 'lew-radio-unicon' : ''}
+    ${size ? 'lew-radio-' + size : ''} 
+    `"
     >
         <div class="icon-radio-box" v-if="iconable">
             <div class="icon-radio"></div>
@@ -63,6 +63,7 @@ const setChecked = () => {
     font-size: 14px;
     border-radius: 50px;
     transition: var(--lew-form-transition);
+
     .icon-radio-box {
         display: inline-flex;
         align-items: center;
@@ -75,6 +76,7 @@ const setChecked = () => {
         overflow: hidden;
         border-radius: 50%;
         background-color: var(--lew-bgcolor-0);
+        outline: 0px var(--lew-primary-color-light) solid;
         .icon-radio {
             width: 50%;
             height: 50%;
@@ -86,6 +88,7 @@ const setChecked = () => {
             border-radius: 50%;
         }
     }
+
     .lew-radio-label {
         margin-left: 6px;
     }
@@ -93,6 +96,7 @@ const setChecked = () => {
 
 .lew-radio-small {
     font-size: 13px;
+
     .icon-radio-box {
         width: 14px;
         height: 14px;
@@ -101,6 +105,7 @@ const setChecked = () => {
 
 .lew-radio-medium {
     font-size: 14px;
+
     .icon-radio-box {
         width: 16px;
         height: 16px;
@@ -109,6 +114,7 @@ const setChecked = () => {
 
 .lew-radio-large {
     font-size: 15px;
+
     .icon-radio-box {
         width: 18px;
         height: 18px;
@@ -117,6 +123,7 @@ const setChecked = () => {
 
 .lew-radio-unicon.lew-radio-block {
     padding: 4px 12px;
+
     .lew-radio-label {
         color: var(--lew-text-color-6);
     }
@@ -127,16 +134,20 @@ const setChecked = () => {
         color: var(--lew-primary-color-dark);
     }
 }
+
 .lew-radio:hover {
     .icon-radio-box {
         border: 2px var(--lew-form-border-color-active) solid;
+        outline: 3px var(--lew-primary-color-light) solid;
     }
 }
+
 .lew-radio-block {
     background: var(--lew-form-bgcolor);
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     padding: 3px 8px 3px 4px;
     border-radius: 50px;
+
     .lew-radio-label {
         margin-left: 2px;
     }
@@ -155,11 +166,13 @@ const setChecked = () => {
     background: var(--lew-primary-color-light);
     color: var(--lew-primary-color-dark);
 }
+
 .lew-radio-checked.lew-radio-block:hover {
     border: var(--lew-form-border-width) var(--lew-primary-color) solid;
     background: var(--lew-primary-color-light);
     color: var(--lew-primary-color-dark);
 }
+
 .lew-radio-checked {
     .icon-radio-box {
         border: 2px var(--lew-primary-color) solid;
@@ -171,12 +184,14 @@ const setChecked = () => {
         }
     }
 }
+
 .lew-radio-checked:hover {
     .icon-radio-box {
         border: 2px var(--lew-primary-color) solid;
         background: var(--lew-primary-color);
     }
 }
+
 .lew-radio-block.lew-radio-checked {
     .icon-radio-box {
         border: 2px var(--lew-primary-color-light) solid;
@@ -192,9 +207,11 @@ const setChecked = () => {
 
 .lew-radio-block.lew-radio-checked:hover {
     background: var(--lew-primary-color-light);
+
     .icon-radio-box {
         border: 2px var(--lew-primary-color-light) solid;
     }
+
     .icon-radio {
         background-color: var(--lew-primary-color-dark);
         opacity: 1;

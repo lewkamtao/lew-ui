@@ -20,10 +20,7 @@ export const _props = {
         type: String,
         default: 'bottom',
     },
-    arrow: {
-        type: Boolean,
-        default: true,
-    },
+
     width: {
         type: String,
         default: '',

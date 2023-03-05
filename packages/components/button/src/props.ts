@@ -1,11 +1,15 @@
 export const _props = {
     type: {
         type: String,
-        default: 'primary',
+        default: () => {
+            return 'primary';
+        },
     },
     size: {
         type: String,
-        default: 'medium',
+        default: () => {
+            return 'medium';
+        },
     },
     loading: {
         type: Boolean,

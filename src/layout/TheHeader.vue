@@ -4,21 +4,37 @@ import { useRoute, useRouter } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
 const changeMode = (mode: string) => {
-    if (mode == 'dark') {
+    if (mode === 'dark') {
         document.getElementsByTagName('html')[0].classList.add('lew-dark');
-        localStorage.setItem('mode', 'dark');
     } else {
         document.getElementsByTagName('html')[0].classList.remove('lew-dark');
-        localStorage.setItem('mode', 'light');
     }
 };
 
 onMounted(() => {
-    changeMode(localStorage.getItem('mode') || 'light');
+    changeMode(
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light'
+    );
+    let media = window.matchMedia('(prefers-color-scheme: dark)');
+    let callback = (e: any) => {
+        let prefersDarkMode = e.matches;
+        if (prefersDarkMode) {
+            changeMode('dark');
+        } else {
+            changeMode('light');
+        }
+    };
+    if (typeof media.addEventListener === 'function') {
+        media.addEventListener('change', callback);
+    } else if (typeof media.addListener === 'function') {
+        media.addListener(callback);
+    }
 });
 
 const gohome = () => {
-    if (route.name == 'R-LewHome') {
+    if (route.name === 'R-LewHome') {
         LewMessage.warning('你已经在首页了！');
     } else {
         router.push(`/`);
@@ -46,7 +62,7 @@ const gohome = () => {
                 type="info"
                 size="small"
                 style="margin-left: 10px"
-                >Beta v1.1.14</lew-tag
+                >Beta v1.1.26</lew-tag
             >
         </div>
         <lew-flex gap="15px" x="end" class="menu">
@@ -148,6 +164,7 @@ const gohome = () => {
 
         .menu {
             gap: 5px !important;
+
             .menu-item {
                 margin-right: 5px;
                 padding: 5px;

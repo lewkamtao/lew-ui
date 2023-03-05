@@ -25,7 +25,7 @@ defineProps(_props);
                 class="lew-breadcrumb-parting"
             >
                 <svg
-                    v-if="iconType == 'sprit'"
+                    v-if="iconType === 'sprit'"
                     viewBox="0 0 48 48"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@ defineProps(_props);
                 </svg>
 
                 <svg
-                    v-if="iconType == 'shoulder'"
+                    v-if="iconType === 'shoulder'"
                     viewBox="0 0 48 48"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"

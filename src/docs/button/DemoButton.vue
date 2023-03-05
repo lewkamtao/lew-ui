@@ -85,17 +85,15 @@ const docsTable = ref([
 <template>
     <div class="demo-wrapper">
         <lew-title>Button</lew-title>
-        <p class="sub-title">
-            这里仅用了一个元素来实现这个组件，我希望Lew是极简的。
-        </p>
-        <lew-demo-box title="普通" :code="DemoButton1_code"
-            ><demo-button1 />
+        <p class="sub-title">赏心悦目的异步效果</p>
+        <lew-demo-box title="普通" :code="DemoButton1_code">
+            <demo-button1 />
         </lew-demo-box>
-        <lew-demo-box title="尺寸" :code="DemoButton2_code"
-            ><demo-button2 />
+        <lew-demo-box title="尺寸" :code="DemoButton2_code">
+            <demo-button2 />
         </lew-demo-box>
-        <lew-demo-box title="圆形" :code="DemoButton3_code"
-            ><demo-button3 />
+        <lew-demo-box title="圆形" :code="DemoButton3_code">
+            <demo-button3 />
         </lew-demo-box>
         <lew-demo-box title="加载" :code="DemoButton4_code"
             ><demo-button4 />

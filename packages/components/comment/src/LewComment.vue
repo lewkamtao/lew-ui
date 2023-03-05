@@ -8,12 +8,7 @@ defineProps(_props);
         <div class="avatar">
             <slot name="avatar"> </slot>
         </div>
-        <lew-flex
-            direction="column"
-            gap="0px"
-            x="start"
-            class="lew-comment-body"
-        >
+        <lew-flex direction="y" gap="0px" x="start" class="lew-comment-body">
             <div class="header"><slot name="header"> </slot></div>
             <div class="content"><slot name="content"> </slot></div>
             <div class="footer"><slot name="footer"> </slot></div>

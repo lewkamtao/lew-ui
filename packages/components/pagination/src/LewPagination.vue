@@ -1,199 +1,183 @@
 <script lang="ts" setup>
+import { stat } from 'fs';
 import { _props } from './props';
 const props = defineProps(_props);
 
-const generateArray = (start: any, end: any) => {
-    return Array.from(new Array(end + 1).keys()).slice(start);
-};
+const emit = defineEmits(['update:currentPage', 'update:pageSize', 'change']);
 
-let pageNum = ref(props.pageNum);
-let pageSize = ref(props.pageSize);
-
-watch(
-    () => props.pageNum,
-    (v) => {
-        changePage(false, v);
-        emit('change', {
-            pageNum: pageNum.value,
-            pageSize: pageSize.value,
-            total: props.total,
-            pageShowSize: props.pageShowSize,
-        });
-    }
-);
-
-watch(
-    () => props.pageSize,
-    (v) => {
-        pageSize.value = v;
-    }
-);
-
-let maxLen = computed(() => {
-    return Math.ceil(props.total / pageSize.value);
+const state = reactive({
+    currentPage: props.currentPage,
+    pageSize: props.pageSize,
+    total: props.total,
+    visiblePagesCount: props.visiblePagesCount,
+    pageSizeOptions: props.pageSizeOptions,
+    toPage: undefined, 
 });
 
-let pageInterval = computed(() => {
-    let start = pageNum.value - props.pageShowSize;
-    let end = pageNum.value + props.pageShowSize;
+watchEffect(() => {
+    emit('update:currentPage', state.currentPage);
+    emit('update:pageSize', state.pageSize);
+    state.total = props.total;
+    let _visiblePagesCount= props.visiblePagesCount
+     if(_visiblePagesCount<5){
+            _visiblePagesCount =  5   
+    } 
+    if(_visiblePagesCount>12){ 
+        _visiblePagesCount = 12       
+    } 
+    console.log(_visiblePagesCount);
+    
+    state.visiblePagesCount = _visiblePagesCount;
 
-    if (pageNum.value <= props.pageShowSize) {
-        start = 1;
-        end = props.pageShowSize * 2;
-    }
-
-    if (pageNum.value >= maxLen.value - props.pageShowSize) {
-        start = maxLen.value - props.pageShowSize * 2;
-        end = maxLen.value;
-    }
-
-    if (start <= 0) {
-        start = 1;
-    }
-
-    if (maxLen.value <= props.pageShowSize * 2 + 7) {
-        start = 1;
-        end = maxLen.value;
-    }
-
-    if (end == 1 && props.total > pageSize.value) {
-        end += 1;
-    }
-
-    let pageArr = generateArray(start, end);
-
-    if (pageArr.length < 1) {
-        pageArr = [1];
-    }
-
-    return pageArr;
 });
 
-const emit = defineEmits(['update:pageNum', 'update:pageSize', 'change']);
+const totalPages = computed(() => Math.ceil(state.total / state.pageSize));
 
-const changePage = (type: any, num: number) => {
-    if (type == 'next') {
-        pageNum.value += num;
-    } else if (type == 'prve') {
-        pageNum.value -= num;
-    } else {
-        pageNum.value = num;
+const visiblePages = computed(() => {
+    let visiblePagesCount = state.visiblePagesCount;
+    const currentPage = state.currentPage;
+    const totalPages = Math.ceil(state.total / state.pageSize);
+
+    let startPage = currentPage - Math.floor(visiblePagesCount / 2);
+    if (startPage < 1) {
+        startPage = 1;
     }
-
-    if (pageNum.value < 1) {
-        pageNum.value = 1;
-    } else if (pageNum.value > maxLen.value) {
-        pageNum.value = maxLen.value;
+    let endPage = startPage + visiblePagesCount - 1;
+    if (endPage > totalPages) {
+        endPage = totalPages;
+        startPage = endPage - visiblePagesCount + 1;
+        if (startPage < 1) {
+            startPage = 1;
+        }
     }
+    const visiblePages = [];
+    for (let i = startPage; i <= endPage; i++) {
+        visiblePages.push(i);
+    }
+    return visiblePages;
+});
 
-    emit('update:pageNum', pageNum.value);
-    emit('update:pageSize', pageSize.value);
-};
-
-let pageSizebackup = ref('20');
-
-const checkPageSize = (e: any) => {
-    if (!e) {
+const changePage = (page: number) => {
+    page = Math.floor(page)  
+ 
+    if (page < 1 || page > totalPages.value || page === state.currentPage) {
         return;
     }
+    emit('change', {
+        currentPage: state.currentPage,
+        pageSize: state.pageSize,
+    });
+    state.currentPage = page;
+};
 
-    let pageSizeStr = e;
-    pageSizeStr = e.replace(/[^\d]/g, '');
-    let pageSizeNum = Number(pageSizeStr);
-    if (pageSizeNum < 1) {
-        pageSizeNum = 1;
+// 是否显示省略号
+const startEllipsis = computed(() => visiblePages.value[0] > 2);
+const endEllipsis = computed(
+    () =>
+        visiblePages.value[visiblePages.value.length - 1] < totalPages.value - 1
+);
+
+// 是否显示最大和最小页码
+const showOne = computed(() => visiblePages.value[0] > 1);
+const showMax = computed(
+    () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value
+);
+
+const checkPageSize = (value: any) => {
+    state.pageSize = value;
+    changePage(state.currentPage);
+};
+
+const checkPageNum = (value: any) => {
+    let page = Number(value);
+    state.toPage = undefined;
+    if (page > totalPages.value || page < 1) {
+        return;
     }
-    pageSize.value = pageSizeNum;
-    changePage(false, pageNum.value);
+    state.currentPage = page;
+    changePage(value);
 };
 </script>
 
 <template>
-    <div
-        class="lew-pagination"
-        :class="{
-            'lew-pagination-round': round,
-        }"
-    >
-        <lew-flex class="lew-pagination-control" gap="5px">
+    <div class="lew-pagination">
+        <lew-flex class="control" gap="10px">
+            <slot name="left" />
+
             <lew-flex class="lew-pagination-page-box" gap="5px">
-                <div
-                    @click="changePage('prve', 1)"
-                    class="lew-pagination-page-btn lew-pagination-control-btn"
-                >
+                <div class="btn" @click="changePage(state.currentPage - 1)">
                     <lew-icon size="14" type="chevron-left" />
                 </div>
                 <div
-                    v-show="
-                        pageNum - 1 > pageShowSize &&
-                        maxLen > pageShowSize * 2 + 7
-                    "
-                    class="lew-pagination-page-btn"
-                    @click="changePage(false, 1)"
+                    v-if="showOne"
+                    class="btn lew-pagination-page-btn"
+                    @click="changePage(1)"
                 >
                     1
                 </div>
                 <div
-                    v-show="
-                        pageNum - 1 > pageShowSize &&
-                        maxLen > pageShowSize * 2 + 7 &&
-                        pageInterval[0] != 1 + 1
+                    v-if="startEllipsis"
+                    @click="
+                        changePage(
+                            state.currentPage - state.visiblePagesCount + 1
+                        )
                     "
-                    class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('prve', pageShowSize * 2)"
+                    class="btn control-btn"
                 >
                     <lew-icon size="14" type="more-horizontal" />
                 </div>
-
                 <div
-                    v-for="(item, index) in pageInterval"
+                    v-for="(page, index) in visiblePages"
                     :key="index"
-                    class="lew-pagination-page-btn"
-                    :class="{ active: item == pageNum }"
-                    @click="changePage(false, item)"
+                    class="btn"
+                    :class="{
+                        active: Number(page) === Number(state.currentPage),
+                    }"
+                    @click="changePage(page)"
                 >
-                    {{ item }}
+                    {{ page }}
                 </div>
-
                 <div
-                    v-show="
-                        pageNum < maxLen - pageShowSize &&
-                        maxLen > pageShowSize * 2 + 7 &&
-                        pageInterval[pageInterval.length - 1] + 1 != maxLen
-                    "
-                    class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('next', pageShowSize * 2)"
+                    v-if="endEllipsis"
+                    @click="
+                        changePage(
+                               state.currentPage + state.visiblePagesCount - 1
+                        )  
+                    " 
+                    class="btn control-btn"
                 >
                     <lew-icon size="14" type="more-horizontal" />
                 </div>
-
                 <div
-                    v-show="
-                        pageNum < maxLen - pageShowSize &&
-                        maxLen > pageShowSize * 2 + 7
-                    "
-                    class="lew-pagination-page-btn"
-                    @click="changePage(false, maxLen)"
+                    v-if="showMax"
+                    class="btn lew-pagination-page-btn"
+                    @click="changePage(totalPages)"
                 >
-                    {{ maxLen }}
+                    {{ totalPages }}
                 </div>
-                <div
-                    class="lew-pagination-page-btn lew-pagination-control-btn"
-                    @click="changePage('next', 1)"
-                >
+                <div class="btn" @click="changePage(state.currentPage + 1)">
                     <lew-icon size="14" type="chevron-right" />
                 </div>
             </lew-flex>
             <lew-select
                 style="width: 100px"
                 align="center"
-                v-model="pageSizebackup"
+                v-model="state.pageSize"
                 @change="checkPageSize"
                 size="small"
                 :show-icon="false"
                 :options="pageSizeOptions"
             >
             </lew-select>
+            <lew-input
+                size="small"
+                align="center"
+                placeholder="跳转至"
+                auto-width
+                v-model="state.toPage"
+                @change="checkPageNum"
+            />
+            <slot name="right" />
         </lew-flex>
     </div>
 </template>
@@ -207,35 +191,35 @@ const checkPageSize = (e: any) => {
     user-select: none;
     font-size: 14px;
 
-    .lew-pagination-control {
+    .control {
         height: 100%;
         color: var(--lew-text-color-7);
     }
 
+    .btn {
+        position: relative;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 26px;
+        line-height: 1;
+        min-width: 26px;
+        padding: 0px 4px;
+        box-sizing: border-box;
+        border-radius: var(--lew-border-radius);
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: var(--lew-primary-color-light);
+        color: var(--lew-primary-color-dark);
+    }
     .lew-pagination-page-box {
         width: auto;
         position: relative;
         height: 100%;
-
-        .lew-pagination-page-btn {
-            position: relative;
-            z-index: 2;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            height: 26px;
-            min-width: 26px;
-            padding: 0px 4px;
-            box-sizing: border-box;
-            border-radius: var(--lew-border-radius);
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .lew-pagination-page-btn:hover {
-            background-color: var(--lew-primary-color-light);
-            color: var(--lew-primary-color-dark);
-        }
 
         .active {
             background-color: var(--lew-primary-color);
@@ -247,7 +231,7 @@ const checkPageSize = (e: any) => {
             color: var(--lew-white-text-color);
         }
 
-        .lew-pagination-control-btn {
+        .control-btn {
             padding: 0px;
         }
     }
@@ -255,14 +239,6 @@ const checkPageSize = (e: any) => {
     .page-label {
         white-space: nowrap;
         padding: 0px 5px;
-    }
-}
-
-.lew-pagination-round {
-    .lew-pagination-page-box {
-        .lew-pagination-page-btn {
-            border-radius: 30px;
-        }
     }
 }
 </style>

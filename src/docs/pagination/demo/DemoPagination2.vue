@@ -1,7 +1,3 @@
 <template>
-    <lew-pagination
-        :total="50000000"
-        round
-        :page-show-size="3"
-    ></lew-pagination>
+    <lew-pagination :total="15000000" :visible-pages-count="7"></lew-pagination>
 </template>

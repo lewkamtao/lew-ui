@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { selectProps, LewSelectOptions } from './props';
 import { LewCheckbox, LewPopover } from 'lew-ui';
-
+import { isArray, isNumber, isString } from 'lodash';
 const props = defineProps(selectProps);
 const v = ref<string>('');
 const multipleV = ref<Array<string>>([]);
@@ -23,12 +23,12 @@ watch(
                 props.modelValue,
                 props.options
             );
-        } else if (typeof props.modelValue == 'string') {
+        } else if (typeof props.modelValue === 'string') {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             v.value = props.modelValue;
             labelStr.value =
-                props.options?.find((e) => e.value == props.modelValue)
+                props.options?.find((e) => e.value === props.modelValue)
                     ?.label || '';
         }
     },
@@ -42,7 +42,7 @@ const filterSelect = (v: string[], options: LewSelectOptions[]) => {
     if (v && options) {
         v.map((e: string) => {
             options.map((o) => {
-                if (e == o.value) {
+                if (e === o.value) {
                     _v.push(o.label);
                 }
             });
@@ -54,7 +54,11 @@ const filterSelect = (v: string[], options: LewSelectOptions[]) => {
 const emit = defineEmits(['update:modelValue', 'change']);
 
 const getChecked = (_value: string) => {
-    return props.modelValue?.includes(_value);
+    if (isArray(props.modelValue)) {
+        return props.modelValue?.includes(_value);
+    } else {
+        return props.modelValue == _value;
+    }
 };
 
 let isShowOptions = ref(false);
@@ -67,7 +71,7 @@ const delTag = (i: number) => {
     multipleLabelStr.value.splice(i, 1);
     emit('update:modelValue', multipleV.value);
     emit('change', { value: multipleV.value, show, hide });
-    if (i == 0 && multipleV.value.length == 0) {
+    if (i === 0 && multipleV.value.length === 0) {
         lewPopverRef2.value.hide();
     }
 };
@@ -77,7 +81,7 @@ const lewSelectWidth = computed(
 );
 
 const check = (item: LewSelectOptions, checked: boolean) => {
-    if (props.modelValue instanceof Array) {
+    if (isArray(props.modelValue)) {
         let updatedValue = [...props.modelValue];
         if (checked) {
             updatedValue.push(item.value);
@@ -91,7 +95,12 @@ const check = (item: LewSelectOptions, checked: boolean) => {
             v.value = item.value;
             emit('change', item.value);
         }
-        emit('update:modelValue', item.value);
+        console.log();
+        if (isNumber(props.modelValue)) {
+            emit('update:modelValue', Number(item.value));
+        } else {
+            emit('update:modelValue', item.value);
+        }
         hide();
     }
 };
@@ -110,9 +119,9 @@ onMounted(() => {
     // 如果是多选
     if (props.multiple && props.modelValue instanceof Array) {
         multipleLabelStr.value = filterSelect(props.modelValue, props.options);
-    } else if (typeof props.modelValue == 'string') {
+    } else if (typeof props.modelValue === 'string') {
         labelStr.value = labelStr.value =
-            props.options?.find((e) => e.value == props.modelValue)?.label ||
+            props.options?.find((e) => e.value === props.modelValue)?.label ||
             '';
     }
 });
@@ -125,7 +134,6 @@ onMounted(() => {
         :class="{ 'lew-select-focus': isShowOptions }"
         :trigger="trigger"
         :placement="placement"
-        :arrow="false"
         style="width: 100%"
         @on-show="isShowOptions = true"
         @on-hide="isShowOptions = false"
@@ -143,8 +151,8 @@ onMounted(() => {
                 />
                 <div
                     v-if="
-                        (!multiple && labelStr.length == 0) ||
-                        (multiple && multipleLabelStr.length == 0)
+                        (!multiple && labelStr.length === 0) ||
+                        (multiple && multipleLabelStr.length === 0)
                     "
                     class="lew-select-placeholder"
                 >
@@ -272,7 +280,7 @@ onMounted(() => {
     background-color: var(--lew-form-bgcolor);
     transition: all 0.15s ease;
     box-sizing: border-box;
-
+    outline: 0px var(--lew-primary-color-light) solid;
     > div {
         width: 100%;
     }
@@ -384,6 +392,7 @@ onMounted(() => {
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
+    outline: 3px var(--lew-primary-color-light) solid;
 
     .lew-select-icon {
         transform: translateY(-50%) rotate(180deg);
@@ -422,7 +431,6 @@ onMounted(() => {
         height: auto;
         box-sizing: border-box;
         transition: all 0.25s ease;
-        font-size: 0px;
 
         .lew-select-item {
             position: relative;

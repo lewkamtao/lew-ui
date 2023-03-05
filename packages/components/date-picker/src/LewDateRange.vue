@@ -45,7 +45,7 @@ let _year2 = ref(moment(dateValue.value.end).year());
 // 月
 let _month2 = ref(moment(dateValue.value.end).month() + 1);
 
-if (_year1.value == _year2.value && _month1.value == _month2.value) {
+if (_year1.value === _year2.value && _month1.value === _month2.value) {
     _month2.value += 1;
 }
 if (_month2.value >= 12) {
@@ -81,8 +81,8 @@ const nextMonth1 = () => {
     if (_year1.value > _year2.value) {
         _year2.value = _year1.value;
     }
-    if (_year1.value == _year2.value && _month1.value >= _month2.value) {
-        if (_month1.value == 12) {
+    if (_year1.value === _year2.value && _month1.value >= _month2.value) {
+        if (_month1.value === 12) {
             _month2.value = 1;
             _year2.value += 1;
         } else {
@@ -102,8 +102,8 @@ const prveMonth2 = () => {
     if (_year2.value < _year1.value) {
         _year1.value = _year2.value;
     }
-    if (_year1.value == _year2.value && _month2.value <= _month1.value) {
-        if (_month2.value == 1) {
+    if (_year1.value === _year2.value && _month2.value <= _month1.value) {
+        if (_month2.value === 1) {
             _month1.value = 12;
             _year1.value -= 1;
         } else {
@@ -134,8 +134,8 @@ const nextYear1 = () => {
     if (_year1.value > _year2.value) {
         _year2.value = _year1.value;
     }
-    if (_year1.value == _year2.value && _month1.value >= _month2.value) {
-        if (_month1.value == 12) {
+    if (_year1.value === _year2.value && _month1.value >= _month2.value) {
+        if (_month1.value === 12) {
             _month2.value = 1;
             _year2.value += 1;
         } else {
@@ -151,8 +151,8 @@ const prveYear2 = () => {
     if (_year2.value < _year1.value) {
         _year1.value = _year2.value;
     }
-    if (_year1.value == _year2.value && _month2.value <= _month1.value) {
-        if (_month2.value == 1) {
+    if (_year1.value === _year2.value && _month2.value <= _month1.value) {
+        if (_month2.value === 1) {
             _month1.value = 12;
             _year1.value -= 1;
         } else {
@@ -169,7 +169,7 @@ const nextYear2 = () => {
 };
 
 const setMonthDate = (type: number) => {
-    if (type == 1) {
+    if (type === 1) {
         dateData1.value = getMonthDate(_year1.value, _month1.value);
     } else {
         dateData2.value = getMonthDate(_year2.value, _month2.value);
@@ -181,7 +181,7 @@ const emit = defineEmits(['change', 'update:modelValue']);
 let i = 0;
 
 const hoverValue = (item: any) => {
-    if (item.date != item.showDate || i % 2 == 0) {
+    if (item.date != item.showDate || i % 2 === 0) {
         return;
     }
     let value = `${item.year}-${item.month}-${item.showDate}`;
@@ -208,7 +208,7 @@ const setValue = (item: any) => {
     let start = dateValue.value.start;
     let end = dateValue.value.end;
 
-    if (i % 2 == 0) {
+    if (i % 2 === 0) {
         start = value;
         end = '';
     } else {
@@ -260,12 +260,12 @@ const getClass = computed(() => (type: string, item: any) => {
 
     switch (type) {
         case 'today':
-            if (_curDate == _date) {
+            if (_curDate === _date) {
                 return true;
             }
             break;
         case 'rangeMonth':
-            if (item.date == item.showDate) {
+            if (item.date === item.showDate) {
                 return 'lew-date-item-curMonth';
             }
             break;
@@ -276,8 +276,8 @@ const getClass = computed(() => (type: string, item: any) => {
             break;
         case 'selected':
             if (
-                _dateValue.value?.start == _date ||
-                _dateValue.value?.end == _date
+                _dateValue.value?.start === _date ||
+                _dateValue.value?.end === _date
             ) {
                 return 'lew-date-value-selected';
             }
@@ -285,14 +285,14 @@ const getClass = computed(() => (type: string, item: any) => {
         case 'rangeSelected':
             let _start = _dateValue.value?.start;
             let _end = _dateValue.value?.end;
-            if (_start == _date) {
+            if (_start === _date) {
                 if (_start > _end) {
                     return 'lew-date-label-selected-end';
                 } else {
                     return 'lew-date-label-selected-start';
                 }
             }
-            if (_end == _date) {
+            if (_end === _date) {
                 if (_start > _end) {
                     return 'lew-date-label-selected-start';
                 } else {
@@ -303,7 +303,7 @@ const getClass = computed(() => (type: string, item: any) => {
                 if (
                     _start < _date &&
                     _end > _date &&
-                    item.date == item.showDate
+                    item.date === item.showDate
                 ) {
                     return 'lew-date-label-selected';
                 }
@@ -311,7 +311,7 @@ const getClass = computed(() => (type: string, item: any) => {
                 if (
                     _end < _date &&
                     _start > _date &&
-                    item.date == item.showDate
+                    item.date === item.showDate
                 ) {
                     return 'lew-date-label-selected';
                 }

@@ -52,27 +52,27 @@ const emit = defineEmits(['onShow', 'cancel']);
                 <div class="left">
                     <div :class="`icon-${type}`">
                         <lew-icon
-                            v-if="type == `normal`"
+                            v-if="type === `normal`"
                             size="22"
                             type="info"
                         ></lew-icon>
                         <lew-icon
-                            v-if="type == `warning`"
+                            v-if="type === `warning`"
                             size="22"
                             type="alert-triangle"
                         ></lew-icon>
                         <lew-icon
-                            v-if="type == `success`"
+                            v-if="type === `success`"
                             size="22"
                             type="check"
                         ></lew-icon>
                         <lew-icon
-                            v-if="type == `error`"
+                            v-if="type === `error`"
                             size="22"
                             type="alert-circle"
                         ></lew-icon>
                         <lew-icon
-                            v-if="type == `info`"
+                            v-if="type === `info`"
                             size="22"
                             type="bell"
                         ></lew-icon>

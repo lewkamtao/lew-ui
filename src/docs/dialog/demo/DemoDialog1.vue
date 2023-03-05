@@ -23,7 +23,7 @@ const open = (type: any, layout: string) => {
 </script>
 
 <template>
-    <lew-flex direction="column" x="start" gap="0px">
+    <lew-flex direction="y" x="start" gap="0px">
         <lew-title size="14px">常规</lew-title>
         <lew-flex wrap x="start" gap="20px">
             <lew-button type="normal" @click="open('normal', 'normal')"

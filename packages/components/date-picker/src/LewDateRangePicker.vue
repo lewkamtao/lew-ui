@@ -38,7 +38,6 @@ defineExpose({ show, hide });
         ref="lewPopoverRef"
         trigger="click"
         placement="bottom-start"
-        :arrow="false"
         @on-show="isShowPicker = true"
         @on-hide="isShowPicker = false"
     >
@@ -100,7 +99,7 @@ defineExpose({ show, hide });
     transition: all 0.15s ease;
     cursor: pointer;
     user-select: none;
-
+    outline: 0px var(--lew-primary-color-light) solid;
     .lew-date-picker-icon {
         position: absolute;
         top: 50%;
@@ -129,5 +128,6 @@ defineExpose({ show, hide });
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
+    outline: 3px var(--lew-primary-color-light) solid;
 }
 </style>

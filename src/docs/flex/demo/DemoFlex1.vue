@@ -1,51 +1,51 @@
 <template>
     <div>
         <div class="demo">
-            <lew-flex direction="row" x="start" y="start" gap="20px">
+            <lew-flex direction="x" x="start" y="start">
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
             </lew-flex>
-            <lew-flex direction="row" x="center" y="start" gap="20px">
+            <lew-flex direction="x" x="center" y="start">
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
             </lew-flex>
-            <lew-flex direction="row" x="end" y="start" gap="20px">
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-            </lew-flex>
-        </div>
-        <div class="demo">
-            <lew-flex direction="row" x="start" y="center" gap="20px">
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-            </lew-flex>
-            <lew-flex direction="row" x="center" y="center" gap="20px">
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-            </lew-flex>
-            <lew-flex direction="row" x="end" y="center" gap="20px">
+            <lew-flex direction="x" x="end" y="start">
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
             </lew-flex>
         </div>
         <div class="demo">
-            <lew-flex direction="row" x="start" y="end" gap="20px">
+            <lew-flex direction="x" x="start" y="center">
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
             </lew-flex>
-            <lew-flex direction="row" x="center" y="end" gap="20px">
+            <lew-flex direction="x" x="center" y="center">
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
             </lew-flex>
-            <lew-flex direction="row" x="end" y="end" gap="20px">
+            <lew-flex direction="x" x="end" y="center">
+                <div class="box"><div></div></div>
+                <div class="box"><div></div></div>
+                <div class="box"><div></div></div>
+            </lew-flex>
+        </div>
+        <div class="demo">
+            <lew-flex direction="x" x="start" y="end">
+                <div class="box"><div></div></div>
+                <div class="box"><div></div></div>
+                <div class="box"><div></div></div>
+            </lew-flex>
+            <lew-flex direction="x" x="center" y="end">
+                <div class="box"><div></div></div>
+                <div class="box"><div></div></div>
+                <div class="box"><div></div></div>
+            </lew-flex>
+            <lew-flex direction="x" x="end" y="end">
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>
                 <div class="box"><div></div></div>

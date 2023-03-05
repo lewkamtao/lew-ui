@@ -12,7 +12,7 @@
             :iconable="iconable"
             :label="option.label"
             :size="size"
-            :checked="modelValue == option.value"
+            :checked="modelValue === option.value"
             @update:checked="check(option.value)"
         />
     </lew-flex>
@@ -83,7 +83,6 @@ const check = (_value: string) => {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    font-size: 0px;
 }
 
 .lew-radio-group-small {

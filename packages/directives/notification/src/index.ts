@@ -93,7 +93,7 @@ const add = (type: string, title: string, content: string, delay: number) => {
     `;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    LewMessageDom?.appendChild(newMessage, LewMessageDom?.childNodes[0]);
+    LewMessageDom?.insertBefore(newMessage, LewMessageDom?.childNodes[0]);
 
     newMessage.setAttribute(
         'class',
@@ -125,9 +125,13 @@ const add = (type: string, title: string, content: string, delay: number) => {
             'class',
             `lew-notification lew-notification-${type} lew-notification-hidden`
         );
-        setTimeout(() => {
-            if (newMessage) LewMessageDom?.removeChild(newMessage);
-        }, 250);
+        if (newMessage) {
+            if (LewMessageDom) {
+                setTimeout(() => {
+                    LewMessageDom.removeChild(newMessage);
+                }, 250);
+            }
+        }
     }
 
     newMessage.children[0].children[2].addEventListener('click', handleClose);
@@ -136,6 +140,8 @@ const add = (type: string, title: string, content: string, delay: number) => {
 
     setTimeout(() => {
         lock = false;
+        console.log(newMessage.clientHeight);
+
         newMessage.setAttribute(
             'class',
             `lew-notification lew-notification-${type} lew-notification-show`

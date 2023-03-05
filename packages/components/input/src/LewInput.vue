@@ -42,7 +42,7 @@ const clear = (): void => {
 };
 
 const focusFn = () => {
-    if (props.type == 'textarea') {
+    if (props.type === 'textarea') {
         lewTextareaRef.value?.focus();
     } else {
         lewInputRef.value?.focus();
@@ -52,7 +52,9 @@ const focusFn = () => {
 let _type = ref(props.type);
 
 const showPasswordFn = (): void => {
-    _type.value == 'text' ? (_type.value = 'password') : (_type.value = 'text');
+    _type.value === 'text'
+        ? (_type.value = 'password')
+        : (_type.value = 'text');
 };
 
 let getCheckNumStr = computed(() => {
@@ -92,7 +94,7 @@ const getTextLength = (val: string) => {
 };
 
 const getEl = () => {
-    if (props.type == 'textarea') {
+    if (props.type === 'textarea') {
         return lewTextareaRef.value;
     } else {
         return lewInputRef.value;
@@ -100,7 +102,7 @@ const getEl = () => {
 };
 
 const focus = (e: any) => {
-    if (v.value.length < 100) {
+    if (props.focusSelect) {
         e?.currentTarget?.select();
     }
     emit('focus');
@@ -114,7 +116,7 @@ defineExpose({ getEl, focusFn });
         class="lew-input-view"
         :class="`
     lew-input-view-${size} 
-    ${_type == 'textarea' ? 'lew-input-view-textarea' : ''}
+    ${_type === 'textarea' ? 'lew-input-view-textarea' : ''}
     ${readonly ? 'lew-input-view-readonly' : ''} 
     ${disabled ? 'lew-input-view-disabled' : ''}
     ${align ? 'lew-input-view-align-' + align : ''}
@@ -122,7 +124,7 @@ defineExpose({ getEl, focusFn });
     `"
     >
         <textarea
-            v-if="_type == 'textarea'"
+            v-if="_type === 'textarea'"
             ref="lewTextareaRef"
             v-model="v"
             class="btf-scrollbar"
@@ -173,10 +175,10 @@ defineExpose({ getEl, focusFn });
                 @click="showPasswordFn"
                 class="lew-input-show-password"
             >
-                <lew-icon size="16" v-show="_type == 'text'" type="eye" />
+                <lew-icon size="16" v-show="_type === 'text'" type="eye" />
                 <lew-icon
                     size="16"
-                    v-show="_type == 'password'"
+                    v-show="_type === 'password'"
                     type="eye-off"
                 />
             </div>
@@ -205,6 +207,7 @@ defineExpose({ getEl, focusFn });
     background-color: var(--lew-form-bgcolor);
     transition: var(--lew-form-transition);
     box-sizing: border-box;
+    outline: 0px var(--lew-primary-color-light) solid;
 
     input,
     textarea {
@@ -215,6 +218,18 @@ defineExpose({ getEl, focusFn });
         color: var(--lew-text-color-2);
         outline: none;
         box-sizing: border-box;
+    }
+
+    textarea::-webkit-scrollbar {
+        background-color: var(--lew-bgcolor-2);
+    }
+
+    textarea::-webkit-scrollbar-thumb:hover {
+        background-color: var(--lew-bgcolor-9);
+    }
+
+    textarea::-webkit-scrollbar-thumb {
+        background-color: var(--lew-bgcolor-6);
     }
 
     input {
@@ -315,6 +330,9 @@ defineExpose({ getEl, focusFn });
         font-size: var(--lew-form-font-size-small);
         line-height: var(--lew-form-input-line-height-small);
     }
+    textarea::-webkit-scrollbar {
+        width: 4px;
+    }
 
     input {
         height: var(--lew-form-item-height-small);
@@ -343,7 +361,9 @@ defineExpose({ getEl, focusFn });
         font-size: var(--lew-form-font-size-medium);
         line-height: var(--lew-form-input-line-height-medium);
     }
-
+    textarea::-webkit-scrollbar {
+        width: 6px;
+    }
     input {
         height: var(--lew-form-item-height-medium);
     }
@@ -371,7 +391,9 @@ defineExpose({ getEl, focusFn });
         font-size: var(--lew-form-font-size-large);
         line-height: var(--lew-form-input-line-height-large);
     }
-
+    textarea::-webkit-scrollbar {
+        width: 8px;
+    }
     input {
         height: var(--lew-form-item-height-large);
     }
@@ -449,6 +471,7 @@ defineExpose({ getEl, focusFn });
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
+    outline: 3px var(--lew-primary-color-light) solid;
 
     .lew-input-controls {
         background: var(--lew-form-bgcolor-focus);

@@ -219,9 +219,9 @@ const notification = (type: string) => {
             >
         </div>
         <div class="home">
-            <lew-flex direction="y" gap="40px">
-                <lew-flex class="item" direction="column" x="end" gap="40px">
-                    <lew-flex direction="column" x="end" gap="0px">
+            <lew-flex direction="x" gap="40px">
+                <lew-flex class="item" direction="y" x="end" gap="40px">
+                    <lew-flex direction="y" x="end" gap="0px">
                         <lew-title size="16px" :bold="200"
                             >Lew Design</lew-title
                         >
@@ -295,7 +295,7 @@ const notification = (type: string) => {
                     </lew-flex>
                 </lew-flex>
                 <lew-flex class="item">
-                    <lew-form direction="column" style="width: 100%">
+                    <lew-form direction="y" style="width: 100%">
                         <lew-form-item label="Input">
                             <LewInput v-model="user.username" />
                         </lew-form-item>
@@ -328,7 +328,7 @@ const notification = (type: string) => {
                         </lew-form-item>
                     </lew-form>
                 </lew-flex>
-                <lew-flex class="item" direction="column" gap="20px">
+                <lew-flex class="item" direction="y" gap="20px">
                     <LewAlert :list="list"></LewAlert>
                     <lew-flex wrap x="start" gap="20px">
                         <lew-button type="normal" @click="message('error')"
