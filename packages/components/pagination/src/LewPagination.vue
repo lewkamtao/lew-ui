@@ -1,51 +1,48 @@
 <script lang="ts" setup>
-import { stat } from 'fs';
 import { _props } from './props';
+import { useVModels } from '@vueuse/core';
 const props = defineProps(_props);
+const emit = defineEmits([
+    'update:currentPage',
+    'update:total',
+    'update:pageSize',
+    'change',
+]);
 
-const emit = defineEmits(['update:currentPage', 'update:pageSize', 'change']);
+const { total, currentPage, visiblePagesCount, pageSize, pageSizeOptions } =
+    useVModels(props, emit);
 
-const state = reactive({
-    currentPage: props.currentPage,
-    pageSize: props.pageSize,
-    total: props.total,
-    visiblePagesCount: props.visiblePagesCount,
-    pageSizeOptions: props.pageSizeOptions,
-    toPage: undefined, 
-});
+let toPage = ref(undefined);
+let _visiblePagesCount = ref(0);
 
 watchEffect(() => {
-    emit('update:currentPage', state.currentPage);
-    emit('update:pageSize', state.pageSize);
-    state.total = props.total;
-    let _visiblePagesCount= props.visiblePagesCount
-     if(_visiblePagesCount<5){
-            _visiblePagesCount =  5   
-    } 
-    if(_visiblePagesCount>12){ 
-        _visiblePagesCount = 12       
-    } 
-    console.log(_visiblePagesCount);
-    
-    state.visiblePagesCount = _visiblePagesCount;
-
+    _visiblePagesCount.value = props.visiblePagesCount;
+    if (_visiblePagesCount.value < 5) {
+        _visiblePagesCount.value = 5;
+    }
+    if (_visiblePagesCount.value > 12) {
+        _visiblePagesCount.value = 12;
+    }
 });
 
-const totalPages = computed(() => Math.ceil(state.total / state.pageSize));
+const totalPages = computed(() => Math.ceil(total.value / pageSize.value));
 
 const visiblePages = computed(() => {
-    let visiblePagesCount = state.visiblePagesCount;
-    const currentPage = state.currentPage;
-    const totalPages = Math.ceil(state.total / state.pageSize);
+    let _currentPage = currentPage.value;
+    let totalPages = Math.ceil(total.value / pageSize.value);
 
-    let startPage = currentPage - Math.floor(visiblePagesCount / 2);
+    let startPage = _currentPage - Math.floor(_visiblePagesCount.value / 2);
+    if (_currentPage < _visiblePagesCount.value / 2 + 2) {
+        startPage = 1;
+    }
+
     if (startPage < 1) {
         startPage = 1;
     }
-    let endPage = startPage + visiblePagesCount - 1;
+    let endPage = startPage + _visiblePagesCount.value - 1;
     if (endPage > totalPages) {
         endPage = totalPages;
-        startPage = endPage - visiblePagesCount + 1;
+        startPage = endPage - _visiblePagesCount.value + 1;
         if (startPage < 1) {
             startPage = 1;
         }
@@ -58,16 +55,16 @@ const visiblePages = computed(() => {
 });
 
 const changePage = (page: number) => {
-    page = Math.floor(page)  
- 
-    if (page < 1 || page > totalPages.value || page === state.currentPage) {
+    page = Math.floor(page);
+
+    if (page < 1 || page > totalPages.value || page === currentPage) {
         return;
     }
     emit('change', {
-        currentPage: state.currentPage,
-        pageSize: state.pageSize,
+        currentPage: currentPage,
+        pageSize: pageSize,
     });
-    state.currentPage = page;
+    currentPage.value = page;
 };
 
 // 是否显示省略号
@@ -84,17 +81,17 @@ const showMax = computed(
 );
 
 const checkPageSize = (value: any) => {
-    state.pageSize = value;
-    changePage(state.currentPage);
+    pageSize.value = value;
+    changePage(currentPage);
 };
 
 const checkPageNum = (value: any) => {
     let page = Number(value);
-    state.toPage = undefined;
+    toPage.value = undefined;
     if (page > totalPages.value || page < 1) {
         return;
     }
-    state.currentPage = page;
+    currentPage.value = page;
     changePage(value);
 };
 </script>
@@ -105,7 +102,7 @@ const checkPageNum = (value: any) => {
             <slot name="left" />
 
             <lew-flex class="lew-pagination-page-box" gap="5px">
-                <div class="btn" @click="changePage(state.currentPage - 1)">
+                <div class="btn" @click="changePage(currentPage - 1)">
                     <lew-icon size="14" type="chevron-left" />
                 </div>
                 <div
@@ -117,11 +114,7 @@ const checkPageNum = (value: any) => {
                 </div>
                 <div
                     v-if="startEllipsis"
-                    @click="
-                        changePage(
-                            state.currentPage - state.visiblePagesCount + 1
-                        )
-                    "
+                    @click="changePage(currentPage - _visiblePagesCount + 1)"
                     class="btn control-btn"
                 >
                     <lew-icon size="14" type="more-horizontal" />
@@ -131,7 +124,7 @@ const checkPageNum = (value: any) => {
                     :key="index"
                     class="btn"
                     :class="{
-                        active: Number(page) === Number(state.currentPage),
+                        active: Number(page) === Number(currentPage),
                     }"
                     @click="changePage(page)"
                 >
@@ -139,11 +132,7 @@ const checkPageNum = (value: any) => {
                 </div>
                 <div
                     v-if="endEllipsis"
-                    @click="
-                        changePage(
-                               state.currentPage + state.visiblePagesCount - 1
-                        )  
-                    " 
+                    @click="changePage(currentPage + _visiblePagesCount - 1)"
                     class="btn control-btn"
                 >
                     <lew-icon size="14" type="more-horizontal" />
@@ -155,14 +144,14 @@ const checkPageNum = (value: any) => {
                 >
                     {{ totalPages }}
                 </div>
-                <div class="btn" @click="changePage(state.currentPage + 1)">
+                <div class="btn" @click="changePage(currentPage + 1)">
                     <lew-icon size="14" type="chevron-right" />
                 </div>
             </lew-flex>
             <lew-select
                 style="width: 100px"
                 align="center"
-                v-model="state.pageSize"
+                v-model="pageSize"
                 @change="checkPageSize"
                 size="small"
                 :show-icon="false"
@@ -174,7 +163,7 @@ const checkPageNum = (value: any) => {
                 align="center"
                 placeholder="跳转至"
                 auto-width
-                v-model="state.toPage"
+                v-model="toPage"
                 @change="checkPageNum"
             />
             <slot name="right" />
