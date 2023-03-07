@@ -112,6 +112,7 @@ const emit = defineEmits(['update:visible']);
                     <div
                         v-if="layout === 'easy'"
                         class="lew-dialog-box lew-dialog-box-easy"
+                        @click.stop
                     >
                         <div class="left">
                             <div :class="`icon-${type}`">
