@@ -15,9 +15,15 @@ export const _props = {
     },
     ok: {
         type: Function,
+        default: () => {
+            return true;
+        },
     },
     cancel: {
         type: Function,
+        default: () => {
+            return true;
+        },
     },
     layout: {
         type: String,

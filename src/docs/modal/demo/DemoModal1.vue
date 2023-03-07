@@ -132,9 +132,9 @@ onMounted(() => {
     </lew-flex>
 
     <lew-modal
-        :visible="modalVisible1"
+        v-model:visible="modalVisible1"
+        closeOnClickOverlay
         width="350px"
-        @mask-click="modalVisible1 = false"
     >
         <div class="modal-body">
             <lew-title :bold="700" style="margin-bottom: 20px"
@@ -160,11 +160,7 @@ onMounted(() => {
             </lew-flex>
         </div>
     </lew-modal>
-    <lew-modal
-        :visible="modalVisible2"
-        width="1250px"
-        @mask-click="modalVisible2 = false"
-    >
+    <lew-modal v-model:visible="modalVisible2" width="1250px">
         <div class="modal-body">
             <lew-table :data="data" :columns="columns" height="auto">
                 <template #id="{ row }"> {{ row.id }} </template>

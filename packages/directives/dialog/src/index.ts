@@ -37,9 +37,8 @@ const dialog = (type: string, options: Options) => {
         // @ts-ignore
         app.unmount(div);
         div.remove();
+        
     };
-    console.log(closeOnClickOverlay);
-
     const app = createApp({
         render() {
             return h(
@@ -49,8 +48,21 @@ const dialog = (type: string, options: Options) => {
                     type: type,
                     layout: layout,
                     visible: true,
-                    ok: ok,
-                    cancel: cancel,
+                    ok: ok
+                        ? ok
+                        : () => {
+                              return true;
+                          },
+                    'onUpdate:visible': (v: boolean) => {
+                        if (v === false) {
+                            close();
+                        }
+                    },
+                    cancel: cancel
+                        ? cancel
+                        : () => {
+                              return true;
+                          },
                 },
                 {
                     title: () => title,

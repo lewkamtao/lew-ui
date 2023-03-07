@@ -4,50 +4,61 @@ import { _props } from './props';
 import { getIconType } from '../../../utils';
 
 const props = defineProps(_props);
+const emit = defineEmits(['update:visible']);
 
 let okLoading = ref<Boolean>(false);
 let cancelLoading = ref<Boolean>(false);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const onClickOverlay = () => {
+const maskClick = () => {
     if (props?.closeOnClickOverlay) {
         close();
     }
 };
 
-let visible = ref<Boolean>(true);
+let visibleMask = ref<Boolean>(true);
 let _visible = ref<Boolean>(true);
-let _visibleTimer = ref();
+
+watch(
+    () => props.visible,
+    (v) => {
+        if (!v) {
+            close();
+        } else {
+            _visible.value = v;
+        }
+    }
+);
 
 const close = () => {
-    visible.value = false;
-    emit('update:visible', false);
-    // 保持动画
-    clearTimeout(_visibleTimer.value);
-    _visibleTimer.value = setTimeout(() => {
+    visibleMask.value = false;
+    setTimeout(() => {
         _visible.value = false;
+        emit('update:visible', false);
     }, 250);
 };
 
-const okHandle = async () => {
+const ok = async () => {
     if (typeof props.ok === 'function') {
         okLoading.value = true;
-        await props.ok();
+        const isOk = await props.ok();
+        if (isOk !== false) {
+            close();
+        }
         okLoading.value = false;
     }
-    close();
 };
 
-const cancelHandle = async () => {
+const cancel = async () => {
     if (typeof props.cancel === 'function') {
         cancelLoading.value = true;
-        await props.cancel();
+        const isCancel = await props.cancel();
+        if (isCancel !== false) {
+            close();
+        }
         cancelLoading.value = false;
     }
-    close();
 };
-
-const emit = defineEmits(['update:visible']);
 </script>
 <template>
     <div>
@@ -56,15 +67,15 @@ const emit = defineEmits(['update:visible']);
                 v-if="_visible"
                 class="lew-dialog"
                 :style="
-                    visible
+                    visibleMask
                         ? 'animation: lewDialogOpen 0.25s;'
                         : 'animation: lewDialogClose 0.25s;'
                 "
-                @click="onClickOverlay"
+                @click="maskClick"
             >
                 <div
                     :style="
-                        visible
+                        visibleMask
                             ? 'animation: lewDialogBoxOpen 0.25s;'
                             : 'animation: lewDialogBoxClose 0.25s;'
                     "
@@ -87,7 +98,7 @@ const emit = defineEmits(['update:visible']);
                                 <slot name="title" />
                                 <span
                                     class="gulu-dialog-close"
-                                    @click="close"
+                                    @click="close()"
                                 ></span>
                             </header>
                             <main>
@@ -97,12 +108,12 @@ const emit = defineEmits(['update:visible']);
                                 <lew-button
                                     :loading="cancelLoading"
                                     type="blank"
-                                    @click.stop="cancelHandle"
+                                    @click.stop="cancel"
                                     >取消
                                 </lew-button>
                                 <lew-button
                                     :loading="okLoading"
-                                    @click.stop="okHandle"
+                                    @click.stop="ok"
                                     >确认</lew-button
                                 >
                             </footer>
@@ -131,12 +142,12 @@ const emit = defineEmits(['update:visible']);
                                 type="normal"
                                 size="small"
                                 :loading="cancelLoading"
-                                @click.stop="cancelHandle"
+                                @click.stop="cancel"
                                 >取消
                             </lew-button>
                             <lew-button
                                 :loading="okLoading"
-                                @click.stop="okHandle"
+                                @click.stop="ok"
                                 size="small"
                                 >确认
                             </lew-button>
