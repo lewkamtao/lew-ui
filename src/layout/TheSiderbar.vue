@@ -65,7 +65,7 @@ const toPath = (item: Item) => {
     width: var(--lew-siderbar-width);
     height: calc(100vh - 60px);
     min-height: calc(100vh - 60px);
-    overflow-y: scroll;
+    overflow-y: auto;
     border-right: var(--lew-border-1);
     user-select: none;
 
