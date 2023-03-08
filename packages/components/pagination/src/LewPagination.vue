@@ -9,19 +9,22 @@ const emit = defineEmits([
     'change',
 ]);
 
-const { total, currentPage, visiblePagesCount, pageSize, pageSizeOptions } =
-    useVModels(props, emit);
+const { total, currentPage, pageSizeOptions } = useVModels(props, emit);
 
 let toPage = ref(undefined);
-let _visiblePagesCount = ref(0);
+let visiblePagesCount = ref(props.visiblePagesCount);
+let pageSize = ref(props.pageSize);
 
-watchEffect(() => {
-    _visiblePagesCount.value = props.visiblePagesCount;
-    if (_visiblePagesCount.value < 5) {
-        _visiblePagesCount.value = 5;
+watch(total, () => {
+    currentPage.value = 1;
+});
+
+onMounted(() => {
+    if (visiblePagesCount.value < 5) {
+        visiblePagesCount.value = 5;
     }
-    if (_visiblePagesCount.value > 12) {
-        _visiblePagesCount.value = 12;
+    if (visiblePagesCount.value > 12) {
+        visiblePagesCount.value = 12;
     }
 });
 
@@ -31,18 +34,18 @@ const visiblePages = computed(() => {
     let _currentPage = currentPage.value;
     let totalPages = Math.ceil(total.value / pageSize.value);
 
-    let startPage = _currentPage - Math.floor(_visiblePagesCount.value / 2);
-    if (_currentPage < _visiblePagesCount.value / 2 + 2) {
+    let startPage = _currentPage - Math.floor(visiblePagesCount.value / 2);
+    if (_currentPage < visiblePagesCount.value / 2 + 2) {
         startPage = 1;
     }
 
     if (startPage < 1) {
         startPage = 1;
     }
-    let endPage = startPage + _visiblePagesCount.value - 1;
+    let endPage = startPage + visiblePagesCount.value - 1;
     if (endPage > totalPages) {
         endPage = totalPages;
-        startPage = endPage - _visiblePagesCount.value + 1;
+        startPage = endPage - visiblePagesCount.value + 1;
         if (startPage < 1) {
             startPage = 1;
         }
@@ -57,12 +60,12 @@ const visiblePages = computed(() => {
 const changePage = (page: number) => {
     page = Math.floor(page);
 
-    if (page < 1 || page > totalPages.value || page === currentPage) {
+    if (page < 1 || page > totalPages.value || page === currentPage.value) {
         return;
     }
     emit('change', {
-        currentPage: currentPage,
-        pageSize: pageSize,
+        currentPage: currentPage.value,
+        pageSize: pageSize.value,
     });
     currentPage.value = page;
 };
@@ -82,7 +85,7 @@ const showMax = computed(
 
 const checkPageSize = (value: any) => {
     pageSize.value = value;
-    changePage(currentPage);
+    changePage(currentPage.value);
 };
 
 const checkPageNum = (value: any) => {
@@ -114,7 +117,7 @@ const checkPageNum = (value: any) => {
                 </div>
                 <div
                     v-if="startEllipsis"
-                    @click="changePage(currentPage - _visiblePagesCount + 1)"
+                    @click="changePage(currentPage - visiblePagesCount + 1)"
                     class="btn control-btn"
                 >
                     <lew-icon size="14" type="more-horizontal" />
@@ -132,7 +135,7 @@ const checkPageNum = (value: any) => {
                 </div>
                 <div
                     v-if="endEllipsis"
-                    @click="changePage(currentPage + _visiblePagesCount - 1)"
+                    @click="changePage(currentPage + visiblePagesCount - 1)"
                     class="btn control-btn"
                 >
                     <lew-icon size="14" type="more-horizontal" />

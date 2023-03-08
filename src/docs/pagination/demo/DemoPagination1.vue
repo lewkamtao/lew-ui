@@ -5,6 +5,11 @@ const change = (e: any) => {
     console.log(e);
 };
 const total = ref(24);
+
+// 模拟请求
+setTimeout(() => {
+    total.value = 10000;
+}, 3000);
 </script>
 
 <template>
