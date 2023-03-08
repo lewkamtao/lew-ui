@@ -11,12 +11,14 @@ const open = (type: any, layout: string) => {
             return new Promise((resolve) => {
                 setTimeout(() => {
                     resolve(true);
-                    LewMessage.success('删除成功');
+                    LewMessage.success({
+                        content: '删除成功',
+                    });
                 }, 1000);
             });
         },
         cancel: () => {
-            console.log('取消');
+            // 取消
         },
     });
 };

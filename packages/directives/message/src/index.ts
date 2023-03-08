@@ -54,7 +54,27 @@ const loading = (e: MessageFnOptions) => {
     });
 };
 
-const clear = (id?: Number) => {};
+const clear = (id?: Number) => {
+    const LewMessageDom = document.getElementById('lew-message');
+    if (id) {
+        let messageDom = document.getElementById(`message-id-${id}`);
+        messageDom && messageDom.classList.add('message-hidden');
+        setTimeout(() => {
+            if (messageDom) LewMessageDom?.removeChild(messageDom);
+        }, 120);
+    } else {
+        if (LewMessageDom?.childNodes) {
+            Array.from(LewMessageDom?.children).forEach((e) => {
+                e && e.classList.add('message-hidden');
+                setTimeout(() => {
+                    try {
+                        if (e) LewMessageDom?.removeChild(e);
+                    } catch {}
+                }, 120);
+            });
+        }
+    }
+};
 
 const createMessageList = () => {
     const div: any = document.createElement('div');
@@ -113,7 +133,9 @@ const setMessage = ({ type, e }: MessageOptions) => {
                 `message message-${type} message-hidden`
             );
             setTimeout(() => {
-                if (messageDom) LewMessageDom?.removeChild(messageDom);
+                try {
+                    if (messageDom) LewMessageDom?.removeChild(messageDom);
+                } catch {}
             }, 120);
         }, e.duration || 3000);
     }, 10);
@@ -127,4 +149,5 @@ export default {
     success,
     error,
     loading,
+    clear,
 };

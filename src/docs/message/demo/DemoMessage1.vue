@@ -1,10 +1,13 @@
 <script lang="ts" setup>
 const open = (type: any) => {
     LewMessage[type]({
-        id: 'get',
         content: '这是一个demo信息',
         duration: 3000,
     });
+};
+
+const clear = () => {
+    LewMessage.clear();
 };
 </script>
 
@@ -20,5 +23,6 @@ const open = (type: any) => {
         <lew-button type="loading" @click="open('loading')"
             >loading
         </lew-button>
+        <lew-button type="loading" @click="clear()">clear </lew-button>
     </lew-flex>
 </template>
