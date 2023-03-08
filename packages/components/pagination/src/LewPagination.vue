@@ -11,41 +11,43 @@ const emit = defineEmits([
 
 const { total, currentPage, pageSizeOptions } = useVModels(props, emit);
 
-let toPage = ref(undefined);
-let visiblePagesCount = ref(props.visiblePagesCount);
-let pageSize = ref(props.pageSize);
+let state = reactive({
+    toPage: undefined,
+    pageSize: props.pageSize,
+    visiblePagesCount: props.visiblePagesCount,
+});
 
 watch(total, () => {
     currentPage.value = 1;
 });
 
 onMounted(() => {
-    if (visiblePagesCount.value < 5) {
-        visiblePagesCount.value = 5;
+    if (state.visiblePagesCount < 5) {
+        state.visiblePagesCount = 5;
     }
-    if (visiblePagesCount.value > 12) {
-        visiblePagesCount.value = 12;
+    if (state.visiblePagesCount > 12) {
+        state.visiblePagesCount = 12;
     }
 });
 
-const totalPages = computed(() => Math.ceil(total.value / pageSize.value));
+const totalPages = computed(() => Math.ceil(total.value / state.pageSize));
 
 const visiblePages = computed(() => {
     let _currentPage = currentPage.value;
-    let totalPages = Math.ceil(total.value / pageSize.value);
+    let totalPages = Math.ceil(total.value / state.pageSize);
 
-    let startPage = _currentPage - Math.floor(visiblePagesCount.value / 2);
-    if (_currentPage < visiblePagesCount.value / 2 + 2) {
+    let startPage = _currentPage - Math.floor(state.visiblePagesCount / 2);
+    if (_currentPage < state.visiblePagesCount / 2 + 2) {
         startPage = 1;
     }
 
     if (startPage < 1) {
         startPage = 1;
     }
-    let endPage = startPage + visiblePagesCount.value - 1;
+    let endPage = startPage + state.visiblePagesCount - 1;
     if (endPage > totalPages) {
         endPage = totalPages;
-        startPage = endPage - visiblePagesCount.value + 1;
+        startPage = endPage - state.visiblePagesCount + 1;
         if (startPage < 1) {
             startPage = 1;
         }
@@ -65,7 +67,7 @@ const changePage = (page: number) => {
     }
     emit('change', {
         currentPage: currentPage.value,
-        pageSize: pageSize.value,
+        pageSize: state.pageSize,
     });
     currentPage.value = page;
 };
@@ -84,13 +86,13 @@ const showMax = computed(
 );
 
 const checkPageSize = (value: any) => {
-    pageSize.value = value;
+    state.pageSize = value;
     changePage(currentPage.value);
 };
 
 const checkPageNum = (value: any) => {
     let page = Number(value);
-    toPage.value = undefined;
+    state.toPage = undefined;
     if (page > totalPages.value || page < 1) {
         return;
     }
@@ -117,7 +119,9 @@ const checkPageNum = (value: any) => {
                 </div>
                 <div
                     v-if="startEllipsis"
-                    @click="changePage(currentPage - visiblePagesCount + 1)"
+                    @click="
+                        changePage(currentPage - state.visiblePagesCount + 1)
+                    "
                     class="btn control-btn"
                 >
                     <lew-icon size="14" type="more-horizontal" />
@@ -135,7 +139,9 @@ const checkPageNum = (value: any) => {
                 </div>
                 <div
                     v-if="endEllipsis"
-                    @click="changePage(currentPage + visiblePagesCount - 1)"
+                    @click="
+                        changePage(currentPage + state.visiblePagesCount - 1)
+                    "
                     class="btn control-btn"
                 >
                     <lew-icon size="14" type="more-horizontal" />
@@ -154,19 +160,18 @@ const checkPageNum = (value: any) => {
             <lew-select
                 style="width: 100px"
                 align="center"
-                v-model="pageSize"
+                v-model="state.pageSize"
                 @change="checkPageSize"
                 size="small"
                 :show-icon="false"
                 :options="pageSizeOptions"
-            >
-            </lew-select>
+            />
             <lew-input
                 size="small"
                 align="center"
                 placeholder="跳转至"
                 auto-width
-                v-model="toPage"
+                v-model="state.toPage"
                 @change="checkPageNum"
             />
             <slot name="right" />

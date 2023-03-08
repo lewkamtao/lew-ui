@@ -36,23 +36,23 @@ export const _props = {
             return [
                 {
                     label: '10 / 页',
-                    value: '10',
+                    value: 10,
                 },
                 {
                     label: '20 / 页',
-                    value: '20',
+                    value: 20,
                 },
                 {
                     label: '30 / 页',
-                    value: '30',
+                    value: 30,
                 },
                 {
                     label: '50 / 页',
-                    value: '50',
+                    value: 50,
                 },
                 {
                     label: '100 / 页',
-                    value: '100',
+                    value: 100,
                 },
             ];
         },
