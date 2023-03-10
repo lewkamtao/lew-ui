@@ -650,6 +650,6 @@ const getClass = computed(() => (type: string, item: any) => {
 }
 
 .lew-date:first-child {
-    border-right: 1px #eee solid;
+    border-right: 1px var(--lew-form-border-color) solid;
 }
 </style>

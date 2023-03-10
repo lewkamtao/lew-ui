@@ -22,12 +22,9 @@ watch(total, () => {
 });
 
 onMounted(() => {
-    if (state.visiblePagesCount < 5) {
-        state.visiblePagesCount = 5;
-    }
-    if (state.visiblePagesCount > 12) {
-        state.visiblePagesCount = 12;
-    }
+    // Ensure that the number of visible pages is at least 5 and at most 12.
+    state.visiblePagesCount = Math.max(state.visiblePagesCount, 5);
+    state.visiblePagesCount = Math.min(state.visiblePagesCount, 12);
 });
 
 const totalPages = computed(() => Math.ceil(total.value / state.pageSize));
