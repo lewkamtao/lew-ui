@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { _props } from './props';
-import type { Alert } from './props';
+import type { AlertItem } from './alert';
 import { getIconType } from 'lew-ui/utils';
-defineProps(_props);
+import { alertProps } from './alert';
+
+defineProps(alertProps);
 
 const emit = defineEmits(['close']);
 
-const getAlertClass = (item: Alert) => {
+const getClass = (item: AlertItem) => {
     return `lew-alert-${item.type}`;
 };
 </script>
@@ -17,7 +18,7 @@ const getAlertClass = (item: Alert) => {
             v-for="(item, i) in list"
             :key="i"
             class="lew-alert"
-            :class="getAlertClass(item)"
+            :class="getClass(item)"
         >
             <div class="alert-icon">
                 <lew-icon size="16" :type="getIconType(item.type)"></lew-icon>
@@ -28,7 +29,7 @@ const getAlertClass = (item: Alert) => {
                     {{ item.content }}
                 </div>
             </div>
-            <div v-if="item.isShowCloseBtn">
+            <div v-if="item.closeable">
                 <lew-icon
                     size="16"
                     class="btn-close"

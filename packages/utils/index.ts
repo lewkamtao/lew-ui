@@ -18,3 +18,5 @@ export const getIconType = (type: string): string => {
 export const getPx = (num: string) => {
     return typeof num === 'string' ? num : num + 'px';
 };
+
+export * from './validator';
