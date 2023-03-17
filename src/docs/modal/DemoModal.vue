@@ -23,11 +23,36 @@ const columns = [
         field: 'default',
     },
 ];
+
 const docsTable = ref([
     {
-        param: 'options',
+        param: 'visible',
         description: '列表配置',
-        type: 'array',
+        type: 'boolean',
+        default: false,
+    },
+    {
+        param: 'title',
+        description: '列表配置',
+        type: 'string',
+        default: '[]',
+    },
+    {
+        param: 'width',
+        description: '宽度',
+        type: 'string',
+        default: '[]',
+    },
+    {
+        param: 'height',
+        description: '高度',
+        type: 'string',
+        default: '[]',
+    },
+    {
+        param: 'closeOnClickOverlay',
+        description: '点击遮罩关闭',
+        type: 'Boolean',
         default: '[]',
     },
 ]);

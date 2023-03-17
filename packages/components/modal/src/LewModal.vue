@@ -27,7 +27,7 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(['confirm']);
+const emit = defineEmits(['update:visible', 'confirm']);
 
 const { visible } = useVModels(props, emit);
 
