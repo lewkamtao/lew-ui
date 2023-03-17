@@ -27,15 +27,15 @@ const columns = [
 const docsTable = ref([
     {
         param: 'visible',
-        description: '列表配置',
+        description: '显示控制',
         type: 'boolean',
         default: false,
     },
     {
         param: 'title',
-        description: '列表配置',
+        description: '标题',
         type: 'string',
-        default: '[]',
+        default: "''",
     },
     {
         param: 'width',
