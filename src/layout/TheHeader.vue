@@ -62,7 +62,7 @@ const gohome = () => {
                 type="info"
                 size="small"
                 style="margin-left: 10px"
-                >Beta v1.1.3</lew-tag
+                >Beta v1.1.30</lew-tag
             >
         </div>
         <lew-flex gap="15px" x="end" class="menu">
