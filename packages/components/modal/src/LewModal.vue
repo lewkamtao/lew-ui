@@ -1,5 +1,7 @@
 <script lang="ts" setup name="Modal">
 import { useDOMCreate } from '../../../hooks';
+import { useVModels } from '@vueuse/core';
+
 useDOMCreate('lew-modal');
 
 const props = defineProps({
@@ -19,9 +21,15 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    closeOnClickOverlay: {
+        type: Boolean,
+        default: false,
+    },
 });
 
-const emit = defineEmits(['maskClick', 'confirm']);
+const emit = defineEmits(['update:visible', 'confirm']);
+
+const { visible } = useVModels(props, emit);
 
 let _visible = ref(props.visible);
 let _visibleTimer = ref();
@@ -33,15 +41,19 @@ watch(
             clearTimeout(_visibleTimer.value);
             _visibleTimer.value = setTimeout(() => {
                 _visible.value = v;
+                visible.value = v;
             }, 250);
         } else {
             _visible.value = v;
+            visible.value = v;
         }
     }
 );
 
 const maskClick = () => {
-    emit('maskClick');
+    if (props.closeOnClickOverlay) {
+        visible.value = false;
+    }
 };
 </script>
 

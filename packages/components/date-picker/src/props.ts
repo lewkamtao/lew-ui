@@ -8,6 +8,10 @@ export const datePickerProps = {
         type: Boolean,
         default: false,
     },
+    size: {
+        type: String,
+        default: 'medium',
+    },
     autoClose: {
         type: Boolean,
         default: true,
@@ -22,6 +26,10 @@ export const dateRangePickerProps = {
     multiple: {
         type: Boolean,
         default: false,
+    },
+    size: {
+        type: String,
+        default: 'medium',
     },
     autoClose: {
         type: Boolean,

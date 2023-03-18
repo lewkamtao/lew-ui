@@ -5,13 +5,18 @@ const change = (e: any) => {
     console.log(e);
 };
 const total = ref(24);
+
+// 模拟请求
+setTimeout(() => {
+    total.value = 10000;
+}, 3000);
 </script>
 
 <template>
     <div>
         <lew-pagination
             v-model:current-page="pageNum"
-            v-model:page-size="pageSize"
+            :page-size="pageSize"
             :page-size-options="[
                 {
                     label: '10 / 页',

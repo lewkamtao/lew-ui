@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { _props } from './props';
+import { avatarProps } from './avatar';
 import { getPx } from 'lew-ui/utils';
 
-const props = defineProps(_props);
+const props = defineProps(avatarProps);
 
 const { round, width, height, status, statusPosition, errorSrc } = props;
 

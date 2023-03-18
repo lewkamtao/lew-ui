@@ -1,4 +1,5 @@
 import _LewDialog from './LewDialog.vue';
+
 type Options = {
     title: string;
     content: string;
@@ -32,14 +33,6 @@ const dialog = (type: string, options: Options) => {
     const { title, content, ok, cancel, layout, closeOnClickOverlay } = options;
     const div: HTMLDivElement = document.createElement('div');
     document.body.appendChild(div);
-    const close = () => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        app.unmount(div);
-        div.remove();
-    };
-    console.log(closeOnClickOverlay);
-
     const app = createApp({
         render() {
             return h(
@@ -48,9 +41,22 @@ const dialog = (type: string, options: Options) => {
                     closeOnClickOverlay: closeOnClickOverlay,
                     type: type,
                     layout: layout,
-                    visible: true,
-                    ok: ok,
-                    cancel: cancel,
+                    ok: ok
+                        ? ok
+                        : () => {
+                              return true;
+                          },
+                    onClose: () => {
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
+                        app.unmount(div);
+                        div.remove();
+                    },
+                    cancel: cancel
+                        ? cancel
+                        : () => {
+                              return true;
+                          },
                 },
                 {
                     title: () => title,

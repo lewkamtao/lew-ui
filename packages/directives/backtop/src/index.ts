@@ -18,7 +18,6 @@ export default {
                         throw new Error(`target is not existed: ${_target}`);
                     }
                 }
-
                 _toBackUp = () => {
                     if (!dom.value) return;
                     const timer = setInterval(() => {

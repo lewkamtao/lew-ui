@@ -1,51 +1,50 @@
 <script lang="ts" setup>
-import { stat } from 'fs';
 import { _props } from './props';
+import { useVModels } from '@vueuse/core';
 const props = defineProps(_props);
+const emit = defineEmits([
+    'update:currentPage',
+    'update:total',
+    'update:pageSize',
+    'change',
+]);
 
-const emit = defineEmits(['update:currentPage', 'update:pageSize', 'change']);
+const { total, currentPage, pageSizeOptions } = useVModels(props, emit);
 
-const state = reactive({
-    currentPage: props.currentPage,
+let state = reactive({
+    toPage: undefined,
     pageSize: props.pageSize,
-    total: props.total,
     visiblePagesCount: props.visiblePagesCount,
-    pageSizeOptions: props.pageSizeOptions,
-    toPage: undefined, 
 });
 
-watchEffect(() => {
-    emit('update:currentPage', state.currentPage);
-    emit('update:pageSize', state.pageSize);
-    state.total = props.total;
-    let _visiblePagesCount= props.visiblePagesCount
-     if(_visiblePagesCount<5){
-            _visiblePagesCount =  5   
-    } 
-    if(_visiblePagesCount>12){ 
-        _visiblePagesCount = 12       
-    } 
-    console.log(_visiblePagesCount);
-    
-    state.visiblePagesCount = _visiblePagesCount;
-
+watch(total, () => {
+    currentPage.value = 1;
 });
 
-const totalPages = computed(() => Math.ceil(state.total / state.pageSize));
+onMounted(() => {
+    // Ensure that the number of visible pages is at least 5 and at most 12.
+    state.visiblePagesCount = Math.max(state.visiblePagesCount, 5);
+    state.visiblePagesCount = Math.min(state.visiblePagesCount, 12);
+});
+
+const totalPages = computed(() => Math.ceil(total.value / state.pageSize));
 
 const visiblePages = computed(() => {
-    let visiblePagesCount = state.visiblePagesCount;
-    const currentPage = state.currentPage;
-    const totalPages = Math.ceil(state.total / state.pageSize);
+    let _currentPage = currentPage.value;
+    let totalPages = Math.ceil(total.value / state.pageSize);
 
-    let startPage = currentPage - Math.floor(visiblePagesCount / 2);
+    let startPage = _currentPage - Math.floor(state.visiblePagesCount / 2);
+    if (_currentPage < state.visiblePagesCount / 2 + 2) {
+        startPage = 1;
+    }
+
     if (startPage < 1) {
         startPage = 1;
     }
-    let endPage = startPage + visiblePagesCount - 1;
+    let endPage = startPage + state.visiblePagesCount - 1;
     if (endPage > totalPages) {
         endPage = totalPages;
-        startPage = endPage - visiblePagesCount + 1;
+        startPage = endPage - state.visiblePagesCount + 1;
         if (startPage < 1) {
             startPage = 1;
         }
@@ -58,16 +57,16 @@ const visiblePages = computed(() => {
 });
 
 const changePage = (page: number) => {
-    page = Math.floor(page)  
- 
-    if (page < 1 || page > totalPages.value || page === state.currentPage) {
+    page = Math.floor(page);
+
+    if (page < 1 || page > totalPages.value || page === currentPage.value) {
         return;
     }
     emit('change', {
-        currentPage: state.currentPage,
+        currentPage: currentPage.value,
         pageSize: state.pageSize,
     });
-    state.currentPage = page;
+    currentPage.value = page;
 };
 
 // 是否显示省略号
@@ -85,7 +84,7 @@ const showMax = computed(
 
 const checkPageSize = (value: any) => {
     state.pageSize = value;
-    changePage(state.currentPage);
+    changePage(currentPage.value);
 };
 
 const checkPageNum = (value: any) => {
@@ -94,7 +93,7 @@ const checkPageNum = (value: any) => {
     if (page > totalPages.value || page < 1) {
         return;
     }
-    state.currentPage = page;
+    currentPage.value = page;
     changePage(value);
 };
 </script>
@@ -105,7 +104,7 @@ const checkPageNum = (value: any) => {
             <slot name="left" />
 
             <lew-flex class="lew-pagination-page-box" gap="5px">
-                <div class="btn" @click="changePage(state.currentPage - 1)">
+                <div class="btn" @click="changePage(currentPage - 1)">
                     <lew-icon size="14" type="chevron-left" />
                 </div>
                 <div
@@ -118,9 +117,7 @@ const checkPageNum = (value: any) => {
                 <div
                     v-if="startEllipsis"
                     @click="
-                        changePage(
-                            state.currentPage - state.visiblePagesCount + 1
-                        )
+                        changePage(currentPage - state.visiblePagesCount + 1)
                     "
                     class="btn control-btn"
                 >
@@ -131,7 +128,7 @@ const checkPageNum = (value: any) => {
                     :key="index"
                     class="btn"
                     :class="{
-                        active: Number(page) === Number(state.currentPage),
+                        active: Number(page) === Number(currentPage),
                     }"
                     @click="changePage(page)"
                 >
@@ -140,10 +137,8 @@ const checkPageNum = (value: any) => {
                 <div
                     v-if="endEllipsis"
                     @click="
-                        changePage(
-                               state.currentPage + state.visiblePagesCount - 1
-                        )  
-                    " 
+                        changePage(currentPage + state.visiblePagesCount - 1)
+                    "
                     class="btn control-btn"
                 >
                     <lew-icon size="14" type="more-horizontal" />
@@ -155,7 +150,7 @@ const checkPageNum = (value: any) => {
                 >
                     {{ totalPages }}
                 </div>
-                <div class="btn" @click="changePage(state.currentPage + 1)">
+                <div class="btn" @click="changePage(currentPage + 1)">
                     <lew-icon size="14" type="chevron-right" />
                 </div>
             </lew-flex>
@@ -167,8 +162,7 @@ const checkPageNum = (value: any) => {
                 size="small"
                 :show-icon="false"
                 :options="pageSizeOptions"
-            >
-            </lew-select>
+            />
             <lew-input
                 size="small"
                 align="center"

@@ -123,6 +123,10 @@ onMounted(() => {
         labelStr.value = labelStr.value =
             props.options?.find((e) => e.value === props.modelValue)?.label ||
             '';
+    } else if (typeof props.modelValue === 'number') {
+        labelStr.value = labelStr.value =
+            props.options?.find((e) => Number(e.value) === props.modelValue)
+                ?.label || '';
     }
 });
 </script>

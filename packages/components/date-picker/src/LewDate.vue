@@ -176,7 +176,6 @@ const checkToday = computed(() => (item: any) => {
             height: 100%;
             font-weight: bold;
             color: var(--lew-text-color-0);
-            padding-left: 8px;
         }
 
         .lew-date-control-left,
@@ -216,6 +215,7 @@ const checkToday = computed(() => (item: any) => {
             justify-content: center;
             width: calc(100% / 7);
             height: 36px;
+            line-height: 36px;
 
             .lew-date-label {
                 display: inline-flex;
@@ -233,8 +233,9 @@ const checkToday = computed(() => (item: any) => {
                     justify-content: center;
                     width: 24px;
                     height: 24px;
+                    line-height: 24px;
                     color: var(--lew-text-color-9);
-                    border-radius: 2px;
+                    border-radius: 6px;
                 }
             }
         }

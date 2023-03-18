@@ -1,10 +1,12 @@
 .pre-box .hljs {
-    background-color: #fbfbfb;
+    background-color: #ffffff;
+    outline: 1px #eee solid;
     font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace;
     color: #5d636f;
     line-height: 22px;
     .lew-dark & {
-        background-color: #1e1f1f;
+        outline: 1px #2d2d2d solid;
+        background-color: #2d2d2d;
         color: #d4d4d4;
     }
 }

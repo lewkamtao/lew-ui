@@ -33,7 +33,7 @@ const install: any = function (Vue: App): void {
             component.hasOwnProperty('name') ||
             component.hasOwnProperty('__name')
         ) {
-            Vue.component(component.name || component.__name, component);
+            Vue.component(`${component.name || component.__name}`, component);
         }
     });
 

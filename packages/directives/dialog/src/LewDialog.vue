@@ -4,50 +4,50 @@ import { _props } from './props';
 import { getIconType } from '../../../utils';
 
 const props = defineProps(_props);
+const emit = defineEmits(['close']);
 
 let okLoading = ref<Boolean>(false);
 let cancelLoading = ref<Boolean>(false);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const onClickOverlay = () => {
+const maskClick = () => {
     if (props?.closeOnClickOverlay) {
         close();
     }
 };
 
-let visible = ref<Boolean>(true);
+let visibleMask = ref<Boolean>(true);
 let _visible = ref<Boolean>(true);
-let _visibleTimer = ref();
 
 const close = () => {
-    visible.value = false;
-    emit('update:visible', false);
-    // 保持动画
-    clearTimeout(_visibleTimer.value);
-    _visibleTimer.value = setTimeout(() => {
+    visibleMask.value = false;
+    setTimeout(() => {
         _visible.value = false;
-    }, 250);
+        emit('close');
+    }, 200);
 };
 
-const okHandle = async () => {
+const ok = async () => {
     if (typeof props.ok === 'function') {
         okLoading.value = true;
-        await props.ok();
+        const isOk = await props.ok();
+        if (isOk !== false) {
+            close();
+        }
         okLoading.value = false;
     }
-    close();
 };
 
-const cancelHandle = async () => {
+const cancel = async () => {
     if (typeof props.cancel === 'function') {
         cancelLoading.value = true;
-        await props.cancel();
+        const isCancel = await props.cancel();
+        if (isCancel !== false) {
+            close();
+        }
         cancelLoading.value = false;
     }
-    close();
 };
-
-const emit = defineEmits(['update:visible']);
 </script>
 <template>
     <div>
@@ -56,90 +56,91 @@ const emit = defineEmits(['update:visible']);
                 v-if="_visible"
                 class="lew-dialog"
                 :style="
-                    visible
-                        ? 'animation: lewDialogOpen 0.25s;'
-                        : 'animation: lewDialogClose 0.25s;'
+                    visibleMask
+                        ? 'animation: lewDialogOpen 0.2s ease-out;'
+                        : 'animation: lewDialogClose 0.2s ease-out;'
                 "
-                @click="onClickOverlay"
+                @click="maskClick"
             >
                 <div
+                    v-if="layout === 'normal'"
+                    class="lew-dialog-box lew-dialog-box-normal"
                     :style="
-                        visible
-                            ? 'animation: lewDialogBoxOpen 0.25s;'
-                            : 'animation: lewDialogBoxClose 0.25s;'
+                        visibleMask
+                            ? 'animation: lewDialogBoxOpen 0.25s ease-out;  '
+                            : 'animation: lewDialogBoxClose 0.25s ease-out; '
                     "
+                    @click.stop
                 >
-                    <div
-                        v-if="layout === 'normal'"
-                        class="lew-dialog-box lew-dialog-box-normal"
-                        @click.stop
-                    >
-                        <div class="left">
-                            <div :class="`icon-${type}`">
-                                <lew-icon
-                                    size="30"
-                                    :type="getIconType(type)"
-                                ></lew-icon>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <header>
-                                <slot name="title" />
-                                <span
-                                    class="gulu-dialog-close"
-                                    @click="close"
-                                ></span>
-                            </header>
-                            <main>
-                                <slot name="content" />
-                            </main>
-                            <footer>
-                                <lew-button
-                                    :loading="cancelLoading"
-                                    type="blank"
-                                    @click.stop="cancelHandle"
-                                    >取消
-                                </lew-button>
-                                <lew-button
-                                    :loading="okLoading"
-                                    @click.stop="okHandle"
-                                    >确认</lew-button
-                                >
-                            </footer>
+                    <div class="left">
+                        <div :class="`icon-${type}`">
+                            <lew-icon
+                                size="30"
+                                :type="getIconType(type)"
+                            ></lew-icon>
                         </div>
                     </div>
-
-                    <div
-                        v-if="layout === 'easy'"
-                        class="lew-dialog-box lew-dialog-box-easy"
-                    >
-                        <div class="left">
-                            <div :class="`icon-${type}`">
-                                <lew-icon
-                                    size="20"
-                                    :type="getIconType(type)"
-                                ></lew-icon>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <main>
-                                <slot name="content" />
-                            </main>
+                    <div class="right">
+                        <header>
+                            <slot name="title" />
+                            <span
+                                class="gulu-dialog-close"
+                                @click="close()"
+                            ></span>
+                        </header>
+                        <main>
+                            <slot name="content" />
+                        </main>
+                        <footer>
                             <lew-button
-                                style="margin-right: 10px"
-                                type="normal"
-                                size="small"
                                 :loading="cancelLoading"
-                                @click.stop="cancelHandle"
+                                type="blank"
+                                @click.stop="cancel"
                                 >取消
                             </lew-button>
-                            <lew-button
-                                :loading="okLoading"
-                                @click.stop="okHandle"
-                                size="small"
-                                >确认
-                            </lew-button>
+                            <lew-button :loading="okLoading" @click.stop="ok"
+                                >确认</lew-button
+                            >
+                        </footer>
+                    </div>
+                </div>
+
+                <div
+                    v-if="layout === 'easy'"
+                    class="lew-dialog-box lew-dialog-box-easy"
+                    :style="
+                        visibleMask
+                            ? 'animation: lewDialogBoxOpen 0.25s ease-out;'
+                            : 'animation: lewDialogBoxClose 0.25s ease-out;'
+                    "
+                    @click.stop
+                >
+                    <div class="left">
+                        <div :class="`icon-${type}`">
+                            <lew-icon
+                                size="20"
+                                :type="getIconType(type)"
+                            ></lew-icon>
                         </div>
+                    </div>
+                    <div class="right">
+                        <main>
+                            <slot name="content" />
+                        </main>
+                        <lew-button
+                            style="margin-right: 10px"
+                            type="normal"
+                            size="small"
+                            :loading="cancelLoading"
+                            @click.stop="cancel"
+                            >取消
+                        </lew-button>
+                        <lew-button
+                            :loading="okLoading"
+                            @click.stop="ok"
+                            size="small"
+                            >确认
+                        </lew-button>
                     </div>
                 </div>
             </div>
@@ -152,8 +153,8 @@ const emit = defineEmits(['update:visible']);
     position: fixed;
     top: 0px;
     left: 0px;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-color: var(--lew-modal-bgcolor);
     display: flex;
     justify-content: center;
@@ -171,7 +172,6 @@ const emit = defineEmits(['update:visible']);
         background-color: var(--lew-bgcolor-0);
         box-shadow: 0px 15px 50px rgba($color: #000000, $alpha: 0.05);
         animation-fill-mode: forwards;
-
         .icon-success {
             color: var(--lew-success-color-dark);
         }
@@ -312,7 +312,7 @@ const emit = defineEmits(['update:visible']);
 @keyframes lewDialogBoxOpen {
     from {
         opacity: 0;
-        transform: scale(0.2);
+        transform: scale(0.9);
     }
 
     to {
@@ -329,7 +329,7 @@ const emit = defineEmits(['update:visible']);
 
     to {
         opacity: 0;
-        transform: scale(0.2);
+        transform: scale(0.9);
     }
 }
 </style>
