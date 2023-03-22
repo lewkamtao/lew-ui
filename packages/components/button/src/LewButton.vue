@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { round, size } from 'lodash';
-import { _props } from './props';
+import { buttonProps } from './button';
 
 const emit = defineEmits(['click']);
-const props = defineProps(_props);
+const props = defineProps(buttonProps);
 
 let _loading = ref(false);
 

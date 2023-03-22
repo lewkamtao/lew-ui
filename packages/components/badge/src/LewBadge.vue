@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { _props } from './props';
-defineProps(_props);
+import { badgeProps } from './badge';
+defineProps(badgeProps);
 </script>
 
 <template>

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import throttle from 'lodash/throttle';
-import { _props } from './props';
+import { backTopProps } from './backTop';
 import { useEventListener } from '../../../hooks';
 
-const props = defineProps(_props);
+const props = defineProps(backTopProps);
 
 const emit = defineEmits(['click']);
 
