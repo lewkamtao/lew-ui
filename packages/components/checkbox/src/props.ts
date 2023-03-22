@@ -1,11 +1,11 @@
-import { PropType } from 'vue';
+import { PropType, ExtractPropTypes } from 'vue';
 
-export type Options = {
+export type CheckboxOptions = {
     label: string;
     value: string;
 };
 
-export const _props = {
+export const checkboxProps = {
     label: {
         type: String,
         default: () => {
@@ -44,7 +44,7 @@ export const _props = {
     },
 };
 
-export const group_props = {
+export const checkboxGroupProps = {
     modelValue: {
         type: Array,
         default: () => {
@@ -77,12 +77,12 @@ export const group_props = {
         default: 'medium',
     },
     options: {
-        type: Array as PropType<Options[]>,
+        type: Array as PropType<CheckboxOptions[]>,
         default: () => {
             return [];
         },
         required: true,
-        validator: (value: Array<Options>) => {
+        validator: (value: Array<CheckboxOptions>) => {
             const hasNameKey = value.every((option) =>
                 Object.keys(option).includes('label')
             );
@@ -93,3 +93,6 @@ export const group_props = {
         },
     },
 };
+
+export type CheckboxProps = ExtractPropTypes<typeof checkboxProps>;
+export type CheckboxGroupProps = ExtractPropTypes<typeof checkboxGroupProps>;

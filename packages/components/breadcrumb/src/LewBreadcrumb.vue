@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { _props } from './props';
+import { breadcrumbProps } from './breadcrumb';
 import { useLewTo } from '../../../hooks';
 
 const { lewTo } = useLewTo();
 
-defineProps(_props);
+defineProps(breadcrumbProps);
 </script>
 
 <template>

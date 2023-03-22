@@ -236,13 +236,6 @@ group.value = [
                 label: 'New',
                 type: 'success',
             },
-            {
-                cname: '评论',
-                name: 'Comment',
-                path: '/Comment',
-                label: 'New',
-                type: 'success',
-            },
         ],
     },
     {
