@@ -108,6 +108,7 @@ const classObject = computed(() => {
 .lew-button-small {
     min-width: 50px;
     height: var(--lew-form-item-height-small);
+    line-height: var(--lew-form-item-height-small);
     padding: 0px 8px;
     font-size: var(--lew-form-font-size-small);
 
@@ -124,6 +125,7 @@ const classObject = computed(() => {
 .lew-button-medium {
     min-width: 60px;
     height: var(--lew-form-item-height-medium);
+    line-height: var(--lew-form-item-height-medium);
     padding: 0px 14px;
     font-size: var(--lew-form-font-size-medium);
 
@@ -139,6 +141,7 @@ const classObject = computed(() => {
 .lew-button-large {
     min-width: 70px;
     height: var(--lew-form-item-height-large);
+    line-height: var(--lew-form-item-height-large);
     padding: 0px 20px;
     font-size: var(--lew-form-font-size-large);
 
