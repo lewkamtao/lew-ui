@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { _props } from './props';
+import { dropdownProps } from './dropdown';
 import type { LewDropdownOptions } from '../index';
 
-defineProps(_props);
+defineProps(dropdownProps);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let lewPopoverRef = ref();

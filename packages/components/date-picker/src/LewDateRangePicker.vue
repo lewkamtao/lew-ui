@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { dateRangePickerProps } from './props';
+import { dateRangePickerProps } from './datePicker';
 const props = defineProps(dateRangePickerProps);
 
 let isShowPicker = ref(false);

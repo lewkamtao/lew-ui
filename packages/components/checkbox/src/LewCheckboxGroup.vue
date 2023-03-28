@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { group_props } from './props';
+import { checkboxGroupProps } from './checkbox';
 import LewCheckbox from './LewCheckbox.vue';
 
-const props = defineProps(group_props);
+const props = defineProps(checkboxGroupProps);
 
 const emit = defineEmits(['update:modelValue']);
 

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { datePickerProps } from './props';
+import { datePickerProps } from './datePicker';
 import moment from 'moment';
 
 const props = defineProps(datePickerProps);

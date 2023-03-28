@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { ref, watch, nextTick } from 'vue';
+import { ref, watch } from 'vue';
 import { useDOMCreate } from '../../../hooks';
-import { DrawerProps, getClass, getStyle } from './index';
+import { drawerProps, getClass, getStyle } from './drawer';
 
 useDOMCreate('lew-drawer');
 const emit = defineEmits(['update:visible']);
 
-const props = defineProps(DrawerProps);
+const props = defineProps(drawerProps);
 let _visible = ref(props.visible);
 let isShowMain = ref(false);
 
@@ -56,7 +56,7 @@ const close = () => {
     width: 100%;
     height: 100%;
     background-color: var(--lew-modal-bgcolor);
-    outline: 1000000px solid var(--lew-modal-bgcolor);
+    outline: 90000px solid var(--lew-modal-bgcolor);
     z-index: 999;
 }
 .lew-drawer-main {

@@ -23,6 +23,78 @@ const options = [
         label: '择善而从',
         value: '择善而从',
     },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
+    {
+        label: '择善而从',
+        value: '择善而从',
+    },
 ];
 </script>
 
@@ -47,12 +119,7 @@ const options = [
             />
         </lew-form-item>
         <lew-form-item direction="y" label="气泡方向自定义">
-            <lew-input-pro
-                style="width: 250px"
-                popover-width="250px"
-                :options="options"
-                clearable
-            />
+            <lew-input-pro style="width: 250px" :options="options" clearable />
         </lew-form-item>
     </lew-form>
 </template>

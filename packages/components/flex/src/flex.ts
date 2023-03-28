@@ -1,4 +1,6 @@
-export const _props = {
+import { ExtractPropTypes } from 'vue';
+
+export const flexProps = {
     direction: {
         type: String,
         default: 'x',
@@ -27,3 +29,4 @@ export const _props = {
     },
     width: { type: [String, Number] },
 };
+export type FlexProps = ExtractPropTypes<typeof flexProps>;

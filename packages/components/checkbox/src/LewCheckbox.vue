@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import { _props } from './props';
+import { checkboxProps } from './checkbox';
 
-const props = defineProps(_props);
+const props = defineProps(checkboxProps);
 
 watch(
     () => props.checked,
-    (v:boolean) => {
+    (v: boolean) => {
         if (v != _checked.value) {
             _checked.value = v;
         }
     }
-); 
+);
 
 let _checked = ref(props.checked || false);
 

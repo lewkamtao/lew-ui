@@ -19,4 +19,16 @@ export const getPx = (num: string) => {
     return typeof num === 'string' ? num : num + 'px';
 };
 
+export const getClass = (prefix: String, props: Object) => {
+    let className = '';
+    for (const [key, value] of Object.entries(props)) {
+        if (typeof value === 'boolean' && value) {
+            className += ` ${prefix}-${key}`;
+        } else if (typeof value === 'string') {
+            className += ` ${prefix}-${key}-${value}`;
+        }
+    }
+    return className;
+};
+
 export * from './validator';

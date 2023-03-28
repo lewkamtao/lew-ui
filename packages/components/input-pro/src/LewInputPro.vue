@@ -49,7 +49,10 @@ const hide = () => {
     lewDropdownRef.value.hide();
 };
 
+let width = ref(0);
+
 const focus = (e: any) => {
+    width.value = lewDropdownRef.value.$el.clientWidth - 12;
     open();
     e?.currentTarget?.select();
     emit('focus', v);
@@ -65,7 +68,7 @@ const focus = (e: any) => {
             :trigger="trigger"
             :placement="placement"
             :align="align"
-            :width="parseFloat(popoverWidth) - 12 + 'px'"
+            :width="`${width}px`"
             :options="options"
             @change="selectFn"
         >

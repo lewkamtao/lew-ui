@@ -1,7 +1,11 @@
-import { PropType } from 'vue';
-import { LewDropdownOptions } from './type';
+import { PropType, ExtractPropTypes } from 'vue';
 
-export const _props = {
+export type LewDropdownOptions = {
+    label: number | string;
+    value: number | string;
+};
+
+export const dropdownProps = {
     options: {
         type: Array as PropType<LewDropdownOptions[]>,
         default() {
@@ -29,9 +33,10 @@ export const _props = {
         type: String,
         default: '300px',
     },
-
     align: {
         type: String,
         default: 'left',
     },
 };
+
+export type DropdownProps = ExtractPropTypes<typeof dropdownProps>;

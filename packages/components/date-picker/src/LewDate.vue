@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { getMonthDate, getHeadDate } from './date';
-import { dateProps } from './props';
+import { dateProps } from './datePicker';
 import moment from 'moment';
 
 const props = defineProps(dateProps);
@@ -23,9 +23,11 @@ let curMonth = ref(today.getMonth() + 1);
 let curDay = ref(today.getDate());
 
 // 年
-let _year = ref(moment(dateValue.value).year());
+let _year = ref(dateValue.value ? moment(dateValue.value).year() : curYear);
 // 月
-let _month = ref(moment(dateValue.value).month() + 1);
+let _month = ref(
+    dateValue.value ? moment(dateValue.value).month() + 1 : curMonth
+);
 
 let dateData = ref(getMonthDate());
 

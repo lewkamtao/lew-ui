@@ -1,6 +1,6 @@
 import { PropType, toRaw } from 'vue';
 
-export type SelectOptions = {
+export type LewSelectOptions = {
     label: string;
     value: string;
     disabled?: boolean;
@@ -8,16 +8,17 @@ export type SelectOptions = {
 
 export const selectProps = {
     modelValue: {
-        type: [String, Number],
+        // 父组件 v-model 没有指定参数名，则默认是 modelValue
+        type: [String, Number, Array<string>],
         required: true,
     },
     options: {
-        type: Array as PropType<SelectOptions[]>,
+        type: Array as PropType<LewSelectOptions[]>,
         default() {
             return [];
         },
         required: true,
-        validator(options: SelectOptions[]) {
+        validator(options: LewSelectOptions[]) {
             const _options = toRaw(options);
             const arr = _options.map((e) => e.value);
             const newSet = new Set(arr);
@@ -28,6 +29,10 @@ export const selectProps = {
             return options.length > 0;
         },
     },
+    placement: {
+        type: String,
+        default: 'bottom-start',
+    },
     trigger: {
         type: String,
         default: 'click',
@@ -35,20 +40,29 @@ export const selectProps = {
             return ['click', 'hover'].includes(value);
         },
     },
-    labelSlot: {
+    multiple: {
         type: Boolean,
         default: false,
     },
-    placeholder: {
+    align: {
         type: String,
-        default: '请选择',
+        default: 'left',
+    },
+    showIcon: {
+        type: Boolean,
+        default: true,
+    },
+    labelSlot: {
+        type: Boolean,
+        default: false,
     },
     size: {
         type: String,
         default: 'medium',
     },
+    // 是否使用清空按钮
     clearable: {
         type: Boolean,
-        default: false,
+        default: true,
     },
 };

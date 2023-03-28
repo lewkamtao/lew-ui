@@ -1,3 +1,5 @@
+import { ExtractPropTypes } from 'vue';
+
 export const inputProps = {
     // 类型
     type: {
@@ -69,3 +71,4 @@ export const inputProps = {
         default: false,
     },
 };
+export type DateRangePickerProps = ExtractPropTypes<typeof inputProps>;

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { getMonthDate, getHeadDate } from './date';
-import { dateRangeProps } from './props';
+import { dateRangeProps } from './datePicker';
 import moment from 'moment';
 
 const props = defineProps(dateRangeProps);

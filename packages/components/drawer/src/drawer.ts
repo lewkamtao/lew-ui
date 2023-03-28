@@ -1,12 +1,6 @@
-/*
- * @Author: sonders
- * @Date: 2022-07-13 14:08:50
- * @LastEditors: sonders
- * @LastEditTime: 2022-07-13 14:56:57
- * @Description:
- *
- */
-export const DrawerProps = {
+import { ExtractPropTypes } from 'vue';
+
+export const drawerProps = {
     visible: {
         type: Boolean,
         default: false,
@@ -24,6 +18,8 @@ export const DrawerProps = {
         default: '',
     },
 };
+
+export type DrawerProps = ExtractPropTypes<typeof drawerProps>;
 
 export const getStyle = (position: string, width: number, height: number) => {
     switch (true) {

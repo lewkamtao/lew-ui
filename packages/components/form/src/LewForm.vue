@@ -1,22 +1,6 @@
 <script setup lang="ts">
-defineProps({
-    width: {
-        type: String,
-        default: '',
-    },
-    labelWidth: {
-        type: String,
-        default: 'auto',
-    },
-    labelAlign: {
-        type: String,
-        default: 'end',
-    },
-    direction: {
-        type: String,
-        default: 'x',
-    },
-});
+import { formProps } from './form';
+defineProps(formProps);
 </script>
 
 <template>

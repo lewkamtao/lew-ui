@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { _props } from './props';
+import { flexProps } from './flex';
 import { getPx } from 'lew-ui/utils';
 
-const props = defineProps(_props);
+const props = defineProps(flexProps);
 
 const classObject = computed(() => {
     return {

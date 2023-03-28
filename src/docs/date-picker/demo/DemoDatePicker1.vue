@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const value = ref('2020-12-12');
+const value = ref('');
 
 const dateRangeValue = ref(['2020-12-11', '2020-12-12']);
 

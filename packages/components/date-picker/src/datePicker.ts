@@ -1,3 +1,5 @@
+import { ExtractPropTypes } from 'vue';
+
 export const datePickerProps = {
     modelValue: {
         type: String,
@@ -58,3 +60,8 @@ export const dateProps = {
         default: false,
     },
 };
+
+export type DatePickerProps = ExtractPropTypes<typeof datePickerProps>;
+export type DateRangePickerProps = ExtractPropTypes<
+    typeof dateRangePickerProps
+>;

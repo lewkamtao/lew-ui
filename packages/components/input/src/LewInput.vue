@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inputProps } from './props';
+import { inputProps } from './input';
 
 const props = defineProps(inputProps);
 const v = ref(props.modelValue);
@@ -108,7 +108,7 @@ const focus = (e: any) => {
     emit('focus');
 };
 
-defineExpose({ getEl, focusFn });
+defineExpose({ getEl, focusFn, lewInputRef });
 </script>
 
 <template>
@@ -476,31 +476,6 @@ defineExpose({ getEl, focusFn });
     .lew-input-controls {
         background: var(--lew-form-bgcolor-focus);
     }
-}
-
-.lew-input-view-readonly {
-    cursor: default;
-    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
-    background-color: var(--lew-form-bgcolor);
-
-    input {
-        user-select: auto;
-    }
-}
-
-.lew-input-view-readonly:hover {
-    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
-    background-color: var(--lew-form-bgcolor);
-}
-
-.lew-input-view-readonly:active {
-    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
-    background-color: var(--lew-form-bgcolor);
-}
-
-.lew-input-view-readonly:focus-within {
-    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
-    background-color: var(--lew-form-bgcolor);
 }
 
 .lew-input-view-disabled {
