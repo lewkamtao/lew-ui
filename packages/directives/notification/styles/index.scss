@@ -16,12 +16,13 @@
         justify-content: space-between;
         width: 300px;
         max-height: 0px;
+        border: var(--lew-popover-border);
         transition: all 0.25s ease, max-height 1s, opacity 0.45s;
         opacity: 0;
         margin-top: 0px;
         margin-bottom: 10px;
         white-space: nowrap;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
         font-size: 14px;
         border-radius: var(--lew-border-radius);
         overflow: hidden;

@@ -1,28 +1,23 @@
 <script setup lang="ts">
-const options = ref([
-    {
-        label: '广东',
-        value: '1',
-    },
-    {
-        label: '深圳',
-        value: '2',
-    },
-    {
-        label: '杭州',
-        value: '3',
-    },
-    {
-        label: '上海',
-        value: '4',
-    },
-    {
-        label: '北京',
-        value: '5',
-    },
-]);
+import { schools } from './schools';
+
+const schoolsOptions = schools.map((e) => {
+    return { label: e, value: e };
+});
+const options = ref(schoolsOptions);
 
 const value = ref('');
+
+const searchFn = (event: any) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            let res = options.value.filter(
+                (e) => e.label.indexOf(event.keyword) >= 0
+            );
+            resolve(res);
+        }, 500);
+    });
+};
 </script>
 
 <template>
@@ -30,13 +25,20 @@ const value = ref('');
         <lew-form style="width: 350px" direction="x" label-width="80px">
             <lew-form-item label="小的">
                 <LewSelect
+                    searchable
                     v-model="value"
                     size="small"
                     :options="options"
                 ></LewSelect>
             </lew-form-item>
             <lew-form-item label="常规">
-                <LewSelect v-model="value" :options="options"></LewSelect>
+                <LewSelect
+                    searchable
+                    search-mode="custom"
+                    :search-method="searchFn"
+                    v-model="value"
+                    :options="options"
+                ></LewSelect>
             </lew-form-item>
             <lew-form-item label="大的">
                 <LewSelect

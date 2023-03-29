@@ -3,20 +3,29 @@ import { useVModel } from '@vueuse/core';
 import { selectProps, SelectOptions } from './props';
 import { LewPopover } from 'lew-ui';
 import { getClass } from 'lew-ui/utils';
+
 const props = defineProps(selectProps);
 const emit = defineEmits(['update:modelValue', 'change']);
-
 const selectValue = useVModel(props, 'modelValue', emit);
 
-let visible = ref(false);
 let lewSelectRef = ref();
 let lewPopverRef = ref();
-let selectWidth = ref();
+let searchInputRef = ref();
 
-// @ts-ingore
+let state = reactive({
+    selectWidth: 0,
+    visible: false,
+    searchOptions: props.options,
+    loading: false,
+});
 
 const getSelectWidth = () => {
-    selectWidth.value = lewSelectRef.value?.clientWidth - 12;
+    state.selectWidth = lewSelectRef.value?.clientWidth - 14;
+    if (props.searchable) {
+        setTimeout(() => {
+            searchInputRef.value && searchInputRef.value.focus();
+        }, 200);
+    }
 };
 
 const show = () => {
@@ -25,6 +34,29 @@ const show = () => {
 
 const hide = () => {
     lewPopverRef.value.hide();
+};
+
+const search = async (e: any) => {
+    const keyword = e.target.value;
+    if (!keyword) {
+        state.searchOptions = props.options;
+        return;
+    }
+    state.loading = true;
+    if (props.searchable && props.searchMode === 'filter') {
+        state.searchOptions = props.options.filter((e) => {
+            return props.searchMethod({ label: e.label, keyword });
+        });
+        state.loading = false;
+    } else if (props.searchable && props.searchMode === 'custom') {
+        const res: any = await props.searchMethod({ keyword });
+        state.searchOptions = res;
+        state.loading = false;
+    }
+};
+
+const contains = (label: string, keyword: string) => {
+    return label.indexOf(keyword) >= 0;
 };
 
 const clearHandle = () => {
@@ -82,12 +114,13 @@ defineExpose({ show, hide });
     <lew-popover
         ref="lewPopverRef"
         class="lew-select-view"
-        :class="{ 'lew-select-focus': visible }"
+        :class="{ 'lew-select-focus': state.visible }"
         :trigger="trigger"
         placement="bottom-start"
         style="width: 100%"
-        @on-show="(visible = true), getSelectWidth()"
-        @on-hide="visible = false"
+        @on-show="(state.visible = true), getSelectWidth()"
+        @on-hide="state.visible = false"
+        :loading="state.loading"
     >
         <template #trigger>
             <div
@@ -113,11 +146,21 @@ defineExpose({ show, hide });
             <div
                 class="lew-select-body"
                 :class="getBodyClassName"
-                :style="`width:${selectWidth}px`"
+                :style="`width:${state.selectWidth}px`"
             >
                 <slot name="header"></slot>
+                <div v-if="searchable" class="search-input">
+                    <input
+                        ref="searchInputRef"
+                        @input="search"
+                        placeholder="输入搜索关键词"
+                    />
+                </div>
                 <div class="lew-select-options-box">
-                    <template v-for="item in options" :key="item.value">
+                    <template
+                        v-for="item in state.searchOptions || options"
+                        :key="item.value"
+                    >
                         <label @click="selectHandle(item)">
                             <!-- 原生 -->
                             <div
@@ -305,7 +348,24 @@ defineExpose({ show, hide });
 .lew-select-body {
     width: 100%;
     box-sizing: border-box;
-
+    .search-input {
+        margin-bottom: 5px;
+        input {
+            outline: none;
+            border: none;
+            background-color: var(--lew-bgcolor-1);
+            width: 100%;
+            height: 30px;
+            border-radius: var(--lew-border-radius);
+            padding: 0px 10px;
+            box-sizing: border-box;
+            color: var(--lew-form-color);
+            transition: var(--lew-form-transition);
+        }
+        input:focus {
+            background-color: var(--lew-form-bgcolor);
+        }
+    }
     .lew-select-options-box {
         overflow-y: auto;
         overflow-x: hidden;
@@ -339,6 +399,9 @@ defineExpose({ show, hide });
             user-select: none;
             font-size: 14px;
             padding: 0px 8px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             box-sizing: border-box;
         }
 

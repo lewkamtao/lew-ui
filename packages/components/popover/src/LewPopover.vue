@@ -14,6 +14,10 @@ const props = defineProps({
         type: String,
         default: 'top',
     },
+    loading: {
+        type: Boolean,
+        default: () => true,
+    },
     triggerTarget: {
         type: Element,
         default: null,
@@ -79,7 +83,13 @@ defineExpose({ show, hide });
         <label ref="triggerRef" style="font-size: 0px">
             <div class="trigger"><slot name="trigger" /></div>
         </label>
-        <div ref="bodyRef" class="lew-popover-body">
+        <div
+            ref="bodyRef"
+            class="lew-popover-body"
+            v-loading="{
+                isShow: loading,
+            }"
+        >
             <slot name="popover-body" :show="show" :hide="hide" />
         </div>
     </div>
@@ -94,5 +104,9 @@ defineExpose({ show, hide });
             font-size: 14px;
         }
     }
+}
+.lew-popover-body {
+    padding: 6px;
+    overflow: hidden;
 }
 </style>

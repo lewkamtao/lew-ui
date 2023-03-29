@@ -6,6 +6,11 @@ export type SelectOptions = {
     disabled?: boolean;
 };
 
+export type SelectSearchMethodParams = {
+    label?: string;
+    keyword?: string;
+};
+
 export const selectProps = {
     modelValue: {
         type: [String, Number],
@@ -46,6 +51,28 @@ export const selectProps = {
     size: {
         type: String,
         default: 'medium',
+    },
+    searchable: {
+        type: Boolean,
+        default: false,
+    },
+    searchMode: {
+        type: String,
+        default: 'filter', //  filter,  custom
+    },
+    searchPlaceholder: {
+        type: String,
+        default: '',
+    },
+    searchMethod: {
+        type: Function as PropType<(e: SelectSearchMethodParams) => void>,
+        default: (e: SelectSearchMethodParams) => {
+            if (e.label && e.keyword) {
+                return e.label.indexOf(e.keyword) >= 0;
+            } else {
+                return false;
+            }
+        },
     },
     clearable: {
         type: Boolean,

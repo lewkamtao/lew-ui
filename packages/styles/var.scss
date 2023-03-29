@@ -148,13 +148,16 @@
     // dialog / modal
     --lew-modal-bgcolor: rgb(0, 0, 0, 0.5);
     // loading
-    --lew-loading-bgcolor: rgb(0, 0, 0, 0.23);
+    --lew-loading-bgcolor: rgb(255, 255, 255, 0.5);
     // povpoer
     --lew-povpoer-bgcolor: rgba(255, 255, 255);
     // message
     --lew-message-bgcolor: rgba(255, 255, 255, 1);
     // notification
     --lew-notification-bgcolor: rgba(255, 255, 255, 1);
+    // popover
+    --lew-popover-border: 1px #E4E5EA solid;
+    --lew-popover-box-shadow: 0 4px 10px #0000001a;
 }
 
 .lew-dark {
@@ -280,11 +283,13 @@
     // dialog / modal
     --lew-modal-bgcolor: rgba(175, 175, 175, 0.05);
     // loading
-    --lew-loading-bgcolor: rgba(0, 0, 0, 0.5);
+    --lew-loading-bgcolor: rgba(0, 0, 0, 0.7);
     // povpoer
     --lew-povpoer-bgcolor: #333;
     // message
     --lew-message-bgcolor: rgb(59, 59, 59);
     // notification
     --lew-notification-bgcolor: rgb(50, 50, 50);
+    // popover
+    --lew-popover-border: 1px rgba(255, 255, 255, 0.05) solid;
 }

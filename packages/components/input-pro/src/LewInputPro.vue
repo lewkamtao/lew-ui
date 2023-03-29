@@ -52,7 +52,7 @@ const hide = () => {
 let width = ref(0);
 
 const focus = (e: any) => {
-    width.value = lewDropdownRef.value.$el.clientWidth - 12;
+    width.value = lewDropdownRef.value.$el.clientWidth - 14;
     open();
     e?.currentTarget?.select();
     emit('focus', v);
