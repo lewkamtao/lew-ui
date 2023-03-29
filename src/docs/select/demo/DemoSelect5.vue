@@ -12,11 +12,6 @@ const options = ref([
     {
         label: '雍正帝',
         disabled: true,
-        value: '121',
-    },
-    {
-        disabled: true,
-        label: '雍正帝',
         value: '3',
     },
     {
@@ -27,40 +22,6 @@ const options = ref([
         label: '陈高祖陈霸先',
         value: '5',
     },
-    {
-        label: '宋钦宗',
-        value: '6',
-    },
-    {
-        label: '唐高宗',
-        value: '7',
-    },
-    {
-        label: '齐高帝萧道成',
-        disabled: true,
-        value: '8',
-    },
-    {
-        label: '晋武帝',
-        value: '9',
-    },
-    {
-        label: '唐中宗',
-        value: '10',
-    },
-    {
-        label: '唐睿宗',
-        value: '11',
-    },
-    {
-        disabled: true,
-        label: '汉献帝',
-        value: '12',
-    },
-    {
-        label: '齐武帝',
-        value: '13',
-    },
 ]);
 
 const value = ref('');
@@ -69,15 +30,8 @@ const value = ref('');
 <template>
     <div>
         <lew-form style="width: 350px" label-width="80px">
-            <lew-form-item label="Focus">
-                <LewSelect v-model="value" :options="options"></LewSelect>
-            </lew-form-item>
-            <lew-form-item label="Hover">
-                <LewSelect
-                    v-model="value"
-                    :options="options"
-                    trigger="hover"
-                ></LewSelect>
+            <lew-form-item label="常规">
+                <lew-select v-model="value" :options="options" multiple />
             </lew-form-item>
         </lew-form>
     </div>

@@ -14,6 +14,8 @@ const searchFn = (event: any) => {
             let res = options.value.filter(
                 (e) => e.label.indexOf(event.keyword) >= 0
             );
+            console.log(res);
+
             resolve(res);
         }, 500);
     });
@@ -23,45 +25,22 @@ const searchFn = (event: any) => {
 <template>
     <div>
         <lew-form style="width: 350px" direction="x" label-width="80px">
-            <lew-form-item label="小的">
-                <LewSelect
+            <lew-form-item label="默认过滤">
+                <lew-select
                     searchable
                     v-model="value"
-                    size="small"
                     :options="options"
-                ></LewSelect>
+                ></lew-select>
             </lew-form-item>
-            <lew-form-item label="常规">
-                <LewSelect
+
+            <lew-form-item label="模拟请求">
+                <lew-select
                     searchable
                     search-mode="custom"
                     :search-method="searchFn"
                     v-model="value"
                     :options="options"
-                ></LewSelect>
-            </lew-form-item>
-            <lew-form-item label="大的">
-                <LewSelect
-                    v-model="value"
-                    size="large"
-                    :options="options"
-                ></LewSelect>
-            </lew-form-item>
-
-            <lew-form-item label="方向（上方）">
-                <LewSelect
-                    v-model="value"
-                    size="large"
-                    :options="options"
-                ></LewSelect>
-            </lew-form-item>
-
-            <lew-form-item label="方向（下方）">
-                <LewSelect
-                    v-model="value"
-                    size="large"
-                    :options="options"
-                ></LewSelect>
+                />
             </lew-form-item>
         </lew-form>
     </div>

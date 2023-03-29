@@ -4,6 +4,12 @@ import {
     DemoSelect1_code,
     DemoSelect2,
     DemoSelect2_code,
+    DemoSelect3,
+    DemoSelect3_code,
+    DemoSelect4,
+    DemoSelect4_code,
+    DemoSelect5,
+    DemoSelect5_code,
 } from './demo';
 
 const columns = [
@@ -74,11 +80,20 @@ const optionsTable = ref([
 <template>
     <div class="demo-wrapper">
         <lew-title>Select</lew-title>
-        <lew-demo-box title="触发方式" :code="DemoSelect1_code">
+        <lew-demo-box title="常规" :code="DemoSelect1_code">
             <demo-select1 />
         </lew-demo-box>
-        <lew-demo-box title="多选" :code="DemoSelect2_code">
+        <lew-demo-box title="触发方式" :code="DemoSelect2_code">
             <demo-select2 />
+        </lew-demo-box>
+        <lew-demo-box title="支持搜索" :code="DemoSelect3_code">
+            <demo-select3 />
+        </lew-demo-box>
+        <lew-demo-box title="插槽" :code="DemoSelect4_code">
+            <demo-select4 />
+        </lew-demo-box>
+        <lew-demo-box title="禁用项" :code="DemoSelect5_code">
+            <demo-select5 />
         </lew-demo-box>
         <lew-title size="16px">Props</lew-title>
         <lew-table :data="docsTable" :columns="columns" height="auto">
