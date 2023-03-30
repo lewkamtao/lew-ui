@@ -38,6 +38,7 @@
                 type="textarea"
                 resize="vertical"
                 show-count
+                clearable
                 :max-length="30"
             />
         </lew-form-item>

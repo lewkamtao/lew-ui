@@ -110,7 +110,7 @@ const getClass = (item: AlertItem) => {
     }
 
     .lew-alert-normal {
-        color: var(--lew-text-color-5);
+        color: var(--lew-text-color-2);
         background-color: var(--lew-normal-color-light);
     }
 

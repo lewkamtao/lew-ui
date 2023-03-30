@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    right: 20px;
+    right: 30px;
     top: 20px;
     z-index: 999;
 
@@ -17,10 +17,10 @@
         width: 300px;
         max-height: 0px;
         border: var(--lew-popover-border);
-        transition: all 0.25s ease, max-height 1s, opacity 0.45s;
+        transition: all 0.35s ease, max-height 1s, opacity 0.45s;
         opacity: 0;
         margin-top: 0px;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         white-space: nowrap;
         box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
         font-size: 14px;
@@ -47,14 +47,14 @@
                 .lew-notification-title {
                     font-size: 14px;
                     font-weight: bold;
-                    color: var(--lew-text-color-4);
+                    color: var(--lew-text-color-2);
                 }
 
                 .lew-notification-content {
                     width: 100%;
                     margin-top: 5px;
                     font-size: 14px;
-                    color: var(--lew-text-color-6);
+                    color: var(--lew-text-color-4);
                     white-space: pre-wrap;
                     word-wrap: break-word;
                 }

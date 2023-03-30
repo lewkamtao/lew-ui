@@ -150,29 +150,35 @@
     // loading
     --lew-loading-bgcolor: rgb(255, 255, 255, 0.5);
     // povpoer
-    --lew-povpoer-bgcolor: rgba(255, 255, 255);
+    --lew-popover-bgcolor: #fff;
     // message
     --lew-message-bgcolor: rgba(255, 255, 255, 1);
     // notification
     --lew-notification-bgcolor: rgba(255, 255, 255, 1);
     // popover
-    --lew-popover-border: 1px #E4E5EA solid;
-    --lew-popover-box-shadow: 0 4px 10px #0000001a;
+    --lew-popover-border: 1px #e4e5ea solid;
+    --lew-popover-box-shadow: 0 4px 10px #00000027;
+
+    --lew-tooltip-box-left-shadow: 4px 0px 10px #00000027;
+    --lew-tooltip-box-right-shadow: -4px 0px 10px #00000027;
+    --lew-tooltip-box-top-shadow: 0 4px 10px #00000027;
+    --lew-tooltip-box-bottom-shadow: 0 -4px 10px #00000027;
 }
 
 .lew-dark {
     // 全局
     // 背景
-    --lew-bgcolor-0: rgb(20, 20, 20);
-    --lew-bgcolor-1: rgb(30, 30, 30);
-    --lew-bgcolor-2: rgb(40, 40, 40);
-    --lew-bgcolor-3: rgb(50, 50, 50);
-    --lew-bgcolor-4: rgb(60, 60, 60);
-    --lew-bgcolor-5: rgb(70, 70, 70);
-    --lew-bgcolor-6: rgb(80, 80, 80);
-    --lew-bgcolor-7: rgb(90, 90, 90);
-    --lew-bgcolor-8: rgb(100, 100, 100);
-    --lew-bgcolor-9: rgb(110, 110, 110);
+    --lew-bgcolor-0: rgb(26, 27, 32);
+    --lew-bgcolor-1: rgb(39, 40, 46);
+    --lew-bgcolor-2: rgb(52, 53, 60);
+    --lew-bgcolor-3: rgb(65, 66, 73);
+    --lew-bgcolor-4: rgb(78, 79, 86);
+    --lew-bgcolor-5: rgb(91, 92, 99);
+    --lew-bgcolor-6: rgb(104, 105, 112);
+    --lew-bgcolor-7: rgb(117, 118, 125);
+    --lew-bgcolor-8: rgb(130, 131, 138);
+    --lew-bgcolor-9: rgb(143, 144, 151);
+
     // 背景反相
     --lew-bgcolor-0-invert: rgb(255, 255, 255);
     --lew-bgcolor-1-invert: rgb(245, 245, 245);
@@ -207,35 +213,37 @@
     --lew-text-color-8-invert: rgb(170, 170, 170);
     --lew-text-color-9-invert: rgb(190, 190, 190);
     // 边界
-    --lew-border-0: 1px solid rgb(30, 30, 30);
-    --lew-border-1: 1px solid rgb(40, 40, 40);
-    --lew-border-2: 1px solid rgb(50, 50, 50);
-    --lew-border-3: 1px solid rgb(60, 60, 60);
-    --lew-border-4: 1px solid rgb(70, 70, 70);
-    --lew-border-5: 1px solid rgb(80, 80, 80);
-    --lew-border-6: 1px solid rgb(90, 90, 90);
-    --lew-border-7: 1px solid rgb(100, 100, 100);
-    --lew-border-8: 1px solid rgb(110, 110, 110);
-    --lew-border-9: 1px solid rgb(120, 120, 120);
+
+    --lew-border-0: 1px solid rgb(36, 37, 42);
+    --lew-border-1: 1px solid rgb(49, 50, 56);
+    --lew-border-2: 1px solid rgb(62, 63, 70);
+    --lew-border-3: 1px solid rgb(75, 76, 83);
+    --lew-border-4: 1px solid rgb(88, 89, 96);
+    --lew-border-5: 1px solid rgb(101, 102, 109);
+    --lew-border-6: 1px solid rgb(114, 115, 122);
+    --lew-border-7: 1px solid rgb(127, 128, 135);
+    --lew-border-8: 1px solid rgb(140, 141, 148);
+    --lew-border-9: 1px solid rgb(153, 154, 161);
+
     // 阴影
     --lew-box-shadow: 0px 3px 15px rgba(243, 243, 243, 0.08);
     // 主题色
     --lew-primary-color: rgb(50, 86, 136);
-    --lew-primary-color-dark: rgb(75, 126, 198);
+    --lew-primary-color-dark: rgb(100, 165, 255);
     --lew-primary-color-light: #273141;
     --lew-primary-color-light2: #374c6c;
     --lew-primary-color-hover: rgb(52, 91, 146);
     --lew-primary-color-active: rgb(26, 58, 92);
     // success
     --lew-success-color: rgb(32, 125, 91);
-    --lew-success-color-dark: rgb(35, 153, 110);
+    --lew-success-color-dark: rgb(34, 255, 174);
     --lew-success-color-light: #2a3d2e;
     --lew-success-color-light2: #3d5d42;
     --lew-success-color-hover: rgb(34, 134, 97);
     --lew-success-color-active: rgb(27, 109, 79);
     // info
     --lew-info-color: rgb(50, 86, 136);
-    --lew-info-color-dark: rgb(75, 126, 198);
+    --lew-info-color-dark: rgb(100, 165, 255);
     --lew-info-color-light: #273141;
     --lew-info-color-light2: #374c6c;
     --lew-info-text-color: rgba(173, 207, 255, 0.8);
@@ -243,7 +251,7 @@
     --lew-info-color-active: rgb(26, 58, 92);
     // error
     --lew-error-color: rgb(161, 74, 74);
-    --lew-error-color-dark: rgb(197, 88, 88);
+    --lew-error-color-dark: rgb(255, 80, 80);
     --lew-error-color-light: #432e2e;
     --lew-error-color-light2: #614140;
     --lew-error-text-color: rgb(255, 127, 127, 0.8);
@@ -251,7 +259,7 @@
     --lew-error-color-active: rgb(123, 55, 55);
     // warning
     --lew-warning-color: rgb(149, 124, 64);
-    --lew-warning-color-dark: rgb(186, 132, 7);
+    --lew-warning-color-dark: rgb(255, 195, 54);
     --lew-warning-color-light: #372b15;
     --lew-warning-color-light2: #543c15;
     --lew-warning-text-color: rgb(255, 224, 100, 0.8);
@@ -259,10 +267,10 @@
     --lew-warning-color-active: rgb(126, 104, 53);
     // normal
     --lew-normal-color: rgb(84, 81, 81);
-    --lew-normal-color-dark: rgb(129, 129, 129);
+    --lew-normal-color-dark: rgb(203, 203, 203);
     --lew-normal-color-light: #2f2f2f;
     --lew-normal-color-light2: #464646;
-    --lew-normal-text-color: rgb(212, 212, 212, 0.8);
+    --lew-normal-text-color: rgba(218, 218, 218, 0.8);
     --lew-normal-color-hover: rgb(88, 88, 88);
     --lew-normal-color-active: rgb(75, 75, 75);
     // 表单样式
@@ -272,10 +280,10 @@
     --lew-form-border-color-active: rgba(96, 96, 96, 0.8);
     --lew-form-border-color-focus: var(--lew-primary-color);
     // 表单背景
-    --lew-form-bgcolor: rgb(35, 35, 35);
-    --lew-form-bgcolor-hover: rgb(40, 40, 40);
-    --lew-form-bgcolor-active: rgb(32, 32, 32);
-    --lew-form-bgcolor-focus: rgb(45, 45, 45);
+    --lew-form-bgcolor: #27282d;
+    --lew-form-bgcolor-hover: #35363d;
+    --lew-form-bgcolor-active: #202025;
+    --lew-form-bgcolor-focus: #49494f;
     // 表单背景2
     --lew-form-bgcolor-high: rgba(71, 71, 71, 0.5);
     --lew-form-bgcolor-high-hover: rgba(71, 71, 71, 0.801);
@@ -285,11 +293,11 @@
     // loading
     --lew-loading-bgcolor: rgba(0, 0, 0, 0.7);
     // povpoer
-    --lew-povpoer-bgcolor: #333;
+    --lew-popover-bgcolor: #323339;
     // message
-    --lew-message-bgcolor: rgb(59, 59, 59);
+    --lew-message-bgcolor: #4d4d58;
     // notification
-    --lew-notification-bgcolor: rgb(50, 50, 50);
+    --lew-notification-bgcolor: #4d4d58;
     // popover
     --lew-popover-border: 1px rgba(255, 255, 255, 0.05) solid;
 }

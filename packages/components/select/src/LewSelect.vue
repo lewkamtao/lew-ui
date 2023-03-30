@@ -24,6 +24,8 @@ let state = reactive({
 
 const getSelectWidth = () => {
     state.selectWidth = lewSelectRef.value?.clientWidth - 14;
+    console.log(state.selectWidth);
+
     if (searchable) {
         setTimeout(() => {
             searchInputRef.value && searchInputRef.value.focus();
@@ -101,8 +103,8 @@ const getSelectClassName = computed(() => {
 });
 
 const getBodyClassName = computed(() => {
-    let { size } = props;
-    return getClass('lew-select-body', { size });
+    let { size, align } = props;
+    return getClass('lew-select-body', { size, align });
 });
 
 const getSelectItemClassName = (e: any) => {
@@ -196,9 +198,7 @@ defineExpose({ show, hide });
                         class="reslut-count"
                     >
                         共
-                        {{
-                            numFormat(state.opitons && state.opitons.length)
-                        }}
+                        {{ numFormat(state.opitons && state.opitons.length) }}
                         条结果
                     </div>
                     <template v-for="item in state.opitons" :key="item.value">

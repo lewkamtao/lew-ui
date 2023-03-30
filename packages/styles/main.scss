@@ -5,26 +5,54 @@ textarea {
 .tippy-box {
     border-radius: var(--lew-border-radius) !important;
     box-sizing: border-box !important;
-}
-
-.tippy-box[data-lew~='popover'] {
-    border: var(--lew-popover-border);
+    background-color: var(--lew-popover-bgcolor) !important;
+    border: var(--lew-popover-border) !important;
     box-shadow: var(--lew-popover-box-shadow) !important;
+    color: var(--lew-text-color-0) !important;
     overflow: hidden;
-
     .tippy-content {
         padding: 0px;
         box-sizing: border-box !important;
     }
 }
 
-.tippy-box[data-lew~='custom'] {
+.tippy-box[data-lew~='tooltip'] {
+    overflow: visible;
+    border: none !important;
+
     .tippy-content {
-        padding: 0px;
+        padding: 10px;
         box-sizing: border-box !important;
     }
 }
+.tippy-box[data-placement^='left'] {
+    box-shadow: var(--lew-tooltip-box-left-shadow) !important;
 
+    > .tippy-arrow:before {
+        border-left-color: var(--lew-popover-bgcolor) !important;
+    }
+}
+.tippy-box[data-placement^='top'] {
+    box-shadow: var(--lew-tooltip-box-top-shadow) !important;
+
+    > .tippy-arrow:before {
+        border-top-color: var(--lew-popover-bgcolor) !important;
+    }
+}
+.tippy-box[data-placement^='right'] {
+    box-shadow: var(--lew-tooltip-box-right-shadow) !important;
+
+    > .tippy-arrow:before {
+        border-right-color: var(--lew-popover-bgcolor) !important;
+    }
+}
+.tippy-box[data-placement^='bottom'] {
+    box-shadow: var(--lew-tooltip-box-bottom-shadow) !important;
+
+    > .tippy-arrow:before {
+        border-bottom-color: var(--lew-popover-bgcolor) !important;
+    }
+}
 .skeletons {
     width: 200%;
     height: 100%;

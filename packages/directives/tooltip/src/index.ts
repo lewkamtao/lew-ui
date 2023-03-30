@@ -19,21 +19,6 @@ export default {
                     allowHTML: binding.value.allowHTML,
                     arrow: binding.value.arrow,
                     maxWidth: 250,
-                    onShow(instance) {
-                        instance.setContent(el.instanceContent);
-                        const node = document.getElementsByTagName('html')[0];
-                        if (node.classList.contains('lew-dark')) {
-                            instance.popper.children[0].setAttribute(
-                                'data-theme',
-                                'dark'
-                            );
-                        } else {
-                            instance.popper.children[0].setAttribute(
-                                'data-theme',
-                                'light'
-                            );
-                        }
-                    },
                 });
                 el.instance.popper.children[0].setAttribute(
                     'data-lew',

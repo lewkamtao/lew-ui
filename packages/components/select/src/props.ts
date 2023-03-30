@@ -69,6 +69,10 @@ export const selectProps = {
     },
     clearable: {
         type: Boolean,
-        default: () => true,
+        default: () => false,
+    },
+    align: {
+        type: String,
+        default: 'left',
     },
 };

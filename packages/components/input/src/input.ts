@@ -32,7 +32,7 @@ export const inputProps = {
     // 是否使用清空按钮
     clearable: {
         type: Boolean,
-        default: () => true,
+        default: () => false,
     },
     // 默认提示语
     placeholder: {

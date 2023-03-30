@@ -48,21 +48,13 @@ onMounted(() => {
         appendTo: () => document.body,
         allowHTML: true,
         maxWidth: 'none',
-        onShow(instance) {
-            const node = document.getElementsByTagName('html')[0];
-            if (node.classList.contains('lew-dark')) {
-                instance.popper.children[0].setAttribute('data-theme', 'dark');
-            } else {
-                instance.popper.children[0].setAttribute('data-theme', 'light');
-            }
+        onShow() {
             emit('onShow');
         },
         onHide() {
             emit('onHide');
         },
     });
-
-    instance.popper.children[0].setAttribute('data-lew', 'popover');
 });
 
 const emit = defineEmits(['onShow', 'onHide']);

@@ -163,8 +163,10 @@ defineExpose({ getEl, focusFn, lewInputRef });
                     (v && showPassword) ||
                     (v && clearable) ||
                     (showCount && !clearable && !showPassword),
-                'lew-input-controls-count': showCount && maxLength && !v,
-                'lew-input-controls-count-show': showCount && maxLength && v,
+                'lew-input-controls-count':
+                    showCount && clearable && maxLength && !v,
+                'lew-input-controls-count-show':
+                    showCount && clearable && maxLength && v,
             }"
         >
             <div v-if="getCheckNumStr" class="lew-input-show-count">
@@ -203,7 +205,7 @@ defineExpose({ getEl, focusFn, lewInputRef });
     position: relative;
     overflow: hidden;
     width: 100%;
-    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     border-radius: var(--lew-border-radius);
     background-color: var(--lew-form-bgcolor);
     transition: var(--lew-form-transition);
@@ -466,8 +468,7 @@ defineExpose({ getEl, focusFn, lewInputRef });
 }
 
 .lew-input-view:hover {
-    border: var(--lew-form-border-width) var(--lew-form-border-color-hover)
-        solid;
+    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor-hover);
 
     .lew-input-controls {

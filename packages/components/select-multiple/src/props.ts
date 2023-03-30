@@ -63,6 +63,6 @@ export const selectProps = {
     // 是否使用清空按钮
     clearable: {
         type: Boolean,
-        default: true,
+        default: false,
     },
 };
