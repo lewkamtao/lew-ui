@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const isShow = ref(false);
+const visible = ref(false);
 const title = ref('加载中');
 </script>
 
@@ -7,7 +7,7 @@ const title = ref('加载中');
     <div style="width: 300px">
         <lew-title size="14px">常规</lew-title>
         <lew-flex
-            v-loading="{ isShow: true }"
+            v-loading="{ visible: true }"
             direction="y"
             style="padding: 20px"
         >
@@ -36,7 +36,7 @@ const title = ref('加载中');
         <lew-title size="14px">自定义文字</lew-title>
 
         <lew-flex
-            v-loading="{ isShow: isShow, title: title }"
+            v-loading="{ visible: visible, title: title }"
             direction="y"
             style="margin-bottom: 20px; padding: 20px"
         >
@@ -56,18 +56,18 @@ const title = ref('加载中');
 
             <lew-flex x="end">
                 <lew-button type="normal">关闭 </lew-button>
-                <lew-button @click="isShow = true">立即登录</lew-button>
+                <lew-button @click="visible = true">立即登录</lew-button>
             </lew-flex>
         </lew-flex>
 
         <lew-form-item
-            v-loading="{ isShow: isShow, title: title }"
+            v-loading="{ visible: visible, title: title }"
             direction="y"
             label="输入加载标题"
         >
             <lew-input v-model="title" show-count :max-length="10" />
         </lew-form-item>
         <br />
-        <lew-button @click="isShow = !isShow">触发</lew-button>
+        <lew-button @click="visible = !visible">触发</lew-button>
     </div>
 </template>

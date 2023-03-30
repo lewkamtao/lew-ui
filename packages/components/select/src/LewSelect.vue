@@ -267,7 +267,6 @@ defineExpose({ show, hide });
             right: 7px;
             transform: translateY(-50%) rotate(0deg);
             transition: var(--lew-form-transition);
-            opacity: 0;
         }
         .clear-icon {
             opacity: 0;
