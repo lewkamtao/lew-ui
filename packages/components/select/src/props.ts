@@ -21,17 +21,6 @@ export const selectProps = {
         default() {
             return [];
         },
-        required: true,
-        validator(options: SelectOptions[]) {
-            const _options = toRaw(options);
-            const arr = _options.map((e) => e.value);
-            const newSet = new Set(arr);
-            // 检查重复
-            if (arr.length !== newSet.size) {
-                throw new Error('lew-select：options 中 value 不能重复');
-            }
-            return options.length > 0;
-        },
     },
     trigger: {
         type: String,

@@ -46,10 +46,16 @@ const search = async (e: any) => {
     state.loading = true;
     const keyword = e.target.value;
     if (searchable) {
-        const result: any = await searchMethod({
-            options: options,
-            keyword,
-        });
+        let result: any = [];
+        // 如果没输入关键词
+        if (!keyword && options.length > 0) {
+            result = options;
+        } else {
+            result = await searchMethod({
+                options: options,
+                keyword,
+            });
+        }
         state.opitons = result;
     }
     state.loading = false;
@@ -171,6 +177,14 @@ defineExpose({ show, hide });
                     />
                 </div>
                 <div class="lew-select-options-box">
+                    <lew-flex
+                        direction="y"
+                        v-show="state.opitons && state.opitons.length === 0"
+                        class="not-found"
+                    >
+                        <lew-icon type="box" />
+                        <span>暂无结果</span>
+                    </lew-flex>
                     <template v-for="item in state.opitons" :key="item.value">
                         <label @click="selectHandle(item)">
                             <!-- 原生 -->
@@ -373,10 +387,14 @@ defineExpose({ show, hide });
             background-color: var(--lew-form-bgcolor);
         }
     }
+    .not-found {
+        padding: 50px 0px;
+        opacity: 0.4;
+    }
     .lew-select-options-box {
         overflow-y: auto;
         overflow-x: hidden;
-        max-height: 300px;
+        max-height: 250px;
         height: auto;
         box-sizing: border-box;
         transition: all 0.25s ease;
