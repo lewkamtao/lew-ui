@@ -310,6 +310,7 @@ defineExpose({ show, hide });
             display: inline-flex;
             align-items: center;
         }
+        .placeholder,
         .value {
             width: 100%;
         }
