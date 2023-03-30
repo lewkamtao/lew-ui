@@ -1,5 +1,4 @@
 import { ExtractPropTypes, PropType } from 'vue';
-import { widthValidator } from 'lew-ui/utils';
 
 type AvatarPosition =
     | 'top'
@@ -31,13 +30,11 @@ export const avatarProps = {
         default: '',
     },
     width: {
-        type: [String, Number],
-        validator: widthValidator,
+        type: Number,
         default: 40,
     },
     height: {
-        type: [String, Number],
-        validator: widthValidator,
+        type: Number,
         default: 40,
     },
     errorSrc: {

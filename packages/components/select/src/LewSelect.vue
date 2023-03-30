@@ -235,19 +235,25 @@ defineExpose({ show, hide });
             right: 7px;
             transform: translateY(-50%) rotate(0deg);
             transition: var(--lew-form-transition);
-            color: var(--lew-text-color-7);
+            opacity: 0;
         }
         .clear-icon {
             opacity: 0;
             transform: translate(100%, -50%);
+        }
+        .clear-icon:hover {
+            opacity: 1;
         }
         .select-icon-hide {
             opacity: 0;
             transform: translate(100%, -50%);
         }
         .clear-icon-show {
-            opacity: 1;
+            opacity: 0.7;
             transform: translate(0%, -50%);
+        }
+        .clear-icon-show:hover {
+            opacity: 1;
         }
         .placeholder {
             color: rgb(165, 165, 165);

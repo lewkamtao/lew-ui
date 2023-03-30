@@ -1,20 +1,16 @@
-import { ExtractPropTypes, PropType } from 'vue';
-import { widthValidator } from 'lew-ui/utils';
+import { ExtractPropTypes } from 'vue';
 
 export const backTopProps = {
     right: {
-        type: String,
-        validator: widthValidator,
+        type: Number,
         default: 40,
     },
     bottom: {
-        type: String,
-        validator: widthValidator,
+        type: Number,
         default: 40,
     },
     valveHeight: {
-        type: String,
-        validator: widthValidator,
+        type: Number,
         default: 50,
     },
     target: {

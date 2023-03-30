@@ -30,5 +30,3 @@ export const getClass = (prefix: String, props: Object) => {
     }
     return className;
 };
-
-export * from './validator';
