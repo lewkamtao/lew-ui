@@ -2,7 +2,7 @@ textarea {
     font-family: inherit;
 }
 
-.tippy-box {
+.tippy-box[data-lew~='popover'] {
     border-radius: var(--lew-border-radius) !important;
     box-sizing: border-box !important;
     background-color: var(--lew-popover-bgcolor) !important;
@@ -17,38 +17,37 @@ textarea {
 }
 
 .tippy-box[data-lew~='tooltip'] {
-    overflow: visible;
     border: none !important;
+    background-color: var(--lew-popover-bgcolor) !important;
+    color: var(--lew-text-color-0) !important;
 
     .tippy-content {
-        padding: 10px;
+        padding: 12px;
         box-sizing: border-box !important;
     }
 }
-.tippy-box[data-placement^='left'] {
-    box-shadow: var(--lew-tooltip-box-left-shadow) !important;
+.lew-dark {
+    .tippy-box[data-lew~='tooltip'] {
+        box-shadow: none !important;
+    }
+}
 
+.tippy-box[data-placement^='left'] {
     > .tippy-arrow:before {
         border-left-color: var(--lew-popover-bgcolor) !important;
     }
 }
 .tippy-box[data-placement^='top'] {
-    box-shadow: var(--lew-tooltip-box-top-shadow) !important;
-
     > .tippy-arrow:before {
         border-top-color: var(--lew-popover-bgcolor) !important;
     }
 }
 .tippy-box[data-placement^='right'] {
-    box-shadow: var(--lew-tooltip-box-right-shadow) !important;
-
     > .tippy-arrow:before {
         border-right-color: var(--lew-popover-bgcolor) !important;
     }
 }
 .tippy-box[data-placement^='bottom'] {
-    box-shadow: var(--lew-tooltip-box-bottom-shadow) !important;
-
     > .tippy-arrow:before {
         border-bottom-color: var(--lew-popover-bgcolor) !important;
     }

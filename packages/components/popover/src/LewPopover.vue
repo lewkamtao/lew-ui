@@ -55,6 +55,7 @@ onMounted(() => {
             emit('onHide');
         },
     });
+    instance.popper.children[0].setAttribute('data-lew', 'popover');
 });
 
 const emit = defineEmits(['onShow', 'onHide']);

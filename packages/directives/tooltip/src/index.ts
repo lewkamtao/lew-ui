@@ -10,6 +10,7 @@ export default {
                     trigger = 'mouseenter';
                 }
                 el.instance = tippy(el, {
+                    theme: 'light',
                     trigger: trigger || 'mouseenter',
                     content: binding.value.content,
                     animation: 'shift-away-subtle',
