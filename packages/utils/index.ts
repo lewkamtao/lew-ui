@@ -30,3 +30,14 @@ export const getClass = (prefix: String, props: Object) => {
     }
     return className;
 };
+
+export const numFormat = (num: number) => {
+    var str = num.toString().split('.');
+    var integerPart = str[0];
+    var decimalPart = str[1] ? '.' + str[1] : '';
+    var reg = /(\d+)(\d{3})/;
+    while (reg.test(integerPart)) {
+        integerPart = integerPart.replace(reg, '$1' + ',' + '$2');
+    }
+    return integerPart + decimalPart;
+};

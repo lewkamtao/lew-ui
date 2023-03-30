@@ -2,7 +2,7 @@
 import { useVModel, useDebounceFn } from '@vueuse/core';
 import { selectProps, SelectOptions } from './props';
 import { LewPopover } from 'lew-ui';
-import { getClass } from 'lew-ui/utils';
+import { getClass, numFormat } from 'lew-ui/utils';
 
 const props = defineProps(selectProps);
 const emit = defineEmits(['update:modelValue', 'change']);
@@ -19,6 +19,7 @@ let state = reactive({
     visible: false,
     loading: false,
     opitons: options,
+    keyword: '',
 });
 
 const getSelectWidth = () => {
@@ -171,6 +172,7 @@ defineExpose({ show, hide });
                 <slot name="header"></slot>
                 <div v-if="searchable" class="search-input">
                     <input
+                        v-model="state.keyword"
                         ref="searchInputRef"
                         @input="searchDebounce"
                         placeholder="输入搜索关键词"
@@ -185,6 +187,20 @@ defineExpose({ show, hide });
                         <lew-icon type="box" />
                         <span>暂无结果</span>
                     </lew-flex>
+                    <div
+                        v-if="
+                            searchable &&
+                            state.opitons &&
+                            state.opitons.length > 0
+                        "
+                        class="reslut-count"
+                    >
+                        共
+                        {{
+                            numFormat(state.opitons && state.opitons.length)
+                        }}
+                        条结果
+                    </div>
                     <template v-for="item in state.opitons" :key="item.value">
                         <label @click="selectHandle(item)">
                             <!-- 原生 -->
@@ -390,6 +406,12 @@ defineExpose({ show, hide });
     .not-found {
         padding: 50px 0px;
         opacity: 0.4;
+    }
+    .reslut-count {
+        padding-left: 8px;
+        margin: 5px 0px;
+        opacity: 0.4;
+        font-size: 13px;
     }
     .lew-select-options-box {
         overflow-y: auto;
