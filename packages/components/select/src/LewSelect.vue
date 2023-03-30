@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useVModel } from '@vueuse/core';
+import { useVModel, useDebounceFn } from '@vueuse/core';
 import { selectProps, SelectOptions } from './props';
 import { LewPopover } from 'lew-ui';
 import { getClass } from 'lew-ui/utils';
@@ -8,6 +8,8 @@ const props = defineProps(selectProps);
 const emit = defineEmits(['update:modelValue', 'change']);
 const selectValue = useVModel(props, 'modelValue', emit);
 
+const { searchDelay, options, searchMethod, searchable, modelValue } = props;
+
 let lewSelectRef = ref();
 let lewPopverRef = ref();
 let searchInputRef = ref();
@@ -15,13 +17,13 @@ let searchInputRef = ref();
 let state = reactive({
     selectWidth: 0,
     visible: false,
-    searchOptions: props.options,
     loading: false,
+    opitons: options,
 });
 
 const getSelectWidth = () => {
     state.selectWidth = lewSelectRef.value?.clientWidth - 14;
-    if (props.searchable) {
+    if (searchable) {
         setTimeout(() => {
             searchInputRef.value && searchInputRef.value.focus();
         }, 200);
@@ -35,28 +37,22 @@ const show = () => {
 const hide = () => {
     lewPopverRef.value.hide();
 };
+const searchDebounce = useDebounceFn(async (e: any) => {
+    search(e);
+}, searchDelay);
 
 const search = async (e: any) => {
-    const keyword = e.target.value;
-    if (!keyword) {
-        state.searchOptions = props.options;
-        return;
-    }
+    // loading
     state.loading = true;
-    if (props.searchable && props.searchMode === 'filter') {
-        state.searchOptions = props.options.filter((e) => {
-            return props.searchMethod({ label: e.label, keyword });
+    const keyword = e.target.value;
+    if (searchable) {
+        const result: any = await searchMethod({
+            options: options,
+            keyword,
         });
-        state.loading = false;
-    } else if (props.searchable && props.searchMode === 'custom') {
-        const res: any = await props.searchMethod({ keyword });
-        state.searchOptions = res;
-        state.loading = false;
+        state.opitons = result;
     }
-};
-
-const contains = (label: string, keyword: string) => {
-    return label.indexOf(keyword) >= 0;
+    state.loading = false;
 };
 
 const clearHandle = () => {
@@ -72,12 +68,12 @@ const selectHandle = (item: SelectOptions) => {
 };
 
 const getChecked = (_value: String | Number) => {
-    return props.modelValue === _value;
+    return modelValue === _value;
 };
 
-const getValue = computed(() => {
-    if (props.options) {
-        const option = props.options.find((e) => {
+const getLabel = computed(() => {
+    if (options) {
+        const option = options.find((e) => {
             if (!!e) {
                 return e.value === selectValue.value;
             }
@@ -107,6 +103,18 @@ const getSelectItemClassName = (e: any) => {
     return getClass('lew-select-item', { disabled });
 };
 
+const onShow = () => {
+    state.visible = true;
+    getSelectWidth();
+    if (state.opitons && state.opitons.length === 0 && searchable) {
+        search({ target: { value: '' } });
+    }
+};
+
+const onHide = () => {
+    state.visible = false;
+};
+
 defineExpose({ show, hide });
 </script>
 
@@ -118,8 +126,8 @@ defineExpose({ show, hide });
         :trigger="trigger"
         placement="bottom-start"
         style="width: 100%"
-        @on-show="(state.visible = true), getSelectWidth()"
-        @on-hide="state.visible = false"
+        @on-show="onShow"
+        @on-hide="onHide"
         :loading="state.loading"
     >
         <template #trigger>
@@ -128,16 +136,22 @@ defineExpose({ show, hide });
                 class="lew-select"
                 :class="getSelectClassName"
             >
-                <lew-icon size="16px" type="chevron-down" class="select-icon" />
+                <lew-icon
+                    size="16px"
+                    type="chevron-down"
+                    class="select-icon"
+                    :class="{ 'select-icon-hide': clearable && getLabel }"
+                />
                 <lew-icon
                     @click.stop="clearHandle"
                     v-if="clearable"
                     size="16px"
                     type="x-circle"
                     class="clear-icon"
+                    :class="{ 'clear-icon-show': clearable && getLabel }"
                 />
-                <div v-show="getValue" class="value">{{ getValue }}</div>
-                <div v-show="!getValue" class="placeholder">
+                <div v-show="getLabel" class="value">{{ getLabel }}</div>
+                <div v-show="!getLabel" class="placeholder">
                     {{ placeholder }}
                 </div>
             </div>
@@ -152,15 +166,12 @@ defineExpose({ show, hide });
                 <div v-if="searchable" class="search-input">
                     <input
                         ref="searchInputRef"
-                        @input="search"
+                        @input="searchDebounce"
                         placeholder="输入搜索关键词"
                     />
                 </div>
                 <div class="lew-select-options-box">
-                    <template
-                        v-for="item in state.searchOptions || options"
-                        :key="item.value"
-                    >
+                    <template v-for="item in state.opitons" :key="item.value">
                         <label @click="selectHandle(item)">
                             <!-- 原生 -->
                             <div
@@ -227,7 +238,16 @@ defineExpose({ show, hide });
             color: var(--lew-text-color-7);
         }
         .clear-icon {
-            display: none;
+            opacity: 0;
+            transform: translate(100%, -50%);
+        }
+        .select-icon-hide {
+            opacity: 0;
+            transform: translate(100%, -50%);
+        }
+        .clear-icon-show {
+            opacity: 1;
+            transform: translate(0%, -50%);
         }
         .placeholder {
             color: rgb(165, 165, 165);
@@ -254,25 +274,6 @@ defineExpose({ show, hide });
         }
     }
 
-    .lew-select-clearable {
-        .select-icon {
-            opacity: 1;
-        }
-        .clear-icon {
-            display: block;
-            opacity: 0;
-            transform: translate(100%, -50%);
-        }
-    }
-    .lew-select-clearable:hover {
-        .select-icon {
-            opacity: 0;
-        }
-        .clear-icon {
-            opacity: 1;
-            transform: translate(0px, -50%);
-        }
-    }
     .lew-select-placeholder {
         color: rgb(165, 165, 165);
     }

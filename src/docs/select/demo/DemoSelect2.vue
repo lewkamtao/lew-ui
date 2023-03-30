@@ -68,16 +68,16 @@ const value = ref('');
 
 <template>
     <div>
-        <lew-form style="width: 350px" label-width="80px">
+        <lew-form style="width: 420px" label-width="120px">
             <lew-form-item label="Focus">
-                <LewSelect v-model="value" :options="options"></LewSelect>
+                <lew-select v-model="value" :options="options"></lew-select>
             </lew-form-item>
             <lew-form-item label="Hover">
-                <LewSelect
+                <lew-select
                     v-model="value"
                     :options="options"
                     trigger="hover"
-                ></LewSelect>
+                ></lew-select>
             </lew-form-item>
         </lew-form>
     </div>

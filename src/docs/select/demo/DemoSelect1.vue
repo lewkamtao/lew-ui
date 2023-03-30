@@ -22,46 +22,25 @@ const searchFn = (event: any) => {
 
 <template>
     <div>
-        <lew-form style="width: 350px" direction="x" label-width="80px">
+        <lew-form style="width: 420px" direction="x" label-width="120px">
             <lew-form-item label="小的">
-                <LewSelect
+                <lew-select
                     searchable
                     v-model="value"
                     size="small"
                     :options="options"
-                ></LewSelect>
+                />
             </lew-form-item>
             <lew-form-item label="常规">
-                <LewSelect
+                <lew-select
                     searchable
-                    search-mode="custom"
                     :search-method="searchFn"
                     v-model="value"
                     :options="options"
-                ></LewSelect>
+                />
             </lew-form-item>
             <lew-form-item label="大的">
-                <LewSelect
-                    v-model="value"
-                    size="large"
-                    :options="options"
-                ></LewSelect>
-            </lew-form-item>
-
-            <lew-form-item label="方向（上方）">
-                <LewSelect
-                    v-model="value"
-                    size="large"
-                    :options="options"
-                ></LewSelect>
-            </lew-form-item>
-
-            <lew-form-item label="方向（下方）">
-                <LewSelect
-                    v-model="value"
-                    size="large"
-                    :options="options"
-                ></LewSelect>
+                <lew-select v-model="value" size="large" :options="options" />
             </lew-form-item>
         </lew-form>
     </div>

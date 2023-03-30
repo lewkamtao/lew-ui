@@ -28,7 +28,12 @@ const handleCopy = (text: string) => {
             class="icon-box"
             @click="handleCopy(item)"
         >
-            <lew-icon :type="item" animation="spin" animation-speed="fast" />
+            <lew-icon
+                size="36"
+                :type="item"
+                animation="spin"
+                animation-speed="fast"
+            />
             <div class="name">
                 {{ item }}
             </div>

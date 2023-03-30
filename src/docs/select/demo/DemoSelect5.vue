@@ -29,7 +29,7 @@ const value = ref('');
 
 <template>
     <div>
-        <lew-form style="width: 350px" label-width="80px">
+        <lew-form style="width: 420px" label-width="120px">
             <lew-form-item label="常规">
                 <lew-select v-model="value" :options="options" multiple />
             </lew-form-item>

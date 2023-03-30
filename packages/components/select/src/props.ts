@@ -7,7 +7,7 @@ export type SelectOptions = {
 };
 
 export type SelectSearchMethodParams = {
-    label?: string;
+    options?: SelectOptions[];
     keyword?: string;
 };
 
@@ -56,26 +56,30 @@ export const selectProps = {
         type: Boolean,
         default: false,
     },
-    searchMode: {
-        type: String,
-        default: 'filter', //  filter,  custom
-    },
     searchPlaceholder: {
         type: String,
         default: '',
     },
     searchMethod: {
         type: Function as PropType<(e: SelectSearchMethodParams) => void>,
-        default: (e: SelectSearchMethodParams) => {
-            if (e.label && e.keyword) {
-                return e.label.indexOf(e.keyword) >= 0;
+        default: (params: SelectSearchMethodParams) => {
+            const { options, keyword } = params;
+            if (options && keyword) {
+                const reslut = options.filter((e) => {
+                    return keyword && e.label.indexOf(keyword) >= 0;
+                });
+                return reslut;
             } else {
-                return false;
+                return [];
             }
         },
     },
+    searchDelay: {
+        type: Number,
+        default: 250,
+    },
     clearable: {
         type: Boolean,
-        default: false,
+        default: () => true,
     },
 };

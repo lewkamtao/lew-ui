@@ -10,7 +10,8 @@ export default {
     install(app: Application) {
         app.directive('loading', {
             mounted(el: HTMLElement, binding: DirectiveBinding) {
-                const _target = binding.value;
+                const { title, iconSize, visible } = binding.value;
+
                 loadingWrapper = document.createElement('div');
                 loadingBox = document.createElement('div');
                 loadingWrapper.classList.add('lew-loading-wrapper');
@@ -22,23 +23,24 @@ export default {
                     type: 'loader',
                     animation: 'spin',
                     'animation-speed': 'fast',
+                    size: iconSize,
                 });
                 loader.mount(loadingBox);
                 // // add loading text
-                loadingBox.setAttribute('data-after', _target.title || '');
+                loadingBox.setAttribute('data-after', title || '');
 
                 loadingWrapper.appendChild(loadingBox);
                 el.appendChild(loadingWrapper);
 
-                if (_target.isShow) {
+                if (visible) {
                     el.classList.add('lew-loading-show');
                 }
             },
             updated(el: HTMLElement, binding: DirectiveBinding) {
-                const _target = binding.value;
-                loadingBox.setAttribute('data-after', _target.title || '');
+                const { title, visible } = binding.value;
+                loadingBox.setAttribute('data-after', title || '');
 
-                if (_target.isShow) {
+                if (visible) {
                     el.classList.add('lew-loading-show');
                 } else {
                     el.classList.remove('lew-loading-show');

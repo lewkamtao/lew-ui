@@ -10,6 +10,8 @@ import {
     DemoSelect4_code,
     DemoSelect5,
     DemoSelect5_code,
+    DemoSelect6,
+    DemoSelect6_code,
 } from './demo';
 
 const columns = [
@@ -94,6 +96,9 @@ const optionsTable = ref([
         </lew-demo-box>
         <lew-demo-box title="禁用项" :code="DemoSelect5_code">
             <demo-select5 />
+        </lew-demo-box>
+        <lew-demo-box title="其他" :code="DemoSelect6_code">
+            <demo-select6 />
         </lew-demo-box>
         <lew-title size="16px">Props</lew-title>
         <lew-table :data="docsTable" :columns="columns" height="auto">

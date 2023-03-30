@@ -5,12 +5,12 @@ textarea {
 .tippy-box {
     border-radius: var(--lew-border-radius) !important;
     box-sizing: border-box !important;
-    overflow: hidden;
 }
 
 .tippy-box[data-lew~='popover'] {
     border: var(--lew-popover-border);
     box-shadow: var(--lew-popover-box-shadow) !important;
+    overflow: hidden;
 
     .tippy-content {
         padding: 0px;

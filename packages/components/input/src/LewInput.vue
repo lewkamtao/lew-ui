@@ -162,8 +162,9 @@ defineExpose({ getEl, focusFn, lewInputRef });
                 'lew-input-controls-show':
                     (v && showPassword) ||
                     (v && clearable) ||
-                    (showCount && !clearable && !showPassword) ||
-                    (showCount && maxLength),
+                    (showCount && !clearable && !showPassword),
+                'lew-input-controls-count': showCount && maxLength && !v,
+                'lew-input-controls-count-show': showCount && maxLength && v,
             }"
         >
             <div v-if="getCheckNumStr" class="lew-input-show-count">
@@ -430,8 +431,19 @@ defineExpose({ getEl, focusFn, lewInputRef });
 
     .lew-input-controls-show {
         transform: translateY(0px);
+        .lew-input-clear {
+            min-width: auto;
+            padding-right: 2px;
+        }
     }
-
+    .lew-input-controls-count {
+        opacity: 0.8;
+        transform: translateY(0px) translateX(28px);
+    }
+    .lew-input-controls-count-show {
+        opacity: 0.8;
+        transform: translateY(0px) translateX(0px);
+    }
     .lew-textarea-resize-none {
         resize: none;
     }
@@ -461,10 +473,6 @@ defineExpose({ getEl, focusFn, lewInputRef });
     .lew-input-controls {
         background: var(--lew-form-bgcolor-hover);
     }
-}
-
-.lew-input-view:active {
-    background-color: var(--lew-form-bgcolor-active);
 }
 
 .lew-input-view:focus-within {

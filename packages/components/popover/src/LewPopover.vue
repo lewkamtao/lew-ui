@@ -16,7 +16,7 @@ const props = defineProps({
     },
     loading: {
         type: Boolean,
-        default: () => true,
+        default: () => false,
     },
     triggerTarget: {
         type: Element,
@@ -87,7 +87,8 @@ defineExpose({ show, hide });
             ref="bodyRef"
             class="lew-popover-body"
             v-loading="{
-                isShow: loading,
+                visible: loading,
+                iconSize: 16,
             }"
         >
             <slot name="popover-body" :show="show" :hide="hide" />
