@@ -97,19 +97,21 @@ const getLabel = computed(() => {
 });
 
 const getSelectClassName = computed(() => {
-    let { clearable, size } = props;
+    let { clearable, size, align } = props;
     clearable = clearable ? (selectValue.value ? true : false) : false;
-    return getClass('lew-select', { clearable, size });
+    return getClass('lew-select', { clearable, size, align });
 });
 
 const getBodyClassName = computed(() => {
-    let { size, align } = props;
-    return getClass('lew-select-body', { size, align });
+    let { size } = props;
+    return getClass('lew-select-body', { size });
 });
 
 const getSelectItemClassName = (e: any) => {
     let { disabled } = e;
-    return getClass('lew-select-item', { disabled });
+    let { align } = props;
+
+    return getClass('lew-select-item', { disabled, align });
 };
 
 const onShow = () => {
@@ -308,6 +310,19 @@ defineExpose({ show, hide });
             display: inline-flex;
             align-items: center;
         }
+        .value {
+            width: 100%;
+        }
+    }
+
+    .lew-select-align-left {
+        text-align: left;
+    }
+    .lew-select-align-center {
+        text-align: center;
+    }
+    .lew-select-align-right {
+        text-align: right;
     }
 
     .lew-select-placeholder {
@@ -439,6 +454,15 @@ defineExpose({ show, hide });
         .lew-select-item-disabled {
             opacity: 0.3;
             cursor: no-drop;
+        }
+        .lew-select-item-align-left {
+            text-align: left;
+        }
+        .lew-select-item-align-center {
+            text-align: center;
+        }
+        .lew-select-item-align-right {
+            text-align: right;
         }
 
         .lew-select-label {
