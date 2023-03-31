@@ -8,7 +8,7 @@ const props = defineProps(selectProps);
 const emit = defineEmits(['update:modelValue', 'change']);
 const selectValue = useVModel(props, 'modelValue', emit);
 
-const { searchDelay, options, searchMethod, searchable, modelValue } = props;
+const { searchDelay, options, searchMethod, searchable } = props;
 
 let lewSelectRef = ref();
 let lewPopverRef = ref();
@@ -77,7 +77,7 @@ const selectHandle = (item: SelectOptions) => {
 };
 
 const getChecked = (_value: String | Number) => {
-    return modelValue === _value;
+    return selectValue.value === _value;
 };
 
 const getLabel = computed(() => {
@@ -98,7 +98,7 @@ const getLabel = computed(() => {
 
 const getSelectClassName = computed(() => {
     let { clearable, size, align } = props;
-    clearable = clearable ? (selectValue.value ? true : false) : false;
+    clearable = clearable ? !!selectValue.value : false;
     return getClass('lew-select', { clearable, size, align });
 });
 
@@ -109,9 +109,11 @@ const getBodyClassName = computed(() => {
 
 const getSelectItemClassName = (e: any) => {
     let { disabled } = e;
+
+    let active = e.value === selectValue.value;
     let { align } = props;
 
-    return getClass('lew-select-item', { disabled, align });
+    return getClass('lew-select-item', { disabled, align, active });
 };
 
 const onShow = () => {
@@ -150,16 +152,16 @@ defineExpose({ show, hide });
                 <lew-icon
                     size="16px"
                     type="chevron-down"
-                    class="select-icon"
-                    :class="{ 'select-icon-hide': clearable && getLabel }"
+                    class="icon-select"
+                    :class="{ 'icon-select-hide': clearable && getLabel }"
                 />
                 <lew-icon
                     @click.stop="clearHandle"
                     v-if="clearable"
                     size="16px"
                     type="x-circle"
-                    class="clear-icon"
-                    :class="{ 'clear-icon-show': clearable && getLabel }"
+                    class="icon-clear"
+                    :class="{ 'icon-clear-show': clearable && getLabel }"
                 />
                 <div v-show="getLabel" class="value">{{ getLabel }}</div>
                 <div v-show="!getLabel" class="placeholder">
@@ -188,7 +190,7 @@ defineExpose({ show, hide });
                         v-show="state.opitons && state.opitons.length === 0"
                         class="not-found"
                     >
-                        <lew-icon type="box" />
+                        <lew-icon type="box" size="30" />
                         <span>暂无结果</span>
                     </lew-flex>
                     <div
@@ -209,15 +211,17 @@ defineExpose({ show, hide });
                             <div
                                 v-if="!labelSlot"
                                 class="lew-select-item"
-                                :class="
-                                    getSelectItemClassName({
-                                        disabled: item.disabled,
-                                    })
-                                "
+                                :class="getSelectItemClassName(item)"
                             >
                                 <div class="lew-select-label">
                                     {{ item.label }}
                                 </div>
+                                <lew-icon
+                                    v-if="item.value === selectValue"
+                                    class="icon-check"
+                                    size="14"
+                                    type="check"
+                                />
                             </div>
                             <div v-else class="lew-select-slot-item">
                                 <slot
@@ -260,30 +264,30 @@ defineExpose({ show, hide });
         user-select: none;
         box-sizing: border-box;
 
-        .select-icon,
-        .clear-icon {
+        .icon-select,
+        .icon-clear {
             position: absolute;
             top: 50%;
             right: 7px;
             transform: translateY(-50%) rotate(0deg);
             transition: var(--lew-form-transition);
         }
-        .clear-icon {
+        .icon-clear {
             opacity: 0;
             transform: translate(100%, -50%);
         }
-        .clear-icon:hover {
+        .icon-clear:hover {
             opacity: 1;
         }
-        .select-icon-hide {
+        .icon-select-hide {
             opacity: 0;
             transform: translate(100%, -50%);
         }
-        .clear-icon-show {
+        .icon-clear-show {
             opacity: 0.7;
             transform: translate(0%, -50%);
         }
-        .clear-icon-show:hover {
+        .icon-clear-show:hover {
             opacity: 1;
         }
         .placeholder {
@@ -305,13 +309,9 @@ defineExpose({ show, hide });
             }
         }
 
-        .lew-isSelect-label-num {
-            display: inline-flex;
-            align-items: center;
-        }
         .placeholder,
         .value {
-            width: 100%;
+            width: calc(100% - 24px);
         }
     }
 
@@ -390,7 +390,7 @@ defineExpose({ show, hide });
         solid;
     outline: 3px var(--lew-primary-color-light) solid;
 
-    .select-icon {
+    .icon-select {
         transform: translateY(-50%) rotate(180deg);
         color: var(--lew-text-color-2);
     }
@@ -446,7 +446,7 @@ defineExpose({ show, hide });
             white-space: nowrap;
             text-overflow: ellipsis;
             cursor: pointer;
-            color: var(--lew-text-color-3);
+            color: var(--lew-text-color-5);
             box-sizing: border-box;
             border-radius: var(--lew-border-radius);
         }
@@ -499,11 +499,19 @@ defineExpose({ show, hide });
             background-color: var(--lew-form-bgcolor);
         }
 
-        .lew-select-checkbox {
-            position: absolute;
-            z-index: 0;
-            top: 50%;
-            transform: translateY(-50%);
+        .lew-select-item-active {
+            color: var(--lew-primary-color-dark);
+            font-weight: bold;
+            background-color: var(--lew-form-bgcolor);
+            .icon-check {
+                margin-right: 10px;
+            }
+        }
+
+        .lew-select-item-active:hover {
+            color: var(--lew-primary-color-dark);
+            font-weight: bold;
+            background-color: var(--lew-form-bgcolor);
         }
     }
 
@@ -534,10 +542,6 @@ defineExpose({ show, hide });
             height: 28px;
             line-height: 28px;
         }
-
-        .lew-select-checkbox {
-            left: 8px;
-        }
     }
 }
 
@@ -547,10 +551,6 @@ defineExpose({ show, hide });
             height: 30px;
             line-height: 30px;
         }
-
-        .lew-select-checkbox {
-            left: 8px;
-        }
     }
 }
 
@@ -559,10 +559,6 @@ defineExpose({ show, hide });
         .lew-select-item {
             height: 32px;
             line-height: 32px;
-        }
-
-        .lew-select-checkbox {
-            left: 8px;
         }
     }
 }

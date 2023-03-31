@@ -19,6 +19,10 @@ const props = defineProps({
         type: String,
         default: '',
     },
+    labelSize: {
+        type: String,
+        default: 'medium',
+    },
 });
 
 let _labelWidth = ref(props.labelWidth || labelWidth || 'auto');
@@ -65,7 +69,7 @@ let _labelAlign = ref(props.labelAlign || labelAlign || 'end');
 
 .lew-form-item-x {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 15px;
     .lew-form-item-label {
         width: auto;

@@ -44,6 +44,7 @@ const classObject = computed(() => {
     >
         <slot />
         <div
+            v-if="loading || _loading"
             class="lew-loading-icon"
             :class="{
                 'lew-loading-icon-show': (_loading || loading) && !disabled,
@@ -303,7 +304,7 @@ const classObject = computed(() => {
     background: none;
     min-width: auto;
     height: auto;
-    padding: 4px 8px;
+    padding: 0px 8px;
 }
 
 .lew-button-text.lew-button-info {
