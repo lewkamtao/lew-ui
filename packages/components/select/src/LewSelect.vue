@@ -118,8 +118,11 @@ const getSelectItemClassName = (e: any) => {
     return getClass('lew-select-item', { disabled, align, active });
 };
 
+let selectRef = ref();
+
 const onShow = () => {
     state.visible = true;
+    selectRef.value.focus();
     getSelectWidth();
     if (state.options && state.options.length === 0 && props.searchable) {
         search({ target: { value: '' } });
@@ -135,6 +138,7 @@ defineExpose({ show, hide });
 
 <template>
     <input
+        ref="selectRef"
         class="lew-select-input"
         @focus="show()"
         @blur="blur()"
