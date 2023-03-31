@@ -37,11 +37,6 @@ const hide = () => {
     lewPopverRef.value.hide();
 };
 
-const blur = () => {
-    setTimeout(() => {
-        hide();
-    }, 250);
-};
 const searchDebounce = useDebounceFn(async (e: any) => {
     search(e);
 }, props.searchDelay);
