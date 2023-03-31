@@ -144,6 +144,7 @@ const setChecked = (e: Event) => {
     .icon-checkbox-box {
         border: 2px var(--lew-form-border-color-active) solid;
         outline: 3px var(--lew-primary-color-light) solid;
+        background-color: transparent;
     }
 }
 

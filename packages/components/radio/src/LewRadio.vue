@@ -75,7 +75,7 @@ const setChecked = () => {
         transition: var(--lew-form-transition);
         overflow: hidden;
         border-radius: 50%;
-        background-color: var(--lew-bgcolor-0);
+        background-color: var(--lew-bgcolor-1);
         outline: 0px var(--lew-primary-color-light) solid;
         .icon-radio {
             width: 50%;
@@ -139,6 +139,7 @@ const setChecked = () => {
     .icon-radio-box {
         border: 2px var(--lew-form-border-color-active) solid;
         outline: 3px var(--lew-primary-color-light) solid;
+        background-color: transparent;
     }
 }
 
