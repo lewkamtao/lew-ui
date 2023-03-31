@@ -31,7 +31,7 @@ const value = ref('');
     <div>
         <lew-form style="width: 420px" label-width="120px">
             <lew-form-item label="常规">
-                <lew-select v-model="value" :options="options" multiple />
+                <lew-select v-model="value" :options="options" />
             </lew-form-item>
         </lew-form>
     </div>

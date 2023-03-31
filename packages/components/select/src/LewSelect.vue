@@ -8,8 +8,6 @@ const props = defineProps(selectProps);
 const emit = defineEmits(['update:modelValue', 'change']);
 const selectValue = useVModel(props, 'modelValue', emit);
 
-const { searchDelay, options, searchMethod, searchable, defaultValue } = props;
-
 let lewSelectRef = ref();
 let lewPopverRef = ref();
 let searchInputRef = ref();
@@ -18,14 +16,13 @@ let state = reactive({
     selectWidth: 0,
     visible: false,
     loading: false,
-    options: options,
+    options: props.options,
     keyword: '',
 });
 
 const getSelectWidth = () => {
     state.selectWidth = lewSelectRef.value?.clientWidth - 14;
-
-    if (searchable) {
+    if (props.searchable) {
         setTimeout(() => {
             searchInputRef.value && searchInputRef.value.focus();
         }, 200);
@@ -39,22 +36,28 @@ const show = () => {
 const hide = () => {
     lewPopverRef.value.hide();
 };
+
+const blur = () => {
+    setTimeout(() => {
+        hide();
+    }, 250);
+};
 const searchDebounce = useDebounceFn(async (e: any) => {
     search(e);
-}, searchDelay);
+}, props.searchDelay);
 
 const search = async (e: any) => {
     // loading
     state.loading = true;
     const keyword = e.target.value;
-    if (searchable) {
+    if (props.searchable) {
         let result: any = [];
         // 如果没输入关键词
-        if (!keyword && options.length > 0) {
-            result = options;
+        if (!keyword && props.options.length > 0) {
+            result = props.options;
         } else {
-            result = await searchMethod({
-                options: options,
+            result = await props.searchMethod({
+                options: props.options,
                 keyword,
             });
         }
@@ -86,11 +89,13 @@ const getLabel = computed(() => {
                 return e.value === selectValue.value;
             }
         });
+
         if (option && JSON.stringify(option) !== '{}') {
             return option.label;
         }
     }
-    return defaultValue || '';
+
+    return props.defaultValue || '';
 });
 
 const getSelectClassName = computed(() => {
@@ -116,7 +121,7 @@ const getSelectItemClassName = (e: any) => {
 const onShow = () => {
     state.visible = true;
     getSelectWidth();
-    if (state.options && state.options.length === 0 && searchable) {
+    if (state.options && state.options.length === 0 && props.searchable) {
         search({ target: { value: '' } });
     }
 };
@@ -129,6 +134,12 @@ defineExpose({ show, hide });
 </script>
 
 <template>
+    <input
+        class="lew-select-input"
+        @focus="show()"
+        @blur="blur()"
+        type="text"
+    />
     <lew-popover
         ref="lewPopverRef"
         class="lew-select-view"
@@ -372,6 +383,12 @@ defineExpose({ show, hide });
         }
     }
 }
+.lew-select-input {
+    position: fixed;
+    z-index: -99999;
+    opacity: 0;
+    left: -9999px;
+}
 .lew-select-view:hover {
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor-hover);
@@ -475,7 +492,7 @@ defineExpose({ show, hide });
 
         .lew-select-item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-form-bgcolor-hover);
         }
 
         .lew-select-checked {
