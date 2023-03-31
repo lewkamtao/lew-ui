@@ -205,12 +205,13 @@ defineExpose({ getEl, focusFn, lewInputRef });
     position: relative;
     overflow: hidden;
     width: 100%;
-    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     border-radius: var(--lew-border-radius);
     background-color: var(--lew-form-bgcolor);
     transition: var(--lew-form-transition);
     box-sizing: border-box;
-    outline: 0px var(--lew-primary-color-light) solid;
+
+    outline: 0px transparent solid;
+    border: var(--lew-form-border-width) transparent solid;
 
     input,
     textarea {
@@ -468,7 +469,6 @@ defineExpose({ getEl, focusFn, lewInputRef });
 }
 
 .lew-input-view:hover {
-    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor-hover);
 
     .lew-input-controls {
@@ -477,10 +477,10 @@ defineExpose({ getEl, focusFn, lewInputRef });
 }
 
 .lew-input-view:focus-within {
-    background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
     outline: 3px var(--lew-primary-color-light) solid;
+    background-color: var(--lew-form-bgcolor-focus);
 
     .lew-input-controls {
         background: var(--lew-form-bgcolor-focus);

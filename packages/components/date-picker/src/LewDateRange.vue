@@ -537,6 +537,7 @@ const getClass = computed(() => (type: string, item: any) => {
                     line-height: 24px;
                     color: var(--lew-text-color-9);
                     border-radius: 6px;
+                    transition: all 0.1s ease;
                 }
 
                 .lew-date-value-selected {
@@ -582,7 +583,7 @@ const getClass = computed(() => (type: string, item: any) => {
 
             .lew-date-label {
                 .lew-date-value {
-                    color: var(--lew-text-color-4);
+                    color: var(--lew-text-color-2);
                 }
 
                 .lew-date-value-selected {

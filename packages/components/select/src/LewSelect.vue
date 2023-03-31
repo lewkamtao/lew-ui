@@ -240,12 +240,14 @@ defineExpose({ show, hide });
 <style lang="scss" scoped>
 .lew-select-view {
     width: 100%;
-    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     border-radius: var(--lew-border-radius);
     background-color: var(--lew-form-bgcolor);
     transition: all 0.15s ease;
     box-sizing: border-box;
+
     outline: 0px var(--lew-primary-color-light) solid;
+    border: var(--lew-form-border-width) transparent solid;
+
     > div {
         width: 100%;
     }
@@ -375,7 +377,6 @@ defineExpose({ show, hide });
 }
 
 .lew-select-view:hover {
-    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor-hover);
 }
 
@@ -445,7 +446,7 @@ defineExpose({ show, hide });
             white-space: nowrap;
             text-overflow: ellipsis;
             cursor: pointer;
-            color: var(--lew-text-color-5);
+            color: var(--lew-text-color-2);
             box-sizing: border-box;
             border-radius: var(--lew-border-radius);
         }
@@ -477,16 +478,7 @@ defineExpose({ show, hide });
 
         .lew-select-item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-bgcolor-hover);
-        }
-
-        .lew-select-checked {
-            font-weight: bold;
-            color: var(--lew-primary-color-dark);
-        }
-
-        .lew-select-checked:hover {
-            color: var(--lew-primary-color-dark);
+            background-color: var(--lew-form-bgcolor);
         }
 
         .lew-select-slot-item {

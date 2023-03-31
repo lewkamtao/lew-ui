@@ -96,13 +96,13 @@ defineExpose({ show, hide });
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
         border-radius: var(--lew-border-radius);
         background-color: var(--lew-form-bgcolor);
         box-sizing: border-box;
         transition: all 0.15s ease;
         cursor: pointer;
         user-select: none;
+        border: var(--lew-form-border-width) transparent solid;
         outline: 0px var(--lew-primary-color-light) solid;
     }
     .lew-date-picker-input {
@@ -127,21 +127,10 @@ defineExpose({ show, hide });
     }
 
     .lew-date-picker-view:hover {
-        border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
         background-color: var(--lew-form-bgcolor-hover);
     }
 
-    .lew-date-picker-view:active {
-        background-color: var(--lew-form-bgcolor-active);
-    }
-
-    .lew-date-picker-focus {
-        background-color: var(--lew-form-bgcolor-focus);
-        border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-            solid;
-        outline: 3px var(--lew-primary-color-light) solid;
-    }
-    .lew-date-picker-focus:hover {
+    .lew-date-picker-view.lew-date-picker-focus {
         background-color: var(--lew-form-bgcolor-focus);
         border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
             solid;

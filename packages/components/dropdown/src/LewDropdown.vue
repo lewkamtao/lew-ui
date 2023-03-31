@@ -62,13 +62,13 @@ defineExpose({ show, hide });
         line-height: 32px;
         font-size: 14px;
         border-radius: var(--lew-border-radius);
-        color: var(--lew-text-color-7);
+        color: var(--lew-text-color-2);
         cursor: pointer;
         white-space: nowrap;
         box-sizing: border-box;
     }
     .lew-dropdown-option:hover {
-        color: var(--lew-text-color-2);
+        color: var(--lew-text-color-0);
         background-color: var(--lew-bgcolor-2);
     }
 }
