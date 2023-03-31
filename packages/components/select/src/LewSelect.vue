@@ -118,13 +118,9 @@ const getSelectItemClassName = (e: any) => {
     return getClass('lew-select-item', { disabled, align, active });
 };
 
-let selectRef = ref();
-
 const onShow = () => {
     state.visible = true;
-    if (!props.searchable) {
-        selectRef.value.focus();
-    }
+
     getSelectWidth();
     if (state.options && state.options.length === 0 && props.searchable) {
         search({ target: { value: '' } });
@@ -139,13 +135,6 @@ defineExpose({ show, hide });
 </script>
 
 <template>
-    <input
-        ref="selectRef"
-        class="lew-select-input"
-        @focus="show()"
-        @blur="blur()"
-        type="text"
-    />
     <lew-popover
         ref="lewPopverRef"
         class="lew-select-view"
@@ -389,12 +378,7 @@ defineExpose({ show, hide });
         }
     }
 }
-.lew-select-input {
-    position: fixed;
-    z-index: -99999;
-    opacity: 0;
-    left: -9999px;
-}
+
 .lew-select-view:hover {
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor-hover);
