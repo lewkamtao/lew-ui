@@ -122,7 +122,9 @@ let selectRef = ref();
 
 const onShow = () => {
     state.visible = true;
-    selectRef.value.focus();
+    if (!props.searchable) {
+        selectRef.value.focus();
+    }
     getSelectWidth();
     if (state.options && state.options.length === 0 && props.searchable) {
         search({ target: { value: '' } });
