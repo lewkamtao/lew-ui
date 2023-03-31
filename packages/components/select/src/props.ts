@@ -75,4 +75,8 @@ export const selectProps = {
         type: String,
         default: 'left',
     },
+    defaultValue: {
+        type: String,
+        default: '',
+    },
 };

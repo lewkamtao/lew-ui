@@ -8,7 +8,7 @@ const props = defineProps(selectProps);
 const emit = defineEmits(['update:modelValue', 'change']);
 const selectValue = useVModel(props, 'modelValue', emit);
 
-const { searchDelay, options, searchMethod, searchable } = props;
+const { searchDelay, options, searchMethod, searchable, defaultValue } = props;
 
 let lewSelectRef = ref();
 let lewPopverRef = ref();
@@ -18,13 +18,12 @@ let state = reactive({
     selectWidth: 0,
     visible: false,
     loading: false,
-    opitons: options,
+    options: options,
     keyword: '',
 });
 
 const getSelectWidth = () => {
     state.selectWidth = lewSelectRef.value?.clientWidth - 14;
-    console.log(state.selectWidth);
 
     if (searchable) {
         setTimeout(() => {
@@ -59,7 +58,7 @@ const search = async (e: any) => {
                 keyword,
             });
         }
-        state.opitons = result;
+        state.options = result;
     }
     state.loading = false;
 };
@@ -81,19 +80,17 @@ const getChecked = (_value: String | Number) => {
 };
 
 const getLabel = computed(() => {
-    if (options) {
-        const option = options.find((e) => {
+    if (state.options) {
+        const option = state.options.find((e) => {
             if (!!e) {
                 return e.value === selectValue.value;
             }
         });
-
-        if (option) {
+        if (option && JSON.stringify(option) !== '{}') {
             return option.label;
-        } else {
-            return '';
         }
     }
+    return defaultValue || '';
 });
 
 const getSelectClassName = computed(() => {
@@ -119,7 +116,7 @@ const getSelectItemClassName = (e: any) => {
 const onShow = () => {
     state.visible = true;
     getSelectWidth();
-    if (state.opitons && state.opitons.length === 0 && searchable) {
+    if (state.options && state.options.length === 0 && searchable) {
         search({ target: { value: '' } });
     }
 };
@@ -187,7 +184,7 @@ defineExpose({ show, hide });
                 <div class="lew-select-options-box">
                     <lew-flex
                         direction="y"
-                        v-show="state.opitons && state.opitons.length === 0"
+                        v-show="state.options && state.options.length === 0"
                         class="not-found"
                     >
                         <lew-icon type="box" size="30" />
@@ -196,16 +193,16 @@ defineExpose({ show, hide });
                     <div
                         v-if="
                             searchable &&
-                            state.opitons &&
-                            state.opitons.length > 0
+                            state.options &&
+                            state.options.length > 0
                         "
                         class="reslut-count"
                     >
                         共
-                        {{ numFormat(state.opitons && state.opitons.length) }}
+                        {{ numFormat(state.options && state.options.length) }}
                         条结果
                     </div>
-                    <template v-for="item in state.opitons" :key="item.value">
+                    <template v-for="item in state.options" :key="item.value">
                         <label @click="selectHandle(item)">
                             <!-- 原生 -->
                             <div

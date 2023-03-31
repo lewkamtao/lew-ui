@@ -34,6 +34,7 @@ const searchFn = (event: any) => {
             <lew-form-item label="默认过滤">
                 <lew-select
                     searchable
+                    :default-value="value"
                     v-model="value"
                     :options="options"
                 ></lew-select>
@@ -41,6 +42,7 @@ const searchFn = (event: any) => {
             <lew-form-item label="自定义过滤方法">
                 <lew-select
                     searchable
+                    :default-value="value"
                     :search-method="filterFn"
                     v-model="value"
                 ></lew-select>
@@ -49,6 +51,7 @@ const searchFn = (event: any) => {
                 <lew-form-item label="模拟异步请求">
                     <lew-select
                         searchable
+                        :default-value="value"
                         :search-method="searchFn"
                         v-model="value"
                     />

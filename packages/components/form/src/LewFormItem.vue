@@ -35,7 +35,10 @@ let _labelAlign = ref(props.labelAlign || labelAlign || 'end');
         class="lew-form-item"
         :class="`lew-form-item-${_direction} lew-form-item-${_labelAlign}`"
     >
-        <div class="lew-form-item-label" :style="`width: ${_labelWidth}`">
+        <div
+            class="lew-form-item-label"
+            :style="`width: ${_labelWidth};height:${labelSize}px;`"
+        >
             {{ props.label }}
         </div>
         <div class="lew-form-item-view">
