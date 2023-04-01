@@ -121,7 +121,7 @@ onUnmounted(() => {
         box-sizing: border-box;
         border-radius: var(--lew-border-radius);
         margin: 3px;
-        color: var(--lew-text-color-5);
+        color: var(--lew-text-color-2);
         white-space: nowrap;
         cursor: pointer;
         font-size: 14px;

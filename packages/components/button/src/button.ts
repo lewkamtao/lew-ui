@@ -2,12 +2,19 @@ import { PropType, ExtractPropTypes } from 'vue';
 
 export type ButtonType = 'primary' | 'normal' | 'success' | 'error' | 'warning';
 export type ButtonSize = 'small' | 'medium' | 'large';
+export type ButtonMode = 'text' | 'icon' | 'iconText' | 'normal';
 
 export const buttonProps = {
     type: {
         type: String as PropType<ButtonType>,
         default: () => {
-            return 'primary';
+            return 'normal';
+        },
+    },
+    mode: {
+        type: String as PropType<ButtonMode>,
+        default: () => {
+            return 'normal';
         },
     },
     size: {
@@ -27,15 +34,7 @@ export const buttonProps = {
         type: Boolean,
         default: false,
     },
-    isIcon: {
-        type: Boolean,
-        default: false,
-    },
     round: {
-        type: Boolean,
-        default: false,
-    },
-    isText: {
         type: Boolean,
         default: false,
     },

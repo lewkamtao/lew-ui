@@ -50,8 +50,7 @@
     --lew-text-color-8-invert: rgb(95, 95, 95);
     --lew-text-color-9-invert: rgb(75, 75, 75);
     // 阴影
-    --lew-box-shadow: 0px 1px 2px rgba(61, 109, 178, 0.15),
-        0px 4px 16px rgba(61, 109, 179, 0.2);
+    --lew-box-shadow: 0px 1px 2px rgba(61, 109, 178, 0.15), 0px 4px 16px rgba(61, 109, 179, 0.2);
     // 圆角
     --lew-border-radius: 6px;
     // 边界
@@ -158,7 +157,6 @@
     // popover
     --lew-popover-border: 1px #e4e5ea solid;
     --lew-popover-box-shadow: 0 18px 36px #00000016;
-
     --lew-tooltip-box-left-shadow: 4px 0px 10px #00000027;
     --lew-tooltip-box-right-shadow: -4px 0px 10px #00000027;
     --lew-tooltip-box-top-shadow: 0 4px 10px #00000027;
@@ -178,7 +176,6 @@
     --lew-bgcolor-7: rgb(117, 118, 125);
     --lew-bgcolor-8: rgb(130, 131, 138);
     --lew-bgcolor-9: rgb(143, 144, 151);
-
     // 背景反相
     --lew-bgcolor-0-invert: rgb(255, 255, 255);
     --lew-bgcolor-1-invert: rgb(245, 245, 245);
@@ -213,7 +210,6 @@
     --lew-text-color-8-invert: rgb(170, 170, 170);
     --lew-text-color-9-invert: rgb(190, 190, 190);
     // 边界
-
     --lew-border-0: 1px solid rgb(36, 37, 42);
     --lew-border-1: 1px solid rgb(49, 50, 56);
     --lew-border-2: 1px solid rgb(62, 63, 70);
@@ -224,7 +220,6 @@
     --lew-border-7: 1px solid rgb(127, 128, 135);
     --lew-border-8: 1px solid rgb(140, 141, 148);
     --lew-border-9: 1px solid rgb(153, 154, 161);
-
     // 阴影
     --lew-box-shadow: 0px 3px 15px rgba(243, 243, 243, 0.08);
     // 主题色
@@ -278,7 +273,7 @@
     --lew-form-border-color: rgb(77, 77, 77);
     --lew-form-border-color-hover: rgb(59, 58, 58);
     --lew-form-border-color-active: rgba(96, 96, 96, 0.8);
-    --lew-form-border-color-focus: var(--lew-primary-color);
+    --lew-form-border-color-focus: var(--lew-primary-color-dark);
     // 表单背景
     --lew-form-bgcolor: #27282d;
     --lew-form-bgcolor-hover: #2a2a2f;

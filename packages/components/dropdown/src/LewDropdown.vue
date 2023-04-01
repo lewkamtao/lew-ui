@@ -57,9 +57,7 @@ defineExpose({ show, hide });
     overflow: auto;
     box-sizing: border-box;
     .lew-dropdown-option {
-        padding: 0px 10px;
-        height: 32px;
-        line-height: 32px;
+        padding: 4px 10px;
         font-size: 14px;
         border-radius: var(--lew-border-radius);
         color: var(--lew-text-color-2);
@@ -69,7 +67,7 @@ defineExpose({ show, hide });
     }
     .lew-dropdown-option:hover {
         color: var(--lew-text-color-0);
-        background-color: var(--lew-bgcolor-2);
+        background-color: var(--lew-form-bgcolor);
     }
 }
 .lew-dropdown-body::-webkit-scrollbar {
