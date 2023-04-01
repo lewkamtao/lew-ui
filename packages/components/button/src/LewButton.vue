@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import { buttonProps } from './button';
+import { getClass } from 'lew-ui/utils';
 
 const emit = defineEmits(['click']);
 const props = defineProps(buttonProps);
 
 let _loading = ref(false);
-
-if (props.request && props.loading) {
-    throw new Error('request 和 loading 不能同时设置');
-}
 
 const handleClick = async (e: any) => {
     if (props.disabled || _loading.value || props.loading) return;
@@ -23,22 +20,17 @@ const handleClick = async (e: any) => {
     }
 };
 
-const classObject = computed(() => {
-    return {
-        'lew-button-text': props.isText,
-        [`lew-button-${props.size}`]: props.size,
-        [`lew-button-${props.type}`]: props.type,
-        'lew-button-round': props.round,
-        'lew-button-icon': props.isIcon,
-        'lew-button-loading': _loading.value || props.loading,
-    };
+const getButtonClass = computed(() => {
+    let { round, mode, size, type } = props;
+    let loading = _loading.value || props.loading;
+    return getClass('lew-button', { round, mode, size, type, loading });
 });
 </script>
 
 <template>
     <button
         class="lew-button"
-        :class="classObject"
+        :class="getButtonClass"
         :disabled="disabled"
         @click="handleClick"
     >
@@ -105,7 +97,7 @@ const classObject = computed(() => {
     transform: scale(0.96);
 }
 
-.lew-button-small {
+.lew-button-size-small {
     min-width: 50px;
     height: var(--lew-form-item-height-small);
     line-height: var(--lew-form-item-height-small);
@@ -122,7 +114,7 @@ const classObject = computed(() => {
     }
 }
 
-.lew-button-medium {
+.lew-button-size-medium {
     min-width: 60px;
     height: var(--lew-form-item-height-medium);
     line-height: var(--lew-form-item-height-medium);
@@ -138,7 +130,7 @@ const classObject = computed(() => {
     }
 }
 
-.lew-button-large {
+.lew-button-size-large {
     min-width: 70px;
     height: var(--lew-form-item-height-large);
     line-height: var(--lew-form-item-height-large);
@@ -154,19 +146,19 @@ const classObject = computed(() => {
     }
 }
 
-.lew-button-normal.lew-button-small {
+.lew-button-type-normal.lew-button-size-small {
     .lew-loading-icon::after {
         border-left: 1.5px solid var(--lew-primary-color-dark);
     }
 }
-.lew-button-normal.lew-button-medium {
+.lew-button-type-normal.lew-button-size-medium {
     .lew-loading-icon::after {
         border: 2px solid rgba(0, 0, 0, 0.25);
         border-left: 2px solid var(--lew-primary-color-dark);
     }
 }
 
-.lew-button-normal.lew-button-large {
+.lew-button-type-normal.lew-button-size-large {
     .lew-loading-icon::after {
         border: 2.5px solid rgba(0, 0, 0, 0.25);
         border-left: 2.5px solid var(--lew-primary-color-dark);
@@ -185,95 +177,85 @@ const classObject = computed(() => {
 .lew-button-round {
     border-radius: 50px;
 }
-
-.lew-button-blank {
-    background: none;
-    color: var(--lew-text-color-5);
-}
-
-.lew-button-blank:hover {
-    color: var(--lew-text-color-3);
-}
-
 .lew-button-active:hover {
     color: var(--lew-text-color-0);
 }
 
-.lew-button-primary {
+.lew-button-type-primary {
     background: var(--lew-primary-color);
     color: var(--lew-white-text-color);
 }
 
-.lew-button-primary:hover {
+.lew-button-type-primary:hover {
     background-color: var(--lew-primary-color-hover);
 }
 
-.lew-button-primary:active {
+.lew-button-type-primary:active {
     background-color: var(--lew-primary-color-active);
 }
 
-.lew-button-info:hover {
+.lew-button-type-info:hover {
     background-color: var(--lew-info-color-hover);
 }
 
-.lew-button-info {
+.lew-button-type-info {
     background: var(--lew-info-color);
     color: var(--lew-white-text-color);
 }
 
-.lew-button-info:active {
+.lew-button-type-info:active {
     background-color: var(--lew-info-color-active);
 }
 
-.lew-button-success {
+.lew-button-type-success {
     background: var(--lew-success-color);
     color: var(--lew-white-text-color);
 }
 
-.lew-button-success:hover {
+.lew-button-type-success:hover {
     background-color: var(--lew-success-color-hover);
 }
 
-.lew-button-success:active {
+.lew-button-type-success:active {
     background-color: var(--lew-success-color-active);
 }
 
-.lew-button-error {
+.lew-button-type-error {
     background: var(--lew-error-color);
     color: var(--lew-white-text-color);
 }
 
-.lew-button-error:hover {
+.lew-button-type-error:hover {
     background-color: var(--lew-error-color-hover);
 }
 
-.lew-button-error:active {
+.lew-button-type-error:active {
     background-color: var(--lew-error-color-active);
 }
 
-.lew-button-normal {
+.lew-button-type-normal {
     background: var(--lew-normal-color);
     color: var(--lew-text-color-3);
 }
 
-.lew-button-normal:hover {
+.lew-button-type-normal:hover {
     background-color: var(--lew-normal-color-hover);
 }
 
-.lew-button-normal:active {
+.lew-button-type-normal:active {
     background-color: var(--lew-normal-color-active);
 }
 
-.lew-button-warning {
+.lew-button-type-warning {
     background: var(--lew-warning-color);
     color: var(--lew-white-text-color);
 }
 
-.lew-button-warning:hover {
+.lew-button-type-warning:hover {
     background-color: var(--lew-warning-color-hover);
 }
 
-.lew-button-warning:active {
+.lew-button-type-warning:active {
     background-color: var(--lew-warning-color-active);
 }
 
@@ -281,13 +263,13 @@ const classObject = computed(() => {
     cursor: progress;
     padding-left: 0px;
 }
-.lew-button-small.lew-button-loading {
+.lew-button-size-small.lew-button-loading {
     padding-left: 24px;
 }
-.lew-button-medium.lew-button-loading {
+.lew-button-size-medium.lew-button-loading {
     padding-left: 30px;
 }
-.lew-button-large.lew-button-loading {
+.lew-button-size-large.lew-button-loading {
     padding-left: 36px;
 }
 
@@ -300,14 +282,14 @@ const classObject = computed(() => {
     opacity: var(--lew-disabled-opacity);
 }
 
-.lew-button-text {
+.lew-button-mode-text {
     background: none;
     min-width: auto;
     height: auto;
     padding: 0px 8px;
 }
 
-.lew-button-text.lew-button-info {
+.lew-button-mode-text.lew-button-type-info {
     color: var(--lew-info-color-dark);
 
     &:hover {
@@ -315,7 +297,7 @@ const classObject = computed(() => {
     }
 }
 
-.lew-button-text.lew-button-primary {
+.lew-button-mode-text.lew-button-type-primary {
     color: var(--lew-primary-color-dark);
 
     &:hover {
@@ -323,7 +305,7 @@ const classObject = computed(() => {
     }
 }
 
-.lew-button-text.lew-button-error {
+.lew-button-mode-text.lew-button-type-error {
     color: var(--lew-error-color-dark);
 
     &:hover {
@@ -331,7 +313,7 @@ const classObject = computed(() => {
     }
 }
 
-.lew-button-text.lew-button-warning {
+.lew-button-mode-text.lew-button-type-warning {
     color: var(--lew-warning-color-dark);
 
     &:hover {
@@ -339,7 +321,7 @@ const classObject = computed(() => {
     }
 }
 
-.lew-button-text.lew-button-success {
+.lew-button-mode-text.lew-button-type-success {
     color: var(--lew-success-color-dark);
 
     &:hover {
@@ -347,7 +329,7 @@ const classObject = computed(() => {
     }
 }
 
-.lew-button-text.lew-button-normal {
+.lew-button-mode-text.lew-button-type-normal {
     color: var(--lew-text-color-5);
 
     &:hover {
@@ -355,16 +337,16 @@ const classObject = computed(() => {
     }
 }
 
-.lew-button-icon {
+.lew-button-mode-icon {
     background: none;
     padding: 4px;
 }
 
-.lew-button-icon[disabled] {
+.lew-button-mode-icon[disabled] {
     background: none;
 }
 
-.lew-button-icon.lew-button-small {
+.lew-button-mode-icon.lew-button-size-small {
     min-width: 24px;
     min-height: 24px;
     width: 24px;
@@ -372,7 +354,7 @@ const classObject = computed(() => {
     font-size: 14px;
 }
 
-.lew-button-icon.lew-button-medium {
+.lew-button-mode-icon.lew-button-size-medium {
     min-width: 30px;
     min-height: 30px;
     width: 30px;
@@ -380,7 +362,7 @@ const classObject = computed(() => {
     font-size: 20px;
 }
 
-.lew-button-icon.lew-button-large {
+.lew-button-mode-icon.lew-button-size-large {
     min-width: 36px;
     min-height: 36px;
     width: 36px;
@@ -388,7 +370,7 @@ const classObject = computed(() => {
     font-size: 26px;
 }
 
-.lew-button-icon.lew-button-info {
+.lew-button-mode-icon.lew-button-type-info {
     &:hover {
         background-color: var(--lew-info-color-light);
     }
@@ -404,7 +386,7 @@ const classObject = computed(() => {
     }
 }
 
-.lew-button-icon.lew-button-warning {
+.lew-button-mode-icon.lew-button-type-warning {
     &:hover {
         background-color: var(--lew-warning-color-light);
     }
@@ -420,7 +402,7 @@ const classObject = computed(() => {
     }
 }
 
-.lew-button-icon.lew-button-primary {
+.lew-button-mode-icon.lew-button-type-primary {
     &:hover {
         background-color: var(--lew-primary-color-light);
     }
@@ -436,7 +418,7 @@ const classObject = computed(() => {
     }
 }
 
-.lew-button-icon.lew-button-error {
+.lew-button-mode-icon.lew-button-type-error {
     &:hover {
         background-color: var(--lew-error-color-light);
     }
@@ -452,7 +434,7 @@ const classObject = computed(() => {
     }
 }
 
-.lew-button-icon.lew-button-normal {
+.lew-button-mode-icon.lew-button-type-normal {
     &:hover {
         background-color: var(--lew-normal-color-light);
     }
@@ -468,7 +450,7 @@ const classObject = computed(() => {
     }
 }
 
-.lew-button-icon.lew-button-success {
+.lew-button-mode-icon.lew-button-type-success {
     &:hover {
         background-color: var(--lew-success-color-light);
     }
@@ -484,7 +466,7 @@ const classObject = computed(() => {
     }
 }
 
-.lew-button-icon.lew-button-loading {
+.lew-button-mode-icon.lew-button-loading {
     color: rgba($color: #000000, $alpha: 0);
     padding-left: 0px;
     &::after {
@@ -492,7 +474,7 @@ const classObject = computed(() => {
         transform: translateX(-50%);
     }
 }
-.lew-button-icon.lew-button-loading {
+.lew-button-mode-icon.lew-button-loading {
     .lew-loading-icon::after {
         left: auto;
     }

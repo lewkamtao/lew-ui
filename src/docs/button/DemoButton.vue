@@ -86,7 +86,7 @@ const docsTable = ref([
     <div class="demo-wrapper">
         <lew-title>Button</lew-title>
         <p class="sub-title">赏心悦目的异步效果</p>
-        <lew-demo-box title="普通" :code="DemoButton1_code">
+        <lew-demo-box title="常规" :code="DemoButton1_code">
             <demo-button1 />
         </lew-demo-box>
         <lew-demo-box title="尺寸" :code="DemoButton2_code">
