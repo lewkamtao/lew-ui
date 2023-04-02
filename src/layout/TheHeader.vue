@@ -55,15 +55,17 @@ const gohome = () => {
             <span style="margin-left: 10px"> Lew UI</span>
             <lew-tag
                 v-tooltip="{
-                    content: 'Beta 阶段，请勿在正式环境使用。',
+                    content:
+                        '当前演示版本为 Beta v1.1.30，请勿在生产环境使用。',
                     placement: 'top-start',
                     trigger: 'mouseenter',
                 }"
                 type="info"
                 size="small"
                 style="margin-left: 10px"
-                >Beta v1.1.30</lew-tag
             >
+                Beta v1.1.30
+            </lew-tag>
         </div>
         <lew-flex gap="15px" x="end" class="menu">
             <div class="menu-item" @click="router.push(`/`)">首页</div>

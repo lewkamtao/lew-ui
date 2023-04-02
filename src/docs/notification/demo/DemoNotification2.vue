@@ -19,11 +19,16 @@ const openWithoutDelay = (type: string) => {
 
 <template>
     <lew-flex wrap x="start" gap="20px">
-        <lew-button type="error" @click="openWithDelay('error')">
-            WithDelay
-        </lew-button>
-        <lew-button type="success" @click="openWithoutDelay('success')">
-            WithoutDelay
-        </lew-button>
+        <lew-button
+            text="WithDelay"
+            type="error"
+            @click="openWithDelay('error')"
+        />
+
+        <lew-button
+            text="WithDelay"
+            type="success"
+            @click="openWithoutDelay('success')"
+        />
     </lew-flex>
 </template>
