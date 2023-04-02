@@ -328,25 +328,33 @@ const getClass = computed(() => (type: string, item: any) => {
             <lew-flex x="start" mode="between" class="lew-date-control">
                 <div class="lew-date-control-left">
                     <!-- 上一年 -->
-                    <lew-button type="normal" size="small" @click="prveYear1">
-                        <lew-icon size="16" type="chevrons-left" />
-                    </lew-button>
+                    <lew-button
+                        icon="chevrons-left"
+                        size="small"
+                        @click="prveYear1"
+                    />
                     <!-- 上一月 -->
-                    <lew-button type="normal" size="small" @click="prveMonth1">
-                        <lew-icon size="16" type="chevron-left" />
-                    </lew-button>
+                    <lew-button
+                        icon="chevron-left"
+                        size="small"
+                        @click="prveMonth1"
+                    />
                 </div>
                 <!-- 日期 -->
                 <div class="cur-date">{{ _year1 }} 年 {{ _month1 }} 月</div>
                 <div class="lew-date-control-right">
                     <!-- 下一月 -->
-                    <lew-button type="normal" size="small" @click="nextMonth1">
-                        <lew-icon size="16" type="chevron-right" />
-                    </lew-button>
+                    <lew-button
+                        icon="chevron-right"
+                        size="small"
+                        @click="nextMonth1"
+                    />
                     <!-- 下一年 -->
-                    <lew-button type="normal" size="small" @click="nextYear1">
-                        <lew-icon size="16" type="chevrons-right" />
-                    </lew-button>
+                    <lew-button
+                        icon="chevrons-right"
+                        size="small"
+                        @click="nextYear1"
+                    />
                 </div>
             </lew-flex>
             <div class="lew-date-box">
@@ -390,25 +398,33 @@ const getClass = computed(() => (type: string, item: any) => {
             <lew-flex x="start" mode="between" class="lew-date-control">
                 <div class="lew-date-control-left">
                     <!-- 上一年 -->
-                    <lew-button type="normal" size="small" @click="prveYear2">
-                        <lew-icon size="16" type="chevrons-left" />
-                    </lew-button>
+                    <lew-button
+                        icon="chevrons-left"
+                        size="small"
+                        @click="prveYear2"
+                    />
                     <!-- 上一月 -->
-                    <lew-button type="normal" size="small" @click="prveMonth2">
-                        <lew-icon size="16" type="chevron-left" />
-                    </lew-button>
+                    <lew-button
+                        icon="chevron-left"
+                        size="small"
+                        @click="prveMonth2"
+                    />
                 </div>
                 <!-- 日期 -->
                 <div class="cur-date">{{ _year2 }} 年 {{ _month2 }} 月</div>
                 <div class="lew-date-control-right">
                     <!-- 下一月 -->
-                    <lew-button type="normal" size="small" @click="nextMonth2">
-                        <lew-icon size="16" type="chevron-right" />
-                    </lew-button>
+                    <lew-button
+                        icon="chevron-right"
+                        size="small"
+                        @click="nextMonth2"
+                    />
                     <!-- 下一年 -->
-                    <lew-button type="normal" size="small" @click="nextYear2">
-                        <lew-icon size="16" type="chevrons-right" />
-                    </lew-button>
+                    <lew-button
+                        icon="chevrons-right"
+                        size="small"
+                        @click="nextYear2"
+                    />
                 </div>
             </lew-flex>
             <div class="lew-date-box">

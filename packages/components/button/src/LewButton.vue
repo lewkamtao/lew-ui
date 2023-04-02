@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { LewIcon } from 'lew-ui';
 import { buttonProps } from './button';
 import { getClass } from 'lew-ui/utils';
 
@@ -21,9 +22,24 @@ const handleClick = async (e: any) => {
 };
 
 const getButtonClass = computed(() => {
-    let { round, mode, size, type } = props;
+    let { round, size, type, icon, text } = props;
     let loading = _loading.value || props.loading;
-    return getClass('lew-button', { round, mode, size, type, loading });
+    let singleIcon = !!(!text && icon);
+    return getClass('lew-button', { round, size, type, loading, singleIcon });
+});
+
+const getIconSize = computed(() => {
+    let { size } = props;
+    switch (size) {
+        case 'small':
+            return 12;
+        case 'medium':
+            return 14;
+        case 'large':
+            return 16;
+        default:
+            return 14;
+    }
 });
 </script>
 
@@ -34,7 +50,13 @@ const getButtonClass = computed(() => {
         :disabled="disabled"
         @click="handleClick"
     >
-        <slot />
+        <lew-icon
+            class="lew-button-icon"
+            v-if="icon"
+            :size="getIconSize"
+            :type="icon"
+        />
+        <span class="lew-button-text" v-if="text">{{ text }} </span>
         <div
             v-if="loading || _loading"
             class="lew-loading-icon"
@@ -103,6 +125,7 @@ const getButtonClass = computed(() => {
     line-height: var(--lew-form-item-height-small);
     padding: 0px 8px;
     font-size: var(--lew-form-font-size-small);
+    gap: 4px;
 
     .lew-loading-icon::after {
         left: 14px;
@@ -120,7 +143,7 @@ const getButtonClass = computed(() => {
     line-height: var(--lew-form-item-height-medium);
     padding: 0px 14px;
     font-size: var(--lew-form-font-size-medium);
-
+    gap: 6px;
     .lew-loading-icon::after {
         left: 16px;
         border: 2px solid rgba(0, 0, 0, 0.25);
@@ -136,13 +159,46 @@ const getButtonClass = computed(() => {
     line-height: var(--lew-form-item-height-large);
     padding: 0px 20px;
     font-size: var(--lew-form-font-size-large);
-
+    gap: 8px;
     .lew-loading-icon::after {
         left: 20px;
         border: 2.5px solid rgba(0, 0, 0, 0.25);
         border-left: 2.5px solid rgba(255, 255, 255, 1);
         width: 12px;
         height: 12px;
+    }
+}
+
+.lew-button-size-small.lew-button-singleIcon {
+    min-width: auto;
+    padding: 0px;
+    width: var(--lew-form-item-height-small);
+    height: var(--lew-form-item-height-small);
+}
+.lew-button-size-medium.lew-button-singleIcon {
+    min-width: auto;
+    padding: 0px;
+    width: var(--lew-form-item-height-medium);
+    height: var(--lew-form-item-height-medium);
+}
+.lew-button-size-large.lew-button-singleIcon {
+    min-width: auto;
+    padding: 0px;
+    width: var(--lew-form-item-height-large);
+    height: var(--lew-form-item-height-large);
+}
+
+.lew-button-loading.lew-button-singleIcon {
+    .lew-button-text {
+        display: none;
+    }
+    .lew-button-icon {
+        display: none;
+    }
+    .lew-loading-icon::after {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
     }
 }
 
@@ -233,6 +289,23 @@ const getButtonClass = computed(() => {
     background-color: var(--lew-error-color-active);
 }
 
+.lew-button-type-blank {
+    background-color: transparent;
+    color: var(--lew-text-color-2);
+    padding: 0px 4px;
+    min-width: auto;
+}
+
+.lew-button-type-blank:hover {
+    background-color: transparent;
+    color: var(--lew-text-color-2);
+}
+
+.lew-button-type-blank:active {
+    background-color: transparent;
+    color: var(--lew-text-color-2);
+}
+
 .lew-button-type-normal {
     background: var(--lew-normal-color);
     color: var(--lew-text-color-3);
@@ -280,203 +353,5 @@ const getButtonClass = computed(() => {
 .lew-button[disabled] {
     pointer-events: none; //鼠标点击不可修改
     opacity: var(--lew-disabled-opacity);
-}
-
-.lew-button-mode-text {
-    background: none;
-    min-width: auto;
-    height: auto;
-    padding: 0px 8px;
-}
-
-.lew-button-mode-text.lew-button-type-info {
-    color: var(--lew-info-color-dark);
-
-    &:hover {
-        background-color: var(--lew-info-color-light2);
-    }
-}
-
-.lew-button-mode-text.lew-button-type-primary {
-    color: var(--lew-primary-color-dark);
-
-    &:hover {
-        background-color: var(--lew-info-color-light2);
-    }
-}
-
-.lew-button-mode-text.lew-button-type-error {
-    color: var(--lew-error-color-dark);
-
-    &:hover {
-        background-color: var(--lew-error-color-light2);
-    }
-}
-
-.lew-button-mode-text.lew-button-type-warning {
-    color: var(--lew-warning-color-dark);
-
-    &:hover {
-        background-color: var(--lew-warning-color-light2);
-    }
-}
-
-.lew-button-mode-text.lew-button-type-success {
-    color: var(--lew-success-color-dark);
-
-    &:hover {
-        background-color: var(--lew-success-color-light2);
-    }
-}
-
-.lew-button-mode-text.lew-button-type-normal {
-    color: var(--lew-text-color-5);
-
-    &:hover {
-        background-color: var(--lew-normal-color-light2);
-    }
-}
-
-.lew-button-mode-icon {
-    background: none;
-    padding: 4px;
-}
-
-.lew-button-mode-icon[disabled] {
-    background: none;
-}
-
-.lew-button-mode-icon.lew-button-size-small {
-    min-width: 24px;
-    min-height: 24px;
-    width: 24px;
-    height: 24px;
-    font-size: 14px;
-}
-
-.lew-button-mode-icon.lew-button-size-medium {
-    min-width: 30px;
-    min-height: 30px;
-    width: 30px;
-    height: 30px;
-    font-size: 20px;
-}
-
-.lew-button-mode-icon.lew-button-size-large {
-    min-width: 36px;
-    min-height: 36px;
-    width: 36px;
-    height: 36px;
-    font-size: 26px;
-}
-
-.lew-button-mode-icon.lew-button-type-info {
-    &:hover {
-        background-color: var(--lew-info-color-light);
-    }
-
-    &:active {
-        background-color: var(--lew-info-color-light2);
-    }
-
-    &,
-    &:disabled {
-        background: none;
-        color: var(--lew-info-text-color);
-    }
-}
-
-.lew-button-mode-icon.lew-button-type-warning {
-    &:hover {
-        background-color: var(--lew-warning-color-light);
-    }
-
-    &:active {
-        background-color: var(--lew-warning-color-light2);
-    }
-
-    &,
-    &:disabled {
-        background: none;
-        color: var(--lew-warning-text-color);
-    }
-}
-
-.lew-button-mode-icon.lew-button-type-primary {
-    &:hover {
-        background-color: var(--lew-primary-color-light);
-    }
-
-    &:active {
-        background-color: var(--lew-primary-color-light2);
-    }
-
-    &,
-    &:disabled {
-        background: none;
-        color: var(--lew-primary-text-color);
-    }
-}
-
-.lew-button-mode-icon.lew-button-type-error {
-    &:hover {
-        background-color: var(--lew-error-color-light);
-    }
-
-    &:active {
-        background-color: var(--lew-error-color-light2);
-    }
-
-    &,
-    &:disabled {
-        background: none;
-        color: var(--lew-error-text-color);
-    }
-}
-
-.lew-button-mode-icon.lew-button-type-normal {
-    &:hover {
-        background-color: var(--lew-normal-color-light);
-    }
-
-    &:active {
-        background-color: var(--lew-normal-color-light2);
-    }
-
-    &,
-    &:disabled {
-        background: none;
-        color: var(--lew-normal-text-color);
-    }
-}
-
-.lew-button-mode-icon.lew-button-type-success {
-    &:hover {
-        background-color: var(--lew-success-color-light);
-    }
-
-    &:active {
-        background-color: var(--lew-success-color-light2);
-    }
-
-    &,
-    &:disabled {
-        background: none;
-        color: var(--lew-success-text-color);
-    }
-}
-
-.lew-button-mode-icon.lew-button-loading {
-    color: rgba($color: #000000, $alpha: 0);
-    padding-left: 0px;
-    &::after {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-}
-.lew-button-mode-icon.lew-button-loading {
-    .lew-loading-icon::after {
-        left: auto;
-    }
 }
 </style>

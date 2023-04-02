@@ -160,7 +160,7 @@ const checkPageNum = (value: any) => {
                 v-model="state.pageSize"
                 @change="checkPageSize"
                 size="small"
-                :show-icon="false"
+                :show-check-icon="false"
                 :options="pageSizeOptions"
             />
             <lew-input

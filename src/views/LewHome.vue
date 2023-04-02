@@ -75,6 +75,7 @@ const user = ref({
     hobby: [],
     tags: ['美丽', '大方'],
     school: '',
+    birth: '',
     home: '',
     dark: true,
     pay: '',
@@ -214,37 +215,48 @@ const notification = (type: string) => {
                 </div>
             </div>
             <p>一个 Vue 3 组件库</p>
-            <lew-button style="margin-top: 10px" @click="router.push('/Avatar')"
-                >开始使用</lew-button
-            >
+            <lew-button
+                type="primary"
+                text="Get Start"
+                style="margin-top: 20px"
+                @click="router.push('/Avatar')"
+            />
         </div>
         <div class="home">
             <lew-flex direction="x" gap="40px">
                 <lew-flex class="item" direction="y" x="end" gap="40px">
                     <lew-flex direction="y" x="end" gap="0px">
-                        <lew-title size="16px" :bold="200"
-                            >Lew Design</lew-title
-                        >
-                        <lew-title size="24px" :bold="400"
-                            >Lew Design</lew-title
-                        >
-                        <lew-title size="32px" :bold="600"
-                            >Lew Design</lew-title
-                        >
-                        <lew-title size="40px" :bold="900"
-                            >Lew Design</lew-title
-                        >
+                        <lew-title size="16px" :bold="200">
+                            Lew Design 16px
+                        </lew-title>
+                        <lew-title size="24px" :bold="400">
+                            Lew Design 24px
+                        </lew-title>
+                        <lew-title size="32px" :bold="600">
+                            Lew Design 32px
+                        </lew-title>
+                        <lew-title size="40px" :bold="900">
+                            Lew Design 40px
+                        </lew-title>
                     </lew-flex>
                     <lew-flex x="end" gap="20px">
+                        <lew-avatar
+                            src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                        />
+                        <lew-badge round value="3">
+                            <lew-avatar
+                                src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+                            />
+                        </lew-badge>
                         <lew-badge round value="99+">
                             <lew-avatar
                                 src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
-                            ></lew-avatar>
+                            />
                         </lew-badge>
                         <lew-badge type="info" round value="99+">
                             <lew-avatar
                                 src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
-                            ></lew-avatar>
+                            />
                         </lew-badge>
                         <lew-avatar
                             src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
@@ -257,7 +269,7 @@ const notification = (type: string) => {
                             status-position="bottom-right"
                         />
                     </lew-flex>
-                    <lew-flex x="end" gap="20px">
+                    <lew-flex x="end" gap="10px">
                         <lew-tag type="primary">primary</lew-tag>
                         <lew-tag type="success">success</lew-tag>
                         <lew-tag type="error">error</lew-tag>
@@ -266,11 +278,11 @@ const notification = (type: string) => {
                     </lew-flex>
 
                     <lew-flex x="end" gap="20px">
-                        <lew-button type="normal">取消</lew-button>
-                        <lew-button>确定</lew-button>
-                        <lew-button loading type="warning">确定</lew-button>
-                        <lew-button type="error">确定</lew-button>
-                        <lew-button type="success">确定</lew-button>
+                        <lew-button text="cancel" type="error" />
+                        <lew-button text="cancel" />
+                        <lew-button text="phone" type="primary" icon="phone" />
+                        <lew-button text="confirm" type="warning" icon="box" />
+                        <lew-button text="confirm" type="success" loading />
                     </lew-flex>
                     <lew-flex x="end">
                         <lew-breadcrumb :options="breadcrumb_options">
@@ -283,29 +295,35 @@ const notification = (type: string) => {
 
                     <lew-flex gap="20px" x="end">
                         <lew-dropdown :options="dropdown_options">
-                            <lew-button type="normal">trigger hover</lew-button>
+                            <lew-button text="trigger hover" type="normal" />
                         </lew-dropdown>
                         <lew-dropdown
                             :options="dropdown_options"
                             trigger="click"
                             placement="top"
                         >
-                            <lew-button type="normal">trigger click</lew-button>
+                            <lew-button text="trigger click" type="normal" />
                         </lew-dropdown>
                     </lew-flex>
                 </lew-flex>
                 <lew-flex class="item">
                     <lew-form direction="y" style="width: 100%">
                         <lew-form-item label="Input">
-                            <LewInput v-model="user.username" />
+                            <lew-input v-model="user.username" />
                         </lew-form-item>
                         <lew-form-item label="Textarea">
-                            <LewInput type="textarea" resize="none" />
+                            <lew-input type="textarea" resize="none" />
                         </lew-form-item>
                         <lew-form-item label="Select">
-                            <LewSelect
+                            <lew-select
                                 v-model="user.home"
                                 :options="home_options"
+                            />
+                        </lew-form-item>
+                        <lew-form-item label="Date picker">
+                            <lew-date-picker
+                                style="width: 100%"
+                                v-model="user.birth"
                             />
                         </lew-form-item>
                         <lew-form-item label="Radio">
@@ -314,49 +332,57 @@ const notification = (type: string) => {
                                 :options="sex_options"
                             />
                         </lew-form-item>
-                        <lew-form-item label="Checkbox">
+                        <lew-form-item label="Check box">
                             <lew-checkbox-group
                                 v-model="user.hobby"
                                 :options="hobby_options"
                             />
                         </lew-form-item>
-                        <lew-form-item label="InputTag">
+                        <lew-form-item label="Input tag">
                             <lew-input-tag v-model="user.tags" />
                         </lew-form-item>
                         <lew-form-item label="Switch">
-                            <LewSwitch v-model="user.dark" />
+                            <lew-switch v-model="user.dark" />
                         </lew-form-item>
                     </lew-form>
                 </lew-flex>
                 <lew-flex class="item" direction="y" gap="20px">
                     <LewAlert :list="list"></LewAlert>
                     <lew-flex wrap x="start" gap="20px">
-                        <lew-button type="normal" @click="message('error')"
-                            >Message</lew-button
-                        >
-                        <lew-button type="success" @click="message('success')"
-                            >Save</lew-button
-                        >
+                        <lew-button
+                            text="Message"
+                            type="normal"
+                            @click="message('error')"
+                        />
+                        <lew-button
+                            text="Save"
+                            type="success"
+                            @click="message('success')"
+                        />
                     </lew-flex>
                     <lew-flex wrap x="start" gap="20px">
                         <lew-button
+                            text="Notification"
                             type="error"
                             @click="notification('success')"
-                            >Notification</lew-button
-                        >
+                        />
                         <lew-button
+                            text="Notification"
                             type="warning"
                             @click="notification('error')"
-                            >Notification</lew-button
-                        >
+                        />
                     </lew-flex>
                     <lew-flex wrap x="start" gap="20px">
-                        <lew-button type="error" @click="open('warning')"
-                            >Dialog</lew-button
-                        >
-                        <lew-button type="warning" @click="open('error')"
-                            >Cancel</lew-button
-                        >
+                        <lew-button
+                            text="Dialog"
+                            type="error"
+                            @click="open('error')"
+                        />
+                        <lew-button
+                            text="Cancel"
+                            type="warning"
+                            @click="open('warning')"
+                        />
                     </lew-flex>
                     <lew-flex x="start" gap="20px">
                         <lew-popover
@@ -365,7 +391,7 @@ const notification = (type: string) => {
                             placement="bottom-start"
                         >
                             <template #trigger>
-                                <lew-button>Popover</lew-button>
+                                <lew-button text="Popover" />
                             </template>
                             <template #popover-body>
                                 <lew-form
@@ -379,16 +405,16 @@ const notification = (type: string) => {
 
                                     <lew-flex x="end">
                                         <lew-button
-                                            type="blank"
+                                            text="取消"
                                             size="small"
                                             @click="lewPopoverRef.hide()"
-                                            >取消
-                                        </lew-button>
+                                        />
                                         <lew-button
+                                            type="primary"
+                                            text="提交"
                                             size="small"
                                             @click="submit()"
-                                            >提交</lew-button
-                                        >
+                                        />
                                     </lew-flex>
                                 </lew-form>
                             </template>
@@ -458,7 +484,7 @@ const notification = (type: string) => {
 
         .item {
             flex-shrink: 0;
-            width: 420px;
+            width: 350px;
             height: calc(100vh - 70px);
         }
     }

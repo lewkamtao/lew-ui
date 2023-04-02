@@ -26,6 +26,6 @@ const cancel = () => {
         :ok="ok"
         :cancel="cancel"
     >
-        <lew-button>click 触发（模拟请求）</lew-button>
+        <lew-button text="click 触发（模拟请求）" />
     </lew-popok>
 </template>

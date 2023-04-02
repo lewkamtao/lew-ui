@@ -75,6 +75,10 @@ export const selectProps = {
         type: String,
         default: 'left',
     },
+    showCheckIcon: {
+        type: Boolean,
+        default: () => true,
+    },
     defaultValue: {
         type: String,
         default: '',

@@ -106,11 +106,14 @@ const getBodyClassName = computed(() => {
 
 const getSelectItemClassName = (e: any) => {
     let { disabled } = e;
-
     let active = e.value === selectValue.value;
     let { align } = props;
 
-    return getClass('lew-select-item', { disabled, align, active });
+    return getClass('lew-select-item', {
+        disabled,
+        align,
+        active,
+    });
 };
 
 const onShow = () => {
@@ -215,7 +218,10 @@ defineExpose({ show, hide });
                                     {{ item.label }}
                                 </div>
                                 <lew-icon
-                                    v-if="item.value === selectValue"
+                                    v-if="
+                                        item.value === selectValue &&
+                                        showCheckIcon
+                                    "
                                     class="icon-check"
                                     size="14"
                                     type="check"

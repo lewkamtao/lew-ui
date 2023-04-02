@@ -100,8 +100,9 @@ const maskClick = () => {
 
     .lew-modal-box {
         border-radius: var(--lew-border-radius);
-        background-color: var(--lew-bgcolor-0);
-        box-shadow: 0px 15px 50px rgba($color: #000000, $alpha: 0.05);
+        background-color: var(--lew-modal-box-bgcolor);
+        border: var(--lew-modal-border);
+        box-shadow: var(--lew-modal-box-shadow);
         animation-fill-mode: forwards;
     }
 }

@@ -26,8 +26,8 @@ const title = ref('加载中');
             </lew-form-item>
 
             <lew-flex x="end">
-                <lew-button type="normal">关闭 </lew-button>
-                <lew-button>立即登录</lew-button>
+                <lew-button text="关闭" type="normal" />
+                <lew-button text="立即登录" />
             </lew-flex>
         </lew-flex>
         <br />
@@ -55,8 +55,8 @@ const title = ref('加载中');
             </lew-form-item>
 
             <lew-flex x="end">
-                <lew-button type="normal">关闭 </lew-button>
-                <lew-button @click="visible = true">立即登录</lew-button>
+                <lew-button text="关闭" type="normal" />
+                <lew-button @click="visible = true" text="立即登录" />
             </lew-flex>
         </lew-flex>
 
@@ -68,6 +68,6 @@ const title = ref('加载中');
             <lew-input v-model="title" show-count :max-length="10" />
         </lew-form-item>
         <br />
-        <lew-button @click="visible = !visible">触发</lew-button>
+        <lew-button text="触发" @click="visible = !visible" />
     </div>
 </template>

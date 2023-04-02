@@ -145,7 +145,11 @@
     --lew-form-bgcolor-high-hover: rgba(6, 57, 88, 0.16);
     --lew-form-bgcolor-high-active: rgba(6, 57, 88, 0.2);
     // dialog / modal
-    --lew-modal-bgcolor: rgb(0, 0, 0, 0.5);
+    --lew-modal-bgcolor: rgb(0, 0, 0, 0.1);
+    //  dialog / modal box
+    --lew-modal-box-bgcolor: #fff;
+    --lew-modal-box-border: 1px #e2e2e2 solid;
+    --lew-modal-box-shadow: 0 18px 36px #00000016;
     // loading
     --lew-loading-bgcolor: rgb(255, 255, 255, 0.8);
     // povpoer
@@ -284,7 +288,10 @@
     --lew-form-bgcolor-high-hover: rgba(71, 71, 71, 0.801);
     --lew-form-bgcolor-high-active: rgba(71, 71, 71, 1);
     // dialog / modal
-    --lew-modal-bgcolor: rgba(175, 175, 175, 0.05);
+    --lew-modal-bgcolor: rgba(0, 0, 0, 0.45);
+    //  dialog / modal box
+    --lew-modal-box-bgcolor: #323339;
+    --lew-modal-box-border: 1px rgba(255, 255, 255, 0.05) solid;
     // loading
     --lew-loading-bgcolor: rgba(0, 0, 0, 0.7);
     // povpoer

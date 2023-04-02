@@ -83,18 +83,18 @@ const emit = defineEmits(['onShow', 'cancel']);
                     <div v-if="content" class="content">{{ content }}</div>
                     <div class="footer">
                         <lew-button
+                            text="取消"
                             size="small"
                             type="blank"
                             @click="cancelHandle"
                             :loading="cancelLoading"
-                            >取消
-                        </lew-button>
+                        />
                         <lew-button
+                            text="确定"
                             size="small"
                             @click="okHandle"
                             :loading="okLoading"
-                            >确定</lew-button
-                        >
+                        />
                     </div>
                 </div>
             </div>

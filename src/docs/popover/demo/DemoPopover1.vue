@@ -3,9 +3,12 @@ const v = ref('');
 const lewPopoverRef1 = ref();
 const lewPopoverRef2 = ref();
 const submit = () => {
-    LewMessage.error(v.value || '密码不可为空');
-    lewPopoverRef1.value.hide();
-    lewPopoverRef2.value.hide();
+    if (v.value) {
+        LewMessage.warning(v.value);
+        lewPopoverRef1.value.hide();
+    } else {
+        LewMessage.warning('密码不可为空');
+    }
 };
 
 const data: any = [
@@ -114,7 +117,7 @@ const formatSex = (sex: number) => {
             placement="bottom-start"
         >
             <template #trigger>
-                <lew-button>进入保险箱</lew-button>
+                <lew-button text="进入保险箱" />
             </template>
             <template #popover-body>
                 <div class="popover-body" style="width: 300px">
@@ -123,14 +126,16 @@ const formatSex = (sex: number) => {
                     </lew-form-item>
                     <lew-flex x="end" style="margin-top: 15px">
                         <lew-button
+                            text="取消"
                             type="blank"
                             size="small"
                             @click="lewPopoverRef1.hide()"
-                            >取消
-                        </lew-button>
-                        <lew-button size="small" @click="submit()"
-                            >提交
-                        </lew-button>
+                        />
+                        <lew-button
+                            text="提交"
+                            size="small"
+                            @click="submit()"
+                        />
                     </lew-flex>
                 </div>
             </template>
@@ -142,7 +147,7 @@ const formatSex = (sex: number) => {
             placement="bottom-start"
         >
             <template #trigger>
-                <lew-button>展示表格</lew-button>
+                <lew-button text="展示表格" />
             </template>
             <template #popover-body>
                 <div class="popover-body" style="width: 800px">
@@ -170,14 +175,17 @@ const formatSex = (sex: number) => {
                     <br />
                     <lew-flex x="end">
                         <lew-button
+                            text="取消"
                             type="blank"
                             size="small"
                             @click="lewPopoverRef2.hide()"
-                            >取消
-                        </lew-button>
-                        <lew-button size="small" @click="submit()"
-                            >提交
-                        </lew-button>
+                        />
+
+                        <lew-button
+                            text="提交"
+                            size="small"
+                            @click="lewPopoverRef2.hide()"
+                        />
                     </lew-flex>
                 </div>
             </template>

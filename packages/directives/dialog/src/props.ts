@@ -27,6 +27,6 @@ export const _props = {
     },
     layout: {
         type: String,
-        default: 'normal',
+        default: 'normal', // normal or mini
     },
 };

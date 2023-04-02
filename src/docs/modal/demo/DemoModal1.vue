@@ -127,8 +127,8 @@ onMounted(() => {
 
 <template>
     <lew-flex x="start">
-        <lew-button @click="modalVisible1 = true">登录</lew-button>
-        <lew-button @click="modalVisible2 = true">展示表格</lew-button>
+        <lew-button text="登录" @click="modalVisible1 = true" />
+        <lew-button text="展示表格" @click="modalVisible2 = true" />
     </lew-flex>
 
     <lew-modal
@@ -153,10 +153,12 @@ onMounted(() => {
                 </lew-form-item>
             </lew-form>
             <lew-flex x="end">
-                <lew-button type="normal" @click="modalVisible1 = false"
-                    >关闭
-                </lew-button>
-                <lew-button @click="modalVisible1 = false">立即登录</lew-button>
+                <lew-button
+                    text="关闭"
+                    type="normal"
+                    @click="modalVisible1 = false"
+                />
+                <lew-button text="立即登录" @click="modalVisible1 = false" />
             </lew-flex>
         </div>
     </lew-modal>
@@ -181,24 +183,29 @@ onMounted(() => {
                 <template #intro="{ row }"> {{ row.intro }} </template>
                 <template #action="{ row, column }">
                     <lew-flex>
-                        <lew-button is-text @click="set(row, column)"
-                            >管理</lew-button
-                        ><lew-button
-                            type="error"
-                            is-text
+                        <lew-button
+                            text="管理"
+                            type="blank"
+                            @click="set(row, column)"
+                        />
+                        <lew-button
+                            text="删除"
+                            type="blank"
                             @click="del(row, column)"
-                            >删除
-                        </lew-button>
+                        />
                     </lew-flex>
                 </template>
             </lew-table>
             <br />
 
             <lew-flex x="end">
-                <lew-button type="normal" @click="modalVisible2 = false"
-                    >关闭
-                </lew-button>
-                <lew-button @click="modalVisible2 = false">提交</lew-button>
+                <lew-button
+                    text="关闭"
+                    type="normal"
+                    @click="modalVisible2 = false"
+                />
+
+                <lew-button text="提交" @click="modalVisible2 = false" />
             </lew-flex>
         </div>
     </lew-modal>

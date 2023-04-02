@@ -100,25 +100,33 @@ const checkToday = computed(() => (item: any) => {
         <lew-flex x="start" mode="between" class="lew-date-control">
             <div class="lew-date-control-left">
                 <!-- 上一年 -->
-                <lew-button type="normal" size="small" @click="prveYear">
-                    <lew-icon size="16" type="chevrons-left" />
-                </lew-button>
+                <lew-button
+                    icon="chevrons-left"
+                    size="small"
+                    @click="prveYear"
+                />
                 <!-- 上一月 -->
-                <lew-button type="normal" size="small" @click="prveMonth">
-                    <lew-icon size="16" type="chevron-left" />
-                </lew-button>
+                <lew-button
+                    icon="chevron-left"
+                    size="small"
+                    @click="prveMonth"
+                />
             </div>
             <!-- 日期 -->
             <div class="cur-date">{{ _year }} 年 {{ _month }} 月</div>
             <div class="lew-date-control-right">
                 <!-- 下一月 -->
-                <lew-button type="normal" size="small" @click="nextMonth">
-                    <lew-icon size="16" type="chevron-right" />
-                </lew-button>
+                <lew-button
+                    icon="chevron-right"
+                    size="small"
+                    @click="nextMonth"
+                />
                 <!-- 下一年 -->
-                <lew-button type="normal" size="small" @click="nextYear">
-                    <lew-icon size="16" type="chevrons-right" />
-                </lew-button>
+                <lew-button
+                    icon="chevrons-right"
+                    size="small"
+                    @click="nextYear"
+                />
             </div>
         </lew-flex>
         <div class="lew-date-box">

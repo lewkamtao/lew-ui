@@ -26,10 +26,10 @@ const change = (e: any, handle: any) => {
 <template>
     <lew-flex gap="30px" x="start">
         <lew-dropdown :options="options" @change="change">
-            <lew-button>hover</lew-button>
+            <lew-button text="hover" />
         </lew-dropdown>
         <lew-dropdown :options="options" trigger="click" @change="change">
-            <lew-button>click</lew-button>
+            <lew-button text="click" />
         </lew-dropdown>
     </lew-flex>
 </template>

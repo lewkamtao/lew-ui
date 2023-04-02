@@ -129,11 +129,17 @@ const del = (row: any, column: any) => {
         <template #intro="{ row }"> {{ row.intro }} </template>
         <template #action="{ row, column }">
             <lew-flex>
-                <lew-button is-text @click="set(row, column)">管理</lew-button
-                ><lew-button is-text @click="del(row, column)"
-                    >删除
-                </lew-button></lew-flex
-            >
+                <lew-button
+                    text="管理"
+                    type="blank"
+                    @click="set(row, column)"
+                />
+                <lew-button
+                    text="删除"
+                    type="blank"
+                    @click="del(row, column)"
+                />
+            </lew-flex>
         </template>
     </lew-table>
 </template>

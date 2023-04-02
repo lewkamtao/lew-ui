@@ -140,7 +140,7 @@ const error = (e: any) => {
             <lew-flex>
                 <lew-popover trigger="click" placement="top">
                     <template #trigger>
-                        <lew-button is-text>录入</lew-button>
+                        <lew-button text="录入" type="blank" />
                     </template>
                     <template #popover-body="{ hide }">
                         <div class="popover-body">
@@ -149,16 +149,16 @@ const error = (e: any) => {
                             </lew-form-item>
                             <lew-flex x="end">
                                 <lew-button
+                                    text="取消"
                                     type="blank"
                                     size="small"
                                     @click="hide()"
-                                    >取消
-                                </lew-button>
+                                />
                                 <lew-button
+                                    text="提交"
                                     size="small"
                                     @click="hide(), submit()"
-                                    >提交
-                                </lew-button>
+                                />
                             </lew-flex>
                         </div>
                     </template>
@@ -171,7 +171,7 @@ const error = (e: any) => {
                     @ok="success"
                     @cancel="error"
                 >
-                    <lew-button is-text type="error">删除</lew-button>
+                    <lew-button text="删除" type="blank" />
                 </lew-popok>
             </lew-flex>
         </template>

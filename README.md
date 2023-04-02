@@ -28,7 +28,7 @@ import { LewButton } from 'lew-ui';
 </script>
 
 <template>
-    <lew-button> 发送 </lew-button>
+    <lew-button text="发送" />
 </template>
 ```
 

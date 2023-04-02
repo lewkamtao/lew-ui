@@ -12,11 +12,20 @@ const mockFn = () => {
 
 <template>
     <lew-flex wrap x="start" y="end" gap="20px">
-        <lew-button round size="small" :request="mockFn">模拟请求 </lew-button>
-        <lew-button size="small" type="normal" loading>确定</lew-button>
-        <lew-button size="medium" loading>确定</lew-button>
-        <lew-button size="large" :loading="loading" @click="loading = !loading">
-            点击触发
-        </lew-button>
+        <lew-button
+            text="submit"
+            icon="phone"
+            round
+            size="small"
+            :request="mockFn"
+        />
+        <lew-button text="submit" size="small" type="normal" loading />
+        <lew-button text="submit" size="medium" loading />
+        <lew-button
+            text="submit"
+            size="large"
+            :loading="loading"
+            @click="loading = !loading"
+        />
     </lew-flex>
 </template>

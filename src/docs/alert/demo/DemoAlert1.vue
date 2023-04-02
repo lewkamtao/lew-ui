@@ -19,6 +19,7 @@ const close = (e: number) => {
 <template>
     <lew-flex wrap gap="20px" x="start">
         <lew-button
+            text="点我"
             type="primary"
             @click="
                 addAlert({
@@ -27,9 +28,9 @@ const close = (e: number) => {
                     content: '',
                 })
             "
-            >点我
-        </lew-button>
+        />
         <lew-button
+            text="点我"
             type="error"
             @click="
                 addAlert({
@@ -38,9 +39,9 @@ const close = (e: number) => {
                     content: '',
                 })
             "
-            >点我
-        </lew-button>
+        />
         <lew-button
+            text="点我"
             type="warning"
             @click="
                 addAlert({
@@ -49,9 +50,9 @@ const close = (e: number) => {
                     content: '',
                 })
             "
-            >点我
-        </lew-button>
+        />
         <lew-button
+            text="点我"
             type="success"
             @click="
                 addAlert({
@@ -61,9 +62,9 @@ const close = (e: number) => {
                     content: '',
                 })
             "
-            >点我
-        </lew-button>
+        />
         <lew-button
+            text="点我"
             type="normal"
             @click="
                 addAlert({
@@ -74,8 +75,7 @@ const close = (e: number) => {
                         'Well the Ukraine girls really knock me out They leave the West behind And Moscow girls make me sing and shout That Georgia s always on my mind Aw come on!',
                 })
             "
-            >点我
-        </lew-button>
+        />
     </lew-flex>
     <div style="margin-top: 20px">
         <LewAlert :list="list" @close="close"></LewAlert>

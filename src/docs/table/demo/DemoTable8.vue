@@ -106,25 +106,25 @@ const getChecked = computed(() => (id: any) => {
 <template>
     <lew-flex x="start">
         <lew-button
+            text="取消所有选择"
             v-if="isCheckeds.length > 0"
             type="error"
             @click="isCheckeds = []"
-            >取消所有选择</lew-button
-        >
+        />
         <lew-button
+            text="选中前五个"
             v-if="isCheckeds.length === 0"
             @click="
                 isCheckeds = data
                     .filter((_e: any, i: number) => i <= 4)
                     .map((e: any) => e.id)
             "
-            >选中前五个</lew-button
-        >
+        />
         <lew-button
+            text="全选"
             v-if="isCheckeds.length != data.length"
             @click="isCheckeds = data.map((e: any) => e.id)"
-            >全选</lew-button
-        >
+        />
     </lew-flex>
     <br />
     <lew-table :data="data" :columns="columns" max-height="600px">
@@ -163,9 +163,11 @@ const getChecked = computed(() => (id: any) => {
         </template>
 
         <template #action="{ row, column }">
-            <lew-button is-text @click.stop="get({ row, column })"
-                >管理</lew-button
-            >
+            <lew-button
+                text="管理"
+                type="blank"
+                @click.stop="get({ row, column })"
+            />
             <lew-popok
                 title="删除确认"
                 content="删除之后无法恢复，请确认！"
@@ -173,7 +175,7 @@ const getChecked = computed(() => (id: any) => {
                 width="200px"
                 @click.stop
             >
-                <lew-button is-text type="error">删除</lew-button>
+                <lew-button text="删除" type="blank" />
             </lew-popok>
         </template>
         <template #type="{ row }">

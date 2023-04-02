@@ -2,7 +2,6 @@ import { PropType, ExtractPropTypes } from 'vue';
 
 export type ButtonType = 'primary' | 'normal' | 'success' | 'error' | 'warning';
 export type ButtonSize = 'small' | 'medium' | 'large';
-export type ButtonMode = 'text' | 'icon' | 'iconText' | 'normal';
 
 export const buttonProps = {
     type: {
@@ -11,11 +10,11 @@ export const buttonProps = {
             return 'normal';
         },
     },
-    mode: {
-        type: String as PropType<ButtonMode>,
-        default: () => {
-            return 'normal';
-        },
+    text: {
+        type: String,
+    },
+    icon: {
+        type: String,
     },
     size: {
         type: String as PropType<ButtonSize>,
