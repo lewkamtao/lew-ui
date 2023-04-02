@@ -56,7 +56,7 @@ const gohome = () => {
             <lew-tag
                 v-tooltip="{
                     content:
-                        '当前演示版本为 Beta v1.1.30，请勿在生产环境使用。',
+                        '当前演示版本为 Beta v1.2，请勿在生产环境使用。',
                     placement: 'top-start',
                     trigger: 'mouseenter',
                 }"
@@ -64,7 +64,7 @@ const gohome = () => {
                 size="small"
                 style="margin-left: 10px"
             >
-                Beta v1.1.30
+                Beta v1.2
             </lew-tag>
         </div>
         <lew-flex gap="15px" x="end" class="menu">
