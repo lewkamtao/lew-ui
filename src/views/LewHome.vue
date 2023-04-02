@@ -217,7 +217,7 @@ const notification = (type: string) => {
             <p>一个 Vue 3 组件库</p>
             <lew-button
                 type="primary"
-                text="Get Start"
+                text="Get started"
                 style="margin-top: 20px"
                 @click="router.push('/Avatar')"
             />
