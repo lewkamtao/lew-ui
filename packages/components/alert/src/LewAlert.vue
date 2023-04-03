@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import type { AlertItem } from './alert';
-import { getIconType } from 'lew-ui/utils';
+import { getIconType, getClass } from 'lew-ui/utils';
 import { alertProps } from './alert';
 
 defineProps(alertProps);
 
 const emit = defineEmits(['close']);
 
-const getClass = (item: AlertItem) => {
-    return `lew-alert-${item.type}`;
+const alertClassName = (item: AlertItem) => {
+    return getClass('lew-alert', { type: item.type });
 };
 </script>
 
@@ -18,7 +18,7 @@ const getClass = (item: AlertItem) => {
             v-for="(item, i) in list"
             :key="i"
             class="lew-alert"
-            :class="getClass(item)"
+            :class="alertClassName(item)"
         >
             <div class="alert-icon">
                 <lew-icon size="16" :type="getIconType(item.type)"></lew-icon>
@@ -56,7 +56,7 @@ const getClass = (item: AlertItem) => {
         background-color: var(--lew-normal-color);
         border-radius: var(--lew-border-radius);
         margin-bottom: 10px;
-        padding: 8px 12px;
+        padding: 12px 18px;
         box-sizing: border-box;
 
         .alert-icon {
@@ -109,27 +109,27 @@ const getClass = (item: AlertItem) => {
         }
     }
 
-    .lew-alert-normal {
+    .lew-alert-type-normal {
         color: var(--lew-text-color-2);
         background-color: var(--lew-normal-color-light);
     }
 
-    .lew-alert-success {
+    .lew-alert-type-success {
         color: var(--lew-success-color-dark);
         background-color: var(--lew-success-color-light);
     }
 
-    .lew-alert-warning {
+    .lew-alert-type-warning {
         color: var(--lew-warning-color-dark);
         background-color: var(--lew-warning-color-light);
     }
 
-    .lew-alert-error {
+    .lew-alert-type-error {
         color: var(--lew-error-color-dark);
         background-color: var(--lew-error-color-light);
     }
 
-    .lew-alert-info {
+    .lew-alert-type-info {
         color: var(--lew-info-color-dark);
         background-color: var(--lew-info-color-light);
     }

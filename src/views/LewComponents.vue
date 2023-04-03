@@ -68,6 +68,13 @@ group.value = [
                 type: 'success',
             },
             {
+                cname: '文本修剪',
+                name: 'TextTrim',
+                path: '/TextTrim',
+                label: 'new',
+                type: 'success',
+            },
+            {
                 cname: '弹性布局',
                 name: 'Flex',
                 path: '/Flex',

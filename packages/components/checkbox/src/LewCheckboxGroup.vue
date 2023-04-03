@@ -24,7 +24,7 @@ const getChecked = (_value: string | number) => {
 <template>
     <lew-flex
         x="start"
-        gap="15px"
+        gap="15"
         class="lew-checkbox-group"
         :class="`lew-checkbox-group-${direction} lew-checkbox-group-${size}`"
     >

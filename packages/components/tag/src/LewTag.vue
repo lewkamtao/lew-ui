@@ -67,8 +67,6 @@ const getSize = computed(() => {
         padding: 0px 3px;
         box-sizing: border-box;
         white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
 
     .lew-tag-close {

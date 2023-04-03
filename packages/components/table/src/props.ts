@@ -8,10 +8,10 @@ export const tableProps = {
             return [];
         },
     },
-    width: {
-        type: String,
+    pickColumns: {
+        type: Array,
         default: () => {
-            return '';
+            return [];
         },
     },
     maxHeight: {
@@ -20,8 +20,7 @@ export const tableProps = {
             return '';
         },
     },
-
-    data: {
+    dataSource: {
         type: Array as any,
         default: () => {
             return [];

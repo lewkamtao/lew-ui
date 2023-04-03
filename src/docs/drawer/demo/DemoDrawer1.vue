@@ -17,7 +17,7 @@ const open4 = (): void => {
 };
 </script>
 <template>
-    <lew-flex gap="20px" x="start">
+    <lew-flex gap="20" x="start">
         <lew-drawer v-model:visible="visible1" position="right"></lew-drawer>
         <lew-button text="右边" @click="open1" />
         

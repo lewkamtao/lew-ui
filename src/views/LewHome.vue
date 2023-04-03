@@ -223,8 +223,8 @@ const notification = (type: string) => {
             />
         </div>
         <div class="home">
-            <lew-flex direction="x" gap="40px">
-                <lew-flex class="item" direction="y" x="end" gap="40px">
+            <lew-flex direction="x" gap="40">
+                <lew-flex class="item" direction="y" x="end" gap="40">
                     <lew-flex direction="y" x="end" gap="0px">
                         <lew-title size="16px" :bold="200">
                             Lew Design 16px
@@ -239,7 +239,7 @@ const notification = (type: string) => {
                             Lew Design 40px
                         </lew-title>
                     </lew-flex>
-                    <lew-flex x="end" gap="20px">
+                    <lew-flex x="end" gap="20">
                         <lew-avatar
                             src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
                         />
@@ -269,7 +269,7 @@ const notification = (type: string) => {
                             status-position="bottom-right"
                         />
                     </lew-flex>
-                    <lew-flex x="end" gap="10px">
+                    <lew-flex x="end" gap="10">
                         <lew-tag type="primary">primary</lew-tag>
                         <lew-tag type="success">success</lew-tag>
                         <lew-tag type="error">error</lew-tag>
@@ -277,7 +277,7 @@ const notification = (type: string) => {
                         <lew-tag type="normal">normal</lew-tag>
                     </lew-flex>
 
-                    <lew-flex x="end" gap="20px">
+                    <lew-flex x="end" gap="20">
                         <lew-button text="cancel" type="error" />
                         <lew-button text="cancel" />
                         <lew-button text="phone" type="primary" icon="phone" />
@@ -293,7 +293,7 @@ const notification = (type: string) => {
                         <lew-tabs :options="tab_soptions" />
                     </lew-flex>
 
-                    <lew-flex gap="20px" x="end">
+                    <lew-flex gap="20" x="end">
                         <lew-dropdown :options="dropdown_options">
                             <lew-button text="trigger hover" type="normal" />
                         </lew-dropdown>
@@ -346,9 +346,9 @@ const notification = (type: string) => {
                         </lew-form-item>
                     </lew-form>
                 </lew-flex>
-                <lew-flex class="item" direction="y" gap="20px">
+                <lew-flex class="item" direction="y" gap="20">
                     <LewAlert :list="list"></LewAlert>
-                    <lew-flex wrap x="start" gap="20px">
+                    <lew-flex wrap x="start" gap="20">
                         <lew-button
                             text="Message"
                             type="normal"
@@ -360,7 +360,7 @@ const notification = (type: string) => {
                             @click="message('success')"
                         />
                     </lew-flex>
-                    <lew-flex wrap x="start" gap="20px">
+                    <lew-flex wrap x="start" gap="20">
                         <lew-button
                             text="Notification"
                             type="error"
@@ -372,7 +372,7 @@ const notification = (type: string) => {
                             @click="notification('error')"
                         />
                     </lew-flex>
-                    <lew-flex wrap x="start" gap="20px">
+                    <lew-flex wrap x="start" gap="20">
                         <lew-button
                             text="Dialog"
                             type="error"
@@ -384,7 +384,7 @@ const notification = (type: string) => {
                             @click="open('warning')"
                         />
                     </lew-flex>
-                    <lew-flex x="start" gap="20px">
+                    <lew-flex x="start" gap="20">
                         <lew-popover
                             ref="lewPopoverRef"
                             trigger="click"

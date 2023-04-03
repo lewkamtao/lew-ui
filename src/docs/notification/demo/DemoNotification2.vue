@@ -18,7 +18,7 @@ const openWithoutDelay = (type: string) => {
 </script>
 
 <template>
-    <lew-flex wrap x="start" gap="20px">
+    <lew-flex wrap x="start" gap="20">
         <lew-button
             text="WithDelay"
             type="error"

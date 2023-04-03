@@ -1,89 +1,50 @@
 <script setup lang="ts">
+import { useImage } from '@vueuse/core';
 import { avatarProps } from './avatar';
-import { getPx } from 'lew-ui/utils';
+import { getClass } from 'lew-ui/utils';
 
 const props = defineProps(avatarProps);
+const { isLoading } = useImage({ src: props.src });
+let isError = ref(false);
 
-const { round, width, height, status, statusPosition, errorSrc } = props;
-
-let loading = ref(true);
-let imgRef = ref<HTMLImageElement>();
-let count = 8000;
-let speed = 500;
-let loadErr = ref(false);
-let imgSrc = ref(props.src);
-
-watch(
-    () => props.src,
-    () => {
-        if (props.src) {
-            imgSrc.value = props.src;
-            setImg();
-        }
-    }
-);
-
-onMounted(() => {
-    setImg();
+const imgSrc = computed(() => {
+    return isError.value ? props.errorSrc : props.src;
 });
 
-const setImg = () => {
-    var timer = setInterval(function () {
-        count -= speed;
-        if (count < 0) {
-            loading.value = false;
-            loadErr.value = true;
-            clearInterval(timer);
-        }
-        if (imgRef.value?.complete) {
-            loading.value = false;
-            //判断图片是否加载完成
-            clearInterval(timer);
-            //图片加载完成，写入对应的请求
-        }
-    }, speed);
-};
-
-const imgOnError = () => {
-    imgSrc.value = errorSrc;
-};
-
-const imageClassObject = computed(() => {
-    return {
-        'lew-avatar-round': round,
-        skeletons: loading.value && !loadErr.value,
-    };
+const dotClassName = computed(() => {
+    return getClass('dot', {
+        status: props.status,
+        statusPosition: props.statusPosition,
+    });
 });
 
-const styleObject = computed(() => {
-    return {
-        width: getPx(width),
-        height: getPx(height),
-    };
+const avatarClassName = computed(() => {
+    return getClass('lew-avatar', {
+        round: props.round,
+        skeletons: isLoading.value,
+    });
 });
 
-const dotClassObject = computed(() => {
+const avatarStyleObject = computed(() => {
     return {
-        [`dot-${status}`]: status,
-        [`dot-${statusPosition}`]: statusPosition,
+        width: `${props.width}px`,
+        height: `${props.height}px`,
     };
 });
 </script>
 
 <template>
-    <div class="lew-avatar" :style="styleObject">
-        <div class="lew-avatar-box" :class="imageClassObject">
+    <div class="lew-avatar" :style="avatarStyleObject">
+        <div class="lew-avatar-box" :class="avatarClassName">
+            <span v-if="isLoading" class="skeletons"> </span>
             <img
-                v-if="imgSrc"
-                ref="imgRef"
-                v-show="!loading"
                 :src="imgSrc"
-                :onerror="imgOnError"
                 :alt="alt"
+                :onerror="() => (isError = true)"
                 lazy
             />
         </div>
-        <span v-if="status" class="dot" :class="dotClassObject"> </span>
+        <span v-if="status" class="dot" :class="dotClassName"> </span>
     </div>
 </template>
 
@@ -119,44 +80,44 @@ const dotClassObject = computed(() => {
         border: 2px var(--lew-white-color) solid;
     }
 
-    .dot-online {
+    .dot-status-online {
         background-color: var(--lew-success-color);
     }
 
-    .dot-busy {
+    .dot-status-busy {
         background-color: var(--lew-error-color);
     }
 
-    .dot-offline {
+    .dot-status-offline {
         background-color: var(--lew-normal-color-dark);
     }
 
-    .dot-processing {
+    .dot-status-processing {
         background-color: var(--lew-info-color);
     }
 
-    .dot-away {
+    .dot-status-away {
         background-color: var(--lew-warning-color);
     }
 
-    .dot-top-left {
+    .dot-statusPosition-top-left {
         top: -0.25rem;
         left: -0.25rem;
     }
 
-    .dot-top-right {
+    .dot-statusPosition-top-right {
         top: -0.25rem;
         left: auto;
         right: -0.25rem;
     }
 
-    .dot-bottom-left {
+    .dot-statusPosition-bottom-left {
         top: auto;
         bottom: -0.25rem;
         left: -0.25rem;
     }
 
-    .dot-bottom-right {
+    .dot-statusPosition-bottom-right {
         top: auto;
         bottom: -0.25rem;
         left: auto;

@@ -1,7 +1,7 @@
 <template>
     <lew-flex
         x="start"
-        gap="15px"
+        gap="15"
         class="lew-radio-group"
         :class="`lew-radio-group-${direction} lew-radio-group-${size}`"
     >

@@ -12,7 +12,7 @@ const clear = () => {
 </script>
 
 <template>
-    <lew-flex wrap x="start" gap="20px">
+    <lew-flex wrap x="start" gap="20">
         <lew-button text="error" type="error" @click="open('error')" />
         <lew-button text="success" type="success" @click="open('success')" />
         <lew-button text="normal" type="normal" @click="open('normal')" />

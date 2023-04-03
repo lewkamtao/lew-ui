@@ -120,13 +120,13 @@ const formatSex = (sex: number) => {
 </script>
 
 <template>
-    <lew-table :data="data" :columns="columns">
+    <lew-table :data-source="data" :columns="columns">
         <template #id="{ row }"> {{ row.id }} </template>
         <template #name="{ row }"> {{ row.name }} </template>
         <template #age="{ row }"> {{ row.age }} </template>
         <template #sex="{ row }"> {{ formatSex(row.sex) }} </template>
         <template #hobby="{ row }">
-            <lew-flex gap="5px" x="start">
+            <lew-flex gap="5" x="start">
                 <lew-tag
                     v-for="(item, index) in row.hobby"
                     :key="index"
@@ -138,9 +138,9 @@ const formatSex = (sex: number) => {
         </template>
         <template #intro="{ row }"> {{ row.intro }} </template>
         <template #action>
-            <lew-flex>
-                <lew-button text="管理" type="blank" />
-                <lew-button text="删除" type="blank" />
+            <lew-flex gap="5">
+                <lew-button size="small" text="管理" type="blank" />
+                <lew-button size="small" text="删除" type="blank" />
             </lew-flex>
         </template>
     </lew-table>

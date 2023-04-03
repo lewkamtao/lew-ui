@@ -20,6 +20,7 @@ export default {
                     allowHTML: binding.value.allowHTML,
                     arrow: binding.value.arrow,
                     maxWidth: 250,
+                    delay: trigger === 'mouseenter' ? [150, 150] : undefined,
                 });
                 el.instance.popper.children[0].setAttribute(
                     'data-lew',
@@ -27,7 +28,7 @@ export default {
                 );
             },
             updated(el: any, binding: DirectiveBinding) {
-                el.instanceContent = binding.value.content;
+                el.instance.setContent(binding.value.content);
             },
             unmounted(el: any) {
                 el.instance = null;

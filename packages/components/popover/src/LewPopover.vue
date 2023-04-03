@@ -45,6 +45,7 @@ onMounted(() => {
         interactive: true,
         placement: placement,
         arrow: false,
+        delay: trigger === 'mouseenter' ? [150, 150] : undefined,
         appendTo: () => document.body,
         allowHTML: true,
         maxWidth: 'none',

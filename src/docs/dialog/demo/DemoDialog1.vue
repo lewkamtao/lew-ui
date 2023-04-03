@@ -27,7 +27,7 @@ const open = (type: any, layout: string) => {
 <template>
     <lew-flex direction="y" x="start" gap="0px">
         <lew-title size="14px">normal</lew-title>
-        <lew-flex wrap x="start" gap="20px">
+        <lew-flex wrap x="start" gap="20">
             <lew-button
                 text="normal"
                 type="normal"
@@ -52,7 +52,7 @@ const open = (type: any, layout: string) => {
         <br />
         <br />
         <lew-title size="14px">mini</lew-title>
-        <lew-flex wrap x="start" gap="20px">
+        <lew-flex wrap x="start" gap="20">
             <lew-button
                 text="normal"
                 type="normal"

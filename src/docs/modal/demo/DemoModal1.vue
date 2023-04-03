@@ -170,7 +170,7 @@ onMounted(() => {
                 <template #age="{ row }"> {{ row.age }} </template>
                 <template #sex="{ row }"> {{ formatSex(row.sex) }} </template>
                 <template #hobby="{ row }">
-                    <lew-flex gap="5px" x="start">
+                    <lew-flex gap="5" x="start">
                         <lew-tag
                             v-for="(item, index) in row.hobby"
                             :key="index"

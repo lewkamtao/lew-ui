@@ -1,5 +1,5 @@
 <template>
-    <lew-flex gap="20px">
+    <lew-flex gap="20">
         <lew-button
             text="left"
             v-tooltip="{

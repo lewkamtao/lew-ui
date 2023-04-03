@@ -67,7 +67,7 @@ const docsTable = ref([
         </lew-demo-box>
 
         <lew-title size="16px">Props</lew-title>
-        <lew-table :data="docsTable" :columns="columns" height="auto">
+        <lew-table :data-source="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }">
                 {{ row.description }}

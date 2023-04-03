@@ -1,5 +1,5 @@
 <template>
-    <lew-flex wrap x="start" gap="20px">
+    <lew-flex wrap x="start" gap="20">
         <lew-button round text="primary" type="primary" />
         <lew-button round text="error" type="error" />
         <lew-button round text="warning" type="warning" />

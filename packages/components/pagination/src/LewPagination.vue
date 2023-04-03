@@ -100,10 +100,10 @@ const checkPageNum = (value: any) => {
 
 <template>
     <div class="lew-pagination">
-        <lew-flex class="control" gap="10px">
+        <lew-flex class="control" gap="10">
             <slot name="left" />
 
-            <lew-flex class="lew-pagination-page-box" gap="5px">
+            <lew-flex class="lew-pagination-page-box" gap="5">
                 <div class="btn" @click="changePage(currentPage - 1)">
                     <lew-icon size="14" type="chevron-left" />
                 </div>

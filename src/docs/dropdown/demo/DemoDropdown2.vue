@@ -23,7 +23,7 @@ const change = (e: any) => {
 };
 </script>
 <template>
-    <lew-flex gap="30px" x="start">
+    <lew-flex gap="30" x="start">
         <lew-dropdown
             :options="options"
             placement="bottom-start"

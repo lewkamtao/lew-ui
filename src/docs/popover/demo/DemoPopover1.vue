@@ -110,7 +110,7 @@ const formatSex = (sex: number) => {
 </script>
 
 <template>
-    <lew-flex gap="20px" x="start">
+    <lew-flex gap="20" x="start">
         <lew-popover
             ref="lewPopoverRef1"
             trigger="click"
@@ -159,7 +159,7 @@ const formatSex = (sex: number) => {
                             {{ formatSex(row.sex) }}
                         </template>
                         <template #hobby="{ row }">
-                            <lew-flex gap="5px" x="start">
+                            <lew-flex gap="5" x="start">
                                 <lew-tag
                                     v-for="(item, index) in row.hobby"
                                     :key="index"

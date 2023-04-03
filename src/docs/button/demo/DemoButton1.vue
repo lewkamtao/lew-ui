@@ -1,5 +1,5 @@
 <template>
-    <lew-flex direction="y" x="start" gap="20px">
+    <lew-flex direction="y" x="start" gap="20">
         <div>
             <lew-title size="16">normal</lew-title>
             <lew-flex y="end">

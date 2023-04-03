@@ -11,7 +11,7 @@ const mockFn = () => {
 </script>
 
 <template>
-    <lew-flex wrap x="start" y="end" gap="20px">
+    <lew-flex wrap x="start" y="end" gap="20">
         <lew-button
             text="submit"
             icon="phone"

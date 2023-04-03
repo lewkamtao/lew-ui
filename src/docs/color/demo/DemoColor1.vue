@@ -15,7 +15,7 @@ const colors = ref([
             v-for="(item, index) in colors"
             :key="index"
             direction="y"
-            gap="10px"
+            gap="10"
         >
             <lew-flex
                 class="item"

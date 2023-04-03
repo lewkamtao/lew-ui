@@ -55,36 +55,36 @@ const data: any = ref([
 const columns = [
     {
         title: 'id',
-        width: '100px',
         field: 'id',
+        width: 60,
         x: 'center',
     },
     {
         title: '信息',
-        width: '180px',
+        width: 180,
         field: 'info',
     },
     {
         title: '年龄',
-        width: 'auto',
         field: 'age',
+        width: 80,
         x: 'center',
     },
     {
         title: '性别',
-        width: 'auto',
         field: 'sex',
+        width: 80,
         x: 'center',
     },
     {
         title: '成绩',
-        width: 'auto',
+        width: 280,
         field: 'fraction',
         x: 'center',
     },
     {
         title: '介绍',
-        width: 'auto',
+        width: 280,
         field: 'intro',
     },
 ];
@@ -102,7 +102,7 @@ const formatSex = (sex: number) => {
 </script>
 
 <template>
-    <lew-table :data="data" :columns="columns">
+    <lew-table :data-source="data" :columns="columns">
         <template #id="{ row }"> {{ row.id }} </template>
         <template #info="{ row }">
             <lew-flex class="info">

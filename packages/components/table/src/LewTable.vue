@@ -1,182 +1,178 @@
 <script lang="ts" setup>
 import { tableProps } from './props';
+
 const props = defineProps(tableProps);
 
-let lewTableRef = ref<HTMLElement | any>(null); // 表格的 ref
-let lewTableBodyRef = ref<HTMLElement | any>(null); // 表格的 body ref
-
-// 设置左右线
-let leftIndex = ref<number>(-1);
-let rightIndex = ref<number>(-1);
-
-const setSubLine = () => {
-    props.columns.map((e, i) => {
-        if (e.sticky === 'left') {
-            leftIndex.value = i;
-        } else if (e.sticky === 'right' && rightIndex.value === -1) {
-            rightIndex.value = i;
-            if (
-                lewTableRef.value!.scrollWidth != lewTableRef.value!.offsetWidth
-            ) {
-                isShowRightLine.value = true;
-            }
-        }
-    });
-};
-
-// 设置展示线 过渡
-let isShowLeftLine = ref(false);
-let isShowRightLine = ref(false);
-
-const setShowLine = (e: any) => {
-    if (e.target.scrollWidth != e.target.offsetWidth) {
-        isShowLeftLine.value = e.target.scrollLeft >= 5;
-        isShowRightLine.value =
-            e.target.scrollLeft <=
-            e.target.scrollWidth - e.target.offsetWidth - 5;
-    }
-};
-
-// 设置粘住左右
-const setSticky = (column: any) => {
-    if (column.sticky === 'left') {
-        return `position: sticky;left:${column.offsetX || '0px'};z-index:1;`;
-    } else if (column.sticky === 'right') {
-        return `position: sticky;right:${column.offsetX || '0px'};z-index:1;`;
-    }
-};
-
-// 设置单元格宽度
-let niceWidth = ref<string>('');
-const setWidth = () => {
-    let sw = lewTableRef.value.scrollWidth;
-    let w = lewTableRef.value.offsetWidth;
-    niceWidth.value = '';
-    if (w >= sw) {
-        let autoLen = props.columns.filter((e) => e.width === 'auto').length;
-        let wTotal = 0;
-
-        props.columns
-            .filter((e) => e.width != 'auto')
-            .map((e) => {
-                wTotal += parseFloat(e.width);
-            });
-        niceWidth.value = `${(w - wTotal) / autoLen}px`;
-    }
-};
-
-// 防抖
-let lock = false;
-const throttle = (e: any, delay: any) => {
-    if (leftIndex.value === -1 && rightIndex.value === -1) {
-        return;
-    }
-    if (!lock) {
-        // 判断是否锁
-        lock = true; // 锁住
-        setTimeout(() => {
-            setShowLine(e);
-            lock = false; // 开锁
-        }, delay);
-    }
-};
-
-const init = () => {
-    setWidth();
-    // 设置固定单元格的阴影
-    setSubLine();
-};
-
-onMounted(() => {
-    init();
-    window.addEventListener('resize', init);
+let state = reactive({
+    hoverIndex: 0,
 });
 
-onUnmounted(() => {
-    window.removeEventListener('resize', init);
+const getTdNotWidth = computed(() => {
+    let totalWidth: number = 0;
+    let countWidth: number = props.columns.filter((e) => !!e.width).length;
+    props.columns.forEach((item: any) => {
+        if (item.width !== undefined) {
+            totalWidth += parseInt(item.width);
+        }
+    });
+    return totalWidth / countWidth;
+});
+
+const getTdStyleObject = computed(() => (column: any) => {
+    return `width: ${
+        column.width ? column.width + 'px' : getTdNotWidth.value + 'px'
+    }`;
+});
+
+const getTdTotalWidth = computed(() => {
+    let width = 0;
+    props.columns.forEach((item: any) => {
+        if (item.width !== undefined) {
+            width += parseInt(item.width);
+        } else {
+            width += getTdNotWidth.value;
+        }
+    });
+    return width;
+});
+
+const newColumns = computed(() => {
+    return props.columns.filter((e) => !e.fixed);
+});
+
+const fixedColumns = computed(() => (direction: string) => {
+    return props.columns.filter((e) => e.fixed === direction);
 });
 </script>
 
 <template>
-    <div
-        ref="lewTableRef"
-        class="lew-table"
-        :style="`max-height:${maxHeight};width:${width};
-    overflow-y:${maxHeight ? 'auto' : 'hidden'};overflow-x:${
-            niceWidth ? 'hidden' : 'auto'
-        };`"
-        @scroll="throttle($event, 200)"
-    >
-        <div class="lew-table-head">
+    <div class="lew-table" @mouseleave="state.hoverIndex = -1">
+        <div class="lew-table-body" :style="`width: ${getTdTotalWidth}px`">
             <div
-                class="lew-table-tr"
-                :style="`width:${
-                    lewTableRef?.scrollWidth > lewTableRef?.offsetWidth
-                        ? lewTableRef?.scrollWidth
-                        : ''
-                }px`"
+                v-if="fixedColumns('left').length > 0"
+                class="lew-table-fixed-left"
             >
-                <lew-flex
-                    v-for="(column, index) in columns"
-                    :key="`columns${index}`"
-                    class="lew-table-td"
-                    :class="{
-                        'lew-table-left-subline': index === leftIndex,
-                        'lew-table-right-subline': index === rightIndex,
-                        'lew-table-left-subline-show':
-                            index === leftIndex && isShowLeftLine,
-                        'lew-table-right-subline-show':
-                            index === rightIndex && isShowRightLine,
-                    }"
-                    :style="`
-${column.columnStyle ? column.columnStyle : ''};
-${setSticky(column)};   
-width:${column.width != 'auto' ? column.width : niceWidth || '100px'};
-
-`"
-                    :x="column.x || 'start'"
-                    :y="column.y"
+                <div
+                    @mouseenter="state.hoverIndex = -1"
+                    class="lew-table-tr lew-table-head"
                 >
-                    {{ column.title }}
-                </lew-flex>
+                    <lew-flex
+                        v-for="(column, index) in fixedColumns('left')"
+                        :key="`columns${index}`"
+                        class="lew-table-td"
+                        :x="column.x || 'start'"
+                        :y="column.y"
+                        :style="getTdStyleObject(column)"
+                    >
+                        {{ column.title }}
+                    </lew-flex>
+                </div>
+                <div
+                    v-for="(row, i) in dataSource"
+                    :key="`data${i}`"
+                    class="lew-table-tr"
+                    :class="{ 'lew-table-tr-hover': state.hoverIndex === i }"
+                    @mouseenter="state.hoverIndex = i"
+                >
+                    <lew-flex
+                        v-for="(column, j) in fixedColumns('left')"
+                        :key="`col${j}`"
+                        class="lew-table-td"
+                        :x="column.x || 'start'"
+                        :y="column.y"
+                        :style="getTdStyleObject(column)"
+                    >
+                        <!-- 模板 -->
+                        <slot
+                            :name="column.field"
+                            :row="row"
+                            :column="column"
+                        />
+                    </lew-flex>
+                </div>
             </div>
-        </div>
-        <div ref="lewTableBodyRef" class="lew-table-body">
-            <div
-                v-for="(row, i) in data"
-                :key="`data${i}`"
-                class="lew-table-tr"
-                :style="`width:${
-                    lewTableRef?.scrollWidth > lewTableRef?.offsetWidth
-                        ? lewTableRef?.scrollWidth
-                        : ''
-                }px`"
-            >
-                <lew-flex
-                    v-for="(column, j) in columns"
-                    :key="`col${j}`"
-                    class="lew-table-td"
-                    :class="{
-                        'lew-table-left-subline': j === leftIndex,
-                        'lew-table-right-subline': j === rightIndex,
-                        'lew-table-left-subline-show':
-                            j === leftIndex && isShowLeftLine,
-                        'lew-table-right-subline-show':
-                            j === rightIndex && isShowRightLine,
-                    }"
-                    :style="`  
-${column.columnStyle ? column.columnStyle : ''};
-${row.rowStyle};
-${row.tdStyle?.[column.field] ? row.tdStyle[column.field] : ''};
-${setSticky(column)};
-width:${column.width != 'auto' ? column.width : niceWidth || '100px'};
-`"
-                    :x="column.x || 'start'"
-                    :y="column.y"
+            <div class="lew-table-main">
+                <div
+                    @mouseenter="state.hoverIndex = -1"
+                    class="lew-table-tr lew-table-head"
                 >
-                    <!-- 模板 -->
-                    <slot :name="column.field" :row="row" :column="column" />
-                </lew-flex>
+                    <lew-flex
+                        v-for="(column, index) in newColumns"
+                        :key="`columns${index}`"
+                        class="lew-table-td"
+                        :x="column.x || 'start'"
+                        :y="column.y"
+                        :style="getTdStyleObject(column)"
+                    >
+                        {{ column.title }}
+                    </lew-flex>
+                </div>
+                <div
+                    v-for="(row, i) in dataSource"
+                    :key="`data${i}`"
+                    class="lew-table-tr"
+                    :class="{ 'lew-table-tr-hover': state.hoverIndex === i }"
+                    @mouseenter="state.hoverIndex = i"
+                >
+                    <lew-flex
+                        v-for="(column, j) in newColumns"
+                        :key="`col${j}`"
+                        class="lew-table-td"
+                        :x="column.x || 'start'"
+                        :y="column.y"
+                        :style="getTdStyleObject(column)"
+                    >
+                        <!-- 模板 -->
+                        <slot
+                            :name="column.field"
+                            :row="row"
+                            :column="column"
+                        />
+                    </lew-flex>
+                </div>
+            </div>
+            <div
+                v-if="fixedColumns('right').length > 0"
+                class="lew-table-fixed-right"
+            >
+                <div
+                    @mouseenter="state.hoverIndex = -1"
+                    class="lew-table-tr lew-table-head"
+                >
+                    <lew-flex
+                        v-for="(column, index) in fixedColumns('right')"
+                        :key="`columns${index}`"
+                        class="lew-table-td"
+                        :x="column.x || 'start'"
+                        :y="column.y"
+                        :style="getTdStyleObject(column)"
+                    >
+                        {{ column.title }}
+                    </lew-flex>
+                </div>
+                <div
+                    v-for="(row, i) in dataSource"
+                    :key="`data${i}`"
+                    class="lew-table-tr"
+                    :class="{ 'lew-table-tr-hover': state.hoverIndex === i }"
+                    @mouseenter="state.hoverIndex = i"
+                >
+                    <lew-flex
+                        v-for="(column, j) in fixedColumns('right')"
+                        :key="`col${j}`"
+                        class="lew-table-td"
+                        :x="column.x || 'start'"
+                        :y="column.y"
+                        :style="getTdStyleObject(column)"
+                    >
+                        <!-- 模板 -->
+                        <slot
+                            :name="column.field"
+                            :row="row"
+                            :column="column"
+                        />
+                    </lew-flex>
+                </div>
             </div>
         </div>
     </div>
@@ -184,74 +180,46 @@ width:${column.width != 'auto' ? column.width : niceWidth || '100px'};
 
 <style lang="scss">
 .lew-table {
-    display: flex;
-    flex-direction: column;
-    height: auto;
-
     width: 100%;
-    font-size: 14px;
-    border: var(--lew-form-border-width) var(--lew-bgcolor-2) solid;
+    height: auto;
+    border: 1px var(--lew-bgcolor-3) solid;
     border-radius: var(--lew-border-radius);
-
-    .lew-table-head {
+    overflow-x: auto;
+    .lew-table-fixed-left {
         position: sticky;
-        top: 0;
+        left: 0px;
         z-index: 9;
         display: flex;
-        align-items: center;
-
-        .lew-table-td {
-            font-weight: 600;
-            color: var(--lew-text-color-3);
-            background-color: var(--lew-bgcolor-1);
-            white-space: nowrap;
-        }
+        flex-direction: column;
+        box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.2);
+    }
+    .lew-table-fixed-right {
+        position: sticky;
+        right: 0px;
+        z-index: 9;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.2);
+    }
+    .lew-table-main {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.2);
+    }
+    .lew-table-body {
+        display: flex;
+        width: 100%;
     }
 
     .lew-table-tr {
-        width: 100%;
         display: flex;
-    }
-
-    .lew-table-left-subline::after {
-        position: absolute;
-        right: -12px;
-        top: -1px;
-        content: '';
-        width: 12px;
-        height: calc(100% + 2px);
-        opacity: 0;
-        transition: all 0.25s ease;
-        background: linear-gradient(
-            to right,
-            rgba(0, 0, 0, 0.08),
-            rgba(0, 0, 0, 0.03),
-            rgba(0, 0, 0, 0.01),
-            rgba(0, 0, 0, 0)
-        );
-    }
-
-    .lew-table-right-subline::after {
-        position: absolute;
-        left: -12px;
-        top: -1px;
-        content: '';
-        width: 12px;
-        opacity: 0;
-        transition: all 0.25s ease;
-        height: calc(100% + 2px);
-        background: linear-gradient(
-            to left,
-            rgba(0, 0, 0, 0.08),
-            rgba(0, 0, 0, 0.03),
-            rgba(0, 0, 0, 0.01),
-            rgba(0, 0, 0, 0)
-        );
-    }
-
-    .lew-table-left-subline-show::after,
-    .lew-table-right-subline-show::after {
-        opacity: 1;
+        flex-grow: 1;
+        background-color: var(--lew-bgcolor-0);
+        border-bottom: 1px var(--lew-bgcolor-2) solid;
+        overflow: hidden;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .lew-table-td {
@@ -259,42 +227,33 @@ width:${column.width != 'auto' ? column.width : niceWidth || '100px'};
         display: inline-flex;
         align-items: center;
         justify-content: start;
-        flex-shrink: 0;
         text-align: left;
-        padding: 14px 18px;
+        padding: 8px 16px;
         box-sizing: border-box;
-        background-color: var(--lew-bgcolor-0);
+        min-width: 70px;
+    }
+    .lew-table-head {
+        background-color: var(--lew-bgcolor-1);
+        .lew-table-td {
+            height: 35px;
+            color: var(--lew-text-color-6);
+            white-space: nowrap;
+        }
+    }
+    .lew-table-tr:last-child {
         border-bottom: var(--lew-form-border-width) var(--lew-bgcolor-2) solid;
     }
 
     .lew-table-tr:last-child {
-        .lew-table-td {
-            border-bottom: 0px var(--lew-form-border-color) solid;
-        }
+        border-bottom: 0px transparent solid;
     }
 
-    .lew-table-head {
-        .lew-table-tr:last-child {
-            .lew-table-td {
-                border-bottom: var(--lew-form-border-width) var(--lew-bgcolor-2)
-                    solid;
-            }
-        }
+    .lew-table-td {
+        color: var(--lew-text-color-4);
     }
 
-    .lew-table-body {
-        width: 100%;
-        height: auto;
-
-        .lew-table-td {
-            color: var(--lew-text-color-5);
-        }
-    }
-
-    .lew-table-tr:hover {
-        .lew-table-td {
-            background-color: var(--lew-bgcolor-1);
-        }
+    .lew-table-tr-hover {
+        background-color: var(--lew-bgcolor-1);
     }
 }
 

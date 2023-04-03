@@ -12,13 +12,6 @@ export const getIconType = (type: string): string => {
     return map[type] || 'info';
 };
 
-// getPx takes a string or number and returns a string with 'px' appended to it.
-// num: string | number
-// return: string
-export const getPx = (num: string) => {
-    return typeof num === 'string' ? num : num + 'px';
-};
-
 export const getClass = (prefix: String, props: Object) => {
     let className = '';
     for (const [key, value] of Object.entries(props)) {

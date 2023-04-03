@@ -1,5 +1,5 @@
 <template>
-    <lew-flex wrap x="start" gap="30px">
+    <lew-flex wrap x="start" gap="30">
         <lew-badge value="5" />
         <lew-badge value="15" type="info" />
         <lew-badge value="65" type="success" />

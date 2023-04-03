@@ -1,5 +1,5 @@
 <template>
-    <lew-flex gap="20px">
+    <lew-flex gap="20">
         请看右下角
         <lew-back-top target="app-main" :right="100"></lew-back-top>
     </lew-flex>

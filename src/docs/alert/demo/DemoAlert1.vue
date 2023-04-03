@@ -17,7 +17,7 @@ const close = (e: number) => {
 </script>
 
 <template>
-    <lew-flex wrap gap="20px" x="start">
+    <lew-flex wrap gap="20" x="start">
         <lew-button
             text="点我"
             type="primary"

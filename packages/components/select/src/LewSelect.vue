@@ -77,6 +77,10 @@ const getChecked = (_value: String | Number) => {
     return selectValue.value === _value;
 };
 
+const getValueStyle = computed(() => {
+    return state.visible ? 'opacity:0.4' : '';
+});
+
 const getLabel = computed(() => {
     if (state.options) {
         const option = state.options.find((e) => {
@@ -164,7 +168,9 @@ defineExpose({ show, hide });
                     class="icon-clear"
                     :class="{ 'icon-clear-show': clearable && getLabel }"
                 />
-                <div v-show="getLabel" class="value">{{ getLabel }}</div>
+                <div v-show="getLabel" :style="getValueStyle" class="value">
+                    {{ getLabel }}
+                </div>
                 <div v-show="!getLabel" class="placeholder">
                     {{ placeholder }}
                 </div>
@@ -318,6 +324,7 @@ defineExpose({ show, hide });
         .placeholder,
         .value {
             width: calc(100% - 24px);
+            transition: all 0.2s;
         }
     }
 

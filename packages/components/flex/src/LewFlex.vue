@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { flexProps } from './flex';
-import { getPx } from 'lew-ui/utils';
 
 const props = defineProps(flexProps);
 
@@ -16,8 +15,8 @@ const classObject = computed(() => {
 
 const styleObject = computed(() => {
     return {
-        gap: getPx(props.gap),
-        width: getPx(props.width),
+        gap: `${props.gap}px`,
+        width: `${props.width}px`,
     };
 });
 </script>

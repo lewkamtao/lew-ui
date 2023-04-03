@@ -15,7 +15,7 @@ const handleCopy = (text: string) => {
 </script>
 
 <template>
-    <lew-flex wrap gap="20px">
+    <lew-flex wrap gap="20">
         <lew-flex
             v-for="(item, index) in iconArr"
             :key="index"

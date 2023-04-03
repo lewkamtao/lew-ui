@@ -22,14 +22,14 @@ defineProps(badgeProps);
     .lew-badge-dot {
         position: absolute;
         left: 100%;
-        width: 12px;
-        height: 12px;
-        bottom: calc(100% - 7px);
+        width: 10px;
+        height: 10px;
+        bottom: calc(100% - 5px);
         transform: translateX(-50%);
         z-index: 1;
         cursor: normal;
         border-radius: 3px;
-        border: 2px var(--lew-white-color) solid;
+        border: 1px var(--lew-white-color) solid;
         box-sizing: border-box;
     }
     .lew-badge-value {

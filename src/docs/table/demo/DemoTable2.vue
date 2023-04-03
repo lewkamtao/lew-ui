@@ -45,43 +45,39 @@ const data: any = [
 const columns = [
     {
         title: 'id',
-        width: '50px',
+        width: 100,
         field: 'id',
+        fixed: 'left',
         x: 'center',
-        sticky: 'left',
-        offsetX: '0px',
+    },
+    {
+        title: '性别',
+        width: 120,
+        field: 'sex',
+        x: 'center',
     },
     {
         title: '姓名',
-        width: '100px',
+        width: 120,
         field: 'name',
         x: 'center',
-        sticky: 'left',
-        offsetX: '50px',
     },
     {
         title: '年龄',
-        width: '400px',
+        width: 120,
         field: 'age',
         x: 'center',
     },
     {
         title: '爱好',
-        width: '400px',
+        width: 320,
         field: 'hobby',
     },
     {
         title: '介绍',
-        width: '400px',
+        width: 320,
+        fixed: 'right',
         field: 'intro',
-    },
-    {
-        title: '性别',
-        width: '80px',
-        field: 'sex',
-        x: 'center',
-        sticky: 'right',
-        offsetX: '0px',
     },
 ];
 
@@ -98,13 +94,13 @@ const formatSex = (sex: number) => {
 </script>
 
 <template>
-    <lew-table :data="data" :columns="columns">
+    <lew-table :data-source="data" :columns="columns">
         <template #id="{ row }"> {{ row.id }} </template>
         <template #name="{ row }"> {{ row.name }} </template>
         <template #age="{ row }"> {{ row.age }} </template>
         <template #sex="{ row }"> {{ formatSex(row.sex) }} </template>
         <template #hobby="{ row }">
-            <lew-flex :gap="5" x="start">
+            <lew-flex :gap="5" x="start" wrap>
                 <lew-tag
                     v-for="(item, index) in row.hobby"
                     :key="index"

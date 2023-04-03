@@ -67,7 +67,7 @@ const gohome = () => {
                 Beta v1.2
             </lew-tag>
         </div>
-        <lew-flex gap="15px" x="end" class="menu">
+        <lew-flex gap="15" x="end" class="menu">
             <div class="menu-item" @click="router.push(`/`)">首页</div>
             <div class="menu-item" @click="router.push(`/Install`)">指南</div>
             <div class="menu-item" @click="router.push(`/Avatar`)">组件</div>

@@ -209,7 +209,7 @@ onMounted(() => {
                         <template #popover-body>
                             <lew-flex
                                 wrap
-                                gap="5px"
+                                gap="5"
                                 x="start"
                                 class="lew-isSelect-label-box"
                             >
