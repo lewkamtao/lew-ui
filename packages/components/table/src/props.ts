@@ -15,10 +15,8 @@ export const tableProps = {
         },
     },
     maxHeight: {
-        type: String,
-        default: () => {
-            return '';
-        },
+        type: Number,
+        default: undefined,
     },
     dataSource: {
         type: Array as any,

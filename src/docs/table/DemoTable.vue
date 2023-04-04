@@ -23,23 +23,23 @@ const alertClose: any = ref([]);
 const columns = [
     {
         title: '参数名',
-        width: '200px',
+        width: 200,
         field: 'param',
     },
     {
-        title: '描述',
-        width: '320px',
-        field: 'description',
-    },
-    {
         title: '类型',
-        width: 'auto',
+        width: 200,
         field: 'type',
     },
     {
         title: '默认值',
-        width: '200px',
+        width: 200,
         field: 'default',
+    },
+    {
+        title: '描述',
+        width: 320,
+        field: 'description',
     },
 ];
 
@@ -107,7 +107,7 @@ const docsTable2 = ref([
                 @close="alertClose[0] = true"
             />
         </lew-demo-box>
-        <lew-demo-box title="固定列" :code="DemoTable2_code">
+        <lew-demo-box title="固定行列" :code="DemoTable2_code">
             <demo-table2 />
             <lew-alert
                 v-if="!alertClose[2]"
@@ -118,7 +118,7 @@ const docsTable2 = ref([
                         type: 'info',
                         title: '提示',
                         content:
-                            '为了高度自定义，你需要调整「offsetX」来设置横向偏移量，不设置，默认是 0px',
+                            '你可以设置max-height，来限制高度，设置max-height触发时自动固定head。',
                     },
                 ]"
                 @close="alertClose[2] = true"

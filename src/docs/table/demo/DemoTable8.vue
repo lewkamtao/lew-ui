@@ -8,41 +8,38 @@ const columns = [
         type: 'template',
         title: '选择',
         field: 'checkbox',
-        width: '50px',
+        width: 50,
         align: 'center',
-        sticky: 'left',
-        offsetX: '0px',
+        fixed: 'left',
         x: 'center',
     },
     {
         type: 'text',
         title: 'id',
         field: 'id',
-        width: '100px',
-        sticky: 'left',
-        offsetX: '50px',
-
+        width: 100,
+        fixed: 'left',
         x: 'center',
     },
     {
         type: 'text',
         title: '名称',
         field: 'title',
-        width: '180px',
+        width: 180,
     },
 
     {
         type: 'text',
         title: '上线日期',
         field: 'release_date',
-        width: '100px',
+        width: 100,
         x: 'center',
     },
     {
         type: 'template',
         title: '在线观看',
         field: 'has_linewatch',
-        width: '100px',
+        width: 100,
 
         x: 'center',
     },
@@ -50,36 +47,36 @@ const columns = [
         type: 'html',
         title: '导演',
         field: 'directors',
-        width: '120px',
+        width: 140,
     },
     {
         type: 'text',
         title: '简介',
         field: 'info',
-        width: 'auto',
+        width: 200,
+    },
+    {
+        type: 'template',
+        title: '类型',
+        field: 'type',
+        width: 100,
+        x: 'center',
     },
     {
         type: 'template',
         title: '主演',
         align: 'start',
         field: 'actors',
-        width: '300px',
+        width: 450,
     },
-    {
-        type: 'template',
-        title: '类型',
-        field: 'type',
-        width: '100px',
-        x: 'center',
-    },
+
     {
         type: 'template',
         title: '执行',
         field: 'action',
-        width: '120px',
+        width: 120,
         align: 'center',
-        sticky: 'right',
-        offsetX: '0px',
+        fixed: 'right',
         x: 'center',
     },
 ];
@@ -127,7 +124,7 @@ const getChecked = computed(() => (id: any) => {
         />
     </lew-flex>
     <br />
-    <lew-table :data-source="data" :columns="columns" max-height="600px">
+    <lew-table :data-source="data" :columns="columns" :max-height="400">
         <template #checkbox="{ row, column }">
             <lew-checkbox
                 :checked="getChecked(row.id)"
@@ -136,7 +133,6 @@ const getChecked = computed(() => (id: any) => {
                 @click.stop
             ></lew-checkbox>
         </template>
-        <template #id="{ row }"> {{ row.id }} </template>
         <template #title="{ row }">
             <div class="title">{{ row.title }}</div>
         </template>
@@ -151,15 +147,7 @@ const getChecked = computed(() => (id: any) => {
             >
         </template>
         <template #info="{ row }">
-            <div
-                v-tooltip="{
-                    content: row.info,
-                    placement: 'left',
-                    trigger: 'mouseenter',
-                }"
-                class="info"
-                v-html="row.info"
-            ></div>
+            <lew-text-trim style="width: 100%" :text="row.info"></lew-text-trim>
         </template>
 
         <template #action="{ row, column }">

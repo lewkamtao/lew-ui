@@ -110,9 +110,6 @@ const del = (row: any, column: any) => {
 
 <template>
     <lew-table :data-source="data" :columns="columns">
-        <template #id="{ row }"> {{ row.id }} </template>
-        <template #name="{ row }"> {{ row.name }} </template>
-        <template #age="{ row }"> {{ row.age }} </template>
         <template #sex="{ row }"> {{ formatSex(row.sex) }} </template>
         <template #hobby="{ row }">
             <lew-flex gap="5" x="start">
@@ -125,7 +122,6 @@ const del = (row: any, column: any) => {
                 </lew-tag></lew-flex
             >
         </template>
-        <template #intro="{ row }"> {{ row.intro }} </template>
         <template #action="{ row, column }">
             <lew-flex>
                 <lew-button

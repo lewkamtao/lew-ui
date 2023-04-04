@@ -64,13 +64,13 @@ const columns = [
     },
     {
         title: '年龄',
-        width: '200px',
+        width: 200,
         field: 'age',
         x: 'center',
     },
     {
         title: '性别',
-        width: '200px',
+        width: 200,
         field: 'sex',
         x: 'center',
     },

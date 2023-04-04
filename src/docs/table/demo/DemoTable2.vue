@@ -17,18 +17,50 @@ const data: any = [
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
     },
     {
-        id: 3,
-        name: '小娟',
-        age: '25',
-        sex: 0,
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
     },
     {
-        id: 4,
-        name: '小贝',
-        age: '22',
-        sex: 0,
+        id: 1,
+        name: '小明',
+        age: '14',
+        sex: 1,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 2,
+        name: '小卢',
+        age: '24',
+        sex: 1,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 1,
+        name: '小明',
+        age: '14',
+        sex: 1,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 2,
+        name: '小卢',
+        age: '24',
+        sex: 1,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
     },
@@ -47,37 +79,38 @@ const columns = [
         title: 'id',
         width: 100,
         field: 'id',
-        fixed: 'left',
         x: 'center',
+        fixed: 'left',
     },
     {
         title: '性别',
-        width: 120,
+        width: 220,
         field: 'sex',
         x: 'center',
     },
     {
         title: '姓名',
-        width: 120,
+        width: 220,
         field: 'name',
         x: 'center',
+    },
+
+    {
+        title: '介绍',
+        width: 520,
+        field: 'intro',
+    },
+    {
+        title: '爱好',
+        width: 420,
+        field: 'hobby',
     },
     {
         title: '年龄',
         width: 120,
+        fixed: 'right',
         field: 'age',
         x: 'center',
-    },
-    {
-        title: '爱好',
-        width: 320,
-        field: 'hobby',
-    },
-    {
-        title: '介绍',
-        width: 320,
-        fixed: 'right',
-        field: 'intro',
     },
 ];
 
@@ -94,10 +127,7 @@ const formatSex = (sex: number) => {
 </script>
 
 <template>
-    <lew-table :data-source="data" :columns="columns">
-        <template #id="{ row }"> {{ row.id }} </template>
-        <template #name="{ row }"> {{ row.name }} </template>
-        <template #age="{ row }"> {{ row.age }} </template>
+    <lew-table :data-source="data" :max-height="300" :columns="columns">
         <template #sex="{ row }"> {{ formatSex(row.sex) }} </template>
         <template #hobby="{ row }">
             <lew-flex :gap="5" x="start" wrap>
@@ -110,6 +140,5 @@ const formatSex = (sex: number) => {
                 >
             </lew-flex>
         </template>
-        <template #intro="{ row }"> {{ row.intro }} </template>
     </lew-table>
 </template>

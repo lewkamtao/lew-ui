@@ -3,7 +3,7 @@ import { ExtractPropTypes } from 'vue';
 export const textTrimProps = {
     text: {
         type: String,
-        default: '',
+        default: () => '',
     },
     allowHTML: {
         type: Boolean,
@@ -16,6 +16,10 @@ export const textTrimProps = {
     placement: {
         type: String,
         default: 'top',
+    },
+    lineClamp: {
+        type: Number,
+        default: undefined,
     },
 };
 

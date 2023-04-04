@@ -5,7 +5,7 @@ const data: any = [
         name: '小明',
         age: '14',
         sex: 1,
-        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        intro: '从小独立呼吸。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
     },
     {
@@ -21,7 +21,7 @@ const data: any = [
         name: '小娟',
         age: '25',
         sex: 0,
-        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        intro: '不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
     },
     {
@@ -45,48 +45,45 @@ const data: any = [
 const columns = [
     {
         title: 'id',
-        width: '50px',
+        width: 50,
         field: 'id',
         x: 'center',
-        sticky: 'left',
-        offsetX: '0px',
+        fixed: 'left',
     },
     {
         title: '姓名',
-        width: '100px',
+        width: 100,
         field: 'name',
         x: 'center',
-        sticky: 'left',
-        offsetX: '50px',
+        fixed: 'left',
     },
     {
         title: '年龄',
-        width: '200px',
+        width: 200,
         field: 'age',
         x: 'center',
     },
     {
         title: '性别',
-        width: '200px',
+        width: 200,
         field: 'sex',
         x: 'center',
     },
     {
         title: '爱好',
-        width: '400px',
+        width: 400,
         field: 'hobby',
     },
     {
         title: '介绍',
-        width: '400px',
+        width: 240,
         field: 'intro',
     },
     {
         title: '操作',
-        width: '120px',
+        width: 120,
         field: 'action',
-        sticky: 'right',
-        offsetX: '0px',
+        fixed: 'right',
         x: 'center',
     },
 ];
@@ -120,9 +117,6 @@ const error = (e: any) => {
 
 <template>
     <lew-table :data-source="data" :columns="columns">
-        <template #id="{ row }"> {{ row.id }} </template>
-        <template #name="{ row }"> {{ row.name }} </template>
-        <template #age="{ row }"> {{ row.age }} </template>
         <template #sex="{ row }"> {{ formatSex(row.sex) }} </template>
         <template #hobby="{ row }">
             <lew-flex gap="5" x="start">
@@ -135,7 +129,10 @@ const error = (e: any) => {
                 >
             </lew-flex>
         </template>
-        <template #intro="{ row }"> {{ row.intro }} </template>
+        <template #intro="{ row }">
+            <lew-text-trim style="width: 100%" :text="row.intro">
+            </lew-text-trim>
+        </template>
         <template #action>
             <lew-flex>
                 <lew-popover trigger="click" placement="top">
@@ -143,7 +140,7 @@ const error = (e: any) => {
                         <lew-button text="录入" type="blank" />
                     </template>
                     <template #popover-body="{ hide }">
-                        <div class="popover-body">
+                        <lew-flex direction="y" gap="20" class="popover-body">
                             <lew-form-item direction="y" label="请输入密码">
                                 <lew-input v-model="v" />
                             </lew-form-item>
@@ -155,12 +152,13 @@ const error = (e: any) => {
                                     @click="hide()"
                                 />
                                 <lew-button
+                                    type="primary"
                                     text="提交"
                                     size="small"
                                     @click="hide(), submit()"
                                 />
                             </lew-flex>
-                        </div>
+                        </lew-flex>
                     </template>
                 </lew-popover>
                 <lew-popok

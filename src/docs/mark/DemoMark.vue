@@ -4,23 +4,24 @@ import { DemoMark1, DemoMark1_code } from './demo';
 const columns = [
     {
         title: '参数名',
-        width: '200px',
+        width: 200,
         field: 'param',
     },
-    {
-        title: '描述',
-        width: '320px',
-        field: 'description',
-    },
+
     {
         title: '类型',
-        width: 'auto',
+        width: 200,
         field: 'type',
     },
     {
         title: '默认值',
-        width: '200px',
+        width: 200,
         field: 'default',
+    },
+    {
+        title: '描述',
+        width: 320,
+        field: 'description',
     },
 ];
 const docsTable = ref([
