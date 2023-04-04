@@ -6,7 +6,7 @@ const props = defineProps(tableProps);
 const tableRef = ref();
 let obs: any;
 let state = reactive({
-    hoverIndex: 0,
+    hoverIndex: -1,
     columns: [],
     scrollbarVisible: false,
     scrollWidth: 0,
