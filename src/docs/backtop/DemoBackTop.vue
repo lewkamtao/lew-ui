@@ -14,18 +14,18 @@ const docsTable = reactive([
         columns: [
             {
                 title: '参数名',
-                width: 200,
+                width: 120,
                 field: 'param',
             },
             {
                 title: '类型',
-                width: 200,
+                width: 120,
                 field: 'type',
             },
 
             {
                 title: '默认值',
-                width: 200,
+                width: 120,
                 field: 'default',
             },
             {
@@ -66,18 +66,18 @@ const docsTable = reactive([
         columns: [
             {
                 title: '参数名',
-                width: 200,
+                width: 120,
                 field: 'param',
             },
             {
                 title: '类型',
-                width: 200,
+                width: 120,
                 field: 'type',
             },
 
             {
                 title: '默认值',
-                width: 200,
+                width: 120,
                 field: 'default',
             },
             {
@@ -100,18 +100,18 @@ const docsTable = reactive([
         columns: [
             {
                 title: '参数名',
-                width: 200,
+                width: 120,
                 field: 'param',
             },
             {
                 title: '类型',
-                width: 200,
+                width: 120,
                 field: 'type',
             },
 
             {
                 title: '默认值',
-                width: 200,
+                width: 120,
                 field: 'default',
             },
             {

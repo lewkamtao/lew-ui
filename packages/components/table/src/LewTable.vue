@@ -1,10 +1,8 @@
 <script lang="ts" setup>
 import { tableProps } from './props';
-import { useDebounceFn } from '@vueuse/core';
 
 const props = defineProps(tableProps);
 const tableRef = ref();
-let obs: any;
 let state = reactive({
     hoverIndex: -1,
     columns: [],
@@ -19,11 +17,9 @@ onMounted(() => {
     resizeTableHandle();
 });
 
-onUnmounted(() => {
-    if (obs) {
-        obs.disconnect(); //去掉监听
-        obs = null;
-    }
+onActivated(() => {
+    checkScroll();
+    resizeTableHandle();
 });
 
 const checkScroll = () => {
@@ -48,14 +44,8 @@ const checkScroll = () => {
 };
 
 const tableObserve = () => {
-    obs = new ResizeObserver(() => {
-        resizeTableHandleDb();
-    });
-    obs.observe(tableRef.value);
+    resizeTableHandle;
 };
-const resizeTableHandleDb = useDebounceFn(() => {
-    resizeTableHandle();
-}, 200);
 
 const resizeTableHandle = () => {
     const table = tableRef.value;
@@ -380,7 +370,7 @@ const fixedColumns = computed(() => (direction: string) => {
     .lew-table-tr {
         display: flex;
         background-color: var(--lew-bgcolor-0);
-        border-bottom: 1px var(--lew-bgcolor-2) solid;
+        border-bottom: var(--lew-table-border);
         overflow: hidden;
         width: 100%;
         box-sizing: border-box;
@@ -400,27 +390,24 @@ const fixedColumns = computed(() => (direction: string) => {
     }
 
     .lew-table-tr:last-child {
-        border-bottom: var(--lew-form-border-width) var(--lew-bgcolor-2) solid;
+        border-bottom: 1px transparent solid;
     }
 
-    .lew-table-tr:last-child {
-        border-bottom: 0px transparent solid;
-    }
     .lew-table-head {
         position: sticky;
         top: 0;
         width: 100%;
-        z-index: 99;
+        z-index: 12;
         box-sizing: border-box;
-        height: 35px;
+        height: 40px;
         .lew-table-tr {
             background-color: var(--lew-bgcolor-1);
-            height: 35px;
+            height: 40px;
             flex-shrink: 0;
-            border-bottom: 1px var(--lew-bgcolor-2) solid;
+            border-bottom: var(--lew-table-border);
 
             .lew-table-td {
-                color: var(--lew-text-color-6);
+                color: var(--lew-text-color-5);
                 white-space: nowrap;
             }
         }
@@ -436,7 +423,7 @@ const fixedColumns = computed(() => (direction: string) => {
 
 .lew-table-wrapper::before {
     position: absolute;
-    z-index: 999;
+    z-index: 18;
     left: 0px;
     top: 0px;
     width: 4px;
@@ -452,7 +439,7 @@ const fixedColumns = computed(() => (direction: string) => {
 }
 .lew-table-wrapper::after {
     position: absolute;
-    z-index: 999;
+    z-index: 18;
     right: 0px;
     top: 0px;
     width: 4px;

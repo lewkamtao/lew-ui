@@ -52,20 +52,20 @@ const columns = [
     },
     {
         title: '姓名',
-        width: 200,
+        width: 120,
         field: 'name',
         x: 'center',
         fixed: 'left',
     },
     {
         title: '年龄',
-        width: 200,
+        width: 120,
         field: 'age',
         x: 'center',
     },
     {
         title: '性别',
-        width: 200,
+        width: 120,
         field: 'sex',
         x: 'center',
     },

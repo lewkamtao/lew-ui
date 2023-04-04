@@ -78,7 +78,7 @@ const setChecked = (e: Event) => {
         justify-content: center;
         width: 18px;
         height: 18px;
-        border: var(--lew-form-border-width) var(--lew-form-border-color-hover)
+        border: var(--lew-form-border-width) var(--lew-checkbox-border-color)
             solid;
         box-sizing: border-box;
         border-radius: 4px;
@@ -137,14 +137,13 @@ const setChecked = (e: Event) => {
 
 .lew-checkbox-unicon.lew-checkbox-checked.lew-checkbox-block {
     .lew-checkbox-label {
-        color: var(--lew-form-border-color-focus);
+        color: var(--lew-primary-color-dark);
     }
 }
 
 .lew-checkbox:hover {
     .icon-checkbox-box {
-        border: var(--lew-form-border-width) var(--lew-form-border-color-active)
-            solid;
+        border: var(--lew-form-border-width) var(--lew-primary-color) solid;
         outline: 3px var(--lew-primary-color-light) solid;
         background-color: transparent;
     }
@@ -162,17 +161,14 @@ const setChecked = (e: Event) => {
 }
 
 .lew-checkbox-checked.lew-checkbox-block {
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-        solid;
+    border: var(--lew-form-border-width) var(--lew-primary-color) solid;
     background: var(--lew-primary-color-light);
-    color: var(--lew-form-border-color-focus);
+    color: var(--lew-primary-color-dark);
 }
 
 .lew-checkbox-checked.lew-checkbox-block:hover {
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-        solid;
+    border: var(--lew-form-border-width) var(--lew-primary-color) solid;
     background: var(--lew-primary-color-light);
-    color: var(--lew-form-border-color-focus);
 }
 
 .lew-checkbox-round {
@@ -184,7 +180,11 @@ const setChecked = (e: Event) => {
 }
 
 .lew-checkbox-block:hover {
-    background: var(--lew-form-border-color-hover);
+    background: var(--lew-form-bgcolor-hover);
+    .icon-checkbox-box {
+        border-radius: 50%;
+        border: var(--lew-form-border-width) var(--lew-primary-color) solid;
+    }
 }
 
 .lew-checkbox-block:active {
@@ -193,9 +193,8 @@ const setChecked = (e: Event) => {
 
 .lew-checkbox-checked {
     .icon-checkbox-box {
-        border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-            solid;
-        background: var(--lew-form-border-color-focus);
+        border: var(--lew-form-border-width) var(--lew-primary-color) solid;
+        background: var(--lew-primary-color);
 
         .icon-checkbox {
             transform: scale(0.85) translateY(0px);
@@ -206,9 +205,8 @@ const setChecked = (e: Event) => {
 
 .lew-checkbox-checked:hover {
     .icon-checkbox-box {
-        border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-            solid;
-        background: var(--lew-form-border-color-focus);
+        border: var(--lew-form-border-width) var(--lew-primary-color) solid;
+        background: var(--lew-primary-color);
     }
 }
 
@@ -218,7 +216,7 @@ const setChecked = (e: Event) => {
         background: var(--lew-primary-color-light);
 
         .icon-checkbox {
-            color: var(--lew-form-border-color-focus);
+            color: var(--lew-primary-color-dark);
             opacity: 1;
         }
     }
@@ -230,11 +228,6 @@ const setChecked = (e: Event) => {
     .icon-checkbox-box {
         border: var(--lew-form-border-width) var(--lew-primary-color-light)
             solid;
-    }
-
-    .icon-checkbox {
-        color: var(--lew-form-border-color-focus);
-        opacity: 1;
     }
 }
 </style>

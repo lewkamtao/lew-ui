@@ -121,8 +121,6 @@
     --lew-form-transition: all 0.15s ease;
     --lew-form-border-color: rgb(245, 245, 245);
     --lew-form-border-color-hover: rgb(228, 228, 228);
-    --lew-form-border-color-active: rgba(0, 0, 0, 0.22);
-    --lew-form-border-color-focus: var(--lew-primary-color);
     // 表单尺寸
     --lew-form-input-padding-small: 2px 8px;
     --lew-form-input-padding-medium: 4px 10px;
@@ -141,10 +139,12 @@
     --lew-form-bgcolor-hover: rgb(228, 228, 228);
     --lew-form-bgcolor-active: rgb(215, 215, 215);
     --lew-form-bgcolor-focus: rgb(255, 255, 255);
-    // 表单背景2
-    --lew-form-bgcolor-high: rgba(6, 57, 88, 0.1);
-    --lew-form-bgcolor-high-hover: rgba(6, 57, 88, 0.16);
-    --lew-form-bgcolor-high-active: rgba(6, 57, 88, 0.2);
+    --lew-form-border-color-active: rgba(0, 0, 0, 0.22);
+    --lew-form-border-color-focus: var(--lew-primary-color);
+
+    // checkbox
+    --lew-checkbox-border-color: rgb(228, 228, 228);
+    --lew-radio-border-color: rgb(228, 228, 228);
     // dialog / modal
     --lew-modal-bgcolor: rgb(0, 0, 0, 0.1);
     //  dialog / modal box
@@ -167,6 +167,7 @@
     --lew-tooltip-box-top-shadow: 0 4px 10px #00000027;
     --lew-tooltip-box-bottom-shadow: 0 -4px 10px #00000027;
     // table
+    --lew-table-border: 1px #f6f5f8 solid;
     --lew-table-scroll-line-color-start: rgba(0, 0, 0, 0);
     --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.12);
 }
@@ -280,17 +281,15 @@
     --lew-form-border-width: 1.5px;
     --lew-form-border-color: rgb(77, 77, 77);
     --lew-form-border-color-hover: rgb(59, 58, 58);
-    --lew-form-border-color-active: rgba(96, 96, 96, 0.8);
-    --lew-form-border-color-focus: var(--lew-primary-color-dark);
+    // checkbox
+    --lew-checkbox-border-color: rgb(59, 58, 58);
+    --lew-radio-border-color: rgb(59, 58, 58);
     // 表单背景
     --lew-form-bgcolor: #27282d;
     --lew-form-bgcolor-hover: #2a2a2f;
     --lew-form-bgcolor-active: #202025;
     --lew-form-bgcolor-focus: #49494f;
-    // 表单背景2
-    --lew-form-bgcolor-high: rgba(71, 71, 71, 0.5);
-    --lew-form-bgcolor-high-hover: rgba(71, 71, 71, 0.801);
-    --lew-form-bgcolor-high-active: rgba(71, 71, 71, 1);
+
     // dialog / modal
     --lew-modal-bgcolor: rgba(0, 0, 0, 0.45);
     //  dialog / modal box
@@ -307,6 +306,7 @@
     // popover
     --lew-popover-border: 1px rgba(255, 255, 255, 0.05) solid;
     // table
+    --lew-table-border: 1px rgba(255, 255, 255, 0.05) solid;
     --lew-table-scroll-line-color-start: rgba(0, 0, 0, 0);
     --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.25);
 }

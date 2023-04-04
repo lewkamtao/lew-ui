@@ -14,12 +14,12 @@ const columns = [
     },
     {
         title: '类型',
-        width: 200,
+        width: 240,
         field: 'type',
     },
     {
         title: '默认值',
-        width: 200,
+        width: 120,
         field: 'default',
     },
 ];

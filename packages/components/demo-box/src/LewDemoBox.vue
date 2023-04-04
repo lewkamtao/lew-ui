@@ -82,6 +82,7 @@ const style = computed<CSSProperties>(() => {
         background-color: var(--lew-bgcolor-0);
         border-radius: var(--lew-border-radius);
         border: var(--lew-border-1);
+        overflow: hidden;
     }
 
     .hl-pre {
@@ -102,7 +103,6 @@ const style = computed<CSSProperties>(() => {
         border-top: var(--lew-border-1);
         width: 100%;
         height: 30px;
-        border-radius: 0px 0px var(--lew-border-radius) var(--lew-border-radius);
         font-size: 14px;
         cursor: pointer;
         color: #999;

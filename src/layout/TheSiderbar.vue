@@ -101,7 +101,7 @@ const toPath = (item: Item) => {
             border-radius: var(--lew-border-radius);
             cursor: pointer;
             font-size: 14px;
-            color: var(--lew-text-color-6);
+            color: var(--lew-text-color-2);
 
             .ename {
                 margin-right: 5px;

@@ -4,19 +4,19 @@ import { DemoAlert1, DemoAlert1_code } from './demo';
 const columns = [
     {
         title: '参数名',
-        width: 200,
+        width: 120,
         field: 'param',
     },
 
     {
         title: '类型',
-        width: 200,
+        width: 240,
         field: 'type',
     },
 
     {
         title: '默认值',
-        width: 200,
+        width: 120,
         field: 'default',
     },
     {

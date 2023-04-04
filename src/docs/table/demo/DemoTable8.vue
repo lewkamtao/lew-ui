@@ -53,7 +53,7 @@ const columns = [
         type: 'text',
         title: '简介',
         field: 'info',
-        width: 200,
+        width: 120,
     },
     {
         type: 'template',
