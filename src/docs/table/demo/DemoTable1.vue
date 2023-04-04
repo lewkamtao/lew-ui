@@ -41,30 +41,30 @@ const columns = [
     },
     {
         title: '信息',
-        width: 180,
+        width: 150,
         field: 'info',
     },
     {
         title: '年龄',
         field: 'age',
-        width: 80,
+        width: 120,
         x: 'center',
     },
     {
         title: '性别',
         field: 'sex',
-        width: 80,
+        width: 120,
         x: 'center',
     },
     {
         title: '成绩',
-        width: 280,
+        width: 120,
         field: 'fraction',
         x: 'center',
     },
     {
         title: '介绍',
-        width: 280,
+        width: 480,
         field: 'intro',
     },
 ];
