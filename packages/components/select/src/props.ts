@@ -71,6 +71,10 @@ export const selectProps = {
         type: Boolean,
         default: () => false,
     },
+    disabled: {
+        type: Boolean,
+        default: () => false,
+    },
     align: {
         type: String,
         default: 'left',

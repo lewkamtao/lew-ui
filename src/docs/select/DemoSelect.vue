@@ -62,6 +62,12 @@ const docsTable = ref([
         type: 'boolean',
         default: 'false',
     },
+    {
+        param: 'disabled',
+        description: '禁用选择器',
+        type: `boolean`,
+        default: "'false'",
+    },
 ]);
 
 const optionsTable = ref([
@@ -76,6 +82,12 @@ const optionsTable = ref([
         description: '值',
         type: `string`,
         default: "''",
+    },
+    {
+        param: 'disabled',
+        description: '禁用选项',
+        type: `boolean`,
+        default: "'false'",
     },
 ]);
 </script>
@@ -109,7 +121,7 @@ const optionsTable = ref([
             <template #default="{ row }"> {{ row.default }} </template>
         </lew-table>
         <lew-title style="margin-top: 40px" size="16px">Options</lew-title>
-        <lew-table :data="optionsTable" :columns="columns" height="auto">
+        <lew-table :data-source="optionsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>
             <template #type="{ row }"> {{ row.type }} </template>

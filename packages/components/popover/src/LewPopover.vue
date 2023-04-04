@@ -1,41 +1,71 @@
 <script setup lang="ts">
 import tippy from 'tippy.js';
+import { popoverProps } from './popover';
+import { watchDebounced } from '@vueuse/core';
 
-let triggerRef = ref(null);
-let bodyRef = ref(null);
+const props = defineProps(popoverProps);
+let triggerRef = ref();
+let bodyRef = ref();
 let instance: any;
+let watchOptions = { debounce: 250, maxWait: 1000 };
 
-const props = defineProps({
-    trigger: {
-        type: String,
-        default: 'click',
+// 方向
+watchDebounced(
+    () => props.placement,
+    (value: any) => {
+        instance.setProps({
+            placement: value,
+        });
     },
-    placement: {
-        type: String,
-        default: 'top',
-    },
-    loading: {
-        type: Boolean,
-        default: () => false,
-    },
-    triggerTarget: {
-        type: Element,
-        default: null,
-        required: false,
-    },
-});
+    watchOptions
+);
 
-onMounted(() => {
-    let trigger = props.trigger;
-    let triggerTarget = props.triggerTarget;
+// 禁用
+watchDebounced(
+    () => props.disabled,
+    (value: any) => {
+        if (value) {
+            instance.disable();
+        } else {
+            instance.enable();
+        }
+    },
+    watchOptions
+);
 
-    let placement = props.placement;
+// trigger
+watchDebounced(
+    () => props.trigger,
+    (value: any) => {
+        if (instance) {
+            instance.setProps({
+                trigger: value,
+            });
+        }
+    },
+    watchOptions
+);
+
+// trigger
+watchDebounced(
+    () => props.triggerTarget,
+    (value: any) => {
+        if (instance) {
+            instance.setProps({
+                triggerTarget: value,
+            });
+        }
+    },
+    watchOptions
+);
+
+const initTippy = () => {
+    let { placement, triggerTarget, trigger, disabled }: any = props;
+
     if (trigger === 'hover') {
         trigger = 'mouseenter';
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     instance = tippy(triggerRef.value, {
         theme: 'light',
         trigger: trigger,
@@ -57,6 +87,15 @@ onMounted(() => {
         },
     });
     instance.popper.children[0].setAttribute('data-lew', 'popover');
+
+    // 判断入参
+    if (disabled && instance) {
+        instance.disable();
+    }
+};
+
+onMounted(() => {
+    initTippy();
 });
 
 const emit = defineEmits(['onShow', 'onHide']);

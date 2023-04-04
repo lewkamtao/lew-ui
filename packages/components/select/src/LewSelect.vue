@@ -104,8 +104,14 @@ const getSelectClassName = computed(() => {
 });
 
 const getBodyClassName = computed(() => {
-    let { size } = props;
-    return getClass('lew-select-body', { size });
+    let { size, disabled } = props;
+    return getClass('lew-select-body', { size, disabled });
+});
+
+const getSelectViewClassName = computed(() => {
+    let { disabled } = props;
+    let focus = state.visible;
+    return getClass('lew-select-view', { focus, disabled });
 });
 
 const getSelectItemClassName = (e: any) => {
@@ -140,8 +146,9 @@ defineExpose({ show, hide });
     <lew-popover
         ref="lewPopverRef"
         class="lew-select-view"
-        :class="{ 'lew-select-focus': state.visible }"
+        :class="getSelectViewClassName"
         :trigger="trigger"
+        :disabled="disabled"
         placement="bottom-start"
         style="width: 100%"
         @on-show="onShow"
@@ -256,7 +263,6 @@ defineExpose({ show, hide });
     background-color: var(--lew-form-bgcolor);
     transition: all 0.15s ease;
     box-sizing: border-box;
-
     outline: 0px var(--lew-primary-color-light) solid;
     border: var(--lew-form-border-width) transparent solid;
 
@@ -397,7 +403,7 @@ defineExpose({ show, hide });
     background-color: var(--lew-form-bgcolor-active);
 }
 
-.lew-select-view.lew-select-focus {
+.lew-select-view.lew-select-view-focus {
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
@@ -407,6 +413,20 @@ defineExpose({ show, hide });
         transform: translateY(-50%) rotate(180deg);
         color: var(--lew-text-color-2);
     }
+}
+
+.lew-select-view-disabled {
+    opacity: var(--lew-disabled-opacity);
+    .lew-select,
+    label {
+        cursor: not-allowed;
+    }
+}
+.lew-select-view-disabled:hover {
+    border-radius: var(--lew-border-radius);
+    background-color: var(--lew-form-bgcolor);
+    outline: 0px var(--lew-primary-color-light) solid;
+    border: var(--lew-form-border-width) transparent solid;
 }
 </style>
 <style lang="scss">

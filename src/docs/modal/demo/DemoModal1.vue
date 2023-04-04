@@ -164,7 +164,7 @@ onMounted(() => {
     </lew-modal>
     <lew-modal v-model:visible="modalVisible2" width="1250px">
         <div class="modal-body">
-            <lew-table :data="data" :columns="columns" height="auto">
+            <lew-table :data-source="data" :columns="columns" height="auto">
                 <template #id="{ row }"> {{ row.id }} </template>
                 <template #name="{ row }"> {{ row.name }} </template>
                 <template #age="{ row }"> {{ row.age }} </template>
