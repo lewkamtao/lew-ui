@@ -41,7 +41,7 @@ const docsTable = ref([
 
 <template>
     <div class="demo-wrapper">
-        <lew-title>Mark</lew-title>
+        <lew-title>TextTrim</lew-title>
         <p class="sub-title">
             虽然这小家伙看起来很简单，但是我觉得它非常有用，在我看来。
         </p>

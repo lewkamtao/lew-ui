@@ -57,13 +57,13 @@ const getIconSize = computed(() => {
             :type="icon"
         />
         <span class="lew-button-text" v-if="text">{{ text }} </span>
-        <div
+        <span
             v-if="loading || _loading"
             class="lew-loading-icon"
             :class="{
                 'lew-loading-icon-show': (_loading || loading) && !disabled,
             }"
-        ></div>
+        />
     </button>
 </template>
 

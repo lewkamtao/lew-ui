@@ -36,24 +36,3 @@ const value = ref('');
         </lew-form>
     </div>
 </template>
-
-<style lang="scss">
-.custom-select-box {
-    border-radius: var(--lew-border-radius);
-    margin-bottom: 4px;
-    padding: 6px 8px;
-    user-select: none;
-    cursor: pointer;
-    .label {
-        color: var(--lew-text-color-1);
-        font-size: 14px;
-    }
-    .desc {
-        color: var(--lew-text-color-8);
-        font-size: 12px;
-    }
-}
-.custom-select-checked {
-    background: var(--lew-primary-color-light);
-}
-</style>

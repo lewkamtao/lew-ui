@@ -4,6 +4,6 @@ export type TableColumns = {
     fixed: string;
     x: string;
     y: string;
-    width: string;
+    width: number;
     columnStyle: string;
 };

@@ -243,7 +243,6 @@ onMounted(() => {
                 <div class="lew-select-options-box">
                     <template v-for="item in options" :key="item.value">
                         <label>
-                            <!-- 原生 -->
                             <div
                                 v-if="!labelSlot"
                                 class="lew-select-item"

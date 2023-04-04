@@ -13,4 +13,5 @@ declare module 'lew-ui';
 declare module 'lew-ui/utils';
 declare module 'lodash/throttle';
 declare module '@vueuse/core';
+declare module '@vueuse/components';
 declare module 'moment';

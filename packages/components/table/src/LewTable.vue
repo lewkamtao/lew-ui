@@ -1,13 +1,15 @@
 <script lang="ts" setup>
 import { tableProps } from './props';
+import { useDebounceFn } from '@vueuse/core';
 
 const props = defineProps(tableProps);
 const tableRef = ref();
+let obs: any;
 let state = reactive({
     hoverIndex: -1,
     columns: [],
     scrollbarVisible: false,
-    scrollWidth: 0,
+    scrollClientWidth: 0,
     hidScrollLine: 'all',
 });
 
@@ -17,25 +19,39 @@ onMounted(() => {
     resizeTableHandle();
 });
 
+onUnmounted(() => {
+    if (obs) {
+        obs.disconnect(); //去掉监听
+        obs = null;
+    }
+});
+
 onActivated(() => {
     checkScroll();
     resizeTableHandle();
 });
 
+const tableObserve = () => {
+    obs = new ResizeObserver(() => {
+        resizeTableHandleDb();
+    });
+    obs.observe(tableRef.value);
+};
+
 const checkScroll = () => {
     let element = tableRef.value;
     const clientWidth = element.clientWidth;
-    const scrollWidth = element.scrollWidth;
+    const scrollClientWidth = element.scrollClientWidth;
     const scrollLeft = element.scrollLeft;
 
-    if (scrollWidth === clientWidth) {
+    if (scrollClientWidth === clientWidth) {
         state.hidScrollLine = 'all';
         return;
     }
     if (scrollLeft < 10) {
         state.hidScrollLine = 'left';
         return;
-    } else if (scrollLeft + clientWidth > scrollWidth - 10) {
+    } else if (scrollLeft + clientWidth > scrollClientWidth - 10) {
         state.hidScrollLine = 'right';
         return;
     }
@@ -43,15 +59,20 @@ const checkScroll = () => {
     return;
 };
 
-const tableObserve = () => {
-    resizeTableHandle;
-};
+const resizeTableHandleDb = useDebounceFn(() => {
+    resizeTableHandle();
+}, 250);
 
 const resizeTableHandle = () => {
     const table = tableRef.value;
-    const scrollbarWidth = table.offsetWidth - table.clientWidth;
-    state.scrollWidth = table.scrollWidth - scrollbarWidth;
-    state.scrollbarVisible = state.scrollWidth > table.clientWidth;
+    let clientWidth: number = 0;
+    props.columns
+        .map((e) => e.width)
+        .forEach((w) => {
+            clientWidth += w;
+        });
+    state.scrollClientWidth = table.clientWidth;
+    state.scrollbarVisible = clientWidth > state.scrollClientWidth;
 };
 
 const getTdNotWidth = computed(() => {
@@ -73,7 +94,7 @@ const getTdStyle = computed(() => (column: any, row?: any) => {
         return `width: ${width}px;${tdStyle}`;
     } else {
         return `width: ${
-            (width / getTdTotalWidth.value) * state.scrollWidth
+            (width / getTdTotalWidth.value) * state.scrollClientWidth
         }px;${tdStyle}`;
     }
 });
@@ -385,8 +406,7 @@ const fixedColumns = computed(() => (direction: string) => {
         text-align: left;
         padding: 8px 16px;
         box-sizing: border-box;
-        flex-shrink: 0;
-        min-width: 70px;
+        flex-grow: 1;
     }
 
     .lew-table-tr:last-child {

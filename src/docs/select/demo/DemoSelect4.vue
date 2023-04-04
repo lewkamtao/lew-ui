@@ -29,7 +29,12 @@ const value = ref('');
     <div>
         <lew-form style="width: 420px" label-width="120px">
             <lew-form-item label="支持插槽">
-                <lew-select v-model="value" :options="options" label-slot>
+                <lew-select
+                    v-model="value"
+                    :item-height="48"
+                    :options="options"
+                    label-slot
+                >
                     <template #label="{ item, checked }">
                         <div
                             class="custom-select-box"
@@ -49,10 +54,13 @@ const value = ref('');
 
 <style lang="scss">
 .custom-select-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     border-radius: var(--lew-border-radius);
-    margin-bottom: 4px;
-    padding: 6px 8px;
+    height: 48px;
     user-select: none;
+    padding: 0px 8px;
     cursor: pointer;
     .label {
         color: var(--lew-text-color-1);

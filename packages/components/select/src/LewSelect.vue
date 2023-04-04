@@ -3,6 +3,7 @@ import { useVModel, useDebounceFn } from '@vueuse/core';
 import { selectProps, SelectOptions } from './props';
 import { LewPopover } from 'lew-ui';
 import { getClass, numFormat } from 'lew-ui/utils';
+import { UseVirtualList } from '@vueuse/components';
 
 const props = defineProps(selectProps);
 const emit = defineEmits(['update:modelValue', 'change']);
@@ -126,9 +127,14 @@ const getSelectItemClassName = (e: any) => {
     });
 };
 
+const getVirtualHeight = computed(() => {
+    let height = state.options.length * props.itemHeight;
+    height = height > 240 ? 240 : height;
+    return height + 'px';
+});
+
 const onShow = () => {
     state.visible = true;
-
     getSelectWidth();
     if (state.options && state.options.length === 0 && props.searchable) {
         search({ target: { value: '' } });
@@ -219,36 +225,55 @@ defineExpose({ show, hide });
                         {{ numFormat(state.options && state.options.length) }}
                         条结果
                     </div>
-                    <template v-for="item in state.options" :key="item.value">
-                        <label @click="selectHandle(item)">
-                            <!-- 原生 -->
-                            <div
-                                v-if="!labelSlot"
-                                class="lew-select-item"
-                                :class="getSelectItemClassName(item)"
+
+                    <use-virtual-list
+                        class="lew-select-options-list"
+                        v-if="state.options.length > 0"
+                        :list="state.options"
+                        :options="{
+                            itemHeight: 30,
+                        }"
+                        :height="getVirtualHeight"
+                    >
+                        <template #="props">
+                            <!-- you can get current item of list here -->
+                            <label
+                                style="height: 22px"
+                                @click="selectHandle(props.data)"
                             >
-                                <div class="lew-select-label">
-                                    {{ item.label }}
+                                <div
+                                    v-if="!labelSlot"
+                                    class="lew-select-item"
+                                    :class="getSelectItemClassName(props.data)"
+                                    :style="{ height: itemHeight + 'px' }"
+                                >
+                                    <div class="lew-select-label">
+                                        {{ props.data.label }}
+                                    </div>
+                                    <lew-icon
+                                        v-if="
+                                            props.data.value === selectValue &&
+                                            showCheckIcon
+                                        "
+                                        class="icon-check"
+                                        size="14"
+                                        type="check"
+                                    />
                                 </div>
-                                <lew-icon
-                                    v-if="
-                                        item.value === selectValue &&
-                                        showCheckIcon
-                                    "
-                                    class="icon-check"
-                                    size="14"
-                                    type="check"
-                                />
-                            </div>
-                            <div v-else class="lew-select-slot-item">
-                                <slot
-                                    name="label"
-                                    :item="item"
-                                    :checked="getChecked(item.value)"
-                                />
-                            </div>
-                        </label>
-                    </template>
+                                <div
+                                    v-else
+                                    class="lew-select-slot-item"
+                                    :style="{ height: itemHeight + 'px' }"
+                                >
+                                    <slot
+                                        name="label"
+                                        :item="props.data"
+                                        :checked="getChecked(props.data.value)"
+                                    />
+                                </div>
+                            </label>
+                        </template>
+                    </use-virtual-list>
                 </div>
                 <slot name="footer"></slot>
             </div>
@@ -417,10 +442,7 @@ defineExpose({ show, hide });
 
 .lew-select-view-disabled {
     opacity: var(--lew-disabled-opacity);
-    .lew-select,
-    label {
-        cursor: not-allowed;
-    }
+    pointer-events: none; //鼠标点击不可修改
 }
 .lew-select-view-disabled:hover {
     border-radius: var(--lew-border-radius);
@@ -464,7 +486,6 @@ defineExpose({ show, hide });
     .lew-select-options-box {
         overflow-y: auto;
         overflow-x: hidden;
-        max-height: 250px;
         height: auto;
         box-sizing: border-box;
         transition: all 0.25s ease;
@@ -539,51 +560,24 @@ defineExpose({ show, hide });
         }
     }
 
-    .lew-select-options-box::-webkit-scrollbar {
+    .lew-select-options-list::-webkit-scrollbar {
         background-color: rgb(126, 126, 126, 0);
-        width: 5px;
-        height: 5px;
+        width: 7px;
+        height: 7px;
     }
 
-    .lew-select-options-box::-webkit-scrollbar-thumb:hover {
+    .lew-select-options-list::-webkit-scrollbar-thumb:hover {
         background-color: rgb(126, 126, 126);
     }
 
-    .lew-select-options-box::-webkit-scrollbar-thumb {
+    .lew-select-options-list::-webkit-scrollbar-thumb {
         background-color: rgb(209 213 219 / 0);
-        border-radius: 5px;
+        border-radius: 2px;
     }
 
-    .lew-select-options-box:hover::-webkit-scrollbar-thumb {
+    .lew-select-options-list:hover::-webkit-scrollbar-thumb {
         background-color: rgb(209 213 219 / 1);
-        border-radius: 5px;
-    }
-}
-
-.lew-select-body-size-small {
-    .lew-select-options-box {
-        .lew-select-item {
-            height: 28px;
-            line-height: 28px;
-        }
-    }
-}
-
-.lew-select-body-size-medium {
-    .lew-select-options-box {
-        .lew-select-item {
-            height: 30px;
-            line-height: 30px;
-        }
-    }
-}
-
-.lew-select-body-size-large {
-    .lew-select-options-box {
-        .lew-select-item {
-            height: 32px;
-            line-height: 32px;
-        }
+        border-radius: 2px;
     }
 }
 </style>
