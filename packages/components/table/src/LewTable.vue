@@ -41,17 +41,17 @@ const tableObserve = () => {
 const checkScroll = () => {
     let element = tableRef.value;
     const clientWidth = element.clientWidth;
-    const scrollClientWidth = element.scrollClientWidth;
+    const scrollWidth = element.scrollWidth;
     const scrollLeft = element.scrollLeft;
 
-    if (scrollClientWidth === clientWidth) {
+    if (scrollWidth === clientWidth) {
         state.hidScrollLine = 'all';
         return;
     }
     if (scrollLeft < 10) {
         state.hidScrollLine = 'left';
         return;
-    } else if (scrollLeft + clientWidth > scrollClientWidth - 10) {
+    } else if (scrollLeft + clientWidth > scrollWidth - 10) {
         state.hidScrollLine = 'right';
         return;
     }
