@@ -92,13 +92,15 @@ const cancel = async () => {
                         </main>
                         <footer>
                             <lew-button
-                                text="取消"
+                                v-if="cancelText"
+                                :text="cancelText"
                                 type="blank"
                                 :loading="cancelLoading"
                                 @click.stop="cancel"
                             />
                             <lew-button
-                                text="确定"
+                                v-if="okText"
+                                :text="okText"
                                 :type="type"
                                 :loading="okLoading"
                                 @click.stop="ok"
@@ -122,26 +124,30 @@ const cancel = async () => {
                             <lew-icon size="20" :type="getIconType(type)" />
                         </div>
                     </div>
-                    <div class="right">
+                    <lew-flex class="right">
                         <main>
                             <slot name="content" />
                         </main>
-                        <lew-button
-                            text="取消"
-                            type="blank"
-                            size="small"
-                            style="margin-right: 10px"
-                            :loading="cancelLoading"
-                            @click.stop="cancel"
-                        />
-                        <lew-button
-                            text="确认"
-                            :type="type"
-                            size="small"
-                            :loading="okLoading"
-                            @click.stop="ok"
-                        />
-                    </div>
+                        <lew-flex x="end">
+                            <lew-button
+                                v-if="cancelText"
+                                :text="cancelText"
+                                type="blank"
+                                size="small"
+                                style="margin-right: 10px"
+                                :loading="cancelLoading"
+                                @click.stop="cancel"
+                            />
+                            <lew-button
+                                v-if="okText"
+                                :text="okText"
+                                :type="type"
+                                size="small"
+                                :loading="okLoading"
+                                @click.stop="ok"
+                            />
+                        </lew-flex>
+                    </lew-flex>
                 </div>
             </div>
         </teleport>
@@ -277,7 +283,6 @@ const cancel = async () => {
             justify-content: space-between;
 
             main {
-                width: 200px;
                 margin-right: 10px;
             }
 

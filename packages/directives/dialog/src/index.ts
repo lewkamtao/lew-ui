@@ -6,6 +6,8 @@ type Options = {
     ok: Function;
     cancel: Function;
     layout: string;
+    okText: string;
+    cancelText: string;
     closeOnClickOverlay?: boolean;
 };
 
@@ -30,7 +32,16 @@ const success = (options: Options) => {
 };
 
 const dialog = (type: string, options: Options) => {
-    const { title, content, ok, cancel, layout, closeOnClickOverlay } = options;
+    const {
+        title,
+        content,
+        ok,
+        cancel,
+        okText,
+        cancelText,
+        layout,
+        closeOnClickOverlay,
+    } = options;
     const div: HTMLDivElement = document.createElement('div');
     document.body.appendChild(div);
     const app = createApp({
@@ -38,9 +49,11 @@ const dialog = (type: string, options: Options) => {
             return h(
                 _LewDialog,
                 {
-                    closeOnClickOverlay: closeOnClickOverlay,
-                    type: type,
-                    layout: layout,
+                    closeOnClickOverlay,
+                    type,
+                    layout,
+                    okText,
+                    cancelText,
                     ok: ok
                         ? ok
                         : () => {

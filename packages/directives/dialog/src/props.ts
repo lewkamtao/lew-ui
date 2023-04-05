@@ -19,6 +19,8 @@ export const _props = {
             return true;
         },
     },
+    okText: { type: String, default: '确定' },
+    cancelText: { type: String, default: '取消' },
     cancel: {
         type: Function,
         default: () => {

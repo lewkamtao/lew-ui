@@ -6,6 +6,17 @@ const isShowSider = ref(false);
 const route = useRoute();
 const mainRef: any = ref(null);
 
+onMounted(() => {
+    LewDialog.info({
+        title: '温馨提示',
+        content:
+            '当前组件库仍处于开发测试状态，请勿用于生产环境，当前文档仍有很多地方未完善，持续更新中，敬请期待。',
+        cancelText: '',
+        okText: '知道了',
+        closeOnClickOverlay: true,
+    });
+});
+
 watch(route, () => {
     setTimeout(() => {
         if (mainRef.value) mainRef.value.scrollTop = 0;
