@@ -13,7 +13,6 @@ onMounted(() => {
             '当前组件库仍处于开发测试状态，请勿用于生产环境，当前文档仍有很多地方未完善，持续更新中，敬请期待。',
         cancelText: '',
         okText: '知道了',
-        closeOnClickOverlay: true,
     });
 });
 
