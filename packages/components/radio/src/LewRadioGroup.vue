@@ -1,3 +1,22 @@
+<script lang="ts" setup>
+import LewRadio from './LewRadio.vue';
+import { useVModel } from '@vueuse/core';
+import { radioGroupProps } from './radio';
+import type { RadioOptions } from './radio';
+
+const emit = defineEmits(['change', 'update:modelValue']);
+const props = defineProps(radioGroupProps);
+const modelValue = useVModel(props, 'modelValue', emit);
+
+const check = (item: RadioOptions) => {
+    modelValue.value = item.value;
+    emit('change', {
+        value: item.value,
+        item: toRaw(item),
+    });
+};
+</script>
+
 <template>
     <lew-flex
         x="start"
@@ -13,70 +32,10 @@
             :label="option.label"
             :size="size"
             :checked="modelValue === option.value"
-            @update:checked="check(option.value)"
+            @update:checked="check(option)"
         />
     </lew-flex>
 </template>
-
-<script lang="ts" setup>
-import { PropType } from 'vue';
-import LewRadio from './LewRadio.vue';
-
-type Options = {
-    label: string;
-    value: string;
-};
-
-defineProps({
-    modelValue: {
-        type: String,
-        default: () => {
-            return '';
-        },
-        required: true,
-    },
-    block: {
-        type: Boolean,
-        default: () => {
-            return false;
-        },
-    },
-    iconable: {
-        type: Boolean,
-        default: true,
-    },
-    direction: {
-        type: String,
-        default: 'x',
-    },
-    size: {
-        type: String,
-        default: 'medium',
-    },
-    options: {
-        type: Array as PropType<Options[]>,
-        default: () => {
-            return [];
-        },
-        required: true,
-        validator: (value: Array<number>) => {
-            const hasNameKey = value.every((option) =>
-                Object.keys(option).includes('label')
-            );
-            const hasIdKey = value.every((option) =>
-                Object.keys(option).includes('value')
-            );
-            return hasNameKey && hasIdKey;
-        },
-    },
-});
-
-const emit = defineEmits(['update:modelValue']);
-
-const check = (_value: string) => {
-    emit('update:modelValue', _value);
-};
-</script>
 
 <style lang="scss" scoped>
 .lew-radio-group {

@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { schools } from './schools';
 
-let schoolsOptions = schools.map((e) => {
-    return { label: e, value: e };
+let schoolsOptions = schools.map((e, i) => {
+    return { label: e, value: i + 1 };
 });
-
 
 const options = ref(schoolsOptions);
 

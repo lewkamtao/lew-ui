@@ -1,7 +1,8 @@
 <script lang="ts" setup>
+const selectedKey = ref([1]);
 const data: any = [
     {
-        id: 2,
+        id: 1,
         name: '小卢',
         age: '24',
         sex: '男',
@@ -9,7 +10,7 @@ const data: any = [
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
     },
     {
-        id: 3,
+        id: 2,
         name: '小娟',
         age: '25',
         sex: '女',
@@ -17,7 +18,7 @@ const data: any = [
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
     },
     {
-        id: 4,
+        id: 3,
         name: '小贝',
         age: '22',
         sex: '男',
@@ -29,17 +30,15 @@ const data: any = [
 const columns = [
     {
         title: 'id',
-        width: '50px',
+        width: 50,
         field: 'id',
         x: 'center',
-        fixed: 'left',
     },
     {
         title: '姓名',
-        width: '100px',
+        width: 100,
         field: 'name',
         x: 'center',
-        fixed: 'left',
     },
     {
         title: '年龄',
@@ -55,17 +54,17 @@ const columns = [
     },
     {
         title: '爱好',
-        width: '400px',
+        width: 400,
         field: 'hobby',
     },
     {
         title: '介绍',
-        width: '450px',
+        width: 450,
         field: 'intro',
     },
     {
         title: '操作',
-        width: '120px',
+        width: 120,
         field: 'action',
         fixed: 'right',
         x: 'center',
@@ -80,7 +79,14 @@ const del = (row: any, column: any) => {
 </script>
 
 <template>
-    <lew-table :data-source="data" :columns="columns">
+    <span> 已选择：{{ selectedKey }}</span>
+    <lew-table
+        v-model:selectedKey="selectedKey"
+        :data-source="data"
+        :columns="columns"
+        checkable
+        row-key="id"
+    >
         <template #hobby="{ row }">
             <lew-flex gap="5" x="start">
                 <lew-tag

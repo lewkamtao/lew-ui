@@ -173,8 +173,21 @@ const docsTable2 = ref([
                 @close="alertClose[4] = true"
             />
         </lew-demo-box>
-        <lew-demo-box v-if="false" title="固定列" :code="DemoTable6_code">
+        <lew-demo-box title="选择" :code="DemoTable6_code">
             <demo-table6 />
+            <lew-alert
+                v-if="!alertClose[4]"
+                style="margin-top: 20px"
+                size="16px"
+                :list="[
+                    {
+                        type: 'warning',
+                        title: '警告',
+                        content: `当checkable开启时，必须设置rowKey。`,
+                    },
+                ]"
+                @close="alertClose[4] = true"
+            />
         </lew-demo-box>
         <lew-demo-box v-if="false" title="固定列" :code="DemoTable7_code">
             <demo-table7 />

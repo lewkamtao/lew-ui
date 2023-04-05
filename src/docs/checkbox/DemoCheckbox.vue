@@ -47,10 +47,10 @@ const docsTable = ref([
     <div class="demo-wrapper">
         <lew-title>Checkbox</lew-title>
         <p class="sub-title">通过复选框选择一个或多个数据。</p>
-        <lew-demo-box title="x 布局" tag="方的" :code="DemoCheckbox1_code">
+        <lew-demo-box title="常规" :code="DemoCheckbox1_code">
             <demo-checkbox1 />
         </lew-demo-box>
-        <lew-demo-box title="y 布局" tag="圆的" :code="DemoCheckbox2_code">
+        <lew-demo-box title="单个模式" :code="DemoCheckbox2_code">
             <demo-checkbox2
         /></lew-demo-box>
         <lew-demo-box title="块" :code="DemoCheckbox3_code" tag="方的">

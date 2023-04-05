@@ -1,13 +1,29 @@
+<script lang="ts" setup>
+import { radioProps } from './radio';
+import { getClass } from 'lew-ui/utils';
+
+const props = defineProps(radioProps);
+
+const emit = defineEmits(['update:checked']);
+
+const setChecked = () => {
+    emit('update:checked');
+};
+
+const getRadioClassName = computed(() => {
+    const { block, checked, iconable, size } = props;
+    let unicon = !iconable;
+    return getClass('lew-radio', {
+        block,
+        checked,
+        unicon,
+        size,
+    });
+});
+</script>
+
 <template>
-    <label
-        class="lew-radio"
-        :class="`
-    ${block ? 'lew-radio-block' : ''}  
-    ${checked ? 'lew-radio-checked' : ''}   
-    ${!iconable ? 'lew-radio-unicon' : ''}
-    ${size ? 'lew-radio-' + size : ''} 
-    `"
-    >
+    <label class="lew-radio" :class="getRadioClassName">
         <div class="icon-radio-box" v-if="iconable">
             <div class="icon-radio"></div>
         </div>
@@ -15,43 +31,11 @@
             v-show="false"
             type="radio"
             :checked="checked"
-            @input="setChecked"
+            @change="setChecked"
         />
         <span v-if="label" class="lew-radio-label"> {{ label }}</span>
     </label>
 </template>
-
-<script lang="ts" setup>
-defineProps({
-    label: {
-        type: String,
-        required: true,
-    },
-    block: {
-        type: Boolean,
-        default: () => {
-            return false;
-        },
-    },
-    iconable: {
-        type: Boolean,
-        default: true,
-    },
-    checked: {
-        type: Boolean,
-    },
-    size: {
-        type: String,
-        default: 'medium',
-    },
-});
-
-const emit = defineEmits(['update:checked']);
-
-const setChecked = () => {
-    emit('update:checked');
-};
-</script>
 
 <style lang="scss" scoped>
 .lew-radio {
@@ -95,7 +79,7 @@ const setChecked = () => {
     }
 }
 
-.lew-radio-small {
+.lew-radio-size-small {
     font-size: 13px;
 
     .icon-radio-box {
@@ -104,7 +88,7 @@ const setChecked = () => {
     }
 }
 
-.lew-radio-medium {
+.lew-radio-size-medium {
     font-size: 14px;
 
     .icon-radio-box {
@@ -113,7 +97,7 @@ const setChecked = () => {
     }
 }
 
-.lew-radio-large {
+.lew-radio-size-large {
     font-size: 15px;
 
     .icon-radio-box {

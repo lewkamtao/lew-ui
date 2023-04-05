@@ -95,7 +95,7 @@ const getLabel = computed(() => {
         }
     }
 
-    return props.defaultValue || '';
+    return props.defaultValue || props.modelValue;
 });
 
 const getSelectClassName = computed(() => {
@@ -237,10 +237,7 @@ defineExpose({ show, hide });
                     >
                         <template #="props">
                             <!-- you can get current item of list here -->
-                            <label
-                                style="height: 22px"
-                                @click="selectHandle(props.data)"
-                            >
+                            <label @click="selectHandle(props.data)">
                                 <div
                                     v-if="!labelSlot"
                                     class="lew-select-item"

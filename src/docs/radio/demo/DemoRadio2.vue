@@ -6,7 +6,10 @@ const options = ref([
     { label: '清朝', value: '4' },
 ]);
 
-const value = ref('');
+const value = ref('2');
+const change = (e: any) => {
+    console.log(e);
+};
 </script>
 
 <template>
@@ -14,5 +17,6 @@ const value = ref('');
         v-model="value"
         direction="y"
         :options="options"
+        @change="change"
     ></lew-radio-group>
 </template>

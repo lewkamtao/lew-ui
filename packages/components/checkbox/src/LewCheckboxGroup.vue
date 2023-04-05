@@ -1,43 +1,65 @@
 <script lang="ts" setup>
 import { checkboxGroupProps } from './checkbox';
+import type { CheckboxOptions } from './checkbox';
+
 import LewCheckbox from './LewCheckbox.vue';
+import { useVModel, watchArray } from '@vueuse/core';
 
 const props = defineProps(checkboxGroupProps);
+const emit = defineEmits(['change', 'update:modelValue']);
+const modelValue = useVModel(props, 'modelValue', emit);
+const checkList = ref([] as any);
 
-const emit = defineEmits(['update:modelValue']);
-
-const check = (_value: string, checked: boolean) => {
-    let updatedValue = [...props.modelValue];
-
+const change = (item: CheckboxOptions, checked: Boolean) => {
     if (checked) {
-        updatedValue.push(_value);
+        modelValue.value.push(item.value);
     } else {
-        updatedValue.splice(updatedValue.indexOf(_value), 1);
+        let index = props.modelValue.findIndex((e: any) => e === item.value);
+        if (index >= 0) {
+            modelValue.value.splice(index, 1);
+        }
     }
-    emit('update:modelValue', updatedValue);
+    emit('change', {
+        value: toRaw(modelValue.value),
+        item: toRaw(item),
+    });
 };
 
-const getChecked = (_value: string | number) => {
-    return props.modelValue.includes(_value);
+watchArray(modelValue.value, () => {
+    initCheckbox();
+});
+
+const initCheckbox = () => {
+    checkList.value = props.options.map((item) => {
+        if (modelValue.value.includes(item.value)) {
+            return true;
+        } else {
+            return false;
+        }
+    });
 };
+
+onMounted(() => {
+    initCheckbox;
+});
 </script>
 <template>
     <lew-flex
         x="start"
         gap="15"
+        :direction="direction"
         class="lew-checkbox-group"
-        :class="`lew-checkbox-group-${direction} lew-checkbox-group-${size}`"
     >
         <lew-checkbox
-            v-for="option in options"
-            :key="option.value"
+            v-for="(item, index) in options"
+            :key="item.value"
             :block="block"
             :iconable="iconable"
             :round="round"
             :size="size"
-            :label="option.label"
-            :checked="getChecked(option.value)"
-            @change="check(option.value, $event)"
+            :label="item.label"
+            v-model="checkList[index]"
+            @change="change(item, $event)"
         />
     </lew-flex>
 </template>
