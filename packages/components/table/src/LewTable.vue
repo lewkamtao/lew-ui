@@ -20,20 +20,6 @@ let state = reactive({
     checkAll: false,
 });
 
-onMounted(() => {
-    tableObserve();
-    checkScroll();
-    resizeTableHandle();
-    initCheckbox();
-});
-
-onUnmounted(() => {
-    if (obs) {
-        obs.disconnect(); //去掉监听
-        obs = null;
-    }
-});
-
 onActivated(() => {
     checkScroll();
     resizeTableHandle();
@@ -182,8 +168,21 @@ const initCheckbox = () => {
     });
 };
 
+initCheckbox();
 watchArray(selectedKey, () => {
     initCheckbox();
+});
+onMounted(() => {
+    tableObserve();
+    checkScroll();
+    resizeTableHandle();
+});
+
+onUnmounted(() => {
+    if (obs) {
+        obs.disconnect(); //去掉监听
+        obs = null;
+    }
 });
 </script>
 

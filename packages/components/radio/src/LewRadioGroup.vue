@@ -25,14 +25,15 @@ const check = (item: RadioOptions) => {
         :class="`lew-radio-group-${direction} lew-radio-group-${size}`"
     >
         <lew-radio
-            v-for="option in options"
-            :key="option.value"
+            v-for="item in options"
+            :key="item.value"
             :block="block"
             :iconable="iconable"
-            :label="option.label"
+            :label="item.label"
+            :disabled="item.disabled"
             :size="size"
-            :checked="modelValue === option.value"
-            @update:checked="check(option)"
+            :checked="modelValue === item.value"
+            @update:checked="check(item)"
         />
     </lew-flex>
 </template>

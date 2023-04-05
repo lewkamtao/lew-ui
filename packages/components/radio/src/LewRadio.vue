@@ -11,13 +11,14 @@ const setChecked = () => {
 };
 
 const getRadioClassName = computed(() => {
-    const { block, checked, iconable, size } = props;
+    const { block, checked, iconable, size, disabled } = props;
     let unicon = !iconable;
     return getClass('lew-radio', {
         block,
         checked,
         unicon,
         size,
+        disabled,
     });
 });
 </script>
@@ -199,5 +200,9 @@ const getRadioClassName = computed(() => {
         opacity: 1;
         transform: translateY(0%) scale(1.15);
     }
+}
+.lew-radio-disabled {
+    opacity: var(--lew-disabled-opacity);
+    pointer-events: none; //鼠标点击不可修改
 }
 </style>

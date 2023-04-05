@@ -39,9 +39,7 @@ const initCheckbox = () => {
     });
 };
 
-onMounted(() => {
-    initCheckbox;
-});
+initCheckbox();
 </script>
 <template>
     <lew-flex
@@ -58,6 +56,7 @@ onMounted(() => {
             :round="round"
             :size="size"
             :label="item.label"
+            :disabled="item.disabled"
             v-model="checkList[index]"
             @change="change(item, $event)"
         />

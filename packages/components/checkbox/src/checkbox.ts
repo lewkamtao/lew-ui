@@ -3,6 +3,7 @@ import { PropType, ExtractPropTypes } from 'vue';
 export type CheckboxOptions = {
     label: string;
     value: string | number;
+    disabled?: boolean;
 };
 
 export const checkboxProps = {
@@ -12,7 +13,6 @@ export const checkboxProps = {
             return false;
         },
     },
-
     label: {
         type: String,
         default: () => {

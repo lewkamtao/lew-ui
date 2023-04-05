@@ -488,10 +488,8 @@ defineExpose({ getEl, focusFn, lewInputRef });
 }
 
 .lew-input-view-disabled {
-    cursor: no-drop;
     opacity: var(--lew-disabled-opacity);
-    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
-    background-color: var(--lew-form-bgcolor);
+    pointer-events: none; //鼠标点击不可修改
 }
 
 .lew-input-view-disabled:hover {

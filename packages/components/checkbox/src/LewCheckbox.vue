@@ -18,7 +18,7 @@ const setChecked = (e: Event) => {
 };
 
 const getCheckboxClassName = computed(() => {
-    const { block, round, iconable, size } = props;
+    const { block, round, iconable, size, disabled } = props;
     let checked = modelValue.value;
     let unicon = !iconable;
     return getClass('lew-checkbox', {
@@ -27,6 +27,7 @@ const getCheckboxClassName = computed(() => {
         size,
         checked,
         unicon,
+        disabled,
     });
 });
 </script>
@@ -125,10 +126,6 @@ const getCheckboxClassName = computed(() => {
 
 .lew-checkbox-unicon.lew-checkbox-block {
     padding: 4px 12px;
-
-    .lew-checkbox-label {
-        color: var(--lew-text-color-6);
-    }
 }
 
 .lew-checkbox-unicon.lew-checkbox-checked.lew-checkbox-block {
@@ -224,5 +221,10 @@ const getCheckboxClassName = computed(() => {
         border: var(--lew-form-border-width) var(--lew-primary-color-light)
             solid;
     }
+}
+
+.lew-checkbox-disabled {
+    opacity: var(--lew-disabled-opacity);
+    pointer-events: none; //鼠标点击不可修改
 }
 </style>

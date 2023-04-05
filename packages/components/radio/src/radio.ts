@@ -3,6 +3,7 @@ import { PropType, ExtractPropTypes } from 'vue';
 export type RadioOptions = {
     label: string;
     value: string | number;
+    disabled?: boolean;
 };
 
 export const radioProps = {
