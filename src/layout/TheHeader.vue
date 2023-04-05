@@ -127,9 +127,9 @@ const gohome = () => {
             display: inline-flex;
             align-items: center;
             padding: 5px;
-            opacity: 0.6;
+            opacity: 0.8;
             font-size: 14px;
-            transition: all 0.5s;
+            transition: all 0.25s;
             color: var(--lew-text-color-1);
             cursor: pointer;
 
