@@ -206,14 +206,6 @@ const getSize = computed(() => {
 
 .lew-tag-disabled {
     opacity: var(--lew-disabled-opacity);
-    cursor: not-allowed;
-
-    .lew-tag-close {
-        cursor: not-allowed;
-    }
-
-    .lew-tag-close:hover {
-        background-color: rgba(0, 0, 0, 0);
-    }
+    pointer-events: none;
 }
 </style>

@@ -26,7 +26,7 @@ const close = () => {
     timer = setTimeout(() => {
         _visible.value = false;
         emit('close');
-    }, 300);
+    }, 400);
 };
 
 const ok = async () => {
@@ -59,8 +59,8 @@ const cancel = async () => {
                 class="lew-dialog"
                 :style="
                     visibleMask
-                        ? 'animation: lewDialogOpen 0.15s ease;'
-                        : 'animation: lewDialogClose 0.3s ease;'
+                        ? 'animation: lewDialogOpen 0.4s ease;'
+                        : 'animation: lewDialogClose 0.4s ease;'
                 "
                 @click="maskClick"
             >
@@ -69,8 +69,8 @@ const cancel = async () => {
                     class="lew-dialog-box lew-dialog-box-normal"
                     :style="
                         visibleMask
-                            ? 'animation: lewDialogBoxOpen 0.25s ease;  '
-                            : 'animation: lewDialogBoxClose 0.25s ease; '
+                            ? 'animation: lewDialogBoxOpen 0.35s ease;  '
+                            : 'animation: lewDialogBoxClose 0.35s ease; '
                     "
                     @click.stop
                 >
@@ -112,8 +112,8 @@ const cancel = async () => {
                     class="lew-dialog-box lew-dialog-box-mini"
                     :style="
                         visibleMask
-                            ? 'animation: lewDialogBoxOpen 0.25s ease-out;'
-                            : 'animation: lewDialogBoxClose 0.25s ease-out;'
+                            ? 'animation: lewDialogBoxOpen 0.35s ease;'
+                            : 'animation: lewDialogBoxClose 0.35s ease;'
                     "
                     @click.stop
                 >
@@ -156,7 +156,6 @@ const cancel = async () => {
     width: 100vw;
     height: 100vh;
     background-color: var(--lew-modal-bgcolor);
-
     display: flex;
     justify-content: center;
     align-items: center;

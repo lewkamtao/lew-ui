@@ -44,7 +44,7 @@ const docsTable = ref([
         param: 'size',
         description: '尺寸大小',
         type: 'small ｜ medium ｜ large',
-        default: 'false',
+        default: 'medium',
     },
     {
         param: 'closable',
@@ -54,7 +54,7 @@ const docsTable = ref([
     },
     {
         param: 'disabled',
-        description: '头像形状，是否为圆形。',
+        description: '禁用',
         type: 'boolean',
         default: 'false',
     },
@@ -76,7 +76,7 @@ const docsTable = ref([
         <lew-demo-box title="尺寸" :code="DemoTag2_code">
             <demo-tag2 />
         </lew-demo-box>
-        <lew-demo-box title="可关闭的" :code="DemoTag3_code">
+        <lew-demo-box title="禁用与关闭" :code="DemoTag3_code">
             <demo-tag3 />
         </lew-demo-box>
         <lew-demo-box title="插槽" :code="DemoTag4_code">

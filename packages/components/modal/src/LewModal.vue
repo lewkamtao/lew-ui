@@ -42,7 +42,7 @@ watch(
             _visibleTimer.value = setTimeout(() => {
                 _visible.value = v;
                 visible.value = v;
-            }, 250);
+            }, 400);
         } else {
             _visible.value = v;
             visible.value = v;
@@ -64,8 +64,8 @@ const maskClick = () => {
             class="lew-modal"
             :style="
                 visible
-                    ? 'animation: lewModalOpen 0.25s;'
-                    : 'animation: lewModalClose 0.25s;'
+                    ? 'animation: lewModalOpen 0.4s ease;'
+                    : 'animation: lewModalClose 0.4s ease;'
             "
             @click="maskClick"
         >
@@ -73,8 +73,8 @@ const maskClick = () => {
                 class="lew-modal-box"
                 :style="`width:${width};height:${height};${
                     visible
-                        ? 'animation: lewModalBoxOpen 0.25s;'
-                        : 'animation: lewModalBoxClose 0.25s;'
+                        ? 'animation: lewModalBoxOpen 0.35s ease;'
+                        : 'animation: lewModalBoxClose 0.35s ease;'
                 }`"
                 @click.stop
             >

@@ -39,7 +39,7 @@ const columns = [
 ];
 const docsTable = ref([
     {
-        param: 'model-value (v-model)',
+        param: 'model-value',
         description: '绑定值',
         type: 'string | array',
         default: "''",
@@ -57,14 +57,32 @@ const docsTable = ref([
         default: 'click',
     },
     {
-        param: 'multiple',
-        description: '多选模式，开启后，v-model需要是数组类型',
-        type: 'boolean',
-        default: 'false',
+        param: 'default-value',
+        description: '默认值',
+        type: `string | number`,
+        default: "''",
+    },
+    {
+        param: 'searchable',
+        description: '禁用选择器',
+        type: `boolean`,
+        default: "'false'",
+    },
+    {
+        param: 'search-method',
+        description: '搜索方法（支持promise）',
+        type: `function`,
+        default: '默认filter',
     },
     {
         param: 'disabled',
         description: '禁用选择器',
+        type: `boolean`,
+        default: "'false'",
+    },
+    {
+        param: 'clearable',
+        description: '支持清空',
         type: `boolean`,
         default: "'false'",
     },
