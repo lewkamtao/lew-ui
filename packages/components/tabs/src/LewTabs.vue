@@ -7,9 +7,9 @@ type Options = {
 };
 
 const props = defineProps(tabsProps);
-let activeItemStyle = ref('');
-let v = ref(props.modelValue);
-let itemRef = ref([] as any);
+const activeItemStyle = ref('');
+const v = ref(props.modelValue);
+const itemRef = ref([] as any);
 
 watch(
     () => props.modelValue,
@@ -28,15 +28,15 @@ const init = () => {
 const emit = defineEmits(['change', 'update:modelValue']);
 let curIndex = props.options.findIndex((e) => v.value === e.value);
 const setStyle = (value: string) => {
-    let index = props.options.findIndex((e) => value === e.value);
+    const index = props.options.findIndex((e) => value === e.value);
     if (curIndex != index) {
-        let _item = props.options[index];
+        const _item = props.options[index];
 
         if (v.value != _item.value) {
             v.value = _item.value;
         }
 
-        let activeRef = itemRef.value[index];
+        const activeRef = itemRef.value[index];
         activeItemStyle.value = `width:${activeRef.offsetWidth}px;transform: translate(${activeRef.offsetLeft}px);`;
 
         if (v.value != props.modelValue) {

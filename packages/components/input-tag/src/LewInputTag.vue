@@ -38,10 +38,8 @@ const openInput = () => {
                     delDownCheck = 0;
                 }
             }
-        } else {
-            if (event.keyCode === 13) {
-                isEnter = true;
-            }
+        } else if (event.keyCode === 13) {
+            isEnter = true;
         }
     };
 };
@@ -57,7 +55,7 @@ const blurFn = (e: any) => {
 };
 
 const addTag = () => {
-    if (!!inputValue.value) {
+    if (inputValue.value) {
         tagsValue.value.push(inputValue.value);
     }
 

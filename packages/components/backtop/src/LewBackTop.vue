@@ -19,10 +19,10 @@ const backTopStyle = computed(() => ({
 const toBackUp = () => {
     if (!dom.value) return;
     emit('click');
-    let timer = setInterval(() => {
-        let scrollDom = dom.value as HTMLElement;
-        let ispeed = Math.floor(-scrollDom.scrollTop / 5);
-        scrollDom.scrollTop = scrollDom.scrollTop + ispeed;
+    const timer = setInterval(() => {
+        const scrollDom = dom.value as HTMLElement;
+        const ispeed = Math.floor(-scrollDom.scrollTop / 5);
+        scrollDom.scrollTop += ispeed;
         if (scrollDom.scrollTop === 0) {
             clearInterval(timer);
         }

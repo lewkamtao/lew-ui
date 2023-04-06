@@ -1,8 +1,5 @@
 import type { App } from 'vue';
 
-export * from './components';
-export * from './directives';
-
 // tippy 样式
 import 'tippy.js/dist/tippy.css'; // optional for styling
 import 'tippy.js/animations/shift-away-subtle.css';
@@ -16,6 +13,9 @@ import './styles/var.scss';
 // 全局 => 定义 install 方法
 import * as components from './components';
 import * as directives from './directives';
+
+export * from './components';
+export * from './directives';
 
 const install: any = function (Vue: App): void {
     if (install.installed) return;

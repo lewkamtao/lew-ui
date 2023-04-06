@@ -59,5 +59,5 @@ export const getPosition = (position: string) => {
 };
 
 export const getClass = (position: string) => {
-    return position ? 'lew-drawer-main-' + position : 'lew-drawer-main-right';
+    return position ? `lew-drawer-main-${position}` : 'lew-drawer-main-right';
 };

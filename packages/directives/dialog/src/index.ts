@@ -54,22 +54,22 @@ const dialog = (type: string, options: Options) => {
                     layout,
                     okText,
                     cancelText,
-                    ok: ok
-                        ? ok
-                        : () => {
-                              return true;
-                          },
+                    ok:
+                        ok ||
+                        (() => {
+                            return true;
+                        }),
                     onClose: () => {
                         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                         // @ts-ignore
                         app.unmount(div);
                         div.remove();
                     },
-                    cancel: cancel
-                        ? cancel
-                        : () => {
-                              return true;
-                          },
+                    cancel:
+                        cancel ||
+                        (() => {
+                            return true;
+                        }),
                 },
                 {
                     title: () => title,

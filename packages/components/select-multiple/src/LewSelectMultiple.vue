@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { useVModel, useDebounceFn } from '@vueuse/core';
-import { selectMultipleProps, SelectMultipleOptions } from './props';
 import { LewPopover } from 'lew-ui';
 import { getClass, numFormat } from 'lew-ui/utils';
 import { UseVirtualList } from '@vueuse/components';
+import { selectMultipleProps, SelectMultipleOptions } from './props';
 
 const props = defineProps(selectMultipleProps);
 const emit = defineEmits(['update:modelValue', 'change']);
 const selectValue = useVModel(props, 'modelValue', emit);
 
-let lewSelectRef = ref();
-let lewPopverRef = ref();
-let searchInputRef = ref();
+const lewSelectRef = ref();
+const lewPopverRef = ref();
+const searchInputRef = ref();
 
-let state = reactive({
+const state = reactive({
     selectWidth: 0,
     visible: false,
     loading: false,
@@ -68,11 +68,11 @@ const clearHandle = () => {
     lewPopverRef.value.refresh();
 };
 
-const closeLabel = (label: String) => {
-    let value = state.options.find((e) => e.label === label)?.value;
+const closeLabel = (label: string) => {
+    const value = state.options.find((e) => e.label === label)?.value;
     console.log(value);
 
-    let index = selectValue.value.findIndex((v: any) => v === value);
+    const index = selectValue.value.findIndex((v: any) => v === value);
     if (index >= 0) {
         selectValue.value.splice(index, 1);
         lewPopverRef.value.refresh();
@@ -83,8 +83,8 @@ const selectHandle = (item: SelectMultipleOptions) => {
     if (item.disabled) {
         return;
     }
-    let index = selectValue.value.findIndex(
-        (e: String | Number) => e == item.value
+    const index = selectValue.value.findIndex(
+        (e: string | number) => e == item.value
     );
     if (index == -1) {
         selectValue.value.push(item.value);
@@ -95,13 +95,13 @@ const selectHandle = (item: SelectMultipleOptions) => {
     lewPopverRef.value.refresh();
 };
 
-const getChecked = computed(() => (value: String | Number) => {
+const getChecked = computed(() => (value: string | number) => {
     return selectValue.value.includes(value);
 });
 
 const getLabels = computed(() => {
     if (state.options) {
-        const labels = selectValue.value.map((v: Number | String) => {
+        const labels = selectValue.value.map((v: number | string) => {
             return state.options.find(
                 (e: SelectMultipleOptions) => v === e.value
             )?.label;
@@ -119,20 +119,20 @@ const getSelectClassName = computed(() => {
 });
 
 const getBodyClassName = computed(() => {
-    let { size, disabled } = props;
+    const { size, disabled } = props;
     return getClass('lew-select-body', { size, disabled });
 });
 
 const getSelectViewClassName = computed(() => {
-    let { disabled } = props;
-    let focus = state.visible;
+    const { disabled } = props;
+    const focus = state.visible;
     return getClass('lew-select-view', { focus, disabled });
 });
 
 const getSelectItemClassName = (e: any) => {
-    let { disabled } = e;
-    let active = getChecked.value(e.value);
-    let { align } = props;
+    const { disabled } = e;
+    const active = getChecked.value(e.value);
+    const { align } = props;
 
     return getClass('lew-select-item', {
         disabled,
@@ -144,7 +144,7 @@ const getSelectItemClassName = (e: any) => {
 const getVirtualHeight = computed(() => {
     let height = state.options.length * props.itemHeight;
     height = height > 240 ? 240 : height;
-    return height + 'px';
+    return `${height}px`;
 });
 
 const onShow = () => {
@@ -171,9 +171,9 @@ defineExpose({ show, hide });
         :disabled="disabled"
         placement="bottom-start"
         style="width: 100%"
+        :loading="state.loading"
         @on-show="onShow"
         @on-hide="onHide"
-        :loading="state.loading"
     >
         <template #trigger>
             <div
@@ -191,7 +191,6 @@ defineExpose({ show, hide });
                     }"
                 />
                 <lew-icon
-                    @click.stop="clearHandle"
                     v-if="clearable"
                     size="16px"
                     type="x-circle"
@@ -200,20 +199,21 @@ defineExpose({ show, hide });
                         'icon-clear-show':
                             clearable && getLabels && getLabels.length > 0,
                     }"
+                    @click.stop="clearHandle"
                 />
                 <lew-flex
-                    style="padding: 3px"
                     v-show="getLabels && getLabels.length > 0"
+                    style="padding: 3px"
                     x="start"
                     :gap="3"
                     wrap
                     class="value"
                 >
                     <lew-tag
-                        :size="size"
-                        type="primary"
                         v-for="(item, index) in getLabels"
                         :key="index"
+                        :size="size"
+                        type="primary"
                         closable
                         @close="closeLabel(item)"
                     >
@@ -237,16 +237,16 @@ defineExpose({ show, hide });
                 <slot name="header"></slot>
                 <div v-if="searchable" class="search-input">
                     <input
-                        v-model="state.keyword"
                         ref="searchInputRef"
-                        @input="searchDebounce"
+                        v-model="state.keyword"
                         placeholder="输入搜索关键词"
+                        @input="searchDebounce"
                     />
                 </div>
                 <div class="lew-select-options-box">
                     <lew-flex
-                        direction="y"
                         v-show="state.options && state.options.length === 0"
+                        direction="y"
                         class="not-found"
                     >
                         <lew-icon type="box" size="30" />
@@ -266,8 +266,8 @@ defineExpose({ show, hide });
                     </div>
 
                     <use-virtual-list
-                        class="lew-select-options-list"
                         v-if="state.options.length > 0"
+                        class="lew-select-options-list"
                         :list="state.options"
                         :options="{
                             itemHeight: 30,

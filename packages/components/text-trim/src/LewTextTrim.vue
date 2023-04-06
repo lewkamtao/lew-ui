@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import tippy from 'tippy.js';
-import { textTrimProps } from './text-trim';
 import { watchDebounced } from '@vueuse/core';
+import { textTrimProps } from './text-trim';
 
 const props = defineProps(textTrimProps);
 
-let textTrimRef = ref();
+const textTrimRef = ref();
 let instance: any;
 
-let watchOptions = { debounce: 250, maxWait: 1000 };
+const watchOptions = { debounce: 250, maxWait: 1000 };
 
 // 监听变化 清除初始化
 watchDebounced(
@@ -45,7 +45,7 @@ const clear = () => {
 };
 
 const showPop = () => {
-    var element = textTrimRef.value;
+    const element = textTrimRef.value;
     let isEllipsis = false;
     const { placement, allowHTML, text, arrow }: any = props;
     if (props.lineClamp) {
@@ -62,32 +62,29 @@ const showPop = () => {
             animation: 'shift-away-subtle',
             interactive: true,
             appendTo: () => document.body,
-            placement: placement,
-            allowHTML: allowHTML,
-            arrow: arrow,
+            placement,
+            allowHTML,
+            arrow,
             maxWidth: 250,
         });
         instance.popper.children[0].setAttribute('data-lew', 'tooltip');
-    } else {
-        if (instance) instance.setContent(props.text);
-    }
+    } else if (instance) instance.setContent(props.text);
 };
 
 const getTextTrimStyleObject = computed(() => {
     if (props.lineClamp) {
         return `display: -webkit-box;-webkit-line-clamp: ${props.lineClamp};-webkit-box-orient: vertical;`;
-    } else {
-        return `white-space: nowrap;`;
     }
+    return `white-space: nowrap;`;
 });
 </script>
 
 <template>
     <div
-        @mouseover="showPop"
         ref="textTrimRef"
         class="lew-text-trim-wrapper"
         :style="getTextTrimStyleObject"
+        @mouseover="showPop"
         v-html="text"
     />
 </template>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { checkboxProps } from './checkbox';
 import { useVModel } from '@vueuse/core';
 import { getClass } from 'lew-ui/utils';
+import { checkboxProps } from './checkbox';
 
 const props = defineProps(checkboxProps);
 
@@ -12,15 +12,15 @@ const setChecked = (e: Event) => {
     if (props.disabled) {
         return;
     }
-    let checked = (e.target as HTMLInputElement).checked;
+    const { checked } = e.target as HTMLInputElement;
     modelValue.value = checked;
     emit('change', checked);
 };
 
 const getCheckboxClassName = computed(() => {
     const { block, round, iconable, size, disabled } = props;
-    let checked = modelValue.value;
-    let unicon = !iconable;
+    const checked = modelValue.value;
+    const unicon = !iconable;
     return getClass('lew-checkbox', {
         block,
         round,

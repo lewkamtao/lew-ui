@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useImage } from '@vueuse/core';
-import { avatarProps } from './avatar';
 import { getClass } from 'lew-ui/utils';
+import { avatarProps } from './avatar';
 
 const props = defineProps(avatarProps);
 const { isLoading } = useImage({ src: props.src });
-let isError = ref(false);
+const isError = ref(false);
 
 const imgSrc = computed(() => {
     return isError.value ? props.errorSrc : props.src;

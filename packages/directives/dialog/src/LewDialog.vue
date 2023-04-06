@@ -7,8 +7,8 @@ const props = defineProps(_props);
 const emit = defineEmits(['close']);
 
 let timer: any;
-let okLoading = ref<Boolean>(false);
-let cancelLoading = ref<Boolean>(false);
+const okLoading = ref<boolean>(false);
+const cancelLoading = ref<boolean>(false);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const maskClick = () => {
@@ -17,8 +17,8 @@ const maskClick = () => {
     }
 };
 
-let visibleMask = ref<Boolean>(true);
-let _visible = ref<Boolean>(true);
+const visibleMask = ref<boolean>(true);
+const _visible = ref<boolean>(true);
 
 const close = () => {
     clearTimeout(timer);

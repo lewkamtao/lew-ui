@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { startCase } from 'lodash';
-import { tableProps } from './props';
 import { useDebounceFn, useVModel, watchArray } from '@vueuse/core';
+import { tableProps } from './props';
 
 const props = defineProps(tableProps);
 const emit = defineEmits(['update:selectedKey']);
@@ -10,7 +10,7 @@ const tableRef = ref();
 
 let obs: any;
 
-let state = reactive({
+const state = reactive({
     hoverIndex: -1,
     columns: [],
     scrollbarVisible: false, // 滚动条显示隐藏
@@ -36,10 +36,10 @@ const tableObserve = () => {
 };
 
 const checkScroll = () => {
-    let element = tableRef.value;
-    const clientWidth = element.clientWidth;
-    const scrollWidth = element.scrollWidth;
-    const scrollLeft = element.scrollLeft;
+    const element = tableRef.value;
+    const { clientWidth } = element;
+    const { scrollWidth } = element;
+    const { scrollLeft } = element;
 
     if (scrollWidth === clientWidth) {
         state.hidScrollLine = 'all';
@@ -48,13 +48,13 @@ const checkScroll = () => {
     if (scrollLeft < 5) {
         state.hidScrollLine = 'left';
         return;
-    } else if (scrollLeft + clientWidth > scrollWidth - 5) {
+    }
+    if (scrollLeft + clientWidth > scrollWidth - 5) {
         state.hidScrollLine = 'right';
         return;
     }
 
     state.hidScrollLine = '';
-    return;
 };
 
 const resizeTableHandleDb = useDebounceFn(() => {
@@ -63,7 +63,7 @@ const resizeTableHandleDb = useDebounceFn(() => {
 
 const resizeTableHandle = () => {
     const table = tableRef.value;
-    let clientWidth: number = 0;
+    let clientWidth = 0;
     props.columns
         .map((e) => e.width)
         .forEach((w) => {
@@ -79,27 +79,26 @@ const resizeTableHandle = () => {
 };
 
 const getTdNotWidth = computed(() => {
-    let totalWidth: number = 0;
-    let countWidth: number = props.columns.filter((e) => !!e.width).length;
+    let totalWidth = 0;
+    const countWidth: number = props.columns.filter((e) => !!e.width).length;
     props.columns.forEach((item: any) => {
         if (item.width !== undefined) {
             totalWidth += item.width;
         }
     });
-    let width = totalWidth / countWidth || totalWidth / props.columns.length;
+    const width = totalWidth / countWidth || totalWidth / props.columns.length;
     return width;
 });
 
 const getTdStyle = computed(() => (column: any, row?: any) => {
-    let width = column.width || getTdNotWidth.value;
-    let tdStyle = row && row.tdStyle?.[column.field];
+    const width = column.width || getTdNotWidth.value;
+    const tdStyle = row && row.tdStyle?.[column.field];
     if (state.scrollbarVisible) {
         return `width: ${width}px;${tdStyle}`;
-    } else {
-        return `width: ${
-            (width / getTdTotalWidth.value) * state.scrollClientWidth
-        }px;${tdStyle}`;
     }
+    return `width: ${
+        (width / getTdTotalWidth.value) * state.scrollClientWidth
+    }px;${tdStyle}`;
 });
 
 const getTdTotalWidth = computed(() => {
@@ -128,7 +127,7 @@ const fixedColumns = computed(() => (direction: string) => {
     return props.columns.filter((e) => e.fixed === direction);
 });
 
-const setAllChecked = (checked: Boolean) => {
+const setAllChecked = (checked: boolean) => {
     if (checked) {
         selectedKey.value = props.dataSource.map(
             (e: any) => props.rowKey && e[props.rowKey]
@@ -138,17 +137,17 @@ const setAllChecked = (checked: Boolean) => {
     }
 };
 
-const setChecked = (key: any, checked: Boolean) => {
+const setChecked = (key: any, checked: boolean) => {
     if (checked) {
         selectedKey.value.push(key);
     } else {
-        let index = props.selectedKey.findIndex((e: any) => e === key);
+        const index = props.selectedKey.findIndex((e: any) => e === key);
         if (index >= 0) {
             selectedKey.value.splice(index, 1);
         }
     }
 
-    let isAll =
+    const isAll =
         selectedKey.value.length > 0 &&
         selectedKey.value.length === props.dataSource.length;
     if (isAll) {
@@ -162,9 +161,8 @@ const initCheckbox = () => {
     state.checkList = props.dataSource.map((item: any) => {
         if (props.rowKey && selectedKey.value.includes(item[props.rowKey])) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     });
 };
 
@@ -180,7 +178,7 @@ onMounted(() => {
 
 onUnmounted(() => {
     if (obs) {
-        obs.disconnect(); //去掉监听
+        obs.disconnect(); // 去掉监听
         obs = null;
     }
 });
@@ -201,11 +199,11 @@ onUnmounted(() => {
         }"
     >
         <div
-            class="lew-table"
             ref="tableRef"
+            class="lew-table"
+            :style="`max-height: ${maxHeight}px`"
             @scroll="checkScroll"
             @mouseleave="state.hoverIndex = -1"
-            :style="`max-height: ${maxHeight}px`"
         >
             <div
                 class="lew-table-head"

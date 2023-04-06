@@ -1,16 +1,16 @@
 <script lang="ts" setup>
+import moment from 'moment';
 import { getMonthDate, getHeadDate } from './date';
 import { dateRangeProps } from './datePicker';
-import moment from 'moment';
 
 const props = defineProps(dateRangeProps);
 
-let dateValue = ref({
+const dateValue = ref({
     start: props.modelValue?.[0],
     end: props.modelValue?.[1],
 });
 
-let _dateValue = ref({
+const _dateValue = ref({
     start: Number(moment(dateValue.value.start).format('X')),
     end: Number(moment(dateValue.value.end).format('X')),
 });
@@ -26,24 +26,24 @@ watch(
 );
 
 // 获取当天日期对象
-let today = new Date();
+const today = new Date();
 // 获取当前年份
-let curYear = today.getFullYear();
+const curYear = today.getFullYear();
 // 获取当前月份
-let curMonth = today.getMonth() + 1;
-let curDay = today.getDate();
-let curDate = `${curYear}-${curMonth}-${curDay}`;
-let _curDate = Number(moment(`${curYear}-${curMonth}-${curDay}`).format('X'));
+const curMonth = today.getMonth() + 1;
+const curDay = today.getDate();
+const curDate = `${curYear}-${curMonth}-${curDay}`;
+const _curDate = Number(moment(`${curYear}-${curMonth}-${curDay}`).format('X'));
 
 // 年
-let _year1 = ref(moment(dateValue.value.start).year());
+const _year1 = ref(moment(dateValue.value.start).year());
 // 月
-let _month1 = ref(moment(dateValue.value.start).month() + 1);
+const _month1 = ref(moment(dateValue.value.start).month() + 1);
 
 // 年
-let _year2 = ref(moment(dateValue.value.end).year());
+const _year2 = ref(moment(dateValue.value.end).year());
 // 月
-let _month2 = ref(moment(dateValue.value.end).month() + 1);
+const _month2 = ref(moment(dateValue.value.end).month() + 1);
 
 if (_year1.value === _year2.value && _month1.value === _month2.value) {
     _month2.value += 1;
@@ -53,8 +53,8 @@ if (_month2.value >= 12) {
     _month2.value = 1;
 }
 
-let dateData1 = ref(getMonthDate(1));
-let dateData2 = ref(getMonthDate(2));
+const dateData1 = ref(getMonthDate(1));
+const dateData2 = ref(getMonthDate(2));
 
 onMounted(() => {
     setMonthDate(1);
@@ -184,13 +184,13 @@ const hoverValue = (item: any) => {
     if (item.date != item.showDate || i % 2 === 0) {
         return;
     }
-    let value = `${item.year}-${item.month}-${item.showDate}`;
-    let start = dateValue.value.start;
-    let end = dateValue.value.end;
+    const value = `${item.year}-${item.month}-${item.showDate}`;
+    const { start } = dateValue.value;
+    let { end } = dateValue.value;
     end = value;
     dateValue.value = {
-        start: start,
-        end: end,
+        start,
+        end,
     };
 
     _dateValue.value = {
@@ -203,25 +203,23 @@ const setValue = (item: any) => {
     if (item.date != item.showDate) {
         return;
     }
-    let value = `${item.year}-${item.month}-${item.showDate}`;
-    let _value = Number(moment(value).format('X'));
-    let start = dateValue.value.start;
-    let end = dateValue.value.end;
+    const value = `${item.year}-${item.month}-${item.showDate}`;
+    const _value = Number(moment(value).format('X'));
+    let { start } = dateValue.value;
+    let { end } = dateValue.value;
 
     if (i % 2 === 0) {
         start = value;
         end = '';
+    } else if (_value < _dateValue.value.start) {
+        start = value;
+        end = dateValue.value.start;
     } else {
-        if (_value < _dateValue.value.start) {
-            start = value;
-            end = dateValue.value.start;
-        } else {
-            end = value;
-        }
+        end = value;
     }
     dateValue.value = {
-        start: start,
-        end: end,
+        start,
+        end,
     };
 
     _dateValue.value = {
@@ -251,12 +249,12 @@ const getClass = computed(() => (type: string, item: any) => {
         return;
     }
 
-    let dateStr = moment(
+    const dateStr = moment(
         `${item.year}-${item.month}-${item.showDate}`,
         'YYYY-MM-DD'
     );
 
-    let _date = Number(moment(dateStr).format('X'));
+    const _date = Number(moment(dateStr).format('X'));
 
     switch (type) {
         case 'today':
@@ -283,21 +281,19 @@ const getClass = computed(() => (type: string, item: any) => {
             }
             break;
         case 'rangeSelected':
-            let _start = _dateValue.value?.start;
-            let _end = _dateValue.value?.end;
+            const _start = _dateValue.value?.start;
+            const _end = _dateValue.value?.end;
             if (_start === _date) {
                 if (_start > _end) {
                     return 'lew-date-label-selected-end';
-                } else {
-                    return 'lew-date-label-selected-start';
                 }
+                return 'lew-date-label-selected-start';
             }
             if (_end === _date) {
                 if (_start > _end) {
                     return 'lew-date-label-selected-start';
-                } else {
-                    return 'lew-date-label-selected-end';
                 }
+                return 'lew-date-label-selected-end';
             }
             if (_start < _end) {
                 if (
@@ -307,14 +303,12 @@ const getClass = computed(() => (type: string, item: any) => {
                 ) {
                     return 'lew-date-label-selected';
                 }
-            } else {
-                if (
-                    _end < _date &&
-                    _start > _date &&
-                    item.date === item.showDate
-                ) {
-                    return 'lew-date-label-selected';
-                }
+            } else if (
+                _end < _date &&
+                _start > _date &&
+                item.date === item.showDate
+            ) {
+                return 'lew-date-label-selected';
             }
             break;
         default:

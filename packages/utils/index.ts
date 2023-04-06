@@ -1,7 +1,7 @@
 // Returns the icon type to be used in a tooltip.
 // type: The type of message to display in the tooltip.
 export const getIconType = (type: string): string => {
-    let map = {
+    const map = {
         normal: 'info',
         warning: 'alert-triangle',
         success: 'check',
@@ -12,7 +12,7 @@ export const getIconType = (type: string): string => {
     return map[type] || 'info';
 };
 
-export const getClass = (prefix: String, props: Object) => {
+export const getClass = (prefix: string, props: Object) => {
     let className = '';
     for (const [key, value] of Object.entries(props)) {
         if (typeof value === 'boolean' && value) {
@@ -25,10 +25,10 @@ export const getClass = (prefix: String, props: Object) => {
 };
 
 export const numFormat = (num: number) => {
-    var str = num.toString().split('.');
-    var integerPart = str[0];
-    var decimalPart = str[1] ? '.' + str[1] : '';
-    var reg = /(\d+)(\d{3})/;
+    const str = num.toString().split('.');
+    let integerPart = str[0];
+    const decimalPart = str[1] ? `.${str[1]}` : '';
+    const reg = /(\d+)(\d{3})/;
     while (reg.test(integerPart)) {
         integerPart = integerPart.replace(reg, '$1' + ',' + '$2');
     }

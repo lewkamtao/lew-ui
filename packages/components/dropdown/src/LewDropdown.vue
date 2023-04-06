@@ -5,13 +5,13 @@ import type { LewDropdownOptions } from '../index';
 defineProps(dropdownProps);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-let lewPopoverRef = ref();
+const lewPopoverRef = ref();
 
-let show = () => {
+const show = () => {
     lewPopoverRef.value.show();
 };
 
-let hide = () => {
+const hide = () => {
     lewPopoverRef.value.hide();
 };
 

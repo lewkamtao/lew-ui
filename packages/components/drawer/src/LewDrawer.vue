@@ -7,8 +7,8 @@ useDOMCreate('lew-drawer');
 const emit = defineEmits(['update:visible']);
 
 const props = defineProps(drawerProps);
-let _visible = ref(props.visible);
-let isShowMain = ref(false);
+const _visible = ref(props.visible);
+const isShowMain = ref(false);
 
 watch(
     () => props.visible,

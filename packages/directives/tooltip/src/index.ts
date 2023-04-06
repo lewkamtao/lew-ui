@@ -5,7 +5,7 @@ export default {
     install(app: Application) {
         app.directive('tooltip', {
             mounted(el: any, binding: DirectiveBinding) {
-                let trigger = binding.value.trigger;
+                let { trigger } = binding.value;
                 if (trigger === 'hover') {
                     trigger = 'mouseenter';
                 }

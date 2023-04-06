@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import tippy from 'tippy.js';
-import { popoverProps } from './popover';
 import { watchDebounced } from '@vueuse/core';
+import { popoverProps } from './popover';
 
 const props = defineProps(popoverProps);
-let triggerRef = ref();
-let bodyRef = ref();
+const triggerRef = ref();
+const bodyRef = ref();
 let instance: any;
-let watchOptions = { debounce: 250, maxWait: 1000 };
+const watchOptions = { debounce: 250, maxWait: 1000 };
 
 // 方向
 watchDebounced(
@@ -68,12 +68,12 @@ const initTippy = () => {
 
     instance = tippy(triggerRef.value, {
         theme: 'light',
-        trigger: trigger,
-        triggerTarget: triggerTarget,
+        trigger,
+        triggerTarget,
         content: bodyRef.value,
         animation: 'shift-away-subtle',
         interactive: true,
-        placement: placement,
+        placement,
         arrow: false,
         delay: trigger === 'mouseenter' ? [150, 150] : undefined,
         appendTo: () => document.body,
@@ -122,11 +122,11 @@ defineExpose({ show, hide, refresh });
         </label>
         <div
             ref="bodyRef"
-            class="lew-popover-body"
             v-loading="{
                 visible: loading,
                 iconSize: 16,
             }"
+            class="lew-popover-body"
         >
             <slot name="popover-body" :show="show" :hide="hide" />
         </div>

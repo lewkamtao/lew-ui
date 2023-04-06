@@ -49,7 +49,7 @@ export const getMonthDate = (year?: number, month?: number) => {
         } else if (date > lastData) {
             // 当date大于了这个月最后一天，那么代表下个月
             thisMonth = month + 1; // 月份加一
-            showDate = showDate - lastData; // 显示下一个月具体几号
+            showDate -= lastData; // 显示下一个月具体几号
         }
         // 当我们月份是13的时候，代表下一年，月份置为一
         if (thisMonth === 13) thisMonth = 1;
@@ -57,10 +57,10 @@ export const getMonthDate = (year?: number, month?: number) => {
         if (thisMonth === 0) thisMonth = 12;
         // 最后塞入到我们的ret中去
         ret.push({
-            date: date,
-            year: year,
+            date,
+            year,
             month: thisMonth,
-            showDate: showDate,
+            showDate,
         });
     }
     return ret;

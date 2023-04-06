@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useLewTo } from '../../../hooks';
 import _props from './props';
+
 const { lewTo } = useLewTo();
 
 const props = defineProps(_props);
@@ -47,7 +48,7 @@ const getSize = computed(() => {
         <div class="lew-tag-right">
             <slot name="right"></slot>
         </div>
-        <div class="lew-tag-close" @click.stop="close" v-if="closable">
+        <div v-if="closable" class="lew-tag-close" @click.stop="close">
             <lew-icon :size="getSize" type="x" />
         </div>
     </div>

@@ -20,7 +20,7 @@ const emit = defineEmits([
     'input',
 ]);
 
-let lewDropdownRef = ref();
+const lewDropdownRef = ref();
 
 const input = (value: string) => {
     emit('update:modelValue', value);
@@ -49,7 +49,7 @@ const hide = () => {
     lewDropdownRef.value.hide();
 };
 
-let width = ref(0);
+const width = ref(0);
 
 const focus = (e: any) => {
     width.value = lewDropdownRef.value.$el.clientWidth - 14;

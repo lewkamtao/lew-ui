@@ -12,7 +12,7 @@ const columns = [
         width: 120,
         field: 'param',
     },
-   
+
     {
         title: '类型',
         width: 240,
@@ -22,7 +22,8 @@ const columns = [
         title: '默认值',
         width: 120,
         field: 'default',
-    }, {
+    },
+    {
         title: '描述',
         width: 320,
         field: 'description',

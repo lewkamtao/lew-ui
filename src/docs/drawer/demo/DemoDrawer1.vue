@@ -20,7 +20,7 @@ const open4 = (): void => {
     <lew-flex gap="20" x="start">
         <lew-drawer v-model:visible="visible1" position="right"></lew-drawer>
         <lew-button text="右边" @click="open1" />
-        
+
         <lew-drawer v-model:visible="visible2" position="bottom"></lew-drawer>
         <lew-button text="下边" @click="open2" />
 

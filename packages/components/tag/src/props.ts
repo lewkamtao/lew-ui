@@ -1,5 +1,5 @@
-let sizeRules = ['small', 'medium', 'large'];
-let typeRules = ['primary', 'info', 'success', 'error', 'warning', 'normal'];
+const sizeRules = ['small', 'medium', 'large'];
+const typeRules = ['primary', 'info', 'success', 'error', 'warning', 'normal'];
 
 const _props = {
     type: {

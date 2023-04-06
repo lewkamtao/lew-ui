@@ -49,7 +49,7 @@ const focusFn = () => {
     }
 };
 
-let _type = ref(props.type);
+const _type = ref(props.type);
 
 const showPasswordFn = (): void => {
     _type.value === 'text'
@@ -57,18 +57,18 @@ const showPasswordFn = (): void => {
         : (_type.value = 'text');
 };
 
-let getCheckNumStr = computed(() => {
+const getCheckNumStr = computed(() => {
     if (props.showCount && props.maxLength) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        return getTextLength(v.value) + ' / ' + props.maxLength;
-    } else if (props.showCount) {
+        return `${getTextLength(v.value)} / ${props.maxLength}`;
+    }
+    if (props.showCount) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         return getTextLength(v.value);
-    } else {
-        return false;
     }
+    return false;
 });
 
 /**
@@ -79,26 +79,24 @@ let getCheckNumStr = computed(() => {
 const getTextLength = (val: string) => {
     if (!props.niceCount) {
         return val.length;
-    } else {
-        let len = 0;
-        for (let i = 0; i <= val.length - 1; i++) {
-            let length = val.charCodeAt(i);
-            if (length >= 0 && length <= 128) {
-                len += 0.5;
-            } else {
-                len += 1;
-            }
-        }
-        return Math.trunc(len);
     }
+    let len = 0;
+    for (let i = 0; i <= val.length - 1; i++) {
+        const length = val.charCodeAt(i);
+        if (length >= 0 && length <= 128) {
+            len += 0.5;
+        } else {
+            len += 1;
+        }
+    }
+    return Math.trunc(len);
 };
 
 const getEl = () => {
     if (props.type === 'textarea') {
         return lewTextareaRef.value;
-    } else {
-        return lewInputRef.value;
     }
+    return lewInputRef.value;
 };
 
 const focus = (e: any) => {
@@ -174,22 +172,22 @@ defineExpose({ getEl, focusFn, lewInputRef });
             </div>
             <div
                 v-if="showPassword"
+                class="lew-input-show-password"
                 @mousedown.prevent=""
                 @click="showPasswordFn"
-                class="lew-input-show-password"
             >
-                <lew-icon size="16" v-show="_type === 'text'" type="eye" />
+                <lew-icon v-show="_type === 'text'" size="16" type="eye" />
                 <lew-icon
-                    size="16"
                     v-show="_type === 'password'"
+                    size="16"
                     type="eye-off"
                 />
             </div>
             <div
                 v-if="clearable"
+                class="lew-input-clear"
                 @mousedown.prevent=""
                 @click="clear"
-                class="lew-input-clear"
             >
                 <lew-icon size="16" type="x-circle" />
             </div>

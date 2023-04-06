@@ -151,7 +151,11 @@ const formatSex = (sex: number) => {
             </template>
             <template #popover-body>
                 <div class="popover-body" style="width: 800px">
-                    <lew-table :data-source="data" :columns="columns" height="auto">
+                    <lew-table
+                        :data-source="data"
+                        :columns="columns"
+                        height="auto"
+                    >
                         <template #id="{ row }"> {{ row.id }} </template>
                         <template #name="{ row }"> {{ row.name }} </template>
                         <template #age="{ row }"> {{ row.age }} </template>

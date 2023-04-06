@@ -151,7 +151,11 @@ const docsTable = reactive([
             <br />
             <br />
             <lew-title size="16px">{{ item.desc }}</lew-title>
-            <lew-table :data-source="item.data" :columns="item.columns" height="auto">
+            <lew-table
+                :data-source="item.data"
+                :columns="item.columns"
+                height="auto"
+            >
                 <template #param="{ row }"> {{ row.param }} </template>
                 <template #description="{ row }">
                     {{ row.description }}

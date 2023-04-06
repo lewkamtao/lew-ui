@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import { dateRangePickerProps } from './datePicker';
+
 const props = defineProps(dateRangePickerProps);
 
-let isShowPicker = ref(false);
-let dateValue = ref(props.modelValue as any);
-let lewPopoverRef = ref();
+const isShowPicker = ref(false);
+const dateValue = ref(props.modelValue as any);
+const lewPopoverRef = ref();
 
 watch(
     () => props.modelValue,

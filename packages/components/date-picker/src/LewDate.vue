@@ -1,11 +1,11 @@
 <script lang="ts" setup>
+import moment from 'moment';
 import { getMonthDate, getHeadDate } from './date';
 import { dateProps } from './datePicker';
-import moment from 'moment';
 
 const props = defineProps(dateProps);
 
-let dateValue = ref<string | undefined>(props.modelValue || '');
+const dateValue = ref<string | undefined>(props.modelValue || '');
 
 watch(
     () => props.modelValue,
@@ -15,21 +15,21 @@ watch(
 );
 
 // 获取当天日期对象
-let today = new Date();
+const today = new Date();
 // 获取当前年份
-let curYear = ref(today.getFullYear());
+const curYear = ref(today.getFullYear());
 // 获取当前月份
-let curMonth = ref(today.getMonth() + 1);
-let curDay = ref(today.getDate());
+const curMonth = ref(today.getMonth() + 1);
+const curDay = ref(today.getDate());
 
 // 年
-let _year = ref(dateValue.value ? moment(dateValue.value).year() : curYear);
+const _year = ref(dateValue.value ? moment(dateValue.value).year() : curYear);
 // 月
-let _month = ref(
+const _month = ref(
     dateValue.value ? moment(dateValue.value).month() + 1 : curMonth
 );
 
-let dateData = ref(getMonthDate());
+const dateData = ref(getMonthDate());
 
 onMounted(() => {
     setMonthDate();
@@ -72,7 +72,7 @@ const setMonthDate = () => {
 const emit = defineEmits(['change', 'update:modelValue']);
 
 const selectDateFn = (item: any) => {
-    let v = `${item.year}-${item.month}-${item.showDate}`;
+    const v = `${item.year}-${item.month}-${item.showDate}`;
     dateValue.value = v;
     emit('update:modelValue', dateValue.value);
     emit('change', v);
@@ -80,7 +80,7 @@ const selectDateFn = (item: any) => {
 
 const checkDateSelect = computed(() => (item: any) => {
     if (item.date > 0 && item.date <= item.showDate) {
-        let v = `${_year.value}-${_month.value}-${item.showDate}`;
+        const v = `${_year.value}-${_month.value}-${item.showDate}`;
         return dateValue.value === v;
     }
 });

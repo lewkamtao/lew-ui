@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import LewRadio from './LewRadio.vue';
 import { useVModel } from '@vueuse/core';
+import LewRadio from './LewRadio.vue';
 import { radioGroupProps } from './radio';
 import type { RadioOptions } from './radio';
 

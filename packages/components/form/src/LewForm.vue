@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { formProps } from './form';
+
 defineProps(formProps);
 </script>
 

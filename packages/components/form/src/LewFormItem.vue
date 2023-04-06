@@ -25,9 +25,9 @@ const props = defineProps({
     },
 });
 
-let _labelWidth = ref(props.labelWidth || labelWidth || 'auto');
-let _direction = ref(props.direction || direction || 'x');
-let _labelAlign = ref(props.labelAlign || labelAlign || 'end');
+const _labelWidth = ref(props.labelWidth || labelWidth || 'auto');
+const _direction = ref(props.direction || direction || 'x');
+const _labelAlign = ref(props.labelAlign || labelAlign || 'end');
 </script>
 
 <template>

@@ -17,11 +17,11 @@ describe('Button', () => {
         const buttonComponent = shallowMount(LewButton);
         // 默认type为primary
         expect(buttonComponent.find('.lew-button').classes()).toContain(
-            'lew-button-primary',
+            'lew-button-primary'
         );
         // 默认size为medium
         expect(buttonComponent.find('.lew-button').classes()).toContain(
-            'lew-button-medium',
+            'lew-button-medium'
         );
     });
 
@@ -33,10 +33,10 @@ describe('Button', () => {
             },
         });
         expect(buttonComponent.find('.lew-button').classes()).toContain(
-            'lew-button-success',
+            'lew-button-success'
         );
         expect(buttonComponent.find('.lew-button').classes()).toContain(
-            'lew-button-small',
+            'lew-button-small'
         );
     });
 

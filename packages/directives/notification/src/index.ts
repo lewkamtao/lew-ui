@@ -79,9 +79,7 @@ const add = (type: string, title: string, content: string, delay: number) => {
                       <div class="lew-notification-title">${title}</div>
                       ${
                           content
-                              ? '<div class="lew-notification-content">' +
-                                content +
-                                '</div>'
+                              ? `<div class="lew-notification-content">${content}</div>`
                               : ''
                       }
                     </div> 
@@ -100,7 +98,7 @@ const add = (type: string, title: string, content: string, delay: number) => {
         `lew-notification lew-notification-${type}`
     );
 
-    let timer: (() => void) | undefined = undefined;
+    let timer: (() => void) | undefined;
     let lock = false; // 加上锁 避免 点击关闭和鼠标移出事件重叠 bug
 
     function startTimer() {

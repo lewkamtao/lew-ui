@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { LewIcon } from 'lew-ui';
-import { buttonProps } from './button';
 import { getClass } from 'lew-ui/utils';
+import { buttonProps } from './button';
 
 const emit = defineEmits(['click']);
 const props = defineProps(buttonProps);
 
-let _loading = ref(false);
+const _loading = ref(false);
 
 const handleClick = async (e: any) => {
     if (props.disabled || _loading.value || props.loading) return;
@@ -22,14 +22,14 @@ const handleClick = async (e: any) => {
 };
 
 const getButtonClass = computed(() => {
-    let { round, size, type, icon, text } = props;
-    let loading = _loading.value || props.loading;
-    let singleIcon = !!(!text && icon);
+    const { round, size, type, icon, text } = props;
+    const loading = _loading.value || props.loading;
+    const singleIcon = !!(!text && icon);
     return getClass('lew-button', { round, size, type, loading, singleIcon });
 });
 
 const getIconSize = computed(() => {
-    let { size } = props;
+    const { size } = props;
     switch (size) {
         case 'small':
             return 12;
@@ -51,12 +51,12 @@ const getIconSize = computed(() => {
         @click="handleClick"
     >
         <lew-icon
-            class="lew-button-icon"
             v-if="icon"
+            class="lew-button-icon"
             :size="getIconSize"
             :type="icon"
         />
-        <span class="lew-button-text" v-if="text">{{ text }} </span>
+        <span v-if="text" class="lew-button-text">{{ text }} </span>
         <span
             v-if="loading || _loading"
             class="lew-loading-icon"

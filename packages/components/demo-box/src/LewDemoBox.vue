@@ -22,7 +22,7 @@ defineProps({
     },
 });
 
-let isShowCode = ref(false);
+const isShowCode = ref(false);
 
 const outCodeRef = shallowRef<HTMLElement | null>(null);
 const style = computed<CSSProperties>(() => {
@@ -60,11 +60,11 @@ const style = computed<CSSProperties>(() => {
             <div class="show-bar" @click="isShowCode = !isShowCode">
                 <div class="icon">
                     <lew-icon
-                        size="16"
                         v-if="!isShowCode"
+                        size="16"
                         type="chevron-down"
                     />
-                    <lew-icon size="16" v-else type="chevron-up" />
+                    <lew-icon v-else size="16" type="chevron-up" />
                 </div>
 
                 {{ isShowCode ? '关闭' : '显示源码' }}

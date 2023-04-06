@@ -58,9 +58,8 @@ export const selectProps = {
                     return keyword && e.label.indexOf(keyword) >= 0;
                 });
                 return reslut;
-            } else {
-                return [];
             }
+            return [];
         },
     },
     searchDelay: {

@@ -2,7 +2,7 @@
 import { _props } from './props';
 
 const props = defineProps(_props);
-let _loading = ref(false);
+const _loading = ref(false);
 const v = ref(props.modelValue);
 
 watch(

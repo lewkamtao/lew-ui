@@ -1,20 +1,20 @@
 <script lang="ts" setup>
+import { useVModel, watchArray } from '@vueuse/core';
 import { checkboxGroupProps } from './checkbox';
 import type { CheckboxOptions } from './checkbox';
 
 import LewCheckbox from './LewCheckbox.vue';
-import { useVModel, watchArray } from '@vueuse/core';
 
 const props = defineProps(checkboxGroupProps);
 const emit = defineEmits(['change', 'update:modelValue']);
 const modelValue = useVModel(props, 'modelValue', emit);
 const checkList = ref([] as any);
 
-const change = (item: CheckboxOptions, checked: Boolean) => {
+const change = (item: CheckboxOptions, checked: boolean) => {
     if (checked) {
         modelValue.value.push(item.value);
     } else {
-        let index = props.modelValue.findIndex((e: any) => e === item.value);
+        const index = props.modelValue.findIndex((e: any) => e === item.value);
         if (index >= 0) {
             modelValue.value.splice(index, 1);
         }
@@ -33,9 +33,8 @@ const initCheckbox = () => {
     checkList.value = props.options.map((item) => {
         if (modelValue.value.includes(item.value)) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     });
 };
 
@@ -51,13 +50,13 @@ initCheckbox();
         <lew-checkbox
             v-for="(item, index) in options"
             :key="item.value"
+            v-model="checkList[index]"
             :block="block"
             :iconable="iconable"
             :round="round"
             :size="size"
             :label="item.label"
             :disabled="item.disabled"
-            v-model="checkList[index]"
             @change="change(item, $event)"
         />
     </lew-flex>

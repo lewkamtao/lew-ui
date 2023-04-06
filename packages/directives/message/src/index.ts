@@ -54,25 +54,23 @@ const loading = (e: MessageFnOptions) => {
     });
 };
 
-const clear = (id?: Number) => {
+const clear = (id?: number) => {
     const LewMessageDom = document.getElementById('lew-message');
     if (id) {
-        let messageDom = document.getElementById(`message-id-${id}`);
+        const messageDom = document.getElementById(`message-id-${id}`);
         messageDom && messageDom.classList.add('message-hidden');
         setTimeout(() => {
             if (messageDom) LewMessageDom?.removeChild(messageDom);
         }, 120);
-    } else {
-        if (LewMessageDom?.childNodes) {
-            Array.from(LewMessageDom?.children).forEach((e) => {
-                e && e.classList.add('message-hidden');
-                setTimeout(() => {
-                    try {
-                        if (e) LewMessageDom?.removeChild(e);
-                    } catch {}
-                }, 120);
-            });
-        }
+    } else if (LewMessageDom?.childNodes) {
+        Array.from(LewMessageDom?.children).forEach((e) => {
+            e && e.classList.add('message-hidden');
+            setTimeout(() => {
+                try {
+                    if (e) LewMessageDom?.removeChild(e);
+                } catch {}
+            }, 120);
+        });
     }
 };
 
@@ -91,14 +89,14 @@ const message = ({ type, e }: MessageOptions) => {
     }
 };
 
-let timer = {} as any;
+const timer = {} as any;
 
 const setMessage = ({ type, e }: MessageOptions) => {
     const LewMessageDom = document.getElementById('lew-message');
-    let hasMessageById = e.id
+    const hasMessageById = e.id
         ? document.getElementById(`message-id-${e.id}`)
         : false;
-    let messageDom = hasMessageById || document.createElement('div');
+    const messageDom = hasMessageById || document.createElement('div');
     const svgArr: any = {
         success: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check vue-feather__content"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
         warning: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle vue-feather__content"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>`,

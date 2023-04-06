@@ -13,7 +13,7 @@ export type SelectSearchMultipleMethodParams = {
 
 export const selectMultipleProps = {
     modelValue: {
-        type: Array as PropType<String[] | Number[]>,
+        type: Array as PropType<string[] | number[]>,
         required: true,
     },
     options: {
@@ -60,9 +60,8 @@ export const selectMultipleProps = {
                     return keyword && e.label.indexOf(keyword) >= 0;
                 });
                 return reslut;
-            } else {
-                return [];
             }
+            return [];
         },
     },
     searchDelay: {

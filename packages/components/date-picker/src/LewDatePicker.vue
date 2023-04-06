@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { datePickerProps } from './datePicker';
 import moment from 'moment';
+import { datePickerProps } from './datePicker';
 
 const props = defineProps(datePickerProps);
 
-let isShowPicker = ref(false);
-let dateValue = ref<string | undefined>(props.modelValue);
+const isShowPicker = ref(false);
+const dateValue = ref<string | undefined>(props.modelValue);
 
-let lewPopoverRef = ref();
+const lewPopoverRef = ref();
 
 watch(
     () => props.modelValue,
@@ -28,7 +28,7 @@ const hide = () => {
 
 const change = (date: string) => {
     emit('update:modelValue', moment(date).format('YYYY-MM-DD'));
-    emit('change', { date: date, show, hide });
+    emit('change', { date, show, hide });
     if (props.autoClose) {
         hide();
     }

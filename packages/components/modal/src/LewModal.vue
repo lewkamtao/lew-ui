@@ -1,6 +1,6 @@
 <script lang="ts" setup name="Modal">
-import { useDOMCreate } from '../../../hooks';
 import { useVModels } from '@vueuse/core';
+import { useDOMCreate } from '../../../hooks';
 
 useDOMCreate('lew-modal');
 
@@ -31,8 +31,8 @@ const emit = defineEmits(['update:visible', 'confirm']);
 
 const { visible } = useVModels(props, emit);
 
-let _visible = ref(props.visible);
-let _visibleTimer = ref();
+const _visible = ref(props.visible);
+const _visibleTimer = ref();
 
 watch(
     () => props.visible,

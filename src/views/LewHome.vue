@@ -538,13 +538,13 @@ const notification = (type: string) => {
         @keyframes demo {
             from {
                 opacity: 0;
-                transform: scale(0.3) translate(-320px, 200px) rotateX(0deg)
+                transform: scale(0.3) translate(0px, 200px) rotateX(0deg)
                     rotateY(0deg);
             }
 
             to {
                 opacity: 1;
-                transform: scale(0.5) translate(-320px, 200px) rotateX(15deg)
+                transform: scale(0.5) translate(0px, 200px) rotateX(15deg)
                     rotateY(-15deg);
             }
         }

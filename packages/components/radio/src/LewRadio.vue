@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { radioProps } from './radio';
 import { getClass } from 'lew-ui/utils';
+import { radioProps } from './radio';
 
 const props = defineProps(radioProps);
 
@@ -12,7 +12,7 @@ const setChecked = () => {
 
 const getRadioClassName = computed(() => {
     const { block, checked, iconable, size, disabled } = props;
-    let unicon = !iconable;
+    const unicon = !iconable;
     return getClass('lew-radio', {
         block,
         checked,
@@ -25,7 +25,7 @@ const getRadioClassName = computed(() => {
 
 <template>
     <label class="lew-radio" :class="getRadioClassName">
-        <div class="icon-radio-box" v-if="iconable">
+        <div v-if="iconable" class="icon-radio-box">
             <div class="icon-radio"></div>
         </div>
         <input

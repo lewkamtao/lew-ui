@@ -6,12 +6,12 @@ import { _props } from './props';
 const props = defineProps(_props);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-let lewPopoverRef = ref();
+const lewPopoverRef = ref();
 
-let okLoading = ref(false);
-let cancelLoading = ref(false);
+const okLoading = ref(false);
+const cancelLoading = ref(false);
 
-let hide = () => {
+const hide = () => {
     lewPopoverRef.value.hide();
 };
 
@@ -86,14 +86,14 @@ const emit = defineEmits(['onShow', 'cancel']);
                             text="取消"
                             size="small"
                             type="blank"
-                            @click="cancelHandle"
                             :loading="cancelLoading"
+                            @click="cancelHandle"
                         />
                         <lew-button
                             text="确定"
                             size="small"
-                            @click="okHandle"
                             :loading="okLoading"
+                            @click="okHandle"
                         />
                     </div>
                 </div>
