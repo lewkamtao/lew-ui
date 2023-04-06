@@ -7,13 +7,19 @@ const route = useRoute();
 const mainRef: any = ref(null);
 
 onMounted(() => {
-    LewDialog.info({
-        title: '温馨提示',
-        content:
-            '当前组件库仍处于开发测试状态，请勿用于生产环境，当前文档仍有很多地方未完善，持续更新中，敬请期待。',
-        cancelText: '',
-        okText: '知道了',
-    });
+    let isInfo = localStorage.getItem('isInfo');
+    if (!isInfo) {
+        LewDialog.info({
+            title: '温馨提示',
+            content:
+                '当前组件库仍处于开发测试状态，请勿用于生产环境，当前文档仍有很多地方未完善，持续更新中，敬请期待。',
+            cancelText: '',
+            okText: '知道了',
+            ok: () => {
+                localStorage.setItem('isInfo', '1');
+            },
+        });
+    }
 });
 
 watch(route, () => {
@@ -207,6 +213,13 @@ group.value = [
                 path: '/Select',
                 label: '',
                 type: 'info',
+            },
+            {
+                cname: '多选选择器',
+                name: 'SelectMultiple',
+                path: '/SelectMultiple',
+                label: 'New',
+                type: 'success',
             },
             {
                 cname: '日期选择器',

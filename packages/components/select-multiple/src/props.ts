@@ -1,37 +1,26 @@
-import { PropType, toRaw } from 'vue';
+import { PropType } from 'vue';
 
-export type LewSelectOptions = {
+export type SelectMultipleOptions = {
     label: string;
     value: string;
     disabled?: boolean;
 };
 
-export const selectProps = {
+export type SelectSearchMultipleMethodParams = {
+    options?: SelectMultipleOptions[];
+    keyword?: string;
+};
+
+export const selectMultipleProps = {
     modelValue: {
-        // 父组件 v-model 没有指定参数名，则默认是 modelValue
-        type: [String, Number, Array<string>],
+        type: Array as PropType<String[] | Number[]>,
         required: true,
     },
     options: {
-        type: Array as PropType<LewSelectOptions[]>,
+        type: Array as PropType<SelectMultipleOptions[]>,
         default() {
             return [];
         },
-        required: true,
-        validator(options: LewSelectOptions[]) {
-            const _options = toRaw(options);
-            const arr = _options.map((e) => e.value);
-            const newSet = new Set(arr);
-            // 检查重复
-            if (arr.length !== newSet.size) {
-                throw new Error('lew-select：options 中 value 不能重复');
-            }
-            return options.length > 0;
-        },
-    },
-    placement: {
-        type: String,
-        default: 'bottom-start',
     },
     trigger: {
         type: String,
@@ -40,29 +29,68 @@ export const selectProps = {
             return ['click', 'hover'].includes(value);
         },
     },
-    multiple: {
-        type: Boolean,
-        default: false,
-    },
-    align: {
-        type: String,
-        default: 'left',
-    },
-    showIcon: {
-        type: Boolean,
-        default: true,
-    },
     labelSlot: {
         type: Boolean,
         default: false,
+    },
+    placeholder: {
+        type: String,
+        default: '请选择',
     },
     size: {
         type: String,
         default: 'medium',
     },
-    // 是否使用清空按钮
-    clearable: {
+    searchable: {
         type: Boolean,
         default: false,
+    },
+    searchPlaceholder: {
+        type: String,
+        default: '',
+    },
+    searchMethod: {
+        type: Function as PropType<
+            (e: SelectSearchMultipleMethodParams) => void
+        >,
+        default: (params: SelectSearchMultipleMethodParams) => {
+            const { options, keyword } = params;
+            if (options && keyword) {
+                const reslut = options.filter((e) => {
+                    return keyword && e.label.indexOf(keyword) >= 0;
+                });
+                return reslut;
+            } else {
+                return [];
+            }
+        },
+    },
+    searchDelay: {
+        type: Number,
+        default: 250,
+    },
+    clearable: {
+        type: Boolean,
+        default: () => false,
+    },
+    disabled: {
+        type: Boolean,
+        default: () => false,
+    },
+    itemHeight: {
+        type: Number,
+        default: 30,
+    },
+    align: {
+        type: String,
+        default: 'left',
+    },
+    showCheckIcon: {
+        type: Boolean,
+        default: () => true,
+    },
+    defaultValue: {
+        type: String,
+        default: '',
     },
 };

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useVModel, useDebounceFn } from '@vueuse/core';
-import { selectProps, SelectOptions } from './props';
+import { selectMultipleProps, SelectMultipleOptions } from './props';
 import { LewPopover } from 'lew-ui';
 import { getClass, numFormat } from 'lew-ui/utils';
 import { UseVirtualList } from '@vueuse/components';
 
-const props = defineProps(selectProps);
+const props = defineProps(selectMultipleProps);
 const emit = defineEmits(['update:modelValue', 'change']);
 const selectValue = useVModel(props, 'modelValue', emit);
 
@@ -63,35 +63,43 @@ const search = async (e: any) => {
 };
 
 const clearHandle = () => {
-    selectValue.value = '';
+    selectValue.value = [];
 };
 
-const selectHandle = (item: SelectOptions) => {
+const selectHandle = (item: SelectMultipleOptions) => {
     if (item.disabled) {
         return;
     }
-    selectValue.value = item.value;
+    let index = selectValue.value.findIndex(
+        (e: String | Number) => e == item.value
+    );
+    if (index == -1) {
+        selectValue.value.push(item.value);
+    } else {
+        selectValue.value.splice(index, 1);
+    }
     hide();
 };
 
 const getChecked = computed(() => (value: String | Number) => {
-    return selectValue.value === value;
+    return selectValue.value.includes(value);
 });
 
 const getValueStyle = computed(() => {
     return state.visible ? 'opacity:0.4' : '';
 });
 
-const getLabel = computed(() => {
+const getLabels = computed(() => {
     if (state.options) {
-        const option = state.options.find((e) => {
-            if (!!e) {
-                return e.value === selectValue.value;
-            }
+        const options = state.options.filter((e: SelectMultipleOptions) => {
+            return (
+                selectValue.value.findIndex(
+                    (v: string | number) => v === e.value
+                ) >= 0
+            );
         });
-
-        if (option && JSON.stringify(option) !== '{}') {
-            return option.label;
+        if (options && JSON.stringify(options) !== '{}') {
+            return options.map((e) => e.label);
         }
     }
 
@@ -171,7 +179,10 @@ defineExpose({ show, hide });
                     size="16px"
                     type="chevron-down"
                     class="icon-select"
-                    :class="{ 'icon-select-hide': clearable && getLabel }"
+                    :class="{
+                        'icon-select-hide':
+                            clearable && getLabels && getLabels.length > 0,
+                    }"
                 />
                 <lew-icon
                     @click.stop="clearHandle"
@@ -179,12 +190,33 @@ defineExpose({ show, hide });
                     size="16px"
                     type="x-circle"
                     class="icon-clear"
-                    :class="{ 'icon-clear-show': clearable && getLabel }"
+                    :class="{
+                        'icon-clear-show':
+                            clearable && getLabels && getLabels.length > 0,
+                    }"
                 />
-                <div v-show="getLabel" :style="getValueStyle" class="value">
-                    {{ getLabel }}
-                </div>
-                <div v-show="!getLabel" class="placeholder">
+                <lew-flex
+                    style="padding: 3px"
+                    v-show="getLabels && getLabels.length > 0"
+                    x="start"
+                    :gap="3"
+                    wrap
+                    :style="getValueStyle"
+                    class="value"
+                >
+                    <lew-tag
+                        :size="size"
+                        type="primary"
+                        v-for="(item, index) in getLabels"
+                        :key="index"
+                    >
+                        {{ item }}
+                    </lew-tag>
+                </lew-flex>
+                <div
+                    v-show="getLabels && getLabels.length === 0"
+                    class="placeholder"
+                >
                     {{ placeholder }}
                 </div>
             </div>
@@ -333,6 +365,21 @@ defineExpose({ show, hide });
         .placeholder {
             color: rgb(165, 165, 165);
         }
+        .lew-select-label-multiple {
+            width: 100%;
+            display: flex;
+            align-items: center;
+
+            .lew-popover {
+                display: flex;
+                align-items: center;
+
+                > div {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
 
         .placeholder,
         .value {
@@ -351,37 +398,33 @@ defineExpose({ show, hide });
         text-align: right;
     }
 
-    .lew-select-placeholder {
-        color: rgb(165, 165, 165);
-    }
-
     .lew-select-size-small {
-        padding: var(--lew-form-input-padding-small);
-        height: var(--lew-form-item-height-small);
+        min-height: var(--lew-form-item-height-small);
         line-height: var(--lew-form-input-line-height-small);
 
         .placeholder {
             font-size: var(--lew-form-font-size-small);
+            margin-left: 8px;
         }
     }
 
     .lew-select-size-medium {
-        padding: var(--lew-form-input-padding-medium);
         line-height: var(--lew-form-input-line-height-medium);
-        height: var(--lew-form-item-height-medium);
+        min-height: var(--lew-form-item-height-medium);
 
         .placeholder {
             font-size: var(--lew-form-font-size-medium);
+            margin-left: 10px;
         }
     }
 
     .lew-select-size-large {
-        padding: var(--lew-form-input-padding-large);
         line-height: var(--lew-form-input-line-height-large);
-        height: var(--lew-form-item-height-large);
+        min-height: var(--lew-form-item-height-large);
 
         .placeholder {
             font-size: var(--lew-form-font-size-large);
+            margin-left: 12px;
         }
     }
 }

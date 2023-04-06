@@ -17,6 +17,7 @@ export * from './form';
 export * from './checkbox';
 export * from './radio';
 export * from './select';
+export * from './select-multiple';
 export * from './switch';
 export * from './date-picker';
 
