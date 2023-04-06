@@ -108,7 +108,11 @@ const hide = () => {
     instance.hide();
 };
 
-defineExpose({ show, hide });
+const refresh = () => {
+    instance.setProps({});
+};
+
+defineExpose({ show, hide, refresh });
 </script>
 
 <template>

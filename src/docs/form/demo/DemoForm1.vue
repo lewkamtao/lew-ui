@@ -52,7 +52,7 @@ const home_options = ref([
         value: '5',
     },
 ]);
-const d = ref('2020-12-12');
+const d = ref('');
 </script>
 
 <template>

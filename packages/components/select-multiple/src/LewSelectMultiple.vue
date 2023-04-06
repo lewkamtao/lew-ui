@@ -64,6 +64,19 @@ const search = async (e: any) => {
 
 const clearHandle = () => {
     selectValue.value = [];
+    // 刷新位置
+    lewPopverRef.value.refresh();
+};
+
+const closeLabel = (label: String) => {
+    let value = state.options.find((e) => e.label === label)?.value;
+    console.log(value);
+
+    let index = selectValue.value.findIndex((v: any) => v === value);
+    if (index >= 0) {
+        selectValue.value.splice(index, 1);
+        lewPopverRef.value.refresh();
+    }
 };
 
 const selectHandle = (item: SelectMultipleOptions) => {
@@ -78,29 +91,22 @@ const selectHandle = (item: SelectMultipleOptions) => {
     } else {
         selectValue.value.splice(index, 1);
     }
-    hide();
+    // 刷新位置
+    lewPopverRef.value.refresh();
 };
 
 const getChecked = computed(() => (value: String | Number) => {
     return selectValue.value.includes(value);
 });
 
-const getValueStyle = computed(() => {
-    return state.visible ? 'opacity:0.4' : '';
-});
-
 const getLabels = computed(() => {
     if (state.options) {
-        const options = state.options.filter((e: SelectMultipleOptions) => {
-            return (
-                selectValue.value.findIndex(
-                    (v: string | number) => v === e.value
-                ) >= 0
-            );
+        const labels = selectValue.value.map((v: Number | String) => {
+            return state.options.find(
+                (e: SelectMultipleOptions) => v === e.value
+            )?.label;
         });
-        if (options && JSON.stringify(options) !== '{}') {
-            return options.map((e) => e.label);
-        }
+        return labels;
     }
 
     return props.defaultValue || props.modelValue;
@@ -201,7 +207,6 @@ defineExpose({ show, hide });
                     x="start"
                     :gap="3"
                     wrap
-                    :style="getValueStyle"
                     class="value"
                 >
                     <lew-tag
@@ -209,6 +214,8 @@ defineExpose({ show, hide });
                         type="primary"
                         v-for="(item, index) in getLabels"
                         :key="index"
+                        closable
+                        @close="closeLabel(item)"
                     >
                         {{ item }}
                     </lew-tag>
@@ -325,16 +332,14 @@ defineExpose({ show, hide });
     }
 
     .lew-select {
-        display: flex;
-        align-items: center;
         position: relative;
         width: 100%;
-        overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         cursor: pointer;
         user-select: none;
         box-sizing: border-box;
+        overflow: hidden;
 
         .icon-select,
         .icon-clear {
@@ -400,30 +405,30 @@ defineExpose({ show, hide });
 
     .lew-select-size-small {
         min-height: var(--lew-form-item-height-small);
-        line-height: var(--lew-form-input-line-height-small);
 
         .placeholder {
             font-size: var(--lew-form-font-size-small);
+            line-height: var(--lew-form-item-height-small);
             margin-left: 8px;
         }
     }
 
     .lew-select-size-medium {
-        line-height: var(--lew-form-input-line-height-medium);
         min-height: var(--lew-form-item-height-medium);
 
         .placeholder {
             font-size: var(--lew-form-font-size-medium);
+            line-height: var(--lew-form-item-height-medium);
             margin-left: 10px;
         }
     }
 
     .lew-select-size-large {
-        line-height: var(--lew-form-input-line-height-large);
         min-height: var(--lew-form-item-height-large);
 
         .placeholder {
             font-size: var(--lew-form-font-size-large);
+            line-height: var(--lew-form-item-height-large);
             margin-left: 12px;
         }
     }

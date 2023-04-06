@@ -47,8 +47,8 @@ const getSize = computed(() => {
         <div class="lew-tag-right">
             <slot name="right"></slot>
         </div>
-        <div class="lew-tag-close" v-if="closable">
-            <lew-icon @click.stop="close" :size="getSize" type="x" />
+        <div class="lew-tag-close" @click.stop="close" v-if="closable">
+            <lew-icon :size="getSize" type="x" />
         </div>
     </div>
 </template>
@@ -61,6 +61,7 @@ const getSize = computed(() => {
     border-radius: 3px;
     user-select: none;
     box-sizing: border-box;
+    overflow: hidden;
 
     .lew-tag-value {
         font-weight: normal;
@@ -110,7 +111,7 @@ const getSize = computed(() => {
     min-width: 20px;
     line-height: 20px;
     padding: 0px;
-    font-size: 12px;
+    font-size: 11px;
 
     .lew-tag-close {
         margin-left: -2px;
@@ -154,7 +155,7 @@ const getSize = computed(() => {
     min-width: 28px;
     line-height: 28px;
     padding: 0px 4px;
-    font-size: 14px;
+    font-size: 15px;
 
     .lew-tag-close {
         margin-left: -4px;

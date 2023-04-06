@@ -116,7 +116,6 @@ defineExpose({ show, hide });
 
         .lew-date-picker-placeholder {
             color: rgb(165, 165, 165);
-            margin-left: 7px;
         }
     }
 

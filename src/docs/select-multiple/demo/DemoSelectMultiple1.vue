@@ -22,13 +22,18 @@ const value = ref([]);
                 />
             </lew-form-item>
             <lew-form-item label="常规">
-                <lew-select-multiple v-model="value" :options="options" />
+                <lew-select-multiple
+                    v-model="value"
+                    :options="options"
+                    clearable
+                />
             </lew-form-item>
             <lew-form-item label="大的">
                 <lew-select-multiple
                     v-model="value"
                     size="large"
                     :options="options"
+                    clearable
                 />
             </lew-form-item>
         </lew-form>

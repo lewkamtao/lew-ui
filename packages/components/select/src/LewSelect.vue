@@ -293,8 +293,6 @@ defineExpose({ show, hide });
     }
 
     .lew-select {
-        display: flex;
-        align-items: center;
         position: relative;
         width: 100%;
         overflow: hidden;
@@ -336,7 +334,10 @@ defineExpose({ show, hide });
 
         .placeholder,
         .value {
+            display: inline-flex;
+            align-items: center;
             width: calc(100% - 24px);
+            box-sizing: border-box;
             transition: all 0.2s;
         }
     }
@@ -356,31 +357,31 @@ defineExpose({ show, hide });
     }
 
     .lew-select-size-small {
-        padding: var(--lew-form-input-padding-small);
-        height: var(--lew-form-item-height-small);
-        line-height: var(--lew-form-input-line-height-small);
-
+        .value,
         .placeholder {
+            padding: var(--lew-form-input-padding-small);
+            height: var(--lew-form-item-height-small);
+            line-height: var(--lew-form-input-line-height-small);
             font-size: var(--lew-form-font-size-small);
         }
     }
 
     .lew-select-size-medium {
-        padding: var(--lew-form-input-padding-medium);
-        line-height: var(--lew-form-input-line-height-medium);
-        height: var(--lew-form-item-height-medium);
-
+        .value,
         .placeholder {
+            padding: var(--lew-form-input-padding-medium);
+            line-height: var(--lew-form-input-line-height-medium);
+            height: var(--lew-form-item-height-medium);
             font-size: var(--lew-form-font-size-medium);
         }
     }
 
     .lew-select-size-large {
-        padding: var(--lew-form-input-padding-large);
-        line-height: var(--lew-form-input-line-height-large);
-        height: var(--lew-form-item-height-large);
-
+        .value,
         .placeholder {
+            padding: var(--lew-form-input-padding-large);
+            height: var(--lew-form-item-height-large);
+            line-height: var(--lew-form-input-line-height-large);
             font-size: var(--lew-form-font-size-large);
         }
     }
