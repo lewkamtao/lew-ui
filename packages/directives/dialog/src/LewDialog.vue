@@ -1,5 +1,5 @@
 <script lang="ts" setup name="dialog">
-import { LewButton, LewIcon } from 'lew-ui';
+import { LewButton, LewIcon, LewFlex } from 'lew-ui';
 import { _props } from './props';
 import { getIconType } from '../../../utils';
 
