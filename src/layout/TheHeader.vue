@@ -1,37 +1,15 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
+import { useDark } from '@vueuse/core';
+
+const isDark = useDark({
+    selector: 'html',
+    valueDark: 'lew-dark',
+    valueLight: 'lew-light',
+});
 
 const router = useRouter();
 const route = useRoute();
-const changeMode = (mode: string) => {
-    if (mode === 'dark') {
-        document.getElementsByTagName('html')[0].classList.add('lew-dark');
-    } else {
-        document.getElementsByTagName('html')[0].classList.remove('lew-dark');
-    }
-};
-
-onMounted(() => {
-    changeMode(
-        window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? 'dark'
-            : 'light'
-    );
-    let media = window.matchMedia('(prefers-color-scheme: dark)');
-    let callback = (e: any) => {
-        let prefersDarkMode = e.matches;
-        if (prefersDarkMode) {
-            changeMode('dark');
-        } else {
-            changeMode('light');
-        }
-    };
-    if (typeof media.addEventListener === 'function') {
-        media.addEventListener('change', callback);
-    } else if (typeof media.addListener === 'function') {
-        media.addListener(callback);
-    }
-});
 
 const gohome = () => {
     if (route.name === 'R-LewHome') {
@@ -77,13 +55,13 @@ const gohome = () => {
                 class="menu-item icon-mode-sunny"
                 type="sun"
                 size="18"
-                @click="changeMode('light')"
+                @click="isDark = false"
             />
             <lew-icon
                 class="menu-item icon-mode-moon"
                 type="moon"
                 size="18"
-                @click="changeMode('dark')"
+                @click="isDark = true"
             />
         </lew-flex>
     </div>
