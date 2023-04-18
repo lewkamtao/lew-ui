@@ -36,12 +36,13 @@ const columns = [
         field: 'description',
     },
 ];
+
 const docsTable = ref([
     {
         param: 'type',
         description: '色彩类型',
         type: 'primary | normal | success | error | warning',
-        default: `primary`,
+        default: `normal`,
     },
     {
         param: 'size',
@@ -68,13 +69,13 @@ const docsTable = ref([
         default: 'false',
     },
     {
-        param: 'isText',
+        param: 'is-text',
         description: '文字按钮',
         type: 'boolean',
         default: 'false',
     },
     {
-        param: 'isIcon',
+        param: 'is-icon',
         description: '图标按钮',
         type: 'boolean',
         default: 'false',

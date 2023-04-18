@@ -24,13 +24,11 @@ defineProps({
 
 const isShowCode = ref(false);
 
-const outCodeRef = shallowRef<HTMLElement | null>(null);
 const style = computed<CSSProperties>(() => {
     if (isShowCode.value) {
-        const height = outCodeRef.value?.firstElementChild?.clientHeight;
-        return { height: height ? `${height}px` : 'auto' };
+        return { maxHeight: `400px` };
     }
-    return { height: 0 };
+    return { maxHeight: 0 };
 });
 </script>
 
@@ -46,13 +44,7 @@ const style = computed<CSSProperties>(() => {
             <div class="demo-cp">
                 <slot></slot>
             </div>
-            <div
-                v-show="code"
-                ref="outCodeRef"
-                v-highlight
-                class="hl-pre"
-                :style="style"
-            >
+            <div v-show="code" v-highlight class="hl-pre" :style="style">
                 <div class="pre-box">
                     <pre><code>{{ code }}</code></pre>
                 </div>
@@ -87,11 +79,10 @@ const style = computed<CSSProperties>(() => {
 
     .hl-pre {
         position: relative;
-        transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
 
         .pre-box {
-            margin-top: 10px;
             border-radius: var(--lew-border-radius);
         }
     }

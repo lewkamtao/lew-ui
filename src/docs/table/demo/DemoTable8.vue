@@ -5,15 +5,6 @@ const data: any = ref(mvJson);
 
 const columns = [
     {
-        type: 'template',
-        title: '选择',
-        field: 'checkbox',
-        width: 50,
-        align: 'center',
-        fixed: 'left',
-        x: 'center',
-    },
-    {
         type: 'text',
         title: 'id',
         field: 'id',
@@ -81,7 +72,7 @@ const columns = [
     },
 ];
 
-const isCheckeds = ref([]);
+const selectedKey = ref([]);
 
 const get = (e: any) => {
     if (e.column.field === 'action') {
@@ -104,35 +95,34 @@ const getChecked = computed(() => (id: any) => {
     <lew-flex x="start">
         <lew-button
             text="取消所有选择"
-            v-if="isCheckeds.length > 0"
+            v-if="selectedKey.length > 0"
             type="error"
-            @click="isCheckeds = []"
+            @click="selectedKey = []"
         />
         <lew-button
             text="选中前五个"
-            v-if="isCheckeds.length === 0"
+            v-if="selectedKey.length === 0"
             @click="
-                isCheckeds = data
+                selectedKey = data
                     .filter((_e: any, i: number) => i <= 4)
                     .map((e: any) => e.id)
             "
         />
         <lew-button
             text="全选"
-            v-if="isCheckeds.length != data.length"
-            @click="isCheckeds = data.map((e: any) => e.id)"
+            v-if="selectedKey.length != data.length"
+            @click="selectedKey = data.map((e: any) => e.id)"
         />
     </lew-flex>
     <br />
-    <lew-table :data-source="data" :columns="columns" :max-height="400">
-        <template #checkbox="{ row, column }">
-            <lew-checkbox
-                :checked="getChecked(row.id)"
-                :label="''"
-                @change="change($event, row, column)"
-                @click.stop
-            ></lew-checkbox>
-        </template>
+    <lew-table
+        v-model:selectedKey="selectedKey"
+        checkable
+        :data-source="data"
+        :columns="columns"
+        :max-height="400"
+        row-key="id"
+    >
         <template #title="{ row }">
             <div class="title">{{ row.title }}</div>
         </template>

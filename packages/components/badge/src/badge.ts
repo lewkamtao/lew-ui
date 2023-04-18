@@ -1,6 +1,12 @@
 import { ExtractPropTypes, PropType } from 'vue';
 
-type badgeType = 'normal' | 'success' | 'error' | 'warning' | 'info';
+type badgeType =
+    | 'primary'
+    | 'info'
+    | 'success'
+    | 'error'
+    | 'warning'
+    | 'normal';
 
 export const badgeProps = {
     type: {

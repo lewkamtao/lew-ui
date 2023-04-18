@@ -188,7 +188,6 @@ const checkPageNum = (value: any) => {
 
     .control {
         height: 100%;
-        color: var(--lew-text-color-7);
     }
 
     .btn {
@@ -215,6 +214,7 @@ const checkPageNum = (value: any) => {
         width: auto;
         position: relative;
         height: 100%;
+        color: var(--lew-text-color-2);
 
         .active {
             background-color: var(--lew-primary-color);

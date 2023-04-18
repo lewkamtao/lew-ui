@@ -30,7 +30,7 @@ const data: any = [
         // 定义这一单元格的样式
         tdStyle: {
             sex: 'color:var(--lew-warning-color-dark);',
-            intro: 'background:var(--lew-warning-color-dark);color:#fff',
+            intro: 'background:var(--lew-warning-color);color:#fff',
         },
     },
     {
@@ -41,7 +41,7 @@ const data: any = [
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
         tdStyle: {
-            sex: 'background:var(--lew-error-color-dark);color:#fff',
+            sex: 'background:var(--lew-error-color);color:#fff',
         },
     },
     {

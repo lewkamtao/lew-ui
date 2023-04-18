@@ -1,14 +1,20 @@
 <script setup lang="ts">
 import { badgeProps } from './badge';
+import { getClass } from 'lew-ui/utils';
 
-defineProps(badgeProps);
+const props = defineProps(badgeProps);
+
+const badgeClassName = computed(() => {
+    const { round, type } = props;
+    return getClass('lew-badge', {
+        round,
+        type,
+    });
+});
 </script>
 
 <template>
-    <div
-        class="lew-badge"
-        :class="`lew-badge-${type} ${round ? 'lew-badge-round' : ''}`"
-    >
+    <div class="lew-badge" :class="badgeClassName">
         <div v-if="value" class="lew-badge-value">
             {{ value }}
         </div>
@@ -64,21 +70,21 @@ defineProps(badgeProps);
     }
 }
 
-.lew-badge-primary {
+.lew-badge-type-primary {
     .lew-badge-value,
     .lew-badge-dot {
         color: var(--lew-white-color);
         background-color: var(--lew-primary-color);
     }
 }
-.lew-badge-info {
+.lew-badge-type-info {
     .lew-badge-value,
     .lew-badge-dot {
         color: var(--lew-white-color);
         background-color: var(--lew-info-color);
     }
 }
-.lew-badge-success {
+.lew-badge-type-success {
     .lew-badge-value,
     .lew-badge-dot {
         color: var(--lew-white-color);
@@ -86,25 +92,25 @@ defineProps(badgeProps);
     }
 }
 
-.lew-badge-warning {
+.lew-badge-type-warning {
     .lew-badge-value,
     .lew-badge-dot {
         color: var(--lew-white-color);
         background-color: var(--lew-warning-color);
     }
 }
-.lew-badge-error {
+.lew-badge-type-error {
     .lew-badge-value,
     .lew-badge-dot {
         color: var(--lew-white-color);
         background-color: var(--lew-error-color);
     }
 }
-.lew-badge-normal {
+.lew-badge-type-normal {
     .lew-badge-value,
     .lew-badge-dot {
         color: var(--lew-white-color);
-        background-color: var(--lew-error-color-dark);
+        background-color: var(--lew-error-color);
     }
 }
 </style>

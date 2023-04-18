@@ -36,15 +36,21 @@ const columns = [
 const docsTable = ref([
     {
         param: 'type',
-        description: '头像链接',
-        type: 'string',
-        default: `''`,
+        description: '类型',
+        type: `primary | info | success | error | warning | normal`,
+        default: `'normal'`,
     },
     {
         param: 'size',
-        description: '尺寸大小',
-        type: 'small ｜ medium ｜ large',
+        description: '尺寸',
+        type: `small | medium | large`,
         default: 'medium',
+    },
+    {
+        param: 'max-width',
+        description: '最大宽度',
+        type: 'number',
+        default: 220,
     },
     {
         param: 'closable',
@@ -59,10 +65,10 @@ const docsTable = ref([
         default: 'false',
     },
     {
-        param: 'to',
-        description: '跳转链接',
-        type: 'string',
-        default: "''",
+        param: 'round',
+        description: '是否是圆角',
+        type: 'boolean',
+        default: 'false',
     },
 ]);
 </script>

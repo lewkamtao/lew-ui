@@ -1,6 +1,12 @@
 import { PropType, ExtractPropTypes } from 'vue';
 
-export type ButtonType = 'primary' | 'normal' | 'success' | 'error' | 'warning';
+export type ButtonType =
+    | 'primary'
+    | 'info'
+    | 'success'
+    | 'error'
+    | 'warning'
+    | 'normal';
 export type ButtonSize = 'small' | 'medium' | 'large';
 
 export const buttonProps = {

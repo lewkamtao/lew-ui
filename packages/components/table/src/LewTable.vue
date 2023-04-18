@@ -147,6 +147,10 @@ const setChecked = (key: any, checked: boolean) => {
         }
     }
 
+    initCheckAll();
+};
+
+const initCheckAll = () => {
     const isAll =
         selectedKey.value.length > 0 &&
         selectedKey.value.length === props.dataSource.length;
@@ -169,6 +173,7 @@ const initCheckbox = () => {
 initCheckbox();
 watchArray(selectedKey, () => {
     initCheckbox();
+    initCheckAll();
 });
 onMounted(() => {
     tableObserve();
@@ -429,6 +434,7 @@ onUnmounted(() => {
 <style lang="scss">
 .lew-table-wrapper {
     position: relative;
+    width: 100%;
     border: 1px var(--lew-bgcolor-3) solid;
     box-sizing: border-box;
     background-color: var(--lew-bgcolor-0);

@@ -79,37 +79,39 @@ const del = (row: any, column: any) => {
 </script>
 
 <template>
-    <span> 已选择：{{ selectedKey }}</span>
-    <lew-table
-        v-model:selectedKey="selectedKey"
-        :data-source="data"
-        :columns="columns"
-        checkable
-        row-key="id"
-    >
-        <template #hobby="{ row }">
-            <lew-flex gap="5" x="start">
-                <lew-tag
-                    v-for="(item, index) in row.hobby"
-                    :key="index"
-                    type="info"
-                    >{{ item }}
-                </lew-tag>
-            </lew-flex>
-        </template>
-        <template #action="{ row, column }">
-            <lew-flex>
-                <lew-button
-                    text="管理"
-                    type="blank"
-                    @click="set(row, column)"
-                />
-                <lew-button
-                    text="删除"
-                    type="blank"
-                    @click="del(row, column)"
-                />
-            </lew-flex>
-        </template>
-    </lew-table>
+    <lew-flex style="width: 100%" direction="y" x="start">
+        <span style="margin-bot"> 已选择：{{ selectedKey }}</span>
+        <lew-table
+            v-model:selectedKey="selectedKey"
+            :data-source="data"
+            :columns="columns"
+            checkable
+            row-key="id"
+        >
+            <template #hobby="{ row }">
+                <lew-flex gap="5" x="start">
+                    <lew-tag
+                        v-for="(item, index) in row.hobby"
+                        :key="index"
+                        type="info"
+                        >{{ item }}
+                    </lew-tag>
+                </lew-flex>
+            </template>
+            <template #action="{ row, column }">
+                <lew-flex>
+                    <lew-button
+                        text="管理"
+                        type="blank"
+                        @click="set(row, column)"
+                    />
+                    <lew-button
+                        text="删除"
+                        type="blank"
+                        @click="del(row, column)"
+                    />
+                </lew-flex>
+            </template>
+        </lew-table>
+    </lew-flex>
 </template>

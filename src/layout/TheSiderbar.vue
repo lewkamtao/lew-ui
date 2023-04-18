@@ -47,14 +47,13 @@ const toPath = (item: Item) => {
             >
                 <span v-if="item.name" class="ename"> {{ item.name }} </span>
                 <span class="cname"> {{ item.cname }}</span>
-
-                <Lew-tag
+                <lew-tag
                     v-if="item.label"
                     :type="item.type"
                     size="small"
                     style="margin-left: 10px"
                     >{{ item.label }}
-                </Lew-tag>
+                </lew-tag>
             </div>
         </div>
     </div>
