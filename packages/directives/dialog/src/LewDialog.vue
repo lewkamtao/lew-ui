@@ -124,7 +124,7 @@ const cancel = async () => {
                             <lew-icon size="20" :type="getIconType(type)" />
                         </div>
                     </div>
-                    <lew-flex class="right">
+                    <lew-flex class="right" y="start">
                         <main>
                             <slot name="content" />
                         </main>
@@ -268,6 +268,7 @@ const cancel = async () => {
 
     .lew-dialog-box-mini {
         .left {
+            margin-top: 3px;
             margin-right: 10px;
             display: flex;
         }
@@ -283,7 +284,9 @@ const cancel = async () => {
             justify-content: space-between;
 
             main {
-                margin-right: 10px;
+                width: 200px;
+                margin-top: 2px;
+                flex-shrink: 0;
             }
 
             footer {
