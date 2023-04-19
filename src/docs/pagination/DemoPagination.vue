@@ -75,7 +75,7 @@ const docsTable = ref([
             <demo-pagination2 />
         </lew-demo-box>
         <br />
-        <lew-title size="16px">props</lew-title>
+        <lew-title :size="16">props</lew-title>
         <lew-table :data-source="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>

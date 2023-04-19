@@ -72,7 +72,7 @@ const docsTable = ref([
         <lew-demo-box title="点击事件触发" :code="DemoTooltip2_code">
             <demo-tooltip2 />
         </lew-demo-box>
-        <lew-title size="16px">v-tooltip</lew-title>
+        <lew-title :size="16">v-tooltip</lew-title>
         <lew-table :data-source="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>

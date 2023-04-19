@@ -20,6 +20,7 @@ export * from './select';
 export * from './select-multiple';
 export * from './switch';
 export * from './date-picker';
+export * from './magic-number';
 
 export * from './table';
 export * from './pagination';

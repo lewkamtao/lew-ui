@@ -145,7 +145,7 @@ const docsTable = reactive([
         <div v-for="(item, index) in docsTable" :key="index">
             <br />
             <br />
-            <lew-title size="16px">{{ item.desc }}</lew-title>
+            <lew-title :size="16">{{ item.desc }}</lew-title>
             <lew-table
                 :data-source="item.data"
                 :columns="item.columns"

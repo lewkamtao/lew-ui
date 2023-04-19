@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {
-    DemoSwitch1,
-    DemoSwitch2,
-    DemoSwitch1_code,
-    DemoSwitch2_code,
+    DemoMagicNumber1,
+    DemoMagicNumber1_code,
+    DemoMagicNumber2,
+    DemoMagicNumber2_code,
 } from './demo';
 
 const columns = [
@@ -12,7 +12,6 @@ const columns = [
         width: 120,
         field: 'param',
     },
-
     {
         title: '类型',
         width: 240,
@@ -31,36 +30,30 @@ const columns = [
 ];
 const docsTable = ref([
     {
-        param: 'model-value (v-model)',
-        description: '绑定值',
-        type: 'boolean',
-        default: 'false',
+        param: 'value',
+        description: '值',
+        type: 'number',
+        default: 999.99,
     },
     {
-        param: 'round',
-        description: '是否是圆角',
-        type: 'boolean',
-        default: 'true',
-    },
-    {
-        param: '@change',
-        description: '组件值发生变化的回调',
-        type: '(value: boolean) => void	',
-        default: "''",
+        param: 'size',
+        description: '数字大小',
+        type: `number`,
+        default: 16,
     },
 ]);
 </script>
 
 <template>
     <div class="demo-wrapper">
-        <lew-title>Switch</lew-title>
-        <lew-demo-box title="圆的" :code="DemoSwitch1_code">
-            <demo-switch1 />
+        <lew-title>Flex</lew-title>
+        <p class="sub-title">这是一个专门为弹性布局写的组件</p>
+        <lew-demo-box title="任意值" :code="DemoMagicNumber1_code">
+            <demo-magic-number1 />
         </lew-demo-box>
-        <lew-demo-box title="方的" :code="DemoSwitch2_code">
-            <demo-switch2 />
+        <lew-demo-box title="自增" :code="DemoMagicNumber2_code">
+            <demo-magic-number2 />
         </lew-demo-box>
-        <br />
         <lew-title :size="16">Props</lew-title>
         <lew-table :data-source="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
@@ -70,3 +63,9 @@ const docsTable = ref([
         </lew-table>
     </div>
 </template>
+
+<style lang="scss" scoped>
+.lew-avatar {
+    margin: 10px;
+}
+</style>

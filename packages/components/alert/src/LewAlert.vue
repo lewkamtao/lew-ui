@@ -21,7 +21,7 @@ const alertClassName = (item: AlertItem) => {
             :class="alertClassName(item)"
         >
             <div class="alert-icon">
-                <lew-icon size="16" :type="getIconType(item.type)"></lew-icon>
+                <lew-icon :size="16" :type="getIconType(item.type)"></lew-icon>
             </div>
             <div class="message">
                 <div class="title">{{ item.title }}</div>
@@ -31,7 +31,7 @@ const alertClassName = (item: AlertItem) => {
             </div>
             <div v-if="item.closeable">
                 <lew-icon
-                    size="16"
+                    :size="16"
                     class="btn-close"
                     type="x"
                     @click="emit('close', i)"

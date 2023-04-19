@@ -34,7 +34,7 @@ const style = computed<CSSProperties>(() => {
 
 <template>
     <div class="demo-box">
-        <lew-title size="16px"
+        <lew-title :size="16"
             >{{ title }}
             <lew-tag v-if="tag" type="info" style="margin: 2px 0px 0px 5px">
                 {{ tag }}</lew-tag
@@ -53,10 +53,10 @@ const style = computed<CSSProperties>(() => {
                 <div class="icon">
                     <lew-icon
                         v-if="!isShowCode"
-                        size="16"
+                        :size="16"
                         type="chevron-down"
                     />
-                    <lew-icon v-else size="16" type="chevron-up" />
+                    <lew-icon v-else :size="16" type="chevron-up" />
                 </div>
 
                 {{ isShowCode ? '关闭' : '显示源码' }}

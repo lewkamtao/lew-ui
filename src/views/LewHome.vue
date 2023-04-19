@@ -226,7 +226,7 @@ const notification = (type: string) => {
             <lew-flex direction="x" gap="40">
                 <lew-flex class="item" direction="y" x="end" gap="40">
                     <lew-flex direction="y" x="end" gap="0px">
-                        <lew-title size="16px" :bold="200">
+                        <lew-title :size="16" :bold="200">
                             Lew Design 16px
                         </lew-title>
                         <lew-title size="24px" :bold="400">

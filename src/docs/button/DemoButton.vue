@@ -40,8 +40,8 @@ const columns = [
 const docsTable = ref([
     {
         param: 'type',
-        description: '色彩类型',
-        type: 'primary | normal | success | error | warning',
+        description: '类型',
+        type: `primary | info | success | error | warning | normal`,
         default: `normal`,
     },
     {
@@ -105,7 +105,7 @@ const docsTable = ref([
         <lew-demo-box title="图标" :code="DemoButton6_code"
             ><demo-button6 />
         </lew-demo-box>
-        <lew-title size="16px">Props</lew-title>
+        <lew-title :size="16">Props</lew-title>
         <lew-table :data-source="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>

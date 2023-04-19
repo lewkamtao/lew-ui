@@ -1,18 +1,16 @@
 <script setup lang="ts">
-defineProps({
-    bold: {
-        type: Number,
-        default: 500,
-    },
-    size: {
-        type: String,
-        default: '24px',
-    },
+import { titleProps } from './title';
+
+const props = defineProps(titleProps);
+
+const titleStyle = computed(() => {
+    const { bold, size } = props;
+    return `font-weight:${bold};font-size:${size}px`;
 });
 </script>
 
 <template>
-    <div class="lew-title" :style="`font-weight:${bold};font-size:${size}`">
+    <div class="lew-title" :style="titleStyle">
         <slot></slot>
     </div>
 </template>

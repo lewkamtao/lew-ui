@@ -96,7 +96,7 @@ const docsTable2 = ref([
             <lew-alert
                 v-if="!alertClose[1]"
                 style="margin-top: 20px"
-                size="16px"
+                :size="16"
                 :list="[
                     {
                         type: 'warning',
@@ -112,7 +112,7 @@ const docsTable2 = ref([
             <lew-alert
                 v-if="!alertClose[2]"
                 style="margin-top: 20px"
-                size="16px"
+                :size="16"
                 :list="[
                     {
                         type: 'info',
@@ -136,7 +136,7 @@ const docsTable2 = ref([
                         content: '插槽为你提供了整列和整行的数据以及参数。',
                     },
                 ]"
-                size="16px"
+                :size="16"
                 @close="alertClose[3] = true"
             />
         </lew-demo-box>
@@ -145,7 +145,7 @@ const docsTable2 = ref([
             <lew-alert
                 v-if="!alertClose[4]"
                 style="margin-top: 20px"
-                size="16px"
+                :size="16"
                 :list="[
                     {
                         type: 'info',
@@ -162,7 +162,7 @@ const docsTable2 = ref([
             <lew-alert
                 v-if="!alertClose[4]"
                 style="margin-top: 20px"
-                size="16px"
+                :size="16"
                 :list="[
                     {
                         type: 'info',
@@ -178,7 +178,7 @@ const docsTable2 = ref([
             <lew-alert
                 v-if="!alertClose[4]"
                 style="margin-top: 20px"
-                size="16px"
+                :size="16"
                 :list="[
                     {
                         type: 'warning',
@@ -197,7 +197,7 @@ const docsTable2 = ref([
             <lew-alert
                 v-if="!alertClose[4]"
                 style="margin-top: 20px"
-                size="16px"
+                :size="16"
                 :list="[
                     {
                         type: 'success',
@@ -214,7 +214,7 @@ const docsTable2 = ref([
             />
         </lew-demo-box>
         <!-- <br />
-        <lew-title size="16px">Props</lew-title>
+        <lew-title :size="16">Props</lew-title>
         <lew-table :data-source="docsTable1" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>
@@ -223,7 +223,7 @@ const docsTable2 = ref([
         </lew-table>
         <br />
         <br />
-        <lew-title size="16px">columns</lew-title>
+        <lew-title :size="16">columns</lew-title>
         <lew-table :data-source="docsTable2" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>

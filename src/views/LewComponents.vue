@@ -266,6 +266,13 @@ group.value = [
                 label: 'New',
                 type: 'success',
             },
+            {
+                cname: '魔术数值',
+                name: 'MagicNumber',
+                path: '/MagicNumber',
+                label: 'new',
+                type: 'success',
+            },
         ],
     },
     {

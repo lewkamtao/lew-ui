@@ -176,10 +176,10 @@ defineExpose({ getEl, focusFn, lewInputRef });
                 @mousedown.prevent=""
                 @click="showPasswordFn"
             >
-                <lew-icon v-show="_type === 'text'" size="16" type="eye" />
+                <lew-icon v-show="_type === 'text'" :size="16" type="eye" />
                 <lew-icon
                     v-show="_type === 'password'"
-                    size="16"
+                    :size="16"
                     type="eye-off"
                 />
             </div>
@@ -189,7 +189,7 @@ defineExpose({ getEl, focusFn, lewInputRef });
                 @mousedown.prevent=""
                 @click="clear"
             >
-                <lew-icon size="16" type="x-circle" />
+                <lew-icon :size="16" type="x-circle" />
             </div>
         </div>
     </div>

@@ -51,7 +51,7 @@ const docsTable = ref([
         <lew-demo-box title="多行省略" :code="DemoTextTrim2_code">
             <demo-text-trim2 />
         </lew-demo-box>
-        <lew-title size="16px">props</lew-title>
+        <lew-title :size="16">props</lew-title>
         <lew-table :data-source="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>

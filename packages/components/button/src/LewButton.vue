@@ -56,14 +56,18 @@ const getIconSize = computed(() => {
             :size="getIconSize"
             :type="icon"
         />
-        <span v-if="text" class="lew-button-text">{{ text }} </span>
-        <span
-            v-if="loading || _loading"
+        <lew-icon
             class="lew-loading-icon"
+            v-if="loading || _loading"
+            :size="getIconSize"
+            animation="spin"
+            animation-speed="fast"
             :class="{
                 'lew-loading-icon-show': (_loading || loading) && !disabled,
             }"
+            type="loader"
         />
+        <span v-if="text" class="lew-button-text">{{ text }} </span>
     </button>
 </template>
 
@@ -91,27 +95,13 @@ const getIconSize = computed(() => {
 
     .lew-loading-icon {
         position: absolute;
-        width: 100%;
-        height: 100%;
-        left: 0;
-        top: 0;
-        transition: all 0.15s cubic-bezier(0.65, 0, 0.25, 1);
+        left: 10px;
         opacity: 0;
-        transform: translateX(0%);
+        transition: opacity 0.35s;
     }
 
     .lew-loading-icon-show {
         opacity: 1;
-    }
-
-    .lew-loading-icon::after {
-        position: absolute;
-        top: 50%;
-        user-select: none;
-        transform: translateY(-50%);
-        content: '';
-        animation: lew-loading-spinner-spin 1s linear infinite;
-        border-radius: 50%;
     }
 }
 
@@ -127,13 +117,8 @@ const getIconSize = computed(() => {
     font-size: var(--lew-form-font-size-small);
     gap: 4px;
 
-    .lew-loading-icon::after {
-        left: 14px;
-
-        border: 1.5px solid rgba(0, 0, 0, 0.25);
-        border-left: 1.5px solid rgba(255, 255, 255, 1);
-        width: 9px;
-        height: 9px;
+    .lew-loading-icon {
+        left: 8px;
     }
 }
 
@@ -144,12 +129,8 @@ const getIconSize = computed(() => {
     padding: 0px 14px;
     font-size: var(--lew-form-font-size-medium);
     gap: 6px;
-    .lew-loading-icon::after {
-        left: 16px;
-        border: 2px solid rgba(0, 0, 0, 0.25);
-        border-left: 2px solid rgba(255, 255, 255, 1);
-        width: 10px;
-        height: 10px;
+    .lew-loading-icon {
+        left: 10px;
     }
 }
 
@@ -160,12 +141,8 @@ const getIconSize = computed(() => {
     padding: 0px 20px;
     font-size: var(--lew-form-font-size-large);
     gap: 8px;
-    .lew-loading-icon::after {
-        left: 20px;
-        border: 2.5px solid rgba(0, 0, 0, 0.25);
-        border-left: 2.5px solid rgba(255, 255, 255, 1);
-        width: 12px;
-        height: 12px;
+    .lew-loading-icon {
+        left: 12px;
     }
 }
 
@@ -188,45 +165,16 @@ const getIconSize = computed(() => {
     height: var(--lew-form-item-height-large);
 }
 
-.lew-button-loading.lew-button-singleIcon {
+.lew-button.lew-button-loading.lew-button-singleIcon {
+    padding: 0px;
     .lew-button-text {
         display: none;
     }
     .lew-button-icon {
         display: none;
     }
-    .lew-loading-icon::after {
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
-}
-
-.lew-button-type-normal.lew-button-size-small {
-    .lew-loading-icon::after {
-        border-left: 1.5px solid var(--lew-primary-color-dark);
-    }
-}
-.lew-button-type-normal.lew-button-size-medium {
-    .lew-loading-icon::after {
-        border: 2px solid rgba(0, 0, 0, 0.25);
-        border-left: 2px solid var(--lew-primary-color-dark);
-    }
-}
-
-.lew-button-type-normal.lew-button-size-large {
-    .lew-loading-icon::after {
-        border: 2.5px solid rgba(0, 0, 0, 0.25);
-        border-left: 2.5px solid var(--lew-primary-color-dark);
-    }
-}
-
-@keyframes lew-loading-spinner-spin {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg);
+    .lew-loading-icon {
+        position: static;
     }
 }
 

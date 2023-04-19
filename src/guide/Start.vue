@@ -15,7 +15,7 @@ app.use(Lew);`);
     <div class="guide-wrapper">
         <lew-title>如何使用</lew-title>
         <br />
-        <lew-title size="16px">直接引入（推荐）</lew-title>
+        <lew-title :size="16">直接引入（推荐）</lew-title>
         <p>你可以在页面中直接导入</p>
         <div v-highlight class="hl-pre">
             <div class="pre-box">
@@ -35,7 +35,7 @@ app.use(Lew);`);
 
         <br />
         <br />
-        <lew-title size="16px">全局安装（不推荐）</lew-title>
+        <lew-title :size="16">全局安装（不推荐）</lew-title>
         <p>
             你需要在
             <lew-mark>main.ts</lew-mark

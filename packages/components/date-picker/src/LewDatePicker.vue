@@ -64,7 +64,7 @@ defineExpose({ show, hide });
                     </div>
                     <lew-icon
                         class="lew-date-picker-icon"
-                        size="16px"
+                        :size="16"
                         type="calendar"
                     />
                 </div>

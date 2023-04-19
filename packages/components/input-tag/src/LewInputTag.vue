@@ -84,7 +84,7 @@ const delTag = (index: number) => {
             class="lew-input-tag-button"
             @click="openInput"
         >
-            <lew-icon size="16" type="plus" />
+            <lew-icon :size="16" type="plus" />
         </label>
 
         <lew-input

@@ -168,14 +168,14 @@ defineExpose({ show, hide });
                 :class="getSelectClassName"
             >
                 <lew-icon
-                    size="16px"
+                    :size="16"
                     type="chevron-down"
                     class="icon-select"
                     :class="{ 'icon-select-hide': clearable && getLabel }"
                 />
                 <lew-icon
                     v-if="clearable"
-                    size="16px"
+                    :size="16"
                     type="x-circle"
                     class="icon-clear"
                     :class="{ 'icon-clear-show': clearable && getLabel }"

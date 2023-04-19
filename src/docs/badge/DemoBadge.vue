@@ -43,7 +43,7 @@ const docsTable = ref([
     {
         param: 'type',
         description: '显示色彩类型',
-        type: `normal | success | error | warning | info`,
+        type: `primary | info | success | error | warning | normal`,
         default: 'normal',
     },
     {
@@ -68,7 +68,7 @@ const docsTable = ref([
         <lew-demo-box title="直接使用" :code="DemoBadge3_code">
             <demo-badge3 />
         </lew-demo-box>
-        <lew-title size="16px">Props</lew-title>
+        <lew-title :size="16">Props</lew-title>
         <lew-table :data-source="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>

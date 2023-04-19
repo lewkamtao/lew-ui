@@ -33,14 +33,14 @@ const docsTable = ref([
     {
         param: 'size',
         description: '标题尺寸大小',
-        type: 'string(px)',
-        default: '24px',
+        type: 'number',
+        default: 24,
     },
     {
         param: 'bold',
         description: '粗体值',
         type: `100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900`,
-        default: '500',
+        default: 500,
     },
 ]);
 </script>
@@ -53,7 +53,7 @@ const docsTable = ref([
         <lew-demo-box title="粗体" :code="DemoTitle2_code">
             <demo-title2 />
         </lew-demo-box>
-        <lew-title size="16px">Props</lew-title>
+        <lew-title :size="16">Props</lew-title>
         <lew-table :data-source="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>
