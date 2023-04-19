@@ -46,8 +46,8 @@ const docsTable = ref([
 
 <template>
     <div class="demo-wrapper">
-        <lew-title>Flex</lew-title>
-        <p class="sub-title">这是一个专门为弹性布局写的组件</p>
+        <lew-title>MagicNumber</lew-title>
+        <p class="sub-title">这是一个很酷数值变化效果。</p>
         <lew-demo-box title="任意值" :code="DemoMagicNumber1_code">
             <demo-magic-number1 />
         </lew-demo-box>

@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { IntervalHistogram } from 'perf_hooks';
-
 let num = ref(23141323.23);
 let num2 = ref(3242313);
 let timer: any;
