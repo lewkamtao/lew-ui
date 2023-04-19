@@ -1,15 +1,24 @@
 <script lang="ts" setup>
+import { IntervalHistogram } from 'perf_hooks';
+
 let num = ref(23141323.23);
 let num2 = ref(3242313);
+let timer: any;
+let timer2: any;
 
 onMounted(() => {
-    setInterval(() => {
+    timer2 = setInterval(() => {
         num.value += Number((Math.random() * 2000).toFixed(2));
         num.value = Number(num.value.toFixed(2));
     }, 1500);
-    setInterval(() => {
+    timer2 = setInterval(() => {
         num2.value += parseInt(String(Math.random() * 500));
     }, 1500);
+});
+
+onBeforeUnmount(() => {
+    clearInterval(timer);
+    clearInterval(timer2);
 });
 </script>
 
