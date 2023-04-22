@@ -13,7 +13,7 @@ const value = ref([]);
 
 <template>
     <lew-flex direction="y" x="start">
-        <lew-title size="14px">无图标</lew-title>
+        <lew-title :size="14">无图标</lew-title>
         <lew-checkbox-group
             v-model="value"
             block
@@ -31,7 +31,7 @@ const value = ref([]);
         ></lew-checkbox-group>
         <br />
         <br />
-        <lew-title size="14px">有图标</lew-title>
+        <lew-title :size="14">有图标</lew-title>
         <lew-checkbox-group
             v-model="value"
             block

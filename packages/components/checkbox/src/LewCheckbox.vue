@@ -82,9 +82,10 @@ const getCheckboxClassName = computed(() => {
         transition: var(--lew-form-transition);
         background-color: var(--lew-bgcolor-1);
         outline: 0px var(--lew-primary-color-light) solid;
+        overflow: hidden;
 
         .icon-checkbox {
-            transform: scale(0.7) translateY(50%);
+            transform: translateY(50%);
             transition: var(--lew-form-transition);
             opacity: 0;
             color: var(--lew-white-color);
@@ -189,7 +190,7 @@ const getCheckboxClassName = computed(() => {
         background: var(--lew-primary-color);
 
         .icon-checkbox {
-            transform: scale(0.85) translateY(0px);
+            transform: translateY(0px);
             opacity: 1;
         }
     }

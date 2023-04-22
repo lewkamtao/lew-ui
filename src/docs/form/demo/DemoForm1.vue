@@ -94,11 +94,10 @@ const d = ref('');
         <lew-form-item label="标签输入框">
             <lew-input-tag v-model="user.tags" />
         </lew-form-item>
-        <lew-form-item label="爱好">
+        <lew-form-item label="支付方式">
             <lew-tabs
                 v-model="user.pay"
                 width="100%"
-                item-width="100%"
                 :options="pay_options"
                 round
             />
@@ -147,11 +146,10 @@ const d = ref('');
         <lew-form-item direction="y" label="标签输入框">
             <lew-input-tag v-model="user.tags" />
         </lew-form-item>
-        <lew-form-item direction="y" label="爱好">
+        <lew-form-item direction="y" label="支付方式">
             <lew-tabs
                 v-model="user.pay"
                 width="100%"
-                item-width="100%"
                 :options="pay_options"
             />
         </lew-form-item>

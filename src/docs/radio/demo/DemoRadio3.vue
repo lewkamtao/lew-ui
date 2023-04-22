@@ -11,7 +11,7 @@ const value = ref('');
 
 <template>
     <lew-flex direction="y" x="start">
-        <lew-title size="14px">无图标</lew-title>
+        <lew-title :size="14">无图标</lew-title>
         <lew-radio-group
             v-model="value"
             block
@@ -20,7 +20,7 @@ const value = ref('');
         ></lew-radio-group>
         <br />
         <br />
-        <lew-title size="14px">有图标</lew-title>
+        <lew-title :size="14">有图标</lew-title>
         <lew-radio-group
             v-model="value"
             block

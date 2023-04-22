@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { startCase } from 'lodash';
 import { useDebounceFn, useVModel, watchArray } from '@vueuse/core';
 import { tableProps } from './props';
 

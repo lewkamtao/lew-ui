@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { magicNumberProps } from './magic-number';
+import { numFormat } from 'lew-ui/utils';
 
 const props = defineProps(magicNumberProps);
 
@@ -11,7 +12,7 @@ const getValueArr = computed(() => {
     if (typeof props.value !== 'number') {
         throw new Error('LewMagicNumber props value 必须为number类型！');
     }
-    return String(props.value).split('');
+    return numFormat(props.value).split('');
 });
 
 const getMagicNumberStyle = computed(() => {
@@ -37,7 +38,9 @@ const getNumStyle = computed(() => {
             v-for="(item, index) in getValueArr"
             :key="index"
         >
-            <span :style="getNumStyle" v-if="item === '.'">.</span>
+            <span :style="getNumStyle" v-if="item === '.' || item === ','"
+                >{{ item }}
+            </span>
             <span
                 v-else
                 class="lew-magic-number-num"

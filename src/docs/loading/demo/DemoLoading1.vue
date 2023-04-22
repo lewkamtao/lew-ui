@@ -5,7 +5,7 @@ const title = ref('加载中');
 
 <template>
     <div style="width: 300px">
-        <lew-title size="14px">常规</lew-title>
+        <lew-title :size="14">常规</lew-title>
         <lew-flex
             v-loading="{ visible: true }"
             direction="y"
@@ -33,7 +33,7 @@ const title = ref('加载中');
         <br />
         <br />
         <br />
-        <lew-title size="14px">自定义文字</lew-title>
+        <lew-title :size="14">自定义文字</lew-title>
 
         <lew-flex
             v-loading="{ visible: visible, title: title }"

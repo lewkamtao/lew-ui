@@ -1,18 +1,16 @@
-import { PropType } from 'vue';
+import { PropType, ExtractPropTypes } from 'vue';
 
-type Options = {
+export type TabsOptions = {
     label: string;
-    value: string;
+    value: [String, Number];
 };
 
 export const tabsProps = {
     modelValue: {
-        // 父组件 v-model 没有指定参数名，则默认是 modelValue
-        type: String,
-        default: '',
+        type: [String, Number],
     },
     options: {
-        type: Array as PropType<Options[]>,
+        type: Array as PropType<TabsOptions[]>,
         default() {
             return [];
         },
@@ -22,10 +20,7 @@ export const tabsProps = {
         default: '',
     },
     itemWidth: {
-        type: String,
-        default() {
-            return '';
-        },
+        type: Number,
     },
     round: {
         type: Boolean,
@@ -36,3 +31,4 @@ export const tabsProps = {
         default: 'block',
     },
 };
+export type TabsProps = ExtractPropTypes<typeof tabsProps>;

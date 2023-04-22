@@ -93,9 +93,21 @@ const docsTable = reactive([
 <template>
     <div class="demo-wrapper">
         <lew-title>Tabs</lew-title>
+        <p class="sub-title"></p>
         <lew-demo-box title="常规" :code="DemoTabs1_code">
-            <demo-tabs1
-        /></lew-demo-box>
+            <demo-tabs1 />
+            <lew-alert
+                style="margin-top: 20px"
+                :size="16"
+                :list="[
+                    {
+                        type: 'info',
+                        title: '提示',
+                        content: `值得注意的是，按住Shift，上下滑动滚轮，可以实现横向滑动。`,
+                    },
+                ]"
+            />
+        </lew-demo-box>
         <lew-demo-box title="圆形" :code="DemoTabs2_code">
             <demo-tabs2
         /></lew-demo-box>
