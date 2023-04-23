@@ -88,7 +88,9 @@ const optionsTable = ref([
             <template #type="{ row }"> {{ row.type }} </template>
             <template #default="{ row }"> {{ row.default }} </template>
         </lew-table>
-        <lew-title style="margin-top: 40px" :size="16">Options</lew-title>
+        <lew-title style="margin-top: 40px" :size="16">
+            BreadcrumbOptions
+        </lew-title>
         <lew-table :data-source="optionsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { dropdownProps } from './dropdown';
-import type { LewDropdownOptions } from '../index';
+import type { DropdownOptions } from './dropdown';
 
 defineProps(dropdownProps);
 
@@ -17,8 +17,9 @@ const hide = () => {
 
 const emit = defineEmits(['change']);
 
-const change = (item: LewDropdownOptions) => {
-    emit('change', item, { show, hide });
+const change = (item: DropdownOptions) => {
+    emit('change', item);
+    hide();
 };
 
 defineExpose({ show, hide });

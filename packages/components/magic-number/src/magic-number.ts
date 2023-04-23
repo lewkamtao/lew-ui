@@ -9,5 +9,11 @@ export const magicNumberProps = {
         type: Number,
         default: 16,
     },
+    sep: {
+        type: Boolean,
+        default: () => {
+            return false;
+        },
+    },
 };
 export type MagicNumberProps = ExtractPropTypes<typeof magicNumberProps>;

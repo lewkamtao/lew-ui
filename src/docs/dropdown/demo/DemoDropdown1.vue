@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const options = ref([
+import type { DropdownOptions } from 'lew-ui';
+
+type Options = typeof DropdownOptions;
+
+const options: Options = ref([
     {
         label: '西游记',
         value: '1',
@@ -18,9 +22,8 @@ const options = ref([
     },
 ]);
 
-const change = (e: any, handle: any) => {
+const change = (e: Options) => {
     LewMessage.info(e.label);
-    handle.hide();
 };
 </script>
 <template>

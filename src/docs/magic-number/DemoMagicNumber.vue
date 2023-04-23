@@ -4,6 +4,8 @@ import {
     DemoMagicNumber1_code,
     DemoMagicNumber2,
     DemoMagicNumber2_code,
+    DemoMagicNumber3,
+    DemoMagicNumber3_code,
 } from './demo';
 
 const columns = [
@@ -53,6 +55,9 @@ const docsTable = ref([
         </lew-demo-box>
         <lew-demo-box title="自增" :code="DemoMagicNumber2_code">
             <demo-magic-number2 />
+        </lew-demo-box>
+        <lew-demo-box title="天然支持千分位" :code="DemoMagicNumber3_code">
+            <demo-magic-number3 />
         </lew-demo-box>
         <lew-title :size="16">Props</lew-title>
         <lew-table :data-source="docsTable" :columns="columns" height="auto">

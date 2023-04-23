@@ -24,12 +24,31 @@ const columns = [
         field: 'description',
     },
 ];
+
 const docsTable = ref([
     {
         param: 'type',
         description: '配色类型',
         type: `normal | success | error | warning | info`,
         default: 'normal',
+    },
+    {
+        param: 'round',
+        description: '是否圆角',
+        type: 'boolean',
+        default: false,
+    },
+    {
+        param: 'to',
+        description: '跳转链接',
+        type: `string`,
+        default: '#',
+    },
+    {
+        param: 'bold',
+        description: '配色类型',
+        type: `normal | success | error | warning | info`,
+        default: `''`,
     },
 ]);
 </script>

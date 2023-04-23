@@ -79,7 +79,7 @@ const toPath = (item: Item) => {
             font-size: 14px;
             font-weight: 400;
             height: 20px;
-            color: var(--lew-text-color-9);
+            color: var(--lew-text-color-5);
             overflow: hidden;
 
             span {

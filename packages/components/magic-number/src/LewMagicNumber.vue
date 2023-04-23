@@ -12,7 +12,12 @@ const getValueArr = computed(() => {
     if (typeof props.value !== 'number') {
         throw new Error('LewMagicNumber props value 必须为number类型！');
     }
-    return numFormat(props.value).split('');
+
+    if (props.sep) {
+        return numFormat(props.value).split('');
+    } else {
+        return String(props.value).split('');
+    }
 });
 
 const getMagicNumberStyle = computed(() => {

@@ -281,7 +281,7 @@ onUnmounted(() => {
         z-index: 9;
         height: 2px;
         transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
-        background: var(--lew-primary-color);
+        background: var(--lew-primary-color-dark);
         transform: translateX(3px);
         box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);
     }

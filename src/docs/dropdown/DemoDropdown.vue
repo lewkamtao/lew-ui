@@ -31,6 +31,31 @@ const columns = [
         field: 'description',
     },
 ];
+
+const functionColumns = [
+    {
+        title: '参数名',
+        width: 120,
+        field: 'param',
+    },
+
+    {
+        title: '类型',
+        width: 240,
+        field: 'type',
+    },
+    {
+        title: '默认值',
+        width: 120,
+        field: 'default',
+    },
+    {
+        title: '描述',
+        width: 320,
+        field: 'description',
+    },
+];
+
 const docsTable = ref([
     {
         param: 'options',
@@ -55,6 +80,21 @@ const docsTable = ref([
         description: '下拉气泡宽度',
         type: 'string(px)',
         default: "''",
+    },
+]);
+
+const functionTable = ref([
+    {
+        param: 'show',
+        description: '展示下拉',
+        type: 'function',
+        default: '() => {}',
+    },
+    {
+        param: 'hide',
+        description: '收起下拉',
+        type: `function`,
+        default: '() => {}',
     },
 ]);
 </script>
@@ -89,5 +129,18 @@ const docsTable = ref([
             <lew-mark to="/Tooltip" type="info">Tooltip</lew-mark>
             找到你需要的位置参数。
         </p>
+        <br />
+        <br />
+        <lew-title :size="16">Function</lew-title>
+        <lew-table
+            :data-source="functionTable"
+            :columns="functionColumns"
+            height="auto"
+        >
+            <template #param="{ row }"> {{ row.param }} </template>
+            <template #description="{ row }"> {{ row.description }} </template>
+            <template #type="{ row }"> {{ row.type }} </template>
+            <template #default="{ row }"> {{ row.default }} </template>
+        </lew-table>
     </div>
 </template>

@@ -69,7 +69,7 @@ defineProps(breadcrumbProps);
         span {
             cursor: default;
             padding: 2px 4px;
-            border-radius: 2px;
+            border-radius: var(--lew-border-radius);
         }
         .lew-breadcrumb-isPath:hover {
             cursor: pointer;

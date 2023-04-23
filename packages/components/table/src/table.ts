@@ -1,5 +1,14 @@
 import { PropType } from 'vue';
-import { TableColumns } from './types';
+
+export type TableColumns = {
+    title: string;
+    field: string;
+    fixed: string;
+    x: string;
+    y: string;
+    width: number;
+    columnStyle: string;
+};
 
 export const tableProps = {
     selectedKey: {
