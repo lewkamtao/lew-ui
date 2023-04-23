@@ -147,11 +147,7 @@ const d = ref('');
             <lew-input-tag v-model="user.tags" />
         </lew-form-item>
         <lew-form-item direction="y" label="支付方式">
-            <lew-tabs
-                v-model="user.pay"
-                width="100%"
-                :options="pay_options"
-            />
+            <lew-tabs v-model="user.pay" width="100%" :options="pay_options" />
         </lew-form-item>
     </lew-form>
 </template>

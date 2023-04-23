@@ -47,25 +47,25 @@ textarea {
 }
 
 .tippy-box[data-placement^='left'] {
-    >.tippy-arrow:before {
+    > .tippy-arrow:before {
         border-left-color: var(--lew-popover-bgcolor) !important;
     }
 }
 
 .tippy-box[data-placement^='top'] {
-    >.tippy-arrow:before {
+    > .tippy-arrow:before {
         border-top-color: var(--lew-popover-bgcolor) !important;
     }
 }
 
 .tippy-box[data-placement^='right'] {
-    >.tippy-arrow:before {
+    > .tippy-arrow:before {
         border-right-color: var(--lew-popover-bgcolor) !important;
     }
 }
 
 .tippy-box[data-placement^='bottom'] {
-    >.tippy-arrow:before {
+    > .tippy-arrow:before {
         border-bottom-color: var(--lew-popover-bgcolor) !important;
     }
 }
@@ -89,13 +89,23 @@ textarea {
     height: 100%;
     background-size: 400% 100%;
     background-position: 100% 50%;
-    background-image: linear-gradient( 90deg, rgb(214, 214, 214) 25%, #fff 37%, rgb(203, 203, 203) 63%);
+    background-image: linear-gradient(
+        90deg,
+        rgb(214, 214, 214) 25%,
+        #fff 37%,
+        rgb(203, 203, 203) 63%
+    );
     animation: skeleton-loading 1.5s ease infinite;
 }
 
 .lew-dark .skeletons::after {
     /* 内容区域空状态时追加骨架屏样式 */
-    background-image: linear-gradient( 90deg, rgb(84, 84, 84) 25%, rgb(116, 116, 116) 37%, rgb(58, 58, 58) 63%);
+    background-image: linear-gradient(
+        90deg,
+        rgb(84, 84, 84) 25%,
+        rgb(116, 116, 116) 37%,
+        rgb(58, 58, 58) 63%
+    );
 }
 
 ::-webkit-scrollbar {
@@ -111,13 +121,11 @@ textarea {
     background-color: var(--lew-bgcolor-4);
 }
 
-
 /* 修改滚动条角的颜色为蓝色 */
 
 ::-webkit-scrollbar-corner {
     background-color: var(--lew-bgcolor-0);
 }
-
 
 /* 修改滚动条角的颜色为蓝色 */
 
