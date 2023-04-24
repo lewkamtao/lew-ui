@@ -96,7 +96,6 @@ const focus = (e: any) => {
     display: inline-flex;
     align-items: center;
     width: 100%;
-
     .lew-input {
         width: 100%;
     }

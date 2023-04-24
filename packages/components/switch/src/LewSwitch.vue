@@ -67,6 +67,7 @@ const handleClick = async (e: any) => {
     border-radius: var(--lew-border-radius);
     transition: var(--lew-form-transition);
     cursor: pointer;
+    box-shadow: var(--lew-form-box-shadow);
     outline: 0px var(--lew-primary-color-light) solid;
     .lew-switch-dot {
         position: absolute;
@@ -78,7 +79,7 @@ const handleClick = async (e: any) => {
         background: var(--lew-white-color);
         transition: var(--lew-form-transition);
         transform: translate(4px, 4px);
-        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.08);
+        box-shadow: 0px 0px 12px rgba($color: #000000, $alpha: 0.15);
     }
 
     .lew-switch-dot::after {
@@ -132,7 +133,7 @@ const handleClick = async (e: any) => {
 }
 
 .lew-switch-view:hover {
-    background: var(--lew-form-bgcolor-hover);
+    background: var(--lew-form-bgcolor-active);
     outline: 3px var(--lew-primary-color-light) solid;
 }
 

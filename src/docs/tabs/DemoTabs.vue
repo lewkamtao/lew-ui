@@ -30,20 +30,44 @@ const docsTable = reactive([
         data: [
             {
                 param: 'modelValue',
-                description: '配置表',
-                type: 'options',
-                default: '[]',
+                description: '值',
+                type: 'string | number',
+                default: `''`,
             },
             {
                 param: 'options',
-                description: '显示类型',
-                type: `options`,
-                default: 'sprit',
+                description: '配置',
+                type: `TabsOptions`,
+                default: [],
+            },
+            {
+                param: 'width',
+                description: '宽度',
+                type: `number`,
+                default: '',
+            },
+            {
+                param: 'itemWidth',
+                description: 'item 宽度',
+                type: `number`,
+                default: '',
+            },
+            {
+                param: 'round',
+                description: '是否圆角',
+                type: `boolean`,
+                default: 'false',
+            },
+            {
+                param: 'type',
+                description: '类型',
+                type: `block | line`,
+                default: 'block',
             },
         ],
     },
     {
-        desc: 'Options',
+        desc: 'TabsOptions',
         columns: [
             {
                 title: '参数名',

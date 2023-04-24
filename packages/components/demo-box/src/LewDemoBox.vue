@@ -81,6 +81,7 @@ const style = computed<CSSProperties>(() => {
         position: relative;
         overflow-y: auto;
         overflow-x: hidden;
+        border-top: var(--lew-border-1);
 
         .pre-box {
             border-radius: var(--lew-border-radius);

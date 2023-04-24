@@ -5,6 +5,7 @@ export type TabsOptions = {
     value: [String, Number];
 };
 
+export type TabsType = 'block' | 'line';
 export const tabsProps = {
     modelValue: {
         type: [String, Number],
@@ -27,7 +28,7 @@ export const tabsProps = {
         default: false,
     },
     type: {
-        type: String,
+        type: String as PropType<TabsType>,
         default: 'block',
     },
 };

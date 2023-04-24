@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { breadcrumbProps } from './breadcrumb';
 import { useLewTo } from '../../../hooks';
-
 const { lewTo } = useLewTo();
-
 defineProps(breadcrumbProps);
 </script>
 
@@ -63,9 +61,8 @@ defineProps(breadcrumbProps);
         align-items: center;
         font-size: 14px;
         font-weight: 400;
-        color: var(--lew-text-color-7);
+        color: var(--lew-text-color-5);
         user-select: none;
-
         span {
             cursor: default;
             padding: 2px 4px;

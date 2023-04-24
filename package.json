@@ -41,9 +41,11 @@
         "lodash": "^4.17.21",
         "moment": "^2.29.4",
         "tippy.js": "^6.3.7",
+        "vee-validate": "^4.8.6",
         "vue": "^3.2.41",
         "vue-feather": "^2.0.0",
-        "vue-router": "^4.0.13"
+        "vue-router": "^4.0.13",
+        "yup": "^1.1.1"
     },
     "devDependencies": {
         "@types/lodash": "^4.14.182",

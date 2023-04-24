@@ -135,8 +135,6 @@ defineExpose({ show, hide, refresh });
 
 <style lang="scss">
 .lew-popover {
-    display: inline-block;
-
     .trigger {
         > div {
             font-size: 14px;

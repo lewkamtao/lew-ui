@@ -326,6 +326,7 @@ defineExpose({ show, hide });
     box-sizing: border-box;
     outline: 0px var(--lew-primary-color-light) solid;
     border: var(--lew-form-border-width) transparent solid;
+    box-shadow: var(--lew-form-box-shadow);
 
     > div {
         width: 100%;
@@ -469,6 +470,7 @@ defineExpose({ show, hide });
 .lew-select-body {
     width: 100%;
     box-sizing: border-box;
+
     .search-input {
         margin-bottom: 5px;
         input {

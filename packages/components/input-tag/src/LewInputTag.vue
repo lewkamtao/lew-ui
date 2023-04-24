@@ -79,16 +79,12 @@ const delTag = (index: number) => {
             >{{ item }}
         </lew-tag>
 
-        <label
-            v-show="!isInput"
-            class="lew-input-tag-button"
-            @click="openInput"
-        >
+        <label v-if="!isInput" class="lew-input-tag-button" @click="openInput">
             <lew-icon :size="16" type="plus" />
         </label>
 
         <lew-input
-            v-show="isInput"
+            v-else
             ref="lewInputRef"
             v-model="inputValue"
             class="lew-input-tag"
@@ -109,7 +105,7 @@ const delTag = (index: number) => {
     flex-wrap: wrap;
     gap: 10px;
     padding: 5px 0px;
-    box-sizing: border-box;
+    border: var(--lew-form-border-width solid rgba(0, 0, 0, 0));
 
     .lew-input-tag {
         height: 26px;

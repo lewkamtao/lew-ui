@@ -92,6 +92,7 @@ const getIconSize = computed(() => {
     border-radius: var(--lew-border-radius);
     box-sizing: border-box;
     overflow: hidden;
+    box-shadow: var(--lew-form-box-shadow);
 
     .lew-loading-icon {
         position: absolute;
@@ -242,6 +243,7 @@ const getIconSize = computed(() => {
     color: var(--lew-text-color-2);
     padding: 0px 4px;
     min-width: auto;
+    box-shadow: none;
 }
 
 .lew-button-type-blank:hover {

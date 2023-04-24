@@ -1,17 +1,18 @@
 import { ExtractPropTypes } from 'vue';
 
 export const inputProps = {
-    // 类型
-    type: {
-        type: String,
-        default: '',
-    },
     // 绑定值
     modelValue: {
         // 父组件 v-model 没有指定参数名，则默认是 modelValue
         type: String,
         default: '',
     },
+    // 类型
+    type: {
+        type: String,
+        default: 'text',
+    },
+
     size: {
         type: String,
         default: 'medium',

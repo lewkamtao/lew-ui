@@ -98,6 +98,7 @@ defineExpose({ show, hide });
         cursor: pointer;
         user-select: none;
         outline: 0px transparent solid;
+        box-shadow: var(--lew-form-box-shadow);
         border: var(--lew-form-border-width) transparent solid;
     }
     .lew-date-picker-input {

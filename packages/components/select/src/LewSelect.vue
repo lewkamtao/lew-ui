@@ -6,7 +6,7 @@ import { UseVirtualList } from '@vueuse/components';
 import { selectProps, SelectOptions } from './props';
 
 const props = defineProps(selectProps);
-const emit = defineEmits(['update:modelValue', 'change']);
+const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
 const selectValue = useVModel(props, 'modelValue', emit);
 
 const lewSelectRef = ref();
@@ -64,12 +64,15 @@ const search = async (e: any) => {
 
 const clearHandle = () => {
     selectValue.value = '';
+    emit('clear');
+    emit('change');
 };
 
 const selectHandle = (item: SelectOptions) => {
     if (item.disabled) {
         return;
     }
+    emit('change', item.value);
     selectValue.value = item.value;
     hide();
 };
@@ -143,6 +146,7 @@ const onShow = () => {
 
 const onHide = () => {
     state.visible = false;
+    emit('blur');
 };
 
 defineExpose({ show, hide });
@@ -287,6 +291,7 @@ defineExpose({ show, hide });
     box-sizing: border-box;
     outline: 0px var(--lew-primary-color-light) solid;
     border: var(--lew-form-border-width) transparent solid;
+    box-shadow: var(--lew-form-box-shadow);
 
     > div {
         width: 100%;
@@ -314,9 +319,7 @@ defineExpose({ show, hide });
             opacity: 0;
             transform: translate(100%, -50%);
         }
-        .icon-clear:hover {
-            opacity: 1;
-        }
+
         .icon-select-hide {
             opacity: 0;
             transform: translate(100%, -50%);

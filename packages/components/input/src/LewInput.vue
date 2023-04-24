@@ -1,44 +1,37 @@
 <script setup lang="ts">
 import { inputProps } from './input';
-
-const props = defineProps(inputProps);
-const v = ref(props.modelValue);
-const lewInputRef = ref();
-const lewTextareaRef = ref();
-
-watch(
-    () => props.modelValue,
-    () => {
-        v.value = props.modelValue;
-    }
-);
-
+import { useVModel } from '@vueuse/core';
 const emit = defineEmits([
     'update:modelValue',
+    'update:type',
     'clear',
     'blur',
     'focus',
     'change',
     'input',
 ]);
+const props = defineProps(inputProps);
+const modelValue = useVModel(props, 'modelValue', emit);
+const inputType = useVModel(props, 'type', emit);
+const lewInputRef = ref();
+const lewTextareaRef = ref();
 
 const input = () => {
     if (props.maxLength) {
-        for (let i = 0; i <= v.value.length - 1; i++) {
-            if (getTextLength(v.value.slice(0, i)) >= props.maxLength) {
-                v.value = v.value.slice(0, i);
+        for (let i = 0; i <= modelValue.value.length - 1; i++) {
+            if (
+                getTextLength(modelValue.value.slice(0, i)) >= props.maxLength
+            ) {
+                modelValue.value = modelValue.value.slice(0, i);
             }
         }
     }
-
-    emit('update:modelValue', v.value);
-    emit('input', v.value);
+    emit('blur', modelValue.value);
 };
 
 const clear = (): void => {
-    emit('clear', v.value);
-    v.value = '';
-    emit('update:modelValue', v.value);
+    modelValue.value = '';
+    emit('clear');
 };
 
 const focusFn = () => {
@@ -49,24 +42,24 @@ const focusFn = () => {
     }
 };
 
-const _type = ref(props.type);
-
 const showPasswordFn = (): void => {
-    _type.value === 'text'
-        ? (_type.value = 'password')
-        : (_type.value = 'text');
+    if (inputType.value === 'text') {
+        inputType.value = 'password';
+    } else {
+        inputType.value = 'text';
+    }
 };
 
 const getCheckNumStr = computed(() => {
     if (props.showCount && props.maxLength) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        return `${getTextLength(v.value)} / ${props.maxLength}`;
+        return `${getTextLength(modelValue.value)} / ${props.maxLength}`;
     }
     if (props.showCount) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        return getTextLength(v.value);
+        return getTextLength(modelValue.value);
     }
     return false;
 });
@@ -114,7 +107,7 @@ defineExpose({ getEl, focusFn, lewInputRef });
         class="lew-input-view"
         :class="`
     lew-input-view-${size} 
-    ${_type === 'textarea' ? 'lew-input-view-textarea' : ''}
+    ${inputType === 'textarea' ? 'lew-input-view-textarea' : ''}
     ${readonly ? 'lew-input-view-readonly' : ''} 
     ${disabled ? 'lew-input-view-disabled' : ''}
     ${align ? 'lew-input-view-align-' + align : ''}
@@ -122,9 +115,9 @@ defineExpose({ getEl, focusFn, lewInputRef });
     `"
     >
         <textarea
-            v-if="_type === 'textarea'"
+            v-model="modelValue"
+            v-if="inputType === 'textarea'"
             ref="lewTextareaRef"
-            v-model="v"
             class="btf-scrollbar"
             :class="`lew-textarea-resize-${resize}`"
             rows="3"
@@ -133,38 +126,40 @@ defineExpose({ getEl, focusFn, lewInputRef });
             :readonly="readonly"
             :placeholder="placeholder"
             @input="input"
-            @change="emit('change', v)"
-            @blur="emit('blur', v)"
+            @change="emit('change', modelValue)"
+            @blur="emit('blur', modelValue)"
             @focus="focus"
         ></textarea>
 
         <input
             v-else
             ref="lewInputRef"
-            v-model="v"
+            v-model="modelValue"
             :disabled="disabled"
             :placeholder="placeholder"
-            :type="_type"
+            :type="inputType"
             :readonly="readonly"
             onkeypress="if(window.event.keyCode==13) this.blur()"
             @input="input"
-            @change="emit('change', v)"
-            @blur="emit('blur', v)"
+            @change="emit('change', modelValue)"
+            @blur="emit('blur', modelValue)"
             @focus="focus"
         />
-        <label v-if="autoWidth" class="input-auto-width">{{ v }}</label>
+        <label v-if="autoWidth" class="input-auto-width">
+            {{ modelValue }}
+        </label>
         <div
             v-if="showPassword || clearable || showCount"
             class="lew-input-controls"
             :class="{
                 'lew-input-controls-show':
-                    (v && showPassword) ||
-                    (v && clearable) ||
+                    (modelValue && showPassword) ||
+                    (modelValue && clearable) ||
                     (showCount && !clearable && !showPassword),
                 'lew-input-controls-count':
-                    showCount && clearable && maxLength && !v,
+                    showCount && clearable && maxLength && !modelValue,
                 'lew-input-controls-count-show':
-                    showCount && clearable && maxLength && v,
+                    showCount && clearable && maxLength && modelValue,
             }"
         >
             <div v-if="getCheckNumStr" class="lew-input-show-count">
@@ -176,9 +171,9 @@ defineExpose({ getEl, focusFn, lewInputRef });
                 @mousedown.prevent=""
                 @click="showPasswordFn"
             >
-                <lew-icon v-show="_type === 'text'" :size="16" type="eye" />
+                <lew-icon v-show="inputType === 'text'" :size="16" type="eye" />
                 <lew-icon
-                    v-show="_type === 'password'"
+                    v-show="inputType === 'password'"
                     :size="16"
                     type="eye-off"
                 />
@@ -210,7 +205,7 @@ defineExpose({ getEl, focusFn, lewInputRef });
 
     outline: 0px transparent solid;
     border: var(--lew-form-border-width) transparent solid;
-
+    box-shadow: var(--lew-form-box-shadow);
     input,
     textarea {
         width: 100%;

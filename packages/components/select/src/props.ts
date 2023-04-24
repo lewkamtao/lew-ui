@@ -14,7 +14,6 @@ export type SelectSearchMethodParams = {
 export const selectProps = {
     modelValue: {
         type: [String, Number],
-        required: true,
     },
     options: {
         type: Array as PropType<SelectOptions[]>,

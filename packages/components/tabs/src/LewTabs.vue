@@ -154,6 +154,7 @@ onUnmounted(() => {
     width: auto;
     border-radius: var(--lew-border-radius);
     overflow: hidden;
+    box-shadow: var(--lew-form-box-shadow);
 }
 .lew-tabs-wrapper-round {
     border-radius: 35px;
@@ -194,6 +195,10 @@ onUnmounted(() => {
         rgba(0, 0, 0, 0.1)
     );
 }
+.lew-tabs-wrapper-type-line {
+    box-shadow: none;
+}
+
 .lew-tabs-wrapper-type-line::before,
 .lew-tabs-wrapper-type-line::after {
     display: none;
@@ -218,7 +223,6 @@ onUnmounted(() => {
     scroll-behavior: smooth;
     width: 100%;
     box-sizing: border-box;
-
     .lew-tabs-item {
         position: relative;
         display: inline-flex;
