@@ -134,7 +134,7 @@ const handleClick = async (e: any) => {
 
 .lew-switch-view:hover {
     background: var(--lew-form-bgcolor-active);
-    outline: 3px var(--lew-primary-color-light) solid;
+    outline: 3px var(--lew-form-ouline-color) solid;
 }
 
 .lew-switch-view:active {

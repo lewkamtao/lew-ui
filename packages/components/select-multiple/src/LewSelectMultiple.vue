@@ -447,7 +447,7 @@ defineExpose({ show, hide });
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
-    outline: 3px var(--lew-primary-color-light) solid;
+    outline: 3px var(--lew-form-ouline-color) solid;
 
     .icon-select {
         transform: translateY(-50%) rotate(180deg);

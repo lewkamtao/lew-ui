@@ -1,22 +1,14 @@
 <script lang="ts" setup>
 import moment from 'moment';
 import { datePickerProps } from './datePicker';
-
+import { useVModel } from '@vueuse/core';
+const emit = defineEmits(['change', 'update:modelValue']);
 const props = defineProps(datePickerProps);
+const modelValue = useVModel(props, 'modelValue', emit);
 
 const isShowPicker = ref(false);
-const dateValue = ref<string | undefined>(props.modelValue);
 
 const lewPopoverRef = ref();
-
-watch(
-    () => props.modelValue,
-    () => {
-        dateValue.value = props.modelValue;
-    }
-);
-
-const emit = defineEmits(['change', 'update:modelValue']);
 
 const show = () => {
     lewPopoverRef.value.show();
@@ -54,13 +46,13 @@ defineExpose({ show, hide });
             <div class="lew-date-picker-view" :class="classObject">
                 <div class="lew-date-picker-input">
                     <div
-                        v-show="!dateValue"
+                        v-show="!modelValue"
                         class="lew-date-picker-placeholder"
                     >
                         请选择日期
                     </div>
-                    <div v-show="dateValue" class="lew-date-picker-dateValue">
-                        {{ dateValue }}
+                    <div v-show="modelValue" class="lew-date-picker-dateValue">
+                        {{ modelValue }}
                     </div>
                     <lew-icon
                         class="lew-date-picker-icon"
@@ -72,7 +64,7 @@ defineExpose({ show, hide });
         </template>
         <template #popover-body>
             <lew-date
-                v-model="dateValue"
+                v-model="modelValue"
                 :multiple="multiple"
                 @change="change"
             />
@@ -128,7 +120,7 @@ defineExpose({ show, hide });
         background-color: var(--lew-form-bgcolor-focus);
         border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
             solid;
-        outline: 3px var(--lew-primary-color-light) solid;
+        outline: 3px var(--lew-form-ouline-color) solid;
     }
 
     .lew-date-picker-small {

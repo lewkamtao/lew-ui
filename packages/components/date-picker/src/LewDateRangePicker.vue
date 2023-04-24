@@ -1,20 +1,12 @@
 <script lang="ts" setup>
 import { dateRangePickerProps } from './datePicker';
-
+import { useVModel } from '@vueuse/core';
 const props = defineProps(dateRangePickerProps);
-
-const isShowPicker = ref(false);
-const dateValue = ref(props.modelValue as any);
-const lewPopoverRef = ref();
-
-watch(
-    () => props.modelValue,
-    () => {
-        dateValue.value = props.modelValue;
-    }
-);
-
 const emit = defineEmits(['change', 'update:modelValue']);
+const modelValue = useVModel(props, 'modelValue', emit);
+const isShowPicker = ref(false);
+const lewPopoverRef = ref();
+const { startKey, endKey } = props;
 
 const show = () => {
     lewPopoverRef.value.show();
@@ -24,8 +16,11 @@ const hide = () => {
     lewPopoverRef.value.hide();
 };
 
-const change = (e: any) => {
-    emit('update:modelValue', e.dateValue);
+const change = (e?: any) => {
+    modelValue.value = {
+        [startKey]: e[startKey],
+        [endKey]: e[endKey],
+    };
     emit('change', { ...e, show, hide });
     if (props.autoClose) {
         hide();
@@ -52,19 +47,29 @@ defineExpose({ show, hide });
             <div class="lew-date-picker-view" :class="classObject">
                 <div class="lew-date-picker-input">
                     <div
-                        v-show="!dateValue"
+                        v-if="!modelValue[startKey]"
                         class="lew-date-picker-placeholder"
                     >
                         请选择日期
                     </div>
                     <div
+                        v-else
                         class="lew-date-picker-dateValue lew-date-picker-start"
                     >
-                        {{ dateValue[0] }}
+                        {{ modelValue[startKey] }}
                     </div>
                     <div class="lew-date-picker-mid">-</div>
-                    <div class="lew-date-picker-dateValue lew-date-picker-end">
-                        {{ dateValue[1] }}
+                    <div
+                        v-if="!modelValue[endKey]"
+                        class="lew-date-picker-placeholder"
+                    >
+                        请选择日期
+                    </div>
+                    <div
+                        v-else
+                        class="lew-date-picker-dateValue lew-date-picker-end"
+                    >
+                        {{ modelValue[endKey] }}
                     </div>
                     <lew-icon
                         class="lew-date-picker-icon"
@@ -76,7 +81,7 @@ defineExpose({ show, hide });
         </template>
         <template #popover-body>
             <Lew-date-range
-                v-model="dateValue"
+                v-model="modelValue"
                 :multiple="multiple"
                 @change="change"
             />
@@ -136,7 +141,7 @@ defineExpose({ show, hide });
         background-color: var(--lew-form-bgcolor-focus);
         border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
             solid;
-        outline: 3px var(--lew-primary-color-light) solid;
+        outline: 3px var(--lew-form-ouline-color) solid;
     }
 
     .lew-date-picker-small {

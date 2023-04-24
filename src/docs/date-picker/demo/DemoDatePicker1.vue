@@ -1,7 +1,10 @@
 <script setup lang="ts">
 const value = ref('');
 
-const dateRangeValue = ref(['2020-12-11', '2020-12-12']);
+const dateRangeValue = ref({
+    start: '2022-11-11',
+    end: '2022-12-12',
+});
 
 const change1 = (e: any) => {
     LewMessage.info(e.date);
@@ -14,7 +17,7 @@ const change2 = (e: any) => {
     }, 1000);
 };
 const change3 = (e: any) => {
-    LewMessage.info(`${e.date.start} 至 ${e.date.end}`);
+    LewMessage.info(`${e.start} 至 ${e.end}`);
 };
 </script>
 

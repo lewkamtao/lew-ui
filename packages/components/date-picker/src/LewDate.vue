@@ -2,17 +2,10 @@
 import moment from 'moment';
 import { getMonthDate, getHeadDate } from './date';
 import { dateProps } from './datePicker';
-
+import { useVModel } from '@vueuse/core';
+const emit = defineEmits(['change', 'update:modelValue']);
 const props = defineProps(dateProps);
-
-const dateValue = ref<string | undefined>(props.modelValue || '');
-
-watch(
-    () => props.modelValue,
-    () => {
-        dateValue.value = props.modelValue;
-    }
-);
+const modelValue = useVModel(props, 'modelValue', emit);
 
 // 获取当天日期对象
 const today = new Date();
@@ -23,10 +16,10 @@ const curMonth = ref(today.getMonth() + 1);
 const curDay = ref(today.getDate());
 
 // 年
-const _year = ref(dateValue.value ? moment(dateValue.value).year() : curYear);
+const _year = ref(modelValue.value ? moment(modelValue.value).year() : curYear);
 // 月
 const _month = ref(
-    dateValue.value ? moment(dateValue.value).month() + 1 : curMonth
+    modelValue.value ? moment(modelValue.value).month() + 1 : curMonth
 );
 
 const dateData = ref(getMonthDate());
@@ -69,19 +62,17 @@ const setMonthDate = () => {
     dateData.value = getMonthDate(_year.value, _month.value);
 };
 
-const emit = defineEmits(['change', 'update:modelValue']);
-
 const selectDateFn = (item: any) => {
     const v = `${item.year}-${item.month}-${item.showDate}`;
-    dateValue.value = v;
-    emit('update:modelValue', dateValue.value);
+    modelValue.value = v;
+    emit('update:modelValue', modelValue.value);
     emit('change', v);
 };
 
 const checkDateSelect = computed(() => (item: any) => {
     if (item.date > 0 && item.date <= item.showDate) {
         const v = `${_year.value}-${_month.value}-${item.showDate}`;
-        return dateValue.value === v;
+        return modelValue.value === v;
     }
 });
 

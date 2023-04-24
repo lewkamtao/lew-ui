@@ -118,7 +118,7 @@ const getRadioClassName = computed(() => {
 .lew-radio:hover {
     .icon-radio-box {
         border: var(--lew-form-border-width) var(--lew-primary-color) solid;
-        outline: 3px var(--lew-primary-color-light) solid;
+        outline: 3px var(--lew-form-ouline-color) solid;
         background-color: transparent;
     }
 }

@@ -24,6 +24,9 @@ watch(
 const arrayToObj = (arr: any): any => {
     const obj: Record<string, unknown> = {};
     arr.forEach(({ field, value }: any) => {
+        if (!field) {
+            return;
+        }
         const keys = field.split('.');
         let currentObj = obj;
         for (let i = 0; i < keys.length - 1; i++) {
@@ -33,7 +36,9 @@ const arrayToObj = (arr: any): any => {
             }
             currentObj = currentObj[key] as Record<string, unknown>;
         }
-        currentObj[keys[keys.length - 1]] = value;
+        if (value !== undefined) {
+            currentObj[keys[keys.length - 1]] = value;
+        }
     });
     return obj;
 };
@@ -47,7 +52,7 @@ const validate = (field: string) => {
         if (field && rules) {
             obj[field] = rules;
         }
-        if (value) {
+        if (value !== undefined) {
             formObj[field] = value;
         }
     });
@@ -129,17 +134,24 @@ defineExpose({ validate });
             :key="item.field"
             class="lew-form-item"
         >
-            <div :style="`width:${labelWidth}px`" class="label-box">
+            <div
+                :style="direction === 'x' ? `width:${labelWidth}px` : ''"
+                class="label-box"
+            >
                 <label :class="{ 'label-required': item.rules && item.label }">
                     {{ item.label }}
                 </label>
             </div>
             <div
-                :style="`width:calc(100% - ${labelWidth}px)`"
+                :style="
+                    direction === 'x'
+                        ? `width:calc(100% - ${labelWidth}px)`
+                        : ''
+                "
                 class="lew-form-main"
+                :class="{ 'lew-form-item-error': item.errMessage }"
             >
                 <lew-input
-                    :key="item.field"
                     v-model="item.value"
                     v-if="item.as === 'lew-input'"
                     @change="validate(item.field)"
@@ -150,7 +162,6 @@ defineExpose({ validate });
                 />
 
                 <lew-checkbox
-                    :key="item.field"
                     v-model="item.value"
                     v-if="item.as === 'lew-checkbox'"
                     @change="validate(item.field)"
@@ -158,18 +169,56 @@ defineExpose({ validate });
                 />
 
                 <lew-select
-                    :key="item.field"
                     v-model="item.value"
                     v-if="item.as === 'lew-select'"
                     @change=" 
                         (e:any) => {
                             validate(item.field);
-                            item.props.change(e);
-                        }
+                            typeof item.props.click === 'function'?item.props.change(e):'';
+                        } "
+                    @blur="validate(item.field)"
+                    @input="validate(item.field)"
+                    @clear="validate(item.field)"
+                    v-bind="{ ...item.props }"
+                />
+
+                <lew-date-picker
+                    style="width: 100%"
+                    v-model="item.value"
+                    v-if="item.as === 'lew-date-picker'"
+                    @change=" 
+                        (e:any) => {
+                            validate(item.field);
+                            typeof item.props.click === 'function'?item.props.change(e):'';
+                        }"
+                    @blur="validate(item.field)"
+                    @input="validate(item.field)"
+                    @clear="validate(item.field)"
+                />
+
+                <lew-date-range-picker
+                    style="width: 100%"
+                    v-model="item.value"
+                    v-if="item.as === 'lew-date-range-picker'"
+                    @change=" 
+                        (e:any) => {
+                            validate(item.field);
+                            typeof item.props.click === 'function'?item.props.change(e):'';
+                        }  
                     "
                     @blur="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
+                />
+
+                <lew-button
+                    v-model="item.value"
+                    v-if="item.as === 'lew-button'"
+                    @click="
+                        typeof item.props.click === 'function'
+                            ? item.props.click()
+                            : ''
+                    "
                     v-bind="{ ...item.props }"
                 />
 
@@ -194,15 +243,9 @@ defineExpose({ validate });
             display: inline-flex;
             justify-content: flex-end;
             label {
-                position: relative;
+                display: flex;
+                align-items: center;
                 white-space: nowrap;
-            }
-            .label-required::before {
-                position: absolute;
-                left: -12px;
-                content: '*';
-                color: var(--lew-error-color-dark);
-                margin-right: 4px;
             }
         }
     }
@@ -221,6 +264,45 @@ defineExpose({ validate });
         }
     }
 }
+
+.lew-form-direction-x {
+    .lew-form-item {
+        gap: 10px;
+        .label-box {
+            display: inline-flex;
+            justify-content: flex-end;
+            .label-required::before {
+                content: '*';
+                color: var(--lew-error-color-dark);
+                margin-right: 4px;
+            }
+        }
+    }
+}
+.lew-form-direction-y {
+    .lew-form-item {
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+        .label-box {
+            display: inline-flex;
+            justify-content: flex-start;
+            .label-required::after {
+                content: '*';
+                color: var(--lew-error-color-dark);
+                margin-left: 4px;
+            }
+        }
+    }
+}
+
+.lew-form-item-error {
+    --lew-form-box-shadow: 0px 1px 1px rgba(160, 62, 62, 0.64);
+    --lew-form-border-color-focus: var(--lew-error-color-dark);
+    --lew-form-ouline-color: var(--lew-error-color-light);
+}
+
 .slide-fade-leave-active,
 .slide-fade-enter-active {
     transition: all 0.15s ease;

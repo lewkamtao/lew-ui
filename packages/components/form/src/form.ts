@@ -15,7 +15,6 @@ export const formProps = {
     labelWidth: {
         type: Number,
     },
-
     direction: {
         type: String,
         default: 'x',

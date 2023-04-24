@@ -22,8 +22,19 @@ export const datePickerProps = {
 
 export const dateRangePickerProps = {
     modelValue: {
-        type: Array,
-        required: false,
+        type: Object,
+        default: () => {
+            return {};
+        },
+        required: true,
+    },
+    startKey: {
+        type: String,
+        default: 'start',
+    },
+    endKey: {
+        type: String,
+        default: 'end',
     },
     multiple: {
         type: Boolean,
@@ -41,8 +52,16 @@ export const dateRangePickerProps = {
 
 export const dateRangeProps = {
     modelValue: {
-        type: Array,
+        type: Object,
         required: true,
+    },
+    startKey: {
+        type: String,
+        default: 'start',
+    },
+    endKey: {
+        type: String,
+        default: 'end',
     },
     multiple: {
         type: Boolean,

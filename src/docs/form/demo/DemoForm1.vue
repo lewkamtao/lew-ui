@@ -87,6 +87,13 @@ const options = ref([
             label: '是否同意',
         },
     },
+    {
+        as: 'lew-button',
+        props: {
+            text: '提交',
+            click: () => submit(),
+        },
+    },
 ]);
 
 let formRef = ref();
@@ -97,20 +104,25 @@ const submit = () => {
 </script>
 
 <template>
-    <pre>{{ form }}</pre>
-    <lew-form
-        ref="formRef"
-        class="form-box"
-        v-model="form"
-        :options="options"
-        :label-width="80"
-    />
-    <lew-button text="提交" @click="submit"></lew-button>
+    <lew-flex x="start" y="start" :gap="50">
+        <lew-form
+            ref="formRef"
+            class="form-box"
+            v-model="form"
+            :options="options"
+            :label-width="80"
+        />
+        <pre>{{ form }}</pre>
+    </lew-flex>
 </template>
 <style scoped lang="scss">
 .form-box {
     width: 380px;
-    margin: 0 auto;
+    flex-shrink: 0;
+}
+pre {
+    background-color: var(--lew-bgcolor-2);
+    padding: 30px;
 }
 @media (max-width: 767px) {
     .form-box {
