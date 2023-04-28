@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useImage } from '@vueuse/core';
-import { getClass } from 'lew-ui/utils';
+import { object2class } from 'lew-ui/utils';
 import { avatarProps } from './avatar';
 
 const props = defineProps(avatarProps);
@@ -12,14 +12,14 @@ const imgSrc = computed(() => {
 });
 
 const dotClassName = computed(() => {
-    return getClass('dot', {
+    return object2class('dot', {
         status: props.status,
         statusPosition: props.statusPosition,
     });
 });
 
 const avatarClassName = computed(() => {
-    return getClass('lew-avatar', {
+    return object2class('lew-avatar', {
         round: props.round,
         skeletons: isLoading.value,
     });

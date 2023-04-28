@@ -16,16 +16,20 @@ const hide = () => {
     lewPopoverRef.value.hide();
 };
 
-const change = (e?: any) => {
-    modelValue.value = {
-        [startKey]: e[startKey],
-        [endKey]: e[endKey],
+const getIconSize = computed(() => {
+    const size: any = {
+        small: 13,
+        medium: 14,
+        large: 16,
     };
-    emit('change', { ...e, show, hide });
-    if (props.autoClose) {
-        hide();
-    }
+    return size[props.size];
+});
+
+const change = (e?: any) => {
+    emit('change', { e, show, hide });
+    hide();
 };
+
 const classObject = computed(() => {
     return {
         'lew-date-picker-focus': isShowPicker.value,
@@ -73,18 +77,14 @@ defineExpose({ show, hide });
                     </div>
                     <lew-icon
                         class="lew-date-picker-icon"
-                        :size="16"
+                        :size="getIconSize"
                         type="calendar"
                     />
                 </div>
             </div>
         </template>
         <template #popover-body>
-            <Lew-date-range
-                v-model="modelValue"
-                :multiple="multiple"
-                @change="change"
-            />
+            <lew-date-range v-model="modelValue" @change="change" />
         </template>
     </lew-popover>
 </template>

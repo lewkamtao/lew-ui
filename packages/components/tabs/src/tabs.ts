@@ -17,11 +17,10 @@ export const tabsProps = {
         },
     },
     width: {
-        type: String,
-        default: '',
+        type: [Number, String],
     },
     itemWidth: {
-        type: Number,
+        type: [Number, String],
     },
     round: {
         type: Boolean,

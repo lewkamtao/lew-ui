@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { tagProps } from './tag';
-import { getClass } from 'lew-ui/utils';
+import { object2class } from 'lew-ui/utils';
 
 const props = defineProps(tagProps);
 const emit = defineEmits(['close']);
@@ -26,7 +26,7 @@ const getSize = computed(() => {
 
 const tagClassName = computed(() => {
     const { size, type, round, disabled } = props;
-    return getClass('lew-tag', { size, type, round, disabled });
+    return object2class('lew-tag', { size, type, round, disabled });
 });
 </script>
 

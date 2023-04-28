@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
 import { useDOMCreate } from '../../../hooks';
-import { drawerProps, getClass, getStyle } from './drawer';
+import { drawerProps, object2class, getStyle } from './drawer';
 
 useDOMCreate('lew-drawer');
 const emit = defineEmits(['update:visible']);
@@ -40,7 +40,7 @@ const close = () => {
                 <div
                     :style="getStyle(position, width, height)"
                     class="lew-drawer-main"
-                    :class="getClass(position)"
+                    :class="object2class(position)"
                     @click.stop
                 >
                     <slot></slot>

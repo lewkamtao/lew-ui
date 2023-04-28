@@ -21,10 +21,18 @@ const hide = () => {
 const change = (date: string) => {
     emit('update:modelValue', moment(date).format('YYYY-MM-DD'));
     emit('change', { date, show, hide });
-    if (props.autoClose) {
-        hide();
-    }
+    hide();
 };
+
+const getIconSize = computed(() => {
+    const size: any = {
+        small: 13,
+        medium: 14,
+        large: 16,
+    };
+    return size[props.size];
+});
+
 const classObject = computed(() => {
     return {
         'lew-date-picker-focus': isShowPicker.value,
@@ -56,7 +64,7 @@ defineExpose({ show, hide });
                     </div>
                     <lew-icon
                         class="lew-date-picker-icon"
-                        :size="16"
+                        :size="getIconSize"
                         type="calendar"
                     />
                 </div>

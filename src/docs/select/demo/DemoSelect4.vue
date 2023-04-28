@@ -26,30 +26,27 @@ const value = ref('');
 </script>
 
 <template>
-    <div>
-        <lew-form style="width: 420px" label-width="120px">
-            <lew-form-item label="支持插槽">
-                <lew-select
-                    v-model="value"
-                    :item-height="48"
-                    :options="options"
-                    label-slot
+    <lew-flex style="width: 320px" direction="y">
+        <lew-select
+            v-model="value"
+            :item-height="48"
+            :options="options"
+            placeholder="支持插槽"
+            label-slot
+        >
+            <template #label="{ item, checked }">
+                <div
+                    class="custom-select-box"
+                    :class="{ 'custom-select-checked': checked }"
                 >
-                    <template #label="{ item, checked }">
-                        <div
-                            class="custom-select-box"
-                            :class="{ 'custom-select-checked': checked }"
-                        >
-                            <div class="label">{{ item.label }}</div>
-                            <div class="desc">
-                                {{ item.desc }}
-                            </div>
-                        </div>
-                    </template>
-                </lew-select>
-            </lew-form-item>
-        </lew-form>
-    </div>
+                    <div class="label">{{ item.label }}</div>
+                    <div class="desc">
+                        {{ item.desc }}
+                    </div>
+                </div>
+            </template>
+        </lew-select>
+    </lew-flex>
 </template>
 
 <style lang="scss">

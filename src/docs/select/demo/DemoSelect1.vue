@@ -11,17 +11,24 @@ const value = ref('');
 </script>
 
 <template>
-    <div>
-        <lew-form style="width: 420px" direction="x" label-width="120px">
-            <lew-form-item label="小的">
-                <lew-select v-model="value" size="small" :options="options" />
-            </lew-form-item>
-            <lew-form-item label="常规">
-                <lew-select v-model="value" :options="options" />
-            </lew-form-item>
-            <lew-form-item label="大的">
-                <lew-select v-model="value" size="large" :options="options" />
-            </lew-form-item>
-        </lew-form>
-    </div>
+    <lew-flex style="width: 320px" direction="y">
+        <lew-select
+            v-model="value"
+            size="small"
+            placeholder="小"
+            :options="options"
+        />
+        <lew-select
+            v-model="value"
+            size="medium"
+            placeholder="中"
+            :options="options"
+        />
+        <lew-select
+            v-model="value"
+            size="large"
+            placeholder="大"
+            :options="options"
+        />
+    </lew-flex>
 </template>

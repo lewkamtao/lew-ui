@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { tabsProps } from './tabs';
 import { useVModel } from '@vueuse/core';
-import { getClass } from 'lew-ui/utils';
+import { object2class, any2px } from 'lew-ui/utils';
 
 const emit = defineEmits(['change', 'update:modelValue']);
 const props = defineProps(tabsProps);
@@ -72,7 +72,7 @@ const debounce = () => {
 
 const getTabsWrapperClassName = computed(() => {
     const { type, round } = props;
-    return getClass('lew-tabs-wrapper', {
+    return object2class('lew-tabs-wrapper', {
         type,
         round,
         hidLine: state.hidLine,
@@ -81,7 +81,7 @@ const getTabsWrapperClassName = computed(() => {
 
 const getTabsClassName = computed(() => {
     const { type, round } = props;
-    return getClass('lew-tabs', {
+    return object2class('lew-tabs', {
         type,
         round,
     });
@@ -114,15 +114,33 @@ onMounted(() => {
     window.addEventListener('resize', debounce, false);
 });
 
+const getItemStyle = computed(() => {
+    let width = any2px(props.itemWidth);
+    if (props.itemWidth === 'auto') {
+        return `flex:1`;
+    } else {
+        return `width:${width}`;
+    }
+});
+
+const getTabsStyle = computed(() => {
+    let width = any2px(props.width);
+    return `width:${width}`;
+});
+
 onUnmounted(() => {
     window.removeEventListener('resize', debounce);
 });
 </script>
 
 <template>
-    <div class="lew-tabs-wrapper" :class="getTabsWrapperClassName">
+    <div
+        :style="getTabsStyle"
+        class="lew-tabs-wrapper"
+        :class="getTabsWrapperClassName"
+    >
         <div
-            :style="`width:${width}`"
+            :style="getTabsStyle"
             class="lew-tabs hidden-scrollbar"
             :class="getTabsClassName"
             ref="tabsRef"
@@ -137,7 +155,7 @@ onUnmounted(() => {
                 :key="String(item.value)"
                 :ref="(el) => itemRef.push(el)"
                 class="lew-tabs-item"
-                :style="`width:${itemWidth}px`"
+                :style="getItemStyle"
                 :class="{ 'lew-tabs-item-active': tabsValue === item.value }"
                 @click="selectItem(item.value)"
             >
@@ -149,7 +167,7 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .lew-tabs-wrapper {
-    display: inline-block;
+    display: inline-flex;
     position: relative;
     width: auto;
     border-radius: var(--lew-border-radius);
@@ -228,6 +246,7 @@ onUnmounted(() => {
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        flex: 1;
         z-index: 9;
         height: 28px;
         padding: 0px 12px;

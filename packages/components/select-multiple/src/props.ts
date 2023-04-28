@@ -13,8 +13,7 @@ export type SelectSearchMultipleMethodParams = {
 
 export const selectMultipleProps = {
     modelValue: {
-        type: Array as PropType<string[] | number[]>,
-        required: true,
+        type: (Array as PropType<string[] | number[]>) || undefined,
     },
     options: {
         type: Array as PropType<SelectMultipleOptions[]>,
@@ -69,6 +68,10 @@ export const selectMultipleProps = {
         default: 250,
     },
     clearable: {
+        type: Boolean,
+        default: () => false,
+    },
+    readonly: {
         type: Boolean,
         default: () => false,
     },

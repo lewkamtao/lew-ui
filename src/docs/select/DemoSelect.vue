@@ -17,7 +17,7 @@ import {
 const columns = [
     {
         title: '参数名',
-        width: 120,
+        width: 150,
         field: 'param',
     },
 
@@ -33,7 +33,7 @@ const columns = [
     },
     {
         title: '描述',
-        width: 320,
+        width: 220,
         field: 'description',
     },
 ];
@@ -75,16 +75,22 @@ const docsTable = ref([
         default: '默认filter',
     },
     {
+        param: 'readonly',
+        description: '只读',
+        type: `boolean`,
+        default: false,
+    },
+    {
         param: 'disabled',
         description: '禁用选择器',
         type: `boolean`,
-        default: "'false'",
+        default: false,
     },
     {
         param: 'clearable',
         description: '支持清空',
         type: `boolean`,
-        default: "'false'",
+        default: false,
     },
 ]);
 

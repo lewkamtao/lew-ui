@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useDebounceFn, useVModel, watchArray } from '@vueuse/core';
+import { useVModel, watchArray } from '@vueuse/core';
 import { tableProps } from './table';
 
 const props = defineProps(tableProps);
@@ -29,7 +29,7 @@ onActivated(() => {
 
 const tableObserve = () => {
     obs = new ResizeObserver(() => {
-        resizeTableHandleDb();
+        resizeTableHandle();
     });
     obs.observe(tableRef.value);
 };
@@ -55,10 +55,6 @@ const checkScroll = () => {
 
     state.hidScrollLine = '';
 };
-
-const resizeTableHandleDb = useDebounceFn(() => {
-    resizeTableHandle();
-}, 250);
 
 const resizeTableHandle = () => {
     const table = tableRef.value;

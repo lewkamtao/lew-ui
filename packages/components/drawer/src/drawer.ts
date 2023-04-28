@@ -58,6 +58,6 @@ export const getPosition = (position: string) => {
     }
 };
 
-export const getClass = (position: string) => {
+export const object2class = (position: string) => {
     return position ? `lew-drawer-main-${position}` : 'lew-drawer-main-right';
 };

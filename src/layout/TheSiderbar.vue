@@ -46,7 +46,7 @@ const toPath = (item: Item) => {
                 @click="toPath(item)"
             >
                 <span v-if="item.name" class="ename"> {{ item.name }} </span>
-                <span class="cname"> {{ item.cname }}</span>
+                <span v-else class="cname"> {{ item.cname }}</span>
                 <lew-tag
                     v-if="item.label"
                     :type="item.type"
@@ -101,7 +101,8 @@ const toPath = (item: Item) => {
             cursor: pointer;
             font-size: 14px;
             color: var(--lew-text-color-2);
-
+            font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier,
+                monospace;
             .ename {
                 margin-right: 5px;
             }

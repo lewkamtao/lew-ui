@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useVModel, useDebounceFn } from '@vueuse/core';
 import { LewPopover } from 'lew-ui';
-import { getClass, numFormat } from 'lew-ui/utils';
+import { object2class, numFormat } from 'lew-ui/utils';
 import { UseVirtualList } from '@vueuse/components';
 import { selectProps, SelectOptions } from './props';
 
@@ -104,18 +104,18 @@ const getLabel = computed(() => {
 const getSelectClassName = computed(() => {
     let { clearable, size, align } = props;
     clearable = clearable ? !!selectValue.value : false;
-    return getClass('lew-select', { clearable, size, align });
+    return object2class('lew-select', { clearable, size, align });
 });
 
 const getBodyClassName = computed(() => {
     const { size, disabled } = props;
-    return getClass('lew-select-body', { size, disabled });
+    return object2class('lew-select-body', { size, disabled });
 });
 
 const getSelectViewClassName = computed(() => {
-    const { disabled } = props;
+    const { disabled, readonly } = props;
     const focus = state.visible;
-    return getClass('lew-select-view', { focus, disabled });
+    return object2class('lew-select-view', { focus, disabled, readonly });
 });
 
 const getSelectItemClassName = (e: any) => {
@@ -123,7 +123,7 @@ const getSelectItemClassName = (e: any) => {
     const active = getChecked.value(e.value);
     const { align } = props;
 
-    return getClass('lew-select-item', {
+    return object2class('lew-select-item', {
         disabled,
         align,
         active,
@@ -134,6 +134,15 @@ const getVirtualHeight = computed(() => {
     let height = state.options.length * props.itemHeight;
     height = height > 240 ? 240 : height;
     return `${height}px`;
+});
+
+const getIconSize = computed(() => {
+    const size: any = {
+        small: 13,
+        medium: 14,
+        large: 16,
+    };
+    return size[props.size];
 });
 
 const onShow = () => {
@@ -172,14 +181,14 @@ defineExpose({ show, hide });
                 :class="getSelectClassName"
             >
                 <lew-icon
-                    :size="16"
+                    :size="getIconSize"
                     type="chevron-down"
                     class="icon-select"
                     :class="{ 'icon-select-hide': clearable && getLabel }"
                 />
                 <lew-icon
                     v-if="clearable"
-                    :size="16"
+                    :size="getIconSize"
                     type="x-circle"
                     class="icon-clear"
                     :class="{ 'icon-clear-show': clearable && getLabel }"
@@ -315,6 +324,9 @@ defineExpose({ show, hide });
             transform: translateY(-50%) rotate(0deg);
             transition: var(--lew-form-transition);
         }
+        .icon-select {
+            opacity: var(--lew-form-icon-opacity);
+        }
         .icon-clear {
             opacity: 0;
             transform: translate(100%, -50%);
@@ -325,11 +337,11 @@ defineExpose({ show, hide });
             transform: translate(100%, -50%);
         }
         .icon-clear-show {
-            opacity: 0.7;
+            opacity: var(--lew-form-icon-opacity);
             transform: translate(0%, -50%);
         }
         .icon-clear-show:hover {
-            opacity: 1;
+            opacity: var(--lew-form-icon-opacity-hover);
         }
         .placeholder {
             color: rgb(165, 165, 165);
@@ -413,6 +425,12 @@ defineExpose({ show, hide });
 .lew-select-view-disabled {
     opacity: var(--lew-disabled-opacity);
     pointer-events: none; //鼠标点击不可修改
+}
+.lew-select-view-readonly {
+    pointer-events: none; //鼠标点击不可修改
+    .lew-select {
+        user-select: text;
+    }
 }
 .lew-select-view-disabled:hover {
     border-radius: var(--lew-border-radius);

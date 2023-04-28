@@ -18,11 +18,11 @@
         height: 35px;
         line-height: 35px;
         padding: 20px;
-        transition: all 0.45s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         opacity: 0;
         margin-top: 0px;
         margin-bottom: 20px;
-        transform: translateY(-20px);
+        transform: translateY(-10px);
         box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
         border: var(--lew-popover-border);
         font-size: 14px;

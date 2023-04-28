@@ -12,7 +12,6 @@ export const inputProps = {
         type: String,
         default: 'text',
     },
-
     size: {
         type: String,
         default: 'medium',
@@ -67,9 +66,11 @@ export const inputProps = {
         type: Boolean,
         default: false,
     },
-    niceCount: {
-        type: Boolean,
-        default: false,
+    renderCount: {
+        type: Function,
+        default: (value: string) => {
+            return value?.length || 0;
+        },
     },
 };
 export type DateRangePickerProps = ExtractPropTypes<typeof inputProps>;

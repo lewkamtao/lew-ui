@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getIconType, getClass } from 'lew-ui/utils';
+import { getIconType, object2class } from 'lew-ui/utils';
 import type { AlertItem } from './alert';
 import { alertProps } from './alert';
 
@@ -8,7 +8,7 @@ defineProps(alertProps);
 const emit = defineEmits(['close']);
 
 const alertClassName = (item: AlertItem) => {
-    return getClass('lew-alert', { type: item.type });
+    return object2class('lew-alert', { type: item.type });
 };
 </script>
 

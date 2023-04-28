@@ -11,7 +11,7 @@ import {
 const columns = [
     {
         title: '参数名',
-        width: 120,
+        width: 150,
         field: 'param',
     },
 
@@ -27,7 +27,7 @@ const columns = [
     },
     {
         title: '描述',
-        width: 320,
+        width: 220,
         field: 'description',
     },
 ];
@@ -35,7 +35,7 @@ const columns = [
 const functionColumns = [
     {
         title: '参数名',
-        width: 120,
+        width: 150,
         field: 'param',
     },
 
@@ -51,7 +51,7 @@ const functionColumns = [
     },
     {
         title: '描述',
-        width: 320,
+        width: 220,
         field: 'description',
     },
 ];

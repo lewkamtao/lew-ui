@@ -17,16 +17,12 @@ const maskClick = () => {
     }
 };
 
-const visibleMask = ref<boolean>(true);
 const _visible = ref<boolean>(true);
 
 const close = () => {
     clearTimeout(timer);
-    visibleMask.value = false;
-    timer = setTimeout(() => {
-        _visible.value = false;
-        emit('close');
-    }, 400);
+    _visible.value = false;
+    emit('close');
 };
 
 const ok = async () => {
@@ -54,24 +50,10 @@ const cancel = async () => {
 <template>
     <div>
         <teleport to="body">
-            <div
-                v-if="_visible"
-                class="lew-dialog"
-                :style="
-                    visibleMask
-                        ? 'animation: lewDialogOpen 0.4s ease;'
-                        : 'animation: lewDialogClose 0.4s ease;'
-                "
-                @click="maskClick"
-            >
+            <div v-if="_visible" class="lew-dialog" @click="maskClick">
                 <div
                     v-if="layout === 'normal'"
                     class="lew-dialog-box lew-dialog-box-normal"
-                    :style="
-                        visibleMask
-                            ? 'animation: lewDialogBoxOpen 0.35s ease;  '
-                            : 'animation: lewDialogBoxClose 0.35s ease; '
-                    "
                     @click.stop
                 >
                     <div class="left">
@@ -112,11 +94,6 @@ const cancel = async () => {
                 <div
                     v-if="layout === 'mini'"
                     class="lew-dialog-box lew-dialog-box-mini"
-                    :style="
-                        visibleMask
-                            ? 'animation: lewDialogBoxOpen 0.35s ease;'
-                            : 'animation: lewDialogBoxClose 0.35s ease;'
-                    "
                     @click.stop
                 >
                     <div class="left">
@@ -166,6 +143,7 @@ const cancel = async () => {
     justify-content: center;
     align-items: center;
     z-index: 2050;
+    animation: LewDialog 0.25s;
     animation-fill-mode: forwards;
 
     .lew-dialog-box {
@@ -179,6 +157,8 @@ const cancel = async () => {
         border: var(--lew-modal-box-border);
         box-shadow: var(--lew-modal-box-shadow);
         animation-fill-mode: forwards;
+        animation: LewDialogBox 0.25s;
+        animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
         .icon-success {
             color: var(--lew-success-color-dark);
         }
@@ -298,47 +278,25 @@ const cancel = async () => {
 </style>
 
 <style>
-@keyframes lewDialogOpen {
+@keyframes LewDialogBox {
     from {
         opacity: 0;
+        transform: scale(0);
     }
 
     to {
-        opacity: 1;
+        opacity: 1; 
+        transform: scale(1);
     }
 }
 
-@keyframes lewDialogClose {
-    from {
-        opacity: 1;
-    }
-
-    to {
-        opacity: 0;
-    }
-}
-
-@keyframes lewDialogBoxOpen {
+@keyframes LewDialog {
     from {
         opacity: 0;
-        transform: translateY(-10px);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0%);
-    }
-}
-
-@keyframes lewDialogBoxClose {
-    from {
-        opacity: 1;
-        transform: translateY(0%);
-    }
-
-    to {
-        opacity: 0;
-        transform: translateY(-10px);
     }
 }
 </style>

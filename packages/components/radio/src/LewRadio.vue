@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { getClass } from 'lew-ui/utils';
+import { object2class } from 'lew-ui/utils';
 import { radioProps } from './radio';
 
 const props = defineProps(radioProps);
@@ -13,7 +13,7 @@ const setChecked = () => {
 const getRadioClassName = computed(() => {
     const { block, checked, iconable, size, disabled } = props;
     const unicon = !iconable;
-    return getClass('lew-radio', {
+    return object2class('lew-radio', {
         block,
         checked,
         unicon,
@@ -55,7 +55,7 @@ const getRadioClassName = computed(() => {
         justify-content: center;
         width: 18px;
         height: 18px;
-        border: var(--lew-form-border-width) var(--lew-form-border-color-hover)
+        border: var(--lew-form-border-width) var(--lew-checkbox-border-color)
             solid;
         box-sizing: border-box;
         transition: var(--lew-form-transition);
@@ -119,12 +119,12 @@ const getRadioClassName = computed(() => {
     .icon-radio-box {
         border: var(--lew-form-border-width) var(--lew-primary-color) solid;
         outline: 3px var(--lew-form-ouline-color) solid;
-        background-color: transparent;
+        background: var(--lew-form-bgcolor);
     }
 }
 
 .lew-radio-block {
-    background: var(--lew-form-bgcolor);
+    background: var(--lew-radio-block-color);
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     padding: 3px 8px 3px 4px;
     border-radius: 50px;
@@ -138,18 +138,15 @@ const getRadioClassName = computed(() => {
     background: var(--lew-form-bgcolor-hover);
 }
 
-.lew-radio-block:active {
-    background: var(--lew-form-bgcolor-active);
-}
-
 .lew-radio-checked.lew-radio-block {
-    border: var(--lew-form-border-width) var(--lew-primary-color) solid;
+    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover)
+        solid;
     background: var(--lew-primary-color-light);
     color: var(--lew-form-border-color-focus);
 }
 
 .lew-radio-checked.lew-radio-block:hover {
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover)
         solid;
     background: var(--lew-primary-color-light);
 }
@@ -168,7 +165,7 @@ const getRadioClassName = computed(() => {
 
 .lew-radio-checked:hover {
     .icon-radio-box {
-        border: var(--lew-form-border-width) var(--lew-primary-color) solid;
+        border: var(--lew-form-border-width) var(--lew-radio-border-color) solid;
         background: var(--lew-form-border-color-focus);
     }
 }

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useVModel, useDebounceFn } from '@vueuse/core';
 import { LewPopover } from 'lew-ui';
-import { getClass, numFormat } from 'lew-ui/utils';
+import { object2class, numFormat } from 'lew-ui/utils';
 import { UseVirtualList } from '@vueuse/components';
 import { selectMultipleProps, SelectMultipleOptions } from './props';
 
 const props = defineProps(selectMultipleProps);
-const emit = defineEmits(['update:modelValue', 'change']);
+const emit = defineEmits(['update:modelValue', 'change', 'blur']);
 const selectValue = useVModel(props, 'modelValue', emit);
 
 const lewSelectRef = ref();
@@ -64,17 +64,19 @@ const search = async (e: any) => {
 
 const clearHandle = () => {
     selectValue.value = [];
+    emit('change');
     // 刷新位置
     lewPopverRef.value.refresh();
 };
 
 const closeLabel = (label: string) => {
     const value = state.options.find((e) => e.label === label)?.value;
-    console.log(value);
 
-    const index = selectValue.value.findIndex((v: any) => v === value);
+    const index =
+        selectValue.value &&
+        selectValue.value.findIndex((v: any) => v === value);
     if (index >= 0) {
-        selectValue.value.splice(index, 1);
+        selectValue.value && selectValue.value.splice(index, 1);
         lewPopverRef.value.refresh();
     }
 };
@@ -83,50 +85,57 @@ const selectHandle = (item: SelectMultipleOptions) => {
     if (item.disabled) {
         return;
     }
-    const index = selectValue.value.findIndex(
-        (e: string | number) => e == item.value
-    );
-    if (index == -1) {
-        selectValue.value.push(item.value);
+
+    let _value = selectValue.value || [];
+
+    const index = _value.findIndex((e: string | number) => e == item.value);
+
+    if (index >= 0) {
+        _value.splice(index, 1);
     } else {
-        selectValue.value.splice(index, 1);
+        _value.push(item.value);
     }
+
+    selectValue.value = _value;
+    emit('change', item);
     // 刷新位置
     lewPopverRef.value.refresh();
 };
 
 const getChecked = computed(() => (value: string | number) => {
-    return selectValue.value.includes(value);
+    return selectValue.value && selectValue.value.includes(value);
 });
 
 const getLabels = computed(() => {
     if (state.options) {
-        const labels = selectValue.value.map((v: number | string) => {
-            return state.options.find(
-                (e: SelectMultipleOptions) => v === e.value
-            )?.label;
-        });
-        return labels;
+        const labels =
+            selectValue.value &&
+            selectValue.value.map((v: number | string) => {
+                return state.options.find(
+                    (e: SelectMultipleOptions) => v === e.value
+                )?.label;
+            });
+        return labels || [];
     }
 
-    return props.defaultValue || props.modelValue;
+    return props.defaultValue || props.modelValue || [];
 });
 
 const getSelectClassName = computed(() => {
     let { clearable, size, align } = props;
     clearable = clearable ? !!selectValue.value : false;
-    return getClass('lew-select', { clearable, size, align });
+    return object2class('lew-select', { clearable, size, align });
 });
 
 const getBodyClassName = computed(() => {
     const { size, disabled } = props;
-    return getClass('lew-select-body', { size, disabled });
+    return object2class('lew-select-body', { size, disabled });
 });
 
 const getSelectViewClassName = computed(() => {
-    const { disabled } = props;
+    const { disabled, readonly } = props;
     const focus = state.visible;
-    return getClass('lew-select-view', { focus, disabled });
+    return object2class('lew-select-view', { focus, disabled, readonly });
 });
 
 const getSelectItemClassName = (e: any) => {
@@ -134,7 +143,7 @@ const getSelectItemClassName = (e: any) => {
     const active = getChecked.value(e.value);
     const { align } = props;
 
-    return getClass('lew-select-item', {
+    return object2class('lew-select-item', {
         disabled,
         align,
         active,
@@ -147,6 +156,15 @@ const getVirtualHeight = computed(() => {
     return `${height}px`;
 });
 
+const getIconSize = computed(() => {
+    const size: any = {
+        small: 13,
+        medium: 14,
+        large: 16,
+    };
+    return size[props.size];
+});
+
 const onShow = () => {
     state.visible = true;
     getSelectWidth();
@@ -157,6 +175,7 @@ const onShow = () => {
 
 const onHide = () => {
     state.visible = false;
+    emit('blur');
 };
 
 defineExpose({ show, hide });
@@ -182,7 +201,7 @@ defineExpose({ show, hide });
                 :class="getSelectClassName"
             >
                 <lew-icon
-                    :size="16"
+                    :size="getIconSize"
                     type="chevron-down"
                     class="icon-select"
                     :class="{
@@ -192,7 +211,7 @@ defineExpose({ show, hide });
                 />
                 <lew-icon
                     v-if="clearable"
-                    :size="16"
+                    :size="getIconSize"
                     type="x-circle"
                     class="icon-clear"
                     :class="{
@@ -454,7 +473,12 @@ defineExpose({ show, hide });
         color: var(--lew-text-color-2);
     }
 }
-
+.lew-select-view-readonly {
+    pointer-events: none; //鼠标点击不可修改
+    .lew-select {
+        user-select: text;
+    }
+}
 .lew-select-view-disabled {
     opacity: var(--lew-disabled-opacity);
     pointer-events: none; //鼠标点击不可修改

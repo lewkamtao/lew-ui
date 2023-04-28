@@ -11,14 +11,16 @@ const modelValue = useVModel(props, 'modelValue', emit);
 const checkList = ref([] as any);
 
 const change = (item: CheckboxOptions, checked: boolean) => {
+    let _value = modelValue.value || [];
     if (checked) {
-        modelValue.value.push(item.value);
+        _value.push(item.value);
     } else {
-        const index = props.modelValue.findIndex((e: any) => e === item.value);
+        const index = _value.findIndex((e: any) => e === item.value);
         if (index >= 0) {
-            modelValue.value.splice(index, 1);
+            _value.splice(index, 1);
         }
     }
+    modelValue.value = _value;
     emit('change', {
         value: toRaw(modelValue.value),
         item: toRaw(item),

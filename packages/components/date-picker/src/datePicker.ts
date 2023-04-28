@@ -4,7 +4,6 @@ export const datePickerProps = {
     modelValue: {
         type: String,
         required: false,
-        default: '2022-09-02',
     },
     multiple: {
         type: Boolean,
@@ -13,10 +12,6 @@ export const datePickerProps = {
     size: {
         type: String,
         default: 'medium',
-    },
-    autoClose: {
-        type: Boolean,
-        default: true,
     },
 };
 
@@ -36,17 +31,9 @@ export const dateRangePickerProps = {
         type: String,
         default: 'end',
     },
-    multiple: {
-        type: Boolean,
-        default: false,
-    },
     size: {
         type: String,
         default: 'medium',
-    },
-    autoClose: {
-        type: Boolean,
-        default: true,
     },
 };
 

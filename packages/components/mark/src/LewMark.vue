@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useLewTo } from '../../../hooks';
-import { getClass } from 'lew-ui/utils';
+import { object2class } from 'lew-ui/utils';
 import { markProps } from './mark';
 
 const props = defineProps(markProps);
@@ -9,7 +9,7 @@ const { lewTo } = useLewTo();
 const getMarkClassName = computed(() => {
     const { type, round } = props;
     const to = !!props.to;
-    return getClass('lew-mark', { type, round, to });
+    return object2class('lew-mark', { type, round, to });
 });
 </script>
 

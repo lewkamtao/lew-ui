@@ -28,11 +28,11 @@ const value = ref('');
 </script>
 
 <template>
-    <div>
-        <lew-form style="width: 420px" label-width="120px">
-            <lew-form-item label="常规">
-                <lew-select v-model="value" :options="options" />
-            </lew-form-item>
-        </lew-form>
-    </div>
+    <lew-flex style="width: 320px" direction="y">
+        <lew-select
+            v-model="value"
+            :options="options"
+            placeholder="禁用某几个选项"
+        />
+    </lew-flex>
 </template>

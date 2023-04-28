@@ -15,7 +15,7 @@ import {
 const columns = [
     {
         title: '参数名',
-        width: 120,
+        width: 150,
         field: 'param',
     },
     {
@@ -30,7 +30,7 @@ const columns = [
     },
     {
         title: '描述',
-        width: 320,
+        width: 220,
         field: 'description',
     },
 ];
@@ -60,7 +60,7 @@ const docsTable = ref([
         <lew-demo-box title="方向" :code="DemoForm2_code">
             <demo-form2 />
         </lew-demo-box>
-        <lew-demo-box v-if="false" title="自定义校验" :code="DemoForm3_code">
+        <lew-demo-box title="自定义校验" :code="DemoForm3_code">
             <demo-form3 />
         </lew-demo-box>
         <lew-demo-box v-if="false" title="总览" :code="DemoForm4_code">

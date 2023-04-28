@@ -30,34 +30,27 @@ const searchFn = (event: any) => {
 </script>
 
 <template>
-    <div>
-        <lew-form style="width: 420px" direction="x" label-width="120px">
-            <lew-form-item label="默认过滤">
-                <lew-select
-                    searchable
-                    :default-value="value"
-                    v-model="value"
-                    :options="options"
-                ></lew-select>
-            </lew-form-item>
-            <lew-form-item label="自定义过滤方法">
-                <lew-select
-                    searchable
-                    :default-value="value"
-                    :search-method="filterFn"
-                    v-model="value"
-                ></lew-select>
-            </lew-form-item>
-            <lew-form style="width: 420px" direction="x" label-width="120px">
-                <lew-form-item label="模拟异步请求">
-                    <lew-select
-                        searchable
-                        :default-value="value"
-                        :search-method="searchFn"
-                        v-model="value"
-                    />
-                </lew-form-item>
-            </lew-form>
-        </lew-form>
-    </div>
+    <lew-flex style="width: 320px" direction="y">
+        <lew-select
+            searchable
+            :default-value="value"
+            v-model="value"
+            :options="options"
+            placeholder="默认过滤"
+        />
+        <lew-select
+            searchable
+            :default-value="value"
+            :search-method="filterFn"
+            placeholder="自定义过滤方法"
+            v-model="value"
+        />
+        <lew-select
+            searchable
+            :default-value="value"
+            :search-method="searchFn"
+            placeholder="模拟请求"
+            v-model="value"
+        />
+    </lew-flex>
 </template>

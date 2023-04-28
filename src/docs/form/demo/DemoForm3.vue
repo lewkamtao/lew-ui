@@ -1,19 +1,17 @@
 <script setup lang="ts">
 import * as Yup from 'yup';
-
 const form = ref({});
 const options = ref([
     {
         field: 'username',
         label: '用户名',
-        component: 'lew-input',
+        as: 'lew-input',
         rules: Yup.string().required(),
-        fieldProps: {},
     },
     {
         field: 'password',
         label: '密码',
-        component: 'lew-input',
+        as: 'lew-input',
         rules: Yup.string().min(6).required(),
         fieldProps: {
             type: 'password',

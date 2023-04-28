@@ -6,7 +6,7 @@ import { useVModel } from '@vueuse/core';
 const emit = defineEmits(['change', 'update:modelValue']);
 const props = defineProps(dateRangeProps);
 const modelValue = useVModel(props, 'modelValue', emit);
-const hoverValue: any = ref(modelValue);
+const hoverValue: any = ref(toRaw(modelValue.value));
 const { startKey, endKey } = props;
 
 // 获取当天日期对象
@@ -160,15 +160,14 @@ setMonthDate('left');
 setMonthDate('right');
 
 let i = 0;
-
+let startBackup = '';
 const hoverValueFn = (item: any) => {
     if (item.date != item.showDate || i % 2 === 0) {
         return;
     }
     const end = `${item.year}-${item.month}-${item.showDate}`;
-    const { start } = modelValue.value;
     hoverValue.value = {
-        [startKey]: start,
+        [startKey]: startBackup,
         [endKey]: end,
     };
 };
@@ -185,22 +184,22 @@ const setValue = (item: any) => {
     }
     const __dateStr = `${item.year}-${item.month}-${item.showDate}`;
     const __date = dayjs(__dateStr);
-    let start = hoverValue.value[startKey];
     if (i % 2 === 0) {
         if (__date.isBefore(dayjs(hoverValue.value[startKey]))) {
             hoverValue.value[startKey] = __dateStr;
-            hoverValue.value[endKey] = start;
+            hoverValue.value[endKey] = startBackup;
         } else {
+            hoverValue.value[startKey] = startBackup;
             hoverValue.value[endKey] = __dateStr;
         }
         modelValue.value = hoverValue.value;
-        emit('change', modelValue.value);
+        emit('change', hoverValue.value);
     } else {
-        hoverValue.value[startKey] = __dateStr;
+        startBackup = __dateStr;
     }
 };
 
-const getClass = computed(() => (type: string, item: any) => {
+const object2class = computed(() => (type: string, item: any) => {
     if (!item.year || !item.month || !item.showDate) {
         return;
     }
@@ -313,21 +312,21 @@ const getClass = computed(() => (type: string, item: any) => {
                     v-for="(item, index) in state.leftPanel"
                     :key="`d${index}`"
                     class="lew-date-item"
-                    :class="getClass('rangeMonth', item)"
+                    :class="object2class('rangeMonth', item)"
                     @click="setValue(item)"
                     @mouseenter="hoverValueFn(item)"
                 >
                     <div
                         class="lew-date-label"
-                        :class="getClass('rangeSelected', item)"
+                        :class="object2class('rangeSelected', item)"
                     >
                         <div
-                            v-if="getClass('today', item)"
+                            v-if="object2class('today', item)"
                             class="lew-date-item-cur"
                         ></div>
                         <div
                             class="lew-date-value"
-                            :class="getClass('selected', item)"
+                            :class="object2class('selected', item)"
                         >
                             {{ item.showDate }}
                         </div>
@@ -383,21 +382,21 @@ const getClass = computed(() => (type: string, item: any) => {
                     v-for="(item, index) in state.rightPanel"
                     :key="`d${index}`"
                     class="lew-date-item"
-                    :class="getClass('rangeMonth', item)"
+                    :class="object2class('rangeMonth', item)"
                     @click="setValue(item)"
                     @mouseenter="hoverValueFn(item)"
                 >
                     <div
                         class="lew-date-label"
-                        :class="getClass('rangeSelected', item)"
+                        :class="object2class('rangeSelected', item)"
                     >
                         <div
-                            v-if="getClass('today', item)"
+                            v-if="object2class('today', item)"
                             class="lew-date-item-cur"
                         ></div>
                         <div
                             class="lew-date-value"
-                            :class="getClass('selected', item)"
+                            :class="object2class('selected', item)"
                         >
                             {{ item.showDate }}
                         </div>

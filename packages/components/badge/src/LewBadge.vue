@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { badgeProps } from './badge';
-import { getClass } from 'lew-ui/utils';
+import { object2class } from 'lew-ui/utils';
 
 const props = defineProps(badgeProps);
 
 const badgeClassName = computed(() => {
     const { round, type } = props;
-    return getClass('lew-badge', {
+    return object2class('lew-badge', {
         round,
         type,
     });

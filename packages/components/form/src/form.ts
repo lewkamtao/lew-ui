@@ -9,6 +9,10 @@ export const formProps = {
         type: Object,
         required: true,
     },
+    size: {
+        type: String,
+        default: 'medium',
+    },
     width: {
         type: Number,
     },

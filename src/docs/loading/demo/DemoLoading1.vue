@@ -1,6 +1,25 @@
 <script setup lang="ts">
+import * as Yup from 'yup';
 const visible = ref(false);
 const title = ref('加载中');
+const form = ref({});
+const options = ref([
+    {
+        field: 'username',
+        label: '用户名',
+        as: 'lew-input',
+        rules: Yup.string().required(),
+    },
+    {
+        field: 'password',
+        label: '密码',
+        as: 'lew-input',
+        rules: Yup.string().min(6).required(),
+        fieldProps: {
+            type: 'password',
+        },
+    },
+]);
 </script>
 
 <template>
@@ -14,17 +33,13 @@ const title = ref('加载中');
             <lew-title :bold="700" style="margin-bottom: 20px"
                 >登录你的账户
             </lew-title>
-            <lew-form-item direction="y" label="账号">
-                <lew-input />
-            </lew-form-item>
-            <lew-form-item
-                style="margin-bottom: 30px"
+            <lew-form
                 direction="y"
-                title="密码"
-            >
-                <lew-input />
-            </lew-form-item>
-
+                class="form-box"
+                v-model="form"
+                :options="options"
+                :label-width="80"
+            />
             <lew-flex x="end">
                 <lew-button text="关闭" type="normal" />
                 <lew-button text="立即登录" />
@@ -43,30 +58,19 @@ const title = ref('加载中');
             <lew-title :bold="700" style="margin-bottom: 20px"
                 >登录你的账户
             </lew-title>
-            <lew-form-item direction="y" label="账号">
-                <lew-input />
-            </lew-form-item>
-            <lew-form-item
-                style="margin-bottom: 30px"
+            <lew-form
                 direction="y"
-                title="密码"
-            >
-                <lew-input />
-            </lew-form-item>
+                class="form-box"
+                v-model="form"
+                :options="options"
+                :label-width="80"
+            />
 
             <lew-flex x="end">
                 <lew-button text="关闭" type="normal" />
                 <lew-button @click="visible = true" text="立即登录" />
             </lew-flex>
         </lew-flex>
-
-        <lew-form-item
-            v-loading="{ visible: visible, title: title }"
-            direction="y"
-            label="输入加载标题"
-        >
-            <lew-input v-model="title" show-count :max-length="10" />
-        </lew-form-item>
         <br />
         <lew-button text="触发" @click="visible = !visible" />
     </div>

@@ -47,7 +47,7 @@ export const checkboxProps = {
 
 export const checkboxGroupProps = {
     modelValue: {
-        type: Array,
+        type: [Array || undefined],
         default: () => {
             return [];
         },

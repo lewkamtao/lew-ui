@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { titleProps } from './title';
+import { any2px } from 'lew-ui/utils';
 
 const props = defineProps(titleProps);
 
 const titleStyle = computed(() => {
-    const { bold, size } = props;
-    return `font-weight:${bold};font-size:${size}px`;
+    const { bold } = props;
+    const size = any2px(props.size);
+    return `font-weight:${bold};font-size:${size}`;
 });
 </script>
 

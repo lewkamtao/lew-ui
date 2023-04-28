@@ -67,18 +67,19 @@ const value = ref('');
 </script>
 
 <template>
-    <div>
-        <lew-form style="width: 420px" label-width="120px">
-            <lew-form-item label="Focus">
-                <lew-select v-model="value" :options="options"></lew-select>
-            </lew-form-item>
-            <lew-form-item label="Hover">
-                <lew-select
-                    v-model="value"
-                    :options="options"
-                    trigger="hover"
-                ></lew-select>
-            </lew-form-item>
-        </lew-form>
-    </div>
+    <lew-flex style="width: 320px" direction="y">
+        <lew-select
+            v-model="value"
+            placeholder="focus"
+            clearable
+            :options="options"
+        />
+        <lew-select
+            v-model="value"
+            :options="options"
+            placeholder="hover"
+            clearable
+            trigger="hover"
+        />
+    </lew-flex>
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { LewIcon } from 'lew-ui';
-import { getClass } from 'lew-ui/utils';
+import { object2class } from 'lew-ui/utils';
 import { buttonProps } from './button';
 
 const emit = defineEmits(['click']);
@@ -25,7 +25,7 @@ const getButtonClass = computed(() => {
     const { round, size, type, icon, text } = props;
     const loading = _loading.value || props.loading;
     const singleIcon = !!(!text && icon);
-    return getClass('lew-button', { round, size, type, loading, singleIcon });
+    return object2class('lew-button', { round, size, type, loading, singleIcon });
 });
 
 const getIconSize = computed(() => {

@@ -2,8 +2,12 @@
 import {
     DemoInput1,
     DemoInput2,
+    DemoInput3,
+    DemoInput4,
     DemoInput1_code,
     DemoInput2_code,
+    DemoInput3_code,
+    DemoInput4_code,
 } from './demo';
 
 const docsTable = reactive([
@@ -12,7 +16,7 @@ const docsTable = reactive([
         columns: [
             {
                 title: '参数名',
-                width: 120,
+                width: 150,
                 field: 'param',
             },
 
@@ -28,24 +32,23 @@ const docsTable = reactive([
             },
             {
                 title: '描述',
-                width: 320,
+                width: 220,
                 field: 'description',
             },
         ],
         data: [
-            {
-                param: 'type',
-                description: '输入框类型（textarea：多行文本）',
-                type: 'string',
-                default: 'text',
-            },
             {
                 param: 'model-value (v-model)',
                 description: '绑定值',
                 type: 'string',
                 default: "''",
             },
-
+            {
+                param: 'size',
+                description: '尺寸',
+                type: 'small ｜ medium ｜ large',
+                default: 'text',
+            },
             {
                 param: 'disabled',
                 description: '禁用',
@@ -77,10 +80,10 @@ const docsTable = reactive([
                 default: '-',
             },
             {
-                param: 'resize',
-                description: '缩放模式（只对多行文本框生效）',
-                type: 'string',
-                default: 'none',
+                param: 'auto-width',
+                description: '宽度自动',
+                type: 'boolean',
+                default: false,
             },
         ],
     },
@@ -141,11 +144,29 @@ const docsTable = reactive([
 <template>
     <div class="demo-wrapper">
         <lew-title>Input</lew-title>
-        <lew-demo-box title="单行文本框" :code="DemoInput1_code">
+        <lew-demo-box title="尺寸" :code="DemoInput1_code">
             <demo-input1 />
         </lew-demo-box>
-        <lew-demo-box title="多行文本框" :code="DemoInput2_code">
+        <lew-demo-box title="字数限制" :code="DemoInput2_code">
             <demo-input2 />
+        </lew-demo-box>
+        <lew-demo-box title="密码可见" :code="DemoInput3_code">
+            <demo-input3 />
+        </lew-demo-box>
+        <lew-demo-box title="其他" :code="DemoInput4_code">
+            <demo-input4 />
+        </lew-demo-box>
+        <lew-demo-box title="尺寸" :code="DemoInput1_code">
+            <demo-input1 />
+        </lew-demo-box>
+        <lew-demo-box title="字数限制" :code="DemoInput2_code">
+            <demo-input2 />
+        </lew-demo-box>
+        <lew-demo-box title="密码可见" :code="DemoInput3_code">
+            <demo-input3 />
+        </lew-demo-box>
+        <lew-demo-box title="其他" :code="DemoInput4_code">
+            <demo-input4 />
         </lew-demo-box>
         <div v-for="(item, index) in docsTable" :key="index">
             <br />
@@ -166,3 +187,10 @@ const docsTable = reactive([
         </div>
     </div>
 </template>
+
+<style lang="scss" scoped>
+.scroll-x {
+    width: 100%;
+    overflow-x: auto;
+}
+</style>

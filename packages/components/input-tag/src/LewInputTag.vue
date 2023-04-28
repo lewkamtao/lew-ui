@@ -1,11 +1,19 @@
 <script setup lang="ts">
-import { ref, watch, nextTick } from 'vue';
 import { inputTagProps } from './props';
+import { useVModel } from '@vueuse/core';
+
+const emit = defineEmits([
+    'update:modelValue',
+    'close',
+    'blur',
+    'focus',
+    'change',
+    'input',
+]);
 
 const props = defineProps(inputTagProps);
-
+const tagsValue = useVModel(props, 'modelValue', emit);
 const inputValue = ref();
-const tagsValue = ref(props.modelValue);
 const isInput = ref(false);
 const lewInputRef = ref();
 let isEnter = false;
@@ -22,9 +30,8 @@ watch(
 const openInput = () => {
     isInput.value = true;
     nextTick(() => {
-        lewInputRef.value.focusFn();
+        lewInputRef.value.toFocus();
     });
-
     document.onkeydown = function (event) {
         if (inputValue.value === '') {
             if (event.keyCode === 8 || event.keyCode === 46) {
@@ -55,11 +62,12 @@ const blurFn = (e: any) => {
 };
 
 const addTag = () => {
+    let _value = tagsValue.value || [];
     if (inputValue.value) {
-        tagsValue.value.push(inputValue.value);
+        _value.push(inputValue.value);
     }
-
     inputValue.value = '';
+    tagsValue.value = _value;
 };
 
 const delTag = (index: number) => {
@@ -70,19 +78,20 @@ const delTag = (index: number) => {
 <template>
     <div class="lew-input-tag-view">
         <div style="margin-left: -10px; height: 26px"></div>
-        <lew-tag
-            v-for="(item, index) in tagsValue"
-            :key="index"
-            closable
-            :type="type"
-            @close="delTag(index)"
-            >{{ item }}
-        </lew-tag>
+        <TransitionGroup name="list">
+            <lew-tag
+                v-for="(item, index) in tagsValue"
+                :key="index"
+                closable
+                :type="type"
+                @close="delTag(index)"
+                >{{ item }}
+            </lew-tag>
+        </TransitionGroup>
 
         <label v-if="!isInput" class="lew-input-tag-button" @click="openInput">
             <lew-icon :size="16" type="plus" />
         </label>
-
         <lew-input
             v-else
             ref="lewInputRef"
@@ -93,24 +102,21 @@ const delTag = (index: number) => {
             placeholder=""
             @blur="blurFn"
             @focus="addTag"
-        ></lew-input>
+        />
     </div>
 </template>
 
 <style lang="scss" scoped>
 .lew-input-tag-view {
-    min-height: 36px;
     display: inline-flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
-    padding: 5px 0px;
     border: var(--lew-form-border-width solid rgba(0, 0, 0, 0));
 
     .lew-input-tag {
         height: 26px;
         flex-shrink: 1;
-
         ::v-deep input {
             height: 26px;
         }
@@ -134,5 +140,15 @@ const delTag = (index: number) => {
 .lew-input-tag-button:hover {
     color: var(--lew-primary-color);
     border: var(--lew-primary-color) var(--lew-form-border-width) dashed;
+}
+
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.25s ease;
+}
+.list-enter-from,
+.list-leave-to {
+    opacity: 0;
+    transform: translateX(-10px);
 }
 </style>

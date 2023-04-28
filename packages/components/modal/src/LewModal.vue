@@ -1,6 +1,7 @@
 <script lang="ts" setup name="Modal">
-import { useVModels } from '@vueuse/core';
+import { useVModel } from '@vueuse/core';
 import { useDOMCreate } from '../../../hooks';
+import { any2px } from 'lew-ui/utils';
 
 useDOMCreate('lew-modal');
 
@@ -29,55 +30,25 @@ const props = defineProps({
 
 const emit = defineEmits(['update:visible', 'confirm']);
 
-const { visible } = useVModels(props, emit);
-
-const _visible = ref(props.visible);
-const _visibleTimer = ref();
-
-watch(
-    () => props.visible,
-    (v) => {
-        if (!v) {
-            clearTimeout(_visibleTimer.value);
-            _visibleTimer.value = setTimeout(() => {
-                _visible.value = v;
-                visible.value = v;
-            }, 400);
-        } else {
-            _visible.value = v;
-            visible.value = v;
-        }
-    }
-);
+const visible = useVModel(props, 'visible', emit);
 
 const maskClick = () => {
     if (props.closeOnClickOverlay) {
         visible.value = false;
     }
 };
+const getModalStyle = computed(() => {
+    return {
+        width: any2px(props.width),
+        height: any2px(props.height),
+    };
+});
 </script>
 
 <template>
     <teleport to="#lew-modal">
-        <div
-            v-if="_visible"
-            class="lew-modal"
-            :style="
-                visible
-                    ? 'animation: lewModalOpen 0.4s ease;'
-                    : 'animation: lewModalClose 0.4s ease;'
-            "
-            @click="maskClick"
-        >
-            <div
-                class="lew-modal-box"
-                :style="`width:${width};height:${height};${
-                    visible
-                        ? 'animation: lewModalBoxOpen 0.35s ease;'
-                        : 'animation: lewModalBoxClose 0.35s ease;'
-                }`"
-                @click.stop
-            >
+        <div v-if="visible" class="lew-modal" @click="maskClick">
+            <div :style="getModalStyle" class="lew-modal-box" @click.stop>
                 <slot></slot>
             </div>
         </div>
@@ -96,6 +67,7 @@ const maskClick = () => {
     justify-content: center;
     align-items: center;
     z-index: 2001;
+    animation: LewModal 0.25s;
     animation-fill-mode: forwards;
 
     .lew-modal-box {
@@ -104,73 +76,31 @@ const maskClick = () => {
         border: var(--lew-modal-border);
         box-shadow: var(--lew-modal-box-shadow);
         animation-fill-mode: forwards;
+        animation: LewModalBox 0.25s;
+        animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
-}
-
-.lew-modal-enter-active,
-.lew-modal-leave-active {
-    transition: all 0.25s;
-}
-
-.lew-modal-enter-from,
-.lew-modal-leave-to {
-    opacity: 0;
-}
-
-.lew-modal-box-enter-active,
-.lew-modal-box-leave-active {
-    transition: all 0.25s;
-}
-
-.lew-modal-box-enter-from,
-.lew-modal-box-leave-to {
-    opacity: 0;
-    transform: translateY(10px);
 }
 </style>
 
 <style>
-@keyframes lewModalOpen {
+@keyframes LewModalBox {
     from {
         opacity: 0;
+        transform: scale(0);
     }
-
     to {
         opacity: 1;
+        transform: scale(1);
     }
 }
 
-@keyframes lewModalClose {
-    from {
-        opacity: 1;
-    }
-
-    to {
-        opacity: 0;
-    }
-}
-
-@keyframes lewModalBoxOpen {
+@keyframes LewModal {
     from {
         opacity: 0;
-        transform: translateY(15px);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0px);
-    }
-}
-
-@keyframes lewModalBoxClose {
-    from {
-        opacity: 1;
-        transform: translateY(0px);
-    }
-
-    to {
-        opacity: 0;
-        transform: translateY(15px);
     }
 }
 </style>
