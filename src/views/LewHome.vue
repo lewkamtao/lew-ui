@@ -11,7 +11,7 @@ const form = ref({} as any);
 const options = ref([
     {
         field: 'input', // 字段名
-        label: '文本框', // 标签
+        label: 'Input', // 标签
         as: 'lew-input', // 组件
         rules: Yup.string().required('不能为空'), // 校验规则
         props: {
@@ -21,7 +21,7 @@ const options = ref([
     },
     {
         field: 'textarea', // 字段名
-        label: '多行文本框', // 标签
+        label: 'Textarea', // 标签
         as: 'lew-textarea', // 组件
         rules: Yup.string().required('不能为空'), // 校验规则
         props: {
@@ -32,7 +32,7 @@ const options = ref([
     },
     {
         field: 'select',
-        label: '单选选择器',
+        label: 'Select',
         as: 'lew-select',
         rules: Yup.string().required('此项必填'),
         props: {
@@ -66,7 +66,7 @@ const options = ref([
     },
     {
         field: 'select_multiple',
-        label: '多选选择器',
+        label: 'SelectMultiple',
         as: 'lew-select-multiple',
         rules: Yup.array().min(1, '至少选择一个').required('此项必填'),
         props: {
@@ -79,21 +79,21 @@ const options = ref([
     },
     {
         field: 'info.date_picker',
-        label: '日期选择',
+        label: 'DatePicker',
         as: 'lew-date-picker',
         rules: Yup.string().required('此项必填'),
         props: {},
     },
     {
         field: 'info.date_range_picker',
-        label: '日期选择',
+        label: 'DateRangePicker',
         as: 'lew-date-range-picker',
         rules: Yup.object().required('此项必填'),
         props: {},
     },
     {
         field: 'radio_group',
-        label: '单选框',
+        label: 'Radio',
         as: 'lew-radio-group',
         rules: Yup.string().required('此项必填'),
         props: {
@@ -115,7 +115,7 @@ const options = ref([
     },
     {
         field: 'checkbox_group',
-        label: '多选框',
+        label: 'Checkbox',
         as: 'lew-checkbox-group',
         rules: Yup.array().min(1, '至少选择一个').required('此项必填'),
         props: {
@@ -141,7 +141,7 @@ const options = ref([
     },
     {
         field: 'tabs',
-        label: '选项卡',
+        label: 'Tabs',
         as: 'lew-tabs',
         rules: Yup.string().required('此项必填'),
         props: {
@@ -171,7 +171,7 @@ const options = ref([
     },
     {
         field: 'info.input_tag',
-        label: '标签输入框',
+        label: 'InputTag',
         as: 'lew-input-tag',
         rules: Yup.array().min(1, '至少选择一个').required('不能为空'),
         props: {
@@ -180,7 +180,7 @@ const options = ref([
     },
     {
         field: 'info.switch',
-        label: '开关',
+        label: 'Switch',
         as: 'lew-switch',
         rules: Yup.boolean().required('此项必填'),
         props: {},
@@ -457,12 +457,12 @@ const notification = (type: string) => {
                         </lew-dropdown>
                     </lew-flex>
                 </lew-flex>
-                <lew-flex style="width: 450px; margin-top: 30px" class="item">
+                <lew-flex style="width: 440px; margin-top: 30px" class="item">
                     <lew-form
                         ref="formRef"
                         v-model="form"
                         :options="options"
-                        :label-width="80"
+                        :label-width="100"
                     />
                 </lew-flex>
                 <lew-flex class="item" direction="y" gap="20">
