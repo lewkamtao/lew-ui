@@ -14,23 +14,24 @@ const docsTable = reactive([
         columns: [
             {
                 title: '参数名',
-                width: '200px',
+                width: 120,
                 field: 'param',
             },
             {
-                title: '描述',
-                width: '320px',
-                field: 'description',
-            },
-            {
                 title: '类型',
-                width: 'auto',
+                width: 120,
                 field: 'type',
             },
+
             {
                 title: '默认值',
-                width: '200px',
+                width: 120,
                 field: 'default',
+            },
+            {
+                title: '描述',
+                width: 320,
+                field: 'description',
             },
         ],
         data: [
@@ -65,23 +66,24 @@ const docsTable = reactive([
         columns: [
             {
                 title: '参数名',
-                width: '200px',
+                width: 120,
                 field: 'param',
             },
             {
-                title: '描述',
-                width: '320px',
-                field: 'description',
-            },
-            {
                 title: '类型',
-                width: 'auto',
+                width: 120,
                 field: 'type',
             },
+
             {
                 title: '默认值',
-                width: '200px',
+                width: 120,
                 field: 'default',
+            },
+            {
+                title: '描述',
+                width: 320,
+                field: 'description',
             },
         ],
         data: [
@@ -98,23 +100,24 @@ const docsTable = reactive([
         columns: [
             {
                 title: '参数名',
-                width: '200px',
+                width: 120,
                 field: 'param',
             },
             {
-                title: '描述',
-                width: '320px',
-                field: 'description',
-            },
-            {
                 title: '类型',
-                width: 'auto',
+                width: 120,
                 field: 'type',
             },
+
             {
                 title: '默认值',
-                width: '200px',
+                width: 120,
                 field: 'default',
+            },
+            {
+                title: '描述',
+                width: 320,
+                field: 'description',
             },
         ],
         data: [
@@ -142,8 +145,12 @@ const docsTable = reactive([
         <div v-for="(item, index) in docsTable" :key="index">
             <br />
             <br />
-            <lew-title size="16px">{{ item.desc }}</lew-title>
-            <lew-table :data="item.data" :columns="item.columns" height="auto">
+            <lew-title :size="16">{{ item.desc }}</lew-title>
+            <lew-table
+                :data-source="item.data"
+                :columns="item.columns"
+                height="auto"
+            >
                 <template #param="{ row }"> {{ row.param }} </template>
                 <template #description="{ row }">
                     {{ row.description }}

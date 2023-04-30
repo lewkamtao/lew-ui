@@ -7,8 +7,8 @@
     >
         <template #handle>
             <lew-flex style="margin-top: 30px">
-                <lew-button type="normal">返回</lew-button>
-                <lew-button>前往</lew-button>
+                <lew-button text="返回" />
+                <lew-button text="前往" type="primary" />
             </lew-flex>
         </template>
     </lew-result>
@@ -21,8 +21,8 @@
         <template #title> 警告 </template>
         <template #handle>
             <lew-flex style="margin-top: 30px">
-                <lew-button type="normal">返回</lew-button>
-                <lew-button>前往</lew-button>
+                <lew-button text="返回" />
+                <lew-button text="前往" type="primary" />
             </lew-flex>
         </template>
     </lew-result>
@@ -34,8 +34,8 @@
     >
         <template #handle>
             <lew-flex style="margin-top: 30px">
-                <lew-button type="normal">返回</lew-button>
-                <lew-button>前往</lew-button>
+                <lew-button text="返回" />
+                <lew-button text="前往" type="primary" />
             </lew-flex>
         </template>
     </lew-result>
@@ -47,8 +47,8 @@
     >
         <template #handle>
             <lew-flex style="margin-top: 30px">
-                <lew-button type="normal">返回</lew-button>
-                <lew-button>前往</lew-button>
+                <lew-button text="返回" />
+                <lew-button text="前往" type="primary" />
             </lew-flex>
         </template>
     </lew-result>

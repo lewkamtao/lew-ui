@@ -1,33 +1,22 @@
 <script lang="ts" setup>
 import { useLewTo } from '../../../hooks';
+import { object2class } from 'lew-ui/utils';
+import { markProps } from './mark';
+
+const props = defineProps(markProps);
 const { lewTo } = useLewTo();
 
-defineProps({
-    type: {
-        type: String,
-        default: 'normal',
-    },
-    round: {
-        type: Boolean,
-        default: false,
-    },
-    to: {
-        type: String,
-        default: '',
-    },
-    bold: {
-        type: Number,
-        default: 400,
-    },
+const getMarkClassName = computed(() => {
+    const { type, round } = props;
+    const to = !!props.to;
+    return object2class('lew-mark', { type, round, to });
 });
 </script>
 
 <template>
     <span
         class="lew-mark"
-        :class="`lew-mark-${type} ${round ? 'lew-mark-round' : ''} ${
-            to ? 'lew-mark-to' : ''
-        }`"
+        :class="getMarkClassName"
         :style="`font-weight:${bold};`"
         @click="lewTo(to)"
     >
@@ -46,29 +35,35 @@ defineProps({
 .lew-mark-to {
     cursor: pointer;
 }
+.lew-mark-round {
+    border-radius: 20px;
+}
+.lew-mark-bold {
+    border-radius: 800;
+}
 
-.lew-mark-primary {
+.lew-mark-type-primary {
     color: var(--lew-primary-color-dark);
     background-color: var(--lew-primary-color-light);
 }
-.lew-mark-info {
+.lew-mark-type-info {
     color: var(--lew-info-color-dark);
     background-color: var(--lew-info-color-light);
 }
-.lew-mark-success {
+.lew-mark-type-success {
     color: var(--lew-success-color-dark);
     background-color: var(--lew-success-color-light);
 }
 
-.lew-mark-warning {
+.lew-mark-type-warning {
     color: var(--lew-warning-color-dark);
     background-color: var(--lew-warning-color-light);
 }
-.lew-mark-error {
+.lew-mark-type-error {
     color: var(--lew-error-color-dark);
     background-color: var(--lew-error-color-light);
 }
-.lew-mark-normal {
+.lew-mark-type-normal {
     color: var(--lew-text-color-2);
     background-color: var(--lew-normal-color-light);
 }

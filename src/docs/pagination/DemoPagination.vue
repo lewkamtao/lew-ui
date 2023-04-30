@@ -9,23 +9,24 @@ import {
 const columns = [
     {
         title: '参数名',
-        width: '200px',
+        width: 150,
         field: 'param',
     },
-    {
-        title: '描述',
-        width: '320px',
-        field: 'description',
-    },
+
     {
         title: '类型',
-        width: 'auto',
+        width: 240,
         field: 'type',
     },
     {
         title: '默认值',
-        width: '200px',
+        width: 120,
         field: 'default',
+    },
+    {
+        title: '描述',
+        width: 220,
+        field: 'description',
     },
 ];
 const docsTable = ref([
@@ -74,8 +75,8 @@ const docsTable = ref([
             <demo-pagination2 />
         </lew-demo-box>
         <br />
-        <lew-title size="16px">props</lew-title>
-        <lew-table :data="docsTable" :columns="columns" height="auto">
+        <lew-title :size="16">props</lew-title>
+        <lew-table :data-source="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>
             <template #type="{ row }"> {{ row.type }} </template>

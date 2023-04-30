@@ -1,37 +1,15 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
+import { useDark } from '@vueuse/core';
+
+const isDark = useDark({
+    selector: 'html',
+    valueDark: 'lew-dark',
+    valueLight: 'lew-light',
+});
 
 const router = useRouter();
 const route = useRoute();
-const changeMode = (mode: string) => {
-    if (mode === 'dark') {
-        document.getElementsByTagName('html')[0].classList.add('lew-dark');
-    } else {
-        document.getElementsByTagName('html')[0].classList.remove('lew-dark');
-    }
-};
-
-onMounted(() => {
-    changeMode(
-        window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? 'dark'
-            : 'light'
-    );
-    let media = window.matchMedia('(prefers-color-scheme: dark)');
-    let callback = (e: any) => {
-        let prefersDarkMode = e.matches;
-        if (prefersDarkMode) {
-            changeMode('dark');
-        } else {
-            changeMode('light');
-        }
-    };
-    if (typeof media.addEventListener === 'function') {
-        media.addEventListener('change', callback);
-    } else if (typeof media.addListener === 'function') {
-        media.addListener(callback);
-    }
-});
 
 const gohome = () => {
     if (route.name === 'R-LewHome') {
@@ -55,17 +33,18 @@ const gohome = () => {
             <span style="margin-left: 10px"> Lew UI</span>
             <lew-tag
                 v-tooltip="{
-                    content: 'Beta 阶段，请勿在正式环境使用。',
+                    content: '当前演示版本为 Beta v1.2，请勿在生产环境使用。',
                     placement: 'top-start',
                     trigger: 'mouseenter',
                 }"
                 type="info"
                 size="small"
                 style="margin-left: 10px"
-                >Beta v1.1.30</lew-tag
             >
+                Beta v1.2
+            </lew-tag>
         </div>
-        <lew-flex gap="15px" x="end" class="menu">
+        <lew-flex gap="15" x="end" class="menu">
             <div class="menu-item" @click="router.push(`/`)">首页</div>
             <div class="menu-item" @click="router.push(`/Install`)">指南</div>
             <div class="menu-item" @click="router.push(`/Avatar`)">组件</div>
@@ -76,13 +55,13 @@ const gohome = () => {
                 class="menu-item icon-mode-sunny"
                 type="sun"
                 size="18"
-                @click="changeMode('light')"
+                @click="isDark = false"
             />
             <lew-icon
                 class="menu-item icon-mode-moon"
                 type="moon"
                 size="18"
-                @click="changeMode('dark')"
+                @click="isDark = true"
             />
         </lew-flex>
     </div>
@@ -125,9 +104,9 @@ const gohome = () => {
             display: inline-flex;
             align-items: center;
             padding: 5px;
-            opacity: 0.6;
+            opacity: 0.8;
             font-size: 14px;
-            transition: all 0.5s;
+            transition: all 0.25s;
             color: var(--lew-text-color-1);
             cursor: pointer;
 

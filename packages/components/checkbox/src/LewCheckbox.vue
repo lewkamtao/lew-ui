@@ -1,41 +1,38 @@
 <script lang="ts" setup>
-import { _props } from './props';
+import { useVModel } from '@vueuse/core';
+import { object2class } from 'lew-ui/utils';
+import { checkboxProps } from './checkbox';
 
-const props = defineProps(_props);
-
-watch(
-    () => props.checked,
-    (v:boolean) => {
-        if (v != _checked.value) {
-            _checked.value = v;
-        }
-    }
-); 
-
-let _checked = ref(props.checked || false);
+const props = defineProps(checkboxProps);
 
 const emit = defineEmits(['change', 'update:modelValue']);
+const modelValue = useVModel(props, 'modelValue', emit);
 
 const setChecked = (e: Event) => {
     if (props.disabled) {
         return;
     }
-    _checked.value = (e.target as HTMLInputElement).checked;
-    emit('change', _checked.value);
-    emit('update:modelValue', _checked.value);
+    const { checked } = e.target as HTMLInputElement;
+    modelValue.value = checked;
+    emit('change', checked);
 };
+
+const getCheckboxClassName = computed(() => {
+    const { block, round, iconable, size, disabled } = props;
+    const checked = modelValue.value;
+    const unicon = !iconable;
+    return object2class('lew-checkbox', {
+        block,
+        round,
+        size,
+        checked,
+        unicon,
+        disabled,
+    });
+});
 </script>
 <template>
-    <label
-        class="lew-checkbox"
-        :class="`
-    ${block ? 'lew-checkbox-block' : ''} 
-    ${round ? 'lew-checkbox-round' : ''} 
-    ${_checked ? 'lew-checkbox-checked' : ''} 
-    ${!iconable ? 'lew-checkbox-unicon' : ''}
-    ${size ? 'lew-checkbox-' + size : ''}
-    `"
-    >
+    <label class="lew-checkbox" :class="getCheckboxClassName">
         <div v-if="iconable" class="icon-checkbox-box">
             <svg
                 class="icon-checkbox"
@@ -54,8 +51,8 @@ const setChecked = (e: Event) => {
         <input
             v-show="false"
             type="checkbox"
-            :checked="_checked"
-            @input="setChecked"
+            :checked="modelValue"
+            @change="setChecked"
         />
         <span v-if="label" class="lew-checkbox-label"> {{ label }}</span>
     </label>
@@ -78,15 +75,17 @@ const setChecked = (e: Event) => {
         justify-content: center;
         width: 18px;
         height: 18px;
-        border: 2px var(--lew-form-border-color-hover) solid;
+        border: var(--lew-form-border-width) var(--lew-checkbox-border-color)
+            solid;
         box-sizing: border-box;
-        border-radius: 3px;
+        border-radius: 4px;
         transition: var(--lew-form-transition);
-        background-color: var(--lew-bgcolor-0);
-        outline: 0px var(--lew-primary-color-light) solid;
+        background-color: var(--lew-bgcolor-1);
+        outline: 0px var(--lew-checkbox-color-light) solid;
+        overflow: hidden;
 
         .icon-checkbox {
-            transform: scale(0.7) translateY(50%);
+            transform: translateY(50%);
             transition: var(--lew-form-transition);
             opacity: 0;
             color: var(--lew-white-color);
@@ -99,7 +98,7 @@ const setChecked = (e: Event) => {
     }
 }
 
-.lew-checkbox-small {
+.lew-checkbox-size-small {
     font-size: 13px;
 
     .icon-checkbox-box {
@@ -108,7 +107,7 @@ const setChecked = (e: Event) => {
     }
 }
 
-.lew-checkbox-medium {
+.lew-checkbox-size-medium {
     font-size: 14px;
 
     .icon-checkbox-box {
@@ -117,7 +116,7 @@ const setChecked = (e: Event) => {
     }
 }
 
-.lew-checkbox-large {
+.lew-checkbox-size-large {
     font-size: 15px;
 
     .icon-checkbox-box {
@@ -128,27 +127,25 @@ const setChecked = (e: Event) => {
 
 .lew-checkbox-unicon.lew-checkbox-block {
     padding: 4px 12px;
-
-    .lew-checkbox-label {
-        color: var(--lew-text-color-6);
-    }
 }
 
 .lew-checkbox-unicon.lew-checkbox-checked.lew-checkbox-block {
     .lew-checkbox-label {
-        color: var(--lew-primary-color-dark);
+        color: var(--lew-checkbox-color-dark);
     }
 }
 
 .lew-checkbox:hover {
     .icon-checkbox-box {
-        border: 2px var(--lew-form-border-color-active) solid;
-        outline: 3px var(--lew-primary-color-light) solid;
+        border: var(--lew-form-border-width)
+            var(--lew-checkbox-border-color-hover) solid;
+        outline: 3px var(--lew-form-ouline-color) solid;
+        background: var(--lew-form-bgcolor);
     }
 }
 
 .lew-checkbox-block {
-    background: var(--lew-form-bgcolor);
+    background: var(--lew-checkbox-block-color);
     padding: 3px 8px 3px 4px;
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     border-radius: var(--lew-border-radius);
@@ -159,15 +156,14 @@ const setChecked = (e: Event) => {
 }
 
 .lew-checkbox-checked.lew-checkbox-block {
-    border: var(--lew-form-border-width) var(--lew-primary-color) solid;
-    background: var(--lew-primary-color-light);
-    color: var(--lew-primary-color-dark);
+    border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+    background: var(--lew-checkbox-color-light);
+    color: var(--lew-checkbox-color-dark);
 }
 
 .lew-checkbox-checked.lew-checkbox-block:hover {
-    border: var(--lew-form-border-width) var(--lew-primary-color) solid;
-    background: var(--lew-primary-color-light);
-    color: var(--lew-primary-color-dark);
+    border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+    background: var(--lew-checkbox-color-light);
 }
 
 .lew-checkbox-round {
@@ -180,19 +176,19 @@ const setChecked = (e: Event) => {
 
 .lew-checkbox-block:hover {
     background: var(--lew-form-bgcolor-hover);
-}
-
-.lew-checkbox-block:active {
-    background: var(--lew-form-bgcolor-active);
+    .icon-checkbox-box {
+        border: var(--lew-form-border-width)
+            var(--lew-checkbox-border-color-hover) solid;
+    }
 }
 
 .lew-checkbox-checked {
     .icon-checkbox-box {
-        border: 2px var(--lew-primary-color) solid;
-        background: var(--lew-primary-color);
+        border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+        background: var(--lew-checkbox-color);
 
         .icon-checkbox {
-            transform: scale(0.85) translateY(0px);
+            transform: translateY(0px);
             opacity: 1;
         }
     }
@@ -200,33 +196,34 @@ const setChecked = (e: Event) => {
 
 .lew-checkbox-checked:hover {
     .icon-checkbox-box {
-        border: 2px var(--lew-primary-color) solid;
-        background: var(--lew-primary-color);
+        border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+        background: var(--lew-checkbox-color);
     }
 }
 
 .lew-checkbox-block.lew-checkbox-checked {
     .icon-checkbox-box {
-        border: 2px var(--lew-primary-color-light) solid;
-        background: var(--lew-primary-color-light);
+        border: var(--lew-form-border-width) transparent solid;
+        background: var(--lew-checkbox-color-light);
 
         .icon-checkbox {
-            color: var(--lew-primary-color-dark);
+            color: var(--lew-checkbox-color-dark);
             opacity: 1;
         }
     }
 }
 
 .lew-checkbox-block.lew-checkbox-checked:hover {
-    background: var(--lew-primary-color-light);
+    background: var(--lew-checkbox-color-light);
 
     .icon-checkbox-box {
-        border: 2px var(--lew-primary-color-light) solid;
+        border: var(--lew-form-border-width) var(--lew-checkbox-color-light)
+            solid;
     }
+}
 
-    .icon-checkbox {
-        color: var(--lew-primary-color-dark);
-        opacity: 1;
-    }
+.lew-checkbox-disabled {
+    opacity: var(--lew-disabled-opacity);
+    pointer-events: none; //鼠标点击不可修改
 }
 </style>

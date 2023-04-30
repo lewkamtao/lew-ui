@@ -11,23 +11,24 @@ import {
 const columns = [
     {
         title: '参数名',
-        width: '200px',
+        width: 150,
         field: 'param',
     },
     {
-        title: '描述',
-        width: '320px',
-        field: 'description',
-    },
-    {
         title: '类型',
-        width: 'auto',
+        width: 240,
         field: 'type',
     },
+
     {
         title: '默认值',
-        width: '200px',
+        width: 120,
         field: 'default',
+    },
+    {
+        title: '描述',
+        width: 220,
+        field: 'description',
     },
 ];
 const docsTable = ref([
@@ -80,15 +81,17 @@ const optionsTable = ref([
         <lew-demo-box title="图标类型" :code="DemoBreadcrumb3_code">
             <demo-breadcrumb3 />
         </lew-demo-box>
-        <lew-title size="16px">Props</lew-title>
-        <lew-table :data="docsTable" :columns="columns" height="auto">
+        <lew-title :size="16">Props</lew-title>
+        <lew-table :data-source="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>
             <template #type="{ row }"> {{ row.type }} </template>
             <template #default="{ row }"> {{ row.default }} </template>
         </lew-table>
-        <lew-title style="margin-top: 40px" size="16px">Options</lew-title>
-        <lew-table :data="optionsTable" :columns="columns" height="auto">
+        <lew-title style="margin-top: 40px" :size="16">
+            BreadcrumbOptions
+        </lew-title>
+        <lew-table :data-source="optionsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>
             <template #type="{ row }"> {{ row.type }} </template>

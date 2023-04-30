@@ -1,9 +1,9 @@
 <template>
-    <lew-flex wrap x="start" gap="20px">
-        <lew-button round type="primary">确定</lew-button>
-        <lew-button round type="error">危险</lew-button>
-        <lew-button round type="warning">警告</lew-button>
-        <lew-button round type="normal">这是一个长按钮</lew-button>
-        <lew-button round type="success">确定</lew-button>
+    <lew-flex wrap x="start" gap="20">
+        <lew-button round text="primary" type="primary" />
+        <lew-button round text="error" type="error" />
+        <lew-button round text="warning" type="warning" />
+        <lew-button round text="normal" type="normal" />
+        <lew-button round text="success" type="success" />
     </lew-flex>
 </template>

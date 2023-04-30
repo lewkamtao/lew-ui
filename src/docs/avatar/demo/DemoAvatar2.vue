@@ -1,5 +1,5 @@
 <template>
-    <lew-flex wrap x="start" gap="20px">
+    <lew-flex wrap x="start" gap="20">
         <lew-avatar
             src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/杨"
             status="online"

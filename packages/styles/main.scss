@@ -2,21 +2,71 @@ textarea {
     font-family: inherit;
 }
 
-.tippy-box {
-    border-radius: var(--lew-border-radius) !important;
+.hidden-scrollbar::-webkit-scrollbar {
+    display: none;
+    /* Chrome Safari */
+}
+
+.hidden-scrollbar {
+    scrollbar-width: none;
+    /* firefox */
+    -ms-overflow-style: none;
+    /* IE 10+ */
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .tippy-box[data-lew~='popover'] {
+    border-radius: var(--lew-border-radius) !important;
+    box-sizing: border-box !important;
+    background-color: var(--lew-popover-bgcolor) !important;
+    border: var(--lew-popover-border) !important;
+    box-shadow: var(--lew-popover-box-shadow) !important;
+    color: var(--lew-text-color-0) !important;
+    overflow: hidden;
     .tippy-content {
-        padding: 6px;
+        padding: 0px;
         box-sizing: border-box !important;
     }
 }
 
-.tippy-box[data-lew~='custom'] {
+.tippy-box[data-lew~='tooltip'] {
+    border: none !important;
+    background-color: var(--lew-popover-bgcolor) !important;
+    color: var(--lew-text-color-0) !important;
     .tippy-content {
-        padding: 0px;
+        padding: 6px 10px;
         box-sizing: border-box !important;
+    }
+}
+
+.lew-dark {
+    .tippy-box[data-lew~='tooltip'] {
+        box-shadow: none !important;
+    }
+}
+
+.tippy-box[data-placement^='left'] {
+    > .tippy-arrow:before {
+        border-left-color: var(--lew-popover-bgcolor) !important;
+    }
+}
+
+.tippy-box[data-placement^='top'] {
+    > .tippy-arrow:before {
+        border-top-color: var(--lew-popover-bgcolor) !important;
+    }
+}
+
+.tippy-box[data-placement^='right'] {
+    > .tippy-arrow:before {
+        border-right-color: var(--lew-popover-bgcolor) !important;
+    }
+}
+
+.tippy-box[data-placement^='bottom'] {
+    > .tippy-arrow:before {
+        border-bottom-color: var(--lew-popover-bgcolor) !important;
     }
 }
 
@@ -39,13 +89,48 @@ textarea {
     height: 100%;
     background-size: 400% 100%;
     background-position: 100% 50%;
-    background-image: linear-gradient( 90deg, rgb(214, 214, 214) 25%, #fff 37%, rgb(203, 203, 203) 63%);
+    background-image: linear-gradient(
+        90deg,
+        rgb(214, 214, 214) 25%,
+        #fff 37%,
+        rgb(203, 203, 203) 63%
+    );
     animation: skeleton-loading 1.5s ease infinite;
 }
 
 .lew-dark .skeletons::after {
     /* 内容区域空状态时追加骨架屏样式 */
-    background-image: linear-gradient( 90deg, rgb(84, 84, 84) 25%, rgb(116, 116, 116) 37%, rgb(58, 58, 58) 63%);
+    background-image: linear-gradient(
+        90deg,
+        rgb(84, 84, 84) 25%,
+        rgb(116, 116, 116) 37%,
+        rgb(58, 58, 58) 63%
+    );
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+    background-color: var(--lew-bgcolor-2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--lew-bgcolor-6);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--lew-bgcolor-4);
+}
+
+/* 修改滚动条角的颜色为蓝色 */
+
+::-webkit-scrollbar-corner {
+    background-color: var(--lew-bgcolor-0);
+}
+
+/* 修改滚动条角的颜色为蓝色 */
+
+.scrollbar-corner {
+    background-color: var(--lew-bgcolor-0);
 }
 
 @keyframes skeleton-loading {

@@ -17,13 +17,14 @@
         box-sizing: border-box;
         height: 35px;
         line-height: 35px;
-        padding: 15px;
-        transition: all ease 0.25s;
+        padding: 20px;
+        transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         opacity: 0;
         margin-top: 0px;
-        margin-bottom: 10px;
-        transform: translateY(-3px);
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        transform: translateY(-10px);
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        border: var(--lew-popover-border);
         font-size: 14px;
         border-radius: var(--lew-border-radius);
         background-color: var(--lew-message-bgcolor);
@@ -32,6 +33,7 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
+            color: var(--lew-text-color-3);
         }
         svg {
             width: 16px;

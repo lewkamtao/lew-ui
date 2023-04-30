@@ -1,19 +1,12 @@
 <script lang="ts" setup>
-import { dateRangePickerProps } from './props';
+import { dateRangePickerProps } from './datePicker';
+import { useVModel } from '@vueuse/core';
 const props = defineProps(dateRangePickerProps);
-
-let isShowPicker = ref(false);
-let dateValue = ref(props.modelValue as any);
-let lewPopoverRef = ref();
-
-watch(
-    () => props.modelValue,
-    () => {
-        dateValue.value = props.modelValue;
-    }
-);
-
 const emit = defineEmits(['change', 'update:modelValue']);
+const modelValue = useVModel(props, 'modelValue', emit);
+const isShowPicker = ref(false);
+const lewPopoverRef = ref();
+const { startKey, endKey } = props;
 
 const show = () => {
     lewPopoverRef.value.show();
@@ -23,13 +16,20 @@ const hide = () => {
     lewPopoverRef.value.hide();
 };
 
-const change = (e: any) => {
-    emit('update:modelValue', e.dateValue);
-    emit('change', { ...e, show, hide });
-    if (props.autoClose) {
-        hide();
-    }
+const getIconSize = computed(() => {
+    const size: any = {
+        small: 13,
+        medium: 14,
+        large: 16,
+    };
+    return size[props.size];
+});
+
+const change = (e?: any) => {
+    emit('change', { e, show, hide });
+    hide();
 };
+
 const classObject = computed(() => {
     return {
         'lew-date-picker-focus': isShowPicker.value,
@@ -51,34 +51,40 @@ defineExpose({ show, hide });
             <div class="lew-date-picker-view" :class="classObject">
                 <div class="lew-date-picker-input">
                     <div
-                        v-show="!dateValue"
+                        v-if="!modelValue[startKey]"
                         class="lew-date-picker-placeholder"
                     >
                         请选择日期
                     </div>
                     <div
+                        v-else
                         class="lew-date-picker-dateValue lew-date-picker-start"
                     >
-                        {{ dateValue[0] }}
+                        {{ modelValue[startKey] }}
                     </div>
                     <div class="lew-date-picker-mid">-</div>
-                    <div class="lew-date-picker-dateValue lew-date-picker-end">
-                        {{ dateValue[1] }}
+                    <div
+                        v-if="!modelValue[endKey]"
+                        class="lew-date-picker-placeholder"
+                    >
+                        请选择日期
+                    </div>
+                    <div
+                        v-else
+                        class="lew-date-picker-dateValue lew-date-picker-end"
+                    >
+                        {{ modelValue[endKey] }}
                     </div>
                     <lew-icon
                         class="lew-date-picker-icon"
-                        size="16px"
+                        :size="getIconSize"
                         type="calendar"
                     />
                 </div>
             </div>
         </template>
         <template #popover-body>
-            <Lew-date-range
-                v-model="dateValue"
-                :multiple="multiple"
-                @change="change"
-            />
+            <lew-date-range v-model="modelValue" @change="change" />
         </template>
     </lew-popover>
 </template>
@@ -96,13 +102,14 @@ defineExpose({ show, hide });
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
         border-radius: var(--lew-border-radius);
         background-color: var(--lew-form-bgcolor);
         box-sizing: border-box;
         transition: all 0.15s ease;
         cursor: pointer;
         user-select: none;
+        box-shadow: var(--lew-form-box-shadow);
+        border: var(--lew-form-border-width) transparent solid;
         outline: 0px var(--lew-primary-color-light) solid;
     }
     .lew-date-picker-input {
@@ -127,25 +134,14 @@ defineExpose({ show, hide });
     }
 
     .lew-date-picker-view:hover {
-        border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
         background-color: var(--lew-form-bgcolor-hover);
     }
 
-    .lew-date-picker-view:active {
-        background-color: var(--lew-form-bgcolor-active);
-    }
-
-    .lew-date-picker-focus {
+    .lew-date-picker-view.lew-date-picker-focus {
         background-color: var(--lew-form-bgcolor-focus);
         border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
             solid;
-        outline: 3px var(--lew-primary-color-light) solid;
-    }
-    .lew-date-picker-focus:hover {
-        background-color: var(--lew-form-bgcolor-focus);
-        border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-            solid;
-        outline: 3px var(--lew-primary-color-light) solid;
+        outline: 3px var(--lew-form-ouline-color) solid;
     }
 
     .lew-date-picker-small {

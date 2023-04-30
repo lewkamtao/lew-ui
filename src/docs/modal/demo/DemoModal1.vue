@@ -1,7 +1,25 @@
 <script setup lang="ts">
+import * as Yup from 'yup';
 const modalVisible1 = ref(false);
 const modalVisible2 = ref(false);
-
+const form = ref({});
+const options = ref([
+    {
+        field: 'username',
+        label: '用户名',
+        as: 'lew-input',
+        rules: Yup.string().required(),
+    },
+    {
+        field: 'password',
+        label: '密码',
+        as: 'lew-input',
+        rules: Yup.string().min(6).required(),
+        fieldProps: {
+            type: 'password',
+        },
+    },
+]);
 const data: any = [
     {
         id: 1,
@@ -48,70 +66,39 @@ const data: any = [
 const columns = [
     {
         title: 'id',
-        width: '50px',
         field: 'id',
+        width: 60,
         x: 'center',
-        sticky: 'left',
-        offsetX: '0px',
     },
     {
         title: '姓名',
-        width: '100px',
+        width: 120,
         field: 'name',
-        x: 'center',
-        sticky: 'left',
-        offsetX: '50px',
     },
     {
         title: '年龄',
-        width: '200px',
         field: 'age',
+        width: 80,
         x: 'center',
     },
     {
         title: '性别',
-        width: '200px',
         field: 'sex',
+        width: 80,
         x: 'center',
     },
     {
-        title: '爱好',
-        width: '400px',
-        field: 'hobby',
+        title: '成绩',
+        width: 80,
+        field: 'fraction',
+        x: 'center',
     },
     {
         title: '介绍',
-        width: '400px',
+        width: 180,
         field: 'intro',
     },
-    {
-        title: '操作',
-        width: '120px',
-        field: 'action',
-        sticky: 'right',
-        offsetX: '0px',
-        x: 'center',
-    },
 ];
-
-const formatSex = (sex: number) => {
-    switch (true) {
-        case sex === 0:
-            return '女';
-        case sex === 1:
-            return '男';
-        default:
-            return '未知';
-    }
-};
-
-const set = (row: any, column: any) => {
-    LewMessage.info(`你可以拿到这一行的数据，例如：id=${row.id}`);
-    console.log(row, column);
-};
-const del = (row: any, column: any) => {
-    LewMessage.warning(`你也可以拿到这一列的数据，例如：field=${column.field}`);
-};
 
 onMounted(() => {
     document.onkeydown = function (event) {
@@ -127,8 +114,8 @@ onMounted(() => {
 
 <template>
     <lew-flex x="start">
-        <lew-button @click="modalVisible1 = true">登录</lew-button>
-        <lew-button @click="modalVisible2 = true">展示表格</lew-button>
+        <lew-button text="登录" @click="modalVisible1 = true" />
+        <lew-button text="展示表格" @click="modalVisible2 = true" />
     </lew-flex>
 
     <lew-modal
@@ -140,65 +127,47 @@ onMounted(() => {
             <lew-title :bold="700" style="margin-bottom: 20px"
                 >登录你的账户
             </lew-title>
-            <lew-form>
-                <lew-form-item direction="y" label="账号">
-                    <lew-input />
-                </lew-form-item>
-                <lew-form-item
-                    style="margin-bottom: 30px"
-                    direction="y"
-                    label="密码"
-                >
-                    <lew-input />
-                </lew-form-item>
-            </lew-form>
+            <lew-form
+                class="form-box"
+                v-model="form"
+                :options="options"
+                :label-width="40"
+            />
             <lew-flex x="end">
-                <lew-button type="normal" @click="modalVisible1 = false"
-                    >关闭
-                </lew-button>
-                <lew-button @click="modalVisible1 = false">立即登录</lew-button>
+                <lew-button
+                    text="关闭"
+                    type="normal"
+                    @click="modalVisible1 = false"
+                />
+                <lew-button text="立即登录" @click="modalVisible1 = false" />
             </lew-flex>
         </div>
     </lew-modal>
     <lew-modal v-model:visible="modalVisible2" width="1250px">
         <div class="modal-body">
-            <lew-table :data="data" :columns="columns" height="auto">
-                <template #id="{ row }"> {{ row.id }} </template>
-                <template #name="{ row }"> {{ row.name }} </template>
-                <template #age="{ row }"> {{ row.age }} </template>
-                <template #sex="{ row }"> {{ formatSex(row.sex) }} </template>
-                <template #hobby="{ row }">
-                    <lew-flex gap="5px" x="start">
-                        <lew-tag
-                            v-for="(item, index) in row.hobby"
-                            :key="index"
-                            type="info"
-                            size="small"
-                            >{{ item }}
-                        </lew-tag>
-                    </lew-flex>
-                </template>
-                <template #intro="{ row }"> {{ row.intro }} </template>
-                <template #action="{ row, column }">
+            <lew-table :data-source="data" :columns="columns">
+                <template #fraction="{ row }">
                     <lew-flex>
-                        <lew-button is-text @click="set(row, column)"
-                            >管理</lew-button
-                        ><lew-button
-                            type="error"
-                            is-text
-                            @click="del(row, column)"
-                            >删除
-                        </lew-button>
+                        <lew-badge
+                            v-if="row.fraction >= 60"
+                            round
+                            type="success"
+                        />
+                        <lew-badge v-else round type="error" />
+                        <span>{{ row.fraction >= 60 ? '良好' : '很差' }}</span>
                     </lew-flex>
                 </template>
             </lew-table>
             <br />
 
             <lew-flex x="end">
-                <lew-button type="normal" @click="modalVisible2 = false"
-                    >关闭
-                </lew-button>
-                <lew-button @click="modalVisible2 = false">提交</lew-button>
+                <lew-button
+                    text="关闭"
+                    type="normal"
+                    @click="modalVisible2 = false"
+                />
+
+                <lew-button text="提交" @click="modalVisible2 = false" />
             </lew-flex>
         </div>
     </lew-modal>

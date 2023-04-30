@@ -1,33 +1,28 @@
 <script lang="ts" setup>
-import { getMonthDate, getHeadDate } from './date';
-import { dateProps } from './props';
 import moment from 'moment';
-
+import { getMonthDate, getHeadDate } from './date';
+import { dateProps } from './datePicker';
+import { useVModel } from '@vueuse/core';
+const emit = defineEmits(['change', 'update:modelValue']);
 const props = defineProps(dateProps);
-
-let dateValue = ref<string | undefined>(props.modelValue || '');
-
-watch(
-    () => props.modelValue,
-    () => {
-        dateValue.value = props.modelValue;
-    }
-);
+const modelValue = useVModel(props, 'modelValue', emit);
 
 // 获取当天日期对象
-let today = new Date();
+const today = new Date();
 // 获取当前年份
-let curYear = ref(today.getFullYear());
+const curYear = ref(today.getFullYear());
 // 获取当前月份
-let curMonth = ref(today.getMonth() + 1);
-let curDay = ref(today.getDate());
+const curMonth = ref(today.getMonth() + 1);
+const curDay = ref(today.getDate());
 
 // 年
-let _year = ref(moment(dateValue.value).year());
+const _year = ref(modelValue.value ? moment(modelValue.value).year() : curYear);
 // 月
-let _month = ref(moment(dateValue.value).month() + 1);
+const _month = ref(
+    modelValue.value ? moment(modelValue.value).month() + 1 : curMonth
+);
 
-let dateData = ref(getMonthDate());
+const dateData = ref(getMonthDate());
 
 onMounted(() => {
     setMonthDate();
@@ -67,19 +62,17 @@ const setMonthDate = () => {
     dateData.value = getMonthDate(_year.value, _month.value);
 };
 
-const emit = defineEmits(['change', 'update:modelValue']);
-
 const selectDateFn = (item: any) => {
-    let v = `${item.year}-${item.month}-${item.showDate}`;
-    dateValue.value = v;
-    emit('update:modelValue', dateValue.value);
+    const v = `${item.year}-${item.month}-${item.showDate}`;
+    modelValue.value = v;
+    emit('update:modelValue', modelValue.value);
     emit('change', v);
 };
 
 const checkDateSelect = computed(() => (item: any) => {
     if (item.date > 0 && item.date <= item.showDate) {
-        let v = `${_year.value}-${_month.value}-${item.showDate}`;
-        return dateValue.value === v;
+        const v = `${_year.value}-${_month.value}-${item.showDate}`;
+        return modelValue.value === v;
     }
 });
 
@@ -98,25 +91,33 @@ const checkToday = computed(() => (item: any) => {
         <lew-flex x="start" mode="between" class="lew-date-control">
             <div class="lew-date-control-left">
                 <!-- 上一年 -->
-                <lew-button type="normal" size="small" @click="prveYear">
-                    <lew-icon size="16" type="chevrons-left" />
-                </lew-button>
+                <lew-button
+                    icon="chevrons-left"
+                    size="small"
+                    @click="prveYear"
+                />
                 <!-- 上一月 -->
-                <lew-button type="normal" size="small" @click="prveMonth">
-                    <lew-icon size="16" type="chevron-left" />
-                </lew-button>
+                <lew-button
+                    icon="chevron-left"
+                    size="small"
+                    @click="prveMonth"
+                />
             </div>
             <!-- 日期 -->
             <div class="cur-date">{{ _year }} 年 {{ _month }} 月</div>
             <div class="lew-date-control-right">
                 <!-- 下一月 -->
-                <lew-button type="normal" size="small" @click="nextMonth">
-                    <lew-icon size="16" type="chevron-right" />
-                </lew-button>
+                <lew-button
+                    icon="chevron-right"
+                    size="small"
+                    @click="nextMonth"
+                />
                 <!-- 下一年 -->
-                <lew-button type="normal" size="small" @click="nextYear">
-                    <lew-icon size="16" type="chevrons-right" />
-                </lew-button>
+                <lew-button
+                    icon="chevrons-right"
+                    size="small"
+                    @click="nextYear"
+                />
             </div>
         </lew-flex>
         <div class="lew-date-box">
@@ -236,6 +237,7 @@ const checkToday = computed(() => (item: any) => {
                     line-height: 24px;
                     color: var(--lew-text-color-9);
                     border-radius: 6px;
+                    transition: all 0.1s ease;
                 }
             }
         }
@@ -245,7 +247,7 @@ const checkToday = computed(() => (item: any) => {
 
             .lew-date-label {
                 .lew-date-value {
-                    color: var(--lew-text-color-4);
+                    color: var(--lew-text-color-2);
                 }
             }
         }

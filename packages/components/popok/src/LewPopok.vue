@@ -6,12 +6,12 @@ import { _props } from './props';
 const props = defineProps(_props);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-let lewPopoverRef = ref();
+const lewPopoverRef = ref();
 
-let okLoading = ref(false);
-let cancelLoading = ref(false);
+const okLoading = ref(false);
+const cancelLoading = ref(false);
 
-let hide = () => {
+const hide = () => {
     lewPopoverRef.value.hide();
 };
 
@@ -83,18 +83,18 @@ const emit = defineEmits(['onShow', 'cancel']);
                     <div v-if="content" class="content">{{ content }}</div>
                     <div class="footer">
                         <lew-button
+                            text="取消"
                             size="small"
                             type="blank"
-                            @click="cancelHandle"
                             :loading="cancelLoading"
-                            >取消
-                        </lew-button>
+                            @click="cancelHandle"
+                        />
                         <lew-button
+                            text="确定"
                             size="small"
-                            @click="okHandle"
                             :loading="okLoading"
-                            >确定</lew-button
-                        >
+                            @click="okHandle"
+                        />
                     </div>
                 </div>
             </div>

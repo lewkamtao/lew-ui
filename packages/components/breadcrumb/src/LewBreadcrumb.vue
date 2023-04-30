@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { _props } from './props';
+import { breadcrumbProps } from './breadcrumb';
 import { useLewTo } from '../../../hooks';
-
 const { lewTo } = useLewTo();
-
-defineProps(_props);
+defineProps(breadcrumbProps);
 </script>
 
 <template>
@@ -63,13 +61,12 @@ defineProps(_props);
         align-items: center;
         font-size: 14px;
         font-weight: 400;
-        color: var(--lew-text-color-7);
+        color: var(--lew-text-color-5);
         user-select: none;
-
         span {
             cursor: default;
             padding: 2px 4px;
-            border-radius: 2px;
+            border-radius: var(--lew-border-radius);
         }
         .lew-breadcrumb-isPath:hover {
             cursor: pointer;

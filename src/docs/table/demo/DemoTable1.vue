@@ -1,23 +1,13 @@
 <script lang="ts" setup>
 const data: any = ref([
     {
-        id: 1,
-        name: '小明',
-        avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
-        age: '14',
-        fraction: 63,
-        mail: 'div@kamtao.com',
-        sex: 1,
-        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
-    },
-    {
         id: 2,
         name: '小卢',
         avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
         age: '24',
         fraction: 82,
         mail: 'div@kamtao.com',
-        sex: 1,
+        sex: '男',
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
     },
     {
@@ -27,7 +17,7 @@ const data: any = ref([
         age: '25',
         fraction: 91,
         mail: 'div@kamtao.com',
-        sex: 0,
+        sex: '女',
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
     },
     {
@@ -37,17 +27,7 @@ const data: any = ref([
         age: '22',
         mail: 'div@kamtao.com',
         fraction: 31,
-        sex: 0,
-        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
-    },
-    {
-        id: 5,
-        name: '小飞',
-        avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
-        age: '13',
-        fraction: 54,
-        mail: 'div@kamtao.com',
-        sex: 3,
+        sex: '女',
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
     },
 ]);
@@ -55,55 +35,43 @@ const data: any = ref([
 const columns = [
     {
         title: 'id',
-        width: '100px',
         field: 'id',
+        width: 60,
         x: 'center',
     },
     {
         title: '信息',
-        width: '180px',
+        width: 150,
         field: 'info',
     },
     {
         title: '年龄',
-        width: 'auto',
         field: 'age',
+        width: 120,
         x: 'center',
     },
     {
         title: '性别',
-        width: 'auto',
         field: 'sex',
+        width: 120,
         x: 'center',
     },
     {
         title: '成绩',
-        width: 'auto',
+        width: 120,
         field: 'fraction',
         x: 'center',
     },
     {
         title: '介绍',
-        width: 'auto',
+        width: 480,
         field: 'intro',
     },
 ];
-
-const formatSex = (sex: number) => {
-    switch (true) {
-        case sex === 0:
-            return '女';
-        case sex === 1:
-            return '男';
-        default:
-            return '未知';
-    }
-};
 </script>
 
 <template>
-    <lew-table :data="data" :columns="columns">
-        <template #id="{ row }"> {{ row.id }} </template>
+    <lew-table :data-source="data" :columns="columns">
         <template #info="{ row }">
             <lew-flex class="info">
                 <lew-avatar :src="row.avatar" round />
@@ -113,7 +81,6 @@ const formatSex = (sex: number) => {
                 </lew-flex>
             </lew-flex>
         </template>
-        <template #age="{ row }"> {{ row.age }} </template>
         <template #fraction="{ row }">
             <lew-flex>
                 <lew-badge v-if="row.fraction >= 60" round type="success" />
@@ -121,18 +88,12 @@ const formatSex = (sex: number) => {
                 <span>{{ row.fraction >= 60 ? '良好' : '很差' }}</span>
             </lew-flex>
         </template>
-        <template #sex="{ row }"> {{ formatSex(row.sex) }} </template>
-        <template #intro="{ row }"> {{ row.intro }} </template>
     </lew-table>
-    <div style="margin-top: 20px">
-        <lew-pagination :page-num="1" :total="200" />
-    </div>
 </template>
 
 <style lang="scss" scoped>
 .info {
     line-height: 22px;
-    padding: 10px 0px;
 
     .lew-avatar {
         flex-shrink: 0;

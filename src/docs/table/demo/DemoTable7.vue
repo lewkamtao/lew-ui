@@ -48,26 +48,24 @@ const columns = [
         width: '50px',
         field: 'id',
         x: 'center',
-        sticky: 'left',
-        offsetX: '0px',
+        fixed: 'left',
     },
     {
         title: '姓名',
         width: '100px',
         field: 'name',
         x: 'center',
-        sticky: 'left',
-        offsetX: '50px',
+        fixed: 'left',
     },
     {
         title: '年龄',
-        width: '200px',
+        width: 120,
         field: 'age',
         x: 'center',
     },
     {
         title: '性别',
-        width: '200px',
+        width: 120,
         field: 'sex',
         x: 'center',
     },
@@ -85,8 +83,7 @@ const columns = [
         title: '操作',
         width: '120px',
         field: 'action',
-        sticky: 'right',
-        offsetX: '0px',
+        fixed: 'right',
         x: 'center',
     },
 ];
@@ -111,13 +108,13 @@ const del = (row: any, column: any) => {
 </script>
 
 <template>
-    <lew-table :data="data" :columns="columns">
+    <lew-table :data-source="data" :columns="columns">
         <template #id="{ row }"> {{ row.id }} </template>
         <template #name="{ row }"> {{ row.name }} </template>
         <template #age="{ row }"> {{ row.age }} </template>
         <template #sex="{ row }"> {{ formatSex(row.sex) }} </template>
         <template #hobby="{ row }">
-            <lew-flex gap="5px" x="start">
+            <lew-flex gap="5" x="start">
                 <lew-tag
                     v-for="(item, index) in row.hobby"
                     :key="index"
@@ -129,11 +126,17 @@ const del = (row: any, column: any) => {
         <template #intro="{ row }"> {{ row.intro }} </template>
         <template #action="{ row, column }">
             <lew-flex>
-                <lew-button is-text @click="set(row, column)">管理</lew-button
-                ><lew-button is-text @click="del(row, column)"
-                    >删除</lew-button
-                ></lew-flex
-            >
+                <lew-button
+                    text="管理"
+                    type="blank"
+                    @click="set(row, column)"
+                />
+                <lew-button
+                    text="删除"
+                    type="blank"
+                    @click="del(row, column)"
+                />
+            </lew-flex>
         </template>
     </lew-table>
 </template>

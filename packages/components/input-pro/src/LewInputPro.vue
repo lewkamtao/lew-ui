@@ -20,7 +20,7 @@ const emit = defineEmits([
     'input',
 ]);
 
-let lewDropdownRef = ref();
+const lewDropdownRef = ref();
 
 const input = (value: string) => {
     emit('update:modelValue', value);
@@ -49,7 +49,10 @@ const hide = () => {
     lewDropdownRef.value.hide();
 };
 
+const width = ref(0);
+
 const focus = (e: any) => {
+    width.value = lewDropdownRef.value.$el.clientWidth - 14;
     open();
     e?.currentTarget?.select();
     emit('focus', v);
@@ -65,7 +68,7 @@ const focus = (e: any) => {
             :trigger="trigger"
             :placement="placement"
             :align="align"
-            :width="parseFloat(popoverWidth) - 12 + 'px'"
+            :width="`${width}px`"
             :options="options"
             @change="selectFn"
         >
@@ -93,7 +96,6 @@ const focus = (e: any) => {
     display: inline-flex;
     align-items: center;
     width: 100%;
-
     .lew-input {
         width: 100%;
     }

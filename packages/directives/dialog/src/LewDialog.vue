@@ -1,13 +1,14 @@
 <script lang="ts" setup name="dialog">
-import { LewButton, LewIcon } from 'lew-ui';
+import { LewButton, LewIcon, LewFlex } from 'lew-ui';
 import { _props } from './props';
 import { getIconType } from '../../../utils';
 
 const props = defineProps(_props);
 const emit = defineEmits(['close']);
 
-let okLoading = ref<Boolean>(false);
-let cancelLoading = ref<Boolean>(false);
+let timer: any;
+const okLoading = ref<boolean>(false);
+const cancelLoading = ref<boolean>(false);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const maskClick = () => {
@@ -16,15 +17,12 @@ const maskClick = () => {
     }
 };
 
-let visibleMask = ref<Boolean>(true);
-let _visible = ref<Boolean>(true);
+const _visible = ref<boolean>(true);
 
 const close = () => {
-    visibleMask.value = false;
-    setTimeout(() => {
-        _visible.value = false;
-        emit('close');
-    }, 200);
+    clearTimeout(timer);
+    _visible.value = false;
+    emit('close');
 };
 
 const ok = async () => {
@@ -52,32 +50,15 @@ const cancel = async () => {
 <template>
     <div>
         <teleport to="body">
-            <div
-                v-if="_visible"
-                class="lew-dialog"
-                :style="
-                    visibleMask
-                        ? 'animation: lewDialogOpen 0.2s ease-out;'
-                        : 'animation: lewDialogClose 0.2s ease-out;'
-                "
-                @click="maskClick"
-            >
+            <div v-if="_visible" class="lew-dialog" @click="maskClick">
                 <div
                     v-if="layout === 'normal'"
                     class="lew-dialog-box lew-dialog-box-normal"
-                    :style="
-                        visibleMask
-                            ? 'animation: lewDialogBoxOpen 0.25s ease-out;  '
-                            : 'animation: lewDialogBoxClose 0.25s ease-out; '
-                    "
                     @click.stop
                 >
                     <div class="left">
                         <div :class="`icon-${type}`">
-                            <lew-icon
-                                size="30"
-                                :type="getIconType(type)"
-                            ></lew-icon>
+                            <lew-icon size="24" :type="getIconType(type)" />
                         </div>
                     </div>
                     <div class="right">
@@ -93,55 +74,57 @@ const cancel = async () => {
                         </main>
                         <footer>
                             <lew-button
-                                :loading="cancelLoading"
+                                v-if="cancelText"
+                                :text="cancelText"
                                 type="blank"
+                                :loading="cancelLoading"
                                 @click.stop="cancel"
-                                >取消
-                            </lew-button>
-                            <lew-button :loading="okLoading" @click.stop="ok"
-                                >确认</lew-button
-                            >
+                            />
+                            <lew-button
+                                v-if="okText"
+                                :text="okText"
+                                :type="type"
+                                :loading="okLoading"
+                                @click.stop="ok"
+                            />
                         </footer>
                     </div>
                 </div>
 
                 <div
-                    v-if="layout === 'easy'"
-                    class="lew-dialog-box lew-dialog-box-easy"
-                    :style="
-                        visibleMask
-                            ? 'animation: lewDialogBoxOpen 0.25s ease-out;'
-                            : 'animation: lewDialogBoxClose 0.25s ease-out;'
-                    "
+                    v-if="layout === 'mini'"
+                    class="lew-dialog-box lew-dialog-box-mini"
                     @click.stop
                 >
                     <div class="left">
                         <div :class="`icon-${type}`">
-                            <lew-icon
-                                size="20"
-                                :type="getIconType(type)"
-                            ></lew-icon>
+                            <lew-icon size="20" :type="getIconType(type)" />
                         </div>
                     </div>
-                    <div class="right">
+                    <lew-flex class="right" y="start">
                         <main>
                             <slot name="content" />
                         </main>
-                        <lew-button
-                            style="margin-right: 10px"
-                            type="normal"
-                            size="small"
-                            :loading="cancelLoading"
-                            @click.stop="cancel"
-                            >取消
-                        </lew-button>
-                        <lew-button
-                            :loading="okLoading"
-                            @click.stop="ok"
-                            size="small"
-                            >确认
-                        </lew-button>
-                    </div>
+                        <lew-flex x="end">
+                            <lew-button
+                                v-if="cancelText"
+                                :text="cancelText"
+                                type="blank"
+                                size="small"
+                                style="margin-right: 10px"
+                                :loading="cancelLoading"
+                                @click.stop="cancel"
+                            />
+                            <lew-button
+                                v-if="okText"
+                                :text="okText"
+                                :type="type"
+                                size="small"
+                                :loading="okLoading"
+                                @click.stop="ok"
+                            />
+                        </lew-flex>
+                    </lew-flex>
                 </div>
             </div>
         </teleport>
@@ -160,6 +143,7 @@ const cancel = async () => {
     justify-content: center;
     align-items: center;
     z-index: 2050;
+    animation: LewDialog 0.25s;
     animation-fill-mode: forwards;
 
     .lew-dialog-box {
@@ -169,9 +153,12 @@ const cancel = async () => {
         height: auto;
         padding: 20px;
         border-radius: var(--lew-border-radius);
-        background-color: var(--lew-bgcolor-0);
-        box-shadow: 0px 15px 50px rgba($color: #000000, $alpha: 0.05);
+        background-color: var(--lew-modal-box-bgcolor);
+        border: var(--lew-modal-box-border);
+        box-shadow: var(--lew-modal-box-shadow);
         animation-fill-mode: forwards;
+        animation: LewDialogBox 0.25s;
+        animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
         .icon-success {
             color: var(--lew-success-color-dark);
         }
@@ -250,7 +237,7 @@ const cancel = async () => {
 
         .right {
             position: relative;
-            top: 5px;
+            top: 1px;
             width: 310px;
         }
 
@@ -259,8 +246,9 @@ const cancel = async () => {
         }
     }
 
-    .lew-dialog-box-easy {
+    .lew-dialog-box-mini {
         .left {
+            margin-top: 3px;
             margin-right: 10px;
             display: flex;
         }
@@ -277,7 +265,8 @@ const cancel = async () => {
 
             main {
                 width: 200px;
-                margin-right: 10px;
+                margin-top: 2px;
+                flex-shrink: 0;
             }
 
             footer {
@@ -289,47 +278,25 @@ const cancel = async () => {
 </style>
 
 <style>
-@keyframes lewDialogOpen {
+@keyframes LewDialogBox {
     from {
         opacity: 0;
+        transform: scale(0);
     }
 
     to {
-        opacity: 1;
-    }
-}
-
-@keyframes lewDialogClose {
-    from {
-        opacity: 1;
-    }
-
-    to {
-        opacity: 0;
-    }
-}
-
-@keyframes lewDialogBoxOpen {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-
-    to {
-        opacity: 1;
+        opacity: 1; 
         transform: scale(1);
     }
 }
 
-@keyframes lewDialogBoxClose {
+@keyframes LewDialog {
     from {
-        opacity: 1;
-        transform: scale(1);
+        opacity: 0;
     }
 
     to {
-        opacity: 0;
-        transform: scale(0.9);
+        opacity: 1;
     }
 }
 </style>

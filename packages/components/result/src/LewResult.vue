@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { _props } from './props';
+
 defineProps(_props);
 </script>
 

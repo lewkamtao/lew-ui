@@ -1,6 +1,7 @@
 // hooks/useDOMCreate.ts
 import { ComponentInternalInstance, getCurrentInstance, onMounted } from 'vue';
 import type { Router } from 'vue-router';
+
 let instance: ComponentInternalInstance;
 
 export function useLewTo() {
@@ -13,7 +14,6 @@ export function useLewTo() {
         } else {
             router.push(path);
         }
-        return;
     };
     onMounted(() => {
         instance = getCurrentInstance() as ComponentInternalInstance;

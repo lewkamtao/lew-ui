@@ -1,6 +1,6 @@
 {
     "name": "lew-ui",
-    "version": "1.1.30",
+    "version": "1.20.03",
     "description": "A Component Library for Vue3.js.",
     "keywords": [
         "vue3",
@@ -34,15 +34,19 @@
         }
     },
     "dependencies": {
+        "@vueuse/components": "^9.13.0",
         "@vueuse/core": "^9.1.1",
+        "dayjs": "^1.11.7",
         "eslint-plugin-prettier": "^4.2.1",
         "feather-icons": "^4.29.0",
         "lodash": "^4.17.21",
         "moment": "^2.29.4",
         "tippy.js": "^6.3.7",
+        "vee-validate": "^4.8.6",
         "vue": "^3.2.41",
         "vue-feather": "^2.0.0",
-        "vue-router": "^4.0.13"
+        "vue-router": "^4.0.13",
+        "yup": "^1.1.1"
     },
     "devDependencies": {
         "@types/lodash": "^4.14.182",

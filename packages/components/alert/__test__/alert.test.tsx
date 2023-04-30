@@ -36,7 +36,7 @@ describe('LewAlert', () => {
         ]);
         const wrapper = shallowMount(LewAlert, {
             props: {
-                list: list,
+                list,
             },
         });
         const groupWrapper = wrapper.find<HTMLDivElement>('.lew-alert-group');
@@ -60,7 +60,7 @@ describe('LewAlert', () => {
         // });
         list.splice(0, 1);
         // 同时也需要重新渲染
-        await wrapper.setProps({ list: list });
+        await wrapper.setProps({ list });
         // 显示的alert item数量减少了一个
         expect(groupWrapper.findAll('.lew-alert').length).toBe(list.length);
         expect(alertsWrapper[0].classes()).toContain('lew-alert-error');

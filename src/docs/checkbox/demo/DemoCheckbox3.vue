@@ -6,14 +6,17 @@ const options = ref([
     { label: '清朝', value: 4 },
 ]);
 
-const value = ref([]);
+const value = ref([1, 2, 3]);
+const change = (e: any) => {
+    console.log(e);
+};
 </script>
 
 <template>
     <lew-checkbox-group
         v-model="value"
         block
-        direction="x"
         :options="options"
+        @change="change"
     ></lew-checkbox-group>
 </template>

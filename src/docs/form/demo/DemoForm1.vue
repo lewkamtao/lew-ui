@@ -1,165 +1,233 @@
 <script setup lang="ts">
-const user = ref({
-    username: '',
-    password: '',
-    age: '',
-    sex: '0',
-    hobby: [],
-    school: '',
-    home: '',
-    intro: '',
-    dark: true,
-    tags: [],
-    pay: '',
+import * as Yup from 'yup';
+import { schools } from '../../select/demo/schools';
+
+let schoolsOptions = schools.map((e, i) => {
+    return { label: e, value: i + 1 };
 });
+const form = ref({} as any);
 
-const sex_options = ref([
-    { label: '未知', value: '0' },
-    { label: '男', value: '1' },
-    { label: '女', value: '2' },
+const options = ref([
+    {
+        label: '表单大小',
+        as: 'lew-tabs',
+        field: 'size',
+        props: {
+            itemWidth: 'auto',
+            width: '100%',
+            options: [
+                {
+                    label: 'small',
+                    value: 'small',
+                },
+                {
+                    label: 'medium',
+                    value: 'medium',
+                },
+                {
+                    label: 'large',
+                    value: 'large',
+                },
+            ],
+        },
+    },
+    {
+        field: 'input', // 字段名
+        label: '文本框', // 标签
+        as: 'lew-input', // 组件
+        rules: Yup.string().required('不能为空'), // 校验规则
+        props: {
+            // 组件props
+            clearable: true,
+        },
+    },
+    {
+        field: 'textarea', // 字段名
+        label: '多行文本框', // 标签
+        as: 'lew-textarea', // 组件
+        rules: Yup.string().required('不能为空'), // 校验规则
+        props: {
+            clearable: true,
+            showCount: true,
+            maxLength: 300,
+        },
+    },
+    {
+        field: 'select',
+        label: '单选选择器',
+        as: 'lew-select',
+        rules: Yup.string().required('此项必填'),
+        props: {
+            change: (e: any) => {
+                console.log(e);
+            },
+            clearable: true,
+            options: [
+                {
+                    label: '广东',
+                    value: '1',
+                },
+                {
+                    label: '深圳',
+                    value: '2',
+                },
+                {
+                    label: '杭州',
+                    value: '3',
+                },
+                {
+                    label: '上海',
+                    value: '4',
+                },
+                {
+                    label: '北京',
+                    value: '5',
+                },
+            ],
+        },
+    },
+    {
+        field: 'select_multiple',
+        label: '多选选择器',
+        as: 'lew-select-multiple',
+        rules: Yup.array().min(1, '至少选择一个').required('此项必填'),
+        props: {
+            change: (e: any) => {
+                console.log(e);
+            },
+            clearable: true,
+            options: schoolsOptions,
+        },
+    },
+    {
+        field: 'radio_group',
+        label: '单选框',
+        as: 'lew-radio-group',
+        rules: Yup.string().required('此项必填'),
+        props: {
+            options: [
+                {
+                    label: '男',
+                    value: '1',
+                },
+                {
+                    label: '女',
+                    value: '2',
+                },
+                {
+                    label: '不公开',
+                    value: '2',
+                },
+            ],
+        },
+    },
+    {
+        field: 'checkbox_group',
+        label: '多选框',
+        as: 'lew-checkbox-group',
+        rules: Yup.array().min(1, '至少选择一个').required('此项必填'),
+        props: {
+            options: [
+                {
+                    label: '唱歌',
+                    value: '1',
+                },
+                {
+                    label: '跳舞',
+                    value: '2',
+                },
+                {
+                    label: 'Rap',
+                    value: '3',
+                },
+                {
+                    label: '上海',
+                    value: '4',
+                },
+            ],
+        },
+    },
+    {
+        field: 'tabs',
+        label: '选项卡',
+        as: 'lew-tabs',
+        rules: Yup.string().required('此项必填'),
+        props: {
+            options: [
+                {
+                    label: 'Beijing',
+                    value: '1',
+                },
+                {
+                    label: 'Shanghai',
+                    value: '2',
+                },
+                {
+                    label: 'Guangzhou',
+                    value: '3',
+                },
+                {
+                    label: 'Shenzhen',
+                    value: '4',
+                },
+            ],
+        },
+    },
+    {
+        field: 'user.addd',
+        label: '',
+        as: 'lew-checkbox',
+        rules: Yup.boolean().oneOf([true], '请同意').required('请同意'),
+        props: {
+            label: '是否同意',
+        },
+    },
+    {
+        field: 'info.input_tag',
+        label: '标签输入框',
+        as: 'lew-input-tag',
+        rules: Yup.array().min(1, '至少选择一个').required('不能为空'),
+        props: {
+            clearable: true,
+        },
+    },
+    {
+        as: 'lew-button',
+        props: {
+            text: '提交',
+            click: () => submit(),
+        },
+    },
 ]);
 
-const pay_options = ref([
-    { label: '微信', value: '1' },
-    { label: '支付宝', value: '2' },
-    { label: 'Apple Pay', value: '3' },
-]);
-const hobby_options = ref([
-    { label: '唱歌', value: '1' },
-    { label: '跳', value: '2' },
-    { label: 'rap', value: '3' },
-    { label: '打篮球', value: '44' },
-]);
-const home_options = ref([
-    {
-        label: '广东',
-        value: '1',
-    },
-    {
-        label: '深圳',
-        value: '2',
-    },
-    {
-        label: '杭州',
-        value: '3',
-    },
-    {
-        label: '上海',
-        value: '4',
-    },
-    {
-        label: '北京',
-        value: '5',
-    },
-]);
-const d = ref('2020-12-12');
+let formRef = ref();
+
+const submit = () => {
+    formRef.value.validate();
+};
 </script>
 
 <template>
-    <lew-form class="form-box" label-width="70px">
-        <lew-form-item label="账号">
-            <LewInput v-model="user.username" />
-        </lew-form-item>
-        <lew-form-item label="密码">
-            <LewInput v-model="user.password" />
-        </lew-form-item>
-        <lew-form-item label="简介">
-            <LewInput
-                v-model="user.intro"
-                type="textarea"
-                show-count
-                :max-length="250"
-                resize="none"
-            />
-        </lew-form-item>
-        <lew-form-item label="家地址">
-            <LewSelect v-model="user.home" :options="home_options" />
-        </lew-form-item>
-
-        <lew-form-item label="生日">
-            <lew-date-picker
-                v-model="d"
-                style="width: 100%"
-                auto-close
-            ></lew-date-picker>
-        </lew-form-item>
-
-        <lew-form-item label="性别">
-            <lew-radio-group v-model="user.sex" :options="sex_options" />
-        </lew-form-item>
-        <lew-form-item label="爱好">
-            <lew-checkbox-group v-model="user.hobby" :options="hobby_options" />
-        </lew-form-item>
-
-        <lew-form-item label="标签输入框">
-            <lew-input-tag v-model="user.tags" />
-        </lew-form-item>
-        <lew-form-item label="爱好">
-            <lew-tabs
-                v-model="user.pay"
-                width="100%"
-                item-width="100%"
-                :options="pay_options"
-                round
-            />
-        </lew-form-item>
-    </lew-form>
-
-    <br />
-    <br />
-    <br />
-
-    <lew-form class="form-box">
-        <lew-form-item direction="y" label="账号">
-            <LewInput v-model="user.username" />
-        </lew-form-item>
-        <lew-form-item direction="y" label="密码">
-            <LewInput v-model="user.password" />
-        </lew-form-item>
-        <lew-form-item direction="y" label="简介">
-            <LewInput
-                v-model="user.intro"
-                type="textarea"
-                show-count
-                :max-length="250"
-                resize="none"
-            />
-        </lew-form-item>
-        <lew-form-item direction="y" label="家地址">
-            <LewSelect v-model="user.home" :options="home_options" />
-        </lew-form-item>
-
-        <lew-form-item direction="y" label="生日">
-            <lew-date-picker
-                v-model="d"
-                style="width: 100%"
-                auto-close
-            ></lew-date-picker>
-        </lew-form-item>
-
-        <lew-form-item direction="y" label="性别">
-            <lew-radio-group v-model="user.sex" :options="sex_options" />
-        </lew-form-item>
-        <lew-form-item direction="y" label="爱好">
-            <lew-checkbox-group v-model="user.hobby" :options="hobby_options" />
-        </lew-form-item>
-
-        <lew-form-item direction="y" label="标签输入框">
-            <lew-input-tag v-model="user.tags" />
-        </lew-form-item>
-        <lew-form-item direction="y" label="爱好">
-            <lew-tabs
-                v-model="user.pay"
-                width="100%"
-                item-width="100%"
-                :options="pay_options"
-            />
-        </lew-form-item>
-    </lew-form>
+    <lew-flex x="start" y="start" :gap="50">
+        <lew-form
+            ref="formRef"
+            :size="form.size"
+            class="form-box"
+            v-model="form"
+            :options="options"
+            :label-width="80"
+        />
+        <pre>{{ form }}</pre>
+    </lew-flex>
 </template>
 <style scoped lang="scss">
 .form-box {
     width: 380px;
+    flex-shrink: 0;
+}
+pre {
+    background-color: var(--lew-bgcolor-2);
+    padding: 30px;
 }
 @media (max-width: 767px) {
     .form-box {

@@ -1,274 +1,289 @@
 <script setup lang="ts">
-import { selectProps, LewSelectOptions } from './props';
-import { LewCheckbox, LewPopover } from 'lew-ui';
-import { isArray, isNumber, isString } from 'lodash';
+import { useVModel, useDebounceFn } from '@vueuse/core';
+import { LewPopover } from 'lew-ui';
+import { object2class, numFormat } from 'lew-ui/utils';
+import { UseVirtualList } from '@vueuse/components';
+import { selectProps, SelectOptions } from './props';
+
 const props = defineProps(selectProps);
-const v = ref<string>('');
-const multipleV = ref<Array<string>>([]);
-const labelStr = ref<string>('');
-const multipleLabelStr = ref<Array<string>>([]);
+const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
+const selectValue = useVModel(props, 'modelValue', emit);
 
-watch(
-    () => props.modelValue,
-    () => {
-        // 如果是多选
-        if (!props.modelValue) {
-            return;
-        }
-        if (props.multiple && props.modelValue instanceof Array) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            multipleV.value = props.modelValue;
-            multipleLabelStr.value = filterSelect(
-                props.modelValue,
-                props.options
-            );
-        } else if (typeof props.modelValue === 'string') {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            v.value = props.modelValue;
-            labelStr.value =
-                props.options?.find((e) => e.value === props.modelValue)
-                    ?.label || '';
-        }
-    },
-    { deep: true }
-);
+const lewSelectRef = ref();
+const lewPopverRef = ref();
+const searchInputRef = ref();
 
-let lewSelectRef = ref();
+const state = reactive({
+    selectWidth: 0,
+    visible: false,
+    loading: false,
+    options: props.options,
+    keyword: '',
+});
 
-const filterSelect = (v: string[], options: LewSelectOptions[]) => {
-    let _v: Array<string> = [];
-    if (v && options) {
-        v.map((e: string) => {
-            options.map((o) => {
-                if (e === o.value) {
-                    _v.push(o.label);
-                }
-            });
-        });
-    }
-    return _v;
-};
-
-const emit = defineEmits(['update:modelValue', 'change']);
-
-const getChecked = (_value: string) => {
-    if (isArray(props.modelValue)) {
-        return props.modelValue?.includes(_value);
-    } else {
-        return props.modelValue == _value;
-    }
-};
-
-let isShowOptions = ref(false);
-
-let lewPopverRef1 = ref();
-let lewPopverRef2 = ref();
-
-const delTag = (i: number) => {
-    multipleV.value.splice(i, 1);
-    multipleLabelStr.value.splice(i, 1);
-    emit('update:modelValue', multipleV.value);
-    emit('change', { value: multipleV.value, show, hide });
-    if (i === 0 && multipleV.value.length === 0) {
-        lewPopverRef2.value.hide();
-    }
-};
-
-const lewSelectWidth = computed(
-    () => lewSelectRef.value?.offsetWidth - 12 + 'px'
-);
-
-const check = (item: LewSelectOptions, checked: boolean) => {
-    if (isArray(props.modelValue)) {
-        let updatedValue = [...props.modelValue];
-        if (checked) {
-            updatedValue.push(item.value);
-        } else {
-            updatedValue.splice(updatedValue.indexOf(item.value), 1);
-        }
-        emit('update:modelValue', updatedValue);
-    } else {
-        if (v.value != item.value) {
-            labelStr.value = item.label;
-            v.value = item.value;
-            emit('change', item.value);
-        }
-        console.log();
-        if (isNumber(props.modelValue)) {
-            emit('update:modelValue', Number(item.value));
-        } else {
-            emit('update:modelValue', item.value);
-        }
-        hide();
+const getSelectWidth = () => {
+    state.selectWidth = lewSelectRef.value?.clientWidth - 14;
+    if (props.searchable) {
+        setTimeout(() => {
+            searchInputRef.value && searchInputRef.value.focus();
+        }, 200);
     }
 };
 
 const show = () => {
-    lewPopverRef1.value.show();
+    lewPopverRef.value.show();
 };
 
 const hide = () => {
-    lewPopverRef1.value.hide();
+    lewPopverRef.value.hide();
+};
+
+const searchDebounce = useDebounceFn(async (e: any) => {
+    search(e);
+}, props.searchDelay);
+
+const search = async (e: any) => {
+    // loading
+    state.loading = true;
+    const keyword = e.target.value;
+    if (props.searchable) {
+        let result: any = [];
+        // 如果没输入关键词
+        if (!keyword && props.options.length > 0) {
+            result = props.options;
+        } else {
+            result = await props.searchMethod({
+                options: props.options,
+                keyword,
+            });
+        }
+        state.options = result;
+    }
+    state.loading = false;
+};
+
+const clearHandle = () => {
+    selectValue.value = '';
+    emit('clear');
+    emit('change');
+};
+
+const selectHandle = (item: SelectOptions) => {
+    if (item.disabled) {
+        return;
+    }
+    emit('change', item.value);
+    selectValue.value = item.value;
+    hide();
+};
+
+const getChecked = computed(() => (value: string | number) => {
+    return selectValue.value === value;
+});
+
+const getValueStyle = computed(() => {
+    return state.visible ? 'opacity:0.4' : '';
+});
+
+const getLabel = computed(() => {
+    if (state.options) {
+        const option = state.options.find((e) => {
+            if (e) {
+                return e.value === selectValue.value;
+            }
+        });
+
+        if (option && JSON.stringify(option) !== '{}') {
+            return option.label;
+        }
+    }
+
+    return props.defaultValue || props.modelValue;
+});
+
+const getSelectClassName = computed(() => {
+    let { clearable, size, align } = props;
+    clearable = clearable ? !!selectValue.value : false;
+    return object2class('lew-select', { clearable, size, align });
+});
+
+const getBodyClassName = computed(() => {
+    const { size, disabled } = props;
+    return object2class('lew-select-body', { size, disabled });
+});
+
+const getSelectViewClassName = computed(() => {
+    const { disabled, readonly } = props;
+    const focus = state.visible;
+    return object2class('lew-select-view', { focus, disabled, readonly });
+});
+
+const getSelectItemClassName = (e: any) => {
+    const { disabled } = e;
+    const active = getChecked.value(e.value);
+    const { align } = props;
+
+    return object2class('lew-select-item', {
+        disabled,
+        align,
+        active,
+    });
+};
+
+const getVirtualHeight = computed(() => {
+    let height = state.options.length * props.itemHeight;
+    height = height > 240 ? 240 : height;
+    return `${height}px`;
+});
+
+const getIconSize = computed(() => {
+    const size: any = {
+        small: 13,
+        medium: 14,
+        large: 16,
+    };
+    return size[props.size];
+});
+
+const onShow = () => {
+    state.visible = true;
+    getSelectWidth();
+    if (state.options && state.options.length === 0 && props.searchable) {
+        search({ target: { value: '' } });
+    }
+};
+
+const onHide = () => {
+    state.visible = false;
+    emit('blur');
 };
 
 defineExpose({ show, hide });
-
-onMounted(() => {
-    // 如果是多选
-    if (props.multiple && props.modelValue instanceof Array) {
-        multipleLabelStr.value = filterSelect(props.modelValue, props.options);
-    } else if (typeof props.modelValue === 'string') {
-        labelStr.value = labelStr.value =
-            props.options?.find((e) => e.value === props.modelValue)?.label ||
-            '';
-    } else if (typeof props.modelValue === 'number') {
-        labelStr.value = labelStr.value =
-            props.options?.find((e) => Number(e.value) === props.modelValue)
-                ?.label || '';
-    }
-});
 </script>
 
 <template>
     <lew-popover
-        ref="lewPopverRef1"
+        ref="lewPopverRef"
         class="lew-select-view"
-        :class="{ 'lew-select-focus': isShowOptions }"
+        :class="getSelectViewClassName"
         :trigger="trigger"
-        :placement="placement"
+        :disabled="disabled"
+        placement="bottom-start"
         style="width: 100%"
-        @on-show="isShowOptions = true"
-        @on-hide="isShowOptions = false"
+        :loading="state.loading"
+        @on-show="onShow"
+        @on-hide="onHide"
     >
         <template #trigger>
             <div
                 ref="lewSelectRef"
                 class="lew-select"
-                :class="`lew-select-${size} lew-select-align-${align}`"
+                :class="getSelectClassName"
             >
                 <lew-icon
-                    size="16px"
+                    :size="getIconSize"
                     type="chevron-down"
-                    class="lew-select-icon"
+                    class="icon-select"
+                    :class="{ 'icon-select-hide': clearable && getLabel }"
                 />
-                <div
-                    v-if="
-                        (!multiple && labelStr.length === 0) ||
-                        (multiple && multipleLabelStr.length === 0)
-                    "
-                    class="lew-select-placeholder"
-                >
-                    请选择
+                <lew-icon
+                    v-if="clearable"
+                    :size="getIconSize"
+                    type="x-circle"
+                    class="icon-clear"
+                    :class="{ 'icon-clear-show': clearable && getLabel }"
+                    @click.stop="clearHandle"
+                />
+                <div v-show="getLabel" :style="getValueStyle" class="value">
+                    {{ getLabel }}
                 </div>
-                <!-- 单选 -->
-                <div v-show="!multiple" class="lew-select-label-single">
-                    {{ labelStr }}
-                </div>
-                <!-- 多选 -->
-                <div v-show="multiple" class="lew-select-label-multiple">
-                    <lew-tag
-                        v-show="multipleLabelStr.length > 0"
-                        type="primary"
-                        :size="size"
-                        closable
-                        @close="delTag(0)"
-                    >
-                        {{ multipleLabelStr[0] }}</lew-tag
-                    >
-                    <lew-popover
-                        v-show="multipleLabelStr.length > 1"
-                        ref="lewPopverRef2"
-                        trigger="hover"
-                        placement="top"
-                    >
-                        <template #trigger>
-                            <div
-                                style="margin-left: 5px"
-                                class="lew-isSelect-label-num"
-                            >
-                                <lew-tag
-                                    v-show="multipleLabelStr.length > 1"
-                                    :size="size"
-                                    type="primary"
-                                >
-                                    +{{ multipleLabelStr.length - 1 }}</lew-tag
-                                >
-                            </div>
-                        </template>
-                        <template #popover-body>
-                            <lew-flex
-                                wrap
-                                gap="5px"
-                                x="start"
-                                class="lew-isSelect-label-box"
-                            >
-                                <lew-tag
-                                    v-for="(item, index) in multipleLabelStr"
-                                    :key="index"
-                                    type="primary"
-                                    closable
-                                    :size="size"
-                                    @close="delTag(index)"
-                                >
-                                    {{ item }}
-                                </lew-tag>
-                            </lew-flex>
-                        </template>
-                    </lew-popover>
+                <div v-show="!getLabel" class="placeholder">
+                    {{ placeholder }}
                 </div>
             </div>
         </template>
         <template #popover-body>
             <div
                 class="lew-select-body"
-                :class="`
-            ${size ? 'lew-select-body-' + size : ''} 
-            ${multiple ? 'lew-select-multiple-body' : ''}  
-            ${align ? 'lew-select-body-align-' + align : ''}  
-            `"
-                :style="`width:${lewSelectWidth}`"
+                :class="getBodyClassName"
+                :style="`width:${state.selectWidth}px`"
             >
                 <slot name="header"></slot>
+                <div v-if="searchable" class="search-input">
+                    <input
+                        ref="searchInputRef"
+                        v-model="state.keyword"
+                        placeholder="输入搜索关键词"
+                        @input="searchDebounce"
+                    />
+                </div>
                 <div class="lew-select-options-box">
-                    <template v-for="item in options" :key="item.value">
-                        <label>
-                            <!-- 原生 -->
-                            <div
-                                v-if="!labelSlot"
-                                class="lew-select-item"
-                                :class="`
-                            ${item.disabled ? 'lew-select-item-disabled' : ''} 
-                            `"
-                            >
-                                <lew-checkbox
-                                    v-show="showIcon && multiple"
-                                    :size="size"
-                                    class="lew-select-checkbox"
-                                    :label="item.label"
-                                    :disabled="item.disabled"
-                                    :checked="getChecked(item.value)"
-                                    @change="check(item, $event)"
-                                />
-                                <div v-if="!multiple" class="lew-select-label">
-                                    {{ item.label }}
+                    <lew-flex
+                        v-show="state.options && state.options.length === 0"
+                        direction="y"
+                        class="not-found"
+                    >
+                        <lew-icon type="box" size="30" />
+                        <span>暂无结果</span>
+                    </lew-flex>
+                    <div
+                        v-if="
+                            searchable &&
+                            state.options &&
+                            state.options.length > 0
+                        "
+                        class="reslut-count"
+                    >
+                        共
+                        {{ numFormat(state.options && state.options.length) }}
+                        条结果
+                    </div>
+
+                    <use-virtual-list
+                        v-if="state.options.length > 0"
+                        class="lew-select-options-list"
+                        :list="state.options"
+                        :options="{
+                            itemHeight: 30,
+                        }"
+                        :height="getVirtualHeight"
+                    >
+                        <template #="props">
+                            <!-- you can get current item of list here -->
+                            <label @click="selectHandle(props.data)">
+                                <div
+                                    v-if="!labelSlot"
+                                    class="lew-select-item"
+                                    :class="getSelectItemClassName(props.data)"
+                                    :style="{ height: itemHeight + 'px' }"
+                                >
+                                    <div class="lew-select-label">
+                                        {{ props.data.label }}
+                                    </div>
+                                    <lew-icon
+                                        v-if="
+                                            getChecked(props.data.value) &&
+                                            showCheckIcon
+                                        "
+                                        class="icon-check"
+                                        size="14"
+                                        type="check"
+                                    />
                                 </div>
-                            </div>
-                            <div v-else class="lew-select-slot-item">
-                                <slot
-                                    name="label"
-                                    :item="item"
-                                    :checked="getChecked(item.value)"
-                                ></slot>
-                                <lew-checkbox
-                                    v-show="false"
-                                    :checked="getChecked(item.value)"
-                                    @change="check(item, $event)"
-                                />
-                            </div>
-                        </label>
-                    </template>
+                                <div
+                                    v-else
+                                    class="lew-select-slot-item"
+                                    :style="{ height: itemHeight + 'px' }"
+                                >
+                                    <slot
+                                        name="label"
+                                        :item="props.data"
+                                        :checked="getChecked(props.data.value)"
+                                    />
+                                </div>
+                            </label>
+                        </template>
+                    </use-virtual-list>
                 </div>
                 <slot name="footer"></slot>
             </div>
@@ -279,19 +294,19 @@ onMounted(() => {
 <style lang="scss" scoped>
 .lew-select-view {
     width: 100%;
-    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     border-radius: var(--lew-border-radius);
     background-color: var(--lew-form-bgcolor);
     transition: all 0.15s ease;
     box-sizing: border-box;
     outline: 0px var(--lew-primary-color-light) solid;
+    border: var(--lew-form-border-width) transparent solid;
+    box-shadow: var(--lew-form-box-shadow);
+
     > div {
         width: 100%;
     }
 
     .lew-select {
-        display: flex;
-        align-items: center;
         position: relative;
         width: 100%;
         overflow: hidden;
@@ -301,90 +316,93 @@ onMounted(() => {
         user-select: none;
         box-sizing: border-box;
 
-        .lew-select-icon {
+        .icon-select,
+        .icon-clear {
             position: absolute;
             top: 50%;
             right: 7px;
             transform: translateY(-50%) rotate(0deg);
-            transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
-            color: var(--lew-text-color-7);
+            transition: var(--lew-form-transition);
+        }
+        .icon-select {
+            opacity: var(--lew-form-icon-opacity);
+        }
+        .icon-clear {
+            opacity: 0;
+            transform: translate(100%, -50%);
         }
 
-        .lew-select-label-multiple {
-            width: 100%;
-            display: flex;
-            align-items: center;
-
-            .lew-popover {
-                display: flex;
-                align-items: center;
-
-                > div {
-                    display: flex;
-                    align-items: center;
-                }
-            }
+        .icon-select-hide {
+            opacity: 0;
+            transform: translate(100%, -50%);
+        }
+        .icon-clear-show {
+            opacity: var(--lew-form-icon-opacity);
+            transform: translate(0%, -50%);
+        }
+        .icon-clear-show:hover {
+            opacity: var(--lew-form-icon-opacity-hover);
+        }
+        .placeholder {
+            color: rgb(165, 165, 165);
         }
 
-        .lew-isSelect-label-num {
+        .placeholder,
+        .value {
             display: inline-flex;
             align-items: center;
+            width: calc(100% - 24px);
+            box-sizing: border-box;
+            transition: all 0.2s;
         }
+    }
+
+    .lew-select-align-left {
+        text-align: left;
+    }
+    .lew-select-align-center {
+        text-align: center;
+    }
+    .lew-select-align-right {
+        text-align: right;
     }
 
     .lew-select-placeholder {
         color: rgb(165, 165, 165);
     }
 
-    .lew-select-small {
-        padding: var(--lew-form-input-padding-small);
-        height: var(--lew-form-item-height-small);
-        line-height: var(--lew-form-input-line-height-small);
-
-        .lew-select-label-single,
-        .lew-select-placeholder {
-            width: calc(100% - 20px);
+    .lew-select-size-small {
+        .value,
+        .placeholder {
+            padding: var(--lew-form-input-padding-small);
+            height: var(--lew-form-item-height-small);
+            line-height: var(--lew-form-input-line-height-small);
             font-size: var(--lew-form-font-size-small);
         }
-
-        .lew-select-label-multiple {
-            margin-left: -4px;
-        }
     }
 
-    .lew-select-medium {
-        padding: var(--lew-form-input-padding-medium);
-        line-height: var(--lew-form-input-line-height-medium);
-        height: var(--lew-form-item-height-medium);
-
-        .lew-select-label-single,
-        .lew-select-placeholder {
+    .lew-select-size-medium {
+        .value,
+        .placeholder {
+            padding: var(--lew-form-input-padding-medium);
+            line-height: var(--lew-form-input-line-height-medium);
+            height: var(--lew-form-item-height-medium);
             font-size: var(--lew-form-font-size-medium);
         }
-
-        .lew-select-label-multiple {
-            margin-left: -6px;
-        }
     }
 
-    .lew-select-large {
-        padding: var(--lew-form-input-padding-large);
-        line-height: var(--lew-form-input-line-height-large);
-        height: var(--lew-form-item-height-large);
-
-        .lew-select-label-single,
-        .lew-select-placeholder {
+    .lew-select-size-large {
+        .value,
+        .placeholder {
+            padding: var(--lew-form-input-padding-large);
+            height: var(--lew-form-item-height-large);
+            line-height: var(--lew-form-input-line-height-large);
             font-size: var(--lew-form-font-size-large);
-        }
-
-        .lew-select-label-multiple {
-            margin-left: -8px;
         }
     }
 }
 
 .lew-select-view:hover {
-    border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor-hover);
 }
 
@@ -392,46 +410,70 @@ onMounted(() => {
     background-color: var(--lew-form-bgcolor-active);
 }
 
-.lew-select-view.lew-select-focus {
+.lew-select-view.lew-select-view-focus {
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
-    outline: 3px var(--lew-primary-color-light) solid;
+    outline: 3px var(--lew-form-ouline-color) solid;
 
-    .lew-select-icon {
+    .icon-select {
         transform: translateY(-50%) rotate(180deg);
         color: var(--lew-text-color-2);
     }
 }
+
+.lew-select-view-disabled {
+    opacity: var(--lew-disabled-opacity);
+    pointer-events: none; //鼠标点击不可修改
+}
+.lew-select-view-readonly {
+    pointer-events: none; //鼠标点击不可修改
+    .lew-select {
+        user-select: text;
+    }
+}
+.lew-select-view-disabled:hover {
+    border-radius: var(--lew-border-radius);
+    background-color: var(--lew-form-bgcolor);
+    outline: 0px var(--lew-primary-color-light) solid;
+    border: var(--lew-form-border-width) transparent solid;
+}
 </style>
 <style lang="scss">
-.lew-isSelect-label-box {
-    max-width: 250px;
-}
-
-.lew-select-align-left,
-.lew-select-body-align-left {
-    text-align: left;
-}
-
-.lew-select-align-center,
-.lew-select-body-align-center {
-    text-align: center;
-}
-
-.lew-select-align-right,
-.lew-select-body-align-right {
-    text-align: right;
-}
-
 .lew-select-body {
     width: 100%;
     box-sizing: border-box;
-
+    .search-input {
+        margin-bottom: 5px;
+        input {
+            outline: none;
+            border: none;
+            background-color: var(--lew-bgcolor-1);
+            width: 100%;
+            height: 30px;
+            border-radius: var(--lew-border-radius);
+            padding: 0px 10px;
+            box-sizing: border-box;
+            color: var(--lew-form-color);
+            transition: var(--lew-form-transition);
+        }
+        input:focus {
+            background-color: var(--lew-form-bgcolor);
+        }
+    }
+    .not-found {
+        padding: 50px 0px;
+        opacity: 0.4;
+    }
+    .reslut-count {
+        padding-left: 8px;
+        margin: 5px 0px;
+        opacity: 0.4;
+        font-size: 13px;
+    }
     .lew-select-options-box {
         overflow-y: auto;
         overflow-x: hidden;
-        max-height: 300px;
         height: auto;
         box-sizing: border-box;
         transition: all 0.25s ease;
@@ -446,7 +488,7 @@ onMounted(() => {
             white-space: nowrap;
             text-overflow: ellipsis;
             cursor: pointer;
-            color: var(--lew-text-color-7);
+            color: var(--lew-text-color-2);
             box-sizing: border-box;
             border-radius: var(--lew-border-radius);
         }
@@ -455,27 +497,30 @@ onMounted(() => {
             opacity: 0.3;
             cursor: no-drop;
         }
+        .lew-select-item-align-left {
+            text-align: left;
+        }
+        .lew-select-item-align-center {
+            text-align: center;
+        }
+        .lew-select-item-align-right {
+            text-align: right;
+        }
 
         .lew-select-label {
             width: 100%;
             user-select: none;
             font-size: 14px;
             padding: 0px 8px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             box-sizing: border-box;
         }
 
         .lew-select-item:hover {
             color: var(--lew-text-color-0);
             background-color: var(--lew-form-bgcolor);
-        }
-
-        .lew-select-checked {
-            font-weight: bold;
-            color: var(--lew-primary-color-dark);
-        }
-
-        .lew-select-checked:hover {
-            color: var(--lew-primary-color-dark);
         }
 
         .lew-select-slot-item {
@@ -487,71 +532,40 @@ onMounted(() => {
             background-color: var(--lew-form-bgcolor);
         }
 
-        .lew-select-checkbox {
-            position: absolute;
-            z-index: 0;
-            top: 50%;
-            transform: translateY(-50%);
+        .lew-select-item-active {
+            color: var(--lew-primary-color-dark);
+            font-weight: bold;
+            background-color: var(--lew-form-bgcolor);
+            .icon-check {
+                margin-right: 10px;
+            }
+        }
+
+        .lew-select-item-active:hover {
+            color: var(--lew-primary-color-dark);
+            font-weight: bold;
+            background-color: var(--lew-form-bgcolor);
         }
     }
 
-    .lew-select-options-box::-webkit-scrollbar {
+    .lew-select-options-list::-webkit-scrollbar {
         background-color: rgb(126, 126, 126, 0);
-        width: 5px;
-        height: 5px;
+        width: 7px;
+        height: 7px;
     }
 
-    .lew-select-options-box::-webkit-scrollbar-thumb:hover {
+    .lew-select-options-list::-webkit-scrollbar-thumb:hover {
         background-color: rgb(126, 126, 126);
     }
 
-    .lew-select-options-box::-webkit-scrollbar-thumb {
+    .lew-select-options-list::-webkit-scrollbar-thumb {
         background-color: rgb(209 213 219 / 0);
-        border-radius: 5px;
+        border-radius: 2px;
     }
 
-    .lew-select-options-box:hover::-webkit-scrollbar-thumb {
+    .lew-select-options-list:hover::-webkit-scrollbar-thumb {
         background-color: rgb(209 213 219 / 1);
-        border-radius: 5px;
-    }
-}
-
-.lew-select-body-small {
-    .lew-select-options-box {
-        .lew-select-item {
-            height: 28px;
-            line-height: 28px;
-        }
-
-        .lew-select-checkbox {
-            left: 8px;
-        }
-    }
-}
-
-.lew-select-body-medium {
-    .lew-select-options-box {
-        .lew-select-item {
-            height: 30px;
-            line-height: 30px;
-        }
-
-        .lew-select-checkbox {
-            left: 8px;
-        }
-    }
-}
-
-.lew-select-body-large {
-    .lew-select-options-box {
-        .lew-select-item {
-            height: 32px;
-            line-height: 32px;
-        }
-
-        .lew-select-checkbox {
-            left: 8px;
-        }
+        border-radius: 2px;
     }
 }
 </style>

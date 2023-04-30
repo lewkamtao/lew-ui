@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import throttle from 'lodash/throttle';
-import { _props } from './props';
+import { backTopProps } from './backTop';
 import { useEventListener } from '../../../hooks';
 
-const props = defineProps(_props);
+const props = defineProps(backTopProps);
 
 const emit = defineEmits(['click']);
 
@@ -12,17 +12,17 @@ const dom = shallowRef<HTMLElement>();
 const showBackTop = ref(false);
 
 const backTopStyle = computed(() => ({
-    right: `${props.right}`,
-    bottom: `${props.bottom}`,
+    right: `${props.right}px`,
+    bottom: `${props.bottom}px`,
 }));
 
 const toBackUp = () => {
     if (!dom.value) return;
     emit('click');
-    let timer = setInterval(() => {
-        let scrollDom = dom.value as HTMLElement;
-        let ispeed = Math.floor(-scrollDom.scrollTop / 5);
-        scrollDom.scrollTop = scrollDom.scrollTop + ispeed;
+    const timer = setInterval(() => {
+        const scrollDom = dom.value as HTMLElement;
+        const ispeed = Math.floor(-scrollDom.scrollTop / 5);
+        scrollDom.scrollTop += ispeed;
         if (scrollDom.scrollTop === 0) {
             clearInterval(timer);
         }
@@ -30,9 +30,7 @@ const toBackUp = () => {
 };
 
 const handleScroll = () => {
-    if (dom.value)
-        showBackTop.value =
-            dom.value.scrollTop >= parseFloat(props.valveHeight);
+    if (dom.value) showBackTop.value = dom.value.scrollTop >= props.valveHeight;
 };
 
 const throttledScrollHandler = throttle(handleScroll, 250);

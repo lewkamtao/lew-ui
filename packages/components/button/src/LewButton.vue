@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import { round, size } from 'lodash';
-import { _props } from './props';
+import { LewIcon } from 'lew-ui';
+import { object2class } from 'lew-ui/utils';
+import { buttonProps } from './button';
 
 const emit = defineEmits(['click']);
-const props = defineProps(_props);
+const props = defineProps(buttonProps);
 
-let _loading = ref(false);
-
-if (props.request && props.loading) {
-    throw new Error('request 和 loading 不能同时设置');
-}
+const _loading = ref(false);
 
 const handleClick = async (e: any) => {
     if (props.disabled || _loading.value || props.loading) return;
@@ -24,32 +21,53 @@ const handleClick = async (e: any) => {
     }
 };
 
-const classObject = computed(() => {
-    return {
-        'lew-button-text': props.isText,
-        [`lew-button-${props.size}`]: props.size,
-        [`lew-button-${props.type}`]: props.type,
-        'lew-button-round': props.round,
-        'lew-button-icon': props.isIcon,
-        'lew-button-loading': _loading.value || props.loading,
-    };
+const getButtonClass = computed(() => {
+    const { round, size, type, icon, text } = props;
+    const loading = _loading.value || props.loading;
+    const singleIcon = !!(!text && icon);
+    return object2class('lew-button', { round, size, type, loading, singleIcon });
+});
+
+const getIconSize = computed(() => {
+    const { size } = props;
+    switch (size) {
+        case 'small':
+            return 12;
+        case 'medium':
+            return 14;
+        case 'large':
+            return 16;
+        default:
+            return 14;
+    }
 });
 </script>
 
 <template>
     <button
         class="lew-button"
-        :class="classObject"
+        :class="getButtonClass"
         :disabled="disabled"
         @click="handleClick"
     >
-        <slot />
-        <div
+        <lew-icon
+            v-if="icon"
+            class="lew-button-icon"
+            :size="getIconSize"
+            :type="icon"
+        />
+        <lew-icon
             class="lew-loading-icon"
+            v-if="loading || _loading"
+            :size="getIconSize"
+            animation="spin"
+            animation-speed="fast"
             :class="{
                 'lew-loading-icon-show': (_loading || loading) && !disabled,
             }"
-        ></div>
+            type="loader"
+        />
+        <span v-if="text" class="lew-button-text">{{ text }} </span>
     </button>
 </template>
 
@@ -74,30 +92,17 @@ const classObject = computed(() => {
     border-radius: var(--lew-border-radius);
     box-sizing: border-box;
     overflow: hidden;
+    box-shadow: var(--lew-form-box-shadow);
 
     .lew-loading-icon {
         position: absolute;
-        width: 100%;
-        height: 100%;
-        left: 0;
-        top: 0;
-        transition: all 0.15s cubic-bezier(0.65, 0, 0.25, 1);
+        left: 10px;
         opacity: 0;
-        transform: translateX(0%);
+        transition: opacity 0.35s;
     }
 
     .lew-loading-icon-show {
         opacity: 1;
-    }
-
-    .lew-loading-icon::after {
-        position: absolute;
-        top: 50%;
-        user-select: none;
-        transform: translateY(-50%);
-        content: '';
-        animation: lew-loading-spinner-spin 1s linear infinite;
-        border-radius: 50%;
     }
 }
 
@@ -105,172 +110,175 @@ const classObject = computed(() => {
     transform: scale(0.96);
 }
 
-.lew-button-small {
+.lew-button-size-small {
     min-width: 50px;
     height: var(--lew-form-item-height-small);
+    line-height: var(--lew-form-item-height-small);
     padding: 0px 8px;
     font-size: var(--lew-form-font-size-small);
+    gap: 4px;
 
-    .lew-loading-icon::after {
-        left: 14px;
-
-        border: 1.5px solid rgba(0, 0, 0, 0.25);
-        border-left: 1.5px solid rgba(255, 255, 255, 1);
-        width: 9px;
-        height: 9px;
+    .lew-loading-icon {
+        left: 8px;
     }
 }
 
-.lew-button-medium {
+.lew-button-size-medium {
     min-width: 60px;
     height: var(--lew-form-item-height-medium);
+    line-height: var(--lew-form-item-height-medium);
     padding: 0px 14px;
     font-size: var(--lew-form-font-size-medium);
-
-    .lew-loading-icon::after {
-        left: 16px;
-        border: 2px solid rgba(0, 0, 0, 0.25);
-        border-left: 2px solid rgba(255, 255, 255, 1);
-        width: 10px;
-        height: 10px;
+    gap: 6px;
+    .lew-loading-icon {
+        left: 10px;
     }
 }
 
-.lew-button-large {
+.lew-button-size-large {
     min-width: 70px;
     height: var(--lew-form-item-height-large);
+    line-height: var(--lew-form-item-height-large);
     padding: 0px 20px;
     font-size: var(--lew-form-font-size-large);
-
-    .lew-loading-icon::after {
-        left: 20px;
-        border: 2.5px solid rgba(0, 0, 0, 0.25);
-        border-left: 2.5px solid rgba(255, 255, 255, 1);
-        width: 12px;
-        height: 12px;
+    gap: 8px;
+    .lew-loading-icon {
+        left: 12px;
     }
 }
 
-.lew-button-normal.lew-button-small {
-    .lew-loading-icon::after {
-        border-left: 1.5px solid var(--lew-primary-color-dark);
-    }
+.lew-button-size-small.lew-button-singleIcon {
+    min-width: auto;
+    padding: 0px;
+    width: var(--lew-form-item-height-small);
+    height: var(--lew-form-item-height-small);
 }
-.lew-button-normal.lew-button-medium {
-    .lew-loading-icon::after {
-        border: 2px solid rgba(0, 0, 0, 0.25);
-        border-left: 2px solid var(--lew-primary-color-dark);
-    }
+.lew-button-size-medium.lew-button-singleIcon {
+    min-width: auto;
+    padding: 0px;
+    width: var(--lew-form-item-height-medium);
+    height: var(--lew-form-item-height-medium);
+}
+.lew-button-size-large.lew-button-singleIcon {
+    min-width: auto;
+    padding: 0px;
+    width: var(--lew-form-item-height-large);
+    height: var(--lew-form-item-height-large);
 }
 
-.lew-button-normal.lew-button-large {
-    .lew-loading-icon::after {
-        border: 2.5px solid rgba(0, 0, 0, 0.25);
-        border-left: 2.5px solid var(--lew-primary-color-dark);
+.lew-button.lew-button-loading.lew-button-singleIcon {
+    padding: 0px;
+    .lew-button-text {
+        display: none;
     }
-}
-
-@keyframes lew-loading-spinner-spin {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg);
+    .lew-button-icon {
+        display: none;
     }
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg);
+    .lew-loading-icon {
+        position: static;
     }
 }
 
 .lew-button-round {
     border-radius: 50px;
 }
-
-.lew-button-blank {
-    background: none;
-    color: var(--lew-text-color-5);
-}
-
-.lew-button-blank:hover {
-    color: var(--lew-text-color-3);
-}
-
 .lew-button-active:hover {
     color: var(--lew-text-color-0);
 }
 
-.lew-button-primary {
+.lew-button-type-primary {
     background: var(--lew-primary-color);
     color: var(--lew-white-text-color);
 }
 
-.lew-button-primary:hover {
+.lew-button-type-primary:hover {
     background-color: var(--lew-primary-color-hover);
 }
 
-.lew-button-primary:active {
+.lew-button-type-primary:active {
     background-color: var(--lew-primary-color-active);
 }
 
-.lew-button-info:hover {
+.lew-button-type-info:hover {
     background-color: var(--lew-info-color-hover);
 }
 
-.lew-button-info {
+.lew-button-type-info {
     background: var(--lew-info-color);
     color: var(--lew-white-text-color);
 }
 
-.lew-button-info:active {
+.lew-button-type-info:active {
     background-color: var(--lew-info-color-active);
 }
 
-.lew-button-success {
+.lew-button-type-success {
     background: var(--lew-success-color);
     color: var(--lew-white-text-color);
 }
 
-.lew-button-success:hover {
+.lew-button-type-success:hover {
     background-color: var(--lew-success-color-hover);
 }
 
-.lew-button-success:active {
+.lew-button-type-success:active {
     background-color: var(--lew-success-color-active);
 }
 
-.lew-button-error {
+.lew-button-type-error {
     background: var(--lew-error-color);
     color: var(--lew-white-text-color);
 }
 
-.lew-button-error:hover {
+.lew-button-type-error:hover {
     background-color: var(--lew-error-color-hover);
 }
 
-.lew-button-error:active {
+.lew-button-type-error:active {
     background-color: var(--lew-error-color-active);
 }
 
-.lew-button-normal {
+.lew-button-type-blank {
+    background-color: transparent;
+    color: var(--lew-text-color-2);
+    padding: 0px 4px;
+    min-width: auto;
+    box-shadow: none;
+}
+
+.lew-button-type-blank:hover {
+    background-color: transparent;
+    color: var(--lew-text-color-2);
+}
+
+.lew-button-type-blank:active {
+    background-color: transparent;
+    color: var(--lew-text-color-2);
+}
+
+.lew-button-type-normal {
     background: var(--lew-normal-color);
     color: var(--lew-text-color-3);
 }
 
-.lew-button-normal:hover {
+.lew-button-type-normal:hover {
     background-color: var(--lew-normal-color-hover);
 }
 
-.lew-button-normal:active {
+.lew-button-type-normal:active {
     background-color: var(--lew-normal-color-active);
 }
 
-.lew-button-warning {
+.lew-button-type-warning {
     background: var(--lew-warning-color);
     color: var(--lew-white-text-color);
 }
 
-.lew-button-warning:hover {
+.lew-button-type-warning:hover {
     background-color: var(--lew-warning-color-hover);
 }
 
-.lew-button-warning:active {
+.lew-button-type-warning:active {
     background-color: var(--lew-warning-color-active);
 }
 
@@ -278,13 +286,13 @@ const classObject = computed(() => {
     cursor: progress;
     padding-left: 0px;
 }
-.lew-button-small.lew-button-loading {
+.lew-button-size-small.lew-button-loading {
     padding-left: 24px;
 }
-.lew-button-medium.lew-button-loading {
+.lew-button-size-medium.lew-button-loading {
     padding-left: 30px;
 }
-.lew-button-large.lew-button-loading {
+.lew-button-size-large.lew-button-loading {
     padding-left: 36px;
 }
 
@@ -295,203 +303,5 @@ const classObject = computed(() => {
 .lew-button[disabled] {
     pointer-events: none; //鼠标点击不可修改
     opacity: var(--lew-disabled-opacity);
-}
-
-.lew-button-text {
-    background: none;
-    min-width: auto;
-    height: auto;
-    padding: 4px 8px;
-}
-
-.lew-button-text.lew-button-info {
-    color: var(--lew-info-color-dark);
-
-    &:hover {
-        background-color: var(--lew-info-color-light2);
-    }
-}
-
-.lew-button-text.lew-button-primary {
-    color: var(--lew-primary-color-dark);
-
-    &:hover {
-        background-color: var(--lew-info-color-light2);
-    }
-}
-
-.lew-button-text.lew-button-error {
-    color: var(--lew-error-color-dark);
-
-    &:hover {
-        background-color: var(--lew-error-color-light2);
-    }
-}
-
-.lew-button-text.lew-button-warning {
-    color: var(--lew-warning-color-dark);
-
-    &:hover {
-        background-color: var(--lew-warning-color-light2);
-    }
-}
-
-.lew-button-text.lew-button-success {
-    color: var(--lew-success-color-dark);
-
-    &:hover {
-        background-color: var(--lew-success-color-light2);
-    }
-}
-
-.lew-button-text.lew-button-normal {
-    color: var(--lew-text-color-5);
-
-    &:hover {
-        background-color: var(--lew-normal-color-light2);
-    }
-}
-
-.lew-button-icon {
-    background: none;
-    padding: 4px;
-}
-
-.lew-button-icon[disabled] {
-    background: none;
-}
-
-.lew-button-icon.lew-button-small {
-    min-width: 24px;
-    min-height: 24px;
-    width: 24px;
-    height: 24px;
-    font-size: 14px;
-}
-
-.lew-button-icon.lew-button-medium {
-    min-width: 30px;
-    min-height: 30px;
-    width: 30px;
-    height: 30px;
-    font-size: 20px;
-}
-
-.lew-button-icon.lew-button-large {
-    min-width: 36px;
-    min-height: 36px;
-    width: 36px;
-    height: 36px;
-    font-size: 26px;
-}
-
-.lew-button-icon.lew-button-info {
-    &:hover {
-        background-color: var(--lew-info-color-light);
-    }
-
-    &:active {
-        background-color: var(--lew-info-color-light2);
-    }
-
-    &,
-    &:disabled {
-        background: none;
-        color: var(--lew-info-text-color);
-    }
-}
-
-.lew-button-icon.lew-button-warning {
-    &:hover {
-        background-color: var(--lew-warning-color-light);
-    }
-
-    &:active {
-        background-color: var(--lew-warning-color-light2);
-    }
-
-    &,
-    &:disabled {
-        background: none;
-        color: var(--lew-warning-text-color);
-    }
-}
-
-.lew-button-icon.lew-button-primary {
-    &:hover {
-        background-color: var(--lew-primary-color-light);
-    }
-
-    &:active {
-        background-color: var(--lew-primary-color-light2);
-    }
-
-    &,
-    &:disabled {
-        background: none;
-        color: var(--lew-primary-text-color);
-    }
-}
-
-.lew-button-icon.lew-button-error {
-    &:hover {
-        background-color: var(--lew-error-color-light);
-    }
-
-    &:active {
-        background-color: var(--lew-error-color-light2);
-    }
-
-    &,
-    &:disabled {
-        background: none;
-        color: var(--lew-error-text-color);
-    }
-}
-
-.lew-button-icon.lew-button-normal {
-    &:hover {
-        background-color: var(--lew-normal-color-light);
-    }
-
-    &:active {
-        background-color: var(--lew-normal-color-light2);
-    }
-
-    &,
-    &:disabled {
-        background: none;
-        color: var(--lew-normal-text-color);
-    }
-}
-
-.lew-button-icon.lew-button-success {
-    &:hover {
-        background-color: var(--lew-success-color-light);
-    }
-
-    &:active {
-        background-color: var(--lew-success-color-light2);
-    }
-
-    &,
-    &:disabled {
-        background: none;
-        color: var(--lew-success-text-color);
-    }
-}
-
-.lew-button-icon.lew-button-loading {
-    color: rgba($color: #000000, $alpha: 0);
-    padding-left: 0px;
-    &::after {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-}
-.lew-button-icon.lew-button-loading {
-    .lew-loading-icon::after {
-        left: auto;
-    }
 }
 </style>

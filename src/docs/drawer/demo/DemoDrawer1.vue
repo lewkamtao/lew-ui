@@ -17,14 +17,17 @@ const open4 = (): void => {
 };
 </script>
 <template>
-    <lew-flex gap="20px" x="start">
+    <lew-flex gap="20" x="start">
         <lew-drawer v-model:visible="visible1" position="right"></lew-drawer>
-        <lew-button @click="open1">右边</lew-button>
+        <lew-button text="右边" @click="open1" />
+
         <lew-drawer v-model:visible="visible2" position="bottom"></lew-drawer>
-        <lew-button @click="open2">下边</lew-button>
+        <lew-button text="下边" @click="open2" />
+
         <lew-drawer v-model:visible="visible3" position="left"></lew-drawer>
-        <lew-button @click="open3">左边</lew-button>
+        <lew-button text="左边" @click="open3" />
+
         <lew-drawer v-model:visible="visible4" position="top"></lew-drawer>
-        <lew-button @click="open4">上边</lew-button>
+        <lew-button text="上边" @click="open4" />
     </lew-flex>
 </template>

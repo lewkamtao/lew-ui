@@ -23,23 +23,23 @@ const alertClose: any = ref([]);
 const columns = [
     {
         title: '参数名',
-        width: '200px',
+        width: 150,
         field: 'param',
     },
     {
-        title: '描述',
-        width: '320px',
-        field: 'description',
-    },
-    {
         title: '类型',
-        width: 'auto',
+        width: 240,
         field: 'type',
     },
     {
         title: '默认值',
-        width: '200px',
+        width: 120,
         field: 'default',
+    },
+    {
+        title: '描述',
+        width: 220,
+        field: 'description',
     },
 ];
 
@@ -96,7 +96,7 @@ const docsTable2 = ref([
             <lew-alert
                 v-if="!alertClose[1]"
                 style="margin-top: 20px"
-                size="16px"
+                :size="16"
                 :list="[
                     {
                         type: 'warning',
@@ -107,18 +107,18 @@ const docsTable2 = ref([
                 @close="alertClose[0] = true"
             />
         </lew-demo-box>
-        <lew-demo-box title="固定列" :code="DemoTable2_code">
+        <lew-demo-box title="固定行列" :code="DemoTable2_code">
             <demo-table2 />
             <lew-alert
                 v-if="!alertClose[2]"
                 style="margin-top: 20px"
-                size="16px"
+                :size="16"
                 :list="[
                     {
                         type: 'info',
                         title: '提示',
                         content:
-                            '为了高度自定义，你需要调整「offsetX」来设置横向偏移量，不设置，默认是 0px',
+                            '你可以设置max-height，来限制高度，设置max-height触发时自动固定head。',
                     },
                 ]"
                 @close="alertClose[2] = true"
@@ -136,7 +136,7 @@ const docsTable2 = ref([
                         content: '插槽为你提供了整列和整行的数据以及参数。',
                     },
                 ]"
-                size="16px"
+                :size="16"
                 @close="alertClose[3] = true"
             />
         </lew-demo-box>
@@ -145,7 +145,7 @@ const docsTable2 = ref([
             <lew-alert
                 v-if="!alertClose[4]"
                 style="margin-top: 20px"
-                size="16px"
+                :size="16"
                 :list="[
                     {
                         type: 'info',
@@ -162,7 +162,7 @@ const docsTable2 = ref([
             <lew-alert
                 v-if="!alertClose[4]"
                 style="margin-top: 20px"
-                size="16px"
+                :size="16"
                 :list="[
                     {
                         type: 'info',
@@ -173,8 +173,21 @@ const docsTable2 = ref([
                 @close="alertClose[4] = true"
             />
         </lew-demo-box>
-        <lew-demo-box v-if="false" title="固定列" :code="DemoTable6_code">
+        <lew-demo-box title="选择" :code="DemoTable6_code">
             <demo-table6 />
+            <lew-alert
+                v-if="!alertClose[4]"
+                style="margin-top: 20px"
+                :size="16"
+                :list="[
+                    {
+                        type: 'warning',
+                        title: '警告',
+                        content: `当checkable开启时，必须设置rowKey。`,
+                    },
+                ]"
+                @close="alertClose[4] = true"
+            />
         </lew-demo-box>
         <lew-demo-box v-if="false" title="固定列" :code="DemoTable7_code">
             <demo-table7 />
@@ -184,7 +197,7 @@ const docsTable2 = ref([
             <lew-alert
                 v-if="!alertClose[4]"
                 style="margin-top: 20px"
-                size="16px"
+                :size="16"
                 :list="[
                     {
                         type: 'success',
@@ -201,8 +214,8 @@ const docsTable2 = ref([
             />
         </lew-demo-box>
         <!-- <br />
-        <lew-title size="16px">Props</lew-title>
-        <lew-table :data="docsTable1" :columns="columns" height="auto">
+        <lew-title :size="16">Props</lew-title>
+        <lew-table :data-source="docsTable1" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>
             <template #type="{ row }"> {{ row.type }} </template>
@@ -210,8 +223,8 @@ const docsTable2 = ref([
         </lew-table>
         <br />
         <br />
-        <lew-title size="16px">columns</lew-title>
-        <lew-table :data="docsTable2" :columns="columns" height="auto">
+        <lew-title :size="16">columns</lew-title>
+        <lew-table :data-source="docsTable2" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>
             <template #type="{ row }"> {{ row.type }} </template>

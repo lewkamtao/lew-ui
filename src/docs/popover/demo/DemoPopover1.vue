@@ -3,9 +3,12 @@ const v = ref('');
 const lewPopoverRef1 = ref();
 const lewPopoverRef2 = ref();
 const submit = () => {
-    LewMessage.error(v.value || '密码不可为空');
-    lewPopoverRef1.value.hide();
-    lewPopoverRef2.value.hide();
+    if (v.value) {
+        LewMessage.warning(v.value);
+        lewPopoverRef1.value.hide();
+    } else {
+        LewMessage.warning('密码不可为空');
+    }
 };
 
 const data: any = [
@@ -54,83 +57,66 @@ const data: any = [
 const columns = [
     {
         title: 'id',
-        width: '50px',
         field: 'id',
+        width: 60,
         x: 'center',
-        sticky: 'left',
-        offsetX: '0px',
     },
     {
         title: '姓名',
-        width: '100px',
+        width: 120,
         field: 'name',
-        x: 'center',
-        sticky: 'left',
-        offsetX: '50px',
     },
     {
         title: '年龄',
-        width: '400px',
         field: 'age',
+        width: 80,
         x: 'center',
-    },
-    {
-        title: '爱好',
-        width: '400px',
-        field: 'hobby',
-    },
-    {
-        title: '介绍',
-        width: '400px',
-        field: 'intro',
     },
     {
         title: '性别',
-        width: '80px',
         field: 'sex',
+        width: 80,
         x: 'center',
-        sticky: 'right',
-        offsetX: '0px',
+    },
+    {
+        title: '成绩',
+        width: 80,
+        field: 'fraction',
+        x: 'center',
+    },
+    {
+        title: '介绍',
+        width: 180,
+        field: 'intro',
     },
 ];
-
-const formatSex = (sex: number) => {
-    switch (true) {
-        case sex === 0:
-            return '女';
-        case sex === 1:
-            return '男';
-        default:
-            return '未知';
-    }
-};
 </script>
 
 <template>
-    <lew-flex gap="20px" x="start">
+    <lew-flex gap="20" x="start">
         <lew-popover
             ref="lewPopoverRef1"
             trigger="click"
             placement="bottom-start"
         >
             <template #trigger>
-                <lew-button>进入保险箱</lew-button>
+                <lew-button text="进入保险箱" />
             </template>
             <template #popover-body>
-                <div class="popover-body" style="width: 300px">
-                    <lew-form-item direction="y" label="请输入密码">
-                        <lew-input v-model="v" />
-                    </lew-form-item>
+                <div class="popover-body" style="width: 240px">
+                    <lew-input v-model="v" placeholder="请输入密码" />
                     <lew-flex x="end" style="margin-top: 15px">
                         <lew-button
+                            text="取消"
                             type="blank"
                             size="small"
                             @click="lewPopoverRef1.hide()"
-                            >取消
-                        </lew-button>
-                        <lew-button size="small" @click="submit()"
-                            >提交
-                        </lew-button>
+                        />
+                        <lew-button
+                            text="提交"
+                            size="small"
+                            @click="submit()"
+                        />
                     </lew-flex>
                 </div>
             </template>
@@ -142,42 +128,39 @@ const formatSex = (sex: number) => {
             placement="bottom-start"
         >
             <template #trigger>
-                <lew-button>展示表格</lew-button>
+                <lew-button text="展示表格" />
             </template>
             <template #popover-body>
                 <div class="popover-body" style="width: 800px">
-                    <lew-table :data="data" :columns="columns" height="auto">
-                        <template #id="{ row }"> {{ row.id }} </template>
-                        <template #name="{ row }"> {{ row.name }} </template>
-                        <template #age="{ row }"> {{ row.age }} </template>
-                        <template #sex="{ row }">
-                            {{ formatSex(row.sex) }}
-                        </template>
-                        <template #hobby="{ row }">
-                            <lew-flex gap="5px" x="start">
-                                <lew-tag
-                                    v-for="(item, index) in row.hobby"
-                                    :key="index"
-                                    size="small"
-                                    type="info"
-                                >
-                                    {{ item }}
-                                </lew-tag>
+                    <lew-table :data-source="data" :columns="columns">
+                        <template #fraction="{ row }">
+                            <lew-flex>
+                                <lew-badge
+                                    v-if="row.fraction >= 60"
+                                    round
+                                    type="success"
+                                />
+                                <lew-badge v-else round type="error" />
+                                <span>{{
+                                    row.fraction >= 60 ? '良好' : '很差'
+                                }}</span>
                             </lew-flex>
                         </template>
-                        <template #intro="{ row }"> {{ row.intro }} </template>
                     </lew-table>
                     <br />
                     <lew-flex x="end">
                         <lew-button
+                            text="取消"
                             type="blank"
                             size="small"
                             @click="lewPopoverRef2.hide()"
-                            >取消
-                        </lew-button>
-                        <lew-button size="small" @click="submit()"
-                            >提交
-                        </lew-button>
+                        />
+
+                        <lew-button
+                            text="提交"
+                            size="small"
+                            @click="lewPopoverRef2.hide()"
+                        />
                     </lew-flex>
                 </div>
             </template>
@@ -187,7 +170,7 @@ const formatSex = (sex: number) => {
 
 <style lang="scss" scoped>
 .popover-body {
-    padding: 15px;
+    padding: 10px;
     box-sizing: border-box;
 }
 </style>

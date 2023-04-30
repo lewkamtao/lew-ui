@@ -1,64 +1,44 @@
 <script lang="ts" setup>
+import dayjs from 'dayjs';
 import { getMonthDate, getHeadDate } from './date';
-import { dateRangeProps } from './props';
-import moment from 'moment';
-
+import { dateRangeProps } from './datePicker';
+import { useVModel } from '@vueuse/core';
+const emit = defineEmits(['change', 'update:modelValue']);
 const props = defineProps(dateRangeProps);
-
-let dateValue = ref({
-    start: props.modelValue?.[0],
-    end: props.modelValue?.[1],
-});
-
-let _dateValue = ref({
-    start: Number(moment(dateValue.value.start).format('X')),
-    end: Number(moment(dateValue.value.end).format('X')),
-});
-
-watch(
-    () => props.modelValue,
-    () => {
-        dateValue.value = {
-            start: props.modelValue?.[0],
-            end: props.modelValue?.[1],
-        };
-    }
-);
+const modelValue = useVModel(props, 'modelValue', emit);
+const hoverValue: any = ref(toRaw(modelValue.value));
+const { startKey, endKey } = props;
 
 // 获取当天日期对象
-let today = new Date();
+const today = new Date();
 // 获取当前年份
-let curYear = today.getFullYear();
+const curYear = today.getFullYear();
 // 获取当前月份
-let curMonth = today.getMonth() + 1;
-let curDay = today.getDate();
-let curDate = `${curYear}-${curMonth}-${curDay}`;
-let _curDate = Number(moment(`${curYear}-${curMonth}-${curDay}`).format('X'));
+const curMonth = today.getMonth() + 1;
+const curDay = today.getDate();
+const _curDate = dayjs(`${curYear}-${curMonth}-${curDay}`);
 
 // 年
-let _year1 = ref(moment(dateValue.value.start).year());
+const _year1 = ref(dayjs(modelValue.value[startKey]).year());
 // 月
-let _month1 = ref(moment(dateValue.value.start).month() + 1);
+const _month1 = ref(dayjs(modelValue.value[startKey]).month() + 1);
 
 // 年
-let _year2 = ref(moment(dateValue.value.end).year());
+const _year2 = ref(dayjs(modelValue.value[endKey]).year());
 // 月
-let _month2 = ref(moment(dateValue.value.end).month() + 1);
+const _month2 = ref(dayjs(modelValue.value[endKey]).month() + 1);
 
 if (_year1.value === _year2.value && _month1.value === _month2.value) {
     _month2.value += 1;
 }
-if (_month2.value >= 12) {
+if (_month2.value > 12) {
     _year2.value += 1;
     _month2.value = 1;
 }
 
-let dateData1 = ref(getMonthDate(1));
-let dateData2 = ref(getMonthDate(2));
-
-onMounted(() => {
-    setMonthDate(1);
-    setMonthDate(2);
+const state = reactive({
+    leftPanel: getMonthDate(1),
+    rightPanel: getMonthDate(2),
 });
 
 const prveMonth1 = () => {
@@ -68,7 +48,7 @@ const prveMonth1 = () => {
         _year1.value -= 1;
         _month1.value = 12;
     }
-    setMonthDate(1);
+    setMonthDate('left');
 };
 
 const nextMonth1 = () => {
@@ -89,8 +69,8 @@ const nextMonth1 = () => {
             _month2.value = _month1.value + 1;
         }
     }
-    setMonthDate(1);
-    setMonthDate(2);
+    setMonthDate('left');
+    setMonthDate('right');
 };
 const prveMonth2 = () => {
     if (_month2.value > 1) {
@@ -110,8 +90,8 @@ const prveMonth2 = () => {
             _month1.value = _month2.value - 1;
         }
     }
-    setMonthDate(1);
-    setMonthDate(2);
+    setMonthDate('left');
+    setMonthDate('right');
 };
 
 const nextMonth2 = () => {
@@ -121,12 +101,12 @@ const nextMonth2 = () => {
         _year2.value += 1;
         _month2.value = 1;
     }
-    setMonthDate(2);
+    setMonthDate('right');
 };
 
 const prveYear1 = () => {
     _year1.value -= 1;
-    setMonthDate(1);
+    setMonthDate('left');
 };
 
 const nextYear1 = () => {
@@ -143,8 +123,8 @@ const nextYear1 = () => {
         }
     }
 
-    setMonthDate(1);
-    setMonthDate(2);
+    setMonthDate('left');
+    setMonthDate('right');
 };
 const prveYear2 = () => {
     _year2.value -= 1;
@@ -159,108 +139,77 @@ const prveYear2 = () => {
             _month1.value = _month2.value - 1;
         }
     }
-    setMonthDate(1);
-    setMonthDate(2);
+    setMonthDate('left');
+    setMonthDate('right');
 };
 
 const nextYear2 = () => {
     _year2.value += 1;
-    setMonthDate(2);
+    setMonthDate('right');
 };
 
-const setMonthDate = (type: number) => {
-    if (type === 1) {
-        dateData1.value = getMonthDate(_year1.value, _month1.value);
+const setMonthDate = (type: string) => {
+    if (type === 'left') {
+        state.leftPanel = getMonthDate(_year1.value, _month1.value);
     } else {
-        dateData2.value = getMonthDate(_year2.value, _month2.value);
+        state.rightPanel = getMonthDate(_year2.value, _month2.value);
     }
 };
 
-const emit = defineEmits(['change', 'update:modelValue']);
+setMonthDate('left');
+setMonthDate('right');
 
 let i = 0;
-
-const hoverValue = (item: any) => {
+let startBackup = '';
+const hoverValueFn = (item: any) => {
     if (item.date != item.showDate || i % 2 === 0) {
         return;
     }
-    let value = `${item.year}-${item.month}-${item.showDate}`;
-    let start = dateValue.value.start;
-    let end = dateValue.value.end;
-    end = value;
-    dateValue.value = {
-        start: start,
-        end: end,
-    };
-
-    _dateValue.value = {
-        start: Number(moment(start).format('X')),
-        end: Number(moment(end).format('X')),
+    const end = `${item.year}-${item.month}-${item.showDate}`;
+    hoverValue.value = {
+        [startKey]: startBackup,
+        [endKey]: end,
     };
 };
 
 const setValue = (item: any) => {
+    i += 1;
+
+    if (!hoverValue.value) {
+        return;
+    }
+
     if (item.date != item.showDate) {
         return;
     }
-    let value = `${item.year}-${item.month}-${item.showDate}`;
-    let _value = Number(moment(value).format('X'));
-    let start = dateValue.value.start;
-    let end = dateValue.value.end;
-
+    const __dateStr = `${item.year}-${item.month}-${item.showDate}`;
+    const __date = dayjs(__dateStr);
     if (i % 2 === 0) {
-        start = value;
-        end = '';
-    } else {
-        if (_value < _dateValue.value.start) {
-            start = value;
-            end = dateValue.value.start;
+        if (__date.isBefore(dayjs(hoverValue.value[startKey]))) {
+            hoverValue.value[startKey] = __dateStr;
+            hoverValue.value[endKey] = startBackup;
         } else {
-            end = value;
+            hoverValue.value[startKey] = startBackup;
+            hoverValue.value[endKey] = __dateStr;
         }
+        modelValue.value = hoverValue.value;
+        emit('change', hoverValue.value);
+    } else {
+        startBackup = __dateStr;
     }
-    dateValue.value = {
-        start: start,
-        end: end,
-    };
-
-    _dateValue.value = {
-        start: Number(moment(start).format('X')),
-        end: Number(moment(end).format('X')),
-    };
-    if (i % 2 != 0) {
-        emit('update:modelValue', [
-            moment(dateValue.value.start).format('YYYY-MM-DD'),
-            moment(dateValue.value.end).format('YYYY-MM-DD'),
-        ]);
-        emit('change', {
-            _date: _dateValue.value,
-            date: dateValue.value,
-            dateValue: [
-                moment(dateValue.value.start).format('YYYY-MM-DD'),
-                moment(dateValue.value.end).format('YYYY-MM-DD'),
-            ],
-        });
-    }
-
-    i += 1;
 };
 
-const getClass = computed(() => (type: string, item: any) => {
+const object2class = computed(() => (type: string, item: any) => {
     if (!item.year || !item.month || !item.showDate) {
         return;
     }
-
-    let dateStr = moment(
-        `${item.year}-${item.month}-${item.showDate}`,
-        'YYYY-MM-DD'
-    );
-
-    let _date = Number(moment(dateStr).format('X'));
+    const _date = dayjs(`${item.year}-${item.month}-${item.showDate}`);
+    const hoverStart = dayjs(hoverValue.value?.start);
+    const hoverEnd = dayjs(hoverValue.value?.end);
 
     switch (type) {
         case 'today':
-            if (_curDate === _date) {
+            if (_curDate.isSame(_date)) {
                 return true;
             }
             break;
@@ -270,51 +219,42 @@ const getClass = computed(() => (type: string, item: any) => {
             }
             break;
         case 'notRangeMonth':
-            if (item.date != item.showDate) {
+            if (item.date !== item.showDate) {
                 return '';
             }
             break;
         case 'selected':
-            if (
-                _dateValue.value?.start === _date ||
-                _dateValue.value?.end === _date
-            ) {
+            if (hoverStart.isSame(_date) || hoverEnd.isSame(_date)) {
                 return 'lew-date-value-selected';
             }
             break;
         case 'rangeSelected':
-            let _start = _dateValue.value?.start;
-            let _end = _dateValue.value?.end;
-            if (_start === _date) {
-                if (_start > _end) {
-                    return 'lew-date-label-selected-end';
-                } else {
-                    return 'lew-date-label-selected-start';
-                }
-            }
-            if (_end === _date) {
-                if (_start > _end) {
-                    return 'lew-date-label-selected-start';
-                } else {
+            if (hoverStart.isSame(_date)) {
+                if (hoverStart.isAfter(hoverEnd)) {
                     return 'lew-date-label-selected-end';
                 }
+                return 'lew-date-label-selected-start';
             }
-            if (_start < _end) {
+            if (hoverEnd.isSame(_date)) {
+                if (hoverStart.isAfter(hoverEnd)) {
+                    return 'lew-date-label-selected-start';
+                }
+                return 'lew-date-label-selected-end';
+            }
+            if (hoverStart.isBefore(hoverEnd)) {
                 if (
-                    _start < _date &&
-                    _end > _date &&
+                    hoverStart.isBefore(_date) &&
+                    hoverEnd.isAfter(_date) &&
                     item.date === item.showDate
                 ) {
                     return 'lew-date-label-selected';
                 }
-            } else {
-                if (
-                    _end < _date &&
-                    _start > _date &&
-                    item.date === item.showDate
-                ) {
-                    return 'lew-date-label-selected';
-                }
+            } else if (
+                hoverEnd.isBefore(_date) &&
+                hoverStart.isAfter(_date) &&
+                item.date === item.showDate
+            ) {
+                return 'lew-date-label-selected';
             }
             break;
         default:
@@ -328,25 +268,33 @@ const getClass = computed(() => (type: string, item: any) => {
             <lew-flex x="start" mode="between" class="lew-date-control">
                 <div class="lew-date-control-left">
                     <!-- 上一年 -->
-                    <lew-button type="normal" size="small" @click="prveYear1">
-                        <lew-icon size="16" type="chevrons-left" />
-                    </lew-button>
+                    <lew-button
+                        icon="chevrons-left"
+                        size="small"
+                        @click="prveYear1"
+                    />
                     <!-- 上一月 -->
-                    <lew-button type="normal" size="small" @click="prveMonth1">
-                        <lew-icon size="16" type="chevron-left" />
-                    </lew-button>
+                    <lew-button
+                        icon="chevron-left"
+                        size="small"
+                        @click="prveMonth1"
+                    />
                 </div>
                 <!-- 日期 -->
                 <div class="cur-date">{{ _year1 }} 年 {{ _month1 }} 月</div>
                 <div class="lew-date-control-right">
                     <!-- 下一月 -->
-                    <lew-button type="normal" size="small" @click="nextMonth1">
-                        <lew-icon size="16" type="chevron-right" />
-                    </lew-button>
+                    <lew-button
+                        icon="chevron-right"
+                        size="small"
+                        @click="nextMonth1"
+                    />
                     <!-- 下一年 -->
-                    <lew-button type="normal" size="small" @click="nextYear1">
-                        <lew-icon size="16" type="chevrons-right" />
-                    </lew-button>
+                    <lew-button
+                        icon="chevrons-right"
+                        size="small"
+                        @click="nextYear1"
+                    />
                 </div>
             </lew-flex>
             <div class="lew-date-box">
@@ -361,24 +309,24 @@ const getClass = computed(() => (type: string, item: any) => {
 
                 <!-- 表格 -->
                 <div
-                    v-for="(item, index) in dateData1"
+                    v-for="(item, index) in state.leftPanel"
                     :key="`d${index}`"
                     class="lew-date-item"
-                    :class="getClass('rangeMonth', item)"
+                    :class="object2class('rangeMonth', item)"
                     @click="setValue(item)"
-                    @mouseenter="hoverValue(item)"
+                    @mouseenter="hoverValueFn(item)"
                 >
                     <div
                         class="lew-date-label"
-                        :class="getClass('rangeSelected', item)"
+                        :class="object2class('rangeSelected', item)"
                     >
                         <div
-                            v-if="getClass('today', item)"
+                            v-if="object2class('today', item)"
                             class="lew-date-item-cur"
                         ></div>
                         <div
                             class="lew-date-value"
-                            :class="getClass('selected', item)"
+                            :class="object2class('selected', item)"
                         >
                             {{ item.showDate }}
                         </div>
@@ -390,25 +338,33 @@ const getClass = computed(() => (type: string, item: any) => {
             <lew-flex x="start" mode="between" class="lew-date-control">
                 <div class="lew-date-control-left">
                     <!-- 上一年 -->
-                    <lew-button type="normal" size="small" @click="prveYear2">
-                        <lew-icon size="16" type="chevrons-left" />
-                    </lew-button>
+                    <lew-button
+                        icon="chevrons-left"
+                        size="small"
+                        @click="prveYear2"
+                    />
                     <!-- 上一月 -->
-                    <lew-button type="normal" size="small" @click="prveMonth2">
-                        <lew-icon size="16" type="chevron-left" />
-                    </lew-button>
+                    <lew-button
+                        icon="chevron-left"
+                        size="small"
+                        @click="prveMonth2"
+                    />
                 </div>
                 <!-- 日期 -->
                 <div class="cur-date">{{ _year2 }} 年 {{ _month2 }} 月</div>
                 <div class="lew-date-control-right">
                     <!-- 下一月 -->
-                    <lew-button type="normal" size="small" @click="nextMonth2">
-                        <lew-icon size="16" type="chevron-right" />
-                    </lew-button>
+                    <lew-button
+                        icon="chevron-right"
+                        size="small"
+                        @click="nextMonth2"
+                    />
                     <!-- 下一年 -->
-                    <lew-button type="normal" size="small" @click="nextYear2">
-                        <lew-icon size="16" type="chevrons-right" />
-                    </lew-button>
+                    <lew-button
+                        icon="chevrons-right"
+                        size="small"
+                        @click="nextYear2"
+                    />
                 </div>
             </lew-flex>
             <div class="lew-date-box">
@@ -423,24 +379,24 @@ const getClass = computed(() => (type: string, item: any) => {
 
                 <!-- 表格 -->
                 <div
-                    v-for="(item, index) in dateData2"
+                    v-for="(item, index) in state.rightPanel"
                     :key="`d${index}`"
                     class="lew-date-item"
-                    :class="getClass('rangeMonth', item)"
+                    :class="object2class('rangeMonth', item)"
                     @click="setValue(item)"
-                    @mouseenter="hoverValue(item)"
+                    @mouseenter="hoverValueFn(item)"
                 >
                     <div
                         class="lew-date-label"
-                        :class="getClass('rangeSelected', item)"
+                        :class="object2class('rangeSelected', item)"
                     >
                         <div
-                            v-if="getClass('today', item)"
+                            v-if="object2class('today', item)"
                             class="lew-date-item-cur"
                         ></div>
                         <div
                             class="lew-date-value"
-                            :class="getClass('selected', item)"
+                            :class="object2class('selected', item)"
                         >
                             {{ item.showDate }}
                         </div>
@@ -537,6 +493,7 @@ const getClass = computed(() => (type: string, item: any) => {
                     line-height: 24px;
                     color: var(--lew-text-color-9);
                     border-radius: 6px;
+                    transition: all 0.1s ease;
                 }
 
                 .lew-date-value-selected {
@@ -582,7 +539,7 @@ const getClass = computed(() => (type: string, item: any) => {
 
             .lew-date-label {
                 .lew-date-value {
-                    color: var(--lew-text-color-4);
+                    color: var(--lew-text-color-2);
                 }
 
                 .lew-date-value-selected {

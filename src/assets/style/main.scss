@@ -1,6 +1,6 @@
 body {
     color: var(--lew-text-color-1);
-    background-color: var(--lew-bgcolor-4);
+    background-color: var(--lew-bgcolor-3);
     overflow: hidden;
     font-size: 14px;
 }
@@ -11,19 +11,6 @@ body {
 
 a {
     color: var(--lew-text-color-2);
-}
-
-::-webkit-scrollbar {
-    width: 15px;
-    background-color: var(--lew-bgcolor-2);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-color: var(--lew-bgcolor-9);
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: var(--lew-bgcolor-6);
 }
 
 .sub-title {

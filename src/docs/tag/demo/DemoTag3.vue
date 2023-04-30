@@ -8,8 +8,15 @@ const close = () => {
     <lew-flex x="start" wrap>
         <lew-tag type="primary" closable @close="close">primary</lew-tag>
         <lew-tag type="primary" round closable @close="close">primary</lew-tag>
-        <lew-tag type="primary" size="large" closable @close="close">
-            primary
+        <lew-tag
+            type="primary"
+            @click="close"
+            size="large"
+            disabled
+            closable
+            @close="close"
+        >
+            这是禁用
         </lew-tag>
         <lew-tag type="primary" size="large" round closable @close="close">
             primary

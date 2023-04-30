@@ -5,11 +5,12 @@ export default {
     install(app: Application) {
         app.directive('tooltip', {
             mounted(el: any, binding: DirectiveBinding) {
-                let trigger = binding.value.trigger;
+                let { trigger } = binding.value;
                 if (trigger === 'hover') {
                     trigger = 'mouseenter';
                 }
                 el.instance = tippy(el, {
+                    theme: 'light',
                     trigger: trigger || 'mouseenter',
                     content: binding.value.content,
                     animation: 'shift-away-subtle',
@@ -19,21 +20,7 @@ export default {
                     allowHTML: binding.value.allowHTML,
                     arrow: binding.value.arrow,
                     maxWidth: 250,
-                    onShow(instance) {
-                        instance.setContent(el.instanceContent);
-                        const node = document.getElementsByTagName('html')[0];
-                        if (node.classList.contains('lew-dark')) {
-                            instance.popper.children[0].setAttribute(
-                                'data-theme',
-                                'dark'
-                            );
-                        } else {
-                            instance.popper.children[0].setAttribute(
-                                'data-theme',
-                                'light'
-                            );
-                        }
-                    },
+                    delay: trigger === 'mouseenter' ? [150, 150] : undefined,
                 });
                 el.instance.popper.children[0].setAttribute(
                     'data-lew',
@@ -41,7 +28,7 @@ export default {
                 );
             },
             updated(el: any, binding: DirectiveBinding) {
-                el.instanceContent = binding.value.content;
+                el.instance.setContent(binding.value.content);
             },
             unmounted(el: any) {
                 el.instance = null;

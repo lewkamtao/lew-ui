@@ -17,31 +17,32 @@ import {
 const columns = [
     {
         title: '参数名',
-        width: '200px',
+        width: 150,
         field: 'param',
     },
     {
-        title: '描述',
-        width: '320px',
-        field: 'description',
-    },
-    {
         title: '类型',
-        width: 'auto',
+        width: 240,
         field: 'type',
     },
     {
         title: '默认值',
-        width: '200px',
+        width: 120,
         field: 'default',
     },
+    {
+        title: '描述',
+        width: 220,
+        field: 'description',
+    },
 ];
+
 const docsTable = ref([
     {
         param: 'type',
-        description: '色彩类型',
-        type: 'primary | normal | success | error | warning',
-        default: `primary`,
+        description: '类型',
+        type: `primary | info | success | error | warning | normal`,
+        default: `normal`,
     },
     {
         param: 'size',
@@ -68,13 +69,13 @@ const docsTable = ref([
         default: 'false',
     },
     {
-        param: 'isText',
+        param: 'is-text',
         description: '文字按钮',
         type: 'boolean',
         default: 'false',
     },
     {
-        param: 'isIcon',
+        param: 'is-icon',
         description: '图标按钮',
         type: 'boolean',
         default: 'false',
@@ -86,7 +87,7 @@ const docsTable = ref([
     <div class="demo-wrapper">
         <lew-title>Button</lew-title>
         <p class="sub-title">赏心悦目的异步效果</p>
-        <lew-demo-box title="普通" :code="DemoButton1_code">
+        <lew-demo-box title="常规" :code="DemoButton1_code">
             <demo-button1 />
         </lew-demo-box>
         <lew-demo-box title="尺寸" :code="DemoButton2_code">
@@ -104,8 +105,8 @@ const docsTable = ref([
         <lew-demo-box title="图标" :code="DemoButton6_code"
             ><demo-button6 />
         </lew-demo-box>
-        <lew-title size="16px">Props</lew-title>
-        <lew-table :data="docsTable" :columns="columns" height="auto">
+        <lew-title :size="16">Props</lew-title>
+        <lew-table :data-source="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>
             <template #type="{ row }"> {{ row.type }} </template>

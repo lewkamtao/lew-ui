@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const options = ref([
+import type { DropdownOptions } from 'lew-ui';
+
+type Options = typeof DropdownOptions;
+
+const options: Options = ref([
     {
         label: '西游记',
         value: '1',
@@ -18,18 +22,17 @@ const options = ref([
     },
 ]);
 
-const change = (e: any, handle: any) => {
+const change = (e: Options) => {
     LewMessage.info(e.label);
-    handle.hide();
 };
 </script>
 <template>
-    <lew-flex gap="30px" x="start">
+    <lew-flex gap="30" x="start">
         <lew-dropdown :options="options" @change="change">
-            <lew-button>hover</lew-button>
+            <lew-button text="hover" />
         </lew-dropdown>
         <lew-dropdown :options="options" trigger="click" @change="change">
-            <lew-button>click</lew-button>
+            <lew-button text="click" />
         </lew-dropdown>
     </lew-flex>
 </template>

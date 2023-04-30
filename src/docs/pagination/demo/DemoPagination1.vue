@@ -20,15 +20,15 @@ setTimeout(() => {
             :page-size-options="[
                 {
                     label: '10 / 页',
-                    value: '10',
+                    value: 10,
                 },
                 {
                     label: '20 / 页',
-                    value: '20',
+                    value: 20,
                 },
                 {
                     label: '30 / 页',
-                    value: '30',
+                    value: 30,
                 },
             ]"
             :total="total"

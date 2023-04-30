@@ -1,10 +1,8 @@
 <script lang="ts" setup>
-import { useLewTo } from '../../../hooks';
-import _props from './props';
-const { lewTo } = useLewTo();
+import { tagProps } from './tag';
+import { object2class } from 'lew-ui/utils';
 
-const props = defineProps(_props);
-
+const props = defineProps(tagProps);
 const emit = defineEmits(['close']);
 const close = () => {
     if (props.disabled) {
@@ -16,27 +14,27 @@ const close = () => {
 const getSize = computed(() => {
     switch (props.size) {
         case 'small':
-            return '12';
+            return 12;
         case 'medium':
-            return '14';
+            return 14;
         case 'large':
-            return '16';
+            return 16;
         default:
-            return '14';
+            return 14;
     }
+});
+
+const tagClassName = computed(() => {
+    const { size, type, round, disabled } = props;
+    return object2class('lew-tag', { size, type, round, disabled });
 });
 </script>
 
 <template>
     <div
         class="lew-tag"
-        :class="`lew-tag-${size} 
-    lew-tag-${type} 
-    ${round ? 'lew-tag-round' : ''}       
-    ${bold ? 'lew-tag-bold' : ''} 
-    ${disabled ? 'lew-tag-disabled' : ''} ${to ? 'lew-tag-to' : ''}`"
-        :style="`max-width:${maxWidth}`"
-        @click="lewTo(to)"
+        :class="tagClassName"
+        :style="`max-width:${maxWidth}px`"
     >
         <div class="lew-tag-left">
             <slot name="left"></slot>
@@ -47,8 +45,8 @@ const getSize = computed(() => {
         <div class="lew-tag-right">
             <slot name="right"></slot>
         </div>
-        <div class="lew-tag-close" v-if="closable">
-            <lew-icon @click.stop="close" :size="getSize" type="x" />
+        <div v-if="closable" class="lew-tag-close" @click.stop="close">
+            <lew-icon :size="getSize" type="x" />
         </div>
     </div>
 </template>
@@ -61,14 +59,13 @@ const getSize = computed(() => {
     border-radius: 3px;
     user-select: none;
     box-sizing: border-box;
+    overflow: hidden;
 
     .lew-tag-value {
         font-weight: normal;
         padding: 0px 3px;
         box-sizing: border-box;
         white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
 
     .lew-tag-close {
@@ -107,12 +104,12 @@ const getSize = computed(() => {
     cursor: pointer;
 }
 
-.lew-tag-small {
+.lew-tag-size-small {
     height: 20px;
     min-width: 20px;
     line-height: 20px;
     padding: 0px;
-    font-size: 12px;
+    font-size: 11px;
 
     .lew-tag-close {
         margin-left: -2px;
@@ -133,7 +130,7 @@ const getSize = computed(() => {
     }
 }
 
-.lew-tag-medium {
+.lew-tag-size-medium {
     height: 24px;
     min-width: 24px;
     line-height: 24px;
@@ -151,12 +148,12 @@ const getSize = computed(() => {
     }
 }
 
-.lew-tag-large {
+.lew-tag-size-large {
     height: 28px;
     min-width: 28px;
     line-height: 28px;
     padding: 0px 4px;
-    font-size: 14px;
+    font-size: 15px;
 
     .lew-tag-close {
         margin-left: -4px;
@@ -176,46 +173,38 @@ const getSize = computed(() => {
     }
 }
 
-.lew-tag-primary {
+.lew-tag-type-primary {
     background-color: var(--lew-primary-color-light);
     color: var(--lew-primary-color-dark);
 }
 
-.lew-tag-info {
+.lew-tag-type-info {
     color: var(--lew-info-color-dark);
     background-color: var(--lew-info-color-light);
 }
 
-.lew-tag-success {
+.lew-tag-type-success {
     color: var(--lew-success-color-dark);
     background-color: var(--lew-success-color-light);
 }
 
-.lew-tag-warning {
+.lew-tag-type-warning {
     color: var(--lew-warning-color-dark);
     background-color: var(--lew-warning-color-light);
 }
 
-.lew-tag-error {
+.lew-tag-type-error {
     color: var(--lew-error-color-dark);
     background-color: var(--lew-error-color-light);
 }
 
-.lew-tag-normal {
+.lew-tag-type-normal {
     color: var(--lew-text-color-3);
     background-color: var(--lew-normal-color-light);
 }
 
 .lew-tag-disabled {
     opacity: var(--lew-disabled-opacity);
-    cursor: not-allowed;
-
-    .lew-tag-close {
-        cursor: not-allowed;
-    }
-
-    .lew-tag-close:hover {
-        background-color: rgba(0, 0, 0, 0);
-    }
+    pointer-events: none;
 }
 </style>

@@ -46,15 +46,14 @@ const toPath = (item: Item) => {
                 @click="toPath(item)"
             >
                 <span v-if="item.name" class="ename"> {{ item.name }} </span>
-                <span class="cname"> {{ item.cname }}</span>
-
-                <Lew-tag
+                <span v-else class="cname"> {{ item.cname }}</span>
+                <lew-tag
                     v-if="item.label"
                     :type="item.type"
                     size="small"
                     style="margin-left: 10px"
                     >{{ item.label }}
-                </Lew-tag>
+                </lew-tag>
             </div>
         </div>
     </div>
@@ -80,7 +79,7 @@ const toPath = (item: Item) => {
             font-size: 14px;
             font-weight: 400;
             height: 20px;
-            color: var(--lew-text-color-9);
+            color: var(--lew-text-color-5);
             overflow: hidden;
 
             span {
@@ -101,8 +100,9 @@ const toPath = (item: Item) => {
             border-radius: var(--lew-border-radius);
             cursor: pointer;
             font-size: 14px;
-            color: var(--lew-text-color-6);
-
+            color: var(--lew-text-color-2);
+            font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier,
+                monospace;
             .ename {
                 margin-right: 5px;
             }

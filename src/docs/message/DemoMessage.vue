@@ -14,12 +14,12 @@ const columns = [
     },
     {
         title: '类型',
-        width: 'auto',
+        width: 240,
         field: 'type',
     },
     {
         title: '默认值',
-        width: '200px',
+        width: 120,
         field: 'default',
     },
 ];
@@ -45,8 +45,8 @@ const docsTable = ref([
         <lew-demo-box title="快捷唤起" :code="DemoMessage1_code">
             <demo-message1>删除</demo-message1></lew-demo-box
         >
-        <lew-title size="16px">Props</lew-title>
-        <lew-table :data="docsTable" :columns="columns" height="auto">
+        <lew-title :size="16">Props</lew-title>
+        <lew-table :data-source="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>
             <template #type="{ row }"> {{ row.type }} </template>

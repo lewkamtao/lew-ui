@@ -22,21 +22,19 @@ defineProps({
     },
 });
 
-let isShowCode = ref(false);
+const isShowCode = ref(false);
 
-const outCodeRef = shallowRef<HTMLElement | null>(null);
 const style = computed<CSSProperties>(() => {
     if (isShowCode.value) {
-        const height = outCodeRef.value?.firstElementChild?.clientHeight;
-        return { height: height ? `${height}px` : 'auto' };
+        return { maxHeight: `400px` };
     }
-    return { height: 0 };
+    return { maxHeight: 0 };
 });
 </script>
 
 <template>
     <div class="demo-box">
-        <lew-title size="16px"
+        <lew-title :size="16"
             >{{ title }}
             <lew-tag v-if="tag" type="info" style="margin: 2px 0px 0px 5px">
                 {{ tag }}</lew-tag
@@ -46,13 +44,7 @@ const style = computed<CSSProperties>(() => {
             <div class="demo-cp">
                 <slot></slot>
             </div>
-            <div
-                v-show="code"
-                ref="outCodeRef"
-                v-highlight
-                class="hl-pre"
-                :style="style"
-            >
+            <div v-show="code" v-highlight class="hl-pre" :style="style">
                 <div class="pre-box">
                     <pre><code>{{ code }}</code></pre>
                 </div>
@@ -60,11 +52,11 @@ const style = computed<CSSProperties>(() => {
             <div class="show-bar" @click="isShowCode = !isShowCode">
                 <div class="icon">
                     <lew-icon
-                        size="16"
                         v-if="!isShowCode"
+                        :size="16"
                         type="chevron-down"
                     />
-                    <lew-icon size="16" v-else type="chevron-up" />
+                    <lew-icon v-else :size="16" type="chevron-up" />
                 </div>
 
                 {{ isShowCode ? '关闭' : '显示源码' }}
@@ -82,15 +74,16 @@ const style = computed<CSSProperties>(() => {
         background-color: var(--lew-bgcolor-0);
         border-radius: var(--lew-border-radius);
         border: var(--lew-border-1);
+        overflow: hidden;
     }
 
     .hl-pre {
         position: relative;
-        transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
+        border-top: var(--lew-border-1);
 
         .pre-box {
-            margin-top: 10px;
             border-radius: var(--lew-border-radius);
         }
     }
@@ -102,7 +95,6 @@ const style = computed<CSSProperties>(() => {
         border-top: var(--lew-border-1);
         width: 100%;
         height: 30px;
-        border-radius: 0px 0px var(--lew-border-radius) var(--lew-border-radius);
         font-size: 14px;
         cursor: pointer;
         color: #999;

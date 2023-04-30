@@ -6,6 +6,22 @@ const isShowSider = ref(false);
 const route = useRoute();
 const mainRef: any = ref(null);
 
+onMounted(() => {
+    let isInfo = localStorage.getItem('isInfo');
+    if (!isInfo) {
+        LewDialog.info({
+            title: '温馨提示',
+            content:
+                '当前组件库仍处于开发测试状态，请勿用于生产环境，当前文档仍有很多地方未完善，持续更新中，敬请期待。',
+            cancelText: '',
+            okText: '知道了',
+            ok: () => {
+                localStorage.setItem('isInfo', '1');
+            },
+        });
+    }
+});
+
 watch(route, () => {
     setTimeout(() => {
         if (mainRef.value) mainRef.value.scrollTop = 0;
@@ -35,14 +51,14 @@ group.value = [
                 cname: '头像',
                 name: 'Avatar',
                 path: '/Avatar',
-                label: '',
+                label: 'Comp',
                 type: 'success',
             },
             {
                 cname: '按钮',
                 name: 'Button',
                 path: '/Button',
-                label: '',
+                label: 'Comp',
                 type: 'success',
             },
 
@@ -50,49 +66,56 @@ group.value = [
                 cname: '标签',
                 name: 'Tag',
                 path: '/Tag',
-                label: '',
-                type: 'info',
+                label: 'Comp',
+                type: 'success',
             },
             {
                 cname: '徽章',
                 name: 'Badge',
                 path: '/Badge',
-                label: '',
-                type: 'info',
+                label: 'Comp',
+                type: 'success',
             },
             {
                 cname: '标题',
                 name: 'Title',
                 path: '/Title',
-                label: '',
+                label: 'Comp',
+                type: 'success',
+            },
+            {
+                cname: '文本修剪',
+                name: 'TextTrim',
+                path: '/TextTrim',
+                label: 'Comp',
                 type: 'success',
             },
             {
                 cname: '弹性布局',
                 name: 'Flex',
                 path: '/Flex',
-                label: '',
-                type: '',
+                label: 'Comp',
+                type: 'success',
             },
             {
                 cname: '标记',
                 name: 'Mark',
                 path: '/Mark',
-                label: '',
-                type: '',
+                label: 'Comp',
+                type: 'success',
             },
             {
                 cname: '颜色',
                 name: 'Color',
                 path: '/Color',
-                label: '',
+                label: 'Comp',
                 type: 'success',
             },
             {
                 cname: '图标',
                 name: 'Icon',
                 path: '/icon',
-                label: 'New',
+                label: 'Comp',
                 type: 'success',
             },
         ],
@@ -105,8 +128,8 @@ group.value = [
                 cname: '回到顶部',
                 name: 'BackTop',
                 path: '/BackTop',
-                label: '',
-                type: '',
+                label: 'Comp',
+                type: 'success',
             },
             // {
             //     cname: '步骤',
@@ -119,22 +142,15 @@ group.value = [
                 cname: '下拉菜单',
                 name: 'Dropdown',
                 path: '/Dropdown',
-                label: '',
-                type: '',
+                label: 'Comp',
+                type: 'success',
             },
             {
                 cname: '面包屑',
                 name: 'Breadcrumb',
                 path: '/Breadcrumb',
-                label: '',
-                type: '',
-            },
-            {
-                cname: '选项卡',
-                name: 'Tabs',
-                path: '/Tabs',
-                label: '',
-                type: '',
+                label: 'Comp',
+                type: 'success',
             },
         ],
     },
@@ -145,14 +161,21 @@ group.value = [
                 cname: '表单',
                 name: 'Form',
                 path: '/Form',
-                label: '',
+                label: 'Developing',
+                type: 'warning',
+            },
+            {
+                cname: '文本框',
+                name: 'Input',
+                path: '/Input',
+                label: 'Comp',
                 type: 'success',
             },
             {
-                cname: '输入框',
-                name: 'Input',
-                path: '/Input',
-                label: '',
+                cname: '多行文本框',
+                name: 'Textarea',
+                path: '/Textarea',
+                label: 'Comp',
                 type: 'success',
             },
             {
@@ -173,30 +196,50 @@ group.value = [
                 cname: '多选框',
                 name: 'Checkbox',
                 path: '/Checkbox',
-                label: '',
+                label: 'Comp',
                 type: 'success',
             },
             {
                 cname: '单选框',
                 name: 'Radio',
                 path: '/Radio',
-                label: '',
+                label: 'Comp',
                 type: 'success',
             },
-
+            {
+                cname: '选项卡',
+                name: 'Tabs',
+                path: '/Tabs',
+                label: 'Comp',
+                type: 'success',
+            },
             {
                 cname: '选择器',
                 name: 'Select',
                 path: '/Select',
-                label: '',
-                type: 'info',
+                label: 'Comp',
+                type: 'success',
+            },
+            {
+                cname: '多选选择器',
+                name: 'SelectMultiple',
+                path: '/SelectMultiple',
+                label: 'Comp',
+                type: 'success',
             },
             {
                 cname: '日期选择器',
                 name: 'DatePicker',
                 path: '/DatePicker',
-                label: '',
-                type: 'warning',
+                label: 'Comp',
+                type: 'success',
+            },
+            {
+                cname: '日期范围选择器',
+                name: 'DateRangePicker',
+                path: '/DateRangePicker',
+                label: 'Comp',
+                type: 'success',
             },
             // {
             //     cname:"",name: 'Cascader',
@@ -208,7 +251,7 @@ group.value = [
                 cname: '开关',
                 name: 'Switch',
                 path: '/Switch',
-                label: '',
+                label: 'Comp',
                 type: 'success',
             },
             // {
@@ -226,21 +269,21 @@ group.value = [
                 cname: '表格',
                 name: 'Table',
                 path: '/Table',
-                label: '',
+                label: 'Comp',
                 type: 'success',
             },
             {
                 cname: '分页',
                 name: 'Pagination',
                 path: '/Pagination',
-                label: 'New',
+                label: 'Comp',
                 type: 'success',
             },
             {
-                cname: '评论',
-                name: 'Comment',
-                path: '/Comment',
-                label: 'New',
+                cname: '魔术数值',
+                name: 'MagicNumber',
+                path: '/MagicNumber',
+                label: 'Comp',
                 type: 'success',
             },
         ],
@@ -346,7 +389,7 @@ group.value = [
         <div ref="mainRef" class="app-main btf-scrollbar">
             <router-view v-slot="{ Component }">
                 <keep-alive>
-                    <component :is="Component"> </component>
+                    <Component :is="Component"> </Component>
                 </keep-alive>
             </router-view>
         </div>

@@ -15,7 +15,7 @@ const handleCopy = (text: string) => {
 </script>
 
 <template>
-    <lew-flex wrap gap="20px">
+    <lew-flex wrap gap="20">
         <lew-flex
             v-for="(item, index) in iconArr"
             :key="index"
@@ -28,7 +28,12 @@ const handleCopy = (text: string) => {
             class="icon-box"
             @click="handleCopy(item)"
         >
-            <lew-icon :type="item" animation="spin" animation-speed="fast" />
+            <lew-icon
+                size="36"
+                :type="item"
+                animation="spin"
+                animation-speed="fast"
+            />
             <div class="name">
                 {{ item }}
             </div>

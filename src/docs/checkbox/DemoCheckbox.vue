@@ -13,23 +13,24 @@ import {
 const columns = [
     {
         title: '参数名',
-        width: '200px',
+        width: 150,
         field: 'param',
     },
     {
-        title: '描述',
-        width: '320px',
-        field: 'description',
-    },
-    {
         title: '类型',
-        width: 'auto',
+        width: 240,
         field: 'type',
     },
+
     {
         title: '默认值',
-        width: '200px',
+        width: 120,
         field: 'default',
+    },
+    {
+        title: '描述',
+        width: 220,
+        field: 'description',
     },
 ];
 const docsTable = ref([
@@ -46,10 +47,10 @@ const docsTable = ref([
     <div class="demo-wrapper">
         <lew-title>Checkbox</lew-title>
         <p class="sub-title">通过复选框选择一个或多个数据。</p>
-        <lew-demo-box title="x 布局" tag="方的" :code="DemoCheckbox1_code">
+        <lew-demo-box title="常规" :code="DemoCheckbox1_code">
             <demo-checkbox1 />
         </lew-demo-box>
-        <lew-demo-box title="y 布局" tag="圆的" :code="DemoCheckbox2_code">
+        <lew-demo-box title="单个模式" :code="DemoCheckbox2_code">
             <demo-checkbox2
         /></lew-demo-box>
         <lew-demo-box title="块" :code="DemoCheckbox3_code" tag="方的">
@@ -58,8 +59,8 @@ const docsTable = ref([
         <lew-demo-box title="块" :code="DemoCheckbox4_code" tag="圆的">
             <demo-checkbox4 />
         </lew-demo-box>
-        <lew-title size="16px">Props</lew-title>
-        <lew-table :data="docsTable" :columns="columns" height="auto">
+        <lew-title :size="16">Props</lew-title>
+        <lew-table :data-source="docsTable" :columns="columns" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>
             <template #type="{ row }"> {{ row.type }} </template>

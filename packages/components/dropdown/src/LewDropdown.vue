@@ -1,24 +1,25 @@
 <script setup lang="ts">
-import { _props } from './props';
-import type { LewDropdownOptions } from '../index';
+import { dropdownProps } from './dropdown';
+import type { DropdownOptions } from './dropdown';
 
-defineProps(_props);
+defineProps(dropdownProps);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-let lewPopoverRef = ref();
+const lewPopoverRef = ref();
 
-let show = () => {
+const show = () => {
     lewPopoverRef.value.show();
 };
 
-let hide = () => {
+const hide = () => {
     lewPopoverRef.value.hide();
 };
 
 const emit = defineEmits(['change']);
 
-const change = (item: LewDropdownOptions) => {
-    emit('change', item, { show, hide });
+const change = (item: DropdownOptions) => {
+    emit('change', item);
+    hide();
 };
 
 defineExpose({ show, hide });
@@ -57,19 +58,17 @@ defineExpose({ show, hide });
     overflow: auto;
     box-sizing: border-box;
     .lew-dropdown-option {
-        padding: 0px 10px;
-        height: 32px;
-        line-height: 32px;
+        padding: 4px 10px;
         font-size: 14px;
         border-radius: var(--lew-border-radius);
-        color: var(--lew-text-color-7);
+        color: var(--lew-text-color-2);
         cursor: pointer;
         white-space: nowrap;
         box-sizing: border-box;
     }
     .lew-dropdown-option:hover {
-        color: var(--lew-text-color-2);
-        background-color: var(--lew-bgcolor-2);
+        color: var(--lew-text-color-0);
+        background-color: var(--lew-form-bgcolor);
     }
 }
 .lew-dropdown-body::-webkit-scrollbar {

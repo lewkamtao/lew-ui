@@ -5,44 +5,32 @@ const data: any = ref(mvJson);
 
 const columns = [
     {
-        type: 'template',
-        title: '选择',
-        field: 'checkbox',
-        width: '50px',
-        align: 'center',
-        sticky: 'left',
-        offsetX: '0px',
-        x: 'center',
-    },
-    {
         type: 'text',
         title: 'id',
         field: 'id',
-        width: '100px',
-        sticky: 'left',
-        offsetX: '50px',
-
+        width: 100,
+        fixed: 'left',
         x: 'center',
     },
     {
         type: 'text',
         title: '名称',
         field: 'title',
-        width: '180px',
+        width: 180,
     },
 
     {
         type: 'text',
         title: '上线日期',
         field: 'release_date',
-        width: '100px',
+        width: 100,
         x: 'center',
     },
     {
         type: 'template',
         title: '在线观看',
         field: 'has_linewatch',
-        width: '100px',
+        width: 100,
 
         x: 'center',
     },
@@ -50,41 +38,41 @@ const columns = [
         type: 'html',
         title: '导演',
         field: 'directors',
-        width: '120px',
+        width: 140,
     },
     {
         type: 'text',
         title: '简介',
         field: 'info',
-        width: 'auto',
+        width: 120,
+    },
+    {
+        type: 'template',
+        title: '类型',
+        field: 'type',
+        width: 100,
+        x: 'center',
     },
     {
         type: 'template',
         title: '主演',
         align: 'start',
         field: 'actors',
-        width: '300px',
+        width: 450,
     },
-    {
-        type: 'template',
-        title: '类型',
-        field: 'type',
-        width: '100px',
-        x: 'center',
-    },
+
     {
         type: 'template',
         title: '执行',
         field: 'action',
-        width: '120px',
+        width: 120,
         align: 'center',
-        sticky: 'right',
-        offsetX: '0px',
+        fixed: 'right',
         x: 'center',
     },
 ];
 
-const isCheckeds = ref([]);
+const selectedKey = ref([]);
 
 const get = (e: any) => {
     if (e.column.field === 'action') {
@@ -106,37 +94,35 @@ const getChecked = computed(() => (id: any) => {
 <template>
     <lew-flex x="start">
         <lew-button
-            v-if="isCheckeds.length > 0"
+            text="取消所有选择"
+            v-if="selectedKey.length > 0"
             type="error"
-            @click="isCheckeds = []"
-            >取消所有选择</lew-button
-        >
+            @click="selectedKey = []"
+        />
         <lew-button
-            v-if="isCheckeds.length === 0"
+            text="选中前五个"
+            v-if="selectedKey.length === 0"
             @click="
-                isCheckeds = data
+                selectedKey = data
                     .filter((_e: any, i: number) => i <= 4)
                     .map((e: any) => e.id)
             "
-            >选中前五个</lew-button
-        >
+        />
         <lew-button
-            v-if="isCheckeds.length != data.length"
-            @click="isCheckeds = data.map((e: any) => e.id)"
-            >全选</lew-button
-        >
+            text="全选"
+            v-if="selectedKey.length != data.length"
+            @click="selectedKey = data.map((e: any) => e.id)"
+        />
     </lew-flex>
     <br />
-    <lew-table :data="data" :columns="columns" max-height="600px">
-        <template #checkbox="{ row, column }">
-            <lew-checkbox
-                :checked="getChecked(row.id)"
-                :label="''"
-                @change="change($event, row, column)"
-                @click.stop
-            ></lew-checkbox>
-        </template>
-        <template #id="{ row }"> {{ row.id }} </template>
+    <lew-table
+        v-model:selectedKey="selectedKey"
+        checkable
+        :data-source="data"
+        :columns="columns"
+        :max-height="400"
+        row-key="id"
+    >
         <template #title="{ row }">
             <div class="title">{{ row.title }}</div>
         </template>
@@ -151,21 +137,15 @@ const getChecked = computed(() => (id: any) => {
             >
         </template>
         <template #info="{ row }">
-            <div
-                v-tooltip="{
-                    content: row.info,
-                    placement: 'left',
-                    trigger: 'mouseenter',
-                }"
-                class="info"
-                v-html="row.info"
-            ></div>
+            <lew-text-trim style="width: 100%" :text="row.info"></lew-text-trim>
         </template>
 
         <template #action="{ row, column }">
-            <lew-button is-text @click.stop="get({ row, column })"
-                >管理</lew-button
-            >
+            <lew-button
+                text="管理"
+                type="blank"
+                @click.stop="get({ row, column })"
+            />
             <lew-popok
                 title="删除确认"
                 content="删除之后无法恢复，请确认！"
@@ -173,7 +153,7 @@ const getChecked = computed(() => (id: any) => {
                 width="200px"
                 @click.stop
             >
-                <lew-button is-text type="error">删除</lew-button>
+                <lew-button text="删除" type="blank" />
             </lew-popok>
         </template>
         <template #type="{ row }">
@@ -193,7 +173,7 @@ const getChecked = computed(() => (id: any) => {
                     allowHTML: true,
                 }"
                 x="start"
-                gap="5px"
+                gap="5"
             >
                 <lew-tag
                     v-for="(actor, index) in row.actors"

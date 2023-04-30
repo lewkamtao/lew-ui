@@ -10,24 +10,9 @@ const value = ref([]);
 </script>
 
 <template>
-    <lew-checkbox-group
-        v-model="value"
-        size="small"
-        direction="x"
-        :options="options"
-    />
+    <lew-checkbox-group v-model="value" size="small" :options="options" />
     <br />
-    <lew-checkbox-group
-        v-model="value"
-        size="medium"
-        direction="x"
-        :options="options"
-    />
+    <lew-checkbox-group v-model="value" size="medium" :options="options" />
     <br />
-    <lew-checkbox-group
-        v-model="value"
-        size="large"
-        direction="x"
-        :options="options"
-    />
+    <lew-checkbox-group v-model="value" size="large" :options="options" />
 </template>
