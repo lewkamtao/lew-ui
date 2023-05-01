@@ -5,7 +5,9 @@ import { schools } from '../../select/demo/schools';
 let schoolsOptions = schools.map((e, i) => {
     return { label: e, value: i + 1 };
 });
-const form = ref({} as any);
+const form = ref({
+    size: 'medium',
+} as any);
 
 const options = ref([
     {
@@ -90,7 +92,7 @@ const options = ref([
         field: 'select_multiple',
         label: '多选选择器',
         as: 'lew-select-multiple',
-        rules: Yup.array().min(1, '至少选择一个').required('此项必填'),
+        rules: Yup.array().min(2, '至少选择2个').required('此项必填'),
         props: {
             change: (e: any) => {
                 console.log(e);
@@ -187,9 +189,6 @@ const options = ref([
         label: '标签输入框',
         as: 'lew-input-tag',
         rules: Yup.array().min(1, '至少选择一个').required('不能为空'),
-        props: {
-            clearable: true,
-        },
     },
     {
         as: 'lew-button',

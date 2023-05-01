@@ -518,10 +518,7 @@ const notification = (type: string) => {
                                     class="popover-body"
                                     style="width: 250px"
                                 >
-                                    <lew-form-item label="请输入密码">
-                                        <lew-input v-model="v" />
-                                    </lew-form-item>
-
+                                    <lew-input v-model="v" />
                                     <lew-flex x="end">
                                         <lew-button
                                             text="取消"

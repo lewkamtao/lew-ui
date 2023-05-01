@@ -2,14 +2,7 @@
 import { inputTagProps } from './props';
 import { useVModel } from '@vueuse/core';
 
-const emit = defineEmits([
-    'update:modelValue',
-    'close',
-    'blur',
-    'focus',
-    'change',
-    'input',
-]);
+const emit = defineEmits(['update:modelValue', 'close', 'change']);
 
 const props = defineProps(inputTagProps);
 const tagsValue = useVModel(props, 'modelValue', emit);
@@ -68,10 +61,13 @@ const addTag = () => {
     }
     inputValue.value = '';
     tagsValue.value = _value;
+    emit('change', _value);
 };
 
 const delTag = (index: number) => {
     tagsValue.value.splice(index, 1);
+    emit('change', tagsValue.value);
+    emit('close', tagsValue.value);
 };
 </script>
 

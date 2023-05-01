@@ -114,13 +114,33 @@ const validate = (field: string) => {
                     ...error,
                     field: () => {
                         try {
-                            return JSON.parse(error.path)[0];
+                            let fieldName = error?.path; // 去除首尾的方括号
+
+                            if (fieldName[0] !== '[') {
+                                return fieldName;
+                            }
+
+                            fieldName = error?.path.slice(1, -1); // 去除首尾的方括号
+                            if (
+                                fieldName.charAt(0) === '"' &&
+                                fieldName.charAt(fieldName.length - 1) === '"'
+                            ) {
+                                // 处理包含引号的情况
+                                fieldName = fieldName.slice(1, -1);
+                            }
+                            if (fieldName.includes('\\"')) {
+                                // 处理转义字符
+                                fieldName = fieldName.replace(/\\"/g, '"');
+                            }
+                            return fieldName;
                         } catch {
                             return error.path;
                         }
                     },
                 }));
+
                 errors = errors.filter((e: any) => e.field() === field);
+
                 let errItem = errors[0] && errors[0];
                 let index = opt.findIndex((e: any) => {
                     return e?.field === errItem?.field();
@@ -211,9 +231,7 @@ defineExpose({ validate });
                     v-model="item.value"
                     v-if="item.as === 'lew-input-tag'"
                     @change="validate(item.field)"
-                    @input="validate(item.field)"
-                    @clear="validate(item.field)"
-                    @blur="validate(item.field)"
+                    @close="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
                 />
 

@@ -178,13 +178,13 @@ group.value = [
                 label: 'Comp',
                 type: 'success',
             },
-            {
-                cname: '高级输入框',
-                name: 'InputPro',
-                path: '/InputPro',
-                label: '',
-                type: 'warning',
-            },
+            // {
+            //     cname: '高级输入框',
+            //     name: 'InputPro',
+            //     path: '/InputPro',
+            //     label: '',
+            //     type: 'warning',
+            // },
             {
                 cname: '标签输入框',
                 name: 'InputTag',

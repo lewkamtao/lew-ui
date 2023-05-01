@@ -371,10 +371,7 @@ defineExpose({ show, hide });
         }
         .icon-clear {
             opacity: 0;
-            transform: translate(100%, -50%);
-        }
-        .icon-clear:hover {
-            opacity: 1;
+            transform: translate(150%, -50%);
         }
         .icon-select-hide {
             opacity: 0;

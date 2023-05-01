@@ -329,7 +329,7 @@ defineExpose({ show, hide });
         }
         .icon-clear {
             opacity: 0;
-            transform: translate(100%, -50%);
+            transform: translate(150%, -50%);
         }
 
         .icon-select-hide {
