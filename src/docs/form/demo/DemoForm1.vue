@@ -116,7 +116,7 @@ const options = ref([
                 },
                 {
                     label: '不公开',
-                    value: '2',
+                    value: '3',
                 },
             ],
         },

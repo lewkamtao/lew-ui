@@ -9,6 +9,13 @@ const modelValue = useVModel(props, 'modelValue', emit);
 const hoverValue: any = ref(toRaw(modelValue.value));
 const { startKey, endKey } = props;
 
+watch(
+    () => modelValue.value,
+    () => {
+        hoverValue.value = toRaw(modelValue.value);
+    }
+);
+
 // 获取当天日期对象
 const today = new Date();
 // 获取当前年份
@@ -195,6 +202,9 @@ const setValue = (item: any) => {
         modelValue.value = hoverValue.value;
         emit('change', hoverValue.value);
     } else {
+        hoverValue.value[startKey] = __dateStr;
+        hoverValue.value[endKey] = '';
+
         startBackup = __dateStr;
     }
 };
@@ -203,6 +213,7 @@ const object2class = computed(() => (type: string, item: any) => {
     if (!item.year || !item.month || !item.showDate) {
         return;
     }
+
     const _date = dayjs(`${item.year}-${item.month}-${item.showDate}`);
     const hoverStart = dayjs(hoverValue.value?.start);
     const hoverEnd = dayjs(hoverValue.value?.end);
@@ -224,11 +235,17 @@ const object2class = computed(() => (type: string, item: any) => {
             }
             break;
         case 'selected':
-            if (hoverStart.isSame(_date) || hoverEnd.isSame(_date)) {
+            if (
+                (hoverStart.isSame(_date) || hoverEnd.isSame(_date)) &&
+                item.date === item.showDate
+            ) {
                 return 'lew-date-value-selected';
             }
             break;
         case 'rangeSelected':
+            if (item.date !== item.showDate) {
+                return;
+            }
             if (hoverStart.isSame(_date)) {
                 if (hoverStart.isAfter(hoverEnd)) {
                     return 'lew-date-label-selected-end';
@@ -249,11 +266,7 @@ const object2class = computed(() => (type: string, item: any) => {
                 ) {
                     return 'lew-date-label-selected';
                 }
-            } else if (
-                hoverEnd.isBefore(_date) &&
-                hoverStart.isAfter(_date) &&
-                item.date === item.showDate
-            ) {
+            } else if (hoverEnd.isBefore(_date) && hoverStart.isAfter(_date)) {
                 return 'lew-date-label-selected';
             }
             break;

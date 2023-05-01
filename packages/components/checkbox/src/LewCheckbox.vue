@@ -139,7 +139,7 @@ const getCheckboxClassName = computed(() => {
     .icon-checkbox-box {
         border: var(--lew-form-border-width)
             var(--lew-checkbox-border-color-hover) solid;
-        outline: 3px var(--lew-form-ouline-color) solid;
+        outline: var(--lew-form-ouline);
         background: var(--lew-form-bgcolor);
     }
 }

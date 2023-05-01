@@ -66,7 +66,7 @@
     --lew-border-8: 1px solid rgb(165, 165, 165);
     --lew-border-9: 1px solid rgb(155, 155, 155);
     // 主题色
-    --lew-primary-color: rgb(59, 121, 208);
+    --lew-primary-color: rgb(62, 127, 219);
     --lew-primary-color-dark: rgb(38, 84, 148);
     --lew-primary-color-light: rgb(217, 233, 255);
     --lew-primary-color-light2: rgb(190, 211, 239);
@@ -90,13 +90,13 @@
     --lew-success-color-hover: rgb(40, 176, 126);
     --lew-success-color-active: rgb(28, 157, 110);
     // info
-    --lew-info-color: rgb(59, 121, 208);
-    --lew-info-color-dark: rgb(33, 83, 153);
-    --lew-info-color-light: rgb(217, 233, 255);
-    --lew-info-color-light2: rgb(190, 211, 239);
-    --lew-info-text-color: rgb(47, 88, 146);
-    --lew-info-color-hover: rgb(54, 109, 187);
-    --lew-info-color-active: rgb(42, 94, 149);
+    --lew-info-color: var(--lew-primary-color);
+    --lew-info-color-dark: var(--lew-primary-color-dark);
+    --lew-info-color-light: var(--lew-primary-color-light);
+    --lew-info-color-light2: var(--lew-primary-color-light2);
+    --lew-info-text-color: var(--lew-primary-text-color);
+    --lew-info-color-hover: var(--lew-primary-color-hover);
+    --lew-info-color-active: var(--lew-primary-color-active);
     // warning
     --lew-warning-color: rgb(227, 179, 68);
     --lew-warning-color-dark: rgb(186, 132, 7);
@@ -121,7 +121,7 @@
     --lew-form-transition: all 0.15s ease;
     --lew-form-border-color: rgb(245, 245, 245);
     --lew-form-border-color-hover: rgb(228, 228, 228);
-    --lew-form-ouline-color: var(--lew-primary-color-light);
+    --lew-form-ouline: 2px var(--lew-primary-color-light) solid;
     // 表单尺寸
     --lew-form-input-padding-small: 2px 8px;
     --lew-form-input-padding-medium: 4px 10px;
@@ -250,8 +250,8 @@
     --lew-box-shadow: 0px 3px 15px rgba(243, 243, 243, 0.08);
     // 主题色
     --lew-primary-color: rgb(50, 86, 136);
-    --lew-primary-color-dark: rgb(85, 179, 255);
-    --lew-primary-color-light: #273141;
+    --lew-primary-color-dark: rgb(68, 147, 212);
+    --lew-primary-color-light: #354258;
     --lew-primary-color-light2: #374c6c;
     --lew-primary-color-hover: rgb(52, 91, 146);
     --lew-primary-color-active: rgb(26, 58, 92);
@@ -296,7 +296,7 @@
     --lew-normal-color-active: rgb(75, 75, 75);
     // 表单样式
     --lew-form-border-width: 1.5px;
-    --lew-form-box-shadow: 0px 1px 1px rgba(255, 255, 255, 0.2);
+    --lew-form-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.7);
     --lew-form-border-color: rgb(77, 77, 77);
     --lew-form-border-color-hover: rgb(59, 58, 58);
 
@@ -306,7 +306,7 @@
     --lew-form-bgcolor: #27282d;
     --lew-form-bgcolor-hover: #2a2a2f;
     --lew-form-bgcolor-active: #202025;
-    --lew-form-bgcolor-focus: #49494f;
+    --lew-form-bgcolor-focus: #1f1f22;
     // dialog / modal
     --lew-modal-bgcolor: rgba(0, 0, 0, 0.45);
     //  dialog / modal box

@@ -128,7 +128,7 @@ defineExpose({ show, hide });
         background-color: var(--lew-form-bgcolor-focus);
         border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
             solid;
-        outline: 3px var(--lew-form-ouline-color) solid;
+        outline: var(--lew-form-ouline);
     }
 
     .lew-date-picker-small {

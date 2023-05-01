@@ -368,7 +368,7 @@ defineExpose({ toFocus });
 .lew-input-view:focus-within {
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
-    outline: 3px var(--lew-form-ouline-color) solid;
+        outline: var(--lew-form-ouline);
     background-color: var(--lew-form-bgcolor-focus);
 }
 .lew-input-view-readonly {
