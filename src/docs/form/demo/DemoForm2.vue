@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import * as Yup from 'yup';
 
-const form = ref({});
+const form = ref({} as any);
+
 const options = ref([
     {
         field: 'name', // 字段名
         label: '姓名', // 标签
         as: 'lew-input', // 组件
+        value: 'asdasd',
         rules: Yup.string()
             .matches(/^[a-zA-Z]+$/, '必须为纯英文字母')
             .min(4, '长度必须至少为4')
@@ -54,8 +56,12 @@ const options = ref([
         },
     },
     {
-        field: 'date',
+        field: 'date.birth',
         label: '有效期',
+        value: {
+            start: '2012-11-12',
+            end: '2012-12-12',
+        },
         as: 'lew-date-range-picker',
         rules: Yup.object().required('不能为空'),
         props: {
@@ -117,21 +123,35 @@ const options = ref([
 let formRef = ref();
 
 const submit = () => {
-    formRef.value.validate();
+    formRef.value.validate().then((res: any) => {
+        console.log(res);
+    });
 };
 </script>
 
 <template>
     <lew-flex x="start" y="start" :gap="50">
         <lew-form
-            direction="y"
             ref="formRef"
+            direction="y"
             class="form-box"
             v-model="form"
             :options="options"
             :label-width="80"
         />
-        <pre>{{ form }}</pre>
+        <lew-flex style="width: calc(100% - 380px)" direction="y" x="start">
+            <lew-button text="获取form" @click="form = formRef.getForm()" />
+            <pre>{{ form }}</pre>
+            <pre>{{
+                    options.map((e: any) => {
+                        return {
+                            field: e.field,
+                            errMessage: e?.errMessage || undefined,
+                        };
+                    })
+                }} 
+            </pre>
+        </lew-flex>
     </lew-flex>
 </template>
 <style scoped lang="scss">

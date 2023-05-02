@@ -9,12 +9,11 @@ const modelValue = useVModel(props, 'modelValue', emit);
 const hoverValue: any = ref(toRaw(modelValue.value));
 const { startKey, endKey } = props;
 
-watch(
-    () => modelValue.value,
-    () => {
-        hoverValue.value = toRaw(modelValue.value);
-    }
-);
+const init = () => {
+    hoverValue.value = JSON.parse(JSON.stringify(modelValue.value));
+};
+
+defineExpose({ init });
 
 // 获取当天日期对象
 const today = new Date();

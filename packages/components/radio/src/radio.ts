@@ -48,7 +48,7 @@ export const radioProps = {
 export const radioGroupProps = {
     modelValue: {
         type: String || Number,
-        required: true,
+        default: '',
     },
     block: {
         type: Boolean,

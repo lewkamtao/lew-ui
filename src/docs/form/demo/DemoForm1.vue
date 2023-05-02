@@ -5,6 +5,7 @@ import { schools } from '../../select/demo/schools';
 let schoolsOptions = schools.map((e, i) => {
     return { label: e, value: i + 1 };
 });
+
 const form = ref({
     size: 'medium',
 } as any);

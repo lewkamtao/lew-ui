@@ -84,7 +84,6 @@ const delTag = (index: number) => {
                 >{{ item }}
             </lew-tag>
         </TransitionGroup>
-
         <label v-if="!isInput" class="lew-input-tag-button" @click="openInput">
             <lew-icon :size="16" type="plus" />
         </label>
@@ -97,7 +96,6 @@ const delTag = (index: number) => {
             auto-width
             placeholder=""
             @blur="blurFn"
-            @focus="addTag"
         />
     </div>
 </template>

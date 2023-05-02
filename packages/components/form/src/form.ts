@@ -1,10 +1,6 @@
 import { ExtractPropTypes } from 'vue';
 
 export const formProps = {
-    modelValue: {
-        type: Object,
-        required: true,
-    },
     options: {
         type: Object,
         required: true,

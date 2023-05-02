@@ -2,10 +2,8 @@
 import { textareaProps } from './textarea';
 import { useVModel } from '@vueuse/core';
 import { object2class, any2px } from 'lew-ui/utils';
-import { useElementSize } from '@vueuse/core';
-let lewTextareaRef = ref();
-const { width, height } = useElementSize(lewTextareaRef);
 
+let lewTextareaRef = ref();
 const emit = defineEmits([
     'update:modelValue',
     'update:type',

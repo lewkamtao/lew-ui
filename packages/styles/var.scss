@@ -50,8 +50,7 @@
     --lew-text-color-8-invert: rgb(95, 95, 95);
     --lew-text-color-9-invert: rgb(75, 75, 75);
     // 阴影
-    --lew-box-shadow: 0px 1px 2px rgba(61, 109, 178, 0.15),
-        0px 4px 16px rgba(61, 109, 179, 0.2);
+    --lew-box-shadow: 0px 1px 2px rgba(61, 109, 178, 0.15), 0px 4px 16px rgba(61, 109, 179, 0.2);
     // 圆角
     --lew-border-radius: 6px;
     // 边界
@@ -121,7 +120,7 @@
     --lew-form-transition: all 0.15s ease;
     --lew-form-border-color: rgb(245, 245, 245);
     --lew-form-border-color-hover: rgb(228, 228, 228);
-    --lew-form-ouline: 2px var(--lew-primary-color-light) solid;
+    --lew-form-ouline: 3px var(--lew-primary-color-light) solid;
     // 表单尺寸
     --lew-form-input-padding-small: 2px 8px;
     --lew-form-input-padding-medium: 4px 10px;
@@ -145,7 +144,6 @@
     // form icon
     --lew-form-icon-opacity: 0.6;
     --lew-form-icon-opacity-hover: 0.8;
-
     // checkbox
     --lew-checkbox-block-color: var(--lew-bgcolor-2);
     --lew-checkbox-border-color: var(--lew-bgcolor-4);
@@ -159,7 +157,6 @@
     --lew-radio-color: var(--lew-primary-color);
     --lew-radio-color-dark: var(--lew-primary-color-dark);
     --lew-radio-color-light: var(--lew-primary-color-light);
-
     // tabs
     --lew-tabs-active-color: #fff;
     // dialog / modal
@@ -300,7 +297,6 @@
     --lew-form-border-color: rgb(77, 77, 77);
     --lew-form-border-color-hover: rgb(59, 58, 58);
     --lew-form-border-color-focus: #3e63a4;
-
     // tabs
     --lew-tabs-active-color: rgb(77, 77, 77);
     // 表单背景

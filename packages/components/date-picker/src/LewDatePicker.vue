@@ -73,7 +73,6 @@ defineExpose({ show, hide });
         <template #popover-body>
             <lew-date
                 v-model="modelValue"
-                :multiple="multiple"
                 @change="change"
             />
         </template>
