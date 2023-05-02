@@ -1,8 +1,11 @@
 <script lang="ts" setup>
+import { Ref } from 'vue';
 import moment from 'moment';
 import { getMonthDate, getHeadDate } from './date';
+import type { RetType, RetItemType } from './date';
 import { dateProps } from './datePicker';
 import { useVModel } from '@vueuse/core';
+
 const emit = defineEmits(['change', 'update:modelValue']);
 const props = defineProps(dateProps);
 const modelValue = useVModel(props, 'modelValue', emit);
@@ -22,7 +25,7 @@ const _month = ref(
     modelValue.value ? moment(modelValue.value).month() + 1 : curMonth
 );
 
-const dateData = ref(getMonthDate());
+const dateData: Ref<RetType> = ref(getMonthDate());
 
 onMounted(() => {
     setMonthDate();
@@ -62,21 +65,21 @@ const setMonthDate = () => {
     dateData.value = getMonthDate(_year.value, _month.value);
 };
 
-const selectDateFn = (item: any) => {
+const selectDateFn = (item: RetItemType) => {
     const v = `${item.year}-${item.month}-${item.showDate}`;
     modelValue.value = v;
     emit('update:modelValue', modelValue.value);
     emit('change', v);
 };
 
-const checkDateSelect = computed(() => (item: any) => {
+const checkDateSelect = computed(() => (item: RetItemType) => {
     if (item.date > 0 && item.date <= item.showDate) {
         const v = `${_year.value}-${_month.value}-${item.showDate}`;
         return modelValue.value === v;
     }
 });
 
-const checkToday = computed(() => (item: any) => {
+const checkToday = computed(() => (item: RetItemType) => {
     return (
         curDay.value === item.showDate &&
         curYear.value === item.year &&

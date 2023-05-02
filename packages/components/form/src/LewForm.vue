@@ -6,7 +6,7 @@ import { useVModel, watchDebounced } from '@vueuse/core';
 const props = defineProps(formProps);
 const emit = defineEmits(['update:modelValue', 'update:options', 'change']);
 const form = ref({} as any);
-const componentOptions = useVModel(props, 'options', emit);
+const componentOptions: any = useVModel(props, 'options', emit);
 
 const getFormClassNames = computed(() => {
     const { direction, size } = props;

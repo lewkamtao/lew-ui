@@ -11,9 +11,11 @@ export const formProps = {
     },
     width: {
         type: Number,
+        default: '',
     },
     labelWidth: {
         type: Number,
+        default: '',
     },
     direction: {
         type: String,
