@@ -141,9 +141,7 @@ const error = (e: any) => {
                     </template>
                     <template #popover-body="{ hide }">
                         <lew-flex direction="y" gap="20" class="popover-body">
-                            <lew-form-item direction="y" label="请输入密码">
-                                <lew-input v-model="v" />
-                            </lew-form-item>
+                            <lew-input v-model="v" />
                             <lew-flex x="end">
                                 <lew-button
                                     text="取消"

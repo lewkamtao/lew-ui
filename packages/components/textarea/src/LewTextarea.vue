@@ -2,8 +2,9 @@
 import { textareaProps } from './textarea';
 import { useVModel } from '@vueuse/core';
 import { object2class, any2px } from 'lew-ui/utils';
-
+import { useElementSize } from '@vueuse/core';
 let lewTextareaRef = ref();
+const { width, height } = useElementSize(lewTextareaRef);
 
 const emit = defineEmits([
     'update:modelValue',
@@ -78,14 +79,20 @@ const getIconSize = computed(() => {
 });
 
 const getTextareaStyle = computed(() => {
-    return `min-height:${any2px(props.minHeight)}`;
+    let { width, height } = props;
+
+    return `width:${any2px(width)};height:${any2px(height)};`;
 });
 
 defineExpose({ toFocus });
 </script>
 
 <template>
-    <div class="lew-textarea-view" :class="getTextareaClassNames">
+    <div
+        class="lew-textarea-view"
+        :style="getTextareaStyle"
+        :class="getTextareaClassNames"
+    >
         <textarea
             ref="lewTextareaRef"
             class="lew-textarea btf-scrollbar"
@@ -93,7 +100,6 @@ defineExpose({ toFocus });
             :disabled="disabled"
             :readonly="readonly"
             :placeholder="placeholder"
-            :style="getTextareaStyle"
             @input="inputFn"
             @change="emit('change', modelValue)"
             @blur="emit('blur', modelValue)"
@@ -118,9 +124,7 @@ defineExpose({ toFocus });
 
 <style lang="scss" scoped>
 .lew-textarea-view {
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
+    display: inline-block;
     position: relative;
     overflow: hidden;
     width: 100%;
@@ -133,12 +137,14 @@ defineExpose({ toFocus });
     box-shadow: var(--lew-form-box-shadow);
     .lew-textarea {
         width: 100%;
+        height: 100%;
         text-overflow: ellipsis;
         border: none;
         background: none;
         color: var(--lew-text-color-2);
         outline: none;
         box-sizing: border-box;
+        resize: none;
     }
 
     .lew-textarea::placeholder {
@@ -148,7 +154,7 @@ defineExpose({ toFocus });
     .lew-textarea-count {
         position: absolute;
         right: 6px;
-        bottom: 0px;
+        bottom: 2px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -230,29 +236,14 @@ defineExpose({ toFocus });
     justify-content: center;
 }
 .lew-textarea-view-resize-both {
-    .lew-textarea {
-        resize: both;
-    }
 }
 .lew-textarea-view-resize-inline {
-    .lew-textarea {
-        resize: inline;
-    }
 }
 .lew-textarea-view-resize-vertical {
-    .lew-textarea {
-        resize: vertical;
-    }
 }
 .lew-textarea-view-resize-none {
-    .lew-textarea {
-        resize: none;
-    }
 }
 .lew-textarea-view-resize-horizontal {
-    .lew-textarea {
-        resize: horizontal;
-    }
 }
 
 .lew-textarea-view:hover {
@@ -262,7 +253,7 @@ defineExpose({ toFocus });
 .lew-textarea-view:focus-within {
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
-        outline: var(--lew-form-ouline);
+    outline: var(--lew-form-ouline);
     background-color: var(--lew-form-bgcolor-focus);
 
     .lew-textarea-controls {

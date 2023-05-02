@@ -54,9 +54,13 @@ export const textareaProps = {
             return value?.length || 0;
         },
     },
-    minHeight: {
-        type: String,
-        default: '80px',
+    width: {
+        type: [Number, String],
+        default: '',
+    },
+    height: {
+        type: [Number, String],
+        default: '',
     },
 };
 export type TextareaProps = ExtractPropTypes<typeof textareaProps>;
