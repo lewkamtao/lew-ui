@@ -457,7 +457,7 @@ const notification = (type: string) => {
                         </lew-dropdown>
                     </lew-flex>
                 </lew-flex>
-                <lew-flex style="width: 440px; margin-top: 30px" class="item">
+                <lew-flex style="width: 450px; margin-top: 30px" class="item">
                     <lew-form
                         ref="formRef"
                         v-model="form"

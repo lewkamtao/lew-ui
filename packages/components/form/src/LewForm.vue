@@ -30,7 +30,7 @@ onMounted(() => {
 
 const arrayToObj = (arr: any): any => {
     const obj: Record<string, unknown> = {};
-    arr.forEach(({ field, value }: any) => {
+    arr?.forEach(({ field, value }: any) => {
         if (!field) {
             return;
         }
