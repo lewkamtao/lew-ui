@@ -25,7 +25,7 @@ const change = (date: string) => {
 };
 
 const getIconSize = computed(() => {
-    const size: any = {
+    const size = {
         small: 13,
         medium: 14,
         large: 16,
@@ -71,10 +71,7 @@ defineExpose({ show, hide });
             </div>
         </template>
         <template #popover-body>
-            <lew-date
-                v-model="modelValue"
-                @change="change"
-            />
+            <lew-date v-model="modelValue" @change="change" />
         </template>
     </lew-popover>
 </template>
