@@ -19,7 +19,7 @@ watchDebounced(
         form.value = arrayToObj(v);
         emit('change', toRaw(form.value));
     },
-    { deep: true, debounce: 250, maxWait: 1000 }
+    { deep: true, debounce: 250, maxWait: 500 }
 );
 
 onMounted(() => {

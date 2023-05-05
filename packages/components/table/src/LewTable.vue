@@ -434,7 +434,6 @@ onUnmounted(() => {
     box-sizing: border-box;
     background-color: var(--lew-bgcolor-0);
     box-shadow: var(--lew-box-shadow);
-    border-radius: var(--lew-border-radius);
     overflow: hidden;
 }
 .lew-table {

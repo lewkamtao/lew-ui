@@ -6,15 +6,14 @@ let schoolsOptions = schools.map((e, i) => {
     return { label: e, value: i + 1 };
 });
 
-const form = ref({
-    size: 'medium',
-} as any);
+const form = ref({} as any);
 
 const options = ref([
     {
         label: '表单大小',
         as: 'lew-tabs',
         field: 'size',
+        value: 'medium',
         props: {
             itemWidth: 'auto',
             width: '100%',
@@ -213,9 +212,13 @@ const submit = () => {
             ref="formRef"
             :size="form.size"
             class="form-box"
-            v-model="form"
             :options="options"
             :label-width="80"
+            @change="
+                (e:any) => {
+                    form = e;
+                }
+            "
         />
         <pre>{{ form }}</pre>
     </lew-flex>
