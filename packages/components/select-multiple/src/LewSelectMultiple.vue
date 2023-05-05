@@ -42,10 +42,10 @@ const searchDebounce = useDebounceFn(async (e: any) => {
     search(e);
 }, props.searchDelay);
 
-const search = async (e: any) => {
+const search = async (e?: any) => {
     // loading
     state.loading = true;
-    const keyword = e.target.value;
+    const keyword = e?.target.value;
     if (props.searchable) {
         let result: any = [];
         // 如果没输入关键词
@@ -69,16 +69,8 @@ const clearHandle = () => {
     lewPopverRef.value.refresh();
 };
 
-const closeLabel = (label: string) => {
-    const value = state.options.find((e) => e.label === label)?.value;
-
-    const index =
-        selectValue.value &&
-        selectValue.value.findIndex((v: any) => v === value);
-    if (index >= 0) {
-        selectValue.value && selectValue.value.splice(index, 1);
-        lewPopverRef.value.refresh();
-    }
+const closeLabel = (index: number) => {
+    selectValue.value && selectValue.value.splice(index, 1);
 };
 
 const selectHandle = (item: SelectMultipleOptions) => {
@@ -107,7 +99,7 @@ const getChecked = computed(() => (value: string | number) => {
 });
 
 const getLabels = computed(() => {
-    if (state.options) {
+    if (state.options.length > 0) {
         const labels =
             selectValue.value &&
             selectValue.value.map((v: number | string) => {
@@ -117,8 +109,7 @@ const getLabels = computed(() => {
             });
         return labels || [];
     }
-
-    return props.defaultValue || props.modelValue || [];
+    return props?.defaultValue || selectValue.value || [];
 });
 
 const getSelectClassName = computed(() => {
@@ -234,7 +225,7 @@ defineExpose({ show, hide });
                         :size="size"
                         type="primary"
                         closable
-                        @close="closeLabel(item)"
+                        @close="closeLabel(index)"
                     >
                         {{ item }}
                     </lew-tag>

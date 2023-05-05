@@ -28,7 +28,7 @@ const style = computed<CSSProperties>(() => {
     if (isShowCode.value) {
         return { maxHeight: `400px` };
     }
-    return { maxHeight: 0 };
+    return { maxHeight: 0, borderTop: 'none' };
 });
 </script>
 
@@ -58,7 +58,6 @@ const style = computed<CSSProperties>(() => {
                     />
                     <lew-icon v-else :size="16" type="chevron-up" />
                 </div>
-
                 {{ isShowCode ? '关闭' : '显示源码' }}
             </div>
         </div>
@@ -73,7 +72,7 @@ const style = computed<CSSProperties>(() => {
         margin: 10px 0px;
         background-color: var(--lew-bgcolor-0);
         border-radius: var(--lew-border-radius);
-        border: var(--lew-border-1);
+        box-shadow: var(--lew-box-shadow);
         overflow: hidden;
     }
 

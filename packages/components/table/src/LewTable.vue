@@ -430,9 +430,12 @@ onUnmounted(() => {
 .lew-table-wrapper {
     position: relative;
     width: 100%;
-    border: 1px var(--lew-bgcolor-3) solid;
+    border-bottom: 0px solid transparent;
     box-sizing: border-box;
     background-color: var(--lew-bgcolor-0);
+    box-shadow: var(--lew-box-shadow);
+    border-radius: var(--lew-border-radius);
+    overflow: hidden;
 }
 .lew-table {
     width: 100%;
@@ -463,9 +466,9 @@ onUnmounted(() => {
     }
     .lew-table-fixed-left::after {
         position: absolute;
-        right: -4px;
+        right: -3px;
         top: 0px;
-        width: 4px;
+        width: 3px;
         height: 100%;
         background-image: linear-gradient(
             to left,
@@ -477,9 +480,9 @@ onUnmounted(() => {
     }
     .lew-table-fixed-right::after {
         position: absolute;
-        left: -4px;
+        left: -3px;
         top: 0px;
-        width: 4px;
+        width: 3px;
         height: 100%;
         background-image: linear-gradient(
             to right,

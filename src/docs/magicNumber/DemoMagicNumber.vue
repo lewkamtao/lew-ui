@@ -43,6 +43,12 @@ const docsTable = ref([
         type: `number`,
         default: 16,
     },
+    {
+        param: 'sep',
+        description: '千分位转换',
+        type: `boolean`,
+        default: false,
+    },
 ]);
 </script>
 
