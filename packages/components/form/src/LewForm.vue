@@ -257,7 +257,6 @@ defineExpose({ getForm, setForm, validate });
                     @change="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
-                    @blur="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
                 />
 
@@ -267,7 +266,6 @@ defineExpose({ getForm, setForm, validate });
                     @change="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
-                    @blur="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
                 />
 
@@ -308,7 +306,6 @@ defineExpose({ getForm, setForm, validate });
                             validate(item.field);
                             typeof item.props.click === 'function'?item.props.change(e):'';
                         } "
-                    @blur="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
@@ -322,7 +319,6 @@ defineExpose({ getForm, setForm, validate });
                             validate(item.field);
                             typeof item.props.click === 'function'?item.props.change(e):'';
                         } "
-                    @blur="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
@@ -337,7 +333,6 @@ defineExpose({ getForm, setForm, validate });
                             validate(item.field);
                             typeof item.props.click === 'function'?item.props.change(e):'';
                         }"
-                    @blur="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
@@ -351,9 +346,8 @@ defineExpose({ getForm, setForm, validate });
                         (e:any) => {
                             validate(item.field);
                             typeof item.props.click === 'function'?item.props.change(e):'';
-                        }  
+                        }   
                     "
-                    @blur="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
