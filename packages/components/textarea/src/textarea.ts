@@ -36,11 +36,6 @@ export const textareaProps = {
         type: Boolean,
         default: false,
     },
-    // 缩放模式
-    resize: {
-        type: String,
-        default: 'none',
-    },
     maxLength: {
         type: Number,
     },

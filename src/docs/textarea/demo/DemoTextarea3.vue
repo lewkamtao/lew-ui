@@ -27,32 +27,5 @@ let value = ref('');
             disabled
             clearable
         />
-        <lew-textarea
-            v-model="value"
-            placeholder="自由缩放"
-            :max-length="12"
-            width="300px"
-            height="100px"
-            show-count
-            clearable
-            resize="both"
-        />
-        <lew-textarea
-            v-model="value"
-            placeholder="垂直缩放"
-            :max-length="12"
-            show-count
-            clearable
-            resize="vertical"
-        />
-        <lew-textarea
-            v-model="value"
-            width="300px"
-            placeholder="横向缩放"
-            :max-length="12"
-            show-count
-            clearable
-            resize="horizontal"
-        />
     </lew-flex>
 </template>

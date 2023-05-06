@@ -71,12 +71,6 @@ const docsTable = reactive([
                 type: 'boolean',
                 default: false,
             },
-            {
-                param: 'resize',
-                description: '缩放模式',
-                type: 'vertical | horizontal | inline | both | none',
-                default: 'none',
-            },
         ],
     },
     {

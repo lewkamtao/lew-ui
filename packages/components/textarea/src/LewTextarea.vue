@@ -51,11 +51,10 @@ const getCheckNumStr = computed(() => {
 });
 
 const getTextareaClassNames = computed(() => {
-    const { size, readonly, resize, disabled } = props;
+    const { size, readonly, disabled } = props;
     return object2class('lew-textarea-view', {
         size,
         readonly,
-        resize,
         disabled,
     });
 });
@@ -78,7 +77,6 @@ const getIconSize = computed(() => {
 
 const getTextareaStyle = computed(() => {
     let { width, height } = props;
-
     return `width:${any2px(width)};height:${any2px(height)};`;
 });
 
@@ -122,7 +120,7 @@ defineExpose({ toFocus });
 
 <style lang="scss" scoped>
 .lew-textarea-view {
-    display: inline-block;
+    display: inline-flex;
     position: relative;
     overflow: hidden;
     width: 100%;
@@ -151,7 +149,7 @@ defineExpose({ toFocus });
 
     .lew-textarea-count {
         position: absolute;
-        right: 6px;
+        right: 7px;
         bottom: 2px;
         display: inline-flex;
         align-items: center;
@@ -160,6 +158,7 @@ defineExpose({ toFocus });
         opacity: var(--lew-form-icon-opacity);
         transition: opacity 0.25s;
         z-index: 2;
+        user-select: none;
     }
 
     .lew-textarea-clear {
@@ -233,15 +232,40 @@ defineExpose({ toFocus });
     flex-direction: column;
     justify-content: center;
 }
+.lew-textarea-view {
+    .resize-btn {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        width: 10px;
+        height: 10px;
+        border-radius: 2px;
+        content: '';
+        z-index: 9;
+        opacity: 1;
+        display: none;
+    }
+}
+
 .lew-textarea-view-resize-both {
+    .resize-btn {
+        display: block;
+        cursor: nwse-resize;
+    }
 }
-.lew-textarea-view-resize-inline {
-}
+
 .lew-textarea-view-resize-vertical {
+    .resize-btn {
+        display: block;
+        cursor: row-resize;
+    }
 }
-.lew-textarea-view-resize-none {
-}
+
 .lew-textarea-view-resize-horizontal {
+    .resize-btn {
+        display: block;
+        cursor: col-resize;
+    }
 }
 
 .lew-textarea-view:hover {

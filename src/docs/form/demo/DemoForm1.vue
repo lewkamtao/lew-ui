@@ -40,7 +40,8 @@ const options = ref([
         rules: Yup.string().required('不能为空'), // 校验规则
         props: {
             // 组件props
-            clearable: true,
+            showCount: true,
+            maxLength: 30,
         },
     },
     {
