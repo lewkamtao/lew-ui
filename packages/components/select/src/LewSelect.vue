@@ -72,8 +72,8 @@ const selectHandle = (item: SelectOptions) => {
     if (item.disabled) {
         return;
     }
-    emit('change', item.value);
     selectValue.value = item.value;
+    emit('change', item.value);
     hide();
 };
 
@@ -414,7 +414,7 @@ defineExpose({ show, hide });
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
-        outline: var(--lew-form-ouline);
+    outline: var(--lew-form-ouline);
 
     .icon-select {
         transform: translateY(-50%) rotate(180deg);
