@@ -1,16 +1,14 @@
 <script setup lang="ts">
-const checked = ref(false);
+const options = ref([
+    { label: '宋朝', value: 1 },
+    { label: '唐朝', value: 2 },
+    { label: '明朝', value: 3 },
+    { label: '清朝', value: 4 },
+]);
+
+const value = ref([]);
 </script>
 
 <template>
-    <lew-flex x="start" gap="15" direction="y">
-        <lew-checkbox v-model="checked" size="small" label="同意" />
-        <lew-checkbox v-model="checked" disabled round label="是否付款" />
-        <lew-checkbox
-            v-model="checked"
-            size="large"
-            round
-            label="是否少数民族"
-        />
-    </lew-flex>
+    <lew-checkbox-group v-model="value" direction="y" :options="options" />
 </template>

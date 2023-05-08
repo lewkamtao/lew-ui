@@ -11,8 +11,6 @@ const value = ref([]);
 
 <template>
     <lew-checkbox-group v-model="value" size="small" :options="options" />
-    <br />
     <lew-checkbox-group v-model="value" size="medium" :options="options" />
-    <br />
     <lew-checkbox-group v-model="value" size="large" :options="options" />
 </template>

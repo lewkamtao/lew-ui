@@ -5,6 +5,7 @@ export type CheckboxOptions = {
     value: string | number;
     disabled?: boolean;
 };
+export type CheckboxSize = 'small' | 'medium' | 'large';
 
 export const checkboxProps = {
     modelValue: {
@@ -40,7 +41,7 @@ export const checkboxProps = {
         default: false,
     },
     size: {
-        type: String,
+        type: String as PropType<CheckboxSize>,
         default: 'medium',
     },
 };
@@ -65,6 +66,10 @@ export const checkboxGroupProps = {
             return false;
         },
     },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
     direction: {
         type: String,
         default: 'x',
@@ -74,7 +79,7 @@ export const checkboxGroupProps = {
         default: true,
     },
     size: {
-        type: String,
+        type: String as PropType<CheckboxSize>,
         default: 'medium',
     },
     options: {

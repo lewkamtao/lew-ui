@@ -2,7 +2,7 @@
 import { useVModel, watchArray } from '@vueuse/core';
 import { checkboxGroupProps } from './checkbox';
 import type { CheckboxOptions } from './checkbox';
-
+import { object2class } from 'lew-ui/utils';
 import LewCheckbox from './LewCheckbox.vue';
 
 const props = defineProps(checkboxGroupProps);
@@ -40,6 +40,11 @@ const initCheckbox = () => {
     });
 };
 
+const getCheckboxGroupClassName = computed(() => {
+    const { size, direction } = props;
+    return object2class('lew-checkbox-group', { size, direction });
+});
+
 initCheckbox();
 </script>
 <template>
@@ -48,6 +53,7 @@ initCheckbox();
         gap="15"
         :direction="direction"
         class="lew-checkbox-group"
+        :class="getCheckboxGroupClassName"
     >
         <lew-checkbox
             v-for="(item, index) in options"
@@ -58,7 +64,7 @@ initCheckbox();
             :round="round"
             :size="size"
             :label="item.label"
-            :disabled="item.disabled"
+            :disabled="item.disabled || disabled"
             @change="change(item, $event)"
         />
     </lew-flex>
@@ -71,23 +77,23 @@ initCheckbox();
     flex-wrap: wrap;
 }
 
-.lew-checkbox-group-small {
+.lew-checkbox-group-size-small {
     min-height: var(--lew-form-item-height-small);
 }
 
-.lew-checkbox-group-medium {
+.lew-checkbox-group-size-medium {
     min-height: var(--lew-form-item-height-medium);
 }
 
-.lew-checkbox-group-large {
+.lew-checkbox-group-size-large {
     min-height: var(--lew-form-item-height-large);
 }
 
-.lew-checkbox-group.lew-checkbox-group-x {
+.lew-checkbox-group.lew-checkbox-group-direction-x {
     flex-direction: row;
 }
 
-.lew-checkbox-group.lew-checkbox-group-y {
+.lew-checkbox-group.lew-checkbox-group-direction-y {
     align-items: flex-start;
     flex-direction: column;
 }

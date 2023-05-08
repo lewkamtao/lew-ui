@@ -3,6 +3,7 @@ import { useVModel } from '@vueuse/core';
 import LewRadio from './LewRadio.vue';
 import { radioGroupProps } from './radio';
 import type { RadioOptions } from './radio';
+import { object2class } from 'lew-ui/utils';
 
 const emit = defineEmits(['change', 'update:modelValue']);
 const props = defineProps(radioGroupProps);
@@ -15,6 +16,11 @@ const check = (item: RadioOptions) => {
         item: toRaw(item),
     });
 };
+
+const getRadioGroupClassName = computed(() => {
+    const { size, direction } = props;
+    return object2class('lew-radio-group', { size, direction });
+});
 </script>
 
 <template>
@@ -22,7 +28,7 @@ const check = (item: RadioOptions) => {
         x="start"
         gap="15"
         class="lew-radio-group"
-        :class="`lew-radio-group-${direction} lew-radio-group-${size}`"
+        :class="getRadioGroupClassName"
     >
         <lew-radio
             v-for="item in options"
@@ -30,7 +36,7 @@ const check = (item: RadioOptions) => {
             :block="block"
             :iconable="iconable"
             :label="item.label"
-            :disabled="item.disabled"
+            :disabled="item.disabled || disabled"
             :size="size"
             :checked="modelValue === item.value"
             @update:checked="check(item)"
@@ -45,22 +51,22 @@ const check = (item: RadioOptions) => {
     flex-wrap: wrap;
 }
 
-.lew-radio-group-small {
+.lew-radio-group-size-small {
     min-height: var(--lew-form-item-height-small);
 }
 
-.lew-radio-group-medium {
+.lew-radio-group-size-medium {
     min-height: var(--lew-form-item-height-medium);
 }
 
-.lew-radio-group-large {
+.lew-radio-group-size-large {
     min-height: var(--lew-form-item-height-large);
 }
-.lew-radio-group.lew-radio-group-x {
+.lew-radio-group.lew-radio-group-direction-x {
     flex-direction: row;
 }
 
-.lew-radio-group.lew-radio-group-y {
+.lew-radio-group.lew-radio-group-direction-y {
     flex-direction: column;
     align-items: start;
     justify-content: flex-start;

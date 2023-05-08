@@ -12,7 +12,7 @@ const setChecked = () => {
 
 const getRadioClassName = computed(() => {
     const { block, checked, iconable, size, disabled } = props;
-    const unicon = !iconable;
+    const unicon = !iconable && block;
     return object2class('lew-radio', {
         block,
         checked,
@@ -25,7 +25,7 @@ const getRadioClassName = computed(() => {
 
 <template>
     <label class="lew-radio" :class="getRadioClassName">
-        <div v-if="iconable" class="icon-radio-box">
+        <div v-if="iconable || (!iconable && !block)" class="icon-radio-box">
             <div class="icon-radio"></div>
         </div>
         <input
