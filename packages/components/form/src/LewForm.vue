@@ -307,7 +307,7 @@ defineExpose({ getForm, setForm, validate });
             >
                 <lew-input
                     v-model="item.value"
-                    v-if="item.as === 'lew-input'"
+                    v-if="item.as === 'input'"
                     @change="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
@@ -316,7 +316,7 @@ defineExpose({ getForm, setForm, validate });
 
                 <lew-textarea
                     v-model="item.value"
-                    v-if="item.as === 'lew-textarea'"
+                    v-if="item.as === 'textarea'"
                     @change="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
@@ -325,7 +325,7 @@ defineExpose({ getForm, setForm, validate });
 
                 <lew-input-tag
                     v-model="item.value"
-                    v-if="item.as === 'lew-input-tag'"
+                    v-if="item.as === 'input-tag'"
                     @change="validate(item.field)"
                     @close="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
@@ -333,28 +333,28 @@ defineExpose({ getForm, setForm, validate });
 
                 <lew-checkbox-group
                     v-model="item.value"
-                    v-if="item.as === 'lew-checkbox-group'"
+                    v-if="item.as === 'checkbox-group'"
                     @change="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-radio-group
                     v-model="item.value"
-                    v-if="item.as === 'lew-radio-group'"
+                    v-if="item.as === 'radio-group'"
                     @change="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-checkbox
                     v-model="item.value"
-                    v-if="item.as === 'lew-checkbox'"
+                    v-if="item.as === 'checkbox'"
                     @change="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
                 />
 
-                <lew-select-multiple
+                <lew-select
                     v-model="item.value"
-                    v-if="item.as === 'lew-select-multiple'"
+                    v-if="item.as === 'select'"
                     @change=" 
                         (e:any) => {
                             validate(item.field);
@@ -365,9 +365,9 @@ defineExpose({ getForm, setForm, validate });
                     v-bind="{ size: size, ...item.props }"
                 />
 
-                <lew-select
+                <lew-select-multiple
                     v-model="item.value"
-                    v-if="item.as === 'lew-select'"
+                    v-if="item.as === 'select-multiple'"
                     @change=" 
                         (e:any) => {
                             validate(item.field);
@@ -381,7 +381,7 @@ defineExpose({ getForm, setForm, validate });
                 <lew-date-picker
                     style="width: 100%"
                     v-model="item.value"
-                    v-if="item.as === 'lew-date-picker'"
+                    v-if="item.as === 'date-picker'"
                     @change=" 
                         (e:any) => {
                             validate(item.field);
@@ -395,7 +395,7 @@ defineExpose({ getForm, setForm, validate });
                 <lew-date-range-picker
                     style="width: 100%"
                     v-model="item.value"
-                    v-if="item.as === 'lew-date-range-picker'"
+                    v-if="item.as === 'date-range-picker'"
                     @change=" 
                         (e:any) => {
                             validate(item.field);
@@ -408,7 +408,7 @@ defineExpose({ getForm, setForm, validate });
                 />
                 <lew-tabs
                     v-model="item.value"
-                    v-if="item.as === 'lew-tabs'"
+                    v-if="item.as === 'tabs'"
                     @change=" 
                         (e:any) => {
                             validate(item.field);
@@ -420,7 +420,7 @@ defineExpose({ getForm, setForm, validate });
 
                 <lew-switch
                     v-model="item.value"
-                    v-if="item.as === 'lew-switch'"
+                    v-if="item.as === 'switch'"
                     @change="
                         typeof item.props.change === 'function'
                             ? item.props.change()
@@ -431,7 +431,7 @@ defineExpose({ getForm, setForm, validate });
 
                 <lew-button
                     v-model="item.value"
-                    v-if="item.as === 'lew-button'"
+                    v-if="item.as === 'button'"
                     @click="
                         typeof item.props.click === 'function'
                             ? item.props.click()

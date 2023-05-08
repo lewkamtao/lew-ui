@@ -2,8 +2,10 @@
 import {
     DemoPagination1,
     DemoPagination2,
+    DemoPagination3,
     DemoPagination1_code,
     DemoPagination2_code,
+    DemoPagination3_code,
 } from './demo';
 
 const columns = [
@@ -73,6 +75,9 @@ const docsTable = ref([
         </lew-demo-box>
         <lew-demo-box title="巨量" :code="DemoPagination2_code">
             <demo-pagination2 />
+        </lew-demo-box>
+        <lew-demo-box title="模拟异步" :code="DemoPagination3_code">
+            <demo-pagination3 />
         </lew-demo-box>
         <br />
         <lew-title :size="16">props</lew-title>

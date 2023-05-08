@@ -138,11 +138,11 @@ const delTag = (index: number) => {
 
 .list-enter-active,
 .list-leave-active {
-    transition: all 0.25s ease;
+    transition: all 0.15s ease-in-out;
 }
 .list-enter-from,
 .list-leave-to {
     opacity: 0;
-    transform: translateX(-10px);
+    transform: translateX(-5px);
 }
 </style>

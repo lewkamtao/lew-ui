@@ -12,7 +12,7 @@ const options = ref([
     {
         field: 'input', // 字段名
         label: 'Input', // 标签
-        as: 'lew-input', // 组件
+        as: 'input', // 组件
         rules: Yup.string().required('不能为空'), // 校验规则
         props: {
             // 组件props
@@ -22,7 +22,7 @@ const options = ref([
     {
         field: 'textarea', // 字段名
         label: 'Textarea', // 标签
-        as: 'lew-textarea', // 组件
+        as: 'textarea', // 组件
         rules: Yup.string().required('不能为空'), // 校验规则
         props: {
             clearable: true,
@@ -33,7 +33,7 @@ const options = ref([
     {
         field: 'select',
         label: 'Select',
-        as: 'lew-select',
+        as: 'select',
         rules: Yup.string().required('此项必填'),
         props: {
             change: (e: any) => {
@@ -67,7 +67,7 @@ const options = ref([
     {
         field: 'select_multiple',
         label: 'SelectMultiple',
-        as: 'lew-select-multiple',
+        as: 'select-multiple',
         rules: Yup.array().min(1, '至少选择一个').required('此项必填'),
         props: {
             change: (e: any) => {
@@ -80,21 +80,21 @@ const options = ref([
     {
         field: 'info.date_picker',
         label: 'DatePicker',
-        as: 'lew-date-picker',
+        as: 'date-picker',
         rules: Yup.string().required('此项必填'),
         props: {},
     },
     {
         field: 'info.date_range_picker',
         label: 'DateRangePicker',
-        as: 'lew-date-range-picker',
+        as: 'date-range-picker',
         rules: Yup.object().required('此项必填'),
         props: {},
     },
     {
         field: 'radio_group',
         label: 'Radio',
-        as: 'lew-radio-group',
+        as: 'radio-group',
         rules: Yup.string().required('此项必填'),
         props: {
             options: [
@@ -116,7 +116,7 @@ const options = ref([
     {
         field: 'checkbox_group',
         label: 'Checkbox',
-        as: 'lew-checkbox-group',
+        as: 'checkbox-group',
         rules: Yup.array().min(1, '至少选择一个').required('此项必填'),
         props: {
             options: [
@@ -142,7 +142,7 @@ const options = ref([
     {
         field: 'tabs',
         label: 'Tabs',
-        as: 'lew-tabs',
+        as: 'tabs',
         rules: Yup.string().required('此项必填'),
         props: {
             options: [
@@ -172,7 +172,7 @@ const options = ref([
     {
         field: 'info.input_tag',
         label: 'InputTag',
-        as: 'lew-input-tag',
+        as: 'input-tag',
         rules: Yup.array().min(1, '至少选择一个').required('不能为空'),
         props: {
             clearable: true,
@@ -181,7 +181,7 @@ const options = ref([
     {
         field: 'info.switch',
         label: 'Switch',
-        as: 'lew-switch',
+        as: 'switch',
         rules: Yup.boolean().required('此项必填'),
         props: {},
     },

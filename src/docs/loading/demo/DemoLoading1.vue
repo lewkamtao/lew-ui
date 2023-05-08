@@ -7,13 +7,13 @@ const options = ref([
     {
         field: 'username',
         label: '用户名',
-        as: 'lew-input',
+        as: 'input',
         rules: Yup.string().required(),
     },
     {
         field: 'password',
         label: '密码',
-        as: 'lew-input',
+        as: 'input',
         rules: Yup.string().min(6).required(),
         fieldProps: {
             type: 'password',

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { object } from 'yup';
 import {
     DemoForm1,
     DemoForm1_code,
@@ -50,6 +49,18 @@ const columns2 = [
         title: '默认值',
         width: 120,
         field: 'default',
+    },
+    {
+        title: '描述',
+        width: 220,
+        field: 'description',
+    },
+];
+const columns3 = [
+    {
+        title: '方法名',
+        width: 150,
+        field: 'name',
     },
     {
         title: '描述',
@@ -110,9 +121,15 @@ const docsTable2 = ref([
         default: '',
     },
     {
+        param: 'value',
+        description: '值，此处用于会显数据。',
+        type: 'any',
+        default: '',
+    },
+    {
         param: 'as',
         description: '组件名',
-        type: 'string',
+        type: 'input | textarea | select | select-multiple | input-tag | checkbox | checkbox-group | radio-group | date-picker | date-range-picker | tabs | switch | button',
         default: '',
     },
     {
@@ -120,6 +137,16 @@ const docsTable2 = ref([
         description: '组件props',
         type: 'object',
         default: '{}',
+    },
+]);
+const docsTable3 = ref([
+    {
+        name: 'getForm',
+        description: '获取表单值',
+    },
+    {
+        name: 'setForm',
+        description: '设置表单值',
     },
 ]);
 </script>
@@ -147,21 +174,36 @@ const docsTable2 = ref([
         </lew-demo-box>
 
         <lew-title :size="16">Props</lew-title>
-        <lew-table :data-source="docsTable" :columns="columns" height="auto">
-            <template #param="{ row }"> {{ row.param }} </template>
-            <template #description="{ row }"> {{ row.description }} </template>
-            <template #type="{ row }"> {{ row.type }} </template>
-            <template #default="{ row }"> {{ row.default }} </template>
-        </lew-table>
+        <lew-table :data-source="docsTable" :columns="columns" height="auto" />
         <br />
         <br />
         <br />
         <lew-title :size="16">Options</lew-title>
-        <lew-table :data-source="docsTable2" :columns="columns2" height="auto">
-            <template #param="{ row }"> {{ row.param }} </template>
-            <template #description="{ row }"> {{ row.description }} </template>
-            <template #type="{ row }"> {{ row.type }} </template>
-            <template #default="{ row }"> {{ row.default }} </template>
-        </lew-table>
+        <lew-table
+            :data-source="docsTable2"
+            :columns="columns2"
+            height="auto"
+        />
+        <lew-alert
+            style="margin-top: 20px"
+            :size="16"
+            :list="[
+                {
+                    type: 'info',
+                    title: '当前支持的表单组件如下：',
+                    content:
+                        'input | textarea | select | select-multiple | input-tag | checkbox | checkbox-group | radio-group | date-picker | date-range-picker | tabs | switch | button',
+                },
+            ]"
+        />
+        <br />
+        <br />
+        <br />
+        <lew-title :size="16">Function</lew-title>
+        <lew-table
+            :data-source="docsTable3"
+            :columns="columns3"
+            height="auto"
+        />
     </div>
 </template>

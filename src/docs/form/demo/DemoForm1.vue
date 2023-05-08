@@ -11,7 +11,7 @@ const form = ref({} as any);
 const options = ref([
     {
         label: '表单大小',
-        as: 'lew-tabs',
+        as: 'tabs',
         field: 'size',
         value: 'medium',
         props: {
@@ -36,7 +36,7 @@ const options = ref([
     {
         field: 'input', // 字段名
         label: '文本框', // 标签
-        as: 'lew-input', // 组件
+        as: 'input', // 组件
         rules: Yup.string().required('不能为空'), // 校验规则
         props: {
             // 组件props
@@ -47,7 +47,7 @@ const options = ref([
     {
         field: 'textarea', // 字段名
         label: '多行文本框', // 标签
-        as: 'lew-textarea', // 组件
+        as: 'textarea', // 组件
         rules: Yup.string().required('不能为空'), // 校验规则
         props: {
             clearable: true,
@@ -58,7 +58,7 @@ const options = ref([
     {
         field: 'select',
         label: '单选选择器',
-        as: 'lew-select',
+        as: 'select',
         rules: Yup.string().required('此项必填'),
         props: {
             change: (e: any) => {
@@ -92,7 +92,7 @@ const options = ref([
     {
         field: 'select_multiple',
         label: '多选选择器',
-        as: 'lew-select-multiple',
+        as: 'select-multiple',
         rules: Yup.array().min(2, '至少选择2个').required('此项必填'),
         props: {
             change: (e: any) => {
@@ -105,7 +105,7 @@ const options = ref([
     {
         field: 'radio_group',
         label: '单选框',
-        as: 'lew-radio-group',
+        as: 'radio-group',
         rules: Yup.string().required('此项必填'),
         props: {
             options: [
@@ -127,7 +127,7 @@ const options = ref([
     {
         field: 'checkbox_group',
         label: '多选框',
-        as: 'lew-checkbox-group',
+        as: 'checkbox-group',
         rules: Yup.array().min(1, '至少选择一个').required('此项必填'),
         props: {
             options: [
@@ -153,7 +153,7 @@ const options = ref([
     {
         field: 'tabs',
         label: '选项卡',
-        as: 'lew-tabs',
+        as: 'tabs',
         rules: Yup.string().required('此项必填'),
         props: {
             options: [
@@ -179,7 +179,7 @@ const options = ref([
     {
         field: 'user.addd',
         label: '',
-        as: 'lew-checkbox',
+        as: 'checkbox',
         rules: Yup.boolean().oneOf([true], '请同意').required('请同意'),
         props: {
             label: '是否同意',
@@ -188,11 +188,11 @@ const options = ref([
     {
         field: 'info.asd.dsd.input_tag',
         label: '标签输入框',
-        as: 'lew-input-tag',
+        as: 'input-tag',
         rules: Yup.array().min(1, '至少选择一个').required('不能为空'),
     },
     {
-        as: 'lew-button',
+        as: 'button',
         props: {
             text: '提交',
             click: () => submit(),
