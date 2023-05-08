@@ -58,10 +58,10 @@ const addTag = () => {
     let _value = tagsValue.value || [];
     if (inputValue.value) {
         _value.push(inputValue.value);
-        emit('change', _value);
     }
     inputValue.value = '';
     tagsValue.value = _value;
+    emit('change', _value);
 };
 
 const delTag = (index: number) => {

@@ -22,8 +22,8 @@ const change = (item: CheckboxOptions, checked: boolean) => {
     }
     modelValue.value = _value;
     emit('change', {
-        value: toRaw(modelValue.value),
-        item: toRaw(item),
+        value: modelValue.value,
+        item: item,
     });
 };
 

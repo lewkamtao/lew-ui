@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { object } from 'yup';
 import {
     DemoForm1,
     DemoForm1_code,
@@ -34,12 +35,52 @@ const columns = [
         field: 'description',
     },
 ];
+const columns2 = [
+    {
+        title: '参数名',
+        width: 150,
+        field: 'param',
+    },
+    {
+        title: '类型',
+        width: 240,
+        field: 'type',
+    },
+    {
+        title: '默认值',
+        width: 120,
+        field: 'default',
+    },
+    {
+        title: '描述',
+        width: 220,
+        field: 'description',
+    },
+];
 const docsTable = ref([
     {
-        param: 'title',
-        description: '表单标题',
-        type: 'string',
+        param: 'options',
+        description: '表单配置',
+        type: 'object',
         default: "''",
+    },
+    {
+        param: 'size',
+        description: '表单大小',
+        type: 'small ｜ medium ｜ large',
+        default: 'medium',
+    },
+    {
+        param: 'width',
+        description: '宽度',
+        type: 'number | string',
+        default: '',
+    },
+    {
+        param: 'labelWidth',
+        description: '表单item方向',
+        type: 'number | string',
+        default: '',
     },
     {
         param: 'direction',
@@ -48,11 +89,46 @@ const docsTable = ref([
         default: 'x',
     },
 ]);
+
+const docsTable2 = ref([
+    {
+        param: 'field',
+        description: '表单字段',
+        type: 'string',
+        default: "''",
+    },
+    {
+        param: 'label',
+        description: '表单标题',
+        type: 'small ｜ medium ｜ large',
+        default: 'medium',
+    },
+    {
+        param: 'rules',
+        description: '校验规则',
+        type: 'yup*',
+        default: '',
+    },
+    {
+        param: 'as',
+        description: '组件名',
+        type: 'string',
+        default: '',
+    },
+    {
+        param: 'fieldProps',
+        description: '组件props',
+        type: 'object',
+        default: '{}',
+    },
+]);
 </script>
 
 <template>
     <div class="demo-wrapper">
         <lew-title>Form</lew-title>
+        <p class="sub-title">这是一个基于Yup实现的表单校验引擎。</p>
+
         <lew-demo-box title="普通表单" :code="DemoForm1_code">
             <demo-form1 />
         </lew-demo-box>
@@ -70,7 +146,18 @@ const docsTable = ref([
             <demo-form5 />
         </lew-demo-box>
 
+        <lew-title :size="16">Props</lew-title>
         <lew-table :data-source="docsTable" :columns="columns" height="auto">
+            <template #param="{ row }"> {{ row.param }} </template>
+            <template #description="{ row }"> {{ row.description }} </template>
+            <template #type="{ row }"> {{ row.type }} </template>
+            <template #default="{ row }"> {{ row.default }} </template>
+        </lew-table>
+        <br />
+        <br />
+        <br />
+        <lew-title :size="16">Options</lew-title>
+        <lew-table :data-source="docsTable2" :columns="columns2" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>
             <template #type="{ row }"> {{ row.type }} </template>

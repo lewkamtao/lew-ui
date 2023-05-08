@@ -186,7 +186,7 @@ const options = ref([
         },
     },
     {
-        field: 'info.input_tag',
+        field: 'info.asd.dsd.input_tag',
         label: '标签输入框',
         as: 'lew-input-tag',
         rules: Yup.array().min(1, '至少选择一个').required('不能为空'),

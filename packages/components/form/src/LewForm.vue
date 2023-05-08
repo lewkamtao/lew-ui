@@ -36,35 +36,71 @@ const arrayToObj = (arr: any): any => {
         }
         const keys = field.split('.');
         let currentObj = obj;
+
         for (let i = 0; i < keys.length - 1; i++) {
             const key = keys[i];
+
             if (!currentObj[key]) {
                 currentObj[key] = {};
             }
             currentObj = currentObj[key] as Record<string, unknown>;
         }
+
         if (value !== undefined) {
-            currentObj[keys[keys.length - 1]] = value;
+            currentObj[keys[keys.length - 1]] = toRaw(value);
         }
     });
     return removeEmpty(obj);
 };
-
 function removeEmpty(obj: any) {
-    return Object.keys(obj)
-        .filter((key) => {
-            const value = obj[key];
-            if (value && typeof value === 'object') {
-                obj[key] = removeEmpty(value);
+    if (Array.isArray(obj)) {
+        // 如果是数组类型
+        return obj
+            .map((value: any) => {
+                if (typeof value === 'object') {
+                    value = removeEmpty(value);
+                    if (Array.isArray(value) && value.length === 0) {
+                        return undefined;
+                    }
+                    if (
+                        typeof value === 'object' &&
+                        Object.keys(value).length === 0
+                    ) {
+                        return undefined;
+                    }
+                }
+                return value !== undefined && value !== null
+                    ? value
+                    : undefined;
+            })
+            .filter((value: any) => value !== undefined);
+    }
+    const keys = Object.keys(obj);
+    if (keys.length === 0) {
+        return obj;
+    }
+    const newObj: any = {};
+    keys.forEach((key) => {
+        const value = obj[key];
+        if (typeof value === 'object' && value !== null) {
+            const newValue = removeEmpty(value);
+            if (Array.isArray(newValue) && newValue.length === 0) {
+                return;
             }
-            return !(
-                typeof value === 'object' && Object.keys(value).length === 0
-            );
-        })
-        .reduce((acc: any, key) => {
-            acc[key] = obj[key];
-            return acc;
-        }, {});
+            if (
+                typeof newValue === 'object' &&
+                Object.keys(newValue).length === 0
+            ) {
+                return;
+            }
+            newObj[key] = newValue;
+        } else {
+            if (value !== undefined && value !== null) {
+                newObj[key] = value;
+            }
+        }
+    });
+    return newObj;
 }
 
 const flattenObject = (obj: any, prefix = '') => {
@@ -85,6 +121,7 @@ const form2componentOptions = () => {
         return;
     }
     let vArr = flattenObject(form.value);
+
     vArr.forEach((_e: any) => {
         componentOptions.value.forEach((__e: any, i: number) => {
             if (_e.field.lastIndexOf('.') >= 0) {
@@ -132,6 +169,8 @@ const validate = (field: string) => {
                 resolve(true);
             })
             .catch((err: any) => {
+                console.log(err.inner);
+
                 resolve(false);
                 if (field) {
                     // 重置
@@ -146,11 +185,9 @@ const validate = (field: string) => {
                         field: () => {
                             try {
                                 let fieldName = error?.path; // 去除首尾的方括号
-
                                 if (fieldName[0] !== '[') {
                                     return fieldName;
                                 }
-
                                 fieldName = error?.path.slice(1, -1); // 去除首尾的方括号
                                 if (
                                     fieldName.charAt(0) === '"' &&
@@ -190,7 +227,24 @@ const validate = (field: string) => {
                         ...error,
                         field: () => {
                             try {
-                                return JSON.parse(error.path)[0];
+                                let fieldName = error?.path; // 去除首尾的方括号
+                                if (fieldName[0] !== '[') {
+                                    return fieldName;
+                                }
+                                fieldName = error?.path.slice(1, -1); // 去除首尾的方括号
+                                if (
+                                    fieldName.charAt(0) === '"' &&
+                                    fieldName.charAt(fieldName.length - 1) ===
+                                        '"'
+                                ) {
+                                    // 处理包含引号的情况
+                                    fieldName = fieldName.slice(1, -1);
+                                }
+                                if (fieldName.includes('\\"')) {
+                                    // 处理转义字符
+                                    fieldName = fieldName.replace(/\\"/g, '"');
+                                }
+                                return fieldName;
                             } catch {
                                 return error.path;
                             }
