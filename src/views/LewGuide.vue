@@ -124,7 +124,7 @@ group.value = [
     overflow-x: hidden;
     box-sizing: border-box;
     padding: 50px 50px 150px 50px;
-    background: var(--lew-bgcolor-1);
+    background: var(--lew-bgcolor-2);
 }
 
 .mb-btn {
