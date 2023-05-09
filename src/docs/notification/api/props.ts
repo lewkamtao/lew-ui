@@ -3,16 +3,28 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            param: 'size',
-            description: '标题尺寸大小',
-            type: 'number',
-            default: 24,
+            name: 'type',
+            description: '提示类型',
+            type: `success | warning | error | info | normal`,
+            default: '3000',
         },
         {
-            param: 'bold',
-            description: '粗体值',
-            type: `100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900`,
-            default: 500,
+            name: 'title',
+            description: '标题',
+            type: 'array',
+            default: '[]',
+        },
+        {
+            name: 'content',
+            description: '内容',
+            type: 'array',
+            default: '[]',
+        },
+        {
+            name: 'delay',
+            description: '延迟时间',
+            type: 'array',
+            default: '[]',
         },
     ],
 };

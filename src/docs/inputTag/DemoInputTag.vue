@@ -2,43 +2,13 @@
 import { DemoInputTag1, DemoInputTag1_code } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
-
-const docsTable = reactive([
-    {
-        desc: 'Props',
-        columns: [
-            {
-                title: '参数名',
-                width: 120,
-                field: 'param',
-            },
-
-            {
-                title: '类型',
-                width: 120,
-                field: 'type',
-            },
-            {
-                title: '默认值',
-                width: 120,
-                field: 'default',
-            },
-            {
-                title: '描述',
-                width: 320,
-                field: 'description',
-            },
-        ],
-        data: [
-            {
-                param: 'model-value (v-model)',
-                description: '绑定值',
-                type: 'Array',
-                default: "-",
-            },
-        ],
-    },
-]);
+import * as API from './api';
+const options = ref(
+    Object.keys(API).map((key: any) => {
+        // @ts-ignore
+        return API[key];
+    })
+);
 </script>
 
 <template>
@@ -60,23 +30,6 @@ const docsTable = reactive([
                 ]"
             />
         </lew-demo-box>
-
-        <div v-for="(item, index) in docsTable" :key="index">
-            <br />
-            <br />
-            <lew-title :size="16">{{ item.desc }}</lew-title>
-            <lew-table
-                :data-source="item.data"
-                :columns="item.columns"
-                height="auto"
-            >
-                <template #param="{ row }"> {{ row.param }} </template>
-                <template #description="{ row }">
-                    {{ row.description }}
-                </template>
-                <template #type="{ row }"> {{ row.type }} </template>
-                <template #default="{ row }"> {{ row.default }} </template>
-            </lew-table>
-        </div>
+        <lew-docs-tables :options="options"></lew-docs-tables>
     </div>
 </template>

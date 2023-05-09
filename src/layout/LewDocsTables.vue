@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps({
+const props = defineProps({
     options: {
         type: Object,
         default() {
@@ -13,7 +13,7 @@ const columnsMap: any = {
         {
             title: '参数名',
             width: 150,
-            field: 'param',
+            field: 'name',
         },
         {
             title: '描述',
@@ -52,7 +52,7 @@ const columnsMap: any = {
         {
             title: '事件名',
             width: 150,
-            field: 'param',
+            field: 'name',
         },
         {
             title: '描述',
@@ -69,7 +69,7 @@ const columnsMap: any = {
         {
             title: '方法名',
             width: 150,
-            field: 'param',
+            field: 'name',
         },
         {
             title: '描述',
@@ -83,6 +83,29 @@ const columnsMap: any = {
         },
     ],
 };
+const sortOptions = computed(() => {
+    const columnArr = [
+        'Props',
+        'FormOptions',
+        'SelectOptions',
+        'SelectMultipleOptions',
+        'Slots',
+        'Events',
+        'Methods',
+    ];
+    return props.options
+        .map((e: any) => {
+            let orderNum =
+                columnArr.indexOf(e.title) === -1
+                    ? 99
+                    : columnArr.indexOf(e.title);
+            return {
+                orderNum: orderNum,
+                ...e,
+            };
+        })
+        .sort((a: any, b: any) => a.orderNum - b.orderNum);
+});
 </script>
 
 <template>
@@ -90,7 +113,7 @@ const columnsMap: any = {
         <lew-flex
             direction="y"
             x="start"
-            v-for="(item, index) in options"
+            v-for="(item, index) in sortOptions"
             :key="index"
         >
             <lew-title :size="16">{{ item.title }}</lew-title>

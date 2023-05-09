@@ -3,15 +3,15 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            param: 'size',
-            description: '标题尺寸大小',
-            type: 'number',
+            name: 'trigger',
+            description: '触发方式',
+            type: 'string',
             default: 24,
         },
         {
-            param: 'bold',
+            name: 'placement',
             description: '粗体值',
-            type: `100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900`,
+            type: `string`,
             default: 500,
         },
     ],

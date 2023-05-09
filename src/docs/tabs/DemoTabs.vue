@@ -2,118 +2,13 @@
 import { DemoTabs1, DemoTabs2, DemoTabs1_code, DemoTabs2_code } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
-
-const docsTable = reactive([
-    {
-        desc: 'Props',
-        columns: [
-            {
-                title: '参数名',
-                width: 120,
-                field: 'param',
-            },
-
-            {
-                title: '类型',
-                width: 120,
-                field: 'type',
-            },
-            {
-                title: '默认值',
-                width: 120,
-                field: 'default',
-            },
-            {
-                title: '描述',
-                width: 320,
-                field: 'description',
-            },
-        ],
-        data: [
-            {
-                param: 'modelValue',
-                description: '值',
-                type: 'string | number',
-                default: `''`,
-            },
-            {
-                param: 'options',
-                description: '配置',
-                type: `TabsOptions`,
-                default: [],
-            },
-            {
-                param: 'width',
-                description: '宽度',
-                type: `number`,
-                default: '',
-            },
-            {
-                param: 'itemWidth',
-                description: 'item 宽度',
-                type: `number`,
-                default: '',
-            },
-            {
-                param: 'round',
-                description: '是否圆角',
-                type: `boolean`,
-                default: 'false',
-            },
-            {
-                param: 'type',
-                description: '类型',
-                type: `block | line`,
-                default: 'block',
-            },
-        ],
-    },
-    {
-        desc: 'TabsOptions',
-        columns: [
-            {
-                title: '参数名',
-                width: 120,
-                field: 'param',
-            },
-            {
-                title: '类型',
-                width: 120,
-                field: 'type',
-            },
-            {
-                title: '默认值',
-                width: 120,
-                field: 'default',
-            },
-            {
-                title: '描述',
-                width: 320,
-                field: 'description',
-            },
-        ],
-        data: [
-            {
-                param: 'label',
-                description: '文本内容',
-                type: 'string',
-                default: "-",
-            },
-            {
-                param: 'value',
-                description: '值',
-                type: `string`,
-                default: "-",
-            },
-            {
-                param: 'activeIndex',
-                description: '选中的索引',
-                type: `number`,
-                default: "-",
-            },
-        ],
-    },
-]);
+import * as API from './api';
+const options = ref(
+    Object.keys(API).map((key: any) => {
+        // @ts-ignore
+        return API[key];
+    })
+);
 </script>
 
 <template>
@@ -137,22 +32,6 @@ const docsTable = reactive([
         <lew-demo-box title="圆形" :code="DemoTabs2_code">
             <demo-tabs2
         /></lew-demo-box>
-        <div v-for="(item, index) in docsTable" :key="index">
-            <br />
-            <br />
-            <lew-title :size="16">{{ item.desc }}</lew-title>
-            <lew-table
-                :data-source="item.data"
-                :columns="item.columns"
-                height="auto"
-            >
-                <template #param="{ row }"> {{ row.param }} </template>
-                <template #description="{ row }">
-                    {{ row.description }}
-                </template>
-                <template #type="{ row }"> {{ row.type }} </template>
-                <template #default="{ row }"> {{ row.default }} </template>
-            </lew-table>
-        </div>
+        <lew-docs-tables :options="options"></lew-docs-tables>
     </div>
 </template>

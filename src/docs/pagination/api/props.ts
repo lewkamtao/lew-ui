@@ -3,16 +3,34 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            param: 'size',
-            description: '标题尺寸大小',
+            name: 'total',
+            description: '总数',
             type: 'number',
-            default: 24,
+            default: '100',
         },
         {
-            param: 'bold',
-            description: '粗体值',
-            type: `100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900`,
-            default: 500,
+            name: 'currentPage',
+            description: '当前页码',
+            type: 'number',
+            default: '1',
+        },
+        {
+            name: 'pageSize',
+            description: '页大小',
+            type: 'number',
+            default: '20',
+        },
+        {
+            name: 'visiblePagesCount',
+            description: '展示页码长度',
+            type: 'number',
+            default: '5',
+        },
+        {
+            name: 'pageSizeOptions',
+            description: '页码配置',
+            type: 'Options',
+            default: '-',
         },
     ],
 };

@@ -3,16 +3,34 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            param: 'size',
-            description: '标题尺寸大小',
-            type: 'number',
-            default: 24,
+            name:'options',
+            description: '表单配置',
+            type: 'Array<FormOptions>',
+            default: '[]',
         },
         {
-            param: 'bold',
-            description: '粗体值',
-            type: `100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900`,
-            default: 500,
+            name:'size',
+            description: '表单大小',
+            type: 'small ｜ medium ｜ large',
+            default: 'medium',
+        },
+        {
+            name:'width',
+            description: '宽度',
+            type: 'number | string',
+            default: '',
+        },
+        {
+            name:'labelWidth',
+            description: '表单item方向',
+            type: 'number | string',
+            default: '',
+        },
+        {
+            name:'direction',
+            description: '表单item方向',
+            type: 'x | y',
+            default: 'x',
         },
     ],
 };

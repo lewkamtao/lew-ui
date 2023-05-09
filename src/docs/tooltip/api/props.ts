@@ -3,31 +3,31 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            param: 'content',
+            name:'content',
             description: '内容',
             type: 'string',
             default: '-',
         },
         {
-            param: 'placement',
+            name:'placement',
             description: '位置',
             type: 'string',
             default: '-',
         },
         {
-            param: 'trigger',
+            name:'trigger',
             description: '触发方式',
             type: 'hover | click',
             default: 'hover',
         },
         {
-            param: 'allowHTML',
+            name:'allowHTML',
             description: '是否支持HTML',
             type: 'boolean',
             default: 'false',
         },
         {
-            param: 'arrow',
+            name:'arrow',
             description: '是否需要箭头',
             type: 'boolean',
             default: 'true',

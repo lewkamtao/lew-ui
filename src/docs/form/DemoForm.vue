@@ -13,144 +13,13 @@ import {
 } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
-
-const columns = [
-    {
-        title: '参数名',
-        width: 150,
-        field: 'param',
-    },
-    {
-        title: '类型',
-        width: 240,
-        field: 'type',
-    },
-    {
-        title: '默认值',
-        width: 120,
-        field: 'default',
-    },
-    {
-        title: '描述',
-        width: 220,
-        field: 'description',
-    },
-];
-const columns2 = [
-    {
-        title: '参数名',
-        width: 150,
-        field: 'param',
-    },
-    {
-        title: '类型',
-        width: 240,
-        field: 'type',
-    },
-    {
-        title: '默认值',
-        width: 120,
-        field: 'default',
-    },
-    {
-        title: '描述',
-        width: 220,
-        field: 'description',
-    },
-];
-const columns3 = [
-    {
-        title: '方法名',
-        width: 150,
-        field: 'name',
-    },
-    {
-        title: '描述',
-        width: 220,
-        field: 'description',
-    },
-];
-const docsTable = ref([
-    {
-        param: 'options',
-        description: '表单配置',
-        type: 'object',
-        default: "-",
-    },
-    {
-        param: 'size',
-        description: '表单大小',
-        type: 'small ｜ medium ｜ large',
-        default: 'medium',
-    },
-    {
-        param: 'width',
-        description: '宽度',
-        type: 'number | string',
-        default: '',
-    },
-    {
-        param: 'labelWidth',
-        description: '表单item方向',
-        type: 'number | string',
-        default: '',
-    },
-    {
-        param: 'direction',
-        description: '表单item方向',
-        type: 'x | y',
-        default: 'x',
-    },
-]);
-
-const docsTable2 = ref([
-    {
-        param: 'field',
-        description: '表单字段',
-        type: 'string',
-        default: "-",
-    },
-    {
-        param: 'label',
-        description: '表单标题',
-        type: 'small ｜ medium ｜ large',
-        default: 'medium',
-    },
-    {
-        param: 'rules',
-        description: '校验规则',
-        type: 'yup*',
-        default: '',
-    },
-    {
-        param: 'value',
-        description: '值，此处用于会显数据。',
-        type: 'any',
-        default: '',
-    },
-    {
-        param: 'as',
-        description: '组件名',
-        type: 'input | textarea | select | select-multiple | input-tag | checkbox | checkbox-group | radio-group | date-picker | date-range-picker | tabs | switch | button',
-        default: '',
-    },
-    {
-        param: 'fieldProps',
-        description: '组件props',
-        type: 'object',
-        default: '{}',
-    },
-]);
-const docsTable3 = ref([
-    {
-        name: 'getForm',
-        description: '获取表单值',
-    },
-    {
-        name: 'setForm',
-        description: '设置表单值',
-    },
-]);
+import * as API from './api';
+const options = ref(
+    Object.keys(API).map((key: any) => {
+        // @ts-ignore
+        return API[key];
+    })
+);
 </script>
 
 <template>
@@ -174,38 +43,6 @@ const docsTable3 = ref([
         <lew-demo-box v-if="false" title="其他" :code="DemoForm5_code">
             <demo-form5 />
         </lew-demo-box>
-
-        <lew-title :size="16">Props</lew-title>
-        <lew-table :data-source="docsTable" :columns="columns" height="auto" />
-        <br />
-        <br />
-        <br />
-        <lew-title :size="16">Options</lew-title>
-        <lew-table
-            :data-source="docsTable2"
-            :columns="columns2"
-            height="auto"
-        />
-        <lew-alert
-            style="margin-top: 20px"
-            :size="16"
-            :list="[
-                {
-                    type: 'info',
-                    title: '当前支持的表单组件如下：',
-                    content:
-                        'input | textarea | select | select-multiple | input-tag | checkbox | checkbox-group | radio-group | date-picker | date-range-picker | tabs | switch | button',
-                },
-            ]"
-        />
-        <br />
-        <br />
-        <br />
-        <lew-title :size="16">Function</lew-title>
-        <lew-table
-            :data-source="docsTable3"
-            :columns="columns3"
-            height="auto"
-        />
+        <lew-docs-tables :options="options"></lew-docs-tables>
     </div>
 </template>

@@ -3,16 +3,28 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            param: 'size',
-            description: '标题尺寸大小',
-            type: 'number',
-            default: 24,
+            name: 'type',
+            description: '配色类型',
+            type: `normal | success | error | warning | info`,
+            default: 'normal',
         },
         {
-            param: 'bold',
-            description: '粗体值',
-            type: `100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900`,
-            default: 500,
+            name: 'round',
+            description: '是否圆角',
+            type: 'boolean',
+            default: false,
+        },
+        {
+            name: 'to',
+            description: '跳转链接',
+            type: `string`,
+            default: '#',
+        },
+        {
+            name: 'bold',
+            description: '配色类型',
+            type: `normal | success | error | warning | info`,
+            default: `''`,
         },
     ],
 };

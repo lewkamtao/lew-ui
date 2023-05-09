@@ -3,16 +3,28 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            param: 'size',
-            description: '标题尺寸大小',
+            name:'right',
+            description: '控制其显示位置，距离页面右边距',
             type: 'number',
-            default: 24,
+            default: '40',
         },
         {
-            param: 'bold',
-            description: '粗体值',
-            type: `100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900`,
-            default: 500,
+            name:'bottom',
+            description: '控制其显示位置，距离页面底部距离',
+            type: 'number',
+            default: '40',
+        },
+        {
+            name:'valveHeight',
+            description: '滚动高度达到该阀门数值才会出现',
+            type: 'number',
+            default: 50,
+        },
+        {
+            name:'target',
+            description: '触发滚动的对象, class名',
+            type: 'string',
+            default: '-',
         },
     ],
 };

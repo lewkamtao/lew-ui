@@ -3,16 +3,34 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            param: 'size',
-            description: '标题尺寸大小',
-            type: 'number',
-            default: 24,
+            name:'type',
+            description: '消息类型',
+            type: "'success' | 'warning' | 'info' | 'error' | 'normal'",
+            default: "' '",
         },
         {
-            param: 'bold',
-            description: '粗体值',
-            type: `100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900`,
-            default: 500,
+            name:'title',
+            description: '标题',
+            type: 'string',
+            default: "' '",
+        },
+        {
+            name:'content',
+            description: '内容',
+            type: 'string',
+            default: "' '",
+        },
+        {
+            name:'closeOnClickOverlay',
+            description: '点击遮罩层关闭弹窗',
+            type: 'boolean',
+            default: 'true',
+        },
+        {
+            name:'layout',
+            description: '布局',
+            type: "'normal' | 'easy'",
+            default: 'normal',
         },
     ],
 };

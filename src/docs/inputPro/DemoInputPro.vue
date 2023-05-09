@@ -36,44 +36,44 @@ const docsTable = reactive([
         ],
         data: [
             {
-                param: 'type',
+                name:'type',
                 description: '输入框类型',
                 type: 'string',
                 default: 'text',
             },
             {
-                param: 'model-value (v-model)',
+                name:'model-value (v-model)',
                 description: '绑定值',
                 type: 'string',
                 default: "-",
             },
 
             {
-                param: 'disabled',
+                name:'disabled',
                 description: '禁用',
                 type: 'boolean',
                 default: 'false',
             },
             {
-                param: 'placeholder',
+                name:'placeholder',
                 description: '默认提示',
                 type: 'string',
                 default: '请输入',
             },
             {
-                param: 'readonly',
+                name:'readonly',
                 description: '是否只读',
                 type: 'boolean',
                 default: 'false',
             },
             {
-                param: 'clearable',
+                name:'clearable',
                 description: '是否可清空',
                 type: 'boolean',
                 default: false,
             },
             {
-                param: 'clear',
+                name:'clear',
                 description: '清空触发的回调方法',
                 type: '(e: value) => void',
                 default: '-',
@@ -107,25 +107,25 @@ const docsTable = reactive([
         ],
         data: [
             {
-                param: 'input',
+                name:'input',
                 description: '输入',
                 type: '() => void',
                 default: 'false',
             },
             {
-                param: 'change',
+                name:'change',
                 description: '值变化',
                 type: '() => void',
                 default: 'false',
             },
             {
-                param: 'blur',
+                name:'blur',
                 description: '失焦',
                 type: '() => void',
                 default: 'false',
             },
             {
-                param: 'focus',
+                name:'focus',
                 description: '聚焦',
                 type: '() => void',
                 default: 'false',

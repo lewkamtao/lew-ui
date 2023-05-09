@@ -3,16 +3,28 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            param: 'size',
-            description: '标题尺寸大小',
-            type: 'number',
-            default: 24,
+            name:'v-model:visible',
+            description: '打开抽屉',
+            type: 'boolean',
+            default: 'false',
         },
         {
-            param: 'bold',
-            description: '粗体值',
-            type: `100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900`,
-            default: 500,
+            name:'width',
+            description: '宽度',
+            type: 'number',
+            default: '30(百分比)',
+        },
+        {
+            name:'height',
+            description: '高度',
+            type: 'number',
+            default: '30(百分比)',
+        },
+        {
+            name:'position',
+            description: '位置',
+            type: 'string',
+            default: 'right(left,right,top,bottom)',
         },
     ],
 };

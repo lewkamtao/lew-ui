@@ -3,16 +3,40 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            param: 'size',
-            description: '标题尺寸大小',
-            type: 'number',
-            default: 24,
+            name: 'model-value (v-model)',
+            description: '绑定值',
+            type: 'string',
+            default: '-',
         },
         {
-            param: 'bold',
-            description: '粗体值',
-            type: `100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900`,
-            default: 500,
+            name: 'size',
+            description: '尺寸',
+            type: 'small ｜ medium ｜ large',
+            default: 'text',
+        },
+        {
+            name: 'placeholder',
+            description: '默认提示',
+            type: 'string',
+            default: '请输入',
+        },
+        {
+            name: 'disabled',
+            description: '禁用',
+            type: 'boolean',
+            default: 'false',
+        },
+        {
+            name: 'readonly',
+            description: '是否只读',
+            type: 'boolean',
+            default: 'false',
+        },
+        {
+            name: 'clearable',
+            description: '是否可清空',
+            type: 'boolean',
+            default: false,
         },
     ],
 };

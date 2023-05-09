@@ -9,63 +9,13 @@ import {
 } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
-
-const columns = [
-    {
-        title: '参数名',
-        width: 150,
-        field: 'param',
-    },
-
-    {
-        title: '类型',
-        width: 240,
-        field: 'type',
-    },
-    {
-        title: '默认值',
-        width: 120,
-        field: 'default',
-    },
-    {
-        title: '描述',
-        width: 220,
-        field: 'description',
-    },
-];
-const docsTable = ref([
-    {
-        param: 'total',
-        description: '总数',
-        type: 'number',
-        default: '100',
-    },
-    {
-        param: 'currentPage',
-        description: '当前页码',
-        type: 'number',
-        default: '1',
-    },
-    {
-        param: 'pageSize',
-        description: '页大小',
-        type: 'number',
-        default: '20',
-    },
-    {
-        param: 'visiblePagesCount',
-        description:
-            '展示页码长度，这里有一定特殊性，比如长度是2，如果超出相应长度，就会只展示5个页码。',
-        type: 'number',
-        default: '5',
-    },
-    {
-        param: 'pageSizeOptions',
-        description: '页码配置',
-        type: 'Options',
-        default: '-',
-    },
-]);
+import * as API from './api';
+const options = ref(
+    Object.keys(API).map((key: any) => {
+        // @ts-ignore
+        return API[key];
+    })
+);
 </script>
 
 <template>
@@ -81,13 +31,6 @@ const docsTable = ref([
         <lew-demo-box title="模拟异步" :code="DemoPagination3_code">
             <demo-pagination3 />
         </lew-demo-box>
-        <br />
-        <lew-title :size="16">props</lew-title>
-        <lew-table :data-source="docsTable" :columns="columns" height="auto">
-            <template #param="{ row }"> {{ row.param }} </template>
-            <template #description="{ row }"> {{ row.description }} </template>
-            <template #type="{ row }"> {{ row.type }} </template>
-            <template #default="{ row }"> {{ row.default }} </template>
-        </lew-table>
+        <lew-docs-tables :options="options"></lew-docs-tables>
     </div>
 </template>

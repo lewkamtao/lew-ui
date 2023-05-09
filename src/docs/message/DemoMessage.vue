@@ -2,43 +2,13 @@
 import { DemoMessage1, DemoMessage1_code } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
-
-const columns = [
-    {
-        title: '参数名',
-        width: '120px',
-        field: 'param',
-    },
-    {
-        title: '描述',
-        width: '120px',
-        field: 'description',
-    },
-    {
-        title: '类型',
-        width: 240,
-        field: 'type',
-    },
-    {
-        title: '默认值',
-        width: 120,
-        field: 'default',
-    },
-];
-const docsTable = ref([
-    {
-        param: 'message',
-        description: '消息文字',
-        type: 'string',
-        default: '--',
-    },
-    {
-        param: 'type',
-        description: '消息类型',
-        type: `'success' | 'warning' | 'error' | 'info' | 'normal'`,
-        default: `'normal'`,
-    },
-]);
+import * as API from './api';
+const options = ref(
+    Object.keys(API).map((key: any) => {
+        // @ts-ignore
+        return API[key];
+    })
+);
 </script>
 
 <template>
@@ -47,12 +17,6 @@ const docsTable = ref([
         <lew-demo-box title="快捷唤起" :code="DemoMessage1_code">
             <demo-message1>删除</demo-message1></lew-demo-box
         >
-        <lew-title :size="16">Props</lew-title>
-        <lew-table :data-source="docsTable" :columns="columns" height="auto">
-            <template #param="{ row }"> {{ row.param }} </template>
-            <template #description="{ row }"> {{ row.description }} </template>
-            <template #type="{ row }"> {{ row.type }} </template>
-            <template #default="{ row }"> {{ row.default }} </template>
-        </lew-table>
+        <lew-docs-tables :options="options"></lew-docs-tables>
     </div>
 </template>

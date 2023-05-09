@@ -3,16 +3,28 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            param: 'size',
-            description: '标题尺寸大小',
-            type: 'number',
-            default: 24,
+            name:'options',
+            description: '列表配置',
+            type: 'array',
+            default: '[]',
         },
         {
-            param: 'bold',
-            description: '粗体值',
-            type: `100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900`,
-            default: 500,
+            name:'trigger',
+            description: '触发方式',
+            type: `hover | click`,
+            default: 'hover',
+        },
+        {
+            name:'placement',
+            description: '下拉展示的位置',
+            type: 'string',
+            default: 'bottom',
+        },
+        {
+            name:'width',
+            description: '下拉气泡宽度',
+            type: 'string(px)',
+            default: '-',
         },
     ],
 };

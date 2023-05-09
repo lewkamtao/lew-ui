@@ -3,16 +3,34 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            param: 'size',
-            description: '标题尺寸大小',
-            type: 'number',
-            default: 24,
+            name: 'visible',
+            description: '显示控制',
+            type: 'boolean',
+            default: false,
         },
         {
-            param: 'bold',
-            description: '粗体值',
-            type: `100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900`,
-            default: 500,
+            name: 'title',
+            description: '标题',
+            type: 'string',
+            default: '-',
+        },
+        {
+            name: 'width',
+            description: '宽度',
+            type: 'string',
+            default: '[]',
+        },
+        {
+            name: 'height',
+            description: '高度',
+            type: 'string',
+            default: '[]',
+        },
+        {
+            name: 'closeOnClickOverlay',
+            description: '点击遮罩关闭',
+            type: 'Boolean',
+            default: '[]',
         },
     ],
 };

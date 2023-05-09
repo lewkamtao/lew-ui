@@ -3,16 +3,16 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            param: 'size',
-            description: '标题尺寸大小',
-            type: 'number',
-            default: 24,
+            name:'options',
+            description: '配置表',
+            type: 'BreadcrumbOptions',
+            default: [],
         },
         {
-            param: 'bold',
-            description: '粗体值',
-            type: `100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900`,
-            default: 500,
+            name:'iconType',
+            description: '显示类型',
+            type: `sprit | shoulder`,
+            default: 'sprit',
         },
     ],
 };

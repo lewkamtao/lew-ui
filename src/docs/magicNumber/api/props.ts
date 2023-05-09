@@ -3,16 +3,22 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            param: 'size',
-            description: '标题尺寸大小',
+            name: 'value',
+            description: '值',
             type: 'number',
-            default: 24,
+            default: 999.99,
         },
         {
-            param: 'bold',
-            description: '粗体值',
-            type: `100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900`,
-            default: 500,
+            name: 'size',
+            description: '数字大小',
+            type: `number`,
+            default: 16,
+        },
+        {
+            name: 'sep',
+            description: '千分位转换',
+            type: `boolean`,
+            default: false,
         },
     ],
 };

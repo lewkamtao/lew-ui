@@ -3,16 +3,40 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            param: 'size',
-            description: '标题尺寸大小',
-            type: 'number',
-            default: 24,
+            name: 'modelValue',
+            description: '值',
+            type: 'string | number',
+            default: `''`,
         },
         {
-            param: 'bold',
-            description: '粗体值',
-            type: `100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900`,
-            default: 500,
+            name: 'options',
+            description: '配置',
+            type: `Array<TabsOptions>`,
+            default: [],
+        },
+        {
+            name: 'width',
+            description: '宽度',
+            type: `number`,
+            default: '-',
+        },
+        {
+            name: 'itemWidth',
+            description: 'item 宽度',
+            type: `number`,
+            default: '-',
+        },
+        {
+            name: 'round',
+            description: '是否圆角',
+            type: `boolean`,
+            default: 'false',
+        },
+        {
+            name: 'type',
+            description: '类型',
+            type: `block | line`,
+            default: 'block',
         },
     ],
 };
