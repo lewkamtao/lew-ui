@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { DemoMark1, DemoMark1_code } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const columns = [
     {

@@ -39,6 +39,5 @@ export * from './popover';
 export * from './drawer';
 export * from './result';
 
-export * from './demo-box';
 export * from './backtop';
 export * from './text-trim';

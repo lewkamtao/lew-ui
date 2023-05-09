@@ -5,6 +5,8 @@ import {
     DemoAvatar1_code,
     DemoAvatar2_code,
 } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const columns = [
     {
@@ -40,7 +42,7 @@ const docsTable = ref([
         param: 'alt',
         description: '原生属性',
         type: 'string',
-        default: "''",
+        default: "-",
     },
     {
         param: 'round',
@@ -52,7 +54,7 @@ const docsTable = ref([
         param: 'status',
         description: '状态',
         type: 'online｜processing｜away｜offline｜busy',
-        default: "''",
+        default: "-",
     },
     {
         param: 'status-position',
@@ -64,13 +66,13 @@ const docsTable = ref([
         param: 'width',
         description: '宽度',
         type: 'string｜number',
-        default: "''",
+        default: "-",
     },
     {
         param: 'height',
         description: '高度',
         type: 'string｜number',
-        default: "''",
+        default: "-",
     },
 ]);
 </script>

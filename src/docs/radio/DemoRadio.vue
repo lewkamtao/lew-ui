@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { object } from 'yup';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
+
 import {
     DemoRadio1,
     DemoRadio2,
@@ -60,7 +62,7 @@ const docsTable = ref([
         param: 'model-value (v-model)',
         description: '绑定值',
         type: 'string',
-        default: "''",
+        default: "-",
     },
     {
         param: 'options',
@@ -105,7 +107,7 @@ const docsTable2 = ref([
         param: 'label',
         description: '标题',
         type: 'string',
-        default: "''",
+        default: "-",
     },
     {
         param: 'value',

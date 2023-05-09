@@ -22,6 +22,9 @@
 
 <script setup lang="ts">
 import { DemoIcon1, DemoIcon1_code, DemoIcon2, DemoIcon2_code } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
+
 </script>
 
 <style scoped lang="scss">

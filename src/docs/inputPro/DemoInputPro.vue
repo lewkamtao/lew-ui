@@ -5,6 +5,8 @@ import {
     DemoInputPro1_code,
     DemoInputPro2_code,
 } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const docsTable = reactive([
     {
@@ -43,7 +45,7 @@ const docsTable = reactive([
                 param: 'model-value (v-model)',
                 description: '绑定值',
                 type: 'string',
-                default: "''",
+                default: "-",
             },
 
             {

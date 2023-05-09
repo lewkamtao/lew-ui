@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { DemoPopover1, DemoPopover1_code } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const columns = [
     {

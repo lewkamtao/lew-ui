@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { DemoDateRangePicker1, DemoDateRangePicker1_code } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
+
 const columns = [
     {
         title: '参数名',
@@ -28,7 +31,7 @@ const docsTable = ref([
         param: 'model-value (v-model)',
         description: '绑定值',
         type: 'string',
-        default: "''",
+        default: "-",
     },
 ]);
 </script>

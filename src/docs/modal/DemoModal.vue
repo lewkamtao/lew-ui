@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { DemoModal1, DemoModal1_code } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const columns = [
     {
@@ -36,7 +38,7 @@ const docsTable = ref([
         param: 'title',
         description: '标题',
         type: 'string',
-        default: "''",
+        default: "-",
     },
     {
         param: 'width',

@@ -7,6 +7,8 @@ import {
     DemoDropdown2_code,
     DemoDropdown3_code,
 } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const columns = [
     {
@@ -79,7 +81,7 @@ const docsTable = ref([
         param: 'width',
         description: '下拉气泡宽度',
         type: 'string(px)',
-        default: "''",
+        default: "-",
     },
 ]);
 

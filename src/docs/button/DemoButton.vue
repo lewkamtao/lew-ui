@@ -13,6 +13,8 @@ import {
     DemoButton5_code,
     DemoButton6_code,
 } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const columns = [
     {

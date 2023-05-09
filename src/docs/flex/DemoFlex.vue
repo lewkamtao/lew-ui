@@ -7,6 +7,8 @@ import {
     DemoFlex3,
     DemoFlex3_code,
 } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const columns = [
     {
@@ -54,7 +56,7 @@ const docsTable = ref([
         description:
             '排序模式，这是个可选项，定义之后会干扰x或y的对齐方向，这取决于你的direction。',
         type: `between | around`,
-        default: "''",
+        default: "-",
     },
     {
         param: 'wrap',
@@ -72,7 +74,7 @@ const docsTable = ref([
         param: 'width',
         description: '父元素宽度',
         type: `number`,
-        default: "''",
+        default: "-",
     },
 ]);
 </script>

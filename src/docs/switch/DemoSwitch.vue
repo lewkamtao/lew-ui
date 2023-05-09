@@ -5,6 +5,8 @@ import {
     DemoSwitch1_code,
     DemoSwitch2_code,
 } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const columns = [
     {
@@ -29,6 +31,23 @@ const columns = [
         field: 'description',
     },
 ];
+const columns2 = [
+    {
+        title: '事件名',
+        width: 150,
+        field: 'event',
+    },
+    {
+        title: '参数',
+        width: 120,
+        field: 'params',
+    },
+    {
+        title: '描述',
+        width: 240,
+        field: 'description',
+    },
+];
 const docsTable = ref([
     {
         param: 'model-value (v-model)',
@@ -42,11 +61,12 @@ const docsTable = ref([
         type: 'boolean',
         default: 'true',
     },
+]);
+const docsTable2 = ref([
     {
-        param: '@change',
-        description: '组件值发生变化的回调',
-        type: '(value: boolean) => void	',
-        default: "''",
+        event: 'change',
+        description: '值发生改变时触发',
+        params: 'boolean',
     },
 ]);
 </script>
@@ -63,6 +83,16 @@ const docsTable = ref([
         <br />
         <lew-title :size="16">Props</lew-title>
         <lew-table :data-source="docsTable" :columns="columns" height="auto">
+            <template #param="{ row }"> {{ row.param }} </template>
+            <template #description="{ row }"> {{ row.description }} </template>
+            <template #type="{ row }"> {{ row.type }} </template>
+            <template #default="{ row }"> {{ row.default }} </template>
+        </lew-table>
+        <br />
+        <br />
+        <br />
+        <lew-title :size="16">Events</lew-title>
+        <lew-table :data-source="docsTable2" :columns="columns2" height="auto">
             <template #param="{ row }"> {{ row.param }} </template>
             <template #description="{ row }"> {{ row.description }} </template>
             <template #type="{ row }"> {{ row.type }} </template>

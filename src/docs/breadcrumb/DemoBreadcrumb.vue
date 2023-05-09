@@ -7,6 +7,8 @@ import {
     DemoBreadcrumb2_code,
     DemoBreadcrumb3_code,
 } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const columns = [
     {
@@ -51,13 +53,13 @@ const optionsTable = ref([
         param: 'label',
         description: '文本内容',
         type: 'string',
-        default: "''",
+        default: "-",
     },
     {
         param: 'to',
         description: '绑定跳转链接',
         type: `string`,
-        default: "''",
+        default: "-",
     },
     {
         param: 'active',

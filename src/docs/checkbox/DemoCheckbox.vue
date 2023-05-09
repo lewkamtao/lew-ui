@@ -11,6 +11,8 @@ import {
     DemoCheckbox4_code,
     DemoCheckbox5_code,
 } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const columns = [
     {
@@ -63,7 +65,7 @@ const docsTable = ref([
         param: 'model-value (v-model)',
         description: '绑定值',
         type: 'string',
-        default: "''",
+        default: "-",
     },
     {
         param: 'options',
@@ -113,7 +115,7 @@ const docsTable2 = ref([
         param: 'label',
         description: '标题',
         type: 'string',
-        default: "''",
+        default: "-",
     },
     {
         param: 'value',

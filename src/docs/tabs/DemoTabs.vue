@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { DemoTabs1, DemoTabs2, DemoTabs1_code, DemoTabs2_code } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const docsTable = reactive([
     {
@@ -95,19 +97,19 @@ const docsTable = reactive([
                 param: 'label',
                 description: '文本内容',
                 type: 'string',
-                default: "''",
+                default: "-",
             },
             {
                 param: 'value',
                 description: '值',
                 type: `string`,
-                default: "''",
+                default: "-",
             },
             {
                 param: 'activeIndex',
                 description: '选中的索引',
                 type: `number`,
-                default: "''",
+                default: "-",
             },
         ],
     },

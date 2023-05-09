@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { DemoInputTag1, DemoInputTag1_code } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const docsTable = reactive([
     {
@@ -32,7 +34,7 @@ const docsTable = reactive([
                 param: 'model-value (v-model)',
                 description: '绑定值',
                 type: 'Array',
-                default: "''",
+                default: "-",
             },
         ],
     },

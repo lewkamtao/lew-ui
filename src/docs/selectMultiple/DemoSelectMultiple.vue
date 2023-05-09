@@ -13,6 +13,8 @@ import {
     DemoSelectMultiple6,
     DemoSelectMultiple6_code,
 } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const columns = [
     {
@@ -42,7 +44,7 @@ const docsTable = ref([
         param: 'model-value',
         description: '绑定值',
         type: 'string',
-        default: "''",
+        default: "-",
     },
     {
         param: 'options',
@@ -60,7 +62,7 @@ const docsTable = ref([
         param: 'default-value',
         description: '默认值',
         type: `string | number`,
-        default: "''",
+        default: "-",
     },
     {
         param: 'searchable',
@@ -99,13 +101,13 @@ const optionsTable = ref([
         param: 'label',
         description: '选项组的标签',
         type: 'string',
-        default: "''",
+        default: "-",
     },
     {
         param: 'value',
         description: '值',
         type: `string`,
-        default: "''",
+        default: "-",
     },
     {
         param: 'disabled',

@@ -18,7 +18,6 @@
         title="警告"
         content="这是一段文字，这是一段文字这是一段文字这是一段文字。"
     >
-        <template #title> 警告 </template>
         <template #handle>
             <lew-flex style="margin-top: 30px">
                 <lew-button text="返回" />

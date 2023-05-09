@@ -1,13 +1,7 @@
-<!--
- * @Author: sonders
- * @Date: 2022-07-12 17:20:50
- * @LastEditors: sonders
- * @LastEditTime: 2022-07-13 15:05:26
- * @Description: 
- * 
--->
 <script setup lang="ts">
 import { DemoDrawer1, DemoDrawer1_code } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const columns = [
     {

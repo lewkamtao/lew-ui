@@ -11,6 +11,8 @@ import {
     DemoForm5,
     DemoForm5_code,
 } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const columns = [
     {
@@ -73,7 +75,7 @@ const docsTable = ref([
         param: 'options',
         description: '表单配置',
         type: 'object',
-        default: "''",
+        default: "-",
     },
     {
         param: 'size',
@@ -106,7 +108,7 @@ const docsTable2 = ref([
         param: 'field',
         description: '表单字段',
         type: 'string',
-        default: "''",
+        default: "-",
     },
     {
         param: 'label',

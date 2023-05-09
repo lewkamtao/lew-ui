@@ -17,6 +17,8 @@ import {
     DemoTable7_code,
     DemoTable8_code,
 } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const alertClose: any = ref([]);
 
@@ -60,7 +62,7 @@ const docsTable1 = ref([
         param: '@change',
         description: '组件值发生变化的回调',
         type: '(value: boolean) => void	',
-        default: "''",
+        default: "-",
     },
 ]);
 const docsTable2 = ref([
@@ -80,7 +82,7 @@ const docsTable2 = ref([
         param: '@change',
         description: '组件值发生变化的回调',
         type: '(value: boolean) => void	',
-        default: "''",
+        default: "-",
     },
 ]);
 </script>
