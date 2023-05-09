@@ -17,12 +17,12 @@ const columnsMap: any = {
         },
         {
             title: '描述',
-            width: 220,
+            width: 150,
             field: 'description',
         },
         {
             title: '类型',
-            width: 240,
+            width: 320,
             field: 'type',
         },
         {
