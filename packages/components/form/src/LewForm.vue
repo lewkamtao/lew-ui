@@ -169,8 +169,6 @@ const validate = (field: string) => {
                 resolve(true);
             })
             .catch((err: any) => {
-                console.log(err.inner);
-
                 resolve(false);
                 if (field) {
                     // 重置

@@ -21,10 +21,11 @@ export * from './select';
 export * from './select-multiple';
 export * from './switch';
 export * from './date-picker';
-export * from './magic-number';
 
 export * from './table';
 export * from './pagination';
+export * from './magic-number';
+export * from './magic-text';
 
 export * from './avatar';
 export * from './title';

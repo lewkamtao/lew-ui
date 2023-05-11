@@ -5,9 +5,16 @@ import { any2px } from 'lew-ui/utils';
 const props = defineProps(titleProps);
 
 const titleStyle = computed(() => {
-    const { bold } = props;
+    const { bold, type } = props;
     const size = any2px(props.size);
-    return `font-weight:${bold};font-size:${size}`;
+    const typeStyle = type
+        ? `
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;background-image: linear-gradient(-252deg, var(--lew-${type}-color-start),var(--lew-${type}-color-end))`
+        : '';
+    return `font-weight:${bold};font-size:${size};${typeStyle}`;
 });
 </script>
 

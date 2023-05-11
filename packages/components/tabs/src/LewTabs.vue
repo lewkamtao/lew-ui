@@ -11,9 +11,10 @@ const tabsRef = ref();
 const itemRef = ref([] as any);
 
 const state = reactive({
-    activeItemStyle: '',
+    activeItemStyle: {} as any,
     curIndex: props.options.findIndex((e) => tabsValue.value === e.value),
     hidLine: '',
+    isInit: false,
 });
 
 watch(
@@ -25,9 +26,14 @@ watch(
 
 const init = () => {
     let index = props.options.findIndex((e) => e.value === tabsValue.value);
-    if (index < 0) index = 0;
+    if (index < 0) {
+        index = 0;
+    }
     state.activeItemStyle = `width:${itemRef.value[index].offsetWidth}px;transform: translateX(${itemRef.value[index].offsetLeft}px);`;
     tabsScroll();
+    setTimeout(() => {
+        state.isInit = true;
+    }, 100);
 };
 
 const selectItem = (value: [String, Number]) => {
@@ -48,16 +54,16 @@ const selectItem = (value: [String, Number]) => {
                 activeRef.offsetWidth / 2;
         }
 
-        state.activeItemStyle = `width:${activeRef.offsetWidth}px;transform: translate(${activeRef.offsetLeft}px);`;
+        state.activeItemStyle = {
+            width: `${activeRef.offsetWidth}px`,
+            transform: `translate(${activeRef.offsetLeft}px)`,
+        };
 
-        if (tabsValue.value !== props.modelValue) {
-            emit('change', {
-                label: _item.label,
-                value: _item.value,
-                activeIndex: index,
-            });
-            emit('update:modelValue', tabsValue.value);
-        }
+        emit('change', {
+            label: _item.label,
+            value: _item.value,
+            activeIndex: index,
+        });
         state.curIndex = index;
     }
 };
@@ -107,7 +113,7 @@ const tabsScroll = () => {
 };
 
 onMounted(() => {
-    if (props.modelValue === '') {
+    if (props.modelValue === undefined) {
         tabsValue.value = props.options[0].value;
     }
     init();
@@ -149,6 +155,7 @@ onUnmounted(() => {
             <div
                 :style="state.activeItemStyle"
                 class="lew-tabs-item-animation-active"
+                :class="{ 'lew-tabs-item-isInit': state.isInit }"
             ></div>
             <div
                 v-for="item in options"
@@ -270,11 +277,13 @@ onUnmounted(() => {
         z-index: 9;
         height: 28px;
         border-radius: 4px;
-        transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
         background: var(--lew-tabs-active-color);
         transform: translateX(3px);
         box-shadow: 0px 0px 12px rgba($color: #000000, $alpha: 0.15);
         box-sizing: border-box;
+    }
+    .lew-tabs-item-isInit {
+        transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
     }
 }
 
@@ -303,7 +312,7 @@ onUnmounted(() => {
         left: 0px;
         z-index: 9;
         height: 2px;
-        transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+
         background: var(--lew-primary-color-dark);
         transform: translateX(3px);
         box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);

@@ -2,7 +2,7 @@
 import { inputTagProps } from './props';
 import { useVModel } from '@vueuse/core';
 
-const emit = defineEmits(['update:modelValue', 'close', 'change']);
+const emit = defineEmits(['close', 'change']);
 
 const props = defineProps(inputTagProps);
 const tagsValue = useVModel(props, 'modelValue', emit);

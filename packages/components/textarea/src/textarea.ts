@@ -1,5 +1,4 @@
 import { ExtractPropTypes } from 'vue';
-import { string } from 'yup';
 
 export const textareaProps = {
     // 绑定值

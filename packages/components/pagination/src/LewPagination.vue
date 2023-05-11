@@ -3,12 +3,7 @@ import { useVModels } from '@vueuse/core';
 import { _props } from './props';
 
 const props = defineProps(_props);
-const emit = defineEmits([
-    'update:currentPage',
-    'update:total',
-    'update:pageSize',
-    'change',
-]);
+const emit = defineEmits(['change']);
 
 const { total, currentPage, pageSizeOptions } = useVModels(props, emit);
 

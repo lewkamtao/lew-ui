@@ -9,8 +9,8 @@ export default {
             default: '100',
         },
         {
-            name: 'currentPage',
-            description: '当前页码',
+            name: 'v-model:currentPage',
+            description: '当前页码，双向绑定',
             type: 'number',
             default: '1',
         },

@@ -72,6 +72,8 @@
     --lew-primary-text-color: rgb(47, 88, 146);
     --lew-primary-color-hover: rgb(54, 109, 187);
     --lew-primary-color-active: rgb(42, 94, 149);
+    --lew-primary-color-start: rgb(42, 94, 149);
+    --lew-primary-color-end: rgb(197, 223, 251);
     //
     --lew-normal-color: rgb(240, 240, 240);
     --lew-normal-color-dark: rgb(105, 104, 104);
@@ -80,6 +82,8 @@
     --lew-normal-text-color: rgb(66, 66, 66);
     --lew-normal-color-hover: rgb(235, 235, 235);
     --lew-normal-color-active: rgb(217, 217, 217);
+    --lew-normal-color-start: rgb(119, 119, 119);
+    --lew-normal-color-end: rgb(173, 171, 171);
     // success
     --lew-success-color: rgb(49, 196, 141);
     --lew-success-color-dark: rgb(35, 153, 110);
@@ -88,6 +92,8 @@
     --lew-success-text-color: rgb(32, 161, 113);
     --lew-success-color-hover: rgb(40, 176, 126);
     --lew-success-color-active: rgb(28, 157, 110);
+    --lew-success-color-start: rgb(38, 171, 122);
+    --lew-success-color-end: rgb(158, 213, 193);
     // info
     --lew-info-color: var(--lew-primary-color);
     --lew-info-color-dark: var(--lew-primary-color-dark);
@@ -96,6 +102,8 @@
     --lew-info-text-color: var(--lew-primary-text-color);
     --lew-info-color-hover: var(--lew-primary-color-hover);
     --lew-info-color-active: var(--lew-primary-color-active);
+    --lew-info-color-start: var(--lew-primary-color-start);
+    --lew-info-color-end: var(--lew-primary-color-start);
     // warning
     --lew-warning-color: rgb(227, 179, 68);
     --lew-warning-color-dark: rgb(186, 132, 7);
@@ -104,6 +112,8 @@
     --lew-warning-text-color: rgb(187, 128, 9);
     --lew-warning-color-hover: rgb(222, 161, 17);
     --lew-warning-color-active: rgb(187, 133, 7);
+    --lew-warning-color-start: rgb(202, 160, 61);
+    --lew-warning-color-end: rgb(236, 215, 166);
     // error
     --lew-error-color: rgb(249, 128, 128);
     --lew-error-color-dark: rgb(197, 88, 88);
@@ -112,6 +122,8 @@
     --lew-error-text-color: #d10000;
     --lew-error-color-hover: rgb(231, 113, 113);
     --lew-error-color-active: rgb(204, 92, 92);
+    --lew-error-color-start: rgb(189, 73, 73);
+    --lew-error-color-end: rgb(235, 181, 181);
     // 标题
     --lew-title-bold: 800;
     // 表单样式

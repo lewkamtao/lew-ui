@@ -25,7 +25,13 @@ const getButtonClass = computed(() => {
     const { round, size, type, icon, text } = props;
     const loading = _loading.value || props.loading;
     const singleIcon = !!(!text && icon);
-    return object2class('lew-button', { round, size, type, loading, singleIcon });
+    return object2class('lew-button', {
+        round,
+        size,
+        type,
+        loading,
+        singleIcon,
+    });
 });
 
 const getIconSize = computed(() => {
@@ -67,7 +73,14 @@ const getIconSize = computed(() => {
             }"
             type="loader"
         />
-        <span v-if="text" class="lew-button-text">{{ text }} </span>
+        <span class="lew-button-text">
+            <template v-if="text">
+                {{ text }}
+            </template>
+            <template v-else>
+                <slot />
+            </template>
+        </span>
     </button>
 </template>
 
