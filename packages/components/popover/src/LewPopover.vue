@@ -81,10 +81,10 @@ const initTippy = () => {
         allowHTML: true,
         maxWidth: 'none',
         onShow() {
-            emit('onShow');
+            emit('show');
         },
         onHide() {
-            emit('onHide');
+            emit('hide');
         },
     });
     instance.popper.children[0].setAttribute('data-lew', 'popover');
@@ -99,7 +99,7 @@ onMounted(() => {
     initTippy();
 });
 
-const emit = defineEmits(['onShow', 'onHide']);
+const emit = defineEmits(['show', 'hide']);
 
 const show = () => {
     instance.show();

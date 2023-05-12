@@ -30,9 +30,9 @@ export default {
                 if (!binding?.value?.content) {
                     el.instance.disable();
                 }
-            },
+            }, 
             updated(el: any, binding: DirectiveBinding) {
-                if (binding?.value?.content) {
+                if (!binding?.value?.content) {
                     el.instance.disable();
                 } else {
                     el.instance.enable();

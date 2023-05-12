@@ -75,25 +75,36 @@ export const inputProps = {
             return value?.length || 0;
         },
     },
+
     prefixes: {
         type: String as PropType<InputPrefixesType>,
         default: '',
     },
-    prefixesBody: {
-        type: [String, Array],
+    
+    prefixesValue: {
+        type: String,
         default: 'Prefixes',
     },
-    suffix: {
-        type: String as PropType<InputSuffixType>,
-        default: '',
-    },
-    suffixBody: {
-        type: [String, Array],
-        default: 'Suffix',
+    prefixesOptions: {
+        type: Array,
+        default: () => [],
     },
     prefixesTooltip: {
         type: String,
         default: '',
+    },
+
+    suffix: {
+        type: String as PropType<InputSuffixType>,
+        default: '',
+    },
+    suffixValue: {
+        type: String,
+        default: 'Suffix',
+    },
+    suffixOptions: {
+        type: Array,
+        default: () => [],
     },
     suffixTooltip: {
         type: String,

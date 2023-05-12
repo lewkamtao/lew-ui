@@ -5,6 +5,8 @@ import { object2class } from 'lew-ui/utils';
 
 const emit = defineEmits([
     'update:modelValue',
+    'update:prefixesValue',
+    'update:suffixValue',
     'update:type',
     'clear',
     'blur',
@@ -15,8 +17,14 @@ const emit = defineEmits([
 
 const props = defineProps(inputProps);
 const modelValue = useVModel(props, 'modelValue', emit);
+const prefixesValue = useVModel(props, 'prefixesValue', emit);
+const suffixValue = useVModel(props, 'suffixValue', emit);
 const lewInputRef = ref();
 const _type = ref(props.type);
+const state = ref({
+    prefixesDropdown: 'hide',
+    suffixDropdown: 'hide',
+});
 
 watch(
     () => props.type,
@@ -103,6 +111,24 @@ const getInputClassNames = computed(() => {
     });
 });
 
+const prefixesChange = (item: any) => {
+    prefixesValue.value = item.value;
+};
+const suffixChange = (item: any) => {
+    suffixValue.value = item.value;
+};
+const getPrefixesLabel = computed(() => {
+    const item: any = props.prefixesOptions.find(
+        (e: any) => e.value === prefixesValue.value
+    );
+    return item?.label || '';
+});
+const getSuffixLabel = computed(() => {
+    const item: any = props.suffixOptions.find(
+        (e: any) => e.value === suffixValue.value
+    );
+    return item?.label || '';
+});
 defineExpose({ toFocus });
 </script>
 
@@ -117,13 +143,37 @@ defineExpose({ toFocus });
             class="lew-input-prefixes"
         >
             <div v-if="prefixes === 'text'" class="lew-input-prefixes-text">
-                {{ prefixesBody }}
+                {{ prefixesValue }}
             </div>
             <div v-if="prefixes === 'icon'" class="lew-input-prefixes-icon">
-                <lew-icon :size="getIconSize" :type="prefixesBody"> </lew-icon>
+                <lew-icon :size="getIconSize" :type="prefixesValue"> </lew-icon>
             </div>
             <div v-if="prefixes === 'select'" class="lew-input-prefixes-select">
-                <lew-select :options="prefixesBody"> </lew-select>
+                <lew-dropdown
+                    placement="bottom"
+                    trigger="click"
+                    :options="prefixesOptions"
+                    @change="prefixesChange"
+                    @show="state.prefixesDropdown = 'show'"
+                    @hide="state.prefixesDropdown = 'hide'"
+                >
+                    <lew-flex
+                        gap="5px"
+                        x="start"
+                        class="lew-input-prefixes-dropdown"
+                        :class="{
+                            'lew-input-prefixes-dropdown-open':
+                                state.prefixesDropdown === 'show',
+                        }"
+                    >
+                        {{ getPrefixesLabel }}
+                        <lew-icon
+                            :size="getIconSize"
+                            type="chevron-down"
+                            class="icon-select"
+                        />
+                    </lew-flex>
+                </lew-dropdown>
             </div>
         </div>
         <input
@@ -150,13 +200,37 @@ defineExpose({ toFocus });
             class="lew-input-suffix"
         >
             <div v-if="suffix === 'text'" class="lew-input-suffix-text">
-                {{ suffixBody }}
+                {{ suffixValue }}
             </div>
             <div v-if="suffix === 'icon'" class="lew-input-suffix-icon">
-                <lew-icon :size="getIconSize" :type="suffixBody"> </lew-icon>
+                <lew-icon :size="getIconSize" :type="suffixValue"> </lew-icon>
             </div>
             <div v-if="suffix === 'select'" class="lew-input-suffix-select">
-                <lew-select :options="suffixBody"> </lew-select>
+                <lew-dropdown
+                    placement="bottom"
+                    trigger="click"
+                    :options="suffixOptions"
+                    @change="suffixChange"
+                    @show="state.suffixDropdown = 'show'"
+                    @hide="state.suffixDropdown = 'hide'"
+                >
+                    <lew-flex
+                        gap="5px"
+                        x="start"
+                        class="lew-input-suffix-dropdown"
+                        :class="{
+                            'lew-input-suffix-dropdown-open':
+                                state.suffixDropdown === 'show',
+                        }"
+                    >
+                        {{ getSuffixLabel }}
+                        <lew-icon
+                            :size="getIconSize"
+                            type="chevron-down"
+                            class="icon-select"
+                        />
+                    </lew-flex>
+                </lew-dropdown>
             </div>
         </div>
         <label v-if="autoWidth" class="lew-input-auto-width">
@@ -206,7 +280,6 @@ defineExpose({ toFocus });
     align-items: center;
     justify-content: space-between;
     position: relative;
-    overflow: hidden;
     width: 100%;
     border-radius: var(--lew-border-radius);
     background-color: var(--lew-form-bgcolor);
@@ -221,7 +294,25 @@ defineExpose({ toFocus });
         user-select: none;
         display: inline-flex;
         align-items: center;
+        .icon-select {
+            transition: var(--lew-form-transition);
+        }
+        .icon-select-up {
+            transform: rotate(180deg);
+        }
     }
+    .lew-input-prefixes-dropdown,
+    .lew-input-suffix-dropdown {
+        cursor: pointer;
+    }
+    .lew-input-prefixes-dropdown-open,
+    .lew-input-suffix-dropdown-open {
+        opacity: 0.4;
+        .icon-select {
+            transform: rotate(180deg);
+        }
+    }
+
     .lew-input-prefixes-icon {
         display: inline-flex;
         justify-content: center;

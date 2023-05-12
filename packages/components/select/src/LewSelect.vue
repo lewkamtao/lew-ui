@@ -145,7 +145,7 @@ const getIconSize = computed(() => {
     return size[props.size];
 });
 
-const onShow = () => {
+const showHandle = () => {
     state.visible = true;
     getSelectWidth();
     if (state.options && state.options.length === 0 && props.searchable) {
@@ -153,7 +153,7 @@ const onShow = () => {
     }
 };
 
-const onHide = () => {
+const hideHandle = () => {
     state.visible = false;
     emit('blur');
 };
@@ -171,8 +171,8 @@ defineExpose({ show, hide });
         placement="bottom-start"
         style="width: 100%"
         :loading="state.loading"
-        @on-show="onShow"
-        @on-hide="onHide"
+        @show="showHandle"
+        @hide="hideHandle"
     >
         <template #trigger>
             <div

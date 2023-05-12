@@ -25,7 +25,7 @@ const change = (date: string) => {
 };
 
 const getIconSize = computed(() => {
-    const size = {
+    const size: any = {
         small: 13,
         medium: 14,
         large: 16,
@@ -47,8 +47,8 @@ defineExpose({ show, hide });
         ref="lewPopoverRef"
         trigger="click"
         placement="bottom-start"
-        @on-show="isShowPicker = true"
-        @on-hide="isShowPicker = false"
+        @show="isShowPicker = true"
+        @hide="isShowPicker = false"
     >
         <template #trigger>
             <div class="lew-date-picker-view" :class="classObject">

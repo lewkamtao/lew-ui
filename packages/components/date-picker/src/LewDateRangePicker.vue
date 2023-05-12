@@ -31,10 +31,10 @@ const change = (e?: any) => {
     hide();
 };
 
-const onHide = () => {
+const showHandle = () => {
     isShowPicker.value = false;
 };
-const onShow = () => {
+const hideHandle = () => {
     isShowPicker.value = true;
     lewDateRangePanelRef.value.init();
 };
@@ -53,8 +53,8 @@ defineExpose({ show, hide });
         ref="lewPopoverRef"
         trigger="click"
         placement="bottom-start"
-        @on-show="onShow"
-        @on-hide="onHide"
+        @show="showHandle"
+        @hide="hideHandle"
     >
         <template #trigger>
             <div class="lew-date-picker-view" :class="classObject">

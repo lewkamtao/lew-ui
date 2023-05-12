@@ -69,7 +69,7 @@ const getIconSize = computed(() => {
             animation="spin"
             animation-speed="fast"
             :class="{
-                'lew-loading-icon-show': (_loading || loading) && !disabled,
+                'lew-loading-icshow': (_loading || loading) && !disabled,
             }"
             type="loader"
         />
@@ -114,7 +114,7 @@ const getIconSize = computed(() => {
         transition: opacity 0.35s;
     }
 
-    .lew-loading-icon-show {
+    .lew-loading-icshow {
         opacity: 1;
     }
 }
