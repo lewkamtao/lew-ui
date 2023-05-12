@@ -33,7 +33,7 @@ export default {
             default: '',
         },
         {
-            name:'fieldProps',
+            name:'props',
             description: '组件props',
             type: 'object',
             default: '{}',

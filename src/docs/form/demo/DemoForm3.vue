@@ -13,7 +13,7 @@ const options = ref([
         label: '密码',
         as: 'input',
         rules: Yup.string().min(6).required(),
-        fieldProps: {
+        props: {
             type: 'password',
         },
     },

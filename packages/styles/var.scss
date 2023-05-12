@@ -271,13 +271,15 @@
     --lew-success-color-hover: rgb(34, 134, 97);
     --lew-success-color-active: rgb(27, 109, 79);
     // info
-    --lew-info-color: rgb(50, 86, 136);
-    --lew-info-color-dark: rgb(85, 179, 255);
-    --lew-info-color-light: #273141;
-    --lew-info-color-light2: #374c6c;
-    --lew-info-text-color: rgba(173, 207, 255, 0.8);
-    --lew-info-color-hover: rgb(52, 91, 146);
-    --lew-info-color-active: rgb(26, 58, 92);
+    --lew-info-color: var(--lew-primary-color);
+    --lew-info-color-dark: var(--lew-primary-color-dark);
+    --lew-info-color-light: var(--lew-primary-color-light);
+    --lew-info-color-light2: var(--lew-primary-color-light2);
+    --lew-info-text-color: var(--lew-primary-text-color);
+    --lew-info-color-hover: var(--lew-primary-color-hover);
+    --lew-info-color-active: var(--lew-primary-color-active);
+    --lew-info-color-start: var(--lew-primary-color-start);
+    --lew-info-color-end: var(--lew-primary-color-start);
     // error
     --lew-error-color: rgb(161, 74, 74);
     --lew-error-color-dark: rgb(255, 95, 95);
@@ -335,4 +337,18 @@
     --lew-table-border: 1px rgba(255, 255, 255, 0.05) solid;
     --lew-table-scroll-line-color-start: rgba(0, 0, 0, 0);
     --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.2);
+
+    // checkbox
+    --lew-checkbox-block-color: var(--lew-bgcolor-2);
+    --lew-checkbox-border-color: var(--lew-bgcolor-4);
+    --lew-checkbox-color: var(--lew-primary-color);
+    --lew-checkbox-color-dark: var(--lew-primary-color-dark);
+    --lew-checkbox-color-light: var(--lew-primary-color-light);
+    --lew-checkbox-border-color-hover: var(--lew-primary-color);
+    --lew-radio-block-color: var(--lew-bgcolor-2);
+    --lew-radio-border-color: var(--lew-bgcolor-4);
+    --lew-radio-border-color-hover: var(--lew-primary-color);
+    --lew-radio-color: var(--lew-primary-color);
+    --lew-radio-color-dark: var(--lew-primary-color-dark);
+    --lew-radio-color-light: var(--lew-primary-color-light);
 }

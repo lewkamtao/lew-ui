@@ -8,14 +8,14 @@ const options = ref([
         label: '用户名',
         component: 'lew-input',
         rules: Yup.string().required(),
-        fieldProps: {},
+        props: {},
     },
     {
         field: 'password',
         label: '密码',
         component: 'lew-input',
         rules: Yup.string().min(6).required(),
-        fieldProps: {
+        props: {
             type: 'password',
         },
     },
