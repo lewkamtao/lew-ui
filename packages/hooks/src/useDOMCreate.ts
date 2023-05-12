@@ -1,10 +1,10 @@
 export function useDOMCreate(nodeId: string): void {
-    let node = document.getElementById(nodeId) || document.createElement('div');
-    node.id = nodeId;
-    document.body.appendChild(node);
-    onUnmounted(() => {
-        try {
-            if (node) document.body.removeChild(node);
-        } catch {}
-    });
+    let node = document.getElementById(nodeId);
+    if (node) {
+        return;
+    } else {
+        const newNode = document.createElement('div');
+        newNode.id = nodeId;
+        document.body.appendChild(newNode);
+    }
 }
