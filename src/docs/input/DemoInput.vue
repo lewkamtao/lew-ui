@@ -26,7 +26,7 @@ const options = ref(
         <lew-demo-box title="尺寸" :code="DemoInput1_code">
             <demo-input1 />
         </lew-demo-box>
-        <lew-demo-box title="字数限制" :code="DemoInput2_code">
+        <lew-demo-box title="前后缀" :code="DemoInput2_code">
             <demo-input2 />
         </lew-demo-box>
         <lew-demo-box title="密码可见" :code="DemoInput3_code">

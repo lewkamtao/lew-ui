@@ -20,7 +20,7 @@ const state = reactive({
 watch(
     () => tabsValue.value,
     (v) => {
-        selectItem(v);
+        selectItem(v, 'watch');
     }
 );
 
@@ -36,7 +36,7 @@ const init = () => {
     }, 100);
 };
 
-const selectItem = (value: [String, Number]) => {
+const selectItem = (value: [String, Number], type?: string) => {
     const index = props.options.findIndex((e) => value === e.value);
     if (state.curIndex != index) {
         const _item = props.options[index];
@@ -58,12 +58,14 @@ const selectItem = (value: [String, Number]) => {
             width: `${activeRef.offsetWidth}px`,
             transform: `translate(${activeRef.offsetLeft}px)`,
         };
+        if (type !== 'watch') {
+            emit('change', {
+                label: _item.label,
+                value: _item.value,
+                activeIndex: index,
+            });
+        }
 
-        emit('change', {
-            label: _item.label,
-            value: _item.value,
-            activeIndex: index,
-        });
         state.curIndex = index;
     }
 };

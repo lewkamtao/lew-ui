@@ -286,13 +286,13 @@ group.value = [
                 label: '',
                 type: 'success',
             },
-            {
-                cname: '魔术文本',
-                name: 'MagicText',
-                path: '/MagicText',
-                label: '',
-                type: 'success',
-            },
+            // {
+            //     cname: '魔术文本',
+            //     name: 'MagicText',
+            //     path: '/MagicText',
+            //     label: '',
+            //     type: 'success',
+            // },
         ],
     },
     {

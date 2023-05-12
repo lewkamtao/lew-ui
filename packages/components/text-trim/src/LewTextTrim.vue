@@ -57,7 +57,8 @@ const showPop = () => {
         element.style.cursor = 'pointer';
         instance = tippy(element, {
             theme: 'light',
-            delay: [150, 150],
+            delay: [250, 250],
+            duration: [200, 200],
             content: text,
             animation: 'shift-away-subtle',
             interactive: true,

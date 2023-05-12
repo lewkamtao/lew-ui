@@ -102,11 +102,30 @@ const getInputClassNames = computed(() => {
         autoWidth,
     });
 });
+
 defineExpose({ toFocus });
 </script>
 
 <template>
     <div class="lew-input-view" :class="getInputClassNames">
+        <div
+            v-tooltip="{
+                content: prefixesTooltip,
+                trigger: 'mouseenter',
+            }"
+            v-if="prefixes"
+            class="lew-input-prefixes"
+        >
+            <div v-if="prefixes === 'text'" class="lew-input-prefixes-text">
+                {{ prefixesBody }}
+            </div>
+            <div v-if="prefixes === 'icon'" class="lew-input-prefixes-icon">
+                <lew-icon :size="getIconSize" :type="prefixesBody"> </lew-icon>
+            </div>
+            <div v-if="prefixes === 'select'" class="lew-input-prefixes-select">
+                <lew-select :options="prefixesBody"> </lew-select>
+            </div>
+        </div>
         <input
             ref="lewInputRef"
             class="lew-input"
@@ -122,6 +141,24 @@ defineExpose({ toFocus });
             @blur="emit('blur', modelValue)"
             @focus="focus"
         />
+        <div
+            v-tooltip="{
+                content: suffixTooltip,
+                trigger: suffixTooltip ? 'mouseenter' : '',
+            }"
+            v-if="suffix"
+            class="lew-input-suffix"
+        >
+            <div v-if="suffix === 'text'" class="lew-input-suffix-text">
+                {{ suffixBody }}
+            </div>
+            <div v-if="suffix === 'icon'" class="lew-input-suffix-icon">
+                <lew-icon :size="getIconSize" :type="suffixBody"> </lew-icon>
+            </div>
+            <div v-if="suffix === 'select'" class="lew-input-suffix-select">
+                <lew-select :options="suffixBody"> </lew-select>
+            </div>
+        </div>
         <label v-if="autoWidth" class="lew-input-auto-width">
             {{ modelValue }}
         </label>
@@ -178,6 +215,24 @@ defineExpose({ toFocus });
     outline: 0px transparent solid;
     border: var(--lew-form-border-width) transparent solid;
     box-shadow: var(--lew-form-box-shadow);
+    .lew-input-prefixes,
+    .lew-input-suffix {
+        white-space: nowrap;
+        user-select: none;
+        display: inline-flex;
+        align-items: center;
+    }
+    .lew-input-prefixes-icon {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .lew-input-suffix-icon {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .lew-input {
         width: 100%;
         text-overflow: ellipsis;
@@ -279,7 +334,14 @@ defineExpose({ toFocus });
         font-size: var(--lew-form-font-size-small);
         line-height: var(--lew-form-input-line-height-small);
     }
-
+    .lew-input-prefixes {
+        font-size: var(--lew-form-font-size-small);
+        margin-left: 7px;
+    }
+    .lew-input-suffix {
+        font-size: var(--lew-form-font-size-small);
+        margin-right: 7px;
+    }
     .lew-input {
         height: var(--lew-form-item-height-small);
     }
@@ -311,7 +373,14 @@ defineExpose({ toFocus });
         line-height: var(--lew-form-input-line-height-medium);
         height: var(--lew-form-item-height-medium);
     }
-
+    .lew-input-prefixes {
+        font-size: var(--lew-form-font-size-medium);
+        margin-left: 9px;
+    }
+    .lew-input-suffix {
+        font-size: var(--lew-form-font-size-medium);
+        margin-right: 9px;
+    }
     .lew-input-controls {
         height: var(--lew-form-item-height-medium);
         .lew-input-count {
@@ -340,7 +409,14 @@ defineExpose({ toFocus });
         line-height: var(--lew-form-input-line-height-large);
         height: var(--lew-form-item-height-large);
     }
-
+    .lew-input-prefixes {
+        font-size: var(--lew-form-font-size-large);
+        margin-left: 12px;
+    }
+    .lew-input-suffix {
+        font-size: var(--lew-form-font-size-large);
+        margin-right: 12px;
+    }
     .lew-input-controls {
         height: var(--lew-form-item-height-large);
         .lew-input-count {

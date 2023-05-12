@@ -4,12 +4,47 @@ let value = ref('');
 
 <template>
     <lew-flex style="width: 300px" :gap="20" x="start" direction="y">
-        <lew-input v-model="value" placeholder="展示字数" show-count />
         <lew-input
-            placeholder="最大字数限制"
             v-model="value"
-            show-count
-            :max-length="30"
+            size="small"
+            prefixes="text"
+            suffix="text"
+            prefixesBody="https://"
+            suffixBody=".com"
+            placeholder="请输入网址"
+        />
+        <lew-input
+            v-model="value"
+            size="medium"
+            prefixes="text"
+            suffix="text"
+            prefixesBody="https://"
+            suffixBody=".com"
+            placeholder="请输入网址"
+        />
+        <lew-input
+            v-model="value"
+            size="large"
+            prefixes="text"
+            suffix="text"
+            prefixesBody="https://"
+            suffixBody=".com"
+            placeholder="请输入网址"
+        />
+        <lew-input
+            v-model="value"
+            suffix="text"
+            suffixBody="@gmail.com"
+            placeholder="请输入邮箱"
+        />
+        <lew-input
+            v-model="value"
+            prefixes="icon"
+            prefixesBody="phone"
+            suffix="icon"
+            suffixBody="alert-circle"
+            suffixTooltip="必须填写手机号"
+            placeholder="请输入手机号"
         />
     </lew-flex>
 </template>
