@@ -115,7 +115,7 @@ const tabsScroll = () => {
 };
 
 onMounted(() => {
-    if (props.modelValue === undefined) {
+    if (!props.modelValue) {
         tabsValue.value = props.options[0].value;
     }
     init();
