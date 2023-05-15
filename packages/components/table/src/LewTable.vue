@@ -380,7 +380,12 @@ onUnmounted(() => {
                                 :row="row"
                                 :column="column"
                             />
-                            <template v-else>{{ row[column.field] }}</template>
+                            <template v-else>
+                                <lew-text-trim
+                                    style="width: 100%"
+                                    :text="row[column.field]"
+                                />
+                            </template>
                         </lew-flex>
                     </div>
                 </div>
