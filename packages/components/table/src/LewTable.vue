@@ -382,6 +382,7 @@ onUnmounted(() => {
                             />
                             <template v-else>
                                 <lew-text-trim
+                                    :x="column.x || 'start'"
                                     style="width: 100%"
                                     :text="row[column.field]"
                                 />

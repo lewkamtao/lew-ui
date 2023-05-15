@@ -2,6 +2,7 @@
 import tippy from 'tippy.js';
 import { watchDebounced } from '@vueuse/core';
 import { textTrimProps } from './text-trim';
+import { object2class } from 'lew-ui/utils';
 
 const props = defineProps(textTrimProps);
 
@@ -78,12 +79,18 @@ const getTextTrimStyleObject = computed(() => {
     }
     return `white-space: nowrap;`;
 });
+
+const getClassNames = computed(() => {
+    const { x } = props;
+    return object2class('lew-text-trim', { x });
+});
 </script>
 
 <template>
     <div
         ref="textTrimRef"
         class="lew-text-trim-wrapper"
+        :class="getClassNames"
         :style="getTextTrimStyleObject"
         @mouseover="showPop"
         v-html="text"
@@ -95,5 +102,14 @@ const getTextTrimStyleObject = computed(() => {
     overflow: hidden;
     text-overflow: ellipsis; //文本溢出显示省略号
     width: 100px;
+}
+.lew-text-trim-x-start {
+    text-align: left;
+}
+.lew-text-trim-x-center {
+    text-align: center;
+}
+.lew-text-trim-x-end {
+    text-align: right;
 }
 </style>

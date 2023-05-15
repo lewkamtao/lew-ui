@@ -17,6 +17,10 @@ export const textTrimProps = {
         type: String,
         default: 'top',
     },
+    x: {
+        type: String,
+        default: 'start', // center end
+    },
     lineClamp: {
         type: Number,
         default: undefined,
