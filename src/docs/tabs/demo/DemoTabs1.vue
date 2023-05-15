@@ -50,7 +50,7 @@ const options = ref(
     })
 );
 
-const value = ref(1);
+const value = ref();
 
 const change = (e: Options) => {
     LewMessage.info(e.label);

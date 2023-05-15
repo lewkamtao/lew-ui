@@ -2,47 +2,20 @@
 import {
     DemoTitle1,
     DemoTitle2,
+    DemoTitle3,
     DemoTitle1_code,
     DemoTitle2_code,
+    DemoTitle3_code,
 } from './demo';
-
-const columns = [
-    {
-        title: '参数名',
-        width: 150,
-        field: 'param',
-    },
-
-    {
-        title: '类型',
-        width: 240,
-        field: 'type',
-    },
-    {
-        title: '默认值',
-        width: 120,
-        field: 'default',
-    },
-    {
-        title: '描述',
-        width: 220,
-        field: 'description',
-    },
-];
-const docsTable = ref([
-    {
-        param: 'size',
-        description: '标题尺寸大小',
-        type: 'number',
-        default: 24,
-    },
-    {
-        param: 'bold',
-        description: '粗体值',
-        type: `100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900`,
-        default: 500,
-    },
-]);
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
+import * as API from './api';
+const options = ref(
+    Object.keys(API).map((key: any) => {
+        // @ts-ignore
+        return API[key];
+    })
+);
 </script>
 <template>
     <div class="demo-wrapper">
@@ -53,12 +26,9 @@ const docsTable = ref([
         <lew-demo-box title="粗体" :code="DemoTitle2_code">
             <demo-title2 />
         </lew-demo-box>
-        <lew-title :size="16">Props</lew-title>
-        <lew-table :data-source="docsTable" :columns="columns" height="auto">
-            <template #param="{ row }"> {{ row.param }} </template>
-            <template #description="{ row }"> {{ row.description }} </template>
-            <template #type="{ row }"> {{ row.type }} </template>
-            <template #default="{ row }"> {{ row.default }} </template>
-        </lew-table>
+        <lew-demo-box title="主题色" :code="DemoTitle3_code">
+            <demo-title3 />
+        </lew-demo-box>
+        <lew-docs-tables :options="options"></lew-docs-tables>
     </div>
 </template>

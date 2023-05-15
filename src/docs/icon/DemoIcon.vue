@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import { DemoIcon1, DemoIcon1_code, DemoIcon2, DemoIcon2_code } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
+</script>
 <template>
     <div class="demo-wrapper">
         <lew-title>Icon</lew-title>
@@ -13,16 +18,11 @@
         <lew-demo-box title="图标" :code="DemoIcon1_code">
             <demo-icon1 />
         </lew-demo-box>
-
         <lew-demo-box title="旋转动画" :code="DemoIcon2_code">
             <demo-icon2 />
         </lew-demo-box>
     </div>
 </template>
-
-<script setup lang="ts">
-import { DemoIcon1, DemoIcon1_code, DemoIcon2, DemoIcon2_code } from './demo';
-</script>
 
 <style scoped lang="scss">
 .icon {

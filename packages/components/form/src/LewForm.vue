@@ -2,38 +2,106 @@
 import { formProps } from './form';
 import { object2class } from 'lew-ui/utils';
 import * as Yup from 'yup';
-import { useVModel } from '@vueuse/core';
+import { useVModel, watchDebounced } from '@vueuse/core';
 const props = defineProps(formProps);
 const emit = defineEmits(['update:modelValue', 'update:options', 'change']);
-const form = useVModel(props, 'modelValue', emit);
-const componentOptions = useVModel(props, 'options', emit);
+const form = ref({} as any);
+const componentOptions: any = useVModel(props, 'options', emit);
 
 const getFormClassNames = computed(() => {
     const { direction, size } = props;
     return object2class('lew-form', { direction, size });
 });
 
+watchDebounced(
+    () => componentOptions.value,
+    (v: any) => {
+        form.value = arrayToObj(v);
+        emit('change', toRaw(form.value));
+    },
+    { deep: true, debounce: 250, maxWait: 500 }
+);
+
+onMounted(() => {
+    form2componentOptions();
+    form.value = arrayToObj(toRaw(componentOptions.value));
+    emit('change', toRaw(form.value));
+});
+
 const arrayToObj = (arr: any): any => {
     const obj: Record<string, unknown> = {};
-    arr.forEach(({ field, value }: any) => {
+    arr?.forEach(({ field, value }: any) => {
         if (!field) {
             return;
         }
         const keys = field.split('.');
         let currentObj = obj;
+
         for (let i = 0; i < keys.length - 1; i++) {
             const key = keys[i];
+
             if (!currentObj[key]) {
                 currentObj[key] = {};
             }
             currentObj = currentObj[key] as Record<string, unknown>;
         }
+
         if (value !== undefined) {
-            currentObj[keys[keys.length - 1]] = value;
+            currentObj[keys[keys.length - 1]] = toRaw(value);
         }
     });
-    return obj;
+    return removeEmpty(obj);
 };
+function removeEmpty(obj: any) {
+    if (Array.isArray(obj)) {
+        // 如果是数组类型
+        return obj
+            .map((value: any) => {
+                if (typeof value === 'object') {
+                    value = removeEmpty(value);
+                    if (Array.isArray(value) && value.length === 0) {
+                        return undefined;
+                    }
+                    if (
+                        typeof value === 'object' &&
+                        Object.keys(value).length === 0
+                    ) {
+                        return undefined;
+                    }
+                }
+                return value !== undefined && value !== null
+                    ? value
+                    : undefined;
+            })
+            .filter((value: any) => value !== undefined);
+    }
+    const keys = Object.keys(obj);
+    if (keys.length === 0) {
+        return obj;
+    }
+    const newObj: any = {};
+    keys.forEach((key) => {
+        const value = obj[key];
+        if (typeof value === 'object' && value !== null) {
+            const newValue = removeEmpty(value);
+            if (Array.isArray(newValue) && newValue.length === 0) {
+                return;
+            }
+            if (
+                typeof newValue === 'object' &&
+                Object.keys(newValue).length === 0
+            ) {
+                return;
+            }
+            newObj[key] = newValue;
+        } else {
+            if (value !== undefined && value !== null) {
+                newObj[key] = value;
+            }
+        }
+    });
+    return newObj;
+}
 
 const flattenObject = (obj: any, prefix = '') => {
     return Object.keys(obj).reduce((acc: any, key: any) => {
@@ -48,36 +116,34 @@ const flattenObject = (obj: any, prefix = '') => {
     }, []);
 };
 
-watch(
-    () => componentOptions.value,
-    (v: any) => {
-        form.value = { ...form.value, ...arrayToObj(v) };
-    },
-    { deep: true }
-);
-
-watch(
-    () => form.value,
-    () => {
-        form2componentOptions();
-    }
-);
-
 const form2componentOptions = () => {
     if (!form.value) {
         return;
     }
     let vArr = flattenObject(form.value);
+
     vArr.forEach((_e: any) => {
         componentOptions.value.forEach((__e: any, i: number) => {
-            if (_e.field === __e.field) {
+            if (_e.field.lastIndexOf('.') >= 0) {
+                let _$fieldKey = _e.field?.substring(
+                    _e.field.lastIndexOf('.') + 1
+                );
+                let _$fieldPrefix = _e.field?.substring(
+                    0,
+                    _e.field.lastIndexOf('.')
+                );
+                if (_$fieldKey && __e.field === _$fieldPrefix) {
+                    componentOptions.value[i].value = {
+                        ...componentOptions.value[i].value,
+                        [_$fieldKey]: _e.value,
+                    };
+                }
+            } else if (_e.field === __e.field) {
                 componentOptions.value[i].value = _e.value;
             }
         });
     });
 };
-
-form2componentOptions();
 
 const validate = (field: string) => {
     let opt = componentOptions.value || [];
@@ -93,70 +159,120 @@ const validate = (field: string) => {
         }
     });
     schema = Yup.object().shape(obj);
-
-    schema
-        .validate(formObj, { abortEarly: false })
-        .then(() => {
-            opt.forEach((o: any) => {
-                o.errMessage = '';
-            });
-        })
-        .catch((err: any) => {
-            if (field) {
-                // 重置
-                opt.forEach((e: any) => {
-                    if (e.field === field) {
-                        e.errMessage = '';
-                    }
-                });
-
-                let errors = err.inner.map((error: any) => ({
-                    ...error,
-                    field: () => {
-                        try {
-                            return JSON.parse(error.path)[0];
-                        } catch {
-                            return error.path;
-                        }
-                    },
-                }));
-                errors = errors.filter((e: any) => e.field() === field);
-                let errItem = errors[0] && errors[0];
-                let index = opt.findIndex((e: any) => {
-                    return e?.field === errItem?.field();
-                });
-                if (index >= 0) {
-                    opt[index].errMessage = errItem?.message;
-                }
-            } else {
-                // 重置
+    return new Promise((resolve) => {
+        schema
+            .validate(formObj, { abortEarly: false })
+            .then(() => {
                 opt.forEach((o: any) => {
                     o.errMessage = '';
                 });
-
-                const errors = err.inner.map((error: any) => ({
-                    ...error,
-                    field: () => {
-                        try {
-                            return JSON.parse(error.path)[0];
-                        } catch {
-                            return error.path;
+                resolve(true);
+            })
+            .catch((err: any) => {
+                resolve(false);
+                if (field) {
+                    // 重置
+                    opt.forEach((e: any) => {
+                        if (e.field === field) {
+                            e.errMessage = '';
                         }
-                    },
-                }));
+                    });
 
-                errors.forEach((e: any) => {
-                    let index = opt.findIndex((c: any) => c.field == e.field());
-                    if (index >= 0 && opt) {
-                        opt[index].errMessage = e?.message;
+                    let errors = err.inner.map((error: any) => ({
+                        ...error,
+                        field: () => {
+                            try {
+                                let fieldName = error?.path; // 去除首尾的方括号
+                                if (fieldName[0] !== '[') {
+                                    return fieldName;
+                                }
+                                fieldName = error?.path.slice(1, -1); // 去除首尾的方括号
+                                if (
+                                    fieldName.charAt(0) === '"' &&
+                                    fieldName.charAt(fieldName.length - 1) ===
+                                        '"'
+                                ) {
+                                    // 处理包含引号的情况
+                                    fieldName = fieldName.slice(1, -1);
+                                }
+                                if (fieldName.includes('\\"')) {
+                                    // 处理转义字符
+                                    fieldName = fieldName.replace(/\\"/g, '"');
+                                }
+                                return fieldName;
+                            } catch {
+                                return error.path;
+                            }
+                        },
+                    }));
+
+                    errors = errors.filter((e: any) => e.field() === field);
+
+                    let errItem = errors[0] && errors[0];
+                    let index = opt.findIndex((e: any) => {
+                        return e?.field === errItem?.field();
+                    });
+                    if (index >= 0) {
+                        opt[index].errMessage = errItem?.message;
                     }
-                });
-                componentOptions.value = JSON.parse(JSON.stringify(opt));
-            }
-        });
+                } else {
+                    // 重置
+                    opt.forEach((o: any) => {
+                        o.errMessage = '';
+                    });
+
+                    const errors = err.inner.map((error: any) => ({
+                        ...error,
+                        field: () => {
+                            try {
+                                let fieldName = error?.path; // 去除首尾的方括号
+                                if (fieldName[0] !== '[') {
+                                    return fieldName;
+                                }
+                                fieldName = error?.path.slice(1, -1); // 去除首尾的方括号
+                                if (
+                                    fieldName.charAt(0) === '"' &&
+                                    fieldName.charAt(fieldName.length - 1) ===
+                                        '"'
+                                ) {
+                                    // 处理包含引号的情况
+                                    fieldName = fieldName.slice(1, -1);
+                                }
+                                if (fieldName.includes('\\"')) {
+                                    // 处理转义字符
+                                    fieldName = fieldName.replace(/\\"/g, '"');
+                                }
+                                return fieldName;
+                            } catch {
+                                return error.path;
+                            }
+                        },
+                    }));
+
+                    errors.forEach((e: any) => {
+                        let index = opt.findIndex(
+                            (c: any) => c.field == e.field()
+                        );
+                        if (index >= 0 && opt) {
+                            opt[index].errMessage = e?.message;
+                        }
+                    });
+                    componentOptions.value = JSON.parse(JSON.stringify(opt));
+                }
+            });
+    });
 };
 
-defineExpose({ validate });
+const getForm = () => {
+    return toRaw(form.value);
+};
+
+const setForm = (value: any) => {
+    form.value = value;
+    form2componentOptions();
+};
+
+defineExpose({ getForm, setForm, validate });
 </script>
 
 <template>
@@ -189,78 +305,72 @@ defineExpose({ validate });
             >
                 <lew-input
                     v-model="item.value"
-                    v-if="item.as === 'lew-input'"
+                    v-if="item.as === 'input'"
                     @change="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
-                    @blur="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-textarea
                     v-model="item.value"
-                    v-if="item.as === 'lew-textarea'"
+                    v-if="item.as === 'textarea'"
                     @change="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
-                    @blur="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-input-tag
                     v-model="item.value"
-                    v-if="item.as === 'lew-input-tag'"
+                    v-if="item.as === 'input-tag'"
                     @change="validate(item.field)"
-                    @input="validate(item.field)"
-                    @clear="validate(item.field)"
-                    @blur="validate(item.field)"
+                    @close="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-checkbox-group
                     v-model="item.value"
-                    v-if="item.as === 'lew-checkbox-group'"
+                    v-if="item.as === 'checkbox-group'"
                     @change="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-radio-group
                     v-model="item.value"
-                    v-if="item.as === 'lew-radio-group'"
+                    v-if="item.as === 'radio-group'"
                     @change="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-checkbox
                     v-model="item.value"
-                    v-if="item.as === 'lew-checkbox'"
+                    v-if="item.as === 'checkbox'"
                     @change="validate(item.field)"
-                    v-bind="{ size: size, ...item.props }"
-                />
-
-                <lew-select-multiple
-                    v-model="item.value"
-                    v-if="item.as === 'lew-select-multiple'"
-                    @change=" 
-                        (e:any) => {
-                            validate(item.field);
-                            typeof item.props.click === 'function'?item.props.change(e):'';
-                        } "
-                    @blur="validate(item.field)"
-                    @input="validate(item.field)"
-                    @clear="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-select
                     v-model="item.value"
-                    v-if="item.as === 'lew-select'"
+                    v-if="item.as === 'select'"
                     @change=" 
                         (e:any) => {
                             validate(item.field);
                             typeof item.props.click === 'function'?item.props.change(e):'';
                         } "
-                    @blur="validate(item.field)"
+                    @input="validate(item.field)"
+                    @clear="validate(item.field)"
+                    v-bind="{ size: size, ...item.props }"
+                />
+
+                <lew-select-multiple
+                    v-model="item.value"
+                    v-if="item.as === 'select-multiple'"
+                    @change=" 
+                        (e:any) => {
+                            validate(item.field);
+                            typeof item.props.click === 'function'?item.props.change(e):'';
+                        } "
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
@@ -269,13 +379,12 @@ defineExpose({ validate });
                 <lew-date-picker
                     style="width: 100%"
                     v-model="item.value"
-                    v-if="item.as === 'lew-date-picker'"
+                    v-if="item.as === 'date-picker'"
                     @change=" 
                         (e:any) => {
                             validate(item.field);
                             typeof item.props.click === 'function'?item.props.change(e):'';
                         }"
-                    @blur="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
@@ -284,36 +393,32 @@ defineExpose({ validate });
                 <lew-date-range-picker
                     style="width: 100%"
                     v-model="item.value"
-                    v-if="item.as === 'lew-date-range-picker'"
+                    v-if="item.as === 'date-range-picker'"
                     @change=" 
                         (e:any) => {
                             validate(item.field);
                             typeof item.props.click === 'function'?item.props.change(e):'';
-                        }  
+                        }   
                     "
-                    @blur="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
                 />
                 <lew-tabs
                     v-model="item.value"
-                    v-if="item.as === 'lew-tabs'"
+                    v-if="item.as === 'tabs'"
                     @change=" 
                         (e:any) => {
                             validate(item.field);
                             typeof item.props.click === 'function'?item.props.change(e):'';
                         }  
                     "
-                    @blur="validate(item.field)"
-                    @input="validate(item.field)"
-                    @clear="validate(item.field)"
                     v-bind="{ ...item.props }"
                 />
 
                 <lew-switch
                     v-model="item.value"
-                    v-if="item.as === 'lew-switch'"
+                    v-if="item.as === 'switch'"
                     @change="
                         typeof item.props.change === 'function'
                             ? item.props.change()
@@ -324,7 +429,7 @@ defineExpose({ validate });
 
                 <lew-button
                     v-model="item.value"
-                    v-if="item.as === 'lew-button'"
+                    v-if="item.as === 'button'"
                     @click="
                         typeof item.props.click === 'function'
                             ? item.props.click()
@@ -445,7 +550,6 @@ defineExpose({ validate });
 .lew-form-item-error {
     --lew-form-box-shadow: 0px 1px 1px rgba(160, 62, 62, 0.64);
     --lew-form-border-color-focus: var(--lew-error-color-dark);
-    --lew-form-ouline-color: var(--lew-error-color-light);
     --lew-radio-border-color-hover: var(--lew-error-color);
     --lew-checkbox-border-color-hover: var(--lew-error-color);
     --lew-checkbox-color: var(--lew-error-color);
@@ -454,6 +558,7 @@ defineExpose({ validate });
     --lew-radio-color: var(--lew-error-color);
     --lew-radio-color-dark: var(--lew-error-color-dark);
     --lew-radio-color-light: var(--lew-error-color-light);
+    --lew-form-ouline: 3px var(--lew-error-color-light) solid;
 }
 
 .slide-fade-leave-active,

@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import * as Yup from 'yup';
 
-const form = ref({});
+const form = ref({} as any);
+
 const options = ref([
     {
         field: 'name', // 字段名
         label: '姓名', // 标签
-        as: 'lew-input', // 组件
+        as: 'input', // 组件
+        value: 'asdasd',
         rules: Yup.string()
             .matches(/^[a-zA-Z]+$/, '必须为纯英文字母')
             .min(4, '长度必须至少为4')
@@ -20,7 +22,7 @@ const options = ref([
     {
         field: 'remark', // 字段名
         label: '备注', // 标签
-        as: 'lew-input', // 组件
+        as: 'input', // 组件
         rules: Yup.string()
             .matches(/^[a-zA-Z]+$/, '必须为纯英文字母')
             .min(4, '长度必须至少为4')
@@ -33,7 +35,7 @@ const options = ref([
     {
         field: 'intro',
         label: '介绍',
-        as: 'lew-input',
+        as: 'input',
         rules: Yup.string()
             .matches(/^[\u4e00-\u9fa5]+$/, '必须为纯中文')
             .min(30, '长度必须至少为30')
@@ -47,16 +49,20 @@ const options = ref([
     {
         field: 'birth',
         label: '生日',
-        as: 'lew-date-picker',
+        as: 'date-picker',
         rules: Yup.string().required('不能为空'),
         props: {
             clearable: true,
         },
     },
     {
-        field: 'date',
+        field: 'date.birth',
         label: '有效期',
-        as: 'lew-date-range-picker',
+        value: {
+            start: '2012-11-12',
+            end: '2012-12-12',
+        },
+        as: 'date-range-picker',
         rules: Yup.object().required('不能为空'),
         props: {
             clearable: true,
@@ -65,7 +71,7 @@ const options = ref([
     {
         field: 'user.avatar',
         label: '头像',
-        as: 'lew-select',
+        as: 'select',
         rules: Yup.string().required('此项必填'),
         props: {
             change: (e: any) => {
@@ -99,14 +105,14 @@ const options = ref([
     {
         field: 'user.addd',
         label: '',
-        as: 'lew-checkbox',
+        as: 'checkbox',
         rules: Yup.boolean().oneOf([true], '请同意').required('请同意'),
         props: {
             label: '是否同意',
         },
     },
     {
-        as: 'lew-button',
+        as: 'button',
         props: {
             text: '提交',
             click: () => submit(),
@@ -117,21 +123,35 @@ const options = ref([
 let formRef = ref();
 
 const submit = () => {
-    formRef.value.validate();
+    formRef.value.validate().then((res: any) => {
+        console.log(res);
+    });
 };
 </script>
 
 <template>
     <lew-flex x="start" y="start" :gap="50">
         <lew-form
-            direction="y"
             ref="formRef"
+            direction="y"
             class="form-box"
             v-model="form"
             :options="options"
             :label-width="80"
         />
-        <pre>{{ form }}</pre>
+        <lew-flex style="width: calc(100% - 380px)" direction="y" x="start">
+            <lew-button text="获取form" @click="form = formRef.getForm()" />
+            <pre>{{ form }}</pre>
+            <pre>{{
+                    options.map((e: any) => {
+                        return {
+                            field: e.field,
+                            errMessage: e?.errMessage || undefined,
+                        };
+                    })
+                }} 
+            </pre>
+        </lew-flex>
     </lew-flex>
 </template>
 <style scoped lang="scss">

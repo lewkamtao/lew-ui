@@ -74,16 +74,17 @@ const initTippy = () => {
         animation: 'shift-away-subtle',
         interactive: true,
         placement,
+        duration: [200, 200],
         arrow: false,
-        delay: trigger === 'mouseenter' ? [150, 150] : undefined,
+        delay: trigger === 'mouseenter' ? [250, 250] : undefined,
         appendTo: () => document.body,
         allowHTML: true,
         maxWidth: 'none',
         onShow() {
-            emit('onShow');
+            emit('show');
         },
         onHide() {
-            emit('onHide');
+            emit('hide');
         },
     });
     instance.popper.children[0].setAttribute('data-lew', 'popover');
@@ -98,7 +99,7 @@ onMounted(() => {
     initTippy();
 });
 
-const emit = defineEmits(['onShow', 'onHide']);
+const emit = defineEmits(['show', 'hide']);
 
 const show = () => {
     instance.show();

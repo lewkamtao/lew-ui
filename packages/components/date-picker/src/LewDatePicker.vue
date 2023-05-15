@@ -47,8 +47,8 @@ defineExpose({ show, hide });
         ref="lewPopoverRef"
         trigger="click"
         placement="bottom-start"
-        @on-show="isShowPicker = true"
-        @on-hide="isShowPicker = false"
+        @show="isShowPicker = true"
+        @hide="isShowPicker = false"
     >
         <template #trigger>
             <div class="lew-date-picker-view" :class="classObject">
@@ -71,11 +71,7 @@ defineExpose({ show, hide });
             </div>
         </template>
         <template #popover-body>
-            <lew-date
-                v-model="modelValue"
-                :multiple="multiple"
-                @change="change"
-            />
+            <lew-date v-model="modelValue" @change="change" />
         </template>
     </lew-popover>
 </template>
@@ -128,7 +124,7 @@ defineExpose({ show, hide });
         background-color: var(--lew-form-bgcolor-focus);
         border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
             solid;
-        outline: 3px var(--lew-form-ouline-color) solid;
+        outline: var(--lew-form-ouline);
     }
 
     .lew-date-picker-small {

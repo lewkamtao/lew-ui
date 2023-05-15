@@ -33,7 +33,7 @@ const cancelHandle = async () => {
     hide();
 };
 
-const emit = defineEmits(['onShow', 'cancel']);
+const emit = defineEmits(['show', 'cancel']);
 </script>
 
 <template>
@@ -42,7 +42,7 @@ const emit = defineEmits(['onShow', 'cancel']);
         class="lew-popok"
         :trigger="trigger"
         :placement="placement"
-        @onShow="emit('onShow')"
+        @show="emit('show')"
     >
         <template #trigger>
             <slot />

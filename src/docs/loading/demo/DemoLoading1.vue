@@ -7,15 +7,15 @@ const options = ref([
     {
         field: 'username',
         label: '用户名',
-        as: 'lew-input',
+        as: 'input',
         rules: Yup.string().required(),
     },
     {
         field: 'password',
         label: '密码',
-        as: 'lew-input',
+        as: 'input',
         rules: Yup.string().min(6).required(),
-        fieldProps: {
+        props: {
             type: 'password',
         },
     },
@@ -28,7 +28,7 @@ const options = ref([
         <lew-flex
             v-loading="{ visible: true }"
             direction="y"
-            style="padding: 20px"
+            style="padding: 20px; box-shadow: var(--lew-box-shadow)"
         >
             <lew-title :bold="700" style="margin-bottom: 20px"
                 >登录你的账户
@@ -53,7 +53,11 @@ const options = ref([
         <lew-flex
             v-loading="{ visible: visible, title: title }"
             direction="y"
-            style="margin-bottom: 20px; padding: 20px"
+            style="
+                margin-bottom: 20px;
+                box-shadow: var(--lew-box-shadow);
+                padding: 20px;
+            "
         >
             <lew-title :bold="700" style="margin-bottom: 20px"
                 >登录你的账户

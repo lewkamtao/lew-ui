@@ -12,7 +12,7 @@ const setChecked = () => {
 
 const getRadioClassName = computed(() => {
     const { block, checked, iconable, size, disabled } = props;
-    const unicon = !iconable;
+    const unicon = !iconable && block;
     return object2class('lew-radio', {
         block,
         checked,
@@ -25,7 +25,7 @@ const getRadioClassName = computed(() => {
 
 <template>
     <label class="lew-radio" :class="getRadioClassName">
-        <div v-if="iconable" class="icon-radio-box">
+        <div v-if="iconable || (!iconable && !block)" class="icon-radio-box">
             <div class="icon-radio"></div>
         </div>
         <input
@@ -118,7 +118,7 @@ const getRadioClassName = computed(() => {
 .lew-radio:hover {
     .icon-radio-box {
         border: var(--lew-form-border-width) var(--lew-primary-color) solid;
-        outline: 3px var(--lew-form-ouline-color) solid;
+        outline: var(--lew-form-ouline);
         background: var(--lew-form-bgcolor);
     }
 }
@@ -153,9 +153,8 @@ const getRadioClassName = computed(() => {
 
 .lew-radio-checked {
     .icon-radio-box {
-        border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-            solid;
-        background: var(--lew-form-border-color-focus);
+        border: var(--lew-form-border-width) var(--lew-radio-color) solid;
+        background: var(--lew-radio-color);
         .icon-radio {
             transform: translateY(0%);
             opacity: 1;
@@ -165,8 +164,7 @@ const getRadioClassName = computed(() => {
 
 .lew-radio-checked:hover {
     .icon-radio-box {
-        border: var(--lew-form-border-width) var(--lew-radio-border-color) solid;
-        background: var(--lew-form-border-color-focus);
+        background: var(--lew-radio-color);
     }
 }
 

@@ -1,10 +1,6 @@
 import { ExtractPropTypes } from 'vue';
 
 export const formProps = {
-    modelValue: {
-        type: Object,
-        required: true,
-    },
     options: {
         type: Object,
         required: true,
@@ -15,9 +11,11 @@ export const formProps = {
     },
     width: {
         type: Number,
+        default: '',
     },
     labelWidth: {
         type: Number,
+        default: '',
     },
     direction: {
         type: String,

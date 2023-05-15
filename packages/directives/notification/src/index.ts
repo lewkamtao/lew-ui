@@ -142,7 +142,7 @@ const add = (type: string, title: string, content: string, delay: number) => {
 
         newMessage.setAttribute(
             'class',
-            `lew-notification lew-notification-${type} lew-notification-show`
+            `lew-notification lew-notification-${type} lew-notificatishow`
         );
         delay > 0 && startTimer();
     }, 10);

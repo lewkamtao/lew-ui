@@ -1,67 +1,57 @@
-export const getHeadDate = ['一', '二', '三', '四', '五', '六', '日'];
+export type RetItemType = {
+    date: number;
+    year: number;
+    month: number;
+    showDate: number;
+};
 
-export const getMonthDate = (year?: number, month?: number) => {
-    const ret: any = [];
+export type RetType = Array<RetItemType>;
 
-    if (!year && !month) {
-        // 获取当天日期对象
+export const getHeadDate: string[] = ['一', '二', '三', '四', '五', '六', '日'];
+
+export const getMonthDate = (year?: number, month?: number): RetType => {
+    const ret: RetType = [];
+
+    if (!year || !month) {
         const today = new Date();
-        // 获取当前年份
         year = today.getFullYear();
-        // 获取当前月份
         month = today.getMonth() + 1;
     }
 
-    // 这个月第一天的Date对象
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const firstDay = new Date(year, month - 1, 1);
-    // 那个这个月第一天具体是星期几
-    let firstDayWeekDay = firstDay.getDay();
-    // 0的话就是星期天
+    const firstDay: Date = new Date(year, month - 1, 1);
+    let firstDayWeekDay: number = firstDay.getDay();
     if (firstDayWeekDay === 0) firstDayWeekDay = 7;
-    // 拿到当前的年份
     year = firstDay.getFullYear();
-    // 拿到当前的月份
     month = firstDay.getMonth() + 1;
-    // 上个月的最后一天
-    const lastDayofLastMonth = new Date(year, month - 1, 0);
-    // 上个月的具体日期
-    const lastDateofLastMonth = lastDayofLastMonth.getDate();
-    // 上个月在第一行要显示几天
-    const preMonthDayCount = firstDayWeekDay - 1;
-    // 这个月的最后一天
-    const lastDay = new Date(year, month, 0);
-    // 这个月的最后一天具体日期
-    const lastData = lastDay.getDate();
+    const lastDayofLastMonth: Date = new Date(year, month - 1, 0);
+    const lastDateofLastMonth: number = lastDayofLastMonth.getDate();
+    const preMonthDayCount: number = firstDayWeekDay - 1;
+    const lastDay: Date = new Date(year, month, 0);
+    const lastData: number = lastDay.getDate();
 
     for (let i = 0; i < 6 * 7; i++) {
-        // 赋值date的值，这里上个月的最后一天为0
-        const date = i + 1 - preMonthDayCount;
-        // 赋值showDate，上下月份，下面再做判断
-        let showDate = date;
-        // 赋值月份
-        let thisMonth = month;
-        // 当date < 0时，则代表是上一个月
+        const date: number = i + 1 - preMonthDayCount;
+        let showDate: number = date;
+        let thisMonth: number = month;
+
         if (date <= 0) {
-            thisMonth = month - 1; // 月份减一
-            showDate = lastDateofLastMonth + date; // 显示上一个相应是几号
+            thisMonth = month - 1;
+            showDate = lastDateofLastMonth + date;
         } else if (date > lastData) {
-            // 当date大于了这个月最后一天，那么代表下个月
-            thisMonth = month + 1; // 月份加一
-            showDate -= lastData; // 显示下一个月具体几号
+            thisMonth = month + 1;
+            showDate -= lastData;
         }
-        // 当我们月份是13的时候，代表下一年，月份置为一
+
         if (thisMonth === 13) thisMonth = 1;
-        // 当我们月份是0的时候，代表上一年，月份置为一
         if (thisMonth === 0) thisMonth = 12;
-        // 最后塞入到我们的ret中去
+
         ret.push({
             date,
-            year,
+            year: year as number,
             month: thisMonth,
             showDate,
         });
     }
+
     return ret;
 };

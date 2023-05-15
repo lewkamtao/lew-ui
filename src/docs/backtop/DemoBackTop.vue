@@ -7,129 +7,15 @@ import {
     DemoBackTop3,
     DemoBackTop3_code,
 } from './demo';
-
-const docsTable = reactive([
-    {
-        desc: 'Props',
-        columns: [
-            {
-                title: '参数名',
-                width: 120,
-                field: 'param',
-            },
-            {
-                title: '类型',
-                width: 120,
-                field: 'type',
-            },
-
-            {
-                title: '默认值',
-                width: 120,
-                field: 'default',
-            },
-            {
-                title: '描述',
-                width: 320,
-                field: 'description',
-            },
-        ],
-        data: [
-            {
-                param: 'right',
-                description: '控制其显示位置，距离页面右边距',
-                type: 'number',
-                default: '40',
-            },
-            {
-                param: 'bottom',
-                description: '控制其显示位置，距离页面底部距离',
-                type: 'number',
-                default: '40',
-            },
-            {
-                param: 'valveHeight',
-                description: '滚动高度达到该阀门数值才会出现',
-                type: 'number',
-                default: 50,
-            },
-            {
-                param: 'target',
-                description: '触发滚动的对象, class名',
-                type: 'string',
-                default: '',
-            },
-        ],
-    },
-    {
-        desc: '触发事件',
-        columns: [
-            {
-                title: '参数名',
-                width: 120,
-                field: 'param',
-            },
-            {
-                title: '类型',
-                width: 120,
-                field: 'type',
-            },
-
-            {
-                title: '默认值',
-                width: 120,
-                field: 'default',
-            },
-            {
-                title: '描述',
-                width: 320,
-                field: 'description',
-            },
-        ],
-        data: [
-            {
-                param: 'click',
-                description: '回到顶部事件回调',
-                type: 'event',
-                default: '',
-            },
-        ],
-    },
-    {
-        desc: '自定义内容',
-        columns: [
-            {
-                title: '参数名',
-                width: 120,
-                field: 'param',
-            },
-            {
-                title: '类型',
-                width: 120,
-                field: 'type',
-            },
-
-            {
-                title: '默认值',
-                width: 120,
-                field: 'default',
-            },
-            {
-                title: '描述',
-                width: 320,
-                field: 'description',
-            },
-        ],
-        data: [
-            {
-                param: 'default',
-                description: '自定义默认内容',
-                type: '',
-                default: '',
-            },
-        ],
-    },
-]);
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
+import * as API from './api';
+const options = ref(
+    Object.keys(API).map((key: any) => {
+        // @ts-ignore
+        return API[key];
+    })
+);
 </script>
 
 <template>
@@ -141,25 +27,7 @@ const docsTable = reactive([
         <lew-demo-box title="自定义内容" :code="DemoBackTop2_code">
             <demo-back-top2 />
         </lew-demo-box>
-
-        <div v-for="(item, index) in docsTable" :key="index">
-            <br />
-            <br />
-            <lew-title :size="16">{{ item.desc }}</lew-title>
-            <lew-table
-                :data-source="item.data"
-                :columns="item.columns"
-                height="auto"
-            >
-                <template #param="{ row }"> {{ row.param }} </template>
-                <template #description="{ row }">
-                    {{ row.description }}
-                </template>
-                <template #type="{ row }"> {{ row.type }} </template>
-                <template #default="{ row }"> {{ row.default }} </template>
-            </lew-table>
-        </div>
-
+        <lew-docs-tables :options="options"></lew-docs-tables>
         <lew-demo-box title="指令" :code="DemoBackTop3_code">
             <demo-back-top3 />
         </lew-demo-box>

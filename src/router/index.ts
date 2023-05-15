@@ -6,8 +6,6 @@ import LewComponents from '../views/LewComponents.vue';
 
 import docs from '../docs';
 import guide from '../guide';
-console.log(docs);
-
 const routes: Array<RouteRecordRaw> = [
     { path: '/', name: 'R-LewHome', component: LewHome },
     {

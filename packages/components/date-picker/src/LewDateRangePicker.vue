@@ -7,6 +7,7 @@ const modelValue = useVModel(props, 'modelValue', emit);
 const isShowPicker = ref(false);
 const lewPopoverRef = ref();
 const { startKey, endKey } = props;
+const lewDateRangePanelRef = ref();
 
 const show = () => {
     lewPopoverRef.value.show();
@@ -30,6 +31,14 @@ const change = (e?: any) => {
     hide();
 };
 
+const showHandle = () => {
+    isShowPicker.value = false;
+};
+const hideHandle = () => {
+    isShowPicker.value = true;
+    lewDateRangePanelRef.value.init();
+};
+
 const classObject = computed(() => {
     return {
         'lew-date-picker-focus': isShowPicker.value,
@@ -44,8 +53,8 @@ defineExpose({ show, hide });
         ref="lewPopoverRef"
         trigger="click"
         placement="bottom-start"
-        @on-show="isShowPicker = true"
-        @on-hide="isShowPicker = false"
+        @show="showHandle"
+        @hide="hideHandle"
     >
         <template #trigger>
             <div class="lew-date-picker-view" :class="classObject">
@@ -84,7 +93,11 @@ defineExpose({ show, hide });
             </div>
         </template>
         <template #popover-body>
-            <lew-date-range v-model="modelValue" @change="change" />
+            <lew-date-range
+                ref="lewDateRangePanelRef"
+                v-model="modelValue"
+                @change="change"
+            />
         </template>
     </lew-popover>
 </template>
@@ -141,7 +154,7 @@ defineExpose({ show, hide });
         background-color: var(--lew-form-bgcolor-focus);
         border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
             solid;
-        outline: 3px var(--lew-form-ouline-color) solid;
+        outline: var(--lew-form-ouline);
     }
 
     .lew-date-picker-small {

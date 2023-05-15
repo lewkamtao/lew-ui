@@ -1,5 +1,4 @@
 import { ExtractPropTypes } from 'vue';
-import { string } from 'yup';
 
 export const textareaProps = {
     // 绑定值
@@ -36,11 +35,6 @@ export const textareaProps = {
         type: Boolean,
         default: false,
     },
-    // 缩放模式
-    resize: {
-        type: String,
-        default: 'none',
-    },
     maxLength: {
         type: Number,
     },
@@ -54,9 +48,13 @@ export const textareaProps = {
             return value?.length || 0;
         },
     },
-    minHeight: {
-        type: String,
-        default: '80px',
+    width: {
+        type: [Number, String],
+        default: '',
+    },
+    height: {
+        type: [Number, String],
+        default: '',
     },
 };
 export type TextareaProps = ExtractPropTypes<typeof textareaProps>;

@@ -20,7 +20,8 @@ const setChecked = (e: Event) => {
 const getCheckboxClassName = computed(() => {
     const { block, round, iconable, size, disabled } = props;
     const checked = modelValue.value;
-    const unicon = !iconable;
+    const unicon = !iconable && block;
+
     return object2class('lew-checkbox', {
         block,
         round,
@@ -33,7 +34,7 @@ const getCheckboxClassName = computed(() => {
 </script>
 <template>
     <label class="lew-checkbox" :class="getCheckboxClassName">
-        <div v-if="iconable" class="icon-checkbox-box">
+        <div v-if="iconable || (!iconable && !block)" class="icon-checkbox-box">
             <svg
                 class="icon-checkbox"
                 viewBox="0 0 24 24"
@@ -89,7 +90,7 @@ const getCheckboxClassName = computed(() => {
             transition: var(--lew-form-transition);
             opacity: 0;
             color: var(--lew-white-color);
-            font-size: 12px;
+            padding: 1px;
         }
     }
 
@@ -139,7 +140,7 @@ const getCheckboxClassName = computed(() => {
     .icon-checkbox-box {
         border: var(--lew-form-border-width)
             var(--lew-checkbox-border-color-hover) solid;
-        outline: 3px var(--lew-form-ouline-color) solid;
+        outline: var(--lew-form-ouline);
         background: var(--lew-form-bgcolor);
     }
 }

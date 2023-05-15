@@ -1,4 +1,7 @@
-import { ExtractPropTypes } from 'vue';
+import { ExtractPropTypes, PropType } from 'vue';
+
+export type InputPrefixesType = 'icon' | 'select' | 'text';
+export type InputSuffixType = 'icon' | 'select' | 'text';
 
 export const inputProps = {
     // 绑定值
@@ -71,6 +74,41 @@ export const inputProps = {
         default: (value: string) => {
             return value?.length || 0;
         },
+    },
+
+    prefixes: {
+        type: String as PropType<InputPrefixesType>,
+        default: '',
+    },
+    
+    prefixesValue: {
+        type: String,
+        default: 'Prefixes',
+    },
+    prefixesOptions: {
+        type: Array,
+        default: () => [],
+    },
+    prefixesTooltip: {
+        type: String,
+        default: '',
+    },
+
+    suffix: {
+        type: String as PropType<InputSuffixType>,
+        default: '',
+    },
+    suffixValue: {
+        type: String,
+        default: 'Suffix',
+    },
+    suffixOptions: {
+        type: Array,
+        default: () => [],
+    },
+    suffixTooltip: {
+        type: String,
+        default: '',
     },
 };
 export type DateRangePickerProps = ExtractPropTypes<typeof inputProps>;

@@ -7,74 +7,15 @@ import {
     DemoFlex3,
     DemoFlex3_code,
 } from './demo';
-
-const columns = [
-    {
-        title: '参数名',
-        width: 150,
-        field: 'param',
-    },
-    {
-        title: '类型',
-        width: 240,
-        field: 'type',
-    },
-    {
-        title: '默认值',
-        width: 120,
-        field: 'default',
-    },
-    {
-        title: '描述',
-        width: 220,
-        field: 'description',
-    },
-];
-const docsTable = ref([
-    {
-        param: 'direction',
-        description: '排列方向',
-        type: 'x | y',
-        default: 'x',
-    },
-    {
-        param: 'x',
-        description: '横向对齐方向',
-        type: `start | center | end`,
-        default: 'center',
-    },
-    {
-        param: 'y',
-        description: '垂直对齐方向',
-        type: `start | center | end`,
-        default: 'center',
-    },
-    {
-        param: 'mode',
-        description:
-            '排序模式，这是个可选项，定义之后会干扰x或y的对齐方向，这取决于你的direction。',
-        type: `between | around`,
-        default: "''",
-    },
-    {
-        param: 'wrap',
-        description: '让元素在必要的时候换行',
-        type: `boolean`,
-        default: 'false',
-    },
-    {
-        param: 'gap',
-        description: '元素之间的空隙',
-        type: `number`,
-        default: '10',
-    },
-    {
-        param: 'width',
-        description: '父元素宽度',
-        type: `number`,
-        default: "''",
-    },
-]);
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
+import * as API from './api';
+const options = ref(
+    Object.keys(API).map((key: any) => {
+        // @ts-ignore
+        return API[key];
+    })
+);
 </script>
 
 <template>
@@ -90,13 +31,7 @@ const docsTable = ref([
         <lew-demo-box title="mode" :code="DemoFlex3_code">
             <demo-flex3 />
         </lew-demo-box>
-        <lew-title :size="16">Props</lew-title>
-        <lew-table :data-source="docsTable" :columns="columns" height="auto">
-            <template #param="{ row }"> {{ row.param }} </template>
-            <template #description="{ row }"> {{ row.description }} </template>
-            <template #type="{ row }"> {{ row.type }} </template>
-            <template #default="{ row }"> {{ row.default }} </template>
-        </lew-table>
+        <lew-docs-tables :options="options"></lew-docs-tables>
     </div>
 </template>
 

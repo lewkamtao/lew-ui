@@ -72,8 +72,8 @@ const selectHandle = (item: SelectOptions) => {
     if (item.disabled) {
         return;
     }
-    emit('change', item.value);
     selectValue.value = item.value;
+    emit('change', item.value);
     hide();
 };
 
@@ -145,7 +145,7 @@ const getIconSize = computed(() => {
     return size[props.size];
 });
 
-const onShow = () => {
+const showHandle = () => {
     state.visible = true;
     getSelectWidth();
     if (state.options && state.options.length === 0 && props.searchable) {
@@ -153,7 +153,7 @@ const onShow = () => {
     }
 };
 
-const onHide = () => {
+const hideHandle = () => {
     state.visible = false;
     emit('blur');
 };
@@ -171,8 +171,8 @@ defineExpose({ show, hide });
         placement="bottom-start"
         style="width: 100%"
         :loading="state.loading"
-        @on-show="onShow"
-        @on-hide="onHide"
+        @show="showHandle"
+        @hide="hideHandle"
     >
         <template #trigger>
             <div
@@ -329,7 +329,7 @@ defineExpose({ show, hide });
         }
         .icon-clear {
             opacity: 0;
-            transform: translate(100%, -50%);
+            transform: translate(150%, -50%);
         }
 
         .icon-select-hide {
@@ -414,7 +414,7 @@ defineExpose({ show, hide });
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
-    outline: 3px var(--lew-form-ouline-color) solid;
+    outline: var(--lew-form-ouline);
 
     .icon-select {
         transform: translateY(-50%) rotate(180deg);

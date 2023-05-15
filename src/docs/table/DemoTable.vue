@@ -17,72 +17,15 @@ import {
     DemoTable7_code,
     DemoTable8_code,
 } from './demo';
-
-const alertClose: any = ref([]);
-
-const columns = [
-    {
-        title: '参数名',
-        width: 150,
-        field: 'param',
-    },
-    {
-        title: '类型',
-        width: 240,
-        field: 'type',
-    },
-    {
-        title: '默认值',
-        width: 120,
-        field: 'default',
-    },
-    {
-        title: '描述',
-        width: 220,
-        field: 'description',
-    },
-];
-
-const docsTable1 = ref([
-    {
-        param: 'model-value (v-model)',
-        description: '绑定值',
-        type: 'boolean',
-        default: 'false',
-    },
-    {
-        param: 'round',
-        description: '是否是圆角',
-        type: 'boolean',
-        default: 'true',
-    },
-    {
-        param: '@change',
-        description: '组件值发生变化的回调',
-        type: '(value: boolean) => void	',
-        default: "''",
-    },
-]);
-const docsTable2 = ref([
-    {
-        param: 'model-value (v-model)',
-        description: '绑定值',
-        type: 'boolean',
-        default: 'false',
-    },
-    {
-        param: 'round',
-        description: '是否是圆角',
-        type: 'boolean',
-        default: 'true',
-    },
-    {
-        param: '@change',
-        description: '组件值发生变化的回调',
-        type: '(value: boolean) => void	',
-        default: "''",
-    },
-]);
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
+import * as API from './api';
+const options = ref(
+    Object.keys(API).map((key: any) => {
+        // @ts-ignore
+        return API[key];
+    })
+);
 </script>
 
 <template>
@@ -94,7 +37,6 @@ const docsTable2 = ref([
         <lew-demo-box title="常规" :code="DemoTable1_code">
             <demo-table1 />
             <lew-alert
-                v-if="!alertClose[1]"
                 style="margin-top: 20px"
                 :size="16"
                 :list="[
@@ -104,13 +46,11 @@ const docsTable2 = ref([
                         content: '你必须在「columns」中设置每一列的宽度',
                     },
                 ]"
-                @close="alertClose[0] = true"
             />
         </lew-demo-box>
         <lew-demo-box title="固定行列" :code="DemoTable2_code">
             <demo-table2 />
             <lew-alert
-                v-if="!alertClose[2]"
                 style="margin-top: 20px"
                 :size="16"
                 :list="[
@@ -121,13 +61,11 @@ const docsTable2 = ref([
                             '你可以设置max-height，来限制高度，设置max-height触发时自动固定head。',
                     },
                 ]"
-                @close="alertClose[2] = true"
             />
         </lew-demo-box>
         <lew-demo-box title="自定义操作" :code="DemoTable3_code">
             <demo-table3 />
             <lew-alert
-                v-if="!alertClose[3]"
                 style="margin-top: 20px"
                 :list="[
                     {
@@ -137,13 +75,11 @@ const docsTable2 = ref([
                     },
                 ]"
                 :size="16"
-                @close="alertClose[3] = true"
             />
         </lew-demo-box>
         <lew-demo-box title="插槽" :code="DemoTable4_code">
             <demo-table4 />
             <lew-alert
-                v-if="!alertClose[4]"
                 style="margin-top: 20px"
                 :size="16"
                 :list="[
@@ -154,13 +90,11 @@ const docsTable2 = ref([
                             甚至你可以使用 popover + input 这种高度自定义的方式录入信息。`,
                     },
                 ]"
-                @close="alertClose[4] = true"
             />
         </lew-demo-box>
         <lew-demo-box title="自定义样式" :code="DemoTable5_code">
             <demo-table5 />
             <lew-alert
-                v-if="!alertClose[4]"
                 style="margin-top: 20px"
                 :size="16"
                 :list="[
@@ -170,13 +104,11 @@ const docsTable2 = ref([
                         content: `你可以根据自己的实际情况来自定义某一行，某一列，某一个单元格的样式;`,
                     },
                 ]"
-                @close="alertClose[4] = true"
             />
         </lew-demo-box>
         <lew-demo-box title="选择" :code="DemoTable6_code">
             <demo-table6 />
             <lew-alert
-                v-if="!alertClose[4]"
                 style="margin-top: 20px"
                 :size="16"
                 :list="[
@@ -186,7 +118,6 @@ const docsTable2 = ref([
                         content: `当checkable开启时，必须设置rowKey。`,
                     },
                 ]"
-                @close="alertClose[4] = true"
             />
         </lew-demo-box>
         <lew-demo-box v-if="false" title="固定列" :code="DemoTable7_code">
@@ -195,7 +126,6 @@ const docsTable2 = ref([
         <lew-demo-box title="完整功能" :code="DemoTable8_code">
             <demo-table8 />
             <lew-alert
-                v-if="!alertClose[4]"
                 style="margin-top: 20px"
                 :size="16"
                 :list="[
@@ -210,25 +140,8 @@ const docsTable2 = ref([
                         `,
                     },
                 ]"
-                @close="alertClose[4] = true"
             />
         </lew-demo-box>
-        <!-- <br />
-        <lew-title :size="16">Props</lew-title>
-        <lew-table :data-source="docsTable1" :columns="columns" height="auto">
-            <template #param="{ row }"> {{ row.param }} </template>
-            <template #description="{ row }"> {{ row.description }} </template>
-            <template #type="{ row }"> {{ row.type }} </template>
-            <template #default="{ row }"> {{ row.default }} </template>
-        </lew-table>
-        <br />
-        <br />
-        <lew-title :size="16">columns</lew-title>
-        <lew-table :data-source="docsTable2" :columns="columns" height="auto">
-            <template #param="{ row }"> {{ row.param }} </template>
-            <template #description="{ row }"> {{ row.description }} </template>
-            <template #type="{ row }"> {{ row.type }} </template>
-            <template #default="{ row }"> {{ row.default }} </template>
-        </lew-table> -->
+        <lew-docs-tables :options="options"></lew-docs-tables>
     </div>
 </template>

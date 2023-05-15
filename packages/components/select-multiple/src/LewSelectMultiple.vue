@@ -42,10 +42,10 @@ const searchDebounce = useDebounceFn(async (e: any) => {
     search(e);
 }, props.searchDelay);
 
-const search = async (e: any) => {
+const search = async (e?: any) => {
     // loading
     state.loading = true;
-    const keyword = e.target.value;
+    const keyword = e?.target.value;
     if (props.searchable) {
         let result: any = [];
         // 如果没输入关键词
@@ -69,16 +69,8 @@ const clearHandle = () => {
     lewPopverRef.value.refresh();
 };
 
-const closeLabel = (label: string) => {
-    const value = state.options.find((e) => e.label === label)?.value;
-
-    const index =
-        selectValue.value &&
-        selectValue.value.findIndex((v: any) => v === value);
-    if (index >= 0) {
-        selectValue.value && selectValue.value.splice(index, 1);
-        lewPopverRef.value.refresh();
-    }
+const closeLabel = (index: number) => {
+    selectValue.value && selectValue.value.splice(index, 1);
 };
 
 const selectHandle = (item: SelectMultipleOptions) => {
@@ -107,7 +99,7 @@ const getChecked = computed(() => (value: string | number) => {
 });
 
 const getLabels = computed(() => {
-    if (state.options) {
+    if (state.options.length > 0) {
         const labels =
             selectValue.value &&
             selectValue.value.map((v: number | string) => {
@@ -117,8 +109,7 @@ const getLabels = computed(() => {
             });
         return labels || [];
     }
-
-    return props.defaultValue || props.modelValue || [];
+    return props?.defaultValue || selectValue.value || [];
 });
 
 const getSelectClassName = computed(() => {
@@ -165,7 +156,7 @@ const getIconSize = computed(() => {
     return size[props.size];
 });
 
-const onShow = () => {
+const showHandle = () => {
     state.visible = true;
     getSelectWidth();
     if (state.options && state.options.length === 0 && props.searchable) {
@@ -173,7 +164,7 @@ const onShow = () => {
     }
 };
 
-const onHide = () => {
+const hideHandle = () => {
     state.visible = false;
     emit('blur');
 };
@@ -191,8 +182,8 @@ defineExpose({ show, hide });
         placement="bottom-start"
         style="width: 100%"
         :loading="state.loading"
-        @on-show="onShow"
-        @on-hide="onHide"
+        @show="showHandle"
+        @hide="hideHandle"
     >
         <template #trigger>
             <div
@@ -234,7 +225,7 @@ defineExpose({ show, hide });
                         :size="size"
                         type="primary"
                         closable
-                        @close="closeLabel(item)"
+                        @close="closeLabel(index)"
                     >
                         {{ item }}
                     </lew-tag>
@@ -371,10 +362,7 @@ defineExpose({ show, hide });
         }
         .icon-clear {
             opacity: 0;
-            transform: translate(100%, -50%);
-        }
-        .icon-clear:hover {
-            opacity: 1;
+            transform: translate(150%, -50%);
         }
         .icon-select-hide {
             opacity: 0;
@@ -466,7 +454,7 @@ defineExpose({ show, hide });
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
-    outline: 3px var(--lew-form-ouline-color) solid;
+    outline: var(--lew-form-ouline);
 
     .icon-select {
         transform: translateY(-50%) rotate(180deg);

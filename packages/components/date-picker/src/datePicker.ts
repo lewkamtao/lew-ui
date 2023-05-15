@@ -3,11 +3,7 @@ import { ExtractPropTypes } from 'vue';
 export const datePickerProps = {
     modelValue: {
         type: String,
-        required: false,
-    },
-    multiple: {
-        type: Boolean,
-        default: false,
+        default: '',
     },
     size: {
         type: String,
@@ -50,20 +46,12 @@ export const dateRangeProps = {
         type: String,
         default: 'end',
     },
-    multiple: {
-        type: Boolean,
-        default: false,
-    },
 };
 
 export const dateProps = {
     modelValue: {
         type: String,
         required: true,
-    },
-    multiple: {
-        type: Boolean,
-        default: false,
     },
 };
 

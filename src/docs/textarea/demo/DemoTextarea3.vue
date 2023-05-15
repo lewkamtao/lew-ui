@@ -27,13 +27,5 @@ let value = ref('');
             disabled
             clearable
         />
-        <lew-textarea
-            v-model="value"
-            placeholder="可缩放"
-            :max-length="12"
-            show-count
-            clearable
-            resize="both"
-        />
     </lew-flex>
 </template>

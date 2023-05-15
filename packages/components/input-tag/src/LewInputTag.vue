@@ -2,14 +2,7 @@
 import { inputTagProps } from './props';
 import { useVModel } from '@vueuse/core';
 
-const emit = defineEmits([
-    'update:modelValue',
-    'close',
-    'blur',
-    'focus',
-    'change',
-    'input',
-]);
+const emit = defineEmits(['close', 'change']);
 
 const props = defineProps(inputTagProps);
 const tagsValue = useVModel(props, 'modelValue', emit);
@@ -68,10 +61,13 @@ const addTag = () => {
     }
     inputValue.value = '';
     tagsValue.value = _value;
+    emit('change', _value);
 };
 
 const delTag = (index: number) => {
     tagsValue.value.splice(index, 1);
+    emit('change', tagsValue.value);
+    emit('close', tagsValue.value);
 };
 </script>
 
@@ -83,12 +79,11 @@ const delTag = (index: number) => {
                 v-for="(item, index) in tagsValue"
                 :key="index"
                 closable
-                :type="type"
+                type="primary"
                 @close="delTag(index)"
                 >{{ item }}
             </lew-tag>
         </TransitionGroup>
-
         <label v-if="!isInput" class="lew-input-tag-button" @click="openInput">
             <lew-icon :size="16" type="plus" />
         </label>
@@ -101,7 +96,6 @@ const delTag = (index: number) => {
             auto-width
             placeholder=""
             @blur="blurFn"
-            @focus="addTag"
         />
     </div>
 </template>
@@ -144,11 +138,11 @@ const delTag = (index: number) => {
 
 .list-enter-active,
 .list-leave-active {
-    transition: all 0.25s ease;
+    transition: all 0.15s ease-in-out;
 }
 .list-enter-from,
 .list-leave-to {
     opacity: 0;
-    transform: translateX(-10px);
+    transform: translateX(-5px);
 }
 </style>

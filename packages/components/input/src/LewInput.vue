@@ -5,6 +5,8 @@ import { object2class } from 'lew-ui/utils';
 
 const emit = defineEmits([
     'update:modelValue',
+    'update:prefixesValue',
+    'update:suffixValue',
     'update:type',
     'clear',
     'blur',
@@ -15,8 +17,14 @@ const emit = defineEmits([
 
 const props = defineProps(inputProps);
 const modelValue = useVModel(props, 'modelValue', emit);
+const prefixesValue = useVModel(props, 'prefixesValue', emit);
+const suffixValue = useVModel(props, 'suffixValue', emit);
 const lewInputRef = ref();
 const _type = ref(props.type);
+const state = ref({
+    prefixesDropdown: 'hide',
+    suffixDropdown: 'hide',
+});
 
 watch(
     () => props.type,
@@ -38,6 +46,7 @@ const updateValue = () => {
 
 const inputFn = () => {
     updateValue();
+    emit('input', modelValue.value);
 };
 
 const clear = (): void => {
@@ -101,11 +110,72 @@ const getInputClassNames = computed(() => {
         autoWidth,
     });
 });
+
+const prefixesChange = (item: any) => {
+    prefixesValue.value = item.value;
+};
+const suffixChange = (item: any) => {
+    suffixValue.value = item.value;
+};
+const getPrefixesLabel = computed(() => {
+    const item: any = props.prefixesOptions.find(
+        (e: any) => e.value === prefixesValue.value
+    );
+    return item?.label || '';
+});
+const getSuffixLabel = computed(() => {
+    const item: any = props.suffixOptions.find(
+        (e: any) => e.value === suffixValue.value
+    );
+    return item?.label || '';
+});
 defineExpose({ toFocus });
 </script>
 
 <template>
     <div class="lew-input-view" :class="getInputClassNames">
+        <div
+            v-tooltip="{
+                content: prefixesTooltip,
+                trigger: 'mouseenter',
+            }"
+            v-if="prefixes"
+            class="lew-input-prefixes"
+        >
+            <div v-if="prefixes === 'text'" class="lew-input-prefixes-text">
+                {{ prefixesValue }}
+            </div>
+            <div v-if="prefixes === 'icon'" class="lew-input-prefixes-icon">
+                <lew-icon :size="getIconSize" :type="prefixesValue"> </lew-icon>
+            </div>
+            <div v-if="prefixes === 'select'" class="lew-input-prefixes-select">
+                <lew-dropdown
+                    placement="bottom"
+                    trigger="click"
+                    :options="prefixesOptions"
+                    @change="prefixesChange"
+                    @show="state.prefixesDropdown = 'show'"
+                    @hide="state.prefixesDropdown = 'hide'"
+                >
+                    <lew-flex
+                        gap="5px"
+                        x="start"
+                        class="lew-input-prefixes-dropdown"
+                        :class="{
+                            'lew-input-prefixes-dropdown-open':
+                                state.prefixesDropdown === 'show',
+                        }"
+                    >
+                        {{ getPrefixesLabel }}
+                        <lew-icon
+                            :size="getIconSize"
+                            type="chevron-down"
+                            class="icon-select"
+                        />
+                    </lew-flex>
+                </lew-dropdown>
+            </div>
+        </div>
         <input
             ref="lewInputRef"
             class="lew-input"
@@ -121,6 +191,48 @@ defineExpose({ toFocus });
             @blur="emit('blur', modelValue)"
             @focus="focus"
         />
+        <div
+            v-tooltip="{
+                content: suffixTooltip,
+                trigger: suffixTooltip ? 'mouseenter' : '',
+            }"
+            v-if="suffix"
+            class="lew-input-suffix"
+        >
+            <div v-if="suffix === 'text'" class="lew-input-suffix-text">
+                {{ suffixValue }}
+            </div>
+            <div v-if="suffix === 'icon'" class="lew-input-suffix-icon">
+                <lew-icon :size="getIconSize" :type="suffixValue"> </lew-icon>
+            </div>
+            <div v-if="suffix === 'select'" class="lew-input-suffix-select">
+                <lew-dropdown
+                    placement="bottom"
+                    trigger="click"
+                    :options="suffixOptions"
+                    @change="suffixChange"
+                    @show="state.suffixDropdown = 'show'"
+                    @hide="state.suffixDropdown = 'hide'"
+                >
+                    <lew-flex
+                        gap="5px"
+                        x="start"
+                        class="lew-input-suffix-dropdown"
+                        :class="{
+                            'lew-input-suffix-dropdown-open':
+                                state.suffixDropdown === 'show',
+                        }"
+                    >
+                        {{ getSuffixLabel }}
+                        <lew-icon
+                            :size="getIconSize"
+                            type="chevron-down"
+                            class="icon-select"
+                        />
+                    </lew-flex>
+                </lew-dropdown>
+            </div>
+        </div>
         <label v-if="autoWidth" class="lew-input-auto-width">
             {{ modelValue }}
         </label>
@@ -168,7 +280,6 @@ defineExpose({ toFocus });
     align-items: center;
     justify-content: space-between;
     position: relative;
-    overflow: hidden;
     width: 100%;
     border-radius: var(--lew-border-radius);
     background-color: var(--lew-form-bgcolor);
@@ -177,6 +288,42 @@ defineExpose({ toFocus });
     outline: 0px transparent solid;
     border: var(--lew-form-border-width) transparent solid;
     box-shadow: var(--lew-form-box-shadow);
+    .lew-input-prefixes,
+    .lew-input-suffix {
+        white-space: nowrap;
+        user-select: none;
+        display: inline-flex;
+        align-items: center;
+        .icon-select {
+            transition: var(--lew-form-transition);
+        }
+        .icon-select-up {
+            transform: rotate(180deg);
+        }
+    }
+    .lew-input-prefixes-dropdown,
+    .lew-input-suffix-dropdown {
+        cursor: pointer;
+    }
+    .lew-input-prefixes-dropdown-open,
+    .lew-input-suffix-dropdown-open {
+        opacity: 0.4;
+        .icon-select {
+            transform: rotate(180deg);
+        }
+    }
+
+    .lew-input-prefixes-icon {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .lew-input-suffix-icon {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .lew-input {
         width: 100%;
         text-overflow: ellipsis;
@@ -278,7 +425,14 @@ defineExpose({ toFocus });
         font-size: var(--lew-form-font-size-small);
         line-height: var(--lew-form-input-line-height-small);
     }
-
+    .lew-input-prefixes {
+        font-size: var(--lew-form-font-size-small);
+        margin-left: 7px;
+    }
+    .lew-input-suffix {
+        font-size: var(--lew-form-font-size-small);
+        margin-right: 7px;
+    }
     .lew-input {
         height: var(--lew-form-item-height-small);
     }
@@ -310,7 +464,14 @@ defineExpose({ toFocus });
         line-height: var(--lew-form-input-line-height-medium);
         height: var(--lew-form-item-height-medium);
     }
-
+    .lew-input-prefixes {
+        font-size: var(--lew-form-font-size-medium);
+        margin-left: 9px;
+    }
+    .lew-input-suffix {
+        font-size: var(--lew-form-font-size-medium);
+        margin-right: 9px;
+    }
     .lew-input-controls {
         height: var(--lew-form-item-height-medium);
         .lew-input-count {
@@ -339,7 +500,14 @@ defineExpose({ toFocus });
         line-height: var(--lew-form-input-line-height-large);
         height: var(--lew-form-item-height-large);
     }
-
+    .lew-input-prefixes {
+        font-size: var(--lew-form-font-size-large);
+        margin-left: 12px;
+    }
+    .lew-input-suffix {
+        font-size: var(--lew-form-font-size-large);
+        margin-right: 12px;
+    }
     .lew-input-controls {
         height: var(--lew-form-item-height-large);
         .lew-input-count {
@@ -368,7 +536,7 @@ defineExpose({ toFocus });
 .lew-input-view:focus-within {
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
-    outline: 3px var(--lew-form-ouline-color) solid;
+    outline: var(--lew-form-ouline);
     background-color: var(--lew-form-bgcolor-focus);
 }
 .lew-input-view-readonly {

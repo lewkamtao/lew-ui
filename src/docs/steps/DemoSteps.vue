@@ -7,6 +7,8 @@ import {
     DemoSteps2_code,
     DemoSteps3_code,
 } from './demo';
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
 
 const columns = [
     {
@@ -33,19 +35,19 @@ const columns = [
 ];
 const docsTable = ref([
     {
-        param: 'value',
+        name:'value',
         description: '显示内容',
         type: 'string | number',
         default: 'undefined',
     },
     {
-        param: 'type',
+        name:'type',
         description: '显示类型',
         type: `default | success | error | warning | info`,
         default: 'default',
     },
     {
-        param: 'round',
+        name:'round',
         description: '形状，是否为圆形。',
         type: 'boolean',
         default: 'false',

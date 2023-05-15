@@ -11,48 +11,22 @@ import {
     DemoForm5,
     DemoForm5_code,
 } from './demo';
-
-const columns = [
-    {
-        title: '参数名',
-        width: 150,
-        field: 'param',
-    },
-    {
-        title: '类型',
-        width: 240,
-        field: 'type',
-    },
-    {
-        title: '默认值',
-        width: 120,
-        field: 'default',
-    },
-    {
-        title: '描述',
-        width: 220,
-        field: 'description',
-    },
-];
-const docsTable = ref([
-    {
-        param: 'title',
-        description: '表单标题',
-        type: 'string',
-        default: "''",
-    },
-    {
-        param: 'direction',
-        description: '表单item方向',
-        type: 'x | y',
-        default: 'x',
-    },
-]);
+import LewDemoBox from '../../layout/LewDemoBox.vue';
+import LewDocsTables from '../../layout/LewDocsTables.vue';
+import * as API from './api';
+const options = ref(
+    Object.keys(API).map((key: any) => {
+        // @ts-ignore
+        return API[key];
+    })
+);
 </script>
 
 <template>
     <div class="demo-wrapper">
         <lew-title>Form</lew-title>
+        <p class="sub-title">这是一个基于Yup实现的表单校验引擎。</p>
+
         <lew-demo-box title="普通表单" :code="DemoForm1_code">
             <demo-form1 />
         </lew-demo-box>
@@ -69,12 +43,6 @@ const docsTable = ref([
         <lew-demo-box v-if="false" title="其他" :code="DemoForm5_code">
             <demo-form5 />
         </lew-demo-box>
-
-        <lew-table :data-source="docsTable" :columns="columns" height="auto">
-            <template #param="{ row }"> {{ row.param }} </template>
-            <template #description="{ row }"> {{ row.description }} </template>
-            <template #type="{ row }"> {{ row.type }} </template>
-            <template #default="{ row }"> {{ row.default }} </template>
-        </lew-table>
+        <lew-docs-tables :options="options"></lew-docs-tables>
     </div>
 </template>

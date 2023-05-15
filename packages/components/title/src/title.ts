@@ -1,6 +1,13 @@
 import { ExtractPropTypes, PropType } from 'vue';
 
 type boldType = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+type TitleType =
+    | 'primary'
+    | 'info'
+    | 'success'
+    | 'error'
+    | 'warning'
+    | 'normal';
 
 export const titleProps = {
     bold: {
@@ -10,6 +17,10 @@ export const titleProps = {
     size: {
         type: Number,
         default: 24,
+    },
+    type: {
+        type: String as PropType<TitleType>,
+        default: '',
     },
 };
 

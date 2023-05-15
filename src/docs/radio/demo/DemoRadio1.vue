@@ -16,14 +16,12 @@ const value = ref('');
         direction="x"
         :options="options"
     />
-    <br />
     <lew-radio-group
         v-model="value"
         size="medium"
         direction="x"
         :options="options"
     />
-    <br />
     <lew-radio-group
         v-model="value"
         size="large"

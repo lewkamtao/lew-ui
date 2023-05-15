@@ -5,13 +5,15 @@ import { schools } from '../../select/demo/schools';
 let schoolsOptions = schools.map((e, i) => {
     return { label: e, value: i + 1 };
 });
+
 const form = ref({} as any);
 
 const options = ref([
     {
         label: '表单大小',
-        as: 'lew-tabs',
+        as: 'tabs',
         field: 'size',
+        value: 'medium',
         props: {
             itemWidth: 'auto',
             width: '100%',
@@ -34,17 +36,18 @@ const options = ref([
     {
         field: 'input', // 字段名
         label: '文本框', // 标签
-        as: 'lew-input', // 组件
+        as: 'input', // 组件
         rules: Yup.string().required('不能为空'), // 校验规则
         props: {
             // 组件props
-            clearable: true,
+            showCount: true,
+            maxLength: 30,
         },
     },
     {
         field: 'textarea', // 字段名
         label: '多行文本框', // 标签
-        as: 'lew-textarea', // 组件
+        as: 'textarea', // 组件
         rules: Yup.string().required('不能为空'), // 校验规则
         props: {
             clearable: true,
@@ -55,7 +58,7 @@ const options = ref([
     {
         field: 'select',
         label: '单选选择器',
-        as: 'lew-select',
+        as: 'select',
         rules: Yup.string().required('此项必填'),
         props: {
             change: (e: any) => {
@@ -89,8 +92,8 @@ const options = ref([
     {
         field: 'select_multiple',
         label: '多选选择器',
-        as: 'lew-select-multiple',
-        rules: Yup.array().min(1, '至少选择一个').required('此项必填'),
+        as: 'select-multiple',
+        rules: Yup.array().min(2, '至少选择2个').required('此项必填'),
         props: {
             change: (e: any) => {
                 console.log(e);
@@ -102,7 +105,7 @@ const options = ref([
     {
         field: 'radio_group',
         label: '单选框',
-        as: 'lew-radio-group',
+        as: 'radio-group',
         rules: Yup.string().required('此项必填'),
         props: {
             options: [
@@ -116,7 +119,7 @@ const options = ref([
                 },
                 {
                     label: '不公开',
-                    value: '2',
+                    value: '3',
                 },
             ],
         },
@@ -124,7 +127,7 @@ const options = ref([
     {
         field: 'checkbox_group',
         label: '多选框',
-        as: 'lew-checkbox-group',
+        as: 'checkbox-group',
         rules: Yup.array().min(1, '至少选择一个').required('此项必填'),
         props: {
             options: [
@@ -150,7 +153,7 @@ const options = ref([
     {
         field: 'tabs',
         label: '选项卡',
-        as: 'lew-tabs',
+        as: 'tabs',
         rules: Yup.string().required('此项必填'),
         props: {
             options: [
@@ -176,23 +179,20 @@ const options = ref([
     {
         field: 'user.addd',
         label: '',
-        as: 'lew-checkbox',
+        as: 'checkbox',
         rules: Yup.boolean().oneOf([true], '请同意').required('请同意'),
         props: {
             label: '是否同意',
         },
     },
     {
-        field: 'info.input_tag',
+        field: 'info.asd.dsd.input_tag',
         label: '标签输入框',
-        as: 'lew-input-tag',
+        as: 'input-tag',
         rules: Yup.array().min(1, '至少选择一个').required('不能为空'),
-        props: {
-            clearable: true,
-        },
     },
     {
-        as: 'lew-button',
+        as: 'button',
         props: {
             text: '提交',
             click: () => submit(),
@@ -213,9 +213,13 @@ const submit = () => {
             ref="formRef"
             :size="form.size"
             class="form-box"
-            v-model="form"
             :options="options"
             :label-width="80"
+            @change="
+                (e:any) => {
+                    form = e;
+                }
+            "
         />
         <pre>{{ form }}</pre>
     </lew-flex>

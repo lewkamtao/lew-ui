@@ -6,6 +6,8 @@ export type RadioOptions = {
     disabled?: boolean;
 };
 
+export type RadioSize = 'small' | 'medium' | 'large';
+
 export const radioProps = {
     checked: {
         type: Boolean,
@@ -25,12 +27,6 @@ export const radioProps = {
             return false;
         },
     },
-    round: {
-        type: Boolean,
-        default: () => {
-            return false;
-        },
-    },
     iconable: {
         type: Boolean,
         default: true,
@@ -40,7 +36,7 @@ export const radioProps = {
         default: false,
     },
     size: {
-        type: String,
+        type: String as PropType<RadioSize>,
         default: 'medium',
     },
 };
@@ -48,15 +44,9 @@ export const radioProps = {
 export const radioGroupProps = {
     modelValue: {
         type: String || Number,
-        required: true,
+        default: '',
     },
     block: {
-        type: Boolean,
-        default: () => {
-            return false;
-        },
-    },
-    round: {
         type: Boolean,
         default: () => {
             return false;
@@ -70,8 +60,12 @@ export const radioGroupProps = {
         type: Boolean,
         default: true,
     },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
     size: {
-        type: String,
+        type: String as PropType<RadioSize>,
         default: 'medium',
     },
     options: {

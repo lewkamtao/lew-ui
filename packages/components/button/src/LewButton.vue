@@ -25,7 +25,13 @@ const getButtonClass = computed(() => {
     const { round, size, type, icon, text } = props;
     const loading = _loading.value || props.loading;
     const singleIcon = !!(!text && icon);
-    return object2class('lew-button', { round, size, type, loading, singleIcon });
+    return object2class('lew-button', {
+        round,
+        size,
+        type,
+        loading,
+        singleIcon,
+    });
 });
 
 const getIconSize = computed(() => {
@@ -63,11 +69,18 @@ const getIconSize = computed(() => {
             animation="spin"
             animation-speed="fast"
             :class="{
-                'lew-loading-icon-show': (_loading || loading) && !disabled,
+                'lew-loading-icshow': (_loading || loading) && !disabled,
             }"
             type="loader"
         />
-        <span v-if="text" class="lew-button-text">{{ text }} </span>
+        <span class="lew-button-text">
+            <template v-if="text">
+                {{ text }}
+            </template>
+            <template v-else>
+                <slot />
+            </template>
+        </span>
     </button>
 </template>
 
@@ -101,7 +114,7 @@ const getIconSize = computed(() => {
         transition: opacity 0.35s;
     }
 
-    .lew-loading-icon-show {
+    .lew-loading-icshow {
         opacity: 1;
     }
 }
