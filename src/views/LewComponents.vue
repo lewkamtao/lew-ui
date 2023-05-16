@@ -426,6 +426,7 @@ group.value = [
     height: calc(100vh - 60px);
     background: var(--lew-bgcolor-2);
     display: flex;
+    box-sizing: border-box;
     .component-main {
         width: calc(100% - 300px);
         height: 100%;
@@ -477,7 +478,14 @@ group.value = [
     .app-main {
         width: 100%;
         margin-left: 0px;
-        padding: 50px 15px;
+
+        .component-main {
+            width: 100%;
+            padding: 50px 15px;
+        }
+        .component-nav {
+            display: none;
+        }
     }
 }
 </style>
