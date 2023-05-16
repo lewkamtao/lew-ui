@@ -73,7 +73,7 @@ const getIconSize = computed(() => {
             }"
             type="loader"
         />
-        <span class="lew-button-text">
+        <span v-if="!!!(!text && icon)" class="lew-button-text">
             <template v-if="text">
                 {{ text }}
             </template>
