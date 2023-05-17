@@ -64,17 +64,19 @@ onMounted(() => {
     padding: 20px;
     box-sizing: border-box;
     background-color: var(--lew-bgcolor-1);
-    .title {
-        border-bottom: 1px #eee solid;
-    }
+
     .item {
         display: block;
         cursor: pointer;
         padding: 5px 10px;
         border-radius: var(--lew-border-radius);
     }
+    .title {
+        border-bottom: 1px var(--lew-bgcolor-2) solid;
+        border-radius: 0px;
+    }
     .item:hover {
-        background-color: #eee;
+        background-color: var(--lew-bgcolor-2);
     }
 }
 </style>

@@ -287,13 +287,13 @@ group.value = [
                 label: '',
                 type: 'success',
             },
-            {
-                cname: '折叠面板',
-                name: 'Collapse',
-                path: '/Collapse',
-                label: '',
-                type: 'success',
-            },
+            // {
+            //     cname: '折叠面板',
+            //     name: 'Collapse',
+            //     path: '/Collapse',
+            //     label: '',
+            //     type: 'success',
+            // },
         ],
     },
     {
@@ -430,14 +430,13 @@ group.value = [
     .component-main {
         width: calc(100% - 300px);
         height: 100%;
-        overflow-y: scroll;
+        overflow-y: auto;
         overflow-x: hidden;
         box-sizing: border-box;
         padding: 50px 50px 150px 50px;
         scroll-behavior: smooth;
     }
     .component-nav {
-        overflow-y: scroll;
         height: 100%;
         width: 300px;
     }
