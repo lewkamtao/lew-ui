@@ -288,6 +288,7 @@ defineExpose({ toFocus });
     outline: 0px transparent solid;
     border: var(--lew-form-border-width) transparent solid;
     box-shadow: var(--lew-form-box-shadow);
+    overflow: hidden;
     .lew-input-prefixes,
     .lew-input-suffix {
         white-space: nowrap;
