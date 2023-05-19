@@ -52,7 +52,8 @@ const toPath = (item: Item) => {
                     :type="item.type"
                     size="small"
                     style="margin-left: 10px"
-                    >{{ item.label }}
+                >
+                    {{ item.label }}
                 </lew-tag>
             </div>
         </div>

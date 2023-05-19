@@ -116,7 +116,9 @@ const sortOptions = computed(() => {
             v-for="(item, index) in sortOptions"
             :key="index"
         >
-            <lew-title :size="16">{{ item.title }}</lew-title>
+            <lew-title :size="16" class="demo-docs-title" :id="item.title">{{
+                item.title
+            }}</lew-title>
             <lew-table
                 :data-source="item.data"
                 :columns="columnsMap[item.columnsKey]"

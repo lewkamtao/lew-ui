@@ -32,10 +32,10 @@ const change = (e?: any) => {
 };
 
 const showHandle = () => {
-    isShowPicker.value = false;
+    isShowPicker.value = true;
 };
 const hideHandle = () => {
-    isShowPicker.value = true;
+    isShowPicker.value = false;
     lewDateRangePanelRef.value.init();
 };
 

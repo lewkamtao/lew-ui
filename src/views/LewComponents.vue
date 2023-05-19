@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import TheSiderbar from '../layout/TheSiderbar.vue';
+import LewRightNav from '../layout/LewRightNav.vue';
 
 const isShowSider = ref(false);
 const route = useRoute();
@@ -296,9 +297,9 @@ group.value = [
                 type: 'success',
             },
             // {
-            //     cname: '魔术文本',
-            //     name: 'MagicText',
-            //     path: '/MagicText',
+            //     cname: '折叠面板',
+            //     name: 'Collapse',
+            //     path: '/Collapse',
             //     label: '',
             //     type: 'success',
             // },
@@ -403,11 +404,14 @@ group.value = [
             <the-siderbar :group="group" />
         </div>
         <div ref="mainRef" class="app-main btf-scrollbar">
-            <router-view v-slot="{ Component }">
-                <keep-alive>
-                    <Component :is="Component"> </Component>
-                </keep-alive>
-            </router-view>
+            <div class="component-main" id="component-main">
+                <router-view v-slot="{ Component }">
+                    <keep-alive>
+                        <Component :is="Component"> </Component>
+                    </keep-alive>
+                </router-view>
+            </div>
+            <div class="component-nav"><lew-right-nav /></div>
         </div>
     </div>
 </template>
@@ -429,11 +433,22 @@ group.value = [
     margin-left: var(--lew-siderbar-width);
     width: calc(100% - var(--lew-siderbar-width));
     height: calc(100vh - 60px);
-    overflow-y: scroll;
-    overflow-x: hidden;
-    box-sizing: border-box;
-    padding: 50px 50px 150px 50px;
     background: var(--lew-bgcolor-2);
+    display: flex;
+    box-sizing: border-box;
+    .component-main {
+        width: calc(100% - 300px);
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        box-sizing: border-box;
+        padding: 50px 50px 150px 50px;
+        scroll-behavior: smooth;
+    }
+    .component-nav {
+        height: 100%;
+        width: 300px;
+    }
 }
 
 .mb-btn {
@@ -471,7 +486,14 @@ group.value = [
     .app-main {
         width: 100%;
         margin-left: 0px;
-        padding: 50px 15px;
+
+        .component-main {
+            width: 100%;
+            padding: 50px 15px;
+        }
+        .component-nav {
+            display: none;
+        }
     }
 }
 </style>
