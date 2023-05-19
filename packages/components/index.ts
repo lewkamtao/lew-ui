@@ -21,6 +21,7 @@ export * from './select';
 export * from './select-multiple';
 export * from './switch';
 export * from './date-picker';
+export * from './upload';
 
 export * from './table';
 export * from './pagination';
