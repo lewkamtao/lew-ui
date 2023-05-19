@@ -45,7 +45,6 @@ const options = Object.keys(API).map((key: any) => {
             <demo-tooltip5 />
         </lew-demo-box>
         <br />
-        <lew-title :size="16">Props</lew-title>
         <lew-docs-tables :options="options"></lew-docs-tables>
     </div>
 </template>
