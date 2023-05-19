@@ -49,23 +49,33 @@ export const any2px = (value: number | string | undefined): string => {
     const pixelRegex = /^-?\d+(\.\d+)?(px)?$/;
     const numericRegex = /^-?\d+(\.\d+)?$/;
 
-    let _value = String(value);
+    const _value = String(value);
 
     if (numericRegex.test(_value)) {
         return `${value}px`;
-    } else if (autoRegex.test(_value)) {
-        return _value;
-    } else if (percentRegex.test(_value)) {
-        return _value;
-    } else if (calcRegex.test(_value)) {
-        return _value;
-    } else if (pixelRegex.test(_value)) {
-        return `${_value}`;
-    } else {
-        const numValue = parseFloat(_value);
-        if (!isNaN(numValue)) {
-            return `${numValue}px`;
-        }
     }
+    if (autoRegex.test(_value)) {
+        return _value;
+    }
+    if (percentRegex.test(_value)) {
+        return _value;
+    }
+    if (calcRegex.test(_value)) {
+        return _value;
+    }
+    if (pixelRegex.test(_value)) {
+        return `${_value}`;
+    }
+    const numValue = parseFloat(_value);
+    if (!isNaN(numValue)) {
+        return `${numValue}px`;
+    }
+
     return '';
 };
+
+/** @func 生成uid */
+let uid = 1;
+export function genUid(): number {
+    return Date.now() + uid++;
+}

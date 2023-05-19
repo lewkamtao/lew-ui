@@ -16,4 +16,16 @@ module.exports = {
         'plugin:prettier/recommended',
     ],
     plugins: ['@typescript-eslint'],
+    rules: {
+        'no-plusplus': 0,
+        'import/no-unresolved': 0,
+        'import/extensions': 0,
+        'import/prefer-default-export': 0,
+        'no-unused-vars': 0,
+        'no-restricted-syntax': 0,
+        'no-continue': 0,
+        '@typescript-eslint/no-empty-function': 0,
+        'import/no-extraneous-dependencies': 0,
+        'no-param-reassign': 0,
+    },
 };

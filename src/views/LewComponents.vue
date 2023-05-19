@@ -7,7 +7,7 @@ const route = useRoute();
 const mainRef: any = ref(null);
 
 onMounted(() => {
-    let isInfo = localStorage.getItem('isInfo');
+    const isInfo = localStorage.getItem('isInfo');
     if (!isInfo) {
         LewDialog.info({
             title: '温馨提示',
@@ -242,7 +242,8 @@ group.value = [
                 type: 'success',
             },
             // {
-            //     cname:"",name: 'Cascader',
+            //     cname:"",
+            //     name: 'Cascader',
             //     path: '/Cascader',
             //     label: '',
             //     type: 'error',
@@ -255,11 +256,19 @@ group.value = [
                 type: 'success',
             },
             // {
-            //     cname:"",name: 'InputTag',
+            //     cname:"",
+            //     name: 'InputTag',
             //     path: '/InputTag',
             //     label: '',
             //     type: 'error',
             // },
+            {
+                cname: '文件上传',
+                name: 'Upload',
+                path: '/Upload',
+                label: '',
+                type: 'success',
+            },
         ],
     },
     {
