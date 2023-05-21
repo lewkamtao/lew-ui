@@ -16,7 +16,8 @@
         "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
         "format": "prettier --write './*.{js,ts,json,vue,css,scss}' './*/*.{js,ts,json,vue,css,scss}' './*/*/*.{js,ts,json,vue,css,scss}' './*/*/*/*.{js,ts,json,vue,css,scss}' './*/*/*/*/*.{js,ts,json,vue,css,scss}'",
         "test": "vitest",
-        "test:coverage": "vitest --coverage"
+        "test:coverage": "vitest --coverage",
+        "prepare": "husky install"
     },
     "files": [
         "dist"
@@ -49,6 +50,8 @@
         "yup": "^1.1.1"
     },
     "devDependencies": {
+        "@commitlint/cli": "^17.6.3",
+        "@commitlint/config-conventional": "^17.6.3",
         "@types/lodash": "^4.14.182",
         "@types/node": "^17.0.35",
         "@typescript-eslint/eslint-plugin": "^5.7.0",
@@ -63,7 +66,9 @@
         "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-vue": "^8.2.0",
+        "husky": "^8.0.3",
         "jsdom": "^20.0.0",
+        "lint-staged": "^13.2.2",
         "prettier": "^2.5.1",
         "sass": "^1.52.1",
         "typescript": "^4.8.4",
