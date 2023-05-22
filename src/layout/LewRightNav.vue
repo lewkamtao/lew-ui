@@ -19,7 +19,7 @@ const init = () => {
     const observer = new MutationObserver((mutationsList, observer) => {
         for (let mutation of mutationsList) {
             if (mutation.type === 'childList') {
-                console.log('节点发生变化，添加或删除了子节点');
+                targetNode.scrollTop = 0;
                 initNav();
             }
         }
