@@ -192,18 +192,18 @@ const setValue = (item: any) => {
     const __date = dayjs(__dateStr);
     if (i % 2 === 0) {
         if (__date.isBefore(dayjs(hoverValue.value[startKey]))) {
-            hoverValue.value[startKey] = __dateStr;
-            hoverValue.value[endKey] = startBackup;
+            hoverValue.value[startKey] = dayjs(__dateStr).format('YYYY-MM-DD');
+            hoverValue.value[endKey] = dayjs(startBackup).format('YYYY-MM-DD');
         } else {
-            hoverValue.value[startKey] = startBackup;
-            hoverValue.value[endKey] = __dateStr;
+            hoverValue.value[startKey] =
+                dayjs(startBackup).format('YYYY-MM-DD');
+            hoverValue.value[endKey] = dayjs(__dateStr).format('YYYY-MM-DD');
         }
         modelValue.value = hoverValue.value;
         emit('change', hoverValue.value);
     } else {
         hoverValue.value[startKey] = __dateStr;
         hoverValue.value[endKey] = '';
-
         startBackup = __dateStr;
     }
 };

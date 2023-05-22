@@ -40,7 +40,6 @@
         "eslint-plugin-prettier": "^4.2.1",
         "feather-icons": "^4.29.0",
         "lodash": "^4.17.21",
-        "moment": "^2.29.4",
         "tippy.js": "^6.3.7",
         "vee-validate": "^4.8.6",
         "vue": "^3.2.41",

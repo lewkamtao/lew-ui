@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { Ref } from 'vue';
-import moment from 'moment';
 import { getMonthDate, getHeadDate } from './date';
 import type { RetType, RetItemType } from './date';
 import { dateProps } from './datePicker';
 import { useVModel } from '@vueuse/core';
+import dayjs from 'dayjs';
 
 const emit = defineEmits(['change', 'update:modelValue']);
 const props = defineProps(dateProps);
@@ -19,10 +19,10 @@ const curMonth = ref(today.getMonth() + 1);
 const curDay = ref(today.getDate());
 
 // 年
-const _year = ref(modelValue.value ? moment(modelValue.value).year() : curYear);
+const _year = ref(modelValue.value ? dayjs(modelValue.value).year() : curYear);
 // 月
 const _month = ref(
-    modelValue.value ? moment(modelValue.value).month() + 1 : curMonth
+    modelValue.value ? dayjs(modelValue.value).month() + 1 : curMonth
 );
 
 const dateData: Ref<RetType> = ref(getMonthDate());
@@ -67,7 +67,7 @@ const setMonthDate = () => {
 
 const selectDateFn = (item: RetItemType) => {
     const v = `${item.year}-${item.month}-${item.showDate}`;
-    modelValue.value = v;
+    modelValue.value = dayjs(v).format('YYYY-MM-DD');
     emit('update:modelValue', modelValue.value);
     emit('change', v);
 };
@@ -75,7 +75,7 @@ const selectDateFn = (item: RetItemType) => {
 const checkDateSelect = computed(() => (item: RetItemType) => {
     if (item.date > 0 && item.date <= item.showDate) {
         const v = `${_year.value}-${_month.value}-${item.showDate}`;
-        return modelValue.value === v;
+        return dayjs(v).isSame(dayjs(modelValue.value));
     }
 });
 

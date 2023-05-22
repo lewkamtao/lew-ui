@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { datePickerProps } from './datePicker';
 import { useVModel } from '@vueuse/core';
 const emit = defineEmits(['change', 'update:modelValue']);
@@ -9,6 +9,7 @@ const modelValue = useVModel(props, 'modelValue', emit);
 const isShowPicker = ref(false);
 
 const lewPopoverRef = ref();
+const lewDateRef = ref();
 
 const show = () => {
     lewPopoverRef.value.show();
@@ -19,7 +20,7 @@ const hide = () => {
 };
 
 const change = (date: string) => {
-    emit('update:modelValue', moment(date).format('YYYY-MM-DD'));
+    emit('update:modelValue', dayjs(date).format('YYYY-MM-DD'));
     emit('change', { date, show, hide });
     hide();
 };
@@ -71,7 +72,7 @@ defineExpose({ show, hide });
             </div>
         </template>
         <template #popover-body>
-            <lew-date v-model="modelValue" @change="change" />
+            <lew-date ref="lewDateRef" v-model="modelValue" @change="change" />
         </template>
     </lew-popover>
 </template>
