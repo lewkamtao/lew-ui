@@ -600,12 +600,12 @@ defineExpose({ show, hide });
 
     .lew-select-options-list::-webkit-scrollbar-thumb {
         background-color: rgb(209 213 219 / 0);
-        border-radius: 2px;
+        border-radius: 4px;
     }
 
     .lew-select-options-list:hover::-webkit-scrollbar-thumb {
         background-color: rgb(209 213 219 / 1);
-        border-radius: 2px;
+        border-radius: 4px;
     }
 }
 </style>

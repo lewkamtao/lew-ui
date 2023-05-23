@@ -52,7 +52,7 @@
     --lew-text-color-8-invert: rgb(95, 95, 95);
     --lew-text-color-9-invert: rgb(75, 75, 75);
     // 圆角
-    --lew-border-radius: 6px;
+    --lew-border-radius: 8px;
     // 边界
     --lew-border-0: 1px solid rgb(245, 245, 245);
     --lew-border-1: 1px solid rgb(235, 235, 235);
@@ -127,7 +127,7 @@
     // 标题
     --lew-title-bold: 800;
     // 表单样式
-    --lew-form-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+    --lew-form-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
     --lew-form-border-width: 1.5px;
     --lew-form-transition: all 0.2s ease;
     --lew-form-border-color: rgb(245, 245, 245);
@@ -310,7 +310,7 @@
     --lew-form-border-color: rgb(77, 77, 77);
     --lew-form-border-color-hover: rgb(59, 58, 58);
     --lew-form-border-color-focus: #3e63a4;
-    --lew-form-ouline: 3px var(--lew-primary-color-light) solid;
+    // --lew-form-ouline: 3px var(--lew-primary-color-light) solid;
     // tabs
     --lew-tabs-active-color: rgb(77, 77, 77);
     // 表单背景

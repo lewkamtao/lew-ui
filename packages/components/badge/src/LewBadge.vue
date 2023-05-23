@@ -35,7 +35,7 @@ const badgeClassName = computed(() => {
         transform: translateX(-50%);
         z-index: 1;
         cursor: normal;
-        border-radius: 3px;
+        border-radius: 4px;
         border: 1px var(--lew-white-color) solid;
         box-sizing: border-box;
     }
@@ -46,7 +46,7 @@ const badgeClassName = computed(() => {
         left: 100%;
         bottom: calc(100% - 9px);
         transform: translateX(-50%);
-        border-radius: 3px;
+        border-radius: 4px;
         min-width: 18px;
         height: 18px;
         text-align: center;

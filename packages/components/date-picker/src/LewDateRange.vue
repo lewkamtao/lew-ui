@@ -492,7 +492,7 @@ const object2class = computed(() => (type: string, item: any) => {
                 justify-content: center;
                 font-size: 14px;
                 width: 100%;
-                height: 24px;
+                height: 28px;
                 box-sizing: border-box;
                 transition: all 0.1s ease;
 
@@ -504,13 +504,15 @@ const object2class = computed(() => (type: string, item: any) => {
                     height: 24px;
                     line-height: 24px;
                     color: var(--lew-text-color-9);
-                    border-radius: 6px;
+                    border-radius: 50%;
                     transition: all 0.1s ease;
+                    border: 2px transparent solid;
                 }
 
                 .lew-date-value-selected {
                     background: var(--lew-primary-color);
                     color: var(--lew-white-text-color);
+                    border: 2px var(--lew-primary-color-light) solid;
                 }
 
                 .lew-date-item-cur {
