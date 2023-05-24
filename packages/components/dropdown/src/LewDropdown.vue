@@ -60,7 +60,7 @@ defineExpose({ show, hide });
     .lew-dropdown-option {
         padding: 4px 10px;
         font-size: 14px;
-        border-radius: var(--lew-border-radius);
+        border-radius: 6px;
         color: var(--lew-text-color-2);
         cursor: pointer;
         white-space: nowrap;

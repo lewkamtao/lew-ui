@@ -96,13 +96,11 @@ const checkToday = computed(() => (item: RetItemType) => {
                 <!-- 上一年 -->
                 <lew-button
                     icon="chevrons-left"
-                    size="small"
                     @click="prveYear"
                 />
                 <!-- 上一月 -->
                 <lew-button
                     icon="chevron-left"
-                    size="small"
                     @click="prveMonth"
                 />
             </div>
@@ -112,13 +110,11 @@ const checkToday = computed(() => (item: RetItemType) => {
                 <!-- 下一月 -->
                 <lew-button
                     icon="chevron-right"
-                    size="small"
                     @click="nextMonth"
                 />
                 <!-- 下一年 -->
                 <lew-button
                     icon="chevrons-right"
-                    size="small"
                     @click="nextYear"
                 />
             </div>
@@ -235,11 +231,10 @@ const checkToday = computed(() => (item: RetItemType) => {
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
-                    width: 24px;
-                    height: 24px;
-                    line-height: 24px;
+                    width: 28px;
+                    height: 28px;
                     color: var(--lew-text-color-9);
-                    border-radius: 6px;
+                    border-radius: 50%;
                     transition: all 0.1s ease;
                 }
             }

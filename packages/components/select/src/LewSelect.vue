@@ -433,7 +433,6 @@ defineExpose({ show, hide });
     }
 }
 .lew-select-view-disabled:hover {
-    border-radius: var(--lew-border-radius);
     background-color: var(--lew-form-bgcolor);
     outline: 0px var(--lew-primary-color-light) solid;
     border: var(--lew-form-border-width) transparent solid;
@@ -490,7 +489,7 @@ defineExpose({ show, hide });
             cursor: pointer;
             color: var(--lew-text-color-2);
             box-sizing: border-box;
-            border-radius: var(--lew-border-radius);
+            border-radius: 6px;
         }
 
         .lew-select-item-disabled {
@@ -524,7 +523,7 @@ defineExpose({ show, hide });
         }
 
         .lew-select-slot-item {
-            border-radius: var(--lew-border-radius);
+            border-radius: 6px;
         }
 
         .lew-select-slot-item:hover {

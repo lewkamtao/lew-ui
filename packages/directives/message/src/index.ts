@@ -69,7 +69,7 @@ const clear = (id?: number) => {
                 try {
                     if (e) LewMessageDom?.removeChild(e);
                 } catch {}
-            }, 250);
+            }, 350);
         });
     }
 };
@@ -136,7 +136,7 @@ const setMessage = ({ type, e }: MessageOptions) => {
                 try {
                     if (messageDom) LewMessageDom?.removeChild(messageDom);
                 } catch {}
-            }, 250);
+            }, 350);
         }, e.duration || 3000);
     }, 10);
 };
