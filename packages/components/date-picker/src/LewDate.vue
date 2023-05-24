@@ -175,6 +175,7 @@ const checkToday = computed(() => (item: RetItemType) => {
             align-items: center;
             height: 100%;
             font-weight: bold;
+            font-size: 15px;
             color: var(--lew-text-color-0);
         }
 
@@ -231,8 +232,8 @@ const checkToday = computed(() => (item: RetItemType) => {
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
-                    width: 28px;
-                    height: 28px;
+                    width: 24px;
+                    height: 24px;
                     color: var(--lew-text-color-9);
                     border-radius: 50%;
                     transition: all 0.1s ease;

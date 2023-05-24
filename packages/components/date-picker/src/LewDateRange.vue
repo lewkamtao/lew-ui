@@ -454,6 +454,7 @@ defineExpose({ init });
             display: flex;
             align-items: center;
             height: 100%;
+            font-size: 15px;
             font-weight: bold;
             color: var(--lew-text-color-0);
         }
@@ -503,7 +504,7 @@ defineExpose({ init });
                 justify-content: center;
                 font-size: 14px;
                 width: 100%;
-                height: 28px;
+                height: 26px;
                 box-sizing: border-box;
                 transition: all 0.1s ease;
 
@@ -511,8 +512,8 @@ defineExpose({ init });
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
-                    width: 24px;
-                    height: 24px;
+                    width: 22px;
+                    height: 22px;
                     line-height: 24px;
                     color: var(--lew-text-color-9);
                     border-radius: 50%;

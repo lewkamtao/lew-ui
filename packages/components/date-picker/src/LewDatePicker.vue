@@ -2,7 +2,8 @@
 import dayjs from 'dayjs';
 import { datePickerProps } from './datePicker';
 import { useVModel } from '@vueuse/core';
-const emit = defineEmits(['change', 'update:modelValue']);
+import { object2class } from 'lew-ui/utils';
+const emit = defineEmits(['change', 'clear', 'update:modelValue']);
 const props = defineProps(datePickerProps);
 const modelValue = useVModel(props, 'modelValue', emit);
 
@@ -34,12 +35,16 @@ const getIconSize = computed(() => {
     return size[props.size];
 });
 
-const classObject = computed(() => {
-    return {
-        'lew-date-picker-focus': isShowPicker.value,
-        [`lew-date-picker-${props.size}`]: props.size,
-    };
+const lewDateClassNames = computed(() => {
+    const focus = isShowPicker.value;
+    const { size } = props;
+    return object2class('lew-date-picker', { focus, size });
 });
+
+const clearHandle = () => {
+    modelValue.value = '';
+    emit('clear');
+};
 
 defineExpose({ show, hide });
 </script>
@@ -52,7 +57,7 @@ defineExpose({ show, hide });
         @hide="isShowPicker = false"
     >
         <template #trigger>
-            <div class="lew-date-picker-view" :class="classObject">
+            <div class="lew-date-picker-view" :class="lewDateClassNames">
                 <div class="lew-date-picker-input">
                     <div
                         v-show="!modelValue"
@@ -64,9 +69,20 @@ defineExpose({ show, hide });
                         {{ modelValue }}
                     </div>
                     <lew-icon
-                        class="lew-date-picker-icon"
+                        class="icon-calendar"
                         :size="getIconSize"
+                        :class="{
+                            'icon-calendar-hide': modelValue && clearable,
+                        }"
                         type="calendar"
+                    />
+                    <lew-icon
+                        v-if="clearable"
+                        :size="getIconSize"
+                        type="x-circle"
+                        class="icon-clear"
+                        :class="{ 'icon-clear-show': modelValue && clearable }"
+                        @click.stop="clearHandle"
                     />
                 </div>
             </div>
@@ -103,15 +119,33 @@ defineExpose({ show, hide });
         display: inline-flex;
         align-items: center;
         box-sizing: border-box;
-        .lew-date-picker-icon {
+        .icon-calendar {
             position: absolute;
             top: 50%;
             right: 7px;
             transform: translateY(-50%);
-            transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
-            color: var(--lew-text-color-7);
+            transition: var(--lew-form-transition);
+            opacity: var(--lew-form-icon-opacity);
         }
-
+        .icon-calendar-hide {
+            opacity: 0;
+            transform: translateY(-50%) translateX(100%);
+        }
+        .icon-clear {
+            position: absolute;
+            top: 50%;
+            right: 7px;
+            opacity: 0;
+            transform: translateY(-50%) translateX(100%);
+            transition: var(--lew-form-transition);
+        }
+        .icon-clear-show {
+            transform: translateY(-50%) translateX(0);
+            opacity: var(--lew-form-icon-opacity);
+        }
+        .icon-clear-show:hover {
+            opacity: var(--lew-form-icon-opacity-hover);
+        }
         .lew-date-picker-placeholder {
             color: rgb(165, 165, 165);
         }
@@ -128,7 +162,7 @@ defineExpose({ show, hide });
         outline: var(--lew-form-ouline);
     }
 
-    .lew-date-picker-small {
+    .lew-date-picker-size-small {
         .lew-date-picker-input {
             height: var(--lew-form-item-height-small);
             padding: var(--lew-form-input-padding-small);
@@ -136,7 +170,7 @@ defineExpose({ show, hide });
             line-height: var(--lew-form-input-line-height-small);
         }
     }
-    .lew-date-picker-medium {
+    .lew-date-picker-size-medium {
         .lew-date-picker-input {
             height: var(--lew-form-item-height-medium);
             padding: var(--lew-form-input-padding-medium);
@@ -144,7 +178,7 @@ defineExpose({ show, hide });
             line-height: var(--lew-form-input-line-height-medium);
         }
     }
-    .lew-date-picker-large {
+    .lew-date-picker-size-large {
         .lew-date-picker-input {
             height: var(--lew-form-item-height-large);
             padding: var(--lew-form-input-padding-large);
