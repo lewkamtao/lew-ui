@@ -5,9 +5,10 @@
     <p>
         金钱既是天使，又是<lew-mark round type="info">魔鬼</lew-mark>。
         金钱正好够用，使你心满意足时，
-        <lew-mark :bold="600" type="info">金钱是天使</lew-mark
-        >；金钱让你感到是一堆麻烦时，便成了魔鬼。
-        金钱是流动着的财富。有的人挣了钱对朋友不吝啬，有的人钱多了对自己
+        <lew-mark type="info"
+            >金钱是天使；金钱让你感到是一堆麻烦时，便成了魔鬼。
+            金钱是流动着的财富。</lew-mark
+        >有的人挣了钱对朋友不吝啬，有的人钱多了对自己
         <lew-mark to="https://vuejs.org/" type="success">不慷慨</lew-mark
         >，这里面都有天使的点化。
     </p>

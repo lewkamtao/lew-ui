@@ -111,7 +111,7 @@ defineExpose({ show, hide });
         align-items: center;
         position: relative;
         width: 100%;
-        padding: 0px 45px 0px 10px;
+        padding: 0px 45px 0px 0px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -129,7 +129,6 @@ defineExpose({ show, hide });
         width: 100%;
         display: inline-flex;
         align-items: center;
-        justify-content: space-around;
         gap: 10px;
         box-sizing: border-box;
         .lew-date-picker-icon {
@@ -142,7 +141,6 @@ defineExpose({ show, hide });
         }
         .lew-date-picker-placeholder {
             color: rgb(165, 165, 165);
-            margin-left: 7px;
         }
     }
 

@@ -29,7 +29,8 @@ const getMarkClassName = computed(() => {
     display: inline;
     border-radius: 4px;
     padding: 2px 6px;
-    margin: 0px 4px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
 }
 
 .lew-mark-to {
