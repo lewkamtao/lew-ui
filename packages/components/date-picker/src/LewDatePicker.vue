@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import dayjs from 'dayjs';
 import { datePickerProps } from './datePicker';
 import { useVModel } from '@vueuse/core';
 import { object2class } from 'lew-ui/utils';
@@ -7,7 +6,7 @@ const emit = defineEmits(['change', 'clear', 'update:modelValue']);
 const props = defineProps(datePickerProps);
 const modelValue = useVModel(props, 'modelValue', emit);
 
-const isShowPicker = ref(false);
+const visible = ref(false);
 
 const lewPopoverRef = ref();
 const lewDateRef = ref();
@@ -21,7 +20,6 @@ const hide = () => {
 };
 
 const change = (date: string) => {
-    emit('update:modelValue', dayjs(date).format('YYYY-MM-DD'));
     emit('change', { date, show, hide });
     hide();
 };
@@ -36,7 +34,7 @@ const getIconSize = computed(() => {
 });
 
 const lewDateClassNames = computed(() => {
-    const focus = isShowPicker.value;
+    const focus = visible.value;
     const { size } = props;
     return object2class('lew-date-picker', { focus, size });
 });
@@ -46,6 +44,14 @@ const clearHandle = () => {
     emit('clear');
 };
 
+const showHandle = () => {
+    visible.value = true;
+    lewDateRef.value.init();
+};
+const hideHandle = () => {
+    visible.value = false;
+};
+
 defineExpose({ show, hide });
 </script>
 <template>
@@ -53,8 +59,8 @@ defineExpose({ show, hide });
         ref="lewPopoverRef"
         trigger="click"
         placement="bottom-start"
-        @show="isShowPicker = true"
-        @hide="isShowPicker = false"
+        @show="showHandle"
+        @hide="hideHandle"
     >
         <template #trigger>
             <div class="lew-date-picker-view" :class="lewDateClassNames">

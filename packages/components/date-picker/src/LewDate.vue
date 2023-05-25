@@ -5,25 +5,30 @@ import type { RetType, RetItemType } from './date';
 import { dateProps } from './datePicker';
 import { useVModel } from '@vueuse/core';
 import dayjs from 'dayjs';
+import { object2class } from 'lew-ui/utils';
 
 const emit = defineEmits(['change', 'update:modelValue']);
 const props = defineProps(dateProps);
 const modelValue = useVModel(props, 'modelValue', emit);
 
-// 获取当天日期对象
-const today = new Date();
 // 获取当前年份
-const curYear = ref(today.getFullYear());
+const _year = dayjs().year();
 // 获取当前月份
-const curMonth = ref(today.getMonth() + 1);
-const curDay = ref(today.getDate());
+const _month = dayjs().month() + 1;
 
-// 年
-const _year = ref(modelValue.value ? dayjs(modelValue.value).year() : curYear);
-// 月
-const _month = ref(
-    modelValue.value ? dayjs(modelValue.value).month() + 1 : curMonth
-);
+const dateState = reactive({
+    year: _year,
+    month: _month,
+});
+
+const init = () => {
+    dateState.year = dayjs(modelValue.value || undefined).year();
+    dateState.month = dayjs(modelValue.value || undefined).month() + 1;
+};
+
+init();
+
+defineExpose({ init });
 
 const dateData: Ref<RetType> = ref(getMonthDate());
 
@@ -32,61 +37,62 @@ onMounted(() => {
 });
 
 const prveMonth = () => {
-    if (_month.value > 1) {
-        _month.value -= 1;
+    if (dateState.month > 1) {
+        dateState.month -= 1;
     } else {
-        _year.value -= 1;
-        _month.value = 12;
+        dateState.year -= 1;
+        dateState.month = 12;
     }
     setMonthDate();
 };
 
 const nextMonth = () => {
-    if (_month.value < 12) {
-        _month.value += 1;
+    if (dateState.month < 12) {
+        dateState.month += 1;
     } else {
-        _year.value += 1;
-        _month.value = 1;
+        dateState.year += 1;
+        dateState.month = 1;
     }
     setMonthDate();
 };
 
 const prveYear = () => {
-    _year.value -= 1;
+    dateState.year -= 1;
     setMonthDate();
 };
 
 const nextYear = () => {
-    _year.value += 1;
+    dateState.year += 1;
     setMonthDate();
 };
 
 const setMonthDate = () => {
-    dateData.value = getMonthDate(_year.value, _month.value);
+    dateData.value = getMonthDate(dateState.year, dateState.month);
 };
 
 const selectDateFn = (item: RetItemType) => {
     const v = `${item.year}-${item.month}-${item.showDate}`;
-    modelValue.value = dayjs(v).format('YYYY-MM-DD');
-    emit('update:modelValue', modelValue.value);
-    emit('change', v);
+    let _v = dayjs(v).format('YYYY-MM-DD');
+    modelValue.value = _v;
+    emit('change', _v);
 };
 
-const checkDateSelect = computed(() => (item: RetItemType) => {
-    if (item.date > 0 && item.date <= item.showDate) {
-        const v = `${_year.value}-${_month.value}-${item.showDate}`;
-        return dayjs(v).isSame(dayjs(modelValue.value));
-    }
+const checkToday = computed(() => (item: RetItemType) => {
+    const today = dayjs();
+    return today.isSame(
+        dayjs(`${item.year}-${item.month}-${item.date}`),
+        'day'
+    );
 });
 
-const checkToday = computed(() => (item: RetItemType) => {
-    return (
-        curDay.value === item.showDate &&
-        curYear.value === item.year &&
-        curMonth.value === item.month &&
-        item.date > 0 &&
-        item.date === item.showDate
-    );
+const lewDateItemClassNames = computed(() => (item: RetItemType) => {
+    let e = item.date === item.showDate;
+    let selected = false;
+    if (item.date > 0 && item.date <= item.showDate) {
+        const v = `${dateState.year}-${dateState.month}-${item.showDate}`;
+        selected = dayjs(v).isSame(dayjs(modelValue.value));
+    }
+    return object2class('lew-date-item', { e, selected });
 });
 </script>
 <template>
@@ -94,29 +100,19 @@ const checkToday = computed(() => (item: RetItemType) => {
         <lew-flex x="start" mode="between" class="lew-date-control">
             <div class="lew-date-control-left">
                 <!-- 上一年 -->
-                <lew-button
-                    icon="chevrons-left"
-                    @click="prveYear"
-                />
+                <lew-button icon="chevrons-left" @click="prveYear" />
                 <!-- 上一月 -->
-                <lew-button
-                    icon="chevron-left"
-                    @click="prveMonth"
-                />
+                <lew-button icon="chevron-left" @click="prveMonth" />
             </div>
             <!-- 日期 -->
-            <div class="cur-date">{{ _year }} 年 {{ _month }} 月</div>
+            <div class="cur-date">
+                {{ dateState.year }} 年 {{ dateState.month }} 月
+            </div>
             <div class="lew-date-control-right">
                 <!-- 下一月 -->
-                <lew-button
-                    icon="chevron-right"
-                    @click="nextMonth"
-                />
+                <lew-button icon="chevron-right" @click="nextMonth" />
                 <!-- 下一年 -->
-                <lew-button
-                    icon="chevrons-right"
-                    @click="nextYear"
-                />
+                <lew-button icon="chevrons-right" @click="nextYear" />
             </div>
         </lew-flex>
         <div class="lew-date-box">
@@ -134,17 +130,11 @@ const checkToday = computed(() => (item: RetItemType) => {
                 v-for="(item, index) in dateData"
                 :key="`d${index}`"
                 class="lew-date-item"
-                :class="{
-                    'lew-date-item-e': item.date === item.showDate,
-                    'lew-date-item-select': checkDateSelect(item),
-                }"
+                :class="lewDateItemClassNames(item)"
                 @click="selectDateFn(item)"
             >
                 <div class="lew-date-label">
-                    <div
-                        v-if="checkToday(item)"
-                        class="lew-date-item-cur"
-                    ></div>
+                    <i v-if="checkToday(item)" class="lew-date-item-today"></i>
                     <div class="lew-date-value">
                         {{ item.showDate }}
                     </div>
@@ -211,6 +201,7 @@ const checkToday = computed(() => (item: RetItemType) => {
         // border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
 
         .lew-date-item {
+            position: relative;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -251,24 +242,16 @@ const checkToday = computed(() => (item: RetItemType) => {
             }
         }
 
-        .lew-date-item-cur {
-            .lew-date-label {
-                position: relative;
-                color: var(--lew-success-color-dark);
-                font-weight: 900;
-                background-color: var(--lew-success-color-light);
-            }
-        }
-
-        .lew-date-item-cur:hover {
-            .lew-date-label {
-                .lew-date-value {
-                    position: relative;
-                    color: var(--lew-success-color-dark);
-                    font-weight: 900;
-                    background-color: var(--lew-success-color-light);
-                }
-            }
+        .lew-date-item-today {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            left: 50%;
+            bottom: 0px;
+            transform: translateX(-50%);
+            z-index: 99;
+            background-color: var(--lew-success-color);
         }
 
         .lew-date-item-e:hover {
@@ -288,7 +271,7 @@ const checkToday = computed(() => (item: RetItemType) => {
             }
         }
 
-        .lew-date-item-select {
+        .lew-date-item-selected {
             .lew-date-label {
                 .lew-date-value {
                     background-color: var(--lew-primary-color-light);

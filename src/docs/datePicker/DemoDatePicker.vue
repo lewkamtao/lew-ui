@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { DemoDatePicker1, DemoDatePicker1_code } from './demo';
+import {
+    DemoDatePicker1,
+    DemoDatePicker2,
+    DemoDatePicker1_code,
+    DemoDatePicker2_code,
+} from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
 import * as API from './api';
@@ -17,6 +22,9 @@ const options = ref(
         <p class="sub-title">一个很漂亮的、支持双向绑定的日期选择器。</p>
         <lew-demo-box title="常规" :code="DemoDatePicker1_code">
             <demo-date-picker1 />
+        </lew-demo-box>
+        <lew-demo-box title="可清空的" :code="DemoDatePicker2_code">
+            <demo-date-picker2 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>
     </div>

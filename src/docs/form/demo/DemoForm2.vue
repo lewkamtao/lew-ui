@@ -49,6 +49,7 @@ const options = ref([
     {
         field: 'birth',
         label: '生日',
+        value: '2023-01-12',
         as: 'date-picker',
         rules: Yup.string().required('不能为空'),
         props: {
@@ -63,7 +64,12 @@ const options = ref([
             end: '2012-12-12',
         },
         as: 'date-range-picker',
-        rules: Yup.object().required('不能为空'),
+        rules: Yup.object()
+            .shape({
+                start: Yup.string().required(),
+                end: Yup.string().required(),
+            })
+            .required('不能为空'),
         props: {
             clearable: true,
         },
@@ -142,7 +148,8 @@ const submit = () => {
         <lew-flex style="width: calc(100% - 380px)" direction="y" x="start">
             <lew-button text="获取form" @click="form = formRef.getForm()" />
             <pre>{{ form }}</pre>
-            <pre>{{
+            <pre
+                >{{
                     options.map((e: any) => {
                         return {
                             field: e.field,
