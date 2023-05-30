@@ -11,6 +11,9 @@ const pathPackage = path.resolve(__dirname, 'packages');
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv) => {
     return {
+        server: {
+            port: 10034,
+        },
         resolve: {
             //设置别名
             alias: {
