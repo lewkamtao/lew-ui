@@ -24,10 +24,14 @@ export default defineConfig(({ mode }: ConfigEnv) => {
         plugins: [
             vue(),
             vueJsx(),
-            compressPlugin({
-                ext: '.gz',
-                deleteOriginFile: false, // 是否删除原始文件
-            }),
+            () => {
+                mode === 'package'
+                    ? compressPlugin({
+                          ext: '.gz',
+                          deleteOriginFile: false, // 是否删除原始文件
+                      })
+                    : undefined;
+            },
             AutoImport({
                 imports: ['vue'],
                 dts: path.resolve(pathSrc, 'auto-imports.d.ts'),
@@ -53,6 +57,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
                               drop_debugger: true,
                           },
                       },
+                      emptyOutDir: true,
                       rollupOptions: {
                           // 确保外部化处理那些你不想打包进库的依赖
                           external: ['vue'],
@@ -83,6 +88,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
                           },
                       },
                       minify: 'terser',
+                      emptyOutDir: true,
                       terserOptions: {
                           compress: {
                               drop_console: true,
