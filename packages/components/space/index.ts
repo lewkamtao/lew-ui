@@ -1,1 +1,1 @@
-export { default as LewSpace } from './src/LewSpace.vue';
+export { default as LewSpace } from './src/LewSpace.vue'

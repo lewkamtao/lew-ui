@@ -1,2 +1,3 @@
-import DemoSelectMultiple from './DemoSelectMultiple';
-export default DemoSelectMultiple;
+import DemoSelectMultiple from './DemoSelectMultiple'
+
+export default DemoSelectMultiple

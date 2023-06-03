@@ -1,106 +1,107 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
-import TheSiderbar from '../layout/TheSiderbar.vue';
+import { useRoute } from 'vue-router'
+import TheSiderbar from '../layout/TheSiderbar.vue'
 
-const route = useRoute();
-const mainRef: any = ref(null);
-const isShowSider = ref(false);
+const route = useRoute()
+const mainRef: any = ref(null)
+const isShowSider = ref(false)
 
 watch(route, () => {
-    setTimeout(() => {
-        if (mainRef.value) mainRef.value.scrollTop = 0;
-    }, 250);
-    isShowSider.value = false;
-});
+  setTimeout(() => {
+    if (mainRef.value)
+      mainRef.value.scrollTop = 0
+  }, 250)
+  isShowSider.value = false
+})
 
-type Item = {
-    cname: string;
-    name: string;
-    path: string;
-    label: string;
-    type: string;
-};
+interface Item {
+  cname: string
+  name: string
+  path: string
+  label: string
+  type: string
+}
 
-type Group = {
-    title: string;
-    items: Item[];
-};
+interface Group {
+  title: string
+  items: Item[]
+}
 
-const group = ref<Group[]>([]);
+const group = ref<Group[]>([])
 group.value = [
-    {
-        title: '快速上手',
-        items: [
-            {
-                cname: '安装',
-                name: '',
-                path: '/Install',
-                label: '',
-                type: 'success',
-            },
-            {
-                cname: '如何使用',
-                name: '',
-                path: '/Start',
-                label: '',
-                type: 'success',
-            },
-            {
-                cname: '常见问题',
-                name: '',
-                path: '/QA',
-                label: '',
-                type: 'success',
-            },
-            {
-                cname: '未来计划',
-                name: '',
-                path: '/TodoList',
-                label: '',
-                type: '',
-            },
-            // {
-            //     cname: 'Chat',
-            //     name: '交流群',
-            //     path: '/chat',
-            //     label: '',
-            //     type: '',
-            // },
-        ],
-    },
-    {
-        title: '版本',
-        items: [
-            {
-                cname: '更新日志',
-                name: '',
-                path: '/Log',
-                label: 'new',
-                type: 'success',
-            },
-        ],
-    },
-];
+  {
+    title: '快速上手',
+    items: [
+      {
+        cname: '安装',
+        name: '',
+        path: '/Install',
+        label: '',
+        type: 'success',
+      },
+      {
+        cname: '如何使用',
+        name: '',
+        path: '/Start',
+        label: '',
+        type: 'success',
+      },
+      {
+        cname: '常见问题',
+        name: '',
+        path: '/QA',
+        label: '',
+        type: 'success',
+      },
+      {
+        cname: '未来计划',
+        name: '',
+        path: '/TodoList',
+        label: '',
+        type: '',
+      },
+      // {
+      //     cname: 'Chat',
+      //     name: '交流群',
+      //     path: '/chat',
+      //     label: '',
+      //     type: '',
+      // },
+    ],
+  },
+  {
+    title: '版本',
+    items: [
+      {
+        cname: '更新日志',
+        name: '',
+        path: '/Log',
+        label: 'new',
+        type: 'success',
+      },
+    ],
+  },
+]
 </script>
 
 <template>
-    <div class="container">
-        <div
-            class="mb-btn"
-            :class="{ 'mb-btn-open': isShowSider }"
-            @click="isShowSider = !isShowSider"
-        >
-            <lew-icon type="menu" size="24px" />
-        </div>
-        <div class="sider" :class="{ 'sider-open': isShowSider }">
-            <the-siderbar :group="group" />
-        </div>
-        <div ref="mainRef" class="app-main btf-scrollbar">
-            <router-view v-slot="{ Component }">
-                <component :is="Component" />
-            </router-view>
-        </div>
+  <div class="container">
+    <div
+      class="mb-btn"
+      :class="{ 'mb-btn-open': isShowSider }"
+      @click="isShowSider = !isShowSider"
+    >
+      <lew-icon type="menu" size="24px" />
     </div>
+    <div class="sider" :class="{ 'sider-open': isShowSider }">
+      <TheSiderbar :group="group" />
+    </div>
+    <div ref="mainRef" class="app-main btf-scrollbar">
+      <router-view v-slot="{ Component }">
+        <component :is="Component" />
+      </router-view>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>

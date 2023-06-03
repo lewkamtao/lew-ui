@@ -1,1 +1,1 @@
-export { default as LewDrawer } from './src/LewDrawer.vue';
+export { default as LewDrawer } from './src/LewDrawer.vue'

@@ -1,70 +1,75 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router';
-import { useDark } from '@vueuse/core';
+import { useRoute, useRouter } from 'vue-router'
+import { useDark } from '@vueuse/core'
 
 const isDark = useDark({
-    selector: 'html',
-    valueDark: 'lew-dark',
-    valueLight: 'lew-light',
-});
+  selector: 'html',
+  valueDark: 'lew-dark',
+  valueLight: 'lew-light',
+})
 
-const router = useRouter();
-const route = useRoute();
+const router = useRouter()
+const route = useRoute()
 
-const gohome = () => {
-    if (route.name === 'R-LewHome') {
-        LewMessage.warning('你已经在首页了！');
-    } else {
-        router.push(`/`);
-    }
-};
+function gohome() {
+  if (route.name === 'R-LewHome')
+    LewMessage.warning('你已经在首页了！')
+  else
+    router.push('/')
+}
 </script>
 
 <template>
-    <div class="Header">
-        <div class="logo" @click="gohome">
-            <img
-                src="../assets/images/logo.png"
-                alt="logo"
-                srcset=""
-                width="30"
-                height="30"
-            />
-            <span style="margin-left: 10px"> Lew UI</span>
-            <lew-tag
-                v-tooltip="{
-                    content: '当前演示版本为 Beta v1.2，请勿在生产环境使用。',
-                    placement: 'top-start',
-                    trigger: 'mouseenter',
-                }"
-                type="info"
-                size="small"
-                style="margin-left: 10px"
-            >
-                Beta v1.3.5
-            </lew-tag>
-        </div>
-        <lew-flex gap="15" x="end" class="menu">
-            <div class="menu-item" @click="router.push(`/`)">首页</div>
-            <div class="menu-item" @click="router.push(`/Install`)">指南</div>
-            <div class="menu-item" @click="router.push(`/Avatar`)">组件</div>
-            <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
-                <lew-icon size="18" type="github" />
-            </a>
-            <lew-icon
-                class="menu-item icon-mode-sunny"
-                type="sun"
-                size="18"
-                @click="isDark = false"
-            />
-            <lew-icon
-                class="menu-item icon-mode-moon"
-                type="moon"
-                size="18"
-                @click="isDark = true"
-            />
-        </lew-flex>
+  <div class="Header">
+    <div class="logo" @click="gohome">
+      <img
+        src="../assets/images/logo.png"
+        alt="logo"
+        srcset=""
+        width="30"
+        height="30"
+      >
+      <span style="margin-left: 10px"> Lew UI</span>
+      <lew-tag
+        v-tooltip="{
+          content: '当前演示版本为 Beta v1.2，请勿在生产环境使用。',
+          placement: 'top-start',
+          trigger: 'mouseenter',
+        }"
+        type="info"
+        size="small"
+        style="margin-left: 10px"
+      >
+        Beta v1.3.5
+      </lew-tag>
     </div>
+    <lew-flex gap="15" x="end" class="menu">
+      <div class="menu-item" @click="router.push(`/`)">
+        首页
+      </div>
+      <div class="menu-item" @click="router.push(`/Install`)">
+        指南
+      </div>
+      <div class="menu-item" @click="router.push(`/Avatar`)">
+        组件
+      </div>
+      <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
+        <lew-icon size="18" type="github" />
+      </a>
+      <lew-icon
+        class="menu-item icon-mode-sunny"
+        type="sun"
+        size="18"
+        @click="isDark = false"
+      />
+      <lew-icon
+        class="menu-item icon-mode-moon"
+        type="moon"
+        size="18"
+        @click="isDark = true"
+      />
+    </lew-flex>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -164,6 +169,7 @@ const gohome = () => {
     }
 }
 </style>
+
 <style lang="scss">
 .icon-mode-sunny {
     display: none !important;

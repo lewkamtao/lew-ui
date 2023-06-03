@@ -1,105 +1,109 @@
 <script lang="ts" setup>
-import { dateRangePickerProps } from './datePicker';
-import { useVModel } from '@vueuse/core';
-const props = defineProps(dateRangePickerProps);
-const emit = defineEmits(['change', 'update:modelValue']);
-const modelValue = useVModel(props, 'modelValue', emit);
-const isShowPicker = ref(false);
-const lewPopoverRef = ref();
-const { startKey, endKey } = props;
-const lewDateRangePanelRef = ref();
+import { useVModel } from '@vueuse/core'
+import { dateRangePickerProps } from './datePicker'
 
-const show = () => {
-    lewPopoverRef.value.show();
-};
+const props = defineProps(dateRangePickerProps)
+const emit = defineEmits(['change', 'update:modelValue'])
+const modelValue = useVModel(props, 'modelValue', emit)
+const isShowPicker = ref(false)
+const lewPopoverRef = ref()
+const { startKey, endKey } = props
+const lewDateRangePanelRef = ref()
 
-const hide = () => {
-    lewPopoverRef.value.hide();
-};
+function show() {
+  lewPopoverRef.value.show()
+}
+
+function hide() {
+  lewPopoverRef.value.hide()
+}
 
 const getIconSize = computed(() => {
-    const size: any = {
-        small: 13,
-        medium: 14,
-        large: 16,
-    };
-    return size[props.size];
-});
+  const size: any = {
+    small: 13,
+    medium: 14,
+    large: 16,
+  }
+  return size[props.size]
+})
 
-const change = (e?: any) => {
-    emit('change', { e, show, hide });
-    hide();
-};
+function change(e?: any) {
+  emit('change', { e, show, hide })
+  hide()
+}
 
-const showHandle = () => {
-    isShowPicker.value = true;
-};
-const hideHandle = () => {
-    isShowPicker.value = false;
-    lewDateRangePanelRef.value.init();
-};
+function showHandle() {
+  isShowPicker.value = true
+}
+function hideHandle() {
+  isShowPicker.value = false
+  lewDateRangePanelRef.value.init()
+}
 
 const classObject = computed(() => {
-    return {
-        'lew-date-picker-focus': isShowPicker.value,
-        [`lew-date-picker-${props.size}`]: props.size,
-    };
-});
+  return {
+    'lew-date-picker-focus': isShowPicker.value,
+    [`lew-date-picker-${props.size}`]: props.size,
+  }
+})
 
-defineExpose({ show, hide });
+defineExpose({ show, hide })
 </script>
+
 <template>
-    <lew-popover
-        ref="lewPopoverRef"
-        trigger="click"
-        placement="bottom-start"
-        @show="showHandle"
-        @hide="hideHandle"
-    >
-        <template #trigger>
-            <div class="lew-date-picker-view" :class="classObject">
-                <div class="lew-date-picker-input">
-                    <div
-                        v-if="!modelValue[startKey]"
-                        class="lew-date-picker-placeholder"
-                    >
-                        请选择日期
-                    </div>
-                    <div
-                        v-else
-                        class="lew-date-picker-dateValue lew-date-picker-start"
-                    >
-                        {{ modelValue[startKey] }}
-                    </div>
-                    <div class="lew-date-picker-mid">-</div>
-                    <div
-                        v-if="!modelValue[endKey]"
-                        class="lew-date-picker-placeholder"
-                    >
-                        请选择日期
-                    </div>
-                    <div
-                        v-else
-                        class="lew-date-picker-dateValue lew-date-picker-end"
-                    >
-                        {{ modelValue[endKey] }}
-                    </div>
-                    <lew-icon
-                        class="lew-date-picker-icon"
-                        :size="getIconSize"
-                        type="calendar"
-                    />
-                </div>
-            </div>
-        </template>
-        <template #popover-body>
-            <lew-date-range
-                ref="lewDateRangePanelRef"
-                v-model="modelValue"
-                @change="change"
-            />
-        </template>
-    </lew-popover>
+  <lew-popover
+    ref="lewPopoverRef"
+    trigger="click"
+    placement="bottom-start"
+    @show="showHandle"
+    @hide="hideHandle"
+  >
+    <template #trigger>
+      <div class="lew-date-picker-view" :class="classObject">
+        <div class="lew-date-picker-input">
+          <div
+            v-if="!modelValue[startKey]"
+            class="lew-date-picker-placeholder"
+          >
+            请选择日期
+          </div>
+          <div
+            v-else
+            class="lew-date-picker-dateValue lew-date-picker-start"
+          >
+            {{ modelValue[startKey] }}
+          </div>
+          <div class="lew-date-picker-mid">
+            -
+          </div>
+          <div
+            v-if="!modelValue[endKey]"
+            class="lew-date-picker-placeholder"
+          >
+            请选择日期
+          </div>
+          <div
+            v-else
+            class="lew-date-picker-dateValue lew-date-picker-end"
+          >
+            {{ modelValue[endKey] }}
+          </div>
+          <lew-icon
+            class="lew-date-picker-icon"
+            :size="getIconSize"
+            type="calendar"
+          />
+        </div>
+      </div>
+    </template>
+    <template #popover-body>
+      <lew-date-range
+        ref="lewDateRangePanelRef"
+        v-model="modelValue"
+        @change="change"
+      />
+    </template>
+  </lew-popover>
 </template>
 
 <style lang="scss" scoped>

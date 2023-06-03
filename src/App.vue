@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import TheHeader from './layout/TheHeader.vue';
+import TheHeader from './layout/TheHeader.vue'
 </script>
 
 <template>
-    <div class="wrapper">
-        <the-header />
-        <router-view />
-    </div>
+  <div class="wrapper">
+    <TheHeader />
+    <router-view />
+  </div>
 </template>
 
 <style lang="scss" scoped>

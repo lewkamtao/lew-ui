@@ -1,35 +1,36 @@
 <script setup lang="ts">
+import LewDemoBox from '../../layout/LewDemoBox.vue'
+import LewDocsTables from '../../layout/LewDocsTables.vue'
 import {
-    DemoTextarea1,
-    DemoTextarea2,
-    DemoTextarea3,
-    DemoTextarea1_code,
-    DemoTextarea2_code,
-    DemoTextarea3_code,
-} from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
-import * as API from './api';
+  DemoTextarea1,
+  DemoTextarea1_code,
+  DemoTextarea2,
+  DemoTextarea2_code,
+  DemoTextarea3,
+  DemoTextarea3_code,
+} from './demo'
+import * as API from './api'
+
 const options = ref(
-    Object.keys(API).map((key: any) => {
-        // @ts-ignore
-        return API[key];
-    })
-);
+  Object.keys(API).map((key: any) => {
+    // @ts-expect-error
+    return API[key]
+  }),
+)
 </script>
 
 <template>
-    <div class="demo-wrapper">
-        <lew-title>Textarea</lew-title>
-        <lew-demo-box title="尺寸" :code="DemoTextarea1_code">
-            <demo-textarea1 />
-        </lew-demo-box>
-        <lew-demo-box title="字数限制" :code="DemoTextarea2_code">
-            <demo-textarea2 />
-        </lew-demo-box>
-        <lew-demo-box title="其他" :code="DemoTextarea3_code">
-            <demo-textarea3 />
-        </lew-demo-box>
-        <lew-docs-tables :options="options"></lew-docs-tables>
-    </div>
+  <div class="demo-wrapper">
+    <lew-title>Textarea</lew-title>
+    <LewDemoBox title="尺寸" :code="DemoTextarea1_code">
+      <DemoTextarea1 />
+    </LewDemoBox>
+    <LewDemoBox title="字数限制" :code="DemoTextarea2_code">
+      <DemoTextarea2 />
+    </LewDemoBox>
+    <LewDemoBox title="其他" :code="DemoTextarea3_code">
+      <DemoTextarea3 />
+    </LewDemoBox>
+    <LewDocsTables :options="options" />
+  </div>
 </template>

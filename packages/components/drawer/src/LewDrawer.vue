@@ -1,53 +1,55 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
-import { useDOMCreate } from '../../../hooks';
-import { drawerProps, object2class, getStyle } from './drawer';
+import { ref, watch } from 'vue'
+import { useDOMCreate } from '../../../hooks'
+import { drawerProps, getStyle, object2class } from './drawer'
 
-useDOMCreate('lew-drawer');
-const emit = defineEmits(['update:visible']);
-
-const props = defineProps(drawerProps);
-const _visible = ref(props.visible);
-const isShowMain = ref(false);
+const props = defineProps(drawerProps)
+const emit = defineEmits(['update:visible'])
+useDOMCreate('lew-drawer')
+const _visible = ref(props.visible)
+const isShowMain = ref(false)
 
 watch(
-    () => props.visible,
-    (val) => {
-        _visible.value = val;
-        setTimeout(() => {
-            // 设置固定单元格的阴影
-            isShowMain.value = val;
-        }, 100);
-    }
-);
-
-const close = () => {
-    isShowMain.value = false;
+  () => props.visible,
+  (val) => {
+    _visible.value = val
     setTimeout(() => {
-        emit('update:visible', false);
-    }, 100);
-};
+      // 设置固定单元格的阴影
+      isShowMain.value = val
+    }, 100)
+  },
+)
+
+function close() {
+  isShowMain.value = false
+  setTimeout(() => {
+    emit('update:visible', false)
+  }, 100)
+}
 </script>
+
 <template>
-    <teleport to="#lew-drawer">
-        <transition name="fade">
-            <div
-                v-if="_visible"
-                class="lew-drawer"
-                :class="{ 'lew-drawer-show': isShowMain }"
-                @click="close"
-            >
-                <div
-                    :style="getStyle(position, width, height)"
-                    class="lew-drawer-main"
-                    :class="object2class(position)"
-                    @click.stop
-                >
-                    <slot></slot>
-                </div>
-            </div> </transition
-    ></teleport>
+  <teleport to="#lew-drawer">
+    <transition name="fade">
+      <div
+        v-if="_visible"
+        class="lew-drawer"
+        :class="{ 'lew-drawer-show': isShowMain }"
+        @click="close"
+      >
+        <div
+          :style="getStyle(position, width, height)"
+          class="lew-drawer-main"
+          :class="object2class(position)"
+          @click.stop
+        >
+          <slot />
+        </div>
+      </div>
+    </transition>
+  </teleport>
 </template>
+
 <style lang="scss">
 .lew-drawer {
     position: fixed;

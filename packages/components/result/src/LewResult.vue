@@ -1,36 +1,40 @@
 <script setup lang="ts">
-import { _props } from './props';
+import { _props } from './props'
 
-defineProps(_props);
+defineProps(_props)
 </script>
 
 <template>
-    <lew-flex direction="y" class="lew-result">
-        <lew-flex class="lew-result-icon" :class="`lew-result-icon-${type}`">
-            <lew-icon v-if="type === `normal`" size="60" type="info"></lew-icon>
-            <lew-icon
-                v-if="type === `warning`"
-                size="60"
-                type="alert-triangle"
-            ></lew-icon>
-            <lew-icon
-                v-if="type === `success`"
-                size="60"
-                type="smile"
-            ></lew-icon>
-            <lew-icon
-                v-if="type === `error`"
-                size="60"
-                type="alert-circle"
-            ></lew-icon>
-            <lew-icon v-if="type === `info`" size="60" type="bell"></lew-icon>
-        </lew-flex>
-        <lew-title class="lew-result-title">{{ title }}</lew-title>
-        <div class="lew-result-content">{{ content }}</div>
-        <div>
-            <slot name="handle" />
-        </div>
+  <lew-flex direction="y" class="lew-result">
+    <lew-flex class="lew-result-icon" :class="`lew-result-icon-${type}`">
+      <lew-icon v-if="type === `normal`" size="60" type="info" />
+      <lew-icon
+        v-if="type === `warning`"
+        size="60"
+        type="alert-triangle"
+      />
+      <lew-icon
+        v-if="type === `success`"
+        size="60"
+        type="smile"
+      />
+      <lew-icon
+        v-if="type === `error`"
+        size="60"
+        type="alert-circle"
+      />
+      <lew-icon v-if="type === `info`" size="60" type="bell" />
     </lew-flex>
+    <lew-title class="lew-result-title">
+      {{ title }}
+    </lew-title>
+    <div class="lew-result-content">
+      {{ content }}
+    </div>
+    <div>
+      <slot name="handle" />
+    </div>
+  </lew-flex>
 </template>
 
 <style lang="scss" scoped>

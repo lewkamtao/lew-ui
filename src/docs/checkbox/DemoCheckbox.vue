@@ -1,46 +1,49 @@
 <script setup lang="ts">
+import LewDemoBox from '../../layout/LewDemoBox.vue'
+import LewDocsTables from '../../layout/LewDocsTables.vue'
 import {
-    DemoCheckbox1,
-    DemoCheckbox2,
-    DemoCheckbox3,
-    DemoCheckbox4,
-    DemoCheckbox5,
-    DemoCheckbox1_code,
-    DemoCheckbox2_code,
-    DemoCheckbox3_code,
-    DemoCheckbox4_code,
-    DemoCheckbox5_code,
-} from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
-import * as API from './api';
+  DemoCheckbox1,
+  DemoCheckbox1_code,
+  DemoCheckbox2,
+  DemoCheckbox2_code,
+  DemoCheckbox3,
+  DemoCheckbox3_code,
+  DemoCheckbox4,
+  DemoCheckbox4_code,
+  DemoCheckbox5,
+  DemoCheckbox5_code,
+} from './demo'
+import * as API from './api'
+
 const options = ref(
-    Object.keys(API).map((key: any) => {
-        // @ts-ignore
-        return API[key];
-    })
-);
+  Object.keys(API).map((key: any) => {
+    // @ts-expect-error
+    return API[key]
+  }),
+)
 </script>
 
 <template>
-    <div class="demo-wrapper">
-        <lew-title>Checkbox</lew-title>
-        <p class="sub-title">通过复选框选择一个或多个数据。</p>
-        <lew-demo-box title="常规" :code="DemoCheckbox1_code">
-            <demo-checkbox1 />
-        </lew-demo-box>
-        <lew-demo-box title="y 布局" :code="DemoCheckbox2_code">
-            <demo-checkbox2
-        /></lew-demo-box>
-        <lew-demo-box title="块" :code="DemoCheckbox3_code" tag="方的">
-            <demo-checkbox3 />
-        </lew-demo-box>
-        <lew-demo-box title="块" :code="DemoCheckbox4_code" tag="圆的">
-            <demo-checkbox4 />
-        </lew-demo-box>
-        <lew-demo-box title="单个模式" :code="DemoCheckbox5_code">
-            <demo-checkbox5 />
-        </lew-demo-box>
-        <lew-docs-tables :options="options"></lew-docs-tables>
-    </div>
+  <div class="demo-wrapper">
+    <lew-title>Checkbox</lew-title>
+    <p class="sub-title">
+      通过复选框选择一个或多个数据。
+    </p>
+    <LewDemoBox title="常规" :code="DemoCheckbox1_code">
+      <DemoCheckbox1 />
+    </LewDemoBox>
+    <LewDemoBox title="y 布局" :code="DemoCheckbox2_code">
+      <DemoCheckbox2 />
+    </LewDemoBox>
+    <LewDemoBox title="块" :code="DemoCheckbox3_code" tag="方的">
+      <DemoCheckbox3 />
+    </LewDemoBox>
+    <LewDemoBox title="块" :code="DemoCheckbox4_code" tag="圆的">
+      <DemoCheckbox4 />
+    </LewDemoBox>
+    <LewDemoBox title="单个模式" :code="DemoCheckbox5_code">
+      <DemoCheckbox5 />
+    </LewDemoBox>
+    <LewDocsTables :options="options" />
+  </div>
 </template>

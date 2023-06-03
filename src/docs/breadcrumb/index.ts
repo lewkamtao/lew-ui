@@ -1,2 +1,3 @@
-import DemoBreadcrumb from './DemoBreadcrumb.vue';
-export default DemoBreadcrumb;
+import DemoBreadcrumb from './DemoBreadcrumb.vue'
+
+export default DemoBreadcrumb

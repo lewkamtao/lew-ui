@@ -1,1 +1,1 @@
-export { default as LewSelectMultiple } from './src/LewSelectMultiple.vue';
+export { default as LewSelectMultiple } from './src/LewSelectMultiple.vue'

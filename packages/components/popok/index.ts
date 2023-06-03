@@ -1,1 +1,1 @@
-export { default as LewPopok } from './src/LewPopok.vue';
+export { default as LewPopok } from './src/LewPopok.vue'

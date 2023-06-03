@@ -1,1 +1,1 @@
-export { default as LewInputPro } from './src/LewInputPro.vue';
+export { default as LewInputPro } from './src/LewInputPro.vue'

@@ -1,2 +1,3 @@
-import DemoAlert from './DemoAlert.vue';
-export default DemoAlert;
+import DemoAlert from './DemoAlert.vue'
+
+export default DemoAlert

@@ -1,2 +1,3 @@
-import DemoColor from './DemoColor.vue';
-export default DemoColor;
+import DemoColor from './DemoColor.vue'
+
+export default DemoColor

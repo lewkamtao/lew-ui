@@ -1,1 +1,1 @@
-export { default as LewPagination } from './src/LewPagination.vue';
+export { default as LewPagination } from './src/LewPagination.vue'

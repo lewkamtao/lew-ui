@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { magicNumberProps } from './magic-text';
+import { magicNumberProps } from './magic-text'
 
-const props = defineProps(magicNumberProps);
+const props = defineProps(magicNumberProps)
 </script>
 
 <template>
-    <div class="lew-magic-text">
-        <slot />
-    </div>
+  <div class="lew-magic-text">
+    <slot />
+  </div>
 </template>
 
 <style lang="scss" scoped></style>

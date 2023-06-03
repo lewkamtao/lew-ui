@@ -1,161 +1,168 @@
 <script lang="ts" setup>
-import { Ref } from 'vue';
-import moment from 'moment';
-import { getMonthDate, getHeadDate } from './date';
-import type { RetType, RetItemType } from './date';
-import { dateProps } from './datePicker';
-import { useVModel } from '@vueuse/core';
+import type { Ref } from 'vue'
+import moment from 'moment'
+import { useVModel } from '@vueuse/core'
+import { getHeadDate, getMonthDate } from './date'
+import type { RetItemType, RetType } from './date'
+import { dateProps } from './datePicker'
 
-const emit = defineEmits(['change', 'update:modelValue']);
-const props = defineProps(dateProps);
-const modelValue = useVModel(props, 'modelValue', emit);
+const props = defineProps(dateProps)
+const emit = defineEmits(['change', 'update:modelValue'])
+const modelValue = useVModel(props, 'modelValue', emit)
 
 // 获取当天日期对象
-const today = new Date();
+const today = new Date()
 // 获取当前年份
-const curYear = ref(today.getFullYear());
+const curYear = ref(today.getFullYear())
 // 获取当前月份
-const curMonth = ref(today.getMonth() + 1);
-const curDay = ref(today.getDate());
+const curMonth = ref(today.getMonth() + 1)
+const curDay = ref(today.getDate())
 
 // 年
-const _year = ref(modelValue.value ? moment(modelValue.value).year() : curYear);
+const _year = ref(modelValue.value ? moment(modelValue.value).year() : curYear)
 // 月
 const _month = ref(
-    modelValue.value ? moment(modelValue.value).month() + 1 : curMonth
-);
+  modelValue.value ? moment(modelValue.value).month() + 1 : curMonth,
+)
 
-const dateData: Ref<RetType> = ref(getMonthDate());
+const dateData: Ref<RetType> = ref(getMonthDate())
 
 onMounted(() => {
-    setMonthDate();
-});
+  setMonthDate()
+})
 
-const prveMonth = () => {
-    if (_month.value > 1) {
-        _month.value -= 1;
-    } else {
-        _year.value -= 1;
-        _month.value = 12;
-    }
-    setMonthDate();
-};
+function prveMonth() {
+  if (_month.value > 1) {
+    _month.value -= 1
+  }
+  else {
+    _year.value -= 1
+    _month.value = 12
+  }
+  setMonthDate()
+}
 
-const nextMonth = () => {
-    if (_month.value < 12) {
-        _month.value += 1;
-    } else {
-        _year.value += 1;
-        _month.value = 1;
-    }
-    setMonthDate();
-};
+function nextMonth() {
+  if (_month.value < 12) {
+    _month.value += 1
+  }
+  else {
+    _year.value += 1
+    _month.value = 1
+  }
+  setMonthDate()
+}
 
-const prveYear = () => {
-    _year.value -= 1;
-    setMonthDate();
-};
+function prveYear() {
+  _year.value -= 1
+  setMonthDate()
+}
 
-const nextYear = () => {
-    _year.value += 1;
-    setMonthDate();
-};
+function nextYear() {
+  _year.value += 1
+  setMonthDate()
+}
 
-const setMonthDate = () => {
-    dateData.value = getMonthDate(_year.value, _month.value);
-};
+function setMonthDate() {
+  dateData.value = getMonthDate(_year.value, _month.value)
+}
 
-const selectDateFn = (item: RetItemType) => {
-    const v = `${item.year}-${item.month}-${item.showDate}`;
-    modelValue.value = v;
-    emit('update:modelValue', modelValue.value);
-    emit('change', v);
-};
+function selectDateFn(item: RetItemType) {
+  const v = `${item.year}-${item.month}-${item.showDate}`
+  modelValue.value = v
+  emit('update:modelValue', modelValue.value)
+  emit('change', v)
+}
 
 const checkDateSelect = computed(() => (item: RetItemType) => {
-    if (item.date > 0 && item.date <= item.showDate) {
-        const v = `${_year.value}-${_month.value}-${item.showDate}`;
-        return modelValue.value === v;
-    }
-});
+  if (item.date > 0 && item.date <= item.showDate) {
+    const v = `${_year.value}-${_month.value}-${item.showDate}`
+    return modelValue.value === v
+  }
+})
 
 const checkToday = computed(() => (item: RetItemType) => {
-    return (
-        curDay.value === item.showDate &&
-        curYear.value === item.year &&
-        curMonth.value === item.month &&
-        item.date > 0 &&
-        item.date === item.showDate
-    );
-});
+  return (
+    curDay.value === item.showDate
+        && curYear.value === item.year
+        && curMonth.value === item.month
+        && item.date > 0
+        && item.date === item.showDate
+  )
+})
 </script>
-<template>
-    <div class="lew-date">
-        <lew-flex x="start" mode="between" class="lew-date-control">
-            <div class="lew-date-control-left">
-                <!-- 上一年 -->
-                <lew-button
-                    icon="chevrons-left"
-                    size="small"
-                    @click="prveYear"
-                />
-                <!-- 上一月 -->
-                <lew-button
-                    icon="chevron-left"
-                    size="small"
-                    @click="prveMonth"
-                />
-            </div>
-            <!-- 日期 -->
-            <div class="cur-date">{{ _year }} 年 {{ _month }} 月</div>
-            <div class="lew-date-control-right">
-                <!-- 下一月 -->
-                <lew-button
-                    icon="chevron-right"
-                    size="small"
-                    @click="nextMonth"
-                />
-                <!-- 下一年 -->
-                <lew-button
-                    icon="chevrons-right"
-                    size="small"
-                    @click="nextYear"
-                />
-            </div>
-        </lew-flex>
-        <div class="lew-date-box">
-            <!-- 表头 周 -->
-            <div
-                v-for="(item, index) in getHeadDate"
-                :key="`h${index}`"
-                class="lew-date-item"
-            >
-                <div class="lew-date-num">{{ item }}</div>
-            </div>
 
-            <!-- 表格 -->
-            <div
-                v-for="(item, index) in dateData"
-                :key="`d${index}`"
-                class="lew-date-item"
-                :class="{
-                    'lew-date-item-e': item.date === item.showDate,
-                    'lew-date-item-select': checkDateSelect(item),
-                }"
-                @click="selectDateFn(item)"
-            >
-                <div class="lew-date-label">
-                    <div
-                        v-if="checkToday(item)"
-                        class="lew-date-item-cur"
-                    ></div>
-                    <div class="lew-date-value">
-                        {{ item.showDate }}
-                    </div>
-                </div>
-            </div>
+<template>
+  <div class="lew-date">
+    <lew-flex x="start" mode="between" class="lew-date-control">
+      <div class="lew-date-control-left">
+        <!-- 上一年 -->
+        <lew-button
+          icon="chevrons-left"
+          size="small"
+          @click="prveYear"
+        />
+        <!-- 上一月 -->
+        <lew-button
+          icon="chevron-left"
+          size="small"
+          @click="prveMonth"
+        />
+      </div>
+      <!-- 日期 -->
+      <div class="cur-date">
+        {{ _year }} 年 {{ _month }} 月
+      </div>
+      <div class="lew-date-control-right">
+        <!-- 下一月 -->
+        <lew-button
+          icon="chevron-right"
+          size="small"
+          @click="nextMonth"
+        />
+        <!-- 下一年 -->
+        <lew-button
+          icon="chevrons-right"
+          size="small"
+          @click="nextYear"
+        />
+      </div>
+    </lew-flex>
+    <div class="lew-date-box">
+      <!-- 表头 周 -->
+      <div
+        v-for="(item, index) in getHeadDate"
+        :key="`h${index}`"
+        class="lew-date-item"
+      >
+        <div class="lew-date-num">
+          {{ item }}
         </div>
+      </div>
+
+      <!-- 表格 -->
+      <div
+        v-for="(item, index) in dateData"
+        :key="`d${index}`"
+        class="lew-date-item"
+        :class="{
+          'lew-date-item-e': item.date === item.showDate,
+          'lew-date-item-select': checkDateSelect(item),
+        }"
+        @click="selectDateFn(item)"
+      >
+        <div class="lew-date-label">
+          <div
+            v-if="checkToday(item)"
+            class="lew-date-item-cur"
+          />
+          <div class="lew-date-value">
+            {{ item.showDate }}
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>

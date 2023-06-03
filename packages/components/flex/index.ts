@@ -1,1 +1,1 @@
-export { default as LewFlex } from './src/LewFlex.vue';
+export { default as LewFlex } from './src/LewFlex.vue'

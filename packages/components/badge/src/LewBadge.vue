@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import { badgeProps } from './badge';
-import { object2class } from 'lew-ui/utils';
+import { object2class } from 'lew-ui/utils'
+import { badgeProps } from './badge'
 
-const props = defineProps(badgeProps);
+const props = defineProps(badgeProps)
 
 const badgeClassName = computed(() => {
-    const { round, type } = props;
-    return object2class('lew-badge', {
-        round,
-        type,
-    });
-});
+  const { round, type } = props
+  return object2class('lew-badge', {
+    round,
+    type,
+  })
+})
 </script>
 
 <template>
-    <div class="lew-badge" :class="badgeClassName">
-        <div v-if="value" class="lew-badge-value">
-            {{ value }}
-        </div>
-        <div v-if="!value" class="lew-badge-dot"></div>
-        <slot></slot>
+  <div class="lew-badge" :class="badgeClassName">
+    <div v-if="value" class="lew-badge-value">
+      {{ value }}
     </div>
+    <div v-if="!value" class="lew-badge-dot" />
+    <slot />
+  </div>
 </template>
 
 <style lang="scss">

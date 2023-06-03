@@ -1,61 +1,58 @@
 <script setup lang="ts">
-import { magicNumberProps } from './magic-number';
-import { numFormat } from 'lew-ui/utils';
+import { numFormat } from 'lew-ui/utils'
+import { magicNumberProps } from './magic-number'
 
-const props = defineProps(magicNumberProps);
+const props = defineProps(magicNumberProps)
 
-let state = reactive({
-    numberArr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-});
+const state = reactive({
+  numberArr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+})
 
 const getValueArr = computed(() => {
-    if (typeof props.value !== 'number') {
-        throw new Error('LewMagicNumber props value 必须为number类型！');
-    }
+  if (typeof props.value !== 'number')
+    throw new Error('LewMagicNumber props value 必须为number类型！')
 
-    if (props.sep) {
-        return numFormat(props.value).split('');
-    } else {
-        return String(props.value).split('');
-    }
-});
+  if (props.sep)
+    return numFormat(props.value).split('')
+  else
+    return String(props.value).split('')
+})
 
 const getMagicNumberStyle = computed(() => {
-    const { size } = props;
-    return `height:${size}px;`;
-});
+  const { size } = props
+  return `height:${size}px;`
+})
 const getItemStyle = computed(() => (item: string) => {
-    const { size } = props;
-    let index = parseInt(item);
-    return `transform: translateY(-${size * index}px)`;
-});
+  const { size } = props
+  const index = parseInt(item)
+  return `transform: translateY(-${size * index}px)`
+})
 const getNumStyle = computed(() => {
-    const { size } = props;
-    return `font-size:${size}px; line-height:${size}px; height:${size}px;`;
-});
+  const { size } = props
+  return `font-size:${size}px; line-height:${size}px; height:${size}px;`
+})
 </script>
 
 <template>
-    <div class="lew-magic-number" :style="getMagicNumberStyle">
-        <div
-            :style="getItemStyle(item)"
-            class="lew-magic-number-item"
-            v-for="(item, index) in getValueArr"
-            :key="index"
-        >
-            <span :style="getNumStyle" v-if="item === '.' || item === ','"
-                >{{ item }}
-            </span>
-            <span
-                v-else
-                class="lew-magic-number-num"
-                :style="getNumStyle"
-                v-for="(n, index) in state.numberArr"
-                :key="index"
-                v-text="n"
-            />
-        </div>
+  <div class="lew-magic-number" :style="getMagicNumberStyle">
+    <div
+      v-for="(item, index) in getValueArr"
+      :key="index"
+      :style="getItemStyle(item)"
+      class="lew-magic-number-item"
+    >
+      <span v-if="item === '.' || item === ','" :style="getNumStyle">{{ item }}
+      </span>
+      <span
+        v-for="(n, index) in state.numberArr"
+        v-else
+        :key="index"
+        class="lew-magic-number-num"
+        :style="getNumStyle"
+        v-text="n"
+      />
     </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>

@@ -1,1 +1,1 @@
-export { default as LewModal } from './src/LewModal.vue';
+export { default as LewModal } from './src/LewModal.vue'

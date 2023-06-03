@@ -1,2 +1,3 @@
-import DemoBadge from './DemoBadge.vue';
-export default DemoBadge;
+import DemoBadge from './DemoBadge.vue'
+
+export default DemoBadge

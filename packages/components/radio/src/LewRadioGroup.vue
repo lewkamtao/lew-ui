@@ -1,47 +1,47 @@
 <script lang="ts" setup>
-import { useVModel } from '@vueuse/core';
-import LewRadio from './LewRadio.vue';
-import { radioGroupProps } from './radio';
-import type { RadioOptions } from './radio';
-import { object2class } from 'lew-ui/utils';
+import { useVModel } from '@vueuse/core'
+import { object2class } from 'lew-ui/utils'
+import LewRadio from './LewRadio.vue'
+import { radioGroupProps } from './radio'
+import type { RadioOptions } from './radio'
 
-const emit = defineEmits(['change', 'update:modelValue']);
-const props = defineProps(radioGroupProps);
-const modelValue = useVModel(props, 'modelValue', emit);
+const props = defineProps(radioGroupProps)
+const emit = defineEmits(['change', 'update:modelValue'])
+const modelValue = useVModel(props, 'modelValue', emit)
 
-const check = (item: RadioOptions) => {
-    modelValue.value = item.value;
-    emit('change', {
-        value: item.value,
-        item: toRaw(item),
-    });
-};
+function check(item: RadioOptions) {
+  modelValue.value = item.value
+  emit('change', {
+    value: item.value,
+    item: toRaw(item),
+  })
+}
 
 const getRadioGroupClassName = computed(() => {
-    const { size, direction } = props;
-    return object2class('lew-radio-group', { size, direction });
-});
+  const { size, direction } = props
+  return object2class('lew-radio-group', { size, direction })
+})
 </script>
 
 <template>
-    <lew-flex
-        x="start"
-        gap="15"
-        class="lew-radio-group"
-        :class="getRadioGroupClassName"
-    >
-        <lew-radio
-            v-for="item in options"
-            :key="item.value"
-            :block="block"
-            :iconable="iconable"
-            :label="item.label"
-            :disabled="item.disabled || disabled"
-            :size="size"
-            :checked="modelValue === item.value"
-            @update:checked="check(item)"
-        />
-    </lew-flex>
+  <lew-flex
+    x="start"
+    gap="15"
+    class="lew-radio-group"
+    :class="getRadioGroupClassName"
+  >
+    <LewRadio
+      v-for="item in options"
+      :key="item.value"
+      :block="block"
+      :iconable="iconable"
+      :label="item.label"
+      :disabled="item.disabled || disabled"
+      :size="size"
+      :checked="modelValue === item.value"
+      @update:checked="check(item)"
+    />
+  </lew-flex>
 </template>
 
 <style lang="scss" scoped>

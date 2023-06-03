@@ -1,177 +1,176 @@
 <script setup lang="ts">
-import { tabsProps } from './tabs';
-import { useVModel } from '@vueuse/core';
-import { object2class, any2px } from 'lew-ui/utils';
+import { useVModel } from '@vueuse/core'
+import { any2px, object2class } from 'lew-ui/utils'
+import { tabsProps } from './tabs'
 
-const emit = defineEmits(['change', 'update:modelValue']);
-const props = defineProps(tabsProps);
-const tabsValue = useVModel(props, 'modelValue', emit);
+const props = defineProps(tabsProps)
+const emit = defineEmits(['change', 'update:modelValue'])
+const tabsValue = useVModel(props, 'modelValue', emit)
 
-const tabsRef = ref();
-const itemRef = ref([] as any);
+const tabsRef = ref()
+const itemRef = ref([] as any)
 
 const state = reactive({
-    activeItemStyle: {} as any,
-    curIndex: props.options.findIndex((e) => tabsValue.value === e.value),
-    hidLine: '',
-    isInit: false,
-});
+  activeItemStyle: {} as any,
+  curIndex: props.options.findIndex(e => tabsValue.value === e.value),
+  hidLine: '',
+  isInit: false,
+})
 
 watch(
-    () => tabsValue.value,
-    (v) => {
-        selectItem(v, 'watch');
+  () => tabsValue.value,
+  (v) => {
+    selectItem(v, 'watch')
+  },
+)
+
+function init() {
+  let index = props.options.findIndex(e => e.value === tabsValue.value)
+  if (index < 0)
+    index = 0
+
+  state.activeItemStyle = `width:${itemRef.value[index].offsetWidth}px;transform: translateX(${itemRef.value[index].offsetLeft}px);`
+  tabsScroll()
+  setTimeout(() => {
+    state.isInit = true
+  }, 100)
+}
+
+function selectItem(value: [String, Number], type?: string) {
+  const index = props.options.findIndex(e => value === e.value)
+  if (state.curIndex != index) {
+    const _item = props.options[index]
+
+    if (tabsValue.value != _item.value)
+      tabsValue.value = _item.value
+
+    const activeRef = itemRef.value[index]
+
+    if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
+      tabsRef.value.scrollLeft
+                = activeRef.offsetLeft
+                - tabsRef.value.clientWidth / 2
+                + activeRef.offsetWidth / 2
     }
-);
 
-const init = () => {
-    let index = props.options.findIndex((e) => e.value === tabsValue.value);
-    if (index < 0) {
-        index = 0;
+    state.activeItemStyle = {
+      width: `${activeRef.offsetWidth}px`,
+      transform: `translate(${activeRef.offsetLeft}px)`,
     }
-    state.activeItemStyle = `width:${itemRef.value[index].offsetWidth}px;transform: translateX(${itemRef.value[index].offsetLeft}px);`;
-    tabsScroll();
-    setTimeout(() => {
-        state.isInit = true;
-    }, 100);
-};
-
-const selectItem = (value: [String, Number], type?: string) => {
-    const index = props.options.findIndex((e) => value === e.value);
-    if (state.curIndex != index) {
-        const _item = props.options[index];
-
-        if (tabsValue.value != _item.value) {
-            tabsValue.value = _item.value;
-        }
-
-        const activeRef = itemRef.value[index];
-
-        if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
-            tabsRef.value.scrollLeft =
-                activeRef.offsetLeft -
-                tabsRef.value.clientWidth / 2 +
-                activeRef.offsetWidth / 2;
-        }
-
-        state.activeItemStyle = {
-            width: `${activeRef.offsetWidth}px`,
-            transform: `translate(${activeRef.offsetLeft}px)`,
-        };
-        if (type !== 'watch') {
-            emit('change', {
-                label: _item.label,
-                value: _item.value,
-                activeIndex: index,
-            });
-        }
-
-        state.curIndex = index;
+    if (type !== 'watch') {
+      emit('change', {
+        label: _item.label,
+        value: _item.value,
+        activeIndex: index,
+      })
     }
-};
 
-let timer: ReturnType<typeof setTimeout> | undefined;
-const debounce = () => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-        init();
-    }, 250);
-};
+    state.curIndex = index
+  }
+}
+
+let timer: ReturnType<typeof setTimeout> | undefined
+function debounce() {
+  clearTimeout(timer)
+  timer = setTimeout(() => {
+    init()
+  }, 250)
+}
 
 const getTabsWrapperClassName = computed(() => {
-    const { type, round } = props;
-    return object2class('lew-tabs-wrapper', {
-        type,
-        round,
-        hidLine: state.hidLine,
-    });
-});
+  const { type, round } = props
+  return object2class('lew-tabs-wrapper', {
+    type,
+    round,
+    hidLine: state.hidLine,
+  })
+})
 
 const getTabsClassName = computed(() => {
-    const { type, round } = props;
-    return object2class('lew-tabs', {
-        type,
-        round,
-    });
-});
+  const { type, round } = props
+  return object2class('lew-tabs', {
+    type,
+    round,
+  })
+})
 
-const tabsScroll = () => {
-    if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
-        if (tabsRef.value.scrollLeft > 0) {
-            if (
-                tabsRef.value.scrollLeft >=
-                tabsRef.value.scrollWidth - tabsRef.value.clientWidth - 10
-            ) {
-                state.hidLine = 'right';
-            } else {
-                state.hidLine = '';
-            }
-        } else {
-            state.hidLine = 'left';
-        }
-    } else {
-        state.hidLine = 'all';
+function tabsScroll() {
+  if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
+    if (tabsRef.value.scrollLeft > 0) {
+      if (
+        tabsRef.value.scrollLeft
+                >= tabsRef.value.scrollWidth - tabsRef.value.clientWidth - 10
+      )
+        state.hidLine = 'right'
+      else
+        state.hidLine = ''
     }
-};
+    else {
+      state.hidLine = 'left'
+    }
+  }
+  else {
+    state.hidLine = 'all'
+  }
+}
 
 onMounted(() => {
-    if (!props.modelValue) {
-        tabsValue.value = props.options[0].value;
-    }
-    init();
-    window.addEventListener('resize', debounce, false);
-});
+  if (!props.modelValue)
+    tabsValue.value = props.options[0].value
+
+  init()
+  window.addEventListener('resize', debounce, false)
+})
 
 const getItemStyle = computed(() => {
-    let width = any2px(props.itemWidth);
-    if (props.itemWidth === 'auto') {
-        return `flex:1`;
-    } else {
-        return `width:${width}`;
-    }
-});
+  const width = any2px(props.itemWidth)
+  if (props.itemWidth === 'auto')
+    return 'flex:1'
+  else
+    return `width:${width}`
+})
 
 const getTabsStyle = computed(() => {
-    let width = any2px(props.width);
-    return `width:${width}`;
-});
+  const width = any2px(props.width)
+  return `width:${width}`
+})
 
 onUnmounted(() => {
-    window.removeEventListener('resize', debounce);
-});
+  window.removeEventListener('resize', debounce)
+})
 </script>
 
 <template>
+  <div
+    :style="getTabsStyle"
+    class="lew-tabs-wrapper"
+    :class="getTabsWrapperClassName"
+  >
     <div
-        :style="getTabsStyle"
-        class="lew-tabs-wrapper"
-        :class="getTabsWrapperClassName"
+      ref="tabsRef"
+      :style="getTabsStyle"
+      class="lew-tabs hidden-scrollbar"
+      :class="getTabsClassName"
+      @scroll="tabsScroll"
     >
-        <div
-            :style="getTabsStyle"
-            class="lew-tabs hidden-scrollbar"
-            :class="getTabsClassName"
-            ref="tabsRef"
-            @scroll="tabsScroll"
-        >
-            <div
-                :style="state.activeItemStyle"
-                class="lew-tabs-item-animation-active"
-                :class="{ 'lew-tabs-item-isInit': state.isInit }"
-            ></div>
-            <div
-                v-for="item in options"
-                :key="String(item.value)"
-                :ref="(el) => itemRef.push(el)"
-                class="lew-tabs-item"
-                :style="getItemStyle"
-                :class="{ 'lew-tabs-item-active': tabsValue === item.value }"
-                @click="selectItem(item.value)"
-            >
-                {{ item.label }}
-            </div>
-        </div>
+      <div
+        :style="state.activeItemStyle"
+        class="lew-tabs-item-animation-active"
+        :class="{ 'lew-tabs-item-isInit': state.isInit }"
+      />
+      <div
+        v-for="item in options"
+        :key="String(item.value)"
+        :ref="(el) => itemRef.push(el)"
+        class="lew-tabs-item"
+        :style="getItemStyle"
+        :class="{ 'lew-tabs-item-active': tabsValue === item.value }"
+        @click="selectItem(item.value)"
+      >
+        {{ item.label }}
+      </div>
     </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>

@@ -1,1 +1,1 @@
-export { default as LewSteps } from './src/LewSteps.vue';
+export { default as LewSteps } from './src/LewSteps.vue'

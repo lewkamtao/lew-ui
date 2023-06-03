@@ -1,2 +1,3 @@
-import DemoTag from './DemoTag.vue';
-export default DemoTag;
+import DemoTag from './DemoTag.vue'
+
+export default DemoTag

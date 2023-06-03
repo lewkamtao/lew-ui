@@ -1,51 +1,51 @@
 <script setup lang="ts">
-import { useImage } from '@vueuse/core';
-import { object2class } from 'lew-ui/utils';
-import { avatarProps } from './avatar';
+import { useImage } from '@vueuse/core'
+import { object2class } from 'lew-ui/utils'
+import { avatarProps } from './avatar'
 
-const props = defineProps(avatarProps);
-const { isLoading } = useImage({ src: props.src });
-const isError = ref(false);
+const props = defineProps(avatarProps)
+const { isLoading } = useImage({ src: props.src })
+const isError = ref(false)
 
 const imgSrc = computed(() => {
-    return isError.value ? props.errorSrc : props.src;
-});
+  return isError.value ? props.errorSrc : props.src
+})
 
 const dotClassName = computed(() => {
-    return object2class('dot', {
-        status: props.status,
-        statusPosition: props.statusPosition,
-    });
-});
+  return object2class('dot', {
+    status: props.status,
+    statusPosition: props.statusPosition,
+  })
+})
 
 const avatarClassName = computed(() => {
-    return object2class('lew-avatar', {
-        round: props.round,
-        skeletons: isLoading.value,
-    });
-});
+  return object2class('lew-avatar', {
+    round: props.round,
+    skeletons: isLoading.value,
+  })
+})
 
 const avatarStyleObject = computed(() => {
-    return {
-        width: `${props.width}px`,
-        height: `${props.height}px`,
-    };
-});
+  return {
+    width: `${props.width}px`,
+    height: `${props.height}px`,
+  }
+})
 </script>
 
 <template>
-    <div class="lew-avatar" :style="avatarStyleObject">
-        <div class="lew-avatar-box" :class="avatarClassName">
-            <span v-if="isLoading" class="skeletons"> </span>
-            <img
-                :src="imgSrc"
-                :alt="alt"
-                :onerror="() => (isError = true)"
-                lazy
-            />
-        </div>
-        <span v-if="status" class="dot" :class="dotClassName"> </span>
+  <div class="lew-avatar" :style="avatarStyleObject">
+    <div class="lew-avatar-box" :class="avatarClassName">
+      <span v-if="isLoading" class="skeletons" />
+      <img
+        :src="imgSrc"
+        :alt="alt"
+        :onerror="() => (isError = true)"
+        lazy
+      >
     </div>
+    <span v-if="status" class="dot" :class="dotClassName" />
+  </div>
 </template>
 
 <style lang="scss" scoped>

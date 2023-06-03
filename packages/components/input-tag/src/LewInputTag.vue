@@ -1,103 +1,104 @@
 <script setup lang="ts">
-import { inputTagProps } from './props';
-import { useVModel } from '@vueuse/core';
+import { useVModel } from '@vueuse/core'
+import { inputTagProps } from './props'
 
-const emit = defineEmits(['close', 'change']);
+const props = defineProps(inputTagProps)
 
-const props = defineProps(inputTagProps);
-const tagsValue = useVModel(props, 'modelValue', emit);
-const inputValue = ref();
-const isInput = ref(false);
-const lewInputRef = ref();
-let isEnter = false;
+const emit = defineEmits(['close', 'change'])
 
-let delDownTimer: any;
-let delDownCheck = 0;
+const tagsValue = useVModel(props, 'modelValue', emit)
+const inputValue = ref()
+const isInput = ref(false)
+const lewInputRef = ref()
+let isEnter = false
+
+let delDownTimer: any
+let delDownCheck = 0
 watch(
-    () => props.modelValue,
-    () => {
-        tagsValue.value = props.modelValue;
-    }
-);
+  () => props.modelValue,
 
-const openInput = () => {
-    isInput.value = true;
-    nextTick(() => {
-        lewInputRef.value.toFocus();
-    });
-    document.onkeydown = function (event) {
-        if (inputValue.value === '') {
-            if (event.keyCode === 8 || event.keyCode === 46) {
-                clearTimeout(delDownTimer);
-                delDownTimer = setTimeout(() => {
-                    delDownCheck = 0;
-                }, 500);
-                delDownCheck += 1;
-                if (delDownCheck >= 2) {
-                    tagsValue.value.splice(tagsValue.value.length - 1, 1);
-                    delDownCheck = 0;
-                }
-            }
-        } else if (event.keyCode === 13) {
-            isEnter = true;
+  () => {
+    tagsValue.value = props.modelValue
+  },
+)
+
+function openInput() {
+  isInput.value = true
+  nextTick(() => {
+    lewInputRef.value.toFocus()
+  })
+  document.onkeydown = function (event) {
+    if (inputValue.value === '') {
+      if (event.keyCode === 8 || event.keyCode === 46) {
+        clearTimeout(delDownTimer)
+        delDownTimer = setTimeout(() => {
+          delDownCheck = 0
+        }, 500)
+        delDownCheck += 1
+        if (delDownCheck >= 2) {
+          tagsValue.value.splice(tagsValue.value.length - 1, 1)
+          delDownCheck = 0
         }
-    };
-};
-
-const blurFn = (e: any) => {
-    isInput.value = false;
-    document.onkeydown = null;
-    addTag();
-    if (isEnter) {
-        openInput();
+      }
     }
-    isEnter = false;
-};
-
-const addTag = () => {
-    let _value = tagsValue.value || [];
-    if (inputValue.value) {
-        _value.push(inputValue.value);
+    else if (event.keyCode === 13) {
+      isEnter = true
     }
-    inputValue.value = '';
-    tagsValue.value = _value;
-    emit('change', _value);
-};
+  }
+}
 
-const delTag = (index: number) => {
-    tagsValue.value.splice(index, 1);
-    emit('change', tagsValue.value);
-    emit('close', tagsValue.value);
-};
+function blurFn() {
+  isInput.value = false
+  document.onkeydown = null
+  addTag()
+  if (isEnter)
+    openInput()
+
+  isEnter = false
+}
+
+function addTag() {
+  const _value = tagsValue.value || []
+  if (inputValue.value)
+    _value.push(inputValue.value)
+
+  inputValue.value = ''
+  tagsValue.value = _value
+  emit('change', _value)
+}
+
+function delTag(index: number) {
+  tagsValue.value.splice(index, 1)
+  emit('change', tagsValue.value)
+  emit('close', tagsValue.value)
+}
 </script>
 
 <template>
-    <div class="lew-input-tag-view">
-        <div style="margin-left: -10px; height: 26px"></div>
-        <TransitionGroup name="list">
-            <lew-tag
-                v-for="(item, index) in tagsValue"
-                :key="index"
-                closable
-                type="primary"
-                @close="delTag(index)"
-                >{{ item }}
-            </lew-tag>
-        </TransitionGroup>
-        <label v-if="!isInput" class="lew-input-tag-button" @click="openInput">
-            <lew-icon :size="16" type="plus" />
-        </label>
-        <lew-input
-            v-else
-            ref="lewInputRef"
-            v-model="inputValue"
-            class="lew-input-tag"
-            size="small"
-            auto-width
-            placeholder=""
-            @blur="blurFn"
-        />
-    </div>
+  <div class="lew-input-tag-view">
+    <div style="margin-left: -10px; height: 26px" />
+    <TransitionGroup name="list">
+      <lew-tag
+        v-for="(item, index) in tagsValue" :key="index" closable
+        type="primary" @close="delTag(index)"
+      >
+        {{ item }}
+      </lew-tag>
+    </TransitionGroup>
+    <label v-if="!isInput" class="lew-input-tag-button" @click="openInput">
+      <lew-icon :size="16" type="plus" />
+    </label>
+    <lew-input
+      v-else
+      ref="lewInputRef"
+      v-model="inputValue"
+      class="lew-input-tag"
+      size="small"
+      auto-width
+      placeholder=""
+      @blur="blurFn"
+    />
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -111,7 +112,8 @@ const delTag = (index: number) => {
     .lew-input-tag {
         height: 26px;
         flex-shrink: 1;
-        ::v-deep input {
+
+        :deep(input) {
             height: 26px;
         }
     }
@@ -140,6 +142,7 @@ const delTag = (index: number) => {
 .list-leave-active {
     transition: all 0.15s ease-in-out;
 }
+
 .list-enter-from,
 .list-leave-to {
     opacity: 0;

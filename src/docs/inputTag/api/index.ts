@@ -1,2 +1,7 @@
-export { default as props } from './props';
-export { default as events } from './events';
+import { props } from './props'
+import { event } from './events'
+
+export const API = {
+  props,
+  event,
+}

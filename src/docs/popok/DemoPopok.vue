@@ -1,32 +1,35 @@
 <script setup lang="ts">
+import LewDemoBox from '../../layout/LewDemoBox.vue'
+import LewDocsTables from '../../layout/LewDocsTables.vue'
 import {
-    DemoPopok1,
-    DemoPopok2,
-    DemoPopok1_code,
-    DemoPopok2_code,
-} from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
-import * as API from './api';
+  DemoPopok1,
+  DemoPopok1_code,
+  DemoPopok2,
+  DemoPopok2_code,
+} from './demo'
+import * as API from './api'
+
 const options = ref(
-    Object.keys(API).map((key: any) => {
-        // @ts-ignore
-        return API[key];
-    })
-);
+  Object.keys(API).map((key: any) => {
+    // @ts-expect-error
+    return API[key]
+  }),
+)
 </script>
 
 <template>
-    <div class="demo-wrapper">
-        <lew-title>Popok</lew-title>
-        <lew-demo-box title="简单的询问" tag="click" :code="DemoPopok1_code">
-            <demo-popok1> </demo-popok1>
-        </lew-demo-box>
+  <div class="demo-wrapper">
+    <lew-title>Popok</lew-title>
+    <LewDemoBox title="简单的询问" tag="click" :code="DemoPopok1_code">
+      <DemoPopok1 />
+    </LewDemoBox>
 
-        <lew-demo-box title="简单的询问" tag="hover" :code="DemoPopok2_code">
-            <demo-popok2> </demo-popok2>
-        </lew-demo-box>
-        <lew-title :size="16">Props</lew-title>
-        <lew-docs-tables :options="options"></lew-docs-tables>
-    </div>
+    <LewDemoBox title="简单的询问" tag="hover" :code="DemoPopok2_code">
+      <DemoPopok2 />
+    </LewDemoBox>
+    <lew-title :size="16">
+      Props
+    </lew-title>
+    <LewDocsTables :options="options" />
+  </div>
 </template>

@@ -1,1 +1,1 @@
-export { default as LewPopover } from './src/LewPopover.vue';
+export { default as LewPopover } from './src/LewPopover.vue'

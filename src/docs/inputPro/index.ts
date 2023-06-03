@@ -1,2 +1,3 @@
-import DemoInputPro from './DemoInputPro.vue';
-export default DemoInputPro;
+import DemoInputPro from './DemoInputPro.vue'
+
+export default DemoInputPro

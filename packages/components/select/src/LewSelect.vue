@@ -1,294 +1,294 @@
 <script setup lang="ts">
-import { useVModel, useDebounceFn } from '@vueuse/core';
-import { LewPopover } from 'lew-ui';
-import { object2class, numFormat } from 'lew-ui/utils';
-import { UseVirtualList } from '@vueuse/components';
-import { selectProps, SelectOptions } from './props';
+import { useDebounceFn, useVModel } from '@vueuse/core'
+import { LewPopover } from 'lew-ui'
+import { numFormat, object2class } from 'lew-ui/utils'
+import { UseVirtualList } from '@vueuse/components'
+import type { SelectOptions } from './props'
+import { selectProps } from './props'
 
-const props = defineProps(selectProps);
-const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
-const selectValue = useVModel(props, 'modelValue', emit);
+const props = defineProps(selectProps)
+const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear'])
+const selectValue = useVModel(props, 'modelValue', emit)
 
-const lewSelectRef = ref();
-const lewPopverRef = ref();
-const searchInputRef = ref();
+const lewSelectRef = ref()
+const lewPopverRef = ref()
+const searchInputRef = ref()
 
 const state = reactive({
-    selectWidth: 0,
-    visible: false,
-    loading: false,
-    options: props.options,
-    keyword: '',
-});
+  selectWidth: 0,
+  visible: false,
+  loading: false,
+  options: props.options,
+  keyword: '',
+})
 
-const getSelectWidth = () => {
-    state.selectWidth = lewSelectRef.value?.clientWidth - 14;
-    if (props.searchable) {
-        setTimeout(() => {
-            searchInputRef.value && searchInputRef.value.focus();
-        }, 200);
-    }
-};
+function getSelectWidth() {
+  state.selectWidth = lewSelectRef.value?.clientWidth - 14
+  if (props.searchable) {
+    setTimeout(() => {
+      searchInputRef.value && searchInputRef.value.focus()
+    }, 200)
+  }
+}
 
-const show = () => {
-    lewPopverRef.value.show();
-};
+function show() {
+  lewPopverRef.value.show()
+}
 
-const hide = () => {
-    lewPopverRef.value.hide();
-};
+function hide() {
+  lewPopverRef.value.hide()
+}
 
 const searchDebounce = useDebounceFn(async (e: any) => {
-    search(e);
-}, props.searchDelay);
+  search(e)
+}, props.searchDelay)
 
-const search = async (e: any) => {
-    // loading
-    state.loading = true;
-    const keyword = e.target.value;
-    if (props.searchable) {
-        let result: any = [];
-        // 如果没输入关键词
-        if (!keyword && props.options.length > 0) {
-            result = props.options;
-        } else {
-            result = await props.searchMethod({
-                options: props.options,
-                keyword,
-            });
-        }
-        state.options = result;
+async function search(e: any) {
+  // loading
+  state.loading = true
+  const keyword = e.target.value
+  if (props.searchable) {
+    let result: any = []
+    // 如果没输入关键词
+    if (!keyword && props.options.length > 0) {
+      result = props.options
     }
-    state.loading = false;
-};
-
-const clearHandle = () => {
-    selectValue.value = '';
-    emit('clear');
-    emit('change');
-};
-
-const selectHandle = (item: SelectOptions) => {
-    if (item.disabled) {
-        return;
+    else {
+      result = await props.searchMethod({
+        options: props.options,
+        keyword,
+      })
     }
-    selectValue.value = item.value;
-    emit('change', item.value);
-    hide();
-};
+    state.options = result
+  }
+  state.loading = false
+}
+
+function clearHandle() {
+  selectValue.value = ''
+  emit('clear')
+  emit('change')
+}
+
+function selectHandle(item: SelectOptions) {
+  if (item.disabled)
+    return
+
+  selectValue.value = item.value
+  emit('change', item.value)
+  hide()
+}
 
 const getChecked = computed(() => (value: string | number) => {
-    return selectValue.value === value;
-});
+  return selectValue.value === value
+})
 
 const getValueStyle = computed(() => {
-    return state.visible ? 'opacity:0.4' : '';
-});
+  return state.visible ? 'opacity:0.4' : ''
+})
 
 const getLabel = computed(() => {
-    if (state.options) {
-        const option = state.options.find((e) => {
-            if (e) {
-                return e.value === selectValue.value;
-            }
-        });
+  if (state.options) {
+    const option = state.options.find((e) => {
+      if (e)
+        return e.value === selectValue.value
+      return false
+    })
 
-        if (option && JSON.stringify(option) !== '{}') {
-            return option.label;
-        }
-    }
+    if (option && JSON.stringify(option) !== '{}')
+      return option.label
+  }
 
-    return props.defaultValue || props.modelValue;
-});
+  return props.defaultValue || props.modelValue
+})
 
 const getSelectClassName = computed(() => {
-    let { clearable, size, align } = props;
-    clearable = clearable ? !!selectValue.value : false;
-    return object2class('lew-select', { clearable, size, align });
-});
+  let { clearable, size, align } = props
+  clearable = clearable ? !!selectValue.value : false
+  return object2class('lew-select', { clearable, size, align })
+})
 
 const getBodyClassName = computed(() => {
-    const { size, disabled } = props;
-    return object2class('lew-select-body', { size, disabled });
-});
+  const { size, disabled } = props
+  return object2class('lew-select-body', { size, disabled })
+})
 
 const getSelectViewClassName = computed(() => {
-    const { disabled, readonly } = props;
-    const focus = state.visible;
-    return object2class('lew-select-view', { focus, disabled, readonly });
-});
+  const { disabled, readonly } = props
+  const focus = state.visible
+  return object2class('lew-select-view', { focus, disabled, readonly })
+})
 
-const getSelectItemClassName = (e: any) => {
-    const { disabled } = e;
-    const active = getChecked.value(e.value);
-    const { align } = props;
+function getSelectItemClassName(e: any) {
+  const { disabled } = e
+  const active = getChecked.value(e.value)
+  const { align } = props
 
-    return object2class('lew-select-item', {
-        disabled,
-        align,
-        active,
-    });
-};
+  return object2class('lew-select-item', {
+    disabled,
+    align,
+    active,
+  })
+}
 
 const getVirtualHeight = computed(() => {
-    let height = state.options.length * props.itemHeight;
-    height = height > 240 ? 240 : height;
-    return `${height}px`;
-});
+  let height = state.options.length * props.itemHeight
+  height = height > 240 ? 240 : height
+  return `${height}px`
+})
 
 const getIconSize = computed(() => {
-    const size: any = {
-        small: 13,
-        medium: 14,
-        large: 16,
-    };
-    return size[props.size];
-});
+  const size: any = {
+    small: 13,
+    medium: 14,
+    large: 16,
+  }
+  return size[props.size]
+})
 
-const showHandle = () => {
-    state.visible = true;
-    getSelectWidth();
-    if (state.options && state.options.length === 0 && props.searchable) {
-        search({ target: { value: '' } });
-    }
-};
+function showHandle() {
+  state.visible = true
+  getSelectWidth()
+  if (state.options && state.options.length === 0 && props.searchable)
+    search({ target: { value: '' } })
+}
 
-const hideHandle = () => {
-    state.visible = false;
-    emit('blur');
-};
+function hideHandle() {
+  state.visible = false
+  emit('blur')
+}
 
-defineExpose({ show, hide });
+defineExpose({ show, hide })
 </script>
 
 <template>
-    <lew-popover
-        ref="lewPopverRef"
-        class="lew-select-view"
-        :class="getSelectViewClassName"
-        :trigger="trigger"
-        :disabled="disabled"
-        placement="bottom-start"
-        style="width: 100%"
-        :loading="state.loading"
-        @show="showHandle"
-        @hide="hideHandle"
-    >
-        <template #trigger>
-            <div
-                ref="lewSelectRef"
-                class="lew-select"
-                :class="getSelectClassName"
-            >
-                <lew-icon
-                    :size="getIconSize"
-                    type="chevron-down"
-                    class="icon-select"
-                    :class="{ 'icon-select-hide': clearable && getLabel }"
-                />
-                <lew-icon
-                    v-if="clearable"
-                    :size="getIconSize"
-                    type="x-circle"
-                    class="icon-clear"
-                    :class="{ 'icon-clear-show': clearable && getLabel }"
-                    @click.stop="clearHandle"
-                />
-                <div v-show="getLabel" :style="getValueStyle" class="value">
-                    {{ getLabel }}
-                </div>
-                <div v-show="!getLabel" class="placeholder">
-                    {{ placeholder }}
-                </div>
-            </div>
-        </template>
-        <template #popover-body>
-            <div
-                class="lew-select-body"
-                :class="getBodyClassName"
-                :style="`width:${state.selectWidth}px`"
-            >
-                <slot name="header"></slot>
-                <div v-if="searchable" class="search-input">
-                    <input
-                        ref="searchInputRef"
-                        v-model="state.keyword"
-                        placeholder="输入搜索关键词"
-                        @input="searchDebounce"
-                    />
-                </div>
-                <div class="lew-select-options-box">
-                    <lew-flex
-                        v-show="state.options && state.options.length === 0"
-                        direction="y"
-                        class="not-found"
-                    >
-                        <lew-icon type="box" size="30" />
-                        <span>暂无结果</span>
-                    </lew-flex>
-                    <div
-                        v-if="
-                            searchable &&
-                            state.options &&
-                            state.options.length > 0
-                        "
-                        class="reslut-count"
-                    >
-                        共
-                        {{ numFormat(state.options && state.options.length) }}
-                        条结果
-                    </div>
+  <LewPopover
+    ref="lewPopverRef"
+    class="lew-select-view"
+    :class="getSelectViewClassName"
+    :trigger="trigger"
+    :disabled="disabled"
+    placement="bottom-start"
+    style="width: 100%"
+    :loading="state.loading"
+    @show="showHandle"
+    @hide="hideHandle"
+  >
+    <template #trigger>
+      <div
+        ref="lewSelectRef"
+        class="lew-select"
+        :class="getSelectClassName"
+      >
+        <lew-icon
+          :size="getIconSize"
+          type="chevron-down"
+          class="icon-select"
+          :class="{ 'icon-select-hide': clearable && getLabel }"
+        />
+        <lew-icon
+          v-if="clearable"
+          :size="getIconSize"
+          type="x-circle"
+          class="icon-clear"
+          :class="{ 'icon-clear-show': clearable && getLabel }"
+          @click.stop="clearHandle"
+        />
+        <div v-show="getLabel" :style="getValueStyle" class="value">
+          {{ getLabel }}
+        </div>
+        <div v-show="!getLabel" class="placeholder">
+          {{ placeholder }}
+        </div>
+      </div>
+    </template>
+    <template #popover-body>
+      <div
+        class="lew-select-body"
+        :class="getBodyClassName"
+        :style="`width:${state.selectWidth}px`"
+      >
+        <slot name="header" />
+        <div v-if="searchable" class="search-input">
+          <input
+            ref="searchInputRef"
+            v-model="state.keyword"
+            placeholder="输入搜索关键词"
+            @input="searchDebounce"
+          >
+        </div>
+        <div class="lew-select-options-box">
+          <lew-flex
+            v-show="state.options && state.options.length === 0"
+            direction="y"
+            class="not-found"
+          >
+            <lew-icon type="box" size="30" />
+            <span>暂无结果</span>
+          </lew-flex>
+          <div
+            v-if="
+              searchable
+                && state.options
+                && state.options.length > 0
+            "
+            class="reslut-count"
+          >
+            共
+            {{ numFormat(state.options && state.options.length) }}
+            条结果
+          </div>
 
-                    <use-virtual-list
-                        v-if="state.options.length > 0"
-                        class="lew-select-options-list"
-                        :list="state.options"
-                        :options="{
-                            itemHeight: 30,
-                        }"
-                        :height="getVirtualHeight"
-                    >
-                        <template #="props">
-                            <!-- you can get current item of list here -->
-                            <label @click="selectHandle(props.data)">
-                                <div
-                                    v-if="!labelSlot"
-                                    class="lew-select-item"
-                                    :class="getSelectItemClassName(props.data)"
-                                    :style="{ height: itemHeight + 'px' }"
-                                >
-                                    <div class="lew-select-label">
-                                        {{ props.data.label }}
-                                    </div>
-                                    <lew-icon
-                                        v-if="
-                                            getChecked(props.data.value) &&
-                                            showCheckIcon
-                                        "
-                                        class="icon-check"
-                                        size="14"
-                                        type="check"
-                                    />
-                                </div>
-                                <div
-                                    v-else
-                                    class="lew-select-slot-item"
-                                    :style="{ height: itemHeight + 'px' }"
-                                >
-                                    <slot
-                                        name="label"
-                                        :item="props.data"
-                                        :checked="getChecked(props.data.value)"
-                                    />
-                                </div>
-                            </label>
-                        </template>
-                    </use-virtual-list>
+          <UseVirtualList
+            v-if="state.options.length > 0"
+            class="lew-select-options-list"
+            :list="state.options"
+            :options="{
+              itemHeight: 30,
+            }"
+            :height="getVirtualHeight"
+          >
+            <template #default="props">
+              <!-- you can get current item of list here -->
+              <label @click="selectHandle(props.data)">
+                <div
+                  v-if="!labelSlot"
+                  class="lew-select-item"
+                  :class="getSelectItemClassName(props.data)"
+                  :style="{ height: `${itemHeight}px` }"
+                >
+                  <div class="lew-select-label">
+                    {{ props.data.label }}
+                  </div>
+                  <lew-icon
+                    v-if="
+                      getChecked(props.data.value)
+                        && showCheckIcon
+                    "
+                    class="icon-check"
+                    size="14"
+                    type="check"
+                  />
                 </div>
-                <slot name="footer"></slot>
-            </div>
-        </template>
-    </lew-popover>
+                <div
+                  v-else
+                  class="lew-select-slot-item"
+                  :style="{ height: `${itemHeight}px` }"
+                >
+                  <slot
+                    name="label"
+                    :item="props.data"
+                    :checked="getChecked(props.data.value)"
+                  />
+                </div>
+              </label>
+            </template>
+          </UseVirtualList>
+        </div>
+        <slot name="footer" />
+      </div>
+    </template>
+  </LewPopover>
 </template>
 
 <style lang="scss" scoped>
@@ -439,6 +439,7 @@ defineExpose({ show, hide });
     border: var(--lew-form-border-width) transparent solid;
 }
 </style>
+
 <style lang="scss">
 .lew-select-body {
     width: 100%;

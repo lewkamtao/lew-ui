@@ -1,27 +1,27 @@
-import { ExtractPropTypes, PropType } from 'vue';
+import type { ExtractPropTypes, PropType } from 'vue'
 
-type boldType = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+type boldType = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
 type TitleType =
     | 'primary'
     | 'info'
     | 'success'
     | 'error'
     | 'warning'
-    | 'normal';
+    | 'normal'
 
 export const titleProps = {
-    bold: {
-        type: Number as PropType<boldType>,
-        default: 500,
-    },
-    size: {
-        type: Number,
-        default: 24,
-    },
-    type: {
-        type: String as PropType<TitleType>,
-        default: '',
-    },
-};
+  bold: {
+    type: Number as PropType<boldType>,
+    default: 500,
+  },
+  size: {
+    type: Number,
+    default: 24,
+  },
+  type: {
+    type: String as PropType<TitleType>,
+    default: '',
+  },
+}
 
-export type TitleProps = ExtractPropTypes<typeof titleProps>;
+export type TitleProps = ExtractPropTypes<typeof titleProps>

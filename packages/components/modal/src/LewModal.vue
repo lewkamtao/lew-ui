@@ -1,58 +1,57 @@
 <script lang="ts" setup name="Modal">
-import { useVModel } from '@vueuse/core';
-import { useDOMCreate } from '../../../hooks';
-import { any2px } from 'lew-ui/utils';
-
-useDOMCreate('lew-modal');
+import { useVModel } from '@vueuse/core'
+import { any2px } from 'lew-ui/utils'
+import { useDOMCreate } from '../../../hooks'
 
 const props = defineProps({
-    title: {
-        type: String,
-        default: '',
-    },
-    width: {
-        type: String,
-        default: '',
-    },
-    height: {
-        type: String,
-        default: '',
-    },
-    visible: {
-        type: Boolean,
-        default: false,
-    },
-    closeOnClickOverlay: {
-        type: Boolean,
-        default: false,
-    },
-});
+  title: {
+    type: String,
+    default: '',
+  },
+  width: {
+    type: String,
+    default: '',
+  },
+  height: {
+    type: String,
+    default: '',
+  },
+  visible: {
+    type: Boolean,
+    default: false,
+  },
+  closeOnClickOverlay: {
+    type: Boolean,
+    default: false,
+  },
+})
 
-const emit = defineEmits(['update:visible', 'confirm']);
+const emit = defineEmits(['update:visible', 'confirm'])
 
-const visible = useVModel(props, 'visible', emit);
+useDOMCreate('lew-modal')
 
-const maskClick = () => {
-    if (props.closeOnClickOverlay) {
-        visible.value = false;
-    }
-};
+const visible = useVModel(props, 'visible', emit)
+
+function maskClick() {
+  if (props.closeOnClickOverlay)
+    visible.value = false
+}
 const getModalStyle = computed(() => {
-    return {
-        width: any2px(props.width),
-        height: any2px(props.height),
-    };
-});
+  return {
+    width: any2px(props.width),
+    height: any2px(props.height),
+  }
+})
 </script>
 
 <template>
-    <teleport to="#lew-modal">
-        <div v-if="visible" class="lew-modal" @click="maskClick">
-            <div :style="getModalStyle" class="lew-modal-box" @click.stop>
-                <slot></slot>
-            </div>
-        </div>
-    </teleport>
+  <teleport to="#lew-modal">
+    <div v-if="visible" class="lew-modal" @click="maskClick">
+      <div :style="getModalStyle" class="lew-modal-box" @click.stop>
+        <slot />
+      </div>
+    </div>
+  </teleport>
 </template>
 
 <style lang="scss" scoped>

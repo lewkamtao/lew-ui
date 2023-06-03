@@ -1,54 +1,54 @@
 <script lang="ts" setup>
-import { tagProps } from './tag';
-import { object2class } from 'lew-ui/utils';
+import { object2class } from 'lew-ui/utils'
+import { tagProps } from './tag'
 
-const props = defineProps(tagProps);
-const emit = defineEmits(['close']);
-const close = () => {
-    if (props.disabled) {
-        return;
-    }
-    emit('close');
-};
+const props = defineProps(tagProps)
+const emit = defineEmits(['close'])
+function close() {
+  if (props.disabled)
+    return
+
+  emit('close')
+}
 
 const getSize = computed(() => {
-    switch (props.size) {
-        case 'small':
-            return 12;
-        case 'medium':
-            return 14;
-        case 'large':
-            return 16;
-        default:
-            return 14;
-    }
-});
+  switch (props.size) {
+    case 'small':
+      return 12
+    case 'medium':
+      return 14
+    case 'large':
+      return 16
+    default:
+      return 14
+  }
+})
 
 const tagClassName = computed(() => {
-    const { size, type, round, disabled } = props;
-    return object2class('lew-tag', { size, type, round, disabled });
-});
+  const { size, type, round, disabled } = props
+  return object2class('lew-tag', { size, type, round, disabled })
+})
 </script>
 
 <template>
-    <div
-        class="lew-tag"
-        :class="tagClassName"
-        :style="`max-width:${maxWidth}px`"
-    >
-        <div class="lew-tag-left">
-            <slot name="left"></slot>
-        </div>
-        <div class="lew-tag-value">
-            <slot></slot>
-        </div>
-        <div class="lew-tag-right">
-            <slot name="right"></slot>
-        </div>
-        <div v-if="closable" class="lew-tag-close" @click.stop="close">
-            <lew-icon :size="getSize" type="x" />
-        </div>
+  <div
+    class="lew-tag"
+    :class="tagClassName"
+    :style="`max-width:${maxWidth}px`"
+  >
+    <div class="lew-tag-left">
+      <slot name="left" />
     </div>
+    <div class="lew-tag-value">
+      <slot />
+    </div>
+    <div class="lew-tag-right">
+      <slot name="right" />
+    </div>
+    <div v-if="closable" class="lew-tag-close" @click.stop="close">
+      <lew-icon :size="getSize" type="x" />
+    </div>
+  </div>
 </template>
 
 <style lang="scss">

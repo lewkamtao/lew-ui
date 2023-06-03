@@ -1,435 +1,433 @@
 <script lang="ts" setup>
-import { useVModel, watchArray } from '@vueuse/core';
-import { tableProps } from './table';
+import { useVModel, watchArray } from '@vueuse/core'
+import { tableProps } from './table'
 
-const props = defineProps(tableProps);
-const emit = defineEmits(['update:selectedKey']);
-const selectedKey = useVModel(props, 'selectedKey', emit);
-const tableRef = ref();
+const props = defineProps(tableProps)
+const emit = defineEmits(['update:selectedKey'])
+const selectedKey = useVModel(props, 'selectedKey', emit)
+const tableRef = ref()
 
-let obs: any;
+let obs: any
 
 const state = reactive({
-    hoverIndex: -1,
-    columns: [],
-    scrollbarVisible: false, // 滚动条显示隐藏
-    scrollClientWidth: 0, // 滚动视图宽度（不是滚动宽度）
-    hidScrollLine: 'all',
-    checkList: [] as any,
-    checkAll: false,
-});
+  hoverIndex: -1,
+  columns: [],
+  scrollbarVisible: false, // 滚动条显示隐藏
+  scrollClientWidth: 0, // 滚动视图宽度（不是滚动宽度）
+  hidScrollLine: 'all',
+  checkList: [] as any,
+  checkAll: false,
+})
 
 onActivated(() => {
-    checkScroll();
-    resizeTableHandle();
-    if (props.checkable && !props.rowKey) {
-        throw new Error('当checkable开启的时候，必须设置rowKey！');
-    }
-});
+  checkScroll()
+  resizeTableHandle()
+  if (props.checkable && !props.rowKey)
+    throw new Error('当checkable开启的时候，必须设置rowKey！')
+})
 
-const tableObserve = () => {
-    obs = new ResizeObserver(() => {
-        resizeTableHandle();
-    });
-    obs.observe(tableRef.value);
-};
+function tableObserve() {
+  obs = new ResizeObserver(() => {
+    resizeTableHandle()
+  })
+  obs.observe(tableRef.value)
+}
 
-const checkScroll = () => {
-    const element = tableRef.value;
-    const { clientWidth } = element;
-    const { scrollWidth } = element;
-    const { scrollLeft } = element;
+function checkScroll() {
+  const element = tableRef.value
+  const { clientWidth } = element
+  const { scrollWidth } = element
+  const { scrollLeft } = element
 
-    if (scrollWidth === clientWidth) {
-        state.hidScrollLine = 'all';
-        return;
-    }
-    if (scrollLeft < 5) {
-        state.hidScrollLine = 'left';
-        return;
-    }
-    if (scrollLeft + clientWidth > scrollWidth - 5) {
-        state.hidScrollLine = 'right';
-        return;
-    }
+  if (scrollWidth === clientWidth) {
+    state.hidScrollLine = 'all'
+    return
+  }
+  if (scrollLeft < 5) {
+    state.hidScrollLine = 'left'
+    return
+  }
+  if (scrollLeft + clientWidth > scrollWidth - 5) {
+    state.hidScrollLine = 'right'
+    return
+  }
 
-    state.hidScrollLine = '';
-};
+  state.hidScrollLine = ''
+}
 
-const resizeTableHandle = () => {
-    const table = tableRef.value;
-    let clientWidth = 0;
-    props.columns
-        .map((e) => e.width)
-        .forEach((w) => {
-            clientWidth += w;
-        });
+function resizeTableHandle() {
+  const table = tableRef.value
+  let clientWidth = 0
+  props.columns
+    .map(e => e.width)
+    .forEach((w) => {
+      clientWidth += w
+    })
 
-    if (props.checkable) {
-        clientWidth += 40;
-    }
+  if (props.checkable)
+    clientWidth += 40
 
-    state.scrollClientWidth = table.clientWidth;
-    state.scrollbarVisible = clientWidth > state.scrollClientWidth;
-};
+  state.scrollClientWidth = table.clientWidth
+  state.scrollbarVisible = clientWidth > state.scrollClientWidth
+}
 
 const getTdNotWidth = computed(() => {
-    let totalWidth = 0;
-    const countWidth: number = props.columns.filter((e) => !!e.width).length;
-    props.columns.forEach((item: any) => {
-        if (item.width !== undefined) {
-            totalWidth += item.width;
-        }
-    });
-    const width = totalWidth / countWidth || totalWidth / props.columns.length;
-    return width;
-});
-
-const getTdStyle = computed(() => (column: any, row?: any) => {
-    const width = column.width || getTdNotWidth.value;
-    const tdStyle = row && row.tdStyle?.[column.field];
-    if (state.scrollbarVisible) {
-        return `width: ${width}px;${tdStyle}`;
-    }
-    return `width: ${
-        (width / getTdTotalWidth.value) * state.scrollClientWidth
-    }px;${tdStyle}`;
-});
+  let totalWidth = 0
+  const countWidth: number = props.columns.filter(e => !!e.width).length
+  props.columns.forEach((item: any) => {
+    if (item.width !== undefined)
+      totalWidth += item.width
+  })
+  const width = totalWidth / countWidth || totalWidth / props.columns.length
+  return width
+})
 
 const getTdTotalWidth = computed(() => {
-    let width = 0;
+  let width = 0
 
-    props.columns.forEach((item: any) => {
-        if (item.width !== undefined) {
-            width += item.width;
-        } else {
-            width += getTdNotWidth.value;
-        }
-    });
+  props.columns.forEach((item: any) => {
+    if (item.width !== undefined)
+      width += item.width
+    else
+      width += getTdNotWidth.value
+  })
 
-    if (props.checkable) {
-        width += 50;
-    }
+  if (props.checkable)
+    width += 50
+  return width
+})
 
-    return width;
-});
+const getTdStyle = computed(() => (column: any, row?: any) => {
+  const width = column.width || getTdNotWidth.value
+  const tdStyle = row && row.tdStyle?.[column.field]
+  if (state.scrollbarVisible)
+    return `width: ${width}px;${tdStyle}`
+
+  return `width: ${
+        (width / getTdTotalWidth.value) * state.scrollClientWidth
+    }px;${tdStyle}`
+})
 
 const newColumns = computed(() => {
-    return props.columns.filter((e) => !e.fixed);
-});
+  return props.columns.filter(e => !e.fixed)
+})
 
 const fixedColumns = computed(() => (direction: string) => {
-    return props.columns.filter((e) => e.fixed === direction);
-});
+  return props.columns.filter(e => e.fixed === direction)
+})
 
-const setAllChecked = (checked: boolean) => {
-    if (checked) {
-        selectedKey.value = props.dataSource.map(
-            (e: any) => props.rowKey && e[props.rowKey]
-        );
-    } else {
-        selectedKey.value = [];
-    }
-};
+function setAllChecked(checked: boolean) {
+  if (checked) {
+    selectedKey.value = props.dataSource.map(
+      (e: any) => props.rowKey && e[props.rowKey],
+    )
+  }
+  else {
+    selectedKey.value = []
+  }
+}
 
-const setChecked = (key: any, checked: boolean) => {
-    if (checked) {
-        selectedKey.value.push(key);
-    } else {
-        const index = props.selectedKey.findIndex((e: any) => e === key);
-        if (index >= 0) {
-            selectedKey.value.splice(index, 1);
-        }
-    }
+function setChecked(key: any, checked: boolean) {
+  if (checked) {
+    selectedKey.value.push(key)
+  }
+  else {
+    const index = props.selectedKey.findIndex((e: any) => e === key)
+    if (index >= 0)
+      selectedKey.value.splice(index, 1)
+  }
 
-    initCheckAll();
-};
+  initCheckAll()
+}
 
-const initCheckAll = () => {
-    const isAll =
-        selectedKey.value.length > 0 &&
-        selectedKey.value.length === props.dataSource.length;
-    if (isAll) {
-        state.checkAll = true;
-    } else {
-        state.checkAll = false;
-    }
-};
+function initCheckAll() {
+  const isAll
+        = selectedKey.value.length > 0
+        && selectedKey.value.length === props.dataSource.length
+  if (isAll)
+    state.checkAll = true
+  else
+    state.checkAll = false
+}
 
-const initCheckbox = () => {
-    state.checkList = props.dataSource.map((item: any) => {
-        if (props.rowKey && selectedKey.value.includes(item[props.rowKey])) {
-            return true;
-        }
-        return false;
-    });
-};
+function initCheckbox() {
+  state.checkList = props.dataSource.map((item: any) => {
+    if (props.rowKey && selectedKey.value.includes(item[props.rowKey]))
+      return true
 
-initCheckbox();
+    return false
+  })
+}
+
+initCheckbox()
 watchArray(selectedKey, () => {
-    initCheckbox();
-    initCheckAll();
-});
+  initCheckbox()
+  initCheckAll()
+})
 onMounted(() => {
-    tableObserve();
-    checkScroll();
-    resizeTableHandle();
-});
+  tableObserve()
+  checkScroll()
+  resizeTableHandle()
+})
 
 onUnmounted(() => {
-    if (obs) {
-        obs.disconnect(); // 去掉监听
-        obs = null;
-    }
-});
+  if (obs) {
+    obs.disconnect() // 去掉监听
+    obs = null
+  }
+})
 </script>
 
 <template>
+  <div
+    class="lew-table-wrapper"
+    :class="{
+      ['hide-line-left']:
+        !state.scrollbarVisible
+        || ['all', 'left'].includes(state.hidScrollLine)
+        || columns.filter((e) => e.fixed === 'left').length > 0,
+      ['hide-line-right']:
+        !state.scrollbarVisible
+        || ['all', 'right'].includes(state.hidScrollLine)
+        || columns.filter((e) => e.fixed === 'right').length > 0,
+    }"
+  >
     <div
-        class="lew-table-wrapper"
-        :class="{
-            'hide-line-left':
-                !state.scrollbarVisible ||
-                ['all', 'left'].includes(state.hidScrollLine) ||
-                columns.filter((e) => e.fixed === 'left').length > 0,
-            'hide-line-right':
-                !state.scrollbarVisible ||
-                ['all', 'right'].includes(state.hidScrollLine) ||
-                columns.filter((e) => e.fixed === 'right').length > 0,
-        }"
+      ref="tableRef"
+      class="lew-table"
+      :style="`max-height: ${maxHeight}px`"
+      @scroll="checkScroll"
+      @mouseleave="state.hoverIndex = -1"
     >
+      <div
+        class="lew-table-head"
+        :style="`width: ${getTdTotalWidth}px`"
+        @mouseenter="state.hoverIndex = -1"
+      >
         <div
-            ref="tableRef"
-            class="lew-table"
-            :style="`max-height: ${maxHeight}px`"
-            @scroll="checkScroll"
-            @mouseleave="state.hoverIndex = -1"
+          v-if="fixedColumns('left').length > 0"
+          class="lew-table-fixed-left"
+          :class="{
+            'hid-scroll-line': ['all', 'left'].includes(
+              state.hidScrollLine,
+            ),
+          }"
         >
-            <div
-                class="lew-table-head"
-                :style="`width: ${getTdTotalWidth}px`"
-                @mouseenter="state.hoverIndex = -1"
+          <div class="lew-table-tr">
+            <lew-flex
+              v-if="checkable && fixedColumns('left').length > 0"
+              style="width: 50px"
+              x="center"
             >
-                <div
-                    v-if="fixedColumns('left').length > 0"
-                    class="lew-table-fixed-left"
-                    :class="{
-                        'hid-scroll-line': ['all', 'left'].includes(
-                            state.hidScrollLine
-                        ),
-                    }"
-                >
-                    <div class="lew-table-tr">
-                        <lew-flex
-                            v-if="checkable && fixedColumns('left').length > 0"
-                            style="width: 50px"
-                            x="center"
-                        >
-                            <lew-checkbox
-                                v-model="state.checkAll"
-                                @change="setAllChecked($event)"
-                            ></lew-checkbox>
-                        </lew-flex>
-                        <lew-flex
-                            v-for="(column, index) in fixedColumns('left')"
-                            :key="`columns${index}`"
-                            class="lew-table-td"
-                            :x="column.x || 'start'"
-                            :y="column.y"
-                            :style="getTdStyle(column)"
-                        >
-                            {{ column.title }}
-                        </lew-flex>
-                    </div>
-                </div>
-                <div class="lew-table-main">
-                    <div class="lew-table-tr">
-                        <lew-flex
-                            v-if="
-                                checkable && fixedColumns('left').length === 0
-                            "
-                            style="width: 50px"
-                            x="center"
-                        >
-                            <lew-checkbox
-                                v-model="state.checkAll"
-                                @change="setAllChecked($event)"
-                            ></lew-checkbox>
-                        </lew-flex>
-                        <lew-flex
-                            v-for="(column, index) in newColumns"
-                            :key="`columns${index}`"
-                            class="lew-table-td"
-                            :x="column.x || 'start'"
-                            :y="column.y"
-                            :style="getTdStyle(column)"
-                        >
-                            {{ column.title }}
-                        </lew-flex>
-                    </div>
-                </div>
-                <div
-                    v-if="fixedColumns('right').length > 0"
-                    class="lew-table-fixed-right"
-                    :class="{
-                        'hid-scroll-line': ['all', 'right'].includes(
-                            state.hidScrollLine
-                        ),
-                    }"
-                >
-                    <div class="lew-table-tr">
-                        <lew-flex
-                            v-for="(column, index) in fixedColumns('right')"
-                            :key="`columns${index}`"
-                            class="lew-table-td"
-                            :x="column.x || 'start'"
-                            :y="column.y"
-                            :style="getTdStyle(column)"
-                        >
-                            {{ column.title }}
-                        </lew-flex>
-                    </div>
-                </div>
-            </div>
-            <div class="lew-table-body" :style="`width: ${getTdTotalWidth}px`">
-                <div
-                    v-if="fixedColumns('left').length > 0"
-                    class="lew-table-fixed-left"
-                    :class="{
-                        'hid-scroll-line': ['all', 'left'].includes(
-                            state.hidScrollLine
-                        ),
-                    }"
-                >
-                    <div
-                        v-for="(row, i) in dataSource"
-                        :key="`data${i}`"
-                        class="lew-table-tr"
-                        :class="{
-                            'lew-table-tr-hover': state.hoverIndex === i,
-                        }"
-                        @mouseenter="state.hoverIndex = i"
-                    >
-                        <lew-flex
-                            v-if="checkable && fixedColumns('left').length > 0"
-                            style="width: 50px"
-                            x="center"
-                        >
-                            <lew-checkbox
-                                v-model="state.checkList[i]"
-                                @change="
-                                    rowKey && setChecked(row[rowKey], $event)
-                                "
-                            ></lew-checkbox>
-                        </lew-flex>
-                        <lew-flex
-                            v-for="(column, j) in fixedColumns('left')"
-                            :key="`col${j}`"
-                            class="lew-table-td"
-                            :x="column.x || 'start'"
-                            :y="column.y"
-                            :style="getTdStyle(column, row)"
-                        >
-                            <!-- 模板 -->
-                            <slot
-                                v-if="$slots[column.field]"
-                                :name="column.field"
-                                :row="row"
-                                :column="column"
-                            />
-                            <template v-else>{{ row[column.field] }}</template>
-                        </lew-flex>
-                    </div>
-                </div>
-                <div class="lew-table-main">
-                    <div
-                        v-for="(row, i) in dataSource"
-                        :key="`data${i}`"
-                        class="lew-table-tr"
-                        :class="{
-                            'lew-table-tr-hover': state.hoverIndex === i,
-                        }"
-                        @mouseenter="state.hoverIndex = i"
-                    >
-                        <lew-flex
-                            v-if="
-                                checkable && fixedColumns('left').length === 0
-                            "
-                            style="width: 50px"
-                            x="center"
-                        >
-                            <lew-checkbox
-                                v-model="state.checkList[i]"
-                                @change="
-                                    rowKey && setChecked(row[rowKey], $event)
-                                "
-                            />
-                        </lew-flex>
-                        <lew-flex
-                            v-for="(column, j) in newColumns"
-                            :key="`col${j}`"
-                            class="lew-table-td"
-                            :x="column.x || 'start'"
-                            :y="column.y"
-                            :style="getTdStyle(column, row)"
-                        >
-                            <!-- 模板 -->
-                            <slot
-                                v-if="$slots[column.field]"
-                                :name="column.field"
-                                :row="row"
-                                :column="column"
-                            />
-                            <template v-else>
-                                <lew-text-trim
-                                    :x="column.x || 'start'"
-                                    style="width: 100%"
-                                    :text="row[column.field]"
-                                />
-                            </template>
-                        </lew-flex>
-                    </div>
-                </div>
-                <div
-                    v-if="fixedColumns('right').length > 0"
-                    class="lew-table-fixed-right"
-                    :class="{
-                        'hid-scroll-line': ['all', 'right'].includes(
-                            state.hidScrollLine
-                        ),
-                    }"
-                >
-                    <div
-                        v-for="(row, i) in dataSource"
-                        :key="`data${i}`"
-                        class="lew-table-tr"
-                        :class="{
-                            'lew-table-tr-hover': state.hoverIndex === i,
-                        }"
-                        @mouseenter="state.hoverIndex = i"
-                    >
-                        <lew-flex
-                            v-for="(column, j) in fixedColumns('right')"
-                            :key="`col${j}`"
-                            class="lew-table-td"
-                            :x="column.x || 'start'"
-                            :y="column.y"
-                            :style="getTdStyle(column, row)"
-                        >
-                            <!-- 模板 -->
-                            <slot
-                                v-if="$slots[column.field]"
-                                :name="column.field"
-                                :row="row"
-                                :column="column"
-                            />
-                            <template v-else>{{ row[column.field] }}</template>
-                        </lew-flex>
-                    </div>
-                </div>
-            </div>
+              <lew-checkbox
+                v-model="state.checkAll"
+                @change="setAllChecked($event)"
+              />
+            </lew-flex>
+            <lew-flex
+              v-for="(column, index) in fixedColumns('left')"
+              :key="`columns${index}`"
+              class="lew-table-td"
+              :x="column.x || 'start'"
+              :y="column.y"
+              :style="getTdStyle(column)"
+            >
+              {{ column.title }}
+            </lew-flex>
+          </div>
         </div>
+        <div class="lew-table-main">
+          <div class="lew-table-tr">
+            <lew-flex
+              v-if="
+                checkable && fixedColumns('left').length === 0
+              "
+              style="width: 50px"
+              x="center"
+            >
+              <lew-checkbox
+                v-model="state.checkAll"
+                @change="setAllChecked($event)"
+              />
+            </lew-flex>
+            <lew-flex
+              v-for="(column, index) in newColumns"
+              :key="`columns${index}`"
+              class="lew-table-td"
+              :x="column.x || 'start'"
+              :y="column.y"
+              :style="getTdStyle(column)"
+            >
+              {{ column.title }}
+            </lew-flex>
+          </div>
+        </div>
+        <div
+          v-if="fixedColumns('right').length > 0"
+          class="lew-table-fixed-right"
+          :class="{
+            'hid-scroll-line': ['all', 'right'].includes(
+              state.hidScrollLine,
+            ),
+          }"
+        >
+          <div class="lew-table-tr">
+            <lew-flex
+              v-for="(column, index) in fixedColumns('right')"
+              :key="`columns${index}`"
+              class="lew-table-td"
+              :x="column.x || 'start'"
+              :y="column.y"
+              :style="getTdStyle(column)"
+            >
+              {{ column.title }}
+            </lew-flex>
+          </div>
+        </div>
+      </div>
+      <div class="lew-table-body" :style="`width: ${getTdTotalWidth}px`">
+        <div
+          v-if="fixedColumns('left').length > 0"
+          class="lew-table-fixed-left"
+          :class="{
+            'hid-scroll-line': ['all', 'left'].includes(
+              state.hidScrollLine,
+            ),
+          }"
+        >
+          <div
+            v-for="(row, i) in dataSource"
+            :key="`data${i}`"
+            class="lew-table-tr"
+            :class="{
+              'lew-table-tr-hover': state.hoverIndex === i,
+            }"
+            @mouseenter="state.hoverIndex = i"
+          >
+            <lew-flex
+              v-if="checkable && fixedColumns('left').length > 0"
+              style="width: 50px"
+              x="center"
+            >
+              <lew-checkbox
+                v-model="state.checkList[i]"
+                @change="
+                  rowKey && setChecked(row[rowKey], $event)
+                "
+              />
+            </lew-flex>
+            <lew-flex
+              v-for="(column, j) in fixedColumns('left')"
+              :key="`col${j}`"
+              class="lew-table-td"
+              :x="column.x || 'start'"
+              :y="column.y"
+              :style="getTdStyle(column, row)"
+            >
+              <!-- 模板 -->
+              <slot
+                v-if="$slots[column.field]"
+                :name="column.field"
+                :row="row"
+                :column="column"
+              />
+              <template v-else>
+                {{ row[column.field] }}
+              </template>
+            </lew-flex>
+          </div>
+        </div>
+        <div class="lew-table-main">
+          <div
+            v-for="(row, i) in dataSource"
+            :key="`data${i}`"
+            class="lew-table-tr"
+            :class="{
+              'lew-table-tr-hover': state.hoverIndex === i,
+            }"
+            @mouseenter="state.hoverIndex = i"
+          >
+            <lew-flex
+              v-if="
+                checkable && fixedColumns('left').length === 0
+              "
+              style="width: 50px"
+              x="center"
+            >
+              <lew-checkbox
+                v-model="state.checkList[i]"
+                @change="
+                  rowKey && setChecked(row[rowKey], $event)
+                "
+              />
+            </lew-flex>
+            <lew-flex
+              v-for="(column, j) in newColumns"
+              :key="`col${j}`"
+              class="lew-table-td"
+              :x="column.x || 'start'"
+              :y="column.y"
+              :style="getTdStyle(column, row)"
+            >
+              <!-- 模板 -->
+              <slot
+                v-if="$slots[column.field]"
+                :name="column.field"
+                :row="row"
+                :column="column"
+              />
+              <template v-else>
+                <lew-text-trim
+                  :x="column.x || 'start'"
+                  style="width: 100%"
+                  :text="row[column.field]"
+                />
+              </template>
+            </lew-flex>
+          </div>
+        </div>
+        <div
+          v-if="fixedColumns('right').length > 0"
+          class="lew-table-fixed-right"
+          :class="{
+            'hid-scroll-line': ['all', 'right'].includes(
+              state.hidScrollLine,
+            ),
+          }"
+        >
+          <div
+            v-for="(row, i) in dataSource"
+            :key="`data${i}`"
+            class="lew-table-tr"
+            :class="{
+              'lew-table-tr-hover': state.hoverIndex === i,
+            }"
+            @mouseenter="state.hoverIndex = i"
+          >
+            <lew-flex
+              v-for="(column, j) in fixedColumns('right')"
+              :key="`col${j}`"
+              class="lew-table-td"
+              :x="column.x || 'start'"
+              :y="column.y"
+              :style="getTdStyle(column, row)"
+            >
+              <!-- 模板 -->
+              <slot
+                v-if="$slots[column.field]"
+                :name="column.field"
+                :row="row"
+                :column="column"
+              />
+              <template v-else>
+                {{ row[column.field] }}
+              </template>
+            </lew-flex>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <style lang="scss">

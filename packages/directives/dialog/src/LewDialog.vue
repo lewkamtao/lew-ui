@@ -1,134 +1,133 @@
 <script lang="ts" setup name="dialog">
-import { LewButton, LewIcon, LewFlex } from 'lew-ui';
-import { _props } from './props';
-import { getIconType } from '../../../utils';
+import { LewButton, LewFlex, LewIcon } from 'lew-ui'
+import { getIconType } from '../../../utils'
+import { _props } from './props'
 
-const props = defineProps(_props);
-const emit = defineEmits(['close']);
+const props = defineProps(_props)
+const emit = defineEmits(['close'])
 
-let timer: any;
-const okLoading = ref<boolean>(false);
-const cancelLoading = ref<boolean>(false);
+let timer: any
+const okLoading = ref<boolean>(false)
+const cancelLoading = ref<boolean>(false)
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const maskClick = () => {
-    if (props?.closeOnClickOverlay) {
-        close();
-    }
-};
+function maskClick() {
+  if (props?.closeOnClickOverlay)
+    close()
+}
 
-const _visible = ref<boolean>(true);
+const _visible = ref<boolean>(true)
 
-const close = () => {
-    clearTimeout(timer);
-    _visible.value = false;
-    emit('close');
-};
+function close() {
+  clearTimeout(timer)
+  _visible.value = false
+  emit('close')
+}
 
-const ok = async () => {
-    if (typeof props.ok === 'function') {
-        okLoading.value = true;
-        const isOk = await props.ok();
-        if (isOk !== false) {
-            close();
-        }
-        okLoading.value = false;
-    }
-};
+async function ok() {
+  if (typeof props.ok === 'function') {
+    okLoading.value = true
+    const isOk = await props.ok()
+    if (isOk !== false)
+      close()
 
-const cancel = async () => {
-    if (typeof props.cancel === 'function') {
-        cancelLoading.value = true;
-        const isCancel = await props.cancel();
-        if (isCancel !== false) {
-            close();
-        }
-        cancelLoading.value = false;
-    }
-};
+    okLoading.value = false
+  }
+}
+
+async function cancel() {
+  if (typeof props.cancel === 'function') {
+    cancelLoading.value = true
+    const isCancel = await props.cancel()
+    if (isCancel !== false)
+      close()
+
+    cancelLoading.value = false
+  }
+}
 </script>
-<template>
-    <div>
-        <teleport to="body">
-            <div v-if="_visible" class="lew-dialog" @click="maskClick">
-                <div
-                    v-if="layout === 'normal'"
-                    class="lew-dialog-box lew-dialog-box-normal"
-                    @click.stop
-                >
-                    <div class="left">
-                        <div :class="`icon-${type}`">
-                            <lew-icon size="24" :type="getIconType(type)" />
-                        </div>
-                    </div>
-                    <div class="right">
-                        <header>
-                            <slot name="title" />
-                            <span
-                                class="gulu-dialog-close"
-                                @click="close()"
-                            ></span>
-                        </header>
-                        <main>
-                            <slot name="content" />
-                        </main>
-                        <footer>
-                            <lew-button
-                                v-if="cancelText"
-                                :text="cancelText"
-                                type="blank"
-                                :loading="cancelLoading"
-                                @click.stop="cancel"
-                            />
-                            <lew-button
-                                v-if="okText"
-                                :text="okText"
-                                :type="type"
-                                :loading="okLoading"
-                                @click.stop="ok"
-                            />
-                        </footer>
-                    </div>
-                </div>
 
-                <div
-                    v-if="layout === 'mini'"
-                    class="lew-dialog-box lew-dialog-box-mini"
-                    @click.stop
-                >
-                    <div class="left">
-                        <div :class="`icon-${type}`">
-                            <lew-icon size="20" :type="getIconType(type)" />
-                        </div>
-                    </div>
-                    <lew-flex class="right" y="start">
-                        <main>
-                            <slot name="content" />
-                        </main>
-                        <lew-flex x="end">
-                            <lew-button
-                                v-if="cancelText"
-                                :text="cancelText"
-                                type="blank"
-                                size="small"
-                                style="margin-right: 10px"
-                                :loading="cancelLoading"
-                                @click.stop="cancel"
-                            />
-                            <lew-button
-                                v-if="okText"
-                                :text="okText"
-                                :type="type"
-                                size="small"
-                                :loading="okLoading"
-                                @click.stop="ok"
-                            />
-                        </lew-flex>
-                    </lew-flex>
-                </div>
+<template>
+  <div>
+    <teleport to="body">
+      <div v-if="_visible" class="lew-dialog" @click="maskClick">
+        <div
+          v-if="layout === 'normal'"
+          class="lew-dialog-box lew-dialog-box-normal"
+          @click.stop
+        >
+          <div class="left">
+            <div :class="`icon-${type}`">
+              <LewIcon size="24" :type="getIconType(type)" />
             </div>
-        </teleport>
-    </div>
+          </div>
+          <div class="right">
+            <header>
+              <slot name="title" />
+              <span
+                class="gulu-dialog-close"
+                @click="close()"
+              />
+            </header>
+            <main>
+              <slot name="content" />
+            </main>
+            <footer>
+              <LewButton
+                v-if="cancelText"
+                :text="cancelText"
+                type="blank"
+                :loading="cancelLoading"
+                @click.stop="cancel"
+              />
+              <LewButton
+                v-if="okText"
+                :text="okText"
+                :type="type"
+                :loading="okLoading"
+                @click.stop="ok"
+              />
+            </footer>
+          </div>
+        </div>
+
+        <div
+          v-if="layout === 'mini'"
+          class="lew-dialog-box lew-dialog-box-mini"
+          @click.stop
+        >
+          <div class="left">
+            <div :class="`icon-${type}`">
+              <LewIcon size="20" :type="getIconType(type)" />
+            </div>
+          </div>
+          <LewFlex class="right" y="start">
+            <main>
+              <slot name="content" />
+            </main>
+            <LewFlex x="end">
+              <LewButton
+                v-if="cancelText"
+                :text="cancelText"
+                type="blank"
+                size="small"
+                style="margin-right: 10px"
+                :loading="cancelLoading"
+                @click.stop="cancel"
+              />
+              <LewButton
+                v-if="okText"
+                :text="okText"
+                :type="type"
+                size="small"
+                :loading="okLoading"
+                @click.stop="ok"
+              />
+            </LewFlex>
+          </LewFlex>
+        </div>
+      </div>
+    </teleport>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -285,7 +284,7 @@ const cancel = async () => {
     }
 
     to {
-        opacity: 1; 
+        opacity: 1;
         transform: scale(1);
     }
 }

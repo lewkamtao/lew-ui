@@ -1,10 +1,11 @@
 export function useDOMCreate(nodeId: string): void {
-    let node = document.getElementById(nodeId);
-    if (node) {
-        return;
-    } else {
-        const newNode = document.createElement('div');
-        newNode.id = nodeId;
-        document.body.appendChild(newNode);
-    }
+  const node = document.getElementById(nodeId)
+  if (node) {
+
+  }
+  else {
+    const newNode = document.createElement('div')
+    newNode.id = nodeId
+    document.body.appendChild(newNode)
+  }
 }

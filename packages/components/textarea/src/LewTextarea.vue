@@ -1,121 +1,119 @@
 <script setup lang="ts">
-import { textareaProps } from './textarea';
-import { useVModel } from '@vueuse/core';
-import { object2class, any2px } from 'lew-ui/utils';
+import { useVModel } from '@vueuse/core'
+import { any2px, object2class } from 'lew-ui/utils'
+import { textareaProps } from './textarea'
 
-let lewTextareaRef = ref();
+const props = defineProps(textareaProps)
 const emit = defineEmits([
-    'update:modelValue',
-    'update:type',
-    'clear',
-    'blur',
-    'focus',
-    'change',
-    'textarea',
-]);
+  'update:modelValue',
+  'update:type',
+  'clear',
+  'blur',
+  'focus',
+  'change',
+  'textarea',
+])
+const lewTextareaRef = ref()
+const modelValue = useVModel(props, 'modelValue', emit)
 
-const props = defineProps(textareaProps);
-const modelValue = useVModel(props, 'modelValue', emit);
+function updateValue() {
+  if (
+    props.maxLength
+        && props.renderCount(modelValue.value) >= Number(props.maxLength)
+  )
+    modelValue.value = modelValue.value.slice(0, props.maxLength)
+}
 
-const updateValue = () => {
-    if (
-        props.maxLength &&
-        props.renderCount(modelValue.value) >= Number(props.maxLength)
-    ) {
-        modelValue.value = modelValue.value.slice(0, props.maxLength);
-    }
-};
+function inputFn(e: any) {
+  updateValue()
+  emit('blur', modelValue.value)
+}
 
-const inputFn = (e: any) => {
-    updateValue();
-    emit('blur', modelValue.value);
-};
+function clear(): void {
+  modelValue.value = ''
+  emit('clear')
+}
 
-const clear = (): void => {
-    modelValue.value = '';
-    emit('clear');
-};
-
-const toFocus = () => {
-    lewTextareaRef.value?.focus();
-};
+function toFocus() {
+  lewTextareaRef.value?.focus()
+}
 
 const getCheckNumStr = computed(() => {
-    if (props.showCount && props.maxLength) {
-        return `${props.renderCount(modelValue.value)} / ${props.maxLength}`;
-    }
-    if (props.showCount) {
-        return props.renderCount(modelValue.value);
-    }
-    return false;
-});
+  if (props.showCount && props.maxLength)
+    return `${props.renderCount(modelValue.value)} / ${props.maxLength}`
+
+  if (props.showCount)
+    return props.renderCount(modelValue.value)
+
+  return false
+})
 
 const getTextareaClassNames = computed(() => {
-    const { size, readonly, disabled } = props;
-    return object2class('lew-textarea-view', {
-        size,
-        readonly,
-        disabled,
-    });
-});
+  const { size, readonly, disabled } = props
+  return object2class('lew-textarea-view', {
+    size,
+    readonly,
+    disabled,
+  })
+})
 
-const focus = (e: any) => {
-    if (props.focusSelect) {
-        e?.currentTarget?.select();
-    }
-    emit('focus');
-};
+function focus(e: any) {
+  if (props.focusSelect)
+    e?.currentTarget?.select()
+
+  emit('focus')
+}
 
 const getIconSize = computed(() => {
-    const size: any = {
-        small: 12,
-        medium: 14,
-        large: 16,
-    };
-    return size[props.size];
-});
+  const size: any = {
+    small: 12,
+    medium: 14,
+    large: 16,
+  }
+  return size[props.size]
+})
 
 const getTextareaStyle = computed(() => {
-    let { width, height } = props;
-    return `width:${any2px(width)};height:${any2px(height)};`;
-});
+  const { width, height } = props
+  return `width:${any2px(width)};height:${any2px(height)};`
+})
 
-defineExpose({ toFocus });
+defineExpose({ toFocus })
 </script>
 
 <template>
-    <div
-        class="lew-textarea-view"
-        :style="getTextareaStyle"
-        :class="getTextareaClassNames"
-    >
-        <textarea
-            ref="lewTextareaRef"
-            class="lew-textarea btf-scrollbar"
-            v-model="modelValue"
-            :disabled="disabled"
-            :readonly="readonly"
-            :placeholder="placeholder"
-            @input="inputFn"
-            @change="emit('change', modelValue)"
-            @blur="emit('blur', modelValue)"
-            @focus="focus"
-        />
+  <div
+    class="lew-textarea-view"
+    :style="getTextareaStyle"
+    :class="getTextareaClassNames"
+  >
+    <textarea
+      ref="lewTextareaRef"
+      v-model="modelValue"
+      class="lew-textarea btf-scrollbar"
+      :disabled="disabled"
+      :readonly="readonly"
+      :placeholder="placeholder"
+      @input="inputFn"
+      @change="emit('change', modelValue)"
+      @blur="emit('blur', modelValue)"
+      @focus="focus"
+    />
 
-        <div v-if="getCheckNumStr && showCount" class="lew-textarea-count">
-            {{ getCheckNumStr }}
-        </div>
-        <transition name="slide-fade">
-            <div
-                v-if="clearable && modelValue"
-                class="lew-textarea-clear"
-                @mousedown.prevent=""
-                @click="clear"
-            >
-                <lew-icon :size="getIconSize" type="x-circle" />
-            </div>
-        </transition>
+    <div v-if="getCheckNumStr && showCount" class="lew-textarea-count">
+      {{ getCheckNumStr }}
     </div>
+    <transition name="slide-fade">
+      <div
+        v-if="clearable && modelValue"
+        class="lew-textarea-clear"
+        @mousedown.prevent=""
+        @click="clear"
+      >
+        <lew-icon :size="getIconSize" type="x-circle" />
+      </div>
+    </transition>
+  </div>
 </template>
 
 <style lang="scss" scoped>

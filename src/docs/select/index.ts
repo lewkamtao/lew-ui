@@ -1,2 +1,3 @@
-import DemoSelect from './DemoSelect.vue';
-export default DemoSelect;
+import DemoSelect from './DemoSelect.vue'
+
+export default DemoSelect

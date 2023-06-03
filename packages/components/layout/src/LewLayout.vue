@@ -1,35 +1,35 @@
 <script setup lang="ts">
 defineProps({
-    direction: {
-        type: String,
-        default: 'row',
-    },
-    x: {
-        type: String,
-        default: 'center', // start center end
-    },
-    y: {
-        type: String,
-        default: 'center', // start center end
-    },
-    mode: {
-        type: String,
-        default: '', // around / between
-    },
-});
+  direction: {
+    type: String,
+    default: 'row',
+  },
+  x: {
+    type: String,
+    default: 'center', // start center end
+  },
+  y: {
+    type: String,
+    default: 'center', // start center end
+  },
+  mode: {
+    type: String,
+    default: '', // around / between
+  },
+})
 </script>
 
 <template>
-    <div
-        class="lew-flex"
-        :class="`${direction ? 'lew-flex-' + direction : ''} ${
-            x ? 'lew-flex-x-' + x : ''
-        } ${y ? 'lew-flex-y-' + y : ''}  ${
-            mode ? 'lew-flex-mode-' + mode : ''
-        } `"
-    >
-        <slot />
-    </div>
+  <div
+    class="lew-flex"
+    :class="`${direction ? `lew-flex-${direction}` : ''} ${
+      x ? `lew-flex-x-${x}` : ''
+    } ${y ? `lew-flex-y-${y}` : ''}  ${
+      mode ? `lew-flex-mode-${mode}` : ''
+    } `"
+  >
+    <slot />
+  </div>
 </template>
 
 <style lang="scss" scoped>

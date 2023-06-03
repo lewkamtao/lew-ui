@@ -1,87 +1,87 @@
 <script setup lang="ts">
-import { LewIcon } from 'lew-ui';
-import { object2class } from 'lew-ui/utils';
-import { buttonProps } from './button';
+import { LewIcon } from 'lew-ui'
+import { object2class } from 'lew-ui/utils'
+import { buttonProps } from './button'
 
-const emit = defineEmits(['click']);
-const props = defineProps(buttonProps);
+const props = defineProps(buttonProps)
+const emit = defineEmits(['click'])
+const _loading = ref(false)
 
-const _loading = ref(false);
+async function handleClick(e: any) {
+  if (props.disabled || _loading.value || props.loading)
+    return
+  emit('click', e)
+  if (typeof props.request === 'function') {
+    if (_loading.value)
+      return
 
-const handleClick = async (e: any) => {
-    if (props.disabled || _loading.value || props.loading) return;
-    emit('click', e);
-    if (typeof props.request === 'function') {
-        if (_loading.value) {
-            return;
-        }
-        _loading.value = true;
-        await props.request();
-        _loading.value = false;
-    }
-};
+    _loading.value = true
+    await props.request()
+    _loading.value = false
+  }
+}
 
 const getButtonClass = computed(() => {
-    const { round, size, type, icon, text } = props;
-    const loading = _loading.value || props.loading;
-    const singleIcon = !!(!text && icon);
-    return object2class('lew-button', {
-        round,
-        size,
-        type,
-        loading,
-        singleIcon,
-    });
-});
+  const { round, size, type, icon, text } = props
+  const loading = _loading.value || props.loading
+  const singleIcon = !!(!text && icon)
+  return object2class('lew-button', {
+    round,
+    size,
+    type,
+    loading,
+    singleIcon,
+  })
+})
 
 const getIconSize = computed(() => {
-    const { size } = props;
-    switch (size) {
-        case 'small':
-            return 12;
-        case 'medium':
-            return 14;
-        case 'large':
-            return 16;
-        default:
-            return 14;
-    }
-});
+  const { size } = props
+  switch (size) {
+    case 'small':
+      return 12
+    case 'medium':
+      return 14
+    case 'large':
+      return 16
+    default:
+      return 14
+  }
+})
 </script>
 
 <template>
-    <button
-        class="lew-button"
-        :class="getButtonClass"
-        :disabled="disabled"
-        @click="handleClick"
-    >
-        <lew-icon
-            v-if="icon"
-            class="lew-button-icon"
-            :size="getIconSize"
-            :type="icon"
-        />
-        <lew-icon
-            class="lew-loading-icon"
-            v-if="loading || _loading"
-            :size="getIconSize"
-            animation="spin"
-            animation-speed="fast"
-            :class="{
-                'lew-loading-icshow': (_loading || loading) && !disabled,
-            }"
-            type="loader"
-        />
-        <span v-if="!!!(!text && icon)" class="lew-button-text">
-            <template v-if="text">
-                {{ text }}
-            </template>
-            <template v-else>
-                <slot />
-            </template>
-        </span>
-    </button>
+  <button
+    class="lew-button"
+    :class="getButtonClass"
+    :disabled="disabled"
+    @click="handleClick"
+  >
+    <LewIcon
+      v-if="icon"
+      class="lew-button-icon"
+      :size="getIconSize"
+      :type="icon"
+    />
+    <LewIcon
+      v-if="loading || _loading"
+      class="lew-loading-icon"
+      :size="getIconSize"
+      animation="spin"
+      animation-speed="fast"
+      :class="{
+        'lew-loading-icshow': (_loading || loading) && !disabled,
+      }"
+      type="loader"
+    />
+    <span v-if="!!!(!text && icon)" class="lew-button-text">
+      <template v-if="text">
+        {{ text }}
+      </template>
+      <template v-else>
+        <slot />
+      </template>
+    </span>
+  </button>
 </template>
 
 <style lang="scss" scoped>

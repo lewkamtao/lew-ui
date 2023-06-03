@@ -1,1 +1,1 @@
-export { default as LewSelect } from './src/LewSelect.vue';
+export { default as LewSelect } from './src/LewSelect.vue'

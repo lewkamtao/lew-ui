@@ -1,57 +1,111 @@
 <template>
-    <div>
-        <div class="demo">
-            <lew-flex direction="y" x="start" y="start">
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-            </lew-flex>
-            <lew-flex direction="y" x="center" y="start">
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-            </lew-flex>
-            <lew-flex direction="y" x="end" y="start">
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-            </lew-flex>
+  <div>
+    <div class="demo">
+      <lew-flex direction="y" x="start" y="start">
+        <div class="box">
+          <div />
         </div>
-        <div class="demo">
-            <lew-flex direction="y" x="start" y="center">
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-            </lew-flex>
-            <lew-flex direction="y" x="center" y="center">
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-            </lew-flex>
-            <lew-flex direction="y" x="end" y="center">
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-            </lew-flex>
+        <div class="box">
+          <div />
         </div>
-        <div class="demo">
-            <lew-flex direction="y" x="start" y="end">
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-            </lew-flex>
-            <lew-flex direction="y" x="center" y="end">
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-            </lew-flex>
-            <lew-flex direction="y" x="end" y="end">
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-                <div class="box"><div></div></div>
-            </lew-flex>
+        <div class="box">
+          <div />
         </div>
+      </lew-flex>
+      <lew-flex direction="y" x="center" y="start">
+        <div class="box">
+          <div />
+        </div>
+        <div class="box">
+          <div />
+        </div>
+        <div class="box">
+          <div />
+        </div>
+      </lew-flex>
+      <lew-flex direction="y" x="end" y="start">
+        <div class="box">
+          <div />
+        </div>
+        <div class="box">
+          <div />
+        </div>
+        <div class="box">
+          <div />
+        </div>
+      </lew-flex>
     </div>
+    <div class="demo">
+      <lew-flex direction="y" x="start" y="center">
+        <div class="box">
+          <div />
+        </div>
+        <div class="box">
+          <div />
+        </div>
+        <div class="box">
+          <div />
+        </div>
+      </lew-flex>
+      <lew-flex direction="y" x="center" y="center">
+        <div class="box">
+          <div />
+        </div>
+        <div class="box">
+          <div />
+        </div>
+        <div class="box">
+          <div />
+        </div>
+      </lew-flex>
+      <lew-flex direction="y" x="end" y="center">
+        <div class="box">
+          <div />
+        </div>
+        <div class="box">
+          <div />
+        </div>
+        <div class="box">
+          <div />
+        </div>
+      </lew-flex>
+    </div>
+    <div class="demo">
+      <lew-flex direction="y" x="start" y="end">
+        <div class="box">
+          <div />
+        </div>
+        <div class="box">
+          <div />
+        </div>
+        <div class="box">
+          <div />
+        </div>
+      </lew-flex>
+      <lew-flex direction="y" x="center" y="end">
+        <div class="box">
+          <div />
+        </div>
+        <div class="box">
+          <div />
+        </div>
+        <div class="box">
+          <div />
+        </div>
+      </lew-flex>
+      <lew-flex direction="y" x="end" y="end">
+        <div class="box">
+          <div />
+        </div>
+        <div class="box">
+          <div />
+        </div>
+        <div class="box">
+          <div />
+        </div>
+      </lew-flex>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>

@@ -1,62 +1,63 @@
 <script lang="ts" setup>
-import { useVModel } from '@vueuse/core';
-import { object2class } from 'lew-ui/utils';
-import { checkboxProps } from './checkbox';
+import { useVModel } from '@vueuse/core'
+import { object2class } from 'lew-ui/utils'
+import { checkboxProps } from './checkbox'
 
-const props = defineProps(checkboxProps);
+const props = defineProps(checkboxProps)
 
-const emit = defineEmits(['change', 'update:modelValue']);
-const modelValue = useVModel(props, 'modelValue', emit);
+const emit = defineEmits(['change', 'update:modelValue'])
+const modelValue = useVModel(props, 'modelValue', emit)
 
-const setChecked = (e: Event) => {
-    if (props.disabled) {
-        return;
-    }
-    const { checked } = e.target as HTMLInputElement;
-    modelValue.value = checked;
-    emit('change', checked);
-};
+function setChecked(e: Event) {
+  if (props.disabled)
+    return
+
+  const { checked } = e.target as HTMLInputElement
+  modelValue.value = checked
+  emit('change', checked)
+}
 
 const getCheckboxClassName = computed(() => {
-    const { block, round, iconable, size, disabled } = props;
-    const checked = modelValue.value;
-    const unicon = !iconable && block;
+  const { block, round, iconable, size, disabled } = props
+  const checked = modelValue.value
+  const unicon = !iconable && block
 
-    return object2class('lew-checkbox', {
-        block,
-        round,
-        size,
-        checked,
-        unicon,
-        disabled,
-    });
-});
+  return object2class('lew-checkbox', {
+    block,
+    round,
+    size,
+    checked,
+    unicon,
+    disabled,
+  })
+})
 </script>
+
 <template>
-    <label class="lew-checkbox" :class="getCheckboxClassName">
-        <div v-if="iconable || (!iconable && !block)" class="icon-checkbox-box">
-            <svg
-                class="icon-checkbox"
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-                stroke="currentColor"
-                stroke-width="4"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            >
-                <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-        </div>
-        <input
-            v-show="false"
-            type="checkbox"
-            :checked="modelValue"
-            @change="setChecked"
-        />
-        <span v-if="label" class="lew-checkbox-label"> {{ label }}</span>
-    </label>
+  <label class="lew-checkbox" :class="getCheckboxClassName">
+    <div v-if="iconable || (!iconable && !block)" class="icon-checkbox-box">
+      <svg
+        class="icon-checkbox"
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+        stroke="currentColor"
+        stroke-width="4"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+    </div>
+    <input
+      style="display: none;"
+      type="checkbox"
+      :checked="modelValue"
+      @change="setChecked"
+    >
+    <span v-if="label" class="lew-checkbox-label"> {{ label }}</span>
+  </label>
 </template>
 
 <style lang="scss" scoped>

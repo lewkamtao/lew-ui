@@ -1,1 +1,1 @@
-export { default as LewTextTrim } from './src/LewTextTrim.vue';
+export { default as LewTextTrim } from './src/LewTextTrim.vue'

@@ -1,33 +1,33 @@
 <script setup lang="ts">
-import { flexProps } from './flex';
-import { any2px } from 'lew-ui/utils';
+import { any2px } from 'lew-ui/utils'
+import { flexProps } from './flex'
 
-const props = defineProps(flexProps);
+const props = defineProps(flexProps)
 
 const classObject = computed(() => {
-    return {
-        [`lew-flex-${props.direction}`]: props.direction,
-        'lew-flex-wrap': props.wrap,
-        [`lew-flex-x-${props.x}`]: props.x,
-        [`lew-flex-y-${props.y}`]: props.y,
-        [`lew-flex-mode-${props.mode}`]: props.mode,
-    };
-});
+  return {
+    [`lew-flex-${props.direction}`]: props.direction,
+    'lew-flex-wrap': props.wrap,
+    [`lew-flex-x-${props.x}`]: props.x,
+    [`lew-flex-y-${props.y}`]: props.y,
+    [`lew-flex-mode-${props.mode}`]: props.mode,
+  }
+})
 
 const styleObject = computed(() => {
-    const gap = any2px(props.gap);
-    const width = any2px(props.width);
-    return {
-        gap: `${gap}`,
-        width: `${width}`,
-    };
-});
+  const gap = any2px(props.gap)
+  const width = any2px(props.width)
+  return {
+    gap: `${gap}`,
+    width: `${width}`,
+  }
+})
 </script>
 
 <template>
-    <div class="lew-flex" :class="classObject" :style="styleObject">
-        <slot />
-    </div>
+  <div class="lew-flex" :class="classObject" :style="styleObject">
+    <slot />
+  </div>
 </template>
 
 <style lang="scss" scoped>

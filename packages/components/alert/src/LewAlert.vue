@@ -1,44 +1,46 @@
 <script setup lang="ts">
-import { getIconType, object2class } from 'lew-ui/utils';
-import type { AlertItem } from './alert';
-import { alertProps } from './alert';
+import { getIconType, object2class } from 'lew-ui/utils'
+import type { AlertItem } from './alert'
+import { alertProps } from './alert'
 
-defineProps(alertProps);
+defineProps(alertProps)
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close'])
 
-const alertClassName = (item: AlertItem) => {
-    return object2class('lew-alert', { type: item.type });
-};
+function alertClassName(item: AlertItem) {
+  return object2class('lew-alert', { type: item.type })
+}
 </script>
 
 <template>
-    <div class="lew-alert-group">
-        <div
-            v-for="(item, i) in list"
-            :key="i"
-            class="lew-alert"
-            :class="alertClassName(item)"
-        >
-            <div class="alert-icon">
-                <lew-icon :size="16" :type="getIconType(item.type)"></lew-icon>
-            </div>
-            <div class="message">
-                <div class="title">{{ item.title }}</div>
-                <div v-show="item.content" class="content">
-                    {{ item.content }}
-                </div>
-            </div>
-            <div v-if="item.closeable">
-                <lew-icon
-                    :size="16"
-                    class="btn-close"
-                    type="x"
-                    @click="emit('close', i)"
-                />
-            </div>
+  <div class="lew-alert-group">
+    <div
+      v-for="(item, i) in list"
+      :key="i"
+      class="lew-alert"
+      :class="alertClassName(item)"
+    >
+      <div class="alert-icon">
+        <lew-icon :size="16" :type="getIconType(item.type)" />
+      </div>
+      <div class="message">
+        <div class="title">
+          {{ item.title }}
         </div>
+        <div v-show="item.content" class="content">
+          {{ item.content }}
+        </div>
+      </div>
+      <div v-if="item.closeable">
+        <lew-icon
+          :size="16"
+          class="btn-close"
+          type="x"
+          @click="emit('close', i)"
+        />
+      </div>
     </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>

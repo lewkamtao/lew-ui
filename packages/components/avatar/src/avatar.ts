@@ -1,4 +1,4 @@
-import { ExtractPropTypes, PropType } from 'vue';
+import type { ExtractPropTypes, PropType } from 'vue'
 
 type AvatarPosition =
     | 'top'
@@ -12,44 +12,44 @@ type AvatarPosition =
     | 'left-top'
     | 'left-bottom'
     | 'right-top'
-    | 'right-bottom';
+    | 'right-bottom'
 
-type AvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy';
+type AvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy'
 
 export const avatarProps = {
-    round: {
-        type: Boolean,
-        default: false,
-    },
-    status: {
-        type: String as PropType<AvatarStatus>,
-        default: '',
-    },
-    statusPosition: {
-        type: String as PropType<AvatarPosition>,
-        default: '',
-    },
-    width: {
-        type: Number,
-        default: 40,
-    },
-    height: {
-        type: Number,
-        default: 40,
-    },
-    errorSrc: {
-        type: String,
-        default:
+  round: {
+    type: Boolean,
+    default: false,
+  },
+  status: {
+    type: String as PropType<AvatarStatus>,
+    default: '',
+  },
+  statusPosition: {
+    type: String as PropType<AvatarPosition>,
+    default: '',
+  },
+  width: {
+    type: Number,
+    default: 40,
+  },
+  height: {
+    type: Number,
+    default: 40,
+  },
+  errorSrc: {
+    type: String,
+    default:
             'https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png',
-    },
-    src: {
-        type: String,
-        default: '',
-    },
-    alt: {
-        type: String,
-        default: '',
-    },
-};
+  },
+  src: {
+    type: String,
+    default: '',
+  },
+  alt: {
+    type: String,
+    default: '',
+  },
+}
 
-export type AvatarProps = ExtractPropTypes<typeof avatarProps>;
+export type AvatarProps = ExtractPropTypes<typeof avatarProps>

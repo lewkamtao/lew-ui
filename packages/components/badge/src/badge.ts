@@ -1,4 +1,4 @@
-import { ExtractPropTypes, PropType } from 'vue';
+import type { ExtractPropTypes, PropType } from 'vue'
 
 type badgeType =
     | 'primary'
@@ -6,21 +6,21 @@ type badgeType =
     | 'success'
     | 'error'
     | 'warning'
-    | 'normal';
+    | 'normal'
 
 export const badgeProps = {
-    type: {
-        type: String as PropType<badgeType>,
-        default: 'normal',
-    },
-    round: {
-        type: Boolean,
-        default: false,
-    },
-    value: {
-        type: String,
-        default: '',
-    },
-};
+  type: {
+    type: String as PropType<badgeType>,
+    default: 'normal',
+  },
+  round: {
+    type: Boolean,
+    default: false,
+  },
+  value: {
+    type: String,
+    default: '',
+  },
+}
 
-export type BadgeProps = ExtractPropTypes<typeof badgeProps>;
+export type BadgeProps = ExtractPropTypes<typeof badgeProps>

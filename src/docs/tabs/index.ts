@@ -1,2 +1,3 @@
-import DemoTabs from './DemoTabs.vue';
-export default DemoTabs;
+import DemoTabs from './DemoTabs.vue'
+
+export default DemoTabs

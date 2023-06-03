@@ -1,2 +1,2 @@
-export { default as props } from './props';
-export { default as breadcrumbOptions } from './breadcrumbOptions';
+export { default as props } from './props'
+export { default as breadcrumbOptions } from './breadcrumbOptions'

@@ -1,2 +1,3 @@
-import DemoTextTrim from './DemoTextTrim.vue';
-export default DemoTextTrim;
+import DemoTextTrim from './DemoTextTrim.vue'
+
+export default DemoTextTrim

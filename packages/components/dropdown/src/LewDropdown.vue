@@ -1,53 +1,52 @@
 <script setup lang="ts">
-import { dropdownProps } from './dropdown';
-import type { DropdownOptions } from './dropdown';
+import { dropdownProps } from './dropdown'
+import type { DropdownOptions } from './dropdown'
 
-defineProps(dropdownProps);
+defineProps(dropdownProps)
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const lewPopoverRef = ref();
+const emit = defineEmits(['change'])
 
-const show = () => {
-    lewPopoverRef.value.show();
-};
+const lewPopoverRef = ref()
 
-const hide = () => {
-    lewPopoverRef.value.hide();
-};
+function show() {
+  lewPopoverRef.value.show()
+}
 
-const emit = defineEmits(['change']);
+function hide() {
+  lewPopoverRef.value.hide()
+}
 
-const change = (item: DropdownOptions) => {
-    emit('change', item);
-    hide();
-};
+function change(item: DropdownOptions) {
+  emit('change', item)
+  hide()
+}
 
-defineExpose({ show, hide });
+defineExpose({ show, hide })
 </script>
 
 <template>
-    <lew-popover ref="lewPopoverRef" :trigger="trigger" :placement="placement">
-        <template #trigger>
-            <slot />
-        </template>
-        <template #popover-body>
-            <div
-                v-if="options.length > 0"
-                class="lew-dropdown-body"
-                :style="`width:${width};max-height:${maxHeight}`"
-            >
-                <div
-                    v-for="(item, index) in options"
-                    :key="index"
-                    class="lew-dropdown-option"
-                    :style="`text-align:${align}`"
-                    @click="change(item)"
-                >
-                    {{ item.label }}
-                </div>
-            </div>
-        </template>
-    </lew-popover>
+  <lew-popover ref="lewPopoverRef" :trigger="trigger" :placement="placement">
+    <template #trigger>
+      <slot />
+    </template>
+    <template #popover-body>
+      <div
+        v-if="options.length > 0"
+        class="lew-dropdown-body"
+        :style="`width:${width};max-height:${maxHeight}`"
+      >
+        <div
+          v-for="(item, index) in options"
+          :key="index"
+          class="lew-dropdown-option"
+          :style="`text-align:${align}`"
+          @click="change(item)"
+        >
+          {{ item.label }}
+        </div>
+      </div>
+    </template>
+  </lew-popover>
 </template>
 
 <style lang="scss" scoped>

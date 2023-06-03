@@ -1,1 +1,1 @@
-export { default as LewDialog } from './src';
+export { default as LewDialog } from './src'

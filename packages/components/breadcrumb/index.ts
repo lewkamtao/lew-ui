@@ -1,1 +1,1 @@
-export { default as LewBreadcrumb } from './src/LewBreadcrumb.vue';
+export { default as LewBreadcrumb } from './src/LewBreadcrumb.vue'

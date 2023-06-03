@@ -1,24 +1,25 @@
 <script setup lang="ts">
-import { DemoDrawer1, DemoDrawer1_code } from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
-import * as API from './api';
+import LewDemoBox from '../../layout/LewDemoBox.vue'
+import LewDocsTables from '../../layout/LewDocsTables.vue'
+import { DemoDrawer1, DemoDrawer1_code } from './demo'
+import * as API from './api'
+
 const options = ref(
-    Object.keys(API).map((key: any) => {
-        // @ts-ignore
-        return API[key];
-    })
-);
+  Object.keys(API).map((key: any) => {
+    // @ts-expect-error
+    return API[key]
+  }),
+)
 </script>
 
 <template>
-    <div class="demo-wrapper">
-        <lew-title>Drawer</lew-title>
-        <lew-demo-box title="基础用法" :code="DemoDrawer1_code">
-            <DemoDrawer1 />
-        </lew-demo-box>
-        <lew-docs-tables :options="options"></lew-docs-tables>
-    </div>
+  <div class="demo-wrapper">
+    <lew-title>Drawer</lew-title>
+    <LewDemoBox title="基础用法" :code="DemoDrawer1_code">
+      <DemoDrawer1 />
+    </LewDemoBox>
+    <LewDocsTables :options="options" />
+  </div>
 </template>
 
 <style lang="scss" scoped>

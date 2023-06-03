@@ -1,105 +1,108 @@
 <!-- filename: Popover.vue -->
 <script setup lang="ts">
-import { LewButton } from 'lew-ui';
-import { _props } from './props';
+import { LewButton } from 'lew-ui'
+import { _props } from './props'
 
-const props = defineProps(_props);
+const props = defineProps(_props)
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const lewPopoverRef = ref();
+const emit = defineEmits(['show', 'cancel'])
 
-const okLoading = ref(false);
-const cancelLoading = ref(false);
+const lewPopoverRef = ref()
 
-const hide = () => {
-    lewPopoverRef.value.hide();
-};
+const okLoading = ref(false)
+const cancelLoading = ref(false)
 
-const okHandle = async () => {
-    if (typeof props.ok === 'function') {
-        okLoading.value = true;
-        await props.ok();
-        okLoading.value = false;
-    }
-    hide();
-};
+function hide() {
+  lewPopoverRef.value.hide()
+}
 
-const cancelHandle = async () => {
-    if (typeof props.cancel === 'function') {
-        cancelLoading.value = true;
-        await props.cancel();
-        cancelLoading.value = false;
-    }
-    hide();
-};
+async function okHandle() {
+  if (typeof props.ok === 'function') {
+    okLoading.value = true
+    await props.ok()
+    okLoading.value = false
+  }
+  hide()
+}
 
-const emit = defineEmits(['show', 'cancel']);
+async function cancelHandle() {
+  if (typeof props.cancel === 'function') {
+    cancelLoading.value = true
+    await props.cancel()
+    cancelLoading.value = false
+  }
+  hide()
+}
 </script>
 
 <template>
-    <lew-popover
-        ref="lewPopoverRef"
-        class="lew-popok"
-        :trigger="trigger"
-        :placement="placement"
-        @show="emit('show')"
-    >
-        <template #trigger>
-            <slot />
-        </template>
-        <template #popover-body>
-            <div class="lew-popok-body" :style="`width:${width}`">
-                <div class="left">
-                    <div :class="`icon-${type}`">
-                        <lew-icon
-                            v-if="type === `normal`"
-                            size="22"
-                            type="info"
-                        ></lew-icon>
-                        <lew-icon
-                            v-if="type === `warning`"
-                            size="22"
-                            type="alert-triangle"
-                        ></lew-icon>
-                        <lew-icon
-                            v-if="type === `success`"
-                            size="22"
-                            type="check"
-                        ></lew-icon>
-                        <lew-icon
-                            v-if="type === `error`"
-                            size="22"
-                            type="alert-circle"
-                        ></lew-icon>
-                        <lew-icon
-                            v-if="type === `info`"
-                            size="22"
-                            type="bell"
-                        ></lew-icon>
-                    </div>
-                </div>
-                <div class="right">
-                    <div v-if="title" class="title">{{ title }}</div>
-                    <div v-if="content" class="content">{{ content }}</div>
-                    <div class="footer">
-                        <lew-button
-                            text="取消"
-                            size="small"
-                            type="blank"
-                            :loading="cancelLoading"
-                            @click="cancelHandle"
-                        />
-                        <lew-button
-                            text="确定"
-                            size="small"
-                            :loading="okLoading"
-                            @click="okHandle"
-                        />
-                    </div>
-                </div>
-            </div>
-        </template>
-    </lew-popover>
+  <lew-popover
+    ref="lewPopoverRef"
+    class="lew-popok"
+    :trigger="trigger"
+    :placement="placement"
+    @show="emit('show')"
+  >
+    <template #trigger>
+      <slot />
+    </template>
+    <template #popover-body>
+      <div class="lew-popok-body" :style="`width:${width}`">
+        <div class="left">
+          <div :class="`icon-${type}`">
+            <lew-icon
+              v-if="type === `normal`"
+              size="22"
+              type="info"
+            />
+            <lew-icon
+              v-if="type === `warning`"
+              size="22"
+              type="alert-triangle"
+            />
+            <lew-icon
+              v-if="type === `success`"
+              size="22"
+              type="check"
+            />
+            <lew-icon
+              v-if="type === `error`"
+              size="22"
+              type="alert-circle"
+            />
+            <lew-icon
+              v-if="type === `info`"
+              size="22"
+              type="bell"
+            />
+          </div>
+        </div>
+        <div class="right">
+          <div v-if="title" class="title">
+            {{ title }}
+          </div>
+          <div v-if="content" class="content">
+            {{ content }}
+          </div>
+          <div class="footer">
+            <LewButton
+              text="取消"
+              size="small"
+              type="blank"
+              :loading="cancelLoading"
+              @click="cancelHandle"
+            />
+            <LewButton
+              text="确定"
+              size="small"
+              :loading="okLoading"
+              @click="okHandle"
+            />
+          </div>
+        </div>
+      </div>
+    </template>
+  </lew-popover>
 </template>
 
 <style lang="scss" scoped>

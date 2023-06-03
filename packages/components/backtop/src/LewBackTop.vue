@@ -1,63 +1,64 @@
 <script lang="ts" setup>
-import throttle from 'lodash/throttle';
-import { backTopProps } from './backTop';
-import { useEventListener } from '../../../hooks';
+import throttle from 'lodash/throttle'
+import { useEventListener } from '../../../hooks'
+import { backTopProps } from './backTop'
 
-const props = defineProps(backTopProps);
+const props = defineProps(backTopProps)
 
-const emit = defineEmits(['click']);
+const emit = defineEmits(['click'])
 
-const dom = shallowRef<HTMLElement>();
+const dom = shallowRef<HTMLElement>()
 
-const showBackTop = ref(false);
+const showBackTop = ref(false)
 
 const backTopStyle = computed(() => ({
-    right: `${props.right}px`,
-    bottom: `${props.bottom}px`,
-}));
+  right: `${props.right}px`,
+  bottom: `${props.bottom}px`,
+}))
 
-const toBackUp = () => {
-    if (!dom.value) return;
-    const scrollDom = dom.value as HTMLElement;
-    scrollDom.scrollTop = 0;
+function toBackUp() {
+  if (!dom.value)
+    return
+  const scrollDom = dom.value as HTMLElement
+  scrollDom.scrollTop = 0
 
-    emit('click');
-};
+  emit('click')
+}
 
-const handleScroll = () => {
-    if (dom.value) showBackTop.value = dom.value.scrollTop >= props.valveHeight;
-};
+function handleScroll() {
+  if (dom.value)
+    showBackTop.value = dom.value.scrollTop >= props.valveHeight
+}
 
-const throttledScrollHandler = throttle(handleScroll, 250);
+const throttledScrollHandler = throttle(handleScroll, 250)
 
-useEventListener(window, 'scroll', throttledScrollHandler);
+useEventListener(window, 'scroll', throttledScrollHandler)
 
 onMounted(() => {
-    dom.value = document.documentElement;
-    if (props.target) {
-        dom.value =
-            document.querySelector<HTMLElement>(`.${props.target}`) ??
-            undefined;
-        if (!dom.value) {
-            throw new Error(`target is not existed: ${props.target}`);
-        }
-    }
-});
+  dom.value = document.documentElement
+  if (props.target) {
+    dom.value
+            = document.querySelector<HTMLElement>(`.${props.target}`)
+            ?? undefined
+    if (!dom.value)
+      throw new Error(`target is not existed: ${props.target}`)
+  }
+})
 </script>
 
 <template>
-    <transition name="fade">
-        <div
-            v-if="showBackTop"
-            class="backTop"
-            :style="backTopStyle"
-            @click="toBackUp"
-        >
-            <slot>
-                <lew-icon size="20" type="chevron-up" />
-            </slot>
-        </div>
-    </transition>
+  <transition name="fade">
+    <div
+      v-if="showBackTop"
+      class="backTop"
+      :style="backTopStyle"
+      @click="toBackUp"
+    >
+      <slot>
+        <lew-icon size="20" type="chevron-up" />
+      </slot>
+    </div>
+  </transition>
 </template>
 
 <style lang="scss" scoped>

@@ -1,79 +1,81 @@
 <script lang="ts" setup>
-import moment from 'moment';
-import { datePickerProps } from './datePicker';
-import { useVModel } from '@vueuse/core';
-const emit = defineEmits(['change', 'update:modelValue']);
-const props = defineProps(datePickerProps);
-const modelValue = useVModel(props, 'modelValue', emit);
+import moment from 'moment'
+import { useVModel } from '@vueuse/core'
+import { datePickerProps } from './datePicker'
 
-const isShowPicker = ref(false);
+const props = defineProps(datePickerProps)
+const emit = defineEmits(['change', 'update:modelValue'])
+const modelValue = useVModel(props, 'modelValue', emit)
 
-const lewPopoverRef = ref();
+const isShowPicker = ref(false)
 
-const show = () => {
-    lewPopoverRef.value.show();
-};
+const lewPopoverRef = ref()
 
-const hide = () => {
-    lewPopoverRef.value.hide();
-};
+function show() {
+  lewPopoverRef.value.show()
+}
 
-const change = (date: string) => {
-    emit('update:modelValue', moment(date).format('YYYY-MM-DD'));
-    emit('change', { date, show, hide });
-    hide();
-};
+function hide() {
+  lewPopoverRef.value.hide()
+}
+
+function change(date: string) {
+  emit('update:modelValue', moment(date).format('YYYY-MM-DD'))
+  emit('change', { date, show, hide })
+  hide()
+}
 
 const getIconSize = computed(() => {
-    const size: any = {
-        small: 13,
-        medium: 14,
-        large: 16,
-    };
-    return size[props.size];
-});
+  const size: any = {
+    small: 13,
+    medium: 14,
+    large: 16,
+  }
+  return size[props.size]
+})
 
 const classObject = computed(() => {
-    return {
-        'lew-date-picker-focus': isShowPicker.value,
-        [`lew-date-picker-${props.size}`]: props.size,
-    };
-});
+  return {
+    'lew-date-picker-focus': isShowPicker.value,
+    [`lew-date-picker-${props.size}`]: props.size,
+  }
+})
 
-defineExpose({ show, hide });
+defineExpose({ show, hide })
 </script>
+
 <template>
-    <lew-popover
-        ref="lewPopoverRef"
-        trigger="click"
-        placement="bottom-start"
-        @show="isShowPicker = true"
-        @hide="isShowPicker = false"
-    >
-        <template #trigger>
-            <div class="lew-date-picker-view" :class="classObject">
-                <div class="lew-date-picker-input">
-                    <div
-                        v-show="!modelValue"
-                        class="lew-date-picker-placeholder"
-                    >
-                        请选择日期
-                    </div>
-                    <div v-show="modelValue" class="lew-date-picker-dateValue">
-                        {{ modelValue }}
-                    </div>
-                    <lew-icon
-                        class="lew-date-picker-icon"
-                        :size="getIconSize"
-                        type="calendar"
-                    />
-                </div>
-            </div>
-        </template>
-        <template #popover-body>
-            <lew-date v-model="modelValue" @change="change" />
-        </template>
-    </lew-popover>
+  <lew-popover
+    ref="lewPopoverRef"
+    trigger="click"
+    placement="bottom-start"
+    @show="isShowPicker = true"
+    @hide="isShowPicker = false"
+  >
+    <template #trigger>
+      <div class="lew-date-picker-view" :class="classObject">
+        <div class="lew-date-picker-input">
+          <div
+            v-show="!modelValue"
+            class="lew-date-picker-placeholder"
+          >
+            请选择日期
+          </div>
+          <div v-show="modelValue" class="lew-date-picker-dateValue">
+            {{ modelValue }}
+          </div>
+          <lew-icon
+            class="lew-date-picker-icon"
+            :size="getIconSize"
+            type="calendar"
+          />
+        </div>
+      </div>
+    </template>
+    <template #popover-body>
+      <lew-date v-model="modelValue" @change="change" />
+    </template>
+  </lew-popover>
 </template>
 
 <style lang="scss" scoped>

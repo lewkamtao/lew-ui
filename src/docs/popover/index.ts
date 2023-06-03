@@ -1,2 +1,3 @@
-import DemoPopover from './DemoPopover.vue';
-export default DemoPopover;
+import DemoPopover from './DemoPopover.vue'
+
+export default DemoPopover

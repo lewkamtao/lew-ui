@@ -1,1 +1,1 @@
-export { default as LewUpload } from './src/LewUpload.tsx';
+export { default as LewUpload } from './src/LewUpload.tsx'

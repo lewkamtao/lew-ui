@@ -1,1 +1,1 @@
-export { default as LewButton } from './src/LewButton.vue';
+export { default as LewButton } from './src/LewButton.vue'

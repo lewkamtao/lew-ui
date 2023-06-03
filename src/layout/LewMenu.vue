@@ -1,64 +1,62 @@
 <script setup lang="ts">
-import { PropType } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-
-const route = useRoute();
-const router = useRouter();
-
-type Item = {
-    name: string;
-    cname: string;
-    path: string;
-    label: string;
-    type: string;
-};
-
-type Group = {
-    title: string;
-    items: Item[];
-};
+import type { PropType } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 defineProps({
-    group: {
-        type: Array as PropType<Group[]>,
-        default() {
-            return [];
-        },
+  group: {
+    type: Array as PropType<Group[]>,
+    default() {
+      return []
     },
-});
+  },
+})
+const route = useRoute()
+const router = useRouter()
 
-const toPath = (item: Item) => {
-    router.push(item.path);
-};
+interface Item {
+  name: string
+  cname: string
+  path: string
+  label: string
+  type: string
+}
+
+interface Group {
+  title: string
+  items: Item[]
+}
+
+function toPath(item: Item) {
+  router.push(item.path)
+}
 </script>
 
 <template>
-    <div class="siderbar btf-scrollbar">
-        <div v-for="(list, i) in group" :key="`group${i}`" class="group">
-            <div v-if="list.title" class="title">
-                <span> {{ list.title }}</span>
-            </div>
-            <div
-                v-for="(item, j) in list.items"
-                :key="`siderbar${j}`"
-                class="item"
-                :class="{ active: route.path === item.path }"
-                :style="`animation-delay: ${(i * 5 + j) * 25}ms;`"
-                @click="toPath(item)"
-            >
-                <span class="name">
-                    {{ item.name }}
-                </span>
-                <LewBadge
-                    v-if="item.label"
-                    :type="item.type"
-                    :value="item.label"
-                    style="margin-left: 30px"
-                >
-                </LewBadge>
-            </div>
-        </div>
+  <div class="siderbar btf-scrollbar">
+    <div v-for="(list, i) in group" :key="`group${i}`" class="group">
+      <div v-if="list.title" class="title">
+        <span> {{ list.title }}</span>
+      </div>
+      <div
+        v-for="(item, j) in list.items"
+        :key="`siderbar${j}`"
+        class="item"
+        :class="{ active: route.path === item.path }"
+        :style="`animation-delay: ${(i * 5 + j) * 25}ms;`"
+        @click="toPath(item)"
+      >
+        <span class="name">
+          {{ item.name }}
+        </span>
+        <LewBadge
+          v-if="item.label"
+          :type="item.type"
+          :value="item.label"
+          style="margin-left: 30px"
+        />
+      </div>
     </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>

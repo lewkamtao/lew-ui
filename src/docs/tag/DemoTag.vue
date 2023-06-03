@@ -1,40 +1,41 @@
 <script setup lang="ts">
+import LewDemoBox from '../../layout/LewDemoBox.vue'
+import LewDocsTables from '../../layout/LewDocsTables.vue'
 import {
-    DemoTag1,
-    DemoTag2,
-    DemoTag3,
-    DemoTag4,
-    DemoTag1_code,
-    DemoTag2_code,
-    DemoTag3_code,
-    DemoTag4_code,
-} from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
-import * as API from './api';
+  DemoTag1,
+  DemoTag1_code,
+  DemoTag2,
+  DemoTag2_code,
+  DemoTag3,
+  DemoTag3_code,
+  DemoTag4,
+  DemoTag4_code,
+} from './demo'
+import * as API from './api'
+
 const options = ref(
-    Object.keys(API).map((key: any) => {
-        // @ts-ignore
-        return API[key];
-    })
-);
+  Object.keys(API).map((key: any) => {
+    // @ts-expect-error
+    return API[key]
+  }),
+)
 </script>
 
 <template>
-    <div class="demo-wrapper">
-        <lew-title>Tag</lew-title>
-        <lew-demo-box title="基础" :code="DemoTag1_code">
-            <demo-tag1 />
-        </lew-demo-box>
-        <lew-demo-box title="尺寸" :code="DemoTag2_code">
-            <demo-tag2 />
-        </lew-demo-box>
-        <lew-demo-box title="禁用与关闭" :code="DemoTag3_code">
-            <demo-tag3 />
-        </lew-demo-box>
-        <lew-demo-box title="插槽" :code="DemoTag4_code">
-            <demo-tag4 />
-        </lew-demo-box>
-        <lew-docs-tables :options="options"></lew-docs-tables>
-    </div>
+  <div class="demo-wrapper">
+    <lew-title>Tag</lew-title>
+    <LewDemoBox title="基础" :code="DemoTag1_code">
+      <DemoTag1 />
+    </LewDemoBox>
+    <LewDemoBox title="尺寸" :code="DemoTag2_code">
+      <DemoTag2 />
+    </LewDemoBox>
+    <LewDemoBox title="禁用与关闭" :code="DemoTag3_code">
+      <DemoTag3 />
+    </LewDemoBox>
+    <LewDemoBox title="插槽" :code="DemoTag4_code">
+      <DemoTag4 />
+    </LewDemoBox>
+    <LewDocsTables :options="options" />
+  </div>
 </template>

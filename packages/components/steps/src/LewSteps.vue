@@ -1,9 +1,9 @@
 <script setup lang="ts">
-defineProps({});
+defineProps({})
 </script>
 
 <template>
-    <div class="lew-breadcrumb"></div>
+  <div class="lew-breadcrumb" />
 </template>
 
 <style lang="scss" scoped>

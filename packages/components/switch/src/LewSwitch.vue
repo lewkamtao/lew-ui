@@ -1,60 +1,61 @@
 <script setup lang="ts">
-import { _props } from './props';
+import { _props } from './props'
 
-const props = defineProps(_props);
-const _loading = ref(false);
-const v = ref(props.modelValue);
+const props = defineProps(_props)
+const emit = defineEmits(['update:modelValue', 'click', 'change'])
+const _loading = ref(false)
+const v = ref(props.modelValue)
 
 watch(
-    () => props.modelValue,
-    () => {
-        v.value = props.modelValue;
-    }
-);
+  () => props.modelValue,
+  () => {
+    v.value = props.modelValue
+  },
+)
 
-const emit = defineEmits(['update:modelValue', 'click', 'change']);
+async function handleClick(e: any) {
+  if (props.disabled || _loading.value || props.loading)
+    return
+  emit('click', e)
+  if (typeof props.request === 'function') {
+    if (_loading.value)
+      return
 
-const handleClick = async (e: any) => {
-    if (props.disabled || _loading.value || props.loading) return;
-    emit('click', e);
-    if (typeof props.request === 'function') {
-        if (_loading.value) {
-            return;
-        }
-        _loading.value = true;
-        const isSuccess = await props.request(!v.value);
-        if (isSuccess) {
-            v.value = !v.value;
-            _loading.value = false;
-        }
-        _loading.value = false;
-    } else {
-        v.value = !v.value;
+    _loading.value = true
+    const isSuccess = await props.request(!v.value)
+    if (isSuccess) {
+      v.value = !v.value
+      _loading.value = false
     }
-    emit('update:modelValue', v.value);
-    emit('change', v.value);
-};
+    _loading.value = false
+  }
+  else {
+    v.value = !v.value
+  }
+  emit('update:modelValue', v.value)
+  emit('change', v.value)
+}
 </script>
 
 <template>
-    <div
-        class="lew-switch-view"
-        :class="`
-     ${round ? 'lew-switch-round' : ''} 
+  <div
+    class="lew-switch-view"
+    :class="`
+     ${round ? 'lew-switch-round' : ''}
      ${v ? 'lew-switch-checked' : ''}
      ${_loading || loading ? 'lew-switch-loading' : ''}
      ${request ? 'lew-switch-request' : ''}
     `"
-        @click="handleClick"
+    @click="handleClick"
+  >
+    <input
+      v-model="v"
+      style="display: none;"
+      type="checkbox"
+      :disabled="disabled"
     >
-        <input
-            v-show="false"
-            v-model="v"
-            type="checkbox"
-            :disabled="disabled"
-        />
-        <div class="lew-switch-dot"></div>
-    </div>
+    <div class="lew-switch-dot" />
+  </div>
 </template>
 
 <style lang="scss" scoped>

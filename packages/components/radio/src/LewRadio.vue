@@ -1,41 +1,41 @@
 <script lang="ts" setup>
-import { object2class } from 'lew-ui/utils';
-import { radioProps } from './radio';
+import { object2class } from 'lew-ui/utils'
+import { radioProps } from './radio'
 
-const props = defineProps(radioProps);
+const props = defineProps(radioProps)
 
-const emit = defineEmits(['update:checked']);
+const emit = defineEmits(['update:checked'])
 
-const setChecked = () => {
-    emit('update:checked');
-};
+function setChecked() {
+  emit('update:checked')
+}
 
 const getRadioClassName = computed(() => {
-    const { block, checked, iconable, size, disabled } = props;
-    const unicon = !iconable && block;
-    return object2class('lew-radio', {
-        block,
-        checked,
-        unicon,
-        size,
-        disabled,
-    });
-});
+  const { block, checked, iconable, size, disabled } = props
+  const unicon = !iconable && block
+  return object2class('lew-radio', {
+    block,
+    checked,
+    unicon,
+    size,
+    disabled,
+  })
+})
 </script>
 
 <template>
-    <label class="lew-radio" :class="getRadioClassName">
-        <div v-if="iconable || (!iconable && !block)" class="icon-radio-box">
-            <div class="icon-radio"></div>
-        </div>
-        <input
-            v-show="false"
-            type="radio"
-            :checked="checked"
-            @change="setChecked"
-        />
-        <span v-if="label" class="lew-radio-label"> {{ label }}</span>
-    </label>
+  <label class="lew-radio" :class="getRadioClassName">
+    <div v-if="iconable || (!iconable && !block)" class="icon-radio-box">
+      <div class="icon-radio" />
+    </div>
+    <input
+      style="display: none;"
+      type="radio"
+      :checked="checked"
+      @change="setChecked"
+    >
+    <span v-if="label" class="lew-radio-label"> {{ label }}</span>
+  </label>
 </template>
 
 <style lang="scss" scoped>
