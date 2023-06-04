@@ -1,8 +1,8 @@
 {
-    "name": "lew-ui",
-    "version": "1.3.7",
+    "name": "lew-ui-self",
+    "version": "0.0.3",
     "description": "A Component Library for Vue3.js.",
-    "author": "lewkamtao",
+    "author": "lewkamtao zhang771",
     "license": "MIT",
     "keywords": [
         "vue3",
@@ -39,6 +39,7 @@
         "feather-icons": "^4.29.0",
         "lodash": "^4.17.21",
         "moment": "^2.29.4",
+        "terser": "^5.17.7",
         "tippy.js": "^6.3.7",
         "vee-validate": "^4.9.6",
         "vue": "^3.3.4",

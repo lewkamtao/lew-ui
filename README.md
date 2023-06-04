@@ -1,14 +1,24 @@
 ![471656552467_.pic_i9uhs1_.jpeg](https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/471656552467_.pic_i9uhs1_.jpeg)
 
+
+# !Important
+
+- This project just copy [lewui](https://github.com/lewkamtao/lew-ui.git).
+- Just change something about lint and detail.
+
 # Lew-UI
 
 A Component Library for Vue3.js.
-Doc address: https://lew.kamtao.com
+Lew-ui Doc address: https://lew.kamtao.com
+
+# My Doc ? 
+
+Scorry, No. I copy it just for me. if you want to use it. please go to [lewui](https://github.com/lewkamtao/lew-ui.git). Or you can use this. But it will change anytime.
 
 ## Install
 
 ```bash
-npm install lew-ui --save
+npm install lew-ui-self --save
 ```
 
 ## How to use
@@ -32,15 +42,8 @@ import { LewButton } from 'lew-ui'
 </template>
 ```
 
-## Todo List
-
--   Step 步骤
--   Upload 上传
--   Card 卡片
--   Progress 进度条
--   Loading 加载
-
 ## Thanks
 
+-   https://github.com/lewkamtao/lew-ui.git
 -   https://github.com/atomiks/tippyjs
 -   https://fengyuanchen.github.io/vue-feather/
