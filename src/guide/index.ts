@@ -1,7 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
 
 const modules = import.meta.glob('./*.vue')
-const capitalizeRegex = /(?:^|[\s_-]+)\w/g
 const routes: RouteRecordRaw[] = []
 let tempName = ''
 

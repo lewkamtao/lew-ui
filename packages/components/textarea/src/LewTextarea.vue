@@ -24,7 +24,7 @@ function updateValue() {
     modelValue.value = modelValue.value.slice(0, props.maxLength)
 }
 
-function inputFn(e: any) {
+function inputFn() {
   updateValue()
   emit('blur', modelValue.value)
 }

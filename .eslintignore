@@ -3,3 +3,4 @@ dist/
 index.html
 .eslintrc.js
 package.json
+.vscode

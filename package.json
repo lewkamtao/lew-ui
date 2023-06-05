@@ -28,9 +28,11 @@
         "build:noemit": "vite build --mode demo",
         "build": "vite build --mode demo",
         "build:package": "vite build --mode package",
-        "lint": "eslint --fix .",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
         "test": "vitest",
-        "test:coverage": "vitest --coverage"
+        "test:coverage": "vitest --coverage",
+        "prepare": "husky install"
     },
     "dependencies": {
         "@vueuse/components": "^10.1.2",
@@ -49,6 +51,8 @@
     },
     "devDependencies": {
         "@antfu/eslint-config": "^0.39.4",
+        "@commitlint/cli": "^17.6.5",
+        "@commitlint/config-conventional": "^17.6.5",
         "@types/lodash": "^4.14.195",
         "@types/node": "^20.2.5",
         "@vitejs/plugin-vue": "^4.2.3",
@@ -56,10 +60,7 @@
         "@vue/test-utils": "^2.3.2",
         "c8": "^7.14.0",
         "eslint": "^8.42.0",
-        "eslint-config-airbnb-base": "^15.0.0",
-        "eslint-config-prettier": "^8.8.0",
-        "eslint-plugin-import": "^2.27.5",
-        "eslint-plugin-vue": "^9.14.1",
+        "husky": "^8.0.0",
         "jsdom": "^22.1.0",
         "sass": "^1.62.1",
         "typescript": "^5.1.3",

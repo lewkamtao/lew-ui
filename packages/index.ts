@@ -32,17 +32,17 @@ const install: any = function (Vue: App): void {
 
   _components.forEach((component: any) => {
     if (
-      component.hasOwnProperty('name')
-            || component.hasOwnProperty('__name')
+      'name' in component
+            || '__name' in component
     )
       Vue.component(`${component.name || component.__name}`, component)
   })
 
   _directives.forEach((directive: any) => {
-    if (directive.hasOwnProperty('install')) {
+    if ('install' in directive) {
       Vue.use(directive)
     }
-    else if (directive.hasOwnProperty('name')) {
+    else if ('name' in directive) {
       window[directive.name] = directive
       Vue.config.globalProperties[directive.name] = directive
     }

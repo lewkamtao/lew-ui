@@ -1,4 +1,5 @@
 import { defineComponent, reactive, shallowRef, watch } from 'vue'
+import { genUid } from '../../../utils'
 import uploadProps from './props'
 import type {
   RenderIconOptions,
@@ -8,7 +9,6 @@ import type {
   UploadRequestOptions,
 } from './upload.type'
 import './styles/index.scss'
-import { genUid } from '../../../utils'
 import LewUploadDragger from './components/LewUploadDragger'
 
 export default defineComponent({
@@ -219,7 +219,7 @@ export default defineComponent({
     }
 
     function renderFileListText() {
-      return props.showFileList && props.fileList.length
+      return props.showFileList && (props.fileList.length
         ? (
                 <ul class="lew-upload-list lew-upload-list--text">
                     {props.fileList.map((file) => {
@@ -261,11 +261,11 @@ export default defineComponent({
                     })}
                 </ul>
           )
-        : null
+        : null)
     }
 
     function renderFileListPicture() {
-      return props.showFileList && props.fileList.length
+      return props.showFileList && (props.fileList.length
         ? (
                 <ul class="lew-upload-list lew-upload-list--picture">
                     {props.fileList.map((file) => {
@@ -306,7 +306,7 @@ export default defineComponent({
                     })}
                 </ul>
           )
-        : null
+        : null)
     }
 
     function renderFileListPictureCard() {

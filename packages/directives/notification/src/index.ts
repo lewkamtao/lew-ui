@@ -88,8 +88,7 @@ function add(type: string, title: string, content: string, delay: number) {
                     </div>
                 </div>
     `
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
+
   LewMessageDom?.insertBefore(newMessage, LewMessageDom?.childNodes[0])
 
   newMessage.setAttribute(
@@ -137,7 +136,6 @@ function add(type: string, title: string, content: string, delay: number) {
 
   setTimeout(() => {
     lock = false
-    console.log(newMessage.clientHeight)
 
     newMessage.setAttribute(
       'class',
@@ -147,11 +145,11 @@ function add(type: string, title: string, content: string, delay: number) {
   }, 10)
 }
 
-export default {
-  name: 'LewNotification',
+export const NotificationFnList: NotificationInstance = {
   warning,
   info,
   normal,
   success,
   error,
-} as NotificationInstance
+  name: 'LewNotification',
+}

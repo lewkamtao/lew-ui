@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { magicNumberProps } from './magic-text'
 
-const props = defineProps(magicNumberProps)
+defineProps(magicNumberProps)
 </script>
 
 <template>

@@ -61,9 +61,6 @@ const options = ref([
     as: 'select',
     rules: Yup.string().required('此项必填'),
     props: {
-      change: (e: any) => {
-        console.log(e)
-      },
       clearable: true,
       options: [
         {
@@ -95,9 +92,6 @@ const options = ref([
     as: 'select-multiple',
     rules: Yup.array().min(2, '至少选择2个').required('此项必填'),
     props: {
-      change: (e: any) => {
-        console.log(e)
-      },
       clearable: true,
       options: schoolsOptions,
     },

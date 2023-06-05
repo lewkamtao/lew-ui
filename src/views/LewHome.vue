@@ -252,19 +252,6 @@ function open(type: any) {
     },
   })
 }
-const user = ref({
-  username: '',
-  password: '',
-  age: '',
-  sex: '1',
-  hobby: [],
-  tags: ['美丽', '大方'],
-  school: '',
-  birth: '',
-  home: '',
-  dark: true,
-  pay: '',
-})
 
 const breadcrumb_options = ref([
   {
@@ -469,7 +456,6 @@ function notification(type: string) {
         </lew-flex>
         <lew-flex style="width: 450px; margin-top: 30px" class="item">
           <lew-form
-            ref="formRef"
             v-model="form"
             :options="options"
             :label-width="100"

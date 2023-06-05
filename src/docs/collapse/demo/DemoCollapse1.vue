@@ -1,9 +1,4 @@
 <script lang="ts" setup>
-const num = ref(81414.2323)
-
-function change() {
-  num.value = Number((Math.random() * 100000).toFixed(2))
-}
 </script>
 
 <template>

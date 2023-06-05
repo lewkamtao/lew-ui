@@ -38,10 +38,10 @@ function init() {
 
 function selectItem(value: [String, Number], type?: string) {
   const index = props.options.findIndex(e => value === e.value)
-  if (state.curIndex != index) {
+  if (state.curIndex !== index) {
     const _item = props.options[index]
 
-    if (tabsValue.value != _item.value)
+    if (tabsValue.value !== _item.value)
       tabsValue.value = _item.value
 
     const activeRef = itemRef.value[index]

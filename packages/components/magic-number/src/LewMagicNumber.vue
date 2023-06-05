@@ -24,7 +24,7 @@ const getMagicNumberStyle = computed(() => {
 })
 const getItemStyle = computed(() => (item: string) => {
   const { size } = props
-  const index = parseInt(item)
+  const index = Number.parseInt(item)
   return `transform: translateY(-${size * index}px)`
 })
 const getNumStyle = computed(() => {
@@ -44,9 +44,9 @@ const getNumStyle = computed(() => {
       <span v-if="item === '.' || item === ','" :style="getNumStyle">{{ item }}
       </span>
       <span
-        v-for="(n, index) in state.numberArr"
+        v-for="(n, idx) in state.numberArr"
         v-else
-        :key="index"
+        :key="idx"
         class="lew-magic-number-num"
         :style="getNumStyle"
         v-text="n"
