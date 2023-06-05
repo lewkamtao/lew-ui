@@ -186,7 +186,12 @@ const validate = (field: string) => {
                                 if (fieldName[0] !== '[') {
                                     return fieldName;
                                 }
-                                fieldName = error?.path.slice(1, -1); // 去除首尾的方括号
+                                const startIndex = error?.path.indexOf('[') + 1;
+                                const endIndex = error?.path.indexOf(']');
+                                fieldName = error?.path.slice(
+                                    startIndex,
+                                    endIndex
+                                ); // 去除首尾的方括号
                                 if (
                                     fieldName.charAt(0) === '"' &&
                                     fieldName.charAt(fieldName.length - 1) ===

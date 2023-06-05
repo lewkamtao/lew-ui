@@ -3,7 +3,7 @@
         <div>
             <lew-title :size="16">normal</lew-title>
             <lew-flex y="end">
-                <lew-button size="small" text="submit" />
+                <lew-button size="small">submit</lew-button>
                 <lew-button size="medium" text="submit" />
                 <lew-button size="large" text="submit" />
             </lew-flex>

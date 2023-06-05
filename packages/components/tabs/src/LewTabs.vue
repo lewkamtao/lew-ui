@@ -278,7 +278,7 @@ onUnmounted(() => {
         left: 0px;
         z-index: 9;
         height: 28px;
-        border-radius: 4px;
+        border-radius:6px;
         background: var(--lew-tabs-active-color);
         transform: translateX(3px);
         box-shadow: 0px 0px 12px rgba($color: #000000, $alpha: 0.15);

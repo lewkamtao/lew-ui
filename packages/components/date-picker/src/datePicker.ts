@@ -9,6 +9,18 @@ export const datePickerProps = {
         type: String,
         default: 'medium',
     },
+    clearable: {
+        type: Boolean,
+        default: () => false,
+    },
+    readonly: {
+        type: Boolean,
+        default: () => false,
+    },
+    disabled: {
+        type: Boolean,
+        default: () => false,
+    },
 };
 
 export const dateRangePickerProps = {
@@ -30,6 +42,18 @@ export const dateRangePickerProps = {
     size: {
         type: String,
         default: 'medium',
+    },
+    clearable: {
+        type: Boolean,
+        default: () => false,
+    },
+    readonly: {
+        type: Boolean,
+        default: () => false,
+    },
+    disabled: {
+        type: Boolean,
+        default: () => false,
     },
 };
 

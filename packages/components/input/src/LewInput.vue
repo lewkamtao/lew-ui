@@ -357,7 +357,7 @@ defineExpose({ toFocus });
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 2px;
+            border-radius: 4px;
             opacity: var(--lew-form-icon-opacity);
             transition: all 0.25s;
             z-index: 2;

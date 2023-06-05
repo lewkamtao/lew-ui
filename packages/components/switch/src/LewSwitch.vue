@@ -75,7 +75,7 @@ const handleClick = async (e: any) => {
         height: 16px;
         left: 0px;
         top: 0px;
-        border-radius: 2px;
+        border-radius: 4px;
         background: var(--lew-white-color);
         transition: var(--lew-form-transition);
         transform: translate(4px, 4px);

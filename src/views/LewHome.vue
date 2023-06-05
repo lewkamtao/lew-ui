@@ -513,26 +513,25 @@ const notification = (type: string) => {
                                 <lew-button text="Popover" />
                             </template>
                             <template #popover-body>
-                                <lew-form
-                                    direction="y"
-                                    class="popover-body"
-                                    style="width: 250px"
-                                >
-                                    <lew-input v-model="v" />
-                                    <lew-flex x="end">
+                                <div class="popover-body" style="width: 240px">
+                                    <lew-input
+                                        v-model="v"
+                                        placeholder="请输入密码"
+                                    />
+                                    <lew-flex x="end" style="margin-top: 15px">
                                         <lew-button
                                             text="取消"
+                                            type="blank"
                                             size="small"
                                             @click="lewPopoverRef.hide()"
                                         />
                                         <lew-button
-                                            type="primary"
                                             text="提交"
                                             size="small"
                                             @click="submit()"
                                         />
                                     </lew-flex>
-                                </lew-form>
+                                </div>
                             </template>
                         </lew-popover>
                     </lew-flex>

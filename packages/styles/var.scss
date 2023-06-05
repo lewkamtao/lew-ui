@@ -6,7 +6,6 @@
     --lew-black-text-color: rgba(0, 0, 0, 0.9);
     --lew-disabled-opacity: 0.5;
     --lew-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
-
     // 背景
     --lew-bgcolor-0: rgb(255, 255, 255);
     --lew-bgcolor-1: rgb(250, 250, 250);
@@ -52,7 +51,7 @@
     --lew-text-color-8-invert: rgb(95, 95, 95);
     --lew-text-color-9-invert: rgb(75, 75, 75);
     // 圆角
-    --lew-border-radius: 6px;
+    --lew-border-radius: 8px;
     // 边界
     --lew-border-0: 1px solid rgb(245, 245, 245);
     --lew-border-1: 1px solid rgb(235, 235, 235);
@@ -127,7 +126,7 @@
     // 标题
     --lew-title-bold: 800;
     // 表单样式
-    --lew-form-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+    --lew-form-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
     --lew-form-border-width: 1.5px;
     --lew-form-transition: all 0.2s ease;
     --lew-form-border-color: rgb(245, 245, 245);
@@ -337,7 +336,6 @@
     --lew-table-border: 1px rgba(255, 255, 255, 0.05) solid;
     --lew-table-scroll-line-color-start: rgba(0, 0, 0, 0);
     --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.2);
-
     // checkbox
     --lew-checkbox-block-color: var(--lew-bgcolor-2);
     --lew-checkbox-border-color: var(--lew-bgcolor-4);

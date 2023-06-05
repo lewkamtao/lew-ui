@@ -27,9 +27,10 @@ const getMarkClassName = computed(() => {
 <style lang="scss">
 .lew-mark {
     display: inline;
-    border-radius: 2px;
+    border-radius: 4px;
     padding: 2px 6px;
-    margin: 0px 4px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
 }
 
 .lew-mark-to {

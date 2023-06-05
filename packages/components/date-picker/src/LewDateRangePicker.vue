@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { dateRangePickerProps } from './datePicker';
 import { useVModel } from '@vueuse/core';
+import { object2class } from 'lew-ui/utils';
+
 const props = defineProps(dateRangePickerProps);
-const emit = defineEmits(['change', 'update:modelValue']);
+const emit = defineEmits(['change', 'clear', 'update:modelValue']);
 const modelValue = useVModel(props, 'modelValue', emit);
-const isShowPicker = ref(false);
+const visible = ref(false);
 const lewPopoverRef = ref();
 const { startKey, endKey } = props;
 const lewDateRangePanelRef = ref();
@@ -32,18 +34,30 @@ const change = (e?: any) => {
 };
 
 const showHandle = () => {
-    isShowPicker.value = true;
+    visible.value = true;
+    lewDateRangePanelRef.value.init();
 };
 const hideHandle = () => {
-    isShowPicker.value = false;
-    lewDateRangePanelRef.value.init();
+    visible.value = false;
+};
+
+const clearHandle = () => {
+    modelValue.value = {};
+    emit('clear');
 };
 
 const classObject = computed(() => {
     return {
-        'lew-date-picker-focus': isShowPicker.value,
+        'lew-date-picker-focus': visible.value,
         [`lew-date-picker-${props.size}`]: props.size,
     };
+});
+
+const checkClear = computed(() => {
+    return (
+        (modelValue.value[startKey] || modelValue.value[endKey]) &&
+        props.clearable
+    );
 });
 
 defineExpose({ show, hide });
@@ -85,9 +99,20 @@ defineExpose({ show, hide });
                         {{ modelValue[endKey] }}
                     </div>
                     <lew-icon
-                        class="lew-date-picker-icon"
+                        class="icon-calendar"
                         :size="getIconSize"
+                        :class="{
+                            'icon-calendar-hide': checkClear,
+                        }"
                         type="calendar"
+                    />
+                    <lew-icon
+                        v-if="clearable"
+                        :size="getIconSize"
+                        type="x-circle"
+                        class="icon-clear"
+                        :class="{ 'icon-clear-show': checkClear }"
+                        @click.stop="clearHandle"
                     />
                 </div>
             </div>
@@ -111,7 +136,7 @@ defineExpose({ show, hide });
         align-items: center;
         position: relative;
         width: 100%;
-        padding: 0px 45px 0px 10px;
+        padding: 0px 45px 0px 0px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -129,20 +154,37 @@ defineExpose({ show, hide });
         width: 100%;
         display: inline-flex;
         align-items: center;
-        justify-content: space-around;
         gap: 10px;
         box-sizing: border-box;
-        .lew-date-picker-icon {
+        .icon-calendar {
             position: absolute;
             top: 50%;
             right: 7px;
             transform: translateY(-50%);
-            transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
-            color: var(--lew-text-color-7);
+            transition: var(--lew-form-transition);
+            opacity: var(--lew-form-icon-opacity);
+        }
+        .icon-calendar-hide {
+            opacity: 0;
+            transform: translateY(-50%) translateX(100%);
+        }
+        .icon-clear {
+            position: absolute;
+            top: 50%;
+            right: 7px;
+            opacity: 0;
+            transform: translateY(-50%) translateX(100%);
+            transition: var(--lew-form-transition);
+        }
+        .icon-clear-show {
+            transform: translateY(-50%) translateX(0);
+            opacity: var(--lew-form-icon-opacity);
+        }
+        .icon-clear-show:hover {
+            opacity: var(--lew-form-icon-opacity-hover);
         }
         .lew-date-picker-placeholder {
             color: rgb(165, 165, 165);
-            margin-left: 7px;
         }
     }
 

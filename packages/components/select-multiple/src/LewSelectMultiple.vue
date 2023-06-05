@@ -530,7 +530,7 @@ defineExpose({ show, hide });
             cursor: pointer;
             color: var(--lew-text-color-2);
             box-sizing: border-box;
-            border-radius: var(--lew-border-radius);
+            border-radius: 6px;
         }
 
         .lew-select-item-disabled {
@@ -564,7 +564,7 @@ defineExpose({ show, hide });
         }
 
         .lew-select-slot-item {
-            border-radius: var(--lew-border-radius);
+            border-radius: 6px;
         }
 
         .lew-select-slot-item:hover {
@@ -600,12 +600,12 @@ defineExpose({ show, hide });
 
     .lew-select-options-list::-webkit-scrollbar-thumb {
         background-color: rgb(209 213 219 / 0);
-        border-radius: 2px;
+        border-radius: 4px;
     }
 
     .lew-select-options-list:hover::-webkit-scrollbar-thumb {
         background-color: rgb(209 213 219 / 1);
-        border-radius: 2px;
+        border-radius: 4px;
     }
 }
 </style>

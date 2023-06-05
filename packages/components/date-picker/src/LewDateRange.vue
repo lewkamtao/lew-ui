@@ -9,12 +9,6 @@ const modelValue = useVModel(props, 'modelValue', emit);
 const hoverValue: any = ref(toRaw(modelValue.value));
 const { startKey, endKey } = props;
 
-const init = () => {
-    hoverValue.value = JSON.parse(JSON.stringify(modelValue.value));
-};
-
-defineExpose({ init });
-
 // 获取当天日期对象
 const today = new Date();
 // 获取当前年份
@@ -24,23 +18,12 @@ const curMonth = today.getMonth() + 1;
 const curDay = today.getDate();
 const _curDate = dayjs(`${curYear}-${curMonth}-${curDay}`);
 
-// 年
-const _year1 = ref(dayjs(modelValue.value[startKey]).year());
-// 月
-const _month1 = ref(dayjs(modelValue.value[startKey]).month() + 1);
-
-// 年
-const _year2 = ref(dayjs(modelValue.value[endKey]).year());
-// 月
-const _month2 = ref(dayjs(modelValue.value[endKey]).month() + 1);
-
-if (_year1.value === _year2.value && _month1.value === _month2.value) {
-    _month2.value += 1;
-}
-if (_month2.value > 12) {
-    _year2.value += 1;
-    _month2.value = 1;
-}
+const dateState = reactive({
+    year1: 0,
+    year2: 0,
+    month1: 0,
+    month2: 0,
+});
 
 const state = reactive({
     leftPanel: getMonthDate(1),
@@ -48,52 +31,58 @@ const state = reactive({
 });
 
 const prveMonth1 = () => {
-    if (_month1.value > 1) {
-        _month1.value -= 1;
+    if (dateState.month1 > 1) {
+        dateState.month1 -= 1;
     } else {
-        _year1.value -= 1;
-        _month1.value = 12;
+        dateState.year1 -= 1;
+        dateState.month1 = 12;
     }
     setMonthDate('left');
 };
 
 const nextMonth1 = () => {
-    if (_month1.value < 12) {
-        _month1.value += 1;
+    if (dateState.month1 < 12) {
+        dateState.month1 += 1;
     } else {
-        _year1.value += 1;
-        _month1.value = 1;
+        dateState.year1 += 1;
+        dateState.month1 = 1;
     }
-    if (_year1.value > _year2.value) {
-        _year2.value = _year1.value;
+    if (dateState.year1 > dateState.year2) {
+        dateState.year2 = dateState.year1;
     }
-    if (_year1.value === _year2.value && _month1.value >= _month2.value) {
-        if (_month1.value === 12) {
-            _month2.value = 1;
-            _year2.value += 1;
+    if (
+        dateState.year1 === dateState.year2 &&
+        dateState.month1 >= dateState.month2
+    ) {
+        if (dateState.month1 === 12) {
+            dateState.month2 = 1;
+            dateState.year2 += 1;
         } else {
-            _month2.value = _month1.value + 1;
+            dateState.month2 = dateState.month1 + 1;
         }
     }
     setMonthDate('left');
     setMonthDate('right');
 };
 const prveMonth2 = () => {
-    if (_month2.value > 1) {
-        _month2.value -= 1;
+    if (dateState.month2 > 1) {
+        dateState.month2 -= 1;
     } else {
-        _year2.value -= 1;
-        _month2.value = 12;
+        dateState.year2 -= 1;
+        dateState.month2 = 12;
     }
-    if (_year2.value < _year1.value) {
-        _year1.value = _year2.value;
+    if (dateState.year2 < dateState.year1) {
+        dateState.year1 = dateState.year2;
     }
-    if (_year1.value === _year2.value && _month2.value <= _month1.value) {
-        if (_month2.value === 1) {
-            _month1.value = 12;
-            _year1.value -= 1;
+    if (
+        dateState.year1 === dateState.year2 &&
+        dateState.month2 <= dateState.month1
+    ) {
+        if (dateState.month2 === 1) {
+            dateState.month1 = 12;
+            dateState.year1 -= 1;
         } else {
-            _month1.value = _month2.value - 1;
+            dateState.month1 = dateState.month2 - 1;
         }
     }
     setMonthDate('left');
@@ -101,31 +90,34 @@ const prveMonth2 = () => {
 };
 
 const nextMonth2 = () => {
-    if (_month2.value < 12) {
-        _month2.value += 1;
+    if (dateState.month2 < 12) {
+        dateState.month2 += 1;
     } else {
-        _year2.value += 1;
-        _month2.value = 1;
+        dateState.year2 += 1;
+        dateState.month2 = 1;
     }
     setMonthDate('right');
 };
 
 const prveYear1 = () => {
-    _year1.value -= 1;
+    dateState.year1 -= 1;
     setMonthDate('left');
 };
 
 const nextYear1 = () => {
-    _year1.value += 1;
-    if (_year1.value > _year2.value) {
-        _year2.value = _year1.value;
+    dateState.year1 += 1;
+    if (dateState.year1 > dateState.year2) {
+        dateState.year2 = dateState.year1;
     }
-    if (_year1.value === _year2.value && _month1.value >= _month2.value) {
-        if (_month1.value === 12) {
-            _month2.value = 1;
-            _year2.value += 1;
+    if (
+        dateState.year1 === dateState.year2 &&
+        dateState.month1 >= dateState.month2
+    ) {
+        if (dateState.month1 === 12) {
+            dateState.month2 = 1;
+            dateState.year2 += 1;
         } else {
-            _month2.value = _month1.value + 1;
+            dateState.month2 = dateState.month1 + 1;
         }
     }
 
@@ -133,16 +125,19 @@ const nextYear1 = () => {
     setMonthDate('right');
 };
 const prveYear2 = () => {
-    _year2.value -= 1;
-    if (_year2.value < _year1.value) {
-        _year1.value = _year2.value;
+    dateState.year2 -= 1;
+    if (dateState.year2 < dateState.year1) {
+        dateState.year1 = dateState.year2;
     }
-    if (_year1.value === _year2.value && _month2.value <= _month1.value) {
-        if (_month2.value === 1) {
-            _month1.value = 12;
-            _year1.value -= 1;
+    if (
+        dateState.year1 === dateState.year2 &&
+        dateState.month2 <= dateState.month1
+    ) {
+        if (dateState.month2 === 1) {
+            dateState.month1 = 12;
+            dateState.year1 -= 1;
         } else {
-            _month1.value = _month2.value - 1;
+            dateState.month1 = dateState.month2 - 1;
         }
     }
     setMonthDate('left');
@@ -150,15 +145,15 @@ const prveYear2 = () => {
 };
 
 const nextYear2 = () => {
-    _year2.value += 1;
+    dateState.year2 += 1;
     setMonthDate('right');
 };
 
 const setMonthDate = (type: string) => {
     if (type === 'left') {
-        state.leftPanel = getMonthDate(_year1.value, _month1.value);
+        state.leftPanel = getMonthDate(dateState.year1, dateState.month1);
     } else {
-        state.rightPanel = getMonthDate(_year2.value, _month2.value);
+        state.rightPanel = getMonthDate(dateState.year2, dateState.month2);
     }
 };
 
@@ -192,18 +187,18 @@ const setValue = (item: any) => {
     const __date = dayjs(__dateStr);
     if (i % 2 === 0) {
         if (__date.isBefore(dayjs(hoverValue.value[startKey]))) {
-            hoverValue.value[startKey] = __dateStr;
-            hoverValue.value[endKey] = startBackup;
+            hoverValue.value[startKey] = dayjs(__dateStr).format('YYYY-MM-DD');
+            hoverValue.value[endKey] = dayjs(startBackup).format('YYYY-MM-DD');
         } else {
-            hoverValue.value[startKey] = startBackup;
-            hoverValue.value[endKey] = __dateStr;
+            hoverValue.value[startKey] =
+                dayjs(startBackup).format('YYYY-MM-DD');
+            hoverValue.value[endKey] = dayjs(__dateStr).format('YYYY-MM-DD');
         }
         modelValue.value = hoverValue.value;
         emit('change', hoverValue.value);
     } else {
         hoverValue.value[startKey] = __dateStr;
         hoverValue.value[endKey] = '';
-
         startBackup = __dateStr;
     }
 };
@@ -273,6 +268,34 @@ const object2class = computed(() => (type: string, item: any) => {
             return '';
     }
 });
+
+const init = () => {
+    hoverValue.value = JSON.parse(JSON.stringify(modelValue.value));
+    // 年
+    dateState.year1 = dayjs(modelValue.value[startKey]).year();
+    // 月
+    dateState.month1 = dayjs(modelValue.value[startKey]).month() + 1;
+    // 年
+    dateState.year2 = dayjs(modelValue.value[endKey]).year();
+    // 月
+    dateState.month2 = dayjs(modelValue.value[endKey]).month() + 1;
+    if (
+        dateState.year1 === dateState.year2 &&
+        dateState.month1 === dateState.month2
+    ) {
+        dateState.month2 += 1;
+    }
+    if (dateState.month2 > 12) {
+        dateState.year2 += 1;
+        dateState.month2 = 1;
+    }
+    setMonthDate('left');
+    setMonthDate('right');
+};
+
+init();
+
+defineExpose({ init });
 </script>
 <template>
     <div class="lew-date-range">
@@ -280,33 +303,19 @@ const object2class = computed(() => (type: string, item: any) => {
             <lew-flex x="start" mode="between" class="lew-date-control">
                 <div class="lew-date-control-left">
                     <!-- 上一年 -->
-                    <lew-button
-                        icon="chevrons-left"
-                        size="small"
-                        @click="prveYear1"
-                    />
+                    <lew-button icon="chevrons-left" @click="prveYear1" />
                     <!-- 上一月 -->
-                    <lew-button
-                        icon="chevron-left"
-                        size="small"
-                        @click="prveMonth1"
-                    />
+                    <lew-button icon="chevron-left" @click="prveMonth1" />
                 </div>
                 <!-- 日期 -->
-                <div class="cur-date">{{ _year1 }} 年 {{ _month1 }} 月</div>
+                <div class="cur-date">
+                    {{ dateState.year1 }} 年 {{ dateState.month1 }} 月
+                </div>
                 <div class="lew-date-control-right">
                     <!-- 下一月 -->
-                    <lew-button
-                        icon="chevron-right"
-                        size="small"
-                        @click="nextMonth1"
-                    />
+                    <lew-button icon="chevron-right" @click="nextMonth1" />
                     <!-- 下一年 -->
-                    <lew-button
-                        icon="chevrons-right"
-                        size="small"
-                        @click="nextYear1"
-                    />
+                    <lew-button icon="chevrons-right" @click="nextYear1" />
                 </div>
             </lew-flex>
             <div class="lew-date-box">
@@ -363,7 +372,9 @@ const object2class = computed(() => (type: string, item: any) => {
                     />
                 </div>
                 <!-- 日期 -->
-                <div class="cur-date">{{ _year2 }} 年 {{ _month2 }} 月</div>
+                <div class="cur-date">
+                    {{ dateState.year2 }} 年 {{ dateState.month2 }} 月
+                </div>
                 <div class="lew-date-control-right">
                     <!-- 下一月 -->
                     <lew-button
@@ -443,6 +454,7 @@ const object2class = computed(() => (type: string, item: any) => {
             display: flex;
             align-items: center;
             height: 100%;
+            font-size: 15px;
             font-weight: bold;
             color: var(--lew-text-color-0);
         }
@@ -492,7 +504,7 @@ const object2class = computed(() => (type: string, item: any) => {
                 justify-content: center;
                 font-size: 14px;
                 width: 100%;
-                height: 24px;
+                height: 26px;
                 box-sizing: border-box;
                 transition: all 0.1s ease;
 
@@ -500,17 +512,19 @@ const object2class = computed(() => (type: string, item: any) => {
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
-                    width: 24px;
-                    height: 24px;
+                    width: 22px;
+                    height: 22px;
                     line-height: 24px;
                     color: var(--lew-text-color-9);
-                    border-radius: 6px;
+                    border-radius: 50%;
                     transition: all 0.1s ease;
+                    border: 2px transparent solid;
                 }
 
                 .lew-date-value-selected {
                     background: var(--lew-primary-color);
                     color: var(--lew-white-text-color);
+                    border: 2px var(--lew-primary-color-light) solid;
                 }
 
                 .lew-date-item-cur {

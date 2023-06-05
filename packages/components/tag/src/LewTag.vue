@@ -56,7 +56,7 @@ const tagClassName = computed(() => {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 3px;
+    border-radius: 4px;
     user-select: none;
     box-sizing: border-box;
     overflow: hidden;
