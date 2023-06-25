@@ -420,6 +420,10 @@ defineExpose({ show, hide });
         transform: translateY(-50%) rotate(180deg);
         color: var(--lew-text-color-2);
     }
+    .icon-select-hide {
+        opacity: 0;
+        transform: translate(100%, -50%) rotate(180deg);
+    }
 }
 
 .lew-select-view-disabled {

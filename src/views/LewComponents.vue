@@ -437,7 +437,7 @@ group.value = [
     display: flex;
     box-sizing: border-box;
     .component-main {
-        width: calc(100% - 300px);
+        width: calc(100% - 200px);
         height: 100%;
         overflow-y: auto;
         overflow-x: hidden;
@@ -447,7 +447,7 @@ group.value = [
     }
     .component-nav {
         height: 100%;
-        width: 300px;
+        width: 200px;
     }
 }
 
