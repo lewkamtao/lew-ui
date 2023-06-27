@@ -189,7 +189,11 @@ defineExpose({ show, hide });
                 <lew-icon
                     v-if="clearable"
                     :size="getIconSize"
-                    type="x-circle"
+                    type="x"
+                    v-tooltip="{
+                        content: '清空',
+                        placement: 'top',
+                    }"
                     class="icon-clear"
                     :class="{ 'icon-clear-show': clearable && getLabel }"
                     @click.stop="clearHandle"
@@ -339,9 +343,13 @@ defineExpose({ show, hide });
         .icon-clear-show {
             opacity: var(--lew-form-icon-opacity);
             transform: translate(0%, -50%);
+            border-radius: 50%;
+            padding: 3px;
+            right: 4px;
         }
         .icon-clear-show:hover {
             opacity: var(--lew-form-icon-opacity-hover);
+            background-color: var(--lew-bgcolor-0);
         }
         .placeholder {
             color: rgb(165, 165, 165);

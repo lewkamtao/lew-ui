@@ -112,7 +112,7 @@ defineExpose({ toFocus });
                 @mousedown.prevent=""
                 @click="clear"
             >
-                <lew-icon :size="getIconSize" type="x-circle" />
+                <lew-icon :size="getIconSize" type="x" />
             </div>
         </transition>
     </div>

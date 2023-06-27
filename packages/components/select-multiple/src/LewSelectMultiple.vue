@@ -223,7 +223,11 @@ defineExpose({ show, hide });
                 <lew-icon
                     v-if="clearable"
                     :size="getIconSize"
-                    type="x-circle"
+                    type="x"
+                    v-tooltip="{
+                        content: '清空',
+                        placement: 'top',
+                    }"
                     class="icon-clear"
                     :class="{
                         'icon-clear-show':
@@ -381,6 +385,7 @@ defineExpose({ show, hide });
             right: 7px;
             transform: translateY(-50%) rotate(0deg);
             transition: var(--lew-form-transition);
+            opacity: var(--lew-form-icon-opacity);
         }
         .icon-clear {
             opacity: 0;
@@ -391,11 +396,15 @@ defineExpose({ show, hide });
             transform: translate(100%, -50%);
         }
         .icon-clear-show {
-            opacity: 0.7;
+            opacity: var(--lew-form-icon-opacity);
             transform: translate(0%, -50%);
+            border-radius: 50%;
+            padding: 3px;
+            right: 4px;
         }
         .icon-clear-show:hover {
-            opacity: 1;
+            opacity: var(--lew-form-icon-opacity-hover);
+            background-color: var(--lew-bgcolor-0);
         }
         .placeholder {
             color: rgb(165, 165, 165);

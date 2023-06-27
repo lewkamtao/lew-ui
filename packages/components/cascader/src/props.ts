@@ -3,7 +3,9 @@ import { PropType } from 'vue';
 export type CascaderOptions = {
     label: string;
     value: string;
+    isHasChild?: boolean;
     disabled?: boolean;
+    children?: CascaderOptions[];
 };
 
 export const cascaderProps = {

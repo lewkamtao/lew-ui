@@ -96,9 +96,9 @@ textarea {
 
 .lew-scrollbar-hover {
     &::-webkit-scrollbar {
-        width: 0px;
-        height: 0px;
-        background-color: var(--lew-bgcolor-2);
+        width: 6px;
+        height: 6px;
+        background-color: transparent;
     }
     &:hover {
         &::-webkit-scrollbar {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useVModel, useDebounceFn } from '@vueuse/core';
+import { useVModel } from '@vueuse/core';
 import { LewPopover } from 'lew-ui';
-import { object2class, numFormat } from 'lew-ui/utils';
+import { object2class } from 'lew-ui/utils';
 import { cascaderProps, CascaderOptions } from './props';
 const props = defineProps(cascaderProps);
 const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
@@ -9,35 +9,66 @@ const cascaderValue = useVModel(props, 'modelValue', emit);
 
 const lewCascaderRef = ref();
 const lewPopverRef = ref();
-const searchInputRef = ref();
 
 const state = reactive({
     visible: false,
     loading: false,
-    options: [],
+    options: [] as CascaderOptions[][],
+    labels: [] as string[],
+    hoverlabels: [] as string[],
     keyword: '',
 });
 
-const init = () => {
-    const _options = props.options.map((e) => {
-        return {
-            ...e,
-            isHasChild: e.children && e.children.length > 0,
-        };
+const getHierarchyLevel = (arr: any) => {
+    let level = 0;
+
+    function calculateLevel(obj: any, currentLevel: any) {
+        if (obj.children && obj.children.length > 0) {
+            currentLevel++;
+            obj.children.forEach((child: any) => {
+                level = Math.max(level, currentLevel);
+                calculateLevel(child, currentLevel);
+            });
+        }
+    }
+
+    arr.forEach((obj: any) => {
+        calculateLevel(obj, 0);
     });
-    state.options = [_options];
+
+    return level;
+};
+
+const init = () => {
+    const _options: CascaderOptions[] =
+        (props.options &&
+            props.options.map((e) => {
+                return {
+                    ...e,
+                    isHasChild: (e.children && e.children.length > 0) || false,
+                };
+            })) ||
+        [];
+    const highLevel = getHierarchyLevel(props.options) + 1;
+    let new_options = new Array(highLevel).fill([]);
+    new_options[0] = _options;
+    state.options = new_options;
 };
 init();
 
 const selectItem = (item: CascaderOptions, level: number) => {
     if (item.isHasChild) {
+        state.hoverlabels[level] = item.label;
         state.options = state.options.slice(0, level + 1);
-        const _options = item.children.map((e) => {
-            return {
-                ...e,
-                isHasChild: e.children && e.children.length > 0,
-            };
-        });
+        const _options =
+            (item.children &&
+                item.children.map((e) => {
+                    return {
+                        ...e,
+                        isHasChild: e.children && e.children.length > 0,
+                    };
+                })) ||
+            [];
         state.options.push(_options);
     }
 };
@@ -48,30 +79,6 @@ const show = () => {
 
 const hide = () => {
     lewPopverRef.value.hide();
-};
-
-const searchDebounce = useDebounceFn(async (e: any) => {
-    search(e);
-}, props.searchDelay);
-
-const search = async (e: any) => {
-    // loading
-    state.loading = true;
-    const keyword = e.target.value;
-    if (props.searchable) {
-        let result: any = [];
-        // 如果没输入关键词
-        if (!keyword && props.options.length > 0) {
-            result = props.options;
-        } else {
-            result = await props.searchMethod({
-                options: props.options,
-                keyword,
-            });
-        }
-        state.options = result;
-    }
-    state.loading = false;
 };
 
 const clearHandle = () => {
@@ -85,32 +92,13 @@ const cascaderHandle = (item: CascaderOptions) => {
         return;
     }
     cascaderValue.value = item.value;
+    state.labels = [...state.hoverlabels, item.label];
     emit('change', item.value);
     hide();
 };
 
-const getChecked = computed(() => (value: string | number) => {
-    return cascaderValue.value === value;
-});
-
 const getValueStyle = computed(() => {
     return state.visible ? 'opacity:0.4' : '';
-});
-
-const getLabel = computed(() => {
-    // if (state.options) {
-    //     const option = state.options.find((e) => {
-    //         if (e) {
-    //             return e.value === cascaderValue.value;
-    //         }
-    //     });
-
-    //     if (option && JSON.stringify(option) !== '{}') {
-    //         return option.label;
-    //     }
-    // }
-
-    return props.defaultValue || props.modelValue;
 });
 
 const getCascaderClassName = computed(() => {
@@ -130,24 +118,6 @@ const getCascaderViewClassName = computed(() => {
     return object2class('lew-cascader-view', { focus, disabled, readonly });
 });
 
-const getCascaderItemClassName = (e: any) => {
-    const { disabled } = e;
-    const active = getChecked.value(e.value);
-    const { align } = props;
-
-    return object2class('lew-cascader-item', {
-        disabled,
-        align,
-        active,
-    });
-};
-
-const getVirtualHeight = computed(() => {
-    let height = state.options.length * props.itemHeight;
-    height = height > 240 ? 240 : height;
-    return `${height}px`;
-});
-
 const getIconSize = computed(() => {
     const size: any = {
         small: 13,
@@ -159,15 +129,22 @@ const getIconSize = computed(() => {
 
 const showHandle = () => {
     state.visible = true;
-    if (state.options && state.options.length === 0 && props.searchable) {
-        search({ target: { value: '' } });
-    }
 };
 
 const hideHandle = () => {
     state.visible = false;
     emit('blur');
 };
+
+const getCascaderWidth = computed(() => {
+    let _hasChildOptions = state.options.filter(
+        (e) => e && e.length > 0
+    ).length;
+    if (_hasChildOptions > 1) {
+        return _hasChildOptions * 180 + 5;
+    }
+    return _hasChildOptions * 180;
+});
 
 defineExpose({ show, hide });
 </script>
@@ -195,42 +172,108 @@ defineExpose({ show, hide });
                     :size="getIconSize"
                     type="chevron-down"
                     class="icon-cascader"
-                    :class="{ 'icon-cascader-hide': clearable && getLabel }"
+                    :class="{
+                        'icon-cascader-hide':
+                            clearable &&
+                            state.labels &&
+                            state.labels.length > 0,
+                    }"
                 />
                 <lew-icon
                     v-if="clearable"
                     :size="getIconSize"
-                    type="x-circle"
+                    type="x"
                     class="icon-clear"
-                    :class="{ 'icon-clear-show': clearable && getLabel }"
+                    v-tooltip="{
+                        content: '清空',
+                        placement: 'top',
+                    }"
+                    :class="{
+                        'icon-clear-show':
+                            clearable &&
+                            state.labels &&
+                            state.labels.length > 0,
+                    }"
                     @click.stop="clearHandle"
                 />
-                <div v-show="getLabel" :style="getValueStyle" class="value">
-                    {{ getLabel }}
+                <div
+                    v-show="state.labels && state.labels.length > 0"
+                    :style="getValueStyle"
+                    class="value"
+                >
+                    <span v-for="(item, index) in state.labels" :key="index">
+                        {{ item }}
+                        <svg
+                            v-if="index !== state.labels.length - 1"
+                            viewBox="0 0 48 48"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            stroke="currentColor"
+                            stroke-width="4"
+                            stroke-linecap="butt"
+                            stroke-linejoin="miter"
+                            data-v-5303b0ef=""
+                        >
+                            <path
+                                d="M29.506 6.502 18.493 41.498"
+                                data-v-5303b0ef=""
+                            ></path>
+                        </svg>
+                    </span>
                 </div>
-                <div v-show="!getLabel" class="placeholder">
+                <div
+                    v-show="
+                        !state.labels ||
+                        (state.labels && state.labels.length === 0)
+                    "
+                    class="placeholder"
+                >
                     {{ placeholder }}
                 </div>
             </div>
         </template>
         <template #popover-body>
-            <div class="lew-cascader-body" :class="getBodyClassName">
+            <div
+                class="lew-cascader-body"
+                :style="{
+                    width: `${getCascaderWidth}px`,
+                }"
+                :class="getBodyClassName"
+            >
                 <slot name="header"></slot>
                 <div class="lew-cascader-options-box">
-                    <div
+                    <template
                         v-for="(oItem, oIndex) in state.options"
-                        :key="index"
-                        class="lew-cascader-item-warpper lew-scrollbar-hover"
+                        :key="oIndex"
                     >
                         <div
-                            class="lew-cascader-item"
-                            v-for="(item, index) in oItem"
-                            :key="index"
-                            @click="selectItem(item, oIndex)"
+                            class="lew-cascader-item-warpper lew-scrollbar-hover"
+                            :style="{
+                                zIndex: 999 - oIndex,
+                                transform:
+                                    oItem.length > 0
+                                        ? `translateX(${180 * oIndex}px)`
+                                        : '',
+                            }"
                         >
-                            {{ item.label }}
+                            <!-- @click="cascaderHandle(item)" -->
+
+                            <div
+                                class="lew-cascader-item"
+                                v-for="(item, index) in oItem"
+                                :key="index"
+                                @click="selectItem(item, oIndex)"
+                            >
+                                {{ item.label }}
+                                <lew-icon
+                                    v-if="item.isHasChild"
+                                    size="16px"
+                                    class="icon"
+                                    type="chevron-right"
+                                />
+                            </div>
                         </div>
-                    </div>
+                    </template>
                 </div>
                 <slot name="footer"></slot>
             </div>
@@ -248,7 +291,6 @@ defineExpose({ show, hide });
     outline: 0px var(--lew-primary-color-light) solid;
     border: var(--lew-form-border-width) transparent solid;
     box-shadow: var(--lew-form-box-shadow);
-
     > div {
         width: 100%;
     }
@@ -260,7 +302,7 @@ defineExpose({ show, hide });
         white-space: nowrap;
         text-overflow: ellipsis;
         cursor: pointer;
-        user-cascader: none;
+        user-select: none;
         box-sizing: border-box;
 
         .icon-cascader,
@@ -286,9 +328,13 @@ defineExpose({ show, hide });
         .icon-clear-show {
             opacity: var(--lew-form-icon-opacity);
             transform: translate(0%, -50%);
+            border-radius: 50%;
+            padding: 3px;
+            right: 4px;
         }
         .icon-clear-show:hover {
             opacity: var(--lew-form-icon-opacity-hover);
+            background-color: var(--lew-bgcolor-0);
         }
         .placeholder {
             color: rgb(165, 165, 165);
@@ -298,9 +344,20 @@ defineExpose({ show, hide });
         .value {
             display: inline-flex;
             align-items: center;
+            gap: 5px;
             width: calc(100% - 24px);
             box-sizing: border-box;
             transition: all 0.2s;
+            span {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                svg {
+                    width: 14px;
+                    height: 14px;
+                    opacity: 0.6;
+                }
+            }
         }
     }
 
@@ -380,7 +437,7 @@ defineExpose({ show, hide });
 .lew-cascader-view-readonly {
     pointer-events: none; //鼠标点击不可修改
     .lew-cascader {
-        user-cascader: text;
+        user-select: text;
     }
 }
 .lew-cascader-view-disabled:hover {
@@ -394,6 +451,9 @@ defineExpose({ show, hide });
     width: 100%;
     box-sizing: border-box;
     min-width: 180px;
+    height: 300px;
+    overflow: hidden;
+    transition: all 0.25s;
     .search-input {
         margin-bottom: 5px;
         input {
@@ -423,13 +483,22 @@ defineExpose({ show, hide });
         font-size: 13px;
     }
     .lew-cascader-options-box {
+        position: relative;
         display: flex;
-
         box-sizing: border-box;
+        height: 100%;
         .lew-cascader-item-warpper {
-            overflow-y: auto;
-            max-height: 300px;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            overflow-y: scroll;
+            height: 100%;
             width: 180px;
+            padding-left: 5px;
+            border-right: 1px solid var(--lew-bgcolor-4);
+        }
+        .lew-cascader-item-warpper:first-child {
+            padding-left: 0px;
         }
 
         .lew-cascader-item {
@@ -447,8 +516,19 @@ defineExpose({ show, hide });
             border-radius: 6px;
             height: 30px;
             padding: 0px 10px;
+            .icon {
+                position: absolute;
+                right: 2px;
+                top: 50%;
+                transform: translateY(-50%);
+                opacity: 0.4;
+            }
         }
-
+        .lew-cascader-item:hover {
+            .icon {
+                opacity: 1;
+            }
+        }
         .lew-cascader-item-disabled {
             opacity: 0.3;
             cursor: no-drop;

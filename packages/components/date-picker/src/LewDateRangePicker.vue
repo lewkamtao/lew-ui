@@ -110,7 +110,11 @@ defineExpose({ show, hide });
                     <lew-icon
                         v-if="clearable"
                         :size="getIconSize"
-                        type="x-circle"
+                        type="x"
+                        v-tooltip="{
+                            content: '清空',
+                            placement: 'top',
+                        }"
                         class="icon-clear"
                         :class="{ 'icon-clear-show': checkClear }"
                         @click.stop="clearHandle"
@@ -183,11 +187,15 @@ defineExpose({ show, hide });
             transition: var(--lew-form-transition);
         }
         .icon-clear-show {
-            transform: translateY(-50%) translateX(0);
             opacity: var(--lew-form-icon-opacity);
+            transform: translate(0%, -50%);
+            border-radius: 50%;
+            padding: 3px;
+            right: 4px;
         }
         .icon-clear-show:hover {
             opacity: var(--lew-form-icon-opacity-hover);
+            background-color: var(--lew-bgcolor-0);
         }
         .lew-date-picker-placeholder {
             color: rgb(165, 165, 165);

@@ -126,7 +126,7 @@
     // 标题
     --lew-title-bold: 800;
     // 表单样式
-    --lew-form-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
+    --lew-form-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
     --lew-form-border-width: 1.5px;
     --lew-form-transition: all 0.2s ease;
     --lew-form-border-color: rgb(245, 245, 245);
@@ -308,7 +308,7 @@
     --lew-form-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.7);
     --lew-form-border-color: rgb(77, 77, 77);
     --lew-form-border-color-hover: rgb(59, 58, 58);
-    --lew-form-border-color-focus: #3e63a4;
+    --lew-form-border-color-focus: #2da8ff;
     --lew-form-ouline: 3px var(--lew-primary-color-light) solid;
     // tabs
     --lew-tabs-active-color: rgb(77, 77, 77);
@@ -339,14 +339,15 @@
     // checkbox
     --lew-checkbox-block-color: var(--lew-bgcolor-2);
     --lew-checkbox-border-color: var(--lew-bgcolor-4);
-    --lew-checkbox-color: var(--lew-primary-color);
-    --lew-checkbox-color-dark: var(--lew-primary-color-dark);
-    --lew-checkbox-color-light: var(--lew-primary-color-light);
-    --lew-checkbox-border-color-hover: var(--lew-primary-color);
+    --lew-checkbox-color: #2da8ff;
+    --lew-checkbox-color-dark: #2da8ff;
+    --lew-checkbox-color-light: #0e5181;
+    --lew-checkbox-border-color-hover: #2a97e6;
+    // radio
     --lew-radio-block-color: var(--lew-bgcolor-2);
     --lew-radio-border-color: var(--lew-bgcolor-4);
-    --lew-radio-border-color-hover: var(--lew-primary-color);
-    --lew-radio-color: var(--lew-primary-color);
-    --lew-radio-color-dark: var(--lew-primary-color-dark);
-    --lew-radio-color-light: var(--lew-primary-color-light);
+    --lew-radio-color: #2da8ff;
+    --lew-radio-color-dark: #2da8ff;
+    --lew-radio-color-light: #0e5181;
+    --lew-radio-border-color-hover: #2a97e6;
 }
