@@ -260,15 +260,19 @@ defineExpose({ toFocus });
                     type="eye-off"
                 />
             </div>
-            <transition name="clear-hid">
-                <div
+            <transition name="lew-form-icon-ani">
+                <lew-icon
                     v-if="clearable && modelValue"
-                    class="lew-input-clear"
+                    class="lew-form-icon-clear"
+                    v-tooltip="{
+                        content: '清空',
+                        placement: 'top',
+                    }"
                     @mousedown.prevent=""
                     @click="clear"
-                >
-                    <lew-icon :size="getIconSize" type="x" />
-                </div>
+                    :size="getIconSize"
+                    type="x"
+                />
             </transition>
         </div>
     </div>
@@ -362,10 +366,6 @@ defineExpose({ toFocus });
             transition: all 0.25s;
             z-index: 2;
         }
-        .lew-input-clear {
-            opacity: var(--lew-form-icon-opacity);
-            cursor: pointer;
-        }
 
         .lew-input-show-password {
             opacity: var(--lew-form-icon-opacity);
@@ -373,8 +373,7 @@ defineExpose({ toFocus });
             cursor: pointer;
         }
 
-        .lew-input-show-password:hover,
-        .lew-input-clear:hover {
+        .lew-input-show-password:hover {
             opacity: var(--lew-form-icon-opacity-hover);
         }
     }
@@ -451,11 +450,6 @@ defineExpose({ toFocus });
         font-size: var(--lew-form-font-size-small);
         line-height: var(--lew-form-input-line-height-small);
     }
-    .clear-hid-enter-from,
-    .clear-hid-leave-to {
-        opacity: 0;
-        margin-right: -31px;
-    }
 }
 
 .lew-input-view-size-medium {
@@ -486,12 +480,6 @@ defineExpose({ toFocus });
         line-height: var(--lew-form-input-line-height-medium);
         padding: var(--lew-form-input-padding-medium);
     }
-
-    .clear-hid-enter-from,
-    .clear-hid-leave-to {
-        opacity: 0;
-        margin-right: -32px;
-    }
 }
 
 .lew-input-view-size-large {
@@ -521,12 +509,6 @@ defineExpose({ toFocus });
         padding: var(--lew-form-input-padding-large);
         font-size: var(--lew-form-font-size-large);
         line-height: var(--lew-form-input-line-height-large);
-    }
-
-    .clear-hid-enter-from,
-    .clear-hid-leave-to {
-        opacity: 0;
-        margin-right: -34px;
     }
 }
 
@@ -562,9 +544,5 @@ defineExpose({ toFocus });
 .lew-input-view-disabled:focus-within {
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor);
-}
-.clear-hid-enter-active,
-.clear-hid-leave-active {
-    transition: var(--lew-form-transition);
 }
 </style>

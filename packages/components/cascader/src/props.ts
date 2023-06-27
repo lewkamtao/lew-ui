@@ -39,7 +39,7 @@ export const cascaderProps = {
     },
     clearable: {
         type: Boolean,
-        default: () => false,
+        default: () => true,
     },
     readonly: {
         type: Boolean,

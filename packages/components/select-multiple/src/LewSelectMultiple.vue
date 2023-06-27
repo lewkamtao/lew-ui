@@ -220,21 +220,20 @@ defineExpose({ show, hide });
                             clearable && getLabels && getLabels.length > 0,
                     }"
                 />
-                <lew-icon
-                    v-if="clearable"
-                    :size="getIconSize"
-                    type="x"
-                    v-tooltip="{
-                        content: '清空',
-                        placement: 'top',
-                    }"
-                    class="icon-clear"
-                    :class="{
-                        'icon-clear-show':
-                            clearable && getLabels && getLabels.length > 0,
-                    }"
-                    @click.stop="clearHandle"
-                />
+                <transition name="lew-form-icon-ani">
+                    <lew-icon
+                        v-if="clearable && getLabels && getLabels.length > 0"
+                        :size="getIconSize"
+                        type="x"
+                        v-tooltip="{
+                            content: '清空',
+                            placement: 'top',
+                        }"
+                        class="lew-form-icon-clear"
+                        @click.stop="clearHandle"
+                    />
+                </transition>
+
                 <lew-flex
                     v-show="getLabels && getLabels.length > 0"
                     style="padding: 3px"
@@ -378,8 +377,7 @@ defineExpose({ show, hide });
         box-sizing: border-box;
         overflow: hidden;
 
-        .icon-select,
-        .icon-clear {
+        .icon-select {
             position: absolute;
             top: 50%;
             right: 7px;
@@ -387,25 +385,11 @@ defineExpose({ show, hide });
             transition: var(--lew-form-transition);
             opacity: var(--lew-form-icon-opacity);
         }
-        .icon-clear {
-            opacity: 0;
-            transform: translate(150%, -50%);
-        }
         .icon-select-hide {
             opacity: 0;
             transform: translate(100%, -50%);
         }
-        .icon-clear-show {
-            opacity: var(--lew-form-icon-opacity);
-            transform: translate(0%, -50%);
-            border-radius: 50%;
-            padding: 3px;
-            right: 4px;
-        }
-        .icon-clear-show:hover {
-            opacity: var(--lew-form-icon-opacity-hover);
-            background-color: var(--lew-bgcolor-0);
-        }
+
         .placeholder {
             color: rgb(165, 165, 165);
         }

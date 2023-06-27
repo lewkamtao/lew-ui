@@ -186,18 +186,21 @@ defineExpose({ show, hide });
                     class="icon-select"
                     :class="{ 'icon-select-hide': clearable && getLabel }"
                 />
-                <lew-icon
-                    v-if="clearable"
-                    :size="getIconSize"
-                    type="x"
-                    v-tooltip="{
-                        content: '清空',
-                        placement: 'top',
-                    }"
-                    class="icon-clear"
-                    :class="{ 'icon-clear-show': clearable && getLabel }"
-                    @click.stop="clearHandle"
-                />
+
+                <transition name="lew-form-icon-ani">
+                    <lew-icon
+                        v-if="clearable && getLabel"
+                        :size="getIconSize"
+                        type="x"
+                        v-tooltip="{
+                            content: '清空',
+                            placement: 'top',
+                        }"
+                        class="lew-form-icon-clear"
+                        @click.stop="clearHandle"
+                    />
+                </transition>
+
                 <div v-show="getLabel" :style="getValueStyle" class="value">
                     {{ getLabel }}
                 </div>
@@ -320,8 +323,7 @@ defineExpose({ show, hide });
         user-select: none;
         box-sizing: border-box;
 
-        .icon-select,
-        .icon-clear {
+        .icon-select {
             position: absolute;
             top: 50%;
             right: 7px;
@@ -331,26 +333,12 @@ defineExpose({ show, hide });
         .icon-select {
             opacity: var(--lew-form-icon-opacity);
         }
-        .icon-clear {
-            opacity: 0;
-            transform: translate(150%, -50%);
-        }
 
         .icon-select-hide {
             opacity: 0;
             transform: translate(100%, -50%);
         }
-        .icon-clear-show {
-            opacity: var(--lew-form-icon-opacity);
-            transform: translate(0%, -50%);
-            border-radius: 50%;
-            padding: 3px;
-            right: 4px;
-        }
-        .icon-clear-show:hover {
-            opacity: var(--lew-form-icon-opacity-hover);
-            background-color: var(--lew-bgcolor-0);
-        }
+
         .placeholder {
             color: rgb(165, 165, 165);
         }

@@ -83,6 +83,9 @@ const hide = () => {
 
 const clearHandle = () => {
     cascaderValue.value = '';
+    state.labels = [];
+    state.hoverlabels = [];
+    init();
     emit('clear');
     emit('change');
 };
@@ -168,34 +171,37 @@ defineExpose({ show, hide });
                 class="lew-cascader"
                 :class="getCascaderClassName"
             >
-                <lew-icon
-                    :size="getIconSize"
-                    type="chevron-down"
-                    class="icon-cascader"
-                    :class="{
-                        'icon-cascader-hide':
-                            clearable &&
-                            state.labels &&
-                            state.labels.length > 0,
-                    }"
-                />
-                <lew-icon
-                    v-if="clearable"
-                    :size="getIconSize"
-                    type="x"
-                    class="icon-clear"
-                    v-tooltip="{
-                        content: '清空',
-                        placement: 'top',
-                    }"
-                    :class="{
-                        'icon-clear-show':
-                            clearable &&
-                            state.labels &&
-                            state.labels.length > 0,
-                    }"
-                    @click.stop="clearHandle"
-                />
+                <transition name="lew-form-icon-ani">
+                    <lew-icon
+                        v-if="
+                            !(
+                                clearable &&
+                                state.labels &&
+                                state.labels.length > 0
+                            )
+                        "
+                        :size="getIconSize"
+                        type="chevron-down"
+                        class="icon-cascader"
+                    />
+                </transition>
+
+                <transition name="lew-form-icon-ani">
+                    <lew-icon
+                        v-if="
+                            clearable && state.labels && state.labels.length > 0
+                        "
+                        :size="getIconSize"
+                        type="x"
+                        class="lew-form-icon-clear"
+                        v-tooltip="{
+                            content: '清空',
+                            placement: 'top',
+                        }"
+                        @click.stop="clearHandle"
+                    />
+                </transition>
+
                 <div
                     v-show="state.labels && state.labels.length > 0"
                     :style="getValueStyle"
@@ -256,18 +262,19 @@ defineExpose({ show, hide });
                                         : '',
                             }"
                         >
-                            <!-- @click="cascaderHandle(item)" -->
+                            <!--  -->
 
                             <div
                                 class="lew-cascader-item"
                                 v-for="(item, index) in oItem"
                                 :key="index"
-                                @click="selectItem(item, oIndex)"
+                                @click="cascaderHandle(item)"
+                                @mouseover="selectItem(item, oIndex)"
                             >
                                 {{ item.label }}
                                 <lew-icon
                                     v-if="item.isHasChild"
-                                    size="16px"
+                                    size="14px"
                                     class="icon"
                                     type="chevron-right"
                                 />
@@ -305,8 +312,7 @@ defineExpose({ show, hide });
         user-select: none;
         box-sizing: border-box;
 
-        .icon-cascader,
-        .icon-clear {
+        .icon-cascader {
             position: absolute;
             top: 50%;
             right: 7px;
@@ -316,26 +322,12 @@ defineExpose({ show, hide });
         .icon-cascader {
             opacity: var(--lew-form-icon-opacity);
         }
-        .icon-clear {
-            opacity: 0;
-            transform: translate(150%, -50%);
-        }
 
         .icon-cascader-hide {
             opacity: 0;
             transform: translate(100%, -50%);
         }
-        .icon-clear-show {
-            opacity: var(--lew-form-icon-opacity);
-            transform: translate(0%, -50%);
-            border-radius: 50%;
-            padding: 3px;
-            right: 4px;
-        }
-        .icon-clear-show:hover {
-            opacity: var(--lew-form-icon-opacity-hover);
-            background-color: var(--lew-bgcolor-0);
-        }
+
         .placeholder {
             color: rgb(165, 165, 165);
         }

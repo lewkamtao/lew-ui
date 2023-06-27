@@ -28,6 +28,10 @@ defineProps({
 });
 
 const toPath = (item: Item) => {
+    if (item.label === 'Coming soon') {
+        LewMessage.info('敬请期待！');
+        return;
+    }
     router.push(item.path);
 };
 </script>

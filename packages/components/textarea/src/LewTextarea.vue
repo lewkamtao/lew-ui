@@ -105,15 +105,20 @@ defineExpose({ toFocus });
         <div v-if="getCheckNumStr && showCount" class="lew-textarea-count">
             {{ getCheckNumStr }}
         </div>
-        <transition name="slide-fade">
-            <div
+        <transition name="lew-form-icon-ani">
+            <lew-icon
                 v-if="clearable && modelValue"
-                class="lew-textarea-clear"
+                class="lew-form-icon-clear"
+                v-tooltip="{
+                    content: '清空',
+                    placement: 'top',
+                }"
                 @mousedown.prevent=""
                 @click="clear"
-            >
-                <lew-icon :size="getIconSize" type="x" />
-            </div>
+                :size="getIconSize"
+                style="top: 14px"
+                type="x"
+            />
         </transition>
     </div>
 </template>
@@ -159,17 +164,6 @@ defineExpose({ toFocus });
         transition: opacity 0.25s;
         z-index: 2;
         user-select: none;
-    }
-
-    .lew-textarea-clear {
-        position: absolute;
-        right: 7px;
-        top: 4px;
-        opacity: var(--lew-form-icon-opacity);
-        cursor: pointer;
-    }
-    .lew-textarea-clear:hover {
-        opacity: var(--lew-form-icon-opacity-hover);
     }
 }
 
@@ -297,16 +291,5 @@ defineExpose({ toFocus });
 .lew-textarea-view-disabled:focus-within {
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor);
-}
-
-.slide-fade-enter-active,
-.slide-fade-leave-active {
-    transition: var(--lew-form-transition);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-    transform: translateX(34px);
-    opacity: 0;
 }
 </style>
