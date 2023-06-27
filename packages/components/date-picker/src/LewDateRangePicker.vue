@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { dateRangePickerProps } from './datePicker';
 import { useVModel } from '@vueuse/core';
-import { object2class } from 'lew-ui/utils';
 
 const props = defineProps(dateRangePickerProps);
 const emit = defineEmits(['change', 'clear', 'update:modelValue']);
@@ -85,7 +84,9 @@ defineExpose({ show, hide });
                     >
                         {{ modelValue[startKey] }}
                     </div>
-                    <div class="lew-date-picker-mid">-</div>
+                    <div class="lew-date-picker-mid">
+                        <lew-icon size="14" type="minus" />
+                    </div>
                     <div
                         v-if="!modelValue[endKey]"
                         class="lew-date-picker-placeholder"
@@ -136,7 +137,7 @@ defineExpose({ show, hide });
         align-items: center;
         position: relative;
         width: 100%;
-        padding: 0px 45px 0px 0px;
+        padding: 0px 30px 0px 0px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -153,9 +154,14 @@ defineExpose({ show, hide });
     .lew-date-picker-input {
         width: 100%;
         display: inline-flex;
+        gap: 5px;
         align-items: center;
-        gap: 10px;
         box-sizing: border-box;
+        .lew-date-picker-mid {
+            display: flex;
+            align-items: center;
+            color: var(--lew-text-color-8);
+        }
         .icon-calendar {
             position: absolute;
             top: 50%;

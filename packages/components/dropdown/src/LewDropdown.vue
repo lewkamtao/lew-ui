@@ -33,7 +33,7 @@ defineExpose({ show, hide });
         <template #popover-body>
             <div
                 v-if="options.length > 0"
-                class="lew-dropdown-body"
+                class="lew-dropdown-body lew-scrollbar"
                 :style="`width:${width};max-height:${maxHeight}`"
             >
                 <div
@@ -70,22 +70,5 @@ defineExpose({ show, hide });
         color: var(--lew-text-color-0);
         background-color: var(--lew-form-bgcolor);
     }
-}
-.lew-dropdown-body::-webkit-scrollbar {
-    background-color: rgb(126, 126, 126, 0);
-    width: 5px;
-    height: 5px;
-}
-
-.lew-dropdown-body::-webkit-scrollbar-thumb:hover {
-    background-color: rgb(126, 126, 126);
-}
-.lew-dropdown-body::-webkit-scrollbar-thumb {
-    background-color: rgb(209 213 219 / 0);
-    border-radius: 5px;
-}
-.lew-dropdown-body:hover::-webkit-scrollbar-thumb {
-    background-color: rgb(209 213 219 / 1);
-    border-radius: 5px;
 }
 </style>

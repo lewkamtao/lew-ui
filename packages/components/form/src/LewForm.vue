@@ -362,7 +362,7 @@ defineExpose({ getForm, setForm, validate });
                         (e:any) => {
                             validate(item.field);
                             typeof item.props.click === 'function'?item.props.change(e):'';
-                        } "
+                        }"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"

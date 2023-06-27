@@ -95,7 +95,7 @@ group.value = [
         <div class="sider" :class="{ 'sider-open': isShowSider }">
             <the-siderbar :group="group" />
         </div>
-        <div ref="mainRef" class="app-main btf-scrollbar">
+        <div ref="mainRef" class="app-main lew-scrollbar">
             <router-view v-slot="{ Component }">
                 <component :is="Component" />
             </router-view>

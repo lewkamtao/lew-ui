@@ -10,8 +10,7 @@ export const formProps = {
         default: 'medium',
     },
     width: {
-        type: Number,
-        default: '',
+        type: [Number, String],
     },
     labelWidth: {
         type: Number,

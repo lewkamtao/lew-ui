@@ -15,7 +15,7 @@ export const titleProps = {
         default: 500,
     },
     size: {
-        type: Number,
+        type: [Number, String],
         default: 24,
     },
     type: {

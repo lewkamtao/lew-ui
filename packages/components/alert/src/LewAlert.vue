@@ -14,30 +14,35 @@ const alertClassName = (item: AlertItem) => {
 
 <template>
     <div class="lew-alert-group">
-        <div
-            v-for="(item, i) in list"
-            :key="i"
-            class="lew-alert"
-            :class="alertClassName(item)"
-        >
-            <div class="alert-icon">
-                <lew-icon :size="16" :type="getIconType(item.type)"></lew-icon>
-            </div>
-            <div class="message">
-                <div class="title">{{ item.title }}</div>
-                <div v-show="item.content" class="content">
-                    {{ item.content }}
+        <TransitionGroup name="list">
+            <div
+                v-for="(item, i) in list"
+                :key="i"
+                class="lew-alert"
+                :class="alertClassName(item)"
+            >
+                <div class="alert-icon">
+                    <lew-icon
+                        :size="16"
+                        :type="getIconType(item.type)"
+                    ></lew-icon>
+                </div>
+                <div class="message">
+                    <div class="title">{{ item.title }}</div>
+                    <div v-show="item.content" class="content">
+                        {{ item.content }}
+                    </div>
+                </div>
+                <div v-if="item.closeable">
+                    <lew-icon
+                        :size="16"
+                        class="btn-close"
+                        type="x"
+                        @click="emit('close', i)"
+                    />
                 </div>
             </div>
-            <div v-if="item.closeable">
-                <lew-icon
-                    :size="16"
-                    class="btn-close"
-                    type="x"
-                    @click="emit('close', i)"
-                />
-            </div>
-        </div>
+        </TransitionGroup>
     </div>
 </template>
 
@@ -133,5 +138,14 @@ const alertClassName = (item: AlertItem) => {
         color: var(--lew-info-color-dark);
         background-color: var(--lew-info-color-light);
     }
+}
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.15s ease-in-out;
+}
+.list-enter-from,
+.list-leave-to {
+    opacity: 0;
+    transform: translateX(-15px);
 }
 </style>

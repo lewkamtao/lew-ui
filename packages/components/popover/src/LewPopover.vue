@@ -74,7 +74,7 @@ const initTippy = () => {
         animation: 'shift-away-subtle',
         interactive: true,
         placement,
-        duration: [200, 200],
+        duration: [150, 150],
         arrow: false,
         delay: trigger === 'mouseenter' ? [250, 250] : undefined,
         appendTo: () => document.body,

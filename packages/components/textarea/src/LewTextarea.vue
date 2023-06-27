@@ -91,7 +91,7 @@ defineExpose({ toFocus });
     >
         <textarea
             ref="lewTextareaRef"
-            class="lew-textarea btf-scrollbar"
+            class="lew-textarea lew-scrollbar"
             v-model="modelValue"
             :disabled="disabled"
             :readonly="readonly"
@@ -179,9 +179,6 @@ defineExpose({ toFocus });
         font-size: var(--lew-form-font-size-small);
         line-height: var(--lew-form-input-line-height-small);
     }
-    .lew-textarea::-webkit-scrollbar {
-        width: 4px;
-    }
 
     .lew-textarea {
         min-height: var(--lew-form-item-height-small);
@@ -197,9 +194,6 @@ defineExpose({ toFocus });
         font-size: var(--lew-form-font-size-medium);
         line-height: var(--lew-form-input-line-height-medium);
     }
-    .lew-textarea::-webkit-scrollbar {
-        width: 6px;
-    }
 
     .lew-textarea {
         min-height: var(--lew-form-item-height-medium);
@@ -214,9 +208,6 @@ defineExpose({ toFocus });
         padding: var(--lew-form-input-padding-large);
         font-size: var(--lew-form-font-size-large);
         line-height: var(--lew-form-input-line-height-large);
-    }
-    .lew-textarea::-webkit-scrollbar {
-        width: 8px;
     }
 
     .lew-textarea {

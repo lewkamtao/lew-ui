@@ -242,13 +242,20 @@ group.value = [
                 label: '',
                 type: 'success',
             },
-            // {
-            //     cname:"",
-            //     name: 'Cascader',
-            //     path: '/Cascader',
-            //     label: '',
-            //     type: 'error',
-            // },
+            {
+                cname: '',
+                name: 'Cascader',
+                path: '/Cascader',
+                label: 'dev',
+                type: 'primary',
+            },
+            {
+                cname: '',
+                name: 'TreeSelect',
+                path: '/TreeSelect',
+                label: 'dev',
+                type: 'primary',
+            },
             {
                 cname: '开关',
                 name: 'Switch',
@@ -256,13 +263,7 @@ group.value = [
                 label: '',
                 type: 'success',
             },
-            // {
-            //     cname:"",
-            //     name: 'InputTag',
-            //     path: '/InputTag',
-            //     label: '',
-            //     type: 'error',
-            // },
+
             {
                 cname: '文件上传',
                 name: 'Upload',
@@ -403,8 +404,8 @@ group.value = [
         <div class="sider" :class="{ 'sider-open': isShowSider }">
             <the-siderbar :group="group" />
         </div>
-        <div ref="mainRef" class="app-main btf-scrollbar">
-            <div class="component-main" id="component-main">
+        <div ref="mainRef" class="app-main lew-scrollbar">
+            <div class="component-main lew-scrollbar" id="component-main">
                 <router-view v-slot="{ Component }">
                     <keep-alive>
                         <Component :is="Component"> </Component>

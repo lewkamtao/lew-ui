@@ -33,7 +33,7 @@ const toPath = (item: Item) => {
 </script>
 
 <template>
-    <div class="siderbar btf-scrollbar">
+    <div class="siderbar lew-scrollbar">
         <div v-for="(list, i) in group" :key="`group${i}`" class="group">
             <div v-if="list.title" class="title">
                 <span> {{ list.title }}</span>

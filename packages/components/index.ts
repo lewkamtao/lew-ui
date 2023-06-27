@@ -3,6 +3,8 @@ export * from './space';
 export * from './layout';
 export * from './mark';
 export * from './icon';
+export * from './cascader';
+export * from './tree-select';
 
 export * from './tabs';
 export * from './steps';

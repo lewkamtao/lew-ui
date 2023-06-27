@@ -123,9 +123,7 @@ const getChecked = computed(() => (id: any) => {
         :max-height="400"
         row-key="id"
     >
-        <template #title="{ row }">
-            <div class="title">{{ row.title }}</div>
-        </template>
+   
         <template #release_date="{ row }"> {{ row.release_date }} </template>
         <template #directors="{ row }">
             <lew-tag

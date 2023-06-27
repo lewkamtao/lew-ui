@@ -3,17 +3,10 @@ import { useVModel, useDebounceFn } from '@vueuse/core';
 import { LewPopover } from 'lew-ui';
 import { object2class, numFormat } from 'lew-ui/utils';
 import { UseVirtualList } from '@vueuse/components';
-import { selectMultipleProps, SelectMultipleOptions } from './props';
+import { selectProps, SelectOptions } from './props';
 
-const props = defineProps(selectMultipleProps);
-const emit = defineEmits([
-    'update:modelValue',
-    'change',
-    'select',
-    'clear',
-    'delete',
-    'blur',
-]);
+const props = defineProps(selectProps);
+const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
 const selectValue = useVModel(props, 'modelValue', emit);
 
 const lewSelectRef = ref();
@@ -49,10 +42,10 @@ const searchDebounce = useDebounceFn(async (e: any) => {
     search(e);
 }, props.searchDelay);
 
-const search = async (e?: any) => {
+const search = async (e: any) => {
     // loading
     state.loading = true;
-    const keyword = e?.target.value;
+    const keyword = e.target.value;
     if (props.searchable) {
         let result: any = [];
         // 如果没输入关键词
@@ -70,66 +63,42 @@ const search = async (e?: any) => {
 };
 
 const clearHandle = () => {
-    selectValue.value = [];
+    selectValue.value = '';
     emit('clear');
-    // 刷新位置
-    nextTick(() => {
-        lewPopverRef.value.refresh();
-        emit('change', selectValue.value);
-    });
+    emit('change');
 };
 
-const deleteTag = (index: number) => {
-    let item = selectValue.value[index];
-    selectValue.value && selectValue.value.splice(index, 1);
-    emit('delete', item);
-    // 刷新位置
-    nextTick(() => {
-        lewPopverRef.value.refresh();
-        emit('change', selectValue.value);
-    });
-};
-
-const selectHandle = (item: SelectMultipleOptions) => {
+const selectHandle = (item: SelectOptions) => {
     if (item.disabled) {
         return;
     }
-
-    let _value = selectValue.value || [];
-
-    const index = _value.findIndex((e: string | number) => e == item.value);
-
-    if (index >= 0) {
-        _value.splice(index, 1);
-    } else {
-        _value.push(item.value);
-    }
-
-    selectValue.value = _value;
-    emit('select', item);
-    // 刷新位置
-    nextTick(() => {
-        lewPopverRef.value.refresh();
-        emit('change', selectValue.value);
-    });
+    selectValue.value = item.value;
+    emit('change', item.value);
+    hide();
 };
 
 const getChecked = computed(() => (value: string | number) => {
-    return selectValue.value && selectValue.value.includes(value);
+    return selectValue.value === value;
 });
 
-const getLabels = computed(() => {
-    if (state.options.length > 0) {
-        const labels =
-            selectValue.value &&
-            selectValue.value.map((v: number | string) => {
-                return state.options.find(
-                    (e: SelectMultipleOptions) => v === e.value
-                )?.label;
-            });
-        return labels || [];
+const getValueStyle = computed(() => {
+    return state.visible ? 'opacity:0.4' : '';
+});
+
+const getLabel = computed(() => {
+    if (state.options) {
+        const option = state.options.find((e) => {
+            if (e) {
+                return e.value === selectValue.value;
+            }
+        });
+
+        if (option && JSON.stringify(option) !== '{}') {
+            return option.label;
+        }
     }
-    return props?.defaultValue || selectValue.value || [];
+
+    return props.defaultValue || props.modelValue;
 });
 
 const getSelectClassName = computed(() => {
@@ -215,47 +184,20 @@ defineExpose({ show, hide });
                     :size="getIconSize"
                     type="chevron-down"
                     class="icon-select"
-                    :class="{
-                        'icon-select-hide':
-                            clearable && getLabels && getLabels.length > 0,
-                    }"
+                    :class="{ 'icon-select-hide': clearable && getLabel }"
                 />
                 <lew-icon
                     v-if="clearable"
                     :size="getIconSize"
                     type="x-circle"
                     class="icon-clear"
-                    :class="{
-                        'icon-clear-show':
-                            clearable && getLabels && getLabels.length > 0,
-                    }"
+                    :class="{ 'icon-clear-show': clearable && getLabel }"
                     @click.stop="clearHandle"
                 />
-                <lew-flex
-                    v-show="getLabels && getLabels.length > 0"
-                    style="padding: 3px"
-                    x="start"
-                    :gap="3"
-                    wrap
-                    class="value"
-                >
-                    <TransitionGroup name="list">
-                        <lew-tag
-                            v-for="(item, index) in getLabels"
-                            :key="index"
-                            :size="size"
-                            type="primary"
-                            closable
-                            @close="deleteTag(index)"
-                        >
-                            {{ item }}
-                        </lew-tag>
-                    </TransitionGroup>
-                </lew-flex>
-                <div
-                    v-show="getLabels && getLabels.length === 0"
-                    class="placeholder"
-                >
+                <div v-show="getLabel" :style="getValueStyle" class="value">
+                    {{ getLabel }}
+                </div>
+                <div v-show="!getLabel" class="placeholder">
                     {{ placeholder }}
                 </div>
             </div>
@@ -299,7 +241,7 @@ defineExpose({ show, hide });
 
                     <use-virtual-list
                         v-if="state.options.length > 0"
-                        class="lew-select-options-list lew-scrollbar"
+                        class="lew-select-options-list"
                         :list="state.options"
                         :options="{
                             itemHeight: 30,
@@ -367,12 +309,12 @@ defineExpose({ show, hide });
     .lew-select {
         position: relative;
         width: 100%;
+        overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         cursor: pointer;
         user-select: none;
         box-sizing: border-box;
-        overflow: hidden;
 
         .icon-select,
         .icon-clear {
@@ -382,43 +324,35 @@ defineExpose({ show, hide });
             transform: translateY(-50%) rotate(0deg);
             transition: var(--lew-form-transition);
         }
+        .icon-select {
+            opacity: var(--lew-form-icon-opacity);
+        }
         .icon-clear {
             opacity: 0;
             transform: translate(150%, -50%);
         }
+
         .icon-select-hide {
             opacity: 0;
             transform: translate(100%, -50%);
         }
         .icon-clear-show {
-            opacity: 0.7;
+            opacity: var(--lew-form-icon-opacity);
             transform: translate(0%, -50%);
         }
         .icon-clear-show:hover {
-            opacity: 1;
+            opacity: var(--lew-form-icon-opacity-hover);
         }
         .placeholder {
             color: rgb(165, 165, 165);
         }
-        .lew-select-label-multiple {
-            width: 100%;
-            display: flex;
-            align-items: center;
-
-            .lew-popover {
-                display: flex;
-                align-items: center;
-
-                > div {
-                    display: flex;
-                    align-items: center;
-                }
-            }
-        }
 
         .placeholder,
         .value {
+            display: inline-flex;
+            align-items: center;
             width: calc(100% - 24px);
+            box-sizing: border-box;
             transition: all 0.2s;
         }
     }
@@ -433,33 +367,37 @@ defineExpose({ show, hide });
         text-align: right;
     }
 
-    .lew-select-size-small {
-        min-height: var(--lew-form-item-height-small);
+    .lew-select-placeholder {
+        color: rgb(165, 165, 165);
+    }
 
+    .lew-select-size-small {
+        .value,
         .placeholder {
+            padding: var(--lew-form-input-padding-small);
+            height: var(--lew-form-item-height-small);
+            line-height: var(--lew-form-input-line-height-small);
             font-size: var(--lew-form-font-size-small);
-            line-height: var(--lew-form-item-height-small);
-            margin-left: 8px;
         }
     }
 
     .lew-select-size-medium {
-        min-height: var(--lew-form-item-height-medium);
-
+        .value,
         .placeholder {
+            padding: var(--lew-form-input-padding-medium);
+            line-height: var(--lew-form-input-line-height-medium);
+            height: var(--lew-form-item-height-medium);
             font-size: var(--lew-form-font-size-medium);
-            line-height: var(--lew-form-item-height-medium);
-            margin-left: 10px;
         }
     }
 
     .lew-select-size-large {
-        min-height: var(--lew-form-item-height-large);
-
+        .value,
         .placeholder {
+            padding: var(--lew-form-input-padding-large);
+            height: var(--lew-form-item-height-large);
+            line-height: var(--lew-form-input-line-height-large);
             font-size: var(--lew-form-font-size-large);
-            line-height: var(--lew-form-item-height-large);
-            margin-left: 12px;
         }
     }
 }
@@ -487,38 +425,27 @@ defineExpose({ show, hide });
         transform: translate(100%, -50%) rotate(180deg);
     }
 }
+
+.lew-select-view-disabled {
+    opacity: var(--lew-disabled-opacity);
+    pointer-events: none; //鼠标点击不可修改
+}
 .lew-select-view-readonly {
     pointer-events: none; //鼠标点击不可修改
     .lew-select {
         user-select: text;
     }
 }
-.lew-select-view-disabled {
-    opacity: var(--lew-disabled-opacity);
-    pointer-events: none; //鼠标点击不可修改
-}
 .lew-select-view-disabled:hover {
-    border-radius: var(--lew-border-radius);
     background-color: var(--lew-form-bgcolor);
     outline: 0px var(--lew-primary-color-light) solid;
     border: var(--lew-form-border-width) transparent solid;
-}
-
-.list-enter-active,
-.list-leave-active {
-    transition: all 0.15s ease-in-out;
-}
-.list-enter-from,
-.list-leave-to {
-    opacity: 0;
-    transform: translateX(-5px);
 }
 </style>
 <style lang="scss">
 .lew-select-body {
     width: 100%;
     box-sizing: border-box;
-
     .search-input {
         margin-bottom: 5px;
         input {

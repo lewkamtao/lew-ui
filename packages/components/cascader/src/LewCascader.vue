@@ -2,31 +2,43 @@
 import { useVModel, useDebounceFn } from '@vueuse/core';
 import { LewPopover } from 'lew-ui';
 import { object2class, numFormat } from 'lew-ui/utils';
-import { UseVirtualList } from '@vueuse/components';
-import { selectProps, SelectOptions } from './props';
-
-const props = defineProps(selectProps);
+import { cascaderProps, CascaderOptions } from './props';
+const props = defineProps(cascaderProps);
 const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
-const selectValue = useVModel(props, 'modelValue', emit);
+const cascaderValue = useVModel(props, 'modelValue', emit);
 
-const lewSelectRef = ref();
+const lewCascaderRef = ref();
 const lewPopverRef = ref();
 const searchInputRef = ref();
 
 const state = reactive({
-    selectWidth: 0,
     visible: false,
     loading: false,
-    options: props.options,
+    options: [],
     keyword: '',
 });
 
-const getSelectWidth = () => {
-    state.selectWidth = lewSelectRef.value?.clientWidth - 14;
-    if (props.searchable) {
-        setTimeout(() => {
-            searchInputRef.value && searchInputRef.value.focus();
-        }, 200);
+const init = () => {
+    const _options = props.options.map((e) => {
+        return {
+            ...e,
+            isHasChild: e.children && e.children.length > 0,
+        };
+    });
+    state.options = [_options];
+};
+init();
+
+const selectItem = (item: CascaderOptions, level: number) => {
+    if (item.isHasChild) {
+        state.options = state.options.slice(0, level + 1);
+        const _options = item.children.map((e) => {
+            return {
+                ...e,
+                isHasChild: e.children && e.children.length > 0,
+            };
+        });
+        state.options.push(_options);
     }
 };
 
@@ -63,22 +75,22 @@ const search = async (e: any) => {
 };
 
 const clearHandle = () => {
-    selectValue.value = '';
+    cascaderValue.value = '';
     emit('clear');
     emit('change');
 };
 
-const selectHandle = (item: SelectOptions) => {
+const cascaderHandle = (item: CascaderOptions) => {
     if (item.disabled) {
         return;
     }
-    selectValue.value = item.value;
+    cascaderValue.value = item.value;
     emit('change', item.value);
     hide();
 };
 
 const getChecked = computed(() => (value: string | number) => {
-    return selectValue.value === value;
+    return cascaderValue.value === value;
 });
 
 const getValueStyle = computed(() => {
@@ -86,44 +98,44 @@ const getValueStyle = computed(() => {
 });
 
 const getLabel = computed(() => {
-    if (state.options) {
-        const option = state.options.find((e) => {
-            if (e) {
-                return e.value === selectValue.value;
-            }
-        });
+    // if (state.options) {
+    //     const option = state.options.find((e) => {
+    //         if (e) {
+    //             return e.value === cascaderValue.value;
+    //         }
+    //     });
 
-        if (option && JSON.stringify(option) !== '{}') {
-            return option.label;
-        }
-    }
+    //     if (option && JSON.stringify(option) !== '{}') {
+    //         return option.label;
+    //     }
+    // }
 
     return props.defaultValue || props.modelValue;
 });
 
-const getSelectClassName = computed(() => {
+const getCascaderClassName = computed(() => {
     let { clearable, size, align } = props;
-    clearable = clearable ? !!selectValue.value : false;
-    return object2class('lew-select', { clearable, size, align });
+    clearable = clearable ? !!cascaderValue.value : false;
+    return object2class('lew-cascader', { clearable, size, align });
 });
 
 const getBodyClassName = computed(() => {
     const { size, disabled } = props;
-    return object2class('lew-select-body', { size, disabled });
+    return object2class('lew-cascader-body', { size, disabled });
 });
 
-const getSelectViewClassName = computed(() => {
+const getCascaderViewClassName = computed(() => {
     const { disabled, readonly } = props;
     const focus = state.visible;
-    return object2class('lew-select-view', { focus, disabled, readonly });
+    return object2class('lew-cascader-view', { focus, disabled, readonly });
 });
 
-const getSelectItemClassName = (e: any) => {
+const getCascaderItemClassName = (e: any) => {
     const { disabled } = e;
     const active = getChecked.value(e.value);
     const { align } = props;
 
-    return object2class('lew-select-item', {
+    return object2class('lew-cascader-item', {
         disabled,
         align,
         active,
@@ -147,7 +159,6 @@ const getIconSize = computed(() => {
 
 const showHandle = () => {
     state.visible = true;
-    getSelectWidth();
     if (state.options && state.options.length === 0 && props.searchable) {
         search({ target: { value: '' } });
     }
@@ -164,8 +175,8 @@ defineExpose({ show, hide });
 <template>
     <lew-popover
         ref="lewPopverRef"
-        class="lew-select-view"
-        :class="getSelectViewClassName"
+        class="lew-cascader-view"
+        :class="getCascaderViewClassName"
         :trigger="trigger"
         :disabled="disabled"
         placement="bottom-start"
@@ -176,15 +187,15 @@ defineExpose({ show, hide });
     >
         <template #trigger>
             <div
-                ref="lewSelectRef"
-                class="lew-select"
-                :class="getSelectClassName"
+                ref="lewCascaderRef"
+                class="lew-cascader"
+                :class="getCascaderClassName"
             >
                 <lew-icon
                     :size="getIconSize"
                     type="chevron-down"
-                    class="icon-select"
-                    :class="{ 'icon-select-hide': clearable && getLabel }"
+                    class="icon-cascader"
+                    :class="{ 'icon-cascader-hide': clearable && getLabel }"
                 />
                 <lew-icon
                     v-if="clearable"
@@ -203,87 +214,23 @@ defineExpose({ show, hide });
             </div>
         </template>
         <template #popover-body>
-            <div
-                class="lew-select-body"
-                :class="getBodyClassName"
-                :style="`width:${state.selectWidth}px`"
-            >
+            <div class="lew-cascader-body" :class="getBodyClassName">
                 <slot name="header"></slot>
-                <div v-if="searchable" class="search-input">
-                    <input
-                        ref="searchInputRef"
-                        v-model="state.keyword"
-                        placeholder="输入搜索关键词"
-                        @input="searchDebounce"
-                    />
-                </div>
-                <div class="lew-select-options-box">
-                    <lew-flex
-                        v-show="state.options && state.options.length === 0"
-                        direction="y"
-                        class="not-found"
-                    >
-                        <lew-icon type="box" size="30" />
-                        <span>暂无结果</span>
-                    </lew-flex>
+                <div class="lew-cascader-options-box">
                     <div
-                        v-if="
-                            searchable &&
-                            state.options &&
-                            state.options.length > 0
-                        "
-                        class="reslut-count"
+                        v-for="(oItem, oIndex) in state.options"
+                        :key="index"
+                        class="lew-cascader-item-warpper lew-scrollbar-hover"
                     >
-                        共
-                        {{ numFormat(state.options && state.options.length) }}
-                        条结果
+                        <div
+                            class="lew-cascader-item"
+                            v-for="(item, index) in oItem"
+                            :key="index"
+                            @click="selectItem(item, oIndex)"
+                        >
+                            {{ item.label }}
+                        </div>
                     </div>
-
-                    <use-virtual-list
-                        v-if="state.options.length > 0"
-                        class="lew-select-options-list lew-scrollbar"
-                        :list="state.options"
-                        :options="{
-                            itemHeight: 30,
-                        }"
-                        :height="getVirtualHeight"
-                    >
-                        <template #="props">
-                            <!-- you can get current item of list here -->
-                            <label @click="selectHandle(props.data)">
-                                <div
-                                    v-if="!labelSlot"
-                                    class="lew-select-item"
-                                    :class="getSelectItemClassName(props.data)"
-                                    :style="{ height: itemHeight + 'px' }"
-                                >
-                                    <div class="lew-select-label">
-                                        {{ props.data.label }}
-                                    </div>
-                                    <lew-icon
-                                        v-if="
-                                            getChecked(props.data.value) &&
-                                            showCheckIcon
-                                        "
-                                        class="icon-check"
-                                        size="14"
-                                        type="check"
-                                    />
-                                </div>
-                                <div
-                                    v-else
-                                    class="lew-select-slot-item"
-                                    :style="{ height: itemHeight + 'px' }"
-                                >
-                                    <slot
-                                        name="label"
-                                        :item="props.data"
-                                        :checked="getChecked(props.data.value)"
-                                    />
-                                </div>
-                            </label>
-                        </template>
-                    </use-virtual-list>
                 </div>
                 <slot name="footer"></slot>
             </div>
@@ -292,7 +239,7 @@ defineExpose({ show, hide });
 </template>
 
 <style lang="scss" scoped>
-.lew-select-view {
+.lew-cascader-view {
     width: 100%;
     border-radius: var(--lew-border-radius);
     background-color: var(--lew-form-bgcolor);
@@ -306,17 +253,17 @@ defineExpose({ show, hide });
         width: 100%;
     }
 
-    .lew-select {
+    .lew-cascader {
         position: relative;
         width: 100%;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         cursor: pointer;
-        user-select: none;
+        user-cascader: none;
         box-sizing: border-box;
 
-        .icon-select,
+        .icon-cascader,
         .icon-clear {
             position: absolute;
             top: 50%;
@@ -324,7 +271,7 @@ defineExpose({ show, hide });
             transform: translateY(-50%) rotate(0deg);
             transition: var(--lew-form-transition);
         }
-        .icon-select {
+        .icon-cascader {
             opacity: var(--lew-form-icon-opacity);
         }
         .icon-clear {
@@ -332,7 +279,7 @@ defineExpose({ show, hide });
             transform: translate(150%, -50%);
         }
 
-        .icon-select-hide {
+        .icon-cascader-hide {
             opacity: 0;
             transform: translate(100%, -50%);
         }
@@ -357,21 +304,21 @@ defineExpose({ show, hide });
         }
     }
 
-    .lew-select-align-left {
+    .lew-cascader-align-left {
         text-align: left;
     }
-    .lew-select-align-center {
+    .lew-cascader-align-center {
         text-align: center;
     }
-    .lew-select-align-right {
+    .lew-cascader-align-right {
         text-align: right;
     }
 
-    .lew-select-placeholder {
+    .lew-cascader-placeholder {
         color: rgb(165, 165, 165);
     }
 
-    .lew-select-size-small {
+    .lew-cascader-size-small {
         .value,
         .placeholder {
             padding: var(--lew-form-input-padding-small);
@@ -381,7 +328,7 @@ defineExpose({ show, hide });
         }
     }
 
-    .lew-select-size-medium {
+    .lew-cascader-size-medium {
         .value,
         .placeholder {
             padding: var(--lew-form-input-padding-medium);
@@ -391,7 +338,7 @@ defineExpose({ show, hide });
         }
     }
 
-    .lew-select-size-large {
+    .lew-cascader-size-large {
         .value,
         .placeholder {
             padding: var(--lew-form-input-padding-large);
@@ -402,50 +349,51 @@ defineExpose({ show, hide });
     }
 }
 
-.lew-select-view:hover {
+.lew-cascader-view:hover {
     background-color: var(--lew-form-bgcolor-hover);
 }
 
-.lew-select-view:active {
+.lew-cascader-view:active {
     background-color: var(--lew-form-bgcolor-active);
 }
 
-.lew-select-view.lew-select-view-focus {
+.lew-cascader-view.lew-cascader-view-focus {
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
         solid;
     outline: var(--lew-form-ouline);
 
-    .icon-select {
+    .icon-cascader {
         transform: translateY(-50%) rotate(180deg);
         color: var(--lew-text-color-2);
     }
-    .icon-select-hide {
+    .icon-cascader-hide {
         opacity: 0;
         transform: translate(100%, -50%) rotate(180deg);
     }
 }
 
-.lew-select-view-disabled {
+.lew-cascader-view-disabled {
     opacity: var(--lew-disabled-opacity);
     pointer-events: none; //鼠标点击不可修改
 }
-.lew-select-view-readonly {
+.lew-cascader-view-readonly {
     pointer-events: none; //鼠标点击不可修改
-    .lew-select {
-        user-select: text;
+    .lew-cascader {
+        user-cascader: text;
     }
 }
-.lew-select-view-disabled:hover {
+.lew-cascader-view-disabled:hover {
     background-color: var(--lew-form-bgcolor);
     outline: 0px var(--lew-primary-color-light) solid;
     border: var(--lew-form-border-width) transparent solid;
 }
 </style>
 <style lang="scss">
-.lew-select-body {
+.lew-cascader-body {
     width: 100%;
     box-sizing: border-box;
+    min-width: 180px;
     .search-input {
         margin-bottom: 5px;
         input {
@@ -474,14 +422,17 @@ defineExpose({ show, hide });
         opacity: 0.4;
         font-size: 13px;
     }
-    .lew-select-options-box {
-        overflow-y: auto;
-        overflow-x: hidden;
-        height: auto;
-        box-sizing: border-box;
-        transition: all 0.25s ease;
+    .lew-cascader-options-box {
+        display: flex;
 
-        .lew-select-item {
+        box-sizing: border-box;
+        .lew-cascader-item-warpper {
+            overflow-y: auto;
+            max-height: 300px;
+            width: 180px;
+        }
+
+        .lew-cascader-item {
             position: relative;
             display: inline-flex;
             align-items: center;
@@ -494,25 +445,27 @@ defineExpose({ show, hide });
             color: var(--lew-text-color-2);
             box-sizing: border-box;
             border-radius: 6px;
+            height: 30px;
+            padding: 0px 10px;
         }
 
-        .lew-select-item-disabled {
+        .lew-cascader-item-disabled {
             opacity: 0.3;
             cursor: no-drop;
         }
-        .lew-select-item-align-left {
+        .lew-cascader-item-align-left {
             text-align: left;
         }
-        .lew-select-item-align-center {
+        .lew-cascader-item-align-center {
             text-align: center;
         }
-        .lew-select-item-align-right {
+        .lew-cascader-item-align-right {
             text-align: right;
         }
 
-        .lew-select-label {
+        .lew-cascader-label {
             width: 100%;
-            user-select: none;
+            user-cascader: none;
             font-size: 14px;
             padding: 0px 8px;
             overflow: hidden;
@@ -521,21 +474,21 @@ defineExpose({ show, hide });
             box-sizing: border-box;
         }
 
-        .lew-select-item:hover {
+        .lew-cascader-item:hover {
             color: var(--lew-text-color-0);
             background-color: var(--lew-form-bgcolor);
         }
 
-        .lew-select-slot-item {
+        .lew-cascader-slot-item {
             border-radius: 6px;
         }
 
-        .lew-select-slot-item:hover {
+        .lew-cascader-slot-item:hover {
             color: var(--lew-text-color-0);
             background-color: var(--lew-form-bgcolor);
         }
 
-        .lew-select-item-active {
+        .lew-cascader-item-active {
             color: var(--lew-primary-color-dark);
             font-weight: bold;
             background-color: var(--lew-form-bgcolor);
@@ -544,7 +497,7 @@ defineExpose({ show, hide });
             }
         }
 
-        .lew-select-item-active:hover {
+        .lew-cascader-item-active:hover {
             color: var(--lew-primary-color-dark);
             font-weight: bold;
             background-color: var(--lew-form-bgcolor);

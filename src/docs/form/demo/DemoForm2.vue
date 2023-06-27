@@ -8,7 +8,7 @@ const options = ref([
         field: 'name', // 字段名
         label: '姓名', // 标签
         as: 'input', // 组件
-        value: 'asdasd',
+        value: '',
         rules: Yup.string()
             .matches(/^[a-zA-Z]+$/, '必须为纯英文字母')
             .min(4, '长度必须至少为4')
