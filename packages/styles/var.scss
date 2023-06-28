@@ -104,15 +104,15 @@
     --lew-info-color-start: var(--lew-primary-color-start);
     --lew-info-color-end: var(--lew-primary-color-start);
     // warning
-    --lew-warning-color: rgb(255, 231, 74);
-    --lew-warning-color-dark: rgb(186, 132, 7);
+    --lew-warning-color: #F19A37;
+    --lew-warning-color-dark: #F19A37;
     --lew-warning-color-light: rgb(255, 240, 209);
     --lew-warning-color-light2: rgb(236, 218, 177);
     --lew-warning-text-color: rgb(187, 128, 9);
-    --lew-warning-color-hover: rgb(222, 161, 17);
-    --lew-warning-color-active: rgb(187, 133, 7);
-    --lew-warning-color-start: rgb(202, 160, 61);
-    --lew-warning-color-end: rgb(236, 215, 166);
+    --lew-warning-color-hover: #e08f32;
+    --lew-warning-color-active: #d0832b;
+    --lew-warning-color-start: #F19A37;
+    --lew-warning-color-end: #e89f4b;
     // error
     --lew-error-color: rgb(249, 128, 128);
     --lew-error-color-dark: rgb(197, 88, 88);
@@ -287,13 +287,13 @@
     --lew-error-color-hover: rgb(175, 80, 80);
     --lew-error-color-active: rgb(123, 55, 55);
     // warning
-    --lew-warning-color: rgb(149, 124, 64);
+    --lew-warning-color: #c57314;
     --lew-warning-color-dark: rgb(255, 195, 54);
     --lew-warning-color-light: #372b15;
     --lew-warning-color-light2: #543c15;
-    --lew-warning-text-color: rgb(255, 224, 100, 0.8);
-    --lew-warning-color-hover: rgb(159, 132, 69);
-    --lew-warning-color-active: rgb(126, 104, 53);
+    --lew-warning-text-color: #c57314;
+    --lew-warning-color-hover: #b16611;
+    --lew-warning-color-active: #9a570b;
     // normal
     --lew-normal-color: rgb(84, 81, 81);
     --lew-normal-color-dark: rgb(193, 193, 193);
