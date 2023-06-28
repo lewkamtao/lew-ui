@@ -104,7 +104,7 @@
     --lew-info-color-start: var(--lew-primary-color-start);
     --lew-info-color-end: var(--lew-primary-color-start);
     // warning
-    --lew-warning-color: rgb(227, 179, 68);
+    --lew-warning-color: rgb(255, 231, 74);
     --lew-warning-color-dark: rgb(186, 132, 7);
     --lew-warning-color-light: rgb(255, 240, 209);
     --lew-warning-color-light2: rgb(236, 218, 177);
@@ -174,7 +174,6 @@
     --lew-modal-bgcolor: rgb(0, 0, 0, 0.1);
     //  dialog / modal box
     --lew-modal-box-bgcolor: #fff;
-    --lew-modal-box-border: 1px #e2e2e2 solid;
     --lew-modal-box-shadow: 0 18px 36px #00000016;
     // loading
     --lew-loading-bgcolor: rgb(255, 255, 255, 0.8);
@@ -321,7 +320,6 @@
     --lew-modal-bgcolor: rgba(0, 0, 0, 0.45);
     //  dialog / modal box
     --lew-modal-box-bgcolor: #323339;
-    --lew-modal-box-border: 1px rgba(255, 255, 255, 0.05) solid;
     // loading
     --lew-loading-bgcolor: rgba(0, 0, 0, 0.7);
     // povpoer

@@ -76,7 +76,7 @@ const getModalStyle = computed(() => {
         border: var(--lew-modal-border);
         box-shadow: var(--lew-modal-box-shadow);
         animation-fill-mode: forwards;
-        animation: LewModalBox 0.25s;
+        animation: LewModalBox 0.35s;
         animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
 }
@@ -86,11 +86,12 @@ const getModalStyle = computed(() => {
 @keyframes LewModalBox {
     from {
         opacity: 0;
-        transform: scale(0);
+        transform: translateY(20px);
     }
+
     to {
         opacity: 1;
-        transform: scale(1);
+        transform: translateY(0px);
     }
 }
 

@@ -244,14 +244,14 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
 
         .lew-date-item-today {
             position: absolute;
-            width: 5px;
-            height: 5px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
+            background: rgba($color: #19c175, $alpha: 0.8);
             left: 50%;
-            bottom: 0px;
             transform: translateX(-50%);
-            z-index: 99;
-            background-color: var(--lew-success-color);
+            bottom:0px;
+            box-shadow: 0px 0px 12px #0e7346;
         }
 
         .lew-date-item-e:hover {

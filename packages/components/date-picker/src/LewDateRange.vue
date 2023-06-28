@@ -214,7 +214,7 @@ const object2class = computed(() => (type: string, item: any) => {
 
     switch (type) {
         case 'today':
-            if (_curDate.isSame(_date)) {
+            if (_curDate.isSame(_date) && item.date === item.showDate) {
                 return true;
             }
             break;
@@ -343,7 +343,7 @@ defineExpose({ init });
                     >
                         <div
                             v-if="object2class('today', item)"
-                            class="lew-date-item-cur"
+                            class="lew-date-item-today"
                         ></div>
                         <div
                             class="lew-date-value"
@@ -415,7 +415,7 @@ defineExpose({ init });
                     >
                         <div
                             v-if="object2class('today', item)"
-                            class="lew-date-item-cur"
+                            class="lew-date-item-today"
                         ></div>
                         <div
                             class="lew-date-value"
@@ -491,6 +491,7 @@ defineExpose({ init });
         // border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
 
         .lew-date-item {
+            position: relative;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -498,7 +499,6 @@ defineExpose({ init });
             height: 36px;
 
             .lew-date-label {
-                position: relative;
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
@@ -527,14 +527,15 @@ defineExpose({ init });
                     border: 2px var(--lew-primary-color-light) solid;
                 }
 
-                .lew-date-item-cur {
+                .lew-date-item-today {
                     position: absolute;
                     width: 6px;
                     height: 6px;
                     border-radius: 50%;
                     background: rgba($color: #19c175, $alpha: 0.8);
-                    right: 3px;
-                    top: -3px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    bottom: 0px;
                     box-shadow: 0px 0px 12px #0e7346;
                 }
             }
@@ -583,7 +584,7 @@ defineExpose({ init });
             }
         }
 
-        .lew-date-item-cur:hover {
+        .lew-date-item-today:hover {
             .lew-date-label {
                 .lew-date-value {
                     position: relative;

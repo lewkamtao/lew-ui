@@ -109,6 +109,7 @@ const cancel = async () => {
                             <lew-button
                                 v-if="cancelText"
                                 :text="cancelText"
+                                round
                                 type="blank"
                                 size="small"
                                 style="margin-right: 10px"
@@ -118,8 +119,9 @@ const cancel = async () => {
                             <lew-button
                                 v-if="okText"
                                 :text="okText"
-                                :type="type"
+                                round
                                 size="small"
+                                :type="type"
                                 :loading="okLoading"
                                 @click.stop="ok"
                             />
@@ -149,15 +151,14 @@ const cancel = async () => {
     .lew-dialog-box {
         position: relative;
         display: flex;
-        width: 350px;
+        max-width: 350px;
         height: auto;
         padding: 20px;
         border-radius: var(--lew-border-radius);
         background-color: var(--lew-modal-box-bgcolor);
-        border: var(--lew-modal-box-border);
         box-shadow: var(--lew-modal-box-shadow);
         animation-fill-mode: forwards;
-        animation: LewDialogBox 0.25s;
+        animation: LewDialogBox 0.35s;
         animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
         .icon-success {
             color: var(--lew-success-color-dark);
@@ -247,8 +248,12 @@ const cancel = async () => {
     }
 
     .lew-dialog-box-mini {
+        padding: 10px 20px;
+        border-radius: 50px;
+        max-width: 650px;
+        align-items: center;
         .left {
-            margin-top: 3px;
+            margin-top: 5px;
             margin-right: 10px;
             display: flex;
         }
@@ -256,21 +261,19 @@ const cancel = async () => {
         .right {
             position: relative;
             top: 1px;
-            width: 320px;
+            max-width: calc(650px - 30px);
         }
 
         .right {
             display: flex;
             justify-content: space-between;
+            align-items: center;
 
             main {
-                width: 200px;
-                margin-top: 2px;
+                max-width: calc(650px - 100px);
+                margin-top: 0px;
                 flex-shrink: 0;
-            }
-
-            footer {
-                width: 80px;
+                margin-right: 20px;
             }
         }
     }
@@ -281,12 +284,12 @@ const cancel = async () => {
 @keyframes LewDialogBox {
     from {
         opacity: 0;
-        transform: scale(0);
+        transform: translateY(20px);
     }
 
     to {
-        opacity: 1; 
-        transform: scale(1);
+        opacity: 1;
+        transform: translateY(0px);
     }
 }
 

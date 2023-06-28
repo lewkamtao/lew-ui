@@ -13,7 +13,7 @@ export default {
                     theme: 'light',
                     trigger: trigger || 'mouseenter',
                     content: binding.value.content,
-                    animation: 'scale-subtle',
+                    animation: 'shift-away-subtle',
                     interactive: true,
                     appendTo: () => document.body,
                     placement: binding.value.placement,
@@ -30,7 +30,7 @@ export default {
                 if (!binding?.value?.content) {
                     el.instance.disable();
                 }
-            }, 
+            },
             updated(el: any, binding: DirectiveBinding) {
                 if (!binding?.value?.content) {
                     el.instance.disable();
