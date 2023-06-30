@@ -2,5 +2,5 @@
 const v = ref([]);
 </script>
 <template>
-    <lew-input-tag v-model="v" type="primary" />
+    <lew-input-tag v-model="v"  />
 </template>

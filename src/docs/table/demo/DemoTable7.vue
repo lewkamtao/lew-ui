@@ -128,12 +128,12 @@ const del = (row: any, column: any) => {
             <lew-flex>
                 <lew-button
                     text="管理"
-                    type="blank"
+                    type="text"
                     @click="set(row, column)"
                 />
                 <lew-button
                     text="删除"
-                    type="blank"
+                    type="text"
                     @click="del(row, column)"
                 />
             </lew-flex>

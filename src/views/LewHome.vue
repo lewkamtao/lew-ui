@@ -367,7 +367,6 @@ const notification = (type: string) => {
             </div>
             <p>一个 Vue 3 组件库</p>
             <lew-button
-                type="primary"
                 text="Get started"
                 style="margin-top: 20px"
                 @click="router.push('/Avatar')"
@@ -421,19 +420,19 @@ const notification = (type: string) => {
                         />
                     </lew-flex>
                     <lew-flex x="end" gap="10">
-                        <lew-tag type="primary">primary</lew-tag>
-                        <lew-tag type="success">success</lew-tag>
+                        <lew-tag>primary</lew-tag>
+                        <lew-tag color="green">success</lew-tag>
                         <lew-tag type="error">error</lew-tag>
                         <lew-tag type="warning">warning</lew-tag>
                         <lew-tag type="normal">normal</lew-tag>
                     </lew-flex>
 
                     <lew-flex x="end" gap="20">
-                        <lew-button text="cancel" type="error" />
-                        <lew-button text="cancel" />
-                        <lew-button text="phone" type="primary" icon="phone" />
-                        <lew-button text="confirm" type="warning" icon="box" />
-                        <lew-button text="confirm" type="success" loading />
+                        <lew-button text="Cancel" color="red" />
+                        <lew-button text="Cancel" color="yellow" />
+                        <lew-button text="Phone" color="orange" icon="phone" />
+                        <lew-button text="Confirm" color="blue" icon="box" />
+                        <lew-button text="Confirm" color="cyan" loading />
                     </lew-flex>
                     <lew-flex x="end">
                         <lew-breadcrumb :options="breadcrumb_options">
@@ -475,7 +474,7 @@ const notification = (type: string) => {
                         />
                         <lew-button
                             text="Save"
-                            type="success"
+                            color="green"
                             @click="message('success')"
                         />
                     </lew-flex>
@@ -521,7 +520,7 @@ const notification = (type: string) => {
                                     <lew-flex x="end" style="margin-top: 15px">
                                         <lew-button
                                             text="取消"
-                                            type="blank"
+                                            type="text"
                                             size="small"
                                             @click="lewPopoverRef.hide()"
                                         />

@@ -100,9 +100,17 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
         <lew-flex x="start" mode="between" class="lew-date-control">
             <div class="lew-date-control-left">
                 <!-- 上一年 -->
-                <lew-button icon="chevrons-left" @click="prveYear" />
+                <lew-button
+                    type="light"
+                    icon="chevrons-left"
+                    @click="prveYear"
+                />
                 <!-- 上一月 -->
-                <lew-button icon="chevron-left" @click="prveMonth" />
+                <lew-button
+                    type="light"
+                    icon="chevron-left"
+                    @click="prveMonth"
+                />
             </div>
             <!-- 日期 -->
             <div class="cur-date">
@@ -110,9 +118,17 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
             </div>
             <div class="lew-date-control-right">
                 <!-- 下一月 -->
-                <lew-button icon="chevron-right" @click="nextMonth" />
+                <lew-button
+                    type="light"
+                    icon="chevron-right"
+                    @click="nextMonth"
+                />
                 <!-- 下一年 -->
-                <lew-button icon="chevrons-right" @click="nextYear" />
+                <lew-button
+                    type="light"
+                    icon="chevrons-right"
+                    @click="nextYear"
+                />
             </div>
         </lew-flex>
         <div class="lew-date-box">
@@ -181,15 +197,10 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
             padding: 2px;
             width: 24px;
             height: 24px;
-            opacity: 0.7;
 
             svg {
                 width: 16px;
                 margin-right: 0px;
-            }
-
-            &:hover {
-                opacity: 1;
             }
         }
     }
@@ -250,7 +261,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
             background: rgba($color: #19c175, $alpha: 0.8);
             left: 50%;
             transform: translateX(-50%);
-            bottom:0px;
+            bottom: 0px;
             box-shadow: 0px 0px 12px #0e7346;
         }
 

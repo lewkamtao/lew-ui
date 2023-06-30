@@ -27,7 +27,7 @@ const openWithoutDelay = (type: string) => {
 
         <lew-button
             text="WithDelay"
-            type="success"
+            color="green"
             @click="openWithoutDelay('success')"
         />
     </lew-flex>

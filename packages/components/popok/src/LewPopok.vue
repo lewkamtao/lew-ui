@@ -85,7 +85,7 @@ const emit = defineEmits(['show', 'cancel']);
                         <lew-button
                             text="取消"
                             size="small"
-                            type="blank"
+                            type="text"
                             :loading="cancelLoading"
                             @click="cancelHandle"
                         />

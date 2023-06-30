@@ -113,6 +113,9 @@ const style = computed<CSSProperties>(() => {
     }
 
     .demo-cp {
+        width: 100%;
+        overflow-x: auto;
+        box-sizing: border-box;
         padding: 30px;
     }
 

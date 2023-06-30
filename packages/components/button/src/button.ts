@@ -1,23 +1,37 @@
 import { PropType, ExtractPropTypes } from 'vue';
 
-export type ButtonType =
-    | 'primary'
-    | 'info'
-    | 'success'
-    | 'error'
-    | 'warning'
-    | 'normal';
+export type ButtonColor =
+    | 'red'
+    | 'orange'
+    | 'yellow'
+    | 'green'
+    | 'mint'
+    | 'teal'
+    | 'cyan'
+    | 'blue'
+    | 'indigo'
+    | 'purple'
+    | 'pink'
+    | 'gray'
+    | 'brown';
 export type ButtonSize = 'small' | 'medium' | 'large';
+export type ButtonType = 'fill' | 'light' | 'ghost' | 'text';
 
 export const buttonProps = {
-    type: {
-        type: String as PropType<ButtonType>,
+    color: {
+        type: String as PropType<ButtonColor>,
         default: () => {
-            return 'normal';
+            return 'blue';
         },
     },
     text: {
         type: String,
+    },
+    type: {
+        type: String as PropType<ButtonType>,
+        default: () => {
+            return 'fill';
+        },
     },
     icon: {
         type: String,

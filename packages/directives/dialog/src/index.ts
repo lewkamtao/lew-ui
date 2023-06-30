@@ -1,44 +1,31 @@
 import _LewDialog from './LewDialog.vue';
+import { ButtonColor } from '../../../components/button/src/button';
 
 type Options = {
     title: string;
     content: string;
     ok: Function;
     cancel: Function;
-    layout: string;
-    okText: string;
-    cancelText: string;
+    layout: String;
+    iconType: String;
     closeOnClickOverlay?: boolean;
+    okText: String;
+    cancelText: String;
+    okButtonColor: ButtonColor;
+    cancelButtonColor: ButtonColor;
 };
 
-const warning = (options: Options) => {
-    dialog('warning', options);
-};
-
-const error = (options: Options) => {
-    dialog('error', options);
-};
-
-const info = (options: Options) => {
-    dialog('info', options);
-};
-
-const normal = (options: Options) => {
-    dialog('normal', options);
-};
-
-const success = (options: Options) => {
-    dialog('success', options);
-};
-
-const dialog = (type: string, options: Options) => {
+const LewDialog = (options: Options) => {
     const {
         title,
         content,
         ok,
         cancel,
         okText,
+        iconType,
         cancelText,
+        okButtonColor,
+        cancelButtonColor,
         layout,
         closeOnClickOverlay,
     } = options;
@@ -50,10 +37,12 @@ const dialog = (type: string, options: Options) => {
                 _LewDialog,
                 {
                     closeOnClickOverlay,
-                    type,
                     layout,
                     okText,
                     cancelText,
+                    okButtonColor,
+                    cancelButtonColor,
+                    iconType,
                     ok:
                         ok ||
                         (() => {
@@ -81,11 +70,4 @@ const dialog = (type: string, options: Options) => {
     app.mount(div);
 };
 
-export default {
-    name: 'LewDialog',
-    warning,
-    info,
-    normal,
-    success,
-    error,
-};
+export default LewDialog;

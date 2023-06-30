@@ -3,7 +3,7 @@ type Options = {
     type: string;
     title: string;
     content: string;
-    isShowCloseBtn?: boolean;
+    closeable?: boolean;
 };
 
 const list = ref<Options[]>([]);
@@ -20,7 +20,6 @@ const close = (e: number) => {
     <lew-flex wrap gap="20" x="start">
         <lew-button
             text="点我"
-            type="primary"
             @click="
                 addAlert({
                     type: 'info',
@@ -53,12 +52,12 @@ const close = (e: number) => {
         />
         <lew-button
             text="点我"
-            type="success"
+            color="green"
             @click="
                 addAlert({
                     type: 'success',
                     title: '成功发送一条消息',
-                    isShowCloseBtn: true,
+                    closeable: true,
                     content: '',
                 })
             "
@@ -70,7 +69,7 @@ const close = (e: number) => {
                 addAlert({
                     type: 'normal',
                     title: '成功发送一条消息',
-                    isShowCloseBtn: true,
+                    closeable: true,
                     content:
                         'Well the Ukraine girls really knock me out They leave the West behind And Moscow girls make me sing and shout That Georgia s always on my mind Aw come on!',
                 })

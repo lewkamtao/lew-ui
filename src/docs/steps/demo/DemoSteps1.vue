@@ -20,7 +20,7 @@
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>
         </lew-badge>
-        <lew-badge value="99+" type="success">
+        <lew-badge value="99+" color="green">
             <lew-avatar
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>
@@ -45,7 +45,7 @@
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>
         </lew-badge>
-        <lew-badge value="999+" round type="success">
+        <lew-badge value="999+" round color="green">
             <lew-avatar
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>

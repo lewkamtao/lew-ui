@@ -9,7 +9,7 @@
             >金钱是天使；金钱让你感到是一堆麻烦时，便成了魔鬼。
             金钱是流动着的财富。</lew-mark
         >有的人挣了钱对朋友不吝啬，有的人钱多了对自己
-        <lew-mark to="https://vuejs.org/" type="success">不慷慨</lew-mark
+        <lew-mark to="https://vuejs.org/" color="green">不慷慨</lew-mark
         >，这里面都有天使的点化。
     </p>
 </template>

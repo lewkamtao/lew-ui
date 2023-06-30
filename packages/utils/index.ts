@@ -1,9 +1,7 @@
 // Returns the icon type to be used in a tooltip.
 
-import { string } from 'yup';
-
 // type: The type of message to display in the tooltip.
-export const getIconType = (type: string): string => {
+export const getIconType = (type: string | undefined): string => {
     const map = {
         normal: 'info',
         warning: 'alert-triangle',

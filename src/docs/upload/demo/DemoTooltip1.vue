@@ -1,6 +1,6 @@
 <template>
     <lew-upload v-model:file-list="fileList" @preview="handlePreview">
-        <lew-button type="primary" icon="upload" text="upload"></lew-button>
+        <lew-button icon="upload" text="upload"></lew-button>
         <template #tip>
             <span>jpg/png files with a size less than 500KB.</span>
         </template>
@@ -22,7 +22,7 @@ const fileList = reactive([
     },
 ]);
 
-function handlePreview(file) {
+function handlePreview(file: any) {
     if (file?.response?.data) {
         window.open(file.response.data);
     }

@@ -4,7 +4,7 @@
         list-type="picture"
         @preview="handlePreview"
     >
-        <lew-button type="primary" icon="upload" text="upload"></lew-button>
+        <lew-button icon="upload" text="upload"></lew-button>
     </lew-upload>
 </template>
 
@@ -41,7 +41,7 @@ const fileList = reactive([
     },
 ]);
 
-function handlePreview(file) {
+function handlePreview(file: any) {
     if (file?.response?.data) {
         window.open(file.response.data);
     }

@@ -28,23 +28,23 @@ const options = ref(
     <div class="demo-wrapper">
         <lew-title>Button</lew-title>
         <p class="sub-title">赏心悦目的异步效果</p>
-        <lew-demo-box title="常规" :code="DemoButton1_code">
+        <lew-demo-box title="基本用法" :code="DemoButton1_code">
             <demo-button1 />
         </lew-demo-box>
-        <lew-demo-box title="尺寸" :code="DemoButton2_code">
-            <demo-button2 />
+        <lew-demo-box title="色彩系统" :code="DemoButton2_code"
+            ><demo-button2 />
         </lew-demo-box>
-        <lew-demo-box title="圆形" :code="DemoButton3_code">
-            <demo-button3 />
+        <lew-demo-box title="Icon Text" :code="DemoButton3_code"
+            ><demo-button3 />
         </lew-demo-box>
-        <lew-demo-box title="加载" :code="DemoButton4_code"
-            ><demo-button4 />
+        <lew-demo-box title="Loading" :code="DemoButton4_code">
+            <demo-button4 />
         </lew-demo-box>
-        <lew-demo-box title="其他" :code="DemoButton5_code"
-            ><demo-button5 />
+        <lew-demo-box title="Disabled" :code="DemoButton5_code">
+            <demo-button5 />
         </lew-demo-box>
-        <lew-demo-box title="图标" :code="DemoButton6_code"
-            ><demo-button6 />
+        <lew-demo-box title="模拟请求" :code="DemoButton6_code">
+            <demo-button6 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>
     </div>

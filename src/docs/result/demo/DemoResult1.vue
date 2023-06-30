@@ -1,14 +1,14 @@
 <template>
     <lew-result
         style="height: 60vh"
-        type="success"
+        color="green"
         title="更新成功"
         content="你可以前往个人中心，继续完善信息。"
     >
         <template #handle>
             <lew-flex style="margin-top: 30px">
                 <lew-button text="返回" />
-                <lew-button text="前往" type="primary" />
+                <lew-button text="前往"  />
             </lew-flex>
         </template>
     </lew-result>
@@ -21,7 +21,7 @@
         <template #handle>
             <lew-flex style="margin-top: 30px">
                 <lew-button text="返回" />
-                <lew-button text="前往" type="primary" />
+                <lew-button text="前往"  />
             </lew-flex>
         </template>
     </lew-result>
@@ -34,7 +34,7 @@
         <template #handle>
             <lew-flex style="margin-top: 30px">
                 <lew-button text="返回" />
-                <lew-button text="前往" type="primary" />
+                <lew-button text="前往"  />
             </lew-flex>
         </template>
     </lew-result>
@@ -47,7 +47,7 @@
         <template #handle>
             <lew-flex style="margin-top: 30px">
                 <lew-button text="返回" />
-                <lew-button text="前往" type="primary" />
+                <lew-button text="前往"  />
             </lew-flex>
         </template>
     </lew-result>

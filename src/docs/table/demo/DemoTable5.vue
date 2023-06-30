@@ -129,8 +129,8 @@ const formatSex = (sex: number) => {
         <template #intro="{ row }"> {{ row.intro }} </template>
         <template #action>
             <lew-flex gap="5">
-                <lew-button size="small" text="管理" type="blank" />
-                <lew-button size="small" text="删除" type="blank" />
+                <lew-button size="small" text="管理" type="text" />
+                <lew-button size="small" text="删除" type="text" />
             </lew-flex>
         </template>
     </lew-table>

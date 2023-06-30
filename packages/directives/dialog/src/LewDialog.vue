@@ -1,9 +1,9 @@
 <script lang="ts" setup name="dialog">
 import { LewButton, LewIcon, LewFlex } from 'lew-ui';
-import { _props } from './props';
+import { dialogProps } from './dialog';
 import { getIconType } from '../../../utils';
 
-const props = defineProps(_props);
+const props = defineProps(dialogProps);
 const emit = defineEmits(['close']);
 
 let timer: any;
@@ -57,8 +57,8 @@ const cancel = async () => {
                     @click.stop
                 >
                     <div class="left">
-                        <div :class="`icon-${type}`">
-                            <lew-icon size="24" :type="getIconType(type)" />
+                        <div :class="`icon-${iconType}`">
+                            <lew-icon size="24" :type="getIconType(iconType)" />
                         </div>
                     </div>
                     <div class="right">
@@ -76,14 +76,18 @@ const cancel = async () => {
                             <lew-button
                                 v-if="cancelText"
                                 :text="cancelText"
-                                type="blank"
+                                :color="cancelButtonColor"
+                                size="small"
+                                type="text"
                                 :loading="cancelLoading"
                                 @click.stop="cancel"
                             />
                             <lew-button
                                 v-if="okText"
                                 :text="okText"
-                                :type="type"
+                                size="small"
+                                type="fill"
+                                :color="okButtonColor"
                                 :loading="okLoading"
                                 @click.stop="ok"
                             />
@@ -97,8 +101,8 @@ const cancel = async () => {
                     @click.stop
                 >
                     <div class="left">
-                        <div :class="`icon-${type}`">
-                            <lew-icon size="20" :type="getIconType(type)" />
+                        <div :class="`icon-${iconType}`">
+                            <lew-icon size="20" :type="getIconType(iconType)" />
                         </div>
                     </div>
                     <lew-flex class="right" y="start">
@@ -109,10 +113,10 @@ const cancel = async () => {
                             <lew-button
                                 v-if="cancelText"
                                 :text="cancelText"
+                                :color="cancelButtonColor"
                                 round
-                                type="blank"
+                                type="text"
                                 size="small"
-                                style="margin-right: 10px"
                                 :loading="cancelLoading"
                                 @click.stop="cancel"
                             />
@@ -120,8 +124,9 @@ const cancel = async () => {
                                 v-if="okText"
                                 :text="okText"
                                 round
+                                :color="okButtonColor"
                                 size="small"
-                                :type="type"
+                                type="fill"
                                 :loading="okLoading"
                                 @click.stop="ok"
                             />
@@ -248,7 +253,7 @@ const cancel = async () => {
     }
 
     .lew-dialog-box-mini {
-        padding: 10px 20px;
+        padding: 10px 15px;
         border-radius: 50px;
         max-width: 650px;
         align-items: center;

@@ -79,7 +79,7 @@ const delTag = (index: number) => {
                 v-for="(item, index) in tagsValue"
                 :key="index"
                 closable
-                type="primary"
+                
                 @close="delTag(index)"
                 >{{ item }}
             </lew-tag>

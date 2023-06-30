@@ -247,7 +247,7 @@ defineExpose({ show, hide });
                             v-for="(item, index) in getLabels"
                             :key="index"
                             :size="size"
-                            type="primary"
+                            
                             closable
                             @close="deleteTag(index)"
                         >

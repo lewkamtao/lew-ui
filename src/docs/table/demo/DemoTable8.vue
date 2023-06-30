@@ -141,7 +141,7 @@ const getChecked = computed(() => (id: any) => {
         <template #action="{ row, column }">
             <lew-button
                 text="管理"
-                type="blank"
+                type="text"
                 @click.stop="get({ row, column })"
             />
             <lew-popok
@@ -151,11 +151,11 @@ const getChecked = computed(() => (id: any) => {
                 width="200px"
                 @click.stop
             >
-                <lew-button text="删除" type="blank" />
+                <lew-button text="删除" type="text" />
             </lew-popok>
         </template>
         <template #type="{ row }">
-            <lew-tag type="success"
+            <lew-tag color="green"
                 >{{ row.type === 'movie' ? '电影' : '电视剧' }}
             </lew-tag>
         </template>

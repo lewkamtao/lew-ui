@@ -108,7 +108,7 @@ const columns = [
                     <lew-flex x="end" style="margin-top: 15px">
                         <lew-button
                             text="取消"
-                            type="blank"
+                            type="text"
                             size="small"
                             @click="lewPopoverRef1.hide()"
                         />
@@ -138,7 +138,7 @@ const columns = [
                                 <lew-badge
                                     v-if="row.fraction >= 60"
                                     round
-                                    type="success"
+                                    color="green"
                                 />
                                 <lew-badge v-else round type="error" />
                                 <span>{{
@@ -151,7 +151,7 @@ const columns = [
                     <lew-flex x="end">
                         <lew-button
                             text="取消"
-                            type="blank"
+                            type="text"
                             size="small"
                             @click="lewPopoverRef2.hide()"
                         />
