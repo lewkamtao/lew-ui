@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { LewIcon } from 'lew-ui';
-import { object2class } from 'lew-ui/utils';
+import { object2class, getColorType } from 'lew-ui/utils';
 import { buttonProps } from './button';
 
 const emit = defineEmits(['click']);
@@ -47,34 +47,43 @@ const getIconSize = computed(() => {
     }
 });
 
-const getStyle = () => {
+const getStyle = computed(() => {
     const { round, type, color } = props;
     let styleObj = {} as any;
+    const _map: any = {
+        normal: 'gray',
+        warning: 'orange',
+        success: 'green',
+        error: 'red',
+        info: 'blue',
+    };
+    let _color = _map[color] || color;
     switch (type) {
         case 'fill':
-            styleObj.backgroundColor = `var(--lew-color-${color})`;
+            styleObj.backgroundColor = `var(--lew-color-${_color})`;
             break;
         case 'light':
-            styleObj.backgroundColor = `var(--lew-color-${color}-light)`;
-            styleObj.color = `var(--lew-color-${color}-dark)`;
+            styleObj.backgroundColor = `var(--lew-color-${_color}-light)`;
+            styleObj.color = `var(--lew-color-${_color}-dark)`;
             break;
         case 'ghost':
             styleObj.backgroundColor = `transparent`;
-            styleObj.border = `1.5px solid var(--lew-color-${color})`;
-            styleObj.color = `var(--lew-color-${color}-dark)`;
+            styleObj.border = `1px solid var(--lew-color-${_color})`;
+            styleObj.color = `var(--lew-color-${_color}-dark)`;
             styleObj.boxShadow = 'none';
             break;
         case 'text':
             styleObj.backgroundColor = `transparent`;
-            styleObj.color = `var(--lew-color-${color}-dark`;
+            styleObj.color = `var(--lew-color-${_color}-dark`;
             styleObj.boxShadow = 'none';
             break;
         default:
+            styleObj.backgroundColor = `var(--lew-color-${_color})`;
             break;
     }
     styleObj.borderRadius = round ? '30px' : 'none';
     return styleObj;
-};
+});
 </script>
 
 <template>
@@ -82,7 +91,7 @@ const getStyle = () => {
         class="lew-button"
         :class="getButtonClass"
         :disabled="disabled"
-        :style="getStyle()"
+        :style="getStyle"
         @click="handleClick"
     >
         <lew-icon

@@ -12,7 +12,18 @@ export const getIconType = (type: string | undefined): string => {
     // @ts-ignore
     return map[type] || 'info';
 };
-
+// type: The type of message to display in the tooltip.
+export const getColorType = (type: string | undefined): string => {
+    const map = {
+        normal: 'gray',
+        warning: 'orange',
+        success: 'green',
+        error: 'red',
+        info: 'blue',
+    };
+    // @ts-ignore
+    return map[type] || 'blue';
+};
 export const object2class = (prefix: string, props: Object) => {
     let className = '';
     for (const [key, value] of Object.entries(props)) {

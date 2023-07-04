@@ -68,7 +68,7 @@ const handleClick = async (e: any) => {
     transition: var(--lew-form-transition);
     cursor: pointer;
     box-shadow: var(--lew-form-box-shadow);
-    outline: 0px var(--lew-primary-color-light) solid;
+    outline: 0px var(--lew-color-primary-light) solid;
     .lew-switch-dot {
         position: absolute;
         width: 16px;
@@ -118,7 +118,7 @@ const handleClick = async (e: any) => {
 
     .lew-switch-dot::after {
         border: 2px solid rgba(0, 0, 0, 0);
-        border-left: 2px solid var(--lew-primary-color);
+        border-left: 2px solid var(--lew-color-primary);
         width: 10px;
         height: 10px;
     }
@@ -146,15 +146,15 @@ const handleClick = async (e: any) => {
 }
 
 .lew-switch-view.lew-switch-checked {
-    background: var(--lew-primary-color);
+    background: var(--lew-color-primary);
 }
 
 .lew-switch-view.lew-switch-checked:hover {
-    background: var(--lew-primary-color);
+    background: var(--lew-color-primary);
 }
 
 .lew-switch-view.lew-switch-checked:active {
-    background: var(--lew-primary-color);
+    background: var(--lew-color-primary);
 
     .lew-switch-dot {
         width: 20px;

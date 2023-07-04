@@ -9,7 +9,7 @@ const data: any = [
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
         // 定义这一单元格的样式
         tdStyle: {
-            age: 'background:var(--lew-primary-color-light);color:var(--lew-primary-color-dark)',
+            age: 'background:var(--lew-color-primary-light);color:var(--lew-color-primary-dark)',
         },
     },
     {
@@ -29,8 +29,8 @@ const data: any = [
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
         // 定义这一单元格的样式
         tdStyle: {
-            sex: 'color:var(--lew-warning-color-dark);',
-            intro: 'background:var(--lew-warning-color);color:#fff',
+            sex: 'color:var(--lew-color-warning-dark);',
+            intro: 'background:var(--lew-color-warning);color:#fff',
         },
     },
     {
@@ -41,7 +41,7 @@ const data: any = [
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
         tdStyle: {
-            sex: 'background:var(--lew-error-color);color:#fff',
+            sex: 'background:var(--lew-color-error);color:#fff',
         },
     },
     {
@@ -120,7 +120,7 @@ const formatSex = (sex: number) => {
                 <lew-tag
                     v-for="(item, index) in row.hobby"
                     :key="index"
-                    type="info"
+                    type="light" color="blue"
                     size="small"
                     >{{ item }}
                 </lew-tag>

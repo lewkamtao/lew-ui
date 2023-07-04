@@ -205,7 +205,7 @@ const getCheckboxClassName = computed(() => {
 .lew-checkbox-block.lew-checkbox-checked {
     .icon-checkbox-box {
         border: var(--lew-form-border-width) transparent solid;
-        background: var(--lew-checkbox-color-light);
+        background: transparent;
 
         .icon-checkbox {
             color: var(--lew-checkbox-color-dark);
@@ -215,11 +215,8 @@ const getCheckboxClassName = computed(() => {
 }
 
 .lew-checkbox-block.lew-checkbox-checked:hover {
-    background: var(--lew-checkbox-color-light);
-
     .icon-checkbox-box {
-        border: var(--lew-form-border-width) var(--lew-checkbox-color-light)
-            solid;
+        border: var(--lew-form-border-width) transparent solid;
     }
 }
 

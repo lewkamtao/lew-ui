@@ -6,12 +6,14 @@ import {
     DemoButton4,
     DemoButton5,
     DemoButton6,
+    DemoButton7,
     DemoButton1_code,
     DemoButton2_code,
     DemoButton3_code,
     DemoButton4_code,
     DemoButton5_code,
     DemoButton6_code,
+    DemoButton7_code,
 } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
@@ -30,6 +32,9 @@ const options = ref(
         <p class="sub-title">赏心悦目的异步效果</p>
         <lew-demo-box title="基本用法" :code="DemoButton1_code">
             <demo-button1 />
+        </lew-demo-box>
+        <lew-demo-box title="尺寸" :code="DemoButton2_code"
+            ><demo-button7 />
         </lew-demo-box>
         <lew-demo-box title="色彩系统" :code="DemoButton2_code"
             ><demo-button2 />

@@ -1,6 +1,6 @@
 <template>
     <lew-flex wrap x="start" gap="30">
-        <lew-badge value="9" type="info">
+        <lew-badge value="9" type="light" color="blue">
             <lew-avatar
                 src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
             ></lew-avatar>
@@ -10,12 +10,12 @@
                 src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
             ></lew-avatar>
         </lew-badge>
-        <lew-badge value="25" type="warning">
+        <lew-badge value="25" color="warning">
             <lew-avatar
                 src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
             ></lew-avatar>
         </lew-badge>
-        <lew-badge value="9+" type="error">
+        <lew-badge value="9+" color="red">
             <lew-avatar
                 src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
             ></lew-avatar>
@@ -25,7 +25,7 @@
                 src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
             ></lew-avatar>
         </lew-badge>
-        <lew-badge value="9" round type="info">
+        <lew-badge value="9" round type="light" color="blue">
             <lew-avatar
                 src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
             ></lew-avatar>
@@ -35,12 +35,12 @@
                 src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
             ></lew-avatar>
         </lew-badge>
-        <lew-badge value="25" round type="warning">
+        <lew-badge value="25" round color="warning">
             <lew-avatar
                 src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
             ></lew-avatar>
         </lew-badge>
-        <lew-badge value="99+" round type="error">
+        <lew-badge value="99+" round color="red">
             <lew-avatar
                 src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
             ></lew-avatar>

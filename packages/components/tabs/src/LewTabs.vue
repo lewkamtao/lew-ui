@@ -269,7 +269,7 @@ onUnmounted(() => {
         flex-shrink: 0;
     }
     .lew-tabs-item-active {
-        color: var(--lew-primary-color-dark);
+        color: var(--lew-color-primary-dark);
     }
 
     .lew-tabs-item-animation-active {
@@ -315,7 +315,7 @@ onUnmounted(() => {
         z-index: 9;
         height: 2px;
 
-        background: var(--lew-primary-color-dark);
+        background: var(--lew-color-primary-dark);
         transform: translateX(3px);
         box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);
     }

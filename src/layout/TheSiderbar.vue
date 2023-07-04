@@ -10,7 +10,7 @@ type Item = {
     cname: string;
     path: string;
     label: string;
-    type: string;
+    color?: string;
 };
 
 type Group = {
@@ -52,8 +52,9 @@ const toPath = (item: Item) => {
                 <span v-if="item.name" class="ename"> {{ item.name }} </span>
                 <span v-else class="cname"> {{ item.cname }}</span>
                 <lew-tag
+                    type="light"
                     v-if="item.label"
-                    :type="item.type"
+                    :color="item.color"
                     size="small"
                     style="margin-left: 10px"
                 >
@@ -119,13 +120,13 @@ const toPath = (item: Item) => {
         }
 
         .active {
-            color: var(--lew-white-text-color);
-            background: var(--lew-primary-color);
+            color: var(--lew-color-primary);
+            background: var(--lew-color-primary-light);
         }
 
         .active:hover {
-            color: var(--lew-white-text-color);
-            background: var(--lew-primary-color);
+            color: var(--lew-color-primary);
+            background: var(--lew-color-primary-light);
         }
     }
 

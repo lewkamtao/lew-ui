@@ -36,7 +36,7 @@ const style = computed<CSSProperties>(() => {
     <div class="demo-box">
         <lew-title :size="16" :id="title" class="demo-docs-title"
             >{{ title }}
-            <lew-tag v-if="tag" type="info" style="margin: 2px 0px 0px 5px">
+            <lew-tag v-if="tag" type="light" color="blue" style="margin: 2px 0px 0px 5px">
                 {{ tag }}</lew-tag
             >
         </lew-title>

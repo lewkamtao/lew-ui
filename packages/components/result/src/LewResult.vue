@@ -7,7 +7,7 @@ defineProps(_props);
 <template>
     <lew-flex direction="y" class="lew-result">
         <lew-flex class="lew-result-icon" :class="`lew-result-icon-${type}`">
-            <lew-icon v-if="type === `normal`" size="60" type="info"></lew-icon>
+            <lew-icon v-if="type === `normal`" size="60" type="light" color="blue"></lew-icon>
             <lew-icon
                 v-if="type === `warning`"
                 size="60"
@@ -48,23 +48,23 @@ defineProps(_props);
     }
 
     .lew-result-icon-success {
-        color: var(--lew-success-color);
+        color: var(--lew-color-success);
     }
 
     .lew-result-icon-warning {
-        color: var(--lew-warning-color);
+        color: var(--lew-color-warning);
     }
 
     .lew-result-icon-normal {
-        color: var(--lew-normal-color-dark);
+        color: var(--lew-color-normal-dark);
     }
 
     .lew-result-icon-error {
-        color: var(--lew-error-color);
+        color: var(--lew-color-error);
     }
 
     .lew-result-icon-info {
-        color: var(--lew-info-color);
+        color: var(--lew-color-info);
     }
 }
 </style>

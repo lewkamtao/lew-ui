@@ -202,8 +202,8 @@ const checkPageNum = (value: any) => {
     }
 
     .btn:hover {
-        background-color: var(--lew-primary-color-light);
-        color: var(--lew-primary-color-dark);
+        background-color: var(--lew-color-primary-light);
+        color: var(--lew-color-primary-dark);
     }
     .lew-pagination-page-box {
         width: auto;
@@ -212,12 +212,12 @@ const checkPageNum = (value: any) => {
         color: var(--lew-text-color-2);
 
         .active {
-            background-color: var(--lew-primary-color);
+            background-color: var(--lew-color-primary);
             color: var(--lew-white-text-color);
         }
 
         .active:hover {
-            background-color: var(--lew-primary-color);
+            background-color: var(--lew-color-primary);
             color: var(--lew-white-text-color);
         }
 

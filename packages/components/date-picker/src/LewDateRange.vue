@@ -537,9 +537,9 @@ defineExpose({ init });
                 }
 
                 .lew-date-value-selected {
-                    background: var(--lew-primary-color);
+                    background: var(--lew-color-primary);
                     color: var(--lew-white-text-color);
-                    border: 2px var(--lew-primary-color-light) solid;
+                    border: 2px var(--lew-color-primary-light) solid;
                 }
 
                 .lew-date-item-today {
@@ -560,16 +560,16 @@ defineExpose({ init });
                     to right,
                     rgba(0, 0, 0, 0) 0%,
                     rgba(0, 0, 0, 0) 50%,
-                    var(--lew-primary-color-light) 51%,
-                    var(--lew-primary-color-light) 100%
+                    var(--lew-color-primary-light) 51%,
+                    var(--lew-color-primary-light) 100%
                 );
             }
 
             .lew-date-label-selected-end {
                 background: linear-gradient(
                     to right,
-                    var(--lew-primary-color-light) 0%,
-                    var(--lew-primary-color-light) 50%,
+                    var(--lew-color-primary-light) 0%,
+                    var(--lew-color-primary-light) 50%,
                     rgba(0, 0, 0, 0) 51%,
                     rgba(0, 0, 0, 0) 100%
                 );
@@ -585,13 +585,13 @@ defineExpose({ init });
                 }
 
                 .lew-date-value-selected {
-                    background: var(--lew-primary-color);
+                    background: var(--lew-color-primary);
                     color: var(--lew-white-text-color);
                 }
             }
 
             .lew-date-label-selected {
-                background: var(--lew-primary-color-light);
+                background: var(--lew-color-primary-light);
 
                 .lew-date-value {
                     color: var(--lew-text-color-0);
@@ -603,13 +603,13 @@ defineExpose({ init });
             .lew-date-label {
                 .lew-date-value {
                     position: relative;
-                    color: var(--lew-success-color-dark);
+                    color: var(--lew-color-success-dark);
                     font-weight: 900;
-                    background-color: var(--lew-success-color-light);
+                    background-color: var(--lew-color-success-light);
                 }
 
                 .lew-date-value-selected {
-                    background: var(--lew-primary-color);
+                    background: var(--lew-color-primary);
                     color: var(--lew-white-text-color);
                 }
             }
@@ -618,12 +618,12 @@ defineExpose({ init });
         .lew-date-item-curMonth:hover {
             .lew-date-label {
                 .lew-date-value {
-                    background-color: var(--lew-primary-color-light);
-                    color: var(--lew-primary-color-dark);
+                    background-color: var(--lew-color-primary-light);
+                    color: var(--lew-color-primary-dark);
                 }
 
                 .lew-date-value-selected {
-                    background: var(--lew-primary-color);
+                    background: var(--lew-color-primary);
                     color: var(--lew-white-text-color);
                 }
             }
@@ -640,8 +640,8 @@ defineExpose({ init });
         .lew-date-item-select {
             .lew-date-label {
                 .lew-date-value {
-                    background-color: var(--lew-primary-color-light);
-                    color: var(--lew-primary-color-dark);
+                    background-color: var(--lew-color-primary-light);
+                    color: var(--lew-color-primary-dark);
                 }
             }
         }

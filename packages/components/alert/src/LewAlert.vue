@@ -52,7 +52,7 @@ const alertClassName = (item: AlertItem) => {
         align-items: flex-start;
         width: 100%;
         min-height: 32px;
-        background-color: var(--lew-normal-color);
+        background-color: var(--lew-color-normal);
         border-radius: var(--lew-border-radius);
         margin-bottom: 10px;
         padding: 12px 18px;
@@ -95,27 +95,27 @@ const alertClassName = (item: AlertItem) => {
 
     .lew-alert-type-normal {
         color: var(--lew-text-color-2);
-        background-color: var(--lew-normal-color-light);
+        background-color: var(--lew-color-normal-light);
     }
 
     .lew-alert-type-success {
-        color: var(--lew-success-color-dark);
-        background-color: var(--lew-success-color-light);
+        color: var(--lew-color-success-dark);
+        background-color: var(--lew-color-success-light);
     }
 
     .lew-alert-type-warning {
-        color: var(--lew-warning-color-dark);
-        background-color: var(--lew-warning-color-light);
+        color: var(--lew-color-warning-dark);
+        background-color: var(--lew-color-warning-light);
     }
 
     .lew-alert-type-error {
-        color: var(--lew-error-color-dark);
-        background-color: var(--lew-error-color-light);
+        color: var(--lew-color-error-dark);
+        background-color: var(--lew-color-error-light);
     }
 
     .lew-alert-type-info {
-        color: var(--lew-info-color-dark);
-        background-color: var(--lew-info-color-light);
+        color: var(--lew-color-info-dark);
+        background-color: var(--lew-color-info-light);
     }
 }
 </style>

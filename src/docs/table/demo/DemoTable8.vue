@@ -96,7 +96,7 @@ const getChecked = computed(() => (id: any) => {
         <lew-button
             text="取消所有选择"
             v-if="selectedKey.length > 0"
-            type="error"
+            color="red"
             @click="selectedKey = []"
         />
         <lew-button
@@ -129,7 +129,7 @@ const getChecked = computed(() => (id: any) => {
             <lew-tag
                 v-for="(item, index) in row.directors"
                 :key="index"
-                type="warning"
+                color="warning"
             >
                 {{ item }}</lew-tag
             >
@@ -176,7 +176,7 @@ const getChecked = computed(() => (id: any) => {
                 <lew-tag
                     v-for="(actor, index) in row.actors"
                     :key="index"
-                    type="info"
+                    type="light" color="blue"
                     size="small"
                     >{{ actor }}
                 </lew-tag>

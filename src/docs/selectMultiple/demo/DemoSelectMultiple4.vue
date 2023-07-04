@@ -69,6 +69,6 @@ const value = ref([]);
     }
 }
 .custom-select-checked {
-    background: var(--lew-primary-color-light);
+    background: var(--lew-color-primary-light);
 }
 </style>

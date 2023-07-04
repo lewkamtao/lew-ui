@@ -57,7 +57,7 @@ const badgeClassName = computed(() => {
         font-weight: normal;
         box-sizing: border-box;
         color: var(--lew-white-text-color);
-        background-color: var(--lew-error-color-dark);
+        background-color: var(--lew-color-error-dark);
     }
 }
 
@@ -74,21 +74,21 @@ const badgeClassName = computed(() => {
     .lew-badge-value,
     .lew-badge-dot {
         color: var(--lew-white-color);
-        background-color: var(--lew-primary-color);
+        background-color: var(--lew-color-primary);
     }
 }
 .lew-badge-type-info {
     .lew-badge-value,
     .lew-badge-dot {
         color: var(--lew-white-color);
-        background-color: var(--lew-info-color);
+        background-color: var(--lew-color-info);
     }
 }
 .lew-badge-type-success {
     .lew-badge-value,
     .lew-badge-dot {
         color: var(--lew-white-color);
-        background-color: var(--lew-success-color);
+        background-color: var(--lew-color-success);
     }
 }
 
@@ -96,21 +96,21 @@ const badgeClassName = computed(() => {
     .lew-badge-value,
     .lew-badge-dot {
         color: var(--lew-white-color);
-        background-color: var(--lew-warning-color);
+        background-color: var(--lew-color-warning);
     }
 }
 .lew-badge-type-error {
     .lew-badge-value,
     .lew-badge-dot {
         color: var(--lew-white-color);
-        background-color: var(--lew-error-color);
+        background-color: var(--lew-color-error);
     }
 }
 .lew-badge-type-normal {
     .lew-badge-value,
     .lew-badge-dot {
         color: var(--lew-white-color);
-        background-color: var(--lew-error-color);
+        background-color: var(--lew-color-error);
     }
 }
 </style>

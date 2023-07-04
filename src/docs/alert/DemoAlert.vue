@@ -16,7 +16,7 @@ const options = ref(
         <lew-title>Alert</lew-title>
         <p class="sub-title">
             如果你需要使用全局的提示，请可以尝试一下
-            <lew-mark type="info" to="/Message">Message</lew-mark>
+            <lew-mark type="light" color="blue" to="/Message">Message</lew-mark>
         </p>
         <lew-demo-box title="警报" :code="DemoAlert1_code">
             <demo-alert1 />

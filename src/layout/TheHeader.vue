@@ -37,7 +37,7 @@ const gohome = () => {
                     placement: 'top-start',
                     trigger: 'mouseenter',
                 }"
-                type="info"
+                type="light"
                 size="small"
                 style="margin-left: 10px"
             >

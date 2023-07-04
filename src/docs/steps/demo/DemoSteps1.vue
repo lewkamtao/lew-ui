@@ -1,6 +1,6 @@
 <template>
     <lew-flex wrap x="start" gap="30">
-        <lew-badge value="9" type="info">
+        <lew-badge value="9" type="light" color="blue">
             <lew-avatar
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>
@@ -10,12 +10,12 @@
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>
         </lew-badge>
-        <lew-badge value="25" type="warning">
+        <lew-badge value="25" color="warning">
             <lew-avatar
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>
         </lew-badge>
-        <lew-badge value="9+" type="error">
+        <lew-badge value="9+" color="red">
             <lew-avatar
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>
@@ -25,7 +25,7 @@
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>
         </lew-badge>
-        <lew-badge value="9" round type="info">
+        <lew-badge value="9" round type="light" color="blue">
             <lew-avatar
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>
@@ -35,12 +35,12 @@
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>
         </lew-badge>
-        <lew-badge value="25" round type="warning">
+        <lew-badge value="25" round color="warning">
             <lew-avatar
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>
         </lew-badge>
-        <lew-badge value="99+" round type="error">
+        <lew-badge value="99+" round color="red">
             <lew-avatar
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>

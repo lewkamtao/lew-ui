@@ -28,14 +28,43 @@ const tagClassName = computed(() => {
     const { size, type, round, disabled } = props;
     return object2class('lew-tag', { size, type, round, disabled });
 });
+
+const getStyle = computed(() => {
+    const { round, type, color } = props;
+    let styleObj = {} as any;
+    const _map: any = {
+        normal: 'gray',
+        warning: 'orange',
+        success: 'green',
+        error: 'red',
+        info: 'blue',
+    };
+    let _color = _map[color] || color;
+    switch (type) {
+        case 'fill':
+            styleObj.backgroundColor = `var(--lew-color-${_color})`;
+            break;
+        case 'light':
+            styleObj.backgroundColor = `var(--lew-color-${_color}-light)`;
+            styleObj.color = `var(--lew-color-${_color}-dark)`;
+            break;
+        case 'ghost':
+            styleObj.backgroundColor = `transparent`;
+            styleObj.border = `1px solid var(--lew-color-${_color})`;
+            styleObj.color = `var(--lew-color-${_color}-dark)`;
+            styleObj.boxShadow = 'none';
+            break;
+        default:
+            styleObj.backgroundColor = `var(--lew-color-${_color})`;
+            break;
+    }
+    styleObj.borderRadius = round ? '30px' : 'none';
+    return styleObj;
+});
 </script>
 
 <template>
-    <div
-        class="lew-tag"
-        :class="tagClassName"
-        :style="`max-width:${maxWidth}px`"
-    >
+    <div class="lew-tag" :class="tagClassName" :style="getStyle">
         <div class="lew-tag-left">
             <slot name="left"></slot>
         </div>
@@ -60,6 +89,7 @@ const tagClassName = computed(() => {
     user-select: none;
     box-sizing: border-box;
     overflow: hidden;
+    color: var(--lew-bgcolor-0);
 
     .lew-tag-value {
         font-weight: normal;
@@ -171,36 +201,6 @@ const tagClassName = computed(() => {
     .lew-tag-close {
         border-radius: 35px;
     }
-}
-
-.lew-tag-type-primary {
-    background-color: var(--lew-primary-color-light);
-    color: var(--lew-primary-color-dark);
-}
-
-.lew-tag-type-info {
-    color: var(--lew-info-color-dark);
-    background-color: var(--lew-info-color-light);
-}
-
-.lew-tag-type-success {
-    color: var(--lew-success-color-dark);
-    background-color: var(--lew-success-color-light);
-}
-
-.lew-tag-type-warning {
-    color: var(--lew-warning-color-dark);
-    background-color: var(--lew-warning-color-light);
-}
-
-.lew-tag-type-error {
-    color: var(--lew-error-color-dark);
-    background-color: var(--lew-error-color-light);
-}
-
-.lew-tag-type-normal {
-    color: var(--lew-text-color-3);
-    background-color: var(--lew-normal-color-light);
 }
 
 .lew-tag-disabled {

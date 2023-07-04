@@ -244,10 +244,10 @@ defineExpose({ show, hide });
                 >
                     <TransitionGroup name="list">
                         <lew-tag
+                            type="light"
                             v-for="(item, index) in getLabels"
                             :key="index"
                             :size="size"
-                            
                             closable
                             @close="deleteTag(index)"
                         >
@@ -359,7 +359,7 @@ defineExpose({ show, hide });
     background-color: var(--lew-form-bgcolor);
     transition: all 0.15s ease;
     box-sizing: border-box;
-    outline: 0px var(--lew-primary-color-light) solid;
+    outline: 0px var(--lew-color-primary-light) solid;
     border: var(--lew-form-border-width) transparent solid;
     box-shadow: var(--lew-form-box-shadow);
 
@@ -493,7 +493,7 @@ defineExpose({ show, hide });
 .lew-select-view-disabled:hover {
     border-radius: var(--lew-border-radius);
     background-color: var(--lew-form-bgcolor);
-    outline: 0px var(--lew-primary-color-light) solid;
+    outline: 0px var(--lew-color-primary-light) solid;
     border: var(--lew-form-border-width) transparent solid;
 }
 
@@ -602,7 +602,7 @@ defineExpose({ show, hide });
         }
 
         .lew-select-item-active {
-            color: var(--lew-primary-color-dark);
+            color: var(--lew-color-primary-dark);
             font-weight: bold;
             background-color: var(--lew-form-bgcolor);
             .icon-check {
@@ -611,7 +611,7 @@ defineExpose({ show, hide });
         }
 
         .lew-select-item-active:hover {
-            color: var(--lew-primary-color-dark);
+            color: var(--lew-color-primary-dark);
             font-weight: bold;
             background-color: var(--lew-form-bgcolor);
         }

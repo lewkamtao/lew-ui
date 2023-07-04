@@ -1,6 +1,6 @@
 import { ExtractPropTypes, PropType } from 'vue';
 
-export type markType =
+export type markColor =
     | 'primary'
     | 'info'
     | 'success'
@@ -9,8 +9,8 @@ export type markType =
     | 'normal';
 
 export const markProps = {
-    type: {
-        type: String as PropType<markType>,
+    color: {
+        type: String as PropType<markColor>,
         default: 'normal',
     },
     round: {

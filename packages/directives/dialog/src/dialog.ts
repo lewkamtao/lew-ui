@@ -1,5 +1,3 @@
-import { ButtonColor } from '../../../components/button/src/button';
-import { PropType } from 'vue';
 export const dialogProps = {
     visible: {
         type: Boolean,
@@ -11,35 +9,9 @@ export const dialogProps = {
         type: Boolean,
         default: false,
     },
-    iconType: {
+    type: {
         type: String,
-        default: () => {
-            return 'info';
-        },
-    },
-    okText: {
-        type: String,
-        default: () => {
-            return '确认';
-        },
-    },
-    cancelText: {
-        type: String,
-        default: () => {
-            return '取消';
-        },
-    },
-    okButtonColor: {
-        type: String as PropType<ButtonColor>,
-        default: () => {
-            return 'blue';
-        },
-    },
-    cancelButtonColor: {
-        type: String as PropType<ButtonColor>,
-        default: () => {
-            return 'gray';
-        },
+        default: '',
     },
     ok: {
         type: Function,
@@ -53,8 +25,16 @@ export const dialogProps = {
             return true;
         },
     },
+    okText: {
+        type: String,
+        default: '确定',
+    },
+    cancelText: {
+        type: String,
+        default: '取消',
+    },
     layout: {
         type: String,
-        default: 'normal', // normal or mini
+        default: 'normal',
     },
 };

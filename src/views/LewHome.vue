@@ -36,9 +36,6 @@ const options = ref([
         as: 'select',
         rules: Yup.string().required('此项必填'),
         props: {
-            change: (e: any) => {
-                console.log(e);
-            },
             clearable: true,
             options: [
                 {
@@ -403,7 +400,7 @@ const notification = (type: string) => {
                                 src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
                             />
                         </lew-badge>
-                        <lew-badge type="info" round value="99+">
+                        <lew-badge type="light" color="blue" round value="99+">
                             <lew-avatar
                                 src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
                             />
@@ -422,9 +419,9 @@ const notification = (type: string) => {
                     <lew-flex x="end" gap="10">
                         <lew-tag>primary</lew-tag>
                         <lew-tag color="green">success</lew-tag>
-                        <lew-tag type="error">error</lew-tag>
-                        <lew-tag type="warning">warning</lew-tag>
-                        <lew-tag type="normal">normal</lew-tag>
+                        <lew-tag color="red">error</lew-tag>
+                        <lew-tag color="warning">warning</lew-tag>
+                        <lew-tag color="normal">normal</lew-tag>
                     </lew-flex>
 
                     <lew-flex x="end" gap="20">
@@ -445,14 +442,22 @@ const notification = (type: string) => {
 
                     <lew-flex gap="20" x="end">
                         <lew-dropdown :options="dropdown_options">
-                            <lew-button text="trigger hover" type="normal" />
+                            <lew-button
+                                text="trigger hover"
+                                type="light"
+                                color="normal"
+                            />
                         </lew-dropdown>
                         <lew-dropdown
                             :options="dropdown_options"
                             trigger="click"
                             placement="top"
                         >
-                            <lew-button text="trigger click" type="normal" />
+                            <lew-button
+                                text="trigger click"
+                                type="light"
+                                color="normal"
+                            />
                         </lew-dropdown>
                     </lew-flex>
                 </lew-flex>
@@ -468,8 +473,11 @@ const notification = (type: string) => {
                     <LewAlert :list="list"></LewAlert>
                     <lew-flex wrap x="start" gap="20">
                         <lew-button
-                            text="Message"
-                            type="normal"
+                            text="Like"
+                            color="pink"
+                            round
+                            icon="heart"
+                            type="light"
                             @click="message('error')"
                         />
                         <lew-button
@@ -481,24 +489,26 @@ const notification = (type: string) => {
                     <lew-flex wrap x="start" gap="20">
                         <lew-button
                             text="Notification"
-                            type="error"
+                            color="green"
                             @click="notification('success')"
                         />
                         <lew-button
                             text="Notification"
-                            type="warning"
+                            color="error"
                             @click="notification('error')"
                         />
                     </lew-flex>
                     <lew-flex wrap x="start" gap="20">
                         <lew-button
                             text="Dialog"
-                            type="error"
+                            type="light"
+                            color="error"
                             @click="open('error')"
                         />
                         <lew-button
                             text="Cancel"
-                            type="warning"
+                            type="light"
+                            color="warning"
                             @click="open('warning')"
                         />
                     </lew-flex>

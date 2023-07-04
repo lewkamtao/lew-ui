@@ -57,8 +57,8 @@ const cancel = async () => {
                     @click.stop
                 >
                     <div class="left">
-                        <div :class="`icon-${iconType}`">
-                            <lew-icon size="24" :type="getIconType(iconType)" />
+                        <div :class="`icon-${type}`">
+                            <lew-icon size="24" :type="getIconType(type)" />
                         </div>
                     </div>
                     <div class="right">
@@ -76,18 +76,16 @@ const cancel = async () => {
                             <lew-button
                                 v-if="cancelText"
                                 :text="cancelText"
-                                :color="cancelButtonColor"
-                                size="small"
                                 type="text"
+                                color="gray"
                                 :loading="cancelLoading"
                                 @click.stop="cancel"
                             />
                             <lew-button
                                 v-if="okText"
                                 :text="okText"
-                                size="small"
                                 type="fill"
-                                :color="okButtonColor"
+                                :color="type"
                                 :loading="okLoading"
                                 @click.stop="ok"
                             />
@@ -101,8 +99,8 @@ const cancel = async () => {
                     @click.stop
                 >
                     <div class="left">
-                        <div :class="`icon-${iconType}`">
-                            <lew-icon size="20" :type="getIconType(iconType)" />
+                        <div :class="`icon-${type}`">
+                            <lew-icon size="20" :type="getIconType(type)" />
                         </div>
                     </div>
                     <lew-flex class="right" y="start">
@@ -113,20 +111,20 @@ const cancel = async () => {
                             <lew-button
                                 v-if="cancelText"
                                 :text="cancelText"
-                                :color="cancelButtonColor"
-                                round
                                 type="text"
                                 size="small"
+                                color="gray"
+                                round
                                 :loading="cancelLoading"
                                 @click.stop="cancel"
                             />
                             <lew-button
                                 v-if="okText"
                                 :text="okText"
-                                round
-                                :color="okButtonColor"
-                                size="small"
                                 type="fill"
+                                size="small"
+                                round
+                                :color="type"
                                 :loading="okLoading"
                                 @click.stop="ok"
                             />
@@ -156,33 +154,34 @@ const cancel = async () => {
     .lew-dialog-box {
         position: relative;
         display: flex;
-        max-width: 350px;
+        width: 350px;
         height: auto;
         padding: 20px;
         border-radius: var(--lew-border-radius);
         background-color: var(--lew-modal-box-bgcolor);
+        border: var(--lew-modal-box-border);
         box-shadow: var(--lew-modal-box-shadow);
         animation-fill-mode: forwards;
-        animation: LewDialogBox 0.35s;
+        animation: LewDialogBox 0.25s;
         animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
         .icon-success {
-            color: var(--lew-success-color-dark);
+            color: var(--lew-color-success-dark);
         }
 
         .icon-warning {
-            color: var(--lew-warning-color-dark);
+            color: var(--lew-color-warning-dark);
         }
 
         .icon-normal {
-            color: var(--lew-normal-color-dark);
+            color: var(--lew-color-normal-dark);
         }
 
         .icon-info {
-            color: var(--lew-info-color-dark);
+            color: var(--lew-color-info-dark);
         }
 
         .icon-error {
-            color: var(--lew-error-color-dark);
+            color: var(--lew-color-error-dark);
         }
 
         header {
@@ -253,12 +252,13 @@ const cancel = async () => {
     }
 
     .lew-dialog-box-mini {
-        padding: 10px 15px;
+        padding: 15px 24px;
         border-radius: 50px;
         max-width: 650px;
+        width: auto;
         align-items: center;
         .left {
-            margin-top: 5px;
+            margin-top: 6px;
             margin-right: 10px;
             display: flex;
         }
@@ -266,19 +266,20 @@ const cancel = async () => {
         .right {
             position: relative;
             top: 1px;
-            max-width: calc(650px - 30px);
         }
 
         .right {
             display: flex;
             justify-content: space-between;
             align-items: center;
-
             main {
-                max-width: calc(650px - 100px);
-                margin-top: 0px;
                 flex-shrink: 0;
                 margin-right: 20px;
+                max-width: calc(650px - 180px);
+            }
+
+            footer {
+                width: 80px;
             }
         }
     }
@@ -289,12 +290,12 @@ const cancel = async () => {
 @keyframes LewDialogBox {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: scale(0);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0px);
+        transform: scale(1);
     }
 }
 

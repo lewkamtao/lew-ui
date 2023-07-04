@@ -140,11 +140,11 @@ const toPath = (item: Item) => {
 
         .active {
             color: var(--lew-white-text-color);
-            background: var(--lew-primary-color);
+            background: var(--lew-color-primary);
         }
         .active:hover {
             color: var(--lew-white-text-color);
-            background: var(--lew-primary-color);
+            background: var(--lew-color-primary);
         }
     }
 

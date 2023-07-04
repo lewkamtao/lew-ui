@@ -5,17 +5,17 @@
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>
         </lew-badge>
-        <lew-badge round type="info">
+        <lew-badge round type="light" color="blue">
             <lew-avatar
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>
         </lew-badge>
-        <lew-badge round type="warning">
+        <lew-badge round color="warning">
             <lew-avatar
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>
         </lew-badge>
-        <lew-badge round type="error">
+        <lew-badge round color="red">
             <lew-avatar
                 src="https://cdn.jsdelivr.net/gh/lewkamtao/PicHub-Cloud@master/PicHub/1fb3f5f5bf661efd985d940004b3642_pyapiq_.jpeg"
             ></lew-avatar>

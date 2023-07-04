@@ -1,10 +1,9 @@
 <script setup lang="ts">
 const open = () => {
-    LewDialog.error({
-        title: '销毁确认',
-        okText: '销毁',
-        content: '你是否要销毁该仓库，此操作会立即生效，请谨慎操作！',
+    LewDialog.info({
+        content: '确定要上架该产品？',
         closeOnClickOverlay: true,
+        layout: 'mini',
         ok: () => {
             return new Promise((resolve) => {
                 setTimeout(() => {
@@ -21,7 +20,6 @@ const open = () => {
     });
 };
 </script>
-
 <template>
-    <lew-button color="error" type="fill" text="销毁" @click="open()" />
+    <lew-button text="立即上架" round type="light" @click="open()" />
 </template>

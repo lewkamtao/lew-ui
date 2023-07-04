@@ -30,7 +30,7 @@ const close = (e: number) => {
         />
         <lew-button
             text="点我"
-            type="error"
+            color="red"
             @click="
                 addAlert({
                     type: 'error',
@@ -41,7 +41,7 @@ const close = (e: number) => {
         />
         <lew-button
             text="点我"
-            type="warning"
+            color="warning"
             @click="
                 addAlert({
                     type: 'warning',
@@ -64,7 +64,7 @@ const close = (e: number) => {
         />
         <lew-button
             text="点我"
-            type="normal"
+            color="normal"
             @click="
                 addAlert({
                     type: 'normal',

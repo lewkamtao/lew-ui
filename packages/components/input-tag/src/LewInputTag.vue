@@ -76,10 +76,10 @@ const delTag = (index: number) => {
         <div style="margin-left: -10px; height: 26px"></div>
         <TransitionGroup name="list">
             <lew-tag
+                type="light"
                 v-for="(item, index) in tagsValue"
                 :key="index"
                 closable
-                
                 @close="delTag(index)"
                 >{{ item }}
             </lew-tag>
@@ -132,8 +132,8 @@ const delTag = (index: number) => {
 }
 
 .lew-input-tag-button:hover {
-    color: var(--lew-primary-color);
-    border: var(--lew-primary-color) var(--lew-form-border-width) dashed;
+    color: var(--lew-color-primary);
+    border: var(--lew-color-primary) var(--lew-form-border-width) dashed;
 }
 
 .list-enter-active,

@@ -54,7 +54,7 @@ const emit = defineEmits(['show', 'cancel']);
                         <lew-icon
                             v-if="type === `normal`"
                             size="22"
-                            type="info"
+                            type="light" color="blue"
                         ></lew-icon>
                         <lew-icon
                             v-if="type === `warning`"
@@ -116,23 +116,23 @@ const emit = defineEmits(['show', 'cancel']);
         margin-right: 5px;
 
         .icon-success {
-            color: var(--lew-success-color-dark);
+            color: var(--lew-color-success-dark);
         }
 
         .icon-warning {
-            color: var(--lew-warning-color-dark);
+            color: var(--lew-color-warning-dark);
         }
 
         .icon-normal {
-            color: var(--lew-normal-color-dark);
+            color: var(--lew-color-normal-dark);
         }
 
         .icon-info {
-            color: var(--lew-info-color-dark);
+            color: var(--lew-color-info-dark);
         }
 
         .icon-error {
-            color: var(--lew-error-color-dark);
+            color: var(--lew-color-error-dark);
         }
     }
 

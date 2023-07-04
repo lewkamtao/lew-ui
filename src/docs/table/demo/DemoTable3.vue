@@ -116,7 +116,7 @@ const del = (row: any, column: any) => {
                 <lew-tag
                     v-for="(item, index) in row.hobby"
                     :key="index"
-                    type="info"
+                    type="light" color="blue"
                     size="small"
                     >{{ item }}
                 </lew-tag></lew-flex

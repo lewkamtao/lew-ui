@@ -1,14 +1,14 @@
 <template>
     <lew-flex wrap x="start" gap="30">
         <lew-badge />
-        <lew-badge type="info" />
+        <lew-badge type="light" color="blue" />
         <lew-badge color="green" />
-        <lew-badge type="warning" />
-        <lew-badge type="error" />
+        <lew-badge color="warning" />
+        <lew-badge color="red" />
         <lew-badge round />
-        <lew-badge round type="info" />
+        <lew-badge round type="light" color="blue" />
         <lew-badge round color="green" />
-        <lew-badge round type="warning" />
-        <lew-badge round type="error" />
+        <lew-badge round color="warning" />
+        <lew-badge round color="red" />
     </lew-flex>
 </template>

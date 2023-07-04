@@ -268,8 +268,8 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
         .lew-date-item-e:hover {
             .lew-date-label {
                 .lew-date-value {
-                    background-color: var(--lew-primary-color-light);
-                    color: var(--lew-primary-color-dark);
+                    background-color: var(--lew-color-primary-light);
+                    color: var(--lew-color-primary-dark);
                 }
             }
         }
@@ -285,8 +285,8 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
         .lew-date-item-selected {
             .lew-date-label {
                 .lew-date-value {
-                    background-color: var(--lew-primary-color-light);
-                    color: var(--lew-primary-color-dark);
+                    background-color: var(--lew-color-primary-light);
+                    color: var(--lew-color-primary-dark);
                 }
             }
         }

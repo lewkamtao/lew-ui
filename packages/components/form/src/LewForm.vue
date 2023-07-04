@@ -483,7 +483,7 @@ defineExpose({ getForm, setForm, validate });
             font-size: 12px;
             transition: all 0.25s;
             transform: translateY(calc(100% + 4px));
-            color: var(--lew-error-color-dark);
+            color: var(--lew-color-error-dark);
         }
     }
 }
@@ -528,7 +528,7 @@ defineExpose({ getForm, setForm, validate });
             justify-content: flex-end;
             .label-required::before {
                 content: '*';
-                color: var(--lew-error-color-dark);
+                color: var(--lew-color-error-dark);
                 margin-right: 4px;
             }
         }
@@ -545,7 +545,7 @@ defineExpose({ getForm, setForm, validate });
             justify-content: flex-start;
             .label-required::after {
                 content: '*';
-                color: var(--lew-error-color-dark);
+                color: var(--lew-color-error-dark);
                 margin-left: 4px;
             }
         }
@@ -554,16 +554,16 @@ defineExpose({ getForm, setForm, validate });
 
 .lew-form-item-error {
     --lew-form-box-shadow: 0px 1px 1px rgba(160, 62, 62, 0.64);
-    --lew-form-border-color-focus: var(--lew-error-color-dark);
-    --lew-radio-border-color-hover: var(--lew-error-color);
-    --lew-checkbox-border-color-hover: var(--lew-error-color);
-    --lew-checkbox-color: var(--lew-error-color);
-    --lew-checkbox-color-dark: var(--lew-error-color-dark);
-    --lew-checkbox-color-light: var(--lew-error-color-light);
-    --lew-radio-color: var(--lew-error-color);
-    --lew-radio-color-dark: var(--lew-error-color-dark);
-    --lew-radio-color-light: var(--lew-error-color-light);
-    --lew-form-ouline: 3px var(--lew-error-color-light) solid;
+    --lew-form-border-color-focus: var(--lew-color-error-dark);
+    --lew-radio-border-color-hover: var(--lew-color-error);
+    --lew-checkbox-border-color-hover: var(--lew-color-error);
+    --lew-checkbox-color: var(--lew-color-error);
+    --lew-checkbox-color-dark: var(--lew-color-error-dark);
+    --lew-checkbox-color-light: var(--lew-color-error-light);
+    --lew-radio-color: var(--lew-color-error);
+    --lew-radio-color-dark: var(--lew-color-error-dark);
+    --lew-radio-color-light: var(--lew-color-error-light);
+    --lew-form-ouline: 3px var(--lew-color-error-light) solid;
 }
 
 .slide-fade-leave-active,
