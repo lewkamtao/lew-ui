@@ -1,24 +1,24 @@
 <script setup lang="ts">
 import { badgeProps } from './badge';
-import { object2class } from 'lew-ui/utils';
+import { getColorType } from 'lew-ui/utils';
 
 const props = defineProps(badgeProps);
 
-const badgeClassName = computed(() => {
-    const { round, type } = props;
-    return object2class('lew-badge', {
-        round,
-        type,
-    });
+const getStyle = computed(() => {
+    const { color } = props;
+    let styleObj = {} as any;
+    let _color = getColorType(color);
+    styleObj.backgroundColor = `var(--lew-color-${_color})`;
+    return styleObj;
 });
 </script>
 
 <template>
-    <div class="lew-badge" :class="badgeClassName">
-        <div v-if="value" class="lew-badge-value">
+    <div class="lew-badge">
+        <div v-if="value" class="lew-badge-value" :style="getStyle">
             {{ value }}
         </div>
-        <div v-if="!value" class="lew-badge-dot"></div>
+        <div v-if="!value" class="lew-badge-dot" :style="getStyle"></div>
         <slot></slot>
     </div>
 </template>
@@ -26,6 +26,7 @@ const badgeClassName = computed(() => {
 <style lang="scss">
 .lew-badge {
     position: relative;
+
     .lew-badge-dot {
         position: absolute;
         left: 100%;
@@ -35,10 +36,11 @@ const badgeClassName = computed(() => {
         transform: translateX(-50%);
         z-index: 1;
         cursor: normal;
-        border-radius: 4px;
+        border-radius: 50%;
         border: 1px var(--lew-white-color) solid;
         box-sizing: border-box;
     }
+
     .lew-badge-value {
         position: absolute;
         display: inline-flex;
@@ -46,7 +48,7 @@ const badgeClassName = computed(() => {
         left: 100%;
         bottom: calc(100% - 9px);
         transform: translateX(-50%);
-        border-radius: 4px;
+        border-radius: 25px;
         min-width: 18px;
         height: 18px;
         text-align: center;
@@ -61,56 +63,11 @@ const badgeClassName = computed(() => {
     }
 }
 
-.lew-badge-round {
-    .lew-badge-value {
-        border-radius: 25px;
-    }
-    .lew-badge-dot {
-        border-radius: 50%;
-    }
+.lew-badge-value {
+    border-radius: 25px;
 }
 
-.lew-badge-type-primary {
-    .lew-badge-value,
-    .lew-badge-dot {
-        color: var(--lew-white-color);
-        background-color: var(--lew-color-primary);
-    }
-}
-.lew-badge-type-info {
-    .lew-badge-value,
-    .lew-badge-dot {
-        color: var(--lew-white-color);
-        background-color: var(--lew-color-info);
-    }
-}
-.lew-badge-type-success {
-    .lew-badge-value,
-    .lew-badge-dot {
-        color: var(--lew-white-color);
-        background-color: var(--lew-color-success);
-    }
-}
-
-.lew-badge-type-warning {
-    .lew-badge-value,
-    .lew-badge-dot {
-        color: var(--lew-white-color);
-        background-color: var(--lew-color-warning);
-    }
-}
-.lew-badge-type-error {
-    .lew-badge-value,
-    .lew-badge-dot {
-        color: var(--lew-white-color);
-        background-color: var(--lew-color-error);
-    }
-}
-.lew-badge-type-normal {
-    .lew-badge-value,
-    .lew-badge-dot {
-        color: var(--lew-white-color);
-        background-color: var(--lew-color-error);
-    }
+.lew-badge-dot {
+    border-radius: 50%;
 }
 </style>

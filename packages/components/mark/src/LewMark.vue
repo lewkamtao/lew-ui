@@ -1,46 +1,31 @@
 <script lang="ts" setup>
 import { useLewTo } from '../../../hooks';
-import { object2class } from 'lew-ui/utils';
+import { getColorType } from 'lew-ui/utils';
 import { markProps } from './mark';
 
 const props = defineProps(markProps);
 const { lewTo } = useLewTo();
 
-const getMarkClassName = computed(() => {
-    const { round } = props;
-    const to = !!props.to;
-    return object2class('lew-mark', { round, to });
-});
+
 const getStyle = computed(() => {
-    const { color, round, bold } = props;
+    const { color, round, bold, to } = props;
     let styleObj = {} as any;
-    const _map: any = {
-        normal: 'gray',
-        warning: 'orange',
-        success: 'green',
-        error: 'red',
-        info: 'blue',
-    };
-    let _color = _map[color] || color;
+    let _color = getColorType(color);
     styleObj.borderRadius = round ? '20px' : '4px';
     styleObj.fontWeight = bold ? bold : '';
     styleObj.color = `var(--lew-color-${_color}-dark)`;
     styleObj.backgroundColor = `var(--lew-color-${_color}-light)`;
+    styleObj.cursor = to ? 'pointer' : '';
     return styleObj;
 });
 </script>
 
 <template>
-    <span
-        class="lew-mark"
-        :class="getMarkClassName"
-        :style="getStyle"
-        @click="lewTo(to)"
-    >
+    <span class="lew-mark" :style="getStyle" @click="lewTo(to)">
         <slot />
     </span>
 </template>
-
+ 
 <style lang="scss">
 .lew-mark {
     display: inline;
@@ -53,6 +38,7 @@ const getStyle = computed(() => {
 .lew-mark-to {
     cursor: pointer;
 }
+
 .lew-mark-round {
     border-radius: 20px;
 }

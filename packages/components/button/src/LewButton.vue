@@ -50,14 +50,7 @@ const getIconSize = computed(() => {
 const getStyle = computed(() => {
     const { round, type, color } = props;
     let styleObj = {} as any;
-    const _map: any = {
-        normal: 'gray',
-        warning: 'orange',
-        success: 'green',
-        error: 'red',
-        info: 'blue',
-    };
-    let _color = _map[color] || color;
+    let _color = getColorType(color)
     switch (type) {
         case 'fill':
             styleObj.backgroundColor = `var(--lew-color-${_color})`;
@@ -87,30 +80,12 @@ const getStyle = computed(() => {
 </script>
 
 <template>
-    <button
-        class="lew-button"
-        :class="getButtonClass"
-        :disabled="disabled"
-        :style="getStyle"
-        @click="handleClick"
-    >
-        <lew-icon
-            v-if="icon"
-            class="lew-button-icon"
-            :size="getIconSize"
-            :type="icon"
-        />
-        <lew-icon
-            class="lew-loading-icon"
-            v-if="loading || _loading"
-            :size="getIconSize"
-            animation="spin"
-            animation-speed="fast"
-            :class="{
+    <button class="lew-button" :class="getButtonClass" :disabled="disabled" :style="getStyle" @click="handleClick">
+        <lew-icon v-if="icon" class="lew-button-icon" :size="getIconSize" :type="icon" />
+        <lew-icon class="lew-loading-icon" v-if="loading || _loading" :size="getIconSize" animation="spin"
+            animation-speed="fast" :class="{
                 'lew-loading-isShow': (_loading || loading) && !disabled,
-            }"
-            type="loader"
-        />
+            }" type="loader" />
         <span v-if="$slots.default || text" class="lew-button-text">
             <template v-if="$slots.default">
                 <slot />
@@ -145,15 +120,18 @@ const getStyle = computed(() => {
     overflow: hidden;
     color: var(--lew-bgcolor-0);
     background-color: var(--lew-bgcolor-0);
+
     .lew-loading-icon {
         position: absolute;
         left: 10px;
         opacity: 0;
         transition: opacity 0.35s;
     }
+
     .lew-button-text {
         z-index: 2;
     }
+
     .lew-loading-isShow {
         opacity: 1;
     }
@@ -174,12 +152,15 @@ const getStyle = computed(() => {
 .lew-button-type-ghost::after {
     display: none;
 }
+
 .lew-button:hover:after {
     opacity: 0.5;
 }
+
 .lew-button:active {
     transform: scale(0.96);
 }
+
 .lew-button:active::after {
     opacity: 1;
 }
@@ -204,6 +185,7 @@ const getStyle = computed(() => {
     padding: 0px 14px;
     font-size: var(--lew-form-font-size-medium);
     gap: 6px;
+
     .lew-loading-icon {
         left: 10px;
     }
@@ -216,6 +198,7 @@ const getStyle = computed(() => {
     padding: 0px 20px;
     font-size: var(--lew-form-font-size-large);
     gap: 8px;
+
     .lew-loading-icon {
         left: 12px;
     }
@@ -227,12 +210,14 @@ const getStyle = computed(() => {
     width: var(--lew-form-item-height-small);
     height: var(--lew-form-item-height-small);
 }
+
 .lew-button-size-medium.lew-button-singleIcon {
     min-width: auto;
     padding: 0px;
     width: var(--lew-form-item-height-medium);
     height: var(--lew-form-item-height-medium);
 }
+
 .lew-button-size-large.lew-button-singleIcon {
     min-width: auto;
     padding: 0px;
@@ -242,12 +227,15 @@ const getStyle = computed(() => {
 
 .lew-button.lew-button-loading.lew-button-singleIcon {
     padding: 0px;
+
     .lew-button-text {
         display: none;
     }
+
     .lew-button-icon {
         display: none;
     }
+
     .lew-loading-icon {
         position: static;
     }
@@ -257,12 +245,15 @@ const getStyle = computed(() => {
     cursor: progress;
     padding-left: 0px;
 }
+
 .lew-button-size-small.lew-button-loading {
     padding-left: 24px;
 }
+
 .lew-button-size-medium.lew-button-loading {
     padding-left: 30px;
 }
+
 .lew-button-size-large.lew-button-loading {
     padding-left: 36px;
 }

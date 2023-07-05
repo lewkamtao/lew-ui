@@ -1,17 +1,24 @@
 import { ExtractPropTypes, PropType } from 'vue';
 
-export type markColor =
-    | 'primary'
-    | 'info'
-    | 'success'
-    | 'error'
-    | 'warning'
-    | 'normal';
+type markColor =
+    | 'red'
+    | 'orange'
+    | 'yellow'
+    | 'green'
+    | 'mint'
+    | 'teal'
+    | 'cyan'
+    | 'blue'
+    | 'indigo'
+    | 'purple'
+    | 'pink'
+    | 'gray'
+    | 'brown';
 
 export const markProps = {
     color: {
         type: String as PropType<markColor>,
-        default: 'normal',
+        default: 'blue',
     },
     round: {
         type: Boolean,

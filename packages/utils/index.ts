@@ -1,5 +1,7 @@
 // Returns the icon type to be used in a tooltip.
 
+import { log } from "console";
+
 // type: The type of message to display in the tooltip.
 export const getIconType = (type: string | undefined): string => {
     const map = {
@@ -14,15 +16,17 @@ export const getIconType = (type: string | undefined): string => {
 };
 // type: The type of message to display in the tooltip.
 export const getColorType = (type: string | undefined): string => {
-    const map = {
+    const typeMap = {
         normal: 'gray',
         warning: 'orange',
         success: 'green',
         error: 'red',
+        danger: 'red',
         info: 'blue',
+        primary: 'blue',
     };
     // @ts-ignore
-    return map[type] || 'blue';
+    return typeMap[type] || type;
 };
 export const object2class = (prefix: string, props: Object) => {
     let className = '';

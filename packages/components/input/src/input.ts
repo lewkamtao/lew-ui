@@ -80,9 +80,9 @@ export const inputProps = {
         type: String as PropType<InputPrefixesType>,
         default: '',
     },
-    
+
     prefixesValue: {
-        type: String,
+        type: [String, Number],
         default: 'Prefixes',
     },
     prefixesOptions: {
@@ -99,7 +99,7 @@ export const inputProps = {
         default: '',
     },
     suffixValue: {
-        type: String,
+        type: [String, Number],
         default: 'Suffix',
     },
     suffixOptions: {

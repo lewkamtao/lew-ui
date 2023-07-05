@@ -92,7 +92,7 @@ export const selectMultipleProps = {
         default: () => true,
     },
     defaultValue: {
-        type: String,
-        default: '',
+        type: (Array as PropType<string[] | number[]>) || undefined,
+        default: [],
     },
 };

@@ -14,7 +14,7 @@ const close = () => {
             <template #left>🦄 </template>
             primary
         </lew-tag>
-        <lew-tag color="normal" size="large" round>
+        <lew-tag type="light" color="normal" size="large" round>
             <template #right> 🎉 </template>
             primary
         </lew-tag>

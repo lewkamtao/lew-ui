@@ -1,4 +1,4 @@
-import { PropType, toRaw } from 'vue';
+import { PropType, } from 'vue';
 
 export type SelectOptions = {
     label: string;
@@ -13,7 +13,7 @@ export type SelectSearchMethodParams = {
 
 export const selectProps = {
     modelValue: {
-        type: [String, Number],
+        type: [String, Number] || undefined,
     },
     options: {
         type: Array as PropType<SelectOptions[]>,
@@ -90,7 +90,7 @@ export const selectProps = {
         default: () => true,
     },
     defaultValue: {
-        type: String,
+        type: [String, Number] || undefined,
         default: '',
     },
 };

@@ -6,7 +6,7 @@ export default {
             name: 'type',
             description: '类型',
             type: `fill | light | ghost | text`,
-            default: `normal`,
+            default: `fill`,
         },
         {
             name: 'text(slot)',

@@ -2,7 +2,7 @@ import { ExtractPropTypes } from 'vue';
 
 export const textTrimProps = {
     text: {
-        type: [String, Number, Boolean],
+        type: [String, Number, Boolean, Array],
         default: () => '',
     },
     allowHTML: {

@@ -5,8 +5,25 @@ export default {
         {
             name: 'type',
             description: '类型',
-            type: `primary | info | success | error | warning | normal`,
-            default: `'normal'`,
+            type: `fill | light | ghost`,
+            default: `fill`,
+        },
+        {
+            name: 'color',
+            description: '按钮色彩',
+            type: `red | orange
+            | yellow
+            | green
+            | mint
+            | teal
+            | cyan
+            | blue
+            | indigo
+            | purple
+            | pink
+            | gray
+            | brown`,
+            default: 'blue',
         },
         {
             name: 'size',

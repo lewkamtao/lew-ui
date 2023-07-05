@@ -5,16 +5,16 @@ const close = () => {
 </script>
 <template>
     <lew-flex x="start" wrap>
-        <lew-tag color="normal" closable @close="close">
+        <lew-tag type="light" color="blue" closable @close="close">
             <template #left> 🦄 </template>
             <template #right> 🎉 </template>
             primary
         </lew-tag>
-        <lew-tag color="normal" size="large" round>
+        <lew-tag type="light" color="success" size="large" round>
             <template #left>🦄 </template>
             primary
         </lew-tag>
-        <lew-tag color="normal" size="large" round>
+        <lew-tag type="light" color="red" size="large" round>
             <template #right> 🎉 </template>
             primary
         </lew-tag>
