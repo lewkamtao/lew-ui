@@ -146,7 +146,12 @@ textarea {
 
 .lew-form-icon-clear:hover {
     opacity: var(--lew-form-icon-opacity-hover);
-    background-color: var(--lew-bgcolor-7);
+    background-color: var(--lew-bgcolor-0);
+}
+
+.lew-form-icon-clear-focus:hover {
+    opacity: var(--lew-form-icon-opacity-hover);
+    background-color: var(--lew-bgcolor-4);
 }
 
 @keyframes skeleton-loading {

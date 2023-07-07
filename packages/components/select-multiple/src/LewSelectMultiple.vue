@@ -230,6 +230,9 @@ defineExpose({ show, hide });
                             placement: 'top',
                         }"
                         class="lew-form-icon-clear"
+                        :class="{
+                            'lew-form-icon-clear-focus': state.visible,
+                        }"
                         @click.stop="clearHandle"
                     />
                 </transition>

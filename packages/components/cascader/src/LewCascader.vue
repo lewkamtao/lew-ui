@@ -194,6 +194,9 @@ defineExpose({ show, hide });
                         :size="getIconSize"
                         type="x"
                         class="lew-form-icon-clear"
+                        :class="{
+                            'lew-form-icon-clear-focus': state.visible,
+                        }"
                         v-tooltip="{
                             content: '清空',
                             placement: 'top',

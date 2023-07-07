@@ -21,9 +21,10 @@ const prefixesValue = useVModel(props, 'prefixesValue', emit);
 const suffixValue = useVModel(props, 'suffixValue', emit);
 const lewInputRef = ref();
 const _type = ref(props.type);
-const state = ref({
+const state = reactive({
     prefixesDropdown: 'hide',
     suffixDropdown: 'hide',
+    isFocus: false,
 });
 
 watch(
@@ -81,6 +82,12 @@ const focus = (e: any) => {
         e?.currentTarget?.select();
     }
     emit('focus');
+    state.isFocus = true;
+};
+
+const blur = (e: any) => {
+    emit('blur', modelValue);
+    state.isFocus = false;
 };
 
 const getIconSize = computed(() => {
@@ -188,7 +195,7 @@ defineExpose({ toFocus });
             onkeypress="if(window.event.keyCode==13) this.blur()"
             @input="inputFn"
             @change="emit('change', modelValue)"
-            @blur="emit('blur', modelValue)"
+            @blur="blur"
             @focus="focus"
         />
         <div
@@ -264,6 +271,9 @@ defineExpose({ toFocus });
                 <lew-icon
                     v-if="clearable && modelValue"
                     class="lew-form-icon-clear"
+                    :class="{
+                        'lew-form-icon-clear-focus': state.isFocus,
+                    }"
                     v-tooltip="{
                         content: '清空',
                         placement: 'top',

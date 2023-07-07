@@ -16,6 +16,9 @@ const emit = defineEmits([
 
 const props = defineProps(textareaProps);
 const modelValue = useVModel(props, 'modelValue', emit);
+const state = reactive({
+    isFocus: false,
+});
 
 const updateValue = () => {
     if (
@@ -63,7 +66,13 @@ const focus = (e: any) => {
     if (props.focusSelect) {
         e?.currentTarget?.select();
     }
+    state.isFocus = true;
     emit('focus');
+};
+
+const blur = (e: any) => {
+    emit('blur', modelValue);
+    state.isFocus = false;
 };
 
 const getIconSize = computed(() => {
@@ -98,7 +107,7 @@ defineExpose({ toFocus });
             :placeholder="placeholder"
             @input="inputFn"
             @change="emit('change', modelValue)"
-            @blur="emit('blur', modelValue)"
+            @blur="blur"
             @focus="focus"
         />
 
@@ -109,6 +118,9 @@ defineExpose({ toFocus });
             <lew-icon
                 v-if="clearable && modelValue"
                 class="lew-form-icon-clear"
+                :class="{
+                    'lew-form-icon-clear-focus': state.isFocus,
+                }"
                 v-tooltip="{
                     content: '清空',
                     placement: 'top',
