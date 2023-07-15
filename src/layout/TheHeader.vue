@@ -31,16 +31,7 @@ const gohome = () => {
                 height="30"
             />
             <span style="margin-left: 10px"> Lew UI</span>
-            <lew-tag
-                v-tooltip="{
-                    content: '当前演示版本为 Beta v1.2，请勿在生产环境使用。',
-                    placement: 'top-start',
-                    trigger: 'mouseenter',
-                }"
-                type="light"
-                size="small"
-                style="margin-left: 10px"
-            >
+            <lew-tag type="light" size="small" style="margin-left: 10px">
                 Beta v1.4.5 未发布
             </lew-tag>
         </div>
