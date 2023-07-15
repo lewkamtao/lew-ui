@@ -69,6 +69,8 @@ const getStyle = computed(() => {
             styleObj.backgroundColor = `transparent`;
             styleObj.color = `var(--lew-color-${_color}-dark`;
             styleObj.boxShadow = 'none';
+            styleObj.minWidth = 'auto';
+            styleObj.padding = '0px 8px';
             break;
         default:
             styleObj.backgroundColor = `var(--lew-color-${_color})`;
