@@ -15,9 +15,20 @@ export default {
             default: 500,
         },
         {
-            name: 'type',
-            description: '类型，漂亮的渐变色。',
-            type: `primary | info | success | error | warning | normal`,
+            name: 'color',
+            description: '色彩类型，漂亮的渐变色。',
+            type: `red | orange
+            | yellow
+            | green
+            | mint
+            | teal
+            | cyan
+            | blue
+            | indigo
+            | purple
+            | pink
+            | gray
+            | brown`,
             default: '',
         },
     ],
