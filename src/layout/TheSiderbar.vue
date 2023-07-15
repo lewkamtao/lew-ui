@@ -107,8 +107,6 @@ const toPath = (item: Item) => {
             cursor: pointer;
             font-size: 14px;
             color: var(--lew-text-color-2);
-            font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier,
-                monospace;
             .ename {
                 margin-right: 5px;
             }

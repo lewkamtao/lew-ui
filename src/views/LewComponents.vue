@@ -105,13 +105,13 @@ group.value = [
                 label: '',
                 color: '',
             },
-            {
-                cname: '颜色',
-                name: 'Color',
-                path: '/Color',
-                label: '',
-                color: '',
-            },
+            // {
+            //     cname: '颜色',
+            //     name: 'Color',
+            //     path: '/Color',
+            //     label: '',
+            //     color: '',
+            // },
             {
                 cname: '图标',
                 name: 'Icon',
@@ -246,7 +246,7 @@ group.value = [
                 cname: '',
                 name: 'Cascader',
                 path: '/Cascader',
-                label: '',
+                label: 'Coming soon',
                 color: 'warning',
             },
             {
