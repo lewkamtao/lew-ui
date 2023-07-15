@@ -6,8 +6,3 @@
         <lew-button text="Disabled" type="text" disabled />
     </lew-flex>
 </template>
-<style lang="scss" scoped>
-.lew-button {
-    font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace;
-}
-</style>
