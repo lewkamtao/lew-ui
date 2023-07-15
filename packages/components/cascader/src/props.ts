@@ -25,9 +25,12 @@ export const cascaderProps = {
             return ['click', 'hover'].includes(value);
         },
     },
-    labelSlot: {
-        type: Boolean,
-        default: false,
+    selectTrigger: {
+        type: String,
+        default: 'click',
+        validator(value: string) {
+            return ['click', 'hover'].includes(value);
+        },
     },
     placeholder: {
         type: String,
@@ -48,21 +51,5 @@ export const cascaderProps = {
     disabled: {
         type: Boolean,
         default: () => false,
-    },
-    itemHeight: {
-        type: Number,
-        default: 30,
-    },
-    align: {
-        type: String,
-        default: 'left',
-    },
-    showCheckIcon: {
-        type: Boolean,
-        default: () => true,
-    },
-    defaultValue: {
-        type: String,
-        default: '',
     },
 };

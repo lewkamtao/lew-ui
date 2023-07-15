@@ -56,20 +56,29 @@ const init = () => {
 };
 init();
 
-const selectItem = (item: CascaderOptions, level: number) => {
-    if (item.isHasChild) {
-        state.hoverlabels[level] = item.label;
-        state.options = state.options.slice(0, level + 1);
-        const _options =
-            (item.children &&
-                item.children.map((e) => {
-                    return {
-                        ...e,
-                        isHasChild: e.children && e.children.length > 0,
-                    };
-                })) ||
-            [];
-        state.options.push(_options);
+const selectItem = (
+    item: CascaderOptions,
+    level: number,
+    selectTrigger: string
+) => {
+    if (selectTrigger === props.selectTrigger) {
+        if (item.isHasChild) {
+            state.hoverlabels[level] = item.label;
+            state.options = state.options.slice(0, level + 1);
+            const _options =
+                (item.children &&
+                    item.children.map((e) => {
+                        return {
+                            ...e,
+                            isHasChild: e.children && e.children.length > 0,
+                        };
+                    })) ||
+                [];
+            state.options.push(_options);
+        }
+    }
+    if (selectTrigger === 'click' && level === state.options.length - 1) {
+        cascaderHandle(item, level);
     }
 };
 
@@ -90,10 +99,7 @@ const clearHandle = () => {
     emit('change');
 };
 
-const cascaderHandle = (item: CascaderOptions) => {
-    if (item.disabled) {
-        return;
-    }
+const cascaderHandle = (item: CascaderOptions, level: number) => {
     cascaderValue.value = item.value;
     state.labels = [...state.hoverlabels, item.label];
     emit('change', item.value);
@@ -105,9 +111,9 @@ const getValueStyle = computed(() => {
 });
 
 const getCascaderClassName = computed(() => {
-    let { clearable, size, align } = props;
+    let { clearable, size } = props;
     clearable = clearable ? !!cascaderValue.value : false;
-    return object2class('lew-cascader', { clearable, size, align });
+    return object2class('lew-cascader', { clearable, size });
 });
 
 const getBodyClassName = computed(() => {
@@ -269,10 +275,13 @@ defineExpose({ show, hide });
 
                             <div
                                 class="lew-cascader-item"
+                                :class="{
+                                    'lew-cascader-item-disabled': item.disabled,
+                                }"
                                 v-for="(item, index) in oItem"
                                 :key="index"
-                                @click="cascaderHandle(item)"
-                                @mouseover="selectItem(item, oIndex)"
+                                @click="selectItem(item, oIndex, 'click')"
+                                @mouseover="selectItem(item, oIndex, 'hover')"
                             >
                                 {{ item.label }}
                                 <lew-icon
@@ -526,7 +535,7 @@ defineExpose({ show, hide });
         }
         .lew-cascader-item-disabled {
             opacity: 0.3;
-            cursor: no-drop;
+            pointer-events: none;
         }
         .lew-cascader-item-align-left {
             text-align: left;

@@ -246,8 +246,8 @@ group.value = [
                 cname: '',
                 name: 'Cascader',
                 path: '/Cascader',
-                label: 'Coming soon',
-                color: 'warning',
+                label: 'Beta',
+                color: 'green',
             },
             {
                 cname: '',

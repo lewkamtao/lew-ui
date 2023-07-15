@@ -41,7 +41,7 @@ const gohome = () => {
                 size="small"
                 style="margin-left: 10px"
             >
-                Beta v1.3.5
+                Beta v1.4.5 未发布
             </lew-tag>
         </div>
         <lew-flex gap="15" x="end" class="menu">

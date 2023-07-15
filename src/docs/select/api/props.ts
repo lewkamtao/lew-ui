@@ -15,6 +15,12 @@ export default {
             default: [],
         },
         {
+            name: 'size',
+            description: '尺寸大小',
+            type: 'small ｜ medium ｜ large',
+            default: 'medium',
+        },
+        {
             name: 'trigger',
             description: '触发方式',
             type: 'click | hover',

@@ -31,8 +31,7 @@ const options = getOptions();
 </script>
 
 <template>
-    <lew-flex direction="y" gap="20px" style="width: 300px">
+    <div style="width: 300px">
         <lew-cascader :options="options" />
-        <lew-cascader :options="options" select-trigger="hover" />
-    </lew-flex>
+    </div>
 </template>
