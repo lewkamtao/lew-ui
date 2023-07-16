@@ -48,7 +48,7 @@ const getIconSize = computed(() => {
 });
 
 const getStyle = computed(() => {
-    const { round, type, color } = props;
+    const { round, type, color, loading } = props;
     let styleObj = {} as any;
     let _color = getColorType(color)
     switch (type) {
@@ -71,7 +71,19 @@ const getStyle = computed(() => {
             styleObj.color = `var(--lew-color-${_color}-dark`;
             styleObj.boxShadow = 'none';
             styleObj.minWidth = 'auto';
-            styleObj.padding = '0px 8px';
+            if (_loading.value || props.loading) {
+                if (props.size === 'small') {
+                    styleObj.padding = '0px 8px 0px 24px';
+                }
+                if (props.size === 'medium') {
+                    styleObj.padding = '0px 8px 0px 30px';
+                }
+                if (props.size === 'large') {
+                    styleObj.padding = '0px 8px 0px 36px';
+                }
+            } else {
+                styleObj.padding = '0px 8px';
+            }
             break;
         default:
             styleObj.backgroundColor = `var(--lew-color-${_color})`;
