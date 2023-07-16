@@ -77,7 +77,7 @@ const avatarStyleObject = computed(() => {
         height: 0.6rem;
         border-radius: 50%;
         z-index: 99;
-        border: 2px var(--lew-white-color) solid;
+        border: 2px var(--lew-color-white) solid;
     }
 
     .dot-status-online {

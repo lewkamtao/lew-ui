@@ -89,8 +89,8 @@ const getCheckboxClassName = computed(() => {
             transform: translateY(50%);
             transition: var(--lew-form-transition);
             opacity: 0;
-            color: var(--lew-white-color);
-            padding: 1px;
+            color: var(--lew-color-white);
+            padding: 2px;
         }
     }
 

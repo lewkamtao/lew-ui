@@ -54,6 +54,7 @@ const getStyle = computed(() => {
     switch (type) {
         case 'fill':
             styleObj.backgroundColor = `var(--lew-color-${_color})`;
+            styleObj.color = `var(--lew-color-white)`;
             break;
         case 'light':
             styleObj.backgroundColor = `var(--lew-color-${_color}-light)`;

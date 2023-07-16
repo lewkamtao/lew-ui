@@ -76,7 +76,7 @@ const handleClick = async (e: any) => {
         left: 0px;
         top: 0px;
         border-radius: 4px;
-        background: var(--lew-white-color);
+        background: var(--lew-color-white);
         transition: var(--lew-form-transition);
         transform: translate(4px, 4px);
         box-shadow: 0px 0px 12px rgba($color: #000000, $alpha: 0.15);

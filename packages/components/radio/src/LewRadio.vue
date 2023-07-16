@@ -66,7 +66,7 @@ const getRadioClassName = computed(() => {
         .icon-radio {
             width: 50%;
             height: 50%;
-            background-color: var(--lew-white-color);
+            background-color: var(--lew-color-white);
             transform: translateY(100%);
             opacity: 0;
             transition: var(--lew-form-transition);

@@ -538,7 +538,7 @@ defineExpose({ init });
 
                 .lew-date-value-selected {
                     background: var(--lew-color-primary);
-                    color: var(--lew-white-text-color);
+                    color: var(--lew-color-white-text);
                     border: 2px var(--lew-color-primary-light) solid;
                 }
 
@@ -586,7 +586,7 @@ defineExpose({ init });
 
                 .lew-date-value-selected {
                     background: var(--lew-color-primary);
-                    color: var(--lew-white-text-color);
+                    color: var(--lew-color-white-text);
                 }
             }
 
@@ -610,7 +610,7 @@ defineExpose({ init });
 
                 .lew-date-value-selected {
                     background: var(--lew-color-primary);
-                    color: var(--lew-white-text-color);
+                    color: var(--lew-color-white-text);
                 }
             }
         }
@@ -624,7 +624,7 @@ defineExpose({ init });
 
                 .lew-date-value-selected {
                     background: var(--lew-color-primary);
-                    color: var(--lew-white-text-color);
+                    color: var(--lew-color-white-text);
                 }
             }
         }

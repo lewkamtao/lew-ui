@@ -179,12 +179,12 @@ const checkPageNum = (value: any) => {
 
         .active {
             background-color: var(--lew-color-primary);
-            color: var(--lew-white-text-color);
+            color: var(--lew-color-white-text);
         }
 
         .active:hover {
             background-color: var(--lew-color-primary);
-            color: var(--lew-white-text-color);
+            color: var(--lew-color-white-text);
         }
 
         .control-btn {

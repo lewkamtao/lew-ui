@@ -69,10 +69,10 @@
     --lew-color-primary-dark: var(--lew-color-blue-dark);
     --lew-color-primary-light: var(--lew-color-blue-light);
     // 全局
-    --lew-white-color: #fff;
-    --lew-white-text-color: rgba(255, 255, 255, 0.9);
-    --lew-black-color: #000;
-    --lew-black-text-color: rgba(0, 0, 0, 0.9);
+    --lew-color-white: #fff;
+    --lew-color-white-text: rgba(255, 255, 255, 0.9);
+    --lew-color-black: #000;
+    --lew-color-black-text: rgba(0, 0, 0, 0.9);
     --lew-disabled-opacity: 0.5;
     --lew-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
     // 背景
@@ -275,6 +275,11 @@
     --lew-color-primary: var(--lew-color-blue);
     --lew-color-primary-dark: var(--lew-color-blue-dark);
     --lew-color-primary-light: var(--lew-color-blue-light);
+    // 全局
+    --lew-color-white: #fff;
+    --lew-color-white-text: rgba(255, 255, 255, 0.9);
+    --lew-color-black: #000;
+    --lew-color-black-text: rgba(0, 0, 0, 0.9);
     // 全局
     --lew-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.7);
     // 背景

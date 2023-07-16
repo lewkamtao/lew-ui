@@ -37,7 +37,7 @@ const getStyle = computed(() => {
         z-index: 1;
         cursor: normal;
         border-radius: 50%;
-        border: 1px var(--lew-white-color) solid;
+        border: 1px var(--lew-color-white) solid;
         box-sizing: border-box;
     }
 
@@ -58,7 +58,7 @@ const getStyle = computed(() => {
         z-index: 1;
         font-weight: normal;
         box-sizing: border-box;
-        color: var(--lew-white-text-color);
+        color: var(--lew-color-white-text);
         background-color: var(--lew-color-error-dark);
     }
 }
