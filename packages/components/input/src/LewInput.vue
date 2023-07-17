@@ -247,7 +247,13 @@ defineExpose({ toFocus });
             v-if="showPassword || clearable || showCount"
             class="lew-input-controls"
         >
-            <div v-if="getCheckNumStr" class="lew-input-count">
+            <div
+                v-if="getCheckNumStr"
+                class="lew-input-count"
+                :class="{
+                    'lew-input-count-clearable': clearable && modelValue,
+                }"
+            >
                 {{ getCheckNumStr }}
             </div>
             <div
@@ -452,6 +458,9 @@ defineExpose({ toFocus });
         .lew-input-count {
             font-size: 12px;
         }
+        .lew-input-count-clearable {
+            padding-right: 24px;
+        }
     }
 
     .lew-input-auto-width {
@@ -482,6 +491,9 @@ defineExpose({ toFocus });
         .lew-input-count {
             font-size: 13px;
         }
+        .lew-input-count-clearable {
+            padding-right: 26px;
+        }
     }
 
     .lew-input-auto-width {
@@ -511,6 +523,9 @@ defineExpose({ toFocus });
         height: var(--lew-form-item-height-large);
         .lew-input-count {
             font-size: 14px;
+        }
+        .lew-input-count-clearable {
+            padding-right: 28px;
         }
     }
 
