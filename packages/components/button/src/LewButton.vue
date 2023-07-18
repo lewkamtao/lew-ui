@@ -50,7 +50,7 @@ const getIconSize = computed(() => {
 const getStyle = computed(() => {
     const { round, type, color, loading } = props;
     let styleObj = {} as any;
-    let _color = getColorType(color)
+    let _color = getColorType(color);
     switch (type) {
         case 'fill':
             styleObj.backgroundColor = `var(--lew-color-${_color})`;
@@ -71,7 +71,7 @@ const getStyle = computed(() => {
             styleObj.color = `var(--lew-color-${_color}-dark`;
             styleObj.boxShadow = 'none';
             styleObj.minWidth = 'auto';
-            if (_loading.value || props.loading) {
+            if (_loading.value || loading) {
                 if (props.size === 'small') {
                     styleObj.padding = '0px 8px 0px 24px';
                 }
@@ -95,12 +95,30 @@ const getStyle = computed(() => {
 </script>
 
 <template>
-    <button class="lew-button" :class="getButtonClass" :disabled="disabled" :style="getStyle" @click="handleClick">
-        <lew-icon v-if="icon" class="lew-button-icon" :size="getIconSize" :type="icon" />
-        <lew-icon class="lew-loading-icon" v-if="loading || _loading" :size="getIconSize" animation="spin"
-            animation-speed="fast" :class="{
+    <button
+        class="lew-button"
+        :class="getButtonClass"
+        :disabled="disabled"
+        :style="getStyle"
+        @click="handleClick"
+    >
+        <lew-icon
+            v-if="icon"
+            class="lew-button-icon"
+            :size="getIconSize"
+            :type="icon"
+        />
+        <lew-icon
+            class="lew-loading-icon"
+            v-if="loading || _loading"
+            :size="getIconSize"
+            animation="spin"
+            animation-speed="fast"
+            :class="{
                 'lew-loading-isShow': (_loading || loading) && !disabled,
-            }" type="loader" />
+            }"
+            type="loader"
+        />
         <span v-if="$slots.default || text" class="lew-button-text">
             <template v-if="$slots.default">
                 <slot />
@@ -133,8 +151,6 @@ const getStyle = computed(() => {
     border-radius: var(--lew-border-radius);
     box-sizing: border-box;
     overflow: hidden;
-    color: var(--lew-bgcolor-0);
-    background-color: var(--lew-bgcolor-0);
 
     .lew-loading-icon {
         position: absolute;
