@@ -3,9 +3,21 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            name: 'type',
+            name: 'color',
             description: '配色类型',
-            type: `normal | success | error | warning | info`,
+            type: `red
+            | orange
+            | yellow
+            | green
+            | mint
+            | teal
+            | cyan
+            | blue
+            | indigo
+            | purple
+            | pink
+            | gray
+            | brown`,
             default: 'normal',
         },
         {
@@ -22,8 +34,8 @@ export default {
         },
         {
             name: 'bold',
-            description: '配色类型',
-            type: `normal | success | error | warning | info`,
+            description: '字重',
+            type: `number`,
             default: `''`,
         },
     ],

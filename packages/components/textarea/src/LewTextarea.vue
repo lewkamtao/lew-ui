@@ -16,6 +16,9 @@ const emit = defineEmits([
 
 const props = defineProps(textareaProps);
 const modelValue = useVModel(props, 'modelValue', emit);
+const state = reactive({
+    isFocus: false,
+});
 
 const updateValue = () => {
     if (
@@ -63,7 +66,13 @@ const focus = (e: any) => {
     if (props.focusSelect) {
         e?.currentTarget?.select();
     }
+    state.isFocus = true;
     emit('focus');
+};
+
+const blur = (e: any) => {
+    emit('blur', modelValue);
+    state.isFocus = false;
 };
 
 const getIconSize = computed(() => {
@@ -91,29 +100,37 @@ defineExpose({ toFocus });
     >
         <textarea
             ref="lewTextareaRef"
-            class="lew-textarea btf-scrollbar"
+            class="lew-textarea lew-scrollbar"
             v-model="modelValue"
             :disabled="disabled"
             :readonly="readonly"
             :placeholder="placeholder"
             @input="inputFn"
             @change="emit('change', modelValue)"
-            @blur="emit('blur', modelValue)"
+            @blur="blur"
             @focus="focus"
         />
 
         <div v-if="getCheckNumStr && showCount" class="lew-textarea-count">
             {{ getCheckNumStr }}
         </div>
-        <transition name="slide-fade">
-            <div
+        <transition name="lew-form-icon-ani">
+            <lew-icon
                 v-if="clearable && modelValue"
-                class="lew-textarea-clear"
+                class="lew-form-icon-clear"
+                :class="{
+                    'lew-form-icon-clear-focus': state.isFocus,
+                }"
+                v-tooltip="{
+                    content: '清空',
+                    placement: 'top',
+                }"
                 @mousedown.prevent=""
                 @click="clear"
-            >
-                <lew-icon :size="getIconSize" type="x-circle" />
-            </div>
+                :size="getIconSize"
+                style="top: 14px"
+                type="x"
+            />
         </transition>
     </div>
 </template>
@@ -160,17 +177,6 @@ defineExpose({ toFocus });
         z-index: 2;
         user-select: none;
     }
-
-    .lew-textarea-clear {
-        position: absolute;
-        right: 7px;
-        top: 4px;
-        opacity: var(--lew-form-icon-opacity);
-        cursor: pointer;
-    }
-    .lew-textarea-clear:hover {
-        opacity: var(--lew-form-icon-opacity-hover);
-    }
 }
 
 .lew-textarea-view-size-small {
@@ -178,9 +184,6 @@ defineExpose({ toFocus });
         padding: var(--lew-form-input-padding-small);
         font-size: var(--lew-form-font-size-small);
         line-height: var(--lew-form-input-line-height-small);
-    }
-    .lew-textarea::-webkit-scrollbar {
-        width: 4px;
     }
 
     .lew-textarea {
@@ -197,9 +200,6 @@ defineExpose({ toFocus });
         font-size: var(--lew-form-font-size-medium);
         line-height: var(--lew-form-input-line-height-medium);
     }
-    .lew-textarea::-webkit-scrollbar {
-        width: 6px;
-    }
 
     .lew-textarea {
         min-height: var(--lew-form-item-height-medium);
@@ -214,9 +214,6 @@ defineExpose({ toFocus });
         padding: var(--lew-form-input-padding-large);
         font-size: var(--lew-form-font-size-large);
         line-height: var(--lew-form-input-line-height-large);
-    }
-    .lew-textarea::-webkit-scrollbar {
-        width: 8px;
     }
 
     .lew-textarea {
@@ -306,16 +303,5 @@ defineExpose({ toFocus });
 .lew-textarea-view-disabled:focus-within {
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     background-color: var(--lew-form-bgcolor);
-}
-
-.slide-fade-enter-active,
-.slide-fade-leave-active {
-    transition: var(--lew-form-transition);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-    transform: translateX(34px);
-    opacity: 0;
 }
 </style>

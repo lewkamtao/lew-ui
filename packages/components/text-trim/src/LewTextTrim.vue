@@ -28,11 +28,6 @@ watchDebounced(
     watchOptions
 );
 watchDebounced(
-    () => props.arrow,
-    () => clear(),
-    watchOptions
-);
-watchDebounced(
     () => props.allowHTML,
     () => clear(),
     watchOptions
@@ -48,7 +43,7 @@ const clear = () => {
 const showPop = () => {
     const element = textTrimRef.value;
     let isEllipsis = false;
-    const { placement, allowHTML, text, arrow }: any = props;
+    const { placement, allowHTML, text }: any = props;
     if (props.lineClamp) {
         isEllipsis = element.offsetHeight < element.scrollHeight;
     } else {
@@ -59,14 +54,14 @@ const showPop = () => {
         instance = tippy(element, {
             theme: 'light',
             delay: [250, 250],
-            duration: [200, 200],
+            duration: [150, 150],
             content: text,
             animation: 'shift-away-subtle',
             interactive: true,
             appendTo: () => document.body,
             placement,
             allowHTML,
-            arrow,
+            arrow: false,
             maxWidth: 250,
         });
         instance.popper.children[0].setAttribute('data-lew', 'tooltip');

@@ -136,7 +136,8 @@ onMounted(() => {
             <lew-flex x="end">
                 <lew-button
                     text="关闭"
-                    type="normal"
+                    color="normal"
+                    type="text"
                     @click="modalVisible1 = false"
                 />
                 <lew-button text="立即登录" @click="modalVisible1 = false" />
@@ -151,9 +152,9 @@ onMounted(() => {
                         <lew-badge
                             v-if="row.fraction >= 60"
                             round
-                            type="success"
+                            color="green"
                         />
-                        <lew-badge v-else round type="error" />
+                        <lew-badge v-else round color="red" />
                         <span>{{ row.fraction >= 60 ? '良好' : '很差' }}</span>
                     </lew-flex>
                 </template>
@@ -163,7 +164,8 @@ onMounted(() => {
             <lew-flex x="end">
                 <lew-button
                     text="关闭"
-                    type="normal"
+                    type="text"
+                    color="normal"
                     @click="modalVisible2 = false"
                 />
 

@@ -214,7 +214,7 @@ const object2class = computed(() => (type: string, item: any) => {
 
     switch (type) {
         case 'today':
-            if (_curDate.isSame(_date)) {
+            if (_curDate.isSame(_date) && item.date === item.showDate) {
                 return true;
             }
             break;
@@ -303,9 +303,17 @@ defineExpose({ init });
             <lew-flex x="start" mode="between" class="lew-date-control">
                 <div class="lew-date-control-left">
                     <!-- 上一年 -->
-                    <lew-button icon="chevrons-left" @click="prveYear1" />
+                    <lew-button
+                        type="light"
+                        icon="chevrons-left"
+                        @click="prveYear1"
+                    />
                     <!-- 上一月 -->
-                    <lew-button icon="chevron-left" @click="prveMonth1" />
+                    <lew-button
+                        type="light"
+                        icon="chevron-left"
+                        @click="prveMonth1"
+                    />
                 </div>
                 <!-- 日期 -->
                 <div class="cur-date">
@@ -313,9 +321,17 @@ defineExpose({ init });
                 </div>
                 <div class="lew-date-control-right">
                     <!-- 下一月 -->
-                    <lew-button icon="chevron-right" @click="nextMonth1" />
+                    <lew-button
+                        type="light"
+                        icon="chevron-right"
+                        @click="nextMonth1"
+                    />
                     <!-- 下一年 -->
-                    <lew-button icon="chevrons-right" @click="nextYear1" />
+                    <lew-button
+                        type="light"
+                        icon="chevrons-right"
+                        @click="nextYear1"
+                    />
                 </div>
             </lew-flex>
             <div class="lew-date-box">
@@ -343,7 +359,7 @@ defineExpose({ init });
                     >
                         <div
                             v-if="object2class('today', item)"
-                            class="lew-date-item-cur"
+                            class="lew-date-item-today"
                         ></div>
                         <div
                             class="lew-date-value"
@@ -360,12 +376,14 @@ defineExpose({ init });
                 <div class="lew-date-control-left">
                     <!-- 上一年 -->
                     <lew-button
+                        type="light"
                         icon="chevrons-left"
                         size="small"
                         @click="prveYear2"
                     />
                     <!-- 上一月 -->
                     <lew-button
+                        type="light"
                         icon="chevron-left"
                         size="small"
                         @click="prveMonth2"
@@ -378,12 +396,14 @@ defineExpose({ init });
                 <div class="lew-date-control-right">
                     <!-- 下一月 -->
                     <lew-button
+                        type="light"
                         icon="chevron-right"
                         size="small"
                         @click="nextMonth2"
                     />
                     <!-- 下一年 -->
                     <lew-button
+                        type="light"
                         icon="chevrons-right"
                         size="small"
                         @click="nextYear2"
@@ -415,7 +435,7 @@ defineExpose({ init });
                     >
                         <div
                             v-if="object2class('today', item)"
-                            class="lew-date-item-cur"
+                            class="lew-date-item-today"
                         ></div>
                         <div
                             class="lew-date-value"
@@ -471,15 +491,10 @@ defineExpose({ init });
             padding: 2px;
             width: 24px;
             height: 24px;
-            opacity: 0.7;
 
             svg {
                 width: 16px;
                 margin-right: 0px;
-            }
-
-            &:hover {
-                opacity: 1;
             }
         }
     }
@@ -491,6 +506,7 @@ defineExpose({ init });
         // border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
 
         .lew-date-item {
+            position: relative;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -498,7 +514,6 @@ defineExpose({ init });
             height: 36px;
 
             .lew-date-label {
-                position: relative;
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
@@ -522,19 +537,20 @@ defineExpose({ init });
                 }
 
                 .lew-date-value-selected {
-                    background: var(--lew-primary-color);
-                    color: var(--lew-white-text-color);
-                    border: 2px var(--lew-primary-color-light) solid;
+                    background: var(--lew-color-primary);
+                    color: var(--lew-color-white-text);
+                    border: 2px var(--lew-color-primary-light) solid;
                 }
 
-                .lew-date-item-cur {
+                .lew-date-item-today {
                     position: absolute;
                     width: 6px;
                     height: 6px;
                     border-radius: 50%;
                     background: rgba($color: #19c175, $alpha: 0.8);
-                    right: 3px;
-                    top: -3px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    bottom: 0px;
                     box-shadow: 0px 0px 12px #0e7346;
                 }
             }
@@ -544,16 +560,16 @@ defineExpose({ init });
                     to right,
                     rgba(0, 0, 0, 0) 0%,
                     rgba(0, 0, 0, 0) 50%,
-                    var(--lew-primary-color-light) 51%,
-                    var(--lew-primary-color-light) 100%
+                    var(--lew-color-primary-light) 51%,
+                    var(--lew-color-primary-light) 100%
                 );
             }
 
             .lew-date-label-selected-end {
                 background: linear-gradient(
                     to right,
-                    var(--lew-primary-color-light) 0%,
-                    var(--lew-primary-color-light) 50%,
+                    var(--lew-color-primary-light) 0%,
+                    var(--lew-color-primary-light) 50%,
                     rgba(0, 0, 0, 0) 51%,
                     rgba(0, 0, 0, 0) 100%
                 );
@@ -569,13 +585,13 @@ defineExpose({ init });
                 }
 
                 .lew-date-value-selected {
-                    background: var(--lew-primary-color);
-                    color: var(--lew-white-text-color);
+                    background: var(--lew-color-primary);
+                    color: var(--lew-color-white-text);
                 }
             }
 
             .lew-date-label-selected {
-                background: var(--lew-primary-color-light);
+                background: var(--lew-color-primary-light);
 
                 .lew-date-value {
                     color: var(--lew-text-color-0);
@@ -583,18 +599,18 @@ defineExpose({ init });
             }
         }
 
-        .lew-date-item-cur:hover {
+        .lew-date-item-today:hover {
             .lew-date-label {
                 .lew-date-value {
                     position: relative;
-                    color: var(--lew-success-color-dark);
+                    color: var(--lew-color-success-dark);
                     font-weight: 900;
-                    background-color: var(--lew-success-color-light);
+                    background-color: var(--lew-color-success-light);
                 }
 
                 .lew-date-value-selected {
-                    background: var(--lew-primary-color);
-                    color: var(--lew-white-text-color);
+                    background: var(--lew-color-primary);
+                    color: var(--lew-color-white-text);
                 }
             }
         }
@@ -602,13 +618,13 @@ defineExpose({ init });
         .lew-date-item-curMonth:hover {
             .lew-date-label {
                 .lew-date-value {
-                    background-color: var(--lew-primary-color-light);
-                    color: var(--lew-primary-color-dark);
+                    background-color: var(--lew-color-primary-light);
+                    color: var(--lew-color-primary-dark);
                 }
 
                 .lew-date-value-selected {
-                    background: var(--lew-primary-color);
-                    color: var(--lew-white-text-color);
+                    background: var(--lew-color-primary);
+                    color: var(--lew-color-white-text);
                 }
             }
         }
@@ -624,8 +640,8 @@ defineExpose({ init });
         .lew-date-item-select {
             .lew-date-label {
                 .lew-date-value {
-                    background-color: var(--lew-primary-color-light);
-                    color: var(--lew-primary-color-dark);
+                    background-color: var(--lew-color-primary-light);
+                    color: var(--lew-color-primary-dark);
                 }
             }
         }

@@ -41,7 +41,7 @@ const options = ref([
                 :label-width="80"
             />
             <lew-flex x="end">
-                <lew-button text="关闭" type="normal" />
+                <lew-button type="text" text="关闭" color="normal" />
                 <lew-button text="立即登录" />
             </lew-flex>
         </lew-flex>
@@ -71,7 +71,7 @@ const options = ref([
             />
 
             <lew-flex x="end">
-                <lew-button text="关闭" type="normal" />
+                <lew-button text="关闭" type="text" color="normal" />
                 <lew-button @click="visible = true" text="立即登录" />
             </lew-flex>
         </lew-flex>

@@ -29,14 +29,13 @@ const alertClassName = (item: AlertItem) => {
                     {{ item.content }}
                 </div>
             </div>
-            <div v-if="item.closeable">
-                <lew-icon
-                    :size="16"
-                    class="btn-close"
-                    type="x"
-                    @click="emit('close', i)"
-                />
-            </div>
+            <lew-icon
+                v-if="item.closeable"
+                :size="16"
+                class="lew-form-icon-clear"
+                type="x"
+                @click="emit('close', i)"
+            />
         </div>
     </div>
 </template>
@@ -53,7 +52,7 @@ const alertClassName = (item: AlertItem) => {
         align-items: flex-start;
         width: 100%;
         min-height: 32px;
-        background-color: var(--lew-normal-color);
+        background-color: var(--lew-color-normal);
         border-radius: var(--lew-border-radius);
         margin-bottom: 10px;
         padding: 12px 18px;
@@ -65,25 +64,10 @@ const alertClassName = (item: AlertItem) => {
             align-items: center;
         }
 
-        .btn-close {
-            position: absolute;
-            top: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            right: 8px;
-            border-radius: var(--lew-border-radius);
-            box-sizing: border-box;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .btn-close:hover {
-            background: rgba($color: #000000, $alpha: 0.05);
-        }
-
-        .btn-close:active {
-            background: rgba($color: #000000, $alpha: 0.15);
+        .lew-form-icon-clear {
+            top: 11px;
+            right: 11px;
+            transform: none;
         }
 
         .message {
@@ -111,27 +95,27 @@ const alertClassName = (item: AlertItem) => {
 
     .lew-alert-type-normal {
         color: var(--lew-text-color-2);
-        background-color: var(--lew-normal-color-light);
+        background-color: var(--lew-color-normal-light);
     }
 
     .lew-alert-type-success {
-        color: var(--lew-success-color-dark);
-        background-color: var(--lew-success-color-light);
+        color: var(--lew-color-success-dark);
+        background-color: var(--lew-color-success-light);
     }
 
     .lew-alert-type-warning {
-        color: var(--lew-warning-color-dark);
-        background-color: var(--lew-warning-color-light);
+        color: var(--lew-color-warning-dark);
+        background-color: var(--lew-color-warning-light);
     }
 
     .lew-alert-type-error {
-        color: var(--lew-error-color-dark);
-        background-color: var(--lew-error-color-light);
+        color: var(--lew-color-error-dark);
+        background-color: var(--lew-color-error-light);
     }
 
     .lew-alert-type-info {
-        color: var(--lew-info-color-dark);
-        background-color: var(--lew-info-color-light);
+        color: var(--lew-color-info-dark);
+        background-color: var(--lew-color-info-light);
     }
 }
 </style>

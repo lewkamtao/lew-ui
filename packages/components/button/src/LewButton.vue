@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { LewIcon } from 'lew-ui';
-import { object2class } from 'lew-ui/utils';
+import { object2class, getColorType } from 'lew-ui/utils';
 import { buttonProps } from './button';
 
 const emit = defineEmits(['click']);
@@ -22,11 +22,10 @@ const handleClick = async (e: any) => {
 };
 
 const getButtonClass = computed(() => {
-    const { round, size, type, icon, text } = props;
+    const { size, type, icon, text } = props;
     const loading = _loading.value || props.loading;
     const singleIcon = !!(!text && icon);
     return object2class('lew-button', {
-        round,
         size,
         type,
         loading,
@@ -47,6 +46,52 @@ const getIconSize = computed(() => {
             return 14;
     }
 });
+
+const getStyle = computed(() => {
+    const { round, type, color, loading } = props;
+    let styleObj = {} as any;
+    let _color = getColorType(color);
+    switch (type) {
+        case 'fill':
+            styleObj.backgroundColor = `var(--lew-color-${_color})`;
+            styleObj.color = `var(--lew-color-white)`;
+            break;
+        case 'light':
+            styleObj.backgroundColor = `var(--lew-color-${_color}-light)`;
+            styleObj.color = `var(--lew-color-${_color}-dark)`;
+            break;
+        case 'ghost':
+            styleObj.backgroundColor = `transparent`;
+            styleObj.border = `1px solid var(--lew-color-${_color})`;
+            styleObj.color = `var(--lew-color-${_color}-dark)`;
+            styleObj.boxShadow = 'none';
+            break;
+        case 'text':
+            styleObj.backgroundColor = `transparent`;
+            styleObj.color = `var(--lew-color-${_color}-dark`;
+            styleObj.boxShadow = 'none';
+            styleObj.minWidth = 'auto';
+            if (_loading.value || loading) {
+                if (props.size === 'small') {
+                    styleObj.padding = '0px 8px 0px 24px';
+                }
+                if (props.size === 'medium') {
+                    styleObj.padding = '0px 8px 0px 30px';
+                }
+                if (props.size === 'large') {
+                    styleObj.padding = '0px 8px 0px 36px';
+                }
+            } else {
+                styleObj.padding = '0px 8px';
+            }
+            break;
+        default:
+            styleObj.backgroundColor = `var(--lew-color-${_color})`;
+            break;
+    }
+    styleObj.borderRadius = round ? '30px' : 'none';
+    return styleObj;
+});
 </script>
 
 <template>
@@ -54,6 +99,7 @@ const getIconSize = computed(() => {
         class="lew-button"
         :class="getButtonClass"
         :disabled="disabled"
+        :style="getStyle"
         @click="handleClick"
     >
         <lew-icon
@@ -69,7 +115,7 @@ const getIconSize = computed(() => {
             animation="spin"
             animation-speed="fast"
             :class="{
-                'lew-loading-icshow': (_loading || loading) && !disabled,
+                'lew-loading-isShow': (_loading || loading) && !disabled,
             }"
             type="loader"
         />
@@ -105,7 +151,6 @@ const getIconSize = computed(() => {
     border-radius: var(--lew-border-radius);
     box-sizing: border-box;
     overflow: hidden;
-    box-shadow: var(--lew-form-box-shadow);
 
     .lew-loading-icon {
         position: absolute;
@@ -114,13 +159,41 @@ const getIconSize = computed(() => {
         transition: opacity 0.35s;
     }
 
-    .lew-loading-icshow {
+    .lew-button-text {
+        z-index: 2;
+    }
+
+    .lew-loading-isShow {
         opacity: 1;
     }
 }
 
+.lew-button::after {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #000000, $alpha: 0.2);
+    transition: 0.25s all;
+    opacity: 0;
+    content: '';
+}
+
+.lew-button-type-ghost::after {
+    display: none;
+}
+
+.lew-button:hover:after {
+    opacity: 0.5;
+}
+
 .lew-button:active {
     transform: scale(0.96);
+}
+
+.lew-button:active::after {
+    opacity: 1;
 }
 
 .lew-button-size-small {
@@ -143,6 +216,7 @@ const getIconSize = computed(() => {
     padding: 0px 14px;
     font-size: var(--lew-form-font-size-medium);
     gap: 6px;
+
     .lew-loading-icon {
         left: 10px;
     }
@@ -155,6 +229,7 @@ const getIconSize = computed(() => {
     padding: 0px 20px;
     font-size: var(--lew-form-font-size-large);
     gap: 8px;
+
     .lew-loading-icon {
         left: 12px;
     }
@@ -166,12 +241,14 @@ const getIconSize = computed(() => {
     width: var(--lew-form-item-height-small);
     height: var(--lew-form-item-height-small);
 }
+
 .lew-button-size-medium.lew-button-singleIcon {
     min-width: auto;
     padding: 0px;
     width: var(--lew-form-item-height-medium);
     height: var(--lew-form-item-height-medium);
 }
+
 .lew-button-size-large.lew-button-singleIcon {
     min-width: auto;
     padding: 0px;
@@ -181,130 +258,33 @@ const getIconSize = computed(() => {
 
 .lew-button.lew-button-loading.lew-button-singleIcon {
     padding: 0px;
+
     .lew-button-text {
         display: none;
     }
+
     .lew-button-icon {
         display: none;
     }
+
     .lew-loading-icon {
         position: static;
     }
-}
-
-.lew-button-round {
-    border-radius: 50px;
-}
-.lew-button-active:hover {
-    color: var(--lew-text-color-0);
-}
-
-.lew-button-type-primary {
-    background: var(--lew-primary-color);
-    color: var(--lew-white-text-color);
-}
-
-.lew-button-type-primary:hover {
-    background-color: var(--lew-primary-color-hover);
-}
-
-.lew-button-type-primary:active {
-    background-color: var(--lew-primary-color-active);
-}
-
-.lew-button-type-info:hover {
-    background-color: var(--lew-info-color-hover);
-}
-
-.lew-button-type-info {
-    background: var(--lew-info-color);
-    color: var(--lew-white-text-color);
-}
-
-.lew-button-type-info:active {
-    background-color: var(--lew-info-color-active);
-}
-
-.lew-button-type-success {
-    background: var(--lew-success-color);
-    color: var(--lew-white-text-color);
-}
-
-.lew-button-type-success:hover {
-    background-color: var(--lew-success-color-hover);
-}
-
-.lew-button-type-success:active {
-    background-color: var(--lew-success-color-active);
-}
-
-.lew-button-type-error {
-    background: var(--lew-error-color);
-    color: var(--lew-white-text-color);
-}
-
-.lew-button-type-error:hover {
-    background-color: var(--lew-error-color-hover);
-}
-
-.lew-button-type-error:active {
-    background-color: var(--lew-error-color-active);
-}
-
-.lew-button-type-blank {
-    background-color: transparent;
-    color: var(--lew-text-color-2);
-    padding: 0px 4px;
-    min-width: auto;
-    box-shadow: none;
-}
-
-.lew-button-type-blank:hover {
-    background-color: transparent;
-    color: var(--lew-text-color-2);
-}
-
-.lew-button-type-blank:active {
-    background-color: transparent;
-    color: var(--lew-text-color-2);
-}
-
-.lew-button-type-normal {
-    background: var(--lew-normal-color);
-    color: var(--lew-text-color-3);
-}
-
-.lew-button-type-normal:hover {
-    background-color: var(--lew-normal-color-hover);
-}
-
-.lew-button-type-normal:active {
-    background-color: var(--lew-normal-color-active);
-}
-
-.lew-button-type-warning {
-    background: var(--lew-warning-color);
-    color: var(--lew-white-text-color);
-}
-
-.lew-button-type-warning:hover {
-    background-color: var(--lew-warning-color-hover);
-}
-
-.lew-button-type-warning:active {
-    background-color: var(--lew-warning-color-active);
 }
 
 .lew-button-loading {
     cursor: progress;
     padding-left: 0px;
 }
+
 .lew-button-size-small.lew-button-loading {
     padding-left: 24px;
 }
+
 .lew-button-size-medium.lew-button-loading {
     padding-left: 30px;
 }
+
 .lew-button-size-large.lew-button-loading {
     padding-left: 36px;
 }

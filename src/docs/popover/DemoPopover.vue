@@ -16,7 +16,7 @@ const options = ref(
         <lew-title>Popover</lew-title>
         <p class="sub-title">
             如果你需要信息提示，请可以尝试一下
-            <lew-mark type="info" to="/Tooltip">Tooltip</lew-mark>
+            <lew-mark type="light" color="blue" to="/Tooltip">Tooltip</lew-mark>
         </p>
         <lew-demo-box
             title="询问校验"

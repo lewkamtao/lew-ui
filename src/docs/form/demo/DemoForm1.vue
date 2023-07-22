@@ -61,9 +61,6 @@ const options = ref([
         as: 'select',
         rules: Yup.string().required('此项必填'),
         props: {
-            change: (e: any) => {
-                console.log(e);
-            },
             clearable: true,
             options: [
                 {
@@ -202,8 +199,13 @@ const options = ref([
 
 let formRef = ref();
 
-const submit = () => {
-    formRef.value.validate();
+const submit = async () => {
+    const vail = await formRef.value.validate();
+    if (vail) {
+        LewMessage.success('已提交');
+    } else {
+        LewMessage.warning('请完善表单');
+    }
 };
 </script>
 

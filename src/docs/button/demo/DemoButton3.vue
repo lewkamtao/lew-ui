@@ -1,9 +1,13 @@
 <template>
-    <lew-flex wrap x="start" gap="20">
-        <lew-button round text="primary" type="primary" />
-        <lew-button round text="error" type="error" />
-        <lew-button round text="warning" type="warning" />
-        <lew-button round text="normal" type="normal" />
-        <lew-button round text="success" type="success" />
+    <lew-flex x="start" y="end">
+        <lew-button type="fill" round icon="message-circle" />
+        <lew-button type="light" round icon="message-circle" />
+        <lew-button type="ghost" round icon="message-circle" />
+        <lew-button type="text" round icon="message-circle" />
+        <lew-button type="fill" round text="Submit" icon="message-circle" />
+        <lew-button type="light" round text="Submit" icon="message-circle" />
+        <lew-button type="ghost" round text="Submit" icon="message-circle" />
+        <lew-button type="text" round text="Submit" icon="message-circle" />
+        <lew-button type="light" round text="Submit" icon="plus" />
     </lew-flex>
 </template>

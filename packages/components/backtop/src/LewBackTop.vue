@@ -74,7 +74,7 @@ onMounted(() => {
     align-items: center;
     user-select: none;
     cursor: pointer;
-    color: var(--lew-primary-color);
+    color: var(--lew-color-primary);
 }
 
 .fade-enter-active,

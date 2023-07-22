@@ -13,13 +13,13 @@ export default {
                     theme: 'light',
                     trigger: trigger || 'mouseenter',
                     content: binding.value.content,
-                    animation: 'scale-subtle',
+                    animation: 'shift-away-subtle',
                     interactive: true,
                     appendTo: () => document.body,
                     placement: binding.value.placement,
                     allowHTML: binding.value.allowHTML,
-                    arrow: binding.value.arrow,
-                    duration: [200, 200],
+                    arrow: false,
+                    duration: [150, 150],
                     maxWidth: 250,
                     delay: trigger === 'mouseenter' ? [250, 250] : undefined,
                 });
@@ -30,7 +30,7 @@ export default {
                 if (!binding?.value?.content) {
                     el.instance.disable();
                 }
-            }, 
+            },
             updated(el: any, binding: DirectiveBinding) {
                 if (!binding?.value?.content) {
                     el.instance.disable();

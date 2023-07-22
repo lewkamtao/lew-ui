@@ -79,7 +79,7 @@ const getCheckboxClassName = computed(() => {
         border: var(--lew-form-border-width) var(--lew-checkbox-border-color)
             solid;
         box-sizing: border-box;
-        border-radius: 4px;
+        border-radius: 6px;
         transition: var(--lew-form-transition);
         background-color: var(--lew-bgcolor-1);
         outline: 0px var(--lew-checkbox-color-light) solid;
@@ -89,8 +89,8 @@ const getCheckboxClassName = computed(() => {
             transform: translateY(50%);
             transition: var(--lew-form-transition);
             opacity: 0;
-            color: var(--lew-white-color);
-            padding: 1px;
+            color: var(--lew-color-white);
+            padding: 2px;
         }
     }
 
@@ -205,7 +205,7 @@ const getCheckboxClassName = computed(() => {
 .lew-checkbox-block.lew-checkbox-checked {
     .icon-checkbox-box {
         border: var(--lew-form-border-width) transparent solid;
-        background: var(--lew-checkbox-color-light);
+        background: transparent;
 
         .icon-checkbox {
             color: var(--lew-checkbox-color-dark);
@@ -215,11 +215,8 @@ const getCheckboxClassName = computed(() => {
 }
 
 .lew-checkbox-block.lew-checkbox-checked:hover {
-    background: var(--lew-checkbox-color-light);
-
     .icon-checkbox-box {
-        border: var(--lew-form-border-width) var(--lew-checkbox-color-light)
-            solid;
+        border: var(--lew-form-border-width) transparent solid;
     }
 }
 

@@ -3,45 +3,68 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            name:'type',
+            name: 'type',
             description: '类型',
-            type: `primary | info | success | error | warning | normal`,
-            default: `normal`,
+            type: `fill | light | ghost | text`,
+            default: `fill`,
         },
         {
-            name:'size',
+            name: 'text(slot)',
+            description: '按钮文本',
+            type: 'string',
+            default: '""',
+        },
+        {
+            name: 'color',
+            description: '按钮色彩',
+            type: `red | orange
+            | yellow
+            | green
+            | mint
+            | teal
+            | cyan
+            | blue
+            | indigo
+            | purple
+            | pink
+            | gray
+            | brown`,
+            default: 'blue',
+        },
+        {
+            name: 'size',
             description: '尺寸大小',
             type: 'small ｜ medium ｜ large',
             default: 'medium',
         },
         {
-            name:'loading',
-            description: '是否为加载状态',
-            type: 'boolean',
-            default: 'false',
-        },
-        {
-            name:'round',
+            name: 'round',
             description: '是否为圆角',
             type: 'boolean',
             default: 'false',
         },
         {
-            name:'disabled',
+            name: 'icon',
+            description: '图标按钮',
+            type: 'Lew-Icon',
+            default: '""',
+        },
+        {
+            name: 'disabled',
             description: '禁用',
             type: 'boolean',
             default: 'false',
         },
         {
-            name:'is-text',
-            description: '文字按钮',
+            name: 'loading',
+            description: '是否为加载状态',
             type: 'boolean',
             default: 'false',
         },
         {
-            name:'is-icon',
-            description: '图标按钮',
-            type: 'boolean',
+            name: 'request',
+            description: '异步请求',
+            type: 'Promise(()=>{})',
             default: 'false',
         },
     ],

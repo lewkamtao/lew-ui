@@ -77,27 +77,27 @@ const avatarStyleObject = computed(() => {
         height: 0.6rem;
         border-radius: 50%;
         z-index: 99;
-        border: 2px var(--lew-white-color) solid;
+        border: 2px var(--lew-color-white) solid;
     }
 
     .dot-status-online {
-        background-color: var(--lew-success-color);
+        background-color: var(--lew-color-success);
     }
 
     .dot-status-busy {
-        background-color: var(--lew-error-color);
+        background-color: var(--lew-color-error);
     }
 
     .dot-status-offline {
-        background-color: var(--lew-normal-color-dark);
+        background-color: var(--lew-color-normal-dark);
     }
 
     .dot-status-processing {
-        background-color: var(--lew-info-color);
+        background-color: var(--lew-color-info);
     }
 
     .dot-status-away {
-        background-color: var(--lew-warning-color);
+        background-color: var(--lew-color-warning);
     }
 
     .dot-statusPosition-top-left {

@@ -87,7 +87,7 @@ const getValueStyle = computed(() => {
 
 const getLabel = computed(() => {
     if (state.options) {
-        const option = state.options.find((e) => {
+        const option = state.options.find((e: any) => {
             if (e) {
                 return e.value === selectValue.value;
             }
@@ -132,7 +132,7 @@ const getSelectItemClassName = (e: any) => {
 
 const getVirtualHeight = computed(() => {
     let height = state.options.length * props.itemHeight;
-    height = height > 240 ? 240 : height;
+    height = height >= 240 ? 240 : height;
     return `${height}px`;
 });
 
@@ -186,14 +186,22 @@ defineExpose({ show, hide });
                     class="icon-select"
                     :class="{ 'icon-select-hide': clearable && getLabel }"
                 />
-                <lew-icon
-                    v-if="clearable"
-                    :size="getIconSize"
-                    type="x-circle"
-                    class="icon-clear"
-                    :class="{ 'icon-clear-show': clearable && getLabel }"
-                    @click.stop="clearHandle"
-                />
+                <transition name="lew-form-icon-ani">
+                    <lew-icon
+                        v-if="clearable && getLabel"
+                        :size="getIconSize"
+                        type="x"
+                        v-tooltip="{
+                            content: '清空',
+                            placement: 'top',
+                        }"
+                        class="lew-form-icon-clear"
+                        :class="{
+                            'lew-form-icon-clear-focus': state.visible,
+                        }"
+                        @click.stop="clearHandle"
+                    />
+                </transition>
                 <div v-show="getLabel" :style="getValueStyle" class="value">
                     {{ getLabel }}
                 </div>
@@ -241,7 +249,7 @@ defineExpose({ show, hide });
 
                     <use-virtual-list
                         v-if="state.options.length > 0"
-                        class="lew-select-options-list"
+                        class="lew-select-options-list lew-scrollbar"
                         :list="state.options"
                         :options="{
                             itemHeight: 30,
@@ -298,7 +306,7 @@ defineExpose({ show, hide });
     background-color: var(--lew-form-bgcolor);
     transition: all 0.15s ease;
     box-sizing: border-box;
-    outline: 0px var(--lew-primary-color-light) solid;
+    outline: 0px var(--lew-color-primary-light) solid;
     border: var(--lew-form-border-width) transparent solid;
     box-shadow: var(--lew-form-box-shadow);
 
@@ -316,33 +324,23 @@ defineExpose({ show, hide });
         user-select: none;
         box-sizing: border-box;
 
-        .icon-select,
-        .icon-clear {
+        .icon-select {
             position: absolute;
             top: 50%;
             right: 7px;
             transform: translateY(-50%) rotate(0deg);
             transition: var(--lew-form-transition);
         }
+
         .icon-select {
             opacity: var(--lew-form-icon-opacity);
-        }
-        .icon-clear {
-            opacity: 0;
-            transform: translate(150%, -50%);
         }
 
         .icon-select-hide {
             opacity: 0;
             transform: translate(100%, -50%);
         }
-        .icon-clear-show {
-            opacity: var(--lew-form-icon-opacity);
-            transform: translate(0%, -50%);
-        }
-        .icon-clear-show:hover {
-            opacity: var(--lew-form-icon-opacity-hover);
-        }
+
         .placeholder {
             color: rgb(165, 165, 165);
         }
@@ -360,9 +358,11 @@ defineExpose({ show, hide });
     .lew-select-align-left {
         text-align: left;
     }
+
     .lew-select-align-center {
         text-align: center;
     }
+
     .lew-select-align-right {
         text-align: right;
     }
@@ -420,21 +420,29 @@ defineExpose({ show, hide });
         transform: translateY(-50%) rotate(180deg);
         color: var(--lew-text-color-2);
     }
+
+    .icon-select-hide {
+        opacity: 0;
+        transform: translate(100%, -50%) rotate(180deg);
+    }
 }
 
 .lew-select-view-disabled {
     opacity: var(--lew-disabled-opacity);
     pointer-events: none; //鼠标点击不可修改
 }
+
 .lew-select-view-readonly {
     pointer-events: none; //鼠标点击不可修改
+
     .lew-select {
         user-select: text;
     }
 }
+
 .lew-select-view-disabled:hover {
     background-color: var(--lew-form-bgcolor);
-    outline: 0px var(--lew-primary-color-light) solid;
+    outline: 0px var(--lew-color-primary-light) solid;
     border: var(--lew-form-border-width) transparent solid;
 }
 </style>
@@ -442,8 +450,10 @@ defineExpose({ show, hide });
 .lew-select-body {
     width: 100%;
     box-sizing: border-box;
+
     .search-input {
         margin-bottom: 5px;
+
         input {
             outline: none;
             border: none;
@@ -456,20 +466,25 @@ defineExpose({ show, hide });
             color: var(--lew-form-color);
             transition: var(--lew-form-transition);
         }
+
         input:focus {
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-bgcolor-3) !important;
         }
     }
+
     .not-found {
         padding: 50px 0px;
         opacity: 0.4;
+        min-height: 268px;
     }
+
     .reslut-count {
         padding-left: 8px;
         margin: 5px 0px;
         opacity: 0.4;
         font-size: 13px;
     }
+
     .lew-select-options-box {
         overflow-y: auto;
         overflow-x: hidden;
@@ -496,12 +511,15 @@ defineExpose({ show, hide });
             opacity: 0.3;
             cursor: no-drop;
         }
+
         .lew-select-item-align-left {
             text-align: left;
         }
+
         .lew-select-item-align-center {
             text-align: center;
         }
+
         .lew-select-item-align-right {
             text-align: right;
         }
@@ -532,39 +550,20 @@ defineExpose({ show, hide });
         }
 
         .lew-select-item-active {
-            color: var(--lew-primary-color-dark);
+            color: var(--lew-color-primary-dark);
             font-weight: bold;
             background-color: var(--lew-form-bgcolor);
+
             .icon-check {
                 margin-right: 10px;
             }
         }
 
         .lew-select-item-active:hover {
-            color: var(--lew-primary-color-dark);
+            color: var(--lew-color-primary-dark);
             font-weight: bold;
             background-color: var(--lew-form-bgcolor);
         }
-    }
-
-    .lew-select-options-list::-webkit-scrollbar {
-        background-color: rgb(126, 126, 126, 0);
-        width: 7px;
-        height: 7px;
-    }
-
-    .lew-select-options-list::-webkit-scrollbar-thumb:hover {
-        background-color: rgb(126, 126, 126);
-    }
-
-    .lew-select-options-list::-webkit-scrollbar-thumb {
-        background-color: rgb(209 213 219 / 0);
-        border-radius: 4px;
-    }
-
-    .lew-select-options-list:hover::-webkit-scrollbar-thumb {
-        background-color: rgb(209 213 219 / 1);
-        border-radius: 4px;
     }
 }
 </style>

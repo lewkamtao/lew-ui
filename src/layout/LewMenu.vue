@@ -33,7 +33,7 @@ const toPath = (item: Item) => {
 </script>
 
 <template>
-    <div class="siderbar btf-scrollbar">
+    <div class="siderbar lew-scrollbar">
         <div v-for="(list, i) in group" :key="`group${i}`" class="group">
             <div v-if="list.title" class="title">
                 <span> {{ list.title }}</span>
@@ -139,12 +139,12 @@ const toPath = (item: Item) => {
         }
 
         .active {
-            color: var(--lew-white-text-color);
-            background: var(--lew-primary-color);
+            color: var(--lew-color-white-text);
+            background: var(--lew-color-primary);
         }
         .active:hover {
-            color: var(--lew-white-text-color);
-            background: var(--lew-primary-color);
+            color: var(--lew-color-white-text);
+            background: var(--lew-color-primary);
         }
     }
 

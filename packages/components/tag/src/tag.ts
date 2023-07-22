@@ -1,20 +1,34 @@
 import { ExtractPropTypes, PropType } from 'vue';
 
 type TagSize = 'small' | 'medium' | 'large';
-type TagType = 'primary' | 'info' | 'success' | 'error' | 'warning' | 'normal';
+type TagType = 'fill' | 'light' | 'ghost';
+type TagColor =
+    | 'red'
+    | 'orange'
+    | 'yellow'
+    | 'green'
+    | 'mint'
+    | 'teal'
+    | 'cyan'
+    | 'blue'
+    | 'indigo'
+    | 'purple'
+    | 'pink'
+    | 'gray'
+    | 'brown';
 
 export const tagProps = {
     type: {
         type: String as PropType<TagType>,
-        default: 'normal',
+        default: 'fill',
+    },
+    color: {
+        type: String as PropType<TagColor>,
+        default: 'blue',
     },
     size: {
         type: String as PropType<TagSize>,
         default: 'medium',
-    },
-    maxWidth: {
-        type: Number,
-        default: 220,
     },
     round: {
         type: Boolean,

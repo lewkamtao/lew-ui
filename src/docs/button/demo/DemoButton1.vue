@@ -1,28 +1,11 @@
 <template>
-    <lew-flex direction="y" x="start" gap="20">
-        <div>
-            <lew-title :size="16">normal</lew-title>
-            <lew-flex y="end">
-                <lew-button size="small">submit</lew-button>
-                <lew-button size="medium" text="submit" />
-                <lew-button size="large" text="submit" />
-            </lew-flex>
-        </div>
-        <div>
-            <lew-title :size="16">icon</lew-title>
-            <lew-flex y="end">
-                <lew-button size="small" icon="message-circle" />
-                <lew-button size="medium" icon="message-circle" />
-                <lew-button size="large" icon="message-circle" />
-            </lew-flex>
-        </div>
-        <div>
-            <lew-title :size="16">icon text</lew-title>
-            <lew-flex y="end">
-                <lew-button text="submit" size="small" icon="message-circle" />
-                <lew-button text="submit" size="medium" icon="message-circle" />
-                <lew-button text="submit" size="large" icon="message-circle" />
-            </lew-flex>
-        </div>
+    <lew-flex direction="y" gap="20">
+        <lew-flex wrap x="start" gap="10">
+            <lew-button size="medium" text="fill" type="fill" />
+            <lew-button size="medium" text="light" type="light" />
+            <lew-button size="medium" text="ghost" type="ghost" />
+            <lew-button size="medium" text="text" type="text" />
+        </lew-flex>
     </lew-flex>
 </template>
+

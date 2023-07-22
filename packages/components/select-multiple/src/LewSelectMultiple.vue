@@ -6,7 +6,14 @@ import { UseVirtualList } from '@vueuse/components';
 import { selectMultipleProps, SelectMultipleOptions } from './props';
 
 const props = defineProps(selectMultipleProps);
-const emit = defineEmits(['update:modelValue', 'change', 'blur']);
+const emit = defineEmits([
+    'update:modelValue',
+    'change',
+    'select',
+    'clear',
+    'delete',
+    'blur',
+]);
 const selectValue = useVModel(props, 'modelValue', emit);
 
 const lewSelectRef = ref();
@@ -64,13 +71,23 @@ const search = async (e?: any) => {
 
 const clearHandle = () => {
     selectValue.value = [];
-    emit('change');
+    emit('clear');
     // 刷新位置
-    lewPopverRef.value.refresh();
+    nextTick(() => {
+        lewPopverRef.value.refresh();
+        emit('change', selectValue.value);
+    });
 };
 
-const closeLabel = (index: number) => {
+const deleteTag = (index: number) => {
+    let item = selectValue.value[index];
     selectValue.value && selectValue.value.splice(index, 1);
+    emit('delete', item);
+    // 刷新位置
+    nextTick(() => {
+        lewPopverRef.value.refresh();
+        emit('change', selectValue.value);
+    });
 };
 
 const selectHandle = (item: SelectMultipleOptions) => {
@@ -89,9 +106,12 @@ const selectHandle = (item: SelectMultipleOptions) => {
     }
 
     selectValue.value = _value;
-    emit('change', item);
+    emit('select', item);
     // 刷新位置
-    lewPopverRef.value.refresh();
+    nextTick(() => {
+        lewPopverRef.value.refresh();
+        emit('change', selectValue.value);
+    });
 };
 
 const getChecked = computed(() => (value: string | number) => {
@@ -200,17 +220,23 @@ defineExpose({ show, hide });
                             clearable && getLabels && getLabels.length > 0,
                     }"
                 />
-                <lew-icon
-                    v-if="clearable"
-                    :size="getIconSize"
-                    type="x-circle"
-                    class="icon-clear"
-                    :class="{
-                        'icon-clear-show':
-                            clearable && getLabels && getLabels.length > 0,
-                    }"
-                    @click.stop="clearHandle"
-                />
+                <transition name="lew-form-icon-ani">
+                    <lew-icon
+                        v-if="clearable && getLabels && getLabels.length > 0"
+                        :size="getIconSize"
+                        type="x"
+                        v-tooltip="{
+                            content: '清空',
+                            placement: 'top',
+                        }"
+                        class="lew-form-icon-clear"
+                        :class="{
+                            'lew-form-icon-clear-focus': state.visible,
+                        }"
+                        @click.stop="clearHandle"
+                    />
+                </transition>
+
                 <lew-flex
                     v-show="getLabels && getLabels.length > 0"
                     style="padding: 3px"
@@ -219,16 +245,18 @@ defineExpose({ show, hide });
                     wrap
                     class="value"
                 >
-                    <lew-tag
-                        v-for="(item, index) in getLabels"
-                        :key="index"
-                        :size="size"
-                        type="primary"
-                        closable
-                        @close="closeLabel(index)"
-                    >
-                        {{ item }}
-                    </lew-tag>
+                    <TransitionGroup name="list">
+                        <lew-tag
+                            type="light"
+                            v-for="(item, index) in getLabels"
+                            :key="index"
+                            :size="size"
+                            closable
+                            @close="deleteTag(index)"
+                        >
+                            {{ item }}
+                        </lew-tag>
+                    </TransitionGroup>
                 </lew-flex>
                 <div
                     v-show="getLabels && getLabels.length === 0"
@@ -277,7 +305,7 @@ defineExpose({ show, hide });
 
                     <use-virtual-list
                         v-if="state.options.length > 0"
-                        class="lew-select-options-list"
+                        class="lew-select-options-list lew-scrollbar"
                         :list="state.options"
                         :options="{
                             itemHeight: 30,
@@ -334,7 +362,7 @@ defineExpose({ show, hide });
     background-color: var(--lew-form-bgcolor);
     transition: all 0.15s ease;
     box-sizing: border-box;
-    outline: 0px var(--lew-primary-color-light) solid;
+    outline: 0px var(--lew-color-primary-light) solid;
     border: var(--lew-form-border-width) transparent solid;
     box-shadow: var(--lew-form-box-shadow);
 
@@ -352,29 +380,19 @@ defineExpose({ show, hide });
         box-sizing: border-box;
         overflow: hidden;
 
-        .icon-select,
-        .icon-clear {
+        .icon-select {
             position: absolute;
             top: 50%;
             right: 7px;
             transform: translateY(-50%) rotate(0deg);
             transition: var(--lew-form-transition);
-        }
-        .icon-clear {
-            opacity: 0;
-            transform: translate(150%, -50%);
+            opacity: var(--lew-form-icon-opacity);
         }
         .icon-select-hide {
             opacity: 0;
             transform: translate(100%, -50%);
         }
-        .icon-clear-show {
-            opacity: 0.7;
-            transform: translate(0%, -50%);
-        }
-        .icon-clear-show:hover {
-            opacity: 1;
-        }
+
         .placeholder {
             color: rgb(165, 165, 165);
         }
@@ -460,6 +478,10 @@ defineExpose({ show, hide });
         transform: translateY(-50%) rotate(180deg);
         color: var(--lew-text-color-2);
     }
+    .icon-select-hide {
+        opacity: 0;
+        transform: translate(100%, -50%) rotate(180deg);
+    }
 }
 .lew-select-view-readonly {
     pointer-events: none; //鼠标点击不可修改
@@ -474,8 +496,18 @@ defineExpose({ show, hide });
 .lew-select-view-disabled:hover {
     border-radius: var(--lew-border-radius);
     background-color: var(--lew-form-bgcolor);
-    outline: 0px var(--lew-primary-color-light) solid;
+    outline: 0px var(--lew-color-primary-light) solid;
     border: var(--lew-form-border-width) transparent solid;
+}
+
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.15s ease-in-out;
+}
+.list-enter-from,
+.list-leave-to {
+    opacity: 0;
+    transform: translateX(-5px);
 }
 </style>
 <style lang="scss">
@@ -573,7 +605,7 @@ defineExpose({ show, hide });
         }
 
         .lew-select-item-active {
-            color: var(--lew-primary-color-dark);
+            color: var(--lew-color-primary-dark);
             font-weight: bold;
             background-color: var(--lew-form-bgcolor);
             .icon-check {
@@ -582,30 +614,10 @@ defineExpose({ show, hide });
         }
 
         .lew-select-item-active:hover {
-            color: var(--lew-primary-color-dark);
+            color: var(--lew-color-primary-dark);
             font-weight: bold;
             background-color: var(--lew-form-bgcolor);
         }
-    }
-
-    .lew-select-options-list::-webkit-scrollbar {
-        background-color: rgb(126, 126, 126, 0);
-        width: 7px;
-        height: 7px;
-    }
-
-    .lew-select-options-list::-webkit-scrollbar-thumb:hover {
-        background-color: rgb(126, 126, 126);
-    }
-
-    .lew-select-options-list::-webkit-scrollbar-thumb {
-        background-color: rgb(209 213 219 / 0);
-        border-radius: 4px;
-    }
-
-    .lew-select-options-list:hover::-webkit-scrollbar-thumb {
-        background-color: rgb(209 213 219 / 1);
-        border-radius: 4px;
     }
 }
 </style>

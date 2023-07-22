@@ -5,16 +5,16 @@ import { any2px } from 'lew-ui/utils';
 const props = defineProps(titleProps);
 
 const titleStyle = computed(() => {
-    const { bold, type } = props;
+    const { bold, color } = props;
     const size = any2px(props.size);
-    const typeStyle = type
+    const colorStyle = color
         ? `
     -webkit-background-clip: text;
     -moz-background-clip: text;
     background-clip: text;
-    color: transparent;background-image: linear-gradient(-252deg, var(--lew-${type}-color-start),var(--lew-${type}-color-end))`
+    color: transparent;background-image: linear-gradient(-252deg, var(--lew-color-${color}-dark),var(--lew-color-${color}))`
         : '';
-    return `font-weight:${bold};font-size:${size};${typeStyle}`;
+    return `font-weight:${bold};font-size:${size};${colorStyle}`;
 });
 </script>
 

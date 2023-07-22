@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { dateRangePickerProps } from './datePicker';
 import { useVModel } from '@vueuse/core';
-import { object2class } from 'lew-ui/utils';
 
 const props = defineProps(dateRangePickerProps);
 const emit = defineEmits(['change', 'clear', 'update:modelValue']);
@@ -85,7 +84,9 @@ defineExpose({ show, hide });
                     >
                         {{ modelValue[startKey] }}
                     </div>
-                    <div class="lew-date-picker-mid">-</div>
+                    <div class="lew-date-picker-mid">
+                        <lew-icon size="14" type="minus" />
+                    </div>
                     <div
                         v-if="!modelValue[endKey]"
                         class="lew-date-picker-placeholder"
@@ -106,14 +107,22 @@ defineExpose({ show, hide });
                         }"
                         type="calendar"
                     />
-                    <lew-icon
-                        v-if="clearable"
-                        :size="getIconSize"
-                        type="x-circle"
-                        class="icon-clear"
-                        :class="{ 'icon-clear-show': checkClear }"
-                        @click.stop="clearHandle"
-                    />
+                    <transition name="lew-form-icon-ani">
+                        <lew-icon
+                            v-if="clearable && checkClear"
+                            :size="getIconSize"
+                            type="x"
+                            v-tooltip="{
+                                content: '清空',
+                                placement: 'top',
+                            }"
+                            class="lew-form-icon-clear"
+                            :class="{
+                                'lew-form-icon-clear-focus': visible,
+                            }"
+                            @click.stop="clearHandle"
+                        />
+                    </transition>
                 </div>
             </div>
         </template>
@@ -136,7 +145,7 @@ defineExpose({ show, hide });
         align-items: center;
         position: relative;
         width: 100%;
-        padding: 0px 45px 0px 0px;
+        padding: 0px 30px 0px 0px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -148,14 +157,19 @@ defineExpose({ show, hide });
         user-select: none;
         box-shadow: var(--lew-form-box-shadow);
         border: var(--lew-form-border-width) transparent solid;
-        outline: 0px var(--lew-primary-color-light) solid;
+        outline: 0px var(--lew-color-primary-light) solid;
     }
     .lew-date-picker-input {
         width: 100%;
         display: inline-flex;
+        gap: 5px;
         align-items: center;
-        gap: 10px;
         box-sizing: border-box;
+        .lew-date-picker-mid {
+            display: flex;
+            align-items: center;
+            color: var(--lew-text-color-8);
+        }
         .icon-calendar {
             position: absolute;
             top: 50%;
@@ -168,21 +182,7 @@ defineExpose({ show, hide });
             opacity: 0;
             transform: translateY(-50%) translateX(100%);
         }
-        .icon-clear {
-            position: absolute;
-            top: 50%;
-            right: 7px;
-            opacity: 0;
-            transform: translateY(-50%) translateX(100%);
-            transition: var(--lew-form-transition);
-        }
-        .icon-clear-show {
-            transform: translateY(-50%) translateX(0);
-            opacity: var(--lew-form-icon-opacity);
-        }
-        .icon-clear-show:hover {
-            opacity: var(--lew-form-icon-opacity-hover);
-        }
+
         .lew-date-picker-placeholder {
             color: rgb(165, 165, 165);
         }

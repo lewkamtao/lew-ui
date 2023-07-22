@@ -7,7 +7,7 @@ const schoolsOptions = schools.map((e) => {
 const options = ref(schoolsOptions);
 
 const disabled = ref(true);
-const value = ref('');
+const value = ref([]);
 </script>
 
 <template>

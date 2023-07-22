@@ -4,6 +4,7 @@ import DemoButton3 from './DemoButton3.vue';
 import DemoButton4 from './DemoButton4.vue';
 import DemoButton5 from './DemoButton5.vue';
 import DemoButton6 from './DemoButton6.vue';
+import DemoButton7 from './DemoButton7.vue';
 
 import DemoButton1_code from './DemoButton1.vue?raw';
 import DemoButton2_code from './DemoButton2.vue?raw';
@@ -11,6 +12,7 @@ import DemoButton3_code from './DemoButton3.vue?raw';
 import DemoButton4_code from './DemoButton4.vue?raw';
 import DemoButton5_code from './DemoButton5.vue?raw';
 import DemoButton6_code from './DemoButton6.vue?raw';
+import DemoButton7_code from './DemoButton7.vue?raw';
 
 export {
     DemoButton1,
@@ -19,10 +21,12 @@ export {
     DemoButton4,
     DemoButton5,
     DemoButton6,
+    DemoButton7,
     DemoButton1_code,
     DemoButton2_code,
     DemoButton3_code,
     DemoButton4_code,
     DemoButton5_code,
     DemoButton6_code,
+    DemoButton7_code,
 };

@@ -18,7 +18,7 @@ type Item = {
     name: string;
     path: string;
     label: string;
-    type: string;
+    color?: string;
 };
 
 type Group = {
@@ -36,35 +36,31 @@ group.value = [
                 name: '',
                 path: '/Install',
                 label: '',
-                type: 'success',
             },
             {
                 cname: '如何使用',
                 name: '',
                 path: '/Start',
                 label: '',
-                type: 'success',
             },
             {
                 cname: '常见问题',
                 name: '',
                 path: '/QA',
                 label: '',
-                type: 'success',
             },
             {
                 cname: '未来计划',
                 name: '',
                 path: '/TodoList',
                 label: '',
-                type: '',
             },
             // {
             //     cname: 'Chat',
             //     name: '交流群',
             //     path: '/chat',
             //     label: '',
-            //     type: '',
+            //     color '',
             // },
         ],
     },
@@ -76,7 +72,7 @@ group.value = [
                 name: '',
                 path: '/Log',
                 label: 'new',
-                type: 'success',
+                color: 'success',
             },
         ],
     },
@@ -95,7 +91,7 @@ group.value = [
         <div class="sider" :class="{ 'sider-open': isShowSider }">
             <the-siderbar :group="group" />
         </div>
-        <div ref="mainRef" class="app-main btf-scrollbar">
+        <div ref="mainRef" class="app-main lew-scrollbar">
             <router-view v-slot="{ Component }">
                 <component :is="Component" />
             </router-view>
@@ -139,7 +135,7 @@ group.value = [
         z-index: 99;
         display: inline-flex;
         align-items: center;
-        background-color: var(--lew-primary-color);
+        background-color: var(--lew-color-primary);
         padding: 5px 7px;
         color: #fff;
         transition: all 0.85s cubic-bezier(0.65, 0, 0.35, 1);

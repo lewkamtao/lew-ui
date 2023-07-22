@@ -77,7 +77,7 @@
             padding: 10px;
             font-size: 14px;
             border-radius: var(--lew-border-radius);
-            background-color: var(--lew-primary-color);
+            background-color: var(--lew-color-primary);
         }
     }
 }

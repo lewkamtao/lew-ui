@@ -4,9 +4,8 @@
         v-model:file-list="fileList"
         @preview="handlePreview"
     >
-        <lew-button type="success" icon="file-text" text="select"></lew-button>
+        <lew-button color="green" icon="file-text" text="select"></lew-button>
         <lew-button
-            type="primary"
             icon="upload"
             text="upload"
             style="margin-left: 10px"
@@ -32,13 +31,13 @@ const fileList = reactive([
     },
 ]);
 
-function handlePreview(file) {
+function handlePreview(file: any) {
     if (file?.response?.data) {
         window.open(file.response.data);
     }
 }
 
-function submit(event) {
+function submit(event: any) {
     event.stopPropagation();
     uploadRef.value.submit();
     console.log(fileList);

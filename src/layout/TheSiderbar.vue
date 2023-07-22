@@ -10,7 +10,7 @@ type Item = {
     cname: string;
     path: string;
     label: string;
-    type: string;
+    color?: string;
 };
 
 type Group = {
@@ -28,12 +28,16 @@ defineProps({
 });
 
 const toPath = (item: Item) => {
+    if (item.label === 'Coming soon') {
+        LewMessage.info('敬请期待！');
+        return;
+    }
     router.push(item.path);
 };
 </script>
 
 <template>
-    <div class="siderbar btf-scrollbar">
+    <div class="siderbar lew-scrollbar">
         <div v-for="(list, i) in group" :key="`group${i}`" class="group">
             <div v-if="list.title" class="title">
                 <span> {{ list.title }}</span>
@@ -48,8 +52,9 @@ const toPath = (item: Item) => {
                 <span v-if="item.name" class="ename"> {{ item.name }} </span>
                 <span v-else class="cname"> {{ item.cname }}</span>
                 <lew-tag
+                    type="light"
                     v-if="item.label"
-                    :type="item.type"
+                    :color="item.color"
                     size="small"
                     style="margin-left: 10px"
                 >
@@ -102,8 +107,6 @@ const toPath = (item: Item) => {
             cursor: pointer;
             font-size: 14px;
             color: var(--lew-text-color-2);
-            font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier,
-                monospace;
             .ename {
                 margin-right: 5px;
             }
@@ -115,13 +118,13 @@ const toPath = (item: Item) => {
         }
 
         .active {
-            color: var(--lew-white-text-color);
-            background: var(--lew-primary-color);
+            color: var(--lew-color-primary);
+            background: var(--lew-color-primary-light);
         }
 
         .active:hover {
-            color: var(--lew-white-text-color);
-            background: var(--lew-primary-color);
+            color: var(--lew-color-primary);
+            background: var(--lew-color-primary-light);
         }
     }
 

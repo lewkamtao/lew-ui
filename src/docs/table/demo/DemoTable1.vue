@@ -83,8 +83,8 @@ const columns = [
         </template>
         <template #fraction="{ row }">
             <lew-flex>
-                <lew-badge v-if="row.fraction >= 60" round type="success" />
-                <lew-badge v-else round type="error" />
+                <lew-badge v-if="row.fraction >= 60" round color="green" />
+                <lew-badge v-else round color="red" />
                 <span>{{ row.fraction >= 60 ? '良好' : '很差' }}</span>
             </lew-flex>
         </template>

@@ -1,4 +1,4 @@
-export const _props = {
+export const dialogProps = {
     visible: {
         type: Boolean,
         default: () => {
@@ -19,16 +19,22 @@ export const _props = {
             return true;
         },
     },
-    okText: { type: String, default: '确定' },
-    cancelText: { type: String, default: '取消' },
     cancel: {
         type: Function,
         default: () => {
             return true;
         },
     },
+    okText: {
+        type: String,
+        default: '确定',
+    },
+    cancelText: {
+        type: String,
+        default: '取消',
+    },
     layout: {
         type: String,
-        default: 'normal', // normal or mini
+        default: 'normal',
     },
 };

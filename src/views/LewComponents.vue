@@ -35,7 +35,7 @@ type Item = {
     name: string;
     path: string;
     label: string;
-    type: string;
+    color: string;
 };
 
 type Group = {
@@ -53,14 +53,14 @@ group.value = [
                 name: 'Avatar',
                 path: '/Avatar',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '按钮',
                 name: 'Button',
                 path: '/Button',
                 label: '',
-                type: 'success',
+                color: '',
             },
 
             {
@@ -68,56 +68,56 @@ group.value = [
                 name: 'Tag',
                 path: '/Tag',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '徽章',
                 name: 'Badge',
                 path: '/Badge',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '标题',
                 name: 'Title',
                 path: '/Title',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '文本修剪',
                 name: 'TextTrim',
                 path: '/TextTrim',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '弹性布局',
                 name: 'Flex',
                 path: '/Flex',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '标记',
                 name: 'Mark',
                 path: '/Mark',
                 label: '',
-                type: 'success',
+                color: '',
             },
-            {
-                cname: '颜色',
-                name: 'Color',
-                path: '/Color',
-                label: '',
-                type: 'success',
-            },
+            // {
+            //     cname: '颜色',
+            //     name: 'Color',
+            //     path: '/Color',
+            //     label: '',
+            //     color: '',
+            // },
             {
                 cname: '图标',
                 name: 'Icon',
                 path: '/icon',
                 label: '',
-                type: 'success',
+                color: '',
             },
         ],
     },
@@ -130,28 +130,28 @@ group.value = [
                 name: 'BackTop',
                 path: '/BackTop',
                 label: '',
-                type: 'success',
+                color: '',
             },
             // {
             //     cname: '步骤',
             //     name: 'Steps',
             //     path: '/Steps',
             //     label: '',
-            //     type: '',
+            //     color: '',
             // },
             {
                 cname: '下拉菜单',
                 name: 'Dropdown',
                 path: '/Dropdown',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '面包屑',
                 name: 'Breadcrumb',
                 path: '/Breadcrumb',
                 label: '',
-                type: 'success',
+                color: '',
             },
         ],
     },
@@ -162,113 +162,114 @@ group.value = [
                 cname: '表单',
                 name: 'Form',
                 path: '/Form',
-                label: 'Developing',
-                type: 'warning',
+                label: 'Beta',
+                color: 'success',
             },
             {
                 cname: '文本框',
                 name: 'Input',
                 path: '/Input',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '多行文本框',
                 name: 'Textarea',
                 path: '/Textarea',
                 label: '',
-                type: 'success',
+                color: '',
             },
             // {
             //     cname: '高级输入框',
             //     name: 'InputPro',
             //     path: '/InputPro',
             //     label: '',
-            //     type: 'warning',
+            //     color: 'warning',
             // },
             {
                 cname: '标签输入框',
                 name: 'InputTag',
                 path: '/InputTag',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '多选框',
                 name: 'Checkbox',
                 path: '/Checkbox',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '单选框',
                 name: 'Radio',
                 path: '/Radio',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '选项卡',
                 name: 'Tabs',
                 path: '/Tabs',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '选择器',
                 name: 'Select',
                 path: '/Select',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '多选选择器',
                 name: 'SelectMultiple',
                 path: '/SelectMultiple',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '日期选择器',
                 name: 'DatePicker',
                 path: '/DatePicker',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '日期范围选择器',
                 name: 'DateRangePicker',
                 path: '/DateRangePicker',
                 label: '',
-                type: 'success',
+                color: '',
             },
-            // {
-            //     cname:"",
-            //     name: 'Cascader',
-            //     path: '/Cascader',
-            //     label: '',
-            //     type: 'error',
-            // },
+            {
+                cname: '',
+                name: 'Cascader',
+                path: '/Cascader',
+                label: 'Beta',
+                color: 'green',
+            },
+            {
+                cname: '',
+                name: 'TreeSelect',
+                path: '/TreeSelect',
+                label: 'Coming soon',
+                color: 'warning',
+            },
             {
                 cname: '开关',
                 name: 'Switch',
                 path: '/Switch',
                 label: '',
-                type: 'success',
+                color: '',
             },
-            // {
-            //     cname:"",
-            //     name: 'InputTag',
-            //     path: '/InputTag',
-            //     label: '',
-            //     type: 'error',
-            // },
+
             {
                 cname: '文件上传',
                 name: 'Upload',
                 path: '/Upload',
                 label: '',
-                type: 'success',
+                color: '',
             },
         ],
     },
@@ -280,28 +281,28 @@ group.value = [
                 name: 'Table',
                 path: '/Table',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '分页',
                 name: 'Pagination',
                 path: '/Pagination',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '魔术数值',
                 name: 'MagicNumber',
                 path: '/MagicNumber',
                 label: '',
-                type: 'success',
+                color: '',
             },
             // {
             //     cname: '折叠面板',
             //     name: 'Collapse',
             //     path: '/Collapse',
             //     label: '',
-            //     type: 'success',
+            //     color: '',
             // },
         ],
     },
@@ -313,56 +314,56 @@ group.value = [
                 name: 'Alert',
                 path: '/Alert',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '全局提示',
                 name: 'Message',
                 path: '/Message',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '通知',
                 name: 'Notification',
                 path: '/Notification',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '抽屉',
                 name: 'Drawer',
                 path: '/Drawer',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '对话框',
                 name: 'Dialog',
                 path: '/Dialog',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '模态框',
                 name: 'Modal',
                 path: '/Modal',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '确认气泡',
                 name: 'Popok',
                 path: '/Popok',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '信息气泡',
                 name: 'Popover',
                 path: '/Popover',
                 label: '',
-                type: 'error',
+                color: 'error',
             },
 
             {
@@ -370,21 +371,21 @@ group.value = [
                 name: 'Tooltip',
                 path: '/Tooltip',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '加载',
                 name: 'Loading',
                 path: '/Loading',
                 label: '',
-                type: 'success',
+                color: '',
             },
             {
                 cname: '结果',
                 name: 'Result',
                 path: '/Result',
                 label: '',
-                type: 'success',
+                color: '',
             },
         ],
     },
@@ -403,8 +404,8 @@ group.value = [
         <div class="sider" :class="{ 'sider-open': isShowSider }">
             <the-siderbar :group="group" />
         </div>
-        <div ref="mainRef" class="app-main btf-scrollbar">
-            <div class="component-main" id="component-main">
+        <div ref="mainRef" class="app-main lew-scrollbar">
+            <div class="component-main lew-scrollbar" id="component-main">
                 <router-view v-slot="{ Component }">
                     <keep-alive>
                         <Component :is="Component"> </Component>
@@ -437,7 +438,7 @@ group.value = [
     display: flex;
     box-sizing: border-box;
     .component-main {
-        width: calc(100% - 300px);
+        width: calc(100% - 200px);
         height: 100%;
         overflow-y: auto;
         overflow-x: hidden;
@@ -447,7 +448,7 @@ group.value = [
     }
     .component-nav {
         height: 100%;
-        width: 300px;
+        width: 200px;
     }
 }
 
@@ -463,7 +464,7 @@ group.value = [
         z-index: 99;
         display: inline-flex;
         align-items: center;
-        background-color: var(--lew-primary-color);
+        background-color: var(--lew-color-primary);
         padding: 5px 7px;
         color: #fff;
         transition: all 0.85s cubic-bezier(0.65, 0, 0.35, 1);

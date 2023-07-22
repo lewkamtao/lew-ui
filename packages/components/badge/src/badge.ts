@@ -1,25 +1,28 @@
 import { ExtractPropTypes, PropType } from 'vue';
 
-type badgeType =
-    | 'primary'
-    | 'info'
-    | 'success'
-    | 'error'
-    | 'warning'
-    | 'normal';
+type badgeColor =
+    | 'red'
+    | 'orange'
+    | 'yellow'
+    | 'green'
+    | 'mint'
+    | 'teal'
+    | 'cyan'
+    | 'blue'
+    | 'indigo'
+    | 'purple'
+    | 'pink'
+    | 'gray'
+    | 'brown';
 
 export const badgeProps = {
-    type: {
-        type: String as PropType<badgeType>,
-        default: 'normal',
-    },
-    round: {
-        type: Boolean,
-        default: false,
-    },
     value: {
         type: String,
         default: '',
+    },
+    color: {
+        type: String as PropType<badgeColor>,
+        default: 'red',
     },
 };
 

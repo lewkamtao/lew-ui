@@ -1,3 +1,12 @@
+@import url(../font/HarmonyOS_Medium.css);
+@import url(../font/HarmonyOS_Regular.css);
+
+html,
+body {
+    font-family: HarmonyOS_Regular;
+}
+
+
 body {
     color: var(--lew-text-color-1);
     background-color: var(--lew-bgcolor-3);
@@ -39,5 +48,11 @@ a {
             border-radius: var(--lew-border-radius);
             overflow: hidden;
         }
+    }
+}
+
+.docs-wrapper {
+    .lew-table {
+        font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace;
     }
 }

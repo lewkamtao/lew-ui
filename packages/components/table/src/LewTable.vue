@@ -200,7 +200,7 @@ onUnmounted(() => {
     >
         <div
             ref="tableRef"
-            class="lew-table"
+            class="lew-table lew-scrollbar"
             :style="`max-height: ${maxHeight}px`"
             @scroll="checkScroll"
             @mouseleave="state.hoverIndex = -1"

@@ -25,7 +25,7 @@ const change = (e: any) => {
 <template>
     <lew-flex gap="50" x="start">
         <lew-dropdown :options="options" @change="change">
-            <lew-tag type="success">hover</lew-tag>
+            <lew-tag color="green">hover</lew-tag>
         </lew-dropdown>
 
         <lew-dropdown

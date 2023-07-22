@@ -96,7 +96,7 @@ const getChecked = computed(() => (id: any) => {
         <lew-button
             text="取消所有选择"
             v-if="selectedKey.length > 0"
-            type="error"
+            color="red"
             @click="selectedKey = []"
         />
         <lew-button
@@ -123,15 +123,13 @@ const getChecked = computed(() => (id: any) => {
         :max-height="400"
         row-key="id"
     >
-        <template #title="{ row }">
-            <div class="title">{{ row.title }}</div>
-        </template>
+   
         <template #release_date="{ row }"> {{ row.release_date }} </template>
         <template #directors="{ row }">
             <lew-tag
                 v-for="(item, index) in row.directors"
                 :key="index"
-                type="warning"
+                color="warning"
             >
                 {{ item }}</lew-tag
             >
@@ -143,7 +141,7 @@ const getChecked = computed(() => (id: any) => {
         <template #action="{ row, column }">
             <lew-button
                 text="管理"
-                type="blank"
+                type="text"
                 @click.stop="get({ row, column })"
             />
             <lew-popok
@@ -153,11 +151,11 @@ const getChecked = computed(() => (id: any) => {
                 width="200px"
                 @click.stop
             >
-                <lew-button text="删除" type="blank" />
+                <lew-button text="删除" type="text" />
             </lew-popok>
         </template>
         <template #type="{ row }">
-            <lew-tag type="success"
+            <lew-tag color="green"
                 >{{ row.type === 'movie' ? '电影' : '电视剧' }}
             </lew-tag>
         </template>
@@ -178,7 +176,7 @@ const getChecked = computed(() => (id: any) => {
                 <lew-tag
                     v-for="(actor, index) in row.actors"
                     :key="index"
-                    type="info"
+                    type="light" color="blue"
                     size="small"
                     >{{ actor }}
                 </lew-tag>
