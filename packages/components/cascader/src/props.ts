@@ -3,6 +3,9 @@ import { PropType } from 'vue';
 export type CascaderOptions = {
     label: string;
     value: string;
+    labelPath?: string[];
+    valuePath?: string[];
+    level?: number;
     isHasChild?: boolean;
     disabled?: boolean;
     children?: CascaderOptions[];
@@ -31,13 +34,6 @@ export const cascaderProps = {
         },
     },
     trigger: {
-        type: String,
-        default: 'click',
-        validator(value: string) {
-            return ['click', 'hover'].includes(value);
-        },
-    },
-    selectTrigger: {
         type: String,
         default: 'click',
         validator(value: string) {

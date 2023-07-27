@@ -86,8 +86,9 @@ const options = [
 
 <template>
     <lew-flex direction="y" gap="20px" style="width: 300px">
-        <lew-cascader size="small" :options="options" />
-        <lew-cascader :options="options" />
+        <lew-cascader :free="false" size="small" :options="options" />
+        <lew-cascader :showAllLevels="false" :options="options" />
         <lew-cascader size="large" :options="options" />
+        <lew-cascader multiple size="large" :options="options" />
     </lew-flex>
 </template>

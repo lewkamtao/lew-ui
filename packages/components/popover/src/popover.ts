@@ -17,6 +17,10 @@ export const popoverProps = {
         type: Boolean,
         default: () => false,
     },
+    popoverBodyClassName: {
+        type: String,
+        default: 'lew-popover-body',
+    },
     triggerTarget: {
         type: Element,
         default: null,

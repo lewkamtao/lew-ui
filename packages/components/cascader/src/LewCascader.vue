@@ -14,15 +14,35 @@ const state = reactive({
     visible: false,
     loading: false,
     options: [] as CascaderOptions[][],
-    labels: [] as string[],
-    hoverlabels: [] as string[],
-    selectlabels: [] as string[],
+
+    activelabels: [] as string[], // 激活
+    tobelabels: [] as string[], // 待确认
+    selectlabels: [] as string[], // 确认选择的值
     keyword: '',
 });
 
+// 转树
+const addPathsToTreeList = (
+    treeList: CascaderOptions[],
+    parentValuePath = [],
+    parentLabelPath = []
+) => {
+    treeList.forEach((tree) => {
+        const { value, label, children } = tree;
+        const valuePath = [...parentValuePath, value] as any;
+        const labelPath = [...parentLabelPath, label] as any;
+
+        tree.valuePath = valuePath;
+        tree.labelPath = labelPath;
+
+        if (children) {
+            addPathsToTreeList(children, valuePath, labelPath);
+        }
+    });
+};
+// 获取最高层级数
 const getHierarchyLevel = (arr: any) => {
     let level = 0;
-
     function calculateLevel(obj: any, currentLevel: any) {
         if (obj.children && obj.children.length > 0) {
             currentLevel++;
@@ -32,16 +52,14 @@ const getHierarchyLevel = (arr: any) => {
             });
         }
     }
-
     arr.forEach((obj: any) => {
         calculateLevel(obj, 0);
     });
-
     return level;
 };
-
+// 初始化
 const init = () => {
-    const _options: CascaderOptions[] =
+    let _options: CascaderOptions[] =
         (props.options &&
             props.options.map((e) => {
                 return {
@@ -50,49 +68,46 @@ const init = () => {
                 };
             })) ||
         [];
-    const highLevel = getHierarchyLevel(props.options) + 1;
+    addPathsToTreeList(_options);
+    const highLevel = getHierarchyLevel(_options) + 1;
     let new_options = new Array(highLevel).fill([]);
     new_options[0] = _options;
     state.options = new_options;
 };
+
 init();
 
-const selectItem = (
-    item: CascaderOptions,
-    level: number,
-    selectTrigger: string
-) => {
-    if (selectTrigger === props.selectTrigger) {
-        if (item.isHasChild || (item.children && item.children.length > 0)) {
-            state.hoverlabels[level] = item.label;
-            state.selectlabels[level] = item.label;
-            state.options = state.options.slice(0, level + 1);
-            const _options =
-                (item.children &&
-                    item.children.map((e) => {
-                        return {
-                            ...e,
-                            isHasChild: e.children && e.children.length > 0,
-                        };
-                    })) ||
-                [];
-            state.options.push(_options);
-        }
+const selectItem = (item: CascaderOptions, level: number) => {
+    if (item.isHasChild || (item.children && item.children.length > 0)) {
+        state.options = state.options.slice(0, level + 1);
+        const _options =
+            (item.children &&
+                item.children.map((e) => {
+                    return {
+                        ...e,
+                        isHasChild: e.children && e.children.length > 0,
+                    };
+                })) ||
+            [];
+        state.options.push(_options);
     }
-    if (
-        selectTrigger === 'click' &&
-        level === state.options.length - 1 &&
-        !props.free
-    ) {
-        cascaderHandle(item, level);
+    state.activelabels = item.labelPath as string[];
+    if (props.free) {
+        checkItem(item, level);
+    } else {
+        if (!item.isHasChild) {
+            checkItem(item, level);
+            ok();
+        }
     }
 };
 
-const checkItem = (item: CascaderOptions) => {
-    cascaderValue.value = item.value;
-    state.selectlabels = [...state.selectlabels, item.label];
-    state.labels = [item.label];
-    emit('change', item.value);
+const checkItem = (item: CascaderOptions, level: number) => {
+    if (props.showAllLevels) {
+        state.tobelabels = item.labelPath as string[];
+    } else {
+        state.tobelabels = [item.label] as any;
+    }
 };
 
 const show = () => {
@@ -105,21 +120,12 @@ const hide = () => {
 
 const clearHandle = () => {
     cascaderValue.value = '';
-    state.labels = [];
-    state.hoverlabels = [];
+    state.tobelabels = [];
     state.selectlabels = [];
     hide();
     init();
     emit('clear');
     emit('change');
-};
-
-const cascaderHandle = (item: CascaderOptions, level: number) => {
-    cascaderValue.value = item.value;
-    state.selectlabels = [...state.selectlabels, item.label];
-    state.labels = JSON.parse(JSON.stringify(state.selectlabels));
-    emit('change', item.value);
-    hide();
 };
 
 const getValueStyle = computed(() => {
@@ -143,6 +149,7 @@ const getCascaderViewClassName = computed(() => {
     return object2class('lew-cascader-view', { focus, disabled, readonly });
 });
 
+// 获取图标大小
 const getIconSize = computed(() => {
     const size: any = {
         small: 13,
@@ -152,24 +159,39 @@ const getIconSize = computed(() => {
     return size[props.size];
 });
 
+// 展示
 const showHandle = () => {
     state.visible = true;
 };
 
+// 隐藏
 const hideHandle = () => {
     state.visible = false;
     emit('blur');
 };
 
+// 获取宽度
 const getCascaderWidth = computed(() => {
     let _hasChildOptions = state.options.filter(
         (e) => e && e.length > 0
     ).length;
     if (_hasChildOptions > 1) {
-        return _hasChildOptions * 180 + 5;
+        return _hasChildOptions * 180;
     }
     return _hasChildOptions * 180;
 });
+
+const ok = () => {
+    state.selectlabels = JSON.parse(JSON.stringify(state.tobelabels));
+    hide();
+};
+
+const cancel = () => {
+    cascaderValue.value = '';
+    state.tobelabels = [];
+    state.selectlabels = [];
+    hide();
+};
 
 defineExpose({ show, hide });
 </script>
@@ -179,6 +201,7 @@ defineExpose({ show, hide });
         ref="lewPopverRef"
         class="lew-cascader-view"
         :class="getCascaderViewClassName"
+        popoverBodyClassName="lew-cascader-popover-body"
         :trigger="trigger"
         :disabled="disabled"
         placement="bottom-start"
@@ -198,8 +221,8 @@ defineExpose({ show, hide });
                         v-if="
                             !(
                                 clearable &&
-                                state.labels &&
-                                state.labels.length > 0
+                                state.selectlabels &&
+                                state.selectlabels.length > 0
                             )
                         "
                         :size="getIconSize"
@@ -211,7 +234,9 @@ defineExpose({ show, hide });
                 <transition name="lew-form-icon-ani">
                     <lew-icon
                         v-if="
-                            clearable && state.labels && state.labels.length > 0
+                            clearable &&
+                            state.selectlabels &&
+                            state.selectlabels.length > 0
                         "
                         :size="getIconSize"
                         type="x"
@@ -228,18 +253,18 @@ defineExpose({ show, hide });
                 </transition>
 
                 <div
-                    v-show="state.labels && state.labels.length > 0"
+                    v-show="state.selectlabels && state.selectlabels.length > 0"
                     :style="getValueStyle"
                     class="value"
                 >
                     <template v-if="showAllLevels">
                         <span
-                            v-for="(item, index) in state.labels"
+                            v-for="(item, index) in state.selectlabels"
                             :key="index"
                         >
                             {{ item }}
                             <svg
-                                v-if="index !== state.labels.length - 1"
+                                v-if="index !== state.selectlabels.length - 1"
                                 viewBox="0 0 48 48"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -257,13 +282,15 @@ defineExpose({ show, hide });
                         </span>
                     </template>
                     <template v-else>
-                        <span>{{ state.labels[state.labels.length - 1] }}</span>
+                        <span>{{
+                            state.selectlabels[state.selectlabels.length - 1]
+                        }}</span>
                     </template>
                 </div>
                 <div
                     v-show="
-                        !state.labels ||
-                        (state.labels && state.labels.length === 0)
+                        !state.selectlabels ||
+                        (state.selectlabels && state.selectlabels.length === 0)
                     "
                     class="placeholder"
                 >
@@ -280,7 +307,10 @@ defineExpose({ show, hide });
                 :class="getBodyClassName"
             >
                 <slot name="header"></slot>
-                <div class="lew-cascader-options-box">
+                <div
+                    class="lew-cascader-options-box"
+                    :style="{ height: free ? 'calc(100% - 40px)' : '100%' }"
+                >
                     <template
                         v-for="(oItem, oIndex) in state.options"
                         :key="oIndex"
@@ -302,17 +332,18 @@ defineExpose({ show, hide });
                                 :class="{
                                     'lew-cascader-item-disabled': item.disabled,
                                     'lew-cascader-item-active':
-                                        state.selectlabels.includes(item.label),
+                                        state.activelabels.includes(item.label),
                                 }"
                                 v-for="(item, index) in oItem"
                                 :key="index"
-                                @click="selectItem(item, oIndex, 'click')"
-                                @mouseover="selectItem(item, oIndex, 'hover')"
+                                @click="selectItem(item, oIndex)"
                             >
                                 <lew-checkbox
-                                    @click.stop="checkItem(item)"
-                                    :checked="state.labels.includes(item.label)"
-                                ></lew-checkbox>
+                                    v-if="free"
+                                    :checked="
+                                        state.tobelabels.includes(item.label)
+                                    "
+                                />
                                 <span> {{ item.label }}</span>
                                 <lew-icon
                                     v-if="item.isHasChild"
@@ -324,7 +355,19 @@ defineExpose({ show, hide });
                         </div>
                     </template>
                 </div>
-                <slot name="footer"></slot>
+                <lew-flex v-if="free" x="end" class="lew-cascader-control">
+                    <lew-button
+                        @click="cancel"
+                        round
+                        color="red"
+                        type="text"
+                        size="small"
+                        >取消</lew-button
+                    >
+                    <lew-button @click="ok" round type="light" size="small">
+                        确认
+                    </lew-button>
+                </lew-flex>
             </div>
         </template>
     </lew-popover>
@@ -485,7 +528,7 @@ defineExpose({ show, hide });
     width: 100%;
     box-sizing: border-box;
     min-width: 180px;
-    height: 300px;
+    height: 280px;
     overflow: hidden;
     transition: all 0.25s;
     .search-input {
@@ -520,7 +563,7 @@ defineExpose({ show, hide });
         position: relative;
         display: flex;
         box-sizing: border-box;
-        height: 100%;
+
         .lew-cascader-item-warpper {
             position: absolute;
             left: 0px;
@@ -530,11 +573,12 @@ defineExpose({ show, hide });
             width: 180px;
             padding-left: 5px;
             border-right: 1px solid var(--lew-bgcolor-4);
+            padding: 5px;
+            box-sizing: border-box;
         }
-        .lew-cascader-item-warpper:first-child {
-            padding-left: 0px;
+        .lew-cascader-item-warpper:last-child {
+            border-right: none;
         }
-
         .lew-cascader-item {
             position: relative;
             display: inline-flex;
@@ -620,5 +664,13 @@ defineExpose({ show, hide });
             background-color: var(--lew-form-bgcolor);
         }
     }
+    .lew-cascader-control {
+        border-top: 1px solid var(--lew-bgcolor-4);
+        height: 40px;
+        padding-right: 10px;
+    }
+}
+.lew-popover-body .lew-cascader-popover-body {
+    padding: 0px;
 }
 </style>
