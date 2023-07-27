@@ -16,6 +16,7 @@ const state = reactive({
     options: [] as CascaderOptions[][],
     labels: [] as string[],
     hoverlabels: [] as string[],
+    selectlabels: [] as string[],
     keyword: '',
 });
 
@@ -62,8 +63,9 @@ const selectItem = (
     selectTrigger: string
 ) => {
     if (selectTrigger === props.selectTrigger) {
-        if (item.isHasChild) {
+        if (item.isHasChild || (item.children && item.children.length > 0)) {
             state.hoverlabels[level] = item.label;
+            state.selectlabels[level] = item.label;
             state.options = state.options.slice(0, level + 1);
             const _options =
                 (item.children &&
@@ -77,9 +79,20 @@ const selectItem = (
             state.options.push(_options);
         }
     }
-    if (selectTrigger === 'click' && level === state.options.length - 1) {
+    if (
+        selectTrigger === 'click' &&
+        level === state.options.length - 1 &&
+        !props.free
+    ) {
         cascaderHandle(item, level);
     }
+};
+
+const checkItem = (item: CascaderOptions) => {
+    cascaderValue.value = item.value;
+    state.selectlabels = [...state.selectlabels, item.label];
+    state.labels = [item.label];
+    emit('change', item.value);
 };
 
 const show = () => {
@@ -94,6 +107,8 @@ const clearHandle = () => {
     cascaderValue.value = '';
     state.labels = [];
     state.hoverlabels = [];
+    state.selectlabels = [];
+    hide();
     init();
     emit('clear');
     emit('change');
@@ -101,7 +116,8 @@ const clearHandle = () => {
 
 const cascaderHandle = (item: CascaderOptions, level: number) => {
     cascaderValue.value = item.value;
-    state.labels = [...state.hoverlabels, item.label];
+    state.selectlabels = [...state.selectlabels, item.label];
+    state.labels = JSON.parse(JSON.stringify(state.selectlabels));
     emit('change', item.value);
     hide();
 };
@@ -216,25 +232,33 @@ defineExpose({ show, hide });
                     :style="getValueStyle"
                     class="value"
                 >
-                    <span v-for="(item, index) in state.labels" :key="index">
-                        {{ item }}
-                        <svg
-                            v-if="index !== state.labels.length - 1"
-                            viewBox="0 0 48 48"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            stroke="currentColor"
-                            stroke-width="4"
-                            stroke-linecap="butt"
-                            stroke-linejoin="miter"
-                            data-v-5303b0ef=""
+                    <template v-if="showAllLevels">
+                        <span
+                            v-for="(item, index) in state.labels"
+                            :key="index"
                         >
-                            <path
-                                d="M29.506 6.502 18.493 41.498"
+                            {{ item }}
+                            <svg
+                                v-if="index !== state.labels.length - 1"
+                                viewBox="0 0 48 48"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                stroke="currentColor"
+                                stroke-width="4"
+                                stroke-linecap="butt"
+                                stroke-linejoin="miter"
                                 data-v-5303b0ef=""
-                            ></path>
-                        </svg>
-                    </span>
+                            >
+                                <path
+                                    d="M29.506 6.502 18.493 41.498"
+                                    data-v-5303b0ef=""
+                                ></path>
+                            </svg>
+                        </span>
+                    </template>
+                    <template v-else>
+                        <span>{{ state.labels[state.labels.length - 1] }}</span>
+                    </template>
                 </div>
                 <div
                     v-show="
@@ -277,13 +301,19 @@ defineExpose({ show, hide });
                                 class="lew-cascader-item"
                                 :class="{
                                     'lew-cascader-item-disabled': item.disabled,
+                                    'lew-cascader-item-active':
+                                        state.selectlabels.includes(item.label),
                                 }"
                                 v-for="(item, index) in oItem"
                                 :key="index"
                                 @click="selectItem(item, oIndex, 'click')"
                                 @mouseover="selectItem(item, oIndex, 'hover')"
                             >
-                                {{ item.label }}
+                                <lew-checkbox
+                                    @click.stop="checkItem(item)"
+                                    :checked="state.labels.includes(item.label)"
+                                ></lew-checkbox>
+                                <span> {{ item.label }}</span>
                                 <lew-icon
                                     v-if="item.isHasChild"
                                     size="14px"
@@ -509,6 +539,7 @@ defineExpose({ show, hide });
             position: relative;
             display: inline-flex;
             align-items: center;
+            gap: 10px;
             width: 100%;
             font-size: 14px;
             overflow: hidden;
@@ -520,6 +551,7 @@ defineExpose({ show, hide });
             border-radius: 6px;
             height: 30px;
             padding: 0px 10px;
+
             .icon {
                 position: absolute;
                 right: 2px;
@@ -533,6 +565,7 @@ defineExpose({ show, hide });
                 opacity: 1;
             }
         }
+
         .lew-cascader-item-disabled {
             opacity: 0.3;
             pointer-events: none;
@@ -549,7 +582,7 @@ defineExpose({ show, hide });
 
         .lew-cascader-label {
             width: 100%;
-            user-cascader: none;
+            user-select: none;
             font-size: 14px;
             padding: 0px 8px;
             overflow: hidden;
@@ -573,9 +606,9 @@ defineExpose({ show, hide });
         }
 
         .lew-cascader-item-active {
+            background-color: var(--lew-form-bgcolor);
             color: var(--lew-color-primary-dark);
             font-weight: bold;
-            background-color: var(--lew-form-bgcolor);
             .icon-check {
                 margin-right: 10px;
             }

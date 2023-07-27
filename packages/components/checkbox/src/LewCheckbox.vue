@@ -19,7 +19,7 @@ const setChecked = (e: Event) => {
 
 const getCheckboxClassName = computed(() => {
     const { block, round, iconable, size, disabled } = props;
-    const checked = modelValue.value;
+    const checked = modelValue.value || props.checked;
     const unicon = !iconable && block;
 
     return object2class('lew-checkbox', {

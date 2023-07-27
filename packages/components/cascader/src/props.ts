@@ -12,6 +12,18 @@ export const cascaderProps = {
     modelValue: {
         type: [String, Number],
     },
+    multiple: {
+        type: Boolean,
+        default() {
+            return false;
+        },
+    },
+    free: {
+        type: Boolean,
+        default() {
+            return true;
+        },
+    },
     options: {
         type: Array as PropType<CascaderOptions[]>,
         default() {
@@ -51,5 +63,9 @@ export const cascaderProps = {
     disabled: {
         type: Boolean,
         default: () => false,
+    },
+    showAllLevels: {
+        type: Boolean,
+        default: () => true,
     },
 };

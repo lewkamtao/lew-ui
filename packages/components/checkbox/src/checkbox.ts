@@ -14,6 +14,12 @@ export const checkboxProps = {
             return false;
         },
     },
+    checked: {
+        type: Boolean,
+        default: () => {
+            return false;
+        },
+    },
     label: {
         type: String,
         default: () => {

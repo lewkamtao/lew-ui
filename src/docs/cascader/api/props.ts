@@ -39,12 +39,6 @@ export default {
             default: '-',
         },
         {
-            name: 'searchable',
-            description: '禁用选择器',
-            type: `boolean`,
-            default: "'false'",
-        },
-        {
             name: 'readonly',
             description: '只读',
             type: `boolean`,
