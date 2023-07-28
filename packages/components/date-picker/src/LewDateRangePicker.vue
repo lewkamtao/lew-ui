@@ -109,7 +109,7 @@ defineExpose({ show, hide });
                     />
                     <transition name="lew-form-icon-ani">
                         <lew-icon
-                            v-if="clearable && checkClear"
+                            v-if="clearable && checkClear && !readonly"
                             :size="getIconSize"
                             type="x"
                             v-tooltip="{

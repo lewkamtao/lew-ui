@@ -82,13 +82,23 @@ const options = [
         ],
     },
 ];
+
+let v = ref();
+
+const change = (e: any) => {
+    console.log(e);
+};
 </script>
 
 <template>
     <lew-flex direction="y" gap="20px" style="width: 300px">
-        <lew-cascader :free="false" size="small" :options="options" />
-        <lew-cascader :showAllLevels="false" :options="options" />
-        <lew-cascader size="large" :options="options" />
-        <lew-cascader multiple size="large" :options="options" />
+        <lew-cascader
+            @change="change"
+            v-model="v"
+            size="small"
+            :options="options"
+        />
+        <lew-cascader v-model="v" :options="options" />
+        <lew-cascader v-model="v" size="large" :options="options" />
     </lew-flex>
 </template>

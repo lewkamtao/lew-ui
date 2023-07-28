@@ -14,10 +14,10 @@ const state = reactive({
     visible: false,
     loading: false,
     options: [] as CascaderOptions[][],
-
+    format_options: [] as CascaderOptions[],
     activelabels: [] as string[], // 激活
     tobelabels: [] as string[], // 待确认
-    selectlabels: [] as string[], // 确认选择的值
+    tobeItem: {} as CascaderOptions,
     keyword: '',
 });
 
@@ -40,23 +40,30 @@ const addPathsToTreeList = (
         }
     });
 };
-// 获取最高层级数
-const getHierarchyLevel = (arr: any) => {
-    let level = 0;
-    function calculateLevel(obj: any, currentLevel: any) {
-        if (obj.children && obj.children.length > 0) {
-            currentLevel++;
-            obj.children.forEach((child: any) => {
-                level = Math.max(level, currentLevel);
-                calculateLevel(child, currentLevel);
-            });
+
+// 查找
+const findObjectByValue = (
+    treeList: CascaderOptions[],
+    value: [string, number]
+) => {
+    for (let i = 0; i < treeList.length; i++) {
+        const tree = treeList[i];
+        if (tree.value === value) {
+            return tree;
+        }
+        if (tree.children) {
+            const foundObject: CascaderOptions = findObjectByValue(
+                tree.children,
+                value
+            ) as CascaderOptions;
+            if (foundObject) {
+                return foundObject;
+            }
         }
     }
-    arr.forEach((obj: any) => {
-        calculateLevel(obj, 0);
-    });
-    return level;
+    return null;
 };
+
 // 初始化
 const init = () => {
     let _options: CascaderOptions[] =
@@ -69,8 +76,8 @@ const init = () => {
             })) ||
         [];
     addPathsToTreeList(_options);
-    const highLevel = getHierarchyLevel(_options) + 1;
-    let new_options = new Array(highLevel).fill([]);
+    state.format_options = _options;
+    let new_options = [];
     new_options[0] = _options;
     state.options = new_options;
 };
@@ -92,6 +99,8 @@ const selectItem = (item: CascaderOptions, level: number) => {
         state.options.push(_options);
     }
     state.activelabels = item.labelPath as string[];
+    state.tobeItem = { ...item, children: undefined };
+
     if (props.free) {
         checkItem(item, level);
     } else {
@@ -121,7 +130,7 @@ const hide = () => {
 const clearHandle = () => {
     cascaderValue.value = '';
     state.tobelabels = [];
-    state.selectlabels = [];
+    state.activelabels = [];
     hide();
     init();
     emit('clear');
@@ -181,15 +190,22 @@ const getCascaderWidth = computed(() => {
     return _hasChildOptions * 180;
 });
 
+const getLabel = computed(() => {
+    const item = findObjectByValue(state.format_options, cascaderValue.value);
+    return item?.labelPath || [];
+});
+
 const ok = () => {
-    state.selectlabels = JSON.parse(JSON.stringify(state.tobelabels));
+    cascaderValue.value = state.tobeItem.value;
+    console.log(cascaderValue.value);
+
+    emit('change', state.tobeItem);
     hide();
 };
 
 const cancel = () => {
     cascaderValue.value = '';
     state.tobelabels = [];
-    state.selectlabels = [];
     hide();
 };
 
@@ -218,13 +234,7 @@ defineExpose({ show, hide });
             >
                 <transition name="lew-form-icon-ani">
                     <lew-icon
-                        v-if="
-                            !(
-                                clearable &&
-                                state.selectlabels &&
-                                state.selectlabels.length > 0
-                            )
-                        "
+                        v-if="!(clearable && getLabel && getLabel.length > 0)"
                         :size="getIconSize"
                         type="chevron-down"
                         class="icon-cascader"
@@ -235,8 +245,9 @@ defineExpose({ show, hide });
                     <lew-icon
                         v-if="
                             clearable &&
-                            state.selectlabels &&
-                            state.selectlabels.length > 0
+                            getLabel &&
+                            getLabel.length > 0 &&
+                            !readonly
                         "
                         :size="getIconSize"
                         type="x"
@@ -253,18 +264,19 @@ defineExpose({ show, hide });
                 </transition>
 
                 <div
-                    v-show="state.selectlabels && state.selectlabels.length > 0"
+                    v-show="getLabel && getLabel.length > 0"
                     :style="getValueStyle"
                     class="value"
                 >
                     <template v-if="showAllLevels">
-                        <span
-                            v-for="(item, index) in state.selectlabels"
-                            :key="index"
-                        >
+                        <span v-for="(item, index) in getLabel" :key="index">
                             {{ item }}
                             <svg
-                                v-if="index !== state.selectlabels.length - 1"
+                                v-if="getLabel && index !== getLabel.length - 1"
+                                :style="{
+                                    width: getIconSize,
+                                    height: getIconSize,
+                                }"
                                 viewBox="0 0 48 48"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -272,7 +284,6 @@ defineExpose({ show, hide });
                                 stroke-width="4"
                                 stroke-linecap="butt"
                                 stroke-linejoin="miter"
-                                data-v-5303b0ef=""
                             >
                                 <path
                                     d="M29.506 6.502 18.493 41.498"
@@ -281,17 +292,12 @@ defineExpose({ show, hide });
                             </svg>
                         </span>
                     </template>
-                    <template v-else>
-                        <span>{{
-                            state.selectlabels[state.selectlabels.length - 1]
-                        }}</span>
+                    <template v-else-if="getLabel">
+                        <span>{{ getLabel[getLabel.length - 1] }}</span>
                     </template>
                 </div>
                 <div
-                    v-show="
-                        !state.selectlabels ||
-                        (state.selectlabels && state.selectlabels.length === 0)
-                    "
+                    v-show="!getLabel || (getLabel && getLabel.length === 0)"
                     class="placeholder"
                 >
                     {{ placeholder }}
@@ -333,6 +339,11 @@ defineExpose({ show, hide });
                                     'lew-cascader-item-disabled': item.disabled,
                                     'lew-cascader-item-active':
                                         state.activelabels.includes(item.label),
+                                    'lew-cascader-item-tobe':
+                                        state.tobelabels.includes(item.label),
+                                    'lew-cascader-item-select':
+                                        getLabel &&
+                                        getLabel.includes(item.label),
                                 }"
                                 v-for="(item, index) in oItem"
                                 :key="index"
@@ -359,7 +370,7 @@ defineExpose({ show, hide });
                     <lew-button
                         @click="cancel"
                         round
-                        color="red"
+                        color="normal"
                         type="text"
                         size="small"
                         >取消</lew-button
@@ -421,18 +432,16 @@ defineExpose({ show, hide });
         .value {
             display: inline-flex;
             align-items: center;
-            gap: 5px;
             width: calc(100% - 24px);
             box-sizing: border-box;
             transition: all 0.2s;
+            gap: 2px;
             span {
                 display: inline-flex;
+                gap: 2px;
                 align-items: center;
-                gap: 5px;
                 svg {
-                    width: 14px;
-                    height: 14px;
-                    opacity: 0.6;
+                    opacity: 0.4;
                 }
             }
         }
@@ -531,6 +540,7 @@ defineExpose({ show, hide });
     height: 280px;
     overflow: hidden;
     transition: all 0.25s;
+    user-select: none;
     .search-input {
         margin-bottom: 5px;
         input {
@@ -577,7 +587,7 @@ defineExpose({ show, hide });
             box-sizing: border-box;
         }
         .lew-cascader-item-warpper:last-child {
-            border-right: none;
+            border-right: 0px transparent solid;
         }
         .lew-cascader-item {
             position: relative;
@@ -672,5 +682,41 @@ defineExpose({ show, hide });
 }
 .lew-popover-body .lew-cascader-popover-body {
     padding: 0px;
+}
+</style>
+<style lang="scss">
+.lew-cascader-item:hover {
+    .lew-checkbox {
+        .icon-checkbox-box {
+            border: var(--lew-form-border-width)
+                var(--lew-checkbox-border-color-hover) solid;
+            outline: var(--lew-form-ouline);
+            background: var(--lew-form-bgcolor);
+        }
+    }
+}
+.lew-cascader-item-tobe:hover {
+    .lew-checkbox {
+        .icon-checkbox-box {
+            border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+            background: var(--lew-checkbox-color);
+            .icon-checkbox {
+                transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+    }
+}
+.lew-cascader-item-select:hover {
+    .lew-checkbox {
+        .icon-checkbox-box {
+            border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+            background: var(--lew-checkbox-color);
+            .icon-checkbox {
+                transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+    }
 }
 </style>

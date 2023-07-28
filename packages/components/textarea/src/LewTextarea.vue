@@ -116,7 +116,7 @@ defineExpose({ toFocus });
         </div>
         <transition name="lew-form-icon-ani">
             <lew-icon
-                v-if="clearable && modelValue"
+                v-if="clearable && modelValue && !readonly"
                 class="lew-form-icon-clear"
                 :class="{
                     'lew-form-icon-clear-focus': state.isFocus,

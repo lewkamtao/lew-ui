@@ -2,7 +2,7 @@ import { PropType } from 'vue';
 
 export type CascaderOptions = {
     label: string;
-    value: string;
+    value: [string, number];
     labelPath?: string[];
     valuePath?: string[];
     level?: number;
@@ -21,10 +21,14 @@ export const cascaderProps = {
             return false;
         },
     },
+    showAllLevels: {
+        type: Boolean,
+        default: () => true,
+    },
     free: {
         type: Boolean,
         default() {
-            return true;
+            return false;
         },
     },
     options: {
@@ -59,9 +63,5 @@ export const cascaderProps = {
     disabled: {
         type: Boolean,
         default: () => false,
-    },
-    showAllLevels: {
-        type: Boolean,
-        default: () => true,
     },
 };
