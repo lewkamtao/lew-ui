@@ -82,10 +82,11 @@ const options = [
         ],
     },
 ];
+let v = ref()
 </script>
 
 <template>
     <div style="width: 300px">
-        <lew-cascader :options="options" />
+        <lew-cascader v-model="v" :options="options" />
     </div>
 </template>

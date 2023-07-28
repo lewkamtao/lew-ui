@@ -2,7 +2,7 @@
 const options = [
     {
         value: 1,
-        label: 'Asia',
+        label:"Asia",
         children: [
             {
                 value: 2,
@@ -36,6 +36,7 @@ const options = [
     {
         value: 14,
         label: 'Europe',
+        disabled: true,
         children: [
             {
                 value: 15,
@@ -82,10 +83,11 @@ const options = [
         ],
     },
 ];
+let v = ref()
 </script>
 
 <template>
     <div style="width: 300px">
-        <lew-cascader :options="options" />
+        <lew-cascader v-model="v" :options="options" />
     </div>
 </template>
