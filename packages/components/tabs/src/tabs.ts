@@ -16,6 +16,10 @@ export const tabsProps = {
             return [];
         },
     },
+    size: {
+        type: String,
+        default: 'medium',
+    },
     width: {
         type: [Number, String],
     },

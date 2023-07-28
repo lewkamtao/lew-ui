@@ -88,10 +88,11 @@ const getTabsWrapperClassName = computed(() => {
 });
 
 const getTabsClassName = computed(() => {
-    const { type, round } = props;
+    const { type, round, size } = props;
     return object2class('lew-tabs', {
         type,
         round,
+        size,
     });
 });
 
@@ -257,15 +258,12 @@ onUnmounted(() => {
         justify-content: center;
         flex: 1;
         z-index: 9;
-        height: 28px;
-        padding: 0px 12px;
         box-sizing: border-box;
         border-radius: var(--lew-border-radius);
         margin: 3px;
         color: var(--lew-text-color-2);
         white-space: nowrap;
         cursor: pointer;
-        font-size: 14px;
         flex-shrink: 0;
     }
     .lew-tabs-item-active {
@@ -277,8 +275,8 @@ onUnmounted(() => {
         top: 3px;
         left: 0px;
         z-index: 9;
-        height: 28px;
-        border-radius:6px;
+        height: calc(100% - 6px);
+        border-radius: 6px;
         background: var(--lew-tabs-active-color);
         transform: translateX(3px);
         box-shadow: 0px 0px 12px rgba($color: #000000, $alpha: 0.15);
@@ -286,6 +284,28 @@ onUnmounted(() => {
     }
     .lew-tabs-item-isInit {
         transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+}
+
+.lew-tabs-size-small {
+    .lew-tabs-item {
+        padding: var(--lew-form-input-padding-small);
+        font-size: var(--lew-form-font-size-small);
+        line-height: var(--lew-form-input-line-height-small);
+    }
+}
+.lew-tabs-size-medium {
+    .lew-tabs-item {
+        padding: var(--lew-form-input-padding-medium);
+        font-size: var(--lew-form-font-size-medium);
+        line-height: var(--lew-form-input-line-height-medium);
+    }
+}
+.lew-tabs-size-large {
+    .lew-tabs-item {
+        padding: var(--lew-form-input-padding-large);
+        font-size: var(--lew-form-font-size-large);
+        line-height: var(--lew-form-input-line-height-large);
     }
 }
 
@@ -314,7 +334,6 @@ onUnmounted(() => {
         left: 0px;
         z-index: 9;
         height: 2px;
-
         background: var(--lew-color-primary-dark);
         transform: translateX(3px);
         box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);

@@ -419,7 +419,7 @@ defineExpose({ getForm, setForm, validate });
                             typeof item.props.click === 'function'?item.props.change(e):'';
                         }  
                     "
-                    v-bind="{ ...item.props }"
+                    v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-cascader
@@ -432,7 +432,7 @@ defineExpose({ getForm, setForm, validate });
                             typeof item.props.click === 'function'?item.props.change(e):'';
                         }  
                     "
-                    v-bind="{ ...item.props }"
+                    v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-switch

@@ -61,6 +61,20 @@ const change = (e: Options) => {
     <lew-flex direction="y" x="start">
         <lew-title :size="14">限制整体宽度</lew-title>
         <lew-tabs
+            size="small"
+            style="width: 300px"
+            v-model="value"
+            :options="options"
+            @change="change"
+        />
+        <lew-tabs
+            style="width: 300px"
+            v-model="value"
+            :options="options"
+            @change="change"
+        />
+        <lew-tabs
+            size="large"
             style="width: 300px"
             v-model="value"
             :options="options"
