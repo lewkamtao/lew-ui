@@ -409,9 +409,23 @@ defineExpose({ getForm, setForm, validate });
                     @clear="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
                 />
+
                 <lew-tabs
                     v-model="item.value"
                     v-if="item.as === 'tabs'"
+                    @change=" 
+                        (e:any) => {
+                            validate(item.field);
+                            typeof item.props.click === 'function'?item.props.change(e):'';
+                        }  
+                    "
+                    v-bind="{ ...item.props }"
+                />
+
+                <lew-cascader
+                    v-model="item.value"
+                    v-if="item.as === 'cascader'"
+                    @clear="validate(item.field)"
                     @change=" 
                         (e:any) => {
                             validate(item.field);

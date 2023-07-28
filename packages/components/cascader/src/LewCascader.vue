@@ -197,8 +197,6 @@ const getLabel = computed(() => {
 
 const ok = () => {
     cascaderValue.value = state.tobeItem.value;
-    console.log(cascaderValue.value);
-
     emit('change', state.tobeItem);
     hide();
 };
