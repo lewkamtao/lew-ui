@@ -39,33 +39,25 @@ const options = ref(
         </lew-demo-box>
         <lew-demo-box title="自由模式" :code="DemoCascader2_code">
             <demo-cascader2 />
-            <lew-alert
-                style="margin-top: 20px"
-                :size="16"
-                :list="[
-                    {
-                        type: 'info',
-                        title: '提示',
-                        content:
-                            '开启free之后，可选择任意层级。关闭则仅可选择最后一级。',
-                    },
-                ]"
-            />
+            <lew-alert style="margin-top: 20px" :size="16" :list="[
+                {
+                    type: 'info',
+                    title: '提示',
+                    content:
+                        '开启free之后，可选择任意层级。关闭则仅可选择最后一级。',
+                },
+            ]" />
         </lew-demo-box>
         <lew-demo-box title="仅展示最后层级" :code="DemoCascader3_code">
             <demo-cascader3 />
-            <lew-alert
-                style="margin-top: 20px"
-                :size="16"
-                :list="[
-                    {
-                        type: 'info',
-                        title: '提示',
-                        content:
-                            '开启show-all-levels之后，搭配free模式，可选择任意层级。且仅展示最后层级。',
-                    },
-                ]"
-            />
+            <lew-alert style="margin-top: 20px" :size="16" :list="[
+                {
+                    type: 'info',
+                    title: '提示',
+                    content:
+                        '开启show-all-levels之后，搭配free模式，可选择任意层级。且仅展示最后层级。',
+                },
+            ]" />
         </lew-demo-box>
         <lew-demo-box title="异步加载" :code="DemoCascader4_code">
             <demo-cascader4 />
@@ -82,10 +74,10 @@ const options = ref(
         <lew-demo-box title="选项禁用" :code="DemoCascader8_code">
             <demo-cascader8 />
         </lew-demo-box>
-        <lew-demo-box title="多选模式" :code="DemoCascader9_code">
+        <lew-demo-box v-if="false" title="多选模式" :code="DemoCascader9_code">
             <demo-cascader9 />
         </lew-demo-box>
-        <lew-demo-box title="可选任意一级选项" :code="DemoCascader10_code">
+        <lew-demo-box v-if="false" title="可选任意一级选项" :code="DemoCascader10_code">
             <demo-cascader10 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>
