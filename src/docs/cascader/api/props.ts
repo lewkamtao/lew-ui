@@ -21,7 +21,7 @@ export default {
             default: 'medium',
         },
         {
-            name: 'showAllLevels',
+            name: 'show-all-levels',
             description: '展示所有层级',
             type: 'boolean',
             default: false,

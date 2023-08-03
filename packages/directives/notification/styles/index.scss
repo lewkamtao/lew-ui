@@ -25,7 +25,8 @@
         font-size: 14px;
         border-radius: var(--lew-border-radius);
         overflow: hidden;
-        background-color: var(--lew-notification-bgcolor);
+        background-color: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(20px);
         .lew-notification-box {
             display: flex;
             width: 100%;
