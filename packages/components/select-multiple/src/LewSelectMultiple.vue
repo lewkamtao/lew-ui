@@ -91,6 +91,8 @@ const deleteTag = (index: number) => {
 };
 
 const selectHandle = (item: SelectMultipleOptions) => {
+    console.log(item);
+
     if (item.disabled) {
         return;
     }
@@ -160,12 +162,6 @@ const getSelectItemClassName = (e: any) => {
         active,
     });
 };
-
-const getVirtualHeight = computed(() => {
-    let height = state.options.length * props.itemHeight;
-    height = height > 240 ? 240 : height;
-    return `${height}px`;
-});
 
 const getIconSize = computed(() => {
     const size: any = {
@@ -315,29 +311,24 @@ defineExpose({ show, hide });
                         :options="{
                             itemHeight: 30,
                         }"
-                        :height="getVirtualHeight"
+                        height="240px"
                     >
                         <template #="props">
                             <!-- you can get current item of list here -->
-                            <label @click="selectHandle(props.data)">
+                            <div @click="selectHandle(props.data)">
                                 <div
                                     v-if="!labelSlot"
                                     class="lew-select-item"
                                     :class="getSelectItemClassName(props.data)"
                                     :style="{ height: itemHeight + 'px' }"
                                 >
+                                    <lew-checkbox
+                                        class="lew-select-checkbox"
+                                        :checked="getChecked(props.data.value)"
+                                    />
                                     <div class="lew-select-label">
                                         {{ props.data.label }}
                                     </div>
-                                    <lew-icon
-                                        v-if="
-                                            getChecked(props.data.value) &&
-                                            showCheckIcon
-                                        "
-                                        class="icon-check"
-                                        size="14"
-                                        type="check"
-                                    />
                                 </div>
                                 <div
                                     v-else
@@ -350,7 +341,7 @@ defineExpose({ show, hide });
                                         :checked="getChecked(props.data.value)"
                                     />
                                 </div>
-                            </label>
+                            </div>
                         </template>
                     </use-virtual-list>
                 </div>
@@ -568,6 +559,9 @@ defineExpose({ show, hide });
             color: var(--lew-text-color-2);
             box-sizing: border-box;
             border-radius: 6px;
+            .lew-select-checkbox {
+                padding-left: 12px;
+            }
         }
 
         .lew-select-item-disabled {

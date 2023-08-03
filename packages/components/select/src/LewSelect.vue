@@ -130,12 +130,6 @@ const getSelectItemClassName = (e: any) => {
     });
 };
 
-const getVirtualHeight = computed(() => {
-    let height = state.options.length * props.itemHeight;
-    height = height >= 240 ? 240 : height;
-    return `${height}px`;
-});
-
 const getIconSize = computed(() => {
     const size: any = {
         small: 13,
@@ -246,7 +240,6 @@ defineExpose({ show, hide });
                         {{ numFormat(state.options && state.options.length) }}
                         条结果
                     </div>
-
                     <use-virtual-list
                         v-if="state.options.length > 0"
                         class="lew-select-options-list lew-scrollbar"
@@ -254,7 +247,7 @@ defineExpose({ show, hide });
                         :options="{
                             itemHeight: 30,
                         }"
-                        :height="getVirtualHeight"
+                        height="240px"
                     >
                         <template #="props">
                             <!-- you can get current item of list here -->
