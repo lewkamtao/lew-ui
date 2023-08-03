@@ -649,6 +649,6 @@ defineExpose({ init });
 }
 
 .lew-date:first-child {
-    border-right: 1px var(--lew-form-border-color) solid;
+    border-right: var(--lew-popover-border);
 }
 </style>

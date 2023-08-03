@@ -117,7 +117,10 @@ const selectHandle = (item: SelectMultipleOptions) => {
 };
 
 const getChecked = computed(() => (value: string | number) => {
-    return selectValue.value && selectValue.value.includes(value);
+    let v = JSON.parse(
+        JSON.stringify(selectValue.value && selectValue.value.includes(value))
+    );
+    return v;
 });
 
 const getLabels = computed(() => {
@@ -179,6 +182,11 @@ const showHandle = () => {
         search({ target: { value: '' } });
     }
 };
+const getVirtualHeight = computed(() => {
+    let height = state.options.length * props.itemHeight;
+    height = height >= 240 ? 240 : height;
+    return `${height}px`;
+});
 
 const hideHandle = () => {
     state.visible = false;
@@ -305,13 +313,14 @@ defineExpose({ show, hide });
                     </div>
 
                     <use-virtual-list
+                        :key="getVirtualHeight"
                         v-if="state.options.length > 0"
                         class="lew-select-options-list lew-scrollbar"
                         :list="state.options"
                         :options="{
                             itemHeight: 30,
                         }"
-                        height="240px"
+                        :height="getVirtualHeight"
                     >
                         <template #="props">
                             <!-- you can get current item of list here -->
@@ -591,7 +600,7 @@ defineExpose({ show, hide });
 
         .lew-select-item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
         }
 
         .lew-select-slot-item {
@@ -600,13 +609,14 @@ defineExpose({ show, hide });
 
         .lew-select-slot-item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
         }
 
         .lew-select-item-active {
             color: var(--lew-color-primary-dark);
             font-weight: bold;
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
+
             .icon-check {
                 margin-right: 10px;
             }
@@ -615,7 +625,31 @@ defineExpose({ show, hide });
         .lew-select-item-active:hover {
             color: var(--lew-color-primary-dark);
             font-weight: bold;
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
+        }
+    }
+}
+</style>
+<style lang="scss">
+.lew-select-item:hover {
+    .lew-checkbox {
+        .icon-checkbox-box {
+            border: var(--lew-form-border-width)
+                var(--lew-checkbox-border-color-hover) solid;
+            outline: var(--lew-form-ouline);
+            background: var(--lew-form-bgcolor);
+        }
+    }
+}
+.lew-select-item-active:hover {
+    .lew-checkbox {
+        .icon-checkbox-box {
+            border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+            background: var(--lew-checkbox-color);
+            .icon-checkbox {
+                transform: translateY(0px);
+                opacity: 1;
+            }
         }
     }
 }

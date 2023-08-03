@@ -580,7 +580,7 @@ defineExpose({ show, hide });
             height: 100%;
             width: 180px;
             padding-left: 5px;
-            border-right: 1px solid var(--lew-bgcolor-4);
+            border-right: var(--lew-popover-border);
             padding: 5px;
             box-sizing: border-box;
         }
@@ -645,7 +645,7 @@ defineExpose({ show, hide });
 
         .lew-cascader-item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
         }
 
         .lew-cascader-slot-item {
@@ -654,11 +654,12 @@ defineExpose({ show, hide });
 
         .lew-cascader-slot-item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
         }
 
         .lew-cascader-item-active {
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
+
             color: var(--lew-color-primary-dark);
             font-weight: bold;
             .icon-check {
@@ -669,7 +670,7 @@ defineExpose({ show, hide });
         .lew-cascader-item-active:hover {
             color: var(--lew-color-primary-dark);
             font-weight: bold;
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
         }
     }
     .lew-cascader-control {

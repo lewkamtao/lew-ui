@@ -19,7 +19,8 @@ textarea {
 .tippy-box {
     border-radius: var(--lew-border-radius) !important;
     box-sizing: border-box !important;
-    background-color: var(--lew-popover-bgcolor) !important;
+    background-color: var(--lew-backdrop-bg) !important;
+    backdrop-filter: blur(20px);
     border: var(--lew-popover-border) !important;
     box-shadow: var(--lew-popover-box-shadow) !important;
     color: var(--lew-text-color-0) !important;

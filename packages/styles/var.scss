@@ -203,6 +203,8 @@
     --lew-table-border: 1px #f6f5f8 solid;
     --lew-table-scroll-line-color-start: rgba(0, 0, 0, 0);
     --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.2);
+    --lew-backdrop-bg: rgba(255, 255, 255, 0.2);
+    --lew-backdrop-bg-active: rgba(0, 0, 0, 0.05);
 }
 
 .lew-dark {
@@ -364,7 +366,7 @@
     // notification
     --lew-notification-bgcolor: #4d4d58;
     // popover
-    --lew-popover-border: 1px rgba(255, 255, 255, 0.227) solid;
+    --lew-popover-border: 1px rgba(255, 255, 255, 0.1) solid;
     // table
     --lew-table-border: 1px rgba(255, 255, 255, 0.05) solid;
     --lew-table-scroll-line-color-start: rgba(0, 0, 0, 0);
@@ -382,4 +384,6 @@
     --lew-radio-color: var(--lew-color-primary);
     --lew-radio-color-dark: var(--lew-color-primary-dark);
     --lew-radio-color-light: var(--lew-color-primary-light);
+    --lew-backdrop-bg: rgba(30, 30, 30, 0.6);
+    --lew-backdrop-bg-active: rgba(255, 255, 255, 0.1);
 }
