@@ -117,10 +117,10 @@ const selectHandle = (item: SelectMultipleOptions) => {
 };
 
 const getChecked = computed(() => (value: string | number) => {
-    let v = JSON.parse(
-        JSON.stringify(selectValue.value && selectValue.value.includes(value))
-    );
-    return v;
+    if (selectValue.value) {
+        return JSON.parse(JSON.stringify(selectValue.value.includes(value)));
+    }
+    return false;
 });
 
 const getLabels = computed(() => {
