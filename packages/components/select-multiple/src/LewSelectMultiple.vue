@@ -320,6 +320,7 @@ defineExpose({ show, hide });
                         :options="{
                             itemHeight: 30,
                         }"
+                        :overscan="100"
                         :height="getVirtualHeight"
                     >
                         <template #="props">
@@ -332,6 +333,7 @@ defineExpose({ show, hide });
                                     :style="{ height: itemHeight + 'px' }"
                                 >
                                     <lew-checkbox
+                                        :key="props.data.value"
                                         class="lew-select-checkbox"
                                         :checked="getChecked(props.data.value)"
                                     />

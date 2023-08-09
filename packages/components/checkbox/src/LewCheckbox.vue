@@ -33,7 +33,7 @@ const getCheckboxClassName = computed(() => {
 });
 </script>
 <template>
-    <div class="lew-checkbox" :class="getCheckboxClassName">
+    <label class="lew-checkbox" :class="getCheckboxClassName">
         <div v-if="iconable || (!iconable && !block)" class="icon-checkbox-box">
             <svg
                 class="icon-checkbox"
@@ -56,7 +56,7 @@ const getCheckboxClassName = computed(() => {
             @change="setChecked"
         />
         <span v-if="label" class="lew-checkbox-label"> {{ label }}</span>
-    </div>
+    </label>
 </template>
 
 <style lang="scss" scoped>
