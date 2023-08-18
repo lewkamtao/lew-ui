@@ -91,6 +91,8 @@ const deleteTag = (index: number) => {
 };
 
 const selectHandle = (item: SelectMultipleOptions) => {
+    console.log(item);
+
     if (item.disabled) {
         return;
     }
@@ -115,7 +117,10 @@ const selectHandle = (item: SelectMultipleOptions) => {
 };
 
 const getChecked = computed(() => (value: string | number) => {
-    return selectValue.value && selectValue.value.includes(value);
+    if (selectValue.value) {
+        return JSON.parse(JSON.stringify(selectValue.value.includes(value)));
+    }
+    return false;
 });
 
 const getLabels = computed(() => {
@@ -161,12 +166,6 @@ const getSelectItemClassName = (e: any) => {
     });
 };
 
-const getVirtualHeight = computed(() => {
-    let height = state.options.length * props.itemHeight;
-    height = height > 240 ? 240 : height;
-    return `${height}px`;
-});
-
 const getIconSize = computed(() => {
     const size: any = {
         small: 13,
@@ -183,6 +182,11 @@ const showHandle = () => {
         search({ target: { value: '' } });
     }
 };
+const getVirtualHeight = computed(() => {
+    let height = state.options.length * props.itemHeight;
+    height = height >= 240 ? 240 : height;
+    return `${height}px`;
+});
 
 const hideHandle = () => {
     state.visible = false;
@@ -309,35 +313,33 @@ defineExpose({ show, hide });
                     </div>
 
                     <use-virtual-list
+                        :key="getVirtualHeight"
                         v-if="state.options.length > 0"
                         class="lew-select-options-list lew-scrollbar"
                         :list="state.options"
                         :options="{
                             itemHeight: 30,
                         }"
+                        :overscan="100"
                         :height="getVirtualHeight"
                     >
                         <template #="props">
                             <!-- you can get current item of list here -->
-                            <label @click="selectHandle(props.data)">
+                            <div @click="selectHandle(props.data)">
                                 <div
                                     v-if="!labelSlot"
                                     class="lew-select-item"
                                     :class="getSelectItemClassName(props.data)"
                                     :style="{ height: itemHeight + 'px' }"
                                 >
+                                    <lew-checkbox
+                                        :key="props.data.value"
+                                        class="lew-select-checkbox"
+                                        :checked="getChecked(props.data.value)"
+                                    />
                                     <div class="lew-select-label">
                                         {{ props.data.label }}
                                     </div>
-                                    <lew-icon
-                                        v-if="
-                                            getChecked(props.data.value) &&
-                                            showCheckIcon
-                                        "
-                                        class="icon-check"
-                                        size="14"
-                                        type="check"
-                                    />
                                 </div>
                                 <div
                                     v-else
@@ -350,7 +352,7 @@ defineExpose({ show, hide });
                                         :checked="getChecked(props.data.value)"
                                     />
                                 </div>
-                            </label>
+                            </div>
                         </template>
                     </use-virtual-list>
                 </div>
@@ -568,6 +570,9 @@ defineExpose({ show, hide });
             color: var(--lew-text-color-2);
             box-sizing: border-box;
             border-radius: 6px;
+            .lew-select-checkbox {
+                padding-left: 12px;
+            }
         }
 
         .lew-select-item-disabled {
@@ -597,7 +602,7 @@ defineExpose({ show, hide });
 
         .lew-select-item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
         }
 
         .lew-select-slot-item {
@@ -606,13 +611,14 @@ defineExpose({ show, hide });
 
         .lew-select-slot-item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
         }
 
         .lew-select-item-active {
             color: var(--lew-color-primary-dark);
             font-weight: bold;
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
+
             .icon-check {
                 margin-right: 10px;
             }
@@ -621,7 +627,31 @@ defineExpose({ show, hide });
         .lew-select-item-active:hover {
             color: var(--lew-color-primary-dark);
             font-weight: bold;
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
+        }
+    }
+}
+</style>
+<style lang="scss">
+.lew-select-item:hover {
+    .lew-checkbox {
+        .icon-checkbox-box {
+            border: var(--lew-form-border-width)
+                var(--lew-checkbox-border-color-hover) solid;
+            outline: var(--lew-form-ouline);
+            background: var(--lew-form-bgcolor);
+        }
+    }
+}
+.lew-select-item-active:hover {
+    .lew-checkbox {
+        .icon-checkbox-box {
+            border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+            background: var(--lew-checkbox-color);
+            .icon-checkbox {
+                transform: translateY(0px);
+                opacity: 1;
+            }
         }
     }
 }

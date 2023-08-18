@@ -130,12 +130,6 @@ const getSelectItemClassName = (e: any) => {
     });
 };
 
-const getVirtualHeight = computed(() => {
-    let height = state.options.length * props.itemHeight;
-    height = height >= 240 ? 240 : height;
-    return `${height}px`;
-});
-
 const getIconSize = computed(() => {
     const size: any = {
         small: 13,
@@ -143,6 +137,11 @@ const getIconSize = computed(() => {
         large: 16,
     };
     return size[props.size];
+});
+const getVirtualHeight = computed(() => {
+    let height = state.options.length * props.itemHeight;
+    height = height >= 240 ? 240 : height;
+    return `${height}px`;
 });
 
 const showHandle = () => {
@@ -246,8 +245,8 @@ defineExpose({ show, hide });
                         {{ numFormat(state.options && state.options.length) }}
                         条结果
                     </div>
-
                     <use-virtual-list
+                        :key="getVirtualHeight"
                         v-if="state.options.length > 0"
                         class="lew-select-options-list lew-scrollbar"
                         :list="state.options"
@@ -537,7 +536,7 @@ defineExpose({ show, hide });
 
         .lew-select-item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
         }
 
         .lew-select-slot-item {
@@ -546,13 +545,13 @@ defineExpose({ show, hide });
 
         .lew-select-slot-item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
         }
 
         .lew-select-item-active {
             color: var(--lew-color-primary-dark);
             font-weight: bold;
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
 
             .icon-check {
                 margin-right: 10px;
@@ -562,7 +561,7 @@ defineExpose({ show, hide });
         .lew-select-item-active:hover {
             color: var(--lew-color-primary-dark);
             font-weight: bold;
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
         }
     }
 }
