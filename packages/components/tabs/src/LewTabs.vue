@@ -24,6 +24,33 @@ watch(
     }
 );
 
+
+const initActiveItemStyle = (index: number) => {
+    const activeRef = itemRef.value[index];
+    if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
+        tabsRef.value.scrollLeft =
+            activeRef.offsetLeft -
+            tabsRef.value.clientWidth / 2 +
+            activeRef.offsetWidth / 2;
+    }
+
+    state.activeItemStyle = {
+        width: `${activeRef.offsetWidth}px`,
+        transform: `translate(${activeRef.offsetLeft}px)`,
+    };
+}
+
+watch(
+    () => props.size,
+    () => {
+        nextTick(() => {
+            const index = props.options.findIndex((e) => tabsValue.value === e.value);
+            initActiveItemStyle(index)
+        })
+    }
+);
+
+
 const init = () => {
     let index = props.options.findIndex((e) => e.value === tabsValue.value);
     if (index < 0) {
@@ -40,24 +67,10 @@ const selectItem = (value: [String, Number], type?: string) => {
     const index = props.options.findIndex((e) => value === e.value);
     if (state.curIndex != index) {
         const _item = props.options[index];
-
         if (tabsValue.value != _item.value) {
             tabsValue.value = _item.value;
         }
-
-        const activeRef = itemRef.value[index];
-
-        if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
-            tabsRef.value.scrollLeft =
-                activeRef.offsetLeft -
-                tabsRef.value.clientWidth / 2 +
-                activeRef.offsetWidth / 2;
-        }
-
-        state.activeItemStyle = {
-            width: `${activeRef.offsetWidth}px`,
-            transform: `translate(${activeRef.offsetLeft}px)`,
-        };
+        initActiveItemStyle(index)
         if (type !== 'watch') {
             emit('change', {
                 label: _item.label,
@@ -65,12 +78,12 @@ const selectItem = (value: [String, Number], type?: string) => {
                 activeIndex: index,
             });
         }
-
         state.curIndex = index;
     }
 };
 
 let timer: ReturnType<typeof setTimeout> | undefined;
+    
 const debounce = () => {
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -143,32 +156,14 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div
-        :style="getTabsStyle"
-        class="lew-tabs-wrapper"
-        :class="getTabsWrapperClassName"
-    >
-        <div
-            :style="getTabsStyle"
-            class="lew-tabs hidden-scrollbar"
-            :class="getTabsClassName"
-            ref="tabsRef"
-            @scroll="tabsScroll"
-        >
-            <div
-                :style="state.activeItemStyle"
-                class="lew-tabs-item-animation-active"
-                :class="{ 'lew-tabs-item-isInit': state.isInit }"
-            ></div>
-            <div
-                v-for="item in options"
-                :key="String(item.value)"
-                :ref="(el) => itemRef.push(el)"
-                class="lew-tabs-item"
-                :style="getItemStyle"
-                :class="{ 'lew-tabs-item-active': tabsValue === item.value }"
-                @click="selectItem(item.value)"
-            >
+    <div :style="getTabsStyle" class="lew-tabs-wrapper" :class="getTabsWrapperClassName">
+        <div :style="getTabsStyle" class="lew-tabs hidden-scrollbar" :class="getTabsClassName" ref="tabsRef"
+            @scroll="tabsScroll">
+            <div :style="state.activeItemStyle" class="lew-tabs-item-animation-active"
+                :class="{ 'lew-tabs-item-isInit': state.isInit }"></div>
+            <div v-for="item in options" :key="String(item.value)" :ref="(el) => itemRef.push(el)" class="lew-tabs-item"
+                :style="getItemStyle" :class="{ 'lew-tabs-item-active': tabsValue === item.value }"
+                @click="selectItem(item.value)">
                 {{ item.label }}
             </div>
         </div>
@@ -184,6 +179,7 @@ onUnmounted(() => {
     overflow: hidden;
     box-shadow: var(--lew-form-box-shadow);
 }
+
 .lew-tabs-wrapper-round {
     border-radius: 35px;
 }
@@ -198,12 +194,10 @@ onUnmounted(() => {
     content: '';
     opacity: 1;
     transition: opacity 0.2s;
-    background: linear-gradient(
-        to right,
+    background: linear-gradient(to right,
 
-        rgba(0, 0, 0, 0),
-        rgba(0, 0, 0, 0.1)
-    );
+            rgba(0, 0, 0, 0),
+            rgba(0, 0, 0, 0.1));
 }
 
 .lew-tabs-wrapper::before {
@@ -216,13 +210,12 @@ onUnmounted(() => {
     z-index: 9;
     opacity: 1;
     transition: opacity 0.2s;
-    background: linear-gradient(
-        to left,
+    background: linear-gradient(to left,
 
-        rgba(0, 0, 0, 0),
-        rgba(0, 0, 0, 0.1)
-    );
+            rgba(0, 0, 0, 0),
+            rgba(0, 0, 0, 0.1));
 }
+
 .lew-tabs-wrapper-type-line {
     box-shadow: none;
 }
@@ -251,6 +244,7 @@ onUnmounted(() => {
     scroll-behavior: smooth;
     width: 100%;
     box-sizing: border-box;
+
     .lew-tabs-item {
         position: relative;
         display: inline-flex;
@@ -266,6 +260,7 @@ onUnmounted(() => {
         cursor: pointer;
         flex-shrink: 0;
     }
+
     .lew-tabs-item-active {
         color: var(--lew-color-primary-dark);
     }
@@ -282,51 +277,59 @@ onUnmounted(() => {
         box-shadow: 0px 0px 12px rgba($color: #000000, $alpha: 0.15);
         box-sizing: border-box;
     }
+
     .lew-tabs-item-isInit {
         transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
     }
 }
 
 .lew-tabs-size-small {
+    height: 28px;
+
     .lew-tabs-item {
         padding: var(--lew-form-input-padding-small);
         font-size: var(--lew-form-font-size-small);
-        line-height: var(--lew-form-input-line-height-small);
     }
 }
+
 .lew-tabs-size-medium {
+    height: 32px;
+
     .lew-tabs-item {
         padding: var(--lew-form-input-padding-medium);
-        font-size: var(--lew-form-font-size-medium);
-        line-height: var(--lew-form-input-line-height-medium);
+        font-size: 14px;
     }
 }
+
 .lew-tabs-size-large {
+    height: 34px;
+
     .lew-tabs-item {
         padding: var(--lew-form-input-padding-large);
-        font-size: var(--lew-form-font-size-large);
-        line-height: var(--lew-form-input-line-height-large);
+        font-size: 15px;
     }
 }
 
 .lew-tabs-type-line {
     background: none;
     border: none;
-    border-bottom: var(--lew-form-border-width) var(--lew-form-border-color)
-        solid;
+    border-bottom: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     padding-bottom: 5px;
     border-radius: 0px;
 
     .lew-tabs-item:hover {
         background: var(--lew-bgcolor-2);
     }
+
     .lew-tabs-item-active {
         background: none;
     }
+
     .lew-tabs-item-active:hover {
         transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
         background: none;
     }
+
     .lew-tabs-item-animation-active {
         position: absolute;
         top: auto;
@@ -342,9 +345,11 @@ onUnmounted(() => {
 
 .lew-tabs-round {
     border-radius: 35px;
+
     .lew-tabs-item {
         border-radius: 35px;
     }
+
     .lew-tabs-item-animation-active {
         border-radius: 35px;
     }

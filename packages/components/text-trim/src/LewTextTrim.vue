@@ -96,7 +96,6 @@ const getClassNames = computed(() => {
 .lew-text-trim-wrapper {
     overflow: hidden;
     text-overflow: ellipsis; //文本溢出显示省略号
-    width: 100px;
 }
 .lew-text-trim-x-start {
     text-align: left;

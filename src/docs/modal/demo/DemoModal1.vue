@@ -2,6 +2,7 @@
 import * as Yup from 'yup';
 const modalVisible1 = ref(false);
 const modalVisible2 = ref(false);
+const modalVisible3 = ref(false)
 const form = ref({});
 const options = ref([
     {
@@ -118,30 +119,14 @@ onMounted(() => {
         <lew-button text="展示表格" @click="modalVisible2 = true" />
     </lew-flex>
 
-    <lew-modal
-        v-model:visible="modalVisible1"
-        closeOnClickOverlay
-        width="350px"
-    >
+    <lew-modal v-model:visible="modalVisible1" closeOnClickOverlay width="350px">
         <div class="modal-body">
-            <lew-title :bold="700" style="margin-bottom: 20px"
-                >登录你的账户
-            </lew-title>
-            <lew-form
-                class="form-box"
-                v-model="form"
-                :options="options"
-                :label-width="40"
-            />
-            <lew-flex x="end">
-                <lew-button
-                    text="关闭"
-                    color="normal"
-                    type="text"
-                    @click="modalVisible1 = false"
-                />
-                <lew-button text="立即登录" @click="modalVisible1 = false" />
-            </lew-flex>
+            <lew-button @click="modalVisible3 = true">再次打开一个窗口</lew-button>
+            <lew-modal v-model:visible="modalVisible3" closeOnClickOverlay width="350px">
+                <div class="modal-body">
+                    asdasdsadad
+                </div>
+            </lew-modal>
         </div>
     </lew-modal>
     <lew-modal v-model:visible="modalVisible2" width="1250px">
@@ -149,11 +134,7 @@ onMounted(() => {
             <lew-table :data-source="data" :columns="columns">
                 <template #fraction="{ row }">
                     <lew-flex>
-                        <lew-badge
-                            v-if="row.fraction >= 60"
-                            round
-                            color="green"
-                        />
+                        <lew-badge v-if="row.fraction >= 60" round color="green" />
                         <lew-badge v-else round color="red" />
                         <span>{{ row.fraction >= 60 ? '良好' : '很差' }}</span>
                     </lew-flex>
@@ -162,12 +143,7 @@ onMounted(() => {
             <br />
 
             <lew-flex x="end">
-                <lew-button
-                    text="关闭"
-                    type="text"
-                    color="normal"
-                    @click="modalVisible2 = false"
-                />
+                <lew-button text="关闭" type="text" color="normal" @click="modalVisible2 = false" />
 
                 <lew-button text="提交" @click="modalVisible2 = false" />
             </lew-flex>

@@ -2,13 +2,14 @@
 import { useVModel } from '@vueuse/core';
 import { useDOMCreate } from '../../../hooks';
 import { any2px } from 'lew-ui/utils';
+import { LewTextTrim } from '../../text-trim';
 
 useDOMCreate('lew-modal');
 
 const props = defineProps({
     title: {
         type: String,
-        default: '',
+        default: '这是一个标题',
     },
     width: {
         type: String,
@@ -47,61 +48,115 @@ const getModalStyle = computed(() => {
 
 <template>
     <teleport to="#lew-modal">
-        <div v-if="visible" class="lew-modal" @click="maskClick">
-            <div :style="getModalStyle" class="lew-modal-box" @click.stop>
-                <slot></slot>
+        <transition name="lew-modal-mask">
+            <div v-if="visible" class="lew-modal-mask" />
+        </transition>
+        <transition name="lew-modal">
+            <div v-if="visible" class="lew-modal" @click="maskClick">
+                <div :style="getModalStyle" class="lew-modal-box" @click.stop>
+                    <lew-flex mode="between" y="center" class="header">
+                        <lew-text-trim class="title" :text="title" />
+                        <lew-icon size="18" class="close-btn" @click="visible = false" type="x" />
+                    </lew-flex>
+                    <slot></slot>
+                    <lew-flex x="end" y="center" class="footer">
+                        <lew-button type="text" round color="normal">取消</lew-button>
+                        <lew-button round>确定</lew-button>
+                    </lew-flex>
+                </div>
             </div>
-        </div>
+        </transition>
     </teleport>
 </template>
 
 <style lang="scss" scoped>
+.lew-modal-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--lew-modal-bgcolor);
+    z-index: 2001;
+}
+
 .lew-modal {
     position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background-color: var(--lew-modal-bgcolor);
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2001;
-    animation: LewModal 0.25s;
-    animation-fill-mode: forwards;
+    z-index: 2002;
 
     .lew-modal-box {
         border-radius: var(--lew-border-radius);
         background-color: var(--lew-modal-box-bgcolor);
         border: var(--lew-modal-border);
         box-shadow: var(--lew-modal-box-shadow);
-        animation-fill-mode: forwards;
-        animation: LewModalBox 0.35s;
-        animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        overflow: hidden;
+
+        .header {
+            height: 50px;
+            background-color: var(--lew-backdrop-bg) !important;
+            backdrop-filter: blur(20px);
+            padding: 10px 20px;
+            border-bottom: var(--lew-border-1);
+
+            .title {
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .close-btn {
+                cursor: pointer;
+                transition: all .25s;
+                border-radius: var(--lew-border-radius);
+                color: var(--lew-text-color-5);
+                padding: 2px;
+            }
+
+            .close-btn:hover {
+                transform: scale(1.05);
+                background-color: var(--lew-bgcolor-3);
+            }
+
+            .close-btn:active {
+                transform: scale(1);
+            }
+        }
+
+        .footer {
+            height: 50px;
+            background-color: var(--lew-backdrop-bg) !important;
+            backdrop-filter: blur(20px);
+            padding: 10px 20px;
+            border-top: var(--lew-border-1);
+        }
+
     }
 }
-</style>
 
-<style>
-@keyframes LewModalBox {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0px);
-    }
+.lew-modal-mask-enter-active,
+.lew-modal-mask-leave-active {
+    transition: all 0.25s;
 }
 
-@keyframes LewModal {
-    from {
-        opacity: 0;
-    }
+.lew-modal-mask-enter-from,
+.lew-modal-mask-leave-to {
+    opacity: 0;
+}
 
-    to {
-        opacity: 1;
-    }
+.lew-modal-enter-active,
+.lew-modal-leave-active {
+    transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.lew-modal-leave-to,
+.lew-modal-enter-from {
+    opacity: 0;
+    transform: translateY(30px)
 }
 </style>
