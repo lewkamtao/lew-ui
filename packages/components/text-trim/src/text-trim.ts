@@ -14,6 +14,10 @@ export const textTrimProps = {
         type: String,
         default: 'top',
     },
+    offset: {
+        type: Array,
+        default: [0, 15],
+    },
     x: {
         type: String,
         default: 'start', // center end

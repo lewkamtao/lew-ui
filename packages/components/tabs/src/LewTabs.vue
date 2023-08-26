@@ -279,7 +279,7 @@ onUnmounted(() => {
     }
 
     .lew-tabs-item-isInit {
-        transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+        transition: all 0.2s cubic-bezier(0.65, 0, 0.35, 1);
     }
 }
 

@@ -530,7 +530,7 @@ defineExpose({ init });
                     width: 22px;
                     height: 22px;
                     line-height: 24px;
-                    color: var(--lew-text-color-9);
+                    color: var(--lew-text-color-7);
                     border-radius: 50%;
                     transition: all 0.1s ease;
                     border: 2px transparent solid;

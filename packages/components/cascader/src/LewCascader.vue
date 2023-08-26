@@ -24,19 +24,22 @@ const state = reactive({
 // 转树
 const addPathsToTreeList = (
     treeList: CascaderOptions[],
-    parentValuePath = [],
-    parentLabelPath = []
+    parentValuePaths = [],
+    parentLabelPaths = []
 ) => {
     treeList.forEach((tree) => {
         const { value, label, children } = tree;
-        const valuePath = [...parentValuePath, value] as any;
-        const labelPath = [...parentLabelPath, label] as any;
+        const valuePaths = [...parentValuePaths, value] as any;
+        const labelPaths = [...parentLabelPaths, label] as any;
 
-        tree.valuePath = valuePath;
-        tree.labelPath = labelPath;
+        tree.valuePaths = valuePaths;
+        tree.labelPaths = labelPaths;
+        tree.parentValuePaths = parentValuePaths;
+        tree.parentLabelPaths = parentLabelPaths;
 
         if (children) {
-            addPathsToTreeList(children, valuePath, labelPath);
+            tree.parentChildren = children
+            addPathsToTreeList(children, valuePaths, labelPaths);
         }
     });
 };
@@ -98,7 +101,16 @@ const selectItem = (item: CascaderOptions, level: number) => {
             [];
         state.options.push(_options);
     }
-    state.activelabels = item.labelPath as string[];
+
+
+    if (item.labelPaths === state.activelabels) {
+        state.activelabels = item.parentLabelPaths as string[];
+        if (level < state.options.length - 1) {
+            state.options.pop()
+        }
+    } else {
+        state.activelabels = item.labelPaths as string[];
+    }
     state.tobeItem = { ...item, children: undefined };
 
     if (props.free) {
@@ -113,9 +125,17 @@ const selectItem = (item: CascaderOptions, level: number) => {
 
 const checkItem = (item: CascaderOptions, level: number) => {
     if (props.showAllLevels) {
-        state.tobelabels = item.labelPath as string[];
+        if (state.tobelabels === item.labelPaths) {
+            state.tobelabels = item.parentLabelPaths as string[];
+        } else {
+            state.tobelabels = item.labelPaths as string[];
+        }
     } else {
-        state.tobelabels = [item.label] as any;
+        if (state.tobelabels === [item.label] as string[]) {
+            state.tobelabels = [] as string[];
+        } else {
+            state.tobelabels = [item.label] as any;
+        }
     }
 };
 
@@ -192,7 +212,7 @@ const getCascaderWidth = computed(() => {
 
 const getLabel = computed(() => {
     const item = findObjectByValue(state.format_options, cascaderValue.value);
-    return item?.labelPath || [];
+    return item?.labelPaths || [];
 });
 
 const ok = () => {
@@ -211,82 +231,39 @@ defineExpose({ show, hide });
 </script>
 
 <template>
-    <lew-popover
-        ref="lewPopverRef"
-        class="lew-cascader-view"
-        :class="getCascaderViewClassName"
-        popoverBodyClassName="lew-cascader-popover-body"
-        :trigger="trigger"
-        :disabled="disabled"
-        placement="bottom-start"
-        style="width: 100%"
-        :loading="state.loading"
-        @show="showHandle"
-        @hide="hideHandle"
-    >
+    <lew-popover ref="lewPopverRef" class="lew-cascader-view" :class="getCascaderViewClassName"
+        popoverBodyClassName="lew-cascader-popover-body" :trigger="trigger" :disabled="disabled" placement="bottom-start"
+        style="width: 100%" :loading="state.loading" @show="showHandle" @hide="hideHandle">
         <template #trigger>
-            <div
-                ref="lewCascaderRef"
-                class="lew-cascader"
-                :class="getCascaderClassName"
-            >
+            <div ref="lewCascaderRef" class="lew-cascader" :class="getCascaderClassName">
                 <transition name="lew-form-icon-ani">
-                    <lew-icon
-                        v-if="!(clearable && getLabel && getLabel.length > 0)"
-                        :size="getIconSize"
-                        type="chevron-down"
-                        class="icon-cascader"
-                    />
+                    <lew-icon v-if="!(clearable && getLabel && getLabel.length > 0)" :size="getIconSize" type="chevron-down"
+                        class="icon-cascader" />
                 </transition>
 
                 <transition name="lew-form-icon-ani">
-                    <lew-icon
-                        v-if="
-                            clearable &&
-                            getLabel &&
-                            getLabel.length > 0 &&
-                            !readonly
-                        "
-                        :size="getIconSize"
-                        type="x"
-                        class="lew-form-icon-clear"
-                        :class="{
-                            'lew-form-icon-clear-focus': state.visible,
-                        }"
-                        v-tooltip="{
-                            content: '清空',
-                            placement: 'top',
-                        }"
-                        @click.stop="clearHandle"
-                    />
+                    <lew-icon v-if="clearable &&
+                        getLabel &&
+                        getLabel.length > 0 &&
+                        !readonly
+                        " :size="getIconSize" type="x" class="lew-form-icon-clear" :class="{
+        'lew-form-icon-clear-focus': state.visible,
+    }" v-tooltip="{
+    content: '清空',
+    placement: 'top',
+}" @click.stop="clearHandle" />
                 </transition>
 
-                <div
-                    v-show="getLabel && getLabel.length > 0"
-                    :style="getValueStyle"
-                    class="value"
-                >
+                <div v-show="getLabel && getLabel.length > 0" :style="getValueStyle" class="value">
                     <template v-if="showAllLevels">
                         <span v-for="(item, index) in getLabel" :key="index">
                             {{ item }}
-                            <svg
-                                v-if="getLabel && index !== getLabel.length - 1"
-                                :style="{
-                                    width: getIconSize,
-                                    height: getIconSize,
-                                }"
-                                viewBox="0 0 48 48"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                stroke="currentColor"
-                                stroke-width="4"
-                                stroke-linecap="butt"
-                                stroke-linejoin="miter"
-                            >
-                                <path
-                                    d="M29.506 6.502 18.493 41.498"
-                                    data-v-5303b0ef=""
-                                ></path>
+                            <svg v-if="getLabel && index !== getLabel.length - 1" :style="{
+                                width: getIconSize,
+                                height: getIconSize,
+                            }" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor"
+                                stroke-width="4" stroke-linecap="butt" stroke-linejoin="miter">
+                                <path d="M29.506 6.502 18.493 41.498" data-v-5303b0ef=""></path>
                             </svg>
                         </span>
                     </template>
@@ -294,85 +271,50 @@ defineExpose({ show, hide });
                         <span>{{ getLabel[getLabel.length - 1] }}</span>
                     </template>
                 </div>
-                <div
-                    v-show="!getLabel || (getLabel && getLabel.length === 0)"
-                    class="placeholder"
-                >
+                <div v-show="!getLabel || (getLabel && getLabel.length === 0)" class="placeholder">
                     {{ placeholder }}
                 </div>
             </div>
         </template>
         <template #popover-body>
-            <div
-                class="lew-cascader-body"
-                :style="{
-                    width: `${getCascaderWidth}px`,
-                }"
-                :class="getBodyClassName"
-            >
+            <div class="lew-cascader-body" :style="{
+                width: `${getCascaderWidth}px`,
+            }" :class="getBodyClassName">
                 <slot name="header"></slot>
-                <div
-                    class="lew-cascader-options-box"
-                    :style="{ height: free ? 'calc(100% - 40px)' : '100%' }"
-                >
-                    <template
-                        v-for="(oItem, oIndex) in state.options"
-                        :key="oIndex"
-                    >
-                        <div
-                            class="lew-cascader-item-warpper lew-scrollbar-hover"
-                            :style="{
-                                zIndex: 999 - oIndex,
-                                transform:
-                                    oItem.length > 0
-                                        ? `translateX(${180 * oIndex}px)`
-                                        : '',
-                            }"
-                        >
+                <div class="lew-cascader-options-box" :style="{ height: free ? 'calc(100% - 40px)' : '100%' }">
+                    <template v-for="(oItem, oIndex) in state.options" :key="oIndex">
+                        <div class="lew-cascader-item-warpper lew-scrollbar-hover" :style="{
+                            zIndex: 999 - oIndex,
+                            transform:
+                                oItem.length > 0
+                                    ? `translateX(${180 * oIndex}px)`
+                                    : '',
+                        }">
                             <!--  -->
 
-                            <div
-                                class="lew-cascader-item"
-                                :class="{
-                                    'lew-cascader-item-disabled': item.disabled,
-                                    'lew-cascader-item-active':
-                                        state.activelabels.includes(item.label),
-                                    'lew-cascader-item-tobe':
-                                        state.tobelabels.includes(item.label),
-                                    'lew-cascader-item-select':
-                                        getLabel &&
-                                        getLabel.includes(item.label),
-                                }"
-                                v-for="(item, index) in oItem"
-                                :key="index"
-                                @click="selectItem(item, oIndex)"
-                            >
-                                <lew-checkbox
-                                    v-if="free"
-                                    :checked="
-                                        state.tobelabels.includes(item.label)
-                                    "
-                                />
-                                <span> {{ item.label }}</span>
-                                <lew-icon
-                                    v-if="item.isHasChild"
-                                    size="14px"
-                                    class="icon"
-                                    type="chevron-right"
-                                />
+                            <div class="lew-cascader-item" :class="{
+                                'lew-cascader-item-disabled': item.disabled,
+                                'lew-cascader-item-active':
+                                    state.activelabels.includes(item.label),
+                                'lew-cascader-item-tobe':
+                                    state.tobelabels.includes(item.label),
+                                'lew-cascader-item-select':
+                                    getLabel &&
+                                    getLabel.includes(item.label),
+                            }" v-for="(item, index) in oItem" :key="index" @click="selectItem(item, oIndex)">
+                                <lew-checkbox class="lew-cascader-checkbox" v-if="free"
+                                    :checked="state.tobelabels.includes(item.label)" />
+                                <div class="lew-cascader-label" :class="{
+                                    'lew-cascader-label-free': free
+                                }"> {{ item.label }}</div>
+                                <lew-icon v-if="item.isHasChild" size="14px" class="lew-cascader-icon"
+                                    type="chevron-right" />
                             </div>
                         </div>
                     </template>
                 </div>
                 <lew-flex v-if="free" x="end" class="lew-cascader-control">
-                    <lew-button
-                        @click="cancel"
-                        round
-                        color="normal"
-                        type="text"
-                        size="small"
-                        >取消</lew-button
-                    >
+                    <lew-button @click="cancel" round color="normal" type="text" size="small">取消</lew-button>
                     <lew-button @click="ok" round type="light" size="small">
                         确认
                     </lew-button>
@@ -392,7 +334,8 @@ defineExpose({ show, hide });
     outline: 0px var(--lew-color-primary-light) solid;
     border: var(--lew-form-border-width) transparent solid;
     box-shadow: var(--lew-form-box-shadow);
-    > div {
+
+    >div {
         width: 100%;
     }
 
@@ -413,6 +356,7 @@ defineExpose({ show, hide });
             transform: translateY(-50%) rotate(0deg);
             transition: var(--lew-form-transition);
         }
+
         .icon-cascader {
             opacity: var(--lew-form-icon-opacity);
         }
@@ -434,10 +378,12 @@ defineExpose({ show, hide });
             box-sizing: border-box;
             transition: all 0.2s;
             gap: 2px;
+
             span {
                 display: inline-flex;
                 gap: 2px;
                 align-items: center;
+
                 svg {
                     opacity: 0.4;
                 }
@@ -448,9 +394,11 @@ defineExpose({ show, hide });
     .lew-cascader-align-left {
         text-align: left;
     }
+
     .lew-cascader-align-center {
         text-align: center;
     }
+
     .lew-cascader-align-right {
         text-align: right;
     }
@@ -460,6 +408,7 @@ defineExpose({ show, hide });
     }
 
     .lew-cascader-size-small {
+
         .value,
         .placeholder {
             padding: var(--lew-form-input-padding-small);
@@ -470,6 +419,7 @@ defineExpose({ show, hide });
     }
 
     .lew-cascader-size-medium {
+
         .value,
         .placeholder {
             padding: var(--lew-form-input-padding-medium);
@@ -480,6 +430,7 @@ defineExpose({ show, hide });
     }
 
     .lew-cascader-size-large {
+
         .value,
         .placeholder {
             padding: var(--lew-form-input-padding-large);
@@ -500,14 +451,14 @@ defineExpose({ show, hide });
 
 .lew-cascader-view.lew-cascader-view-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-        solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
     outline: var(--lew-form-ouline);
 
     .icon-cascader {
         transform: translateY(-50%) rotate(180deg);
         color: var(--lew-text-color-2);
     }
+
     .icon-cascader-hide {
         opacity: 0;
         transform: translate(100%, -50%) rotate(180deg);
@@ -518,12 +469,15 @@ defineExpose({ show, hide });
     opacity: var(--lew-disabled-opacity);
     pointer-events: none; //鼠标点击不可修改
 }
+
 .lew-cascader-view-readonly {
     pointer-events: none; //鼠标点击不可修改
+
     .lew-cascader {
         user-select: text;
     }
 }
+
 .lew-cascader-view-disabled:hover {
     background-color: var(--lew-form-bgcolor);
     outline: 0px var(--lew-color-primary-light) solid;
@@ -539,8 +493,10 @@ defineExpose({ show, hide });
     overflow: hidden;
     transition: all 0.25s;
     user-select: none;
+
     .search-input {
         margin-bottom: 5px;
+
         input {
             outline: none;
             border: none;
@@ -553,20 +509,24 @@ defineExpose({ show, hide });
             color: var(--lew-form-color);
             transition: var(--lew-form-transition);
         }
+
         input:focus {
             background-color: var(--lew-form-bgcolor);
         }
     }
+
     .not-found {
         padding: 50px 0px;
         opacity: 0.4;
     }
+
     .reslut-count {
         padding-left: 8px;
         margin: 5px 0px;
         opacity: 0.4;
         font-size: 13px;
     }
+
     .lew-cascader-options-box {
         position: relative;
         display: flex;
@@ -584,9 +544,11 @@ defineExpose({ show, hide });
             padding: 5px;
             box-sizing: border-box;
         }
+
         .lew-cascader-item-warpper:last-child {
             border-right: 0px transparent solid;
         }
+
         .lew-cascader-item {
             position: relative;
             display: inline-flex;
@@ -604,14 +566,39 @@ defineExpose({ show, hide });
             height: 30px;
             padding: 0px 10px;
 
-            .icon {
+            .lew-cascader-icon {
                 position: absolute;
                 right: 2px;
                 top: 50%;
                 transform: translateY(-50%);
                 opacity: 0.4;
             }
+
+            .lew-cascader-checkbox {
+                position: absolute;
+                left: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: -9;
+            }
+
+            .lew-cascader-label {
+                position: relative;
+                z-index: 5;
+                width: 100%;
+                user-select: none;
+                font-size: 14px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                box-sizing: border-box;
+            }
+
+            .lew-cascader-label-free {
+                padding: 0px 8px 0px 25px;
+            }
         }
+
         .lew-cascader-item:hover {
             .icon {
                 opacity: 1;
@@ -622,26 +609,20 @@ defineExpose({ show, hide });
             opacity: 0.3;
             pointer-events: none;
         }
+
         .lew-cascader-item-align-left {
             text-align: left;
         }
+
         .lew-cascader-item-align-center {
             text-align: center;
         }
+
         .lew-cascader-item-align-right {
             text-align: right;
         }
 
-        .lew-cascader-label {
-            width: 100%;
-            user-select: none;
-            font-size: 14px;
-            padding: 0px 8px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            box-sizing: border-box;
-        }
+
 
         .lew-cascader-item:hover {
             color: var(--lew-text-color-0);
@@ -662,6 +643,7 @@ defineExpose({ show, hide });
 
             color: var(--lew-color-primary-dark);
             font-weight: bold;
+
             .icon-check {
                 margin-right: 10px;
             }
@@ -673,32 +655,34 @@ defineExpose({ show, hide });
             background-color: var(--lew-backdrop-bg-active);
         }
     }
+
     .lew-cascader-control {
         border-top: 1px solid var(--lew-bgcolor-4);
         height: 40px;
         padding-right: 10px;
     }
 }
+
 .lew-popover-body .lew-cascader-popover-body {
     padding: 0px;
 }
-</style>
-<style lang="scss">
+
 .lew-cascader-item:hover {
     .lew-checkbox {
         .icon-checkbox-box {
-            border: var(--lew-form-border-width)
-                var(--lew-checkbox-border-color-hover) solid;
+            border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
             outline: var(--lew-form-ouline);
             background: var(--lew-form-bgcolor);
         }
     }
 }
+
 .lew-cascader-item-tobe:hover {
     .lew-checkbox {
         .icon-checkbox-box {
             border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
             background: var(--lew-checkbox-color);
+
             .icon-checkbox {
                 transform: translateY(0px);
                 opacity: 1;
@@ -706,11 +690,13 @@ defineExpose({ show, hide });
         }
     }
 }
+
 .lew-cascader-item-select:hover {
     .lew-checkbox {
         .icon-checkbox-box {
             border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
             background: var(--lew-checkbox-color);
+
             .icon-checkbox {
                 transform: translateY(0px);
                 opacity: 1;

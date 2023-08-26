@@ -31,6 +31,7 @@ const getStyle = computed(() => {
     display: inline;
     border-radius: 4px;
     padding: 2px 6px;
+    margin: 0px 3px;
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
 }

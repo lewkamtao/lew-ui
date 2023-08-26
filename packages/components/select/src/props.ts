@@ -77,10 +77,6 @@ export const selectProps = {
         type: Boolean,
         default: () => false,
     },
-    itemHeight: {
-        type: Number,
-        default: 30,
-    },
     align: {
         type: String,
         default: 'left',

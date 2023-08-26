@@ -32,7 +32,11 @@ watchDebounced(
     () => clear(),
     watchOptions
 );
-
+watchDebounced(
+    () => props.offset,
+    () => clear(),
+    watchOptions
+);
 const clear = () => {
     if (instance) {
         instance.destroy();
@@ -42,8 +46,12 @@ const clear = () => {
 
 const showPop = () => {
     const element = textTrimRef.value;
+    if (!element) {
+        return
+    }
     let isEllipsis = false;
-    const { placement, allowHTML, text }: any = props;
+    const { placement, allowHTML, text, offset }: any = props;
+
     if (props.lineClamp) {
         isEllipsis = element.offsetHeight < element.scrollHeight;
     } else {
@@ -60,6 +68,7 @@ const showPop = () => {
             interactive: true,
             appendTo: () => document.body,
             placement,
+            offset,
             allowHTML,
             arrow: false,
             maxWidth: 250,
@@ -82,14 +91,8 @@ const getClassNames = computed(() => {
 </script>
 
 <template>
-    <div
-        ref="textTrimRef"
-        class="lew-text-trim-wrapper"
-        :class="getClassNames"
-        :style="getTextTrimStyleObject"
-        @mouseover="showPop"
-        v-html="text"
-    />
+    <div ref="textTrimRef" class="lew-text-trim-wrapper" :class="getClassNames" :style="getTextTrimStyleObject"
+        @mouseover="showPop" v-html="text" />
 </template>
 
 <style lang="scss" scoped>
@@ -97,12 +100,15 @@ const getClassNames = computed(() => {
     overflow: hidden;
     text-overflow: ellipsis; //文本溢出显示省略号
 }
+
 .lew-text-trim-x-start {
     text-align: left;
 }
+
 .lew-text-trim-x-center {
     text-align: center;
 }
+
 .lew-text-trim-x-end {
     text-align: right;
 }

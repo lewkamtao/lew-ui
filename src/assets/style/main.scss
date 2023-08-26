@@ -1,12 +1,3 @@
-@import url(../font/HarmonyOS_Medium.css);
-@import url(../font/HarmonyOS_Regular.css);
-
-html,
-body {
-    font-family: HarmonyOS_Regular;
-}
-
-
 body {
     color: var(--lew-text-color-1);
     background-color: var(--lew-bgcolor-3);
@@ -43,6 +34,7 @@ a {
         margin: 10px 0px 20px 0px;
         color: var(--lew-text-color-5);
     }
+
     .pre-box {
         code {
             border-radius: var(--lew-border-radius);

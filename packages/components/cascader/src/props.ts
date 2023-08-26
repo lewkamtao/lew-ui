@@ -3,11 +3,14 @@ import { PropType } from 'vue';
 export type CascaderOptions = {
     label: string;
     value: [string, number];
-    labelPath?: string[];
-    valuePath?: string[];
+    labelPaths?: string[];
+    valuePaths?: string[];
     level?: number;
     isHasChild?: boolean;
     disabled?: boolean;
+    parentLabelPaths?: string[];
+    parentValuePaths?: string[];
+    parentChildren?: CascaderOptions[];
     children?: CascaderOptions[];
 };
 

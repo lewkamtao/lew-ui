@@ -151,7 +151,7 @@ const getStyle = computed(() => {
     border-radius: var(--lew-border-radius);
     box-sizing: border-box;
     overflow: hidden;
-
+    font-family: HarmonyOS_Regular;
     .lew-loading-icon {
         position: absolute;
         left: 10px;

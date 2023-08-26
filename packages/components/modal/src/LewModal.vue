@@ -9,7 +9,7 @@ useDOMCreate('lew-modal');
 const props = defineProps({
     title: {
         type: String,
-        default: '这是一个标题',
+        default: '',
     },
     width: {
         type: String,
@@ -23,13 +23,33 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    hideFooter: {
+        type: Boolean,
+        default: false,
+    },
+    okText: {
+        type: String,
+        default: '确定',
+    },
+    okColor: {
+        type: String,
+        default: 'primary',
+    },
+    cancelText: {
+        type: String,
+        default: '取消',
+    },
+    cancelColor: {
+        type: String,
+        default: 'normal',
+    },
     closeOnClickOverlay: {
         type: Boolean,
         default: false,
     },
 });
 
-const emit = defineEmits(['update:visible', 'confirm']);
+const emit = defineEmits(['update:visible', 'ok', 'cancel']);
 
 const visible = useVModel(props, 'visible', emit);
 
@@ -44,6 +64,14 @@ const getModalStyle = computed(() => {
         height: any2px(props.height),
     };
 });
+
+const ok = () => {
+    emit('ok')
+}
+
+const cancel = () => {
+    emit('cancel')
+}
 </script>
 
 <template>
@@ -54,15 +82,22 @@ const getModalStyle = computed(() => {
         <transition name="lew-modal">
             <div v-if="visible" class="lew-modal" @click="maskClick">
                 <div :style="getModalStyle" class="lew-modal-box" @click.stop>
-                    <lew-flex mode="between" y="center" class="header">
+
+                    <lew-flex v-if="title" mode="between" y="center" class="header">
                         <lew-text-trim class="title" :text="title" />
                         <lew-icon size="18" class="close-btn" @click="visible = false" type="x" />
                     </lew-flex>
-                    <slot></slot>
-                    <lew-flex x="end" y="center" class="footer">
-                        <lew-button type="text" round color="normal">取消</lew-button>
-                        <lew-button round>确定</lew-button>
+                    <div v-else class="header-slot">
+                        <slot name="header"></slot>
+                    </div>
+                    <slot name="main"></slot>
+                    <lew-flex v-if="!hideFooter" x="end" y="center" class="footer">
+                        <lew-button @click="cancel" type="text" :color="cancelColor" :text="cancelText" />
+                        <lew-button @click="ok" :color="okColor" :text="okText" />
                     </lew-flex>
+                    <div v-else class="footer-slot">
+                        <slot name="footer"></slot>
+                    </div>
                 </div>
             </div>
         </transition>
@@ -89,7 +124,7 @@ const getModalStyle = computed(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2002;
+    z-index: 2001;
 
     .lew-modal-box {
         border-radius: var(--lew-border-radius);
@@ -100,8 +135,7 @@ const getModalStyle = computed(() => {
 
         .header {
             height: 50px;
-            background-color: var(--lew-backdrop-bg) !important;
-            backdrop-filter: blur(20px);
+            background-color: var(--lew-bgcolor-2);
             padding: 10px 20px;
             border-bottom: var(--lew-border-1);
 
@@ -128,11 +162,21 @@ const getModalStyle = computed(() => {
             }
         }
 
+
         .footer {
             height: 50px;
-            background-color: var(--lew-backdrop-bg) !important;
-            backdrop-filter: blur(20px);
+            background-color: var(--lew-bgcolor-1);
             padding: 10px 20px;
+            border-top: var(--lew-border-1);
+        }
+
+        .header-slot {
+            background-color: var(--lew-bgcolor-1);
+            border-bottom: var(--lew-border-1);
+        }
+
+        .footer-slot {
+            background-color: var(--lew-bgcolor-1);
             border-top: var(--lew-border-1);
         }
 

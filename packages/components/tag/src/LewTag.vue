@@ -84,6 +84,7 @@ const getStyle = computed(() => {
     user-select: none;
     box-sizing: border-box;
     overflow: hidden;
+    font-family: HarmonyOS_Regular;
 
     .lew-tag-value {
         font-weight: normal;

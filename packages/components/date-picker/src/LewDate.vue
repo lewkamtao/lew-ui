@@ -236,7 +236,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
                     justify-content: center;
                     width: 24px;
                     height: 24px;
-                    color: var(--lew-text-color-9);
+                    color: var(--lew-text-color-7);
                     border-radius: 50%;
                     transition: all 0.1s ease;
                 }

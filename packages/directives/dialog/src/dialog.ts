@@ -1,10 +1,4 @@
 export const dialogProps = {
-    visible: {
-        type: Boolean,
-        default: () => {
-            return false;
-        },
-    },
     closeOnClickOverlay: {
         type: Boolean,
         default: false,
