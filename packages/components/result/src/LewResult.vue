@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import { _props } from './props';
+import { resultProps } from './props';
 
-defineProps(_props);
+defineProps(resultProps);
 </script>
 
 <template>
     <lew-flex direction="y" class="lew-result">
         <lew-flex class="lew-result-icon" :class="`lew-result-icon-${type}`">
-            <lew-icon v-if="type === `normal`" size="60" type="light" color="blue"></lew-icon>
+            <lew-icon
+                v-if="type === `normal`"
+                size="60"
+                type="light"
+                color="blue"
+            ></lew-icon>
             <lew-icon
                 v-if="type === `warning`"
                 size="60"

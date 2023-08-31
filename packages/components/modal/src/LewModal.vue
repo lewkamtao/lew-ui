@@ -3,51 +3,11 @@ import { useVModel } from '@vueuse/core';
 import { useDOMCreate } from '../../../hooks';
 import { any2px } from 'lew-ui/utils';
 import { LewTextTrim } from '../../text-trim';
+import { modalProps } from './props';
 
 useDOMCreate('lew-modal');
 
-const props = defineProps({
-    title: {
-        type: String,
-        default: '',
-    },
-    width: {
-        type: String,
-        default: '',
-    },
-    height: {
-        type: String,
-        default: '',
-    },
-    visible: {
-        type: Boolean,
-        default: false,
-    },
-    hideFooter: {
-        type: Boolean,
-        default: false,
-    },
-    okText: {
-        type: String,
-        default: '确定',
-    },
-    okColor: {
-        type: String,
-        default: 'primary',
-    },
-    cancelText: {
-        type: String,
-        default: '取消',
-    },
-    cancelColor: {
-        type: String,
-        default: 'normal',
-    },
-    closeOnClickOverlay: {
-        type: Boolean,
-        default: false,
-    },
-});
+const props = defineProps(modalProps);
 
 const emit = defineEmits(['update:visible', 'ok', 'cancel']);
 
@@ -66,12 +26,12 @@ const getModalStyle = computed(() => {
 });
 
 const ok = () => {
-    emit('ok')
-}
+    emit('ok');
+};
 
 const cancel = () => {
-    emit('cancel')
-}
+    emit('cancel');
+};
 </script>
 
 <template>
@@ -82,18 +42,41 @@ const cancel = () => {
         <transition name="lew-modal">
             <div v-if="visible" class="lew-modal" @click="maskClick">
                 <div :style="getModalStyle" class="lew-modal-box" @click.stop>
-
-                    <lew-flex v-if="title" mode="between" y="center" class="header">
+                    <lew-flex
+                        v-if="title"
+                        mode="between"
+                        y="center"
+                        class="header"
+                    >
                         <lew-text-trim class="title" :text="title" />
-                        <lew-icon size="18" class="close-btn" @click="visible = false" type="x" />
+                        <lew-icon
+                            size="18"
+                            class="close-btn"
+                            @click="visible = false"
+                            type="x"
+                        />
                     </lew-flex>
                     <div v-else class="header-slot">
                         <slot name="header"></slot>
                     </div>
                     <slot name="main"></slot>
-                    <lew-flex v-if="!hideFooter" x="end" y="center" class="footer">
-                        <lew-button @click="cancel" type="text" :color="cancelColor" :text="cancelText" />
-                        <lew-button @click="ok" :color="okColor" :text="okText" />
+                    <lew-flex
+                        v-if="!hideFooter"
+                        x="end"
+                        y="center"
+                        class="footer"
+                    >
+                        <lew-button
+                            @click="cancel"
+                            type="text"
+                            :color="cancelColor"
+                            :text="cancelText"
+                        />
+                        <lew-button
+                            @click="ok"
+                            :color="okColor"
+                            :text="okText"
+                        />
                     </lew-flex>
                     <div v-else class="footer-slot">
                         <slot name="footer"></slot>
@@ -146,7 +129,7 @@ const cancel = () => {
 
             .close-btn {
                 cursor: pointer;
-                transition: all .25s;
+                transition: all 0.25s;
                 border-radius: var(--lew-border-radius);
                 color: var(--lew-text-color-5);
                 padding: 2px;
@@ -161,7 +144,6 @@ const cancel = () => {
                 transform: scale(1);
             }
         }
-
 
         .footer {
             height: 50px;
@@ -179,7 +161,6 @@ const cancel = () => {
             background-color: var(--lew-bgcolor-1);
             border-top: var(--lew-border-1);
         }
-
     }
 }
 
@@ -201,6 +182,6 @@ const cancel = () => {
 .lew-modal-leave-to,
 .lew-modal-enter-from {
     opacity: 0;
-    transform: translateY(30px)
+    transform: translateY(30px);
 }
 </style>

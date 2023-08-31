@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { dateRangePickerProps } from './datePicker';
+import { dateRangePickerProps } from './props';
 import { useVModel } from '@vueuse/core';
 
 const props = defineProps(dateRangePickerProps);

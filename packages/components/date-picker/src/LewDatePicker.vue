@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { datePickerProps } from './datePicker';
+import { datePickerProps } from './props';
 import { useVModel } from '@vueuse/core';
 import { object2class } from 'lew-ui/utils';
 const emit = defineEmits(['change', 'clear', 'update:modelValue']);

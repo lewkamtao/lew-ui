@@ -1,9 +1,9 @@
 <!-- filename: Popover.vue -->
 <script setup lang="ts">
 import { LewButton } from 'lew-ui';
-import { _props } from './props';
+import { popokProps } from './props';
 
-const props = defineProps(_props);
+const props = defineProps(popokProps);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const lewPopoverRef = ref();
@@ -54,7 +54,8 @@ const emit = defineEmits(['show', 'cancel']);
                         <lew-icon
                             v-if="type === `normal`"
                             size="22"
-                            type="light" color="blue"
+                            type="light"
+                            color="blue"
                         ></lew-icon>
                         <lew-icon
                             v-if="type === `warning`"

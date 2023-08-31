@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
 import { useDOMCreate } from '../../../hooks';
-import { drawerProps, object2class, getStyle } from './drawer';
+import { drawerProps, object2class, getStyle } from './props';
 
 useDOMCreate('lew-drawer');
 const emit = defineEmits(['update:visible']);

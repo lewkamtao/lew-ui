@@ -44,4 +44,4 @@ export const tagProps = {
     },
 };
 
-export type AvatarProps = ExtractPropTypes<typeof tagProps>;
+export type TagProps = ExtractPropTypes<typeof tagProps>;

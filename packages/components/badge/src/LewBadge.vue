@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { badgeProps } from './badge';
+import { badgeProps } from './props';
 import { getColorType } from 'lew-ui/utils';
 
 const props = defineProps(badgeProps);

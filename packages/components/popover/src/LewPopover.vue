@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import tippy from 'tippy.js';
 import { watchDebounced } from '@vueuse/core';
-import { popoverProps } from './popover';
+import { popoverProps } from './props';
 
 const props = defineProps(popoverProps);
 const triggerRef = ref();
@@ -58,9 +58,20 @@ watchDebounced(
     },
     watchOptions
 );
-
+// offset
+watchDebounced(
+    () => props.offset,
+    (value: any) => {
+        if (instance) {
+            instance.setProps({
+                offset: value,
+            });
+        }
+    },
+    watchOptions
+);
 const initTippy = () => {
-    let { placement, triggerTarget, trigger, disabled }: any = props;
+    let { placement, triggerTarget, offset, trigger, disabled }: any = props;
 
     if (trigger === 'hover') {
         trigger = 'mouseenter';
@@ -76,6 +87,7 @@ const initTippy = () => {
         placement,
         duration: [150, 150],
         arrow: false,
+        offset: offset,
         delay: trigger === 'mouseenter' ? [250, 250] : undefined,
         appendTo: () => document.body,
         allowHTML: true,

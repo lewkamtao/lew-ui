@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { useVModel } from '@vueuse/core';
 import LewRadio from './LewRadio.vue';
-import { radioGroupProps } from './radio';
-import type { RadioOptions } from './radio';
+import { radioGroupProps } from './props';
+import type { RadioOptions } from './props';
 import { object2class } from 'lew-ui/utils';
 
 const emit = defineEmits(['change', 'update:modelValue']);

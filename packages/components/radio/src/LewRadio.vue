@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { object2class } from 'lew-ui/utils';
-import { radioProps } from './radio';
+import { radioProps } from './props';
 
 const props = defineProps(radioProps);
 

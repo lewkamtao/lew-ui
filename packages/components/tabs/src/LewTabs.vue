@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { tabsProps } from './tabs';
+import { tabsProps } from './props';
 import { useVModel } from '@vueuse/core';
 import { object2class, any2px } from 'lew-ui/utils';
 

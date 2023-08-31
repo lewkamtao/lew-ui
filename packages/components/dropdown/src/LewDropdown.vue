@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { dropdownProps } from './dropdown';
-import type { DropdownOptions } from './dropdown';
+import { dropdownProps } from './props';
+import type { DropdownOptions } from './props';
 
 defineProps(dropdownProps);
 

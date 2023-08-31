@@ -10,6 +10,7 @@ declare module '*.vue' {
 declare module 'highlight.js';
 declare const hljs;
 declare module 'lew-ui';
+declare module '@/lib/utils';
 declare const LewMessage;
 declare const LewDialog;
 declare const LewNotification: typeof import('../packages/directives')['LewNotification'];

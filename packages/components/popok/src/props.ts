@@ -1,4 +1,4 @@
-export const _props = {
+export const popokProps = {
     type: {
         type: String,
         default: 'warning',

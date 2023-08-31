@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { useVModels } from '@vueuse/core';
-import { _props } from './props';
+import { paginationProps } from './props';
 
-const props = defineProps(_props);
+const props = defineProps(paginationProps);
 const emit = defineEmits(['change', 'update:currentPage']);
 
 const { total, currentPage, pageSizeOptions } = useVModels(props, emit);
@@ -103,35 +103,70 @@ const checkPageNum = (value: any) => {
                 <div class="btn" @click="changePage(currentPage - 1)">
                     <lew-icon size="14" type="chevron-left" />
                 </div>
-                <div v-if="showOne" class="btn lew-pagination-page-btn" @click="changePage(1)">
+                <div
+                    v-if="showOne"
+                    class="btn lew-pagination-page-btn"
+                    @click="changePage(1)"
+                >
                     1
                 </div>
-                <div v-if="startEllipsis" class="btn control-btn" @click="
-                    changePage(currentPage - state.visiblePagesCount + 1)
-                    ">
+                <div
+                    v-if="startEllipsis"
+                    class="btn control-btn"
+                    @click="
+                        changePage(currentPage - state.visiblePagesCount + 1)
+                    "
+                >
                     <lew-icon size="14" type="more-horizontal" />
                 </div>
-                <div v-for="(page, index) in visiblePages" :key="index" class="btn" :class="{
-                    active: Number(page) === Number(currentPage),
-                }" @click="changePage(page)">
+                <div
+                    v-for="(page, index) in visiblePages"
+                    :key="index"
+                    class="btn"
+                    :class="{
+                        active: Number(page) === Number(currentPage),
+                    }"
+                    @click="changePage(page)"
+                >
                     {{ page }}
                 </div>
-                <div v-if="endEllipsis" class="btn control-btn" @click="
-                    changePage(currentPage + state.visiblePagesCount - 1)
-                    ">
+                <div
+                    v-if="endEllipsis"
+                    class="btn control-btn"
+                    @click="
+                        changePage(currentPage + state.visiblePagesCount - 1)
+                    "
+                >
                     <lew-icon size="14" type="more-horizontal" />
                 </div>
-                <div v-if="showMax" class="btn lew-pagination-page-btn" @click="changePage(totalPages)">
+                <div
+                    v-if="showMax"
+                    class="btn lew-pagination-page-btn"
+                    @click="changePage(totalPages)"
+                >
                     {{ totalPages }}
                 </div>
                 <div class="btn" @click="changePage(currentPage + 1)">
                     <lew-icon size="14" type="chevron-right" />
                 </div>
             </lew-flex>
-            <lew-select v-model="state.pageSize" style="width: 100px" align="center" size="small" :show-check-icon="false"
-                :options="pageSizeOptions" @change="checkPageSize" />
-            <lew-input v-model="state.toPage" size="small" align="center" placeholder="跳转至" auto-width
-                @change="checkPageNum" />
+            <lew-select
+                v-model="state.pageSize"
+                style="width: 100px"
+                align="center"
+                size="small"
+                :show-check-icon="false"
+                :options="pageSizeOptions"
+                @change="checkPageSize"
+            />
+            <lew-input
+                v-model="state.toPage"
+                size="small"
+                align="center"
+                placeholder="跳转至"
+                auto-width
+                @change="checkPageNum"
+            />
             <slot name="right" />
         </lew-flex>
     </div>

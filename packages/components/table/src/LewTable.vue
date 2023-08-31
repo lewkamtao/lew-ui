@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useVModel, watchArray } from '@vueuse/core';
-import { tableProps } from './table';
+import { tableProps } from './props';
 
 const props = defineProps(tableProps);
 const emit = defineEmits(['update:selectedKey']);

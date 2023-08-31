@@ -46,9 +46,7 @@ const toPath = (item: Item) => {
                 :style="`animation-delay: ${(i * 5 + j) * 25}ms;`"
                 @click="toPath(item)"
             >
-                <span class="name">
-                    {{ item.name }}
-                </span>
+                <span class="name"> {{ item.name }} </span>
                 <LewBadge
                     v-if="item.label"
                     :type="item.type"

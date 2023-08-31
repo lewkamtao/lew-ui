@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { textareaProps } from './textarea';
+import { textareaProps } from './props';
 import { useVModel } from '@vueuse/core';
 import { object2class, any2px } from 'lew-ui/utils';
 

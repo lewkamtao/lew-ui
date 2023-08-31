@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useVModel } from '@vueuse/core';
 import { object2class } from 'lew-ui/utils';
-import { checkboxProps } from './checkbox';
+import { checkboxProps } from './props';
 
 const props = defineProps(checkboxProps);
 

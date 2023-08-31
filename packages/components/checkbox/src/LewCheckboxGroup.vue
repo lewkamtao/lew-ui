@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useVModel, watchArray } from '@vueuse/core';
-import { checkboxGroupProps } from './checkbox';
-import type { CheckboxOptions } from './checkbox';
+import { checkboxGroupProps } from './props';
+import type { CheckboxOptions } from './props';
 import { object2class } from 'lew-ui/utils';
 import LewCheckbox from './LewCheckbox.vue';
 

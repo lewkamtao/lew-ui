@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { _props } from './props';
+import { switchProps } from './props';
 
-const props = defineProps(_props);
+const props = defineProps(switchProps);
 const _loading = ref(false);
 const v = ref(props.modelValue);
 

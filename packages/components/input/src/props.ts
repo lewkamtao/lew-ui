@@ -111,4 +111,4 @@ export const inputProps = {
         default: '',
     },
 };
-export type DateRangePickerProps = ExtractPropTypes<typeof inputProps>;
+export type InputProps = ExtractPropTypes<typeof inputProps>;

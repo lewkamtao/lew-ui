@@ -32,7 +32,7 @@ const state = reactive({
 });
 
 const getSelectWidth = () => {
-    state.selectWidth = lewSelectRef.value?.clientWidth - 14;
+    state.selectWidth = lewSelectRef.value?.clientWidth - 12;
     if (props.searchable) {
         setTimeout(() => {
             searchInputRef.value && searchInputRef.value.focus();

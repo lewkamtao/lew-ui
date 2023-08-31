@@ -2,7 +2,7 @@
 import { Ref } from 'vue';
 import { getMonthDate, getHeadDate } from './date';
 import type { RetType, RetItemType } from './date';
-import { dateProps } from './datePicker';
+import { dateProps } from './props';
 import { useVModel } from '@vueuse/core';
 import dayjs from 'dayjs';
 import { object2class } from 'lew-ui/utils';

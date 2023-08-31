@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useImage } from '@vueuse/core';
 import { object2class } from 'lew-ui/utils';
-import { avatarProps } from './avatar';
+import { avatarProps } from './props';
 
 const props = defineProps(avatarProps);
 const { isLoading } = useImage({ src: props.src });

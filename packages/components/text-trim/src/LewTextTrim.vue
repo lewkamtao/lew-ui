@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import tippy from 'tippy.js';
 import { watchDebounced } from '@vueuse/core';
-import { textTrimProps } from './text-trim';
+import { textTrimProps } from './props';
 import { object2class } from 'lew-ui/utils';
 
 const props = defineProps(textTrimProps);

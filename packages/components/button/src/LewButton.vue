@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { LewIcon } from 'lew-ui';
 import { object2class, getColorType } from 'lew-ui/utils';
-import { buttonProps } from './button';
+import { buttonProps } from './props';
 
 const emit = defineEmits(['click']);
 const props = defineProps(buttonProps);

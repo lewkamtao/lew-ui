@@ -1,4 +1,4 @@
-export const _props = {
+export const switchProps = {
     modelValue: {
         type: Boolean,
         default: () => {

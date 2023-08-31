@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formProps } from './form';
+import { formProps } from './props';
 import { object2class } from 'lew-ui/utils';
 import * as Yup from 'yup';
 import { useVModel, watchDebounced } from '@vueuse/core';

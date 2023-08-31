@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inputProps } from './input';
+import { inputProps } from './props';
 import { useVModel } from '@vueuse/core';
 import { object2class } from 'lew-ui/utils';
 

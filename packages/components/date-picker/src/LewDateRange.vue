@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import dayjs from 'dayjs';
 import { getMonthDate, getHeadDate } from './date';
-import { dateRangeProps } from './datePicker';
+import { dateRangeProps } from './props';
 import { useVModel } from '@vueuse/core';
 const emit = defineEmits(['change', 'update:modelValue']);
 const props = defineProps(dateRangeProps);

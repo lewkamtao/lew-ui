@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import throttle from 'lodash/throttle';
-import { backTopProps } from './backTop';
+import { backTopProps } from './props';
 import { useEventListener } from '../../../hooks';
 
 const props = defineProps(backTopProps);

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useLewTo } from '../../../hooks';
 import { getColorType } from 'lew-ui/utils';
-import { markProps } from './mark';
+import { markProps } from './props';
 
 const props = defineProps(markProps);
 const { lewTo } = useLewTo();

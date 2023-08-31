@@ -1,8 +1,4 @@
-<script setup lang="ts">
-import { magicNumberProps } from './magic-text';
-
-const props = defineProps(magicNumberProps);
-</script>
+<script setup lang="ts"></script>
 
 <template>
     <div class="lew-magic-text">

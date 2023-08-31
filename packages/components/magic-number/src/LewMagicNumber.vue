@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { magicNumberProps } from './magic-number';
+import { magicNumberProps } from './props';
 import { numFormat } from 'lew-ui/utils';
 
 const props = defineProps(magicNumberProps);

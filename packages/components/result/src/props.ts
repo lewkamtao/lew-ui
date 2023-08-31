@@ -1,4 +1,4 @@
-export const _props = {
+export const resultProps = {
     type: {
         type: String,
         default: 'info',

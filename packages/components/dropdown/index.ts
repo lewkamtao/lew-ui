@@ -1,2 +1,3 @@
 export { default as LewDropdown } from './src/LewDropdown.vue';
-export * from './src/dropdown';
+export * from './src/props';
+

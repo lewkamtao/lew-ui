@@ -26,5 +26,9 @@ export const popoverProps = {
         default: null,
         required: false,
     },
+    offset: {
+        type: Array,
+        default: [0, 8],
+    },
 };
 export type PopoverProps = ExtractPropTypes<typeof popoverProps>;

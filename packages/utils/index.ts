@@ -1,6 +1,5 @@
 // Returns the icon type to be used in a tooltip.
 
-import { log } from "console";
 
 // type: The type of message to display in the tooltip.
 export const getIconType = (type: string | undefined): string => {
