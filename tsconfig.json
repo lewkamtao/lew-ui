@@ -1,9 +1,16 @@
 {
     "include": [
+        "src/**/*.ts",
+        "src/**/*.d.ts",
+        "src/**/*.tsx",
+        "src/**/*.vue",
+        "packages",
+        "auto-imports.d.ts",
         "packages/**/*.ts",
         "packages/**/*.d.ts",
         "packages/**/*.tsx",
-        "packages/**/*.vue"
+        "packages/**/*.vue",
+        "packages"
     ],
     // 指定不需要被编译的目录
     "exclude": [

@@ -42,22 +42,11 @@ const toPath = (item: Item) => {
             <div v-if="list.title" class="title">
                 <span> {{ list.title }}</span>
             </div>
-            <div
-                v-for="(item, j) in list.items"
-                :key="`siderbar${j}`"
-                class="item"
-                :class="{ active: route.path === item.path }"
-                @click="toPath(item)"
-            >
-                <span class="ename"> {{ item.name }} </span>
+            <div v-for="(item, j) in list.items" :key="`siderbar${j}`" class="item"
+                :class="{ active: route.path === item.path }" @click="toPath(item)">
+                <span class="ename"> {{ item.name || item.cname }} </span>
                 <!-- <span class="cname"> {{ item.cname }}</span> -->
-                <lew-tag
-                    type="light"
-                    v-if="item.label"
-                    :color="item.color"
-                    size="small"
-                    style="margin-left: 10px"
-                >
+                <lew-tag type="light" v-if="item.label" :color="item.color" size="small" style="margin-left: 10px">
                     {{ item.label }}
                 </lew-tag>
             </div>
@@ -107,7 +96,8 @@ const toPath = (item: Item) => {
             cursor: pointer;
             font-size: 14px;
             color: var(--lew-text-color-2);
-            font-weight: 300;
+            font-weight: 400;
+
             .ename {
                 margin-right: 5px;
                 letter-spacing: 0.8px;
