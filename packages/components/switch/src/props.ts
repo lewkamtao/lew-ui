@@ -16,7 +16,7 @@ export const switchProps = {
     },
     request: {
         type: Function,
-        default: '',
+        default: null,
         description: '请求方法',
     },
     loading: {

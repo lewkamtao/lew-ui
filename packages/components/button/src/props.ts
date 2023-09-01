@@ -50,7 +50,7 @@ export const buttonProps = {
     },
     request: {
         type: Function,
-        default: '',
+        default: null,
         description: '请求方法',
     },
     disabled: {

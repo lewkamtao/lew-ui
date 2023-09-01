@@ -4,12 +4,13 @@ export type TabsOptions = {
     label: string;
     value: [String, Number];
 };
+export type TabsSize = 'small' | 'medium' | 'large';
 
 export type TabsType = 'block' | 'line';
 export const tabsProps = {
     modelValue: {
-        type: [String, Number],
-        default: [],
+        type: String,
+        default: '',
         description: '绑定值',
     },
     options: {
@@ -18,7 +19,7 @@ export const tabsProps = {
         description: '配置列表',
     },
     size: {
-        type: String,
+        type: String as PropType<TabsSize>,
         default: 'medium',
         description: '尺寸，可选值为 small、medium、large',
     },
