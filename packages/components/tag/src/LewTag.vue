@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { tagProps } from './tagProps';
 import { object2class, getColorType } from 'lew-ui/utils';
+import { LewIcon, } from 'lew-ui';
 
 const props = defineProps(tagProps);
 const emit = defineEmits(['close']);
@@ -84,7 +85,6 @@ const getStyle = computed(() => {
     user-select: none;
     box-sizing: border-box;
     overflow: hidden;
-    font-family: HarmonyOS_Regular;
 
     .lew-tag-value {
         font-weight: normal;

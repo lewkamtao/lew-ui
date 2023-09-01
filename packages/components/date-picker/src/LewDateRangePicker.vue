@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { LewPopover, LewIcon, LewDateRange } from 'lew-ui';
 import { dateRangePickerProps } from './props';
 import { useVModel } from '@vueuse/core';
 
@@ -62,76 +63,41 @@ const checkClear = computed(() => {
 defineExpose({ show, hide });
 </script>
 <template>
-    <lew-popover
-        ref="lewPopoverRef"
-        trigger="click"
-        placement="bottom-start"
-        @show="showHandle"
-        @hide="hideHandle"
-    >
+    <lew-popover ref="lewPopoverRef" trigger="click" placement="bottom-start" @show="showHandle" @hide="hideHandle">
         <template #trigger>
             <div class="lew-date-picker-view" :class="classObject">
                 <div class="lew-date-picker-input">
-                    <div
-                        v-if="!modelValue[startKey]"
-                        class="lew-date-picker-placeholder"
-                    >
+                    <div v-if="!modelValue[startKey]" class="lew-date-picker-placeholder">
                         请选择日期
                     </div>
-                    <div
-                        v-else
-                        class="lew-date-picker-dateValue lew-date-picker-start"
-                    >
+                    <div v-else class="lew-date-picker-dateValue lew-date-picker-start">
                         {{ modelValue[startKey] }}
                     </div>
                     <div class="lew-date-picker-mid">
                         <lew-icon size="14" type="minus" />
                     </div>
-                    <div
-                        v-if="!modelValue[endKey]"
-                        class="lew-date-picker-placeholder"
-                    >
+                    <div v-if="!modelValue[endKey]" class="lew-date-picker-placeholder">
                         请选择日期
                     </div>
-                    <div
-                        v-else
-                        class="lew-date-picker-dateValue lew-date-picker-end"
-                    >
+                    <div v-else class="lew-date-picker-dateValue lew-date-picker-end">
                         {{ modelValue[endKey] }}
                     </div>
-                    <lew-icon
-                        class="icon-calendar"
-                        :size="getIconSize"
-                        :class="{
-                            'icon-calendar-hide': checkClear,
-                        }"
-                        type="calendar"
-                    />
+                    <lew-icon class="icon-calendar" :size="getIconSize" :class="{
+                        'icon-calendar-hide': checkClear,
+                    }" type="calendar" />
                     <transition name="lew-form-icon-ani">
-                        <lew-icon
-                            v-if="clearable && checkClear && !readonly"
-                            :size="getIconSize"
-                            type="x"
-                            v-tooltip="{
-                                content: '清空',
-                                placement: 'top',
-                            }"
-                            class="lew-form-icon-clear"
-                            :class="{
-                                'lew-form-icon-clear-focus': visible,
-                            }"
-                            @click.stop="clearHandle"
-                        />
+                        <lew-icon v-if="clearable && checkClear && !readonly" :size="getIconSize" type="x" v-tooltip="{
+                            content: '清空',
+                            placement: 'top',
+                        }" class="lew-form-icon-clear" :class="{
+    'lew-form-icon-clear-focus': visible,
+}" @click.stop="clearHandle" />
                     </transition>
                 </div>
             </div>
         </template>
         <template #popover-body>
-            <lew-date-range
-                ref="lewDateRangePanelRef"
-                v-model="modelValue"
-                @change="change"
-            />
+            <lew-date-range ref="lewDateRangePanelRef" v-model="modelValue" @change="change" />
         </template>
     </lew-popover>
 </template>
@@ -159,17 +125,20 @@ defineExpose({ show, hide });
         border: var(--lew-form-border-width) transparent solid;
         outline: 0px var(--lew-color-primary-light) solid;
     }
+
     .lew-date-picker-input {
         width: 100%;
         display: inline-flex;
         gap: 5px;
         align-items: center;
         box-sizing: border-box;
+
         .lew-date-picker-mid {
             display: flex;
             align-items: center;
             color: var(--lew-text-color-8);
         }
+
         .icon-calendar {
             position: absolute;
             top: 50%;
@@ -178,6 +147,7 @@ defineExpose({ show, hide });
             transition: var(--lew-form-transition);
             opacity: var(--lew-form-icon-opacity);
         }
+
         .icon-calendar-hide {
             opacity: 0;
             transform: translateY(-50%) translateX(100%);
@@ -194,8 +164,7 @@ defineExpose({ show, hide });
 
     .lew-date-picker-view.lew-date-picker-focus {
         background-color: var(--lew-form-bgcolor-focus);
-        border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-            solid;
+        border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
         outline: var(--lew-form-ouline);
     }
 
@@ -207,6 +176,7 @@ defineExpose({ show, hide });
             line-height: var(--lew-form-input-line-height-small);
         }
     }
+
     .lew-date-picker-medium {
         .lew-date-picker-input {
             height: var(--lew-form-item-height-medium);
@@ -215,6 +185,7 @@ defineExpose({ show, hide });
             line-height: var(--lew-form-input-line-height-medium);
         }
     }
+
     .lew-date-picker-large {
         .lew-date-picker-input {
             height: var(--lew-form-item-height-large);

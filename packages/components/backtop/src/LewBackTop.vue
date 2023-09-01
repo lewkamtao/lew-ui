@@ -2,6 +2,7 @@
 import throttle from 'lodash/throttle';
 import { backTopProps } from './props';
 import { useEventListener } from '../../../hooks';
+import { LewIcon } from 'lew-ui';
 
 const props = defineProps(backTopProps);
 
@@ -47,12 +48,7 @@ onMounted(() => {
 
 <template>
     <transition name="fade">
-        <div
-            v-if="showBackTop"
-            class="backTop"
-            :style="backTopStyle"
-            @click="toBackUp"
-        >
+        <div v-if="showBackTop" class="backTop" :style="backTopStyle" @click="toBackUp">
             <slot>
                 <lew-icon size="20" type="chevron-up" />
             </slot>

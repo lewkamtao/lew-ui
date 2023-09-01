@@ -131,16 +131,14 @@ defineExpose({ show, hide, refresh });
 <template>
     <div class="lew-popover">
         <label ref="triggerRef" style="font-size: 0px">
-            <div class="trigger"><slot name="trigger" /></div>
+            <div class="trigger">
+                <slot name="trigger" />
+            </div>
         </label>
-        <div
-            ref="bodyRef"
-            v-loading="{
-                visible: loading,
-                iconSize: 16,
-            }"
-            :class="popoverBodyClassName"
-        >
+        <div ref="bodyRef" v-loading="{
+            visible: loading,
+            iconSize: 16,
+        }" :class="popoverBodyClassName">
             <slot name="popover-body" :show="show" :hide="hide" />
         </div>
     </div>
@@ -149,11 +147,12 @@ defineExpose({ show, hide, refresh });
 <style lang="scss">
 .lew-popover {
     .trigger {
-        > div {
+        >div {
             font-size: 14px;
         }
     }
 }
+
 .lew-popover-body {
     padding: 6px;
     overflow: hidden;

@@ -83,7 +83,7 @@ const selectItem = (value: [String, Number], type?: string) => {
 };
 
 let timer: ReturnType<typeof setTimeout> | undefined;
-    
+
 const debounce = () => {
     clearTimeout(timer);
     timer = setTimeout(() => {

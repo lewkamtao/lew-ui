@@ -3,12 +3,12 @@ import { useVModel, watchArray } from '@vueuse/core';
 import { checkboxGroupProps } from './props';
 import type { CheckboxOptions } from './props';
 import { object2class } from 'lew-ui/utils';
-import LewCheckbox from './LewCheckbox.vue';
+import { LewCheckbox } from 'lew-ui'
 
 const props = defineProps(checkboxGroupProps);
 const emit = defineEmits(['change', 'update:modelValue']);
 const modelValue = useVModel(props, 'modelValue', emit);
-const checkList = ref([] as any);
+const checkList = ref([] as boolean[]);
 
 const change = (item: CheckboxOptions, checked: boolean) => {
     let _value = modelValue.value || [];
@@ -48,25 +48,10 @@ const getCheckboxGroupClassName = computed(() => {
 initCheckbox();
 </script>
 <template>
-    <lew-flex
-        x="start"
-        gap="15"
-        :direction="direction"
-        class="lew-checkbox-group"
-        :class="getCheckboxGroupClassName"
-    >
-        <lew-checkbox
-            v-for="(item, index) in options"
-            :key="item.value"
-            v-model="checkList[index]"
-            :block="block"
-            :iconable="iconable"
-            :round="round"
-            :size="size"
-            :label="item.label"
-            :disabled="item.disabled || disabled"
-            @change="change(item, $event)"
-        />
+    <lew-flex x="start" gap="15" :direction="direction" class="lew-checkbox-group" :class="getCheckboxGroupClassName">
+        <lew-checkbox v-for="(item, index) in options" :key="item.value" v-model="checkList[index]" :block="block"
+            :iconable="iconable" :round="round" :size="size" :label="item.label" :disabled="item.disabled || disabled"
+            @change="change(item, $event)" />
     </lew-flex>
 </template>
 

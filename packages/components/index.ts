@@ -13,7 +13,6 @@ export * from './dropdown';
 
 export * from './input';
 export * from './textarea';
-export * from './input-pro';
 export * from './input-tag';
 
 export * from './form';

@@ -31,22 +31,14 @@ const close = () => {
 <template>
     <teleport to="#lew-drawer">
         <transition name="fade">
-            <div
-                v-if="_visible"
-                class="lew-drawer"
-                :class="{ 'lew-drawer-show': isShowMain }"
-                @click="close"
-            >
-                <div
-                    :style="getStyle(position, width, height)"
-                    class="lew-drawer-main"
-                    :class="object2class(position)"
-                    @click.stop
-                >
+            <div v-if="_visible" class="lew-drawer" :class="{ 'lew-drawer-show': isShowMain }" @click="close">
+                <div :style="getStyle(position, width, height)" class="lew-drawer-main" :class="object2class(position)"
+                    @click.stop>
                     <slot></slot>
                 </div>
-            </div> </transition
-    ></teleport>
+            </div>
+        </transition>
+    </teleport>
 </template>
 <style lang="scss">
 .lew-drawer {
@@ -59,6 +51,7 @@ const close = () => {
     outline: 90000px solid var(--lew-modal-bgcolor);
     z-index: 999;
 }
+
 .lew-drawer-main {
     position: fixed;
     width: 100%;
@@ -67,26 +60,31 @@ const close = () => {
     background: #fff;
     z-index: 9999;
 }
+
 .lew-drawer-main-right {
     right: 0;
     top: 0;
     transform: translateX(100%);
 }
+
 .lew-drawer-main-top {
     left: 0;
     top: 0;
     transform: translateY(-100%);
 }
+
 .lew-drawer-main-left {
     left: 0;
     top: 0;
     transform: translateX(-100%);
 }
+
 .lew-drawer-main-bottom {
     left: 0;
     bottom: 0;
     transform: translateY(100%);
 }
+
 .lew-drawer-show {
     .lew-drawer-main {
         transform: translate(0, 0);

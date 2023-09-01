@@ -2,6 +2,8 @@
 import { datePickerProps } from './props';
 import { useVModel } from '@vueuse/core';
 import { object2class } from 'lew-ui/utils';
+import { LewPopover, LewIcon, LewDate } from 'lew-ui';
+
 const emit = defineEmits(['change', 'clear', 'update:modelValue']);
 const props = defineProps(datePickerProps);
 const modelValue = useVModel(props, 'modelValue', emit);
@@ -25,7 +27,7 @@ const change = (date: string) => {
 };
 
 const getIconSize = computed(() => {
-    const size: any = {
+    const size: Record<string, number> = {
         small: 13,
         medium: 14,
         large: 16,
@@ -55,48 +57,26 @@ const hideHandle = () => {
 defineExpose({ show, hide });
 </script>
 <template>
-    <lew-popover
-        ref="lewPopoverRef"
-        trigger="click"
-        placement="bottom-start"
-        @show="showHandle"
-        @hide="hideHandle"
-    >
+    <lew-popover ref="lewPopoverRef" trigger="click" placement="bottom-start" @show="showHandle" @hide="hideHandle">
         <template #trigger>
             <div class="lew-date-picker-view" :class="lewDateClassNames">
                 <div class="lew-date-picker-input">
-                    <div
-                        v-show="!modelValue"
-                        class="lew-date-picker-placeholder"
-                    >
+                    <div v-show="!modelValue" class="lew-date-picker-placeholder">
                         请选择日期
                     </div>
                     <div v-show="modelValue" class="lew-date-picker-dateValue">
                         {{ modelValue }}
                     </div>
-                    <lew-icon
-                        class="icon-calendar"
-                        :size="getIconSize"
-                        :class="{
-                            'icon-calendar-hide': modelValue && clearable,
-                        }"
-                        type="calendar"
-                    />
+                    <lew-icon class="icon-calendar" :size="getIconSize" :class="{
+                        'icon-calendar-hide': modelValue && clearable,
+                    }" type="calendar" />
                     <transition name="lew-form-icon-ani">
-                        <lew-icon
-                            v-if="modelValue && clearable && !readonly"
-                            :size="getIconSize"
-                            type="x"
-                            v-tooltip="{
-                                content: '清空',
-                                placement: 'top',
-                            }"
-                            class="lew-form-icon-clear"
-                            :class="{
-                                'lew-form-icon-clear-focus': visible,
-                            }"
-                            @click.stop="clearHandle"
-                        />
+                        <lew-icon v-if="modelValue && clearable && !readonly" :size="getIconSize" type="x" v-tooltip="{
+                            content: '清空',
+                            placement: 'top',
+                        }" class="lew-form-icon-clear" :class="{
+    'lew-form-icon-clear-focus': visible,
+}" @click.stop="clearHandle" />
                     </transition>
                 </div>
             </div>
@@ -110,6 +90,7 @@ defineExpose({ show, hide });
 <style lang="scss" scoped>
 .lew-popover {
     width: 273px;
+
     .lew-date-picker-view {
         display: inline-flex;
         align-items: center;
@@ -128,11 +109,13 @@ defineExpose({ show, hide });
         box-shadow: var(--lew-form-box-shadow);
         border: var(--lew-form-border-width) transparent solid;
     }
+
     .lew-date-picker-input {
         width: 100%;
         display: inline-flex;
         align-items: center;
         box-sizing: border-box;
+
         .icon-calendar {
             position: absolute;
             top: 50%;
@@ -141,6 +124,7 @@ defineExpose({ show, hide });
             transition: var(--lew-form-transition);
             opacity: var(--lew-form-icon-opacity);
         }
+
         .icon-calendar-hide {
             opacity: 0;
             transform: translateY(-50%) translateX(100%);
@@ -157,8 +141,7 @@ defineExpose({ show, hide });
 
     .lew-date-picker-view.lew-date-picker-focus {
         background-color: var(--lew-form-bgcolor-focus);
-        border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-            solid;
+        border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
         outline: var(--lew-form-ouline);
     }
 
@@ -170,6 +153,7 @@ defineExpose({ show, hide });
             line-height: var(--lew-form-input-line-height-small);
         }
     }
+
     .lew-date-picker-size-medium {
         .lew-date-picker-input {
             height: var(--lew-form-item-height-medium);
@@ -178,6 +162,7 @@ defineExpose({ show, hide });
             line-height: var(--lew-form-input-line-height-medium);
         }
     }
+
     .lew-date-picker-size-large {
         .lew-date-picker-input {
             height: var(--lew-form-item-height-large);

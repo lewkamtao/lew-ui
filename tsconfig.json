@@ -1,25 +1,12 @@
 {
-    "compilerOptions": {
-        "target": "esnext",
-        "useDefineForClassFields": true,
-        "module": "esnext",
-        "moduleResolution": "node",
-        "strict": true,
-        "jsx": "preserve",
-        "sourceMap": true,
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "esModuleInterop": true,
-        "lib": ["esnext", "dom"],
-        "skipLibCheck": true
-    },
     "include": [
-        "src/**/*.ts",
-        "src/**/*.d.ts",
-        "src/**/*.tsx",
-        "src/**/*.vue",
-        "packages",
-        "auto-imports.d.ts"
+        "packages/**/*.ts",
+        "packages/**/*.d.ts",
+        "packages/**/*.tsx",
+        "packages/**/*.vue"
     ],
-    "references": [{ "path": "./tsconfig.node.json" }]
+    // 指定不需要被编译的目录
+    "exclude": [
+        "node_modules"
+    ],
 }

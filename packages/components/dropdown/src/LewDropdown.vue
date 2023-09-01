@@ -2,6 +2,7 @@
 import { dropdownProps } from './props';
 import type { DropdownOptions } from './props';
 import { any2px } from 'lew-ui/utils';
+import { LewPopover } from "lew-ui"
 
 defineProps(dropdownProps);
 

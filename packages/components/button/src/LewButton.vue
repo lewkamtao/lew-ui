@@ -8,7 +8,7 @@ const props = defineProps(buttonProps);
 
 const _loading = ref(false);
 
-const handleClick = async (e: any) => {
+const handleClick = async (e: MouseEvent) => {
     if (props.disabled || _loading.value || props.loading) return;
     emit('click', e);
     if (typeof props.request === 'function') {
@@ -49,7 +49,7 @@ const getIconSize = computed(() => {
 
 const getStyle = computed(() => {
     const { round, type, color, loading } = props;
-    let styleObj = {} as any;
+    let styleObj: Record<string, string> = {};
     let _color = getColorType(color);
     switch (type) {
         case 'fill':
@@ -95,30 +95,12 @@ const getStyle = computed(() => {
 </script>
 
 <template>
-    <button
-        class="lew-button"
-        :class="getButtonClass"
-        :disabled="disabled"
-        :style="getStyle"
-        @click="handleClick"
-    >
-        <lew-icon
-            v-if="icon"
-            class="lew-button-icon"
-            :size="getIconSize"
-            :type="icon"
-        />
-        <lew-icon
-            class="lew-loading-icon"
-            v-if="loading || _loading"
-            :size="getIconSize"
-            animation="spin"
-            animation-speed="fast"
-            :class="{
+    <button class="lew-button" :class="getButtonClass" :disabled="disabled" :style="getStyle" @click="handleClick">
+        <lew-icon v-if="icon" class="lew-button-icon" :size="getIconSize" :type="icon" />
+        <lew-icon class="lew-loading-icon" v-if="loading || _loading" :size="getIconSize" animation="spin"
+            animation-speed="fast" :class="{
                 'lew-loading-isShow': (_loading || loading) && !disabled,
-            }"
-            type="loader"
-        />
+            }" type="loader" />
         <span v-if="$slots.default || text" class="lew-button-text">
             <template v-if="$slots.default">
                 <slot />
@@ -151,7 +133,7 @@ const getStyle = computed(() => {
     border-radius: var(--lew-border-radius);
     box-sizing: border-box;
     overflow: hidden;
-    font-family: HarmonyOS_Regular;
+
     .lew-loading-icon {
         position: absolute;
         left: 10px;

@@ -1,6 +1,6 @@
 <!-- filename: Popover.vue -->
 <script setup lang="ts">
-import { LewButton } from 'lew-ui';
+import { LewButton, LewPopover } from 'lew-ui';
 import { popokProps } from './props';
 import { any2px } from 'lew-ui/utils';
 
@@ -38,70 +38,29 @@ const emit = defineEmits(['show', 'cancel']);
 </script>
 
 <template>
-    <lew-popover
-        ref="lewPopoverRef"
-        class="lew-popok"
-        :trigger="trigger"
-        :placement="placement"
-        @show="emit('show')"
-    >
+    <lew-popover ref="lewPopoverRef" class="lew-popok" :trigger="trigger" :placement="placement" @show="emit('show')">
         <template #trigger>
             <slot />
         </template>
         <template #popover-body>
-            <div
-                class="lew-popok-body"
-                :style="{
-                    width: any2px(width),
-                }"
-            >
+            <div class="lew-popok-body" :style="{
+                width: any2px(width),
+            }">
                 <div class="left">
                     <div :class="`icon-${type}`">
-                        <lew-icon
-                            v-if="type === `normal`"
-                            size="22"
-                            type="light"
-                            color="blue"
-                        ></lew-icon>
-                        <lew-icon
-                            v-if="type === `warning`"
-                            size="22"
-                            type="alert-triangle"
-                        ></lew-icon>
-                        <lew-icon
-                            v-if="type === `success`"
-                            size="22"
-                            type="check"
-                        ></lew-icon>
-                        <lew-icon
-                            v-if="type === `error`"
-                            size="22"
-                            type="alert-circle"
-                        ></lew-icon>
-                        <lew-icon
-                            v-if="type === `info`"
-                            size="22"
-                            type="bell"
-                        ></lew-icon>
+                        <lew-icon v-if="type === `normal`" size="22" type="light" color="blue"></lew-icon>
+                        <lew-icon v-if="type === `warning`" size="22" type="alert-triangle"></lew-icon>
+                        <lew-icon v-if="type === `success`" size="22" type="check"></lew-icon>
+                        <lew-icon v-if="type === `error`" size="22" type="alert-circle"></lew-icon>
+                        <lew-icon v-if="type === `info`" size="22" type="bell"></lew-icon>
                     </div>
                 </div>
                 <div class="right">
                     <div v-if="title" class="title">{{ title }}</div>
                     <div v-if="content" class="content">{{ content }}</div>
                     <div class="footer">
-                        <lew-button
-                            text="取消"
-                            size="small"
-                            type="text"
-                            :loading="cancelLoading"
-                            @click="cancelHandle"
-                        />
-                        <lew-button
-                            text="确定"
-                            size="small"
-                            :loading="okLoading"
-                            @click="okHandle"
-                        />
+                        <lew-button text="取消" size="small" type="text" :loading="cancelLoading" @click="cancelHandle" />
+                        <lew-button text="确定" size="small" :loading="okLoading" @click="okHandle" />
                     </div>
                 </div>
             </div>

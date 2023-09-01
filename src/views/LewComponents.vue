@@ -7,6 +7,7 @@ const isShowSider = ref(false);
 const route = useRoute();
 const mainRef: any = ref(null);
 
+
 onMounted(() => {
     const isInfo = localStorage.getItem('isInfo');
     if (!isInfo) {
@@ -394,11 +395,7 @@ group.value = [
 
 <template>
     <div class="container">
-        <div
-            class="mb-btn"
-            :class="{ 'mb-btn-open': isShowSider }"
-            @click="isShowSider = !isShowSider"
-        >
+        <div class="mb-btn" :class="{ 'mb-btn-open': isShowSider }" @click="isShowSider = !isShowSider">
             <lew-icon type="menu" size="24px" />
         </div>
         <div class="sider" :class="{ 'sider-open': isShowSider }">
@@ -437,6 +434,7 @@ group.value = [
     background: var(--lew-bgcolor-2);
     display: flex;
     box-sizing: border-box;
+
     .component-main {
         width: calc(100% - 200px);
         height: 100%;
@@ -446,6 +444,7 @@ group.value = [
         padding: 50px 50px 150px 50px;
         scroll-behavior: smooth;
     }
+
     .component-nav {
         height: 100%;
         width: 200px;
@@ -492,6 +491,7 @@ group.value = [
             width: 100%;
             padding: 50px 15px;
         }
+
         .component-nav {
             display: none;
         }

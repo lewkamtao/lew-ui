@@ -2,6 +2,7 @@
 import { getIconType, object2class } from 'lew-ui/utils';
 import type { AlertItem } from './props';
 import { alertProps } from './props';
+import { LewIcon } from 'lew-ui';
 
 defineProps(alertProps);
 
@@ -14,12 +15,7 @@ const alertClassName = (item: AlertItem) => {
 
 <template>
     <div class="lew-alert-group">
-        <div
-            v-for="(item, i) in list"
-            :key="i"
-            class="lew-alert"
-            :class="alertClassName(item)"
-        >
+        <div v-for="(item, i) in list" :key="i" class="lew-alert" :class="alertClassName(item)">
             <div class="alert-icon">
                 <lew-icon :size="16" :type="getIconType(item.type)"></lew-icon>
             </div>
@@ -29,13 +25,7 @@ const alertClassName = (item: AlertItem) => {
                     {{ item.content }}
                 </div>
             </div>
-            <lew-icon
-                v-if="item.closeable"
-                :size="16"
-                class="lew-form-icon-clear"
-                type="x"
-                @click="emit('close', i)"
-            />
+            <lew-icon v-if="item.closeable" :size="16" class="lew-form-icon-clear" type="x" @click="emit('close', i)" />
         </div>
     </div>
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inputTagProps } from './props';
 import { useVModel } from '@vueuse/core';
-
+import { LewInput, LewTag } from 'lew-ui';
 const emit = defineEmits(['close', 'change', 'update:modelValue']);
 
 const props = defineProps(inputTagProps);

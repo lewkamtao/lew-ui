@@ -4,6 +4,7 @@ import { useDOMCreate } from '../../../hooks';
 import { any2px } from 'lew-ui/utils';
 import { LewTextTrim } from '../../text-trim';
 import { modalProps } from './props';
+import { LewFlex, LewButton, LewIcon } from 'lew-ui';
 
 useDOMCreate('lew-modal');
 
@@ -42,41 +43,17 @@ const cancel = () => {
         <transition name="lew-modal">
             <div v-if="visible" class="lew-modal" @click="maskClick">
                 <div :style="getModalStyle" class="lew-modal-box" @click.stop>
-                    <lew-flex
-                        v-if="title"
-                        mode="between"
-                        y="center"
-                        class="header"
-                    >
+                    <lew-flex v-if="title" mode="between" y="center" class="header">
                         <lew-text-trim class="title" :text="title" />
-                        <lew-icon
-                            size="18"
-                            class="close-btn"
-                            @click="visible = false"
-                            type="x"
-                        />
+                        <lew-icon size="18" class="close-btn" @click="visible = false" type="x" />
                     </lew-flex>
                     <div v-else class="header-slot">
                         <slot name="header"></slot>
                     </div>
                     <slot name="main"></slot>
-                    <lew-flex
-                        v-if="!hideFooter"
-                        x="end"
-                        y="center"
-                        class="footer"
-                    >
-                        <lew-button
-                            @click="cancel"
-                            type="text"
-                            :color="cancelColor"
-                            :text="cancelText"
-                        />
-                        <lew-button
-                            @click="ok"
-                            :color="okColor"
-                            :text="okText"
-                        />
+                    <lew-flex v-if="!hideFooter" x="end" y="center" class="footer">
+                        <lew-button @click="cancel" type="text" :color="cancelColor" :text="cancelText" />
+                        <lew-button @click="ok" :color="okColor" :text="okText" />
                     </lew-flex>
                     <div v-else class="footer-slot">
                         <slot name="footer"></slot>
