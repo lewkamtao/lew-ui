@@ -1,15 +1,16 @@
 export default {
     title: 'Events',
     columnsKey: 'events',
+    orderNum: 10,
     data: [
         {
-            name:'show',
+            name: 'show',
             description: '展示下拉',
             type: 'function',
             default: '() => {}',
         },
         {
-            name:'hide',
+            name: 'hide',
             description: '收起下拉',
             type: `function`,
             default: '() => {}',

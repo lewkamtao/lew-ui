@@ -20,14 +20,17 @@ export const titleProps = {
     bold: {
         type: Number as PropType<BoldType>,
         default: 500,
+        description: '加粗',
     },
     size: {
         type: [Number, String],
         default: 24,
+        description: '字体大小',
     },
     color: {
         type: String as PropType<TitleColor>,
         default: '',
+        description: '字体颜色',
     },
 };
 

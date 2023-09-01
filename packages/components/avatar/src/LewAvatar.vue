@@ -2,7 +2,7 @@
 import { useImage } from '@vueuse/core';
 import { object2class } from 'lew-ui/utils';
 import { avatarProps } from './props';
-
+import { any2px } from 'lew-ui/utils';
 const props = defineProps(avatarProps);
 const { isLoading } = useImage({ src: props.src });
 const isError = ref(false);
@@ -27,8 +27,8 @@ const avatarClassName = computed(() => {
 
 const avatarStyleObject = computed(() => {
     return {
-        width: `${props.width}px`,
-        height: `${props.height}px`,
+        width: any2px(props.width),
+        height: any2px(props.height),
     };
 });
 </script>

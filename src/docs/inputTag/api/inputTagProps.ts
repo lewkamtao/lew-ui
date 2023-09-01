@@ -1,9 +1,9 @@
-import { markProps } from 'lew-ui';
+import { inputTagProps } from 'lew-ui';
 import { convertProps } from '@/lib/utils';
 
 export default {
-    title: 'Props',
+    title: 'inputTagProps',
     columnsKey: 'props',
     orderNum: 10,
-    data: convertProps(markProps),
+    data: convertProps(inputTagProps),
 };

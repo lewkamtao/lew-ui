@@ -10,7 +10,8 @@ export type AlertItem = {
 export const alertProps = {
     list: {
         type: Array as PropType<AlertItem[]>,
-        required: true,
+        default: [],
+        description: '配置列表',
     },
 };
 

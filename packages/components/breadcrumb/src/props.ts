@@ -11,15 +11,13 @@ export type BreadcrumbIconType = 'shoulder' | 'sprit';
 export const breadcrumbProps = {
     options: {
         type: Array as PropType<BreadcrumbOptions[]>,
-        default() {
-            return [];
-        },
+        default: [],
+        description: '配置项',
     },
     iconType: {
         type: String as PropType<BreadcrumbIconType>,
-        default() {
-            return 'sprit'; // shoulder ｜ sprit
-        },
+        default: 'sprit',
+        description: '图标类型',
     },
 };
 

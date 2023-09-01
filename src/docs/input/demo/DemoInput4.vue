@@ -1,5 +1,6 @@
 <script setup lang="ts">
 let value = ref('');
+let value2 = ref('聚集后选中所有文本');
 </script>
 
 <template>
@@ -8,6 +9,11 @@ let value = ref('');
         <lew-input placeholder="禁用" disabled v-model="value" />
         <lew-input placeholder="只读" readonly v-model="value" />
         <lew-input placeholder="自动" auto-width v-model="value" />
+        <lew-input
+            placeholder="聚集后选中所有文本"
+            focus-select
+            v-model="value2"
+        />
         <lew-input
             type="password"
             placeholder="密码可见"

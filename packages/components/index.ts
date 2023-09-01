@@ -1,13 +1,13 @@
 export * from './flex';
-export * from './space';
-export * from './layout';
+export * from './_space';
+export * from './_layout';
 export * from './mark';
 export * from './icon';
 export * from './cascader';
-export * from './tree-select';
+export * from './_tree-select';
 
 export * from './tabs';
-export * from './steps';
+export * from './_steps';
 export * from './breadcrumb';
 export * from './dropdown';
 
@@ -23,12 +23,12 @@ export * from './select';
 export * from './select-multiple';
 export * from './switch';
 export * from './date-picker';
-export * from './upload';
+export * from './_upload';
 
 export * from './table';
 export * from './pagination';
 export * from './magic-number';
-export * from './magic-text';
+export * from './_magic-text';
 
 export * from './avatar';
 export * from './title';

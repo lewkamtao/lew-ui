@@ -22,12 +22,12 @@ const columnsMap: any = {
         },
         {
             title: '类型',
-            width: 320,
+            width: 150,
             field: 'type',
         },
         {
             title: '默认值',
-            width: 120,
+            width: 150,
             field: 'default',
         },
     ],
@@ -84,23 +84,10 @@ const columnsMap: any = {
     ],
 };
 const sortOptions = computed(() => {
-    const columnArr = [
-        'Props',
-        'FormOptions',
-        'SelectOptions',
-        'SelectMultipleOptions',
-        'Slots',
-        'Events',
-        'Methods',
-    ];
     return props.options
         .map((e: any) => {
-            let orderNum =
-                columnArr.indexOf(e.title) === -1
-                    ? 99
-                    : columnArr.indexOf(e.title);
             return {
-                orderNum: orderNum,
+                orderNum: e.orderNum || 99999,
                 ...e,
             };
         })
@@ -116,7 +103,7 @@ const sortOptions = computed(() => {
             v-for="(item, index) in sortOptions"
             :key="index"
         >
-            <lew-title :size="16" class="demo-docs-title" :id="item.title">{{
+            <lew-title :size="18" class="demo-docs-title" :id="item.title">{{
                 item.title
             }}</lew-title>
             <lew-table
@@ -126,3 +113,10 @@ const sortOptions = computed(() => {
         </lew-flex>
     </lew-flex>
 </template>
+
+<style lang="scss" scoped>
+.demo-docs-title {
+    text-transform: capitalize;
+    letter-spacing: 0.8px;
+}
+</style>

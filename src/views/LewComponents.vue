@@ -264,13 +264,13 @@ group.value = [
                 color: '',
             },
 
-            {
-                cname: '文件上传',
-                name: 'Upload',
-                path: '/Upload',
-                label: '',
-                color: '',
-            },
+            // {
+            //     cname: '文件上传',
+            //     name: 'Upload',
+            //     path: '/Upload',
+            //     label: '',
+            //     color: '',
+            // },
         ],
     },
     {

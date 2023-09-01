@@ -2,6 +2,7 @@
 <script setup lang="ts">
 import { LewButton } from 'lew-ui';
 import { popokProps } from './props';
+import { any2px } from 'lew-ui/utils';
 
 const props = defineProps(popokProps);
 
@@ -48,7 +49,12 @@ const emit = defineEmits(['show', 'cancel']);
             <slot />
         </template>
         <template #popover-body>
-            <div class="lew-popok-body" :style="`width:${width}`">
+            <div
+                class="lew-popok-body"
+                :style="{
+                    width: any2px(width),
+                }"
+            >
                 <div class="left">
                     <div :class="`icon-${type}`">
                         <lew-icon

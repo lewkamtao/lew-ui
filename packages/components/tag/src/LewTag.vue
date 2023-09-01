@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { tagProps } from './props';
+import { tagProps } from './tagProps';
 import { object2class, getColorType } from 'lew-ui/utils';
 
 const props = defineProps(tagProps);

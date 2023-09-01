@@ -47,7 +47,7 @@ const clear = () => {
 const showPop = () => {
     const element = textTrimRef.value;
     if (!element) {
-        return
+        return;
     }
     let isEllipsis = false;
     const { placement, allowHTML, text, offset }: any = props;
@@ -91,8 +91,14 @@ const getClassNames = computed(() => {
 </script>
 
 <template>
-    <div ref="textTrimRef" class="lew-text-trim-wrapper" :class="getClassNames" :style="getTextTrimStyleObject"
-        @mouseover="showPop" v-html="text" />
+    <div
+        ref="textTrimRef"
+        class="lew-text-trim-wrapper"
+        :class="getClassNames"
+        :style="getTextTrimStyleObject"
+        @mouseover="showPop"
+        v-html="text"
+    />
 </template>
 
 <style lang="scss" scoped>

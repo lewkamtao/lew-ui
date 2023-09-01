@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useVModel, watchArray } from '@vueuse/core';
 import { tableProps } from './props';
+import { any2px } from 'lew-ui/utils';
 
 const props = defineProps(tableProps);
 const emit = defineEmits(['update:selectedKey']);
@@ -201,7 +202,7 @@ onUnmounted(() => {
         <div
             ref="tableRef"
             class="lew-table lew-scrollbar"
-            :style="`max-height: ${maxHeight}px`"
+            :style="`max-height: ${any2px(maxHeight)}`"
             @scroll="checkScroll"
             @mouseleave="state.hoverIndex = -1"
         >
