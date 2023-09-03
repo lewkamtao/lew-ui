@@ -26,7 +26,7 @@ const getStyle = computed(() => {
     </span>
 </template>
  
-<style lang="scss">
+<style lang="scss" scoped>
 .lew-mark {
     display: inline;
     border-radius: 4px;

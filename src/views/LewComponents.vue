@@ -141,6 +141,13 @@ group.value = [
             //     color: '',
             // },
             {
+                cname: '菜单',
+                name: 'Menu',
+                path: '/Menu',
+                label: '',
+                color: '',
+            },
+            {
                 cname: '下拉菜单',
                 name: 'Dropdown',
                 path: '/Dropdown',

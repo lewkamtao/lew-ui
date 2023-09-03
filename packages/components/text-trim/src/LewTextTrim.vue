@@ -14,40 +14,38 @@ const watchOptions = { debounce: 250, maxWait: 1000 };
 // 监听变化 清除初始化
 watchDebounced(
     () => props.text,
-    () => clear(),
+    () => init(),
     watchOptions
 );
 watchDebounced(
     () => props.allowHTML,
-    () => clear(),
+    () => init(),
     watchOptions
 );
 watchDebounced(
     () => props.placement,
-    () => clear(),
+    () => init(),
     watchOptions
 );
 watchDebounced(
     () => props.allowHTML,
-    () => clear(),
+    () => init(),
     watchOptions
 );
 watchDebounced(
     () => props.offset,
-    () => clear(),
+    () => init(),
     watchOptions
 );
-const clear = () => {
-    if (instance) {
-        instance.destroy();
-        instance = null;
-    }
-};
 
-const showPop = () => {
+const init = () => {
     const element = textTrimRef.value;
     if (!element) {
         return;
+    }
+    if (instance) {
+        instance.destroy();
+        instance = null;
     }
     let isEllipsis = false;
     const { placement, allowHTML, text, offset }: any = props;
@@ -61,7 +59,7 @@ const showPop = () => {
         element.style.cursor = 'pointer';
         instance = tippy(element, {
             theme: 'light',
-            delay: [250, 250],
+            delay: [150, 150],
             duration: [150, 150],
             content: text,
             animation: 'shift-away-subtle',
@@ -88,17 +86,16 @@ const getClassNames = computed(() => {
     const { x } = props;
     return object2class('lew-text-trim', { x });
 });
-</script>
 
+onMounted(() => {
+    init()
+})
+
+</script>
+ 
 <template>
-    <div
-        ref="textTrimRef"
-        class="lew-text-trim-wrapper"
-        :class="getClassNames"
-        :style="getTextTrimStyleObject"
-        @mouseover="showPop"
-        v-html="text"
-    />
+    <div ref="textTrimRef" class="lew-text-trim-wrapper" :class="getClassNames" :style="getTextTrimStyleObject"
+        v-html="text" />
 </template>
 
 <style lang="scss" scoped>
