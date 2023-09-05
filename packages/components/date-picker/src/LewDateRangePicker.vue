@@ -6,7 +6,7 @@ import { LewTooltip } from 'lew-ui/directives';
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app;
-if (!app.directive('tooltip')) {
+if (app &&!app.directive('tooltip')) {
     app.use(LewTooltip);
 }
 const props = defineProps(dateRangePickerProps);

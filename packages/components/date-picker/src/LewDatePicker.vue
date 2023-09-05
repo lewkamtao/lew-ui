@@ -7,7 +7,7 @@ import { LewTooltip } from 'lew-ui/directives';
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app;
-if (!app.directive('tooltip')) {
+if (app && !app.directive('tooltip')) {
     app.use(LewTooltip);
 }
 const emit = defineEmits(['change', 'clear', 'update:modelValue']);
@@ -63,26 +63,48 @@ const hideHandle = () => {
 defineExpose({ show, hide });
 </script>
 <template>
-    <lew-popover ref="lewPopoverRef" trigger="click" placement="bottom-start" @show="showHandle" @hide="hideHandle">
+    <lew-popover
+        ref="lewPopoverRef"
+        trigger="click"
+        placement="bottom-start"
+        @show="showHandle"
+        @hide="hideHandle"
+    >
         <template #trigger>
             <div class="lew-date-picker-view" :class="lewDateClassNames">
                 <div class="lew-date-picker-input">
-                    <div v-show="!modelValue" class="lew-date-picker-placeholder">
+                    <div
+                        v-show="!modelValue"
+                        class="lew-date-picker-placeholder"
+                    >
                         请选择日期
                     </div>
                     <div v-show="modelValue" class="lew-date-picker-dateValue">
                         {{ modelValue }}
                     </div>
-                    <lew-icon class="icon-calendar" :size="getIconSize" :class="{
-                        'icon-calendar-hide': modelValue && clearable,
-                    }" type="calendar" />
+                    <lew-icon
+                        class="icon-calendar"
+                        :size="getIconSize"
+                        :class="{
+                            'icon-calendar-hide': modelValue && clearable,
+                        }"
+                        type="calendar"
+                    />
                     <transition name="lew-form-icon-ani">
-                        <lew-icon v-if="modelValue && clearable && !readonly" :size="getIconSize" type="x" v-tooltip="{
-                            content: '清空',
-                            placement: 'top',
-                        }" class="lew-form-icon-clear" :class="{
-    'lew-form-icon-clear-focus': visible,
-}" @click.stop="clearHandle" />
+                        <lew-icon
+                            v-if="modelValue && clearable && !readonly"
+                            :size="getIconSize"
+                            type="x"
+                            v-tooltip="{
+                                content: '清空',
+                                placement: 'top',
+                            }"
+                            class="lew-form-icon-clear"
+                            :class="{
+                                'lew-form-icon-clear-focus': visible,
+                            }"
+                            @click.stop="clearHandle"
+                        />
                     </transition>
                 </div>
             </div>
@@ -147,7 +169,8 @@ defineExpose({ show, hide });
 
     .lew-date-picker-view.lew-date-picker-focus {
         background-color: var(--lew-form-bgcolor-focus);
-        border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+        border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+            solid;
         outline: var(--lew-form-ouline);
     }
 

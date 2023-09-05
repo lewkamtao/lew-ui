@@ -22,7 +22,7 @@ export * from './select';
 export * from './select-multiple';
 export * from './switch';
 export * from './date-picker';
-export * from './_upload';
+// export * from './_upload';
 
 export * from './table';
 export * from './pagination';

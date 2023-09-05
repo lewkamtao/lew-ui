@@ -1,1 +1,1 @@
-export { default as LewVBacktop } from './src';
+export { default as LewBacktop } from './src';

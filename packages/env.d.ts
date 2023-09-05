@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 
 declare module 'highlight.js';
+declare module 'vue';
 declare module 'lew-ui';
 declare module 'lew-ui/utils';
 declare module 'lew-ui/directives';
