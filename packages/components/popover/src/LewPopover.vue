@@ -2,6 +2,13 @@
 import tippy from 'tippy.js';
 import { watchDebounced } from '@vueuse/core';
 import { popoverProps } from './props';
+import { LewLoading } from 'lew-ui/directives';
+
+// 获取app
+const app = getCurrentInstance()?.appContext.app;
+if (!app.directive('loading')) {
+    app.use(LewLoading);
+}
 
 const props = defineProps(popoverProps);
 const triggerRef = ref();
@@ -135,10 +142,14 @@ defineExpose({ show, hide, refresh });
                 <slot name="trigger" />
             </div>
         </label>
-        <div ref="bodyRef" v-loading="{
-            visible: loading,
-            iconSize: 16,
-        }" :class="popoverBodyClassName">
+        <div
+            ref="bodyRef"
+            v-loading="{
+                visible: loading,
+                iconSize: 16,
+            }"
+            :class="popoverBodyClassName"
+        >
             <slot name="popover-body" :show="show" :hide="hide" />
         </div>
     </div>
@@ -147,7 +158,7 @@ defineExpose({ show, hide, refresh });
 <style lang="scss">
 .lew-popover {
     .trigger {
-        >div {
+        > div {
             font-size: 14px;
         }
     }

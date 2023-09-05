@@ -3,7 +3,13 @@ import { datePickerProps } from './props';
 import { useVModel } from '@vueuse/core';
 import { object2class } from 'lew-ui/utils';
 import { LewPopover, LewIcon, LewDate } from 'lew-ui';
+import { LewTooltip } from 'lew-ui/directives';
 
+// 获取app
+const app = getCurrentInstance()?.appContext.app;
+if (!app.directive('tooltip')) {
+    app.use(LewTooltip);
+}
 const emit = defineEmits(['change', 'clear', 'update:modelValue']);
 const props = defineProps(datePickerProps);
 const modelValue = useVModel(props, 'modelValue', emit);

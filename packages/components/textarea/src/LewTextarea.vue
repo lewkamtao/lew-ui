@@ -2,8 +2,14 @@
 import { textareaProps } from './props';
 import { useVModel } from '@vueuse/core';
 import { object2class, any2px } from 'lew-ui/utils';
-import { LewIcon, } from 'lew-ui';
+import { LewIcon } from 'lew-ui';
+import { LewTooltip } from 'lew-ui/directives';
 
+// 获取app
+const app = getCurrentInstance()?.appContext.app;
+if (!app.directive('tooltip')) {
+    app.use(LewTooltip);
+}
 let lewTextareaRef = ref();
 const emit = defineEmits([
     'update:modelValue',
@@ -94,21 +100,44 @@ defineExpose({ toFocus });
 </script>
 
 <template>
-    <div class="lew-textarea-view" :style="getTextareaStyle" :class="getTextareaClassNames">
-        <textarea ref="lewTextareaRef" class="lew-textarea lew-scrollbar" v-model="modelValue" :disabled="disabled"
-            :readonly="readonly" :placeholder="placeholder" @input="inputFn" @change="emit('change', modelValue)"
-            @blur="blur" @focus="focus" />
+    <div
+        class="lew-textarea-view"
+        :style="getTextareaStyle"
+        :class="getTextareaClassNames"
+    >
+        <textarea
+            ref="lewTextareaRef"
+            class="lew-textarea lew-scrollbar"
+            v-model="modelValue"
+            :disabled="disabled"
+            :readonly="readonly"
+            :placeholder="placeholder"
+            @input="inputFn"
+            @change="emit('change', modelValue)"
+            @blur="blur"
+            @focus="focus"
+        />
 
         <div v-if="getCheckNumStr && showCount" class="lew-textarea-count">
             {{ getCheckNumStr }}
         </div>
         <transition name="lew-form-icon-ani">
-            <lew-icon v-if="clearable && modelValue && !readonly" class="lew-form-icon-clear" :class="{
-                'lew-form-icon-clear-focus': state.isFocus,
-            }" v-tooltip="{
-    content: '清空',
-    placement: 'top',
-}" @mousedown.prevent="" @click="clear" :size="getIconSize" style="top: 14px" type="x" />
+            <lew-icon
+                v-if="clearable && modelValue && !readonly"
+                class="lew-form-icon-clear"
+                :class="{
+                    'lew-form-icon-clear-focus': state.isFocus,
+                }"
+                v-tooltip="{
+                    content: '清空',
+                    placement: 'top',
+                }"
+                @mousedown.prevent=""
+                @click="clear"
+                :size="getIconSize"
+                style="top: 14px"
+                type="x"
+            />
         </transition>
     </div>
 </template>
@@ -253,7 +282,8 @@ defineExpose({ toFocus });
 }
 
 .lew-textarea-view:focus-within {
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+        solid;
     outline: var(--lew-form-ouline);
     background-color: var(--lew-form-bgcolor-focus);
 

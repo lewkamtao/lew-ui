@@ -3,6 +3,13 @@ import { useVModel } from '@vueuse/core';
 import { LewPopover, LewFlex, LewButton, LewIcon } from 'lew-ui';
 import { object2class } from 'lew-ui/utils';
 import { cascaderProps, CascaderOptions } from './props';
+import { LewTooltip } from 'lew-ui/directives';
+
+// 获取app
+const app = getCurrentInstance()?.appContext.app;
+if (!app.directive('tooltip')) {
+    app.use(LewTooltip);
+}
 
 const props = defineProps(cascaderProps);
 const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
@@ -231,39 +238,82 @@ defineExpose({ show, hide });
 </script>
 
 <template>
-    <lew-popover ref="lewPopverRef" class="lew-cascader-view" :class="getCascaderViewClassName"
-        popoverBodyClassName="lew-cascader-popover-body" :trigger="trigger" :disabled="disabled" placement="bottom-start"
-        style="width: 100%" :loading="state.loading" @show="showHandle" @hide="hideHandle">
+    <lew-popover
+        ref="lewPopverRef"
+        class="lew-cascader-view"
+        :class="getCascaderViewClassName"
+        popoverBodyClassName="lew-cascader-popover-body"
+        :trigger="trigger"
+        :disabled="disabled"
+        placement="bottom-start"
+        style="width: 100%"
+        :loading="state.loading"
+        @show="showHandle"
+        @hide="hideHandle"
+    >
         <template #trigger>
-            <div ref="lewCascaderRef" class="lew-cascader" :class="getCascaderClassName">
+            <div
+                ref="lewCascaderRef"
+                class="lew-cascader"
+                :class="getCascaderClassName"
+            >
                 <transition name="lew-form-icon-ani">
-                    <lew-icon v-if="!(clearable && getLabel && getLabel.length > 0)" :size="getIconSize" type="chevron-down"
-                        class="icon-cascader" />
+                    <lew-icon
+                        v-if="!(clearable && getLabel && getLabel.length > 0)"
+                        :size="getIconSize"
+                        type="chevron-down"
+                        class="icon-cascader"
+                    />
                 </transition>
 
                 <transition name="lew-form-icon-ani">
-                    <lew-icon v-if="clearable &&
-                        getLabel &&
-                        getLabel.length > 0 &&
-                        !readonly
-                        " :size="getIconSize" type="x" class="lew-form-icon-clear" :class="{
-        'lew-form-icon-clear-focus': state.visible,
-    }" v-tooltip="{
-    content: '清空',
-    placement: 'top',
-}" @click.stop="clearHandle" />
+                    <lew-icon
+                        v-if="
+                            clearable &&
+                            getLabel &&
+                            getLabel.length > 0 &&
+                            !readonly
+                        "
+                        :size="getIconSize"
+                        type="x"
+                        class="lew-form-icon-clear"
+                        :class="{
+                            'lew-form-icon-clear-focus': state.visible,
+                        }"
+                        v-tooltip="{
+                            content: '清空',
+                            placement: 'top',
+                        }"
+                        @click.stop="clearHandle"
+                    />
                 </transition>
 
-                <div v-show="getLabel && getLabel.length > 0" :style="getValueStyle" class="value">
+                <div
+                    v-show="getLabel && getLabel.length > 0"
+                    :style="getValueStyle"
+                    class="value"
+                >
                     <template v-if="showAllLevels">
                         <span v-for="(item, index) in getLabel" :key="index">
                             {{ item }}
-                            <svg v-if="getLabel && index !== getLabel.length - 1" :style="{
-                                width: getIconSize,
-                                height: getIconSize,
-                            }" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor"
-                                stroke-width="4" stroke-linecap="butt" stroke-linejoin="miter">
-                                <path d="M29.506 6.502 18.493 41.498" data-v-5303b0ef=""></path>
+                            <svg
+                                v-if="getLabel && index !== getLabel.length - 1"
+                                :style="{
+                                    width: getIconSize,
+                                    height: getIconSize,
+                                }"
+                                viewBox="0 0 48 48"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                stroke="currentColor"
+                                stroke-width="4"
+                                stroke-linecap="butt"
+                                stroke-linejoin="miter"
+                            >
+                                <path
+                                    d="M29.506 6.502 18.493 41.498"
+                                    data-v-5303b0ef=""
+                                ></path>
                             </svg>
                         </span>
                     </template>
@@ -271,52 +321,93 @@ defineExpose({ show, hide });
                         <span>{{ getLabel[getLabel.length - 1] }}</span>
                     </template>
                 </div>
-                <div v-show="!getLabel || (getLabel && getLabel.length === 0)" class="placeholder">
+                <div
+                    v-show="!getLabel || (getLabel && getLabel.length === 0)"
+                    class="placeholder"
+                >
                     {{ placeholder }}
                 </div>
             </div>
         </template>
         <template #popover-body>
-            <div class="lew-cascader-body" :style="{
-                width: `${getCascaderWidth}px`,
-            }" :class="getBodyClassName">
+            <div
+                class="lew-cascader-body"
+                :style="{
+                    width: `${getCascaderWidth}px`,
+                }"
+                :class="getBodyClassName"
+            >
                 <slot name="header"></slot>
-                <div class="lew-cascader-options-box" :style="{ height: free ? 'calc(100% - 40px)' : '100%' }">
-                    <template v-for="(oItem, oIndex) in state.options" :key="oIndex">
-                        <div class="lew-cascader-item-warpper lew-scrollbar-hover" :style="{
-                            zIndex: 999 - oIndex,
-                            transform:
-                                oItem.length > 0
-                                    ? `translateX(${180 * oIndex}px)`
-                                    : '',
-                        }">
+                <div
+                    class="lew-cascader-options-box"
+                    :style="{ height: free ? 'calc(100% - 40px)' : '100%' }"
+                >
+                    <template
+                        v-for="(oItem, oIndex) in state.options"
+                        :key="oIndex"
+                    >
+                        <div
+                            class="lew-cascader-item-warpper lew-scrollbar-hover"
+                            :style="{
+                                zIndex: 999 - oIndex,
+                                transform:
+                                    oItem.length > 0
+                                        ? `translateX(${180 * oIndex}px)`
+                                        : '',
+                            }"
+                        >
                             <!--  -->
 
-                            <div class="lew-cascader-item" :class="{
-                                'lew-cascader-item-disabled': item.disabled,
-                                'lew-cascader-item-active':
-                                    state.activelabels.includes(item.label),
-                                'lew-cascader-item-tobe':
-                                    state.tobelabels.includes(item.label),
-                                'lew-cascader-item-select':
-                                    getLabel &&
-                                    getLabel.includes(item.label),
-                            }" v-for="(item, index) in oItem" :key="index" @click="selectItem(item, oIndex)">
-                                <lew-checkbox class="lew-cascader-checkbox" v-if="free" :checked="state.tobelabels.includes(item.label)
-                                    " />
-                                <div class="lew-cascader-label" :class="{
-                                    'lew-cascader-label-free': free,
-                                }">
+                            <div
+                                class="lew-cascader-item"
+                                :class="{
+                                    'lew-cascader-item-disabled': item.disabled,
+                                    'lew-cascader-item-active':
+                                        state.activelabels.includes(item.label),
+                                    'lew-cascader-item-tobe':
+                                        state.tobelabels.includes(item.label),
+                                    'lew-cascader-item-select':
+                                        getLabel &&
+                                        getLabel.includes(item.label),
+                                }"
+                                v-for="(item, index) in oItem"
+                                :key="index"
+                                @click="selectItem(item, oIndex)"
+                            >
+                                <lew-checkbox
+                                    class="lew-cascader-checkbox"
+                                    v-if="free"
+                                    :checked="
+                                        state.tobelabels.includes(item.label)
+                                    "
+                                />
+                                <div
+                                    class="lew-cascader-label"
+                                    :class="{
+                                        'lew-cascader-label-free': free,
+                                    }"
+                                >
                                     {{ item.label }}
                                 </div>
-                                <lew-icon v-if="item.isHasChild" size="14px" class="lew-cascader-icon"
-                                    type="chevron-right" />
+                                <lew-icon
+                                    v-if="item.isHasChild"
+                                    size="14px"
+                                    class="lew-cascader-icon"
+                                    type="chevron-right"
+                                />
                             </div>
                         </div>
                     </template>
                 </div>
                 <lew-flex v-if="free" x="end" class="lew-cascader-control">
-                    <lew-button @click="cancel" round color="normal" type="text" size="small">取消</lew-button>
+                    <lew-button
+                        @click="cancel"
+                        round
+                        color="normal"
+                        type="text"
+                        size="small"
+                        >取消</lew-button
+                    >
                     <lew-button @click="ok" round type="light" size="small">
                         确认
                     </lew-button>
@@ -337,7 +428,7 @@ defineExpose({ show, hide });
     border: var(--lew-form-border-width) transparent solid;
     box-shadow: var(--lew-form-box-shadow);
 
-    >div {
+    > div {
         width: 100%;
     }
 
@@ -410,7 +501,6 @@ defineExpose({ show, hide });
     }
 
     .lew-cascader-size-small {
-
         .value,
         .placeholder {
             padding: var(--lew-form-input-padding-small);
@@ -421,7 +511,6 @@ defineExpose({ show, hide });
     }
 
     .lew-cascader-size-medium {
-
         .value,
         .placeholder {
             padding: var(--lew-form-input-padding-medium);
@@ -432,7 +521,6 @@ defineExpose({ show, hide });
     }
 
     .lew-cascader-size-large {
-
         .value,
         .placeholder {
             padding: var(--lew-form-input-padding-large);
@@ -453,7 +541,8 @@ defineExpose({ show, hide });
 
 .lew-cascader-view.lew-cascader-view-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+        solid;
     outline: var(--lew-form-ouline);
 
     .icon-cascader {
@@ -670,7 +759,8 @@ defineExpose({ show, hide });
 .lew-cascader-item:hover {
     .lew-checkbox {
         .icon-checkbox-box {
-            border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
+            border: var(--lew-form-border-width)
+                var(--lew-checkbox-border-color-hover) solid;
             outline: var(--lew-form-ouline);
             background: var(--lew-form-bgcolor);
         }

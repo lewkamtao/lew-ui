@@ -4,7 +4,13 @@ import { LewPopover, LewFlex, LewIcon, } from 'lew-ui';
 import { object2class, numFormat } from 'lew-ui/utils';
 import { UseVirtualList } from '@vueuse/components';
 import { selectProps, SelectOptions } from './props';
+import { LewTooltip } from 'lew-ui/directives';
 
+// 获取app
+const app = getCurrentInstance()?.appContext.app;
+if (!app.directive('tooltip')) {
+    app.use(LewTooltip);
+}
 const props = defineProps(selectProps);
 const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
 const selectValue = useVModel(props, 'modelValue', emit);

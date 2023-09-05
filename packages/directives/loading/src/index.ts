@@ -1,13 +1,13 @@
 import type { App as Application, DirectiveBinding } from 'vue';
 import { LewIcon } from 'lew-ui';
 
-import { h, createApp } from 'vue';
+import { createApp } from 'vue';
 import '../styles/index.scss';
 
 let loadingWrapper: HTMLElement;
 let loadingBox: HTMLElement;
 export default {
-    install(app: Application) {
+    install(app: Application) { 
         app.directive('loading', {
             mounted(el: HTMLElement, binding: DirectiveBinding) {
                 const { title, iconSize, visible } = binding.value;
