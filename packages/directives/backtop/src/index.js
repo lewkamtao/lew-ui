@@ -1,18 +1,17 @@
 import { shallowRef } from 'vue';
-import type { App as Application, DirectiveBinding } from 'vue';
 
-let _toBackUp: any;
+let _toBackUp;
 export default {
-    install(app: Application) {
+    install(app) {
         app.directive('backtop', {
-            mounted(el: HTMLElement, binding: DirectiveBinding) {
+            mounted(el, binding) {
                 const _target = binding.value;
-                const dom = shallowRef<HTMLElement>();
+                const dom = shallowRef();
                 dom.value = document.documentElement;
 
                 if (_target) {
                     dom.value =
-                        document.querySelector<HTMLElement>(`.${_target}`) ??
+                        document.querySelector < HTMLElement > `.${_target}` ? ?
                         undefined;
                     if (!dom.value) {
                         throw new Error(`target is not existed: ${_target}`);
@@ -20,7 +19,7 @@ export default {
                 }
                 _toBackUp = () => {
                     if (!dom.value) return;
-                    const scrollDom = dom.value as HTMLElement;
+                    const scrollDom = dom.value;
                     scrollDom.scrollTop = 0;
                 };
                 el.addEventListener('click', _toBackUp);
