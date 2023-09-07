@@ -202,10 +202,14 @@
         width: 148px;
         height: 148px;
     }
-    &-list--picture-card .lew-upload-list__item:hover .lew-upload-list__item-status {
+    &-list--picture-card
+        .lew-upload-list__item:hover
+        .lew-upload-list__item-status {
         display: none;
     }
-    &-list--picture-card .lew-upload-list__item:hover .lew-upload-list__item-actions {
+    &-list--picture-card
+        .lew-upload-list__item:hover
+        .lew-upload-list__item-actions {
         opacity: 1;
     }
     // drag style

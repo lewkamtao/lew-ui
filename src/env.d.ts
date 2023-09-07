@@ -13,4 +13,4 @@ declare module 'lew-ui';
 declare const LewMessage;
 declare const LewDialog;
 
-declare const LewNotification: (typeof import('../packages/directives'))['LewNotification'];
+declare const LewNotification: typeof import('../packages/directives')['LewNotification'];
