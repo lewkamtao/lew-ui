@@ -88,5 +88,13 @@
         "vite-plugin-style-import": "^2.0.0",
         "vitest": "^0.21.1",
         "vue-tsc": "^0.29.8"
+    },
+    "config": {
+        "commitizen": {
+            "path": "node_modules/cz-customizable"
+        },
+        "cz-customizable": {
+            "config": ".cz-config.cjs"
+        }
     }
 }
