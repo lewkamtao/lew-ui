@@ -98,12 +98,12 @@ const sortOptions = computed(() => {
 <template>
     <lew-flex direction="y" gap="70px" class="docs-wrapper">
         <lew-flex
-            direction="y"
-            x="start"
             v-for="(item, index) in sortOptions"
             :key="index"
+            direction="y"
+            x="start"
         >
-            <lew-title :size="18" class="demo-docs-title" :id="item.title">{{
+            <lew-title :id="item.title" :size="18" class="demo-docs-title">{{
                 item.title
             }}</lew-title>
             <lew-table

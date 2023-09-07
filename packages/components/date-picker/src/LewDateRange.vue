@@ -305,9 +305,17 @@ defineExpose({ init });
             <lew-flex x="start" mode="between" class="lew-date-control">
                 <div class="lew-date-control-left">
                     <!-- 上一年 -->
-                    <lew-button type="light" icon="chevrons-left" @click="prveYear1" />
+                    <lew-button
+                        type="light"
+                        icon="chevrons-left"
+                        @click="prveYear1"
+                    />
                     <!-- 上一月 -->
-                    <lew-button type="light" icon="chevron-left" @click="prveMonth1" />
+                    <lew-button
+                        type="light"
+                        icon="chevron-left"
+                        @click="prveMonth1"
+                    />
                 </div>
                 <!-- 日期 -->
                 <div class="cur-date">
@@ -315,23 +323,50 @@ defineExpose({ init });
                 </div>
                 <div class="lew-date-control-right">
                     <!-- 下一月 -->
-                    <lew-button type="light" icon="chevron-right" @click="nextMonth1" />
+                    <lew-button
+                        type="light"
+                        icon="chevron-right"
+                        @click="nextMonth1"
+                    />
                     <!-- 下一年 -->
-                    <lew-button type="light" icon="chevrons-right" @click="nextYear1" />
+                    <lew-button
+                        type="light"
+                        icon="chevrons-right"
+                        @click="nextYear1"
+                    />
                 </div>
             </lew-flex>
             <div class="lew-date-box">
                 <!-- 表头 周 -->
-                <div v-for="(item, index) in getHeadDate" :key="`h${index}`" class="lew-date-item">
+                <div
+                    v-for="(item, index) in getHeadDate"
+                    :key="`h${index}`"
+                    class="lew-date-item"
+                >
                     <div class="lew-date-num">{{ item }}</div>
                 </div>
 
                 <!-- 表格 -->
-                <div v-for="(item, index) in state.leftPanel" :key="`d${index}`" class="lew-date-item"
-                    :class="object2class('rangeMonth', item)" @click="setValue(item)" @mouseenter="hoverValueFn(item)">
-                    <div class="lew-date-label" :class="object2class('rangeSelected', item)">
-                        <div v-if="object2class('today', item)" class="lew-date-item-today"></div>
-                        <div class="lew-date-value" :class="object2class('selected', item)">
+                <div
+                    v-for="(item, index) in state.leftPanel"
+                    :key="`d${index}`"
+                    class="lew-date-item"
+                    :class="object2class('rangeMonth', item)"
+                    @click="setValue(item)"
+                    @mouseenter="hoverValueFn(item)"
+                >
+                    <div
+                        class="lew-date-label"
+                        :class="object2class('rangeSelected', item)"
+                    >
+                        <div
+                            v-if="object2class('today', item)"
+                            class="lew-date-item-today"
+                        ></div>
+                        <div
+                            class="lew-date-value"
+                            :class="object2class('selected', item)"
+                        >
                             {{ item.showDate }}
                         </div>
                     </div>
@@ -342,9 +377,19 @@ defineExpose({ init });
             <lew-flex x="start" mode="between" class="lew-date-control">
                 <div class="lew-date-control-left">
                     <!-- 上一年 -->
-                    <lew-button type="light" icon="chevrons-left" size="small" @click="prveYear2" />
+                    <lew-button
+                        type="light"
+                        icon="chevrons-left"
+                        size="small"
+                        @click="prveYear2"
+                    />
                     <!-- 上一月 -->
-                    <lew-button type="light" icon="chevron-left" size="small" @click="prveMonth2" />
+                    <lew-button
+                        type="light"
+                        icon="chevron-left"
+                        size="small"
+                        @click="prveMonth2"
+                    />
                 </div>
                 <!-- 日期 -->
                 <div class="cur-date">
@@ -352,23 +397,52 @@ defineExpose({ init });
                 </div>
                 <div class="lew-date-control-right">
                     <!-- 下一月 -->
-                    <lew-button type="light" icon="chevron-right" size="small" @click="nextMonth2" />
+                    <lew-button
+                        type="light"
+                        icon="chevron-right"
+                        size="small"
+                        @click="nextMonth2"
+                    />
                     <!-- 下一年 -->
-                    <lew-button type="light" icon="chevrons-right" size="small" @click="nextYear2" />
+                    <lew-button
+                        type="light"
+                        icon="chevrons-right"
+                        size="small"
+                        @click="nextYear2"
+                    />
                 </div>
             </lew-flex>
             <div class="lew-date-box">
                 <!-- 表头 周 -->
-                <div v-for="(item, index) in getHeadDate" :key="`h${index}`" class="lew-date-item">
+                <div
+                    v-for="(item, index) in getHeadDate"
+                    :key="`h${index}`"
+                    class="lew-date-item"
+                >
                     <div class="lew-date-num">{{ item }}</div>
                 </div>
 
                 <!-- 表格 -->
-                <div v-for="(item, index) in state.rightPanel" :key="`d${index}`" class="lew-date-item"
-                    :class="object2class('rangeMonth', item)" @click="setValue(item)" @mouseenter="hoverValueFn(item)">
-                    <div class="lew-date-label" :class="object2class('rangeSelected', item)">
-                        <div v-if="object2class('today', item)" class="lew-date-item-today"></div>
-                        <div class="lew-date-value" :class="object2class('selected', item)">
+                <div
+                    v-for="(item, index) in state.rightPanel"
+                    :key="`d${index}`"
+                    class="lew-date-item"
+                    :class="object2class('rangeMonth', item)"
+                    @click="setValue(item)"
+                    @mouseenter="hoverValueFn(item)"
+                >
+                    <div
+                        class="lew-date-label"
+                        :class="object2class('rangeSelected', item)"
+                    >
+                        <div
+                            v-if="object2class('today', item)"
+                            class="lew-date-item-today"
+                        ></div>
+                        <div
+                            class="lew-date-value"
+                            :class="object2class('selected', item)"
+                        >
                             {{ item.showDate }}
                         </div>
                     </div>
@@ -484,19 +558,23 @@ defineExpose({ init });
             }
 
             .lew-date-label-selected-start {
-                background: linear-gradient(to right,
-                        rgba(0, 0, 0, 0) 0%,
-                        rgba(0, 0, 0, 0) 50%,
-                        var(--lew-color-primary-light) 51%,
-                        var(--lew-color-primary-light) 100%);
+                background: linear-gradient(
+                    to right,
+                    rgba(0, 0, 0, 0) 0%,
+                    rgba(0, 0, 0, 0) 50%,
+                    var(--lew-color-primary-light) 51%,
+                    var(--lew-color-primary-light) 100%
+                );
             }
 
             .lew-date-label-selected-end {
-                background: linear-gradient(to right,
-                        var(--lew-color-primary-light) 0%,
-                        var(--lew-color-primary-light) 50%,
-                        rgba(0, 0, 0, 0) 51%,
-                        rgba(0, 0, 0, 0) 100%);
+                background: linear-gradient(
+                    to right,
+                    var(--lew-color-primary-light) 0%,
+                    var(--lew-color-primary-light) 50%,
+                    rgba(0, 0, 0, 0) 51%,
+                    rgba(0, 0, 0, 0) 100%
+                );
             }
         }
 

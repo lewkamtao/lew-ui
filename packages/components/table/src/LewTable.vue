@@ -93,8 +93,9 @@ const getTdStyle = computed(() => (column: any, row?: any) => {
     if (state.scrollbarVisible) {
         return `width: ${width}px;${tdStyle}`;
     }
-    return `width: ${(width / getTdTotalWidth.value) * state.scrollClientWidth
-        }px;${tdStyle}`;
+    return `width: ${
+        (width / getTdTotalWidth.value) * state.scrollClientWidth
+    }px;${tdStyle}`;
 });
 
 const getTdTotalWidth = computed(() => {
@@ -186,113 +187,244 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="lew-table-wrapper" :class="{
-        'hide-line-left':
-            !state.scrollbarVisible ||
-            ['all', 'left'].includes(state.hidScrollLine) ||
-            columns.filter((e) => e.fixed === 'left').length > 0,
-        'hide-line-right':
-            !state.scrollbarVisible ||
-            ['all', 'right'].includes(state.hidScrollLine) ||
-            columns.filter((e) => e.fixed === 'right').length > 0,
-    }">
-        <div ref="tableRef" class="lew-table lew-scrollbar" :style="`max-height: ${any2px(maxHeight)}`"
-            @scroll="checkScroll" @mouseleave="state.hoverIndex = -1">
-            <div class="lew-table-head" :style="`width: ${getTdTotalWidth}px`" @mouseenter="state.hoverIndex = -1">
-                <div v-if="fixedColumns('left').length > 0" class="lew-table-fixed-left" :class="{
-                    'hid-scroll-line': ['all', 'left'].includes(
-                        state.hidScrollLine
-                    ),
-                }">
+    <div
+        class="lew-table-wrapper"
+        :class="{
+            'hide-line-left':
+                !state.scrollbarVisible ||
+                ['all', 'left'].includes(state.hidScrollLine) ||
+                columns.filter((e) => e.fixed === 'left').length > 0,
+            'hide-line-right':
+                !state.scrollbarVisible ||
+                ['all', 'right'].includes(state.hidScrollLine) ||
+                columns.filter((e) => e.fixed === 'right').length > 0,
+        }"
+    >
+        <div
+            ref="tableRef"
+            class="lew-table lew-scrollbar"
+            :style="`max-height: ${any2px(maxHeight)}`"
+            @scroll="checkScroll"
+            @mouseleave="state.hoverIndex = -1"
+        >
+            <div
+                class="lew-table-head"
+                :style="`width: ${getTdTotalWidth}px`"
+                @mouseenter="state.hoverIndex = -1"
+            >
+                <div
+                    v-if="fixedColumns('left').length > 0"
+                    class="lew-table-fixed-left"
+                    :class="{
+                        'hid-scroll-line': ['all', 'left'].includes(
+                            state.hidScrollLine
+                        ),
+                    }"
+                >
                     <div class="lew-table-tr">
-                        <lew-flex v-if="checkable && fixedColumns('left').length > 0" style="width: 50px" x="center">
-                            <lew-checkbox v-model="state.checkAll" @change="setAllChecked($event)"></lew-checkbox>
+                        <lew-flex
+                            v-if="checkable && fixedColumns('left').length > 0"
+                            style="width: 50px"
+                            x="center"
+                        >
+                            <lew-checkbox
+                                v-model="state.checkAll"
+                                @change="setAllChecked($event)"
+                            ></lew-checkbox>
                         </lew-flex>
-                        <lew-flex v-for="(column, index) in fixedColumns('left')" :key="`columns${index}`"
-                            class="lew-table-td" :x="column.x || 'start'" :y="column.y" :style="getTdStyle(column)">
+                        <lew-flex
+                            v-for="(column, index) in fixedColumns('left')"
+                            :key="`columns${index}`"
+                            class="lew-table-td"
+                            :x="column.x || 'start'"
+                            :y="column.y"
+                            :style="getTdStyle(column)"
+                        >
                             {{ column.title }}
                         </lew-flex>
                     </div>
                 </div>
                 <div class="lew-table-main">
                     <div class="lew-table-tr">
-                        <lew-flex v-if="checkable && fixedColumns('left').length === 0
-                            " style="width: 50px" x="center">
-                            <lew-checkbox v-model="state.checkAll" @change="setAllChecked($event)"></lew-checkbox>
+                        <lew-flex
+                            v-if="
+                                checkable && fixedColumns('left').length === 0
+                            "
+                            style="width: 50px"
+                            x="center"
+                        >
+                            <lew-checkbox
+                                v-model="state.checkAll"
+                                @change="setAllChecked($event)"
+                            ></lew-checkbox>
                         </lew-flex>
-                        <lew-flex v-for="(column, index) in newColumns" :key="`columns${index}`" class="lew-table-td"
-                            :x="column.x || 'start'" :y="column.y" :style="getTdStyle(column)">
+                        <lew-flex
+                            v-for="(column, index) in newColumns"
+                            :key="`columns${index}`"
+                            class="lew-table-td"
+                            :x="column.x || 'start'"
+                            :y="column.y"
+                            :style="getTdStyle(column)"
+                        >
                             {{ column.title }}
                         </lew-flex>
                     </div>
                 </div>
-                <div v-if="fixedColumns('right').length > 0" class="lew-table-fixed-right" :class="{
-                    'hid-scroll-line': ['all', 'right'].includes(
-                        state.hidScrollLine
-                    ),
-                }">
+                <div
+                    v-if="fixedColumns('right').length > 0"
+                    class="lew-table-fixed-right"
+                    :class="{
+                        'hid-scroll-line': ['all', 'right'].includes(
+                            state.hidScrollLine
+                        ),
+                    }"
+                >
                     <div class="lew-table-tr">
-                        <lew-flex v-for="(column, index) in fixedColumns('right')" :key="`columns${index}`"
-                            class="lew-table-td" :x="column.x || 'start'" :y="column.y" :style="getTdStyle(column)">
+                        <lew-flex
+                            v-for="(column, index) in fixedColumns('right')"
+                            :key="`columns${index}`"
+                            class="lew-table-td"
+                            :x="column.x || 'start'"
+                            :y="column.y"
+                            :style="getTdStyle(column)"
+                        >
                             {{ column.title }}
                         </lew-flex>
                     </div>
                 </div>
             </div>
             <div class="lew-table-body" :style="`width: ${getTdTotalWidth}px`">
-                <div v-if="fixedColumns('left').length > 0" class="lew-table-fixed-left" :class="{
-                    'hid-scroll-line': ['all', 'left'].includes(
-                        state.hidScrollLine
-                    ),
-                }">
-                    <div v-for="(row, i) in dataSource" :key="`data${i}`" class="lew-table-tr" :class="{
-                        'lew-table-tr-hover': state.hoverIndex === i,
-                    }" @mouseenter="state.hoverIndex = i">
-                        <lew-flex v-if="checkable && fixedColumns('left').length > 0" style="width: 50px" x="center">
-                            <lew-checkbox v-model="state.checkList[i]" @change="
-                                rowKey && setChecked(row[rowKey], $event)
-                                "></lew-checkbox>
+                <div
+                    v-if="fixedColumns('left').length > 0"
+                    class="lew-table-fixed-left"
+                    :class="{
+                        'hid-scroll-line': ['all', 'left'].includes(
+                            state.hidScrollLine
+                        ),
+                    }"
+                >
+                    <div
+                        v-for="(row, i) in dataSource"
+                        :key="`data${i}`"
+                        class="lew-table-tr"
+                        :class="{
+                            'lew-table-tr-hover': state.hoverIndex === i,
+                        }"
+                        @mouseenter="state.hoverIndex = i"
+                    >
+                        <lew-flex
+                            v-if="checkable && fixedColumns('left').length > 0"
+                            style="width: 50px"
+                            x="center"
+                        >
+                            <lew-checkbox
+                                v-model="state.checkList[i]"
+                                @change="
+                                    rowKey && setChecked(row[rowKey], $event)
+                                "
+                            ></lew-checkbox>
                         </lew-flex>
-                        <lew-flex v-for="(column, j) in fixedColumns('left')" :key="`col${j}`" class="lew-table-td"
-                            :x="column.x || 'start'" :y="column.y" :style="getTdStyle(column, row)">
+                        <lew-flex
+                            v-for="(column, j) in fixedColumns('left')"
+                            :key="`col${j}`"
+                            class="lew-table-td"
+                            :x="column.x || 'start'"
+                            :y="column.y"
+                            :style="getTdStyle(column, row)"
+                        >
                             <!-- 模板 -->
-                            <slot v-if="$slots[column.field]" :name="column.field" :row="row" :column="column" />
+                            <slot
+                                v-if="$slots[column.field]"
+                                :name="column.field"
+                                :row="row"
+                                :column="column"
+                            />
                             <template v-else>{{ row[column.field] }}</template>
                         </lew-flex>
                     </div>
                 </div>
                 <div class="lew-table-main">
-                    <div v-for="(row, i) in dataSource" :key="`data${i}`" class="lew-table-tr" :class="{
-                        'lew-table-tr-hover': state.hoverIndex === i,
-                    }" @mouseenter="state.hoverIndex = i">
-                        <lew-flex v-if="checkable && fixedColumns('left').length === 0
-                            " style="width: 50px" x="center">
-                            <lew-checkbox v-model="state.checkList[i]" @change="
-                                rowKey && setChecked(row[rowKey], $event)
-                                " />
+                    <div
+                        v-for="(row, i) in dataSource"
+                        :key="`data${i}`"
+                        class="lew-table-tr"
+                        :class="{
+                            'lew-table-tr-hover': state.hoverIndex === i,
+                        }"
+                        @mouseenter="state.hoverIndex = i"
+                    >
+                        <lew-flex
+                            v-if="
+                                checkable && fixedColumns('left').length === 0
+                            "
+                            style="width: 50px"
+                            x="center"
+                        >
+                            <lew-checkbox
+                                v-model="state.checkList[i]"
+                                @change="
+                                    rowKey && setChecked(row[rowKey], $event)
+                                "
+                            />
                         </lew-flex>
-                        <lew-flex v-for="(column, j) in newColumns" :key="`col${j}`" class="lew-table-td"
-                            :x="column.x || 'start'" :y="column.y" :style="getTdStyle(column, row)">
+                        <lew-flex
+                            v-for="(column, j) in newColumns"
+                            :key="`col${j}`"
+                            class="lew-table-td"
+                            :x="column.x || 'start'"
+                            :y="column.y"
+                            :style="getTdStyle(column, row)"
+                        >
                             <!-- 模板 -->
-                            <slot v-if="$slots[column.field]" :name="column.field" :row="row" :column="column" />
+                            <slot
+                                v-if="$slots[column.field]"
+                                :name="column.field"
+                                :row="row"
+                                :column="column"
+                            />
                             <template v-else>
-                                <lew-text-trim :x="column.x || 'start'" style="width: 100%" :text="row[column.field]" />
+                                <lew-text-trim
+                                    :x="column.x || 'start'"
+                                    style="width: 100%"
+                                    :text="row[column.field]"
+                                />
                             </template>
                         </lew-flex>
                     </div>
                 </div>
-                <div v-if="fixedColumns('right').length > 0" class="lew-table-fixed-right" :class="{
-                    'hid-scroll-line': ['all', 'right'].includes(
-                        state.hidScrollLine
-                    ),
-                }">
-                    <div v-for="(row, i) in dataSource" :key="`data${i}`" class="lew-table-tr" :class="{
-                        'lew-table-tr-hover': state.hoverIndex === i,
-                    }" @mouseenter="state.hoverIndex = i">
-                        <lew-flex v-for="(column, j) in fixedColumns('right')" :key="`col${j}`" class="lew-table-td"
-                            :x="column.x || 'start'" :y="column.y" :style="getTdStyle(column, row)">
+                <div
+                    v-if="fixedColumns('right').length > 0"
+                    class="lew-table-fixed-right"
+                    :class="{
+                        'hid-scroll-line': ['all', 'right'].includes(
+                            state.hidScrollLine
+                        ),
+                    }"
+                >
+                    <div
+                        v-for="(row, i) in dataSource"
+                        :key="`data${i}`"
+                        class="lew-table-tr"
+                        :class="{
+                            'lew-table-tr-hover': state.hoverIndex === i,
+                        }"
+                        @mouseenter="state.hoverIndex = i"
+                    >
+                        <lew-flex
+                            v-for="(column, j) in fixedColumns('right')"
+                            :key="`col${j}`"
+                            class="lew-table-td"
+                            :x="column.x || 'start'"
+                            :y="column.y"
+                            :style="getTdStyle(column, row)"
+                        >
                             <!-- 模板 -->
-                            <slot v-if="$slots[column.field]" :name="column.field" :row="row" :column="column" />
+                            <slot
+                                v-if="$slots[column.field]"
+                                :name="column.field"
+                                :row="row"
+                                :column="column"
+                            />
                             <template v-else>{{ row[column.field] }}</template>
                         </lew-flex>
                     </div>
@@ -347,9 +479,11 @@ onUnmounted(() => {
         top: 0px;
         width: 3px;
         height: 100%;
-        background-image: linear-gradient(to left,
-                var(--lew-table-scroll-line-color-start),
-                var(--lew-table-scroll-line-color-end));
+        background-image: linear-gradient(
+            to left,
+            var(--lew-table-scroll-line-color-start),
+            var(--lew-table-scroll-line-color-end)
+        );
         content: '';
         transition: opacity 0.2s ease;
     }
@@ -360,9 +494,11 @@ onUnmounted(() => {
         top: 0px;
         width: 3px;
         height: 100%;
-        background-image: linear-gradient(to right,
-                var(--lew-table-scroll-line-color-start),
-                var(--lew-table-scroll-line-color-end));
+        background-image: linear-gradient(
+            to right,
+            var(--lew-table-scroll-line-color-start),
+            var(--lew-table-scroll-line-color-end)
+        );
         content: '';
         transition: opacity 0.2s ease;
     }
@@ -439,9 +575,11 @@ onUnmounted(() => {
     top: 0px;
     width: 4px;
     height: 100%;
-    background-image: linear-gradient(to left,
-            var(--lew-table-scroll-line-color-start),
-            var(--lew-table-scroll-line-color-end));
+    background-image: linear-gradient(
+        to left,
+        var(--lew-table-scroll-line-color-start),
+        var(--lew-table-scroll-line-color-end)
+    );
     content: '';
     transition: opacity 0.2s ease;
     opacity: 1;
@@ -454,9 +592,11 @@ onUnmounted(() => {
     top: 0px;
     width: 4px;
     height: 100%;
-    background-image: linear-gradient(to right,
-            var(--lew-table-scroll-line-color-start),
-            var(--lew-table-scroll-line-color-end));
+    background-image: linear-gradient(
+        to right,
+        var(--lew-table-scroll-line-color-start),
+        var(--lew-table-scroll-line-color-end)
+    );
     content: '';
     transition: opacity 0.2s ease;
     opacity: 1;

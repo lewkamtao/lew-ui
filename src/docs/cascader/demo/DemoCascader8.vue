@@ -2,7 +2,7 @@
 const options = [
     {
         value: 1,
-        label:"Asia",
+        label: 'Asia',
         children: [
             {
                 value: 2,
@@ -83,7 +83,7 @@ const options = [
         ],
     },
 ];
-let v = ref()
+const v = ref();
 </script>
 
 <template>

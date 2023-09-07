@@ -2,7 +2,7 @@
 import * as Yup from 'yup';
 import { schools } from '../../select/demo/schools';
 
-let schoolsOptions = schools.map((e, i) => {
+const schoolsOptions = schools.map((e, i) => {
     return { label: e, value: i + 1 };
 });
 
@@ -290,7 +290,7 @@ const options = ref([
     },
 ]);
 
-let formRef = ref();
+const formRef = ref();
 
 const submit = async () => {
     const vail = await formRef.value.validate();

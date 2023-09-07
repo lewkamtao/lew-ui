@@ -83,7 +83,7 @@ const options = [
     },
 ];
 
-let v = ref();
+const v = ref();
 
 const change = (e: any) => {
     console.log(e);
@@ -93,10 +93,10 @@ const change = (e: any) => {
 <template>
     <lew-flex direction="y" gap="20px" style="width: 300px">
         <lew-cascader
-            @change="change"
             v-model="v"
             size="small"
             :options="options"
+            @change="change"
         />
         <lew-cascader v-model="v" :options="options" />
         <lew-cascader v-model="v" size="large" :options="options" />

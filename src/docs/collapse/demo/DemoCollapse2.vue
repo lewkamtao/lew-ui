@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-let num = ref(23141323.23);
-let num2 = ref(3242313);
+const num = ref(23141323.23);
+const num2 = ref(3242313);
 let timer: any;
 let timer2: any;
 

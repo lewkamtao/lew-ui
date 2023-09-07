@@ -35,19 +35,19 @@ const columns = [
 ];
 const docsTable = ref([
     {
-        name:'value',
+        name: 'value',
         description: '显示内容',
         type: 'string | number',
         default: 'undefined',
     },
     {
-        name:'type',
+        name: 'type',
         description: '显示类型',
         type: `default | success | error | warning | info`,
         default: 'default',
     },
     {
-        name:'round',
+        name: 'round',
         description: '形状，是否为圆形。',
         type: 'boolean',
         default: 'false',

@@ -31,5 +31,4 @@ export const menuProps = {
     },
 };
 
-
 export type MenuProps = ExtractPropTypes<typeof menuProps>;

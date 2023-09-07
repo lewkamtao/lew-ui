@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as Yup from 'yup';
+
 const visible = ref(false);
 const title = ref('加载中');
 const form = ref({});
@@ -34,9 +35,9 @@ const options = ref([
                 >登录你的账户
             </lew-title>
             <lew-form
+                v-model="form"
                 direction="y"
                 class="form-box"
-                v-model="form"
                 :options="options"
                 :label-width="80"
             />
@@ -63,16 +64,16 @@ const options = ref([
                 >登录你的账户
             </lew-title>
             <lew-form
+                v-model="form"
                 direction="y"
                 class="form-box"
-                v-model="form"
                 :options="options"
                 :label-width="80"
             />
 
             <lew-flex x="end">
                 <lew-button text="关闭" type="text" color="normal" />
-                <lew-button @click="visible = true" text="立即登录" />
+                <lew-button text="立即登录" @click="visible = true" />
             </lew-flex>
         </lew-flex>
         <br />

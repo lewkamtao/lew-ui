@@ -75,14 +75,28 @@ const delTag = (index: number) => {
     <div class="lew-input-tag-view">
         <div style="margin-left: -10px; height: 26px"></div>
         <TransitionGroup name="list">
-            <lew-tag type="light" v-for="(item, index) in tagsValue" :key="index" closable @close="delTag(index)">{{ item }}
+            <lew-tag
+                type="light"
+                v-for="(item, index) in tagsValue"
+                :key="index"
+                closable
+                @close="delTag(index)"
+                >{{ item }}
             </lew-tag>
         </TransitionGroup>
         <label v-if="!isInput" class="lew-input-tag-button" @click="openInput">
             <lew-icon :size="16" type="plus" />
         </label>
-        <lew-input v-else ref="lewInputRef" v-model="inputValue" class="lew-input-tag" size="small" auto-width
-            placeholder="" @blur="blurFn" />
+        <lew-input
+            v-else
+            ref="lewInputRef"
+            v-model="inputValue"
+            class="lew-input-tag"
+            size="small"
+            auto-width
+            placeholder=""
+            @blur="blurFn"
+        />
     </div>
 </template>
 

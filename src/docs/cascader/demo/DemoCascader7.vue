@@ -82,7 +82,7 @@ const options = [
         ],
     },
 ];
-let v = ref(26);
+const v = ref(26);
 </script>
 
 <template>

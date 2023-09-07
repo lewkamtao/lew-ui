@@ -7,7 +7,7 @@ import { LewTooltip } from 'lew-ui/directives';
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app;
-if (app &&!app.directive('tooltip')) {
+if (app && !app.directive('tooltip')) {
     app.use(LewTooltip);
 }
 const emit = defineEmits([
@@ -148,10 +148,14 @@ defineExpose({ toFocus });
 
 <template>
     <div class="lew-input-view" :class="getInputClassNames">
-        <div v-tooltip="{
-            content: prefixesTooltip,
-            trigger: 'mouseenter',
-        }" v-if="prefixes" class="lew-input-prefixes">
+        <div
+            v-tooltip="{
+                content: prefixesTooltip,
+                trigger: 'mouseenter',
+            }"
+            v-if="prefixes"
+            class="lew-input-prefixes"
+        >
             <div v-if="prefixes === 'text'" class="lew-input-prefixes-text">
                 {{ prefixesValue }}
             </div>
@@ -159,26 +163,56 @@ defineExpose({ toFocus });
                 <lew-icon :size="getIconSize" :type="prefixesValue"> </lew-icon>
             </div>
             <div v-if="prefixes === 'select'" class="lew-input-prefixes-select">
-                <lew-dropdown placement="bottom" trigger="click" :options="prefixesOptions" @change="prefixesChange"
-                    @show="state.prefixesDropdown = 'show'" @hide="state.prefixesDropdown = 'hide'">
-                    <lew-flex gap="5px" x="start" class="lew-input-prefixes-dropdown" :class="{
-                        'lew-input-prefixes-dropdown-open':
-                            state.prefixesDropdown === 'show',
-                    }">
+                <lew-dropdown
+                    placement="bottom"
+                    trigger="click"
+                    :options="prefixesOptions"
+                    @change="prefixesChange"
+                    @show="state.prefixesDropdown = 'show'"
+                    @hide="state.prefixesDropdown = 'hide'"
+                >
+                    <lew-flex
+                        gap="5px"
+                        x="start"
+                        class="lew-input-prefixes-dropdown"
+                        :class="{
+                            'lew-input-prefixes-dropdown-open':
+                                state.prefixesDropdown === 'show',
+                        }"
+                    >
                         {{ getPrefixesLabel }}
-                        <lew-icon :size="getIconSize" type="chevron-down" class="icon-select" />
+                        <lew-icon
+                            :size="getIconSize"
+                            type="chevron-down"
+                            class="icon-select"
+                        />
                     </lew-flex>
                 </lew-dropdown>
             </div>
         </div>
-        <input ref="lewInputRef" class="lew-input" autocomplete="new-password" v-model="modelValue" :disabled="disabled"
-            :placeholder="placeholder" :type="getType" :readonly="readonly"
-            onkeypress="if(window.event.keyCode==13) this.blur()" @input="inputFn" @change="emit('change', modelValue)"
-            @blur="blur" @focus="focus" />
-        <div v-tooltip="{
-            content: suffixTooltip,
-            trigger: suffixTooltip ? 'mouseenter' : '',
-        }" v-if="suffix" class="lew-input-suffix">
+        <input
+            ref="lewInputRef"
+            class="lew-input"
+            autocomplete="new-password"
+            v-model="modelValue"
+            :disabled="disabled"
+            :placeholder="placeholder"
+            :type="getType"
+            :readonly="readonly"
+            onkeypress="if(window.event.keyCode==13) this.blur()"
+            @input="inputFn"
+            @change="emit('change', modelValue)"
+            @blur="blur"
+            @focus="focus"
+        />
+        <div
+            v-tooltip="{
+                content: suffixTooltip,
+                trigger: suffixTooltip ? 'mouseenter' : '',
+            }"
+            v-if="suffix"
+            class="lew-input-suffix"
+        >
             <div v-if="suffix === 'text'" class="lew-input-suffix-text">
                 {{ suffixValue }}
             </div>
@@ -186,14 +220,29 @@ defineExpose({ toFocus });
                 <lew-icon :size="getIconSize" :type="suffixValue"> </lew-icon>
             </div>
             <div v-if="suffix === 'select'" class="lew-input-suffix-select">
-                <lew-dropdown placement="bottom" trigger="click" :options="suffixOptions" @change="suffixChange"
-                    @show="state.suffixDropdown = 'show'" @hide="state.suffixDropdown = 'hide'">
-                    <lew-flex gap="5px" x="start" class="lew-input-suffix-dropdown" :class="{
-                        'lew-input-suffix-dropdown-open':
-                            state.suffixDropdown === 'show',
-                    }">
+                <lew-dropdown
+                    placement="bottom"
+                    trigger="click"
+                    :options="suffixOptions"
+                    @change="suffixChange"
+                    @show="state.suffixDropdown = 'show'"
+                    @hide="state.suffixDropdown = 'hide'"
+                >
+                    <lew-flex
+                        gap="5px"
+                        x="start"
+                        class="lew-input-suffix-dropdown"
+                        :class="{
+                            'lew-input-suffix-dropdown-open':
+                                state.suffixDropdown === 'show',
+                        }"
+                    >
                         {{ getSuffixLabel }}
-                        <lew-icon :size="getIconSize" type="chevron-down" class="icon-select" />
+                        <lew-icon
+                            :size="getIconSize"
+                            type="chevron-down"
+                            class="icon-select"
+                        />
                     </lew-flex>
                 </lew-dropdown>
             </div>
@@ -201,24 +250,52 @@ defineExpose({ toFocus });
         <label v-if="autoWidth" class="lew-input-auto-width">
             {{ modelValue }}
         </label>
-        <div v-if="showPassword || clearable || showCount" class="lew-input-controls">
-            <div v-if="getCheckNumStr" class="lew-input-count" :class="{
-                'lew-input-count-clearable': clearable && modelValue,
-            }">
+        <div
+            v-if="showPassword || clearable || showCount"
+            class="lew-input-controls"
+        >
+            <div
+                v-if="getCheckNumStr"
+                class="lew-input-count"
+                :class="{
+                    'lew-input-count-clearable': clearable && modelValue,
+                }"
+            >
                 {{ getCheckNumStr }}
             </div>
-            <div v-if="showPassword && type === 'password'" class="lew-input-show-password" @mousedown.prevent=""
-                @click="showPasswordFn">
-                <lew-icon v-show="_type === 'text'" :size="getIconSize" type="eye" />
-                <lew-icon v-show="_type === 'password'" :size="getIconSize" type="eye-off" />
+            <div
+                v-if="showPassword && type === 'password'"
+                class="lew-input-show-password"
+                @mousedown.prevent=""
+                @click="showPasswordFn"
+            >
+                <lew-icon
+                    v-show="_type === 'text'"
+                    :size="getIconSize"
+                    type="eye"
+                />
+                <lew-icon
+                    v-show="_type === 'password'"
+                    :size="getIconSize"
+                    type="eye-off"
+                />
             </div>
             <transition name="lew-form-icon-ani">
-                <lew-icon v-if="clearable && modelValue && !readonly" class="lew-form-icon-clear" :class="{
-                    'lew-form-icon-clear-focus': state.isFocus,
-                }" v-tooltip="{
-    content: '清空',
-    placement: 'top',
-}" @mousedown.prevent="" @click="clear" :size="getIconSize" type="x" />
+                <lew-icon
+                    v-if="clearable && modelValue && !readonly"
+                    class="lew-form-icon-clear"
+                    :class="{
+                        'lew-form-icon-clear-focus': state.isFocus,
+                    }"
+                    v-tooltip="{
+                        content: '清空',
+                        placement: 'top',
+                    }"
+                    @mousedown.prevent=""
+                    @click="clear"
+                    :size="getIconSize"
+                    type="x"
+                />
             </transition>
         </div>
     </div>
@@ -305,7 +382,7 @@ defineExpose({ toFocus });
         align-items: center;
         margin-right: 3px;
 
-        >div {
+        > div {
             display: inline-flex;
             justify-content: center;
             align-items: center;
@@ -497,7 +574,8 @@ defineExpose({ toFocus });
 }
 
 .lew-input-view:focus-within {
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+        solid;
     outline: var(--lew-form-ouline);
     background-color: var(--lew-form-bgcolor-focus);
 }

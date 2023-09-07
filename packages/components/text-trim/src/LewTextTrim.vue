@@ -88,14 +88,18 @@ const getClassNames = computed(() => {
 });
 
 onMounted(() => {
-    init()
-})
-
+    init();
+});
 </script>
- 
+
 <template>
-    <div ref="textTrimRef" class="lew-text-trim-wrapper" :class="getClassNames" :style="getTextTrimStyleObject"
-        v-html="text" />
+    <div
+        ref="textTrimRef"
+        class="lew-text-trim-wrapper"
+        :class="getClassNames"
+        :style="getTextTrimStyleObject"
+        v-html="text"
+    />
 </template>
 
 <style lang="scss" scoped>

@@ -76,7 +76,7 @@ const close = (e: number) => {
             "
         />
     </lew-flex>
-    <div style="margin-top: 20px">
-        <LewAlert :list="list" @close="close"></LewAlert>
+    <div style="margin-top: 20px;">
+        <LewAlert :list="list" @close="close"> </LewAlert>
     </div>
 </template>

@@ -1,29 +1,31 @@
 {
     "compilerOptions": {
-        "target": "esnext",
+        "target": "ES2020",
         "useDefineForClassFields": true,
-        "module": "esnext",
-        "moduleResolution": "node",
-        "strict": true,
-        "jsx": "preserve",
-        "sourceMap": true,
+        "module": "ESNext",
+        "lib": ["ES2020", "DOM", "DOM.Iterable"],
+        "skipLibCheck": true,
+
+        /* Bundler mode */
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
         "resolveJsonModule": true,
         "isolatedModules": true,
-        "esModuleInterop": true,
-        "lib": ["esnext", "dom"],
-        "skipLibCheck": true,
-        "noImplicitAny": false
+        "noEmit": true,
+        "jsx": "preserve",
+
+        /* Linting */
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true
     },
     "include": [
         "src/**/*.ts",
         "src/**/*.d.ts",
         "src/**/*.tsx",
         "src/**/*.vue",
-        "packages/**/*.ts",
-        "packages/**/*.d.ts",
-        "packages/**/*.tsx",
-        "packages/**/*.vue"
+        "packages"
     ],
-    // 指定不需要被编译的目录
-    "exclude": ["node_modules"]
+    "references": [{ "path": "./tsconfig.node.json" }]
 }

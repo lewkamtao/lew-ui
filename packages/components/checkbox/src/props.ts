@@ -5,6 +5,7 @@ export type CheckboxOptions = {
     value: string | number;
     disabled?: boolean;
 };
+
 export type CheckboxSize = 'small' | 'medium' | 'large';
 
 export type CheckboxGroupDirectionType = 'x' | 'y';

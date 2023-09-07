@@ -8,6 +8,6 @@ const change = (e: any) => {
 
 <template>
     <lew-flex direction="y" x="start">
-        <lew-date-picker clearable v-model="value" @change="change" />
+        <lew-date-picker v-model="value" clearable @change="change" />
     </lew-flex>
 </template>

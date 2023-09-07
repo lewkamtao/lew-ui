@@ -61,22 +61,22 @@ const change = (e: Options) => {
     <lew-flex direction="y" x="start">
         <lew-title :size="14">限制整体宽度</lew-title>
         <lew-tabs
+            v-model="value"
             size="small"
             style="width: 300px"
-            v-model="value"
             :options="options"
             @change="change"
         />
         <lew-tabs
+            v-model="value"
             style="width: 300px"
-            v-model="value"
             :options="options"
             @change="change"
         />
         <lew-tabs
+            v-model="value"
             size="large"
             style="width: 300px"
-            v-model="value"
             :options="options"
             @change="change"
         />
@@ -84,8 +84,8 @@ const change = (e: Options) => {
         <br />
         <lew-title :size="14">根据内容自适应宽度</lew-title>
         <lew-tabs
-            style="width: 100%"
             v-model="value"
+            style="width: 100%"
             :options="options"
             @change="change"
         />
@@ -93,8 +93,8 @@ const change = (e: Options) => {
         <br />
         <lew-title :size="14">自定义item宽度</lew-title>
         <lew-tabs
-            style="width: 100%"
             v-model="value"
+            style="width: 100%"
             :options="options"
             :item-width="120"
             @change="change"

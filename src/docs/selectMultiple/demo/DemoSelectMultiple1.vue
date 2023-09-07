@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { schools } from './schools';
 
-let schoolsOptions = schools.map((e, i) => {
+const schoolsOptions = schools.map((e, i) => {
     return { label: e, value: i + 1 };
 });
 

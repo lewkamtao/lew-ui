@@ -4,7 +4,6 @@ import { dialogProps } from './dialog';
 import { getIconType } from '../../../utils';
 import { useDOMCreate } from '../../../hooks';
 
-
 useDOMCreate('lew-dialog');
 const props = defineProps(dialogProps);
 const emit = defineEmits(['close']);
@@ -22,8 +21,8 @@ const maskClick = () => {
 const visible = ref<boolean>(false);
 
 onMounted(() => {
-    visible.value = true
-})
+    visible.value = true;
+});
 
 const close = () => {
     visible.value = false;
@@ -61,7 +60,11 @@ const cancel = async () => {
         </transition>
         <transition name="lew-dialog">
             <div v-if="visible" class="lew-dialog" @click="maskClick">
-                <div v-if="layout === 'normal'" class="lew-dialog-box lew-dialog-box-normal" @click.stop>
+                <div
+                    v-if="layout === 'normal'"
+                    class="lew-dialog-box lew-dialog-box-normal"
+                    @click.stop
+                >
                     <div class="left">
                         <div :class="`icon-${type}`">
                             <lew-icon size="24" :type="getIconType(type)" />
@@ -70,21 +73,40 @@ const cancel = async () => {
                     <div class="right">
                         <header>
                             <slot name="title" />
-                            <span class="gulu-dialog-close" @click="close()"></span>
+                            <span
+                                class="gulu-dialog-close"
+                                @click="close()"
+                            ></span>
                         </header>
                         <main>
                             <slot name="content" />
                         </main>
                         <footer>
-                            <lew-button v-if="cancelText" :text="cancelText" type="text" color="gray"
-                                :loading="cancelLoading" @click.stop="cancel" />
-                            <lew-button v-if="okText" :text="okText" type="fill" :color="type" :loading="okLoading"
-                                @click.stop="ok" />
+                            <lew-button
+                                v-if="cancelText"
+                                :text="cancelText"
+                                type="text"
+                                color="gray"
+                                :loading="cancelLoading"
+                                @click.stop="cancel"
+                            />
+                            <lew-button
+                                v-if="okText"
+                                :text="okText"
+                                type="fill"
+                                :color="type"
+                                :loading="okLoading"
+                                @click.stop="ok"
+                            />
                         </footer>
                     </div>
                 </div>
 
-                <div v-if="layout === 'mini'" class="lew-dialog-box lew-dialog-box-mini" @click.stop>
+                <div
+                    v-if="layout === 'mini'"
+                    class="lew-dialog-box lew-dialog-box-mini"
+                    @click.stop
+                >
                     <div class="left">
                         <div :class="`icon-${type}`">
                             <lew-icon size="20" :type="getIconType(type)" />
@@ -95,10 +117,26 @@ const cancel = async () => {
                             <slot name="content" />
                         </main>
                         <lew-flex x="end">
-                            <lew-button v-if="cancelText" :text="cancelText" type="text" size="small" color="gray" round
-                                :loading="cancelLoading" @click.stop="cancel" />
-                            <lew-button v-if="okText" :text="okText" type="fill" size="small" round :color="type"
-                                :loading="okLoading" @click.stop="ok" />
+                            <lew-button
+                                v-if="cancelText"
+                                :text="cancelText"
+                                type="text"
+                                size="small"
+                                color="gray"
+                                round
+                                :loading="cancelLoading"
+                                @click.stop="cancel"
+                            />
+                            <lew-button
+                                v-if="okText"
+                                :text="okText"
+                                type="fill"
+                                size="small"
+                                round
+                                :color="type"
+                                :loading="okLoading"
+                                @click.stop="ok"
+                            />
                         </lew-flex>
                     </lew-flex>
                 </div>
@@ -281,6 +319,6 @@ const cancel = async () => {
 .lew-dialog-leave-to,
 .lew-dialog-enter-from {
     opacity: 0;
-    transform: translateY(30px)
+    transform: translateY(30px);
 }
 </style>

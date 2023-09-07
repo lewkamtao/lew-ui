@@ -36,13 +36,22 @@ const handleClick = async (e: any) => {
 </script>
 
 <template>
-    <div class="lew-switch-view" :class="`
+    <div
+        class="lew-switch-view"
+        :class="`
      ${round ? 'lew-switch-round' : ''} 
          ${v ? 'lew-switch-checked' : ''}
          ${_loading || loading ? 'lew-switch-loading' : ''}
          ${request ? 'lew-switch-request' : ''}
-    `" @click="handleClick">
-        <input v-show="false" v-model="v" type="checkbox" :disabled="disabled" />
+    `"
+        @click="handleClick"
+    >
+        <input
+            v-show="false"
+            v-model="v"
+            type="checkbox"
+            :disabled="disabled"
+        />
         <div class="lew-switch-dot"></div>
     </div>
 </template>
@@ -84,12 +93,12 @@ const handleClick = async (e: any) => {
         border-radius: 50%;
     }
 
-    input:checked+.lew-switch-dot {
+    input:checked + .lew-switch-dot {
         background: #fff;
         transform: translate(18px, 4px);
     }
 
-    input:checked+.lew-switch-dot:after {
+    input:checked + .lew-switch-dot:after {
         transform: translateX(-100%);
     }
 }

@@ -53,8 +53,8 @@ const total = ref(100);
                 },
             ]"
             :total="total"
-            @change="change"
             round
+            @change="change"
         >
             <template #right>
                 <div style="margin-left: 20px">共 {{ total }} 条</div>

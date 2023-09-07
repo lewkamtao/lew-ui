@@ -24,7 +24,7 @@ const options = [
 ];
 </script>
 <template>
-    <lew-flex direction="y" x=start>
+    <lew-flex direction="y" x="start">
         <lew-input-pro
             v-model="v"
             style="width: 250px"

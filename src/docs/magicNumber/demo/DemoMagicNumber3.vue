@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-let num = ref(987654321.13);
-let num2 = ref(23321);
+const num = ref(987654321.13);
+const num2 = ref(23321);
 const change = () => {
     num.value += Number(Math.random() * 100000);
     num2.value += parseInt(String(Math.random() * 100000));

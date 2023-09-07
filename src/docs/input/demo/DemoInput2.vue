@@ -1,6 +1,6 @@
 <script setup lang="ts">
-let value = ref('');
-let prefixesValue = ref(1);
+const value = ref('');
+const prefixesValue = ref(1);
 
 const http = ref({
     value: '',
@@ -16,8 +16,8 @@ const http = ref({
             size="small"
             prefixes="text"
             suffix="text"
-            prefixesValue="https://"
-            suffixValue=".com"
+            prefixes-value="https://"
+            suffix-value=".com"
             placeholder="请输入网址"
         />
         <lew-input
@@ -25,8 +25,8 @@ const http = ref({
             size="medium"
             prefixes="text"
             suffix="text"
-            prefixesValue="https://"
-            suffixValue=".com"
+            prefixes-value="https://"
+            suffix-value=".com"
             placeholder="请输入网址"
         />
         <lew-input
@@ -34,30 +34,30 @@ const http = ref({
             size="large"
             prefixes="text"
             suffix="text"
-            prefixesValue="https://"
-            suffixValue=".com"
+            prefixes-value="https://"
+            suffix-value=".com"
             placeholder="请输入网址"
         />
         <lew-input
             v-model="value"
             suffix="text"
-            suffixValue="@gmail.com"
+            suffix-value="@gmail.com"
             placeholder="请输入邮箱"
         />
         <lew-input
             v-model="value"
             prefixes="icon"
-            prefixesValue="phone"
+            prefixes-value="phone"
             suffix="icon"
-            suffixValue="alert-circle"
-            suffixTooltip="必须填写手机号"
+            suffix-value="alert-circle"
+            suffix-tooltip="必须填写手机号"
             placeholder="请输入手机号"
         />
         <lew-input
             v-model="value"
             v-model:prefixesValue="prefixesValue"
             prefixes="select"
-            :prefixesOptions="[
+            :prefixes-options="[
                 {
                     label: '北京',
                     value: 1,
@@ -83,7 +83,7 @@ const http = ref({
             v-model:prefixesValue="http.prefixes"
             v-model:suffixValue="http.suffix"
             prefixes="select"
-            :prefixesOptions="[
+            :prefixes-options="[
                 {
                     label: 'http://',
                     value: 1,
@@ -94,7 +94,7 @@ const http = ref({
                 },
             ]"
             suffix="select"
-            :suffixOptions="[
+            :suffix-options="[
                 {
                     label: '.com',
                     value: 1,

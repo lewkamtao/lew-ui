@@ -126,7 +126,7 @@ const options = ref([
     },
 ]);
 
-let formRef = ref();
+const formRef = ref();
 
 const submit = () => {
     formRef.value.validate().then((res: any) => {
@@ -139,9 +139,9 @@ const submit = () => {
     <lew-flex x="start" y="start" :gap="50">
         <lew-form
             ref="formRef"
+            v-model="form"
             direction="y"
             class="form-box"
-            v-model="form"
             :options="options"
             :label-width="80"
         />

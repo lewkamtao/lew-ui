@@ -116,7 +116,8 @@ const del = (row: any, column: any) => {
                 <lew-tag
                     v-for="(item, index) in row.hobby"
                     :key="index"
-                    type="light" color="blue"
+                    type="light"
+                    color="blue"
                     size="small"
                     >{{ item }}
                 </lew-tag></lew-flex
@@ -124,16 +125,8 @@ const del = (row: any, column: any) => {
         </template>
         <template #action="{ row, column }">
             <lew-flex>
-                <lew-button
-                    text="管理"
-                    type="text"
-                    @click="set(row, column)"
-                />
-                <lew-button
-                    text="删除"
-                    type="text"
-                    @click="del(row, column)"
-                />
+                <lew-button text="管理" type="text" @click="set(row, column)" />
+                <lew-button text="删除" type="text" @click="del(row, column)" />
             </lew-flex>
         </template>
     </lew-table>

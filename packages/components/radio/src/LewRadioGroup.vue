@@ -24,10 +24,23 @@ const getRadioGroupClassName = computed(() => {
 </script>
 
 <template>
-    <lew-flex x="start" gap="15" class="lew-radio-group" :class="getRadioGroupClassName">
-        <lew-radio v-for="item in options" :key="item.value" :block="block" :iconable="iconable" :label="item.label"
-            :disabled="item.disabled || disabled" :size="size" :checked="modelValue === item.value"
-            @update:checked="check(item)" />
+    <lew-flex
+        x="start"
+        gap="15"
+        class="lew-radio-group"
+        :class="getRadioGroupClassName"
+    >
+        <lew-radio
+            v-for="item in options"
+            :key="item.value"
+            :block="block"
+            :iconable="iconable"
+            :label="item.label"
+            :disabled="item.disabled || disabled"
+            :size="size"
+            :checked="modelValue === item.value"
+            @update:checked="check(item)"
+        />
     </lew-flex>
 </template>
 

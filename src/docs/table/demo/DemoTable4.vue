@@ -123,7 +123,8 @@ const error = (e: any) => {
                 <lew-tag
                     v-for="(item, index) in row.hobby"
                     :key="index"
-                    type="light" color="blue"
+                    type="light"
+                    color="blue"
                     size="small"
                     >{{ item }}</lew-tag
                 >
@@ -150,7 +151,6 @@ const error = (e: any) => {
                                     @click="hide()"
                                 />
                                 <lew-button
-                                    
                                     text="提交"
                                     size="small"
                                     @click="hide(), submit()"

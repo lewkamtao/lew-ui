@@ -6,7 +6,6 @@ import { markProps } from './props';
 const props = defineProps(markProps);
 const { lewTo } = useLewTo();
 
-
 const getStyle = computed(() => {
     const { color, round, bold, to } = props;
     let styleObj = {} as any;
@@ -25,7 +24,7 @@ const getStyle = computed(() => {
         <slot />
     </span>
 </template>
- 
+
 <style lang="scss" scoped>
 .lew-mark {
     display: inline;

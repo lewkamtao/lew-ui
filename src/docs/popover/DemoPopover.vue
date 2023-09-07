@@ -3,6 +3,7 @@ import { DemoPopover1, DemoPopover1_code } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
 import * as API from './api';
+
 const options = ref(
     Object.keys(API).map((key: any) => {
         // @ts-ignore

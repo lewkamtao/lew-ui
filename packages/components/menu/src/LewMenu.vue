@@ -1,12 +1,15 @@
 <script lang="ts" setup>
-import { menuProps, } from './props';
+import { menuProps } from './props';
 import { MenuOptions } from './props';
 import LewMenuItem from './LewMenuItem.vue';
 import { watchDebounced } from '@vueuse/core';
 
 const props = defineProps(menuProps);
 
-const generateEnterpriseMenu = (menuData: MenuOptions[], level: number = 1): MenuOptions[] => {
+const generateEnterpriseMenu = (
+    menuData: MenuOptions[],
+    level: number = 1
+): MenuOptions[] => {
     return menuData.map((item) => {
         const { id, label, value, children, disabled, icon } = item;
         const menuItem: MenuOptions = {
@@ -24,11 +27,10 @@ const generateEnterpriseMenu = (menuData: MenuOptions[], level: number = 1): Men
 
         return menuItem;
     });
-}
-
+};
 
 const watchOptions = { deep: true, debounce: 250, maxWait: 1000 };
-const _options = ref([])
+const _options = ref([]);
 
 watchDebounced(
     () => props.options,
@@ -39,8 +41,6 @@ watchDebounced(
 );
 
 _options.value = generateEnterpriseMenu(props.options);
-
-
 </script>
 
 <template>
@@ -50,7 +50,7 @@ _options.value = generateEnterpriseMenu(props.options);
         </div>
     </div>
 </template>
- 
+
 <style lang="scss" scoped>
 .lew-menu {
     display: inline;

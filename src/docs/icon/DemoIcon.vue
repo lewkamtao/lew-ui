@@ -9,9 +9,11 @@ import LewDocsTables from '../../layout/LewDocsTables.vue';
         <p class="sub-title">
             由
             <lew-mark
-                type="light" color="blue"
+                type="light"
+                color="blue"
                 to="https://fengyuanchen.github.io/vue-feather/"
-                >vue-feather</lew-mark>
+                >vue-feather</lew-mark
+            >
             强力驱动
         </p>
         <lew-demo-box title="图标" :code="DemoIcon1_code">

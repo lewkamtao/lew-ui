@@ -10,6 +10,7 @@ import {
     DemoRadio3_code,
 } from './demo';
 import * as API from './api';
+
 const options = ref(
     Object.keys(API).map((key: any) => {
         // @ts-ignore

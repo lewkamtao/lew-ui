@@ -24,7 +24,6 @@ watch(
     }
 );
 
-
 const initActiveItemStyle = (index: number) => {
     const activeRef = itemRef.value[index];
     if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
@@ -38,18 +37,19 @@ const initActiveItemStyle = (index: number) => {
         width: `${activeRef.offsetWidth}px`,
         transform: `translate(${activeRef.offsetLeft}px)`,
     };
-}
+};
 
 watch(
     () => props.size,
     () => {
         nextTick(() => {
-            const index = props.options.findIndex((e) => tabsValue.value === e.value);
-            initActiveItemStyle(index)
-        })
+            const index = props.options.findIndex(
+                (e) => tabsValue.value === e.value
+            );
+            initActiveItemStyle(index);
+        });
     }
 );
-
 
 const init = () => {
     let index = props.options.findIndex((e) => e.value === tabsValue.value);
@@ -70,7 +70,7 @@ const selectItem = (value: [String, Number], type?: string) => {
         if (tabsValue.value != _item.value) {
             tabsValue.value = _item.value;
         }
-        initActiveItemStyle(index)
+        initActiveItemStyle(index);
         if (type !== 'watch') {
             emit('change', {
                 label: _item.label,
@@ -156,14 +156,32 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div :style="getTabsStyle" class="lew-tabs-wrapper" :class="getTabsWrapperClassName">
-        <div :style="getTabsStyle" class="lew-tabs hidden-scrollbar" :class="getTabsClassName" ref="tabsRef"
-            @scroll="tabsScroll">
-            <div :style="state.activeItemStyle" class="lew-tabs-item-animation-active"
-                :class="{ 'lew-tabs-item-isInit': state.isInit }"></div>
-            <div v-for="item in options" :key="String(item.value)" :ref="(el) => itemRef.push(el)" class="lew-tabs-item"
-                :style="getItemStyle" :class="{ 'lew-tabs-item-active': tabsValue === item.value }"
-                @click="selectItem(item.value)">
+    <div
+        :style="getTabsStyle"
+        class="lew-tabs-wrapper"
+        :class="getTabsWrapperClassName"
+    >
+        <div
+            :style="getTabsStyle"
+            class="lew-tabs hidden-scrollbar"
+            :class="getTabsClassName"
+            ref="tabsRef"
+            @scroll="tabsScroll"
+        >
+            <div
+                :style="state.activeItemStyle"
+                class="lew-tabs-item-animation-active"
+                :class="{ 'lew-tabs-item-isInit': state.isInit }"
+            ></div>
+            <div
+                v-for="item in options"
+                :key="String(item.value)"
+                :ref="(el) => itemRef.push(el)"
+                class="lew-tabs-item"
+                :style="getItemStyle"
+                :class="{ 'lew-tabs-item-active': tabsValue === item.value }"
+                @click="selectItem(item.value)"
+            >
                 {{ item.label }}
             </div>
         </div>
@@ -194,10 +212,12 @@ onUnmounted(() => {
     content: '';
     opacity: 1;
     transition: opacity 0.2s;
-    background: linear-gradient(to right,
+    background: linear-gradient(
+        to right,
 
-            rgba(0, 0, 0, 0),
-            rgba(0, 0, 0, 0.1));
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.1)
+    );
 }
 
 .lew-tabs-wrapper::before {
@@ -210,10 +230,12 @@ onUnmounted(() => {
     z-index: 9;
     opacity: 1;
     transition: opacity 0.2s;
-    background: linear-gradient(to left,
+    background: linear-gradient(
+        to left,
 
-            rgba(0, 0, 0, 0),
-            rgba(0, 0, 0, 0.1));
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.1)
+    );
 }
 
 .lew-tabs-wrapper-type-line {
@@ -313,7 +335,8 @@ onUnmounted(() => {
 .lew-tabs-type-line {
     background: none;
     border: none;
-    border-bottom: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    border-bottom: var(--lew-form-border-width) var(--lew-form-border-color)
+        solid;
     padding-bottom: 5px;
     border-radius: 0px;
 

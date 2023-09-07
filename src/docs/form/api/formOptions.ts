@@ -3,37 +3,37 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            name:'field',
+            name: 'field',
             description: '表单字段',
             type: 'string',
             default: '-',
         },
         {
-            name:'label',
+            name: 'label',
             description: '表单标题',
             type: 'small ｜ medium ｜ large',
             default: 'medium',
         },
         {
-            name:'rules',
+            name: 'rules',
             description: '校验规则',
             type: 'yup*',
             default: '',
         },
         {
-            name:'value',
+            name: 'value',
             description: '值，此处用于会显数据。',
             type: 'any',
             default: '',
         },
         {
-            name:'as',
+            name: 'as',
             description: '组件名',
             type: 'input | textarea | select | select-multiple | input-tag | checkbox | checkbox-group | radio-group | date-picker | date-range-picker | tabs | switch | button',
             default: '',
         },
         {
-            name:'props',
+            name: 'props',
             description: '组件props',
             type: 'object',
             default: '{}',

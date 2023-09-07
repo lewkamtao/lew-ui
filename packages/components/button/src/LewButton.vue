@@ -95,12 +95,30 @@ const getStyle = computed(() => {
 </script>
 
 <template>
-    <button class="lew-button" :class="getButtonClass" :disabled="disabled" :style="getStyle" @click="handleClick">
-        <lew-icon v-if="icon" class="lew-button-icon" :size="getIconSize" :type="icon" />
-        <lew-icon class="lew-loading-icon" v-if="loading || _loading" :size="getIconSize" animation="spin"
-            animation-speed="fast" :class="{
+    <button
+        class="lew-button"
+        :class="getButtonClass"
+        :disabled="disabled"
+        :style="getStyle"
+        @click="handleClick"
+    >
+        <lew-icon
+            v-if="icon"
+            class="lew-button-icon"
+            :size="getIconSize"
+            :type="icon"
+        />
+        <lew-icon
+            class="lew-loading-icon"
+            v-if="loading || _loading"
+            :size="getIconSize"
+            animation="spin"
+            animation-speed="fast"
+            :class="{
                 'lew-loading-isShow': (_loading || loading) && !disabled,
-            }" type="loader" />
+            }"
+            type="loader"
+        />
         <span v-if="$slots.default || text" class="lew-button-text">
             <template v-if="$slots.default">
                 <slot />

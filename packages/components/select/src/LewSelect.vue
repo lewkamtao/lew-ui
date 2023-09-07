@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useVModel, useDebounceFn } from '@vueuse/core';
-import { LewPopover, LewFlex, LewIcon, } from 'lew-ui';
+import { LewPopover, LewFlex, LewIcon } from 'lew-ui';
 import { object2class, numFormat } from 'lew-ui/utils';
 import { UseVirtualList } from '@vueuse/components';
 import { selectProps, SelectOptions } from './props';
@@ -8,7 +8,7 @@ import { LewTooltip } from 'lew-ui/directives';
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app;
-if (app &&!app.directive('tooltip')) {
+if (app && !app.directive('tooltip')) {
     app.use(LewTooltip);
 }
 const props = defineProps(selectProps);
@@ -169,20 +169,45 @@ defineExpose({ show, hide });
 </script>
 
 <template>
-    <lew-popover ref="lewPopverRef" class="lew-select-view" :class="getSelectViewClassName" :trigger="trigger"
-        :disabled="disabled" placement="bottom-start" style="width: 100%" :loading="state.loading" @show="showHandle"
-        @hide="hideHandle">
+    <lew-popover
+        ref="lewPopverRef"
+        class="lew-select-view"
+        :class="getSelectViewClassName"
+        :trigger="trigger"
+        :disabled="disabled"
+        placement="bottom-start"
+        style="width: 100%"
+        :loading="state.loading"
+        @show="showHandle"
+        @hide="hideHandle"
+    >
         <template #trigger>
-            <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
-                <lew-icon :size="getIconSize" type="chevron-down" class="icon-select"
-                    :class="{ 'icon-select-hide': clearable && getLabel }" />
+            <div
+                ref="lewSelectRef"
+                class="lew-select"
+                :class="getSelectClassName"
+            >
+                <lew-icon
+                    :size="getIconSize"
+                    type="chevron-down"
+                    class="icon-select"
+                    :class="{ 'icon-select-hide': clearable && getLabel }"
+                />
                 <transition name="lew-form-icon-ani">
-                    <lew-icon v-if="clearable && getLabel && !readonly" :size="getIconSize" type="x" v-tooltip="{
-                        content: '清空',
-                        placement: 'top',
-                    }" class="lew-form-icon-clear" :class="{
-    'lew-form-icon-clear-focus': state.visible,
-}" @click.stop="clearHandle" />
+                    <lew-icon
+                        v-if="clearable && getLabel && !readonly"
+                        :size="getIconSize"
+                        type="x"
+                        v-tooltip="{
+                            content: '清空',
+                            placement: 'top',
+                        }"
+                        class="lew-form-icon-clear"
+                        :class="{
+                            'lew-form-icon-clear-focus': state.visible,
+                        }"
+                        @click.stop="clearHandle"
+                    />
                 </transition>
                 <div v-show="getLabel" :style="getValueStyle" class="value">
                     {{ getLabel }}
@@ -193,42 +218,86 @@ defineExpose({ show, hide });
             </div>
         </template>
         <template #popover-body>
-            <div class="lew-select-body" :class="getBodyClassName" :style="`width:${state.selectWidth}px`">
+            <div
+                class="lew-select-body"
+                :class="getBodyClassName"
+                :style="`width:${state.selectWidth}px`"
+            >
                 <slot name="header"></slot>
                 <div v-if="searchable" class="search-input">
-                    <input ref="searchInputRef" v-model="state.keyword" placeholder="输入搜索关键词" @input="searchDebounce" />
+                    <input
+                        ref="searchInputRef"
+                        v-model="state.keyword"
+                        placeholder="输入搜索关键词"
+                        @input="searchDebounce"
+                    />
                 </div>
                 <div class="lew-select-options-box">
-                    <lew-flex v-show="state.options && state.options.length === 0" direction="y" class="not-found">
+                    <lew-flex
+                        v-show="state.options && state.options.length === 0"
+                        direction="y"
+                        class="not-found"
+                    >
                         <lew-icon type="box" size="30" />
                         <span>暂无结果</span>
                     </lew-flex>
-                    <div v-if="searchable &&
-                        state.options &&
-                        state.options.length > 0
-                        " class="reslut-count">
+                    <div
+                        v-if="
+                            searchable &&
+                            state.options &&
+                            state.options.length > 0
+                        "
+                        class="reslut-count"
+                    >
                         共
                         {{ numFormat(state.options && state.options.length) }}
                         条结果
                     </div>
-                    <use-virtual-list :key="getVirtualHeight" v-if="state.options.length > 0"
-                        class="lew-select-options-list lew-scrollbar" :list="state.options" :options="{
+                    <use-virtual-list
+                        :key="getVirtualHeight"
+                        v-if="state.options.length > 0"
+                        class="lew-select-options-list lew-scrollbar"
+                        :list="state.options"
+                        :options="{
                             itemHeight: 30,
-                        }" :height="getVirtualHeight">
+                        }"
+                        :height="getVirtualHeight"
+                    >
                         <template #="props">
                             <!-- you can get current item of list here -->
-                            <label :style="{ height: state.itemHeight + 'px' }" class="lew-select-item-label"
-                                @click="selectHandle(props.data)">
-                                <div v-if="!labelSlot" class="lew-select-item" :class="getSelectItemClassName(props.data)">
+                            <label
+                                :style="{ height: state.itemHeight + 'px' }"
+                                class="lew-select-item-label"
+                                @click="selectHandle(props.data)"
+                            >
+                                <div
+                                    v-if="!labelSlot"
+                                    class="lew-select-item"
+                                    :class="getSelectItemClassName(props.data)"
+                                >
                                     <div class="lew-select-label">
                                         {{ props.data.label }}
                                     </div>
-                                    <lew-icon v-if="getChecked(props.data.value) &&
-                                        showCheckIcon
-                                        " class="icon-check" size="14" type="check" />
+                                    <lew-icon
+                                        v-if="
+                                            getChecked(props.data.value) &&
+                                            showCheckIcon
+                                        "
+                                        class="icon-check"
+                                        size="14"
+                                        type="check"
+                                    />
                                 </div>
-                                <div v-else class="lew-select-slot-item" :style="{ height: state.itemHeight + 'px' }">
-                                    <slot name="label" :item="props.data" :checked="getChecked(props.data.value)" />
+                                <div
+                                    v-else
+                                    class="lew-select-slot-item"
+                                    :style="{ height: state.itemHeight + 'px' }"
+                                >
+                                    <slot
+                                        name="label"
+                                        :item="props.data"
+                                        :checked="getChecked(props.data.value)"
+                                    />
                                 </div>
                             </label>
                         </template>
@@ -251,7 +320,7 @@ defineExpose({ show, hide });
     border: var(--lew-form-border-width) transparent solid;
     box-shadow: var(--lew-form-box-shadow);
 
-    >div {
+    > div {
         width: 100%;
     }
 
@@ -313,7 +382,6 @@ defineExpose({ show, hide });
     }
 
     .lew-select-size-small {
-
         .value,
         .placeholder {
             padding: var(--lew-form-input-padding-small);
@@ -324,7 +392,6 @@ defineExpose({ show, hide });
     }
 
     .lew-select-size-medium {
-
         .value,
         .placeholder {
             padding: var(--lew-form-input-padding-medium);
@@ -335,7 +402,6 @@ defineExpose({ show, hide });
     }
 
     .lew-select-size-large {
-
         .value,
         .placeholder {
             padding: var(--lew-form-input-padding-large);
@@ -356,7 +422,8 @@ defineExpose({ show, hide });
 
 .lew-select-view.lew-select-view-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+        solid;
     outline: var(--lew-form-ouline);
 
     .icon-select {

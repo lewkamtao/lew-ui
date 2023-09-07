@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import * as Yup from 'yup';
+
 const visible1 = ref(false);
 const modalVisible2 = ref(false);
-const modalVisible3 = ref(false)
+const modalVisible3 = ref(false);
 const form = ref({});
 const options = ref([
     {
@@ -61,196 +62,224 @@ const data: any = [
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
         sex: 3,
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
-    }, {
+    },
+    {
         id: 5,
         name: '小飞',
         age: '13',
@@ -311,7 +340,7 @@ const open = () => {
                         content: '删除成功',
                     });
                     setTimeout(() => {
-                        visible1.value = false
+                        visible1.value = false;
                     }, 250);
                 }, 1000);
             });
@@ -320,7 +349,7 @@ const open = () => {
             // 取消
         },
     });
-}
+};
 
 onMounted(() => {
     document.onkeydown = function (event) {
@@ -340,17 +369,23 @@ onMounted(() => {
         <lew-button text="展示表格" @click="modalVisible2 = true" />
     </lew-flex>
 
-    <lew-modal v-model:visible="visible1" closeOnClickOverlay width="350px" title="About Lew-UI" @ok="open"
-        @cancel="visible1 = false" ok-text="删除" ok-color="red">
+    <lew-modal
+        v-model:visible="visible1"
+        close-on-click-overlay
+        width="350px"
+        title="About Lew-UI"
+        ok-text="删除"
+        ok-color="red"
+        @ok="open"
+        @cancel="visible1 = false"
+    >
         <template #main>
             <div class="modal-body">
-                <div>
-                    A beautiful component library based on vue3
-                </div>
+                <div>A beautiful component library based on vue3</div>
             </div>
         </template>
     </lew-modal>
-    <lew-modal v-model:visible="modalVisible2" hideFooter width="1250px">
+    <lew-modal v-model:visible="modalVisible2" hide-footer width="1250px">
         <template #header>
             <div class="header">这是自定义头部</div>
         </template>
@@ -359,17 +394,28 @@ onMounted(() => {
                 <lew-table :data-source="data" :columns="columns">
                     <template #fraction="{ row }">
                         <lew-flex>
-                            <lew-badge v-if="row.fraction >= 60" round color="green" />
+                            <lew-badge
+                                v-if="row.fraction >= 60"
+                                round
+                                color="green"
+                            />
                             <lew-badge v-else round color="red" />
-                            <span>{{ row.fraction >= 60 ? '良好' : '很差' }}</span>
+                            <span>{{
+                                row.fraction >= 60 ? '良好' : '很差'
+                            }}</span>
                         </lew-flex>
                     </template>
                 </lew-table>
             </div>
         </template>
         <template #footer>
-            <lew-flex x="end" style="padding: 10px 20px;">
-                <lew-button text="关闭" type="text" color="normal" @click="modalVisible2 = false" />
+            <lew-flex x="end" style="padding: 10px 20px">
+                <lew-button
+                    text="关闭"
+                    type="text"
+                    color="normal"
+                    @click="modalVisible2 = false"
+                />
                 <lew-button text="提交" @click="modalVisible2 = false" />
             </lew-flex>
         </template>
@@ -386,8 +432,6 @@ onMounted(() => {
     flex-direction: column;
     padding: 40px;
     box-sizing: border-box;
-
-
 }
 
 .header {
@@ -397,6 +441,5 @@ onMounted(() => {
     height: 50px;
     font-size: 18px;
     font-weight: bolder;
-
 }
 </style>

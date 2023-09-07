@@ -7,11 +7,13 @@ defineProps(menuProps);
     <div v-for="item in options" class="lew-menu-item">
         {{ item.label }}
         <div :style="{ paddingLeft: `${item.level * 10}px` }">
-            <lew-menu-item :options="item.children">{{ item.label }}</lew-menu-item>
+            <lew-menu-item :options="item.children">{{
+                item.label
+            }}</lew-menu-item>
         </div>
     </div>
 </template>
- 
+
 <style lang="scss" scoped>
 .lew-menu {
     display: inline;

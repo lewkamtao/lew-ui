@@ -7,7 +7,7 @@ import '../styles/index.scss';
 let loadingWrapper: HTMLElement;
 let loadingBox: HTMLElement;
 export default {
-    install(app: Application) { 
+    install(app: Application) {
         app.directive('loading', {
             mounted(el: HTMLElement, binding: DirectiveBinding) {
                 const { title, iconSize, visible } = binding.value;

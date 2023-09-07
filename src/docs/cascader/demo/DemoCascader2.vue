@@ -85,11 +85,11 @@ const options = [
 const change = (e: any) => {
     console.log(e);
 };
-let v = ref();
+const v = ref();
 </script>
 
 <template>
     <div style="width: 300px">
-        <lew-cascader @change="change" v-model="v" free :options="options" />
+        <lew-cascader v-model="v" free :options="options" @change="change" />
     </div>
 </template>

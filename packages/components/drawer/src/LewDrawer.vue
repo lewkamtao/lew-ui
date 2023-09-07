@@ -31,9 +31,18 @@ const close = () => {
 <template>
     <teleport to="#lew-drawer">
         <transition name="fade">
-            <div v-if="_visible" class="lew-drawer" :class="{ 'lew-drawer-show': isShowMain }" @click="close">
-                <div :style="getStyle(position, width, height)" class="lew-drawer-main" :class="object2class(position)"
-                    @click.stop>
+            <div
+                v-if="_visible"
+                class="lew-drawer"
+                :class="{ 'lew-drawer-show': isShowMain }"
+                @click="close"
+            >
+                <div
+                    :style="getStyle(position, width, height)"
+                    class="lew-drawer-main"
+                    :class="object2class(position)"
+                    @click.stop
+                >
                     <slot></slot>
                 </div>
             </div>

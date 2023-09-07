@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useVModel, useDebounceFn } from '@vueuse/core';
-import { LewPopover, LewIcon, } from 'lew-ui';
+import { LewPopover, LewIcon } from 'lew-ui';
 import { object2class, numFormat } from 'lew-ui/utils';
 import { UseVirtualList } from '@vueuse/components';
 import { selectMultipleProps, SelectMultipleOptions } from './props';
@@ -8,7 +8,7 @@ import { LewTooltip } from 'lew-ui/directives';
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app;
-if (app &&!app.directive('tooltip')) {
+if (app && !app.directive('tooltip')) {
     app.use(LewTooltip);
 }
 const props = defineProps(selectMultipleProps);
@@ -26,7 +26,6 @@ const lewSelectRef = ref();
 const lewPopverRef = ref();
 const searchInputRef = ref();
 
-
 const state = reactive({
     selectWidth: 0,
     itemHeight: 34,
@@ -34,7 +33,6 @@ const state = reactive({
     loading: false,
     options: props.options,
     keyword: '',
-
 });
 
 const getSelectWidth = () => {
@@ -204,74 +202,148 @@ defineExpose({ show, hide });
 </script>
 
 <template>
-    <lew-popover ref="lewPopverRef" class="lew-select-view" :class="getSelectViewClassName" :trigger="trigger"
-        :disabled="disabled" placement="bottom-start" style="width: 100%" :loading="state.loading" @show="showHandle"
-        @hide="hideHandle">
+    <lew-popover
+        ref="lewPopverRef"
+        class="lew-select-view"
+        :class="getSelectViewClassName"
+        :trigger="trigger"
+        :disabled="disabled"
+        placement="bottom-start"
+        style="width: 100%"
+        :loading="state.loading"
+        @show="showHandle"
+        @hide="hideHandle"
+    >
         <template #trigger>
-            <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
-                <lew-icon :size="getIconSize" type="chevron-down" class="icon-select" :class="{
-                    'icon-select-hide':
-                        clearable && getLabels && getLabels.length > 0,
-                }" />
+            <div
+                ref="lewSelectRef"
+                class="lew-select"
+                :class="getSelectClassName"
+            >
+                <lew-icon
+                    :size="getIconSize"
+                    type="chevron-down"
+                    class="icon-select"
+                    :class="{
+                        'icon-select-hide':
+                            clearable && getLabels && getLabels.length > 0,
+                    }"
+                />
                 <transition name="lew-form-icon-ani">
-                    <lew-icon v-if="clearable &&
-                        getLabels &&
-                        getLabels.length > 0 &&
-                        !readonly
-                        " :size="getIconSize" type="x" v-tooltip="{
-        content: '清空',
-        placement: 'top',
-    }" class="lew-form-icon-clear" :class="{
-    'lew-form-icon-clear-focus': state.visible,
-}" @click.stop="clearHandle" />
+                    <lew-icon
+                        v-if="
+                            clearable &&
+                            getLabels &&
+                            getLabels.length > 0 &&
+                            !readonly
+                        "
+                        :size="getIconSize"
+                        type="x"
+                        v-tooltip="{
+                            content: '清空',
+                            placement: 'top',
+                        }"
+                        class="lew-form-icon-clear"
+                        :class="{
+                            'lew-form-icon-clear-focus': state.visible,
+                        }"
+                        @click.stop="clearHandle"
+                    />
                 </transition>
 
-                <lew-flex v-show="getLabels && getLabels.length > 0" style="padding: 3px" x="start" :gap="3" wrap
-                    class="value">
+                <lew-flex
+                    v-show="getLabels && getLabels.length > 0"
+                    style="padding: 3px"
+                    x="start"
+                    :gap="3"
+                    wrap
+                    class="value"
+                >
                     <TransitionGroup name="list">
-                        <lew-tag type="light" v-for="(item, index) in getLabels" :key="index" :size="size" closable
-                            @close="deleteTag(index)">
+                        <lew-tag
+                            type="light"
+                            v-for="(item, index) in getLabels"
+                            :key="index"
+                            :size="size"
+                            closable
+                            @close="deleteTag(index)"
+                        >
                             {{ item }}
                         </lew-tag>
                     </TransitionGroup>
                 </lew-flex>
-                <div v-show="getLabels && getLabels.length === 0" class="placeholder">
+                <div
+                    v-show="getLabels && getLabels.length === 0"
+                    class="placeholder"
+                >
                     {{ placeholder }}
                 </div>
             </div>
         </template>
         <template #popover-body>
-            <div class="lew-select-body" :class="getBodyClassName" :style="`width:${state.selectWidth}px`">
+            <div
+                class="lew-select-body"
+                :class="getBodyClassName"
+                :style="`width:${state.selectWidth}px`"
+            >
                 <slot name="header"></slot>
                 <div v-if="searchable" class="search-input">
-                    <input ref="searchInputRef" v-model="state.keyword" placeholder="输入搜索关键词" @input="searchDebounce" />
+                    <input
+                        ref="searchInputRef"
+                        v-model="state.keyword"
+                        placeholder="输入搜索关键词"
+                        @input="searchDebounce"
+                    />
                 </div>
                 <div class="lew-select-options-box">
-                    <lew-flex v-show="state.options && state.options.length === 0" direction="y" class="not-found">
+                    <lew-flex
+                        v-show="state.options && state.options.length === 0"
+                        direction="y"
+                        class="not-found"
+                    >
                         <lew-icon type="box" size="30" />
                         <span>暂无结果</span>
                     </lew-flex>
-                    <div v-if="searchable &&
-                        state.options &&
-                        state.options.length > 0
-                        " class="reslut-count">
+                    <div
+                        v-if="
+                            searchable &&
+                            state.options &&
+                            state.options.length > 0
+                        "
+                        class="reslut-count"
+                    >
                         共
                         {{ numFormat(state.options && state.options.length) }}
                         条结果
                     </div>
 
-                    <use-virtual-list :key="getVirtualHeight" v-if="state.options.length > 0"
-                        class="lew-select-options-list lew-scrollbar" :list="state.options" :options="{
+                    <use-virtual-list
+                        :key="getVirtualHeight"
+                        v-if="state.options.length > 0"
+                        class="lew-select-options-list lew-scrollbar"
+                        :list="state.options"
+                        :options="{
                             itemHeight: 30,
-                        }" :overscan="100" :height="getVirtualHeight">
+                        }"
+                        :overscan="100"
+                        :height="getVirtualHeight"
+                    >
                         <template #="props">
                             <!-- you can get current item of list here -->
-                            <div class="lew-select-item-label" :style="{ height: state.itemHeight + 'px' }"
-                                @click="selectHandle(props.data)">
-                                <div class="lew-select-item lew-select-item-mul"
-                                    :class="getSelectItemClassName(props.data)">
-                                    <lew-checkbox :key="props.data.value" class="lew-select-checkbox"
-                                        :checked="getChecked(props.data.value)" />
+                            <div
+                                class="lew-select-item-label"
+                                :style="{ height: state.itemHeight + 'px' }"
+                                @click="selectHandle(props.data)"
+                            >
+                                <div
+                                    class="lew-select-item lew-select-item-mul"
+                                    :class="getSelectItemClassName(props.data)"
+                                >
+                                    <lew-checkbox
+                                        :key="props.data.value"
+                                        class="lew-select-checkbox"
+                                        :checked="getChecked(props.data.value)"
+                                    />
                                     <div class="lew-select-label">
                                         {{ props.data.label }}
                                     </div>
@@ -297,7 +369,7 @@ defineExpose({ show, hide });
     border: var(--lew-form-border-width) transparent solid;
     box-shadow: var(--lew-form-box-shadow);
 
-    >div {
+    > div {
         width: 100%;
     }
 
@@ -338,7 +410,7 @@ defineExpose({ show, hide });
                 display: flex;
                 align-items: center;
 
-                >div {
+                > div {
                     display: flex;
                     align-items: center;
                 }
@@ -405,7 +477,8 @@ defineExpose({ show, hide });
 
 .lew-select-view.lew-select-view-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+        solid;
     outline: var(--lew-form-ouline);
 
     .icon-select {
@@ -560,7 +633,8 @@ defineExpose({ show, hide });
 .lew-select-item:hover {
     .lew-checkbox {
         .icon-checkbox-box {
-            border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
+            border: var(--lew-form-border-width)
+                var(--lew-checkbox-border-color-hover) solid;
             outline: var(--lew-form-ouline);
             background: var(--lew-form-bgcolor);
         }

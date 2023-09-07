@@ -17,7 +17,7 @@ const init = () => {
 
     // 实例化MutationObserver对象，传入回调函数
     const observer = new MutationObserver((mutationsList, observer) => {
-        for (let mutation of mutationsList) {
+        for (const mutation of mutationsList) {
             if (mutation.type === 'childList') {
                 targetNode.scrollTop = 0;
                 initNav();
@@ -47,10 +47,10 @@ onMounted(() => {
     <div class="right-nav">
         <lew-title class="item title" size="14px">目录</lew-title>
         <div
-            @click="toScroll(item)"
-            class="item"
             v-for="(item, index) in navMenus"
             :key="index"
+            class="item"
+            @click="toScroll(item)"
         >
             {{ item.label }}
         </div>

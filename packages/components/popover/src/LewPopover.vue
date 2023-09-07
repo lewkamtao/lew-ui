@@ -6,7 +6,7 @@ import { LewLoading } from 'lew-ui/directives';
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app;
-if (app &&!app.directive('loading')) {
+if (app && !app.directive('loading')) {
     app.use(LewLoading);
 }
 

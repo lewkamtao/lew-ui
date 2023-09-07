@@ -57,8 +57,8 @@ const dialog = (type: string, options: Options) => {
                     ok: ok
                         ? ok
                         : () => {
-                            return true;
-                        },
+                              return true;
+                          },
                     onClose: () => {
                         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                         // @ts-ignore
@@ -68,8 +68,8 @@ const dialog = (type: string, options: Options) => {
                     cancel: cancel
                         ? cancel
                         : () => {
-                            return true;
-                        },
+                              return true;
+                          },
                 },
                 {
                     title: () => title,

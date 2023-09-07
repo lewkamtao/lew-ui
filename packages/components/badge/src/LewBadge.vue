@@ -10,7 +10,7 @@ const getStyle = computed(() => {
     let _color = getColorType(color);
     styleObj.backgroundColor = `var(--lew-color-${_color})`;
     return styleObj;
-}); 
+});
 </script>
 
 <template>
