@@ -30,7 +30,7 @@ const generateEnterpriseMenu = (
 };
 
 const watchOptions = { deep: true, debounce: 250, maxWait: 1000 };
-const _options = ref([]);
+const _options = ref<MenuOptions[]>([]);
 
 watchDebounced(
     () => props.options,

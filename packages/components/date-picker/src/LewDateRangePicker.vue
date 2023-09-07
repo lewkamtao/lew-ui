@@ -2,7 +2,7 @@
 import { LewPopover, LewIcon, LewDateRange } from 'lew-ui';
 import { dateRangePickerProps } from './props';
 import { useVModel } from '@vueuse/core';
-import { LewTooltip } from 'lew-ui/directives';
+import { LewTooltip } from 'lew-ui';
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app;

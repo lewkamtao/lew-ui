@@ -2,7 +2,7 @@
 import tippy from 'tippy.js';
 import { watchDebounced } from '@vueuse/core';
 import { popoverProps } from './props';
-import { LewLoading } from 'lew-ui/directives';
+import { LewLoading } from 'lew-ui';
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app;

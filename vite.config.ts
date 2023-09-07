@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
         plugins: [
             vue(),
             vueJsx(),
-            dts(),
+            mode === 'package' ? dts() : undefined,
             AutoImport({
                 imports: ['vue'],
                 dts: path.resolve(pathSrc, 'auto-imports.d.ts'),
@@ -37,58 +37,60 @@ export default defineConfig(({ mode }) => {
                 dts: path.resolve(pathPackage, 'auto-imports.d.ts'),
             }),
         ],
-        build: mode === 'package' ?
-            {
-                lib: {
-                    entry: path.resolve(__dirname, './packages/index.ts'),
-                    name: 'lew-ui',
-                    fileName: 'index',
-                },
-                minify: 'terser',
-                terserOptions: {
-                    compress: {
-                        //生产环境时移除console
-                        drop_console: true,
-                        drop_debugger: true,
-                    },
-                },
-                emptyOutDir: true,
-                rollupOptions: {
-                    // 确保外部化处理那些你不想打包进库的依赖
-                    external: ['vue'],
-                    output: {
-                        // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
-                        globals: {
-                            vue: 'Vue',
-                        },
-                    },
-                },
-            } :
-            {
-                rollupOptions: {
-                    output: {
-                        chunkFileNames: 'assets/js/[name]-[hash].js',
-                        entryFileNames: 'assets/js/[name]-[hash].js',
-                        assetFileNames: 'assets/static/[name]-[hash].[ext]',
-                        manualChunks(id) {
-                            if (id.includes('node_modules')) {
-                                return id
-                                    .toString()
-                                    .split('node_modules/')[1]
-                                    .split('/')[0]
-                                    .toString();
-                            }
-                        },
-                    },
-                },
-                minify: 'terser',
-                emptyOutDir: true,
-                terserOptions: {
-                    compress: {
-                        drop_console: true,
-                        drop_debugger: true,
-                    },
-                },
-            },
+        build:
+            mode === 'package'
+                ? {
+                      lib: {
+                          entry: path.resolve(__dirname, './packages/index.ts'),
+                          name: 'lew-ui',
+                          fileName: 'index',
+                      },
+                      minify: 'terser',
+                      terserOptions: {
+                          compress: {
+                              //生产环境时移除console
+                              drop_console: true,
+                              drop_debugger: true,
+                          },
+                      },
+                      emptyOutDir: true,
+                      rollupOptions: {
+                          // 确保外部化处理那些你不想打包进库的依赖
+                          external: ['vue'],
+                          output: {
+                              // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
+                              globals: {
+                                  vue: 'Vue',
+                              },
+                          },
+                      },
+                  }
+                : {
+                      rollupOptions: {
+                          output: {
+                              chunkFileNames: 'assets/js/[name]-[hash].js',
+                              entryFileNames: 'assets/js/[name]-[hash].js',
+                              assetFileNames:
+                                  'assets/static/[name]-[hash].[ext]',
+                              manualChunks(id) {
+                                  if (id.includes('node_modules')) {
+                                      return id
+                                          .toString()
+                                          .split('node_modules/')[1]
+                                          .split('/')[0]
+                                          .toString();
+                                  }
+                              },
+                          },
+                      },
+                      minify: 'terser',
+                      emptyOutDir: true,
+                      terserOptions: {
+                          compress: {
+                              drop_console: true,
+                              drop_debugger: true,
+                          },
+                      },
+                  },
     };
 });

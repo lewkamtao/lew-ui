@@ -4,7 +4,7 @@ import { LewPopover, LewFlex, LewIcon } from 'lew-ui';
 import { object2class, numFormat } from 'lew-ui/utils';
 import { UseVirtualList } from '@vueuse/components';
 import { selectProps, SelectOptions } from './props';
-import { LewTooltip } from 'lew-ui/directives';
+import { LewTooltip } from 'lew-ui';
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app;

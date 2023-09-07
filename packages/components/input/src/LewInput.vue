@@ -3,7 +3,7 @@ import { inputProps } from './props';
 import { useVModel } from '@vueuse/core';
 import { object2class } from 'lew-ui/utils';
 import { LewIcon, LewDropdown, LewFlex } from 'lew-ui';
-import { LewTooltip } from 'lew-ui/directives';
+import { LewTooltip } from 'lew-ui';
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app;

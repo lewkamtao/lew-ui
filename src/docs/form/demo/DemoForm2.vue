@@ -145,7 +145,7 @@ const submit = () => {
             :options="options"
             :label-width="80"
         />
-        <lew-flex style="width: calc(100% - 380px)" direction="y" x="start">
+        <lew-flex style="width: calc(100% - 380px);" direction="y" x="start">
             <lew-button text="获取form" @click="form = formRef.getForm()" />
             <pre>{{ form }}</pre>
             <pre
@@ -156,6 +156,7 @@ const submit = () => {
                             errMessage: e?.errMessage || undefined,
                         };
                     })
+
                 }} 
             </pre>
         </lew-flex>
