@@ -47,23 +47,7 @@
                     <lew-tag type="ghost" color="brown">brown</lew-tag>
                     <lew-tag type="ghost" color="gray">gray</lew-tag>
                 </lew-flex>
-                <lew-flex y="end" x="start">
-                    <lew-tag type="text" color="red">red</lew-tag>
-                    <lew-tag type="text" color="orange">orange</lew-tag>
-                    <lew-tag type="text" color="yellow">yellow</lew-tag>
-                    <lew-tag type="text" color="green">green</lew-tag>
-                    <lew-tag type="text" color="mint">mint</lew-tag>
-                    <lew-tag type="text" color="teal">teal</lew-tag>
-                    <lew-tag type="text" color="cyan">cyan</lew-tag>
-                    <lew-tag type="text" color="blue">blue</lew-tag>
-                    <lew-tag type="text" color="indigo">indigo</lew-tag>
-                    <lew-tag type="text" color="purple">purple</lew-tag>
-                    <lew-tag type="text" color="pink">pink</lew-tag>
-                    <lew-tag type="text" color="brown">brown</lew-tag>
-                    <lew-tag type="text" color="gray">gray</lew-tag>
-                </lew-flex>
             </lew-flex>
         </div>
     </lew-flex>
 </template>
-

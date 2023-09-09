@@ -4,7 +4,7 @@
     <br />
     <lew-title size="18px">
         1.0.24 Beta
-        <lew-mark style="margin-left: 20px" >2022-07</lew-mark>
+        <lew-mark style="margin-left: 20px">2022-07</lew-mark>
     </lew-title>
     <br />
     <div>

@@ -1,61 +1,59 @@
 import { PropType } from 'vue';
 
-type Options = {
+export type PaginationOptions = {
     label: number | string;
     value: number | string;
 };
 
-export const _props = {
+export const paginationProps = {
     total: {
         type: Number,
         default: 100,
+        description: '总条数',
     },
-
-    // 绑定值
     currentPage: {
-        // 父组件 v-model 没有指定参数名，则默认是 modelValue
         type: Number,
         default: 1,
+        description: '当前页码',
     },
 
-    // 绑定值
     pageSize: {
-        // 父组件 v-model 没有指定参数名，则默认是 modelValue
         type: Number,
         require: true,
         default: 10,
+        description: '每页条数',
     },
 
     visiblePagesCount: {
         type: Number,
         default: 5,
+        description: '显示的页码数',
     },
 
     pageSizeOptions: {
-        type: Array as PropType<Options[]>,
-        default() {
-            return [
-                {
-                    label: '10 / 页',
-                    value: 10,
-                },
-                {
-                    label: '20 / 页',
-                    value: 20,
-                },
-                {
-                    label: '30 / 页',
-                    value: 30,
-                },
-                {
-                    label: '50 / 页',
-                    value: 50,
-                },
-                {
-                    label: '100 / 页',
-                    value: 100,
-                },
-            ];
-        },
+        type: Array as PropType<PaginationOptions[]>,
+        default: [
+            {
+                label: '10 / 页',
+                value: 10,
+            },
+            {
+                label: '20 / 页',
+                value: 20,
+            },
+            {
+                label: '30 / 页',
+                value: 30,
+            },
+            {
+                label: '50 / 页',
+                value: 50,
+            },
+            {
+                label: '100 / 页',
+                value: 100,
+            },
+        ],
+        description: '每页条数选项',
     },
 };

@@ -2,11 +2,12 @@
 import { LewButton, LewIcon, LewFlex } from 'lew-ui';
 import { dialogProps } from './dialog';
 import { getIconType } from '../../../utils';
+import { useDOMCreate } from '../../../hooks';
 
+useDOMCreate('lew-dialog');
 const props = defineProps(dialogProps);
 const emit = defineEmits(['close']);
 
-let timer: any;
 const okLoading = ref<boolean>(false);
 const cancelLoading = ref<boolean>(false);
 
@@ -17,12 +18,17 @@ const maskClick = () => {
     }
 };
 
-const _visible = ref<boolean>(true);
+const visible = ref<boolean>(false);
+
+onMounted(() => {
+    visible.value = true;
+});
 
 const close = () => {
-    clearTimeout(timer);
-    _visible.value = false;
-    emit('close');
+    visible.value = false;
+    setTimeout(() => {
+        emit('close');
+    }, 250);
 };
 
 const ok = async () => {
@@ -48,9 +54,12 @@ const cancel = async () => {
 };
 </script>
 <template>
-    <div>
-        <teleport to="body">
-            <div v-if="_visible" class="lew-dialog" @click="maskClick">
+    <teleport to="#lew-dialog">
+        <transition name="lew-dialog-mask">
+            <div v-if="visible" class="lew-dialog-mask" />
+        </transition>
+        <transition name="lew-dialog">
+            <div v-if="visible" class="lew-dialog" @click="maskClick">
                 <div
                     v-if="layout === 'normal'"
                     class="lew-dialog-box lew-dialog-box-normal"
@@ -132,24 +141,31 @@ const cancel = async () => {
                     </lew-flex>
                 </div>
             </div>
-        </teleport>
-    </div>
+        </transition>
+    </teleport>
 </template>
 
 <style lang="scss" scoped>
+.lew-dialog-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--lew-modal-bgcolor);
+    z-index: 2002;
+}
+
 .lew-dialog {
     position: fixed;
     top: 0px;
     left: 0px;
     width: 100vw;
     height: 100vh;
-    background-color: var(--lew-modal-bgcolor);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2050;
-    animation: LewDialog 0.25s;
-    animation-fill-mode: forwards;
+    z-index: 2002;
 
     .lew-dialog-box {
         position: relative;
@@ -159,11 +175,9 @@ const cancel = async () => {
         padding: 20px;
         border-radius: var(--lew-border-radius);
         background-color: var(--lew-modal-box-bgcolor);
-        border: var(--lew-modal-box-border);
-        box-shadow: var(--lew-modal-box-shadow);
-        animation-fill-mode: forwards;
-        animation: LewDialogBox 0.35s;
-        animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        border: var(--lew-dialog-box-border);
+        box-shadow: var(--lew-dialog-box-shadow);
+
         .icon-success {
             color: var(--lew-color-success-dark);
         }
@@ -257,6 +271,7 @@ const cancel = async () => {
         max-width: 650px;
         width: auto;
         align-items: center;
+
         .left {
             margin-top: 6px;
             margin-right: 10px;
@@ -272,6 +287,7 @@ const cancel = async () => {
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             main {
                 flex-shrink: 0;
                 margin-right: 20px;
@@ -284,28 +300,25 @@ const cancel = async () => {
         }
     }
 }
-</style>
 
-<style>
-@keyframes LewDialogBox {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0px);
-    }
+.lew-dialog-mask-enter-active,
+.lew-dialog-mask-leave-active {
+    transition: all 0.25s;
 }
 
-@keyframes LewDialog {
-    from {
-        opacity: 0;
-    }
+.lew-dialog-mask-enter-from,
+.lew-dialog-mask-leave-to {
+    opacity: 0;
+}
 
-    to {
-        opacity: 1;
-    }
+.lew-dialog-enter-active,
+.lew-dialog-leave-active {
+    transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.lew-dialog-leave-to,
+.lew-dialog-enter-from {
+    opacity: 0;
+    transform: translateY(30px);
 }
 </style>

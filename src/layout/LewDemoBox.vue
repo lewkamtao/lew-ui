@@ -34,11 +34,16 @@ const style = computed<CSSProperties>(() => {
 
 <template>
     <div class="demo-box">
-        <lew-title :size="16" :id="title" class="demo-docs-title"
+        <lew-title :id="title" :size="18" class="demo-docs-title"
             >{{ title }}
-            <lew-tag v-if="tag" type="light" color="blue" style="margin: 2px 0px 0px 5px">
-                {{ tag }}</lew-tag
+            <lew-tag
+                v-if="tag"
+                type="light"
+                color="blue"
+                style="margin: 2px 0px 0px 5px"
             >
+                {{ tag }}
+            </lew-tag>
         </lew-title>
         <div class="demo-item">
             <div class="demo-cp">
@@ -74,6 +79,9 @@ const style = computed<CSSProperties>(() => {
         border-radius: var(--lew-border-radius);
         box-shadow: var(--lew-box-shadow);
         overflow: hidden;
+    }
+    .demo-docs-title {
+        text-transform: capitalize;
     }
 
     .hl-pre {

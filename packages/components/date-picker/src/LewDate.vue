@@ -2,10 +2,11 @@
 import { Ref } from 'vue';
 import { getMonthDate, getHeadDate } from './date';
 import type { RetType, RetItemType } from './date';
-import { dateProps } from './datePicker';
+import { dateProps } from './props';
 import { useVModel } from '@vueuse/core';
 import dayjs from 'dayjs';
 import { object2class } from 'lew-ui/utils';
+import { LewFlex, LewButton } from 'lew-ui';
 
 const emit = defineEmits(['change', 'update:modelValue']);
 const props = defineProps(dateProps);
@@ -236,7 +237,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
                     justify-content: center;
                     width: 24px;
                     height: 24px;
-                    color: var(--lew-text-color-9);
+                    color: var(--lew-text-color-7);
                     border-radius: 50%;
                     transition: all 0.1s ease;
                 }

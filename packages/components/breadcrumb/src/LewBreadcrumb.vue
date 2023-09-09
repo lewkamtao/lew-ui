@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { breadcrumbProps } from './breadcrumb';
+import { breadcrumbProps } from './props';
 import { useLewTo } from '../../../hooks';
 const { lewTo } = useLewTo();
 defineProps(breadcrumbProps);

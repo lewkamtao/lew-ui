@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { dropdownProps } from './dropdown';
-import type { DropdownOptions } from './dropdown';
+import { dropdownProps } from './props';
+import type { DropdownOptions } from './props';
+import { any2px } from 'lew-ui/utils';
+import { LewPopover } from 'lew-ui';
 
 defineProps(dropdownProps);
 
@@ -34,7 +36,10 @@ defineExpose({ show, hide });
             <div
                 v-if="options.length > 0"
                 class="lew-dropdown-body lew-scrollbar"
-                :style="`width:${width};max-height:${maxHeight}`"
+                :style="{
+                    width: any2px(width),
+                    maxHeight: any2px(maxHeight),
+                }"
             >
                 <div
                     v-for="(item, index) in options"
@@ -68,7 +73,7 @@ defineExpose({ show, hide });
     }
     .lew-dropdown-option:hover {
         color: var(--lew-text-color-0);
-        background-color: var(--lew-form-bgcolor);
+        background-color: var(--lew-backdrop-bg-active);
     }
 }
 </style>

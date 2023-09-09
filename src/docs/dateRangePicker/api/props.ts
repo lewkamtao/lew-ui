@@ -1,12 +1,9 @@
+import { dateRangePickerProps } from 'lew-ui';
+import { convertProps } from '@/lib/utils';
+
 export default {
     title: 'Props',
     columnsKey: 'props',
-    data: [
-        {
-            name:'model-value (v-model)',
-            description: '绑定值',
-            type: 'object',
-            default: '-',
-        },
-    ],
+    orderNum: 1,
+    data: convertProps(dateRangePickerProps),
 };

@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core';
-import { LewPopover } from 'lew-ui';
+import { LewPopover, LewFlex, LewButton, LewIcon } from 'lew-ui';
 import { object2class } from 'lew-ui/utils';
 import { cascaderProps, CascaderOptions } from './props';
+import { LewTooltip } from 'lew-ui';
+
+// 获取app
+const app = getCurrentInstance()?.appContext.app;
+if (app && !app.directive('tooltip')) {
+    app.use(LewTooltip);
+}
+
 const props = defineProps(cascaderProps);
 const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
 const cascaderValue = useVModel(props, 'modelValue', emit);
@@ -14,33 +22,62 @@ const state = reactive({
     visible: false,
     loading: false,
     options: [] as CascaderOptions[][],
-    labels: [] as string[],
-    hoverlabels: [] as string[],
+    format_options: [] as CascaderOptions[],
+    activelabels: [] as string[], // 激活
+    tobelabels: [] as string[], // 待确认
+    tobeItem: {} as CascaderOptions,
     keyword: '',
 });
 
-const getHierarchyLevel = (arr: any) => {
-    let level = 0;
+// 转树
+const addPathsToTreeList = (
+    treeList: CascaderOptions[],
+    parentValuePaths = [],
+    parentLabelPaths = []
+) => {
+    treeList.forEach((tree) => {
+        const { value, label, children } = tree;
+        const valuePaths: any = [...parentValuePaths, value];
+        const labelPaths: any = [...parentLabelPaths, label];
 
-    function calculateLevel(obj: any, currentLevel: any) {
-        if (obj.children && obj.children.length > 0) {
-            currentLevel++;
-            obj.children.forEach((child: any) => {
-                level = Math.max(level, currentLevel);
-                calculateLevel(child, currentLevel);
-            });
+        tree.valuePaths = valuePaths;
+        tree.labelPaths = labelPaths;
+        tree.parentValuePaths = parentValuePaths;
+        tree.parentLabelPaths = parentLabelPaths;
+
+        if (children) {
+            tree.parentChildren = children;
+            addPathsToTreeList(children, valuePaths, labelPaths);
         }
-    }
-
-    arr.forEach((obj: any) => {
-        calculateLevel(obj, 0);
     });
-
-    return level;
 };
 
+// 查找
+const findObjectByValue = (
+    treeList: CascaderOptions[],
+    value: [string, number]
+) => {
+    for (let i = 0; i < treeList.length; i++) {
+        const tree = treeList[i];
+        if (tree.value === value) {
+            return tree;
+        }
+        if (tree.children) {
+            const foundObject: CascaderOptions = findObjectByValue(
+                tree.children,
+                value
+            ) as CascaderOptions;
+            if (foundObject) {
+                return foundObject;
+            }
+        }
+    }
+    return null;
+};
+
+// 初始化
 const init = () => {
-    const _options: CascaderOptions[] =
+    let _options: CascaderOptions[] =
         (props.options &&
             props.options.map((e) => {
                 return {
@@ -49,36 +86,63 @@ const init = () => {
                 };
             })) ||
         [];
-    const highLevel = getHierarchyLevel(props.options) + 1;
-    let new_options = new Array(highLevel).fill([]);
+    addPathsToTreeList(_options);
+    state.format_options = _options;
+    let new_options = [];
     new_options[0] = _options;
     state.options = new_options;
 };
+
 init();
 
-const selectItem = (
-    item: CascaderOptions,
-    level: number,
-    selectTrigger: string
-) => {
-    if (selectTrigger === props.selectTrigger) {
-        if (item.isHasChild) {
-            state.hoverlabels[level] = item.label;
-            state.options = state.options.slice(0, level + 1);
-            const _options =
-                (item.children &&
-                    item.children.map((e) => {
-                        return {
-                            ...e,
-                            isHasChild: e.children && e.children.length > 0,
-                        };
-                    })) ||
-                [];
-            state.options.push(_options);
+const selectItem = (item: CascaderOptions, level: number) => {
+    if (item.isHasChild || (item.children && item.children.length > 0)) {
+        state.options = state.options.slice(0, level + 1);
+        const _options =
+            (item.children &&
+                item.children.map((e) => {
+                    return {
+                        ...e,
+                        isHasChild: e.children && e.children.length > 0,
+                    };
+                })) ||
+            [];
+        state.options.push(_options);
+    }
+
+    if (item.labelPaths === state.activelabels) {
+        state.activelabels = item.parentLabelPaths as string[];
+        if (level < state.options.length - 1) {
+            state.options.pop();
+        }
+    } else {
+        state.activelabels = item.labelPaths as string[];
+    }
+    state.tobeItem = { ...item, children: undefined };
+
+    if (props.free) {
+        checkItem(item, level);
+    } else {
+        if (!item.isHasChild) {
+            checkItem(item, level);
+            ok();
         }
     }
-    if (selectTrigger === 'click' && level === state.options.length - 1) {
-        cascaderHandle(item, level);
+};
+
+const checkItem = (item: CascaderOptions, level: number) => {
+    if (props.showAllLevels) {
+        if (state.tobelabels === item.labelPaths) {
+            state.tobelabels = item.parentLabelPaths as string[];
+        } else {
+            state.tobelabels = item.labelPaths as string[];
+        }
+    } else {
+        if (state.tobelabels === ([item.label] as string[])) {
+            state.tobelabels = [] as string[];
+        } else {
+            state.tobelabels = [item.label] as any;
+        }
     }
 };
 
@@ -92,18 +156,12 @@ const hide = () => {
 
 const clearHandle = () => {
     cascaderValue.value = '';
-    state.labels = [];
-    state.hoverlabels = [];
+    state.tobelabels = [];
+    state.activelabels = [];
+    hide();
     init();
     emit('clear');
     emit('change');
-};
-
-const cascaderHandle = (item: CascaderOptions, level: number) => {
-    cascaderValue.value = item.value;
-    state.labels = [...state.hoverlabels, item.label];
-    emit('change', item.value);
-    hide();
 };
 
 const getValueStyle = computed(() => {
@@ -127,8 +185,9 @@ const getCascaderViewClassName = computed(() => {
     return object2class('lew-cascader-view', { focus, disabled, readonly });
 });
 
+// 获取图标大小
 const getIconSize = computed(() => {
-    const size: any = {
+    const size: Record<string, number> = {
         small: 13,
         medium: 14,
         large: 16,
@@ -136,24 +195,44 @@ const getIconSize = computed(() => {
     return size[props.size];
 });
 
+// 展示
 const showHandle = () => {
     state.visible = true;
 };
 
+// 隐藏
 const hideHandle = () => {
     state.visible = false;
     emit('blur');
 };
 
+// 获取宽度
 const getCascaderWidth = computed(() => {
     let _hasChildOptions = state.options.filter(
         (e) => e && e.length > 0
     ).length;
     if (_hasChildOptions > 1) {
-        return _hasChildOptions * 180 + 5;
+        return _hasChildOptions * 180;
     }
     return _hasChildOptions * 180;
 });
+
+const getLabel = computed(() => {
+    const item = findObjectByValue(state.format_options, cascaderValue.value);
+    return item?.labelPaths || [];
+});
+
+const ok = () => {
+    cascaderValue.value = state.tobeItem.value;
+    emit('change', state.tobeItem);
+    hide();
+};
+
+const cancel = () => {
+    cascaderValue.value = '';
+    state.tobelabels = [];
+    hide();
+};
 
 defineExpose({ show, hide });
 </script>
@@ -163,6 +242,7 @@ defineExpose({ show, hide });
         ref="lewPopverRef"
         class="lew-cascader-view"
         :class="getCascaderViewClassName"
+        popoverBodyClassName="lew-cascader-popover-body"
         :trigger="trigger"
         :disabled="disabled"
         placement="bottom-start"
@@ -179,13 +259,7 @@ defineExpose({ show, hide });
             >
                 <transition name="lew-form-icon-ani">
                     <lew-icon
-                        v-if="
-                            !(
-                                clearable &&
-                                state.labels &&
-                                state.labels.length > 0
-                            )
-                        "
+                        v-if="!(clearable && getLabel && getLabel.length > 0)"
                         :size="getIconSize"
                         type="chevron-down"
                         class="icon-cascader"
@@ -195,7 +269,10 @@ defineExpose({ show, hide });
                 <transition name="lew-form-icon-ani">
                     <lew-icon
                         v-if="
-                            clearable && state.labels && state.labels.length > 0
+                            clearable &&
+                            getLabel &&
+                            getLabel.length > 0 &&
+                            !readonly
                         "
                         :size="getIconSize"
                         type="x"
@@ -212,35 +289,40 @@ defineExpose({ show, hide });
                 </transition>
 
                 <div
-                    v-show="state.labels && state.labels.length > 0"
+                    v-show="getLabel && getLabel.length > 0"
                     :style="getValueStyle"
                     class="value"
                 >
-                    <span v-for="(item, index) in state.labels" :key="index">
-                        {{ item }}
-                        <svg
-                            v-if="index !== state.labels.length - 1"
-                            viewBox="0 0 48 48"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            stroke="currentColor"
-                            stroke-width="4"
-                            stroke-linecap="butt"
-                            stroke-linejoin="miter"
-                            data-v-5303b0ef=""
-                        >
-                            <path
-                                d="M29.506 6.502 18.493 41.498"
-                                data-v-5303b0ef=""
-                            ></path>
-                        </svg>
-                    </span>
+                    <template v-if="showAllLevels">
+                        <span v-for="(item, index) in getLabel" :key="index">
+                            {{ item }}
+                            <svg
+                                v-if="getLabel && index !== getLabel.length - 1"
+                                :style="{
+                                    width: getIconSize,
+                                    height: getIconSize,
+                                }"
+                                viewBox="0 0 48 48"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                stroke="currentColor"
+                                stroke-width="4"
+                                stroke-linecap="butt"
+                                stroke-linejoin="miter"
+                            >
+                                <path
+                                    d="M29.506 6.502 18.493 41.498"
+                                    data-v-5303b0ef=""
+                                ></path>
+                            </svg>
+                        </span>
+                    </template>
+                    <template v-else-if="getLabel">
+                        <span>{{ getLabel[getLabel.length - 1] }}</span>
+                    </template>
                 </div>
                 <div
-                    v-show="
-                        !state.labels ||
-                        (state.labels && state.labels.length === 0)
-                    "
+                    v-show="!getLabel || (getLabel && getLabel.length === 0)"
                     class="placeholder"
                 >
                     {{ placeholder }}
@@ -256,7 +338,10 @@ defineExpose({ show, hide });
                 :class="getBodyClassName"
             >
                 <slot name="header"></slot>
-                <div class="lew-cascader-options-box">
+                <div
+                    class="lew-cascader-options-box"
+                    :style="{ height: free ? 'calc(100% - 40px)' : '100%' }"
+                >
                     <template
                         v-for="(oItem, oIndex) in state.options"
                         :key="oIndex"
@@ -277,24 +362,56 @@ defineExpose({ show, hide });
                                 class="lew-cascader-item"
                                 :class="{
                                     'lew-cascader-item-disabled': item.disabled,
+                                    'lew-cascader-item-active':
+                                        state.activelabels.includes(item.label),
+                                    'lew-cascader-item-tobe':
+                                        state.tobelabels.includes(item.label),
+                                    'lew-cascader-item-select':
+                                        getLabel &&
+                                        getLabel.includes(item.label),
                                 }"
                                 v-for="(item, index) in oItem"
                                 :key="index"
-                                @click="selectItem(item, oIndex, 'click')"
-                                @mouseover="selectItem(item, oIndex, 'hover')"
+                                @click="selectItem(item, oIndex)"
                             >
-                                {{ item.label }}
+                                <lew-checkbox
+                                    class="lew-cascader-checkbox"
+                                    v-if="free"
+                                    :checked="
+                                        state.tobelabels.includes(item.label)
+                                    "
+                                />
+                                <div
+                                    class="lew-cascader-label"
+                                    :class="{
+                                        'lew-cascader-label-free': free,
+                                    }"
+                                >
+                                    {{ item.label }}
+                                </div>
                                 <lew-icon
                                     v-if="item.isHasChild"
                                     size="14px"
-                                    class="icon"
+                                    class="lew-cascader-icon"
                                     type="chevron-right"
                                 />
                             </div>
                         </div>
                     </template>
                 </div>
-                <slot name="footer"></slot>
+                <lew-flex v-if="free" x="end" class="lew-cascader-control">
+                    <lew-button
+                        @click="cancel"
+                        round
+                        color="normal"
+                        type="text"
+                        size="small"
+                        >取消</lew-button
+                    >
+                    <lew-button @click="ok" round type="light" size="small">
+                        确认
+                    </lew-button>
+                </lew-flex>
             </div>
         </template>
     </lew-popover>
@@ -310,6 +427,7 @@ defineExpose({ show, hide });
     outline: 0px var(--lew-color-primary-light) solid;
     border: var(--lew-form-border-width) transparent solid;
     box-shadow: var(--lew-form-box-shadow);
+
     > div {
         width: 100%;
     }
@@ -331,6 +449,7 @@ defineExpose({ show, hide });
             transform: translateY(-50%) rotate(0deg);
             transition: var(--lew-form-transition);
         }
+
         .icon-cascader {
             opacity: var(--lew-form-icon-opacity);
         }
@@ -348,18 +467,18 @@ defineExpose({ show, hide });
         .value {
             display: inline-flex;
             align-items: center;
-            gap: 5px;
             width: calc(100% - 24px);
             box-sizing: border-box;
             transition: all 0.2s;
+            gap: 2px;
+
             span {
                 display: inline-flex;
+                gap: 2px;
                 align-items: center;
-                gap: 5px;
+
                 svg {
-                    width: 14px;
-                    height: 14px;
-                    opacity: 0.6;
+                    opacity: 0.4;
                 }
             }
         }
@@ -368,9 +487,11 @@ defineExpose({ show, hide });
     .lew-cascader-align-left {
         text-align: left;
     }
+
     .lew-cascader-align-center {
         text-align: center;
     }
+
     .lew-cascader-align-right {
         text-align: right;
     }
@@ -428,6 +549,7 @@ defineExpose({ show, hide });
         transform: translateY(-50%) rotate(180deg);
         color: var(--lew-text-color-2);
     }
+
     .icon-cascader-hide {
         opacity: 0;
         transform: translate(100%, -50%) rotate(180deg);
@@ -438,12 +560,15 @@ defineExpose({ show, hide });
     opacity: var(--lew-disabled-opacity);
     pointer-events: none; //鼠标点击不可修改
 }
+
 .lew-cascader-view-readonly {
     pointer-events: none; //鼠标点击不可修改
+
     .lew-cascader {
         user-select: text;
     }
 }
+
 .lew-cascader-view-disabled:hover {
     background-color: var(--lew-form-bgcolor);
     outline: 0px var(--lew-color-primary-light) solid;
@@ -455,11 +580,14 @@ defineExpose({ show, hide });
     width: 100%;
     box-sizing: border-box;
     min-width: 180px;
-    height: 300px;
+    height: 280px;
     overflow: hidden;
     transition: all 0.25s;
+    user-select: none;
+
     .search-input {
         margin-bottom: 5px;
+
         input {
             outline: none;
             border: none;
@@ -472,25 +600,29 @@ defineExpose({ show, hide });
             color: var(--lew-form-color);
             transition: var(--lew-form-transition);
         }
+
         input:focus {
             background-color: var(--lew-form-bgcolor);
         }
     }
+
     .not-found {
         padding: 50px 0px;
         opacity: 0.4;
     }
+
     .reslut-count {
         padding-left: 8px;
         margin: 5px 0px;
         opacity: 0.4;
         font-size: 13px;
     }
+
     .lew-cascader-options-box {
         position: relative;
         display: flex;
         box-sizing: border-box;
-        height: 100%;
+
         .lew-cascader-item-warpper {
             position: absolute;
             left: 0px;
@@ -499,16 +631,20 @@ defineExpose({ show, hide });
             height: 100%;
             width: 180px;
             padding-left: 5px;
-            border-right: 1px solid var(--lew-bgcolor-4);
+            border-right: var(--lew-popover-border);
+            padding: 5px;
+            box-sizing: border-box;
         }
-        .lew-cascader-item-warpper:first-child {
-            padding-left: 0px;
+
+        .lew-cascader-item-warpper:last-child {
+            border-right: 0px transparent solid;
         }
 
         .lew-cascader-item {
             position: relative;
             display: inline-flex;
             align-items: center;
+            gap: 10px;
             width: 100%;
             font-size: 14px;
             overflow: hidden;
@@ -520,47 +656,66 @@ defineExpose({ show, hide });
             border-radius: 6px;
             height: 30px;
             padding: 0px 10px;
-            .icon {
+
+            .lew-cascader-icon {
                 position: absolute;
                 right: 2px;
                 top: 50%;
                 transform: translateY(-50%);
                 opacity: 0.4;
             }
+
+            .lew-cascader-checkbox {
+                position: absolute;
+                left: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: -9;
+            }
+
+            .lew-cascader-label {
+                position: relative;
+                z-index: 5;
+                width: 100%;
+                user-select: none;
+                font-size: 14px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                box-sizing: border-box;
+            }
+
+            .lew-cascader-label-free {
+                padding: 0px 8px 0px 25px;
+            }
         }
+
         .lew-cascader-item:hover {
             .icon {
                 opacity: 1;
             }
         }
+
         .lew-cascader-item-disabled {
             opacity: 0.3;
             pointer-events: none;
         }
+
         .lew-cascader-item-align-left {
             text-align: left;
         }
+
         .lew-cascader-item-align-center {
             text-align: center;
         }
+
         .lew-cascader-item-align-right {
             text-align: right;
         }
 
-        .lew-cascader-label {
-            width: 100%;
-            user-cascader: none;
-            font-size: 14px;
-            padding: 0px 8px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            box-sizing: border-box;
-        }
-
         .lew-cascader-item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
         }
 
         .lew-cascader-slot-item {
@@ -569,13 +724,15 @@ defineExpose({ show, hide });
 
         .lew-cascader-slot-item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
         }
 
         .lew-cascader-item-active {
+            background-color: var(--lew-backdrop-bg-active);
+
             color: var(--lew-color-primary-dark);
             font-weight: bold;
-            background-color: var(--lew-form-bgcolor);
+
             .icon-check {
                 margin-right: 10px;
             }
@@ -584,7 +741,56 @@ defineExpose({ show, hide });
         .lew-cascader-item-active:hover {
             color: var(--lew-color-primary-dark);
             font-weight: bold;
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
+        }
+    }
+
+    .lew-cascader-control {
+        border-top: 1px solid var(--lew-bgcolor-4);
+        height: 40px;
+        padding-right: 10px;
+    }
+}
+
+.lew-popover-body .lew-cascader-popover-body {
+    padding: 0px;
+}
+
+.lew-cascader-item:hover {
+    .lew-checkbox {
+        .icon-checkbox-box {
+            border: var(--lew-form-border-width)
+                var(--lew-checkbox-border-color-hover) solid;
+            outline: var(--lew-form-ouline);
+            background: var(--lew-form-bgcolor);
+        }
+    }
+}
+
+.lew-cascader-item-tobe:hover {
+    .lew-checkbox {
+        .icon-checkbox-box {
+            border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+            background: var(--lew-checkbox-color);
+
+            .icon-checkbox {
+                transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.lew-cascader-item-select:hover {
+    .lew-checkbox {
+        .icon-checkbox-box {
+            border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+            background: var(--lew-checkbox-color);
+
+            .icon-checkbox {
+                transform: translateY(0px);
+                opacity: 1;
+            }
         }
     }
 }

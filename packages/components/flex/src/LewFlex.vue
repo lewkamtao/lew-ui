@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { flexProps } from './flex';
+import { flexProps } from './props';
 import { any2px } from 'lew-ui/utils';
 
 const props = defineProps(flexProps);

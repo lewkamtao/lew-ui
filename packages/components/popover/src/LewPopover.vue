@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import tippy from 'tippy.js';
 import { watchDebounced } from '@vueuse/core';
-import { popoverProps } from './popover';
+import { popoverProps } from './props';
+import { LewLoading } from 'lew-ui';
+
+// 获取app
+const app = getCurrentInstance()?.appContext.app;
+if (app && !app.directive('loading')) {
+    app.use(LewLoading);
+}
 
 const props = defineProps(popoverProps);
 const triggerRef = ref();
@@ -58,9 +65,20 @@ watchDebounced(
     },
     watchOptions
 );
-
+// offset
+watchDebounced(
+    () => props.offset,
+    (value: any) => {
+        if (instance) {
+            instance.setProps({
+                offset: value,
+            });
+        }
+    },
+    watchOptions
+);
 const initTippy = () => {
-    let { placement, triggerTarget, trigger, disabled }: any = props;
+    let { placement, triggerTarget, offset, trigger, disabled }: any = props;
 
     if (trigger === 'hover') {
         trigger = 'mouseenter';
@@ -76,7 +94,8 @@ const initTippy = () => {
         placement,
         duration: [150, 150],
         arrow: false,
-        delay: trigger === 'mouseenter' ? [250, 250] : undefined,
+        offset: offset,
+        delay: trigger === 'mouseenter' ? [150, 150] : undefined,
         appendTo: () => document.body,
         allowHTML: true,
         maxWidth: 'none',
@@ -119,7 +138,9 @@ defineExpose({ show, hide, refresh });
 <template>
     <div class="lew-popover">
         <label ref="triggerRef" style="font-size: 0px">
-            <div class="trigger"><slot name="trigger" /></div>
+            <div class="trigger">
+                <slot name="trigger" />
+            </div>
         </label>
         <div
             ref="bodyRef"
@@ -127,7 +148,7 @@ defineExpose({ show, hide, refresh });
                 visible: loading,
                 iconSize: 16,
             }"
-            class="lew-popover-body"
+            :class="popoverBodyClassName"
         >
             <slot name="popover-body" :show="show" :hide="hide" />
         </div>
@@ -142,6 +163,7 @@ defineExpose({ show, hide, refresh });
         }
     }
 }
+
 .lew-popover-body {
     padding: 6px;
     overflow: hidden;

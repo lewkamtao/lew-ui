@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import { useVModel, useDebounceFn } from '@vueuse/core';
-import { LewPopover } from 'lew-ui';
+import { LewPopover, LewIcon } from 'lew-ui';
 import { object2class, numFormat } from 'lew-ui/utils';
 import { UseVirtualList } from '@vueuse/components';
 import { selectMultipleProps, SelectMultipleOptions } from './props';
+import { LewTooltip } from 'lew-ui';
 
+// 获取app
+const app = getCurrentInstance()?.appContext.app;
+if (app && !app.directive('tooltip')) {
+    app.use(LewTooltip);
+}
 const props = defineProps(selectMultipleProps);
 const emit = defineEmits([
     'update:modelValue',
@@ -22,6 +28,7 @@ const searchInputRef = ref();
 
 const state = reactive({
     selectWidth: 0,
+    itemHeight: 34,
     visible: false,
     loading: false,
     options: props.options,
@@ -29,7 +36,7 @@ const state = reactive({
 });
 
 const getSelectWidth = () => {
-    state.selectWidth = lewSelectRef.value?.clientWidth - 14;
+    state.selectWidth = lewSelectRef.value?.clientWidth - 12;
     if (props.searchable) {
         setTimeout(() => {
             searchInputRef.value && searchInputRef.value.focus();
@@ -115,7 +122,10 @@ const selectHandle = (item: SelectMultipleOptions) => {
 };
 
 const getChecked = computed(() => (value: string | number) => {
-    return selectValue.value && selectValue.value.includes(value);
+    if (selectValue.value) {
+        return JSON.parse(JSON.stringify(selectValue.value.includes(value)));
+    }
+    return false;
 });
 
 const getLabels = computed(() => {
@@ -161,12 +171,6 @@ const getSelectItemClassName = (e: any) => {
     });
 };
 
-const getVirtualHeight = computed(() => {
-    let height = state.options.length * props.itemHeight;
-    height = height > 240 ? 240 : height;
-    return `${height}px`;
-});
-
 const getIconSize = computed(() => {
     const size: any = {
         small: 13,
@@ -183,6 +187,11 @@ const showHandle = () => {
         search({ target: { value: '' } });
     }
 };
+const getVirtualHeight = computed(() => {
+    let height = state.options.length * state.itemHeight;
+    height = height >= 240 ? 240 : height;
+    return `${height}px`;
+});
 
 const hideHandle = () => {
     state.visible = false;
@@ -222,7 +231,12 @@ defineExpose({ show, hide });
                 />
                 <transition name="lew-form-icon-ani">
                     <lew-icon
-                        v-if="clearable && getLabels && getLabels.length > 0"
+                        v-if="
+                            clearable &&
+                            getLabels &&
+                            getLabels.length > 0 &&
+                            !readonly
+                        "
                         :size="getIconSize"
                         type="x"
                         v-tooltip="{
@@ -304,48 +318,37 @@ defineExpose({ show, hide });
                     </div>
 
                     <use-virtual-list
+                        :key="getVirtualHeight"
                         v-if="state.options.length > 0"
                         class="lew-select-options-list lew-scrollbar"
                         :list="state.options"
                         :options="{
                             itemHeight: 30,
                         }"
+                        :overscan="100"
                         :height="getVirtualHeight"
                     >
                         <template #="props">
                             <!-- you can get current item of list here -->
-                            <label @click="selectHandle(props.data)">
+                            <div
+                                class="lew-select-item-label"
+                                :style="{ height: state.itemHeight + 'px' }"
+                                @click="selectHandle(props.data)"
+                            >
                                 <div
-                                    v-if="!labelSlot"
-                                    class="lew-select-item"
+                                    class="lew-select-item lew-select-item-mul"
                                     :class="getSelectItemClassName(props.data)"
-                                    :style="{ height: itemHeight + 'px' }"
                                 >
+                                    <lew-checkbox
+                                        :key="props.data.value"
+                                        class="lew-select-checkbox"
+                                        :checked="getChecked(props.data.value)"
+                                    />
                                     <div class="lew-select-label">
                                         {{ props.data.label }}
                                     </div>
-                                    <lew-icon
-                                        v-if="
-                                            getChecked(props.data.value) &&
-                                            showCheckIcon
-                                        "
-                                        class="icon-check"
-                                        size="14"
-                                        type="check"
-                                    />
                                 </div>
-                                <div
-                                    v-else
-                                    class="lew-select-slot-item"
-                                    :style="{ height: itemHeight + 'px' }"
-                                >
-                                    <slot
-                                        name="label"
-                                        :item="props.data"
-                                        :checked="getChecked(props.data.value)"
-                                    />
-                                </div>
-                            </label>
+                            </div>
                         </template>
                     </use-virtual-list>
                 </div>
@@ -388,6 +391,7 @@ defineExpose({ show, hide });
             transition: var(--lew-form-transition);
             opacity: var(--lew-form-icon-opacity);
         }
+
         .icon-select-hide {
             opacity: 0;
             transform: translate(100%, -50%);
@@ -396,6 +400,7 @@ defineExpose({ show, hide });
         .placeholder {
             color: rgb(165, 165, 165);
         }
+
         .lew-select-label-multiple {
             width: 100%;
             display: flex;
@@ -422,9 +427,11 @@ defineExpose({ show, hide });
     .lew-select-align-left {
         text-align: left;
     }
+
     .lew-select-align-center {
         text-align: center;
     }
+
     .lew-select-align-right {
         text-align: right;
     }
@@ -478,21 +485,26 @@ defineExpose({ show, hide });
         transform: translateY(-50%) rotate(180deg);
         color: var(--lew-text-color-2);
     }
+
     .icon-select-hide {
         opacity: 0;
         transform: translate(100%, -50%) rotate(180deg);
     }
 }
+
 .lew-select-view-readonly {
     pointer-events: none; //鼠标点击不可修改
+
     .lew-select {
         user-select: text;
     }
 }
+
 .lew-select-view-disabled {
     opacity: var(--lew-disabled-opacity);
     pointer-events: none; //鼠标点击不可修改
 }
+
 .lew-select-view-disabled:hover {
     border-radius: var(--lew-border-radius);
     background-color: var(--lew-form-bgcolor);
@@ -504,6 +516,7 @@ defineExpose({ show, hide });
 .list-leave-active {
     transition: all 0.15s ease-in-out;
 }
+
 .list-enter-from,
 .list-leave-to {
     opacity: 0;
@@ -515,34 +528,18 @@ defineExpose({ show, hide });
     width: 100%;
     box-sizing: border-box;
 
-    .search-input {
-        margin-bottom: 5px;
-        input {
-            outline: none;
-            border: none;
-            background-color: var(--lew-bgcolor-1);
-            width: 100%;
-            height: 30px;
-            border-radius: var(--lew-border-radius);
-            padding: 0px 10px;
-            box-sizing: border-box;
-            color: var(--lew-form-color);
-            transition: var(--lew-form-transition);
-        }
-        input:focus {
-            background-color: var(--lew-form-bgcolor);
-        }
-    }
     .not-found {
         padding: 50px 0px;
         opacity: 0.4;
     }
+
     .reslut-count {
         padding-left: 8px;
         margin: 5px 0px;
         opacity: 0.4;
         font-size: 13px;
     }
+
     .lew-select-options-box {
         overflow-y: auto;
         overflow-x: hidden;
@@ -550,12 +547,11 @@ defineExpose({ show, hide });
         box-sizing: border-box;
         transition: all 0.25s ease;
 
-        .lew-select-item {
+        .lew-select-item-mul {
             position: relative;
             display: inline-flex;
             align-items: center;
             width: 100%;
-            font-size: 14px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -563,18 +559,39 @@ defineExpose({ show, hide });
             color: var(--lew-text-color-2);
             box-sizing: border-box;
             border-radius: 6px;
+
+            .lew-select-checkbox {
+                position: absolute;
+                left: 0px;
+                top: 50%;
+                transform: translateY(-50%);
+                padding-left: 12px;
+                z-index: -9;
+            }
+
+            .lew-select-label {
+                position: relative;
+                z-index: 5;
+                height: 30px;
+                display: inline-flex;
+                align-items: center;
+                padding-left: 35px;
+            }
         }
 
         .lew-select-item-disabled {
             opacity: 0.3;
             cursor: no-drop;
         }
+
         .lew-select-item-align-left {
             text-align: left;
         }
+
         .lew-select-item-align-center {
             text-align: center;
         }
+
         .lew-select-item-align-right {
             text-align: right;
         }
@@ -592,22 +609,14 @@ defineExpose({ show, hide });
 
         .lew-select-item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-bgcolor);
-        }
-
-        .lew-select-slot-item {
-            border-radius: 6px;
-        }
-
-        .lew-select-slot-item:hover {
-            color: var(--lew-text-color-0);
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
         }
 
         .lew-select-item-active {
             color: var(--lew-color-primary-dark);
             font-weight: bold;
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
+
             .icon-check {
                 margin-right: 10px;
             }
@@ -616,7 +625,32 @@ defineExpose({ show, hide });
         .lew-select-item-active:hover {
             color: var(--lew-color-primary-dark);
             font-weight: bold;
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
+        }
+    }
+}
+
+.lew-select-item:hover {
+    .lew-checkbox {
+        .icon-checkbox-box {
+            border: var(--lew-form-border-width)
+                var(--lew-checkbox-border-color-hover) solid;
+            outline: var(--lew-form-ouline);
+            background: var(--lew-form-bgcolor);
+        }
+    }
+}
+
+.lew-select-item-active:hover {
+    .lew-checkbox {
+        .icon-checkbox-box {
+            border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+            background: var(--lew-checkbox-color);
+
+            .icon-checkbox {
+                transform: translateY(0px);
+                opacity: 1;
+            }
         }
     }
 }

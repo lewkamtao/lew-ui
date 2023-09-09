@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { useVModel, watchArray } from '@vueuse/core';
-import { tableProps } from './table';
+import { tableProps } from './props';
+import { any2px } from 'lew-ui/utils';
+import { LewFlex, LewCheckbox, LewTextTrim } from 'lew-ui';
 
 const props = defineProps(tableProps);
 const emit = defineEmits(['update:selectedKey']);
@@ -201,7 +203,7 @@ onUnmounted(() => {
         <div
             ref="tableRef"
             class="lew-table lew-scrollbar"
-            :style="`max-height: ${maxHeight}px`"
+            :style="`max-height: ${any2px(maxHeight)}`"
             @scroll="checkScroll"
             @mouseleave="state.hoverIndex = -1"
         >
@@ -440,8 +442,8 @@ onUnmounted(() => {
     box-sizing: border-box;
     background-color: var(--lew-bgcolor-0);
     box-shadow: var(--lew-box-shadow);
-    overflow: hidden;
 }
+
 .lew-table {
     width: 100%;
     overflow-x: auto;
@@ -461,6 +463,7 @@ onUnmounted(() => {
         flex-direction: column;
         flex-grow: 1;
     }
+
     .lew-table-fixed-right {
         position: sticky;
         right: 0px;
@@ -469,6 +472,7 @@ onUnmounted(() => {
         flex-grow: 1;
         flex-direction: column;
     }
+
     .lew-table-fixed-left::after {
         position: absolute;
         right: -3px;
@@ -483,6 +487,7 @@ onUnmounted(() => {
         content: '';
         transition: opacity 0.2s ease;
     }
+
     .lew-table-fixed-right::after {
         position: absolute;
         left: -3px;
@@ -540,6 +545,7 @@ onUnmounted(() => {
         z-index: 12;
         box-sizing: border-box;
         height: 40px;
+
         .lew-table-tr {
             background-color: var(--lew-bgcolor-1);
             height: 40px;
@@ -552,6 +558,7 @@ onUnmounted(() => {
             }
         }
     }
+
     .lew-table-td {
         color: var(--lew-text-color-4);
     }
@@ -577,6 +584,7 @@ onUnmounted(() => {
     transition: opacity 0.2s ease;
     opacity: 1;
 }
+
 .lew-table-wrapper::after {
     position: absolute;
     z-index: 18;
@@ -593,9 +601,11 @@ onUnmounted(() => {
     transition: opacity 0.2s ease;
     opacity: 1;
 }
+
 .hide-line-left::before {
     opacity: 0;
 }
+
 .hide-line-right::after {
     opacity: 0;
 }

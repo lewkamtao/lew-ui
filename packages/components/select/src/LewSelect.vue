@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import { useVModel, useDebounceFn } from '@vueuse/core';
-import { LewPopover } from 'lew-ui';
+import { LewPopover, LewFlex, LewIcon } from 'lew-ui';
 import { object2class, numFormat } from 'lew-ui/utils';
 import { UseVirtualList } from '@vueuse/components';
 import { selectProps, SelectOptions } from './props';
+import { LewTooltip } from 'lew-ui';
 
+// 获取app
+const app = getCurrentInstance()?.appContext.app;
+if (app && !app.directive('tooltip')) {
+    app.use(LewTooltip);
+}
 const props = defineProps(selectProps);
 const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
 const selectValue = useVModel(props, 'modelValue', emit);
@@ -15,6 +21,7 @@ const searchInputRef = ref();
 
 const state = reactive({
     selectWidth: 0,
+    itemHeight: 34,
     visible: false,
     loading: false,
     options: props.options,
@@ -22,7 +29,7 @@ const state = reactive({
 });
 
 const getSelectWidth = () => {
-    state.selectWidth = lewSelectRef.value?.clientWidth - 14;
+    state.selectWidth = lewSelectRef.value?.clientWidth - 12;
     if (props.searchable) {
         setTimeout(() => {
             searchInputRef.value && searchInputRef.value.focus();
@@ -130,12 +137,6 @@ const getSelectItemClassName = (e: any) => {
     });
 };
 
-const getVirtualHeight = computed(() => {
-    let height = state.options.length * props.itemHeight;
-    height = height >= 240 ? 240 : height;
-    return `${height}px`;
-});
-
 const getIconSize = computed(() => {
     const size: any = {
         small: 13,
@@ -143,6 +144,12 @@ const getIconSize = computed(() => {
         large: 16,
     };
     return size[props.size];
+});
+
+const getVirtualHeight = computed(() => {
+    let height = state.options.length * state.itemHeight;
+    height = height >= 240 ? 240 : height;
+    return `${height}px`;
 });
 
 const showHandle = () => {
@@ -188,7 +195,7 @@ defineExpose({ show, hide });
                 />
                 <transition name="lew-form-icon-ani">
                     <lew-icon
-                        v-if="clearable && getLabel"
+                        v-if="clearable && getLabel && !readonly"
                         :size="getIconSize"
                         type="x"
                         v-tooltip="{
@@ -246,8 +253,8 @@ defineExpose({ show, hide });
                         {{ numFormat(state.options && state.options.length) }}
                         条结果
                     </div>
-
                     <use-virtual-list
+                        :key="getVirtualHeight"
                         v-if="state.options.length > 0"
                         class="lew-select-options-list lew-scrollbar"
                         :list="state.options"
@@ -258,12 +265,15 @@ defineExpose({ show, hide });
                     >
                         <template #="props">
                             <!-- you can get current item of list here -->
-                            <label @click="selectHandle(props.data)">
+                            <label
+                                :style="{ height: state.itemHeight + 'px' }"
+                                class="lew-select-item-label"
+                                @click="selectHandle(props.data)"
+                            >
                                 <div
                                     v-if="!labelSlot"
                                     class="lew-select-item"
                                     :class="getSelectItemClassName(props.data)"
-                                    :style="{ height: itemHeight + 'px' }"
                                 >
                                     <div class="lew-select-label">
                                         {{ props.data.label }}
@@ -281,7 +291,7 @@ defineExpose({ show, hide });
                                 <div
                                     v-else
                                     class="lew-select-slot-item"
-                                    :style="{ height: itemHeight + 'px' }"
+                                    :style="{ height: state.itemHeight + 'px' }"
                                 >
                                     <slot
                                         name="label"
@@ -457,7 +467,7 @@ defineExpose({ show, hide });
         input {
             outline: none;
             border: none;
-            background-color: var(--lew-bgcolor-1);
+            background-color: var(--lew-bgcolor-2);
             width: 100%;
             height: 30px;
             border-radius: var(--lew-border-radius);
@@ -468,7 +478,8 @@ defineExpose({ show, hide });
         }
 
         input:focus {
-            background-color: var(--lew-bgcolor-3) !important;
+            background-color: var(--lew-bgcolor-3);
+            box-shadow: var(--lew-box-shadow);
         }
     }
 
@@ -491,6 +502,18 @@ defineExpose({ show, hide });
         height: auto;
         box-sizing: border-box;
         transition: all 0.25s ease;
+        margin-top: -2px;
+        margin-bottom: -2px;
+
+        .lew-select-item-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px 0px;
+            height: 34px;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
 
         .lew-select-item {
             position: relative;
@@ -505,6 +528,7 @@ defineExpose({ show, hide });
             color: var(--lew-text-color-2);
             box-sizing: border-box;
             border-radius: 6px;
+            height: 30px;
         }
 
         .lew-select-item-disabled {
@@ -537,7 +561,7 @@ defineExpose({ show, hide });
 
         .lew-select-item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
         }
 
         .lew-select-slot-item {
@@ -546,13 +570,13 @@ defineExpose({ show, hide });
 
         .lew-select-slot-item:hover {
             color: var(--lew-text-color-0);
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
         }
 
         .lew-select-item-active {
             color: var(--lew-color-primary-dark);
             font-weight: bold;
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
 
             .icon-check {
                 margin-right: 10px;
@@ -562,7 +586,7 @@ defineExpose({ show, hide });
         .lew-select-item-active:hover {
             color: var(--lew-color-primary-dark);
             font-weight: bold;
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-backdrop-bg-active);
         }
     }
 }

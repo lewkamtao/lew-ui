@@ -20,8 +20,14 @@ export default {
                 }
                 _toBackUp = () => {
                     if (!dom.value) return;
-                    const scrollDom = dom.value as HTMLElement;
-                    scrollDom.scrollTop = 0;
+                    const timer = setInterval(() => {
+                        const scrollDom = dom.value as HTMLElement;
+                        const ispeed = Math.floor(-scrollDom.scrollTop / 5);
+                        scrollDom.scrollTop = scrollDom!.scrollTop + ispeed;
+                        if (scrollDom.scrollTop === 0) {
+                            clearInterval(timer);
+                        }
+                    }, 20);
                 };
                 el.addEventListener('click', _toBackUp);
             },

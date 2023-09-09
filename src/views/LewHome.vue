@@ -3,7 +3,7 @@ import { useRouter } from 'vue-router';
 import * as Yup from 'yup';
 import { schools } from '../docs/select/demo/schools';
 
-let schoolsOptions = schools.map((e, i) => {
+const schoolsOptions = schools.map((e, i) => {
     return { label: e, value: i + 1 };
 });
 const form = ref({} as any);
@@ -365,7 +365,7 @@ const notification = (type: string) => {
             <p>一个 Vue 3 组件库</p>
             <lew-button
                 text="Get started"
-                style="margin-top: 20px"
+                style="margin-top: 20px;"
                 @click="router.push('/Avatar')"
             />
         </div>
@@ -436,7 +436,7 @@ const notification = (type: string) => {
                         </lew-breadcrumb>
                     </lew-flex>
 
-                    <lew-flex x="end" style="width: 380px">
+                    <lew-flex x="end" style="width: 380px;">
                         <lew-tabs :options="tab_soptions" />
                     </lew-flex>
 
@@ -461,7 +461,7 @@ const notification = (type: string) => {
                         </lew-dropdown>
                     </lew-flex>
                 </lew-flex>
-                <lew-flex style="width: 450px; margin-top: 30px" class="item">
+                <lew-flex style="width: 450px; margin-top: 30px;" class="item">
                     <lew-form
                         ref="formRef"
                         v-model="form"
@@ -522,12 +522,12 @@ const notification = (type: string) => {
                                 <lew-button text="Popover" />
                             </template>
                             <template #popover-body>
-                                <div class="popover-body" style="width: 240px">
+                                <div class="popover-body" style="width: 240px;">
                                     <lew-input
                                         v-model="v"
                                         placeholder="请输入密码"
                                     />
-                                    <lew-flex x="end" style="margin-top: 15px">
+                                    <lew-flex x="end" style="margin-top: 15px;">
                                         <lew-button
                                             text="取消"
                                             type="text"

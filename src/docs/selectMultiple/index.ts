@@ -1,2 +1,2 @@
-import DemoSelectMultiple from './DemoSelectMultiple';
+import DemoSelectMultiple from './DemoSelectMultiple.vue';
 export default DemoSelectMultiple;

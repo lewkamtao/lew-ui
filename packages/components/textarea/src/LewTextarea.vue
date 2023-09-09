@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import { textareaProps } from './textarea';
+import { textareaProps } from './props';
 import { useVModel } from '@vueuse/core';
 import { object2class, any2px } from 'lew-ui/utils';
+import { LewIcon } from 'lew-ui';
+import { LewTooltip } from 'lew-ui';
 
+// 获取app
+const app = getCurrentInstance()?.appContext.app;
+if (app && !app.directive('tooltip')) {
+    app.use(LewTooltip);
+}
 let lewTextareaRef = ref();
 const emit = defineEmits([
     'update:modelValue',
@@ -116,7 +123,7 @@ defineExpose({ toFocus });
         </div>
         <transition name="lew-form-icon-ani">
             <lew-icon
-                v-if="clearable && modelValue"
+                v-if="clearable && modelValue && !readonly"
                 class="lew-form-icon-clear"
                 :class="{
                     'lew-form-icon-clear-focus': state.isFocus,
@@ -148,6 +155,7 @@ defineExpose({ toFocus });
     outline: 0px transparent solid;
     border: var(--lew-form-border-width) transparent solid;
     box-shadow: var(--lew-form-box-shadow);
+
     .lew-textarea {
         width: 100%;
         height: 100%;
@@ -189,6 +197,7 @@ defineExpose({ toFocus });
     .lew-textarea {
         min-height: var(--lew-form-item-height-small);
     }
+
     .lew-textarea-count {
         font-size: 12px;
     }
@@ -204,6 +213,7 @@ defineExpose({ toFocus });
     .lew-textarea {
         min-height: var(--lew-form-item-height-medium);
     }
+
     .lew-textarea-count {
         font-size: 13px;
     }
@@ -219,6 +229,7 @@ defineExpose({ toFocus });
     .lew-textarea {
         min-height: var(--lew-form-item-height-large);
     }
+
     .lew-textarea-count {
         font-size: 14px;
     }
@@ -229,6 +240,7 @@ defineExpose({ toFocus });
     flex-direction: column;
     justify-content: center;
 }
+
 .lew-textarea-view {
     .resize-btn {
         position: absolute;

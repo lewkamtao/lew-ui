@@ -120,7 +120,8 @@ const formatSex = (sex: number) => {
                 <lew-tag
                     v-for="(item, index) in row.hobby"
                     :key="index"
-                    type="light" color="blue"
+                    type="light"
+                    color="blue"
                     size="small"
                     >{{ item }}
                 </lew-tag>

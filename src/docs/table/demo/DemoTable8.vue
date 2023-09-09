@@ -94,14 +94,14 @@ const getChecked = computed(() => (id: any) => {
 <template>
     <lew-flex x="start">
         <lew-button
-            text="取消所有选择"
             v-if="selectedKey.length > 0"
+            text="取消所有选择"
             color="red"
             @click="selectedKey = []"
         />
         <lew-button
-            text="选中前五个"
             v-if="selectedKey.length === 0"
+            text="选中前五个"
             @click="
                 selectedKey = data
                     .filter((_e: any, i: number) => i <= 4)
@@ -109,8 +109,8 @@ const getChecked = computed(() => (id: any) => {
             "
         />
         <lew-button
-            text="全选"
             v-if="selectedKey.length != data.length"
+            text="全选"
             @click="selectedKey = data.map((e: any) => e.id)"
         />
     </lew-flex>
@@ -123,7 +123,6 @@ const getChecked = computed(() => (id: any) => {
         :max-height="400"
         row-key="id"
     >
-   
         <template #release_date="{ row }"> {{ row.release_date }} </template>
         <template #directors="{ row }">
             <lew-tag
@@ -176,7 +175,8 @@ const getChecked = computed(() => (id: any) => {
                 <lew-tag
                     v-for="(actor, index) in row.actors"
                     :key="index"
-                    type="light" color="blue"
+                    type="light"
+                    color="blue"
                     size="small"
                     >{{ actor }}
                 </lew-tag>

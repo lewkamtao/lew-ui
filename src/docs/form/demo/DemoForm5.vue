@@ -24,8 +24,8 @@ const options = ref([
 
 <template>
     <lew-form
-        class="form-box"
         v-model="form"
+        class="form-box"
         :options="options"
         :label-width="80"
     />

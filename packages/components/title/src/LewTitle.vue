@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { titleProps } from './title';
+import { titleProps } from './props';
 import { any2px } from 'lew-ui/utils';
 
 const props = defineProps(titleProps);

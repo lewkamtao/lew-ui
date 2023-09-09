@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { useVModel } from '@vueuse/core';
-import LewRadio from './LewRadio.vue';
-import { radioGroupProps } from './radio';
-import type { RadioOptions } from './radio';
+import { radioGroupProps } from './props';
+import type { RadioOptions } from './props';
 import { object2class } from 'lew-ui/utils';
+import LewRadio from './LewRadio.vue';
 
 const emit = defineEmits(['change', 'update:modelValue']);
 const props = defineProps(radioGroupProps);
@@ -62,6 +62,7 @@ const getRadioGroupClassName = computed(() => {
 .lew-radio-group-size-large {
     min-height: var(--lew-form-item-height-large);
 }
+
 .lew-radio-group.lew-radio-group-direction-x {
     flex-direction: row;
 }

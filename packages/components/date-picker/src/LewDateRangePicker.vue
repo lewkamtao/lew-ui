@@ -1,7 +1,14 @@
 <script lang="ts" setup>
-import { dateRangePickerProps } from './datePicker';
+import { LewPopover, LewIcon, LewDateRange } from 'lew-ui';
+import { dateRangePickerProps } from './props';
 import { useVModel } from '@vueuse/core';
+import { LewTooltip } from 'lew-ui';
 
+// 获取app
+const app = getCurrentInstance()?.appContext.app;
+if (app && !app.directive('tooltip')) {
+    app.use(LewTooltip);
+}
 const props = defineProps(dateRangePickerProps);
 const emit = defineEmits(['change', 'clear', 'update:modelValue']);
 const modelValue = useVModel(props, 'modelValue', emit);
@@ -109,7 +116,7 @@ defineExpose({ show, hide });
                     />
                     <transition name="lew-form-icon-ani">
                         <lew-icon
-                            v-if="clearable && checkClear"
+                            v-if="clearable && checkClear && !readonly"
                             :size="getIconSize"
                             type="x"
                             v-tooltip="{
@@ -159,17 +166,20 @@ defineExpose({ show, hide });
         border: var(--lew-form-border-width) transparent solid;
         outline: 0px var(--lew-color-primary-light) solid;
     }
+
     .lew-date-picker-input {
         width: 100%;
         display: inline-flex;
         gap: 5px;
         align-items: center;
         box-sizing: border-box;
+
         .lew-date-picker-mid {
             display: flex;
             align-items: center;
             color: var(--lew-text-color-8);
         }
+
         .icon-calendar {
             position: absolute;
             top: 50%;
@@ -178,6 +188,7 @@ defineExpose({ show, hide });
             transition: var(--lew-form-transition);
             opacity: var(--lew-form-icon-opacity);
         }
+
         .icon-calendar-hide {
             opacity: 0;
             transform: translateY(-50%) translateX(100%);
@@ -207,6 +218,7 @@ defineExpose({ show, hide });
             line-height: var(--lew-form-input-line-height-small);
         }
     }
+
     .lew-date-picker-medium {
         .lew-date-picker-input {
             height: var(--lew-form-item-height-medium);
@@ -215,6 +227,7 @@ defineExpose({ show, hide });
             line-height: var(--lew-form-input-line-height-medium);
         }
     }
+
     .lew-date-picker-large {
         .lew-date-picker-input {
             height: var(--lew-form-item-height-large);

@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import dayjs from 'dayjs';
 import { getMonthDate, getHeadDate } from './date';
-import { dateRangeProps } from './datePicker';
+import { dateRangeProps } from './props';
 import { useVModel } from '@vueuse/core';
+import { LewFlex, LewButton } from 'lew-ui';
+
 const emit = defineEmits(['change', 'update:modelValue']);
 const props = defineProps(dateRangeProps);
 const modelValue = useVModel(props, 'modelValue', emit);
@@ -530,7 +532,7 @@ defineExpose({ init });
                     width: 22px;
                     height: 22px;
                     line-height: 24px;
-                    color: var(--lew-text-color-9);
+                    color: var(--lew-text-color-7);
                     border-radius: 50%;
                     transition: all 0.1s ease;
                     border: 2px transparent solid;
@@ -649,6 +651,6 @@ defineExpose({ init });
 }
 
 .lew-date:first-child {
-    border-right: 1px var(--lew-form-border-color) solid;
+    border-right: var(--lew-popover-border);
 }
 </style>

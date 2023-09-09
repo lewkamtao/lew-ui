@@ -5,4 +5,3 @@
         <lew-tag type="ghost" size="large">large</lew-tag>
     </lew-flex>
 </template>
-

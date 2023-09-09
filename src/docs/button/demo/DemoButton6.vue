@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const loading = ref<Boolean>(false);
+const loading = ref<boolean>(false);
 const mockFn = () => {
     return new Promise((resolve) => {
         setTimeout(() => {

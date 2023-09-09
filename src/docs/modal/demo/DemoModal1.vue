@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import * as Yup from 'yup';
-const modalVisible1 = ref(false);
+
+const visible1 = ref(false);
 const modalVisible2 = ref(false);
+const modalVisible3 = ref(false);
 const form = ref({});
 const options = ref([
     {
@@ -61,6 +63,230 @@ const data: any = [
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
         hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
     },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
+    {
+        id: 5,
+        name: '小飞',
+        age: '13',
+        sex: 3,
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+        hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野'],
+    },
 ];
 
 const columns = [
@@ -100,12 +326,37 @@ const columns = [
     },
 ];
 
+const open = () => {
+    LewDialog.error({
+        title: '销毁确认',
+        okText: '销毁',
+        content: '你是否要销毁该仓库，此操作会立即生效，请谨慎操作！',
+        closeOnClickOverlay: true,
+        ok: () => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(true);
+                    LewMessage.success({
+                        content: '删除成功',
+                    });
+                    setTimeout(() => {
+                        visible1.value = false;
+                    }, 250);
+                }, 1000);
+            });
+        },
+        cancel: () => {
+            // 取消
+        },
+    });
+};
+
 onMounted(() => {
     document.onkeydown = function (event) {
         const e = event || window.event || arguments.callee.caller.arguments[0];
         if (e && e.keyCode === 27) {
             // 按 Esc
-            modalVisible1.value = false;
+            visible1.value = false;
             modalVisible2.value = false;
         }
     };
@@ -114,64 +365,60 @@ onMounted(() => {
 
 <template>
     <lew-flex x="start">
-        <lew-button text="登录" @click="modalVisible1 = true" />
+        <lew-button text="登录" @click="visible1 = true" />
         <lew-button text="展示表格" @click="modalVisible2 = true" />
     </lew-flex>
 
     <lew-modal
-        v-model:visible="modalVisible1"
-        closeOnClickOverlay
+        v-model:visible="visible1"
+        close-on-click-overlay
         width="350px"
+        title="About Lew-UI"
+        ok-text="删除"
+        ok-color="red"
+        @ok="open"
+        @cancel="visible1 = false"
     >
-        <div class="modal-body">
-            <lew-title :bold="700" style="margin-bottom: 20px"
-                >登录你的账户
-            </lew-title>
-            <lew-form
-                class="form-box"
-                v-model="form"
-                :options="options"
-                :label-width="40"
-            />
-            <lew-flex x="end">
-                <lew-button
-                    text="关闭"
-                    color="normal"
-                    type="text"
-                    @click="modalVisible1 = false"
-                />
-                <lew-button text="立即登录" @click="modalVisible1 = false" />
-            </lew-flex>
-        </div>
+        <template #main>
+            <div class="modal-body">
+                <div>A beautiful component library based on vue3</div>
+            </div>
+        </template>
     </lew-modal>
-    <lew-modal v-model:visible="modalVisible2" width="1250px">
-        <div class="modal-body">
-            <lew-table :data-source="data" :columns="columns">
-                <template #fraction="{ row }">
-                    <lew-flex>
-                        <lew-badge
-                            v-if="row.fraction >= 60"
-                            round
-                            color="green"
-                        />
-                        <lew-badge v-else round color="red" />
-                        <span>{{ row.fraction >= 60 ? '良好' : '很差' }}</span>
-                    </lew-flex>
-                </template>
-            </lew-table>
-            <br />
-
-            <lew-flex x="end">
+    <lew-modal v-model:visible="modalVisible2" hide-footer width="1250px">
+        <template #header>
+            <div class="header">这是自定义头部</div>
+        </template>
+        <template #main>
+            <div class="modal-body">
+                <lew-table :data-source="data" :columns="columns">
+                    <template #fraction="{ row }">
+                        <lew-flex>
+                            <lew-badge
+                                v-if="row.fraction >= 60"
+                                round
+                                color="green"
+                            />
+                            <lew-badge v-else round color="red" />
+                            <span>{{
+                                row.fraction >= 60 ? '良好' : '很差'
+                            }}</span>
+                        </lew-flex>
+                    </template>
+                </lew-table>
+            </div>
+        </template>
+        <template #footer>
+            <lew-flex x="end" style="padding: 10px 20px">
                 <lew-button
                     text="关闭"
                     type="text"
                     color="normal"
                     @click="modalVisible2 = false"
                 />
-
                 <lew-button text="提交" @click="modalVisible2 = false" />
             </lew-flex>
-        </div>
+        </template>
     </lew-modal>
 </template>
 
@@ -179,9 +426,20 @@ onMounted(() => {
 .modal-body {
     width: 100%;
     height: 100%;
+    max-height: 400px;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     padding: 40px;
     box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    font-size: 18px;
+    font-weight: bolder;
 }
 </style>

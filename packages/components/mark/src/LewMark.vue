@@ -1,11 +1,10 @@
 <script lang="ts" setup>
 import { useLewTo } from '../../../hooks';
 import { getColorType } from 'lew-ui/utils';
-import { markProps } from './mark';
+import { markProps } from './props';
 
 const props = defineProps(markProps);
 const { lewTo } = useLewTo();
-
 
 const getStyle = computed(() => {
     const { color, round, bold, to } = props;
@@ -25,12 +24,13 @@ const getStyle = computed(() => {
         <slot />
     </span>
 </template>
- 
-<style lang="scss">
+
+<style lang="scss" scoped>
 .lew-mark {
     display: inline;
     border-radius: 4px;
     padding: 2px 6px;
+    margin: 0px 3px;
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
 }

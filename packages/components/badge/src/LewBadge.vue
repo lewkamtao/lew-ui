@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { badgeProps } from './badge';
+import { badgeProps } from './props';
 import { getColorType } from 'lew-ui/utils';
 
 const props = defineProps(badgeProps);
 
 const getStyle = computed(() => {
     const { color } = props;
-    let styleObj = {} as any;
+    let styleObj: Record<string, string> = {};
     let _color = getColorType(color);
     styleObj.backgroundColor = `var(--lew-color-${_color})`;
     return styleObj;

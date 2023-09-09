@@ -1,0 +1,231 @@
+.lew-upload {
+    display: inline-flex;
+    &--picture-card {
+        justify-content: center;
+        align-items: center;
+        border: 1px dashed var(--lew-color-normal-light2);
+        border-radius: var(--lew-border-radius);
+        cursor: pointer;
+        overflow: hidden;
+    }
+    &__input {
+        display: none;
+    }
+    &__tip {
+        font-size: 12px;
+        color: var(--lew-text-color-3);
+        margin-top: 7px;
+    }
+    &-list {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        margin: 10px 0 0;
+        padding: 0;
+        list-style: none;
+    }
+    &-list__item {
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+        font-size: 14px;
+        color: var(--lew-text-color-3);
+        margin-bottom: 5px;
+        box-sizing: border-box;
+        border-radius: 4px;
+        &-info {
+            display: flex;
+            padding: 0 4px;
+        }
+        &-info:hover .lew-upload-list__item-filename {
+            color: var(--lew-color-primary-hover);
+        }
+        &-filename {
+            margin-left: 6px;
+        }
+    }
+    // text
+    &-list--text .lew-upload-list__item {
+        height: 20px;
+        line-height: 10px;
+        &:hover {
+            cursor: pointer;
+            background-color: var(--lew-bgcolor-2);
+        }
+        &:hover .lew-icon--check-circle {
+            display: none;
+        }
+        &:hover .lew-icon--x {
+            display: block;
+        }
+        &-status {
+            margin-left: 10px;
+        }
+        .lew-icon {
+            &--file-text {
+                margin-left: 4px;
+            }
+            &--check-circle {
+                color: var(--lew-color-success);
+            }
+            &--x {
+                display: none;
+            }
+            &--x:hover {
+                color: var(--lew-color-primary-hover);
+            }
+            &--x:hover {
+                color: var(--lew-color-primary-hover);
+            }
+        }
+    }
+    // picture
+    &-list--picture .lew-upload-list__item {
+        padding: 10px;
+        position: relative;
+        z-index: 0;
+        overflow: hidden;
+        border: 1px solid var(--lew-color-normal-light2);
+        border-radius: var(--lew-border-radius);
+        &-thumbnail {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            background-color: var(--lew-bgcolor-0);
+        }
+        &-info {
+            cursor: pointer;
+        }
+        &-status {
+            position: absolute;
+            top: -6px;
+            right: -16px;
+            width: 46px;
+            height: 26px;
+            transform: rotate(45deg);
+            cursor: pointer;
+            text-align: center;
+            background-color: var(--lew-color-success);
+        }
+        .lew-icon {
+            &--check {
+                position: relative;
+                top: 12px;
+                transform: rotate(-45deg);
+                color: var(--lew-color-white);
+            }
+            &--x {
+                display: none;
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                cursor: pointer;
+            }
+            &--x:hover {
+                color: var(--lew-color-primary-hover);
+            }
+        }
+        &:hover .lew-upload-list__item-status {
+            display: none;
+        }
+        &:hover .lew-icon--x {
+            display: block;
+        }
+    }
+    // picture-card
+    &-list--picture-card {
+        flex-direction: row;
+    }
+    &-list--picture-card .lew-upload-list__item {
+        width: 148px;
+        height: 148px;
+        margin: 0 8px 8px 0;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--lew-color-normal-light2);
+        border-radius: var(--lew-border-radius);
+        &-thumbnail {
+            width: 100%;
+            height: 100%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            object-fit: contain;
+            background-color: var(--lew-bgcolor-0);
+        }
+        &-status {
+            position: absolute;
+            top: -6px;
+            right: -16px;
+            width: 46px;
+            height: 26px;
+            transform: rotate(45deg);
+            text-align: center;
+            background-color: var(--lew-color-success);
+        }
+        &-actions {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            cursor: default;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            opacity: 0;
+            font-size: 20px;
+            background-color: rgba($color: #000000, $alpha: 0.5);
+            transition: opacity 0.3s;
+        }
+        .lew-icon {
+            &--check {
+                position: relative;
+                top: 12px;
+                transform: rotate(-45deg);
+                color: var(--lew-color-white);
+            }
+            &--eye,
+            &--trash-2 {
+                cursor: pointer;
+            }
+            &--trash-2 {
+                margin-left: 10px;
+            }
+        }
+    }
+    &-list--picture-card .lew-upload {
+        width: 148px;
+        height: 148px;
+    }
+    &-list--picture-card
+        .lew-upload-list__item:hover
+        .lew-upload-list__item-status {
+        display: none;
+    }
+    &-list--picture-card
+        .lew-upload-list__item:hover
+        .lew-upload-list__item-actions {
+        opacity: 1;
+    }
+    // drag style
+    &-dragger {
+        background-color: var(--lew-bgcolor-0);
+        border: 1px dashed var(--lew-color-normal-light2);
+        border-radius: var(--lew-border-radius);
+        box-sizing: border-box;
+        text-align: center;
+        cursor: pointer;
+        overflow: hidden;
+    }
+    &-dragger:hover {
+        border: 1px dashed var(--lew-color-primary-hover);
+    }
+    .is-dragover {
+        border: 1px dashed var(--lew-color-primary-hover);
+    }
+}

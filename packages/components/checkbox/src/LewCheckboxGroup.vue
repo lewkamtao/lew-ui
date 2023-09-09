@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { useVModel, watchArray } from '@vueuse/core';
-import { checkboxGroupProps } from './checkbox';
-import type { CheckboxOptions } from './checkbox';
+import { checkboxGroupProps } from './props';
+import type { CheckboxOptions } from './props';
 import { object2class } from 'lew-ui/utils';
-import LewCheckbox from './LewCheckbox.vue';
+import { LewCheckbox } from 'lew-ui';
 
 const props = defineProps(checkboxGroupProps);
 const emit = defineEmits(['change', 'update:modelValue']);
 const modelValue = useVModel(props, 'modelValue', emit);
-const checkList = ref([] as any);
+const checkList = ref([] as boolean[]);
 
 const change = (item: CheckboxOptions, checked: boolean) => {
     let _value = modelValue.value || [];
@@ -32,7 +32,7 @@ watchArray(modelValue.value, () => {
 });
 
 const initCheckbox = () => {
-    checkList.value = props.options.map((item) => {
+    checkList.value = props.options.map((item: CheckboxOptions) => {
         if (modelValue.value.includes(item.value)) {
             return true;
         }

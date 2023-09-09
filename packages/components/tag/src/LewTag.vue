@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { tagProps } from './tag';
+import { tagProps } from './tagProps';
 import { object2class, getColorType } from 'lew-ui/utils';
+import { LewIcon } from 'lew-ui';
 
 const props = defineProps(tagProps);
 const emit = defineEmits(['close']);
@@ -36,6 +37,7 @@ const getStyle = computed(() => {
     switch (type) {
         case 'fill':
             styleObj.backgroundColor = `var(--lew-color-${_color})`;
+            styleObj.color = `var(--lew-color-white)`;
             break;
         case 'light':
             styleObj.backgroundColor = `var(--lew-color-${_color}-light)`;
@@ -48,6 +50,7 @@ const getStyle = computed(() => {
             styleObj.boxShadow = 'none';
             break;
         default:
+            styleObj.color = `var(--lew-color-white)`;
             styleObj.backgroundColor = `var(--lew-color-${_color})`;
             break;
     }
@@ -82,7 +85,6 @@ const getStyle = computed(() => {
     user-select: none;
     box-sizing: border-box;
     overflow: hidden;
-    color: var(--lew-bgcolor-0);
 
     .lew-tag-value {
         font-weight: normal;
@@ -187,7 +189,6 @@ const getStyle = computed(() => {
         padding: 0px 4px;
     }
 }
-
 
 .lew-tag-disabled {
     opacity: var(--lew-disabled-opacity);

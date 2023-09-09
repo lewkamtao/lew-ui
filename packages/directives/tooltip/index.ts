@@ -1,1 +1,1 @@
-export { default as LewVTooltip } from './src';
+export { default as LewTooltip } from './src';

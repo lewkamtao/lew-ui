@@ -1,7 +1,15 @@
 <script lang="ts" setup>
-import { datePickerProps } from './datePicker';
+import { datePickerProps } from './props';
 import { useVModel } from '@vueuse/core';
 import { object2class } from 'lew-ui/utils';
+import { LewPopover, LewIcon, LewDate } from 'lew-ui';
+import { LewTooltip } from 'lew-ui';
+
+// 获取app
+const app = getCurrentInstance()?.appContext.app;
+if (app && !app.directive('tooltip')) {
+    app.use(LewTooltip);
+}
 const emit = defineEmits(['change', 'clear', 'update:modelValue']);
 const props = defineProps(datePickerProps);
 const modelValue = useVModel(props, 'modelValue', emit);
@@ -25,7 +33,7 @@ const change = (date: string) => {
 };
 
 const getIconSize = computed(() => {
-    const size: any = {
+    const size: Record<string, number> = {
         small: 13,
         medium: 14,
         large: 16,
@@ -84,7 +92,7 @@ defineExpose({ show, hide });
                     />
                     <transition name="lew-form-icon-ani">
                         <lew-icon
-                            v-if="modelValue && clearable"
+                            v-if="modelValue && clearable && !readonly"
                             :size="getIconSize"
                             type="x"
                             v-tooltip="{
@@ -110,6 +118,7 @@ defineExpose({ show, hide });
 <style lang="scss" scoped>
 .lew-popover {
     width: 273px;
+
     .lew-date-picker-view {
         display: inline-flex;
         align-items: center;
@@ -128,11 +137,13 @@ defineExpose({ show, hide });
         box-shadow: var(--lew-form-box-shadow);
         border: var(--lew-form-border-width) transparent solid;
     }
+
     .lew-date-picker-input {
         width: 100%;
         display: inline-flex;
         align-items: center;
         box-sizing: border-box;
+
         .icon-calendar {
             position: absolute;
             top: 50%;
@@ -141,6 +152,7 @@ defineExpose({ show, hide });
             transition: var(--lew-form-transition);
             opacity: var(--lew-form-icon-opacity);
         }
+
         .icon-calendar-hide {
             opacity: 0;
             transform: translateY(-50%) translateX(100%);
@@ -170,6 +182,7 @@ defineExpose({ show, hide });
             line-height: var(--lew-form-input-line-height-small);
         }
     }
+
     .lew-date-picker-size-medium {
         .lew-date-picker-input {
             height: var(--lew-form-item-height-medium);
@@ -178,6 +191,7 @@ defineExpose({ show, hide });
             line-height: var(--lew-form-input-line-height-medium);
         }
     }
+
     .lew-date-picker-size-large {
         .lew-date-picker-input {
             height: var(--lew-form-item-height-large);

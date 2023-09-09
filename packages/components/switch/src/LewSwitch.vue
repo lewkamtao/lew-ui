@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { _props } from './props';
-
-const props = defineProps(_props);
+import { switchProps } from './props';
+const props = defineProps(switchProps);
 const _loading = ref(false);
 const v = ref(props.modelValue);
 
@@ -41,9 +40,9 @@ const handleClick = async (e: any) => {
         class="lew-switch-view"
         :class="`
      ${round ? 'lew-switch-round' : ''} 
-     ${v ? 'lew-switch-checked' : ''}
-     ${_loading || loading ? 'lew-switch-loading' : ''}
-     ${request ? 'lew-switch-request' : ''}
+         ${v ? 'lew-switch-checked' : ''}
+         ${_loading || loading ? 'lew-switch-loading' : ''}
+         ${request ? 'lew-switch-request' : ''}
     `"
         @click="handleClick"
     >
@@ -69,6 +68,7 @@ const handleClick = async (e: any) => {
     cursor: pointer;
     box-shadow: var(--lew-form-box-shadow);
     outline: 0px var(--lew-color-primary-light) solid;
+
     .lew-switch-dot {
         position: absolute;
         width: 16px;

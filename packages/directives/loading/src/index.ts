@@ -1,7 +1,7 @@
 import type { App as Application, DirectiveBinding } from 'vue';
 import { LewIcon } from 'lew-ui';
 
-import { h, createApp } from 'vue';
+import { createApp } from 'vue';
 import '../styles/index.scss';
 
 let loadingWrapper: HTMLElement;

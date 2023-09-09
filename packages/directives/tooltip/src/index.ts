@@ -19,9 +19,9 @@ export default {
                     placement: binding.value.placement,
                     allowHTML: binding.value.allowHTML,
                     arrow: false,
-                    duration: [150, 150],
+                    duration: [120, 120],
                     maxWidth: 250,
-                    delay: trigger === 'mouseenter' ? [250, 250] : undefined,
+                    delay: trigger === 'mouseenter' ? [150, 150] : undefined,
                 });
                 el.instance.popper.children[0].setAttribute(
                     'data-lew',

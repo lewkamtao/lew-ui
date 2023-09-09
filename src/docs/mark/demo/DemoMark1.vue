@@ -7,8 +7,9 @@
         >，这会导致杀身之祸的——你喜欢的东西，别人也会喜欢。
     </p>
     <p>
-        金钱既是天使，又是<lew-mark round type="light" color="blue">魔鬼</lew-mark>。
-        金钱正好够用，使你心满意足时，
+        金钱既是天使，又是<lew-mark round type="light" color="blue"
+            >魔鬼</lew-mark
+        >。 金钱正好够用，使你心满意足时，
         <lew-mark type="light" color="blue"
             >金钱是天使；金钱让你感到是一堆麻烦时，便成了魔鬼。
             金钱是流动着的财富。</lew-mark

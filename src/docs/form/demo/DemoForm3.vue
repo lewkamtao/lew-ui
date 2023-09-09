@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as Yup from 'yup';
+
 const options = ref([
     {
         field: 'username',
@@ -23,7 +24,7 @@ const options = ref([
     },
 ]);
 
-let formRef = ref();
+const formRef = ref();
 const getForm = () => {
     formRef.value.getForm();
 };

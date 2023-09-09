@@ -140,6 +140,13 @@ group.value = [
             //     color: '',
             // },
             {
+                cname: '菜单',
+                name: 'Menu',
+                path: '/Menu',
+                label: '',
+                color: '',
+            },
+            {
                 cname: '下拉菜单',
                 name: 'Dropdown',
                 path: '/Dropdown',
@@ -264,13 +271,13 @@ group.value = [
                 color: '',
             },
 
-            {
-                cname: '文件上传',
-                name: 'Upload',
-                path: '/Upload',
-                label: '',
-                color: '',
-            },
+            // {
+            //     cname: '文件上传',
+            //     name: 'Upload',
+            //     path: '/Upload',
+            //     label: '',
+            //     color: '',
+            // },
         ],
     },
     {
@@ -405,7 +412,7 @@ group.value = [
             <the-siderbar :group="group" />
         </div>
         <div ref="mainRef" class="app-main lew-scrollbar">
-            <div class="component-main lew-scrollbar" id="component-main">
+            <div id="component-main" class="component-main lew-scrollbar">
                 <router-view v-slot="{ Component }">
                     <keep-alive>
                         <Component :is="Component"> </Component>
@@ -437,6 +444,7 @@ group.value = [
     background: var(--lew-bgcolor-2);
     display: flex;
     box-sizing: border-box;
+
     .component-main {
         width: calc(100% - 200px);
         height: 100%;
@@ -446,6 +454,7 @@ group.value = [
         padding: 50px 50px 150px 50px;
         scroll-behavior: smooth;
     }
+
     .component-nav {
         height: 100%;
         width: 200px;
@@ -492,6 +501,7 @@ group.value = [
             width: 100%;
             padding: 50px 15px;
         }
+
         .component-nav {
             display: none;
         }

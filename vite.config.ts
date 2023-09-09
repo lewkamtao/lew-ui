@@ -1,15 +1,16 @@
 import { defineConfig, ConfigEnv } from 'vite';
-import compressPlugin from 'vite-plugin-compression';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import AutoImport from 'unplugin-auto-import/vite';
 import * as path from 'path';
+import dts from 'vite-plugin-dts';
+
 // 路径
 const pathSrc = path.resolve(__dirname, 'src');
 const pathPackage = path.resolve(__dirname, 'packages');
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }: ConfigEnv) => {
+export default defineConfig(({ mode }) => {
     return {
         server: {
             port: 10034,
@@ -23,18 +24,10 @@ export default defineConfig(({ mode }: ConfigEnv) => {
             // 忽略后缀名的配置选项, 添加 .vue 选项时要记得原本默认忽略的选项也要手动写入
             extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
         },
-        // compressPlugin开启gzip压缩
         plugins: [
             vue(),
             vueJsx(),
-            () => {
-                mode === 'package'
-                    ? compressPlugin({
-                          ext: '.gz',
-                          deleteOriginFile: false, // 是否删除原始文件
-                      })
-                    : undefined;
-            },
+            mode === 'package' ? dts() : undefined,
             AutoImport({
                 imports: ['vue'],
                 dts: path.resolve(pathSrc, 'auto-imports.d.ts'),
@@ -50,7 +43,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
                       lib: {
                           entry: path.resolve(__dirname, './packages/index.ts'),
                           name: 'lew-ui',
-                          fileName: (format) => `lew.${format}.ts`,
+                          fileName: 'index',
                       },
                       minify: 'terser',
                       terserOptions: {
@@ -79,7 +72,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
                               entryFileNames: 'assets/js/[name]-[hash].js',
                               assetFileNames:
                                   'assets/static/[name]-[hash].[ext]',
-                              manualChunks(id: any) {
+                              manualChunks(id) {
                                   if (id.includes('node_modules')) {
                                       return id
                                           .toString()

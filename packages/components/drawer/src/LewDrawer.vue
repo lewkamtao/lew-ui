@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
 import { useDOMCreate } from '../../../hooks';
-import { drawerProps, object2class, getStyle } from './drawer';
+import { drawerProps, object2class, getStyle } from './props';
 
 useDOMCreate('lew-drawer');
 const emit = defineEmits(['update:visible']);
@@ -45,8 +45,9 @@ const close = () => {
                 >
                     <slot></slot>
                 </div>
-            </div> </transition
-    ></teleport>
+            </div>
+        </transition>
+    </teleport>
 </template>
 <style lang="scss">
 .lew-drawer {
@@ -59,6 +60,7 @@ const close = () => {
     outline: 90000px solid var(--lew-modal-bgcolor);
     z-index: 999;
 }
+
 .lew-drawer-main {
     position: fixed;
     width: 100%;
@@ -67,26 +69,31 @@ const close = () => {
     background: #fff;
     z-index: 9999;
 }
+
 .lew-drawer-main-right {
     right: 0;
     top: 0;
     transform: translateX(100%);
 }
+
 .lew-drawer-main-top {
     left: 0;
     top: 0;
     transform: translateY(-100%);
 }
+
 .lew-drawer-main-left {
     left: 0;
     top: 0;
     transform: translateX(-100%);
 }
+
 .lew-drawer-main-bottom {
     left: 0;
     bottom: 0;
     transform: translateY(100%);
 }
+
 .lew-drawer-show {
     .lew-drawer-main {
         transform: translate(0, 0);

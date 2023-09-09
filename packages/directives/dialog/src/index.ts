@@ -79,6 +79,7 @@ const dialog = (type: string, options: Options) => {
         },
     });
     app.mount(div);
+    div.remove();
 };
 
 export default {

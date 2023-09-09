@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { LewIcon } from 'lew-ui';
 import { object2class, getColorType } from 'lew-ui/utils';
-import { buttonProps } from './button';
+import { buttonProps } from './props';
 
 const emit = defineEmits(['click']);
 const props = defineProps(buttonProps);
 
 const _loading = ref(false);
 
-const handleClick = async (e: any) => {
+const handleClick = async (e: MouseEvent) => {
     if (props.disabled || _loading.value || props.loading) return;
     emit('click', e);
     if (typeof props.request === 'function') {
@@ -49,7 +49,7 @@ const getIconSize = computed(() => {
 
 const getStyle = computed(() => {
     const { round, type, color, loading } = props;
-    let styleObj = {} as any;
+    let styleObj: Record<string, string> = {};
     let _color = getColorType(color);
     switch (type) {
         case 'fill':

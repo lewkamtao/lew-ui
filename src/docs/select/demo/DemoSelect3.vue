@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { schools } from './schools';
 
-let schoolsOptions = schools.map((e) => {
+const schoolsOptions = schools.map((e) => {
     return { label: e, value: e };
 });
 
@@ -20,7 +20,7 @@ const filterFn = (params: any) => {
 const searchFn = (event: any) => {
     return new Promise((resolve) => {
         setTimeout(() => {
-            let res = options.value.filter(
+            const res = options.value.filter(
                 (e) => e.label.indexOf(event.keyword) >= 0
             );
             resolve(res);
@@ -32,25 +32,25 @@ const searchFn = (event: any) => {
 <template>
     <lew-flex style="width: 320px" direction="y">
         <lew-select
+            v-model="value"
             searchable
             :default-value="value"
-            v-model="value"
             :options="options"
             placeholder="默认过滤"
         />
         <lew-select
+            v-model="value"
             searchable
             :default-value="value"
             :search-method="filterFn"
             placeholder="自定义过滤方法"
-            v-model="value"
         />
         <lew-select
+            v-model="value"
             searchable
             :default-value="value"
             :search-method="searchFn"
             placeholder="模拟请求"
-            v-model="value"
         />
     </lew-flex>
 </template>

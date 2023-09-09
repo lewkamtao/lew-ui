@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { tabsProps } from './tabs';
+import { tabsProps } from './props';
 import { useVModel } from '@vueuse/core';
 import { object2class, any2px } from 'lew-ui/utils';
 
@@ -24,6 +24,33 @@ watch(
     }
 );
 
+const initActiveItemStyle = (index: number) => {
+    const activeRef = itemRef.value[index];
+    if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
+        tabsRef.value.scrollLeft =
+            activeRef.offsetLeft -
+            tabsRef.value.clientWidth / 2 +
+            activeRef.offsetWidth / 2;
+    }
+
+    state.activeItemStyle = {
+        width: `${activeRef.offsetWidth}px`,
+        transform: `translate(${activeRef.offsetLeft}px)`,
+    };
+};
+
+watch(
+    () => props.size,
+    () => {
+        nextTick(() => {
+            const index = props.options.findIndex(
+                (e) => tabsValue.value === e.value
+            );
+            initActiveItemStyle(index);
+        });
+    }
+);
+
 const init = () => {
     let index = props.options.findIndex((e) => e.value === tabsValue.value);
     if (index < 0) {
@@ -40,24 +67,10 @@ const selectItem = (value: [String, Number], type?: string) => {
     const index = props.options.findIndex((e) => value === e.value);
     if (state.curIndex != index) {
         const _item = props.options[index];
-
         if (tabsValue.value != _item.value) {
             tabsValue.value = _item.value;
         }
-
-        const activeRef = itemRef.value[index];
-
-        if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
-            tabsRef.value.scrollLeft =
-                activeRef.offsetLeft -
-                tabsRef.value.clientWidth / 2 +
-                activeRef.offsetWidth / 2;
-        }
-
-        state.activeItemStyle = {
-            width: `${activeRef.offsetWidth}px`,
-            transform: `translate(${activeRef.offsetLeft}px)`,
-        };
+        initActiveItemStyle(index);
         if (type !== 'watch') {
             emit('change', {
                 label: _item.label,
@@ -65,12 +78,12 @@ const selectItem = (value: [String, Number], type?: string) => {
                 activeIndex: index,
             });
         }
-
         state.curIndex = index;
     }
 };
 
 let timer: ReturnType<typeof setTimeout> | undefined;
+
 const debounce = () => {
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -88,10 +101,11 @@ const getTabsWrapperClassName = computed(() => {
 });
 
 const getTabsClassName = computed(() => {
-    const { type, round } = props;
+    const { type, round, size } = props;
     return object2class('lew-tabs', {
         type,
         round,
+        size,
     });
 });
 
@@ -183,6 +197,7 @@ onUnmounted(() => {
     overflow: hidden;
     box-shadow: var(--lew-form-box-shadow);
 }
+
 .lew-tabs-wrapper-round {
     border-radius: 35px;
 }
@@ -222,6 +237,7 @@ onUnmounted(() => {
         rgba(0, 0, 0, 0.1)
     );
 }
+
 .lew-tabs-wrapper-type-line {
     box-shadow: none;
 }
@@ -250,6 +266,7 @@ onUnmounted(() => {
     scroll-behavior: smooth;
     width: 100%;
     box-sizing: border-box;
+
     .lew-tabs-item {
         position: relative;
         display: inline-flex;
@@ -257,17 +274,15 @@ onUnmounted(() => {
         justify-content: center;
         flex: 1;
         z-index: 9;
-        height: 28px;
-        padding: 0px 12px;
         box-sizing: border-box;
         border-radius: var(--lew-border-radius);
         margin: 3px;
         color: var(--lew-text-color-2);
         white-space: nowrap;
         cursor: pointer;
-        font-size: 14px;
         flex-shrink: 0;
     }
+
     .lew-tabs-item-active {
         color: var(--lew-color-primary-dark);
     }
@@ -277,15 +292,43 @@ onUnmounted(() => {
         top: 3px;
         left: 0px;
         z-index: 9;
-        height: 28px;
-        border-radius:6px;
+        height: calc(100% - 6px);
+        border-radius: 6px;
         background: var(--lew-tabs-active-color);
         transform: translateX(3px);
         box-shadow: 0px 0px 12px rgba($color: #000000, $alpha: 0.15);
         box-sizing: border-box;
     }
+
     .lew-tabs-item-isInit {
-        transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+        transition: all 0.2s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+}
+
+.lew-tabs-size-small {
+    height: 28px;
+
+    .lew-tabs-item {
+        padding: var(--lew-form-input-padding-small);
+        font-size: var(--lew-form-font-size-small);
+    }
+}
+
+.lew-tabs-size-medium {
+    height: 32px;
+
+    .lew-tabs-item {
+        padding: var(--lew-form-input-padding-medium);
+        font-size: 14px;
+    }
+}
+
+.lew-tabs-size-large {
+    height: 34px;
+
+    .lew-tabs-item {
+        padding: var(--lew-form-input-padding-large);
+        font-size: 15px;
     }
 }
 
@@ -300,13 +343,16 @@ onUnmounted(() => {
     .lew-tabs-item:hover {
         background: var(--lew-bgcolor-2);
     }
+
     .lew-tabs-item-active {
         background: none;
     }
+
     .lew-tabs-item-active:hover {
         transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
         background: none;
     }
+
     .lew-tabs-item-animation-active {
         position: absolute;
         top: auto;
@@ -314,7 +360,6 @@ onUnmounted(() => {
         left: 0px;
         z-index: 9;
         height: 2px;
-
         background: var(--lew-color-primary-dark);
         transform: translateX(3px);
         box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);
@@ -323,9 +368,11 @@ onUnmounted(() => {
 
 .lew-tabs-round {
     border-radius: 35px;
+
     .lew-tabs-item {
         border-radius: 35px;
     }
+
     .lew-tabs-item-animation-active {
         border-radius: 35px;
     }

@@ -1,8 +1,25 @@
 <script setup lang="ts">
-import { formProps } from './form';
+import { formProps } from './props';
 import { object2class } from 'lew-ui/utils';
 import * as Yup from 'yup';
 import { useVModel, watchDebounced } from '@vueuse/core';
+import {
+    LewInput,
+    LewTextarea,
+    LewInputTag,
+    LewCheckboxGroup,
+    LewRadioGroup,
+    LewCheckbox,
+    LewSelect,
+    LewSelectMultiple,
+    LewDatePicker,
+    LewDateRangePicker,
+    LewTabs,
+    LewCascader,
+    LewSwitch,
+    LewButton,
+} from 'lew-ui';
+
 const props = defineProps(formProps);
 const emit = defineEmits(['update:modelValue', 'update:options', 'change']);
 const form = ref({} as any);
@@ -358,11 +375,10 @@ defineExpose({ getForm, setForm, validate });
                 <lew-select
                     v-model="item.value"
                     v-if="item.as === 'select'"
-                    @change=" 
-                        (e:any) => {
-                            validate(item.field);
-                            typeof item.props.click === 'function'?item.props.change(e):'';
-                        }"
+                    @change="(e: any) => {
+                    validate(item.field);
+                    typeof item.props.click === 'function' ? item.props.change(e) : '';
+                }"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
@@ -371,11 +387,10 @@ defineExpose({ getForm, setForm, validate });
                 <lew-select-multiple
                     v-model="item.value"
                     v-if="item.as === 'select-multiple'"
-                    @change=" 
-                        (e:any) => {
-                            validate(item.field);
-                            typeof item.props.click === 'function'?item.props.change(e):'';
-                        } "
+                    @change="(e: any) => {
+                    validate(item.field);
+                    typeof item.props.click === 'function' ? item.props.change(e) : '';
+                }"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
@@ -385,11 +400,10 @@ defineExpose({ getForm, setForm, validate });
                     style="width: 100%"
                     v-model="item.value"
                     v-if="item.as === 'date-picker'"
-                    @change=" 
-                        (e:any) => {
-                            validate(item.field);
-                            typeof item.props.click === 'function'?item.props.change(e):'';
-                        }"
+                    @change="(e: any) => {
+                    validate(item.field);
+                    typeof item.props.click === 'function' ? item.props.change(e) : '';
+                }"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
@@ -399,26 +413,37 @@ defineExpose({ getForm, setForm, validate });
                     style="width: 100%"
                     v-model="item.value"
                     v-if="item.as === 'date-range-picker'"
-                    @change=" 
-                        (e:any) => {
-                            validate(item.field);
-                            typeof item.props.click === 'function'?item.props.change(e):'';
-                        }   
-                    "
+                    @change="(e: any) => {
+                        validate(item.field);
+                        typeof item.props.click === 'function' ? item.props.change(e) : '';
+                    }
+                        "
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                     v-bind="{ size: size, ...item.props }"
                 />
+
                 <lew-tabs
                     v-model="item.value"
                     v-if="item.as === 'tabs'"
-                    @change=" 
-                        (e:any) => {
-                            validate(item.field);
-                            typeof item.props.click === 'function'?item.props.change(e):'';
-                        }  
+                    @change="(e: any) => {
+                    validate(item.field);
+                    typeof item.props.click === 'function' ? item.props.change(e) : '';
+                }
                     "
-                    v-bind="{ ...item.props }"
+                    v-bind="{ size: size, ...item.props }"
+                />
+
+                <lew-cascader
+                    v-model="item.value"
+                    v-if="item.as === 'cascader'"
+                    @clear="validate(item.field)"
+                    @change="(e: any) => {
+                    validate(item.field);
+                    typeof item.props.click === 'function' ? item.props.change(e) : '';
+                }
+                    "
+                    v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-switch
@@ -456,14 +481,17 @@ defineExpose({ getForm, setForm, validate });
 <style lang="scss" scoped>
 .lew-form {
     width: 100%;
+
     .lew-form-item {
         display: flex;
         align-items: flex-start;
         gap: 20px;
         padding-bottom: 30px;
+
         .label-box {
             display: inline-flex;
             justify-content: flex-end;
+
             label {
                 display: flex;
                 align-items: center;
@@ -471,11 +499,13 @@ defineExpose({ getForm, setForm, validate });
             }
         }
     }
+
     .lew-form-main {
         width: 100%;
         position: relative;
         display: inline-flex;
         align-items: center;
+
         .error-message {
             position: absolute;
             left: 0px;
@@ -487,12 +517,14 @@ defineExpose({ getForm, setForm, validate });
         }
     }
 }
+
 .lew-form-size-small {
     .lew-form-item {
         .label-box {
             margin-top: 5px;
         }
     }
+
     .lew-form-main {
         min-height: calc(var(--lew-form-item-height-small) + 2px);
     }
@@ -504,6 +536,7 @@ defineExpose({ getForm, setForm, validate });
             margin-top: 7px;
         }
     }
+
     .lew-form-main {
         min-height: calc(var(--lew-form-item-height-medium) + 2px);
     }
@@ -515,6 +548,7 @@ defineExpose({ getForm, setForm, validate });
             margin-top: 9px;
         }
     }
+
     .lew-form-main {
         min-height: calc(var(--lew-form-item-height-large) + 2px);
     }
@@ -523,9 +557,11 @@ defineExpose({ getForm, setForm, validate });
 .lew-form-direction-x {
     .lew-form-item {
         gap: 10px;
+
         .label-box {
             display: inline-flex;
             justify-content: flex-end;
+
             .label-required::before {
                 content: '*';
                 color: var(--lew-color-error-dark);
@@ -534,15 +570,18 @@ defineExpose({ getForm, setForm, validate });
         }
     }
 }
+
 .lew-form-direction-y {
     .lew-form-item {
         justify-content: flex-start;
         align-items: flex-start;
         flex-direction: column;
         gap: 5px;
+
         .label-box {
             display: inline-flex;
             justify-content: flex-start;
+
             .label-required::after {
                 content: '*';
                 color: var(--lew-color-error-dark);

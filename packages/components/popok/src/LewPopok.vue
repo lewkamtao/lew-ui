@@ -1,9 +1,10 @@
 <!-- filename: Popover.vue -->
 <script setup lang="ts">
-import { LewButton } from 'lew-ui';
-import { _props } from './props';
+import { LewButton, LewPopover } from 'lew-ui';
+import { popokProps } from './props';
+import { any2px } from 'lew-ui/utils';
 
-const props = defineProps(_props);
+const props = defineProps(popokProps);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const lewPopoverRef = ref();
@@ -48,13 +49,19 @@ const emit = defineEmits(['show', 'cancel']);
             <slot />
         </template>
         <template #popover-body>
-            <div class="lew-popok-body" :style="`width:${width}`">
+            <div
+                class="lew-popok-body"
+                :style="{
+                    width: any2px(width),
+                }"
+            >
                 <div class="left">
                     <div :class="`icon-${type}`">
                         <lew-icon
                             v-if="type === `normal`"
                             size="22"
-                            type="light" color="blue"
+                            type="light"
+                            color="blue"
                         ></lew-icon>
                         <lew-icon
                             v-if="type === `warning`"
