@@ -208,9 +208,8 @@ const hideHandle = () => {
 
 // 获取宽度
 const getCascaderWidth = computed(() => {
-    let _hasChildOptions = state.options.filter(
-        (e) => e && e.length > 0
-    ).length;
+    let _hasChildOptions = state.options.filter((e) => e && e.length > 0)
+        .length;
     if (_hasChildOptions > 1) {
         return _hasChildOptions * 180;
     }
@@ -246,7 +245,7 @@ defineExpose({ show, hide });
         :trigger="trigger"
         :disabled="disabled"
         placement="bottom-start"
-        style="width: 100%"
+        style="width: 100%;"
         :loading="state.loading"
         @show="showHandle"
         @hide="hideHandle"
@@ -362,10 +361,12 @@ defineExpose({ show, hide });
                                 class="lew-cascader-item"
                                 :class="{
                                     'lew-cascader-item-disabled': item.disabled,
-                                    'lew-cascader-item-active':
-                                        state.activelabels.includes(item.label),
-                                    'lew-cascader-item-tobe':
-                                        state.tobelabels.includes(item.label),
+                                    'lew-cascader-item-active': state.activelabels.includes(
+                                        item.label
+                                    ),
+                                    'lew-cascader-item-tobe': state.tobelabels.includes(
+                                        item.label
+                                    ),
                                     'lew-cascader-item-select':
                                         getLabel &&
                                         getLabel.includes(item.label),
