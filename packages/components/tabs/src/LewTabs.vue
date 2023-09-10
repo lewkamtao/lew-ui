@@ -20,22 +20,27 @@ const state = reactive({
 watch(
     () => tabsValue.value,
     (v) => {
-        selectItem(v, 'watch');
+        if (v) {
+            selectItem(v, 'watch');
+        }
     }
 );
 
 const initActiveItemStyle = (index: number) => {
     const activeRef = itemRef.value[index];
-    if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
+    if (
+        tabsRef.value.scrollWidth > tabsRef.value.clientWidth &&
+        activeRef?.offsetLeft >= 0
+    ) {
         tabsRef.value.scrollLeft =
-            activeRef.offsetLeft -
+            activeRef?.offsetLeft -
             tabsRef.value.clientWidth / 2 +
-            activeRef.offsetWidth / 2;
+            activeRef?.offsetWidth / 2;
     }
 
     state.activeItemStyle = {
-        width: `${activeRef.offsetWidth}px`,
-        transform: `translate(${activeRef.offsetLeft}px)`,
+        width: `${activeRef?.offsetWidth}px`,
+        transform: `translate(${activeRef?.offsetLeft}px)`,
     };
 };
 
@@ -212,12 +217,7 @@ onUnmounted(() => {
     content: '';
     opacity: 1;
     transition: opacity 0.2s;
-    background: linear-gradient(
-        to right,
-
-        rgba(0, 0, 0, 0),
-        rgba(0, 0, 0, 0.1)
-    );
+    background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
 }
 
 .lew-tabs-wrapper::before {
@@ -230,12 +230,7 @@ onUnmounted(() => {
     z-index: 9;
     opacity: 1;
     transition: opacity 0.2s;
-    background: linear-gradient(
-        to left,
-
-        rgba(0, 0, 0, 0),
-        rgba(0, 0, 0, 0.1)
-    );
+    background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
 }
 
 .lew-tabs-wrapper-type-line {

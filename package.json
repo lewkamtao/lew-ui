@@ -1,6 +1,6 @@
 {
     "name": "lew-ui",
-    "version": "1.5.11",
+    "version": "1.6.2",
     "description": "A Component Library for Vue3.js.",
     "keywords": [
         "vue3",
@@ -16,8 +16,7 @@
         "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
         "format": "prettier --write src/**/* packages/**/*",
         "test": "vitest",
-        "test:coverage": "vitest --coverage",
-        "prepare": "husky install"
+        "test:coverage": "vitest --coverage"
     },
     "files": [
         "dist/components/**/*.ts",
