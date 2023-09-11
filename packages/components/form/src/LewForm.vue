@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { formProps } from './props';
-import { object2class } from 'lew-ui/utils';
+import { object2class, any2px } from 'lew-ui/utils';
 import * as Yup from 'yup';
 import { useVModel, watchDebounced } from '@vueuse/core';
 import {
@@ -332,7 +332,7 @@ defineExpose({ getForm, setForm, reset, validate });
             class="lew-form-item"
         >
             <div
-                :style="direction === 'x' ? `width:${labelWidth}px` : ''"
+                :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''"
                 class="label-box"
             >
                 <label :class="{ 'label-required': item.rules && item.label }">
@@ -342,7 +342,7 @@ defineExpose({ getForm, setForm, reset, validate });
             <div
                 :style="
                     direction === 'x'
-                        ? `width:calc(100% - ${labelWidth + 10}px)`
+                        ? `width:calc(100% - ${any2px(labelWidth)})`
                         : ''
                 "
                 class="lew-form-main"
@@ -514,6 +514,7 @@ defineExpose({ getForm, setForm, reset, validate });
         .label-box {
             display: inline-flex;
             justify-content: flex-end;
+            flex-shrink: 0;
 
             label {
                 display: flex;
@@ -528,6 +529,7 @@ defineExpose({ getForm, setForm, reset, validate });
         position: relative;
         display: inline-flex;
         align-items: center;
+        flex-shrink: 0;
 
         .error-message {
             position: absolute;
