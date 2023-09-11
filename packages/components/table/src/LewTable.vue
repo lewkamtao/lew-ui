@@ -224,7 +224,7 @@ onUnmounted(() => {
                     <div class="lew-table-tr">
                         <lew-flex
                             v-if="checkable && fixedColumns('left').length > 0"
-                            style="width: 50px"
+                            style="width: 50px;"
                             x="center"
                         >
                             <lew-checkbox
@@ -250,7 +250,7 @@ onUnmounted(() => {
                             v-if="
                                 checkable && fixedColumns('left').length === 0
                             "
-                            style="width: 50px"
+                            style="width: 50px;"
                             x="center"
                         >
                             <lew-checkbox
@@ -314,7 +314,7 @@ onUnmounted(() => {
                     >
                         <lew-flex
                             v-if="checkable && fixedColumns('left').length > 0"
-                            style="width: 50px"
+                            style="width: 50px;"
                             x="center"
                         >
                             <lew-checkbox
@@ -357,7 +357,7 @@ onUnmounted(() => {
                             v-if="
                                 checkable && fixedColumns('left').length === 0
                             "
-                            style="width: 50px"
+                            style="width: 50px;"
                             x="center"
                         >
                             <lew-checkbox
@@ -385,7 +385,7 @@ onUnmounted(() => {
                             <template v-else>
                                 <lew-text-trim
                                     :x="column.x || 'start'"
-                                    style="width: 100%"
+                                    style="width: 100%;"
                                     :text="row[column.field]"
                                 />
                             </template>
@@ -438,6 +438,7 @@ onUnmounted(() => {
 .lew-table-wrapper {
     position: relative;
     width: 100%;
+    height: 100%;
     border-bottom: 0px solid transparent;
     box-sizing: border-box;
     background-color: var(--lew-bgcolor-0);
@@ -445,6 +446,7 @@ onUnmounted(() => {
 }
 
 .lew-table {
+    height: 100%;
     width: 100%;
     overflow-x: auto;
     overflow-y: auto;
