@@ -16,6 +16,7 @@ const emit = defineEmits([
     'update:type',
     'clear',
     'blur',
+    'input',
     'focus',
     'change',
     'textarea',
@@ -38,7 +39,7 @@ const updateValue = () => {
 
 const inputFn = (e: any) => {
     updateValue();
-    emit('blur', modelValue.value);
+    emit('input', modelValue.value);
 };
 
 const clear = (): void => {
