@@ -25,9 +25,9 @@ export const buttonProps = {
     },
     text: {
         type: String,
-        default: '',
-        description: '文本',
-    },
+        default: '', 
+        description: '文本', 
+    }, 
     type: {
         type: String as PropType<ButtonType>,
         default: 'fill',
