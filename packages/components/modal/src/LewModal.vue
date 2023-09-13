@@ -60,24 +60,15 @@ const cancel = () => {
                     <div v-else class="header-slot">
                         <slot name="header"></slot>
                     </div>
-                    <slot name="main"></slot>
+                    <slot />
                     <lew-flex
                         v-if="!hideFooter"
                         x="end"
                         y="center"
                         class="footer"
                     >
-                        <lew-button
-                            @click="cancel"
-                            type="text"
-                            :color="cancelColor"
-                            :text="cancelText"
-                        />
-                        <lew-button
-                            @click="ok"
-                            :color="okColor"
-                            :text="okText"
-                        />
+                        <lew-button v-bind="cancelProps" />
+                        <lew-button v-bind="okProps" />
                     </lew-flex>
                     <div v-else class="footer-slot">
                         <slot name="footer"></slot>

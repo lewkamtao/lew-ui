@@ -379,37 +379,31 @@ onMounted(() => {
         @ok="open"
         @cancel="visible1 = false"
     >
-        <template #main>
-            <div class="modal-body">
-                <div>A beautiful component library based on vue3</div>
-            </div>
-        </template>
+        <div class="modal-body">
+            <div>A beautiful component library based on vue3</div>
+        </div>
     </lew-modal>
     <lew-modal v-model:visible="modalVisible2" hide-footer width="1250px">
         <template #header>
             <div class="header">这是自定义头部</div>
         </template>
-        <template #main>
-            <div class="modal-body">
-                <lew-table :data-source="data" :columns="columns">
-                    <template #fraction="{ row }">
-                        <lew-flex>
-                            <lew-badge
-                                v-if="row.fraction >= 60"
-                                round
-                                color="green"
-                            />
-                            <lew-badge v-else round color="red" />
-                            <span>{{
-                                row.fraction >= 60 ? '良好' : '很差'
-                            }}</span>
-                        </lew-flex>
-                    </template>
-                </lew-table>
-            </div>
-        </template>
+        <div class="modal-body">
+            <lew-table :data-source="data" :columns="columns">
+                <template #fraction="{ row }">
+                    <lew-flex>
+                        <lew-badge
+                            v-if="row.fraction >= 60"
+                            round
+                            color="green"
+                        />
+                        <lew-badge v-else round color="red" />
+                        <span>{{ row.fraction >= 60 ? '良好' : '很差' }}</span>
+                    </lew-flex>
+                </template>
+            </lew-table>
+        </div>
         <template #footer>
-            <lew-flex x="end" style="padding: 10px 20px">
+            <lew-flex x="end" style="padding: 10px 20px;">
                 <lew-button
                     text="关闭"
                     type="text"
