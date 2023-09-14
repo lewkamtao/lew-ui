@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { formProps } from './props';
-import { object2class } from 'lew-ui/utils';
+import { object2class, any2px } from 'lew-ui/utils';
 import * as Yup from 'yup';
 import { useVModel, watchDebounced } from '@vueuse/core';
 import {
@@ -23,7 +23,12 @@ import {
 const props = defineProps(formProps);
 const emit = defineEmits(['update:modelValue', 'update:options', 'change']);
 const form = ref({} as any);
-const componentOptions: any = useVModel(props, 'options', emit);
+const backupOptions = JSON.parse(JSON.stringify(props.options));
+
+const componentOptions: any = useVModel(props, 'options', emit, {
+    passive: true,
+    deep: true,
+});
 
 const getFormClassNames = computed(() => {
     const { direction, size } = props;
@@ -36,7 +41,7 @@ watchDebounced(
         form.value = arrayToObj(v);
         emit('change', toRaw(form.value));
     },
-    { deep: true, debounce: 250, maxWait: 500 }
+    { deep: true, debounce: 50, maxWait: 120 }
 );
 
 onMounted(() => {
@@ -134,14 +139,11 @@ const flattenObject = (obj: any, prefix = '') => {
 };
 
 const form2componentOptions = () => {
-    if (!form.value) {
-        return;
-    }
     let vArr = flattenObject(form.value);
-
     vArr.forEach((_e: any) => {
         componentOptions.value.forEach((__e: any, i: number) => {
             if (_e.field.lastIndexOf('.') >= 0) {
+                console.log(_e.field);
                 let _$fieldKey = _e.field?.substring(
                     _e.field.lastIndexOf('.') + 1
                 );
@@ -157,6 +159,8 @@ const form2componentOptions = () => {
                 }
             } else if (_e.field === __e.field) {
                 componentOptions.value[i].value = _e.value;
+            } else {
+                componentOptions.value[i].value = undefined;
             }
         });
     });
@@ -195,42 +199,51 @@ const validate = (field: string) => {
                         }
                     });
 
-                    let errors = err.inner.map((error: any) => ({
-                        ...error,
-                        field: () => {
-                            try {
-                                let fieldName = error?.path; // 去除首尾的方括号
-                                if (fieldName[0] !== '[') {
+                    let errors =
+                        err.inner &&
+                        err.inner.map((error: any) => ({
+                            ...error,
+                            field: () => {
+                                try {
+                                    let fieldName = error?.path; // 去除首尾的方括号
+                                    if (fieldName[0] !== '[') {
+                                        return fieldName;
+                                    }
+                                    const startIndex =
+                                        error?.path.indexOf('[') + 1;
+                                    const endIndex = error?.path.indexOf(']');
+                                    fieldName = error?.path.slice(
+                                        startIndex,
+                                        endIndex
+                                    ); // 去除首尾的方括号
+                                    if (
+                                        fieldName.charAt(0) === '"' &&
+                                        fieldName.charAt(
+                                            fieldName.length - 1
+                                        ) === '"'
+                                    ) {
+                                        // 处理包含引号的情况
+                                        fieldName = fieldName.slice(1, -1);
+                                    }
+                                    if (fieldName.includes('\\"')) {
+                                        // 处理转义字符
+                                        fieldName = fieldName.replace(
+                                            /\\"/g,
+                                            '"'
+                                        );
+                                    }
                                     return fieldName;
+                                } catch {
+                                    return error.path;
                                 }
-                                const startIndex = error?.path.indexOf('[') + 1;
-                                const endIndex = error?.path.indexOf(']');
-                                fieldName = error?.path.slice(
-                                    startIndex,
-                                    endIndex
-                                ); // 去除首尾的方括号
-                                if (
-                                    fieldName.charAt(0) === '"' &&
-                                    fieldName.charAt(fieldName.length - 1) ===
-                                        '"'
-                                ) {
-                                    // 处理包含引号的情况
-                                    fieldName = fieldName.slice(1, -1);
-                                }
-                                if (fieldName.includes('\\"')) {
-                                    // 处理转义字符
-                                    fieldName = fieldName.replace(/\\"/g, '"');
-                                }
-                                return fieldName;
-                            } catch {
-                                return error.path;
-                            }
-                        },
-                    }));
+                            },
+                        }));
 
-                    errors = errors.filter((e: any) => e.field() === field);
+                    errors =
+                        errors &&
+                        errors.filter((e: any) => e.field() === field);
 
-                    let errItem = errors[0] && errors[0];
+                    let errItem = errors && errors[0];
                     let index = opt.findIndex((e: any) => {
                         return e?.field === errItem?.field();
                     });
@@ -292,9 +305,19 @@ const getForm = () => {
 const setForm = (value: any) => {
     form.value = value;
     form2componentOptions();
+    console.log(componentOptions.value);
+    emit('change', toRaw(form.value));
 };
 
-defineExpose({ getForm, setForm, validate });
+const reset = () => {
+    let _backup = JSON.parse(JSON.stringify(backupOptions));
+    componentOptions.value = _backup;
+    form.value = arrayToObj(_backup);
+    form2componentOptions();
+    emit('change', toRaw(form.value));
+};
+
+defineExpose({ getForm, setForm, reset, validate });
 </script>
 
 <template>
@@ -309,7 +332,7 @@ defineExpose({ getForm, setForm, validate });
             class="lew-form-item"
         >
             <div
-                :style="direction === 'x' ? `width:${labelWidth}px` : ''"
+                :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''"
                 class="label-box"
             >
                 <label :class="{ 'label-required': item.rules && item.label }">
@@ -319,7 +342,7 @@ defineExpose({ getForm, setForm, validate });
             <div
                 :style="
                     direction === 'x'
-                        ? `width:calc(100% - ${labelWidth + 10}px)`
+                        ? `width:calc(100% - ${any2px(labelWidth)})`
                         : ''
                 "
                 class="lew-form-main"
@@ -397,7 +420,7 @@ defineExpose({ getForm, setForm, validate });
                 />
 
                 <lew-date-picker
-                    style="width: 100%"
+                    style="width: 100%;"
                     v-model="item.value"
                     v-if="item.as === 'date-picker'"
                     @change="(e: any) => {
@@ -410,7 +433,7 @@ defineExpose({ getForm, setForm, validate });
                 />
 
                 <lew-date-range-picker
-                    style="width: 100%"
+                    style="width: 100%;"
                     v-model="item.value"
                     v-if="item.as === 'date-range-picker'"
                     @change="(e: any) => {
@@ -491,6 +514,7 @@ defineExpose({ getForm, setForm, validate });
         .label-box {
             display: inline-flex;
             justify-content: flex-end;
+            flex-shrink: 0;
 
             label {
                 display: flex;
@@ -505,6 +529,7 @@ defineExpose({ getForm, setForm, validate });
         position: relative;
         display: inline-flex;
         align-items: center;
+        flex-shrink: 0;
 
         .error-message {
             position: absolute;

@@ -16,7 +16,7 @@ export const formProps = {
         description: '表单宽度',
     },
     labelWidth: {
-        type: Number,
+        type: [Number, String],
         default: '',
         description: '标签宽度',
     },

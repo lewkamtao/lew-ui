@@ -19,6 +19,7 @@ const maskClick = () => {
         visible.value = false;
     }
 };
+
 const getModalStyle = computed(() => {
     return {
         width: any2px(props.width),
@@ -60,7 +61,7 @@ const cancel = () => {
                     <div v-else class="header-slot">
                         <slot name="header"></slot>
                     </div>
-                    <slot name="main"></slot>
+                    <slot />
                     <lew-flex
                         v-if="!hideFooter"
                         x="end"
@@ -69,14 +70,20 @@ const cancel = () => {
                     >
                         <lew-button
                             @click="cancel"
-                            type="text"
-                            :color="cancelColor"
-                            :text="cancelText"
+                            v-bind="{ 
+                                type: 'text', 
+                                text: '取消',
+                                color: 'normal',
+                                ...cancelProps as any,
+                            }"
                         />
                         <lew-button
                             @click="ok"
-                            :color="okColor"
-                            :text="okText"
+                            v-bind="{ 
+                                text: '确定',   
+                                color: 'primary',  
+                                ...okProps as any, 
+                            }"
                         />
                     </lew-flex>
                     <div v-else class="footer-slot">

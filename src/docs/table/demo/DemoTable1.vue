@@ -30,6 +30,96 @@ const data: any = ref([
         sex: '女',
         intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
     },
+    {
+        id: 4,
+        name: '小贝',
+        avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
+        age: '22',
+        mail: 'div@kamtao.com',
+        fraction: 31,
+        sex: '女',
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+    },
+    {
+        id: 4,
+        name: '小贝',
+        avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
+        age: '22',
+        mail: 'div@kamtao.com',
+        fraction: 31,
+        sex: '女',
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+    },
+    {
+        id: 4,
+        name: '小贝',
+        avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
+        age: '22',
+        mail: 'div@kamtao.com',
+        fraction: 31,
+        sex: '女',
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+    },
+    {
+        id: 4,
+        name: '小贝',
+        avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
+        age: '22',
+        mail: 'div@kamtao.com',
+        fraction: 31,
+        sex: '女',
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+    },
+    {
+        id: 4,
+        name: '小贝',
+        avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
+        age: '22',
+        mail: 'div@kamtao.com',
+        fraction: 31,
+        sex: '女',
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+    },
+    {
+        id: 4,
+        name: '小贝',
+        avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
+        age: '22',
+        mail: 'div@kamtao.com',
+        fraction: 31,
+        sex: '女',
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+    },
+    {
+        id: 4,
+        name: '小贝',
+        avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
+        age: '22',
+        mail: 'div@kamtao.com',
+        fraction: 31,
+        sex: '女',
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+    },
+    {
+        id: 4,
+        name: '小贝',
+        avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
+        age: '22',
+        mail: 'div@kamtao.com',
+        fraction: 31,
+        sex: '女',
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+    },
+    {
+        id: 4,
+        name: '小贝',
+        avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
+        age: '22',
+        mail: 'div@kamtao.com',
+        fraction: 31,
+        sex: '女',
+        intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
+    },
 ]);
 
 const columns = [
@@ -71,24 +161,26 @@ const columns = [
 </script>
 
 <template>
-    <lew-table :data-source="data" :columns="columns">
-        <template #info="{ row }">
-            <lew-flex class="info">
-                <lew-avatar :src="row.avatar" round />
-                <lew-flex class="right" direction="y" x="start" gap="0px">
-                    <div class="name">{{ row.name }}</div>
-                    <div class="mail">{{ row.mail }}</div>
+    <div style="height: 300px;">
+        <lew-table :data-source="data" :columns="columns">
+            <template #info="{ row }">
+                <lew-flex class="info">
+                    <lew-avatar :src="row.avatar" round />
+                    <lew-flex class="right" direction="y" x="start" gap="0px">
+                        <div class="name">{{ row.name }}</div>
+                        <div class="mail">{{ row.mail }}</div>
+                    </lew-flex>
                 </lew-flex>
-            </lew-flex>
-        </template>
-        <template #fraction="{ row }">
-            <lew-flex>
-                <lew-badge v-if="row.fraction >= 60" round color="green" />
-                <lew-badge v-else round color="red" />
-                <span>{{ row.fraction >= 60 ? '良好' : '很差' }}</span>
-            </lew-flex>
-        </template>
-    </lew-table>
+            </template>
+            <template #fraction="{ row }">
+                <lew-flex>
+                    <lew-badge v-if="row.fraction >= 60" round color="green" />
+                    <lew-badge v-else round color="red" />
+                    <span>{{ row.fraction >= 60 ? '良好' : '很差' }}</span>
+                </lew-flex>
+            </template>
+        </lew-table>
+    </div>
 </template>
 
 <style lang="scss" scoped>

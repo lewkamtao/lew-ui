@@ -1,4 +1,5 @@
-import { ExtractPropTypes } from 'vue';
+import { ExtractPropTypes, PropType } from 'vue';
+import type { ButtonProps } from '../../button/index';
 
 export const modalProps = {
     title: {
@@ -26,25 +27,26 @@ export const modalProps = {
         default: false,
         description: '是否隐藏底部按钮',
     },
-    okText: {
-        type: String,
-        default: '确定',
+    okProps: {
+        type: Object as PropType<ButtonProps>,
+        default: () => {
+            return {
+                text: '确定',
+                color: 'primary',
+            };
+        },
         description: '确定按钮文字',
     },
-    okColor: {
-        type: String,
-        default: 'primary',
-        description: '确定按钮颜色',
-    },
-    cancelText: {
-        type: String,
-        default: '取消',
-        description: '取消按钮文字',
-    },
-    cancelColor: {
-        type: String,
-        default: 'normal',
-        description: '取消按钮颜色',
+    cancelProps: {
+        type: Object as PropType<ButtonProps>,
+        default: () => {
+            return {
+                type: 'text',
+                text: '取消',
+                color: 'normal',
+            };
+        },
+        description: '确定按钮文字',
     },
     closeOnClickOverlay: {
         type: Boolean,

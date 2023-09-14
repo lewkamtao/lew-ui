@@ -62,6 +62,10 @@ export const any2px = (value: number | string | undefined): string => {
 
     const _value = String(value);
 
+    if (_value.startsWith('calc')) {
+        return _value;
+    }
+
     if (numericRegex.test(_value)) {
         return `${value}px`;
     }
