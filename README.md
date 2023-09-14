@@ -17,9 +17,9 @@ npm install lew-ui --save
 
 ```js
 // main.ts
-import 'lew-ui/dist/style.css';
+import 'lew-ui/style';
 ```
-
+ 
 页面
 
 ```vue

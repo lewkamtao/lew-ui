@@ -52,9 +52,13 @@ const updateValue = () => {
     }
 };
 
-const inputFn = () => {
+let isFirst = true;
+const inputFn = (e: any) => {
     updateValue();
-    emit('input', modelValue.value);
+    if (!isFirst) {
+        emit('input', modelValue.value);
+    }
+    isFirst = false;
 };
 
 const clear = (): void => {

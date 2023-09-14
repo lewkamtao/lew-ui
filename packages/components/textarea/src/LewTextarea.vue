@@ -37,9 +37,13 @@ const updateValue = () => {
     }
 };
 
+let isFirst = true;
 const inputFn = (e: any) => {
     updateValue();
-    emit('input', modelValue.value);
+    if (!isFirst) {
+        emit('input', modelValue.value);
+    }
+    isFirst = false;
 };
 
 const clear = (): void => {
@@ -136,7 +140,7 @@ defineExpose({ toFocus });
                 @mousedown.prevent=""
                 @click="clear"
                 :size="getIconSize"
-                style="top: 14px"
+                style="top: 14px;"
                 type="x"
             />
         </transition>
