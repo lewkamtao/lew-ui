@@ -87,6 +87,21 @@ const getClassNames = computed(() => {
     return object2class('lew-text-trim', { x });
 });
 
+let width = 0;
+const check = () => {
+    const element = textTrimRef.value;
+    if (width === element.offsetWidth) {
+        return;
+    }
+    const isEllipsis = element.offsetWidth < element.scrollWidth;
+    if (isEllipsis) {
+        instance.enable();
+    } else {
+        instance.disable();
+    }
+    width = element.offsetWidth;
+};
+
 onMounted(() => {
     init();
 });
@@ -98,6 +113,7 @@ onMounted(() => {
         class="lew-text-trim-wrapper"
         :class="getClassNames"
         :style="getTextTrimStyleObject"
+        @mouseover="check"
         v-html="text"
     />
 </template>
