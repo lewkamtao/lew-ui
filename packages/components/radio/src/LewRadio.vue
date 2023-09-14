@@ -64,10 +64,10 @@ const getRadioClassName = computed(() => {
         background-color: var(--lew-form-bgcolor);
         outline: 0px var(--lew-color-primary-light) solid;
         .icon-radio {
-            width: 50%;
-            height: 50%;
+            width: 100%;
+            height: 100%;
             background-color: var(--lew-color-white);
-            transform: translateY(100%);
+            transform: translateY(100%) scale(0.5);
             opacity: 0;
             transition: var(--lew-form-transition);
             font-size: 12px;
@@ -157,7 +157,7 @@ const getRadioClassName = computed(() => {
         border: var(--lew-form-border-width) var(--lew-radio-color) solid;
         background: var(--lew-radio-color);
         .icon-radio {
-            transform: translateY(0%);
+            transform: translateY(0%) scale(0.5);
             opacity: 1;
         }
     }
@@ -180,7 +180,7 @@ const getRadioClassName = computed(() => {
         .icon-radio {
             background-color: var(--lew-color-primary-dark);
             opacity: 1;
-            transform: translateY(0%) scale(1.15);
+            transform: translateY(0%) scale(0.5);
         }
     }
 }
@@ -192,7 +192,7 @@ const getRadioClassName = computed(() => {
 
     .icon-radio {
         opacity: 1;
-        transform: translateY(0%) scale(1.15);
+        transform: translateY(0%) scale(0.5);
     }
 }
 .lew-radio-disabled {
