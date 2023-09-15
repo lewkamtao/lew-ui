@@ -1,23 +1,21 @@
 <script lang="ts" setup>
 import { menuProps } from './props';
 import { MenuOptions } from './props';
-import LewMenuItem from './LewMenuItem.vue';
 import { watchDebounced } from '@vueuse/core';
+import { LewTextTrim, LewTag } from 'lew-ui';
 
 const props = defineProps(menuProps);
+
+const emit = defineEmits(['change']);
 
 const generateEnterpriseMenu = (
     menuData: MenuOptions[],
     level: number = 1
 ): MenuOptions[] => {
     return menuData.map((item) => {
-        const { id, label, value, children, disabled, icon } = item;
+        const { children } = item;
         const menuItem: MenuOptions = {
-            id,
-            label,
-            value,
-            disabled,
-            icon,
+            ...item,
             level, // 添加 level 属性
         };
 
@@ -45,19 +43,103 @@ _options.value = generateEnterpriseMenu(props.options);
 
 <template>
     <div class="lew-menu">
-        <div class="lew-menu-main">
-            <lew-menu-item :options="_options" />
-        </div>
+        <template v-for="(item, index) in _options" :key="item.label">
+            <div class="lew-menu-item">
+                <lew-text-trim :text="item.label" />
+                <lew-tag
+                    v-if="item.tagText"
+                    :color="item.tagColor"
+                    round
+                    size="small"
+                    type="light"
+                    >{{ item.tagText }}
+                </lew-tag>
+            </div>
+            <template
+                v-for="(cItem, index) in item.children"
+                :key="cItem.label"
+            >
+                <div
+                    class="lew-menu-item lew-menu-item-child"
+                    :class="{
+                        'lew-menu-item-last':
+                            item.children && index === item.children.length - 1,
+                        'lew-menu-item-actived': cItem.value === actived,
+                    }"
+                    @click="emit('change', cItem)"
+                >
+                    <lew-icon
+                        class="lew-menu-icon"
+                        :type="cItem.icon"
+                        size="14"
+                    ></lew-icon>
+                    <lew-text-trim :text="cItem.label" />
+                    <lew-tag
+                        v-if="cItem.tagText"
+                        :color="cItem.tagColor"
+                        round
+                        size="small"
+                        type="light"
+                        >{{ cItem.tagText }}
+                    </lew-tag>
+                </div>
+            </template>
+        </template>
     </div>
 </template>
 
 <style lang="scss" scoped>
 .lew-menu {
-    display: inline;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     border-radius: 4px;
     padding: 2px 6px;
     margin: 0px 3px;
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
+    height: auto;
+    max-width: 300px;
+
+    .lew-menu-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--lew-text-color-8);
+        height: 28px;
+        line-height: 28px;
+        font-size: 12px;
+        font-weight: 400;
+        padding: 0px 15px;
+        box-sizing: border-box;
+    }
+    .lew-menu-item-child {
+        color: var(--lew-text-color-3);
+        font-size: 14px;
+        height: 42px;
+        line-height: 42px;
+        font-weight: 500;
+        cursor: pointer;
+        border-radius: var(--lew-border-radius);
+        transition: var(--lew-form-transition);
+    }
+    .lew-menu-icon {
+        flex-shrink: 0;
+    }
+    .lew-menu-item-child:hover {
+        background-color: var(--lew-bgcolor-2);
+        color: var(--lew-text-color-1);
+    }
+    .lew-menu-item-actived {
+        background-color: var(--lew-color-primary-light);
+        color: var(--lew-color-primary-dark);
+    }
+    .lew-menu-item-actived:hover {
+        background-color: var(--lew-color-primary-light);
+        color: var(--lew-color-primary-dark);
+    }
+    .lew-menu-item-last {
+        margin-bottom: 20px;
+    }
 }
 </style>

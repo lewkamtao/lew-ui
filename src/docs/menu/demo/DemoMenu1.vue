@@ -1,40 +1,84 @@
 <script setup lang="ts">
 const options = ref([
     {
-        id: 1,
-        label: '菜单1',
-        value: 'menu1',
+        label: 'ANALTYTICS',
+        value: 'ANALTYTICS',
         children: [
             {
-                id: 1,
-                label: '菜单1',
-                value: 'menu1',
-                children: [],
+                label: 'Dashboard',
+                value: 'Dashboard',
+                icon: 'columns',
             },
             {
-                id: 1,
-                label: '菜单1',
-                value: 'menu1',
-                children: [],
+                label: 'Performance',
+                value: 'Performance',
+                icon: 'activity',
+            },
+        ],
+    },
+    {
+        label: 'CONTNET',
+        value: 'CONTNET',
+        children: [
+            {
+                label: 'Guides',
+                value: 'Guides',
+                icon: 'file-text',
+                tagText: 'Beta',
+                tagColor: 'success',
             },
             {
-                id: 1,
-                label: '菜单1',
-                value: 'menu1',
-                children: [],
+                label: 'Hotspots',
+                value: 'Hotspots',
+                icon: 'command',
             },
             {
-                id: 1,
-                label: '菜单1',
-                value: 'menu1',
-                children: [],
+                label: 'Checklists',
+                value: 'Checklists',
+                icon: 'check-square',
+            },
+            {
+                label: 'NPS',
+                value: 'NPS',
+                icon: 'award',
+            },
+        ],
+    },
+    {
+        label: 'CUSTOMIZATION',
+        value: 'CUSTOMIZATION',
+        children: [
+            {
+                label: 'Segments',
+                value: 'Segments',
+                icon: 'folder',
+            },
+            {
+                label: 'Themes',
+                value: 'Themes',
+                icon: 'hash',
             },
         ],
     },
 ]);
+
+let actived = ref('Guides');
 </script>
 <template>
-    <lew-menu :options="options" />
+    <div class="menu lew-scrollbar">
+        <lew-menu
+            :options="options"
+            :actived="actived"
+            @change="(item:any) => (actived = item.value)"
+        />
+    </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.menu {
+    height: 300px;
+    width: 280px;
+    overflow-y: auto;
+    box-shadow: var(--lew-form-box-shadow);
+}
+</style>

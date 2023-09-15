@@ -85,7 +85,7 @@ const getStyle = computed(() => {
     user-select: none;
     box-sizing: border-box;
     overflow: hidden;
-
+    flex-shrink: 0;
     .lew-tag-value {
         font-weight: normal;
         padding: 0px 3px;

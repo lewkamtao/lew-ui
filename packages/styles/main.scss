@@ -82,11 +82,13 @@ button {
         width: 6px;
         height: 6px;
         background-color: var(--lew-bgcolor-2);
+        border-radius: 4px;
     }
     &::-webkit-scrollbar-thumb:hover {
         background-color: var(--lew-bgcolor-6);
     }
     &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
         background-color: var(--lew-bgcolor-4);
     }
     /* 修改滚动条角的颜色为蓝色 */

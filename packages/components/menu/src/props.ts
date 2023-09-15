@@ -1,13 +1,14 @@
 import { ExtractPropTypes, PropType } from 'vue';
 
 export type MenuOptions = {
-    id: string | number;
     label: string;
     value: string;
     children?: MenuOptions[];
     disabled?: boolean;
     level?: number;
     icon?: string;
+    tagText?: number;
+    tagColor?: number;
 };
 
 export const menuProps = {
@@ -17,17 +18,11 @@ export const menuProps = {
         typeDesc: ``,
         description: '颜色',
     },
-    selectKey: {
-        type: [String, Number] as PropType<string | number>,
+    actived: {
+        type: String,
         default: '',
         typeDesc: ``,
         description: '选中的值',
-    },
-    openKeys: {
-        type: Array as PropType<string[]>,
-        default: [],
-        typeDesc: ``,
-        description: '展开的值',
     },
 };
 
