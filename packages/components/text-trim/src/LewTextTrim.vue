@@ -59,8 +59,8 @@ const init = () => {
         element.style.cursor = 'pointer';
         instance = tippy(element, {
             theme: 'light',
-            delay: [150, 150],
-            duration: [150, 150],
+            delay: [120, 120],
+            duration: [120, 120],
             content: text,
             animation: 'shift-away-subtle',
             interactive: true,
@@ -89,6 +89,9 @@ const getClassNames = computed(() => {
 
 let width = 0;
 const check = () => {
+    if (!instance) {
+        return;
+    }
     const element = textTrimRef.value;
     if (width === element.offsetWidth) {
         return;

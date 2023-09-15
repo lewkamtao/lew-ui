@@ -149,7 +149,7 @@ const submit = () => {
             <lew-button text="获取form" @click="form = formRef.getForm()" />
             <pre>{{ form }}</pre>
             <pre
-                >{{
+                >{{ 
                     options.map((e: any) => {
                         return {
                             field: e.field,

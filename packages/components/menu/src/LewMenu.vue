@@ -117,8 +117,8 @@ _options.value = generateEnterpriseMenu(props.options);
     .lew-menu-item-child {
         color: var(--lew-text-color-3);
         font-size: 14px;
-        height: 36px;
-        line-height: 36px;
+        height: 40px;
+        line-height: 40px;
         font-weight: 500;
         cursor: pointer;
         border-radius: var(--lew-border-radius);

@@ -13,6 +13,7 @@ const pathPackage = path.resolve(__dirname, 'packages');
 export default defineConfig(({ mode }) => {
     return {
         server: {
+            open: true,
             port: 10034,
         },
         resolve: {

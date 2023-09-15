@@ -21,7 +21,7 @@ export default {
                     arrow: false,
                     duration: [120, 120],
                     maxWidth: 250,
-                    delay: trigger === 'mouseenter' ? [150, 150] : undefined,
+                    delay: trigger === 'mouseenter' ? [120, 120] : undefined,
                 });
                 el.instance.popper.children[0].setAttribute(
                     'data-lew',

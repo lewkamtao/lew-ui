@@ -1,27 +1,26 @@
 import { ExtractPropTypes, PropType } from 'vue';
 
 export type MenuOptions = {
-    label: string;
-    value?: string;
-    children?: MenuOptions[];
-    disabled?: boolean;
-    level?: number;
-    icon?: string;
-    tagText?: string;
-    tagColor?: string;
+    label: string; // 标题
+    value?: string; // 值
+    children?: MenuOptions[]; // 子类
+    disabled?: boolean; // 是否禁用
+    level?: number; // 层级
+    icon?: string; // 图标
+    tagText?: string; // 标签文本
+    tagColor?: string; // 标签颜色
 };
 
 export const menuProps = {
     options: {
         type: Array as PropType<MenuOptions[]>,
         default: [],
-        typeDesc: ``,
+        typeDesc: `MenuOptions[]`,
         description: '颜色',
     },
     actived: {
         type: String,
         default: '',
-        typeDesc: ``,
         description: '选中的值',
     },
 };

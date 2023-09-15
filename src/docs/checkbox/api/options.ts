@@ -1,5 +1,5 @@
 export default {
-    title: 'CheckboxOptions',
+    title: 'options',
     columnsKey: 'props',
     orderNum: 100,
     data: [
