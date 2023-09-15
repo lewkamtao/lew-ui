@@ -69,6 +69,7 @@ _options.value = generateEnterpriseMenu(props.options);
                     @click="emit('change', cItem)"
                 >
                     <lew-icon
+                        v-if="cItem.icon"
                         class="lew-menu-icon"
                         :type="cItem.icon"
                         size="14"
@@ -116,8 +117,8 @@ _options.value = generateEnterpriseMenu(props.options);
     .lew-menu-item-child {
         color: var(--lew-text-color-3);
         font-size: 14px;
-        height: 42px;
-        line-height: 42px;
+        height: 36px;
+        line-height: 36px;
         font-weight: 500;
         cursor: pointer;
         border-radius: var(--lew-border-radius);

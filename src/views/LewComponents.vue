@@ -2,6 +2,7 @@
 import { useRoute } from 'vue-router';
 import TheSiderbar from '../layout/TheSiderbar.vue';
 import LewRightNav from '../layout/LewRightNav.vue';
+import type { MenuOptions } from '../../packages';
 
 const isShowSider = ref(false);
 const route = useRoute();
@@ -30,369 +31,246 @@ watch(route, () => {
     isShowSider.value = false;
 });
 
-type Item = {
-    cname: string;
-    name: string;
-    path: string;
-    label: string;
-    color: string;
-};
-
-type Group = {
-    title: string;
-    items: Item[];
-};
-
-const group = ref<Group[]>([]);
-group.value = [
+const options = ref<MenuOptions[]>([]);
+options.value = [
     {
-        title: '基础',
-        items: [
+        label: '基础',
+        value: '基础',
+        children: [
             {
-                cname: '头像',
-                name: 'Avatar',
-                path: '/Avatar',
-                label: '',
-                color: '',
+                label: 'Avatar',
+                value: '/Avatar',
             },
             {
-                cname: '按钮',
-                name: 'Button',
-                path: '/Button',
-                label: '',
-                color: '',
+                label: 'Button',
+                value: '/Button',
             },
 
             {
-                cname: '标签',
-                name: 'Tag',
-                path: '/Tag',
-                label: '',
-                color: '',
+                label: 'Tag',
+                value: '/Tag',
             },
             {
-                cname: '徽章',
-                name: 'Badge',
-                path: '/Badge',
-                label: '',
-                color: '',
+                label: 'Badge',
+                value: '/Badge',
             },
             {
-                cname: '标题',
-                name: 'Title',
-                path: '/Title',
-                label: '',
-                color: '',
+                label: 'Title',
+                value: '/Title',
             },
             {
-                cname: '文本修剪',
-                name: 'TextTrim',
-                path: '/TextTrim',
-                label: '',
-                color: '',
+                label: 'TextTrim',
+                value: '/TextTrim',
             },
             {
-                cname: '弹性布局',
-                name: 'Flex',
-                path: '/Flex',
-                label: '',
-                color: '',
+                label: 'Flex',
+                value: '/Flex',
             },
             {
-                cname: '标记',
-                name: 'Mark',
-                path: '/Mark',
-                label: '',
-                color: '',
+                label: 'Mark',
+                value: '/Mark',
             },
             // {
-            //     cname: '颜色',
-            //     name: 'Color',
-            //     path: '/Color',
-            //     label: '',
-            //     color: '',
+            //     clabel: '颜色',
+            //     label: 'Color',
+            //     value: '/Color',
+            //
+            //
             // },
             {
-                cname: '图标',
-                name: 'Icon',
-                path: '/icon',
-                label: '',
-                color: '',
+                label: 'Icon',
+                value: '/icon',
             },
         ],
     },
 
     {
-        title: '导航',
-        items: [
+        label: '导航',
+        value: '导航',
+        children: [
             {
-                cname: '回到顶部',
-                name: 'BackTop',
-                path: '/BackTop',
-                label: '',
-                color: '',
+                label: 'BackTop',
+                value: '/BackTop',
             },
             // {
-            //     cname: '步骤',
-            //     name: 'Steps',
-            //     path: '/Steps',
-            //     label: '',
-            //     color: '',
+            //     clabel: '步骤',
+            //     label: 'Steps',
+            //     value: '/Steps',
+            //
+            //
             // },
             {
-                cname: '菜单',
-                name: 'Menu',
-                path: '/Menu',
-                label: '',
-                color: '',
+                label: 'Menu',
+                value: '/Menu',
+                tagText: 'New',
+                tagColor: 'info',
             },
             {
-                cname: '下拉菜单',
-                name: 'Dropdown',
-                path: '/Dropdown',
-                label: '',
-                color: '',
+                label: 'Dropdown',
+                value: '/Dropdown',
             },
             {
-                cname: '面包屑',
-                name: 'Breadcrumb',
-                path: '/Breadcrumb',
-                label: '',
-                color: '',
+                label: 'Breadcrumb',
+                value: '/Breadcrumb',
             },
         ],
     },
     {
-        title: '表单',
-        items: [
+        label: '表单',
+        value: '表单',
+        children: [
             {
-                cname: '表单',
-                name: 'Form',
-                path: '/Form',
-                label: 'Beta',
-                color: 'success',
+                label: 'Form',
+                value: '/Form',
+                tagText: 'Beta',
+                tagColor: 'success',
             },
             {
-                cname: '文本框',
-                name: 'Input',
-                path: '/Input',
-                label: '',
-                color: '',
+                label: 'Input',
+                value: '/Input',
             },
             {
-                cname: '多行文本框',
-                name: 'Textarea',
-                path: '/Textarea',
-                label: '',
-                color: '',
+                label: 'Textarea',
+                value: '/Textarea',
             },
             // {
-            //     cname: '高级输入框',
-            //     name: 'InputPro',
-            //     path: '/InputPro',
-            //     label: '',
+            //     clabel: '高级输入框',
+            //     label: 'InputPro',
+            //     value: '/InputPro',
+            //
             //     color: 'warning',
             // },
             {
-                cname: '标签输入框',
-                name: 'InputTag',
-                path: '/InputTag',
-                label: '',
-                color: '',
+                label: 'InputTag',
+                value: '/InputTag',
             },
             {
-                cname: '多选框',
-                name: 'Checkbox',
-                path: '/Checkbox',
-                label: '',
-                color: '',
+                label: 'Checkbox',
+                value: '/Checkbox',
             },
             {
-                cname: '单选框',
-                name: 'Radio',
-                path: '/Radio',
-                label: '',
-                color: '',
+                label: 'Radio',
+                value: '/Radio',
             },
             {
-                cname: '选项卡',
-                name: 'Tabs',
-                path: '/Tabs',
-                label: '',
-                color: '',
+                label: 'Tabs',
+                value: '/Tabs',
             },
             {
-                cname: '选择器',
-                name: 'Select',
-                path: '/Select',
-                label: '',
-                color: '',
+                label: 'Select',
+                value: '/Select',
             },
             {
-                cname: '多选选择器',
-                name: 'SelectMultiple',
-                path: '/SelectMultiple',
-                label: '',
-                color: '',
+                label: 'SelectMultiple',
+                value: '/SelectMultiple',
             },
             {
-                cname: '日期选择器',
-                name: 'DatePicker',
-                path: '/DatePicker',
-                label: '',
-                color: '',
+                label: 'DatePicker',
+                value: '/DatePicker',
             },
             {
-                cname: '日期范围选择器',
-                name: 'DateRangePicker',
-                path: '/DateRangePicker',
-                label: '',
-                color: '',
+                label: 'DateRangePicker',
+                value: '/DateRangePicker',
             },
             {
-                cname: '',
-                name: 'Cascader',
-                path: '/Cascader',
-                label: 'Beta',
-                color: 'green',
+                label: 'Cascader',
+                value: '/Cascader',
+                tagText: 'Beta',
+                tagColor: 'green',
             },
             {
-                cname: '',
-                name: 'TreeSelect',
-                path: '/TreeSelect',
-                label: 'Coming soon',
-                color: 'warning',
+                label: 'TreeSelect',
+                value: '/TreeSelect',
+                tagText: 'Coming soon',
+                tagColor: 'warning',
             },
             {
-                cname: '开关',
-                name: 'Switch',
-                path: '/Switch',
-                label: '',
-                color: '',
+                label: 'Switch',
+                value: '/Switch',
             },
 
             // {
-            //     cname: '文件上传',
-            //     name: 'Upload',
-            //     path: '/Upload',
-            //     label: '',
-            //     color: '',
+            //     clabel: '文件上传',
+            //     label: 'Upload',
+            //     value: '/Upload',
+            //
+            //
             // },
         ],
     },
     {
-        title: '数据展示',
-        items: [
+        label: '数据展示',
+        value: '数据展示',
+        children: [
             {
-                cname: '表格',
-                name: 'Table',
-                path: '/Table',
-                label: '',
-                color: '',
+                label: 'Table',
+                value: '/Table',
             },
             {
-                cname: '分页',
-                name: 'Pagination',
-                path: '/Pagination',
-                label: '',
-                color: '',
+                label: 'Pagination',
+                value: '/Pagination',
             },
             {
-                cname: '魔术数值',
-                name: 'MagicNumber',
-                path: '/MagicNumber',
-                label: '',
-                color: '',
+                label: 'MagicNumber',
+                value: '/MagicNumber',
             },
             // {
-            //     cname: '折叠面板',
-            //     name: 'Collapse',
-            //     path: '/Collapse',
-            //     label: '',
-            //     color: '',
+            //     clabel: '折叠面板',
+            //     label: 'Collapse',
+            //     value: '/Collapse',
+            //
+            //
             // },
         ],
     },
     {
-        title: '反馈',
-        items: [
+        label: '反馈',
+        value: '反馈',
+        children: [
             {
-                cname: '警告提醒',
-                name: 'Alert',
-                path: '/Alert',
-                label: '',
-                color: '',
+                label: 'Alert',
+                value: '/Alert',
             },
             {
-                cname: '全局提示',
-                name: 'Message',
-                path: '/Message',
-                label: '',
-                color: '',
+                label: 'Message',
+                value: '/Message',
             },
             {
-                cname: '通知',
-                name: 'Notification',
-                path: '/Notification',
-                label: '',
-                color: '',
+                label: 'Notification',
+                value: '/Notification',
             },
             {
-                cname: '抽屉',
-                name: 'Drawer',
-                path: '/Drawer',
-                label: '',
-                color: '',
+                label: 'Drawer',
+                value: '/Drawer',
             },
             {
-                cname: '对话框',
-                name: 'Dialog',
-                path: '/Dialog',
-                label: '',
-                color: '',
+                label: 'Dialog',
+                value: '/Dialog',
             },
             {
-                cname: '模态框',
-                name: 'Modal',
-                path: '/Modal',
-                label: '',
-                color: '',
+                label: 'Modal',
+                value: '/Modal',
             },
             {
-                cname: '确认气泡',
-                name: 'Popok',
-                path: '/Popok',
-                label: '',
-                color: '',
+                label: 'Popok',
+                value: '/Popok',
             },
             {
-                cname: '信息气泡',
-                name: 'Popover',
-                path: '/Popover',
-                label: '',
-                color: 'error',
+                label: 'Popover',
+                value: '/Popover',
             },
 
             {
-                cname: '文字提示',
-                name: 'Tooltip',
-                path: '/Tooltip',
-                label: '',
-                color: '',
+                label: 'Tooltip',
+                value: '/Tooltip',
             },
             {
-                cname: '加载',
-                name: 'Loading',
-                path: '/Loading',
-                label: '',
-                color: '',
+                label: 'Loading',
+                value: '/Loading',
             },
             {
-                cname: '结果',
-                name: 'Result',
-                path: '/Result',
-                label: '',
-                color: '',
+                label: 'Result',
+                value: '/Result',
             },
         ],
     },
@@ -409,7 +287,7 @@ group.value = [
             <lew-icon type="menu" size="24px" />
         </div>
         <div class="sider" :class="{ 'sider-open': isShowSider }">
-            <the-siderbar :group="group" />
+            <the-siderbar :options="options" />
         </div>
         <div ref="mainRef" class="app-main lew-scrollbar">
             <div id="component-main" class="component-main lew-scrollbar">

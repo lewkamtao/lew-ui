@@ -2,13 +2,13 @@ import { ExtractPropTypes, PropType } from 'vue';
 
 export type MenuOptions = {
     label: string;
-    value: string;
+    value?: string;
     children?: MenuOptions[];
     disabled?: boolean;
     level?: number;
     icon?: string;
-    tagText?: number;
-    tagColor?: number;
+    tagText?: string;
+    tagColor?: string;
 };
 
 export const menuProps = {

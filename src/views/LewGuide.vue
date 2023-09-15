@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import TheSiderbar from '../layout/TheSiderbar.vue';
+import type { MenuOptions } from '../../packages';
 
 const route = useRoute();
 const mainRef: any = ref(null);
@@ -13,47 +14,27 @@ watch(route, () => {
     isShowSider.value = false;
 });
 
-type Item = {
-    cname: string;
-    name: string;
-    path: string;
-    label: string;
-    color?: string;
-};
-
-type Group = {
-    title: string;
-    items: Item[];
-};
-
-const group = ref<Group[]>([]);
-group.value = [
+const options = ref<MenuOptions[]>([]);
+options.value = [
     {
-        title: '快速上手',
-        items: [
+        label: '快速上手',
+        value: '快速上手',
+        children: [
             {
-                cname: '安装',
-                name: '',
-                path: '/Install',
-                label: '',
+                label: '安装',
+                value: '/Install',
             },
             {
-                cname: '如何使用',
-                name: '',
-                path: '/Start',
-                label: '',
+                label: '如何使用',
+                value: '/Start',
             },
             {
-                cname: '常见问题',
-                name: '',
-                path: '/QA',
-                label: '',
+                label: '常见问题',
+                value: '/QA',
             },
             {
-                cname: '未来计划',
-                name: '',
-                path: '/TodoList',
-                label: '',
+                label: '未来计划',
+                value: '/TodoList',
             },
             // {
             //     cname: 'Chat',
@@ -65,14 +46,14 @@ group.value = [
         ],
     },
     {
-        title: '版本',
-        items: [
+        label: '版本',
+        value: '版本',
+        children: [
             {
-                cname: '更新日志',
-                name: '',
-                path: '/Log',
-                label: 'new',
-                color: 'success',
+                label: '更新日志',
+                value: '/Log',
+                tagText: 'new',
+                tagColor: 'success',
             },
         ],
     },
@@ -89,7 +70,7 @@ group.value = [
             <lew-icon type="menu" size="24px" />
         </div>
         <div class="sider" :class="{ 'sider-open': isShowSider }">
-            <the-siderbar :group="group" />
+            <the-siderbar :options="options" />
         </div>
         <div ref="mainRef" class="app-main lew-scrollbar">
             <router-view v-slot="{ Component }">
