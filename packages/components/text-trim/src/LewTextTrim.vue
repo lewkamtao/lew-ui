@@ -96,7 +96,12 @@ const check = () => {
     if (width === element.offsetWidth) {
         return;
     }
-    const isEllipsis = element.offsetWidth < element.scrollWidth;
+    let isEllipsis = false;
+    if (props.lineClamp) {
+        isEllipsis = element.offsetHeight < element.scrollHeight;
+    } else {
+        isEllipsis = element.offsetWidth < element.scrollWidth;
+    }
     if (isEllipsis) {
         instance.enable();
     } else {

@@ -300,10 +300,33 @@ const submit = async () => {
         LewMessage.warning('请完善表单');
     }
 };
+
+onMounted(() => {
+    formRef.value.setForm({
+        input: '1231',
+        textarea: '1231331313',
+        select: '1231331313',
+        select_multiple: [1, 2],
+        radio_group: '2',
+        checkbox_group: ['2'],
+        tabs: '2',
+        user: {
+            address: 30,
+            addd: true,
+        },
+        info: {
+            asd: {
+                dsd: {
+                    input_tag: ['asd'],
+                },
+            },
+        },
+    });
+});
 </script>
 
 <template>
-    <lew-button @click="formRef.reset()">reset</lew-button>
+    <lew-button @click="formRef.setForm({})">reset</lew-button>
     <lew-flex x="start" y="start" :gap="50">
         <lew-form
             ref="formRef"

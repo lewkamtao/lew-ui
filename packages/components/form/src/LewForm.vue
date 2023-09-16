@@ -23,7 +23,6 @@ import {
 const props = defineProps(formProps);
 const emit = defineEmits(['update:modelValue', 'update:options', 'change']);
 const form = ref({} as any);
-const backupOptions = JSON.parse(JSON.stringify(props.options));
 
 const componentOptions: any = useVModel(props, 'options', emit, {
     passive: true,
@@ -43,12 +42,6 @@ watchDebounced(
     },
     { deep: true, debounce: 50, maxWait: 120 }
 );
-
-onMounted(() => {
-    form2componentOptions();
-    form.value = arrayToObj(toRaw(componentOptions.value));
-    emit('change', toRaw(form.value));
-});
 
 const arrayToObj = (arr: any): any => {
     const obj: Record<string, unknown> = {};
@@ -303,21 +296,38 @@ const getForm = () => {
 };
 
 const setForm = (value: any) => {
-    form.value = value;
+    console.log(value);
+    componentOptions.value.forEach((e: any) => {
+        e.value = getNestedFieldValue(value, e.field);
+    });
+    form.value = arrayToObj(componentOptions.value);
+    emit('change', toRaw(form.value));
+};
+const getNestedFieldValue = (obj: any, field: string) => {
+    if (!field) {
+        return undefined;
+    }
+    const keys = field.split('.'); // 将字符串的嵌套字段按照 '.' 分割成数组
+    let value = obj;
+    for (let key of keys) {
+        if (value && value.hasOwnProperty(key)) {
+            value = value[key];
+        } else {
+            return undefined; // 如果找不到字段，返回 undefined
+        }
+    }
+    return value; // 返回目标字段的值
+};
+
+const init = () => {
     form2componentOptions();
-    console.log(componentOptions.value);
+    form.value = arrayToObj(toRaw(componentOptions.value));
     emit('change', toRaw(form.value));
 };
 
-const reset = () => {
-    let _backup = JSON.parse(JSON.stringify(backupOptions));
-    componentOptions.value = _backup;
-    form.value = arrayToObj(_backup);
-    form2componentOptions();
-    emit('change', toRaw(form.value));
-};
+init();
 
-defineExpose({ getForm, setForm, reset, validate });
+defineExpose({ getForm, setForm, validate });
 </script>
 
 <template>
