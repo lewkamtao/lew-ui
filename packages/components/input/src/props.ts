@@ -68,7 +68,7 @@ export const inputProps = {
         description: '是否自动宽度',
     },
     maxLength: {
-        type: Number,
+        type: [Number, String],
         default: null,
         description: '最大输入长度',
     },

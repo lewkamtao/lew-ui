@@ -43,7 +43,7 @@ export const textareaProps = {
         description: '是否只读',
     },
     maxLength: {
-        type: Number,
+        type: [Number, String],
         default: '',
         description: '最大长度',
     },

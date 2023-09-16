@@ -295,8 +295,7 @@ const getForm = () => {
     return toRaw(form.value);
 };
 
-const setForm = (value: any) => {
-    console.log(value);
+const setForm = (value: any = {}) => {
     componentOptions.value.forEach((e: any) => {
         e.value = getNestedFieldValue(value, e.field);
     });
