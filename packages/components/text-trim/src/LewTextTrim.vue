@@ -63,6 +63,7 @@ const init = () => {
             duration: [120, 120],
             content: text,
             animation: 'shift-away-subtle',
+            hideOnClick: false,
             interactive: true,
             appendTo: () => document.body,
             placement,

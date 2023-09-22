@@ -13,6 +13,7 @@ export default {
                     theme: 'light',
                     trigger: trigger || 'mouseenter',
                     content: binding.value.content,
+                    hideOnClick: trigger === 'mouseenter' ? false : true,
                     animation: 'shift-away-subtle',
                     interactive: true,
                     appendTo: () => document.body,
