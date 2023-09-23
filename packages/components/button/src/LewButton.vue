@@ -20,11 +20,17 @@ const handleClick = async (e: MouseEvent) => {
         _loading.value = false;
     }
 };
+const instance = getCurrentInstance();
+const hasDefaultSlot = ref(false);
+
+if (instance?.slots.default) {
+    hasDefaultSlot.value = true;
+}
 
 const getButtonClass = computed(() => {
     const { size, type, icon, text } = props;
     const loading = _loading.value || props.loading;
-    const singleIcon = !!(!text && icon);
+    const singleIcon = !!(!text && icon) && !hasDefaultSlot.value;
     return object2class('lew-button', {
         size,
         type,

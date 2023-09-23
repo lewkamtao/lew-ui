@@ -12,6 +12,7 @@ const pathPackage = path.resolve(__dirname, 'packages');
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     return {
+        base: '',
         server: {
             open: true,
             port: 10034,
