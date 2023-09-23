@@ -20,7 +20,7 @@ const state = reactive({
 watch(
     () => tabsValue.value,
     (v) => {
-        if (v) {
+        if (v || v === 0) {
             selectItem(v, 'watch');
         }
     }
@@ -28,6 +28,7 @@ watch(
 
 const initActiveItemStyle = (index: number) => {
     const activeRef = itemRef.value[index];
+
     if (
         tabsRef.value.scrollWidth > tabsRef.value.clientWidth &&
         activeRef?.offsetLeft >= 0
@@ -58,19 +59,18 @@ watch(
 
 const init = () => {
     let index = props.options.findIndex((e) => e.value === tabsValue.value);
-    if (index < 0) {
-        index = 0;
+    if (index >= 0) {
+        state.activeItemStyle = `width:${itemRef.value[index].offsetWidth}px;transform: translateX(${itemRef.value[index].offsetLeft}px);`;
+        tabsScroll();
+        setTimeout(() => {
+            state.isInit = true;
+        }, 100);
     }
-    state.activeItemStyle = `width:${itemRef.value[index].offsetWidth}px;transform: translateX(${itemRef.value[index].offsetLeft}px);`;
-    tabsScroll();
-    setTimeout(() => {
-        state.isInit = true;
-    }, 100);
 };
 
 const selectItem = (value: [String, Number], type?: string) => {
     const index = props.options.findIndex((e) => value === e.value);
-    if (state.curIndex != index) {
+    if (index >= 0 && state.curIndex != index) {
         const _item = props.options[index];
         if (tabsValue.value != _item.value) {
             tabsValue.value = _item.value;
@@ -116,7 +116,7 @@ const getTabsClassName = computed(() => {
 
 const tabsScroll = () => {
     if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
-        if (tabsRef.value.scrollLeft > 0) {
+        if (tabsRef.value.scrollLeft >= 0) {
             if (
                 tabsRef.value.scrollLeft >=
                 tabsRef.value.scrollWidth - tabsRef.value.clientWidth - 10
@@ -267,7 +267,6 @@ onUnmounted(() => {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        flex: 1;
         z-index: 9;
         box-sizing: border-box;
         border-radius: var(--lew-border-radius);

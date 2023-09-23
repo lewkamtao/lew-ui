@@ -9,7 +9,7 @@ export type TabsSize = 'small' | 'medium' | 'large';
 export type TabsType = 'block' | 'line';
 export const tabsProps = {
     modelValue: {
-        type: String,
+        type: [String, Number],
         default: '',
         description: '绑定值',
     },
