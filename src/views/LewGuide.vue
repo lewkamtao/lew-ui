@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import TheSiderbar from '../layout/TheSiderbar.vue';
-import type { MenuOptions } from '../../packages';
+import type { MenuOptions } from '../../lib';
 
 const route = useRoute();
 const mainRef: any = ref(null);

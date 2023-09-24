@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { PropType } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import type { MenuOptions } from '../../packages';
+import type { MenuOptions } from '../../lib';
 
 const route = useRoute();
 const router = useRouter();

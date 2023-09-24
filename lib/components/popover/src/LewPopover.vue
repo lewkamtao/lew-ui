@@ -83,7 +83,9 @@ const initTippy = () => {
     if (trigger === 'hover') {
         trigger = 'mouseenter';
     }
-
+    if (!trigger) {
+        trigger = 'mouseenter';
+    }
     instance = tippy(triggerRef.value, {
         theme: 'light',
         trigger,
@@ -138,7 +140,7 @@ defineExpose({ show, hide, refresh });
 
 <template>
     <div class="lew-popover">
-        <label ref="triggerRef" style="font-size: 0px;">
+        <label ref="triggerRef" style="font-size: 0px">
             <div class="trigger">
                 <slot name="trigger" />
             </div>

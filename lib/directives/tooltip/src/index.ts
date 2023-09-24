@@ -9,6 +9,9 @@ export default {
                 if (trigger === 'hover') {
                     trigger = 'mouseenter';
                 }
+                if (!trigger) {
+                    trigger = 'mouseenter';
+                }
                 el.instance = tippy(el, {
                     theme: 'light',
                     trigger: trigger || 'mouseenter',

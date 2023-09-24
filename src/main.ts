@@ -8,7 +8,7 @@ import 'lew-ui/styles/main.scss';
 import '@/assets/style/main.scss';
 import '@/assets/style/hljs.scss';
 
-import lew from '../packages';
+import lew from '../lib';
 
 const app = createApp(AppVue);
 // 自定义一个代码高亮指令
