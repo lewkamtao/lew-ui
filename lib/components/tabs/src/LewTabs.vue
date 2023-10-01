@@ -316,7 +316,9 @@ onUnmounted(() => {
         font-size: 14px;
     }
 }
-
+.lew-tabs-type-line {
+    height: auto !important;
+}
 .lew-tabs-size-large {
     height: 34px;
 
