@@ -50,7 +50,7 @@ const options = ref(
     })
 );
 
-const value = ref();
+const value = ref(0);
 
 const change = (e: Options) => {
     LewMessage.info(e.label);
@@ -106,7 +106,20 @@ const change = (e: Options) => {
             v-model="value"
             style="width: 100%"
             type="line"
-            :options="options"
+            :options="[
+                {
+                    label: '北京市',
+                    value: 0,
+                },
+                {
+                    label: '广州市',
+                    value: 1,
+                },
+                {
+                    label: '上海市',
+                    value: 2,
+                },
+            ]"
             @change="change"
         />
     </lew-flex>

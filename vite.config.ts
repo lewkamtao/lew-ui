@@ -7,12 +7,14 @@ import dts from 'vite-plugin-dts';
 
 // 路径
 const pathSrc = path.resolve(__dirname, 'src');
-const pathPackage = path.resolve(__dirname, 'packages');
+const pathPackage = path.resolve(__dirname, 'lib');
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     return {
+        base: '',
         server: {
+            open: true,
             port: 10034,
         },
         resolve: {
@@ -27,7 +29,7 @@ export default defineConfig(({ mode }) => {
         plugins: [
             vue(),
             vueJsx(),
-            mode === 'package' ? dts() : undefined,
+            mode === 'lib' ? dts() : undefined,
             AutoImport({
                 imports: ['vue'],
                 dts: path.resolve(pathSrc, 'auto-imports.d.ts'),
@@ -38,10 +40,10 @@ export default defineConfig(({ mode }) => {
             }),
         ],
         build:
-            mode === 'package'
+            mode === 'lib'
                 ? {
                       lib: {
-                          entry: path.resolve(__dirname, './packages/index.ts'),
+                          entry: path.resolve(__dirname, './lib/index.ts'),
                           name: 'lew-ui',
                           fileName: 'index',
                       },
