@@ -193,7 +193,7 @@ const validate = (field: string) => {
                     });
 
                     let errors =
-                        err.inner &&
+                        err?.inner &&
                         err.inner.map((error: any) => ({
                             ...error,
                             field: () => {
@@ -249,33 +249,39 @@ const validate = (field: string) => {
                         o.errMessage = '';
                     });
 
-                    const errors = err.inner.map((error: any) => ({
-                        ...error,
-                        field: () => {
-                            try {
-                                let fieldName = error?.path; // 去除首尾的方括号
-                                if (fieldName[0] !== '[') {
+                    const errors =
+                        err?.inner &&
+                        err.inner.map((error: any) => ({
+                            ...error,
+                            field: () => {
+                                try {
+                                    let fieldName = error?.path; // 去除首尾的方括号
+                                    if (fieldName[0] !== '[') {
+                                        return fieldName;
+                                    }
+                                    fieldName = error?.path.slice(1, -1); // 去除首尾的方括号
+                                    if (
+                                        fieldName.charAt(0) === '"' &&
+                                        fieldName.charAt(
+                                            fieldName.length - 1
+                                        ) === '"'
+                                    ) {
+                                        // 处理包含引号的情况
+                                        fieldName = fieldName.slice(1, -1);
+                                    }
+                                    if (fieldName.includes('\\"')) {
+                                        // 处理转义字符
+                                        fieldName = fieldName.replace(
+                                            /\\"/g,
+                                            '"'
+                                        );
+                                    }
                                     return fieldName;
+                                } catch {
+                                    return error.path;
                                 }
-                                fieldName = error?.path.slice(1, -1); // 去除首尾的方括号
-                                if (
-                                    fieldName.charAt(0) === '"' &&
-                                    fieldName.charAt(fieldName.length - 1) ===
-                                        '"'
-                                ) {
-                                    // 处理包含引号的情况
-                                    fieldName = fieldName.slice(1, -1);
-                                }
-                                if (fieldName.includes('\\"')) {
-                                    // 处理转义字符
-                                    fieldName = fieldName.replace(/\\"/g, '"');
-                                }
-                                return fieldName;
-                            } catch {
-                                return error.path;
-                            }
-                        },
-                    }));
+                            },
+                        }));
 
                     errors.forEach((e: any) => {
                         let index = opt.findIndex(
@@ -429,7 +435,7 @@ defineExpose({ getForm, setForm, validate });
                 />
 
                 <lew-date-picker
-                    style="width: 100%;"
+                    style="width: 100%"
                     v-model="item.value"
                     v-if="item.as === 'date-picker'"
                     @change="(e: any) => {
@@ -442,7 +448,7 @@ defineExpose({ getForm, setForm, validate });
                 />
 
                 <lew-date-range-picker
-                    style="width: 100%;"
+                    style="width: 100%"
                     v-model="item.value"
                     v-if="item.as === 'date-range-picker'"
                     @change="(e: any) => {
