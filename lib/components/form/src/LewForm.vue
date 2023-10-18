@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { formProps } from './props';
 import { object2class, any2px } from 'lew-ui/utils';
 import * as Yup from 'yup';
 import { useVModel, watchDebounced } from '@vueuse/core';
@@ -19,6 +18,7 @@ import {
     LewSwitch,
     LewButton,
 } from 'lew-ui';
+import { formProps } from './props';
 
 const props = defineProps(formProps);
 const emit = defineEmits(['update:modelValue', 'update:options', 'change']);
@@ -109,10 +109,8 @@ function removeEmpty(obj: any) {
                 return;
             }
             newObj[key] = newValue;
-        } else {
-            if (value !== undefined && value !== null) {
-                newObj[key] = value;
-            }
+        } else if (value !== undefined && value !== null) {
+            newObj[key] = value;
         }
     });
     return newObj;
@@ -132,15 +130,15 @@ const flattenObject = (obj: any, prefix = '') => {
 };
 
 const form2componentOptions = () => {
-    let vArr = flattenObject(form.value);
+    const vArr = flattenObject(form.value);
     vArr.forEach((_e: any) => {
         componentOptions.value.forEach((__e: any, i: number) => {
             if (_e.field.lastIndexOf('.') >= 0) {
                 console.log(_e.field);
-                let _$fieldKey = _e.field?.substring(
+                const _$fieldKey = _e.field?.substring(
                     _e.field.lastIndexOf('.') + 1
                 );
-                let _$fieldPrefix = _e.field?.substring(
+                const _$fieldPrefix = _e.field?.substring(
                     0,
                     _e.field.lastIndexOf('.')
                 );
@@ -160,10 +158,10 @@ const form2componentOptions = () => {
 };
 
 const validate = (field: string) => {
-    let opt = componentOptions.value || [];
+    const opt = componentOptions.value || [];
     let schema: any = Yup.object();
-    let obj: any = [];
-    let formObj: any = {};
+    const obj: any = [];
+    const formObj: any = {};
     opt.forEach(({ field, rules, value }: any) => {
         if (field && rules) {
             obj[field] = rules;
@@ -236,8 +234,8 @@ const validate = (field: string) => {
                         errors &&
                         errors.filter((e: any) => e.field() === field);
 
-                    let errItem = errors && errors[0];
-                    let index = opt.findIndex((e: any) => {
+                    const errItem = errors && errors[0];
+                    const index = opt.findIndex((e: any) => {
                         return e?.field === errItem?.field();
                     });
                     if (index >= 0) {
@@ -283,14 +281,15 @@ const validate = (field: string) => {
                             },
                         }));
 
-                    errors.forEach((e: any) => {
-                        let index = opt.findIndex(
-                            (c: any) => c.field == e.field()
-                        );
-                        if (index >= 0 && opt) {
-                            opt[index].errMessage = e?.message;
-                        }
-                    });
+                    errors &&
+                        errors.forEach((e: any) => {
+                            const index = opt.findIndex(
+                                (c: any) => c.field == e.field()
+                            );
+                            if (index >= 0 && opt) {
+                                opt[index].errMessage = e?.message;
+                            }
+                        });
                     componentOptions.value = JSON.parse(JSON.stringify(opt));
                 }
             });
@@ -314,7 +313,7 @@ const getNestedFieldValue = (obj: any, field: string) => {
     }
     const keys = field.split('.'); // 将字符串的嵌套字段按照 '.' 分割成数组
     let value = obj;
-    for (let key of keys) {
+    for (const key of keys) {
         if (value && value.hasOwnProperty(key)) {
             value = value[key];
         } else {
@@ -364,93 +363,94 @@ defineExpose({ getForm, setForm, validate });
                 :class="{ 'lew-form-item-error': item.errMessage }"
             >
                 <lew-input
-                    v-model="item.value"
                     v-if="item.as === 'input'"
+                    v-model="item.value"
+                    v-bind="{ size: size, ...item.props }"
                     @change="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
-                    v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-textarea
-                    v-model="item.value"
                     v-if="item.as === 'textarea'"
+                    v-model="item.value"
+                    v-bind="{ size: size, ...item.props }"
                     @change="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
-                    v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-input-tag
-                    v-model="item.value"
                     v-if="item.as === 'input-tag'"
+                    v-model="item.value"
+                    v-bind="{ size: size, ...item.props }"
                     @change="validate(item.field)"
                     @close="validate(item.field)"
-                    v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-checkbox-group
-                    v-model="item.value"
                     v-if="item.as === 'checkbox-group'"
-                    @change="validate(item.field)"
+                    v-model="item.value"
                     v-bind="{ size: size, ...item.props }"
+                    @change="validate(item.field)"
                 />
 
                 <lew-radio-group
-                    v-model="item.value"
                     v-if="item.as === 'radio-group'"
-                    @change="validate(item.field)"
+                    v-model="item.value"
                     v-bind="{ size: size, ...item.props }"
+                    @change="validate(item.field)"
                 />
 
                 <lew-checkbox
-                    v-model="item.value"
                     v-if="item.as === 'checkbox'"
-                    @change="validate(item.field)"
+                    v-model="item.value"
                     v-bind="{ size: size, ...item.props }"
+                    @change="validate(item.field)"
                 />
 
                 <lew-select
-                    v-model="item.value"
                     v-if="item.as === 'select'"
+                    v-model="item.value"
+                    v-bind="{ size: size, ...item.props }"
                     @change="(e: any) => {
                     validate(item.field);
                     typeof item.props.click === 'function' ? item.props.change(e) : '';
                 }"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
-                    v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-select-multiple
-                    v-model="item.value"
                     v-if="item.as === 'select-multiple'"
+                    v-model="item.value"
+                    v-bind="{ size: size, ...item.props }"
                     @change="(e: any) => {
                     validate(item.field);
                     typeof item.props.click === 'function' ? item.props.change(e) : '';
                 }"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
-                    v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-date-picker
-                    style="width: 100%"
-                    v-model="item.value"
                     v-if="item.as === 'date-picker'"
+                    v-model="item.value"
+                    style="width: 100%"
+                    v-bind="{ size: size, ...item.props }"
                     @change="(e: any) => {
                     validate(item.field);
                     typeof item.props.click === 'function' ? item.props.change(e) : '';
                 }"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
-                    v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-date-range-picker
-                    style="width: 100%"
-                    v-model="item.value"
                     v-if="item.as === 'date-range-picker'"
+                    v-model="item.value"
+                    style="width: 100%"
+                    v-bind="{ size: size, ...item.props }"
                     @change="(e: any) => {
                         validate(item.field);
                         typeof item.props.click === 'function' ? item.props.change(e) : '';
@@ -458,52 +458,51 @@ defineExpose({ getForm, setForm, validate });
                         "
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
-                    v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-tabs
-                    v-model="item.value"
                     v-if="item.as === 'tabs'"
+                    v-model="item.value"
+                    v-bind="{ size: size, ...item.props }"
                     @change="(e: any) => {
                     validate(item.field);
                     typeof item.props.click === 'function' ? item.props.change(e) : '';
                 }
                     "
-                    v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-cascader
-                    v-model="item.value"
                     v-if="item.as === 'cascader'"
+                    v-model="item.value"
+                    v-bind="{ size: size, ...item.props }"
                     @clear="validate(item.field)"
                     @change="(e: any) => {
                     validate(item.field);
                     typeof item.props.click === 'function' ? item.props.change(e) : '';
                 }
                     "
-                    v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-switch
-                    v-model="item.value"
                     v-if="item.as === 'switch'"
+                    v-model="item.value"
+                    v-bind="{ size: size, ...item.props }"
                     @change="
                         typeof item.props.change === 'function'
                             ? item.props.change()
                             : ''
                     "
-                    v-bind="{ size: size, ...item.props }"
                 />
 
                 <lew-button
-                    v-model="item.value"
                     v-if="item.as === 'button'"
+                    v-model="item.value"
+                    v-bind="{ size: size, ...item.props }"
                     @click="
                         typeof item.props.click === 'function'
                             ? item.props.click()
                             : ''
                     "
-                    v-bind="{ size: size, ...item.props }"
                 />
 
                 <transition name="slide-fade">
