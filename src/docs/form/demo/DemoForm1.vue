@@ -8,12 +8,35 @@ const schoolsOptions = schools.map((e, i) => {
 
 const form = ref({} as any);
 
+onMounted(() => {
+    // 设置表单
+    formRef.value.setForm({
+        size: 'medium',
+        input: '文本框',
+        textarea: '多行文本',
+        select: '1',
+        select_multiple: [1, 2],
+        radio_group: '2',
+        checkbox_group: ['2'],
+        tabs: '2',
+        user: {
+            address: 30,
+            addd: true,
+        },
+        info: {
+            asd: {
+                dsd: {
+                    input_tag: ['测试','小芳'],
+                },
+            },
+        },
+    });
+});
 const options = ref([
     {
         label: '表单大小',
         as: 'tabs',
         field: 'size',
-        value: 'medium',
         props: {
             itemWidth: 'auto',
             width: '100%',
@@ -300,29 +323,6 @@ const submit = async () => {
         LewMessage.warning('请完善表单');
     }
 };
-
-onMounted(() => {
-    formRef.value.setForm({
-        input: '1231',
-        textarea: '1231331313',
-        select: '1231331313',
-        select_multiple: [1, 2],
-        radio_group: '2',
-        checkbox_group: ['2'],
-        tabs: '2',
-        user: {
-            address: 30,
-            addd: true,
-        },
-        info: {
-            asd: {
-                dsd: {
-                    input_tag: ['asd'],
-                },
-            },
-        },
-    });
-});
 </script>
 
 <template>

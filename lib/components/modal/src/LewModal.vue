@@ -10,7 +10,7 @@ useDOMCreate('lew-modal');
 
 const props = defineProps(modalProps);
 
-const emit = defineEmits(['update:visible', 'ok', 'cancel']);
+const emit = defineEmits(['update:visible', 'ok', 'cancel', 'show', 'close']);
 
 const visible = useVModel(props, 'visible', emit);
 
@@ -34,6 +34,17 @@ const ok = () => {
 const cancel = () => {
     emit('cancel');
 };
+
+watch(
+    () => visible.value,
+    (newVal) => {
+        if (newVal) {
+            emit('show');
+        } else {
+            emit('close');
+        }
+    }
+);
 </script>
 
 <template>
