@@ -93,7 +93,7 @@ const initTippy = () => {
         content: bodyRef.value,
         animation: 'shift-away-subtle',
         interactive: true,
-        hideOnClick: trigger !== 'mouseenter',
+        hideOnClick: trigger !== 'mouseenter' ? props.hideOnClick : false as any,
         placement,
         duration: [120, 120],
         arrow: false,

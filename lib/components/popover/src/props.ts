@@ -37,5 +37,9 @@ export const popoverProps = {
         default: [0, 8],
         description: '偏移量',
     },
+    hideOnClick: {
+        type: [Boolean, String],
+        default: true,
+    },
 };
 export type PopoverProps = ExtractPropTypes<typeof popoverProps>;
