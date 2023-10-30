@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { dropdownProps } from './props';
-import type { DropdownOptions } from './props';
 import { any2px } from 'lew-ui/utils';
 import { LewPopover } from 'lew-ui';
+import { dropdownProps } from './props';
+import type { DropdownOptions } from './props';
 
 defineProps(dropdownProps);
 
@@ -28,7 +28,12 @@ defineExpose({ show, hide });
 </script>
 
 <template>
-    <lew-popover ref="lewPopoverRef" :trigger="trigger" :placement="placement">
+    <lew-popover
+        ref="lewPopoverRef"
+        popover-body-class-name="lew-dropdown-popover-body"
+        :trigger="trigger"
+        :placement="placement"
+    >
         <template #trigger>
             <slot />
         </template>
@@ -75,5 +80,10 @@ defineExpose({ show, hide });
         color: var(--lew-text-color-0);
         background-color: var(--lew-backdrop-bg-active);
     }
+}
+</style>
+<style>
+.lew-dropdown-popover-body {
+    padding: 6px;
 }
 </style>

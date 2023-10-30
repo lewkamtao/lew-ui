@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router';
 import { useDark } from '@vueuse/core';
 
-let v = ref('1.7.2');
+const v = ref('1.7.2');
 
 const isDark = useDark({
     selector: 'html',
@@ -44,18 +44,6 @@ const gohome = () => {
             <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
                 <lew-icon size="18" type="github" />
             </a>
-            <lew-icon
-                class="menu-item icon-mode-sunny"
-                type="sun"
-                size="18"
-                @click="isDark = false"
-            />
-            <lew-icon
-                class="menu-item icon-mode-moon"
-                type="moon"
-                size="18"
-                @click="isDark = true"
-            />
         </lew-flex>
     </div>
 </template>
