@@ -5,6 +5,7 @@ const open = () => {
         okText: '销毁',
         content: '你是否要销毁该仓库，此操作会立即生效，请谨慎操作！',
         closeOnClickOverlay: true,
+        closeByEsc: true,
         ok: () => {
             return new Promise((resolve) => {
                 setTimeout(() => {

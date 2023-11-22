@@ -127,5 +127,10 @@ export const inputProps = {
         default: '',
         description: '后缀提示',
     },
+    okByEnter: {
+        type: Boolean,
+        default: false,
+        description: '是否按回车键确认',
+    },
 };
 export type InputProps = ExtractPropTypes<typeof inputProps>;

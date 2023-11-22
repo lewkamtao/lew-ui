@@ -5,7 +5,9 @@ import { any2px } from 'lew-ui/utils';
 import { LewTextTrim } from '../../text-trim';
 import { modalProps } from './props';
 import { LewFlex, LewButton, LewIcon } from 'lew-ui';
+import { useMagicKeys } from '@vueuse/core';
 
+const { Escape } = useMagicKeys();
 useDOMCreate('lew-modal');
 
 const props = defineProps(modalProps);
@@ -45,6 +47,13 @@ watch(
         }
     }
 );
+if (props.closeByEsc) {
+    watch(Escape, (v) => {
+        if (v && visible.value) {
+            visible.value = false;
+        }
+    });
+}
 </script>
 
 <template>

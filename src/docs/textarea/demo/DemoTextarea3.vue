@@ -27,5 +27,13 @@ const value = ref('');
             disabled
             clearable
         />
+        <lew-textarea
+            v-model="value"
+            placeholder="按enter触发"
+            :max-length="300"
+            show-count
+            clearable
+            okByEnter
+        />
     </lew-flex>
 </template>

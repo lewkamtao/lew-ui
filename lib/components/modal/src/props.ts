@@ -27,6 +27,11 @@ export const modalProps = {
         default: false,
         description: '是否隐藏底部按钮',
     },
+    closeByEsc: {
+        type: Boolean,
+        default: false,
+        description: '是否允许esc关闭',
+    },
     okProps: {
         type: Object as PropType<ButtonProps>,
         default: () => {

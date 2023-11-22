@@ -68,5 +68,10 @@ export const textareaProps = {
         default: '',
         description: '高度',
     },
+    okByEnter: {
+        type: Boolean,
+        default: false,
+        description: '是否按回车键确认',
+    },
 };
 export type TextareaProps = ExtractPropTypes<typeof textareaProps>;
