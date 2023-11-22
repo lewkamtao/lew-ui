@@ -153,7 +153,7 @@ const getSuffixLabel = computed(() => {
 
 if (props.okByEnter) {
     watch(enter, (v) => {
-        if (v) {
+        if (v && state.isFocus && modelValue.value) {
             emit('ok', modelValue.value);
         }
     });
