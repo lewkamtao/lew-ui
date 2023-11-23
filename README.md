@@ -44,3 +44,6 @@ import { LewButton } from 'lew-ui';
 
 -   https://github.com/atomiks/tippyjs
 -   https://fengyuanchen.github.io/vue-feather/
+
+## License
+Lew UI is open source software licensed as MIT.
