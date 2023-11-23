@@ -8,7 +8,6 @@ const options = ref([
         field: 'name', // 字段名
         label: '姓名', // 标签
         as: 'input', // 组件
-        value: '',
         rules: Yup.string()
             .matches(/^[a-zA-Z]+$/, '必须为纯英文字母')
             .min(4, '长度必须至少为4')
@@ -49,7 +48,6 @@ const options = ref([
     {
         field: 'birth',
         label: '生日',
-        value: '2023-01-12',
         as: 'date-picker',
         rules: Yup.string().required('不能为空'),
         props: {
@@ -59,10 +57,6 @@ const options = ref([
     {
         field: 'date.birth',
         label: '有效期',
-        value: {
-            start: '2012-11-12',
-            end: '2012-12-12',
-        },
         as: 'date-range-picker',
         rules: Yup.object()
             .shape({

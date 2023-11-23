@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { useVModel, useDebounceFn } from '@vueuse/core';
-import { LewPopover, LewIcon } from 'lew-ui';
+import { LewPopover, LewIcon, LewTooltip } from 'lew-ui';
 import { object2class, numFormat } from 'lew-ui/utils';
 import { UseVirtualList } from '@vueuse/components';
 import { selectMultipleProps, SelectMultipleOptions } from './props';
-import { LewTooltip } from 'lew-ui';
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app;
@@ -87,7 +86,7 @@ const clearHandle = () => {
 };
 
 const deleteTag = (index: number) => {
-    let item = selectValue.value[index];
+    const item = selectValue.value[index];
     selectValue.value && selectValue.value.splice(index, 1);
     emit('delete', item);
     // 刷新位置
@@ -102,7 +101,7 @@ const selectHandle = (item: SelectMultipleOptions) => {
         return;
     }
 
-    let _value = selectValue.value || [];
+    const _value = selectValue.value || [];
 
     const index = _value.findIndex((e: string | number) => e == item.value);
 
@@ -204,6 +203,7 @@ defineExpose({ show, hide });
 <template>
     <lew-popover
         ref="lewPopverRef"
+        popover-body-class-name="lew-select-multiple-popover-body"
         class="lew-select-view"
         :class="getSelectViewClassName"
         :trigger="trigger"
@@ -237,12 +237,12 @@ defineExpose({ show, hide });
                             getLabels.length > 0 &&
                             !readonly
                         "
-                        :size="getIconSize"
-                        type="x"
                         v-tooltip="{
                             content: '清空',
                             placement: 'top',
                         }"
+                        :size="getIconSize"
+                        type="x"
                         class="lew-form-icon-clear"
                         :class="{
                             'lew-form-icon-clear-focus': state.visible,
@@ -261,9 +261,9 @@ defineExpose({ show, hide });
                 >
                     <TransitionGroup name="list">
                         <lew-tag
-                            type="light"
                             v-for="(item, index) in getLabels"
                             :key="index"
+                            type="light"
                             :size="size"
                             closable
                             @close="deleteTag(index)"
@@ -318,8 +318,8 @@ defineExpose({ show, hide });
                     </div>
 
                     <use-virtual-list
-                        :key="getVirtualHeight"
                         v-if="state.options.length > 0"
+                        :key="getVirtualHeight"
                         class="lew-select-options-list lew-scrollbar"
                         :list="state.options"
                         :options="{
@@ -524,6 +524,9 @@ defineExpose({ show, hide });
 }
 </style>
 <style lang="scss">
+.lew-select-multiple-popover-body {
+    padding: 6px;
+}
 .lew-select-body {
     width: 100%;
     box-sizing: border-box;

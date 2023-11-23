@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { useVModel, useDebounceFn } from '@vueuse/core';
-import { LewPopover, LewFlex, LewIcon } from 'lew-ui';
+import { LewPopover, LewFlex, LewIcon, LewTooltip } from 'lew-ui';
 import { object2class, numFormat } from 'lew-ui/utils';
 import { UseVirtualList } from '@vueuse/components';
 import { selectProps, SelectOptions } from './props';
-import { LewTooltip } from 'lew-ui';
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app;
@@ -171,6 +170,7 @@ defineExpose({ show, hide });
 <template>
     <lew-popover
         ref="lewPopverRef"
+        popover-body-class-name="lew-select-popover-body"
         class="lew-select-view"
         :class="getSelectViewClassName"
         :trigger="trigger"
@@ -196,12 +196,12 @@ defineExpose({ show, hide });
                 <transition name="lew-form-icon-ani">
                     <lew-icon
                         v-if="clearable && getLabel && !readonly"
-                        :size="getIconSize"
-                        type="x"
                         v-tooltip="{
                             content: '清空',
                             placement: 'top',
                         }"
+                        :size="getIconSize"
+                        type="x"
                         class="lew-form-icon-clear"
                         :class="{
                             'lew-form-icon-clear-focus': state.visible,
@@ -254,8 +254,8 @@ defineExpose({ show, hide });
                         条结果
                     </div>
                     <use-virtual-list
-                        :key="getVirtualHeight"
                         v-if="state.options.length > 0"
+                        :key="getVirtualHeight"
                         class="lew-select-options-list lew-scrollbar"
                         :list="state.options"
                         :options="{
@@ -457,6 +457,9 @@ defineExpose({ show, hide });
 }
 </style>
 <style lang="scss">
+.lew-select-popover-body {
+    padding: 6px;
+}
 .lew-select-body {
     width: 100%;
     box-sizing: border-box;

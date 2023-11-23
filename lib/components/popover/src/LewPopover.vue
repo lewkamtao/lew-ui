@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import tippy from 'tippy.js';
 import { watchDebounced } from '@vueuse/core';
-import { popoverProps } from './props';
 import { LewLoading } from 'lew-ui';
+import { popoverProps } from './props';
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app;
@@ -93,11 +93,11 @@ const initTippy = () => {
         content: bodyRef.value,
         animation: 'shift-away-subtle',
         interactive: true,
-        hideOnClick: trigger === 'mouseenter' ? false : true,
+        hideOnClick: trigger !== 'mouseenter' ? props.hideOnClick : false as any,
         placement,
         duration: [120, 120],
         arrow: false,
-        offset: offset,
+        offset,
         delay: trigger === 'mouseenter' ? [120, 120] : undefined,
         appendTo: () => document.body,
         allowHTML: true,
@@ -168,7 +168,6 @@ defineExpose({ show, hide, refresh });
 }
 
 .lew-popover-body {
-    padding: 6px;
     overflow: hidden;
 }
 </style>

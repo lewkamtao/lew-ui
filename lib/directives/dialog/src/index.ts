@@ -1,5 +1,4 @@
 import _LewDialog from './LewDialog.vue';
-
 type Options = {
     title: string;
     content: string;
@@ -9,6 +8,7 @@ type Options = {
     okText: string;
     cancelText: string;
     closeOnClickOverlay?: boolean;
+    closeByEsc?: boolean;
 };
 
 const warning = (options: Options) => {
@@ -41,6 +41,7 @@ const dialog = (type: string, options: Options) => {
         cancelText,
         layout,
         closeOnClickOverlay,
+        closeByEsc,
     } = options;
     const div: HTMLDivElement = document.createElement('div');
     document.body.appendChild(div);
@@ -50,6 +51,7 @@ const dialog = (type: string, options: Options) => {
                 _LewDialog,
                 {
                     closeOnClickOverlay,
+                    closeByEsc,
                     type,
                     layout,
                     okText,

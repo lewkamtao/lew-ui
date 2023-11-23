@@ -1,12 +1,15 @@
 <script lang="ts" setup>
 import { useVModels } from '@vueuse/core';
-import { paginationProps } from './props';
 import { LewInput, LewSelect, LewFlex, LewIcon } from 'lew-ui';
+import { paginationProps } from './props';
 
 const props = defineProps(paginationProps);
-const emit = defineEmits(['change', 'update:currentPage']);
+const emit = defineEmits(['change', 'update:currentPage', 'update:pageSize']);
 
-const { total, currentPage, pageSizeOptions } = useVModels(props, emit);
+const { total, currentPage, pageSize, pageSizeOptions } = useVModels(
+    props,
+    emit
+);
 
 const state = reactive({
     toPage: undefined,
@@ -56,14 +59,16 @@ const visiblePages = computed(() => {
 const changePage = (page: number) => {
     page = Math.floor(page);
 
-    if (page < 1 || page > totalPages.value || page === currentPage.value) {
+    if (page < 1 || page > totalPages.value) {
         return;
     }
+
+    currentPage.value = page;
+    pageSize.value = state.pageSize;
     emit('change', {
         currentPage: currentPage.value,
         pageSize: state.pageSize,
     });
-    currentPage.value = page;
 };
 
 // 是否显示省略号

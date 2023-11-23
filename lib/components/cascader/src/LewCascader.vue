@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core';
-import { LewPopover, LewFlex, LewButton, LewIcon } from 'lew-ui';
+import { LewPopover, LewFlex, LewButton, LewIcon, LewTooltip } from 'lew-ui';
 import { object2class } from 'lew-ui/utils';
 import { cascaderProps, CascaderOptions } from './props';
-import { LewTooltip } from 'lew-ui';
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app;
@@ -77,7 +76,7 @@ const findObjectByValue = (
 
 // 初始化
 const init = () => {
-    let _options: CascaderOptions[] =
+    const _options: CascaderOptions[] =
         (props.options &&
             props.options.map((e) => {
                 return {
@@ -88,7 +87,7 @@ const init = () => {
         [];
     addPathsToTreeList(_options);
     state.format_options = _options;
-    let new_options = [];
+    const new_options = [];
     new_options[0] = _options;
     state.options = new_options;
 };
@@ -122,11 +121,9 @@ const selectItem = (item: CascaderOptions, level: number) => {
 
     if (props.free) {
         checkItem(item, level);
-    } else {
-        if (!item.isHasChild) {
-            checkItem(item, level);
-            ok();
-        }
+    } else if (!item.isHasChild) {
+        checkItem(item, level);
+        ok();
     }
 };
 
@@ -137,12 +134,10 @@ const checkItem = (item: CascaderOptions, level: number) => {
         } else {
             state.tobelabels = item.labelPaths as string[];
         }
+    } else if (state.tobelabels === ([item.label] as string[])) {
+        state.tobelabels = [] as string[];
     } else {
-        if (state.tobelabels === ([item.label] as string[])) {
-            state.tobelabels = [] as string[];
-        } else {
-            state.tobelabels = [item.label] as any;
-        }
+        state.tobelabels = [item.label] as any;
     }
 };
 
@@ -208,8 +203,9 @@ const hideHandle = () => {
 
 // 获取宽度
 const getCascaderWidth = computed(() => {
-    let _hasChildOptions = state.options.filter((e) => e && e.length > 0)
-        .length;
+    const _hasChildOptions = state.options.filter(
+        (e) => e && e.length > 0
+    ).length;
     if (_hasChildOptions > 1) {
         return _hasChildOptions * 180;
     }
@@ -241,11 +237,10 @@ defineExpose({ show, hide });
         ref="lewPopverRef"
         class="lew-cascader-view"
         :class="getCascaderViewClassName"
-        popoverBodyClassName="lew-cascader-popover-body"
         :trigger="trigger"
         :disabled="disabled"
         placement="bottom-start"
-        style="width: 100%;"
+        style="width: 100%"
         :loading="state.loading"
         @show="showHandle"
         @hide="hideHandle"
@@ -273,15 +268,15 @@ defineExpose({ show, hide });
                             getLabel.length > 0 &&
                             !readonly
                         "
+                        v-tooltip="{
+                            content: '清空',
+                            placement: 'top',
+                        }"
                         :size="getIconSize"
                         type="x"
                         class="lew-form-icon-clear"
                         :class="{
                             'lew-form-icon-clear-focus': state.visible,
-                        }"
-                        v-tooltip="{
-                            content: '清空',
-                            placement: 'top',
                         }"
                         @click.stop="clearHandle"
                     />
@@ -358,26 +353,24 @@ defineExpose({ show, hide });
                             <!--  -->
 
                             <div
+                                v-for="(item, index) in oItem"
+                                :key="index"
                                 class="lew-cascader-item"
                                 :class="{
                                     'lew-cascader-item-disabled': item.disabled,
-                                    'lew-cascader-item-active': state.activelabels.includes(
-                                        item.label
-                                    ),
-                                    'lew-cascader-item-tobe': state.tobelabels.includes(
-                                        item.label
-                                    ),
+                                    'lew-cascader-item-active':
+                                        state.activelabels.includes(item.label),
+                                    'lew-cascader-item-tobe':
+                                        state.tobelabels.includes(item.label),
                                     'lew-cascader-item-select':
                                         getLabel &&
                                         getLabel.includes(item.label),
                                 }"
-                                v-for="(item, index) in oItem"
-                                :key="index"
                                 @click="selectItem(item, oIndex)"
                             >
                                 <lew-checkbox
-                                    class="lew-cascader-checkbox"
                                     v-if="free"
+                                    class="lew-cascader-checkbox"
                                     :checked="
                                         state.tobelabels.includes(item.label)
                                     "
@@ -402,14 +395,14 @@ defineExpose({ show, hide });
                 </div>
                 <lew-flex v-if="free" x="end" class="lew-cascader-control">
                     <lew-button
-                        @click="cancel"
                         round
                         color="normal"
                         type="text"
                         size="small"
+                        @click="cancel"
                         >取消</lew-button
                     >
-                    <lew-button @click="ok" round type="light" size="small">
+                    <lew-button round type="light" size="small" @click="ok">
                         确认
                     </lew-button>
                 </lew-flex>
@@ -751,10 +744,6 @@ defineExpose({ show, hide });
         height: 40px;
         padding-right: 10px;
     }
-}
-
-.lew-popover-body .lew-cascader-popover-body {
-    padding: 0px;
 }
 
 .lew-cascader-item:hover {

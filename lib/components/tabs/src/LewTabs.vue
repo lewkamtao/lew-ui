@@ -23,6 +23,9 @@ watch(
         if (v || v === 0) {
             selectItem(v, 'watch');
         }
+        if (!state.isInit) {
+            init();
+        }
     }
 );
 
@@ -61,11 +64,11 @@ const init = () => {
     let index = props.options.findIndex((e) => e.value === tabsValue.value);
     if (index >= 0) {
         state.activeItemStyle = `width:${itemRef.value[index].offsetWidth}px;transform: translateX(${itemRef.value[index].offsetLeft}px);`;
-        tabsScroll();
-        setTimeout(() => {
-            state.isInit = true;
-        }, 100);
     }
+    tabsScroll();
+    setTimeout(() => {
+        state.isInit = true;
+    }, 100);
 };
 
 const selectItem = (value: [String, Number], type?: string) => {
@@ -116,10 +119,10 @@ const getTabsClassName = computed(() => {
 
 const tabsScroll = () => {
     if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
-        if (tabsRef.value.scrollLeft >= 0) {
+        if (tabsRef.value.scrollLeft > 50) {
             if (
                 tabsRef.value.scrollLeft >=
-                tabsRef.value.scrollWidth - tabsRef.value.clientWidth - 10
+                tabsRef.value.scrollWidth - tabsRef.value.clientWidth - 50
             ) {
                 state.hidLine = 'right';
             } else {

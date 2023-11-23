@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import { menuProps } from './props';
-import { MenuOptions } from './props';
 import { watchDebounced } from '@vueuse/core';
 import { LewTextTrim, LewTag } from 'lew-ui';
+import { menuProps, MenuOptions } from './props';
 
 const props = defineProps(menuProps);
 
@@ -10,7 +9,7 @@ const emit = defineEmits(['change']);
 
 const generateEnterpriseMenu = (
     menuData: MenuOptions[],
-    level: number = 1
+    level = 1
 ): MenuOptions[] => {
     return menuData.map((item) => {
         const { children } = item;
@@ -119,7 +118,6 @@ _options.value = generateEnterpriseMenu(props.options);
         font-size: 14px;
         height: 40px;
         line-height: 40px;
-        font-weight: 500;
         cursor: pointer;
         border-radius: var(--lew-border-radius);
         transition: var(--lew-form-transition);

@@ -4,7 +4,9 @@ import { useVModel } from '@vueuse/core';
 import { object2class, any2px } from 'lew-ui/utils';
 import { LewIcon } from 'lew-ui';
 import { LewTooltip } from 'lew-ui';
+import { useMagicKeys } from '@vueuse/core';
 
+const { shift, enter } = useMagicKeys();
 // 获取app
 const app = getCurrentInstance()?.appContext.app;
 if (app && !app.directive('tooltip')) {
@@ -20,6 +22,7 @@ const emit = defineEmits([
     'focus',
     'change',
     'textarea',
+    'ok',
 ]);
 
 const props = defineProps(textareaProps);
@@ -100,7 +103,16 @@ const getTextareaStyle = computed(() => {
     let { width, height } = props;
     return `width:${any2px(width)};height:${any2px(height)};`;
 });
-
+if (props.okByEnter) {
+    watchEffect(() => {
+        if (shift.value && enter.value) {
+            return;
+        } else if (enter.value) {
+            lewTextareaRef.value?.blur();
+            emit('ok', modelValue.value);
+        }
+    });
+}
 defineExpose({ toFocus });
 </script>
 
@@ -140,7 +152,7 @@ defineExpose({ toFocus });
                 @mousedown.prevent=""
                 @click="clear"
                 :size="getIconSize"
-                style="top: 14px;"
+                style="top: 14px"
                 type="x"
             />
         </transition>

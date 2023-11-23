@@ -350,17 +350,6 @@ const open = () => {
         },
     });
 };
-
-onMounted(() => {
-    document.onkeydown = function (event) {
-        const e = event || window.event || arguments.callee.caller.arguments[0];
-        if (e && e.keyCode === 27) {
-            // 按 Esc
-            visible1.value = false;
-            modalVisible2.value = false;
-        }
-    };
-});
 </script>
 
 <template>
@@ -374,8 +363,6 @@ onMounted(() => {
         close-on-click-overlay
         width="350px"
         title="About Lew-UI"
-        ok-text="删除"
-        ok-color="red"
         @ok="open"
         @cancel="visible1 = false"
     >
@@ -383,7 +370,12 @@ onMounted(() => {
             <div>A beautiful component library based on vue3</div>
         </div>
     </lew-modal>
-    <lew-modal v-model:visible="modalVisible2" hide-footer width="1250px">
+    <lew-modal
+        v-model:visible="modalVisible2"
+        hide-footer
+        close-by-esc
+        width="1250px"
+    >
         <template #header>
             <div class="header">这是自定义头部</div>
         </template>
@@ -403,7 +395,7 @@ onMounted(() => {
             </lew-table>
         </div>
         <template #footer>
-            <lew-flex x="end" style="padding: 10px 20px;">
+            <lew-flex x="end" style="padding: 10px 20px">
                 <lew-button
                     text="关闭"
                     type="text"

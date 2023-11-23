@@ -68,5 +68,10 @@ export const textareaProps = {
         default: '',
         description: '高度',
     },
+    okByEnter: {
+        type: Boolean,
+        default: false,
+        description: '是否按回车键确认（当开启时，按下shift+enter可以进行换行）',
+    },
 };
 export type TextareaProps = ExtractPropTypes<typeof textareaProps>;

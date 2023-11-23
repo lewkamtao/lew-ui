@@ -1,8 +1,8 @@
 <!-- filename: Popover.vue -->
 <script setup lang="ts">
 import { LewButton, LewPopover } from 'lew-ui';
-import { popokProps } from './props';
 import { any2px } from 'lew-ui/utils';
+import { popokProps } from './props';
 
 const props = defineProps(popokProps);
 
@@ -116,7 +116,7 @@ const emit = defineEmits(['show', 'cancel']);
 
 .lew-popok-body {
     display: flex;
-    padding: 10px;
+    padding: 15px;
 
     .left {
         width: 30px;

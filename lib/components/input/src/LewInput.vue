@@ -4,7 +4,9 @@ import { useVModel } from '@vueuse/core';
 import { object2class } from 'lew-ui/utils';
 import { LewIcon, LewDropdown, LewFlex } from 'lew-ui';
 import { LewTooltip } from 'lew-ui';
+import { useMagicKeys } from '@vueuse/core';
 
+const { enter } = useMagicKeys();
 // 获取app
 const app = getCurrentInstance()?.appContext.app;
 if (app && !app.directive('tooltip')) {
@@ -20,6 +22,7 @@ const emit = defineEmits([
     'focus',
     'change',
     'input',
+    'ok',
 ]);
 
 const props = defineProps(inputProps);
@@ -147,6 +150,14 @@ const getSuffixLabel = computed(() => {
     );
     return item?.label || '';
 });
+
+if (props.okByEnter) {
+    watch(enter, (v) => {
+        if (v) {
+            emit('ok', modelValue.value);
+        }
+    });
+}
 defineExpose({ toFocus });
 </script>
 

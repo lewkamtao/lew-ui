@@ -1,9 +1,11 @@
 <script lang="ts" setup name="dialog">
 import { LewButton, LewIcon, LewFlex } from 'lew-ui';
-import { dialogProps } from './dialog';
+import { dialogProps } from './props';
 import { getIconType } from '../../../utils';
 import { useDOMCreate } from '../../../hooks';
+import { useMagicKeys } from '@vueuse/core';
 
+const { Escape } = useMagicKeys();
 useDOMCreate('lew-dialog');
 const props = defineProps(dialogProps);
 const emit = defineEmits(['close']);
@@ -52,6 +54,14 @@ const cancel = async () => {
         cancelLoading.value = false;
     }
 };
+
+if (props.closeByEsc) {
+    watch(Escape, (v) => {
+        if (v && visible.value) {
+            visible.value = false;
+        }
+    });
+}
 </script>
 <template>
     <teleport to="#lew-dialog">
