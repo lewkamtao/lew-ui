@@ -41,6 +41,18 @@ const gohome = () => {
             <div class="menu-item" @click="router.push(`/`)">首页</div>
             <div class="menu-item" @click="router.push(`/Install`)">指南</div>
             <div class="menu-item" @click="router.push(`/Avatar`)">组件</div>
+            <lew-icon
+                class="menu-item icon-mode-sunny"
+                type="sun"
+                size="18"
+                @click="isDark = false"
+            />
+            <lew-icon
+                class="menu-item icon-mode-moon"
+                type="moon"
+                size="18"
+                @click="isDark = true"
+            />
             <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
                 <lew-icon size="18" type="github" />
             </a>
