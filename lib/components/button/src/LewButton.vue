@@ -88,7 +88,11 @@ const getStyle = computed(() => {
                     styleObj.padding = '0px 8px 0px 36px';
                 }
             } else {
-                styleObj.padding = '0px 8px';
+                if (props.icon) {
+                    styleObj.padding = '0px';
+                } else {
+                    styleObj.padding = '0px 8px';
+                }
             }
             break;
         default:
