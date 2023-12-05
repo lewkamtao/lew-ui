@@ -94,3 +94,24 @@ let uid = 1;
 export function genUid(): number {
     return Date.now() + uid++;
 }
+
+export const lewSetForm = ({
+    formRef,
+    params,
+}: {
+    formRef: any; // 传入formRef.value
+    params: any; // 需要设置的参数
+}) => {
+    let timeout = 0;
+    const _fn = () => {
+        timeout += 10;
+        if (formRef && formRef.value) {
+            formRef.value.setForm(params);
+        } else {
+            setTimeout(() => {
+                _fn();
+            }, timeout);
+        }
+    };
+    _fn();
+};
