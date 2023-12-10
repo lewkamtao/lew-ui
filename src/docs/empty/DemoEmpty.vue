@@ -16,7 +16,7 @@ const options = ref(
     <div class="demo-wrapper">
         <lew-title>Empty</lew-title>
         <p class="sub-title">
-            如果你需要更简单的询问框，请可以尝试一下
+            有时候，一个好看的缺省页，会让你的用户感觉很舒服。
             <lew-mark type="light" color="blue" to="/Popok">Popok</lew-mark>
         </p>
         <lew-demo-box title="暂无数据" :code="DemoEmpty1_code">

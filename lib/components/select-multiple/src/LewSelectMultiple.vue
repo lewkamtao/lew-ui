@@ -301,8 +301,7 @@ defineExpose({ show, hide });
                         direction="y"
                         class="not-found"
                     >
-                        <lew-icon type="box" size="30" />
-                        <span>暂无结果</span>
+                        <lew-empty title="暂无结果" />
                     </lew-flex>
                     <div
                         v-if="
@@ -532,7 +531,6 @@ defineExpose({ show, hide });
     box-sizing: border-box;
 
     .not-found {
-        padding: 50px 0px;
         opacity: 0.4;
     }
 

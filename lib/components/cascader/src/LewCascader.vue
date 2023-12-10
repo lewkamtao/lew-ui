@@ -601,7 +601,6 @@ defineExpose({ show, hide });
     }
 
     .not-found {
-        padding: 50px 0px;
         opacity: 0.4;
     }
 

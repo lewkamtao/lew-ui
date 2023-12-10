@@ -19,6 +19,7 @@ let src = new URL(`../icon/icon_${props.type}.svg`, import.meta.url).href;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 30px;
     img {
         width: 200px;
         height: auto;

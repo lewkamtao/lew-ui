@@ -224,10 +224,11 @@ onUnmounted(() => {
                     <div class="lew-table-tr">
                         <lew-flex
                             v-if="checkable && fixedColumns('left').length > 0"
-                            style="width: 50px;"
+                            style="width: 50px"
                             x="center"
                         >
                             <lew-checkbox
+                                :disabled="dataSource.length === 0"
                                 v-model="state.checkAll"
                                 @change="setAllChecked($event)"
                             ></lew-checkbox>
@@ -250,7 +251,7 @@ onUnmounted(() => {
                             v-if="
                                 checkable && fixedColumns('left').length === 0
                             "
-                            style="width: 50px;"
+                            style="width: 50px"
                             x="center"
                         >
                             <lew-checkbox
@@ -293,7 +294,11 @@ onUnmounted(() => {
                     </div>
                 </div>
             </div>
-            <div class="lew-table-body" :style="`width: ${getTdTotalWidth}px`">
+            <div
+                v-if="dataSource.length > 0"
+                class="lew-table-body"
+                :style="`width: ${getTdTotalWidth}px`"
+            >
                 <div
                     v-if="fixedColumns('left').length > 0"
                     class="lew-table-fixed-left"
@@ -314,7 +319,7 @@ onUnmounted(() => {
                     >
                         <lew-flex
                             v-if="checkable && fixedColumns('left').length > 0"
-                            style="width: 50px;"
+                            style="width: 50px"
                             x="center"
                         >
                             <lew-checkbox
@@ -357,7 +362,7 @@ onUnmounted(() => {
                             v-if="
                                 checkable && fixedColumns('left').length === 0
                             "
-                            style="width: 50px;"
+                            style="width: 50px"
                             x="center"
                         >
                             <lew-checkbox
@@ -385,7 +390,7 @@ onUnmounted(() => {
                             <template v-else>
                                 <lew-text-trim
                                     :x="column.x || 'start'"
-                                    style="width: 100%;"
+                                    style="width: 100%"
                                     :text="row[column.field]"
                                 />
                             </template>
@@ -430,6 +435,9 @@ onUnmounted(() => {
                     </div>
                 </div>
             </div>
+        </div>
+        <div v-if="dataSource.length === 0">
+            <lew-empty />
         </div>
     </div>
 </template>
