@@ -128,6 +128,9 @@ const getCheckboxClassName = computed(() => {
 
 .lew-checkbox-unicon.lew-checkbox-block {
     padding: 4px 12px;
+    .lew-checkbox-label {
+        margin-left: 0px;
+    }
 }
 
 .lew-checkbox-unicon.lew-checkbox-checked.lew-checkbox-block {
@@ -150,10 +153,6 @@ const getCheckboxClassName = computed(() => {
     padding: 3px 8px 3px 4px;
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     border-radius: var(--lew-border-radius);
-
-    .lew-checkbox-label {
-        margin-left: 2px;
-    }
 }
 
 .lew-checkbox-checked.lew-checkbox-block {

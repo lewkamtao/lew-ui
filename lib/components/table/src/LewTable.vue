@@ -436,9 +436,9 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
-        <div v-if="dataSource.length === 0">
+        <lew-flex style="padding: 50px 0px" v-if="dataSource.length === 0">
             <lew-empty />
-        </div>
+        </lew-flex>
     </div>
 </template>
 

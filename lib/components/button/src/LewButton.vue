@@ -30,7 +30,7 @@ if (instance?.slots.default) {
 const getButtonClass = computed(() => {
     const { size, type, icon, text } = props;
     const loading = _loading.value || props.loading;
-    const singleIcon = !!(!text && icon) && !hasDefaultSlot.value;
+    const singleIcon = !!(!text && icon && !hasDefaultSlot.value);
     return object2class('lew-button', {
         size,
         type,
@@ -74,32 +74,14 @@ const getStyle = computed(() => {
             break;
         case 'text':
             styleObj.backgroundColor = `transparent`;
-            styleObj.color = `var(--lew-color-${_color}-dark`;
+            styleObj.color = `var(--lew-color-${_color}-dark)`;
             styleObj.boxShadow = 'none';
-            styleObj.minWidth = 'auto';
-            if (_loading.value || loading) {
-                if (props.size === 'small') {
-                    styleObj.padding = '0px 8px 0px 24px';
-                }
-                if (props.size === 'medium') {
-                    styleObj.padding = '0px 8px 0px 30px';
-                }
-                if (props.size === 'large') {
-                    styleObj.padding = '0px 8px 0px 36px';
-                }
-            } else {
-                if (props.icon) {
-                    styleObj.padding = '0px';
-                } else {
-                    styleObj.padding = '0px 8px';
-                }
-            }
             break;
         default:
             styleObj.backgroundColor = `var(--lew-color-${_color})`;
             break;
     }
-    styleObj.borderRadius = round ? '30px' : 'none';
+    styleObj.borderRadius = round ? '50px' : 'none';
     return styleObj;
 });
 </script>
@@ -199,7 +181,7 @@ const getStyle = computed(() => {
 }
 
 .lew-button:active {
-    transform: scale(0.96);
+    opacity: 0.9;
 }
 
 .lew-button:active::after {

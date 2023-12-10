@@ -33,6 +33,16 @@ export const emptyProps = {
         default: '暂无数据',
         description: '标题',
     },
+    width: {
+        type: String,
+        default: '200px',
+        description: '宽度',
+    },
+    height: {
+        type: String,
+        default: 'auto',
+        description: '高度',
+    },
 };
 
 export type EmptyProps = ExtractPropTypes<typeof emptyProps>;
