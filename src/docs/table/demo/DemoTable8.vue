@@ -167,7 +167,7 @@ const getChecked = computed(() => (id: any) => {
                     content: row.actors.join(' <br /> '),
                     placement: 'left',
                     trigger: 'mouseenter',
-                    allowHTML: true,
+                    allowHtml: true,
                 }"
                 x="start"
                 gap="5"

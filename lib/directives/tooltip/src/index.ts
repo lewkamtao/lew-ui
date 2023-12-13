@@ -21,7 +21,7 @@ export default {
                     interactive: true,
                     appendTo: () => document.body,
                     placement: binding.value.placement,
-                    allowHTML: binding.value.allowHTML,
+                    allowHTML: binding.value.allowHtml,
                     arrow: false,
                     duration: [120, 120],
                     maxWidth: 250,
