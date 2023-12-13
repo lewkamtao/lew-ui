@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router';
 import { useDark } from '@vueuse/core';
 
-const v = ref('1.7.21');
+const version = ref('1.8.11');
 
 const isDark = useDark({
     selector: 'html',
@@ -34,7 +34,7 @@ const gohome = () => {
             />
             <span style="margin-left: 10px"> Lew UI</span>
             <lew-tag type="light" size="small" style="margin-left: 10px">
-                Beta {{ v }}
+                Beta {{ version }}
             </lew-tag>
         </div>
         <lew-flex gap="15" x="end" class="menu">
