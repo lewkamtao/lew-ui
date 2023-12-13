@@ -275,6 +275,8 @@ options.value = [
             {
                 label: 'Empty',
                 value: '/Empty',
+                tagText: 'New',
+                tagColor: 'success',
             },
         ],
     },
