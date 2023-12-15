@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import tippy from 'tippy.js';
 import { watchDebounced } from '@vueuse/core';
-import { textTrimProps } from './props';
 import { object2class } from 'lew-ui/utils';
+import { textTrimProps } from './props';
 
 const props = defineProps(textTrimProps);
 
@@ -10,33 +10,6 @@ const textTrimRef = ref();
 let instance: any;
 
 const watchOptions = { debounce: 250, maxWait: 1000 };
-
-// 监听变化 清除初始化
-watchDebounced(
-    () => props.text,
-    () => init(),
-    watchOptions
-);
-watchDebounced(
-    () => props.allowHtml,
-    () => init(),
-    watchOptions
-);
-watchDebounced(
-    () => props.placement,
-    () => init(),
-    watchOptions
-);
-watchDebounced(
-    () => props.allowHtml,
-    () => init(),
-    watchOptions
-);
-watchDebounced(
-    () => props.offset,
-    () => init(),
-    watchOptions
-);
 
 const init = () => {
     const element = textTrimRef.value;
@@ -75,6 +48,32 @@ const init = () => {
         instance.popper.children[0].setAttribute('data-lew', 'tooltip');
     } else if (instance) instance.setContent(props.text);
 };
+// 监听变化 清除初始化
+watchDebounced(
+    () => props.text,
+    () => init(),
+    watchOptions
+);
+watchDebounced(
+    () => props.allowHtml,
+    () => init(),
+    watchOptions
+);
+watchDebounced(
+    () => props.placement,
+    () => init(),
+    watchOptions
+);
+watchDebounced(
+    () => props.allowHtml,
+    () => init(),
+    watchOptions
+);
+watchDebounced(
+    () => props.offset,
+    () => init(),
+    watchOptions
+);
 
 const getTextTrimStyleObject = computed(() => {
     if (props.lineClamp) {
@@ -122,7 +121,7 @@ onMounted(() => {
         class="lew-text-trim-wrapper"
         :class="getClassNames"
         :style="getTextTrimStyleObject"
-        @mouseover="check"
+        @mouseenter="check"
         v-html="text"
     />
 </template>
