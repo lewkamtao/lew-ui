@@ -17,10 +17,6 @@ const state = reactive({
     visiblePagesCount: props.visiblePagesCount,
 });
 
-watch(total, () => {
-    currentPage.value = 1;
-});
-
 onMounted(() => {
     // Ensure that the number of visible pages is at least 5 and at most 12.
     state.visiblePagesCount = Math.max(state.visiblePagesCount, 5);
