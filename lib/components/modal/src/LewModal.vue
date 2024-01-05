@@ -93,7 +93,8 @@ if (props.closeByEsc) {
                             v-bind="{ 
                                 type: 'text', 
                                 text: '取消',
-                                color: 'normal',
+								round: true,
+								color: 'normal',
                                 ...cancelProps as any,
                             }"
                         />
@@ -102,6 +103,7 @@ if (props.closeByEsc) {
                             v-bind="{ 
                                 text: '确定',   
                                 color: 'primary',  
+								round: true,
                                 ...okProps as any, 
                             }"
                         />
@@ -148,7 +150,6 @@ if (props.closeByEsc) {
             height: 50px;
             background-color: var(--lew-bgcolor-2);
             padding: 10px 20px;
-            border-bottom: var(--lew-border-1);
 
             .title {
                 font-size: 16px;
@@ -177,17 +178,14 @@ if (props.closeByEsc) {
             height: 50px;
             background-color: var(--lew-bgcolor-1);
             padding: 10px 20px;
-            border-top: var(--lew-border-1);
         }
 
         .header-slot {
             background-color: var(--lew-bgcolor-1);
-            border-bottom: var(--lew-border-1);
         }
 
         .footer-slot {
             background-color: var(--lew-bgcolor-1);
-            border-top: var(--lew-border-1);
         }
     }
 }

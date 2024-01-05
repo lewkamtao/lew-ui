@@ -537,7 +537,7 @@ defineExpose({ getForm, setForm, validate });
     .lew-form-item {
         display: flex;
         align-items: flex-start;
-        gap: 20px;
+        gap: 28px;
         padding-bottom: 30px;
 
         .label-box {
