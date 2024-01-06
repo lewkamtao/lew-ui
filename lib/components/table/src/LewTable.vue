@@ -3,6 +3,7 @@ import { useVModel, watchArray } from '@vueuse/core';
 import { tableProps } from './props';
 import { any2px } from 'lew-ui/utils';
 import { LewFlex, LewCheckbox, LewTextTrim } from 'lew-ui';
+import _ from 'lodash';
 
 const props = defineProps(tableProps);
 const emit = defineEmits(['update:selectedKey']);
@@ -58,8 +59,10 @@ const checkScroll = () => {
     state.hidScrollLine = '';
 };
 
-const resizeTableHandle = () => {
+const resizeTableHandle = _.throttle(() => {
     const table = tableRef.value;
+    if (!table) return;
+
     let clientWidth = 0;
     props.columns
         .map((e) => e.width)
@@ -73,7 +76,8 @@ const resizeTableHandle = () => {
 
     state.scrollClientWidth = table.clientWidth;
     state.scrollbarVisible = clientWidth > state.scrollClientWidth;
-};
+    checkScroll();
+}, 200);
 
 const getTdNotWidth = computed(() => {
     let totalWidth = 0;
@@ -168,10 +172,12 @@ const initCheckbox = () => {
 };
 
 initCheckbox();
+
 watchArray(selectedKey, () => {
     initCheckbox();
     initCheckAll();
 });
+
 onMounted(() => {
     tableObserve();
     checkScroll();

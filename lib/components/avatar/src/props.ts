@@ -33,12 +33,12 @@ export const avatarProps = {
         description: '位置',
     },
     width: {
-        type: Number,
+        type: [Number, String],
         default: 40,
         description: '宽度',
     },
     height: {
-        type: Number,
+        type: [Number, String],
         default: 40,
         description: '高度',
     },
