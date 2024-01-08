@@ -153,6 +153,14 @@ const getCheckboxClassName = computed(() => {
     padding: 3px 8px 3px 4px;
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     border-radius: var(--lew-border-radius);
+    .icon-checkbox-box {
+        .icon-checkbox {
+            padding: 1px;
+        }
+    }
+    .lew-checkbox-label {
+        margin-left: 4px;
+    }
 }
 
 .lew-checkbox-checked.lew-checkbox-block {

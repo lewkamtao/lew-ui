@@ -35,7 +35,25 @@ const value = ref([]);
         <lew-checkbox-group
             v-model="value"
             block
+            size="small"
             round
+            direction="x"
+            :options="options"
+        ></lew-checkbox-group>
+
+        <lew-checkbox-group
+            v-model="value"
+            block
+            round
+            direction="x"
+            :options="options"
+        ></lew-checkbox-group>
+
+        <lew-checkbox-group
+            v-model="value"
+            block
+            round
+            size="large"
             direction="x"
             :options="options"
         ></lew-checkbox-group

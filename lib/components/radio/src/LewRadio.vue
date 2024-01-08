@@ -76,7 +76,7 @@ const getRadioClassName = computed(() => {
     }
 
     .lew-radio-label {
-        margin-left: 6px;
+        margin-left: 4px;
     }
 }
 

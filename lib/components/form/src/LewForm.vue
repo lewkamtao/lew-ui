@@ -646,7 +646,6 @@ defineExpose({ getForm, setForm, validate });
 }
 
 .lew-form-item-error {
-    --lew-form-box-shadow: 0px 1px 1px rgba(160, 62, 62, 0.64);
     --lew-form-border-color-focus: var(--lew-color-error-dark);
     --lew-radio-border-color-hover: var(--lew-color-error);
     --lew-checkbox-border-color-hover: var(--lew-color-error);
@@ -656,7 +655,7 @@ defineExpose({ getForm, setForm, validate });
     --lew-radio-color: var(--lew-color-error);
     --lew-radio-color-dark: var(--lew-color-error-dark);
     --lew-radio-color-light: var(--lew-color-error-light);
-    --lew-form-ouline: 3px var(--lew-color-error-light) solid;
+    --lew-form-ouline: 0px var(--lew-color-error-light) solid;
 }
 
 .slide-fade-leave-active,
