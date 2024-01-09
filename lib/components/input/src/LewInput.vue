@@ -2,7 +2,7 @@
 import { inputProps } from './props';
 import { useVModel } from '@vueuse/core';
 import { object2class } from 'lew-ui/utils';
-import { LewIcon, LewDropdown, LewFlex } from 'lew-ui';
+import { LewIcon, LewDropdown, LewFlex, LewMessage } from 'lew-ui';
 import { LewTooltip } from 'lew-ui';
 import { useMagicKeys } from '@vueuse/core';
 
@@ -30,6 +30,8 @@ const modelValue = useVModel(props, 'modelValue', emit);
 const prefixesValue = useVModel(props, 'prefixesValue', emit);
 const suffixValue = useVModel(props, 'suffixValue', emit);
 const lewInputRef = ref();
+const isCopy = ref(false);
+let timer: any = null;
 const _type = ref(props.type);
 const state = reactive({
     prefixesDropdown: 'hide',
@@ -151,6 +153,26 @@ const getSuffixLabel = computed(() => {
     return item?.label || '';
 });
 
+const copy = () => {
+    const textarea = document.createElement('textarea');
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-200vh';
+    textarea.value = modelValue.value;
+
+    document.body.appendChild(textarea);
+    textarea.select();
+    if (document.execCommand('copy')) {
+        LewMessage.success('复制成功！');
+        isCopy.value = true;
+        timer = setTimeout(() => {
+            isCopy.value = false;
+        }, 2000);
+    } else {
+        LewMessage.error('复制失败！');
+    }
+    document.body.removeChild(textarea);
+};
+
 if (props.okByEnter) {
     watch(enter, (v) => {
         if (v && state.isFocus && modelValue.value) {
@@ -158,6 +180,10 @@ if (props.okByEnter) {
         }
     });
 }
+
+onUnmounted(() => {
+    clearTimeout(timer);
+});
 defineExpose({ toFocus });
 </script>
 
@@ -204,6 +230,17 @@ defineExpose({ toFocus });
                     </lew-flex>
                 </lew-dropdown>
             </div>
+        </div>
+        <div
+            v-if="copyable && readonly && modelValue && !suffix"
+            class="lew-input-copy-btn"
+            @click="copy"
+        >
+            <lew-icon
+                :size="getIconSize"
+                :type="isCopy ? 'check' : 'copy'"
+                :class="{ 'lew-input-copy-btn-check': isCopy }"
+            />
         </div>
         <input
             ref="lewInputRef"
@@ -331,6 +368,21 @@ defineExpose({ toFocus });
     border: var(--lew-form-border-width) transparent solid;
     box-shadow: var(--lew-form-box-shadow);
     overflow: hidden;
+    .lew-input-copy-btn {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        opacity: var(--lew-form-icon-opacity);
+    }
+    .lew-input-copy-btn-check {
+        color: var(--lew-color-primary-dark);
+    }
+    .lew-input-copy-btn:hover {
+        opacity: var(--lew-form-icon-opacity-hover);
+    }
 
     .lew-input-prefixes,
     .lew-input-suffix {
@@ -473,6 +525,9 @@ defineExpose({ toFocus });
         font-size: var(--lew-form-font-size-small);
         line-height: var(--lew-form-input-line-height-small);
     }
+    .lew-input-copy-btn {
+        right: 7px;
+    }
 
     .lew-input-prefixes {
         font-size: var(--lew-form-font-size-small);
@@ -515,7 +570,9 @@ defineExpose({ toFocus });
         line-height: var(--lew-form-input-line-height-medium);
         height: var(--lew-form-item-height-medium);
     }
-
+    .lew-input-copy-btn {
+        right: 9px;
+    }
     .lew-input-prefixes {
         font-size: var(--lew-form-font-size-medium);
         margin-left: 9px;
@@ -553,7 +610,9 @@ defineExpose({ toFocus });
         line-height: var(--lew-form-input-line-height-large);
         height: var(--lew-form-item-height-large);
     }
-
+    .lew-input-copy-btn {
+        right: 12px;
+    }
     .lew-input-prefixes {
         font-size: var(--lew-form-font-size-large);
         margin-left: 12px;
@@ -597,7 +656,6 @@ defineExpose({ toFocus });
 
 .lew-input-view-readonly {
     user-select: text;
-    pointer-events: none; //鼠标点击不可修改
 }
 
 .lew-input-view-disabled {

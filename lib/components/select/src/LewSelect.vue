@@ -63,8 +63,6 @@ const search = async (e: any) => {
                 keyword,
             });
         }
-        console.log(result);
-
         state.options = result;
     }
     state.loading = false;

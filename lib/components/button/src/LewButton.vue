@@ -143,6 +143,7 @@ const getStyle = computed(() => {
     border-radius: var(--lew-border-radius);
     box-sizing: border-box;
     overflow: hidden;
+	box-shadow: var(--lew-box-shadow);
 
     .lew-loading-icon {
         position: absolute;

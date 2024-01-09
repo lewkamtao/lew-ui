@@ -56,6 +56,13 @@ export const inputProps = {
         default: false,
         description: '是否只读',
     },
+    // 是否可复制
+    copyable: {
+        type: Boolean,
+        default: false,
+        description:
+            '是否允许复制（只在readonly为true，且suffix为false时生效）',
+    },
     // 对齐方式
     showPassword: {
         type: Boolean,

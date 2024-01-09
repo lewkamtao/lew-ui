@@ -142,7 +142,6 @@ const form2componentOptions = () => {
     vArr.forEach((_e: any) => {
         componentOptions.value.forEach((__e: any, i: number) => {
             if (_e.field.lastIndexOf('.') >= 0) {
-                console.log(_e.field);
                 const _$fieldKey = _e.field?.substring(
                     _e.field.lastIndexOf('.') + 1
                 );
