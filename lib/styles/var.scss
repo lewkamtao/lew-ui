@@ -201,8 +201,9 @@
     --lew-tooltip-box-bottom-shadow: 0 -4px 10px #00000027;
     // table
     --lew-table-border: 1px #f6f5f8 solid;
+    --lew-table-tr-selected: #eef3ff;
     --lew-table-scroll-line-color-start: rgba(0, 0, 0, 0);
-    --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.2);
+    --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.15);
     --lew-backdrop-bg: rgba(255, 255, 255, 0.65);
     --lew-backdrop-bg-active: rgba(0, 0, 0, 0.05);
 }
@@ -370,6 +371,7 @@
     --lew-popover-border: 1px rgba(255, 255, 255, 0.1) solid;
     // table
     --lew-table-border: 1px rgba(255, 255, 255, 0.05) solid;
+    --lew-table-tr-selected: #3f4350;
     --lew-table-scroll-line-color-start: rgba(0, 0, 0, 0);
     --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.2);
     // checkbox

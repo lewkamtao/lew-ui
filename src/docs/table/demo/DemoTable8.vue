@@ -2,7 +2,7 @@
 import mvJson from './movie_hot_gaia.json';
 
 const data: any = ref(mvJson);
-
+const tableRef = ref();
 const columns = [
     {
         type: 'text',
@@ -65,14 +65,12 @@ const columns = [
         type: 'template',
         title: '执行',
         field: 'action',
-        width: 120,
+        width: 150,
         align: 'center',
         fixed: 'right',
         x: 'center',
     },
 ];
-
-const selectedKey = ref([]);
 
 const get = (e: any) => {
     if (e.column.field === 'action') {
@@ -80,44 +78,24 @@ const get = (e: any) => {
     }
 };
 
-const change = (e: any, row: any, column: any) => {
-    console.log('===>', e, '===>', row.id, '===>', column.field);
+const getSelectedKeys = () => {
+    const keys = tableRef.value.getSelectedKeys();
+    if (keys.length > 0) {
+        LewMessage.info(`已选择：${keys}`);
+    } else {
+        LewMessage.info(`未选择`);
+    }
 };
-
-const getChecked = computed(() => (id: any) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    return isCheckeds.value.includes(id);
-});
 </script>
 
 <template>
-    <lew-flex x="start">
-        <lew-button
-            v-if="selectedKey.length > 0"
-            text="取消所有选择"
-            color="red"
-            @click="selectedKey = []"
-        />
-        <lew-button
-            v-if="selectedKey.length === 0"
-            text="选中前五个"
-            @click="
-                selectedKey = data
-                    .filter((_e: any, i: number) => i <= 4)
-                    .map((e: any) => e.id)
-            "
-        />
-        <lew-button
-            v-if="selectedKey.length != data.length"
-            text="全选"
-            @click="selectedKey = data.map((e: any) => e.id)"
-        />
-    </lew-flex>
-    <br />
+    <lew-button @click="getSelectedKeys" style="margin-bottom: 10px"
+        >获取选择</lew-button
+    >
     <lew-table
-        v-model:selectedKey="selectedKey"
+        ref="tableRef"
         checkable
+        single-select
         :data-source="data"
         :columns="columns"
         :max-height="400"

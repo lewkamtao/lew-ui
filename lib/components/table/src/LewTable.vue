@@ -1,13 +1,11 @@
 <script lang="ts" setup>
-import { useVModel, watchArray } from '@vueuse/core';
 import { tableProps } from './props';
 import { any2px } from 'lew-ui/utils';
 import { LewFlex, LewCheckbox, LewTextTrim } from 'lew-ui';
 import _ from 'lodash';
+import { e } from 'vitest/dist/index-4a906fa4';
 
 const props = defineProps(tableProps);
-const emit = defineEmits(['update:selectedKey']);
-const selectedKey = useVModel(props, 'selectedKey', emit);
 const tableRef = ref();
 
 let obs: any;
@@ -18,8 +16,8 @@ const state = reactive({
     scrollbarVisible: false, // 滚动条显示隐藏
     scrollClientWidth: 0, // 滚动视图宽度（不是滚动宽度）
     hidScrollLine: 'all',
-    checkList: [] as any,
     checkAll: false,
+    selectedKeysMap: {} as any,
 });
 
 onActivated(() => {
@@ -130,53 +128,52 @@ const fixedColumns = computed(() => (direction: string) => {
 
 const setAllChecked = (checked: boolean) => {
     if (checked) {
-        selectedKey.value = props.dataSource.map(
-            (e: any) => props.rowKey && e[props.rowKey]
+        state.selectedKeysMap = _.mapValues(
+            _.keyBy(props.dataSource, props.rowKey),
+            () => true
         );
     } else {
-        selectedKey.value = [];
+        state.selectedKeysMap = _.mapValues(
+            _.keyBy(props.dataSource, props.rowKey),
+            () => false
+        );
     }
 };
 
-const setChecked = (key: any, checked: boolean) => {
-    if (checked) {
-        selectedKey.value.push(key);
-    } else {
-        const index = props.selectedKey.findIndex((e: any) => e === key);
-        if (index >= 0) {
-            selectedKey.value.splice(index, 1);
-        }
-    }
-
-    initCheckAll();
-};
-
-const initCheckAll = () => {
-    const isAll =
-        selectedKey.value.length > 0 &&
-        selectedKey.value.length === props.dataSource.length;
-    if (isAll) {
-        state.checkAll = true;
-    } else {
-        state.checkAll = false;
-    }
-};
-
-const initCheckbox = () => {
-    state.checkList = props.dataSource.map((item: any) => {
-        if (props.rowKey && selectedKey.value.includes(item[props.rowKey])) {
-            return true;
-        }
-        return false;
+const setSelectedKeys = (keys: any) => {
+    state.selectedKeysMap = {};
+    keys.forEach((key: any) => {
+        state.selectedKeysMap[key] = true;
     });
+    checkIsAll();
 };
 
-initCheckbox();
+const checkIsAll = () => {
+    const filteredKeys = _.keys(
+        _.pickBy(state.selectedKeysMap, (value) => value === true)
+    );
+    const dataKey = props.dataSource.map((e: any) => String(e[props.rowKey]));
+    const diffArr = _.difference(dataKey, filteredKeys);
+    state.checkAll = _.isEmpty(diffArr);
+};
 
-watchArray(selectedKey, () => {
-    initCheckbox();
-    initCheckAll();
-});
+const getSelectedKeys = () => {
+    return _.keys(_.pickBy(state.selectedKeysMap, (value) => value === true));
+};
+
+const selectTr = (row: any) => {
+    if (props.singleSelect) {
+        state.selectedKeysMap = {};
+    }
+    if (state.selectedKeysMap[row[props.rowKey]]) {
+        state.selectedKeysMap[row[props.rowKey]] = false;
+    } else {
+        state.selectedKeysMap[row[props.rowKey]] = true;
+    }
+    checkIsAll();
+};
+
+defineExpose({ setSelectedKeys, getSelectedKeys });
 
 onMounted(() => {
     tableObserve();
@@ -196,6 +193,7 @@ onUnmounted(() => {
     <div
         class="lew-table-wrapper"
         :class="{
+            'lew-table-checkable': props.checkable,
             'hide-line-left':
                 !state.scrollbarVisible ||
                 ['all', 'left'].includes(state.hidScrollLine) ||
@@ -231,13 +229,16 @@ onUnmounted(() => {
                         <lew-flex
                             v-if="checkable && fixedColumns('left').length > 0"
                             style="width: 50px"
+                            class="lew-table-td"
                             x="center"
                         >
                             <lew-checkbox
+                                v-if="!singleSelect"
                                 :disabled="dataSource.length === 0"
                                 v-model="state.checkAll"
                                 @change="setAllChecked($event)"
                             ></lew-checkbox>
+                            <span v-else>单选</span>
                         </lew-flex>
                         <lew-flex
                             v-for="(column, index) in fixedColumns('left')"
@@ -261,6 +262,8 @@ onUnmounted(() => {
                             x="center"
                         >
                             <lew-checkbox
+                                v-if="!singleSelect"
+                                :disabled="dataSource.length === 0"
                                 v-model="state.checkAll"
                                 @change="setAllChecked($event)"
                             ></lew-checkbox>
@@ -320,19 +323,21 @@ onUnmounted(() => {
                         class="lew-table-tr"
                         :class="{
                             'lew-table-tr-hover': state.hoverIndex === i,
+                            'lew-table-tr-selected':
+                                state.selectedKeysMap[row[rowKey]],
                         }"
+                        @click="selectTr(row)"
                         @mouseenter="state.hoverIndex = i"
                     >
                         <lew-flex
                             v-if="checkable && fixedColumns('left').length > 0"
                             style="width: 50px"
                             x="center"
+                            class="lew-table-checkbox-wrapper"
                         >
                             <lew-checkbox
-                                v-model="state.checkList[i]"
-                                @change="
-                                    rowKey && setChecked(row[rowKey], $event)
-                                "
+                                class="lew-table-checkbox"
+                                :checked="state.selectedKeysMap[row[rowKey]]"
                             ></lew-checkbox>
                         </lew-flex>
                         <lew-flex
@@ -361,7 +366,10 @@ onUnmounted(() => {
                         class="lew-table-tr"
                         :class="{
                             'lew-table-tr-hover': state.hoverIndex === i,
+                            'lew-table-tr-selected':
+                                state.selectedKeysMap[row[rowKey]],
                         }"
+                        @click="selectTr(row)"
                         @mouseenter="state.hoverIndex = i"
                     >
                         <lew-flex
@@ -370,12 +378,11 @@ onUnmounted(() => {
                             "
                             style="width: 50px"
                             x="center"
+                            class="lew-table-checkbox-wrapper"
                         >
                             <lew-checkbox
-                                v-model="state.checkList[i]"
-                                @change="
-                                    rowKey && setChecked(row[rowKey], $event)
-                                "
+                                class="lew-table-checkbox"
+                                :checked="state.selectedKeysMap[row[rowKey]]"
                             />
                         </lew-flex>
                         <lew-flex
@@ -418,6 +425,8 @@ onUnmounted(() => {
                         class="lew-table-tr"
                         :class="{
                             'lew-table-tr-hover': state.hoverIndex === i,
+                            'lew-table-tr-selected':
+                                state.selectedKeysMap[row[rowKey]],
                         }"
                         @mouseenter="state.hoverIndex = i"
                     >
@@ -491,9 +500,9 @@ onUnmounted(() => {
 
     .lew-table-fixed-left::after {
         position: absolute;
-        right: -3px;
+        right: -2px;
         top: 0px;
-        width: 3px;
+        width: 2px;
         height: 100%;
         background-image: linear-gradient(
             to left,
@@ -506,9 +515,9 @@ onUnmounted(() => {
 
     .lew-table-fixed-right::after {
         position: absolute;
-        left: -3px;
+        left: -2px;
         top: 0px;
-        width: 3px;
+        width: 2px;
         height: 100%;
         background-image: linear-gradient(
             to right,
@@ -579,8 +588,38 @@ onUnmounted(() => {
         color: var(--lew-text-color-4);
     }
 
+    .lew-table-checkbox-wrapper {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .lew-table-checkbox-wrapper::after {
+        position: absolute;
+        z-index: 1;
+        content: '';
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+    }
+
     .lew-table-tr-hover {
         background-color: var(--lew-bgcolor-1);
+        .lew-table-checkbox {
+            .icon-checkbox-box {
+                border: var(--lew-form-border-width) var(--lew-checkbox-color)
+                    solid;
+            }
+        }
+    }
+    .lew-table-tr-selected {
+        background-color: var(--lew-table-tr-selected);
+    }
+}
+
+.lew-table-checkable {
+    .lew-table-td {
+        cursor: pointer;
     }
 }
 

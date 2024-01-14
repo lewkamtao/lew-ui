@@ -143,7 +143,7 @@ const getStyle = computed(() => {
     border-radius: var(--lew-border-radius);
     box-sizing: border-box;
     overflow: hidden;
-	box-shadow: var(--lew-box-shadow);
+    box-shadow: var(--lew-box-shadow);
 
     .lew-loading-icon {
         position: absolute;
@@ -289,5 +289,11 @@ const getStyle = computed(() => {
 .lew-button[disabled] {
     pointer-events: none; //鼠标点击不可修改
     opacity: var(--lew-disabled-opacity);
+}
+.lew-button-type-ghost:hover {
+    background-color: var(--lew-bgcolor-2) !important;
+}
+.lew-button-type-ghost:active {
+    background-color: var(--lew-color-blue-light) !important;
 }
 </style>

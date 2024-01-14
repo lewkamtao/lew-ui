@@ -11,11 +11,6 @@ export type TableColumns = {
 };
 
 export const tableProps = {
-    selectedKey: {
-        type: Array as any,
-        default: [],
-        description: '选中的key',
-    },
     rowKey: {
         type: String,
         default: 'id',
@@ -44,6 +39,11 @@ export const tableProps = {
     checkable: {
         type: Boolean,
         default: false,
-        description: '是否显示选择框',
+        description: '是否显示复选框',
+    },
+    singleSelect: {
+        type: Boolean,
+        default: false,
+        description: '是否单选',
     },
 };
