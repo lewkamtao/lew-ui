@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import { tableProps } from './props';
 import { any2px } from 'lew-ui/utils';
 import { LewFlex, LewCheckbox, LewTextTrim } from 'lew-ui';
 import _ from 'lodash';
-import { e } from 'vitest/dist/index-4a906fa4';
+import { tableProps } from './props';
 
 const props = defineProps(tableProps);
 const tableRef = ref();
@@ -234,8 +233,8 @@ onUnmounted(() => {
                         >
                             <lew-checkbox
                                 v-if="!singleSelect"
-                                :disabled="dataSource.length === 0"
                                 v-model="state.checkAll"
+                                :disabled="dataSource.length === 0"
                                 @change="setAllChecked($event)"
                             ></lew-checkbox>
                             <span v-else>单选</span>
@@ -263,8 +262,8 @@ onUnmounted(() => {
                         >
                             <lew-checkbox
                                 v-if="!singleSelect"
-                                :disabled="dataSource.length === 0"
                                 v-model="state.checkAll"
+                                :disabled="dataSource.length === 0"
                                 @change="setAllChecked($event)"
                             ></lew-checkbox>
                         </lew-flex>
@@ -451,7 +450,7 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
-        <lew-flex style="padding: 50px 0px" v-if="dataSource.length === 0">
+        <lew-flex v-if="dataSource.length === 0" style="padding: 50px 0px">
             <lew-empty />
         </lew-flex>
     </div>

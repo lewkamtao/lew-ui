@@ -429,7 +429,7 @@ const notification = (type: string) => {
                     </lew-flex>
 
                     <lew-flex x="end" style="width: 380px">
-                        <lew-tabs :options="tab_soptions" v-model="tabValue" />
+                        <lew-tabs v-model="tabValue" :options="tab_soptions" />
                     </lew-flex>
 
                     <lew-flex gap="20" x="end">

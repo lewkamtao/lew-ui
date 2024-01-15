@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { inputProps } from './props';
-import { useVModel } from '@vueuse/core';
+import { useVModel, useMagicKeys } from '@vueuse/core';
 import { object2class } from 'lew-ui/utils';
-import { LewIcon, LewDropdown, LewFlex, LewMessage } from 'lew-ui';
-import { LewTooltip } from 'lew-ui';
-import { useMagicKeys } from '@vueuse/core';
+import { LewIcon, LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui';
+import { inputProps } from './props';
 
 const { enter } = useMagicKeys();
 // 获取app
@@ -118,9 +116,8 @@ const getIconSize = computed(() => {
 const getType = computed(() => {
     if (props.type === 'password') {
         return _type.value;
-    } else {
-        return props.type;
     }
+    return props.type;
 });
 
 const getInputClassNames = computed(() => {
@@ -190,11 +187,11 @@ defineExpose({ toFocus });
 <template>
     <div class="lew-input-view" :class="getInputClassNames">
         <div
+            v-if="prefixes"
             v-tooltip="{
                 content: prefixesTooltip,
                 trigger: 'mouseenter',
             }"
-            v-if="prefixes"
             class="lew-input-prefixes"
         >
             <div v-if="prefixes === 'text'" class="lew-input-prefixes-text">
@@ -244,9 +241,9 @@ defineExpose({ toFocus });
         </div>
         <input
             ref="lewInputRef"
+            v-model="modelValue"
             class="lew-input"
             autocomplete="new-password"
-            v-model="modelValue"
             :disabled="disabled"
             :placeholder="placeholder"
             :type="getType"
@@ -258,11 +255,11 @@ defineExpose({ toFocus });
             @focus="focus"
         />
         <div
+            v-if="suffix"
             v-tooltip="{
                 content: suffixTooltip,
                 trigger: suffixTooltip ? 'mouseenter' : '',
             }"
-            v-if="suffix"
             class="lew-input-suffix"
         >
             <div v-if="suffix === 'text'" class="lew-input-suffix-text">
@@ -335,18 +332,18 @@ defineExpose({ toFocus });
             <transition name="lew-form-icon-ani">
                 <lew-icon
                     v-if="clearable && modelValue && !readonly"
-                    class="lew-form-icon-clear"
-                    :class="{
-                        'lew-form-icon-clear-focus': state.isFocus,
-                    }"
                     v-tooltip="{
                         content: '清空',
                         placement: 'top',
                     }"
-                    @mousedown.prevent=""
-                    @click="clear"
+                    class="lew-form-icon-clear"
+                    :class="{
+                        'lew-form-icon-clear-focus': state.isFocus,
+                    }"
                     :size="getIconSize"
                     type="x"
+                    @mousedown.prevent=""
+                    @click="clear"
                 />
             </transition>
         </div>
@@ -523,6 +520,12 @@ defineExpose({ toFocus });
     .lew-input {
         padding: var(--lew-form-input-padding-small);
         font-size: var(--lew-form-font-size-small);
+        height: var(--lew-form-item-height-small);
+        line-height: var(--lew-form-input-line-height-small);
+    }
+    .lew-input-prefixes-dropdown,
+    .lew-input-suffix-dropdown {
+        height: var(--lew-form-item-height-small);
         line-height: var(--lew-form-input-line-height-small);
     }
     .lew-input-copy-btn {
@@ -570,6 +573,11 @@ defineExpose({ toFocus });
         line-height: var(--lew-form-input-line-height-medium);
         height: var(--lew-form-item-height-medium);
     }
+    .lew-input-prefixes-dropdown,
+    .lew-input-suffix-dropdown {
+        line-height: var(--lew-form-input-line-height-medium);
+        height: var(--lew-form-item-height-medium);
+    }
     .lew-input-copy-btn {
         right: 9px;
     }
@@ -607,6 +615,11 @@ defineExpose({ toFocus });
     .lew-input {
         padding: var(--lew-form-input-padding-large);
         font-size: var(--lew-form-font-size-large);
+        line-height: var(--lew-form-input-line-height-large);
+        height: var(--lew-form-item-height-large);
+    }
+    .lew-input-prefixes-dropdown,
+    .lew-input-suffix-dropdown {
         line-height: var(--lew-form-input-line-height-large);
         height: var(--lew-form-item-height-large);
     }
