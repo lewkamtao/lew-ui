@@ -1,11 +1,13 @@
 <script lang="ts" setup>
+import { tableProps } from './props';
 import { any2px } from 'lew-ui/utils';
 import { LewFlex, LewCheckbox, LewTextTrim } from 'lew-ui';
 import _ from 'lodash';
-import { tableProps } from './props';
 
 const props = defineProps(tableProps);
 const tableRef = ref();
+const fixedLeftRef = ref();
+const fixedRightRef = ref();
 
 let obs: any;
 
@@ -16,6 +18,8 @@ const state = reactive({
     scrollClientWidth: 0, // 滚动视图宽度（不是滚动宽度）
     hidScrollLine: 'all',
     checkAll: false,
+    fixedLeftWidth: 0,
+    fixedRightWidth: 0,
     selectedKeysMap: {} as any,
 });
 
@@ -36,6 +40,7 @@ const tableObserve = () => {
 
 const checkScroll = () => {
     const element = tableRef.value;
+
     const { clientWidth } = element;
     const { scrollWidth } = element;
     const { scrollLeft } = element;
@@ -69,6 +74,16 @@ const resizeTableHandle = _.throttle(() => {
 
     if (props.checkable) {
         clientWidth += 40;
+    }
+    if (fixedLeftRef.value) {
+        state.fixedLeftWidth = fixedLeftRef.value.clientWidth || 0;
+    }
+    if (fixedRightRef.value) {
+        state.fixedRightWidth = fixedRightRef.value.clientWidth || 0;
+        // 判断是否出现滚动条
+        if (table.clientHeight < table.scrollHeight) {
+            state.fixedRightWidth += 6;
+        }
     }
 
     state.scrollClientWidth = table.clientWidth;
@@ -147,6 +162,10 @@ const setSelectedKeys = (keys: any) => {
     checkIsAll();
 };
 
+const getSelectedKeys = () => {
+    return _.keys(_.pickBy(state.selectedKeysMap, (value) => value === true));
+};
+
 const checkIsAll = () => {
     const filteredKeys = _.keys(
         _.pickBy(state.selectedKeysMap, (value) => value === true)
@@ -154,10 +173,6 @@ const checkIsAll = () => {
     const dataKey = props.dataSource.map((e: any) => String(e[props.rowKey]));
     const diffArr = _.difference(dataKey, filteredKeys);
     state.checkAll = _.isEmpty(diffArr);
-};
-
-const getSelectedKeys = () => {
-    return _.keys(_.pickBy(state.selectedKeysMap, (value) => value === true));
 };
 
 const selectTr = (row: any) => {
@@ -171,6 +186,20 @@ const selectTr = (row: any) => {
     }
     checkIsAll();
 };
+
+const checkCertain = computed(() => {
+    const selectedKeysMap = state.selectedKeysMap;
+    const i = props.dataSource.findIndex((e: any) => {
+        if (
+            e[props.rowKey] in selectedKeysMap &&
+            selectedKeysMap[e[props.rowKey]]
+        ) {
+            return true;
+        }
+        return false;
+    });
+    return i >= 0;
+});
 
 defineExpose({ setSelectedKeys, getSelectedKeys });
 
@@ -193,16 +222,26 @@ onUnmounted(() => {
         class="lew-table-wrapper"
         :class="{
             'lew-table-checkable': props.checkable,
-            'hide-line-left':
-                !state.scrollbarVisible ||
-                ['all', 'left'].includes(state.hidScrollLine) ||
-                columns.filter((e) => e.fixed === 'left').length > 0,
-            'hide-line-right':
-                !state.scrollbarVisible ||
-                ['all', 'right'].includes(state.hidScrollLine) ||
-                columns.filter((e) => e.fixed === 'right').length > 0,
         }"
     >
+        <div
+            :style="{ left: any2px(state.fixedLeftWidth) }"
+            :class="{
+                'hide-line-left':
+                    !state.scrollbarVisible ||
+                    ['all', 'left'].includes(state.hidScrollLine),
+            }"
+            class="lew-table-scroll-line-left"
+        ></div>
+        <div
+            :style="{ right: any2px(state.fixedRightWidth) }"
+            :class="{
+                'hide-line-right':
+                    !state.scrollbarVisible ||
+                    ['all', 'right'].includes(state.hidScrollLine),
+            }"
+            class="lew-table-scroll-line-right"
+        ></div>
         <div
             ref="tableRef"
             class="lew-table lew-scrollbar"
@@ -216,13 +255,9 @@ onUnmounted(() => {
                 @mouseenter="state.hoverIndex = -1"
             >
                 <div
+                    ref="fixedLeftRef"
                     v-if="fixedColumns('left').length > 0"
                     class="lew-table-fixed-left"
-                    :class="{
-                        'hid-scroll-line': ['all', 'left'].includes(
-                            state.hidScrollLine
-                        ),
-                    }"
                 >
                     <div class="lew-table-tr">
                         <lew-flex
@@ -233,8 +268,9 @@ onUnmounted(() => {
                         >
                             <lew-checkbox
                                 v-if="!singleSelect"
-                                v-model="state.checkAll"
                                 :disabled="dataSource.length === 0"
+                                :certain="checkCertain && !state.checkAll"
+                                v-model="state.checkAll"
                                 @change="setAllChecked($event)"
                             ></lew-checkbox>
                             <span v-else>单选</span>
@@ -262,8 +298,9 @@ onUnmounted(() => {
                         >
                             <lew-checkbox
                                 v-if="!singleSelect"
-                                v-model="state.checkAll"
                                 :disabled="dataSource.length === 0"
+                                :certain="checkCertain && !state.checkAll"
+                                v-model="state.checkAll"
                                 @change="setAllChecked($event)"
                             ></lew-checkbox>
                         </lew-flex>
@@ -280,13 +317,9 @@ onUnmounted(() => {
                     </div>
                 </div>
                 <div
+                    ref="fixedRightRef"
                     v-if="fixedColumns('right').length > 0"
                     class="lew-table-fixed-right"
-                    :class="{
-                        'hid-scroll-line': ['all', 'right'].includes(
-                            state.hidScrollLine
-                        ),
-                    }"
                 >
                     <div class="lew-table-tr">
                         <lew-flex
@@ -310,11 +343,6 @@ onUnmounted(() => {
                 <div
                     v-if="fixedColumns('left').length > 0"
                     class="lew-table-fixed-left"
-                    :class="{
-                        'hid-scroll-line': ['all', 'left'].includes(
-                            state.hidScrollLine
-                        ),
-                    }"
                 >
                     <div
                         v-for="(row, i) in dataSource"
@@ -412,11 +440,6 @@ onUnmounted(() => {
                 <div
                     v-if="fixedColumns('right').length > 0"
                     class="lew-table-fixed-right"
-                    :class="{
-                        'hid-scroll-line': ['all', 'right'].includes(
-                            state.hidScrollLine
-                        ),
-                    }"
                 >
                     <div
                         v-for="(row, i) in dataSource"
@@ -450,7 +473,7 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
-        <lew-flex v-if="dataSource.length === 0" style="padding: 50px 0px">
+        <lew-flex style="padding: 50px 0px" v-if="dataSource.length === 0">
             <lew-empty />
         </lew-flex>
     </div>
@@ -465,6 +488,46 @@ onUnmounted(() => {
     box-sizing: border-box;
     background-color: var(--lew-bgcolor-0);
     box-shadow: var(--lew-box-shadow);
+
+    .lew-table-scroll-line-left {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        height: 100%;
+        z-index: 90;
+        width: 8px;
+        background: linear-gradient(
+            to right,
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.075),
+            rgba(0, 0, 0, 0.03),
+            rgba(0, 0, 0, 0.01),
+            rgba(0, 0, 0, 0)
+        );
+        transition: all 0.25s;
+    }
+
+    .lew-table-scroll-line-right {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        height: 100%;
+        z-index: 90;
+        width: 8px;
+        background: linear-gradient(
+            to left,
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.075),
+            rgba(0, 0, 0, 0.03),
+            rgba(0, 0, 0, 0.01),
+            rgba(0, 0, 0, 0)
+        );
+        transition: all 0.25s;
+    }
+    .hide-line-left,
+    .hide-line-right {
+        opacity: 0;
+    }
 }
 
 .lew-table {
@@ -491,44 +554,10 @@ onUnmounted(() => {
     .lew-table-fixed-right {
         position: sticky;
         right: 0px;
-        z-index: 9;
+        z-index: 10;
         display: flex;
         flex-grow: 1;
         flex-direction: column;
-    }
-
-    .lew-table-fixed-left::after {
-        position: absolute;
-        right: -2px;
-        top: 0px;
-        width: 2px;
-        height: 100%;
-        background-image: linear-gradient(
-            to left,
-            var(--lew-table-scroll-line-color-start),
-            var(--lew-table-scroll-line-color-end)
-        );
-        content: '';
-        transition: opacity 0.2s ease;
-    }
-
-    .lew-table-fixed-right::after {
-        position: absolute;
-        left: -2px;
-        top: 0px;
-        width: 2px;
-        height: 100%;
-        background-image: linear-gradient(
-            to right,
-            var(--lew-table-scroll-line-color-start),
-            var(--lew-table-scroll-line-color-end)
-        );
-        content: '';
-        transition: opacity 0.2s ease;
-    }
-
-    .hid-scroll-line::after {
-        opacity: 0;
     }
 
     .lew-table-main {
@@ -620,47 +649,5 @@ onUnmounted(() => {
     .lew-table-td {
         cursor: pointer;
     }
-}
-
-.lew-table-wrapper::before {
-    position: absolute;
-    z-index: 18;
-    left: 0px;
-    top: 0px;
-    width: 4px;
-    height: 100%;
-    background-image: linear-gradient(
-        to left,
-        var(--lew-table-scroll-line-color-start),
-        var(--lew-table-scroll-line-color-end)
-    );
-    content: '';
-    transition: opacity 0.2s ease;
-    opacity: 1;
-}
-
-.lew-table-wrapper::after {
-    position: absolute;
-    z-index: 18;
-    right: 0px;
-    top: 0px;
-    width: 4px;
-    height: 100%;
-    background-image: linear-gradient(
-        to right,
-        var(--lew-table-scroll-line-color-start),
-        var(--lew-table-scroll-line-color-end)
-    );
-    content: '';
-    transition: opacity 0.2s ease;
-    opacity: 1;
-}
-
-.hide-line-left::before {
-    opacity: 0;
-}
-
-.hide-line-right::after {
-    opacity: 0;
 }
 </style>

@@ -17,8 +17,21 @@ const setChecked = (e: Event) => {
     emit('change', checked);
 };
 
+const getIconSize = computed(() => {
+    const { size } = props;
+    switch (size) {
+        case 'small':
+            return 9;
+        case 'medium':
+            return 10;
+        case 'large':
+            return 13;
+        default:
+            return 11;
+    }
+});
 const getCheckboxClassName = computed(() => {
-    const { block, round, iconable, size, disabled } = props;
+    const { block, round, iconable, size, disabled, certain } = props;
     const checked = modelValue.value || props.checked;
     const unicon = !iconable && block;
 
@@ -29,25 +42,20 @@ const getCheckboxClassName = computed(() => {
         checked,
         unicon,
         disabled,
+        certain,
     });
 });
 </script>
 <template>
     <label class="lew-checkbox" :class="getCheckboxClassName">
         <div v-if="iconable || (!iconable && !block)" class="icon-checkbox-box">
-            <svg
+            <i v-show="certain" class="icon-certain"></i>
+            <lew-icon
+                stroke-width="3"
                 class="icon-checkbox"
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-                stroke="currentColor"
-                stroke-width="4"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            >
-                <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
+                type="check"
+                :size="getIconSize"
+            />
         </div>
         <input
             v-show="false"
@@ -69,11 +77,10 @@ const getCheckboxClassName = computed(() => {
     font-size: 14px;
     transition: var(--lew-form-transition);
     white-space: nowrap;
+    box-sizing: border-box;
 
     .icon-checkbox-box {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+        position: relative;
         width: 18px;
         height: 18px;
         border: var(--lew-form-border-width) var(--lew-checkbox-border-color)
@@ -86,11 +93,15 @@ const getCheckboxClassName = computed(() => {
         overflow: hidden;
 
         .icon-checkbox {
-            transform: translateY(50%);
+            position: absolute;
+            left: 50%;
+            top: 0px;
+            transform: translate(-50%, 0px) rotate(-20deg) scale(0.5);
+            transform-origin: 50%;
             transition: var(--lew-form-transition);
             opacity: 0;
+            margin-top: 1px;
             color: var(--lew-color-white);
-            padding: 2px;
         }
     }
 
@@ -105,6 +116,7 @@ const getCheckboxClassName = computed(() => {
     .icon-checkbox-box {
         width: 14px;
         height: 14px;
+        border-radius: 4px;
     }
 }
 
@@ -114,6 +126,7 @@ const getCheckboxClassName = computed(() => {
     .icon-checkbox-box {
         width: 16px;
         height: 16px;
+        border-radius: 5px;
     }
 }
 
@@ -123,6 +136,7 @@ const getCheckboxClassName = computed(() => {
     .icon-checkbox-box {
         width: 18px;
         height: 18px;
+        border-radius: 6px;
     }
 }
 
@@ -196,7 +210,7 @@ const getCheckboxClassName = computed(() => {
         background: var(--lew-checkbox-color);
 
         .icon-checkbox {
-            transform: translateY(0px);
+            transform: translate(-50%, 0px) rotate(0deg) scale(1);
             opacity: 1;
         }
     }
@@ -230,5 +244,28 @@ const getCheckboxClassName = computed(() => {
 .lew-checkbox-disabled {
     opacity: var(--lew-disabled-opacity);
     pointer-events: none; //鼠标点击不可修改
+}
+
+.lew-checkbox-certain {
+    .icon-checkbox-box {
+        border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+        background: var(--lew-checkbox-color);
+        .icon-certain {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 2px;
+            border-radius: 2px;
+            background-color: var(--lew-color-white);
+        }
+    }
+}
+.lew-checkbox-certain:hover {
+    .icon-checkbox-box {
+        border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+        background: var(--lew-checkbox-color);
+    }
 }
 </style>
