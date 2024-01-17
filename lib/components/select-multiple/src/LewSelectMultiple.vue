@@ -649,7 +649,7 @@ defineExpose({ show, hide });
             background: var(--lew-checkbox-color);
 
             .icon-checkbox {
-                transform: translateY(0px);
+                transform: translate(-50%, -50%) rotate(0deg) scale(1);
                 opacity: 1;
             }
         }

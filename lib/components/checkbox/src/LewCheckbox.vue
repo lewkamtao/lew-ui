@@ -23,7 +23,7 @@ const getIconSize = computed(() => {
         case 'small':
             return 9;
         case 'medium':
-            return 10;
+            return 11;
         case 'large':
             return 13;
         default:
@@ -51,7 +51,7 @@ const getCheckboxClassName = computed(() => {
         <div v-if="iconable || (!iconable && !block)" class="icon-checkbox-box">
             <i v-show="certain" class="icon-certain"></i>
             <lew-icon
-                stroke-width="3"
+                stroke-width="4"
                 class="icon-checkbox"
                 type="check"
                 :size="getIconSize"
@@ -95,12 +95,12 @@ const getCheckboxClassName = computed(() => {
         .icon-checkbox {
             position: absolute;
             left: 50%;
-            top: 0px;
-            transform: translate(-50%, 0px) rotate(-20deg) scale(0.5);
+            top: 50%;
+            transform: translate(-50%, calc(-50% + 10px)) rotate(-10deg)
+                scale(0.2);
             transform-origin: 50%;
             transition: var(--lew-form-transition);
             opacity: 0;
-            margin-top: 1px;
             color: var(--lew-color-white);
         }
     }
@@ -210,7 +210,7 @@ const getCheckboxClassName = computed(() => {
         background: var(--lew-checkbox-color);
 
         .icon-checkbox {
-            transform: translate(-50%, 0px) rotate(0deg) scale(1);
+            transform: translate(-50%, -50%) rotate(0deg) scale(1);
             opacity: 1;
         }
     }
