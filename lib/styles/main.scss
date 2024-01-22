@@ -65,15 +65,24 @@ button {
     height: 100%;
     background-size: 400% 100%;
     background-position: 100% 50%;
-    background-image: linear-gradient( 90deg, rgb(214, 214, 214) 25%, #fff 37%, rgb(203, 203, 203) 63%);
+    background-image: linear-gradient(
+        90deg,
+        rgb(214, 214, 214) 25%,
+        #fff 37%,
+        rgb(203, 203, 203) 63%
+    );
     animation: skeleton-loading 1.5s ease infinite;
 }
 
 .lew-dark .skeletons::after {
     /* 内容区域空状态时追加骨架屏样式 */
-    background-image: linear-gradient( 90deg, rgb(84, 84, 84) 25%, rgb(116, 116, 116) 37%, rgb(58, 58, 58) 63%);
+    background-image: linear-gradient(
+        90deg,
+        rgb(84, 84, 84) 25%,
+        rgb(116, 116, 116) 37%,
+        rgb(58, 58, 58) 63%
+    );
 }
-
 
 /* 修改滚动条角的颜色为蓝色 */
 
@@ -130,8 +139,8 @@ button {
 
 .lew-form-icon-ani-enter-from,
 .lew-form-icon-ani-leave-to {
-    opacity: 0;
-    margin-right: -30px;
+    opacity: 0 !important; 
+    margin-right: -10px;
 }
 
 .lew-form-icon-ani-enter-active,
@@ -140,8 +149,8 @@ button {
 }
 
 .lew-form-icon-clear {
-    position: absolute;
     opacity: var(--lew-form-icon-opacity);
+    position: absolute;
     transform: translate(0%, -50%);
     border-radius: 50%;
     padding: 3px;

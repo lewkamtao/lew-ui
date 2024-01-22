@@ -197,10 +197,6 @@ defineExpose({ show, hide });
                 <transition name="lew-form-icon-ani">
                     <lew-icon
                         v-if="clearable && getLabel && !readonly"
-                        v-tooltip="{
-                            content: '清空',
-                            placement: 'top',
-                        }"
                         :size="getIconSize"
                         type="x"
                         class="lew-form-icon-clear"

@@ -237,10 +237,6 @@ defineExpose({ show, hide });
                             getLabels.length > 0 &&
                             !readonly
                         "
-                        v-tooltip="{
-                            content: '清空',
-                            placement: 'top',
-                        }"
                         :size="getIconSize"
                         type="x"
                         class="lew-form-icon-clear"

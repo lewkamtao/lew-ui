@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import { datePickerProps } from './props';
 import { useVModel } from '@vueuse/core';
 import { object2class } from 'lew-ui/utils';
-import { LewPopover, LewIcon, LewDate } from 'lew-ui';
-import { LewTooltip } from 'lew-ui';
+import { LewPopover, LewIcon, LewDate, LewTooltip } from 'lew-ui';
+import { datePickerProps } from './props';
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app;
@@ -95,10 +94,6 @@ defineExpose({ show, hide });
                             v-if="modelValue && clearable && !readonly"
                             :size="getIconSize"
                             type="x"
-                            v-tooltip="{
-                                content: '清空',
-                                placement: 'top',
-                            }"
                             class="lew-form-icon-clear"
                             :class="{
                                 'lew-form-icon-clear-focus': visible,

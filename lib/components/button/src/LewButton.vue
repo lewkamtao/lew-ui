@@ -55,8 +55,8 @@ const getIconSize = computed(() => {
 
 const getStyle = computed(() => {
     const { round, type, color, loading } = props;
-    let styleObj: Record<string, string> = {};
-    let _color = getColorType(color);
+    const styleObj: Record<string, string> = {};
+    const _color = getColorType(color);
     switch (type) {
         case 'fill':
             styleObj.backgroundColor = `var(--lew-color-${_color})`;
@@ -101,8 +101,8 @@ const getStyle = computed(() => {
             :type="icon"
         />
         <lew-icon
-            class="lew-loading-icon"
             v-if="loading || _loading"
+            class="lew-loading-icon"
             :size="getIconSize"
             animation="spin"
             animation-speed="fast"
@@ -135,8 +135,7 @@ const getStyle = computed(() => {
     width: auto;
     white-space: nowrap;
     box-sizing: border-box;
-    transition: background-color 0.1s, transform 0.1s,
-        color 0.35s cubic-bezier(0.65, 0, 0.25, 1),
+    transition: transform 0.1s, color 0.35s cubic-bezier(0.65, 0, 0.25, 1),
         padding 0.25s cubic-bezier(0.65, 0, 0.25, 1);
     border: none;
     cursor: pointer;
@@ -168,7 +167,7 @@ const getStyle = computed(() => {
     width: 100%;
     height: 100%;
     background-color: rgba($color: #000000, $alpha: 0.2);
-    transition: 0.25s all;
+    transition: 0.1s all;
     opacity: 0;
     content: '';
 }
@@ -178,11 +177,11 @@ const getStyle = computed(() => {
 }
 
 .lew-button:hover:after {
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
 .lew-button:active {
-    opacity: 0.9;
+    opacity: 1;
 }
 
 .lew-button:active::after {

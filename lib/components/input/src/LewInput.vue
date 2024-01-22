@@ -332,10 +332,6 @@ defineExpose({ toFocus });
             <transition name="lew-form-icon-ani">
                 <lew-icon
                     v-if="clearable && modelValue && !readonly"
-                    v-tooltip="{
-                        content: '清空',
-                        placement: 'top',
-                    }"
                     class="lew-form-icon-clear"
                     :class="{
                         'lew-form-icon-clear-focus': state.isFocus,
@@ -374,9 +370,7 @@ defineExpose({ toFocus });
         cursor: pointer;
         opacity: var(--lew-form-icon-opacity);
     }
-    .lew-input-copy-btn-check {
-        color: var(--lew-color-primary-dark);
-    }
+
     .lew-input-copy-btn:hover {
         opacity: var(--lew-form-icon-opacity-hover);
     }
