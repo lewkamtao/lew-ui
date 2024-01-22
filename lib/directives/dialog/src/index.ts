@@ -1,4 +1,8 @@
+import { useMouse } from '@vueuse/core';
 import _LewDialog from './LewDialog.vue';
+
+const { x, y } = useMouse();
+
 type Options = {
     title: string;
     content: string;
@@ -44,6 +48,7 @@ const dialog = (type: string, options: Options) => {
         closeByEsc,
     } = options;
     const div: HTMLDivElement = document.createElement('div');
+    const transformOrigin = `${x.value}px ${y.value}px`;
     document.body.appendChild(div);
     const app = createApp({
         render() {
@@ -56,22 +61,23 @@ const dialog = (type: string, options: Options) => {
                     layout,
                     okText,
                     cancelText,
-                    ok: ok
-                        ? ok
-                        : () => {
-                              return true;
-                          },
+                    transformOrigin,
+                    ok:
+                        ok ||
+                        (() => {
+                            return true;
+                        }),
                     onClose: () => {
                         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                         // @ts-ignore
                         app.unmount(div);
                         div.remove();
                     },
-                    cancel: cancel
-                        ? cancel
-                        : () => {
-                              return true;
-                          },
+                    cancel:
+                        cancel ||
+                        (() => {
+                            return true;
+                        }),
                 },
                 {
                     title: () => title,
