@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
+import { object2class } from 'lew-ui/utils';
 import { useDOMCreate } from '../../../hooks';
 import { drawerProps, getStyle } from './props';
-import { object2class } from 'lew-ui/utils';
+
 useDOMCreate('lew-drawer');
 const emit = defineEmits(['update:visible']);
 
@@ -40,7 +41,7 @@ const close = () => {
                 <div
                     :style="getStyle(position, width, height)"
                     class="lew-drawer-main"
-                    :class="object2class(position)"
+                    :class="object2class('lew-drawer-main', { position })"
                     @click.stop
                 >
                     <slot></slot>
@@ -70,25 +71,25 @@ const close = () => {
     z-index: 9999;
 }
 
-.lew-drawer-main-right {
+.lew-drawer-main-position-right {
     right: 0;
     top: 0;
     transform: translateX(100%);
 }
 
-.lew-drawer-main-top {
+.lew-drawer-main-position-top {
     left: 0;
     top: 0;
     transform: translateY(-100%);
 }
 
-.lew-drawer-main-left {
+.lew-drawer-main-position-left {
     left: 0;
     top: 0;
     transform: translateX(-100%);
 }
 
-.lew-drawer-main-bottom {
+.lew-drawer-main-position-bottom {
     left: 0;
     bottom: 0;
     transform: translateY(100%);
