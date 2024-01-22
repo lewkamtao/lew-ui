@@ -71,7 +71,6 @@ const init = () => {
 
 const selectItem = (value: [String, Number], type?: string) => {
     let index = props.options.findIndex((e) => value === e.value);
-    index = index === -1 ? 0 : index;
     if (index >= 0) {
         const _item = props.options[index];
         if (tabsValue.value != _item.value) {
@@ -297,7 +296,7 @@ onUnmounted(() => {
     }
 
     .lew-tabs-item-isInit {
-        transition: all 0.2s cubic-bezier(0.65, 0, 0.35, 1);
+        transition: all 0.15s cubic-bezier(0.65, 0, 0.35, 1);
     }
 }
 

@@ -26,7 +26,7 @@ onMounted(() => {
         info: {
             asd: {
                 dsd: {
-                    input_tag: ['测试','小芳'],
+                    input_tag: ['测试', '小芳'],
                 },
             },
         },
@@ -326,7 +326,9 @@ const submit = async () => {
 </script>
 
 <template>
-    <lew-button @click="formRef.setForm({})">reset</lew-button>
+    <lew-button @click="formRef.setForm({ size: 'medium', tabs: '2' })"
+        >reset</lew-button
+    >
     <lew-flex x="start" y="start" :gap="50">
         <lew-form
             ref="formRef"
