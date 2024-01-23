@@ -390,6 +390,7 @@ defineExpose({ toFocus });
         display: flex;
         align-items: center;
         top: 50%;
+        z-index: 2;
         transform: translateY(-50%);
         cursor: pointer;
         opacity: var(--lew-form-icon-opacity);
@@ -467,7 +468,6 @@ defineExpose({ toFocus });
     .lew-input-controls {
         display: inline-flex;
         align-items: center;
-        margin-right: 3px;
 
         > div {
             display: inline-flex;
@@ -625,7 +625,7 @@ defineExpose({ toFocus });
         }
 
         .lew-input-count-clearable {
-            padding-right: 26px;
+            padding-right: 24px;
         }
     }
 
@@ -671,7 +671,7 @@ defineExpose({ toFocus });
         }
 
         .lew-input-count-clearable {
-            padding-right: 28px;
+            padding-right: 24px;
         }
     }
 

@@ -28,7 +28,7 @@ const getIconSize = computed(() => {
     const size: any = {
         small: 13,
         medium: 14,
-        large: 16,
+        large: 15,
     };
     return size[props.size];
 });
@@ -178,7 +178,7 @@ defineExpose({ show, hide });
         .icon-calendar {
             position: absolute;
             top: 50%;
-            right: 7px;
+            right: 9px;
             transform: translateY(-50%);
             transition: var(--lew-form-transition);
             opacity: var(--lew-form-icon-opacity);

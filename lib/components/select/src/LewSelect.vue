@@ -138,8 +138,8 @@ const getSelectItemClassName = (e: any) => {
 
 const getIconSize = computed(() => {
     const size: any = {
-        small: 13,
-        medium: 14,
+        small: 14,
+        medium: 15,
         large: 16,
     };
     return size[props.size];
@@ -333,7 +333,7 @@ defineExpose({ show, hide });
         .icon-select {
             position: absolute;
             top: 50%;
-            right: 7px;
+            right: 9px;
             transform: translateY(-50%) rotate(0deg);
             transition: var(--lew-form-transition);
         }
