@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { magicNumberProps } from './props';
 import { numFormat } from 'lew-ui/utils';
+import { magicNumberProps } from './props';
 
 const props = defineProps(magicNumberProps);
 
-let state = reactive({
+const state = reactive({
     numberArr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
 });
 
@@ -15,9 +15,8 @@ const getValueArr = computed(() => {
 
     if (props.sep) {
         return numFormat(props.value).split('');
-    } else {
-        return String(props.value).split('');
     }
+    return String(props.value).split('');
 });
 
 const getMagicNumberStyle = computed(() => {
@@ -26,7 +25,7 @@ const getMagicNumberStyle = computed(() => {
 });
 const getItemStyle = computed(() => (item: string) => {
     const { size } = props;
-    let index = parseInt(item);
+    const index = parseInt(item);
     return `transform: translateY(-${size * index}px)`;
 });
 const getNumStyle = computed(() => {
@@ -38,20 +37,20 @@ const getNumStyle = computed(() => {
 <template>
     <div class="lew-magic-number" :style="getMagicNumberStyle">
         <div
-            :style="getItemStyle(item)"
-            class="lew-magic-number-item"
             v-for="(item, index) in getValueArr"
             :key="index"
+            :style="getItemStyle(item)"
+            class="lew-magic-number-item"
         >
-            <span :style="getNumStyle" v-if="item === '.' || item === ','"
+            <span v-if="item === '.' || item === ','" :style="getNumStyle"
                 >{{ item }}
             </span>
             <span
+                v-for="(n, index) in state.numberArr"
                 v-else
+                :key="index"
                 class="lew-magic-number-num"
                 :style="getNumStyle"
-                v-for="(n, index) in state.numberArr"
-                :key="index"
                 v-text="n"
             />
         </div>
@@ -65,7 +64,7 @@ const getNumStyle = computed(() => {
     .lew-magic-number-item {
         display: inline-flex;
         flex-direction: column;
-        transition: transform 0.45s;
+        transition: transform 0.35s;
         .lew-magic-number-num {
             overflow: hidden;
             flex-shrink: 0;
