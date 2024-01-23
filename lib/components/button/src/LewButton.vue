@@ -101,7 +101,6 @@ const getStyle = computed(() => {
             :type="icon"
         />
         <lew-icon
-            v-if="loading || _loading"
             class="lew-loading-icon"
             :size="getIconSize"
             animation="spin"
@@ -136,7 +135,7 @@ const getStyle = computed(() => {
     white-space: nowrap;
     box-sizing: border-box;
     transition: transform 0.1s, color 0.35s cubic-bezier(0.65, 0, 0.25, 1),
-        padding 0.25s cubic-bezier(0.65, 0, 0.25, 1);
+        padding 0.15s cubic-bezier(0.65, 0, 0.25, 1);
     border: none;
     cursor: pointer;
     border-radius: var(--lew-border-radius);
@@ -148,7 +147,7 @@ const getStyle = computed(() => {
         position: absolute;
         left: 10px;
         opacity: 0;
-        transition: opacity 0.35s;
+        transition: opacity 0.3s ease-in-out;
     }
 
     .lew-button-text {
