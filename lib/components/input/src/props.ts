@@ -139,5 +139,10 @@ export const inputProps = {
         default: false,
         description: '是否按回车键确认',
     },
+    regular: {
+        type: Function as PropType<(value: string) => boolean>,
+        default: () => true,
+        description: '正则校验',
+    },
 };
 export type InputProps = ExtractPropTypes<typeof inputProps>;

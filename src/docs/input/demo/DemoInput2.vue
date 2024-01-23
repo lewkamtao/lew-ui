@@ -51,6 +51,7 @@ const http = ref({
             suffix="icon"
             suffix-value="alert-circle"
             suffix-tooltip="必须填写手机号"
+            clearable
             placeholder="请输入手机号"
         />
         <lew-input

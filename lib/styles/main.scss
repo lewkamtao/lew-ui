@@ -139,7 +139,7 @@ button {
 
 .lew-form-icon-ani-enter-from,
 .lew-form-icon-ani-leave-to {
-    opacity: 0 !important; 
+    opacity: 0 !important;
     margin-right: -10px;
 }
 
@@ -153,8 +153,8 @@ button {
     position: absolute;
     transform: translate(0%, -50%);
     border-radius: 50%;
-    padding: 3px;
-    right: 4px;
+    padding: 2px;
+    right: 5px;
     top: 50%;
     z-index: 9;
     cursor: pointer;
@@ -164,10 +164,15 @@ button {
     opacity: var(--lew-form-icon-opacity-hover);
     background-color: var(--lew-bgcolor-0);
 }
-
+.lew-form-icon-clear:active {
+    opacity: var(--lew-form-icon-opacity-active);
+}
 .lew-form-icon-clear-focus:hover {
     opacity: var(--lew-form-icon-opacity-hover);
     background-color: var(--lew-bgcolor-4);
+}
+.lew-form-icon-clear-focus:active {
+    opacity: var(--lew-form-icon-opacity-active);
 }
 
 @keyframes skeleton-loading {

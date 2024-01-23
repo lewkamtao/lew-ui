@@ -244,21 +244,68 @@ defineExpose({ toFocus });
                 :class="{ 'lew-input-copy-btn-check': isCopy }"
             />
         </div>
-        <input
-            ref="lewInputRef"
-            v-model="modelValue"
-            class="lew-input"
-            autocomplete="new-password"
-            :disabled="disabled"
-            :placeholder="placeholder"
-            :type="getType"
-            :readonly="readonly"
-            onkeypress="if(window.event.keyCode==13) this.blur()"
-            @input="inputFn"
-            @change="emit('change', modelValue)"
-            @blur="blur"
-            @focus="focus"
-        />
+        <div class="lew-input-box">
+            <input
+                ref="lewInputRef"
+                v-model="modelValue"
+                class="lew-input"
+                autocomplete="new-password"
+                :disabled="disabled"
+                :placeholder="placeholder"
+                :type="getType"
+                :readonly="readonly"
+                onkeypress="if(window.event.keyCode==13) this.blur()"
+                @input="inputFn"
+                @change="emit('change', modelValue)"
+                @blur="blur"
+                @focus="focus"
+            />
+            <div
+                v-if="showPassword || clearable || showCount"
+                class="lew-input-controls"
+            >
+                <div
+                    v-if="getCheckNumStr"
+                    class="lew-input-count"
+                    :class="{
+                        'lew-input-count-clearable': clearable && modelValue,
+                    }"
+                >
+                    {{ getCheckNumStr }}
+                </div>
+                <div
+                    v-if="showPassword && type === 'password'"
+                    class="lew-input-show-password"
+                    @mousedown.prevent=""
+                    @click="showPasswordFn"
+                >
+                    <lew-icon
+                        v-show="_type === 'text'"
+                        :size="getIconSize"
+                        type="eye"
+                    />
+                    <lew-icon
+                        v-show="_type === 'password'"
+                        :size="getIconSize"
+                        type="eye-off"
+                    />
+                </div>
+                <transition name="lew-form-icon-ani">
+                    <lew-icon
+                        v-if="clearable && modelValue && !readonly"
+                        class="lew-form-icon-clear"
+                        :class="{
+                            'lew-form-icon-clear-focus': state.isFocus,
+                        }"
+                        :size="getIconSize"
+                        type="x"
+                        @mousedown.prevent=""
+                        @click="clear"
+                    />
+                </transition>
+            </div>
+        </div>
+
         <div
             v-if="suffix"
             v-tooltip="{
@@ -309,50 +356,6 @@ defineExpose({ toFocus });
         <label v-if="autoWidth" class="lew-input-auto-width">
             {{ modelValue }}
         </label>
-        <div
-            v-if="showPassword || clearable || showCount"
-            class="lew-input-controls"
-        >
-            <div
-                v-if="getCheckNumStr"
-                class="lew-input-count"
-                :class="{
-                    'lew-input-count-clearable': clearable && modelValue,
-                }"
-            >
-                {{ getCheckNumStr }}
-            </div>
-            <div
-                v-if="showPassword && type === 'password'"
-                class="lew-input-show-password"
-                @mousedown.prevent=""
-                @click="showPasswordFn"
-            >
-                <lew-icon
-                    v-show="_type === 'text'"
-                    :size="getIconSize"
-                    type="eye"
-                />
-                <lew-icon
-                    v-show="_type === 'password'"
-                    :size="getIconSize"
-                    type="eye-off"
-                />
-            </div>
-            <transition name="lew-form-icon-ani">
-                <lew-icon
-                    v-if="clearable && modelValue && !readonly"
-                    class="lew-form-icon-clear"
-                    :class="{
-                        'lew-form-icon-clear-focus': state.isFocus,
-                    }"
-                    :size="getIconSize"
-                    type="x"
-                    @mousedown.prevent=""
-                    @click="clear"
-                />
-            </transition>
-        </div>
     </div>
 </template>
 
@@ -371,6 +374,17 @@ defineExpose({ toFocus });
     border: var(--lew-form-border-width) transparent solid;
     box-shadow: var(--lew-form-box-shadow);
     overflow: hidden;
+
+    .lew-input-box {
+        position: relative;
+        width: 100%;
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        .lew-input {
+            height: 100%;
+        }
+    }
     .lew-input-copy-btn {
         position: absolute;
         display: flex;
@@ -526,7 +540,7 @@ defineExpose({ toFocus });
 }
 
 .lew-input-view-size-small {
-    .lew-input {
+    .lew-input-box {
         padding: var(--lew-form-input-padding-small);
         font-size: var(--lew-form-font-size-small);
         height: var(--lew-form-item-height-small);
@@ -577,7 +591,7 @@ defineExpose({ toFocus });
 }
 
 .lew-input-view-size-medium {
-    .lew-input {
+    .lew-input-box {
         padding: var(--lew-form-input-padding-medium);
         font-size: var(--lew-form-font-size-medium);
         line-height: var(--lew-form-input-line-height-medium);
@@ -625,7 +639,7 @@ defineExpose({ toFocus });
 }
 
 .lew-input-view-size-large {
-    .lew-input {
+    .lew-input-box {
         padding: var(--lew-form-input-padding-large);
         font-size: var(--lew-form-font-size-large);
         line-height: var(--lew-form-input-line-height-large);
