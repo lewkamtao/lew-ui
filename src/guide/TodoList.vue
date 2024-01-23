@@ -3,9 +3,6 @@
     <br />
     <div>
         <ul>
-            <li>Select multiple 多选文本框</li>
-            <li>Checkbox 多选框禁用</li>
-            <li>Radio 单选项禁用</li>
             <li>Step 步骤</li>
             <li>Upload 上传</li>
             <li>Card 卡片</li>

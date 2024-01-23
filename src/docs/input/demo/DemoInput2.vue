@@ -10,7 +10,7 @@ const http = ref({
 </script>
 
 <template>
-    <lew-flex style="width: 300px" :gap="20" x="start" direction="y">
+    <lew-flex style="width: 450px" :gap="20" x="start" direction="y">
         <lew-input
             v-model="value"
             size="small"

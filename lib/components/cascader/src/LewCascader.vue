@@ -623,6 +623,9 @@ defineExpose({ show, hide });
             border-right: var(--lew-popover-border);
             padding: 5px;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .lew-cascader-item-warpper:last-child {

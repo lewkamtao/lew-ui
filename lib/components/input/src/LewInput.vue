@@ -194,9 +194,11 @@ defineExpose({ toFocus });
             }"
             class="lew-input-prefixes"
         >
-            <div v-if="prefixes === 'text'" class="lew-input-prefixes-text">
-                {{ prefixesValue }}
-            </div>
+            <lew-text-trim
+                v-if="prefixes === 'text'"
+                :text="prefixesValue"
+                class="lew-input-prefixes-text"
+            />
             <div v-if="prefixes === 'icon'" class="lew-input-prefixes-icon">
                 <lew-icon :size="getIconSize" :type="prefixesValue"> </lew-icon>
             </div>
@@ -218,7 +220,10 @@ defineExpose({ toFocus });
                                 state.prefixesDropdown === 'show',
                         }"
                     >
-                        {{ getPrefixesLabel }}
+                        <lew-text-trim
+                            :text="getPrefixesLabel"
+                            class="lew-input-prefixes-text"
+                        />
                         <lew-icon
                             :size="getIconSize"
                             type="chevron-down"
@@ -262,9 +267,11 @@ defineExpose({ toFocus });
             }"
             class="lew-input-suffix"
         >
-            <div v-if="suffix === 'text'" class="lew-input-suffix-text">
-                {{ suffixValue }}
-            </div>
+            <lew-text-trim
+                v-if="suffix === 'text'"
+                :text="suffixValue"
+                class="lew-input-suffix-text"
+            />
             <div v-if="suffix === 'icon'" class="lew-input-suffix-icon">
                 <lew-icon :size="getIconSize" :type="suffixValue"> </lew-icon>
             </div>
@@ -286,7 +293,10 @@ defineExpose({ toFocus });
                                 state.suffixDropdown === 'show',
                         }"
                     >
-                        {{ getSuffixLabel }}
+                        <lew-text-trim
+                            :text="getSuffixLabel"
+                            class="lew-input-suffix-text"
+                        />
                         <lew-icon
                             :size="getIconSize"
                             type="chevron-down"
@@ -374,7 +384,12 @@ defineExpose({ toFocus });
     .lew-input-copy-btn:hover {
         opacity: var(--lew-form-icon-opacity-hover);
     }
-
+    .lew-input-prefixes {
+        border-right: rgba(0, 0, 0, 0.05) 1px solid;
+    }
+    .lew-input-suffix {
+        border-left: rgba(0, 0, 0, 0.05) 1px solid;
+    }
     .lew-input-prefixes,
     .lew-input-suffix {
         white-space: nowrap;
@@ -517,6 +532,8 @@ defineExpose({ toFocus });
         height: var(--lew-form-item-height-small);
         line-height: var(--lew-form-input-line-height-small);
     }
+    .lew-input-prefixes,
+    .lew-input-suffix,
     .lew-input-prefixes-dropdown,
     .lew-input-suffix-dropdown {
         height: var(--lew-form-item-height-small);
@@ -525,15 +542,14 @@ defineExpose({ toFocus });
     .lew-input-copy-btn {
         right: 7px;
     }
-
-    .lew-input-prefixes {
+    .lew-input-prefixes-text,
+    .lew-input-suffix-text {
         font-size: var(--lew-form-font-size-small);
-        margin-left: 7px;
+        max-width: 80px;
     }
-
+    .lew-input-prefixes,
     .lew-input-suffix {
-        font-size: var(--lew-form-font-size-small);
-        margin-right: 7px;
+        padding: 0px 7px;
     }
 
     .lew-input {
@@ -567,22 +583,25 @@ defineExpose({ toFocus });
         line-height: var(--lew-form-input-line-height-medium);
         height: var(--lew-form-item-height-medium);
     }
+    .lew-input-prefixes,
+    .lew-input-suffix,
     .lew-input-prefixes-dropdown,
     .lew-input-suffix-dropdown {
         line-height: var(--lew-form-input-line-height-medium);
         height: var(--lew-form-item-height-medium);
+        max-width: 100px;
     }
     .lew-input-copy-btn {
         right: 9px;
     }
-    .lew-input-prefixes {
+    .lew-input-prefixes-text,
+    .lew-input-suffix-text {
         font-size: var(--lew-form-font-size-medium);
-        margin-left: 9px;
+        max-width: 100px;
     }
-
+    .lew-input-prefixes,
     .lew-input-suffix {
-        font-size: var(--lew-form-font-size-medium);
-        margin-right: 9px;
+        padding: 0px 9px;
     }
 
     .lew-input-controls {
@@ -612,6 +631,8 @@ defineExpose({ toFocus });
         line-height: var(--lew-form-input-line-height-large);
         height: var(--lew-form-item-height-large);
     }
+    .lew-input-prefixes,
+    .lew-input-suffix,
     .lew-input-prefixes-dropdown,
     .lew-input-suffix-dropdown {
         line-height: var(--lew-form-input-line-height-large);
@@ -620,14 +641,14 @@ defineExpose({ toFocus });
     .lew-input-copy-btn {
         right: 12px;
     }
-    .lew-input-prefixes {
+    .lew-input-prefixes-text,
+    .lew-input-suffix-text {
         font-size: var(--lew-form-font-size-large);
-        margin-left: 12px;
+        max-width: 120px;
     }
-
+    .lew-input-prefixes,
     .lew-input-suffix {
-        font-size: var(--lew-form-font-size-large);
-        margin-right: 12px;
+        padding: 0px 12px;
     }
 
     .lew-input-controls {
