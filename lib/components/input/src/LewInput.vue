@@ -260,6 +260,9 @@ defineExpose({ toFocus });
                 @blur="blur"
                 @focus="focus"
             />
+            <label v-if="autoWidth" class="lew-input-auto-width">
+                {{ modelValue }}
+            </label>
             <div
                 v-if="showPassword || clearable || showCount"
                 class="lew-input-controls"
@@ -353,9 +356,6 @@ defineExpose({ toFocus });
                 </lew-dropdown>
             </div>
         </div>
-        <label v-if="autoWidth" class="lew-input-auto-width">
-            {{ modelValue }}
-        </label>
     </div>
 </template>
 
@@ -532,7 +532,7 @@ defineExpose({ toFocus });
 
     .lew-input-auto-width {
         width: auto;
-        min-width: 65px;
+        min-width: 45px;
         height: 100%;
         visibility: hidden;
         box-sizing: border-box;
@@ -584,7 +584,6 @@ defineExpose({ toFocus });
 
     .lew-input-auto-width {
         height: var(--lew-form-item-height-small);
-        padding: var(--lew-form-input-padding-small);
         font-size: var(--lew-form-font-size-small);
         line-height: var(--lew-form-input-line-height-small);
     }
@@ -634,7 +633,6 @@ defineExpose({ toFocus });
         height: var(--lew-form-item-height-medium);
         font-size: var(--lew-form-font-size-medium);
         line-height: var(--lew-form-input-line-height-medium);
-        padding: var(--lew-form-input-padding-medium);
     }
 }
 
@@ -679,9 +677,27 @@ defineExpose({ toFocus });
 
     .lew-input-auto-width {
         height: var(--lew-form-item-height-large);
-        padding: var(--lew-form-input-padding-large);
         font-size: var(--lew-form-font-size-large);
         line-height: var(--lew-form-input-line-height-large);
+    }
+}
+
+.lew-input-view-size-small.lew-input-view-autoWidth {
+    .lew-input {
+        left: 7px;
+        width: calc(100% - 14px);
+    }
+}
+.lew-input-view-size-medium.lew-input-view-autoWidth {
+    .lew-input {
+        left: 9px;
+        width: calc(100% - 18px);
+    }
+}
+.lew-input-view-size-large.lew-input-view-autoWidth {
+    .lew-input {
+        left: 12px;
+        width: calc(100% - 24px);
     }
 }
 
