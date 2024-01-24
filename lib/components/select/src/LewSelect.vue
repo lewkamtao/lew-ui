@@ -138,8 +138,8 @@ const getSelectItemClassName = (e: any) => {
 
 const getIconSize = computed(() => {
     const size: any = {
-        small: 13,
-        medium: 14,
+        small: 14,
+        medium: 15,
         large: 16,
     };
     return size[props.size];
@@ -153,8 +153,9 @@ const getVirtualHeight = computed(() => {
 
 const showHandle = () => {
     state.visible = true;
+    state.keyword = '';
     getSelectWidth();
-    if (state.options && state.options.length === 0 && props.searchable) {
+    if (props.searchable) {
         search({ target: { value: '' } });
     }
 };
@@ -196,10 +197,6 @@ defineExpose({ show, hide });
                 <transition name="lew-form-icon-ani">
                     <lew-icon
                         v-if="clearable && getLabel && !readonly"
-                        v-tooltip="{
-                            content: '清空',
-                            placement: 'top',
-                        }"
                         :size="getIconSize"
                         type="x"
                         class="lew-form-icon-clear"
@@ -238,8 +235,7 @@ defineExpose({ show, hide });
                         direction="y"
                         class="not-found"
                     >
-                        <lew-icon type="box" size="30" />
-                        <span>暂无结果</span>
+                        <lew-empty title="暂无结果" />
                     </lew-flex>
                     <div
                         v-if="
@@ -337,7 +333,7 @@ defineExpose({ show, hide });
         .icon-select {
             position: absolute;
             top: 50%;
-            right: 7px;
+            right: 9px;
             transform: translateY(-50%) rotate(0deg);
             transition: var(--lew-form-transition);
         }
@@ -487,7 +483,6 @@ defineExpose({ show, hide });
     }
 
     .not-found {
-        padding: 50px 0px;
         opacity: 0.4;
         min-height: 268px;
     }

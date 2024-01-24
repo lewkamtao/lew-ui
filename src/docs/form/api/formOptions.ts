@@ -22,7 +22,7 @@ export default {
         },
         {
             name: 'value',
-            description: '值，此处用于会显数据。',
+            description: '值，此处用于回显数据。',
             type: 'any',
             default: '',
         },

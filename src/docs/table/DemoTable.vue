@@ -8,6 +8,7 @@ import {
     DemoTable6,
     DemoTable7,
     DemoTable8,
+    DemoTable9,
     DemoTable1_code,
     DemoTable2_code,
     DemoTable3_code,
@@ -16,6 +17,7 @@ import {
     DemoTable6_code,
     DemoTable7_code,
     DemoTable8_code,
+    DemoTable9_code,
 } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
@@ -142,6 +144,9 @@ const options = ref(
                     },
                 ]"
             />
+        </lew-demo-box>
+        <lew-demo-box title="暂无数据" :code="DemoTable9_code">
+            <demo-table9 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>
     </div>

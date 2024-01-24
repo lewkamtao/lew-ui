@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router';
 import { useDark } from '@vueuse/core';
 
-const v = ref('1.7.21');
+const version = ref('1.8.11');
 
 const isDark = useDark({
     selector: 'html',
@@ -34,13 +34,25 @@ const gohome = () => {
             />
             <span style="margin-left: 10px"> Lew UI</span>
             <lew-tag type="light" size="small" style="margin-left: 10px">
-                Beta {{ v }}
+                Beta {{ version }}
             </lew-tag>
         </div>
         <lew-flex gap="15" x="end" class="menu">
             <div class="menu-item" @click="router.push(`/`)">首页</div>
             <div class="menu-item" @click="router.push(`/Install`)">指南</div>
             <div class="menu-item" @click="router.push(`/Avatar`)">组件</div>
+            <lew-icon
+                class="menu-item icon-mode-sunny"
+                type="sun"
+                size="18"
+                @click="isDark = false"
+            />
+            <lew-icon
+                class="menu-item icon-mode-moon"
+                type="moon"
+                size="18"
+                @click="isDark = true"
+            />
             <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
                 <lew-icon size="18" type="github" />
             </a>

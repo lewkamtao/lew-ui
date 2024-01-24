@@ -272,6 +272,12 @@ options.value = [
                 label: 'Result',
                 value: '/Result',
             },
+            {
+                label: 'Empty',
+                value: '/Empty',
+                tagText: 'New',
+                tagColor: 'blue',
+            },
         ],
     },
 ];

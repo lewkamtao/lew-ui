@@ -1,4 +1,5 @@
 import { ExtractPropTypes } from 'vue';
+
 export const dialogProps = {
     type: {
         type: String,
@@ -44,6 +45,11 @@ export const dialogProps = {
         type: Boolean,
         default: false,
         description: '是否允许esc关闭',
+    },
+    transformOrigin: {
+        type: String,
+        default: '0 0',
+        description: '对话框原点位置（无需传参）',
     },
 };
 export type DialogProps = ExtractPropTypes<typeof dialogProps>;

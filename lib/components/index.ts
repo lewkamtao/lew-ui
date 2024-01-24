@@ -45,3 +45,4 @@ export * from './result';
 export * from './backtop';
 export * from './text-trim';
 export * from './menu';
+export * from './empty';

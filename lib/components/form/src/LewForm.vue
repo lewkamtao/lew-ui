@@ -19,6 +19,7 @@ import {
     LewButton,
 } from 'lew-ui';
 import { formProps } from './props';
+import _ from 'lodash';
 
 const props = defineProps(formProps);
 const emit = defineEmits(['update:modelValue', 'update:options', 'change']);
@@ -45,7 +46,9 @@ watchDebounced(
 
 const arrayToObj = (arr: any): any => {
     const obj: Record<string, unknown> = {};
-    arr?.forEach(({ field, value }: any) => {
+    let _arr = _.cloneDeep(arr);
+    _arr?.forEach((row: any) => {
+        const { field, value, outputFormat } = row;
         if (!field) {
             return;
         }
@@ -62,7 +65,12 @@ const arrayToObj = (arr: any): any => {
         }
 
         if (value !== undefined) {
-            currentObj[keys[keys.length - 1]] = toRaw(value);
+            const _value = _.cloneDeep(value);
+            if (outputFormat) {
+                currentObj[keys[keys.length - 1]] = outputFormat(row);
+            } else {
+                currentObj[keys[keys.length - 1]] = _value;
+            }
         }
     });
     return removeEmpty(obj);
@@ -134,7 +142,6 @@ const form2componentOptions = () => {
     vArr.forEach((_e: any) => {
         componentOptions.value.forEach((__e: any, i: number) => {
             if (_e.field.lastIndexOf('.') >= 0) {
-                console.log(_e.field);
                 const _$fieldKey = _e.field?.substring(
                     _e.field.lastIndexOf('.') + 1
                 );
@@ -158,7 +165,7 @@ const form2componentOptions = () => {
 };
 
 const validate = (field: string) => {
-    const opt = componentOptions.value || [];
+    const opt = _.cloneDeep(componentOptions.value || []);
     let schema: any = Yup.object();
     const obj: any = [];
     const formObj: any = {};
@@ -178,6 +185,7 @@ const validate = (field: string) => {
                 opt.forEach((o: any) => {
                     o.errMessage = '';
                 });
+                componentOptions.value = _.cloneDeep(opt);
                 resolve(true);
             })
             .catch((err: any) => {
@@ -290,19 +298,25 @@ const validate = (field: string) => {
                                 opt[index].errMessage = e?.message;
                             }
                         });
-                    componentOptions.value = JSON.parse(JSON.stringify(opt));
                 }
+                componentOptions.value = _.cloneDeep(opt);
             });
     });
 };
 
 const getForm = () => {
-    return toRaw(form.value);
+    return _.cloneDeep(form.value);
 };
 
 const setForm = (value: any = {}) => {
+    let _form = _.cloneDeep(value);
     componentOptions.value.forEach((e: any) => {
-        e.value = getNestedFieldValue(value, e.field);
+        let _value = getNestedFieldValue(_form, e.field);
+        if (e.inputFormat) {
+            e.value = e.inputFormat(_value);
+        } else {
+            e.value = _value;
+        }
     });
     form.value = arrayToObj(componentOptions.value);
     emit('change', toRaw(form.value));
@@ -325,7 +339,7 @@ const getNestedFieldValue = (obj: any, field: string) => {
 
 const init = () => {
     form2componentOptions();
-    form.value = arrayToObj(toRaw(componentOptions.value));
+    form.value = arrayToObj(componentOptions.value);
     emit('change', toRaw(form.value));
 };
 
@@ -522,7 +536,7 @@ defineExpose({ getForm, setForm, validate });
     .lew-form-item {
         display: flex;
         align-items: flex-start;
-        gap: 20px;
+        gap: 28px;
         padding-bottom: 30px;
 
         .label-box {
@@ -631,7 +645,6 @@ defineExpose({ getForm, setForm, validate });
 }
 
 .lew-form-item-error {
-    --lew-form-box-shadow: 0px 1px 1px rgba(160, 62, 62, 0.64);
     --lew-form-border-color-focus: var(--lew-color-error-dark);
     --lew-radio-border-color-hover: var(--lew-color-error);
     --lew-checkbox-border-color-hover: var(--lew-color-error);
@@ -641,7 +654,7 @@ defineExpose({ getForm, setForm, validate });
     --lew-radio-color: var(--lew-color-error);
     --lew-radio-color-dark: var(--lew-color-error-dark);
     --lew-radio-color-light: var(--lew-color-error-light);
-    --lew-form-ouline: 3px var(--lew-color-error-light) solid;
+    --lew-form-ouline: 0px var(--lew-color-error-light) solid;
 }
 
 .slide-fade-leave-active,

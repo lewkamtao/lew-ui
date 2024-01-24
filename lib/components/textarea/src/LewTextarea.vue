@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { textareaProps } from './props';
-import { useVModel } from '@vueuse/core';
+import { useVModel, useMagicKeys } from '@vueuse/core';
 import { object2class, any2px } from 'lew-ui/utils';
-import { LewIcon } from 'lew-ui';
-import { LewTooltip } from 'lew-ui';
-import { useMagicKeys } from '@vueuse/core';
+import { LewIcon, LewTooltip } from 'lew-ui';
+import { textareaProps } from './props';
 
 const { shift, enter } = useMagicKeys();
 // 获取app
@@ -12,7 +10,7 @@ const app = getCurrentInstance()?.appContext.app;
 if (app && !app.directive('tooltip')) {
     app.use(LewTooltip);
 }
-let lewTextareaRef = ref();
+const lewTextareaRef = ref();
 const emit = defineEmits([
     'update:modelValue',
     'update:type',
@@ -100,14 +98,13 @@ const getIconSize = computed(() => {
 });
 
 const getTextareaStyle = computed(() => {
-    let { width, height } = props;
+    const { width, height } = props;
     return `width:${any2px(width)};height:${any2px(height)};`;
 });
 if (props.okByEnter) {
     watchEffect(() => {
         if (shift.value && enter.value) {
-            return;
-        } else if (enter.value) {
+        } else if (enter.value && state.isFocus && modelValue.value) {
             lewTextareaRef.value?.blur();
             emit('ok', modelValue.value);
         }
@@ -124,8 +121,8 @@ defineExpose({ toFocus });
     >
         <textarea
             ref="lewTextareaRef"
-            class="lew-textarea lew-scrollbar"
             v-model="modelValue"
+            class="lew-textarea lew-scrollbar"
             :disabled="disabled"
             :readonly="readonly"
             :placeholder="placeholder"
@@ -145,15 +142,11 @@ defineExpose({ toFocus });
                 :class="{
                     'lew-form-icon-clear-focus': state.isFocus,
                 }"
-                v-tooltip="{
-                    content: '清空',
-                    placement: 'top',
-                }"
-                @mousedown.prevent=""
-                @click="clear"
                 :size="getIconSize"
                 style="top: 14px"
                 type="x"
+                @mousedown.prevent=""
+                @click="clear"
             />
         </transition>
     </div>

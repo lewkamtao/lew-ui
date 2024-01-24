@@ -29,7 +29,7 @@ const open = () => {
             <lew-mark>main.ts</lew-mark> 注册该指令
         </p>
 
-        <div v-highlight class="hl-pre">
+        <div v-highlight class="hl-pre lew-scrollbar">
             <div class="pre-box">
                 <pre><code v-text="pre1"></code></pre>
             </div>
@@ -38,7 +38,7 @@ const open = () => {
         <br />
         <lew-title :size="16">关于 Dialog 和 Message 的用法</lew-title>
         <p>如果你使用的方式不是全局引入，你需要引入它们才能使用</p>
-        <div v-highlight class="hl-pre">
+        <div v-highlight class="hl-pre lew-scrollbar">
             <div class="pre-box">
                 <pre><code v-text="pre2"></code></pre>
             </div>

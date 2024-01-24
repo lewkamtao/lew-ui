@@ -30,7 +30,7 @@ if (instance?.slots.default) {
 const getButtonClass = computed(() => {
     const { size, type, icon, text } = props;
     const loading = _loading.value || props.loading;
-    const singleIcon = !!(!text && icon) && !hasDefaultSlot.value;
+    const singleIcon = !!(!text && icon && !hasDefaultSlot.value);
     return object2class('lew-button', {
         size,
         type,
@@ -55,8 +55,8 @@ const getIconSize = computed(() => {
 
 const getStyle = computed(() => {
     const { round, type, color, loading } = props;
-    let styleObj: Record<string, string> = {};
-    let _color = getColorType(color);
+    const styleObj: Record<string, string> = {};
+    const _color = getColorType(color);
     switch (type) {
         case 'fill':
             styleObj.backgroundColor = `var(--lew-color-${_color})`;
@@ -74,28 +74,14 @@ const getStyle = computed(() => {
             break;
         case 'text':
             styleObj.backgroundColor = `transparent`;
-            styleObj.color = `var(--lew-color-${_color}-dark`;
+            styleObj.color = `var(--lew-color-${_color}-dark)`;
             styleObj.boxShadow = 'none';
-            styleObj.minWidth = 'auto';
-            if (_loading.value || loading) {
-                if (props.size === 'small') {
-                    styleObj.padding = '0px 8px 0px 24px';
-                }
-                if (props.size === 'medium') {
-                    styleObj.padding = '0px 8px 0px 30px';
-                }
-                if (props.size === 'large') {
-                    styleObj.padding = '0px 8px 0px 36px';
-                }
-            } else {
-                styleObj.padding = '0px 8px';
-            }
             break;
         default:
             styleObj.backgroundColor = `var(--lew-color-${_color})`;
             break;
     }
-    styleObj.borderRadius = round ? '30px' : 'none';
+    styleObj.borderRadius = round ? '50px' : 'none';
     return styleObj;
 });
 </script>
@@ -116,7 +102,6 @@ const getStyle = computed(() => {
         />
         <lew-icon
             class="lew-loading-icon"
-            v-if="loading || _loading"
             :size="getIconSize"
             animation="spin"
             animation-speed="fast"
@@ -149,20 +134,20 @@ const getStyle = computed(() => {
     width: auto;
     white-space: nowrap;
     box-sizing: border-box;
-    transition: background-color 0.1s, transform 0.1s,
-        color 0.35s cubic-bezier(0.65, 0, 0.25, 1),
-        padding 0.25s cubic-bezier(0.65, 0, 0.25, 1);
+    transition: transform 0.1s, color 0.35s cubic-bezier(0.65, 0, 0.25, 1),
+        padding 0.15s cubic-bezier(0.65, 0, 0.25, 1);
     border: none;
     cursor: pointer;
     border-radius: var(--lew-border-radius);
     box-sizing: border-box;
     overflow: hidden;
+    box-shadow: var(--lew-box-shadow);
 
     .lew-loading-icon {
         position: absolute;
         left: 10px;
         opacity: 0;
-        transition: opacity 0.35s;
+        transition: opacity 0.3s ease-in-out;
     }
 
     .lew-button-text {
@@ -181,7 +166,7 @@ const getStyle = computed(() => {
     width: 100%;
     height: 100%;
     background-color: rgba($color: #000000, $alpha: 0.2);
-    transition: 0.25s all;
+    transition: 0.1s all;
     opacity: 0;
     content: '';
 }
@@ -191,11 +176,11 @@ const getStyle = computed(() => {
 }
 
 .lew-button:hover:after {
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
 .lew-button:active {
-    transform: scale(0.96);
+    opacity: 1;
 }
 
 .lew-button:active::after {
@@ -302,5 +287,11 @@ const getStyle = computed(() => {
 .lew-button[disabled] {
     pointer-events: none; //鼠标点击不可修改
     opacity: var(--lew-disabled-opacity);
+}
+.lew-button-type-ghost:hover {
+    background-color: var(--lew-bgcolor-2) !important;
+}
+.lew-button-type-ghost:active {
+    background-color: var(--lew-color-blue-light) !important;
 }
 </style>

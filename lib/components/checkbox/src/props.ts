@@ -21,6 +21,11 @@ export const checkboxProps = {
         default: false,
         description: '选中状态',
     },
+    certain: {
+        type: Boolean,
+        default: false,
+        description: '是否是确定状态',
+    },
     label: {
         type: String,
         default: '',

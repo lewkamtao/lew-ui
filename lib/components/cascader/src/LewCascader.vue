@@ -268,10 +268,6 @@ defineExpose({ show, hide });
                             getLabel.length > 0 &&
                             !readonly
                         "
-                        v-tooltip="{
-                            content: '清空',
-                            placement: 'top',
-                        }"
                         :size="getIconSize"
                         type="x"
                         class="lew-form-icon-clear"
@@ -416,7 +412,7 @@ defineExpose({ show, hide });
     width: 100%;
     border-radius: var(--lew-border-radius);
     background-color: var(--lew-form-bgcolor);
-    transition: all 0.15s ease;
+    transition: var(--lew-form-transition);
     box-sizing: border-box;
     outline: 0px var(--lew-color-primary-light) solid;
     border: var(--lew-form-border-width) transparent solid;
@@ -463,7 +459,7 @@ defineExpose({ show, hide });
             align-items: center;
             width: calc(100% - 24px);
             box-sizing: border-box;
-            transition: all 0.2s;
+            transition: var(--lew-form-transition);
             gap: 2px;
 
             span {
@@ -576,7 +572,7 @@ defineExpose({ show, hide });
     min-width: 180px;
     height: 280px;
     overflow: hidden;
-    transition: all 0.25s;
+    transition: var(--lew-form-transition);
     user-select: none;
 
     .search-input {
@@ -601,7 +597,6 @@ defineExpose({ show, hide });
     }
 
     .not-found {
-        padding: 50px 0px;
         opacity: 0.4;
     }
 
@@ -628,6 +623,9 @@ defineExpose({ show, hide });
             border-right: var(--lew-popover-border);
             padding: 5px;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .lew-cascader-item-warpper:last-child {
@@ -764,7 +762,7 @@ defineExpose({ show, hide });
             background: var(--lew-checkbox-color);
 
             .icon-checkbox {
-                transform: translateY(0px);
+                transform: translate(-50%, -50%) rotate(0deg) scale(1);
                 opacity: 1;
             }
         }
@@ -778,7 +776,7 @@ defineExpose({ show, hide });
             background: var(--lew-checkbox-color);
 
             .icon-checkbox {
-                transform: translateY(0px);
+                transform: translate(-50%, -50%) rotate(0deg) scale(1);
                 opacity: 1;
             }
         }

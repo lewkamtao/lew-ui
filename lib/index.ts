@@ -5,7 +5,7 @@ import 'tippy.js/dist/tippy.css'; // optional for styling
 import 'tippy.js/animations/shift-away-subtle.css';
 import 'tippy.js/themes/light.css';
 
-// 引入样式 
+// 引入样式
 import './styles/reset.scss';
 import './styles/main.scss';
 import './styles/var.scss';
@@ -16,6 +16,7 @@ import * as directives from './directives';
 
 export * from './components';
 export * from './directives';
+export * from './utils';
 
 const install: any = function (Vue: App): void {
     if (install.installed) return;

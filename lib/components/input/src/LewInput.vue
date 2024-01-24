@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { inputProps } from './props';
-import { useVModel } from '@vueuse/core';
+import { useVModel, useMagicKeys } from '@vueuse/core';
 import { object2class } from 'lew-ui/utils';
-import { LewIcon, LewDropdown, LewFlex } from 'lew-ui';
-import { LewTooltip } from 'lew-ui';
-import { useMagicKeys } from '@vueuse/core';
+import { LewIcon, LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui';
+import { inputProps } from './props';
 
 const { enter } = useMagicKeys();
 // 获取app
@@ -30,6 +28,8 @@ const modelValue = useVModel(props, 'modelValue', emit);
 const prefixesValue = useVModel(props, 'prefixesValue', emit);
 const suffixValue = useVModel(props, 'suffixValue', emit);
 const lewInputRef = ref();
+const isCopy = ref(false);
+let timer: any = null;
 const _type = ref(props.type);
 const state = reactive({
     prefixesDropdown: 'hide',
@@ -116,9 +116,8 @@ const getIconSize = computed(() => {
 const getType = computed(() => {
     if (props.type === 'password') {
         return _type.value;
-    } else {
-        return props.type;
     }
+    return props.type;
 });
 
 const getInputClassNames = computed(() => {
@@ -151,29 +150,55 @@ const getSuffixLabel = computed(() => {
     return item?.label || '';
 });
 
+const copy = () => {
+    const textarea = document.createElement('textarea');
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-200vh';
+    textarea.value = modelValue.value;
+
+    document.body.appendChild(textarea);
+    textarea.select();
+    if (document.execCommand('copy')) {
+        LewMessage.success('复制成功！');
+        isCopy.value = true;
+        timer = setTimeout(() => {
+            isCopy.value = false;
+        }, 2000);
+    } else {
+        LewMessage.error('复制失败！');
+    }
+    document.body.removeChild(textarea);
+};
+
 if (props.okByEnter) {
     watch(enter, (v) => {
-        if (v) {
+        if (v && state.isFocus && modelValue.value) {
             emit('ok', modelValue.value);
         }
     });
 }
+
+onUnmounted(() => {
+    clearTimeout(timer);
+});
 defineExpose({ toFocus });
 </script>
 
 <template>
     <div class="lew-input-view" :class="getInputClassNames">
         <div
+            v-if="prefixes"
             v-tooltip="{
                 content: prefixesTooltip,
                 trigger: 'mouseenter',
             }"
-            v-if="prefixes"
             class="lew-input-prefixes"
         >
-            <div v-if="prefixes === 'text'" class="lew-input-prefixes-text">
-                {{ prefixesValue }}
-            </div>
+            <lew-text-trim
+                v-if="prefixes === 'text'"
+                :text="prefixesValue"
+                class="lew-input-prefixes-text"
+            />
             <div v-if="prefixes === 'icon'" class="lew-input-prefixes-icon">
                 <lew-icon :size="getIconSize" :type="prefixesValue"> </lew-icon>
             </div>
@@ -195,7 +220,10 @@ defineExpose({ toFocus });
                                 state.prefixesDropdown === 'show',
                         }"
                     >
-                        {{ getPrefixesLabel }}
+                        <lew-text-trim
+                            :text="getPrefixesLabel"
+                            class="lew-input-prefixes-text"
+                        />
                         <lew-icon
                             :size="getIconSize"
                             type="chevron-down"
@@ -205,32 +233,95 @@ defineExpose({ toFocus });
                 </lew-dropdown>
             </div>
         </div>
-        <input
-            ref="lewInputRef"
-            class="lew-input"
-            autocomplete="new-password"
-            v-model="modelValue"
-            :disabled="disabled"
-            :placeholder="placeholder"
-            :type="getType"
-            :readonly="readonly"
-            onkeypress="if(window.event.keyCode==13) this.blur()"
-            @input="inputFn"
-            @change="emit('change', modelValue)"
-            @blur="blur"
-            @focus="focus"
-        />
         <div
+            v-if="copyable && readonly && modelValue && !suffix"
+            class="lew-input-copy-btn"
+            @click="copy"
+        >
+            <lew-icon
+                :size="getIconSize"
+                :type="isCopy ? 'check' : 'copy'"
+                :class="{ 'lew-input-copy-btn-check': isCopy }"
+            />
+        </div>
+        <div class="lew-input-box">
+            <input
+                ref="lewInputRef"
+                v-model="modelValue"
+                class="lew-input"
+                autocomplete="new-password"
+                :disabled="disabled"
+                :placeholder="placeholder"
+                :type="getType"
+                :readonly="readonly"
+                onkeypress="if(window.event.keyCode==13) this.blur()"
+                @input="inputFn"
+                @change="emit('change', modelValue)"
+                @blur="blur"
+                @focus="focus"
+            />
+            <label v-if="autoWidth" class="lew-input-auto-width">
+                {{ modelValue }}
+            </label>
+            <div
+                v-if="showPassword || clearable || showCount"
+                class="lew-input-controls"
+            >
+                <div
+                    v-if="getCheckNumStr"
+                    class="lew-input-count"
+                    :class="{
+                        'lew-input-count-clearable': clearable && modelValue,
+                    }"
+                >
+                    {{ getCheckNumStr }}
+                </div>
+                <div
+                    v-if="showPassword && type === 'password'"
+                    class="lew-input-show-password"
+                    @mousedown.prevent=""
+                    @click="showPasswordFn"
+                >
+                    <lew-icon
+                        v-show="_type === 'text'"
+                        :size="getIconSize"
+                        type="eye"
+                    />
+                    <lew-icon
+                        v-show="_type === 'password'"
+                        :size="getIconSize"
+                        type="eye-off"
+                    />
+                </div>
+                <transition name="lew-form-icon-ani">
+                    <lew-icon
+                        v-if="clearable && modelValue && !readonly"
+                        class="lew-form-icon-clear"
+                        :class="{
+                            'lew-form-icon-clear-focus': state.isFocus,
+                        }"
+                        :size="getIconSize"
+                        type="x"
+                        @mousedown.prevent=""
+                        @click="clear"
+                    />
+                </transition>
+            </div>
+        </div>
+
+        <div
+            v-if="suffix"
             v-tooltip="{
                 content: suffixTooltip,
                 trigger: suffixTooltip ? 'mouseenter' : '',
             }"
-            v-if="suffix"
             class="lew-input-suffix"
         >
-            <div v-if="suffix === 'text'" class="lew-input-suffix-text">
-                {{ suffixValue }}
-            </div>
+            <lew-text-trim
+                v-if="suffix === 'text'"
+                :text="suffixValue"
+                class="lew-input-suffix-text"
+            />
             <div v-if="suffix === 'icon'" class="lew-input-suffix-icon">
                 <lew-icon :size="getIconSize" :type="suffixValue"> </lew-icon>
             </div>
@@ -252,7 +343,10 @@ defineExpose({ toFocus });
                                 state.suffixDropdown === 'show',
                         }"
                     >
-                        {{ getSuffixLabel }}
+                        <lew-text-trim
+                            :text="getSuffixLabel"
+                            class="lew-input-suffix-text"
+                        />
                         <lew-icon
                             :size="getIconSize"
                             type="chevron-down"
@@ -261,57 +355,6 @@ defineExpose({ toFocus });
                     </lew-flex>
                 </lew-dropdown>
             </div>
-        </div>
-        <label v-if="autoWidth" class="lew-input-auto-width">
-            {{ modelValue }}
-        </label>
-        <div
-            v-if="showPassword || clearable || showCount"
-            class="lew-input-controls"
-        >
-            <div
-                v-if="getCheckNumStr"
-                class="lew-input-count"
-                :class="{
-                    'lew-input-count-clearable': clearable && modelValue,
-                }"
-            >
-                {{ getCheckNumStr }}
-            </div>
-            <div
-                v-if="showPassword && type === 'password'"
-                class="lew-input-show-password"
-                @mousedown.prevent=""
-                @click="showPasswordFn"
-            >
-                <lew-icon
-                    v-show="_type === 'text'"
-                    :size="getIconSize"
-                    type="eye"
-                />
-                <lew-icon
-                    v-show="_type === 'password'"
-                    :size="getIconSize"
-                    type="eye-off"
-                />
-            </div>
-            <transition name="lew-form-icon-ani">
-                <lew-icon
-                    v-if="clearable && modelValue && !readonly"
-                    class="lew-form-icon-clear"
-                    :class="{
-                        'lew-form-icon-clear-focus': state.isFocus,
-                    }"
-                    v-tooltip="{
-                        content: '清空',
-                        placement: 'top',
-                    }"
-                    @mousedown.prevent=""
-                    @click="clear"
-                    :size="getIconSize"
-                    type="x"
-                />
-            </transition>
         </div>
     </div>
 </template>
@@ -332,6 +375,36 @@ defineExpose({ toFocus });
     box-shadow: var(--lew-form-box-shadow);
     overflow: hidden;
 
+    .lew-input-box {
+        position: relative;
+        width: 100%;
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        .lew-input {
+            height: 100%;
+        }
+    }
+    .lew-input-copy-btn {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        top: 50%;
+        z-index: 2;
+        transform: translateY(-50%);
+        cursor: pointer;
+        opacity: var(--lew-form-icon-opacity);
+    }
+
+    .lew-input-copy-btn:hover {
+        opacity: var(--lew-form-icon-opacity-hover);
+    }
+    .lew-input-prefixes {
+        border-right: rgba(0, 0, 0, 0.05) 1px solid;
+    }
+    .lew-input-suffix {
+        border-left: rgba(0, 0, 0, 0.05) 1px solid;
+    }
     .lew-input-prefixes,
     .lew-input-suffix {
         white-space: nowrap;
@@ -395,7 +468,6 @@ defineExpose({ toFocus });
     .lew-input-controls {
         display: inline-flex;
         align-items: center;
-        margin-right: 3px;
 
         > div {
             display: inline-flex;
@@ -460,7 +532,7 @@ defineExpose({ toFocus });
 
     .lew-input-auto-width {
         width: auto;
-        min-width: 65px;
+        min-width: 45px;
         height: 100%;
         visibility: hidden;
         box-sizing: border-box;
@@ -468,20 +540,30 @@ defineExpose({ toFocus });
 }
 
 .lew-input-view-size-small {
-    .lew-input {
+    .lew-input-box {
         padding: var(--lew-form-input-padding-small);
         font-size: var(--lew-form-font-size-small);
+        height: var(--lew-form-item-height-small);
         line-height: var(--lew-form-input-line-height-small);
     }
-
-    .lew-input-prefixes {
-        font-size: var(--lew-form-font-size-small);
-        margin-left: 7px;
+    .lew-input-prefixes,
+    .lew-input-suffix,
+    .lew-input-prefixes-dropdown,
+    .lew-input-suffix-dropdown {
+        height: var(--lew-form-item-height-small);
+        line-height: var(--lew-form-input-line-height-small);
     }
-
-    .lew-input-suffix {
+    .lew-input-copy-btn {
+        right: 7px;
+    }
+    .lew-input-prefixes-text,
+    .lew-input-suffix-text {
         font-size: var(--lew-form-font-size-small);
-        margin-right: 7px;
+        max-width: 80px;
+    }
+    .lew-input-prefixes,
+    .lew-input-suffix {
+        padding: 0px 7px;
     }
 
     .lew-input {
@@ -502,28 +584,37 @@ defineExpose({ toFocus });
 
     .lew-input-auto-width {
         height: var(--lew-form-item-height-small);
-        padding: var(--lew-form-input-padding-small);
         font-size: var(--lew-form-font-size-small);
         line-height: var(--lew-form-input-line-height-small);
     }
 }
 
 .lew-input-view-size-medium {
-    .lew-input {
+    .lew-input-box {
         padding: var(--lew-form-input-padding-medium);
         font-size: var(--lew-form-font-size-medium);
         line-height: var(--lew-form-input-line-height-medium);
         height: var(--lew-form-item-height-medium);
     }
-
-    .lew-input-prefixes {
-        font-size: var(--lew-form-font-size-medium);
-        margin-left: 9px;
+    .lew-input-prefixes,
+    .lew-input-suffix,
+    .lew-input-prefixes-dropdown,
+    .lew-input-suffix-dropdown {
+        line-height: var(--lew-form-input-line-height-medium);
+        height: var(--lew-form-item-height-medium);
+        max-width: 100px;
     }
-
-    .lew-input-suffix {
+    .lew-input-copy-btn {
+        right: 9px;
+    }
+    .lew-input-prefixes-text,
+    .lew-input-suffix-text {
         font-size: var(--lew-form-font-size-medium);
-        margin-right: 9px;
+        max-width: 100px;
+    }
+    .lew-input-prefixes,
+    .lew-input-suffix {
+        padding: 0px 9px;
     }
 
     .lew-input-controls {
@@ -534,7 +625,7 @@ defineExpose({ toFocus });
         }
 
         .lew-input-count-clearable {
-            padding-right: 26px;
+            padding-right: 24px;
         }
     }
 
@@ -542,26 +633,34 @@ defineExpose({ toFocus });
         height: var(--lew-form-item-height-medium);
         font-size: var(--lew-form-font-size-medium);
         line-height: var(--lew-form-input-line-height-medium);
-        padding: var(--lew-form-input-padding-medium);
     }
 }
 
 .lew-input-view-size-large {
-    .lew-input {
+    .lew-input-box {
         padding: var(--lew-form-input-padding-large);
         font-size: var(--lew-form-font-size-large);
         line-height: var(--lew-form-input-line-height-large);
         height: var(--lew-form-item-height-large);
     }
-
-    .lew-input-prefixes {
-        font-size: var(--lew-form-font-size-large);
-        margin-left: 12px;
+    .lew-input-prefixes,
+    .lew-input-suffix,
+    .lew-input-prefixes-dropdown,
+    .lew-input-suffix-dropdown {
+        line-height: var(--lew-form-input-line-height-large);
+        height: var(--lew-form-item-height-large);
     }
-
-    .lew-input-suffix {
+    .lew-input-copy-btn {
+        right: 12px;
+    }
+    .lew-input-prefixes-text,
+    .lew-input-suffix-text {
         font-size: var(--lew-form-font-size-large);
-        margin-right: 12px;
+        max-width: 120px;
+    }
+    .lew-input-prefixes,
+    .lew-input-suffix {
+        padding: 0px 12px;
     }
 
     .lew-input-controls {
@@ -572,15 +671,33 @@ defineExpose({ toFocus });
         }
 
         .lew-input-count-clearable {
-            padding-right: 28px;
+            padding-right: 24px;
         }
     }
 
     .lew-input-auto-width {
         height: var(--lew-form-item-height-large);
-        padding: var(--lew-form-input-padding-large);
         font-size: var(--lew-form-font-size-large);
         line-height: var(--lew-form-input-line-height-large);
+    }
+}
+
+.lew-input-view-size-small.lew-input-view-autoWidth {
+    .lew-input {
+        left: 7px;
+        width: calc(100% - 14px);
+    }
+}
+.lew-input-view-size-medium.lew-input-view-autoWidth {
+    .lew-input {
+        left: 9px;
+        width: calc(100% - 18px);
+    }
+}
+.lew-input-view-size-large.lew-input-view-autoWidth {
+    .lew-input {
+        left: 12px;
+        width: calc(100% - 24px);
     }
 }
 
@@ -597,7 +714,6 @@ defineExpose({ toFocus });
 
 .lew-input-view-readonly {
     user-select: text;
-    pointer-events: none; //鼠标点击不可修改
 }
 
 .lew-input-view-disabled {

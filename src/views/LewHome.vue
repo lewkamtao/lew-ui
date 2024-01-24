@@ -6,7 +6,6 @@ import { schools } from '../docs/select/demo/schools';
 const schoolsOptions = schools.map((e, i) => {
     return { label: e, value: i + 1 };
 });
-const form = ref({} as any);
 
 const options = ref([
     {
@@ -254,19 +253,6 @@ const open = (type: any) => {
         },
     });
 };
-const user = ref({
-    username: '',
-    password: '',
-    age: '',
-    sex: '1',
-    hobby: [],
-    tags: ['美丽', '大方'],
-    school: '',
-    birth: '',
-    home: '',
-    dark: true,
-    pay: '',
-});
 
 const breadcrumb_options = ref([
     {
@@ -295,6 +281,8 @@ const tab_soptions = ref([
     { label: '深圳', value: '4' },
     { label: '乌鲁木齐', value: '5' },
 ]);
+
+const tabValue = ref('2');
 
 const dropdown_options = ref([
     {
@@ -441,7 +429,7 @@ const notification = (type: string) => {
                     </lew-flex>
 
                     <lew-flex x="end" style="width: 380px">
-                        <lew-tabs :options="tab_soptions" />
+                        <lew-tabs v-model="tabValue" :options="tab_soptions" />
                     </lew-flex>
 
                     <lew-flex gap="20" x="end">
@@ -468,7 +456,6 @@ const notification = (type: string) => {
                 <lew-flex style="width: 450px; margin-top: 30px" class="item">
                     <lew-form
                         ref="formRef"
-                        v-model="form"
                         :options="options"
                         :label-width="100"
                     />

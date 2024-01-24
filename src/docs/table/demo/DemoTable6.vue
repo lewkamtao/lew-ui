@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-const selectedKey = ref([1]);
 const data: any = [
     {
         id: 1,
@@ -76,13 +75,31 @@ const set = (row: any, column: any) => {
 const del = (row: any, column: any) => {
     console.log(row, column);
 };
+const tableRef = ref();
+
+const getSelectedKeys = () => {
+    const keys = tableRef.value.getSelectedKeys();
+    if (keys.length > 0) {
+        LewMessage.info(`已选择：${keys}`);
+    } else {
+        LewMessage.info(`未选择`);
+    }
+};
+const setSelectedKeys = () => {
+    tableRef.value.setSelectedKeys([2, 3]);
+};
 </script>
 
 <template>
     <lew-flex style="width: 100%" direction="y" x="start">
-        <span style="margin-bot"> 已选择：{{ selectedKey }}</span>
+        <lew-button @click="setSelectedKeys" style="margin-bottom: 10px">
+            设置已选项
+        </lew-button>
+        <lew-button @click="getSelectedKeys" style="margin-bottom: 10px">
+            获取选择
+        </lew-button>
         <lew-table
-            v-model:selectedKey="selectedKey"
+            ref="tableRef"
             :data-source="data"
             :columns="columns"
             checkable

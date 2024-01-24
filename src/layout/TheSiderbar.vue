@@ -20,8 +20,8 @@ const toPath = (item: MenuOptions) => {
         LewMessage.info('敬请期待！');
         return;
     }
-    router.push(item.value);
-    actived.value = item.value;
+    router.push(item.value as string);
+    actived.value = item.value as string;
 };
 
 let actived = ref(route.path);

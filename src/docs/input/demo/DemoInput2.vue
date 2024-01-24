@@ -10,7 +10,7 @@ const http = ref({
 </script>
 
 <template>
-    <lew-flex style="width: 300px" :gap="20" x="start" direction="y">
+    <lew-flex style="width: 450px" :gap="20" x="start" direction="y">
         <lew-input
             v-model="value"
             size="small"
@@ -51,6 +51,7 @@ const http = ref({
             suffix="icon"
             suffix-value="alert-circle"
             suffix-tooltip="必须填写手机号"
+            clearable
             placeholder="请输入手机号"
         />
         <lew-input
@@ -77,11 +78,92 @@ const http = ref({
             ]"
             placeholder="请输入手机号"
         />
-
         <lew-input
             v-model="http.value"
             v-model:prefixesValue="http.prefixes"
             v-model:suffixValue="http.suffix"
+            size="small"
+            prefixes="select"
+            :prefixes-options="[
+                {
+                    label: 'http://',
+                    value: 1,
+                },
+                {
+                    label: 'https://',
+                    value: 2,
+                },
+            ]"
+            suffix="select"
+            :suffix-options="[
+                {
+                    label: '.com',
+                    value: 1,
+                },
+                {
+                    label: '.cn',
+                    value: 2,
+                },
+                {
+                    label: '.com.cn',
+                    value: 3,
+                },
+                {
+                    label: '.org',
+                    value: 4,
+                },
+                {
+                    label: '.net',
+                    value: 5,
+                },
+            ]"
+            placeholder="请输入网址"
+        />
+        <lew-input
+            v-model="http.value"
+            v-model:prefixesValue="http.prefixes"
+            v-model:suffixValue="http.suffix"
+            prefixes="select"
+            :prefixes-options="[
+                {
+                    label: 'http://',
+                    value: 1,
+                },
+                {
+                    label: 'https://',
+                    value: 2,
+                },
+            ]"
+            suffix="select"
+            :suffix-options="[
+                {
+                    label: '.com',
+                    value: 1,
+                },
+                {
+                    label: '.cn',
+                    value: 2,
+                },
+                {
+                    label: '.com.cn',
+                    value: 3,
+                },
+                {
+                    label: '.org',
+                    value: 4,
+                },
+                {
+                    label: '.net',
+                    value: 5,
+                },
+            ]"
+            placeholder="请输入网址"
+        />
+        <lew-input
+            v-model="http.value"
+            v-model:prefixesValue="http.prefixes"
+            v-model:suffixValue="http.suffix"
+            size="large"
             prefixes="select"
             :prefixes-options="[
                 {

@@ -1,44 +1,48 @@
 <script lang="ts" setup name="dialog">
 import { LewButton, LewIcon, LewFlex } from 'lew-ui';
+import { useMagicKeys } from '@vueuse/core';
 import { dialogProps } from './props';
 import { getIconType } from '../../../utils';
 import { useDOMCreate } from '../../../hooks';
-import { useMagicKeys } from '@vueuse/core';
 
 const { Escape } = useMagicKeys();
 useDOMCreate('lew-dialog');
 const props = defineProps(dialogProps);
-const emit = defineEmits(['close']);
-
+const emit = defineEmits(['close', 'show']);
+const visible = ref<boolean>(false);
 const okLoading = ref<boolean>(false);
 const cancelLoading = ref<boolean>(false);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const maskClick = () => {
     if (props?.closeOnClickOverlay) {
-        close();
+        visible.value = false;
     }
 };
-
-const visible = ref<boolean>(false);
 
 onMounted(() => {
     visible.value = true;
 });
 
-const close = () => {
-    visible.value = false;
-    setTimeout(() => {
-        emit('close');
-    }, 250);
-};
+watch(
+    () => visible.value,
+    (newVal) => {
+        if (newVal) {
+            emit('show');
+        } else {
+            setTimeout(() => {
+                emit('close');
+            }, 500);
+        }
+    }
+);
 
 const ok = async () => {
     if (typeof props.ok === 'function') {
         okLoading.value = true;
         const isOk = await props.ok();
         if (isOk !== false) {
-            close();
+            visible.value = false;
         }
         okLoading.value = false;
     }
@@ -49,7 +53,7 @@ const cancel = async () => {
         cancelLoading.value = true;
         const isCancel = await props.cancel();
         if (isCancel !== false) {
-            close();
+            visible.value = false;
         }
         cancelLoading.value = false;
     }
@@ -65,93 +69,102 @@ if (props.closeByEsc) {
 </script>
 <template>
     <teleport to="#lew-dialog">
-        <transition name="lew-dialog-mask">
-            <div v-if="visible" class="lew-dialog-mask" />
-        </transition>
-        <transition name="lew-dialog">
-            <div v-if="visible" class="lew-dialog" @click="maskClick">
-                <div
-                    v-if="layout === 'normal'"
-                    class="lew-dialog-box lew-dialog-box-normal"
-                    @click.stop
-                >
-                    <div class="left">
-                        <div :class="`icon-${type}`">
-                            <lew-icon size="24" :type="getIconType(type)" />
+        <div
+            class="lew-dialog-container"
+            :style="{
+                '--lew-dialog-transform-origin': transformOrigin,
+            }"
+        >
+            <transition name="lew-dialog-mask">
+                <div v-if="visible" class="lew-dialog-mask" />
+            </transition>
+            <transition name="lew-dialog">
+                <div v-if="visible" class="lew-dialog" @click="maskClick">
+                    <div
+                        v-if="layout === 'normal'"
+                        class="lew-dialog-box lew-dialog-box-normal"
+                        @click.stop
+                    >
+                        <div class="left">
+                            <div :class="`icon-${type}`">
+                                <lew-icon size="24" :type="getIconType(type)" />
+                            </div>
+                        </div>
+                        <div class="right">
+                            <header>
+                                <slot name="title" />
+                                <span
+                                    class="gulu-dialog-close"
+                                    @click="visible = false"
+                                ></span>
+                            </header>
+                            <main>
+                                <slot name="content" />
+                            </main>
+                            <footer>
+                                <lew-button
+                                    v-if="cancelText"
+                                    :text="cancelText"
+                                    type="text"
+                                    color="gray"
+                                    round
+                                    :loading="cancelLoading"
+                                    @click.stop="cancel"
+                                />
+                                <lew-button
+                                    v-if="okText"
+                                    :text="okText"
+                                    type="fill"
+                                    round
+                                    :color="type"
+                                    :loading="okLoading"
+                                    @click.stop="ok"
+                                />
+                            </footer>
                         </div>
                     </div>
-                    <div class="right">
-                        <header>
-                            <slot name="title" />
-                            <span
-                                class="gulu-dialog-close"
-                                @click="close()"
-                            ></span>
-                        </header>
-                        <main>
-                            <slot name="content" />
-                        </main>
-                        <footer>
-                            <lew-button
-                                v-if="cancelText"
-                                :text="cancelText"
-                                type="text"
-                                color="gray"
-                                :loading="cancelLoading"
-                                @click.stop="cancel"
-                            />
-                            <lew-button
-                                v-if="okText"
-                                :text="okText"
-                                type="fill"
-                                :color="type"
-                                :loading="okLoading"
-                                @click.stop="ok"
-                            />
-                        </footer>
-                    </div>
-                </div>
 
-                <div
-                    v-if="layout === 'mini'"
-                    class="lew-dialog-box lew-dialog-box-mini"
-                    @click.stop
-                >
-                    <div class="left">
-                        <div :class="`icon-${type}`">
-                            <lew-icon size="20" :type="getIconType(type)" />
+                    <div
+                        v-if="layout === 'mini'"
+                        class="lew-dialog-box lew-dialog-box-mini"
+                        @click.stop
+                    >
+                        <div class="left">
+                            <div :class="`icon-${type}`">
+                                <lew-icon size="20" :type="getIconType(type)" />
+                            </div>
                         </div>
-                    </div>
-                    <lew-flex class="right" y="start">
-                        <main>
-                            <slot name="content" />
-                        </main>
-                        <lew-flex x="end">
-                            <lew-button
-                                v-if="cancelText"
-                                :text="cancelText"
-                                type="text"
-                                size="small"
-                                color="gray"
-                                round
-                                :loading="cancelLoading"
-                                @click.stop="cancel"
-                            />
-                            <lew-button
-                                v-if="okText"
-                                :text="okText"
-                                type="fill"
-                                size="small"
-                                round
-                                :color="type"
-                                :loading="okLoading"
-                                @click.stop="ok"
-                            />
+                        <lew-flex class="right" y="start">
+                            <main>
+                                <slot name="content" />
+                            </main>
+                            <lew-flex x="end">
+                                <lew-button
+                                    v-if="cancelText"
+                                    :text="cancelText"
+                                    type="text"
+                                    size="small"
+                                    color="gray"
+                                    round
+                                    :loading="cancelLoading"
+                                    @click.stop="cancel"
+                                />
+                                <lew-button
+                                    v-if="okText"
+                                    :text="okText"
+                                    type="fill"
+                                    size="small"
+                                    round
+                                    :color="type"
+                                    :loading="okLoading"
+                                    @click.stop="ok"
+                                />
+                            </lew-flex>
                         </lew-flex>
-                    </lew-flex>
+                    </div>
                 </div>
-            </div>
-        </transition>
+            </transition>
+        </div>
     </teleport>
 </template>
 
@@ -323,12 +336,14 @@ if (props.closeByEsc) {
 
 .lew-dialog-enter-active,
 .lew-dialog-leave-active {
-    transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transition: opacity 0.4s cubic-bezier(0.3, 1.3, 0.3, 1),
+        transform 0.4s cubic-bezier(0.3, 1.3, 0.3, 1);
+    transform-origin: var(--lew-dialog-transform-origin);
 }
 
 .lew-dialog-leave-to,
 .lew-dialog-enter-from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: scale(0.2);
 }
 </style>

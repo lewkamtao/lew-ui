@@ -138,8 +138,6 @@ const add = (type: string, title: string, content: string, delay: number) => {
 
     setTimeout(() => {
         lock = false;
-        console.log(newMessage.clientHeight);
-
         newMessage.setAttribute(
             'class',
             `lew-notification lew-notification-${type} lew-notificatishow`

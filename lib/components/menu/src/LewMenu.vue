@@ -120,7 +120,6 @@ _options.value = generateEnterpriseMenu(props.options);
         line-height: 40px;
         cursor: pointer;
         border-radius: var(--lew-border-radius);
-        transition: var(--lew-form-transition);
     }
     .lew-menu-icon {
         flex-shrink: 0;

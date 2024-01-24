@@ -24,6 +24,18 @@ const value = ref('');
         <lew-radio-group
             v-model="value"
             block
+            size="small"
+            :options="options"
+        ></lew-radio-group>
+        <lew-radio-group
+            v-model="value"
+            block
+            :options="options"
+        ></lew-radio-group>
+        <lew-radio-group
+            v-model="value"
+            block
+            size="large"
             :options="options"
         ></lew-radio-group>
     </lew-flex>

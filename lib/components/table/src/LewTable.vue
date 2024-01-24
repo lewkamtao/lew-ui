@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { useVModel, watchArray } from '@vueuse/core';
 import { tableProps } from './props';
 import { any2px } from 'lew-ui/utils';
 import { LewFlex, LewCheckbox, LewTextTrim } from 'lew-ui';
+import _ from 'lodash';
 
 const props = defineProps(tableProps);
-const emit = defineEmits(['update:selectedKey']);
-const selectedKey = useVModel(props, 'selectedKey', emit);
 const tableRef = ref();
+const fixedLeftRef = ref();
+const fixedRightRef = ref();
 
 let obs: any;
 
@@ -17,8 +17,10 @@ const state = reactive({
     scrollbarVisible: false, // 滚动条显示隐藏
     scrollClientWidth: 0, // 滚动视图宽度（不是滚动宽度）
     hidScrollLine: 'all',
-    checkList: [] as any,
     checkAll: false,
+    fixedLeftWidth: 0,
+    fixedRightWidth: 0,
+    selectedKeysMap: {} as any,
 });
 
 onActivated(() => {
@@ -38,6 +40,7 @@ const tableObserve = () => {
 
 const checkScroll = () => {
     const element = tableRef.value;
+
     const { clientWidth } = element;
     const { scrollWidth } = element;
     const { scrollLeft } = element;
@@ -58,8 +61,10 @@ const checkScroll = () => {
     state.hidScrollLine = '';
 };
 
-const resizeTableHandle = () => {
+const resizeTableHandle = _.throttle(() => {
     const table = tableRef.value;
+    if (!table) return;
+
     let clientWidth = 0;
     props.columns
         .map((e) => e.width)
@@ -70,10 +75,21 @@ const resizeTableHandle = () => {
     if (props.checkable) {
         clientWidth += 40;
     }
+    if (fixedLeftRef.value) {
+        state.fixedLeftWidth = fixedLeftRef.value.clientWidth || 0;
+    }
+    if (fixedRightRef.value) {
+        state.fixedRightWidth = fixedRightRef.value.clientWidth || 0;
+        // 判断是否出现滚动条
+        if (table.clientHeight < table.scrollHeight) {
+            state.fixedRightWidth += 6;
+        }
+    }
 
     state.scrollClientWidth = table.clientWidth;
     state.scrollbarVisible = clientWidth > state.scrollClientWidth;
-};
+    checkScroll();
+}, 200);
 
 const getTdNotWidth = computed(() => {
     let totalWidth = 0;
@@ -126,52 +142,67 @@ const fixedColumns = computed(() => (direction: string) => {
 
 const setAllChecked = (checked: boolean) => {
     if (checked) {
-        selectedKey.value = props.dataSource.map(
-            (e: any) => props.rowKey && e[props.rowKey]
+        state.selectedKeysMap = _.mapValues(
+            _.keyBy(props.dataSource, props.rowKey),
+            () => true
         );
     } else {
-        selectedKey.value = [];
+        state.selectedKeysMap = _.mapValues(
+            _.keyBy(props.dataSource, props.rowKey),
+            () => false
+        );
     }
 };
 
-const setChecked = (key: any, checked: boolean) => {
-    if (checked) {
-        selectedKey.value.push(key);
+const setSelectedKeys = (keys: any) => {
+    state.selectedKeysMap = {};
+    keys.forEach((key: any) => {
+        state.selectedKeysMap[key] = true;
+    });
+    checkIsAll();
+};
+
+const getSelectedKeys = () => {
+    return _.keys(_.pickBy(state.selectedKeysMap, (value) => value === true));
+};
+
+const checkIsAll = () => {
+    const filteredKeys = _.keys(
+        _.pickBy(state.selectedKeysMap, (value) => value === true)
+    );
+    const dataKey = props.dataSource.map((e: any) => String(e[props.rowKey]));
+    const diffArr = _.difference(dataKey, filteredKeys);
+    state.checkAll = _.isEmpty(diffArr);
+};
+
+const selectTr = (row: any) => {
+    if (props.singleSelect) {
+        state.selectedKeysMap = {};
+    }
+    if (state.selectedKeysMap[row[props.rowKey]]) {
+        state.selectedKeysMap[row[props.rowKey]] = false;
     } else {
-        const index = props.selectedKey.findIndex((e: any) => e === key);
-        if (index >= 0) {
-            selectedKey.value.splice(index, 1);
-        }
+        state.selectedKeysMap[row[props.rowKey]] = true;
     }
-
-    initCheckAll();
+    checkIsAll();
 };
 
-const initCheckAll = () => {
-    const isAll =
-        selectedKey.value.length > 0 &&
-        selectedKey.value.length === props.dataSource.length;
-    if (isAll) {
-        state.checkAll = true;
-    } else {
-        state.checkAll = false;
-    }
-};
-
-const initCheckbox = () => {
-    state.checkList = props.dataSource.map((item: any) => {
-        if (props.rowKey && selectedKey.value.includes(item[props.rowKey])) {
+const checkCertain = computed(() => {
+    const selectedKeysMap = state.selectedKeysMap;
+    const i = props.dataSource.findIndex((e: any) => {
+        if (
+            e[props.rowKey] in selectedKeysMap &&
+            selectedKeysMap[e[props.rowKey]]
+        ) {
             return true;
         }
         return false;
     });
-};
-
-initCheckbox();
-watchArray(selectedKey, () => {
-    initCheckbox();
-    initCheckAll();
+    return i >= 0;
 });
+
+defineExpose({ setSelectedKeys, getSelectedKeys });
+
 onMounted(() => {
     tableObserve();
     checkScroll();
@@ -190,16 +221,27 @@ onUnmounted(() => {
     <div
         class="lew-table-wrapper"
         :class="{
-            'hide-line-left':
-                !state.scrollbarVisible ||
-                ['all', 'left'].includes(state.hidScrollLine) ||
-                columns.filter((e) => e.fixed === 'left').length > 0,
-            'hide-line-right':
-                !state.scrollbarVisible ||
-                ['all', 'right'].includes(state.hidScrollLine) ||
-                columns.filter((e) => e.fixed === 'right').length > 0,
+            'lew-table-checkable': props.checkable,
         }"
     >
+        <div
+            :style="{ left: any2px(state.fixedLeftWidth) }"
+            :class="{
+                'hide-line-left':
+                    !state.scrollbarVisible ||
+                    ['all', 'left'].includes(state.hidScrollLine),
+            }"
+            class="lew-table-scroll-line-left"
+        ></div>
+        <div
+            :style="{ right: any2px(state.fixedRightWidth) }"
+            :class="{
+                'hide-line-right':
+                    !state.scrollbarVisible ||
+                    ['all', 'right'].includes(state.hidScrollLine),
+            }"
+            class="lew-table-scroll-line-right"
+        ></div>
         <div
             ref="tableRef"
             class="lew-table lew-scrollbar"
@@ -213,24 +255,25 @@ onUnmounted(() => {
                 @mouseenter="state.hoverIndex = -1"
             >
                 <div
+                    ref="fixedLeftRef"
                     v-if="fixedColumns('left').length > 0"
                     class="lew-table-fixed-left"
-                    :class="{
-                        'hid-scroll-line': ['all', 'left'].includes(
-                            state.hidScrollLine
-                        ),
-                    }"
                 >
                     <div class="lew-table-tr">
                         <lew-flex
                             v-if="checkable && fixedColumns('left').length > 0"
-                            style="width: 50px;"
+                            style="width: 50px"
+                            class="lew-table-td"
                             x="center"
                         >
                             <lew-checkbox
+                                v-if="!singleSelect"
+                                :disabled="dataSource.length === 0"
+                                :certain="checkCertain && !state.checkAll"
                                 v-model="state.checkAll"
                                 @change="setAllChecked($event)"
                             ></lew-checkbox>
+                            <span v-else>单选</span>
                         </lew-flex>
                         <lew-flex
                             v-for="(column, index) in fixedColumns('left')"
@@ -250,10 +293,13 @@ onUnmounted(() => {
                             v-if="
                                 checkable && fixedColumns('left').length === 0
                             "
-                            style="width: 50px;"
+                            style="width: 50px"
                             x="center"
                         >
                             <lew-checkbox
+                                v-if="!singleSelect"
+                                :disabled="dataSource.length === 0"
+                                :certain="checkCertain && !state.checkAll"
                                 v-model="state.checkAll"
                                 @change="setAllChecked($event)"
                             ></lew-checkbox>
@@ -271,13 +317,9 @@ onUnmounted(() => {
                     </div>
                 </div>
                 <div
+                    ref="fixedRightRef"
                     v-if="fixedColumns('right').length > 0"
                     class="lew-table-fixed-right"
-                    :class="{
-                        'hid-scroll-line': ['all', 'right'].includes(
-                            state.hidScrollLine
-                        ),
-                    }"
                 >
                     <div class="lew-table-tr">
                         <lew-flex
@@ -293,15 +335,14 @@ onUnmounted(() => {
                     </div>
                 </div>
             </div>
-            <div class="lew-table-body" :style="`width: ${getTdTotalWidth}px`">
+            <div
+                v-if="dataSource.length > 0"
+                class="lew-table-body"
+                :style="`width: ${getTdTotalWidth}px`"
+            >
                 <div
                     v-if="fixedColumns('left').length > 0"
                     class="lew-table-fixed-left"
-                    :class="{
-                        'hid-scroll-line': ['all', 'left'].includes(
-                            state.hidScrollLine
-                        ),
-                    }"
                 >
                     <div
                         v-for="(row, i) in dataSource"
@@ -309,19 +350,21 @@ onUnmounted(() => {
                         class="lew-table-tr"
                         :class="{
                             'lew-table-tr-hover': state.hoverIndex === i,
+                            'lew-table-tr-selected':
+                                state.selectedKeysMap[row[rowKey]],
                         }"
+                        @click="selectTr(row)"
                         @mouseenter="state.hoverIndex = i"
                     >
                         <lew-flex
                             v-if="checkable && fixedColumns('left').length > 0"
-                            style="width: 50px;"
+                            style="width: 50px"
                             x="center"
+                            class="lew-table-checkbox-wrapper"
                         >
                             <lew-checkbox
-                                v-model="state.checkList[i]"
-                                @change="
-                                    rowKey && setChecked(row[rowKey], $event)
-                                "
+                                class="lew-table-checkbox"
+                                :checked="state.selectedKeysMap[row[rowKey]]"
                             ></lew-checkbox>
                         </lew-flex>
                         <lew-flex
@@ -350,21 +393,23 @@ onUnmounted(() => {
                         class="lew-table-tr"
                         :class="{
                             'lew-table-tr-hover': state.hoverIndex === i,
+                            'lew-table-tr-selected':
+                                state.selectedKeysMap[row[rowKey]],
                         }"
+                        @click="selectTr(row)"
                         @mouseenter="state.hoverIndex = i"
                     >
                         <lew-flex
                             v-if="
                                 checkable && fixedColumns('left').length === 0
                             "
-                            style="width: 50px;"
+                            style="width: 50px"
                             x="center"
+                            class="lew-table-checkbox-wrapper"
                         >
                             <lew-checkbox
-                                v-model="state.checkList[i]"
-                                @change="
-                                    rowKey && setChecked(row[rowKey], $event)
-                                "
+                                class="lew-table-checkbox"
+                                :checked="state.selectedKeysMap[row[rowKey]]"
                             />
                         </lew-flex>
                         <lew-flex
@@ -385,7 +430,7 @@ onUnmounted(() => {
                             <template v-else>
                                 <lew-text-trim
                                     :x="column.x || 'start'"
-                                    style="width: 100%;"
+                                    style="width: 100%"
                                     :text="row[column.field]"
                                 />
                             </template>
@@ -395,11 +440,6 @@ onUnmounted(() => {
                 <div
                     v-if="fixedColumns('right').length > 0"
                     class="lew-table-fixed-right"
-                    :class="{
-                        'hid-scroll-line': ['all', 'right'].includes(
-                            state.hidScrollLine
-                        ),
-                    }"
                 >
                     <div
                         v-for="(row, i) in dataSource"
@@ -407,6 +447,8 @@ onUnmounted(() => {
                         class="lew-table-tr"
                         :class="{
                             'lew-table-tr-hover': state.hoverIndex === i,
+                            'lew-table-tr-selected':
+                                state.selectedKeysMap[row[rowKey]],
                         }"
                         @mouseenter="state.hoverIndex = i"
                     >
@@ -431,6 +473,9 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+        <lew-flex style="padding: 50px 0px" v-if="dataSource.length === 0">
+            <lew-empty />
+        </lew-flex>
     </div>
 </template>
 
@@ -443,6 +488,46 @@ onUnmounted(() => {
     box-sizing: border-box;
     background-color: var(--lew-bgcolor-0);
     box-shadow: var(--lew-box-shadow);
+
+    .lew-table-scroll-line-left {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        height: 100%;
+        z-index: 90;
+        width: 8px;
+        background: linear-gradient(
+            to right,
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.075),
+            rgba(0, 0, 0, 0.03),
+            rgba(0, 0, 0, 0.01),
+            rgba(0, 0, 0, 0)
+        );
+        transition: all 0.25s;
+    }
+
+    .lew-table-scroll-line-right {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        height: 100%;
+        z-index: 90;
+        width: 8px;
+        background: linear-gradient(
+            to left,
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.075),
+            rgba(0, 0, 0, 0.03),
+            rgba(0, 0, 0, 0.01),
+            rgba(0, 0, 0, 0)
+        );
+        transition: all 0.25s;
+    }
+    .hide-line-left,
+    .hide-line-right {
+        opacity: 0;
+    }
 }
 
 .lew-table {
@@ -469,44 +554,10 @@ onUnmounted(() => {
     .lew-table-fixed-right {
         position: sticky;
         right: 0px;
-        z-index: 9;
+        z-index: 10;
         display: flex;
         flex-grow: 1;
         flex-direction: column;
-    }
-
-    .lew-table-fixed-left::after {
-        position: absolute;
-        right: -3px;
-        top: 0px;
-        width: 3px;
-        height: 100%;
-        background-image: linear-gradient(
-            to left,
-            var(--lew-table-scroll-line-color-start),
-            var(--lew-table-scroll-line-color-end)
-        );
-        content: '';
-        transition: opacity 0.2s ease;
-    }
-
-    .lew-table-fixed-right::after {
-        position: absolute;
-        left: -3px;
-        top: 0px;
-        width: 3px;
-        height: 100%;
-        background-image: linear-gradient(
-            to right,
-            var(--lew-table-scroll-line-color-start),
-            var(--lew-table-scroll-line-color-end)
-        );
-        content: '';
-        transition: opacity 0.2s ease;
-    }
-
-    .hid-scroll-line::after {
-        opacity: 0;
     }
 
     .lew-table-main {
@@ -565,50 +616,38 @@ onUnmounted(() => {
         color: var(--lew-text-color-4);
     }
 
+    .lew-table-checkbox-wrapper {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .lew-table-checkbox-wrapper::after {
+        position: absolute;
+        z-index: 1;
+        content: '';
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+    }
+
     .lew-table-tr-hover {
         background-color: var(--lew-bgcolor-1);
+        .lew-table-checkbox {
+            .icon-checkbox-box {
+                border: var(--lew-form-border-width) var(--lew-checkbox-color)
+                    solid;
+            }
+        }
+    }
+    .lew-table-tr-selected {
+        background-color: var(--lew-table-tr-selected);
     }
 }
 
-.lew-table-wrapper::before {
-    position: absolute;
-    z-index: 18;
-    left: 0px;
-    top: 0px;
-    width: 4px;
-    height: 100%;
-    background-image: linear-gradient(
-        to left,
-        var(--lew-table-scroll-line-color-start),
-        var(--lew-table-scroll-line-color-end)
-    );
-    content: '';
-    transition: opacity 0.2s ease;
-    opacity: 1;
-}
-
-.lew-table-wrapper::after {
-    position: absolute;
-    z-index: 18;
-    right: 0px;
-    top: 0px;
-    width: 4px;
-    height: 100%;
-    background-image: linear-gradient(
-        to right,
-        var(--lew-table-scroll-line-color-start),
-        var(--lew-table-scroll-line-color-end)
-    );
-    content: '';
-    transition: opacity 0.2s ease;
-    opacity: 1;
-}
-
-.hide-line-left::before {
-    opacity: 0;
-}
-
-.hide-line-right::after {
-    opacity: 0;
+.lew-table-checkable {
+    .lew-table-td {
+        cursor: pointer;
+    }
 }
 </style>

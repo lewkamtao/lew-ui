@@ -172,8 +172,8 @@ const getSelectItemClassName = (e: any) => {
 
 const getIconSize = computed(() => {
     const size: any = {
-        small: 13,
-        medium: 14,
+        small: 14,
+        medium: 15,
         large: 16,
     };
     return size[props.size];
@@ -237,10 +237,6 @@ defineExpose({ show, hide });
                             getLabels.length > 0 &&
                             !readonly
                         "
-                        v-tooltip="{
-                            content: '清空',
-                            placement: 'top',
-                        }"
                         :size="getIconSize"
                         type="x"
                         class="lew-form-icon-clear"
@@ -301,8 +297,7 @@ defineExpose({ show, hide });
                         direction="y"
                         class="not-found"
                     >
-                        <lew-icon type="box" size="30" />
-                        <span>暂无结果</span>
+                        <lew-empty title="暂无结果" />
                     </lew-flex>
                     <div
                         v-if="
@@ -386,7 +381,7 @@ defineExpose({ show, hide });
         .icon-select {
             position: absolute;
             top: 50%;
-            right: 7px;
+			right: 9px;
             transform: translateY(-50%) rotate(0deg);
             transition: var(--lew-form-transition);
             opacity: var(--lew-form-icon-opacity);
@@ -532,7 +527,6 @@ defineExpose({ show, hide });
     box-sizing: border-box;
 
     .not-found {
-        padding: 50px 0px;
         opacity: 0.4;
     }
 
@@ -651,7 +645,7 @@ defineExpose({ show, hide });
             background: var(--lew-checkbox-color);
 
             .icon-checkbox {
-                transform: translateY(0px);
+                transform: translate(-50%, -50%) rotate(0deg) scale(1);
                 opacity: 1;
             }
         }

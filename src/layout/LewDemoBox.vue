@@ -49,7 +49,12 @@ const style = computed<CSSProperties>(() => {
             <div class="demo-cp">
                 <slot></slot>
             </div>
-            <div v-show="code" v-highlight class="hl-pre" :style="style">
+            <div
+                v-show="code"
+                v-highlight
+                class="hl-pre lew-scrollbar"
+                :style="style"
+            >
                 <div class="pre-box">
                     <pre><code>{{ code }}</code></pre>
                 </div>

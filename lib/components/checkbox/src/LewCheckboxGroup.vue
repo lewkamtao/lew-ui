@@ -27,7 +27,7 @@ const change = (item: CheckboxOptions, checked: boolean) => {
     });
 };
 
-watchArray(modelValue.value, () => {
+watchArray(modelValue, () => {
     initCheckbox();
 });
 

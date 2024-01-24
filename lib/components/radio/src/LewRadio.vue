@@ -76,7 +76,7 @@ const getRadioClassName = computed(() => {
     }
 
     .lew-radio-label {
-        margin-left: 6px;
+        margin-left: 4px;
     }
 }
 
@@ -112,6 +112,7 @@ const getRadioClassName = computed(() => {
 
     .lew-radio-label {
         color: var(--lew-text-color-6);
+        margin-left: 0px;
     }
 }
 
@@ -129,10 +130,6 @@ const getRadioClassName = computed(() => {
     border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
     padding: 3px 8px 3px 4px;
     border-radius: 50px;
-
-    .lew-radio-label {
-        margin-left: 2px;
-    }
 }
 
 .lew-radio-block:hover {

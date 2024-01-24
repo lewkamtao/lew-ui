@@ -1,5 +1,8 @@
 <script setup lang="ts">
 const value = ref('');
+const ok = () => {
+    LewMessage.success('提交成功');
+};
 </script>
 
 <template>
@@ -33,7 +36,8 @@ const value = ref('');
             :max-length="300"
             show-count
             clearable
-            okByEnter
+            ok-by-enter
+            @ok="ok"
         />
     </lew-flex>
 </template>

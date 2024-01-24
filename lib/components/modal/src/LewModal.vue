@@ -1,12 +1,12 @@
 <script lang="ts" setup name="Modal">
-import { useVModel } from '@vueuse/core';
-import { useDOMCreate } from '../../../hooks';
+import { useVModel, useMagicKeys, useMouse } from '@vueuse/core';
 import { any2px } from 'lew-ui/utils';
+import { LewFlex, LewButton, LewIcon } from 'lew-ui';
+import { useDOMCreate } from '../../../hooks';
 import { LewTextTrim } from '../../text-trim';
 import { modalProps } from './props';
-import { LewFlex, LewButton, LewIcon } from 'lew-ui';
-import { useMagicKeys } from '@vueuse/core';
 
+const { x, y } = useMouse();
 const { Escape } = useMagicKeys();
 useDOMCreate('lew-modal');
 
@@ -15,6 +15,7 @@ const props = defineProps(modalProps);
 const emit = defineEmits(['update:visible', 'ok', 'cancel', 'show', 'close']);
 
 const visible = useVModel(props, 'visible', emit);
+const transformOrigin = ref('0 0');
 
 const maskClick = () => {
     if (props.closeOnClickOverlay) {
@@ -41,6 +42,7 @@ watch(
     () => visible.value,
     (newVal) => {
         if (newVal) {
+            transformOrigin.value = `${x.value}px ${y.value}px`;
             emit('show');
         } else {
             emit('close');
@@ -58,60 +60,73 @@ if (props.closeByEsc) {
 
 <template>
     <teleport to="#lew-modal">
-        <transition name="lew-modal-mask">
-            <div v-if="visible" class="lew-modal-mask" />
-        </transition>
-        <transition name="lew-modal">
-            <div v-if="visible" class="lew-modal" @click="maskClick">
-                <div :style="getModalStyle" class="lew-modal-box" @click.stop>
-                    <lew-flex
-                        v-if="title"
-                        mode="between"
-                        y="center"
-                        class="header"
+        <div
+            :style="{
+                '--lew-modal-transform-origin': transformOrigin,
+            }"
+            class="lew-modal-container"
+        >
+            <transition name="lew-modal-mask">
+                <div v-if="visible" class="lew-modal-mask" />
+            </transition>
+            <transition name="lew-modal">
+                <div v-if="visible" class="lew-modal" @click="maskClick">
+                    <div
+                        :style="getModalStyle"
+                        class="lew-modal-box"
+                        @click.stop
                     >
-                        <lew-text-trim class="title" :text="title" />
-                        <lew-icon
-                            size="18"
-                            class="close-btn"
-                            @click="visible = false"
-                            type="x"
-                        />
-                    </lew-flex>
-                    <div v-else class="header-slot">
-                        <slot name="header"></slot>
-                    </div>
-                    <slot />
-                    <lew-flex
-                        v-if="!hideFooter"
-                        x="end"
-                        y="center"
-                        class="footer"
-                    >
-                        <lew-button
-                            @click="cancel"
-                            v-bind="{ 
+                        <lew-flex
+                            v-if="title"
+                            mode="between"
+                            y="center"
+                            class="header"
+                        >
+                            <lew-text-trim class="title" :text="title" />
+                            <lew-icon
+                                size="18"
+                                class="close-btn"
+                                type="x"
+                                @click="visible = false"
+                            />
+                        </lew-flex>
+                        <div v-else class="header-slot">
+                            <slot name="header"></slot>
+                        </div>
+                        <slot />
+                        <lew-flex
+                            v-if="!hideFooter"
+                            x="end"
+                            y="center"
+                            class="footer"
+                        >
+                            <lew-button
+                                v-bind="{ 
                                 type: 'text', 
                                 text: '取消',
-                                color: 'normal',
+								round: true,
+								color: 'normal',
                                 ...cancelProps as any,
                             }"
-                        />
-                        <lew-button
-                            @click="ok"
-                            v-bind="{ 
+                                @click="cancel"
+                            />
+                            <lew-button
+                                v-bind="{ 
                                 text: '确定',   
                                 color: 'primary',  
+								round: true,
                                 ...okProps as any, 
                             }"
-                        />
-                    </lew-flex>
-                    <div v-else class="footer-slot">
-                        <slot name="footer"></slot>
+                                @click="ok"
+                            />
+                        </lew-flex>
+                        <div v-else class="footer-slot">
+                            <slot name="footer"></slot>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </transition>
+            </transition>
+        </div>
     </teleport>
 </template>
 
@@ -148,7 +163,6 @@ if (props.closeByEsc) {
             height: 50px;
             background-color: var(--lew-bgcolor-2);
             padding: 10px 20px;
-            border-bottom: var(--lew-border-1);
 
             .title {
                 font-size: 16px;
@@ -177,17 +191,14 @@ if (props.closeByEsc) {
             height: 50px;
             background-color: var(--lew-bgcolor-1);
             padding: 10px 20px;
-            border-top: var(--lew-border-1);
         }
 
         .header-slot {
             background-color: var(--lew-bgcolor-1);
-            border-bottom: var(--lew-border-1);
         }
 
         .footer-slot {
             background-color: var(--lew-bgcolor-1);
-            border-top: var(--lew-border-1);
         }
     }
 }
@@ -204,12 +215,14 @@ if (props.closeByEsc) {
 
 .lew-modal-enter-active,
 .lew-modal-leave-active {
-    transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transition: opacity 0.4s cubic-bezier(0.3, 1.3, 0.3, 1),
+        transform 0.4s cubic-bezier(0.3, 1.3, 0.3, 1);
+    transform-origin: var(--lew-modal-transform-origin);
 }
 
 .lew-modal-leave-to,
 .lew-modal-enter-from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: scale(0.2);
 }
 </style>
