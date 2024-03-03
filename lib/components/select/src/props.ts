@@ -68,7 +68,7 @@ export const selectProps = {
     },
     searchDelay: {
         type: Number,
-        default: 250,
+        default: 500,
         description: '搜索延迟，单位毫秒，仅在 searchable 为 true 时有效',
     },
     clearable: {

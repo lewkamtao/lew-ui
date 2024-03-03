@@ -43,7 +43,7 @@ export const radioProps = {
 
 export const radioGroupProps = {
     modelValue: {
-        type: String || Number,
+        type: [String, Number],
         default: '',
         description: '绑定值',
     },

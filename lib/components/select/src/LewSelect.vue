@@ -484,7 +484,6 @@ defineExpose({ show, hide });
 
     .not-found {
         opacity: 0.4;
-        min-height: 268px;
     }
 
     .reslut-count {

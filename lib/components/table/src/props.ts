@@ -26,11 +26,6 @@ export const tableProps = {
         default: [],
         description: '列配置',
     },
-    pickColumns: {
-        type: Array,
-        default: [],
-        description: '选中的列',
-    },
     maxHeight: {
         type: [Number, String],
         default: '',

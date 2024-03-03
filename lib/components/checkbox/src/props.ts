@@ -66,7 +66,7 @@ export const checkboxGroupProps = {
         description: '配置项',
     },
     modelValue: {
-        type: [Array || undefined],
+        type: [Array, undefined],
         default: [],
         required: true,
         description: '值（双向绑定）',

@@ -176,6 +176,7 @@ const checkIsAll = () => {
 };
 
 const selectTr = (row: any) => {
+    if (!props.checkable) return;
     if (props.singleSelect) {
         state.selectedKeysMap = {};
     }
@@ -351,7 +352,7 @@ onUnmounted(() => {
                         :class="{
                             'lew-table-tr-hover': state.hoverIndex === i,
                             'lew-table-tr-selected':
-                                state.selectedKeysMap[row[rowKey]],
+                                checkable && state.selectedKeysMap[row[rowKey]],
                         }"
                         @click="selectTr(row)"
                         @mouseenter="state.hoverIndex = i"
