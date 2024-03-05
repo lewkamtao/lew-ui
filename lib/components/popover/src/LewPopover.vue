@@ -93,7 +93,8 @@ const initTippy = () => {
         content: bodyRef.value,
         animation: 'shift-away-subtle',
         interactive: true,
-        hideOnClick: trigger !== 'mouseenter' ? props.hideOnClick : false as any,
+        hideOnClick:
+            trigger !== 'mouseenter' ? props.hideOnClick : (false as any),
         placement,
         duration: [120, 120],
         arrow: false,
@@ -140,7 +141,7 @@ defineExpose({ show, hide, refresh });
 
 <template>
     <div class="lew-popover">
-        <label ref="triggerRef" style="font-size: 0px">
+        <label ref="triggerRef">
             <div class="trigger">
                 <slot name="trigger" />
             </div>
@@ -159,14 +160,6 @@ defineExpose({ show, hide, refresh });
 </template>
 
 <style lang="scss">
-.lew-popover {
-    .trigger {
-        > div {
-            font-size: 14px;
-        }
-    }
-}
-
 .lew-popover-body {
     overflow: hidden;
 }
