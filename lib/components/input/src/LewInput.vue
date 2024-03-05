@@ -172,7 +172,7 @@ const copy = () => {
 
 if (props.okByEnter) {
     watch(enter, (v) => {
-        if (v && state.isFocus && modelValue.value) {
+        if (v && state.isFocus) {
             emit('ok', modelValue.value);
         }
     });
