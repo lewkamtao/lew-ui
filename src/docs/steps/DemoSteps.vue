@@ -1,58 +1,57 @@
 <script setup lang="ts">
-import {
-    DemoSteps1,
-    DemoSteps2,
-    DemoSteps3,
-    DemoSteps1Code,
-    DemoSteps2Code,
-    DemoSteps3Code,
-} from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
+    import {
+        DemoSteps1,
+        DemoSteps2,
+        DemoSteps3,
+        DemoSteps1Code,
+        DemoSteps2Code,
+        DemoSteps3Code
+    } from './demo';
+    import LewDemoBox from '../../layout/LewDemoBox.vue';
 
-const columns = [
-    {
-        title: '参数名',
-        width: 150,
-        field: 'param',
-    },
+    const columns = [
+        {
+            title: '参数名',
+            width: 150,
+            field: 'param'
+        },
 
-    {
-        title: '类型',
-        width: 240,
-        field: 'type',
-    },
-    {
-        title: '默认值',
-        width: 120,
-        field: 'default',
-    },
-    {
-        title: '描述',
-        width: 220,
-        field: 'description',
-    },
-];
-const docsTable = ref([
-    {
-        name: 'value',
-        description: '显示内容',
-        type: 'string | number',
-        default: 'undefined',
-    },
-    {
-        name: 'type',
-        description: '显示类型',
-        type: `default | success | error | warning | info`,
-        default: 'default',
-    },
-    {
-        name: 'round',
-        description: '形状，是否为圆形。',
-        type: 'boolean',
-        default: 'false',
-    },
-]);
+        {
+            title: '类型',
+            width: 240,
+            field: 'type'
+        },
+        {
+            title: '默认值',
+            width: 120,
+            field: 'default'
+        },
+        {
+            title: '描述',
+            width: 220,
+            field: 'description'
+        }
+    ];
+    const docsTable = ref([
+        {
+            name: 'value',
+            description: '显示内容',
+            type: 'string | number',
+            default: 'undefined'
+        },
+        {
+            name: 'type',
+            description: '显示类型',
+            type: 'default | success | error | warning | info',
+            default: 'default'
+        },
+        {
+            name: 'round',
+            description: '形状，是否为圆形。',
+            type: 'boolean',
+            default: 'false'
+        }
+    ]);
 </script>
 
 <template>

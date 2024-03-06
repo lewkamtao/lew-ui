@@ -36,5 +36,5 @@ export {
     DemoTable6Code,
     DemoTable7Code,
     DemoTable8Code,
-    DemoTable9Code,
+    DemoTable9Code
 };

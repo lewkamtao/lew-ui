@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { DemoEmpty1, DemoEmpty1Code } from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
-import * as API from './api';
+    import { DemoEmpty1, DemoEmpty1Code } from './demo';
+    import LewDemoBox from '../../layout/LewDemoBox.vue';
+    import LewDocsTables from '../../layout/LewDocsTables.vue';
+    import * as API from './api';
 
-const options = ref(
-    Object.keys(API).map((key: any) => {
-        // @ts-ignore
-        return API[key];
-    })
-);
+    const options = ref(
+        Object.keys(API).map((key: any) => {
+            // @ts-ignore
+            return API[key];
+        })
+    );
 </script>
 
 <template>

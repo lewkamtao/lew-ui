@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import {
-    DemoDropdown1,
-    DemoDropdown2,
-    DemoDropdown3,
-    DemoDropdown1Code,
-    DemoDropdown2Code,
-    DemoDropdown3Code,
-} from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
-import * as API from './api';
+    import {
+        DemoDropdown1,
+        DemoDropdown2,
+        DemoDropdown3,
+        DemoDropdown1Code,
+        DemoDropdown2Code,
+        DemoDropdown3Code
+    } from './demo';
+    import LewDemoBox from '../../layout/LewDemoBox.vue';
+    import LewDocsTables from '../../layout/LewDocsTables.vue';
+    import * as API from './api';
 
-const options = ref(
-    Object.keys(API).map((key: any) => {
-        // @ts-ignore
-        return API[key];
-    })
-);
+    const options = ref(
+        Object.keys(API).map((key: any) => {
+            // @ts-ignore
+            return API[key];
+        })
+    );
 </script>
 
 <template>

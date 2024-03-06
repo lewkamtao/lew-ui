@@ -14,48 +14,48 @@ export const checkboxProps = {
     modelValue: {
         type: Boolean,
         default: false,
-        description: '值（双向绑定）',
+        description: '值（双向绑定）'
     },
     checked: {
         type: Boolean,
         default: false,
-        description: '选中状态',
+        description: '选中状态'
     },
     certain: {
         type: Boolean,
         default: false,
-        description: '是否是确定状态',
+        description: '是否是确定状态'
     },
     label: {
         type: String,
         default: '',
-        description: '标签',
+        description: '标签'
     },
     block: {
         type: Boolean,
         default: false,
-        description: '是否为块状',
+        description: '是否为块状'
     },
     round: {
         type: Boolean,
         default: false,
-        description: '是否圆形',
+        description: '是否圆形'
     },
     iconable: {
         type: Boolean,
         default: true,
-        description: '图标开启',
+        description: '图标开启'
     },
     disabled: {
         type: Boolean,
         default: false,
-        description: '是否禁用',
+        description: '是否禁用'
     },
     size: {
         type: String as PropType<CheckboxSize>,
         default: 'medium',
-        description: '尺寸大小',
-    },
+        description: '尺寸大小'
+    }
 };
 
 export const checkboxGroupProps = {
@@ -63,44 +63,44 @@ export const checkboxGroupProps = {
         type: Array as PropType<CheckboxOptions[]>,
         default: [],
         required: true,
-        description: '配置项',
+        description: '配置项'
     },
     modelValue: {
         type: [Array, undefined],
         default: [],
         required: true,
-        description: '值（双向绑定）',
+        description: '值（双向绑定）'
     },
     block: {
         type: Boolean,
         default: false,
-        description: '是否块状',
+        description: '是否块状'
     },
     round: {
         type: Boolean,
         default: false,
-        description: '是否圆形',
+        description: '是否圆形'
     },
     disabled: {
         type: Boolean,
         default: false,
-        description: '是否禁用',
+        description: '是否禁用'
     },
     direction: {
         type: String as PropType<CheckboxGroupDirectionType>,
         default: 'x',
-        description: '组排列方向',
+        description: '组排列方向'
     },
     iconable: {
         type: Boolean,
         default: true,
-        description: '图标开启',
+        description: '图标开启'
     },
     size: {
         type: String as PropType<CheckboxSize>,
         default: 'medium',
-        description: '尺寸大小',
-    },
+        description: '尺寸大小'
+    }
 };
 
 export type CheckboxProps = ExtractPropTypes<typeof checkboxProps>;

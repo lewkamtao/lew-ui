@@ -18,7 +18,7 @@ app.directive('highlight', {
         blocks.forEach((block: unknown) => {
             hljs.highlightBlock(block);
         });
-    },
+    }
 });
 
 app.use(lew);

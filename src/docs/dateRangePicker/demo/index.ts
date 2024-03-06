@@ -7,5 +7,5 @@ export {
     DemoDateRangePicker1,
     DemoDateRangePicker2,
     DemoDateRangePicker1Code,
-    DemoDateRangePicker2Code,
+    DemoDateRangePicker2Code
 };

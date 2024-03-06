@@ -12,18 +12,18 @@ const routes: Array<RouteRecordRaw> = [
         path: '/Guide',
         name: 'R-LewGuide',
         component: LewGuide,
-        children: guide,
+        children: guide
     },
     {
         path: '/Components',
         name: 'R-LewComponents',
         component: LewComponents,
-        children: docs,
-    },
+        children: docs
+    }
 ];
 const router = createRouter({
     history: createWebHashHistory(),
-    routes,
+    routes
 });
 
 export default router;

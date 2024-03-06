@@ -6,7 +6,7 @@ export default {
         {
             name: 'click',
             description: '回到顶部事件回调',
-            params: '() => event',
-        },
-    ],
+            params: '() => event'
+        }
+    ]
 };

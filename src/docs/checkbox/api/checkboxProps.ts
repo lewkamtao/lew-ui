@@ -5,5 +5,5 @@ export default {
     title: 'Props (checkbox)',
     columnsKey: 'props',
     orderNum: 10,
-    data: convertProps(checkboxProps),
+    data: convertProps(checkboxProps)
 };

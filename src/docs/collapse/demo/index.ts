@@ -12,5 +12,5 @@ export {
     DemoCollapse2,
     DemoCollapse2Code,
     DemoCollapse3,
-    DemoCollapse3Code,
+    DemoCollapse3Code
 };

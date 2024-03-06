@@ -12,5 +12,5 @@ export {
     DemoPagination3,
     DemoPagination1Code,
     DemoPagination2Code,
-    DemoPagination3Code,
+    DemoPagination3Code
 };

@@ -20,5 +20,5 @@ export {
     DemoCheckbox2Code,
     DemoCheckbox3Code,
     DemoCheckbox4Code,
-    DemoCheckbox5Code,
+    DemoCheckbox5Code
 };

@@ -1,40 +1,40 @@
 <!-- filename: Popover.vue -->
 <script setup lang="ts">
-import { LewButton, LewPopover } from 'lew-ui';
-import { any2px } from 'lew-ui/utils';
-import { popokProps } from './props';
+    import { LewButton, LewPopover } from 'lew-ui';
+    import { any2px } from 'lew-ui/utils';
+    import { popokProps } from './props';
 
-const props = defineProps(popokProps);
+    const props = defineProps(popokProps);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const lewPopoverRef = ref();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const lewPopoverRef = ref();
 
-const okLoading = ref(false);
-const cancelLoading = ref(false);
+    const okLoading = ref(false);
+    const cancelLoading = ref(false);
 
-const hide = () => {
-    lewPopoverRef.value.hide();
-};
+    const hide = () => {
+        lewPopoverRef.value.hide();
+    };
 
-const okHandle = async () => {
-    if (typeof props.ok === 'function') {
-        okLoading.value = true;
-        await props.ok();
-        okLoading.value = false;
-    }
-    hide();
-};
+    const okHandle = async () => {
+        if (typeof props.ok === 'function') {
+            okLoading.value = true;
+            await props.ok();
+            okLoading.value = false;
+        }
+        hide();
+    };
 
-const cancelHandle = async () => {
-    if (typeof props.cancel === 'function') {
-        cancelLoading.value = true;
-        await props.cancel();
-        cancelLoading.value = false;
-    }
-    hide();
-};
+    const cancelHandle = async () => {
+        if (typeof props.cancel === 'function') {
+            cancelLoading.value = true;
+            await props.cancel();
+            cancelLoading.value = false;
+        }
+        hide();
+    };
 
-const emit = defineEmits(['show', 'cancel']);
+    const emit = defineEmits(['show', 'cancel']);
 </script>
 
 <template>
@@ -52,7 +52,7 @@ const emit = defineEmits(['show', 'cancel']);
             <div
                 class="lew-popok-body"
                 :style="{
-                    width: any2px(width),
+                    width: any2px(width)
                 }"
             >
                 <div class="left">
@@ -68,21 +68,9 @@ const emit = defineEmits(['show', 'cancel']);
                             size="22"
                             type="alert-triangle"
                         ></lew-icon>
-                        <lew-icon
-                            v-if="type === `success`"
-                            size="22"
-                            type="check"
-                        ></lew-icon>
-                        <lew-icon
-                            v-if="type === `error`"
-                            size="22"
-                            type="alert-circle"
-                        ></lew-icon>
-                        <lew-icon
-                            v-if="type === `info`"
-                            size="22"
-                            type="bell"
-                        ></lew-icon>
+                        <lew-icon v-if="type === `success`" size="22" type="check"></lew-icon>
+                        <lew-icon v-if="type === `error`" size="22" type="alert-circle"></lew-icon>
+                        <lew-icon v-if="type === `info`" size="22" type="bell"></lew-icon>
                     </div>
                 </div>
                 <div class="right">
@@ -110,63 +98,63 @@ const emit = defineEmits(['show', 'cancel']);
 </template>
 
 <style lang="scss" scoped>
-.lew-popok {
-    display: inline-block;
-}
-
-.lew-popok-body {
-    display: flex;
-    padding: 15px;
-
-    .left {
-        width: 30px;
-        margin-right: 5px;
-
-        .icon-success {
-            color: var(--lew-color-success-dark);
-        }
-
-        .icon-warning {
-            color: var(--lew-color-warning-dark);
-        }
-
-        .icon-normal {
-            color: var(--lew-color-normal-dark);
-        }
-
-        .icon-info {
-            color: var(--lew-color-info-dark);
-        }
-
-        .icon-error {
-            color: var(--lew-color-error-dark);
-        }
+    .lew-popok {
+        display: inline-block;
     }
 
-    .right {
-        width: calc(100% - 30px);
+    .lew-popok-body {
+        display: flex;
+        padding: 15px;
 
-        .title {
-            width: 100%;
-            font-weight: 600;
-            margin-bottom: 5px;
+        .left {
+            width: 30px;
+            margin-right: 5px;
+
+            .icon-success {
+                color: var(--lew-color-success-dark);
+            }
+
+            .icon-warning {
+                color: var(--lew-color-warning-dark);
+            }
+
+            .icon-normal {
+                color: var(--lew-color-normal-dark);
+            }
+
+            .icon-info {
+                color: var(--lew-color-info-dark);
+            }
+
+            .icon-error {
+                color: var(--lew-color-error-dark);
+            }
         }
 
-        .content {
-            width: 100%;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
+        .right {
+            width: calc(100% - 30px);
 
-        .footer {
-            width: 100%;
-            display: flex;
-            justify-content: end;
+            .title {
+                width: 100%;
+                font-weight: 600;
+                margin-bottom: 5px;
+            }
 
-            .lew-button {
-                margin-left: 10px;
+            .content {
+                width: 100%;
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+
+            .footer {
+                width: 100%;
+                display: flex;
+                justify-content: end;
+
+                .lew-button {
+                    margin-left: 10px;
+                }
             }
         }
     }
-}
 </style>

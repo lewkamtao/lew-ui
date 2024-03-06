@@ -1,12 +1,12 @@
 <script setup lang="ts">
-// 确认
-const ok = () => {
-    LewMessage.success('确定');
-};
-// 取消
-const cancel = () => {
-    LewMessage.info('取消');
-};
+    // 确认
+    const ok = () => {
+        LewMessage.success('确定');
+    };
+    // 取消
+    const cancel = () => {
+        LewMessage.info('取消');
+    };
 </script>
 
 <template>

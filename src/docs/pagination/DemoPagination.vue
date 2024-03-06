@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import {
-    DemoPagination1,
-    DemoPagination2,
-    DemoPagination3,
-    DemoPagination1Code,
-    DemoPagination2Code,
-    DemoPagination3Code,
-} from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
-import * as API from './api';
+    import {
+        DemoPagination1,
+        DemoPagination2,
+        DemoPagination3,
+        DemoPagination1Code,
+        DemoPagination2Code,
+        DemoPagination3Code
+    } from './demo';
+    import LewDemoBox from '../../layout/LewDemoBox.vue';
+    import LewDocsTables from '../../layout/LewDocsTables.vue';
+    import * as API from './api';
 
-const options = ref(
-    Object.keys(API).map((key: any) => {
-        // @ts-ignore
-        return API[key];
-    })
-);
+    const options = ref(
+        Object.keys(API).map((key: any) => {
+            // @ts-ignore
+            return API[key];
+        })
+    );
 </script>
 
 <template>

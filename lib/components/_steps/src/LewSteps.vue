@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps({});
+    defineProps({});
 </script>
 
 <template>
@@ -7,11 +7,11 @@ defineProps({});
 </template>
 
 <style lang="scss" scoped>
-.lew-breadcrumb {
-    display: inline-flex;
-    align-items: center;
-    .lew-breadcrumb-item {
-        font-size: 16px;
+    .lew-breadcrumb {
+        display: inline-flex;
+        align-items: center;
+        .lew-breadcrumb-item {
+            font-size: 16px;
+        }
     }
-}
 </style>

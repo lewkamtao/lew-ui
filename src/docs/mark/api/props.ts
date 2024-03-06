@@ -5,5 +5,5 @@ export default {
     title: 'Props',
     columnsKey: 'props',
     orderNum: 10,
-    data: convertProps(markProps),
+    data: convertProps(markProps)
 };

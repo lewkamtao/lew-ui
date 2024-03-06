@@ -12,5 +12,5 @@ export {
     DemoBackTop2,
     DemoBackTop2Code,
     DemoBackTop3,
-    DemoBackTop3Code,
+    DemoBackTop3Code
 };

@@ -5,7 +5,7 @@ export default {
         {
             name: 'handle',
             description: '操作按钮',
-            params: '-',
-        },
-    ],
+            params: '-'
+        }
+    ]
 };

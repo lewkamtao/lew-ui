@@ -7,13 +7,13 @@ export default {
             name: 'show',
             description: '展示下拉',
             type: 'function',
-            default: '() => {}',
+            default: '() => {}'
         },
         {
             name: 'hide',
             description: '收起下拉',
             type: `function`,
-            default: '() => {}',
-        },
-    ],
+            default: '() => {}'
+        }
+    ]
 };

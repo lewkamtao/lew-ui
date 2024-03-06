@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import {
-    DemoSpace1,
-    DemoSpace1Code,
-    DemoSpace2,
-    DemoSpace2Code,
-    DemoSpace3,
-    DemoSpace3Code,
-} from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
+    import {
+        DemoSpace1,
+        DemoSpace1Code,
+        DemoSpace2,
+        DemoSpace2Code,
+        DemoSpace3,
+        DemoSpace3Code
+    } from './demo';
+    import LewDemoBox from '../../layout/LewDemoBox.vue';
 </script>
 
 <template>
@@ -27,7 +26,7 @@ import LewDocsTables from '../../layout/LewDocsTables.vue';
 </template>
 
 <style lang="scss" scoped>
-.lew-avatar {
-    margin: 10px;
-}
+    .lew-avatar {
+        margin: 10px;
+    }
 </style>

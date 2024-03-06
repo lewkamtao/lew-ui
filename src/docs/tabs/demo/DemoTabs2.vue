@@ -1,29 +1,29 @@
 <script setup lang="ts">
-type Options = {
-    label: string;
-    value: string;
-    activeIndex: number;
-};
+    type Options = {
+        label: string;
+        value: string;
+        activeIndex: number;
+    };
 
-const options = ref([
-    { label: 'Light', value: '1' },
-    { label: 'Dark', value: '2' },
-]);
+    const options = ref([
+        { label: 'Light', value: '1' },
+        { label: 'Dark', value: '2' }
+    ]);
 
-const options2 = ref([
-    { label: 'red', value: '1' },
-    { label: 'blue', value: '2' },
-    { label: 'black', value: '3' },
-    { label: 'white', value: '4' },
-]);
+    const options2 = ref([
+        { label: 'red', value: '1' },
+        { label: 'blue', value: '2' },
+        { label: 'black', value: '3' },
+        { label: 'white', value: '4' }
+    ]);
 
-const value = ref('');
-const value2 = ref('');
+    const value = ref('');
+    const value2 = ref('');
 
-const change = (e: Options) => {
-    console.log(e);
-    LewMessage.info(e.label);
-};
+    const change = (e: Options) => {
+        console.log(e);
+        LewMessage.info(e.label);
+    };
 </script>
 
 <template>

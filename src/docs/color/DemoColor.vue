@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { DemoColor1, DemoColor1Code } from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
+    import { DemoColor1, DemoColor1Code } from './demo';
+    import LewDemoBox from '../../layout/LewDemoBox.vue';
 </script>
 
 <template>

@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { DemoTabs1, DemoTabs2, DemoTabs1Code, DemoTabs2Code } from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
-import * as API from './api';
+    import { DemoTabs1, DemoTabs2, DemoTabs1Code, DemoTabs2Code } from './demo';
+    import LewDemoBox from '../../layout/LewDemoBox.vue';
+    import LewDocsTables from '../../layout/LewDocsTables.vue';
+    import * as API from './api';
 
-const options = ref(
-    Object.keys(API).map((key: any) => {
-        // @ts-ignore
-        return API[key];
-    })
-);
+    const options = ref(
+        Object.keys(API).map((key: any) => {
+            // @ts-ignore
+            return API[key];
+        })
+    );
 </script>
 
 <template>
@@ -25,14 +25,12 @@ const options = ref(
                     {
                         type: 'info',
                         title: '提示',
-                        content: `值得注意的是，按住Shift，上下滑动滚轮，可以实现横向滑动。`,
-                    },
+                        content: `值得注意的是，按住Shift，上下滑动滚轮，可以实现横向滑动。`
+                    }
                 ]"
             />
         </lew-demo-box>
-        <lew-demo-box title="圆形" :code="DemoTabs2Code">
-            <demo-tabs2
-        /></lew-demo-box>
+        <lew-demo-box title="圆形" :code="DemoTabs2Code"> <demo-tabs2 /></lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>
     </div>
 </template>

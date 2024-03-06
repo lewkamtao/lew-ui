@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import {
-    DemoNotification1,
-    DemoNotification1Code,
-    DemoNotification2,
-    DemoNotification2Code,
-} from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
-import * as API from './api';
+    import {
+        DemoNotification1,
+        DemoNotification1Code,
+        DemoNotification2,
+        DemoNotification2Code
+    } from './demo';
+    import LewDemoBox from '../../layout/LewDemoBox.vue';
+    import LewDocsTables from '../../layout/LewDocsTables.vue';
+    import * as API from './api';
 
-const options = ref(
-    Object.keys(API).map((key: any) => {
-        // @ts-ignore
-        return API[key];
-    })
-);
+    const options = ref(
+        Object.keys(API).map((key: any) => {
+            // @ts-ignore
+            return API[key];
+        })
+    );
 </script>
 
 <template>

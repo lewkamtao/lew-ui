@@ -11,9 +11,7 @@ export default {
                 dom.value = document.documentElement;
 
                 if (_target) {
-                    dom.value =
-                        document.querySelector<HTMLElement>(`.${_target}`) ??
-                        undefined;
+                    dom.value = document.querySelector<HTMLElement>(`.${_target}`) ?? undefined;
                     if (!dom.value) {
                         throw new Error(`target is not existed: ${_target}`);
                     }
@@ -27,7 +25,7 @@ export default {
             },
             unmounted(el) {
                 el.removeEventListener('click', _toBackUp);
-            },
+            }
         });
-    },
+    }
 };

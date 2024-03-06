@@ -10,9 +10,7 @@
             <li>新增<lew-mark>Button</lew-mark>的 Icon 模式。</li>
             <li>新增<lew-mark>InputTag</lew-mark></li>
             <li>新增<lew-mark>Comment</lew-mark></li>
-            <li>
-                新增<lew-mark>Notification</lew-mark>关闭按钮，自定义关闭时间。
-            </li>
+            <li> 新增<lew-mark>Notification</lew-mark>关闭按钮，自定义关闭时间。 </li>
         </ul>
         <lew-title :size="14"> 修复 </lew-title>
         <ul>
@@ -32,8 +30,8 @@
     </div>
 </template>
 <style lang="scss" scoped>
-ul {
-    padding-left: 20px;
-    line-height: 35px;
-}
+    ul {
+        padding-left: 20px;
+        line-height: 35px;
+    }
 </style>

@@ -5,8 +5,8 @@ export default defineComponent({
     props: {
         disabled: {
             type: Boolean,
-            default: false,
-        },
+            default: false
+        }
     },
     emits: ['dragFiles'],
     setup(props, { slots, emit }) {
@@ -49,5 +49,5 @@ export default defineComponent({
                 </div>
             </>
         );
-    },
+    }
 });

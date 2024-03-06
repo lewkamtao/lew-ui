@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const pre1 = ref(`<script setup>
+    const pre1 = ref(`<script setup>
   import { LewButton } from 'lew-ui'
 <\/script>`);
-const pre2 = ref(`import "lew-ui/style";`);
-const pre3 = ref(`import { createApp } from 'vue'
+    const pre2 = ref('import "lew-ui/style";');
+    const pre3 = ref(`import { createApp } from 'vue'
 import Lew from "lew-ui";
 import "lew-ui/style";
 
@@ -38,8 +38,7 @@ app.use(Lew);`);
         <lew-title :size="16">全局安装（不推荐）</lew-title>
         <p>
             你需要在
-            <lew-mark>main.ts</lew-mark
-            >全局安装，这样你就可以在页面内使用全部组件。
+            <lew-mark>main.ts</lew-mark>全局安装，这样你就可以在页面内使用全部组件。
         </p>
         <div v-highlight class="hl-pre lew-scrollbar">
             <div class="pre-box">

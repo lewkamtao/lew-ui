@@ -12,71 +12,71 @@ export const radioProps = {
     checked: {
         type: Boolean,
         default: false,
-        description: '是否选中',
+        description: '是否选中'
     },
     label: {
         type: String,
         default: '',
-        description: 'button 文本',
+        description: 'button 文本'
     },
     block: {
         type: Boolean,
         default: '',
-        description: '是否块级元素',
+        description: '是否块级元素'
     },
     iconable: {
         type: Boolean,
         default: true,
-        description: '是否显示图标',
+        description: '是否显示图标'
     },
     disabled: {
         type: Boolean,
         default: false,
-        description: '是否禁用',
+        description: '是否禁用'
     },
     size: {
         type: String as PropType<RadioSize>,
         default: 'medium',
-        description: '尺寸，可选值为 small、medium、large',
-    },
+        description: '尺寸，可选值为 small、medium、large'
+    }
 };
 
 export const radioGroupProps = {
     modelValue: {
         type: [String, Number],
         default: '',
-        description: '绑定值',
+        description: '绑定值'
     },
     block: {
         type: Boolean,
         default: false,
-        description: '是否块级元素',
+        description: '是否块级元素'
     },
     direction: {
         type: String,
         default: 'x',
-        description: '排列方向，可选值为 x 或 y',
+        description: '排列方向，可选值为 x 或 y'
     },
     iconable: {
         type: Boolean,
         default: true,
-        description: '是否显示图标',
+        description: '是否显示图标'
     },
     disabled: {
         type: Boolean,
         default: false,
-        description: '是否禁用',
+        description: '是否禁用'
     },
     size: {
         type: String as PropType<RadioSize>,
         default: 'medium',
-        description: '尺寸，可选值为 small、medium、large',
+        description: '尺寸，可选值为 small、medium、large'
     },
     options: {
         type: Array as PropType<RadioOptions[]>,
         default: [],
-        description: '选项',
-    },
+        description: '选项'
+    }
 };
 
 export type RadioProps = ExtractPropTypes<typeof radioProps>;

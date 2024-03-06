@@ -1,18 +1,18 @@
 <script setup lang="ts">
-const value = ref(false);
+    const value = ref(false);
 
-const mockFn = (v: boolean) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            console.log(v);
-            resolve(true);
-            LewMessage.success('发送成功');
-        }, 1000);
-    });
-};
-const change = (e: boolean) => {
-    console.log(e);
-};
+    const mockFn = (v: boolean) => {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                console.log(v);
+                resolve(true);
+                LewMessage.success('发送成功');
+            }, 1000);
+        });
+    };
+    const change = (e: boolean) => {
+        console.log(e);
+    };
 </script>
 
 <template>

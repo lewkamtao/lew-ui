@@ -6,19 +6,19 @@ export default {
             name: 'label',
             description: '文本内容',
             type: 'string',
-            default: '-',
+            default: '-'
         },
         {
             name: 'value',
             description: '值',
             type: `string`,
-            default: '-',
+            default: '-'
         },
         {
             name: 'activeIndex',
             description: '选中的索引',
             type: `number`,
-            default: '-',
-        },
-    ],
+            default: '-'
+        }
+    ]
 };

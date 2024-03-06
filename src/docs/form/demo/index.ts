@@ -20,5 +20,5 @@ export {
     DemoForm4,
     DemoForm4Code,
     DemoForm5,
-    DemoForm5Code,
+    DemoForm5Code
 };

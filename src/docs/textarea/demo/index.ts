@@ -14,5 +14,5 @@ export {
     DemoTextarea3,
     DemoTextarea1Code,
     DemoTextarea2Code,
-    DemoTextarea3Code,
+    DemoTextarea3Code
 };

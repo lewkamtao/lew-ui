@@ -6,8 +6,7 @@ let instance: ComponentInternalInstance;
 
 export function useLewTo() {
     const lewTo = (path: string) => {
-        const router = instance.appContext.config?.globalProperties
-            .$router as Router;
+        const router = instance.appContext.config?.globalProperties.$router as Router;
         if (!path) return;
         if (path && path.startsWith('http')) {
             window.open(path);
@@ -19,6 +18,6 @@ export function useLewTo() {
         instance = getCurrentInstance() as ComponentInternalInstance;
     });
     return {
-        lewTo,
+        lewTo
     };
 }

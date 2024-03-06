@@ -5,7 +5,7 @@ import type {
     UploadRequestOptions,
     UploadRawFile,
     UploadProgressEvent,
-    RenderIconOptions,
+    RenderIconOptions
 } from './upload.type';
 import './styles/index.scss';
 import { genUid } from '../../../utils';
@@ -27,7 +27,7 @@ export default defineComponent({
             },
             {
                 immediate: true,
-                deep: true,
+                deep: true
             }
         );
 
@@ -42,9 +42,7 @@ export default defineComponent({
             // 上传进度
             const onProgress = (event: ProgressEvent) => {
                 proxyUploadFile.status = 'uploading';
-                proxyUploadFile.percent = (
-                    event as UploadProgressEvent
-                ).percent;
+                proxyUploadFile.percent = (event as UploadProgressEvent).percent;
                 props.onProgress(event, proxyUploadFile, proxyUploadFileList);
             };
 
@@ -74,7 +72,7 @@ export default defineComponent({
                 headers: props.headers || {},
                 onProgress,
                 onSuccess,
-                onFail,
+                onFail
             };
 
             props.httpRequest(options);
@@ -84,9 +82,7 @@ export default defineComponent({
             inputRef.value!.value = '';
 
             if (props.onBeforeUpload) {
-                const result = await props.onBeforeUpload(
-                    file as unknown as UploadFile
-                );
+                const result = await props.onBeforeUpload(file as unknown as UploadFile);
                 if (!result) return;
             }
 
@@ -97,7 +93,7 @@ export default defineComponent({
                 size: file.size,
                 uid: file.uid,
                 url: URL.createObjectURL(file),
-                raw: file,
+                raw: file
             };
 
             const proxyUploadFile = reactive<UploadFile>(uploadFile);
@@ -159,23 +155,15 @@ export default defineComponent({
 
         // 渲染tip插槽
         function renderTipSlot() {
-            return slots.tip ? (
-                <div class="lew-upload__tip">{slots.tip && slots.tip()}</div>
-            ) : null;
+            return slots.tip ? <div class="lew-upload__tip">{slots.tip && slots.tip()}</div> : null;
         }
 
         // 渲染upload
         function renderUploader() {
             return (
-                <div
-                    class={['lew-upload', `lew-upload--${props.listType}`]}
-                    onClick={handleClick}
-                >
+                <div class={['lew-upload', `lew-upload--${props.listType}`]} onClick={handleClick}>
                     {props.drag ? (
-                        <LewUploadDragger
-                            disabled={props.disabled}
-                            onDragFiles={handleDragFiles}
-                        >
+                        <LewUploadDragger disabled={props.disabled} onDragFiles={handleDragFiles}>
                             {renderDefaultSlot()}
                         </LewUploadDragger>
                     ) : (
@@ -194,13 +182,7 @@ export default defineComponent({
         }
 
         // 渲染图标
-        function renderIcon({
-            isRender,
-            type,
-            size,
-            file,
-            click,
-        }: RenderIconOptions) {
+        function renderIcon({ isRender, type, size, file, click }: RenderIconOptions) {
             return isRender ? (
                 <lew-icon
                     class={`lew-icon lew-icon--${type}`}
@@ -224,11 +206,9 @@ export default defineComponent({
                                     {renderIcon({
                                         isRender: true,
                                         type: 'file-text',
-                                        size: 14,
+                                        size: 14
                                     })}
-                                    <span class="lew-upload-list__item-filename">
-                                        {file.name}
-                                    </span>
+                                    <span class="lew-upload-list__item-filename">{file.name}</span>
                                 </div>
                                 <div
                                     class="lew-upload-list__item-status"
@@ -238,7 +218,7 @@ export default defineComponent({
                                         isRender: true,
                                         type: 'check-circle',
                                         size: 14,
-                                        file,
+                                        file
                                     })}
                                 </div>
                                 {renderIcon({
@@ -246,7 +226,7 @@ export default defineComponent({
                                     type: 'x',
                                     size: 14,
                                     file,
-                                    click: handleRemove,
+                                    click: handleRemove
                                 })}
                             </li>
                         );
@@ -261,17 +241,12 @@ export default defineComponent({
                     {props.fileList.map((file) => {
                         return (
                             <li class="lew-upload-list__item">
-                                <img
-                                    class="lew-upload-list__item-thumbnail"
-                                    src={file.url}
-                                />
+                                <img class="lew-upload-list__item-thumbnail" src={file.url} />
                                 <div
                                     class="lew-upload-list__item-info"
                                     onClick={() => handlePreview(file)}
                                 >
-                                    <span class="lew-upload-list__item-filename">
-                                        {file.name}
-                                    </span>
+                                    <span class="lew-upload-list__item-filename">{file.name}</span>
                                 </div>
                                 <div
                                     class="lew-upload-list__item-status"
@@ -281,7 +256,7 @@ export default defineComponent({
                                         isRender: true,
                                         type: 'check',
                                         size: 14,
-                                        file,
+                                        file
                                     })}
                                 </div>
                                 {renderIcon({
@@ -289,7 +264,7 @@ export default defineComponent({
                                     type: 'x',
                                     size: 14,
                                     file,
-                                    click: handleRemove,
+                                    click: handleRemove
                                 })}
                             </li>
                         );
@@ -305,10 +280,7 @@ export default defineComponent({
                         {props.fileList.map((file) => {
                             return (
                                 <li class="lew-upload-list__item">
-                                    <img
-                                        class="lew-upload-list__item-thumbnail"
-                                        src={file.url}
-                                    />
+                                    <img class="lew-upload-list__item-thumbnail" src={file.url} />
                                     <div
                                         class="lew-upload-list__item-status"
                                         v-show={file.status === 'success'}
@@ -316,7 +288,7 @@ export default defineComponent({
                                         {renderIcon({
                                             isRender: true,
                                             type: 'check',
-                                            size: 14,
+                                            size: 14
                                         })}
                                     </div>
                                     <div class="lew-upload-list__item-actions">
@@ -325,14 +297,14 @@ export default defineComponent({
                                             type: 'eye',
                                             size: 20,
                                             file,
-                                            click: handlePreview,
+                                            click: handlePreview
                                         })}
                                         {renderIcon({
                                             isRender: !props.disabled,
                                             type: 'trash-2',
                                             size: 20,
                                             file,
-                                            click: handleRemove,
+                                            click: handleRemove
                                         })}
                                     </div>
                                 </li>
@@ -353,21 +325,18 @@ export default defineComponent({
             renderFileListPicture,
             renderFileListPictureCard,
             renderTipSlot,
-            submit,
+            submit
         };
     },
     render() {
         return (
             <>
-                {this.props.listType === 'picture-card' &&
-                    this.renderFileListPictureCard()}
-                {this.props.listType !== 'picture-card' &&
-                    this.renderUploader()}
+                {this.props.listType === 'picture-card' && this.renderFileListPictureCard()}
+                {this.props.listType !== 'picture-card' && this.renderUploader()}
                 {this.renderTipSlot()}
                 {this.props.listType === 'text' && this.renderFileListText()}
-                {this.props.listType === 'picture' &&
-                    this.renderFileListPicture()}
+                {this.props.listType === 'picture' && this.renderFileListPicture()}
             </>
         );
-    },
+    }
 });

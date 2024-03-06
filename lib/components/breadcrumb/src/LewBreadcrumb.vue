@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { breadcrumbProps } from './props';
-import { useLewTo } from '../../../hooks';
-const { lewTo } = useLewTo();
-defineProps(breadcrumbProps);
+    import { breadcrumbProps } from './props';
+    import { useLewTo } from '../../../hooks';
+    const { lewTo } = useLewTo();
+    defineProps(breadcrumbProps);
 </script>
 
 <template>
@@ -13,15 +13,10 @@ defineProps(breadcrumbProps);
             class="lew-breadcrumb-item"
             :class="{ 'lew-breadcrumb-active': item.active }"
         >
-            <span
-                :class="{ 'lew-breadcrumb-isPath': !!item.to }"
-                @click="lewTo(item.to)"
-                >{{ item.label }}</span
-            >
-            <div
-                v-if="index != options.length - 1"
-                class="lew-breadcrumb-parting"
-            >
+            <span :class="{ 'lew-breadcrumb-isPath': !!item.to }" @click="lewTo(item.to)">{{
+                item.label
+            }}</span>
+            <div v-if="index != options.length - 1" class="lew-breadcrumb-parting">
                 <svg
                     v-if="iconType === 'sprit'"
                     viewBox="0 0 48 48"
@@ -53,39 +48,39 @@ defineProps(breadcrumbProps);
 </template>
 
 <style lang="scss" scoped>
-.lew-breadcrumb {
-    display: inline-flex;
-    align-items: center;
-    .lew-breadcrumb-item {
+    .lew-breadcrumb {
         display: inline-flex;
         align-items: center;
-        font-size: 14px;
-        font-weight: 400;
-        color: var(--lew-text-color-5);
-        user-select: none;
-        span {
-            cursor: default;
-            padding: 2px 4px;
-            border-radius: 6px;
-        }
-        .lew-breadcrumb-isPath:hover {
-            cursor: pointer;
-            background-color: var(--lew-bgcolor-2);
-        }
-    }
-    .lew-breadcrumb-active {
-        color: var(--lew-text-color-2);
-        font-weight: 500;
-    }
-    .lew-breadcrumb-parting {
-        display: inline-flex;
-        align-items: center;
-        svg {
-            margin: 0px 5px;
-            height: 1em;
+        .lew-breadcrumb-item {
+            display: inline-flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 400;
             color: var(--lew-text-color-5);
-            opacity: 0.3;
+            user-select: none;
+            span {
+                cursor: default;
+                padding: 2px 4px;
+                border-radius: 6px;
+            }
+            .lew-breadcrumb-isPath:hover {
+                cursor: pointer;
+                background-color: var(--lew-bgcolor-2);
+            }
+        }
+        .lew-breadcrumb-active {
+            color: var(--lew-text-color-2);
+            font-weight: 500;
+        }
+        .lew-breadcrumb-parting {
+            display: inline-flex;
+            align-items: center;
+            svg {
+                margin: 0px 5px;
+                height: 1em;
+                color: var(--lew-text-color-5);
+                opacity: 0.3;
+            }
         }
     }
-}
 </style>

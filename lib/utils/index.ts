@@ -7,7 +7,7 @@ export const getIconType = (type: string | undefined): string => {
         warning: 'alert-triangle',
         success: 'check',
         error: 'alert-circle',
-        info: 'bell',
+        info: 'bell'
     };
     // @ts-ignore
     return map[type] || 'info';
@@ -21,7 +21,7 @@ export const getColorType = (type: string | undefined): string => {
         error: 'red',
         danger: 'red',
         info: 'blue',
-        primary: 'blue',
+        primary: 'blue'
     };
     // @ts-ignore
     return typeMap[type] || type;
@@ -97,7 +97,7 @@ export function genUid(): number {
 
 export const lewSetForm = ({
     formRef,
-    params,
+    params
 }: {
     formRef: any; // 传入formRef.value
     params: any; // 需要设置的参数

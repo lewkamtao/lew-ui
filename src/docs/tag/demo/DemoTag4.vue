@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const close = () => {
-    LewMessage.success('你点击了关闭');
-};
+    const close = () => {
+        LewMessage.success('你点击了关闭');
+    };
 </script>
 <template>
     <lew-flex x="start" wrap>

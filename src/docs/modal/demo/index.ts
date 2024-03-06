@@ -16,5 +16,5 @@ export {
     DemoModal1Code,
     DemoModal2Code,
     DemoModal3Code,
-    DemoModal4Code,
+    DemoModal4Code
 };

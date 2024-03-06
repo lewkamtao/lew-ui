@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-const pageNum = ref(2);
-const pageSize = ref(20);
-const change = (e: any) => {
-    console.log(e);
-};
-const total = ref(100);
+    const pageNum = ref(2);
+    const pageSize = ref(20);
+    const change = (e: any) => {
+        console.log(e);
+    };
+    const total = ref(100);
 </script>
 
 <template>
@@ -15,16 +15,16 @@ const total = ref(100);
             :page-size-options="[
                 {
                     label: '10 / 页',
-                    value: 10,
+                    value: 10
                 },
                 {
                     label: '20 / 页',
-                    value: 20,
+                    value: 20
                 },
                 {
                     label: '30 / 页',
-                    value: 30,
-                },
+                    value: 30
+                }
             ]"
             :total="total"
             @change="change"
@@ -41,16 +41,16 @@ const total = ref(100);
             :page-size-options="[
                 {
                     label: '10 / 页',
-                    value: 10,
+                    value: 10
                 },
                 {
                     label: '20 / 页',
-                    value: 20,
+                    value: 20
                 },
                 {
                     label: '30 / 页',
-                    value: 30,
-                },
+                    value: 30
+                }
             ]"
             :total="total"
             round

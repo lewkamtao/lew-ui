@@ -1,74 +1,74 @@
 <script setup lang="ts">
-import { inputTagProps } from './props';
-import { useVModel } from '@vueuse/core';
-import { LewInput, LewTag } from 'lew-ui';
-const emit = defineEmits(['close', 'change', 'update:modelValue']);
+    import { inputTagProps } from './props';
+    import { useVModel } from '@vueuse/core';
+    import { LewInput, LewTag } from 'lew-ui';
+    const emit = defineEmits(['close', 'change', 'update:modelValue']);
 
-const props = defineProps(inputTagProps);
-const tagsValue = useVModel(props, 'modelValue', emit);
-const inputValue = ref();
-const isInput = ref(false);
-const lewInputRef = ref();
-let isEnter = false;
+    const props = defineProps(inputTagProps);
+    const tagsValue = useVModel(props, 'modelValue', emit);
+    const inputValue = ref();
+    const isInput = ref(false);
+    const lewInputRef = ref();
+    let isEnter = false;
 
-let delDownTimer: any;
-let delDownCheck = 0;
-watch(
-    () => props.modelValue,
-    () => {
-        tagsValue.value = props.modelValue;
-    }
-);
-
-const openInput = () => {
-    isInput.value = true;
-    nextTick(() => {
-        lewInputRef.value.toFocus();
-    });
-    document.onkeydown = function (event) {
-        if (inputValue.value === '') {
-            if (event.keyCode === 8 || event.keyCode === 46) {
-                clearTimeout(delDownTimer);
-                delDownTimer = setTimeout(() => {
-                    delDownCheck = 0;
-                }, 500);
-                delDownCheck += 1;
-                if (delDownCheck >= 2) {
-                    tagsValue.value.splice(tagsValue.value.length - 1, 1);
-                    delDownCheck = 0;
-                }
-            }
-        } else if (event.keyCode === 13) {
-            isEnter = true;
+    let delDownTimer: any;
+    let delDownCheck = 0;
+    watch(
+        () => props.modelValue,
+        () => {
+            tagsValue.value = props.modelValue;
         }
+    );
+
+    const openInput = () => {
+        isInput.value = true;
+        nextTick(() => {
+            lewInputRef.value.toFocus();
+        });
+        document.onkeydown = function (event) {
+            if (inputValue.value === '') {
+                if (event.keyCode === 8 || event.keyCode === 46) {
+                    clearTimeout(delDownTimer);
+                    delDownTimer = setTimeout(() => {
+                        delDownCheck = 0;
+                    }, 500);
+                    delDownCheck += 1;
+                    if (delDownCheck >= 2) {
+                        tagsValue.value.splice(tagsValue.value.length - 1, 1);
+                        delDownCheck = 0;
+                    }
+                }
+            } else if (event.keyCode === 13) {
+                isEnter = true;
+            }
+        };
     };
-};
 
-const blurFn = (e: any) => {
-    isInput.value = false;
-    document.onkeydown = null;
-    addTag();
-    if (isEnter) {
-        openInput();
-    }
-    isEnter = false;
-};
+    const blurFn = () => {
+        isInput.value = false;
+        document.onkeydown = null;
+        addTag();
+        if (isEnter) {
+            openInput();
+        }
+        isEnter = false;
+    };
 
-const addTag = () => {
-    let _value = tagsValue.value || [];
-    if (inputValue.value) {
-        _value.push(inputValue.value);
-    }
-    inputValue.value = '';
-    tagsValue.value = _value;
-    emit('change', _value);
-};
+    const addTag = () => {
+        let _value = tagsValue.value || [];
+        if (inputValue.value) {
+            _value.push(inputValue.value);
+        }
+        inputValue.value = '';
+        tagsValue.value = _value;
+        emit('change', _value);
+    };
 
-const delTag = (index: number) => {
-    tagsValue.value.splice(index, 1);
-    emit('change', tagsValue.value);
-    emit('close', tagsValue.value);
-};
+    const delTag = (index: number) => {
+        tagsValue.value.splice(index, 1);
+        emit('change', tagsValue.value);
+        emit('close', tagsValue.value);
+    };
 </script>
 
 <template>
@@ -76,9 +76,9 @@ const delTag = (index: number) => {
         <div style="margin-left: -10px; height: 26px"></div>
         <TransitionGroup name="list">
             <lew-tag
-                type="light"
                 v-for="(item, index) in tagsValue"
                 :key="index"
+                type="light"
                 closable
                 @close="delTag(index)"
                 >{{ item }}
@@ -101,50 +101,50 @@ const delTag = (index: number) => {
 </template>
 
 <style lang="scss" scoped>
-.lew-input-tag-view {
-    display: inline-flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    border: var(--lew-form-border-width solid rgba(0, 0, 0, 0));
+    .lew-input-tag-view {
+        display: inline-flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        border: var(--lew-form-border-width solid rgba(0, 0, 0, 0));
 
-    .lew-input-tag {
-        height: 26px;
-        flex-shrink: 1;
-
-        ::v-deep input {
+        .lew-input-tag {
             height: 26px;
+            flex-shrink: 1;
+
+            ::v-deep input {
+                height: 26px;
+            }
         }
     }
-}
 
-.lew-input-tag-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    height: 26px;
-    width: 65px;
-    box-sizing: border-box;
-    border-radius: var(--lew-border-radius);
-    background-color: var(--lew-bgcolor-0);
-    color: var(--lew-text-color-8);
-    border: var(--lew-text-color-8) var(--lew-form-border-width) dashed;
-}
+    .lew-input-tag-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        height: 26px;
+        width: 65px;
+        box-sizing: border-box;
+        border-radius: var(--lew-border-radius);
+        background-color: var(--lew-bgcolor-0);
+        color: var(--lew-text-color-8);
+        border: var(--lew-text-color-8) var(--lew-form-border-width) dashed;
+    }
 
-.lew-input-tag-button:hover {
-    color: var(--lew-color-primary);
-    border: var(--lew-color-primary) var(--lew-form-border-width) dashed;
-}
+    .lew-input-tag-button:hover {
+        color: var(--lew-color-primary);
+        border: var(--lew-color-primary) var(--lew-form-border-width) dashed;
+    }
 
-.list-enter-active,
-.list-leave-active {
-    transition: all 0.15s ease-in-out;
-}
+    .list-enter-active,
+    .list-leave-active {
+        transition: all 0.15s ease-in-out;
+    }
 
-.list-enter-from,
-.list-leave-to {
-    opacity: 0;
-    transform: translateX(-5px);
-}
+    .list-enter-from,
+    .list-leave-to {
+        opacity: 0;
+        transform: translateX(-5px);
+    }
 </style>

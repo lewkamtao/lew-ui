@@ -12,5 +12,5 @@ export {
     DemoBreadcrumb3,
     DemoBreadcrumb1Code,
     DemoBreadcrumb2Code,
-    DemoBreadcrumb3Code,
+    DemoBreadcrumb3Code
 };

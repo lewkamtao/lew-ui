@@ -24,5 +24,5 @@ export {
     DemoTag3Code,
     DemoTag4Code,
     DemoTag5Code,
-    DemoTag6Code,
+    DemoTag6Code
 };

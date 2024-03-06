@@ -2,8 +2,7 @@
 
 # Lew-UI
 
-A Component Library for Vue3.js.
-Doc address: https://lew.kamtao.com
+A Component Library for Vue3.js. Doc address: https://lew.kamtao.com
 
 ## Install
 
@@ -19,12 +18,12 @@ npm install lew-ui --save
 // main.ts
 import 'lew-ui/style';
 ```
- 
+
 页面
 
 ```vue
 <script setup lang="ts">
-import { LewButton } from 'lew-ui';
+    import { LewButton } from 'lew-ui';
 </script>
 
 <template>
@@ -46,4 +45,5 @@ import { LewButton } from 'lew-ui';
 -   https://fengyuanchen.github.io/vue-feather/
 
 ## License
+
 Lew UI is open source software licensed as MIT.

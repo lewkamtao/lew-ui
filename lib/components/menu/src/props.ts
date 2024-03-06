@@ -16,13 +16,13 @@ export const menuProps = {
         type: Array as PropType<MenuOptions[]>,
         default: [],
         typeDesc: `MenuOptions[]`,
-        description: '颜色',
+        description: '颜色'
     },
     actived: {
         type: String,
         default: '',
-        description: '选中的值',
-    },
+        description: '选中的值'
+    }
 };
 
 export type MenuProps = ExtractPropTypes<typeof menuProps>;

@@ -40,5 +40,5 @@ export {
     DemoCascader7Code,
     DemoCascader8Code,
     DemoCascader9Code,
-    DemoCascader10Code,
+    DemoCascader10Code
 };

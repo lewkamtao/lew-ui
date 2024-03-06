@@ -24,5 +24,5 @@ export {
     DemoSelect3Code,
     DemoSelect4Code,
     DemoSelect5Code,
-    DemoSelect6Code,
+    DemoSelect6Code
 };

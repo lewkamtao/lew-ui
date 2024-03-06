@@ -30,10 +30,7 @@ const install: any = function (Vue: App): void {
     );
 
     _components.forEach((component: any) => {
-        if (
-            component.hasOwnProperty('name') ||
-            component.hasOwnProperty('__name')
-        ) {
+        if (component.hasOwnProperty('name') || component.hasOwnProperty('__name')) {
             Vue.component(`${component.name || component.__name}`, component);
         }
     });
@@ -49,5 +46,5 @@ const install: any = function (Vue: App): void {
 };
 
 export default {
-    install,
+    install
 };

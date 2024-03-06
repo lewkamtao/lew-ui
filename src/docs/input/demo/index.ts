@@ -16,5 +16,5 @@ export {
     DemoInput1Code,
     DemoInput2Code,
     DemoInput3Code,
-    DemoInput4Code,
+    DemoInput4Code
 };

@@ -1,42 +1,40 @@
 <script setup lang="ts">
-import {
-    DemoTable1,
-    DemoTable2,
-    DemoTable3,
-    DemoTable4,
-    DemoTable5,
-    DemoTable6,
-    DemoTable7,
-    DemoTable8,
-    DemoTable9,
-    DemoTable1Code,
-    DemoTable2Code,
-    DemoTable3Code,
-    DemoTable4Code,
-    DemoTable5Code,
-    DemoTable6Code,
-    DemoTable7Code,
-    DemoTable8Code,
-    DemoTable9Code,
-} from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
-import * as API from './api';
+    import {
+        DemoTable1,
+        DemoTable2,
+        DemoTable3,
+        DemoTable4,
+        DemoTable5,
+        DemoTable6,
+        DemoTable7,
+        DemoTable8,
+        DemoTable9,
+        DemoTable1Code,
+        DemoTable2Code,
+        DemoTable3Code,
+        DemoTable4Code,
+        DemoTable5Code,
+        DemoTable6Code,
+        DemoTable7Code,
+        DemoTable8Code,
+        DemoTable9Code
+    } from './demo';
+    import LewDemoBox from '../../layout/LewDemoBox.vue';
+    import LewDocsTables from '../../layout/LewDocsTables.vue';
+    import * as API from './api';
 
-const options = ref(
-    Object.keys(API).map((key: any) => {
-        // @ts-ignore
-        return API[key];
-    })
-);
+    const options = ref(
+        Object.keys(API).map((key: any) => {
+            // @ts-ignore
+            return API[key];
+        })
+    );
 </script>
 
 <template>
     <div class="demo-wrapper">
         <lew-title>Table</lew-title>
-        <p class="sub-title">
-            这是用div取代传统的table，看起来很简单，但其实功能没少。
-        </p>
+        <p class="sub-title"> 这是用div取代传统的table，看起来很简单，但其实功能没少。 </p>
         <lew-demo-box title="常规" :code="DemoTable1Code">
             <demo-table1 />
             <lew-alert
@@ -46,8 +44,8 @@ const options = ref(
                     {
                         type: 'warning',
                         title: '注意',
-                        content: '你必须在「columns」中设置每一列的宽度',
-                    },
+                        content: '你必须在「columns」中设置每一列的宽度'
+                    }
                 ]"
             />
         </lew-demo-box>
@@ -61,8 +59,8 @@ const options = ref(
                         type: 'info',
                         title: '提示',
                         content:
-                            '你可以设置max-height，来限制高度，设置max-height触发时自动固定head。',
-                    },
+                            '你可以设置max-height，来限制高度，设置max-height触发时自动固定head。'
+                    }
                 ]"
             />
         </lew-demo-box>
@@ -74,8 +72,8 @@ const options = ref(
                     {
                         type: 'info',
                         title: '提示',
-                        content: '插槽为你提供了整列和整行的数据以及参数。',
-                    },
+                        content: '插槽为你提供了整列和整行的数据以及参数。'
+                    }
                 ]"
                 :size="16"
             />
@@ -90,8 +88,8 @@ const options = ref(
                         type: 'info',
                         title: '提示',
                         content: `你可以使用任何组件;
-                            甚至你可以使用 popover + input 这种高度自定义的方式录入信息。`,
-                    },
+                            甚至你可以使用 popover + input 这种高度自定义的方式录入信息。`
+                    }
                 ]"
             />
         </lew-demo-box>
@@ -104,8 +102,8 @@ const options = ref(
                     {
                         type: 'info',
                         title: '提示',
-                        content: `你可以根据自己的实际情况来自定义某一行，某一列，某一个单元格的样式;`,
-                    },
+                        content: `你可以根据自己的实际情况来自定义某一行，某一列，某一个单元格的样式;`
+                    }
                 ]"
             />
         </lew-demo-box>
@@ -118,8 +116,8 @@ const options = ref(
                     {
                         type: 'warning',
                         title: '警告',
-                        content: `当checkable开启时，必须设置rowKey。`,
-                    },
+                        content: `当checkable开启时，必须设置rowKey。`
+                    }
                 ]"
             />
         </lew-demo-box>
@@ -140,8 +138,8 @@ const options = ref(
                         3、自定义结构，你可以在单元格内自由自定义，例如：「按钮」、「头像」、「标签」等
                         4、插槽，高度的便利性，你可以使用「计算属性」给文本转格式。
                         5、适用「tooltip」，对于长文本，你可以省略号隐藏起来，通过「气泡」的形式展现。
-                        `,
-                    },
+                        `
+                    }
                 ]"
             />
         </lew-demo-box>

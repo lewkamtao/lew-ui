@@ -23,7 +23,7 @@ export default {
                     type: 'loader',
                     animation: 'spin',
                     'animation-speed': 'fast',
-                    size: iconSize,
+                    size: iconSize
                 });
                 loader.mount(loadingBox);
                 // // add loading text
@@ -45,7 +45,7 @@ export default {
                 } else {
                     el.classList.remove('lew-loading-show');
                 }
-            },
+            }
         });
-    },
+    }
 };

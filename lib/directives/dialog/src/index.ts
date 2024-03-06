@@ -45,7 +45,7 @@ const dialog = (type: string, options: Options) => {
         cancelText,
         layout,
         closeOnClickOverlay,
-        closeByEsc,
+        closeByEsc
     } = options;
     const div: HTMLDivElement = document.createElement('div');
     const transformOrigin = `${x.value}px ${y.value}px`;
@@ -77,14 +77,14 @@ const dialog = (type: string, options: Options) => {
                         cancel ||
                         (() => {
                             return true;
-                        }),
+                        })
                 },
                 {
                     title: () => title,
-                    content: () => content,
+                    content: () => content
                 }
             );
-        },
+        }
     });
     app.mount(div);
     div.remove();
@@ -96,5 +96,5 @@ export default {
     info,
     normal,
     success,
-    error,
+    error
 };

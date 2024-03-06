@@ -9,11 +9,7 @@ class UploadHttpError extends Error {
 
     url: string;
 
-    constructor(
-        message: string,
-        xhr: XMLHttpRequest,
-        options: UploadRequestOptions
-    ) {
+    constructor(message: string, xhr: XMLHttpRequest, options: UploadRequestOptions) {
         super(message);
         this.status = xhr.status;
         this.method = options.method;
@@ -55,9 +51,7 @@ export function http(options: UploadRequestOptions) {
     xhr.open(options.method, options.action, true);
 
     if (options.headers instanceof Headers) {
-        options.headers.forEach((value, key) =>
-            xhr.setRequestHeader(key, value)
-        );
+        options.headers.forEach((value, key) => xhr.setRequestHeader(key, value));
     } else {
         for (const [key, value] of Object.entries(options.headers)) {
             if (value === null || value === undefined) continue;

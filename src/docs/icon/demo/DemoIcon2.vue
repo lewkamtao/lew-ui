@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { useClipboard } from '@vueuse/core';
+    import { useClipboard } from '@vueuse/core';
 
-const iconArr = ref(['rotate-ccw', 'loader', 'settings', 'sun']);
-const { copy, isSupported } = useClipboard();
-const handleCopy = (text: string) => {
-    if (!isSupported) {
-        LewMessage.error('您的浏览器不支持Clipboard API');
-        return;
-    }
-    const htmlText = `<lew-icon type="${text}" />`;
-    copy(htmlText);
-    LewMessage.success(`复制成功`);
-};
+    const iconArr = ref(['rotate-ccw', 'loader', 'settings', 'sun']);
+    const { copy, isSupported } = useClipboard();
+    const handleCopy = (text: string) => {
+        if (!isSupported) {
+            LewMessage.error('您的浏览器不支持Clipboard API');
+            return;
+        }
+        const htmlText = `<lew-icon type="${text}" />`;
+        copy(htmlText);
+        LewMessage.success('复制成功');
+    };
 </script>
 
 <template>
@@ -22,18 +22,13 @@ const handleCopy = (text: string) => {
             v-tooltip="{
                 content: '点击复制',
                 placement: 'bottom',
-                trigger: 'mouseenter',
+                trigger: 'mouseenter'
             }"
             direction="y"
             class="icon-box"
             @click="handleCopy(item)"
         >
-            <lew-icon
-                size="36"
-                :type="item"
-                animation="spin"
-                animation-speed="fast"
-            />
+            <lew-icon size="36" :type="item" animation="spin" animation-speed="fast" />
             <div class="name">
                 {{ item }}
             </div>
@@ -42,20 +37,20 @@ const handleCopy = (text: string) => {
 </template>
 
 <style lang="scss" scoped>
-.icon-box {
-    margin-top: 40px;
-    width: 140px;
-    border-radius: var(--lew-border-radius);
-    transition: all 0.15s;
-    cursor: pointer;
+    .icon-box {
+        margin-top: 40px;
+        width: 140px;
+        border-radius: var(--lew-border-radius);
+        transition: all 0.15s;
+        cursor: pointer;
 
-    .name {
-        white-space: nowrap;
-        color: #999;
+        .name {
+            white-space: nowrap;
+            color: #999;
+        }
     }
-}
 
-.icon-box:hover {
-    transform: translateY(-3px);
-}
+    .icon-box:hover {
+        transform: translateY(-3px);
+    }
 </style>

@@ -12,5 +12,5 @@ export {
     DemoMagicNumber2,
     DemoMagicNumber2Code,
     DemoMagicNumber3,
-    DemoMagicNumber3Code,
+    DemoMagicNumber3Code
 };

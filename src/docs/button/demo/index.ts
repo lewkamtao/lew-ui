@@ -28,5 +28,5 @@ export {
     DemoButton4Code,
     DemoButton5Code,
     DemoButton6Code,
-    DemoButton7Code,
+    DemoButton7Code
 };

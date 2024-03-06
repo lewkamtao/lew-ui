@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import * as Yup from 'yup';
+    import * as Yup from 'yup';
 
-const visible = ref(false);
-const title = ref('加载中');
-const form = ref({});
-const options = ref([
-    {
-        field: 'username',
-        label: '用户名',
-        as: 'input',
-        rules: Yup.string().required(),
-    },
-    {
-        field: 'password',
-        label: '密码',
-        as: 'input',
-        rules: Yup.string().min(6).required(),
-        props: {
-            type: 'password',
+    const visible = ref(false);
+    const title = ref('加载中');
+    const form = ref({});
+    const options = ref([
+        {
+            field: 'username',
+            label: '用户名',
+            as: 'input',
+            rules: Yup.string().required()
         },
-    },
-]);
+        {
+            field: 'password',
+            label: '密码',
+            as: 'input',
+            rules: Yup.string().min(6).required(),
+            props: {
+                type: 'password'
+            }
+        }
+    ]);
 </script>
 
 <template>
@@ -31,9 +31,7 @@ const options = ref([
             direction="y"
             style="padding: 20px; box-shadow: var(--lew-box-shadow)"
         >
-            <lew-title :bold="700" style="margin-bottom: 20px"
-                >登录你的账户
-            </lew-title>
+            <lew-title :bold="700" style="margin-bottom: 20px">登录你的账户 </lew-title>
             <lew-form
                 v-model="form"
                 direction="y"
@@ -54,15 +52,9 @@ const options = ref([
         <lew-flex
             v-loading="{ visible: visible, title: title }"
             direction="y"
-            style="
-                margin-bottom: 20px;
-                box-shadow: var(--lew-box-shadow);
-                padding: 20px;
-            "
+            style="margin-bottom: 20px; box-shadow: var(--lew-box-shadow); padding: 20px"
         >
-            <lew-title :bold="700" style="margin-bottom: 20px"
-                >登录你的账户
-            </lew-title>
+            <lew-title :bold="700" style="margin-bottom: 20px">登录你的账户 </lew-title>
             <lew-form
                 v-model="form"
                 direction="y"

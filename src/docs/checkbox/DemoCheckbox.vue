@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import {
-    DemoCheckbox1,
-    DemoCheckbox2,
-    DemoCheckbox3,
-    DemoCheckbox4,
-    DemoCheckbox5,
-    DemoCheckbox1Code,
-    DemoCheckbox2Code,
-    DemoCheckbox3Code,
-    DemoCheckbox4Code,
-    DemoCheckbox5Code,
-} from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
-import * as API from './api';
+    import {
+        DemoCheckbox1,
+        DemoCheckbox2,
+        DemoCheckbox3,
+        DemoCheckbox4,
+        DemoCheckbox5,
+        DemoCheckbox1Code,
+        DemoCheckbox2Code,
+        DemoCheckbox3Code,
+        DemoCheckbox4Code,
+        DemoCheckbox5Code
+    } from './demo';
+    import LewDemoBox from '../../layout/LewDemoBox.vue';
+    import LewDocsTables from '../../layout/LewDocsTables.vue';
+    import * as API from './api';
 
-const options = ref(
-    Object.keys(API).map((key: any) => {
-        // @ts-ignore
-        return API[key];
-    })
-);
+    const options = ref(
+        Object.keys(API).map((key: any) => {
+            // @ts-ignore
+            return API[key];
+        })
+    );
 </script>
 
 <template>
@@ -30,9 +30,7 @@ const options = ref(
         <lew-demo-box title="常规" :code="DemoCheckbox1Code">
             <demo-checkbox1 />
         </lew-demo-box>
-        <lew-demo-box title="y 布局" :code="DemoCheckbox2Code">
-            <demo-checkbox2
-        /></lew-demo-box>
+        <lew-demo-box title="y 布局" :code="DemoCheckbox2Code"> <demo-checkbox2 /></lew-demo-box>
         <lew-demo-box title="块" :code="DemoCheckbox3Code" tag="方的">
             <demo-checkbox3 />
         </lew-demo-box>

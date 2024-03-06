@@ -49,7 +49,7 @@ export const getMonthDate = (year?: number, month?: number): RetType => {
             date,
             year: year as number,
             month: thisMonth,
-            showDate,
+            showDate
         });
     }
 

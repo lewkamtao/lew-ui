@@ -11,8 +11,8 @@ export const alertProps = {
     list: {
         type: Array as PropType<AlertItem[]>,
         default: [],
-        description: '配置列表',
-    },
+        description: '配置列表'
+    }
 };
 
 export type AlertProps = ExtractPropTypes<typeof alertProps>;

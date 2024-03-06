@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { DemoDrawer1, DemoDrawer1Code } from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
-import * as API from './api';
+    import { DemoDrawer1, DemoDrawer1Code } from './demo';
+    import LewDemoBox from '../../layout/LewDemoBox.vue';
+    import LewDocsTables from '../../layout/LewDocsTables.vue';
+    import * as API from './api';
 
-const options = ref(
-    Object.keys(API).map((key: any) => {
-        // @ts-ignore
-        return API[key];
-    })
-);
+    const options = ref(
+        Object.keys(API).map((key: any) => {
+            // @ts-ignore
+            return API[key];
+        })
+    );
 </script>
 
 <template>
@@ -23,11 +23,11 @@ const options = ref(
 </template>
 
 <style lang="scss" scoped>
-.main {
-    width: 100%;
-    margin: 0 auto;
-    > div {
-        margin-bottom: 40px;
+    .main {
+        width: 100%;
+        margin: 0 auto;
+        > div {
+            margin-bottom: 40px;
+        }
     }
-}
 </style>

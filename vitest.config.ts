@@ -5,13 +5,13 @@ import VueJsx from '@vitejs/plugin-vue-jsx';
 export default defineConfig({
     plugins: [Vue(), VueJsx()],
     optimizeDeps: {
-        disabled: true,
+        disabled: true
     },
     test: {
         clearMocks: true,
         environment: 'jsdom',
         transformMode: {
-            web: [/\.[jt]sx$/],
-        },
-    },
+            web: [/\.[jt]sx$/]
+        }
+    }
 });

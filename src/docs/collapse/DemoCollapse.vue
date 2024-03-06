@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import {
-    DemoCollapse1,
-    DemoCollapse1Code,
-    DemoCollapse2,
-    DemoCollapse2Code,
-    DemoCollapse3,
-    DemoCollapse3Code,
-} from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
-import * as API from './api';
+    import {
+        DemoCollapse1,
+        DemoCollapse1Code,
+        DemoCollapse2,
+        DemoCollapse2Code,
+        DemoCollapse3,
+        DemoCollapse3Code
+    } from './demo';
+    import LewDemoBox from '../../layout/LewDemoBox.vue';
+    import LewDocsTables from '../../layout/LewDocsTables.vue';
+    import * as API from './api';
 
-const options = ref(
-    Object.keys(API).map((key: any) => {
-        // @ts-ignore
-        return API[key];
-    })
-);
+    const options = ref(
+        Object.keys(API).map((key: any) => {
+            // @ts-ignore
+            return API[key];
+        })
+    );
 </script>
 
 <template>
@@ -42,7 +42,7 @@ const options = ref(
 </template>
 
 <style lang="scss" scoped>
-.lew-avatar {
-    margin: 10px;
-}
+    .lew-avatar {
+        margin: 10px;
+    }
 </style>

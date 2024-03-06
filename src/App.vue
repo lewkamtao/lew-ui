@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TheHeader from './layout/TheHeader.vue';
+    import TheHeader from './layout/TheHeader.vue';
 </script>
 
 <template>
@@ -10,19 +10,19 @@ import TheHeader from './layout/TheHeader.vue';
 </template>
 
 <style lang="scss" scoped>
-.wrapper {
-    height: 100%;
-    margin: 0 auto;
-    background: var(--lew-bgcolor-0);
-    border-left: var(--lew-border-2);
-    border-right: var(--lew-border-2);
-}
-
-@media (max-width: 767px) {
     .wrapper {
-        width: 100vw;
-        border-left: none;
-        border-right: none;
+        height: 100%;
+        margin: 0 auto;
+        background: var(--lew-bgcolor-0);
+        border-left: var(--lew-border-2);
+        border-right: var(--lew-border-2);
     }
-}
+
+    @media (max-width: 767px) {
+        .wrapper {
+            width: 100vw;
+            border-left: none;
+            border-right: none;
+        }
+    }
 </style>

@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import {
-    DemoInput1,
-    DemoInput2,
-    DemoInput3,
-    DemoInput4,
-    DemoInput1Code,
-    DemoInput2Code,
-    DemoInput3Code,
-    DemoInput4Code,
-} from './demo';
-import LewDemoBox from '../../layout/LewDemoBox.vue';
-import LewDocsTables from '../../layout/LewDocsTables.vue';
-import * as API from './api';
+    import {
+        DemoInput1,
+        DemoInput2,
+        DemoInput3,
+        DemoInput4,
+        DemoInput1Code,
+        DemoInput2Code,
+        DemoInput3Code,
+        DemoInput4Code
+    } from './demo';
+    import LewDemoBox from '../../layout/LewDemoBox.vue';
+    import LewDocsTables from '../../layout/LewDocsTables.vue';
+    import * as API from './api';
 
-const options = ref(
-    Object.keys(API).map((key: any) => {
-        // @ts-ignore
-        return API[key];
-    })
-);
+    const options = ref(
+        Object.keys(API).map((key: any) => {
+            // @ts-ignore
+            return API[key];
+        })
+    );
 </script>
 
 <template>
@@ -41,8 +41,8 @@ const options = ref(
 </template>
 
 <style lang="scss" scoped>
-.scroll-x {
-    width: 100%;
-    overflow-x: auto;
-}
+    .scroll-x {
+        width: 100%;
+        overflow-x: auto;
+    }
 </style>

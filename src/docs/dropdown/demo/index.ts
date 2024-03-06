@@ -12,5 +12,5 @@ export {
     DemoDropdown3,
     DemoDropdown1Code,
     DemoDropdown2Code,
-    DemoDropdown3Code,
+    DemoDropdown3Code
 };
