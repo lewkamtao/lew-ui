@@ -8,6 +8,6 @@
  */
 import DemoDrawer1 from './DemoDrawer1.vue';
 
-import DemoDrawer1_code from './DemoDrawer1.vue?raw';
+import DemoDrawer1Code from './DemoDrawer1.vue?raw';
 
-export { DemoDrawer1, DemoDrawer1_code };
+export { DemoDrawer1, DemoDrawer1Code };

@@ -2,8 +2,8 @@
 import {
     DemoInputPro1,
     DemoInputPro2,
-    DemoInputPro1_code,
-    DemoInputPro2_code,
+    DemoInputPro1Code,
+    DemoInputPro2Code,
 } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
@@ -139,10 +139,10 @@ const docsTable = reactive([
     <div class="demo-wrapper">
         <lew-title>InputPro</lew-title>
         <p class="sub-title">这是一个增强版的输入框，新增：预选择</p>
-        <lew-demo-box title="x 布局" :code="DemoInputPro1_code">
+        <lew-demo-box title="x 布局" :code="DemoInputPro1Code">
             <demo-input-pro1 />
         </lew-demo-box>
-        <lew-demo-box title="y 布局" :code="DemoInputPro2_code">
+        <lew-demo-box title="y 布局" :code="DemoInputPro2Code">
             <demo-input-pro2 />
         </lew-demo-box>
 

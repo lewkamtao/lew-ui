@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DemoInputTag1, DemoInputTag1_code } from './demo';
+import { DemoInputTag1, DemoInputTag1Code } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
 import * as API from './api';
@@ -16,7 +16,7 @@ const options = ref(
     <div class="demo-wrapper">
         <lew-title>InputTag</lew-title>
         <p class="sub-title">这是一个标签的输入框</p>
-        <lew-demo-box title="常规" :code="DemoInputTag1_code">
+        <lew-demo-box title="常规" :code="DemoInputTag1Code">
             <demo-input-tag1 />
             <lew-alert
                 style="margin-top: 20px"

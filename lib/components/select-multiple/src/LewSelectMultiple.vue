@@ -381,7 +381,7 @@ defineExpose({ show, hide });
         .icon-select {
             position: absolute;
             top: 50%;
-			right: 9px;
+            right: 9px;
             transform: translateY(-50%) rotate(0deg);
             transition: var(--lew-form-transition);
             opacity: var(--lew-form-icon-opacity);

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DemoMark1, DemoMark1_code } from './demo';
+import { DemoMark1, DemoMark1Code } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
 import * as API from './api';
@@ -18,7 +18,7 @@ const options = ref(
         <p class="sub-title">
             虽然这小家伙看起来很简单，但是我觉得它非常有用，在我看来。
         </p>
-        <lew-demo-box title="文本标记" :code="DemoMark1_code">
+        <lew-demo-box title="文本标记" :code="DemoMark1Code">
             <demo-mark1>删除</demo-mark1></lew-demo-box
         >
         <lew-docs-tables :options="options"></lew-docs-tables>

@@ -4,11 +4,11 @@ import DemoCheckbox3 from './DemoCheckbox3.vue';
 import DemoCheckbox4 from './DemoCheckbox4.vue';
 import DemoCheckbox5 from './DemoCheckbox5.vue';
 
-import DemoCheckbox1_code from './DemoCheckbox1.vue?raw';
-import DemoCheckbox2_code from './DemoCheckbox2.vue?raw';
-import DemoCheckbox3_code from './DemoCheckbox3.vue?raw';
-import DemoCheckbox4_code from './DemoCheckbox4.vue?raw';
-import DemoCheckbox5_code from './DemoCheckbox5.vue?raw';
+import DemoCheckbox1Code from './DemoCheckbox1.vue?raw';
+import DemoCheckbox2Code from './DemoCheckbox2.vue?raw';
+import DemoCheckbox3Code from './DemoCheckbox3.vue?raw';
+import DemoCheckbox4Code from './DemoCheckbox4.vue?raw';
+import DemoCheckbox5Code from './DemoCheckbox5.vue?raw';
 
 export {
     DemoCheckbox1,
@@ -16,9 +16,9 @@ export {
     DemoCheckbox3,
     DemoCheckbox4,
     DemoCheckbox5,
-    DemoCheckbox1_code,
-    DemoCheckbox2_code,
-    DemoCheckbox3_code,
-    DemoCheckbox4_code,
-    DemoCheckbox5_code,
+    DemoCheckbox1Code,
+    DemoCheckbox2Code,
+    DemoCheckbox3Code,
+    DemoCheckbox4Code,
+    DemoCheckbox5Code,
 };

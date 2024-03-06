@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import {
-    DemoPopok1,
-    DemoPopok2,
-    DemoPopok1_code,
-    DemoPopok2_code,
-} from './demo';
+import { DemoPopok1, DemoPopok2, DemoPopok1Code, DemoPopok2Code } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
 import * as API from './api';
@@ -20,11 +15,11 @@ const options = ref(
 <template>
     <div class="demo-wrapper">
         <lew-title>Popok</lew-title>
-        <lew-demo-box title="简单的询问" tag="click" :code="DemoPopok1_code">
+        <lew-demo-box title="简单的询问" tag="click" :code="DemoPopok1Code">
             <demo-popok1> </demo-popok1>
         </lew-demo-box>
 
-        <lew-demo-box title="简单的询问" tag="hover" :code="DemoPopok2_code">
+        <lew-demo-box title="简单的询问" tag="hover" :code="DemoPopok2Code">
             <demo-popok2> </demo-popok2>
         </lew-demo-box>
         <lew-title :size="16">Props</lew-title>

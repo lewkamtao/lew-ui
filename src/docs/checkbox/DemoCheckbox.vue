@@ -5,11 +5,11 @@ import {
     DemoCheckbox3,
     DemoCheckbox4,
     DemoCheckbox5,
-    DemoCheckbox1_code,
-    DemoCheckbox2_code,
-    DemoCheckbox3_code,
-    DemoCheckbox4_code,
-    DemoCheckbox5_code,
+    DemoCheckbox1Code,
+    DemoCheckbox2Code,
+    DemoCheckbox3Code,
+    DemoCheckbox4Code,
+    DemoCheckbox5Code,
 } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
@@ -27,19 +27,19 @@ const options = ref(
     <div class="demo-wrapper">
         <lew-title>Checkbox</lew-title>
         <p class="sub-title">通过复选框选择一个或多个数据。</p>
-        <lew-demo-box title="常规" :code="DemoCheckbox1_code">
+        <lew-demo-box title="常规" :code="DemoCheckbox1Code">
             <demo-checkbox1 />
         </lew-demo-box>
-        <lew-demo-box title="y 布局" :code="DemoCheckbox2_code">
+        <lew-demo-box title="y 布局" :code="DemoCheckbox2Code">
             <demo-checkbox2
         /></lew-demo-box>
-        <lew-demo-box title="块" :code="DemoCheckbox3_code" tag="方的">
+        <lew-demo-box title="块" :code="DemoCheckbox3Code" tag="方的">
             <demo-checkbox3 />
         </lew-demo-box>
-        <lew-demo-box title="块" :code="DemoCheckbox4_code" tag="圆的">
+        <lew-demo-box title="块" :code="DemoCheckbox4Code" tag="圆的">
             <demo-checkbox4 />
         </lew-demo-box>
-        <lew-demo-box title="单个模式" :code="DemoCheckbox5_code">
+        <lew-demo-box title="单个模式" :code="DemoCheckbox5Code">
             <demo-checkbox5 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>

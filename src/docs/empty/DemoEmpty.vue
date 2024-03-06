@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DemoEmpty1, DemoEmpty1_code } from './demo';
+import { DemoEmpty1, DemoEmpty1Code } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
 import * as API from './api';
@@ -19,7 +19,7 @@ const options = ref(
             有时候，一个好看的缺省页，会让你的用户感觉很舒服。
             <lew-mark type="light" color="blue" to="/Popok">Popok</lew-mark>
         </p>
-        <lew-demo-box title="暂无数据" :code="DemoEmpty1_code">
+        <lew-demo-box title="暂无数据" :code="DemoEmpty1Code">
             <demo-empty1 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>

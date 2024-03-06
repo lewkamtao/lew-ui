@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DemoIcon1, DemoIcon1_code, DemoIcon2, DemoIcon2_code } from './demo';
+import { DemoIcon1, DemoIcon1Code, DemoIcon2, DemoIcon2Code } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
 </script>
@@ -16,10 +16,10 @@ import LewDocsTables from '../../layout/LewDocsTables.vue';
             >
             强力驱动
         </p>
-        <lew-demo-box title="图标" :code="DemoIcon1_code">
+        <lew-demo-box title="图标" :code="DemoIcon1Code">
             <demo-icon1 />
         </lew-demo-box>
-        <lew-demo-box title="旋转动画" :code="DemoIcon2_code">
+        <lew-demo-box title="旋转动画" :code="DemoIcon2Code">
             <demo-icon2 />
         </lew-demo-box>
     </div>

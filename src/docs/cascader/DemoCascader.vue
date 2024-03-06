@@ -10,16 +10,16 @@ import {
     DemoCascader8,
     DemoCascader9,
     DemoCascader10,
-    DemoCascader1_code,
-    DemoCascader2_code,
-    DemoCascader3_code,
-    DemoCascader4_code,
-    DemoCascader5_code,
-    DemoCascader6_code,
-    DemoCascader7_code,
-    DemoCascader8_code,
-    DemoCascader9_code,
-    DemoCascader10_code,
+    DemoCascader1Code,
+    DemoCascader2Code,
+    DemoCascader3Code,
+    DemoCascader4Code,
+    DemoCascader5Code,
+    DemoCascader6Code,
+    DemoCascader7Code,
+    DemoCascader8Code,
+    DemoCascader9Code,
+    DemoCascader10Code,
 } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
@@ -35,10 +35,10 @@ const options = ref(
 <template>
     <div class="demo-wrapper">
         <lew-title>Cascader</lew-title>
-        <lew-demo-box title="尺寸" :code="DemoCascader1_code">
+        <lew-demo-box title="尺寸" :code="DemoCascader1Code">
             <demo-cascader1 />
         </lew-demo-box>
-        <lew-demo-box title="自由模式" :code="DemoCascader2_code">
+        <lew-demo-box title="自由模式" :code="DemoCascader2Code">
             <demo-cascader2 />
             <lew-alert
                 style="margin-top: 20px"
@@ -53,7 +53,7 @@ const options = ref(
                 ]"
             />
         </lew-demo-box>
-        <lew-demo-box title="仅展示最后层级" :code="DemoCascader3_code">
+        <lew-demo-box title="仅展示最后层级" :code="DemoCascader3Code">
             <demo-cascader3 />
             <lew-alert
                 style="margin-top: 20px"
@@ -68,28 +68,28 @@ const options = ref(
                 ]"
             />
         </lew-demo-box>
-        <lew-demo-box title="异步加载" :code="DemoCascader4_code">
+        <lew-demo-box title="异步加载" :code="DemoCascader4Code">
             <demo-cascader4 />
         </lew-demo-box>
-        <lew-demo-box title="可清空的" :code="DemoCascader5_code">
+        <lew-demo-box title="可清空的" :code="DemoCascader5Code">
             <demo-cascader5 />
         </lew-demo-box>
-        <lew-demo-box title="选择器禁用" :code="DemoCascader6_code">
+        <lew-demo-box title="选择器禁用" :code="DemoCascader6Code">
             <demo-cascader6 />
         </lew-demo-box>
-        <lew-demo-box title="只读" :code="DemoCascader7_code">
+        <lew-demo-box title="只读" :code="DemoCascader7Code">
             <demo-cascader7 />
         </lew-demo-box>
-        <lew-demo-box title="选项禁用" :code="DemoCascader8_code">
+        <lew-demo-box title="选项禁用" :code="DemoCascader8Code">
             <demo-cascader8 />
         </lew-demo-box>
-        <lew-demo-box v-if="false" title="多选模式" :code="DemoCascader9_code">
+        <lew-demo-box v-if="false" title="多选模式" :code="DemoCascader9Code">
             <demo-cascader9 />
         </lew-demo-box>
         <lew-demo-box
             v-if="false"
             title="可选任意一级选项"
-            :code="DemoCascader10_code"
+            :code="DemoCascader10Code"
         >
             <demo-cascader10 />
         </lew-demo-box>

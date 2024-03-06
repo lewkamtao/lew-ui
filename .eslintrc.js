@@ -1,31 +1,52 @@
 module.exports = {
-    root: true,
-    env: {
-        browser: true, // browser global variables
-        es2021: true, // adds all ECMAScript 2021 globals and automatically sets the ecmaVersion parser option to 12.
-    },
+    parser: "vue-eslint-parser",
+
     parserOptions: {
-        ecmaVersion: 12,
-        parser: '@typescript-eslint/parser',
+        parser: "@typescript-eslint/parser",
+        ecmaVersion: 2020,
+        sourceType: "module",
+        ecmaFeatures: {
+            jsx: true,
+        },
     },
-    parser: 'vue-eslint-parser', // ++
+
     extends: [
-        'plugin:vue/vue3-recommended',
-        'plugin:@typescript-eslint/recommended',
-        'airbnb-base',
-        'plugin:prettier/recommended',
+        "plugin:vue/vue3-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier",
+        "plugin:prettier/recommended",
     ],
-    plugins: ['@typescript-eslint'],
+
     rules: {
-        'no-plusplus': 0,
-        'import/no-unresolved': 0,
-        'import/extensions': 0,
-        'import/prefer-default-export': 0,
-        'no-unused-vars': 0,
-        'no-restricted-syntax': 0,
-        'no-continue': 0,
-        '@typescript-eslint/no-empty-function': 0,
-        'import/no-extraneous-dependencies': 0,
-        'no-param-reassign': 0,
+        "@typescript-eslint/ban-ts-ignore": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "vue/custom-event-name-casing": "off",
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/ban-types": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "vue/multi-word-component-names": "off",
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                argsIgnorePattern: "^h$",
+                varsIgnorePattern: "^h$",
+            },
+        ],
+        "no-unused-vars": [
+            "error",
+            {
+                argsIgnorePattern: "^h$",
+                varsIgnorePattern: "^h$",
+            },
+        ],
+        "space-before-function-paren": "off",
+        quotes: ["error", "single"],
+        "comma-dangle": ["error", "never"],
     },
 };

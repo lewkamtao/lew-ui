@@ -1,21 +1,28 @@
 <script setup lang="ts">
     const visible = ref(false);
+    const ok = () => {
+        return new Promise<void>(() => {
+            setTimeout(() => {
+                visible.value = false;
+            }, 1000);
+        });
+    };
 </script>
 
 <template>
     <lew-flex x="start">
-        <lew-button @click="visible = true">Modal</lew-button>
+        <lew-button @click="visible = true">异步关闭</lew-button>
     </lew-flex>
     <lew-modal
         v-model:visible="visible"
         close-on-click-overlay
         width="350px"
-        title="About Lew-UI"
-        @ok="visible = false"
+        title="模拟异步请求"
+        :ok-props="{ request: ok }"
         @cancel="visible = false"
     >
         <div class="modal-body">
-            <div>A beautiful component library based on vue3</div>
+            <div>点击确定，对话框将在1秒后关闭。</div>
         </div>
     </lew-modal>
 </template>

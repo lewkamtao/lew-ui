@@ -13,7 +13,7 @@ const value3 = ref('聚集后选中所有文本');
             v-model="value2"
             placeholder="只读并可复制"
             readonly
-			size="small"
+            size="small"
             copyable
         />
         <lew-input
@@ -26,7 +26,7 @@ const value3 = ref('聚集后选中所有文本');
             v-model="value2"
             placeholder="只读并可复制"
             readonly
-			size="large"
+            size="large"
             copyable
         />
         <lew-input v-model="value1" placeholder="自动" auto-width />

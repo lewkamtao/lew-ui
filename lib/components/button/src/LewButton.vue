@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { LewIcon } from 'lew-ui';
-import { object2class, getColorType } from 'lew-ui/utils';
-import { buttonProps } from './props';
+import { LewIcon } from "lew-ui";
+import { object2class, getColorType } from "lew-ui/utils";
+import { buttonProps } from "./props";
 
-const emit = defineEmits(['click']);
+const emit = defineEmits(["click"]);
 const props = defineProps(buttonProps);
 
 const _loading = ref(false);
 
 const handleClick = async (e: MouseEvent) => {
     if (props.disabled || _loading.value || props.loading) return;
-    emit('click', e);
-    if (typeof props.request === 'function') {
+    emit("click", e);
+    if (typeof props.request === "function") {
         if (_loading.value) {
             return;
         }
@@ -31,22 +31,22 @@ const getButtonClass = computed(() => {
     const { size, type, icon, text } = props;
     const loading = _loading.value || props.loading;
     const singleIcon = !!(!text && icon && !hasDefaultSlot.value);
-    return object2class('lew-button', {
+    return object2class("lew-button", {
         size,
         type,
         loading,
-        singleIcon,
+        singleIcon
     });
 });
 
 const getIconSize = computed(() => {
     const { size } = props;
     switch (size) {
-        case 'small':
+        case "small":
             return 12;
-        case 'medium':
+        case "medium":
             return 14;
-        case 'large':
+        case "large":
             return 16;
         default:
             return 14;
@@ -54,71 +54,71 @@ const getIconSize = computed(() => {
 });
 
 const getStyle = computed(() => {
-    const { round, type, color, loading } = props;
+    const { round, type, color } = props;
     const styleObj: Record<string, string> = {};
     const _color = getColorType(color);
     switch (type) {
-        case 'fill':
+        case "fill":
             styleObj.backgroundColor = `var(--lew-color-${_color})`;
-            styleObj.color = `var(--lew-color-white)`;
+            styleObj.color = "var(--lew-color-white)";
             break;
-        case 'light':
+        case "light":
             styleObj.backgroundColor = `var(--lew-color-${_color}-light)`;
             styleObj.color = `var(--lew-color-${_color}-dark)`;
             break;
-        case 'ghost':
-            styleObj.backgroundColor = `transparent`;
+        case "ghost":
+            styleObj.backgroundColor = "transparent";
             styleObj.border = `1px solid var(--lew-color-${_color})`;
             styleObj.color = `var(--lew-color-${_color}-dark)`;
-            styleObj.boxShadow = 'none';
+            styleObj.boxShadow = "none";
             break;
-        case 'text':
-            styleObj.backgroundColor = `transparent`;
+        case "text":
+            styleObj.backgroundColor = "transparent";
             styleObj.color = `var(--lew-color-${_color}-dark)`;
-            styleObj.boxShadow = 'none';
+            styleObj.boxShadow = "none";
             break;
         default:
             styleObj.backgroundColor = `var(--lew-color-${_color})`;
             break;
     }
-    styleObj.borderRadius = round ? '50px' : 'none';
+    styleObj.borderRadius = round ? "50px" : "none";
     return styleObj;
 });
 </script>
 
 <template>
-    <button
-        class="lew-button"
-        :class="getButtonClass"
-        :disabled="disabled"
-        :style="getStyle"
-        @click="handleClick"
-    >
-        <lew-icon
-            v-if="icon"
-            class="lew-button-icon"
-            :size="getIconSize"
-            :type="icon"
-        />
-        <lew-icon
-            class="lew-loading-icon"
-            :size="getIconSize"
-            animation="spin"
-            animation-speed="fast"
-            :class="{
-                'lew-loading-isShow': (_loading || loading) && !disabled,
-            }"
-            type="loader"
-        />
-        <span v-if="$slots.default || text" class="lew-button-text">
-            <template v-if="$slots.default">
-                <slot />
-            </template>
-            <template v-else>
-                {{ text }}
-            </template>
-        </span>
-    </button>
+  <button
+    class="lew-button"
+    :class="getButtonClass"
+    :disabled="disabled"
+    :style="getStyle"
+    @click="handleClick"
+  >
+    <lew-icon
+      v-if="icon"
+      class="lew-button-icon"
+      :size="getIconSize"
+      :type="icon"
+    />
+    <lew-icon
+      class="lew-loading-icon"
+      :size="getIconSize"
+      animation="spin"
+      animation-speed="fast"
+      :class="{
+        'lew-loading-isShow': (_loading || loading) && !disabled,
+      }"
+      type="loader"
+    />
+    <span v-if="$slots.default || text" class="lew-button-text">
+      <template v-if="$slots.default">
+        <slot />
+      </template>
+      <template v-else>
+        {{ text }}
+      </template>
+    </span>
+  </button>
 </template>
 
 <style lang="scss" scoped>
@@ -168,7 +168,7 @@ const getStyle = computed(() => {
     background-color: rgba($color: #000000, $alpha: 0.2);
     transition: 0.1s all;
     opacity: 0;
-    content: '';
+    content: "";
 }
 
 .lew-button-type-ghost::after {

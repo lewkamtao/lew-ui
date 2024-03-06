@@ -2,8 +2,8 @@
 import {
     DemoSwitch1,
     DemoSwitch2,
-    DemoSwitch1_code,
-    DemoSwitch2_code,
+    DemoSwitch1Code,
+    DemoSwitch2Code,
 } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
@@ -20,10 +20,10 @@ const options = ref(
 <template>
     <div class="demo-wrapper">
         <lew-title>Switch</lew-title>
-        <lew-demo-box title="圆的" :code="DemoSwitch1_code">
+        <lew-demo-box title="圆的" :code="DemoSwitch1Code">
             <demo-switch1 />
         </lew-demo-box>
-        <lew-demo-box title="方的" :code="DemoSwitch2_code">
+        <lew-demo-box title="方的" :code="DemoSwitch2Code">
             <demo-switch2 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>

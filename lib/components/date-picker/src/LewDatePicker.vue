@@ -33,7 +33,7 @@ const change = (date: string) => {
 
 const getIconSize = computed(() => {
     const size: Record<string, number> = {
-		small: 13,
+        small: 13,
         medium: 14,
         large: 15,
     };

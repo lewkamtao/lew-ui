@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { DemoModal1, DemoModal1_code } from './demo';
+import {
+    DemoModal1,
+    DemoModal2,
+    DemoModal3,
+    DemoModal4,
+    DemoModal1Code,
+    DemoModal2Code,
+    DemoModal3Code,
+    DemoModal4Code,
+} from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
 import * as API from './api';
@@ -16,8 +25,17 @@ const options = ref(
     <div class="demo-wrapper">
         <lew-title>Modal</lew-title>
 
-        <lew-demo-box title="模态框" :code="DemoModal1_code">
+        <lew-demo-box title="基本" :code="DemoModal1Code">
             <demo-modal1 />
+        </lew-demo-box>
+        <lew-demo-box title="异步关闭" :code="DemoModal2Code">
+            <demo-modal2 />
+        </lew-demo-box>
+        <lew-demo-box title="自定义头部和底部" :code="DemoModal3Code">
+            <demo-modal3 />
+        </lew-demo-box>
+        <lew-demo-box title="是否允许esc关闭" :code="DemoModal4Code">
+            <demo-modal4 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>
     </div>

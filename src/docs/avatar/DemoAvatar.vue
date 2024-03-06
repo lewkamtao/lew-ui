@@ -2,8 +2,8 @@
 import {
     DemoAvatar1,
     DemoAvatar2,
-    DemoAvatar1_code,
-    DemoAvatar2_code,
+    DemoAvatar1Code,
+    DemoAvatar2Code,
 } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
@@ -24,10 +24,10 @@ const options = ref(
             如果你需要为你的头像加上消息的数量，你可以移步
             <lew-mark type="light" color="blue" to="/Badge">Badge</lew-mark>
         </p>
-        <lew-demo-box title="普通" :code="DemoAvatar1_code">
+        <lew-demo-box title="普通" :code="DemoAvatar1Code">
             <demo-avatar1 />
         </lew-demo-box>
-        <lew-demo-box title="状态" :code="DemoAvatar2_code">
+        <lew-demo-box title="状态" :code="DemoAvatar2Code">
             <demo-avatar2 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>

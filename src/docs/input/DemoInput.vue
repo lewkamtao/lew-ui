@@ -4,10 +4,10 @@ import {
     DemoInput2,
     DemoInput3,
     DemoInput4,
-    DemoInput1_code,
-    DemoInput2_code,
-    DemoInput3_code,
-    DemoInput4_code,
+    DemoInput1Code,
+    DemoInput2Code,
+    DemoInput3Code,
+    DemoInput4Code,
 } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
@@ -24,16 +24,16 @@ const options = ref(
 <template>
     <div class="demo-wrapper">
         <lew-title>Input</lew-title>
-        <lew-demo-box title="尺寸" :code="DemoInput1_code">
+        <lew-demo-box title="尺寸" :code="DemoInput1Code">
             <demo-input1 />
         </lew-demo-box>
-        <lew-demo-box title="前后缀" :code="DemoInput2_code">
+        <lew-demo-box title="前后缀" :code="DemoInput2Code">
             <demo-input2 />
         </lew-demo-box>
-        <lew-demo-box title="字数限制" :code="DemoInput3_code">
+        <lew-demo-box title="字数限制" :code="DemoInput3Code">
             <demo-input3 />
         </lew-demo-box>
-        <lew-demo-box title="其他" :code="DemoInput4_code">
+        <lew-demo-box title="其他" :code="DemoInput4Code">
             <demo-input4 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>

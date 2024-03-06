@@ -22,11 +22,17 @@ export const modalProps = {
         default: false,
         description: '是否显示',
     },
-    hideFooter: {
+    customHeader: {
         type: Boolean,
         default: false,
-        description: '是否隐藏底部按钮',
+        description: '自定义头部',
     },
+    customFooter: {
+        type: Boolean,
+        default: false,
+        description: '自定义底部',
+    },
+
     closeByEsc: {
         type: Boolean,
         default: false,

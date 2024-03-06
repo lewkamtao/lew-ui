@@ -4,11 +4,12 @@
 
 <template>
     <lew-flex x="start">
-        <lew-button @click="visible = true">Modal</lew-button>
+        <lew-button @click="visible = true">按下Esc关闭</lew-button>
     </lew-flex>
     <lew-modal
         v-model:visible="visible"
         close-on-click-overlay
+        close-by-esc
         width="350px"
         title="About Lew-UI"
         @ok="visible = false"

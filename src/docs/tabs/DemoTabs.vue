@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DemoTabs1, DemoTabs2, DemoTabs1_code, DemoTabs2_code } from './demo';
+import { DemoTabs1, DemoTabs2, DemoTabs1Code, DemoTabs2Code } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
 import * as API from './api';
@@ -16,7 +16,7 @@ const options = ref(
     <div class="demo-wrapper">
         <lew-title>Tabs</lew-title>
         <p class="sub-title"></p>
-        <lew-demo-box title="常规" :code="DemoTabs1_code">
+        <lew-demo-box title="常规" :code="DemoTabs1Code">
             <demo-tabs1 />
             <lew-alert
                 style="margin-top: 20px"
@@ -30,7 +30,7 @@ const options = ref(
                 ]"
             />
         </lew-demo-box>
-        <lew-demo-box title="圆形" :code="DemoTabs2_code">
+        <lew-demo-box title="圆形" :code="DemoTabs2Code">
             <demo-tabs2
         /></lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>

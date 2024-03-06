@@ -17,5 +17,10 @@ export default {
             description: '聚焦',
             params: '() => void',
         },
+        {
+            name: 'ok',
+            description: 'okByEnter 为 true 时触发',
+            params: '() => void',
+        },
     ],
 };

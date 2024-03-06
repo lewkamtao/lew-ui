@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DemoDrawer1, DemoDrawer1_code } from './demo';
+import { DemoDrawer1, DemoDrawer1Code } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
 import * as API from './api';
@@ -15,7 +15,7 @@ const options = ref(
 <template>
     <div class="demo-wrapper">
         <lew-title>Drawer</lew-title>
-        <lew-demo-box title="基础用法" :code="DemoDrawer1_code">
+        <lew-demo-box title="基础用法" :code="DemoDrawer1Code">
             <DemoDrawer1 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>

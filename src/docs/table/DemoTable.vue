@@ -9,15 +9,15 @@ import {
     DemoTable7,
     DemoTable8,
     DemoTable9,
-    DemoTable1_code,
-    DemoTable2_code,
-    DemoTable3_code,
-    DemoTable4_code,
-    DemoTable5_code,
-    DemoTable6_code,
-    DemoTable7_code,
-    DemoTable8_code,
-    DemoTable9_code,
+    DemoTable1Code,
+    DemoTable2Code,
+    DemoTable3Code,
+    DemoTable4Code,
+    DemoTable5Code,
+    DemoTable6Code,
+    DemoTable7Code,
+    DemoTable8Code,
+    DemoTable9Code,
 } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
@@ -37,7 +37,7 @@ const options = ref(
         <p class="sub-title">
             这是用div取代传统的table，看起来很简单，但其实功能没少。
         </p>
-        <lew-demo-box title="常规" :code="DemoTable1_code">
+        <lew-demo-box title="常规" :code="DemoTable1Code">
             <demo-table1 />
             <lew-alert
                 style="margin-top: 20px"
@@ -51,7 +51,7 @@ const options = ref(
                 ]"
             />
         </lew-demo-box>
-        <lew-demo-box title="固定行列" :code="DemoTable2_code">
+        <lew-demo-box title="固定行列" :code="DemoTable2Code">
             <demo-table2 />
             <lew-alert
                 style="margin-top: 20px"
@@ -66,7 +66,7 @@ const options = ref(
                 ]"
             />
         </lew-demo-box>
-        <lew-demo-box title="自定义操作" :code="DemoTable3_code">
+        <lew-demo-box title="自定义操作" :code="DemoTable3Code">
             <demo-table3 />
             <lew-alert
                 style="margin-top: 20px"
@@ -80,7 +80,7 @@ const options = ref(
                 :size="16"
             />
         </lew-demo-box>
-        <lew-demo-box title="插槽" :code="DemoTable4_code">
+        <lew-demo-box title="插槽" :code="DemoTable4Code">
             <demo-table4 />
             <lew-alert
                 style="margin-top: 20px"
@@ -95,7 +95,7 @@ const options = ref(
                 ]"
             />
         </lew-demo-box>
-        <lew-demo-box title="自定义样式" :code="DemoTable5_code">
+        <lew-demo-box title="自定义样式" :code="DemoTable5Code">
             <demo-table5 />
             <lew-alert
                 style="margin-top: 20px"
@@ -109,7 +109,7 @@ const options = ref(
                 ]"
             />
         </lew-demo-box>
-        <lew-demo-box title="选择" :code="DemoTable6_code">
+        <lew-demo-box title="选择" :code="DemoTable6Code">
             <demo-table6 />
             <lew-alert
                 style="margin-top: 20px"
@@ -123,10 +123,10 @@ const options = ref(
                 ]"
             />
         </lew-demo-box>
-        <lew-demo-box v-if="false" title="固定列" :code="DemoTable7_code">
+        <lew-demo-box v-if="false" title="固定列" :code="DemoTable7Code">
             <demo-table7 />
         </lew-demo-box>
-        <lew-demo-box title="完整功能" :code="DemoTable8_code">
+        <lew-demo-box title="完整功能" :code="DemoTable8Code">
             <demo-table8 />
             <lew-alert
                 style="margin-top: 20px"
@@ -145,7 +145,7 @@ const options = ref(
                 ]"
             />
         </lew-demo-box>
-        <lew-demo-box title="暂无数据" :code="DemoTable9_code">
+        <lew-demo-box title="暂无数据" :code="DemoTable9Code">
             <demo-table9 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>

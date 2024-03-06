@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import {
     DemoSelect1,
-    DemoSelect1_code,
+    DemoSelect1Code,
     DemoSelect2,
-    DemoSelect2_code,
+    DemoSelect2Code,
     DemoSelect3,
-    DemoSelect3_code,
+    DemoSelect3Code,
     DemoSelect4,
-    DemoSelect4_code,
+    DemoSelect4Code,
     DemoSelect5,
-    DemoSelect5_code,
+    DemoSelect5Code,
     DemoSelect6,
-    DemoSelect6_code,
+    DemoSelect6Code,
 } from './demo';
 import LewDemoBox from '../../layout/LewDemoBox.vue';
 import LewDocsTables from '../../layout/LewDocsTables.vue';
@@ -31,22 +31,22 @@ const options = ref(
         <p class="sub-title">
             一个自带搜索的、支持异步请求、支持虚拟列表、支持插槽的选择器
         </p>
-        <lew-demo-box title="常规" :code="DemoSelect1_code">
+        <lew-demo-box title="常规" :code="DemoSelect1Code">
             <demo-select1 />
         </lew-demo-box>
-        <lew-demo-box title="触发方式" :code="DemoSelect2_code">
+        <lew-demo-box title="触发方式" :code="DemoSelect2Code">
             <demo-select2 />
         </lew-demo-box>
-        <lew-demo-box title="支持搜索" :code="DemoSelect3_code">
+        <lew-demo-box title="支持搜索" :code="DemoSelect3Code">
             <demo-select3 />
         </lew-demo-box>
-        <lew-demo-box title="插槽" :code="DemoSelect4_code">
+        <lew-demo-box title="插槽" :code="DemoSelect4Code">
             <demo-select4 />
         </lew-demo-box>
-        <lew-demo-box title="禁用项" :code="DemoSelect5_code">
+        <lew-demo-box title="禁用项" :code="DemoSelect5Code">
             <demo-select5 />
         </lew-demo-box>
-        <lew-demo-box title="其他" :code="DemoSelect6_code">
+        <lew-demo-box title="其他" :code="DemoSelect6Code">
             <demo-select6 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>
