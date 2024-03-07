@@ -26,7 +26,7 @@
 <template>
     <div class="demo-wrapper">
         <lew-title>Tabs</lew-title>
-        <p class="sub-title"></p>
+        <p class="sub-title">可切换选项卡</p>
         <lew-demo-box title="常规" :code="DemoTabs1Code">
             <demo-tabs1 />
             <lew-alert

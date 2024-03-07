@@ -19,8 +19,12 @@
 
 <template>
     <lew-flex wrap x="start" gap="20">
-        <lew-button text="WithDelay" color="red" @click="openWithDelay('error')" />
-
-        <lew-button text="WithDelay" color="green" @click="openWithoutDelay('success')" />
+        <lew-button text="WithDelay" type="light" color="red" @click="openWithDelay('error')" />
+        <lew-button
+            text="WithDelay"
+            type="light"
+            color="green"
+            @click="openWithoutDelay('success')"
+        />
     </lew-flex>
 </template>
