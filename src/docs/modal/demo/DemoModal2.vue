@@ -1,8 +1,9 @@
 <script setup lang="ts">
     const visible = ref(false);
     const ok = () => {
-        return new Promise<void>(() => {
+        return new Promise<void>((resolve: any) => {
             setTimeout(() => {
+                resolve(true);
                 visible.value = false;
             }, 1000);
         });

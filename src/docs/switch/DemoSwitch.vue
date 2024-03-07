@@ -1,5 +1,12 @@
 <script setup lang="ts">
-    import { DemoSwitch1, DemoSwitch2, DemoSwitch1Code, DemoSwitch2Code } from './demo';
+    import {
+        DemoSwitch1,
+        DemoSwitch2,
+        DemoSwitch3,
+        DemoSwitch1Code,
+        DemoSwitch2Code,
+        DemoSwitch3Code
+    } from './demo';
     import LewDemoBox from '../../layout/LewDemoBox.vue';
     import LewDocsTables from '../../layout/LewDocsTables.vue';
     import * as API from './api';
@@ -20,6 +27,9 @@
         </lew-demo-box>
         <lew-demo-box title="方的" :code="DemoSwitch2Code">
             <demo-switch2 />
+        </lew-demo-box>
+        <lew-demo-box title="异步" :code="DemoSwitch3Code">
+            <demo-switch3 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>
     </div>

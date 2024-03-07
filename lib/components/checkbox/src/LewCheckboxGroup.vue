@@ -5,7 +5,7 @@
     import { object2class } from 'lew-ui/utils';
     import { LewCheckbox } from 'lew-ui';
 
-    const props = defineProps(checkboxGroupProps);
+    const props: any = defineProps(checkboxGroupProps as any);
     const emit = defineEmits(['change', 'update:modelValue']);
     const modelValue = useVModel(props, 'modelValue', emit);
     const checkList = ref([] as boolean[]);
@@ -41,7 +41,7 @@
     };
 
     const getCheckboxGroupClassName = computed(() => {
-        const { size, direction } = props;
+        const { size, direction } = props as any;
         return object2class('lew-checkbox-group', { size, direction });
     });
 

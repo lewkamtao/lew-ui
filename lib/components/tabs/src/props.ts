@@ -3,6 +3,7 @@ import { PropType, ExtractPropTypes } from 'vue';
 export type TabsOptions = {
     label: string;
     value: [String, Number];
+    activeIndex: Number; // 选项索引
 };
 export type TabsSize = 'small' | 'medium' | 'large';
 

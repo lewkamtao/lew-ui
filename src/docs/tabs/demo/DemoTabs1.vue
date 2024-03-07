@@ -67,50 +67,5 @@
             :options="options"
             @change="change"
         />
-        <lew-tabs v-model="value" style="width: 300px" :options="options" @change="change" />
-        <lew-tabs
-            v-model="value"
-            size="large"
-            style="width: 300px"
-            :options="options"
-            @change="change"
-        />
-        <br />
-        <br />
-        <lew-title :size="14">根据内容自适应宽度</lew-title>
-        <lew-tabs v-model="value" style="width: 100%" :options="options" @change="change" />
-        <br />
-        <br />
-        <lew-title :size="14">自定义item宽度</lew-title>
-        <lew-tabs
-            v-model="value"
-            style="width: 100%"
-            :options="options"
-            :item-width="120"
-            @change="change"
-        />
-        <br />
-        <br />
-        <lew-title :size="14">线</lew-title>
-        <lew-tabs
-            v-model="value"
-            style="width: 100%"
-            type="line"
-            :options="[
-                {
-                    label: '北京市',
-                    value: 0
-                },
-                {
-                    label: '广州市',
-                    value: 1
-                },
-                {
-                    label: '上海市',
-                    value: 2
-                }
-            ]"
-            @change="change"
-        />
     </lew-flex>
 </template>

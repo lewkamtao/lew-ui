@@ -18,11 +18,9 @@
         <lew-demo-box title="简单的询问" tag="click" :code="DemoPopok1Code">
             <demo-popok1> </demo-popok1>
         </lew-demo-box>
-
         <lew-demo-box title="简单的询问" tag="hover" :code="DemoPopok2Code">
             <demo-popok2> </demo-popok2>
         </lew-demo-box>
-        <lew-title :size="16">Props</lew-title>
         <lew-docs-tables :options="options"></lew-docs-tables>
     </div>
 </template>

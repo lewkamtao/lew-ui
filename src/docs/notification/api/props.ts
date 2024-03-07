@@ -5,7 +5,7 @@ export default {
         {
             name: 'type',
             description: '提示类型',
-            type: `success | warning | error | info | normal`,
+            type: 'success | warning | error | info | normal',
             default: '3000'
         },
         {

@@ -76,9 +76,10 @@
 
 <style lang="scss" scoped>
     .menu {
-        height: 300px;
-        width: 280px;
+        height: 600px;
+        width: 320px;
         overflow-y: auto;
         box-shadow: var(--lew-form-box-shadow);
+        border: 1px #eee solid;
     }
 </style>

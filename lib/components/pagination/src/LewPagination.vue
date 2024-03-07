@@ -65,9 +65,9 @@
     };
 
     // 是否显示省略号
-    const startEllipsis = computed(() => visiblePages.value[0] > 2);
+    const startEllipsis = computed(() => visiblePages.value[0] > 2 + 1);
     const endEllipsis = computed(
-        () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value - 1
+        () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value - 2
     );
 
     // 是否显示最大和最小页码
@@ -107,9 +107,16 @@
                 <div
                     v-if="startEllipsis"
                     class="btn control-btn"
-                    @click="changePage(currentPage - state.visiblePagesCount + 1)"
+                    @click="changePage(visiblePages[0] - 1)"
                 >
                     <lew-icon size="14" type="more-horizontal" />
+                </div>
+                <div
+                    v-else-if="currentPage > visiblePages.length / 2 + 2"
+                    class="btn"
+                    @click="changePage(2)"
+                >
+                    2
                 </div>
                 <div
                     v-for="(page, index) in visiblePages"
@@ -125,9 +132,16 @@
                 <div
                     v-if="endEllipsis"
                     class="btn control-btn"
-                    @click="changePage(currentPage + state.visiblePagesCount - 1)"
+                    @click="changePage(visiblePages[visiblePages.length - 1] + 1)"
                 >
                     <lew-icon size="14" type="more-horizontal" />
+                </div>
+                <div
+                    v-else-if="currentPage < totalPages - visiblePages.length / 2 - 1"
+                    class="btn"
+                    @click="changePage(2)"
+                >
+                    {{ totalPages - 1 }}
                 </div>
                 <div
                     v-if="showMax"

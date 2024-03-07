@@ -33,8 +33,7 @@
         } else {
             isEllipsis = element.offsetWidth < element.scrollWidth;
         }
-        if (isEllipsis && !instance) {
-            element.style.cursor = 'pointer';
+        if (isEllipsis) {
             instance = tippy(element, {
                 theme: 'light',
                 delay: [120, 120],
@@ -51,7 +50,7 @@
                 maxWidth: 250
             });
             instance.popper.children[0].setAttribute('data-lew', 'tooltip');
-        } else if (instance) instance.setContent(props.text);
+        }
     };
     // 监听变化 清除初始化
     watchDebounced(
@@ -108,8 +107,10 @@
             isEllipsis = element.offsetWidth < element.scrollWidth;
         }
         if (isEllipsis) {
+            element.style.cursor = 'pointer';
             instance.enable();
         } else {
+            element.style.cursor = 'default';
             instance.disable();
         }
         width = element.offsetWidth;

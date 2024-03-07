@@ -1,5 +1,16 @@
 <script setup lang="ts">
-    import { DemoTabs1, DemoTabs2, DemoTabs1Code, DemoTabs2Code } from './demo';
+    import {
+        DemoTabs1,
+        DemoTabs2,
+        DemoTabs3,
+        DemoTabs4,
+        DemoTabs5,
+        DemoTabs1Code,
+        DemoTabs2Code,
+        DemoTabs3Code,
+        DemoTabs4Code,
+        DemoTabs5Code
+    } from './demo';
     import LewDemoBox from '../../layout/LewDemoBox.vue';
     import LewDocsTables from '../../layout/LewDocsTables.vue';
     import * as API from './api';
@@ -30,7 +41,10 @@
                 ]"
             />
         </lew-demo-box>
-        <lew-demo-box title="圆形" :code="DemoTabs2Code"> <demo-tabs2 /></lew-demo-box>
+        <lew-demo-box title="自适应宽度" :code="DemoTabs2Code"> <demo-tabs2 /></lew-demo-box>
+        <lew-demo-box title="自定义item宽度" :code="DemoTabs3Code"> <demo-tabs3 /></lew-demo-box>
+        <lew-demo-box title="线" :code="DemoTabs4Code"> <demo-tabs4 /></lew-demo-box>
+        <lew-demo-box title="圆形" :code="DemoTabs5Code"> <demo-tabs5 /></lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>
     </div>
 </template>

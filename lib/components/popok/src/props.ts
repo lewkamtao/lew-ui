@@ -1,3 +1,4 @@
+import type { ButtonProps } from '../../button/index';
 export const popokProps = {
     type: {
         type: String,
@@ -19,13 +20,26 @@ export const popokProps = {
         default: '',
         description: '标题'
     },
-    ok: {
-        type: Function,
-        description: '确认回调'
+    okProps: {
+        type: Object as PropType<ButtonProps>,
+        default: () => {
+            return {
+                text: '确定',
+                color: 'primary'
+            };
+        },
+        description: '确定按钮文字'
     },
-    cancel: {
-        type: Function,
-        description: '取消回调'
+    cancelProps: {
+        type: Object as PropType<ButtonProps>,
+        default: () => {
+            return {
+                type: 'text',
+                text: '取消',
+                color: 'normal'
+            };
+        },
+        description: '确定按钮文字'
     },
     content: {
         type: String,

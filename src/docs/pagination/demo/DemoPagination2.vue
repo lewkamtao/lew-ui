@@ -28,7 +28,7 @@
         <lew-pagination
             v-model:current-page="page"
             :total="15000000"
-            :visible-pages-count="12"
+            :visible-pages-count="11"
         ></lew-pagination>
     </div>
 </template>

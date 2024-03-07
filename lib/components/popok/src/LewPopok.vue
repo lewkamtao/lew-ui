@@ -9,32 +9,26 @@
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const lewPopoverRef = ref();
 
-    const okLoading = ref(false);
-    const cancelLoading = ref(false);
+    const ok = () => {
+        if (!props.okProps.request) {
+            hide();
+        }
+        emit('ok');
+    };
+
+    const cancel = () => {
+        if (!props.cancelProps.request) {
+            hide();
+        }
+        emit('cancel');
+    };
 
     const hide = () => {
         lewPopoverRef.value.hide();
     };
+    defineExpose({ hide });
 
-    const okHandle = async () => {
-        if (typeof props.ok === 'function') {
-            okLoading.value = true;
-            await props.ok();
-            okLoading.value = false;
-        }
-        hide();
-    };
-
-    const cancelHandle = async () => {
-        if (typeof props.cancel === 'function') {
-            cancelLoading.value = true;
-            await props.cancel();
-            cancelLoading.value = false;
-        }
-        hide();
-    };
-
-    const emit = defineEmits(['show', 'cancel']);
+    const emit = defineEmits(['show', 'ok', 'cancel']);
 </script>
 
 <template>
@@ -78,17 +72,25 @@
                     <div v-if="content" class="content">{{ content }}</div>
                     <div class="footer">
                         <lew-button
-                            text="取消"
-                            size="small"
-                            type="text"
-                            :loading="cancelLoading"
-                            @click="cancelHandle"
+                            v-bind="{ 
+                                type: 'text', 
+                                text: '取消',
+								round: true,
+								color: 'normal',
+								size: 'small',
+                                ...cancelProps as any,
+                            }"
+                            @click="cancel"
                         />
                         <lew-button
-                            text="确定"
-                            size="small"
-                            :loading="okLoading"
-                            @click="okHandle"
+                            v-bind="{  
+                                text: '确定',   
+                                color: 'primary',  
+								round: true,
+								size: 'small',
+                                ...okProps as any, 
+                            }"
+                            @click="ok"
                         />
                     </div>
                 </div>

@@ -59,6 +59,12 @@
 
 <template>
     <lew-flex direction="y" x="start" y="start">
-        <lew-tabs v-model="value" style="width: 100%" :options="options" @change="change" />
+        <lew-tabs
+            v-model="value"
+            style="width: 100%"
+            :options="options"
+            :item-width="120"
+            @change="change"
+        />
     </lew-flex>
 </template>
