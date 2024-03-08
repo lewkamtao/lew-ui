@@ -44,19 +44,20 @@
                 //     color '',
                 // },
             ]
-        },
-        {
-            label: '版本',
-            value: '版本',
-            children: [
-                {
-                    label: '更新日志',
-                    value: '/Log',
-                    tagText: 'new',
-                    tagColor: 'success'
-                }
-            ]
         }
+        // ,
+        // {
+        //     label: '版本',
+        //     value: '版本',
+        //     children: [
+        //         {
+        //             label: '更新日志',
+        //             value: '/Log',
+        //             tagText: 'new',
+        //             tagColor: 'success'
+        //         }
+        //     ]
+        // }
     ];
 </script>
 
