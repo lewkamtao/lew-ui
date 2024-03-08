@@ -47,3 +47,10 @@ import 'lew-ui/style';
 ## License
 
 Lew UI is open source software licensed as MIT.
+
+## Demo
+
+![这里有图](https://github.com/lewkamtao/lew-ui/blob/dev/images/6221709887502_.pic.jpg)
+![这里有图](https://github.com/lewkamtao/lew-ui/blob/dev/images/6231709887502_.pic.jpg)
+![这里有图](https://github.com/lewkamtao/lew-ui/blob/dev/images/6241709887502_.pic.jpg)
+![这里有图](https://github.com/lewkamtao/lew-ui/blob/dev/images/6251709887502_.pic.jpg)

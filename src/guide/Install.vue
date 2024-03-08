@@ -8,8 +8,5 @@
                 <pre><code>npm install lew-ui --save</code></pre>
             </div>
         </div>
-        <p>
-            lew-ui 仅支持 Vue3，这里我推荐您使用 setup 语法糖，如果你在使用 Vue2，可以去看看别的库。
-        </p>
     </div>
 </template>
