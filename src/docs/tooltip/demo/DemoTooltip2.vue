@@ -5,7 +5,7 @@
                 content:
                     '哈士奇一般指西伯利亚雪橇犬。哈士奇一般指西伯利亚雪橇犬。哈士奇一般指西伯利亚雪橇犬。',
                 placement: 'left',
-                trigger: 'click',
+                trigger: 'click'
             }"
             text="left"
         />
@@ -14,7 +14,7 @@
                 content:
                     '哈士奇一般指西伯利亚雪橇犬。哈士奇一般指西伯利亚雪橇犬。哈士奇一般指西伯利亚雪橇犬。',
                 placement: 'top',
-                trigger: 'click',
+                trigger: 'click'
             }"
             text="top"
         />
@@ -24,7 +24,7 @@
                 content:
                     '哈士奇一般指西伯利亚雪橇犬。哈士奇一般指西伯利亚雪橇犬。哈士奇一般指西伯利亚雪橇犬。',
                 placement: 'bottom',
-                trigger: 'click',
+                trigger: 'click'
             }"
             text="left"
         />
@@ -33,7 +33,7 @@
                 content:
                     '哈士奇一般指西伯利亚雪橇犬。哈士奇一般指西伯利亚雪橇犬。哈士奇一般指西伯利亚雪橇犬。',
                 placement: 'right',
-                trigger: 'click',
+                trigger: 'click'
             }"
             text="right"
         />

@@ -1,4 +1,4 @@
-import { createApp, App } from 'vue';
+import { createApp } from 'vue';
 import AppVue from './App.vue';
 import router from './router/index';
 import 'lew-ui/styles/reset.scss';
@@ -18,7 +18,7 @@ app.directive('highlight', {
         blocks.forEach((block: unknown) => {
             hljs.highlightBlock(block);
         });
-    },
+    }
 });
 
 app.use(lew);

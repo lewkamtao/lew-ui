@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const page = ref(1);
+    const page = ref(1);
 </script>
 
 <template>
@@ -28,7 +28,7 @@ const page = ref(1);
         <lew-pagination
             v-model:current-page="page"
             :total="15000000"
-            :visible-pages-count="12"
+            :visible-pages-count="11"
         ></lew-pagination>
     </div>
 </template>

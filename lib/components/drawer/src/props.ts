@@ -4,23 +4,23 @@ export const drawerProps = {
     visible: {
         type: Boolean,
         default: false,
-        description: '是否显示',
+        description: '是否显示'
     },
     width: {
         type: Number,
         default: 30,
-        description: '宽度',
+        description: '宽度'
     },
     height: {
         type: Number,
         default: 30,
-        description: '高度',
+        description: '高度'
     },
     position: {
         type: String,
         default: '',
-        description: '位置，可选值为 left、right、top、bottom',
-    },
+        description: '位置，可选值为 left、right、top、bottom'
+    }
 };
 
 export type DrawerProps = ExtractPropTypes<typeof drawerProps>;

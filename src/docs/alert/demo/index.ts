@@ -1,4 +1,4 @@
 import DemoAlert1 from './DemoAlert1.vue';
-import DemoAlert1_code from './DemoAlert1.vue?raw';
+import DemoAlert1Code from './DemoAlert1.vue?raw';
 
-export { DemoAlert1, DemoAlert1_code };
+export { DemoAlert1, DemoAlert1Code };

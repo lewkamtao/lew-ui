@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import { any2px } from 'lew-ui/utils';
-import { LewPopover } from 'lew-ui';
-import { dropdownProps } from './props';
-import type { DropdownOptions } from './props';
+    import { any2px } from 'lew-ui/utils';
+    import { LewPopover } from 'lew-ui';
+    import { dropdownProps } from './props';
+    import type { DropdownOptions } from './props';
 
-defineProps(dropdownProps);
+    defineProps(dropdownProps);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const lewPopoverRef = ref();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const lewPopoverRef = ref();
 
-const show = () => {
-    lewPopoverRef.value.show();
-};
+    const show = () => {
+        lewPopoverRef.value.show();
+    };
 
-const hide = () => {
-    lewPopoverRef.value.hide();
-};
+    const hide = () => {
+        lewPopoverRef.value.hide();
+    };
 
-const emit = defineEmits(['change']);
+    const emit = defineEmits(['change']);
 
-const change = (item: DropdownOptions) => {
-    emit('change', item);
-    hide();
-};
+    const change = (item: DropdownOptions) => {
+        emit('change', item);
+        hide();
+    };
 
-defineExpose({ show, hide });
+    defineExpose({ show, hide });
 </script>
 
 <template>
@@ -43,7 +43,7 @@ defineExpose({ show, hide });
                 class="lew-dropdown-body lew-scrollbar"
                 :style="{
                     width: any2px(width),
-                    maxHeight: any2px(maxHeight),
+                    maxHeight: any2px(maxHeight)
                 }"
             >
                 <div
@@ -61,29 +61,29 @@ defineExpose({ show, hide });
 </template>
 
 <style lang="scss" scoped>
-.lew-dropdown-body {
-    display: flex;
-    flex-direction: column;
-    user-select: none;
-    overflow: auto;
-    box-sizing: border-box;
-    .lew-dropdown-option {
-        padding: 4px 10px;
-        font-size: 14px;
-        border-radius: 6px;
-        color: var(--lew-text-color-2);
-        cursor: pointer;
-        white-space: nowrap;
+    .lew-dropdown-body {
+        display: flex;
+        flex-direction: column;
+        user-select: none;
+        overflow: auto;
         box-sizing: border-box;
+        .lew-dropdown-option {
+            padding: 4px 10px;
+            font-size: 14px;
+            border-radius: 6px;
+            color: var(--lew-text-color-2);
+            cursor: pointer;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+        .lew-dropdown-option:hover {
+            color: var(--lew-text-color-0);
+            background-color: var(--lew-backdrop-bg-active);
+        }
     }
-    .lew-dropdown-option:hover {
-        color: var(--lew-text-color-0);
-        background-color: var(--lew-backdrop-bg-active);
-    }
-}
 </style>
 <style>
-.lew-dropdown-popover-body {
-    padding: 6px;
-}
+    .lew-dropdown-popover-body {
+        padding: 6px;
+    }
 </style>

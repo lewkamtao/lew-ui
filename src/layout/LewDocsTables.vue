@@ -1,122 +1,114 @@
 <script setup lang="ts">
-const props = defineProps({
-    options: {
-        type: Object,
-        default() {
-            return {};
-        },
-    },
-});
+    const props = defineProps({
+        options: {
+            type: Object,
+            default() {
+                return {};
+            }
+        }
+    });
 
-const columnsMap: any = {
-    props: [
-        {
-            title: '参数名',
-            width: 150,
-            field: 'name',
-        },
-        {
-            title: '描述',
-            width: 150,
-            field: 'description',
-        },
-        {
-            title: '类型',
-            width: 150,
-            field: 'type',
-        },
-        {
-            title: '默认值',
-            width: 150,
-            field: 'default',
-        },
-    ],
-    slots: [
-        {
-            title: '插槽名',
-            width: 150,
-            field: 'name',
-        },
-        {
-            title: '描述',
-            width: 220,
-            field: 'description',
-        },
-        {
-            title: '参数',
-            width: 240,
-            field: 'params',
-        },
-    ],
-    events: [
-        {
-            title: '事件名',
-            width: 150,
-            field: 'name',
-        },
-        {
-            title: '描述',
-            width: 220,
-            field: 'description',
-        },
-        {
-            title: '参数',
-            width: 240,
-            field: 'params',
-        },
-    ],
-    methods: [
-        {
-            title: '方法名',
-            width: 150,
-            field: 'name',
-        },
-        {
-            title: '描述',
-            width: 240,
-            field: 'description',
-        },
-        {
-            title: '参数',
-            width: 120,
-            field: 'params',
-        },
-    ],
-};
-const sortOptions = computed(() => {
-    return props.options
-        .map((e: any) => {
-            return {
-                orderNum: e.orderNum || 99999,
-                ...e,
-            };
-        })
-        .sort((a: any, b: any) => a.orderNum - b.orderNum);
-});
+    const columnsMap: any = {
+        props: [
+            {
+                title: '参数名',
+                width: 150,
+                field: 'name'
+            },
+            {
+                title: '描述',
+                width: 150,
+                field: 'description'
+            },
+            {
+                title: '类型',
+                width: 150,
+                field: 'type'
+            },
+            {
+                title: '默认值',
+                width: 150,
+                field: 'default'
+            }
+        ],
+        slots: [
+            {
+                title: '插槽名',
+                width: 150,
+                field: 'name'
+            },
+            {
+                title: '描述',
+                width: 220,
+                field: 'description'
+            },
+            {
+                title: '参数',
+                width: 240,
+                field: 'params'
+            }
+        ],
+        events: [
+            {
+                title: '事件名',
+                width: 150,
+                field: 'name'
+            },
+            {
+                title: '描述',
+                width: 220,
+                field: 'description'
+            },
+            {
+                title: '参数',
+                width: 240,
+                field: 'params'
+            }
+        ],
+        methods: [
+            {
+                title: '方法名',
+                width: 150,
+                field: 'name'
+            },
+            {
+                title: '描述',
+                width: 240,
+                field: 'description'
+            },
+            {
+                title: '参数',
+                width: 120,
+                field: 'params'
+            }
+        ]
+    };
+    const sortOptions = computed(() => {
+        return props.options
+            .map((e: any) => {
+                return {
+                    orderNum: e.orderNum || 99999,
+                    ...e
+                };
+            })
+            .sort((a: any, b: any) => a.orderNum - b.orderNum);
+    });
 </script>
 
 <template>
     <lew-flex direction="y" gap="70px" class="docs-wrapper">
-        <lew-flex
-            v-for="(item, index) in sortOptions"
-            :key="index"
-            direction="y"
-            x="start"
-        >
+        <lew-flex v-for="(item, index) in sortOptions" :key="index" direction="y" x="start">
             <lew-title :id="item.title" :size="18" class="demo-docs-title">{{
                 item.title
             }}</lew-title>
-            <lew-table
-                :data-source="item.data"
-                :columns="columnsMap[item.columnsKey]"
-            />
+            <lew-table :data-source="item.data" :columns="columnsMap[item.columnsKey]" />
         </lew-flex>
     </lew-flex>
 </template>
 
 <style lang="scss" scoped>
-.demo-docs-title {
-    text-transform: capitalize;
-    letter-spacing: 0.8px;
-}
+    .demo-docs-title {
+        text-transform: capitalize;
+        letter-spacing: 0.8px;
+    }
 </style>

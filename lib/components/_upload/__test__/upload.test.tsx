@@ -9,7 +9,7 @@ const getMockFile = (element: Element, files: File[]): void => {
     Object.defineProperty(element, 'files', {
         get() {
             return files;
-        },
+        }
     });
 };
 
@@ -20,7 +20,7 @@ const getMockFile = (element: Element, files: File[]): void => {
 const createObjectURLFn = vi.fn();
 Object.defineProperty(URL, 'createObjectURL', {
     writable: true,
-    value: createObjectURLFn,
+    value: createObjectURLFn
 });
 
 describe('Upload', () => {
@@ -28,10 +28,8 @@ describe('Upload', () => {
         const wrapper = mount({
             components: { LewUpload },
             setup() {
-                return () => (
-                    <lew-upload accept=".png,.jpg" multiple></lew-upload>
-                );
-            },
+                return () => <lew-upload accept=".png,.jpg" multiple></lew-upload>;
+            }
         });
 
         const input = wrapper.find('.lew-upload__input');
@@ -46,26 +44,26 @@ describe('Upload', () => {
                 name: 'img_1.png',
                 url: 'http://abc.com/statis/img_1.png',
                 status: 'ready',
-                percent: 0,
+                percent: 0
             },
             {
                 name: 'img_2.png',
                 url: 'http://abc.com/statis/img_2.png',
                 status: 'uploading',
-                percent: 10,
+                percent: 10
             },
             {
                 name: 'img_3.png',
                 url: 'http://abc.com/statis/img_3.png',
                 status: 'success',
-                percent: 100,
+                percent: 100
             },
             {
                 name: 'img_4.png',
                 url: 'http://abc.com/statis/img_4.png',
                 status: 'error',
-                percent: 100,
-            },
+                percent: 100
+            }
         ]);
 
         const showFileList = ref(true);
@@ -82,9 +80,9 @@ describe('Upload', () => {
             setup() {
                 return {
                     showFileList,
-                    fileList,
+                    fileList
                 };
-            },
+            }
         });
 
         const list = wrapper.find('.lew-upload-list');
@@ -109,7 +107,7 @@ describe('Upload', () => {
             components: { LewUpload },
             setup() {
                 return () => <lew-upload drag></lew-upload>;
-            },
+            }
         });
 
         const dragger = wrapper.find('.lew-upload-dragger');
@@ -125,17 +123,12 @@ describe('Upload', () => {
                         name: 'img_3.png',
                         url: 'http://abc.com/statis/img_3.png',
                         status: 'success',
-                        percent: 100,
-                    },
+                        percent: 100
+                    }
                 ]);
 
-                return () => (
-                    <lew-upload
-                        disabled
-                        v-model:fileList={fileList}
-                    ></lew-upload>
-                );
-            },
+                return () => <lew-upload disabled v-model:fileList={fileList}></lew-upload>;
+            }
         });
 
         const listItemStatus = wrapper.find('.lew-upload-list__item-status');
@@ -154,17 +147,14 @@ describe('Upload', () => {
                         name: 'img_3.png',
                         url: 'http://abc.com/statis/img_3.png',
                         status: 'success',
-                        percent: 100,
-                    },
+                        percent: 100
+                    }
                 ]);
 
                 return () => (
-                    <lew-upload
-                        listType="picture"
-                        v-model:fileList={fileList}
-                    ></lew-upload>
+                    <lew-upload listType="picture" v-model:fileList={fileList}></lew-upload>
                 );
-            },
+            }
         });
 
         const list = wrapper.find('.lew-upload-list--picture');
@@ -193,9 +183,9 @@ describe('Upload', () => {
             setup() {
                 return {
                     onBeforeUploadFn,
-                    onChangeFn,
+                    onChangeFn
                 };
-            },
+            }
         });
 
         const input = wrapper.find('.lew-upload__input');
@@ -206,12 +196,12 @@ describe('Upload', () => {
         const uploadFileList = [
             new File(['test text'], 'file1.txt', {
                 type: 'text/plain',
-                lastModified: Date.now(),
+                lastModified: Date.now()
             }),
             new File(['test image'], 'image1.png', {
                 type: 'image/png',
-                lastModified: Date.now(),
-            }),
+                lastModified: Date.now()
+            })
         ];
 
         getMockFile(input.element, uploadFileList);
@@ -234,7 +224,7 @@ describe('Upload', () => {
                         <span class="slot-tip">tip</span>
                     </template>
                 </lew-upload>
-            `,
+            `
         });
 
         const defaultSlot = wrapper.find('.slot-default');
@@ -265,9 +255,9 @@ describe('Upload', () => {
                 return {
                     uploadRef,
                     autoUpload,
-                    onChangeFn,
+                    onChangeFn
                 };
-            },
+            }
         });
 
         const input = wrapper.find('.lew-upload__input');
@@ -277,12 +267,12 @@ describe('Upload', () => {
         const uploadFileList = [
             new File(['test text'], 'file1.txt', {
                 type: 'text/plain',
-                lastModified: Date.now(),
+                lastModified: Date.now()
             }),
             new File(['test image'], 'image1.png', {
                 type: 'image/png',
-                lastModified: Date.now(),
-            }),
+                lastModified: Date.now()
+            })
         ];
         getMockFile(input.element, uploadFileList);
         const evt = new Event('change');
@@ -307,9 +297,9 @@ describe('Upload', () => {
                 </lew-upload>`,
             setup() {
                 return {
-                    onChange,
+                    onChange
                 };
-            },
+            }
         });
 
         const input = wrapper.find('.lew-upload__input');
@@ -319,7 +309,7 @@ describe('Upload', () => {
 
         const file = new File(['test'], 'file1.txt', {
             type: 'text/plain',
-            lastModified: Date.now(),
+            lastModified: Date.now()
         });
 
         const fileList = [file];
@@ -339,14 +329,14 @@ describe('Upload', () => {
                 name: 'img_1.png',
                 url: 'http://abc.com/statis/img_1.png',
                 status: 'ready',
-                percent: 0,
+                percent: 0
             },
             {
                 name: 'img_2.png',
                 url: 'http://abc.com/statis/img_2.png',
                 status: 'success',
-                percent: 100,
-            },
+                percent: 100
+            }
         ]);
 
         const onPreviewFn = vi.fn();
@@ -363,9 +353,9 @@ describe('Upload', () => {
             setup() {
                 return {
                     fileList,
-                    onPreviewFn,
+                    onPreviewFn
                 };
-            },
+            }
         });
 
         const listItemInfoList = wrapper.findAll('.lew-upload-list__item-info');
@@ -382,8 +372,8 @@ describe('Upload', () => {
                 name: 'img_1.png',
                 url: 'http://abc.com/statis/img_1.png',
                 status: 'ready',
-                percent: 0,
-            },
+                percent: 0
+            }
         ]);
 
         const onRemoveFn = vi.fn();
@@ -400,9 +390,9 @@ describe('Upload', () => {
             setup() {
                 return {
                     fileList,
-                    onRemoveFn,
+                    onRemoveFn
                 };
-            },
+            }
         });
 
         const icons = wrapper.findAll('.lew-icon');
@@ -419,7 +409,7 @@ describe('Upload', () => {
 
         const reqData = reactive({
             username: 'root',
-            password: 'root123.',
+            password: 'root123.'
         });
 
         const wrapper = mount({
@@ -436,9 +426,9 @@ describe('Upload', () => {
                 return {
                     uploadRef,
                     customRequest,
-                    reqData,
+                    reqData
                 };
-            },
+            }
         });
 
         const input = wrapper.find('.lew-upload__input');
@@ -448,8 +438,8 @@ describe('Upload', () => {
         const uploadFileList = [
             new File(['test text'], 'file1.txt', {
                 type: 'text/plain',
-                lastModified: Date.now(),
-            }),
+                lastModified: Date.now()
+            })
         ];
         getMockFile(input.element, uploadFileList);
         const evt = new Event('change');

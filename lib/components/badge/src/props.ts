@@ -19,13 +19,13 @@ export const badgeProps = {
     value: {
         type: String,
         default: '',
-        description: '此项为空时，则默认显示一个点。',
+        description: '此项为空时，则默认显示一个点。'
     },
     color: {
         type: String as PropType<badgeColor>,
         default: 'red',
-        description: '颜色',
-    },
+        description: '颜色'
+    }
 };
 
 export type BadgeProps = ExtractPropTypes<typeof badgeProps>;

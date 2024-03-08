@@ -5,5 +5,5 @@ export default {
     title: 'Props (Radio-Group)',
     columnsKey: 'props',
     orderNum: 10,
-    data: convertProps(radioProps),
+    data: convertProps(radioProps)
 };

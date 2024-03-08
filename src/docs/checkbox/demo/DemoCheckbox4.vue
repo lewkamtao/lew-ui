@@ -1,14 +1,14 @@
 <script setup lang="ts">
-const options = ref([
-    { label: '宋朝', value: 1 },
-    { label: '唐朝', value: 2, disabled: true },
-    { label: '明朝', value: 3 },
-    { label: '清朝', value: 4 },
-    { label: '隋朝', value: 5 },
-    { label: '秦朝', value: 6 },
-]);
+    const options = ref([
+        { label: '宋朝', value: 1 },
+        { label: '唐朝', value: 2, disabled: true },
+        { label: '明朝', value: 3 },
+        { label: '清朝', value: 4 },
+        { label: '隋朝', value: 5 },
+        { label: '秦朝', value: 6 }
+    ]);
 
-const value = ref([]);
+    const value = ref([]);
 </script>
 
 <template>

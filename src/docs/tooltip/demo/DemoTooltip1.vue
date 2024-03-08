@@ -6,7 +6,7 @@
                     content:
                         '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
                     placement: 'top-start',
-                    trigger: 'mouseenter',
+                    trigger: 'mouseenter'
                 }"
                 text="top-start"
             />
@@ -15,7 +15,7 @@
                     content:
                         '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
                     placement: 'top',
-                    trigger: 'mouseenter',
+                    trigger: 'mouseenter'
                 }"
                 text="top"
             />
@@ -24,7 +24,7 @@
                     content:
                         '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
                     placement: 'top-end',
-                    trigger: 'mouseenter',
+                    trigger: 'mouseenter'
                 }"
                 text="top-end"
             />
@@ -35,7 +35,7 @@
                     content:
                         '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
                     placement: 'left-start',
-                    trigger: 'mouseenter',
+                    trigger: 'mouseenter'
                 }"
                 text="left-start"
             />
@@ -45,7 +45,7 @@
                     content:
                         '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
                     placement: 'right-start',
-                    trigger: 'mouseenter',
+                    trigger: 'mouseenter'
                 }"
                 text="right-start"
             />
@@ -56,7 +56,7 @@
                     content:
                         '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
                     placement: 'left',
-                    trigger: 'mouseenter',
+                    trigger: 'mouseenter'
                 }"
                 text="left"
             />
@@ -66,7 +66,7 @@
                     content:
                         '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
                     placement: 'right',
-                    trigger: 'mouseenter',
+                    trigger: 'mouseenter'
                 }"
                 text="right"
             />
@@ -77,7 +77,7 @@
                     content:
                         '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
                     placement: 'left-end',
-                    trigger: 'mouseenter',
+                    trigger: 'mouseenter'
                 }"
                 text="left-end"
             />
@@ -87,7 +87,7 @@
                     content:
                         '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
                     placement: 'right-end',
-                    trigger: 'mouseenter',
+                    trigger: 'mouseenter'
                 }"
                 text="right-end"
             />
@@ -98,7 +98,7 @@
                     content:
                         '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
                     placement: 'bottom-start',
-                    trigger: 'mouseenter',
+                    trigger: 'mouseenter'
                 }"
                 text="bottom-start"
             />
@@ -107,7 +107,7 @@
                     content:
                         '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
                     placement: 'bottom',
-                    trigger: 'mouseenter',
+                    trigger: 'mouseenter'
                 }"
                 text="bottom"
             />
@@ -116,7 +116,7 @@
                     content:
                         '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
                     placement: 'bottom-end',
-                    trigger: 'mouseenter',
+                    trigger: 'mouseenter'
                 }"
                 text="bottom-end"
             />

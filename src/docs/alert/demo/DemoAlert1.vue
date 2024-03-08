@@ -1,19 +1,19 @@
 <script setup lang="ts">
-type Options = {
-    type: string;
-    title: string;
-    content: string;
-    closeable?: boolean;
-};
+    type Options = {
+        type: string;
+        title: string;
+        content: string;
+        closeable?: boolean;
+    };
 
-const list = ref<Options[]>([]);
+    const list = ref<Options[]>([]);
 
-const addAlert = (e: Options) => {
-    list.value.unshift(e);
-};
-const close = (e: number) => {
-    list.value.splice(e, 1);
-};
+    const addAlert = (e: Options) => {
+        list.value.unshift(e);
+    };
+    const close = (e: number) => {
+        list.value.splice(e, 1);
+    };
 </script>
 
 <template>
@@ -24,7 +24,7 @@ const close = (e: number) => {
                 addAlert({
                     type: 'info',
                     title: '成功发送一条消息',
-                    content: '',
+                    content: ''
                 })
             "
         />
@@ -35,7 +35,7 @@ const close = (e: number) => {
                 addAlert({
                     type: 'error',
                     title: '成功发送一条消息',
-                    content: '',
+                    content: ''
                 })
             "
         />
@@ -46,7 +46,7 @@ const close = (e: number) => {
                 addAlert({
                     type: 'warning',
                     title: '成功发送一条消息',
-                    content: '',
+                    content: ''
                 })
             "
         />
@@ -58,7 +58,7 @@ const close = (e: number) => {
                     type: 'success',
                     title: '成功发送一条消息',
                     closeable: true,
-                    content: '',
+                    content: ''
                 })
             "
         />
@@ -71,7 +71,7 @@ const close = (e: number) => {
                     title: '成功发送一条消息',
                     closeable: true,
                     content:
-                        'Well the Ukraine girls really knock me out They leave the West behind And Moscow girls make me sing and shout That Georgia s always on my mind Aw come on!',
+                        'Well the Ukraine girls really knock me out They leave the West behind And Moscow girls make me sing and shout That Georgia s always on my mind Aw come on!'
                 })
             "
         />

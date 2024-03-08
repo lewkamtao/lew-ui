@@ -5,26 +5,26 @@ export default {
         {
             name: 'type',
             description: '提示类型',
-            type: `success | warning | error | info | normal`,
-            default: '3000',
+            type: 'success | warning | error | info | normal',
+            default: '3000'
         },
         {
             name: 'title',
             description: '标题',
             type: 'array',
-            default: '[]',
+            default: '[]'
         },
         {
             name: 'content',
             description: '内容',
             type: 'array',
-            default: '[]',
+            default: '[]'
         },
         {
             name: 'delay',
             description: '延迟时间',
             type: 'array',
-            default: '[]',
-        },
-    ],
+            default: '[]'
+        }
+    ]
 };

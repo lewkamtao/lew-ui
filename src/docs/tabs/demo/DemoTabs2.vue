@@ -1,40 +1,64 @@
 <script setup lang="ts">
-type Options = {
-    label: string;
-    value: string;
-    activeIndex: number;
-};
+    type Options = {
+        label: string;
+        value: string;
+        activeIndex: number;
+    };
+    const provinces = [
+        '北京市',
+        '上海市',
+        '天津市',
+        '重庆市',
+        '河北省',
+        '山西省',
+        '辽宁省',
+        '吉林省',
+        '黑龙江省',
+        '江苏省',
+        '浙江省',
+        '安徽省',
+        '福建省',
+        '江西省',
+        '山东省',
+        '河南省',
+        '湖北省',
+        '湖南省',
+        '广东省',
+        '海南省',
+        '四川省',
+        '贵州省',
+        '云南省',
+        '陕西省',
+        '甘肃省',
+        '青海省',
+        '台湾省',
+        '内蒙古自治区',
+        '广西壮族自治区',
+        '西藏自治区',
+        '宁夏回族自治区',
+        '新疆维吾尔自治区',
+        '香港特别行政区',
+        '澳门特别行政区'
+    ];
 
-const options = ref([
-    { label: 'Light', value: '1' },
-    { label: 'Dark', value: '2' },
-]);
+    const options = ref(
+        provinces.map((e, i) => {
+            return {
+                label: e,
+                value: i
+            };
+        })
+    );
 
-const options2 = ref([
-    { label: 'red', value: '1' },
-    { label: 'blue', value: '2' },
-    { label: 'black', value: '3' },
-    { label: 'white', value: '4' },
-]);
+    const value = ref(1);
 
-const value = ref('');
-const value2 = ref('');
-
-const change = (e: Options) => {
-    console.log(e);
-    LewMessage.info(e.label);
-};
+    const change = (e: Options) => {
+        LewMessage.info(e.label);
+    };
 </script>
 
 <template>
     <lew-flex direction="y" x="start" y="start">
-        <lew-tabs v-model="value" round :options="options" @change="change" />
-        <lew-tabs
-            v-model="value2"
-            round
-            width="300px"
-            item-width="calc(300px / 4)"
-            :options="options2"
-            @change="change"
-    /></lew-flex>
+        <lew-tabs v-model="value" style="width: 100%" :options="options" @change="change" />
+    </lew-flex>
 </template>

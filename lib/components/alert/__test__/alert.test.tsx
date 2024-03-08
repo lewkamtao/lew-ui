@@ -10,10 +10,10 @@ describe('LewAlert', () => {
                     {
                         type: 'info',
                         title: '成功发送一条消息',
-                        content: '',
-                    },
-                ],
-            },
+                        content: ''
+                    }
+                ]
+            }
         });
         const groupWrapper = wrapper.find<HTMLDivElement>('.lew-alert-group');
         expect(groupWrapper.find('.lew-alert.lew-alert-info')).toBeTruthy();
@@ -26,18 +26,18 @@ describe('LewAlert', () => {
             {
                 type: 'success',
                 title: 'hi success title',
-                content: 'hi success content',
+                content: 'hi success content'
             },
             {
                 type: 'error',
                 title: 'oh error title',
-                content: 'hoh error content',
-            },
+                content: 'hoh error content'
+            }
         ]);
         const wrapper = shallowMount(LewAlert, {
             props: {
-                list,
-            },
+                list
+            }
         });
         const groupWrapper = wrapper.find<HTMLDivElement>('.lew-alert-group');
         // 获取到 alert item

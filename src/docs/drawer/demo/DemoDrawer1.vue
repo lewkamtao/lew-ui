@@ -1,20 +1,20 @@
 <script setup lang="ts">
-const visible1 = ref(false);
-const visible2 = ref(false);
-const visible3 = ref(false);
-const visible4 = ref(false);
-const open1 = (): void => {
-    visible1.value = true;
-};
-const open2 = (): void => {
-    visible2.value = true;
-};
-const open3 = (): void => {
-    visible3.value = true;
-};
-const open4 = (): void => {
-    visible4.value = true;
-};
+    const visible1 = ref(false);
+    const visible2 = ref(false);
+    const visible3 = ref(false);
+    const visible4 = ref(false);
+    const open1 = (): void => {
+        visible1.value = true;
+    };
+    const open2 = (): void => {
+        visible2.value = true;
+    };
+    const open3 = (): void => {
+        visible3.value = true;
+    };
+    const open4 = (): void => {
+        visible4.value = true;
+    };
 </script>
 <template>
     <lew-flex gap="20" x="start">

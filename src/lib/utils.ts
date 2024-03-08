@@ -5,9 +5,7 @@ export const convertProps = (json: any) => {
             let type = '';
             if (Array.isArray(json[key].type)) {
                 type = json[key].type
-                    .map((item: any) =>
-                        item ? item.toString().match(/function\s+(\w+)/)[1] : ''
-                    )
+                    .map((item: any) => (item ? item.toString().match(/function\s+(\w+)/)[1] : ''))
                     .filter((item: any) => item !== '')
                     .join(' | ');
             } else {
@@ -20,7 +18,7 @@ export const convertProps = (json: any) => {
                 name: key,
                 description: json[key].description,
                 type: json[key].typeDesc ? json[key].typeDesc : type,
-                default: JSON.stringify(json[key].default),
+                default: JSON.stringify(json[key].default)
             };
             props.push(prop);
         }

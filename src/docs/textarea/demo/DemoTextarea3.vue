@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const value = ref('');
-const ok = () => {
-    LewMessage.success('提交成功');
-};
+    const value = ref('');
+    const ok = () => {
+        LewMessage.success('提交成功');
+    };
 </script>
 
 <template>

@@ -8,7 +8,7 @@
     </lew-flex>
 </template>
 <script lang="ts" setup>
-const getEvent = () => {
-    console.log('回到顶部');
-};
+    const getEvent = () => {
+        console.log('回到顶部');
+    };
 </script>

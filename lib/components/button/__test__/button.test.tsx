@@ -7,8 +7,8 @@ describe('Button', () => {
         const text = '添加';
         const buttonComponent = shallowMount(LewButton, {
             slots: {
-                default: text,
-            },
+                default: text
+            }
         });
         expect(buttonComponent.find('.lew-button').text()).toBe(text);
     });
@@ -16,28 +16,20 @@ describe('Button', () => {
     it('default-props', () => {
         const buttonComponent = shallowMount(LewButton);
         // 默认type为primary
-        expect(buttonComponent.find('.lew-button').classes()).toContain(
-            'lew-button-primary'
-        );
+        expect(buttonComponent.find('.lew-button').classes()).toContain('lew-button-primary');
         // 默认size为medium
-        expect(buttonComponent.find('.lew-button').classes()).toContain(
-            'lew-button-medium'
-        );
+        expect(buttonComponent.find('.lew-button').classes()).toContain('lew-button-medium');
     });
 
     it('set-props', () => {
         const buttonComponent = shallowMount(LewButton, {
             props: {
                 type: 'success',
-                size: 'small',
-            },
+                size: 'small'
+            }
         });
-        expect(buttonComponent.find('.lew-button').classes()).toContain(
-            'lew-button-success'
-        );
-        expect(buttonComponent.find('.lew-button').classes()).toContain(
-            'lew-button-small'
-        );
+        expect(buttonComponent.find('.lew-button').classes()).toContain('lew-button-success');
+        expect(buttonComponent.find('.lew-button').classes()).toContain('lew-button-small');
     });
 
     it('click', () => {
@@ -49,8 +41,8 @@ describe('Button', () => {
     it('disabled-click', () => {
         const buttonComponent = shallowMount(LewButton, {
             props: {
-                disabled: true,
-            },
+                disabled: true
+            }
         });
         buttonComponent.trigger('click');
         // button 设置 disabled 属性后，点击事件不会触发

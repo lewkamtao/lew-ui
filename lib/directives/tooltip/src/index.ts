@@ -25,12 +25,9 @@ export default {
                     arrow: false,
                     duration: [120, 120],
                     maxWidth: 250,
-                    delay: trigger === 'mouseenter' ? [120, 120] : undefined,
+                    delay: trigger === 'mouseenter' ? [120, 120] : undefined
                 });
-                el.instance.popper.children[0].setAttribute(
-                    'data-lew',
-                    'tooltip'
-                );
+                el.instance.popper.children[0].setAttribute('data-lew', 'tooltip');
                 if (!binding?.value?.content) {
                     el.instance.disable();
                 }
@@ -45,7 +42,7 @@ export default {
             },
             unmounted(el: any) {
                 el.instance = null;
-            },
+            }
         });
-    },
+    }
 };

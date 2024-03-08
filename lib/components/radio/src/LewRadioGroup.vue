@@ -1,35 +1,30 @@
 <script lang="ts" setup>
-import { useVModel } from '@vueuse/core';
-import { radioGroupProps } from './props';
-import type { RadioOptions } from './props';
-import { object2class } from 'lew-ui/utils';
-import LewRadio from './LewRadio.vue';
+    import { useVModel } from '@vueuse/core';
+    import { radioGroupProps } from './props';
+    import type { RadioOptions } from './props';
+    import { object2class } from 'lew-ui/utils';
+    import LewRadio from './LewRadio.vue';
 
-const emit = defineEmits(['change', 'update:modelValue']);
-const props = defineProps(radioGroupProps);
-const modelValue = useVModel(props, 'modelValue', emit);
+    const emit = defineEmits(['change', 'update:modelValue']);
+    const props = defineProps(radioGroupProps);
+    const modelValue = useVModel(props, 'modelValue', emit);
 
-const check = (item: RadioOptions) => {
-    modelValue.value = item.value;
-    emit('change', {
-        value: item.value,
-        item: toRaw(item),
+    const check = (item: RadioOptions) => {
+        modelValue.value = item.value;
+        emit('change', {
+            value: item.value,
+            item: toRaw(item)
+        });
+    };
+
+    const getRadioGroupClassName = computed(() => {
+        const { size, direction } = props;
+        return object2class('lew-radio-group', { size, direction });
     });
-};
-
-const getRadioGroupClassName = computed(() => {
-    const { size, direction } = props;
-    return object2class('lew-radio-group', { size, direction });
-});
 </script>
 
 <template>
-    <lew-flex
-        x="start"
-        gap="15"
-        class="lew-radio-group"
-        :class="getRadioGroupClassName"
-    >
+    <lew-flex x="start" gap="15" class="lew-radio-group" :class="getRadioGroupClassName">
         <lew-radio
             v-for="item in options"
             :key="item.value"
@@ -45,31 +40,31 @@ const getRadioGroupClassName = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-.lew-radio-group {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-}
+    .lew-radio-group {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
 
-.lew-radio-group-size-small {
-    min-height: var(--lew-form-item-height-small);
-}
+    .lew-radio-group-size-small {
+        min-height: var(--lew-form-item-height-small);
+    }
 
-.lew-radio-group-size-medium {
-    min-height: var(--lew-form-item-height-medium);
-}
+    .lew-radio-group-size-medium {
+        min-height: var(--lew-form-item-height-medium);
+    }
 
-.lew-radio-group-size-large {
-    min-height: var(--lew-form-item-height-large);
-}
+    .lew-radio-group-size-large {
+        min-height: var(--lew-form-item-height-large);
+    }
 
-.lew-radio-group.lew-radio-group-direction-x {
-    flex-direction: row;
-}
+    .lew-radio-group.lew-radio-group-direction-x {
+        flex-direction: row;
+    }
 
-.lew-radio-group.lew-radio-group-direction-y {
-    flex-direction: column;
-    align-items: start;
-    justify-content: flex-start;
-}
+    .lew-radio-group.lew-radio-group-direction-y {
+        flex-direction: column;
+        align-items: start;
+        justify-content: flex-start;
+    }
 </style>

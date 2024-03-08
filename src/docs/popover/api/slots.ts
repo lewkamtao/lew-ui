@@ -5,12 +5,12 @@ export default {
         {
             name: 'trigger',
             description: '触发的节点',
-            params: '-',
+            params: '-'
         },
         {
             name: 'popover-body',
             description: '触发展示的内容主体',
-            params: '-',
-        },
-    ],
+            params: '-'
+        }
+    ]
 };

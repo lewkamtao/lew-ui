@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import type { DropdownOptions } from 'lew-ui';
+    import type { DropdownOptions } from 'lew-ui';
 
-type Options = typeof DropdownOptions;
+    type Options = typeof DropdownOptions;
 
-const options: Options = ref([
-    {
-        label: '西游记',
-        value: '1',
-    },
-    {
-        label: '水浒传',
-        value: '2',
-    },
-    {
-        label: '三国演义',
-        value: '3',
-    },
-    {
-        label: '红楼梦',
-        value: '4',
-    },
-]);
+    const options: Options = ref([
+        {
+            label: '西游记',
+            value: '1'
+        },
+        {
+            label: '水浒传',
+            value: '2'
+        },
+        {
+            label: '三国演义',
+            value: '3'
+        },
+        {
+            label: '红楼梦',
+            value: '4'
+        }
+    ]);
 
-const change = (e: Options) => {
-    LewMessage.info(e.label);
-};
+    const change = (e: Options) => {
+        LewMessage.info(e.label);
+    };
 </script>
 <template>
     <lew-flex gap="30" x="start">

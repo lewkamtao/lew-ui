@@ -5,12 +5,12 @@ export default {
         {
             name: 'change',
             description: '值变化',
-            params: '() => void',
+            params: '() => void'
         },
         {
             name: 'close',
             description: '关闭某个tag',
-            params: '() => void',
-        },
-    ],
+            params: '() => void'
+        }
+    ]
 };

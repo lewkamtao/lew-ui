@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const value = ref('');
-const prefixesValue = ref(1);
+    const value = ref('');
+    const prefixesValue = ref(1);
 
-const http = ref({
-    value: '',
-    prefixes: 1,
-    suffix: 1,
-});
+    const http = ref({
+        value: '',
+        prefixes: 1,
+        suffix: 1
+    });
 </script>
 
 <template>
@@ -61,20 +61,20 @@ const http = ref({
             :prefixes-options="[
                 {
                     label: '北京',
-                    value: 1,
+                    value: 1
                 },
                 {
                     label: '上海',
-                    value: 2,
+                    value: 2
                 },
                 {
                     label: '广州',
-                    value: 3,
+                    value: 3
                 },
                 {
                     label: '上海',
-                    value: 4,
-                },
+                    value: 4
+                }
             ]"
             placeholder="请输入手机号"
         />
@@ -87,35 +87,35 @@ const http = ref({
             :prefixes-options="[
                 {
                     label: 'http://',
-                    value: 1,
+                    value: 1
                 },
                 {
                     label: 'https://',
-                    value: 2,
-                },
+                    value: 2
+                }
             ]"
             suffix="select"
             :suffix-options="[
                 {
                     label: '.com',
-                    value: 1,
+                    value: 1
                 },
                 {
                     label: '.cn',
-                    value: 2,
+                    value: 2
                 },
                 {
                     label: '.com.cn',
-                    value: 3,
+                    value: 3
                 },
                 {
                     label: '.org',
-                    value: 4,
+                    value: 4
                 },
                 {
                     label: '.net',
-                    value: 5,
-                },
+                    value: 5
+                }
             ]"
             placeholder="请输入网址"
         />
@@ -127,35 +127,35 @@ const http = ref({
             :prefixes-options="[
                 {
                     label: 'http://',
-                    value: 1,
+                    value: 1
                 },
                 {
                     label: 'https://',
-                    value: 2,
-                },
+                    value: 2
+                }
             ]"
             suffix="select"
             :suffix-options="[
                 {
                     label: '.com',
-                    value: 1,
+                    value: 1
                 },
                 {
                     label: '.cn',
-                    value: 2,
+                    value: 2
                 },
                 {
                     label: '.com.cn',
-                    value: 3,
+                    value: 3
                 },
                 {
                     label: '.org',
-                    value: 4,
+                    value: 4
                 },
                 {
                     label: '.net',
-                    value: 5,
-                },
+                    value: 5
+                }
             ]"
             placeholder="请输入网址"
         />
@@ -168,35 +168,35 @@ const http = ref({
             :prefixes-options="[
                 {
                     label: 'http://',
-                    value: 1,
+                    value: 1
                 },
                 {
                     label: 'https://',
-                    value: 2,
-                },
+                    value: 2
+                }
             ]"
             suffix="select"
             :suffix-options="[
                 {
                     label: '.com',
-                    value: 1,
+                    value: 1
                 },
                 {
                     label: '.cn',
-                    value: 2,
+                    value: 2
                 },
                 {
                     label: '.com.cn',
-                    value: 3,
+                    value: 3
                 },
                 {
                     label: '.org',
-                    value: 4,
+                    value: 4
                 },
                 {
                     label: '.net',
-                    value: 5,
-                },
+                    value: 5
+                }
             ]"
             placeholder="请输入网址"
         />

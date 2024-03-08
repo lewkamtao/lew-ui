@@ -6,19 +6,19 @@ export default {
             name: 'label',
             description: '文本内容',
             type: 'String',
-            default: "''",
+            default: "''"
         },
         {
             name: 'to',
             description: '绑定跳转链接',
             type: `String`,
-            default: "''",
+            default: "''"
         },
         {
             name: 'active',
             description: '是否是选中状态',
             type: 'Boolean',
-            default: 'false',
-        },
-    ],
+            default: 'false'
+        }
+    ]
 };

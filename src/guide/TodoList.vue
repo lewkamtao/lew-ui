@@ -11,8 +11,8 @@
     </div>
 </template>
 <style lang="scss" scoped>
-ul {
-    padding-left: 20px;
-    line-height: 35px;
-}
+    ul {
+        padding-left: 20px;
+        line-height: 35px;
+    }
 </style>

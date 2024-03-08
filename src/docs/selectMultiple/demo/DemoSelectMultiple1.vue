@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { schools } from './schools';
+    import { schools } from './schools';
 
-const schoolsOptions = schools.map((e, i) => {
-    return { label: e, value: i + 1 };
-});
+    const schoolsOptions = schools.map((e, i) => {
+        return { label: e, value: i + 1 };
+    });
 
-const options = ref(schoolsOptions);
+    const options = ref(schoolsOptions);
 
-const value = ref([]);
+    const value = ref([]);
 </script>
 
 <template>
@@ -19,12 +19,7 @@ const value = ref([]);
             placeholder="小"
             clearable
         />
-        <lew-select-multiple
-            v-model="value"
-            :options="options"
-            placeholder="中"
-            clearable
-        />
+        <lew-select-multiple v-model="value" :options="options" placeholder="中" clearable />
         <lew-select-multiple
             v-model="value"
             size="large"

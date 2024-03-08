@@ -50,16 +50,8 @@ export interface UploadProps {
     httpRequest: (options: UploadRequestOptions) => void;
     onBeforeUpload: (file: UploadFile) => boolean | Promise<boolean>;
     onChange: (file: UploadFile, fileList: UploadFile[]) => void;
-    onProgress: (
-        event: ProgressEvent,
-        file: UploadFile,
-        fileList: UploadFile[]
-    ) => void;
-    onSuccess: (
-        response: any,
-        file: UploadFile,
-        fileList: UploadFile[]
-    ) => void;
+    onProgress: (event: ProgressEvent, file: UploadFile, fileList: UploadFile[]) => void;
+    onSuccess: (response: any, file: UploadFile, fileList: UploadFile[]) => void;
     onFail: (error: Error, file: UploadFile, fileList: UploadFile[]) => void;
     onRemove: (file: UploadFile, fileList: UploadFile[]) => void;
     onPreview: (file: UploadFile) => void;

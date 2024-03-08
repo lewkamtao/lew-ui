@@ -5,6 +5,6 @@ export const inputTagProps = {
     modelValue: {
         type: Array as PropType<string[]> | undefined,
         default: [],
-        description: '绑定值',
-    },
+        description: '绑定值'
+    }
 };

@@ -21,33 +21,33 @@ export const tagProps = {
     type: {
         type: String as PropType<TagType>,
         default: 'fill',
-        description: '类型',
+        description: '类型'
     },
     color: {
         type: String as PropType<TagColor>,
         default: 'blue',
-        description: '颜色',
+        description: '颜色'
     },
     size: {
         type: String as PropType<TagSize>,
         default: 'medium',
-        description: '大小',
+        description: '大小'
     },
     round: {
         type: Boolean,
         default: false,
-        description: '是否圆角',
+        description: '是否圆角'
     },
     closable: {
         type: Boolean,
         default: false,
-        description: '是否可关闭',
+        description: '是否可关闭'
     },
     disabled: {
         type: Boolean,
         default: false,
-        description: '是否禁用',
-    },
+        description: '是否禁用'
+    }
 };
 
 export type TagProps = ExtractPropTypes<typeof tagProps>;
