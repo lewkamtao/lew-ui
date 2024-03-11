@@ -57,7 +57,7 @@
         display: block;
         width: 38px;
         height: 24px;
-        background: var(--lew-form-bgcolor);
+        background: var(--lew-bgcolor-3);
         border-radius: var(--lew-border-radius);
         transition: var(--lew-form-transition);
         cursor: pointer;
@@ -128,12 +128,12 @@
     }
 
     .lew-switch-view:hover {
-        background: var(--lew-form-bgcolor-active);
+        background: var(--lew-bgcolor-4);
         outline: var(--lew-form-ouline);
     }
 
     .lew-switch-view:active {
-        background: var(--lew-form-bgcolor-active);
+        background: var(--lew-bgcolor-5);
 
         .lew-switch-dot {
             width: 20px;
