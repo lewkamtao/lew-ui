@@ -27,11 +27,6 @@ export const selectProps = {
         default: 'click',
         description: '触发方式，可选值为 click 或 hover'
     },
-    labelSlot: {
-        type: Boolean,
-        default: false,
-        description: '是否使用 label 插槽'
-    },
     placeholder: {
         type: String,
         default: '请选择',

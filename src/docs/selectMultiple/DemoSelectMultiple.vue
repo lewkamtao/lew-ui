@@ -6,8 +6,6 @@
         DemoSelectMultiple2Code,
         DemoSelectMultiple3,
         DemoSelectMultiple3Code,
-        DemoSelectMultiple4,
-        DemoSelectMultiple4Code,
         DemoSelectMultiple5,
         DemoSelectMultiple5Code,
         DemoSelectMultiple6,
@@ -38,9 +36,9 @@
         <lew-demo-box title="支持搜索" :code="DemoSelectMultiple3Code">
             <demo-select-multiple3 />
         </lew-demo-box>
-        <lew-demo-box title="插槽" :code="DemoSelectMultiple4Code">
+        <!-- <lew-demo-box title="插槽" :code="DemoSelectMultiple4Code">
             <demo-select-multiple4 />
-        </lew-demo-box>
+        </lew-demo-box> -->
         <lew-demo-box title="禁用项" :code="DemoSelectMultiple5Code">
             <demo-select-multiple5 />
         </lew-demo-box>

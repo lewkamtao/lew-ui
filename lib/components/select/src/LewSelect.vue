@@ -247,7 +247,7 @@
                         class="lew-select-options-list lew-scrollbar"
                         :list="state.options"
                         :options="{
-                            itemHeight: 30
+                            itemHeight: state.itemHeight
                         }"
                         :height="getVirtualHeight"
                     >
@@ -259,7 +259,6 @@
                                 @click="selectHandle(templateProps.data)"
                             >
                                 <div
-                                    v-if="!labelSlot"
                                     class="lew-select-item"
                                     :class="getSelectItemClassName(templateProps.data)"
                                 >
@@ -271,17 +270,6 @@
                                         class="icon-check"
                                         size="14"
                                         type="check"
-                                    />
-                                </div>
-                                <div
-                                    v-else
-                                    class="lew-select-slot-item"
-                                    :style="{ height: state.itemHeight + 'px' }"
-                                >
-                                    <slot
-                                        name="label"
-                                        :item="templateProps.data"
-                                        :checked="getChecked(templateProps.data.value)"
                                     />
                                 </div>
                             </label>
@@ -550,6 +538,7 @@
             }
 
             .lew-select-slot-item {
+                width: 100%;
                 border-radius: 6px;
             }
 
