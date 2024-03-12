@@ -368,7 +368,13 @@
                                 :row="row"
                                 :column="column"
                             />
-                            <template v-else>{{ row[column.field] }}</template>
+                            <template v-else>
+                                <lew-text-trim
+                                    :x="column.x || 'start'"
+                                    style="width: 100%"
+                                    :text="row[column.field]"
+                                />
+                            </template>
                         </lew-flex>
                     </div>
                 </div>
@@ -446,7 +452,13 @@
                                 :row="row"
                                 :column="column"
                             />
-                            <template v-else>{{ row[column.field] }}</template>
+                            <template v-else>
+                                <lew-text-trim
+                                    :x="column.x || 'start'"
+                                    style="width: 100%"
+                                    :text="row[column.field]"
+                                />
+                            </template>
                         </lew-flex>
                     </div>
                 </div>
