@@ -1,6 +1,6 @@
 {
     "name": "lew-ui",
-    "version": "1.9.12",
+    "version": "2.0.1",
     "description": "A Component Library for Vue3.js.",
     "keywords": [
         "vue3",
@@ -25,7 +25,7 @@
         "dist/directives/**/*.ts",
         "dist/hooks/**/*.ts",
         "dist/utils/**/*.ts",
-        "dist/index.es.js",
+        "dist/index.mjs",
         "dist/index.umd.js",
         "dist/style.css",
         "dist/index.d.ts",
@@ -33,13 +33,13 @@
         "README.md",
         "LICENSE"
     ],
-    "module": "./dist/index.es.js",
+    "module": "./dist/index.mjs",
     "main": "./dist/index.umd.js",
     "types": "./dist/index.d.ts",
     "typings": "./dist/index.d.ts",
     "exports": {
         ".": {
-            "import": "./dist/index.es.js",
+            "import": "./dist/index.mjs",
             "require": "./dist/index.umd.js",
             "types": "./dist/index.d.ts"
         },
