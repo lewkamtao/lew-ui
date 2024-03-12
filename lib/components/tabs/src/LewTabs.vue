@@ -225,6 +225,7 @@
 
     .lew-tabs-wrapper-type-line {
         box-shadow: none;
+        border-radius: 0px;
     }
 
     .lew-tabs-wrapper-type-line::before,
@@ -319,9 +320,9 @@
     }
 
     .lew-tabs-type-line {
+        position: relative;
         background: none;
         border: none;
-        border-bottom: var(--lew-form-border-width) var(--lew-form-border-color) solid;
         padding-bottom: 5px;
         border-radius: 0px;
 
@@ -345,12 +346,21 @@
             left: 0px;
             z-index: 9;
             height: 2px;
+            border-radius: 0px;
             background: var(--lew-color-primary-dark);
             transform: translateX(3px);
             box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);
         }
     }
-
+    .lew-tabs-type-line:after {
+        position: absolute;
+        content: '';
+        bottom: 1px;
+        left: 3px;
+        height: 2px;
+        background-color: var(--lew-form-border-color);
+        width: calc(100% - 6px);
+    }
     .lew-tabs-round {
         border-radius: 35px;
 
