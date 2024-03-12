@@ -20,7 +20,8 @@
         checkAll: false,
         fixedLeftWidth: 0,
         fixedRightWidth: 0,
-        selectedKeysMap: {} as any
+        selectedKeysMap: {} as any,
+        isInit: false
     });
 
     onActivated(() => {
@@ -33,6 +34,7 @@
 
     const tableObserve = () => {
         obs = new ResizeObserver(() => {
+            state.isInit = false;
             resizeTableHandle();
         });
         obs.observe(tableRef.value);
@@ -88,6 +90,7 @@
 
         state.scrollClientWidth = table.clientWidth;
         state.scrollbarVisible = clientWidth > state.scrollClientWidth;
+        state.isInit = true;
         checkScroll();
     }, 200);
 
@@ -222,7 +225,9 @@
             :style="{ left: any2px(state.fixedLeftWidth) }"
             :class="{
                 'hide-line-left':
-                    !state.scrollbarVisible || ['all', 'left'].includes(state.hidScrollLine)
+                    !state.scrollbarVisible ||
+                    !state.isInit ||
+                    ['all', 'left'].includes(state.hidScrollLine)
             }"
             class="lew-table-scroll-line-left"
         ></div>
@@ -230,7 +235,9 @@
             :style="{ right: any2px(state.fixedRightWidth) }"
             :class="{
                 'hide-line-right':
-                    !state.scrollbarVisible || ['all', 'right'].includes(state.hidScrollLine)
+                    !state.scrollbarVisible ||
+                    !state.isInit ||
+                    ['all', 'right'].includes(state.hidScrollLine)
             }"
             class="lew-table-scroll-line-right"
         ></div>

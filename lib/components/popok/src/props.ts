@@ -1,4 +1,5 @@
 import type { ButtonProps } from '../../button/index';
+import type { PropType } from 'vue';
 export const popokProps = {
     type: {
         type: String,

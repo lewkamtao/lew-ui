@@ -326,7 +326,7 @@
                 </label>
             </div>
             <div
-                :style="direction === 'x' ? `width:calc(100% - ${any2px(labelWidth)})` : ''"
+                :style="direction === 'x' ? `width:calc(100% - ${any2px(labelWidth)} - 10px)` : ''"
                 class="lew-form-main"
                 :class="{ 'lew-form-item-error': item.errMessage }"
             >

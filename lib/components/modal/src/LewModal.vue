@@ -12,7 +12,15 @@
 
     const props = defineProps(modalProps);
 
-    const emit = defineEmits(['update:visible', 'ok', 'cancel', 'show', 'close']);
+    const emit = defineEmits([
+        'update:visible',
+        'ok',
+        'cancel',
+        'show',
+        'close',
+        'after-show',
+        'after-close'
+    ]);
 
     const visible = useVModel(props, 'visible', emit);
     const transformOrigin = ref('0 0');
@@ -44,11 +52,22 @@
             if (newVal) {
                 transformOrigin.value = `${x.value}px ${y.value}px`;
                 emit('show');
+                setTimeout(() => {
+                    nextTick(() => {
+                        emit('after-show');
+                    });
+                }, 500);
             } else {
                 emit('close');
+                setTimeout(() => {
+                    nextTick(() => {
+                        emit('after-show');
+                    });
+                }, 500);
             }
         }
     );
+
     if (props.closeByEsc) {
         watch(Escape, (v) => {
             if (v && visible.value) {
