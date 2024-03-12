@@ -495,7 +495,7 @@
                 rgba(0, 0, 0, 0.01),
                 rgba(0, 0, 0, 0)
             );
-            transition: all 0.25s;
+            transition: opacity 0.25s;
         }
 
         .lew-table-scroll-line-right {
@@ -513,7 +513,7 @@
                 rgba(0, 0, 0, 0.01),
                 rgba(0, 0, 0, 0)
             );
-            transition: all 0.25s;
+            transition: opacity 0.25s;
         }
         .hide-line-left,
         .hide-line-right {

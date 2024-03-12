@@ -69,6 +69,7 @@
         ref="lewPopoverRef"
         trigger="click"
         placement="bottom-start"
+        :offset="[1, 8]"
         @show="showHandle"
         @hide="hideHandle"
     >

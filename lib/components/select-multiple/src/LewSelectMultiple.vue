@@ -201,6 +201,7 @@
         :disabled="disabled"
         placement="bottom-start"
         style="width: 100%"
+        :offset="[-1, 10]"
         :loading="state.loading"
         @show="showHandle"
         @hide="hideHandle"
