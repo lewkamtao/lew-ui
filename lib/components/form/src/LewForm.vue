@@ -422,8 +422,7 @@
                     @change="(e: any) => {
                         validate(item.field);
                         typeof item.props.click === 'function' ? item.props.change(e) : '';
-                    }
-                        "
+                    }"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                 />
@@ -520,6 +519,7 @@
     .lew-form-size-small {
         .lew-form-item {
             .label-box {
+                font-size: var(--lew-form-font-size-small);
                 margin-top: 5px;
             }
         }
@@ -532,6 +532,7 @@
     .lew-form-size-medium {
         .lew-form-item {
             .label-box {
+                font-size: var(--lew-form-font-size-medium);
                 margin-top: 7px;
             }
         }
@@ -544,6 +545,7 @@
     .lew-form-size-large {
         .lew-form-item {
             .label-box {
+                font-size: var(--lew-form-font-size-large);
                 margin-top: 9px;
             }
         }
@@ -580,6 +582,7 @@
             .label-box {
                 display: inline-flex;
                 justify-content: flex-start;
+                box-sizing: border-box;
 
                 .label-required::after {
                     content: '*';

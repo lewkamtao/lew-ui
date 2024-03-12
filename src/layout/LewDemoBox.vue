@@ -41,12 +41,12 @@
             </lew-tag>
         </lew-title>
         <div class="demo-item">
-            <div class="demo-cp">
+            <div class="demo-cp lew-scrollbar">
                 <slot></slot>
             </div>
-            <div v-show="code" v-highlight class="hl-pre lew-scrollbar" :style="style">
+            <div v-if="code" class="hl-pre lew-scrollbar" :style="style">
                 <div class="pre-box">
-                    <pre><code>{{ code }}</code></pre>
+                    <highlightjs autodetect :code="code" />
                 </div>
             </div>
             <div class="show-bar" @click="isShowCode = !isShowCode">

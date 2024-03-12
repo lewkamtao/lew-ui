@@ -159,6 +159,11 @@
 </template>
 
 <style lang="scss">
+    .lew-popover {
+        .trigger {
+            display: flex;
+        }
+    }
     .lew-popover-body {
         overflow: hidden;
     }

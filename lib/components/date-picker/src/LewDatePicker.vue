@@ -47,7 +47,8 @@
     });
 
     const clearHandle = () => {
-        modelValue.value = '';
+        modelValue.value = undefined;
+        change(modelValue.value);
         emit('clear');
     };
 

@@ -1,6 +1,6 @@
 {
     "name": "lew-ui",
-    "version": "2.0.3",
+    "version": "2.0.4",
     "description": "A Component Library for Vue3.js.",
     "keywords": [
         "vue3",
@@ -46,10 +46,12 @@
         "./style": "./dist/style.css"
     },
     "dependencies": {
+        "@highlightjs/vue-plugin": "^2.1.0",
         "@vueuse/components": "^9.13.0",
         "@vueuse/core": "^9.1.1",
         "dayjs": "^1.11.7",
         "feather-icons": "^4.29.0",
+        "highlight.js": "^11.9.0",
         "lodash": "^4.17.21",
         "terser": "^5.28.1",
         "tippy.js": "^6.3.7",

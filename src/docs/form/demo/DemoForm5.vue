@@ -1,7 +1,6 @@
 <script setup lang="ts">
     import * as Yup from 'yup';
 
-    const form = ref({});
     const options = ref([
         {
             field: 'username',
@@ -23,7 +22,7 @@
 </script>
 
 <template>
-    <lew-form v-model="form" class="form-box" :options="options" :label-width="80" />
+    <lew-form class="form-box" :options="options" :label-width="80" />
 </template>
 <style scoped lang="scss">
     .form-box {

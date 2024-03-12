@@ -6,7 +6,7 @@
     line-height: 22px;
     .lew-dark & {
         outline: 1px #2d2d2d solid;
-        background-color: #2d2d2d;
+        background-color: #27282d;
         color: #d4d4d4;
     }
 }
@@ -98,4 +98,51 @@ code.hljs {
 
 .hljs-title.class_ {
     color: #f93;
+}
+
+.hljs::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: var(--lew-bgcolor-2);
+    border-radius: 4px;
+}
+.hljs::-webkit-scrollbar-thumb:hover {
+    background-color: var(--lew-bgcolor-6);
+}
+.hljs::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: var(--lew-bgcolor-4);
+}
+/* 修改滚动条角的颜色为蓝色 */
+.hljs::-webkit-scrollbar-corner {
+    background-color: var(--lew-bgcolor-0);
+}
+.scrollbar-corner {
+    background-color: var(--lew-bgcolor-0);
+}
+
+.hljs::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: transparent;
+}
+.hljs:hover {
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+        background-color: var(--lew-bgcolor-2);
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: var(--lew-bgcolor-6);
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--lew-bgcolor-4);
+    }
+    /* 修改滚动条角的颜色为蓝色 */
+    &::-webkit-scrollbar-corner {
+        background-color: var(--lew-bgcolor-0);
+    }
+    .scrollbar-corner {
+        background-color: var(--lew-bgcolor-0);
+    }
 }
