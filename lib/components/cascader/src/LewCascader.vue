@@ -147,7 +147,7 @@
     };
 
     const clearHandle = () => {
-        cascaderValue.value = '';
+        cascaderValue.value = undefined;
         state.tobelabels = [];
         state.activelabels = [];
         hide();

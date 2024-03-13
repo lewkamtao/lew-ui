@@ -45,7 +45,7 @@
     };
 
     const clear = (): void => {
-        modelValue.value = '';
+        modelValue.value = undefined;
         emit('clear');
     };
 

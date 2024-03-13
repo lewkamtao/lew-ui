@@ -69,7 +69,7 @@
     };
 
     const clearHandle = () => {
-        selectValue.value = '';
+        selectValue.value = undefined;
         emit('clear');
         emit('change');
     };
