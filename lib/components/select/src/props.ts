@@ -17,6 +17,11 @@ export const selectProps = {
         default: '',
         description: '绑定值'
     },
+    defaultValue: {
+        type: [String, Number] || undefined,
+        default: '',
+        description: '默认值，用于异步列表的情况，无法映射label和value，需要手动传入'
+    },
     options: {
         type: Array as PropType<SelectOptions[]>,
         default: [],
@@ -90,10 +95,5 @@ export const selectProps = {
         type: Boolean,
         default: () => true,
         description: '是否显示选中图标'
-    },
-    defaultValue: {
-        type: [String, Number] || undefined,
-        default: '',
-        description: '默认值'
     }
 };
