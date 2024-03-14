@@ -42,11 +42,6 @@ export const selectProps = {
         default: false,
         description: '是否可搜索'
     },
-    searchPlaceholder: {
-        type: String,
-        default: '',
-        description: '搜索提示语'
-    },
     searchMethod: {
         type: Function as PropType<(e: SelectSearchMethodParams) => void>,
         default: (params: SelectSearchMethodParams) => {
