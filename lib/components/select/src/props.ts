@@ -27,11 +27,6 @@ export const selectProps = {
         default: [],
         description: '配置列表'
     },
-    trigger: {
-        type: String,
-        default: 'click',
-        description: '触发方式，可选值为 click 或 hover'
-    },
     placeholder: {
         type: String,
         default: '请选择',
@@ -68,7 +63,7 @@ export const selectProps = {
     },
     searchDelay: {
         type: Number,
-        default: 500,
+        default: 250,
         description: '搜索延迟，单位毫秒，仅在 searchable 为 true 时有效'
     },
     clearable: {

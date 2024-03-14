@@ -4,6 +4,7 @@
     import { object2class, numFormat } from 'lew-ui/utils';
     import { UseVirtualList } from '@vueuse/components';
     import { selectProps, SelectOptions } from './props';
+    import _ from 'lodash';
 
     // 获取app
     const app = getCurrentInstance()?.appContext.app;
@@ -15,8 +16,8 @@
     const selectValue = useVModel(props, 'modelValue', emit);
 
     const lewSelectRef = ref();
+    const inputRef = ref();
     const lewPopverRef = ref();
-    const searchInputRef = ref();
 
     const state = reactive({
         selectWidth: 0,
@@ -24,16 +25,13 @@
         visible: false,
         loading: false,
         options: props.options,
-        keyword: ''
+        hideBySelect: false, // 记录是否通过选择隐藏
+        keyword: props.defaultValue || (props.modelValue as any),
+        backupKeyword: props.defaultValue as any
     });
 
     const getSelectWidth = () => {
         state.selectWidth = lewSelectRef.value?.clientWidth - 12;
-        if (props.searchable) {
-            setTimeout(() => {
-                searchInputRef.value && searchInputRef.value.focus();
-            }, 200);
-        }
     };
 
     const show = () => {
@@ -49,7 +47,6 @@
     }, props.searchDelay);
 
     const search = async (e: any) => {
-        // loading
         state.loading = true;
         const keyword = e.target.value;
         if (props.searchable) {
@@ -78,6 +75,8 @@
         if (item.disabled) {
             return;
         }
+        state.hideBySelect = true;
+        state.keyword = item.label;
         selectValue.value = item.value;
         emit('change', item.value);
         hide();
@@ -88,10 +87,10 @@
     });
 
     const getValueStyle = computed(() => {
-        return state.visible ? 'opacity:0.4' : '';
+        return state.visible ? 'opacity:0.6' : '';
     });
 
-    const getLabel = computed(() => {
+    const findKeyword = () => {
         if (state.options) {
             const option = state.options.find((e: any) => {
                 if (e) {
@@ -100,12 +99,12 @@
             });
 
             if (option && JSON.stringify(option) !== '{}') {
-                return option.label;
+                return (state.keyword = option.label);
             }
         }
-
-        return props.defaultValue || props.modelValue;
-    });
+        return (state.keyword = props.defaultValue);
+    };
+    findKeyword();
 
     const getSelectClassName = computed(() => {
         let { clearable, size, align } = props;
@@ -119,9 +118,9 @@
     });
 
     const getSelectViewClassName = computed(() => {
-        const { disabled, readonly } = props;
+        const { disabled, readonly, searchable } = props;
         const focus = state.visible;
-        return object2class('lew-select-view', { focus, disabled, readonly });
+        return object2class('lew-select-view', { focus, searchable, disabled, readonly });
     });
 
     const getSelectItemClassName = (e: any) => {
@@ -153,7 +152,11 @@
 
     const showHandle = () => {
         state.visible = true;
-        state.keyword = '';
+        state.backupKeyword = _.cloneDeep(state.keyword);
+        if (props.searchable) {
+            state.keyword = '';
+        }
+        state.hideBySelect = false; // 重置
         getSelectWidth();
         if (props.searchable) {
             search({ target: { value: '' } });
@@ -162,8 +165,19 @@
 
     const hideHandle = () => {
         state.visible = false;
+        if (!state.hideBySelect) {
+            findKeyword();
+        }
+        inputRef.value.blur();
         emit('blur');
     };
+
+    watch(
+        () => selectValue.value,
+        () => {
+            findKeyword();
+        }
+    );
 
     defineExpose({ show, hide });
 </script>
@@ -174,7 +188,7 @@
         popover-body-class-name="lew-select-popover-body"
         class="lew-select-view"
         :class="getSelectViewClassName"
-        :trigger="trigger"
+        trigger="click"
         :disabled="disabled"
         placement="bottom-start"
         style="width: 100%"
@@ -189,11 +203,11 @@
                     :size="getIconSize"
                     type="chevron-down"
                     class="icon-select"
-                    :class="{ 'icon-select-hide': clearable && getLabel }"
+                    :class="{ 'icon-select-hide': clearable && state.keyword }"
                 />
                 <transition name="lew-form-icon-ani">
                     <lew-icon
-                        v-if="clearable && getLabel && !readonly"
+                        v-if="clearable && state.keyword && !readonly"
                         :size="getIconSize"
                         type="x"
                         class="lew-form-icon-clear"
@@ -203,12 +217,15 @@
                         @click.stop="clearHandle"
                     />
                 </transition>
-                <div v-show="getLabel" :style="getValueStyle" class="value">
-                    {{ getLabel }}
-                </div>
-                <div v-show="!getLabel" class="placeholder">
-                    {{ placeholder }}
-                </div>
+                <input
+                    ref="inputRef"
+                    class="value"
+                    :style="getValueStyle"
+                    :readonly="!searchable"
+                    v-model="state.keyword"
+                    :placeholder="placeholder"
+                    @input="searchDebounce"
+                />
             </div>
         </template>
         <template #popover-body>
@@ -218,14 +235,7 @@
                 :style="`width:${state.selectWidth}px`"
             >
                 <slot name="header"></slot>
-                <div v-if="searchable" class="search-input">
-                    <input
-                        ref="searchInputRef"
-                        v-model="state.keyword"
-                        placeholder="输入搜索关键词"
-                        @input="searchDebounce"
-                    />
-                </div>
+
                 <div class="lew-select-options-box">
                     <lew-flex
                         v-show="state.options && state.options.length === 0"
@@ -244,7 +254,7 @@
                     </div>
                     <use-virtual-list
                         v-if="state.options.length > 0"
-                        :key="getVirtualHeight"
+                        :key="state.options.length"
                         class="lew-select-options-list lew-scrollbar"
                         :list="state.options"
                         :options="{
@@ -325,20 +335,22 @@
                 transform: translate(100%, -50%);
             }
 
-            .placeholder {
-                color: rgb(165, 165, 165);
-            }
-
-            .placeholder,
             .value {
+                width: calc(100% - 24px);
                 display: inline-flex;
                 align-items: center;
-                width: calc(100% - 24px);
                 box-sizing: border-box;
                 transition: all 0.2s;
+                border: none;
+                outline: none;
+                background: none;
+                cursor: pointer;
+            }
+
+            .value::placeholder {
+                color: rgb(165, 165, 165);
             }
         }
-
         .lew-select-align-left {
             text-align: left;
         }
@@ -356,8 +368,7 @@
         }
 
         .lew-select-size-small {
-            .value,
-            .placeholder {
+            .value {
                 padding: var(--lew-form-input-padding-small);
                 height: var(--lew-form-item-height-small);
                 line-height: var(--lew-form-input-line-height-small);
@@ -366,8 +377,7 @@
         }
 
         .lew-select-size-medium {
-            .value,
-            .placeholder {
+            .value {
                 padding: var(--lew-form-input-padding-medium);
                 line-height: var(--lew-form-input-line-height-medium);
                 height: var(--lew-form-item-height-medium);
@@ -376,8 +386,7 @@
         }
 
         .lew-select-size-large {
-            .value,
-            .placeholder {
+            .value {
                 padding: var(--lew-form-input-padding-large);
                 height: var(--lew-form-item-height-large);
                 line-height: var(--lew-form-input-line-height-large);
@@ -422,7 +431,13 @@
             user-select: text;
         }
     }
-
+    .lew-select-view-searchable {
+        .lew-select {
+            .value {
+                cursor: text;
+            }
+        }
+    }
     .lew-select-view-disabled:hover {
         background-color: var(--lew-form-bgcolor);
         outline: 0px var(--lew-color-primary-light) solid;
@@ -436,28 +451,6 @@
     .lew-select-body {
         width: 100%;
         box-sizing: border-box;
-
-        .search-input {
-            margin-bottom: 5px;
-
-            input {
-                outline: none;
-                border: none;
-                background-color: var(--lew-bgcolor-2);
-                width: 100%;
-                height: 30px;
-                border-radius: var(--lew-border-radius);
-                padding: 0px 10px;
-                box-sizing: border-box;
-                color: var(--lew-form-color);
-                transition: var(--lew-form-transition);
-            }
-
-            input:focus {
-                background-color: var(--lew-bgcolor-3);
-                box-shadow: var(--lew-box-shadow);
-            }
-        }
 
         .not-found {
             opacity: 0.4;

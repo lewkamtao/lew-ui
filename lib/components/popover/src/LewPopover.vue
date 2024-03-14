@@ -79,7 +79,6 @@
     );
     const initTippy = () => {
         let { placement, triggerTarget, offset, trigger, disabled }: any = props;
-
         if (trigger === 'hover') {
             trigger = 'mouseenter';
         }
@@ -140,11 +139,9 @@
 
 <template>
     <div class="lew-popover">
-        <label ref="triggerRef">
-            <div class="trigger">
+            <div ref="triggerRef" class="trigger">
                 <slot name="trigger" />
             </div>
-        </label>
         <div
             ref="bodyRef"
             v-loading="{
