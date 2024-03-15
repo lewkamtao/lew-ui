@@ -193,7 +193,7 @@
             width: 350px;
             height: auto;
             padding: 20px;
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-medium);
             background-color: var(--lew-modal-box-bgcolor);
             border: var(--lew-dialog-box-border);
             box-shadow: var(--lew-dialog-box-shadow);
@@ -249,7 +249,7 @@
                 width: 25px;
                 height: 25px;
                 right: 10px;
-                border-radius: var(--lew-border-radius);
+                border-radius: var(--lew-border-radius-small);
                 box-sizing: border-box;
                 cursor: pointer;
                 user-select: none;

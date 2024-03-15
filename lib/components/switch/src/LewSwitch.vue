@@ -58,7 +58,7 @@
         width: 38px;
         height: 24px;
         background: var(--lew-bgcolor-3);
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         transition: var(--lew-form-transition);
         cursor: pointer;
         box-shadow: var(--lew-form-box-shadow);

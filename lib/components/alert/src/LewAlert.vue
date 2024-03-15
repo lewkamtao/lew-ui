@@ -49,7 +49,7 @@
             width: 100%;
             min-height: 32px;
             background-color: var(--lew-color-normal);
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-small);
             margin-bottom: 10px;
             padding: 12px 18px;
             box-sizing: border-box;

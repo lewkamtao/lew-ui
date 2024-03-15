@@ -181,7 +181,7 @@
         display: inline-block;
         box-sizing: border-box;
         height: 40px;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         user-select: none;
         font-size: 14px;
 
@@ -200,7 +200,7 @@
             min-width: 26px;
             padding: 0px 4px;
             box-sizing: border-box;
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-small);
             text-align: center;
             cursor: pointer;
         }

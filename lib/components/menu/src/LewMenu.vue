@@ -107,7 +107,7 @@
             height: 40px;
             line-height: 40px;
             cursor: pointer;
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-small);
         }
         .lew-menu-icon {
             flex-shrink: 0;

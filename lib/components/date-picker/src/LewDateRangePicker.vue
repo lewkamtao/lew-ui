@@ -134,7 +134,7 @@
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-small);
             background-color: var(--lew-form-bgcolor);
             box-sizing: border-box;
             transition: all 0.15s ease;

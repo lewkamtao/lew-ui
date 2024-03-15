@@ -153,7 +153,7 @@
         background: var(--lew-checkbox-block-color);
         padding: 3px 8px 3px 4px;
         border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         .icon-checkbox-box {
             .icon-checkbox {
                 padding: 1px;

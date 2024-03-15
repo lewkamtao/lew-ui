@@ -133,7 +133,7 @@
             padding 0.15s cubic-bezier(0.65, 0, 0.25, 1);
         border: none;
         cursor: pointer;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         box-sizing: border-box;
         overflow: hidden;
         box-shadow: var(--lew-box-shadow);

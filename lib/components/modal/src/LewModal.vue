@@ -142,7 +142,7 @@
         z-index: 2001;
 
         .lew-modal-box {
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-large);
             background-color: var(--lew-modal-box-bgcolor);
             border: var(--lew-modal-border);
             box-shadow: var(--lew-modal-box-shadow);
@@ -161,7 +161,7 @@
                 .close-btn {
                     cursor: pointer;
                     transition: all 0.25s;
-                    border-radius: var(--lew-border-radius);
+                    border-radius: var(--lew-border-radius-small);
                     color: var(--lew-text-color-5);
                     padding: 2px;
                 }

@@ -151,7 +151,7 @@
         position: relative;
         overflow: hidden;
         width: 100%;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         background-color: var(--lew-form-bgcolor);
         transition: var(--lew-form-transition);
         box-sizing: border-box;

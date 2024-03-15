@@ -51,7 +51,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         height: 48px;
         user-select: none;
         padding: 0px 8px;

@@ -126,7 +126,7 @@
         height: 26px;
         width: 65px;
         box-sizing: border-box;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         background-color: var(--lew-bgcolor-0);
         color: var(--lew-text-color-8);
         border: var(--lew-text-color-8) var(--lew-form-border-width) dashed;

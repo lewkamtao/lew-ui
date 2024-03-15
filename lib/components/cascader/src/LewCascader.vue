@@ -371,7 +371,7 @@
 <style lang="scss" scoped>
     .lew-cascader-view {
         width: 100%;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         background-color: var(--lew-form-bgcolor);
         transition: var(--lew-form-transition);
         box-sizing: border-box;
@@ -544,7 +544,7 @@
                 background-color: var(--lew-bgcolor-1);
                 width: 100%;
                 height: 30px;
-                border-radius: var(--lew-border-radius);
+                border-radius: var(--lew-border-radius-small);
                 padding: 0px 10px;
                 box-sizing: border-box;
                 color: var(--lew-form-color);

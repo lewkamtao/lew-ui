@@ -188,7 +188,7 @@
         display: inline-flex;
         position: relative;
         width: auto;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         overflow: hidden;
         box-shadow: var(--lew-form-box-shadow);
     }
@@ -245,7 +245,7 @@
         display: inline-flex;
         align-items: center;
         background: var(--lew-form-bgcolor);
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         overflow-x: auto;
         overflow-y: hidden;
         user-select: none;
@@ -260,7 +260,7 @@
             justify-content: center;
             z-index: 9;
             box-sizing: border-box;
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-small);
             margin: 3px;
             color: var(--lew-text-color-2);
             white-space: nowrap;

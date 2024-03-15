@@ -188,7 +188,7 @@
         popover-body-class-name="lew-select-popover-body"
         class="lew-select-view"
         :class="getSelectViewClassName"
-        trigger="click"
+        :trigger="trigger"
         :disabled="disabled"
         placement="bottom-start"
         style="width: 100%"
@@ -219,10 +219,10 @@
                 </transition>
                 <input
                     ref="inputRef"
+                    v-model="state.keyword"
                     class="value"
                     :style="getValueStyle"
                     :readonly="!searchable"
-                    v-model="state.keyword"
                     :placeholder="placeholder"
                     @input="searchDebounce"
                 />
@@ -296,7 +296,7 @@
 <style lang="scss" scoped>
     .lew-select-view {
         width: 100%;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         background-color: var(--lew-form-bgcolor);
         transition: all 0.15s ease;
         box-sizing: border-box;

@@ -27,6 +27,11 @@ export const selectProps = {
         default: [],
         description: '配置列表'
     },
+    trigger: {
+        type: String,
+        default: 'click',
+        description: '触发方式，可选值为 click 或 hover'
+    },
     placeholder: {
         type: String,
         default: '请选择',

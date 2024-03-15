@@ -331,7 +331,7 @@
 <style lang="scss" scoped>
     .lew-select-view {
         width: 100%;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         background-color: var(--lew-form-bgcolor);
         transition: all 0.15s ease;
         box-sizing: border-box;
@@ -475,7 +475,7 @@
     }
 
     .lew-select-view-disabled:hover {
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         background-color: var(--lew-form-bgcolor);
         outline: 0px var(--lew-color-primary-light) solid;
         border: var(--lew-form-border-width) transparent solid;
@@ -499,6 +499,27 @@
     .lew-select-body {
         width: 100%;
         box-sizing: border-box;
+        .search-input {
+            margin-bottom: 5px;
+
+            input {
+                outline: none;
+                border: none;
+                background-color: var(--lew-bgcolor-2);
+                width: 100%;
+                height: 30px;
+                border-radius: var(--lew-border-radius-small);
+                padding: 0px 10px;
+                box-sizing: border-box;
+                color: var(--lew-form-color);
+                transition: var(--lew-form-transition);
+            }
+
+            input:focus {
+                background-color: var(--lew-bgcolor-3);
+                box-shadow: var(--lew-box-shadow);
+            }
+        }
 
         .not-found {
             opacity: 0.4;

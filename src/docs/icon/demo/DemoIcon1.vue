@@ -327,7 +327,7 @@
     .icon-box {
         margin-top: 40px;
         width: 140px;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         transition: all 0.15s;
         cursor: pointer;
 

@@ -6,7 +6,7 @@
     --lew-color-orange: rgb(241, 154, 55);
     --lew-color-orange-dark: rgb(254, 136, 0);
     --lew-color-orange-light: rgba(254, 135, 0, 0.13);
-    --lew-color-yellow: rgb(247, 206, 70);
+    --lew-color-yellow: rgb(232, 189, 46);
     --lew-color-yellow-dark: rgb(184, 151, 33);
     --lew-color-yellow-light: rgba(184, 151, 33, 0.13);
     --lew-color-green: rgb(101, 195, 102);
@@ -120,7 +120,10 @@
     --lew-text-color-8-invert: rgb(95, 95, 95);
     --lew-text-color-9-invert: rgb(75, 75, 75);
     // 圆角
-    --lew-border-radius: 8px;
+    --lew-border-radius-mini: 4px;
+    --lew-border-radius-small: 8px;
+    --lew-border-radius-medium: 12px;
+    --lew-border-radius-large: 16px;
     // 边界
     --lew-border-0: 1px solid rgb(245, 245, 245);
     --lew-border-1: 1px solid rgb(235, 235, 235);
@@ -205,47 +208,47 @@
     --lew-table-tr-selected: #eef3ff;
     --lew-table-scroll-line-color-start: rgba(0, 0, 0, 0);
     --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.15);
-    --lew-backdrop-bg: rgba(255, 255, 255, 0.65);
+    --lew-backdrop-bg: rgba(255, 255, 255, 0.45);
     --lew-backdrop-bg-active: rgba(0, 0, 0, 0.05);
 }
 
 .lew-dark {
     // 色彩系统
 
-    --lew-color-red: rgb(235, 85, 69);
+    --lew-color-red: rgba(235, 86, 69, 0.862);
     --lew-color-red-dark: rgb(255, 105, 89);
     --lew-color-red-light: rgba(255, 106, 89, 0.13);
-    --lew-color-orange: rgb(242, 163, 60);
+    --lew-color-orange: rgba(242, 163, 60, 0.764);
     --lew-color-orange-dark: rgb(255, 178, 77);
     --lew-color-orange-light: rgba(255, 178, 77, 0.13);
-    --lew-color-yellow: rgb(248, 216, 74);
+    --lew-color-yellow: rgba(255, 224, 84, 0.774);
     --lew-color-yellow-dark: rgb(255, 220, 65);
     --lew-color-yellow-light: rgba(255, 220, 65, 0.13);
-    --lew-color-green: rgb(104, 206, 103);
+    --lew-color-green: rgba(105, 206, 103, 0.754);
     --lew-color-green-dark: rgb(104, 206, 103);
     --lew-color-green-light: rgba(105, 206, 103, 0.13);
-    --lew-color-mint: rgb(131, 210, 206);
+    --lew-color-mint: rgba(131, 210, 206, 0.755);
     --lew-color-mint-dark: rgb(144, 229, 225);
     --lew-color-mint-light: rgba(144, 229, 225, 0.13);
-    --lew-color-teal: rgb(128, 194, 217);
+    --lew-color-teal: rgba(128, 193, 217, 0.787);
     --lew-color-teal-dark: rgb(139, 210, 236);
     --lew-color-teal-light: rgba(139, 210, 236, 0.13);
-    --lew-color-cyan: rgb(106, 197, 221);
+    --lew-color-cyan: rgba(106, 196, 221, 0.762);
     --lew-color-cyan-dark: rgb(116, 217, 244);
     --lew-color-cyan-light: rgba(116, 216, 244, 0.13);
-    --lew-color-blue: rgb(59, 130, 247);
+    --lew-color-blue: rgba(59, 131, 247, 0.864);
     --lew-color-blue-dark: rgb(78, 146, 255);
     --lew-color-blue-light: rgba(78, 146, 255, 0.13);
     --lew-color-indigo: rgb(95, 93, 222);
     --lew-color-indigo-dark: rgb(108, 105, 245);
     --lew-color-indigo-light: rgba(107, 105, 245, 0.13);
-    --lew-color-purple: rgb(178, 96, 234);
+    --lew-color-purple: rgba(179, 96, 234, 0.869);
     --lew-color-purple-dark: rgb(199, 114, 255);
     --lew-color-purple-light: rgba(199, 114, 255, 0.13);
-    --lew-color-pink: rgb(237, 94, 115);
+    --lew-color-pink: rgba(237, 94, 115, 0.823);
     --lew-color-pink-dark: rgb(234, 75, 99);
     --lew-color-pink-light: rgba(234, 75, 99, 0.13);
-    --lew-color-brown: rgb(167, 143, 109);
+    --lew-color-brown: rgba(167, 143, 109, 0.9);
     --lew-color-brown-dark: rgb(203, 175, 136);
     --lew-color-brown-light: rgba(203, 175, 136, 0.13);
     --lew-color-gray: rgb(152, 152, 157);
@@ -388,6 +391,6 @@
     --lew-radio-color: var(--lew-color-primary);
     --lew-radio-color-dark: var(--lew-color-primary-dark);
     --lew-radio-color-light: var(--lew-color-primary-light);
-    --lew-backdrop-bg: rgba(75, 79, 87, 0.8);
+    --lew-backdrop-bg: rgba(33, 35, 40, 0.75);
     --lew-backdrop-bg-active: rgba(255, 255, 255, 0.1);
 }

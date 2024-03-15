@@ -67,7 +67,7 @@
         .demo-item {
             margin: 10px 0px;
             background-color: var(--lew-bgcolor-0);
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-small);
             box-shadow: var(--lew-box-shadow);
             overflow: hidden;
         }
@@ -82,7 +82,7 @@
             border-top: var(--lew-border-1);
 
             .pre-box {
-                border-radius: var(--lew-border-radius);
+                border-radius: var(--lew-border-radius-small);
             }
         }
 

@@ -19,7 +19,7 @@ button {
 }
 
 .tippy-box {
-    border-radius: var(--lew-border-radius) !important;
+    border-radius: var(--lew-border-radius-small) !important;
     box-sizing: border-box !important;
     background-color: var(--lew-backdrop-bg) !important;
     backdrop-filter: blur(20px);

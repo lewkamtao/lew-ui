@@ -64,7 +64,7 @@
             display: block;
             cursor: pointer;
             padding: 5px 10px;
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-small);
         }
         .title {
             border-bottom: 1px var(--lew-bgcolor-2) solid;
