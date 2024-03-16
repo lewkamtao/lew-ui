@@ -15,7 +15,15 @@ export default defineConfig(({ mode }) => {
         base: '',
         server: {
             open: true,
-            port: 10034
+            port: 10034,
+            hmr: true,
+            proxy: {
+                '/api_admin': {
+                    target: 'https://app.tngeek.com/api_admin',
+                    changeOrigin: true,
+                    rewrite: (path: string) => path.replace(/^\/api_admin/, '')
+                }
+            }
         },
         resolve: {
             // 设置别名

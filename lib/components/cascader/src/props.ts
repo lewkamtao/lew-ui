@@ -5,8 +5,9 @@ export type CascaderOptions = {
     value: [string, number];
     labelPaths?: string[];
     valuePaths?: string[];
-    level?: number;
-    isHasChild?: boolean;
+    level: number;
+    isLeaf?: boolean;
+	loading?: boolean;
     disabled?: boolean;
     parentLabelPaths?: string[];
     parentValuePaths?: string[];
@@ -57,7 +58,11 @@ export const cascaderProps = {
         default: 'medium',
         description: '尺寸大小'
     },
-
+    onload: {
+        type: Function,
+        default: undefined,
+        description: '异步加载数据'
+    },
     clearable: {
         type: Boolean,
         default: true,

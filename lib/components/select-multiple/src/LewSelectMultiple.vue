@@ -298,24 +298,24 @@
                         :overscan="100"
                         :height="getVirtualHeight"
                     >
-                        <template #default="templateProps">
+                        <template #default="{ data: templateProps }">
                             <!-- you can get current item of list here -->
                             <div
                                 class="lew-select-item-label"
                                 :style="{ height: state.itemHeight + 'px' }"
-                                @click="selectHandle(templateProps.data)"
+                                @click="selectHandle(templateProps)"
                             >
                                 <div
                                     class="lew-select-item lew-select-item-mul"
-                                    :class="getSelectItemClassName(templateProps.data)"
+                                    :class="getSelectItemClassName(templateProps)"
                                 >
                                     <lew-checkbox
-                                        :key="templateProps.data.value"
+                                        :key="templateProps.value"
                                         class="lew-select-checkbox"
-                                        :checked="getChecked(templateProps.data.value)"
+                                        :checked="getChecked(templateProps.value)"
                                     />
                                     <div class="lew-select-label">
-                                        {{ templateProps.data.label }}
+                                        {{ templateProps.label }}
                                     </div>
                                 </div>
                             </div>

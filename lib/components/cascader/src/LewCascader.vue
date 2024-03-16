@@ -3,6 +3,8 @@
     import { LewPopover, LewFlex, LewButton, LewIcon, LewTooltip } from 'lew-ui';
     import { object2class } from 'lew-ui/utils';
     import { cascaderProps, CascaderOptions } from './props';
+    import { UseVirtualList } from '@vueuse/components';
+    import _ from 'lodash';
 
     // 获取app
     const app = getCurrentInstance()?.appContext.app;
@@ -20,8 +22,8 @@
     const state = reactive({
         visible: false,
         loading: false,
-        options: [] as CascaderOptions[][],
-        format_options: [] as CascaderOptions[],
+        optionsGroup: [] as CascaderOptions[][],
+        optionsTree: [] as any,
         activelabels: [] as string[], // 激活
         tobelabels: [] as string[], // 待确认
         tobeItem: {} as CascaderOptions,
@@ -29,13 +31,13 @@
     });
 
     // 转树
-    const addPathsToTreeList = (
+    const formatPathsToTreeList = (
         treeList: CascaderOptions[],
         parentValuePaths = [],
         parentLabelPaths = []
     ) => {
         treeList.forEach((tree) => {
-            const { value, label, children } = tree;
+            const { value, label, children = [], isLeaf } = tree;
             const valuePaths: any = [...parentValuePaths, value];
             const labelPaths: any = [...parentLabelPaths, label];
 
@@ -43,14 +45,53 @@
             tree.labelPaths = labelPaths;
             tree.parentValuePaths = parentValuePaths;
             tree.parentLabelPaths = parentLabelPaths;
+            tree.level = valuePaths.length - 1;
 
-            if (children) {
+            if (!isLeaf) {
                 tree.parentChildren = children;
-                addPathsToTreeList(children, valuePaths, labelPaths);
+                formatPathsToTreeList(children, valuePaths, labelPaths);
             }
         });
     };
+    // 将列表转换为树结构
+    const listToTree = (list: any) => {
+        const map = _.keyBy(list, 'value');
+        const result: any = [];
 
+        list.forEach((node: any) => {
+            if (node.parent_value !== null) {
+                const parent = map[node.parent_value];
+                if (parent) {
+                    parent.children = parent.children || [];
+                    parent.children.push(node);
+                }
+            } else {
+                result.push(node);
+            }
+        });
+
+        return result;
+    };
+
+    // 将树结构转换为列表
+    const treeToList = (tree: any) => {
+        const result: any = [];
+
+        const traverse = (node: any) => {
+            result.push(node);
+            if (node.children) {
+                node.children.forEach((child: any) => {
+                    traverse(child);
+                });
+            }
+        };
+
+        tree.forEach((node: any) => {
+            traverse(node);
+        });
+
+        return result;
+    };
     // 查找
     const findObjectByValue = (treeList: CascaderOptions[], value: [string, number]) => {
         for (let i = 0; i < treeList.length; i++) {
@@ -71,54 +112,114 @@
         return null;
     };
 
+    function findAndAddChildren(
+        tree: CascaderOptions[],
+        value: [string, number],
+        children: CascaderOptions[]
+    ): CascaderOptions[] {
+        for (const node of tree) {
+            if (node.value === value) {
+                if (!node.children) {
+                    node.children = [];
+                }
+                node.children = children;
+                return tree;
+            }
+            if (node.children && node.children.length > 0) {
+                const result = findAndAddChildren(node.children, value, children);
+                if (result && result.length > 0) {
+                    return tree;
+                }
+            }
+        }
+
+        return [];
+    }
+
+    function findChildrenByValue(
+        tree: CascaderOptions[],
+        value: [string, number]
+    ): CascaderOptions[] {
+        for (const node of tree) {
+            if (node.value === value) {
+                return node.children || [];
+            }
+
+            if (node.children) {
+                const result = findChildrenByValue(node.children, value);
+                if (result.length > 0) {
+                    return result;
+                }
+            }
+        }
+
+        return [];
+    }
+
     // 初始化
-    const init = () => {
-        const _options: CascaderOptions[] =
-            (props.options &&
-                props.options.map((e) => {
-                    return {
-                        ...e,
-                        isHasChild: (e.children && e.children.length > 0) || false
-                    };
-                })) ||
-            [];
-        addPathsToTreeList(_options);
-        state.format_options = _options;
-        const new_options = [];
-        new_options[0] = _options;
-        state.options = new_options;
+    const init = async () => {
+        let _optionsTree: any = [[]];
+        if (props.onload) {
+            _optionsTree = (await props.onload()) || [];
+        } else if (props.options && props.options.length > 0) {
+            _optionsTree =
+                (props.options &&
+                    props.options.map((e) => {
+                        return {
+                            ...e,
+                            isLeaf: !e.children || (e.children && e.children.length === 0) // 没有孩子
+                        };
+                    })) ||
+                [];
+        }
+        formatPathsToTreeList(_optionsTree);
+        state.optionsGroup = [_optionsTree];
+        state.optionsTree = _optionsTree;
     };
 
     init();
 
-    const selectItem = (item: CascaderOptions, level: number) => {
-        if (item.isHasChild || (item.children && item.children.length > 0)) {
-            state.options = state.options.slice(0, level + 1);
-            const _options =
-                (item.children &&
-                    item.children.map((e) => {
-                        return {
-                            ...e,
-                            isHasChild: e.children && e.children.length > 0
-                        };
-                    })) ||
-                [];
-            state.options.push(_options);
+    const selectItem = async (item: CascaderOptions, level: number) => {
+        if (!item.isLeaf && item.labelPaths !== state.activelabels) {
+            state.optionsGroup = state.optionsGroup.slice(0, level + 1);
+            if (props.onload && !item.isLeaf) {
+                item.loading = true;
+                const new_options = (await props.onload({ ...item, level })) || [];
+                let _optionsTree = findAndAddChildren(
+                    _.cloneDeep(state.optionsTree),
+                    _.cloneDeep(item.value),
+                    new_options
+                );
+                formatPathsToTreeList(_optionsTree);
+                state.optionsTree = _optionsTree;
+                const _options = findChildrenByValue(_optionsTree, item.value);
+                state.optionsGroup.push(_options);
+                item.loading = false;
+            } else if (!item.isLeaf) {
+                const _options =
+                    (item.children &&
+                        item.children.map((e) => {
+                            return {
+                                ...e,
+                                isLeaf: !e.children || (e.children && e.children.length === 0) // 没有孩子
+                            };
+                        })) ||
+                    [];
+                state.optionsGroup.push(_options);
+            }
         }
-
         if (item.labelPaths === state.activelabels) {
             state.activelabels = item.parentLabelPaths as string[];
-            if (level < state.options.length - 1) {
-                state.options.pop();
+            if (level < state.optionsGroup.length - 1) {
+                state.optionsGroup.pop();
             }
         } else {
             state.activelabels = item.labelPaths as string[];
         }
         state.tobeItem = { ...item, children: undefined };
-
         if (props.free) {
             checkItem(item);
-        } else if (!item.isHasChild) {
+        } else if (item.isLeaf) {
             checkItem(item);
             ok();
         }
@@ -131,14 +232,14 @@
             } else {
                 state.tobelabels = item.labelPaths as string[];
             }
-        } else if (state.tobelabels === ([item.label] as string[])) {
+        } else if (state.tobelabels[0] === (item.label as string)) {
             state.tobelabels = [] as string[];
         } else {
             state.tobelabels = [item.label] as any;
         }
     };
 
-    const show = () => {
+    const show = async () => {
         lewPopverRef.value.show();
     };
 
@@ -200,7 +301,7 @@
 
     // 获取宽度
     const getCascaderWidth = computed(() => {
-        const _hasChildOptions = state.options.filter((e) => e && e.length > 0).length;
+        const _hasChildOptions = state.optionsGroup.filter((e) => e && e.length > 0).length;
         if (_hasChildOptions > 1) {
             return _hasChildOptions * 180;
         }
@@ -208,7 +309,7 @@
     });
 
     const getLabel = computed(() => {
-        const item = findObjectByValue(state.format_options, cascaderValue.value);
+        const item = findObjectByValue(state.optionsTree, cascaderValue.value);
         return item?.labelPaths || [];
     });
 
@@ -228,6 +329,7 @@
 </script>
 
 <template>
+   
     <lew-popover
         ref="lewPopverRef"
         class="lew-cascader-view"
@@ -309,52 +411,76 @@
                     class="lew-cascader-options-box"
                     :style="{ height: free ? 'calc(100% - 40px)' : '100%' }"
                 >
-                    <template v-for="(oItem, oIndex) in state.options" :key="oIndex">
-                        <div
+                    <template v-for="(oItem, oIndex) in state.optionsGroup" :key="oIndex">
+                        <use-virtual-list
+                            v-if="oItem.length > 0"
                             class="lew-cascader-item-warpper lew-scrollbar-hover"
+                            :list="oItem"
+                            :options="{
+                                itemHeight: 30
+                            }"
+                            :height="30 * oItem.length"
                             :style="{
                                 zIndex: 999 - oIndex,
                                 transform: oItem.length > 0 ? `translateX(${180 * oIndex}px)` : ''
                             }"
                         >
-                            <!--  -->
-
-                            <div
-                                v-for="(item, index) in oItem"
-                                :key="index"
-                                class="lew-cascader-item"
-                                :class="{
-                                    'lew-cascader-item-disabled': item.disabled,
-                                    'lew-cascader-item-active': state.activelabels.includes(
-                                        item.label
-                                    ),
-                                    'lew-cascader-item-tobe': state.tobelabels.includes(item.label),
-                                    'lew-cascader-item-select':
-                                        getLabel && getLabel.includes(item.label)
-                                }"
-                                @click="selectItem(item, oIndex)"
-                            >
-                                <lew-checkbox
-                                    v-if="free"
-                                    class="lew-cascader-checkbox"
-                                    :checked="state.tobelabels.includes(item.label)"
-                                />
-                                <div
-                                    class="lew-cascader-label"
-                                    :class="{
-                                        'lew-cascader-label-free': free
-                                    }"
-                                >
-                                    {{ item.label }}
+                            <template #default="{ data: templateProps }">
+                                <div class="lew-cascader-item-padding">
+                                    <div
+                                        class="lew-cascader-item"
+                                        :class="{
+                                            'lew-cascader-item-disabled': templateProps.disabled,
+                                            'lew-cascader-item-hover': state.activelabels.includes(
+                                                templateProps.label
+                                            ),
+                                            'lew-cascader-item-active': free
+                                                ? state.activelabels.includes(
+                                                      templateProps.label
+                                                  ) &&
+                                                  state.tobelabels.includes(templateProps.label)
+                                                : state.activelabels.includes(templateProps.label),
+                                            'lew-cascader-item-tobe': state.tobelabels.includes(
+                                                templateProps.label
+                                            ),
+                                            'lew-cascader-item-select':
+                                                getLabel && getLabel.includes(templateProps.label)
+                                        }"
+                                        @click="selectItem(templateProps, oIndex)"
+                                    >
+                                        <lew-checkbox
+                                            v-if="free"
+                                            class="lew-cascader-checkbox"
+                                            :checked="
+                                                state.tobelabels.includes(templateProps.label)
+                                            "
+                                        />
+                                        <div
+                                            class="lew-cascader-label"
+                                            :class="{
+                                                'lew-cascader-label-free': free
+                                            }"
+                                        >
+                                            {{ templateProps.label }}
+                                        </div>
+                                        <lew-icon
+                                            v-if="templateProps.loading"
+                                            size="14px"
+                                            animation="spin"
+                                            animation-speed="fast"
+                                            class="lew-cascader-loading-icon"
+                                            type="loader"
+                                        />
+                                        <lew-icon
+                                            v-else-if="!templateProps.isLeaf"
+                                            size="14px"
+                                            class="lew-cascader-icon"
+                                            type="chevron-right"
+                                        />
+                                    </div>
                                 </div>
-                                <lew-icon
-                                    v-if="item.isHasChild"
-                                    size="14px"
-                                    class="lew-cascader-icon"
-                                    type="chevron-right"
-                                />
-                            </div>
-                        </div>
+                            </template>
+                        </use-virtual-list>
                     </template>
                 </div>
                 <lew-flex v-if="free" x="end" class="lew-cascader-control">
@@ -586,12 +712,15 @@
                 display: flex;
                 flex-direction: column;
                 gap: 4px;
+                margin-top: -2px;
             }
 
             .lew-cascader-item-warpper:last-child {
                 border-right: 0px transparent solid;
             }
-
+            .lew-cascader-item-padding {
+                padding: 2px 0px;
+            }
             .lew-cascader-item {
                 position: relative;
                 display: inline-flex;
@@ -608,15 +737,19 @@
                 border-radius: 6px;
                 height: 30px;
                 padding: 0px 10px;
+                flex-shrink: 0;
 
                 .lew-cascader-icon {
                     position: absolute;
                     right: 2px;
-                    top: 50%;
-                    transform: translateY(-50%);
+                    top: 8.5px;
                     opacity: 0.4;
                 }
-
+                .lew-cascader-loading-icon {
+                    position: absolute;
+                    right: 5px;
+                    top: 8.5px;
+                }
                 .lew-cascader-checkbox {
                     position: absolute;
                     left: 10px;
@@ -679,9 +812,13 @@
                 background-color: var(--lew-backdrop-bg-active);
             }
 
-            .lew-cascader-item-active {
+            .lew-cascader-item-hover {
                 background-color: var(--lew-backdrop-bg-active);
-
+                .icon-check {
+                    margin-right: 10px;
+                }
+            }
+            .lew-cascader-item-active {
                 color: var(--lew-color-primary-dark);
                 font-weight: bold;
 
@@ -693,7 +830,6 @@
             .lew-cascader-item-active:hover {
                 color: var(--lew-color-primary-dark);
                 font-weight: bold;
-                background-color: var(--lew-backdrop-bg-active);
             }
         }
 

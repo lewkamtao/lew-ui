@@ -262,22 +262,22 @@
                         }"
                         :height="getVirtualHeight"
                     >
-                        <template #default="templateProps">
+                        <template #default="{ data: templateProps }">
                             <!-- you can get current item of list here -->
                             <label
                                 :style="{ height: state.itemHeight + 'px' }"
                                 class="lew-select-item-label"
-                                @click="selectHandle(templateProps.data)"
+                                @click="selectHandle(templateProps)"
                             >
                                 <div
                                     class="lew-select-item"
-                                    :class="getSelectItemClassName(templateProps.data)"
+                                    :class="getSelectItemClassName(templateProps)"
                                 >
                                     <div class="lew-select-label">
-                                        {{ templateProps.data.label }}
+                                        {{ templateProps.label }}
                                     </div>
                                     <lew-icon
-                                        v-if="getChecked(templateProps.data.value) && showCheckIcon"
+                                        v-if="getChecked(templateProps.value) && showCheckIcon"
                                         class="icon-check"
                                         size="14"
                                         type="check"

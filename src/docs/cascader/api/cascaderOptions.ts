@@ -15,8 +15,8 @@ export default {
             default: '-'
         },
         {
-            name: 'isHasChild',
-            description: '是否存在子元素',
+            name: 'isisLeaf',
+            description: '是否是叶子节点',
             type: `boolean`,
             default: '-'
         },
