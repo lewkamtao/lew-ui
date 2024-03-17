@@ -7,10 +7,10 @@
             2: 'area',
             3: 'street'
         };
-
+        // item 无值时，初始化第一层数据
         const _typeKey = item ? item.level + 1 : 0;
 
-        return new Promise<any>((resolve) => {
+        return new Promise<any[]>((resolve) => {
             // item 不存在的时候 是第一层加载
             axios
                 .get({
@@ -25,7 +25,7 @@
                             return {
                                 label: e.name,
                                 value: e.code,
-                                isLeaf: item?.level ===2
+                                isLeaf: e.is_leaf
                             };
                         });
                         resolve(options);
@@ -33,10 +33,13 @@
                 });
         });
     };
+    const change = (item: any) => {
+        console.log(item);
+    };
     const v = ref();
 </script>
 <template>
     <div style="width: 300px">
-        <lew-cascader v-model="v" :onload="onload" />
+        <lew-cascader v-model="v" free :onload="onload" @change="change" />
     </div>
 </template>

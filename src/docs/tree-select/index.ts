@@ -1,2 +1,2 @@
-import DemoResult from './DemoResult.vue';
-export default DemoResult;
+import DemoTreeSelect from './DemoTreeSelect.vue';
+export default DemoTreeSelect;

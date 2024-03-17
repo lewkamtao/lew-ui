@@ -69,6 +69,17 @@
         </lew-demo-box>
         <lew-demo-box title="异步加载" :code="DemoCascader4Code">
             <demo-cascader4 />
+            <lew-alert
+                style="margin-top: 20px"
+                :size="16"
+                :list="[
+                    {
+                        type: 'info',
+                        title: '提示',
+                        content: '你可以传入一个异步的请求方法，当返回的树结构中，下钻数据中的 isLeaf 为 true 时，onload 不再触发。'
+                    }
+                ]"
+            />
         </lew-demo-box>
         <lew-demo-box title="可清空的" :code="DemoCascader5Code">
             <demo-cascader5 />

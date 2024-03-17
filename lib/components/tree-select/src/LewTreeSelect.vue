@@ -2,7 +2,7 @@
     import { useVModel } from '@vueuse/core';
     import { LewPopover, LewFlex, LewButton, LewIcon, LewTooltip } from 'lew-ui';
     import { object2class } from 'lew-ui/utils';
-    import { cascaderProps, CascaderOptions } from './props';
+    import { treeSelectProps, TreeSelectOptions } from './props';
     import { UseVirtualList } from '@vueuse/components';
     import _ from 'lodash';
 
@@ -12,28 +12,28 @@
         app.use(LewTooltip);
     }
 
-    const props = defineProps(cascaderProps);
+    const props = defineProps(treeSelectProps);
     const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
-    const cascaderValue = useVModel(props, 'modelValue', emit);
+    const treeSelectValue = useVModel(props, 'modelValue', emit);
 
-    const lewCascaderRef = ref();
+    const lewTreeSelectRef = ref();
     const lewPopverRef = ref();
 
     const state = reactive({
         visible: false,
         loading: false,
         okLoading: false,
-        optionsGroup: [] as CascaderOptions[][], // 分组
+        optionsGroup: [] as TreeSelectOptions[][], // 分组
         optionsTree: [] as any, // 树
         activelabels: [] as string[], // 激活
         tobelabels: [] as string[], // 待确认
-        tobeItem: {} as CascaderOptions,
+        tobeItem: {} as TreeSelectOptions,
         keyword: ''
     });
 
     // 格式化 获取 path
     const formatPathsToTreeList = (
-        treeList: CascaderOptions[],
+        treeList: TreeSelectOptions[],
         parentValuePaths = [],
         parentLabelPaths = []
     ) => {
@@ -53,17 +53,17 @@
         });
     };
     // 通过值获取对象
-    const findObjectByValue = (treeList: CascaderOptions[], value: [string, number]) => {
+    const findObjectByValue = (treeList: TreeSelectOptions[], value: [string, number]) => {
         for (let i = 0; i < treeList.length; i++) {
             const tree = treeList[i];
             if (tree.value === value) {
                 return tree;
             }
             if (tree.children) {
-                const foundObject: CascaderOptions = findObjectByValue(
+                const foundObject: TreeSelectOptions = findObjectByValue(
                     tree.children,
                     value
-                ) as CascaderOptions;
+                ) as TreeSelectOptions;
                 if (foundObject) {
                     return foundObject;
                 }
@@ -73,10 +73,10 @@
     };
     // 通过值添加子集
     function findAndAddChildrenByValue(
-        tree: CascaderOptions[],
+        tree: TreeSelectOptions[],
         value: [string, number],
-        children: CascaderOptions[]
-    ): CascaderOptions[] {
+        children: TreeSelectOptions[]
+    ): TreeSelectOptions[] {
         for (const node of tree) {
             if (node.value === value) {
                 if (!node.children) {
@@ -97,9 +97,9 @@
     }
     // 通过值查找子集
     function findChildrenByValue(
-        tree: CascaderOptions[],
+        tree: TreeSelectOptions[],
         value: [string, number]
-    ): CascaderOptions[] {
+    ): TreeSelectOptions[] {
         for (const node of tree) {
             if (node.value === value) {
                 return node.children || [];
@@ -142,7 +142,7 @@
     init();
 
     // 选择
-    const selectItem = async (item: CascaderOptions, level: number) => {
+    const selectItem = async (item: TreeSelectOptions, level: number) => {
         if (!item.isLeaf && item.labelPaths !== state.activelabels) {
             state.optionsGroup = state.optionsGroup.slice(0, level + 1);
             if (props.onload && !item.isLeaf) {
@@ -191,7 +191,7 @@
     };
 
     // 检查Item
-    const checkItem = (item: CascaderOptions) => {
+    const checkItem = (item: TreeSelectOptions) => {
         if (props.showAllLevels) {
             if (state.tobelabels === item.labelPaths) {
                 state.tobelabels = item.parentLabelPaths as string[];
@@ -214,7 +214,7 @@
     };
 
     const clearHandle = () => {
-        cascaderValue.value = undefined;
+        treeSelectValue.value = undefined;
         state.tobelabels = [];
         state.activelabels = [];
         hide();
@@ -227,21 +227,21 @@
         return state.visible ? 'opacity:0.4' : '';
     });
 
-    const getCascaderClassName = computed(() => {
+    const getTreeSelectClassName = computed(() => {
         let { clearable, size } = props;
-        clearable = clearable ? !!cascaderValue.value : false;
-        return object2class('lew-cascader', { clearable, size });
+        clearable = clearable ? !!treeSelectValue.value : false;
+        return object2class('lew-treeSelect', { clearable, size });
     });
 
     const getBodyClassName = computed(() => {
         const { size, disabled } = props;
-        return object2class('lew-cascader-body', { size, disabled });
+        return object2class('lew-treeSelect-body', { size, disabled });
     });
 
-    const getCascaderViewClassName = computed(() => {
+    const getTreeSelectViewClassName = computed(() => {
         const { disabled, readonly } = props;
         const focus = state.visible;
-        return object2class('lew-cascader-view', { focus, disabled, readonly });
+        return object2class('lew-treeSelect-view', { focus, disabled, readonly });
     });
 
     // 获取图标大小
@@ -262,7 +262,7 @@
     // 隐藏
     const hideHandle = () => {
         state.visible = false;
-        if (!cascaderValue.value) {
+        if (!treeSelectValue.value) {
             state.tobelabels = [];
             state.activelabels = [];
             state.optionsGroup = [state.optionsGroup[0]];
@@ -271,7 +271,7 @@
     };
 
     // 获取宽度
-    const getCascaderWidth = computed(() => {
+    const getTreeSelectWidth = computed(() => {
         const _hasChildOptions = state.optionsGroup.filter((e) => e && e.length > 0).length;
         if (_hasChildOptions > 1) {
             return _hasChildOptions * 180;
@@ -280,19 +280,19 @@
     });
 
     const getLabel = computed(() => {
-        const item = findObjectByValue(state.optionsTree, cascaderValue.value);
+        const item = findObjectByValue(state.optionsTree, treeSelectValue.value);
         return item?.labelPaths || [];
     });
 
     const ok = () => {
         const item = findObjectByValue(state.optionsTree, state.tobeItem.value);
-        cascaderValue.value = state.tobeItem.value;
+        treeSelectValue.value = state.tobeItem.value;
         emit('change', _.cloneDeep(item));
         hide();
     };
 
     const cancel = () => {
-        cascaderValue.value = '';
+        treeSelectValue.value = '';
         state.tobelabels = [];
         state.activelabels = [];
         hide();
@@ -304,8 +304,8 @@
 <template>
     <lew-popover
         ref="lewPopverRef"
-        class="lew-cascader-view"
-        :class="getCascaderViewClassName"
+        class="lew-treeSelect-view"
+        :class="getTreeSelectViewClassName"
         :trigger="trigger"
         :disabled="disabled"
         placement="bottom-start"
@@ -316,13 +316,13 @@
         @hide="hideHandle"
     >
         <template #trigger>
-            <div ref="lewCascaderRef" class="lew-cascader" :class="getCascaderClassName">
+            <div ref="lewTreeSelectRef" class="lew-treeSelect" :class="getTreeSelectClassName">
                 <transition name="lew-form-icon-ani">
                     <lew-icon
                         v-if="!(clearable && getLabel && getLabel.length > 0)"
                         :size="getIconSize"
                         type="chevron-down"
-                        class="icon-cascader"
+                        class="icon-treeSelect"
                     />
                 </transition>
 
@@ -372,21 +372,18 @@
         </template>
         <template #popover-body>
             <div
-                class="lew-cascader-body"
+                class="lew-treeSelect-body"
                 :style="{
-                    width: `${getCascaderWidth}px`
+                    width: `${getTreeSelectWidth}px`
                 }"
                 :class="getBodyClassName"
             >
                 <slot name="header"></slot>
-                <div
-                    class="lew-cascader-options-box"
-                    :style="{ height: free ? 'calc(100% - 40px)' : '100%' }"
-                >
+                <div class="lew-treeSelect-options-box">
                     <template v-for="(oItem, oIndex) in state.optionsGroup" :key="oIndex">
                         <use-virtual-list
                             v-if="oItem.length > 0"
-                            class="lew-cascader-item-warpper lew-scrollbar-hover"
+                            class="lew-treeSelect-item-warpper lew-scrollbar-hover"
                             :list="oItem"
                             :options="{
                                 itemHeight: 30
@@ -398,39 +395,38 @@
                             }"
                         >
                             <template #default="{ data: templateProps }">
-                                <div class="lew-cascader-item-padding">
+                                <div class="lew-treeSelect-item-padding">
                                     <div
-                                        class="lew-cascader-item"
+                                        class="lew-treeSelect-item"
                                         :class="{
-                                            'lew-cascader-item-disabled': templateProps.disabled,
-                                            'lew-cascader-item-hover': state.activelabels.includes(
-                                                templateProps.label
-                                            ),
-                                            'lew-cascader-item-active': free
+                                            'lew-treeSelect-item-disabled': templateProps.disabled,
+                                            'lew-treeSelect-item-hover':
+                                                state.activelabels.includes(templateProps.label),
+                                            'lew-treeSelect-item-active': free
                                                 ? state.activelabels.includes(
                                                       templateProps.label
                                                   ) &&
                                                   state.tobelabels.includes(templateProps.label)
                                                 : state.activelabels.includes(templateProps.label),
-                                            'lew-cascader-item-tobe': state.tobelabels.includes(
+                                            'lew-treeSelect-item-tobe': state.tobelabels.includes(
                                                 templateProps.label
                                             ),
-                                            'lew-cascader-item-select':
+                                            'lew-treeSelect-item-select':
                                                 getLabel && getLabel.includes(templateProps.label)
                                         }"
                                         @click="selectItem(templateProps, oIndex)"
                                     >
                                         <lew-checkbox
                                             v-if="free"
-                                            class="lew-cascader-checkbox"
+                                            class="lew-treeSelect-checkbox"
                                             :checked="
                                                 state.tobelabels.includes(templateProps.label)
                                             "
                                         />
                                         <div
-                                            class="lew-cascader-label"
+                                            class="lew-treeSelect-label"
                                             :class="{
-                                                'lew-cascader-label-free': free
+                                                'lew-treeSelect-label-free': free
                                             }"
                                         >
                                             {{ templateProps.label }}
@@ -440,13 +436,13 @@
                                             size="14px"
                                             animation="spin"
                                             animation-speed="fast"
-                                            class="lew-cascader-loading-icon"
+                                            class="lew-treeSelect-loading-icon"
                                             type="loader"
                                         />
                                         <lew-icon
                                             v-else-if="!templateProps.isLeaf"
                                             size="14px"
-                                            class="lew-cascader-icon"
+                                            class="lew-treeSelect-icon"
                                             type="chevron-right"
                                         />
                                     </div>
@@ -455,7 +451,7 @@
                         </use-virtual-list>
                     </template>
                 </div>
-                <lew-flex v-if="free" x="end" class="lew-cascader-control">
+                <lew-flex v-if="free" x="end" class="lew-treeSelect-control">
                     <lew-button round color="normal" type="text" size="small" @click="cancel"
                         >取消</lew-button
                     >
@@ -475,7 +471,7 @@
 </template>
 
 <style lang="scss" scoped>
-    .lew-cascader-view {
+    .lew-treeSelect-view {
         width: 100%;
         border-radius: var(--lew-border-radius-small);
         background-color: var(--lew-form-bgcolor);
@@ -489,7 +485,7 @@
             width: 100%;
         }
 
-        .lew-cascader {
+        .lew-treeSelect {
             position: relative;
             width: 100%;
             overflow: hidden;
@@ -499,7 +495,7 @@
             user-select: none;
             box-sizing: border-box;
 
-            .icon-cascader {
+            .icon-treeSelect {
                 position: absolute;
                 top: 50%;
                 right: 7px;
@@ -507,11 +503,11 @@
                 transition: var(--lew-form-transition);
             }
 
-            .icon-cascader {
+            .icon-treeSelect {
                 opacity: var(--lew-form-icon-opacity);
             }
 
-            .icon-cascader-hide {
+            .icon-treeSelect-hide {
                 opacity: 0;
                 transform: translate(100%, -50%);
             }
@@ -541,23 +537,23 @@
             }
         }
 
-        .lew-cascader-align-left {
+        .lew-treeSelect-align-left {
             text-align: left;
         }
 
-        .lew-cascader-align-center {
+        .lew-treeSelect-align-center {
             text-align: center;
         }
 
-        .lew-cascader-align-right {
+        .lew-treeSelect-align-right {
             text-align: right;
         }
 
-        .lew-cascader-placeholder {
+        .lew-treeSelect-placeholder {
             color: rgb(165, 165, 165);
         }
 
-        .lew-cascader-size-small {
+        .lew-treeSelect-size-small {
             .value,
             .placeholder {
                 padding: var(--lew-form-input-padding-small);
@@ -567,7 +563,7 @@
             }
         }
 
-        .lew-cascader-size-medium {
+        .lew-treeSelect-size-medium {
             .value,
             .placeholder {
                 padding: var(--lew-form-input-padding-medium);
@@ -577,7 +573,7 @@
             }
         }
 
-        .lew-cascader-size-large {
+        .lew-treeSelect-size-large {
             .value,
             .placeholder {
                 padding: var(--lew-form-input-padding-large);
@@ -588,51 +584,51 @@
         }
     }
 
-    .lew-cascader-view:hover {
+    .lew-treeSelect-view:hover {
         background-color: var(--lew-form-bgcolor-hover);
     }
 
-    .lew-cascader-view:active {
+    .lew-treeSelect-view:active {
         background-color: var(--lew-form-bgcolor-active);
     }
 
-    .lew-cascader-view.lew-cascader-view-focus {
+    .lew-treeSelect-view.lew-treeSelect-view-focus {
         background-color: var(--lew-form-bgcolor-focus);
         border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
         outline: var(--lew-form-ouline);
 
-        .icon-cascader {
+        .icon-treeSelect {
             transform: translateY(-50%) rotate(180deg);
             color: var(--lew-text-color-2);
         }
 
-        .icon-cascader-hide {
+        .icon-treeSelect-hide {
             opacity: 0;
             transform: translate(100%, -50%) rotate(180deg);
         }
     }
 
-    .lew-cascader-view-disabled {
+    .lew-treeSelect-view-disabled {
         opacity: var(--lew-disabled-opacity);
         pointer-events: none; //鼠标点击不可修改
     }
 
-    .lew-cascader-view-readonly {
+    .lew-treeSelect-view-readonly {
         pointer-events: none; //鼠标点击不可修改
 
-        .lew-cascader {
+        .lew-treeSelect {
             user-select: text;
         }
     }
 
-    .lew-cascader-view-disabled:hover {
+    .lew-treeSelect-view-disabled:hover {
         background-color: var(--lew-form-bgcolor);
         outline: 0px var(--lew-color-primary-light) solid;
         border: var(--lew-form-border-width) transparent solid;
     }
 </style>
 <style lang="scss">
-    .lew-cascader-body {
+    .lew-treeSelect-body {
         width: 100%;
         box-sizing: border-box;
         min-width: 180px;
@@ -673,12 +669,12 @@
             font-size: 13px;
         }
 
-        .lew-cascader-options-box {
+        .lew-treeSelect-options-box {
             position: relative;
             display: flex;
             box-sizing: border-box;
 
-            .lew-cascader-item-warpper {
+            .lew-treeSelect-item-warpper {
                 position: absolute;
                 left: 0px;
                 top: 0px;
@@ -695,13 +691,13 @@
                 margin-top: -2px;
             }
 
-            .lew-cascader-item-warpper:last-child {
+            .lew-treeSelect-item-warpper:last-child {
                 border-right: 0px transparent solid;
             }
-            .lew-cascader-item-padding {
+            .lew-treeSelect-item-padding {
                 padding: 2px 0px;
             }
-            .lew-cascader-item {
+            .lew-treeSelect-item {
                 position: relative;
                 display: inline-flex;
                 align-items: center;
@@ -719,18 +715,18 @@
                 padding: 0px 10px;
                 flex-shrink: 0;
 
-                .lew-cascader-icon {
+                .lew-treeSelect-icon {
                     position: absolute;
                     right: 2px;
                     top: 8.5px;
                     opacity: 0.4;
                 }
-                .lew-cascader-loading-icon {
+                .lew-treeSelect-loading-icon {
                     position: absolute;
                     right: 5px;
                     top: 8.5px;
                 }
-                .lew-cascader-checkbox {
+                .lew-treeSelect-checkbox {
                     position: absolute;
                     left: 10px;
                     top: 50%;
@@ -738,7 +734,7 @@
                     z-index: -9;
                 }
 
-                .lew-cascader-label {
+                .lew-treeSelect-label {
                     position: relative;
                     z-index: 5;
                     width: 100%;
@@ -750,55 +746,55 @@
                     box-sizing: border-box;
                 }
 
-                .lew-cascader-label-free {
+                .lew-treeSelect-label-free {
                     padding: 0px 8px 0px 25px;
                 }
             }
 
-            .lew-cascader-item:hover {
+            .lew-treeSelect-item:hover {
                 .icon {
                     opacity: 1;
                 }
             }
 
-            .lew-cascader-item-disabled {
+            .lew-treeSelect-item-disabled {
                 opacity: 0.3;
                 pointer-events: none;
             }
 
-            .lew-cascader-item-align-left {
+            .lew-treeSelect-item-align-left {
                 text-align: left;
             }
 
-            .lew-cascader-item-align-center {
+            .lew-treeSelect-item-align-center {
                 text-align: center;
             }
 
-            .lew-cascader-item-align-right {
+            .lew-treeSelect-item-align-right {
                 text-align: right;
             }
 
-            .lew-cascader-item:hover {
+            .lew-treeSelect-item:hover {
                 color: var(--lew-text-color-0);
                 background-color: var(--lew-backdrop-bg-active);
             }
 
-            .lew-cascader-slot-item {
+            .lew-treeSelect-slot-item {
                 border-radius: 6px;
             }
 
-            .lew-cascader-slot-item:hover {
+            .lew-treeSelect-slot-item:hover {
                 color: var(--lew-text-color-0);
                 background-color: var(--lew-backdrop-bg-active);
             }
 
-            .lew-cascader-item-hover {
+            .lew-treeSelect-item-hover {
                 background-color: var(--lew-backdrop-bg-active);
                 .icon-check {
                     margin-right: 10px;
                 }
             }
-            .lew-cascader-item-active {
+            .lew-treeSelect-item-active {
                 color: var(--lew-color-primary-dark);
                 font-weight: bold;
 
@@ -807,20 +803,20 @@
                 }
             }
 
-            .lew-cascader-item-active:hover {
+            .lew-treeSelect-item-active:hover {
                 color: var(--lew-color-primary-dark);
                 font-weight: bold;
             }
         }
 
-        .lew-cascader-control {
+        .lew-treeSelect-control {
             border-top: 1px solid var(--lew-bgcolor-4);
             height: 40px;
             padding-right: 10px;
         }
     }
 
-    .lew-cascader-item:hover {
+    .lew-treeSelect-item:hover {
         .lew-checkbox {
             .icon-checkbox-box {
                 border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
@@ -830,7 +826,7 @@
         }
     }
 
-    .lew-cascader-item-tobe:hover {
+    .lew-treeSelect-item-tobe:hover {
         .lew-checkbox {
             .icon-checkbox-box {
                 border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
@@ -844,7 +840,7 @@
         }
     }
 
-    .lew-cascader-item-select:hover {
+    .lew-treeSelect-item-select:hover {
         .lew-checkbox {
             .icon-checkbox-box {
                 border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
