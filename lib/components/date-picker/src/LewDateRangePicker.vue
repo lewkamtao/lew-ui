@@ -93,6 +93,7 @@
                         {{ modelValue[endKey] }}
                     </div>
                     <lew-icon
+                        v-if="!readonly"
                         class="icon-calendar"
                         :size="getIconSize"
                         :class="{

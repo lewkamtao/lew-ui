@@ -200,6 +200,7 @@
         <template #trigger>
             <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
                 <lew-icon
+                    v-if="!readonly"
                     :size="getIconSize"
                     type="chevron-down"
                     class="icon-select"
@@ -345,6 +346,7 @@
                 outline: none;
                 background: none;
                 cursor: pointer;
+                color: var(--lew-text-color-2);
             }
 
             .value::placeholder {

@@ -181,8 +181,8 @@
                 {
                     label: 'TreeSelect',
                     value: '/TreeSelect',
-                    tagText: 'Beta',
-                    tagColor: 'success'
+                    tagText: 'Coming soon',
+                    tagColor: 'warning'
                 },
                 {
                     label: 'Switch',
@@ -216,7 +216,9 @@
                 },
                 {
                     label: 'Tree',
-                    value: '/Tree'
+                    value: '/Tree',
+                    tagText: 'Coming soon',
+                    tagColor: 'warning'
                 }
                 // {
                 //     clabel: '折叠面板',
