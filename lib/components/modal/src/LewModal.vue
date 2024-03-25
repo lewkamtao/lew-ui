@@ -145,7 +145,6 @@
             border-radius: var(--lew-border-radius-large);
             background-color: var(--lew-modal-box-bgcolor);
             border: var(--lew-modal-border);
-            box-shadow: var(--lew-modal-box-shadow);
             overflow: hidden;
 
             .header {

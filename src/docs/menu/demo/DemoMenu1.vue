@@ -79,7 +79,6 @@
         height: 600px;
         width: 320px;
         overflow-y: auto;
-        box-shadow: var(--lew-form-box-shadow);
         border: 1px var(--lew-bgcolor-2) solid;
     }
 </style>

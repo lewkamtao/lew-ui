@@ -141,7 +141,6 @@
             transition: all 0.15s ease;
             cursor: pointer;
             user-select: none;
-            box-shadow: var(--lew-form-box-shadow);
             border: var(--lew-form-border-width) transparent solid;
             outline: 0px var(--lew-color-primary-light) solid;
         }

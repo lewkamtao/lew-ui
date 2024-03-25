@@ -136,7 +136,6 @@
         border-radius: var(--lew-border-radius-small);
         box-sizing: border-box;
         overflow: hidden;
-        box-shadow: var(--lew-box-shadow);
 
         .lew-loading-icon {
             position: absolute;

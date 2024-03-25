@@ -55,7 +55,7 @@
             transition: var(--lew-form-transition);
             overflow: hidden;
             border-radius: 50%;
-            background-color: var(--lew-form-bgcolor);
+            background-color: var(--lew-bgcolor-1);
             outline: 0px var(--lew-color-primary-light) solid;
             .icon-radio {
                 width: 100%;

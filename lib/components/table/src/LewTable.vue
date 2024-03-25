@@ -485,7 +485,6 @@
         border-bottom: 0px solid transparent;
         box-sizing: border-box;
         background-color: var(--lew-bgcolor-0);
-        box-shadow: var(--lew-box-shadow);
 
         .lew-table-scroll-line-left {
             position: absolute;

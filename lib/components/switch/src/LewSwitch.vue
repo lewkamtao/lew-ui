@@ -61,7 +61,6 @@
         border-radius: var(--lew-border-radius-small);
         transition: var(--lew-form-transition);
         cursor: pointer;
-        box-shadow: var(--lew-form-box-shadow);
         outline: 0px var(--lew-color-primary-light) solid;
 
         .lew-switch-dot {
@@ -74,7 +73,6 @@
             background: var(--lew-color-white);
             transition: var(--lew-form-transition);
             transform: translate(4px, 4px);
-            box-shadow: 0px 0px 12px rgba($color: #000000, $alpha: 0.15);
         }
 
         .lew-switch-dot::after {

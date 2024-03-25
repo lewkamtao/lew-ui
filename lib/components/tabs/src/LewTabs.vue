@@ -190,7 +190,6 @@
         width: auto;
         border-radius: var(--lew-border-radius-small);
         overflow: hidden;
-        box-shadow: var(--lew-form-box-shadow);
     }
 
     .lew-tabs-wrapper-round {
@@ -224,7 +223,6 @@
     }
 
     .lew-tabs-wrapper-type-line {
-        box-shadow: none;
         border-radius: 0px;
     }
 
@@ -281,7 +279,6 @@
             border-radius: 6px;
             background: var(--lew-tabs-active-color);
             transform: translateX(3px);
-            box-shadow: 0px 0px 12px rgba($color: #000000, $alpha: 0.15);
             box-sizing: border-box;
         }
 
@@ -349,7 +346,6 @@
             border-radius: 0px;
             background: var(--lew-color-primary-dark);
             transform: translateX(3px);
-            box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);
         }
     }
     .lew-tabs-type-line:after {

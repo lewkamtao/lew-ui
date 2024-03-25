@@ -157,7 +157,6 @@
         box-sizing: border-box;
         outline: 0px transparent solid;
         border: var(--lew-form-border-width) transparent solid;
-        box-shadow: var(--lew-form-box-shadow);
 
         .lew-textarea {
             width: 100%;

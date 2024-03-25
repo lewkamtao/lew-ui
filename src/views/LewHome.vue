@@ -393,16 +393,16 @@
                         />
                     </lew-flex>
                     <lew-flex x="end" gap="10">
-                        <lew-tag>primary</lew-tag>
-                        <lew-tag color="green">success</lew-tag>
-                        <lew-tag color="red">error</lew-tag>
-                        <lew-tag color="warning">warning</lew-tag>
-                        <lew-tag color="normal">normal</lew-tag>
+                        <lew-tag round size="small">primary</lew-tag>
+                        <lew-tag round size="small" color="green">success</lew-tag>
+                        <lew-tag round size="small" color="red">error</lew-tag>
+                        <lew-tag round size="small" color="warning">warning</lew-tag>
+                        <lew-tag round size="small" color="normal">normal</lew-tag>
                     </lew-flex>
 
                     <lew-flex x="end" gap="20">
-                        <lew-button text="Cancel" color="red" />
-                        <lew-button text="Cancel" color="yellow" />
+                        <lew-button round text="Cancel" color="red" />
+                        <lew-button round text="Cancel" color="yellow" />
                         <lew-button text="Phone" color="orange" icon="phone" />
                         <lew-button text="Confirm" color="blue" icon="box" />
                         <lew-button text="Confirm" color="cyan" loading />
@@ -417,10 +417,10 @@
 
                     <lew-flex gap="20" x="end">
                         <lew-dropdown :options="dropdown_options">
-                            <lew-button text="trigger hover" type="light" color="normal" />
+                            <lew-button text="Hover" type="light" color="normal" />
                         </lew-dropdown>
                         <lew-dropdown :options="dropdown_options" trigger="click" placement="top">
-                            <lew-button text="trigger click" type="light" color="normal" />
+                            <lew-button text="Click" type="light" color="normal" />
                         </lew-dropdown>
                     </lew-flex>
                 </lew-flex>
