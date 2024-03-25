@@ -187,6 +187,9 @@
         state.visible = false;
         emit('blur');
     };
+    onMounted(() => {
+        getSelectWidth();
+    });
 
     defineExpose({ show, hide });
 </script>
@@ -229,28 +232,66 @@
                         @click.stop="clearHandle"
                     />
                 </transition>
-
-                <lew-flex
-                    v-show="getLabels && getLabels.length > 0"
-                    style="padding: 3px"
-                    x="start"
-                    :gap="3"
-                    wrap
-                    class="value"
-                >
-                    <TransitionGroup name="list">
-                        <lew-tag
-                            v-for="(item, index) in getLabels"
-                            :key="index"
-                            type="light"
-                            :size="size"
-                            closable
-                            @close="deleteTag(index)"
+                <template v-if="getLabels && getLabels.length > 0">
+                    <lew-flex
+                        v-if="valueLayout === 'tag'"
+                        style="padding: 3px"
+                        x="start"
+                        y="center"
+                        :gap="3"
+                        wrap
+                        class="value"
+                    >
+                        <TransitionGroup name="list">
+                            <lew-tag
+                                v-for="(item, index) in getLabels"
+                                :key="index"
+                                type="light"
+                                :size="size"
+                                closable
+                                @close="deleteTag(index)"
+                            >
+                                {{ item }}
+                            </lew-tag>
+                        </TransitionGroup>
+                    </lew-flex>
+                    <template v-else>
+                        <lew-popover
+                            ref="lewPopverValueRef"
+                            trigger="hover"
+                            popover-body-class-name="lew-select-multiple-popover-tag"
+                            placement="top-start"
+                            style="width: 100%"
                         >
-                            {{ item }}
-                        </lew-tag>
-                    </TransitionGroup>
-                </lew-flex>
+                            <template #trigger>
+                                <div class="lew-select-multiple-text-value">
+                                    {{ getLabels.join('，') }}
+                                </div>
+                            </template>
+                            <template #popover-body>
+                                <lew-flex
+                                    x="start"
+                                    y="center"
+                                    :gap="3"
+                                    wrap
+                                    :style="`max-width:${state.selectWidth + 12}px`"
+                                    class="lew-select-multiple-tag-value"
+                                >
+                                    <lew-tag
+                                        v-for="(item, index) in getLabels"
+                                        :key="index"
+                                        type="light"
+                                        :size="size"
+                                        closable
+                                        @close="deleteTag(index)"
+                                    >
+                                        {{ item }}
+                                    </lew-tag>
+                                </lew-flex>
+                            </template>
+                        </lew-popover>
+                    </template>
+                </template>
                 <div v-show="getLabels && getLabels.length === 0" class="placeholder">
                     {{ placeholder }}
                 </div>
@@ -391,6 +432,12 @@
             .value {
                 width: calc(100% - 24px);
                 transition: all 0.2s;
+                height: 100%;
+            }
+            .lew-select-multiple-text-value {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
         }
 
@@ -409,30 +456,42 @@
         .lew-select-size-small {
             min-height: var(--lew-form-item-height-small);
 
-            .placeholder {
+            .placeholder,
+            .lew-select-multiple-text-value {
                 font-size: var(--lew-form-font-size-small);
                 line-height: var(--lew-form-item-height-small);
                 margin-left: 8px;
+            }
+            .lew-select-multiple-text-value {
+                padding-right: 24px;
             }
         }
 
         .lew-select-size-medium {
             min-height: var(--lew-form-item-height-medium);
 
-            .placeholder {
+            .placeholder,
+            .lew-select-multiple-text-value {
                 font-size: var(--lew-form-font-size-medium);
                 line-height: var(--lew-form-item-height-medium);
                 margin-left: 10px;
+            }
+            .lew-select-multiple-text-value {
+                padding-right: 28px;
             }
         }
 
         .lew-select-size-large {
             min-height: var(--lew-form-item-height-large);
 
-            .placeholder {
+            .placeholder,
+            .lew-select-multiple-text-value {
                 font-size: var(--lew-form-font-size-large);
                 line-height: var(--lew-form-item-height-large);
                 margin-left: 12px;
+            }
+            .lew-select-multiple-text-value {
+                padding-right: 32px;
             }
         }
     }
@@ -496,6 +555,13 @@
     .lew-select-multiple-popover-body {
         padding: 6px;
     }
+    .lew-select-multiple-popover-tag {
+        .lew-select-multiple-tag-value {
+            padding: 3px;
+            box-sizing: border-box;
+        }
+    }
+
     .lew-select-body {
         width: 100%;
         box-sizing: border-box;
