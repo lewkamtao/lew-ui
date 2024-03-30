@@ -4,8 +4,8 @@ export * from './_layout';
 export * from './mark';
 export * from './icon';
 export * from './cascader';
-export * from './tree-select';
-export * from './tree';
+// export * from './tree-select';
+// export * from './tree';
 
 export * from './tabs';
 export * from './_steps';
