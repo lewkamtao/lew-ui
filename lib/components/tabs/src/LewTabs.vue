@@ -1,11 +1,10 @@
 <script setup lang="ts">
     import { tabsProps } from './props';
-    import { useVModel } from '@vueuse/core';
     import { object2class, any2px } from 'lew-ui/utils';
 
-    const emit = defineEmits(['change', 'update:modelValue']);
+    const emit = defineEmits(['change']);
     const props = defineProps(tabsProps);
-    const tabsValue = useVModel(props, 'modelValue', emit);
+    const tabsValue: any = defineModel<string | number | undefined>({ required: true });
 
     const tabsRef = ref();
     const itemRef = ref([] as any);
@@ -128,7 +127,7 @@
     };
 
     onMounted(() => {
-        if (!props.modelValue) {
+        if (!tabsValue.value) {
             tabsValue.value = props.options[0].value;
         }
         init();

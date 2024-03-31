@@ -1,30 +1,37 @@
 import { PropType } from 'vue';
 
-export type TreeOptions = {
+export type TreeDataSource = {
     label: string;
     value: [string, number];
     labelPaths?: string[];
     valuePaths?: string[];
     level: number;
     isLeaf?: boolean;
-	loading?: boolean;
+    loading?: boolean;
     disabled?: boolean;
     parentLabelPaths?: string[];
     parentValuePaths?: string[];
-    parentChildren?: TreeOptions[];
-    children?: TreeOptions[];
+    children?: TreeDataSource[];
 };
 
 export type TreeTriggerType = 'click' | 'hover';
 
-export const treeProps = {
+export const treeModel = {
     modelValue: {
         type: [String, Number],
-        default: '',
+        default: [],
         description: '值（双向绑定）'
     },
-    options: {
-        type: Array as PropType<TreeOptions[]>,
+    expandedKeys: {
+        type: [String, Number],
+        default: [],
+        description: '展开节点的 key 的集合'
+    }
+};
+
+export const treeProps = {
+    dataSource: {
+        type: Array as PropType<TreeDataSource[]>,
         default: [],
         description: '配置项'
     },
@@ -32,6 +39,11 @@ export const treeProps = {
         type: Boolean,
         default: false,
         description: '多选的'
+    },
+    showCheckbox: {
+        type: Boolean,
+        default: false,
+        description: '是否显示复选框'
     },
     showAllLevels: {
         type: Boolean,
@@ -52,6 +64,10 @@ export const treeProps = {
         type: String,
         default: '请选择',
         description: '默认提示文案'
+    },
+    certainKeys: {
+        type: Array as PropType<string[]>,
+        default: []
     },
     size: {
         type: String,

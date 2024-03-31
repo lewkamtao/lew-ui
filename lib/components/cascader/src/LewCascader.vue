@@ -1,9 +1,9 @@
 <script setup lang="ts">
-    import { useVModel } from '@vueuse/core';
     import { LewPopover, LewFlex, LewButton, LewIcon, LewTooltip } from 'lew-ui';
     import { object2class } from 'lew-ui/utils';
     import { cascaderProps, CascaderOptions } from './props';
     import { UseVirtualList } from '@vueuse/components';
+    import { formatPathsToTreeList } from 'lew-ui/utils';
     import _ from 'lodash';
 
     // 获取app
@@ -14,7 +14,7 @@
 
     const props = defineProps(cascaderProps);
     const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
-    const cascaderValue = useVModel(props, 'modelValue', emit);
+    const cascaderValue: any = defineModel<string | number | undefined>();
 
     const lewCascaderRef = ref();
     const lewPopverRef = ref();
@@ -31,27 +31,6 @@
         keyword: ''
     });
 
-    // 格式化 获取 path
-    const formatPathsToTreeList = (
-        treeList: CascaderOptions[],
-        parentValuePaths = [],
-        parentLabelPaths = []
-    ) => {
-        treeList.forEach((tree) => {
-            const { value, label, children = [], isLeaf } = tree;
-            const valuePaths: any = [...parentValuePaths, value];
-            const labelPaths: any = [...parentLabelPaths, label];
-            tree.valuePaths = valuePaths;
-            tree.labelPaths = labelPaths;
-            tree.parentValuePaths = parentValuePaths;
-            tree.parentLabelPaths = parentLabelPaths;
-            tree.level = valuePaths.length - 1;
-            if (!isLeaf) {
-                tree.parentChildren = children;
-                formatPathsToTreeList(children, valuePaths, labelPaths);
-            }
-        });
-    };
     // 通过值获取对象
     const findObjectByValue = (treeList: CascaderOptions[], value: [string, number]) => {
         for (let i = 0; i < treeList.length; i++) {
@@ -118,13 +97,13 @@
 
     // 初始化
     const init = async () => {
-        let _optionsTree: any = [[]];
+        let _tree: any = [[]];
         if (props.onload) {
             state.loading = true;
-            _optionsTree = (await props.onload()) || [];
+            _tree = (await props.onload()) || [];
             state.loading = false;
         } else if (props.options && props.options.length > 0) {
-            _optionsTree =
+            _tree =
                 (props.options &&
                     props.options.map((e) => {
                         return {
@@ -134,9 +113,9 @@
                     })) ||
                 [];
         }
-        formatPathsToTreeList(_optionsTree);
-        state.optionsGroup = [_optionsTree];
-        state.optionsTree = _optionsTree;
+        const __tree: any = formatPathsToTreeList(_tree);
+        state.optionsGroup = [__tree];
+        state.optionsTree = __tree;
     };
 
     init();
@@ -149,14 +128,13 @@
                 item.loading = true;
                 state.okLoading = true;
                 const new_options = (await props.onload(_.cloneDeep({ ...item, level }))) || [];
-                let _optionsTree = findAndAddChildrenByValue(
+                let _tree = findAndAddChildrenByValue(
                     _.cloneDeep(state.optionsTree),
                     _.cloneDeep(item.value),
                     new_options
                 );
-                formatPathsToTreeList(_optionsTree);
-                state.optionsTree = _optionsTree;
-                const _options = findChildrenByValue(_optionsTree, item.value);
+                state.optionsTree = formatPathsToTreeList(_tree);
+                const _options = findChildrenByValue(state.optionsTree, item.value);
                 state.optionsGroup.push(_options);
                 item.loading = false;
                 state.okLoading = false;
@@ -629,6 +607,44 @@
         outline: 0px var(--lew-color-primary-light) solid;
         border: var(--lew-form-border-width) transparent solid;
     }
+
+    .lew-cascader-item:hover {
+        :deep(.lew-checkbox) {
+            .icon-checkbox-box {
+                border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
+                outline: var(--lew-form-ouline);
+                background: var(--lew-form-bgcolor);
+            }
+        }
+    }
+
+    .lew-cascader-item-tobe:hover {
+        :deep(.lew-checkbox) {
+            .icon-checkbox-box {
+                border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+                background: var(--lew-checkbox-color);
+
+                .icon-checkbox {
+                    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    .lew-cascader-item-select:hover {
+        :deep(.lew-checkbox) {
+            .icon-checkbox-box {
+                border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+                background: var(--lew-checkbox-color);
+
+                .icon-checkbox {
+                    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+                    opacity: 1;
+                }
+            }
+        }
+    }
 </style>
 <style lang="scss">
     .lew-cascader-body {
@@ -816,44 +832,6 @@
             border-top: 1px solid var(--lew-bgcolor-4);
             height: 40px;
             padding-right: 10px;
-        }
-    }
-
-    .lew-cascader-item:hover {
-        .lew-checkbox {
-            .icon-checkbox-box {
-                border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
-                outline: var(--lew-form-ouline);
-                background: var(--lew-form-bgcolor);
-            }
-        }
-    }
-
-    .lew-cascader-item-tobe:hover {
-        .lew-checkbox {
-            .icon-checkbox-box {
-                border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-                background: var(--lew-checkbox-color);
-
-                .icon-checkbox {
-                    transform: translate(-50%, -50%) rotate(0deg) scale(1);
-                    opacity: 1;
-                }
-            }
-        }
-    }
-
-    .lew-cascader-item-select:hover {
-        .lew-checkbox {
-            .icon-checkbox-box {
-                border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-                background: var(--lew-checkbox-color);
-
-                .icon-checkbox {
-                    transform: translate(-50%, -50%) rotate(0deg) scale(1);
-                    opacity: 1;
-                }
-            }
         }
     }
 </style>

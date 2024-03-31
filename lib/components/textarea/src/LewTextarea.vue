@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { useVModel, useMagicKeys } from '@vueuse/core';
+    import { useMagicKeys } from '@vueuse/core';
     import { object2class, any2px } from 'lew-ui/utils';
     import { LewIcon, LewTooltip } from 'lew-ui';
     import { textareaProps } from './props';
@@ -24,7 +24,7 @@
     ]);
 
     const props = defineProps(textareaProps);
-    const modelValue = useVModel(props, 'modelValue', emit);
+    const modelValue: any = defineModel();
     const state = reactive({
         isFocus: false
     });

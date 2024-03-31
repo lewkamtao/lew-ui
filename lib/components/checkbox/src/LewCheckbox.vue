@@ -1,20 +1,16 @@
 <script lang="ts" setup>
-    import { useVModel } from '@vueuse/core';
     import { object2class } from 'lew-ui/utils';
     import { checkboxProps } from './props';
 
     const props = defineProps(checkboxProps);
 
-    const emit = defineEmits(['change', 'update:modelValue']);
-    const modelValue = useVModel(props, 'modelValue', emit);
+    const emit = defineEmits(['change']);
+    const modelValue = defineModel<boolean | undefined>({ default: () => false });
 
     const setChecked = (e: Event) => {
-        if (props.disabled) {
-            return;
-        }
         const { checked } = e.target as HTMLInputElement;
-        modelValue.value = checked;
         emit('change', checked);
+        modelValue.value = checked;
     };
 
     const getIconSize = computed(() => {
@@ -30,8 +26,9 @@
                 return 11;
         }
     });
+	
     const getCheckboxClassName = computed(() => {
-        const { block, round, iconable, size, disabled, certain } = props;
+        const { block, round, iconable, size, disabled, certain, readonly } = props;
         const checked = modelValue.value || props.checked;
         const unicon = !iconable && block;
 
@@ -42,7 +39,8 @@
             checked,
             unicon,
             disabled,
-            certain
+            certain,
+            readonly
         });
     });
 </script>
@@ -229,6 +227,10 @@
 
     .lew-checkbox-disabled {
         opacity: var(--lew-disabled-opacity);
+        pointer-events: none; //鼠标点击不可修改
+    }
+
+    .lew-checkbox-readonly {
         pointer-events: none; //鼠标点击不可修改
     }
 

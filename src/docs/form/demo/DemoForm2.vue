@@ -93,8 +93,8 @@
             }
         },
         {
-            field: 'user.avatar',
-            label: '头像',
+            field: 'user.city',
+            label: '城市',
             as: 'select',
             rules: Yup.string().required('此项必填'),
             props: {
@@ -127,7 +127,7 @@
             }
         },
         {
-            field: 'user.addd',
+            field: 'user.agree',
             label: '',
             as: 'checkbox',
             rules: Yup.boolean().oneOf([true], '请同意').required('请同意'),

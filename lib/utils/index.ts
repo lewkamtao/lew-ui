@@ -1,3 +1,4 @@
+import _ from 'lodash';
 // Returns the icon type to be used in a tooltip.
 
 // type: The type of message to display in the tooltip.
@@ -114,4 +115,60 @@ export const lewSetForm = ({
         }
     };
     _fn();
+};
+
+export type Tree = {
+    label: string;
+    value: [string, number];
+    labelPaths?: string[];
+    valuePaths?: string[];
+    level: number;
+    isLeaf?: boolean;
+    loading?: boolean;
+    disabled?: boolean;
+    parentLabelPaths?: string[];
+    parentValuePaths?: string[];
+    parentValue?: string;
+    parentLabel?: string;
+    children?: Tree[];
+};
+
+// 格式化 获取 path
+export const formatPathsToTreeList = (
+    treeList: Tree[],
+    parentValuePaths = [],
+    parentLabelPaths = [],
+    _keyPaths = ''
+) => {
+    let _tree = _.cloneDeep(treeList);
+    let formatFn = (
+        treeList: Tree[],
+        parentValuePaths = [],
+        parentLabelPaths = [],
+        _parentKeyPaths = ''
+    ) => {
+        treeList.forEach((tree) => {
+            const { value, label, children = [], isLeaf } = tree;
+            const valuePaths: any = [...parentValuePaths, value];
+            const labelPaths: any = [...parentLabelPaths, label];
+            tree.parentValue =
+                parentValuePaths.length > 0
+                    ? parentValuePaths[parentValuePaths.length - 1]
+                    : undefined;
+            tree.parentLabel =
+                parentLabelPaths.length > 0
+                    ? parentLabelPaths[parentLabelPaths.length - 1]
+                    : undefined;
+            tree.valuePaths = valuePaths;
+            tree.labelPaths = labelPaths;
+            tree.parentValuePaths = parentValuePaths;
+            tree.parentLabelPaths = parentLabelPaths;
+            tree.level = valuePaths.length - 1;
+            if (!isLeaf) {
+                formatFn(children, valuePaths, labelPaths);
+            }
+        });
+    };
+    formatFn(_tree, parentValuePaths, parentLabelPaths);
+    return _tree;
 };

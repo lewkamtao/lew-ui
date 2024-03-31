@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { object2class, any2px } from 'lew-ui/utils';
     import * as Yup from 'yup';
-    import { useVModel, watchDebounced } from '@vueuse/core';
+    import { watchDebounced } from '@vueuse/core';
     import {
         LewInput,
         LewTextarea,
@@ -25,10 +25,7 @@
     const emit = defineEmits(['update:modelValue', 'update:options', 'change']);
     const form = ref({} as any);
 
-    const componentOptions: any = useVModel(props, 'options', emit, {
-        passive: true,
-        deep: true
-    });
+    const componentOptions: any = defineModel('options');
 
     const getFormClassNames = computed(() => {
         const { direction, size } = props;
@@ -150,8 +147,11 @@
             });
         });
     };
-
-    const validate = (field: string) => {
+    const validate = _.debounce((field: string) => {
+        validateField(field);
+    }, 200);
+    const validateField = (field: string) => {
+        console.log('validateField', field);
         const opt = _.cloneDeep(componentOptions.value || []);
         let schema: any = Yup.object();
         const obj: any = [];

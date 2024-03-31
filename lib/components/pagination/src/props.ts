@@ -5,7 +5,7 @@ export type PaginationOptions = {
     value: number | string;
 };
 
-export const paginationProps = {
+export const paginationModel = {
     total: {
         type: Number,
         default: 100,
@@ -16,20 +16,12 @@ export const paginationProps = {
         default: 1,
         description: '当前页码'
     },
-
     pageSize: {
         type: Number,
         require: true,
         default: 10,
         description: '每页条数'
     },
-
-    visiblePagesCount: {
-        type: Number,
-        default: 5,
-        description: '显示的页码数'
-    },
-
     pageSizeOptions: {
         type: Array as PropType<PaginationOptions[]>,
         default: [
@@ -55,5 +47,13 @@ export const paginationProps = {
             }
         ],
         description: '每页条数选项'
+    }
+};
+
+export const paginationProps = {
+    visiblePagesCount: {
+        type: Number,
+        default: 5,
+        description: '显示的页码数'
     }
 };

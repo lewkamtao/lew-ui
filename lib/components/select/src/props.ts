@@ -2,7 +2,7 @@ import { PropType } from 'vue';
 
 export type SelectOptions = {
     label: string;
-    value: string;
+    value: string | number;
     disabled?: boolean;
 };
 
@@ -11,12 +11,15 @@ export type SelectSearchMethodParams = {
     keyword?: string;
 };
 
-export const selectProps = {
+export const selectModel = {
     modelValue: {
-        type: [String, Number] || undefined,
+        type: [String, Number, undefined],
         default: '',
         description: '绑定值'
-    },
+    }
+};
+
+export const selectProps = {
     defaultValue: {
         type: [String, Number] || undefined,
         default: '',

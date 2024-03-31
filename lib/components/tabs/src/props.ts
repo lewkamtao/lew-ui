@@ -8,12 +8,16 @@ export type TabsOptions = {
 export type TabsSize = 'small' | 'medium' | 'large';
 
 export type TabsType = 'block' | 'line';
-export const tabsProps = {
+
+export const tabsModel = {
     modelValue: {
         type: [String, Number],
-        default: '',
-        description: '绑定值'
-    },
+        default: [],
+        description: '值（双向绑定）'
+    }
+};
+
+export const tabsProps = {
     options: {
         type: Array as PropType<TabsOptions[]>,
         default: [],

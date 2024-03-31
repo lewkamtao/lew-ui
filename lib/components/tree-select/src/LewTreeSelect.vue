@@ -1,5 +1,4 @@
 <script setup lang="ts">
-    import { useVModel } from '@vueuse/core';
     import { LewPopover, LewFlex, LewButton, LewIcon, LewTooltip } from 'lew-ui';
     import { object2class } from 'lew-ui/utils';
     import { treeSelectProps, TreeSelectOptions } from './props';
@@ -14,7 +13,7 @@
 
     const props = defineProps(treeSelectProps);
     const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
-    const treeSelectValue = useVModel(props, 'modelValue', emit);
+    const treeSelectValue: any = defineModel();
 
     const lewTreeSelectRef = ref();
     const lewPopverRef = ref();

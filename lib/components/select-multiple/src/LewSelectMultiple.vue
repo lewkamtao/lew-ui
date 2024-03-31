@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { useVModel, useDebounceFn } from '@vueuse/core';
+    import { useDebounceFn } from '@vueuse/core';
     import { LewPopover, LewIcon, LewTooltip } from 'lew-ui';
     import { object2class, numFormat } from 'lew-ui/utils';
     import { UseVirtualList } from '@vueuse/components';
@@ -12,7 +12,7 @@
     }
     const props = defineProps(selectMultipleProps);
     const emit = defineEmits(['update:modelValue', 'change', 'select', 'clear', 'delete', 'blur']);
-    const selectValue = useVModel(props, 'modelValue', emit);
+    const selectValue: any = defineModel();
 
     const lewSelectRef = ref();
     const lewPopverRef = ref();
@@ -96,7 +96,7 @@
 
         const _value = selectValue.value || [];
 
-        const index = _value.findIndex((e: string | number) => e == item.value);
+        const index = _value.findIndex((e: string | number) => e === item.value);
 
         if (index >= 0) {
             _value.splice(index, 1);

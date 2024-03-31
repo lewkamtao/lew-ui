@@ -2,7 +2,7 @@ import { PropType } from 'vue';
 
 export type SelectMultipleOptions = {
     label: string;
-    value: string;
+    value: string | number;
     disabled?: boolean;
 };
 
@@ -11,12 +11,15 @@ export type SelectSearchMultipleMethodParams = {
     keyword?: string;
 };
 
-export const selectMultipleProps = {
+export const selectMultipleModel = {
     modelValue: {
         type: (Array as PropType<string[] | number[]>) || undefined,
         default: [],
         description: '绑定值'
-    },
+    }
+};
+
+export const selectMultipleProps = {
     options: {
         type: Array as PropType<SelectMultipleOptions[]>,
         default: [],

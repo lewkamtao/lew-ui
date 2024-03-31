@@ -1,6 +1,5 @@
 <script lang="ts" setup>
     import { LewPopover, LewIcon, LewDateRange, LewTooltip } from 'lew-ui';
-    import { useVModel } from '@vueuse/core';
     import { dateRangePickerProps } from './props';
 
     // 获取app
@@ -9,8 +8,8 @@
         app.use(LewTooltip);
     }
     const props = defineProps(dateRangePickerProps);
-    const emit = defineEmits(['change', 'clear', 'update:modelValue']);
-    const modelValue = useVModel(props, 'modelValue', emit);
+    const emit = defineEmits(['change', 'clear']);
+    const modelValue: any = defineModel();
     const visible = ref(false);
     const lewPopoverRef = ref();
     const { startKey, endKey } = props;
@@ -60,7 +59,11 @@
     });
 
     const checkClear = computed(() => {
-        return (modelValue.value[startKey] || modelValue.value[endKey]) && props.clearable;
+        return (
+            ((modelValue.value && modelValue.value[startKey]) ||
+                (modelValue.value && modelValue.value[endKey])) &&
+            props.clearable
+        );
     });
 
     defineExpose({ show, hide });
@@ -77,7 +80,10 @@
         <template #trigger>
             <div class="lew-date-picker-view" :class="classObject">
                 <div class="lew-date-picker-input">
-                    <div v-if="!modelValue[startKey]" class="lew-date-picker-placeholder">
+                    <div
+                        v-if="!modelValue || !modelValue[startKey]"
+                        class="lew-date-picker-placeholder"
+                    >
                         请选择日期
                     </div>
                     <div v-else class="lew-date-picker-dateValue lew-date-picker-start">
@@ -86,7 +92,10 @@
                     <div class="lew-date-picker-mid">
                         <lew-icon size="14" type="minus" />
                     </div>
-                    <div v-if="!modelValue[endKey]" class="lew-date-picker-placeholder">
+                    <div
+                        v-if="!modelValue || !modelValue[endKey]"
+                        class="lew-date-picker-placeholder"
+                    >
                         请选择日期
                     </div>
                     <div v-else class="lew-date-picker-dateValue lew-date-picker-end">

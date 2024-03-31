@@ -3,14 +3,25 @@ import { ExtractPropTypes, PropType } from 'vue';
 export type InputPrefixesType = 'icon' | 'select' | 'text';
 export type InputSuffixType = 'icon' | 'select' | 'text';
 
-export const inputProps = {
-    // 绑定值
+export const inputModel = {
     modelValue: {
-        // 父组件 v-model 没有指定参数名，则默认是 modelValue
-        type: String,
+        type: [String, Number],
         default: '',
-        description: '绑定值'
+        description: '值（双向绑定）'
     },
+    prefixesValue: {
+        type: [String, Number],
+        default: '',
+        description: '前缀值'
+    },
+    suffixValue: {
+        type: [String, Number],
+        default: '',
+        description: '后缀值'
+    }
+};
+
+export const inputProps = {
     // 类型
     type: {
         type: String,
@@ -90,18 +101,12 @@ export const inputProps = {
         },
         description: '自定义输入字数统计方法'
     },
-
     prefixes: {
         type: String as PropType<InputPrefixesType>,
         default: '',
         description: '前缀'
     },
 
-    prefixesValue: {
-        type: [String, Number],
-        default: 'Prefixes',
-        description: '前缀值'
-    },
     prefixesOptions: {
         type: Array,
         default: () => [],
@@ -112,16 +117,10 @@ export const inputProps = {
         default: '',
         description: '前缀提示'
     },
-
     suffix: {
         type: String as PropType<InputSuffixType>,
         default: '',
         description: '后缀'
-    },
-    suffixValue: {
-        type: [String, Number],
-        default: 'Suffix',
-        description: '后缀值'
     },
     suffixOptions: {
         type: Array,

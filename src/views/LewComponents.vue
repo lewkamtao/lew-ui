@@ -217,8 +217,6 @@
                 {
                     label: 'Tree',
                     value: '/Tree',
-                    tagText: 'Coming soon',
-                    tagColor: 'warning'
                 }
                 // {
                 //     clabel: '折叠面板',

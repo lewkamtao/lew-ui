@@ -83,7 +83,7 @@
         }
     ];
 
-    const v = ref();
+    const v = ref([]);
 
     const change = (e: any) => {
         console.log(e);
@@ -91,5 +91,11 @@
 </script>
 
 <template>
-    <lew-tree v-model="v" :options="options" @change="change" />
+    <lew-tree
+        v-model="v"
+        multiple
+        show-checkbox
+        :data-source="options"
+        @change="change"
+    />
 </template>

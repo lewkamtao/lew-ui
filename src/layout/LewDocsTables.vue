@@ -9,6 +9,28 @@
     });
 
     const columnsMap: any = {
+        model: [
+            {
+                title: '参数名',
+                width: 150,
+                field: 'name'
+            },
+            {
+                title: '描述',
+                width: 150,
+                field: 'description'
+            },
+            {
+                title: '类型',
+                width: 150,
+                field: 'type'
+            },
+            {
+                title: '默认值',
+                width: 150,
+                field: 'default'
+            }
+        ],
         props: [
             {
                 title: '参数名',

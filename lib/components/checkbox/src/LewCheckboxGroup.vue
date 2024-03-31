@@ -1,14 +1,26 @@
 <script lang="ts" setup>
-    import { useVModel, watchArray } from '@vueuse/core';
     import { checkboxGroupProps } from './props';
     import type { CheckboxOptions } from './props';
     import { object2class } from 'lew-ui/utils';
     import { LewCheckbox } from 'lew-ui';
+    import _ from 'lodash';
 
     const props: any = defineProps(checkboxGroupProps as any);
-    const emit = defineEmits(['change', 'update:modelValue']);
-    const modelValue = useVModel(props, 'modelValue', emit);
+    const emit = defineEmits(['change']);
+    const modelValue: any = defineModel<string | number | undefined>({
+        required: true
+    });
     const checkList = ref([] as boolean[]);
+
+    watch(
+        () => modelValue.value,
+        () => {
+            initCheckbox();
+        },
+        {
+            deep: true // 开启深度监听
+        }
+    );
 
     const change = (item: CheckboxOptions, checked: boolean) => {
         let _value = modelValue.value || [];
@@ -20,20 +32,16 @@
                 _value.splice(index, 1);
             }
         }
-        modelValue.value = _value;
         emit('change', {
-            value: modelValue.value,
+            value: _.cloneDeep(_value),
             item: item
         });
+        modelValue.value = _.cloneDeep(_value);
     };
-
-    watchArray(modelValue, () => {
-        initCheckbox();
-    });
 
     const initCheckbox = () => {
         checkList.value = props.options.map((item: CheckboxOptions) => {
-            if (modelValue.value.includes(item.value)) {
+            if (modelValue.value && modelValue.value.includes(item.value)) {
                 return true;
             }
             return false;

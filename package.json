@@ -58,7 +58,7 @@
         "tippy.js": "^6.3.7",
         "vee-validate": "^4.5.8",
         "vite-plugin-dts": "^1.4.1",
-        "vue": "^3.2.37",
+        "vue": "^3.4.21",
         "vue-feather": "^2.0.0",
         "vue-router": "^4.0.13",
         "yup": "^1.2.0"

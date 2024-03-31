@@ -7,15 +7,22 @@ export type CascaderOptions = {
     valuePaths?: string[];
     level: number;
     isLeaf?: boolean;
-	loading?: boolean;
+    loading?: boolean;
     disabled?: boolean;
     parentLabelPaths?: string[];
     parentValuePaths?: string[];
-    parentChildren?: CascaderOptions[];
     children?: CascaderOptions[];
 };
 
 export type CascaderTriggerType = 'click' | 'hover';
+
+export const cascaderModel = {
+    modelValue: {
+        type: [String, Number],
+        default: '',
+        description: '值（双向绑定）'
+    }
+};
 
 export const cascaderProps = {
     modelValue: {

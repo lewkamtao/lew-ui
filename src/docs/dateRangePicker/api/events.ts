@@ -1,7 +1,8 @@
 export default {
     title: 'Events',
     columnsKey: 'events',
-    data: [
+	orderNum: 3,
+	data: [
         {
             name: 'change',
             description: '值改变触发',

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { useVModel, useMagicKeys } from '@vueuse/core';
+    import { useMagicKeys } from '@vueuse/core';
     import { object2class } from 'lew-ui/utils';
     import { LewIcon, LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui';
     import { inputProps } from './props';
@@ -10,23 +10,12 @@
     if (app && !app.directive('tooltip')) {
         app.use(LewTooltip);
     }
-    const emit = defineEmits([
-        'update:modelValue',
-        'update:prefixesValue',
-        'update:suffixValue',
-        'update:type',
-        'clear',
-        'blur',
-        'focus',
-        'change',
-        'input',
-        'ok'
-    ]);
+    const emit = defineEmits(['clear', 'blur', 'focus', 'change', 'input', 'ok']);
 
     const props = defineProps(inputProps);
-    const modelValue = useVModel(props, 'modelValue', emit);
-    const prefixesValue = useVModel(props, 'prefixesValue', emit);
-    const suffixValue = useVModel(props, 'suffixValue', emit);
+    const modelValue: any = defineModel<string | number | undefined>({ required: true });
+    const prefixesValue: any = defineModel<string | number | undefined>('prefixesValue');
+    const suffixValue: any = defineModel<string | number | undefined>('suffixValue');
     const lewInputRef = ref();
     const isCopy = ref(false);
     let timer: any = null;
@@ -48,7 +37,7 @@
 
     const updateValue = () => {
         if (props.maxLength && props.renderCount(modelValue.value) >= Number(props.maxLength)) {
-            modelValue.value = modelValue.value.slice(0, props.maxLength);
+            modelValue.value = modelValue.value.slice(0, Number(props.maxLength));
         }
     };
 

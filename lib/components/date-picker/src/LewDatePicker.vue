@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-    import { useVModel } from '@vueuse/core';
     import { object2class } from 'lew-ui/utils';
     import { LewPopover, LewIcon, LewDate, LewTooltip } from 'lew-ui';
     import { datePickerProps } from './props';
@@ -9,9 +8,9 @@
     if (app && !app.directive('tooltip')) {
         app.use(LewTooltip);
     }
-    const emit = defineEmits(['change', 'clear', 'update:modelValue']);
+    const emit = defineEmits(['change', 'clear']);
     const props = defineProps(datePickerProps);
-    const modelValue = useVModel(props, 'modelValue', emit);
+    const modelValue: any = defineModel();
 
     const visible = ref(false);
 

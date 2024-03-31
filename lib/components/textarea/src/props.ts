@@ -1,13 +1,16 @@
 import { ExtractPropTypes } from 'vue';
 
-export const textareaProps = {
+export const textareaModel = {
     // 绑定值
     modelValue: {
         // 父组件 v-model 没有指定参数名，则默认是 modelValue
         type: String,
         default: '',
         description: '绑定值'
-    },
+    }
+};
+
+export const textareaProps = {
     size: {
         type: String,
         default: 'medium',

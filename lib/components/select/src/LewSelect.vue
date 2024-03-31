@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { useVModel, useDebounceFn } from '@vueuse/core';
+    import { useDebounceFn } from '@vueuse/core';
     import { LewPopover, LewFlex, LewIcon, LewTooltip } from 'lew-ui';
     import { object2class, numFormat } from 'lew-ui/utils';
     import { UseVirtualList } from '@vueuse/components';
@@ -13,7 +13,7 @@
     }
     const props = defineProps(selectProps);
     const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
-    const selectValue = useVModel(props, 'modelValue', emit);
+    const selectValue: any = defineModel();
 
     const lewSelectRef = ref();
     const inputRef = ref();
@@ -26,7 +26,7 @@
         loading: false,
         options: props.options,
         hideBySelect: false, // 记录是否通过选择隐藏
-        keyword: props.defaultValue || (props.modelValue as any),
+        keyword: props.defaultValue || (selectValue.value as any),
         backupKeyword: props.defaultValue as any
     });
 

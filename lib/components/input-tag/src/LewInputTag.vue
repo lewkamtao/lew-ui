@@ -1,11 +1,10 @@
 <script setup lang="ts">
     import { inputTagProps } from './props';
-    import { useVModel } from '@vueuse/core';
     import { LewInput, LewTag } from 'lew-ui';
-    const emit = defineEmits(['close', 'change', 'update:modelValue']);
+    const emit = defineEmits(['close', 'change']);
 
-    const props = defineProps(inputTagProps);
-    const tagsValue = useVModel(props, 'modelValue', emit);
+    defineProps(inputTagProps);
+    const tagsValue: any = defineModel();
     const inputValue = ref();
     const isInput = ref(false);
     const lewInputRef = ref();
@@ -13,12 +12,6 @@
 
     let delDownTimer: any;
     let delDownCheck = 0;
-    watch(
-        () => props.modelValue,
-        () => {
-            tagsValue.value = props.modelValue;
-        }
-    );
 
     const openInput = () => {
         isInput.value = true;

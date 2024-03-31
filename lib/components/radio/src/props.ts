@@ -41,12 +41,15 @@ export const radioProps = {
     }
 };
 
-export const radioGroupProps = {
+export const radioGroupModel = {
     modelValue: {
         type: [String, Number],
         default: '',
         description: '绑定值'
-    },
+    }
+};
+
+export const radioGroupProps = {
     block: {
         type: Boolean,
         default: false,

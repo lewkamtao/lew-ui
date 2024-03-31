@@ -1,5 +1,5 @@
 <script lang="ts" setup name="Modal">
-    import { useVModel, useMagicKeys, useMouse } from '@vueuse/core';
+    import { useMagicKeys, useMouse } from '@vueuse/core';
     import { any2px } from 'lew-ui/utils';
     import { LewFlex, LewButton, LewIcon } from 'lew-ui';
     import { useDOMCreate } from '../../../hooks';
@@ -12,9 +12,9 @@
 
     const props = defineProps(modalProps);
 
-    const emit = defineEmits(['update:visible', 'ok', 'cancel', 'show', 'close']);
+    const emit = defineEmits(['ok', 'cancel', 'show', 'close']);
 
-    const visible = useVModel(props, 'visible', emit);
+    const visible = defineModel('visible');
     const transformOrigin = ref('0 0');
 
     const maskClick = () => {

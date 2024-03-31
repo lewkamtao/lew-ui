@@ -1,13 +1,12 @@
 <script lang="ts" setup>
-    import { useVModel } from '@vueuse/core';
     import { radioGroupProps } from './props';
     import type { RadioOptions } from './props';
     import { object2class } from 'lew-ui/utils';
     import LewRadio from './LewRadio.vue';
 
-    const emit = defineEmits(['change', 'update:modelValue']);
+    const emit = defineEmits(['change']);
     const props = defineProps(radioGroupProps);
-    const modelValue = useVModel(props, 'modelValue', emit);
+    const modelValue: any = defineModel();
 
     const check = (item: RadioOptions) => {
         modelValue.value = item.value;
