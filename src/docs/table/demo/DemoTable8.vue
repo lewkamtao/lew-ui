@@ -101,7 +101,14 @@
     >
         <template #release_date="{ row }"> {{ row.release_date }} </template>
         <template #directors="{ row }">
-            <lew-tag v-for="(item, index) in row.directors" :key="index" color="warning">
+            <lew-tag
+                v-for="(item, index) in row.directors"
+                :key="index"
+                round
+                size="small"
+                type="light"
+                color="gray"
+            >
                 {{ item }}</lew-tag
             >
         </template>
@@ -110,7 +117,7 @@
         </template>
 
         <template #action="{ row, column }">
-            <lew-button text="管理" type="text" @click.stop="get({ row, column })" />
+            <lew-button size="small" text="管理" type="text" @click.stop="get({ row, column })" />
             <lew-popok
                 title="删除确认"
                 content="删除之后无法恢复，请确认！"
@@ -118,11 +125,13 @@
                 width="200px"
                 @click.stop
             >
-                <lew-button text="删除" type="text" />
+                <lew-button size="small" text="删除" type="text" />
             </lew-popok>
         </template>
         <template #type="{ row }">
-            <lew-tag color="green">{{ row.type === 'movie' ? '电影' : '电视剧' }} </lew-tag>
+            <lew-tag color="green" type="light" round size="small"
+                >{{ row.type === 'movie' ? '电影' : '电视剧' }}
+            </lew-tag>
         </template>
         <template #has_linewatch="{ row }">
             <span>{{ row.has_linewatch ? '是' : '否' }}</span>

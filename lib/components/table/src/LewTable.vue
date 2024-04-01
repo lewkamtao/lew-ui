@@ -597,20 +597,21 @@
             height: 40px;
 
             .lew-table-tr {
-                background-color: var(--lew-bgcolor-1);
+                background-color: var(--lew-table-header-bgColor);
                 height: 40px;
                 flex-shrink: 0;
                 border-bottom: var(--lew-table-border);
 
                 .lew-table-td {
-                    color: var(--lew-text-color-5);
+                    color: var(--lew-text-color-2);
                     white-space: nowrap;
+                    font-weight: 600;
                 }
             }
         }
 
         .lew-table-td {
-            color: var(--lew-text-color-4);
+            color: var(--lew-text-color-2);
         }
 
         .lew-table-checkbox-wrapper {
@@ -638,12 +639,6 @@
         }
         .lew-table-tr-selected {
             background-color: var(--lew-table-tr-selected);
-        }
-    }
-
-    .lew-table-checkable {
-        .lew-table-td {
-            cursor: pointer;
         }
     }
 </style>

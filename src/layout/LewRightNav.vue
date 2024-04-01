@@ -38,8 +38,10 @@
     };
 
     onMounted(() => {
-        init();
-        initNav();
+        nextTick(() => {
+            init();
+            initNav();
+        });
     });
 </script>
 
