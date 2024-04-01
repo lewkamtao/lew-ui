@@ -12,7 +12,6 @@
     }
     const lewTextareaRef = ref();
     const emit = defineEmits([
-        'update:modelValue',
         'update:type',
         'clear',
         'blur',

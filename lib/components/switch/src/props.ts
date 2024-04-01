@@ -1,3 +1,11 @@
+export const switchModel = {
+    modelValue: {
+        type: Boolean,
+        default: false,
+        description: '绑定值'
+    }
+};
+
 export const switchProps = {
     modelValue: {
         type: Boolean,

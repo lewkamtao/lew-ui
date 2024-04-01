@@ -1,10 +1,11 @@
 <script setup lang="ts">
     import { inputTagProps } from './props';
     import { LewInput, LewTag } from 'lew-ui';
+    import _ from 'lodash';
     const emit = defineEmits(['close', 'change']);
 
     defineProps(inputTagProps);
-    const tagsValue: any = defineModel();
+    const tagsValue: any = defineModel<string[]>();
     const inputValue = ref();
     const isInput = ref(false);
     const lewInputRef = ref();
@@ -28,6 +29,7 @@
                     delDownCheck += 1;
                     if (delDownCheck >= 2) {
                         tagsValue.value.splice(tagsValue.value.length - 1, 1);
+                        emit('change', _.cloneDeep(tagsValue.value));
                         delDownCheck = 0;
                     }
                 }

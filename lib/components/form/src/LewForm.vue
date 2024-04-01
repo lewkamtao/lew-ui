@@ -22,10 +22,10 @@
     import _ from 'lodash';
 
     const props = defineProps(formProps);
-    const emit = defineEmits(['update:modelValue', 'update:options', 'change']);
+    const emit = defineEmits(['change']);
     const form = ref({} as any);
 
-    const componentOptions: any = defineModel('options');
+    const componentOptions: any = defineModel<any>('options');
 
     const getFormClassNames = computed(() => {
         const { direction, size } = props;
@@ -38,7 +38,7 @@
             form.value = arrayToObj(v);
             emit('change', toRaw(form.value));
         },
-        { deep: true, debounce: 50, maxWait: 120 }
+        { deep: true, debounce: 20, maxWait: 100 }
     );
 
     const arrayToObj = (arr: any): any => {
@@ -136,6 +136,7 @@
                     if (_$fieldKey && __e.field === _$fieldPrefix) {
                         componentOptions.value[i].value = {
                             ...componentOptions.value[i].value,
+                            size: props.size,
                             [_$fieldKey]: _e.value
                         };
                     }
@@ -149,9 +150,8 @@
     };
     const validate = _.debounce((field: string) => {
         validateField(field);
-    }, 200);
+    }, 10);
     const validateField = (field: string) => {
-        console.log('validateField', field);
         const opt = _.cloneDeep(componentOptions.value || []);
         let schema: any = Yup.object();
         const obj: any = [];
@@ -308,7 +308,7 @@
 
     const init = () => {
         form2componentOptions();
-        form.value = arrayToObj(componentOptions.value);
+        form.value = arrayToObj(_.cloneDeep(componentOptions.value));
         emit('change', toRaw(form.value));
     };
 
@@ -333,7 +333,7 @@
                 <lew-input
                     v-if="item.as === 'input'"
                     v-model="item.value"
-                    v-bind="{ size: size, ...item.props }"
+                    v-bind="{ size, ...item.props }"
                     @change="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
@@ -342,7 +342,7 @@
                 <lew-textarea
                     v-if="item.as === 'textarea'"
                     v-model="item.value"
-                    v-bind="{ size: size, ...item.props }"
+                    v-bind="{ size, ...item.props }"
                     @change="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
@@ -351,7 +351,7 @@
                 <lew-input-tag
                     v-if="item.as === 'input-tag'"
                     v-model="item.value"
-                    v-bind="{ size: size, ...item.props }"
+                    v-bind="{ size, ...item.props }"
                     @change="validate(item.field)"
                     @close="validate(item.field)"
                 />
@@ -359,32 +359,29 @@
                 <lew-checkbox-group
                     v-if="item.as === 'checkbox-group'"
                     v-model="item.value"
-                    v-bind="{ size: size, ...item.props }"
+                    v-bind="{ size, ...item.props }"
                     @change="validate(item.field)"
                 />
 
                 <lew-radio-group
                     v-if="item.as === 'radio-group'"
                     v-model="item.value"
-                    v-bind="{ size: size, ...item.props }"
+                    v-bind="{ size, ...item.props }"
                     @change="validate(item.field)"
                 />
 
                 <lew-checkbox
                     v-if="item.as === 'checkbox'"
                     v-model="item.value"
-                    v-bind="{ size: size, ...item.props }"
+                    v-bind="{ size, ...item.props }"
                     @change="validate(item.field)"
                 />
 
                 <lew-select
                     v-if="item.as === 'select'"
                     v-model="item.value"
-                    v-bind="{ size: size, ...item.props }"
-                    @change="(e: any) => {
-                    validate(item.field);
-                    typeof item.props.click === 'function' ? item.props.change(e) : '';
-                }"
+                    v-bind="{ size, ...item.props }"
+                    @change="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                 />
@@ -392,11 +389,8 @@
                 <lew-select-multiple
                     v-if="item.as === 'select-multiple'"
                     v-model="item.value"
-                    v-bind="{ size: size, ...item.props }"
-                    @change="(e: any) => {
-                    validate(item.field);
-                    typeof item.props.click === 'function' ? item.props.change(e) : '';
-                }"
+                    v-bind="{ size, ...item.props }"
+                    @change="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                 />
@@ -405,11 +399,8 @@
                     v-if="item.as === 'date-picker'"
                     v-model="item.value"
                     style="width: 100%"
-                    v-bind="{ size: size, ...item.props }"
-                    @change="(e: any) => {
-                    validate(item.field);
-                    typeof item.props.click === 'function' ? item.props.change(e) : '';
-                }"
+                    v-bind="{ size, ...item.props }"
+                    @change="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                 />
@@ -418,11 +409,8 @@
                     v-if="item.as === 'date-range-picker'"
                     v-model="item.value"
                     style="width: 100%"
-                    v-bind="{ size: size, ...item.props }"
-                    @change="(e: any) => {
-                        validate(item.field);
-                        typeof item.props.click === 'function' ? item.props.change(e) : '';
-                    }"
+                    v-bind="{ size, ...item.props }"
+                    @change="validate(item.field)"
                     @input="validate(item.field)"
                     @clear="validate(item.field)"
                 />
@@ -430,37 +418,29 @@
                 <lew-tabs
                     v-if="item.as === 'tabs'"
                     v-model="item.value"
-                    v-bind="{ size: size, ...item.props }"
-                    @change="(e: any) => {
-                    validate(item.field);
-                    typeof item.props.click === 'function' ? item.props.change(e) : '';
-                }
-                    "
+                    v-bind="{ size, ...item.props }"
+                    @change="validate(item.field)"
                 />
 
                 <lew-cascader
                     v-if="item.as === 'cascader'"
                     v-model="item.value"
-                    v-bind="{ size: size, ...item.props }"
+                    v-bind="{ size, ...item.props }"
                     @clear="validate(item.field)"
-                    @change="(e: any) => {
-                    validate(item.field);
-                    typeof item.props.click === 'function' ? item.props.change(e) : '';
-                }
-                    "
+                    @change="validate(item.field)"
                 />
 
                 <lew-switch
                     v-if="item.as === 'switch'"
                     v-model="item.value"
-                    v-bind="{ size: size, ...item.props }"
-                    @change="typeof item.props.change === 'function' ? item.props.change() : ''"
+                    v-bind="{ size, ...item.props }"
+                    @change="validate(item.field)"
                 />
 
                 <lew-button
                     v-if="item.as === 'button'"
                     v-model="item.value"
-                    v-bind="{ size: size, ...item.props }"
+                    v-bind="{ size, ...item.props }"
                     @click="typeof item.props.click === 'function' ? item.props.click() : ''"
                 />
 

@@ -13,7 +13,7 @@
     }
 
     const props = defineProps(cascaderProps);
-    const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
+    const emit = defineEmits(['change', 'blur', 'clear']);
     const cascaderValue: any = defineModel<string | number | undefined>();
 
     const lewCascaderRef = ref();

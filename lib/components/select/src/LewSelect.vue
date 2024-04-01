@@ -12,8 +12,8 @@
         app.use(LewTooltip);
     }
     const props = defineProps(selectProps);
-    const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
-    const selectValue: any = defineModel();
+    const emit = defineEmits(['change', 'blur', 'clear']);
+    const selectValue: any = defineModel<string | number | undefined>();
 
     const lewSelectRef = ref();
     const inputRef = ref();

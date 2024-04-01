@@ -2,16 +2,9 @@
     import { switchProps } from './props';
     const props = defineProps(switchProps);
     const _loading = ref(false);
-    const v = ref(props.modelValue);
 
-    watch(
-        () => props.modelValue,
-        () => {
-            v.value = props.modelValue;
-        }
-    );
-
-    const emit = defineEmits(['update:modelValue', 'click', 'change']);
+    const modelValue = defineModel<boolean>();
+    const emit = defineEmits(['click', 'change']);
 
     const handleClick = async (e: any) => {
         if (props.disabled || _loading.value || props.loading) return;
@@ -21,17 +14,16 @@
                 return;
             }
             _loading.value = true;
-            const isSuccess = await props.request(!v.value);
+            const isSuccess = await props.request(!modelValue.value);
             if (isSuccess) {
-                v.value = !v.value;
+                modelValue.value = !modelValue.value;
                 _loading.value = false;
             }
             _loading.value = false;
         } else {
-            v.value = !v.value;
+            modelValue.value = !modelValue.value;
         }
-        emit('update:modelValue', v.value);
-        emit('change', v.value);
+        emit('change', modelValue.value);
     };
 </script>
 
@@ -40,13 +32,13 @@
         class="lew-switch-view"
         :class="`
      ${round ? 'lew-switch-round' : ''} 
-         ${v ? 'lew-switch-checked' : ''}
+         ${modelValue ? 'lew-switch-checked' : ''}
          ${_loading || loading ? 'lew-switch-loading' : ''}
          ${request ? 'lew-switch-request' : ''}
     `"
         @click="handleClick"
     >
-        <input v-show="false" v-model="v" type="checkbox" :disabled="disabled" />
+        <input v-show="false" v-model="modelValue" type="checkbox" :disabled="disabled" />
         <div class="lew-switch-dot"></div>
     </div>
 </template>

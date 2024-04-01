@@ -6,7 +6,7 @@
 
     const emit = defineEmits(['change']);
     const props = defineProps(radioGroupProps);
-    const modelValue: any = defineModel();
+    const modelValue: any = defineModel<string | number | undefined>();
 
     const check = (item: RadioOptions) => {
         modelValue.value = item.value;

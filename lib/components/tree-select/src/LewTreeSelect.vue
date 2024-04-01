@@ -12,7 +12,7 @@
     }
 
     const props = defineProps(treeSelectProps);
-    const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
+    const emit = defineEmits(['change', 'blur', 'clear']);
     const treeSelectValue: any = defineModel();
 
     const lewTreeSelectRef = ref();
