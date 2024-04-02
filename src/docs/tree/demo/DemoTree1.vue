@@ -96,6 +96,7 @@
         multiple
         show-checkbox
         :data-source="options"
+        :tree="options"
         @change="change"
     />
 </template>

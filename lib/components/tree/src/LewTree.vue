@@ -10,7 +10,7 @@
     const expandedKeys: any = defineModel<string[] | number[]>('expandedKeys', {
         default: []
     });
-    const certainKeys: any = defineModel<string>('certainKeys', {
+    const certainKeys: any = defineModel<string[]>('certainKeys', {
         default: []
     });
 
@@ -21,7 +21,6 @@
     let treeDataSource: TreeDataSource[] = [];
     if (props.dataSource && props.dataSource.length > 0 && !props.dataSource[0].valuePaths) {
         treeDataSource = formatPathsToTreeList(props.dataSource);
-        console.log(treeDataSource);
     } else {
         treeDataSource = props.dataSource;
     }
@@ -42,7 +41,7 @@
         return i >= 0;
     });
 
-    const select = (item: any, parent: any) => {
+    const select = (item: any) => {
         if (props.multiple) {
             if (modelValue.value.includes(item.value)) {
                 let i = modelValue.value.findIndex((e: any) => e == item.value);
@@ -57,33 +56,32 @@
                 modelValue.value = item.value;
             }
         }
-        const intersectionArray = _.intersection(_.map(parent, 'value'), modelValue.value);
-        if (intersectionArray.length > 0) {
-            if (intersectionArray.length === parent.length) {
-                if (!modelValue.value.includes(item.parentValue)) {
-                    modelValue.value.push(item.parentValue);
-                }
-                certainKeys.value = _.replace(
-                    certainKeys.value,
-                    new RegExp(item._keyParentPaths, 'g'),
-                    ''
-                );
+        recursiveArrayTree(_.cloneDeep(props.tree), (node: any) => {
+            if (
+                node.children &&
+                node.children.length > 0 &&
+                _.every(_.map(node.children, 'value'), (e) => _.includes(modelValue.value, e))
+            ) {
+                modelValue.value.push(node.value);
             } else {
-                if (!_.includes(certainKeys.value, item._keyParentPaths)) {
-                    certainKeys.value += item._keyParentPaths;
-                }
-                let i = modelValue.value.findIndex((e: any) => e === item.parentValue);
+                const i = modelValue.value.findIndex(
+                    (e: any) => e === node.value && node.value !== item.value
+                );
                 if (i >= 0) {
                     modelValue.value.splice(i, 1);
                 }
             }
-        } else {
-            certainKeys.value = _.replace(
-                certainKeys.value,
-                new RegExp(item._keyParentPaths, 'g'),
-                ''
-            );
-        }
+        });
+    };
+    // 定义一个函数，传入一个数组树、方法和需要遍历的属性名
+    const recursiveArrayTree = (tree: any, method: any): any => {
+        tree.forEach((item: any) => {
+            // 如果有 children，那么就递归调用自身
+            if (item.children && item.children.length > 0) {
+                recursiveArrayTree(item.children, method);
+            }
+            method(item);
+        });
     };
 </script>
 
@@ -109,22 +107,22 @@
                         item.isLeaf
                 }"
             >
-                <lew-icon
-                    @click.stop="showhide(item.value)"
-                    class="lew-tree-chevron-right"
-                    size="14px"
-                    type="chevron-right"
-                />
-                <div @click="select(item, treeDataSource)" class="lew-tree-item-label">
+                <div @click.stop="showhide(item.value)" class="lew-tree-chevron-right">
+                    <lew-icon
+                        class="lew-tree-chevron-right-icon"
+                        size="14px"
+                        type="chevron-right"
+                    />
+                </div>
+                <div @click="select(item)" class="lew-tree-item-label">
                     <lew-checkbox
-                        :certain="_.includes(certainKeys, item._key)"
                         :checked="
                             multiple ? modelValue.includes(item.value) : modelValue === item.value
                         "
                         v-if="showCheckbox"
                         class="lew-tree-checkbox"
                     />
-                    <span>{{ item.label }} </span>
+                    <span>{{ item.label }}</span>
                 </div>
             </div>
             <div v-show="checkShowTree(item.value)" style="margin-left: 20px" direction="y">
@@ -132,7 +130,7 @@
                     v-bind="$props"
                     v-model="modelValue"
                     v-model:expanded-keys="expandedKeys"
-                    v-model:certain-str="certainKeys"
+                    :tree="tree"
                     :data-source="item.children"
                 />
             </div>
@@ -149,11 +147,18 @@
         user-select: none;
         margin: 2px 0px;
         .lew-tree-chevron-right {
-            transform: rotate(0deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             transition: var(--lew-form-transition);
             width: 14px;
+            height: 14px;
             padding: 4px;
-            border-radius: 50%;
+            border-radius: var(--lew-border-radius-small);
+            .lew-tree-chevron-right-icon {
+                transform: rotate(0deg);
+                transition: var(--lew-form-transition);
+            }
         }
         .lew-tree-chevron-right:hover {
             background-color: var(--lew-bgcolor-3);
@@ -227,7 +232,9 @@
     }
     .lew-tree-item-expand {
         .lew-tree-chevron-right {
-            transform: rotate(90deg);
+            .lew-tree-chevron-right-icon {
+                transform: rotate(90deg);
+            }
         }
     }
 </style>

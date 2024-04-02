@@ -131,8 +131,18 @@ export type Tree = {
     parentValue?: string;
     parentLabel?: string;
     children?: Tree[];
+    _key: string;
 };
 
+export const getUUId = () => {
+    // 生成一个随机字符串作为UUID的前缀
+    const randomString =
+        Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+    // 使用Lodash的_.uniqueId()方法生成UUID
+    const uuid = _.uniqueId(randomString);
+    return uuid;
+};
 // 格式化 获取 path
 export const formatPathsToTreeList = (
     treeList: Tree[],
@@ -164,6 +174,7 @@ export const formatPathsToTreeList = (
             tree.parentValuePaths = parentValuePaths;
             tree.parentLabelPaths = parentLabelPaths;
             tree.level = valuePaths.length - 1;
+            tree._key = getUUId();
             if (!isLeaf) {
                 formatFn(children, valuePaths, labelPaths);
             }

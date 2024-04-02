@@ -137,8 +137,6 @@ button {
     }
 }
 
-
-
 .lew-form-icon-ani-enter-from,
 .lew-form-icon-ani-leave-to {
     opacity: 0 !important;
@@ -154,7 +152,7 @@ button {
     opacity: var(--lew-form-icon-opacity);
     position: absolute;
     transform: translate(0%, -50%);
-    border-radius: 50%;
+    border-radius: var(--lew-border-radius-small);
     padding: 2px;
     right: 9px;
     top: 50%;

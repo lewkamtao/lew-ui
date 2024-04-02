@@ -637,8 +637,8 @@
             }
 
             .lew-select-item-disabled {
-                opacity: 0.3;
-                cursor: no-drop;
+                opacity: var(--lew-disabled-opacity);
+                pointer-events: none; //鼠标点击不可修改
             }
 
             .lew-select-item-align-left {

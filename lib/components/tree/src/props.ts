@@ -35,6 +35,11 @@ export const treeProps = {
         default: [],
         description: '配置项'
     },
+    tree: {
+        type: Array as PropType<TreeDataSource[]>,
+        default: [],
+        description: '配置项'
+    },
     multiple: {
         type: Boolean,
         default: false,
