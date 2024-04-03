@@ -696,7 +696,7 @@
             .lew-cascader-item-warpper {
                 position: absolute;
                 left: 0px;
-                top: 0px;
+                top: 2px;
                 overflow-y: scroll;
                 height: 100%;
                 width: 180px;
@@ -829,7 +829,7 @@
         }
 
         .lew-cascader-control {
-            border-top: 1px solid var(--lew-bgcolor-4);
+            border-top: var(--lew-popover-border);
             height: 40px;
             padding-right: 10px;
         }

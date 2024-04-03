@@ -30,6 +30,12 @@ export const treeModel = {
 };
 
 export const treeProps = {
+    treeId: {
+        type: String,
+        default: '',
+        hidden: true,
+        description: '树ID'
+    },
     dataSource: {
         type: Array as PropType<TreeDataSource[]>,
         default: [],
@@ -72,6 +78,7 @@ export const treeProps = {
     },
     certainKeys: {
         type: Array as PropType<string[]>,
+        hidden: true,
         default: []
     },
     size: {

@@ -176,14 +176,17 @@
 
     const selectTr = (row: any) => {
         if (!props.checkable) return;
+        const checked = state.selectedKeysMap[row[props.rowKey]];
         if (props.singleSelect) {
             state.selectedKeysMap = {};
         }
-        if (state.selectedKeysMap[row[props.rowKey]]) {
+
+        if (checked) {
             state.selectedKeysMap[row[props.rowKey]] = false;
         } else {
             state.selectedKeysMap[row[props.rowKey]] = true;
         }
+
         checkIsAll();
     };
 

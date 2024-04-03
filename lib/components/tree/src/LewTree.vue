@@ -3,52 +3,93 @@
     import { LewFlex, LewIcon } from 'lew-ui';
     import { treeProps } from './props';
     import type { TreeDataSource } from './props';
-    import { formatPathsToTreeList } from 'lew-ui/utils';
+    import { getUUId } from 'lew-ui/utils';
     import _ from 'lodash';
-
-    const modelValue: any = defineModel<string[] | number[]>();
-    const expandedKeys: any = defineModel<string[] | number[]>('expandedKeys', {
-        default: []
-    });
-    const certainKeys: any = defineModel<string[]>('certainKeys', {
-        default: []
-    });
 
     const props = defineProps(treeProps);
 
+    let _treeId = '';
+    let tree = ref([]);
+    let treeDataSource: TreeDataSource[] = [];
+    if (!props.treeId) {
+        _treeId = getUUId();
+        // @ts-ignore
+        window[_treeId] = _.cloneDeep(props.dataSource);
+        // @ts-ignore
+        treeDataSource = window[_treeId];
+    } else {
+        _treeId = props.treeId;
+        treeDataSource = _.cloneDeep(props.dataSource);
+    }
+    // @ts-ignore
+    tree.value = window[_treeId];
+
+    const modelValue: any = defineModel<string[] | number[] | string>();
+    const selectedKey: any = defineModel<string[] | number[]>('selectedKey', {
+        default: []
+    });
+    const expandedKeys: any = defineModel<string[] | number[]>('expandedKeys', {
+        default: []
+    });
+    const selectedKeys: any = defineModel<string[]>('selectedKeys', {
+        default: []
+    });
+    const hasChildSelected: any = defineModel<string[]>('hasChildSelected', {
+        default: []
+    });
+
     const emit = defineEmits([]);
 
-    let treeDataSource: TreeDataSource[] = [];
-    if (props.dataSource && props.dataSource.length > 0 && !props.dataSource[0].valuePaths) {
-        treeDataSource = formatPathsToTreeList(props.dataSource);
-    } else {
-        treeDataSource = props.dataSource;
-    }
-
-    const showhide = (id: any) => {
+    const showhide = (item: any) => {
         let _expandedKeys = _.cloneDeep(expandedKeys.value) || [];
-        let i = _expandedKeys.findIndex((e: any) => e === id);
+        let i = _expandedKeys.findIndex((e: any) => e === item.value);
         if (i >= 0) {
             _expandedKeys.splice(i, 1);
         } else {
-            _expandedKeys.push(id);
+            _expandedKeys.push(item.value);
         }
+
         expandedKeys.value = _expandedKeys;
     };
 
     const checkShowTree = computed(() => (id: any) => {
         let i = (expandedKeys.value || []).findIndex((e: any) => e == id);
+
         return i >= 0;
     });
 
+    const getAllValuesFromTree = (arrayTree: any) => {
+        const valuesArray = _.flatMap(arrayTree, (item) => {
+            const values = [item.value];
+            if (item.children && item.children.length > 0) {
+                values.push(...getAllValuesFromTree(item.children));
+            }
+            return values;
+        });
+        return valuesArray;
+    };
+
     const select = (item: any) => {
         if (props.multiple) {
-            if (modelValue.value.includes(item.value)) {
-                let i = modelValue.value.findIndex((e: any) => e == item.value);
-                modelValue.value.splice(i, 1);
+            let _selected = _.cloneDeep(selectedKey.value) || [];
+            let _modelValue = _.cloneDeep(modelValue.value) || [];
+            if (_modelValue.includes(item.value)) {
+                let i = _selected.findIndex((e: any) => e == item.value);
+                _selected.splice(i, 1);
+                if (item.children && item.children.length > 0) {
+                    _selected = _.uniq(
+                        _.difference(_selected, getAllValuesFromTree(item.children))
+                    );
+                }
             } else {
-                modelValue.value.push(item.value);
+                _selected.push(item.value);
+                if (item.children && item.children.length > 0) {
+                    _selected = _.uniq([..._selected, ...getAllValuesFromTree(item.children)]);
+                }
             }
+            const { _allChildSelected } = calculateParentNodes(tree.value, _selected);
+            formatModelValue(_.uniq([..._selected, ..._allChildSelected]));
+            selectedKey.value = _selected;
         } else {
             if (modelValue.value === item.value) {
                 modelValue.value = '';
@@ -56,33 +97,69 @@
                 modelValue.value = item.value;
             }
         }
-        recursiveArrayTree(_.cloneDeep(props.tree), (node: any) => {
+    };
+
+    const formatModelValue = (_keys: any) => {
+        const { _hasChildSelected, _allChildSelected } = calculateParentNodes(tree.value, _keys);
+        modelValue.value = _.uniq([..._keys, ..._allChildSelected]);
+        hasChildSelected.value = _hasChildSelected;
+    };
+
+    function calculateParentNodes(
+        tree: any[],
+        _selectedKey: string[]
+    ): { _hasChildSelected: string[]; _allChildSelected: string[] } {
+        let _hasChildSelected: Set<string> = new Set();
+        let _allChildSelected: Set<string> = new Set();
+
+        function findParentNodes(
+            node: any,
+            _selectedKey: string[],
+            visitedNodes: Set<string>
+        ): void {
+            if (visitedNodes.has(node.value)) {
+                return;
+            }
+
+            visitedNodes.add(node.value);
+
+            if (_selectedKey.includes(node.value)) {
+                _hasChildSelected.add(node.value);
+            }
+
+            let childrenValues = node.children
+                ? node.children.map((child: any) => child.value)
+                : [];
             if (
                 node.children &&
-                node.children.length > 0 &&
-                _.every(_.map(node.children, 'value'), (e) => _.includes(modelValue.value, e))
+                childrenValues.every((childValue: any) => _selectedKey.includes(childValue))
             ) {
-                modelValue.value.push(node.value);
-            } else {
-                const i = modelValue.value.findIndex(
-                    (e: any) => e === node.value && node.value !== item.value
-                );
-                if (i >= 0) {
-                    modelValue.value.splice(i, 1);
+                _allChildSelected.add(node.value);
+            }
+
+            if (node.children) {
+                for (let child of node.children) {
+                    findParentNodes(child, _selectedKey, visitedNodes);
+                    if (_hasChildSelected.has(child.value)) {
+                        _hasChildSelected.add(node.value);
+                    }
                 }
             }
-        });
-    };
-    // 定义一个函数，传入一个数组树、方法和需要遍历的属性名
-    const recursiveArrayTree = (tree: any, method: any): any => {
-        tree.forEach((item: any) => {
-            // 如果有 children，那么就递归调用自身
-            if (item.children && item.children.length > 0) {
-                recursiveArrayTree(item.children, method);
-            }
-            method(item);
-        });
-    };
+        }
+
+        for (let node of tree) {
+            findParentNodes(node, _selectedKey, new Set());
+        }
+
+        _hasChildSelected = new Set(
+            [..._hasChildSelected].filter((item) => !_selectedKey.includes(item))
+        );
+
+        return {
+            _hasChildSelected: Array.from(_hasChildSelected),
+            _allChildSelected: Array.from(_allChildSelected)
+        };
+    }
 </script>
 
 <template>
@@ -98,6 +175,10 @@
                 class="lew-tree-item"
                 :class="{
                     'lew-tree-item-expand': checkShowTree(item.value) && item.children.length > 0,
+                    'lew-tree-item-certain':
+                        multiple &&
+                        hasChildSelected.includes(item.value) &&
+                        !modelValue.includes(item.value),
                     'lew-tree-item-selected': multiple
                         ? modelValue.includes(item.value)
                         : modelValue === item.value,
@@ -107,7 +188,7 @@
                         item.isLeaf
                 }"
             >
-                <div @click.stop="showhide(item.value)" class="lew-tree-chevron-right">
+                <div @click.stop="showhide(item)" class="lew-tree-chevron-right">
                     <lew-icon
                         class="lew-tree-chevron-right-icon"
                         size="14px"
@@ -116,6 +197,11 @@
                 </div>
                 <div @click="select(item)" class="lew-tree-item-label">
                     <lew-checkbox
+                        :certain="
+                            multiple &&
+                            hasChildSelected.includes(item.value) &&
+                            !modelValue.includes(item.value)
+                        "
                         :checked="
                             multiple ? modelValue.includes(item.value) : modelValue === item.value
                         "
@@ -125,12 +211,20 @@
                     <span>{{ item.label }}</span>
                 </div>
             </div>
-            <div v-show="checkShowTree(item.value)" style="margin-left: 20px" direction="y">
+            <div
+                v-if="checkShowTree(item.value)"
+                :style="{ marginLeft: '20px' }"
+                class="lew-tree-item-children"
+            >
                 <lew-tree
                     v-bind="$props"
                     v-model="modelValue"
+                    v-model:selectedKey="selectedKey"
                     v-model:expanded-keys="expandedKeys"
+                    v-model:selected-keys="selectedKeys"
+                    v-model:has-child-selected="hasChildSelected"
                     :tree="tree"
+                    :tree-id="_treeId"
                     :data-source="item.children"
                 />
             </div>
@@ -220,6 +314,17 @@
                         transform: translate(-50%, -50%) rotate(0deg) scale(1);
                         opacity: 1;
                     }
+                }
+            }
+        }
+    }
+
+    .lew-tree-item-certain {
+        .lew-tree-item-label:hover {
+            :deep(.lew-checkbox) {
+                .icon-checkbox-box {
+                    border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+                    background: var(--lew-checkbox-color);
                 }
             }
         }

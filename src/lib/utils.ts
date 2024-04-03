@@ -14,13 +14,15 @@ export const convertProps = (json: any) => {
                         ? json[key].type.toString().match(/function\s+(\w+)/)[1]
                         : '';
             }
-            const prop = {
-                name: key,
-                description: json[key].description,
-                type: json[key].typeDesc ? json[key].typeDesc : type,
-                default: JSON.stringify(json[key].default)
-            };
-            props.push(prop);
+            if (!json[key].hidden) {
+                const prop = {
+                    name: key,
+                    description: json[key].description,
+                    type: json[key].typeDesc ? json[key].typeDesc : type,
+                    default: JSON.stringify(json[key].default)
+                };
+                props.push(prop);
+            }
         }
     }
     return props;
