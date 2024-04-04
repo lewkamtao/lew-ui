@@ -1,11 +1,11 @@
 <script setup lang="ts">
-    function loop(path = '0', level = 3) {
+    function loop(path = '0', level = 2) {
         const list = [];
-        for (let i = 0; i < 3; i += 1) {
+        for (let i = 0; i < 2; i += 1) {
             const key = `${path}-${i}`;
             const treeNode: any = {
                 label: key,
-                value: key
+                key
             };
             if (level > 0) {
                 treeNode.children = loop(key, level - 1);

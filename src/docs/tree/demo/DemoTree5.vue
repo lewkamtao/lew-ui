@@ -5,7 +5,7 @@
             const key = `${path}-${i}`;
             const treeNode: any = {
                 label: key,
-                value: key
+                key
             };
             if (level > 0) {
                 treeNode.children = loop(key, level - 1);

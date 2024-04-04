@@ -1,144 +1,134 @@
 <script lang="ts" setup>
-    import LewTree from './LewTree.vue';
     import { LewFlex, LewIcon } from 'lew-ui';
     import { treeProps } from './props';
     import type { TreeDataSource } from './props';
-    import { getUUId } from 'lew-ui/utils';
     import _ from 'lodash';
-
-    // 格式化 获取 path
-    const formatTree = (
-        tree: TreeDataSource[],
-        parentValuePaths: String[] = [],
-        parentLabelPaths: String[] = []
-    ): TreeDataSource[] => {
-        return tree.map((node: TreeDataSource) => {
-            const { value, label, children = [] } = node;
-            const valuePaths: String[] = [...parentValuePaths, value];
-            const labelPaths: String[] = [...parentLabelPaths, label];
-            const level = valuePaths.length - 1;
-            const _node = {
-                ...node,
-                valuePaths,
-                labelPaths,
-                level
-            };
-            if ((children || []).length > 0) {
-                return {
-                    ..._node,
-                    leafNodeValues: findLeafNodes(children),
-                    children: formatTree(children, valuePaths, labelPaths)
-                };
-            }
-            return _node;
-        }) as TreeDataSource[];
-    };
 
     const props = defineProps(treeProps);
 
-    let _treeId = '';
-    let treeDataSource: TreeDataSource[] = [];
+    // 递归将树形结构数组转换成展开列表，按照树结构的顺序存储，同时保存父节点
+    function flattenTree(tree: TreeDataSource[]): TreeDataSource[] {
+        return _.flatMap(tree, (node: TreeDataSource) => {
+            const { children }: any = node;
+            return [node, ...flattenTree(children)];
+        });
+    }
+
+    // 格式化路径逻辑
+    const flattenAndFormatTree = (
+        tree: TreeDataSource[],
+        parent: any = null,
+        parentKeyPaths: String[] = [],
+        parentLabelPaths: String[] = []
+    ): TreeDataSource[] => {
+        return tree.map((node: TreeDataSource, index: number) => {
+            const { children, ...rest }: any = node;
+
+            const currentNode = {
+                ...rest,
+                key: rest[props.keyField],
+                label: rest[props.labelField],
+                leafNodeValues: findLeafNodes(children),
+                allNodeValues: findAllNodes(children),
+                isLeaf: (children || []).length === 0,
+                parentKey: parent ? parent[props.keyField] : null,
+                keyPaths: [...parentKeyPaths, rest[props.keyField]],
+                labelPaths: [...parentLabelPaths, rest[props.labelField]],
+                level: parentKeyPaths.length,
+                parentKeyPaths,
+                parentLabelPaths,
+                treeIndex: index
+            };
+
+            const formattedNode = {
+                ...currentNode,
+                children: children
+                    ? flattenAndFormatTree(
+                          children,
+                          currentNode,
+                          currentNode.keyPaths,
+                          currentNode.labelPaths
+                      )
+                    : []
+            };
+
+            return formattedNode;
+        });
+    };
+
+    const treeList: any = ref<TreeDataSource[]>(
+        flattenTree(flattenAndFormatTree(_.cloneDeep(props.dataSource)))
+    );
 
     const modelValue: any = defineModel<string[] | number[] | string>();
-    const tree: any = defineModel<TreeDataSource[]>('tree', {
-        default: []
-    });
+
     const expandedKeys: any = defineModel<string[] | number[]>('expandedKeys', {
         default: []
     });
-    const certainKeys: any = defineModel<string[]>('certainKeys', {
-        default: []
-    });
+
+    const certainKeys: any = ref<string[]>([]);
 
     const emit = defineEmits([]);
 
-    if (!props.treeId) {
-        _treeId = getUUId();
-        // @ts-ignore
-        window[_treeId] = formatTree(_.cloneDeep(props.dataSource));
-        // @ts-ignore
-        treeDataSource = window[_treeId];
-    } else {
-        _treeId = props.treeId;
-        treeDataSource = _.cloneDeep(props.dataSource);
-    }
-    // @ts-ignore
-    tree.value = window[_treeId];
     const loadingKeys = ref<string[]>([]);
-
     const expandHandle = (item: TreeDataSource) => {
         if (props.expandAll) {
             return;
         }
         let _expandedKeys = _.cloneDeep(expandedKeys.value);
-        let i = expandedKeys.value.findIndex((e: string) => e === item.value);
+        let i = _expandedKeys.findIndex((e: string) => e === item.key);
         if (i >= 0) {
             _expandedKeys.splice(i, 1);
             expandedKeys.value = _expandedKeys;
         } else {
-            if (props.onload && !loadingKeys.value.includes(item.value)) {
-                loadingKeys.value.push(item.value);
+            if (props.onload && !loadingKeys.value.includes(item.key)) {
+                loadingKeys.value.push(item.key);
                 setTimeout(() => {
-                    const i = loadingKeys.value.findIndex((e: string) => e === item.value);
+                    const i = loadingKeys.value.findIndex((e: string) => e === item.key);
                     if (i >= 0) {
                         loadingKeys.value.splice(i, 1);
                     }
-                    expandedKeys.value.push(item.value);
+                    expandedKeys.value.push(item.key);
                 }, 150);
             } else {
-                expandedKeys.value = [..._expandedKeys, item.value];
+                expandedKeys.value = [..._expandedKeys, item.key];
             }
         }
     };
 
-    const checkShowTree = computed(() => (id: string) => {
-        let i = (expandedKeys.value || []).findIndex((e: string) => e == id);
-        return i >= 0;
-    });
-
     const select = (item: TreeDataSource) => {
         let _modelValue: string[] = _.cloneDeep(modelValue.value) || [];
         if (props.multiple) {
-            if (_modelValue.includes(item.value)) {
-                const i = _modelValue.findIndex((e: string) => e === item.value);
+            if (_modelValue.includes(item.key)) {
+                const i = _modelValue.findIndex((e: string) => e === item.key);
                 _modelValue.splice(i, 1);
                 if (!props.free) {
-                    if (item.children && item.children.length > 0) {
-                        _modelValue = _.uniq(
-                            _.difference(_modelValue, findNodes(item.children))
-                        ) as string[];
-                    }
+                    _modelValue = _.uniq(_.difference(_modelValue, item.allNodeValues)) as string[];
                 }
             } else {
-                _modelValue.push(item.value);
+                _modelValue.push(item.key);
                 if (!props.free) {
-                    if (item.children && item.children.length > 0) {
-                        _modelValue = _.uniq([
-                            ..._modelValue,
-                            ...findNodes(item.children)
-                        ]) as string[];
-                    }
+                    _modelValue = _.uniq([..._modelValue, ...item.allNodeValues]) as string[];
                 }
             }
             if (!props.free) {
-                const { __certainKeys, __modelValue } = formatValues(
-                    _.cloneDeep(tree.value),
-                    _modelValue
-                );
+                const { __certainKeys, __modelValue } = formatValues({
+                    tree: treeList.value,
+                    values: _modelValue
+                });
                 certainKeys.value = __certainKeys;
                 modelValue.value = __modelValue;
             } else {
                 modelValue.value = _modelValue;
             }
         } else {
-            modelValue.value = modelValue.value === item.value ? '' : item.value;
+            modelValue.value = modelValue.value === item.key ? '' : item.key;
         }
     };
-    function findNodes(tree: TreeDataSource[]) {
+    function findAllNodes(tree: TreeDataSource[] = []) {
         let nodes = new Set();
-
         function traverse(node: TreeDataSource) {
-            nodes.add(node.value);
+            nodes.add(node.key);
             if (node.children && node.children.length > 0) {
                 node.children.forEach((child: TreeDataSource) => {
                     traverse(child);
@@ -150,14 +140,14 @@
             traverse(node);
         });
 
-        return Array.from(nodes);
+        return Array.from(nodes) || [];
     }
 
-    function findLeafNodes(tree: TreeDataSource[]) {
+    function findLeafNodes(tree: TreeDataSource[] = []) {
         let leafNodes = new Set();
         function traverse(node: TreeDataSource) {
             if (!node.children || node.children.length === 0) {
-                leafNodes.add(node.value);
+                leafNodes.add(node.key);
             } else {
                 node.children.forEach((child: TreeDataSource) => {
                     traverse(child);
@@ -167,41 +157,38 @@
         tree.forEach((node) => {
             traverse(node);
         });
-        return Array.from(leafNodes);
+        return Array.from(leafNodes) || [];
     }
 
     // 定义一个函数，传入数组树arrayTree和value列表values
-    const formatValues = (arrayTree: TreeDataSource[], values: any) => {
-        let resultValues = new Set(values); // 使用Set来存储结果值
-        let certainKeys = new Set(values);
-
-        const stack = [...arrayTree]; // 使用展开运算符创建栈，并初始化为数组树
+    const formatValues = ({ tree, values }: any): any => {
+        let _modelValue = new Set(values); // 使用Set来存储结果值
+        let _certainKeys = new Set(values);
+        const stack = _.cloneDeep(tree); // 使用展开运算符创建栈，并初始化为数组树
 
         while (stack.length > 0) {
             const currentNode: any = stack.pop();
+            const key = currentNode.key;
             const childValues = currentNode.leafNodeValues || [];
             const isAllChildValuesInValues = childValues.every((value: string) =>
-                resultValues.has(value)
+                _modelValue.has(value)
             );
             if (!isAllChildValuesInValues && childValues.length > 0) {
-                resultValues.delete(currentNode.value);
+                _modelValue.delete(key);
             } else if (childValues.length > 0) {
-                resultValues.add(currentNode.value);
+                _modelValue.add(key);
             }
             const array1 = Array.from(childValues);
-            const array2 = Array.from(resultValues);
-            if (_.intersection(array1, array2).length > 0 && !resultValues.has(currentNode.value)) {
-                certainKeys.add(currentNode.value);
+            const array2 = Array.from(_modelValue);
+            if (_.intersection(array1, array2).length > 0 && !_modelValue.has(key)) {
+                _certainKeys.add(key);
             } else {
-                certainKeys.delete(currentNode.value);
-            }
-            if (currentNode.children) {
-                stack.push(...currentNode.children); // 使用展开运算符将子节点加入栈中
+                _certainKeys.delete(key);
             }
         }
         return {
-            __certainKeys: Array.from(certainKeys),
-            __modelValue: Array.from(resultValues)
+            __certainKeys: Array.from(_certainKeys),
+            __modelValue: Array.from(_modelValue)
         }; // 将Set转换为数组并返回
     };
 </script>
@@ -209,36 +196,40 @@
 <template>
     <div class="lew-tree-wrapper">
         <lew-flex
-            v-for="(item, index) in (treeDataSource as TreeDataSource[])"
+            v-for="(item, index) in (treeList as TreeDataSource[])"
             :key="index"
             direction="y"
             gap="0px"
             x="start"
         >
             <div
+                v-if="
+                    expandAll ||
+                    item.level === 0 ||
+                    ((expandedKeys || []).includes(item.parentKey) &&
+                        _.intersection(item.parentKeyPaths, expandedKeys).length ===
+                            (item.parentKeyPaths || []).length)
+                "
                 class="lew-tree-item"
                 :class="{
-                    'lew-tree-item-expand':
-                        checkShowTree(item.value) && item.children && item.children.length > 0,
+                    'lew-tree-item-expand': expandAll || (expandedKeys || []).includes(item.key),
                     'lew-tree-item-certain':
                         multiple &&
-                        certainKeys.includes(item.value) &&
-                        !modelValue.includes(item.value),
+                        certainKeys.includes(item.key) &&
+                        !modelValue.includes(item.key),
                     'lew-tree-item-selected': multiple
-                        ? modelValue.includes(item.value)
-                        : modelValue === item.value,
-                    'lew-tree-item-leaf':
-                        !item.children ||
-                        (item.children && item.children.length === 0) ||
-                        item.isLeaf
+                        ? modelValue.includes(item.key)
+                        : modelValue === item.key,
+                    'lew-tree-item-leaf': item.isLeaf
                 }"
                 :style="{
-                    animationDelay: `${index * 0.05}s`
+                    animationDelay: `${(item.treeIndex || 0) * 0.02}s`,
+                    paddingLeft: `${item.level * 26}px`
                 }"
             >
                 <div @click.stop="expandHandle(item)" class="lew-tree-chevron-right">
                     <lew-icon
-                        v-if="loadingKeys.includes(item.value)"
+                        v-if="loadingKeys.includes(item.key)"
                         size="14px"
                         animation="spin"
                         animation-speed="fast"
@@ -256,32 +247,17 @@
                     <lew-checkbox
                         :certain="
                             multiple &&
-                            certainKeys.includes(item.value) &&
-                            !modelValue.includes(item.value)
+                            certainKeys.includes(item.key) &&
+                            !modelValue.includes(item.key)
                         "
                         :checked="
-                            multiple ? modelValue.includes(item.value) : modelValue === item.value
+                            multiple ? modelValue.includes(item.key) : modelValue === item.key
                         "
                         v-if="showCheckbox"
                         class="lew-tree-checkbox"
                     />
                     <span>{{ item.label }}</span>
                 </div>
-            </div>
-            <div
-                v-if="checkShowTree(item.value) || expandAll"
-                :style="{ marginLeft: '26px' }"
-                class="lew-tree-item-children"
-            >
-                <lew-tree
-                    v-bind="$props"
-                    v-model="modelValue"
-                    v-model:expanded-keys="expandedKeys"
-                    v-model:certain-keys="certainKeys"
-                    :tree="tree"
-                    :tree-id="_treeId"
-                    :data-source="item.children"
-                />
             </div>
         </lew-flex>
     </div>
@@ -295,7 +271,7 @@
         white-space: nowrap;
         user-select: none;
         margin: 2px 0px;
-        animation: lewTreeItem 0.35s;
+        animation: lewTreeItem 0.25s;
         animation-fill-mode: forwards;
         opacity: 0;
         transform: translateX(-4px);

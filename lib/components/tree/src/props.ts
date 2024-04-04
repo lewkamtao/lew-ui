@@ -2,11 +2,17 @@ import { PropType } from 'vue';
 
 export type TreeDataSource = {
     label: string;
-    value: string;
+    key: string;
     level: number;
     isLeaf?: boolean;
     loading?: boolean;
     disabled?: boolean;
+    parentKey?: string;
+    treeIndex?: number;
+    parentKeyPaths?: string[];
+    parentLabelPaths?: string[];
+    allNodeValues: string[];
+    leafNodeValues: string[];
     children?: TreeDataSource[];
 };
 
@@ -26,18 +32,7 @@ export const treeModel = {
 };
 
 export const treeProps = {
-    treeId: {
-        type: String,
-        default: '',
-        hidden: true,
-        description: '树ID'
-    },
     dataSource: {
-        type: Array as PropType<TreeDataSource[]>,
-        default: [],
-        description: '配置项'
-    },
-    tree: {
         type: Array as PropType<TreeDataSource[]>,
         default: [],
         description: '配置项'
@@ -59,7 +54,7 @@ export const treeProps = {
     },
     free: {
         type: Boolean,
-        default: false,
+        default: true,
         description: '自由模式（是否严格的遵循父子互相关联）'
     },
     trigger: {
@@ -81,6 +76,21 @@ export const treeProps = {
         type: String,
         default: 'medium',
         description: '尺寸大小'
+    },
+    keyField: {
+        type: String,
+        default: 'key',
+        description: '替代 TreeDataSource 中的 key 字段名'
+    },
+    labelField: {
+        type: String,
+        default: 'label',
+        description: '替代 TreeDataSource 中的 label 字段名'
+    },
+    disabledField: {
+        type: String,
+        default: 'disabled',
+        description: '替代 TreeDataSource 中的 disabled 字段名'
     },
     onload: {
         type: Function,
