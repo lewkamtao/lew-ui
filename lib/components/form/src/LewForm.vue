@@ -489,8 +489,8 @@
                 left: 0px;
                 bottom: 0px;
                 font-size: 12px;
-                transition: all 0.25s;
-                transform: translateY(calc(100% + 4px));
+                transition: all 0.1s;
+                transform: translateY(calc(100% + 2px));
                 color: var(--lew-color-error-dark);
             }
         }

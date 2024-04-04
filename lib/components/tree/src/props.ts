@@ -2,15 +2,11 @@ import { PropType } from 'vue';
 
 export type TreeDataSource = {
     label: string;
-    value: [string, number];
-    labelPaths?: string[];
-    valuePaths?: string[];
+    value: string;
     level: number;
     isLeaf?: boolean;
     loading?: boolean;
     disabled?: boolean;
-    parentLabelPaths?: string[];
-    parentValuePaths?: string[];
     children?: TreeDataSource[];
 };
 
@@ -56,15 +52,15 @@ export const treeProps = {
         default: false,
         description: '是否显示复选框'
     },
-    showAllLevels: {
+    expandAll: {
         type: Boolean,
-        default: true,
-        description: '是否展示所有层级'
+        default: false,
+        description: '默认全部展开'
     },
     free: {
         type: Boolean,
         default: false,
-        description: '自由模式'
+        description: '自由模式（是否严格的遵循父子互相关联）'
     },
     trigger: {
         type: String as PropType<TreeTriggerType>,

@@ -2,7 +2,7 @@ import { PropType } from 'vue';
 
 export type CascaderOptions = {
     label: string;
-    value: [string, number];
+    value: string;
     labelPaths?: string[];
     valuePaths?: string[];
     level: number;

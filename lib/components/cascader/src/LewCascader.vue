@@ -1,10 +1,38 @@
 <script setup lang="ts">
-    import { LewPopover, LewFlex, LewButton, LewIcon, LewTooltip } from 'lew-ui';
+    import { LewPopover, LewFlex, LewButton, LewIcon, LewTooltip, LewTextTrim } from 'lew-ui';
     import { object2class } from 'lew-ui/utils';
     import { cascaderProps, CascaderOptions } from './props';
     import { UseVirtualList } from '@vueuse/components';
-    import { formatPathsToTreeList } from 'lew-ui/utils';
     import _ from 'lodash';
+
+    // 格式化 获取 path
+    const formatTree = (
+        tree: CascaderOptions[],
+        parentValuePaths: String[] = [],
+        parentLabelPaths: String[] = []
+    ): CascaderOptions[] => {
+        return tree.map((node: CascaderOptions) => {
+            const { value, label, children = [] } = node;
+            const valuePaths: String[] = [...parentValuePaths, value];
+            const labelPaths: String[] = [...parentLabelPaths, label];
+            const level = valuePaths.length - 1;
+            const _node = {
+                ...node,
+                valuePaths,
+                labelPaths,
+                level,
+                parentValuePaths,
+                parentLabelPaths
+            };
+            if ((children || []).length > 0) {
+                return {
+                    ..._node,
+                    children: formatTree(children, valuePaths, labelPaths)
+                };
+            }
+            return _node;
+        }) as CascaderOptions[];
+    };
 
     // 获取app
     const app = getCurrentInstance()?.appContext.app;
@@ -14,7 +42,7 @@
 
     const props = defineProps(cascaderProps);
     const emit = defineEmits(['change', 'blur', 'clear']);
-    const cascaderValue: any = defineModel<string | number | undefined>();
+    const cascaderValue: any = defineModel<string | undefined>();
 
     const lewCascaderRef = ref();
     const lewPopverRef = ref();
@@ -32,7 +60,7 @@
     });
 
     // 通过值获取对象
-    const findObjectByValue = (treeList: CascaderOptions[], value: [string, number]) => {
+    const findObjectByValue = (treeList: CascaderOptions[], value: string) => {
         for (let i = 0; i < treeList.length; i++) {
             const tree = treeList[i];
             if (tree.value === value) {
@@ -53,7 +81,7 @@
     // 通过值添加子集
     function findAndAddChildrenByValue(
         tree: CascaderOptions[],
-        value: [string, number],
+        value: string,
         children: CascaderOptions[]
     ): CascaderOptions[] {
         for (const node of tree) {
@@ -75,10 +103,7 @@
         return [];
     }
     // 通过值查找子集
-    function findChildrenByValue(
-        tree: CascaderOptions[],
-        value: [string, number]
-    ): CascaderOptions[] {
+    function findChildrenByValue(tree: CascaderOptions[], value: string): CascaderOptions[] {
         for (const node of tree) {
             if (node.value === value) {
                 return node.children || [];
@@ -97,23 +122,22 @@
 
     // 初始化
     const init = async () => {
-        let _tree: any = [[]];
-        if (props.onload) {
+        let _tree: CascaderOptions[] = [];
+        if (props.onload && !state.loading) {
             state.loading = true;
             _tree = (await props.onload()) || [];
             state.loading = false;
         } else if (props.options && props.options.length > 0) {
             _tree =
-                (props.options &&
+                ((props.options &&
                     props.options.map((e) => {
                         return {
                             ...e,
                             isLeaf: !e.children || (e.children && e.children.length === 0) // 没有孩子
                         };
-                    })) ||
-                [];
+                    })) as CascaderOptions[]) || [];
         }
-        const __tree: any = formatPathsToTreeList(_tree);
+        const __tree: CascaderOptions[] = formatTree(_tree);
         state.optionsGroup = [__tree];
         state.optionsTree = __tree;
     };
@@ -133,7 +157,7 @@
                     _.cloneDeep(item.value),
                     new_options
                 );
-                state.optionsTree = formatPathsToTreeList(_tree);
+                state.optionsTree = formatTree(_tree);
                 const _options = findChildrenByValue(state.optionsTree, item.value);
                 state.optionsGroup.push(_options);
                 item.loading = false;
@@ -232,6 +256,19 @@
         return size[props.size];
     });
 
+    const getTextTrimOffset = computed(() => {
+        switch (props.size) {
+            case 'small':
+                return [-15, 12];
+            case 'medium':
+                return [-14, 12];
+            case 'large':
+                return [-14, 12];
+            default:
+                return [-14, 12];
+        }
+    });
+
     // 展示
     const showHandle = () => {
         state.visible = true;
@@ -319,25 +356,7 @@
 
                 <div v-show="getLabel && getLabel.length > 0" :style="getValueStyle" class="value">
                     <template v-if="showAllLevels">
-                        <span v-for="(item, index) in getLabel" :key="index">
-                            {{ item }}
-                            <svg
-                                v-if="getLabel && index !== getLabel.length - 1"
-                                :style="{
-                                    width: getIconSize,
-                                    height: getIconSize
-                                }"
-                                viewBox="0 0 48 48"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                stroke="currentColor"
-                                stroke-width="4"
-                                stroke-linecap="butt"
-                                stroke-linejoin="miter"
-                            >
-                                <path d="M29.506 6.502 18.493 41.498" data-v-5303b0ef=""></path>
-                            </svg>
-                        </span>
+                        <lew-text-trim :offset="getTextTrimOffset" :text="getLabel.join(' / ')" />
                     </template>
                     <template v-else-if="getLabel">
                         <span>{{ getLabel[getLabel.length - 1] }}</span>
@@ -393,7 +412,7 @@
                                             'lew-cascader-item-tobe': state.tobelabels.includes(
                                                 templateProps.label
                                             ),
-                                            'lew-cascader-item-select':
+                                            'lew-cascader-item-selected':
                                                 getLabel && getLabel.includes(templateProps.label)
                                         }"
                                         @click="selectItem(templateProps, oIndex)"
@@ -501,16 +520,15 @@
             .value {
                 display: inline-flex;
                 align-items: center;
-                width: calc(100% - 24px);
                 box-sizing: border-box;
                 transition: var(--lew-form-transition);
                 gap: 2px;
+                overflow: hidden;
 
                 span {
                     display: inline-flex;
                     gap: 2px;
                     align-items: center;
-
                     svg {
                         opacity: 0.4;
                     }
@@ -537,6 +555,7 @@
         .lew-cascader-size-small {
             .value,
             .placeholder {
+                width: calc(100% - 20px);
                 padding: var(--lew-form-input-padding-small);
                 height: var(--lew-form-item-height-small);
                 line-height: var(--lew-form-input-line-height-small);
@@ -547,6 +566,7 @@
         .lew-cascader-size-medium {
             .value,
             .placeholder {
+                width: calc(100% - 22px);
                 padding: var(--lew-form-input-padding-medium);
                 line-height: var(--lew-form-input-line-height-medium);
                 height: var(--lew-form-item-height-medium);
@@ -557,6 +577,7 @@
         .lew-cascader-size-large {
             .value,
             .placeholder {
+                width: calc(100% - 24px);
                 padding: var(--lew-form-input-padding-large);
                 height: var(--lew-form-item-height-large);
                 line-height: var(--lew-form-input-line-height-large);
@@ -632,7 +653,7 @@
         }
     }
 
-    .lew-cascader-item-select:hover {
+    .lew-cascader-item-selected:hover {
         :deep(.lew-checkbox) {
             .icon-checkbox-box {
                 border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
@@ -816,7 +837,9 @@
             .lew-cascader-item-active {
                 color: var(--lew-color-primary-dark);
                 font-weight: bold;
-
+                .lew-cascader-icon {
+                    opacity: 1;
+                }
                 .icon-check {
                     margin-right: 10px;
                 }

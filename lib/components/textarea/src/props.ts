@@ -52,7 +52,8 @@ export const textareaProps = {
     },
     showCount: {
         type: Boolean,
-        default: false
+        default: false,
+        description: '是否显示输入字数统计'
     },
     renderCount: {
         type: Function,

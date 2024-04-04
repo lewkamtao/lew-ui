@@ -25,6 +25,7 @@
     <lew-tree
         v-model="v"
         multiple
+        free
         show-checkbox
         :data-source="options"
         :tree="options"
