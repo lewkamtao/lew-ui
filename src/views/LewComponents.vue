@@ -217,6 +217,8 @@
                 {
                     label: 'Tree',
                     value: '/Tree',
+                    tagText: 'Test',
+                    tagColor: 'success'
                 }
                 // {
                 //     clabel: '折叠面板',
