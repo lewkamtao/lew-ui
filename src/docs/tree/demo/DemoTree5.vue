@@ -1,24 +1,42 @@
 <script setup lang="ts">
-    function loop(path = '0', level = 3) {
-        const list = [];
-        for (let i = 0; i < 3; i += 1) {
-            const key = `${path}-${i}`;
-            const treeNode: any = {
-                label: key,
-                key
-            };
-            if (level > 0) {
-                treeNode.children = loop(key, level - 1);
-            }
-            list.push(treeNode);
-        }
-        return list;
-    }
-    const options = loop();
-    const v = ref([]);
-    const change = (e: any) => {
-        console.log(e);
+    import axios from '../../../axios/http';
+    const onload = (item?: any) => {
+        const levelMap: any = {
+            0: 'province',
+            1: 'city',
+            2: 'area',
+            3: 'street'
+        };
+        // item 无值时，初始化第一层数据
+        const _typeKey = item ? item.level + 1 : 0;
+
+        return new Promise<any[]>((resolve) => {
+            // item 不存在的时候 是第一层加载
+            axios
+                .get({
+                    url: `/common/region/${levelMap[_typeKey] || 'province'}/${
+                        item ? item.value : 0
+                    }`
+                })
+                .then((res: any) => {
+                    const { data, success } = res;
+                    if (success) {
+                        const options = data.map((e: any) => {
+                            return {
+                                label: e.name,
+                                value: e.code,
+                                isLeaf: e.is_leaf
+                            };
+                        });
+                        resolve(options);
+                    }
+                });
+        });
     };
+    const change = (item: any) => {
+        console.log(item);
+    };
+    const v = ref([]);
 </script>
 
 <template>
@@ -26,8 +44,8 @@
         v-model="v"
         multiple
         show-checkbox
-        :data-source="options"
-        :tree="options"
+        key-field="value"
+        :onload="onload"
         @change="change"
     />
 </template>

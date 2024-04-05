@@ -68,9 +68,31 @@
         </lew-demo-box>
         <lew-demo-box title="默认全部展开" :code="DemoTree6Code">
             <demo-tree6 />
+            <lew-alert
+                style="margin-top: 20px"
+                :size="16"
+                :list="[
+                    {
+                        type: 'normal',
+                        title: '提示',
+                        content: `当你设置默认展开的时候，初始化的时候会帮你全部展开，这时候展开收起不可切换，这是一个强制全部展开的模式，如果你需要展开收起切换，需要手动控制 expandedKeys，你可以借助某种算法来实现。`
+                    }
+                ]"
+            />
         </lew-demo-box>
         <lew-demo-box title="是否展示checkbox" :code="DemoTree7Code">
             <demo-tree7 />
+            <lew-alert
+                style="margin-top: 20px"
+                :size="16"
+                :list="[
+                    {
+                        type: 'normal',
+                        title: '提示',
+                        content: `当你手动关闭 free 后，这时候是一种受父子节点关联控制的严格模式。`
+                    }
+                ]"
+            />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>
     </div>

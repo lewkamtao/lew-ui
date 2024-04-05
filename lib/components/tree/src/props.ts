@@ -80,7 +80,7 @@ export const treeProps = {
     keyField: {
         type: String,
         default: 'key',
-        description: '替代 TreeDataSource 中的 key 字段名'
+        description: '替代 TreeDataSource 中的 key 字段名，该字段值必须唯一。'
     },
     labelField: {
         type: String,

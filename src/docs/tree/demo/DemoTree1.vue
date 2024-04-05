@@ -1,20 +1,20 @@
 <script setup lang="ts">
-    function loop(path = '0', level = 2) {
+    function createTree(path = '0', level = 2) {
         const list = [];
-        for (let i = 0; i < 2; i += 1) {
-            const key = `${path}-${i}`;
+        for (let i = 0; i < 5; i += 1) {
+            const key = `${path} - ${i}`;
             const treeNode: any = {
                 label: key,
                 key
             };
             if (level > 0) {
-                treeNode.children = loop(key, level - 1);
+                treeNode.children = createTree(key, level - 1);
             }
             list.push(treeNode);
         }
         return list;
     }
-    const options = loop();
+    const options = createTree();
     const v = ref([]);
     const change = (e: any) => {
         console.log(e);
@@ -27,7 +27,6 @@
         multiple
         show-checkbox
         :data-source="options"
-        :tree="options"
         @change="change"
     />
 </template>

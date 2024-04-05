@@ -6,16 +6,29 @@
 
     const props = defineProps(treeProps);
 
+    // 定义异步处理函数
+    const modelValue: any = defineModel<string[] | number[] | string>({
+        default: []
+    });
+    const expandedKeys: any = defineModel<string[] | number[]>('expandedKeys', {
+        default: []
+    });
+    const certainKeys: any = ref<string[]>([]);
+    const emit = defineEmits([]);
+    const loadingKeys = ref<string[]>([]);
+    const treeList: any = ref<TreeDataSource[]>([]);
+    let tree: TreeDataSource[] = [];
     // 递归将树形结构数组转换成展开列表，按照树结构的顺序存储，同时保存父节点
     function flattenTree(tree: TreeDataSource[]): TreeDataSource[] {
-        return _.flatMap(tree, (node: TreeDataSource) => {
+        return _.flatMap(_.cloneDeep(tree), (node: TreeDataSource) => {
             const { children }: any = node;
+            delete node.children;
             return [node, ...flattenTree(children)];
         });
     }
 
     // 格式化路径逻辑
-    const flattenAndFormatTree = (
+    const formatTree = (
         tree: TreeDataSource[],
         parent: any = null,
         parentKeyPaths: String[] = [],
@@ -30,10 +43,10 @@
                 label: rest[props.labelField],
                 leafNodeValues: findLeafNodes(children),
                 allNodeValues: findAllNodes(children),
-                isLeaf: (children || []).length === 0,
-                parentKey: parent ? parent[props.keyField] : null,
                 keyPaths: [...parentKeyPaths, rest[props.keyField]],
                 labelPaths: [...parentLabelPaths, rest[props.labelField]],
+                isLeaf: _.has(rest, 'isLeaf') ? rest.isLeaf : (children || []).length === 0,
+                parentKey: parent ? parent[props.keyField] : null,
                 level: parentKeyPaths.length,
                 parentKeyPaths,
                 parentLabelPaths,
@@ -43,7 +56,7 @@
             const formattedNode = {
                 ...currentNode,
                 children: children
-                    ? flattenAndFormatTree(
+                    ? formatTree(
                           children,
                           currentNode,
                           currentNode.keyPaths,
@@ -55,23 +68,18 @@
             return formattedNode;
         });
     };
+    // 初始化
+    const init = async () => {
+        if (props.onload) {
+            tree = formatTree((await props.onload()) || []);
+        } else if (props.dataSource && props.dataSource.length > 0) {
+            tree = formatTree(props.dataSource);
+        }
+        treeList.value = flattenTree(tree);
+    };
+    init();
 
-    const treeList: any = ref<TreeDataSource[]>(
-        flattenTree(flattenAndFormatTree(_.cloneDeep(props.dataSource)))
-    );
-
-    const modelValue: any = defineModel<string[] | number[] | string>();
-
-    const expandedKeys: any = defineModel<string[] | number[]>('expandedKeys', {
-        default: []
-    });
-
-    const certainKeys: any = ref<string[]>([]);
-
-    const emit = defineEmits([]);
-
-    const loadingKeys = ref<string[]>([]);
-    const expandHandle = (item: TreeDataSource) => {
+    const expandHandle = async (item: TreeDataSource) => {
         if (props.expandAll) {
             return;
         }
@@ -83,16 +91,30 @@
         } else {
             if (props.onload && !loadingKeys.value.includes(item.key)) {
                 loadingKeys.value.push(item.key);
-                setTimeout(() => {
-                    const i = loadingKeys.value.findIndex((e: string) => e === item.key);
-                    if (i >= 0) {
-                        loadingKeys.value.splice(i, 1);
-                    }
-                    expandedKeys.value.push(item.key);
-                }, 150);
+                let _tree = (await props.onload(_.cloneDeep(item))) || [];
+                insertChildByKey(tree, item.key, _tree);
+                tree = formatTree(tree);
+                treeList.value = flattenTree(tree);
+                const i = loadingKeys.value.findIndex((e: string) => e === item.key);
+                if (i >= 0) {
+                    loadingKeys.value.splice(i, 1);
+                }
+                expandedKeys.value.push(item.key);
             } else {
                 expandedKeys.value = [..._expandedKeys, item.key];
             }
+        }
+    };
+
+    // 定义插入子节点的函数
+    const insertChildByKey = (tree: TreeDataSource[], key: string, newChild: TreeDataSource[]) => {
+        const index = _.findIndex(tree, (node: TreeDataSource) => node.key === key);
+        if (index !== -1) {
+            tree[index].children = newChild;
+        } else {
+            _.forEach(tree, (node: any) => {
+                insertChildByKey(node.children, key, newChild);
+            });
         }
     };
 
@@ -127,13 +149,11 @@
     };
     function findAllNodes(tree: TreeDataSource[] = []) {
         let nodes = new Set();
-        function traverse(node: TreeDataSource) {
-            nodes.add(node.key);
-            if (node.children && node.children.length > 0) {
-                node.children.forEach((child: TreeDataSource) => {
-                    traverse(child);
-                });
-            }
+        function traverse(node: any) {
+            nodes.add(node[props.keyField]);
+            (node.children || []).forEach((child: TreeDataSource) => {
+                traverse(child);
+            });
         }
 
         tree.forEach((node) => {
@@ -145,14 +165,13 @@
 
     function findLeafNodes(tree: TreeDataSource[] = []) {
         let leafNodes = new Set();
-        function traverse(node: TreeDataSource) {
+        function traverse(node: any) {
             if (!node.children || node.children.length === 0) {
-                leafNodes.add(node.key);
-            } else {
-                node.children.forEach((child: TreeDataSource) => {
-                    traverse(child);
-                });
+                leafNodes.add(node[props.keyField]);
             }
+            (node.children || []).forEach((child: TreeDataSource) => {
+                traverse(child);
+            });
         }
         tree.forEach((node) => {
             traverse(node);
@@ -206,13 +225,13 @@
                 v-if="
                     expandAll ||
                     item.level === 0 ||
-                    ((expandedKeys || []).includes(item.parentKey) &&
+                    (expandedKeys.includes(item.parentKey) &&
                         _.intersection(item.parentKeyPaths, expandedKeys).length ===
                             (item.parentKeyPaths || []).length)
                 "
                 class="lew-tree-item"
                 :class="{
-                    'lew-tree-item-expand': expandAll || (expandedKeys || []).includes(item.key),
+                    'lew-tree-item-expand': expandedKeys.includes(item.key),
                     'lew-tree-item-certain':
                         multiple &&
                         certainKeys.includes(item.key) &&
@@ -223,11 +242,14 @@
                     'lew-tree-item-leaf': item.isLeaf
                 }"
                 :style="{
-                    animationDelay: `${(item.treeIndex || 0) * 0.02}s`,
                     paddingLeft: `${item.level * 26}px`
                 }"
             >
-                <div @click.stop="expandHandle(item)" class="lew-tree-chevron-right">
+                <div
+                    v-if="!expandAll"
+                    @click.stop="expandHandle(item)"
+                    class="lew-tree-chevron-right"
+                >
                     <lew-icon
                         v-if="loadingKeys.includes(item.key)"
                         size="14px"
@@ -271,20 +293,7 @@
         white-space: nowrap;
         user-select: none;
         margin: 2px 0px;
-        animation: lewTreeItem 0.25s;
-        animation-fill-mode: forwards;
-        opacity: 0;
-        transform: translateX(-4px);
-        @keyframes lewTreeItem {
-            0% {
-                opacity: 0;
-                transform: translateX(-4px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0px);
-            }
-        }
+     
         .lew-tree-chevron-right {
             display: flex;
             justify-content: center;
