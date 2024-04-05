@@ -40,12 +40,19 @@
 </script>
 
 <template>
-    <lew-tree
-        v-model="v"
-        multiple
-        show-checkbox
-        key-field="value"
-        :onload="onload"
-        @change="change"
-    />
+    <div class="tree lew-scrollbar">
+        <lew-tree
+            v-model="v"
+            multiple
+            show-checkbox
+            key-field="value"
+            :onload="onload"
+            @change="change"
+    /></div>
 </template>
+<style lang="scss" scoped>
+    .tree {
+        height: 500px;
+        overflow-y: auto;
+    }
+</style>

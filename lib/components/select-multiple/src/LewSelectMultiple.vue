@@ -586,10 +586,6 @@
             }
         }
 
-        .not-found {
-            opacity: 0.4;
-        }
-
         .reslut-count {
             padding-left: 8px;
             margin: 5px 0px;

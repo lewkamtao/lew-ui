@@ -32,7 +32,7 @@
         <lew-demo-box title="常规" :code="DemoTree1Code">
             <demo-tree1 />
         </lew-demo-box>
-        <lew-demo-box title="单选模式" :code="DemoTree2Code">
+        <lew-demo-box title="是否展示复选框" :code="DemoTree2Code">
             <demo-tree2 />
         </lew-demo-box>
         <lew-demo-box title="多选" :code="DemoTree3Code" a>
@@ -49,7 +49,7 @@
                 ]"
             />
         </lew-demo-box>
-        <lew-demo-box title="多选（父子节点关联严格模式）" :code="DemoTree4Code">
+        <lew-demo-box title="父子节点关联模式" :code="DemoTree4Code">
             <demo-tree4 />
             <lew-alert
                 style="margin-top: 20px"
@@ -59,6 +59,11 @@
                         type: 'normal',
                         title: '提示',
                         content: `当你手动关闭 free 后，这时候是一种受父子节点关联控制的严格模式。`
+                    },
+                    {
+                        type: 'warning',
+                        title: '警告',
+                        content: `当数据是动态请求获取的，父子节点关联控制的严格模式将会失效，所以不建议在动态请求的时候关闭 free。`
                     }
                 ]"
             />
@@ -80,19 +85,8 @@
                 ]"
             />
         </lew-demo-box>
-        <lew-demo-box title="是否展示checkbox" :code="DemoTree7Code">
+        <lew-demo-box title="是否展示辅助线" :code="DemoTree7Code">
             <demo-tree7 />
-            <lew-alert
-                style="margin-top: 20px"
-                :size="16"
-                :list="[
-                    {
-                        type: 'normal',
-                        title: '提示',
-                        content: `当你手动关闭 free 后，这时候是一种受父子节点关联控制的严格模式。`
-                    }
-                ]"
-            />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>
     </div>

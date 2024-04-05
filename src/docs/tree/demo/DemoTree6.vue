@@ -26,9 +26,8 @@
         v-model="v"
         multiple
 		expand-all
-        show-checkbox
+        :show-checkbox="false"
         :data-source="options"
-        
         @change="change"
     />
 </template>

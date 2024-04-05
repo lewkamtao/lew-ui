@@ -57,6 +57,11 @@ export const treeProps = {
         default: true,
         description: '自由模式（是否严格的遵循父子互相关联）'
     },
+    showLine: {
+        type: Boolean,
+        default: false,
+        description: '是否显示连接线'
+    },
     trigger: {
         type: String as PropType<TreeTriggerType>,
         default: 'click',

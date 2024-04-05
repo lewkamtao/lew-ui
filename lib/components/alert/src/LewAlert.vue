@@ -53,6 +53,7 @@
             margin-bottom: 10px;
             padding: 12px 18px;
             box-sizing: border-box;
+            color: var(--lew-text-color-2);
 
             .alert-icon {
                 margin: 2px 5px 0px 0px;
@@ -90,27 +91,22 @@
         }
 
         .lew-alert-type-normal {
-            color: var(--lew-text-color-2);
             background-color: var(--lew-color-normal-light);
         }
 
         .lew-alert-type-success {
-            color: var(--lew-color-success-dark);
             background-color: var(--lew-color-success-light);
         }
 
         .lew-alert-type-warning {
-            color: var(--lew-color-warning-dark);
             background-color: var(--lew-color-warning-light);
         }
 
         .lew-alert-type-error {
-            color: var(--lew-color-error-dark);
             background-color: var(--lew-color-error-light);
         }
 
         .lew-alert-type-info {
-            color: var(--lew-color-info-dark);
             background-color: var(--lew-color-info-light);
         }
     }

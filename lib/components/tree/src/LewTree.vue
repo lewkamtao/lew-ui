@@ -231,6 +231,7 @@
                 "
                 class="lew-tree-item"
                 :class="{
+                    'lew-tree-item-expand-all': expandAll,
                     'lew-tree-item-expand': expandedKeys.includes(item.key),
                     'lew-tree-item-certain':
                         multiple &&
@@ -245,11 +246,7 @@
                     paddingLeft: `${item.level * 26}px`
                 }"
             >
-                <div
-                    v-if="!expandAll"
-                    @click.stop="expandHandle(item)"
-                    class="lew-tree-chevron-right"
-                >
+                <div @click.stop="expandHandle(item)" class="lew-tree-chevron-right">
                     <lew-icon
                         v-if="loadingKeys.includes(item.key)"
                         size="14px"
@@ -266,6 +263,7 @@
                     />
                 </div>
                 <div @click="select(item)" class="lew-tree-item-label">
+                    <div v-if="item.level > 0 && showLine" class="lew-tree-line"></div>
                     <lew-checkbox
                         :certain="
                             multiple &&
@@ -292,8 +290,7 @@
         cursor: pointer;
         white-space: nowrap;
         user-select: none;
-        margin: 2px 0px;
-     
+
         .lew-tree-chevron-right {
             display: flex;
             justify-content: center;
@@ -303,6 +300,7 @@
             height: 14px;
             padding: 4px;
             border-radius: var(--lew-border-radius-small);
+            margin-left: 5px;
             .lew-tree-chevron-right-icon {
                 transform: rotate(0deg);
                 transition: var(--lew-form-transition);
@@ -313,11 +311,22 @@
         }
         .lew-tree-item-label {
             position: relative;
+            position: relative;
             padding: 4px 10px 4px 8px;
             display: flex;
             align-items: center;
             border-radius: var(--lew-border-radius-small);
+            cursor: pointer;
+            .lew-tree-line {
+                position: absolute;
+                left: -37px;
+                top: 0px;
+                background-color: var(--lew-bgcolor-5);
+                height: 100%;
+                width: 1px;
+            }
         }
+
         .lew-tree-item-label::after {
             position: absolute;
             left: 0;
@@ -380,6 +389,15 @@
     }
     .lew-tree-item-expand {
         .lew-tree-chevron-right {
+            .lew-tree-chevron-right-icon {
+                transform: rotate(90deg);
+            }
+        }
+    }
+    .lew-tree-item-expand-all {
+		cursor: default;
+        .lew-tree-chevron-right {
+            pointer-events: none;
             .lew-tree-chevron-right-icon {
                 transform: rotate(90deg);
             }

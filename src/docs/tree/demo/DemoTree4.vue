@@ -1,7 +1,7 @@
 <script setup lang="ts">
-    function createTree(path = '0', level = 2) {
+    function createTree(path = '0', level = 3) {
         const list = [];
-        for (let i = 0; i < 2; i += 1) {
+        for (let i = 0; i < 5; i += 1) {
             const key = `${path} - ${i}`;
             const treeNode: any = {
                 label: key,
@@ -25,8 +25,8 @@
     <lew-tree
         v-model="v"
         multiple
-		:free="false"
         show-checkbox
+        :free="false"
         :data-source="tree"
         @change="change"
     />

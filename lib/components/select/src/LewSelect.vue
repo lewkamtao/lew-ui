@@ -453,9 +453,7 @@
         width: 100%;
         box-sizing: border-box;
 
-        .not-found {
-            opacity: 0.4;
-        }
+    
 
         .reslut-count {
             padding-left: 8px;

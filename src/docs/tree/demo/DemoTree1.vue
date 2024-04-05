@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    function createTree(path = '0', level = 2) {
+    function createTree(path = '0', level = 3) {
         const list = [];
         for (let i = 0; i < 5; i += 1) {
             const key = `${path} - ${i}`;
@@ -15,18 +15,12 @@
         return list;
     }
     const options = createTree();
-    const v = ref([]);
+    const v = ref<string[]>([]);
     const change = (e: any) => {
         console.log(e);
     };
 </script>
 
 <template>
-    <lew-tree
-        v-model="v"
-        multiple
-        show-checkbox
-        :data-source="options"
-        @change="change"
-    />
+    <lew-tree v-model="v" multiple  :data-source="options" @change="change" />
 </template>

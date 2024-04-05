@@ -37,4 +37,11 @@
             color: var(--lew-text-color-8);
         }
     }
+    .lew-dark {
+        .lew-empty {
+            img {
+                opacity: 0.6;
+            }
+        }
+    }
 </style>
