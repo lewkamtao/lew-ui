@@ -90,16 +90,21 @@
             expandedKeys.value = _expandedKeys;
         } else {
             if (props.onload && !loadingKeys.value.includes(item.key)) {
-                loadingKeys.value.push(item.key);
-                let _tree = (await props.onload(_.cloneDeep(item))) || [];
-                insertChildByKey(tree, item.key, _tree);
-                tree = formatTree(tree);
-                treeList.value = flattenTree(tree);
-                const i = loadingKeys.value.findIndex((e: string) => e === item.key);
-                if (i >= 0) {
-                    loadingKeys.value.splice(i, 1);
+                const index = treeList.value.findIndex(
+                    (e: TreeDataSource) => e.parentKey === item.key
+                );
+                if (index < 0) {
+                    loadingKeys.value.push(item.key);
+                    let _tree = (await props.onload(_.cloneDeep(item))) || [];
+                    insertChildByKey(tree, item.key, _tree);
+                    tree = formatTree(tree);
+                    treeList.value = flattenTree(tree);
+                    const i = loadingKeys.value.findIndex((e: string) => e === item.key);
+                    if (i >= 0) {
+                        loadingKeys.value.splice(i, 1);
+                    }
                 }
-                expandedKeys.value.push(item.key);
+                expandedKeys.value = [...expandedKeys.value, item.key];
             } else {
                 expandedKeys.value = [..._expandedKeys, item.key];
             }
@@ -395,7 +400,7 @@
         }
     }
     .lew-tree-item-expand-all {
-		cursor: default;
+        cursor: default;
         .lew-tree-chevron-right {
             pointer-events: none;
             .lew-tree-chevron-right-icon {
