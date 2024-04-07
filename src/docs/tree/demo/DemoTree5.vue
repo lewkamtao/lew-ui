@@ -53,6 +53,7 @@
 <style lang="scss" scoped>
     .tree {
         height: 500px;
+        width: 300px;
         overflow-y: auto;
     }
 </style>

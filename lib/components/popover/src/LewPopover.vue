@@ -139,9 +139,9 @@
 
 <template>
     <div class="lew-popover">
-            <div ref="triggerRef" class="trigger">
-                <slot name="trigger" />
-            </div>
+        <div ref="triggerRef" class="trigger">
+            <slot name="trigger" />
+        </div>
         <div
             ref="bodyRef"
             v-loading="{

@@ -3,7 +3,7 @@ export default {
     columnsKey: 'props',
     data: [
         {
-            name: 'content',
+            name: 'tips',
             description: '内容',
             type: 'string',
             default: '-'

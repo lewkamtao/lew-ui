@@ -1,8 +1,14 @@
 <script lang="ts" setup>
-    import { LewFlex, LewIcon } from 'lew-ui';
+    import { LewFlex, LewIcon, LewEmpty, LewLoading } from 'lew-ui';
     import { treeProps } from './props';
     import type { TreeDataSource } from './props';
     import _ from 'lodash';
+
+    // 获取app
+    const app = getCurrentInstance()?.appContext.app;
+    if (app && !app.directive('loading')) {
+        app.use(LewLoading);
+    }
 
     const props = defineProps(treeProps);
 
@@ -14,8 +20,8 @@
         default: []
     });
     const certainKeys: any = ref<string[]>([]);
-    const emit = defineEmits([]);
     const loadingKeys = ref<string[]>([]);
+    const loading = ref<boolean>(true);
     const treeList: any = ref<TreeDataSource[]>([]);
     let tree: TreeDataSource[] = [];
     // 递归将树形结构数组转换成展开列表，按照树结构的顺序存储，同时保存父节点
@@ -41,8 +47,6 @@
                 ...rest,
                 key: rest[props.keyField],
                 label: rest[props.labelField],
-                leafNodeValues: findLeafNodes(children),
-                allNodeValues: findAllNodes(children),
                 keyPaths: [...parentKeyPaths, rest[props.keyField]],
                 labelPaths: [...parentLabelPaths, rest[props.labelField]],
                 isLeaf: _.has(rest, 'isLeaf') ? rest.isLeaf : (children || []).length === 0,
@@ -52,7 +56,10 @@
                 parentLabelPaths,
                 treeIndex: index
             };
-
+            if (props.free) {
+                currentNode['leafNodeValues'] = findLeafNodes(children);
+                currentNode['allNodeValues'] = findAllNodes(children);
+            }
             const formattedNode = {
                 ...currentNode,
                 children: children
@@ -76,6 +83,7 @@
             tree = formatTree(props.dataSource);
         }
         treeList.value = flattenTree(tree);
+        loading.value = false;
     };
     init();
 
@@ -218,76 +226,91 @@
 </script>
 
 <template>
-    <div class="lew-tree-wrapper">
-        <lew-flex
-            v-for="(item, index) in (treeList as TreeDataSource[])"
-            :key="index"
-            direction="y"
-            gap="0px"
-            x="start"
-        >
-            <div
-                v-if="
-                    expandAll ||
-                    item.level === 0 ||
-                    (expandedKeys.includes(item.parentKey) &&
-                        _.intersection(item.parentKeyPaths, expandedKeys).length ===
-                            (item.parentKeyPaths || []).length)
-                "
-                class="lew-tree-item"
-                :class="{
-                    'lew-tree-item-expand-all': expandAll,
-                    'lew-tree-item-expand': expandedKeys.includes(item.key),
-                    'lew-tree-item-certain':
-                        multiple &&
-                        certainKeys.includes(item.key) &&
-                        !modelValue.includes(item.key),
-                    'lew-tree-item-selected': multiple
-                        ? modelValue.includes(item.key)
-                        : modelValue === item.key,
-                    'lew-tree-item-leaf': item.isLeaf
-                }"
-                :style="{
-                    paddingLeft: `${item.level * 26}px`
-                }"
+    <div
+        v-loading="{ visible: loading, tip: '加载中' }"
+        :style="{
+            minHeight: loading ? '250px' : ''
+        }"
+        class="lew-tree-wrapper"
+    >
+        <template v-if="treeList && treeList.length > 0 && !loading">
+            <lew-flex
+                v-for="(item, index) in (treeList as TreeDataSource[])"
+                :key="index"
+                direction="y"
+                gap="0px"
+                x="start"
             >
-                <div @click.stop="expandHandle(item)" class="lew-tree-chevron-right">
-                    <lew-icon
-                        v-if="loadingKeys.includes(item.key)"
-                        size="14px"
-                        animation="spin"
-                        animation-speed="fast"
-                        class="lew-cascader-loading-icon"
-                        type="loader"
-                    />
-                    <lew-icon
-                        v-else
-                        class="lew-tree-chevron-right-icon"
-                        size="14px"
-                        type="chevron-right"
-                    />
-                </div>
-                <div @click="select(item)" class="lew-tree-item-label">
-                    <div v-if="item.level > 0 && showLine" class="lew-tree-line"></div>
-                    <lew-checkbox
-                        :certain="
+                <div
+                    v-if="
+                        expandAll ||
+                        item.level === 0 ||
+                        (expandedKeys.includes(item.parentKey) &&
+                            _.intersection(item.parentKeyPaths, expandedKeys).length ===
+                                (item.parentKeyPaths || []).length)
+                    "
+                    class="lew-tree-item"
+                    :class="{
+                        'lew-tree-item-expand-all': expandAll,
+                        'lew-tree-item-expand': expandedKeys.includes(item.key),
+                        'lew-tree-item-certain':
                             multiple &&
                             certainKeys.includes(item.key) &&
-                            !modelValue.includes(item.key)
-                        "
-                        :checked="
-                            multiple ? modelValue.includes(item.key) : modelValue === item.key
-                        "
-                        v-if="showCheckbox"
-                        class="lew-tree-checkbox"
-                    />
-                    <span>{{ item.label }}</span>
+                            !modelValue.includes(item.key),
+                        'lew-tree-item-selected': multiple
+                            ? modelValue.includes(item.key)
+                            : modelValue === item.key,
+                        'lew-tree-item-leaf': item.isLeaf
+                    }"
+                    :style="{
+                        paddingLeft: `${item.level * 26}px`
+                    }"
+                >
+                    <div class="lew-tree-chevron-right" @click.stop="expandHandle(item)">
+                        <lew-icon
+                            v-if="loadingKeys.includes(item.key)"
+                            size="14px"
+                            animation="spin"
+                            animation-speed="fast"
+                            class="lew-cascader-loading-icon"
+                            type="loader"
+                        />
+                        <lew-icon
+                            v-else
+                            class="lew-tree-chevron-right-icon"
+                            size="14px"
+                            type="chevron-right"
+                        />
+                    </div>
+                    <div class="lew-tree-item-label" @click="select(item)">
+                        <div v-if="item.level > 0 && showLine" class="lew-tree-line"></div>
+                        <lew-checkbox
+                            v-if="showCheckbox"
+                            :certain="
+                                multiple &&
+                                certainKeys.includes(item.key) &&
+                                !modelValue.includes(item.key)
+                            "
+                            :checked="
+                                multiple ? modelValue.includes(item.key) : modelValue === item.key
+                            "
+                            class="lew-tree-checkbox"
+                        />
+                        <span>{{ item.label }}</span>
+                    </div>
                 </div>
-            </div>
-        </lew-flex>
+            </lew-flex>
+        </template>
+        <template v-else-if="!loading">
+            <lew-flex>
+                <lew-empty />
+            </lew-flex>
+        </template>
     </div>
 </template>
 <style lang="scss" scoped>
+    .lew-tree-wrapper {
+    }
     .lew-tree-item {
         display: inline-flex;
         align-items: center;

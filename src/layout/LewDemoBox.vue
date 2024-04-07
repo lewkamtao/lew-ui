@@ -26,7 +26,7 @@
 
     const style = computed<CSSProperties>(() => {
         if (isShowCode.value) {
-            return { maxHeight: '400px' };
+            return { maxHeight: '10000px' };
         }
         return { maxHeight: 0, borderTop: 'none' };
     });
@@ -96,7 +96,7 @@
             font-size: 14px;
             cursor: pointer;
             color: #999;
-            background-color: var(--lew-bgcolor-0);
+            background-color: var(--lew-bgcolor-1);
 
             .icon {
                 display: flex;
