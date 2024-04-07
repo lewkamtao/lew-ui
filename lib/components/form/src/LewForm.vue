@@ -279,7 +279,8 @@
 
     const setForm = (value: any = {}) => {
         let _form = _.cloneDeep(value);
-        componentOptions.value.forEach((e: any) => {
+        let _componentOptions = _.cloneDeep(componentOptions.value);
+        _componentOptions.forEach((e: any) => {
             let _value = getNestedFieldValue(_form, e.field);
             if (e.inputFormat) {
                 e.value = e.inputFormat(_value);
@@ -287,7 +288,8 @@
                 e.value = _value;
             }
         });
-        form.value = arrayToObj(componentOptions.value);
+        componentOptions.value = _.cloneDeep(_componentOptions);
+        form.value = arrayToObj(_componentOptions);
         emit('change', toRaw(form.value));
     };
     const getNestedFieldValue = (obj: any, field: string) => {
@@ -338,7 +340,6 @@
                     @input="validateField(item.field)"
                     @clear="validateField(item.field)"
                 />
-
                 <lew-textarea
                     v-if="item.as === 'textarea'"
                     v-model="item.value"
@@ -347,7 +348,6 @@
                     @input="validateField(item.field)"
                     @clear="validateField(item.field)"
                 />
-
                 <lew-input-tag
                     v-if="item.as === 'input-tag'"
                     v-model="item.value"
@@ -355,28 +355,24 @@
                     @change="validateField(item.field)"
                     @close="validateField(item.field)"
                 />
-
                 <lew-checkbox-group
                     v-if="item.as === 'checkbox-group'"
                     v-model="item.value"
                     v-bind="{ size, ...item.props }"
                     @change="validateField(item.field)"
                 />
-
                 <lew-radio-group
                     v-if="item.as === 'radio-group'"
                     v-model="item.value"
                     v-bind="{ size, ...item.props }"
                     @change="validateField(item.field)"
                 />
-
                 <lew-checkbox
                     v-if="item.as === 'checkbox'"
                     v-model="item.value"
                     v-bind="{ size, ...item.props }"
                     @change="validateField(item.field)"
                 />
-
                 <lew-select
                     v-if="item.as === 'select'"
                     v-model="item.value"
@@ -385,7 +381,6 @@
                     @input="validateField(item.field)"
                     @clear="validateField(item.field)"
                 />
-
                 <lew-select-multiple
                     v-if="item.as === 'select-multiple'"
                     v-model="item.value"
@@ -394,7 +389,6 @@
                     @input="validateField(item.field)"
                     @clear="validateField(item.field)"
                 />
-
                 <lew-date-picker
                     v-if="item.as === 'date-picker'"
                     v-model="item.value"
@@ -404,7 +398,6 @@
                     @input="validateField(item.field)"
                     @clear="validateField(item.field)"
                 />
-
                 <lew-date-range-picker
                     v-if="item.as === 'date-range-picker'"
                     v-model="item.value"
@@ -414,14 +407,12 @@
                     @input="validateField(item.field)"
                     @clear="validateField(item.field)"
                 />
-
                 <lew-tabs
                     v-if="item.as === 'tabs'"
                     v-model="item.value"
                     v-bind="{ size, ...item.props }"
                     @change="validateField(item.field)"
                 />
-
                 <lew-cascader
                     v-if="item.as === 'cascader'"
                     v-model="item.value"
@@ -429,21 +420,18 @@
                     @clear="validateField(item.field)"
                     @change="validateField(item.field)"
                 />
-
                 <lew-switch
                     v-if="item.as === 'switch'"
                     v-model="item.value"
                     v-bind="{ size, ...item.props }"
                     @change="validateField(item.field)"
                 />
-
                 <lew-button
                     v-if="item.as === 'button'"
                     v-model="item.value"
                     v-bind="{ size, ...item.props }"
                     @click="typeof item.props.click === 'function' ? item.props.click() : ''"
                 />
-
                 <transition name="slide-fade">
                     <div v-if="item.errMessage" class="error-message">
                         {{ item.errMessage }}

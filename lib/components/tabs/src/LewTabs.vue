@@ -23,7 +23,8 @@
             if (!state.isInit) {
                 init();
             }
-        }
+        },
+        { deep: true }
     );
 
     const initActiveItemStyle = (index: number) => {
@@ -127,9 +128,6 @@
     };
 
     onMounted(() => {
-        if (!tabsValue.value) {
-            tabsValue.value = props.options[0].value;
-        }
         init();
         window.addEventListener('resize', debounce, false);
     });
@@ -164,6 +162,7 @@
         >
             <div
                 :style="state.activeItemStyle"
+                v-if="tabsValue"
                 class="lew-tabs-item-animation-active"
                 :class="{ 'lew-tabs-item-isInit': state.isInit }"
             ></div>
