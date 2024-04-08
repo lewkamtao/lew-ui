@@ -17,8 +17,8 @@
         { label: 'white', value: '4' }
     ]);
 
-    const value = ref('');
-    const value2 = ref('');
+    const value = ref('1');
+    const value2 = ref('1');
 
     const change = (e: Options) => {
         console.log(e);

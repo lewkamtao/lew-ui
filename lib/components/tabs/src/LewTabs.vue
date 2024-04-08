@@ -162,7 +162,7 @@
         >
             <div
                 :style="state.activeItemStyle"
-                v-if="tabsValue"
+                v-if="tabsValue || tabsValue === 0"
                 class="lew-tabs-item-animation-active"
                 :class="{ 'lew-tabs-item-isInit': state.isInit }"
             ></div>
