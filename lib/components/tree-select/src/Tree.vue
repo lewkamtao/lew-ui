@@ -729,7 +729,6 @@
                     left: 10px;
                     top: 50%;
                     transform: translateY(-50%);
-                    z-index: -9;
                 }
 
                 .lew-treeSelect-label {

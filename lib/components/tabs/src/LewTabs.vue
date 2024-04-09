@@ -265,7 +265,8 @@
         }
 
         .lew-tabs-item-active {
-            color: var(--lew-color-primary-dark);
+            color: var(--lew-color-primary);
+            font-weight: 600;
         }
 
         .lew-tabs-item-animation-active {
@@ -342,7 +343,7 @@
             z-index: 9;
             height: 2px;
             border-radius: 0px;
-            background: var(--lew-color-primary-dark);
+            background: var(--lew-color-primary);
             transform: translateX(3px);
         }
     }

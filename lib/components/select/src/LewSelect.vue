@@ -541,7 +541,7 @@
             }
 
             .lew-select-item-active {
-                color: var(--lew-color-primary-dark);
+                color:  var(--lew-checkbox-color);
                 font-weight: bold;
                 background-color: var(--lew-backdrop-bg-active);
 
@@ -551,7 +551,7 @@
             }
 
             .lew-select-item-active:hover {
-                color: var(--lew-color-primary-dark);
+                color:  var(--lew-checkbox-color);
                 font-weight: bold;
                 background-color: var(--lew-backdrop-bg-active);
             }

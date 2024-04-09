@@ -26,7 +26,7 @@
                 return 11;
         }
     });
-	
+
     const getCheckboxClassName = computed(() => {
         const { block, round, iconable, size, disabled, certain, readonly } = props;
         const checked = modelValue.value || props.checked;
@@ -135,7 +135,7 @@
 
     .lew-checkbox-unicon.lew-checkbox-checked.lew-checkbox-block {
         .lew-checkbox-label {
-            color: var(--lew-checkbox-color-dark);
+            color: var(--lew-checkbox-color);
         }
     }
 
@@ -165,7 +165,7 @@
     .lew-checkbox-checked.lew-checkbox-block {
         border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
         background: var(--lew-checkbox-color-light);
-        color: var(--lew-checkbox-color-dark);
+        color: var(--lew-checkbox-color);
     }
 
     .lew-checkbox-checked.lew-checkbox-block:hover {
@@ -213,7 +213,7 @@
             background: transparent;
 
             .icon-checkbox {
-                color: var(--lew-checkbox-color-dark);
+                color: var(--lew-checkbox-color);
                 opacity: 1;
             }
         }

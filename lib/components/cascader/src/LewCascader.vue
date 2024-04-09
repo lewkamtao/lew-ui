@@ -771,7 +771,7 @@
                     left: 10px;
                     top: 50%;
                     transform: translateY(-50%);
-                    z-index: -9;
+                    
                 }
 
                 .lew-cascader-label {
@@ -835,7 +835,7 @@
                 }
             }
             .lew-cascader-item-active {
-                color: var(--lew-color-primary-dark);
+                color: var(--lew-checkbox-color);
                 font-weight: bold;
                 .lew-cascader-icon {
                     opacity: 1;
@@ -846,7 +846,7 @@
             }
 
             .lew-cascader-item-active:hover {
-                color: var(--lew-color-primary-dark);
+				color: var(--lew-checkbox-color);
                 font-weight: bold;
             }
         }

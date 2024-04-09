@@ -619,7 +619,6 @@
                     top: 50%;
                     transform: translateY(-50%);
                     padding-left: 12px;
-                    z-index: -9;
                 }
 
                 .lew-select-label {
@@ -666,7 +665,7 @@
             }
 
             .lew-select-item-active {
-                color: var(--lew-color-primary-dark);
+                color: var(--lew-checkbox-color);
                 font-weight: bold;
                 background-color: var(--lew-backdrop-bg-active);
 
@@ -676,7 +675,7 @@
             }
 
             .lew-select-item-active:hover {
-                color: var(--lew-color-primary-dark);
+                color: var(--lew-checkbox-color);
                 font-weight: bold;
                 background-color: var(--lew-backdrop-bg-active);
             }

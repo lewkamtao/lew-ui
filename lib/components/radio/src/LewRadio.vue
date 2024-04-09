@@ -56,7 +56,7 @@
             overflow: hidden;
             border-radius: 50%;
             background-color: var(--lew-bgcolor-1);
-            outline: 0px var(--lew-color-primary-light) solid;
+            outline: 0px var(--lew-radio-color-light) solid;
             .icon-radio {
                 width: 100%;
                 height: 100%;
@@ -130,14 +130,15 @@
     }
 
     .lew-radio-checked.lew-radio-block {
-        border: var(--lew-form-border-width) var(--lew-radio-border-color-hover) solid;
+        border: var(--lew-form-border-width) var(--lew-radio-color) solid;
         background: var(--lew-radio-color-light);
-        color: var(--lew-form-border-color-focus);
+        color: var(--lew-radio-color);
     }
 
     .lew-radio-checked.lew-radio-block:hover {
-        border: var(--lew-form-border-width) var(--lew-radio-border-color-hover) solid;
-        background: var(--lew-color-primary-light);
+        border: var(--lew-form-border-width) var(--lew-radio-color) solid;
+        background: var(--lew-radio-color-light);
+        color: var(--lew-radio-color);
     }
 
     .lew-radio-checked {
@@ -159,14 +160,14 @@
 
     .lew-radio-block.lew-radio-checked {
         .lew-radio-label {
-            color: var(--lew-color-primary-dark);
+            color: var(--lew-radio-color);
         }
         .icon-radio-box {
             border: var(--lew-form-border-width) transparent solid;
             background: transparent;
 
             .icon-radio {
-                background-color: var(--lew-color-primary-dark);
+                background-color: var(--lew-radio-color);
                 opacity: 1;
                 transform: translateY(0%) scale(0.5);
             }
