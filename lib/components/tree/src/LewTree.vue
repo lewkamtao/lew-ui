@@ -56,7 +56,7 @@
                 parentLabelPaths,
                 treeIndex: index
             };
-            if (props.free) {
+            if (!props.free) {
                 currentNode['leafNodeValues'] = findLeafNodes(children);
                 currentNode['allNodeValues'] = findAllNodes(children);
             }
@@ -382,7 +382,7 @@
     }
     .lew-tree-item-selected {
         .lew-tree-item-label {
-            color: var(--lew-color-blue-dark);
+            color: var(--lew-color-primary);
             font-weight: 600;
         }
         .lew-tree-item-label:hover {
