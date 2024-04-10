@@ -260,7 +260,8 @@
                         'lew-tree-item-selected': multiple
                             ? modelValue.includes(item.key)
                             : modelValue === item.key,
-                        'lew-tree-item-leaf': item.isLeaf
+                        'lew-tree-item-leaf': item.isLeaf,
+                        'lew-tree-item-disabled': item.disabled
                     }"
                     :style="{
                         paddingLeft: `${item.level * 26}px`
@@ -315,7 +316,6 @@
         display: inline-flex;
         align-items: center;
         padding: 0px 16px 0px 8px;
-        cursor: pointer;
         white-space: nowrap;
         user-select: none;
 
@@ -323,6 +323,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer;
             transition: var(--lew-form-transition);
             width: 14px;
             height: 14px;
@@ -341,6 +342,7 @@
             position: relative;
             position: relative;
             padding: 4px 10px 4px 8px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             border-radius: var(--lew-border-radius-small);
@@ -413,6 +415,15 @@
     .lew-tree-item-leaf {
         .lew-tree-chevron-right {
             opacity: 0;
+        }
+    }
+    .lew-tree-item-disabled {
+        .lew-tree-chevron-right {
+            cursor: pointer;
+        }
+        .lew-tree-item-label {
+            opacity: 0.6;
+            pointer-events: none;
         }
     }
     .lew-tree-item-expand {
