@@ -56,10 +56,12 @@
                 parentLabelPaths,
                 treeIndex: index
             };
+            // 新增字段，用于判断是否是叶子节点
             if (!props.free) {
                 currentNode['leafNodeValues'] = findLeafNodes(children);
                 currentNode['allNodeValues'] = findAllNodes(children);
             }
+
             const formattedNode = {
                 ...currentNode,
                 children: children
