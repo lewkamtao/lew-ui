@@ -25,7 +25,7 @@
     <lew-tree
         v-model="v"
         multiple
-		expand-all
+        expand-all
         :show-checkbox="false"
         :data-source="options"
         @change="change"

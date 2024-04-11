@@ -7,7 +7,7 @@ export type TreeSelectOptions = {
     valuePaths?: string[];
     level: number;
     isLeaf?: boolean;
-	loading?: boolean;
+    loading?: boolean;
     disabled?: boolean;
     parentLabelPaths?: string[];
     parentValuePaths?: string[];

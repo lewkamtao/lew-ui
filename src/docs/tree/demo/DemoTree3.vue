@@ -22,12 +22,5 @@
 </script>
 
 <template>
-    <lew-tree
-        v-model="v"
-        multiple
-        free
-        :data-source="options"
-        show-checkbox
-        @change="change"
-    />
+    <lew-tree v-model="v" multiple free :data-source="options" show-checkbox @change="change" />
 </template>

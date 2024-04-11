@@ -328,7 +328,7 @@
 </script>
 
 <template>
-    <lew-button @click="formRef.setForm({ size: 'medium',})">reset</lew-button>
+    <lew-button @click="formRef.setForm({ size: 'medium' })">reset</lew-button>
     <lew-flex x="start" y="start" :gap="50">
         <lew-form
             ref="formRef"

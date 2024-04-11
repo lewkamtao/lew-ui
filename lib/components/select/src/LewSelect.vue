@@ -453,8 +453,6 @@
         width: 100%;
         box-sizing: border-box;
 
-    
-
         .reslut-count {
             padding-left: 8px;
             margin: 5px 0px;
@@ -541,7 +539,7 @@
             }
 
             .lew-select-item-active {
-                color:  var(--lew-checkbox-color);
+                color: var(--lew-checkbox-color);
                 font-weight: bold;
                 background-color: var(--lew-backdrop-bg-active);
 
@@ -551,7 +549,7 @@
             }
 
             .lew-select-item-active:hover {
-                color:  var(--lew-checkbox-color);
+                color: var(--lew-checkbox-color);
                 font-weight: bold;
                 background-color: var(--lew-backdrop-bg-active);
             }

@@ -771,7 +771,6 @@
                     left: 10px;
                     top: 50%;
                     transform: translateY(-50%);
-                    
                 }
 
                 .lew-cascader-label {
@@ -846,7 +845,7 @@
             }
 
             .lew-cascader-item-active:hover {
-				color: var(--lew-checkbox-color);
+                color: var(--lew-checkbox-color);
                 font-weight: bold;
             }
         }
