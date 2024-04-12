@@ -16,6 +16,7 @@
                     <lew-button type="fill" color="pink">pink</lew-button>
                     <lew-button type="fill" color="brown">brown</lew-button>
                     <lew-button type="fill" color="gray">gray</lew-button>
+                    <lew-button type="fill" color="black">black</lew-button>
                 </lew-flex>
                 <lew-flex y="end" x="start">
                     <lew-button type="light" color="red">red</lew-button>
@@ -31,6 +32,7 @@
                     <lew-button type="light" color="pink">pink</lew-button>
                     <lew-button type="light" color="brown">brown</lew-button>
                     <lew-button type="light" color="gray">gray</lew-button>
+                    <lew-button type="light" color="black">black</lew-button>
                 </lew-flex>
                 <lew-flex y="end" x="start">
                     <lew-button type="ghost" color="red">red</lew-button>
@@ -46,6 +48,7 @@
                     <lew-button type="ghost" color="pink">pink</lew-button>
                     <lew-button type="ghost" color="brown">brown</lew-button>
                     <lew-button type="ghost" color="gray">gray</lew-button>
+                    <lew-button type="ghost" color="black">black</lew-button>
                 </lew-flex>
                 <lew-flex y="end" x="start">
                     <lew-button type="text" color="red">red</lew-button>
@@ -61,6 +64,7 @@
                     <lew-button type="text" color="pink">pink</lew-button>
                     <lew-button type="text" color="brown">brown</lew-button>
                     <lew-button type="text" color="gray">gray</lew-button>
+                    <lew-button type="text" color="black">black</lew-button>
                 </lew-flex>
             </lew-flex>
         </div>

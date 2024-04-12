@@ -16,6 +16,7 @@
                     <lew-tag type="fill" color="pink">pink</lew-tag>
                     <lew-tag type="fill" color="brown">brown</lew-tag>
                     <lew-tag type="fill" color="gray">gray</lew-tag>
+                    <lew-tag type="fill" color="black">black</lew-tag>
                 </lew-flex>
                 <lew-flex y="end" x="start">
                     <lew-tag type="light" color="red">red</lew-tag>
@@ -31,6 +32,7 @@
                     <lew-tag type="light" color="pink">pink</lew-tag>
                     <lew-tag type="light" color="brown">brown</lew-tag>
                     <lew-tag type="light" color="gray">gray</lew-tag>
+                    <lew-tag type="light" color="black">black</lew-tag>
                 </lew-flex>
                 <lew-flex y="end" x="start">
                     <lew-tag type="ghost" color="red">red</lew-tag>
@@ -46,6 +48,7 @@
                     <lew-tag type="ghost" color="pink">pink</lew-tag>
                     <lew-tag type="ghost" color="brown">brown</lew-tag>
                     <lew-tag type="ghost" color="gray">gray</lew-tag>
+                    <lew-tag type="ghost" color="black">black</lew-tag>
                 </lew-flex>
             </lew-flex>
         </div>

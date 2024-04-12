@@ -25,7 +25,7 @@ export const tagProps = {
     },
     color: {
         type: String as PropType<TagColor>,
-        default: 'blue',
+        default: '',
         description: '颜色'
     },
     size: {

@@ -20,7 +20,7 @@ export type ButtonType = 'fill' | 'light' | 'ghost' | 'text';
 export const buttonProps = {
     color: {
         type: String as PropType<ButtonColor>,
-        default: 'blue',
+        default: '',
         description: '颜色'
     },
     text: {

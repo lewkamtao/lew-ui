@@ -26,14 +26,14 @@
     });
 
     const tagClassName = computed(() => {
-        const { size, disabled } = props;
-        return object2class('lew-tag', { size, disabled });
+        const { size, disabled, color, type } = props;
+        return object2class('lew-tag', { size, color, disabled, type });
     });
 
     const getStyle = computed(() => {
         const { round, type, color } = props;
         const styleObj = {} as any;
-        const _color = getColorType(color);
+        const _color = getColorType(color) || 'primary';
         switch (type) {
             case 'fill':
                 styleObj.backgroundColor = `var(--lew-color-${_color})`;
@@ -81,7 +81,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border-radius: 4px;
+        border-radius: var(--lew-border-radius-mini);
         user-select: none;
         box-sizing: border-box;
         overflow: hidden;
@@ -97,7 +97,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 20px;
+            border-radius: var(--lew-border-radius-small);
             padding: 2px;
             margin-left: -3px;
             cursor: pointer;
@@ -193,5 +193,10 @@
     .lew-tag-disabled {
         opacity: var(--lew-disabled-opacity);
         pointer-events: none;
+    }
+</style>
+<style lang="scss">
+    .lew-dark .lew-tag-color-black.lew-tag-type-fill {
+        color: #000 !important;
     }
 </style>

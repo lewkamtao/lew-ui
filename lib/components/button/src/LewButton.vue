@@ -28,14 +28,15 @@
     }
 
     const getButtonClass = computed(() => {
-        const { size, type, icon, text } = props;
+        const { size, type, icon, text, color } = props;
         const loading = _loading.value || props.loading;
         const singleIcon = !!(!text && icon && !hasDefaultSlot.value);
         return object2class('lew-button', {
             size,
             type,
             loading,
-            singleIcon
+            singleIcon,
+            color
         });
     });
 
@@ -56,7 +57,7 @@
     const getStyle = computed(() => {
         const { round, type, color } = props;
         const styleObj: Record<string, string> = {};
-        const _color = getColorType(color);
+        const _color = getColorType(color) || 'primary';
         switch (type) {
             case 'fill':
                 styleObj.backgroundColor = `var(--lew-color-${_color})`;
@@ -159,7 +160,31 @@
         top: 0px;
         width: 100%;
         height: 100%;
-        background-color: rgba($color: #000000, $alpha: 0.2);
+        background-color: rgba($color: #000, $alpha: 0.2);
+        transition: 0.1s all;
+        opacity: 0;
+        content: '';
+    }
+
+    .lew-button-color-black::after {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        background-color: rgba($color: #fff, $alpha: 0.2);
+        transition: 0.1s all;
+        opacity: 0;
+        content: '';
+    }
+
+    .lew-button-type-text.lew-button-color-black::after {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        background-color: rgba($color: #000, $alpha: 0.2);
         transition: 0.1s all;
         opacity: 0;
         content: '';
@@ -286,6 +311,11 @@
         background-color: var(--lew-bgcolor-2) !important;
     }
     .lew-button-type-ghost:active {
-        background-color: var(--lew-color-blue-light) !important;
+        background-color: var(--lew-color-normal-light) !important;
+    }
+</style>
+<style lang="scss">
+    .lew-dark .lew-button-color-black.lew-button-type-fill {
+        color: #000 !important;
     }
 </style>
