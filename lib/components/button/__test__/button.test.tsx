@@ -24,7 +24,7 @@ describe('Button', () => {
     it('set-props', () => {
         const buttonComponent = shallowMount(LewButton, {
             props: {
-                type: 'success',
+                type: 'fill',
                 size: 'small'
             }
         });

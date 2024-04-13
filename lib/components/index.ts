@@ -1,6 +1,4 @@
 export * from './flex';
-export * from './_space';
-export * from './_layout';
 export * from './mark';
 export * from './icon';
 export * from './cascader';
@@ -8,7 +6,6 @@ export * from './tree-select';
 export * from './tree';
 
 export * from './tabs';
-export * from './_steps';
 export * from './breadcrumb';
 export * from './dropdown';
 
@@ -23,12 +20,10 @@ export * from './select';
 export * from './select-multiple';
 export * from './switch';
 export * from './date-picker';
-// export * from './_upload';
 
 export * from './table';
 export * from './pagination';
 export * from './magic-number';
-export * from './_magic-text';
 
 export * from './avatar';
 export * from './title';

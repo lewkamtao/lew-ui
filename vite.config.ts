@@ -4,6 +4,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import AutoImport from 'unplugin-auto-import/vite';
 import * as path from 'path';
 import dts from 'vite-plugin-dts';
+import checker from 'vite-plugin-checker';
 
 // 路径
 const pathSrc = path.resolve(__dirname, 'src');
@@ -45,6 +46,9 @@ export default defineConfig(({ mode }) => {
             AutoImport({
                 imports: ['vue'],
                 dts: path.resolve(pathPackage, 'auto-imports.d.ts')
+            }),
+            checker({
+                typescript: true
             })
         ],
         build:

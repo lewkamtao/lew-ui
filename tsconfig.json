@@ -19,7 +19,9 @@
         "src/**/*.tsx",
         "src/**/*.vue",
         "lib/**/*.vue",
-        "lib/**/*.ts"
+        "lib/**/*.ts",
+        "lib/**/*.tsx"
     ],
+    "exclude": ["lib/components/_backup/**/*"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }
