@@ -21,7 +21,7 @@ export const selectModel = {
 
 export const selectProps = {
     defaultValue: {
-        type: [String, Number] || undefined,
+        type: [String, Number],
         default: '',
         description: '默认值，用于异步列表的情况，无法映射label和value，需要手动传入'
     },
@@ -44,6 +44,11 @@ export const selectProps = {
         type: String,
         default: 'medium',
         description: '尺寸，可选值为 small、medium、large'
+    },
+    itemHeight: {
+        type: Number,
+        default: 34,
+        description: '选项高度，单位 px，没用插槽时无需设置，用于计算虚拟列表的高度'
     },
     searchable: {
         type: Boolean,

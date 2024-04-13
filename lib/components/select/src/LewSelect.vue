@@ -21,7 +21,6 @@
 
     const state = reactive({
         selectWidth: 0,
-        itemHeight: 34,
         visible: false,
         loading: false,
         options: props.options,
@@ -145,7 +144,7 @@
     });
 
     const getVirtualHeight = computed(() => {
-        let height = state.options.length * state.itemHeight;
+        let height = state.options.length * props.itemHeight;
         height = height >= 240 ? 240 : height;
         return `${height}px`;
     });
@@ -238,13 +237,12 @@
                 <slot name="header"></slot>
 
                 <div class="lew-select-options-box">
-                    <lew-flex
-                        v-show="state.options && state.options.length === 0"
-                        direction="y"
-                        class="not-found"
-                    >
-                        <lew-empty title="暂无结果" />
-                    </lew-flex>
+                    <template v-if="state.options && state.options.length === 0">
+                        <slot v-if="$slots.empty" name="empty" />
+                        <lew-flex v-else direction="y" class="not-found">
+                            <lew-empty title="暂无结果" />
+                        </lew-flex>
+                    </template>
                     <div
                         v-if="searchable && state.options && state.options.length > 0"
                         class="reslut-count"
@@ -259,18 +257,25 @@
                         class="lew-select-options-list lew-scrollbar"
                         :list="state.options"
                         :options="{
-                            itemHeight: state.itemHeight
+                            itemHeight
                         }"
                         :height="getVirtualHeight"
                     >
                         <template #default="{ data: templateProps }">
-                            <!-- you can get current item of list here -->
-                            <label
-                                :style="{ height: state.itemHeight + 'px' }"
-                                class="lew-select-item-label"
+                            <div
+                                :style="{ height: itemHeight + 'px' }"
                                 @click="selectHandle(templateProps)"
                             >
+                                <slot
+                                    v-if="$slots.item"
+                                    name="item"
+                                    :props="{
+                                        ...templateProps,
+                                        checked: getChecked(templateProps.value)
+                                    }"
+                                />
                                 <div
+                                    v-else
                                     class="lew-select-item"
                                     :class="getSelectItemClassName(templateProps)"
                                 >
@@ -284,7 +289,7 @@
                                         type="check"
                                     />
                                 </div>
-                            </label>
+                            </div>
                         </template>
                     </use-virtual-list>
                 </div>
@@ -324,6 +329,7 @@
                 right: 9px;
                 transform: translateY(-50%) rotate(0deg);
                 transition: var(--lew-form-transition);
+                padding: 2px;
             }
 
             .icon-select {
@@ -468,16 +474,6 @@
             transition: all 0.25s ease;
             margin-top: -2px;
             margin-bottom: -2px;
-
-            .lew-select-item-label {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 2px 0px;
-                height: 34px;
-                overflow: hidden;
-                box-sizing: border-box;
-            }
 
             .lew-select-item {
                 position: relative;

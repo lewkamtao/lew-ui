@@ -3,7 +3,7 @@
         { label: '宋朝', value: '1' },
         { label: '唐朝', value: '2' },
         { label: '明朝', value: '3' },
-        { label: '清朝', value: '4', disabled: true }
+        { label: '清朝', value: '4' }
     ]);
 
     const value = ref('');
@@ -24,5 +24,25 @@
         <lew-radio-group v-model="value" block size="small" :options="options"></lew-radio-group>
         <lew-radio-group v-model="value" block :options="options"></lew-radio-group>
         <lew-radio-group v-model="value" block size="large" :options="options"></lew-radio-group>
+        <br />
+        <br />
+        <lew-title :size="14">禁用</lew-title>
+        <lew-radio-group
+            v-model="value"
+            disabled
+            block
+            size="large"
+            :options="options"
+        ></lew-radio-group>
+        <br />
+        <br />
+        <lew-title :size="14">只读</lew-title>
+        <lew-radio-group
+            v-model="value"
+            readonly
+            block
+            size="large"
+            :options="options"
+        ></lew-radio-group>
     </lew-flex>
 </template>

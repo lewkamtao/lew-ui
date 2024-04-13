@@ -20,7 +20,6 @@
 
     const state = reactive({
         selectWidth: 0,
-        itemHeight: 34,
         visible: false,
         loading: false,
         options: props.options,
@@ -178,7 +177,7 @@
         }
     };
     const getVirtualHeight = computed(() => {
-        let height = state.options.length * state.itemHeight;
+        let height = state.options.length * props.itemHeight;
         height = height >= 240 ? 240 : height;
         return `${height}px`;
     });
@@ -313,13 +312,12 @@
                     />
                 </div>
                 <div class="lew-select-options-box">
-                    <lew-flex
-                        v-show="state.options && state.options.length === 0"
-                        direction="y"
-                        class="not-found"
-                    >
-                        <lew-empty title="暂无结果" />
-                    </lew-flex>
+                    <template v-if="state.options && state.options.length === 0">
+                        <slot v-if="$slots.empty" name="empty" />
+                        <lew-flex v-else direction="y" class="not-found">
+                            <lew-empty title="暂无结果" />
+                        </lew-flex>
+                    </template>
                     <div
                         v-if="searchable && state.options && state.options.length > 0"
                         class="reslut-count"
@@ -335,7 +333,7 @@
                         class="lew-select-options-list lew-scrollbar"
                         :list="state.options"
                         :options="{
-                            itemHeight: 30
+                            itemHeight
                         }"
                         :overscan="100"
                         :height="getVirtualHeight"
@@ -343,11 +341,19 @@
                         <template #default="{ data: templateProps }">
                             <!-- you can get current item of list here -->
                             <div
-                                class="lew-select-item-label"
-                                :style="{ height: state.itemHeight + 'px' }"
+                                :style="{ height: itemHeight + 'px' }"
                                 @click="selectHandle(templateProps)"
                             >
+                                <slot
+                                    v-if="$slots.item"
+                                    name="item"
+                                    :props="{
+                                        ...templateProps,
+                                        checked: getChecked(templateProps.value)
+                                    }"
+                                />
                                 <div
+                                    v-else
                                     class="lew-select-item lew-select-item-mul"
                                     :class="getSelectItemClassName(templateProps)"
                                 >
@@ -401,6 +407,7 @@
                 transform: translateY(-50%) rotate(0deg);
                 transition: var(--lew-form-transition);
                 opacity: var(--lew-form-icon-opacity);
+                padding: 2px;
             }
 
             .icon-select-hide {

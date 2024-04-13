@@ -7,5 +7,6 @@
         <lew-checkbox v-model="checked" size="small" label="同意" />
         <lew-checkbox v-model="checked" disabled round label="是否付款" />
         <lew-checkbox v-model="checked" size="large" round label="是否少数民族" />
+        <lew-checkbox v-model="checked" readonly size="large" round label="是否少数民族" />
     </lew-flex>
 </template>

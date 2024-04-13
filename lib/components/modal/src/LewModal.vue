@@ -148,23 +148,24 @@
             overflow: hidden;
 
             .header {
-				position: relative;
+                position: relative;
                 height: 50px;
-                background-color: var(--lew-bgcolor-2);
                 padding: 10px 20px;
 
                 .title {
                     font-size: 16px;
                     font-weight: bold;
                 }
-				.lew-form-icon-clear {
-					right: 15px;
-				}
+                .lew-form-icon-clear {
+                    right: 15px;
+                }
+                .lew-form-icon-clear:hover {
+                    background-color: var(--lew-bgcolor-5);
+                }
             }
 
             .footer {
                 height: 50px;
-                background-color: var(--lew-bgcolor-1);
                 padding: 10px 20px;
             }
 

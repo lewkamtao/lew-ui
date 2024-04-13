@@ -4,21 +4,37 @@
 
     const props = defineProps(radioProps);
 
-    const emit = defineEmits(['update:checked']);
+    const emit = defineEmits(['change']);
 
     const setChecked = () => {
-        emit('update:checked');
+        emit('change');
     };
 
+    const getIconSize = computed(() => {
+        const { size } = props;
+        switch (size) {
+            case 'small':
+                return 9;
+            case 'medium':
+                return 11;
+            case 'large':
+                return 13;
+            default:
+                return 11;
+        }
+    });
+
     const getRadioClassName = computed(() => {
-        const { block, checked, iconable, size, disabled } = props;
+        const { block, checked, iconable, size, disabled, round, readonly } = props;
         const unicon = !iconable && block;
         return object2class('lew-radio', {
             block,
             checked,
             unicon,
             size,
-            disabled
+            disabled,
+            round,
+            readonly
         });
     });
 </script>
@@ -26,7 +42,7 @@
 <template>
     <label class="lew-radio" :class="getRadioClassName">
         <div v-if="iconable || (!iconable && !block)" class="icon-radio-box">
-            <div class="icon-radio"></div>
+            <lew-icon stroke-width="4" class="icon-radio" type="check" :size="getIconSize" />
         </div>
         <input v-show="false" type="radio" :checked="checked" @change="setChecked" />
         <span v-if="label" class="lew-radio-label"> {{ label }}</span>
@@ -41,36 +57,36 @@
         cursor: pointer;
         color: var(--lew-text-color-1);
         font-size: 14px;
-        border-radius: 50px;
         transition: var(--lew-form-transition);
+        white-space: nowrap;
+        box-sizing: border-box;
 
         .icon-radio-box {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            position: relative;
             width: 18px;
             height: 18px;
-            border: var(--lew-form-border-width) var(--lew-checkbox-border-color) solid;
+            border: var(--lew-form-border-width) var(--lew-radio-border-color) solid;
             box-sizing: border-box;
+            border-radius: 6px;
             transition: var(--lew-form-transition);
-            overflow: hidden;
-            border-radius: 50%;
             background-color: var(--lew-bgcolor-1);
             outline: 0px var(--lew-radio-color-light) solid;
+            overflow: hidden;
+
             .icon-radio {
-                width: 100%;
-                height: 100%;
-                background-color: var(--lew-color-white);
-                transform: translateY(100%) scale(0.5);
-                opacity: 0;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, calc(-50% + 10px)) rotate(-10deg) scale(0.2);
+                transform-origin: 50%;
                 transition: var(--lew-form-transition);
-                font-size: 12px;
-                border-radius: 50%;
+                opacity: 0;
+                color: var(--lew-color-white);
             }
         }
 
         .lew-radio-label {
-            margin-left: 4px;
+            margin-left: 6px;
         }
     }
 
@@ -80,6 +96,7 @@
         .icon-radio-box {
             width: 14px;
             height: 14px;
+            border-radius: 4px;
         }
     }
 
@@ -89,6 +106,7 @@
         .icon-radio-box {
             width: 16px;
             height: 16px;
+            border-radius: 5px;
         }
     }
 
@@ -98,15 +116,20 @@
         .icon-radio-box {
             width: 18px;
             height: 18px;
+            border-radius: 6px;
         }
     }
 
     .lew-radio-unicon.lew-radio-block {
         padding: 4px 12px;
-
         .lew-radio-label {
-            color: var(--lew-text-color-6);
             margin-left: 0px;
+        }
+    }
+
+    .lew-radio-unicon.lew-radio-checked.lew-radio-block {
+        .lew-radio-label {
+            color: var(--lew-radio-color);
         }
     }
 
@@ -120,13 +143,17 @@
 
     .lew-radio-block {
         background: var(--lew-radio-block-color);
-        border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
         padding: 3px 8px 3px 4px;
-        border-radius: 50px;
-    }
-
-    .lew-radio-block:hover {
-        background: var(--lew-form-bgcolor-hover);
+        border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
+        border-radius: var(--lew-border-radius-small);
+        .icon-radio-box {
+            .icon-radio {
+                padding: 1px;
+            }
+        }
+        .lew-radio-label {
+            margin-left: 4px;
+        }
     }
 
     .lew-radio-checked.lew-radio-block {
@@ -138,15 +165,30 @@
     .lew-radio-checked.lew-radio-block:hover {
         border: var(--lew-form-border-width) var(--lew-radio-color) solid;
         background: var(--lew-radio-color-light);
-        color: var(--lew-radio-color);
+    }
+
+    .lew-radio-round {
+        border-radius: 50px;
+
+        .icon-radio-box {
+            border-radius: 50%;
+        }
+    }
+
+    .lew-radio-block:hover {
+        background: var(--lew-form-bgcolor-hover);
+        .icon-radio-box {
+            border: var(--lew-form-border-width) var(--lew-radio-border-color-hover) solid;
+        }
     }
 
     .lew-radio-checked {
         .icon-radio-box {
             border: var(--lew-form-border-width) var(--lew-radio-color) solid;
             background: var(--lew-radio-color);
+
             .icon-radio {
-                transform: translateY(0%) scale(0.5);
+                transform: translate(-50%, -50%) rotate(0deg) scale(1);
                 opacity: 1;
             }
         }
@@ -154,22 +196,19 @@
 
     .lew-radio-checked:hover {
         .icon-radio-box {
+            border: var(--lew-form-border-width) var(--lew-radio-color) solid;
             background: var(--lew-radio-color);
         }
     }
 
     .lew-radio-block.lew-radio-checked {
-        .lew-radio-label {
-            color: var(--lew-radio-color);
-        }
         .icon-radio-box {
             border: var(--lew-form-border-width) transparent solid;
             background: transparent;
 
             .icon-radio {
-                background-color: var(--lew-radio-color);
+                color: var(--lew-radio-color);
                 opacity: 1;
-                transform: translateY(0%) scale(0.5);
             }
         }
     }
@@ -178,14 +217,14 @@
         .icon-radio-box {
             border: var(--lew-form-border-width) transparent solid;
         }
-
-        .icon-radio {
-            opacity: 1;
-            transform: translateY(0%) scale(0.5);
-        }
     }
+
     .lew-radio-disabled {
         opacity: var(--lew-disabled-opacity);
+        pointer-events: none; //鼠标点击不可修改
+    }
+
+    .lew-radio-readonly {
         pointer-events: none; //鼠标点击不可修改
     }
 </style>

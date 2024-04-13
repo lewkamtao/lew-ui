@@ -148,6 +148,7 @@
                 visible: loading,
                 iconSize: 16
             }"
+			class="lew-popover-body"
             :class="popoverBodyClassName"
         >
             <slot name="popover-body" :show="show" :hide="hide" />
@@ -163,5 +164,6 @@
     }
     .lew-popover-body {
         overflow: hidden;
+        border-radius: var(--lew-border-radius-small);
     }
 </style>

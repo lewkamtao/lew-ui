@@ -1,15 +1,19 @@
 <script setup lang="ts">
     import {
-        DemoSelectMultiple1,
-        DemoSelectMultiple1Code,
         DemoSelectMultiple2,
-        DemoSelectMultiple2Code,
+        DemoSelectMultiple1,
         DemoSelectMultiple3,
-        DemoSelectMultiple3Code,
+        DemoSelectMultiple4,
         DemoSelectMultiple5,
-        DemoSelectMultiple5Code,
         DemoSelectMultiple6,
-        DemoSelectMultiple6Code
+        DemoSelectMultiple7,
+        DemoSelectMultiple1Code,
+        DemoSelectMultiple2Code,
+        DemoSelectMultiple3Code,
+        DemoSelectMultiple4Code,
+        DemoSelectMultiple5Code,
+        DemoSelectMultiple6Code,
+        DemoSelectMultiple7Code
     } from './demo';
     import LewDemoBox from '../../layout/LewDemoBox.vue';
     import LewDocsTables from '../../layout/LewDocsTables.vue';
@@ -36,14 +40,17 @@
         <lew-demo-box title="支持搜索" :code="DemoSelectMultiple3Code">
             <demo-select-multiple3 />
         </lew-demo-box>
-        <!-- <lew-demo-box title="插槽" :code="DemoSelectMultiple4Code">
+        <lew-demo-box title="插槽" :code="DemoSelectMultiple4Code">
             <demo-select-multiple4 />
-        </lew-demo-box> -->
+        </lew-demo-box>
         <lew-demo-box title="禁用项" :code="DemoSelectMultiple5Code">
             <demo-select-multiple5 />
         </lew-demo-box>
         <lew-demo-box title="其他" :code="DemoSelectMultiple6Code">
             <demo-select-multiple6 />
+        </lew-demo-box>
+        <lew-demo-box title="空状态插槽" :code="DemoSelectMultiple7Code">
+            <demo-select-multiple7 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>
     </div>

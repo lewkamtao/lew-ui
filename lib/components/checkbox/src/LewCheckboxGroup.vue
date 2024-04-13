@@ -22,7 +22,7 @@
         }
     );
 
-    const change = (item: CheckboxOptions, checked: boolean) => {
+    const change = ({ item, checked }: { item: CheckboxOptions; checked: boolean }) => {
         let _value = modelValue.value || [];
         if (checked) {
             _value.push(item.value);
@@ -49,8 +49,8 @@
     };
 
     const getCheckboxGroupClassName = computed(() => {
-        const { size, direction } = props as any;
-        return object2class('lew-checkbox-group', { size, direction });
+        const { size, direction, readonly, disabled } = props as any;
+        return object2class('lew-checkbox-group', { size, direction, readonly, disabled });
     });
 
     initCheckbox();
@@ -73,7 +73,7 @@
             :size="size"
             :label="item.label"
             :disabled="item.disabled || disabled"
-            @change="change(item, $event)"
+            @change="change({ item, checked: $event })"
         />
     </lew-flex>
 </template>
@@ -104,5 +104,12 @@
     .lew-checkbox-group.lew-checkbox-group-direction-y {
         align-items: flex-start;
         flex-direction: column;
+    }
+    .lew-checkbox-group-disabled {
+        opacity: var(--lew-disabled-opacity);
+        pointer-events: none;
+    }
+    .lew-checkbox-group-readonly {
+        pointer-events: none;
     }
 </style>

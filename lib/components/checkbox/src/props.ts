@@ -97,6 +97,11 @@ export const checkboxGroupProps = {
         default: false,
         description: '是否禁用'
     },
+    readonly: {
+        type: Boolean,
+        default: false,
+        description: '是否只读'
+    },
     direction: {
         type: String as PropType<CheckboxGroupDirectionType>,
         default: 'x',

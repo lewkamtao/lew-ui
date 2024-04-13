@@ -18,7 +18,9 @@
 </script>
 <template>
     <lew-flex gap="20" x="start">
-        <lew-drawer v-model:visible="visible1" position="right"></lew-drawer>
+        <lew-drawer v-model:visible="visible1" position="right">
+            <div class="title">标题</div>
+        </lew-drawer>
         <lew-button text="右边" @click="open1" />
 
         <lew-drawer v-model:visible="visible2" position="bottom"></lew-drawer>
@@ -31,3 +33,11 @@
         <lew-button text="上边" @click="open4" />
     </lew-flex>
 </template>
+<style lang="scss" scoped>
+    .title {
+        padding: 10px;
+        background-color: #f2f2f2;
+        border-radius: 5px;
+        color: #f93;
+    }
+</style>
