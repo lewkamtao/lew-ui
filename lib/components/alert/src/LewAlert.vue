@@ -49,10 +49,11 @@
             width: 100%;
             min-height: 32px;
             background-color: var(--lew-color-normal);
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-small);
             margin-bottom: 10px;
             padding: 12px 18px;
             box-sizing: border-box;
+            color: var(--lew-text-color-1);
 
             .alert-icon {
                 margin: 2px 5px 0px 0px;
@@ -90,7 +91,7 @@
         }
 
         .lew-alert-type-normal {
-            color: var(--lew-text-color-2);
+            color: var(--lew-color-normal-dark);
             background-color: var(--lew-color-normal-light);
         }
 

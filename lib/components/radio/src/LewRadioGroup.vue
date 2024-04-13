@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-    import { useVModel } from '@vueuse/core';
     import { radioGroupProps } from './props';
     import type { RadioOptions } from './props';
     import { object2class } from 'lew-ui/utils';
     import LewRadio from './LewRadio.vue';
 
-    const emit = defineEmits(['change', 'update:modelValue']);
+    const emit = defineEmits(['change']);
     const props = defineProps(radioGroupProps);
-    const modelValue = useVModel(props, 'modelValue', emit);
+    const modelValue: any = defineModel<string | number | undefined>();
 
-    const check = (item: RadioOptions) => {
+    const change = ({ item }: { item: RadioOptions }) => {
+        console.log('change', item);
         modelValue.value = item.value;
         emit('change', {
             value: item.value,
@@ -18,8 +18,8 @@
     };
 
     const getRadioGroupClassName = computed(() => {
-        const { size, direction } = props;
-        return object2class('lew-radio-group', { size, direction });
+        const { size, direction, disabled, readonly } = props;
+        return object2class('lew-radio-group', { size, direction, disabled, readonly });
     });
 </script>
 
@@ -34,7 +34,7 @@
             :disabled="item.disabled || disabled"
             :size="size"
             :checked="modelValue === item.value"
-            @update:checked="check(item)"
+            @change="change({ item })"
         />
     </lew-flex>
 </template>
@@ -66,5 +66,12 @@
         flex-direction: column;
         align-items: start;
         justify-content: flex-start;
+    }
+    .lew-radio-group-disabled {
+        opacity: var(--lew-disabled-opacity);
+        pointer-events: none;
+    }
+    .lew-radio-group-readonly {
+        pointer-events: none;
     }
 </style>

@@ -1,17 +1,19 @@
 <script setup lang="ts">
     import {
         DemoSelect1,
-        DemoSelect1Code,
         DemoSelect2,
-        DemoSelect2Code,
         DemoSelect3,
-        DemoSelect3Code,
         DemoSelect4,
-        DemoSelect4Code,
         DemoSelect5,
-        DemoSelect5Code,
         DemoSelect6,
-        DemoSelect6Code
+        DemoSelect7,
+        DemoSelect1Code,
+        DemoSelect2Code,
+        DemoSelect3Code,
+        DemoSelect4Code,
+        DemoSelect5Code,
+        DemoSelect6Code,
+        DemoSelect7Code
     } from './demo';
     import LewDemoBox from '../../layout/LewDemoBox.vue';
     import LewDocsTables from '../../layout/LewDocsTables.vue';
@@ -46,6 +48,9 @@
         </lew-demo-box>
         <lew-demo-box title="其他" :code="DemoSelect6Code">
             <demo-select6 />
+        </lew-demo-box>
+        <lew-demo-box title="空状态插槽" :code="DemoSelect7Code">
+            <demo-select7 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>
     </div>

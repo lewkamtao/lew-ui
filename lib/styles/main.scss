@@ -18,33 +18,6 @@ button {
     overflow-y: auto;
 }
 
-.tippy-box {
-    border-radius: var(--lew-border-radius) !important;
-    box-sizing: border-box !important;
-    background-color: var(--lew-backdrop-bg) !important;
-    backdrop-filter: blur(20px);
-    border: var(--lew-popover-border) !important;
-    box-shadow: var(--lew-popover-box-shadow) !important;
-    color: var(--lew-text-color-0) !important;
-    overflow: hidden;
-    .tippy-content {
-        padding: 0px;
-        box-sizing: border-box !important;
-    }
-}
-
-.tippy-box[data-lew~='tooltip'] {
-    .tippy-content {
-        padding: 6px 10px;
-        font-size: 14px;
-    }
-}
-
-.lew-dark {
-    .tippy-box[data-lew~='tooltip'] {
-        box-shadow: none !important;
-    }
-}
 
 .skeletons {
     width: 200%;
@@ -152,7 +125,7 @@ button {
     opacity: var(--lew-form-icon-opacity);
     position: absolute;
     transform: translate(0%, -50%);
-    border-radius: 50%;
+    border-radius: var(--lew-border-radius-small);
     padding: 2px;
     right: 9px;
     top: 50%;

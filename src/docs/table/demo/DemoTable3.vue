@@ -124,9 +124,9 @@
             >
         </template>
         <template #action="{ row, column }">
-            <lew-flex>
-                <lew-button text="管理" type="text" @click="set(row, column)" />
-                <lew-button text="删除" type="text" @click="del(row, column)" />
+            <lew-flex gap="5">
+                <lew-button text="管理" size="small" type="text" @click="set(row, column)" />
+                <lew-button text="删除" size="small" type="text" @click="del(row, column)" />
             </lew-flex>
         </template>
     </lew-table>

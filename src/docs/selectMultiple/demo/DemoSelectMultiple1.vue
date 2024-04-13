@@ -19,7 +19,13 @@
             placeholder="小"
             clearable
         />
-        <lew-select-multiple v-model="value" :options="options" placeholder="中" clearable />
+        <lew-select-multiple
+            v-model="value"
+            value-layout="tag"
+            :options="options"
+            placeholder="中"
+            clearable
+        />
         <lew-select-multiple
             v-model="value"
             size="large"

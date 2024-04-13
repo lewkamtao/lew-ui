@@ -6,12 +6,14 @@
         DemoButton4,
         DemoButton5,
         DemoButton6,
+        DemoButton7,
         DemoButton1Code,
         DemoButton2Code,
         DemoButton3Code,
         DemoButton4Code,
         DemoButton5Code,
-        DemoButton6Code
+        DemoButton6Code,
+        DemoButton7Code
     } from './demo';
     import LewDemoBox from '../../layout/LewDemoBox.vue';
     import LewDocsTables from '../../layout/LewDocsTables.vue';
@@ -32,7 +34,7 @@
         <lew-demo-box title="基本用法" :code="DemoButton1Code">
             <demo-button1 />
         </lew-demo-box>
-        <lew-demo-box title="尺寸" :code="DemoButton2Code"><demo-button7 /> </lew-demo-box>
+        <lew-demo-box title="尺寸" :code="DemoButton7Code"><demo-button7 /> </lew-demo-box>
         <lew-demo-box title="色彩系统" :code="DemoButton2Code"><demo-button2 /> </lew-demo-box>
         <lew-demo-box title="Icon Text" :code="DemoButton3Code"><demo-button3 /> </lew-demo-box>
         <lew-demo-box title="Loading" :code="DemoButton4Code">

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-    import { useVModel, useDebounceFn } from '@vueuse/core';
+    import { useDebounceFn } from '@vueuse/core';
     import { LewPopover, LewFlex, LewIcon, LewTooltip } from 'lew-ui';
     import { object2class, numFormat } from 'lew-ui/utils';
     import { UseVirtualList } from '@vueuse/components';
     import { selectProps, SelectOptions } from './props';
+    import _ from 'lodash';
 
     // 获取app
     const app = getCurrentInstance()?.appContext.app;
@@ -11,29 +12,25 @@
         app.use(LewTooltip);
     }
     const props = defineProps(selectProps);
-    const emit = defineEmits(['update:modelValue', 'change', 'blur', 'clear']);
-    const selectValue = useVModel(props, 'modelValue', emit);
+    const emit = defineEmits(['change', 'blur', 'clear']);
+    const selectValue: any = defineModel<string | number | undefined>();
 
     const lewSelectRef = ref();
+    const inputRef = ref();
     const lewPopverRef = ref();
-    const searchInputRef = ref();
 
     const state = reactive({
         selectWidth: 0,
-        itemHeight: 34,
         visible: false,
         loading: false,
         options: props.options,
-        keyword: ''
+        hideBySelect: false, // 记录是否通过选择隐藏
+        keyword: props.defaultValue || (selectValue.value as any),
+        backupKeyword: props.defaultValue as any
     });
 
     const getSelectWidth = () => {
         state.selectWidth = lewSelectRef.value?.clientWidth - 12;
-        if (props.searchable) {
-            setTimeout(() => {
-                searchInputRef.value && searchInputRef.value.focus();
-            }, 200);
-        }
     };
 
     const show = () => {
@@ -49,7 +46,6 @@
     }, props.searchDelay);
 
     const search = async (e: any) => {
-        // loading
         state.loading = true;
         const keyword = e.target.value;
         if (props.searchable) {
@@ -69,7 +65,7 @@
     };
 
     const clearHandle = () => {
-        selectValue.value = '';
+        selectValue.value = undefined;
         emit('clear');
         emit('change');
     };
@@ -78,6 +74,8 @@
         if (item.disabled) {
             return;
         }
+        state.hideBySelect = true;
+        state.keyword = item.label;
         selectValue.value = item.value;
         emit('change', item.value);
         hide();
@@ -88,10 +86,10 @@
     });
 
     const getValueStyle = computed(() => {
-        return state.visible ? 'opacity:0.4' : '';
+        return state.visible ? 'opacity:0.6' : '';
     });
 
-    const getLabel = computed(() => {
+    const findKeyword = () => {
         if (state.options) {
             const option = state.options.find((e: any) => {
                 if (e) {
@@ -100,12 +98,12 @@
             });
 
             if (option && JSON.stringify(option) !== '{}') {
-                return option.label;
+                return (state.keyword = option.label);
             }
         }
-
-        return props.defaultValue || props.modelValue;
-    });
+        return (state.keyword = props.defaultValue);
+    };
+    findKeyword();
 
     const getSelectClassName = computed(() => {
         let { clearable, size, align } = props;
@@ -119,9 +117,9 @@
     });
 
     const getSelectViewClassName = computed(() => {
-        const { disabled, readonly } = props;
+        const { disabled, readonly, searchable } = props;
         const focus = state.visible;
-        return object2class('lew-select-view', { focus, disabled, readonly });
+        return object2class('lew-select-view', { focus, searchable, disabled, readonly });
     });
 
     const getSelectItemClassName = (e: any) => {
@@ -146,14 +144,18 @@
     });
 
     const getVirtualHeight = computed(() => {
-        let height = state.options.length * state.itemHeight;
+        let height = state.options.length * props.itemHeight;
         height = height >= 240 ? 240 : height;
         return `${height}px`;
     });
 
     const showHandle = () => {
         state.visible = true;
-        state.keyword = '';
+        state.backupKeyword = _.cloneDeep(state.keyword);
+        if (props.searchable) {
+            state.keyword = '';
+        }
+        state.hideBySelect = false; // 重置
         getSelectWidth();
         if (props.searchable) {
             search({ target: { value: '' } });
@@ -162,8 +164,19 @@
 
     const hideHandle = () => {
         state.visible = false;
+        if (!state.hideBySelect) {
+            findKeyword();
+        }
+        inputRef.value.blur();
         emit('blur');
     };
+
+    watch(
+        () => selectValue.value,
+        () => {
+            findKeyword();
+        }
+    );
 
     defineExpose({ show, hide });
 </script>
@@ -178,6 +191,7 @@
         :disabled="disabled"
         placement="bottom-start"
         style="width: 100%"
+        :offset="[-1, 10]"
         :loading="state.loading"
         @show="showHandle"
         @hide="hideHandle"
@@ -185,14 +199,15 @@
         <template #trigger>
             <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
                 <lew-icon
+                    v-if="!readonly"
                     :size="getIconSize"
                     type="chevron-down"
                     class="icon-select"
-                    :class="{ 'icon-select-hide': clearable && getLabel }"
+                    :class="{ 'icon-select-hide': clearable && state.keyword }"
                 />
                 <transition name="lew-form-icon-ani">
                     <lew-icon
-                        v-if="clearable && getLabel && !readonly"
+                        v-if="clearable && state.keyword && !readonly"
                         :size="getIconSize"
                         type="x"
                         class="lew-form-icon-clear"
@@ -202,12 +217,15 @@
                         @click.stop="clearHandle"
                     />
                 </transition>
-                <div v-show="getLabel" :style="getValueStyle" class="value">
-                    {{ getLabel }}
-                </div>
-                <div v-show="!getLabel" class="placeholder">
-                    {{ placeholder }}
-                </div>
+                <input
+                    ref="inputRef"
+                    v-model="state.keyword"
+                    class="value"
+                    :style="getValueStyle"
+                    :readonly="!searchable"
+                    :placeholder="placeholder"
+                    @input="searchDebounce"
+                />
             </div>
         </template>
         <template #popover-body>
@@ -217,22 +235,14 @@
                 :style="`width:${state.selectWidth}px`"
             >
                 <slot name="header"></slot>
-                <div v-if="searchable" class="search-input">
-                    <input
-                        ref="searchInputRef"
-                        v-model="state.keyword"
-                        placeholder="输入搜索关键词"
-                        @input="searchDebounce"
-                    />
-                </div>
+
                 <div class="lew-select-options-box">
-                    <lew-flex
-                        v-show="state.options && state.options.length === 0"
-                        direction="y"
-                        class="not-found"
-                    >
-                        <lew-empty title="暂无结果" />
-                    </lew-flex>
+                    <template v-if="state.options && state.options.length === 0">
+                        <slot v-if="$slots.empty" name="empty" />
+                        <lew-flex v-else direction="y" class="not-found">
+                            <lew-empty title="暂无结果" />
+                        </lew-flex>
+                    </template>
                     <div
                         v-if="searchable && state.options && state.options.length > 0"
                         class="reslut-count"
@@ -243,48 +253,43 @@
                     </div>
                     <use-virtual-list
                         v-if="state.options.length > 0"
-                        :key="getVirtualHeight"
+                        :key="state.options.length"
                         class="lew-select-options-list lew-scrollbar"
                         :list="state.options"
                         :options="{
-                            itemHeight: 30
+                            itemHeight
                         }"
                         :height="getVirtualHeight"
                     >
-                        <template #default="templateProps">
-                            <!-- you can get current item of list here -->
-                            <label
-                                :style="{ height: state.itemHeight + 'px' }"
-                                class="lew-select-item-label"
-                                @click="selectHandle(templateProps.data)"
+                        <template #default="{ data: templateProps }">
+                            <div
+                                :style="{ height: itemHeight + 'px' }"
+                                @click="selectHandle(templateProps)"
                             >
+                                <slot
+                                    v-if="$slots.item"
+                                    name="item"
+                                    :props="{
+                                        ...templateProps,
+                                        checked: getChecked(templateProps.value)
+                                    }"
+                                />
                                 <div
-                                    v-if="!labelSlot"
+                                    v-else
                                     class="lew-select-item"
-                                    :class="getSelectItemClassName(templateProps.data)"
+                                    :class="getSelectItemClassName(templateProps)"
                                 >
                                     <div class="lew-select-label">
-                                        {{ templateProps.data.label }}
+                                        {{ templateProps.label }}
                                     </div>
                                     <lew-icon
-                                        v-if="getChecked(templateProps.data.value) && showCheckIcon"
+                                        v-if="getChecked(templateProps.value) && showCheckIcon"
                                         class="icon-check"
                                         size="14"
                                         type="check"
                                     />
                                 </div>
-                                <div
-                                    v-else
-                                    class="lew-select-slot-item"
-                                    :style="{ height: state.itemHeight + 'px' }"
-                                >
-                                    <slot
-                                        name="label"
-                                        :item="templateProps.data"
-                                        :checked="getChecked(templateProps.data.value)"
-                                    />
-                                </div>
-                            </label>
+                            </div>
                         </template>
                     </use-virtual-list>
                 </div>
@@ -297,13 +302,12 @@
 <style lang="scss" scoped>
     .lew-select-view {
         width: 100%;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         background-color: var(--lew-form-bgcolor);
         transition: all 0.15s ease;
         box-sizing: border-box;
         outline: 0px var(--lew-color-primary-light) solid;
         border: var(--lew-form-border-width) transparent solid;
-        box-shadow: var(--lew-form-box-shadow);
 
         > div {
             width: 100%;
@@ -325,6 +329,7 @@
                 right: 9px;
                 transform: translateY(-50%) rotate(0deg);
                 transition: var(--lew-form-transition);
+                padding: 2px;
             }
 
             .icon-select {
@@ -336,20 +341,23 @@
                 transform: translate(100%, -50%);
             }
 
-            .placeholder {
-                color: rgb(165, 165, 165);
-            }
-
-            .placeholder,
             .value {
+                width: calc(100% - 24px);
                 display: inline-flex;
                 align-items: center;
-                width: calc(100% - 24px);
                 box-sizing: border-box;
                 transition: all 0.2s;
+                border: none;
+                outline: none;
+                background: none;
+                cursor: pointer;
+                color: var(--lew-text-color-1);
+            }
+
+            .value::placeholder {
+                color: rgb(165, 165, 165);
             }
         }
-
         .lew-select-align-left {
             text-align: left;
         }
@@ -367,8 +375,7 @@
         }
 
         .lew-select-size-small {
-            .value,
-            .placeholder {
+            .value {
                 padding: var(--lew-form-input-padding-small);
                 height: var(--lew-form-item-height-small);
                 line-height: var(--lew-form-input-line-height-small);
@@ -377,8 +384,7 @@
         }
 
         .lew-select-size-medium {
-            .value,
-            .placeholder {
+            .value {
                 padding: var(--lew-form-input-padding-medium);
                 line-height: var(--lew-form-input-line-height-medium);
                 height: var(--lew-form-item-height-medium);
@@ -387,8 +393,7 @@
         }
 
         .lew-select-size-large {
-            .value,
-            .placeholder {
+            .value {
                 padding: var(--lew-form-input-padding-large);
                 height: var(--lew-form-item-height-large);
                 line-height: var(--lew-form-input-line-height-large);
@@ -412,7 +417,7 @@
 
         .icon-select {
             transform: translateY(-50%) rotate(180deg);
-            color: var(--lew-text-color-2);
+            color: var(--lew-text-color-1);
         }
 
         .icon-select-hide {
@@ -433,7 +438,13 @@
             user-select: text;
         }
     }
-
+    .lew-select-view-searchable {
+        .lew-select {
+            .value {
+                cursor: text;
+            }
+        }
+    }
     .lew-select-view-disabled:hover {
         background-color: var(--lew-form-bgcolor);
         outline: 0px var(--lew-color-primary-light) solid;
@@ -447,33 +458,9 @@
     .lew-select-body {
         width: 100%;
         box-sizing: border-box;
-
-        .search-input {
-            margin-bottom: 5px;
-
-            input {
-                outline: none;
-                border: none;
-                background-color: var(--lew-bgcolor-2);
-                width: 100%;
-                height: 30px;
-                border-radius: var(--lew-border-radius);
-                padding: 0px 10px;
-                box-sizing: border-box;
-                color: var(--lew-form-color);
-                transition: var(--lew-form-transition);
-            }
-
-            input:focus {
-                background-color: var(--lew-bgcolor-3);
-                box-shadow: var(--lew-box-shadow);
-            }
+        .lew-select-options-list {
+            padding: 2px 0px;
         }
-
-        .not-found {
-            opacity: 0.4;
-        }
-
         .reslut-count {
             padding-left: 8px;
             margin: 5px 0px;
@@ -490,16 +477,6 @@
             margin-top: -2px;
             margin-bottom: -2px;
 
-            .lew-select-item-label {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 2px 0px;
-                height: 34px;
-                overflow: hidden;
-                box-sizing: border-box;
-            }
-
             .lew-select-item {
                 position: relative;
                 display: inline-flex;
@@ -510,7 +487,7 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 cursor: pointer;
-                color: var(--lew-text-color-2);
+                color: var(--lew-text-color-1);
                 box-sizing: border-box;
                 border-radius: 6px;
                 height: 30px;
@@ -550,6 +527,7 @@
             }
 
             .lew-select-slot-item {
+                width: 100%;
                 border-radius: 6px;
             }
 
@@ -559,7 +537,7 @@
             }
 
             .lew-select-item-active {
-                color: var(--lew-color-primary-dark);
+                color: var(--lew-checkbox-color);
                 font-weight: bold;
                 background-color: var(--lew-backdrop-bg-active);
 
@@ -569,7 +547,7 @@
             }
 
             .lew-select-item-active:hover {
-                color: var(--lew-color-primary-dark);
+                color: var(--lew-checkbox-color);
                 font-weight: bold;
                 background-color: var(--lew-backdrop-bg-active);
             }

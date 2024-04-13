@@ -1,5 +1,5 @@
-import DemoResult1 from './DemoResult1.vue';
+import DemoTreeSelect1 from './DemoTreeSelect1.vue';
 
-import DemoResult1Code from './DemoResult1.vue?raw';
+import DemoTreeSelect1Code from './DemoTreeSelect1.vue?raw';
 
-export { DemoResult1, DemoResult1Code };
+export { DemoTreeSelect1, DemoTreeSelect1Code };

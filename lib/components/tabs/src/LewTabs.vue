@@ -1,11 +1,10 @@
 <script setup lang="ts">
     import { tabsProps } from './props';
-    import { useVModel } from '@vueuse/core';
     import { object2class, any2px } from 'lew-ui/utils';
 
-    const emit = defineEmits(['change', 'update:modelValue']);
+    const emit = defineEmits(['change']);
     const props = defineProps(tabsProps);
-    const tabsValue = useVModel(props, 'modelValue', emit);
+    const tabsValue: any = defineModel<string | number | undefined>({ required: true });
 
     const tabsRef = ref();
     const itemRef = ref([] as any);
@@ -24,7 +23,8 @@
             if (!state.isInit) {
                 init();
             }
-        }
+        },
+        { deep: true }
     );
 
     const initActiveItemStyle = (index: number) => {
@@ -128,9 +128,6 @@
     };
 
     onMounted(() => {
-        if (!props.modelValue) {
-            tabsValue.value = props.options[0].value;
-        }
         init();
         window.addEventListener('resize', debounce, false);
     });
@@ -164,6 +161,7 @@
             @scroll="tabsScroll"
         >
             <div
+                v-if="tabsValue || tabsValue === 0"
                 :style="state.activeItemStyle"
                 class="lew-tabs-item-animation-active"
                 :class="{ 'lew-tabs-item-isInit': state.isInit }"
@@ -188,9 +186,8 @@
         display: inline-flex;
         position: relative;
         width: auto;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         overflow: hidden;
-        box-shadow: var(--lew-form-box-shadow);
     }
 
     .lew-tabs-wrapper-round {
@@ -224,7 +221,7 @@
     }
 
     .lew-tabs-wrapper-type-line {
-        box-shadow: none;
+        border-radius: 0px;
     }
 
     .lew-tabs-wrapper-type-line::before,
@@ -244,7 +241,7 @@
         display: inline-flex;
         align-items: center;
         background: var(--lew-form-bgcolor);
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         overflow-x: auto;
         overflow-y: hidden;
         user-select: none;
@@ -259,16 +256,17 @@
             justify-content: center;
             z-index: 9;
             box-sizing: border-box;
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-small);
             margin: 3px;
-            color: var(--lew-text-color-2);
+            color: var(--lew-text-color-1);
             white-space: nowrap;
             cursor: pointer;
             flex-shrink: 0;
         }
 
         .lew-tabs-item-active {
-            color: var(--lew-color-primary-dark);
+            color: var(--lew-color-primary);
+            font-weight: 600;
         }
 
         .lew-tabs-item-animation-active {
@@ -280,7 +278,6 @@
             border-radius: 6px;
             background: var(--lew-tabs-active-color);
             transform: translateX(3px);
-            box-shadow: 0px 0px 12px rgba($color: #000000, $alpha: 0.15);
             box-sizing: border-box;
         }
 
@@ -319,9 +316,9 @@
     }
 
     .lew-tabs-type-line {
+        position: relative;
         background: none;
         border: none;
-        border-bottom: var(--lew-form-border-width) var(--lew-form-border-color) solid;
         padding-bottom: 5px;
         border-radius: 0px;
 
@@ -345,12 +342,20 @@
             left: 0px;
             z-index: 9;
             height: 2px;
-            background: var(--lew-color-primary-dark);
+            border-radius: 0px;
+            background: var(--lew-color-primary);
             transform: translateX(3px);
-            box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.08);
         }
     }
-
+    .lew-tabs-type-line:after {
+        position: absolute;
+        content: '';
+        bottom: 1px;
+        left: 3px;
+        height: 2px;
+        background-color: var(--lew-form-border-color);
+        width: calc(100% - 6px);
+    }
     .lew-tabs-round {
         border-radius: 35px;
 

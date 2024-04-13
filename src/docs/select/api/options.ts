@@ -1,5 +1,5 @@
 export default {
-    title: 'SelectMultipleOptions',
+    title: 'Options',
     columnsKey: 'props',
     data: [
         {
@@ -11,7 +11,7 @@ export default {
         {
             name: 'value',
             description: '值',
-            type: `string`,
+            type: `string | number`,
             default: '-'
         },
         {

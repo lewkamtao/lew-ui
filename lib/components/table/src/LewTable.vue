@@ -20,7 +20,8 @@
         checkAll: false,
         fixedLeftWidth: 0,
         fixedRightWidth: 0,
-        selectedKeysMap: {} as any
+        selectedKeysMap: {} as any,
+        isInit: false
     });
 
     onActivated(() => {
@@ -33,6 +34,7 @@
 
     const tableObserve = () => {
         obs = new ResizeObserver(() => {
+            state.isInit = false;
             resizeTableHandle();
         });
         obs.observe(tableRef.value);
@@ -88,6 +90,7 @@
 
         state.scrollClientWidth = table.clientWidth;
         state.scrollbarVisible = clientWidth > state.scrollClientWidth;
+        state.isInit = true;
         checkScroll();
     }, 200);
 
@@ -173,14 +176,17 @@
 
     const selectTr = (row: any) => {
         if (!props.checkable) return;
+        const checked = state.selectedKeysMap[row[props.rowKey]];
         if (props.singleSelect) {
             state.selectedKeysMap = {};
         }
-        if (state.selectedKeysMap[row[props.rowKey]]) {
+
+        if (checked) {
             state.selectedKeysMap[row[props.rowKey]] = false;
         } else {
             state.selectedKeysMap[row[props.rowKey]] = true;
         }
+
         checkIsAll();
     };
 
@@ -222,7 +228,9 @@
             :style="{ left: any2px(state.fixedLeftWidth) }"
             :class="{
                 'hide-line-left':
-                    !state.scrollbarVisible || ['all', 'left'].includes(state.hidScrollLine)
+                    !state.scrollbarVisible ||
+                    !state.isInit ||
+                    ['all', 'left'].includes(state.hidScrollLine)
             }"
             class="lew-table-scroll-line-left"
         ></div>
@@ -230,7 +238,9 @@
             :style="{ right: any2px(state.fixedRightWidth) }"
             :class="{
                 'hide-line-right':
-                    !state.scrollbarVisible || ['all', 'right'].includes(state.hidScrollLine)
+                    !state.scrollbarVisible ||
+                    !state.isInit ||
+                    ['all', 'right'].includes(state.hidScrollLine)
             }"
             class="lew-table-scroll-line-right"
         ></div>
@@ -368,7 +378,13 @@
                                 :row="row"
                                 :column="column"
                             />
-                            <template v-else>{{ row[column.field] }}</template>
+                            <template v-else>
+                                <lew-text-trim
+                                    :x="column.x || 'start'"
+                                    style="width: 100%"
+                                    :text="row[column.field]"
+                                />
+                            </template>
                         </lew-flex>
                     </div>
                 </div>
@@ -446,7 +462,13 @@
                                 :row="row"
                                 :column="column"
                             />
-                            <template v-else>{{ row[column.field] }}</template>
+                            <template v-else>
+                                <lew-text-trim
+                                    :x="column.x || 'start'"
+                                    style="width: 100%"
+                                    :text="row[column.field]"
+                                />
+                            </template>
                         </lew-flex>
                     </div>
                 </div>
@@ -466,7 +488,6 @@
         border-bottom: 0px solid transparent;
         box-sizing: border-box;
         background-color: var(--lew-bgcolor-0);
-        box-shadow: var(--lew-box-shadow);
 
         .lew-table-scroll-line-left {
             position: absolute;
@@ -483,7 +504,7 @@
                 rgba(0, 0, 0, 0.01),
                 rgba(0, 0, 0, 0)
             );
-            transition: all 0.25s;
+            transition: opacity 0.25s;
         }
 
         .lew-table-scroll-line-right {
@@ -501,7 +522,7 @@
                 rgba(0, 0, 0, 0.01),
                 rgba(0, 0, 0, 0)
             );
-            transition: all 0.25s;
+            transition: opacity 0.25s;
         }
         .hide-line-left,
         .hide-line-right {
@@ -579,20 +600,21 @@
             height: 40px;
 
             .lew-table-tr {
-                background-color: var(--lew-bgcolor-1);
+                background-color: var(--lew-table-header-bgColor);
                 height: 40px;
                 flex-shrink: 0;
                 border-bottom: var(--lew-table-border);
 
                 .lew-table-td {
-                    color: var(--lew-text-color-5);
+                    color: var(--lew-text-color-1);
                     white-space: nowrap;
+                    font-weight: 600;
                 }
             }
         }
 
         .lew-table-td {
-            color: var(--lew-text-color-4);
+            color: var(--lew-text-color-1);
         }
 
         .lew-table-checkbox-wrapper {
@@ -620,12 +642,6 @@
         }
         .lew-table-tr-selected {
             background-color: var(--lew-table-tr-selected);
-        }
-    }
-
-    .lew-table-checkable {
-        .lew-table-td {
-            cursor: pointer;
         }
     }
 </style>

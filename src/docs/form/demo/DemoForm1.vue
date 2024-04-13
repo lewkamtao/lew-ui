@@ -150,6 +150,8 @@
             as: 'checkbox-group',
             rules: Yup.array().min(1, '至少选择一个').required('此项必填'),
             props: {
+                round: true,
+                block: true,
                 options: [
                     {
                         label: '唱歌',
@@ -326,7 +328,7 @@
 </script>
 
 <template>
-    <lew-button @click="formRef.setForm({ size: 'medium', tabs: '2' })">reset</lew-button>
+    <lew-button @click="formRef.setForm({ size: 'medium' })">reset</lew-button>
     <lew-flex x="start" y="start" :gap="50">
         <lew-form
             ref="formRef"
@@ -345,7 +347,7 @@
 </template>
 <style scoped lang="scss">
     .form-box {
-        width: 380px;
+        width: 450px;
         flex-shrink: 0;
     }
     pre {

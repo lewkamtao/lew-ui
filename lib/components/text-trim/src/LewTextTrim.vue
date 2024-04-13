@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import tippy from 'tippy.js';
+    import tippy, { roundArrow } from 'tippy.js';
     import { watchDebounced } from '@vueuse/core';
     import { object2class } from 'lew-ui/utils';
     import { textTrimProps } from './props';
@@ -36,17 +36,17 @@
         if (isEllipsis) {
             instance = tippy(element, {
                 theme: 'light',
-                delay: [120, 120],
-                duration: [120, 120],
+                delay: props.delay as any,
+                duration: [250, 250],
                 content: text,
-                animation: 'shift-away-subtle',
+                animation: 'scale',
                 hideOnClick: false,
                 interactive: true,
                 appendTo: () => document.body,
                 placement,
                 offset,
                 allowHTML: allowHtml,
-                arrow: false,
+                arrow: roundArrow,
                 maxWidth: 250
             });
             instance.popper.children[0].setAttribute('data-lew', 'tooltip');

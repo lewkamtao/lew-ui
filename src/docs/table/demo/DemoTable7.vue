@@ -127,8 +127,8 @@
         <template #intro="{ row }"> {{ row.intro }} </template>
         <template #action="{ row, column }">
             <lew-flex>
-                <lew-button text="管理" type="text" @click="set(row, column)" />
-                <lew-button text="删除" type="text" @click="del(row, column)" />
+                <lew-button size="small" text="管理" type="text" @click="set(row, column)" />
+                <lew-button size="small" text="删除" type="text" @click="del(row, column)" />
             </lew-flex>
         </template>
     </lew-table>

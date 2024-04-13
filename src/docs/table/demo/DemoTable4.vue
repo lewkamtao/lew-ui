@@ -134,15 +134,15 @@
             <lew-text-trim style="width: 100%" :text="row.intro"> </lew-text-trim>
         </template>
         <template #action>
-            <lew-flex>
+            <lew-flex gap="5">
                 <lew-popover trigger="click" placement="top">
                     <template #trigger>
-                        <lew-button text="录入" type="text" />
+                        <lew-button size="small" text="录入" type="text" />
                     </template>
                     <template #popover-body="{ hide }">
                         <lew-flex direction="y" gap="20" class="popover-body">
                             <lew-input v-model="v" />
-                            <lew-flex x="end">
+                            <lew-flex x="end" gap="5">
                                 <lew-button text="取消" type="text" size="small" @click="hide()" />
                                 <lew-button text="提交" size="small" @click="hide(), submit()" />
                             </lew-flex>
@@ -157,7 +157,7 @@
                     @ok="success"
                     @cancel="error"
                 >
-                    <lew-button text="删除" type="text" />
+                    <lew-button size="small" text="删除" type="text" />
                 </lew-popok>
             </lew-flex>
         </template>

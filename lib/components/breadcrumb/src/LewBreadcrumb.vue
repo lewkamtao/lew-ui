@@ -69,7 +69,7 @@
             }
         }
         .lew-breadcrumb-active {
-            color: var(--lew-text-color-2);
+            color: var(--lew-text-color-1);
             font-weight: 500;
         }
         .lew-breadcrumb-parting {

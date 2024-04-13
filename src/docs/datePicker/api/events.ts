@@ -1,6 +1,7 @@
 export default {
     title: 'Events',
     columnsKey: 'events',
+    orderNum: 3,
     data: [
         {
             name: 'change',

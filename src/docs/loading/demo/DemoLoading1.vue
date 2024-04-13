@@ -2,7 +2,7 @@
     import * as Yup from 'yup';
 
     const visible = ref(false);
-    const title = ref('加载中');
+    const tip = ref('加载中');
     const form = ref({});
     const options = ref([
         {
@@ -50,7 +50,7 @@
         <lew-title :size="14">自定义文字</lew-title>
 
         <lew-flex
-            v-loading="{ visible: visible, title: title }"
+            v-loading="{ visible: visible, tip: tip }"
             direction="y"
             style="margin-bottom: 20px; box-shadow: var(--lew-box-shadow); padding: 20px"
         >

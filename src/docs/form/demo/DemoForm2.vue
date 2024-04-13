@@ -3,7 +3,36 @@
 
     const form = ref({} as any);
 
+    onMounted(() => {
+        // 设置表单
+        formRef.value.setForm({
+            size: 'medium'
+        });
+    });
     const options = ref([
+        {
+            label: '表单大小',
+            as: 'tabs',
+            field: 'size',
+            props: {
+                itemWidth: 'auto',
+                width: '100%',
+                options: [
+                    {
+                        label: 'small',
+                        value: 'small'
+                    },
+                    {
+                        label: 'medium',
+                        value: 'medium'
+                    },
+                    {
+                        label: 'large',
+                        value: 'large'
+                    }
+                ]
+            }
+        },
         {
             field: 'name', // 字段名
             label: '姓名', // 标签
@@ -58,19 +87,14 @@
             field: 'date.birth',
             label: '有效期',
             as: 'date-range-picker',
-            rules: Yup.object()
-                .shape({
-                    start: Yup.string().required(),
-                    end: Yup.string().required()
-                })
-                .required('不能为空'),
+            rules: Yup.object().required('不能为空'),
             props: {
                 clearable: true
             }
         },
         {
-            field: 'user.avatar',
-            label: '头像',
+            field: 'user.city',
+            label: '城市',
             as: 'select',
             rules: Yup.string().required('此项必填'),
             props: {
@@ -103,7 +127,7 @@
             }
         },
         {
-            field: 'user.addd',
+            field: 'user.agree',
             label: '',
             as: 'checkbox',
             rules: Yup.boolean().oneOf([true], '请同意').required('请同意'),
@@ -133,25 +157,20 @@
     <lew-flex x="start" y="start" :gap="50">
         <lew-form
             ref="formRef"
-            v-model="form"
             direction="y"
             class="form-box"
+            :size="form.size"
             :options="options"
             :label-width="80"
+            @change="
+                (e:any) => {
+                    form = e;
+                }
+            "
         />
         <lew-flex style="width: calc(100% - 380px)" direction="y" x="start">
             <lew-button text="获取form" @click="form = formRef.getForm()" />
             <pre>{{ form }}</pre>
-            <pre
-                >{{
-                    options.map((e: any) => {
-                        return {
-                            field: e.field,
-                            errMessage: e?.errMessage || undefined
-                        };
-                    })
-                }} 
-            </pre>
         </lew-flex>
     </lew-flex>
 </template>

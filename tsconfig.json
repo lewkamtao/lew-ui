@@ -13,6 +13,15 @@
         "lib": ["esnext", "dom"],
         "skipLibCheck": true
     },
-    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "lib"],
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.d.ts",
+        "src/**/*.tsx",
+        "src/**/*.vue",
+        "lib/**/*.vue",
+        "lib/**/*.ts",
+        "lib/**/*.tsx"
+    ],
+    "exclude": ["lib/components/_backup/**/*"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

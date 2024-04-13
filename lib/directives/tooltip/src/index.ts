@@ -1,4 +1,4 @@
-import tippy from 'tippy.js';
+import tippy, { roundArrow } from 'tippy.js';
 import type { App as Application, DirectiveBinding } from 'vue';
 
 export default {
@@ -17,15 +17,15 @@ export default {
                     trigger: trigger || 'mouseenter',
                     content: binding.value.content,
                     hideOnClick: trigger === 'mouseenter' ? false : true,
-                    animation: 'shift-away-subtle',
+                    animation: 'scale',
                     interactive: true,
                     appendTo: () => document.body,
                     placement: binding.value.placement,
                     allowHTML: binding.value.allowHtml,
-                    arrow: false,
-                    duration: [120, 120],
+                    arrow: roundArrow,
                     maxWidth: 250,
-                    delay: trigger === 'mouseenter' ? [120, 120] : undefined
+                    duration: [250, 250],
+                    delay: trigger === 'mouseenter' ? binding.value.delay || [80, 80] : undefined
                 });
                 el.instance.popper.children[0].setAttribute('data-lew', 'tooltip');
                 if (!binding?.value?.content) {

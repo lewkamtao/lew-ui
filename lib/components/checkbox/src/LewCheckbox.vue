@@ -1,20 +1,18 @@
 <script lang="ts" setup>
-    import { useVModel } from '@vueuse/core';
     import { object2class } from 'lew-ui/utils';
     import { checkboxProps } from './props';
 
     const props = defineProps(checkboxProps);
 
-    const emit = defineEmits(['change', 'update:modelValue']);
-    const modelValue = useVModel(props, 'modelValue', emit);
+    const emit = defineEmits(['change']);
+    const modelValue: any = defineModel<Boolean>({
+        default: false
+    });
 
     const setChecked = (e: Event) => {
-        if (props.disabled) {
-            return;
-        }
         const { checked } = e.target as HTMLInputElement;
-        modelValue.value = checked;
         emit('change', checked);
+        modelValue.value = checked;
     };
 
     const getIconSize = computed(() => {
@@ -30,8 +28,9 @@
                 return 11;
         }
     });
+
     const getCheckboxClassName = computed(() => {
-        const { block, round, iconable, size, disabled, certain } = props;
+        const { block, round, iconable, size, disabled, certain, readonly } = props;
         const checked = modelValue.value || props.checked;
         const unicon = !iconable && block;
 
@@ -42,7 +41,8 @@
             checked,
             unicon,
             disabled,
-            certain
+            certain,
+            readonly
         });
     });
 </script>
@@ -137,7 +137,7 @@
 
     .lew-checkbox-unicon.lew-checkbox-checked.lew-checkbox-block {
         .lew-checkbox-label {
-            color: var(--lew-checkbox-color-dark);
+            color: var(--lew-checkbox-color);
         }
     }
 
@@ -153,7 +153,7 @@
         background: var(--lew-checkbox-block-color);
         padding: 3px 8px 3px 4px;
         border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         .icon-checkbox-box {
             .icon-checkbox {
                 padding: 1px;
@@ -167,7 +167,7 @@
     .lew-checkbox-checked.lew-checkbox-block {
         border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
         background: var(--lew-checkbox-color-light);
-        color: var(--lew-checkbox-color-dark);
+        color: var(--lew-checkbox-color);
     }
 
     .lew-checkbox-checked.lew-checkbox-block:hover {
@@ -215,7 +215,7 @@
             background: transparent;
 
             .icon-checkbox {
-                color: var(--lew-checkbox-color-dark);
+                color: var(--lew-checkbox-color);
                 opacity: 1;
             }
         }
@@ -229,6 +229,10 @@
 
     .lew-checkbox-disabled {
         opacity: var(--lew-disabled-opacity);
+        pointer-events: none; //鼠标点击不可修改
+    }
+
+    .lew-checkbox-readonly {
         pointer-events: none; //鼠标点击不可修改
     }
 

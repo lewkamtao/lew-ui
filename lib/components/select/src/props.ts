@@ -2,7 +2,7 @@ import { PropType } from 'vue';
 
 export type SelectOptions = {
     label: string;
-    value: string;
+    value: string | number;
     disabled?: boolean;
 };
 
@@ -11,11 +11,19 @@ export type SelectSearchMethodParams = {
     keyword?: string;
 };
 
-export const selectProps = {
+export const selectModel = {
     modelValue: {
-        type: [String, Number] || undefined,
+        type: [String, Number, undefined],
         default: '',
         description: '绑定值'
+    }
+};
+
+export const selectProps = {
+    defaultValue: {
+        type: [String, Number],
+        default: '',
+        description: '默认值，用于异步列表的情况，无法映射label和value，需要手动传入'
     },
     options: {
         type: Array as PropType<SelectOptions[]>,
@@ -27,11 +35,6 @@ export const selectProps = {
         default: 'click',
         description: '触发方式，可选值为 click 或 hover'
     },
-    labelSlot: {
-        type: Boolean,
-        default: false,
-        description: '是否使用 label 插槽'
-    },
     placeholder: {
         type: String,
         default: '请选择',
@@ -42,15 +45,15 @@ export const selectProps = {
         default: 'medium',
         description: '尺寸，可选值为 small、medium、large'
     },
+    itemHeight: {
+        type: Number,
+        default: 34,
+        description: '选项高度，单位 px，没用插槽时无需设置，用于计算虚拟列表的高度'
+    },
     searchable: {
         type: Boolean,
         default: false,
         description: '是否可搜索'
-    },
-    searchPlaceholder: {
-        type: String,
-        default: '',
-        description: '搜索提示语'
     },
     searchMethod: {
         type: Function as PropType<(e: SelectSearchMethodParams) => void>,
@@ -68,7 +71,7 @@ export const selectProps = {
     },
     searchDelay: {
         type: Number,
-        default: 500,
+        default: 250,
         description: '搜索延迟，单位毫秒，仅在 searchable 为 true 时有效'
     },
     clearable: {
@@ -95,10 +98,5 @@ export const selectProps = {
         type: Boolean,
         default: () => true,
         description: '是否显示选中图标'
-    },
-    defaultValue: {
-        type: [String, Number] || undefined,
-        default: '',
-        description: '默认值'
     }
 };

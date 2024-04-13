@@ -1,16 +1,41 @@
 <script lang="ts" setup>
-    import { useVModels } from '@vueuse/core';
     import { LewInput, LewSelect, LewFlex, LewIcon } from 'lew-ui';
     import { paginationProps } from './props';
 
     const props = defineProps(paginationProps);
     const emit = defineEmits(['change', 'update:currentPage', 'update:pageSize']);
 
-    const { total, currentPage, pageSize, pageSizeOptions } = useVModels(props, emit);
+    const total: any = defineModel('total', { default: 0 });
+    const currentPage: any = defineModel('currentPage', { default: 1 });
+    const pageSize: any = defineModel('pageSize', { default: 10 });
+    const pageSizeOptions: any = defineModel('pageSizeOptions', {
+        default: [
+            {
+                label: '10 / 页',
+                value: 10
+            },
+            {
+                label: '20 / 页',
+                value: 20
+            },
+            {
+                label: '30 / 页',
+                value: 30
+            },
+            {
+                label: '50 / 页',
+                value: 50
+            },
+            {
+                label: '100 / 页',
+                value: 100
+            }
+        ]
+    });
 
     const state = reactive({
         toPage: undefined,
-        pageSize: props.pageSize,
+        pageSize: pageSize.value,
         visiblePagesCount: props.visiblePagesCount
     });
 
@@ -181,7 +206,7 @@
         display: inline-block;
         box-sizing: border-box;
         height: 40px;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         user-select: none;
         font-size: 14px;
 
@@ -200,7 +225,7 @@
             min-width: 26px;
             padding: 0px 4px;
             box-sizing: border-box;
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-small);
             text-align: center;
             cursor: pointer;
         }
@@ -214,7 +239,7 @@
             width: auto;
             position: relative;
             height: 100%;
-            color: var(--lew-text-color-2);
+            color: var(--lew-text-color-1);
 
             .active {
                 background-color: var(--lew-color-primary);

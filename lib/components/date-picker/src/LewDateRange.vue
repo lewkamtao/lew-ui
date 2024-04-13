@@ -2,12 +2,12 @@
     import dayjs from 'dayjs';
     import { getMonthDate, getHeadDate } from './date';
     import { dateRangeProps } from './props';
-    import { useVModel } from '@vueuse/core';
     import { LewFlex, LewButton } from 'lew-ui';
+    import _ from 'lodash';
 
-    const emit = defineEmits(['change', 'update:modelValue']);
+    const emit = defineEmits(['change']);
     const props = defineProps(dateRangeProps);
-    const modelValue = useVModel(props, 'modelValue', emit);
+    const modelValue: any = defineModel();
     const hoverValue: any = ref(toRaw(modelValue.value));
     const { startKey, endKey } = props;
 
@@ -183,7 +183,7 @@
                 hoverValue.value[startKey] = dayjs(startBackup).format('YYYY-MM-DD');
                 hoverValue.value[endKey] = dayjs(__dateStr).format('YYYY-MM-DD');
             }
-            modelValue.value = hoverValue.value;
+            modelValue.value = _.cloneDeep(hoverValue.value);
             emit('change', hoverValue.value);
         } else {
             hoverValue.value[startKey] = __dateStr;
@@ -259,15 +259,25 @@
     });
 
     const init = () => {
-        hoverValue.value = JSON.parse(JSON.stringify(modelValue.value));
+        let _value = _.cloneDeep(modelValue.value);
+
+        if (!_value) {
+            _value = {
+                [startKey]: undefined,
+                [endKey]: undefined
+            };
+        }
+
+        hoverValue.value = _value;
+
         // 年
-        dateState.year1 = dayjs(modelValue.value[startKey]).year();
+        dateState.year1 = dayjs(_value[startKey]).year();
         // 月
-        dateState.month1 = dayjs(modelValue.value[startKey]).month() + 1;
+        dateState.month1 = dayjs(_value[startKey]).month() + 1;
         // 年
-        dateState.year2 = dayjs(modelValue.value[endKey]).year();
+        dateState.year2 = dayjs(_value[endKey]).year();
         // 月
-        dateState.month2 = dayjs(modelValue.value[endKey]).month() + 1;
+        dateState.month2 = dayjs(_value[endKey]).month() + 1;
         if (dateState.year1 === dateState.year2 && dateState.month1 === dateState.month2) {
             dateState.month2 += 1;
         }
@@ -511,7 +521,7 @@
 
                 .lew-date-label {
                     .lew-date-value {
-                        color: var(--lew-text-color-2);
+                        color: var(--lew-text-color-1);
                     }
 
                     .lew-date-value-selected {

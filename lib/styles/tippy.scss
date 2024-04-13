@@ -1,0 +1,77 @@
+.tippy-box {
+    border-radius: var(--lew-border-radius-small) !important;
+    box-sizing: border-box !important;
+    color: var(--lew-text-color-0) !important;
+    transition-timing-function: cubic-bezier(0.1, -0.2, 0.1, 1.5) !important;
+    .tippy-content {
+        padding: 0px;
+        box-sizing: border-box !important;
+    }
+}
+
+.tippy-box[data-lew~='popover'] {
+    background-color: var(--lew-backdrop-bg) !important;
+    backdrop-filter: blur(20px);
+    border: var(--lew-popover-border) !important;
+    box-shadow: var(--lew-popover-box-shadow) !important;
+}
+
+.tippy-box[data-lew~='tooltip'] {
+    background-color: var(--lew-tooltip-bg) !important;
+    color: var(--lew-tooltip-color) !important;
+    .tippy-content {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+    .tippy-svg-arrow {
+        fill: var(--lew-tooltip-bg) !important;
+    }
+}
+
+.tippy-box[data-lew~='tooltip'] {
+    box-shadow: none !important;
+}
+
+.tippy-box[data-placement^='top'] > .tippy-svg-arrow {
+    bottom: 0;
+}
+.tippy-box[data-placement^='top'] > .tippy-svg-arrow:after,
+.tippy-box[data-placement^='top'] > .tippy-svg-arrow > svg {
+    top: 16px;
+    transform: scale(1.1) rotate(180deg);
+}
+.tippy-box[data-placement^='bottom'] > .tippy-svg-arrow {
+    top: 0;
+}
+.tippy-box[data-placement^='bottom'] > .tippy-svg-arrow > svg {
+    transform: scale(1.1);
+    bottom: 16px;
+}
+.tippy-box[data-placement^='left'] > .tippy-svg-arrow {
+    right: 0;
+}
+.tippy-box[data-placement^='left'] > .tippy-svg-arrow:after,
+.tippy-box[data-placement^='left'] > .tippy-svg-arrow > svg {
+    transform: scale(1.1) rotate(90deg);
+    top: calc(50% - 3px);
+    left: 11px;
+}
+.tippy-box[data-placement^='right'] > .tippy-svg-arrow {
+    left: 0;
+}
+.tippy-box[data-placement^='right'] > .tippy-svg-arrow:after,
+.tippy-box[data-placement^='right'] > .tippy-svg-arrow > svg {
+    transform: scale(1.1) rotate(-90deg);
+    top: calc(50% - 3px);
+    right: 11px;
+}
+.tippy-svg-arrow {
+    width: 16px;
+    height: 16px;
+    fill: #333;
+    text-align: initial;
+}
+.tippy-svg-arrow,
+.tippy-svg-arrow > svg {
+    position: absolute;
+}

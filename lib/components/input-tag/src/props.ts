@@ -1,6 +1,6 @@
 import { PropType } from 'vue';
 
-export const inputTagProps = {
+export const inputTagModel = {
     // 绑定值
     modelValue: {
         type: Array as PropType<string[]> | undefined,
@@ -8,3 +8,4 @@ export const inputTagProps = {
         description: '绑定值'
     }
 };
+export const inputTagProps = {};

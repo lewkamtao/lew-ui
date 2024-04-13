@@ -2,16 +2,9 @@
     import { switchProps } from './props';
     const props = defineProps(switchProps);
     const _loading = ref(false);
-    const v = ref(props.modelValue);
 
-    watch(
-        () => props.modelValue,
-        () => {
-            v.value = props.modelValue;
-        }
-    );
-
-    const emit = defineEmits(['update:modelValue', 'click', 'change']);
+    const modelValue = defineModel<boolean>();
+    const emit = defineEmits(['click', 'change']);
 
     const handleClick = async (e: any) => {
         if (props.disabled || _loading.value || props.loading) return;
@@ -21,17 +14,16 @@
                 return;
             }
             _loading.value = true;
-            const isSuccess = await props.request(!v.value);
+            const isSuccess = await props.request(!modelValue.value);
             if (isSuccess) {
-                v.value = !v.value;
+                modelValue.value = !modelValue.value;
                 _loading.value = false;
             }
             _loading.value = false;
         } else {
-            v.value = !v.value;
+            modelValue.value = !modelValue.value;
         }
-        emit('update:modelValue', v.value);
-        emit('change', v.value);
+        emit('change', modelValue.value);
     };
 </script>
 
@@ -40,13 +32,13 @@
         class="lew-switch-view"
         :class="`
      ${round ? 'lew-switch-round' : ''} 
-         ${v ? 'lew-switch-checked' : ''}
+         ${modelValue ? 'lew-switch-checked' : ''}
          ${_loading || loading ? 'lew-switch-loading' : ''}
          ${request ? 'lew-switch-request' : ''}
     `"
         @click="handleClick"
     >
-        <input v-show="false" v-model="v" type="checkbox" :disabled="disabled" />
+        <input v-show="false" v-model="modelValue" type="checkbox" :disabled="disabled" />
         <div class="lew-switch-dot"></div>
     </div>
 </template>
@@ -57,11 +49,10 @@
         display: block;
         width: 38px;
         height: 24px;
-        background: var(--lew-form-bgcolor);
-        border-radius: var(--lew-border-radius);
+        background: var(--lew-bgcolor-3);
+        border-radius: var(--lew-border-radius-small);
         transition: var(--lew-form-transition);
         cursor: pointer;
-        box-shadow: var(--lew-form-box-shadow);
         outline: 0px var(--lew-color-primary-light) solid;
 
         .lew-switch-dot {
@@ -74,7 +65,6 @@
             background: var(--lew-color-white);
             transition: var(--lew-form-transition);
             transform: translate(4px, 4px);
-            box-shadow: 0px 0px 12px rgba($color: #000000, $alpha: 0.15);
         }
 
         .lew-switch-dot::after {
@@ -128,12 +118,12 @@
     }
 
     .lew-switch-view:hover {
-        background: var(--lew-form-bgcolor-active);
+        background: var(--lew-bgcolor-4);
         outline: var(--lew-form-ouline);
     }
 
     .lew-switch-view:active {
-        background: var(--lew-form-bgcolor-active);
+        background: var(--lew-bgcolor-5);
 
         .lew-switch-dot {
             width: 20px;

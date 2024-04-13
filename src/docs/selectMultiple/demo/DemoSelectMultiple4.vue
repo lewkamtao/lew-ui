@@ -1,71 +1,87 @@
 <script setup lang="ts">
-    const options = ref([
-        {
-            label: '宋太宗',
-            value: '1',
-            desc: '一个很帅的帝王'
-        },
-        {
-            value: '2',
-            label: '唐睿宗',
-            desc: '一个很聪明的帝王'
-        },
-        {
-            value: '3',
-            label: '汉献帝',
-            desc: '一个很有智慧的帝王'
-        },
-        {
-            value: '4',
-            label: '齐武帝',
-            desc: '一个好帝王'
-        }
-    ]);
+    import { schools } from './schools';
+    import _ from 'lodash';
 
-    const value = ref([]);
+    const schoolsOptions = schools.map((e, i) => {
+        return { label: e, value: _.padStart(String(i), 8, '0') };
+    });
+
+    const value = ref('');
 </script>
 
 <template>
-    <lew-flex style="width: 320px" direction="y">
-        <lew-select-multiple
-            v-model="value"
-            :item-height="48"
-            :options="options"
-            placeholder="支持插槽"
-            label-slot
-        >
-            <template #label="{ item, checked }">
-                <div class="custom-select-box" :class="{ 'custom-select-checked': checked }">
-                    <div class="label">{{ item.label }}</div>
-                    <div class="desc">
-                        {{ item.desc }}
+    <lew-select-multiple
+        v-model="value"
+        style="width: 320px"
+        :item-height="48"
+        clearable
+        :options="schoolsOptions"
+        placeholder="支持插槽"
+    >
+        <template #item="{ props }">
+            <div class="custom-select-box" :class="{ 'custom-select-checked': props.checked }">
+                <div class="custom-select-content">
+                    <lew-avatar
+                        round
+                        width="30"
+                        height="30"
+                        :src="`https://api.lew.kamtao.com/manage/common/avatar/350/4B78CA/${props.label}`"
+                    />
+                    <div class="info">
+                        <div class="label"
+                            >{{ props.label }} {{ props.checked ? '（已选择）' : '' }}</div
+                        >
+                        <div class="desc">
+                            {{ props.value }}
+                        </div>
                     </div>
                 </div>
-            </template>
-        </lew-select-multiple>
-    </lew-flex>
+            </div>
+        </template>
+    </lew-select-multiple>
 </template>
 
 <style lang="scss">
     .custom-select-box {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        border-radius: var(--lew-border-radius);
+        width: 100%;
         height: 48px;
         user-select: none;
-        padding: 0px 8px;
+        padding: 2px 0px;
+        box-sizing: border-box;
         cursor: pointer;
-        .label {
-            color: var(--lew-text-color-1);
-            font-size: 14px;
+        overflow: hidden;
+        .custom-select-content {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0px 8px;
+            height: 100%;
+            border-radius: var(--lew-border-radius-small);
+            box-sizing: border-box;
+            .info {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                .label {
+                    color: var(--lew-text-color-1);
+                    font-size: 14px;
+                }
+                .desc {
+                    color: var(--lew-text-color-8);
+                    font-size: 12px;
+                }
+            }
         }
-        .desc {
-            color: var(--lew-text-color-8);
-            font-size: 12px;
+    }
+    .custom-select-box:hover {
+        .custom-select-content {
+            background: var(--lew-color-primary-light);
         }
     }
     .custom-select-checked {
-        background: var(--lew-color-primary-light);
+        .custom-select-content {
+            background: var(--lew-color-primary-light);
+        }
     }
 </style>

@@ -79,7 +79,6 @@
     );
     const initTippy = () => {
         let { placement, triggerTarget, offset, trigger, disabled }: any = props;
-
         if (trigger === 'hover') {
             trigger = 'mouseenter';
         }
@@ -95,7 +94,7 @@
             interactive: true,
             hideOnClick: trigger !== 'mouseenter' ? props.hideOnClick : (false as any),
             placement,
-            duration: [120, 120],
+            duration: [250, 250],
             arrow: false,
             offset,
             delay: trigger === 'mouseenter' ? [120, 120] : undefined,
@@ -140,17 +139,16 @@
 
 <template>
     <div class="lew-popover">
-        <label ref="triggerRef">
-            <div class="trigger">
-                <slot name="trigger" />
-            </div>
-        </label>
+        <div ref="triggerRef" class="trigger">
+            <slot name="trigger" />
+        </div>
         <div
             ref="bodyRef"
             v-loading="{
                 visible: loading,
                 iconSize: 16
             }"
+            class="lew-popover-body"
             :class="popoverBodyClassName"
         >
             <slot name="popover-body" :show="show" :hide="hide" />
@@ -159,7 +157,13 @@
 </template>
 
 <style lang="scss">
+    .lew-popover {
+        .trigger {
+            display: flex;
+        }
+    }
     .lew-popover-body {
         overflow: hidden;
+        border-radius: var(--lew-border-radius-small);
     }
 </style>

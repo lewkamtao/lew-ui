@@ -1,7 +1,7 @@
 export default {
     title: 'options',
     columnsKey: 'props',
-    orderNum: 100,
+    orderNum: 5,
     data: [
         {
             name: 'label',

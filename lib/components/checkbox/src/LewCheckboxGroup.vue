@@ -1,16 +1,30 @@
 <script lang="ts" setup>
-    import { useVModel, watchArray } from '@vueuse/core';
     import { checkboxGroupProps } from './props';
     import type { CheckboxOptions } from './props';
     import { object2class } from 'lew-ui/utils';
     import { LewCheckbox } from 'lew-ui';
+    import _ from 'lodash';
 
     const props: any = defineProps(checkboxGroupProps as any);
-    const emit = defineEmits(['change', 'update:modelValue']);
-    const modelValue = useVModel(props, 'modelValue', emit);
+    const emit = defineEmits(['change']);
+    const modelValue: any = defineModel<string[] | number[] | undefined>({
+        default: () => [],
+        required: true
+    });
+
     const checkList = ref([] as boolean[]);
 
-    const change = (item: CheckboxOptions, checked: boolean) => {
+    watch(
+        () => modelValue.value,
+        () => {
+            initCheckbox();
+        },
+        {
+            deep: true // 开启深度监听
+        }
+    );
+
+    const change = ({ item, checked }: { item: CheckboxOptions; checked: boolean }) => {
         let _value = modelValue.value || [];
         if (checked) {
             _value.push(item.value);
@@ -20,20 +34,16 @@
                 _value.splice(index, 1);
             }
         }
-        modelValue.value = _value;
         emit('change', {
-            value: modelValue.value,
+            value: _.cloneDeep(_value),
             item: item
         });
+        modelValue.value = _.cloneDeep(_value);
     };
-
-    watchArray(modelValue, () => {
-        initCheckbox();
-    });
 
     const initCheckbox = () => {
         checkList.value = props.options.map((item: CheckboxOptions) => {
-            if (modelValue.value.includes(item.value)) {
+            if (modelValue.value && modelValue.value.includes(item.value)) {
                 return true;
             }
             return false;
@@ -41,8 +51,8 @@
     };
 
     const getCheckboxGroupClassName = computed(() => {
-        const { size, direction } = props as any;
-        return object2class('lew-checkbox-group', { size, direction });
+        const { size, direction, readonly, disabled } = props as any;
+        return object2class('lew-checkbox-group', { size, direction, readonly, disabled });
     });
 
     initCheckbox();
@@ -65,7 +75,7 @@
             :size="size"
             :label="item.label"
             :disabled="item.disabled || disabled"
-            @change="change(item, $event)"
+            @change="change({ item, checked: $event })"
         />
     </lew-flex>
 </template>
@@ -96,5 +106,12 @@
     .lew-checkbox-group.lew-checkbox-group-direction-y {
         align-items: flex-start;
         flex-direction: column;
+    }
+    .lew-checkbox-group-disabled {
+        opacity: var(--lew-disabled-opacity);
+        pointer-events: none;
+    }
+    .lew-checkbox-group-readonly {
+        pointer-events: none;
     }
 </style>

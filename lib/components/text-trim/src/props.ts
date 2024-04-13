@@ -26,6 +26,11 @@ export const textTrimProps = {
         default: 'start', // center end
         description: '水平方向对齐方式'
     },
+    delay: {
+        type: Array,
+        default: () => [80, 80],
+        description: '延迟显示和隐藏的时间'
+    },
     lineClamp: {
         type: Number,
         default: undefined,

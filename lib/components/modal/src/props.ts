@@ -1,6 +1,14 @@
 import { ExtractPropTypes, PropType } from 'vue';
 import type { ButtonProps } from '../../button/index';
 
+export const modalModel = {
+    visible: {
+        type: Boolean,
+        default: false,
+        description: '绑定值，显示控制'
+    }
+};
+
 export const modalProps = {
     title: {
         type: String,
@@ -16,11 +24,6 @@ export const modalProps = {
         type: [String, Number],
         default: 'auto',
         description: '高度'
-    },
-    visible: {
-        type: Boolean,
-        default: false,
-        description: '是否显示'
     },
     customHeader: {
         type: Boolean,

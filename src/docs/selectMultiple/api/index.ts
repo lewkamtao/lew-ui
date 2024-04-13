@@ -1,3 +1,5 @@
-export { default as selectMultipleProps } from './props';
-export { default as selectMultipleOptions } from './selectMultipleOptions';
+export { default as props } from './props';
+export { default as model } from './model';
+export { default as options } from './options';
 export { default as events } from './events';
+export { default as slot } from './slots';

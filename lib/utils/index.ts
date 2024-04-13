@@ -1,3 +1,4 @@
+import _ from 'lodash';
 // Returns the icon type to be used in a tooltip.
 
 // type: The type of message to display in the tooltip.
@@ -114,4 +115,31 @@ export const lewSetForm = ({
         }
     };
     _fn();
+};
+
+export type Tree = {
+    label: string;
+    value: string;
+    labelPaths?: string[];
+    valuePaths?: string[];
+    level: number;
+    isLeaf?: boolean;
+    loading?: boolean;
+    disabled?: boolean;
+    parentLabelPaths?: string[];
+    parentValuePaths?: string[];
+    parentValue?: string;
+    parentLabel?: string;
+    children?: Tree[];
+    _key: string;
+};
+
+export const getUUId = () => {
+    // 生成一个随机字符串作为UUID的前缀
+    const randomString =
+        Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+    // 使用Lodash的_.uniqueId()方法生成UUID
+    const uuid = _.uniqueId(randomString);
+    return uuid;
 };

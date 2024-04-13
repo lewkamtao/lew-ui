@@ -2,26 +2,29 @@ import { PropType } from 'vue';
 
 export type CascaderOptions = {
     label: string;
-    value: [string, number];
+    value: string;
     labelPaths?: string[];
     valuePaths?: string[];
-    level?: number;
-    isHasChild?: boolean;
+    level: number;
+    isLeaf?: boolean;
+    loading?: boolean;
     disabled?: boolean;
     parentLabelPaths?: string[];
     parentValuePaths?: string[];
-    parentChildren?: CascaderOptions[];
     children?: CascaderOptions[];
 };
 
 export type CascaderTriggerType = 'click' | 'hover';
 
-export const cascaderProps = {
+export const cascaderModel = {
     modelValue: {
         type: [String, Number],
         default: '',
         description: '值（双向绑定）'
-    },
+    }
+};
+
+export const cascaderProps = {
     options: {
         type: Array as PropType<CascaderOptions[]>,
         default: [],
@@ -57,7 +60,11 @@ export const cascaderProps = {
         default: 'medium',
         description: '尺寸大小'
     },
-
+    onload: {
+        type: Function,
+        default: undefined,
+        description: '异步加载数据'
+    },
     clearable: {
         type: Boolean,
         default: true,

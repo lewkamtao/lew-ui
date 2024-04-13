@@ -10,19 +10,30 @@ export type CheckboxSize = 'small' | 'medium' | 'large';
 
 export type CheckboxGroupDirectionType = 'x' | 'y';
 
-export const checkboxProps = {
+export const checkboxModel = {
     modelValue: {
         type: Boolean,
         default: false,
         description: '值（双向绑定）'
-    },
+    }
+};
+
+export const checkboxGroupModel = {
+    modelValue: {
+        type: [Array as PropType<String[]>, undefined],
+        default: [],
+        required: true,
+        description: '值（双向绑定）'
+    }
+};
+export const checkboxProps = {
     checked: {
-        type: Boolean,
+        type: [Boolean, Function],
         default: false,
         description: '选中状态'
     },
     certain: {
-        type: Boolean,
+        type: [Boolean, Function],
         default: false,
         description: '是否是确定状态'
     },
@@ -51,6 +62,11 @@ export const checkboxProps = {
         default: false,
         description: '是否禁用'
     },
+    readonly: {
+        type: Boolean,
+        default: false,
+        description: '是否只读'
+    },
     size: {
         type: String as PropType<CheckboxSize>,
         default: 'medium',
@@ -65,12 +81,7 @@ export const checkboxGroupProps = {
         required: true,
         description: '配置项'
     },
-    modelValue: {
-        type: [Array as PropType<String[]>, undefined],
-        default: [],
-        required: true,
-        description: '值（双向绑定）'
-    },
+
     block: {
         type: Boolean,
         default: false,
@@ -85,6 +96,11 @@ export const checkboxGroupProps = {
         type: Boolean,
         default: false,
         description: '是否禁用'
+    },
+    readonly: {
+        type: Boolean,
+        default: false,
+        description: '是否只读'
     },
     direction: {
         type: String as PropType<CheckboxGroupDirectionType>,

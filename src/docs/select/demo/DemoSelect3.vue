@@ -34,6 +34,7 @@
             searchable
             :default-value="value"
             :options="options"
+            clearable
             placeholder="默认过滤"
         />
         <lew-select

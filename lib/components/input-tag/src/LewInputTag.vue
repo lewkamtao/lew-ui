@@ -1,11 +1,11 @@
 <script setup lang="ts">
     import { inputTagProps } from './props';
-    import { useVModel } from '@vueuse/core';
     import { LewInput, LewTag } from 'lew-ui';
-    const emit = defineEmits(['close', 'change', 'update:modelValue']);
+    import _ from 'lodash';
+    const emit = defineEmits(['close', 'change']);
 
-    const props = defineProps(inputTagProps);
-    const tagsValue = useVModel(props, 'modelValue', emit);
+    defineProps(inputTagProps);
+    const tagsValue: any = defineModel<string[]>();
     const inputValue = ref();
     const isInput = ref(false);
     const lewInputRef = ref();
@@ -13,12 +13,6 @@
 
     let delDownTimer: any;
     let delDownCheck = 0;
-    watch(
-        () => props.modelValue,
-        () => {
-            tagsValue.value = props.modelValue;
-        }
-    );
 
     const openInput = () => {
         isInput.value = true;
@@ -35,6 +29,7 @@
                     delDownCheck += 1;
                     if (delDownCheck >= 2) {
                         tagsValue.value.splice(tagsValue.value.length - 1, 1);
+                        emit('change', _.cloneDeep(tagsValue.value));
                         delDownCheck = 0;
                     }
                 }
@@ -126,7 +121,7 @@
         height: 26px;
         width: 65px;
         box-sizing: border-box;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         background-color: var(--lew-bgcolor-0);
         color: var(--lew-text-color-8);
         border: var(--lew-text-color-8) var(--lew-form-border-width) dashed;

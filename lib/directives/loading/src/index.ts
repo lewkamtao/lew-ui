@@ -10,7 +10,7 @@ export default {
     install(app: Application) {
         app.directive('loading', {
             mounted(el: HTMLElement, binding: DirectiveBinding) {
-                const { title, iconSize, visible } = binding.value;
+                const { tip, iconSize, visible } = binding.value;
 
                 loadingWrapper = document.createElement('div');
                 loadingBox = document.createElement('div');
@@ -27,7 +27,7 @@ export default {
                 });
                 loader.mount(loadingBox);
                 // // add loading text
-                loadingBox.setAttribute('data-after', title || '');
+                loadingBox.setAttribute('data-after', tip || '');
 
                 loadingWrapper.appendChild(loadingBox);
                 el.appendChild(loadingWrapper);
@@ -37,8 +37,8 @@ export default {
                 }
             },
             updated(el: HTMLElement, binding: DirectiveBinding) {
-                const { title, visible } = binding.value;
-                loadingBox.setAttribute('data-after', title || '');
+                const { tip, visible } = binding.value;
+                loadingBox.setAttribute('data-after', tip || '');
 
                 if (visible) {
                     el.classList.add('lew-loading-show');

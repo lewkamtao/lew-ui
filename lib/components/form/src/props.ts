@@ -1,5 +1,13 @@
 import { ExtractPropTypes } from 'vue';
 
+export const formModel = {
+    options: {
+        type: Array,
+        required: true,
+        default: [],
+        description: '可控表单配置'
+    }
+};
 export const formProps = {
     options: {
         type: Object,

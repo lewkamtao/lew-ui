@@ -2,7 +2,7 @@ import { PropType } from 'vue';
 
 export type SelectMultipleOptions = {
     label: string;
-    value: string;
+    value: string | number;
     disabled?: boolean;
 };
 
@@ -11,12 +11,15 @@ export type SelectSearchMultipleMethodParams = {
     keyword?: string;
 };
 
-export const selectMultipleProps = {
+export const selectMultipleModel = {
     modelValue: {
         type: (Array as PropType<string[] | number[]>) || undefined,
         default: [],
         description: '绑定值'
-    },
+    }
+};
+
+export const selectMultipleProps = {
     options: {
         type: Array as PropType<SelectMultipleOptions[]>,
         default: [],
@@ -27,10 +30,10 @@ export const selectMultipleProps = {
         default: 'click',
         description: '触发方式，可选值为 click 或 hover'
     },
-    labelSlot: {
-        type: Boolean,
-        default: false,
-        description: '是否使用 label 插槽'
+    valueLayout: {
+        type: String,
+        default: 'text',
+        description: '值的布局方式，可选值为 tag 或 text'
     },
     placeholder: {
         type: String,
@@ -41,6 +44,11 @@ export const selectMultipleProps = {
         type: String,
         default: 'medium',
         description: '尺寸，可选值为 small、medium、large'
+    },
+    itemHeight: {
+        type: Number,
+        default: 34,
+        description: '选项高度，单位 px，没用插槽时无需设置，用于计算虚拟列表的高度'
     },
     searchable: {
         type: Boolean,

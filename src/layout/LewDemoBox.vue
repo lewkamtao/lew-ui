@@ -26,7 +26,7 @@
 
     const style = computed<CSSProperties>(() => {
         if (isShowCode.value) {
-            return { maxHeight: '400px' };
+            return { maxHeight: '10000px' };
         }
         return { maxHeight: 0, borderTop: 'none' };
     });
@@ -41,12 +41,12 @@
             </lew-tag>
         </lew-title>
         <div class="demo-item">
-            <div class="demo-cp">
+            <div class="demo-cp lew-scrollbar">
                 <slot></slot>
             </div>
-            <div v-show="code" v-highlight class="hl-pre lew-scrollbar" :style="style">
+            <div v-if="code" class="hl-pre lew-scrollbar" :style="style">
                 <div class="pre-box">
-                    <pre><code>{{ code }}</code></pre>
+                    <highlightjs autodetect :code="code" />
                 </div>
             </div>
             <div class="show-bar" @click="isShowCode = !isShowCode">
@@ -67,7 +67,7 @@
         .demo-item {
             margin: 10px 0px;
             background-color: var(--lew-bgcolor-0);
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-small);
             box-shadow: var(--lew-box-shadow);
             overflow: hidden;
         }
@@ -82,7 +82,7 @@
             border-top: var(--lew-border-1);
 
             .pre-box {
-                border-radius: var(--lew-border-radius);
+                border-radius: var(--lew-border-radius-small);
             }
         }
 
@@ -96,7 +96,7 @@
             font-size: 14px;
             cursor: pointer;
             color: #999;
-            background-color: var(--lew-bgcolor-0);
+            background-color: var(--lew-bgcolor-1);
 
             .icon {
                 display: flex;

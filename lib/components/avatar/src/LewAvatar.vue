@@ -51,7 +51,7 @@
         .lew-avatar-box {
             width: 100%;
             height: 100%;
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-small);
             overflow: hidden;
             background-color: #eee;
         }
@@ -60,7 +60,7 @@
             width: 100%;
             height: 100%;
             background-color: var(--lew-bgcolor-2);
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-small);
         }
 
         .dot {

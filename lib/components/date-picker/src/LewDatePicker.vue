@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-    import { useVModel } from '@vueuse/core';
     import { object2class } from 'lew-ui/utils';
     import { LewPopover, LewIcon, LewDate, LewTooltip } from 'lew-ui';
     import { datePickerProps } from './props';
@@ -9,9 +8,9 @@
     if (app && !app.directive('tooltip')) {
         app.use(LewTooltip);
     }
-    const emit = defineEmits(['change', 'clear', 'update:modelValue']);
+    const emit = defineEmits(['change', 'clear']);
     const props = defineProps(datePickerProps);
-    const modelValue = useVModel(props, 'modelValue', emit);
+    const modelValue: any = defineModel();
 
     const visible = ref(false);
 
@@ -47,7 +46,8 @@
     });
 
     const clearHandle = () => {
-        modelValue.value = '';
+        modelValue.value = undefined;
+        change(modelValue.value);
         emit('clear');
     };
 
@@ -66,6 +66,7 @@
         ref="lewPopoverRef"
         trigger="click"
         placement="bottom-start"
+        :offset="[0, 8]"
         @show="showHandle"
         @hide="hideHandle"
     >
@@ -77,6 +78,7 @@
                         {{ modelValue }}
                     </div>
                     <lew-icon
+                        v-if="!readonly"
                         class="icon-calendar"
                         :size="getIconSize"
                         :class="{
@@ -117,14 +119,13 @@
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-small);
             background-color: var(--lew-form-bgcolor);
             box-sizing: border-box;
             transition: all 0.15s ease;
             cursor: pointer;
             user-select: none;
             outline: 0px transparent solid;
-            box-shadow: var(--lew-form-box-shadow);
             border: var(--lew-form-border-width) transparent solid;
         }
 

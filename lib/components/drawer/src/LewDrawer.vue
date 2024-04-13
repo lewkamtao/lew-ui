@@ -58,17 +58,17 @@
         width: 100%;
         height: 100%;
         background-color: var(--lew-modal-bgcolor);
-        outline: 90000px solid var(--lew-modal-bgcolor);
-        z-index: 999;
+        outline: 10000px solid var(--lew-modal-bgcolor);
+        z-index: 201;
     }
 
     .lew-drawer-main {
         position: fixed;
         width: 100%;
         height: 100%;
-        transition: all 0.3s ease;
+        transition: all 0.15s ease;
         background: #fff;
-        z-index: 9999;
+        z-index: 202;
     }
 
     .lew-drawer-main-position-right {
@@ -103,7 +103,7 @@
 
     .fade-enter-active,
     .fade-leave-active {
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
     }
 
     .fade-enter-from,

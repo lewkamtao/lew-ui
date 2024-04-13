@@ -19,6 +19,11 @@ export const radioProps = {
         default: '',
         description: 'button 文本'
     },
+    round: {
+        type: Boolean,
+        default: true,
+        description: '是否圆角'
+    },
     block: {
         type: Boolean,
         default: '',
@@ -34,6 +39,11 @@ export const radioProps = {
         default: false,
         description: '是否禁用'
     },
+    readonly: {
+        type: Boolean,
+        default: false,
+        description: '是否只读'
+    },
     size: {
         type: String as PropType<RadioSize>,
         default: 'medium',
@@ -41,12 +51,15 @@ export const radioProps = {
     }
 };
 
-export const radioGroupProps = {
+export const radioGroupModel = {
     modelValue: {
         type: [String, Number],
         default: '',
         description: '绑定值'
-    },
+    }
+};
+
+export const radioGroupProps = {
     block: {
         type: Boolean,
         default: false,
@@ -66,6 +79,11 @@ export const radioGroupProps = {
         type: Boolean,
         default: false,
         description: '是否禁用'
+    },
+    readonly: {
+        type: Boolean,
+        default: false,
+        description: '是否只读'
     },
     size: {
         type: String as PropType<RadioSize>,

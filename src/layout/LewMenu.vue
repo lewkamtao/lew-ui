@@ -111,7 +111,7 @@
                 box-sizing: border-box;
                 list-style: none;
                 width: calc(100% - 20px);
-                border-radius: var(--lew-border-radius);
+                border-radius: var(--lew-border-radius-small);
                 cursor: pointer;
                 font-size: 14px;
                 transform: translateX(50px);

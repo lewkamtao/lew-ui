@@ -1,5 +1,5 @@
 <script lang="ts" setup name="Modal">
-    import { useVModel, useMagicKeys, useMouse } from '@vueuse/core';
+    import { useMagicKeys, useMouse } from '@vueuse/core';
     import { any2px } from 'lew-ui/utils';
     import { LewFlex, LewButton, LewIcon } from 'lew-ui';
     import { useDOMCreate } from '../../../hooks';
@@ -12,9 +12,9 @@
 
     const props = defineProps(modalProps);
 
-    const emit = defineEmits(['update:visible', 'ok', 'cancel', 'show', 'close']);
+    const emit = defineEmits(['ok', 'cancel', 'show', 'close']);
 
-    const visible = useVModel(props, 'visible', emit);
+    const visible = defineModel('visible');
     const transformOrigin = ref('0 0');
 
     const maskClick = () => {
@@ -49,6 +49,7 @@
             }
         }
     );
+
     if (props.closeByEsc) {
         watch(Escape, (v) => {
             if (v && visible.value) {
@@ -79,7 +80,7 @@
                             <lew-text-trim class="title" :text="title" />
                             <lew-icon
                                 size="18"
-                                class="close-btn"
+                                class="lew-form-icon-clear"
                                 type="x"
                                 @click="visible = false"
                             />
@@ -141,43 +142,30 @@
         z-index: 2001;
 
         .lew-modal-box {
-            border-radius: var(--lew-border-radius);
+            border-radius: var(--lew-border-radius-large);
             background-color: var(--lew-modal-box-bgcolor);
             border: var(--lew-modal-border);
-            box-shadow: var(--lew-modal-box-shadow);
             overflow: hidden;
 
             .header {
+                position: relative;
                 height: 50px;
-                background-color: var(--lew-bgcolor-2);
                 padding: 10px 20px;
 
                 .title {
                     font-size: 16px;
                     font-weight: bold;
                 }
-
-                .close-btn {
-                    cursor: pointer;
-                    transition: all 0.25s;
-                    border-radius: var(--lew-border-radius);
-                    color: var(--lew-text-color-5);
-                    padding: 2px;
+                .lew-form-icon-clear {
+                    right: 15px;
                 }
-
-                .close-btn:hover {
-                    transform: scale(1.05);
-                    background-color: var(--lew-bgcolor-3);
-                }
-
-                .close-btn:active {
-                    transform: scale(1);
+                .lew-form-icon-clear:hover {
+                    background-color: var(--lew-bgcolor-5);
                 }
             }
 
             .footer {
                 height: 50px;
-                background-color: var(--lew-bgcolor-1);
                 padding: 10px 20px;
             }
 

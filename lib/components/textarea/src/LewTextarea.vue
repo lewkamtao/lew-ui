@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { useVModel, useMagicKeys } from '@vueuse/core';
+    import { useMagicKeys } from '@vueuse/core';
     import { object2class, any2px } from 'lew-ui/utils';
     import { LewIcon, LewTooltip } from 'lew-ui';
     import { textareaProps } from './props';
@@ -12,7 +12,6 @@
     }
     const lewTextareaRef = ref();
     const emit = defineEmits([
-        'update:modelValue',
         'update:type',
         'clear',
         'blur',
@@ -24,7 +23,7 @@
     ]);
 
     const props = defineProps(textareaProps);
-    const modelValue = useVModel(props, 'modelValue', emit);
+    const modelValue: any = defineModel();
     const state = reactive({
         isFocus: false
     });
@@ -45,7 +44,7 @@
     };
 
     const clear = (): void => {
-        modelValue.value = '';
+        modelValue.value = undefined;
         emit('clear');
     };
 
@@ -151,13 +150,12 @@
         position: relative;
         overflow: hidden;
         width: 100%;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         background-color: var(--lew-form-bgcolor);
         transition: var(--lew-form-transition);
         box-sizing: border-box;
         outline: 0px transparent solid;
         border: var(--lew-form-border-width) transparent solid;
-        box-shadow: var(--lew-form-box-shadow);
 
         .lew-textarea {
             width: 100%;
@@ -165,7 +163,7 @@
             text-overflow: ellipsis;
             border: none;
             background: none;
-            color: var(--lew-text-color-2);
+            color: var(--lew-text-color-1);
             outline: none;
             box-sizing: border-box;
             resize: none;

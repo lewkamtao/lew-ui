@@ -3,14 +3,13 @@
     import { getMonthDate, getHeadDate } from './date';
     import type { RetType, RetItemType } from './date';
     import { dateProps } from './props';
-    import { useVModel } from '@vueuse/core';
     import dayjs from 'dayjs';
     import { object2class } from 'lew-ui/utils';
     import { LewFlex, LewButton } from 'lew-ui';
 
-    const emit = defineEmits(['change', 'update:modelValue']);
-    const props = defineProps(dateProps);
-    const modelValue = useVModel(props, 'modelValue', emit);
+    const emit = defineEmits(['change']);
+    defineProps(dateProps);
+    const modelValue: any = defineModel();
 
     // 获取当前年份
     const _year = dayjs().year();
@@ -224,7 +223,7 @@
 
                 .lew-date-label {
                     .lew-date-value {
-                        color: var(--lew-text-color-2);
+                        color: var(--lew-text-color-1);
                     }
                 }
             }

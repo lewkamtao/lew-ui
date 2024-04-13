@@ -71,7 +71,7 @@
             padding: 4px 10px;
             font-size: 14px;
             border-radius: 6px;
-            color: var(--lew-text-color-2);
+            color: var(--lew-text-color-1);
             cursor: pointer;
             white-space: nowrap;
             box-sizing: border-box;

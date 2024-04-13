@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { useVModel, useDebounceFn } from '@vueuse/core';
+    import { useDebounceFn } from '@vueuse/core';
     import { LewPopover, LewIcon, LewTooltip } from 'lew-ui';
     import { object2class, numFormat } from 'lew-ui/utils';
     import { UseVirtualList } from '@vueuse/components';
@@ -11,8 +11,8 @@
         app.use(LewTooltip);
     }
     const props = defineProps(selectMultipleProps);
-    const emit = defineEmits(['update:modelValue', 'change', 'select', 'clear', 'delete', 'blur']);
-    const selectValue = useVModel(props, 'modelValue', emit);
+    const emit = defineEmits(['change', 'select', 'clear', 'delete', 'blur']);
+    const selectValue: any = defineModel<any[]>();
 
     const lewSelectRef = ref();
     const lewPopverRef = ref();
@@ -20,7 +20,6 @@
 
     const state = reactive({
         selectWidth: 0,
-        itemHeight: 34,
         visible: false,
         loading: false,
         options: props.options,
@@ -96,7 +95,7 @@
 
         const _value = selectValue.value || [];
 
-        const index = _value.findIndex((e: string | number) => e == item.value);
+        const index = _value.findIndex((e: string | number) => e === item.value);
 
         if (index >= 0) {
             _value.splice(index, 1);
@@ -178,7 +177,7 @@
         }
     };
     const getVirtualHeight = computed(() => {
-        let height = state.options.length * state.itemHeight;
+        let height = state.options.length * props.itemHeight;
         height = height >= 240 ? 240 : height;
         return `${height}px`;
     });
@@ -187,6 +186,9 @@
         state.visible = false;
         emit('blur');
     };
+    onMounted(() => {
+        getSelectWidth();
+    });
 
     defineExpose({ show, hide });
 </script>
@@ -201,6 +203,7 @@
         :disabled="disabled"
         placement="bottom-start"
         style="width: 100%"
+        :offset="[-1, 10]"
         :loading="state.loading"
         @show="showHandle"
         @hide="hideHandle"
@@ -208,6 +211,7 @@
         <template #trigger>
             <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
                 <lew-icon
+                    v-if="!readonly"
                     :size="getIconSize"
                     type="chevron-down"
                     class="icon-select"
@@ -227,28 +231,66 @@
                         @click.stop="clearHandle"
                     />
                 </transition>
-
-                <lew-flex
-                    v-show="getLabels && getLabels.length > 0"
-                    style="padding: 3px"
-                    x="start"
-                    :gap="3"
-                    wrap
-                    class="value"
-                >
-                    <TransitionGroup name="list">
-                        <lew-tag
-                            v-for="(item, index) in getLabels"
-                            :key="index"
-                            type="light"
-                            :size="size"
-                            closable
-                            @close="deleteTag(index)"
+                <template v-if="getLabels && getLabels.length > 0">
+                    <lew-flex
+                        v-if="valueLayout === 'tag'"
+                        style="padding: 3px"
+                        x="start"
+                        y="center"
+                        :gap="3"
+                        wrap
+                        class="value"
+                    >
+                        <TransitionGroup name="list">
+                            <lew-tag
+                                v-for="(item, index) in getLabels"
+                                :key="index"
+                                type="light"
+                                :size="size"
+                                closable
+                                @close="deleteTag(index)"
+                            >
+                                {{ item }}
+                            </lew-tag>
+                        </TransitionGroup>
+                    </lew-flex>
+                    <template v-else>
+                        <lew-popover
+                            ref="lewPopverValueRef"
+                            trigger="hover"
+                            popover-body-class-name="lew-select-multiple-popover-tag"
+                            placement="top-start"
+                            style="width: 100%"
                         >
-                            {{ item }}
-                        </lew-tag>
-                    </TransitionGroup>
-                </lew-flex>
+                            <template #trigger>
+                                <div class="lew-select-multiple-text-value">
+                                    {{ getLabels.join('，') }}
+                                </div>
+                            </template>
+                            <template #popover-body>
+                                <lew-flex
+                                    x="start"
+                                    y="center"
+                                    :gap="3"
+                                    wrap
+                                    :style="`max-width:${state.selectWidth + 12}px`"
+                                    class="lew-select-multiple-tag-value"
+                                >
+                                    <lew-tag
+                                        v-for="(item, index) in getLabels"
+                                        :key="index"
+                                        type="light"
+                                        :size="size"
+                                        closable
+                                        @close="deleteTag(index)"
+                                    >
+                                        {{ item }}
+                                    </lew-tag>
+                                </lew-flex>
+                            </template>
+                        </lew-popover>
+                    </template>
+                </template>
                 <div v-show="getLabels && getLabels.length === 0" class="placeholder">
                     {{ placeholder }}
                 </div>
@@ -270,13 +312,12 @@
                     />
                 </div>
                 <div class="lew-select-options-box">
-                    <lew-flex
-                        v-show="state.options && state.options.length === 0"
-                        direction="y"
-                        class="not-found"
-                    >
-                        <lew-empty title="暂无结果" />
-                    </lew-flex>
+                    <template v-if="state.options && state.options.length === 0">
+                        <slot v-if="$slots.empty" name="empty" />
+                        <lew-flex v-else direction="y" class="not-found">
+                            <lew-empty title="暂无结果" />
+                        </lew-flex>
+                    </template>
                     <div
                         v-if="searchable && state.options && state.options.length > 0"
                         class="reslut-count"
@@ -292,29 +333,37 @@
                         class="lew-select-options-list lew-scrollbar"
                         :list="state.options"
                         :options="{
-                            itemHeight: 30
+                            itemHeight
                         }"
                         :overscan="100"
                         :height="getVirtualHeight"
                     >
-                        <template #default="templateProps">
+                        <template #default="{ data: templateProps }">
                             <!-- you can get current item of list here -->
                             <div
-                                class="lew-select-item-label"
-                                :style="{ height: state.itemHeight + 'px' }"
-                                @click="selectHandle(templateProps.data)"
+                                :style="{ height: itemHeight + 'px' }"
+                                @click="selectHandle(templateProps)"
                             >
+                                <slot
+                                    v-if="$slots.item"
+                                    name="item"
+                                    :props="{
+                                        ...templateProps,
+                                        checked: getChecked(templateProps.value)
+                                    }"
+                                />
                                 <div
+                                    v-else
                                     class="lew-select-item lew-select-item-mul"
-                                    :class="getSelectItemClassName(templateProps.data)"
+                                    :class="getSelectItemClassName(templateProps)"
                                 >
                                     <lew-checkbox
-                                        :key="templateProps.data.value"
+                                        :key="templateProps.value"
                                         class="lew-select-checkbox"
-                                        :checked="getChecked(templateProps.data.value)"
+                                        :checked="getChecked(templateProps.value)"
                                     />
                                     <div class="lew-select-label">
-                                        {{ templateProps.data.label }}
+                                        {{ templateProps.label }}
                                     </div>
                                 </div>
                             </div>
@@ -330,13 +379,12 @@
 <style lang="scss" scoped>
     .lew-select-view {
         width: 100%;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         background-color: var(--lew-form-bgcolor);
         transition: all 0.15s ease;
         box-sizing: border-box;
         outline: 0px var(--lew-color-primary-light) solid;
         border: var(--lew-form-border-width) transparent solid;
-        box-shadow: var(--lew-form-box-shadow);
 
         > div {
             width: 100%;
@@ -359,6 +407,7 @@
                 transform: translateY(-50%) rotate(0deg);
                 transition: var(--lew-form-transition);
                 opacity: var(--lew-form-icon-opacity);
+                padding: 2px;
             }
 
             .icon-select-hide {
@@ -390,6 +439,12 @@
             .value {
                 width: calc(100% - 24px);
                 transition: all 0.2s;
+                height: 100%;
+            }
+            .lew-select-multiple-text-value {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
         }
 
@@ -408,30 +463,42 @@
         .lew-select-size-small {
             min-height: var(--lew-form-item-height-small);
 
-            .placeholder {
+            .placeholder,
+            .lew-select-multiple-text-value {
                 font-size: var(--lew-form-font-size-small);
                 line-height: var(--lew-form-item-height-small);
                 margin-left: 8px;
+            }
+            .lew-select-multiple-text-value {
+                padding-right: 24px;
             }
         }
 
         .lew-select-size-medium {
             min-height: var(--lew-form-item-height-medium);
 
-            .placeholder {
+            .placeholder,
+            .lew-select-multiple-text-value {
                 font-size: var(--lew-form-font-size-medium);
                 line-height: var(--lew-form-item-height-medium);
                 margin-left: 10px;
+            }
+            .lew-select-multiple-text-value {
+                padding-right: 28px;
             }
         }
 
         .lew-select-size-large {
             min-height: var(--lew-form-item-height-large);
 
-            .placeholder {
+            .placeholder,
+            .lew-select-multiple-text-value {
                 font-size: var(--lew-form-font-size-large);
                 line-height: var(--lew-form-item-height-large);
                 margin-left: 12px;
+            }
+            .lew-select-multiple-text-value {
+                padding-right: 32px;
             }
         }
     }
@@ -451,7 +518,7 @@
 
         .icon-select {
             transform: translateY(-50%) rotate(180deg);
-            color: var(--lew-text-color-2);
+            color: var(--lew-text-color-1);
         }
 
         .icon-select-hide {
@@ -474,7 +541,7 @@
     }
 
     .lew-select-view-disabled:hover {
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         background-color: var(--lew-form-bgcolor);
         outline: 0px var(--lew-color-primary-light) solid;
         border: var(--lew-form-border-width) transparent solid;
@@ -495,12 +562,35 @@
     .lew-select-multiple-popover-body {
         padding: 6px;
     }
+    .lew-select-multiple-popover-tag {
+        .lew-select-multiple-tag-value {
+            padding: 3px;
+            box-sizing: border-box;
+        }
+    }
+
     .lew-select-body {
         width: 100%;
         box-sizing: border-box;
+        .search-input {
+            margin-bottom: 5px;
 
-        .not-found {
-            opacity: 0.4;
+            input {
+                outline: none;
+                border: none;
+                background-color: var(--lew-bgcolor-2);
+                width: 100%;
+                height: 30px;
+                border-radius: var(--lew-border-radius-small);
+                padding: 0px 10px;
+                box-sizing: border-box;
+                color: var(--lew-form-color);
+                transition: var(--lew-form-transition);
+            }
+
+            input:focus {
+                background-color: var(--lew-bgcolor-3);
+            }
         }
 
         .reslut-count {
@@ -526,7 +616,7 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 cursor: pointer;
-                color: var(--lew-text-color-2);
+                color: var(--lew-text-color-1);
                 box-sizing: border-box;
                 border-radius: 6px;
 
@@ -536,7 +626,6 @@
                     top: 50%;
                     transform: translateY(-50%);
                     padding-left: 12px;
-                    z-index: -9;
                 }
 
                 .lew-select-label {
@@ -550,8 +639,8 @@
             }
 
             .lew-select-item-disabled {
-                opacity: 0.3;
-                cursor: no-drop;
+                opacity: var(--lew-disabled-opacity);
+                pointer-events: none; //鼠标点击不可修改
             }
 
             .lew-select-item-align-left {
@@ -583,7 +672,7 @@
             }
 
             .lew-select-item-active {
-                color: var(--lew-color-primary-dark);
+                color: var(--lew-checkbox-color);
                 font-weight: bold;
                 background-color: var(--lew-backdrop-bg-active);
 
@@ -593,7 +682,7 @@
             }
 
             .lew-select-item-active:hover {
-                color: var(--lew-color-primary-dark);
+                color: var(--lew-checkbox-color);
                 font-weight: bold;
                 background-color: var(--lew-backdrop-bg-active);
             }

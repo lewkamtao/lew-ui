@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { useVModel, useMagicKeys } from '@vueuse/core';
+    import { useMagicKeys } from '@vueuse/core';
     import { object2class } from 'lew-ui/utils';
     import { LewIcon, LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui';
     import { inputProps } from './props';
@@ -10,23 +10,12 @@
     if (app && !app.directive('tooltip')) {
         app.use(LewTooltip);
     }
-    const emit = defineEmits([
-        'update:modelValue',
-        'update:prefixesValue',
-        'update:suffixValue',
-        'update:type',
-        'clear',
-        'blur',
-        'focus',
-        'change',
-        'input',
-        'ok'
-    ]);
+    const emit = defineEmits(['clear', 'blur', 'focus', 'change', 'input', 'ok']);
 
     const props = defineProps(inputProps);
-    const modelValue = useVModel(props, 'modelValue', emit);
-    const prefixesValue = useVModel(props, 'prefixesValue', emit);
-    const suffixValue = useVModel(props, 'suffixValue', emit);
+    const modelValue: any = defineModel<string | number | undefined>({ required: true });
+    const prefixesValue: any = defineModel<string | number | undefined>('prefixesValue');
+    const suffixValue: any = defineModel<string | number | undefined>('suffixValue');
     const lewInputRef = ref();
     const isCopy = ref(false);
     let timer: any = null;
@@ -48,7 +37,7 @@
 
     const updateValue = () => {
         if (props.maxLength && props.renderCount(modelValue.value) >= Number(props.maxLength)) {
-            modelValue.value = modelValue.value.slice(0, props.maxLength);
+            modelValue.value = modelValue.value.slice(0, Number(props.maxLength));
         }
     };
 
@@ -62,7 +51,7 @@
     };
 
     const clear = (): void => {
-        modelValue.value = '';
+        modelValue.value = undefined;
         emit('clear');
     };
 
@@ -332,13 +321,12 @@
         justify-content: space-between;
         position: relative;
         width: 100%;
-        border-radius: var(--lew-border-radius);
+        border-radius: var(--lew-border-radius-small);
         background-color: var(--lew-form-bgcolor);
         transition: var(--lew-form-transition);
         box-sizing: border-box;
         outline: 0px transparent solid;
         border: var(--lew-form-border-width) transparent solid;
-        box-shadow: var(--lew-form-box-shadow);
         overflow: hidden;
 
         .lew-input-box {
@@ -418,7 +406,7 @@
             text-overflow: ellipsis;
             border: none;
             background: none;
-            color: var(--lew-text-color-2);
+            color: var(--lew-text-color-1);
             outline: none;
             box-sizing: border-box;
         }
@@ -449,7 +437,7 @@
                 justify-content: center;
                 border-radius: 4px;
                 opacity: var(--lew-form-icon-opacity);
-                transition: all 0.25s;
+                transition: transform 0.25s;
                 z-index: 2;
             }
 
@@ -533,6 +521,7 @@
         }
 
         .lew-input {
+            font-size: var(--lew-form-font-size-small);
             height: var(--lew-form-item-height-small);
         }
 
@@ -544,7 +533,7 @@
             }
 
             .lew-input-count-clearable {
-                padding-right: 24px;
+                transform: translateX(-18px);
             }
         }
 
@@ -582,7 +571,10 @@
         .lew-input-suffix {
             padding: 0px 9px;
         }
-
+        .lew-input {
+            font-size: var(--lew-form-font-size-medium);
+            height: var(--lew-form-item-height-medium);
+        }
         .lew-input-controls {
             height: var(--lew-form-item-height-medium);
 
@@ -591,7 +583,7 @@
             }
 
             .lew-input-count-clearable {
-                padding-right: 24px;
+                transform: translateX(-18px);
             }
         }
 
@@ -628,7 +620,10 @@
         .lew-input-suffix {
             padding: 0px 12px;
         }
-
+        .lew-input {
+            font-size: var(--lew-form-font-size-large);
+            height: var(--lew-form-item-height-large);
+        }
         .lew-input-controls {
             height: var(--lew-form-item-height-large);
 
@@ -637,7 +632,7 @@
             }
 
             .lew-input-count-clearable {
-                padding-right: 24px;
+                transform: translateX(-18px);
             }
         }
 

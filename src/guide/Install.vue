@@ -3,9 +3,9 @@
         <lew-title>安装</lew-title>
         <p>使用 npm 安装。</p>
 
-        <div v-highlight class="hl-pre lew-scrollbar">
+        <div class="hl-pre lew-scrollbar">
             <div class="pre-box">
-                <pre><code>npm install lew-ui --save</code></pre>
+                <highlightjs autodetect code="npm install lew-ui --save" />
             </div>
         </div>
     </div>

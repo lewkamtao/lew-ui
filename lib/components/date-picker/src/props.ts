@@ -1,12 +1,22 @@
 import { ExtractPropTypes, PropType } from 'vue';
 export type datePickerSize = 'small' | 'medium' | 'large';
 
-export const datePickerProps = {
+export const datePickerModel = {
     modelValue: {
         type: String,
         default: '',
         description: '绑定值'
-    },
+    }
+};
+export const dateRangePickerModel = {
+    modelValue: {
+        type: Object,
+        default: {},
+        description: '绑定值，可选值为{start: Date, end: Date}'
+    }
+};
+
+export const datePickerProps = {
     size: {
         type: String as PropType<datePickerSize>,
         default: 'medium',
@@ -30,11 +40,6 @@ export const datePickerProps = {
 };
 
 export const dateRangePickerProps = {
-    modelValue: {
-        type: Object,
-        default: {},
-        description: '绑定值，可选值为{start: Date, end: Date}'
-    },
     startKey: {
         type: String,
         default: 'start',
@@ -68,11 +73,6 @@ export const dateRangePickerProps = {
 };
 
 export const dateRangeProps = {
-    modelValue: {
-        type: Object,
-        required: true,
-        description: '绑定值，可选值为{start: Date, end: Date}'
-    },
     startKey: {
         type: String,
         default: 'start',
@@ -85,13 +85,7 @@ export const dateRangeProps = {
     }
 };
 
-export const dateProps = {
-    modelValue: {
-        type: String,
-        required: true,
-        description: '绑定值'
-    }
-};
+export const dateProps = {};
 
 export type DatePickerProps = ExtractPropTypes<typeof datePickerProps>;
 export type DateRangePickerProps = ExtractPropTypes<typeof dateRangePickerProps>;
