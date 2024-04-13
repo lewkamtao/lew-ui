@@ -102,7 +102,7 @@
             box-sizing: border-box;
         }
         .lew-menu-item-child {
-            color: var(--lew-text-color-3);
+            color: var(--lew-text-color-1);
             font-size: 14px;
             height: 40px;
             line-height: 40px;

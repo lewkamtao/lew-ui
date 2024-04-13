@@ -80,7 +80,7 @@
                             <lew-text-trim class="title" :text="title" />
                             <lew-icon
                                 size="18"
-                                class="close-btn"
+                                class="lew-form-icon-clear"
                                 type="x"
                                 @click="visible = false"
                             />
@@ -148,6 +148,7 @@
             overflow: hidden;
 
             .header {
+				position: relative;
                 height: 50px;
                 background-color: var(--lew-bgcolor-2);
                 padding: 10px 20px;
@@ -156,23 +157,9 @@
                     font-size: 16px;
                     font-weight: bold;
                 }
-
-                .close-btn {
-                    cursor: pointer;
-                    transition: all 0.25s;
-                    border-radius: var(--lew-border-radius-small);
-                    color: var(--lew-text-color-5);
-                    padding: 2px;
-                }
-
-                .close-btn:hover {
-                    transform: scale(1.05);
-                    background-color: var(--lew-bgcolor-3);
-                }
-
-                .close-btn:active {
-                    transform: scale(1);
-                }
+				.lew-form-icon-clear {
+					right: 15px;
+				}
             }
 
             .footer {

@@ -239,7 +239,7 @@
             width: auto;
             position: relative;
             height: 100%;
-            color: var(--lew-text-color-2);
+            color: var(--lew-text-color-1);
 
             .active {
                 background-color: var(--lew-color-primary);

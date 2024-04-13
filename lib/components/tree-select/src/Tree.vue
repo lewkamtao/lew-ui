@@ -597,7 +597,7 @@
 
         .icon-treeSelect {
             transform: translateY(-50%) rotate(180deg);
-            color: var(--lew-text-color-2);
+            color: var(--lew-text-color-1);
         }
 
         .icon-treeSelect-hide {
@@ -706,7 +706,7 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 cursor: pointer;
-                color: var(--lew-text-color-2);
+                color: var(--lew-text-color-1);
                 box-sizing: border-box;
                 border-radius: 6px;
                 height: 30px;

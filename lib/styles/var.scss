@@ -95,7 +95,7 @@
     --lew-color-normal-dark: var(--lew-color-gray-dark);
     --lew-color-normal-light: var(--lew-color-gray-light);
     // 危险
-	--lew-color-danger: var(--lew-color-red);
+    --lew-color-danger: var(--lew-color-red);
     --lew-color-danger-dark: var(--lew-color-red-dark);
     --lew-color-danger-light: var(--lew-color-red-light);
     // 错误
@@ -167,7 +167,7 @@
     --lew-form-border-color-active: rgba(0, 0, 0, 0.22);
     --lew-form-border-color-focus: var(--lew-color-primary);
     // form icon
-    --lew-form-icon-opacity: 0.6;
+    --lew-form-icon-opacity: 1;
     --lew-form-icon-opacity-hover: 0.8;
     --lew-form-icon-opacity-active: 1;
     // checkbox
@@ -210,6 +210,8 @@
     --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.15);
     --lew-backdrop-bg: rgba(255, 255, 255, 0.45);
     --lew-backdrop-bg-active: rgba(0, 0, 0, 0.05);
+    --lew-tooltip-bg: #000;
+    --lew-tooltip-color: #fff;
 }
 
 .lew-dark {
@@ -257,7 +259,7 @@
     --lew-color-black: var(--lew-bgcolor-2-invert);
     --lew-color-black-dark: var(--lew-bgcolor-0-invert);
     --lew-color-black-light: var(--lew-bgcolor-1);
-	
+
     --lew-color-success: var(--lew-color-green);
     --lew-color-success-dark: var(--lew-color-green-dark);
     --lew-color-success-light: var(--lew-color-green-light);
@@ -387,4 +389,6 @@
     --lew-radio-color-light: var(--lew-color-primary-light);
     --lew-backdrop-bg: rgba(33, 35, 40, 0.75);
     --lew-backdrop-bg-active: rgba(255, 255, 255, 0.1);
+    --lew-tooltip-bg: #eaeaea;
+    --lew-tooltip-color: #000;
 }

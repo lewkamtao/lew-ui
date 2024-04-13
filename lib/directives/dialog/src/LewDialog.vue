@@ -259,7 +259,7 @@
 
             .btn-close:hover {
                 background: rgba($color: #000000, $alpha: 0.05);
-                color: var(--lew-text-color-3);
+                color: var(--lew-text-color-1);
             }
 
             .btn-close:active {

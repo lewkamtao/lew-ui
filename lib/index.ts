@@ -3,12 +3,14 @@ import type { App } from 'vue';
 // tippy 样式
 import 'tippy.js/dist/tippy.css'; // optional for styling
 import 'tippy.js/animations/shift-away-subtle.css';
+import 'tippy.js/animations/scale.css';
 import 'tippy.js/themes/light.css';
 
 // 引入样式
 import './styles/reset.scss';
 import './styles/main.scss';
 import './styles/var.scss';
+import './styles/tippy.scss';
 
 // 全局 => 定义 install 方法
 import * as components from './components';

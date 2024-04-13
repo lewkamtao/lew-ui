@@ -521,7 +521,7 @@
 
                 .lew-date-label {
                     .lew-date-value {
-                        color: var(--lew-text-color-2);
+                        color: var(--lew-text-color-1);
                     }
 
                     .lew-date-value-selected {

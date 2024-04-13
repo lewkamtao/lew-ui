@@ -606,7 +606,7 @@
                 border-bottom: var(--lew-table-border);
 
                 .lew-table-td {
-                    color: var(--lew-text-color-2);
+                    color: var(--lew-text-color-1);
                     white-space: nowrap;
                     font-weight: 600;
                 }
@@ -614,7 +614,7 @@
         }
 
         .lew-table-td {
-            color: var(--lew-text-color-2);
+            color: var(--lew-text-color-1);
         }
 
         .lew-table-checkbox-wrapper {

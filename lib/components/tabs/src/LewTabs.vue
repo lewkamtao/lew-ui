@@ -258,7 +258,7 @@
             box-sizing: border-box;
             border-radius: var(--lew-border-radius-small);
             margin: 3px;
-            color: var(--lew-text-color-2);
+            color: var(--lew-text-color-1);
             white-space: nowrap;
             cursor: pointer;
             flex-shrink: 0;

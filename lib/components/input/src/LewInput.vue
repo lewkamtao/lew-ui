@@ -406,7 +406,7 @@
             text-overflow: ellipsis;
             border: none;
             background: none;
-            color: var(--lew-text-color-2);
+            color: var(--lew-text-color-1);
             outline: none;
             box-sizing: border-box;
         }

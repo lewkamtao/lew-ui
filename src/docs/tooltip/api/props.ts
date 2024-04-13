@@ -25,6 +25,12 @@ export default {
             description: '是否支持HTML',
             type: 'boolean',
             default: 'false'
+        },
+        {
+            name: 'delay',
+            description: '延迟显示',
+            type: 'Array<number>',
+            default: '[80,80]'
         }
     ]
 };

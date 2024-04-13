@@ -1,5 +1,5 @@
 <template>
-    <lew-flex gap="20">
+    <lew-flex gap="50">
         <lew-button
             v-tooltip="{
                 content:
@@ -7,6 +7,7 @@
                 placement: 'left',
                 trigger: 'click'
             }"
+            round
             text="left"
         />
         <lew-button
@@ -16,6 +17,7 @@
                 placement: 'top',
                 trigger: 'click'
             }"
+            round
             text="top"
         />
 
@@ -26,7 +28,8 @@
                 placement: 'bottom',
                 trigger: 'click'
             }"
-            text="left"
+            round
+            text="bottom"
         />
         <lew-button
             v-tooltip="{
@@ -35,6 +38,7 @@
                 placement: 'right',
                 trigger: 'click'
             }"
+            round
             text="right"
         />
     </lew-flex>

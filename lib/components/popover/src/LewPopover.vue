@@ -94,7 +94,7 @@
             interactive: true,
             hideOnClick: trigger !== 'mouseenter' ? props.hideOnClick : (false as any),
             placement,
-            duration: [120, 120],
+            duration: [250, 250],
             arrow: false,
             offset,
             delay: trigger === 'mouseenter' ? [120, 120] : undefined,
