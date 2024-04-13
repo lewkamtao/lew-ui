@@ -25,11 +25,6 @@ export const cascaderModel = {
 };
 
 export const cascaderProps = {
-    modelValue: {
-        type: [String, Number],
-        default: '',
-        description: '值（双向绑定）'
-    },
     options: {
         type: Array as PropType<CascaderOptions[]>,
         default: [],

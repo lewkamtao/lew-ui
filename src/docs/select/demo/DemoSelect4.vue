@@ -11,8 +11,8 @@
 
 <template>
     <lew-select
-        style="width: 320px"
         v-model="value"
+        style="width: 320px"
         :item-height="48"
         :options="schoolsOptions"
         placeholder="支持插槽"
@@ -21,7 +21,6 @@
             <div class="custom-select-box" :class="{ 'custom-select-checked': props.checked }">
                 <div class="custom-select-content">
                     <lew-avatar
-                        :key="props.value"
                         round
                         width="30"
                         height="30"

@@ -13,10 +13,10 @@
     const props = defineProps(treeProps);
 
     // 定义异步处理函数
-    const modelValue: any = defineModel<string[] | number[] | string>({
+    const modelValue: any = defineModel<[string[] | number[] | string]>({
         default: []
     });
-    const expandedKeys: any = defineModel<string[] | number[]>('expandedKeys', {
+    const expandedKeys: any = defineModel<[string[] | number[]]>('expandedKeys', {
         default: []
     });
     const certainKeys: any = ref<string[]>([]);

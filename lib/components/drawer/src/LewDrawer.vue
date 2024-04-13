@@ -61,7 +61,7 @@
         outline: 10000px solid var(--lew-modal-bgcolor);
         z-index: 201;
     }
- 
+
     .lew-drawer-main {
         position: fixed;
         width: 100%;

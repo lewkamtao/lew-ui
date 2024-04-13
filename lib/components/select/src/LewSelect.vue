@@ -458,7 +458,9 @@
     .lew-select-body {
         width: 100%;
         box-sizing: border-box;
-
+        .lew-select-options-list {
+            padding: 2px 0px;
+        }
         .reslut-count {
             padding-left: 8px;
             margin: 5px 0px;

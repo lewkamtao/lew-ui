@@ -42,7 +42,9 @@
 
     const props = defineProps(cascaderProps);
     const emit = defineEmits(['change', 'blur', 'clear']);
-    const cascaderValue: any = defineModel<string | undefined>();
+    const cascaderValue = defineModel<string>({
+        default: undefined
+    });
 
     const lewCascaderRef = ref();
     const lewPopverRef = ref();
@@ -130,7 +132,7 @@
         } else if (props.options && props.options.length > 0) {
             _tree =
                 ((props.options &&
-                    props.options.map((e) => {
+                    props.options.map((e: CascaderOptions) => {
                         return {
                             ...e,
                             isLeaf: !e.children || (e.children && e.children.length === 0) // 没有孩子
@@ -216,7 +218,7 @@
     };
 
     const clearHandle = () => {
-        cascaderValue.value = undefined;
+        cascaderValue.value = undefined as any;
         state.tobelabels = [];
         state.activelabels = [];
         hide();

@@ -5,7 +5,7 @@ export type InputSuffixType = 'icon' | 'select' | 'text';
 
 export const inputModel = {
     modelValue: {
-        type: [String, Number],
+        type: [String, Number, undefined],
         default: '',
         description: '值（双向绑定）'
     },

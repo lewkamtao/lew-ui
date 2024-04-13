@@ -12,8 +12,8 @@
 
 <template>
     <lew-flex style="width: 320px" direction="y">
-        <lew-select clearable v-model="value" size="small" placeholder="小" :options="options" />
-        <lew-select clearable v-model="value" size="medium" placeholder="中" :options="options" />
-        <lew-select clearable v-model="value" size="large" placeholder="大" :options="options" />
+        <lew-select v-model="value" clearable size="small" placeholder="小" :options="options" />
+        <lew-select v-model="value" clearable size="medium" placeholder="中" :options="options" />
+        <lew-select v-model="value" clearable size="large" placeholder="大" :options="options" />
     </lew-flex>
 </template>

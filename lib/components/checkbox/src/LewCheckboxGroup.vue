@@ -7,9 +7,11 @@
 
     const props: any = defineProps(checkboxGroupProps as any);
     const emit = defineEmits(['change']);
-    const modelValue: any = defineModel<string | number | undefined>({
+    const modelValue: any = defineModel<string[] | number[] | undefined>({
+        default: () => [],
         required: true
     });
+
     const checkList = ref([] as boolean[]);
 
     watch(

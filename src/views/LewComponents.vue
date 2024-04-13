@@ -103,7 +103,7 @@
                     label: 'Menu',
                     value: '/Menu',
                     tagText: 'New',
-                    tagColor: 'info'
+                    tagColor: 'success'
                 },
                 {
                     label: 'Dropdown',
@@ -122,7 +122,7 @@
                 {
                     label: 'Form',
                     value: '/Form',
-                    tagText: 'Beta',
+                    tagText: 'New',
                     tagColor: 'success'
                 },
                 {
@@ -175,7 +175,7 @@
                 {
                     label: 'Cascader',
                     value: '/Cascader',
-                    tagText: 'Beta',
+                    tagText: 'New',
                     tagColor: 'green'
                 },
                 {
@@ -217,7 +217,7 @@
                 {
                     label: 'Tree',
                     value: '/Tree',
-                    tagText: 'Test',
+                    tagText: 'New',
                     tagColor: 'success'
                 }
                 // {
@@ -282,7 +282,7 @@
                     label: 'Empty',
                     value: '/Empty',
                     tagText: 'New',
-                    tagColor: 'blue'
+                    tagColor: 'success'
                 }
             ]
         }

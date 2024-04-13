@@ -161,8 +161,8 @@
             @scroll="tabsScroll"
         >
             <div
-                :style="state.activeItemStyle"
                 v-if="tabsValue || tabsValue === 0"
+                :style="state.activeItemStyle"
                 class="lew-tabs-item-animation-active"
                 :class="{ 'lew-tabs-item-isInit': state.isInit }"
             ></div>

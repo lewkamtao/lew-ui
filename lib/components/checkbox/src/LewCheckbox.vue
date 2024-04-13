@@ -5,7 +5,9 @@
     const props = defineProps(checkboxProps);
 
     const emit = defineEmits(['change']);
-    const modelValue = defineModel<boolean | undefined>({ default: () => false });
+    const modelValue: any = defineModel<Boolean>({
+        default: false
+    });
 
     const setChecked = (e: Event) => {
         const { checked } = e.target as HTMLInputElement;

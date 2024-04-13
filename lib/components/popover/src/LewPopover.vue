@@ -148,7 +148,7 @@
                 visible: loading,
                 iconSize: 16
             }"
-			class="lew-popover-body"
+            class="lew-popover-body"
             :class="popoverBodyClassName"
         >
             <slot name="popover-body" :show="show" :hide="hide" />

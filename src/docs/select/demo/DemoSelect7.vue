@@ -5,8 +5,8 @@
 
 <template>
     <lew-select
-        style="width: 320px"
         v-model="value"
+        style="width: 320px"
         :options="options"
         clearable
         placeholder="默认过滤"

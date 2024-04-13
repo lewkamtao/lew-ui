@@ -73,11 +73,6 @@ export const dateRangePickerProps = {
 };
 
 export const dateRangeProps = {
-    modelValue: {
-        type: Object,
-        required: true,
-        description: '绑定值，可选值为{start: Date, end: Date}'
-    },
     startKey: {
         type: String,
         default: 'start',
@@ -90,13 +85,7 @@ export const dateRangeProps = {
     }
 };
 
-export const dateProps = {
-    modelValue: {
-        type: String,
-        required: true,
-        description: '绑定值'
-    }
-};
+export const dateProps = {};
 
 export type DatePickerProps = ExtractPropTypes<typeof datePickerProps>;
 export type DateRangePickerProps = ExtractPropTypes<typeof dateRangePickerProps>;
