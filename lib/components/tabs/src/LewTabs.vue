@@ -1,24 +1,27 @@
 <script setup lang="ts">
     import { tabsProps } from './props';
+    import type { TabsOptions } from './props';
     import { object2class, any2px } from 'lew-ui/utils';
 
     const emit = defineEmits(['change']);
     const props = defineProps(tabsProps);
-    const tabsValue: any = defineModel<string | number | undefined>({ required: true });
+    const tabsValue: Ref<string | number | undefined> = defineModel<string | number | undefined>({
+        required: true
+    });
 
     const tabsRef = ref();
     const itemRef = ref([] as any);
 
     const state = reactive({
         activeItemStyle: {} as any,
-        curIndex: props.options.findIndex((e) => tabsValue.value === e.value),
+        curIndex: props.options.findIndex((e: TabsOptions) => tabsValue.value === e.value),
         hidLine: '',
         isInit: false
     });
 
     watch(
         () => tabsValue.value,
-        (v) => {
+        (v: string | number | undefined) => {
             selectItem(v, 'watch');
             if (!state.isInit) {
                 init();
@@ -62,7 +65,7 @@
         }, 100);
     };
 
-    const selectItem = (value: [String, Number], type?: string) => {
+    const selectItem = (value: string | number | undefined, type?: string) => {
         let index = props.options.findIndex((e) => value === e.value);
         if (index >= 0) {
             const _item = props.options[index];

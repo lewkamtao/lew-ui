@@ -6,7 +6,7 @@
 
     const emit = defineEmits(['change']);
     const props = defineProps(radioGroupProps);
-    const modelValue: any = defineModel<string | number | undefined>();
+    const modelValue: Ref<string | number | undefined> = defineModel<string | number | undefined>();
 
     const change = ({ item }: { item: RadioOptions }) => {
         console.log('change', item);

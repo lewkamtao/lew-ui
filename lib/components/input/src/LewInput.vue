@@ -3,6 +3,7 @@
     import { object2class } from 'lew-ui/utils';
     import { LewIcon, LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui';
     import { inputProps } from './props';
+    import _ from 'lodash';
 
     const { enter } = useMagicKeys();
     // 获取app
@@ -13,11 +14,11 @@
     const emit = defineEmits(['clear', 'blur', 'focus', 'change', 'input', 'ok']);
 
     const props = defineProps(inputProps);
-    const modelValue: any = defineModel<string | number | undefined>({ required: true });
-    const prefixesValue: any = defineModel<string | number | undefined>('prefixesValue');
-    const suffixValue: any = defineModel<string | number | undefined>('suffixValue');
+    const modelValue: Ref<string | undefined> = defineModel<string | undefined>({ required: true });
+    const prefixesValue: Ref<string | undefined> = defineModel<string | undefined>('prefixesValue');
+    const suffixValue: Ref<string | undefined> = defineModel<string | undefined>('suffixValue');
     const lewInputRef = ref();
-    const isCopy = ref(false);
+    const isCopy = ref<boolean>(false);
     let timer: any = null;
     const _type = ref(props.type);
     const state = reactive({
@@ -36,8 +37,12 @@
     );
 
     const updateValue = () => {
-        if (props.maxLength && props.renderCount(modelValue.value) >= Number(props.maxLength)) {
-            modelValue.value = modelValue.value.slice(0, Number(props.maxLength));
+        if (
+            props.maxLength &&
+            props.renderCount(modelValue.value) >= Number(props.maxLength) &&
+            modelValue.value
+        ) {
+            modelValue.value = _.cloneDeep(modelValue.value.slice(0, Number(props.maxLength)));
         }
     };
 
@@ -136,7 +141,7 @@
         const textarea = document.createElement('textarea');
         textarea.style.position = 'fixed';
         textarea.style.top = '-200vh';
-        textarea.value = modelValue.value;
+        textarea.value = modelValue.value as string;
 
         document.body.appendChild(textarea);
         textarea.select();

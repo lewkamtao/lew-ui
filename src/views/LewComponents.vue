@@ -181,7 +181,7 @@
                 {
                     label: 'TreeSelect',
                     value: '/TreeSelect',
-                    tagText: 'Coming soon',
+                    tagText: 'Test',
                     tagColor: 'warning'
                 },
                 {

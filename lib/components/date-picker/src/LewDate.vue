@@ -9,7 +9,7 @@
 
     const emit = defineEmits(['change']);
     defineProps(dateProps);
-    const modelValue: any = defineModel();
+    const modelValue: Ref<string | undefined> = defineModel<string | undefined>();
 
     // 获取当前年份
     const _year = dayjs().year();

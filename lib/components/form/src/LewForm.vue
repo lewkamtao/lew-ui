@@ -25,7 +25,7 @@
     const emit = defineEmits(['change']);
     const form = ref({} as any);
 
-    const componentOptions: any = defineModel<any>('options');
+    const componentOptions: Ref<any[]> = defineModel('options', { type: Array, default: () => [] });
 
     const getFormClassNames = computed(() => {
         const { direction, size } = props;

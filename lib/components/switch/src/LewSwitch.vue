@@ -3,7 +3,7 @@
     const props = defineProps(switchProps);
     const _loading = ref(false);
 
-    const modelValue = defineModel<boolean>();
+    const modelValue: Ref<boolean | undefined> = defineModel<boolean | undefined>();
     const emit = defineEmits(['click', 'change']);
 
     const handleClick = async (e: any) => {

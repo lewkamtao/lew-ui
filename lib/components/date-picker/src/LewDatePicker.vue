@@ -10,7 +10,7 @@
     }
     const emit = defineEmits(['change', 'clear']);
     const props = defineProps(datePickerProps);
-    const modelValue: any = defineModel();
+    const modelValue: Ref<string | undefined> = defineModel<string | undefined>();
 
     const visible = ref(false);
 
@@ -25,7 +25,7 @@
         lewPopoverRef.value.hide();
     };
 
-    const change = (date: string) => {
+    const change = (date: string | undefined) => {
         emit('change', { date, show, hide });
         hide();
     };

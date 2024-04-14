@@ -6,7 +6,7 @@
         return { label: e, value: _.padStart(String(i), 8, '0') };
     });
 
-    const value = ref('');
+    const value = ref();
 </script>
 
 <template>

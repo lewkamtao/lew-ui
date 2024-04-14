@@ -7,7 +7,9 @@
 
     const props: any = defineProps(checkboxGroupProps as any);
     const emit = defineEmits(['change']);
-    const modelValue: any = defineModel<string[] | number[] | undefined>({
+    const modelValue: Ref<String[] | Number[] | undefined> = defineModel<
+        String[] | Number[] | undefined
+    >({
         default: () => [],
         required: true
     });
@@ -27,7 +29,7 @@
     const change = ({ item, checked }: { item: CheckboxOptions; checked: boolean }) => {
         let _value = modelValue.value || [];
         if (checked) {
-            _value.push(item.value);
+            _value.push(item.value as string & number);
         } else {
             const index = _value.findIndex((e: any) => e === item.value);
             if (index >= 0) {
@@ -43,7 +45,7 @@
 
     const initCheckbox = () => {
         checkList.value = props.options.map((item: CheckboxOptions) => {
-            if (modelValue.value && modelValue.value.includes(item.value)) {
+            if (modelValue.value && modelValue.value.includes(item.value as string & number)) {
                 return true;
             }
             return false;

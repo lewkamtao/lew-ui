@@ -14,7 +14,7 @@
 
     const emit = defineEmits(['ok', 'cancel', 'show', 'close']);
 
-    const visible = defineModel('visible');
+    const visible: Ref<boolean | undefined> = defineModel<boolean | undefined>('visible');
     const transformOrigin = ref('0 0');
 
     const maskClick = () => {

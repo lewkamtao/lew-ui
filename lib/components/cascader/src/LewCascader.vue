@@ -42,7 +42,10 @@
 
     const props = defineProps(cascaderProps);
     const emit = defineEmits(['change', 'blur', 'clear']);
-    const cascaderValue = defineModel<string>({
+
+    const cascaderValue: Ref<string | number | undefined> = defineModel<
+        string | number | undefined
+    >({
         default: undefined
     });
 
@@ -297,7 +300,7 @@
     });
 
     const getLabel = computed(() => {
-        const item = findObjectByValue(state.optionsTree, cascaderValue.value);
+        const item = findObjectByValue(state.optionsTree, cascaderValue.value as string);
         return item?.labelPaths || [];
     });
 

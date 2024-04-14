@@ -5,7 +5,7 @@
     const emit = defineEmits(['close', 'change']);
 
     defineProps(inputTagProps);
-    const tagsValue: any = defineModel<string[]>();
+    const tagsValue: Ref<string[] | undefined> = defineModel<string[] | undefined>();
     const inputValue = ref();
     const isInput = ref(false);
     const lewInputRef = ref();
@@ -27,7 +27,7 @@
                         delDownCheck = 0;
                     }, 500);
                     delDownCheck += 1;
-                    if (delDownCheck >= 2) {
+                    if (delDownCheck >= 2 && tagsValue.value && tagsValue.value.length > 0) {
                         tagsValue.value.splice(tagsValue.value.length - 1, 1);
                         emit('change', _.cloneDeep(tagsValue.value));
                         delDownCheck = 0;
@@ -60,7 +60,7 @@
     };
 
     const delTag = (index: number) => {
-        tagsValue.value.splice(index, 1);
+        tagsValue.value && tagsValue.value.splice(index, 1);
         emit('change', tagsValue.value);
         emit('close', tagsValue.value);
     };

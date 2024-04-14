@@ -3,6 +3,7 @@
     import { object2class, any2px } from 'lew-ui/utils';
     import { LewIcon, LewTooltip } from 'lew-ui';
     import { textareaProps } from './props';
+    import _ from 'lodash';
 
     const { shift, enter } = useMagicKeys();
     // 获取app
@@ -23,14 +24,18 @@
     ]);
 
     const props = defineProps(textareaProps);
-    const modelValue: any = defineModel();
+    const modelValue: Ref<string | undefined> = defineModel<string | undefined>();
     const state = reactive({
         isFocus: false
     });
 
     const updateValue = () => {
-        if (props.maxLength && props.renderCount(modelValue.value) >= Number(props.maxLength)) {
-            modelValue.value = modelValue.value.slice(0, props.maxLength);
+        if (
+            props.maxLength &&
+            props.renderCount(modelValue.value) >= Number(props.maxLength) &&
+            modelValue.value
+        ) {
+            modelValue.value = modelValue.value.slice(0, _.toNumber(props.maxLength));
         }
     };
 

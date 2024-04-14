@@ -7,7 +7,7 @@ export type TreeDataSource = {
     isLeaf?: boolean;
     loading?: boolean;
     disabled?: boolean;
-    parentKey?: string;
+    parentKey?: string | number;
     treeIndex?: number;
     parentKeyPaths?: string[];
     parentLabelPaths?: string[];
@@ -20,12 +20,12 @@ export type TreeTriggerType = 'click' | 'hover';
 
 export const treeModel = {
     modelValue: {
-        type: [String, Number],
+        type: [Array, String],
         default: [],
         description: '值（双向绑定）'
     },
     expandedKeys: {
-        type: [String, Number],
+        type: [Array, String],
         default: [],
         description: '展开节点的 key 的集合'
     }

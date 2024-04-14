@@ -11,12 +11,18 @@
     }
 
     const props = defineProps(treeProps);
+    const emit = defineEmits(['change']);
 
     // 定义异步处理函数
-    const modelValue: any = defineModel<[string[] | number[] | string]>({
-        default: []
+    const modelValue: Ref<string | (string | number)[] | undefined> = defineModel<
+        string | (string | number)[] | undefined
+    >({
+        default: undefined
     });
-    const expandedKeys: any = defineModel<[string[] | number[]]>('expandedKeys', {
+
+    const expandedKeys: Ref<(string | number)[] | undefined> = defineModel<
+        (string | number)[] | undefined
+    >('expandedKeys', {
         default: []
     });
     const certainKeys: any = ref<string[]>([]);
@@ -94,8 +100,8 @@
         if (props.expandAll) {
             return;
         }
-        let _expandedKeys = _.cloneDeep(expandedKeys.value);
-        let i = _expandedKeys.findIndex((e: string) => e === item.key);
+        let _expandedKeys = _.cloneDeep(expandedKeys.value || []);
+        let i = _expandedKeys.findIndex((e: string | number) => e === item.key);
         if (i >= 0) {
             _expandedKeys.splice(i, 1);
             expandedKeys.value = _expandedKeys;
@@ -115,7 +121,7 @@
                         loadingKeys.value.splice(i, 1);
                     }
                 }
-                expandedKeys.value = [...expandedKeys.value, item.key];
+                expandedKeys.value = [...(expandedKeys.value as (string | number)[]), item.key];
             } else {
                 expandedKeys.value = [..._expandedKeys, item.key];
             }
@@ -135,10 +141,11 @@
     };
 
     const select = (item: TreeDataSource) => {
-        let _modelValue: string[] = _.cloneDeep(modelValue.value) || [];
-        if (props.multiple) {
+        let _modelValue: (string | number)[] | undefined | string =
+            _.cloneDeep(modelValue.value) || [];
+        if (props.multiple && _.isArray(_modelValue)) {
             if (_modelValue.includes(item.key)) {
-                const i = _modelValue.findIndex((e: string) => e === item.key);
+                const i = _modelValue.findIndex((e: string | number) => e === item.key);
                 _modelValue.splice(i, 1);
                 if (!props.free) {
                     _modelValue = _.uniq(_.difference(_modelValue, item.allNodeValues)) as string[];
@@ -162,6 +169,7 @@
         } else {
             modelValue.value = modelValue.value === item.key ? '' : item.key;
         }
+        emit('change', { item, value: modelValue.value });
     };
     function findAllNodes(tree: TreeDataSource[] = []) {
         let nodes = new Set();
@@ -226,6 +234,12 @@
             __modelValue: Array.from(_modelValue)
         }; // 将Set转换为数组并返回
     };
+
+    const getTreeList = () => {
+        return _.cloneDeep(treeList.value);
+    };
+
+    defineExpose({ getTreeList });
 </script>
 
 <template>
@@ -248,20 +262,20 @@
                     v-if="
                         expandAll ||
                         item.level === 0 ||
-                        (expandedKeys.includes(item.parentKey) &&
+                        ((expandedKeys || []).includes(item.parentKey as string | number) &&
                             _.intersection(item.parentKeyPaths, expandedKeys).length ===
                                 (item.parentKeyPaths || []).length)
                     "
                     class="lew-tree-item"
                     :class="{
                         'lew-tree-item-expand-all': expandAll,
-                        'lew-tree-item-expand': expandedKeys.includes(item.key),
+                        'lew-tree-item-expand': (expandedKeys || []).includes(item.key),
                         'lew-tree-item-certain':
                             multiple &&
                             certainKeys.includes(item.key) &&
-                            !modelValue.includes(item.key),
+                            !(modelValue || []).includes(item.key),
                         'lew-tree-item-selected': multiple
-                            ? modelValue.includes(item.key)
+                            ? (modelValue || []).includes(item.key)
                             : modelValue === item.key,
                         'lew-tree-item-leaf': item.isLeaf,
                         'lew-tree-item-disabled': item.disabled
@@ -293,10 +307,12 @@
                             :certain="
                                 multiple &&
                                 certainKeys.includes(item.key) &&
-                                !modelValue.includes(item.key)
+                                !(modelValue || []).includes(item.key)
                             "
                             :checked="
-                                multiple ? modelValue.includes(item.key) : modelValue === item.key
+                                multiple
+                                    ? (modelValue || []).includes(item.key)
+                                    : modelValue === item.key
                             "
                             class="lew-tree-checkbox"
                         />
@@ -314,6 +330,7 @@
 </template>
 <style lang="scss" scoped>
     .lew-tree-wrapper {
+        padding: 5px 0px;
     }
     .lew-tree-item {
         display: inline-flex;

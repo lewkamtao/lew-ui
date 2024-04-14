@@ -13,7 +13,9 @@
     }
     const props = defineProps(selectProps);
     const emit = defineEmits(['change', 'blur', 'clear']);
-    const selectValue: any = defineModel<string | number | undefined>();
+    const selectValue: Ref<string | number | undefined> = defineModel<
+        string | number | undefined
+    >();
 
     const lewSelectRef = ref();
     const inputRef = ref();

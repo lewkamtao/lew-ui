@@ -11,8 +11,8 @@
     "scripts": {
         "dev": "vite",
         "build:noemit": "vite build --mode demo",
-        "build": "vite build --mode demo",
-        "build:lib": "vite build --mode lib",
+        "build": "vue-tsc --noEmit && vite build --mode demo",
+        "build:lib": "vue-tsc --noEmit && vite build --mode lib",
         "lint:comment": "使用 ESLint 检查并自动修复 src 目录下所有扩展名为 .js 和 .vue 的文件",
         "eslint": "eslint --ext .js,.vue --ignore-path .gitignore --fix .",
         "prettier:comment": "自动格式化当前目录下的所有文件",

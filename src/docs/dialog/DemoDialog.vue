@@ -6,7 +6,7 @@
 
     const options = ref(
         Object.keys(API).map((key) => {
-			// @ts-ignore
+            // @ts-ignore
             return API[key];
         })
     );

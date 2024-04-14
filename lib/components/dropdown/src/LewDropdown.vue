@@ -67,6 +67,7 @@
         user-select: none;
         overflow: auto;
         box-sizing: border-box;
+        gap: 4px;
         .lew-dropdown-option {
             padding: 4px 10px;
             font-size: 14px;

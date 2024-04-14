@@ -9,7 +9,7 @@
     }
     const props = defineProps(dateRangePickerProps);
     const emit = defineEmits(['change', 'clear']);
-    const modelValue: any = defineModel();
+    const modelValue: Ref<any> = defineModel<any>();
     const visible = ref(false);
     const lewPopoverRef = ref();
     const { startKey, endKey } = props;

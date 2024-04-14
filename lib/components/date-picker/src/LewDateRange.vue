@@ -7,8 +7,8 @@
 
     const emit = defineEmits(['change']);
     const props = defineProps(dateRangeProps);
-    const modelValue: any = defineModel();
-    const hoverValue: any = ref(toRaw(modelValue.value));
+    const modelValue: Ref<any> = defineModel<any>();
+    const hoverValue: Ref<any> = ref(toRaw(modelValue.value));
     const { startKey, endKey } = props;
 
     // 获取当天日期对象
