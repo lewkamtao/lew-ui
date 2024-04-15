@@ -5,7 +5,6 @@
     import { object2class, numFormat } from 'lew-ui/utils';
     import { treeSelectProps } from './props';
     import _ from 'lodash';
-    import { model } from '../../../../src/docs/cascader/api';
 
     // 获取app
     const app = getCurrentInstance()?.appContext.app;
@@ -27,11 +26,11 @@
         selectWidth: 0,
         visible: false,
         loading: false,
-        dataSource: props.dataSource,
+        initLoading: true,
         treeList: [],
         hideBySelect: false, // 记录是否通过选择隐藏
         keyword: props.defaultValue || (treeSelectValue.value as any),
-        backupKeyword: props.defaultValue as any
+        keywordBackup: props.defaultValue as any
     });
 
     const getSelectWidth = () => {
@@ -54,17 +53,7 @@
         state.loading = true;
         const keyword = e.target.value;
         if (props.searchable) {
-            let result: any = [];
-            // 如果没输入关键词
-            if (!keyword && props.dataSource.length > 0) {
-                result = props.dataSource;
-            } else {
-                result = await props.searchMethod({
-                    options: props.dataSource,
-                    keyword
-                });
-            }
-            state.dataSource = result;
+            state.treeList = lewTreeRef.value.init(keyword);
         }
         state.loading = false;
     };
@@ -84,6 +73,8 @@
 
     const clearHandle = () => {
         treeSelectValue.value = undefined;
+        state.keyword = '';
+        state.keywordBackup = '';
         emit('clear');
         emit('change');
     };
@@ -118,7 +109,12 @@
     const getSelectViewClassName = computed(() => {
         const { disabled, readonly, searchable } = props;
         const focus = state.visible;
-        return object2class('lew-select-view', { focus, searchable, disabled, readonly });
+        return object2class('lew-select-view', {
+            focus,
+            searchable,
+            disabled,
+            readonly: readonly || state.initLoading
+        });
     });
 
     const getIconSize = computed(() => {
@@ -132,7 +128,7 @@
 
     const showHandle = () => {
         state.visible = true;
-        state.backupKeyword = _.cloneDeep(state.keyword);
+        state.keywordBackup = _.cloneDeep(state.keyword);
         if (props.searchable) {
             state.keyword = '';
         }
@@ -180,11 +176,17 @@
         <template #trigger>
             <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
                 <lew-icon
-                    v-if="!readonly"
+                    v-if="!readonly && !state.initLoading"
                     :size="getIconSize"
                     type="chevron-down"
                     class="icon-select"
                     :class="{ 'icon-select-hide': clearable && state.keyword }"
+                />
+                <lew-icon
+                    v-else="state.initLoading"
+                    type="loader"
+                    :size="getIconSize"
+                    class="icon-loader"
                 />
                 <transition name="lew-form-icon-ani">
                     <lew-icon
@@ -204,7 +206,11 @@
                     class="value"
                     :style="getValueStyle"
                     :readonly="!searchable"
-                    :placeholder="placeholder"
+                    :placeholder="
+                        state.initLoading
+                            ? '数据初始化中···'
+                            : state.keywordBackup || props.placeholder
+                    "
                     @input="searchDebounce"
                 />
             </div>
@@ -218,31 +224,36 @@
                 <slot name="header"></slot>
 
                 <div class="lew-select-options-box">
-                    <template v-if="state.dataSource && state.dataSource.length === 0">
-                        <slot v-if="$slots.empty" name="empty" />
-                        <lew-flex v-else direction="y" class="not-found">
-                            <lew-empty title="暂无结果" />
-                        </lew-flex>
-                    </template>
                     <div
-                        v-if="searchable && state.dataSource && state.dataSource.length > 0"
+                        v-if="searchable && (state.treeList || []).length > 0"
                         class="reslut-count"
                     >
                         共
-                        {{ numFormat(state.dataSource && state.dataSource.length) }}
+                        {{ numFormat((state.treeList || []).length) }}
                         条结果
                     </div>
                     <div class="tree-select-wrapper lew-scrollbar">
                         <lew-tree
                             ref="lewTreeRef"
                             v-model="treeSelectValue"
-                            show-checkbox
-                            :data-source="state.dataSource"
-                            :key-field="props.keyField"
-                            :label-field="props.labelField"
-                            :disabled-field="props.disabledField"
+                            v-bind="{
+                                keyField,
+                                labelField,
+                                disabledField,
+                                showLine,
+                                showCheckbox,
+                                dataSource,
+                                onload,
+                                initTree,
+                                expandAll: expandAll
+                            }"
+                            @init-success="state.initLoading = false"
                             @change="change"
-                        />
+                        >
+                            <template #empty>
+                                <slot v-if="$slots.empty" name="empty" />
+                            </template>
+                        </lew-tree>
                     </div>
                 </div>
                 <slot name="footer"></slot>
@@ -282,6 +293,21 @@
                 transform: translateY(-50%) rotate(0deg);
                 transition: var(--lew-form-transition);
                 padding: 2px;
+            }
+
+            .icon-loader {
+                position: absolute;
+                top: 50%;
+                right: 9px;
+                animation: icon-spin 1s infinite linear;
+            }
+            @keyframes icon-spin {
+                0% {
+                    transform: translateY(-50%) rotate(0deg);
+                }
+                100% {
+                    transform: translateY(-50%) rotate(360deg);
+                }
             }
 
             .icon-select {

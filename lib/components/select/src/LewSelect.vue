@@ -28,7 +28,7 @@
         options: props.options,
         hideBySelect: false, // 记录是否通过选择隐藏
         keyword: props.defaultValue || (selectValue.value as any),
-        backupKeyword: props.defaultValue as any
+        keywordBackup: props.defaultValue as any
     });
 
     const getSelectWidth = () => {
@@ -68,6 +68,8 @@
 
     const clearHandle = () => {
         selectValue.value = undefined;
+		state.keywordBackup = undefined;
+        state.keyword = '';
         emit('clear');
         emit('change');
     };
@@ -153,7 +155,7 @@
 
     const showHandle = () => {
         state.visible = true;
-        state.backupKeyword = _.cloneDeep(state.keyword);
+        state.keywordBackup = _.cloneDeep(state.keyword);
         if (props.searchable) {
             state.keyword = '';
         }
@@ -225,7 +227,7 @@
                     class="value"
                     :style="getValueStyle"
                     :readonly="!searchable"
-                    :placeholder="placeholder"
+                    :placeholder="state.keywordBackup || placeholder"
                     @input="searchDebounce"
                 />
             </div>

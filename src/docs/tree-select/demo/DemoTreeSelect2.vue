@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import axios from '../../../axios/http';
-
     const initTree = () => {
         return new Promise<any[]>((resolve) => {
             // item 不存在的时候 是第一层加载
@@ -64,21 +63,15 @@
 </script>
 
 <template>
-    <div class="tree lew-scrollbar">
-        <lew-tree
+    <lew-flex direction="y" gap="20px" style="width: 300px">
+        <lew-tree-select
             v-model="v"
-            multiple
-            show-checkbox
             key-field="value"
-            :initTree="initTree"
+            label-field="label"
+            searchable
             :onload="onload"
+            :initTree="initTree"
             @change="change"
-    /></div>
+        />
+    </lew-flex>
 </template>
-<style lang="scss" scoped>
-    .tree {
-        height: 500px;
-        width: 300px;
-        overflow-y: auto;
-    }
-</style>

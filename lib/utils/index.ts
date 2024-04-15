@@ -117,23 +117,6 @@ export const lewSetForm = ({
     _fn();
 };
 
-export type Tree = {
-    label: string;
-    value: string;
-    labelPaths?: string[];
-    valuePaths?: string[];
-    level: number;
-    isLeaf?: boolean;
-    loading?: boolean;
-    disabled?: boolean;
-    parentLabelPaths?: string[];
-    parentValuePaths?: string[];
-    parentValue?: string;
-    parentLabel?: string;
-    children?: Tree[];
-    _key: string;
-};
-
 export const getUUId = () => {
     // 生成一个随机字符串作为UUID的前缀
     const randomString =

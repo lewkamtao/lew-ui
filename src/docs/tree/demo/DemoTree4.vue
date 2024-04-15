@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    function createTree(path = '0', level = 3) {
+    function createTree(path = '0', level = 2) {
         const list = [];
         for (let i = 0; i < 5; i += 1) {
             const key = `${path} - ${i}`;

@@ -16,6 +16,7 @@
 
     const lewSelectRef = ref();
     const lewPopverRef = ref();
+    const lewPopverValueRef = ref();
     const searchInputRef = ref();
 
     const state = reactive({
@@ -31,16 +32,16 @@
         if (props.searchable) {
             setTimeout(() => {
                 searchInputRef.value && searchInputRef.value.focus();
-            }, 200);
+            }, 100);
         }
     };
 
     const show = () => {
-        lewPopverRef.value.show();
+        lewPopverRef.value && lewPopverRef.value.show();
     };
 
     const hide = () => {
-        lewPopverRef.value.hide();
+        lewPopverRef.value && lewPopverRef.value.hide();
     };
 
     const searchDebounce = useDebounceFn(async (e: any) => {
@@ -71,10 +72,10 @@
         selectValue.value = [];
         emit('clear');
         // 刷新位置
-        nextTick(() => {
-            lewPopverRef.value.refresh();
-            emit('change', selectValue.value);
-        });
+        setTimeout(() => {
+            lewPopverRef.value && lewPopverRef.value.refresh();
+        }, 100);
+        emit('change', selectValue.value);
     };
 
     const deleteTag = (index: number) => {
@@ -82,10 +83,13 @@
         selectValue.value && selectValue.value.splice(index, 1);
         emit('delete', item);
         // 刷新位置
-        nextTick(() => {
-            lewPopverRef.value.refresh();
-            emit('change', selectValue.value);
-        });
+        if (selectValue.value.length === 0) {
+            lewPopverValueRef.value && lewPopverValueRef.value.hide();
+        }
+        setTimeout(() => {
+            lewPopverRef.value && lewPopverRef.value.refresh();
+        }, 100);
+        emit('change', selectValue.value);
     };
 
     const selectHandle = (item: SelectMultipleOptions) => {
@@ -106,10 +110,10 @@
         selectValue.value = _value;
         emit('select', item);
         // 刷新位置
-        nextTick(() => {
-            lewPopverRef.value.refresh();
-            emit('change', selectValue.value);
-        });
+        setTimeout(() => {
+            lewPopverRef.value && lewPopverRef.value.refresh();
+        }, 100);
+        emit('change', selectValue.value);
     };
 
     const getChecked = computed(() => (value: string | number) => {
@@ -470,7 +474,7 @@
                 margin-left: 8px;
             }
             .lew-select-multiple-text-value {
-                padding-right: 24px;
+                padding-right: 26px;
             }
         }
 
@@ -498,7 +502,7 @@
                 margin-left: 12px;
             }
             .lew-select-multiple-text-value {
-                padding-right: 32px;
+                padding-right: 30px;
             }
         }
     }
@@ -549,7 +553,7 @@
 
     .list-enter-active,
     .list-leave-active {
-        transition: all 0.15s ease-in-out;
+        transition: all 0.08s ease-in-out;
     }
 
     .list-enter-from,

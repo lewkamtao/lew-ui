@@ -9,6 +9,8 @@ export type TreeDataSource = {
     disabled?: boolean;
     parentKey?: string | number;
     treeIndex?: number;
+	labelPaths?: string[];
+    valueKeys?: string[];
     parentKeyPaths?: string[];
     parentLabelPaths?: string[];
     allNodeValues: string[];
@@ -72,16 +74,6 @@ export const treeProps = {
         default: '请选择',
         description: '默认提示文案'
     },
-    certainKeys: {
-        type: Array as PropType<string[]>,
-        hidden: true,
-        default: []
-    },
-    size: {
-        type: String,
-        default: 'medium',
-        description: '尺寸大小'
-    },
     keyField: {
         type: String,
         default: 'key',
@@ -97,24 +89,15 @@ export const treeProps = {
         default: 'disabled',
         description: '替代 TreeDataSource 中的 disabled 字段名'
     },
+    initTree: {
+        type: Function as PropType<() => void> | undefined,
+        default: undefined,
+        description: '初始化加载树形数据'
+    },
+
     onload: {
-        type: Function,
+        type: Function as PropType<(item: TreeDataSource) => void> | undefined,
         default: undefined,
         description: '异步加载数据'
-    },
-    clearable: {
-        type: Boolean,
-        default: true,
-        description: '是否支持清空'
-    },
-    readonly: {
-        type: Boolean,
-        default: false,
-        description: '是否只读'
-    },
-    disabled: {
-        type: Boolean,
-        default: false,
-        description: '是否禁用'
     }
 };

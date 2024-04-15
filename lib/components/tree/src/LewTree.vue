@@ -3,6 +3,7 @@
     import { treeProps } from './props';
     import type { TreeDataSource } from './props';
     import _ from 'lodash';
+    import { tree2List } from './tree2list';
 
     // 获取app
     const app = getCurrentInstance()?.appContext.app;
@@ -11,7 +12,7 @@
     }
 
     const props = defineProps(treeProps);
-    const emit = defineEmits(['change']);
+    const emit = defineEmits(['change', 'initSuccess']);
 
     // 定义异步处理函数
     const modelValue: Ref<string | (string | number)[] | undefined> = defineModel<
@@ -29,70 +30,40 @@
     const loadingKeys = ref<string[]>([]);
     const loading = ref<boolean>(true);
     const treeList: any = ref<TreeDataSource[]>([]);
-    let tree: TreeDataSource[] = [];
-    // 递归将树形结构数组转换成展开列表，按照树结构的顺序存储，同时保存父节点
-    function flattenTree(tree: TreeDataSource[]): TreeDataSource[] {
-        return _.flatMap(_.cloneDeep(tree), (node: TreeDataSource) => {
-            const { children }: any = node;
-            delete node.children;
-            return [node, ...flattenTree(children)];
-        });
-    }
-
-    // 格式化路径逻辑
-    const formatTree = (
-        tree: TreeDataSource[],
-        parent: any = null,
-        parentKeyPaths: String[] = [],
-        parentLabelPaths: String[] = []
-    ): TreeDataSource[] => {
-        return tree.map((node: TreeDataSource, index: number) => {
-            const { children, ...rest }: any = node;
-
-            const currentNode = {
-                ...rest,
-                key: rest[props.keyField],
-                label: rest[props.labelField],
-                keyPaths: [...parentKeyPaths, rest[props.keyField]],
-                labelPaths: [...parentLabelPaths, rest[props.labelField]],
-                isLeaf: _.has(rest, 'isLeaf') ? rest.isLeaf : (children || []).length === 0,
-                parentKey: parent ? parent[props.keyField] : null,
-                level: parentKeyPaths.length,
-                parentKeyPaths,
-                parentLabelPaths,
-                treeIndex: index
-            };
-            // 新增字段，用于判断是否是叶子节点
-            if (!props.free) {
-                currentNode['leafNodeValues'] = findLeafNodes(children);
-                currentNode['allNodeValues'] = findAllNodes(children);
-            }
-
-            const formattedNode = {
-                ...currentNode,
-                children: children
-                    ? formatTree(
-                          children,
-                          currentNode,
-                          currentNode.keyPaths,
-                          currentNode.labelPaths
-                      )
-                    : []
-            };
-
-            return formattedNode;
-        });
-    };
 
     // 初始化
-    const init = async () => {
-        if (props.onload) {
-            tree = formatTree((await props.onload()) || []);
-        } else if (props.dataSource && props.dataSource.length > 0) {
-            tree = formatTree(props.dataSource);
+    let treeBackup: TreeDataSource[] = [];
+    const init = async (keyword: string = '') => {
+        let _treeList = [];
+        const { dataSource, initTree, keyField, labelField, free } = props;
+        if (_.isFunction(initTree)) {
+            const { newTreeList, newTree }: any = (await tree2List({
+                initTree,
+                keyField,
+                labelField,
+                free,
+                keyword
+            })) as any;
+            treeBackup = newTree;
+            _treeList = newTreeList;
+        } else if (dataSource && dataSource.length > 0) {
+            const { newTreeList, newTree }: any = (await tree2List({
+                dataSource,
+                keyField,
+                labelField,
+                free,
+                keyword
+            })) as any;
+            treeBackup = newTree;
+            _treeList = newTreeList;
         }
-        treeList.value = flattenTree(tree);
+        treeList.value = _treeList;
+        expandedKeys.value = [];
+        certainKeys.value = [];
+        loadingKeys.value = [];
         loading.value = false;
+        emit('initSuccess');
+        return _treeList;
     };
     init();
 
@@ -112,10 +83,17 @@
                 );
                 if (index < 0) {
                     loadingKeys.value.push(item.key);
-                    let _tree = (await props.onload(_.cloneDeep(item))) || [];
-                    insertChildByKey(tree, item.key, _tree);
-                    tree = formatTree(tree);
-                    treeList.value = flattenTree(tree);
+                    let _tree =
+                        ((await props.onload(_.cloneDeep(item) as TreeDataSource)) as any) || [];
+                    insertChildByKey(treeBackup, item.key, _tree);
+                    const { newTree, newTreeList }: any = (await tree2List({
+                        dataSource: treeBackup,
+                        keyField: props.keyField,
+                        labelField: props.labelField,
+                        free: props.free
+                    })) as any;
+                    treeBackup = newTree;
+                    treeList.value = newTreeList;
                     const i = loadingKeys.value.findIndex((e: string) => e === item.key);
                     if (i >= 0) {
                         loadingKeys.value.splice(i, 1);
@@ -171,37 +149,6 @@
         }
         emit('change', { item, value: modelValue.value });
     };
-    function findAllNodes(tree: TreeDataSource[] = []) {
-        let nodes = new Set();
-        function traverse(node: any) {
-            nodes.add(node[props.keyField]);
-            (node.children || []).forEach((child: TreeDataSource) => {
-                traverse(child);
-            });
-        }
-
-        tree.forEach((node) => {
-            traverse(node);
-        });
-
-        return Array.from(nodes) || [];
-    }
-
-    function findLeafNodes(tree: TreeDataSource[] = []) {
-        let leafNodes = new Set();
-        function traverse(node: any) {
-            if (!node.children || node.children.length === 0) {
-                leafNodes.add(node[props.keyField]);
-            }
-            (node.children || []).forEach((child: TreeDataSource) => {
-                traverse(child);
-            });
-        }
-        tree.forEach((node) => {
-            traverse(node);
-        });
-        return Array.from(leafNodes) || [];
-    }
 
     // 定义一个函数，传入数组树arrayTree和value列表values
     const formatValues = ({ tree, values }: any): any => {
@@ -234,12 +181,10 @@
             __modelValue: Array.from(_modelValue)
         }; // 将Set转换为数组并返回
     };
-
     const getTreeList = () => {
         return _.cloneDeep(treeList.value);
     };
-
-    defineExpose({ getTreeList });
+    defineExpose({ init, getTreeList });
 </script>
 
 <template>
@@ -260,11 +205,11 @@
             >
                 <div
                     v-if="
-                        expandAll ||
+                      (expandAll ||
                         item.level === 0 ||
                         ((expandedKeys || []).includes(item.parentKey as string | number) &&
                             _.intersection(item.parentKeyPaths, expandedKeys).length ===
-                                (item.parentKeyPaths || []).length)
+                                (item.parentKeyPaths || []).length)) 
                     "
                     class="lew-tree-item"
                     :class="{
@@ -335,10 +280,11 @@
     .lew-tree-item {
         display: inline-flex;
         align-items: center;
-        padding: 0px 16px 0px 8px;
+        padding: 0px 8px;
         white-space: nowrap;
         user-select: none;
-
+        width: 100%;
+        box-sizing: border-box;
         .lew-tree-chevron-right {
             display: flex;
             justify-content: center;
@@ -360,13 +306,14 @@
         }
         .lew-tree-item-label {
             position: relative;
-            position: relative;
             padding: 4px 10px 4px 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
             border-radius: var(--lew-border-radius-small);
             cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
             .lew-tree-line {
                 position: absolute;
                 left: -37px;

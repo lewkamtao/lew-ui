@@ -96,7 +96,7 @@
             v-model="v"
             key-field="value"
             label-field="label"
-            size="small"
+			searchable
             :data-source="options"
             @change="change"
         />

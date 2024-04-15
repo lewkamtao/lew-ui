@@ -5,13 +5,13 @@ export type TreeSelectOptions = {
     label: string;
     value: [string, number];
     labelPaths?: string[];
-    valuePaths?: string[];
+    keysPaths?: string[];
     level: number;
     isLeaf?: boolean;
     loading?: boolean;
     disabled?: boolean;
     parentLabelPaths?: string[];
-    parentValuePaths?: string[];
+    parentKeysPaths?: string[];
     parentChildren?: TreeSelectOptions[];
     children?: TreeSelectOptions[];
 };
@@ -27,7 +27,7 @@ export const treeSelectModel = {
 };
 
 export type TreeSelectSearchMethodParams = {
-    options?: TreeDataSource[];
+    item?: TreeDataSource;
     keyword?: string;
 };
 
@@ -57,20 +57,7 @@ export const treeSelectProps = {
         default: false,
         description: '是否可搜索'
     },
-    searchMethod: {
-        type: Function as PropType<(e: TreeSelectSearchMethodParams) => void>,
-        default: (params: TreeSelectSearchMethodParams) => {
-            const { options, keyword } = params;
-            if (options && keyword) {
-                const reslut = options.filter((e) => {
-                    return keyword && e.label.indexOf(keyword) >= 0;
-                });
-                return reslut;
-            }
-            return [];
-        },
-        description: '搜索方法'
-    },
+
     searchDelay: {
         type: Number,
         default: 250,
@@ -120,5 +107,35 @@ export const treeSelectProps = {
         type: String,
         default: '',
         description: '默认值'
+    },
+    showCheckbox: {
+        type: Boolean,
+        default: false,
+        description: '是否显示复选框'
+    },
+    initTree: {
+        type: Function as PropType<(keyword: string) => void> | undefined,
+        default: undefined,
+        description: '初始化加载树形数据，会覆盖searchMethod方法'
+    },
+    onload: {
+        type: Function as PropType<() => void> | undefined,
+        default: undefined,
+        description: '异步加载数据'
+    },
+    showLine: {
+        type: Boolean,
+        default: false,
+        description: '是否显示连接线'
+    },
+    expandAll: {
+        type: Boolean,
+        default: false,
+        description: '默认全部展开'
+    },
+    free: {
+        type: Boolean,
+        default: true,
+        description: '自由模式（是否严格的遵循父子互相关联）'
     }
 };
