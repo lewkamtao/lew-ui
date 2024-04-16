@@ -95,17 +95,19 @@
         :style="getStyle"
         @click="handleClick"
     >
-        <lew-icon v-if="icon" class="lew-button-icon" :size="getIconSize" :type="icon" />
-        <lew-icon
-            class="lew-loading-icon"
-            :size="getIconSize"
-            animation="spin"
-            animation-speed="fast"
-            :class="{
-                'lew-loading-isShow': (_loading || loading) && !disabled
-            }"
-            type="loader"
-        />
+        <template v-if="iconPosition === 'left'">
+            <lew-icon v-if="icon" class="lew-button-icon" :size="getIconSize" :type="icon" />
+            <lew-icon
+                class="lew-loading-icon"
+                :size="getIconSize"
+                animation="spin"
+                animation-speed="fast"
+                :class="{
+                    'lew-loading-isShow': (_loading || loading) && !disabled
+                }"
+                type="loader"
+            />
+        </template>
         <span v-if="$slots.default || text" class="lew-button-text">
             <template v-if="$slots.default">
                 <slot />
@@ -114,6 +116,19 @@
                 {{ text }}
             </template>
         </span>
+        <template v-if="iconPosition === 'right'">
+            <lew-icon v-if="icon" class="lew-button-icon" :size="getIconSize" :type="icon" />
+            <lew-icon
+                class="lew-loading-icon"
+                :size="getIconSize"
+                animation="spin"
+                animation-speed="fast"
+                :class="{
+                    'lew-loading-isShow': (_loading || loading) && !disabled
+                }"
+                type="loader"
+            />
+        </template>
     </button>
 </template>
 

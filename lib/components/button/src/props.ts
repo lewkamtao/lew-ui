@@ -38,6 +38,11 @@ export const buttonProps = {
         default: '',
         description: '图标'
     },
+    iconPosition: {
+        type: String,
+        default: 'left',
+        description: '图标位置'
+    },
     size: {
         type: String as PropType<ButtonSize>,
         default: 'medium',

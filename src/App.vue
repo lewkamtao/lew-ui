@@ -13,6 +13,7 @@
     .wrapper {
         height: 100%;
         margin: 0 auto;
+		max-width: 1440px;
         background: var(--lew-bgcolor-0);
         border-left: var(--lew-border-2);
         border-right: var(--lew-border-2);

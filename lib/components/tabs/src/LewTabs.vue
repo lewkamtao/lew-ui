@@ -57,7 +57,7 @@
     const init = () => {
         let index = props.options.findIndex((e) => e.value === tabsValue.value);
         if (index >= 0) {
-            state.activeItemStyle = `width:${itemRef.value[index].offsetWidth}px;transform: translateX(${itemRef.value[index].offsetLeft}px);`;
+            initActiveItemStyle(index);
         }
         tabsScroll();
         setTimeout(() => {

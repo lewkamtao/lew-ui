@@ -193,7 +193,6 @@
         :style="{
             minHeight: loading ? '250px' : ''
         }"
-        class="lew-tree-wrapper"
     >
         <template v-if="treeList && treeList.length > 0 && !loading">
             <lew-flex
@@ -274,13 +273,9 @@
     </div>
 </template>
 <style lang="scss" scoped>
-    .lew-tree-wrapper {
-        padding: 5px 0px;
-    }
     .lew-tree-item {
         display: inline-flex;
         align-items: center;
-        padding: 0px 8px;
         white-space: nowrap;
         user-select: none;
         width: 100%;

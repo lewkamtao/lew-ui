@@ -2,6 +2,17 @@
     import { useRouter } from 'vue-router';
     import * as Yup from 'yup';
     import { schools } from '../docs/select/demo/schools';
+    import _ from 'lodash';
+
+    const viewTotal = ref(100000000);
+
+    const timer = setInterval(() => {
+        viewTotal.value += _.random(1, 1000000);
+    }, 1000);
+
+    onUnmounted(() => {
+        clearInterval(timer);
+    });
 
     const schoolsOptions = schools.map((e, i) => {
         return { label: e, value: i + 1 };
@@ -356,6 +367,9 @@
             </div>
             <p>一个 Vue 3 组件库</p>
             <lew-button
+                round
+                icon="arrow-right"
+                icon-position="right"
                 text="Get started"
                 style="margin-top: 20px"
                 @click="router.push('/Avatar')"
@@ -368,7 +382,10 @@
                         <lew-title :size="16" :bold="200"> Lew Design 16px </lew-title>
                         <lew-title size="24px" :bold="400"> Lew Design 24px </lew-title>
                         <lew-title size="32px" :bold="600"> Lew Design 32px </lew-title>
-                        <lew-title size="40px" :bold="900"> Lew Design 40px </lew-title>
+                        <lew-title size="40px" :bold="600">
+                            访问量：
+                            <lew-magic-number sep :value="viewTotal" :size="40" />
+                        </lew-title>
                     </lew-flex>
                     <lew-flex x="end" gap="20">
                         <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" />

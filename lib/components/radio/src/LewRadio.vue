@@ -11,16 +11,16 @@
     };
 
     const getIconSize = computed(() => {
-        const { size } = props;
+        const { size, block } = props;
         switch (size) {
             case 'small':
-                return 9;
+                return block ? 9 : 7;
             case 'medium':
-                return 11;
+                return block ? 11 : 9;
             case 'large':
-                return 13;
+                return block ? 13 : 11;
             default:
-                return 11;
+                return block ? 11 : 9;
         }
     });
 

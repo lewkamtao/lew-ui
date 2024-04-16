@@ -110,7 +110,7 @@
             element.style.cursor = 'pointer';
             instance.enable();
         } else {
-            element.style.cursor = 'default';
+            element.style.cursor = 'text';
             instance.disable();
         }
         width = element.offsetWidth;

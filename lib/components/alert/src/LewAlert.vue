@@ -54,6 +54,8 @@
             padding: 12px 18px;
             box-sizing: border-box;
             color: var(--lew-text-color-1);
+            background-color: var(--lew-bgcolor-1);
+            overflow: hidden;
 
             .alert-icon {
                 margin: 2px 5px 0px 0px;

@@ -1,6 +1,6 @@
 <template>
-    <lew-flex gap="20"
-        >请看右下角
+    <lew-flex style="height: 50vh" gap="20"
+        >请往下滚动，留意右下角
         <lew-back-top target="component-main" @click="getEvent"></lew-back-top>
         <lew-back-top :bottom="100" target="component-main">
             <div>UP</div>

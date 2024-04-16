@@ -437,11 +437,9 @@
         width: 100%;
         box-sizing: border-box;
         .tree-select-wrapper {
+			padding: 3px 0px;
             max-height: 320px;
             overflow: auto;
-        }
-        .lew-select-options-list {
-            padding: 2px 0px;
         }
         .reslut-count {
             padding-left: 8px;
