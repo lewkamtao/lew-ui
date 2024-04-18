@@ -97,25 +97,44 @@
     >
         <template v-if="iconPosition === 'left'">
             <lew-icon v-if="icon" class="lew-button-icon" :size="getIconSize" :type="icon" />
-            <lew-icon
+            <div
                 class="lew-loading-icon"
-                :size="getIconSize"
-                animation="spin"
-                animation-speed="fast"
                 :class="{
                     'lew-loading-isShow': (_loading || loading) && !disabled
                 }"
-                type="loader"
-            />
+            >
+                <lew-icon
+                    v-if="!$slots.default && !text"
+                    :size="getIconSize"
+                    animation="spin"
+                    animation-speed="fast"
+                    type="loader"
+                />
+            </div>
         </template>
-        <span v-if="$slots.default || text" class="lew-button-text">
-            <template v-if="$slots.default">
-                <slot />
-            </template>
-            <template v-else>
-                {{ text }}
-            </template>
-        </span>
+        <div v-if="$slots.default || text" class="lew-button-content">
+            <div
+                class="lew-loading-icon"
+                :class="{
+                    'lew-loading-isShow': (_loading || loading) && !disabled
+                }"
+            >
+                <lew-icon
+                    :size="getIconSize"
+                    animation="spin"
+                    animation-speed="fast"
+                    type="loader"
+                />
+            </div>
+            <span class="lew-button-text">
+                <template v-if="$slots.default">
+                    <slot />
+                </template>
+                <template v-else>
+                    {{ text }}
+                </template>
+            </span>
+        </div>
         <template v-if="iconPosition === 'right'">
             <lew-icon v-if="icon" class="lew-button-icon" :size="getIconSize" :type="icon" />
             <lew-icon
@@ -155,13 +174,25 @@
 
         .lew-loading-icon {
             position: absolute;
-            left: 10px;
             opacity: 0;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
             transition: opacity 0.3s ease-in-out;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        .lew-button-text {
+        .lew-loading-isShow {
+            opacity: 1;
+        }
+        .lew-button-content {
+            position: relative;
             z-index: 2;
+            .lew-loading-icon {
+                left: -20px;
+                transform: translateY(-50%);
+            }
         }
 
         .lew-loading-isShow {
@@ -228,9 +259,10 @@
         padding: 0px 8px;
         font-size: var(--lew-form-font-size-small);
         gap: 4px;
-
-        .lew-loading-icon {
-            left: 8px;
+        .lew-button-content {
+            .lew-loading-icon {
+                left: -16px;
+            }
         }
     }
 
@@ -241,9 +273,10 @@
         padding: 0px 14px;
         font-size: var(--lew-form-font-size-medium);
         gap: 6px;
-
-        .lew-loading-icon {
-            left: 10px;
+        .lew-button-content {
+            .lew-loading-icon {
+                left: -18px;
+            }
         }
     }
 
@@ -254,9 +287,10 @@
         padding: 0px 20px;
         font-size: var(--lew-form-font-size-large);
         gap: 8px;
-
-        .lew-loading-icon {
-            left: 12px;
+        .lew-button-content {
+            .lew-loading-icon {
+                left: -20px;
+            }
         }
     }
 
@@ -290,10 +324,6 @@
 
         .lew-button-icon {
             display: none;
-        }
-
-        .lew-loading-icon {
-            position: static;
         }
     }
 
