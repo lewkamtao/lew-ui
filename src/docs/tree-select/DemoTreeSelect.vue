@@ -19,10 +19,10 @@
 <template>
     <div class="demo-wrapper">
         <lew-title>TreeSelect</lew-title>
-        <lew-demo-box title="状态" :code="DemoTreeSelect1Code">
+        <lew-demo-box title="常规" :code="DemoTreeSelect1Code">
             <demo-tree-select1 />
         </lew-demo-box>
-        <lew-demo-box title="状态" :code="DemoTreeSelect1Code">
+        <lew-demo-box title="支持异步加载数据" :code="DemoTreeSelect1Code">
             <demo-tree-select2 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>
