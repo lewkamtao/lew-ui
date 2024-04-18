@@ -35,10 +35,9 @@
             white-space: nowrap;
             overflow: hidden;
             color: var(--lew-text-color-3);
+			font-weight: 400;
         }
-        svg {
-            width: 16px;
-            height: 16px;
+        i {
             margin-right: 10px;
         }
     }

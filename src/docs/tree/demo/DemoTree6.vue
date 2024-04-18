@@ -2,7 +2,7 @@
     function createTree(path = '0', level = 2) {
         const list = [];
         for (let i = 0; i < 2; i += 1) {
-            const key = `${path} - ${i}`;
+            const key = `${path}-${i}`;
             const treeNode: any = {
                 label: key,
                 key

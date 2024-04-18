@@ -295,7 +295,7 @@
             LewMessage.error('您的浏览器不支持Clipboard API');
             return;
         }
-        const htmlText = `<lew-icon type="${text}" />`;
+        const htmlText = text;
         copy(htmlText);
         LewMessage.success('复制成功');
     };

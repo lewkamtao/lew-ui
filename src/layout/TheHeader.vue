@@ -35,23 +35,15 @@
             <div class="menu-item" @click="router.push(`/`)">首页</div>
             <div class="menu-item" @click="router.push(`/Install`)">指南</div>
             <div class="menu-item" @click="router.push(`/Avatar`)">组件</div>
-
-            
-            <lew-icon
-                class="menu-item icon-mode-sunny"
-                type="sun"
-                size="18"
-                @click="isDark = false"
-            />
-            <lew-icon
-                class="menu-item icon-mode-moon"
-                type="moon"
-                size="18"
-                @click="isDark = true"
-            />
-            <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
-                <lew-icon size="18" type="github" />
-            </a>
+            <div @click="isDark = !isDark" class="menu-item menu-item-icon">
+                <lew-icon class="icon-mode-sunny" type="sun" size="18" />
+                <lew-icon class="icon-mode-moon" type="moon" size="18" />
+            </div>
+            <div class="menu-item menu-item-icon">
+                <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
+                    <lew-icon size="18" type="github" />
+                </a>
+            </div>
         </lew-flex>
     </div>
 </template>
@@ -87,23 +79,33 @@
             display: flex;
             align-items: center;
 
-            a,
-            span,
             .menu-item {
                 display: inline-flex;
                 align-items: center;
-                padding: 5px;
+                justify-content: center;
+                padding: 10px;
                 opacity: 0.8;
                 font-size: 14px;
                 transition: all 0.25s;
                 color: var(--lew-text-color-1);
                 cursor: pointer;
+                box-sizing: border-box;
+                height: 30px;
+                border-radius: var(--lew-border-radius-small);
 
                 svg {
                     cursor: pointer;
                 }
+                a {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
             }
-
+            .menu-item-icon {
+                width: 30px;
+                padding: 0px;
+            }
             .menu-item:nth-child(3) {
                 margin-right: 50px;
             }
@@ -112,10 +114,7 @@
             span:hover,
             .menu-item:hover {
                 opacity: 1;
-            }
-
-            .menu-item {
-                padding: 10px;
+                background-color: var(--lew-bgcolor-3);
             }
         }
     }

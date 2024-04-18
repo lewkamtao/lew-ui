@@ -6,7 +6,7 @@ export const getIconType = (type: string | undefined): string => {
     const map = {
         normal: 'info',
         warning: 'alert-triangle',
-        success: 'check',
+        success: 'check-circle',
         error: 'alert-circle',
         info: 'bell'
     };
