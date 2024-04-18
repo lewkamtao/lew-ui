@@ -5,6 +5,8 @@ import AutoImport from 'unplugin-auto-import/vite';
 import * as path from 'path';
 import dts from 'vite-plugin-dts';
 import checker from 'vite-plugin-checker';
+import zipPack from 'vite-plugin-zip-pack';
+import dayjs from 'dayjs';
 
 // 路径
 const pathSrc = path.resolve(__dirname, 'src');
@@ -36,6 +38,9 @@ export default defineConfig(({ mode }) => {
             extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue']
         },
         plugins: [
+            zipPack({
+                outFileName: `lew-ui_${mode}_${dayjs().format('YYYY_MM_DD_HH_mm')}.zip`
+            }),
             vue(),
             vueJsx(),
             mode === 'lib' ? dts() : undefined,

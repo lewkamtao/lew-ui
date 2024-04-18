@@ -10,8 +10,8 @@
     "license": "MIT",
     "scripts": {
         "dev": "vite",
-        "build:noemit": "vite build --mode demo",
-        "build": "vue-tsc --noEmit && vite build --mode demo",
+        "build:noemit": "vite build --mode home",
+        "build": "vue-tsc --noEmit && vite build --mode home",
         "build:lib": "vue-tsc --noEmit && vite build --mode lib",
         "lint:comment": "使用 ESLint 检查并自动修复 src 目录下所有扩展名为 .js 和 .vue 的文件",
         "eslint": "eslint --ext .js,.vue --ignore-path .gitignore --fix .",
@@ -58,6 +58,7 @@
         "tippy.js": "^6.3.7",
         "vee-validate": "^4.5.8",
         "vite-plugin-dts": "^3.8.2",
+        "vite-plugin-zip-pack": "^1.2.3",
         "vue": "^3.4.21",
         "vue-feather": "^2.0.0",
         "vue-router": "^4.0.13",
