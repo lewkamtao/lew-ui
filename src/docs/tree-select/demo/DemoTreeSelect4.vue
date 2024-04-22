@@ -3,19 +3,22 @@
         {
             value: 1,
             label: 'Asia',
+            disabled: true,
             children: [
                 {
                     value: 2,
                     label: 'China',
+                    disabled: true,
                     children: [
-                        { value: 3, label: 'Beijing' },
-                        { value: 4, label: 'Shanghai' },
+                        { value: 3, disabled: true, label: 'Beijing' },
+                        { value: 4, disabled: true, label: 'Shanghai' },
                         { value: 5, label: 'Hangzhou' }
                     ]
                 },
                 {
                     value: 6,
                     label: 'Japan',
+                    disabled: true,
                     children: [
                         { value: 7, label: 'Tokyo' },
                         { value: 8, label: 'Osaka' },
@@ -26,8 +29,8 @@
                     value: 10,
                     label: 'Korea',
                     children: [
-                        { value: 11, label: 'Seoul' },
-                        { value: 12, label: 'Busan' },
+                        { value: 11, disabled: true, label: 'Seoul' },
+                        { value: 12, disabled: true, label: 'Busan' },
                         { value: 13, label: 'Taegu' }
                     ]
                 }
@@ -36,12 +39,13 @@
         {
             value: 14,
             label: 'Europe',
+            disabled: true,
             children: [
                 {
                     value: 15,
                     label: 'France',
                     children: [
-                        { value: 16, label: 'Paris' },
+                        { value: 16, disabled: true, label: 'Paris' },
                         { value: 17, label: 'Marseille' },
                         { value: 18, label: 'Lyon' }
                     ]
@@ -66,7 +70,7 @@
                     label: 'US',
                     children: [
                         { value: 25, label: 'New York' },
-                        { value: 26, label: 'Los Angeles' },
+                        { value: 26, disabled: true, label: 'Los Angeles' },
                         { value: 27, label: 'Washington' }
                     ]
                 },
@@ -75,7 +79,7 @@
                     label: 'Canada',
                     children: [
                         { value: 29, label: 'Toronto' },
-                        { value: 30, label: 'Montreal' },
+                        { value: 30, disabled: true, label: 'Montreal' },
                         { value: 31, label: 'Ottawa' }
                     ]
                 }
@@ -94,27 +98,11 @@
     <lew-flex direction="y" gap="20px" style="width: 300px">
         <lew-tree-select
             v-model="v"
-            size="small"
             key-field="value"
             label-field="label"
             :data-source="options"
             @change="change"
-        />
-        <lew-tree-select
-            v-model="v"
-            key-field="value"
-            size="medium"
-            label-field="label"
-            :data-source="options"
-            @change="change"
-        />
-        <lew-tree-select
-            v-model="v"
-            size="large"
-            key-field="value"
-            label-field="label"
-            :data-source="options"
-            @change="change"
-        />
+        >
+        </lew-tree-select>
     </lew-flex>
 </template>

@@ -41,8 +41,8 @@
 
     const lewDateClassNames = computed(() => {
         const focus = visible.value;
-        const { size } = props;
-        return object2class('lew-date-picker', { focus, size });
+        const { size, readonly, disabled } = props;
+        return object2class('lew-date-picker', { focus, size, readonly, disabled });
     });
 
     const clearHandle = () => {
@@ -66,6 +66,7 @@
         ref="lewPopoverRef"
         trigger="click"
         placement="bottom-start"
+        :disabled="disabled || readonly"
         :offset="[0, 8]"
         @show="showHandle"
         @hide="hideHandle"
@@ -73,7 +74,9 @@
         <template #trigger>
             <div class="lew-date-picker-view" :class="lewDateClassNames">
                 <div class="lew-date-picker-input">
-                    <div v-show="!modelValue" class="lew-date-picker-placeholder"> 请选择日期 </div>
+                    <div v-show="!modelValue" class="lew-date-picker-placeholder">
+                        {{ placeholder }}
+                    </div>
                     <div v-show="modelValue" class="lew-date-picker-dateValue">
                         {{ modelValue }}
                     </div>
@@ -190,5 +193,12 @@
                 line-height: var(--lew-form-input-line-height-large);
             }
         }
+    }
+    .lew-date-picker-readonly {
+        pointer-events: none;
+    }
+    .lew-date-picker-disabled {
+        pointer-events: none;
+        opacity: var(--lew-disabled-opacity);
     }
 </style>

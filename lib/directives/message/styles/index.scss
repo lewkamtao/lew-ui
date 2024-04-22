@@ -34,11 +34,17 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
-            color: var(--lew-text-color-3);
-			font-weight: 400;
+            color: var(--lew-text-color-1);
+            font-weight: 400;
         }
-        i {
-            margin-right: 10px;
+        svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 7px;
+        }
+        .vue-feather--spin {
+            width: 16px;
+            height: 16px;
         }
     }
     .message-normal {

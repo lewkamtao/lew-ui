@@ -183,7 +183,7 @@
                     :class="{ 'icon-select-hide': clearable && state.keyword }"
                 />
                 <lew-icon
-                    v-else="state.initLoading"
+                    v-else-if="state.initLoading"
                     type="loader"
                     :size="getIconSize"
                     class="icon-loader"
@@ -250,8 +250,11 @@
                             @init-success="state.initLoading = false"
                             @change="change"
                         >
-                            <template #empty>
-                                <slot v-if="$slots.empty" name="empty" />
+                            <template v-if="$slots.empty" #empty>
+                                <slot name="empty" />
+                            </template>
+                            <template v-if="$slots.item" #item="{ props }">
+                                <slot name="item" :props="props" />
                             </template>
                         </lew-tree>
                     </div>
@@ -437,7 +440,7 @@
         width: 100%;
         box-sizing: border-box;
         .tree-select-wrapper {
-			padding: 3px 0px;
+            padding: 3px 0px;
             max-height: 320px;
             overflow: auto;
         }

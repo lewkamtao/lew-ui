@@ -94,27 +94,21 @@
     <lew-flex direction="y" gap="20px" style="width: 300px">
         <lew-tree-select
             v-model="v"
-            size="small"
             key-field="value"
             label-field="label"
             :data-source="options"
             @change="change"
-        />
-        <lew-tree-select
-            v-model="v"
-            key-field="value"
-            size="medium"
-            label-field="label"
-            :data-source="options"
-            @change="change"
-        />
-        <lew-tree-select
-            v-model="v"
-            size="large"
-            key-field="value"
-            label-field="label"
-            :data-source="options"
-            @change="change"
-        />
+        >
+            <template #item="{ props }">
+                <lew-icon style="margin-right: 5px" size="13" /> {{ props.label }}
+                <span>（{{ props.value }}）</span>
+            </template>
+            <template #empty>
+                <div class="empty">
+                    <lew-icon size="30" type="box" />
+                    暂无内容
+                </div>
+            </template>
+        </lew-tree-select>
     </lew-flex>
 </template>

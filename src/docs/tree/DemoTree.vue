@@ -7,13 +7,15 @@
         DemoTree5,
         DemoTree6,
         DemoTree7,
+        DemoTree8,
         DemoTree1Code,
         DemoTree2Code,
         DemoTree3Code,
         DemoTree4Code,
         DemoTree5Code,
         DemoTree6Code,
-        DemoTree7Code
+        DemoTree7Code,
+        DemoTree8Code
     } from './demo';
     import LewDemoBox from '../../layout/LewDemoBox.vue';
     import LewDocsTables from '../../layout/LewDocsTables.vue';
@@ -87,6 +89,9 @@
         </lew-demo-box>
         <lew-demo-box title="是否展示辅助线" :code="DemoTree7Code">
             <demo-tree7 />
+        </lew-demo-box>
+        <lew-demo-box title="插槽" :code="DemoTree8Code">
+            <demo-tree8 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>
     </div>

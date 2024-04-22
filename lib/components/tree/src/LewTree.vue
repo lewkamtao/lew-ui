@@ -244,7 +244,8 @@
                             type="chevron-right"
                         />
                     </div>
-                    <div class="lew-tree-item-label" @click="select(item)">
+
+                    <div @click="select(item)" class="lew-tree-item-label">
                         <div v-if="item.level > 0 && showLine" class="lew-tree-line"></div>
                         <lew-checkbox
                             v-if="showCheckbox"
@@ -260,7 +261,17 @@
                             "
                             class="lew-tree-checkbox"
                         />
-                        <span>{{ item.label }}</span>
+                        <slot
+                            v-if="$slots.item"
+                            name="item"
+                            :props="{
+                                ...item,
+                                checked: multiple
+                                    ? (modelValue || []).includes(item.key)
+                                    : modelValue === item.key
+                            }"
+                        />
+                        <span v-else>{{ item.label }}</span>
                     </div>
                 </div>
             </lew-flex>

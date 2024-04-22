@@ -3,10 +3,12 @@
         {
             value: 1,
             label: 'Asia',
+
             children: [
                 {
                     value: 2,
                     label: 'China',
+
                     children: [
                         { value: 3, label: 'Beijing' },
                         { value: 4, label: 'Shanghai' },
@@ -16,6 +18,7 @@
                 {
                     value: 6,
                     label: 'Japan',
+
                     children: [
                         { value: 7, label: 'Tokyo' },
                         { value: 8, label: 'Osaka' },
@@ -36,6 +39,7 @@
         {
             value: 14,
             label: 'Europe',
+
             children: [
                 {
                     value: 15,
@@ -94,25 +98,25 @@
     <lew-flex direction="y" gap="20px" style="width: 300px">
         <lew-tree-select
             v-model="v"
-            size="small"
             key-field="value"
             label-field="label"
+            clearable
             :data-source="options"
             @change="change"
         />
         <lew-tree-select
             v-model="v"
             key-field="value"
-            size="medium"
             label-field="label"
+            readonly
             :data-source="options"
             @change="change"
         />
         <lew-tree-select
             v-model="v"
-            size="large"
             key-field="value"
             label-field="label"
+            disabled
             :data-source="options"
             @change="change"
         />

@@ -2,8 +2,10 @@
     import {
         DemoDateRangePicker1,
         DemoDateRangePicker2,
+        DemoDateRangePicker3,
         DemoDateRangePicker1Code,
-        DemoDateRangePicker2Code
+        DemoDateRangePicker2Code,
+        DemoDateRangePicker3Code
     } from './demo';
     import LewDemoBox from '../../layout/LewDemoBox.vue';
     import LewDocsTables from '../../layout/LewDocsTables.vue';
@@ -26,6 +28,9 @@
         </lew-demo-box>
         <lew-demo-box title="可清空的" :code="DemoDateRangePicker2Code">
             <demo-date-range-picker2 />
+        </lew-demo-box>
+        <lew-demo-box title="其他" :code="DemoDateRangePicker3Code">
+            <demo-date-range-picker3 />
         </lew-demo-box>
         <lew-docs-tables :options="options"></lew-docs-tables>
     </div>

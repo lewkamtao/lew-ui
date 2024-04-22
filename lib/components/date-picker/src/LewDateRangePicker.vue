@@ -1,6 +1,7 @@
 <script lang="ts" setup>
     import { LewPopover, LewIcon, LewDateRange, LewTooltip } from 'lew-ui';
     import { dateRangePickerProps } from './props';
+    import { object2class } from 'lew-ui/utils';
 
     // 获取app
     const app = getCurrentInstance()?.appContext.app;
@@ -51,11 +52,10 @@
         emit('clear');
     };
 
-    const classObject = computed(() => {
-        return {
-            'lew-date-picker-focus': visible.value,
-            [`lew-date-picker-${props.size}`]: props.size
-        };
+    const lewDateRangeClassNames = computed(() => {
+        const focus = visible.value;
+        const { size, readonly, disabled } = props;
+        return object2class('lew-date-picker', { focus, size, readonly, disabled });
     });
 
     const checkClear = computed(() => {
@@ -74,17 +74,18 @@
         trigger="click"
         placement="bottom-start"
         :offset="[1, 8]"
+        :disabled="disabled || readonly"
         @show="showHandle"
         @hide="hideHandle"
     >
         <template #trigger>
-            <div class="lew-date-picker-view" :class="classObject">
+            <div class="lew-date-picker-view" :class="lewDateRangeClassNames">
                 <div class="lew-date-picker-input">
                     <div
                         v-if="!modelValue || !modelValue[startKey]"
                         class="lew-date-picker-placeholder"
                     >
-                        请选择日期
+                        {{ placeholderStart }}
                     </div>
                     <div v-else class="lew-date-picker-dateValue lew-date-picker-start">
                         {{ modelValue[startKey] }}
@@ -96,7 +97,7 @@
                         v-if="!modelValue || !modelValue[endKey]"
                         class="lew-date-picker-placeholder"
                     >
-                        请选择日期
+                        {{ placeholderEnd }}
                     </div>
                     <div v-else class="lew-date-picker-dateValue lew-date-picker-end">
                         {{ modelValue[endKey] }}
@@ -196,7 +197,7 @@
             outline: var(--lew-form-ouline);
         }
 
-        .lew-date-picker-small {
+        .lew-date-picker-size-small {
             .lew-date-picker-input {
                 height: var(--lew-form-item-height-small);
                 padding: var(--lew-form-input-padding-small);
@@ -205,7 +206,7 @@
             }
         }
 
-        .lew-date-picker-medium {
+        .lew-date-picker-size-medium {
             .lew-date-picker-input {
                 height: var(--lew-form-item-height-medium);
                 padding: var(--lew-form-input-padding-medium);
@@ -214,7 +215,7 @@
             }
         }
 
-        .lew-date-picker-large {
+        .lew-date-picker-size-large {
             .lew-date-picker-input {
                 height: var(--lew-form-item-height-large);
                 padding: var(--lew-form-input-padding-large);
@@ -222,5 +223,13 @@
                 line-height: var(--lew-form-input-line-height-large);
             }
         }
+    }
+
+    .lew-date-picker-readonly {
+        pointer-events: none;
+    }
+    .lew-date-picker-disabled {
+        pointer-events: none;
+        opacity: var(--lew-disabled-opacity);
     }
 </style>

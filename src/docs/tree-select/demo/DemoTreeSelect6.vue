@@ -68,6 +68,7 @@
             v-model="v"
             key-field="value"
             label-field="label"
+            searchable
             :onload="onload"
             :initTree="initTree"
             @change="change"

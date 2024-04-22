@@ -36,6 +36,13 @@ export const datePickerProps = {
         type: Boolean,
         default: false,
         description: '是否禁用'
+    },
+    placeholder: {
+        type: String,
+        default: () => {
+            return '请选择日期';
+        },
+        description: '默认提示语'
     }
 };
 
@@ -69,6 +76,20 @@ export const dateRangePickerProps = {
         type: Boolean,
         default: false,
         description: '是否禁用'
+    },
+    placeholderStart: {
+        type: String,
+        default: () => {
+            return '开始日期';
+        },
+        description: '开始日期的默认提示语'
+    },
+    placeholderEnd: {
+        type: String,
+        default: () => {
+            return '结束日期';
+        },
+        description: '结束日期的默认提示语'
     }
 };
 

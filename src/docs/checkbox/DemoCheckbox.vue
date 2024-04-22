@@ -26,7 +26,12 @@
 <template>
     <div class="demo-wrapper">
         <lew-title>Checkbox</lew-title>
-        <p class="sub-title">通过复选框选择一个或多个数据。</p>
+        <p class="sub-title"
+            >通过复选框选择一个或多个数据。单选框可移步
+            <lew-mark type="light" color="blue" to="https://fengyuanchen.github.io/vue-feather/">
+                Radio
+            </lew-mark>
+        </p>
         <lew-demo-box title="常规" :code="DemoCheckbox1Code">
             <demo-checkbox1 />
         </lew-demo-box>
