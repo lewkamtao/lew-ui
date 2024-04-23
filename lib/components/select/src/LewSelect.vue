@@ -311,7 +311,7 @@
         transition: all 0.15s ease;
         box-sizing: border-box;
         outline: 0px var(--lew-color-primary-light) solid;
-        border: var(--lew-form-border-width) transparent solid;
+        border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
 
         > div {
             width: 100%;
@@ -452,7 +452,7 @@
     .lew-select-view-disabled:hover {
         background-color: var(--lew-form-bgcolor);
         outline: 0px var(--lew-color-primary-light) solid;
-        border: var(--lew-form-border-width) transparent solid;
+        border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     }
 </style>
 <style lang="scss">

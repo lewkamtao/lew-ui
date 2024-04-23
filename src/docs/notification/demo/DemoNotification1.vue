@@ -3,7 +3,8 @@
         // @ts-ignore
         LewNotification[type]({
             title: '通知',
-            content: '这是一条重要的通知！！！'
+            content:
+                '这是一条重要的通知！！！这是一条重要的通知！！！这是一条重要的通知！！！这是一条重要的通知！！！'
         });
     };
 </script>

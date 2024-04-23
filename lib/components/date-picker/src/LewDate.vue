@@ -184,7 +184,7 @@
             width: 100%;
             display: flex;
             flex-wrap: wrap;
-            // border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+            border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
 
             .lew-date-item {
                 position: relative;

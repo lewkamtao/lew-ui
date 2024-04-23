@@ -330,8 +330,8 @@
         background-color: var(--lew-form-bgcolor);
         transition: var(--lew-form-transition);
         box-sizing: border-box;
-        outline: 0px transparent solid;
-        border: var(--lew-form-border-width) transparent solid;
+        outline: 0px var(--lew-form-border-color) solid;
+        border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
         overflow: hidden;
 
         .lew-input-box {

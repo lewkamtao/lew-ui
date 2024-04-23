@@ -17,13 +17,13 @@
         box-sizing: border-box;
         height: 40px;
         line-height: 40px;
-        padding: 7px 14px;
+        padding:7px 18px 7px 14px;
         transition: all 0.25s ease;
         opacity: 0;
         margin-top: 0px;
         margin-bottom: 12px;
         transform: translateY(-10px);
-        box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.07);
+        box-shadow: 0px 4px 10px -5px rgba(0, 0, 0, 0.15);
         border: var(--lew-popover-border);
         font-size: 14px;
         border-radius: 20px;
@@ -48,22 +48,22 @@
         }
     }
     .message-normal {
-        color: var(--lew-color-normal-dark);
+        color: var(--lew-color-normal);
     }
     .message-error {
-        color: var(--lew-color-error-dark);
+        color: var(--lew-color-error);
     }
     .message-success {
-        color: var(--lew-color-success-dark);
+        color: var(--lew-color-success);
     }
     .message-info {
-        color: var(--lew-color-info-dark);
+        color: var(--lew-color-info);
     }
     .message-warning {
-        color: var(--lew-color-warning-dark);
+        color: var(--lew-color-warning);
     }
     .message-loading {
-        color: var(--lew-color-normal-dark);
+        color: var(--lew-color-normal);
     }
     .message-icon {
         display: flex;

@@ -34,6 +34,6 @@
             request: cancel
         }"
     >
-        <lew-button text="click 触发（模拟请求）" />
+        <lew-button text="click 触发" />
     </lew-popok>
 </template>

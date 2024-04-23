@@ -13,7 +13,7 @@
         display: flex;
         flex-shrink: 0;
         justify-content: space-between;
-        width: 300px;
+        width: 320px;
         max-height: 0px;
         border: var(--lew-popover-border);
         transition: all 0.25s ease, max-height 1s, opacity 0.25s;
@@ -21,7 +21,7 @@
         margin-top: 0px;
         margin-bottom: 20px;
         white-space: nowrap;
-        box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.07);
+		box-shadow: 0px 4px 10px -5px rgba(0, 0, 0, 0.15);
         font-size: 14px;
         border-radius: var(--lew-border-radius-medium);
         overflow: hidden;
@@ -30,13 +30,12 @@
         .lew-notification-box {
             display: flex;
             width: 100%;
-            padding: 15px 18px 15px 20px;
+            padding: 15px 36px 15px 20px;
             box-sizing: border-box;
             .lew-notification-icon {
                 width: 24px;
                 height: 24px;
                 margin-right: 10px;
-                margin-top: 1px;
                 svg {
                     width: 24px;
                     height: 24px;
@@ -56,6 +55,7 @@
                     color: var(--lew-text-color-4);
                     white-space: pre-wrap;
                     word-wrap: break-word;
+					font-weight: 300;
                 }
             }
             .lew-notification-close-icon {
@@ -85,19 +85,19 @@
         }
     }
     .lew-notification-normal .lew-notification-icon {
-        color: var(--lew-color-normal-dark);
+        color: var(--lew-color-normal);
     }
     .lew-notification-error .lew-notification-icon {
-        color: var(--lew-color-error-dark);
+        color: var(--lew-color-error);
     }
     .lew-notification-success .lew-notification-icon {
-        color: var(--lew-color-success-dark);
+        color: var(--lew-color-success);
     }
     .lew-notification-info .lew-notification-icon {
-        color: var(--lew-color-info-dark);
+        color: var(--lew-color-info);
     }
     .lew-notification-warning .lew-notification-icon {
-        color: var(--lew-color-warning-dark);
+        color: var(--lew-color-warning);
     }
     .lew-notificatishow {
         max-height: 100vh;

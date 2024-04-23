@@ -128,8 +128,8 @@
             transition: all 0.15s ease;
             cursor: pointer;
             user-select: none;
-            outline: 0px transparent solid;
-            border: var(--lew-form-border-width) transparent solid;
+            outline: 0px var(--lew-form-border-color) solid;
+            border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
         }
 
         .lew-date-picker-input {

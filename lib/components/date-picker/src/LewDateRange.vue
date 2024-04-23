@@ -443,7 +443,7 @@
             width: 100%;
             display: flex;
             flex-wrap: wrap;
-            // border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+            border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
 
             .lew-date-item {
                 position: relative;
@@ -473,7 +473,7 @@
                         color: var(--lew-text-color-7);
                         border-radius: 50%;
                         transition: all 0.1s ease;
-                        border: 2px transparent solid;
+                        border: 2px var(--lew-form-border-color) solid;
                     }
 
                     .lew-date-value-selected {

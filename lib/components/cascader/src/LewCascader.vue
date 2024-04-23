@@ -484,7 +484,7 @@
         transition: var(--lew-form-transition);
         box-sizing: border-box;
         outline: 0px var(--lew-color-primary-light) solid;
-        border: var(--lew-form-border-width) transparent solid;
+        border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
 
         > div {
             width: 100%;
@@ -631,7 +631,7 @@
     .lew-cascader-view-disabled:hover {
         background-color: var(--lew-form-bgcolor);
         outline: 0px var(--lew-color-primary-light) solid;
-        border: var(--lew-form-border-width) transparent solid;
+        border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     }
 
     .lew-cascader-item:hover {
@@ -733,11 +733,11 @@
                 display: flex;
                 flex-direction: column;
                 gap: 4px;
-                margin-top: -2px;
+                margin-top: -4px;
             }
 
             .lew-cascader-item-warpper:last-child {
-                border-right: 0px transparent solid;
+                border-right: 0px var(--lew-form-border-color) solid;
             }
             .lew-cascader-item-padding {
                 padding: 2px 0px;

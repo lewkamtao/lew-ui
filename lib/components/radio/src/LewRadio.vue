@@ -203,7 +203,7 @@
 
     .lew-radio-block.lew-radio-checked {
         .icon-radio-box {
-            border: var(--lew-form-border-width) transparent solid;
+            border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
             background: transparent;
 
             .icon-radio {
@@ -215,7 +215,7 @@
 
     .lew-radio-block.lew-radio-checked:hover {
         .icon-radio-box {
-            border: var(--lew-form-border-width) transparent solid;
+            border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
         }
     }
 

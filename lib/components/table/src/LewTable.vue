@@ -588,7 +588,7 @@
         }
 
         .lew-table-tr:last-child {
-            border-bottom: 1px transparent solid;
+            border-bottom: 1px var(--lew-form-border-color) solid;
         }
 
         .lew-table-head {

@@ -8,7 +8,7 @@ export const popokProps = {
     },
     width: {
         type: [String, Number],
-        default: '250px',
+        default: '280px',
         description: '宽度'
     },
     trigger: {

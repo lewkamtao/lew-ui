@@ -2,8 +2,8 @@
     import { LewButton, LewIcon, LewFlex } from 'lew-ui';
     import { useMagicKeys } from '@vueuse/core';
     import { dialogProps } from './props';
-    import { getIconType } from '../../../utils';
-    import { useDOMCreate } from '../../../hooks';
+    import { getStatusIcon } from 'lew-ui/utils';
+    import { useDOMCreate } from 'lew-ui/hooks';
 
     const { Escape } = useMagicKeys();
     useDOMCreate('lew-dialog');
@@ -86,8 +86,10 @@
                         @click.stop
                     >
                         <div class="left">
-                            <div :class="`icon-${type}`">
-                                <lew-icon size="24" :type="getIconType(type)" />
+                            <div
+                                v-html="getStatusIcon(type)"
+                                :class="`lew-dialog-icon lew-dialog-icon-${type}`"
+                            >
                             </div>
                         </div>
                         <div class="right">
@@ -127,8 +129,10 @@
                         @click.stop
                     >
                         <div class="left">
-                            <div :class="`icon-${type}`">
-                                <lew-icon size="20" :type="getIconType(type)" />
+                            <div
+                                v-html="getStatusIcon(type)"
+                                :class="`lew-dialog-icon lew-dialog-icon-${type}`"
+                            >
                             </div>
                         </div>
                         <lew-flex class="right" y="start">
@@ -197,24 +201,28 @@
             background-color: var(--lew-modal-box-bgcolor);
             border: var(--lew-dialog-box-border);
             box-shadow: var(--lew-dialog-box-shadow);
+            .lew-dialog-icon ::v-deep svg {
+                width: 32px;
+                height: 32px;
+            }
 
-            .icon-success {
+            .lew-dialog-icon-success {
                 color: var(--lew-color-success-dark);
             }
 
-            .icon-warning {
+            .lew-dialog-icon-warning {
                 color: var(--lew-color-warning-dark);
             }
 
-            .icon-normal {
+            .lew-dialog-icon-normal {
                 color: var(--lew-color-normal-dark);
             }
 
-            .icon-info {
+            .lew-dialog-icon-info {
                 color: var(--lew-color-info-dark);
             }
 
-            .icon-error {
+            .lew-dialog-icon-error {
                 color: var(--lew-color-error-dark);
             }
 
@@ -270,7 +278,7 @@
 
         .lew-dialog-box-normal {
             .left {
-                margin-right: 10px;
+                margin-right: 15px;
                 width: 30px;
             }
 
@@ -286,9 +294,9 @@
         }
 
         .lew-dialog-box-mini {
-            padding: 15px 24px;
+            padding: 12px 20px;
             border-radius: 50px;
-            max-width: 650px;
+            max-width: 480px;
             width: auto;
             align-items: center;
 
@@ -296,6 +304,10 @@
                 margin-top: 6px;
                 margin-right: 10px;
                 display: flex;
+                .lew-dialog-icon ::v-deep svg {
+                    width: 24px;
+                    height: 24px;
+                }
             }
 
             .right {
@@ -311,7 +323,7 @@
                 main {
                     flex-shrink: 0;
                     margin-right: 20px;
-                    max-width: calc(650px - 180px);
+                    max-width: calc(480px - 180px);
                 }
 
                 footer {

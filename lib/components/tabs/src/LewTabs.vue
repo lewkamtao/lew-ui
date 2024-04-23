@@ -356,7 +356,7 @@
         bottom: 1px;
         left: 3px;
         height: 2px;
-        background-color: var(--lew-form-border-color);
+        background-color: var(--lew-form-bgcolor);
         width: calc(100% - 6px);
     }
     .lew-tabs-round {

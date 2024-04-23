@@ -1,7 +1,7 @@
 <!-- filename: Popover.vue -->
 <script setup lang="ts">
     import { LewButton, LewPopover } from 'lew-ui';
-    import { any2px } from 'lew-ui/utils';
+    import { any2px, getStatusIcon } from 'lew-ui/utils';
     import { popokProps } from './props';
 
     const props = defineProps(popokProps);
@@ -50,21 +50,10 @@
                 }"
             >
                 <div class="left">
-                    <div :class="`icon-${type}`">
-                        <lew-icon
-                            v-if="type === `normal`"
-                            size="22"
-                            type="light"
-                            color="blue"
-                        ></lew-icon>
-                        <lew-icon
-                            v-if="type === `warning`"
-                            size="22"
-                            type="alert-triangle"
-                        ></lew-icon>
-                        <lew-icon v-if="type === `success`" size="22" type="check"></lew-icon>
-                        <lew-icon v-if="type === `error`" size="22" type="alert-circle"></lew-icon>
-                        <lew-icon v-if="type === `info`" size="22" type="bell"></lew-icon>
+                    <div
+                        v-html="getStatusIcon(type)"
+                        :class="`lew-popok-icon lew-popok-icon-${type}`"
+                    >
                     </div>
                 </div>
                 <div class="right">
@@ -110,25 +99,28 @@
 
         .left {
             width: 30px;
-            margin-right: 5px;
-
-            .icon-success {
+            margin-right: 12px;
+            .lew-popok-icon ::v-deep svg {
+                width: 26px;
+                height: 26px;
+            }
+            .lew-popok-icon-success {
                 color: var(--lew-color-success-dark);
             }
 
-            .icon-warning {
+            .lew-popok-icon-warning {
                 color: var(--lew-color-warning-dark);
             }
 
-            .icon-normal {
+            .lew-popok-icon-normal {
                 color: var(--lew-color-normal-dark);
             }
 
-            .icon-info {
+            .lew-popok-icon-info {
                 color: var(--lew-color-info-dark);
             }
 
-            .icon-error {
+            .lew-popok-icon-error {
                 color: var(--lew-color-error-dark);
             }
         }
@@ -145,7 +137,7 @@
             .content {
                 width: 100%;
                 font-size: 14px;
-                margin-bottom: 10px;
+                margin-bottom: 15px;
             }
 
             .footer {

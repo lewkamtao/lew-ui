@@ -211,7 +211,7 @@
 
     .lew-checkbox-block.lew-checkbox-checked {
         .icon-checkbox-box {
-            border: var(--lew-form-border-width) transparent solid;
+            border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
             background: transparent;
 
             .icon-checkbox {
@@ -223,7 +223,7 @@
 
     .lew-checkbox-block.lew-checkbox-checked:hover {
         .icon-checkbox-box {
-            border: var(--lew-form-border-width) transparent solid;
+            border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
         }
     }
 

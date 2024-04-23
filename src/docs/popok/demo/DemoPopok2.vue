@@ -12,7 +12,7 @@
 <template>
     <lew-popok
         title="删除确认"
-        trigger="hover"
+        type="error"
         content="删除之后无法恢复，请确认！"
         :ok="ok"
         :cancel="cancel"
