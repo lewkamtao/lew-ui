@@ -13,4 +13,5 @@ declare module 'lew-ui';
 declare const LewMessage;
 declare const LewDialog;
 declare module '@/lib/utils';
+declare module 'lodash-es';
 declare const LewNotification: typeof import('../lib/directives')['LewNotification'];

@@ -7,6 +7,7 @@ import dts from 'vite-plugin-dts';
 import checker from 'vite-plugin-checker';
 import zipPack from 'vite-plugin-zip-pack';
 import dayjs from 'dayjs';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 // 路径
 const pathSrc = path.resolve(__dirname, 'src');
@@ -43,7 +44,11 @@ export default defineConfig(({ mode }) => {
             }),
             vue(),
             vueJsx(),
-            mode === 'lib' ? dts() : undefined,
+            mode === 'lib'
+                ? dts({
+                      include: ['lib/**/*.vue', 'lib/**/*.ts', 'lib/**/*.tsx']
+                  })
+                : undefined,
             AutoImport({
                 imports: ['vue'],
                 dts: path.resolve(pathSrc, 'auto-imports.d.ts')
@@ -67,7 +72,7 @@ export default defineConfig(({ mode }) => {
                       minify: 'terser',
                       terserOptions: {
                           compress: {
-                              // 生产环境时移除console
+                              // 移除console
                               drop_console: true,
                               drop_debugger: true
                           }
@@ -75,6 +80,14 @@ export default defineConfig(({ mode }) => {
                       emptyOutDir: true,
                       rollupOptions: {
                           // 确保外部化处理那些你不想打包进库的依赖
+                          plugins: [
+                              visualizer({
+                                  open: true, // 直接在浏览器中打开分析报告
+                                  filename: 'stats.html', // 输出文件的名称
+                                  gzipSize: true, // 显示gzip后的大小
+                                  brotliSize: true // 显示brotli压缩后的大小
+                              })
+                          ],
                           external: ['vue'],
                           output: {
                               // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
@@ -86,6 +99,14 @@ export default defineConfig(({ mode }) => {
                   }
                 : {
                       rollupOptions: {
+                          plugins: [
+                              visualizer({
+                                  open: true, // 直接在浏览器中打开分析报告
+                                  filename: 'stats.html', // 输出文件的名称
+                                  gzipSize: true, // 显示gzip后的大小
+                                  brotliSize: true // 显示brotli压缩后的大小
+                              })
+                          ],
                           output: {
                               chunkFileNames: 'assets/js/[name]-[hash].js',
                               entryFileNames: 'assets/js/[name]-[hash].js',

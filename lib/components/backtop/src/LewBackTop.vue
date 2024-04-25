@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-    import throttle from 'lodash/throttle';
+    import { throttle } from 'lodash-es';
     import { backTopProps } from './props';
     import { useEventListener } from '../../../hooks';
     import { LewIcon } from 'lew-ui';

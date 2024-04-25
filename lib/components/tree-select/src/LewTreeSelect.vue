@@ -1,10 +1,10 @@
 <script setup lang="ts">
     import { useDebounceFn } from '@vueuse/core';
-    import { LewPopover, LewTree, LewFlex, LewIcon, LewTooltip } from 'lew-ui';
+    import { LewPopover, LewTree, LewIcon, LewTooltip } from 'lew-ui';
     import type { TreeDataSource } from '../../tree';
     import { object2class, numFormat } from 'lew-ui/utils';
     import { treeSelectProps } from './props';
-    import _ from 'lodash';
+    import { cloneDeep } from 'lodash-es';
 
     // 获取app
     const app = getCurrentInstance()?.appContext.app;
@@ -128,7 +128,7 @@
 
     const showHandle = () => {
         state.visible = true;
-        state.keywordBackup = _.cloneDeep(state.keyword);
+        state.keywordBackup = cloneDeep(state.keyword);
         if (props.searchable) {
             state.keyword = '';
         }

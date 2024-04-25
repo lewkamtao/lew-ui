@@ -3,7 +3,7 @@
     import { object2class } from 'lew-ui/utils';
     import { cascaderProps, CascaderOptions } from './props';
     import { UseVirtualList } from '@vueuse/components';
-    import _ from 'lodash';
+    import { cloneDeep } from 'lodash-es';
 
     // 格式化 获取 path
     const formatTree = (
@@ -156,10 +156,10 @@
             if (props.onload && !item.isLeaf) {
                 item.loading = true;
                 state.okLoading = true;
-                const new_options = (await props.onload(_.cloneDeep({ ...item, level }))) || [];
+                const new_options = (await props.onload(cloneDeep({ ...item, level }))) || [];
                 let _tree = findAndAddChildrenByValue(
-                    _.cloneDeep(state.optionsTree),
-                    _.cloneDeep(item.value),
+                    cloneDeep(state.optionsTree),
+                    cloneDeep(item.value),
                     new_options
                 );
                 state.optionsTree = formatTree(_tree);
@@ -307,7 +307,7 @@
     const ok = () => {
         const item = findObjectByValue(state.optionsTree, state.tobeItem.value);
         cascaderValue.value = state.tobeItem.value;
-        emit('change', _.cloneDeep(item));
+        emit('change', cloneDeep(item));
         hide();
     };
 

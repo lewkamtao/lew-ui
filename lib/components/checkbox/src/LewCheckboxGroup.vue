@@ -3,7 +3,7 @@
     import type { CheckboxOptions } from './props';
     import { object2class } from 'lew-ui/utils';
     import { LewCheckbox } from 'lew-ui';
-    import _ from 'lodash';
+	import { cloneDeep } from 'lodash-es';
 
     const props: any = defineProps(checkboxGroupProps as any);
     const emit = defineEmits(['change']);
@@ -37,10 +37,10 @@
             }
         }
         emit('change', {
-            value: _.cloneDeep(_value),
+            value: cloneDeep(_value),
             item: item
         });
-        modelValue.value = _.cloneDeep(_value);
+        modelValue.value = cloneDeep(_value);
     };
 
     const initCheckbox = () => {

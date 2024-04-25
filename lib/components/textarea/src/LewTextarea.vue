@@ -3,7 +3,7 @@
     import { object2class, any2px } from 'lew-ui/utils';
     import { LewIcon, LewTooltip } from 'lew-ui';
     import { textareaProps } from './props';
-    import _ from 'lodash';
+    import { toNumber } from 'lodash-es';
 
     const { shift, enter } = useMagicKeys();
     // 获取app
@@ -35,7 +35,7 @@
             props.renderCount(modelValue.value) >= Number(props.maxLength) &&
             modelValue.value
         ) {
-            modelValue.value = modelValue.value.slice(0, _.toNumber(props.maxLength));
+            modelValue.value = modelValue.value.slice(0, toNumber(props.maxLength));
         }
     };
 

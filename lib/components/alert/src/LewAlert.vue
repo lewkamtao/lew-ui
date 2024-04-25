@@ -1,8 +1,9 @@
 <script setup lang="ts">
-    import { getIconType, object2class } from 'lew-ui/utils';
+    import { object2class } from 'lew-ui/utils';
     import type { AlertItem } from './props';
     import { alertProps } from './props';
     import { LewIcon } from 'lew-ui';
+    import { getStatusIcon } from 'lew-ui/utils';
 
     defineProps(alertProps);
 
@@ -16,9 +17,7 @@
 <template>
     <div class="lew-alert-group">
         <div v-for="(item, i) in list" :key="i" class="lew-alert" :class="alertClassName(item)">
-            <div class="alert-icon">
-                <lew-icon :size="16" :type="getIconType(item.type)"></lew-icon>
-            </div>
+            <div v-html="getStatusIcon(item.type)" class="alert-icon"></div>
             <div class="message">
                 <div class="title">{{ item.title }}</div>
                 <div v-show="item.content" class="content">
@@ -58,9 +57,12 @@
             overflow: hidden;
 
             .alert-icon {
-                margin: 2px 5px 0px 0px;
+				width: 18px;
+				height: 18px;
                 display: inline-flex;
                 align-items: center;
+				justify-content: center;
+				margin-top: 1px;
             }
 
             .lew-form-icon-clear {

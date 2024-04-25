@@ -2,7 +2,7 @@
     import { tableProps } from './props';
     import { any2px } from 'lew-ui/utils';
     import { LewFlex, LewCheckbox, LewTextTrim } from 'lew-ui';
-    import _ from 'lodash';
+    import { isEmpty, throttle, mapValues, keyBy, pickBy, difference, keys } from 'lodash-es';
 
     const props = defineProps(tableProps);
     const tableRef = ref();
@@ -63,7 +63,7 @@
         state.hidScrollLine = '';
     };
 
-    const resizeTableHandle = _.throttle(() => {
+    const resizeTableHandle = throttle(() => {
         const table = tableRef.value;
         if (!table) return;
 
@@ -143,15 +143,9 @@
 
     const setAllChecked = (checked: boolean) => {
         if (checked) {
-            state.selectedKeysMap = _.mapValues(
-                _.keyBy(props.dataSource, props.rowKey),
-                () => true
-            );
+            state.selectedKeysMap = mapValues(keyBy(props.dataSource, props.rowKey), () => true);
         } else {
-            state.selectedKeysMap = _.mapValues(
-                _.keyBy(props.dataSource, props.rowKey),
-                () => false
-            );
+            state.selectedKeysMap = mapValues(keyBy(props.dataSource, props.rowKey), () => false);
         }
     };
 
@@ -164,14 +158,14 @@
     };
 
     const getSelectedKeys = () => {
-        return _.keys(_.pickBy(state.selectedKeysMap, (value) => value === true));
+        return keys(pickBy(state.selectedKeysMap, (value: boolean) => value === true));
     };
 
     const checkIsAll = () => {
-        const filteredKeys = _.keys(_.pickBy(state.selectedKeysMap, (value) => value === true));
+        const filteredKeys = keys(pickBy(state.selectedKeysMap, (value: boolean) => value === true));
         const dataKey = props.dataSource.map((e: any) => String(e[props.rowKey]));
-        const diffArr = _.difference(dataKey, filteredKeys);
-        state.checkAll = _.isEmpty(diffArr);
+        const diffArr = difference(dataKey, filteredKeys);
+        state.checkAll = isEmpty(diffArr);
     };
 
     const selectTr = (row: any) => {

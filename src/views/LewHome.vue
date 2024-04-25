@@ -2,12 +2,12 @@
     import { useRouter } from 'vue-router';
     import * as Yup from 'yup';
     import { schools } from '../docs/select/demo/schools';
-    import _ from 'lodash';
+    import { random } from 'lodash-es';
 
     const viewTotal = ref(100000000);
 
     const timer = setInterval(() => {
-        viewTotal.value += _.random(1, 1000000);
+        viewTotal.value += random(1, 1000000);
     }, 1000);
 
     onUnmounted(() => {

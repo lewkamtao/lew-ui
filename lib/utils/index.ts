@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { uniqueId } from 'lodash-es';
 // Returns the icon type to be used in a tooltip.
 
 // type: The type of message to display in the tooltip.
@@ -122,8 +122,8 @@ export const getUUId = () => {
     const randomString =
         Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
-    // 使用Lodash的_.uniqueId()方法生成UUID
-    const uuid = _.uniqueId(randomString);
+    // 使用Lodash的uniqueId()方法生成UUID
+    const uuid = uniqueId(randomString);
     return uuid;
 };
 

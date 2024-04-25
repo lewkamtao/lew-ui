@@ -1,9 +1,9 @@
 <script setup lang="ts">
     import { schools } from './schools';
-    import _ from 'lodash';
+    import { padStart } from 'lodash-es';
 
     const schoolsOptions = schools.map((e, i) => {
-        return { label: e, value: _.padStart(String(i), 8, '0') };
+        return { label: e, value: padStart(String(i), 8, '0') };
     });
 
     const value = ref();

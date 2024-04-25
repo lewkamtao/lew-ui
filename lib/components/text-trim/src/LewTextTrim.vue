@@ -3,10 +3,10 @@
     import { watchDebounced } from '@vueuse/core';
     import { object2class } from 'lew-ui/utils';
     import { textTrimProps } from './props';
-    import _ from 'lodash';
+    import { escape } from 'lodash-es';
 
     function sanitizeHtml(html: string) {
-        return _.escape(html);
+        return escape(html);
     }
 
     const props = defineProps(textTrimProps);

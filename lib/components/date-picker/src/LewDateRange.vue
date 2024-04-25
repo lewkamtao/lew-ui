@@ -3,7 +3,7 @@
     import { getMonthDate, getHeadDate } from './date';
     import { dateRangeProps } from './props';
     import { LewFlex, LewButton } from 'lew-ui';
-    import _ from 'lodash';
+	import { cloneDeep } from 'lodash-es';
 
     const emit = defineEmits(['change']);
     const props = defineProps(dateRangeProps);
@@ -183,7 +183,7 @@
                 hoverValue.value[startKey] = dayjs(startBackup).format('YYYY-MM-DD');
                 hoverValue.value[endKey] = dayjs(__dateStr).format('YYYY-MM-DD');
             }
-            modelValue.value = _.cloneDeep(hoverValue.value);
+            modelValue.value = cloneDeep(hoverValue.value);
             emit('change', hoverValue.value);
         } else {
             hoverValue.value[startKey] = __dateStr;
@@ -259,7 +259,7 @@
     });
 
     const init = () => {
-        let _value = _.cloneDeep(modelValue.value);
+        let _value = cloneDeep(modelValue.value);
 
         if (!_value) {
             _value = {

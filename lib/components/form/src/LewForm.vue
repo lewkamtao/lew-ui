@@ -19,7 +19,7 @@
         LewButton
     } from 'lew-ui';
     import { formProps } from './props';
-    import _ from 'lodash';
+    import { cloneDeep, debounce } from 'lodash-es';
 
     const props = defineProps(formProps);
     const emit = defineEmits(['change']);
@@ -43,7 +43,7 @@
 
     const arrayToObj = (arr: any): any => {
         const obj: Record<string, unknown> = {};
-        let _arr = _.cloneDeep(arr);
+        let _arr = cloneDeep(arr);
         _arr?.forEach((row: any) => {
             const { field, value, outputFormat } = row;
             if (!field) {
@@ -62,7 +62,7 @@
             }
 
             if (value !== undefined) {
-                const _value = _.cloneDeep(value);
+                const _value = cloneDeep(value);
                 if (outputFormat) {
                     currentObj[keys[keys.length - 1]] = outputFormat(row);
                 } else {
@@ -148,11 +148,11 @@
             });
         });
     };
-    const validateField = _.debounce((field: string) => {
+    const validateField = debounce((field: string) => {
         validate(field);
     }, 10);
     const validate = (field: string) => {
-        const opt = _.cloneDeep(componentOptions.value || []);
+        const opt = cloneDeep(componentOptions.value || []);
         let schema: any = Yup.object();
         const obj: any = [];
         const formObj: any = {};
@@ -172,7 +172,7 @@
                     opt.forEach((o: any) => {
                         o.errMessage = '';
                     });
-                    componentOptions.value = _.cloneDeep(opt);
+                    componentOptions.value = cloneDeep(opt);
                     resolve(true);
                 })
                 .catch((err: any) => {
@@ -268,18 +268,18 @@
                                 }
                             });
                     }
-                    componentOptions.value = _.cloneDeep(opt);
+                    componentOptions.value = cloneDeep(opt);
                 });
         });
     };
 
     const getForm = () => {
-        return _.cloneDeep(form.value);
+        return cloneDeep(form.value);
     };
 
     const setForm = (value: any = {}) => {
-        let _form = _.cloneDeep(value);
-        let _componentOptions = _.cloneDeep(componentOptions.value);
+        let _form = cloneDeep(value);
+        let _componentOptions = cloneDeep(componentOptions.value);
         _componentOptions.forEach((e: any) => {
             let _value = getNestedFieldValue(_form, e.field);
             if (e.inputFormat) {
@@ -288,7 +288,7 @@
                 e.value = _value;
             }
         });
-        componentOptions.value = _.cloneDeep(_componentOptions);
+        componentOptions.value = cloneDeep(_componentOptions);
         form.value = arrayToObj(_componentOptions);
         emit('change', toRaw(form.value));
     };
@@ -310,7 +310,7 @@
 
     const init = () => {
         form2componentOptions();
-        form.value = arrayToObj(_.cloneDeep(componentOptions.value));
+        form.value = arrayToObj(cloneDeep(componentOptions.value));
         emit('change', toRaw(form.value));
     };
 

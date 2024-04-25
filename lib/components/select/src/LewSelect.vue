@@ -4,7 +4,7 @@
     import { object2class, numFormat } from 'lew-ui/utils';
     import { UseVirtualList } from '@vueuse/components';
     import { selectProps, SelectOptions } from './props';
-    import _ from 'lodash';
+    import { cloneDeep } from 'lodash-es';
 
     // 获取app
     const app = getCurrentInstance()?.appContext.app;
@@ -68,7 +68,7 @@
 
     const clearHandle = () => {
         selectValue.value = undefined;
-		state.keywordBackup = undefined;
+        state.keywordBackup = undefined;
         state.keyword = '';
         emit('clear');
         emit('change');
@@ -155,7 +155,7 @@
 
     const showHandle = () => {
         state.visible = true;
-        state.keywordBackup = _.cloneDeep(state.keyword);
+        state.keywordBackup = cloneDeep(state.keyword);
         if (props.searchable) {
             state.keyword = '';
         }

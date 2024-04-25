@@ -3,7 +3,7 @@
     import { object2class } from 'lew-ui/utils';
     import { LewIcon, LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui';
     import { inputProps } from './props';
-    import _ from 'lodash';
+    import { cloneDeep } from 'lodash-es';
 
     const { enter } = useMagicKeys();
     // 获取app
@@ -42,7 +42,7 @@
             props.renderCount(modelValue.value) >= Number(props.maxLength) &&
             modelValue.value
         ) {
-            modelValue.value = _.cloneDeep(modelValue.value.slice(0, Number(props.maxLength)));
+            modelValue.value = cloneDeep(modelValue.value.slice(0, Number(props.maxLength)));
         }
     };
 

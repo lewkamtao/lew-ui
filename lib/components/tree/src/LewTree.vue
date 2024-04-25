@@ -2,7 +2,16 @@
     import { LewFlex, LewIcon, LewEmpty, LewLoading } from 'lew-ui';
     import { treeProps } from './props';
     import type { TreeDataSource } from './props';
-    import _ from 'lodash';
+    import {
+        forEach,
+        cloneDeep,
+        isFunction,
+        isArray,
+        findIndex,
+        difference,
+        uniq,
+        intersection
+    } from 'lodash-es';
     import { tree2List } from './tree2list';
 
     // 获取app
@@ -36,7 +45,7 @@
     const init = async (keyword: string = '') => {
         let _treeList = [];
         const { dataSource, initTree, keyField, labelField, free } = props;
-        if (_.isFunction(initTree)) {
+        if (isFunction(initTree)) {
             const { newTreeList, newTree }: any = (await tree2List({
                 initTree,
                 keyField,
@@ -71,7 +80,7 @@
         if (props.expandAll) {
             return;
         }
-        let _expandedKeys = _.cloneDeep(expandedKeys.value || []);
+        let _expandedKeys = cloneDeep(expandedKeys.value || []);
         let i = _expandedKeys.findIndex((e: string | number) => e === item.key);
         if (i >= 0) {
             _expandedKeys.splice(i, 1);
@@ -84,7 +93,7 @@
                 if (index < 0) {
                     loadingKeys.value.push(item.key);
                     let _tree =
-                        ((await props.onload(_.cloneDeep(item) as TreeDataSource)) as any) || [];
+                        ((await props.onload(cloneDeep(item) as TreeDataSource)) as any) || [];
                     insertChildByKey(treeBackup, item.key, _tree);
                     const { newTree, newTreeList }: any = (await tree2List({
                         dataSource: treeBackup,
@@ -108,11 +117,11 @@
 
     // 定义插入子节点的函数
     const insertChildByKey = (tree: TreeDataSource[], key: string, newChild: TreeDataSource[]) => {
-        const index = _.findIndex(tree, (node: TreeDataSource) => node.key === key);
+        const index = findIndex(tree, (node: TreeDataSource) => node.key === key);
         if (index !== -1) {
             tree[index].children = newChild;
         } else {
-            _.forEach(tree, (node: any) => {
+            forEach(tree, (node: any) => {
                 insertChildByKey(node.children, key, newChild);
             });
         }
@@ -120,18 +129,22 @@
 
     const select = (item: TreeDataSource) => {
         let _modelValue: (string | number)[] | undefined | string =
-            _.cloneDeep(modelValue.value) || [];
-        if (props.multiple && _.isArray(_modelValue)) {
-            if (_modelValue.includes(item.key)) {
+            cloneDeep(modelValue.value) || [];
+        if (props.multiple && isArray(_modelValue)) {
+            if (_modelValue && isArray(_modelValue) && _modelValue.includes(item.key)) {
+                // @ts-ignore
                 const i = _modelValue.findIndex((e: string | number) => e === item.key);
+                // @ts-ignore
                 _modelValue.splice(i, 1);
                 if (!props.free) {
-                    _modelValue = _.uniq(_.difference(_modelValue, item.allNodeValues)) as string[];
+                    _modelValue = uniq(difference(_modelValue, item.allNodeValues)) as string[];
                 }
             } else {
-                _modelValue.push(item.key);
-                if (!props.free) {
-                    _modelValue = _.uniq([..._modelValue, ...item.allNodeValues]) as string[];
+                // @ts-ignore
+                _modelValue && _modelValue.push(item.key);
+                if (!props.free && isArray(_modelValue)) {
+                    // @ts-ignore
+                    _modelValue = uniq([..._modelValue, ...item.allNodeValues]) as string[];
                 }
             }
             if (!props.free) {
@@ -154,7 +167,7 @@
     const formatValues = ({ tree, values }: any): any => {
         let _modelValue = new Set(values); // 使用Set来存储结果值
         let _certainKeys = new Set(values);
-        const stack = _.cloneDeep(tree); // 使用展开运算符创建栈，并初始化为数组树
+        const stack = cloneDeep(tree); // 使用展开运算符创建栈，并初始化为数组树
 
         while (stack.length > 0) {
             const currentNode: any = stack.pop();
@@ -170,7 +183,7 @@
             }
             const array1 = Array.from(childValues);
             const array2 = Array.from(_modelValue);
-            if (_.intersection(array1, array2).length > 0 && !_modelValue.has(key)) {
+            if (intersection(array1, array2).length > 0 && !_modelValue.has(key)) {
                 _certainKeys.add(key);
             } else {
                 _certainKeys.delete(key);
@@ -182,7 +195,7 @@
         }; // 将Set转换为数组并返回
     };
     const getTreeList = () => {
-        return _.cloneDeep(treeList.value);
+        return cloneDeep(treeList.value);
     };
     defineExpose({ init, getTreeList });
 </script>
@@ -207,7 +220,7 @@
                       (expandAll ||
                         item.level === 0 ||
                         ((expandedKeys || []).includes(item.parentKey as string | number) &&
-                            _.intersection(item.parentKeyPaths, expandedKeys).length ===
+                            intersection(item.parentKeyPaths, expandedKeys).length ===
                                 (item.parentKeyPaths || []).length)) 
                     "
                     class="lew-tree-item"

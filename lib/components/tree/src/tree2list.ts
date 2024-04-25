@@ -1,8 +1,8 @@
 import type { TreeDataSource } from './props';
-import _ from 'lodash';
+import { has, flatMap, cloneDeep, some, isArray } from 'lodash-es';
 // 递归将树形结构数组转换成展开列表，按照树结构的顺序存储，同时保存父节点
 export const flattenTree = (tree: TreeDataSource[]): TreeDataSource[] => {
-    return _.flatMap(_.cloneDeep(tree), (node: TreeDataSource) => {
+    return flatMap(cloneDeep(tree), (node: TreeDataSource) => {
         const { children }: any = node;
         delete node.children;
         return [node, ...flattenTree(children)];
@@ -67,7 +67,7 @@ export const formatTree = ({
             label: rest[labelField],
             keyPaths: [...parentKeyPaths, rest[keyField]],
             labelPaths: [...parentLabelPaths, rest[labelField]],
-            isLeaf: _.has(rest, 'isLeaf') ? rest.isLeaf : (children || []).length === 0,
+            isLeaf: has(rest, 'isLeaf') ? rest.isLeaf : (children || []).length === 0,
             parentKey: parent ? parent[keyField] : null,
             level: parentKeyPaths.length,
             parentKeyPaths,
@@ -119,7 +119,7 @@ export const tree2List = async ({
     let tree: TreeDataSource[] = [];
     if (initTree) {
         const _tree: TreeDataSource[] = await initTree();
-        if (_.isArray(_tree)) {
+        if (isArray(_tree)) {
             tree = formatTree({ dataSource: _tree, keyField, labelField, free });
         } else {
             return new Error(
@@ -133,7 +133,7 @@ export const tree2List = async ({
             const filterTree = (node: TreeDataSource[]) => {
                 for (let i = 0; i < node.length; i++) {
                     const { labelPaths, children } = node[i];
-                    if (_.some(labelPaths, (label) => label.includes(keyword))) {
+                    if (some(labelPaths, (label: string) => label.includes(keyword))) {
                         _tree.push(node[i]);
                     } else {
                         if (children) {
