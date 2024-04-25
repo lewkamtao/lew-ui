@@ -143,9 +143,15 @@
     // 表单样式
     --lew-form-border-width: 2px;
     --lew-form-transition: all 0.2s cubic-bezier(0.3, 1.3, 0.3, 1);
+    --lew-form-ouline: 0px var(--lew-color-primary-light) solid;
+    --lew-form-bgcolor: rgb(243, 243, 243);
+    --lew-form-bgcolor-hover: rgb(228, 228, 228);
+    --lew-form-bgcolor-active: rgb(215, 215, 215);
+    --lew-form-bgcolor-focus: rgb(255, 255, 255);
     --lew-form-border-color: transparent;
     --lew-form-border-color-hover: rgb(211, 209, 209);
-    --lew-form-ouline: 0px var(--lew-color-primary-light) solid;
+    --lew-form-border-color-active: rgba(0, 0, 0, 0.22);
+    --lew-form-border-color-focus: var(--lew-color-primary);
     // 表单尺寸
     --lew-form-input-padding-small: 2px 8px;
     --lew-form-input-padding-medium: 4px 10px;
@@ -159,13 +165,6 @@
     --lew-form-font-size-small: 13px;
     --lew-form-font-size-medium: 14px;
     --lew-form-font-size-large: 16px;
-    // 表单背景
-    --lew-form-bgcolor: rgb(243, 243, 243);
-    --lew-form-bgcolor-hover: rgb(228, 228, 228);
-    --lew-form-bgcolor-active: rgb(215, 215, 215);
-    --lew-form-bgcolor-focus: rgb(255, 255, 255);
-    --lew-form-border-color-active: rgba(0, 0, 0, 0.22);
-    --lew-form-border-color-focus: var(--lew-color-primary);
     // form icon
     --lew-form-icon-opacity: 1;
     --lew-form-icon-opacity-hover: 0.8;
@@ -283,6 +282,10 @@
     --lew-color-info: var(--lew-color-blue);
     --lew-color-info-dark: var(--lew-color-blue-dark);
     --lew-color-info-light: var(--lew-color-blue-light);
+    // 主题色
+    --lew-color-primary: var(--lew-color-blue);
+    --lew-color-primary-dark: var(--lew-color-blue-dark);
+    --lew-color-primary-light: var(--lew-color-blue-light);
     // 全局
     --lew-color-white: #fff;
     --lew-color-white-text: rgba(255, 255, 255, 0.9);
@@ -345,17 +348,15 @@
     --lew-border-8: 1px solid rgb(140, 141, 148);
     --lew-border-9: 1px solid rgb(153, 154, 161);
     // 表单样式
-    --lew-form-border-color: rgb(77, 77, 77);
+    --lew-form-bgcolor: #27282d;
+    --lew-form-bgcolor-hover: #2a2a2f;
+    --lew-form-bgcolor-active: #202025;
+    --lew-form-bgcolor-focus: #1f1f22;
     --lew-form-border-color-hover: rgb(59, 58, 58);
     --lew-form-border-color-focus: var(--lew-color-primary);
     --lew-form-ouline: 0px var(--lew-color-primary-light) solid;
     // tabs
     --lew-tabs-active-color: rgb(14, 14, 14);
-    // 表单背景
-    --lew-form-bgcolor: #27282d;
-    --lew-form-bgcolor-hover: #2a2a2f;
-    --lew-form-bgcolor-active: #202025;
-    --lew-form-bgcolor-focus: #1f1f22;
     // dialog / modal
     --lew-modal-bgcolor: rgba(0, 0, 0, 0.45);
     //  dialog / modal box
