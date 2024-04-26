@@ -53,7 +53,7 @@
     --lew-color-yellow: rgb(232, 189, 46);
     --lew-color-yellow-dark: rgb(156, 128, 25);
     --lew-color-yellow-light: rgba(184, 151, 33, 0.0918);
-    --lew-color-green: rgb(29, 197, 121);
+    --lew-color-green: rgb(43, 198, 126);
     --lew-color-green-dark: rgb(29, 172, 108);
     --lew-color-green-light: rgba(56, 144, 58, 0.0918);
     --lew-color-mint: rgb(90, 196, 189);
@@ -207,7 +207,7 @@
     --lew-table-tr-selected: #eef3ff;
     --lew-table-scroll-line-color-start: rgba(0, 0, 0, 0);
     --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.15);
-    --lew-backdrop-bg: rgba(255, 255, 255, 0.45);
+    --lew-backdrop-bg: rgba(255, 255, 255, 0.5);
     --lew-backdrop-bg-active: rgba(0, 0, 0, 0.05);
     --lew-tooltip-bg: #000;
     --lew-tooltip-color: #fff;
@@ -225,7 +225,7 @@
     --lew-color-yellow: rgba(255, 224, 84, 0.774);
     --lew-color-yellow-dark: rgb(255, 246, 65);
     --lew-color-yellow-light: rgba(255, 220, 65, 0.0918);
-    --lew-color-green: rgb(29, 160, 75);
+    --lew-color-green: rgb(59, 172, 119);
     --lew-color-green-dark: rgb(94, 241, 136);
     --lew-color-green-light: rgba(105, 206, 103, 0.0918);
     --lew-color-mint: rgba(131, 210, 206, 0.755);
@@ -237,9 +237,9 @@
     --lew-color-cyan: rgba(106, 196, 221, 0.762);
     --lew-color-cyan-dark: rgb(116, 217, 244);
     --lew-color-cyan-light: rgba(116, 216, 244, 0.0918);
-    --lew-color-blue: rgb(55, 117, 217);
-    --lew-color-blue-dark: rgb(60, 177, 255);
-    --lew-color-blue-light: rgba(78, 146, 255, 0.0918);
+    --lew-color-blue: rgb(43, 135, 255);
+    --lew-color-blue-dark: rgb(43, 135, 255);
+    --lew-color-blue-light: rgba(78, 146, 255, 0.15);
     --lew-color-indigo: rgb(95, 93, 222);
     --lew-color-indigo-dark: rgb(119, 105, 245);
     --lew-color-indigo-light: rgba(107, 105, 245, 0.0918);
@@ -293,7 +293,7 @@
     // 全局
     --lew-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
     // 背景
-    --lew-bgcolor-0: rgb(26, 27, 32);
+	--lew-bgcolor-0: rgb(26, 27, 32);
     --lew-bgcolor-1: rgb(39, 40, 46);
     --lew-bgcolor-2: rgb(52, 53, 60);
     --lew-bgcolor-3: rgb(65, 66, 73);
@@ -370,7 +370,7 @@
     // notification
     --lew-notification-bgcolor: #4d4d58;
     // popover
-    --lew-popover-border: 1px rgba(255, 255, 255, 0.1) solid;
+    --lew-popover-border: 1px rgba(255, 255, 255, 0.15) solid;
     // table
     --lew-table-header-bgColor: rgb(12, 12, 12);
     --lew-table-border: 1px rgba(255, 255, 255, 0.05) solid;
@@ -388,8 +388,8 @@
     --lew-radio-border-color-hover: var(--lew-color-primary);
     --lew-radio-color: var(--lew-color-primary);
     --lew-radio-color-light: var(--lew-color-primary-light);
-    --lew-backdrop-bg: rgba(33, 35, 40, 0.75);
-    --lew-backdrop-bg-active: rgba(255, 255, 255, 0.1);
+    --lew-backdrop-bg: rgba(17, 18, 20, 0.75);
+    --lew-backdrop-bg-active: rgba(255, 255, 255, 0.05);
     --lew-tooltip-bg: #eaeaea;
     --lew-tooltip-color: #000;
 }

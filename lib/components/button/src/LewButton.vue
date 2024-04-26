@@ -352,6 +352,9 @@
         pointer-events: none; //鼠标点击不可修改
         opacity: var(--lew-disabled-opacity);
     }
+    .lew-button-type-text:hover {
+        background-color: var(--lew-bgcolor-1) !important;
+    }
     .lew-button-type-ghost:hover {
         background-color: var(--lew-bgcolor-2) !important;
     }

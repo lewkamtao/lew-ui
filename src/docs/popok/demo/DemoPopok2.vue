@@ -16,6 +16,7 @@
         content="删除之后无法恢复，请确认！"
         :ok="ok"
         :cancel="cancel"
+		trigger="hover"
     >
         <lew-button text="hover 触发" />
     </lew-popok>

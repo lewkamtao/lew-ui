@@ -67,7 +67,7 @@
         width: 100%;
         height: 100%;
         transition: all 0.15s ease;
-        background: #fff;
+        background: var(--lew-modal-box-bgcolor);
         z-index: 202;
     }
 

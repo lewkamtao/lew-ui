@@ -119,6 +119,7 @@
         .lew-menu-item-actived {
             background-color: var(--lew-color-primary-light);
             color: var(--lew-color-primary-dark);
+			font-weight: bold;
         }
         .lew-menu-item-actived:hover {
             background-color: var(--lew-color-primary-light);
