@@ -353,16 +353,17 @@
             transform: translateY(-50%);
             cursor: pointer;
             opacity: var(--lew-form-icon-opacity);
+            pointer-events: all;
         }
 
         .lew-input-copy-btn:hover {
             opacity: var(--lew-form-icon-opacity-hover);
         }
         .lew-input-prefixes {
-            border-right: rgba(0, 0, 0, 0.05) 1px solid;
+            border-right: var(--lew-bgcolor-4) 1px dashed;
         }
         .lew-input-suffix {
-            border-left: rgba(0, 0, 0, 0.05) 1px solid;
+            border-left: var(--lew-bgcolor-4) 1px dashed;
         }
         .lew-input-prefixes,
         .lew-input-suffix {
@@ -678,7 +679,7 @@
     }
 
     .lew-input-view-readonly {
-        user-select: text;
+        pointer-events: none;
     }
 
     .lew-input-view-disabled {

@@ -51,8 +51,8 @@
             >
                 <div class="left">
                     <div
-                        v-html="getStatusIcon(type)"
                         :class="`lew-popok-icon lew-popok-icon-${type}`"
+                        v-html="getStatusIcon(type)"
                     >
                     </div>
                 </div>
@@ -105,23 +105,23 @@
                 height: 26px;
             }
             .lew-popok-icon-success {
-                color: var(--lew-color-success-dark);
+                color: var(--lew-color-success);
             }
 
             .lew-popok-icon-warning {
-                color: var(--lew-color-warning-dark);
+                color: var(--lew-color-warning);
             }
 
             .lew-popok-icon-normal {
-                color: var(--lew-color-normal-dark);
+                color: var(--lew-color-normal);
             }
 
             .lew-popok-icon-info {
-                color: var(--lew-color-info-dark);
+                color: var(--lew-color-info);
             }
 
             .lew-popok-icon-error {
-                color: var(--lew-color-error-dark);
+                color: var(--lew-color-error);
             }
         }
 
