@@ -1,4 +1,5 @@
-import { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
+
 export type DatePickerSize = 'small' | 'medium' | 'large'
 
 export const datePickerModel = {

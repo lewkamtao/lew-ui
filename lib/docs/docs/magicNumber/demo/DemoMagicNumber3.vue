@@ -17,6 +17,6 @@ const change = () => {
     <lew-flex x="start" y="end">
       当前访问量：<lew-magic-number sep :value="num2" :size="24" /> 万
     </lew-flex>
-    <lew-button text="增加" @click="change"></lew-button>
+    <lew-button text="增加" @click="change" />
   </lew-flex>
 </template>

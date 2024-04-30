@@ -46,6 +46,6 @@ const options = ref(
     <lew-demo-box v-if="false" title="Disabled" :code="DemoTag6Code">
       <demo-tag6 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

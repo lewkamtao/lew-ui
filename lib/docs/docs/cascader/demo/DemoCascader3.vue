@@ -87,6 +87,6 @@ const v = ref()
 
 <template>
   <lew-flex direction="y" style="width: 300px">
-    <lew-cascader v-model="v" free :show-all-levels="false" :options="options" />
+    <lew-cascader v-model="v" free :showAllLevels="false" :options="options" />
   </lew-flex>
 </template>

@@ -13,10 +13,5 @@ const change = (e: any) => {
 </script>
 
 <template>
-  <lew-radio-group
-    v-model="value"
-    direction="y"
-    :options="options"
-    @change="change"
-  ></lew-radio-group>
+  <lew-radio-group v-model="value" direction="y" :options="options" @change="change" />
 </template>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { switchProps } from './props'
+
 const props = defineProps(switchProps)
 const _loading = ref(false)
 

@@ -52,6 +52,6 @@ const options = ref(
     <lew-demo-box title="空状态插槽" :code="DemoSelectMultiple7Code">
       <demo-select-multiple7 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

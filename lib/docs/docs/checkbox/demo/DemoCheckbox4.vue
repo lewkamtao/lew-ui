@@ -21,42 +21,16 @@ const value = ref([])
       :iconable="false"
       direction="x"
       :options="options"
-    ></lew-checkbox-group>
-    <lew-checkbox-group
-      v-model="value"
-      block
-      :iconable="false"
-      direction="x"
-      :options="options"
-    ></lew-checkbox-group>
+    />
+    <lew-checkbox-group v-model="value" block :iconable="false" direction="x" :options="options" />
     <br />
     <br />
     <lew-title :size="14">有图标</lew-title>
-    <lew-checkbox-group
-      v-model="value"
-      block
-      size="small"
-      round
-      direction="x"
-      :options="options"
-    ></lew-checkbox-group>
+    <lew-checkbox-group v-model="value" block size="small" round direction="x" :options="options" />
 
-    <lew-checkbox-group
-      v-model="value"
-      block
-      round
-      direction="x"
-      :options="options"
-    ></lew-checkbox-group>
+    <lew-checkbox-group v-model="value" block round direction="x" :options="options" />
 
-    <lew-checkbox-group
-      v-model="value"
-      block
-      round
-      size="large"
-      direction="x"
-      :options="options"
-    ></lew-checkbox-group>
+    <lew-checkbox-group v-model="value" block round size="large" direction="x" :options="options" />
     <br />
     <br />
     <lew-title :size="14">禁用</lew-title>

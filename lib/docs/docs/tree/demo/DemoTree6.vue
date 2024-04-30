@@ -25,8 +25,8 @@ const change = (e: any) => {
   <lew-tree
     v-model="v"
     multiple
-    expand-all
-    :show-checkbox="false"
+    expandAll
+    :showCheckbox="false"
     :data-source="options"
     @change="change"
   />

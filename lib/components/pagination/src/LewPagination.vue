@@ -2,6 +2,7 @@
 import { LewInput, LewSelect, LewFlex, LewIcon } from 'lew-ui'
 import { paginationProps } from './props'
 import type { PaginationOptions } from './props'
+
 const props = defineProps(paginationProps)
 const emit = defineEmits(['change', 'update:currentPage', 'update:pageSize'])
 
@@ -118,7 +119,7 @@ const checkPageNum = (value: any) => {
 <template>
   <div class="lew-pagination">
     <lew-flex class="control" gap="10">
-      <slot name="left" />
+      <slot name="left"></slot>
 
       <lew-flex class="lew-pagination-page-box" gap="5">
         <div class="btn" @click="changePage(currentPage - 1)">
@@ -172,7 +173,7 @@ const checkPageNum = (value: any) => {
         style="width: 100px"
         align="center"
         size="small"
-        :show-check-icon="false"
+        :showCheckIcon="false"
         :options="pageSizeOptions"
         @change="checkPageSize"
       />
@@ -181,10 +182,10 @@ const checkPageNum = (value: any) => {
         size="small"
         align="center"
         placeholder="跳转至"
-        auto-width
+        autoWidth
         @change="checkPageNum"
       />
-      <slot name="right" />
+      <slot name="right"></slot>
     </lew-flex>
   </div>
 </template>

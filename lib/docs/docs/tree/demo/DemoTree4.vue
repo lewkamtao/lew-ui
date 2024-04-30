@@ -22,5 +22,5 @@ const change = (e: any) => {
 </script>
 
 <template>
-  <lew-tree v-model="v" multiple show-checkbox :free="false" :data-source="tree" @change="change" />
+  <lew-tree v-model="v" multiple showCheckbox :free="false" :data-source="tree" @change="change" />
 </template>

@@ -6,7 +6,7 @@ const initTree = () => {
     // item 不存在的时候 是第一层加载
     axios
       .get({
-        url: `/common/region/province/0`
+        url: '/common/region/province/0'
       })
       .then((res: any) => {
         const { data, success } = res
@@ -66,8 +66,8 @@ const v = ref([])
     <lew-tree
       v-model="v"
       multiple
-      show-checkbox
-      key-field="value"
+      showCheckbox
+      keyField="value"
       :initTree="initTree"
       :onload="onload"
       @change="change"

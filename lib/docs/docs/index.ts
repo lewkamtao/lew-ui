@@ -1,4 +1,5 @@
-import { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
+
 const modules = import.meta.glob('./*/index.ts')
 const capitalizeRegex = /(?:^|[\s_-]+)\w/g
 const routes: RouteRecordRaw[] = []

@@ -1,4 +1,4 @@
-import { PropType } from 'vue'
+import type { PropType } from 'vue'
 import type { TreeDataSource } from '../../tree'
 
 export type TreeSelectOptions = {

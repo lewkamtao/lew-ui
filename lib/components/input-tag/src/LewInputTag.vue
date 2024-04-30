@@ -2,6 +2,7 @@
 import { inputTagProps } from './props'
 import { LewInput, LewTag } from 'lew-ui'
 import { cloneDeep } from 'lodash-es'
+
 const emit = defineEmits(['close', 'change'])
 
 defineProps(inputTagProps)
@@ -88,7 +89,7 @@ const delTag = (index: number) => {
       v-model="inputValue"
       class="lew-input-tag"
       size="small"
-      auto-width
+      autoWidth
       placeholder=""
       @blur="blurFn"
     />

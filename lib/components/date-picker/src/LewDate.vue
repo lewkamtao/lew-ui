@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Ref } from 'vue'
+import type { Ref } from 'vue'
 import { getMonthDate, getHeadDate } from './date'
 import type { RetType, RetItemType } from './date'
 import { dateProps } from './props'

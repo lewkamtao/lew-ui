@@ -26,7 +26,7 @@ defineProps({
       y ? 'lew-flex-y-' + y : ''
     }  ${mode ? 'lew-flex-mode-' + mode : ''} `"
   >
-    <slot />
+    <slot></slot>
   </div>
 </template>
 

@@ -17,6 +17,6 @@ const options = ref(
     <lew-demo-box title="状态" :code="DemoResult1Code">
       <demo-result1 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

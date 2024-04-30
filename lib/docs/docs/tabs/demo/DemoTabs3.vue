@@ -63,7 +63,7 @@ const change = (e: Options) => {
       v-model="value"
       style="width: 100%"
       :options="options"
-      :item-width="120"
+      :itemWidth="120"
       @change="change"
     />
   </lew-flex>

@@ -12,14 +12,14 @@ const value3 = ref('聚集后选中所有文本')
     <lew-input v-model="value2" placeholder="只读并可复制" readonly size="small" copyable />
     <lew-input v-model="value2" placeholder="只读并可复制" readonly copyable />
     <lew-input v-model="value2" placeholder="只读并可复制" readonly size="large" copyable />
-    <lew-input v-model="value1" placeholder="自动" auto-width />
-    <lew-input v-model="value3" placeholder="聚集后选中所有文本" focus-select />
+    <lew-input v-model="value1" placeholder="自动" autoWidth />
+    <lew-input v-model="value3" placeholder="聚集后选中所有文本" focusSelect />
     <lew-input
       v-model="value1"
       type="password"
       placeholder="密码可见"
-      show-password
-      :max-length="30"
+      showPassword
+      :maxLength="30"
     />
   </lew-flex>
 </template>

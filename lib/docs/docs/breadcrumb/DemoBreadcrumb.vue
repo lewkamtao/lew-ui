@@ -31,6 +31,6 @@ const options = ref(
     <lew-demo-box title="图标类型" :code="DemoBreadcrumb3Code">
       <demo-breadcrumb3 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

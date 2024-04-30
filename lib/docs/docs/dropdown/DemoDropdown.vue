@@ -37,7 +37,7 @@ const options = ref(
       <demo-dropdown3 />
     </lew-demo-box>
 
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
     <p class="demo-tips">
       你可以在
       <lew-mark to="/Tooltip" type="light" color="blue">Tooltip</lew-mark>

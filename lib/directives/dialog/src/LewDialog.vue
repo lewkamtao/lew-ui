@@ -76,24 +76,24 @@ if (props.closeByEsc) {
       }"
     >
       <transition name="lew-dialog-mask">
-        <div v-if="visible" class="lew-dialog-mask" />
+        <div v-if="visible" class="lew-dialog-mask"></div>
       </transition>
       <transition name="lew-dialog">
         <div v-if="visible" class="lew-dialog" @click="maskClick">
           <div v-if="layout === 'normal'" class="lew-dialog-box lew-dialog-box-normal" @click.stop>
             <div class="left">
               <div
-                v-html="getStatusIcon(type)"
                 :class="`lew-dialog-icon lew-dialog-icon-${type}`"
+                v-html="getStatusIcon(type)"
               ></div>
             </div>
             <div class="right">
               <header>
-                <slot name="title" />
+                <slot name="title"></slot>
                 <span class="gulu-dialog-close" @click="visible = false"></span>
               </header>
               <main>
-                <slot name="content" />
+                <slot name="content"></slot>
               </main>
               <footer>
                 <lew-button
@@ -121,13 +121,13 @@ if (props.closeByEsc) {
           <div v-if="layout === 'mini'" class="lew-dialog-box lew-dialog-box-mini" @click.stop>
             <div class="left">
               <div
-                v-html="getStatusIcon(type)"
                 :class="`lew-dialog-icon lew-dialog-icon-${type}`"
+                v-html="getStatusIcon(type)"
               ></div>
             </div>
             <lew-flex class="right" y="start">
               <main>
-                <slot name="content" />
+                <slot name="content"></slot>
               </main>
               <lew-flex x="end">
                 <lew-button

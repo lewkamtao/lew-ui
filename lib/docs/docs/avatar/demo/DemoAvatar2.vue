@@ -3,29 +3,29 @@
     <lew-avatar
       src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/杨"
       status="online"
-      status-position="top-left"
+      statusPosition="top-left"
     />
     <lew-avatar
       src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/陶"
       status="processing"
-      status-position="top-left"
+      statusPosition="top-left"
     />
     <lew-avatar
       src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/卢"
       status="busy"
-      status-position="top-right"
+      statusPosition="top-right"
     />
     <lew-avatar
       src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/黄"
       round
       status="away"
-      status-position="bottom-left"
+      statusPosition="bottom-left"
     />
     <lew-avatar
       src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/王"
       round
       status="offline"
-      status-position="bottom-right"
+      statusPosition="bottom-right"
     />
   </lew-flex>
 </template>

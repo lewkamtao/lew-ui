@@ -5,8 +5,8 @@ export default {
     {
       name: 'type',
       description: '消息类型',
-      type: `success | warning | error | info | normal`,
-      default: `'normal'`
+      type: 'success | warning | error | info | normal',
+      default: "'normal'"
     },
     {
       name: 'content',
@@ -17,8 +17,8 @@ export default {
     {
       name: 'duration',
       description: '时长',
-      type: `number`,
-      default: `3000`
+      type: 'number',
+      default: '3000'
     }
   ]
 }

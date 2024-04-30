@@ -9,6 +9,6 @@
     <lew-button type="ghost" round text="Submit" icon="message-circle" />
     <lew-button type="text" round text="Submit" icon="message-circle" />
     <lew-button type="light" round text="Submit" icon="plus" />
-    <lew-button type="light" round text="Start" icon="corner-up-right" icon-position="right" />
+    <lew-button type="light" round text="Start" icon="corner-up-right" iconPosition="right" />
   </lew-flex>
 </template>

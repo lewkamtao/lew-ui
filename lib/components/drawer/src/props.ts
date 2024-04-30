@@ -1,4 +1,4 @@
-import { ExtractPropTypes } from 'vue'
+import type { ExtractPropTypes } from 'vue'
 
 export const drawerProps = {
   visible: {
@@ -28,7 +28,7 @@ export type DrawerProps = ExtractPropTypes<typeof drawerProps>
 export const getStyle = (position: string, width: number, height: number) => {
   switch (true) {
     case !position:
-      return `width:30%;height:100%`
+      return 'width:30%;height:100%'
 
     case position === 'left':
       return `width:${width}%;height:100%`

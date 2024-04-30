@@ -99,6 +99,6 @@ const options = ref(
     <lew-demo-box v-if="false" title="可选任意一级选项" :code="DemoCascader10Code">
       <demo-cascader10 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

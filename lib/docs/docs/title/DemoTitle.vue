@@ -30,6 +30,6 @@ const options = ref(
     <lew-demo-box title="主题色" :code="DemoTitle3Code">
       <demo-title3 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

@@ -8,7 +8,7 @@ const visible = ref(false)
   </lew-flex>
   <lew-modal
     v-model:visible="visible"
-    close-on-click-overlay
+    closeOnClickOverlay
     width="350px"
     title="About Lew-UI"
     @ok="visible = false"

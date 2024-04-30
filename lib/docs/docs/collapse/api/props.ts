@@ -11,13 +11,13 @@ export default {
     {
       name: 'size',
       description: '数字大小',
-      type: `number`,
+      type: 'number',
       default: 16
     },
     {
       name: 'sep',
       description: '千分位转换',
-      type: `boolean`,
+      type: 'boolean',
       default: false
     }
   ]

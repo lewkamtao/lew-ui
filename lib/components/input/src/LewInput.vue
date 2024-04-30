@@ -187,7 +187,7 @@ defineExpose({ toFocus })
         class="lew-input-prefixes-text"
       />
       <div v-if="prefixes === 'icon'" class="lew-input-prefixes-icon">
-        <lew-icon :size="getIconSize" :type="prefixesValue"> </lew-icon>
+        <lew-icon :size="getIconSize" :type="prefixesValue" />
       </div>
       <div v-if="prefixes === 'select'" class="lew-input-prefixes-select">
         <lew-dropdown
@@ -287,7 +287,7 @@ defineExpose({ toFocus })
     >
       <lew-text-trim v-if="suffix === 'text'" :text="suffixValue" class="lew-input-suffix-text" />
       <div v-if="suffix === 'icon'" class="lew-input-suffix-icon">
-        <lew-icon :size="getIconSize" :type="suffixValue"> </lew-icon>
+        <lew-icon :size="getIconSize" :type="suffixValue" />
       </div>
       <div v-if="suffix === 'select'" class="lew-input-suffix-select">
         <lew-dropdown

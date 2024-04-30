@@ -12,32 +12,20 @@ const value = ref('')
 <template>
   <lew-flex direction="y" x="start">
     <lew-title :size="14">无图标</lew-title>
-    <lew-radio-group v-model="value" block :iconable="false" :options="options"></lew-radio-group>
+    <lew-radio-group v-model="value" block :iconable="false" :options="options" />
     <br />
     <br />
     <lew-title :size="14">有图标</lew-title>
-    <lew-radio-group v-model="value" block size="small" :options="options"></lew-radio-group>
-    <lew-radio-group v-model="value" block :options="options"></lew-radio-group>
-    <lew-radio-group v-model="value" block size="large" :options="options"></lew-radio-group>
+    <lew-radio-group v-model="value" block size="small" :options="options" />
+    <lew-radio-group v-model="value" block :options="options" />
+    <lew-radio-group v-model="value" block size="large" :options="options" />
     <br />
     <br />
     <lew-title :size="14">禁用</lew-title>
-    <lew-radio-group
-      v-model="value"
-      disabled
-      block
-      size="large"
-      :options="options"
-    ></lew-radio-group>
+    <lew-radio-group v-model="value" disabled block size="large" :options="options" />
     <br />
     <br />
     <lew-title :size="14">只读</lew-title>
-    <lew-radio-group
-      v-model="value"
-      readonly
-      block
-      size="large"
-      :options="options"
-    ></lew-radio-group>
+    <lew-radio-group v-model="value" readonly block size="large" :options="options" />
   </lew-flex>
 </template>

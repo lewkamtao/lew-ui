@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 const request = (type: string) => {
   LewMessage.request({ loadingMessage: '程序加载中 ···' }, async () => {
-    return new Promise<any>((resolve, reject) => {
+    return new Promise<any>((resolve) => {
       setTimeout(() => {
         if (type === 'success') {
           resolve({ content: '加载成功！', duration: 1000 })
         } else {
-          reject({ content: '加载失败！', duration: 1000 })
+          resolve({ content: '加载失败！', duration: 1000 })
         }
       }, 1000)
     })

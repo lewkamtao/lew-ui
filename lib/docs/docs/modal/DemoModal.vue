@@ -37,7 +37,7 @@ const options = ref(
     <lew-demo-box title="是否允许esc关闭" :code="DemoModal4Code">
       <demo-modal4 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>
 

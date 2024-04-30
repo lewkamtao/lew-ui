@@ -22,6 +22,6 @@ const options = ref(
     <lew-demo-box title="多行省略" :code="DemoTextTrim2Code">
       <demo-text-trim2 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

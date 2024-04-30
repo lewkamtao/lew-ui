@@ -15,12 +15,12 @@ const ok = () => {
   </lew-flex>
   <lew-modal
     v-model:visible="visible"
-    close-on-click-overlay
+    closeOnClickOverlay
     width="450px"
-    :ok-props="{ request: ok }"
+    :okProps="{ request: ok }"
     closeable
-    custom-header
-    custom-footer
+    customHeader
+    customFooter
     @cancel="visible = false"
   >
     <template #header>

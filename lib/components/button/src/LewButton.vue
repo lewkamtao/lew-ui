@@ -107,7 +107,7 @@ const getStyle = computed(() => {
           v-if="!$slots.default && !text"
           :size="getIconSize"
           animation="spin"
-          animation-speed="fast"
+          animationSpeed="fast"
           type="loader"
         />
       </div>
@@ -119,11 +119,11 @@ const getStyle = computed(() => {
           'lew-loading-isShow': (_loading || loading) && !disabled
         }"
       >
-        <lew-icon :size="getIconSize" animation="spin" animation-speed="fast" type="loader" />
+        <lew-icon :size="getIconSize" animation="spin" animationSpeed="fast" type="loader" />
       </div>
       <span class="lew-button-text">
         <template v-if="$slots.default">
-          <slot />
+          <slot></slot>
         </template>
         <template v-else>
           {{ text }}
@@ -136,7 +136,7 @@ const getStyle = computed(() => {
         class="lew-loading-icon"
         :size="getIconSize"
         animation="spin"
-        animation-speed="fast"
+        animationSpeed="fast"
         :class="{
           'lew-loading-isShow': (_loading || loading) && !disabled
         }"

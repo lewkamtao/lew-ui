@@ -32,7 +32,7 @@ const options = ref(
     <lew-demo-box title="mode" :code="DemoFlex3Code">
       <demo-flex3 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>
 

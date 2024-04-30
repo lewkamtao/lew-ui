@@ -6,7 +6,7 @@ import type { MenuOptions } from 'lew-ui'
 
 const isShowSider = ref(false)
 const route = useRoute()
-const mainRef: any = ref(null)
+const mainRef = ref()
 
 onMounted(() => {
   const isInfo = localStorage.getItem('isInfo')
@@ -301,7 +301,7 @@ options.value = [
       <div id="component-main" class="component-main lew-scrollbar">
         <router-view v-slot="{ Component }">
           <keep-alive>
-            <Component :is="Component"> </Component>
+            <Component :is="Component" />
           </keep-alive>
         </router-view>
       </div>

@@ -11,25 +11,25 @@ export default {
     {
       name: 'value',
       description: '值',
-      type: `string`,
+      type: 'string',
       default: '-'
     },
     {
       name: 'isLeaf',
       description: '是否是叶子节点',
-      type: `boolean`,
+      type: 'boolean',
       default: '-'
     },
     {
       name: 'children',
       description: '值',
-      type: `CascaderOptions`,
+      type: 'CascaderOptions',
       default: '-'
     },
     {
       name: 'disabled',
       description: '禁用',
-      type: `boolean`,
+      type: 'boolean',
       default: '-'
     }
   ]

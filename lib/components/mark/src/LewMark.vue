@@ -11,7 +11,7 @@ const getStyle = computed(() => {
   let styleObj = {} as any
   let _color = getColorType(color)
   styleObj.borderRadius = round ? '20px' : '4px'
-  styleObj.fontWeight = bold ? bold : ''
+  styleObj.fontWeight = bold || ''
   styleObj.color = `var(--lew-color-${_color}-dark)`
   styleObj.backgroundColor = `var(--lew-color-${_color}-light)`
   styleObj.cursor = to ? 'pointer' : ''
@@ -21,7 +21,7 @@ const getStyle = computed(() => {
 
 <template>
   <span class="lew-mark" :style="getStyle" @click="lewTo(to)">
-    <slot />
+    <slot></slot>
   </span>
 </template>
 

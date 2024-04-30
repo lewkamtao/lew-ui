@@ -1,4 +1,5 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 import LewHome from '../views/LewHome.vue'
 import LewGuide from '../views/LewGuide.vue'
@@ -6,6 +7,7 @@ import LewComponents from '../views/LewComponents.vue'
 
 import docs from '../docs'
 import guide from '../guide'
+
 const routes: Array<RouteRecordRaw> = [
   { path: '/', name: 'R-LewHome', component: LewHome },
   {

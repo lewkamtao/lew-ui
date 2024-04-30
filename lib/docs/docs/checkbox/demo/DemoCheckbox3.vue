@@ -13,10 +13,5 @@ const change = (e: any) => {
 </script>
 
 <template>
-  <lew-checkbox-group
-    v-model="value"
-    block
-    :options="options"
-    @change="change"
-  ></lew-checkbox-group>
+  <lew-checkbox-group v-model="value" block :options="options" @change="change" />
 </template>

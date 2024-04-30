@@ -23,13 +23,13 @@ const open4 = (): void => {
     </lew-drawer>
     <lew-button text="右边" @click="open1" />
 
-    <lew-drawer v-model:visible="visible2" position="bottom"></lew-drawer>
+    <lew-drawer v-model:visible="visible2" position="bottom" />
     <lew-button text="下边" @click="open2" />
 
-    <lew-drawer v-model:visible="visible3" position="left"></lew-drawer>
+    <lew-drawer v-model:visible="visible3" position="left" />
     <lew-button text="左边" @click="open3" />
 
-    <lew-drawer v-model:visible="visible4" position="top"></lew-drawer>
+    <lew-drawer v-model:visible="visible4" position="top" />
     <lew-button text="上边" @click="open4" />
   </lew-flex>
 </template>

@@ -250,9 +250,7 @@ const submit = () => {
   LewMessage.error(v.value || '密码不可为空')
   lewPopoverRef.value.hide()
 }
-const open = (type: any) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+const open = (type: string) => {
   LewDialog[type]({
     title: '删除确认',
     content: '删除之后无法恢复，请确定',
@@ -369,7 +367,7 @@ const notification = (type: string) => {
       <lew-button
         round
         icon="arrow-right"
-        icon-position="right"
+        iconPosition="right"
         text="Get started"
         style="margin-top: 20px"
         @click="router.push('/Avatar')"
@@ -401,12 +399,12 @@ const notification = (type: string) => {
             <lew-avatar
               src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
               status="online"
-              status-position="bottom-left"
+              statusPosition="bottom-left"
             />
             <lew-avatar
               src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
               status="processing"
-              status-position="bottom-right"
+              statusPosition="bottom-right"
             />
           </lew-flex>
           <lew-flex x="end" gap="10">
@@ -425,7 +423,7 @@ const notification = (type: string) => {
             <lew-button text="Confirm" color="cyan" loading />
           </lew-flex>
           <lew-flex x="end">
-            <lew-breadcrumb :options="breadcrumb_options"> </lew-breadcrumb>
+            <lew-breadcrumb :options="breadcrumb_options" />
           </lew-flex>
 
           <lew-flex x="end" style="width: 380px">
@@ -442,10 +440,10 @@ const notification = (type: string) => {
           </lew-flex>
         </lew-flex>
         <lew-flex style="width: 450px; margin-top: 30px" class="item">
-          <lew-form ref="formRef" :options="options" :label-width="100" />
+          <lew-form ref="formRef" :options="options" :labelWidth="100" />
         </lew-flex>
         <lew-flex class="item" direction="y" gap="20">
-          <LewAlert :list="list"></LewAlert>
+          <LewAlert :list="list" />
           <lew-flex wrap x="start" gap="20">
             <lew-button
               text="Like"

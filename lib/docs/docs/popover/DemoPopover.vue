@@ -20,8 +20,8 @@ const options = ref(
       <lew-mark type="light" color="blue" to="/Tooltip">Tooltip</lew-mark>
     </p>
     <lew-demo-box title="询问校验" badge="自定义 HTML" :code="DemoPopover1Code">
-      <demo-popover1></demo-popover1>
+      <demo-popover1 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

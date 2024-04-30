@@ -93,6 +93,6 @@ const options = ref(
     <lew-demo-box title="插槽" :code="DemoTree8Code">
       <demo-tree8 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

@@ -33,7 +33,7 @@ const gohome = () => {
       <div class="menu-item" @click="router.push(`/`)">首页</div>
       <div class="menu-item" @click="router.push(`/Install`)">指南</div>
       <div class="menu-item" @click="router.push(`/Avatar`)">组件</div>
-      <div @click="isDark = !isDark" class="menu-item menu-item-icon">
+      <div class="menu-item menu-item-icon" @click="isDark = !isDark">
         <lew-icon class="icon-mode-sunny" type="sun" size="18" />
         <lew-icon class="icon-mode-moon" type="moon" size="18" />
       </div>

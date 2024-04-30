@@ -33,7 +33,7 @@ const change = (e: Options) => {
       v-model="value2"
       round
       width="300px"
-      item-width="calc(300px / 4)"
+      itemWidth="calc(300px / 4)"
       :options="options2"
       @change="change"
     />

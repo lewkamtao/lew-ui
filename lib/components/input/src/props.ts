@@ -1,5 +1,5 @@
-import { ExtractPropTypes, PropType } from 'vue'
-import { SelectOptions } from 'lew-ui'
+import type { ExtractPropTypes, PropType } from 'vue'
+import type { SelectOptions } from 'lew-ui'
 
 export type InputPrefixesType = 'icon' | 'select' | 'text'
 export type InputSuffixType = 'icon' | 'select' | 'text'

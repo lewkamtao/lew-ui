@@ -3,7 +3,8 @@ import { useDebounceFn } from '@vueuse/core'
 import { LewPopover, LewIcon, LewTooltip } from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
 import { UseVirtualList } from '@vueuse/components'
-import { selectMultipleProps, SelectMultipleOptions } from './props'
+import type { SelectMultipleOptions } from './props'
+import { selectMultipleProps } from './props'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -200,7 +201,7 @@ defineExpose({ show, hide })
 <template>
   <lew-popover
     ref="lewPopverRef"
-    popover-body-class-name="lew-select-multiple-popover-body"
+    popoverBodyClassName="lew-select-multiple-popover-body"
     class="lew-select-view"
     :class="getSelectViewClassName"
     :trigger="trigger"
@@ -262,7 +263,7 @@ defineExpose({ show, hide })
             <lew-popover
               ref="lewPopverValueRef"
               trigger="hover"
-              popover-body-class-name="lew-select-multiple-popover-tag"
+              popoverBodyClassName="lew-select-multiple-popover-tag"
               placement="top-start"
               style="width: 100%"
             >
@@ -317,7 +318,7 @@ defineExpose({ show, hide })
         </div>
         <div class="lew-select-options-box">
           <template v-if="state.options && state.options.length === 0">
-            <slot v-if="$slots.empty" name="empty" />
+            <slot v-if="$slots.empty" name="empty"></slot>
             <lew-flex v-else direction="y" class="not-found">
               <lew-empty title="暂无结果" />
             </lew-flex>
@@ -349,7 +350,7 @@ defineExpose({ show, hide })
                     ...templateProps,
                     checked: getChecked(templateProps.value)
                   }"
-                />
+                ></slot>
                 <div
                   v-else
                   class="lew-select-item lew-select-item-mul"

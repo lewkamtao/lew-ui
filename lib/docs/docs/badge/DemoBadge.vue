@@ -31,6 +31,6 @@ const options = ref(
     <lew-demo-box title="直接使用" :code="DemoBadge3Code">
       <demo-badge3 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

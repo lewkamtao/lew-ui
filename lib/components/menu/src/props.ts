@@ -1,4 +1,4 @@
-import { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 import type { TagColor } from 'lew-ui'
 
 export type MenuOptions = {
@@ -16,7 +16,7 @@ export const menuProps = {
   options: {
     type: Array as PropType<MenuOptions[]>,
     default: [],
-    typeDesc: `MenuOptions[]`,
+    typeDesc: 'MenuOptions[]',
     description: '颜色'
   },
   actived: {

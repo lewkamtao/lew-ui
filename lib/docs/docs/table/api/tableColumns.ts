@@ -5,13 +5,13 @@ export default {
     {
       name: 'type',
       description: '类型',
-      type: `text | template`,
+      type: 'text | template',
       default: 'text'
     },
     {
       name: 'title',
       description: '表头标题',
-      type: `string`,
+      type: 'string',
       default: '-'
     },
     {
@@ -29,13 +29,13 @@ export default {
     {
       name: 'fixed',
       description: '是否固定该列，固定方向',
-      type: `left | right`,
+      type: 'left | right',
       default: '-'
     },
     {
       name: 'x',
       description: '方向',
-      type: `start | center | end`,
+      type: 'start | center | end',
       default: '-'
     }
   ]

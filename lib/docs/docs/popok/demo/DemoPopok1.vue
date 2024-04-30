@@ -27,10 +27,10 @@ const cancel = () => {
     ref="popokRef"
     title="删除确认"
     content="删除之后无法恢复，请确认！"
-    :ok-props="{
+    :okProps="{
       request: ok
     }"
-    :cancel-props="{
+    :cancelProps="{
       request: cancel
     }"
   >

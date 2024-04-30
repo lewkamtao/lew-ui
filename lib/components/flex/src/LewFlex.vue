@@ -26,7 +26,7 @@ const styleObject = computed(() => {
 
 <template>
   <div class="lew-flex" :class="classObject" :style="styleObject">
-    <slot />
+    <slot></slot>
   </div>
 </template>
 

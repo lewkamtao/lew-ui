@@ -12,7 +12,7 @@ export default {
     {
       name: 'hide',
       description: '收起下拉',
-      type: `function`,
+      type: 'function',
       default: '() => {}'
     }
   ]

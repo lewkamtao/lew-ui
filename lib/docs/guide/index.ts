@@ -1,4 +1,5 @@
-import { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
+
 const modules = import.meta.glob('./*.vue')
 const routes: RouteRecordRaw[] = []
 let tempName = ''

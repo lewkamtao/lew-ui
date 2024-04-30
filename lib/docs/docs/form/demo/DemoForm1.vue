@@ -335,7 +335,7 @@ const submit = async () => {
       :size="form.size"
       class="form-box"
       :options="options"
-      :label-width="80"
+      :labelWidth="80"
       @change="
         (e: any) => {
           form = e

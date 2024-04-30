@@ -45,6 +45,6 @@ const options = ref(
     <lew-demo-box title="自定义item宽度" :code="DemoTabs3Code"> <demo-tabs3 /></lew-demo-box>
     <lew-demo-box title="线" :code="DemoTabs4Code"> <demo-tabs4 /></lew-demo-box>
     <lew-demo-box title="圆形" :code="DemoTabs5Code"> <demo-tabs5 /></lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

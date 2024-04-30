@@ -95,24 +95,24 @@ const change = (e: any) => {
     <lew-tree-select
       v-model="v"
       size="small"
-      key-field="value"
-      label-field="label"
+      keyField="value"
+      labelField="label"
       :data-source="options"
       @change="change"
     />
     <lew-tree-select
       v-model="v"
-      key-field="value"
+      keyField="value"
       size="medium"
-      label-field="label"
+      labelField="label"
       :data-source="options"
       @change="change"
     />
     <lew-tree-select
       v-model="v"
       size="large"
-      key-field="value"
-      label-field="label"
+      keyField="value"
+      labelField="label"
       :data-source="options"
       @change="change"
     />

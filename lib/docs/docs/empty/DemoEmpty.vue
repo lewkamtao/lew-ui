@@ -22,6 +22,6 @@ const options = ref(
     <lew-demo-box title="暂无数据" :code="DemoEmpty1Code">
       <demo-empty1 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

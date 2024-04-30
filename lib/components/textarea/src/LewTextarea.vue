@@ -128,7 +128,7 @@ defineExpose({ toFocus })
       @change="emit('change', modelValue)"
       @blur="blur"
       @focus="focus"
-    />
+    ></textarea>
 
     <div v-if="getCheckNumStr && showCount" class="lew-textarea-count">
       {{ getCheckNumStr }}

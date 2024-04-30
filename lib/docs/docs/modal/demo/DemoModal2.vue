@@ -16,10 +16,10 @@ const ok = () => {
   </lew-flex>
   <lew-modal
     v-model:visible="visible"
-    close-on-click-overlay
+    closeOnClickOverlay
     width="350px"
     title="模拟异步请求"
-    :ok-props="{ request: ok }"
+    :okProps="{ request: ok }"
     @cancel="visible = false"
   >
     <div class="modal-body">

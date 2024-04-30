@@ -140,7 +140,7 @@ defineExpose({ show, hide, refresh })
 <template>
   <div class="lew-popover">
     <div ref="triggerRef" class="trigger">
-      <slot name="trigger" />
+      <slot name="trigger"></slot>
     </div>
     <div
       ref="bodyRef"
@@ -151,7 +151,7 @@ defineExpose({ show, hide, refresh })
       class="lew-popover-body"
       :class="popoverBodyClassName"
     >
-      <slot name="popover-body" :show="show" :hide="hide" />
+      <slot name="popover-body" :show="show" :hide="hide"></slot>
     </div>
   </div>
 </template>

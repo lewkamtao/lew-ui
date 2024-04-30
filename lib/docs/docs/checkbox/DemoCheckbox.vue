@@ -45,6 +45,6 @@ const options = ref(
     <lew-demo-box title="单个模式" :code="DemoCheckbox5Code">
       <demo-checkbox5 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

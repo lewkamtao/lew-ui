@@ -159,7 +159,7 @@ defineExpose({ show, hide })
 <template>
   <lew-popover
     ref="lewPopverRef"
-    popover-body-class-name="lew-select-popover-body"
+    popoverBodyClassName="lew-select-popover-body"
     class="lew-select-view"
     :class="getSelectViewClassName"
     :trigger="trigger"
@@ -240,14 +240,14 @@ defineExpose({ show, hide })
                 initTree,
                 expandAll: expandAll
               }"
-              @init-success="state.initLoading = false"
+              @initSuccess="state.initLoading = false"
               @change="change"
             >
               <template v-if="$slots.empty" #empty>
-                <slot name="empty" />
+                <slot name="empty"></slot>
               </template>
               <template v-if="$slots.item" #item="{ props }">
-                <slot name="item" :props="props" />
+                <slot name="item" :props="props"></slot>
               </template>
             </lew-tree>
           </div>

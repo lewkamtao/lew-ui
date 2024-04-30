@@ -145,6 +145,6 @@ const options = ref(
     <lew-demo-box title="暂无数据" :code="DemoTable9Code">
       <demo-table9 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

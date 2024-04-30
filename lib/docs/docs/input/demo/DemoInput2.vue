@@ -16,8 +16,8 @@ const http = ref({
       size="small"
       prefixes="text"
       suffix="text"
-      prefixes-value="https://"
-      suffix-value=".com"
+      prefixesValue="https://"
+      suffixValue=".com"
       placeholder="请输入网址"
     />
     <lew-input
@@ -25,8 +25,8 @@ const http = ref({
       size="medium"
       prefixes="text"
       suffix="text"
-      prefixes-value="https://"
-      suffix-value=".com"
+      prefixesValue="https://"
+      suffixValue=".com"
       placeholder="请输入网址"
     />
     <lew-input
@@ -34,18 +34,18 @@ const http = ref({
       size="large"
       prefixes="text"
       suffix="text"
-      prefixes-value="https://"
-      suffix-value=".com"
+      prefixesValue="https://"
+      suffixValue=".com"
       placeholder="请输入网址"
     />
-    <lew-input v-model="value" suffix="text" suffix-value="@gmail.com" placeholder="请输入邮箱" />
+    <lew-input v-model="value" suffix="text" suffixValue="@gmail.com" placeholder="请输入邮箱" />
     <lew-input
       v-model="value"
       prefixes="icon"
-      prefixes-value="phone"
+      prefixesValue="phone"
       suffix="icon"
-      suffix-value="alert-circle"
-      suffix-tooltip="必须填写手机号"
+      suffixValue="alert-circle"
+      suffixTooltip="必须填写手机号"
       clearable
       placeholder="请输入手机号"
     />
@@ -53,7 +53,7 @@ const http = ref({
       v-model="value"
       v-model:prefixesValue="prefixesValue"
       prefixes="select"
-      :prefixes-options="[
+      :prefixesOptions="[
         {
           label: '北京',
           value: 1
@@ -79,7 +79,7 @@ const http = ref({
       v-model:suffixValue="http.suffix"
       size="small"
       prefixes="select"
-      :prefixes-options="[
+      :prefixesOptions="[
         {
           label: 'http://',
           value: 1
@@ -90,7 +90,7 @@ const http = ref({
         }
       ]"
       suffix="select"
-      :suffix-options="[
+      :suffixOptions="[
         {
           label: '.com',
           value: 1
@@ -119,7 +119,7 @@ const http = ref({
       v-model:prefixesValue="http.prefixes"
       v-model:suffixValue="http.suffix"
       prefixes="select"
-      :prefixes-options="[
+      :prefixesOptions="[
         {
           label: 'http://',
           value: 1
@@ -130,7 +130,7 @@ const http = ref({
         }
       ]"
       suffix="select"
-      :suffix-options="[
+      :suffixOptions="[
         {
           label: '.com',
           value: 1
@@ -160,7 +160,7 @@ const http = ref({
       v-model:suffixValue="http.suffix"
       size="large"
       prefixes="select"
-      :prefixes-options="[
+      :prefixesOptions="[
         {
           label: 'http://',
           value: 1
@@ -171,7 +171,7 @@ const http = ref({
         }
       ]"
       suffix="select"
-      :suffix-options="[
+      :suffixOptions="[
         {
           label: '.com',
           value: 1

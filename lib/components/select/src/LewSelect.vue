@@ -3,7 +3,8 @@ import { useDebounceFn } from '@vueuse/core'
 import { LewPopover, LewFlex, LewIcon, LewTooltip } from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
 import { UseVirtualList } from '@vueuse/components'
-import { selectProps, SelectOptions } from './props'
+import type { SelectOptions } from './props'
+import { selectProps } from './props'
 import { cloneDeep } from 'lodash-es'
 
 // 获取app
@@ -121,7 +122,12 @@ const getBodyClassName = computed(() => {
 const getSelectViewClassName = computed(() => {
   const { disabled, readonly, searchable } = props
   const focus = state.visible
-  return object2class('lew-select-view', { focus, searchable, disabled, readonly })
+  return object2class('lew-select-view', {
+    focus,
+    searchable,
+    disabled,
+    readonly
+  })
 })
 
 const getSelectItemClassName = (e: any) => {
@@ -186,7 +192,7 @@ defineExpose({ show, hide })
 <template>
   <lew-popover
     ref="lewPopverRef"
-    popover-body-class-name="lew-select-popover-body"
+    popoverBodyClassName="lew-select-popover-body"
     class="lew-select-view"
     :class="getSelectViewClassName"
     :trigger="trigger"
@@ -240,7 +246,7 @@ defineExpose({ show, hide })
 
         <div class="lew-select-options-box">
           <template v-if="state.options && state.options.length === 0">
-            <slot v-if="$slots.empty" name="empty" />
+            <slot v-if="$slots.empty" name="empty"></slot>
             <lew-flex v-else direction="y" class="not-found">
               <lew-empty title="暂无结果" />
             </lew-flex>
@@ -269,7 +275,7 @@ defineExpose({ show, hide })
                     ...templateProps,
                     checked: getChecked(templateProps.value)
                   }"
-                />
+                ></slot>
                 <div v-else class="lew-select-item" :class="getSelectItemClassName(templateProps)">
                   <div class="lew-select-label">
                     {{ templateProps.label }}

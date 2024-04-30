@@ -1,5 +1,6 @@
 import { getStatusIcon } from 'lew-ui/utils'
 import '../styles/index.scss'
+
 type MessageFnOptions = {
   id: string
   content: string
@@ -110,7 +111,7 @@ const LewMessage: any = {
             LewMessage.error({
               id: 'request-fail',
               content,
-              duration: duration
+              duration
             })
           }
         )

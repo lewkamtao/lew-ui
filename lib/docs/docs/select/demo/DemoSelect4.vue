@@ -13,7 +13,7 @@ const value = ref('')
   <lew-select
     v-model="value"
     style="width: 320px"
-    :item-height="48"
+    :itemHeight="48"
     :options="schoolsOptions"
     placeholder="支持插槽"
   >

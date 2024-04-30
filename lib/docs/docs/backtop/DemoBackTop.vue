@@ -28,7 +28,7 @@ const options = ref(
     <lew-demo-box title="自定义内容" :code="DemoBackTop2Code">
       <demo-back-top2 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
     <lew-demo-box title="指令" :code="DemoBackTop3Code">
       <demo-back-top3 />
     </lew-demo-box>

@@ -4,31 +4,15 @@ const page = ref(1)
 
 <template>
   <div>
-    <lew-pagination
-      v-model:current-page="page"
-      :total="1000"
-      :visible-pages-count="5"
-    ></lew-pagination>
+    <lew-pagination v-model:current-page="page" :total="1000" :visiblePagesCount="5" />
   </div>
   <div>
-    <lew-pagination
-      v-model:current-page="page"
-      :total="10000"
-      :visible-pages-count="7"
-    ></lew-pagination>
+    <lew-pagination v-model:current-page="page" :total="10000" :visiblePagesCount="7" />
   </div>
   <div>
-    <lew-pagination
-      v-model:current-page="page"
-      :total="100000"
-      :visible-pages-count="9"
-    ></lew-pagination>
+    <lew-pagination v-model:current-page="page" :total="100000" :visiblePagesCount="9" />
   </div>
   <div>
-    <lew-pagination
-      v-model:current-page="page"
-      :total="15000000"
-      :visible-pages-count="11"
-    ></lew-pagination>
+    <lew-pagination v-model:current-page="page" :total="15000000" :visiblePagesCount="11" />
   </div>
 </template>

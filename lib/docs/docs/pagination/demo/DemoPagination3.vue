@@ -16,8 +16,8 @@ setTimeout(() => {
   <div>
     <lew-pagination
       v-model:current-page="pageNum"
-      :page-size="pageSize"
-      :page-size-options="[
+      :pageSize="pageSize"
+      :pageSizeOptions="[
         {
           label: '10 / 页',
           value: 10

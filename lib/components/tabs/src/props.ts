@@ -1,4 +1,4 @@
-import { PropType, ExtractPropTypes } from 'vue'
+import type { PropType, ExtractPropTypes } from 'vue'
 
 export type TabsOptions = {
   label: string

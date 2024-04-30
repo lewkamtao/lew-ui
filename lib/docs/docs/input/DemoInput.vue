@@ -36,7 +36,7 @@ const options = ref(
     <lew-demo-box title="其他" :code="DemoInput4Code">
       <demo-input4 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>
 

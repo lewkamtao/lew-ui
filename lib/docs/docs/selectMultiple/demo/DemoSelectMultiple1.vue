@@ -21,7 +21,7 @@ const value = ref([])
     />
     <lew-select-multiple
       v-model="value"
-      value-layout="tag"
+      valueLayout="tag"
       :options="options"
       placeholder="中"
       clearable

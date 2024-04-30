@@ -22,10 +22,10 @@ const change = (e: any) => {
 </script>
 
 <template>
-  <lew-tree v-model="v" show-checkbox show-line multiple :data-source="options" @change="change">
+  <lew-tree v-model="v" showCheckbox showLine multiple :data-source="options" @change="change">
     <template #item="{ props }">
       {{ props.label }}
-      <span size="small" v-if="props.checked" type="success">
+      <span v-if="props.checked" size="small" type="success">
         （ {{ props.checked ? 'checked' : '' }}）
       </span>
     </template>

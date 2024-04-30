@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType } from 'vue'
+import type { PropType } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -47,8 +47,12 @@ const toPath = (item: Item) => {
         @click="toPath(item)"
       >
         <span class="name"> {{ item.name }} </span>
-        <LewBadge v-if="item.label" :type="item.type" :value="item.label" style="margin-left: 30px">
-        </LewBadge>
+        <LewBadge
+          v-if="item.label"
+          :type="item.type"
+          :value="item.label"
+          style="margin-left: 30px"
+        />
       </div>
     </div>
   </div>

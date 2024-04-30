@@ -32,7 +32,7 @@ const options = ref(
     <lew-demo-box title="天然支持千分位" :code="DemoMagicNumber3Code">
       <demo-magic-number3 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>
 

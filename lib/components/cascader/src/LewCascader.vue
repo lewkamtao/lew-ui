@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { LewPopover, LewFlex, LewButton, LewIcon, LewTooltip, LewTextTrim } from 'lew-ui'
 import { object2class } from 'lew-ui/utils'
-import { cascaderProps, CascaderOptions } from './props'
+import type { CascaderOptions } from './props'
+import { cascaderProps } from './props'
 import { UseVirtualList } from '@vueuse/components'
 import { cloneDeep } from 'lodash-es'
 
@@ -431,7 +432,7 @@ defineExpose({ show, hide })
                       v-if="templateProps.loading"
                       size="14px"
                       animation="spin"
-                      animation-speed="fast"
+                      animationSpeed="fast"
                       class="lew-cascader-loading-icon"
                       type="loader"
                     />

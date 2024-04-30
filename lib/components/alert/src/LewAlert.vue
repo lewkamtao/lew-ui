@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { object2class } from 'lew-ui/utils'
+import { object2class, getStatusIcon } from 'lew-ui/utils'
 import type { AlertItem } from './props'
 import { alertProps } from './props'
 import { LewIcon } from 'lew-ui'
-import { getStatusIcon } from 'lew-ui/utils'
 
 defineProps(alertProps)
 
@@ -17,7 +16,7 @@ const alertClassName = (item: AlertItem) => {
 <template>
   <div class="lew-alert-group">
     <div v-for="(item, i) in list" :key="i" class="lew-alert" :class="alertClassName(item)">
-      <div v-html="getStatusIcon(item.type)" class="alert-icon"></div>
+      <div class="alert-icon" v-html="getStatusIcon(item.type)"></div>
       <div class="message">
         <div class="title">{{ item.title }}</div>
         <div v-show="item.content" class="content">

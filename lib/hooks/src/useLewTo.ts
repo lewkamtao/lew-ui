@@ -1,5 +1,6 @@
 // hooks/useDOMCreate.ts
-import { ComponentInternalInstance, getCurrentInstance, onMounted } from 'vue'
+import type { ComponentInternalInstance } from 'vue'
+import { getCurrentInstance, onMounted } from 'vue'
 import type { Router } from 'vue-router'
 
 let instance: ComponentInternalInstance

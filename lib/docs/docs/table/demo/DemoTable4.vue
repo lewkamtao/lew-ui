@@ -131,7 +131,7 @@ const error = (e: any) => {
       </lew-flex>
     </template>
     <template #intro="{ row }">
-      <lew-text-trim style="width: 100%" :text="row.intro"> </lew-text-trim>
+      <lew-text-trim style="width: 100%" :text="row.intro" />
     </template>
     <template #action>
       <lew-flex gap="5">

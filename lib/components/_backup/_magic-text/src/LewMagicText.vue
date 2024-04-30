@@ -2,7 +2,7 @@
 
 <template>
   <div class="lew-magic-text">
-    <slot />
+    <slot></slot>
   </div>
 </template>
 

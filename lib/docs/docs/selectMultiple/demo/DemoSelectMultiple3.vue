@@ -32,7 +32,7 @@ const searchFn = (event: any) => {
     <lew-select-multiple
       v-model="value"
       searchable
-      :default-value="value"
+      :defaultValue="value"
       :options="options"
       placeholder="默认过滤"
     >
@@ -46,15 +46,15 @@ const searchFn = (event: any) => {
     <lew-select-multiple
       v-model="value"
       searchable
-      :default-value="value"
-      :search-method="filterFn"
+      :defaultValue="value"
+      :searchMethod="filterFn"
       placeholder="自定义过滤方法"
     />
     <lew-select-multiple
       v-model="value"
       searchable
-      :default-value="value"
-      :search-method="searchFn"
+      :defaultValue="value"
+      :searchMethod="searchFn"
       placeholder="模拟请求"
     />
   </lew-flex>

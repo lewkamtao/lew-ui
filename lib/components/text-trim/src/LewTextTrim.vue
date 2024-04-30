@@ -129,7 +129,7 @@ onMounted(() => {
     :style="getTextTrimStyleObject"
     @mouseenter="check"
     v-html="sanitizeHtml(text as any)"
-  />
+  ></div>
 </template>
 
 <style lang="scss" scoped>

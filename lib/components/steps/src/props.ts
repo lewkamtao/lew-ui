@@ -1,4 +1,4 @@
-import { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 
 type TagSize = 'small' | 'medium' | 'large'
 type TagType = 'fill' | 'light' | 'ghost'

@@ -50,7 +50,7 @@ const getNumStyle = computed(() => {
         class="lew-magic-number-num"
         :style="getNumStyle"
         v-text="n"
-      />
+      ></span>
     </div>
   </div>
 </template>

@@ -93,11 +93,11 @@ const getSelectedKeys = () => {
   <lew-table
     ref="tableRef"
     checkable
-    single-select
+    singleSelect
     :data-source="data"
     :columns="columns"
     :max-height="400"
-    row-key="id"
+    rowKey="id"
   >
     <template #release_date="{ row }"> {{ row.release_date }} </template>
     <template #directors="{ row }">
@@ -113,7 +113,7 @@ const getSelectedKeys = () => {
       >
     </template>
     <template #info="{ row }">
-      <lew-text-trim style="width: 100%" :text="row.info"></lew-text-trim>
+      <lew-text-trim style="width: 100%" :text="row.info" />
     </template>
 
     <template #action="{ row, column }">

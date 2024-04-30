@@ -260,7 +260,7 @@ onUnmounted(() => {
                 :disabled="dataSource.length === 0"
                 :certain="checkCertain && !state.checkAll"
                 @change="setAllChecked($event)"
-              ></lew-checkbox>
+              />
               <span v-else>单选</span>
             </lew-flex>
             <lew-flex
@@ -288,7 +288,7 @@ onUnmounted(() => {
                 :disabled="dataSource.length === 0"
                 :certain="checkCertain && !state.checkAll"
                 @change="setAllChecked($event)"
-              ></lew-checkbox>
+              />
             </lew-flex>
             <lew-flex
               v-for="(column, index) in newColumns"
@@ -347,7 +347,7 @@ onUnmounted(() => {
               <lew-checkbox
                 class="lew-table-checkbox"
                 :checked="state.selectedKeysMap[row[rowKey]]"
-              ></lew-checkbox>
+              />
             </lew-flex>
             <lew-flex
               v-for="(column, j) in fixedColumns('left')"
@@ -358,7 +358,12 @@ onUnmounted(() => {
               :style="getTdStyle(column, row)"
             >
               <!-- 模板 -->
-              <slot v-if="$slots[column.field]" :name="column.field" :row="row" :column="column" />
+              <slot
+                v-if="$slots[column.field]"
+                :name="column.field"
+                :row="row"
+                :column="column"
+              ></slot>
               <template v-else>
                 <lew-text-trim
                   :x="column.x || 'start'"
@@ -401,7 +406,12 @@ onUnmounted(() => {
               :style="getTdStyle(column, row)"
             >
               <!-- 模板 -->
-              <slot v-if="$slots[column.field]" :name="column.field" :row="row" :column="column" />
+              <slot
+                v-if="$slots[column.field]"
+                :name="column.field"
+                :row="row"
+                :column="column"
+              ></slot>
               <template v-else>
                 <lew-text-trim
                   :x="column.x || 'start'"
@@ -432,7 +442,12 @@ onUnmounted(() => {
               :style="getTdStyle(column, row)"
             >
               <!-- 模板 -->
-              <slot v-if="$slots[column.field]" :name="column.field" :row="row" :column="column" />
+              <slot
+                v-if="$slots[column.field]"
+                :name="column.field"
+                :row="row"
+                :column="column"
+              ></slot>
               <template v-else>
                 <lew-text-trim
                   :x="column.x || 'start'"

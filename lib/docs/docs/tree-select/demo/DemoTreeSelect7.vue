@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import axios from '../../../axios/http'
+
 const initTree = () => {
   return new Promise<any[]>((resolve) => {
     // item 不存在的时候 是第一层加载
     axios
       .get({
-        url: `/common/region/province/0`
+        url: '/common/region/province/0'
       })
       .then((res: any) => {
         const { data, success } = res
@@ -64,8 +65,8 @@ const v = ref([])
   <lew-flex direction="y" gap="20px" style="width: 300px">
     <lew-tree-select
       v-model="v"
-      key-field="value"
-      label-field="label"
+      keyField="value"
+      labelField="label"
       searchable
       :onload="onload"
       :initTree="initTree"

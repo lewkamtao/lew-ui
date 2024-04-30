@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { breadcrumbProps } from './props'
 import { useLewTo } from '../../../hooks'
+
 const { lewTo } = useLewTo()
 defineProps(breadcrumbProps)
 </script>
@@ -27,7 +28,7 @@ defineProps(breadcrumbProps)
           stroke-linecap="butt"
           stroke-linejoin="miter"
         >
-          <path d="M29.506 6.502 18.493 41.498"></path>
+          <path d="M29.506 6.502 18.493 41.498" />
         </svg>
 
         <svg
@@ -40,7 +41,7 @@ defineProps(breadcrumbProps)
           stroke-linecap="butt"
           stroke-linejoin="miter"
         >
-          <path d="m16 39.513 15.556-15.557L16 8.4"></path>
+          <path d="m16 39.513 15.556-15.557L16 8.4" />
         </svg>
       </div>
     </div>

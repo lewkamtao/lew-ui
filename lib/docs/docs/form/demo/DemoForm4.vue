@@ -22,7 +22,7 @@ const options = ref([
 </script>
 
 <template>
-  <lew-form class="form-box" :options="options" :label-width="80" />
+  <lew-form class="form-box" :options="options" :labelWidth="80" />
 </template>
 <style scoped lang="scss">
 .form-box {

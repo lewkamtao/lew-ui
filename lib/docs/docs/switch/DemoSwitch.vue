@@ -31,6 +31,6 @@ const options = ref(
     <lew-demo-box title="异步" :code="DemoSwitch3Code">
       <demo-switch3 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

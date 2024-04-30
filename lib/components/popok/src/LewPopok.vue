@@ -40,7 +40,7 @@ const emit = defineEmits(['show', 'ok', 'cancel'])
     @show="emit('show')"
   >
     <template #trigger>
-      <slot />
+      <slot></slot>
     </template>
     <template #popover-body>
       <div

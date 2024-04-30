@@ -94,7 +94,7 @@ const setSelectedKeys = () => {
   <lew-flex style="width: 100%" direction="y" x="start">
     <lew-button style="margin-bottom: 10px" @click="setSelectedKeys"> 设置已选项 </lew-button>
     <lew-button style="margin-bottom: 10px" @click="getSelectedKeys"> 获取选择 </lew-button>
-    <lew-table ref="tableRef" :data-source="data" :columns="columns" checkable row-key="id">
+    <lew-table ref="tableRef" :data-source="data" :columns="columns" checkable rowKey="id">
       <template #hobby="{ row }">
         <lew-flex gap="5" x="start">
           <lew-tag v-for="(item, index) in row.hobby" :key="index" type="light" color="blue"

@@ -4,7 +4,7 @@ const dateRangeValue = ref({})
 
 <template>
   <lew-flex direction="y" x="start">
-    <lew-date-range-picker placeholderStart="只读" readonly v-model="dateRangeValue" clearable />
-    <lew-date-range-picker placeholderStart="禁用" disabled v-model="dateRangeValue" clearable />
+    <lew-date-range-picker v-model="dateRangeValue" placeholderStart="只读" readonly clearable />
+    <lew-date-range-picker v-model="dateRangeValue" placeholderStart="禁用" disabled clearable />
   </lew-flex>
 </template>

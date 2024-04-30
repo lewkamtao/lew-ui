@@ -19,7 +19,12 @@ const change = ({ item }: { item: RadioOptions }) => {
 
 const getRadioGroupClassName = computed(() => {
   const { size, direction, disabled, readonly } = props
-  return object2class('lew-radio-group', { size, direction, disabled, readonly })
+  return object2class('lew-radio-group', {
+    size,
+    direction,
+    disabled,
+    readonly
+  })
 })
 </script>
 

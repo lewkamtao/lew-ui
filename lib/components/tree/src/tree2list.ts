@@ -9,7 +9,7 @@ export const flattenTree = (tree: TreeDataSource[]): TreeDataSource[] => {
   })
 }
 
-export const findAllNodes = (tree: TreeDataSource[] = [], keyField: string = 'key') => {
+export const findAllNodes = (tree: TreeDataSource[] = [], keyField = 'key') => {
   const nodes = new Set()
   function traverse(node: any) {
     nodes.add(node[keyField])
@@ -25,7 +25,7 @@ export const findAllNodes = (tree: TreeDataSource[] = [], keyField: string = 'ke
   return Array.from(nodes) || []
 }
 
-export const findLeafNodes = (tree: TreeDataSource[] = [], keyField: string = 'key') => {
+export const findLeafNodes = (tree: TreeDataSource[] = [], keyField = 'key') => {
   const leafNodes = new Set()
   function traverse(node: any) {
     if (!node.children || node.children.length === 0) {
@@ -76,8 +76,8 @@ export const formatTree = ({
     }
     // 新增字段，用于判断是否是叶子节点
     if (!free) {
-      currentNode['leafNodeValues'] = findLeafNodes(children)
-      currentNode['allNodeValues'] = findAllNodes(children)
+      currentNode.leafNodeValues = findLeafNodes(children)
+      currentNode.allNodeValues = findAllNodes(children)
     }
 
     const formattedNode = {
@@ -120,7 +120,12 @@ export const tree2List = async ({
   if (initTree) {
     const _tree: TreeDataSource[] = await initTree()
     if (isArray(_tree)) {
-      tree = formatTree({ dataSource: _tree, keyField, labelField, free })
+      tree = formatTree({
+        dataSource: _tree,
+        keyField,
+        labelField,
+        free
+      })
     } else {
       return new Error('The initTree function should return a Promise that resolves to an array')
     }
@@ -133,15 +138,18 @@ export const tree2List = async ({
           const { labelPaths, children } = node[i]
           if (some(labelPaths, (label: string) => label.includes(keyword))) {
             _tree.push(node[i])
-          } else {
-            if (children) {
-              filterTree(children || [])
-            }
+          } else if (children) {
+            filterTree(children || [])
           }
         }
       }
       filterTree(tree)
-      tree = formatTree({ dataSource: _tree, keyField, labelField, free })
+      tree = formatTree({
+        dataSource: _tree,
+        keyField,
+        labelField,
+        free
+      })
     }
   }
   return {

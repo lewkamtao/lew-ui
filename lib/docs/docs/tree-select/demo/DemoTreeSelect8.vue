@@ -98,24 +98,24 @@ const change = (e: any) => {
   <lew-flex direction="y" gap="20px" style="width: 300px">
     <lew-tree-select
       v-model="v"
-      key-field="value"
-      label-field="label"
+      keyField="value"
+      labelField="label"
       clearable
       :data-source="options"
       @change="change"
     />
     <lew-tree-select
       v-model="v"
-      key-field="value"
-      label-field="label"
+      keyField="value"
+      labelField="label"
       readonly
       :data-source="options"
       @change="change"
     />
     <lew-tree-select
       v-model="v"
-      key-field="value"
-      label-field="label"
+      keyField="value"
+      labelField="label"
       disabled
       :data-source="options"
       @change="change"

@@ -136,9 +136,8 @@ const getItemStyle = computed(() => {
   let width = any2px(props.itemWidth)
   if (props.itemWidth === 'auto') {
     return 'flex:1'
-  } else {
-    return `width:${width}`
   }
+  return `width:${width}`
 })
 
 const getTabsStyle = computed(() => {
@@ -277,6 +276,7 @@ onUnmounted(() => {
     height: calc(100% - 6px);
     border-radius: 6px;
     background: var(--lew-tabs-active-color);
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.05);
     transform: translateX(3px);
     box-sizing: border-box;
   }

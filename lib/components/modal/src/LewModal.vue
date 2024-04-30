@@ -68,7 +68,7 @@ if (props.closeByEsc) {
       class="lew-modal-container"
     >
       <transition name="lew-modal-mask">
-        <div v-if="visible" class="lew-modal-mask" />
+        <div v-if="visible" class="lew-modal-mask"></div>
       </transition>
       <transition name="lew-modal">
         <div v-if="visible" class="lew-modal" @click="maskClick">
@@ -81,7 +81,7 @@ if (props.closeByEsc) {
               <lew-icon size="18" class="lew-form-icon-clear" type="x" @click="visible = false" />
             </lew-flex>
 
-            <slot />
+            <slot></slot>
 
             <div v-if="customFooter" class="footer-slot">
               <slot name="footer"></slot>

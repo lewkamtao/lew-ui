@@ -11,7 +11,7 @@ export default {
     {
       name: 'to',
       description: '绑定跳转链接',
-      type: `String`,
+      type: 'String',
       default: "''"
     },
     {

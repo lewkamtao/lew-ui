@@ -21,6 +21,6 @@ const options = ref(
     <lew-demo-box title="点击事件触发" :code="DemoTooltip2Code">
       <demo-tooltip2 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

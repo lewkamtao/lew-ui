@@ -38,7 +38,7 @@ const treeList: any = ref<TreeDataSource[]>([])
 
 // 初始化
 let treeBackup: TreeDataSource[] = []
-const init = async (keyword: string = '') => {
+const init = async (keyword = '') => {
   let _treeList = []
   const { dataSource, initTree, keyField, labelField, free } = props
   if (isFunction(initTree)) {
@@ -81,30 +81,28 @@ const expandHandle = async (item: TreeDataSource) => {
   if (i >= 0) {
     _expandedKeys.splice(i, 1)
     expandedKeys.value = _expandedKeys
-  } else {
-    if (props.onload && !loadingKeys.value.includes(item.key)) {
-      const index = treeList.value.findIndex((e: TreeDataSource) => e.parentKey === item.key)
-      if (index < 0) {
-        loadingKeys.value.push(item.key)
-        let _tree = ((await props.onload(cloneDeep(item) as TreeDataSource)) as any) || []
-        insertChildByKey(treeBackup, item.key, _tree)
-        const { newTree, newTreeList }: any = (await tree2List({
-          dataSource: treeBackup,
-          keyField: props.keyField,
-          labelField: props.labelField,
-          free: props.free
-        })) as any
-        treeBackup = newTree
-        treeList.value = newTreeList
-        const i = loadingKeys.value.findIndex((e: string) => e === item.key)
-        if (i >= 0) {
-          loadingKeys.value.splice(i, 1)
-        }
+  } else if (props.onload && !loadingKeys.value.includes(item.key)) {
+    const index = treeList.value.findIndex((e: TreeDataSource) => e.parentKey === item.key)
+    if (index < 0) {
+      loadingKeys.value.push(item.key)
+      let _tree = ((await props.onload(cloneDeep(item) as TreeDataSource)) as any) || []
+      insertChildByKey(treeBackup, item.key, _tree)
+      const { newTree, newTreeList }: any = (await tree2List({
+        dataSource: treeBackup,
+        keyField: props.keyField,
+        labelField: props.labelField,
+        free: props.free
+      })) as any
+      treeBackup = newTree
+      treeList.value = newTreeList
+      const i = loadingKeys.value.findIndex((e: string) => e === item.key)
+      if (i >= 0) {
+        loadingKeys.value.splice(i, 1)
       }
-      expandedKeys.value = [...(expandedKeys.value as (string | number)[]), item.key]
-    } else {
-      expandedKeys.value = [..._expandedKeys, item.key]
     }
+    expandedKeys.value = [...(expandedKeys.value as (string | number)[]), item.key]
+  } else {
+    expandedKeys.value = [..._expandedKeys, item.key]
   }
 }
 
@@ -228,14 +226,14 @@ defineExpose({ init, getTreeList })
               v-if="loadingKeys.includes(item.key)"
               size="14px"
               animation="spin"
-              animation-speed="fast"
+              animationSpeed="fast"
               class="lew-cascader-loading-icon"
               type="loader"
             />
             <lew-icon v-else class="lew-tree-chevron-right-icon" size="14px" type="chevron-right" />
           </div>
 
-          <div @click="select(item)" class="lew-tree-item-label">
+          <div class="lew-tree-item-label" @click="select(item)">
             <div v-if="item.level > 0 && showLine" class="lew-tree-line"></div>
             <lew-checkbox
               v-if="showCheckbox"
@@ -252,7 +250,7 @@ defineExpose({ init, getTreeList })
                 ...item,
                 checked: multiple ? (modelValue || []).includes(item.key) : modelValue === item.key
               }"
-            />
+            ></slot>
             <span v-else>{{ item.label }}</span>
           </div>
         </div>

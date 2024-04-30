@@ -24,8 +24,8 @@ const options = ref(
       <demo-notification1>删除</demo-notification1></lew-demo-box
     >
     <lew-demo-box title="自定义展示时间" :code="DemoNotification2Code">
-      <demo-notification2></demo-notification2
-    ></lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+      <demo-notification2
+    /></lew-demo-box>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

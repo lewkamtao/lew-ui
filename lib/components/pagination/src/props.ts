@@ -1,5 +1,5 @@
-import { PropType } from 'vue'
-import { SelectOptions } from 'lew-ui'
+import type { PropType } from 'vue'
+import type { SelectOptions } from 'lew-ui'
 
 export type PaginationOptions = SelectOptions
 

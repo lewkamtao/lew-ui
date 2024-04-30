@@ -30,12 +30,12 @@ defineExpose({ show, hide })
 <template>
   <lew-popover
     ref="lewPopoverRef"
-    popover-body-class-name="lew-dropdown-popover-body"
+    popoverBodyClassName="lew-dropdown-popover-body"
     :trigger="trigger"
     :placement="placement"
   >
     <template #trigger>
-      <slot />
+      <slot></slot>
     </template>
     <template #popover-body>
       <div

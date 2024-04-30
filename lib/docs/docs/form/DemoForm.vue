@@ -44,6 +44,6 @@ const options = ref(
     <lew-demo-box v-if="false" title="其他" :code="DemoForm5Code">
       <demo-form5 />
     </lew-demo-box>
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>

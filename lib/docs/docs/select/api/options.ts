@@ -11,13 +11,13 @@ export default {
     {
       name: 'value',
       description: '值',
-      type: `string | number`,
+      type: 'string | number',
       default: '-'
     },
     {
       name: 'disabled',
       description: '禁用选项',
-      type: `boolean`,
+      type: 'boolean',
       default: false
     }
   ]

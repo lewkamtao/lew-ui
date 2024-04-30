@@ -8,5 +8,5 @@ const change = (e: unknown) => {
 </script>
 
 <template>
-  <lew-switch v-model="value" :round="false" @change="change"></lew-switch>
+  <lew-switch v-model="value" :round="false" @change="change" />
 </template>

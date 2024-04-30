@@ -7,30 +7,30 @@ const ok = () => {
 
 <template>
   <lew-flex style="width: 300px" gap="20px" x="start" direction="y">
-    <lew-textarea v-model="value" placeholder="可清空的" :max-length="300" show-count clearable />
+    <lew-textarea v-model="value" placeholder="可清空的" :maxLength="300" showCount clearable />
     <lew-textarea
       v-model="value"
       placeholder="只读"
-      :max-length="300"
-      show-count
+      :maxLength="300"
+      showCount
       readonly
       clearable
     />
     <lew-textarea
       v-model="value"
       placeholder="禁用"
-      :max-length="300"
-      show-count
+      :maxLength="300"
+      showCount
       disabled
       clearable
     />
     <lew-textarea
       v-model="value"
       placeholder="按enter触发"
-      :max-length="300"
-      show-count
+      :maxLength="300"
+      showCount
       clearable
-      ok-by-enter
+      okByEnter
       @ok="ok"
     />
   </lew-flex>

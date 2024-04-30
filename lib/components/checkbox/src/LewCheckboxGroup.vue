@@ -36,7 +36,7 @@ const change = ({ item, checked }: { item: CheckboxOptions; checked: boolean }) 
   }
   emit('change', {
     value: cloneDeep(_value),
-    item: item
+    item
   })
   modelValue.value = cloneDeep(_value)
 }
@@ -52,7 +52,12 @@ const initCheckbox = () => {
 
 const getCheckboxGroupClassName = computed(() => {
   const { size, direction, readonly, disabled } = props as any
-  return object2class('lew-checkbox-group', { size, direction, readonly, disabled })
+  return object2class('lew-checkbox-group', {
+    size,
+    direction,
+    readonly,
+    disabled
+  })
 })
 
 initCheckbox()

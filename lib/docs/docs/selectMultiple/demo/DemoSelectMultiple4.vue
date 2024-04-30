@@ -13,7 +13,7 @@ const value = ref()
   <lew-select-multiple
     v-model="value"
     style="width: 320px"
-    :item-height="48"
+    :itemHeight="48"
     clearable
     :options="schoolsOptions"
     placeholder="支持插槽"
@@ -28,7 +28,10 @@ const value = ref()
             :src="`https://api.lew.kamtao.com/manage/common/avatar/350/4B78CA/${props.label}`"
           />
           <div class="info">
-            <div class="label">{{ props.label }} {{ props.checked ? '（已选择）' : '' }}</div>
+            <div class="label">
+              {{ props.label }}
+              {{ props.checked ? '（已选择）' : '' }}
+            </div>
             <div class="desc">
               {{ props.value }}
             </div>

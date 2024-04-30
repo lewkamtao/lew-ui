@@ -19,6 +19,6 @@ const options = ref(
     <lew-demo-box title="文本标记" :code="DemoMark1Code">
       <demo-mark1>删除</demo-mark1></lew-demo-box
     >
-    <lew-docs-tables :options="options"></lew-docs-tables>
+    <lew-docs-tables :options="options" />
   </div>
 </template>
