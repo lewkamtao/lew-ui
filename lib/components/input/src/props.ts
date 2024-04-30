@@ -1,4 +1,5 @@
 import { ExtractPropTypes, PropType } from 'vue'
+import { SelectOptions } from 'lew-ui'
 
 export type InputPrefixesType = 'icon' | 'select' | 'text'
 export type InputSuffixType = 'icon' | 'select' | 'text'
@@ -108,7 +109,7 @@ export const inputProps = {
   },
 
   prefixesOptions: {
-    type: Array,
+    type: Array as PropType<SelectOptions[]>,
     default: () => [],
     description: '前缀选项'
   },
@@ -123,7 +124,7 @@ export const inputProps = {
     description: '后缀'
   },
   suffixOptions: {
-    type: Array,
+    type: Array as PropType<SelectOptions[]>,
     default: () => [],
     description: '后缀选项'
   },

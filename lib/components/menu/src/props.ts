@@ -1,4 +1,5 @@
 import { ExtractPropTypes, PropType } from 'vue'
+import type { TagColor } from 'lew-ui'
 
 export type MenuOptions = {
   label: string // 标题
@@ -8,7 +9,7 @@ export type MenuOptions = {
   level?: number // 层级
   icon?: string // 图标
   tagText?: string // 标签文本
-  tagColor?: string // 标签颜色
+  tagColor?: TagColor // 标签颜色
 }
 
 export const menuProps = {

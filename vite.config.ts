@@ -9,9 +9,6 @@ import dayjs from 'dayjs'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { fileURLToPath, URL } from 'node:url'
 
-// 路径
-
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   return {
     base: '',
@@ -90,14 +87,6 @@ export default defineConfig(({ mode }) => {
           }
         : {
             rollupOptions: {
-              plugins: [
-                visualizer({
-                  open: true, // 直接在浏览器中打开分析报告
-                  filename: 'stats.html', // 输出文件的名称
-                  gzipSize: true, // 显示gzip后的大小
-                  brotliSize: true // 显示brotli压缩后的大小
-                })
-              ],
               output: {
                 chunkFileNames: 'assets/js/[name]-[hash].js',
                 entryFileNames: 'assets/js/[name]-[hash].js',
@@ -107,7 +96,15 @@ export default defineConfig(({ mode }) => {
                   if (id.includes('node_modules')) {
                     return id.toString().split('node_modules/')[1].split('/')[0].toString()
                   }
-                }
+                },
+                plugins: [
+                  visualizer({
+                    open: true, // 直接在浏览器中打开分析报告
+                    filename: 'stats.html', // 输出文件的名称
+                    gzipSize: true, // 显示gzip后的大小
+                    brotliSize: true // 显示brotli压缩后的大小
+                  })
+                ]
               }
             },
             minify: 'terser',

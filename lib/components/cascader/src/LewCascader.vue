@@ -448,9 +448,7 @@ defineExpose({ show, hide })
           </template>
         </div>
         <lew-flex v-if="free" x="end" class="lew-cascader-control">
-          <lew-button round color="normal" type="text" size="small" @click="cancel"
-            >取消</lew-button
-          >
+          <lew-button round color="gray" type="text" size="small" @click="cancel">取消</lew-button>
           <lew-button :disabled="state.okLoading" round type="light" size="small" @click="ok()">
             确认
           </lew-button>

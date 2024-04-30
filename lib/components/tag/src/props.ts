@@ -1,8 +1,8 @@
 import { ExtractPropTypes, PropType } from 'vue'
 
-type TagSize = 'small' | 'medium' | 'large'
-type TagType = 'fill' | 'light' | 'ghost'
-type TagColor =
+export type TagSize = 'small' | 'medium' | 'large'
+export type TagType = 'fill' | 'light' | 'ghost'
+export type TagColor =
   | 'red'
   | 'orange'
   | 'yellow'
@@ -16,6 +16,11 @@ type TagColor =
   | 'pink'
   | 'gray'
   | 'brown'
+  | 'success'
+  | 'normal'
+  | 'warning'
+  | 'error'
+  | 'info'
 
 export const tagProps = {
   type: {

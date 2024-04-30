@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router'
 import TheSiderbar from '../layout/TheSiderbar.vue'
 import LewRightNav from '../layout/LewRightNav.vue'
-import type { MenuOptions } from '../../lib'
+import type { MenuOptions } from 'lew-ui'
 
 const isShowSider = ref(false)
 const route = useRoute()

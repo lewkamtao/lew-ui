@@ -94,7 +94,6 @@ export const treeProps = {
     default: undefined,
     description: '初始化加载树形数据'
   },
-
   onload: {
     type: Function as PropType<(item: TreeDataSource) => void> | undefined,
     default: undefined,

@@ -114,7 +114,7 @@ export const treeSelectProps = {
     description: '是否显示复选框'
   },
   initTree: {
-    type: Function as PropType<(keyword: string) => void> | undefined,
+    type: Function as PropType<() => void> | undefined,
     default: undefined,
     description: '初始化加载树形数据，会覆盖searchMethod方法'
   },

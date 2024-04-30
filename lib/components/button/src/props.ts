@@ -14,6 +14,12 @@ export type ButtonColor =
   | 'pink'
   | 'gray'
   | 'brown'
+  | 'success'
+  | 'normal'
+  | 'warning'
+  | 'error'
+  | 'info'
+
 export type ButtonSize = 'small' | 'medium' | 'large'
 export type ButtonType = 'fill' | 'light' | 'ghost' | 'text'
 

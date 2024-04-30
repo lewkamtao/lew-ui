@@ -1,9 +1,7 @@
 import { PropType } from 'vue'
+import { SelectOptions } from 'lew-ui'
 
-export type PaginationOptions = {
-  label: number | string
-  value: number | string
-}
+export type PaginationOptions = SelectOptions
 
 export const paginationModel = {
   total: {

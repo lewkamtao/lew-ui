@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import type { DropdownOptions } from 'lew-ui'
 
-type Options = typeof DropdownOptions
-
-const options: Options = ref([
+const options = ref<DropdownOptions[]>([
   {
     label: '西游记',
     value: '1'
@@ -22,7 +20,7 @@ const options: Options = ref([
   }
 ])
 
-const change = (e: Options) => {
+const change = (e: DropdownOptions) => {
   LewMessage.info(e.label)
 }
 </script>

@@ -1,5 +1,6 @@
 import { useMouse } from '@vueuse/core'
 import _LewDialog from './LewDialog.vue'
+import type { ButtonColor } from 'lew-ui'
 
 const { x, y } = useMouse()
 
@@ -16,26 +17,26 @@ type Options = {
 }
 
 const warning = (options: Options) => {
-  dialog('warning', options)
+  dialog('orange', options)
 }
 
 const error = (options: Options) => {
-  dialog('error', options)
+  dialog('red', options)
 }
 
 const info = (options: Options) => {
-  dialog('info', options)
+  dialog('blue', options)
 }
 
 const normal = (options: Options) => {
-  dialog('normal', options)
+  dialog('gray', options)
 }
 
 const success = (options: Options) => {
-  dialog('success', options)
+  dialog('green', options)
 }
 
-const dialog = (type: string, options: Options) => {
+const dialog = (type: ButtonColor, options: Options) => {
   const {
     title,
     content,
