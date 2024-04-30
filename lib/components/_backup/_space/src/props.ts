@@ -1,1 +1,1 @@
-export const SpaceOptions = {};
+export const SpaceOptions = {}

@@ -1,4 +1,4 @@
-import VueFeather from 'vue-feather';
+import VueFeather from 'vue-feather'
 
-VueFeather.name = 'LewIcon';
-export { VueFeather as LewIcon };
+VueFeather.name = 'LewIcon'
+export { VueFeather as LewIcon }

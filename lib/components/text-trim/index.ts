@@ -1,2 +1,2 @@
-export { default as LewTextTrim } from './src/LewTextTrim.vue';
-export * from './src/props';
+export { default as LewTextTrim } from './src/LewTextTrim.vue'
+export * from './src/props'

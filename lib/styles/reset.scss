@@ -13,8 +13,8 @@ td,
 a,
 button,
 select {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 h1,
@@ -23,67 +23,69 @@ h3,
 h4,
 h4,
 h5 {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 select {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 table {
-    border-collapse: collapse;
+  border-collapse: collapse;
 }
 
 fieldset,
 img {
-    border: 0 none;
+  border: 0 none;
 }
 
 fieldset {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 fieldset p {
-    margin: 0;
-    padding: 0 0 0 8px;
+  margin: 0;
+  padding: 0 0 0 8px;
 }
 
 legend {
-    display: none;
+  display: none;
 }
 
 table caption {
-    margin-left: -var(--lew-border-width);
+  margin-left: -var(--lew-border-width);
 }
 
 ol,
 ul {
-    list-style-image: none;
-    list-style-position: outside;
+  list-style-image: none;
+  list-style-position: outside;
 }
 
 caption,
 th {
-    text-align: left;
+  text-align: left;
 }
 
 q:before,
 q:after,
 blockquote:before,
 blockquote:after {
-    content: '';
+  content: '';
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    transition-delay: 9999999s;
-    -webkit-transition: color 9999999s ease-out, background-color 9999999s ease-out;
+  transition-delay: 9999999s;
+  -webkit-transition:
+    color 9999999s ease-out,
+    background-color 9999999s ease-out;
 }

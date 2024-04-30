@@ -1,1 +1,1 @@
-export { default as LewMagicText } from './src/LewMagicText.vue';
+export { default as LewMagicText } from './src/LewMagicText.vue'

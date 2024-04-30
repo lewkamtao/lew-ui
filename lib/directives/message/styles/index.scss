@@ -1,79 +1,79 @@
 #lew-message {
-    position: fixed;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 999999;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 80px;
+  .message {
+    width: auto;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    z-index: 999999;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 80px;
-    .message {
-        width: auto;
-        display: flex;
-        flex-shrink: 0;
-        align-items: center;
-        justify-content: center;
-        box-sizing: border-box;
-        height: 40px;
-        line-height: 40px;
-        padding:7px 18px 7px 14px;
-        transition: all 0.25s ease;
-        opacity: 0;
-        margin-top: 0px;
-        margin-bottom: 12px;
-        transform: translateY(-10px);
-        box-shadow: 0px 4px 10px -5px rgba(0, 0, 0, 0.15);
-        border: var(--lew-popover-border);
-        font-size: 14px;
-        border-radius: 20px;
-        background-color: var(--lew-backdrop-bg) !important;
-        backdrop-filter: blur(20px);
-        .content {
-            max-width: 500px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            color: var(--lew-text-color-1);
-            font-weight: 400;
-        }
-        svg {
-            width: 20px;
-            height: 20px;
-            margin-right: 7px;
-        }
-        .vue-feather--spin {
-            width: 16px;
-            height: 16px;
-        }
+    box-sizing: border-box;
+    height: 40px;
+    line-height: 40px;
+    padding: 7px 18px 7px 14px;
+    transition: all 0.25s ease;
+    opacity: 0;
+    margin-top: 0px;
+    margin-bottom: 12px;
+    transform: translateY(-10px);
+    box-shadow: 0px 4px 10px -5px rgba(0, 0, 0, 0.15);
+    border: var(--lew-popover-border);
+    font-size: 14px;
+    border-radius: 20px;
+    background-color: var(--lew-backdrop-bg) !important;
+    backdrop-filter: blur(20px);
+    .content {
+      max-width: 500px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      color: var(--lew-text-color-1);
+      font-weight: 400;
     }
-    .message-normal {
-        color: var(--lew-color-normal);
+    svg {
+      width: 20px;
+      height: 20px;
+      margin-right: 7px;
     }
-    .message-error {
-        color: var(--lew-color-error);
+    .vue-feather--spin {
+      width: 16px;
+      height: 16px;
     }
-    .message-success {
-        color: var(--lew-color-success);
-    }
-    .message-info {
-        color: var(--lew-color-info);
-    }
-    .message-warning {
-        color: var(--lew-color-warning);
-    }
-    .message-loading {
-        color: var(--lew-color-normal);
-    }
-    .message-icon {
-        display: flex;
-    }
-    .message-show {
-        opacity: 1;
-        transform: translateY(0px);
-    }
-    .message-hidden {
-        opacity: 0;
-        margin-top: -50px;
-    }
+  }
+  .message-normal {
+    color: var(--lew-color-normal);
+  }
+  .message-error {
+    color: var(--lew-color-error);
+  }
+  .message-success {
+    color: var(--lew-color-success);
+  }
+  .message-info {
+    color: var(--lew-color-info);
+  }
+  .message-warning {
+    color: var(--lew-color-warning);
+  }
+  .message-loading {
+    color: var(--lew-color-normal);
+  }
+  .message-icon {
+    display: flex;
+  }
+  .message-show {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  .message-hidden {
+    opacity: 0;
+    margin-top: -50px;
+  }
 }
