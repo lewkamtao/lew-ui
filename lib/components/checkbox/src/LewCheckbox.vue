@@ -5,7 +5,7 @@ import { checkboxProps } from './props'
 const props = defineProps(checkboxProps)
 
 const emit = defineEmits(['change'])
-const modelValue: Ref<boolean | undefined> = defineModel<boolean | undefined>({
+const modelValue: Ref<boolean | undefined> = defineModel({
   default: false
 })
 

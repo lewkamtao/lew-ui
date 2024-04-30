@@ -3,7 +3,7 @@ import { switchProps } from './props'
 const props = defineProps(switchProps)
 const _loading = ref(false)
 
-const modelValue: Ref<boolean | undefined> = defineModel<boolean | undefined>()
+const modelValue: Ref<boolean | undefined> = defineModel()
 const emit = defineEmits(['click', 'change'])
 
 const handleClick = async (e: any) => {

@@ -19,7 +19,7 @@ const watchOptions = { debounce: 250, maxWait: 1000 }
 // 方向
 watchDebounced(
   () => props.placement,
-  (value: any) => {
+  (value: string) => {
     instance.setProps({
       placement: value
     })
@@ -30,7 +30,7 @@ watchDebounced(
 // 禁用
 watchDebounced(
   () => props.disabled,
-  (value: any) => {
+  (value: boolean) => {
     if (value) {
       instance.disable()
     } else {
@@ -43,7 +43,7 @@ watchDebounced(
 // trigger
 watchDebounced(
   () => props.trigger,
-  (value: any) => {
+  (value: string) => {
     if (instance) {
       instance.setProps({
         trigger: value
@@ -56,7 +56,7 @@ watchDebounced(
 // trigger
 watchDebounced(
   () => props.triggerTarget,
-  (value: any) => {
+  (value: Element | string) => {
     if (instance) {
       instance.setProps({
         triggerTarget: value
@@ -68,7 +68,7 @@ watchDebounced(
 // offset
 watchDebounced(
   () => props.offset,
-  (value: any) => {
+  (value: number[]) => {
     if (instance) {
       instance.setProps({
         offset: value

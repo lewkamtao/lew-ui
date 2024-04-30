@@ -12,7 +12,7 @@ if (app && !app.directive('tooltip')) {
 }
 const props = defineProps(selectMultipleProps)
 const emit = defineEmits(['change', 'select', 'clear', 'delete', 'blur'])
-const selectValue: any = defineModel<any[]>()
+const selectValue: any = defineModel()
 
 const lewSelectRef = ref()
 const lewPopverRef = ref()

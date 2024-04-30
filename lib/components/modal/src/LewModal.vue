@@ -14,7 +14,7 @@ const props = defineProps(modalProps)
 
 const emit = defineEmits(['ok', 'cancel', 'show', 'close'])
 
-const visible: Ref<boolean | undefined> = defineModel<boolean | undefined>('visible')
+const visible: Ref<boolean | undefined> = defineModel('visible')
 const transformOrigin = ref('0 0')
 
 const maskClick = () => {

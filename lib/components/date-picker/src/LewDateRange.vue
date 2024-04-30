@@ -1,13 +1,15 @@
 <script lang="ts" setup>
 import dayjs from 'dayjs'
 import { getMonthDate, getHeadDate } from './date'
+import type { RetItemType } from './date'
+
 import { dateRangeProps } from './props'
 import { LewFlex, LewButton } from 'lew-ui'
 import { cloneDeep } from 'lodash-es'
 
 const emit = defineEmits(['change'])
 const props = defineProps(dateRangeProps)
-const modelValue: Ref<any> = defineModel<any>()
+const modelValue: Ref<any> = defineModel()
 const hoverValue: Ref<any> = ref(toRaw(modelValue.value))
 const { startKey, endKey } = props
 
@@ -152,7 +154,7 @@ setMonthDate('right')
 
 let i = 0
 let startBackup = ''
-const hoverValueFn = (item: any) => {
+const hoverValueFn = (item: RetItemType) => {
   if (item.date != item.showDate || i % 2 === 0) {
     return
   }
@@ -163,7 +165,7 @@ const hoverValueFn = (item: any) => {
   }
 }
 
-const setValue = (item: any) => {
+const setValue = (item: RetItemType) => {
   i += 1
 
   if (!hoverValue.value) {
@@ -192,7 +194,7 @@ const setValue = (item: any) => {
   }
 }
 
-const object2class = computed(() => (type: string, item: any) => {
+const object2class = computed(() => (type: string, item: RetItemType) => {
   if (!item.year || !item.month || !item.showDate) {
     return
   }

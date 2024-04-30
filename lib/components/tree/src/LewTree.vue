@@ -24,15 +24,11 @@ const props = defineProps(treeProps)
 const emit = defineEmits(['change', 'initSuccess'])
 
 // 定义异步处理函数
-const modelValue: Ref<string | (string | number)[] | undefined> = defineModel<
-  string | (string | number)[] | undefined
->({
+const modelValue: Ref<string | (string | number)[] | undefined> = defineModel({
   default: undefined
 })
 
-const expandedKeys: Ref<(string | number)[] | undefined> = defineModel<
-  (string | number)[] | undefined
->('expandedKeys', {
+const expandedKeys: Ref<(string | number)[] | undefined> = defineModel('expandedKeys', {
   default: []
 })
 const certainKeys: any = ref<string[]>([])
@@ -202,13 +198,7 @@ defineExpose({ init, getTreeList })
     }"
   >
     <template v-if="treeList && treeList.length > 0 && !loading">
-      <lew-flex
-        v-for="(item, index) in treeList as TreeDataSource[]"
-        :key="index"
-        direction="y"
-        gap="0px"
-        x="start"
-      >
+      <lew-flex v-for="(item, index) in treeList" :key="index" direction="y" gap="0px" x="start">
         <div
           v-if="
             expandAll ||
@@ -337,12 +327,10 @@ defineExpose({ init, getTreeList })
   .lew-tree-item-label:hover {
     background-color: var(--lew-bgcolor-3);
     user-select: none;
-    :deep(.lew-checkbox) {
-      .icon-checkbox-box {
-        border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
-        outline: var(--lew-form-ouline);
-        background: var(--lew-form-bgcolor);
-      }
+    .lew-checkbox:deep(.icon-checkbox-box) {
+      border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
+      outline: var(--lew-form-ouline);
+      background: var(--lew-form-bgcolor);
     }
   }
 }
@@ -352,14 +340,12 @@ defineExpose({ init, getTreeList })
     font-weight: 600;
   }
   .lew-tree-item-label:hover {
-    :deep(.lew-checkbox) {
-      .icon-checkbox-box {
-        border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-        background: var(--lew-checkbox-color);
-        .icon-checkbox {
-          transform: translate(-50%, -50%) rotate(0deg) scale(1);
-          opacity: 1;
-        }
+    .lew-checkbox:deep(.icon-checkbox-box) {
+      border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+      background: var(--lew-checkbox-color);
+      .icon-checkbox {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+        opacity: 1;
       }
     }
   }
@@ -367,11 +353,9 @@ defineExpose({ init, getTreeList })
 
 .lew-tree-item-certain {
   .lew-tree-item-label:hover {
-    :deep(.lew-checkbox) {
-      .icon-checkbox-box {
-        border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-        background: var(--lew-checkbox-color);
-      }
+    .lew-checkbox:deep(.icon-checkbox-box) {
+      border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+      background: var(--lew-checkbox-color);
     }
   }
 }

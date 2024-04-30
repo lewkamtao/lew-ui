@@ -4,7 +4,7 @@ import type { ButtonColor } from 'lew-ui'
 export const dialogProps = {
   type: {
     type: String as PropType<ButtonColor>,
-    default: '',
+    default: 'error',
     description: '类型'
   },
   layout: {

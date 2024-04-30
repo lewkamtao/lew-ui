@@ -5,36 +5,33 @@ import type { PaginationOptions } from './props'
 const props = defineProps(paginationProps)
 const emit = defineEmits(['change', 'update:currentPage', 'update:pageSize'])
 
-const total: Ref<number> = defineModel<number>('total', { default: 0 })
-const currentPage: Ref<number> = defineModel<number>('currentPage', { default: 1 })
-const pageSize: Ref<number> = defineModel<number>('pageSize', { default: 10 })
-const pageSizeOptions: Ref<PaginationOptions[]> = defineModel<PaginationOptions[]>(
-  'pageSizeOptions',
-  {
-    default: [
-      {
-        label: '10 / 页',
-        value: 10
-      },
-      {
-        label: '20 / 页',
-        value: 20
-      },
-      {
-        label: '30 / 页',
-        value: 30
-      },
-      {
-        label: '50 / 页',
-        value: 50
-      },
-      {
-        label: '100 / 页',
-        value: 100
-      }
-    ]
-  }
-)
+const total: Ref<number> = defineModel('total', { default: 0 })
+const currentPage: Ref<number> = defineModel('currentPage', { default: 1 })
+const pageSize: Ref<number> = defineModel('pageSize', { default: 10 })
+const pageSizeOptions: Ref<PaginationOptions[]> = defineModel('pageSizeOptions', {
+  default: [
+    {
+      label: '10 / 页',
+      value: 10
+    },
+    {
+      label: '20 / 页',
+      value: 20
+    },
+    {
+      label: '30 / 页',
+      value: 30
+    },
+    {
+      label: '50 / 页',
+      value: 50
+    },
+    {
+      label: '100 / 页',
+      value: 100
+    }
+  ]
+})
 
 const state = reactive({
   toPage: undefined,

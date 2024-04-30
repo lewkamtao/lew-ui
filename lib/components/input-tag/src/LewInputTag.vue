@@ -5,7 +5,7 @@ import { cloneDeep } from 'lodash-es'
 const emit = defineEmits(['close', 'change'])
 
 defineProps(inputTagProps)
-const tagsValue: Ref<string[] | undefined> = defineModel<string[] | undefined>()
+const tagsValue: Ref<string[] | undefined> = defineModel()
 const inputValue = ref()
 const isInput = ref(false)
 const lewInputRef = ref()
@@ -107,8 +107,10 @@ const delTag = (index: number) => {
     height: 26px;
     flex-shrink: 1;
 
-    ::v-deep input {
-      height: 26px;
+    :deep() {
+      input {
+        height: 26px;
+      }
     }
   }
 }

@@ -191,9 +191,11 @@ if (props.closeByEsc) {
     background-color: var(--lew-modal-box-bgcolor);
     border: var(--lew-dialog-box-border);
     box-shadow: var(--lew-dialog-box-shadow);
-    .lew-dialog-icon ::v-deep svg {
-      width: 32px;
-      height: 32px;
+    .lew-dialog-icon:deep() {
+      svg {
+        width: 32px;
+        height: 32px;
+      }
     }
 
     .lew-dialog-icon-success {
@@ -294,9 +296,11 @@ if (props.closeByEsc) {
       margin-top: 6px;
       margin-right: 10px;
       display: flex;
-      .lew-dialog-icon ::v-deep svg {
-        width: 24px;
-        height: 24px;
+      .lew-dialog-icon:deep() {
+        svg {
+          width: 24px;
+          height: 24px;
+        }
       }
     }
 

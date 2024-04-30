@@ -6,7 +6,7 @@ import LewRadio from './LewRadio.vue'
 
 const emit = defineEmits(['change'])
 const props = defineProps(radioGroupProps)
-const modelValue: Ref<string | number | undefined> = defineModel<string | number | undefined>()
+const modelValue: Ref<string | number | undefined> = defineModel()
 
 const change = ({ item }: { item: RadioOptions }) => {
   console.log('change', item)

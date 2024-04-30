@@ -24,7 +24,7 @@ const emit = defineEmits([
 ])
 
 const props = defineProps(textareaProps)
-const modelValue: Ref<string | undefined> = defineModel<string | undefined>()
+const modelValue: Ref<string | undefined> = defineModel()
 const state = reactive({
   isFocus: false
 })

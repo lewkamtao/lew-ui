@@ -17,23 +17,23 @@ type Options = {
 }
 
 const warning = (options: Options) => {
-  dialog('orange', options)
+  dialog('warning', options)
 }
 
 const error = (options: Options) => {
-  dialog('red', options)
+  dialog('error', options)
 }
 
 const info = (options: Options) => {
-  dialog('blue', options)
+  dialog('info', options)
 }
 
 const normal = (options: Options) => {
-  dialog('gray', options)
+  dialog('normal', options)
 }
 
 const success = (options: Options) => {
-  dialog('green', options)
+  dialog('success', options)
 }
 
 const dialog = (type: ButtonColor, options: Options) => {

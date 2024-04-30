@@ -1,5 +1,4 @@
 import type { App } from 'vue'
-
 // tippy 样式
 import 'tippy.js/dist/tippy.css' // optional for styling
 import 'tippy.js/animations/shift-away-subtle.css'
@@ -20,9 +19,7 @@ export * from './components'
 export * from './directives'
 export * from './utils'
 
-const install: any = function (Vue: App): void {
-  if (install.installed) return
-
+const install = function (Vue: App): void {
   const _components = Object.keys(components).map(
     (key) => components[key as keyof typeof components]
   )
@@ -33,8 +30,9 @@ const install: any = function (Vue: App): void {
 
   _components.forEach((component: any) => {
     if (
-      Object.prototype.hasOwnProperty.call(component, 'name') ||
-      Object.prototype.hasOwnProperty.call(component, '__name')
+      (Object.prototype.hasOwnProperty.call(component, 'name') ||
+        Object.prototype.hasOwnProperty.call(component, '__name')) &&
+      Object.prototype.hasOwnProperty.call(component, 'render')
     ) {
       Vue.component(`${component.name || component.__name}`, component)
     }

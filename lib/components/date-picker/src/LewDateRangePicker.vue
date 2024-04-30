@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { LewPopover, LewIcon, LewDateRange, LewTooltip } from 'lew-ui'
 import { dateRangePickerProps } from './props'
+import type { DatePickerSize } from './props'
 import { object2class } from 'lew-ui/utils'
 
 // 获取app
@@ -8,9 +9,16 @@ const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
+
+type DateRangePickerModel =
+  | {
+      [key in typeof startKey | typeof endKey]: string | undefined
+    }
+  | undefined
+
 const props = defineProps(dateRangePickerProps)
 const emit = defineEmits(['change', 'clear'])
-const modelValue: Ref<any> = defineModel<any>()
+const modelValue: Ref<DateRangePickerModel> = defineModel()
 const visible = ref(false)
 const lewPopoverRef = ref()
 const { startKey, endKey } = props
@@ -25,12 +33,13 @@ const hide = () => {
 }
 
 const getIconSize = computed(() => {
-  const size: any = {
+  const size: { [key in DatePickerSize]: number } = {
     small: 13,
     medium: 14,
     large: 15
   }
-  return size[props.size]
+  const _propsSize: DatePickerSize = props.size as DatePickerSize
+  return size[_propsSize]
 })
 
 const change = (e?: any) => {

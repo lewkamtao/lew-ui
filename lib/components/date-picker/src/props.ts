@@ -1,5 +1,5 @@
 import { ExtractPropTypes, PropType } from 'vue'
-export type datePickerSize = 'small' | 'medium' | 'large'
+export type DatePickerSize = 'small' | 'medium' | 'large'
 
 export const datePickerModel = {
   modelValue: {
@@ -18,7 +18,7 @@ export const dateRangePickerModel = {
 
 export const datePickerProps = {
   size: {
-    type: String as PropType<datePickerSize>,
+    type: String as PropType<DatePickerSize>,
     default: 'medium',
     description: '尺寸，可选值为 small、medium、large'
   },

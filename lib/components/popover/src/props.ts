@@ -33,7 +33,7 @@ export const popoverProps = {
     description: '触发元素'
   },
   offset: {
-    type: Array,
+    type: Array as PropType<number[]>,
     default: [0, 8],
     description: '偏移量'
   },

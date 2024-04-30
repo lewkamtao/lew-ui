@@ -56,7 +56,7 @@ export const selectProps = {
     description: '是否可搜索'
   },
   searchMethod: {
-    type: Function as PropType<(e: SelectSearchMethodParams) => void>,
+    type: Function as PropType<(e: SelectSearchMethodParams) => SelectOptions[]>,
     default: (params: SelectSearchMethodParams) => {
       const { options, keyword } = params
       if (options && keyword) {

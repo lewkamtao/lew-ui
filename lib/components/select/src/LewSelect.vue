@@ -13,7 +13,7 @@ if (app && !app.directive('tooltip')) {
 }
 const props = defineProps(selectProps)
 const emit = defineEmits(['change', 'blur', 'clear'])
-const selectValue: Ref<string | number | undefined> = defineModel<string | number | undefined>()
+const selectValue: Ref<string | number | undefined> = defineModel()
 
 const lewSelectRef = ref()
 const inputRef = ref()
@@ -49,7 +49,7 @@ const search = async (e: any) => {
   state.loading = true
   const keyword = e.target.value
   if (props.searchable) {
-    let result: any = []
+    let result: SelectOptions[] = []
     // 如果没输入关键词
     if (!keyword && props.options.length > 0) {
       result = props.options

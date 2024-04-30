@@ -5,7 +5,7 @@ import { object2class, any2px } from 'lew-ui/utils'
 
 const emit = defineEmits(['change'])
 const props = defineProps(tabsProps)
-const tabsValue: Ref<string | number | undefined> = defineModel<string | number | undefined>({
+const tabsValue: Ref<string | number | undefined> = defineModel({
   required: true
 })
 

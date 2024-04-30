@@ -96,9 +96,11 @@ const emit = defineEmits(['show', 'ok', 'cancel'])
   .left {
     width: 30px;
     margin-right: 12px;
-    .lew-popok-icon ::v-deep svg {
-      width: 26px;
-      height: 26px;
+    .lew-popok-icon:deep() {
+      svg {
+        width: 26px;
+        height: 26px;
+      }
     }
     .lew-popok-icon-success {
       color: var(--lew-color-success);

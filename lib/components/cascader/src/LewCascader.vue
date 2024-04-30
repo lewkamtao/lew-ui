@@ -43,7 +43,7 @@ if (app && !app.directive('tooltip')) {
 const props = defineProps(cascaderProps)
 const emit = defineEmits(['change', 'blur', 'clear'])
 
-const cascaderValue: Ref<string | number | undefined> = defineModel<string | number | undefined>({
+const cascaderValue: Ref<string | number | undefined> = defineModel({
   default: undefined
 })
 
@@ -617,39 +617,33 @@ defineExpose({ show, hide })
 }
 
 .lew-cascader-item:hover {
-  :deep(.lew-checkbox) {
-    .icon-checkbox-box {
-      border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
-      outline: var(--lew-form-ouline);
-      background: var(--lew-form-bgcolor);
-    }
+  .lew-checkbox:deep(.icon-checkbox-box) {
+    border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
+    outline: var(--lew-form-ouline);
+    background: var(--lew-form-bgcolor);
   }
 }
 
 .lew-cascader-item-tobe:hover {
-  :deep(.lew-checkbox) {
-    .icon-checkbox-box {
-      border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-      background: var(--lew-checkbox-color);
+  .lew-checkbox:deep(.icon-checkbox-box) {
+    border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+    background: var(--lew-checkbox-color);
 
-      .icon-checkbox {
-        transform: translate(-50%, -50%) rotate(0deg) scale(1);
-        opacity: 1;
-      }
+    .icon-checkbox {
+      transform: translate(-50%, -50%) rotate(0deg) scale(1);
+      opacity: 1;
     }
   }
 }
 
 .lew-cascader-item-selected:hover {
-  :deep(.lew-checkbox) {
-    .icon-checkbox-box {
-      border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-      background: var(--lew-checkbox-color);
+  .lew-checkbox:deep(.icon-checkbox-box) {
+    border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+    background: var(--lew-checkbox-color);
 
-      .icon-checkbox {
-        transform: translate(-50%, -50%) rotate(0deg) scale(1);
-        opacity: 1;
-      }
+    .icon-checkbox {
+      transform: translate(-50%, -50%) rotate(0deg) scale(1);
+      opacity: 1;
     }
   }
 }

@@ -14,9 +14,9 @@ if (app && !app.directive('tooltip')) {
 const emit = defineEmits(['clear', 'blur', 'focus', 'change', 'input', 'ok'])
 
 const props = defineProps(inputProps)
-const modelValue: Ref<string | undefined> = defineModel<string | undefined>({ required: true })
-const prefixesValue: Ref<string | undefined> = defineModel<string | undefined>('prefixesValue')
-const suffixValue: Ref<string | undefined> = defineModel<string | undefined>('suffixValue')
+const modelValue: Ref<string | undefined> = defineModel({ required: true })
+const prefixesValue: Ref<string | undefined> = defineModel('prefixesValue')
+const suffixValue: Ref<string | undefined> = defineModel('suffixValue')
 const lewInputRef = ref()
 const isCopy = ref<boolean>(false)
 let timer: any = null
