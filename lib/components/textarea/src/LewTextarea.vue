@@ -105,6 +105,7 @@ const getTextareaStyle = computed(() => {
 if (props.okByEnter) {
   watchEffect(() => {
     if (shift.value && enter.value) {
+      return
     } else if (enter.value && state.isFocus && modelValue.value) {
       lewTextareaRef.value?.blur()
       emit('ok', modelValue.value)

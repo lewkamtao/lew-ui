@@ -1,5 +1,3 @@
-import { PropType } from 'vue'
-
 export type UploadStatus = 'ready' | 'uploading' | 'success' | 'fail'
 
 export interface UploadRawFile extends File {

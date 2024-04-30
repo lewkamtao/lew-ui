@@ -1,5 +1,5 @@
 <script lang="ts" setup name="dialog">
-import { LewButton, LewIcon, LewFlex } from 'lew-ui'
+import { LewButton, LewFlex } from 'lew-ui'
 import { useMagicKeys } from '@vueuse/core'
 import { dialogProps } from './props'
 import { getStatusIcon } from 'lew-ui/utils'

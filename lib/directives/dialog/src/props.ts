@@ -1,8 +1,9 @@
-import { ExtractPropTypes } from 'vue'
+import { ExtractPropTypes, PropType } from 'vue'
+import type { ButtonColor } from 'lew-ui'
 
 export const dialogProps = {
   type: {
-    type: String,
+    type: String as PropType<ButtonColor>,
     default: '',
     description: '类型'
   },

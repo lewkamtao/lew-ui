@@ -3,7 +3,6 @@ import { reactive, ref, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
 import { URL } from 'url'
 import LewUpload from '../src/LewUpload'
-import { UploadFile } from '../src/upload.type'
 
 const getMockFile = (element: Element, files: File[]): void => {
   Object.defineProperty(element, 'files', {

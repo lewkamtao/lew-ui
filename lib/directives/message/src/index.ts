@@ -40,9 +40,7 @@ const showMessage = ({ type, e }: MessageOptions) => {
     LewMessage.timer[e.id] = setTimeout(() => {
       messageElement.setAttribute('class', `message message-${type} message-hidden`)
       setTimeout(() => {
-        try {
-          if (messageElement) messageContainer?.removeChild(messageElement)
-        } catch {}
+        if (messageElement) messageContainer?.removeChild(messageElement)
       }, 350)
     }, e.duration || 3000)
   }, 10)

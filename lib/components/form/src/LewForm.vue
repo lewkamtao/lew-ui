@@ -299,7 +299,7 @@ const getNestedFieldValue = (obj: any, field: string) => {
   const keys = field.split('.') // 将字符串的嵌套字段按照 '.' 分割成数组
   let value = obj
   for (const key of keys) {
-    if (value && value.hasOwnProperty(key)) {
+    if (value && Object.prototype.hasOwnProperty.call(value, key)) {
       value = value[key]
     } else {
       return undefined // 如果找不到字段，返回 undefined
