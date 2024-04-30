@@ -196,11 +196,8 @@
   --lew-notification-bgcolor: rgba(255, 255, 255, 1);
   // popover
   --lew-popover-border: 1px rgb(204, 204, 216) solid;
-  --lew-popover-box-shadow: 0 18px 36px #0000001e;
-  --lew-tooltip-box-left-shadow: 4px 0px 10px #00000027;
-  --lew-tooltip-box-right-shadow: -4px 0px 10px #00000027;
-  --lew-tooltip-box-top-shadow: 0 4px 10px #00000027;
-  --lew-tooltip-box-bottom-shadow: 0 -4px 10px #00000027;
+  --lew-popover-box-shadow: 0 0px 30px #0000001e;
+  --lew-tooltip-shadow: 0 0px 20px #0000002c;
   // table
   --lew-table-header-bgColor: rgb(246, 246, 246);
   --lew-table-border: 1px #f6f5f8 solid;
@@ -209,8 +206,8 @@
   --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.15);
   --lew-backdrop-bg: rgba(255, 255, 255, 0.5);
   --lew-backdrop-bg-active: rgba(0, 0, 0, 0.05);
-  --lew-tooltip-bg: #000;
-  --lew-tooltip-color: #fff;
+  --lew-tooltip-bg: #fff;
+  --lew-tooltip-color: #000;
 }
 
 .lew-dark {
@@ -390,6 +387,6 @@
   --lew-radio-color-light: var(--lew-color-primary-light);
   --lew-backdrop-bg: rgba(17, 18, 20, 0.75);
   --lew-backdrop-bg-active: rgba(255, 255, 255, 0.05);
-  --lew-tooltip-bg: #eaeaea;
-  --lew-tooltip-color: #000;
+  --lew-tooltip-bg: #43444a;
+  --lew-tooltip-color: #fff;
 }

@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { DemoAvatar1, DemoAvatar2, DemoAvatar1Code, DemoAvatar2Code } from './demo'
+import {
+  DemoAvatar1,
+  DemoAvatar2,
+  DemoAvatar3,
+  DemoAvatar1Code,
+  DemoAvatar2Code,
+  DemoAvatar3Code
+} from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
@@ -24,6 +31,9 @@ const options = ref(
     </lew-demo-box>
     <lew-demo-box title="状态" :code="DemoAvatar2Code">
       <demo-avatar2 />
+    </lew-demo-box>
+    <lew-demo-box title="加载失败" :code="DemoAvatar3Code">
+      <demo-avatar3 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>

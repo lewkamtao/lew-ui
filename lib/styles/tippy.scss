@@ -6,6 +6,7 @@
   .tippy-content {
     padding: 0px;
     box-sizing: border-box !important;
+    word-wrap: break-word;
   }
 }
 
@@ -19,17 +20,38 @@
 .tippy-box[data-lew~='tooltip'] {
   background-color: var(--lew-tooltip-bg) !important;
   color: var(--lew-tooltip-color) !important;
+  box-shadow: none !important;
+  filter: drop-shadow(var(--lew-tooltip-shadow));
   .tippy-content {
     padding: 6px 10px;
     font-size: 14px;
+    max-height: 300px;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+      background-color: var(--lew-bgcolor-2);
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: var(--lew-bgcolor-6);
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: var(--lew-bgcolor-4);
+    }
+    /* 修改滚动条角的颜色为蓝色 */
+    &::-webkit-scrollbar-corner {
+      background-color: var(--lew-bgcolor-0);
+    }
+    .scrollbar-corner {
+      background-color: var(--lew-bgcolor-0);
+    }
   }
+
   .tippy-svg-arrow {
     fill: var(--lew-tooltip-bg) !important;
   }
-}
-
-.tippy-box[data-lew~='tooltip'] {
-  box-shadow: none !important;
 }
 
 .tippy-box[data-placement^='top'] > .tippy-svg-arrow {

@@ -94,6 +94,7 @@ const getClassNames = computed(() => {
 let width = 0
 const check = () => {
   if (!instance) {
+    init()
     return
   }
   const element = textTrimRef.value
@@ -117,7 +118,9 @@ const check = () => {
 }
 
 onMounted(() => {
-  init()
+  nextTick(() => {
+    init()
+  })
 })
 </script>
 

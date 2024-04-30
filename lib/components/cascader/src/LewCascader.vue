@@ -253,8 +253,8 @@ const getCascaderViewClassName = computed(() => {
 // 获取图标大小
 const getIconSize = computed(() => {
   const size: Record<string, number> = {
-    small: 13,
-    medium: 14,
+    small: 14,
+    medium: 15,
     large: 16
   }
   return size[props.size]
@@ -341,7 +341,7 @@ defineExpose({ show, hide })
             v-if="!(clearable && getLabel && getLabel.length > 0)"
             :size="getIconSize"
             type="chevron-down"
-            class="icon-cascader"
+            class="icon-select"
           />
         </transition>
 
@@ -483,19 +483,20 @@ defineExpose({ show, hide })
     user-select: none;
     box-sizing: border-box;
 
-    .icon-cascader {
+    .icon-select {
       position: absolute;
       top: 50%;
-      right: 7px;
+      right: 9px;
       transform: translateY(-50%) rotate(0deg);
       transition: var(--lew-form-transition);
+      padding: 2px;
     }
 
-    .icon-cascader {
+    .icon-select {
       opacity: var(--lew-form-icon-opacity);
     }
 
-    .icon-cascader-hide {
+    .icon-select-hide {
       opacity: 0;
       transform: translate(100%, -50%);
     }
@@ -587,12 +588,12 @@ defineExpose({ show, hide })
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
   outline: var(--lew-form-ouline);
 
-  .icon-cascader {
+  .icon-select {
     transform: translateY(-50%) rotate(180deg);
     color: var(--lew-text-color-1);
   }
 
-  .icon-cascader-hide {
+  .icon-select-hide {
     opacity: 0;
     transform: translate(100%, -50%) rotate(180deg);
   }
