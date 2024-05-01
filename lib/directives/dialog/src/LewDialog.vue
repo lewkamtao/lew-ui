@@ -199,23 +199,23 @@ if (props.closeByEsc) {
     }
 
     .lew-dialog-icon-success {
-      color: var(--lew-color-success-dark);
+      color: var(--lew-color-success);
     }
 
     .lew-dialog-icon-warning {
-      color: var(--lew-color-warning-dark);
+      color: var(--lew-color-warning);
     }
 
     .lew-dialog-icon-normal {
-      color: var(--lew-color-normal-dark);
+      color: var(--lew-color-normal);
     }
 
     .lew-dialog-icon-info {
-      color: var(--lew-color-info-dark);
+      color: var(--lew-color-info);
     }
 
     .lew-dialog-icon-error {
-      color: var(--lew-color-error-dark);
+      color: var(--lew-color-error);
     }
 
     header {
