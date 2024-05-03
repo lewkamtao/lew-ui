@@ -52,6 +52,11 @@ export const treeSelectProps = {
     default: 'medium',
     description: '尺寸，可选值为 small、medium、large'
   },
+  showAllLevels: {
+    type: Boolean,
+    default: true,
+    description: '是否展示所有层级'
+  },
   searchable: {
     type: Boolean,
     default: false,

@@ -84,10 +84,16 @@ const getValueStyle = computed(() => {
 const findKeyword = () => {
   if (lewTreeRef.value) {
     const treeList = lewTreeRef.value.getTreeList()
-    state.keyword = treeList.find((e: TreeDataSource) => {
+    const treeItem = treeList.find((e: TreeDataSource) => {
       // @ts-ignore
       return e[props.keyField] === treeSelectValue.value
-    })?.[props.labelField]
+    })
+
+    if (props.showAllLevels) {
+      state.keyword = treeItem.labelPaths.join(' / ')
+    } else {
+      state.keyword = treeItem.label
+    }
   }
   return treeSelectValue.value
 }
