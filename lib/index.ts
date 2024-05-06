@@ -30,9 +30,8 @@ const install = function (Vue: App): void {
 
   _components.forEach((component: any) => {
     if (
-      (Object.prototype.hasOwnProperty.call(component, 'name') ||
-        Object.prototype.hasOwnProperty.call(component, '__name')) &&
-      Object.prototype.hasOwnProperty.call(component, 'render')
+      Object.prototype.hasOwnProperty.call(component, 'name') ||
+      Object.prototype.hasOwnProperty.call(component, '__name')
     ) {
       Vue.component(`${component.name || component.__name}`, component)
     }
