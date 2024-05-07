@@ -605,7 +605,9 @@ defineExpose({ show, hide })
     height: auto;
     box-sizing: border-box;
     transition: all 0.25s ease;
-
+    margin-top: -4px;
+    margin-bottom: -4px;
+	
     .lew-select-item-mul {
       position: relative;
       display: inline-flex;
@@ -618,6 +620,7 @@ defineExpose({ show, hide })
       color: var(--lew-text-color-1);
       box-sizing: border-box;
       border-radius: 6px;
+      margin-top: 2px;
 
       .lew-select-checkbox {
         position: absolute;

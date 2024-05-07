@@ -472,8 +472,8 @@ defineExpose({ show, hide })
     height: auto;
     box-sizing: border-box;
     transition: all 0.25s ease;
-    margin-top: -2px;
-    margin-bottom: -2px;
+    margin-top: -4px;
+    margin-bottom: -4px;
 
     .lew-select-item {
       position: relative;
@@ -489,6 +489,7 @@ defineExpose({ show, hide })
       box-sizing: border-box;
       border-radius: 6px;
       height: 30px;
+      margin-top: 2px;
     }
 
     .lew-select-item-disabled {
