@@ -14,7 +14,7 @@ const imgSrc = computed(() => {
 const dotClassName = computed(() => {
   return object2class('dot', {
     status: props.status,
-    statusPosition: props.statusPosition
+    statusPlacement: props.statusPlacement
   })
 })
 

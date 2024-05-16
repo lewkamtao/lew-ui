@@ -260,19 +260,6 @@ const getIconSize = computed(() => {
   return size[props.size]
 })
 
-const getTextTrimOffset = computed(() => {
-  switch (props.size) {
-    case 'small':
-      return [-15, 12]
-    case 'medium':
-      return [-14, 12]
-    case 'large':
-      return [-14, 12]
-    default:
-      return [-14, 12]
-  }
-})
-
 // 展示
 const showHandle = () => {
   state.visible = true
@@ -360,7 +347,7 @@ defineExpose({ show, hide })
 
         <div v-show="getLabel && getLabel.length > 0" :style="getValueStyle" class="value">
           <template v-if="showAllLevels">
-            <lew-text-trim :offset="getTextTrimOffset" :text="getLabel.join(' / ')" />
+            <lew-text-trim :text="getLabel.join(' / ')" />
           </template>
           <template v-else-if="getLabel">
             <span>{{ getLabel[getLabel.length - 1] }}</span>
@@ -411,7 +398,9 @@ defineExpose({ show, hide })
                         : state.activelabels.includes(templateProps.label),
                       'lew-cascader-item-tobe': state.tobelabels.includes(templateProps.label),
                       'lew-cascader-item-selected':
-                        getLabel && getLabel.includes(templateProps.label)
+                        getLabel &&
+                        getLabel.includes(templateProps.label) &&
+                        state.tobelabels.includes(templateProps.label)
                     }"
                     @click="selectItem(templateProps, oIndex)"
                   >

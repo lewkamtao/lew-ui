@@ -83,7 +83,7 @@ const options = [
   }
 ]
 
-const v = ref()
+const v = ref<string>('')
 
 const change = (e: any) => {
   console.log(e)
@@ -104,6 +104,7 @@ const change = (e: any) => {
       v-model="v"
       keyField="value"
       size="medium"
+      searchable
       labelField="label"
       :data-source="options"
       @change="change"

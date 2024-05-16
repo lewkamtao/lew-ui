@@ -58,7 +58,7 @@ const onload = (item?: any) => {
 const change = (item: any) => {
   console.log(item)
 }
-const v = ref([])
+const v = ref<string>('')
 </script>
 
 <template>

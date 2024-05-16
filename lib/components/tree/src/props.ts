@@ -98,5 +98,11 @@ export const treeProps = {
     type: Function as PropType<(item: TreeDataSource) => void> | undefined,
     default: undefined,
     description: '异步加载数据'
+  },
+  isSelect: {
+    type: Boolean,
+    default: false,
+    hidden: true,
+    description: '选择器模型'
   }
 }

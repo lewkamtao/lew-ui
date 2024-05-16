@@ -1,18 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 
-type AvatarPosition =
-  | 'top'
-  | 'left'
-  | 'right'
-  | 'bottom'
-  | 'top-left'
-  | 'top-right'
-  | 'bottom-left'
-  | 'bottom-right'
-  | 'left-top'
-  | 'left-bottom'
-  | 'right-top'
-  | 'right-bottom'
+type AvatarPlacement = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 
 type AvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy'
 
@@ -27,10 +15,10 @@ export const avatarProps = {
     default: '',
     description: '状态'
   },
-  statusPosition: {
-    type: String as PropType<AvatarPosition>,
+  statusPlacement: {
+    type: String as PropType<AvatarPlacement>,
     default: 'top-right',
-    description: '位置'
+    description: '状态位置'
   },
   width: {
     type: [Number, String],

@@ -4,7 +4,7 @@ import { LewPopover, LewTree, LewIcon, LewTooltip } from 'lew-ui'
 import type { TreeDataSource } from '../../tree'
 import { object2class, numFormat } from 'lew-ui/utils'
 import { treeSelectProps } from './props'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, isString } from 'lodash-es'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -15,20 +15,25 @@ const props = defineProps(treeSelectProps)
 const emit = defineEmits(['change', 'blur', 'clear'])
 const treeSelectValue: Ref<string | undefined> = defineModel()
 
+// 校验 Model
+if (!isString(treeSelectValue.value)) {
+  throw new Error('tree-select modelValue must be a string')
+}
+
 const lewSelectRef = ref()
 const inputRef = ref()
 const lewPopverRef = ref()
 const lewTreeRef = ref()
 
 const state = reactive({
-  selectWidth: 0,
-  visible: false,
-  loading: false,
-  initLoading: true,
-  treeList: [],
+  selectWidth: 0, // 选择框宽度
+  visible: false, // 弹出框是否显示
+  searchLoading: false, // 树加载
+  initLoading: true, // 初始化 loading
+  treeList: [], // 树列表
   hideBySelect: false, // 记录是否通过选择隐藏
-  keyword: props.defaultValue || (treeSelectValue.value as any),
-  keywordBackup: props.defaultValue as any
+  keyword: props.defaultValue || (treeSelectValue.value as any), // 搜索关键字
+  keywordBackup: props.defaultValue as any // 搜索关键字备份
 })
 
 const getSelectWidth = () => {
@@ -48,12 +53,13 @@ const searchDebounce = useDebounceFn(async (e: any) => {
 }, props.searchDelay)
 
 const search = async (e: any) => {
-  state.loading = true
   const keyword = e.target.value
   if (props.searchable) {
-    state.treeList = lewTreeRef.value.init(keyword)
+    state.searchLoading = true
+    await lewTreeRef.value.init(keyword)
+    state.treeList = lewTreeRef.value.getTreeList()
+    state.searchLoading = false
   }
-  state.loading = false
 }
 
 const change = ({ item }: { item: TreeDataSource }) => {
@@ -82,21 +88,22 @@ const getValueStyle = computed(() => {
 })
 
 const findKeyword = () => {
-  if (lewTreeRef.value) {
-    const treeList = lewTreeRef.value.getTreeList()
-    const treeItem = treeList.find((e: TreeDataSource) => {
+  if (lewTreeRef.value && treeSelectValue.value) {
+    state.treeList = lewTreeRef.value.getTreeList()
+    const treeItem: any = state.treeList.find((e: TreeDataSource) => {
       // @ts-ignore
       return e[props.keyField] === treeSelectValue.value
     })
-
-    if (props.showAllLevels) {
-      state.keyword = treeItem.labelPaths.join(' / ')
-    } else {
-      state.keyword = treeItem.label
+    if (treeItem !== undefined) {
+      if (props.showAllLevels && treeItem.labelPaths && treeItem.labelPaths.length > 0) {
+        state.keyword = treeItem.labelPaths.join(' / ')
+      } else {
+        state.keyword = treeItem.label[0]
+      }
     }
   }
-  return treeSelectValue.value
 }
+
 findKeyword()
 
 const getSelectClassName = computed(() => {
@@ -138,15 +145,19 @@ const showHandle = () => {
   }
   state.hideBySelect = false // 重置
   getSelectWidth()
-  if (props.searchable) {
+  if (props.searchable && state.treeList.length === 0) {
     search({ target: { value: '' } })
   }
 }
 
 const hideHandle = () => {
   state.visible = false
-  if (!state.hideBySelect) {
+  if (!state.hideBySelect && treeSelectValue.value) {
     findKeyword()
+  }
+  if (!treeSelectValue.value && state.keyword) {
+    state.keyword = ''
+    state.keywordBackup = ''
   }
   inputRef.value.blur()
   emit('blur')
@@ -158,6 +169,12 @@ watch(
     findKeyword()
   }
 )
+
+const searchCount = computed(() => {
+  return state.treeList.filter((e: TreeDataSource) => {
+    return e.level === 0
+  }).length
+})
 
 defineExpose({ show, hide })
 </script>
@@ -173,7 +190,7 @@ defineExpose({ show, hide })
     placement="bottom-start"
     style="width: 100%"
     :offset="[-1, 10]"
-    :loading="state.loading"
+    :loading="state.searchLoading"
     @show="showHandle"
     @hide="hideHandle"
   >
@@ -210,9 +227,7 @@ defineExpose({ show, hide })
           class="value"
           :style="getValueStyle"
           :readonly="!searchable"
-          :placeholder="
-            state.initLoading ? '数据初始化中···' : state.keywordBackup || props.placeholder
-          "
+          :placeholder="state.keywordBackup || props.placeholder"
           @input="searchDebounce"
         />
       </div>
@@ -228,7 +243,7 @@ defineExpose({ show, hide })
         <div class="lew-select-options-box">
           <div v-if="searchable && (state.treeList || []).length > 0" class="reslut-count">
             共
-            {{ numFormat((state.treeList || []).length) }}
+            {{ numFormat(searchCount) }}
             条结果
           </div>
           <div class="tree-select-wrapper lew-scrollbar">
@@ -244,9 +259,10 @@ defineExpose({ show, hide })
                 dataSource,
                 onload,
                 initTree,
-                expandAll: expandAll
+                expandAll
               }"
-              @initSuccess="state.initLoading = false"
+              :is-select="true"
+              @init-end="state.initLoading = false"
               @change="change"
             >
               <template v-if="$slots.empty" #empty>
@@ -331,6 +347,8 @@ defineExpose({ show, hide })
       outline: none;
       background: none;
       cursor: pointer;
+      overflow: hidden;
+      text-overflow: ellipsis;
       color: var(--lew-text-color-1);
     }
 
@@ -439,7 +457,7 @@ defineExpose({ show, hide })
   width: 100%;
   box-sizing: border-box;
   .tree-select-wrapper {
-    padding: 3px 0px;
+    padding: 5px 0px;
     max-height: 320px;
     overflow: auto;
   }

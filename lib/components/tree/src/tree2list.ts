@@ -131,26 +131,26 @@ export const tree2List = async ({
     }
   } else if (dataSource && dataSource.length > 0) {
     tree = formatTree({ dataSource, keyField, labelField, free })
-    if (keyword) {
-      const _tree: TreeDataSource[] = []
-      const filterTree = (node: TreeDataSource[]) => {
-        for (let i = 0; i < node.length; i++) {
-          const { labelPaths, children } = node[i]
-          if (some(labelPaths, (label: string) => label.includes(keyword))) {
-            _tree.push(node[i])
-          } else if (children) {
-            filterTree(children || [])
-          }
+  }
+  if (keyword) {
+    const _tree: TreeDataSource[] = []
+    const filterTree = (node: TreeDataSource[]) => {
+      for (let i = 0; i < node.length; i++) {
+        const { labelPaths, children } = node[i]
+        if (some(labelPaths, (label: string) => label.includes(keyword))) {
+          _tree.push(node[i])
+        } else if (children) {
+          filterTree(children || [])
         }
       }
-      filterTree(tree)
-      tree = formatTree({
-        dataSource: _tree,
-        keyField,
-        labelField,
-        free
-      })
     }
+    filterTree(tree)
+    tree = formatTree({
+      dataSource: _tree,
+      keyField,
+      labelField,
+      free
+    })
   }
   return {
     newTree: tree,

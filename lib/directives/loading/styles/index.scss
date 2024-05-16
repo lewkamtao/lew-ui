@@ -40,9 +40,7 @@
   }
 }
 
-.lew-loading-show {
-  .lew-loading-wrapper {
-    opacity: 1;
-    z-index: 99;
-  }
+.lew-loading-show > .lew-loading-wrapper {
+  opacity: 1;
+  z-index: 99;
 }

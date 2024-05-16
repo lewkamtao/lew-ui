@@ -2,16 +2,7 @@
 import { LewFlex, LewIcon, LewEmpty, LewLoading } from 'lew-ui'
 import { treeProps } from './props'
 import type { TreeDataSource } from './props'
-import {
-  forEach,
-  cloneDeep,
-  isFunction,
-  isArray,
-  findIndex,
-  difference,
-  uniq,
-  intersection
-} from 'lodash-es'
+import { forEach, cloneDeep, isArray, findIndex, difference, uniq, intersection } from 'lodash-es'
 import { tree2List } from './tree2list'
 
 // 获取app
@@ -19,9 +10,8 @@ const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('loading')) {
   app.use(LewLoading)
 }
-
 const props = defineProps(treeProps)
-const emit = defineEmits(['change', 'initSuccess'])
+const emit = defineEmits(['change', 'initStart', 'initEnd'])
 
 // 定义异步处理函数
 const modelValue: Ref<string | (string | number)[] | undefined> = defineModel({
@@ -33,41 +23,34 @@ const expandedKeys: Ref<(string | number)[] | undefined> = defineModel('expanded
 })
 const certainKeys: any = ref<string[]>([])
 const loadingKeys = ref<string[]>([])
-const loading = ref<boolean>(true)
+const loading = ref<boolean>(false)
 const treeList: any = ref<TreeDataSource[]>([])
 
 // 初始化
 let treeBackup: TreeDataSource[] = []
 const init = async (keyword = '') => {
   let _treeList = []
-  const { dataSource, initTree, keyField, labelField, free } = props
-  if (isFunction(initTree)) {
-    const { newTreeList, newTree }: any = (await tree2List({
-      initTree,
-      keyField,
-      labelField,
-      free,
-      keyword
-    })) as any
-    treeBackup = newTree
-    _treeList = newTreeList
-  } else if (dataSource && dataSource.length > 0) {
-    const { newTreeList, newTree }: any = (await tree2List({
-      dataSource,
-      keyField,
-      labelField,
-      free,
-      keyword
-    })) as any
-    treeBackup = newTree
-    _treeList = newTreeList
+  if (!props.isSelect) {
+    loading.value = true
   }
+  emit('initStart')
+  const { dataSource, initTree, keyField, labelField, free } = props
+  const { newTreeList, newTree }: any = (await tree2List({
+    initTree,
+    dataSource,
+    keyField,
+    labelField,
+    free,
+    keyword
+  })) as any
+  treeBackup = newTree
+  _treeList = newTreeList
   treeList.value = _treeList
   expandedKeys.value = []
   certainKeys.value = []
   loadingKeys.value = []
   loading.value = false
-  emit('initSuccess')
+  emit('initEnd')
   return _treeList
 }
 init()
@@ -190,7 +173,7 @@ defineExpose({ init, getTreeList })
 
 <template>
   <div
-    v-loading="{ visible: loading, tip: '加载中' }"
+    v-loading="{ visible: loading }"
     :style="{
       minHeight: loading ? '250px' : ''
     }"

@@ -87,7 +87,7 @@ const options = [
   }
 ]
 
-const v = ref()
+const v = ref<string>('')
 
 const change = (e: any) => {
   console.log(e)
