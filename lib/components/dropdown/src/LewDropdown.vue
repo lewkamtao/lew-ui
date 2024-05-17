@@ -69,7 +69,9 @@ defineExpose({ show, hide })
   box-sizing: border-box;
   gap: 4px;
   .lew-dropdown-option {
-    padding: 4px 10px;
+    padding: 0px 12px;
+    height: 30px;
+    line-height: 30px;
     font-size: 14px;
     border-radius: 6px;
     color: var(--lew-text-color-1);
