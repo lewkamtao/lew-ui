@@ -285,29 +285,27 @@ onUnmounted(() => {
     transition: all 0.15s cubic-bezier(0.65, 0, 0.35, 1);
   }
 }
-
+.lew-tabs-type-line {
+  height: auto !important;
+}
 .lew-tabs-size-small {
-  height: 28px;
+  height: var(--lew-form-item-height-small);
 
   .lew-tabs-item {
     padding: var(--lew-form-input-padding-small);
     font-size: var(--lew-form-font-size-small);
   }
 }
-
 .lew-tabs-size-medium {
-  height: 32px;
+  height: var(--lew-form-item-height-medium);
 
   .lew-tabs-item {
     padding: var(--lew-form-input-padding-medium);
     font-size: 14px;
   }
 }
-.lew-tabs-type-line {
-  height: auto !important;
-}
 .lew-tabs-size-large {
-  height: 34px;
+  height: var(--lew-form-item-height-large);
 
   .lew-tabs-item {
     padding: var(--lew-form-input-padding-large);

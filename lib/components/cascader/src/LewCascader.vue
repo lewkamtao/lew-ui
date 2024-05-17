@@ -377,16 +377,16 @@ defineExpose({ show, hide })
               class="lew-cascader-item-warpper lew-scrollbar-hover"
               :list="oItem"
               :options="{
-                itemHeight: 30
+                itemHeight: 38
               }"
-              :height="30 * oItem.length"
+              :height="38 * oItem.length"
               :style="{
                 zIndex: 20 - oIndex,
                 transform: oItem.length > 0 ? `translateX(${180 * oIndex}px)` : ''
               }"
             >
               <template #default="{ data: templateProps }">
-                <div class="lew-cascader-item-padding">
+                <div class="lew-cascader-item-padding" :style="{ height: 38 + 'px' }">
                   <div
                     class="lew-cascader-item"
                     :class="{
@@ -649,27 +649,6 @@ defineExpose({ show, hide })
   transition: var(--lew-form-transition);
   user-select: none;
 
-  .search-input {
-    margin-bottom: 5px;
-
-    input {
-      outline: none;
-      border: none;
-      background-color: var(--lew-bgcolor-1);
-      width: 100%;
-      height: 30px;
-      border-radius: var(--lew-border-radius-small);
-      padding: 0px 10px;
-      box-sizing: border-box;
-      color: var(--lew-form-color);
-      transition: var(--lew-form-transition);
-    }
-
-    input:focus {
-      background-color: var(--lew-form-bgcolor);
-    }
-  }
-
   .not-found {
     opacity: 0.4;
   }
@@ -688,27 +667,19 @@ defineExpose({ show, hide })
 
     .lew-cascader-item-warpper {
       position: absolute;
-      left: 0px;
-      top: 2px;
       overflow-y: scroll;
       height: 100%;
       width: 180px;
-      padding-left: 5px;
+      padding: 5px 5px 0px 5px;
       border-right: var(--lew-popover-border);
-      padding: 5px;
       box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
       gap: 4px;
-      margin-top: -4px;
     }
 
     .lew-cascader-item-warpper:last-child {
       border-right: 0px var(--lew-form-border-color) solid;
     }
-    .lew-cascader-item-padding {
-      padding: 2px 0px;
-    }
+
     .lew-cascader-item {
       position: relative;
       display: inline-flex;
@@ -722,11 +693,9 @@ defineExpose({ show, hide })
       cursor: pointer;
       color: var(--lew-text-color-1);
       box-sizing: border-box;
-      border-radius: 6px;
-      height: 30px;
-      padding: 0px 10px;
+      border-radius: var(--lew-border-radius-small);
+      height: 34px;
       flex-shrink: 0;
-
       .lew-cascader-icon {
         position: absolute;
         right: 2px;
@@ -755,10 +724,11 @@ defineExpose({ show, hide })
         white-space: nowrap;
         text-overflow: ellipsis;
         box-sizing: border-box;
+        padding: 0px 12px;
       }
 
       .lew-cascader-label-free {
-        padding: 0px 8px 0px 25px;
+        padding: 0px 8px 0px 35px;
       }
     }
 

@@ -487,8 +487,8 @@ defineExpose({ show, hide })
       cursor: pointer;
       color: var(--lew-text-color-1);
       box-sizing: border-box;
-      border-radius: 6px;
-      height: 30px;
+      border-radius: var(--lew-border-radius-small);
+      height: 34px;
       margin-top: 2px;
     }
 
@@ -513,7 +513,7 @@ defineExpose({ show, hide })
       width: 100%;
       user-select: none;
       font-size: 14px;
-      padding: 0px 8px;
+      padding: 0px 12px;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -527,7 +527,7 @@ defineExpose({ show, hide })
 
     .lew-select-slot-item {
       width: 100%;
-      border-radius: 6px;
+      border-radius: var(--lew-border-radius-small);
     }
 
     .lew-select-slot-item:hover {

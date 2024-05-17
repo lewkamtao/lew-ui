@@ -19,13 +19,13 @@ const getIconSize = computed(() => {
   const { size, block } = props
   switch (size) {
     case 'small':
-      return block ? 9 : 7
+      return block ? 10 : 8
     case 'medium':
-      return block ? 11 : 9
+      return block ? 12 : 10
     case 'large':
-      return block ? 13 : 11
+      return block ? 14 : 12
     default:
-      return block ? 11 : 9
+      return block ? 12 : 10
   }
 })
 
@@ -102,9 +102,9 @@ const getCheckboxClassName = computed(() => {
   font-size: 13px;
 
   .icon-checkbox-box {
-    width: 14px;
-    height: 14px;
-    border-radius: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 6px;
   }
 }
 
@@ -112,9 +112,9 @@ const getCheckboxClassName = computed(() => {
   font-size: 14px;
 
   .icon-checkbox-box {
-    width: 16px;
-    height: 16px;
-    border-radius: 5px;
+    width: 18px;
+    height: 18px;
+    border-radius: 7px;
   }
 }
 
@@ -122,9 +122,9 @@ const getCheckboxClassName = computed(() => {
   font-size: 15px;
 
   .icon-checkbox-box {
-    width: 18px;
-    height: 18px;
-    border-radius: 6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 8px;
   }
 }
 
@@ -133,6 +133,19 @@ const getCheckboxClassName = computed(() => {
   .lew-checkbox-label {
     margin-left: 0px;
   }
+}
+
+.lew-checkbox-size-small.lew-checkbox-block {
+  height: var(--lew-form-item-height-small);
+  padding: 3px 8px 3px 7px;
+}
+.lew-checkbox-size-medium.lew-checkbox-block {
+  height: var(--lew-form-item-height-medium);
+  padding: 3px 10px 3px 8px;
+}
+.lew-checkbox-size-large.lew-checkbox-block {
+  height: var(--lew-form-item-height-large);
+  padding: 3px 12px 3px 9px;
 }
 
 .lew-checkbox-unicon.lew-checkbox-checked.lew-checkbox-block {
@@ -151,7 +164,6 @@ const getCheckboxClassName = computed(() => {
 
 .lew-checkbox-block {
   background: var(--lew-checkbox-block-color);
-  padding: 3px 8px 3px 4px;
   border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
   border-radius: var(--lew-border-radius-small);
   .icon-checkbox-box {

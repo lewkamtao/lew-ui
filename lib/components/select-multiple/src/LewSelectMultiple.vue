@@ -239,10 +239,10 @@ defineExpose({ show, hide })
         <template v-if="getLabels && getLabels.length > 0">
           <lew-flex
             v-if="valueLayout === 'tag'"
-            style="padding: 3px"
+            style="padding: 5px"
             x="start"
             y="center"
-            :gap="3"
+            :gap="5"
             wrap
             class="value"
           >
@@ -466,7 +466,7 @@ defineExpose({ show, hide })
     .lew-select-multiple-text-value {
       font-size: var(--lew-form-font-size-small);
       line-height: var(--lew-form-item-height-small);
-      margin-left: 8px;
+      margin-left: 10px;
     }
     .lew-select-multiple-text-value {
       padding-right: 26px;
@@ -480,7 +480,7 @@ defineExpose({ show, hide })
     .lew-select-multiple-text-value {
       font-size: var(--lew-form-font-size-medium);
       line-height: var(--lew-form-item-height-medium);
-      margin-left: 10px;
+      margin-left: 12px;
     }
     .lew-select-multiple-text-value {
       padding-right: 28px;
@@ -494,7 +494,7 @@ defineExpose({ show, hide })
     .lew-select-multiple-text-value {
       font-size: var(--lew-form-font-size-large);
       line-height: var(--lew-form-item-height-large);
-      margin-left: 12px;
+      margin-left: 14px;
     }
     .lew-select-multiple-text-value {
       padding-right: 30px;
@@ -579,7 +579,7 @@ defineExpose({ show, hide })
       border: none;
       background-color: var(--lew-bgcolor-2);
       width: 100%;
-      height: 30px;
+      height: 32px;
       border-radius: var(--lew-border-radius-small);
       padding: 0px 10px;
       box-sizing: border-box;
@@ -607,7 +607,7 @@ defineExpose({ show, hide })
     transition: all 0.25s ease;
     margin-top: -4px;
     margin-bottom: -4px;
-	
+
     .lew-select-item-mul {
       position: relative;
       display: inline-flex;
@@ -619,7 +619,6 @@ defineExpose({ show, hide })
       cursor: pointer;
       color: var(--lew-text-color-1);
       box-sizing: border-box;
-      border-radius: 6px;
       margin-top: 2px;
 
       .lew-select-checkbox {
@@ -655,17 +654,6 @@ defineExpose({ show, hide })
 
     .lew-select-item-align-right {
       text-align: right;
-    }
-
-    .lew-select-label {
-      width: 100%;
-      user-select: none;
-      font-size: 14px;
-      padding: 0px 8px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      box-sizing: border-box;
     }
 
     .lew-select-item:hover {

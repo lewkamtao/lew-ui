@@ -8,7 +8,7 @@ const total = ref(100)
 </script>
 
 <template>
-  <div>
+  <lew-flex direction="y" x="start" gap="24px">
     <lew-pagination
       v-model:current-page="pageNum"
       :pageSize="pageSize"
@@ -33,8 +33,6 @@ const total = ref(100)
         <div style="margin-left: 20px">共 {{ total }} 条</div>
       </template>
     </lew-pagination>
-  </div>
-  <div>
     <lew-pagination
       v-model:current-page="pageNum"
       :pageSize="pageSize"
@@ -60,5 +58,5 @@ const total = ref(100)
         <div style="margin-left: 20px">共 {{ total }} 条</div>
       </template>
     </lew-pagination>
-  </div>
+  </lew-flex>
 </template>

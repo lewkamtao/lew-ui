@@ -81,7 +81,6 @@ const getStyle = computed(() => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--lew-border-radius-mini);
   user-select: none;
   box-sizing: border-box;
   overflow: hidden;
@@ -135,6 +134,7 @@ const getStyle = computed(() => {
   line-height: 20px;
   padding: 0px;
   font-size: 11px;
+  border-radius: 5px;
 
   .lew-tag-close {
     margin-left: -2px;
@@ -161,6 +161,7 @@ const getStyle = computed(() => {
   line-height: 24px;
   padding: 0px 2px;
   font-size: 13px;
+  border-radius: 6px;
 
   .lew-tag-close {
     margin-left: -3px;
@@ -179,6 +180,7 @@ const getStyle = computed(() => {
   line-height: 28px;
   padding: 0px 4px;
   font-size: 15px;
+  border-radius: 8px;
 
   .lew-tag-close {
     margin-left: -4px;

@@ -47,7 +47,7 @@ export const selectMultipleProps = {
   },
   itemHeight: {
     type: Number,
-    default: 34,
+    default: 38,
     description: '选项高度，单位 px，没用插槽时无需设置，用于计算虚拟列表的高度'
   },
   searchable: {

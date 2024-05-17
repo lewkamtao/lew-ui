@@ -253,7 +253,7 @@ const getStyle = computed(() => {
   min-width: 50px;
   height: var(--lew-form-item-height-small);
   line-height: var(--lew-form-item-height-small);
-  padding: 0px 8px;
+  padding: 0px 14px;
   font-size: var(--lew-form-font-size-small);
   gap: 4px;
   .lew-button-content {
@@ -267,7 +267,7 @@ const getStyle = computed(() => {
   min-width: 60px;
   height: var(--lew-form-item-height-medium);
   line-height: var(--lew-form-item-height-medium);
-  padding: 0px 14px;
+  padding: 0px 16px;
   font-size: var(--lew-form-font-size-medium);
   gap: 6px;
   .lew-button-content {
@@ -281,7 +281,7 @@ const getStyle = computed(() => {
   min-width: 70px;
   height: var(--lew-form-item-height-large);
   line-height: var(--lew-form-item-height-large);
-  padding: 0px 20px;
+  padding: 0px 18px;
   font-size: var(--lew-form-font-size-large);
   gap: 8px;
   .lew-button-content {

@@ -92,7 +92,7 @@ const style = computed<CSSProperties>(() => {
     align-items: center;
     border-top: var(--lew-border-1);
     width: 100%;
-    height: 30px;
+    height: 35px;
     font-size: 14px;
     cursor: pointer;
     color: #999;
