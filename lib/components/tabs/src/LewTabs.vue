@@ -73,7 +73,7 @@ const selectItem = (value: string | number | undefined, type?: string) => {
       tabsValue.value = _item.value
     }
     initActiveItemStyle(index)
-    if (type !== 'watch') {
+    if (type !== 'watch' && value !== tabsValue.value) {
       emit('change', {
         label: _item.label,
         value: _item.value,
@@ -113,8 +113,8 @@ const getTabsClassName = computed(() => {
 
 const tabsScroll = () => {
   if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
-    if (tabsRef.value.scrollLeft > 50) {
-      if (tabsRef.value.scrollLeft >= tabsRef.value.scrollWidth - tabsRef.value.clientWidth - 50) {
+    if (tabsRef.value.scrollLeft > 5) {
+      if (tabsRef.value.scrollLeft >= tabsRef.value.scrollWidth - tabsRef.value.clientWidth - 5) {
         state.hidLine = 'right'
       } else {
         state.hidLine = ''
@@ -256,7 +256,7 @@ onUnmounted(() => {
     z-index: 9;
     box-sizing: border-box;
     border-radius: var(--lew-border-radius-small);
-    margin: 3px;
+    margin: 4px;
     color: var(--lew-text-color-1);
     white-space: nowrap;
     cursor: pointer;
@@ -270,14 +270,14 @@ onUnmounted(() => {
 
   .lew-tabs-item-animation-active {
     position: absolute;
-    top: 3px;
+    top: 4px;
     left: 0px;
-    z-index: 9;
-    height: calc(100% - 6px);
+    z-index: 7;
+    height: calc(100% - 8px);
     border-radius: 6px;
     background: var(--lew-tabs-active-color);
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.05);
-    transform: translateX(3px);
+    transform: translateX(4px);
     box-sizing: border-box;
   }
 
@@ -289,7 +289,7 @@ onUnmounted(() => {
   height: auto !important;
 }
 .lew-tabs-size-small {
-  height: var(--lew-form-item-height-small);
+  height: calc(var(--lew-form-item-height-small) + 2px);
 
   .lew-tabs-item {
     padding: var(--lew-form-input-padding-small);
@@ -297,7 +297,7 @@ onUnmounted(() => {
   }
 }
 .lew-tabs-size-medium {
-  height: var(--lew-form-item-height-medium);
+  height: calc(var(--lew-form-item-height-medium) + 2px);
 
   .lew-tabs-item {
     padding: var(--lew-form-input-padding-medium);
@@ -305,7 +305,7 @@ onUnmounted(() => {
   }
 }
 .lew-tabs-size-large {
-  height: var(--lew-form-item-height-large);
+  height: calc(var(--lew-form-item-height-large) + 2px);
 
   .lew-tabs-item {
     padding: var(--lew-form-input-padding-large);
