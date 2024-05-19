@@ -264,6 +264,7 @@ defineExpose({ show, hide })
               ref="lewPopverValueRef"
               trigger="hover"
               popoverBodyClassName="lew-select-multiple-popover-tag"
+              :offset="[-1, 10]"
               placement="top-start"
               style="width: 100%"
             >
@@ -276,7 +277,7 @@ defineExpose({ show, hide })
                 <lew-flex
                   x="start"
                   y="center"
-                  :gap="3"
+                  :gap="5"
                   wrap
                   :style="`max-width:${state.selectWidth + 12}px`"
                   class="lew-select-multiple-tag-value"
@@ -563,7 +564,7 @@ defineExpose({ show, hide })
 }
 .lew-select-multiple-popover-tag {
   .lew-select-multiple-tag-value {
-    padding: 3px;
+    padding: 5px;
     box-sizing: border-box;
   }
 }
