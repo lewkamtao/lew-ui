@@ -40,6 +40,9 @@ const style = computed<CSSProperties>(() => {
         {{ tag }}
       </lew-tag>
     </lew-title>
+    <div class="desc">
+      <slot name="desc"></slot>
+    </div>
     <div class="demo-item">
       <div class="demo-cp lew-scrollbar">
         <slot></slot>
@@ -63,7 +66,10 @@ const style = computed<CSSProperties>(() => {
 <style lang="scss">
 .demo-box {
   margin: 50px 0px 50px 0px;
-
+  .desc {
+    margin: 20px 0px;
+    color: var(--lew-text-color-5);
+  }
   .demo-item {
     margin: 10px 0px;
     background-color: var(--lew-bgcolor-0);

@@ -351,7 +351,7 @@ defineExpose({ init, getTreeList })
     cursor: pointer;
   }
   .lew-tree-item-label {
-    opacity: 0.6;
+    opacity: var(--lew-disabled-opacity);
     pointer-events: none;
   }
 }

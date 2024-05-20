@@ -739,7 +739,7 @@ defineExpose({ show, hide })
     }
 
     .lew-cascader-item-disabled {
-      opacity: 0.3;
+		opacity: var(--lew-disabled-opacity);
       pointer-events: none;
     }
 

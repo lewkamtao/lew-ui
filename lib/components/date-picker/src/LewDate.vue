@@ -8,7 +8,7 @@ import { object2class } from 'lew-ui/utils'
 import { LewFlex, LewButton } from 'lew-ui'
 
 const emit = defineEmits(['change'])
-defineProps(dateProps)
+const props = defineProps(dateProps)
 const modelValue: Ref<string | undefined> = defineModel()
 
 // 获取当前年份
@@ -72,7 +72,7 @@ const setMonthDate = () => {
 
 const selectDateFn = (item: RetItemType) => {
   const v = `${item.year}-${item.month}-${item.showDate}`
-  let _v = dayjs(v).format('YYYY-MM-DD')
+  let _v = dayjs(v).format(props.valueFormat)
   modelValue.value = _v
   emit('change', _v)
 }

@@ -179,11 +179,11 @@ const setValue = (item: RetItemType) => {
   const __date = dayjs(__dateStr)
   if (i % 2 === 0) {
     if (__date.isBefore(dayjs(hoverValue.value[startKey]))) {
-      hoverValue.value[startKey] = dayjs(__dateStr).format('YYYY-MM-DD')
-      hoverValue.value[endKey] = dayjs(startBackup).format('YYYY-MM-DD')
+      hoverValue.value[startKey] = dayjs(__dateStr).format(props.valueFormat)
+      hoverValue.value[endKey] = dayjs(startBackup).format(props.valueFormat)
     } else {
-      hoverValue.value[startKey] = dayjs(startBackup).format('YYYY-MM-DD')
-      hoverValue.value[endKey] = dayjs(__dateStr).format('YYYY-MM-DD')
+      hoverValue.value[startKey] = dayjs(startBackup).format(props.valueFormat)
+      hoverValue.value[endKey] = dayjs(__dateStr).format(props.valueFormat)
     }
     modelValue.value = cloneDeep(hoverValue.value)
     emit('change', hoverValue.value)

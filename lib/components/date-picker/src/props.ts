@@ -38,6 +38,11 @@ export const datePickerProps = {
     default: false,
     description: '是否禁用'
   },
+  valueFormat: {
+    type: String,
+    default: 'YYYY-MM-DD',
+    description: '日期格式'
+  },
   placeholder: {
     type: String,
     default: () => {
@@ -78,6 +83,11 @@ export const dateRangePickerProps = {
     default: false,
     description: '是否禁用'
   },
+  valueFormat: {
+    type: String,
+    default: 'YYYY-MM-DD',
+    description: '日期格式'
+  },
   placeholderStart: {
     type: String,
     default: () => {
@@ -104,10 +114,21 @@ export const dateRangeProps = {
     type: String,
     default: 'end',
     description: '结束日期的字段名'
+  },
+  valueFormat: {
+    type: String,
+    default: 'YYYY-MM-DD',
+    description: '日期格式'
   }
 }
 
-export const dateProps = {}
+export const dateProps = {
+  valueFormat: {
+    type: String,
+    default: 'YYYY-MM-DD',
+    description: '日期格式'
+  }
+}
 
 export type DatePickerProps = ExtractPropTypes<typeof datePickerProps>
 export type DateRangePickerProps = ExtractPropTypes<typeof dateRangePickerProps>

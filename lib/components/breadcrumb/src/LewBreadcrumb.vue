@@ -80,7 +80,7 @@ defineProps(breadcrumbProps)
       margin: 0px 5px;
       height: 1em;
       color: var(--lew-text-color-5);
-      opacity: 0.3;
+      opacity: var(--lew-disabled-opacity);
     }
   }
 }

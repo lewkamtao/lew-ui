@@ -289,7 +289,7 @@ onUnmounted(() => {
   height: auto !important;
 }
 .lew-tabs-size-small {
-  height: calc(var(--lew-form-item-height-small) + 2px);
+  height: calc(var(--lew-form-item-height-small) + 4px);
 
   .lew-tabs-item {
     padding: var(--lew-form-input-padding-small);
@@ -297,7 +297,7 @@ onUnmounted(() => {
   }
 }
 .lew-tabs-size-medium {
-  height: calc(var(--lew-form-item-height-medium) + 2px);
+  height: calc(var(--lew-form-item-height-medium) + 4px);
 
   .lew-tabs-item {
     padding: var(--lew-form-input-padding-medium);
@@ -305,7 +305,7 @@ onUnmounted(() => {
   }
 }
 .lew-tabs-size-large {
-  height: calc(var(--lew-form-item-height-large) + 2px);
+  height: calc(var(--lew-form-item-height-large) + 4px);
 
   .lew-tabs-item {
     padding: var(--lew-form-input-padding-large);

@@ -105,7 +105,7 @@ defineExpose({ show, hide })
       </div>
     </template>
     <template #popover-body>
-      <lew-date ref="lewDateRef" v-model="modelValue" @change="change" />
+      <lew-date ref="lewDateRef" v-model="modelValue" v-bind="props" @change="change" />
     </template>
   </lew-popover>
 </template>

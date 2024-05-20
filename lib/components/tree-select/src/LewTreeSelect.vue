@@ -494,7 +494,7 @@ defineExpose({ show, hide })
     }
 
     .lew-select-item-disabled {
-      opacity: 0.3;
+      opacity: var(--lew-disabled-opacity);
       cursor: no-drop;
     }
 
