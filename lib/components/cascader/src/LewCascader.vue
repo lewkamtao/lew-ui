@@ -670,7 +670,7 @@ defineExpose({ show, hide })
       overflow-y: scroll;
       height: 100%;
       width: 180px;
-      padding: 5px 5px 0px 5px;
+      padding: 6px 6px 2px 6px;
       border-right: var(--lew-popover-border);
       box-sizing: border-box;
       gap: 4px;
@@ -699,7 +699,7 @@ defineExpose({ show, hide })
       .lew-cascader-icon {
         position: absolute;
         right: 2px;
-        top: 8.5px;
+        top: 10px;
         opacity: 0.4;
       }
       .lew-cascader-loading-icon {
