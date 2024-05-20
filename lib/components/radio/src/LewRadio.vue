@@ -77,8 +77,7 @@ const getRadioClassName = computed(() => {
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(-50%, calc(-50% + 10px)) rotate(-10deg) scale(0.2);
-      transform-origin: 50%;
+      transform: translate(-50%, 5px) scale(0);
       transition: var(--lew-form-transition);
       opacity: 0;
       color: var(--lew-color-white);
@@ -200,7 +199,7 @@ const getRadioClassName = computed(() => {
     background: var(--lew-radio-color);
 
     .icon-radio {
-      transform: translate(-50%, -50%) rotate(0deg) scale(1);
+      transform: translate(-50%, -50%) scale(1);
       opacity: 1;
     }
   }
