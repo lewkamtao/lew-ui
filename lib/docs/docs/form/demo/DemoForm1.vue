@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as Yup from 'yup'
-import { schools } from '../../select/demo/schools'
+import { schools } from '@/lib/data'
 
 const schoolsOptions = schools.map((e, i) => {
   return { label: e, value: i + 1 }

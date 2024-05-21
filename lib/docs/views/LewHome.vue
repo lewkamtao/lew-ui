@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import * as Yup from 'yup'
-import { schools } from '../docs/select/demo/schools'
+import { schools } from '@/lib/data'
 import { random } from 'lodash-es'
 
 const viewTotal = ref(100000000)

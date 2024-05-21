@@ -97,17 +97,17 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
     <lew-flex x="start" mode="between" class="lew-date-control">
       <div class="lew-date-control-left">
         <!-- 上一年 -->
-        <lew-button type="light" icon="chevrons-left" @click="prveYear" />
+        <lew-button type="light" icon="chevrons-left" round @click="prveYear" />
         <!-- 上一月 -->
-        <lew-button type="light" icon="chevron-left" @click="prveMonth" />
+        <lew-button type="light" icon="chevron-left" round @click="prveMonth" />
       </div>
       <!-- 日期 -->
       <div class="cur-date">{{ dateState.year }} 年 {{ dateState.month }} 月</div>
       <div class="lew-date-control-right">
         <!-- 下一月 -->
-        <lew-button type="light" icon="chevron-right" @click="nextMonth" />
+        <lew-button type="light" icon="chevron-right" round @click="nextMonth" />
         <!-- 下一年 -->
-        <lew-button type="light" icon="chevrons-right" @click="nextYear" />
+        <lew-button type="light" icon="chevrons-right" round @click="nextYear" />
       </div>
     </lew-flex>
     <div class="lew-date-box">
@@ -169,9 +169,8 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
 
     .lew-button {
       min-width: auto;
-      padding: 2px;
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
 
       svg {
         width: 16px;
@@ -211,9 +210,14 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
           justify-content: center;
           width: 24px;
           height: 24px;
+          line-height: 24px;
           color: var(--lew-text-color-7);
           border-radius: 50%;
           transition: all 0.1s ease;
+          border: 2px var(--lew-form-border-color) solid;
+        }
+        .lew-date-value:active {
+          transform: scale(1.1);
         }
       }
     }
@@ -260,8 +264,27 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
     .lew-date-item-selected {
       .lew-date-label {
         .lew-date-value {
-          background-color: var(--lew-color-primary-light);
-          color: var(--lew-color-primary-dark);
+          background: var(--lew-color-primary);
+          color: var(--lew-color-white-text);
+          border: 2px var(--lew-color-primary-light) solid;
+        }
+      }
+    }
+    .lew-date-item-selected:active {
+      .lew-date-label {
+        .lew-date-value {
+          background: var(--lew-color-primary);
+          color: var(--lew-color-white-text);
+          border: 2px var(--lew-color-primary-light) solid;
+        }
+      }
+    }
+    .lew-date-item-selected:hover {
+      .lew-date-label {
+        .lew-date-value {
+          background: var(--lew-color-primary);
+          color: var(--lew-color-white-text);
+          border: 2px var(--lew-color-primary-light) solid;
         }
       }
     }

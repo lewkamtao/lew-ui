@@ -37,9 +37,15 @@ const options = ref(
       <demo-date-picker1 />
     </lew-demo-box>
     <lew-demo-box title="可清空的" :code="DemoDatePicker2Code">
+      <template #desc>
+        <div>设置 <lew-mark>clearable</lew-mark> 可以开启展示按钮</div>
+      </template>
       <demo-date-picker2 />
     </lew-demo-box>
     <lew-demo-box title="格式化" :code="DemoDatePicker3Code">
+      <template #desc>
+        <div><lew-mark>valueFormat</lew-mark> 可以设置日期格式，默认格式为 YYYY-MM-DD</div>
+      </template>
       <demo-date-picker3 />
     </lew-demo-box>
     <lew-demo-box title="快捷选项" :code="DemoDatePicker4Code">

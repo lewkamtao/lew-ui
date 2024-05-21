@@ -183,7 +183,7 @@ const showHandle = () => {
 }
 const getVirtualHeight = computed(() => {
   let height = state.options.length * props.itemHeight
-  height = height >= 240 ? 240 : height
+  height = height >= 320 ? 320 : height
   return `${height}px`
 })
 
@@ -697,7 +697,7 @@ defineExpose({ show, hide })
       background: var(--lew-checkbox-color);
 
       .icon-checkbox {
-        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+        transform: translate(-50%, -50%)  scale(1);
         opacity: 1;
       }
     }

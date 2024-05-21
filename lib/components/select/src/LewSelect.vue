@@ -153,7 +153,7 @@ const getIconSize = computed(() => {
 
 const getVirtualHeight = computed(() => {
   let height = state.options.length * props.itemHeight
-  height = height >= 240 ? 240 : height
+  height = height >= 320 ? 320 : height
   return `${height}px`
 })
 

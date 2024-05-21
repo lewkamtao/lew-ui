@@ -43,13 +43,13 @@ const options = ref(
     <lew-demo-box title="禁用项" :code="DemoTreeSelect4Code">
       <demo-tree-select4 />
     </lew-demo-box>
-    <lew-demo-box title="异步加载数据" :code="DemoTreeSelect5Code">
+    <lew-demo-box title="默认展开全部" :code="DemoTreeSelect5Code">
       <demo-tree-select5 />
     </lew-demo-box>
-    <lew-demo-box title="空状态插槽" :code="DemoTreeSelect6Code">
+    <lew-demo-box title="可搜索" :code="DemoTreeSelect6Code">
       <demo-tree-select6 />
     </lew-demo-box>
-    <lew-demo-box title="自定义字段" :code="DemoTreeSelect7Code">
+    <lew-demo-box title="空状态插槽" :code="DemoTreeSelect7Code">
       <demo-tree-select7 />
     </lew-demo-box>
     <lew-demo-box title="其他" :code="DemoTreeSelect8Code">

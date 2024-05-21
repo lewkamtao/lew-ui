@@ -369,7 +369,7 @@ defineExpose({ show, hide })
         <slot name="header"></slot>
         <div
           class="lew-cascader-options-box"
-          :style="{ height: free ? 'calc(100% - 40px)' : '100%' }"
+          :style="{ height: free ? 'calc(100% - 45px)' : '100%' }"
         >
           <template v-for="(oItem, oIndex) in state.optionsGroup" :key="oIndex">
             <use-virtual-list
@@ -621,7 +621,7 @@ defineExpose({ show, hide })
     background: var(--lew-checkbox-color);
 
     .icon-checkbox {
-      transform: translate(-50%, -50%) rotate(0deg) scale(1);
+      transform: translate(-50%, -50%) scale(1);
       opacity: 1;
     }
   }
@@ -633,7 +633,7 @@ defineExpose({ show, hide })
     background: var(--lew-checkbox-color);
 
     .icon-checkbox {
-      transform: translate(-50%, -50%) rotate(0deg) scale(1);
+      transform: translate(-50%, -50%) scale(1);
       opacity: 1;
     }
   }
@@ -644,7 +644,7 @@ defineExpose({ show, hide })
   width: 100%;
   box-sizing: border-box;
   min-width: 180px;
-  height: 280px;
+  height: 320px;
   overflow: hidden;
   transition: var(--lew-form-transition);
   user-select: none;
@@ -739,7 +739,7 @@ defineExpose({ show, hide })
     }
 
     .lew-cascader-item-disabled {
-		opacity: var(--lew-disabled-opacity);
+      opacity: var(--lew-disabled-opacity);
       pointer-events: none;
     }
 
@@ -794,7 +794,7 @@ defineExpose({ show, hide })
 
   .lew-cascader-control {
     border-top: var(--lew-popover-border);
-    height: 40px;
+    height: 45px;
     padding-right: 10px;
   }
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { schools } from './schools'
+import { schools } from '@/lib/data'
 
 const schoolsOptions = schools.map((e) => {
   return { label: e, value: e }

@@ -241,7 +241,8 @@ defineExpose({ init, getTreeList })
     </template>
     <template v-else-if="!loading">
       <lew-flex>
-        <lew-empty />
+        <slot v-if="$slots.empty" name="empty"></slot>
+        <lew-empty v-else />
       </lew-flex>
     </template>
   </div>
@@ -325,7 +326,7 @@ defineExpose({ init, getTreeList })
       border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
       background: var(--lew-checkbox-color);
       .icon-checkbox {
-        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+        transform: translate(-50%, -50%) scale(1);
         opacity: 1;
       }
     }

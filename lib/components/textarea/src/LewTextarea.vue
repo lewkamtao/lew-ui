@@ -106,7 +106,7 @@ if (props.okByEnter) {
   watchEffect(() => {
     if (shift.value && enter.value) {
       return
-    } else if (enter.value && state.isFocus && modelValue.value) {
+    } else if (enter.value && state.isFocus) {
       lewTextareaRef.value?.blur()
       emit('ok', modelValue.value)
     }

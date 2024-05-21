@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import axios from '../../../axios/http'
+import axios from '@/axios/http'
 
 const initTree = () => {
   return new Promise<any[]>((resolve) => {
