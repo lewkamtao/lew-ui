@@ -38,7 +38,14 @@ const http = ref({
       suffixValue=".com"
       placeholder="请输入网址"
     />
-    <lew-input v-model="value" suffix="text" suffixValue="@gmail.com" placeholder="请输入邮箱" />
+    <lew-input
+      auto-width
+      min-width="180px"
+      v-model="value"
+      suffix="text"
+      suffixValue="@gmail.com"
+      placeholder="请输入"
+    />
     <lew-input
       v-model="value"
       prefixes="icon"

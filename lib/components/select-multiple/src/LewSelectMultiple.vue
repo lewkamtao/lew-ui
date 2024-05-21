@@ -270,7 +270,7 @@ defineExpose({ show, hide })
             >
               <template #trigger>
                 <div class="lew-select-multiple-text-value">
-                  {{ getLabels.join('，') }}
+                  {{ getLabels.join(valueTextSplit) }}
                 </div>
               </template>
               <template #popover-body>
@@ -697,7 +697,7 @@ defineExpose({ show, hide })
       background: var(--lew-checkbox-color);
 
       .icon-checkbox {
-        transform: translate(-50%, -50%)  scale(1);
+        transform: translate(-50%, -50%) scale(1);
         opacity: 1;
       }
     }

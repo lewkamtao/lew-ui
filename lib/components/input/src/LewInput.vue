@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useMagicKeys } from '@vueuse/core'
-import { object2class } from 'lew-ui/utils'
+import { object2class, any2px } from 'lew-ui/utils'
 import { LewIcon, LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui'
 import { inputProps } from './props'
 import { cloneDeep } from 'lodash-es'
@@ -172,7 +172,7 @@ defineExpose({ toFocus })
 </script>
 
 <template>
-  <div class="lew-input-view" :class="getInputClassNames">
+  <div class="lew-input-view" :class="getInputClassNames" :style="{ minWidth: any2px(minWidth) }">
     <div
       v-if="prefixes"
       v-tooltip="{

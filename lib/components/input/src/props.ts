@@ -80,6 +80,11 @@ export const inputProps = {
     default: false,
     description: '是否显示密码切换按钮'
   },
+  minWidth: {
+    type: [Number, String],
+    default: '60px',
+    description: '最小宽度'
+  },
   autoWidth: {
     type: Boolean,
     default: false,

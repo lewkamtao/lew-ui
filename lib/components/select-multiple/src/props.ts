@@ -35,6 +35,11 @@ export const selectMultipleProps = {
     default: 'text',
     description: '值的布局方式，可选值为 tag 或 text'
   },
+  valueTextSplit: {
+    type: String,
+    default: '、',
+    description: '值的分隔符，仅在 valueLayout 为 text 时有效'
+  },
   placeholder: {
     type: String,
     default: '请选择',
