@@ -2,21 +2,22 @@
 import { inputTagProps } from './props'
 import { LewInput, LewTag } from 'lew-ui'
 import { cloneDeep } from 'lodash-es'
+import { object2class } from 'lew-ui/utils'
 
 const emit = defineEmits(['close', 'change'])
 
-defineProps(inputTagProps)
+const props = defineProps(inputTagProps)
 const tagsValue: Ref<string[] | undefined> = defineModel()
 const inputValue = ref()
-const isInput = ref(false)
 const lewInputRef = ref()
+const isFocus = ref(false)
 let isEnter = false
 
 let delDownTimer: any
 let delDownCheck = 0
 
 const openInput = () => {
-  isInput.value = true
+  isFocus.value = true
   nextTick(() => {
     lewInputRef.value.toFocus()
   })
@@ -41,8 +42,8 @@ const openInput = () => {
 }
 
 const blurFn = () => {
-  isInput.value = false
   document.onkeydown = null
+  isFocus.value = false
   addTag()
   if (isEnter) {
     openInput()
@@ -65,49 +66,67 @@ const delTag = (index: number) => {
   emit('change', tagsValue.value)
   emit('close', tagsValue.value)
 }
+
+const getInputClassNames = computed(() => {
+  const { size, readonly, disabled } = props
+  return object2class('lew-input-tag-view', {
+    size,
+    readonly,
+    disabled
+  })
+})
 </script>
 
 <template>
-  <div class="lew-input-tag-view">
-    <div style="margin-left: -10px; height: 26px"></div>
-    <TransitionGroup name="list">
-      <lew-tag
-        v-for="(item, index) in tagsValue"
-        :key="index"
-        type="light"
-        closable
-        @close="delTag(index)"
-        >{{ item }}
-      </lew-tag>
-    </TransitionGroup>
-    <label v-if="!isInput" class="lew-input-tag-button" @click="openInput">
-      <lew-icon :size="16" type="plus" />
-    </label>
-    <lew-input
-      v-else
-      ref="lewInputRef"
-      v-model="inputValue"
-      class="lew-input-tag"
-      size="small"
-      autoWidth
-      placeholder=""
-      @blur="blurFn"
-    />
+  <div class="lew-input-tag-view" @click="openInput" :class="getInputClassNames">
+    <div class="lew-input-tag-box">
+      <TransitionGroup name="list">
+        <lew-tag
+          v-for="(item, index) in tagsValue"
+          :key="index"
+          type="light"
+          closable
+          @close="delTag(index)"
+          >{{ item }}
+        </lew-tag>
+      </TransitionGroup>
+      <lew-input
+        ref="lewInputRef"
+        v-model="inputValue"
+        class="lew-input-tag"
+        size="small"
+        :readonly="!isFocus"
+        autoWidth
+        placeholder=""
+        @blur="blurFn"
+      />
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .lew-input-tag-view {
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  border: var(--lew-form-border-width solid rgba(0, 0, 0, 0));
-
+  border-radius: var(--lew-border-radius-small);
+  background-color: var(--lew-form-bgcolor);
+  box-sizing: border-box;
+  outline: 0px var(--lew-form-border-color) solid;
+  border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  transition: var(--lew-form-transition);
+  cursor: text;
+  .lew-input-tag-box {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    box-sizing: border-box;
+    padding-left: 4px;
+  }
   .lew-input-tag {
     height: 26px;
     flex-shrink: 1;
-
+    border: none !important;
+    outline: none !important;
+    background: none !important;
     :deep() {
       input {
         height: 26px;
@@ -116,23 +135,13 @@ const delTag = (index: number) => {
   }
 }
 
-.lew-input-tag-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  height: 26px;
-  width: 65px;
-  box-sizing: border-box;
-  border-radius: var(--lew-border-radius-small);
-  background-color: var(--lew-bgcolor-0);
-  color: var(--lew-text-color-8);
-  border: var(--lew-text-color-8) var(--lew-form-border-width) dashed;
+.lew-input-tag-view:hover {
+  background-color: var(--lew-form-bgcolor-hover);
 }
-
-.lew-input-tag-button:hover {
-  color: var(--lew-color-primary);
-  border: var(--lew-color-primary) var(--lew-form-border-width) dashed;
+.lew-input-tag-view:focus-within {
+  border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+  outline: var(--lew-form-ouline);
+  background-color: var(--lew-form-bgcolor-focus);
 }
 
 .list-enter-active,
@@ -144,5 +153,29 @@ const delTag = (index: number) => {
 .list-leave-to {
   opacity: 0;
   transform: translateX(-5px);
+}
+
+.lew-input-tag-view-size-small {
+  .lew-input-tag-box {
+    font-size: var(--lew-form-font-size-small);
+    height: var(--lew-form-item-height-small);
+    line-height: var(--lew-form-input-line-height-small);
+  }
+}
+
+.lew-input-tag-view-size-medium {
+  .lew-input-tag-box {
+    font-size: var(--lew-form-font-size-medium);
+    line-height: var(--lew-form-input-line-height-medium);
+    height: var(--lew-form-item-height-medium);
+  }
+}
+
+.lew-input-tag-view-size-large {
+  .lew-input-tag-box {
+    font-size: var(--lew-form-font-size-large);
+    line-height: var(--lew-form-input-line-height-large);
+    height: var(--lew-form-item-height-large);
+  }
 }
 </style>

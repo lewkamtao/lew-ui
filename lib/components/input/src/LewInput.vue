@@ -338,6 +338,7 @@ defineExpose({ toFocus })
     align-items: center;
     .lew-input {
       height: 100%;
+	  margin-left: -5px;
     }
   }
   .lew-input-copy-btn {
