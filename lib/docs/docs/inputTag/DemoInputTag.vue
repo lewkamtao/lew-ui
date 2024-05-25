@@ -1,5 +1,16 @@
 <script setup lang="ts">
-import { DemoInputTag1, DemoInputTag1Code } from './demo'
+import {
+  DemoInputTag1,
+  DemoInputTag2,
+  DemoInputTag3,
+  DemoInputTag4,
+  DemoInputTag5,
+  DemoInputTag1Code,
+  DemoInputTag2Code,
+  DemoInputTag3Code,
+  DemoInputTag4Code,
+  DemoInputTag5Code
+} from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
@@ -29,6 +40,18 @@ const options = ref(
           }
         ]"
       />
+    </lew-demo-box>
+    <lew-demo-box title="常规" :code="DemoInputTag1Code">
+      <demo-input-tag1 />
+    </lew-demo-box>
+    <lew-demo-box title="常规" :code="DemoInputTag1Code">
+      <demo-input-tag1 />
+    </lew-demo-box>
+    <lew-demo-box title="常规" :code="DemoInputTag1Code">
+      <demo-input-tag1 />
+    </lew-demo-box>
+    <lew-demo-box title="常规" :code="DemoInputTag1Code">
+      <demo-input-tag1 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>

@@ -25,10 +25,11 @@ export const inputTagProps = {
     type: Boolean,
     default: false,
     description: '是否使用清空按钮'
-  }, // 默认提示语
+  }, 
+  // 默认提示语
   placeholder: {
     type: String,
-    default: '请输入',
+    default: '按Enter添加标签',
     description: '默认提示语'
   },
   // 是否只读
@@ -36,5 +37,11 @@ export const inputTagProps = {
     type: Boolean,
     default: false,
     description: '是否只读'
+  },
+  // 是否允许重复
+  allowDuplicates: {
+    type: Boolean,
+    default: false,
+    description: '是否允许重复'
   }
 }

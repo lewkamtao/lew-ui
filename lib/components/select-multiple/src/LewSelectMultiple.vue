@@ -434,7 +434,11 @@ defineExpose({ show, hide })
         }
       }
     }
-
+    :deep() {
+      .lew-tag {
+        background-color: #fff !important;
+      }
+    }
     .placeholder,
     .value {
       width: calc(100% - 24px);
@@ -515,7 +519,11 @@ defineExpose({ show, hide })
   background-color: var(--lew-form-bgcolor-focus);
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
   outline: var(--lew-form-ouline);
-
+  :deep() {
+    .lew-tag {
+      background-color: var(--lew-color-primary-light) !important;
+    }
+  }
   .icon-select {
     transform: translateY(-50%) rotate(180deg);
     color: var(--lew-text-color-1);

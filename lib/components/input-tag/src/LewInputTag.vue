@@ -14,7 +14,6 @@ const isFocus = ref(false)
 let isEnter = false
 
 let delDownTimer: any
-let delDownCheck = 0
 
 const openInput = () => {
   isFocus.value = true
@@ -22,17 +21,12 @@ const openInput = () => {
     lewInputRef.value.toFocus()
   })
   document.onkeydown = function (event) {
-    if (inputValue.value === '') {
+    if (!inputValue.value) {
       if (event.keyCode === 8 || event.keyCode === 46) {
         clearTimeout(delDownTimer)
-        delDownTimer = setTimeout(() => {
-          delDownCheck = 0
-        }, 500)
-        delDownCheck += 1
-        if (delDownCheck >= 2 && tagsValue.value && tagsValue.value.length > 0) {
+        if (tagsValue.value && tagsValue.value.length > 0) {
           tagsValue.value.splice(tagsValue.value.length - 1, 1)
           emit('change', cloneDeep(tagsValue.value))
-          delDownCheck = 0
         }
       }
     } else if (event.keyCode === 13) {
@@ -44,7 +38,13 @@ const openInput = () => {
 const blurFn = () => {
   document.onkeydown = null
   isFocus.value = false
-  addTag()
+  if (props.allowDuplicates) {
+    addTag()
+  } else {
+    if (tagsValue.value && !tagsValue.value.includes(inputValue.value)) {
+      addTag()
+    }
+  }
   if (isEnter) {
     openInput()
   }
@@ -61,8 +61,16 @@ const addTag = () => {
   emit('change', _value)
 }
 
+const autoWidthDelay = ref(false)
+
 const delTag = (index: number) => {
   tagsValue.value && tagsValue.value.splice(index, 1)
+  if (tagsValue.value && tagsValue.value.length === 0) {
+    autoWidthDelay.value = true
+    setTimeout(() => {
+      autoWidthDelay.value = false
+    }, 550)
+  }
   emit('change', tagsValue.value)
   emit('close', tagsValue.value)
 }
@@ -79,7 +87,7 @@ const getInputClassNames = computed(() => {
 
 <template>
   <div class="lew-input-tag-view" @click="openInput" :class="getInputClassNames">
-    <div class="lew-input-tag-box">
+    <div :style="{ padding: (tagsValue || []).length > 0 ? '5px' : '' }" class="lew-input-tag-box">
       <TransitionGroup name="list">
         <lew-tag
           v-for="(item, index) in tagsValue"
@@ -94,10 +102,9 @@ const getInputClassNames = computed(() => {
         ref="lewInputRef"
         v-model="inputValue"
         class="lew-input-tag"
-        size="small"
+        :size="size"
         :readonly="!isFocus"
-        autoWidth
-        placeholder=""
+        :placeholder="(tagsValue || []).length > 0 ? '' : placeholder"
         @blur="blurFn"
       />
     </div>
@@ -106,30 +113,54 @@ const getInputClassNames = computed(() => {
 
 <style lang="scss" scoped>
 .lew-input-tag-view {
+  display: inline-flex;
+  align-items: center;
   border-radius: var(--lew-border-radius-small);
   background-color: var(--lew-form-bgcolor);
   box-sizing: border-box;
   outline: 0px var(--lew-form-border-color) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   transition: var(--lew-form-transition);
+  overflow: hidden;
+  width: 100%;
   cursor: text;
+  :deep() {
+    .lew-tag {
+      background-color: #fff !important;
+    }
+  }
+
   .lew-input-tag-box {
     display: inline-flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 5px;
     box-sizing: border-box;
-    padding-left: 4px;
+    transition: var(--lew-form-transition);
+    :deep() {
+      .lew-input-view {
+        border-radius: 0px !important;
+      }
+    }
   }
   .lew-input-tag {
-    height: 26px;
     flex-shrink: 1;
     border: none !important;
     outline: none !important;
     background: none !important;
+    margin-left: 2px;
+    overflow: hidden;
+    width: auto !important;
     :deep() {
+      .lew-input-view {
+        border-radius: 0px !important;
+      }
+      .lew-input-box {
+        padding: 0px !important;
+      }
       input {
         height: 26px;
+        left: 0px !important;
       }
     }
   }
@@ -142,6 +173,12 @@ const getInputClassNames = computed(() => {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
   outline: var(--lew-form-ouline);
   background-color: var(--lew-form-bgcolor-focus);
+
+  :deep() {
+    .lew-tag {
+      background-color: var(--lew-color-primary-light) !important;
+    }
+  }
 }
 
 .list-enter-active,
@@ -157,25 +194,52 @@ const getInputClassNames = computed(() => {
 
 .lew-input-tag-view-size-small {
   .lew-input-tag-box {
+    padding: var(--lew-form-input-padding-small);
     font-size: var(--lew-form-font-size-small);
-    height: var(--lew-form-item-height-small);
+    min-height: var(--lew-form-item-height-small);
     line-height: var(--lew-form-input-line-height-small);
+  }
+  .lew-input-tag {
+    height: 20px;
+  }
+  :deep() {
+    .lew-tag {
+      height: 20px;
+    }
   }
 }
 
 .lew-input-tag-view-size-medium {
   .lew-input-tag-box {
+    padding: var(--lew-form-input-padding-small);
     font-size: var(--lew-form-font-size-medium);
     line-height: var(--lew-form-input-line-height-medium);
-    height: var(--lew-form-item-height-medium);
+    min-height: var(--lew-form-item-height-medium);
+  }
+  .lew-input-tag {
+    height: 24px;
+  }
+  :deep() {
+    .lew-tag {
+      height: 24px;
+    }
   }
 }
 
 .lew-input-tag-view-size-large {
   .lew-input-tag-box {
+    padding: var(--lew-form-input-padding-small);
     font-size: var(--lew-form-font-size-large);
     line-height: var(--lew-form-input-line-height-large);
-    height: var(--lew-form-item-height-large);
+    min-height: var(--lew-form-item-height-large);
+  }
+  .lew-input-tag {
+    height: 28px;
+  }
+  :deep() {
+    .lew-tag {
+      height: 28px;
+    }
   }
 }
 </style>
