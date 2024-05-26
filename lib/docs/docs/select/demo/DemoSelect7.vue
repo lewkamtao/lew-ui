@@ -9,7 +9,6 @@ const value = ref('')
     style="width: 320px"
     :options="options"
     clearable
-    placeholder="默认过滤"
   >
     <template #empty>
       <div class="empty">

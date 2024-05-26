@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMagicKeys } from '@vueuse/core'
+import { useMagicKeys, useDebounceFn } from '@vueuse/core'
 import { object2class, any2px } from 'lew-ui/utils'
 import { LewIcon, LewTooltip } from 'lew-ui'
 import { textareaProps } from './props'
@@ -77,7 +77,7 @@ const getTextareaClassNames = computed(() => {
 })
 
 const focus = (e: any) => {
-  if (props.focusSelect) {
+  if (props.selectByFocus) {
     e?.currentTarget?.select()
   }
   state.isFocus = true
@@ -102,16 +102,22 @@ const getTextareaStyle = computed(() => {
   const { width, height } = props
   return `width:${any2px(width)};height:${any2px(height)};`
 })
+
 if (props.okByEnter) {
   watchEffect(() => {
     if (shift.value && enter.value) {
       return
     } else if (enter.value && state.isFocus) {
       lewTextareaRef.value?.blur()
-      emit('ok', modelValue.value)
+      ok()
     }
   })
 }
+
+const ok = useDebounceFn(() => {
+  emit('ok', modelValue.value)
+}, 250)
+
 defineExpose({ toFocus })
 </script>
 

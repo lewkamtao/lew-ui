@@ -1,25 +1,13 @@
 <script setup lang="ts">
-const value1 = ref('')
-const value2 = ref('这是个只读文本')
-const value3 = ref('聚集后选中所有文本')
+const v1 = ref('左对齐')
+const v2 = ref('居中对齐')
+const v3 = ref('右对齐')
 </script>
 
 <template>
   <lew-flex style="width: 300px" :gap="20" x="start" direction="y">
-    <lew-input v-model="value1" placeholder="可清空的" clearable />
-    <lew-input v-model="value1" placeholder="禁用" disabled />
-    <lew-input v-model="value2" placeholder="只读" readonly />
-    <lew-input v-model="value2" placeholder="只读并可复制" readonly size="small" copyable />
-    <lew-input v-model="value2" placeholder="只读并可复制" readonly copyable />
-    <lew-input v-model="value2" placeholder="只读并可复制" readonly size="large" copyable />
-    <lew-input v-model="value1" placeholder="自动" autoWidth />
-    <lew-input v-model="value3" placeholder="聚集后选中所有文本" focusSelect />
-    <lew-input
-      v-model="value1"
-      type="password"
-      placeholder="密码可见"
-      showPassword
-      :maxLength="30"
-    />
+    <lew-input v-model="v1" align="left" />
+    <lew-input v-model="v2" align="center" />
+    <lew-input v-model="v3" align="right" />
   </lew-flex>
 </template>

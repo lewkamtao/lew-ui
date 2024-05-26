@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMagicKeys } from '@vueuse/core'
+import { useMagicKeys, useDebounceFn } from '@vueuse/core'
 import { object2class, any2px } from 'lew-ui/utils'
 import { LewIcon, LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui'
 import { inputProps } from './props'
@@ -83,7 +83,7 @@ const getCheckNumStr = computed(() => {
 })
 
 const focus = (e: any) => {
-  if (props.focusSelect) {
+  if (props.selectByFocus) {
     e?.currentTarget?.select()
   }
   emit('focus')
@@ -160,10 +160,14 @@ const copy = () => {
 if (props.okByEnter) {
   watch(enter, (v) => {
     if (v && state.isFocus) {
-      emit('ok', modelValue.value)
+      ok()
     }
   })
 }
+
+const ok = useDebounceFn(() => {
+  emit('ok', modelValue.value)
+}, 250)
 
 onUnmounted(() => {
   clearTimeout(timer)

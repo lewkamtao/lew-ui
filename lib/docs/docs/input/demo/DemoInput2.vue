@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const value = ref('')
+const v = ref('')
 const prefixesValue = ref(1)
 
 const http = ref({
@@ -12,7 +12,7 @@ const http = ref({
 <template>
   <lew-flex style="width: 450px" :gap="20" x="start" direction="y">
     <lew-input
-      v-model="value"
+      v-model="v"
       size="small"
       prefixes="text"
       suffix="text"
@@ -21,7 +21,7 @@ const http = ref({
       placeholder="请输入网址"
     />
     <lew-input
-      v-model="value"
+      v-model="v"
       size="medium"
       prefixes="text"
       suffix="text"
@@ -30,7 +30,7 @@ const http = ref({
       placeholder="请输入网址"
     />
     <lew-input
-      v-model="value"
+      v-model="v"
       size="large"
       prefixes="text"
       suffix="text"
@@ -41,13 +41,13 @@ const http = ref({
     <lew-input
       auto-width
       min-width="180px"
-      v-model="value"
+      v-model="v"
       suffix="text"
       suffixValue="@gmail.com"
       placeholder="请输入"
     />
     <lew-input
-      v-model="value"
+      v-model="v"
       prefixes="icon"
       prefixesValue="phone"
       suffix="icon"
@@ -57,7 +57,7 @@ const http = ref({
       placeholder="请输入手机号"
     />
     <lew-input
-      v-model="value"
+      v-model="v"
       v-model:prefixesValue="prefixesValue"
       prefixes="select"
       :prefixesOptions="[

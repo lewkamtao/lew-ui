@@ -36,22 +36,22 @@ const options = ref(
           {
             type: 'info',
             title: '提示',
-            content: '在focus状态下，按下Enter新增标签，快速按下两次退格删除标签。'
+            content: '在focus状态下，按下Enter新增标签。'
           }
         ]"
       />
     </lew-demo-box>
-    <lew-demo-box title="常规" :code="DemoInputTag1Code">
-      <demo-input-tag1 />
+    <lew-demo-box title="提示语" :code="DemoInputTag2Code">
+      <demo-input-tag2 />
     </lew-demo-box>
-    <lew-demo-box title="常规" :code="DemoInputTag1Code">
-      <demo-input-tag1 />
+    <lew-demo-box title="是否允许重复" :code="DemoInputTag3Code">
+      <demo-input-tag3 />
     </lew-demo-box>
-    <lew-demo-box title="常规" :code="DemoInputTag1Code">
-      <demo-input-tag1 />
+    <lew-demo-box title="受控默认值" :code="DemoInputTag4Code">
+      <demo-input-tag4 />
     </lew-demo-box>
-    <lew-demo-box title="常规" :code="DemoInputTag1Code">
-      <demo-input-tag1 />
+    <lew-demo-box title="其他" :code="DemoInputTag5Code">
+      <demo-input-tag5 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>

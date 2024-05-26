@@ -34,7 +34,7 @@ export const inputProps = {
     default: 'medium',
     description: '尺寸，可选值为 small、medium、large'
   },
-  focusSelect: {
+  selectByFocus: {
     type: Boolean,
     default: false,
     description: '是否聚焦选中文本'

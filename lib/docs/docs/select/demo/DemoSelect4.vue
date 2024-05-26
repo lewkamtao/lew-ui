@@ -22,6 +22,7 @@ const value = ref('')
         <div class="custom-select-content">
           <lew-avatar
             round
+            :key="props.label"
             width="30"
             height="30"
             :src="`https://api.lew.kamtao.com/manage/common/avatar/350/4B78CA/${props.label}`"

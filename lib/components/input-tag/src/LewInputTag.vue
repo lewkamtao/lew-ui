@@ -13,8 +13,6 @@ const lewInputRef = ref()
 const isFocus = ref(false)
 let isEnter = false
 
-let delDownTimer: any
-
 const openInput = () => {
   isFocus.value = true
   nextTick(() => {
@@ -23,7 +21,6 @@ const openInput = () => {
   document.onkeydown = function (event) {
     if (!inputValue.value) {
       if (event.keyCode === 8 || event.keyCode === 46) {
-        clearTimeout(delDownTimer)
         if (tagsValue.value && tagsValue.value.length > 0) {
           tagsValue.value.splice(tagsValue.value.length - 1, 1)
           emit('change', cloneDeep(tagsValue.value))
@@ -41,7 +38,7 @@ const blurFn = () => {
   if (props.allowDuplicates) {
     addTag()
   } else {
-    if (tagsValue.value && !tagsValue.value.includes(inputValue.value)) {
+    if (!(tagsValue.value || []).includes(inputValue.value)) {
       addTag()
     }
   }
@@ -55,10 +52,10 @@ const addTag = () => {
   let _value = tagsValue.value || []
   if (inputValue.value) {
     _value.push(inputValue.value)
+    inputValue.value = ''
+    tagsValue.value = _value
+    emit('change', _value)
   }
-  inputValue.value = ''
-  tagsValue.value = _value
-  emit('change', _value)
 }
 
 const autoWidthDelay = ref(false)
@@ -76,11 +73,12 @@ const delTag = (index: number) => {
 }
 
 const getInputClassNames = computed(() => {
-  const { size, readonly, disabled } = props
+  const { size, readonly, disabled, clearable } = props
   return object2class('lew-input-tag-view', {
     size,
     readonly,
-    disabled
+    disabled,
+    clearable
   })
 })
 </script>
@@ -99,6 +97,7 @@ const getInputClassNames = computed(() => {
         </lew-tag>
       </TransitionGroup>
       <lew-input
+        v-if="isFocus || (tagsValue || []).length === 0"
         ref="lewInputRef"
         v-model="inputValue"
         class="lew-input-tag"
