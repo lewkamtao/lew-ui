@@ -227,7 +227,13 @@ defineExpose({ toFocus })
         :class="{ 'lew-input-copy-btn-check': isCopy }"
       />
     </div>
-    <div class="lew-input-box">
+    <div
+      class="lew-input-box"
+      :style="{
+        paddingLeft: prefixes ? '0px' : '',
+        paddingRight: suffix ? '0px' : ''
+      }"
+    >
       <input
         ref="lewInputRef"
         v-model="modelValue"
@@ -271,6 +277,9 @@ defineExpose({ toFocus })
             class="lew-form-icon-clear"
             :class="{
               'lew-form-icon-clear-focus': state.isFocus
+            }"
+            :style="{
+              right: suffix ? '0px' : ''
             }"
             :size="getIconSize"
             type="x"
@@ -359,12 +368,7 @@ defineExpose({ toFocus })
   .lew-input-copy-btn:hover {
     opacity: var(--lew-form-icon-opacity-hover);
   }
-  .lew-input-prefixes {
-    border-right: var(--lew-bgcolor-4) 1px dashed;
-  }
-  .lew-input-suffix {
-    border-left: var(--lew-bgcolor-4) 1px dashed;
-  }
+
   .lew-input-prefixes,
   .lew-input-suffix {
     white-space: nowrap;
@@ -670,24 +674,12 @@ defineExpose({ toFocus })
 
 .lew-input-view:hover {
   background-color: var(--lew-form-bgcolor-hover);
-  .lew-input-prefixes {
-    border-right: var(--lew-bgcolor-8) 1px dashed;
-  }
-  .lew-input-suffix {
-    border-left: var(--lew-bgcolor-8) 1px dashed;
-  }
 }
 
 .lew-input-view:focus-within {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
   outline: var(--lew-form-ouline);
   background-color: var(--lew-form-bgcolor-focus);
-  .lew-input-prefixes {
-    border-right: var(--lew-bgcolor-8) 1px dashed;
-  }
-  .lew-input-suffix {
-    border-left: var(--lew-bgcolor-8) 1px dashed;
-  }
 }
 
 .lew-input-view-readonly {

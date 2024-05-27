@@ -5,11 +5,15 @@ import {
   DemoInputTag3,
   DemoInputTag4,
   DemoInputTag5,
+  DemoInputTag6,
+  DemoInputTag7,
   DemoInputTag1Code,
   DemoInputTag2Code,
   DemoInputTag3Code,
   DemoInputTag4Code,
-  DemoInputTag5Code
+  DemoInputTag5Code,
+  DemoInputTag6Code,
+  DemoInputTag7Code
 } from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
@@ -50,8 +54,14 @@ const options = ref(
     <lew-demo-box title="受控默认值" :code="DemoInputTag4Code">
       <demo-input-tag4 />
     </lew-demo-box>
-    <lew-demo-box title="其他" :code="DemoInputTag5Code">
+    <lew-demo-box title="可清空的" :code="DemoInputTag5Code">
       <demo-input-tag5 />
+    </lew-demo-box>
+    <lew-demo-box title="只读状态" :code="DemoInputTag6Code">
+      <demo-input-tag6 />
+    </lew-demo-box>
+    <lew-demo-box title="禁用状态" :code="DemoInputTag7Code">
+      <demo-input-tag7 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>

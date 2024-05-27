@@ -1,10 +1,6 @@
 <script lang="ts" setup>
-const v = ref([])
+const v = ref(['小明', '小红', '小刚'])
 </script>
 <template>
-  <lew-flex style="width: 320px" direction="y" x="start" gap="10px">
-    <lew-input-tag clearable v-model="v" />
-    <lew-input-tag disabled v-model="v" />
-    <lew-input-tag readonly v-model="v" />
-  </lew-flex>
+  <lew-input-tag style="width: 320px" clearable v-model="v" />
 </template>

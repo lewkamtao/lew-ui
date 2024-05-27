@@ -92,13 +92,10 @@ options.value = [
         label: 'BackTop',
         value: '/BackTop'
       },
-      // {
-      //     clabel: '步骤',
-      //     label: 'Steps',
-      //     value: '/Steps',
-      //
-      //
-      // },
+      {
+        label: 'Steps',
+        value: '/Steps'
+      },
       {
         label: 'Menu',
         value: '/Menu',

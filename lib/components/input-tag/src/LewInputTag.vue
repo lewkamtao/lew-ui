@@ -7,7 +7,7 @@ import { object2class } from 'lew-ui/utils'
 const emit = defineEmits(['close', 'change'])
 
 const props = defineProps(inputTagProps)
-const tagsValue: Ref<string[] | undefined> = defineModel()
+const modelValue: Ref<string[] | undefined> = defineModel()
 const inputValue = ref()
 const lewInputRef = ref()
 const isFocus = ref(false)
@@ -21,9 +21,9 @@ const openInput = () => {
   document.onkeydown = function (event) {
     if (!inputValue.value) {
       if (event.keyCode === 8 || event.keyCode === 46) {
-        if (tagsValue.value && tagsValue.value.length > 0) {
-          tagsValue.value.splice(tagsValue.value.length - 1, 1)
-          emit('change', cloneDeep(tagsValue.value))
+        if (modelValue.value && modelValue.value.length > 0) {
+          modelValue.value.splice(modelValue.value.length - 1, 1)
+          emit('change', cloneDeep(modelValue.value))
         }
       }
     } else if (event.keyCode === 13) {
@@ -38,7 +38,7 @@ const blurFn = () => {
   if (props.allowDuplicates) {
     addTag()
   } else {
-    if (!(tagsValue.value || []).includes(inputValue.value)) {
+    if (!(modelValue.value || []).includes(inputValue.value)) {
       addTag()
     }
   }
@@ -49,11 +49,11 @@ const blurFn = () => {
 }
 
 const addTag = () => {
-  let _value = tagsValue.value || []
+  let _value = modelValue.value || []
   if (inputValue.value) {
     _value.push(inputValue.value)
     inputValue.value = ''
-    tagsValue.value = _value
+    modelValue.value = _value
     emit('change', _value)
   }
 }
@@ -61,15 +61,15 @@ const addTag = () => {
 const autoWidthDelay = ref(false)
 
 const delTag = (index: number) => {
-  tagsValue.value && tagsValue.value.splice(index, 1)
-  if (tagsValue.value && tagsValue.value.length === 0) {
+  modelValue.value && modelValue.value.splice(index, 1)
+  if (modelValue.value && modelValue.value.length === 0) {
     autoWidthDelay.value = true
     setTimeout(() => {
       autoWidthDelay.value = false
     }, 550)
   }
-  emit('change', tagsValue.value)
-  emit('close', tagsValue.value)
+  emit('change', modelValue.value)
+  emit('close', modelValue.value)
 }
 
 const getInputClassNames = computed(() => {
@@ -81,37 +81,66 @@ const getInputClassNames = computed(() => {
     clearable
   })
 })
+
+const getIconSize = computed(() => {
+  const size: any = {
+    small: 13,
+    medium: 14,
+    large: 16
+  }
+  return size[props.size]
+})
+
+const clear = () => {
+  modelValue.value = []
+  inputValue.value = ''
+  emit('change', [])
+}
 </script>
 
 <template>
   <div class="lew-input-tag-view" @click="openInput" :class="getInputClassNames">
-    <div :style="{ padding: (tagsValue || []).length > 0 ? '5px' : '' }" class="lew-input-tag-box">
+    <div :style="{ padding: (modelValue || []).length > 0 ? '5px' : '' }" class="lew-input-tag-box">
       <TransitionGroup name="list">
         <lew-tag
-          v-for="(item, index) in tagsValue"
+          v-for="(item, index) in modelValue"
           :key="index"
           type="light"
-          closable
+          :closable="!readonly"
           @close="delTag(index)"
           >{{ item }}
         </lew-tag>
       </TransitionGroup>
       <lew-input
-        v-if="isFocus || (tagsValue || []).length === 0"
+        v-if="isFocus || (modelValue || []).length === 0"
         ref="lewInputRef"
         v-model="inputValue"
         class="lew-input-tag"
         :size="size"
         :readonly="!isFocus"
-        :placeholder="(tagsValue || []).length > 0 ? '' : placeholder"
+        :placeholder="(modelValue || []).length > 0 ? '' : placeholder"
         @blur="blurFn"
       />
+      <transition name="lew-form-icon-ani">
+        <lew-icon
+          v-if="clearable && (modelValue || []).length > 0 && !readonly"
+          class="lew-form-icon-clear"
+          :class="{
+            'lew-form-icon-clear-focus': isFocus
+          }"
+          :size="getIconSize"
+          type="x"
+          @mousedown.prevent=""
+          @click="clear"
+        />
+      </transition>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .lew-input-tag-view {
+  position: relative;
   display: inline-flex;
   align-items: center;
   border-radius: var(--lew-border-radius-small);
@@ -240,5 +269,13 @@ const getInputClassNames = computed(() => {
       height: 28px;
     }
   }
+}
+
+.lew-input-tag-view-disabled {
+  pointer-events: none;
+  opacity: var(--lew-disabled-opacity);
+}
+.lew-input-tag-view-readonly {
+  pointer-events: none;
 }
 </style>

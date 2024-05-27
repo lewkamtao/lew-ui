@@ -16,6 +16,7 @@ const http = ref({
       size="small"
       prefixes="text"
       suffix="text"
+      clearable
       prefixesValue="https://"
       suffixValue=".com"
       placeholder="请输入网址"
@@ -42,6 +43,7 @@ const http = ref({
       auto-width
       min-width="180px"
       v-model="v"
+      clearable
       suffix="text"
       suffixValue="@gmail.com"
       placeholder="请输入"
