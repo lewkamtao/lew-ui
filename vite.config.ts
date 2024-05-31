@@ -70,7 +70,7 @@ export default defineConfig(({ mode }) => {
                           // 确保外部化处理那些你不想打包进库的依赖
                           plugins: [
                               visualizer({
-                                  open: true, // 直接在浏览器中打开分析报告
+                                  open: false, // 直接在浏览器中打开分析报告
                                   filename: 'stats.html', // 输出文件的名称
                                   gzipSize: true, // 显示gzip后的大小
                                   brotliSize: true // 显示brotli压缩后的大小

@@ -436,7 +436,7 @@ defineExpose({ show, hide })
     }
     :deep() {
       .lew-tag {
-        background-color: #fff !important;
+        background-color: var(--lew-bgcolor-0) !important;
       }
     }
     .placeholder,
