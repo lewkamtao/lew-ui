@@ -7,17 +7,17 @@ import { drawerProps, getStyle } from './props'
 useDOMCreate('lew-drawer')
 const emit = defineEmits(['update:visible'])
 
-const props = defineProps(drawerProps)
-const _visible = ref(props.visible)
+const visible: Ref<boolean | undefined> = defineModel('visible')
+
+defineProps(drawerProps)
 const isShowMain = ref(false)
 
 watch(
-  () => props.visible,
+  () => visible.value,
   (val) => {
-    _visible.value = val
     setTimeout(() => {
       // 设置固定单元格的阴影
-      isShowMain.value = val
+      isShowMain.value = !!val
     }, 100)
   }
 )
@@ -33,7 +33,7 @@ const close = () => {
   <teleport to="#lew-drawer">
     <transition name="fade">
       <div
-        v-if="_visible"
+        v-if="visible"
         class="lew-drawer"
         :class="{ 'lew-drawer-show': isShowMain }"
         @click="close"

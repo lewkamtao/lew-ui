@@ -36,7 +36,7 @@ const open4 = (): void => {
 <style lang="scss" scoped>
 .title {
   padding: 10px;
-  background-color: #f2f2f2;
+  background-color: var(--lew-bgcolor-3);
   border-radius: 5px;
   color: #f93;
 }

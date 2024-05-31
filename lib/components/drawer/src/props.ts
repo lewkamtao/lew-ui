@@ -1,11 +1,12 @@
 import type { ExtractPropTypes } from 'vue'
-
-export const drawerProps = {
+export const drawerModel = {
   visible: {
-    type: Boolean,
-    default: false,
-    description: '是否显示'
-  },
+    type: String,
+    default: '',
+    description: '绑定值'
+  }
+}
+export const drawerProps = {
   width: {
     type: Number,
     default: 30,
