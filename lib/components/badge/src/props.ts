@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 
-type badgeColor =
+export type BadgeColor =
   | 'red'
   | 'orange'
   | 'yellow'
@@ -22,7 +22,7 @@ export const badgeProps = {
     description: '此项为空时，则默认显示一个点。'
   },
   color: {
-    type: String as PropType<badgeColor>,
+    type: String as PropType<BadgeColor>,
     default: 'red',
     description: '颜色'
   }

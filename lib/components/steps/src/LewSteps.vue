@@ -1,197 +1,180 @@
 <script lang="ts" setup>
-import { object2class, getColorType } from 'lew-ui/utils'
-import { LewIcon } from 'lew-ui'
-import { tagProps } from './props'
-
-const props = defineProps(tagProps)
-const emit = defineEmits(['close'])
-const close = () => {
-  if (props.disabled) {
-    return
-  }
-  emit('close')
-}
-
-const getSize = computed(() => {
-  switch (props.size) {
-    case 'small':
-      return 12
-    case 'medium':
-      return 14
-    case 'large':
-      return 16
-    default:
-      return 14
-  }
-})
-
-const tagClassName = computed(() => {
-  const { size, disabled } = props
-  return object2class('lew-tag', { size, disabled })
-})
-
-const getStyle = computed(() => {
-  const { round, type, color } = props
-  const styleObj = {} as any
-  const _color = getColorType(color)
-  switch (type) {
-    case 'fill':
-      styleObj.backgroundColor = `var(--lew-color-${_color})`
-      styleObj.color = 'var(--lew-color-white)'
-      break
-    case 'light':
-      styleObj.backgroundColor = `var(--lew-color-${_color}-light)`
-      styleObj.color = `var(--lew-color-${_color}-dark)`
-      break
-    case 'ghost':
-      styleObj.backgroundColor = 'transparent'
-      styleObj.border = `1px solid var(--lew-color-${_color})`
-      styleObj.color = `var(--lew-color-${_color}-dark)`
-      styleObj.boxShadow = 'none'
-      break
-    default:
-      styleObj.color = 'var(--lew-color-white)'
-      styleObj.backgroundColor = `var(--lew-color-${_color})`
-      break
-  }
-  styleObj.borderRadius = round ? '20px' : 'none'
-  return styleObj
-})
+import { stepsProps } from './props'
+defineProps(stepsProps)
+const stepsValue: Ref<number | undefined> = defineModel()
 </script>
 
 <template>
-  <div class="lew-tag" :class="tagClassName" :style="getStyle">
-    <div class="lew-tag-left">
-      <slot name="left"></slot>
-    </div>
-    <div class="lew-tag-value">
-      <slot></slot>
-    </div>
-    <div class="lew-tag-right">
-      <slot name="right"></slot>
-    </div>
-    <div v-if="closable" class="lew-tag-close" @click.stop="close">
-      <lew-icon :size="getSize" type="x" />
+  <div class="lew-steps lew-scrollbar">
+    <div
+      v-for="(item, index) in options"
+      :key="index"
+      class="lew-steps-item"
+      :class="{
+        'lew-steps-item-active': index === (stepsValue || 1) - 1,
+        'lew-steps-item-succeeded': index < (stepsValue || 1) - 1,
+        'lew-steps-item-error': index === (stepsValue || 1) - 1 && status === 'error',
+        'lew-steps-item-warning': index === (stepsValue || 1) - 1 && status === 'warning',
+        'lew-steps-item-done': index === (stepsValue || 1) - 1 && status === 'done'
+      }"
+    >
+      <div class="lew-steps-item-index">
+        <lew-icon
+          v-if="index === (stepsValue || 1) - 1 && status === 'pending'"
+          size="16"
+          stroke-width="3"
+          animation="spin"
+          animationSpeed="fast"
+          type="loader"
+        />
+        <lew-icon
+          v-else-if="index === (stepsValue || 1) - 1 && status === 'warning'"
+          size="16"
+          stroke-width="3"
+          type="alert-circle"
+        />
+        <lew-icon
+          v-else-if="index === (stepsValue || 1) - 1 && status === 'error'"
+          size="16"
+          stroke-width="3"
+          type="x"
+        />
+
+        <lew-icon
+          :style="{ color: 'var(--lew-color-primary)' }"
+          v-else-if="
+            index < (stepsValue || 1) - 1 || (index === (stepsValue || 1) - 1 && status === 'done')
+          "
+          size="16"
+          stroke-width="3"
+          type="check"
+        />
+        <span v-else class="index">{{ index + 1 }}</span>
+      </div>
+      <div class="lew-steps-item-info">
+        <div class="lew-steps-item-title">
+          <lew-text-trim placement="bottom" :text="item.title" />
+        </div>
+        <div class="lew-steps-item-description">
+          <lew-text-trim allowHtml :lineClamp="2" placement="bottom" :text="item.description" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss">
-.lew-tag {
+.lew-steps {
+  width: 100%;
+  overflow-x: auto;
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  user-select: none;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 15px;
   box-sizing: border-box;
-  overflow: hidden;
-  flex-shrink: 0;
-  .lew-tag-value {
-    font-weight: normal;
-    padding: 0px 3px;
-    box-sizing: border-box;
-    white-space: nowrap;
-  }
 
-  .lew-tag-close {
-    display: inline-flex;
-    align-items: center;
+  .lew-steps-item {
+    display: flex;
+    align-items: flex-start;
     justify-content: center;
-    border-radius: 20px;
-    padding: 2px;
-    margin-left: -3px;
-    cursor: pointer;
-  }
-
-  .lew-tag-close:hover {
-    background-color: rgba($color: #000, $alpha: 0.1);
-  }
-
-  .lew-tag-close:active {
-    background-color: rgba($color: #000, $alpha: 0.2);
-  }
-
-  .lew-tag-left {
-    margin-left: 3px;
-    display: inline-flex;
-    align-items: center;
+    flex: 1;
+    overflow: hidden;
+    padding: 0px 15px;
+    min-width: 200px;
     box-sizing: border-box;
+    .lew-steps-item-index {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      font-size: 16px;
+      background-color: var(--lew-bgcolor-3);
+    }
+
+    .lew-steps-item-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      width: 100%;
+      gap: 5px;
+      margin-top: 5px;
+      margin-left: 10px;
+    }
+    .lew-steps-item-title {
+      position: relative;
+      font-size: 16px;
+      background-color: var(--lew-bgcolor-0);
+      padding-right: 15px;
+      box-sizing: border-box;
+      max-width: 150px;
+      white-space: nowrap;
+    }
+    .lew-steps-item-title::after {
+      position: absolute;
+      content: '';
+      top: 50%;
+      left: 100%;
+      transform: translateY(-50%);
+      width: 5000px;
+      height: 1px;
+      background-color: var(--lew-bgcolor-3);
+    }
+    .lew-steps-item-description {
+      font-size: 14px;
+      max-width: 200px;
+      color: var(--lew-text-color-5);
+    }
+  }
+  .lew-steps-item-active {
+    .lew-steps-item-index {
+      background-color: var(--lew-color-primary);
+      color: var(--lew-color-white);
+    }
+    .lew-steps-item-title {
+      font-weight: bold;
+    }
+  }
+  .lew-steps-item-warning {
+    .lew-steps-item-index {
+      background-color: var(--lew-color-warning);
+      color: var(--lew-color-white);
+    }
+    .lew-steps-item-title {
+      font-weight: bold;
+    }
+  }
+  .lew-steps-item-error {
+    .lew-steps-item-index {
+      background-color: var(--lew-color-error);
+      color: var(--lew-color-white);
+    }
+    .lew-steps-item-title {
+      font-weight: bold;
+    }
+  }
+  .lew-steps-item-succeeded,
+  .lew-steps-item-done {
+    .lew-steps-item-index {
+      background-color: var(--lew-color-primary-light);
+
+      .index {
+        display: none;
+      }
+    }
+    .lew-steps-item-title::after {
+      background-color: var(--lew-color-primary);
+    }
   }
 
-  .lew-tag-right {
-    margin-right: 3px;
-    display: inline-flex;
-    align-items: center;
+  .lew-steps-item:last-child {
+    flex: none;
+    .lew-steps-item-title::after {
+      display: none;
+    }
   }
-}
-
-.lew-tag-to {
-  cursor: pointer;
-}
-
-.lew-tag-size-small {
-  height: 20px;
-  min-width: 20px;
-  line-height: 20px;
-  padding: 0px;
-  font-size: 11px;
-
-  .lew-tag-close {
-    margin-left: -2px;
-    font-size: 12px;
-    margin-right: 4px;
-  }
-
-  .lew-tag-value {
-    padding: 0px 4px;
-  }
-}
-
-.lew-tag-bold {
-  font-weight: bold;
-
-  .lew-tag-value {
-    font-weight: bold;
-  }
-}
-
-.lew-tag-size-medium {
-  height: 24px;
-  min-width: 24px;
-  line-height: 24px;
-  padding: 0px 2px;
-  font-size: 13px;
-
-  .lew-tag-close {
-    margin-left: -3px;
-    font-size: 13px;
-    margin-right: 2px;
-  }
-
-  .lew-tag-value {
-    padding: 0px 4px;
-  }
-}
-
-.lew-tag-size-large {
-  height: 28px;
-  min-width: 28px;
-  line-height: 28px;
-  padding: 0px 4px;
-  font-size: 15px;
-
-  .lew-tag-close {
-    margin-left: -4px;
-    font-size: 14px;
-  }
-
-  .lew-tag-value {
-    padding: 0px 4px;
-  }
-}
-
-.lew-tag-disabled {
-  opacity: var(--lew-disabled-opacity);
-  pointer-events: none;
 }
 </style>

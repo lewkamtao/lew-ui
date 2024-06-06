@@ -1,2 +1,2 @@
-export { default as LewTag } from './src/LewTag.vue'
+export { default as LewSteps } from './src/LewSteps.vue'
 export * from './src/props'

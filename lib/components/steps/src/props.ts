@@ -1,53 +1,30 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 
-type TagSize = 'small' | 'medium' | 'large'
-type TagType = 'fill' | 'light' | 'ghost'
-type TagColor =
-  | 'red'
-  | 'orange'
-  | 'yellow'
-  | 'green'
-  | 'mint'
-  | 'teal'
-  | 'cyan'
-  | 'blue'
-  | 'indigo'
-  | 'purple'
-  | 'pink'
-  | 'gray'
-  | 'brown'
+export type StepsOptions = {
+  title: string
+  description: string
+}
 
-export const tagProps = {
-  type: {
-    type: String as PropType<TagType>,
+export type StepsStatus = 'pending' | 'done' | 'error' | 'warning'
+
+export const stepsModel = {
+  modelValue: {
+    type: [String, Number, undefined],
+    default: '',
+    description: '绑定值'
+  }
+}
+export const stepsProps = {
+  options: {
+    type: Array as PropType<StepsOptions[]>,
     default: 'fill',
     description: '类型'
   },
-  color: {
-    type: String as PropType<TagColor>,
-    default: 'blue',
-    description: '颜色'
-  },
-  size: {
-    type: String as PropType<TagSize>,
-    default: 'medium',
-    description: '大小'
-  },
-  round: {
-    type: Boolean,
-    default: false,
-    description: '是否圆角'
-  },
-  closable: {
-    type: Boolean,
-    default: false,
-    description: '是否可关闭'
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-    description: '是否禁用'
+  status: {
+    type: String as PropType<StepsStatus>,
+    default: '',
+    description: '状态'
   }
 }
 
-export type TagProps = ExtractPropTypes<typeof tagProps>
+export type StepsProps = ExtractPropTypes<typeof stepsProps>
