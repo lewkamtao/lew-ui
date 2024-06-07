@@ -17,7 +17,7 @@ export const stepsModel = {
 export const stepsProps = {
   options: {
     type: Array as PropType<StepsOptions[]>,
-    default: 'fill',
+    default: [],
     description: '类型'
   },
   status: {

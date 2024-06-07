@@ -2,26 +2,20 @@
 const options = [
   {
     title: 'Step 1',
-    description: 'This is step 1This is stes step 3'
+    description: 'This is step 1'
   },
   {
     title: 'Step 2',
-    description: 'This is step 2tep 3'
+    description: 'This is step 2'
   },
   {
     title: 'Step 3',
-    description:
-      'This is step 3 This is stepep 3ThiThis is step 3 This is step 3ThiThis is step 3 This is step 3ThiThis is step 3 This is step 3ThiThis is step 3 This is step 3ThiThis is step 3 This is step 3ThiThis is step 3 This is step 3This step 3This is step 3This is step 3'
-  },
-  {
-    title: 'Step 4',
-    description:
-      'This is step 3 This is stepep 3ThiThis is step 3 This is step 3ThiThis is step 3 This is step 3ThiThis is step 3 This is step 3ThiThis is step 3 This is step 3ThiThis is step 3 This is step 3ThiThis is step 3 This is step 3This step 3This is step 3This is step 3'
+    description: 'This is step 3'
   }
 ]
 
 const status = ref('error')
-const currentStep = ref(1)
+const currentStep = ref(2)
 </script>
 
 <template>
