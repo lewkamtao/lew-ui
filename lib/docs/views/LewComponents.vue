@@ -94,13 +94,13 @@ options.value = [
       },
       {
         label: 'Steps',
-        value: '/Steps'
+        value: '/Steps',
+        tagText: 'New',
+        tagColor: 'success'
       },
       {
         label: 'Menu',
         value: '/Menu',
-        tagText: 'New',
-        tagColor: 'success'
       },
       {
         label: 'Dropdown',
@@ -178,8 +178,8 @@ options.value = [
       {
         label: 'TreeSelect',
         value: '/TreeSelect',
-        tagText: 'Test',
-        tagColor: 'warning'
+        tagText: 'New',
+        tagColor: 'success'
       },
       {
         label: 'Switch',

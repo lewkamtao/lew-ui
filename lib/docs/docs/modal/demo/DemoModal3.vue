@@ -19,8 +19,6 @@ const ok = () => {
     width="450px"
     :okProps="{ request: ok }"
     closeable
-    customHeader
-    customFooter
     @cancel="visible = false"
   >
     <template #header>

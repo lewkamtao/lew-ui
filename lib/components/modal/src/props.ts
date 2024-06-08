@@ -25,17 +25,11 @@ export const modalProps = {
     default: 'auto',
     description: '高度'
   },
-  customHeader: {
+  hideFooter: {
     type: Boolean,
     default: false,
-    description: '自定义头部'
+    description: '隐藏底部'
   },
-  customFooter: {
-    type: Boolean,
-    default: false,
-    description: '自定义底部'
-  },
-
   closeByEsc: {
     type: Boolean,
     default: false,

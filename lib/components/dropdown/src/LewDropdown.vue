@@ -81,7 +81,7 @@ defineExpose({ show, hide })
   }
   .lew-dropdown-option:hover {
     color: var(--lew-text-color-0);
-    background-color: var(--lew-backdrop-bg-active);
+    background-color: var(--lew-pop-bg-active);
   }
 }
 </style>

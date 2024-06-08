@@ -11,8 +11,7 @@
 }
 
 .tippy-box[data-lew~='popover'] {
-  background-color: var(--lew-backdrop-bg) !important;
-  backdrop-filter: blur(20px);
+  background-color: var(--lew-pop-bg) !important;
   border: var(--lew-popover-border) !important;
   box-shadow: var(--lew-popover-box-shadow) !important;
 }

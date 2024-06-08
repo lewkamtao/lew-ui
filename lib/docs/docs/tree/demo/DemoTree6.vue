@@ -23,6 +23,7 @@ const change = (e: any) => {
 
 <template>
   <lew-tree
+    style="width: 300px"
     v-model="v"
     multiple
     expandAll

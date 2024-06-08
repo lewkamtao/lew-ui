@@ -18,18 +18,13 @@ const open4 = (): void => {
 </script>
 <template>
   <lew-flex gap="20" x="start">
-    <lew-drawer v-model:visible="visible1" position="right">
-      <div class="title">标题</div>
-    </lew-drawer>
+    <lew-drawer title="新建商品" v-model:visible="visible1" position="right"> </lew-drawer>
     <lew-button text="右边" @click="open1" />
-
-    <lew-drawer v-model:visible="visible2" position="bottom" />
+    <lew-drawer title="新建商品" v-model:visible="visible2" position="bottom" />
     <lew-button text="下边" @click="open2" />
-
-    <lew-drawer v-model:visible="visible3" position="left" />
+    <lew-drawer title="新建商品" v-model:visible="visible3" position="left" />
     <lew-button text="左边" @click="open3" />
-
-    <lew-drawer v-model:visible="visible4" position="top" />
+    <lew-drawer title="新建商品" v-model:visible="visible4" position="top" />
     <lew-button text="上边" @click="open4" />
   </lew-flex>
 </template>

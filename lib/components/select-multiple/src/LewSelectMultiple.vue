@@ -183,7 +183,7 @@ const showHandle = () => {
 }
 const getVirtualHeight = computed(() => {
   let height = state.options.length * props.itemHeight
-  height = height >= 320 ? 320 : height
+  height = height >= 280 ? 280 : height
   return `${height}px`
 })
 
@@ -667,13 +667,13 @@ defineExpose({ show, hide })
 
     .lew-select-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-backdrop-bg-active);
+      background-color: var(--lew-pop-bg-active);
     }
 
     .lew-select-item-active {
       color: var(--lew-checkbox-color);
       font-weight: bold;
-      background-color: var(--lew-backdrop-bg-active);
+      background-color: var(--lew-pop-bg-active);
 
       .icon-check {
         margin-right: 10px;
@@ -683,7 +683,7 @@ defineExpose({ show, hide })
     .lew-select-item-active:hover {
       color: var(--lew-checkbox-color);
       font-weight: bold;
-      background-color: var(--lew-backdrop-bg-active);
+      background-color: var(--lew-pop-bg-active);
     }
   }
 }

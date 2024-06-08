@@ -73,20 +73,20 @@ if (props.closeByEsc) {
       <transition name="lew-modal">
         <div v-if="visible" class="lew-modal" @click="maskClick">
           <div :style="getModalStyle" class="lew-modal-box" @click.stop>
-            <div v-if="customHeader" class="header-slot">
+            <div v-if="$slots.header" class="header-slot">
               <slot name="header"></slot>
             </div>
-            <lew-flex v-else mode="between" y="center" class="header">
+            <lew-flex v-else-if="title" mode="between" y="center" class="header">
               <lew-text-trim class="title" :text="title" />
               <lew-icon size="18" class="lew-form-icon-clear" type="x" @click="visible = false" />
             </lew-flex>
 
             <slot></slot>
 
-            <div v-if="customFooter" class="footer-slot">
+            <div v-if="$slots.footer" class="footer-slot">
               <slot name="footer"></slot>
             </div>
-            <lew-flex v-else x="end" y="center" class="footer">
+            <lew-flex v-else-if="!hideFooter" x="end" y="center" class="footer">
               <lew-button
                 v-bind="{
                   type: 'text',
@@ -146,6 +146,7 @@ if (props.closeByEsc) {
       position: relative;
       height: 50px;
       padding: 10px 20px;
+      border-bottom: var(--lew-modal-header-border);
 
       .title {
         font-size: 16px;
@@ -160,8 +161,8 @@ if (props.closeByEsc) {
     }
 
     .footer {
-      height: 50px;
       padding: 10px 20px;
+      border-top: var(--lew-modal-footer-border);
     }
 
     .header-slot {

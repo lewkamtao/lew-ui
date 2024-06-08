@@ -184,6 +184,12 @@
   --lew-tabs-active-color: #fff;
   // dialog / modal
   --lew-modal-bgcolor: rgba(0, 0, 0, 0.6);
+  --lew-modal-header-border: 1px rgb(227, 227, 233) solid;
+  --lew-modal-footer-border: 1px rgb(227, 227, 233) solid;
+  // drawer
+  --lew-drawer-bgcolor: rgba(0, 0, 0, 0.6);
+  --lew-drawer-header-border: 1px rgb(227, 227, 233) solid;
+  --lew-drawer-footer-border: 1px rgb(227, 227, 233) solid;
   //  dialog / modal box
   --lew-modal-box-bgcolor: #fff;
   // loading
@@ -198,14 +204,15 @@
   --lew-popover-border: 1px rgb(204, 204, 216) solid;
   --lew-popover-box-shadow: 0 0px 30px #0000001e;
   --lew-tooltip-shadow: 0 0px 20px #0000002c;
+
   // table
   --lew-table-header-bgColor: rgb(249, 249, 249);
   --lew-table-border: 1px #f6f5f8 solid;
   --lew-table-tr-selected: #eef3ff;
   --lew-table-scroll-line-color-start: rgba(0, 0, 0, 0);
   --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.15);
-  --lew-backdrop-bg: rgba(255, 255, 255, 0.5);
-  --lew-backdrop-bg-active: rgba(0, 0, 0, 0.05);
+  --lew-pop-bg: rgba(255, 255, 255, 1);
+  --lew-pop-bg-active: rgba(0, 0, 0, 0.05);
   --lew-tooltip-bg: #fff;
   --lew-tooltip-color: #000;
 }
@@ -356,6 +363,12 @@
   --lew-tabs-active-color: rgb(14, 14, 14);
   // dialog / modal
   --lew-modal-bgcolor: rgba(0, 0, 0, 0.45);
+  --lew-modal-header-border: 1px rgba(255, 255, 255, 0.1) solid;
+  --lew-modal-footer-border: 1px rgba(255, 255, 255, 0.1) solid;
+  // drawer
+  --lew-drawer-bgcolor: rgba(0, 0, 0, 0.45);
+  --lew-drawer-header-border: 1px rgba(255, 255, 255, 0.1) solid;
+  --lew-drawer-footer-border: 1px rgba(255, 255, 255, 0.1) solid;
   //  dialog / modal box
   --lew-modal-box-bgcolor: #323339;
   // loading
@@ -385,8 +398,8 @@
   --lew-radio-border-color-hover: var(--lew-color-primary);
   --lew-radio-color: var(--lew-color-primary);
   --lew-radio-color-light: var(--lew-color-primary-light);
-  --lew-backdrop-bg: rgba(17, 18, 20, 0.75);
-  --lew-backdrop-bg-active: rgba(255, 255, 255, 0.05);
+  --lew-pop-bg: #242529;
+  --lew-pop-bg-active: rgba(255, 255, 255, 0.05);
   --lew-tooltip-bg: #43444a;
   --lew-tooltip-color: #fff;
 }

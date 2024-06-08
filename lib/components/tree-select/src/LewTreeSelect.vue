@@ -458,7 +458,7 @@ defineExpose({ show, hide })
   box-sizing: border-box;
   .tree-select-wrapper {
     padding: 5px 0px;
-    max-height: 320px;
+    max-height: 280px;
     overflow: auto;
   }
   .reslut-count {
@@ -523,7 +523,7 @@ defineExpose({ show, hide })
 
     .lew-select-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-backdrop-bg-active);
+      background-color: var(--lew-pop-bg-active);
     }
 
     .lew-select-slot-item {
@@ -533,13 +533,13 @@ defineExpose({ show, hide })
 
     .lew-select-slot-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-backdrop-bg-active);
+      background-color: var(--lew-pop-bg-active);
     }
 
     .lew-select-item-active {
       color: var(--lew-checkbox-color);
       font-weight: bold;
-      background-color: var(--lew-backdrop-bg-active);
+      background-color: var(--lew-pop-bg-active);
 
       .icon-check {
         margin-right: 10px;
@@ -549,7 +549,7 @@ defineExpose({ show, hide })
     .lew-select-item-active:hover {
       color: var(--lew-checkbox-color);
       font-weight: bold;
-      background-color: var(--lew-backdrop-bg-active);
+      background-color: var(--lew-pop-bg-active);
     }
   }
 }

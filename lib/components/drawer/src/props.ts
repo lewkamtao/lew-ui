@@ -1,4 +1,5 @@
 import type { ExtractPropTypes } from 'vue'
+import type { ButtonProps } from '../../button/index'
 export const drawerModel = {
   visible: {
     type: String,
@@ -7,58 +8,62 @@ export const drawerModel = {
   }
 }
 export const drawerProps = {
+  title: {
+    type: String,
+    default: '',
+    description: '标题'
+  },
   width: {
     type: Number,
-    default: 30,
+    default: 500,
     description: '宽度'
   },
   height: {
     type: Number,
-    default: 30,
+    default: 500,
     description: '高度'
   },
   position: {
     type: String,
-    default: '',
+    default: 'right',
     description: '位置，可选值为 left、right、top、bottom'
+  },
+  hideFooter: {
+    type: Boolean,
+    default: false,
+    description: '隐藏底部'
+  },
+  closeByEsc: {
+    type: Boolean,
+    default: false,
+    description: '是否允许esc关闭'
+  },
+  okProps: {
+    type: Object as PropType<ButtonProps>,
+    default: () => {
+      return {
+        text: '确定',
+        color: 'primary'
+      }
+    },
+    description: '确定按钮文字'
+  },
+  cancelProps: {
+    type: Object as PropType<ButtonProps>,
+    default: () => {
+      return {
+        type: 'text',
+        text: '取消',
+        color: 'normal'
+      }
+    },
+    description: '确定按钮文字'
+  },
+  closeOnClickOverlay: {
+    type: Boolean,
+    default: false,
+    description: '点击遮罩层是否关闭'
   }
 }
 
 export type DrawerProps = ExtractPropTypes<typeof drawerProps>
-
-export const getStyle = (position: string, width: number, height: number) => {
-  switch (true) {
-    case !position:
-      return 'width:30%;height:100%'
-
-    case position === 'left':
-      return `width:${width}%;height:100%`
-
-    case position === 'right':
-      return `width:${width}%;height:100%`
-
-    case position === 'top':
-      return `width:100%;height:${height}%`
-
-    case position === 'bottom':
-      return `width:100%;height:${height}%`
-
-    default:
-      break
-  }
-}
-
-export const getPosition = (position: string) => {
-  switch (position) {
-    case 'left':
-      return 0
-    case 'right':
-      return 0
-    case 'top':
-      return 1
-    case 'bottom':
-      return 1
-    default:
-      return 0
-  }
-}

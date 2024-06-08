@@ -6,7 +6,7 @@
   flex-direction: column;
   right: 30px;
   top: 20px;
-  z-index: 999;
+  z-index: 99999;
   .lew-notification {
     position: relative;
     width: auto;
@@ -28,8 +28,8 @@
     font-size: 14px;
     border-radius: var(--lew-border-radius-medium);
     overflow: hidden;
-    background-color: var(--lew-backdrop-bg) !important;
-    backdrop-filter: blur(20px);
+    background-color: var(--lew-pop-bg) !important;
+
     .lew-notification-box {
       display: flex;
       width: 100%;
@@ -49,13 +49,13 @@
         .lew-notification-title {
           font-size: 14px;
           font-weight: bold;
-          color: var(--lew-text-color-2);
+          color: var(--lew-text-color-0);
         }
         .lew-notification-content {
           width: 100%;
           margin-top: 5px;
           font-size: 14px;
-          color: var(--lew-text-color-4);
+          color: var(--lew-text-color-2);
           white-space: pre-wrap;
           word-wrap: break-word;
           font-weight: 300;
@@ -78,11 +78,11 @@
         color: var(--lew-text-color-5);
         &:hover {
           color: var(--lew-text-color-2);
-          background: rgba($color: #000000, $alpha: 0.05);
+          background: var(--lew-bgcolor-3);
         }
         &:active {
           color: var(--lew-text-color-0);
-          background: rgba($color: #000000, $alpha: 0.15);
+          background: var(--lew-bgcolor-5);
         }
       }
     }

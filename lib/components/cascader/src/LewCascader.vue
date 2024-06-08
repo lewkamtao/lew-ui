@@ -644,7 +644,7 @@ defineExpose({ show, hide })
   width: 100%;
   box-sizing: border-box;
   min-width: 180px;
-  height: 320px;
+  height: 280px;
   overflow: hidden;
   transition: var(--lew-form-transition);
   user-select: none;
@@ -757,7 +757,7 @@ defineExpose({ show, hide })
 
     .lew-cascader-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-backdrop-bg-active);
+      background-color: var(--lew-pop-bg-active);
     }
 
     .lew-cascader-slot-item {
@@ -766,11 +766,11 @@ defineExpose({ show, hide })
 
     .lew-cascader-slot-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-backdrop-bg-active);
+      background-color: var(--lew-pop-bg-active);
     }
 
     .lew-cascader-item-hover {
-      background-color: var(--lew-backdrop-bg-active);
+      background-color: var(--lew-pop-bg-active);
       .icon-check {
         margin-right: 10px;
       }

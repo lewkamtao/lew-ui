@@ -22,5 +22,13 @@ const change = (e: any) => {
 </script>
 
 <template>
-  <lew-tree v-model="v" showCheckbox showLine multiple :data-source="options" @change="change" />
+  <lew-tree
+    style="width: 300px"
+    v-model="v"
+    showCheckbox
+    showLine
+    multiple
+    :data-source="options"
+    @change="change"
+  />
 </template>
