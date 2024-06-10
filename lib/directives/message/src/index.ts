@@ -1,5 +1,6 @@
 import { getStatusIcon } from 'lew-ui/utils'
 import '../styles/index.scss'
+import { t } from 'vitest/dist/index-4a906fa4'
 
 type MessageFnOptions = {
   id: string
@@ -90,13 +91,20 @@ const LewMessage: any = {
       // 执行异步方法
       asyncFn()
         .then(
-          ({ content = '请求成功！', duration = 3000 }: { content: string; duration: number }) => {
+          ({
+            content = '请求成功！',
+            duration = 3000,
+            type = 'success'
+          }: {
+            content: string
+            duration: number
+            type?: string
+          }) => {
             // 隐藏loading消息
             LewMessage.close({ id: 'request-loading' })
 
             // 显示success消息
-            LewMessage.success({
-              id: 'request-success',
+            LewMessage[type]({
               content,
               duration
             })
@@ -106,7 +114,6 @@ const LewMessage: any = {
           ({ content = '加载失败！', duration = 3000 }: { content: string; duration: number }) => {
             // 隐藏loading消息
             LewMessage.close({ id: 'request-loading' })
-
             // 显示success消息
             LewMessage.error({
               id: 'request-fail',

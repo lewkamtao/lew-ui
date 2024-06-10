@@ -4,9 +4,9 @@ const request = (type: string) => {
     return new Promise<any>((resolve) => {
       setTimeout(() => {
         if (type === 'success') {
-          resolve({ content: '加载成功！', duration: 1000 })
+          resolve({ content: '加载成功！', duration: 1000, type: 'success' })
         } else {
-          resolve({ content: '加载失败！', duration: 1000 })
+          resolve({ content: '加载失败！', duration: 1000, type: 'error' })
         }
       }, 1000)
     })

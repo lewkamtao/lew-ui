@@ -82,6 +82,8 @@ const stepsValue: Ref<number | undefined> = defineModel()
     padding: 0px 15px;
     min-width: 200px;
     box-sizing: border-box;
+    transition: 0.25s all;
+
     .lew-steps-item-index {
       display: flex;
       align-items: center;
@@ -92,6 +94,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
       border-radius: 50%;
       font-size: 16px;
       background-color: var(--lew-bgcolor-3);
+      transition: 0.25s all;
     }
 
     .lew-steps-item-info {
@@ -103,6 +106,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
       gap: 5px;
       margin-top: 5px;
       margin-left: 10px;
+      transition: 0.25s all;
     }
     .lew-steps-item-title {
       position: relative;
@@ -113,7 +117,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
       max-width: 150px;
       white-space: nowrap;
     }
-    .lew-steps-item-title::after {
+    .lew-steps-item-title::before {
       position: absolute;
       content: '';
       top: 50%;
@@ -122,6 +126,17 @@ const stepsValue: Ref<number | undefined> = defineModel()
       width: 5000px;
       height: 1px;
       background-color: var(--lew-bgcolor-3);
+    }
+    .lew-steps-item-title::after {
+      position: absolute;
+      content: '';
+      top: 50%;
+      left: 100%;
+      transform: translateY(-50%);
+      width: 0px;
+      height: 1px;
+      background-color: var(--lew-color-primary);
+      transition: 0.5s all ease-in;
     }
     .lew-steps-item-description {
       font-size: 14px;
@@ -166,13 +181,16 @@ const stepsValue: Ref<number | undefined> = defineModel()
       }
     }
     .lew-steps-item-title::after {
-      background-color: var(--lew-color-primary);
+      width: 40vw;
     }
   }
 
   .lew-steps-item:last-child {
     flex: none;
     .lew-steps-item-title::after {
+      width: 0px;
+    }
+    .lew-steps-item-title::before {
       display: none;
     }
   }
