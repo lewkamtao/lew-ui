@@ -166,12 +166,16 @@ const options = ref([
           value: '3'
         },
         {
-          label: 'PHP',
+          label: 'TyeScript',
           value: '4'
         },
         {
-          label: 'Python',
+          label: 'PHP',
           value: '5'
+        },
+        {
+          label: 'Python',
+          value: '6'
         }
       ]
     }
@@ -194,8 +198,16 @@ const options = ref([
   }
 ])
 
+let formRef = ref()
+
 onMounted(() => {
   sprs()
+  formRef.value.setForm({
+    tabs: '1',
+	radio_group: '1',
+    checkbox_group: ['1', '2'],
+    info: { input_tag: ['Red', 'Green', 'Blue'] }
+  })
 })
 
 const sprs = () => {
