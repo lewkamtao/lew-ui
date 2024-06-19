@@ -1,18 +1,18 @@
-import { PropType, ExtractPropTypes } from 'vue';
+import type { PropType, ExtractPropTypes } from 'vue'
 
 export type AlertItem = {
-    type: string;
-    title: string;
-    content?: string;
-    closeable?: boolean;
-};
+  type: string
+  title: string
+  content?: string
+  closeable?: boolean
+}
 
 export const alertProps = {
-    list: {
-        type: Array as PropType<AlertItem[]>,
-        default: [],
-        description: '配置列表'
-    }
-};
+  list: {
+    type: Array as PropType<AlertItem[]>,
+    default: [],
+    description: '配置列表'
+  }
+}
 
-export type AlertProps = ExtractPropTypes<typeof alertProps>;
+export type AlertProps = ExtractPropTypes<typeof alertProps>

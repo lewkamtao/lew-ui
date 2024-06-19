@@ -1,2 +1,2 @@
-export * from './src/props';
-export { default as LewDialog } from './src';
+export * from './src/props'
+export { default as LewDialog } from './src'

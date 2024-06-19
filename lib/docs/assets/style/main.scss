@@ -1,0 +1,49 @@
+body {
+  color: var(--lew-text-color-1);
+  background-color: var(--lew-bgcolor-3);
+  overflow: hidden;
+  font-size: 14px;
+  font-family:
+    PingFang SC,
+    Microsoft YaHei,
+    Arial Regular,
+    sans-serif;
+}
+
+:root {
+  --lew-siderbar-width: 250px;
+}
+
+a {
+  color: var(--lew-text-color-1);
+}
+
+.sub-title {
+  font-size: 14px;
+  color: var(--lew-text-color-6);
+  font-weight: 400;
+  line-height: 30px;
+}
+
+.demo-tips {
+  font-size: 14px;
+  color: var(--lew-text-color-6);
+  font-weight: 400;
+  margin: 20px 0px;
+}
+
+.guide-wrapper {
+  p {
+    line-height: 30px;
+    font-size: 14px;
+    margin: 10px 0px 20px 0px;
+    color: var(--lew-text-color-5);
+  }
+
+  .pre-box {
+    code {
+      border-radius: var(--lew-border-radius-small);
+      overflow: hidden;
+    }
+  }
+}

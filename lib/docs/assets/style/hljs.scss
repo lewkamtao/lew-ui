@@ -1,0 +1,148 @@
+.pre-box .hljs {
+  background-color: #fbfbfbd9;
+  outline: 1px #eee solid;
+  font-family: v-mono, SFMono-Regular, Menlo, Consolas, Courier, monospace;
+  color: #5d636f;
+  line-height: 22px;
+  .lew-dark & {
+    outline: 1px #2d2d2d solid;
+    background-color: #27282d;
+    color: #d4d4d4;
+  }
+}
+
+pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+}
+
+code.hljs {
+  padding: 3px 5px;
+}
+
+.hljs {
+  color: #abb2bf;
+  background: #282c34;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #454c58;
+  font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-formula,
+.hljs-keyword {
+  color: #8f13b4;
+}
+
+.hljs-deletion,
+.hljs-name,
+.hljs-section,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #eb3956;
+}
+
+.hljs-literal {
+  color: #4190a6;
+}
+
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta .hljs-string,
+.hljs-regexp,
+.hljs-string {
+  color: #249363;
+}
+
+.hljs-attr,
+.hljs-number,
+.hljs-selector-attr,
+.hljs-selector-class,
+.hljs-selector-pseudo,
+.hljs-template-variable,
+.hljs-type,
+.hljs-variable {
+  color: #bd7027;
+}
+
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-symbol,
+.hljs-title {
+  color: #428dcb;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title,
+.hljs-title.class_ {
+  color: #ee8c42;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 700;
+}
+
+.hljs-link {
+  text-decoration: underline;
+}
+
+.hljs-title.class_ {
+  color: rgb(204, 121, 38);
+}
+
+.hljs::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: var(--lew-bgcolor-2);
+  border-radius: 4px;
+}
+.hljs::-webkit-scrollbar-thumb:hover {
+  background-color: var(--lew-bgcolor-6);
+}
+.hljs::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: var(--lew-bgcolor-4);
+}
+/* 修改滚动条角的颜色为蓝色 */
+.hljs::-webkit-scrollbar-corner {
+  background-color: var(--lew-bgcolor-0);
+}
+.scrollbar-corner {
+  background-color: var(--lew-bgcolor-0);
+}
+
+.hljs::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: transparent;
+}
+.hljs:hover {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: var(--lew-bgcolor-2);
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--lew-bgcolor-6);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--lew-bgcolor-4);
+  }
+  /* 修改滚动条角的颜色为蓝色 */
+  &::-webkit-scrollbar-corner {
+    background-color: var(--lew-bgcolor-0);
+  }
+  .scrollbar-corner {
+    background-color: var(--lew-bgcolor-0);
+  }
+}

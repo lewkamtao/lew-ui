@@ -1,145 +1,281 @@
 <script setup lang="ts">
-    import { inputTagProps } from './props';
-    import { LewInput, LewTag } from 'lew-ui';
-    import _ from 'lodash';
-    const emit = defineEmits(['close', 'change']);
+import { inputTagProps } from './props'
+import { LewInput, LewTag } from 'lew-ui'
+import { cloneDeep } from 'lodash-es'
+import { object2class } from 'lew-ui/utils'
 
-    defineProps(inputTagProps);
-    const tagsValue: any = defineModel<string[]>();
-    const inputValue = ref();
-    const isInput = ref(false);
-    const lewInputRef = ref();
-    let isEnter = false;
+const emit = defineEmits(['close', 'change'])
 
-    let delDownTimer: any;
-    let delDownCheck = 0;
+const props = defineProps(inputTagProps)
+const modelValue: Ref<string[] | undefined> = defineModel()
+const inputValue = ref()
+const lewInputRef = ref()
+const isFocus = ref(false)
+let isEnter = false
 
-    const openInput = () => {
-        isInput.value = true;
-        nextTick(() => {
-            lewInputRef.value.toFocus();
-        });
-        document.onkeydown = function (event) {
-            if (inputValue.value === '') {
-                if (event.keyCode === 8 || event.keyCode === 46) {
-                    clearTimeout(delDownTimer);
-                    delDownTimer = setTimeout(() => {
-                        delDownCheck = 0;
-                    }, 500);
-                    delDownCheck += 1;
-                    if (delDownCheck >= 2) {
-                        tagsValue.value.splice(tagsValue.value.length - 1, 1);
-                        emit('change', _.cloneDeep(tagsValue.value));
-                        delDownCheck = 0;
-                    }
-                }
-            } else if (event.keyCode === 13) {
-                isEnter = true;
-            }
-        };
-    };
-
-    const blurFn = () => {
-        isInput.value = false;
-        document.onkeydown = null;
-        addTag();
-        if (isEnter) {
-            openInput();
+const openInput = () => {
+  isFocus.value = true
+  nextTick(() => {
+    lewInputRef.value.toFocus()
+  })
+  document.onkeydown = function (event) {
+    if (!inputValue.value) {
+      if (event.keyCode === 8 || event.keyCode === 46) {
+        if (modelValue.value && modelValue.value.length > 0) {
+          modelValue.value.splice(modelValue.value.length - 1, 1)
+          emit('change', cloneDeep(modelValue.value))
         }
-        isEnter = false;
-    };
+      }
+    } else if (event.keyCode === 13) {
+      isEnter = true
+    }
+  }
+}
 
-    const addTag = () => {
-        let _value = tagsValue.value || [];
-        if (inputValue.value) {
-            _value.push(inputValue.value);
-        }
-        inputValue.value = '';
-        tagsValue.value = _value;
-        emit('change', _value);
-    };
+const blurFn = () => {
+  document.onkeydown = null
+  isFocus.value = false
+  if (props.allowDuplicates) {
+    addTag()
+  } else {
+    if (!(modelValue.value || []).includes(inputValue.value)) {
+      addTag()
+    }
+  }
+  if (isEnter) {
+    openInput()
+  }
+  isEnter = false
+}
 
-    const delTag = (index: number) => {
-        tagsValue.value.splice(index, 1);
-        emit('change', tagsValue.value);
-        emit('close', tagsValue.value);
-    };
+const addTag = () => {
+  let _value = modelValue.value || []
+  if (inputValue.value) {
+    _value.push(inputValue.value)
+    inputValue.value = ''
+    modelValue.value = _value
+    emit('change', _value)
+  }
+}
+
+const autoWidthDelay = ref(false)
+
+const delTag = (index: number) => {
+  modelValue.value && modelValue.value.splice(index, 1)
+  if (modelValue.value && modelValue.value.length === 0) {
+    autoWidthDelay.value = true
+    setTimeout(() => {
+      autoWidthDelay.value = false
+    }, 550)
+  }
+  emit('change', modelValue.value)
+  emit('close', modelValue.value)
+}
+
+const getInputClassNames = computed(() => {
+  const { size, readonly, disabled, clearable } = props
+  return object2class('lew-input-tag-view', {
+    size,
+    readonly,
+    disabled,
+    clearable
+  })
+})
+
+const getIconSize = computed(() => {
+  const size: any = {
+    small: 13,
+    medium: 14,
+    large: 16
+  }
+  return size[props.size]
+})
+
+const clear = () => {
+  modelValue.value = []
+  inputValue.value = ''
+  emit('change', [])
+}
 </script>
 
 <template>
-    <div class="lew-input-tag-view">
-        <div style="margin-left: -10px; height: 26px"></div>
-        <TransitionGroup name="list">
-            <lew-tag
-                v-for="(item, index) in tagsValue"
-                :key="index"
-                type="light"
-                closable
-                @close="delTag(index)"
-                >{{ item }}
-            </lew-tag>
-        </TransitionGroup>
-        <label v-if="!isInput" class="lew-input-tag-button" @click="openInput">
-            <lew-icon :size="16" type="plus" />
-        </label>
-        <lew-input
-            v-else
-            ref="lewInputRef"
-            v-model="inputValue"
-            class="lew-input-tag"
-            size="small"
-            auto-width
-            placeholder=""
-            @blur="blurFn"
+  <div class="lew-input-tag-view" @click="openInput" :class="getInputClassNames">
+    <div :style="{ padding: (modelValue || []).length > 0 ? '5px' : '' }" class="lew-input-tag-box">
+      <TransitionGroup name="list">
+        <lew-tag
+          v-for="(item, index) in modelValue"
+          :key="index"
+          type="light"
+          :closable="!readonly"
+          @close="delTag(index)"
+          >{{ item }}
+        </lew-tag>
+      </TransitionGroup>
+      <lew-input
+        v-if="isFocus || (modelValue || []).length === 0"
+        ref="lewInputRef"
+        v-model="inputValue"
+        class="lew-input-tag"
+        :size="size"
+        :readonly="!isFocus"
+        :placeholder="(modelValue || []).length > 0 ? '' : placeholder"
+        @blur="blurFn"
+      />
+      <transition name="lew-form-icon-ani">
+        <lew-icon
+          v-if="clearable && (modelValue || []).length > 0 && !readonly"
+          class="lew-form-icon-clear"
+          :class="{
+            'lew-form-icon-clear-focus': isFocus
+          }"
+          :size="getIconSize"
+          type="x"
+          @mousedown.prevent=""
+          @click="clear"
         />
+      </transition>
     </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-    .lew-input-tag-view {
-        display: inline-flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 10px;
-        border: var(--lew-form-border-width solid rgba(0, 0, 0, 0));
-
-        .lew-input-tag {
-            height: 26px;
-            flex-shrink: 1;
-
-            ::v-deep input {
-                height: 26px;
-            }
-        }
+.lew-input-tag-view {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--lew-border-radius-small);
+  background-color: var(--lew-form-bgcolor);
+  box-sizing: border-box;
+  outline: 0px var(--lew-form-border-color) solid;
+  border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  transition: var(--lew-form-transition);
+  overflow: hidden;
+  width: 100%;
+  cursor: text;
+  :deep() {
+    .lew-tag {
+      background-color: var(--lew-bgcolor-0) !important;
     }
+  }
 
-    .lew-input-tag-button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
+  .lew-input-tag-box {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    box-sizing: border-box;
+    transition: var(--lew-form-transition);
+    :deep() {
+      .lew-input-view {
+        border-radius: 0px !important;
+      }
+    }
+  }
+  .lew-input-tag {
+    flex-shrink: 1;
+    border: none !important;
+    outline: none !important;
+    background: none !important;
+    margin-left: 2px;
+    overflow: hidden;
+    width: auto !important;
+    :deep() {
+      .lew-input-view {
+        border-radius: 0px !important;
+      }
+      .lew-input-box {
+        padding: 0px !important;
+      }
+      input {
         height: 26px;
-        width: 65px;
-        box-sizing: border-box;
-        border-radius: var(--lew-border-radius-small);
-        background-color: var(--lew-bgcolor-0);
-        color: var(--lew-text-color-8);
-        border: var(--lew-text-color-8) var(--lew-form-border-width) dashed;
+        left: 0px !important;
+      }
     }
+  }
+}
 
-    .lew-input-tag-button:hover {
-        color: var(--lew-color-primary);
-        border: var(--lew-color-primary) var(--lew-form-border-width) dashed;
-    }
+.lew-input-tag-view:hover {
+  background-color: var(--lew-form-bgcolor-hover);
+}
+.lew-input-tag-view:focus-within {
+  border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+  outline: var(--lew-form-ouline);
+  background-color: var(--lew-form-bgcolor-focus);
 
-    .list-enter-active,
-    .list-leave-active {
-        transition: all 0.15s ease-in-out;
+  :deep() {
+    .lew-tag {
+      background-color: var(--lew-color-primary-light) !important;
     }
+  }
+}
 
-    .list-enter-from,
-    .list-leave-to {
-        opacity: 0;
-        transform: translateX(-5px);
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.15s ease-in-out;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(-5px);
+}
+
+.lew-input-tag-view-size-small {
+  .lew-input-tag-box {
+    padding: var(--lew-form-input-padding-small);
+    font-size: var(--lew-form-font-size-small);
+    min-height: var(--lew-form-item-height-small);
+    line-height: var(--lew-form-input-line-height-small);
+  }
+  .lew-input-tag {
+    height: 20px;
+  }
+  :deep() {
+    .lew-tag {
+      height: 20px;
     }
+  }
+}
+
+.lew-input-tag-view-size-medium {
+  .lew-input-tag-box {
+    padding: var(--lew-form-input-padding-small);
+    font-size: var(--lew-form-font-size-medium);
+    line-height: var(--lew-form-input-line-height-medium);
+    min-height: var(--lew-form-item-height-medium);
+  }
+  .lew-input-tag {
+    height: 24px;
+  }
+  :deep() {
+    .lew-tag {
+      height: 24px;
+    }
+  }
+}
+
+.lew-input-tag-view-size-large {
+  .lew-input-tag-box {
+    padding: var(--lew-form-input-padding-small);
+    font-size: var(--lew-form-font-size-large);
+    line-height: var(--lew-form-input-line-height-large);
+    min-height: var(--lew-form-item-height-large);
+  }
+  .lew-input-tag {
+    height: 28px;
+  }
+  :deep() {
+    .lew-tag {
+      height: 28px;
+    }
+  }
+}
+
+.lew-input-tag-view-disabled {
+  pointer-events: none;
+  opacity: var(--lew-disabled-opacity);
+}
+.lew-input-tag-view-readonly {
+  pointer-events: none;
+}
 </style>

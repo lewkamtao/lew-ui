@@ -1,1 +1,1 @@
-export { default as LewLayout } from './src/LewLayout.vue';
+export { default as LewLayout } from './src/LewLayout.vue'
