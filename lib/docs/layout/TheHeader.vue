@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { useDark } from '@vueuse/core'
 
-const version = ref('2.1.11')
+const version = ref('2.1.12')
 
 const isDark = useDark({
   selector: 'html',
