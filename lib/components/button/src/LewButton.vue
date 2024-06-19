@@ -95,32 +95,18 @@ const getStyle = computed(() => {
     :style="getStyle"
     @click="handleClick"
   >
+    <div
+      class="lew-loading-icon"
+      :class="{
+        'lew-loading-isShow': (_loading || loading) && !disabled
+      }"
+    >
+      <lew-icon :size="getIconSize" animation="spin" animationSpeed="fast" type="loader" />
+    </div>
     <template v-if="iconPosition === 'left'">
       <lew-icon v-if="icon" class="lew-button-icon" :size="getIconSize" :type="icon" />
-      <div
-        class="lew-loading-icon"
-        :class="{
-          'lew-loading-isShow': (_loading || loading) && !disabled
-        }"
-      >
-        <lew-icon
-          v-if="!$slots.default && !text"
-          :size="getIconSize"
-          animation="spin"
-          animationSpeed="fast"
-          type="loader"
-        />
-      </div>
     </template>
     <div v-if="$slots.default || text" class="lew-button-content">
-      <div
-        class="lew-loading-icon"
-        :class="{
-          'lew-loading-isShow': (_loading || loading) && !disabled
-        }"
-      >
-        <lew-icon :size="getIconSize" animation="spin" animationSpeed="fast" type="loader" />
-      </div>
       <span class="lew-button-text">
         <template v-if="$slots.default">
           <slot></slot>
@@ -132,16 +118,6 @@ const getStyle = computed(() => {
     </div>
     <template v-if="iconPosition === 'right'">
       <lew-icon v-if="icon" class="lew-button-icon" :size="getIconSize" :type="icon" />
-      <lew-icon
-        class="lew-loading-icon"
-        :size="getIconSize"
-        animation="spin"
-        animationSpeed="fast"
-        :class="{
-          'lew-loading-isShow': (_loading || loading) && !disabled
-        }"
-        type="loader"
-      />
     </template>
   </button>
 </template>
@@ -168,13 +144,13 @@ const getStyle = computed(() => {
   border-radius: var(--lew-border-radius-small);
   box-sizing: border-box;
   overflow: hidden;
+  padding: 0px 16px;
 
   .lew-loading-icon {
     position: absolute;
     opacity: 0;
-    left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateY(-50%);
     transition: opacity 0.3s ease-in-out;
     display: inline-flex;
     align-items: center;
@@ -186,10 +162,6 @@ const getStyle = computed(() => {
   .lew-button-content {
     position: relative;
     z-index: 2;
-    .lew-loading-icon {
-      left: -20px;
-      transform: translateY(-50%);
-    }
   }
 
   .lew-loading-isShow {
@@ -253,13 +225,10 @@ const getStyle = computed(() => {
   min-width: 50px;
   height: var(--lew-form-item-height-small);
   line-height: var(--lew-form-item-height-small);
-  padding: 0px 16px;
   font-size: var(--lew-form-font-size-small);
   gap: 4px;
-  .lew-button-content {
-    .lew-loading-icon {
-      left: -16px;
-    }
+  .lew-loading-icon {
+    left: 9px;
   }
 }
 
@@ -267,13 +236,10 @@ const getStyle = computed(() => {
   min-width: 60px;
   height: var(--lew-form-item-height-medium);
   line-height: var(--lew-form-item-height-medium);
-  padding: 0px 18px;
   font-size: var(--lew-form-font-size-medium);
   gap: 6px;
-  .lew-button-content {
-    .lew-loading-icon {
-      left: -18px;
-    }
+  .lew-loading-icon {
+    left: 9.5px;
   }
 }
 
@@ -281,13 +247,10 @@ const getStyle = computed(() => {
   min-width: 70px;
   height: var(--lew-form-item-height-large);
   line-height: var(--lew-form-item-height-large);
-  padding: 0px 20px;
   font-size: var(--lew-form-font-size-large);
   gap: 8px;
-  .lew-button-content {
-    .lew-loading-icon {
-      left: -20px;
-    }
+  .lew-loading-icon {
+    left: 10px;
   }
 }
 
@@ -330,7 +293,7 @@ const getStyle = computed(() => {
 }
 
 .lew-button-size-small.lew-button-loading {
-  padding-left: 24px;
+  padding-left: 26px;
 }
 
 .lew-button-size-medium.lew-button-loading {
@@ -338,7 +301,7 @@ const getStyle = computed(() => {
 }
 
 .lew-button-size-large.lew-button-loading {
-  padding-left: 36px;
+  padding-left: 34px;
 }
 
 .lew-button-loading:active {
