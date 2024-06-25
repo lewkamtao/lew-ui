@@ -89,16 +89,3 @@ input:-webkit-autofill:active {
     color 9999999s ease-out,
     background-color 9999999s ease-out;
 }
-
-@font-face {
-  font-family: 'HarmonyOSHans-Regular';
-  src: url('./fonts/HarmonyOSHans-Regular.woff2')
-    format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
-
-body {
-  font-family: 'HarmonyOSHans-Regular', 'HarmonyOSHans-fallback', 'PingFangSC-Regular',
-    'Microsoft YaHei', 'Arial', 'Helvetica', sans-serif;
-}
