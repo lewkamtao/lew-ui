@@ -278,6 +278,9 @@ if (props.closeByEsc) {
       position: relative;
       top: 1px;
       width: 310px;
+      header {
+        margin-top: 4px;
+      }
     }
 
     main {
