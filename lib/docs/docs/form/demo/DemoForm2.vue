@@ -169,7 +169,6 @@ const submit = () => {
       "
     />
     <lew-flex style="width: calc(100% - 380px)" direction="y" x="start">
-      <lew-button text="获取form" @click="form = formRef.getForm()" />
       <pre>{{ form }}</pre>
     </lew-flex>
   </lew-flex>

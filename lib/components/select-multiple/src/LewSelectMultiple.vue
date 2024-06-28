@@ -362,9 +362,11 @@ defineExpose({ show, hide })
                     class="lew-select-checkbox"
                     :checked="getChecked(templateProps.value)"
                   />
-                  <div class="lew-select-label">
-                    {{ templateProps.label }}
-                  </div>
+                  <lew-text-trim
+                    :text="templateProps.label"
+                    :delay="[500, 0]"
+                    class="lew-select-label"
+                  />
                 </div>
               </div>
             </template>
@@ -642,9 +644,10 @@ defineExpose({ show, hide })
         position: relative;
         z-index: 5;
         height: 30px;
-        display: inline-flex;
-        align-items: center;
-        padding-left: 35px;
+        line-height: 30px;
+        padding-left: 38px;
+        box-sizing: border-box;
+        cursor: pointer !important;
       }
     }
 

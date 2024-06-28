@@ -28,7 +28,7 @@ export const textTrimProps = {
   },
   delay: {
     type: Array,
-    default: () => [80, 80],
+    default: [0, 0],
     description: '延迟显示和隐藏的时间'
   },
   lineClamp: {

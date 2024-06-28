@@ -1,17 +1,13 @@
-@font-face {
-  font-family: 'HarmonyOSHans-Regular';
-  src: url('../fonts/HarmonyOS_SansSC_Regular.ttf') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
-
 body {
   color: var(--lew-text-color-1);
   background-color: var(--lew-bgcolor-3);
   overflow: hidden;
   font-size: 14px;
-  font-family: 'HarmonyOSHans-Regular', 'HarmonyOSHans-fallback', 'PingFangSC-Regular',
-    'Microsoft YaHei', 'Arial', 'Helvetica', sans-serif;
+  font-family:
+    PingFang SC,
+    Microsoft YaHei,
+    Arial Regular,
+    sans-serif;
 }
 
 :root {

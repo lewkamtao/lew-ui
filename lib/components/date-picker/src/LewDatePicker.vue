@@ -105,7 +105,16 @@ defineExpose({ show, hide })
       </div>
     </template>
     <template #popover-body>
-      <lew-date ref="lewDateRef" v-model="modelValue" v-bind="props" @change="change" />
+      <lew-flex gap="0">
+        <lew-flex direction="y" gap="5" y="start" class="lew-date-picker-left">
+          <div class="item">今天</div>
+          <div class="item">昨天</div>
+          <div class="item">周末</div>
+        </lew-flex>
+        <lew-flex class="lew-date-picker-date-panel">
+          <lew-date ref="lewDateRef" v-model="modelValue" v-bind="props" @change="change" />
+        </lew-flex>
+      </lew-flex>
     </template>
   </lew-popover>
 </template>
@@ -200,5 +209,42 @@ defineExpose({ show, hide })
 .lew-date-picker-disabled {
   pointer-events: none;
   opacity: var(--lew-disabled-opacity);
+}
+
+:deep() {
+  .lew-date-picker-date-panel {
+    width: 273px;
+    flex-shrink: 0;
+  }
+
+  .lew-date-picker-left,
+  .lew-date-picker-right {
+    flex-shrink: 0;
+    height: 325px;
+    padding: 5px;
+    box-sizing: border-box;
+    width: 120px;
+    .item {
+      width: 100%;
+      height: 30px;
+      line-height: 30px;
+      border-radius: var(--lew-border-radius-small);
+      text-align: center;
+      background-color: var(--lew-form-bgcolor);
+      cursor: pointer;
+    }
+    .item:hover {
+      background-color: var(--lew-form-bgcolor-hover);
+    }
+    .item:active {
+      background-color: var(--lew-form-bgcolor-active);
+    }
+  }
+  .lew-date-picker-left {
+    border-right: var(--lew-popover-border);
+  }
+  .lew-date-picker-right {
+    border-left: var(--lew-popover-border);
+  }
 }
 </style>

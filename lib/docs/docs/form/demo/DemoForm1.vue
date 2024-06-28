@@ -328,7 +328,6 @@ const submit = async () => {
 </script>
 
 <template>
-  <lew-button @click="formRef.setForm({ size: 'medium' })">reset</lew-button>
   <lew-flex x="start" y="start" :gap="50">
     <lew-form
       ref="formRef"
@@ -342,7 +341,10 @@ const submit = async () => {
         }
       "
     />
-    <pre>{{ form }}</pre>
+    <lew-flex direction="y" x="start">
+      <lew-button @click="formRef.setForm({ size: 'medium' })">reset</lew-button>
+      <pre>{{ form }}</pre>
+    </lew-flex>
   </lew-flex>
 </template>
 <style scoped lang="scss">

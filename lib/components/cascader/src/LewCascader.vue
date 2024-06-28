@@ -280,9 +280,9 @@ const hideHandle = () => {
 const getCascaderWidth = computed(() => {
   const _hasChildOptions = state.optionsGroup.filter((e) => e && e.length > 0).length
   if (_hasChildOptions > 1) {
-    return _hasChildOptions * 180
+    return _hasChildOptions * 200
   }
-  return _hasChildOptions * 180
+  return _hasChildOptions * 200
 })
 
 const getLabel = computed(() => {
@@ -382,7 +382,7 @@ defineExpose({ show, hide })
               :height="38 * oItem.length"
               :style="{
                 zIndex: 20 - oIndex,
-                transform: oItem.length > 0 ? `translateX(${180 * oIndex}px)` : ''
+                transform: oItem.length > 0 ? `translateX(${200 * oIndex}px)` : ''
               }"
             >
               <template #default="{ data: templateProps }">
@@ -409,14 +409,14 @@ defineExpose({ show, hide })
                       class="lew-cascader-checkbox"
                       :checked="state.tobelabels.includes(templateProps.label)"
                     />
-                    <div
+                    <lew-text-trim
                       class="lew-cascader-label"
                       :class="{
                         'lew-cascader-label-free': free
                       }"
-                    >
-                      {{ templateProps.label }}
-                    </div>
+                      :text="templateProps.label"
+                      :delay="[500, 0]"
+                    />
                     <lew-icon
                       v-if="templateProps.loading"
                       size="14px"
@@ -643,8 +643,8 @@ defineExpose({ show, hide })
 .lew-cascader-body {
   width: 100%;
   box-sizing: border-box;
-  min-width: 180px;
-  height: 280px;
+  min-width: 200px;
+  height: 300px;
   overflow: hidden;
   transition: var(--lew-form-transition);
   user-select: none;
@@ -669,7 +669,7 @@ defineExpose({ show, hide })
       position: absolute;
       overflow-y: scroll;
       height: 100%;
-      width: 180px;
+      width: 200px;
       padding: 6px 6px 2px 6px;
       border-right: var(--lew-popover-border);
       box-sizing: border-box;
@@ -728,7 +728,7 @@ defineExpose({ show, hide })
       }
 
       .lew-cascader-label-free {
-        padding: 0px 8px 0px 35px;
+        padding: 0px 14px 0px 38px;
       }
     }
 

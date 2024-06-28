@@ -277,9 +277,11 @@ defineExpose({ show, hide })
                   }"
                 ></slot>
                 <div v-else class="lew-select-item" :class="getSelectItemClassName(templateProps)">
-                  <div class="lew-select-label">
-                    {{ templateProps.label }}
-                  </div>
+                  <lew-text-trim
+                    :text="templateProps.label"
+                    :delay="[500, 0]"
+                    class="lew-select-label"
+                  />
                   <lew-icon
                     v-if="getChecked(templateProps.value) && showCheckIcon"
                     class="icon-check"
@@ -514,10 +516,10 @@ defineExpose({ show, hide })
       user-select: none;
       font-size: 14px;
       padding: 0px 12px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+      height: 30px;
+      line-height: 30px;
       box-sizing: border-box;
+      cursor: pointer !important;
     }
 
     .lew-select-item:hover {
