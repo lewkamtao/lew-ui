@@ -20,9 +20,10 @@ import {
 } from 'lew-ui'
 import { formProps } from './props'
 import { cloneDeep, debounce } from 'lodash-es'
+import { after } from 'lodash'
 
 const props = defineProps(formProps)
-const emit = defineEmits(['change'])
+const emit = defineEmits(['change', 'mounted'])
 const form = ref({} as any)
 
 const componentOptions: Ref<any[]> = defineModel('options', {
@@ -318,6 +319,10 @@ const init = () => {
 }
 
 init()
+
+onMounted(() => {
+  emit('mounted')
+})
 
 defineExpose({ getForm, setForm, validate })
 </script>
