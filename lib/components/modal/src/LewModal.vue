@@ -52,7 +52,10 @@ watch(
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
-    if (v && visible.value) {
+    const dialogEl = document.getElementById('lew-dialog')
+    const hasDialog = dialogEl && dialogEl.children.length > 0
+    // 且 dialogEl 不为空
+    if (v && visible.value && !hasDialog) {
       visible.value = false
     }
   })
