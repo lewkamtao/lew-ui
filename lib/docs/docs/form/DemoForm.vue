@@ -38,7 +38,7 @@ const options = ref(
     <lew-demo-box title="自定义校验" :code="DemoForm3Code">
       <demo-form3 />
     </lew-demo-box>
-    <lew-demo-box v-if="false" title="总览" :code="DemoForm4Code">
+    <lew-demo-box  title="分栏表单" :code="DemoForm4Code">
       <demo-form4 />
     </lew-demo-box>
     <lew-demo-box v-if="false" title="其他" :code="DemoForm5Code">

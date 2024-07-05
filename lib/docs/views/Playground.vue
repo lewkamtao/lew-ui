@@ -67,11 +67,13 @@ const options = ref([
       maxLength: 30
     }
   },
+  {},
   {
     field: 'textarea', // 字段名
     label: '多行文本框', // 标签
     as: 'textarea', // 组件
     rules: Yup.string().required('不能为空'), // 校验规则
+    gridArea: '2 / 1 / 2 / 4',
     props: {
       clearable: true,
       showCount: true,
@@ -83,6 +85,7 @@ const options = ref([
     label: '单选选择器',
     as: 'select',
     rules: Yup.string().required('此项必填'),
+    gridArea: '3 / 1 / 4 / 1',
     props: {
       clearable: true,
       options: [
@@ -113,6 +116,7 @@ const options = ref([
     field: 'select_multiple',
     label: '多选选择器',
     as: 'select-multiple',
+    gridArea: '3 / 2 / 4 / 3',
     rules: Yup.array().min(2, '至少选择2个').required('此项必填'),
     props: {
       change: (e: any) => {
@@ -126,6 +130,7 @@ const options = ref([
     field: 'radio_group',
     label: '单选框',
     as: 'radio-group',
+    gridArea: '5 / 1 / 6 / 2',
     rules: Yup.string().required('此项必填'),
     props: {
       options: [
@@ -148,6 +153,7 @@ const options = ref([
     field: 'checkbox_group',
     label: '多选框',
     as: 'checkbox-group',
+    gridArea: '7 / 1 / 8 / 2',
     rules: Yup.array().min(1, '至少选择一个').required('此项必填'),
     props: {
       round: true,
@@ -328,12 +334,14 @@ const submit = async () => {
 </script>
 
 <template>
-  <lew-flex x="start" y="start" :gap="50">
+  <div class="playground">
     <lew-form
       ref="formRef"
+      direction="y"
       :size="form.size"
       :options="options"
       :labelWidth="80"
+      :column-gap="50"
       :col="3"
       @change="
         (e: any) => {
@@ -341,5 +349,11 @@ const submit = async () => {
         }
       "
     />
-  </lew-flex>
+  </div>
 </template>
+<style>
+.playground {
+  background-color: #fff;
+  padding: 120px;
+}
+</style>

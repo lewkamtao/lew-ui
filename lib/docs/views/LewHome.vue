@@ -140,7 +140,7 @@ const options = ref([
           value: '3'
         },
         {
-          label: '上海',
+          label: '打篮球',
           value: '4'
         }
       ]

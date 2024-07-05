@@ -14,10 +14,26 @@ export const formProps = {
     required: true,
     description: '表单配置'
   },
+
   size: {
     type: String,
     default: 'medium',
     description: '尺寸，可选值为 small、medium、large'
+  },
+  col: {
+    type: [Number, String],
+    default: 1,
+    description: '每行显示的表单项数量，最大值为 4'
+  },
+  columnGap: {
+    type: [Number, String],
+    default: 20,
+    description: '表单项间的间隔'
+  },
+  rowGap: {
+    type: [Number, String],
+    default: 20,
+    description: '表单项行间的间隔'
   },
   width: {
     type: [Number, String],

@@ -32,7 +32,7 @@ export const object2class = (prefix: string, props: Object) => {
   for (const [key, value] of Object.entries(props)) {
     if (typeof value === 'boolean' && value) {
       className += ` ${prefix}-${key}`
-    } else if (typeof value === 'string') {
+    } else if (typeof value === 'string' || typeof value === 'number') {
       className += ` ${prefix}-${key}-${value}`
     }
   }

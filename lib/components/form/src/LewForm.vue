@@ -20,7 +20,6 @@ import {
 } from 'lew-ui'
 import { formProps } from './props'
 import { cloneDeep, debounce } from 'lodash-es'
-import { after } from 'lodash'
 
 const props = defineProps(formProps)
 const emit = defineEmits(['change', 'mounted'])
@@ -32,8 +31,17 @@ const componentOptions: Ref<any[]> = defineModel('options', {
 })
 
 const getFormClassNames = computed(() => {
-  const { direction, size } = props
-  return object2class('lew-form', { direction, size })
+  const { direction, size, col } = cloneDeep(props)
+  return object2class('lew-form', { direction, size, col })
+})
+
+const getFormStyle = computed(() => {
+  const { width, rowGap, columnGap } = cloneDeep(props)
+  return {
+    width: any2px(width),
+    'grid-column-gap': any2px(columnGap),
+    'grid-row-gap': any2px(rowGap)
+  }
 })
 
 watchDebounced(
@@ -328,8 +336,15 @@ defineExpose({ getForm, setForm, validate })
 </script>
 
 <template>
-  <div class="lew-form" :class="getFormClassNames" :style="`width:${width}px`">
-    <div v-for="item in componentOptions" :key="item.field" class="lew-form-item">
+  <div class="lew-form" :class="getFormClassNames" :style="getFormStyle">
+    <div
+      v-for="item in componentOptions"
+      :key="item.field"
+      class="lew-form-item"
+      :style="{
+        'grid-area': item.gridArea || ''
+      }"
+    >
       <div :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''" class="label-box">
         <label :class="{ 'label-required': item.rules && item.label }">
           {{ item.label }}
@@ -453,12 +468,12 @@ defineExpose({ getForm, setForm, validate })
 <style lang="scss" scoped>
 .lew-form {
   width: 100%;
+  display: grid;
 
   .lew-form-item {
     display: flex;
     align-items: flex-start;
     gap: 28px;
-    padding-bottom: 30px;
 
     .label-box {
       display: inline-flex;
@@ -490,6 +505,22 @@ defineExpose({ getForm, setForm, validate })
       color: var(--lew-color-error-dark);
     }
   }
+}
+
+.lew-form-col-1 {
+  grid-template-columns: 1fr;
+}
+
+.lew-form-col-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.lew-form-col-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.lew-form-col-4 {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .lew-form-size-small {
