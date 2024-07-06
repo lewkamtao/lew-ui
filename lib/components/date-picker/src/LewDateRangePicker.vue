@@ -22,6 +22,7 @@ const modelValue: Ref<DateRangePickerModel> = defineModel()
 const visible = ref(false)
 const lewPopoverRef = ref()
 const { startKey, endKey } = props
+
 const lewDateRangePanelRef = ref()
 
 const show = () => {
@@ -49,7 +50,7 @@ const change = (e?: any) => {
 
 const showHandle = () => {
   visible.value = true
-  lewDateRangePanelRef.value.init()
+  lewDateRangePanelRef.value && lewDateRangePanelRef.value.init()
 }
 const hideHandle = () => {
   visible.value = false
@@ -130,14 +131,19 @@ defineExpose({ show, hide })
       </div>
     </template>
     <template #popover-body>
-      <lew-date-range ref="lewDateRangePanelRef" v-bind="props" v-model="modelValue" @change="change" />
+      <lew-date-range
+        ref="lewDateRangePanelRef"
+        v-bind="props"
+        v-model="modelValue"
+        @change="change"
+      />
     </template>
   </lew-popover>
 </template>
 
 <style lang="scss" scoped>
 .lew-popover {
-  width: 273px;
+  width: 100%;
 
   .lew-date-picker-view {
     display: inline-flex;

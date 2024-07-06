@@ -6,32 +6,6 @@ const schoolsOptions = schools.map((e, i) => {
   return { label: e, value: i + 1 }
 })
 
-const form = ref({} as any)
-
-onMounted(() => {
-  // 设置表单
-  formRef.value.setForm({
-    size: 'medium',
-    input: '文本框',
-    textarea: '多行文本',
-    select: '1',
-    select_multiple: [1, 2],
-    radio_group: '2',
-    checkbox_group: ['2'],
-    tabs: '2',
-    user: {
-      address: 30,
-      addd: true
-    },
-    info: {
-      asd: {
-        dsd: {
-          input_tag: ['测试', '小芳']
-        }
-      }
-    }
-  })
-})
 const options = ref([
   {
     label: '表单大小',
@@ -60,7 +34,7 @@ const options = ref([
     field: 'input', // 字段名
     label: '文本框', // 标签
     as: 'input', // 组件
-    rules: Yup.string().required('不能为空'), // 校验规则
+    rule: Yup.string().required('不能为空'), // 校验规则
     props: {
       // 组件props
       showCount: true,
@@ -71,7 +45,7 @@ const options = ref([
     field: 'textarea', // 字段名
     label: '多行文本框', // 标签
     as: 'textarea', // 组件
-    rules: Yup.string().required('不能为空'), // 校验规则
+    rule: Yup.string().required('不能为空'), // 校验规则
     props: {
       clearable: true,
       showCount: true,
@@ -82,7 +56,7 @@ const options = ref([
     field: 'select',
     label: '单选选择器',
     as: 'select',
-    rules: Yup.string().required('此项必填'),
+    rule: Yup.string().required('此项必填'),
     props: {
       clearable: true,
       options: [
@@ -113,7 +87,7 @@ const options = ref([
     field: 'select_multiple',
     label: '多选选择器',
     as: 'select-multiple',
-    rules: Yup.array().min(2, '至少选择2个').required('此项必填'),
+    rule: Yup.array().min(2, '至少选择2个').required('此项必填'),
     props: {
       change: (e: any) => {
         console.log(e)
@@ -126,7 +100,7 @@ const options = ref([
     field: 'radio_group',
     label: '单选框',
     as: 'radio-group',
-    rules: Yup.string().required('此项必填'),
+    rule: Yup.string().required('此项必填'),
     props: {
       options: [
         {
@@ -148,7 +122,7 @@ const options = ref([
     field: 'checkbox_group',
     label: '多选框',
     as: 'checkbox-group',
-    rules: Yup.array().min(1, '至少选择一个').required('此项必填'),
+    rule: Yup.array().min(1, '至少选择一个').required('此项必填'),
     props: {
       round: true,
       block: true,
@@ -176,7 +150,7 @@ const options = ref([
     field: 'tabs',
     label: '选项卡',
     as: 'tabs',
-    rules: Yup.string().required('此项必填'),
+    rule: Yup.string().required('此项必填'),
     props: {
       options: [
         {
@@ -202,7 +176,7 @@ const options = ref([
     field: 'user.address',
     label: '地址',
     as: 'cascader',
-    rules: Yup.string().required('地址必填'),
+    rule: Yup.string().required('地址必填'),
     props: {
       label: '是否同意',
       free: true,
@@ -295,16 +269,16 @@ const options = ref([
     field: 'user.addd',
     label: '',
     as: 'checkbox',
-    rules: Yup.boolean().oneOf([true], '请同意').required('请同意'),
+    rule: Yup.boolean().oneOf([true], '请同意').required('请同意'),
     props: {
       label: '是否同意'
     }
   },
   {
-    field: 'info.asd.dsd.input_tag',
+    field: 'info.a.b.c.input_tag',
     label: '标签输入框',
     as: 'input-tag',
-    rules: Yup.array().min(1, '至少选择一个').required('不能为空')
+    rule: Yup.array().min(1, '至少选择一个').required('不能为空')
   },
   {
     as: 'button',
@@ -320,11 +294,50 @@ const formRef = ref()
 const submit = async () => {
   const vail = await formRef.value.validate()
   if (vail) {
+    form.value = formRef.value.getForm()
     LewMessage.success('已提交')
   } else {
     LewMessage.warning('请完善表单')
   }
 }
+
+const form = ref({} as any)
+
+const setForm = () => {
+  // 设置表单
+  formRef.value.setForm({
+    size: 'medium',
+    input: '文本框',
+    textarea: '多行文本',
+    select: '1',
+    select_multiple: [1, 2],
+    radio_group: '2',
+    checkbox_group: ['2'],
+    tabs: '2',
+    user: {
+      address: 30,
+      addd: true
+    },
+    info: {
+      a: {
+        b: {
+          c: {
+            input_tag: ['测试', '小芳']
+          }
+        }
+      }
+    }
+  })
+}
+
+const resetForm = () => {
+  // 重置表单
+  formRef.value.setForm({ size: 'medium' })
+}
+
+onMounted(() => {
+  setForm()
+})
 </script>
 
 <template>
@@ -334,7 +347,8 @@ const submit = async () => {
       :size="form.size"
       class="form-box"
       :options="options"
-      :labelWidth="80"
+      :labelWidth="100"
+      @mounted="setForm"
       @change="
         (e: any) => {
           form = e
@@ -342,7 +356,11 @@ const submit = async () => {
       "
     />
     <lew-flex direction="y" x="start">
-      <lew-button @click="formRef.setForm({ size: 'medium' })">reset</lew-button>
+      <lew-flex x="start">
+        <lew-button type="light" round @click="submit">submit</lew-button>
+        <lew-button type="light" round @click="setForm">setForm</lew-button>
+        <lew-button type="light" round @click="resetForm"> reset </lew-button>
+      </lew-flex>
       <pre>{{ form }}</pre>
     </lew-flex>
   </lew-flex>

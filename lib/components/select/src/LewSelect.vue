@@ -20,6 +20,7 @@ const lewSelectRef = ref()
 const inputRef = ref()
 const lewPopverRef = ref()
 
+
 const state = reactive({
   selectWidth: 0,
   visible: false,
@@ -160,6 +161,7 @@ const getVirtualHeight = computed(() => {
 const showHandle = () => {
   state.visible = true
   state.keywordBackup = cloneDeep(state.keyword)
+  
   if (props.searchable) {
     state.keyword = ''
   }

@@ -37,7 +37,7 @@ const options = ref([
     field: 'name', // 字段名
     label: '姓名', // 标签
     as: 'input', // 组件
-    rules: Yup.string()
+    rule: Yup.string()
       .matches(/^[a-zA-Z]+$/, '必须为纯英文字母')
       .min(4, '长度必须至少为4')
       .max(16, '长度不能超过16')
@@ -51,7 +51,7 @@ const options = ref([
     field: 'remark', // 字段名
     label: '备注', // 标签
     as: 'input', // 组件
-    rules: Yup.string()
+    rule: Yup.string()
       .matches(/^[a-zA-Z]+$/, '必须为纯英文字母')
       .min(4, '长度必须至少为4')
       .max(16, '长度不能超过16')
@@ -64,7 +64,7 @@ const options = ref([
     field: 'intro',
     label: '介绍',
     as: 'input',
-    rules: Yup.string()
+    rule: Yup.string()
       .matches(/^[\u4e00-\u9fa5]+$/, '必须为纯中文')
       .min(30, '长度必须至少为30')
       .max(300, '长度不能超过8')
@@ -78,7 +78,7 @@ const options = ref([
     field: 'birth',
     label: '生日',
     as: 'date-picker',
-    rules: Yup.string().required('不能为空'),
+    rule: Yup.string().required('不能为空'),
     props: {
       clearable: true
     }
@@ -87,7 +87,7 @@ const options = ref([
     field: 'date.birth',
     label: '有效期',
     as: 'date-range-picker',
-    rules: Yup.object().required('不能为空'),
+    rule: Yup.object().required('不能为空'),
     props: {
       clearable: true
     }
@@ -96,7 +96,7 @@ const options = ref([
     field: 'user.city',
     label: '城市',
     as: 'select',
-    rules: Yup.string().required('此项必填'),
+    rule: Yup.string().required('此项必填'),
     props: {
       change: (e: any) => {
         console.log(e)
@@ -130,7 +130,7 @@ const options = ref([
     field: 'user.agree',
     label: '',
     as: 'checkbox',
-    rules: Yup.boolean().oneOf([true], '请同意').required('请同意'),
+    rule: Yup.boolean().oneOf([true], '请同意').required('请同意'),
     props: {
       label: '是否同意'
     }

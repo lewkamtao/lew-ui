@@ -184,7 +184,7 @@ onUnmounted(() => {
 .lew-tabs-wrapper {
   display: inline-flex;
   position: relative;
-  width: auto;
+  width: 100%;
   border-radius: var(--lew-border-radius-small);
   overflow: hidden;
 }

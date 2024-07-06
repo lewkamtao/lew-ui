@@ -11,8 +11,8 @@ const modelValue: Ref<boolean | undefined> = defineModel({
 
 const setChecked = (e: Event) => {
   const { checked } = e.target as HTMLInputElement
-  emit('change', checked)
   modelValue.value = checked
+  emit('change', checked)
 }
 
 const getIconSize = computed(() => {

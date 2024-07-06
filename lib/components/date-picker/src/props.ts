@@ -49,7 +49,19 @@ export const datePickerProps = {
       return '请选择日期'
     },
     description: '默认提示语'
+  },
+  presets: {
+    type: Array as PropType<DatePickerPresetsOptions[]>,
+    default: () => {
+      return []
+    },
+    description: '预设时间范围'
   }
+}
+
+export type DatePickerPresetsOptions = {
+  label: string
+  value: string
 }
 
 export const dateRangePickerProps = {

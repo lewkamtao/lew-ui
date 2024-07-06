@@ -145,3 +145,21 @@ export const getStatusIcon = (type: string) => {
   }
   return svgArr[type]
 }
+
+export const formatFormByMap = (formMap: any) => {
+  const form = {}
+  Object.keys(formMap).forEach((key) => {
+    const value = formMap[key]
+    const keys = key.split('.')
+    let obj: any = form
+    for (let i = 0; i < keys.length - 1; i++) {
+      const k = keys[i]
+      if (!obj[k]) {
+        obj[k] = {}
+      }
+      obj = obj[k]
+    }
+    obj[keys[keys.length - 1]] = value
+  })
+  return form
+}

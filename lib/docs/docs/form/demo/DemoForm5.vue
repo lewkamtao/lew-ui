@@ -6,14 +6,14 @@ const options = ref([
     field: 'username',
     label: '用户名',
     component: 'lew-input',
-    rules: Yup.string().required(),
+    rule: Yup.string().required(),
     props: {}
   },
   {
     field: 'password',
     label: '密码',
     component: 'lew-input',
-    rules: Yup.string().min(6).required(),
+    rule: Yup.string().min(6).required(),
     props: {
       type: 'password'
     }

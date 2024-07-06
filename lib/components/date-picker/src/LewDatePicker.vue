@@ -2,6 +2,7 @@
 import { object2class } from 'lew-ui/utils'
 import { LewPopover, LewIcon, LewDate, LewTooltip } from 'lew-ui'
 import { datePickerProps } from './props'
+import dayjs from 'dayjs'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -15,6 +16,7 @@ const modelValue: Ref<string | undefined> = defineModel()
 const visible = ref(false)
 
 const lewPopoverRef = ref()
+
 const lewDateRef = ref()
 
 const show = () => {
@@ -28,6 +30,16 @@ const hide = () => {
 const change = (date: string | undefined) => {
   emit('change', { date, show, hide })
   hide()
+}
+
+const selectPresets = (item: { label: string; value: string }) => {
+  modelValue.value = dayjs(item.value).format(props.valueFormat)
+  lewDateRef.value && lewDateRef.value.init(item.value)
+  setTimeout(() => {
+    nextTick(() => {
+      change(modelValue.value)
+    })
+  }, 100)
 }
 
 const getIconSize = computed(() => {
@@ -53,7 +65,7 @@ const clearHandle = () => {
 
 const showHandle = () => {
   visible.value = true
-  lewDateRef.value.init()
+  lewDateRef.value && lewDateRef.value.init(modelValue.value)
 }
 const hideHandle = () => {
   visible.value = false
@@ -106,10 +118,27 @@ defineExpose({ show, hide })
     </template>
     <template #popover-body>
       <lew-flex gap="0">
-        <lew-flex direction="y" gap="5" y="start" class="lew-date-picker-left">
-          <div class="item">今天</div>
-          <div class="item">昨天</div>
-          <div class="item">周末</div>
+        <lew-flex
+          v-if="(presets || []).length > 0"
+          direction="y"
+          gap="7"
+          y="start"
+          class="lew-date-picker-presets lew-scrollbar"
+        >
+          <div
+            v-for="(item, index) in presets"
+            @click="selectPresets(item)"
+            :key="index"
+            class="item"
+            v-tooltip="{
+              content: dayjs(item.value).format(valueFormat),
+              placement: 'right',
+              delay: [500, 80]
+            }"
+            :class="[dayjs(modelValue).isSame(item.value, 'day') ? 'item-actived' : '']"
+          >
+            {{ item.label }}
+          </div>
         </lew-flex>
         <lew-flex class="lew-date-picker-date-panel">
           <lew-date ref="lewDateRef" v-model="modelValue" v-bind="props" @change="change" />
@@ -121,7 +150,7 @@ defineExpose({ show, hide })
 
 <style lang="scss" scoped>
 .lew-popover {
-  width: 273px;
+  width: 100%;
 
   .lew-date-picker-view {
     display: inline-flex;
@@ -217,13 +246,14 @@ defineExpose({ show, hide })
     flex-shrink: 0;
   }
 
-  .lew-date-picker-left,
-  .lew-date-picker-right {
+  .lew-date-picker-presets {
     flex-shrink: 0;
     height: 325px;
-    padding: 5px;
+    overflow-y: auto;
+    padding: 7px;
     box-sizing: border-box;
     width: 120px;
+    border-right: var(--lew-popover-border);
     .item {
       width: 100%;
       height: 30px;
@@ -236,15 +266,10 @@ defineExpose({ show, hide })
     .item:hover {
       background-color: var(--lew-form-bgcolor-hover);
     }
-    .item:active {
-      background-color: var(--lew-form-bgcolor-active);
+    .item-actived {
+      background-color: var(--lew-color-blue) !important;
+      color: var(--lew-color-white);
     }
-  }
-  .lew-date-picker-left {
-    border-right: var(--lew-popover-border);
-  }
-  .lew-date-picker-right {
-    border-left: var(--lew-popover-border);
   }
 }
 </style>

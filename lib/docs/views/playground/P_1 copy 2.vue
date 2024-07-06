@@ -6,32 +6,6 @@ const schoolsOptions = schools.map((e, i) => {
   return { label: e, value: i + 1 }
 })
 
-const form = ref({} as any)
-
-onMounted(() => {
-  // 设置表单
-  formRef.value.setForm({
-    size: 'medium',
-    input: '文本框',
-    textarea: '多行文本',
-    select: '1',
-    select_multiple: [1, 2],
-    radio_group: '2',
-    checkbox_group: ['2'],
-    tabs: '2',
-    user: {
-      address: 30,
-      addd: true
-    },
-    info: {
-      asd: {
-        dsd: {
-          input_tag: ['测试', '小芳']
-        }
-      }
-    }
-  })
-})
 const options = ref([
   {
     field: 'input', // 字段名
@@ -91,10 +65,24 @@ const options = ref([
     }
   },
   {
+    field: 'select_multiple',
+    label: '多选选择器',
+    as: 'select-multiple',
+    gridArea: '3 / 1 / 4 / 2',
+    rule: Yup.array().min(2, '至少选择2个').required('此项必填'),
+    props: {
+      change: (e: any) => {
+        console.log(e)
+      },
+      clearable: true,
+      options: schoolsOptions
+    }
+  },
+  {
     field: 'radio_group',
     label: '单选框',
     as: 'radio-group',
-    gridArea: '3 / 1 / 4 / 2',
+    gridArea: '3 / 2 / 4 / 3',
     rule: Yup.string().required('此项必填'),
     props: {
       options: [
@@ -113,21 +101,6 @@ const options = ref([
       ]
     }
   },
-  {
-    field: 'select_multiple',
-    label: '多选选择器',
-    as: 'select-multiple',
-    gridArea: '3 / 2 / 4 / 3',
-    rule: Yup.array().min(2, '至少选择2个').required('此项必填'),
-    props: {
-      change: (e: any) => {
-        console.log(e)
-      },
-      clearable: true,
-      options: schoolsOptions
-    }
-  },
-
   {
     field: 'checkbox_group',
     label: '多选框',
@@ -152,6 +125,33 @@ const options = ref([
         },
         {
           label: '上海',
+          value: '4'
+        }
+      ]
+    }
+  },
+  {
+    field: 'tabs',
+    label: '选项卡',
+    as: 'tabs',
+    gridArea: '4 / 2 / 5 / 3',
+    rule: Yup.string().required('此项必填'),
+    props: {
+      options: [
+        {
+          label: 'Beijing',
+          value: '1'
+        },
+        {
+          label: 'Shanghai',
+          value: '2'
+        },
+        {
+          label: 'Guangzhou',
+          value: '3'
+        },
+        {
+          label: 'Shenzhen',
           value: '4'
         }
       ]
@@ -289,22 +289,57 @@ const submit = async () => {
     LewMessage.warning('请完善表单')
   }
 }
+
+const colOptions = [
+  { label: '单栏', value: 1 },
+  { label: '两栏', value: 2 },
+  { label: '四栏', value: 3 },
+  { label: '四栏', value: 4 }
+]
+
+const col = ref(2)
 </script>
 
 <template>
-  <lew-flex x="start" y="start" :gap="50">
-    <lew-form
-      ref="formRef"
-      :size="form.size"
-      :options="options"
-      :labelWidth="80"
-      direction="y"
-      :col="3"
-      @change="
-        (e: any) => {
-          form = e
-        }
-      "
-    />
-  </lew-flex>
+  <div class="playground">
+    <div class="form-component">Playground</div>
+    <div class="form-wrapper">
+      <lew-form
+        ref="formRef"
+        direction="y"
+        :options="options"
+        :labelWidth="80"
+        :row-gap="30"
+        :column-gap="50"
+        :col="col"
+      />
+    </div>
+    <div class="form-options">
+      <lew-tabs :options="colOptions" v-model="col"></lew-tabs>
+    </div>
+  </div>
 </template>
+<style scoped lang="scss">
+.playground {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow-x: auto;
+  background-color: #fff;
+  .form-component {
+    width: 350px;
+    background-color: var(--lew-bgcolor-2);
+    flex-shrink: 0;
+  }
+  .form-wrapper {
+    width: calc(100% - 350px - 500px);
+    padding: 50px;
+    min-width: 1000px;
+  }
+  .form-options {
+    width: 500px;
+    background-color: var(--lew-bgcolor-2);
+    flex-shrink: 0;
+  }
+}
+</style>

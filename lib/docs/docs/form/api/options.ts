@@ -15,7 +15,7 @@ export default {
       default: 'medium'
     },
     {
-      name: 'rules',
+      name: 'rule',
       description: '校验规则',
       type: 'yup*',
       default: ''
