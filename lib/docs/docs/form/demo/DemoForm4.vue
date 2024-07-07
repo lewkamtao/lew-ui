@@ -38,7 +38,7 @@ const options = ref([
     label: '文本框', // 标签
     as: 'input', // 组件
     rule: Yup.string().required('不能为空'), // 校验规则
-    gridArea: '1 / 1 / 2 / 2',
+    gridArea: 'auto / 1 / auto / 2',
     props: {
       // 组件props
       showCount: true,
@@ -51,7 +51,7 @@ const options = ref([
     label: '单选选择器',
     as: 'select',
     rule: Yup.string().required('此项必填'),
-    gridArea: '1 / 2 / 2 / 3',
+    gridArea: 'auto / 2 / auto / 3',
     props: {
       clearable: true,
       options: [
@@ -83,7 +83,7 @@ const options = ref([
     label: '多行文本框', // 标签
     as: 'textarea', // 组件
     rule: Yup.string().required('不能为空'), // 校验规则
-    gridArea: '2 / 1 / 3 / 3',
+    gridArea: 'auto / 1 / auto / 3',
     props: {
       clearable: true,
       showCount: true,
@@ -94,7 +94,7 @@ const options = ref([
     field: 'radio_group',
     label: '单选框',
     as: 'radio-group',
-    gridArea: '3 / 1 / 4 / 2',
+    gridArea: 'auto / 1 / auto / 2',
     rule: Yup.string().required('此项必填'),
     props: {
       options: [
@@ -117,7 +117,7 @@ const options = ref([
     field: 'select_multiple',
     label: '多选选择器',
     as: 'select-multiple',
-    gridArea: '3 / 2 / 4 / 3',
+    gridArea: 'auto / 2 / auto / 3',
     rule: Yup.array().min(2, '至少选择2个').required('此项必填'),
     props: {
       change: (e: any) => {
@@ -132,7 +132,7 @@ const options = ref([
     field: 'checkbox_group',
     label: '多选框',
     as: 'checkbox-group',
-    gridArea: '4 / 1 / 5 / 2',
+    gridArea: 'auto / 1 / auto / 2',
     rule: Yup.array().min(1, '至少选择一个').required('此项必填'),
     props: {
       round: true,
@@ -161,7 +161,7 @@ const options = ref([
     field: 'user.address',
     label: '地址',
     as: 'cascader',
-    gridArea: '5 / 1 / 6 / 2',
+    gridArea: 'auto / 1 / auto / 2',
     rule: Yup.string().required('地址必填'),
     props: {
       label: '是否同意',
@@ -256,14 +256,14 @@ const options = ref([
     field: 'info.asd.dsd.input_tag',
     label: '标签输入框',
     as: 'input-tag',
-    gridArea: '5 / 2 / 6 / 3',
+    gridArea: 'auto / 2 / auto / 3',
     rule: Yup.array().min(1, '至少选择一个').required('不能为空')
   },
   {
     field: 'user.addd',
     label: '',
     as: 'checkbox',
-    gridArea: '6 / 1 / 7 / 2',
+    gridArea: 'auto / 1 / auto / 2',
     rule: Yup.boolean().oneOf([true], '请同意').required('请同意'),
     props: {
       label: '是否同意'
@@ -271,7 +271,7 @@ const options = ref([
   },
   {
     as: 'button',
-    gridArea: '7 / 1 / 8 / 2',
+    gridArea: 'auto / 1 / auto / 2',
     props: {
       text: '提交',
       click: () => submit()
@@ -299,7 +299,7 @@ const submit = async () => {
       :options="options"
       :labelWidth="80"
       direction="y"
-      :col="3"
+      :columns="3"
       @change="
         (e: any) => {
           form = e

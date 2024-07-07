@@ -311,7 +311,7 @@ const col = ref(2)
         :labelWidth="80"
         :row-gap="30"
         :column-gap="50"
-        :col="col"
+        :columns="col"
       />
     </div>
     <div class="form-options">

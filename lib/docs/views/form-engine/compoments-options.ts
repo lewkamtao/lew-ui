@@ -1,5 +1,9 @@
 export const componentsOptions = [
   {
+    label: '占位盒子',
+    as: ''
+  },
+  {
     label: '表单大小',
     as: 'tabs',
     field: 'size',

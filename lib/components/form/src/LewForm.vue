@@ -24,8 +24,8 @@ const formRulesmap = reduce(
 )
 
 const getFormClassNames = computed(() => {
-  const { col } = cloneDeep(props)
-  return object2class('lew-form', { col })
+  const { columns } = cloneDeep(props)
+  return object2class('lew-form', { columns })
 })
 
 const getFormStyle = computed(() => {
@@ -127,19 +127,19 @@ defineExpose({ getForm, setForm, validate })
   display: grid;
 }
 
-.lew-form-col-1 {
+.lew-form-columns-1 {
   grid-template-columns: minmax(0, 1fr);
 }
 
-.lew-form-col-2 {
+.lew-form-columns-2 {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
-.lew-form-col-3 {
+.lew-form-columns-3 {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
 }
 
-.lew-form-col-4 {
+.lew-form-columns-4 {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
 }
 </style>

@@ -14,7 +14,7 @@ export const formProps = {
     default: 'medium',
     description: '尺寸，可选值为 small、medium、large'
   },
-  col: {
+  columns: {
     type: [Number, String],
     default: 1,
     description: '每行显示的表单项数量，最大值为 4'

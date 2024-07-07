@@ -94,7 +94,7 @@ defineExpose({ validate, setErrors })
     }"
   >
     <div :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''" class="label-box">
-      <label :class="{ 'label-required': rule && label }">
+      <label v-if="as" :class="{ 'label-required': rule && label }">
         {{ label }}
       </label>
     </div>

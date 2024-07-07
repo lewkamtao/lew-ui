@@ -17,6 +17,10 @@ const setOptionModal = ref()
 const menuOptions = ref<any>(componentsOptions)
 const options = ref<any>([])
 const formMap = ref<Record<string, any>>({})
+const itemRefMap = ref<Record<string, any>>({})
+const formWrapperRef = ref()
+const cols = ref(2)
+const previewTab = ref('model')
 
 const formModel = computed(() => {
   return formatFormByMap(cloneDeep(formMap.value))
@@ -36,11 +40,12 @@ const generateId = () => {
 const cloneDog = (item: any) => {
   const date = dayjs().format('YYYYMMDD_HHmmss')
   const field = `field_${generateId()}`
-  formMap.value[field] = ''
+  formMap.value[field] = item.as ? '' : undefined
   return {
     ...item,
     id: `${item.as}_${date}_${generateId()}`,
-    field
+    span: 1,
+    field: item.as ? field : undefined
   }
 }
 
@@ -50,6 +55,7 @@ const deleteItem = (item: any) => {
     content: '确认删除该组件吗？',
     ok: () => {
       options.value = options.value.filter((e: any) => e.id !== item.id)
+      formatFormMap({ target: { value: item.field } })
     }
   })
 }
@@ -63,9 +69,30 @@ const formatFormMap = (e: any) => {
   })
 }
 
-const cols = ref(2)
+const minimize = (item: any) => {
+  item.span -= 1
+}
 
-const previewTab = ref('model')
+const maximize = (item: any) => {
+  item.span += 1
+}
+
+const getComponentModelCode = () => {
+  const width = formWrapperRef.value.offsetWidth / cols.value
+  options.value.forEach((item: any) => {
+    const rowStart = Math.floor(itemRefMap.value[item.id].offsetLeft / width) + 1
+    const rowEnd = rowStart + item.span
+    item.gridArea = `auto  / ${rowStart} / auto  / ${rowEnd}`
+  })
+  const componentModel = {
+    labelWidth: 110,
+    direction: 'y',
+    columns: cols.value,
+    options: cloneDeep(options.value)
+  }
+  console.log(componentModel)
+  return componentModel
+}
 </script>
 
 <template>
@@ -86,7 +113,7 @@ const previewTab = ref('model')
         </template>
       </draggable>
     </div>
-    <div class="lew-form-wrapper" :class="`lew-form-wrapper-${cols}`">
+    <div ref="formWrapperRef" class="lew-form-wrapper" :class="`lew-form-wrapper-${cols}`">
       <lew-flex x="center" y="center" class="lew-form-select-cols">
         <lew-tabs size="large" width="auto" :options="colOptions" round v-model="cols" />
       </lew-flex>
@@ -107,49 +134,74 @@ const previewTab = ref('model')
       >
         <template #item="{ element }">
           <div
+            :ref="(el) => (itemRefMap[element.id] = el)"
             class="lew-form-wrapper-draggable-item"
             :style="{ 'grid-column-end': `span ${element.span}` }"
           >
-            <lew-icon class="handle handle-move" size="14" type="move"></lew-icon>
-            <lew-icon
-              @click="setOptionModal.open(element)"
-              class="handle handle-tool"
-              size="14"
-              type="tool"
-            ></lew-icon>
-            <lew-icon
-              @click="deleteItem(element)"
-              class="handle handle-trash"
-              size="14"
-              type="trash"
-            ></lew-icon>
+            <lew-flex x="center" y="center" mode="between" class="handle-box">
+              <lew-icon class="handle-icon handle-move" size="14" type="move"></lew-icon>
+              <lew-flex x="end" gap="5" y="center">
+                <lew-icon
+                  v-if="element.span > 1"
+                  @click="minimize(element)"
+                  class="handle-icon handle-resize"
+                  size="14"
+                  type="minimize-2"
+                ></lew-icon>
+                <lew-icon
+                  v-if="element.span < cols"
+                  @click="maximize(element)"
+                  class="handle-icon handle-resize"
+                  size="14"
+                  type="maximize-2"
+                ></lew-icon>
+                <lew-icon
+                  v-if="element.as"
+                  @click="setOptionModal.open(element)"
+                  class="handle-icon"
+                  size="14"
+                  type="tool"
+                ></lew-icon>
+                <lew-icon
+                  @click="deleteItem(element)"
+                  class="handle-icon"
+                  size="14"
+                  type="trash"
+                ></lew-icon>
+              </lew-flex>
+            </lew-flex>
+
             <input
+              v-if="element.as"
               v-model="element.field"
               @change="formatFormMap"
               placeholder="设置字段名"
               class="field"
             />
             <lew-form-item
+              v-if="element.as"
               v-model="formMap[element.field]"
               v-bind="{ ...element, direction: 'y' }"
             />
+            <lew-flex x="center" y="center" class="blank-box" v-else>占位盒子</lew-flex>
           </div>
         </template>
       </draggable>
     </div>
     <lew-flex direction="y" x="start" y="start" class="lew-form-options lew-scrollbar">
+      <lew-button @click="getComponentModelCode">获取组件模型源码</lew-button>
       <lew-flex class="lew-form-preview-tabs">
         <lew-tabs
           v-model="previewTab"
           width="100%"
           item-width="172px"
           :options="[
-            { label: '表单数据', value: 'model' },
-            { label: '组件数据', value: 'options' }
+            { label: '表单模型', value: 'model' },
+            { label: '组件模型源码', value: 'options' }
           ]"
         />
       </lew-flex>
-      <lew-flex x="start" class="lew-form-preview-content">
+      <lew-flex x="start" class="lew-form-preview-content lew-scrollbar">
         <pre v-if="previewTab === 'model'">{{ formModel }}</pre>
         <pre v-else>{{ options }}</pre>
       </lew-flex>
@@ -233,34 +285,31 @@ const previewTab = ref('model')
   .lew-form-wrapper-draggable-item {
     position: relative;
     padding: 20px 20px 30px 20px;
-    min-height: 120px;
     background-color: var(--lew-bgcolor-0);
     box-sizing: border-box;
     border: 2px dashed transparent;
-    .handle {
+    .handle-box {
+      width: 100%;
       position: absolute;
       top: 0px;
-      opacity: 0;
-      transition: opacity 0.1s ease-in-out;
-      cursor: pointer;
-      padding: 5px;
-    }
-    .handle-move {
       left: 0px;
-      cursor: move;
+      .handle-icon {
+        transition: opacity 0.1s ease-in-out;
+        opacity: 0;
+        cursor: pointer;
+        padding: 5px;
+      }
+      .handle-resize {
+        transform: rotate(45deg);
+      }
     }
-    .handle-tool {
-      right: 30px;
-    }
-    .handle-trash {
-      right: 0px;
-    }
+
     .field {
       position: absolute;
       right: 5px;
       bottom: 0px;
       width: calc(100% - 100px);
-	  overflow: hidden;
+      overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
       text-align: right;
@@ -270,11 +319,17 @@ const previewTab = ref('model')
       outline: none;
     }
   }
+  .blank-box {
+    min-height: 63px;
+    opacity: 0.4;
+    font-size: 16px;
+    margin-top: 5px;
+  }
   .lew-form-wrapper-draggable-item:hover {
-    .handle {
+    .handle-icon {
       opacity: 0.4;
     }
-    .handle:hover {
+    .handle-icon:hover {
       opacity: 1;
     }
   }
@@ -334,6 +389,8 @@ const previewTab = ref('model')
 
 .lew-form-preview-content {
   width: 100%;
+  height: 500px;
+  overflow: auto;
   pre {
     text-align: left;
   }

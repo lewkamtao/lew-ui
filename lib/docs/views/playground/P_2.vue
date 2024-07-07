@@ -120,7 +120,7 @@ const submit = async () => {
       :labelWidth="80"
       :row-gap="50"
       :column-gap="50"
-      :col="1"
+      :columns="1"
       @change="
         (e: any) => {
           form = e
