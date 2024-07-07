@@ -3,6 +3,7 @@ import draggable from 'vuedraggable'
 import { componentsOptions } from './compoments-options'
 import dayjs from 'dayjs'
 import SetOptionModal from './SetOptionModal.vue'
+import PreviewModal from './PreviewModal.vue'
 import { formatFormByMap } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash'
 const dragOptions = computed(() => {
@@ -13,7 +14,8 @@ const dragOptions = computed(() => {
   }
 })
 
-const setOptionModal = ref()
+const setOptionModalRef = ref()
+const previewModalRef = ref()
 const menuOptions = ref<any>(componentsOptions)
 const options = ref<any>([])
 const formMap = ref<Record<string, any>>({})
@@ -40,11 +42,15 @@ const generateId = () => {
 const cloneDog = (item: any) => {
   const date = dayjs().format('YYYYMMDD_HHmmss')
   const field = `field_${generateId()}`
-  formMap.value[field] = item.as ? '' : undefined
   return {
     ...item,
     id: `${item.as}_${date}_${generateId()}`,
-    span: 1,
+    spanMap: {
+      1: 1,
+      2: 1,
+      3: 1,
+      4: 1
+    },
     field: item.as ? field : undefined
   }
 }
@@ -70,18 +76,18 @@ const formatFormMap = (e: any) => {
 }
 
 const minimize = (item: any) => {
-  item.span -= 1
+  item.spanMap[cols.value] -= 1
 }
 
 const maximize = (item: any) => {
-  item.span += 1
+  item.spanMap[cols.value] += 1
 }
 
 const getComponentModelCode = () => {
   const width = formWrapperRef.value.offsetWidth / cols.value
   options.value.forEach((item: any) => {
     const rowStart = Math.floor(itemRefMap.value[item.id].offsetLeft / width) + 1
-    const rowEnd = rowStart + item.span
+    const rowEnd = rowStart + item.spanMap[cols.value]
     item.gridArea = `auto  / ${rowStart} / auto  / ${rowEnd}`
   })
   const componentModel = {
@@ -91,7 +97,12 @@ const getComponentModelCode = () => {
     options: cloneDeep(options.value)
   }
   console.log(componentModel)
-  return componentModel
+  previewModalRef.value && previewModalRef.value.open(componentModel)
+}
+
+const changeDraggable = (e: any) => {
+  const { element } = e?.added
+  formMap.value[element.field] = element.as ? '' : undefined
 }
 </script>
 
@@ -113,83 +124,94 @@ const getComponentModelCode = () => {
         </template>
       </draggable>
     </div>
-    <div ref="formWrapperRef" class="lew-form-wrapper" :class="`lew-form-wrapper-${cols}`">
+    <div ref="formWrapperRef" class="lew-form-wrapper">
       <lew-flex x="center" y="center" class="lew-form-select-cols">
-        <lew-tabs size="large" width="auto" :options="colOptions" round v-model="cols" />
+        <lew-tabs size="large" width="auto" :options="colOptions" v-model="cols" />
       </lew-flex>
-      <draggable
-        group="form"
-        :class="{
-          'lew-form-wrapper-draggable-empty': options.length === 0,
-          'lew-form-wrapper-draggable-1': cols === 1,
-          'lew-form-wrapper-draggable-2': cols === 2,
-          'lew-form-wrapper-draggable-3': cols === 3,
-          'lew-form-wrapper-draggable-4': cols === 4
-        }"
-        class="lew-form-wrapper-draggable lew-scrollbar"
-        handle=".handle-move"
-        v-model="options"
-        item-key="id"
-        v-bind="dragOptions"
-      >
-        <template #item="{ element }">
-          <div
-            :ref="(el) => (itemRefMap[element.id] = el)"
-            class="lew-form-wrapper-draggable-item"
-            :style="{ 'grid-column-end': `span ${element.span}` }"
-          >
-            <lew-flex x="center" y="center" mode="between" class="handle-box">
-              <lew-icon class="handle-icon handle-move" size="14" type="move"></lew-icon>
-              <lew-flex x="end" gap="5" y="center">
-                <lew-icon
-                  v-if="element.span > 1"
-                  @click="minimize(element)"
-                  class="handle-icon handle-resize"
-                  size="14"
-                  type="minimize-2"
-                ></lew-icon>
-                <lew-icon
-                  v-if="element.span < cols"
-                  @click="maximize(element)"
-                  class="handle-icon handle-resize"
-                  size="14"
-                  type="maximize-2"
-                ></lew-icon>
-                <lew-icon
-                  v-if="element.as"
-                  @click="setOptionModal.open(element)"
-                  class="handle-icon"
-                  size="14"
-                  type="tool"
-                ></lew-icon>
-                <lew-icon
-                  @click="deleteItem(element)"
-                  class="handle-icon"
-                  size="14"
-                  type="trash"
-                ></lew-icon>
+      <div class="form-main" :style="{ 'max-width': `calc(400px * ${cols})` }">
+        <draggable
+          group="form"
+          :class="{
+            'lew-form-wrapper-draggable-empty': options.length === 0,
+            'lew-form-wrapper-draggable-1': cols === 1,
+            'lew-form-wrapper-draggable-2': cols === 2,
+            'lew-form-wrapper-draggable-3': cols === 3,
+            'lew-form-wrapper-draggable-4': cols === 4
+          }"
+          class="lew-form-wrapper-draggable lew-scrollbar"
+          handle=".handle-move"
+          v-model="options"
+          item-key="id"
+          v-bind="dragOptions"
+          @change="changeDraggable"
+        >
+          <template #item="{ element }">
+            <div
+              :ref="(el) => (itemRefMap[element.id] = el)"
+              class="lew-form-wrapper-draggable-item"
+              :style="{ 'grid-column-end': `span ${element.spanMap[cols]}` }"
+            >
+              <lew-flex x="center" y="center" mode="between" class="handle-box">
+                <lew-icon class="handle-icon handle-move" size="14" type="move"></lew-icon>
+                <lew-flex x="end" gap="5" y="center">
+                  <lew-icon
+                    v-if="element.spanMap[cols] > 1"
+                    @click="minimize(element)"
+                    class="handle-icon handle-resize"
+                    size="14"
+                    type="minimize-2"
+                  ></lew-icon>
+                  <lew-icon
+                    v-if="element.spanMap[cols] < cols"
+                    @click="maximize(element)"
+                    class="handle-icon handle-resize"
+                    size="14"
+                    type="maximize-2"
+                  ></lew-icon>
+                  <lew-icon
+                    v-if="element.as"
+                    @click="setOptionModalRef.open(element)"
+                    class="handle-icon"
+                    size="14"
+                    type="tool"
+                  ></lew-icon>
+                  <lew-icon
+                    @click="deleteItem(element)"
+                    class="handle-icon"
+                    size="14"
+                    type="trash"
+                  ></lew-icon>
+                </lew-flex>
               </lew-flex>
-            </lew-flex>
 
-            <input
-              v-if="element.as"
-              v-model="element.field"
-              @change="formatFormMap"
-              placeholder="设置字段名"
-              class="field"
-            />
-            <lew-form-item
-              v-if="element.as"
-              v-model="formMap[element.field]"
-              v-bind="{ ...element, direction: 'y' }"
-            />
-            <lew-flex x="center" y="center" class="blank-box" v-else>占位盒子</lew-flex>
-          </div>
-        </template>
-      </draggable>
+              <input
+                v-if="element.as"
+                v-model="element.field"
+                @change="formatFormMap"
+                placeholder="设置字段名"
+                class="field"
+              />
+              <lew-form-item
+                v-if="element.as"
+                v-model="formMap[element.field]"
+                v-bind="{ ...element, direction: 'y' }"
+              />
+              <lew-flex x="center" y="center" class="blank-box" v-else>占位盒子</lew-flex>
+            </div>
+          </template>
+        </draggable>
+      </div>
     </div>
     <lew-flex direction="y" x="start" y="start" class="lew-form-options lew-scrollbar">
-      <lew-button @click="getComponentModelCode">获取组件模型源码</lew-button>
+      <lew-button
+        :disabled="options.length === 0"
+        type="light"
+        icon="navigation"
+        size="large"
+        @click="getComponentModelCode"
+      >
+        预览
+      </lew-button>
       <lew-flex class="lew-form-preview-tabs">
         <lew-tabs
           v-model="previewTab"
@@ -201,14 +223,14 @@ const getComponentModelCode = () => {
           ]"
         />
       </lew-flex>
-      <lew-flex x="start" class="lew-form-preview-content lew-scrollbar">
+      <lew-flex x="start" y="start" class="lew-form-preview-content lew-scrollbar">
         <pre v-if="previewTab === 'model'">{{ formModel }}</pre>
         <pre v-else>{{ options }}</pre>
       </lew-flex>
     </lew-flex>
   </div>
-
-  <set-option-modal ref="setOptionModal" />
+  <preview-modal ref="previewModalRef" />
+  <set-option-modal ref="setOptionModalRef" />
 </template>
 <style scoped lang="scss">
 .playground {
@@ -233,28 +255,35 @@ const getComponentModelCode = () => {
     gap: 15px;
     .lew-form-component-box {
       display: flex;
-      justify-content: center;
       align-items: center;
       width: 180px;
       height: 50px;
+      padding: 0px 20px;
       background-color: var(--lew-bgcolor-2);
       border-radius: var(--lew-border-radius-small);
       border: 2px solid transparent;
       cursor: move;
     }
+    .lew-form-component-box:hover {
+      background-color: var(--lew-bgcolor-4);
+    }
   }
   .lew-form-wrapper {
     display: flex;
     flex-direction: column;
-    width: calc(100% - 350px - 500px);
-    min-width: 400px;
+    align-items: center;
+    width: 100%;
     background-color: var(--lew-bgcolor-2);
     height: 100vh;
     box-sizing: border-box;
     border-left: 1px solid var(--lew-bgcolor-3);
     border-right: 1px solid var(--lew-bgcolor-3);
+
+    .form-main {
+      width: 100%;
+    }
     .lew-form-select-cols {
-      padding: 0px 20px;
+      padding: 0px 12px;
       width: 100%;
       height: 60px;
       background-color: #fff;
@@ -308,7 +337,7 @@ const getComponentModelCode = () => {
       position: absolute;
       right: 5px;
       bottom: 0px;
-      width: calc(100% - 100px);
+      width: 200px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -317,6 +346,8 @@ const getComponentModelCode = () => {
       font-size: 14px;
       border: none;
       outline: none;
+      opacity: 1;
+      border: 1px dashed transparent;
     }
   }
   .blank-box {
@@ -341,21 +372,6 @@ const getComponentModelCode = () => {
     overflow-y: auto;
   }
 
-  .lew-form-wrapper-1 {
-    width: 500px;
-  }
-
-  .lew-form-wrapper-2 {
-    width: 800px;
-  }
-
-  .lew-form-wrapper-3 {
-    width: 1200px;
-  }
-
-  .lew-form-wrapper-4 {
-    width: 1400px;
-  }
   .lew-form-wrapper-draggable {
     position: relative;
     align-content: start;

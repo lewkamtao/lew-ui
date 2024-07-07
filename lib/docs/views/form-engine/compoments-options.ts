@@ -4,29 +4,6 @@ export const componentsOptions = [
     as: ''
   },
   {
-    label: '表单大小',
-    as: 'tabs',
-    field: 'size',
-    props: {
-      itemWidth: 'auto',
-      width: 'auto',
-      options: [
-        {
-          label: 'small',
-          value: 'small'
-        },
-        {
-          label: 'medium',
-          value: 'medium'
-        },
-        {
-          label: 'large',
-          value: 'large'
-        }
-      ]
-    }
-  },
-  {
     label: '文本框', // 标签
     as: 'input', // 组件
     props: {
