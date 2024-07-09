@@ -83,10 +83,14 @@ const maximize = (item: any) => {
   item.spanMap[cols.value] += 1
 }
 
-const getComponentModelCode = () => {
+const preview = () => {
+  if (options.value.length === 0) {
+    LewMessage.warning('请先添加组件')
+    return
+  }
   const width = formMainRef.value.offsetWidth / cols.value
   options.value.forEach((item: any) => {
-    const rowStart = Math.floor(itemRefMap.value[item.id].offsetLeft / width) + 1
+    const rowStart = Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1
     const rowEnd = rowStart + item.spanMap[cols.value]
     item.gridArea = `auto  / ${rowStart} / auto  / ${rowEnd}`
   })
@@ -96,13 +100,15 @@ const getComponentModelCode = () => {
     columns: cols.value,
     options: cloneDeep(options.value)
   }
-  console.log(componentModel)
   previewModalRef.value && previewModalRef.value.open(componentModel)
 }
 
 const changeDraggable = (e: any) => {
-  const { element } = e?.added
-  formMap.value[element.field] = element.as ? '' : undefined
+  const { added } = e
+  if (added) {
+    const { element } = e?.added
+    formMap.value[element.field] = element.as ? '' : undefined
+  }
 }
 </script>
 
@@ -128,7 +134,7 @@ const changeDraggable = (e: any) => {
       <lew-flex x="center" y="center" class="lew-form-select-cols">
         <lew-tabs size="large" width="auto" :options="colOptions" v-model="cols" />
       </lew-flex>
-      <div ref="formMainRef" class="form-main" :style="{ 'max-width': `calc(400px * ${cols})` }">
+      <div ref="formMainRef" class="form-main" :style="{ 'max-width': `calc(320px * ${cols})` }">
         <draggable
           group="form"
           :class="{
@@ -139,7 +145,6 @@ const changeDraggable = (e: any) => {
             'lew-form-wrapper-draggable-4': cols === 4
           }"
           class="lew-form-wrapper-draggable lew-scrollbar"
-          handle=".handle-move"
           v-model="options"
           item-key="id"
           v-bind="dragOptions"
@@ -151,8 +156,7 @@ const changeDraggable = (e: any) => {
               class="lew-form-wrapper-draggable-item"
               :style="{ 'grid-column-end': `span ${element.spanMap[cols]}` }"
             >
-              <lew-flex x="center" y="center" mode="between" class="handle-box">
-                <lew-icon class="handle-icon handle-move" size="14" type="move"></lew-icon>
+              <lew-flex x="end" y="center" class="handle-box">
                 <lew-flex x="end" gap="5" y="center">
                   <lew-icon
                     v-if="element.spanMap[cols] > 1"
@@ -203,15 +207,14 @@ const changeDraggable = (e: any) => {
       </div>
     </div>
     <lew-flex direction="y" x="start" y="start" class="lew-form-options lew-scrollbar">
-      <lew-button
-        :disabled="options.length === 0"
-        type="light"
-        icon="navigation"
-        size="large"
-        @click="getComponentModelCode"
-      >
-        预览
-      </lew-button>
+      <lew-flex x="end" class="lew-form-options-btns">
+        <lew-button type="light" icon="monitor" @click="preview"> 预览 </lew-button>
+        <lew-flex x="end">
+          <lew-button type="light" icon="code" @click="preview"> 源码 </lew-button>
+          <lew-button type="light" icon="upload" @click="preview"> 预览 </lew-button>
+        </lew-flex>
+      </lew-flex>
+
       <lew-flex class="lew-form-preview-tabs">
         <lew-tabs
           v-model="previewTab"
@@ -261,7 +264,7 @@ const changeDraggable = (e: any) => {
       padding: 0px 20px;
       background-color: var(--lew-bgcolor-2);
       border-radius: var(--lew-border-radius-small);
-      border: 2px solid transparent;
+      border: 2px dashed transparent;
       cursor: move;
     }
     .lew-form-component-box:hover {
@@ -273,14 +276,16 @@ const changeDraggable = (e: any) => {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    background-color: var(--lew-bgcolor-2);
+    background-color: var(--lew-bgcolor-0);
     height: 100vh;
     box-sizing: border-box;
     border-left: 1px solid var(--lew-bgcolor-3);
     border-right: 1px solid var(--lew-bgcolor-3);
+    background-color: var(--lew-bgcolor-2);
 
     .form-main {
       width: 100%;
+      background-color: var(--lew-bgcolor-0);
     }
     .lew-form-select-cols {
       padding: 0px 12px;
@@ -296,9 +301,7 @@ const changeDraggable = (e: any) => {
       flex-shrink: 0;
       height: calc(100vh - 60px);
       overflow-y: auto;
-      padding: 5px;
       box-sizing: border-box;
-      gap: 5px;
     }
     .lew-form-component-box {
       display: flex;
@@ -313,8 +316,7 @@ const changeDraggable = (e: any) => {
   }
   .lew-form-wrapper-draggable-item {
     position: relative;
-    padding: 20px 20px 30px 20px;
-    background-color: var(--lew-bgcolor-0);
+    padding: 10px 10px 20px 10px;
     box-sizing: border-box;
     border: 2px dashed transparent;
     .handle-box {
@@ -343,12 +345,15 @@ const changeDraggable = (e: any) => {
       white-space: nowrap;
       text-align: right;
       color: var(--lew-color-blue-dark);
-      font-size: 14px;
+      font-size: 12px;
       border: none;
       outline: none;
       opacity: 1;
-      border: 1px dashed transparent;
+      border: 2px dashed transparent;
     }
+  }
+  .lew-form-wrapper-draggable-item:hover {
+    border: 2px dashed var(--lew-color-blue-dark);
   }
   .blank-box {
     min-height: 63px;
@@ -365,11 +370,15 @@ const changeDraggable = (e: any) => {
     }
   }
   .lew-form-options {
-    padding: 20px;
     width: 400px;
     background-color: var(--lew-bgcolor-0);
     flex-shrink: 0;
     overflow-y: auto;
+    .lew-form-options-btns {
+      border-bottom: 1px solid var(--lew-bgcolor-3);
+      height: 60px;
+      padding: 0px 15px;
+    }
   }
 
   .lew-form-wrapper-draggable {
@@ -400,7 +409,7 @@ const changeDraggable = (e: any) => {
 }
 
 .chosen {
-  border: 2px dashed #333 !important;
+  border: 2px dashed var(--lew-color-blue-dark) !important;
 }
 
 .lew-form-preview-content {

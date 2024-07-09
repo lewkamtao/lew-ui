@@ -19,16 +19,6 @@ export const formProps = {
     default: 1,
     description: '每行显示的表单项数量，最大值为 4'
   },
-  columnGap: {
-    type: [Number, String],
-    default: 20,
-    description: '表单项间的间隔'
-  },
-  rowGap: {
-    type: [Number, String],
-    default: 30,
-    description: '表单项行间的间隔'
-  },
   labelWidth: {
     type: [Number, String],
     default: '110px',

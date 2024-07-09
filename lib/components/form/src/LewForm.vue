@@ -28,14 +28,6 @@ const getFormClassNames = computed(() => {
   return object2class('lew-form', { columns })
 })
 
-const getFormStyle = computed(() => {
-  const { rowGap, columnGap } = cloneDeep(props)
-  return {
-    'grid-column-gap': any2px(columnGap),
-    'grid-row-gap': any2px(rowGap)
-  }
-})
-
 // 将 formMap.value 中 xx.xx.xx 形式的字段，转换成嵌套对象
 const getForm = () => formatFormByMap(cloneDeep(formMap.value))
 
@@ -105,7 +97,7 @@ defineExpose({ getForm, setForm, validate })
 </script>
 
 <template>
-  <div class="lew-form" :class="getFormClassNames" :style="getFormStyle">
+  <div class="lew-form" :class="getFormClassNames">
     <lew-form-item
       :ref="(el) => (formItemRefMap[item.field] = el)"
       v-for="item in componentOptions"
@@ -125,6 +117,7 @@ defineExpose({ getForm, setForm, validate })
 .lew-form {
   width: 100%;
   display: grid;
+  gap: 30px;
 }
 
 .lew-form-columns-1 {

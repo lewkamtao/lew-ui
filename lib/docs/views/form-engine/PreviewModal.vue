@@ -4,7 +4,7 @@ const visible = ref(false)
 const bindOptions = ref({})
 const open = (options: any) => {
   visible.value = true
-  width.value = options.columns * 400 + 40
+  width.value = options.columns * 320 + 40 + 20 * (options.columns - 1)
   bindOptions.value = options
 }
 defineExpose({ open })
@@ -29,7 +29,7 @@ defineExpose({ open })
 .form-modal {
   padding: 20px;
   box-sizing: border-box;
-  overflow-y:auto;
+  overflow-y: auto;
   max-height: 80vh;
 }
 </style>
