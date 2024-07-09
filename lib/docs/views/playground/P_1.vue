@@ -294,10 +294,10 @@ const colOptions = ref([
 ])
 
 const cloneDog = (item: any) => {
-	return {
-		...item,
-		id:  item.as + '_' + Math.random().toString(36).substr(2, 9)
-	}
+  return {
+    ...item,
+    id: item.as + '_' + Math.random().toString(36).substr(2, 9)
+  }
 }
 const cols = ref(2)
 </script>
@@ -309,8 +309,8 @@ const cols = ref(2)
         :group="{ name: 'form', pull: 'clone', put: false }"
         :class="['lew-form-component-draggable']"
         v-model="componentOptions"
-		:clone="cloneDog"
-		item-key="field"
+        :clone="cloneDog"
+        item-key="field"
         v-bind="dragOptions"
       >
         <template #item="{ element }">
@@ -326,7 +326,11 @@ const cols = ref(2)
       </div>
       <draggable
         group="form"
-        :class="['lew-form-wrapper-draggable lew-scrollbar', `lew-form-wrapper-draggable-${cols}`, `lew-form-wrapper-draggable-${options.length===0?'empty':''}`]"
+        :class="[
+          'lew-form-wrapper-draggable lew-scrollbar',
+          `lew-form-wrapper-draggable-${cols}`,
+          `lew-form-wrapper-draggable-${options.length === 0 ? 'empty' : ''}`
+        ]"
         handle=".handle"
         v-model="options"
         item-key="id"
@@ -340,13 +344,13 @@ const cols = ref(2)
             <div class="handle">
               <lew-icon size="14" type="move"></lew-icon>
             </div>
-            <input v-model="element.field" placeholder="设置字段名" class="field"></input>
+            <input v-model="element.field" placeholder="设置字段名" class="field" />
             <lew-form-item v-bind="{ ...element, direction: 'y' }" />
           </div>
         </template>
-		<template #no-item>
-			<lew-empty type="order" title="从左侧拖动组件到右侧区域" />
-		</template>
+        <template #no-item>
+          <lew-empty type="order" title="从左侧拖动组件到右侧区域" />
+        </template>
       </draggable>
     </div>
     <lew-flex direction="y" x="start" y="start" class="lew-form-options lew-scrollbar">
@@ -368,7 +372,7 @@ const cols = ref(2)
     overflow-y: auto;
     background-color: var(--lew-bgcolor-0);
     flex-shrink: 0;
-	user-select: none;
+    user-select: none;
   }
   .lew-form-component-draggable {
     display: flex;
@@ -381,9 +385,9 @@ const cols = ref(2)
       width: 180px;
       height: 50px;
       background-color: var(--lew-bgcolor-2);
-	  border-radius: var(--lew-border-radius-small);
+      border-radius: var(--lew-border-radius-small);
       border: 2px solid transparent;
-	  cursor: move;
+      cursor: move;
     }
   }
   .lew-form-wrapper {
@@ -394,19 +398,19 @@ const cols = ref(2)
     background-color: var(--lew-bgcolor-2);
     height: 100vh;
     box-sizing: border-box;
-	border-left:1px solid var(--lew-bgcolor-3);
-	border-right:1px solid var(--lew-bgcolor-3);
+    border-left: 1px solid var(--lew-bgcolor-3);
+    border-right: 1px solid var(--lew-bgcolor-3);
     .lew-form-select-cols {
-      display: flex; 
+      display: flex;
       justify-content: center;
       align-items: center;
       width: 100%;
       height: 60px;
       background-color: #fff;
       flex-shrink: 0;
-	  border-bottom:1px solid var(--lew-bgcolor-3);
-	}
-    
+      border-bottom: 1px solid var(--lew-bgcolor-3);
+    }
+
     .lew-form-wrapper-draggable {
       display: grid;
       flex-shrink: 0;
@@ -438,18 +442,18 @@ const cols = ref(2)
       top: 0px;
       opacity: 0;
       transition: opacity 0.1s ease-in-out;
-	  cursor: move;
+      cursor: move;
     }
     .field {
       position: absolute;
       right: 5px;
       bottom: 0px;
-	  width: auto;
-	  text-align: right;
-	  color: var(--lew-color-blue-dark);
+      width: auto;
+      text-align: right;
+      color: var(--lew-color-blue-dark);
       font-size: 14px;
-	  border: none;
-	  outline: none;
+      border: none;
+      outline: none;
     }
   }
   .lew-form-wrapper-draggable-item:hover {
@@ -481,17 +485,17 @@ const cols = ref(2)
     width: 1400px;
   }
   .lew-form-wrapper-draggable {
-	position: relative;
+    position: relative;
     align-content: start;
   }
-  .lew-form-wrapper-draggable-empty::after{
-	position: absolute;
-	content: "从左侧拖动组件到当前区域";
-	top: 50%;
-	left: 50%;
-	opacity: 0.5;
-	font-size: 24px;
-	transform: translate(-50%, -50%);
+  .lew-form-wrapper-draggable-empty::after {
+    position: absolute;
+    content: '从左侧拖动组件到当前区域';
+    top: 50%;
+    left: 50%;
+    opacity: 0.5;
+    font-size: 24px;
+    transform: translate(-50%, -50%);
   }
   .lew-form-wrapper-draggable-1 {
     grid-template-columns: minmax(0, 1fr);
