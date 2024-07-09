@@ -20,7 +20,7 @@ const menuOptions = ref<any>(componentsOptions)
 const options = ref<any>([])
 const formMap = ref<Record<string, any>>({})
 const itemRefMap = ref<Record<string, any>>({})
-const formWrapperRef = ref()
+const formMainRef = ref()
 const cols = ref(2)
 const previewTab = ref('model')
 
@@ -84,7 +84,7 @@ const maximize = (item: any) => {
 }
 
 const getComponentModelCode = () => {
-  const width = formWrapperRef.value.offsetWidth / cols.value
+  const width = formMainRef.value.offsetWidth / cols.value
   options.value.forEach((item: any) => {
     const rowStart = Math.floor(itemRefMap.value[item.id].offsetLeft / width) + 1
     const rowEnd = rowStart + item.spanMap[cols.value]
@@ -124,11 +124,11 @@ const changeDraggable = (e: any) => {
         </template>
       </draggable>
     </div>
-    <div ref="formWrapperRef" class="lew-form-wrapper">
+    <div class="lew-form-wrapper">
       <lew-flex x="center" y="center" class="lew-form-select-cols">
         <lew-tabs size="large" width="auto" :options="colOptions" v-model="cols" />
       </lew-flex>
-      <div class="form-main" :style="{ 'max-width': `calc(400px * ${cols})` }">
+      <div ref="formMainRef" class="form-main" :style="{ 'max-width': `calc(400px * ${cols})` }">
         <draggable
           group="form"
           :class="{
