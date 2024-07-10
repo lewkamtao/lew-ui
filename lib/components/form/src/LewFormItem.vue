@@ -57,6 +57,7 @@ const validateField = debounce(() => {
 const errMsg = ref('')
 
 const validate = () => {
+  console.log(1)
   if (!props.required && !modelValue.value) {
     errMsg.value = ''
     return

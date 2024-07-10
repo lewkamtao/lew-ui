@@ -42,6 +42,7 @@ const options = ref([
       .min(4, '长度必须至少为4')
       .max(16, '长度不能超过16')
       .required('不能为空'),
+    required: true,
     props: {
       clearable: true
     }
@@ -55,6 +56,7 @@ const options = ref([
       .min(4, '长度必须至少为4')
       .max(16, '长度不能超过16')
       .required('不能为空'),
+    required: true,
     props: {
       clearable: true
     }
@@ -78,6 +80,7 @@ const options = ref([
     label: '生日',
     as: 'date-picker',
     rule: Yup.string().required('不能为空'),
+    required: true,
     props: {
       clearable: true
     }
@@ -87,6 +90,7 @@ const options = ref([
     label: '有效期',
     as: 'date-range-picker',
     rule: Yup.object().required('不能为空'),
+    required: true,
     props: {
       clearable: true
     }
@@ -95,6 +99,7 @@ const options = ref([
     field: 'user.city',
     label: '城市',
     as: 'select',
+    required: true,
     rule: Yup.string().required('此项必填'),
     props: {
       change: (e: any) => {
@@ -129,6 +134,7 @@ const options = ref([
     field: 'user.agree',
     label: '',
     as: 'checkbox',
+    required: true,
     rule: Yup.boolean().oneOf([true], '请同意').required('请同意'),
     props: {
       label: '是否同意'

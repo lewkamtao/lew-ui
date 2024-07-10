@@ -27,6 +27,8 @@ const state = reactive({
   isFocus: false
 })
 
+const lewInputCountRef = ref()
+
 watch(
   () => props.type,
   (v) => {
@@ -102,6 +104,20 @@ const getIconSize = computed(() => {
     large: 16
   }
   return size[props.size]
+})
+
+const getInputStyle = computed(() => {
+  const { size, clearable } = props
+  const countWidth = (lewInputCountRef.value && lewInputCountRef.value.offsetWidth) || 0
+  const wMap: Record<string, number> = {
+    small: 30 + countWidth,
+    medium: 30 + countWidth,
+    large: 30 + countWidth
+  }
+  console.log(`calc(100% - ${clearable ? wMap[size] : 0}px)`)
+  return {
+    width: `calc(100% - ${clearable ? wMap[size] : 0}px)`
+  }
 })
 
 const getType = computed(() => {
@@ -238,6 +254,7 @@ defineExpose({ toFocus })
         ref="lewInputRef"
         v-model="modelValue"
         class="lew-input"
+        :style="getInputStyle"
         autocomplete="new-password"
         :disabled="disabled"
         :placeholder="placeholder"
@@ -254,6 +271,7 @@ defineExpose({ toFocus })
       </label>
       <div v-if="showPassword || clearable || showCount" class="lew-input-controls">
         <div
+          ref="lewInputCountRef"
           v-if="getCheckNumStr"
           class="lew-input-count"
           :class="{
@@ -349,6 +367,7 @@ defineExpose({ toFocus })
     box-sizing: border-box;
     display: inline-flex;
     align-items: center;
+    justify-content: space-between;
     .lew-input {
       height: 100%;
     }
@@ -656,19 +675,19 @@ defineExpose({ toFocus })
 .lew-input-view-size-small.lew-input-view-autoWidth {
   .lew-input {
     left: 7px;
-    width: calc(100% - 14px);
+    width: calc(100% - 18px);
   }
 }
 .lew-input-view-size-medium.lew-input-view-autoWidth {
   .lew-input {
     left: 9px;
-    width: calc(100% - 18px);
+    width: calc(100% - 24px);
   }
 }
 .lew-input-view-size-large.lew-input-view-autoWidth {
   .lew-input {
     left: 12px;
-    width: calc(100% - 24px);
+    width: calc(100% - 30px);
   }
 }
 

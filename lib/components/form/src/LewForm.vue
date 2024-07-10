@@ -12,6 +12,14 @@ const formMap = ref<Record<string, any>>({})
 let componentOptions: any[] = cloneDeep(props.options) || []
 
 // 处理 options 里的 rule 字段
+
+componentOptions.forEach((item: any) => {
+  const { rule } = item
+  if (rule && rule.tests.some((test: any) => test.OPTIONS.name === 'required')) {
+    item.required = true
+  }
+})
+
 const formRulesmap = () => {
   const form: Record<string, any> = getForm()
   return reduce(
@@ -23,8 +31,12 @@ const formRulesmap = () => {
       }
       if (rule) {
         acc[field] = rule
+        return acc
       }
-      return acc
+      if (required) {
+        acc[field] = Yup.string().required()
+        return acc
+      }
     },
     {}
   )
