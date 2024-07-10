@@ -33,11 +33,7 @@ import 'lew-ui/style';
 
 ## Todo List
 
--   Step 步骤
 -   Upload 上传
--   Card 卡片
--   Progress 进度条
--   Loading 加载
 
 ## Thanks
 
