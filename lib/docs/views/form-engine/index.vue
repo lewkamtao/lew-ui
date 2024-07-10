@@ -106,7 +106,7 @@ const preview = () => {
 const changeDraggable = (e: any) => {
   const { added } = e
   if (added) {
-    const { element } = e?.added
+    const { element } = e?.added || {}
     formMap.value[element.field] = element.as ? '' : undefined
   }
 }

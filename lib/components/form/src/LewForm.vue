@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { object2class, any2px, formatFormByMap } from 'lew-ui/utils'
+import { object2class, formatFormByMap } from 'lew-ui/utils'
 import { formProps } from './props'
 import { cloneDeep, reduce } from 'lodash-es'
 import LewFormItem from './LewFormItem.vue'
@@ -12,16 +12,23 @@ const formMap = ref<Record<string, any>>({})
 let componentOptions: any[] = cloneDeep(props.options) || []
 
 // 处理 options 里的 rule 字段
-const formRulesmap = reduce(
-  cloneDeep(componentOptions),
-  (acc: Record<string, any>, cur: any) => {
-    if (cur.rule) {
-      acc[cur.field] = cur.rule
-    }
-    return acc
-  },
-  {}
-)
+const formRulesmap = () => {
+  const form: Record<string, any> = getForm()
+  return reduce(
+    cloneDeep(componentOptions),
+    (acc: Record<string, any>, cur: any) => {
+      const { required, field, rule } = cur
+      if (!required && !form[field]) {
+        return acc
+      }
+      if (rule) {
+        acc[field] = rule
+      }
+      return acc
+    },
+    {}
+  )
+}
 
 const getFormClassNames = computed(() => {
   const { columns } = cloneDeep(props)
@@ -64,7 +71,7 @@ const formItemRefMap = ref<Record<string, any>>({})
 const validate = () => {
   return new Promise<boolean>((resolve) => {
     // 定义校验规则
-    const schema = Yup.object().shape(formRulesmap)
+    const schema = Yup.object().shape(formRulesmap())
     // 清除错误信息
     Object.keys(formItemRefMap.value).forEach((key) => {
       formItemRefMap.value[key].setErrors('')

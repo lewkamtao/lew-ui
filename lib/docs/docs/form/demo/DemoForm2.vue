@@ -34,28 +34,27 @@ const options = ref([
     }
   },
   {
-    field: 'name', // 字段名
-    label: '姓名', // 标签
-    as: 'input', // 组件
+    field: 'name',
+    label: '姓名',
+    as: 'input',
     rule: Yup.string()
       .matches(/^[a-zA-Z]+$/, '必须为纯英文字母')
       .min(4, '长度必须至少为4')
       .max(16, '长度不能超过16')
-      .required('不能为空'), // 校验规则
+      .required('不能为空'),
     props: {
-      // 组件props
       clearable: true
     }
   },
   {
-    field: 'remark', // 字段名
-    label: '备注', // 标签
-    as: 'input', // 组件
+    field: 'remark',
+    label: '备注',
+    as: 'input',
     rule: Yup.string()
       .matches(/^[a-zA-Z]+$/, '必须为纯英文字母')
       .min(4, '长度必须至少为4')
       .max(16, '长度不能超过16')
-      .required('不能为空'), // 校验规则
+      .required('不能为空'),
     props: {
       clearable: true
     }

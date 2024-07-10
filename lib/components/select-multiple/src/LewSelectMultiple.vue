@@ -20,7 +20,6 @@ const lewPopverRef = ref()
 const lewPopverValueRef = ref()
 const searchInputRef = ref()
 
-
 const state = reactive({
   selectWidth: 0,
   visible: false,
@@ -177,7 +176,7 @@ const getIconSize = computed(() => {
 
 const showHandle = () => {
   state.visible = true
-  
+
   getSelectWidth()
   if (state.options && state.options.length === 0 && props.searchable) {
     search({ target: { value: '' } })

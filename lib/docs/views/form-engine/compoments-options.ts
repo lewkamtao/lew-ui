@@ -4,17 +4,16 @@ export const componentsOptions = [
     as: ''
   },
   {
-    label: '文本框', // 标签
-    as: 'input', // 组件
+    label: '文本框',
+    as: 'input',
     props: {
-      // 组件props
       showCount: true,
       maxLength: 30
     }
   },
   {
-    label: '多行文本框', // 标签
-    as: 'textarea', // 组件
+    label: '多行文本框',
+    as: 'textarea',
     props: {
       clearable: true,
       showCount: true,

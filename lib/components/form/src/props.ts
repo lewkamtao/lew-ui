@@ -72,6 +72,11 @@ export const formItemProps = {
     default: 'medium',
     description: '尺寸，可选值为 small、medium、large'
   },
+  required: {
+    type: Boolean,
+    default: false,
+    description: '是否必填'
+  },
   rule: {
     type: Object as PropType<Record<string, any>>,
     description: '表单项验证规则'

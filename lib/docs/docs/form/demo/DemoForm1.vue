@@ -31,21 +31,22 @@ const options = ref([
     }
   },
   {
-    field: 'input', // 字段名
-    label: '文本框', // 标签
-    as: 'input', // 组件
-    rule: Yup.string().required('不能为空'), // 校验规则
+    field: 'input',
+    label: '文本框',
+    as: 'input',
+    required: true,
+    rule: Yup.string().required(),
     props: {
-      // 组件props
       showCount: true,
       maxLength: 30
     }
   },
   {
-    field: 'textarea', // 字段名
-    label: '多行文本框', // 标签
-    as: 'textarea', // 组件
-    rule: Yup.string().required('不能为空'), // 校验规则
+    field: 'textarea',
+    label: '多行文本框',
+    as: 'textarea',
+    required: true,
+    rule: Yup.string().required('不能为空'),
     props: {
       clearable: true,
       showCount: true,
@@ -56,6 +57,7 @@ const options = ref([
     field: 'select',
     label: '单选选择器',
     as: 'select',
+    required: true,
     rule: Yup.string().required('此项必填'),
     props: {
       clearable: true,
@@ -87,6 +89,7 @@ const options = ref([
     field: 'select_multiple',
     label: '多选选择器',
     as: 'select-multiple',
+    required: true,
     rule: Yup.array().min(2, '至少选择2个').required('此项必填'),
     props: {
       change: (e: any) => {
@@ -100,6 +103,7 @@ const options = ref([
     field: 'radio_group',
     label: '单选框',
     as: 'radio-group',
+    required: true,
     rule: Yup.string().required('此项必填'),
     props: {
       options: [
@@ -122,6 +126,7 @@ const options = ref([
     field: 'checkbox_group',
     label: '多选框',
     as: 'checkbox-group',
+    required: true,
     rule: Yup.array().min(1, '至少选择一个').required('此项必填'),
     props: {
       round: true,
@@ -150,6 +155,7 @@ const options = ref([
     field: 'tabs',
     label: '选项卡',
     as: 'tabs',
+    required: true,
     rule: Yup.string().required('此项必填'),
     props: {
       options: [
@@ -176,6 +182,7 @@ const options = ref([
     field: 'user.address',
     label: '地址',
     as: 'cascader',
+    required: true,
     rule: Yup.string().required('地址必填'),
     props: {
       label: '是否同意',
@@ -269,6 +276,7 @@ const options = ref([
     field: 'user.addd',
     label: '',
     as: 'checkbox',
+    required: true,
     rule: Yup.boolean().oneOf([true], '请同意').required('请同意'),
     props: {
       label: '是否同意'
@@ -278,6 +286,7 @@ const options = ref([
     field: 'info.a.b.c.input_tag',
     label: '标签输入框',
     as: 'input-tag',
+    required: true,
     rule: Yup.array().min(1, '至少选择一个').required('不能为空')
   },
   {
@@ -292,6 +301,7 @@ const options = ref([
 const formRef = ref()
 
 const submit = async () => {
+  LewMessage.loading('处理中···')
   const vail = await formRef.value.validate()
   if (vail) {
     form.value = formRef.value.getForm()

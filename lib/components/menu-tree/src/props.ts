@@ -8,8 +8,8 @@ export type MenuTreeOptions = {
   disabled?: boolean // 是否禁用
   level?: number // 层级
   icon?: string // 图标
-  tagText?: string // 标签文本
-  tagColor?: TagColor // 标签颜色
+  tagText?: string // 文本
+  tagColor?: TagColor // 颜色
 }
 
 export const menuTreeProps = {

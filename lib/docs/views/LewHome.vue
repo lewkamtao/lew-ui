@@ -20,20 +20,19 @@ const schoolsOptions = schools.map((e, i) => {
 
 const options = ref([
   {
-    field: 'input', // 字段名
-    label: 'Input', // 标签
-    as: 'input', // 组件
-    rule: Yup.string().required('不能为空'), // 校验规则
+    field: 'input',
+    label: 'Input',
+    as: 'input',
+    rule: Yup.string().required('不能为空'),
     props: {
-      // 组件props
       clearable: true
     }
   },
   {
-    field: 'textarea', // 字段名
-    label: 'Textarea', // 标签
-    as: 'textarea', // 组件
-    rule: Yup.string().required('不能为空'), // 校验规则
+    field: 'textarea',
+    label: 'Textarea',
+    as: 'textarea',
+    rule: Yup.string().required('不能为空'),
     props: {
       clearable: true,
       showCount: true,

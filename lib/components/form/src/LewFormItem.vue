@@ -52,11 +52,15 @@ const modelValue: Ref<any> = defineModel({
 
 const validateField = debounce(() => {
   validate()
-}, 50)
+}, 250)
 
-let errMsg = ref('')
+const errMsg = ref('')
 
 const validate = () => {
+  if (!props.required && !modelValue.value) {
+    errMsg.value = ''
+    return
+  }
   if (props.rule) {
     props.rule
       .validate(modelValue.value)
@@ -94,7 +98,7 @@ defineExpose({ validate, setErrors })
     }"
   >
     <div :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''" class="label-box">
-      <label v-if="as" :class="{ 'label-required': rule && label }">
+      <label v-if="as" :class="{ 'label-required': required && label }">
         {{ label }}
       </label>
     </div>

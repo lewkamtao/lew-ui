@@ -1,6 +1,5 @@
 import { getStatusIcon } from 'lew-ui/utils'
 import '../styles/index.scss'
-import { t } from 'vitest/dist/index-4a906fa4'
 
 type MessageFnOptions = {
   id: string

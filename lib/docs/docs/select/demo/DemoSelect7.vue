@@ -4,12 +4,7 @@ const value = ref('')
 </script>
 
 <template>
-  <lew-select
-    v-model="value"
-    style="width: 320px"
-    :options="options"
-    clearable
-  >
+  <lew-select v-model="value" style="width: 320px" :options="options" clearable>
     <template #empty>
       <div class="empty">
         <lew-icon size="30" type="box" />

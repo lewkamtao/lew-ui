@@ -34,13 +34,12 @@ onMounted(() => {
 })
 const options = ref([
   {
-    field: 'input', // 字段名
-    label: '文本框', // 标签
-    as: 'input', // 组件
-    rule: Yup.string().required('不能为空'), // 校验规则
+    field: 'input',
+    label: '文本框',
+    as: 'input',
+    rule: Yup.string().required('不能为空'),
     gridArea: 'auto / 1 / auto / 2',
     props: {
-      // 组件props
       showCount: true,
       maxLength: 30
     }
@@ -79,10 +78,10 @@ const options = ref([
     }
   },
   {
-    field: 'textarea', // 字段名
-    label: '多行文本框', // 标签
-    as: 'textarea', // 组件
-    rule: Yup.string().required('不能为空'), // 校验规则
+    field: 'textarea',
+    label: '多行文本框',
+    as: 'textarea',
+    rule: Yup.string().required('不能为空'),
     gridArea: 'auto / 1 / auto / 3',
     props: {
       clearable: true,

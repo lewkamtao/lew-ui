@@ -100,7 +100,7 @@ options.value = [
       },
       {
         label: 'Menu',
-        value: '/Menu',
+        value: '/Menu'
       },
       {
         label: 'Dropdown',
