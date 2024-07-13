@@ -77,6 +77,16 @@ export const formItemProps = {
     default: false,
     description: '是否必填'
   },
+  readonly: {
+    type: Boolean,
+    default: false,
+    description: '是否只读'
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+    description: '是否禁用表单项'
+  },
   rule: {
     type: Object as PropType<Record<string, any>>,
     description: '表单项验证规则'

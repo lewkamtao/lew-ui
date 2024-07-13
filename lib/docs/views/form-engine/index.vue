@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import draggable from 'vuedraggable'
-import { componentsOptions } from './compoments-options'
+import { componentsOptions } from './options/compoments'
 import dayjs from 'dayjs'
-import SetOptionModal from './SetOptionModal.vue'
-import PreviewModal from './PreviewModal.vue'
+import SetOptionModal from './components/SetOptionModal.vue'
+import PreviewModal from './components/PreviewModal.vue'
 import { formatFormByMap } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash'
 const dragOptions = computed(() => {
@@ -22,7 +22,7 @@ const formMap = ref<Record<string, any>>({})
 const itemRefMap = ref<Record<string, any>>({})
 const formMainRef = ref()
 const cols = ref(2)
-const previewTab = ref('model')
+const settingTab = ref('option')
 
 const formModel = computed(() => {
   return formatFormByMap(cloneDeep(formMap.value))
@@ -132,7 +132,13 @@ const changeDraggable = (e: any) => {
     </div>
     <div class="lew-form-wrapper">
       <lew-flex x="center" y="center" class="lew-form-select-cols">
-        <lew-tabs size="large" width="auto" :options="colOptions" v-model="cols" />
+        <lew-tabs
+          size="large"
+          width="320px"
+          item-width="auto"
+          :options="colOptions"
+          v-model="cols"
+        />
       </lew-flex>
       <div ref="formMainRef" class="form-main" :style="{ 'max-width': `calc(320px * ${cols})` }">
         <draggable
@@ -198,7 +204,7 @@ const changeDraggable = (e: any) => {
               <lew-form-item
                 v-if="element.as"
                 v-model="formMap[element.field]"
-                v-bind="{ ...element, direction: 'y' }"
+                v-bind="{ ...element, direction: 'y', readonly: true }"
               />
               <lew-flex x="center" y="center" class="blank-box" v-else>占位盒子</lew-flex>
             </div>
@@ -206,7 +212,7 @@ const changeDraggable = (e: any) => {
         </draggable>
       </div>
     </div>
-    <lew-flex direction="y" x="start" y="start" class="lew-form-options lew-scrollbar">
+    <lew-flex direction="y" gap="0" x="start" y="start" class="lew-form-options lew-scrollbar">
       <lew-flex x="end" class="lew-form-options-btns">
         <lew-button type="light" icon="monitor" @click="preview"> 预览 </lew-button>
         <lew-flex x="end">
@@ -214,21 +220,18 @@ const changeDraggable = (e: any) => {
           <lew-button type="light" icon="upload" @click="preview"> 预览 </lew-button>
         </lew-flex>
       </lew-flex>
-
-      <lew-flex class="lew-form-preview-tabs">
+      <lew-flex class="lew-form-setting-tabs">
         <lew-tabs
-          v-model="previewTab"
+          v-model="settingTab"
           width="100%"
-          item-width="172px"
+          size="large"
+          item-width="auto"
           :options="[
-            { label: '表单模型', value: 'model' },
-            { label: '组件模型源码', value: 'options' }
+            { label: '全局属性', value: 'global' },
+            { label: '组件属性', value: 'option' },
+            { label: '表单模型', value: 'model' }
           ]"
         />
-      </lew-flex>
-      <lew-flex x="start" y="start" class="lew-form-preview-content lew-scrollbar">
-        <pre v-if="previewTab === 'model'">{{ formModel }}</pre>
-        <pre v-else>{{ options }}</pre>
       </lew-flex>
     </lew-flex>
   </div>
@@ -319,6 +322,7 @@ const changeDraggable = (e: any) => {
     padding: 10px 10px 20px 10px;
     box-sizing: border-box;
     border: 2px dashed transparent;
+    cursor: pointer;
     .handle-box {
       width: 100%;
       position: absolute;
@@ -344,7 +348,7 @@ const changeDraggable = (e: any) => {
       text-overflow: ellipsis;
       white-space: nowrap;
       text-align: right;
-      color: var(--lew-color-blue-dark);
+      color: var(--lew-color-gray);
       font-size: 12px;
       border: none;
       outline: none;
@@ -352,7 +356,7 @@ const changeDraggable = (e: any) => {
       border: 2px dashed transparent;
     }
   }
-  .lew-form-wrapper-draggable-item:hover {
+  .lew-form-wrapper-draggable-item-actived {
     border: 2px dashed var(--lew-color-blue-dark);
   }
   .blank-box {
@@ -412,12 +416,7 @@ const changeDraggable = (e: any) => {
   border: 2px dashed var(--lew-color-blue-dark) !important;
 }
 
-.lew-form-preview-content {
-  width: 100%;
-  height: 500px;
-  overflow: auto;
-  pre {
-    text-align: left;
-  }
+.lew-form-setting-tabs {
+  padding: 15px;
 }
 </style>

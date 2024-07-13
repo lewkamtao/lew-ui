@@ -38,8 +38,8 @@ const asMap: Record<string, any> = {
 }
 
 const getFormItemClassNames = computed(() => {
-  const { direction, size } = cloneDeep(props)
-  return object2class('lew-form-item', { direction, size })
+  const { direction, size, readonly, disabled } = cloneDeep(props)
+  return object2class('lew-form-item', { direction, size, readonly, disabled })
 })
 
 const formItemRef = ref()
@@ -57,7 +57,6 @@ const validateField = debounce(() => {
 const errMsg = ref('')
 
 const validate = () => {
-  console.log(1)
   if (!props.required && !modelValue.value) {
     errMsg.value = ''
     return
@@ -247,5 +246,13 @@ defineExpose({ validate, setErrors })
 .slide-fade-leave-to {
   transform: translateY(100%) !important;
   opacity: 0;
+}
+
+.lew-form-item-readonly {
+  pointer-events: none;
+}
+.lew-form-item-disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
 </style>

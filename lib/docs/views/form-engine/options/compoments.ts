@@ -106,8 +106,6 @@ export const componentsOptions = [
     label: '多选框',
     as: 'checkbox-group',
     props: {
-      round: true,
-      block: true,
       options: [
         {
           label: '唱歌',
