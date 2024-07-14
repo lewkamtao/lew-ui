@@ -17,6 +17,8 @@ const options = ref(
     return API[key]
   })
 )
+
+const { push } = useRouter()
 </script>
 
 <template>
@@ -24,7 +26,7 @@ const options = ref(
     <lew-title>Avatar</lew-title>
     <p class="sub-title">
       如果你需要为你的头像加上消息的数量，你可以移步
-      <lew-mark type="light" color="blue" to="/Badge">Badge</lew-mark>
+      <lew-mark type="light" cursor="pointer"  color="blue" @click="push('/Badge')">Badge</lew-mark>
     </p>
     <lew-demo-box title="普通" :code="DemoAvatar1Code">
       <demo-avatar1 />

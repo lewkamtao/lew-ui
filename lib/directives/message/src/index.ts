@@ -20,30 +20,35 @@ const createMessageList = () => {
 }
 
 const showMessage = ({ type, e }: MessageOptions) => {
+  const { id, content, duration } = e
+
   const messageContainer: any = document.getElementById('lew-message')
-  const hasMessageById = e.id ? document.getElementById(`message-id-${e.id}`) : false
+  const hasMessageById = id ? document.getElementById(`message-id-${id}`) : false
   const messageElement = hasMessageById || document.createElement('div')
-  messageElement.innerHTML = `${getStatusIcon(type)}<div class="content">${e.content || e}</div>`
+  messageElement.innerHTML = `${getStatusIcon(type)}<div class="content">${content || e}</div>`
 
   if (!hasMessageById) {
-    if (e.id) {
-      messageElement.setAttribute('id', `message-id-${e.id}`)
+    if (id) {
+      messageElement.setAttribute('id', `message-id-${id}`)
     }
     messageContainer?.appendChild(messageElement, messageContainer?.childNodes[0])
   } else {
-    clearTimeout(LewMessage.timer[e.id])
+    clearTimeout(LewMessage.timer[id])
   }
 
-  messageElement.setAttribute('class', `message message-${type} message-id-${e.id}`)
+  messageElement.setAttribute('class', `message message-${type} message-id-${id}`)
 
   setTimeout(() => {
     messageElement.setAttribute('class', `message message-${type} message-show`)
-    LewMessage.timer[e.id] = setTimeout(() => {
-      messageElement.setAttribute('class', `message message-${type} message-hidden`)
-      setTimeout(() => {
-        if (messageElement) messageContainer?.removeChild(messageElement)
-      }, 350)
-    }, e.duration || 3000)
+    LewMessage.timer[id] = setTimeout(
+      () => {
+        messageElement.setAttribute('class', `message message-${type} message-hidden`)
+        setTimeout(() => {
+          if (messageElement) messageContainer?.removeChild(messageElement)
+        }, 350)
+      },
+      duration === 0 ? 1000 * 60 * 60 * 24 * 365 : duration || 3000
+    )
   }, 10)
 }
 const removeClass = (element: any, className: any) => {
@@ -87,10 +92,12 @@ const LewMessage: any = {
         duration: 0
       })
 
+      let startTime = new Date().getTime()
+
       // 执行异步方法
       asyncFn()
         .then(
-          ({
+          async ({
             content = '请求成功！',
             duration = 3000,
             type = 'success'
@@ -99,9 +106,13 @@ const LewMessage: any = {
             duration: number
             type?: string
           }) => {
-            // 隐藏loading消息
+            // 最小延迟 500ms 保持动画完整性
+            let endTime = new Date().getTime()
+            let delay = 500
+            if (endTime - startTime < delay) {
+              await new Promise((resolve) => setTimeout(resolve, delay - (endTime - startTime)))
+            }
             LewMessage.close({ id: 'request-loading' })
-
             // 显示success消息
             LewMessage[type]({
               content,

@@ -2,7 +2,7 @@ import type { PropType, ExtractPropTypes } from 'vue'
 
 export type BreadcrumbOptions = {
   label: string
-  to: string
+  value: string
   active: boolean
 }
 

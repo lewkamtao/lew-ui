@@ -91,6 +91,7 @@ if (props.closeByEsc) {
             </div>
             <lew-flex v-else-if="!hideFooter" x="end" y="center" class="footer">
               <lew-button
+                v-if="!hideCancelButton"
                 v-bind="{
                   type: 'text',
                   text: '取消',
@@ -101,6 +102,7 @@ if (props.closeByEsc) {
                 @click="cancel"
               />
               <lew-button
+                v-if="!hideOkButton"
                 v-bind="{
                   text: '确定',
                   color: 'primary',

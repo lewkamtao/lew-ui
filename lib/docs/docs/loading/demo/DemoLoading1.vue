@@ -32,7 +32,7 @@ const options = ref([
       style="padding: 20px; box-shadow: var(--lew-box-shadow)"
     >
       <lew-title :bold="700" style="margin-bottom: 20px">登录你的账户 </lew-title>
-      <lew-form v-model="form" direction="y" class="form-box" :options="options" :labelWidth="80" />
+      <lew-form v-model="form" direction="y" class="form-box" :options="options" />
       <lew-flex x="end">
         <lew-button type="text" text="关闭" color="normal" />
         <lew-button text="立即登录" />
@@ -49,7 +49,7 @@ const options = ref([
       style="margin-bottom: 20px; box-shadow: var(--lew-box-shadow); padding: 20px"
     >
       <lew-title :bold="700" style="margin-bottom: 20px">登录你的账户 </lew-title>
-      <lew-form v-model="form" direction="y" class="form-box" :options="options" :labelWidth="80" />
+      <lew-form v-model="form" direction="y" class="form-box" :options="options" />
 
       <lew-flex x="end">
         <lew-button text="关闭" type="text" color="normal" />

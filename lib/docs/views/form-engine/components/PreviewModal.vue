@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const width = ref(1200)
+const width = ref(350)
 const visible = ref(false)
 const bindOptions = ref({})
 const open = (options: any) => {
   visible.value = true
-  width.value = options.columns * 320 + 40 + 20 * (options.columns - 1)
+  width.value = options.maxWidth + 40
   bindOptions.value = options
 }
 defineExpose({ open })
@@ -16,16 +16,22 @@ defineExpose({ open })
     closeOnClickOverlay
     closeByEsc
     :width="width"
-    title="预览表单"
-    @ok="visible = false"
+    hideOkButton
+    :cancelProps="{
+      text: '关闭'
+    }"
     @cancel="visible = false"
+    title="预览表单"
   >
-    <div class="form-modal">
+    <div class="form-modal lew-scrollbar">
       <lew-form v-bind="bindOptions" />
     </div>
   </lew-modal>
 </template>
 <style lang="scss" scoped>
+.footer {
+  padding: 5px 15px;
+}
 .form-modal {
   padding: 20px;
   box-sizing: border-box;

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { object2class, formatFormByMap } from 'lew-ui/utils'
+import LewGetLabelWidth from './LewGetLabelWidth.vue'
 import { formProps } from './props'
 import { cloneDeep, reduce } from 'lodash-es'
 import LewFormItem from './LewFormItem.vue'
@@ -8,6 +9,8 @@ import * as Yup from 'yup'
 const props = defineProps(formProps)
 const emit = defineEmits(['change', 'mounted'])
 const formMap = ref<Record<string, any>>({})
+const formLabelRef = ref()
+const autoLabelWidth = ref(0)
 
 let componentOptions: any[] = cloneDeep(props.options) || []
 
@@ -24,7 +27,7 @@ const formRulesmap = () => {
   const form: Record<string, any> = getForm()
   return reduce(
     cloneDeep(componentOptions),
-    (acc: Record<string, any>, cur: any) => {
+    (acc: Record<string, any> = {}, cur: any) => {
       const { required, field, rule } = cur
       if (!required && !form[field]) {
         return acc
@@ -55,6 +58,9 @@ const setForm = (value: any = {}) => {
   componentOptions.forEach((item: any) => {
     const v = getNestedFieldValue(value, item.field)
     if (value !== undefined) {
+      // 重置error
+      formItemRefMap.value[item.field]?.setError('')
+      // 如果有值，就把值给 formMap
       formMap.value[item.field] = v
     }
   })
@@ -86,7 +92,7 @@ const validate = () => {
     const schema = Yup.object().shape(formRulesmap())
     // 清除错误信息
     Object.keys(formItemRefMap.value).forEach((key) => {
-      formItemRefMap.value[key].setErrors('')
+      formItemRefMap.value[key].setError('')
     })
     // 校验对象
     schema
@@ -99,7 +105,7 @@ const validate = () => {
           const path = item.path.replace(`["`, '').replace(`"]`, '')
           const ref = formItemRefMap.value[path]
           if (ref) {
-            ref.setErrors(item.message)
+            ref.setError(item.message)
           }
         })
         // 校验失败，将错误信息赋值给 formItemRef
@@ -109,20 +115,39 @@ const validate = () => {
 }
 
 onMounted(() => {
+  // 计算 label 的宽度
+  autoLabelWidth.value = formLabelRef.value.$el.offsetWidth
   emit('mounted')
 })
+
+watch(
+  () => props.size,
+  () => {
+    nextTick(() => {
+      autoLabelWidth.value = formLabelRef.value.$el.offsetWidth
+    })
+  }
+)
 
 defineExpose({ getForm, setForm, validate })
 </script>
 
 <template>
+  <LewGetLabelWidth ref="formLabelRef" :size="size" :options="componentOptions" />
   <div class="lew-form" :class="getFormClassNames">
     <lew-form-item
       :ref="(el) => (formItemRefMap[item.field] = el)"
       v-for="item in componentOptions"
       v-model="formMap[item.field]"
       :key="item.field"
-      v-bind="{ direction, size, labelWidth, disabled, ...item }"
+      v-bind="{
+        direction,
+        size,
+        labelWidth: labelWidth === 'auto' ? autoLabelWidth : labelWidth,
+        disabled,
+        readonly,
+        ...item
+      }"
       @change="
         () => {
           emit('change', getForm())
@@ -153,5 +178,22 @@ defineExpose({ getForm, setForm, validate })
 
 .lew-form-columns-4 {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.lew-form-label-box {
+  position: fixed;
+  width: auto;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: #000;
+  padding-left: 20px;
+  z-index: -99;
+  opacity: 0;
+  left: -200vw;
+  span {
+    flex-shrink: 0;
+    display: inline;
+  }
 }
 </style>

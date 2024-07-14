@@ -166,7 +166,6 @@ const submit = () => {
       class="form-box"
       :size="form.size"
       :options="options"
-      :labelWidth="80"
       @change="
         (e: any) => {
           form = e

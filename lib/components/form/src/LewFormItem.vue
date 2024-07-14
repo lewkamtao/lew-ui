@@ -73,7 +73,7 @@ const validate = () => {
   }
 }
 
-const setErrors = (message: any) => {
+const setError = (message: any) => {
   errMsg.value = message
 }
 
@@ -85,7 +85,7 @@ const change = () => {
   emit('change', cloneDeep({ value: modelValue.value, field, label }))
 }
 
-defineExpose({ validate, setErrors })
+defineExpose({ validate, setError })
 </script>
 
 <template>
@@ -178,6 +178,7 @@ defineExpose({ validate, setErrors })
     display: inline-flex;
     justify-content: flex-end;
     flex-shrink: 0;
+    white-space: nowrap;
     .label-required::before {
       content: '*';
       color: var(--lew-color-error-dark);
@@ -201,6 +202,7 @@ defineExpose({ validate, setErrors })
     justify-content: flex-start;
     box-sizing: border-box;
     margin-top: 0px;
+    white-space: nowrap;
 
     .label-required::after {
       content: '*';

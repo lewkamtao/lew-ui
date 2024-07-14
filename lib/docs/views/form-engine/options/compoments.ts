@@ -248,5 +248,9 @@ export const componentsOptions = [
   {
     label: '标签输入框',
     as: 'input-tag'
+  },
+  {
+    label: '开关',
+    as: 'switch'
   }
 ]

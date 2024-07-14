@@ -21,6 +21,10 @@ const options = ref(
     return API[key]
   })
 )
+
+const open = (url: string) => {
+  window.open(url)
+}
 </script>
 
 <template>
@@ -28,7 +32,12 @@ const options = ref(
     <lew-title>Checkbox</lew-title>
     <p class="sub-title">
       通过复选框选择一个或多个数据。单选框可移步
-      <lew-mark type="light" color="blue" to="https://fengyuanchen.github.io/vue-feather/">
+      <lew-mark
+        type="light"
+        cursor="pointer"
+        color="blue"
+        @click="open('https://fengyuanchen.github.io/vue-feather/')"
+      >
         Radio
       </lew-mark>
     </p>

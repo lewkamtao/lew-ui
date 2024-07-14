@@ -1,26 +1,26 @@
 <script lang="ts" setup>
-import { useLewTo } from '../../../hooks'
 import { getColorType } from 'lew-ui/utils'
 import { markProps } from './props'
 
 const props = defineProps(markProps)
-const { lewTo } = useLewTo()
 
 const getStyle = computed(() => {
-  const { color, round, bold, to } = props
+  const { color, round, bold, cursor } = props
   let styleObj = {} as any
   let _color = getColorType(color)
   styleObj.borderRadius = round ? '20px' : 'var(--lew-border-radius-mini)'
   styleObj.fontWeight = bold || ''
   styleObj.color = `var(--lew-color-${_color}-dark)`
   styleObj.backgroundColor = `var(--lew-color-${_color}-light)`
-  styleObj.cursor = to ? 'pointer' : ''
+  styleObj.cursor = cursor ? cursor : ''
   return styleObj
 })
+
+const emit = defineEmits(['click'])
 </script>
 
 <template>
-  <span class="lew-mark" :style="getStyle" @click="lewTo(to)">
+  <span class="lew-mark" :style="getStyle" @click="emit('click')">
     <slot></slot>
   </span>
 </template>

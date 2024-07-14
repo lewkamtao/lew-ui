@@ -17,6 +17,10 @@ const options = ref(
     return API[key]
   })
 )
+
+const open = (url: string) => {
+  window.open(url)
+}
 </script>
 
 <template>
@@ -24,7 +28,8 @@ const options = ref(
     <lew-title>Collapse</lew-title>
     <p class="sub-title">
       这是一个参考（tou）<lew-mark
-        to="https://www.naiveui.com/zh-CN/os-theme/components/gradient-text"
+        cursor="pointer"
+        @click="open('https://www.naiveui.com/zh-CN/os-theme/components/gradient-text')"
         >Naive-UI</lew-mark
       >的 Gradient Text 设计的组件，不能说是模仿，只能说一模一样。
     </p>

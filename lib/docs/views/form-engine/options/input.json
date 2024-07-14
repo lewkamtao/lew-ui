@@ -1,0 +1,7 @@
+[
+  {
+    "label": "多行文本框",
+    "as": "switch",
+    "field": "clearable"
+  }
+]

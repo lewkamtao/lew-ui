@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import { DemoIcon1, DemoIcon1Code, DemoIcon2, DemoIcon2Code } from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
+
+const open = (url: string) => {
+  window.open(url)
+}
 </script>
 <template>
   <div class="demo-wrapper">
     <lew-title>Icon</lew-title>
     <p class="sub-title">
       由
-      <lew-mark type="light" color="blue" to="https://fengyuanchen.github.io/vue-feather/"
+      <lew-mark
+        cursor="pointer"
+        type="light"
+        color="blue"
+        @click="open('https://fengyuanchen.github.io/vue-feather/')"
         >vue-feather</lew-mark
       >
       强力驱动

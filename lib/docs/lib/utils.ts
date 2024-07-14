@@ -24,3 +24,29 @@ export const convertProps = (json: any) => {
   }
   return props
 }
+
+/**
+ * 将对象转成文件并下载
+ * @param {object} data - 要转成文件的对象数据
+ * @param {string} filename - 下载的文件名
+ */
+export const downloadObjectAsFile = (data: any, filename: string) => {
+  // 创建一个Blob对象，Blob表示一个不可变的原始数据的类文件对象，将对象转成JSON字符串
+  const blob = new Blob([JSON.stringify(data)], { type: 'application/json' })
+
+  // 创建一个临时URL对象，用于生成下载链接
+  const url = URL.createObjectURL(blob)
+
+  // 创建一个<a>标签并设置下载链接和文件名，模拟点击实现文件下载
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+
+  // 将<a>标签添加到文档中并触发点击事件，开始下载文件
+  document.body.appendChild(a)
+  a.click()
+
+  // 下载完成后移除临时URL和<a>标签
+  URL.revokeObjectURL(url)
+  document.body.removeChild(a)
+}

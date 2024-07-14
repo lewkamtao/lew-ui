@@ -114,7 +114,6 @@ const getInputStyle = computed(() => {
     medium: 30 + countWidth,
     large: 30 + countWidth
   }
-  console.log(`calc(100% - ${clearable ? wMap[size] : 0}px)`)
   return {
     width: `calc(100% - ${clearable ? wMap[size] : 0}px)`
   }

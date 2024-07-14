@@ -296,7 +296,6 @@ const submit = async () => {
       ref="formRef"
       :size="form.size"
       :options="options"
-      :labelWidth="80"
       direction="y"
       :columns="3"
       @change="

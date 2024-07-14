@@ -21,13 +21,18 @@ export const formProps = {
   },
   labelWidth: {
     type: [Number, String],
-    default: '110px',
+    default: 'auto',
     description: '标签宽度'
   },
   disabled: {
     type: Boolean,
     default: false,
     description: '是否禁用表单'
+  },
+  readonly: {
+    type: Boolean,
+    default: false,
+    description: '是否只读'
   },
   direction: {
     type: String,
@@ -59,7 +64,7 @@ export const formItemProps = {
   },
   labelWidth: {
     type: [Number, String],
-    default: '',
+    default: 'auto',
     description: '标签宽度'
   },
   direction: {

@@ -21,6 +21,8 @@ const options = ref(
     return API[key]
   })
 )
+
+const { push } = useRouter()
 </script>
 
 <template>
@@ -41,9 +43,11 @@ const options = ref(
     <lew-demo-box title="支持网格布局" :code="DemoForm4Code">
       <demo-form4 />
     </lew-demo-box>
-    <lew-demo-box v-if="false" title="支持在线配置 Bata" :code="DemoForm5Code">
+    <lew-demo-box title="支持在线配置 Bata" :code="DemoForm5Code">
       <template #desc>
-        <div>你可以通过 <lew-mark to="/form-engine">表单引擎</lew-mark> 进行快捷布局表单</div>
+        <div>
+          你可以通过 <lew-mark cursor="pointer"  @click="push('/form-engine')">表单引擎</lew-mark> 进行快捷布局表单
+        </div>
       </template>
       <demo-form5 />
     </lew-demo-box>

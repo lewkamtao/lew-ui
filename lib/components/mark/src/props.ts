@@ -39,10 +39,10 @@ export const markProps = {
     default: false,
     description: '是否圆角'
   },
-  to: {
+  cursor: {
     type: String,
     default: '',
-    description: '跳转链接'
+    description: '鼠标悬停样式'
   },
   bold: {
     type: Number,

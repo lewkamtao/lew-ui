@@ -301,14 +301,17 @@ const options = ref([
 const formRef = ref()
 
 const submit = async () => {
-  LewMessage.loading('处理中···')
-  const vail = await formRef.value.validate()
-  if (vail) {
-    form.value = formRef.value.getForm()
-    LewMessage.success('已提交')
-  } else {
-    LewMessage.warning('请完善表单')
-  }
+  LewMessage.request({ loadingMessage: '处理中···' }, async () => {
+    return new Promise<any>(async (resolve) => {
+      const vail = await formRef.value.validate()
+      if (vail) {
+        form.value = formRef.value.getForm()
+        resolve({ content: '加载成功！', duration: 1000, type: 'success' })
+      } else {
+        resolve({ content: '请完善表单', duration: 1000, type: 'warning' })
+      }
+    })
+  })
 }
 
 const form = ref({} as any)
@@ -357,7 +360,6 @@ onMounted(() => {
       :size="form.size"
       class="form-box"
       :options="options"
-      :labelWidth="100"
       @mounted="setForm"
       @change="
         (e: any) => {

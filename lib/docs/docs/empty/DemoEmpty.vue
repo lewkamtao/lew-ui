@@ -10,6 +10,7 @@ const options = ref(
     return API[key]
   })
 )
+const { push } = useRouter()
 </script>
 
 <template>
@@ -17,7 +18,7 @@ const options = ref(
     <lew-title>Empty</lew-title>
     <p class="sub-title">
       有时候，一个好看的缺省页，会让你的用户感觉很舒服。
-      <lew-mark type="light" color="blue" to="/Popok">Popok</lew-mark>
+      <lew-mark cursor="pointer"  type="light" color="blue" @click="push('/Popok')">Popok</lew-mark>
     </p>
     <lew-demo-box title="暂无数据" :code="DemoEmpty1Code">
       <demo-empty1 />
