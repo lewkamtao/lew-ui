@@ -44,8 +44,8 @@ const formGlobal = ref({
 
 const formWidth = computed(() => {
   return formGlobal.value.direction === 'x'
-    ? (320 + autoLabelWidth.value) * formGlobal.value.columns
-    : 320 * formGlobal.value.columns
+    ? (350 + autoLabelWidth.value) * formGlobal.value.columns
+    : 350 * formGlobal.value.columns
 })
 
 const setLabelWidth = () => {
@@ -185,7 +185,6 @@ const changeDraggable = (e: any) => {
     <div class="lew-form-wrapper" @click="(settingTab = 'global'), (activedId = '')">
       <lew-flex x="center" y="center" class="lew-form-select-columns">
         <lew-tabs
-          size="large"
           width="320px"
           item-width="auto"
           :options="colOptions"
@@ -392,6 +391,7 @@ const changeDraggable = (e: any) => {
       height: calc(100vh - 60px);
       overflow-y: auto;
       box-sizing: border-box;
+      padding: 5px;
     }
     .lew-form-component-box {
       display: flex;
@@ -406,7 +406,7 @@ const changeDraggable = (e: any) => {
   }
   .lew-form-wrapper-draggable-item {
     position: relative;
-    padding: 10px 10px 20px 10px;
+    padding: 10px 13px 20px 13px;
     box-sizing: border-box;
     border: 2px dashed transparent;
     cursor: pointer;
@@ -429,7 +429,7 @@ const changeDraggable = (e: any) => {
 
     .field {
       position: absolute;
-      right: 5px;
+      right: 13px;
       bottom: 0px;
       width: 200px;
       overflow: hidden;

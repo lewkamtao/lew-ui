@@ -41,5 +41,16 @@
         }
       ]
     }
+  },
+
+  {
+    "label": "是否只读",
+    "as": "switch",
+    "field": "readonly"
+  },
+  {
+    "label": "是否禁用",
+    "as": "switch",
+    "field": "disabled"
   }
 ]

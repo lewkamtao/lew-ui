@@ -4,7 +4,7 @@ const visible = ref(false)
 const bindOptions = ref({})
 const open = (options: any) => {
   visible.value = true
-  width.value = options.maxWidth + 40
+  width.value = options.maxWidth
   bindOptions.value = options
 }
 defineExpose({ open })

@@ -254,7 +254,8 @@ defineExpose({ validate, setError })
   pointer-events: none;
 }
 .lew-form-item-disabled {
-  opacity: 0.5;
+  opacity: var(--lew-disabled-opacity);
   pointer-events: none;
+  user-select: none;
 }
 </style>
