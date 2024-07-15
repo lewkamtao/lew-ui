@@ -130,7 +130,6 @@ export const componentsOptions = [
     label: '选项卡',
     as: 'tabs',
     props: {
-      width: '100%',
       options: [
         {
           label: 'Beijing',
