@@ -1,10 +1,8 @@
 <script setup lang="ts">
-const width = ref(350)
 const visible = ref(false)
 const bindOptions = ref({})
 const open = (options: any) => {
   visible.value = true
-  width.value = options.maxWidth
   bindOptions.value = options
 }
 defineExpose({ open })
@@ -15,7 +13,6 @@ defineExpose({ open })
     v-model:visible="visible"
     closeOnClickOverlay
     closeByEsc
-    :width="width"
     hideOkButton
     :cancelProps="{
       text: '关闭'

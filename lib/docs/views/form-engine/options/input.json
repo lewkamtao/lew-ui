@@ -1,7 +1,12 @@
 [
   {
-    "label": "多行文本框",
+    "label": "是否只读",
     "as": "switch",
-    "field": "clearable"
+    "field": "readonly"
+  },
+  {
+    "label": "是否禁用",
+    "as": "switch",
+    "field": "disabled"
   }
 ]

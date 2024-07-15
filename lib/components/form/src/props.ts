@@ -14,6 +14,11 @@ export const formProps = {
     default: 'medium',
     description: '尺寸，可选值为 small、medium、large'
   },
+  width: {
+    type: [Number, String],
+    default: '',
+    description: '表单项宽度'
+  },
   columns: {
     type: [Number, String],
     default: 1,

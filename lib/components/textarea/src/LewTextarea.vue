@@ -179,6 +179,7 @@ defineExpose({ toFocus })
     outline: none;
     box-sizing: border-box;
     resize: none;
+    transition: all 0.25s;
   }
 
   .lew-textarea::placeholder {

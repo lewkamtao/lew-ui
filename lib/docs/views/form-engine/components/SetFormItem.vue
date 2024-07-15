@@ -51,6 +51,7 @@ const asMap: Record<string, any> = {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  user-select: none;
   label {
     white-space: nowrap;
   }

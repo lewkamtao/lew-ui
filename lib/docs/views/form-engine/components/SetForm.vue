@@ -8,7 +8,7 @@ defineProps({
   }
 })
 
-const form: any = defineModel()
+const form: any = defineModel({ default: {} })
 </script>
 
 <template>

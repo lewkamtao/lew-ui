@@ -132,6 +132,13 @@ defineExpose({ validate, setError })
 </template>
 
 <style lang="scss" scoped>
+.lew-form-item {
+  transition: opacity 0.25s;
+  .label-box {
+    transition: all 0.25s;
+  }
+}
+
 .lew-form-item-size-small {
   .label-box {
     font-size: var(--lew-form-font-size-small);

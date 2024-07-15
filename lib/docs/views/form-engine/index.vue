@@ -9,7 +9,16 @@ import { cloneDeep } from 'lodash'
 import { useDark } from '@vueuse/core'
 import SetForm from './components/SetForm.vue'
 import globalOptions from './options/global.json'
+import inputOptions from './options/input.json'
 import LewGetLabelWidth from 'lew-ui/components/form/src/LewGetLabelWidth.vue'
+
+const optionsMap = {
+  global: globalOptions,
+  input: inputOptions,
+  select: globalOptions,
+  switch: globalOptions,
+  tabs: globalOptions
+}
 
 const isDark = useDark({
   selector: 'html',
@@ -44,8 +53,8 @@ const formGlobal = ref({
 
 const formWidth = computed(() => {
   return formGlobal.value.direction === 'x'
-    ? (350 + autoLabelWidth.value) * formGlobal.value.columns
-    : 350 * formGlobal.value.columns
+    ? (320 + autoLabelWidth.value) * formGlobal.value.columns
+    : 320 * formGlobal.value.columns
 })
 
 const setLabelWidth = () => {
@@ -132,7 +141,7 @@ const getModel = () => {
   const componentModel = {
     ...formGlobal.value,
     columns: formGlobal.value.columns,
-    maxWidth: formWidth.value,
+    width: formWidth.value,
     id: `form_${dayjs().format('YYYYMMDD_HHmmss')}_${generateId()}`,
     options: _options
   }
@@ -203,7 +212,7 @@ const changeDraggable = (e: any) => {
         ref="formMainRef"
         class="form-main"
         :style="{
-          'max-width': `${formWidth}px`
+          'max-width': `${formWidth + 40}px`
         }"
       >
         <draggable
@@ -269,11 +278,10 @@ const changeDraggable = (e: any) => {
                 v-if="element.as"
                 v-model="formMap[element.field]"
                 v-bind="{
-                  ...element,
                   size: formGlobal.size,
                   direction: formGlobal.direction,
                   labelWidth: autoLabelWidth,
-                  readonly: true
+                  ...element
                 }"
               />
               <lew-flex x="center" y="center" class="blank-box" v-else>占位盒子</lew-flex>
@@ -302,11 +310,16 @@ const changeDraggable = (e: any) => {
         />
       </lew-flex>
       <div class="lew-form-options-main lew-scrollbar">
-        <div v-show="settingTab === 'global'" class="lew-form-global-panel">
-          <set-form v-model="formGlobal" :options="globalOptions"></set-form>
+        <div v-show="settingTab === 'global'" class="lew-form-options-panel">
+          <set-form v-model="formGlobal" :options="optionsMap.global" />
         </div>
-        <div v-show="settingTab === 'options'">
-          <lew-empty width="100%" type="order" title="未选择组件" />
+        <div v-show="settingTab === 'options'" class="lew-form-options-panel">
+          <set-form
+            v-if="activedId"
+            v-model="options[options.findIndex((e: any) => e.id === activedId)]"
+            :options="optionsMap['input']"
+          />
+          <lew-empty v-else width="100%" type="order" title="未选择组件" />
         </div>
         <div v-show="settingTab === 'model'" class="lew-form-model pre-box">
           <highlightjs autodetect :code="JSON.stringify(formModel, null, 4)" />
@@ -521,7 +534,7 @@ const changeDraggable = (e: any) => {
   background-color: var(--lew-bgcolor-0);
   border-bottom: 1px solid var(--lew-bgcolor-3);
 }
-.lew-form-global-panel {
+.lew-form-options-panel {
   width: 100%;
   padding: 15px;
   box-sizing: border-box;

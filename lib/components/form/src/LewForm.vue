@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { object2class, formatFormByMap } from 'lew-ui/utils'
+import { object2class, any2px, formatFormByMap } from 'lew-ui/utils'
 import LewGetLabelWidth from './LewGetLabelWidth.vue'
 import { formProps } from './props'
 import { cloneDeep, reduce } from 'lodash-es'
@@ -134,7 +134,7 @@ defineExpose({ getForm, setForm, validate })
 
 <template>
   <LewGetLabelWidth ref="formLabelRef" :size="size" :options="componentOptions" />
-  <div class="lew-form" :class="getFormClassNames">
+  <div class="lew-form" :style="{ width: any2px(width) }" :class="getFormClassNames">
     <lew-form-item
       :ref="(el) => (formItemRefMap[item.field] = el)"
       v-for="item in componentOptions"
