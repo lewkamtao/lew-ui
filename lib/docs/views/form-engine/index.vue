@@ -281,6 +281,7 @@ const changeDraggable = (e: any) => {
                   size: formGlobal.size,
                   direction: formGlobal.direction,
                   labelWidth: autoLabelWidth,
+                  readonly: true,
                   ...element
                 }"
               />

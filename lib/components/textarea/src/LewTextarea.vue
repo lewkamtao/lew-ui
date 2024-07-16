@@ -90,7 +90,7 @@ const blur = () => {
 }
 
 const getIconSize = computed(() => {
-  const size: any = {
+  const size: Record<string, number> = {
     small: 12,
     medium: 14,
     large: 16
@@ -99,8 +99,13 @@ const getIconSize = computed(() => {
 })
 
 const getTextareaStyle = computed(() => {
-  const { width, height } = props
-  return `width:${any2px(width)};height:${any2px(height)};`
+  const { width, height, size } = props
+  const heightMap: Record<string, number> = {
+    small: 60,
+    medium: 75,
+    large: 90
+  }
+  return `width:${any2px(width)}; height:${any2px(height ? height : heightMap[size])};`
 })
 
 if (props.okByEnter) {
