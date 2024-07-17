@@ -340,12 +340,13 @@ const changeDraggable = (e: any) => {
 
   .lew-form-component {
     padding: 15px;
-    width: 180px;
+    width: calc(30px + 200px + 15px);
     overflow-x: hidden;
     overflow-y: auto;
     background-color: var(--lew-bgcolor-0);
     flex-shrink: 0;
     user-select: none;
+    box-sizing: border-box;
   }
   .lew-form-component-draggable {
     display: flex;
@@ -354,12 +355,13 @@ const changeDraggable = (e: any) => {
     .lew-form-component-box {
       display: flex;
       align-items: center;
-      width: 180px;
-      height: 50px;
-      padding: 0px 20px;
+      justify-content: center;
+      width: 100px;
+      height: 100px;
       background-color: var(--lew-bgcolor-2);
       border-radius: var(--lew-border-radius-small);
       border: 2px dashed transparent;
+      box-sizing: border-box;
       cursor: move;
     }
     .lew-form-component-box:hover {
