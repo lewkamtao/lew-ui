@@ -1,4 +1,4 @@
-export const componentsOptions = [
+export const componentsMenusSchema = [
   {
     label: '占位盒子',
     as: ''
@@ -246,10 +246,14 @@ export const componentsOptions = [
   },
   {
     label: '标签输入框',
-    as: 'input-tag'
+    as: 'input-tag',
+    props: {}
   },
   {
     label: '开关',
-    as: 'switch'
+    as: 'switch',
+    props: {
+      round: 1
+    }
   }
 ]

@@ -22,6 +22,8 @@ const form: any = defineModel({ default: {} })
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  padding:15px 15px 0px 15px;
+  gap: 10px;
+  box-sizing: border-box;
 }
 </style>

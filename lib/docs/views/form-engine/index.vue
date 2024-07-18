@@ -1,23 +1,29 @@
 <script setup lang="ts">
 import draggable from 'vuedraggable'
-import { componentsOptions } from './options/compoments'
 import dayjs from 'dayjs'
 import PreviewModal from './components/PreviewModal.vue'
 import { formatFormByMap } from 'lew-ui/utils'
 import { downloadObjectAsFile } from 'lew-ui/docs/lib/utils'
-import { cloneDeep } from 'lodash'
 import { useDark } from '@vueuse/core'
 import SetForm from './components/SetForm.vue'
-import globalOptions from './options/global.json'
-import inputOptions from './options/input.json'
+import {
+  baseSchema,
+  globalSchema,
+  tabsSchema,
+  switchSchema,
+  inputSchema,
+  selectSchema,
+  componentsMenusSchema
+} from './schema'
 import LewGetLabelWidth from 'lew-ui/components/form/src/LewGetLabelWidth.vue'
+import { debounce, cloneDeep, has } from 'lodash'
 
-const optionsMap = {
-  global: globalOptions,
-  input: inputOptions,
-  select: globalOptions,
-  switch: globalOptions,
-  tabs: globalOptions
+const schemaMap: Record<string, any> = {
+  global: globalSchema,
+  input: inputSchema,
+  select: selectSchema,
+  switch: switchSchema,
+  tabs: tabsSchema
 }
 
 const isDark = useDark({
@@ -35,13 +41,13 @@ const dragOptions = computed(() => {
 })
 
 const previewModalRef = ref()
-const menuOptions = ref<any>(componentsOptions)
+const menuOptions = ref<any>(componentsMenusSchema)
 const options = ref<any>([])
 const formMap = ref<Record<string, any>>({})
 const itemRefMap = ref<Record<string, any>>({})
 const formMainRef = ref()
 
-const settingTab = ref('global')
+const settingTab = ref('options')
 const activedId = ref('')
 const formLabelRef = ref()
 const autoLabelWidth = ref(0)
@@ -57,14 +63,14 @@ const formWidth = computed(() => {
     : 320 * formGlobal.value.columns
 })
 
-const setLabelWidth = () => {
+const refreshForm = debounce(() => {
   nextTick(() => {
     if (formLabelRef.value) {
       autoLabelWidth.value = formLabelRef.value.$el.offsetWidth
-      console.log(autoLabelWidth.value)
     }
   })
-}
+  formatFormMap()
+}, 200)
 
 const formModel = computed(() => {
   return formatFormByMap(cloneDeep(formMap.value))
@@ -82,7 +88,6 @@ const generateId = () => {
 }
 
 const cloneDog = (item: any) => {
-  const field = `field_${generateId()}`
   return {
     ...item,
     id: `${item.as}_${dayjs().format('YYYYMMDD_HHmmss')}_${generateId()}`,
@@ -92,7 +97,7 @@ const cloneDog = (item: any) => {
       3: 1,
       4: 1
     },
-    field: item.as ? field : undefined
+    field: undefined
   }
 }
 
@@ -102,18 +107,19 @@ const deleteItem = (item: any) => {
     content: '确认删除该组件吗？',
     ok: () => {
       options.value = options.value.filter((e: any) => e.id !== item.id)
-      formatFormMap({ target: { value: item.field } })
+      formatFormMap()
     }
   })
 }
 
-const formatFormMap = (e: any) => {
-  formMap.value[e.target.value] = ''
-  Object.keys(formMap.value).forEach((key) => {
-    if (options.value.findIndex((e: any) => e.field === key) === -1) {
-      delete formMap.value[key]
+const formatFormMap = () => {
+  let _formMap: Record<string, any> = {}
+  cloneDeep(options.value).forEach((item: any) => {
+    if (!has(_formMap, item.field) && item.field) {
+      _formMap[item.field] = ''
     }
   })
+  formMap.value = _formMap
 }
 
 const minimize = (item: any) => {
@@ -162,14 +168,15 @@ const exportFile = () => {
   }
 }
 
-const changeDraggable = (e: any) => {
-  const { added } = e
-  if (added) {
-    const { element } = e?.added || {}
-    formMap.value[element.field] = element.as ? '' : undefined
+watch(
+  () => options.value,
+  () => {
+    refreshForm()
+  },
+  {
+    deep: true
   }
-  setLabelWidth()
-}
+)
 </script>
 
 <template>
@@ -191,7 +198,7 @@ const changeDraggable = (e: any) => {
         </template>
       </draggable>
     </div>
-    <div class="lew-form-wrapper" @click="(settingTab = 'global'), (activedId = '')">
+    <div class="lew-form-wrapper" @click="(settingTab = 'options'), (activedId = '')">
       <lew-flex x="center" y="center" class="lew-form-select-columns">
         <lew-tabs
           width="320px"
@@ -228,7 +235,6 @@ const changeDraggable = (e: any) => {
           v-model="options"
           item-key="id"
           v-bind="dragOptions"
-          @change="changeDraggable"
         >
           <template #item="{ element }">
             <div
@@ -236,7 +242,9 @@ const changeDraggable = (e: any) => {
               class="lew-form-wrapper-draggable-item"
               :class="{ 'lew-form-wrapper-draggable-item-actived': activedId === element.id }"
               @click.stop="
-                activedId === element.id ? (activedId = '') : (activedId = element.id),
+                activedId === element.id || element.as === 'blank'
+                  ? (activedId = '')
+                  : (activedId = element.id),
                   (settingTab = 'options')
               "
               :style="{ 'grid-column-end': `span ${element.spanMap[formGlobal.columns]}` }"
@@ -266,14 +274,17 @@ const changeDraggable = (e: any) => {
                 </lew-flex>
               </lew-flex>
 
-              <input
-                v-if="element.as"
-                v-model="element.field"
-                @change="formatFormMap"
-                @click.stop
-                placeholder="设置字段名"
-                class="field"
+              <lew-icon
+                v-tooltip="{
+                  content: '未绑定字段',
+                  trigger: 'mouseenter'
+                }"
+                v-if="!element.field"
+                class="tips-icon"
+                size="14"
+                type="alert-circle"
               />
+
               <lew-form-item
                 v-if="element.as"
                 v-model="formMap[element.field]"
@@ -304,23 +315,32 @@ const changeDraggable = (e: any) => {
           width="100%"
           item-width="auto"
           :options="[
-            { label: '全局属性', value: 'global' },
-            { label: '组件属性', value: 'options' },
-            { label: '表单模型', value: 'model' }
+            { label: '属性', value: 'options' },
+            { label: '模型', value: 'model' }
           ]"
         />
       </lew-flex>
       <div class="lew-form-options-main lew-scrollbar">
-        <div v-show="settingTab === 'global'" class="lew-form-options-panel">
-          <set-form v-model="formGlobal" :options="optionsMap.global" />
-        </div>
         <div v-show="settingTab === 'options'" class="lew-form-options-panel">
-          <set-form
-            v-if="activedId"
-            v-model="options[options.findIndex((e: any) => e.id === activedId)]"
-            :options="optionsMap['input']"
-          />
-          <lew-empty v-else width="100%" type="order" title="未选择组件" />
+          <lew-flex direction="y" gap="0">
+            <lew-flex v-if="activedId" direction="y" x="start" gap="0">
+              <div class="title">表单属性</div>
+              <set-form
+                v-model="options[options.findIndex((e: any) => e.id === activedId)]"
+                :options="baseSchema"
+              />
+            </lew-flex>
+            <lew-flex direction="y" x="start" gap="0">
+              <div class="title">全局属性</div>
+              <set-form v-model="formGlobal" :options="schemaMap.global" /> </lew-flex
+            ><lew-flex v-if="activedId" direction="y" x="start" gap="0">
+              <div class="title">组件属性</div>
+              <set-form
+                v-model="options[options.findIndex((e: any) => e.id === activedId)].props"
+                :options="schemaMap[options[options.findIndex((e: any) => e.id === activedId)].as]"
+              />
+            </lew-flex>
+          </lew-flex>
         </div>
         <div v-show="settingTab === 'model'" class="lew-form-model pre-box">
           <highlightjs autodetect :code="JSON.stringify(formModel, null, 4)" />
@@ -422,10 +442,17 @@ const changeDraggable = (e: any) => {
   }
   .lew-form-wrapper-draggable-item {
     position: relative;
-    padding: 10px 13px 20px 13px;
+    padding: 15px 13px 15px 13px;
     box-sizing: border-box;
     border: 2px dashed transparent;
     cursor: pointer;
+    .tips-icon {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      color: var(--lew-color-error-dark);
+      z-index: 9;
+    }
     .handle-box {
       position: absolute;
       top: 0px;
@@ -461,8 +488,11 @@ const changeDraggable = (e: any) => {
       background-color: transparent;
     }
   }
+  .lew-form-wrapper-draggable-item:hover {
+    border: 2px dashed var(--lew-bgcolor-5);
+  }
   .lew-form-wrapper-draggable-item-actived {
-    border: 2px dashed var(--lew-color-blue-dark);
+    border: 2px dashed var(--lew-color-blue-dark) !important;
   }
   .blank-box {
     min-height: 63px;
@@ -535,14 +565,23 @@ const changeDraggable = (e: any) => {
   padding: 15px;
   flex-shrink: 0;
   background-color: var(--lew-bgcolor-0);
-  border-bottom: 1px solid var(--lew-bgcolor-3);
 }
 .lew-form-options-panel {
   width: 100%;
-  padding: 15px;
   box-sizing: border-box;
+  .title {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: var(--lew-bgcolor-1);
+    border-bottom: 1px solid var(--lew-bgcolor-3);
+    border-top: 1px solid var(--lew-bgcolor-3);
+    font-size: 14px;
+    font-weight: bold;
+  }
 }
 .lew-form-model {
   width: 100%;
+  border-top: 1px solid var(--lew-bgcolor-3);
+  border-bottom: 1px solid var(--lew-bgcolor-3);
 }
 </style>
