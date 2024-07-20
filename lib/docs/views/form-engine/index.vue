@@ -32,16 +32,8 @@ const isDark = useDark({
   valueLight: 'lew-light'
 })
 
-const dragOptions = computed(() => {
-  return {
-    animation: 200,
-    disabled: false,
-    chosenClass: 'chosen'
-  }
-})
-
 const previewModalRef = ref()
-const menuOptions = ref<any>(componentsMenusSchema)
+const menuOptions = componentsMenusSchema
 const options = ref<any>([])
 const formMap = ref<Record<string, any>>({})
 const itemRefMap = ref<Record<string, any>>({})
@@ -52,8 +44,8 @@ const activedId = ref('')
 const formLabelRef = ref()
 const autoLabelWidth = ref(0)
 const formGlobal = ref({
-  direction: 'y',
-  columns: 2,
+  direction: 'x',
+  columns: 1,
   size: 'medium'
 })
 
@@ -97,26 +89,15 @@ const cloneDog = (item: any) => {
       3: 1,
       4: 1
     },
-    field: undefined
+    field: `${generateId()}`
   }
-}
-
-const deleteItem = (item: any) => {
-  LewDialog.error({
-    title: '确认删除',
-    content: '确认删除该组件吗？',
-    ok: () => {
-      options.value = options.value.filter((e: any) => e.id !== item.id)
-      formatFormMap()
-    }
-  })
 }
 
 const formatFormMap = () => {
   let _formMap: Record<string, any> = {}
   cloneDeep(options.value).forEach((item: any) => {
     if (!has(_formMap, item.field) && item.field) {
-      _formMap[item.field] = ''
+      _formMap[item.field] = item.fieldType
     }
   })
   formMap.value = _formMap
@@ -154,20 +135,6 @@ const getModel = () => {
   return componentModel
 }
 
-const preview = () => {
-  const model = getModel()
-  if (model) {
-    previewModalRef.value && previewModalRef.value.open(model)
-  }
-}
-
-const exportFile = () => {
-  const model = getModel()
-  if (model) {
-    downloadObjectAsFile(model, `${model.id}.json`)
-  }
-}
-
 watch(
   () => options.value,
   () => {
@@ -177,6 +144,32 @@ watch(
     deep: true
   }
 )
+
+const deleteItem = (item: any) => {
+  LewDialog.error({
+    title: '确认删除',
+    content: '删除后无法恢复，请谨慎操作',
+    cancelText: '手滑了',
+    ok: () => {
+      options.value = options.value.filter((e: any) => e.id !== item.id)
+      formatFormMap()
+    }
+  })
+}
+
+const exportFile = () => {
+  const model = getModel()
+  if (model) {
+    downloadObjectAsFile(model, `${model.id}.json`)
+  }
+}
+
+const preview = () => {
+  const model = getModel()
+  if (model) {
+    previewModalRef.value && previewModalRef.value.open(model)
+  }
+}
 </script>
 
 <template>
@@ -186,10 +179,13 @@ watch(
       <draggable
         :group="{ name: 'form', pull: 'clone', put: false }"
         :class="['lew-form-component-draggable']"
-        v-model="menuOptions"
+        :list="menuOptions"
         :clone="cloneDog"
         item-key="field"
-        v-bind="dragOptions"
+        v-bind="{
+          animation: 200,
+          chosenClass: 'chosen'
+        }"
       >
         <template #item="{ element }">
           <div class="lew-form-component-box">
@@ -234,7 +230,10 @@ watch(
           class="lew-form-wrapper-draggable lew-scrollbar"
           v-model="options"
           item-key="id"
-          v-bind="dragOptions"
+          v-bind="{
+            animation: 200,
+            chosenClass: 'chosen'
+          }"
         >
           <template #item="{ element }">
             <div
@@ -242,7 +241,7 @@ watch(
               class="lew-form-wrapper-draggable-item"
               :class="{ 'lew-form-wrapper-draggable-item-actived': activedId === element.id }"
               @click.stop="
-                activedId === element.id || element.as === 'blank'
+                activedId === element.id || element.as === ''
                   ? (activedId = '')
                   : (activedId = element.id),
                   (settingTab = 'options')
@@ -273,7 +272,6 @@ watch(
                   ></lew-icon>
                 </lew-flex>
               </lew-flex>
-
               <lew-icon
                 v-tooltip="{
                   content: '未绑定字段',
@@ -284,9 +282,11 @@ watch(
                 size="14"
                 type="alert-circle"
               />
-
+              <lew-flex x="center" y="center" class="blank-box" v-if="element.as === ''"
+                >占位盒子</lew-flex
+              >
               <lew-form-item
-                v-if="element.as"
+                v-else
                 v-model="formMap[element.field]"
                 v-bind="{
                   size: formGlobal.size,
@@ -296,7 +296,6 @@ watch(
                   ...element
                 }"
               />
-              <lew-flex x="center" y="center" class="blank-box" v-else>占位盒子</lew-flex>
             </div>
           </template>
         </draggable>
@@ -332,9 +331,21 @@ watch(
             </lew-flex>
             <lew-flex direction="y" x="start" gap="0">
               <div class="title">全局属性</div>
-              <set-form v-model="formGlobal" :options="schemaMap.global" /> </lew-flex
-            ><lew-flex v-if="activedId" direction="y" x="start" gap="0">
-              <div class="title">组件属性</div>
+              <set-form v-model="formGlobal" :options="schemaMap.global" />
+            </lew-flex>
+            <lew-flex
+              v-if="
+                activedId &&
+                options.findIndex((e: any) => e.id === activedId) >= 0 &&
+                options[options.findIndex((e: any) => e.id === activedId)].as !== ''
+              "
+              direction="y"
+              x="start"
+              gap="0"
+            >
+              <div class="title">
+                组件属性{{ options[options.findIndex((e: any) => e.id === activedId)].as }}
+              </div>
               <set-form
                 v-model="options[options.findIndex((e: any) => e.id === activedId)].props"
                 :options="schemaMap[options[options.findIndex((e: any) => e.id === activedId)].as]"
@@ -347,8 +358,8 @@ watch(
         </div>
       </div>
     </lew-flex>
+    <preview-modal ref="previewModalRef" />
   </div>
-  <preview-modal ref="previewModalRef" />
 </template>
 <style scoped lang="scss">
 .playground {
@@ -434,7 +445,7 @@ watch(
       justify-content: center;
       align-items: center;
       padding: 10px;
-      min-height: 120px;
+      min-height: 70px;
       background-color: var(--lew-bgcolor-0);
       box-sizing: border-box;
       border: 2px dashed transparent;
@@ -495,11 +506,9 @@ watch(
     border: 2px dashed var(--lew-color-blue-dark) !important;
   }
   .blank-box {
-    min-height: 63px;
     height: 100%;
     opacity: 0.4;
     font-size: 16px;
-    margin-top: 5px;
   }
   .lew-form-wrapper-draggable-item:hover {
     .handle-icon {

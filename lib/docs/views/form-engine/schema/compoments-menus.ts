@@ -5,6 +5,7 @@ export const componentsMenusSchema = [
   },
   {
     label: '文本框',
+    fieldType: '',
     as: 'input',
     props: {
       showCount: true,
@@ -13,6 +14,7 @@ export const componentsMenusSchema = [
   },
   {
     label: '多行文本框',
+    fieldType: '',
     as: 'textarea',
     props: {
       clearable: true,
@@ -22,6 +24,7 @@ export const componentsMenusSchema = [
   },
   {
     label: '单选选择器',
+    fieldType: '',
     as: 'select',
     props: {
       clearable: true,
@@ -51,6 +54,7 @@ export const componentsMenusSchema = [
   },
   {
     field: 'select_multiple',
+    fieldType: [],
     label: '多选选择器',
     as: 'select-multiple',
     props: {
@@ -84,6 +88,7 @@ export const componentsMenusSchema = [
   },
   {
     label: '单选框',
+    fieldType: '',
     as: 'radio-group',
     props: {
       options: [
@@ -104,6 +109,7 @@ export const componentsMenusSchema = [
   },
   {
     label: '多选框',
+    fieldType: [],
     as: 'checkbox-group',
     props: {
       options: [
@@ -128,6 +134,7 @@ export const componentsMenusSchema = [
   },
   {
     label: '选项卡',
+    fieldType: '',
     as: 'tabs',
     props: {
       options: [
@@ -148,6 +155,7 @@ export const componentsMenusSchema = [
   },
   {
     label: '地址',
+    fieldType: '',
     as: 'cascader',
     props: {
       label: '是否同意',
@@ -239,6 +247,7 @@ export const componentsMenusSchema = [
   },
   {
     label: '复选框',
+    fieldType: false,
     as: 'checkbox',
     props: {
       label: '是否同意'
@@ -246,11 +255,13 @@ export const componentsMenusSchema = [
   },
   {
     label: '标签输入框',
+    fieldType: [],
     as: 'input-tag',
     props: {}
   },
   {
     label: '开关',
+    fieldType: false,
     as: 'switch',
     props: {
       round: 1

@@ -1,7 +1,7 @@
 export const inputSchema = [
   {
-    label: '标题',
-    as: 'input',
-    field: 'label'
+    label: '是否可清空',
+    as: 'switch',
+    field: 'clearable'
   }
 ]

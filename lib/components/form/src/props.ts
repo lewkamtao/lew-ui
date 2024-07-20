@@ -3,6 +3,11 @@ import type { ExtractPropTypes, PropType } from 'vue'
 export type FormSize = 'small' | 'medium' | 'large'
 
 export const formProps = {
+  id: {
+    type: String,
+    default: '',
+    description: '表单唯一标识'
+  },
   options: {
     type: Array,
     required: true,
