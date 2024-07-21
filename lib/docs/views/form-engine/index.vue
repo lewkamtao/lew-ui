@@ -62,7 +62,7 @@ const refreshForm = debounce(() => {
     }
   })
   formatFormMap()
-}, 200)
+}, 100)
 
 const formModel = computed(() => {
   return formatFormByMap(cloneDeep(formMap.value))
@@ -76,13 +76,13 @@ const colOptions = ref([
 ])
 
 const generateId = () => {
-  return Math.random().toString(36).substr(2, 9)
+  return Math.random().toString(36).substring(2, 9)
 }
 
 const cloneDog = (item: any) => {
   return {
     ...item,
-    id: `${item.as}_${dayjs().format('YYYYMMDD_HHmmss')}_${generateId()}`,
+    id: `${item.as}_${dayjs().format('YYYYMMDD')}_${generateId()}`,
     spanMap: {
       1: 1,
       2: 1,
@@ -129,7 +129,7 @@ const getModel = () => {
     ...formGlobal.value,
     columns: formGlobal.value.columns,
     width: formWidth.value,
-    id: `form_${dayjs().format('YYYYMMDD_HHmmss')}_${generateId()}`,
+    id: `form_${dayjs().format('YYYYMMDD')}_${generateId()}`,
     options: _options
   }
   return componentModel

@@ -39,16 +39,18 @@ const showMessage = ({ type, e }: MessageOptions) => {
   messageElement.setAttribute('class', `message message-${type} message-id-${id}`)
 
   setTimeout(() => {
-    messageElement.setAttribute('class', `message message-${type} message-show`)
-    LewMessage.timer[id] = setTimeout(
-      () => {
-        messageElement.setAttribute('class', `message message-${type} message-hidden`)
-        setTimeout(() => {
-          if (messageElement) messageContainer?.removeChild(messageElement)
-        }, 350)
-      },
-      duration === 0 ? 1000 * 60 * 60 * 24 * 365 : duration || 3000
-    )
+    nextTick(() => {
+      messageElement.setAttribute('class', `message message-${type} message-show`)
+      LewMessage.timer[id] = setTimeout(
+        () => {
+          messageElement.setAttribute('class', `message message-${type} message-hidden`)
+          setTimeout(() => {
+            if (messageElement) messageContainer?.removeChild(messageElement)
+          }, 250)
+        },
+        duration === 0 ? 31536000000 : duration || 3000
+      )
+    })
   }, 10)
 }
 const removeClass = (element: any, className: any) => {
@@ -106,9 +108,9 @@ const LewMessage: any = {
             duration: number
             type?: string
           }) => {
-            // 最小延迟 500ms 保持动画完整性
+            // 最小延迟 250ms 保持动画流畅
             let endTime = new Date().getTime()
-            let delay = 500
+            let delay = 250
             if (endTime - startTime < delay) {
               await new Promise((resolve) => setTimeout(resolve, delay - (endTime - startTime)))
             }

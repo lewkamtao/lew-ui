@@ -134,7 +134,11 @@ defineExpose({ getForm, setForm, validate })
 
 <template>
   <LewGetLabelWidth ref="formLabelRef" :size="size" :options="componentOptions" />
-  <div class="lew-form" :style="{ width: any2px(width) }" :class="getFormClassNames">
+  <div
+    class="lew-form"
+    :style="{ width: any2px(width), minWidth: any2px(direction === 'x' ? 450 : 320) }"
+    :class="getFormClassNames"
+  >
     <lew-form-item
       :ref="(el) => (formItemRefMap[item.field] = el)"
       v-for="item in componentOptions"

@@ -22,10 +22,12 @@ const state = reactive({
 watch(
   () => tabsValue.value,
   (v: string | number | undefined) => {
-    selectItem(v, 'watch')
-    if (!state.isInit) {
-      init()
-    }
+    nextTick(() => {
+      if (!state.isInit) {
+        selectItem(v, 'watch')
+        init()
+      }
+    })
   },
   { deep: true }
 )

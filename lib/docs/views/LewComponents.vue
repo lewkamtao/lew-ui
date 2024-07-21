@@ -184,15 +184,12 @@ options.value = [
       {
         label: 'Switch',
         value: '/Switch'
-      }
+      },
 
-      // {
-      //     clabel: '文件上传',
-      //     label: 'Upload',
-      //     value: '/Upload',
-      //
-      //
-      // },
+      {
+        label: 'Upload',
+        value: '/Upload'
+      }
     ]
   },
   {

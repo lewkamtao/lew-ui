@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { any2px } from 'lew-ui/utils'
-import { LewInput, LewSelect, LewDatePicker, LewTabs, LewSwitch } from 'lew-ui'
+import { LewInput, LewSelect, LewDatePicker, LewTabs, LewSwitch, LewTextarea } from 'lew-ui'
 
 const props = defineProps({
   as: {
@@ -27,6 +27,7 @@ const modelValue = defineModel()
 
 const asMap: Record<string, any> = {
   input: LewInput,
+  textarea: LewTextarea,
   select: LewSelect,
   'date-picker': LewDatePicker,
   tabs: LewTabs,
@@ -49,14 +50,21 @@ const asMap: Record<string, any> = {
 .set-form-item {
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   user-select: none;
   border-bottom: 1px var(--lew-form-bgcolor) solid;
   padding-bottom: 10px;
   label {
     white-space: nowrap;
+    margin-top: 7px;
+  }
+  .lew-form-item-main {
+    width: 200px;
+    display: flex;
+    align-items: center;
+	justify-content: flex-end;
+    min-height: 34px;
   }
 }
-
 </style>

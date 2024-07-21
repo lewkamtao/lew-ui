@@ -31,7 +31,7 @@ const formRef = ref()
 </script>
 
 <template>
-  <lew-flex style="width: 350px">
+  <lew-flex style="width: 450px">
     <lew-form ref="formRef" class="form-box" :options="options" />
   </lew-flex>
 </template>

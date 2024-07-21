@@ -5,6 +5,6 @@ const bindOptions = options
 
 <template>
   <lew-flex x="start" y="start" :gap="50">
-    <lew-form style="width: 800px" v-bind="bindOptions" />
+    <lew-form v-bind="bindOptions" />
   </lew-flex>
 </template>

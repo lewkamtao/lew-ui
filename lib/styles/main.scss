@@ -124,6 +124,7 @@ button {
   opacity: var(--lew-form-icon-opacity);
   position: absolute;
   transform: translate(0%, -50%);
+  transition: all 0.2s;
   border-radius: var(--lew-border-radius-small);
   padding: 2px;
   right: 9px;

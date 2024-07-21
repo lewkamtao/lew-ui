@@ -31,6 +31,17 @@ const options = ref([
     }
   },
   {
+    field: 'upload',
+    label: '上传',
+    as: 'upload',
+    required: true,
+    rule: Yup.string().required(),
+    props: {
+      showCount: true,
+      maxLength: 30
+    }
+  },
+  {
     field: 'input',
     label: '文本框',
     as: 'input',
@@ -361,6 +372,7 @@ onMounted(() => {
       class="form-box"
       :options="options"
       @mounted="setForm"
+      :width="650"
       @change="
         (e: any) => {
           form = e

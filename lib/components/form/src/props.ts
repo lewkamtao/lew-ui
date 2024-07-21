@@ -57,6 +57,11 @@ export const formItemProps = {
     default: '',
     description: '标签'
   },
+  tips: {
+    type: String,
+    default: '',
+    description: '提示信息'
+  },
   field: {
     type: String,
     default: '',

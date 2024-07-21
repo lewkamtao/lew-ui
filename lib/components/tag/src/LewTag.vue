@@ -143,7 +143,10 @@ const getStyle = computed(() => {
   }
 
   .lew-tag-value {
-    padding: 0px 4px;
+    padding: 0px 3px;
+  }
+  .lew-tag-left {
+    margin-left: 4px;
   }
 }
 
@@ -172,6 +175,9 @@ const getStyle = computed(() => {
   .lew-tag-value {
     padding: 0px 4px;
   }
+  .lew-tag-left {
+    margin-left: 4px;
+  }
 }
 
 .lew-tag-size-large {
@@ -188,7 +194,10 @@ const getStyle = computed(() => {
   }
 
   .lew-tag-value {
-    padding: 0px 4px;
+    padding: 0px 5px;
+  }
+  .lew-tag-left {
+    margin-left: 4px;
   }
 }
 

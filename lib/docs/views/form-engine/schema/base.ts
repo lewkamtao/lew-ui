@@ -1,13 +1,18 @@
 export const baseSchema = [
   {
+    label: '字段标识',
+    as: 'input',
+    field: 'field'
+  },
+  {
     label: '标题',
     as: 'input',
     field: 'label'
   },
   {
-    label: '绑定字段',
-    as: 'input',
-    field: 'field'
+    label: '提示信息',
+    as: 'textarea',
+    field: 'tips'
   },
   {
     label: '是否必填',

@@ -78,7 +78,6 @@ const getCheckboxClassName = computed(() => {
     border-radius: 6px;
     transition: var(--lew-form-transition);
     background-color: var(--lew-bgcolor-1);
-    outline: 0px var(--lew-checkbox-color-light) solid;
     overflow: hidden;
 
     .icon-checkbox {
@@ -156,14 +155,13 @@ const getCheckboxClassName = computed(() => {
 .lew-checkbox:hover {
   .icon-checkbox-box {
     border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
-    outline: var(--lew-form-ouline);
     background: var(--lew-form-bgcolor);
   }
 }
 
 .lew-checkbox-block {
   background: var(--lew-checkbox-block-color);
-  border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
+  border: var(--lew-form-border-width) transparent solid;
   border-radius: var(--lew-border-radius-small);
   .icon-checkbox-box {
     .icon-checkbox {

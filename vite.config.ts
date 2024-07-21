@@ -21,6 +21,11 @@ export default defineConfig(({ mode }) => {
           target: 'https://app.tngeek.com/api_admin',
           changeOrigin: true,
           rewrite: (path: string) => path.replace(/^\/api_admin/, '')
+        },
+        '/api_sso': {
+          target: 'https://app.tngeek.com/api_sso',
+          changeOrigin: true,
+          rewrite: (path: string) => path.replace(/^\/api_sso/, '')
         }
       }
     },

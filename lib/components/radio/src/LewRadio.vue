@@ -70,7 +70,6 @@ const getRadioClassName = computed(() => {
     border-radius: 6px;
     transition: var(--lew-form-transition);
     background-color: var(--lew-bgcolor-1);
-    outline: 0px var(--lew-radio-color-light) solid;
     overflow: hidden;
 
     .icon-radio {
@@ -148,14 +147,13 @@ const getRadioClassName = computed(() => {
 .lew-radio:hover {
   .icon-radio-box {
     border: var(--lew-form-border-width) var(--lew-radio-border-color-hover) solid;
-    outline: var(--lew-form-ouline);
     background: var(--lew-form-bgcolor);
   }
 }
 
 .lew-radio-block {
   background: var(--lew-radio-block-color);
-  border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
+  border: var(--lew-form-border-width) transparent solid;
   border-radius: var(--lew-border-radius-small);
   .icon-radio-box {
     .icon-radio {

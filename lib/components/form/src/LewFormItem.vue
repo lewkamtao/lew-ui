@@ -14,7 +14,8 @@ import {
   LewTabs,
   LewCascader,
   LewSwitch,
-  LewButton
+  LewButton,
+  LewUpload
 } from 'lew-ui'
 import { debounce, cloneDeep } from 'lodash'
 
@@ -34,7 +35,8 @@ const asMap: Record<string, any> = {
   tabs: LewTabs,
   cascader: LewCascader,
   switch: LewSwitch,
-  button: LewButton
+  button: LewButton,
+  upload: LewUpload
 }
 
 const getFormItemClassNames = computed(() => {
@@ -98,7 +100,13 @@ defineExpose({ validate, setError })
     }"
   >
     <div :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''" class="label-box">
-      <label v-if="as" :class="{ 'label-required': required && label }">
+      <label
+        v-tooltip="{
+          content: tips
+        }"
+        v-if="as"
+        :class="{ 'label-required': required && label, 'label-tips': tips }"
+      >
         {{ label }}
       </label>
     </div>
@@ -175,7 +183,10 @@ defineExpose({ validate, setError })
   display: flex;
   align-items: center;
 }
-
+.label-tips {
+  cursor: pointer;
+  border-bottom: 2px dashed var(--lew-color-blue);
+}
 .lew-form-item-direction-x {
   display: flex;
   align-items: flex-start;
