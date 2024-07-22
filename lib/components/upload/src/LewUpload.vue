@@ -34,10 +34,22 @@ const uploadIconFontSizeMap: Record<string, number> = {
   medium: 35,
   large: 45
 }
-const deleteBtnSizeMap: Record<string, number> = {
+const rightTopBtnSizeMap: Record<string, number> = {
   small: 16,
   medium: 18,
   large: 20
+}
+
+const rightTopBtnIconSizeMap: Record<string, number> = {
+  small: 10,
+  medium: 12,
+  large: 14
+}
+
+const rightTopBorderRadiusMap: Record<string, number> = {
+  small: 7,
+  medium: 7.8,
+  large: 8.5
 }
 
 const statusMap: Record<UploadStatus, string> = {
@@ -67,10 +79,9 @@ const props = defineProps(uploadProps)
 const fileList = ref<FileItem[]>([])
 const emit = defineEmits(['change'])
 const inputRef = ref<HTMLInputElement | null>(null)
+const dropActive = ref(false)
 
-const change = (e: any) => {
-  const files = e.target.files
-
+const addImageToList = (files: any) => {
   let _files: FileItem[] = Array.from(files).map((file: any) => {
     return {
       id: getUUId(),
@@ -93,6 +104,66 @@ const change = (e: any) => {
   })
 }
 
+const reUpload = (id: string) => {
+  const index = fileList.value.findIndex((e) => e.id === id)
+  if (index >= 0) {
+    const item = fileList.value[index]
+    props.uploadHandle({ ...item, updateStatus, updateProgress })
+  } else {
+    LewMessage.error('文件不存在')
+  }
+}
+
+const clickUpload = (e: any) => {
+  const files = e.target.files
+  addImageToList(files)
+}
+// 拖拽上传
+const dropUpload = (e: any) => {
+  let files = e.dataTransfer.files
+  dropActive.value = false
+  e.stopPropagation()
+  e.preventDefault()
+  addImageToList(files)
+}
+
+// 监听粘贴操作
+const pasteUpload = (e: any) => {
+  const items = e.clipboardData.items //  获取剪贴板中的数据
+  let files: any = null //  用来保存 files 对象
+  if (items.length > 0) {
+    //  判断剪贴板中是否是文件
+    if (items[0].kind == 'file') {
+      files = items[0].getAsFile()
+      addImageToList([files])
+    }
+  }
+}
+
+let dropRef = ref()
+
+onMounted(() => {
+  // 拖拽接听
+  const drop = dropRef.value.$el
+
+  drop.addEventListener('drop', dropUpload, false)
+  let timer: any = ''
+  drop.addEventListener('dragleave', (e: any) => {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      e.stopPropagation()
+      e.preventDefault()
+      dropActive.value = false
+    }, 0)
+  })
+
+  drop.addEventListener('dragover', (e: any) => {
+    e.stopPropagation()
+    e.preventDefault()
+    dropActive.value = true
+  })
+})
+
 const updateProgress = ({ id, percent }: { id: string; percent: number }) => {
   const index = fileList.value.findIndex((e) => e.id === id)
   if (index >= 0) {
@@ -113,7 +184,7 @@ const updateStatus = ({ id, status }: { id: string; status: UploadStatus }) => {
   }
 }
 
-const deleteFile = ({ id }: { id: string }) => {
+const deleteFile = (id: string) => {
   LewDialog.error({
     title: '移除文件',
     okText: '移除',
@@ -135,10 +206,13 @@ const deleteFile = ({ id }: { id: string }) => {
   <lew-flex class="lew-upload-wrapper" direction="y" gap="0">
     <label style="width: 100%">
       <lew-flex
+        ref="dropRef"
+        @paste="pasteUpload"
         direction="y"
         x="center"
         y="center"
         class="lew-upload"
+        :class="{ 'lew-upload-drop-active': dropActive }"
         :style="{
           padding: `var(--lew-form-upload-padding-${size})`
         }"
@@ -156,7 +230,7 @@ const deleteFile = ({ id }: { id: string }) => {
           }"
           class="lew-upload-tip"
         >
-          点击 或 拖动文件到此处
+          {{ dropActive ? '松开鼠标上传文件' : '点击、粘贴、拖拽文件到此处' }}
         </div>
         <div
           :style="{
@@ -167,11 +241,18 @@ const deleteFile = ({ id }: { id: string }) => {
           最大不可超过 100M
         </div>
       </lew-flex>
-      <input ref="inputRef" type="file" multiple v-show="false" @input.stop @change.stop="change" />
+      <input
+        ref="inputRef"
+        type="file"
+        multiple
+        v-show="false"
+        @input.stop
+        @change.stop="clickUpload"
+      />
     </label>
 
     <lew-flex direction="y" class="lew-upload-file-list" gap="10">
-      <transition-group name="upload-list" class="upload-list">
+      <transition-group name="upload-list">
         <lew-flex
           v-for="item in fileList"
           :key="item.id"
@@ -183,13 +264,32 @@ const deleteFile = ({ id }: { id: string }) => {
           gap="0"
         >
           <lew-flex
-            @click.stop="deleteFile({ id: item.id })"
+            v-if="item.status === 'fail'"
+            @click.stop="reUpload(item.id)"
             x="center"
             y="center"
-            :style="{ width: deleteBtnSizeMap[size] + 'px', height: deleteBtnSizeMap[size] + 'px' }"
+            :style="{
+              width: rightTopBtnSizeMap[size] + 'px',
+              height: rightTopBtnSizeMap[size] + 'px',
+              borderRadius: rightTopBorderRadiusMap[size] + 'px'
+            }"
+            class="lew-upload-reupload-btn"
+          >
+            <lew-icon :size="rightTopBtnIconSizeMap[size]" type="rotate-cw" />
+          </lew-flex>
+
+          <lew-flex
+            @click.stop="deleteFile(item.id)"
+            x="center"
+            y="center"
+            :style="{
+              width: rightTopBtnSizeMap[size] + 'px',
+              height: rightTopBtnSizeMap[size] + 'px',
+              borderRadius: rightTopBorderRadiusMap[size] + 'px'
+            }"
             class="lew-upload-delete-btn"
           >
-            <lew-icon :size="tipFontSizeMap[size]" type="x"></lew-icon>
+            <lew-icon :size="rightTopBtnIconSizeMap[size]" type="x"></lew-icon>
           </lew-flex>
           <lew-flex mode="between" gap="5" y="center">
             <lew-flex
@@ -234,16 +334,18 @@ const deleteFile = ({ id }: { id: string }) => {
               </template>
               {{ formatBytes(item.size) }}
             </span>
-            <lew-tag type="light" size="small" :color="statusColorMap[item.status]">
-              <template #left>
-                <lew-icon
-                  size="12"
-                  :type="statusIconMap[item.status]"
-                  :animation="item.status === 'uploading' ? 'spin' : ''"
-                />
-              </template>
-              {{ statusMap[item.status] }}
-            </lew-tag>
+            <lew-flex style="max-width: 200px" y="center" x="end">
+              <lew-tag type="light" size="small" :color="statusColorMap[item.status]">
+                <template #left>
+                  <lew-icon
+                    size="12"
+                    :type="statusIconMap[item.status]"
+                    :animation="item.status === 'uploading' ? 'spin' : ''"
+                  />
+                </template>
+                {{ statusMap[item.status] }}
+              </lew-tag>
+            </lew-flex>
           </lew-flex>
         </lew-flex>
       </transition-group>
@@ -255,6 +357,7 @@ const deleteFile = ({ id }: { id: string }) => {
 .lew-upload-wrapper {
   min-width: 320px;
   .lew-upload {
+    position: relative;
     width: 100%;
     border: var(--lew-form-border-width) var(--lew-form-border-color-hover) dashed;
     background-color: var(--lew-form-bgcolor);
@@ -278,7 +381,22 @@ const deleteFile = ({ id }: { id: string }) => {
       transition: var(--lew-form-transition);
     }
   }
+
+  // 防止拖拽时出现闪烁
+  .lew-upload::after {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    content: '';
+    z-index: 9;
+    width: 100%;
+    height: 100%;
+  }
   .lew-upload:hover {
+    border-color: var(--lew-form-border-color-focus);
+    background-color: var(--lew-color-blue-light);
+  }
+  .lew-upload-drop-active {
     border-color: var(--lew-form-border-color-focus);
     background-color: var(--lew-color-blue-light);
   }
@@ -295,17 +413,15 @@ const deleteFile = ({ id }: { id: string }) => {
       border-radius: var(--lew-border-radius-small);
       box-shadow: 0px 1px 5px rgba($color: #000000, $alpha: 0.07);
       box-sizing: border-box;
+
+      .lew-upload-reupload-btn,
       .lew-upload-delete-btn {
         position: absolute;
-        right: -7px;
         top: -7px;
         width: 20px;
         height: 20px;
         box-sizing: border-box;
-        border-radius: var(--lew-border-radius-small);
-        background-color: var(--lew-color-red);
         transition: var(--lew-form-transition);
-        color: var(--lew-color-white);
         cursor: pointer;
         transition: all 0.15s;
         &:hover {
@@ -314,6 +430,17 @@ const deleteFile = ({ id }: { id: string }) => {
         &:active {
           transform: scale(1);
         }
+      }
+
+      .lew-upload-reupload-btn {
+        right: 21px;
+        background-color: var(--lew-color-blue);
+        color: var(--lew-color-white);
+      }
+      .lew-upload-delete-btn {
+        right: -7px;
+        background-color: var(--lew-color-red);
+        color: var(--lew-color-white);
       }
       .lew-upload-file-icon {
         color: var(--lew-text-color-2);
@@ -383,9 +510,6 @@ const deleteFile = ({ id }: { id: string }) => {
   }
 }
 
-.upload-list {
-  position: relative;
-}
 .upload-list-move, /* 对移动中的元素应用的过渡 */
 .upload-list-enter-active,
 .upload-list-leave-active {
