@@ -41,23 +41,26 @@ const deleteBtnSizeMap: Record<string, number> = {
 }
 
 const statusMap: Record<UploadStatus, string> = {
-  success: '上传完成',
+  success: '上传成功',
   fail: '上传失败',
   uploading: '上传中',
-  pending: '等待上传'
+  pending: '等待上传',
+  complete: '已上传'
 }
 
 const statusColorMap: Record<UploadStatus, string> = {
   success: 'green',
   fail: 'red',
   uploading: 'blue',
-  pending: 'mint'
+  pending: 'mint',
+  complete: 'gray'
 }
 const statusIconMap: Record<UploadStatus, string> = {
   success: 'check',
   fail: 'alert-circle',
   uploading: 'loader',
-  pending: 'coffee'
+  pending: 'coffee',
+  complete: 'check'
 }
 
 const props = defineProps(uploadProps)
@@ -104,6 +107,9 @@ const updateStatus = ({ id, status }: { id: string; status: UploadStatus }) => {
   const index = fileList.value.findIndex((e) => e.id === id)
   if (index >= 0) {
     fileList.value[index].status = status
+    if (status === 'success') {
+      updateProgress({ id, percent: 100 })
+    }
   }
 }
 
@@ -205,7 +211,7 @@ const deleteFile = ({ id }: { id: string }) => {
         </lew-flex>
         <lew-flex
           class="lew-upload-progress"
-          :class="{ 'lew-upload-progress-uploading': item.status === 'uploading' }"
+          :class="{ 'lew-upload-progress-complete': item.status === 'success' }"
         >
           <lew-flex y="center" class="lew-upload-progress-box">
             <span class="lew-upload-progress-bar"></span>
@@ -316,12 +322,25 @@ const deleteFile = ({ id }: { id: string }) => {
       }
       .lew-upload-progress {
         position: relative;
-        height: 0px;
+        height: 20px;
         display: flex;
         align-items: center;
-        transition: all 0.25s;
         overflow: hidden;
-        opacity: 0;
+        animation: progressCompleted 0.25s;
+        animation-fill-mode: forwards;
+        animation-play-state: paused;
+        animation-delay: 2000ms;
+
+        @keyframes progressCompleted {
+          0% {
+            opacity: 1;
+            height: 20px;
+          }
+          100% {
+            opacity: 0;
+            height: 0px;
+          }
+        }
 
         .lew-upload-progress-box {
           height: 20px;
@@ -350,9 +369,8 @@ const deleteFile = ({ id }: { id: string }) => {
         }
       }
 
-      .lew-upload-progress-uploading {
-        height: 20px;
-        opacity: 1;
+      .lew-upload-progress-complete {
+        animation-play-state: running;
       }
 
       .lew-upload-footer {

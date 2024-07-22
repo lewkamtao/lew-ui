@@ -1,6 +1,6 @@
 import type { ExtractPropTypes } from 'vue'
 
-export type UploadStatus = 'success' | 'fail' | 'uploading' | 'pending'
+export type UploadStatus = 'success' | 'fail' | 'uploading' | 'pending'| 'complete'
 
 export type FileItem = {
   id: string
