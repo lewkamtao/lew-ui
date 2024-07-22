@@ -171,80 +171,82 @@ const deleteFile = ({ id }: { id: string }) => {
     </label>
 
     <lew-flex direction="y" class="lew-upload-file-list" gap="10">
-      <lew-flex
-        class="lew-upload-file-item"
-        :style="{
-          padding: `var(--lew-form-upload-item-padding-${size})`
-        }"
-        direction="y"
-        v-for="item in fileList"
-        gap="0"
-        :key="item.id"
-      >
+      <transition-group name="upload-list" class="upload-list">
         <lew-flex
-          @click.stop="deleteFile({ id: item.id })"
-          x="center"
-          y="center"
-          :style="{ width: deleteBtnSizeMap[size] + 'px', height: deleteBtnSizeMap[size] + 'px' }"
-          class="lew-upload-delete-btn"
+          v-for="item in fileList"
+          :key="item.id"
+          class="lew-upload-file-item"
+          :style="{
+            padding: `var(--lew-form-upload-item-padding-${size})`
+          }"
+          direction="y"
+          gap="0"
         >
-          <lew-icon :size="tipFontSizeMap[size]" type="x"></lew-icon>
-        </lew-flex>
-        <lew-flex mode="between" gap="5" y="center">
           <lew-flex
-            :style="{
-              width: 'calc(100% - 30px)'
-            }"
+            @click.stop="deleteFile({ id: item.id })"
+            x="center"
             y="center"
-            gap="5"
+            :style="{ width: deleteBtnSizeMap[size] + 'px', height: deleteBtnSizeMap[size] + 'px' }"
+            class="lew-upload-delete-btn"
           >
-            <lew-icon class="lew-upload-file-icon" :size="fileIconSizeMap[size]" type="file" />
-            <lew-text-trim
-              :text="item.name"
+            <lew-icon :size="tipFontSizeMap[size]" type="x"></lew-icon>
+          </lew-flex>
+          <lew-flex mode="between" gap="5" y="center">
+            <lew-flex
               :style="{
-                fontSize: `${any2px(fileNameFontSizeMap[size])}`
+                width: 'calc(100% - 30px)'
               }"
-              class="lew-upload-file-name"
+              y="center"
+              gap="5"
             >
-            </lew-text-trim>
+              <lew-icon class="lew-upload-file-icon" :size="fileIconSizeMap[size]" type="file" />
+              <lew-text-trim
+                :text="item.name"
+                :style="{
+                  fontSize: `${any2px(fileNameFontSizeMap[size])}`
+                }"
+                class="lew-upload-file-name"
+              >
+              </lew-text-trim>
+            </lew-flex>
           </lew-flex>
-        </lew-flex>
-        <lew-flex
-          class="lew-upload-progress"
-          :class="{ 'lew-upload-progress-complete': item.status === 'success' }"
-        >
-          <lew-flex y="center" class="lew-upload-progress-box">
-            <span class="lew-upload-progress-bar"></span>
-            <span
-              :style="{ width: `${item.percent > 100 ? 100 : item.percent}%` }"
-              class="lew-upload-progress-bar-upload"
-            >
-            </span>
-          </lew-flex>
-        </lew-flex>
-        <lew-flex mode="between" y="center" class="lew-upload-footer">
-          <span
-            :style="{
-              fontSize: `${any2px(footerFontSizeMap[size])}`
-            }"
+          <lew-flex
+            class="lew-upload-progress"
+            :class="{ 'lew-upload-progress-complete': item.status === 'success' }"
           >
-            <template v-if="item.status === 'uploading'">
-              {{ formatBytes((item.percent / 100) * item.size) + ' / ' }}
-            </template>
-            {{ formatBytes(item.size) }}
-          </span>
-          <lew-tag type="light" size="small" :color="statusColorMap[item.status]">
-            <template #left>
-              <lew-icon
-                size="12"
-                :type="statusIconMap[item.status]"
-                :animation="item.status === 'uploading' ? 'spin' : ''"
-              />
-            </template>
-            {{ statusMap[item.status] }}
-          </lew-tag>
+            <lew-flex y="center" class="lew-upload-progress-box">
+              <span class="lew-upload-progress-bar"></span>
+              <span
+                :style="{ width: `${item.percent > 100 ? 100 : item.percent}%` }"
+                class="lew-upload-progress-bar-upload"
+              >
+              </span>
+            </lew-flex>
+          </lew-flex>
+          <lew-flex mode="between" y="center" class="lew-upload-footer">
+            <span
+              :style="{
+                fontSize: `${any2px(footerFontSizeMap[size])}`
+              }"
+            >
+              <template v-if="item.status === 'uploading'">
+                {{ formatBytes((item.percent / 100) * item.size) + ' / ' }}
+              </template>
+              {{ formatBytes(item.size) }}
+            </span>
+            <lew-tag type="light" size="small" :color="statusColorMap[item.status]">
+              <template #left>
+                <lew-icon
+                  size="12"
+                  :type="statusIconMap[item.status]"
+                  :animation="item.status === 'uploading' ? 'spin' : ''"
+                />
+              </template>
+              {{ statusMap[item.status] }}
+            </lew-tag>
+          </lew-flex>
         </lew-flex>
-      </lew-flex>
+      </transition-group>
     </lew-flex>
   </lew-flex>
 </template>
@@ -329,7 +331,7 @@ const deleteFile = ({ id }: { id: string }) => {
         animation: progressCompleted 0.25s;
         animation-fill-mode: forwards;
         animation-play-state: paused;
-        animation-delay: 2000ms;
+        animation-delay: 1000ms;
 
         @keyframes progressCompleted {
           0% {
@@ -379,5 +381,24 @@ const deleteFile = ({ id }: { id: string }) => {
       }
     }
   }
+}
+
+.upload-list {
+  position: relative;
+}
+.upload-list-move, /* 对移动中的元素应用的过渡 */
+.upload-list-enter-active,
+.upload-list-leave-active {
+  transition: all 0.25s cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+.upload-list-enter-from,
+.upload-list-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.upload-list-leave-active {
+  position: absolute;
 }
 </style>

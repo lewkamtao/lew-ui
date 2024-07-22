@@ -40,8 +40,8 @@ watch(
 const ok = async () => {
   if (typeof props.ok === 'function') {
     okLoading.value = true
-    const res = await props.ok()
-    if (res) {
+    const isOk = await props.ok()
+    if (isOk !== false) {
       visible.value = false
     }
     okLoading.value = false

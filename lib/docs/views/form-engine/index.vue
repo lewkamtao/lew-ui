@@ -471,10 +471,18 @@ const preview = () => {
       padding: 0px 5px;
       z-index: 9;
       .handle-icon {
-        transition: opacity 0.1s ease-in-out;
+        transition: all 0.2s;
         opacity: 0;
         cursor: pointer;
         padding: 5px;
+        transform: scale(1);
+      }
+      .handle-icon:hover {
+        transform: scale(1.1);
+      }
+      .handle-icon:active {
+        transform: scale(0.95);
+        opacity: 0;
       }
       .handle-resize {
         transform: rotate(45deg);
