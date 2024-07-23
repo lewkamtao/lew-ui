@@ -41,6 +41,7 @@ export default {
         }
       },
       unmounted(el: any) {
+        el.instance.hide()
         el.instance = null
       }
     })

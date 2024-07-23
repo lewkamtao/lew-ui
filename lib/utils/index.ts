@@ -172,3 +172,84 @@ export const formatBytes = (bytes: number, decimals: number = 2) => {
   const i = Math.floor(Math.log(bytes) / Math.log(k))
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
 }
+
+// 获取assets静态资源
+export const getAssetsFile = ({ name, type }: { name: string; type: string }) => {
+  return new URL(`../assets/${type}/${name}`, import.meta.url).href
+}
+
+
+
+export const getFileIcon = (fileName: string) => {
+  // 根据文件名 判断后缀名
+  const suffix = fileName.split('.').pop()
+  switch (suffix) {
+    case 'doc':
+    case 'docx':
+    case 'wps':
+      return getAssetsFile({ name: 'file_word.svg', type: 'icon' })
+    case 'pdf':
+    case 'PDF':
+    case 'PDFX':
+      return getAssetsFile({ name: 'file_pdf.svg', type: 'icon' })
+    case 'ppt':
+    case 'pptx':
+      return getAssetsFile({ name: 'file_ppt.svg', type: 'icon' })
+    case 'txt':
+    case 'txtx':
+      return getAssetsFile({ name: 'file_txt.svg', type: 'icon' })
+    case 'xls':
+    case 'xlsx':
+    case 'et':
+    case 'etx':
+    case 'ett':
+      return getAssetsFile({ name: 'file_excel.svg', type: 'icon' })
+    case 'csv':
+      return getAssetsFile({ name: 'file_csv.svg', type: 'icon' })
+    case 'zip':
+    case 'rar':
+    case '7z':
+    case 'zipx':
+    case 'gz':
+      return getAssetsFile({ name: 'file_rar.svg', type: 'icon' })
+    case 'mp3':
+    case 'wma':
+    case 'm4a':
+    case 'mp3x':
+      return getAssetsFile({ name: 'file_audio.svg', type: 'icon' })
+    case 'mp4':
+    case 'avi':
+    case 'mkv':
+    case 'flv':
+      return getAssetsFile({ name: 'file_mp4.svg', type: 'icon' })
+    case 'png':
+    case 'jpg':
+    case 'jpeg':
+    case 'gif':
+    case 'webp':
+    case 'svg':
+    case 'bmp':
+    case 'ico':
+      return getAssetsFile({ name: 'file_img.svg', type: 'icon' })
+    case 'psd':
+    case 'psdx':
+      return getAssetsFile({ name: 'file_psd.svg', type: 'icon' })
+    case 'ai':
+    case 'cdr':
+      return getAssetsFile({ name: 'file_ai.svg', type: 'icon' })
+    case 'cad':
+      return getAssetsFile({ name: 'file_cad.svg', type: 'icon' })
+    case 'html':
+    case 'htm':
+    case 'xhtml':
+      return getAssetsFile({ name: 'file_html.svg', type: 'icon' })
+    case 'project':
+      return getAssetsFile({ name: 'file_project.svg', type: 'icon' })
+    case 'pdf':
+      return getAssetsFile({ name: 'file_pdf.svg', type: 'icon' })
+    case 'vsdx':
+      return getAssetsFile({ name: 'file_visio.svg', type: 'icon' })
+    default:
+      return getAssetsFile({ name: 'file_default.svg', type: 'icon' })
+  }
+}

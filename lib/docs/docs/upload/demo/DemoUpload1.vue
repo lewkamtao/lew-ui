@@ -1,26 +1,31 @@
 <script setup lang="ts">
 import axios from '@/axios/http'
 
-const uploadHandle = ({ id, file, updateProgress, updateStatus }: any) => {
+const uploadHandle = ({ id, file, setFileItem }: any) => {
   var formdata = new FormData()
   formdata.append('file', file)
-  updateStatus({ id, status: 'uploading' })
+  setFileItem({ id, status: 'uploading' })
   axios
     .post({
       url: '/open/upload',
       data: formdata,
       baseURL: '/api_sso',
       onUploadProgress: (e: any) => {
-        updateProgress({ id, percent: e.progress * 100 })
+        setFileItem({ id, percent: e.progress * 100 })
       }
     })
     .then((res: any) => {
       if (res.success) {
         const { fileName } = res.data
         console.log('上传成功：', `https://app.tngeek.com/api_sso/open/file/${fileName}`)
-        updateStatus({ id, status: 'success' })
+        setFileItem({
+          id,
+          status: 'success',
+          url: `https://app.tngeek.com/api_sso/open/file/${fileName}`,
+          percent: 100
+        })
       } else {
-        updateStatus({ id, status: 'fail' })
+        setFileItem({ id, status: 'fail' })
       }
     })
 }

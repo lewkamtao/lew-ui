@@ -134,6 +134,11 @@ const refresh = () => {
   instance.setProps({})
 }
 
+onUnmounted(() => {
+  instance.hide()
+  instance.destroy()
+})
+
 defineExpose({ show, hide, refresh })
 </script>
 

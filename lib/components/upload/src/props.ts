@@ -1,6 +1,6 @@
 import type { ExtractPropTypes } from 'vue'
 
-export type UploadStatus = 'success' | 'fail' | 'uploading' | 'pending'| 'complete'
+export type UploadStatus = 'success' | 'fail' | 'uploading' | 'pending' | 'complete'
 
 export type FileItem = {
   id: string
@@ -33,7 +33,7 @@ export const uploadProps = {
     default: 0,
     description: '最大上传数量'
   },
-  'list-type': {
+  listType: {
     type: String,
     default: 'list', // list card
     description: '列表类型'

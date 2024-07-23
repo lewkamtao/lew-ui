@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isNumber } from 'lodash'
 import { uploadProps } from './props'
 import type { FileItem, UploadStatus } from './props'
-import { any2px, getUUId, formatBytes } from 'lew-ui/utils'
-
+import { any2px, getUUId, formatBytes, getFileIcon } from 'lew-ui/utils'
 const tipFontSizeMap: Record<string, number> = {
   small: 12,
   medium: 14,
   large: 16
 }
 const fileIconSizeMap: Record<string, number> = {
-  small: 14,
-  medium: 16,
-  large: 18
+  small: 28,
+  medium: 36,
+  large: 44
 }
 const maxSizeFontSizeMap: Record<string, number> = {
   small: 10,
@@ -100,7 +99,7 @@ const addImageToList = (files: any) => {
 
   fileList.value = [..._files, ...cloneDeep(fileList.value)]
   _files.forEach((e) => {
-    props.uploadHandle({ ...e, updateStatus, updateProgress })
+    props.uploadHandle({ ...e, setFileItem })
   })
 }
 
@@ -108,7 +107,8 @@ const reUpload = (id: string) => {
   const index = fileList.value.findIndex((e) => e.id === id)
   if (index >= 0) {
     const item = fileList.value[index]
-    props.uploadHandle({ ...item, updateStatus, updateProgress })
+    setFileItem({ id, percent: 0, status: 'uploading' })
+    props.uploadHandle({ ...item, setFileItem })
   } else {
     LewMessage.error('文件不存在')
   }
@@ -164,22 +164,30 @@ onMounted(() => {
   })
 })
 
-const updateProgress = ({ id, percent }: { id: string; percent: number }) => {
+const setFileItem = ({
+  id,
+  percent,
+  status,
+  url
+}: {
+  id: string
+  percent?: number
+  status?: UploadStatus
+  url?: string
+}) => {
   const index = fileList.value.findIndex((e) => e.id === id)
   if (index >= 0) {
-    let _percent = percent
-    if (_percent > 100) _percent = 100
-    if (_percent < 0) _percent = 0
-    fileList.value[index].percent = _percent
-  }
-}
-
-const updateStatus = ({ id, status }: { id: string; status: UploadStatus }) => {
-  const index = fileList.value.findIndex((e) => e.id === id)
-  if (index >= 0) {
-    fileList.value[index].status = status
-    if (status === 'success') {
-      updateProgress({ id, percent: 100 })
+    if (percent) {
+      let _percent = percent
+      if (_percent > 100) _percent = 100
+      if (_percent < 0) _percent = 0
+      fileList.value[index].percent = _percent
+    }
+    if (status) {
+      fileList.value[index].status = status
+    }
+    if (url) {
+      fileList.value[index].url = url
     }
   }
 }
@@ -199,6 +207,12 @@ const deleteFile = (id: string) => {
       return true
     }
   })
+}
+
+const checkUrlIsImg = (url?: string = '') => {
+  // 图片正则
+  const reg = /\.(jpg|jpeg|png|webp|bmp|gif)$/i
+  return reg.test(url)
 }
 </script>
 
@@ -224,6 +238,7 @@ const deleteFile = (id: string) => {
           :size="uploadIconFontSizeMap[size]"
           type="upload-cloud"
         />
+
         <div
           :style="{
             fontSize: `${any2px(tipFontSizeMap[size])}`
@@ -257,94 +272,109 @@ const deleteFile = (id: string) => {
           v-for="item in fileList"
           :key="item.id"
           class="lew-upload-file-item"
+          mode="between"
+          gap="8"
           :style="{
             padding: `var(--lew-form-upload-item-padding-${size})`
           }"
-          direction="y"
-          gap="0"
         >
           <lew-flex
-            v-if="item.status === 'fail'"
-            @click.stop="reUpload(item.id)"
-            x="center"
-            y="center"
-            :style="{
-              width: rightTopBtnSizeMap[size] + 'px',
-              height: rightTopBtnSizeMap[size] + 'px',
-              borderRadius: rightTopBorderRadiusMap[size] + 'px'
-            }"
-            class="lew-upload-reupload-btn"
+            :style="{ width: `${fileIconSizeMap[size]}px`, height: `${fileIconSizeMap[size]}px` }"
+            class="lew-upload-icon-wrapper"
           >
-            <lew-icon :size="rightTopBtnIconSizeMap[size]" type="rotate-cw" />
+            <img v-if="checkUrlIsImg(item.url)" class="lew-upload-file-icon" :src="item.url" />
+            <img v-else class="lew-upload-file-icon" :src="getFileIcon(item.name)" />
           </lew-flex>
-
           <lew-flex
-            @click.stop="deleteFile(item.id)"
-            x="center"
-            y="center"
-            :style="{
-              width: rightTopBtnSizeMap[size] + 'px',
-              height: rightTopBtnSizeMap[size] + 'px',
-              borderRadius: rightTopBorderRadiusMap[size] + 'px'
-            }"
-            class="lew-upload-delete-btn"
+            class="lew-upload-file-info"
+            :style="{ width: `calc(100% - ${fileIconSizeMap[size]}px - 8px)` }"
+            direction="y"
+            gap="0"
           >
-            <lew-icon :size="rightTopBtnIconSizeMap[size]" type="x"></lew-icon>
-          </lew-flex>
-          <lew-flex mode="between" gap="5" y="center">
             <lew-flex
-              :style="{
-                width: 'calc(100% - 30px)'
+              v-tooltip="{
+                content: '重新上传',
+                trigger: 'mouseenter'
               }"
+              v-if="item.status === 'fail'"
+              @click.stop="reUpload(item.id)"
+              x="center"
               y="center"
-              gap="5"
-            >
-              <lew-icon class="lew-upload-file-icon" :size="fileIconSizeMap[size]" type="file" />
-              <lew-text-trim
-                :text="item.name"
-                :style="{
-                  fontSize: `${any2px(fileNameFontSizeMap[size])}`
-                }"
-                class="lew-upload-file-name"
-              >
-              </lew-text-trim>
-            </lew-flex>
-          </lew-flex>
-          <lew-flex
-            class="lew-upload-progress"
-            :class="{ 'lew-upload-progress-complete': item.status === 'success' }"
-          >
-            <lew-flex y="center" class="lew-upload-progress-box">
-              <span class="lew-upload-progress-bar"></span>
-              <span
-                :style="{ width: `${item.percent > 100 ? 100 : item.percent}%` }"
-                class="lew-upload-progress-bar-upload"
-              >
-              </span>
-            </lew-flex>
-          </lew-flex>
-          <lew-flex mode="between" y="center" class="lew-upload-footer">
-            <span
               :style="{
-                fontSize: `${any2px(footerFontSizeMap[size])}`
+                width: rightTopBtnSizeMap[size] + 'px',
+                height: rightTopBtnSizeMap[size] + 'px',
+                borderRadius: rightTopBorderRadiusMap[size] + 'px'
               }"
+              class="lew-upload-reupload-btn"
             >
-              <template v-if="item.status === 'uploading'">
-                {{ formatBytes((item.percent / 100) * item.size) + ' / ' }}
-              </template>
-              {{ formatBytes(item.size) }}
-            </span>
-            <lew-flex style="max-width: 200px" y="center" x="end">
-              <lew-tag type="light" size="small" :color="statusColorMap[item.status]">
-                <template #left>
-                  <lew-icon
-                    size="12"
-                    :type="statusIconMap[item.status]"
-                    :animation="item.status === 'uploading' ? 'spin' : ''"
-                  />
+              <lew-icon :size="rightTopBtnIconSizeMap[size]" type="rotate-cw" />
+            </lew-flex>
+
+            <lew-flex
+              v-tooltip="{
+                content: '移除文件',
+                trigger: 'mouseenter'
+              }"
+              @click.stop="deleteFile(item.id)"
+              x="center"
+              y="center"
+              :style="{
+                width: rightTopBtnSizeMap[size] + 'px',
+                height: rightTopBtnSizeMap[size] + 'px',
+                borderRadius: rightTopBorderRadiusMap[size] + 'px'
+              }"
+              class="lew-upload-delete-btn"
+            >
+              <lew-icon :size="rightTopBtnIconSizeMap[size]" type="x"></lew-icon>
+            </lew-flex>
+            <lew-flex mode="between" gap="5" y="center">
+              <lew-flex y="center" x="start" gap="5">
+                <lew-text-trim
+                  :text="item.name"
+                  :style="{
+                    width: `calc(100% - 20px)`,
+                    fontSize: `${any2px(fileNameFontSizeMap[size])}`
+                  }"
+                  class="lew-upload-file-name"
+                />
+              </lew-flex>
+            </lew-flex>
+            <lew-flex
+              class="lew-upload-progress"
+              :class="{ 'lew-upload-progress-complete': item.status === 'success' }"
+            >
+              <lew-flex y="center" class="lew-upload-progress-box">
+                <span class="lew-upload-progress-bar"></span>
+                <span
+                  :style="{ width: `${item.percent > 100 ? 100 : item.percent}%` }"
+                  class="lew-upload-progress-bar-upload"
+                >
+                </span>
+              </lew-flex>
+            </lew-flex>
+            <lew-flex mode="between" y="center" class="lew-upload-footer">
+              <span
+                :style="{
+                  fontSize: `${any2px(footerFontSizeMap[size])}`
+                }"
+              >
+                <template v-if="item.status === 'uploading'">
+                  {{ formatBytes((item.percent / 100) * item.size) + ' / ' }}
                 </template>
-                {{ statusMap[item.status] }}
-              </lew-tag>
+                {{ formatBytes(item.size) }}
+              </span>
+              <lew-flex style="max-width: 200px" y="center" x="end">
+                <lew-tag type="light" size="small" :color="statusColorMap[item.status]">
+                  <template #left>
+                    <lew-icon
+                      size="12"
+                      :type="statusIconMap[item.status]"
+                      :animation="item.status === 'uploading' ? 'spin' : ''"
+                    />
+                  </template>
+                  {{ statusMap[item.status] }}
+                </lew-tag>
+              </lew-flex>
             </lew-flex>
           </lew-flex>
         </lew-flex>
@@ -433,7 +463,7 @@ const deleteFile = (id: string) => {
       }
 
       .lew-upload-reupload-btn {
-        right: 21px;
+        right: 24px;
         background-color: var(--lew-color-blue);
         color: var(--lew-color-white);
       }
@@ -442,11 +472,20 @@ const deleteFile = (id: string) => {
         background-color: var(--lew-color-red);
         color: var(--lew-color-white);
       }
-      .lew-upload-file-icon {
-        color: var(--lew-text-color-2);
+
+      .lew-upload-icon-wrapper {
+        padding: 2px;
+        box-sizing: border-box;
+        .lew-upload-file-icon {
+          width: 100%;
+          height: 100%;
+          border-radius: 4px;
+          overflow: hidden;
+        }
       }
+
       .lew-upload-file-name {
-        width: calc(100% - 20px);
+        width: 100%;
         color: var(--lew-text-color-2);
       }
       .lew-upload-progress {
