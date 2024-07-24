@@ -551,7 +551,7 @@ const checkUrlIsImg = (url?: string = '') => {
 .upload-list-move,
 .upload-list-enter-active,
 .upload-list-leave-active {
-  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: all 0.25s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
 .upload-list-enter-from,
