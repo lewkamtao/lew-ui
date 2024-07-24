@@ -387,7 +387,7 @@ const preview = () => {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100px;
+      width: calc(100% / 2 - 8px);
       height: 100px;
       background-color: var(--lew-bgcolor-2);
       border-radius: var(--lew-border-radius-small);
@@ -415,6 +415,7 @@ const preview = () => {
     .form-main {
       width: 100%;
       background-color: var(--lew-bgcolor-0);
+      transition: all 0.25s;
     }
     .lew-form-select-columns {
       position: relative;
@@ -550,7 +551,9 @@ const preview = () => {
     top: 50%;
     left: 50%;
     opacity: 0.4;
-    font-size: 24px;
+    font-size: 18px;
+	white-space: nowrap;
+    text-align: center;
     transform: translate(-50%, -50%);
   }
   .lew-form-wrapper-draggable-1 {

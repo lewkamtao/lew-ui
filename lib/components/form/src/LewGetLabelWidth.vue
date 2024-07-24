@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import RequiredIcon from './RequiredIcon.vue'
+import { requiredIconSizeMap } from './props'
 defineProps({
   size: {
     type: String,
@@ -8,18 +10,32 @@ defineProps({
     type: Array as PropType<any>
   }
 })
+
+const formLabelRef = ref<HTMLDivElement>()
+
+const getWidth = () => {
+  console.log(formLabelRef.value?.offsetWidth)
+  return formLabelRef.value?.offsetWidth
+}
+
+defineExpose({
+  getWidth
+})
 </script>
 
 <template>
   <div ref="formLabelRef" class="lew-form-label-box">
-    <span
+    <lew-flex
+      gap="5"
       :style="{
         fontSize: `var(--lew-form-font-size-${size})`
       }"
       v-for="(item, index) in options"
       :key="index"
-      >{{ item.label }}</span
     >
+      <RequiredIcon :size="requiredIconSizeMap[size]" v-if="item.required && item.label" />
+      {{ item.label }}
+    </lew-flex>
   </div>
 </template>
 
@@ -30,14 +46,7 @@ defineProps({
   display: inline-flex;
   flex-direction: column;
   justify-content: flex-start;
-  background-color: #000;
-  padding-left: 20px;
   z-index: -99;
   opacity: 0;
-  left: -200vw;
-  span {
-    flex-shrink: 0;
-    display: inline;
-  }
 }
 </style>

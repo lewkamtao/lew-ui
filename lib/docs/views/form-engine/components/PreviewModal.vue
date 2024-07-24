@@ -1,9 +1,21 @@
 <script setup lang="ts">
 const visible = ref(false)
 const bindOptions = ref({})
+const formRef = ref()
 const open = (options: any) => {
   visible.value = true
   bindOptions.value = options
+  console.log(options)
+}
+const ok = () => {
+  formRef.value.validate().then((res: boolean) => {
+    if (res) {
+      console.log(formRef.value.getForm())
+      LewMessage.success('校验成功')
+    } else {
+      LewMessage.error('校验失败')
+    }
+  })
 }
 defineExpose({ open })
 </script>
@@ -13,15 +25,18 @@ defineExpose({ open })
     v-model:visible="visible"
     closeOnClickOverlay
     closeByEsc
-    hideOkButton
     :cancelProps="{
       text: '关闭'
     }"
+    :okProps="{
+      text: '校验表单'
+    }"
+    @ok="ok"
     @cancel="visible = false"
     title="预览表单"
   >
     <div class="form-modal lew-scrollbar">
-      <lew-form v-bind="bindOptions" />
+      <lew-form ref="formRef" v-bind="bindOptions" />
     </div>
   </lew-modal>
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
 
-const iconArr = ref(['rotate-ccw', 'loader', 'settings', 'sun'])
+const iconArr = ref(['rotate-cw', 'loader', 'settings', 'sun'])
 const { copy, isSupported } = useClipboard()
 const handleCopy = (text: string) => {
   if (!isSupported) {

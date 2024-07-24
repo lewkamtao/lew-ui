@@ -10,7 +10,6 @@ export type FileItem = {
   percent: number
   file: File
   size: number
-  response?: any
 }
 export const uploadProps = {
   'default-file-list': {

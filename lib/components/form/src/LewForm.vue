@@ -116,7 +116,7 @@ const validate = () => {
 
 onMounted(() => {
   // 计算 label 的宽度
-  autoLabelWidth.value = formLabelRef.value.$el.offsetWidth
+  autoLabelWidth.value = formLabelRef.value?.getWidth()
   emit('mounted')
 })
 
@@ -124,7 +124,7 @@ watch(
   () => props.size,
   () => {
     nextTick(() => {
-      autoLabelWidth.value = formLabelRef.value.$el.offsetWidth
+      autoLabelWidth.value = formLabelRef.value?.getWidth()
     })
   }
 )
@@ -134,11 +134,7 @@ defineExpose({ getForm, setForm, validate })
 
 <template>
   <LewGetLabelWidth ref="formLabelRef" :size="size" :options="componentOptions" />
-  <div
-    class="lew-form"
-    :style="{ width: any2px(width), minWidth: any2px(direction === 'x' ? 450 : 320) }"
-    :class="getFormClassNames"
-  >
+  <div class="lew-form" :style="{ width: any2px(width), minWidth: 320 }" :class="getFormClassNames">
     <lew-form-item
       :ref="(el) => (formItemRefMap[item.field] = el)"
       v-for="item in componentOptions"
@@ -147,7 +143,7 @@ defineExpose({ getForm, setForm, validate })
       v-bind="{
         direction,
         size,
-        labelWidth: labelWidth === 'auto' ? autoLabelWidth : labelWidth,
+        labelWidth: labelWidth === 'auto' ? autoLabelWidth || labelWidth : labelWidth,
         disabled,
         readonly,
         ...item
@@ -182,22 +178,5 @@ defineExpose({ getForm, setForm, validate })
 
 .lew-form-columns-4 {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-}
-
-.lew-form-label-box {
-  position: fixed;
-  width: auto;
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  background-color: #000;
-  padding-left: 20px;
-  z-index: -99;
-  opacity: 0;
-  left: -200vw;
-  span {
-    flex-shrink: 0;
-    display: inline;
-  }
 }
 </style>

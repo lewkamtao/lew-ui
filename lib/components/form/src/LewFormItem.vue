@@ -20,7 +20,7 @@ import {
 } from 'lew-ui'
 import { debounce, cloneDeep } from 'lodash'
 
-import { formItemProps } from './props'
+import { formItemProps, requiredIconSizeMap } from './props'
 
 const asMap: Record<string, any> = {
   input: LewInput,
@@ -101,16 +101,18 @@ defineExpose({ validate, setError })
     }"
   >
     <div :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''" class="label-box">
-      <label
+      <lew-flex
+        x="end"
+        gap="5"
         v-tooltip="{
           content: tips
         }"
         v-if="as"
         :class="{ 'label-tips': tips }"
       >
-        <RequiredIcon v-if="required && label" />
+        <RequiredIcon :size="requiredIconSizeMap[size]" v-if="required && label" />
         {{ label }}
-      </label>
+      </lew-flex>
     </div>
     <div
       class="lew-form-item-main"

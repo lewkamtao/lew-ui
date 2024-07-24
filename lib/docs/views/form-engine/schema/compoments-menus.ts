@@ -266,5 +266,11 @@ export const componentsMenusSchema = [
     props: {
       round: 1
     }
+  },
+  {
+    label: '上传',
+    fieldType: false,
+    as: 'upload',
+    props: {}
   }
 ]

@@ -200,10 +200,8 @@ const deleteFile = (id: string) => {
     closeOnClickOverlay: true,
     closeByEsc: true,
     ok: () => {
-      const _fileList = cloneDeep(fileList.value)
-      const index = _fileList.findIndex((e) => e.id === id)
-      _fileList.splice(index, 1)
-      fileList.value = _fileList
+      const index = fileList.value.findIndex((e) => e.id === id)
+      fileList.value.splice(index, 1)
       return true
     }
   })
@@ -385,7 +383,7 @@ const checkUrlIsImg = (url?: string = '') => {
 
 <style lang="scss" scoped>
 .lew-upload-wrapper {
-  min-width: 320px;
+  min-width: 280px;
   .lew-upload {
     position: relative;
     width: 100%;
@@ -435,6 +433,7 @@ const checkUrlIsImg = (url?: string = '') => {
     background-color: var(--lew-form-bgcolor-focus);
   }
   .lew-upload-file-list {
+    position: relative;
     .lew-upload-file-item {
       position: relative;
       background-color: var(--lew-bgcolor-0);
@@ -542,25 +541,27 @@ const checkUrlIsImg = (url?: string = '') => {
 
       .lew-upload-footer {
         font-size: 14px;
+        white-space: nowrap;
         color: var(--lew-text-color-6);
       }
     }
   }
 }
-
-.upload-list-move, /* 对移动中的元素应用的过渡 */
+</style>
+<style>
+.upload-list-move,
 .upload-list-enter-active,
 .upload-list-leave-active {
-  transition: all 0.25s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
 .upload-list-enter-from,
 .upload-list-leave-to {
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateY(10px);
 }
 
 .upload-list-leave-active {
-  position: absolute;
+  position: absolute !important;
 }
 </style>
