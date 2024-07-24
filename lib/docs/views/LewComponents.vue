@@ -213,14 +213,13 @@ options.value = [
         value: '/Tree',
         tagText: 'New',
         tagColor: 'success'
+      },
+      {
+        label: 'Collapse',
+        value: '/Collapse',
+        tagText: 'New',
+        tagColor: 'success'
       }
-      // {
-      //     clabel: '折叠面板',
-      //     label: 'Collapse',
-      //     value: '/Collapse',
-      //
-      //
-      // },
     ]
   },
   {

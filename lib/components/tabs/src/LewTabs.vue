@@ -264,7 +264,8 @@ onUnmounted(() => {
     white-space: nowrap;
     cursor: pointer;
     flex-shrink: 0;
-  }
+	transition: all 0.25s;
+}
 
   .lew-tabs-item-active {
     color: var(--lew-color-primary);

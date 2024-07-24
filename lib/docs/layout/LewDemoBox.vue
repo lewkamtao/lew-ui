@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CSSProperties } from 'vue'
+import { LewCollapseTransition } from 'lew-ui'
 
 defineProps({
   title: {
@@ -23,13 +23,6 @@ defineProps({
 })
 
 const isShowCode = ref(false)
-
-const style = computed<CSSProperties>(() => {
-  if (isShowCode.value) {
-    return { maxHeight: '10000px' }
-  }
-  return { maxHeight: 0, borderTop: 'none' }
-})
 </script>
 
 <template>
@@ -47,11 +40,13 @@ const style = computed<CSSProperties>(() => {
       <div class="demo-cp lew-scrollbar">
         <slot></slot>
       </div>
-      <div v-if="code" class="hl-pre lew-scrollbar" :style="style">
-        <div class="pre-box">
-          <highlightjs autodetect :code="code" />
+      <LewCollapseTransition>
+        <div v-if="isShowCode && code" class="hl-pre lew-scrollbar">
+          <div class="pre-box">
+            <highlightjs autodetect :code="code" />
+          </div>
         </div>
-      </div>
+      </LewCollapseTransition>
       <div class="show-bar" @click="isShowCode = !isShowCode">
         <div class="icon">
           <lew-icon v-if="!isShowCode" :size="16" type="chevron-down" />

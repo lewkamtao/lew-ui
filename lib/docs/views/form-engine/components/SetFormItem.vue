@@ -63,8 +63,11 @@ const asMap: Record<string, any> = {
     width: 200px;
     display: flex;
     align-items: center;
-	justify-content: flex-end;
+    justify-content: flex-end;
     min-height: 34px;
   }
+}
+.set-form-item:last-child {
+  border-bottom: none;
 }
 </style>

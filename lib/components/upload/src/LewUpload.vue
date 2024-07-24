@@ -217,7 +217,7 @@ const checkUrlIsImg = (url?: string = '') => {
 </script>
 
 <template>
-  <lew-flex class="lew-upload-wrapper" direction="y" gap="0">
+  <lew-flex class="lew-upload-wrapper" direction="y" gap="10">
     <label style="width: 100%">
       <lew-flex
         ref="dropRef"
@@ -266,7 +266,7 @@ const checkUrlIsImg = (url?: string = '') => {
       />
     </label>
 
-    <lew-flex direction="y" class="lew-upload-file-list" gap="10">
+    <lew-flex v-show="fileList.length > 0" direction="y" class="lew-upload-file-list" gap="10">
       <transition-group name="upload-list">
         <lew-flex
           v-for="item in fileList"
@@ -435,7 +435,6 @@ const checkUrlIsImg = (url?: string = '') => {
     background-color: var(--lew-form-bgcolor-focus);
   }
   .lew-upload-file-list {
-    margin-top: 10px;
     .lew-upload-file-item {
       position: relative;
       background-color: var(--lew-bgcolor-0);

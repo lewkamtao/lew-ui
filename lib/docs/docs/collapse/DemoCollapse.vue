@@ -26,13 +26,7 @@ const open = (url: string) => {
 <template>
   <div class="demo-wrapper">
     <lew-title>Collapse</lew-title>
-    <p class="sub-title">
-      这是一个参考（tou）<lew-mark
-        cursor="pointer"
-        @click="open('https://www.naiveui.com/zh-CN/os-theme/components/gradient-text')"
-        >Naive-UI</lew-mark
-      >的 Gradient Text 设计的组件，不能说是模仿，只能说一模一样。
-    </p>
+    <p class="sub-title">折叠面板</p>
     <lew-demo-box title="任意值" :code="DemoCollapse1Code">
       <demo-collapse1 />
     </lew-demo-box>

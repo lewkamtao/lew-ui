@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { any2px, object2class } from 'lew-ui/utils'
+import RequiredIcon from './RequiredIcon.vue'
 import {
   LewInput,
   LewTextarea,
@@ -105,8 +106,9 @@ defineExpose({ validate, setError })
           content: tips
         }"
         v-if="as"
-        :class="{ 'label-required': required && label, 'label-tips': tips }"
+        :class="{ 'label-tips': tips }"
       >
+        <RequiredIcon v-if="required && label" />
         {{ label }}
       </label>
     </div>
@@ -197,11 +199,6 @@ defineExpose({ validate, setError })
     justify-content: flex-end;
     flex-shrink: 0;
     white-space: nowrap;
-    .label-required::before {
-      content: '*';
-      color: var(--lew-color-error-dark);
-      margin-right: 4px;
-    }
   }
   .lew-form-item-main {
     flex: 1;
@@ -221,12 +218,6 @@ defineExpose({ validate, setError })
     box-sizing: border-box;
     margin-top: 0px;
     white-space: nowrap;
-
-    .label-required::after {
-      content: '*';
-      color: var(--lew-color-error-dark);
-      margin-left: 4px;
-    }
   }
 }
 .lew-form-item {
