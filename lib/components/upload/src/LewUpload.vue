@@ -547,8 +547,7 @@ const checkUrlIsImg = (url?: string = '') => {
     }
   }
 }
-</style>
-<style>
+
 .upload-list-move,
 .upload-list-enter-active,
 .upload-list-leave-active {
