@@ -178,6 +178,7 @@ const preview = () => {
     <div class="lew-form-component lew-scrollbar">
       <draggable
         :group="{ name: 'form', pull: 'clone', put: false }"
+		:sort="false"
         :class="['lew-form-component-draggable']"
         :list="menuOptions"
         :clone="cloneDog"

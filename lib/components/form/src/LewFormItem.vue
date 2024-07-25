@@ -100,10 +100,9 @@ defineExpose({ validate, setError })
       'grid-area': gridArea || ''
     }"
   >
-    <div :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''" class="label-box">
-      <lew-flex
-        x="end"
-        gap="5"
+    <div :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''" class="label-box-wrapper">
+      <div
+        class="label-box"
         v-tooltip="{
           content: tips
         }"
@@ -112,7 +111,7 @@ defineExpose({ validate, setError })
       >
         <RequiredIcon :size="requiredIconSizeMap[size]" v-if="required && label" />
         {{ label }}
-      </lew-flex>
+      </div>
     </div>
     <div
       class="lew-form-item-main"
@@ -146,13 +145,17 @@ defineExpose({ validate, setError })
 <style lang="scss" scoped>
 .lew-form-item {
   transition: opacity 0.25s;
-  .label-box {
+  .label-box-wrapper {
     transition: all 0.25s;
+    .label-box {
+      display: inline-flex;
+      gap: 5px;
+    }
   }
 }
 
 .lew-form-item-size-small {
-  .label-box {
+  .label-box-wrapper {
     font-size: var(--lew-form-font-size-small);
     margin-top: 6px;
   }
@@ -163,7 +166,7 @@ defineExpose({ validate, setError })
 }
 
 .lew-form-item-size-medium {
-  .label-box {
+  .label-box-wrapper {
     font-size: var(--lew-form-font-size-medium);
     margin-top: 8px;
   }
@@ -174,7 +177,7 @@ defineExpose({ validate, setError })
 }
 
 .lew-form-item-size-large {
-  .label-box {
+  .label-box-wrapper {
     font-size: var(--lew-form-font-size-large);
     margin-top: 10px;
   }
@@ -196,7 +199,7 @@ defineExpose({ validate, setError })
   align-items: flex-start;
   gap: 10px;
 
-  .label-box {
+  .label-box-wrapper {
     display: inline-flex;
     justify-content: flex-end;
     flex-shrink: 0;
@@ -214,7 +217,7 @@ defineExpose({ validate, setError })
   flex-direction: column;
   gap: 5px;
 
-  .label-box {
+  .label-box-wrapper {
     display: inline-flex;
     justify-content: flex-start;
     box-sizing: border-box;
