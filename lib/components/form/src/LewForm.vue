@@ -161,6 +161,7 @@ defineExpose({ getForm, setForm, validate })
 .lew-form {
   width: 100%;
   display: grid;
+  flex-shrink: 0;
   gap: 30px;
 }
 

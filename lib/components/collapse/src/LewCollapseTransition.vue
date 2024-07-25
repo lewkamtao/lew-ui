@@ -37,7 +37,7 @@ export default {
     duration: {
       type: Number,
       required: false,
-      default: 200
+      default: 250
     },
     easing: {
       type: String,
@@ -216,6 +216,7 @@ export default {
       if (this.dimension === 'height') {
         return {
           height: el.offsetHeight + 'px',
+          opacity: 1,
           paddingTop: el.style.paddingTop || this.getCssValue(el, 'padding-top'),
           paddingBottom: el.style.paddingBottom || this.getCssValue(el, 'padding-bottom')
         }
@@ -224,6 +225,7 @@ export default {
       if (this.dimension === 'width') {
         return {
           width: el.offsetWidth + 'px',
+          opacity: 1,
           paddingLeft: el.style.paddingLeft || this.getCssValue(el, 'padding-left'),
           paddingRight: el.style.paddingRight || this.getCssValue(el, 'padding-right')
         }

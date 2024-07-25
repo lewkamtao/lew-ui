@@ -50,3 +50,12 @@ export const downloadObjectAsFile = (data: any, filename: string) => {
   URL.revokeObjectURL(url)
   document.body.removeChild(a)
 }
+
+// 获取assets静态资源
+export const getAssetsFile = ({ name, type }: { name: string; type: string }) => {
+  return new URL(`../assets/images/${type}/${name}`, import.meta.url).href
+}
+
+export const getComponentIcon = (name: string) => {
+  return getAssetsFile({ name: `${name}.svg`, type: 'icon' })
+}

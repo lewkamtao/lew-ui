@@ -3,7 +3,7 @@ import draggable from 'vuedraggable'
 import dayjs from 'dayjs'
 import PreviewModal from './components/PreviewModal.vue'
 import { formatFormByMap } from 'lew-ui/utils'
-import { downloadObjectAsFile } from 'lew-ui/docs/lib/utils'
+import { downloadObjectAsFile, getComponentIcon } from 'lew-ui/docs/lib/utils'
 import { useDark } from '@vueuse/core'
 import SetForm from './components/SetForm.vue'
 import {
@@ -188,9 +188,11 @@ const preview = () => {
         }"
       >
         <template #item="{ element }">
-          <div class="lew-form-component-box">
+          <lew-flex direction="y" gap="0" class="lew-form-component-box">
+            <img :src="getComponentIcon(element.as)" alt="" srcset="" />
+            {{}}
             {{ element.label }}
-          </div>
+          </lew-flex>
         </template>
       </draggable>
     </div>
@@ -552,7 +554,7 @@ const preview = () => {
     left: 50%;
     opacity: 0.4;
     font-size: 18px;
-	white-space: nowrap;
+    white-space: nowrap;
     text-align: center;
     transform: translate(-50%, -50%);
   }
