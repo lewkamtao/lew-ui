@@ -178,7 +178,7 @@ const preview = () => {
     <div class="lew-form-component lew-scrollbar">
       <draggable
         :group="{ name: 'form', pull: 'clone', put: false }"
-		:sort="false"
+        :sort="false"
         :class="['lew-form-component-draggable']"
         :list="menuOptions"
         :clone="cloneDog"
@@ -189,9 +189,8 @@ const preview = () => {
         }"
       >
         <template #item="{ element }">
-          <lew-flex direction="y" gap="0" class="lew-form-component-box">
-            <img :src="getComponentIcon(element.as)" alt="" srcset="" />
-            {{}}
+          <lew-flex direction="y" gap="5" class="lew-form-component-box">
+            <img :src="getComponentIcon(element.as || 'blank')" alt="" srcset="" />
             {{ element.label }}
           </lew-flex>
         </template>
@@ -373,8 +372,8 @@ const preview = () => {
   background-color: var(--lew-bgcolor-4);
 
   .lew-form-component {
-    padding: 15px;
-    width: calc(30px + 200px + 15px);
+    padding: 10px;
+    width: 200px;
     overflow-x: hidden;
     overflow-y: auto;
     background-color: var(--lew-bgcolor-0);
@@ -385,21 +384,34 @@ const preview = () => {
   .lew-form-component-draggable {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 10px;
     .lew-form-component-box {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: calc(100% / 2 - 8px);
-      height: 100px;
-      background-color: var(--lew-bgcolor-2);
-      border-radius: var(--lew-border-radius-small);
+      width: calc(100% / 2 - 5px);
       border: 2px dashed transparent;
       box-sizing: border-box;
       cursor: move;
+      font-size: 12px;
+      color: var(--lew-text-color-5);
+      img {
+        width: 100%;
+        height: auto;
+		background-color: var(--lew-bgcolor-2);
+        border-radius: var(--lew-border-radius-small);
+        transition: all 0.15s;
+      }
     }
     .lew-form-component-box:hover {
-      background-color: var(--lew-bgcolor-4);
+      img {
+        background-color: var(--lew-bgcolor-4);
+      }
+    }
+    .lew-form-component-box:active {
+      img {
+        transform: scale(0.9);
+      }
     }
   }
   .lew-form-wrapper {
@@ -490,6 +502,12 @@ const preview = () => {
       }
       .handle-resize {
         transform: rotate(45deg);
+      }
+      .handle-resize:hover {
+        transform: scale(1.1) rotate(45deg);
+      }
+      .handle-resize:active {
+        transform: scale(0.95) rotate(45deg);
       }
     }
 

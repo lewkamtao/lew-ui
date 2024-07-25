@@ -4,7 +4,7 @@ export const componentsMenusSchema = [
     as: ''
   },
   {
-    label: '文本框',
+    label: '输入框',
     fieldType: '',
     as: 'input',
     props: {
@@ -13,7 +13,7 @@ export const componentsMenusSchema = [
     }
   },
   {
-    label: '多行文本框',
+    label: '多行文本',
     fieldType: '',
     as: 'textarea',
     props: {
@@ -23,7 +23,7 @@ export const componentsMenusSchema = [
     }
   },
   {
-    label: '单选选择器',
+    label: '下拉单选',
     fieldType: '',
     as: 'select',
     props: {
@@ -55,7 +55,7 @@ export const componentsMenusSchema = [
   {
     field: 'select_multiple',
     fieldType: [],
-    label: '多选选择器',
+    label: '下拉多选',
     as: 'select-multiple',
     props: {
       change: (e: any) => {
@@ -154,7 +154,49 @@ export const componentsMenusSchema = [
     }
   },
   {
-    label: '地址',
+    label: '日期',
+    fieldType: '',
+    as: 'date-picker',
+    props: {
+      options: [
+        {
+          label: 'Beijing',
+          value: '1'
+        },
+        {
+          label: 'Shanghai',
+          value: '2'
+        },
+        {
+          label: 'Guangzhou',
+          value: '3'
+        }
+      ]
+    }
+  },
+  {
+    label: '日期范围',
+    fieldType: '',
+    as: 'date-range-picker',
+    props: {
+      options: [
+        {
+          label: 'Beijing',
+          value: '1'
+        },
+        {
+          label: 'Shanghai',
+          value: '2'
+        },
+        {
+          label: 'Guangzhou',
+          value: '3'
+        }
+      ]
+    }
+  },
+  {
+    label: '级联选择',
     fieldType: '',
     as: 'cascader',
     props: {
