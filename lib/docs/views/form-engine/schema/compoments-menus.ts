@@ -7,13 +7,37 @@ export const componentsMenusSchema = [
     label: '输入框',
     fieldType: '',
     as: 'input',
+    props: {}
+  },
+  {
+    label: '数字输入',
+    fieldType: '',
+    as: 'input-number',
     props: {
       showCount: true,
       maxLength: 30
     }
   },
   {
-    label: '多行文本',
+    label: '滑块',
+    fieldType: '',
+    as: 'slider',
+    props: {
+      showCount: true,
+      maxLength: 30
+    }
+  },
+  {
+    label: '范围滑块',
+    fieldType: [],
+    as: 'slider-range',
+    props: {
+      showCount: true,
+      maxLength: 30
+    }
+  },
+  {
+    label: '文本域',
     fieldType: '',
     as: 'textarea',
     props: {
@@ -108,7 +132,7 @@ export const componentsMenusSchema = [
     }
   },
   {
-    label: '多选框',
+    label: '复选框',
     fieldType: [],
     as: 'checkbox-group',
     props: {
@@ -288,7 +312,7 @@ export const componentsMenusSchema = [
     }
   },
   {
-    label: '复选框',
+    label: '选框',
     fieldType: false,
     as: 'checkbox',
     props: {

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { flexProps } from './props'
+import { inputNumberProps } from './props'
 import { any2px } from 'lew-ui/utils'
 
-const props = defineProps(flexProps)
+const props = defineProps(inputNumberProps)
 
 const classObject = computed(() => {
   return {

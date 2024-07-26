@@ -1,6 +1,6 @@
 import type { ExtractPropTypes } from 'vue'
 
-export const flexProps = {
+export const inputNumberProps = {
   direction: {
     type: String,
     default: 'x',
@@ -40,4 +40,4 @@ export const flexProps = {
     description: '父元素宽度'
   }
 }
-export type FlexProps = ExtractPropTypes<typeof flexProps>
+export type FlexProps = ExtractPropTypes<typeof inputNumberProps>

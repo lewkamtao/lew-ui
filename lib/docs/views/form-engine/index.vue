@@ -346,7 +346,7 @@ const preview = () => {
               gap="0"
             >
               <div class="title">
-                组件属性{{ options[options.findIndex((e: any) => e.id === activedId)].as }}
+                组件属性（{{ options[options.findIndex((e: any) => e.id === activedId)].as }}）
               </div>
               <set-form
                 v-model="options[options.findIndex((e: any) => e.id === activedId)].props"
@@ -373,7 +373,7 @@ const preview = () => {
 
   .lew-form-component {
     padding: 10px;
-    width: 200px;
+    width: 300px;
     overflow-x: hidden;
     overflow-y: auto;
     background-color: var(--lew-bgcolor-0);
@@ -389,7 +389,7 @@ const preview = () => {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: calc(100% / 2 - 5px);
+      width: calc(100% / 3 - 7px);
       border: 2px dashed transparent;
       box-sizing: border-box;
       cursor: move;
@@ -398,7 +398,7 @@ const preview = () => {
       img {
         width: 100%;
         height: auto;
-		background-color: var(--lew-bgcolor-2);
+        background-color: var(--lew-bgcolor-2);
         border-radius: var(--lew-border-radius-small);
         transition: all 0.15s;
       }

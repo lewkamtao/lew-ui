@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import dayjs from 'dayjs'
-import { getMonthDate, getHeadDate } from './date'
-import type { RetItemType } from './date'
+import { getMonthDate, getHeadDate } from '../../date-picker/src/date'
+import type { RetItemType } from '../../date-picker/src/date'
 
 import { dateRangeProps } from './props'
 import { LewFlex, LewButton } from 'lew-ui'
