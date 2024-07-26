@@ -264,12 +264,12 @@ onUnmounted(() => {
     white-space: nowrap;
     cursor: pointer;
     flex-shrink: 0;
-	transition: all 0.25s;
-}
+    transition: all 0.25s;
+  }
 
   .lew-tabs-item-active {
     color: var(--lew-color-primary);
-    font-weight: 600;
+    text-shadow: 0px 0px 1px var(--lew-color-primary-dark);
   }
 
   .lew-tabs-item-animation-active {
