@@ -294,13 +294,11 @@ const ok = () => {
   const item = findObjectByValue(state.optionsTree, state.tobeItem.value)
   cascaderValue.value = state.tobeItem.value
   emit('change', cloneDeep(item))
+
   hide()
 }
 
 const cancel = () => {
-  cascaderValue.value = ''
-  state.tobelabels = []
-  state.activelabels = []
   hide()
 }
 

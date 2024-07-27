@@ -49,10 +49,10 @@ const updateValue = () => {
 }
 
 let isFirst = true
-const inputFn = () => {
+const inputFn = (e: any) => {
   updateValue()
   if (!isFirst) {
-    emit('input', modelValue.value)
+    emit('input', modelValue.value, e)
   }
   isFirst = false
 }
@@ -184,6 +184,10 @@ const ok = useDebounceFn(() => {
   emit('ok', modelValue.value)
 }, 250)
 
+const changeFn = () => {
+  emit('change', modelValue.value)
+}
+
 onUnmounted(() => {
   clearTimeout(timer)
 })
@@ -261,7 +265,7 @@ defineExpose({ toFocus })
         :readonly="readonly"
         onkeypress="if(window.event.keyCode==13) this.blur()"
         @input="inputFn"
-        @change="emit('change', modelValue)"
+        @change="changeFn"
         @blur="blur"
         @focus="focus"
       />

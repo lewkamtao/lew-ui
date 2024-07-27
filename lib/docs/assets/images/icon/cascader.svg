@@ -7,10 +7,10 @@
 		<rect x="12" y="15" width="22" height="8" fill="#3478f6"></rect>
 		<rect x="16" y="18" width="9" height="2" rx="1" fill="#fff"></rect>
 		<rect x="28" y="18" width="2" height="2" rx="1" fill="#fff"></rect>
-		<rect x="16" y="26" width="9" height="2" rx="1" fill="#bebebe"></rect>
-		<rect x="28" y="26" width="2" height="2" rx="1" fill="#bebebe"></rect>
-		<rect x="16" y="34" width="9" height="2" rx="1" fill="#bebebe"></rect>
-		<rect x="28" y="34" width="2" height="2" rx="1" fill="#bebebe"></rect>
+		<rect x="16" y="26" width="9" height="2" rx="1" fill="#999"></rect>
+		<rect x="28" y="26" width="2" height="2" rx="1" fill="#999"></rect>
+		<rect x="16" y="34" width="9" height="2" rx="1" fill="#999"></rect>
+		<rect x="28" y="34" width="2" height="2" rx="1" fill="#999"></rect>
 	</g>
 	<g clip-path="url(#clip1_6580_8574)">
 		<path d="M34 10H52C54.2091 10 56 11.7909 56 14V40C56 42.2091 54.2091 44 52 44H34V10Z"
@@ -18,10 +18,10 @@
 		<rect x="34" y="23" width="22" height="8" fill="#3478f6"></rect>
 		<rect x="39" y="26" width="9" height="2" rx="1" fill="#fff"></rect>
 		<rect x="50" y="26" width="2" height="2" rx="1" fill="#fff"></rect>
-		<rect x="39" y="18" width="9" height="2" rx="1" fill="#bebebe"></rect>
-		<rect x="50" y="18" width="2" height="2" rx="1" fill="#bebebe"></rect>
-		<rect x="39" y="34" width="9" height="2" rx="1" fill="#bebebe"></rect>
-		<rect x="50" y="34" width="2" height="2" rx="1" fill="#bebebe"></rect>
+		<rect x="39" y="18" width="9" height="2" rx="1" fill="#999"></rect>
+		<rect x="50" y="18" width="2" height="2" rx="1" fill="#999"></rect>
+		<rect x="39" y="34" width="9" height="2" rx="1" fill="#999"></rect>
+		<rect x="50" y="34" width="2" height="2" rx="1" fill="#999"></rect>
 	</g>
 	<defs>
 		<clipPath id="clip0_6580_8574">

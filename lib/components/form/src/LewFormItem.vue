@@ -53,9 +53,19 @@ const modelValue: Ref<any> = defineModel({
   default: undefined
 })
 
+watch(
+  () => modelValue.value,
+  () => {
+    validateField()
+  },
+  {
+    deep: true
+  }
+)
+
 const validateField = debounce(() => {
   validate()
-}, 250)
+}, 50)
 
 const errMsg = ref('')
 
@@ -84,7 +94,6 @@ const emit = defineEmits(['change'])
 
 const change = () => {
   const { field, label } = props
-  validateField()
   emit('change', cloneDeep({ value: modelValue.value, field, label }))
 }
 
@@ -128,15 +137,10 @@ defineExpose({ validate, setError })
         v-model="modelValue"
         v-bind="{ size, ...props.props }"
         @change="change"
-        @input="validateField"
-        @clear="validateField"
-        @close="validateField"
-        @click="typeof props.props.click === 'function' ? props.props.click() : ''"
       />
       <transition name="slide-fade">
-        <div v-if="errMsg" class="error-message">
-          {{ errMsg }}
-        </div>
+        <lew-text-trim style="width: 100%" :text="errMsg" v-if="errMsg" class="error-message">
+        </lew-text-trim>
       </transition>
     </div>
   </div>
@@ -149,6 +153,7 @@ defineExpose({ validate, setError })
     transition: all 0.25s;
     .label-box {
       display: inline-flex;
+      align-items: center;
       gap: 5px;
     }
   }

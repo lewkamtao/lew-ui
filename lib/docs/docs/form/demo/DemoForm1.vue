@@ -35,7 +35,7 @@ const options = ref([
     label: '上传',
     as: 'upload',
     required: true,
-    rule: Yup.string().required(),
+    rule: Yup.array().min(2, '至少两个').required('此项必填'),
     props: {
       showCount: true,
       maxLength: 30

@@ -19,7 +19,7 @@ const { push } = useRouter()
     <lew-title>Dialog</lew-title>
     <p class="sub-title">
       如果你需要更简单的询问框，请可以尝试一下
-      <lew-mark cursor="pointer"  type="light" color="blue" @click="push('/Popok')">Popok</lew-mark>
+      <lew-mark cursor="pointer" type="light" color="blue" @click="push('/Popok')">Popok</lew-mark>
     </p>
     <lew-demo-box title="快捷唤起" :code="DemoDialog1Code">
       <demo-dialog1 />

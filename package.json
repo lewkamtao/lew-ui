@@ -45,7 +45,7 @@
   "dependencies": {
     "@highlightjs/vue-plugin": "^2.1.0",
     "@vueuse/components": "^9.13.0",
-    "@vueuse/core": "^9.1.1",
+    "@vueuse/core": "^10.11.0",
     "axios": "^1.6.7",
     "dayjs": "^1.11.7",
     "feather-icons": "^4.29.0",

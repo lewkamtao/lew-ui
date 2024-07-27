@@ -18,7 +18,7 @@ const { push } = useRouter()
     <lew-title>Empty</lew-title>
     <p class="sub-title">
       有时候，一个好看的缺省页，会让你的用户感觉很舒服。
-      <lew-mark cursor="pointer"  type="light" color="blue" @click="push('/Popok')">Popok</lew-mark>
+      <lew-mark cursor="pointer" type="light" color="blue" @click="push('/Popok')">Popok</lew-mark>
     </p>
     <lew-demo-box title="暂无数据" :code="DemoEmpty1Code">
       <demo-empty1 />

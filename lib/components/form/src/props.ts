@@ -129,10 +129,10 @@ export const formItemProps = {
 }
 
 export const requiredIconSizeMap: Record<string, number> = {
-	small: 6,
-	medium: 8,
-	large: 10
-  }
+  small: 6,
+  medium: 7,
+  large: 8
+}
 
 export type FormProps = ExtractPropTypes<typeof formProps>
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>

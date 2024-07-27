@@ -46,7 +46,9 @@ const { push } = useRouter()
     <lew-demo-box title="支持在线配置 Bata" :code="DemoForm5Code">
       <template #desc>
         <div>
-          你可以通过 <lew-mark cursor="pointer"  @click="push('/form-engine')">表单引擎</lew-mark> 进行快捷布局表单
+          你可以通过
+          <lew-mark cursor="pointer" @click="push('/form-engine')">表单引擎</lew-mark>
+          进行快捷布局表单
         </div>
       </template>
       <demo-form5 />

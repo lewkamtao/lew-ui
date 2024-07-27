@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { cloneDeep, isNumber } from 'lodash'
+import { cloneDeep } from 'lodash'
 import { uploadProps } from './props'
-import type { FileItem, UploadStatus } from './props'
-import { any2px, getUUId, formatBytes, getFileIcon } from 'lew-ui/utils'
+import type { UploadFileItem, UploadStatus } from './props'
+import { any2px, getUUId, formatBytes, getFileIcon, object2class } from 'lew-ui/utils'
+import { useClipboardItems } from '@vueuse/core'
+const { isSupported } = useClipboardItems({ read: true })
 const tipFontSizeMap: Record<string, number> = {
   small: 12,
   medium: 14,
@@ -12,6 +14,11 @@ const fileIconSizeMap: Record<string, number> = {
   small: 28,
   medium: 36,
   large: 44
+}
+const uploadItemPaddingMap: Record<string, number> = {
+  small: 8,
+  medium: 10,
+  large: 12
 }
 const maxSizeFontSizeMap: Record<string, number> = {
   small: 10,
@@ -56,7 +63,9 @@ const statusMap: Record<UploadStatus, string> = {
   fail: '上传失败',
   uploading: '上传中',
   pending: '等待上传',
-  complete: '已上传'
+  complete: '已上传',
+  wrong_type: '非法格式',
+  wrong_size: '文件大小超出限制'
 }
 
 const statusColorMap: Record<UploadStatus, string> = {
@@ -64,51 +73,70 @@ const statusColorMap: Record<UploadStatus, string> = {
   fail: 'red',
   uploading: 'blue',
   pending: 'mint',
-  complete: 'gray'
+  complete: 'gray',
+  wrong_type: 'red',
+  wrong_size: 'red'
 }
 const statusIconMap: Record<UploadStatus, string> = {
   success: 'check',
   fail: 'alert-circle',
   uploading: 'loader',
   pending: 'coffee',
-  complete: 'check'
+  complete: 'check',
+  wrong_type: 'alert-circle',
+  wrong_size: 'alert-circle'
 }
 
 const props = defineProps(uploadProps)
-const fileList = ref<FileItem[]>([])
 const emit = defineEmits(['change'])
-const inputRef = ref<HTMLInputElement | null>(null)
+const inputClickRef = ref<HTMLInputElement | null>(null)
+const inputPasteRef = ref<HTMLInputElement | null>(null)
 const dropActive = ref(false)
+const modelValue = defineModel<UploadFileItem[]>()
+const isFocus = ref(false)
 
 const addImageToList = (files: any) => {
-  let _files: FileItem[] = Array.from(files).map((file: any) => {
-    return {
-      id: getUUId(),
-      name: file.name,
-      status: 'pending',
-      percent: 0,
-      size: file.size,
-      file
+  console.log(files)
+  if ((files || []).length > 0) {
+    const item = files.pop()
+    const { size, type, name, lastModifiedDate, lastModified } = item
+    let status: UploadStatus = 'pending'
+    if (!checkFileAccept({ ...item, file: item })) {
+      status = 'wrong_type'
     }
-  })
-
-  // 清空
-  if (inputRef.value) {
-    inputRef.value.value = ''
+    if (size && size > props.maxSize) {
+      status = 'wrong_size'
+    }
+    const fileItem = {
+      id: getUUId(),
+      status,
+      size,
+      type,
+      name,
+      lastModifiedDate,
+      lastModified,
+      file: item
+    }
+    modelValue.value = [fileItem, ...cloneDeep(modelValue.value || [])]
+    nextTick(() => {
+      if (fileItem.status === 'pending') {
+        props.uploadHandle({ fileItem: cloneDeep(fileItem), setFileItem })
+      }
+      setTimeout(() => {
+        if ((modelValue.value || []).length < props.limit) {
+          addImageToList(files)
+        }
+      }, 500)
+    })
   }
-
-  fileList.value = [..._files, ...cloneDeep(fileList.value)]
-  _files.forEach((e) => {
-    props.uploadHandle({ ...e, setFileItem })
-  })
 }
 
 const reUpload = (id: string) => {
-  const index = fileList.value.findIndex((e) => e.id === id)
+  const index = (modelValue.value || []).findIndex((e) => e.id === id)
   if (index >= 0) {
-    const item = fileList.value[index]
+    const item = (modelValue.value || [])[index]
     setFileItem({ id, percent: 0, status: 'uploading' })
-    props.uploadHandle({ ...item, setFileItem })
+    props.uploadHandle({ fileItem: cloneDeep(item), setFileItem })
   } else {
     LewMessage.error('文件不存在')
   }
@@ -116,7 +144,13 @@ const reUpload = (id: string) => {
 
 const clickUpload = (e: any) => {
   const files = e.target.files
-  addImageToList(files)
+  addImageToList(Array.from(files))
+  // 清空
+  nextTick(() => {
+    if (inputClickRef.value) {
+      inputClickRef.value.value = ''
+    }
+  })
 }
 // 拖拽上传
 const dropUpload = (e: any) => {
@@ -124,20 +158,48 @@ const dropUpload = (e: any) => {
   dropActive.value = false
   e.stopPropagation()
   e.preventDefault()
-  addImageToList(files)
+  addImageToList(Array.from(files))
 }
 
 // 监听粘贴操作
 const pasteUpload = (e: any) => {
   const items = e.clipboardData.items //  获取剪贴板中的数据
-  let files: any = null //  用来保存 files 对象
   if (items.length > 0) {
     //  判断剪贴板中是否是文件
-    if (items[0].kind == 'file') {
-      files = items[0].getAsFile()
-      addImageToList([files])
-    }
+    let files = Array.from(items)
+      .filter((item: any) => {
+        return item.kind === 'file'
+      })
+      .map((e: any) => {
+        return e.getAsFile()
+      })
+    addImageToList(files)
   }
+}
+
+// 定义判断文件是否符合accept规则的方法
+const checkFileAccept = (fileItem: UploadFileItem) => {
+  const acceptedFiles = props.accept
+  const file = fileItem.file
+  if (file && acceptedFiles) {
+    const acceptedFilesArray = Array.isArray(acceptedFiles)
+      ? acceptedFiles
+      : acceptedFiles.split(',')
+    const fileName = file.name || ''
+    const mimeType = (file.type || '').toLowerCase()
+    const baseMimeType = mimeType.replace(/\/.*$/, '')
+    return acceptedFilesArray.some((type) => {
+      const validType = type.trim().toLowerCase()
+      if (validType.charAt(0) === '.') {
+        return fileName.toLowerCase().endsWith(validType)
+      } else if (validType.endsWith('/*')) {
+        // This is something like a image/* mime type
+        return baseMimeType === validType.replace(/\/.*$/, '')
+      }
+      return mimeType === validType
+    })
+  }
+  return true
 }
 
 let dropRef = ref()
@@ -145,7 +207,6 @@ let dropRef = ref()
 onMounted(() => {
   // 拖拽接听
   const drop = dropRef.value.$el
-
   drop.addEventListener('drop', dropUpload, false)
   let timer: any = ''
   drop.addEventListener('dragleave', (e: any) => {
@@ -164,47 +225,53 @@ onMounted(() => {
   })
 })
 
-const setFileItem = ({
-  id,
-  percent,
-  status,
-  url
-}: {
+const setFileItem = (item: {
   id: string
   percent?: number
   status?: UploadStatus
   url?: string
+  [key: string]: any
 }) => {
-  const index = fileList.value.findIndex((e) => e.id === id)
+  const { id, percent } = item
+  let fileList = cloneDeep(modelValue.value) || []
+  const index = (fileList || []).findIndex((e) => e.id === id)
+  let _percent = percent || 0
   if (index >= 0) {
     if (percent) {
-      let _percent = percent
       if (_percent > 100) _percent = 100
       if (_percent < 0) _percent = 0
-      fileList.value[index].percent = _percent
+      fileList[index].percent = _percent
+    } else {
+      _percent = fileList[index].percent as number
     }
-    if (status) {
-      fileList.value[index].status = status
-    }
-    if (url) {
-      fileList.value[index].url = url
-    }
+    fileList[index] = { ...fileList[index], ...item, percent: _percent }
   }
+  modelValue.value = fileList
 }
 
 const deleteFile = (id: string) => {
-  LewDialog.error({
-    title: '移除文件',
-    okText: '移除',
-    content: '你是否要移除该文件，此操作会立即生效，请谨慎操作！',
-    closeOnClickOverlay: true,
-    closeByEsc: true,
-    ok: () => {
-      const index = fileList.value.findIndex((e) => e.id === id)
-      fileList.value.splice(index, 1)
-      return true
+  let fileList = cloneDeep(modelValue.value) || []
+  const index = (fileList || []).findIndex((e) => e.id === id)
+  if (index >= 0) {
+    const { status } = fileList[index]
+    if (['wrong_type', 'wrong_size'].includes(status || '')) {
+      fileList.splice(index, 1)
+      modelValue.value = fileList
+    } else {
+      LewDialog.error({
+        title: '移除文件',
+        okText: '移除',
+        content: '你是否要移除该文件，此操作会立即生效，请谨慎操作！',
+        closeOnClickOverlay: true,
+        closeByEsc: true,
+        ok: () => {
+          fileList.splice(index, 1)
+          modelValue.value = fileList
+          return true
+        }
+      })
     }
-  })
+  }
 }
 
 const checkUrlIsImg = (url?: string = '') => {
@@ -212,14 +279,35 @@ const checkUrlIsImg = (url?: string = '') => {
   const reg = /\.(jpg|jpeg|png|webp|bmp|gif)$/i
   return reg.test(url)
 }
+
+const getFileName = computed(() => (item: UploadFileItem) => {
+  return item.name || getLastValueAfterSlash(item.url)
+})
+
+// 定义提取最后一个/后面的所有值方法
+const getLastValueAfterSlash = (url: string = '') => {
+  const urlParts = url.split('/')
+  return urlParts[urlParts.length - 1]
+}
+
+const getUploadLabelClass = computed(() => {
+  const { disabled, readonly } = props
+  return object2class('lew-upload-label', { disabled, readonly })
+})
 </script>
 
 <template>
   <lew-flex class="lew-upload-wrapper" direction="y" gap="10">
-    <label style="width: 100%">
+    <label
+      v-show="(modelValue || []).length < limit"
+      @mouseenter="inputPasteRef?.focus()"
+      @mouseleave="inputPasteRef?.blur()"
+      class="lew-upload-label"
+      :class="getUploadLabelClass"
+      style="width: 100%"
+    >
       <lew-flex
         ref="dropRef"
-        @paste="pasteUpload"
         direction="y"
         x="center"
         y="center"
@@ -234,8 +322,7 @@ const checkUrlIsImg = (url?: string = '') => {
           stroke-width="1.4"
           class="lew-upload-icon"
           :size="uploadIconFontSizeMap[size]"
-          type="upload-cloud"
-        />
+          type="upload-cloud" />
 
         <div
           :style="{
@@ -243,44 +330,59 @@ const checkUrlIsImg = (url?: string = '') => {
           }"
           class="lew-upload-tip"
         >
-          {{ dropActive ? '松开鼠标上传文件' : '点击、粘贴、拖拽文件到此处' }}
+          {{
+            dropActive
+              ? '松开鼠标上传文件'
+              : `点击、${isSupported && isFocus ? 'Ctrl + V 粘贴、' : ''}拖拽文件到此处`
+          }}
         </div>
         <div
+          v-if="tips"
           :style="{
             fontSize: `${any2px(maxSizeFontSizeMap[size])}`
           }"
           class="lew-upload-max-size"
         >
-          最大不可超过 100M
+          {{ tips }}
         </div>
-      </lew-flex>
-      <input
-        ref="inputRef"
-        type="file"
-        multiple
-        v-show="false"
-        @input.stop
-        @change.stop="clickUpload"
-      />
+        <input
+          class="lew-upload-input"
+          ref="inputClickRef"
+          type="file"
+          :multiple="multiple"
+          :accept="accept"
+          @change.stop="clickUpload" />
+        <input
+          class="lew-upload-input"
+          ref="inputPasteRef"
+          @paste="pasteUpload"
+          @focus="isFocus = true"
+          @blur="isFocus = false"
+          type="text"
+      /></lew-flex>
     </label>
-
-    <lew-flex v-show="fileList.length > 0" direction="y" class="lew-upload-file-list" gap="10">
+    <lew-flex
+      v-show="(modelValue || []).length > 0"
+      direction="y"
+      class="lew-upload-file-list"
+      gap="10"
+    >
       <transition-group name="upload-list">
         <lew-flex
-          v-for="item in fileList"
+          v-for="item in modelValue"
           :key="item.id"
           class="lew-upload-file-item"
           mode="between"
           gap="8"
           :style="{
-            padding: `var(--lew-form-upload-item-padding-${size})`
+            padding: uploadItemPaddingMap[size] + 'px'
           }"
         >
           <lew-flex
             :style="{ width: `${fileIconSizeMap[size]}px`, height: `${fileIconSizeMap[size]}px` }"
             class="lew-upload-icon-wrapper"
           >
-            <img v-if="checkUrlIsImg(item.url)" class="lew-upload-file-icon" :src="item.url" />
+            <img v-if="checkUrlIsImg(item.url)" class="lew-upload-file-image" :src="item.url" />
             <img v-else class="lew-upload-file-icon" :src="getFileIcon(item.name)" />
           </lew-flex>
           <lew-flex
@@ -328,7 +430,7 @@ const checkUrlIsImg = (url?: string = '') => {
             <lew-flex mode="between" gap="5" y="center">
               <lew-flex y="center" x="start" gap="5">
                 <lew-text-trim
-                  :text="item.name"
+                  :text="getFileName(item)"
                   :style="{
                     width: `calc(100% - 20px)`,
                     fontSize: `${any2px(fileNameFontSizeMap[size])}`
@@ -338,8 +440,9 @@ const checkUrlIsImg = (url?: string = '') => {
               </lew-flex>
             </lew-flex>
             <lew-flex
+              v-if="item.percent"
               class="lew-upload-progress"
-              :class="{ 'lew-upload-progress-complete': item.status === 'success' }"
+              :class="[`lew-upload-progress-${item.status}`]"
             >
               <lew-flex y="center" class="lew-upload-progress-box">
                 <span class="lew-upload-progress-bar"></span>
@@ -356,21 +459,25 @@ const checkUrlIsImg = (url?: string = '') => {
                   fontSize: `${any2px(footerFontSizeMap[size])}`
                 }"
               >
-                <template v-if="item.status === 'uploading'">
+                <template v-if="item.status === 'uploading' && item.percent && item.size">
                   {{ formatBytes((item.percent / 100) * item.size) + ' / ' }}
                 </template>
-                {{ formatBytes(item.size) }}
+                <span v-if="item.size"> {{ formatBytes(item.size) }}</span>
               </span>
               <lew-flex style="max-width: 200px" y="center" x="end">
-                <lew-tag type="light" size="small" :color="statusColorMap[item.status]">
+                <lew-tag
+                  type="light"
+                  size="small"
+                  :color="statusColorMap[item.status || 'complete']"
+                >
                   <template #left>
                     <lew-icon
                       size="12"
-                      :type="statusIconMap[item.status]"
+                      :type="statusIconMap[item.status || 'complete']"
                       :animation="item.status === 'uploading' ? 'spin' : ''"
                     />
                   </template>
-                  {{ statusMap[item.status] }}
+                  {{ statusMap[item.status || 'complete'] }}
                 </lew-tag>
               </lew-flex>
             </lew-flex>
@@ -393,6 +500,7 @@ const checkUrlIsImg = (url?: string = '') => {
     box-sizing: border-box;
     transition: var(--lew-form-transition);
     cursor: pointer;
+
     .lew-upload-icon {
       color: var(--lew-color-primary-dark);
       transition: var(--lew-form-transition);
@@ -408,8 +516,25 @@ const checkUrlIsImg = (url?: string = '') => {
       color: var(--lew-text-color-8);
       transition: var(--lew-form-transition);
     }
+    .lew-upload-input {
+      position: fixed;
+      left: -100vw;
+      opacity: 0;
+      z-index: -99;
+    }
+  }
+  .lew-upload-label {
+    user-select: none;
+  }
+  .lew-upload-label-readonly {
+    user-select: text;
+    pointer-events: none; //鼠标点击不可修改
   }
 
+  .lew-upload-label-disabled {
+    opacity: var(--lew-disabled-opacity);
+    pointer-events: none; //鼠标点击不可修改
+  }
   // 防止拖拽时出现闪烁
   .lew-upload::after {
     position: absolute;
@@ -480,6 +605,14 @@ const checkUrlIsImg = (url?: string = '') => {
           border-radius: 4px;
           overflow: hidden;
         }
+        .lew-upload-file-image {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          border-radius: 4px;
+          overflow: hidden;
+          background-color: var(--lew-bgcolor-2);
+        }
       }
 
       .lew-upload-file-name {
@@ -488,19 +621,19 @@ const checkUrlIsImg = (url?: string = '') => {
       }
       .lew-upload-progress {
         position: relative;
-        height: 20px;
+        height: 14px;
         display: flex;
         align-items: center;
         overflow: hidden;
         animation: progressCompleted 0.25s;
         animation-fill-mode: forwards;
         animation-play-state: paused;
-        animation-delay: 1000ms;
+        animation-delay: 500ms;
 
         @keyframes progressCompleted {
           0% {
             opacity: 1;
-            height: 20px;
+            height: 14px;
           }
           100% {
             opacity: 0;
@@ -509,7 +642,7 @@ const checkUrlIsImg = (url?: string = '') => {
         }
 
         .lew-upload-progress-box {
-          height: 20px;
+          height: 14px;
         }
 
         .lew-upload-progress-bar {
@@ -535,8 +668,13 @@ const checkUrlIsImg = (url?: string = '') => {
         }
       }
 
-      .lew-upload-progress-complete {
+      .lew-upload-progress-success {
         animation-play-state: running;
+      }
+      .lew-upload-progress-fail {
+        .lew-upload-progress-bar-upload {
+          background-color: var(--lew-color-red);
+        }
       }
 
       .lew-upload-footer {
@@ -544,6 +682,9 @@ const checkUrlIsImg = (url?: string = '') => {
         white-space: nowrap;
         color: var(--lew-text-color-6);
       }
+    }
+    .lew-upload-file-item-invalid {
+      opacity: 0.5;
     }
   }
 }

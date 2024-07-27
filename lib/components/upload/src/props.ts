@@ -1,22 +1,28 @@
 import type { ExtractPropTypes } from 'vue'
 
-export type UploadStatus = 'success' | 'fail' | 'uploading' | 'pending' | 'complete'
+export type UploadStatus =
+  | 'success'
+  | 'fail'
+  | 'uploading'
+  | 'pending'
+  | 'complete'
+  | 'wrong_type'
+  | 'wrong_size'
 
-export type FileItem = {
+export type UploadFileItem = {
   id: string
   name: string
   url?: string
-  status: UploadStatus
-  percent: number
-  file: File
-  size: number
+  status?: UploadStatus
+  percent?: number
+  file?: File
+  size?: number
+  type?: string
+  lastModifiedDate?: any
+  lastModified?: any
 }
+
 export const uploadProps = {
-  'default-file-list': {
-    type: Array as PropType<FileItem[]>,
-    default: () => [],
-    description: '默认文件列表'
-  },
   size: {
     type: String,
     default: 'medium',
@@ -24,12 +30,37 @@ export const uploadProps = {
   },
   accept: {
     type: String,
-    default: '',
+    default: 'image/*',
     description: '接受上传的文件类型'
+  },
+  maxSize: {
+    type: Number,
+    default: 1024 * 1024 * 10,
+    description: '最大上传大小'
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+    description: '是否禁用'
+  },
+  readonly: {
+    type: Boolean,
+    default: false,
+    description: '是否只读'
+  },
+  tips: {
+    type: String,
+    default: '',
+    description: '是否只读'
+  },
+  multiple: {
+    type: Boolean,
+    default: false,
+    description: '是否多选'
   },
   limit: {
     type: Number,
-    default: 0,
+    default: 1,
     description: '最大上传数量'
   },
   listType: {

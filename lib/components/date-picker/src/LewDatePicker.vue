@@ -3,6 +3,7 @@ import { object2class } from 'lew-ui/utils'
 import { LewPopover, LewIcon, LewDate, LewTooltip } from 'lew-ui'
 import { datePickerProps } from './props'
 import dayjs from 'dayjs'
+import { cloneDeep } from 'lodash'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -28,7 +29,7 @@ const hide = () => {
 }
 
 const change = (date: string | undefined) => {
-  emit('change', { date, show, hide })
+  emit('change', { date, value: cloneDeep(modelValue.value) })
   hide()
 }
 
