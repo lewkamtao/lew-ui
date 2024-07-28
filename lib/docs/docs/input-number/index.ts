@@ -1,3 +1,3 @@
-import DemoFlex from './DemoFlex.vue'
+import DemoInputNumber from './DemoInputNumber.vue'
 
-export default DemoFlex
+export default DemoInputNumber

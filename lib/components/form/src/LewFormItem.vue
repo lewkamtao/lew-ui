@@ -16,7 +16,8 @@ import {
   LewCascader,
   LewSwitch,
   LewButton,
-  LewUpload
+  LewUpload,
+  LewInputNumber
 } from 'lew-ui'
 import { debounce, cloneDeep } from 'lodash'
 
@@ -37,7 +38,8 @@ const asMap: Record<string, any> = {
   cascader: LewCascader,
   switch: LewSwitch,
   button: LewButton,
-  upload: LewUpload
+  upload: LewUpload,
+  'input-number': LewInputNumber
 }
 
 const getFormItemClassNames = computed(() => {

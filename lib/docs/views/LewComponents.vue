@@ -31,8 +31,7 @@ watch(route, () => {
   isShowSider.value = false
 })
 
-const options = ref<MenuOptions[]>([])
-options.value = [
+const options: MenuOptions[] = [
   {
     label: '基础',
     value: '基础',
@@ -125,6 +124,10 @@ options.value = [
       {
         label: 'Input',
         value: '/Input'
+      },
+      {
+        label: 'InputNumber',
+        value: '/InputNumber'
       },
       {
         label: 'Textarea',
@@ -279,7 +282,12 @@ options.value = [
       }
     ]
   }
-]
+].map((item: any) => {
+  return {
+    ...item,
+    label: item.label + '（' + (item?.children || []).length + '）'
+  }
+})
 </script>
 
 <template>

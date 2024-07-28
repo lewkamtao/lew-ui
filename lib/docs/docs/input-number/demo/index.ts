@@ -1,9 +1,24 @@
-import DemoFlex1 from './DemoFlex1.vue'
-import DemoFlex2 from './DemoFlex2.vue'
-import DemoFlex3 from './DemoFlex3.vue'
+import DemoInputNumber1 from './DemoInputNumber1.vue'
+import DemoInputNumber2 from './DemoInputNumber2.vue'
+import DemoInputNumber3 from './DemoInputNumber3.vue'
+import DemoInputNumber4 from './DemoInputNumber4.vue'
+import DemoInputNumber5 from './DemoInputNumber5.vue'
 
-import DemoFlex1Code from './DemoFlex1.vue?raw'
-import DemoFlex2Code from './DemoFlex2.vue?raw'
-import DemoFlex3Code from './DemoFlex3.vue?raw'
+import DemoInputNumber1Code from './DemoInputNumber1.vue?raw'
+import DemoInputNumber2Code from './DemoInputNumber2.vue?raw'
+import DemoInputNumber3Code from './DemoInputNumber3.vue?raw'
+import DemoInputNumber4Code from './DemoInputNumber4.vue?raw'
+import DemoInputNumber5Code from './DemoInputNumber5.vue?raw'
 
-export { DemoFlex1, DemoFlex1Code, DemoFlex2, DemoFlex2Code, DemoFlex3, DemoFlex3Code }
+export {
+  DemoInputNumber1,
+  DemoInputNumber1Code,
+  DemoInputNumber2,
+  DemoInputNumber2Code,
+  DemoInputNumber3,
+  DemoInputNumber3Code,
+  DemoInputNumber4,
+  DemoInputNumber4Code,
+  DemoInputNumber5,
+  DemoInputNumber5Code
+}

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isFunction } from 'lodash'
 import { uploadProps } from './props'
 import type { UploadFileItem, UploadStatus } from './props'
 import { any2px, getUUId, formatBytes, getFileIcon, object2class } from 'lew-ui/utils'
@@ -96,7 +96,6 @@ const modelValue = defineModel<UploadFileItem[]>()
 const isFocus = ref(false)
 
 const addImageToList = (files: any) => {
-  console.log(files)
   if ((files || []).length > 0) {
     const item = files.pop()
     const { size, type, name, lastModifiedDate, lastModified } = item
@@ -104,7 +103,7 @@ const addImageToList = (files: any) => {
     if (!checkFileAccept({ ...item, file: item })) {
       status = 'wrong_type'
     }
-    if (size && size > props.maxSize) {
+    if (size && size > props.maxFileSize) {
       status = 'wrong_size'
     }
     const fileItem = {
@@ -120,13 +119,15 @@ const addImageToList = (files: any) => {
     modelValue.value = [fileItem, ...cloneDeep(modelValue.value || [])]
     nextTick(() => {
       if (fileItem.status === 'pending') {
-        props.uploadHandle({ fileItem: cloneDeep(fileItem), setFileItem })
+        isFunction(props.uploadHelper)
+          ? props.uploadHelper({ fileItem: cloneDeep(fileItem), setFileItem })
+          : LewMessage.error('未配置上传 uploadHelper')
       }
       setTimeout(() => {
         if ((modelValue.value || []).length < props.limit) {
           addImageToList(files)
         }
-      }, 500)
+      }, 250)
     })
   }
 }
@@ -136,7 +137,9 @@ const reUpload = (id: string) => {
   if (index >= 0) {
     const item = (modelValue.value || [])[index]
     setFileItem({ id, percent: 0, status: 'uploading' })
-    props.uploadHandle({ fileItem: cloneDeep(item), setFileItem })
+    isFunction(props.uploadHelper)
+      ? props.uploadHelper({ fileItem: cloneDeep(item), setFileItem })
+      : LewMessage.error('未配置上传 uploadHelper')
   } else {
     LewMessage.error('文件不存在')
   }
@@ -225,13 +228,7 @@ onMounted(() => {
   })
 })
 
-const setFileItem = (item: {
-  id: string
-  percent?: number
-  status?: UploadStatus
-  url?: string
-  [key: string]: any
-}) => {
+const setFileItem = (item: UploadFileItem) => {
   const { id, percent } = item
   let fileList = cloneDeep(modelValue.value) || []
   const index = (fileList || []).findIndex((e) => e.id === id)
@@ -274,7 +271,7 @@ const deleteFile = (id: string) => {
   }
 }
 
-const checkUrlIsImg = (url?: string = '') => {
+const checkUrlIsImg = (url: string = '') => {
   // 图片正则
   const reg = /\.(jpg|jpeg|png|webp|bmp|gif)$/i
   return reg.test(url)
@@ -293,6 +290,25 @@ const getLastValueAfterSlash = (url: string = '') => {
 const getUploadLabelClass = computed(() => {
   const { disabled, readonly } = props
   return object2class('lew-upload-label', { disabled, readonly })
+})
+
+const getTips = computed(() => {
+  const { tips, maxFileSize, accept, limit } = props
+  if (tips) {
+    return tips
+  } else {
+    let tips = []
+    if (accept) {
+      tips.push(`支持 ${accept}`)
+    }
+    if (limit) {
+      tips.push(`至多上传 ${limit} 个文件`)
+    }
+    if (maxFileSize) {
+      tips.push(`文件大小不能超过 ${formatBytes(maxFileSize)}`)
+    }
+    return tips.join('，') + '。'
+  }
 })
 </script>
 
@@ -319,7 +335,7 @@ const getUploadLabelClass = computed(() => {
         gap="5"
       >
         <lew-icon
-          stroke-width="1.4"
+          stroke-width="1.5"
           class="lew-upload-icon"
           :size="uploadIconFontSizeMap[size]"
           type="upload-cloud" />
@@ -337,13 +353,12 @@ const getUploadLabelClass = computed(() => {
           }}
         </div>
         <div
-          v-if="tips"
           :style="{
             fontSize: `${any2px(maxSizeFontSizeMap[size])}`
           }"
           class="lew-upload-max-size"
         >
-          {{ tips }}
+          {{ getTips }}
         </div>
         <input
           class="lew-upload-input"
@@ -361,6 +376,18 @@ const getUploadLabelClass = computed(() => {
           type="text"
       /></lew-flex>
     </label>
+
+    <lew-alert
+      v-if="!isFunction(uploadHelper)"
+      :list="[
+        {
+          type: 'error',
+          title: 'uploadHelper Error: 未配置上传方法'
+        }
+      ]"
+    >
+    </lew-alert>
+
     <lew-flex
       v-show="(modelValue || []).length > 0"
       direction="y"
@@ -383,7 +410,7 @@ const getUploadLabelClass = computed(() => {
             class="lew-upload-icon-wrapper"
           >
             <img v-if="checkUrlIsImg(item.url)" class="lew-upload-file-image" :src="item.url" />
-            <img v-else class="lew-upload-file-icon" :src="getFileIcon(item.name)" />
+            <img v-else class="lew-upload-file-icon" :src="getFileIcon(item.name as string)" />
           </lew-flex>
           <lew-flex
             class="lew-upload-file-info"
@@ -432,7 +459,7 @@ const getUploadLabelClass = computed(() => {
                 <lew-text-trim
                   :text="getFileName(item)"
                   :style="{
-                    width: `calc(100% - 20px)`,
+                    width: `calc(100% - 60px)`,
                     fontSize: `${any2px(fileNameFontSizeMap[size])}`
                   }"
                   class="lew-upload-file-name"

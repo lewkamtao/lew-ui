@@ -13,10 +13,7 @@ export const componentsMenusSchema = [
     label: '数字输入',
     fieldType: '',
     as: 'input-number',
-    props: {
-      showCount: true,
-      maxLength: 30
-    }
+    props: {}
   },
   {
     label: '滑块',

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import * as Yup from 'yup'
 import { schools } from '@/lib/data'
+import uploadHelper from 'lew-ui/docs/docs/upload/uploadHelper'
 
 const schoolsOptions = schools.map((e, i) => {
   return { label: e, value: i + 1 }
@@ -35,10 +36,13 @@ const options = ref([
     label: '上传',
     as: 'upload',
     required: true,
-    rule: Yup.array().min(2, '至少两个').required('此项必填'),
+    rule: Yup.array().min(3, '至少3个').required('此项必填'),
     props: {
-      showCount: true,
-      maxLength: 30
+      uploadHelper,
+      multiple: true,
+      limit: 3,
+      accept: 'image/jpeg,image/png',
+      tips: '只能上传jpg/png文件，且不超过500kb，最多上传3个文件'
     }
   },
   {
@@ -51,6 +55,14 @@ const options = ref([
       showCount: true,
       maxLength: 30
     }
+  },
+  {
+    field: 'input-number',
+    label: '数字输入框',
+    as: 'input-number',
+    required: true,
+    rule: Yup.number().required('不能为空').typeError('请输入数字'),
+    props: {}
   },
   {
     field: 'textarea',

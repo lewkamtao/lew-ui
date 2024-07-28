@@ -142,6 +142,24 @@ export const inputProps = {
     type: Boolean,
     default: false,
     description: '是否按回车键确认'
+  },
+  step: {
+    type: Number,
+    default: 0.01,
+    description: '允许小数值，步长默认为 1',
+    hidden: true
+  },
+  min: {
+    type: Number,
+    default: 0,
+    description: '最小值',
+    hidden: true
+  },
+  max: {
+    type: Number,
+    default: 100,
+    description: '最大值',
+    hidden: true
   }
 }
 export type InputProps = ExtractPropTypes<typeof inputProps>

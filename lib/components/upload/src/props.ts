@@ -1,5 +1,5 @@
 import type { ExtractPropTypes } from 'vue'
-
+import type { FormSize } from 'lew-ui'
 export type UploadStatus =
   | 'success'
   | 'fail'
@@ -11,7 +11,7 @@ export type UploadStatus =
 
 export type UploadFileItem = {
   id: string
-  name: string
+  name?: string
   url?: string
   status?: UploadStatus
   percent?: number
@@ -24,19 +24,19 @@ export type UploadFileItem = {
 
 export const uploadProps = {
   size: {
-    type: String,
+    type: String as PropType<FormSize>,
     default: 'medium',
     description: '尺寸'
   },
   accept: {
     type: String,
-    default: 'image/*',
+    default: '',
     description: '接受上传的文件类型'
   },
-  maxSize: {
+  maxFileSize: {
     type: Number,
     default: 1024 * 1024 * 10,
-    description: '最大上传大小'
+    description: '最大上传文件大小'
   },
   disabled: {
     type: Boolean,
@@ -68,10 +68,10 @@ export const uploadProps = {
     default: 'list', // list card
     description: '列表类型'
   },
-  uploadHandle: {
-    type: Function,
-    default: () => {},
-    description: '上传文件的处理函数'
+  uploadHelper: {
+    type: Function || undefined,
+    default: `(fileItem,setFileItem) => void`,
+    description: '上传文件的处理方法'
   }
 }
 

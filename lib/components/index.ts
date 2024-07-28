@@ -11,6 +11,7 @@ export * from './dropdown'
 export * from './steps'
 
 export * from './input'
+export * from './input-number'
 export * from './textarea'
 export * from './input-tag'
 

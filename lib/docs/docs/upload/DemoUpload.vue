@@ -26,7 +26,7 @@ const options = ref(
     <lew-demo-box title="常规" :code="DemoUpload1Code">
       <demo-upload1 />
     </lew-demo-box>
-    <lew-demo-box title="自定义上传" :code="DemoUpload2Code">
+    <lew-demo-box title="限制格式和大小" :code="DemoUpload2Code">
       <demo-upload2 />
     </lew-demo-box>
     <lew-demo-box title="上传图片" :code="DemoUpload3Code">

@@ -178,7 +178,7 @@ export const getAssetsFile = ({ name, type }: { name: string; type: string }) =>
   return new URL(`../assets/${type}/${name}`, import.meta.url).href
 }
 
-export const getFileIcon = (fileName: string) => {
+export const getFileIcon = (fileName: string = '') => {
   // 根据文件名 判断后缀名
   const suffix = fileName.split('.').pop()
   switch (suffix) {

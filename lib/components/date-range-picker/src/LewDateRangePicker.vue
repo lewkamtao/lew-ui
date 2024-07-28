@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { LewPopover, LewIcon, LewDateRange, LewTooltip } from 'lew-ui'
+import type { DatePickerSize } from 'lew-ui'
 import { dateRangePickerProps } from './props'
-import type { DatePickerSize } from './props'
 import { object2class } from 'lew-ui/utils'
 
 // 获取app

@@ -1,2 +1,2 @@
-export { default as LewFlex } from './src/LewFlex.vue'
+export { default as LewInputNumber } from './src/LewInputNumber.vue'
 export * from './src/props'

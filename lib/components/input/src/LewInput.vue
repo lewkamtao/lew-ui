@@ -38,7 +38,7 @@ watch(
   }
 )
 
-const updateValue = () => {
+const inputFn = (e: any) => {
   if (
     props.maxLength &&
     props.renderCount(modelValue.value) >= Number(props.maxLength) &&
@@ -46,15 +46,7 @@ const updateValue = () => {
   ) {
     modelValue.value = cloneDeep(modelValue.value.slice(0, Number(props.maxLength)))
   }
-}
-
-let isFirst = true
-const inputFn = (e: any) => {
-  updateValue()
-  if (!isFirst) {
-    emit('input', modelValue.value, e)
-  }
-  isFirst = false
+  emit('input', modelValue.value, e)
 }
 
 const clear = (): void => {
@@ -114,8 +106,13 @@ const getInputStyle = computed(() => {
     medium: 30 + countWidth,
     large: 30 + countWidth
   }
+  const wMap2: Record<string, number> = {
+    small: 14,
+    medium: 16,
+    large: 20
+  }
   return {
-    width: `calc(100% - ${clearable ? wMap[size] : 0}px)`
+    width: `calc(100% - ${clearable ? wMap[size] : wMap2[size]}px)`
   }
 })
 
@@ -264,6 +261,9 @@ defineExpose({ toFocus })
         :type="getType"
         :readonly="readonly"
         onkeypress="if(window.event.keyCode==13) this.blur()"
+        :min="min"
+        :max="max"
+        :step="step"
         @input="inputFn"
         @change="changeFn"
         @blur="blur"
@@ -441,10 +441,11 @@ defineExpose({ toFocus })
     color: var(--lew-text-color-1);
     outline: none;
     box-sizing: border-box;
+    overflow: hidden;
   }
 
-  .lew-input {
-    overflow: hidden;
+  .lew-input:invalid {
+    text-decoration: line-through;
   }
 
   .lew-input::placeholder {
@@ -519,7 +520,7 @@ defineExpose({ toFocus })
   .lew-input-auto-width {
     width: auto;
     min-width: 45px;
-    height: 100%;
+    height: 1px;
     visibility: hidden;
     box-sizing: border-box;
   }
@@ -570,7 +571,6 @@ defineExpose({ toFocus })
   }
 
   .lew-input-auto-width {
-    height: var(--lew-form-item-height-small);
     font-size: var(--lew-form-font-size-small);
     line-height: var(--lew-form-input-line-height-small);
   }
@@ -620,7 +620,6 @@ defineExpose({ toFocus })
   }
 
   .lew-input-auto-width {
-    height: var(--lew-form-item-height-medium);
     font-size: var(--lew-form-font-size-medium);
     line-height: var(--lew-form-input-line-height-medium);
   }
@@ -669,7 +668,6 @@ defineExpose({ toFocus })
   }
 
   .lew-input-auto-width {
-    height: var(--lew-form-item-height-large);
     font-size: var(--lew-form-font-size-large);
     line-height: var(--lew-form-input-line-height-large);
   }
