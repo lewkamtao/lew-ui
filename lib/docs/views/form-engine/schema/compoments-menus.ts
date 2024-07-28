@@ -15,24 +15,24 @@ export const componentsMenusSchema = [
     as: 'input-number',
     props: {}
   },
-  {
-    label: '滑块',
-    fieldType: '',
-    as: 'slider',
-    props: {
-      showCount: true,
-      maxLength: 30
-    }
-  },
-  {
-    label: '范围滑块',
-    fieldType: [],
-    as: 'slider-range',
-    props: {
-      showCount: true,
-      maxLength: 30
-    }
-  },
+//   {
+//     label: '滑块',
+//     fieldType: '',
+//     as: 'slider',
+//     props: {
+//       showCount: true,
+//       maxLength: 30
+//     }
+//   },
+//   {
+//     label: '范围滑块',
+//     fieldType: [],
+//     as: 'slider-range',
+//     props: {
+//       showCount: true,
+//       maxLength: 30
+//     }
+//   },
   {
     label: '文本域',
     fieldType: '',
@@ -332,7 +332,7 @@ export const componentsMenusSchema = [
   },
   {
     label: '上传',
-    fieldType: false,
+    fieldType: [],
     as: 'upload',
     props: {}
   }

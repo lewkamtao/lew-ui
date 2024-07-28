@@ -43,7 +43,7 @@ const { push } = useRouter()
     <lew-demo-box title="支持网格布局" :code="DemoForm4Code">
       <demo-form4 />
     </lew-demo-box>
-    <lew-demo-box title="支持在线配置 Bata" :code="DemoForm5Code">
+    <lew-demo-box title="支持在线配置" :code="DemoForm5Code">
       <template #desc>
         <div>
           你可以通过

@@ -170,6 +170,20 @@ const preview = () => {
     previewModalRef.value && previewModalRef.value.open(model)
   }
 }
+
+const isInfo = localStorage.getItem('isAlertByFormEngine')
+if (!isInfo) {
+  LewDialog.warning({
+    title: '温馨提示',
+    content:
+      '当前表单引擎仍处于开发测试状态，请勿用于生产环境，当前配置项仍未完善，持续更新中，敬请期待。',
+    cancelText: '',
+    okText: '知道了',
+    ok: () => {
+      localStorage.setItem('isAlertByFormEngine', '1')
+    }
+  })
+}
 </script>
 
 <template>

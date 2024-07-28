@@ -302,10 +302,10 @@ const getTips = computed(() => {
       tips.push(`支持 ${accept}`)
     }
     if (limit) {
-      tips.push(`至多上传 ${limit} 个文件`)
+      tips.push(`最多上传 ${limit} 个文件`)
     }
     if (maxFileSize) {
-      tips.push(`文件大小不能超过 ${formatBytes(maxFileSize)}`)
+      tips.push(`文件大小限制 ${formatBytes(maxFileSize)}`)
     }
     return tips.join('，') + '。'
   }
@@ -545,7 +545,6 @@ const getTips = computed(() => {
     }
     .lew-upload-input {
       position: fixed;
-      left: -100vw;
       opacity: 0;
       z-index: -99;
     }
