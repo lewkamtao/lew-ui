@@ -3,9 +3,11 @@ import {
   DemoUpload1,
   DemoUpload2,
   DemoUpload3,
+  DemoUpload4,
   DemoUpload1Code,
   DemoUpload2Code,
-  DemoUpload3Code
+  DemoUpload3Code,
+  DemoUpload4Code
 } from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
@@ -31,6 +33,9 @@ const options = ref(
     </lew-demo-box>
     <lew-demo-box title="上传图片" :code="DemoUpload3Code">
       <demo-upload3 />
+    </lew-demo-box>
+    <lew-demo-box title="自定义tips" :code="DemoUpload4Code">
+      <demo-upload4 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>

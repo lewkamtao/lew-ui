@@ -127,7 +127,9 @@ const options: MenuOptions[] = [
       },
       {
         label: 'InputNumber',
-        value: '/InputNumber'
+        value: '/InputNumber',
+        tagText: 'Beta',
+        tagColor: 'red'
       },
       {
         label: 'Textarea',
@@ -191,7 +193,9 @@ const options: MenuOptions[] = [
 
       {
         label: 'Upload',
-        value: '/Upload'
+        value: '/Upload',
+        tagText: 'Beta',
+        tagColor: 'red'
       }
     ]
   },
