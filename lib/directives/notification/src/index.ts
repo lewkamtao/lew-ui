@@ -122,11 +122,20 @@ const add = (type: string, title: string, content: string, delay: number) => {
   }, 10)
 }
 
-export default {
+export const LewNotification = {
   name: 'LewNotification',
   warning,
   info,
   normal,
   success,
   error
-} as NotificationInstance
+}
+
+export type LewNotification = {
+  name: string
+  warning: NotificationFn
+  info: NotificationFn
+  normal: NotificationFn
+  success: NotificationFn
+  error: NotificationFn
+}

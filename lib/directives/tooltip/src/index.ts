@@ -1,7 +1,7 @@
 import tippy, { roundArrow } from 'tippy.js'
 import type { App as Application, DirectiveBinding } from 'vue'
 
-export default {
+export const LewTooltip = {
   install(app: Application) {
     app.directive('tooltip', {
       mounted(el: any, binding: DirectiveBinding) {

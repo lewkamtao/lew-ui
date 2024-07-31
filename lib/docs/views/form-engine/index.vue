@@ -3,6 +3,7 @@ import draggable from 'vuedraggable'
 import dayjs from 'dayjs'
 import PreviewModal from './components/PreviewModal.vue'
 import { formatFormByMap } from 'lew-ui/utils'
+import { getUniqueId } from 'lew-ui/utils'
 import { downloadObjectAsFile, getComponentIcon } from 'lew-ui/docs/lib/utils'
 import { useDark } from '@vueuse/core'
 import SetForm from './components/SetForm.vue'
@@ -16,7 +17,7 @@ import {
   componentsMenusSchema
 } from './schema'
 import LewGetLabelWidth from 'lew-ui/components/form/src/LewGetLabelWidth.vue'
-import { debounce, cloneDeep, has } from 'lodash'
+import { debounce, cloneDeep, has } from 'lodash-es'
 
 const schemaMap: Record<string, any> = {
   global: globalSchema,
@@ -75,21 +76,17 @@ const colOptions = ref([
   { label: '四栏', value: 4 }
 ])
 
-const generateId = () => {
-  return Math.random().toString(36).substring(2, 9)
-}
-
 const cloneDog = (item: any) => {
   return {
     ...item,
-    id: `${item.as}_${dayjs().format('YYYYMMDD')}_${generateId()}`,
+    id: `${item.as}_${dayjs().format('YYYYMMDD')}_${getUniqueId()}`,
     spanMap: {
       1: 1,
       2: 1,
       3: 1,
       4: 1
     },
-    field: `${generateId()}`
+    field: `${getUniqueId()}`
   }
 }
 
@@ -129,7 +126,7 @@ const getModel = () => {
     ...formGlobal.value,
     columns: formGlobal.value.columns,
     width: formWidth.value,
-    id: `form_${dayjs().format('YYYYMMDD')}_${generateId()}`,
+    id: `form_${dayjs().format('YYYYMMDD')}_${getUniqueId()}`,
     options: _options
   }
   return componentModel
@@ -189,7 +186,23 @@ if (!isInfo) {
 <template>
   <div class="playground">
     <LewGetLabelWidth ref="formLabelRef" :size="formGlobal.size" :options="options" />
-    <div class="lew-form-component lew-scrollbar">
+    <div
+      v-contextmenu="{
+        id: 321,
+        menu: [
+          {
+            name: 'test1',
+            id: 1,
+            childrens: [
+              { name: 'test3', id: 3 },
+              { name: 'test4', id: 4 }
+            ]
+          },
+          { name: 'test2', id: 2 }
+        ]
+      }"
+      class="lew-form-component lew-scrollbar"
+    >
       <draggable
         :group="{ name: 'form', pull: 'clone', put: false }"
         :sort="false"
@@ -203,7 +216,25 @@ if (!isInfo) {
         }"
       >
         <template #item="{ element }">
-          <lew-flex direction="y" gap="5" class="lew-form-component-box">
+          <lew-flex
+            direction="y"
+            gap="5"
+            v-contextmenu="{
+              id: 123,
+              menu: [
+                {
+                  name: 'test1',
+                  id: 1,
+                  childrens: [
+                    { name: 'test3', id: 3 },
+                    { name: 'test4', id: 4 }
+                  ]
+                },
+                { name: 'test2', id: 2 }
+              ]
+            }"
+            class="lew-form-component-box"
+          >
             <img :src="getComponentIcon(element.as || 'blank')" alt="" srcset="" />
             {{ element.label }}
           </lew-flex>
@@ -213,6 +244,20 @@ if (!isInfo) {
     <div class="lew-form-wrapper" @click="(settingTab = 'options'), (activedId = '')">
       <lew-flex x="center" y="center" class="lew-form-select-columns">
         <lew-tabs
+          v-contextmenu="{
+            id: 1132131,
+            menu: [
+              {
+                name: 'test1',
+                id: 1,
+                childrens: [
+                  { name: 'test3', id: 3 },
+                  { name: 'test4', id: 4 }
+                ]
+              },
+              { name: 'test2', id: 2 }
+            ]
+          }"
           width="320px"
           item-width="auto"
           :options="colOptions"

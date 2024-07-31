@@ -3,7 +3,7 @@ import { object2class } from 'lew-ui/utils'
 import { LewPopover, LewIcon, LewDate, LewTooltip } from 'lew-ui'
 import { datePickerProps } from './props'
 import dayjs from 'dayjs'
-import { cloneDeep } from 'lodash'
+import { cloneDeep } from 'lodash-es'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app

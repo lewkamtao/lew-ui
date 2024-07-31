@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { cloneDeep, isFunction } from 'lodash'
+import { cloneDeep, isFunction } from 'lodash-es'
 import { uploadProps } from './props'
 import type { UploadFileItem, UploadStatus } from './props'
-import { any2px, getUUId, formatBytes, getFileIcon, object2class } from 'lew-ui/utils'
+import { any2px, getUniqueId, formatBytes, getFileIcon, object2class } from 'lew-ui/utils'
 import { useClipboardItems } from '@vueuse/core'
 const { isSupported } = useClipboardItems({ read: true })
 const tipFontSizeMap: Record<string, number> = {
@@ -107,7 +107,7 @@ const addImageToList = (files: any) => {
       status = 'wrong_size'
     }
     const fileItem = {
-      id: getUUId(),
+      id: getUniqueId(),
       status,
       size,
       type,
@@ -231,7 +231,7 @@ onMounted(() => {
 const setFileItem = (item: UploadFileItem) => {
   const { id, percent } = item
   let fileList = cloneDeep(modelValue.value) || []
-  const index = (fileList || []).findIndex((e) => e.id === id)
+  const index = (fileList || []).findIndex((e: UploadFileItem) => e.id === id)
   let _percent = percent || 0
   if (index >= 0) {
     if (percent) {
@@ -248,7 +248,7 @@ const setFileItem = (item: UploadFileItem) => {
 
 const deleteFile = (id: string) => {
   let fileList = cloneDeep(modelValue.value) || []
-  const index = (fileList || []).findIndex((e) => e.id === id)
+  const index = (fileList || []).findIndex((e: UploadFileItem) => e.id === id)
   if (index >= 0) {
     const { status } = fileList[index]
     if (['wrong_type', 'wrong_size'].includes(status || '')) {

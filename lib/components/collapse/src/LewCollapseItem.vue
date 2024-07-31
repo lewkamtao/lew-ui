@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { collapseItemProps } from './props'
 import LewCollapseTransition from './LewCollapseTransition.vue'
-import { isArray } from 'lodash'
+import { isArray } from 'lodash-es'
 const props = defineProps(collapseItemProps)
 const modelValue = defineModel()
 

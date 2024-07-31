@@ -38,12 +38,49 @@ const companies = [
       "Tesla, Inc. is an American electric vehicle and clean energy company founded by Elon Musk, Martin Eberhard, Marc Tarpenning, JB Straubel, and Ian Wright in 2003. Tesla is known for its electric vehicles, energy storage solutions, and solar products, aiming to accelerate the world's transition to sustainable energy."
   }
 ]
+const index = ref(1)
+setInterval(() => {
+  index.value = index.value + 1
+}, 1000)
 </script>
 
 <template>
   <lew-collapse width="400" v-model="value">
-    <lew-collapse-item :title="item.name" :collapse-key="item.id" v-for="item in companies">
-      <div>
+    <lew-collapse-item
+      v-contextmenu="{
+        id: index,
+        menu: [
+          {
+            name: 'test1',
+            id: 1,
+            childrens: [
+              { name: 'test3', id: 3 },
+              { name: 'test4', id: 4 }
+            ]
+          },
+          { name: 'test2', id: 2 }
+        ]
+      }"
+      :title="item.name"
+      :collapse-key="item.id"
+      v-for="item in companies"
+    >
+      <div
+        v-contextmenu="{
+          id: index,
+          menu: [
+            {
+              name: 'name1',
+              id: 1,
+              childrens: [
+                { name: 'name1', id: 3 },
+                { name: 'name1', id: 4 }
+              ]
+            },
+            { name: 'name1', id: 2 }
+          ]
+        }"
+      >
         {{ item.description }}
       </div>
     </lew-collapse-item>

@@ -6,9 +6,15 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+import { LewNotification, LewDialog, LewMessage, LewContextmenu } from '../directives'
 
 declare module 'highlight.js'
 declare const hljs
-declare module 'lodash-es'
 declare module '@vueuse/core'
 declare module '@vueuse/components'
+declare interface Window {
+  LewContextmenu: LewContextmenu
+  LewNotification: LewNotification
+  LewDialog: LewDialog
+  LewMessage: LewMessage
+}

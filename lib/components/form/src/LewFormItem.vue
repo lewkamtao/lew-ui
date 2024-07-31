@@ -19,7 +19,7 @@ import {
   LewUpload,
   LewInputNumber
 } from 'lew-ui'
-import { debounce, cloneDeep } from 'lodash'
+import { debounce, cloneDeep } from 'lodash-es'
 
 import { formItemProps, requiredIconSizeMap } from './props'
 

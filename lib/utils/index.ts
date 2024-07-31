@@ -90,12 +90,6 @@ export const any2px = (value: number | string | undefined): string => {
   return ''
 }
 
-/** @func 生成uid */
-let uid = 1
-export function genUid(): number {
-  return Date.now() + uid++
-}
-
 export const lewSetForm = ({
   formRef,
   params
@@ -117,14 +111,11 @@ export const lewSetForm = ({
   _fn()
 }
 
-export const getUUId = () => {
+export const getUniqueId = () => {
   // 生成一个随机字符串作为UUID的前缀
-  const randomString =
-    Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-
+  const randomString = Math.random().toString(16).substring(2, 8)
   // 使用Lodash的uniqueId()方法生成UUID
-  const uuid = uniqueId(randomString)
-  return uuid
+  return uniqueId(randomString)
 }
 
 export const getStatusIcon = (type: string) => {
