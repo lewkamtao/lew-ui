@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { LewFlex } from 'lew-ui/components'
+import { LewFlex, LewIcon } from 'lew-ui/components'
+import tippy from 'tippy.js'
+import LewContextMenu from './LewContextMenu.vue'
 interface ContextMenus {
   label: string
   icon: string
@@ -10,7 +12,7 @@ interface ContextMenus {
   [key: string]: any
 }
 
-defineProps({
+const props = defineProps({
   menus: {
     type: Array as PropType<ContextMenus[]>,
     default: () => []
@@ -18,20 +20,60 @@ defineProps({
 })
 
 const emit = defineEmits(['clickitem'])
-console.log(2)
 
 const clickItem = (item: ContextMenus) => {
   emit('clickitem', item)
 }
+
+let instance: any
+let itemRefs = ref<(Element | globalThis.ComponentPublicInstance | null)[]>([])
+const initTippy = () => {
+  itemRefs.value.forEach((el: any, index: number) => {
+    const item = props.menus[index]
+    if (!el || item.disabled || (item.children || []).length === 0) {
+      return
+    }
+    const menuDom = document.createElement('div')
+    createApp({
+      render() {
+        return h(LewContextMenu, {
+          menus: item.children,
+          onClickitem: (e: any) => {
+            console.log(e)
+          }
+        })
+      }
+    }).mount(menuDom)
+    instance = tippy(el, {
+      theme: 'light',
+      animation: 'shift-away-subtle',
+      trigger: 'mouseenter',
+      interactive: true,
+      placement: 'right-start',
+      duration: [250, 250],
+      arrow: false,
+      offset: [0, 0],
+      allowHTML: true,
+      hideOnClick: false,
+      content: menuDom
+    })
+    instance.popper.children[0].setAttribute('data-lew', 'popover')
+  })
+}
+
+onMounted(() => {
+  initTippy()
+})
 </script>
 
 <template>
-  <lew-flex direction="y" gap="4" class="lew-context-menu">
+  <lew-flex direction="y" gap="0" class="lew-context-menu">
     <div v-for="(item, index) in menus" :key="index" class="lew-context-menu-box">
-      <div class="lew-context-menu-item">
-        <div @click="clickItem(item)" class="lew-context-menu-label">
+      <div :ref="(el) => itemRefs.push(el)" @click="clickItem(item)" class="lew-context-menu-item">
+        <div class="lew-context-menu-label">
           {{ item.label }}
         </div>
+        <lew-icon v-if="(item.children || []).length > 0" size="14" type="chevron-right"></lew-icon>
       </div>
     </div>
   </lew-flex>
@@ -44,6 +86,9 @@ const clickItem = (item: ContextMenus) => {
   box-sizing: border-box;
 
   .lew-context-menu-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     box-sizing: border-box;
     transition: all 0.25s ease;
     width: 100%;
@@ -52,6 +97,7 @@ const clickItem = (item: ContextMenus) => {
       position: relative;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       width: 100%;
       font-size: 14px;
       overflow: hidden;
@@ -61,17 +107,22 @@ const clickItem = (item: ContextMenus) => {
       color: var(--lew-text-color-1);
       box-sizing: border-box;
       border-radius: var(--lew-border-radius-small);
-      height: 34px;
+      padding: 0px 5px;
       .lew-context-menu-label {
         width: 100%;
         user-select: none;
         font-size: 14px;
-        padding: 0px 12px;
         height: 30px;
+        padding: 0px 10px 0px 5px;
         line-height: 30px;
         box-sizing: border-box;
         cursor: pointer !important;
       }
+    }
+    .lew-context-menu-divider {
+      width: 100%;
+      height: 1px;
+      background-color: var(--lew-bgcolor-2);
     }
 
     .lew-context-menu-item-disabled {

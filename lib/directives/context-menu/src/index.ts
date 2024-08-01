@@ -48,7 +48,6 @@ export const LewContextMenu = {
                   menus,
                   onClickitem: (e: any) => {
                     console.log(e)
-                    instance.hide()
                   }
                 })
               }
