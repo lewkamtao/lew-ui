@@ -186,23 +186,7 @@ if (!isInfo) {
 <template>
   <div class="playground">
     <LewGetLabelWidth ref="formLabelRef" :size="formGlobal.size" :options="options" />
-    <div
-      v-contextmenu="{
-        id: 321,
-        menu: [
-          {
-            name: 'test1',
-            id: 1,
-            childrens: [
-              { name: 'test3', id: 3 },
-              { name: 'test4', id: 4 }
-            ]
-          },
-          { name: 'test2', id: 2 }
-        ]
-      }"
-      class="lew-form-component lew-scrollbar"
-    >
+    <div class="lew-form-component lew-scrollbar">
       <draggable
         :group="{ name: 'form', pull: 'clone', put: false }"
         :sort="false"
@@ -216,25 +200,7 @@ if (!isInfo) {
         }"
       >
         <template #item="{ element }">
-          <lew-flex
-            direction="y"
-            gap="5"
-            v-contextmenu="{
-              id: 123,
-              menu: [
-                {
-                  name: 'test1',
-                  id: 1,
-                  childrens: [
-                    { name: 'test3', id: 3 },
-                    { name: 'test4', id: 4 }
-                  ]
-                },
-                { name: 'test2', id: 2 }
-              ]
-            }"
-            class="lew-form-component-box"
-          >
+          <lew-flex direction="y" gap="5" class="lew-form-component-box">
             <img :src="getComponentIcon(element.as || 'blank')" alt="" srcset="" />
             {{ element.label }}
           </lew-flex>
@@ -244,20 +210,6 @@ if (!isInfo) {
     <div class="lew-form-wrapper" @click="(settingTab = 'options'), (activedId = '')">
       <lew-flex x="center" y="center" class="lew-form-select-columns">
         <lew-tabs
-          v-contextmenu="{
-            id: 1132131,
-            menu: [
-              {
-                name: 'test1',
-                id: 1,
-                childrens: [
-                  { name: 'test3', id: 3 },
-                  { name: 'test4', id: 4 }
-                ]
-              },
-              { name: 'test2', id: 2 }
-            ]
-          }"
           width="320px"
           item-width="auto"
           :options="colOptions"

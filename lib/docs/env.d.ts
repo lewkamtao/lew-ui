@@ -16,7 +16,7 @@ declare module 'lodash-es'
 declare const LewNotification: (typeof import('../directives'))['LewNotification']
 
 declare interface Window {
-  LewContextmenu: LewContextmenu
+  LewContextMenu: LewContextMenu
   LewNotification: LewNotification
   LewDialog: LewDialog
   LewMessage: LewMessage
