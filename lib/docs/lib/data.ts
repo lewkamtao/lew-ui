@@ -1,10 +1,12 @@
-export const cityTree = [
+export const contextMenuCityTree = [
   {
     value: 1,
     label: 'Asia',
+    icon: 'edit',
     children: [
       {
         value: 2,
+        disabled: true,
         label: 'China',
         children: [
           { value: 3, label: 'Beijing' },
@@ -15,9 +17,126 @@ export const cityTree = [
       {
         value: 6,
         label: 'Japan',
+        disabled: true,
         children: [
           { value: 7, label: 'Tokyo' },
           { value: 8, label: 'Osaka' },
+          { value: 9, label: 'Kyoto' }
+        ]
+      },
+      {
+        value: 10,
+        label: 'Korea',
+        children: [
+          { value: 11, disabled: true, label: 'Seoul' },
+          { value: 12, disabled: true, label: 'Busan' },
+          { value: 13, label: 'Taegu' }
+        ]
+      }
+    ]
+  },
+  {
+    value: 14,
+    label: 'Europe',
+    icon: 'aperture',
+    children: [
+      {
+        value: 15,
+        label: 'France',
+        children: [
+          { value: 16, label: 'Paris' },
+          { value: 17, label: 'Marseille' },
+          { value: 18, label: 'Lyon' }
+        ]
+      },
+      {
+        value: 19,
+        label: 'UK',
+        disabled: true,
+        children: [
+          { value: 20, label: 'London' },
+          { value: 21, disabled: true, label: 'Birmingham' },
+          { value: 22, label: 'Manchester' }
+        ]
+      }
+    ]
+  },
+  {
+    isDividerLine: true
+  },
+  {
+    value: 1223,
+    label: 'Nort12h America',
+    icon: 'share-2',
+    children: [
+      {
+        value: 24,
+        label: 'US',
+        children: [
+          { value: 25, label: 'New York' },
+          { value: 26, label: 'Los Angeles' },
+          { value: 27, label: 'Washington' }
+        ]
+      },
+      {
+        value: 28,
+        disabled: true,
+        label: 'Canada',
+        children: [
+          { value: 29, label: 'Toronto' },
+          { value: 30, disabled: true, label: 'Montreal' },
+          { value: 31, label: 'Ottawa' }
+        ]
+      }
+    ]
+  },
+  {
+    value: 23,
+    label: 'North America',
+    icon: 'user-plus',
+    children: [
+      {
+        value: 24,
+        label: 'US',
+        children: [
+          { value: 25, label: 'New York' },
+          { value: 26, label: 'Los Angeles' },
+          { value: 27, label: 'Washington' }
+        ]
+      },
+      {
+        value: 28,
+        label: 'Canada',
+        children: [
+          { value: 29, label: 'Toronto' },
+          { value: 30, label: 'Montreal' },
+          { value: 31, label: 'Ottawa' }
+        ]
+      }
+    ]
+  }
+]
+
+export const cityTree = [
+  {
+    value: 1,
+    label: 'Asia',
+    children: [
+      {
+        value: 2,
+        label: 'China',
+        children: [
+          { value: 3, label: 'Beijing' },
+          { value: 4, disabled: true, label: 'Shanghai' },
+          { value: 5, label: 'Hangzhou' }
+        ]
+      },
+      {
+        value: 6,
+        label: 'Japan',
+        children: [
+          { value: 7, label: 'Tokyo' },
+          { value: 8, disabled: true, label: 'Osaka' },
           { value: 9, label: 'Kyoto' }
         ]
       },
@@ -50,7 +169,7 @@ export const cityTree = [
         label: 'UK',
         children: [
           { value: 20, label: 'London' },
-          { value: 21, label: 'Birmingham' },
+          { value: 21, disabled: true, label: 'Birmingham' },
           { value: 22, label: 'Manchester' }
         ]
       }
@@ -74,7 +193,7 @@ export const cityTree = [
         label: 'Canada',
         children: [
           { value: 29, label: 'Toronto' },
-          { value: 30, label: 'Montreal' },
+          { value: 30, disabled: true, label: 'Montreal' },
           { value: 31, label: 'Ottawa' }
         ]
       }

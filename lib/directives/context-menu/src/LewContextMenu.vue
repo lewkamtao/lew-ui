@@ -3,12 +3,13 @@ import { LewFlex, LewIcon } from 'lew-ui/components'
 import tippy from 'tippy.js'
 import LewContextMenu from './LewContextMenu.vue'
 interface ContextMenus {
-  label: string
-  icon: string
-  value: string
-  children: ContextMenus[]
+  label?: string
+  icon?: string
+  value?: string
+  children?: ContextMenus[]
   disabled?: boolean
   level?: number
+  isDividerLine?: false
   [key: string]: any
 }
 
@@ -68,7 +69,15 @@ onMounted(() => {
 
 <template>
   <lew-flex direction="y" gap="0" class="lew-context-menu">
-    <div v-for="(item, index) in menus" :key="index" class="lew-context-menu-box">
+    <div
+      v-for="(item, index) in menus"
+      :key="index"
+      class="lew-context-menu-box"
+      :class="{
+        'lew-context-menu-box-disabled': item.disabled,
+        'lew-context-menu-box-divider-line': item.isDividerLine
+      }"
+    >
       <div
         :ref="(el) => itemRefs.push(el)"
         @click="clickItem(item)"
@@ -76,6 +85,7 @@ onMounted(() => {
         :style="{ 'animation-delay': index * 20 + 'ms' }"
       >
         <div class="lew-context-menu-label">
+          <lew-icon v-if="item.icon" size="14" :type="item.icon"></lew-icon>
           {{ item.label }}
         </div>
         <lew-icon v-if="(item.children || []).length > 0" size="14" type="chevron-right"></lew-icon>
@@ -126,6 +136,9 @@ onMounted(() => {
         }
       }
       .lew-context-menu-label {
+        display: flex;
+        align-items: center;
+        gap: 5px;
         width: 100%;
         user-select: none;
         font-size: 14px;
@@ -135,11 +148,6 @@ onMounted(() => {
         box-sizing: border-box;
         cursor: pointer !important;
       }
-    }
-    .lew-context-menu-divider {
-      width: 100%;
-      height: 1px;
-      background-color: var(--lew-bgcolor-2);
     }
 
     .lew-context-menu-item-disabled {
@@ -151,6 +159,28 @@ onMounted(() => {
       color: var(--lew-text-color-0);
       background-color: var(--lew-pop-bg-active);
     }
+  }
+  .lew-context-menu-box-disabled {
+    opacity: var(--lew-disabled-opacity);
+    pointer-events: none;
+  }
+
+  .lew-context-menu-box-divider-line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 12px;
+    overflow: hidden;
+    .lew-context-menu-item {
+      display: none;
+    }
+  }
+  .lew-context-menu-box-divider-line::after {
+    content: '';
+    width: calc(100% - 20px);
+    height: 1px;
+    background-color: var(--lew-bgcolor-2);
   }
 }
 </style>

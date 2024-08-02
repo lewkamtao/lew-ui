@@ -36,9 +36,9 @@ export const LewContextMenu = {
 
         if (!window.LewContextMenu.contextMenu) {
           window.LewContextMenu.contextMenu = (e: any) => {
-            e.preventDefault()
             const _id = findContextMenuId(e.target)
             if (!_id) return
+            e.preventDefault()
             const menus = window.LewContextMenu.menu[_id]
             const { instance } = window.LewContextMenu
             const menuDom = document.createElement('div')
