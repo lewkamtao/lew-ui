@@ -80,6 +80,8 @@ const getRadioClassName = computed(() => {
       transition: var(--lew-form-transition);
       opacity: 0;
       color: var(--lew-color-white);
+      width: 100%;
+      height: 100%;
     }
   }
 
@@ -197,7 +199,7 @@ const getRadioClassName = computed(() => {
     background: var(--lew-radio-color);
 
     .icon-radio {
-      transform: translate(-50%, -50%) scale(1);
+      transform: translate(-50%, -50%) scale(0.8);
       opacity: 1;
     }
   }
