@@ -69,7 +69,12 @@ onMounted(() => {
 <template>
   <lew-flex direction="y" gap="0" class="lew-context-menu">
     <div v-for="(item, index) in menus" :key="index" class="lew-context-menu-box">
-      <div :ref="(el) => itemRefs.push(el)" @click="clickItem(item)" class="lew-context-menu-item">
+      <div
+        :ref="(el) => itemRefs.push(el)"
+        @click="clickItem(item)"
+        class="lew-context-menu-item"
+        :style="{ 'animation-delay': index * 20 + 'ms' }"
+      >
         <div class="lew-context-menu-label">
           {{ item.label }}
         </div>
@@ -108,6 +113,18 @@ onMounted(() => {
       box-sizing: border-box;
       border-radius: var(--lew-border-radius-small);
       padding: 0px 5px;
+      animation: enterAni 0.2s ease forwards;
+      opacity: 0;
+      @keyframes enterAni {
+        0% {
+          transform: translateX(-10px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateX(0px);
+          opacity: 1;
+        }
+      }
       .lew-context-menu-label {
         width: 100%;
         user-select: none;

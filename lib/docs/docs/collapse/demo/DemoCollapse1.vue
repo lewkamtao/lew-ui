@@ -48,7 +48,7 @@ setInterval(() => {
 <template>
   <lew-collapse width="400" v-model="value">
     <lew-collapse-item
-      v-context-menu="{ menus: cityTree }"
+      v-context-menu="{ menus: [...cityTree,...cityTree] }"
       :title="item.name"
       :collapse-key="item.id"
       v-for="item in companies"
