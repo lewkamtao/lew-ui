@@ -26,7 +26,7 @@ const init = () => {
     instance = null
   }
   let isEllipsis = false
-  const { placement, allowHtml, text, offset }: any = props
+  const { placement, allowHTML, text, offset }: any = props
 
   if (props.lineClamp) {
     isEllipsis = element.offsetHeight < element.scrollHeight
@@ -45,7 +45,7 @@ const init = () => {
       appendTo: () => document.body,
       placement,
       offset,
-      allowHTML: allowHtml,
+      allowHTML: allowHTML,
       arrow: roundArrow,
       maxWidth: 250
     })
@@ -59,7 +59,7 @@ watchDebounced(
   watchOptions
 )
 watchDebounced(
-  () => props.allowHtml,
+  () => props.allowHTML,
   () => init(),
   watchOptions
 )
@@ -69,7 +69,7 @@ watchDebounced(
   watchOptions
 )
 watchDebounced(
-  () => props.allowHtml,
+  () => props.allowHTML,
   () => init(),
   watchOptions
 )

@@ -39,6 +39,7 @@ const initTippy = () => {
       interactive: true,
       placement: 'right-start',
       duration: [250, 250],
+      delay: [250, 250],
       arrow: false,
       offset: [0, 0],
       allowHTML: true,

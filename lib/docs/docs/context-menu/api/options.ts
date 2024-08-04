@@ -21,14 +21,12 @@ export default {
       type: 'string',
       default: 'default'
     },
-
     {
       name: 'icon',
       description: '图标',
       type: 'string',
       default: '-'
     },
-
     {
       name: 'children',
       description: '子节点集合',

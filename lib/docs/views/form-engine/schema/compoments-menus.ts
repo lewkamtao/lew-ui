@@ -7,7 +7,10 @@ export const componentsMenusSchema = [
     label: '输入框',
     fieldType: '',
     as: 'input',
-    props: {}
+    props: {
+      type: 'text',
+      align: 'left'
+    }
   },
   {
     label: '数字输入',
@@ -15,24 +18,24 @@ export const componentsMenusSchema = [
     as: 'input-number',
     props: {}
   },
-//   {
-//     label: '滑块',
-//     fieldType: '',
-//     as: 'slider',
-//     props: {
-//       showCount: true,
-//       maxLength: 30
-//     }
-//   },
-//   {
-//     label: '范围滑块',
-//     fieldType: [],
-//     as: 'slider-range',
-//     props: {
-//       showCount: true,
-//       maxLength: 30
-//     }
-//   },
+  //   {
+  //     label: '滑块',
+  //     fieldType: '',
+  //     as: 'slider',
+  //     props: {
+  //       showCount: true,
+  //       maxLength: 30
+  //     }
+  //   },
+  //   {
+  //     label: '范围滑块',
+  //     fieldType: [],
+  //     as: 'slider-range',
+  //     props: {
+  //       showCount: true,
+  //       maxLength: 30
+  //     }
+  //   },
   {
     label: '文本域',
     fieldType: '',

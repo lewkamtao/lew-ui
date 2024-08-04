@@ -142,7 +142,7 @@ const getSelectedKeys = () => {
           content: row.actors.join(' <br /> '),
           placement: 'left',
           trigger: 'mouseenter',
-          allowHtml: true
+          allowHTML: true
         }"
         x="start"
         gap="5"

@@ -31,7 +31,7 @@ export const inputNumberProps = {
   },
   selectByFocus: {
     type: Boolean,
-    default: false,
+    default: true,
     description: '是否聚焦选中文本'
   },
   align: {
@@ -63,10 +63,10 @@ export const inputNumberProps = {
     default: false,
     description: '是否只读'
   },
-  minWidth: {
+  width: {
     type: [Number, String],
-    default: '120px',
-    description: '最小宽度'
+    default: '150px',
+    description: '宽度'
   }
 }
 

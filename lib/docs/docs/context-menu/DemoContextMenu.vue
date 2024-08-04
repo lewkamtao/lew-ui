@@ -31,10 +31,10 @@ const options = ref(
     <lew-demo-box title="支持多级嵌套" :code="DemoContextMenu2Code">
       <demo-context-menu2 />
     </lew-demo-box>
-    <lew-demo-box v-if="false" title="分割线" :code="DemoContextMenu3Code">
+    <lew-demo-box title="支持动态更新" :code="DemoContextMenu3Code">
       <demo-context-menu3 />
     </lew-demo-box>
-    <lew-demo-box v-if="false" title="支持LewIcon" :code="DemoContextMenu4Code">
+    <lew-demo-box title="空状态" :code="DemoContextMenu4Code">
       <demo-context-menu4 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />

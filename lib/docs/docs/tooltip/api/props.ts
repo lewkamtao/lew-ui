@@ -21,7 +21,7 @@ export default {
       default: 'hover'
     },
     {
-      name: 'allowHtml',
+      name: 'allowHTML',
       description: '是否支持HTML',
       type: 'boolean',
       default: 'false'

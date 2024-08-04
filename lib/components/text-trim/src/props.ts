@@ -6,7 +6,7 @@ export const textTrimProps = {
     default: '',
     description: '文本内容'
   },
-  allowHtml: {
+  allowHTML: {
     type: Boolean,
     default: false,
     description: 'HTML'

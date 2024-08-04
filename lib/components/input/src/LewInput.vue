@@ -21,10 +21,10 @@ const lewInputRef = ref()
 const isCopy = ref<boolean>(false)
 let timer: any = null
 const _type = ref(props.type)
+const isFocus = ref(false)
 const state = reactive({
   prefixesDropdown: 'hide',
-  suffixDropdown: 'hide',
-  isFocus: false
+  suffixDropdown: 'hide'
 })
 
 const lewInputCountRef = ref()
@@ -81,12 +81,12 @@ const focus = (e: any) => {
     e?.currentTarget?.select()
   }
   emit('focus')
-  state.isFocus = true
+  isFocus.value = true
 }
 
 const blur = () => {
   emit('blur', modelValue)
-  state.isFocus = false
+  isFocus.value = false
 }
 
 const getIconSize = computed(() => {
@@ -171,7 +171,7 @@ const copy = () => {
 
 if (props.okByEnter) {
   watch(enter, (v) => {
-    if (v && state.isFocus) {
+    if (v && isFocus.value) {
       ok()
     }
   })
@@ -261,9 +261,6 @@ defineExpose({ toFocus })
         :type="getType"
         :readonly="readonly"
         onkeypress="if(window.event.keyCode==13) this.blur()"
-        :min="min"
-        :max="max"
-        :step="step"
         @input="inputFn"
         @change="changeFn"
         @blur="blur"
@@ -297,7 +294,7 @@ defineExpose({ toFocus })
             v-if="clearable && modelValue && !readonly"
             class="lew-form-icon-clear"
             :class="{
-              'lew-form-icon-clear-focus': state.isFocus
+              'lew-form-icon-clear-focus': isFocus
             }"
             :style="{
               right: suffix ? '0px' : ''

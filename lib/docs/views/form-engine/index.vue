@@ -77,7 +77,7 @@ const colOptions = ref([
 ])
 
 const cloneDog = (item: any) => {
-  return {
+  return cloneDeep({
     ...item,
     id: `${item.as}_${dayjs().format('YYYYMMDD')}_${getUniqueId()}`,
     spanMap: {
@@ -87,7 +87,7 @@ const cloneDog = (item: any) => {
       4: 1
     },
     field: `${getUniqueId()}`
-  }
+  })
 }
 
 const formatFormMap = () => {
@@ -305,8 +305,8 @@ if (!isInfo) {
                   size: formGlobal.size,
                   direction: formGlobal.direction,
                   labelWidth: autoLabelWidth,
-                  readonly: true,
-                  ...element
+                  ...element,
+                  readonly: true
                 }"
               />
             </div>
@@ -335,16 +335,16 @@ if (!isInfo) {
       <div class="lew-form-options-main lew-scrollbar">
         <div v-show="settingTab === 'options'" class="lew-form-options-panel">
           <lew-flex direction="y" gap="0">
+            <lew-flex direction="y" x="start" gap="0">
+              <div class="title">全局属性</div>
+              <set-form v-model="formGlobal" :options="schemaMap.global" />
+            </lew-flex>
             <lew-flex v-if="activedId" direction="y" x="start" gap="0">
               <div class="title">表单属性</div>
               <set-form
                 v-model="options[options.findIndex((e: any) => e.id === activedId)]"
                 :options="baseSchema"
               />
-            </lew-flex>
-            <lew-flex direction="y" x="start" gap="0">
-              <div class="title">全局属性</div>
-              <set-form v-model="formGlobal" :options="schemaMap.global" />
             </lew-flex>
             <lew-flex
               v-if="
@@ -356,10 +356,14 @@ if (!isInfo) {
               x="start"
               gap="0"
             >
-              <div class="title">
-                组件属性（{{ options[options.findIndex((e: any) => e.id === activedId)].as }}）
-              </div>
+              <lew-flex class="title" mode="between">
+                <span>组件属性</span>
+                <lew-tag type="light" class="component-name">
+                  {{ options[options.findIndex((e: any) => e.id === activedId)].as }}
+                </lew-tag>
+              </lew-flex>
               <set-form
+                :key="activedId"
                 v-model="options[options.findIndex((e: any) => e.id === activedId)].props"
                 :options="schemaMap[options[options.findIndex((e: any) => e.id === activedId)].as]"
               />
@@ -476,6 +480,10 @@ if (!isInfo) {
       background-color: var(--lew-bgcolor-0);
       box-sizing: border-box;
       border: 2px dashed transparent;
+      img {
+        height: 40px;
+        width: auto;
+      }
     }
   }
   .lew-form-wrapper-draggable-item {
@@ -629,6 +637,10 @@ if (!isInfo) {
     border-top: 1px solid var(--lew-bgcolor-3);
     font-size: 14px;
     font-weight: bold;
+    .component-name {
+      font-weight: normal;
+      color: var(--lew-text-color-7);
+    }
   }
 }
 .lew-form-model {

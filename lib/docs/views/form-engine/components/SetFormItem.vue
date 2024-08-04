@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { any2px } from 'lew-ui/utils'
 import { LewInput, LewSelect, LewDatePicker, LewTabs, LewSwitch, LewTextarea } from 'lew-ui'
+import LewInputNumber from 'lew-ui/components/input-number/src/LewInputNumber.vue'
 
 const props = defineProps({
   as: {
@@ -20,6 +21,9 @@ const props = defineProps({
   },
   props: {
     type: Object
+  },
+  tips: {
+    type: String
   }
 })
 
@@ -31,15 +35,23 @@ const asMap: Record<string, any> = {
   select: LewSelect,
   'date-picker': LewDatePicker,
   tabs: LewTabs,
-  switch: LewSwitch
+  switch: LewSwitch,
+  'input-number': LewInputNumber
 }
 </script>
 
 <template>
   <div class="set-form-item">
-    <label v-if="as">
+    <lew-flex x="start" gap="5" class="set-form-item-label" v-if="as">
       {{ label || '标签' }}
-    </label>
+      <lew-icon
+        class="set-form-item-tips"
+        v-if="props?.tips"
+        size="14"
+        type="info"
+        v-tooltip="{ content: props?.tips }"
+      ></lew-icon>
+    </lew-flex>
     <div :style="{ width: any2px(props?.componentWidth) }" class="lew-form-item-main">
       <component v-model="modelValue" :is="asMap[as]" v-bind="{ ...props.props, size: 'small' }" />
     </div>
@@ -55,9 +67,12 @@ const asMap: Record<string, any> = {
   user-select: none;
   border-bottom: 1px var(--lew-form-bgcolor) solid;
   padding-bottom: 10px;
-  label {
+  .set-form-item-label {
     white-space: nowrap;
     margin-top: 7px;
+    .set-form-item-tips {
+      cursor: pointer;
+    }
   }
   .lew-form-item-main {
     width: 200px;
