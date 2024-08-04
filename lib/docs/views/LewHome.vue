@@ -392,8 +392,7 @@ const notification = (type: string) => {
             <lew-title size="24px" :bold="400"> Lew Design 24px </lew-title>
             <lew-title size="32px" :bold="600"> Lew Design 32px </lew-title>
             <lew-title size="40px" :bold="600">
-              访问量：
-              <lew-magic-number sep :value="viewTotal" :size="40" />
+              成交额： ￥<lew-magic-number sep :value="viewTotal" :size="40" />
             </lew-title>
           </lew-flex>
           <lew-flex x="end" gap="20">

@@ -199,7 +199,7 @@ const getRadioClassName = computed(() => {
     background: var(--lew-radio-color);
 
     .icon-radio {
-      transform: translate(-50%, -50%) scale(0.8);
+      transform: translate(-50%, -50%) scale(0.7);
       opacity: 1;
     }
   }

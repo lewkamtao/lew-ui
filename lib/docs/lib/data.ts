@@ -1,7 +1,11 @@
+const deleteOrder = (e: any) => {
+  console.log(e)
+}
+
 export const contextMenuCityTree = [
   {
     value: 1,
-    label: 'Asia',
+    label: 'AsiaAsiaAsiaAsiaAsiaAsiaAsiaAsiaAsiaAsiaAsiaAsia',
     icon: 'edit',
     children: [
       {
@@ -30,7 +34,7 @@ export const contextMenuCityTree = [
         children: [
           { value: 11, disabled: true, label: 'Seoul' },
           { value: 12, disabled: true, label: 'Busan' },
-          { value: 13, label: 'Taegu' }
+          { value: 13, onClick: deleteOrder, label: 'Taegu' }
         ]
       }
     ]
@@ -38,7 +42,6 @@ export const contextMenuCityTree = [
   {
     value: 14,
     label: 'Europe',
-    icon: 'aperture',
     children: [
       {
         value: 15,

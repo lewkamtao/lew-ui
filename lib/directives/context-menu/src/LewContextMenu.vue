@@ -1,36 +1,22 @@
 <script setup lang="ts">
-import { LewFlex, LewIcon } from 'lew-ui/components'
+import { LewFlex, LewIcon, LewEmpty } from 'lew-ui/components'
 import tippy from 'tippy.js'
 import LewContextMenu from './LewContextMenu.vue'
-interface ContextMenus {
-  label?: string
-  icon?: string
-  value?: string
-  children?: ContextMenus[]
-  disabled?: boolean
-  level?: number
-  isDividerLine?: false
-  [key: string]: any
+import { getUniqueId } from 'lew-ui/utils'
+import { LewContextMenus, contextMenuProps } from './index'
+
+const props = defineProps(contextMenuProps)
+
+const emit = defineEmits(['select'])
+
+const clickItem = (item: LewContextMenus) => {
+  emit('select', item)
 }
 
-const props = defineProps({
-  menus: {
-    type: Array as PropType<ContextMenus[]>,
-    default: () => []
-  }
-})
-
-const emit = defineEmits(['clickitem'])
-
-const clickItem = (item: ContextMenus) => {
-  emit('clickitem', item)
-}
-
-let instance: any
 let itemRefs = ref<(Element | globalThis.ComponentPublicInstance | null)[]>([])
 const initTippy = () => {
   itemRefs.value.forEach((el: any, index: number) => {
-    const item = props.menus[index]
+    const item = props.options[index]
     if (!el || item.disabled || (item.children || []).length === 0) {
       return
     }
@@ -38,14 +24,15 @@ const initTippy = () => {
     createApp({
       render() {
         return h(LewContextMenu, {
-          menus: item.children,
-          onClickitem: (e: any) => {
-            console.log(e)
+          options: item.children,
+          onSelect: (item: LewContextMenus) => {
+            emit('select', item)
           }
         })
       }
     }).mount(menuDom)
-    instance = tippy(el, {
+    const uniqueId = getUniqueId()
+    window.LewContextMenu.menuInstance[uniqueId] = tippy(el, {
       theme: 'light',
       animation: 'shift-away-subtle',
       trigger: 'mouseenter',
@@ -58,7 +45,10 @@ const initTippy = () => {
       hideOnClick: false,
       content: menuDom
     })
-    instance.popper.children[0].setAttribute('data-lew', 'popover')
+    window.LewContextMenu.menuInstance[uniqueId].popper.children[0].setAttribute(
+      'data-lew',
+      'popover'
+    )
   })
 }
 
@@ -69,28 +59,40 @@ onMounted(() => {
 
 <template>
   <lew-flex direction="y" gap="0" class="lew-context-menu">
-    <div
-      v-for="(item, index) in menus"
-      :key="index"
-      class="lew-context-menu-box"
-      :class="{
-        'lew-context-menu-box-disabled': item.disabled,
-        'lew-context-menu-box-divider-line': item.isDividerLine
-      }"
-    >
+    <template v-if="(options || []).length > 0">
       <div
-        :ref="(el) => itemRefs.push(el)"
-        @click="clickItem(item)"
-        class="lew-context-menu-item"
-        :style="{ 'animation-delay': index * 20 + 'ms' }"
+        v-for="(item, index) in options"
+        :key="index"
+        class="lew-context-menu-box"
+        :class="{
+          'lew-context-menu-box-disabled': item.disabled,
+          'lew-context-menu-box-divider-line': item.isDividerLine
+        }"
       >
-        <div class="lew-context-menu-label">
-          <lew-icon v-if="item.icon" size="14" :type="item.icon"></lew-icon>
-          {{ item.label }}
+        <div
+          :ref="(el) => itemRefs.push(el)"
+          @click="clickItem(item)"
+          class="lew-context-menu-item"
+          :style="{ 'animation-delay': index * 15 + 'ms' }"
+        >
+          <div class="lew-context-menu-label">
+            <lew-icon
+              v-if="options.findIndex((item) => item.icon) !== -1"
+              :style="{ opacity: item.icon ? 1 : 0 }"
+              size="14"
+              :type="item.icon"
+            ></lew-icon>
+            <div :title="item.label" class="lew-context-menu-label-text">{{ item.label }}</div>
+          </div>
+          <lew-icon
+            v-if="(item.children || []).length > 0"
+            size="14"
+            type="chevron-right"
+          ></lew-icon>
         </div>
-        <lew-icon v-if="(item.children || []).length > 0" size="14" type="chevron-right"></lew-icon>
       </div>
-    </div>
+    </template>
+    <lew-empty width="120px" padding="5px" font-size="12px" v-else type="search" title="暂无操作" />
   </lew-flex>
 </template>
 
@@ -105,7 +107,6 @@ onMounted(() => {
     flex-direction: column;
     gap: 4px;
     box-sizing: border-box;
-    transition: all 0.25s ease;
     width: 100%;
 
     .lew-context-menu-item {
@@ -147,6 +148,12 @@ onMounted(() => {
         line-height: 30px;
         box-sizing: border-box;
         cursor: pointer !important;
+        .lew-context-menu-label-text {
+          max-width: 180px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
       }
     }
 
@@ -180,7 +187,7 @@ onMounted(() => {
     content: '';
     width: calc(100% - 20px);
     height: 1px;
-    background-color: var(--lew-bgcolor-2);
+    background-color: var(--lew-bgcolor-3);
   }
 }
 </style>

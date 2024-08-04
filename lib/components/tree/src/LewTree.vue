@@ -326,7 +326,7 @@ defineExpose({ init, getTreeList })
       border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
       background: var(--lew-checkbox-color);
       .icon-checkbox {
-        transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scale(0.7);
         opacity: 1;
       }
     }

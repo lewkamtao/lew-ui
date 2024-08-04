@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { contextMenuCityTree } from '@/lib/data'
 const value = ref(['1'])
 const companies = [
   {
@@ -47,13 +46,8 @@ setInterval(() => {
 
 <template>
   <lew-collapse width="400" v-model="value">
-    <lew-collapse-item
-      v-context-menu="{ menus: contextMenuCityTree }"
-      :title="item.name"
-      :collapse-key="item.id"
-      v-for="item in companies"
-    >
-      <div v-context-menu="{ menus: contextMenuCityTree }">
+    <lew-collapse-item :title="item.name" :collapse-key="item.id" v-for="item in companies">
+      <div>
         {{ item.description }}
       </div>
     </lew-collapse-item>

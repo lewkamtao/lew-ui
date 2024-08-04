@@ -108,6 +108,12 @@ const options: MenuOptions[] = [
       {
         label: 'Breadcrumb',
         value: '/Breadcrumb'
+      },
+      {
+        label: 'ContextMenu',
+        value: '/ContextMenu',
+        tagText: 'Beta',
+        tagColor: 'red'
       }
     ]
   },

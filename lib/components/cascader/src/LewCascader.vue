@@ -377,7 +377,7 @@ defineExpose({ show, hide })
               :options="{
                 itemHeight: 38
               }"
-              :height="38 * oItem.length"
+              :height="`${38 * oItem.length}`"
               :style="{
                 zIndex: 20 - oIndex,
                 transform: oItem.length > 0 ? `translateX(${200 * oIndex}px)` : ''
@@ -619,7 +619,7 @@ defineExpose({ show, hide })
     background: var(--lew-checkbox-color);
 
     .icon-checkbox {
-      transform: translate(-50%, -50%) scale(1);
+      transform: translate(-50%, -50%) scale(0.7);
       opacity: 1;
     }
   }
@@ -631,7 +631,7 @@ defineExpose({ show, hide })
     background: var(--lew-checkbox-color);
 
     .icon-checkbox {
-      transform: translate(-50%, -50%) scale(1);
+      transform: translate(-50%, -50%) scale(0.7);
       opacity: 1;
     }
   }
