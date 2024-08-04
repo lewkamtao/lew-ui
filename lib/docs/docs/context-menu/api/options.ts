@@ -1,5 +1,5 @@
 export default {
-  title: 'Options (LewContextMenus)',
+  title: 'Options (ContextMenus)',
   columnsKey: 'props',
   orderNum: 2,
   data: [
@@ -32,7 +32,7 @@ export default {
     {
       name: 'children',
       description: '子节点集合',
-      type: 'LewContextMenus[]',
+      type: 'ContextMenus[]',
       default: '-'
     },
     {

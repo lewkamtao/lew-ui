@@ -3,13 +3,13 @@ import { LewFlex, LewIcon, LewEmpty } from 'lew-ui/components'
 import tippy from 'tippy.js'
 import LewContextMenu from './LewContextMenu.vue'
 import { getUniqueId } from 'lew-ui/utils'
-import { LewContextMenus, contextMenuProps } from './index'
+import { ContextMenus, contextMenuProps } from './index'
 
 const props = defineProps(contextMenuProps)
 
 const emit = defineEmits(['select'])
 
-const clickItem = (item: LewContextMenus) => {
+const clickItem = (item: ContextMenus) => {
   emit('select', item)
 }
 
@@ -25,7 +25,7 @@ const initTippy = () => {
       render() {
         return h(LewContextMenu, {
           options: item.children,
-          onSelect: (item: LewContextMenus) => {
+          onSelect: (item: ContextMenus) => {
             emit('select', item)
           }
         })

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { LewContextMenus } from 'lew-ui/directives'
+import type { ContextMenus } from 'lew-ui/directives'
 
-const options: LewContextMenus = [
+const options: ContextMenus = [
   {
     label: '新建文件',
     value: 'new-file'
@@ -124,7 +124,7 @@ const options: LewContextMenus = [
   }
 ]
 
-const selectHandler = (item: LewContextMenus) => {
+const selectHandler = (item: ContextMenus) => {
   console.log(item)
   LewMessage.info(`你点击了：${item.label} `)
 }

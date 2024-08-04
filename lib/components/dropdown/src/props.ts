@@ -1,5 +1,5 @@
 import type { PropType, ExtractPropTypes } from 'vue'
-import type { LewContextMenus } from 'lew-ui'
+import type { ContextMenus } from 'lew-ui'
 
 export type DropdownOptions = {
   label: number | string
@@ -8,7 +8,7 @@ export type DropdownOptions = {
 
 export const dropdownProps = {
   options: {
-    type: Array as PropType<LewContextMenus[]>,
+    type: Array as PropType<ContextMenus[]>,
     default: [],
     description: '下拉选项'
   },

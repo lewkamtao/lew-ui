@@ -55,7 +55,7 @@ export const LewVContextMenu = {
               render() {
                 return h(_LewContextMenu, {
                   options,
-                  onSelect: (item: LewContextMenus) => {
+                  onSelect: (item: ContextMenus) => {
                     const { selectHandler } = binding.value
                     // 执行回调
                     if (isFunction(selectHandler)) {
@@ -115,12 +115,12 @@ const findContextMenuId = (el: HTMLElement): string => {
   }
 }
 
-export interface LewContextMenus {
+export interface ContextMenus {
   label?: string
   value?: string
   type?: string
   icon?: string
-  children?: LewContextMenus[]
+  children?: ContextMenus[]
   disabled?: boolean
   level?: number
   isDividerLine?: false
@@ -129,7 +129,7 @@ export interface LewContextMenus {
 
 export const contextMenuProps = {
   options: {
-    type: Array as PropType<LewContextMenus[]>,
+    type: Array as PropType<ContextMenus[]>,
     default: [],
     description: '右键菜单配置'
   }

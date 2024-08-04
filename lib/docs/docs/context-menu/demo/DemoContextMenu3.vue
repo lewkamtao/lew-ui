@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { LewContextMenus } from 'lew-ui/directives'
+import type { ContextMenus } from 'lew-ui/directives'
 
-const options1: LewContextMenus = [
+const options1: ContextMenus = [
   {
     label: '返回',
     value: 1,
@@ -66,7 +66,7 @@ const options2 = [
   }
 ]
 
-const selectHandler = (item: LewContextMenus) => {
+const selectHandler = (item: ContextMenus) => {
   console.log(item)
   LewMessage.info(`你点击了：${item.label} `)
 }

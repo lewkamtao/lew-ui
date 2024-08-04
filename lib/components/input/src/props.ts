@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import type { SelectOptions } from 'lew-ui'
+import type { ContextMenus } from 'lew-ui'
 
 export type InputPrefixesType = 'icon' | 'select' | 'text'
 export type InputSuffixType = 'icon' | 'select' | 'text'
@@ -114,7 +114,7 @@ export const inputProps = {
   },
 
   prefixesOptions: {
-    type: Array as PropType<SelectOptions[]>,
+    type: Array as PropType<ContextMenus[]>,
     default: () => [],
     description: '前缀选项'
   },
@@ -129,7 +129,7 @@ export const inputProps = {
     description: '后缀'
   },
   suffixOptions: {
-    type: Array as PropType<SelectOptions[]>,
+    type: Array as PropType<ContextMenus[]>,
     default: () => [],
     description: '后缀选项'
   },
