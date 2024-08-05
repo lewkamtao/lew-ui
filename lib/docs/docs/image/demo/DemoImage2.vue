@@ -1,0 +1,31 @@
+<template>
+  <lew-flex wrap x="start" gap="20">
+    <lew-avatar
+      src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/杨"
+      status="online"
+      statusPosition="top-left"
+    />
+    <lew-avatar
+      src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/陶"
+      status="processing"
+      statusPosition="top-left"
+    />
+    <lew-avatar
+      src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/卢"
+      status="busy"
+      statusPosition="top-right"
+    />
+    <lew-avatar
+      src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/黄"
+      round
+      status="away"
+      statusPosition="bottom-left"
+    />
+    <lew-avatar
+      src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/王"
+      round
+      status="offline"
+      statusPosition="bottom-right"
+    />
+  </lew-flex>
+</template>

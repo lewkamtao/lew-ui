@@ -20,6 +20,7 @@ export const LewVContextMenu = {
               interactive: true,
               placement: 'right-start',
               duration: [250, 250],
+              delay: [250, 250],
               arrow: false,
               appendTo: () => document.body,
               allowHTML: true
@@ -69,19 +70,20 @@ export const LewVContextMenu = {
                 })
               }
             }).mount(menuDom)
-
-            instance.setProps({
-              content: menuDom,
-              getReferenceClientRect: () => ({
-                width: 0,
-                height: 0,
-                top: e.clientY,
-                bottom: e.clientY,
-                left: e.clientX,
-                right: e.clientX
+            setTimeout(() => {
+              instance.setProps({
+                content: menuDom,
+                getReferenceClientRect: () => ({
+                  width: 0,
+                  height: 0,
+                  top: e.clientY,
+                  bottom: e.clientY,
+                  left: e.clientX,
+                  right: e.clientX
+                })
               })
-            })
-            instance.show()
+              instance.show()
+            }, 120)
           }
           window.addEventListener('contextmenu', window.LewContextMenu.contextMenu)
         }

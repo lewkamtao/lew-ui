@@ -18,42 +18,23 @@ button {
   overflow-y: auto;
 }
 
+/* The loading Class */
 .skeletons {
-  width: 200%;
+  width: 100%;
   height: 100%;
-  overflow: hidden;
+  background: linear-gradient(90deg, hsl(210, 15%, 88%), hsl(210, 15%, 95%), hsl(210, 15%, 88%));
+  background-size: 200%;
+  animation: loader 1s infinite reverse;
+  opacity: 0.6;
 }
-
-.skeletons {
-  /* 内容区域空状态时的样式 */
-  background-color: #f2f2f2;
-}
-
-.skeletons::after {
-  /* 内容区域空状态时追加骨架屏样式 */
-  content: '';
-  display: block;
-  width: 200%;
-  height: 100%;
-  background-size: 400% 100%;
-  background-position: 100% 50%;
-  background-image: linear-gradient(
-    90deg,
-    rgb(214, 214, 214) 25%,
-    #fff 37%,
-    rgb(203, 203, 203) 63%
-  );
-  animation: skeleton-loading 1.5s ease infinite;
-}
-
-.lew-dark .skeletons::after {
-  /* 内容区域空状态时追加骨架屏样式 */
-  background-image: linear-gradient(
-    90deg,
-    rgb(84, 84, 84) 25%,
-    rgb(116, 116, 116) 37%,
-    rgb(58, 58, 58) 63%
-  );
+/* skeleton animation */
+@keyframes loader {
+  from {
+    background-position: -100% 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
 }
 
 /* 修改滚动条角的颜色为蓝色 */
@@ -146,13 +127,4 @@ button {
 }
 .lew-form-icon-clear-focus:active {
   opacity: var(--lew-form-icon-opacity-active);
-}
-
-@keyframes skeleton-loading {
-  0% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0 50%;
-  }
 }

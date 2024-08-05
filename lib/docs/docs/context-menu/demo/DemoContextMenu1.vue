@@ -83,7 +83,6 @@ const selectHandler = (item: ContextMenus) => {
       右键点击此处
     </div>
     <div v-context-menu="{ options: options2 }" class="box">右键点击此处</div>
-    <div v-context-menu="{ options: [] }" class="box">右键点击此处</div>
   </lew-flex>
 </template>
 
@@ -92,7 +91,7 @@ const selectHandler = (item: ContextMenus) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: calc(100% / 3);
+  width: calc(100% / 2);
   height: 200px;
   background-color: var(--lew-bgcolor-2);
   border-radius: var(--lew-border-radius-small);

@@ -37,6 +37,10 @@ const options: MenuOptions[] = [
     value: '基础',
     children: [
       {
+        label: 'Image',
+        value: '/Image'
+      },
+      {
         label: 'Avatar',
         value: '/Avatar'
       },
