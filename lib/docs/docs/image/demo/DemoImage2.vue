@@ -1,31 +1,24 @@
+<script setup lang="ts">
+let key = ref(0)
+</script>
+
 <template>
-  <lew-flex wrap x="start" gap="20">
-    <lew-avatar
-      src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/杨"
-      status="online"
-      statusPosition="top-left"
+  <lew-flex direction="y" x="start" y="end" gap="20">
+    <lew-image
+      :key="key"
+      :width="150"
+      :height="150"
+      loading
+      :src="`https://cdn.pixabay.com/photo/2020/07/23/14/51/cat-paw-5431547_1280.jpg?key=${key}`"
     />
-    <lew-avatar
-      src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/陶"
-      status="processing"
-      statusPosition="top-left"
-    />
-    <lew-avatar
-      src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/卢"
-      status="busy"
-      statusPosition="top-right"
-    />
-    <lew-avatar
-      src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/黄"
-      round
-      status="away"
-      statusPosition="bottom-left"
-    />
-    <lew-avatar
-      src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/王"
-      round
-      status="offline"
-      statusPosition="bottom-right"
-    />
+    <lew-alert
+      :list="[
+        {
+          type: 'info',
+          title: '需要设置 width 和 height，才会有占位加载效果。',
+          content: ''
+        }
+      ]"
+    ></lew-alert>
   </lew-flex>
 </template>

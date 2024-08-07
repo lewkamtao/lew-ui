@@ -28,7 +28,7 @@ const { push } = useRouter()
     <lew-demo-box title="普通" :code="DemoImage1Code">
       <demo-image1 />
     </lew-demo-box>
-    <lew-demo-box title="状态" :code="DemoImage2Code">
+    <lew-demo-box title="加载状态" :code="DemoImage2Code">
       <demo-image2 />
     </lew-demo-box>
     <lew-demo-box title="加载失败" :code="DemoImage3Code">

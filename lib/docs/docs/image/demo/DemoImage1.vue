@@ -1,14 +1,16 @@
 <template>
   <lew-flex wrap x="start" y="end" gap="20">
     <lew-image
-      :width="230"
-      :height="230"
-      src="https://api.lew.kamtao.com/manage/common/avatar/350/4B78CA/王"
+      object-position="top"
+      :width="150"
+      :height="150"
+      src="https://cdn.pixabay.com/photo/2016/12/06/10/03/lighthouse-1886076_1280.jpg"
     />
     <lew-image
-      :width="40"
-      :height="40"
-      src="https://api.lew.kamtao.com/manage/common/avatar/51150/4B78CA/杨"
+      object-position="center"
+      :width="150"
+      :height="150"
+      src="https://cdn.pixabay.com/photo/2020/07/23/14/48/cat-5431546_1280.jpg"
     />
   </lew-flex>
 </template>

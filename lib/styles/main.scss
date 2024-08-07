@@ -27,6 +27,12 @@ button {
   animation: loader 1s infinite reverse;
   opacity: 0.6;
 }
+.lew-dark {
+  .skeletons {
+    background: linear-gradient(90deg, hsl(210, 15%, 15%), hsl(210, 15%, 20%), hsl(210, 15%, 15%));
+    background-size: 200%;
+  }
+}
 /* skeleton animation */
 @keyframes loader {
   from {

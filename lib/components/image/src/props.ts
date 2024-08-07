@@ -26,6 +26,11 @@ export const imageProps = {
     default: 'cover',
     description: '图片填充模式'
   },
+  objectPosition: {
+    type: String,
+    default: '',
+    description: '图片位置'
+  },
   preview: {
     type: Boolean,
     default: false,
@@ -35,6 +40,16 @@ export const imageProps = {
     type: String,
     default: '',
     description: '图像的备选文本，供图像无法显示时采用'
+  },
+  lazy: {
+    type: Boolean,
+    default: false,
+    description: '是否懒加载图片'
+  },
+  loading: {
+    type: Boolean,
+    default: false,
+    description: '图片加载状态'
   }
 }
 

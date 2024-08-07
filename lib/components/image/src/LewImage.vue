@@ -5,6 +5,7 @@ import { imageProps } from './props'
 
 const props = defineProps(imageProps)
 const { isLoading, error } = useImage({ src: props.src })
+
 const imageStyleObject = computed(() => {
   const { width, height } = props
   return {
@@ -12,21 +13,28 @@ const imageStyleObject = computed(() => {
     height: any2px(height)
   }
 })
+
+const getIconSize = computed(() => {
+  const { width, height } = props
+  return Math.min(Number(width), Number(height)) * 0.45 + 'px'
+})
 </script>
 
 <template>
   <lew-flex gap="0" class="lew-image-wrapper" :style="imageStyleObject">
-    <span class="skeletons" v-if="isLoading"></span>
+    <div class="skeletons" v-if="isLoading || loading"></div>
     <template v-else-if="error">
       <slot v-if="$slots.error" name="error" />
-      <lew-icon class="lew-image-icon" v-else type="image" size="16px" />
+      <lew-icon stroke-width="1" class="lew-image-icon" v-else type="image" :size="getIconSize" />
     </template>
     <img
       v-else
       :src
       class="lew-image"
+      :lazy="lazy"
       :style="{
-        'object-fit': objectFit
+        'object-fit': objectFit,
+        'object-position': objectPosition
       }"
     />
   </lew-flex>
@@ -41,7 +49,7 @@ const imageStyleObject = computed(() => {
   .lew-image {
     width: 100%;
     height: 100%;
-    animation: img-enter 0.5s ease;
+    animation: img-enter 0.25s ease;
     animation-fill-mode: forwards;
     opacity: 0;
   }
