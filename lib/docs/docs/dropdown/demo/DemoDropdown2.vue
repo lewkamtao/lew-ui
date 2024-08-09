@@ -1,20 +1,124 @@
 <script setup lang="ts">
 const options = ref([
   {
-    label: '修改头像',
-    value: '1'
+    label: '新建文件',
+    value: 'new-file'
   },
   {
-    label: '个人中心',
-    value: '2'
+    label: '新建窗口',
+    value: 'new-window',
+    children: [
+      {
+        label: '新建窗口',
+        value: 'new-window1'
+      },
+      {
+        label: '使用配置文件新建窗口',
+        value: 'new-window2'
+      }
+    ]
   },
   {
-    label: '开通会员',
-    value: '3'
+    isDividerLine: true
   },
   {
-    label: '退出登陆',
-    value: '4'
+    label: '保存文件',
+    value: 'save-file'
+  },
+  {
+    label: '另存为',
+    value: 'save-as',
+    children: [
+      {
+        label: '另存为图片',
+        value: 'image'
+      },
+      {
+        label: '另存为文本',
+        value: 'text'
+      }
+    ]
+  },
+  {
+    label: '保存',
+    value: 'save'
+  },
+  {
+    label: '全部保存',
+    value: 'save-all'
+  },
+  {
+    isDividerLine: true
+  },
+  {
+    label: '首选项',
+    value: 'preference',
+    children: [
+      {
+        label: '设置',
+        value: 'setting',
+        children: [
+          {
+            label: '语言',
+            value: 'language',
+            children: [
+              {
+                label: '中文（Chinese',
+                value: 'chinese'
+              },
+              {
+                label: '英语（English）',
+                value: 'english'
+              }
+            ]
+          },
+          {
+            label: '主题',
+            value: 'theme',
+            children: [
+              {
+                label: 'Light',
+                value: 'light',
+                icon: 'sun'
+              },
+              {
+                label: 'Dark',
+                value: 'dark',
+                icon: 'moon'
+              }
+            ]
+          },
+          {
+            label: '字体样式（编译器）',
+            value: 'font'
+          }
+        ]
+      },
+      {
+        label: '关于',
+        value: 'about'
+      },
+      {
+        label: '帮助',
+        value: 'help'
+      },
+      {
+        label: '检查更新',
+        value: 'check-update'
+      }
+    ]
+  },
+  {
+    label: '在文件中查找',
+    value: 'find'
+  },
+  {
+    label: '关闭窗口',
+    value: 'close-window'
+  },
+  {
+    label: '退出',
+    value: 'exit'
   }
 ])
 

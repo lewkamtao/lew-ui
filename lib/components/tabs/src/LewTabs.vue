@@ -23,10 +23,8 @@ watch(
   () => tabsValue.value,
   (v: string | number | undefined) => {
     nextTick(() => {
-      if (!state.isInit) {
-        selectItem(v, 'watch')
-        init()
-      }
+      selectItem(v, 'watch')
+      init()
     })
   },
   { deep: true }
@@ -266,10 +264,18 @@ onUnmounted(() => {
     flex-shrink: 0;
     transition: all 0.25s;
   }
+  .lew-tabs-item:hover {
+    opacity: 0.6;
+  }
+  .lew-tabs-item:active {
+    opacity: 1;
+  }
 
   .lew-tabs-item-active {
     color: var(--lew-color-primary);
-    text-shadow: 0px 0px 1px var(--lew-color-primary-dark);
+  }
+  .lew-tabs-item-active:hover {
+    opacity: 1;
   }
 
   .lew-tabs-item-animation-active {
@@ -280,7 +286,7 @@ onUnmounted(() => {
     height: calc(100% - 8px);
     border-radius: 6px;
     background: var(--lew-tabs-active-color);
-    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.08);
     transform: translateX(4px);
     box-sizing: border-box;
   }

@@ -201,14 +201,14 @@
   // loading
   --lew-loading-bgcolor: rgb(255, 255, 255, 0.8);
   // povpoer
-  --lew-popover-bgcolor: #fff;
+  --lew-pop-bgcolor: #fff;
   // message
   --lew-message-bgcolor: rgba(255, 255, 255, 1);
   // notification
   --lew-notification-bgcolor: rgba(255, 255, 255, 1);
   // popover
-  --lew-popover-border: 1px rgb(204, 204, 216) solid;
-  --lew-popover-box-shadow: 0 0px 30px #0000001e;
+  --lew-pop-border: 1px rgba(211, 211, 221, 0.693) solid;
+  --lew-pop-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
   --lew-tooltip-shadow: 0 0px 20px #0000002c;
 
   // table
@@ -366,7 +366,7 @@
   --lew-form-border-color-focus: var(--lew-color-primary);
   --lew-form-ouline: 0px var(--lew-color-primary-light) solid;
   // tabs
-  --lew-tabs-active-color: rgb(14, 14, 14);
+  --lew-tabs-active-color: #3f3f45;
   // dialog / modal
   --lew-modal-bgcolor: rgba(0, 0, 0, 0.45);
   --lew-modal-header-border: 1px rgba(255, 255, 255, 0.1) solid;
@@ -380,13 +380,13 @@
   // loading
   --lew-loading-bgcolor: rgba(0, 0, 0, 0.7);
   // povpoer
-  --lew-popover-bgcolor: #323339;
+  --lew-pop-bgcolor: #323339;
   // message
   --lew-message-bgcolor: #4d4d58;
   // notification
   --lew-notification-bgcolor: #4d4d58;
   // popover
-  --lew-popover-border: 1px rgba(255, 255, 255, 0.15) solid;
+  --lew-pop-border: 1px rgba(255, 255, 255, 0.15) solid;
   // table
   --lew-table-header-bgColor: #131418;
   --lew-table-border: 1px rgba(255, 255, 255, 0.05) solid;
@@ -404,8 +404,9 @@
   --lew-radio-border-color-hover: var(--lew-color-primary);
   --lew-radio-color: var(--lew-color-primary);
   --lew-radio-color-light: var(--lew-color-primary-light);
-  --lew-pop-bg: #242529;
+  --lew-pop-bg: #1a1b1e;
   --lew-pop-bg-active: rgba(255, 255, 255, 0.05);
   --lew-tooltip-bg: #43444a;
   --lew-tooltip-color: #fff;
+  --lew-pop-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.06);
 }

@@ -168,7 +168,6 @@ defineExpose({ show, hide, refresh })
   }
 }
 .lew-popover-body {
-  overflow: hidden;
   border-radius: var(--lew-border-radius-small);
 }
 </style>

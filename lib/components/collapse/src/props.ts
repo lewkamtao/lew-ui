@@ -21,6 +21,11 @@ export const collapseProps = {
     type: String,
     default: '100%',
     description: '宽度'
+  },
+  gap: {
+    type: String,
+    default: '0px',
+    description: '间距'
   }
 }
 export const collapseItemProps = {
@@ -33,6 +38,16 @@ export const collapseItemProps = {
     type: String,
     default: '',
     description: '标题（支持插槽）'
+  },
+  radius: {
+    type: String,
+    default: '0px',
+    description: '圆角'
+  },
+  padding: {
+    type: String,
+    default: '0px 0px 0px 20px',
+    description: '内边距'
   }
 }
 

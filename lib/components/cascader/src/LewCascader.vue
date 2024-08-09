@@ -669,7 +669,7 @@ defineExpose({ show, hide })
       height: 100%;
       width: 200px;
       padding: 6px 6px 2px 6px;
-      border-right: var(--lew-popover-border);
+      border-right: var(--lew-pop-border);
       box-sizing: border-box;
       gap: 4px;
     }
@@ -791,7 +791,7 @@ defineExpose({ show, hide })
   }
 
   .lew-cascader-control {
-    border-top: var(--lew-popover-border);
+    border-top: var(--lew-pop-border);
     height: 45px;
     padding-right: 10px;
   }

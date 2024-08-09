@@ -4,30 +4,34 @@ import { getUniqueId } from 'lew-ui/utils'
 import _LewContextMenu from './LewContextMenu.vue'
 import { isFunction } from 'lodash-es'
 
+export const initLewContextMenu = () => {
+  window.LewContextMenu = {
+    menu: {},
+    contextMenu: null,
+    instance: tippy(document.body, {
+      theme: 'light',
+      animation: 'shift-away-subtle',
+      trigger: 'manual',
+      interactive: true,
+      placement: 'right-start',
+      duration: [250, 250],
+      delay: [250, 250],
+      arrow: false,
+      appendTo: () => document.body,
+      allowHTML: true
+    }),
+    menuInstance: {}
+  }
+  window.LewContextMenu.instance.popper.children[0].setAttribute('data-lew', 'popover')
+}
+
 export const LewVContextMenu = {
   install(app: App) {
     app.directive('context-menu', {
       mounted(el: any, binding: DirectiveBinding) {
         // 创建右键索引
         if (!window.LewContextMenu) {
-          window.LewContextMenu = {
-            menu: {},
-            contextMenu: null,
-            instance: tippy(document.body, {
-              theme: 'light',
-              animation: 'shift-away-subtle',
-              trigger: 'manual',
-              interactive: true,
-              placement: 'right-start',
-              duration: [250, 250],
-              delay: [250, 250],
-              arrow: false,
-              appendTo: () => document.body,
-              allowHTML: true
-            }),
-            menuInstance: {}
-          }
-          window.LewContextMenu.instance.popper.children[0].setAttribute('data-lew', 'popover')
+          initLewContextMenu()
         }
 
         if (!el.id) {

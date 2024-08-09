@@ -6,7 +6,7 @@ provide('expandKeys', modelValue)
 defineProps(collapseProps)
 </script>
 <template>
-  <div :style="{ width: any2px(width) }" class="lew-collapse">
+  <div :style="{ width: any2px(width), gap: any2px(gap) }" class="lew-collapse">
     <slot />
   </div>
 </template>

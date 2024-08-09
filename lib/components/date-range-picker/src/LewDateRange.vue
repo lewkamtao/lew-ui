@@ -573,6 +573,6 @@ defineExpose({ init })
 }
 
 .lew-date:first-child {
-  border-right: var(--lew-popover-border);
+  border-right: var(--lew-pop-border);
 }
 </style>

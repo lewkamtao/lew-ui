@@ -2,6 +2,7 @@
 import { collapseItemProps } from './props'
 import LewCollapseTransition from './LewCollapseTransition.vue'
 import { isArray } from 'lodash-es'
+import { any2px } from 'lew-ui/utils'
 const props = defineProps(collapseItemProps)
 const modelValue = defineModel()
 
@@ -47,6 +48,7 @@ const change = () => {
       y="center"
       class="lew-collapse-title"
       :class="{ 'lew-collapse-title-active': modelValue }"
+      :style="{ borderRadius: any2px(radius) }"
       @click="change"
     >
       <slot v-if="$slots.title" name="title" :props="props"></slot>
@@ -63,8 +65,10 @@ const change = () => {
       </template>
     </lew-flex>
     <Lew-collapse-transition>
-      <div v-if="modelValue" class="lew-collapse-main">
-        <slot />
+      <div v-if="modelValue">
+        <div :style="{ padding }" class="lew-collapse-main">
+          <slot />
+        </div>
       </div>
     </Lew-collapse-transition>
   </div>
@@ -92,7 +96,6 @@ const change = () => {
   }
 
   .lew-collapse-main {
-    padding: 10px;
     box-sizing: border-box;
   }
 }

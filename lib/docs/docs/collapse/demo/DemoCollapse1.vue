@@ -38,6 +38,21 @@ const companies = [
       "Tesla, Inc. is an American electric vehicle and clean energy company founded by Elon Musk, Martin Eberhard, Marc Tarpenning, JB Straubel, and Ian Wright in 2003. Tesla is known for its electric vehicles, energy storage solutions, and solar products, aiming to accelerate the world's transition to sustainable energy."
   }
 ]
+
+const companies1 = [
+  {
+    id: '1123',
+    name: 'iPhone',
+    description:
+      'Apple Inc. is an American multinational technology company that designs, manufactures, and markets consumer electronics, computer software, and online services. Founded by Steve Jobs, Steve Wozniak, and Ronald Wayne in 1976, Apple is known for its innovative products such as the iPhone, iPad, Mac computers, and Apple Watch.'
+  },
+  {
+    id: '2123a',
+    name: 'iPad',
+    description:
+      'Google is a technology company that specializes in Internet-related services and products. Founded in 1998 by Larry Page and Sergey Brin while they were Ph.D. students at Stanford University, Google is now one of the most valuable companies in the world, known for its search engine, online advertising, and cloud computing services.'
+  }
+]
 const index = ref(1)
 setInterval(() => {
   index.value = index.value + 1
@@ -47,9 +62,20 @@ setInterval(() => {
 <template>
   <lew-collapse width="400" v-model="value">
     <lew-collapse-item :title="item.name" :collapse-key="item.id" v-for="item in companies">
-      <div>
-        {{ item.description }}
-      </div>
+      <template v-if="item.name === 'Apple'">
+        <lew-collapse width="100%" v-model="value">
+          <lew-collapse-item :title="item.name" :collapse-key="item.id" v-for="item in companies1">
+            <div>
+              {{ item.description }}
+            </div>
+          </lew-collapse-item>
+        </lew-collapse>
+      </template>
+      <template v-else>
+        <div>
+          {{ item.description }}
+        </div>
+      </template>
     </lew-collapse-item>
   </lew-collapse>
 </template>

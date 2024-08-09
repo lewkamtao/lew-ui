@@ -254,7 +254,7 @@ defineExpose({ show, hide })
     padding: 7px;
     box-sizing: border-box;
     width: 120px;
-    border-right: var(--lew-popover-border);
+    border-right: var(--lew-pop-border);
     .item {
       width: 100%;
       height: 30px;

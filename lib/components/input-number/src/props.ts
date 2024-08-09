@@ -15,17 +15,17 @@ export const inputNumberProps = {
     description: '尺寸，可选值为 small、medium、large'
   },
   step: {
-    type: Number,
+    type: [Number, String],
     default: 0.01,
     description: '允许小数值，步长默认为 0.01，精确到小数点后 2 位'
   },
   min: {
-    type: Number,
+    type: [Number, String],
     default: 0,
     description: '最小值'
   },
   max: {
-    type: Number,
+    type: [Number, String],
     default: 100,
     description: '最大值'
   },

@@ -409,7 +409,11 @@ const getTips = computed(() => {
             :style="{ width: `${fileIconSizeMap[size]}px`, height: `${fileIconSizeMap[size]}px` }"
             class="lew-upload-icon-wrapper"
           >
-            <img v-if="checkUrlIsImg(item.url)" class="lew-upload-file-image" :src="item.url" />
+            <lew-image
+              v-if="checkUrlIsImg(item.url)"
+              class="lew-upload-file-image"
+              :src="item.url"
+            />
             <img v-else class="lew-upload-file-icon" :src="getFileIcon(item.name as string)" />
           </lew-flex>
           <lew-flex

@@ -12,8 +12,8 @@
 
 .tippy-box[data-lew~='popover'] {
   background-color: var(--lew-pop-bg) !important;
-  border: var(--lew-popover-border) !important;
-  box-shadow: var(--lew-popover-box-shadow) !important;
+  border: var(--lew-pop-border) !important;
+  box-shadow: var(--lew-pop-box-shadow) !important;
 }
 
 .tippy-box[data-lew~='tooltip'] {

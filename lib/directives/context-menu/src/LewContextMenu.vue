@@ -3,7 +3,7 @@ import { LewFlex, LewIcon, LewEmpty } from 'lew-ui/components'
 import tippy from 'tippy.js'
 import LewContextMenu from './LewContextMenu.vue'
 import { getUniqueId } from 'lew-ui/utils'
-import { ContextMenus, contextMenuProps } from './index'
+import { ContextMenus, contextMenuProps, initLewContextMenu } from './index'
 
 const props = defineProps(contextMenuProps)
 
@@ -32,6 +32,12 @@ const initTippy = () => {
       }
     }).mount(menuDom)
     const uniqueId = getUniqueId()
+
+    // 创建右键索引
+    if (!window.LewContextMenu) {
+      initLewContextMenu()
+    }
+
     window.LewContextMenu.menuInstance[uniqueId] = tippy(el, {
       theme: 'light',
       animation: 'shift-away-subtle',
@@ -44,6 +50,7 @@ const initTippy = () => {
       offset: [0, 0],
       allowHTML: true,
       hideOnClick: false,
+      zIndex: 9999,
       content: menuDom
     })
     window.LewContextMenu.menuInstance[uniqueId].popper.children[0].setAttribute(
@@ -117,7 +124,6 @@ onMounted(() => {
       justify-content: center;
       width: 100%;
       font-size: 14px;
-      overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
       cursor: pointer;
