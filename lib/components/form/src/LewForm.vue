@@ -23,7 +23,7 @@ componentOptions.forEach((item: any) => {
   }
 })
 
-const formRulesmap = () => {
+const formRulesmap: any = () => {
   const form: Record<string, any> = getForm()
   return reduce(
     cloneDeep(componentOptions),

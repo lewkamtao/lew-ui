@@ -12,7 +12,6 @@ declare const hljs
 declare const LewMessage
 declare const LewDialog
 
-declare module 'lodash-es'
 declare const LewNotification: (typeof import('../directives'))['LewNotification']
 
 declare interface Window {
