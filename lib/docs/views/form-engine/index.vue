@@ -121,6 +121,7 @@ const getModel = () => {
     const rowEnd = rowStart + item.spanMap[formGlobal.value.columns]
     item.gridArea = `auto  / ${rowStart} / auto  / ${rowEnd}`
     delete item.spanMap
+    delete item.fieldType
   })
   const componentModel = {
     ...formGlobal.value,
@@ -149,7 +150,6 @@ const deleteItem = (item: any) => {
     cancelText: '手滑了',
     ok: () => {
       options.value = options.value.filter((e: any) => e.id !== item.id)
-      formatFormMap()
     }
   })
 }
@@ -181,6 +181,22 @@ if (!isInfo) {
     }
   })
 }
+
+const addComponent = (item: any) => {
+  options.value.push(
+    cloneDeep({
+      ...item,
+      id: `${item.as}_${dayjs().format('YYYYMMDD')}_${getUniqueId()}`,
+      spanMap: {
+        1: 1,
+        2: 1,
+        3: 1,
+        4: 1
+      },
+      field: `${getUniqueId()}`
+    })
+  )
+}
 </script>
 
 <template>
@@ -200,7 +216,13 @@ if (!isInfo) {
         }"
       >
         <template #item="{ element }">
-          <lew-flex direction="y" gap="5" class="lew-form-component-box">
+          <lew-flex
+            @click="addComponent(element)"
+            x="center"
+            direction="y"
+            gap="5"
+            class="lew-form-component-box"
+          >
             <img :src="getComponentIcon(element.as || 'blank')" alt="" srcset="" />
             {{ element.label }}
           </lew-flex>

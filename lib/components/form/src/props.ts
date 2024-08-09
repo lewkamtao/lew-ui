@@ -6,7 +6,8 @@ export const formProps = {
   id: {
     type: String,
     default: '',
-    description: '表单唯一标识'
+    description: '表单唯一标识',
+    hidden: true
   },
   options: {
     type: Array,
@@ -52,6 +53,12 @@ export const formProps = {
 }
 
 export const formItemProps = {
+  id: {
+    type: String,
+    default: '',
+    description: '表单Item唯一标识',
+    hidden: true
+  },
   label: {
     type: String,
     default: '',

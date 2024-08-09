@@ -268,7 +268,7 @@ onUnmounted(() => {
     opacity: 0.6;
   }
   .lew-tabs-item:active {
-    opacity: 1;
+    opacity: 0.3;
   }
 
   .lew-tabs-item-active {

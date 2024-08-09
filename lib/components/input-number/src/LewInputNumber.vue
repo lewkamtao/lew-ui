@@ -64,6 +64,16 @@ const getInputNumberStyle: any = computed(() => {
   }
 })
 
+const getIconSize = computed(() => {
+  const { size } = props
+  const sizeMap: Record<string, number> = {
+    small: 12,
+    medium: 13,
+    large: 14
+  }
+  return `${sizeMap[size]}px`
+})
+
 defineExpose({ toFocus })
 </script>
 
@@ -91,6 +101,18 @@ defineExpose({ toFocus })
       @blur="blur"
       @focus="focus"
     />
+    <lew-flex
+      :style="{
+        height: `var(--lew-form-item-height-${size})`
+      }"
+      direction="y"
+      x="end"
+      gap="2px"
+      class="lew-input-number-control"
+    >
+      <lew-icon class="lew-input-number-icon" :size="getIconSize" type="plus"></lew-icon>
+      <lew-icon class="lew-input-number-icon" :size="getIconSize" type="minus"></lew-icon>
+    </lew-flex>
   </div>
 </template>
 
@@ -109,7 +131,7 @@ defineExpose({ toFocus })
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   overflow: hidden;
   .lew-input-number {
-    width: 100%;
+    width: calc(100% - 30px);
     text-overflow: ellipsis;
     border: none;
     background: none;
@@ -133,14 +155,43 @@ defineExpose({ toFocus })
   .lew-input-number::placeholder {
     color: rgb(165, 165, 165);
   }
+
+  .lew-input-number-control {
+    width: 30px;
+    height: 100%;
+    padding-right: 2px;
+	user-select: none;
+    .lew-input-number-icon {
+      padding: 0px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+    .lew-input-number-icon:hover {
+      transform: scale(1.05);
+    }
+    .lew-input-number-icon:active {
+      transform: scale(0.95);
+    }
+  }
 }
 .lew-input-number-view:hover {
   background-color: var(--lew-form-bgcolor-hover);
+  .lew-input-number-control {
+    .lew-input-number-icon {
+      background-color: var(--lew-bgcolor-2);
+    }
+  }
 }
 .lew-input-number-view:focus-within {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
   outline: var(--lew-form-ouline);
   background-color: var(--lew-form-bgcolor-focus);
+  .lew-input-number-control {
+    .lew-input-number-icon {
+      background-color: var(--lew-bgcolor-4);
+    }
+  }
 }
 .lew-input-number-view-readonly {
   pointer-events: none;
