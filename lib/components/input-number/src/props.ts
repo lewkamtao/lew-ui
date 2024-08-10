@@ -16,7 +16,7 @@ export const inputNumberProps = {
   },
   step: {
     type: [Number, String],
-    default: 0.01,
+    default: 1,
     description: '允许小数值，步长默认为 0.01，精确到小数点后 2 位'
   },
   min: {
