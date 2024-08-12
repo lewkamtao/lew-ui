@@ -28,7 +28,7 @@ const change = (e: Options) => {
 
 <template>
   <lew-flex direction="y" x="start" y="start">
-    <lew-tabs v-model="value" round :options="options" @change="change" />
+    <lew-tabs v-model="value" width="auto" round :options="options" @change="change" />
     <lew-tabs
       v-model="value2"
       round

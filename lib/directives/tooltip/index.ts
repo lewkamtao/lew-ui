@@ -1,1 +1,1 @@
-export { default as LewTooltip } from './src'
+export * from './src'

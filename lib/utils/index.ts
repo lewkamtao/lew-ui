@@ -32,7 +32,7 @@ export const object2class = (prefix: string, props: Object) => {
   for (const [key, value] of Object.entries(props)) {
     if (typeof value === 'boolean' && value) {
       className += ` ${prefix}-${key}`
-    } else if (typeof value === 'string') {
+    } else if (typeof value === 'string' || typeof value === 'number') {
       className += ` ${prefix}-${key}-${value}`
     }
   }
@@ -90,12 +90,6 @@ export const any2px = (value: number | string | undefined): string => {
   return ''
 }
 
-/** @func 生成uid */
-let uid = 1
-export function genUid(): number {
-  return Date.now() + uid++
-}
-
 export const lewSetForm = ({
   formRef,
   params
@@ -117,14 +111,11 @@ export const lewSetForm = ({
   _fn()
 }
 
-export const getUUId = () => {
+export const getUniqueId = () => {
   // 生成一个随机字符串作为UUID的前缀
-  const randomString =
-    Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-
+  const randomString = Math.random().toString(16).substring(2, 8)
   // 使用Lodash的uniqueId()方法生成UUID
-  const uuid = uniqueId(randomString)
-  return uuid
+  return uniqueId(randomString)
 }
 
 export const getStatusIcon = (type: string) => {
@@ -144,4 +135,108 @@ export const getStatusIcon = (type: string) => {
       '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x vue-feather__content"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
   }
   return svgArr[type]
+}
+
+export const formatFormByMap = (formMap: any) => {
+  const form = {}
+  Object.keys(formMap).forEach((key) => {
+    const value = formMap[key]
+    const keys = key.split('.')
+    let obj: any = form
+    for (let i = 0; i < keys.length - 1; i++) {
+      const k = keys[i]
+      if (!obj[k]) {
+        obj[k] = {}
+      }
+      obj = obj[k]
+    }
+    obj[keys[keys.length - 1]] = value
+  })
+  return form
+}
+
+export const formatBytes = (bytes: number, decimals: number = 2) => {
+  if (bytes === 0) return '0 Bytes'
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
+}
+
+// 获取assets静态资源
+export const getAssetsFile = ({ name, type }: { name: string; type: string }) => {
+  return new URL(`../assets/${type}/${name}`, import.meta.url).href
+}
+
+export const getFileIcon = (fileName: string = '') => {
+  // 根据文件名 判断后缀名
+  const suffix = fileName.split('.').pop()
+  switch (suffix) {
+    case 'doc':
+    case 'docx':
+    case 'wps':
+      return getAssetsFile({ name: 'file_word.svg', type: 'icon' })
+    case 'pdf':
+    case 'PDF':
+    case 'PDFX':
+      return getAssetsFile({ name: 'file_pdf.svg', type: 'icon' })
+    case 'ppt':
+    case 'pptx':
+      return getAssetsFile({ name: 'file_ppt.svg', type: 'icon' })
+    case 'txt':
+    case 'txtx':
+      return getAssetsFile({ name: 'file_txt.svg', type: 'icon' })
+    case 'xls':
+    case 'xlsx':
+    case 'et':
+    case 'etx':
+    case 'ett':
+      return getAssetsFile({ name: 'file_excel.svg', type: 'icon' })
+    case 'csv':
+      return getAssetsFile({ name: 'file_csv.svg', type: 'icon' })
+    case 'zip':
+    case 'rar':
+    case '7z':
+    case 'zipx':
+    case 'gz':
+      return getAssetsFile({ name: 'file_rar.svg', type: 'icon' })
+    case 'mp3':
+    case 'wma':
+    case 'm4a':
+    case 'mp3x':
+      return getAssetsFile({ name: 'file_audio.svg', type: 'icon' })
+    case 'mp4':
+    case 'avi':
+    case 'mkv':
+    case 'flv':
+      return getAssetsFile({ name: 'file_mp4.svg', type: 'icon' })
+    case 'png':
+    case 'jpg':
+    case 'jpeg':
+    case 'gif':
+    case 'webp':
+    case 'svg':
+    case 'bmp':
+    case 'ico':
+      return getAssetsFile({ name: 'file_img.svg', type: 'icon' })
+    case 'psd':
+    case 'psdx':
+      return getAssetsFile({ name: 'file_psd.svg', type: 'icon' })
+    case 'ai':
+    case 'cdr':
+      return getAssetsFile({ name: 'file_ai.svg', type: 'icon' })
+    case 'cad':
+      return getAssetsFile({ name: 'file_cad.svg', type: 'icon' })
+    case 'html':
+    case 'htm':
+    case 'xhtml':
+      return getAssetsFile({ name: 'file_html.svg', type: 'icon' })
+    case 'project':
+      return getAssetsFile({ name: 'file_project.svg', type: 'icon' })
+    case 'vsdx':
+      return getAssetsFile({ name: 'file_visio.svg', type: 'icon' })
+    default:
+      return getAssetsFile({ name: 'file_default.svg', type: 'icon' })
+  }
 }

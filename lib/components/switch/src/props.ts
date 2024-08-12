@@ -13,7 +13,7 @@ export const switchProps = {
     description: '绑定值'
   },
   round: {
-    type: Boolean,
+    type: [Boolean, Number],
     default: true,
     description: '是否圆角'
   },

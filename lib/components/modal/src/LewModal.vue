@@ -52,7 +52,10 @@ watch(
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
-    if (v && visible.value) {
+    const dialogEl = document.getElementById('lew-dialog')
+    const hasDialog = dialogEl && dialogEl.children.length > 0
+    // 且 dialogEl 不为空
+    if (v && visible.value && !hasDialog) {
       visible.value = false
     }
   })
@@ -88,6 +91,7 @@ if (props.closeByEsc) {
             </div>
             <lew-flex v-else-if="!hideFooter" x="end" y="center" class="footer">
               <lew-button
+                v-if="!hideCancelButton"
                 v-bind="{
                   type: 'text',
                   text: '取消',
@@ -98,6 +102,7 @@ if (props.closeByEsc) {
                 @click="cancel"
               />
               <lew-button
+                v-if="!hideOkButton"
                 v-bind="{
                   text: '确定',
                   color: 'primary',

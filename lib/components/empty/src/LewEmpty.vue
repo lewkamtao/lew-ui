@@ -7,9 +7,11 @@ const props = defineProps(emptyProps)
 let src = new URL(`../icon/icon_${props.type}.svg`, import.meta.url).href
 
 const emptyStyleObject = computed(() => {
+  const { width, height, padding } = props
   return {
-    width: any2px(props.width),
-    height: any2px(props.height)
+    width: any2px(width),
+    height: any2px(height),
+    padding: padding
   }
 })
 </script>
@@ -17,7 +19,14 @@ const emptyStyleObject = computed(() => {
 <template>
   <div class="lew-empty" :style="emptyStyleObject">
     <img :src="src" alt="" srcset="" />
-    <div class="title">{{ title }}</div>
+    <div
+      :style="{
+        fontSize: any2px(fontSize)
+      }"
+      class="title"
+    >
+      {{ title }}
+    </div>
   </div>
 </template>
 

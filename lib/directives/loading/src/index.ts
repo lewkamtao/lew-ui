@@ -4,7 +4,7 @@ import { LewIcon } from 'lew-ui'
 import { createApp } from 'vue'
 import '../styles/index.scss'
 
-export default {
+export const LewLoading = {
   install(app: Application) {
     app.directive('loading', {
       mounted(el: HTMLElement, binding: DirectiveBinding) {

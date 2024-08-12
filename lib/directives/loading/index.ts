@@ -1,1 +1,1 @@
-export { default as LewLoading } from './src'
+export * from './src'

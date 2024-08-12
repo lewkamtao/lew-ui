@@ -1,6 +1,5 @@
 import { getStatusIcon } from 'lew-ui/utils'
 import '../styles/index.scss'
-import { t } from 'vitest/dist/index-4a906fa4'
 
 type MessageFnOptions = {
   id: string
@@ -21,30 +20,37 @@ const createMessageList = () => {
 }
 
 const showMessage = ({ type, e }: MessageOptions) => {
+  const { id, content, duration } = e
+
   const messageContainer: any = document.getElementById('lew-message')
-  const hasMessageById = e.id ? document.getElementById(`message-id-${e.id}`) : false
+  const hasMessageById = id ? document.getElementById(`message-id-${id}`) : false
   const messageElement = hasMessageById || document.createElement('div')
-  messageElement.innerHTML = `${getStatusIcon(type)}<div class="content">${e.content || e}</div>`
+  messageElement.innerHTML = `${getStatusIcon(type)}<div class="content">${content || e}</div>`
 
   if (!hasMessageById) {
-    if (e.id) {
-      messageElement.setAttribute('id', `message-id-${e.id}`)
+    if (id) {
+      messageElement.setAttribute('id', `message-id-${id}`)
     }
     messageContainer?.appendChild(messageElement, messageContainer?.childNodes[0])
   } else {
-    clearTimeout(LewMessage.timer[e.id])
+    clearTimeout(LewMessage.timer[id])
   }
 
-  messageElement.setAttribute('class', `message message-${type} message-id-${e.id}`)
+  messageElement.setAttribute('class', `message message-${type} message-id-${id}`)
 
   setTimeout(() => {
-    messageElement.setAttribute('class', `message message-${type} message-show`)
-    LewMessage.timer[e.id] = setTimeout(() => {
-      messageElement.setAttribute('class', `message message-${type} message-hidden`)
-      setTimeout(() => {
-        if (messageElement) messageContainer?.removeChild(messageElement)
-      }, 350)
-    }, e.duration || 3000)
+    nextTick(() => {
+      messageElement.setAttribute('class', `message message-${type} message-show`)
+      LewMessage.timer[id] = setTimeout(
+        () => {
+          messageElement.setAttribute('class', `message message-${type} message-hidden`)
+          setTimeout(() => {
+            if (messageElement) messageContainer?.removeChild(messageElement)
+          }, 250)
+        },
+        duration === 0 ? 31536000000 : duration || 3000
+      )
+    })
   }, 10)
 }
 const removeClass = (element: any, className: any) => {
@@ -88,10 +94,12 @@ const LewMessage: any = {
         duration: 0
       })
 
+      const startTime = new Date().getTime()
+
       // 执行异步方法
       asyncFn()
         .then(
-          ({
+          async ({
             content = '请求成功！',
             duration = 3000,
             type = 'success'
@@ -100,9 +108,13 @@ const LewMessage: any = {
             duration: number
             type?: string
           }) => {
-            // 隐藏loading消息
+            // 最小延迟 250ms 保持动画流畅
+            const endTime = new Date().getTime()
+            const delay = 250
+            if (endTime - startTime < delay) {
+              await new Promise((resolve) => setTimeout(resolve, delay - (endTime - startTime)))
+            }
             LewMessage.close({ id: 'request-loading' })
-
             // 显示success消息
             LewMessage[type]({
               content,

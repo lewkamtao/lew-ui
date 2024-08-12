@@ -8,12 +8,11 @@ import { useDOMCreate } from 'lew-ui/hooks'
 const { Escape } = useMagicKeys()
 useDOMCreate('lew-dialog')
 const props = defineProps(dialogProps)
-const emit = defineEmits(['close', 'show'])
+const emit = defineEmits(['close'])
 const visible = ref<boolean>(false)
 const okLoading = ref<boolean>(false)
 const cancelLoading = ref<boolean>(false)
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const maskClick = () => {
   if (props?.closeOnClickOverlay) {
     visible.value = false
@@ -27,9 +26,7 @@ onMounted(() => {
 watch(
   () => visible.value,
   (newVal) => {
-    if (newVal) {
-      emit('show')
-    } else {
+    if (!newVal) {
       setTimeout(() => {
         emit('close')
       }, 500)

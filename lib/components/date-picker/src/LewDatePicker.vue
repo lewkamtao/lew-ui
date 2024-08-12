@@ -2,6 +2,8 @@
 import { object2class } from 'lew-ui/utils'
 import { LewPopover, LewIcon, LewDate, LewTooltip } from 'lew-ui'
 import { datePickerProps } from './props'
+import dayjs from 'dayjs'
+import { cloneDeep } from 'lodash-es'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -15,6 +17,7 @@ const modelValue: Ref<string | undefined> = defineModel()
 const visible = ref(false)
 
 const lewPopoverRef = ref()
+
 const lewDateRef = ref()
 
 const show = () => {
@@ -26,8 +29,18 @@ const hide = () => {
 }
 
 const change = (date: string | undefined) => {
-  emit('change', { date, show, hide })
+  emit('change', { date, value: cloneDeep(modelValue.value) })
   hide()
+}
+
+const selectPresets = (item: { label: string; value: string }) => {
+  modelValue.value = dayjs(item.value).format(props.valueFormat)
+  lewDateRef.value && lewDateRef.value.init(item.value)
+  setTimeout(() => {
+    nextTick(() => {
+      change(modelValue.value)
+    })
+  }, 100)
 }
 
 const getIconSize = computed(() => {
@@ -53,7 +66,7 @@ const clearHandle = () => {
 
 const showHandle = () => {
   visible.value = true
-  lewDateRef.value.init()
+  lewDateRef.value && lewDateRef.value.init(modelValue.value)
 }
 const hideHandle = () => {
   visible.value = false
@@ -105,14 +118,40 @@ defineExpose({ show, hide })
       </div>
     </template>
     <template #popover-body>
-      <lew-date ref="lewDateRef" v-model="modelValue" v-bind="props" @change="change" />
+      <lew-flex gap="0">
+        <lew-flex
+          v-if="(presets || []).length > 0"
+          direction="y"
+          gap="7"
+          y="start"
+          class="lew-date-picker-presets lew-scrollbar"
+        >
+          <div
+            v-for="(item, index) in presets"
+            @click="selectPresets(item)"
+            :key="index"
+            class="item"
+            v-tooltip="{
+              content: dayjs(item.value).format(valueFormat),
+              placement: 'right',
+              delay: [500, 80]
+            }"
+            :class="[dayjs(modelValue).isSame(item.value, 'day') ? 'item-actived' : '']"
+          >
+            {{ item.label }}
+          </div>
+        </lew-flex>
+        <lew-flex class="lew-date-picker-date-panel">
+          <lew-date ref="lewDateRef" v-model="modelValue" v-bind="props" @change="change" />
+        </lew-flex>
+      </lew-flex>
     </template>
   </lew-popover>
 </template>
 
 <style lang="scss" scoped>
 .lew-popover {
-  width: 273px;
+  width: 100%;
 
   .lew-date-picker-view {
     display: inline-flex;
@@ -200,5 +239,38 @@ defineExpose({ show, hide })
 .lew-date-picker-disabled {
   pointer-events: none;
   opacity: var(--lew-disabled-opacity);
+}
+
+:deep() {
+  .lew-date-picker-date-panel {
+    width: 273px;
+    flex-shrink: 0;
+  }
+
+  .lew-date-picker-presets {
+    flex-shrink: 0;
+    height: 325px;
+    overflow-y: auto;
+    padding: 7px;
+    box-sizing: border-box;
+    width: 120px;
+    border-right: var(--lew-pop-border);
+    .item {
+      width: 100%;
+      height: 30px;
+      line-height: 30px;
+      border-radius: var(--lew-border-radius-small);
+      text-align: center;
+      background-color: var(--lew-form-bgcolor);
+      cursor: pointer;
+    }
+    .item:hover {
+      background-color: var(--lew-form-bgcolor-hover);
+    }
+    .item-actived {
+      background-color: var(--lew-color-blue) !important;
+      color: var(--lew-color-white);
+    }
+  }
 }
 </style>

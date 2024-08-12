@@ -56,7 +56,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
           <lew-text-trim placement="bottom" :text="item.title" />
         </div>
         <div class="lew-steps-item-description">
-          <lew-text-trim allowHtml :lineClamp="2" placement="bottom" :text="item.description" />
+          <lew-text-trim allowHTML :lineClamp="2" placement="bottom" :text="item.description" />
         </div>
       </div>
     </div>

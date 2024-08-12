@@ -16,25 +16,27 @@ const _year = dayjs().year()
 // 获取当前月份
 const _month = dayjs().month() + 1
 
+const dateData: Ref<RetType> = ref(getMonthDate())
+
 const dateState = reactive({
   year: _year,
   month: _month
 })
 
-const init = () => {
-  dateState.year = dayjs(modelValue.value || undefined).year()
-  dateState.month = dayjs(modelValue.value || undefined).month() + 1
+const setMonthDate = () => {
+  dateData.value = getMonthDate(dateState.year, dateState.month)
 }
 
-init()
+const init = (date: string | undefined = '') => {
+  dateState.year = dayjs(date || undefined).year()
+  dateState.month = dayjs(date || undefined).month() + 1
+  console.log(1)
+  setMonthDate()
+}
+
+init(modelValue.value)
 
 defineExpose({ init })
-
-const dateData: Ref<RetType> = ref(getMonthDate())
-
-onMounted(() => {
-  setMonthDate()
-})
 
 const prveMonth = () => {
   if (dateState.month > 1) {
@@ -64,10 +66,6 @@ const prveYear = () => {
 const nextYear = () => {
   dateState.year += 1
   setMonthDate()
-}
-
-const setMonthDate = () => {
-  dateData.value = getMonthDate(dateState.year, dateState.month)
 }
 
 const selectDateFn = (item: RetItemType) => {
@@ -137,7 +135,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
 
 <style lang="scss" scoped>
 .lew-date {
-  width: 273px;
+  width: 280px;
   user-select: none;
   padding: 15px;
   box-sizing: border-box;
@@ -157,6 +155,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
       height: 100%;
       font-weight: bold;
       font-size: 15px;
+      white-space: nowrap;
       color: var(--lew-text-color-0);
     }
 

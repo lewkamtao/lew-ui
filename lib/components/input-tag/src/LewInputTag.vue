@@ -83,7 +83,7 @@ const getInputClassNames = computed(() => {
 })
 
 const getIconSize = computed(() => {
-  const size: any = {
+  const size: Record<string, number> = {
     small: 13,
     medium: 14,
     large: 16

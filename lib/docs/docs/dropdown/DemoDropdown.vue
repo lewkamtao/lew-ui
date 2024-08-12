@@ -17,6 +17,8 @@ const options = ref(
     return API[key]
   })
 )
+
+const { push } = useRouter()
 </script>
 
 <template>
@@ -24,7 +26,9 @@ const options = ref(
     <lew-title>Dropdown</lew-title>
     <p class="sub-title">
       你可以使用
-      <lew-mark to="/Popover" type="light" color="blue">Popover</lew-mark>
+      <lew-mark cursor="pointer" k @click="push('/Popover')" type="light" color="blue"
+        >Popover</lew-mark
+      >
       进行高度自定义下拉菜单
     </p>
     <lew-demo-box title="常规" :code="DemoDropdown1Code">
@@ -36,11 +40,12 @@ const options = ref(
     <lew-demo-box title="无箭头" :code="DemoDropdown3Code">
       <demo-dropdown3 />
     </lew-demo-box>
-
     <lew-docs-tables :options="options" />
     <p class="demo-tips">
       你可以在
-      <lew-mark to="/Tooltip" type="light" color="blue">Tooltip</lew-mark>
+      <lew-mark cursor="pointer" @click="push('/Tooltip')" type="light" color="blue"
+        >Tooltip</lew-mark
+      >
       找到你需要的位置参数。
     </p>
   </div>

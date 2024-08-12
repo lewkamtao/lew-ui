@@ -11,5 +11,12 @@ declare module 'highlight.js'
 declare const hljs
 declare const LewMessage
 declare const LewDialog
-declare module 'lodash-es'
+
 declare const LewNotification: (typeof import('../directives'))['LewNotification']
+
+declare interface Window {
+  LewContextMenu: LewContextMenu
+  LewNotification: LewNotification
+  LewDialog: LewDialog
+  LewMessage: LewMessage
+}

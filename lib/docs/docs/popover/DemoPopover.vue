@@ -10,6 +10,8 @@ const options = ref(
     return API[key]
   })
 )
+
+const { push } = useRouter()
 </script>
 
 <template>
@@ -17,7 +19,9 @@ const options = ref(
     <lew-title>Popover</lew-title>
     <p class="sub-title">
       如果你需要信息提示，请可以尝试一下
-      <lew-mark type="light" color="blue" to="/Tooltip">Tooltip</lew-mark>
+      <lew-mark cursor="pointer" type="light" color="blue" @click="push('/Tooltip')"
+        >Tooltip</lew-mark
+      >
     </p>
     <lew-demo-box title="询问校验" badge="自定义 HTML" :code="DemoPopover1Code">
       <demo-popover1 />

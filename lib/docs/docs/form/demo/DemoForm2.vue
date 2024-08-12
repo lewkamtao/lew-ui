@@ -34,28 +34,29 @@ const options = ref([
     }
   },
   {
-    field: 'name', // 字段名
-    label: '姓名', // 标签
-    as: 'input', // 组件
-    rules: Yup.string()
+    field: 'name',
+    label: '姓名',
+    as: 'input',
+    rule: Yup.string()
       .matches(/^[a-zA-Z]+$/, '必须为纯英文字母')
       .min(4, '长度必须至少为4')
       .max(16, '长度不能超过16')
-      .required('不能为空'), // 校验规则
+      .required('不能为空'),
+    required: true,
     props: {
-      // 组件props
       clearable: true
     }
   },
   {
-    field: 'remark', // 字段名
-    label: '备注', // 标签
-    as: 'input', // 组件
-    rules: Yup.string()
+    field: 'remark',
+    label: '备注',
+    as: 'input',
+    rule: Yup.string()
       .matches(/^[a-zA-Z]+$/, '必须为纯英文字母')
       .min(4, '长度必须至少为4')
       .max(16, '长度不能超过16')
-      .required('不能为空'), // 校验规则
+      .required('不能为空'),
+    required: true,
     props: {
       clearable: true
     }
@@ -64,7 +65,7 @@ const options = ref([
     field: 'intro',
     label: '介绍',
     as: 'input',
-    rules: Yup.string()
+    rule: Yup.string()
       .matches(/^[\u4e00-\u9fa5]+$/, '必须为纯中文')
       .min(30, '长度必须至少为30')
       .max(300, '长度不能超过8')
@@ -78,7 +79,8 @@ const options = ref([
     field: 'birth',
     label: '生日',
     as: 'date-picker',
-    rules: Yup.string().required('不能为空'),
+    rule: Yup.string().required('不能为空'),
+    required: true,
     props: {
       clearable: true
     }
@@ -87,7 +89,8 @@ const options = ref([
     field: 'date.birth',
     label: '有效期',
     as: 'date-range-picker',
-    rules: Yup.object().required('不能为空'),
+    rule: Yup.object().required('不能为空'),
+    required: true,
     props: {
       clearable: true
     }
@@ -96,7 +99,8 @@ const options = ref([
     field: 'user.city',
     label: '城市',
     as: 'select',
-    rules: Yup.string().required('此项必填'),
+    required: true,
+    rule: Yup.string().required('此项必填'),
     props: {
       change: (e: any) => {
         console.log(e)
@@ -130,7 +134,8 @@ const options = ref([
     field: 'user.agree',
     label: '',
     as: 'checkbox',
-    rules: Yup.boolean().oneOf([true], '请同意').required('请同意'),
+    required: true,
+    rule: Yup.boolean().oneOf([true], '请同意').required('请同意'),
     props: {
       label: '是否同意'
     }
@@ -154,14 +159,13 @@ const submit = () => {
 </script>
 
 <template>
-  <lew-flex x="start" y="start" :gap="50">
+  <lew-flex width="500" x="start" y="start" :gap="50">
     <lew-form
       ref="formRef"
       direction="y"
       class="form-box"
       :size="form.size"
       :options="options"
-      :labelWidth="80"
       @change="
         (e: any) => {
           form = e
@@ -169,7 +173,6 @@ const submit = () => {
       "
     />
     <lew-flex style="width: calc(100% - 380px)" direction="y" x="start">
-      <lew-button text="获取form" @click="form = formRef.getForm()" />
       <pre>{{ form }}</pre>
     </lew-flex>
   </lew-flex>

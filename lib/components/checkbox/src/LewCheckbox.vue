@@ -11,8 +11,8 @@ const modelValue: Ref<boolean | undefined> = defineModel({
 
 const setChecked = (e: Event) => {
   const { checked } = e.target as HTMLInputElement
-  emit('change', checked)
   modelValue.value = checked
+  emit('change', checked)
 }
 
 const getIconSize = computed(() => {
@@ -78,7 +78,6 @@ const getCheckboxClassName = computed(() => {
     border-radius: 6px;
     transition: var(--lew-form-transition);
     background-color: var(--lew-bgcolor-1);
-    outline: 0px var(--lew-checkbox-color-light) solid;
     overflow: hidden;
 
     .icon-checkbox {
@@ -89,6 +88,8 @@ const getCheckboxClassName = computed(() => {
       transition: var(--lew-form-transition);
       opacity: 0;
       color: var(--lew-color-white);
+      width: 100%;
+      height: 100%;
     }
   }
 
@@ -156,14 +157,13 @@ const getCheckboxClassName = computed(() => {
 .lew-checkbox:hover {
   .icon-checkbox-box {
     border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
-    outline: var(--lew-form-ouline);
     background: var(--lew-form-bgcolor);
   }
 }
 
 .lew-checkbox-block {
   background: var(--lew-checkbox-block-color);
-  border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
+  border: var(--lew-form-border-width) transparent solid;
   border-radius: var(--lew-border-radius-small);
   .icon-checkbox-box {
     .icon-checkbox {
@@ -207,7 +207,7 @@ const getCheckboxClassName = computed(() => {
     background: var(--lew-checkbox-color);
 
     .icon-checkbox {
-      transform: translate(-50%, -50%) scale(1);
+      transform: translate(-50%, -50%) scale(0.7);
       opacity: 1;
     }
   }

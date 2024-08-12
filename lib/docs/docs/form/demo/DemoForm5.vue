@@ -1,37 +1,10 @@
 <script setup lang="ts">
-import * as Yup from 'yup'
-
-const options = ref([
-  {
-    field: 'username',
-    label: '用户名',
-    component: 'lew-input',
-    rules: Yup.string().required(),
-    props: {}
-  },
-  {
-    field: 'password',
-    label: '密码',
-    component: 'lew-input',
-    rules: Yup.string().min(6).required(),
-    props: {
-      type: 'password'
-    }
-  }
-])
+import options from './form_20240714_155154_quvi8vkan.json'
+const bindOptions = options
 </script>
 
 <template>
-  <lew-form class="form-box" :options="options" :labelWidth="80" />
+  <lew-flex x="start" y="start" :gap="50">
+    <lew-form v-bind="bindOptions" />
+  </lew-flex>
 </template>
-<style scoped lang="scss">
-.form-box {
-  width: 380px;
-  margin: 0 auto;
-}
-@media (max-width: 767px) {
-  .form-box {
-    width: 100%;
-  }
-}
-</style>

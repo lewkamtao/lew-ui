@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { breadcrumbProps } from './props'
-import { useLewTo } from '../../../hooks'
+const emit = defineEmits(['click'])
 
-const { lewTo } = useLewTo()
 defineProps(breadcrumbProps)
 </script>
 
@@ -14,9 +13,9 @@ defineProps(breadcrumbProps)
       class="lew-breadcrumb-item"
       :class="{ 'lew-breadcrumb-active': item.active }"
     >
-      <span :class="{ 'lew-breadcrumb-isPath': !!item.to }" @click="lewTo(item.to)">{{
-        item.label
-      }}</span>
+      <span :class="{ 'lew-breadcrumb-isPath': !!item.value }" @click="emit('click', item)">
+        {{ item.label }}
+      </span>
       <div v-if="index != options.length - 1" class="lew-breadcrumb-parting">
         <svg
           v-if="iconType === 'sprit'"

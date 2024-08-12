@@ -67,7 +67,7 @@
   --lew-color-cyan-light: rgba(52, 131, 184, 0.0918);
   --lew-color-blue: rgb(52, 120, 246);
   --lew-color-blue-dark: rgb(35, 103, 230);
-  --lew-color-blue-light: #e9edf7;
+  --lew-color-blue-light: rgba(52, 120, 246, 0.075);
   --lew-color-indigo: rgb(88, 86, 207);
   --lew-color-indigo-dark: rgb(53, 51, 157);
   --lew-color-indigo-light: rgba(53, 51, 157, 0.0918);
@@ -144,7 +144,7 @@
   --lew-form-border-width: 2px;
   --lew-form-transition: all 0.2s cubic-bezier(0.3, 1.3, 0.3, 1);
   --lew-form-ouline: 0px var(--lew-color-primary-light) solid;
-  --lew-form-bgcolor: rgb(243, 243, 243);
+  --lew-form-bgcolor: rgba(243, 243, 243, 0.76);
   --lew-form-bgcolor-hover: rgb(228, 228, 228);
   --lew-form-bgcolor-active: rgb(215, 215, 215);
   --lew-form-bgcolor-focus: rgb(255, 255, 255);
@@ -156,6 +156,12 @@
   --lew-form-input-padding-small: 2px 10px;
   --lew-form-input-padding-medium: 4px 12px;
   --lew-form-input-padding-large: 6px 14px;
+  --lew-form-upload-padding-small: 14px 10px;
+  --lew-form-upload-padding-medium: 18px 12px;
+  --lew-form-upload-padding-large: 22px 14px;
+  --lew-form-upload-item-padding-small: 8px;
+  --lew-form-upload-item-padding-medium: 10px;
+  --lew-form-upload-item-padding-large: 12px;
   --lew-form-item-height-small: 30px;
   --lew-form-item-height-medium: 34px;
   --lew-form-item-height-large: 38px;
@@ -195,14 +201,14 @@
   // loading
   --lew-loading-bgcolor: rgb(255, 255, 255, 0.8);
   // povpoer
-  --lew-popover-bgcolor: #fff;
+  --lew-pop-bgcolor: #fff;
   // message
   --lew-message-bgcolor: rgba(255, 255, 255, 1);
   // notification
   --lew-notification-bgcolor: rgba(255, 255, 255, 1);
   // popover
-  --lew-popover-border: 1px rgb(204, 204, 216) solid;
-  --lew-popover-box-shadow: 0 0px 30px #0000001e;
+  --lew-pop-border: 1px rgba(211, 211, 221, 0.693) solid;
+  --lew-pop-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
   --lew-tooltip-shadow: 0 0px 20px #0000002c;
 
   // table
@@ -243,7 +249,7 @@
   --lew-color-cyan-light: rgba(116, 216, 244, 0.0918);
   --lew-color-blue: rgb(43, 135, 255);
   --lew-color-blue-dark: rgb(43, 135, 255);
-  --lew-color-blue-light: #28303f;
+  --lew-color-blue-light: #28303fda;
   --lew-color-indigo: rgb(95, 93, 222);
   --lew-color-indigo-dark: rgb(119, 105, 245);
   --lew-color-indigo-light: rgba(107, 105, 245, 0.0918);
@@ -360,7 +366,7 @@
   --lew-form-border-color-focus: var(--lew-color-primary);
   --lew-form-ouline: 0px var(--lew-color-primary-light) solid;
   // tabs
-  --lew-tabs-active-color: rgb(14, 14, 14);
+  --lew-tabs-active-color: #3f3f45;
   // dialog / modal
   --lew-modal-bgcolor: rgba(0, 0, 0, 0.45);
   --lew-modal-header-border: 1px rgba(255, 255, 255, 0.1) solid;
@@ -374,13 +380,13 @@
   // loading
   --lew-loading-bgcolor: rgba(0, 0, 0, 0.7);
   // povpoer
-  --lew-popover-bgcolor: #323339;
+  --lew-pop-bgcolor: #323339;
   // message
   --lew-message-bgcolor: #4d4d58;
   // notification
   --lew-notification-bgcolor: #4d4d58;
   // popover
-  --lew-popover-border: 1px rgba(255, 255, 255, 0.15) solid;
+  --lew-pop-border: 1px rgba(255, 255, 255, 0.15) solid;
   // table
   --lew-table-header-bgColor: #131418;
   --lew-table-border: 1px rgba(255, 255, 255, 0.05) solid;
@@ -398,8 +404,9 @@
   --lew-radio-border-color-hover: var(--lew-color-primary);
   --lew-radio-color: var(--lew-color-primary);
   --lew-radio-color-light: var(--lew-color-primary-light);
-  --lew-pop-bg: #242529;
+  --lew-pop-bg: #1a1b1e;
   --lew-pop-bg-active: rgba(255, 255, 255, 0.05);
   --lew-tooltip-bg: #43444a;
   --lew-tooltip-color: #fff;
+  --lew-pop-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.06);
 }

@@ -56,6 +56,16 @@ export const modalProps = {
     },
     description: '确定按钮文字'
   },
+  hideOkButton: {
+    type: Boolean,
+    default: false,
+    description: '隐藏确定按钮'
+  },
+  hideCancelButton: {
+    type: Boolean,
+    default: false,
+    description: '隐藏取消按钮'
+  },
   closeOnClickOverlay: {
     type: Boolean,
     default: false,

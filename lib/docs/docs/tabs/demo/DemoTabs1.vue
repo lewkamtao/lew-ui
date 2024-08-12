@@ -58,10 +58,10 @@ const change = (e: Options) => {
 </script>
 
 <template>
-  <lew-flex direction="y" x="start">
+  <lew-flex style="width: 300px" direction="y" x="start">
     <lew-title :size="14">限制整体宽度</lew-title>
-    <lew-tabs v-model="value" size="small" style="width: 300px" :options="options" @change="change" />
-    <lew-tabs v-model="value" size="medium" style="width: 300px" :options="options" @change="change" />
-    <lew-tabs v-model="value" size="large" style="width: 300px" :options="options" @change="change" />
+    <lew-tabs v-model="value" size="small" :options="options" @change="change" />
+    <lew-tabs v-model="value" size="medium" :options="options" @change="change" />
+    <lew-tabs v-model="value" size="large" :options="options" @change="change" />
   </lew-flex>
 </template>

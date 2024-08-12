@@ -31,12 +31,15 @@ watch(route, () => {
   isShowSider.value = false
 })
 
-const options = ref<MenuOptions[]>([])
-options.value = [
+const options: MenuOptions[] = [
   {
     label: '基础',
     value: '基础',
     children: [
+      {
+        label: 'Image',
+        value: '/Image'
+      },
       {
         label: 'Avatar',
         value: '/Avatar'
@@ -100,7 +103,7 @@ options.value = [
       },
       {
         label: 'Menu',
-        value: '/Menu',
+        value: '/Menu'
       },
       {
         label: 'Dropdown',
@@ -109,6 +112,12 @@ options.value = [
       {
         label: 'Breadcrumb',
         value: '/Breadcrumb'
+      },
+      {
+        label: 'ContextMenu',
+        value: '/ContextMenu',
+        tagText: 'Beta',
+        tagColor: 'red'
       }
     ]
   },
@@ -125,6 +134,12 @@ options.value = [
       {
         label: 'Input',
         value: '/Input'
+      },
+      {
+        label: 'InputNumber',
+        value: '/InputNumber',
+        tagText: 'Beta',
+        tagColor: 'red'
       },
       {
         label: 'Textarea',
@@ -184,15 +199,14 @@ options.value = [
       {
         label: 'Switch',
         value: '/Switch'
-      }
+      },
 
-      // {
-      //     clabel: '文件上传',
-      //     label: 'Upload',
-      //     value: '/Upload',
-      //
-      //
-      // },
+      {
+        label: 'Upload',
+        value: '/Upload',
+        tagText: 'Beta',
+        tagColor: 'red'
+      }
     ]
   },
   {
@@ -216,14 +230,13 @@ options.value = [
         value: '/Tree',
         tagText: 'New',
         tagColor: 'success'
+      },
+      {
+        label: 'Collapse',
+        value: '/Collapse',
+        tagText: 'New',
+        tagColor: 'success'
       }
-      // {
-      //     clabel: '折叠面板',
-      //     label: 'Collapse',
-      //     value: '/Collapse',
-      //
-      //
-      // },
     ]
   },
   {
@@ -283,7 +296,12 @@ options.value = [
       }
     ]
   }
-]
+].map((item: any) => {
+  return {
+    ...item,
+    label: item.label + '（' + (item?.children || []).length + '）'
+  }
+})
 </script>
 
 <template>

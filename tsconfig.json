@@ -17,9 +17,15 @@
       "lew-ui": ["./lib"],
       "lew-ui/*": ["./lib/*"],
       "@/*": ["./lib/docs/*"]
-    }
+    },
   },
-  "include": ["lib/**/*.vue", "lib/**/*.ts", "lib/**/*.tsx", "lib/**/*.d.ts", "lib/docs/docs/inputTag/demo/DemoInputTag2vue"],
+  "include": [
+    "lib/**/*.vue",
+    "lib/**/*.ts",
+    "lib/**/*.tsx",
+    "lib/**/*.d.ts",
+    "lib/docs/docs/inputTag/demo/DemoInputTag2vue"
+  ],
   "exclude": ["lib/components/_backup/**/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

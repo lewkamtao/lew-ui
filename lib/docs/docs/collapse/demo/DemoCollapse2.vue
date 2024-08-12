@@ -1,33 +1,61 @@
 <script lang="ts" setup>
-const num = ref(23141323.23)
-const num2 = ref(3242313)
-let timer: any
-let timer2: any
-
-onMounted(() => {
-  timer2 = setInterval(() => {
-    num.value += Number((Math.random() * 2000).toFixed(2))
-    num.value = Number(num.value.toFixed(2))
-  }, 1500)
-  timer2 = setInterval(() => {
-    num2.value += parseInt(String(Math.random() * 500))
-  }, 1500)
-})
-
-onBeforeUnmount(() => {
-  clearInterval(timer)
-  clearInterval(timer2)
-})
+const value = ref([1])
+const companies = [
+  {
+    id: '1',
+    name: 'Apple',
+    description:
+      'Apple Inc. is an American multinational technology company that designs, manufactures, and markets consumer electronics, computer software, and online services. Founded by Steve Jobs, Steve Wozniak, and Ronald Wayne in 1976, Apple is known for its innovative products such as the iPhone, iPad, Mac computers, and Apple Watch.'
+  },
+  {
+    id: '2',
+    name: 'Google',
+    description:
+      'Google is a technology company that specializes in Internet-related services and products. Founded in 1998 by Larry Page and Sergey Brin while they were Ph.D. students at Stanford University, Google is now one of the most valuable companies in the world, known for its search engine, online advertising, and cloud computing services.'
+  },
+  {
+    id: '3',
+    name: 'Microsoft',
+    description:
+      'Microsoft Corporation is an American technology company that develops, manufactures, licenses, supports, and sells computer software, consumer electronics, and personal computers. Founded by Bill Gates and Paul Allen in 1975, Microsoft is best known for its Windows operating system and Office productivity suite.'
+  },
+  {
+    id: '4',
+    name: 'Tencent',
+    description:
+      'Tencent Holdings Limited is a Chinese multinational conglomerate holding company founded in 1998. Tencent is one of the largest technology companies in the world, offering a wide range of internet services and products, including social media, entertainment, and online payment systems.'
+  },
+  {
+    id: '5',
+    name: 'Amazon',
+    description:
+      "Amazon.com, Inc. is an American multinational technology company founded by Jeff Bezos in 1994. Amazon is the world's largest online retailer and cloud computing company, known for its e-commerce platform, Amazon Prime subscription service, and Amazon Web Services (AWS) cloud computing platform."
+  },
+  {
+    id: '6',
+    name: 'Tesla',
+    description:
+      "Tesla, Inc. is an American electric vehicle and clean energy company founded by Elon Musk, Martin Eberhard, Marc Tarpenning, JB Straubel, and Ian Wright in 2003. Tesla is known for its electric vehicles, energy storage solutions, and solar products, aiming to accelerate the world's transition to sustainable energy."
+  }
+]
 </script>
 
 <template>
-  <lew-flex x="start" direction="y">
-    <lew-flex x="start" y="end">
-      当前成交额： <lew-magic-number :value="num" :size="24" /> 元
-    </lew-flex>
-    <lew-flex x="start" y="end">
-      当前访问量：
-      <lew-magic-number :value="num2" :size="24" />
-    </lew-flex>
-  </lew-flex>
+  <lew-collapse width="400" v-model="value">
+    <lew-collapse-item
+      :title="item.name"
+      :collapse-key="item.id"
+      v-for="item in companies"
+      :key="item.id"
+    >
+      <template #title>
+        <lew-flex x="start">
+          {{ item.name }} <lew-tag v-if="item.id === '1'">全球领先</lew-tag>
+        </lew-flex>
+      </template>
+      <div>
+        {{ item.description }}
+      </div>
+    </lew-collapse-item>
+  </lew-collapse>
 </template>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { switchProps } from './props'
+import { object2class } from 'lew-ui/utils'
 
 const props = defineProps(switchProps)
 const _loading = ref(false)
@@ -26,19 +27,23 @@ const handleClick = async (e: any) => {
   }
   emit('change', modelValue.value)
 }
+
+const getSwitchClassName = computed(() => {
+  const { round, request } = props
+
+  let loading = props.loading || _loading.value
+
+  return object2class('lew-switch', {
+    checked: modelValue.value,
+    round: !!round,
+    request,
+    loading
+  })
+})
 </script>
 
 <template>
-  <div
-    class="lew-switch-view"
-    :class="`
-     ${round ? 'lew-switch-round' : ''} 
-         ${modelValue ? 'lew-switch-checked' : ''}
-         ${_loading || loading ? 'lew-switch-loading' : ''}
-         ${request ? 'lew-switch-request' : ''}
-    `"
-    @click="handleClick"
-  >
+  <div class="lew-switch-view" :class="getSwitchClassName" @click="handleClick">
     <input v-show="false" v-model="modelValue" type="checkbox" :disabled="disabled" />
     <div class="lew-switch-dot"></div>
   </div>

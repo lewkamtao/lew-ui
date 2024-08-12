@@ -91,7 +91,7 @@ const dialog = (type: ButtonColor, options: Options) => {
   div.remove()
 }
 
-export default {
+export const LewDialog = {
   name: 'LewDialog',
   warning,
   info,
@@ -99,3 +99,14 @@ export default {
   success,
   error
 }
+
+export type LewDialog = {
+  name: string
+  warning: (options: Options) => void
+  info: (options: Options) => void
+  normal: (options: Options) => void
+  success: (options: Options) => void
+  error: (options: Options) => void
+}
+
+export * from './props'

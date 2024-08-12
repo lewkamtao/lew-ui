@@ -3,7 +3,7 @@
     <lew-avatar
       :width="30"
       :height="30"
-      src="https://api.lew.kamtao.com/manage/common/avatar/350/4B78CA/王"
+      src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/王"
       alt="avatar"
     />
     <lew-avatar

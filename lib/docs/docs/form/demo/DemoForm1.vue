@@ -1,37 +1,33 @@
 <script setup lang="ts">
 import * as Yup from 'yup'
 import { schools } from '@/lib/data'
+import uploadHelper from 'lew-ui/docs/docs/upload/uploadHelper'
 
 const schoolsOptions = schools.map((e, i) => {
   return { label: e, value: i + 1 }
 })
 
-const form = ref({} as any)
+const formRef = ref()
 
-onMounted(() => {
-  // 设置表单
-  formRef.value.setForm({
-    size: 'medium',
-    input: '文本框',
-    textarea: '多行文本',
-    select: '1',
-    select_multiple: [1, 2],
-    radio_group: '2',
-    checkbox_group: ['2'],
-    tabs: '2',
-    user: {
-      address: 30,
-      addd: true
-    },
-    info: {
-      asd: {
-        dsd: {
-          input_tag: ['测试', '小芳']
-        }
-      }
-    }
+const submit = () => {
+  LewMessage.request({ loadingMessage: '处理中···' }, () => {
+    return new Promise<any>((resolve, reject) => {
+      formRef.value
+        .validate()
+        .then((vail: boolean) => {
+          if (vail) {
+            form.value = formRef.value.getForm()
+            resolve({ content: '加载成功！', duration: 1000, type: 'success' })
+          } else {
+            resolve({ content: '请完善表单', duration: 1000, type: 'warning' })
+          }
+        })
+        .catch((err: any) => {
+          reject(err)
+        })
+    })
   })
-})
+}
 const options = ref([
   {
     label: '表单大小',
@@ -57,21 +53,51 @@ const options = ref([
     }
   },
   {
-    field: 'input', // 字段名
-    label: '文本框', // 标签
-    as: 'input', // 组件
-    rules: Yup.string().required('不能为空'), // 校验规则
+    field: 'upload',
+    label: '上传',
+    as: 'upload',
+    required: true,
+    rule: Yup.array()
+      .of(
+        Yup.object({
+          status: Yup.string().oneOf(['success'], '请等待上传完成')
+        })
+      )
+      .min(3, '至少包含3个元素')
+      .required('此项必填'),
     props: {
-      // 组件props
+      uploadHelper,
+      multiple: true,
+      limit: 3,
+      accept: 'image/jpeg,image/png',
+      tips: '只能上传jpg/png文件，且不超过500kb，最多上传3个文件'
+    }
+  },
+  {
+    field: 'input',
+    label: '文本框',
+    as: 'input',
+    required: true,
+    rule: Yup.string().required(),
+    props: {
       showCount: true,
       maxLength: 30
     }
   },
   {
-    field: 'textarea', // 字段名
-    label: '多行文本框', // 标签
-    as: 'textarea', // 组件
-    rules: Yup.string().required('不能为空'), // 校验规则
+    field: 'input-number',
+    label: '数字输入框',
+    as: 'input-number',
+    required: true,
+    rule: Yup.number().min(0).max(100).required('不能为空').typeError('请输入数字'),
+    props: {}
+  },
+  {
+    field: 'textarea',
+    label: '多行文本框',
+    as: 'textarea',
+    required: true,
+    rule: Yup.string().required('不能为空'),
     props: {
       clearable: true,
       showCount: true,
@@ -82,7 +108,8 @@ const options = ref([
     field: 'select',
     label: '单选选择器',
     as: 'select',
-    rules: Yup.string().required('此项必填'),
+    required: true,
+    rule: Yup.string().required('此项必填'),
     props: {
       clearable: true,
       options: [
@@ -113,11 +140,9 @@ const options = ref([
     field: 'select_multiple',
     label: '多选选择器',
     as: 'select-multiple',
-    rules: Yup.array().min(2, '至少选择2个').required('此项必填'),
+    required: true,
+    rule: Yup.array().min(2, '至少选择2个').required('此项必填'),
     props: {
-      change: (e: any) => {
-        console.log(e)
-      },
       clearable: true,
       options: schoolsOptions
     }
@@ -126,7 +151,8 @@ const options = ref([
     field: 'radio_group',
     label: '单选框',
     as: 'radio-group',
-    rules: Yup.string().required('此项必填'),
+    required: true,
+    rule: Yup.string().required('此项必填'),
     props: {
       options: [
         {
@@ -148,7 +174,8 @@ const options = ref([
     field: 'checkbox_group',
     label: '多选框',
     as: 'checkbox-group',
-    rules: Yup.array().min(1, '至少选择一个').required('此项必填'),
+    required: true,
+    rule: Yup.array().min(1, '至少选择一个').required('此项必填'),
     props: {
       round: true,
       block: true,
@@ -176,7 +203,8 @@ const options = ref([
     field: 'tabs',
     label: '选项卡',
     as: 'tabs',
-    rules: Yup.string().required('此项必填'),
+    required: true,
+    rule: Yup.string().required('此项必填'),
     props: {
       options: [
         {
@@ -202,7 +230,8 @@ const options = ref([
     field: 'user.address',
     label: '地址',
     as: 'cascader',
-    rules: Yup.string().required('地址必填'),
+    required: true,
+    rule: Yup.string().required('地址必填'),
     props: {
       label: '是否同意',
       free: true,
@@ -295,54 +324,90 @@ const options = ref([
     field: 'user.addd',
     label: '',
     as: 'checkbox',
-    rules: Yup.boolean().oneOf([true], '请同意').required('请同意'),
+    required: true,
+    rule: Yup.boolean().oneOf([true], '请同意').required('请同意'),
     props: {
       label: '是否同意'
     }
   },
   {
-    field: 'info.asd.dsd.input_tag',
+    field: 'info.a.b.c.input_tag',
     label: '标签输入框',
     as: 'input-tag',
-    rules: Yup.array().min(1, '至少选择一个').required('不能为空')
+    required: true,
+    rule: Yup.array().min(1, '至少选择一个').required('不能为空')
   },
   {
     as: 'button',
     props: {
       text: '提交',
-      click: () => submit()
+      request: submit
     }
   }
 ])
 
-const formRef = ref()
+const form = ref({} as any)
 
-const submit = async () => {
-  const vail = await formRef.value.validate()
-  if (vail) {
-    LewMessage.success('已提交')
-  } else {
-    LewMessage.warning('请完善表单')
-  }
+const setForm = () => {
+  // 设置表单
+  formRef.value.setForm({
+    size: 'medium',
+    input: '文本框',
+    textarea: '多行文本',
+    select: '1',
+    select_multiple: [1, 2],
+    radio_group: '2',
+    checkbox_group: ['2'],
+    tabs: '2',
+    user: {
+      address: 30,
+      addd: true
+    },
+    info: {
+      a: {
+        b: {
+          c: {
+            input_tag: ['测试', '小芳']
+          }
+        }
+      }
+    }
+  })
 }
+
+const resetForm = () => {
+  // 重置表单
+  formRef.value.setForm({ size: 'medium' })
+}
+
+onMounted(() => {
+  setForm()
+})
 </script>
 
 <template>
-  <lew-button @click="formRef.setForm({ size: 'medium' })">reset</lew-button>
   <lew-flex x="start" y="start" :gap="50">
     <lew-form
       ref="formRef"
       :size="form.size"
       class="form-box"
       :options="options"
-      :labelWidth="80"
+      @mounted="setForm"
+      :width="450"
       @change="
         (e: any) => {
           form = e
         }
       "
     />
-    <pre>{{ form }}</pre>
+    <lew-flex direction="y" x="start">
+      <lew-flex x="start">
+        <lew-button type="light" round @click="submit">submit</lew-button>
+        <lew-button type="light" round @click="setForm">setForm</lew-button>
+        <lew-button type="light" round @click="resetForm"> reset </lew-button>
+      </lew-flex>
+      <pre>{{ form }}</pre>
+    </lew-flex>
   </lew-flex>
 </template>
 <style scoped lang="scss">

@@ -20,8 +20,7 @@ import {
   DemoInput7Code,
   DemoInput8Code,
   DemoInput9Code,
-  DemoInput10Code,
-  DemoInput11Code
+  DemoInput10Code
 } from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'

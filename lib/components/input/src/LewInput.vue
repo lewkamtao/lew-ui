@@ -21,11 +21,13 @@ const lewInputRef = ref()
 const isCopy = ref<boolean>(false)
 let timer: any = null
 const _type = ref(props.type)
+const isFocus = ref(false)
 const state = reactive({
   prefixesDropdown: 'hide',
-  suffixDropdown: 'hide',
-  isFocus: false
+  suffixDropdown: 'hide'
 })
+
+const lewInputCountRef = ref()
 
 watch(
   () => props.type,
@@ -36,7 +38,7 @@ watch(
   }
 )
 
-const updateValue = () => {
+const inputFn = (e: any) => {
   if (
     props.maxLength &&
     props.renderCount(modelValue.value) >= Number(props.maxLength) &&
@@ -44,15 +46,7 @@ const updateValue = () => {
   ) {
     modelValue.value = cloneDeep(modelValue.value.slice(0, Number(props.maxLength)))
   }
-}
-
-let isFirst = true
-const inputFn = () => {
-  updateValue()
-  if (!isFirst) {
-    emit('input', modelValue.value)
-  }
-  isFirst = false
+  emit('input', modelValue.value, e)
 }
 
 const clear = (): void => {
@@ -87,12 +81,12 @@ const focus = (e: any) => {
     e?.currentTarget?.select()
   }
   emit('focus')
-  state.isFocus = true
+  isFocus.value = true
 }
 
 const blur = () => {
   emit('blur', modelValue)
-  state.isFocus = false
+  isFocus.value = false
 }
 
 const getIconSize = computed(() => {
@@ -102,6 +96,24 @@ const getIconSize = computed(() => {
     large: 16
   }
   return size[props.size]
+})
+
+const getInputStyle = computed(() => {
+  const { size, clearable } = props
+  const countWidth = (lewInputCountRef.value && lewInputCountRef.value.offsetWidth) || 0
+  const wMap: Record<string, number> = {
+    small: 30 + countWidth,
+    medium: 30 + countWidth,
+    large: 30 + countWidth
+  }
+  const wMap2: Record<string, number> = {
+    small: 14,
+    medium: 16,
+    large: 20
+  }
+  return {
+    width: `calc(100% - ${clearable ? wMap[size] : wMap2[size]}px)`
+  }
 })
 
 const getType = computed(() => {
@@ -159,7 +171,7 @@ const copy = () => {
 
 if (props.okByEnter) {
   watch(enter, (v) => {
-    if (v && state.isFocus) {
+    if (v && isFocus.value) {
       ok()
     }
   })
@@ -168,6 +180,10 @@ if (props.okByEnter) {
 const ok = useDebounceFn(() => {
   emit('ok', modelValue.value)
 }, 250)
+
+const changeFn = () => {
+  emit('change', modelValue.value)
+}
 
 onUnmounted(() => {
   clearTimeout(timer)
@@ -238,6 +254,7 @@ defineExpose({ toFocus })
         ref="lewInputRef"
         v-model="modelValue"
         class="lew-input"
+        :style="getInputStyle"
         autocomplete="new-password"
         :disabled="disabled"
         :placeholder="placeholder"
@@ -245,7 +262,7 @@ defineExpose({ toFocus })
         :readonly="readonly"
         onkeypress="if(window.event.keyCode==13) this.blur()"
         @input="inputFn"
-        @change="emit('change', modelValue)"
+        @change="changeFn"
         @blur="blur"
         @focus="focus"
       />
@@ -254,6 +271,7 @@ defineExpose({ toFocus })
       </label>
       <div v-if="showPassword || clearable || showCount" class="lew-input-controls">
         <div
+          ref="lewInputCountRef"
           v-if="getCheckNumStr"
           class="lew-input-count"
           :class="{
@@ -276,7 +294,7 @@ defineExpose({ toFocus })
             v-if="clearable && modelValue && !readonly"
             class="lew-form-icon-clear"
             :class="{
-              'lew-form-icon-clear-focus': state.isFocus
+              'lew-form-icon-clear-focus': isFocus
             }"
             :style="{
               right: suffix ? '0px' : ''
@@ -349,6 +367,7 @@ defineExpose({ toFocus })
     box-sizing: border-box;
     display: inline-flex;
     align-items: center;
+    justify-content: space-between;
     .lew-input {
       height: 100%;
     }
@@ -419,10 +438,11 @@ defineExpose({ toFocus })
     color: var(--lew-text-color-1);
     outline: none;
     box-sizing: border-box;
+    overflow: hidden;
   }
 
-  .lew-input {
-    overflow: hidden;
+  .lew-input:invalid {
+    text-decoration: line-through;
   }
 
   .lew-input::placeholder {
@@ -497,7 +517,7 @@ defineExpose({ toFocus })
   .lew-input-auto-width {
     width: auto;
     min-width: 45px;
-    height: 100%;
+    height: 1px;
     visibility: hidden;
     box-sizing: border-box;
   }
@@ -548,7 +568,6 @@ defineExpose({ toFocus })
   }
 
   .lew-input-auto-width {
-    height: var(--lew-form-item-height-small);
     font-size: var(--lew-form-font-size-small);
     line-height: var(--lew-form-input-line-height-small);
   }
@@ -598,7 +617,6 @@ defineExpose({ toFocus })
   }
 
   .lew-input-auto-width {
-    height: var(--lew-form-item-height-medium);
     font-size: var(--lew-form-font-size-medium);
     line-height: var(--lew-form-input-line-height-medium);
   }
@@ -647,7 +665,6 @@ defineExpose({ toFocus })
   }
 
   .lew-input-auto-width {
-    height: var(--lew-form-item-height-large);
     font-size: var(--lew-form-font-size-large);
     line-height: var(--lew-form-input-line-height-large);
   }
@@ -656,19 +673,19 @@ defineExpose({ toFocus })
 .lew-input-view-size-small.lew-input-view-autoWidth {
   .lew-input {
     left: 7px;
-    width: calc(100% - 14px);
+    width: calc(100% - 18px);
   }
 }
 .lew-input-view-size-medium.lew-input-view-autoWidth {
   .lew-input {
     left: 9px;
-    width: calc(100% - 18px);
+    width: calc(100% - 24px);
   }
 }
 .lew-input-view-size-large.lew-input-view-autoWidth {
   .lew-input {
     left: 12px;
-    width: calc(100% - 24px);
+    width: calc(100% - 30px);
   }
 }
 

@@ -69,7 +69,7 @@ export const textareaProps = {
   },
   height: {
     type: [Number, String],
-    default: '80px',
+    default: '',
     description: '高度'
   },
   okByEnter: {

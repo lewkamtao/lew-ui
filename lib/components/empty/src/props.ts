@@ -33,6 +33,16 @@ export const emptyProps = {
     default: '暂无数据',
     description: '标题'
   },
+  fontSize: {
+    type: [String, Number],
+    default: '14px',
+    description: '字体大小'
+  },
+  padding: {
+    type: String,
+    default: '20px',
+    description: '内边距'
+  },
   width: {
     type: String,
     default: '200px',
