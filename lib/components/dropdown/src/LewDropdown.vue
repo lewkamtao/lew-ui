@@ -3,7 +3,7 @@ import { LewPopover, LewContextMenu } from 'lew-ui'
 import { dropdownProps } from './props'
 import type { DropdownOptions } from './props'
 
-const props = defineProps(dropdownProps)
+defineProps(dropdownProps)
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const lewPopoverRef = ref()

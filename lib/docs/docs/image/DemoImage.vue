@@ -17,8 +17,6 @@ const options = ref(
     return API[key]
   })
 )
-
-const { push } = useRouter()
 </script>
 
 <template>

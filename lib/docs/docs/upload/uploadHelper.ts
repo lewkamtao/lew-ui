@@ -3,7 +3,7 @@ import type { UploadFileItem } from 'lew-ui'
 
 export default ({ fileItem, setFileItem }: { fileItem: UploadFileItem; setFileItem: Function }) => {
   const { id, file } = fileItem
-  var formdata = new FormData()
+  const formdata = new FormData()
   formdata.append('file', file as File)
   setFileItem({ id, status: 'uploading' })
   axios

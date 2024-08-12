@@ -57,7 +57,7 @@ const setForm = (value: any = {}) => {
   // 把对象的值给 formMap
   componentOptions.forEach((item: any) => {
     const v = getNestedFieldValue(value, item.field)
-    if (value !== undefined) {
+    if (value !== undefined && item.field) {
       // 重置error
       formItemRefMap.value[item.field]?.setError('')
       // 如果有值，就把值给 formMap
@@ -94,6 +94,7 @@ const validate = () => {
     Object.keys(formItemRefMap.value).forEach((key) => {
       formItemRefMap.value[key].setError('')
     })
+
     // 校验对象
     schema
       .validate(formMap.value, { abortEarly: false })

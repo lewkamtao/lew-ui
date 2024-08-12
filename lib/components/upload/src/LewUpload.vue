@@ -117,6 +117,7 @@ const addImageToList = (files: any) => {
       file: item
     }
     modelValue.value = [fileItem, ...cloneDeep(modelValue.value || [])]
+    emit('change', modelValue.value)
     nextTick(() => {
       if (fileItem.status === 'pending') {
         isFunction(props.uploadHelper)

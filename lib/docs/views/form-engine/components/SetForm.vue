@@ -13,7 +13,12 @@ const form: any = defineModel({ default: {} })
 
 <template>
   <div class="set-form">
-    <set-form-item v-for="item in options" v-model="form[item.field]" v-bind="{ ...item }" />
+    <set-form-item
+      v-for="item in options"
+      :key="item.field"
+      v-model="form[item.field]"
+      v-bind="{ ...item }"
+    />
   </div>
 </template>
 

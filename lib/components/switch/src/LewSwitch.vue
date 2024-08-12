@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { switchProps } from './props'
-import { object2class, any2px } from 'lew-ui/utils'
+import { object2class } from 'lew-ui/utils'
 
 const props = defineProps(switchProps)
 const _loading = ref(false)

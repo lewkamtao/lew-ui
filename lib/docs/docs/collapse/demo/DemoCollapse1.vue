@@ -61,10 +61,20 @@ setInterval(() => {
 
 <template>
   <lew-collapse width="400" v-model="value">
-    <lew-collapse-item :title="item.name" :collapse-key="item.id" v-for="item in companies">
+    <lew-collapse-item
+      :title="item.name"
+      :collapse-key="item.id"
+      v-for="item in companies"
+      :key="item.id"
+    >
       <template v-if="item.name === 'Apple'">
         <lew-collapse width="100%" v-model="value">
-          <lew-collapse-item :title="item.name" :collapse-key="item.id" v-for="item in companies1">
+          <lew-collapse-item
+            :title="item.name"
+            :collapse-key="item.id"
+            v-for="item in companies1"
+            :key="item.id"
+          >
             <div>
               {{ item.description }}
             </div>

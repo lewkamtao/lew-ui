@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { sliderRangeProps } from './props'
 
-const props = defineProps(sliderRangeProps)
+defineProps(sliderRangeProps)
 </script>
 
 <template>

@@ -42,7 +42,12 @@ const companies = [
 
 <template>
   <lew-collapse width="400" v-model="value">
-    <lew-collapse-item :title="item.name" :collapse-key="item.id" v-for="item in companies">
+    <lew-collapse-item
+      :title="item.name"
+      :collapse-key="item.id"
+      v-for="item in companies"
+      :key="item.id"
+    >
       <template #title>
         <lew-flex x="start">
           {{ item.name }} <lew-tag v-if="item.id === '1'">全球领先</lew-tag>

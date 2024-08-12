@@ -94,7 +94,7 @@ const LewMessage: any = {
         duration: 0
       })
 
-      let startTime = new Date().getTime()
+      const startTime = new Date().getTime()
 
       // 执行异步方法
       asyncFn()
@@ -109,8 +109,8 @@ const LewMessage: any = {
             type?: string
           }) => {
             // 最小延迟 250ms 保持动画流畅
-            let endTime = new Date().getTime()
-            let delay = 250
+            const endTime = new Date().getTime()
+            const delay = 250
             if (endTime - startTime < delay) {
               await new Promise((resolve) => setTimeout(resolve, delay - (endTime - startTime)))
             }

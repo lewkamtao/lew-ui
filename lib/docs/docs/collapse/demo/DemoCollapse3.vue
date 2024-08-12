@@ -42,7 +42,14 @@ const companies = [
 
 <template>
   <lew-collapse width="400" gap="10px" v-model="value">
-    <lew-collapse-item padding="10px" radius="5px" :title="item.name" :collapse-key="item.id" v-for="item in companies">
+    <lew-collapse-item
+      padding="10px"
+      radius="5px"
+      :title="item.name"
+      :collapse-key="item.id"
+      v-for="item in companies"
+      :key="item.id"
+    >
       <div>
         {{ item.description }}
       </div>

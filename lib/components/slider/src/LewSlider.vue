@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { sliderProps } from './props'
 
-const props = defineProps(sliderProps)
+defineProps(sliderProps)
 </script>
 
 <template>

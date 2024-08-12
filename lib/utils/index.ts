@@ -234,8 +234,6 @@ export const getFileIcon = (fileName: string = '') => {
       return getAssetsFile({ name: 'file_html.svg', type: 'icon' })
     case 'project':
       return getAssetsFile({ name: 'file_project.svg', type: 'icon' })
-    case 'pdf':
-      return getAssetsFile({ name: 'file_pdf.svg', type: 'icon' })
     case 'vsdx':
       return getAssetsFile({ name: 'file_visio.svg', type: 'icon' })
     default:

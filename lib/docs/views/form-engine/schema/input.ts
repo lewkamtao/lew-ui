@@ -77,7 +77,7 @@ export const inputSchema = [
     props: {
       min: 120,
       max: 1200,
-	  precision: 0
+      precision: 0
     }
   }
 ]

@@ -7,6 +7,27 @@ const schoolsOptions = schools.map((e, i) => {
   return { label: e, value: i + 1 }
 })
 
+const formRef = ref()
+
+const submit = () => {
+  LewMessage.request({ loadingMessage: '处理中···' }, () => {
+    return new Promise<any>((resolve, reject) => {
+      formRef.value
+        .validate()
+        .then((vail: boolean) => {
+          if (vail) {
+            form.value = formRef.value.getForm()
+            resolve({ content: '加载成功！', duration: 1000, type: 'success' })
+          } else {
+            resolve({ content: '请完善表单', duration: 1000, type: 'warning' })
+          }
+        })
+        .catch((err: any) => {
+          reject(err)
+        })
+    })
+  })
+}
 const options = ref([
   {
     label: '表单大小',
@@ -36,7 +57,14 @@ const options = ref([
     label: '上传',
     as: 'upload',
     required: true,
-    rule: Yup.array().min(3, '至少3个').required('此项必填'),
+    rule: Yup.array()
+      .of(
+        Yup.object({
+          status: Yup.string().oneOf(['success'], '请等待上传完成')
+        })
+      )
+      .min(3, '至少包含3个元素')
+      .required('此项必填'),
     props: {
       uploadHelper,
       multiple: true,
@@ -61,7 +89,7 @@ const options = ref([
     label: '数字输入框',
     as: 'input-number',
     required: true,
-    rule: Yup.number().required('不能为空').typeError('请输入数字'),
+    rule: Yup.number().min(0).max(100).required('不能为空').typeError('请输入数字'),
     props: {}
   },
   {
@@ -115,9 +143,6 @@ const options = ref([
     required: true,
     rule: Yup.array().min(2, '至少选择2个').required('此项必填'),
     props: {
-      change: (e: any) => {
-        console.log(e)
-      },
       clearable: true,
       options: schoolsOptions
     }
@@ -316,26 +341,10 @@ const options = ref([
     as: 'button',
     props: {
       text: '提交',
-      click: () => submit()
+      request: submit
     }
   }
 ])
-
-const formRef = ref()
-
-const submit = async () => {
-  LewMessage.request({ loadingMessage: '处理中···' }, async () => {
-    return new Promise<any>(async (resolve) => {
-      const vail = await formRef.value.validate()
-      if (vail) {
-        form.value = formRef.value.getForm()
-        resolve({ content: '加载成功！', duration: 1000, type: 'success' })
-      } else {
-        resolve({ content: '请完善表单', duration: 1000, type: 'warning' })
-      }
-    })
-  })
-}
 
 const form = ref({} as any)
 

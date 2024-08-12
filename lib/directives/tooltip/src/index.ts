@@ -5,7 +5,7 @@ export const LewTooltip = {
   install(app: Application) {
     app.directive('tooltip', {
       mounted(el: any, binding: DirectiveBinding) {
-        let { trigger, content, placement, allowHTML, delay } = binding.value
+        const { trigger, content, placement, allowHTML, delay } = binding.value
         let _trigger = trigger
         if (trigger === 'hover') {
           _trigger = 'mouseenter'
