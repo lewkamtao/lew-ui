@@ -64,13 +64,38 @@ export const textareaProps = {
   },
   width: {
     type: [Number, String],
-    default: '',
+    default: '320px',
     description: '宽度'
   },
   height: {
     type: [Number, String],
     default: '',
     description: '高度'
+  },
+  minWidth: {
+    type: [Number, String],
+    default: '',
+    description: '最大宽度'
+  },
+  minHeight: {
+    type: [Number, String],
+    default: '',
+    description: '最大高度'
+  },
+  maxWidth: {
+    type: [Number, String],
+    default: '',
+    description: '最大宽度'
+  },
+  maxHeight: {
+    type: [Number, String],
+    default: '',
+    description: '最大高度'
+  },
+  resize: {
+    type: String as PropType<'none' | 'both' | 'horizontal' | 'vertical'>,
+    default: 'none',
+    description: '是否允许用户调整尺寸'
   },
   okByEnter: {
     type: Boolean,

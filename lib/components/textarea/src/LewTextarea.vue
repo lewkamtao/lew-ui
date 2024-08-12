@@ -4,6 +4,7 @@ import { object2class, any2px } from 'lew-ui/utils'
 import { LewIcon, LewTooltip } from 'lew-ui'
 import { textareaProps } from './props'
 import { toNumber } from 'lodash-es'
+import { useResizeObserver } from '@vueuse/core'
 
 const { shift, enter } = useMagicKeys()
 // 获取app
@@ -12,6 +13,21 @@ if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
 const lewTextareaRef = ref()
+const lewTextareaViewRef = ref()
+
+let resizeObj = ref({
+  height: 0,
+  width: 0
+})
+
+useResizeObserver(lewTextareaViewRef, () => {
+  const { width, height } = lewTextareaViewRef.value.getBoundingClientRect()
+  resizeObj.value = {
+    width,
+    height
+  }
+})
+
 const emit = defineEmits([
   'update:type',
   'clear',
@@ -99,13 +115,26 @@ const getIconSize = computed(() => {
 })
 
 const getTextareaStyle = computed(() => {
-  const { width, height, size } = props
+  const { width, height, size, resize, maxHeight, minHeight, maxWidth, minWidth } = props
   const heightMap: Record<string, number> = {
     small: 60,
     medium: 75,
     large: 90
   }
-  return `width:${any2px(width)}; height:${any2px(height ? height : heightMap[size])};`
+  const obj = {
+    resize,
+    minWidth: any2px(minWidth || width),
+    minHeight: any2px(minHeight || (height ? height : heightMap[size])),
+    maxWidth: any2px(maxWidth),
+    maxHeight: any2px(maxHeight),
+    width: any2px(width),
+    height: any2px(height ? height : heightMap[size])
+  }
+  if (resizeObj.value.width > 0) {
+    obj.width = resizeObj.value.width + 'px'
+    obj.height = resizeObj.value.height + 'px'
+  }
+  return obj
 })
 
 if (props.okByEnter) {
@@ -127,7 +156,12 @@ defineExpose({ toFocus })
 </script>
 
 <template>
-  <div class="lew-textarea-view" :style="getTextareaStyle" :class="getTextareaClassNames">
+  <div
+    ref="lewTextareaViewRef"
+    class="lew-textarea-view"
+    :style="getTextareaStyle"
+    :class="getTextareaClassNames"
+  >
     <textarea
       ref="lewTextareaRef"
       v-model="modelValue"
@@ -169,7 +203,6 @@ defineExpose({ toFocus })
   width: 100%;
   border-radius: var(--lew-border-radius-small);
   background-color: var(--lew-form-bgcolor);
-  transition: var(--lew-form-transition);
   box-sizing: border-box;
   outline: 0px var(--lew-form-border-color) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
@@ -184,7 +217,6 @@ defineExpose({ toFocus })
     outline: none;
     box-sizing: border-box;
     resize: none;
-    transition: all 0.25s;
   }
 
   .lew-textarea::placeholder {
