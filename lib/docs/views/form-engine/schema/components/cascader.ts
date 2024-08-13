@@ -1,4 +1,4 @@
-export const switchSchema = [
+export default [
   {
     label: '形状',
     as: 'tabs',

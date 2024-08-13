@@ -93,7 +93,7 @@ const plus = () => {
     longClickTimer.value = setInterval(() => {
       lewInputRef.value.stepUp()
       modelValue.value = lewInputRef.value.value
-      if (lewInputRef.value.value >= Number(props.max)) {
+      if (props.max !== '' && lewInputRef.value.value >= Number(props.max || 0)) {
         clearTimer()
       }
     }, 80)
@@ -106,7 +106,7 @@ const minus = () => {
     longClickTimer.value = setInterval(() => {
       lewInputRef.value.stepDown()
       modelValue.value = lewInputRef.value.value
-      if (lewInputRef.value.value <= Number(props.min)) {
+      if (props.min !== '' && lewInputRef.value.value <= Number(props.min || 0)) {
         clearTimer()
       }
     }, 80)

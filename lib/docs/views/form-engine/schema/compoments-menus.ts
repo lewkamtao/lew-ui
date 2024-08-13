@@ -1,3 +1,19 @@
+import inputScheme from './components/input'
+import inputNumberScheme from './components/input-number'
+import selectScheme from './components/select'
+import selectMultipleScheme from './components/select-multiple'
+import textareaScheme from './components/textarea'
+import tabsScheme from './components/tabs'
+import checkbox from './components/checkbox'
+import checkboxGroup from './components/checkbox-group'
+import radio from './components/radio'
+import _switch from './components/switch'
+import upload from './components/upload'
+import cascader from './components/cascader'
+import datePicker from './components/date-picker'
+import datePickerRange from './components/date-range-picker'
+import inputTag from './components/input-tag'
+
 export const componentsMenusSchema = [
   {
     label: '占位盒子',
@@ -7,7 +23,9 @@ export const componentsMenusSchema = [
     label: '输入框',
     fieldType: '',
     as: 'input',
+    schema: inputScheme,
     props: {
+      clearable: true,
       type: 'text',
       align: 'left'
     }
@@ -16,30 +34,14 @@ export const componentsMenusSchema = [
     label: '数字输入',
     fieldType: '',
     as: 'input-number',
+    schema: inputNumberScheme,
     props: {}
   },
-  //   {
-  //     label: '滑块',
-  //     fieldType: '',
-  //     as: 'slider',
-  //     props: {
-  //       showCount: true,
-  //       maxLength: 30
-  //     }
-  //   },
-  //   {
-  //     label: '范围滑块',
-  //     fieldType: [],
-  //     as: 'slider-range',
-  //     props: {
-  //       showCount: true,
-  //       maxLength: 30
-  //     }
-  //   },
   {
     label: '文本域',
     fieldType: '',
     as: 'textarea',
+    schema: textareaScheme,
     props: {
       clearable: true,
       showCount: true,
@@ -50,6 +52,7 @@ export const componentsMenusSchema = [
     label: '下拉单选',
     fieldType: '',
     as: 'select',
+    schema: selectScheme,
     props: {
       clearable: true,
       options: [
@@ -81,6 +84,7 @@ export const componentsMenusSchema = [
     fieldType: [],
     label: '下拉多选',
     as: 'select-multiple',
+    schema: selectMultipleScheme,
     props: {
       change: (e: any) => {
         console.log(e)
@@ -160,6 +164,7 @@ export const componentsMenusSchema = [
     label: '选项卡',
     fieldType: '',
     as: 'tabs',
+    schema: tabsScheme,
     props: {
       options: [
         {
@@ -181,6 +186,7 @@ export const componentsMenusSchema = [
     label: '日期',
     fieldType: '',
     as: 'date-picker',
+	schema: datePicker,
     props: {
       options: [
         {
@@ -202,6 +208,7 @@ export const componentsMenusSchema = [
     label: '日期范围',
     fieldType: '',
     as: 'date-range-picker',
+	schema: datePickerRange,
     props: {
       options: [
         {
@@ -223,6 +230,7 @@ export const componentsMenusSchema = [
     label: '级联选择',
     fieldType: '',
     as: 'cascader',
+	schema: cascader,
     props: {
       label: '是否同意',
       free: true,
@@ -315,6 +323,7 @@ export const componentsMenusSchema = [
     label: '选框',
     fieldType: false,
     as: 'checkbox',
+    schema: checkbox,
     props: {
       label: '是否同意'
     }
@@ -323,12 +332,14 @@ export const componentsMenusSchema = [
     label: '标签输入框',
     fieldType: [],
     as: 'input-tag',
+	schema: inputTag,
     props: {}
   },
   {
     label: '开关',
     fieldType: false,
     as: 'switch',
+    schema: _switch,
     props: {
       round: 1
     }
@@ -337,6 +348,25 @@ export const componentsMenusSchema = [
     label: '上传',
     fieldType: [],
     as: 'upload',
+	schema: upload,
     props: {}
   }
 ]
+//   {
+//     label: '滑块',
+//     fieldType: '',
+//     as: 'slider',
+//     props: {
+//       showCount: true,
+//       maxLength: 30
+//     }
+//   },
+//   {
+//     label: '范围滑块',
+//     fieldType: [],
+//     as: 'slider-range',
+//     props: {
+//       showCount: true,
+//       maxLength: 30
+//     }
+//   },

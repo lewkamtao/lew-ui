@@ -75,11 +75,12 @@ const asMap: Record<string, any> = {
     }
   }
   .lew-form-item-main {
-    width: 200px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     min-height: 34px;
+    width: 150px;
+    flex-shrink: 0;
   }
 }
 .set-form-item:last-child {

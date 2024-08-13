@@ -1,4 +1,4 @@
-export const selectSchema = [
+export default [
   {
     label: '标题',
     as: 'input',

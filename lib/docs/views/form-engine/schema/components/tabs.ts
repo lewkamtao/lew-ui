@@ -1,4 +1,4 @@
-export const tabsSchema = [
+export default [
   {
     label: '标题',
     as: 'input',

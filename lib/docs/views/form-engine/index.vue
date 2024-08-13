@@ -7,25 +7,9 @@ import { getUniqueId } from 'lew-ui/utils'
 import { downloadObjectAsFile, getComponentIcon } from 'lew-ui/docs/lib/utils'
 import { useDark } from '@vueuse/core'
 import SetForm from './components/SetForm.vue'
-import {
-  baseSchema,
-  globalSchema,
-  tabsSchema,
-  switchSchema,
-  inputSchema,
-  selectSchema,
-  componentsMenusSchema
-} from './schema'
+import { baseSchema, componentsMenusSchema, globalSchema } from './schema'
 import LewGetLabelWidth from 'lew-ui/components/form/src/LewGetLabelWidth.vue'
 import { debounce, cloneDeep, has } from 'lodash-es'
-
-const schemaMap: Record<string, any> = {
-  global: globalSchema,
-  input: inputSchema,
-  select: selectSchema,
-  switch: switchSchema,
-  tabs: tabsSchema
-}
 
 const isDark = useDark({
   selector: 'html',
@@ -196,6 +180,7 @@ const addComponent = (item: any) => {
       field: `${getUniqueId()}`
     })
   )
+  console.log(item)
 }
 </script>
 
@@ -359,7 +344,7 @@ const addComponent = (item: any) => {
           <lew-flex direction="y" gap="0">
             <lew-flex direction="y" x="start" gap="0">
               <div class="title">全局属性</div>
-              <set-form v-model="formGlobal" :options="schemaMap.global" />
+              <set-form v-model="formGlobal" :options="globalSchema" />
             </lew-flex>
             <lew-flex v-if="activedId" direction="y" x="start" gap="0">
               <div class="title">表单属性</div>
@@ -380,14 +365,11 @@ const addComponent = (item: any) => {
             >
               <lew-flex class="title" mode="between">
                 <span>组件属性</span>
-                <lew-tag type="light" class="component-name">
-                  {{ options[options.findIndex((e: any) => e.id === activedId)].as }}
-                </lew-tag>
               </lew-flex>
               <set-form
                 :key="activedId"
                 v-model="options[options.findIndex((e: any) => e.id === activedId)].props"
-                :options="schemaMap[options[options.findIndex((e: any) => e.id === activedId)].as]"
+                :options="options[options.findIndex((e: any) => e.id === activedId)].schema"
               />
             </lew-flex>
           </lew-flex>

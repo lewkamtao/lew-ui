@@ -43,8 +43,8 @@ const asMap: Record<string, any> = {
 }
 
 const getFormItemClassNames = computed(() => {
-  const { direction, size, readonly, disabled } = cloneDeep(props)
-  return object2class('lew-form-item', { direction, size, readonly, disabled })
+  const { direction, size } = cloneDeep(props)
+  return object2class('lew-form-item', { direction, size })
 })
 
 const formItemRef = ref()
@@ -137,7 +137,7 @@ defineExpose({ validate, setError })
       <component
         :is="asMap[as]"
         v-model="modelValue"
-        v-bind="{ size, ...props.props }"
+        v-bind="{ size, readonly, disabled, ...props.props }"
         @change="change"
       />
       <transition name="slide-fade">

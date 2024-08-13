@@ -106,13 +106,9 @@ const getInputStyle = computed(() => {
     medium: 30 + countWidth,
     large: 30 + countWidth
   }
-  const wMap2: Record<string, number> = {
-    small: 14,
-    medium: 16,
-    large: 20
-  }
+
   return {
-    width: `calc(100% - ${clearable ? wMap[size] : wMap2[size]}px)`
+    width: `calc(100% - ${clearable ? wMap[size] : 0}px)`
   }
 })
 

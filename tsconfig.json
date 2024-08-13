@@ -25,7 +25,7 @@
     "lib/**/*.tsx",
     "lib/**/*.d.ts",
     "lib/docs/docs/inputTag/demo/DemoInputTag2vue"
-  ],
+, "lib/docs/views/form-engine/schema/base.ts"  ],
   "exclude": ["lib/components/_backup/**/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

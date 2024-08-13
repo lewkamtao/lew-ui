@@ -1,7 +1,4 @@
 export * from './compoments-menus'
 export * from './base'
 export * from './global'
-export * from './input'
-export * from './select'
-export * from './switch'
-export * from './tabs'
+

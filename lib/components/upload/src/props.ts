@@ -70,7 +70,7 @@ export const uploadProps = {
   },
   uploadHelper: {
     type: Function || undefined,
-    default: `(fileItem,setFileItem) => void`,
+    default: () => {},
     description: '上传文件的处理方法'
   }
 }
