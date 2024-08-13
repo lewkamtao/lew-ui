@@ -17,29 +17,19 @@ let componentOptions: any[] = cloneDeep(props.options) || []
 // 处理 options 里的 rule 字段
 
 componentOptions.forEach((item: any) => {
-  const { rule } = item
-  if (rule && rule.tests.some((test: any) => test.OPTIONS.name === 'required')) {
-    item.required = true
-  }
+  let { rule } = item
+  item.required = rule?.spec?.optional === false
 })
 
 const formRulesmap: any = () => {
-  const form: Record<string, any> = getForm()
   return reduce(
     cloneDeep(componentOptions),
     (acc: Record<string, any> = {}, cur: any) => {
-      const { required, field, rule } = cur
-      if (!required && !form[field]) {
-        return acc
-      }
-      if (rule) {
+      const { field, rule } = cur
+      if (field) {
         acc[field] = rule
-        return acc
       }
-      if (required) {
-        acc[field] = Yup.string().required()
-        return acc
-      }
+      return acc
     },
     {}
   )
@@ -90,6 +80,7 @@ const validate = () => {
   return new Promise<boolean>((resolve) => {
     // 定义校验规则
     const schema = Yup.object().shape(formRulesmap())
+
     // 清除错误信息
     Object.keys(formItemRefMap.value).forEach((key) => {
       formItemRefMap.value[key].setError('')

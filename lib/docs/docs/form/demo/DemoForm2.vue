@@ -3,6 +3,14 @@ import * as Yup from 'yup'
 
 const form = ref({} as any)
 
+const formRef = ref()
+
+const submit = () => {
+  formRef.value.validate().then((res: any) => {
+    console.log(res)
+  })
+}
+
 onMounted(() => {
   // 设置表单
   formRef.value.setForm({
@@ -42,7 +50,7 @@ const options = ref([
       .min(4, '长度必须至少为4')
       .max(16, '长度不能超过16')
       .required('不能为空'),
-    required: true,
+
     props: {
       clearable: true
     }
@@ -56,7 +64,7 @@ const options = ref([
       .min(4, '长度必须至少为4')
       .max(16, '长度不能超过16')
       .required('不能为空'),
-    required: true,
+
     props: {
       clearable: true
     }
@@ -80,7 +88,7 @@ const options = ref([
     label: '生日',
     as: 'date-picker',
     rule: Yup.string().required('不能为空'),
-    required: true,
+
     props: {
       clearable: true
     }
@@ -90,7 +98,7 @@ const options = ref([
     label: '有效期',
     as: 'date-range-picker',
     rule: Yup.object().required('不能为空'),
-    required: true,
+
     props: {
       clearable: true
     }
@@ -99,7 +107,7 @@ const options = ref([
     field: 'user.city',
     label: '城市',
     as: 'select',
-    required: true,
+
     rule: Yup.string().required('此项必填'),
     props: {
       change: (e: any) => {
@@ -134,7 +142,6 @@ const options = ref([
     field: 'user.agree',
     label: '',
     as: 'checkbox',
-    required: true,
     rule: Yup.boolean().oneOf([true], '请同意').required('请同意'),
     props: {
       label: '是否同意'
@@ -144,18 +151,10 @@ const options = ref([
     as: 'button',
     props: {
       text: '提交',
-      click: () => submit()
+      request: submit
     }
   }
 ])
-
-const formRef = ref()
-
-const submit = () => {
-  formRef.value.validate().then((res: any) => {
-    console.log(res)
-  })
-}
 </script>
 
 <template>
@@ -172,9 +171,7 @@ const submit = () => {
         }
       "
     />
-    <lew-flex style="width: calc(100% - 380px)" direction="y" x="start">
-      <pre>{{ form }}</pre>
-    </lew-flex>
+    <pre>{{ form }}</pre>
   </lew-flex>
 </template>
 <style scoped lang="scss">
@@ -182,8 +179,10 @@ const submit = () => {
   width: 380px;
 }
 pre {
+  width: 350px;
   background-color: var(--lew-bgcolor-2);
   padding: 30px;
+  flex-shrink: 0;
 }
 @media (max-width: 767px) {
   .form-box {

@@ -21,10 +21,12 @@ let resizeObj = ref({
 })
 
 useResizeObserver(lewTextareaViewRef, () => {
-  const { width, height } = lewTextareaViewRef.value.getBoundingClientRect()
-  resizeObj.value = {
-    width,
-    height
+  if (props.resize !== 'none') {
+    const { width, height } = lewTextareaViewRef.value.getBoundingClientRect()
+    resizeObj.value = {
+      width,
+      height
+    }
   }
 })
 

@@ -23,7 +23,7 @@ const options = ref([
     field: 'input',
     label: 'Input',
     as: 'input',
-    rule: Yup.string().required('不能为空'),
+    rule: Yup.number().required('不能为空'),
     props: {
       clearable: true
     }
