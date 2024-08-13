@@ -105,7 +105,6 @@ if (props.closeByEsc) {
               <lew-button
                 v-if="cancelText"
                 :text="cancelText"
-                round
                 color="gray"
                 type="light"
                 :loading="cancelLoading"
@@ -114,7 +113,6 @@ if (props.closeByEsc) {
               <lew-button
                 v-if="okText"
                 :text="okText"
-                round
                 type="fill"
                 :color="type"
                 :loading="okLoading"
@@ -189,7 +187,7 @@ if (props.closeByEsc) {
   .lew-dialog-box {
     position: relative;
     display: flex;
-    width: 380px;
+    width: 450px;
     height: auto;
     padding: 20px;
     border-radius: var(--lew-border-radius-medium);
@@ -197,6 +195,8 @@ if (props.closeByEsc) {
     border: var(--lew-dialog-box-border);
     box-shadow: var(--lew-dialog-box-shadow);
     .lew-dialog-icon:deep() {
+      width: 36px;
+      height: 36px;
       svg {
         width: 36px;
         height: 36px;
@@ -279,7 +279,7 @@ if (props.closeByEsc) {
     .right {
       position: relative;
       top: 1px;
-      width: calc(350px - 15px - 30px);
+      width: calc(450px - 15px - 30px);
     }
     main {
       margin-top: 10px;
