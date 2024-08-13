@@ -2,7 +2,7 @@
 import { object2class, any2px, formatFormByMap } from 'lew-ui/utils'
 import LewGetLabelWidth from './LewGetLabelWidth.vue'
 import { formProps } from './props'
-import { cloneDeep, reduce } from 'lodash-es'
+import { cloneDeep, reduce, merge } from 'lodash-es'
 import LewFormItem from './LewFormItem.vue'
 import * as Yup from 'yup'
 
@@ -15,10 +15,18 @@ const autoLabelWidth = ref(0)
 let componentOptions: any[] = cloneDeep(props.options) || []
 
 // 处理 options 里的 rule 字段
-
+// 如果 options 中的 required 字段为 true，则
 componentOptions.forEach((item: any) => {
   let { rule } = item
-  item.required = rule?.spec?.optional === false
+  if (item.required) {
+    if (!rule) {
+      item.rule = Yup.mixed().required('此项必填')
+    } else if (rule?.spec?.optional === true) {
+      item.rule = merge(rule, Yup.mixed().required('此项必填'))
+    }
+  } else {
+    item.required = rule?.spec?.optional === false
+  }
 })
 
 const formRulesmap: any = () => {
@@ -93,7 +101,7 @@ const validate = () => {
         resolve(true)
       })
       .catch((error: any) => {
-        error?.inner.forEach((item: any) => {
+        ;(error?.inner || []).forEach((item: any) => {
           const path = item.path.replace(`["`, '').replace(`"]`, '')
           const ref = formItemRefMap.value[path]
           if (ref) {

@@ -14,7 +14,6 @@ defineProps({
 const formLabelRef = ref<HTMLDivElement>()
 
 const getWidth = () => {
-  console.log(formLabelRef.value?.offsetWidth)
   return formLabelRef.value?.offsetWidth
 }
 

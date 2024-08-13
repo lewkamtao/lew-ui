@@ -30,7 +30,6 @@ const setMonthDate = () => {
 const init = (date: string | undefined = '') => {
   dateState.year = dayjs(date || undefined).year()
   dateState.month = dayjs(date || undefined).month() + 1
-  console.log(1)
   setMonthDate()
 }
 
