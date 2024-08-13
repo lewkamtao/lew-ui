@@ -64,7 +64,7 @@ export const textareaProps = {
   },
   width: {
     type: [Number, String],
-    default: '320px',
+    default: '',
     description: '宽度'
   },
   height: {

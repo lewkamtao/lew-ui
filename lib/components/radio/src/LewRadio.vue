@@ -14,13 +14,13 @@ const getIconSize = computed(() => {
   const { size, block } = props
   switch (size) {
     case 'small':
-      return block ? 10 : 8
+      return block ? 16 : 12
     case 'medium':
-      return block ? 12 : 10
+      return block ? 18 : 14
     case 'large':
-      return block ? 14 : 12
+      return block ? 20 : 16
     default:
-      return block ? 12 : 10
+      return block ? 18 : 14
   }
 })
 
@@ -80,8 +80,6 @@ const getRadioClassName = computed(() => {
       transition: var(--lew-form-transition);
       opacity: 0;
       color: var(--lew-color-white);
-      width: 100%;
-      height: 100%;
     }
   }
 

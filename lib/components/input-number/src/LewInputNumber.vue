@@ -235,10 +235,11 @@ defineExpose({ toFocus })
       border-radius: 4px;
       cursor: pointer;
       transition: all 0.1s;
+      transform: scale(0.95);
     }
 
     .lew-input-number-icon:hover {
-      transform: scale(1.05);
+      transform: scale(1);
     }
 
     .lew-input-number-icon:active {

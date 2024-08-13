@@ -130,7 +130,6 @@ const columns = [
               </lew-flex>
             </template>
           </lew-table>
-          <br />
           <lew-flex x="end">
             <lew-button
               text="取消"
