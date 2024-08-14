@@ -28,6 +28,7 @@ const settingTab = ref('options')
 const activedId = ref('')
 const formLabelRef = ref()
 const autoLabelWidth = ref(0)
+
 const formGlobal = ref({
   direction: 'x',
   columns: 1,
@@ -349,6 +350,7 @@ const addComponent = (item: any) => {
             <lew-flex v-if="activedId" direction="y" x="start" gap="0">
               <div class="title">表单属性</div>
               <set-form
+                :collapse-height="200"
                 v-model="options[options.findIndex((e: any) => e.id === activedId)]"
                 :options="baseSchema"
               />

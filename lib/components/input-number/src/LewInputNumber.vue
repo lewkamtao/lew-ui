@@ -166,7 +166,7 @@ defineExpose({ toFocus })
         @mouseleave="clearTimer"
         class="lew-input-number-icon"
         :size="getIconSize"
-        type="plus"
+        type="chevron-up"
       ></lew-icon>
       <lew-icon
         @mousedown="minus"
@@ -174,7 +174,7 @@ defineExpose({ toFocus })
         @mouseleave="clearTimer"
         class="lew-input-number-icon"
         :size="getIconSize"
-        type="minus"
+        type="chevron-down"
       ></lew-icon>
     </lew-flex>
   </div>

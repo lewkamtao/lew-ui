@@ -221,6 +221,9 @@
   --lew-pop-bg-active: rgba(0, 0, 0, 0.05);
   --lew-tooltip-bg: #fff;
   --lew-tooltip-color: #000;
+
+  // 渐变背景
+  --lew-expand-control-bg-gradient: linear-gradient(rgba(255, 255, 255, 0) 0%, #fff 100%);
 }
 
 .lew-dark {
@@ -409,4 +412,5 @@
   --lew-tooltip-bg: #43444a;
   --lew-tooltip-color: #fff;
   --lew-pop-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.06);
+  --lew-expand-control-bg-gradient: linear-gradient(rgba(0, 0, 0, 0) 0%, #1A1B20 100%);
 }
