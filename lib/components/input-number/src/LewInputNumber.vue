@@ -189,7 +189,7 @@ defineExpose({ toFocus })
   width: 100%;
   border-radius: var(--lew-border-radius-small);
   background-color: var(--lew-form-bgcolor);
-  transition: var(--lew-form-transition);
+  transition: var(--lew-form-transition-ease);
   box-sizing: border-box;
   outline: 0px var(--lew-form-border-color) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
@@ -235,10 +235,6 @@ defineExpose({ toFocus })
       border-radius: 4px;
       cursor: pointer;
       transition: all 0.1s;
-      transform: scale(0.95);
-    }
-
-    .lew-input-number-icon:hover {
       transform: scale(1);
     }
 
@@ -260,7 +256,7 @@ defineExpose({ toFocus })
 
 .lew-input-number-view:focus-within {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-ouline);
+  outline: var(--lew-form-outline);
   background-color: var(--lew-form-bgcolor-focus);
 
   .lew-input-number-control {
@@ -272,7 +268,7 @@ defineExpose({ toFocus })
 
 .lew-input-number-view-focus {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-ouline);
+  outline: var(--lew-form-outline);
   background-color: var(--lew-form-bgcolor-focus) !important;
 
   .lew-input-number-control {

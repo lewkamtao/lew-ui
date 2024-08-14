@@ -313,9 +313,9 @@ const addComponent = (item: any) => {
                   size: formGlobal.size,
                   direction: formGlobal.direction,
                   labelWidth: autoLabelWidth,
-                  ...element,
-                  readonly: true
+                  ...element
                 }"
+                readonly
               />
             </div>
           </template>

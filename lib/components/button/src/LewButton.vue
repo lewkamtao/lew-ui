@@ -135,10 +135,7 @@ const getStyle = computed(() => {
   width: auto;
   white-space: nowrap;
   box-sizing: border-box;
-  transition:
-    transform 0.1s,
-    color 0.35s cubic-bezier(0.65, 0, 0.25, 1),
-    padding 0.15s cubic-bezier(0.65, 0, 0.25, 1);
+  transition: var(--lew-form-transition-ease);
   border: none;
   cursor: pointer;
   border-radius: var(--lew-border-radius-small);
@@ -176,7 +173,7 @@ const getStyle = computed(() => {
   width: 100%;
   height: 100%;
   background-color: rgba($color: #000, $alpha: 0.2);
-  transition: 0.1s all;
+  transition: var(--lew-form-transition-ease);
   opacity: 0;
   content: '';
 }
@@ -302,10 +299,6 @@ const getStyle = computed(() => {
 
 .lew-button-size-large.lew-button-loading {
   padding-left: 34px;
-}
-
-.lew-button-loading:active {
-  transform: scale(1);
 }
 
 .lew-button[disabled] {

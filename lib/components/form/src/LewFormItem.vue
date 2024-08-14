@@ -258,7 +258,7 @@ defineExpose({ validate, setError })
   --lew-radio-color: var(--lew-color-error);
   --lew-radio-color: var(--lew-color-error-dark);
   --lew-radio-color-light: var(--lew-color-error-light);
-  --lew-form-ouline: 0px var(--lew-color-error-light) solid;
+  --lew-form-outline: 0px var(--lew-color-error-light) solid;
 }
 
 .slide-fade-leave-active,

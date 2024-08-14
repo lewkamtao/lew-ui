@@ -47,6 +47,16 @@ export const tabsProps = {
     type: String as PropType<TabsType>,
     default: 'block',
     description: '类型，可选值为 block 或 line'
+  },
+  readonly: {
+    type: Boolean,
+    default: false,
+    description: '是否只读'
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+    description: '是否禁用'
   }
 }
 export type TabsProps = ExtractPropTypes<typeof tabsProps>

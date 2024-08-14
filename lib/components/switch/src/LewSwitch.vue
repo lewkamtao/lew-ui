@@ -57,7 +57,7 @@ const getSwitchClassName = computed(() => {
   height: 24px;
   background: var(--lew-bgcolor-3);
   border-radius: var(--lew-border-radius-small);
-  transition: var(--lew-form-transition);
+  transition: var(--lew-form-transition-ease);
   cursor: pointer;
   outline: 0px var(--lew-color-primary-light) solid;
 
@@ -69,7 +69,7 @@ const getSwitchClassName = computed(() => {
     top: 0px;
     border-radius: 4px;
     background: var(--lew-color-white);
-    transition: var(--lew-form-transition);
+    transition: var(--lew-form-transition-ease);
     transform: translate(4px, 4px);
   }
 
@@ -125,7 +125,7 @@ const getSwitchClassName = computed(() => {
 
 .lew-switch-view:hover {
   background: var(--lew-bgcolor-4);
-  outline: var(--lew-form-ouline);
+  outline: var(--lew-form-outline);
 }
 
 .lew-switch-view:active {

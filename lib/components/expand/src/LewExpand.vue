@@ -12,12 +12,10 @@ let expandHeight = ref(0)
 
 onMounted(() => {
   if (expandRef.value) {
-    expandHeight.value = expandRef.value.offsetHeight
+    expandHeight.value = expandRef.value.offsetHeight - 40
     collapse.value = true
   }
 })
-
-const form: any = defineModel({ default: {} })
 </script>
 
 <template>
@@ -25,13 +23,20 @@ const form: any = defineModel({ default: {} })
     ref="expandRef"
     class="expand-wrapper"
     :style="{
-      height: collapse ? any2px(collapseHeight) : any2px(expandHeight)
+      height: collapse ? any2px(collapseHeight) : any2px(expandHeight),
+      paddingBottom: collapse ? '0px' : '40px'
     }"
   >
     <slot />
-    <div @click="collapse = !collapse" v-if="collapseHeight" class="expand-btn">
+    <lew-flex @click="collapse = !collapse" gap="5" v-if="collapseHeight" class="expand-btn">
+      <lew-icon
+        :style="{ transform: collapse ? 'rotate(0deg)' : 'rotate(180deg)' }"
+        class="expand-icon"
+        type="chevron-down"
+        size="14"
+      ></lew-icon>
       {{ collapse ? '展开更多' : '收起' }}
-    </div>
+    </lew-flex>
   </div>
 </template>
 
@@ -40,21 +45,22 @@ const form: any = defineModel({ default: {} })
   position: relative;
   width: 100%;
   overflow: hidden;
-  transition: all 0.25s;
+  transition: var(--lew-form-transition-ease);
   .expand-btn {
     position: absolute;
     bottom: 0px;
     left: 0px;
     z-index: 9;
     display: flex;
-    align-items: flex-end;
     justify-content: center;
     width: 100%;
-    height: 50px;
-    line-height: 30px;
+    height: 40px;
     text-align: center;
     background-image: var(--lew-expand-control-bg-gradient);
     cursor: pointer;
+    .expand-icon {
+      transition: var(--lew-form-transition-ease);
+    }
   }
 }
 </style>

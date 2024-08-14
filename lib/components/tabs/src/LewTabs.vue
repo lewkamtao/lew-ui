@@ -15,7 +15,7 @@ const itemRef = ref([] as any)
 const state = reactive({
   activeItemStyle: {} as any,
   curIndex: props.options.findIndex((e: TabsOptions) => tabsValue.value === e.value),
-  hidLine: '',
+  hidLine: 'all',
   isInit: false
 })
 
@@ -94,11 +94,13 @@ const debounce = () => {
 }
 
 const getTabsWrapperClassName = computed(() => {
-  const { type, round } = props
+  const { type, round, disabled, readonly } = props
   return object2class('lew-tabs-wrapper', {
     type,
     round,
-    hidLine: state.hidLine
+    hidLine: state.hidLine || !state.isInit,
+    disabled,
+    readonly
   })
 })
 
@@ -256,19 +258,13 @@ onUnmounted(() => {
     justify-content: center;
     z-index: 9;
     box-sizing: border-box;
-    border-radius: var(--lew-border-radius-small);
+    border-radius: 6px;
     margin: 4px;
     color: var(--lew-text-color-1);
     white-space: nowrap;
     cursor: pointer;
     flex-shrink: 0;
     transition: all 0.25s;
-  }
-  .lew-tabs-item:hover {
-    opacity: 0.6;
-  }
-  .lew-tabs-item:active {
-    opacity: 0.3;
   }
 
   .lew-tabs-item-active {
@@ -286,7 +282,7 @@ onUnmounted(() => {
     height: calc(100% - 8px);
     border-radius: 6px;
     background: var(--lew-tabs-active-color);
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.08);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.08);
     transform: translateX(4px);
     box-sizing: border-box;
   }
@@ -374,5 +370,14 @@ onUnmounted(() => {
   .lew-tabs-item-animation-active {
     border-radius: 35px;
   }
+}
+
+.lew-tabs-wrapper-disabled {
+  opacity: var(--lew-disabled-opacity);
+  pointer-events: none; //鼠标点击不可修改
+}
+
+.lew-tabs-wrapper-readonly {
+  pointer-events: none; //鼠标点击不可修改
 }
 </style>

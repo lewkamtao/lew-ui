@@ -260,7 +260,7 @@ defineExpose({ init, getTreeList })
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: var(--lew-form-transition);
+    transition: var(--lew-form-transition-bezier);
     width: 14px;
     height: 14px;
     padding: 4px;
@@ -268,7 +268,7 @@ defineExpose({ init, getTreeList })
     margin-left: 5px;
     .lew-tree-chevron-right-icon {
       transform: rotate(0deg);
-      transition: var(--lew-form-transition);
+      transition: var(--lew-form-transition-bezier);
     }
   }
   .lew-tree-chevron-right:hover {
@@ -311,7 +311,7 @@ defineExpose({ init, getTreeList })
     user-select: none;
     .lew-checkbox:deep(.icon-checkbox-box) {
       border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
-      outline: var(--lew-form-ouline);
+      outline: var(--lew-form-outline);
       background: var(--lew-form-bgcolor);
     }
   }
