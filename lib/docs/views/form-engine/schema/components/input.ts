@@ -69,7 +69,7 @@ export default [
     label: '限制最大长度',
     as: 'input-number',
     componentWidth: 110,
-    props: { min: 0, max: 100000000, align: 'center', placeholder: '最大长度' },
+    props: { min: 0, align: 'center', placeholder: '最大长度' },
     field: 'maxLength'
   },
   {

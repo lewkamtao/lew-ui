@@ -45,12 +45,6 @@ export const inputNumberProps = {
     default: false,
     description: '是否禁用'
   },
-  // 是否使用清空按钮
-  clearable: {
-    type: Boolean,
-    default: false,
-    description: '是否使用清空按钮'
-  },
   // 默认提示语
   placeholder: {
     type: String,

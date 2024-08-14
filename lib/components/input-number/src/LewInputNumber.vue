@@ -8,7 +8,7 @@ const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
-const emit = defineEmits(['clear', 'blur', 'focus', 'change', 'input', 'ok'])
+const emit = defineEmits(['blur', 'focus', 'change', 'input'])
 
 const props = defineProps(inputNumberProps)
 const modelValue: Ref<number | undefined> = defineModel({ required: true })

@@ -18,7 +18,7 @@ export const baseSchema = [
     label: '校验规则',
     as: 'textarea',
     direction: 'y',
-    tips: 'Yup 自定义校验逻辑',
+    tips: '参考 Yup 官方文档',
     field: 'rule'
   },
   {

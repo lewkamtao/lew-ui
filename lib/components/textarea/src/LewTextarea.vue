@@ -231,7 +231,6 @@ defineExpose({ toFocus })
 
   .lew-textarea-count {
     position: absolute;
-    right: 7px;
     bottom: 2px;
     display: inline-flex;
     align-items: center;
@@ -257,6 +256,7 @@ defineExpose({ toFocus })
 
   .lew-textarea-count {
     font-size: 12px;
+    right: 13px;
   }
 }
 
@@ -273,6 +273,7 @@ defineExpose({ toFocus })
 
   .lew-textarea-count {
     font-size: 13px;
+    right: 14px;
   }
 }
 
@@ -289,6 +290,7 @@ defineExpose({ toFocus })
 
   .lew-textarea-count {
     font-size: 14px;
+    right: 15px;
   }
 }
 

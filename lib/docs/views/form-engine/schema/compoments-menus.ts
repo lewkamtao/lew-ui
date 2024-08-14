@@ -6,7 +6,7 @@ import textareaScheme from './components/textarea'
 import tabsScheme from './components/tabs'
 import checkbox from './components/checkbox'
 import checkboxGroup from './components/checkbox-group'
-import radio from './components/radio'
+import radioGroup from './components/radio-group'
 import _switch from './components/switch'
 import upload from './components/upload'
 import cascader from './components/cascader'
@@ -35,7 +35,10 @@ export const componentsMenusSchema = [
     fieldType: '',
     as: 'input-number',
     schema: inputNumberScheme,
-    props: {}
+    props: {
+      align: 'left',
+      width: 100
+    }
   },
   {
     label: '文本域',
@@ -45,7 +48,7 @@ export const componentsMenusSchema = [
     props: {
       clearable: true,
       showCount: true,
-      maxLength: 300
+      maxLength: 500
     }
   },
   {
@@ -86,9 +89,6 @@ export const componentsMenusSchema = [
     as: 'select-multiple',
     schema: selectMultipleScheme,
     props: {
-      change: (e: any) => {
-        console.log(e)
-      },
       clearable: true,
       options: [
         {
@@ -118,6 +118,7 @@ export const componentsMenusSchema = [
     label: '单选框',
     fieldType: '',
     as: 'radio-group',
+    schema: radioGroup,
     props: {
       options: [
         {
@@ -139,7 +140,9 @@ export const componentsMenusSchema = [
     label: '复选框',
     fieldType: [],
     as: 'checkbox-group',
+    schema: checkboxGroup,
     props: {
+      iconable: true,
       options: [
         {
           label: '唱歌',
@@ -186,7 +189,7 @@ export const componentsMenusSchema = [
     label: '日期',
     fieldType: '',
     as: 'date-picker',
-	schema: datePicker,
+    schema: datePicker,
     props: {
       options: [
         {
@@ -208,7 +211,7 @@ export const componentsMenusSchema = [
     label: '日期范围',
     fieldType: '',
     as: 'date-range-picker',
-	schema: datePickerRange,
+    schema: datePickerRange,
     props: {
       options: [
         {
@@ -230,7 +233,7 @@ export const componentsMenusSchema = [
     label: '级联选择',
     fieldType: '',
     as: 'cascader',
-	schema: cascader,
+    schema: cascader,
     props: {
       label: '是否同意',
       free: true,
@@ -325,14 +328,15 @@ export const componentsMenusSchema = [
     as: 'checkbox',
     schema: checkbox,
     props: {
-      label: '是否同意'
+      iconable: true,
+      label: '选框文本'
     }
   },
   {
     label: '标签输入框',
     fieldType: [],
     as: 'input-tag',
-	schema: inputTag,
+    schema: inputTag,
     props: {}
   },
   {
@@ -348,7 +352,7 @@ export const componentsMenusSchema = [
     label: '上传',
     fieldType: [],
     as: 'upload',
-	schema: upload,
+    schema: upload,
     props: {}
   }
 ]

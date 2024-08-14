@@ -1,20 +1,23 @@
 export default [
   {
-    label: '形状',
-    as: 'tabs',
-    field: 'round',
-    props: {
-      itemWidth: '50px',
-      options: [
-        {
-          label: '圆角',
-          value: 1
-        },
-        {
-          label: '方形',
-          value: 0
-        }
-      ]
-    }
+    label: '标签名称',
+    as: 'input',
+    field: 'label'
+  },
+  {
+    label: '是否为块状',
+    as: 'switch',
+    field: 'block'
+  },
+  {
+    label: '是否为圆形',
+    as: 'switch',
+    field: 'round'
+  },
+  {
+    label: '图标开启',
+    as: 'switch',
+    tips: '图标开启，仅在 block 时生效',
+    field: 'iconable'
   }
 ]
