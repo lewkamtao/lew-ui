@@ -77,7 +77,7 @@ export const formItemProps = {
   gridArea: {
     type: String,
     default: '',
-    description: '网格区域'
+    description: '网格区域，当使用 Form 组件时有效'
   },
   width: {
     type: [Number, String],
@@ -132,6 +132,11 @@ export const formItemProps = {
     type: Object as PropType<Record<string, any>>,
     default: {},
     description: '表单项组件属性'
+  },
+  between: {
+    type: Boolean,
+    default: false,
+    description: '只在x方向排列时生效，是否在表单项之间增加间隔'
   }
 }
 

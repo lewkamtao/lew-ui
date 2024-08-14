@@ -36,7 +36,7 @@ const getSwitchClassName = computed(() => {
   return object2class('lew-switch', {
     checked: modelValue.value,
     round: !!round,
-    request,
+    request: !!request,
     loading
   })
 })

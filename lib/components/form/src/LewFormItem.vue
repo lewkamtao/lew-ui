@@ -130,7 +130,8 @@ defineExpose({ validate, setError })
         width:
           direction === 'x'
             ? `calc(${formItemRef?.offsetWidth}px - ${any2px(labelWidth)} - 10px)`
-            : '100%'
+            : '100%',
+        justifyContent: direction === 'x' && between ? 'flex-end' : 'flex-start'
       }"
       :class="{ 'lew-form-item-error': errMsg }"
     >
