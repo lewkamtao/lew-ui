@@ -17,9 +17,14 @@ export const switchProps = {
     default: true,
     description: '是否圆角'
   },
+  readonly: {
+    type: Boolean,
+    default: () => false,
+    description: '是否只读'
+  },
   disabled: {
     type: Boolean,
-    default: false,
+    default: () => false,
     description: '是否禁用'
   },
   request: {

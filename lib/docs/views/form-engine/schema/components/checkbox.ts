@@ -17,7 +17,7 @@ export default [
   {
     label: '图标开启',
     as: 'switch',
-    tips: '图标开启，仅在 block 时生效',
+    tips: '图标开启，仅在块状时生效',
     field: 'iconable'
   }
 ]

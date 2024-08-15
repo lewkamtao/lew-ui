@@ -16,10 +16,6 @@ import inputTag from './components/input-tag'
 
 export const componentsMenusSchema = [
   {
-    label: '占位盒子',
-    as: ''
-  },
-  {
     label: '输入框',
     fieldType: '',
     as: 'input',
@@ -28,6 +24,17 @@ export const componentsMenusSchema = [
       clearable: true,
       type: 'text',
       align: 'left'
+    }
+  },
+  {
+    label: '文本域',
+    fieldType: '',
+    as: 'textarea',
+    schema: textareaScheme,
+    props: {
+      clearable: true,
+      showCount: true,
+      maxLength: 500
     }
   },
   {
@@ -41,14 +48,66 @@ export const componentsMenusSchema = [
     }
   },
   {
-    label: '文本域',
+    label: '单选框',
     fieldType: '',
-    as: 'textarea',
-    schema: textareaScheme,
+    as: 'radio-group',
+    schema: radioGroup,
     props: {
-      clearable: true,
-      showCount: true,
-      maxLength: 500
+      round: true,
+      direction: 'x',
+      iconable: false,
+      options: [
+        {
+          label: '男',
+          value: '1'
+        },
+        {
+          label: '女',
+          value: '2'
+        },
+        {
+          label: '不公开',
+          value: '3'
+        }
+      ]
+    }
+  },
+  {
+    label: '选框',
+    fieldType: false,
+    as: 'checkbox',
+    schema: checkbox,
+    props: {
+      iconable: false,
+      label: '选框文本'
+    }
+  },
+  {
+    label: '复选框',
+    fieldType: [],
+    as: 'checkbox-group',
+    schema: checkboxGroup,
+    props: {
+      iconable: false,
+      direction: 'x',
+      options: [
+        {
+          label: '唱歌',
+          value: '1'
+        },
+        {
+          label: '跳舞',
+          value: '2'
+        },
+        {
+          label: 'Rap',
+          value: '3'
+        },
+        {
+          label: '上海',
+          value: '4'
+        }
+      ]
     }
   },
   {
@@ -110,121 +169,6 @@ export const componentsMenusSchema = [
         {
           label: '北京',
           value: '5'
-        }
-      ]
-    }
-  },
-  {
-    label: '单选框',
-    fieldType: '',
-    as: 'radio-group',
-    schema: radioGroup,
-    props: {
-      options: [
-        {
-          label: '男',
-          value: '1'
-        },
-        {
-          label: '女',
-          value: '2'
-        },
-        {
-          label: '不公开',
-          value: '3'
-        }
-      ]
-    }
-  },
-  {
-    label: '复选框',
-    fieldType: [],
-    as: 'checkbox-group',
-    schema: checkboxGroup,
-    props: {
-      iconable: true,
-      options: [
-        {
-          label: '唱歌',
-          value: '1'
-        },
-        {
-          label: '跳舞',
-          value: '2'
-        },
-        {
-          label: 'Rap',
-          value: '3'
-        },
-        {
-          label: '上海',
-          value: '4'
-        }
-      ]
-    }
-  },
-  {
-    label: '选项卡',
-    fieldType: '',
-    as: 'tabs',
-    schema: tabsScheme,
-    props: {
-      options: [
-        {
-          label: 'Beijing',
-          value: '1'
-        },
-        {
-          label: 'Shanghai',
-          value: '2'
-        },
-        {
-          label: 'Guangzhou',
-          value: '3'
-        }
-      ]
-    }
-  },
-  {
-    label: '日期',
-    fieldType: '',
-    as: 'date-picker',
-    schema: datePicker,
-    props: {
-      options: [
-        {
-          label: 'Beijing',
-          value: '1'
-        },
-        {
-          label: 'Shanghai',
-          value: '2'
-        },
-        {
-          label: 'Guangzhou',
-          value: '3'
-        }
-      ]
-    }
-  },
-  {
-    label: '日期范围',
-    fieldType: '',
-    as: 'date-range-picker',
-    schema: datePickerRange,
-    props: {
-      options: [
-        {
-          label: 'Beijing',
-          value: '1'
-        },
-        {
-          label: 'Shanghai',
-          value: '2'
-        },
-        {
-          label: 'Guangzhou',
-          value: '3'
         }
       ]
     }
@@ -323,15 +267,72 @@ export const componentsMenusSchema = [
     }
   },
   {
-    label: '选框',
-    fieldType: false,
-    as: 'checkbox',
-    schema: checkbox,
+    label: '选项卡',
+    fieldType: '',
+    as: 'tabs',
+    schema: tabsScheme,
     props: {
-      iconable: true,
-      label: '选框文本'
+      options: [
+        {
+          label: 'Beijing',
+          value: '1'
+        },
+        {
+          label: 'Shanghai',
+          value: '2'
+        },
+        {
+          label: 'Guangzhou',
+          value: '3'
+        }
+      ]
     }
   },
+  {
+    label: '日期',
+    fieldType: '',
+    as: 'date-picker',
+    schema: datePicker,
+    props: {
+      options: [
+        {
+          label: 'Beijing',
+          value: '1'
+        },
+        {
+          label: 'Shanghai',
+          value: '2'
+        },
+        {
+          label: 'Guangzhou',
+          value: '3'
+        }
+      ]
+    }
+  },
+  {
+    label: '日期范围',
+    fieldType: '',
+    as: 'date-range-picker',
+    schema: datePickerRange,
+    props: {
+      options: [
+        {
+          label: 'Beijing',
+          value: '1'
+        },
+        {
+          label: 'Shanghai',
+          value: '2'
+        },
+        {
+          label: 'Guangzhou',
+          value: '3'
+        }
+      ]
+    }
+  },
+
   {
     label: '标签输入框',
     fieldType: [],
@@ -354,6 +355,10 @@ export const componentsMenusSchema = [
     as: 'upload',
     schema: upload,
     props: {}
+  },
+  {
+    label: '占位盒子',
+    as: ''
   }
 ]
 //   {

@@ -140,8 +140,6 @@ defineExpose({ toFocus })
       v-model="modelValue"
       class="lew-input-number"
       :placeholder="placeholder"
-      :readonly="readonly"
-      :disabled="disabled"
       :min="min"
       :max="max"
       :step="step"

@@ -60,6 +60,7 @@ const getRadioClassName = computed(() => {
   transition: var(--lew-form-transition-ease);
   white-space: nowrap;
   box-sizing: border-box;
+  border: var(--lew-form-border-width) transparent solid;
 
   .icon-radio-box {
     position: relative;

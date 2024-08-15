@@ -29,15 +29,17 @@ const handleClick = async (e: any) => {
 }
 
 const getSwitchClassName = computed(() => {
-  const { round, request } = props
+  const { round, request, disabled, readonly } = props
 
   let loading = props.loading || _loading.value
 
-  return object2class('lew-switch', {
+  return object2class('lew-switch-view', {
     checked: modelValue.value,
     round: !!round,
     request: !!request,
-    loading
+    loading,
+    disabled,
+    readonly
   })
 })
 </script>
@@ -104,18 +106,18 @@ const getSwitchClassName = computed(() => {
   }
 }
 
-.lew-switch-loading {
+.lew-switch-view-loading {
   cursor: progress;
 
   .lew-switch-dot::after {
-    border: 2px solid rgba(0, 0, 0, 0);
+    border: var(--lew-form-border-width)  solid rgba(0, 0, 0, 0);
     border-left: 2px solid var(--lew-color-primary);
     width: 10px;
     height: 10px;
   }
 }
 
-.lew-switch-round {
+.lew-switch-view-round {
   border-radius: 20px;
 
   .lew-switch-dot {
@@ -136,15 +138,15 @@ const getSwitchClassName = computed(() => {
   }
 }
 
-.lew-switch-view.lew-switch-checked {
+.lew-switch-view.lew-switch-view-checked {
   background: var(--lew-color-primary);
 }
 
-.lew-switch-view.lew-switch-checked:hover {
+.lew-switch-view.lew-switch-view-checked:hover {
   background: var(--lew-color-primary);
 }
 
-.lew-switch-view.lew-switch-checked:active {
+.lew-switch-view.lew-switch-view-checked:active {
   background: var(--lew-color-primary);
 
   .lew-switch-dot {
@@ -165,5 +167,14 @@ const getSwitchClassName = computed(() => {
     width: 16px;
     transform: translate(18px, 4px);
   }
+}
+
+.lew-switch-view-disabled {
+  opacity: var(--lew-disabled-opacity);
+  pointer-events: none; //鼠标点击不可修改
+}
+
+.lew-switch-view-readonly {
+  pointer-events: none; //鼠标点击不可修改
 }
 </style>

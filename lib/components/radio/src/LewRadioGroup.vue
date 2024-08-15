@@ -37,6 +37,7 @@ const getRadioGroupClassName = computed(() => {
       :iconable="iconable"
       :label="item.label"
       :disabled="item.disabled || disabled"
+      :round="round"
       :size="size"
       :checked="modelValue === item.value"
       @change="change({ item })"

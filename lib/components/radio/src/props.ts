@@ -80,6 +80,11 @@ export const radioGroupProps = {
     default: false,
     description: '是否禁用'
   },
+  round: {
+    type: Boolean,
+    default: true,
+    description: '是否圆形'
+  },
   readonly: {
     type: Boolean,
     default: false,

@@ -7,12 +7,12 @@ export default [
       itemWidth: '50px',
       options: [
         {
-          label: '垂直',
-          value: 'y'
-        },
-        {
           label: '水平',
           value: 'x'
+        },
+        {
+          label: '垂直',
+          value: 'y'
         }
       ]
     }
@@ -31,7 +31,7 @@ export default [
   {
     label: '图标开启',
     as: 'switch',
-    tips: '图标开启，仅在 block 时生效',
+    tips: '图标开启，仅在块状时生效',
     field: 'iconable'
   }
 ]

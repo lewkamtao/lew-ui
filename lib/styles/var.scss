@@ -141,7 +141,7 @@
   // 标题
   --lew-title-bold: 800;
   // 表单样式
-  --lew-form-border-width: 2px;
+  --lew-form-border-width: 1.5px;
   --lew-form-transition-ease: all 0.25s ease;
   --lew-form-transition-bezier: all 0.25s cubic-bezier(0.3, 1.3, 0.3, 1);
   --lew-form-outline: 0px var(--lew-color-primary-light) solid;
@@ -201,7 +201,7 @@
   --lew-modal-box-bgcolor: #fff;
   // loading
   --lew-loading-bgcolor: rgb(255, 255, 255, 0.8);
-  // povpoer
+  // popover
   --lew-pop-bgcolor: #fff;
   // message
   --lew-message-bgcolor: rgba(255, 255, 255, 1);
@@ -383,7 +383,7 @@
   --lew-modal-box-bgcolor: #323339;
   // loading
   --lew-loading-bgcolor: rgba(0, 0, 0, 0.7);
-  // povpoer
+  // popover
   --lew-pop-bgcolor: #323339;
   // message
   --lew-message-bgcolor: #4d4d58;
