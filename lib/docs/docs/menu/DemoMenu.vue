@@ -15,7 +15,7 @@ const options = ref(
 <template>
   <div class="demo-wrapper">
     <lew-title>Menu</lew-title>
-    <p class="sub-title">一个简单的菜单，提供了多种配置方式。</p>
+    <p class="sub-title">一个简单的菜单。</p>
     <lew-demo-box title="常规" :code="DemoMenu1Code">
       <demo-menu1 />
     </lew-demo-box>

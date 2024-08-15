@@ -259,7 +259,7 @@ defineExpose({ toFocus })
 
   .lew-input-number-control {
     .lew-input-number-icon {
-      background-color: var(--lew-bgcolor-4);
+      background-color: var(--lew-bgcolor-3);
     }
   }
 }
@@ -271,7 +271,7 @@ defineExpose({ toFocus })
 
   .lew-input-number-control {
     .lew-input-number-icon {
-      background-color: var(--lew-bgcolor-4) !important;
+      background-color: var(--lew-bgcolor-3) !important;
     }
   }
 }
