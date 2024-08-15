@@ -73,13 +73,6 @@ const options: MenuOptions[] = [
         label: 'Mark',
         value: '/Mark'
       },
-      // {
-      //     clabel: '颜色',
-      //     label: 'Color',
-      //     value: '/Color',
-      //
-      //
-      // },
       {
         label: 'Icon',
         value: '/icon'
@@ -145,13 +138,6 @@ const options: MenuOptions[] = [
         label: 'Textarea',
         value: '/Textarea'
       },
-      // {
-      //     clabel: '高级输入框',
-      //     label: 'InputPro',
-      //     value: '/InputPro',
-      //
-      //     color: 'warning',
-      // },
       {
         label: 'InputTag',
         value: '/InputTag'

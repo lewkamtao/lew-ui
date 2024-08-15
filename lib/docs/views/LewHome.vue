@@ -375,14 +375,25 @@ const notification = (type: string) => {
         </div>
       </div>
       <p>一个 Vue 3 组件库</p>
-      <lew-button
-        round
-        icon="arrow-right"
-        iconPosition="right"
-        text="Get started"
-        style="margin-top: 20px"
-        @click="router.push('/Avatar')"
-      />
+      <lew-flex>
+        <lew-button
+          round
+          icon="arrow-right"
+          iconPosition="right"
+          text="Get started"
+          style="margin-top: 20px"
+          @click="router.push('/Avatar')"
+        />
+        <a href="/#/form-engine" target="_blank">
+          <lew-button
+            round
+            text="表单引擎 🎉"
+            style="margin-top: 20px"
+            color="primary"
+            type="light"
+          />
+        </a>
+      </lew-flex>
     </div>
     <div class="home">
       <lew-flex direction="x" gap="40">

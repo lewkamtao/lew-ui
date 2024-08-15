@@ -217,7 +217,6 @@ defineExpose({ show, hide })
     <template #trigger>
       <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
         <lew-icon
-          v-if="!readonly"
           :size="getIconSize"
           type="chevron-down"
           class="icon-select"

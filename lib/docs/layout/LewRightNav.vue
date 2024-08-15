@@ -75,5 +75,8 @@ onMounted(() => {
   .item:hover {
     background-color: var(--lew-bgcolor-2);
   }
+  .title:hover {
+    background: none;
+  }
 }
 </style>

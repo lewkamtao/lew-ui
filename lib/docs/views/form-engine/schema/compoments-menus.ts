@@ -117,6 +117,9 @@ export const componentsMenusSchema = [
     schema: selectScheme,
     props: {
       clearable: true,
+      trigger: 'click',
+      align: 'left',
+      showCheckIcon: true,
       options: [
         {
           label: '广东',
@@ -149,6 +152,11 @@ export const componentsMenusSchema = [
     schema: selectMultipleScheme,
     props: {
       clearable: true,
+      valueTextSplit: '、',
+      trigger: 'click',
+      align: 'left',
+      valueLayout: 'text',
+      showCheckIcon: true,
       options: [
         {
           label: '广东',
