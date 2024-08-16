@@ -208,6 +208,7 @@ defineExpose({ toFocus })
   box-sizing: border-box;
   outline: 0px var(--lew-form-border-color) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  box-shadow: var(--lew-form-box-shadow);
   transition:
     var(--lew-form-transition-ease),
     width 0s,

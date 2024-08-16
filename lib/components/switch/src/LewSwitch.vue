@@ -62,6 +62,7 @@ const getSwitchClassName = computed(() => {
   transition: var(--lew-form-transition-ease);
   cursor: pointer;
   outline: 0px var(--lew-color-primary-light) solid;
+  box-shadow: var(--lew-form-box-shadow);
 
   .lew-switch-dot {
     position: absolute;

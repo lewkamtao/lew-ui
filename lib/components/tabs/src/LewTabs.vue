@@ -189,6 +189,7 @@ onUnmounted(() => {
   width: auto;
   max-width: 100%;
   border-radius: var(--lew-border-radius-small);
+  box-shadow: var(--lew-form-box-shadow);
   overflow: hidden;
 }
 

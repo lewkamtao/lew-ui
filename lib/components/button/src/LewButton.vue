@@ -142,6 +142,7 @@ const getStyle = computed(() => {
   box-sizing: border-box;
   overflow: hidden;
   padding: 0px 16px;
+  box-shadow: var(--lew-form-box-shadow);
 
   .lew-loading-icon {
     position: absolute;

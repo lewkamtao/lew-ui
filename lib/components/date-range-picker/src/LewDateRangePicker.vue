@@ -161,7 +161,8 @@ defineExpose({ show, hide })
     user-select: none;
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     outline: 0px var(--lew-color-primary-light) solid;
-  }
+	box-shadow: var(--lew-form-box-shadow);
+}
 
   .lew-date-picker-input {
     width: 100%;

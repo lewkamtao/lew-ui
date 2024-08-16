@@ -308,6 +308,7 @@ defineExpose({ show, hide })
   box-sizing: border-box;
   outline: 0px var(--lew-color-primary-light) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  box-shadow: var(--lew-form-box-shadow);
 
   > div {
     width: 100%;

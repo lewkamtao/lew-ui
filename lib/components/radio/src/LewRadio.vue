@@ -156,6 +156,7 @@ const getRadioClassName = computed(() => {
   background: var(--lew-radio-block-color);
   border: var(--lew-form-border-width) transparent solid;
   border-radius: var(--lew-border-radius-small);
+  box-shadow: var(--lew-form-box-shadow);
   .icon-radio-box {
     .icon-radio {
       padding: 1px;

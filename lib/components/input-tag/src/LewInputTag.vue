@@ -148,6 +148,7 @@ const clear = () => {
   box-sizing: border-box;
   outline: 0px var(--lew-form-border-color) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  box-shadow: var(--lew-form-box-shadow);
   transition: var(--lew-form-transition-ease);
   overflow: hidden;
   width: 100%;
@@ -176,6 +177,7 @@ const clear = () => {
     border: none !important;
     outline: none !important;
     background: none !important;
+    box-shadow: none !important;
     margin-left: 2px;
     overflow: hidden;
     width: auto !important;

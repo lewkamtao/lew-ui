@@ -165,7 +165,7 @@ const options = ref([
           value: '3'
         },
         {
-          label: 'TyeScript',
+          label: 'TypeScript',
           value: '4'
         },
         {
