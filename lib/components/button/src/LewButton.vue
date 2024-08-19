@@ -41,16 +41,16 @@ const getButtonClass = computed(() => {
 })
 
 const getIconSize = computed(() => {
-  const { size } = props
+  const { size, iconSize } = props
   switch (size) {
     case 'small':
-      return 12
+      return iconSize ? iconSize : 14
     case 'medium':
-      return 14
+      return iconSize ? iconSize : 16
     case 'large':
-      return 16
+      return iconSize ? iconSize : 18
     default:
-      return 14
+      return iconSize ? iconSize : 16
   }
 })
 
@@ -101,10 +101,16 @@ const getStyle = computed(() => {
         'lew-loading-isShow': (_loading || loading) && !disabled
       }"
     >
-      <lew-icon :size="getIconSize" animation="spin" animationSpeed="fast" type="loader" />
+      <lew-icon
+        :size="getIconSize"
+        animation="spin"
+        strokeWidth="2"
+        animationSpeed="fast"
+        type="loader"
+      />
     </div>
     <template v-if="iconPosition === 'left'">
-      <lew-icon v-if="icon" class="lew-button-icon" :size="getIconSize" :type="icon" />
+      <lew-icon strokeWidth="2" v-if="icon" class="lew-button-icon" :size="getIconSize" :type="icon" />
     </template>
     <div v-if="$slots.default || text" class="lew-button-content">
       <span class="lew-button-text">
@@ -117,7 +123,13 @@ const getStyle = computed(() => {
       </span>
     </div>
     <template v-if="iconPosition === 'right'">
-      <lew-icon v-if="icon" class="lew-button-icon" :size="getIconSize" :type="icon" />
+      <lew-icon
+        v-if="icon"
+        class="lew-button-icon"
+        strokeWidth="2"
+        :size="getIconSize"
+        :type="icon"
+      />
     </template>
   </button>
 </template>
@@ -141,9 +153,9 @@ const getStyle = computed(() => {
   border-radius: var(--lew-border-radius-small);
   box-sizing: border-box;
   overflow: hidden;
-  padding: 0px 16px;
+  padding: 0px 20px;
   box-shadow: var(--lew-form-box-shadow);
-
+  outline: none;
   .lew-loading-icon {
     position: absolute;
     opacity: 0;
@@ -221,8 +233,8 @@ const getStyle = computed(() => {
 
 .lew-button-size-small {
   min-width: 50px;
-  height: var(--lew-form-item-height-small);
-  line-height: var(--lew-form-item-height-small);
+  height: calc(var(--lew-form-item-height-small) + 4px);
+  line-height: calc(var(--lew-form-item-height-small) + 4px);
   font-size: var(--lew-form-font-size-small);
   gap: 4px;
   .lew-loading-icon {
@@ -232,8 +244,8 @@ const getStyle = computed(() => {
 
 .lew-button-size-medium {
   min-width: 60px;
-  height: var(--lew-form-item-height-medium);
-  line-height: var(--lew-form-item-height-medium);
+  height: calc(var(--lew-form-item-height-medium) + 4px);
+  line-height: calc(var(--lew-form-item-height-medium) + 4px);
   font-size: var(--lew-form-font-size-medium);
   gap: 6px;
   .lew-loading-icon {
@@ -243,8 +255,8 @@ const getStyle = computed(() => {
 
 .lew-button-size-large {
   min-width: 70px;
-  height: var(--lew-form-item-height-large);
-  line-height: var(--lew-form-item-height-large);
+  height: calc(var(--lew-form-item-height-large) + 4px);
+  line-height: calc(var(--lew-form-item-height-large) + 4px);
   font-size: var(--lew-form-font-size-large);
   gap: 8px;
   .lew-loading-icon {
@@ -255,22 +267,22 @@ const getStyle = computed(() => {
 .lew-button-size-small.lew-button-singleIcon {
   min-width: auto;
   padding: 0px;
-  width: var(--lew-form-item-height-small);
-  height: var(--lew-form-item-height-small);
+  width: calc(var(--lew-form-item-height-small) + 4px);
+  height: calc(var(--lew-form-item-height-small) + 4px);
 }
 
 .lew-button-size-medium.lew-button-singleIcon {
   min-width: auto;
   padding: 0px;
-  width: var(--lew-form-item-height-medium);
-  height: var(--lew-form-item-height-medium);
+  width: calc(var(--lew-form-item-height-medium) + 4px);
+  height: calc(var(--lew-form-item-height-medium) + 4px);
 }
 
 .lew-button-size-large.lew-button-singleIcon {
   min-width: auto;
   padding: 0px;
-  width: var(--lew-form-item-height-large);
-  height: var(--lew-form-item-height-large);
+  width: calc(var(--lew-form-item-height-large) + 4px);
+  height: calc(var(--lew-form-item-height-large) + 4px);
 }
 
 .lew-button.lew-button-loading.lew-button-singleIcon {

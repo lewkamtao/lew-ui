@@ -54,6 +54,11 @@ export const buttonProps = {
     default: 'medium',
     description: '大小'
   },
+  iconSize: {
+    type: Number,
+    default: '',
+    description: '图标大小'
+  },
   loading: {
     type: Boolean,
     default: false,

@@ -162,7 +162,7 @@ const getCheckboxClassName = computed(() => {
 }
 
 .lew-checkbox-block {
-  background: var(--lew-checkbox-block-color);
+  background: var(--lew-form-bgcolor);
   border: var(--lew-form-border-width) transparent solid;
   border-radius: var(--lew-border-radius-small);
   box-shadow: var(--lew-form-box-shadow);

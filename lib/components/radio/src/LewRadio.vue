@@ -169,7 +169,7 @@ const getRadioClassName = computed(() => {
 
 .lew-radio-checked.lew-radio-block {
   border: var(--lew-form-border-width) var(--lew-radio-color) solid;
-  background: var(--lew-radio-color-light);
+  background: var(--lew-form-bgcolor);
   color: var(--lew-radio-color);
 }
 

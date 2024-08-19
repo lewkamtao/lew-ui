@@ -518,6 +518,9 @@ defineExpose({ toFocus })
     visibility: hidden;
     box-sizing: border-box;
   }
+  .lew-input-box {
+    padding: 0px;
+  }
 }
 
 .lew-input-view-size-small {
@@ -669,19 +672,19 @@ defineExpose({ toFocus })
 
 .lew-input-view-size-small.lew-input-view-autoWidth {
   .lew-input {
-    left: 7px;
+    padding: var(--lew-form-input-padding-small);
     width: calc(100% - 18px);
   }
 }
 .lew-input-view-size-medium.lew-input-view-autoWidth {
   .lew-input {
-    left: 9px;
+    padding: var(--lew-form-input-padding-small);
     width: calc(100% - 24px);
   }
 }
 .lew-input-view-size-large.lew-input-view-autoWidth {
   .lew-input {
-    left: 12px;
+    padding: var(--lew-form-input-padding-small);
     width: calc(100% - 30px);
   }
 }
