@@ -40,8 +40,8 @@ const options = ref(
       <demo-textarea3 />
     </lew-demo-box>
     <lew-demo-box title="可清空的" :code="DemoTextarea4Code"> <demo-textarea4 /> </lew-demo-box>
-    <lew-demo-box title="只读状态" :code="DemoTextarea5Code"> <demo-textarea5 /> </lew-demo-box>
-    <lew-demo-box title="禁用状态" :code="DemoTextarea6Code"> <demo-textarea6 /> </lew-demo-box>
+    <lew-demo-box title="只读和禁用" :code="DemoTextarea5Code"> <demo-textarea5 /> </lew-demo-box>
+    <lew-demo-box title="缩放模式" :code="DemoTextarea6Code"> <demo-textarea6 /> </lew-demo-box>
     <lew-demo-box title="按下回车键触发事件" :code="DemoTextarea7Code">
       <demo-textarea7 />
       <lew-alert

@@ -3,8 +3,6 @@
   <br />
   <div>
     <ul>
-      <li>Step 步骤</li>
-      <li>Upload 上传</li>
       <li>Card 卡片</li>
       <li>Progress 进度条</li>
     </ul>

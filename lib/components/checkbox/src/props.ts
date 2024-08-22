@@ -110,7 +110,7 @@ export const checkboxGroupProps = {
   iconable: {
     type: Boolean,
     default: true,
-    description: '图标开启'
+    description: '图标开启，仅在块状时生效'
   },
   size: {
     type: String as PropType<CheckboxSize>,

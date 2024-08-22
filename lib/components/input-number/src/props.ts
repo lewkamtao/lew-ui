@@ -21,12 +21,12 @@ export const inputNumberProps = {
   },
   min: {
     type: [Number, String],
-    default: 0,
+    default: '',
     description: '最小值'
   },
   max: {
     type: [Number, String],
-    default: 100,
+    default: '',
     description: '最大值'
   },
   selectByFocus: {
@@ -44,12 +44,6 @@ export const inputNumberProps = {
     type: Boolean,
     default: false,
     description: '是否禁用'
-  },
-  // 是否使用清空按钮
-  clearable: {
-    type: Boolean,
-    default: false,
-    description: '是否使用清空按钮'
   },
   // 默认提示语
   placeholder: {

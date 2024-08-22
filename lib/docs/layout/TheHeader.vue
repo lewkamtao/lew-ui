@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { useDark } from '@vueuse/core'
 
-const version = ref('2.2.1')
+const version = ref('2.2.7')
 
 const isDark = useDark({
   selector: 'html',
@@ -13,7 +13,7 @@ const isDark = useDark({
 const router = useRouter()
 const route = useRoute()
 
-const gohome = () => {
+const goHome = () => {
   if (route.name === 'R-LewHome') {
     LewMessage.warning('你已经在首页了！')
   } else {
@@ -23,27 +23,34 @@ const gohome = () => {
 </script>
 
 <template>
-  <div class="Header">
-    <div class="logo" @click="gohome">
+  <lew-flex mode="between" class="Header">
+    <lew-flex class="logo" x="start" @click="goHome">
       <img src="../assets/images/logo.png" alt="logo" srcset="" width="30" height="30" />
       <span style="margin-left: 10px"> Lew UI</span>
       <lew-tag type="light" size="small" style="margin-left: 10px"> Beta {{ version }} </lew-tag>
-    </div>
+    </lew-flex>
+    <lew-flex gap="15" class="menu">
+      <a class="menu-item" href="/#/">首页</a>
+      <a class="menu-item" href="/#/Install">指南</a>
+      <a class="menu-item" href="/#/Image">组件</a>
+      <a class="menu-item" target="_blank" href="/#/form-engine">
+        <lew-flex gap="5"> 表单引擎<lew-tag size="small" round> Dev </lew-tag> </lew-flex>
+      </a>
+    </lew-flex>
     <lew-flex gap="15" x="end" class="menu">
-      <div class="menu-item" @click="router.push(`/`)">首页</div>
-      <div class="menu-item" @click="router.push(`/Install`)">指南</div>
-      <div class="menu-item" @click="router.push(`/Avatar`)">组件</div>
       <div class="menu-item menu-item-icon" @click="isDark = !isDark">
         <lew-icon class="icon-mode-sunny" type="sun" size="18" />
         <lew-icon class="icon-mode-moon" type="moon" size="18" />
       </div>
-      <div class="menu-item menu-item-icon">
-        <a target="_blank" href="https://github.com/lewkamtao/Lew-UI">
-          <lew-icon size="18" type="github" />
-        </a>
-      </div>
+      <a
+        class="menu-item menu-item-icon"
+        target="_blank"
+        href="https://github.com/lewkamtao/Lew-UI"
+      >
+        <lew-icon size="18" type="github" />
+      </a>
     </lew-flex>
-  </div>
+  </lew-flex>
 </template>
 
 <style lang="scss" scoped>
@@ -57,10 +64,10 @@ const gohome = () => {
   width: 100%;
   height: 60px;
   box-sizing: border-box;
-  background: var(--lew-bgcolor-0);
   border-bottom: var(--lew-border-1);
   user-select: none;
   white-space: nowrap;
+  background: var(--lew-bgcolor-0);
 
   .logo {
     display: flex;
@@ -78,33 +85,27 @@ const gohome = () => {
     align-items: center;
 
     .menu-item {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
-      padding: 10px;
-      opacity: 0.8;
-      font-size: 14px;
+      padding: 10px 15px;
+      font-size: 16px;
       transition: all 0.25s;
       color: var(--lew-text-color-1);
       cursor: pointer;
       box-sizing: border-box;
       height: 30px;
       border-radius: var(--lew-border-radius-small);
-
+      font-weight: bold;
       svg {
         cursor: pointer;
-      }
-      a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
       }
     }
     .menu-item-icon {
       width: 30px;
       padding: 0px;
     }
-    .menu-item:nth-child(3) {
+    .menu-item:nth-child(4) {
       margin-right: 50px;
     }
 

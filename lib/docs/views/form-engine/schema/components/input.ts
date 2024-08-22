@@ -1,4 +1,4 @@
-export const inputSchema = [
+export default [
   {
     label: '占位提示',
     as: 'input',
@@ -26,6 +26,7 @@ export const inputSchema = [
     label: '对齐方式',
     as: 'tabs',
     field: 'align',
+    componentWidth: 180,
     props: {
       itemWidth: '50px',
       options: [
@@ -55,29 +56,26 @@ export const inputSchema = [
     field: 'clearable'
   },
   {
-    label: '只读',
-    as: 'switch',
-    field: 'readonly'
-  },
-  {
-    label: '复制',
-    as: 'switch',
-    field: 'copyable',
-    tips: '只在readonly为true，且suffix为false时生效'
-  },
-  {
     label: '显示密码切换按钮',
     as: 'switch',
     field: 'showPassword'
   },
   {
-    label: '最小宽度',
+    label: '自动宽度',
+    as: 'switch',
+    field: 'autoWidth'
+  },
+  {
+    label: '限制最大长度',
     as: 'input-number',
-    field: 'minWidth',
-    props: {
-      min: 120,
-      max: 1200,
-      precision: 0
-    }
+    componentWidth: 110,
+    props: { min: 0, align: 'center', placeholder: '最大长度' },
+    field: 'maxLength'
+  },
+  {
+    label: '显示输入字数统计',
+    as: 'switch',
+    tips: '只在 type = text 时有效',
+    field: 'showCount'
   }
 ]

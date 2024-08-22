@@ -148,7 +148,8 @@ const clear = () => {
   box-sizing: border-box;
   outline: 0px var(--lew-form-border-color) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-  transition: var(--lew-form-transition);
+  box-shadow: var(--lew-form-box-shadow);
+  transition: var(--lew-form-transition-ease);
   overflow: hidden;
   width: 100%;
   cursor: text;
@@ -164,7 +165,7 @@ const clear = () => {
     flex-wrap: wrap;
     gap: 5px;
     box-sizing: border-box;
-    transition: var(--lew-form-transition);
+    transition: var(--lew-form-transition-bezier);
     :deep() {
       .lew-input-view {
         border-radius: 0px !important;
@@ -176,6 +177,7 @@ const clear = () => {
     border: none !important;
     outline: none !important;
     background: none !important;
+    box-shadow: none !important;
     margin-left: 2px;
     overflow: hidden;
     width: auto !important;
@@ -199,7 +201,7 @@ const clear = () => {
 }
 .lew-input-tag-view:focus-within {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-ouline);
+  outline: var(--lew-form-outline);
   background-color: var(--lew-form-bgcolor-focus);
 
   :deep() {

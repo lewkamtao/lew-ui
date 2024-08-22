@@ -51,7 +51,7 @@ export const uploadProps = {
   tips: {
     type: String,
     default: '',
-    description: '是否只读'
+    description: '提示信息, 会覆盖内置提示信息'
   },
   multiple: {
     type: Boolean,
@@ -63,14 +63,14 @@ export const uploadProps = {
     default: 1,
     description: '最大上传数量'
   },
-  listType: {
-    type: String,
-    default: 'list', // list card
-    description: '列表类型'
-  },
+//   listType: {
+//     type: String,
+//     default: 'list', // list card
+//     description: '列表类型'
+//   },
   uploadHelper: {
     type: Function || undefined,
-    default: `(fileItem,setFileItem) => void`,
+    default: () => {},
     description: '上传文件的处理方法'
   }
 }

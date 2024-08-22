@@ -23,7 +23,7 @@ const options = ref([
     field: 'input',
     label: 'Input',
     as: 'input',
-    rule: Yup.string().required('不能为空'),
+    rule: Yup.number().required('不能为空'),
     props: {
       clearable: true
     }
@@ -165,7 +165,7 @@ const options = ref([
           value: '3'
         },
         {
-          label: 'TyeScript',
+          label: 'TypeScript',
           value: '4'
         },
         {
@@ -375,14 +375,25 @@ const notification = (type: string) => {
         </div>
       </div>
       <p>一个 Vue 3 组件库</p>
-      <lew-button
-        round
-        icon="arrow-right"
-        iconPosition="right"
-        text="Get started"
-        style="margin-top: 20px"
-        @click="router.push('/Avatar')"
-      />
+      <lew-flex>
+        <lew-button
+          round
+          icon="arrow-right"
+          iconPosition="right"
+          text="Get started"
+          style="margin-top: 20px"
+          @click="router.push('/Avatar')"
+        />
+        <a href="/#/form-engine" target="_blank">
+          <lew-button
+            round
+            text="表单引擎 🎉"
+            style="margin-top: 20px"
+            color="primary"
+            type="light"
+          />
+        </a>
+      </lew-flex>
     </div>
     <div class="home">
       <lew-flex direction="x" gap="40">

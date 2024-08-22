@@ -43,8 +43,8 @@ const asMap: Record<string, any> = {
 }
 
 const getFormItemClassNames = computed(() => {
-  const { direction, size, readonly, disabled } = cloneDeep(props)
-  return object2class('lew-form-item', { direction, size, readonly, disabled })
+  const { direction, size } = cloneDeep(props)
+  return object2class('lew-form-item', { direction, size })
 })
 
 const formItemRef = ref()
@@ -130,14 +130,15 @@ defineExpose({ validate, setError })
         width:
           direction === 'x'
             ? `calc(${formItemRef?.offsetWidth}px - ${any2px(labelWidth)} - 10px)`
-            : '100%'
+            : '100%',
+        justifyContent: direction === 'x' && between ? 'flex-end' : 'flex-start'
       }"
       :class="{ 'lew-form-item-error': errMsg }"
     >
       <component
         :is="asMap[as]"
         v-model="modelValue"
-        v-bind="{ size, ...props.props }"
+        v-bind="{ size, readonly, disabled, ...props.props }"
         @change="change"
       />
       <transition name="slide-fade">
@@ -257,7 +258,7 @@ defineExpose({ validate, setError })
   --lew-radio-color: var(--lew-color-error);
   --lew-radio-color: var(--lew-color-error-dark);
   --lew-radio-color-light: var(--lew-color-error-light);
-  --lew-form-ouline: 0px var(--lew-color-error-light) solid;
+  --lew-form-outline: 0px var(--lew-color-error-light) solid;
 }
 
 .slide-fade-leave-active,

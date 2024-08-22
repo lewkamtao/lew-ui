@@ -19,13 +19,13 @@ const getIconSize = computed(() => {
   const { size, block } = props
   switch (size) {
     case 'small':
-      return block ? 10 : 8
+      return block ? 16 : 12
     case 'medium':
-      return block ? 12 : 10
+      return block ? 18 : 14
     case 'large':
-      return block ? 14 : 12
+      return block ? 20 : 16
     default:
-      return block ? 12 : 10
+      return block ? 18 : 14
   }
 })
 
@@ -65,9 +65,11 @@ const getCheckboxClassName = computed(() => {
   cursor: pointer;
   color: var(--lew-text-color-1);
   font-size: 14px;
-  transition: var(--lew-form-transition);
+  transition:
+    var(--lew-form-transition-ease);
   white-space: nowrap;
   box-sizing: border-box;
+  border: var(--lew-form-border-width) transparent solid;
 
   .icon-checkbox-box {
     position: relative;
@@ -76,7 +78,7 @@ const getCheckboxClassName = computed(() => {
     border: var(--lew-form-border-width) var(--lew-checkbox-border-color) solid;
     box-sizing: border-box;
     border-radius: 6px;
-    transition: var(--lew-form-transition);
+    transition: var(--lew-form-transition-bezier);
     background-color: var(--lew-bgcolor-1);
     overflow: hidden;
 
@@ -85,11 +87,9 @@ const getCheckboxClassName = computed(() => {
       left: 50%;
       top: 50%;
       transform: translate(-50%, 5px) scale(0);
-      transition: var(--lew-form-transition);
+      transition: var(--lew-form-transition-bezier);
       opacity: 0;
       color: var(--lew-color-white);
-      width: 100%;
-      height: 100%;
     }
   }
 
@@ -162,9 +162,10 @@ const getCheckboxClassName = computed(() => {
 }
 
 .lew-checkbox-block {
-  background: var(--lew-checkbox-block-color);
+  background: var(--lew-form-bgcolor);
   border: var(--lew-form-border-width) transparent solid;
   border-radius: var(--lew-border-radius-small);
+  box-shadow: var(--lew-form-box-shadow);
   .icon-checkbox-box {
     .icon-checkbox {
       padding: 1px;

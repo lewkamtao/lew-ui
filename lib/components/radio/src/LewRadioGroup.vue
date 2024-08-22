@@ -29,7 +29,7 @@ const getRadioGroupClassName = computed(() => {
 </script>
 
 <template>
-  <lew-flex x="start" gap="15" class="lew-radio-group" :class="getRadioGroupClassName">
+  <lew-flex x="start" gap="5" class="lew-radio-group" :class="getRadioGroupClassName">
     <lew-radio
       v-for="item in options"
       :key="item.value"
@@ -37,6 +37,7 @@ const getRadioGroupClassName = computed(() => {
       :iconable="iconable"
       :label="item.label"
       :disabled="item.disabled || disabled"
+      :round="round"
       :size="size"
       :checked="modelValue === item.value"
       @change="change({ item })"

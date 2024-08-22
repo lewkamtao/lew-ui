@@ -7,25 +7,9 @@ import { getUniqueId } from 'lew-ui/utils'
 import { downloadObjectAsFile, getComponentIcon } from 'lew-ui/docs/lib/utils'
 import { useDark } from '@vueuse/core'
 import SetForm from './components/SetForm.vue'
-import {
-  baseSchema,
-  globalSchema,
-  tabsSchema,
-  switchSchema,
-  inputSchema,
-  selectSchema,
-  componentsMenusSchema
-} from './schema'
+import { baseSchema, componentsMenusSchema, globalSchema } from './schema'
 import LewGetLabelWidth from 'lew-ui/components/form/src/LewGetLabelWidth.vue'
 import { debounce, cloneDeep, has } from 'lodash-es'
-
-const schemaMap: Record<string, any> = {
-  global: globalSchema,
-  input: inputSchema,
-  select: selectSchema,
-  switch: switchSchema,
-  tabs: tabsSchema
-}
 
 const isDark = useDark({
   selector: 'html',
@@ -44,6 +28,7 @@ const settingTab = ref('options')
 const activedId = ref('')
 const formLabelRef = ref()
 const autoLabelWidth = ref(0)
+
 const formGlobal = ref({
   direction: 'x',
   columns: 1,
@@ -196,6 +181,7 @@ const addComponent = (item: any) => {
       field: `${getUniqueId()}`
     })
   )
+  console.log(item)
 }
 </script>
 
@@ -327,9 +313,9 @@ const addComponent = (item: any) => {
                   size: formGlobal.size,
                   direction: formGlobal.direction,
                   labelWidth: autoLabelWidth,
-                  ...element,
-                  readonly: true
+                  ...element
                 }"
+                readonly
               />
             </div>
           </template>
@@ -359,11 +345,12 @@ const addComponent = (item: any) => {
           <lew-flex direction="y" gap="0">
             <lew-flex direction="y" x="start" gap="0">
               <div class="title">全局属性</div>
-              <set-form v-model="formGlobal" :options="schemaMap.global" />
+              <set-form v-model="formGlobal" :options="globalSchema" />
             </lew-flex>
             <lew-flex v-if="activedId" direction="y" x="start" gap="0">
-              <div class="title">表单属性</div>
+              <div class="title">基础属性</div>
               <set-form
+                :collapse-height="200"
                 v-model="options[options.findIndex((e: any) => e.id === activedId)]"
                 :options="baseSchema"
               />
@@ -380,15 +367,16 @@ const addComponent = (item: any) => {
             >
               <lew-flex class="title" mode="between">
                 <span>组件属性</span>
-                <lew-tag type="light" class="component-name">
-                  {{ options[options.findIndex((e: any) => e.id === activedId)].as }}
-                </lew-tag>
               </lew-flex>
               <set-form
+                v-if="options[options.findIndex((e: any) => e.id === activedId)].schema.length > 0"
                 :key="activedId"
                 v-model="options[options.findIndex((e: any) => e.id === activedId)].props"
-                :options="schemaMap[options[options.findIndex((e: any) => e.id === activedId)].as]"
+                :options="options[options.findIndex((e: any) => e.id === activedId)].schema"
               />
+              <lew-flex v-else>
+                <lew-empty title="开发中，敬请期待"></lew-empty>
+              </lew-flex>
             </lew-flex>
           </lew-flex>
         </div>
@@ -427,7 +415,7 @@ const addComponent = (item: any) => {
       align-items: center;
       justify-content: center;
       width: calc(100% / 3 - 7px);
-      border: 2px dashed transparent;
+      border: var(--lew-form-border-width) dashed transparent;
       box-sizing: border-box;
       cursor: move;
       font-size: 12px;
@@ -501,7 +489,7 @@ const addComponent = (item: any) => {
       min-height: 70px;
       background-color: var(--lew-bgcolor-0);
       box-sizing: border-box;
-      border: 2px dashed transparent;
+      border: var(--lew-form-border-width) dashed transparent;
       img {
         height: 40px;
         width: auto;
@@ -512,7 +500,7 @@ const addComponent = (item: any) => {
     position: relative;
     padding: 15px 13px 15px 13px;
     box-sizing: border-box;
-    border: 2px dashed transparent;
+    border: var(--lew-form-border-width) dashed transparent;
     cursor: pointer;
     .tips-icon {
       position: absolute;
@@ -566,15 +554,15 @@ const addComponent = (item: any) => {
       border: none;
       outline: none;
       opacity: 1;
-      border: 2px dashed transparent;
+      border: var(--lew-form-border-width) dashed transparent;
       background-color: transparent;
     }
   }
   .lew-form-wrapper-draggable-item:hover {
-    border: 2px dashed var(--lew-bgcolor-5);
+    border: var(--lew-form-border-width) dashed var(--lew-bgcolor-5);
   }
   .lew-form-wrapper-draggable-item-actived {
-    border: 2px dashed var(--lew-color-blue-dark) !important;
+    border: var(--lew-form-border-width) dashed var(--lew-color-blue-dark) !important;
   }
   .blank-box {
     height: 100%;
@@ -640,7 +628,7 @@ const addComponent = (item: any) => {
 }
 
 .chosen {
-  border: 2px dashed var(--lew-color-blue-dark) !important;
+  border: var(--lew-form-border-width) dashed var(--lew-color-blue-dark) !important;
 }
 
 .lew-form-setting-tabs {

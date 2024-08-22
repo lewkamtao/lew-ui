@@ -119,7 +119,7 @@
   --lew-color-white: #fff;
   --lew-color-white-text: rgba(255, 255, 255, 0.9);
 
-  --lew-disabled-opacity: 0.3;
+  --lew-disabled-opacity: 0.5;
   --lew-box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.5);
 
   // 圆角
@@ -141,9 +141,10 @@
   // 标题
   --lew-title-bold: 800;
   // 表单样式
-  --lew-form-border-width: 2px;
-  --lew-form-transition: all 0.2s cubic-bezier(0.3, 1.3, 0.3, 1);
-  --lew-form-ouline: 0px var(--lew-color-primary-light) solid;
+  --lew-form-border-width: 0.15em;
+  --lew-form-transition-ease: all 0.2s ease;
+  --lew-form-transition-bezier: all 0.25s cubic-bezier(0.3, 1.3, 0.3, 1);
+  --lew-form-outline: 0px var(--lew-color-primary-light) solid;
   --lew-form-bgcolor: rgba(243, 243, 243, 0.76);
   --lew-form-bgcolor-hover: rgb(228, 228, 228);
   --lew-form-bgcolor-active: rgb(215, 215, 215);
@@ -171,6 +172,8 @@
   --lew-form-font-size-small: 13px;
   --lew-form-font-size-medium: 14px;
   --lew-form-font-size-large: 16px;
+  // shadow
+  --lew-form-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
   // form icon
   --lew-form-icon-opacity: 1;
   --lew-form-icon-opacity-hover: 0.8;
@@ -189,7 +192,7 @@
   // tabs
   --lew-tabs-active-color: #fff;
   // dialog / modal
-  --lew-modal-bgcolor: rgba(0, 0, 0, 0.6);
+  --lew-modal-bgcolor: rgba(0, 0, 0, 0.3);
   --lew-modal-header-border: 1px rgb(227, 227, 233) solid;
   --lew-modal-footer-border: 1px rgb(227, 227, 233) solid;
   // drawer
@@ -200,7 +203,7 @@
   --lew-modal-box-bgcolor: #fff;
   // loading
   --lew-loading-bgcolor: rgb(255, 255, 255, 0.8);
-  // povpoer
+  // popover
   --lew-pop-bgcolor: #fff;
   // message
   --lew-message-bgcolor: rgba(255, 255, 255, 1);
@@ -221,6 +224,9 @@
   --lew-pop-bg-active: rgba(0, 0, 0, 0.05);
   --lew-tooltip-bg: #fff;
   --lew-tooltip-color: #000;
+
+  // 渐变背景
+  --lew-expand-control-bg-gradient: linear-gradient(rgba(255, 255, 255, 0) 0%, #fff 100%);
 }
 
 .lew-dark {
@@ -359,12 +365,12 @@
   --lew-border-9: 1px solid rgb(153, 154, 161);
   // 表单样式
   --lew-form-bgcolor: #27282d;
-  --lew-form-bgcolor-hover: #2a2a2f;
+  --lew-form-bgcolor-hover: #343438;
   --lew-form-bgcolor-active: #202025;
   --lew-form-bgcolor-focus: #1f1f22;
   --lew-form-border-color-hover: rgb(59, 58, 58);
   --lew-form-border-color-focus: var(--lew-color-primary);
-  --lew-form-ouline: 0px var(--lew-color-primary-light) solid;
+  --lew-form-outline: 0px var(--lew-color-primary-light) solid;
   // tabs
   --lew-tabs-active-color: #3f3f45;
   // dialog / modal
@@ -379,7 +385,7 @@
   --lew-modal-box-bgcolor: #323339;
   // loading
   --lew-loading-bgcolor: rgba(0, 0, 0, 0.7);
-  // povpoer
+  // popover
   --lew-pop-bgcolor: #323339;
   // message
   --lew-message-bgcolor: #4d4d58;
@@ -409,4 +415,5 @@
   --lew-tooltip-bg: #43444a;
   --lew-tooltip-color: #fff;
   --lew-pop-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.06);
+  --lew-expand-control-bg-gradient: linear-gradient(rgba(0, 0, 0, 0) 0%, #1a1b20 100%);
 }

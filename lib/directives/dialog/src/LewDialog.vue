@@ -77,43 +77,49 @@ if (props.closeByEsc) {
       </transition>
       <transition name="lew-dialog">
         <div v-if="visible" class="lew-dialog" @click="maskClick">
-          <div v-if="layout === 'normal'" class="lew-dialog-box lew-dialog-box-normal" @click.stop>
-            <div class="left">
-              <div
-                :class="`lew-dialog-icon lew-dialog-icon-${type}`"
-                v-html="getStatusIcon(type)"
-              ></div>
-            </div>
-            <div class="right">
-              <header>
-                <slot name="title"></slot>
-                <span class="gulu-dialog-close" @click="visible = false"></span>
-              </header>
-              <main>
-                <slot name="content"></slot>
-              </main>
-              <footer>
-                <lew-button
-                  v-if="cancelText"
-                  :text="cancelText"
-                  type="text"
-                  color="gray"
-                  round
-                  :loading="cancelLoading"
-                  @click.stop="cancel"
-                />
-                <lew-button
-                  v-if="okText"
-                  :text="okText"
-                  type="fill"
-                  round
-                  :color="type"
-                  :loading="okLoading"
-                  @click.stop="ok"
-                />
-              </footer>
-            </div>
-          </div>
+          <lew-flex
+            direction="y"
+            gap="20"
+            v-if="layout === 'normal'"
+            class="lew-dialog-box lew-dialog-box-normal"
+            @click.stop
+          >
+            <lew-flex y="start">
+              <div class="left">
+                <div
+                  :class="`lew-dialog-icon lew-dialog-icon-${type}`"
+                  v-html="getStatusIcon(type)"
+                ></div>
+              </div>
+              <div class="right">
+                <header>
+                  <slot name="title"></slot>
+                  <span class="gulu-dialog-close" @click="visible = false"></span>
+                </header>
+                <main>
+                  <slot name="content"></slot>
+                </main>
+              </div>
+            </lew-flex>
+            <footer>
+              <lew-button
+                v-if="cancelText"
+                :text="cancelText"
+                color="gray"
+                type="light"
+                :loading="cancelLoading"
+                @click.stop="cancel"
+              />
+              <lew-button
+                v-if="okText"
+                :text="okText"
+                type="fill"
+                :color="type"
+                :loading="okLoading"
+                @click.stop="ok"
+              />
+            </footer>
+          </lew-flex>
 
           <div v-if="layout === 'mini'" class="lew-dialog-box lew-dialog-box-mini" @click.stop>
             <div class="left">
@@ -181,7 +187,7 @@ if (props.closeByEsc) {
   .lew-dialog-box {
     position: relative;
     display: flex;
-    width: 350px;
+    width: 450px;
     height: auto;
     padding: 20px;
     border-radius: var(--lew-border-radius-medium);
@@ -189,9 +195,11 @@ if (props.closeByEsc) {
     border: var(--lew-dialog-box-border);
     box-shadow: var(--lew-dialog-box-shadow);
     .lew-dialog-icon:deep() {
+      width: 36px;
+      height: 36px;
       svg {
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
       }
     }
 
@@ -230,11 +238,8 @@ if (props.closeByEsc) {
     footer {
       display: flex;
       justify-content: end;
+      gap: 10px;
       width: 100%;
-
-      .lew-button {
-        margin-left: 10px;
-      }
     }
 
     .btn-close {
@@ -267,18 +272,17 @@ if (props.closeByEsc) {
 
   .lew-dialog-box-normal {
     .left {
-      margin-right: 15px;
-      width: 30px;
+      width: 36px;
+      margin-left: -2px;
     }
 
     .right {
       position: relative;
       top: 1px;
-      width: 310px;
+      width: calc(450px - 15px - 30px);
     }
-
     main {
-      padding: 10px 0px 20px 0px;
+      margin-top: 10px;
     }
   }
 

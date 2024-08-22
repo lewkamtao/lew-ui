@@ -530,23 +530,24 @@ const getTips = computed(() => {
     background-color: var(--lew-form-bgcolor);
     border-radius: var(--lew-border-radius-small);
     box-sizing: border-box;
-    transition: var(--lew-form-transition);
+    transition: var(--lew-form-transition-ease);
     cursor: pointer;
+	box-shadow: var(--lew-form-box-shadow);
 
     .lew-upload-icon {
       color: var(--lew-color-primary-dark);
-      transition: var(--lew-form-transition);
+      transition: var(--lew-form-transition-ease);
     }
     .click-upload {
       color: var(--lew-color-primary-dark);
       border-bottom: 2px var(--lew-color-primary-dark) solid;
     }
     .lew-upload-tip {
-      transition: var(--lew-form-transition);
+      transition: var(--lew-form-transition-ease);
     }
     .lew-upload-max-size {
       color: var(--lew-text-color-8);
-      transition: var(--lew-form-transition);
+      transition: var(--lew-form-transition-ease);
     }
     .lew-upload-input {
       position: fixed;
@@ -605,7 +606,7 @@ const getTips = computed(() => {
         width: 20px;
         height: 20px;
         box-sizing: border-box;
-        transition: var(--lew-form-transition);
+        transition: var(--lew-form-transition-ease);
         cursor: pointer;
         transition: all 0.15s;
         &:hover {
@@ -723,7 +724,7 @@ const getTips = computed(() => {
 .upload-list-move,
 .upload-list-enter-active,
 .upload-list-leave-active {
-  transition: all 0.25s cubic-bezier(0.55, 0, 0.1, 1);
+  transition: var(--lew-form-transition-bezier);
 }
 
 .upload-list-enter-from,

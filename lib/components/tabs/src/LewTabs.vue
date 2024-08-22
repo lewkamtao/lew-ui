@@ -14,8 +14,8 @@ const itemRef = ref([] as any)
 
 const state = reactive({
   activeItemStyle: {} as any,
-  curIndex: props.options.findIndex((e: TabsOptions) => tabsValue.value === e.value),
-  hidLine: '',
+  curIndex: (props.options || []).findIndex((e: TabsOptions) => tabsValue.value === e.value),
+  hidLine: 'all',
   isInit: false
 })
 
@@ -40,7 +40,8 @@ const initActiveItemStyle = (index: number) => {
 
   state.activeItemStyle = {
     width: `${activeRef?.offsetWidth}px`,
-    transform: `translate(${activeRef?.offsetLeft}px)`
+    height: props.type === 'line' ? '' : `${activeRef?.offsetHeight}px`,
+    transform: `translate(${activeRef?.offsetLeft}px,-50%)`
   }
 }
 
@@ -48,8 +49,10 @@ watch(
   () => props.size,
   () => {
     nextTick(() => {
-      const index = props.options.findIndex((e) => tabsValue.value === e.value)
-      initActiveItemStyle(index)
+      setTimeout(() => {
+        const index = props.options.findIndex((e) => tabsValue.value === e.value)
+        initActiveItemStyle(index)
+      }, 250)
     })
   }
 )
@@ -94,11 +97,13 @@ const debounce = () => {
 }
 
 const getTabsWrapperClassName = computed(() => {
-  const { type, round } = props
+  const { type, round, disabled, readonly } = props
   return object2class('lew-tabs-wrapper', {
     type,
     round,
-    hidLine: state.hidLine
+    hidLine: state.hidLine || !state.isInit,
+    disabled,
+    readonly
   })
 })
 
@@ -187,6 +192,7 @@ onUnmounted(() => {
   width: auto;
   max-width: 100%;
   border-radius: var(--lew-border-radius-small);
+  box-shadow: var(--lew-form-box-shadow);
   overflow: hidden;
 }
 
@@ -240,6 +246,7 @@ onUnmounted(() => {
   position: relative;
   display: inline-flex;
   align-items: center;
+  gap: 3px;
   background: var(--lew-form-bgcolor);
   border-radius: var(--lew-border-radius-small);
   overflow-x: auto;
@@ -248,7 +255,7 @@ onUnmounted(() => {
   scroll-behavior: smooth;
   width: 100%;
   box-sizing: border-box;
-
+  padding: 0px 3px;
   .lew-tabs-item {
     position: relative;
     display: inline-flex;
@@ -256,23 +263,21 @@ onUnmounted(() => {
     justify-content: center;
     z-index: 9;
     box-sizing: border-box;
-    border-radius: var(--lew-border-radius-small);
-    margin: 4px;
+    border-radius: 6px;
     color: var(--lew-text-color-1);
     white-space: nowrap;
     cursor: pointer;
     flex-shrink: 0;
+    height: calc(100% - 6px);
     transition: all 0.25s;
   }
+
   .lew-tabs-item:hover {
-    opacity: 0.6;
-  }
-  .lew-tabs-item:active {
-    opacity: 0.3;
+    background-color: var(--lew-form-bgcolor-hover);
   }
 
-  .lew-tabs-item-active {
-    color: var(--lew-color-primary);
+  .lew-tabs-item-active:hover {
+    background-color: rgba(0, 0, 0, 0);
   }
   .lew-tabs-item-active:hover {
     opacity: 1;
@@ -280,14 +285,13 @@ onUnmounted(() => {
 
   .lew-tabs-item-animation-active {
     position: absolute;
-    top: 4px;
+    top: 50%;
     left: 0px;
     z-index: 7;
-    height: calc(100% - 8px);
     border-radius: 6px;
     background: var(--lew-tabs-active-color);
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.08);
-    transform: translateX(4px);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.08);
+    transform: translateX(5px);
     box-sizing: border-box;
   }
 
@@ -295,14 +299,13 @@ onUnmounted(() => {
     transition: all 0.15s cubic-bezier(0.65, 0, 0.35, 1);
   }
 }
-.lew-tabs-type-line {
-  height: auto !important;
-}
+
 .lew-tabs-size-small {
   height: calc(var(--lew-form-item-height-small) + 4px);
 
   .lew-tabs-item {
     padding: var(--lew-form-input-padding-small);
+    min-width: calc(var(--lew-form-item-height-small) - 2px);
     font-size: var(--lew-form-font-size-small);
   }
 }
@@ -311,6 +314,7 @@ onUnmounted(() => {
 
   .lew-tabs-item {
     padding: var(--lew-form-input-padding-medium);
+    min-width: calc(var(--lew-form-item-height-medium) - 2px);
     font-size: 14px;
   }
 }
@@ -319,40 +323,43 @@ onUnmounted(() => {
 
   .lew-tabs-item {
     padding: var(--lew-form-input-padding-large);
+    min-width: calc(var(--lew-form-item-height-large) - 2px);
     font-size: 15px;
   }
 }
 
-.lew-tabs-type-line {
-  position: relative;
-  background: none;
-  border: none;
-  padding-bottom: 5px;
-  border-radius: 0px;
-
-  .lew-tabs-item:hover {
-    background: var(--lew-bgcolor-2);
-  }
-
-  .lew-tabs-item-active {
+.lew-tabs-wrapper-type-line {
+  box-shadow: none;
+  .lew-tabs-type-line {
+    position: relative;
     background: none;
-  }
-
-  .lew-tabs-item-active:hover {
-    transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
-    background: none;
-  }
-
-  .lew-tabs-item-animation-active {
-    position: absolute;
-    top: auto;
-    bottom: 1px;
-    left: 0px;
-    z-index: 9;
-    height: 2px;
+    border: none;
+    padding-bottom: 5px;
     border-radius: 0px;
-    background: var(--lew-color-primary);
-    transform: translateX(3px);
+    .lew-tabs-item:hover {
+      background: var(--lew-bgcolor-2);
+    }
+
+    .lew-tabs-item-active {
+      background: none;
+    }
+
+    .lew-tabs-item-active:hover {
+      transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+      background: none;
+    }
+
+    .lew-tabs-item-animation-active {
+      position: absolute;
+      top: auto;
+      bottom: 1px;
+      left: 0px;
+      z-index: 9;
+      height: 2px;
+      border-radius: 0px;
+      background: var(--lew-color-primary);
+      transform: translateX(3px);
+    }
   }
 }
 .lew-tabs-type-line:after {
@@ -374,5 +381,14 @@ onUnmounted(() => {
   .lew-tabs-item-animation-active {
     border-radius: 35px;
   }
+}
+
+.lew-tabs-wrapper-disabled {
+  opacity: var(--lew-disabled-opacity);
+  pointer-events: none; //鼠标点击不可修改
+}
+
+.lew-tabs-wrapper-readonly {
+  pointer-events: none; //鼠标点击不可修改
 }
 </style>

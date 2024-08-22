@@ -30,7 +30,6 @@ const setMonthDate = () => {
 const init = (date: string | undefined = '') => {
   dateState.year = dayjs(date || undefined).year()
   dateState.month = dayjs(date || undefined).month() + 1
-  console.log(1)
   setMonthDate()
 }
 
@@ -213,7 +212,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
           color: var(--lew-text-color-7);
           border-radius: 50%;
           transition: all 0.1s ease;
-          border: 2px var(--lew-form-border-color) solid;
+          border: var(--lew-form-border-width)  var(--lew-form-border-color) solid;
         }
         .lew-date-value:active {
           transform: scale(1.1);
@@ -265,7 +264,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
         .lew-date-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white-text);
-          border: 2px var(--lew-color-primary-light) solid;
+          border: var(--lew-form-border-width)  var(--lew-color-primary-light) solid;
         }
       }
     }
@@ -274,7 +273,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
         .lew-date-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white-text);
-          border: 2px var(--lew-color-primary-light) solid;
+          border: var(--lew-form-border-width)  var(--lew-color-primary-light) solid;
         }
       }
     }
@@ -283,7 +282,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
         .lew-date-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white-text);
-          border: 2px var(--lew-color-primary-light) solid;
+          border: var(--lew-form-border-width)  var(--lew-color-primary-light) solid;
         }
       }
     }

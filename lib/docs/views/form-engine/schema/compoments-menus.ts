@@ -1,57 +1,125 @@
+import inputScheme from './components/input'
+import inputNumberScheme from './components/input-number'
+import selectScheme from './components/select'
+import selectMultipleScheme from './components/select-multiple'
+import textareaScheme from './components/textarea'
+import tabsScheme from './components/tabs'
+import checkbox from './components/checkbox'
+import checkboxGroup from './components/checkbox-group'
+import radioGroup from './components/radio-group'
+import _switch from './components/switch'
+import upload from './components/upload'
+import cascader from './components/cascader'
+import datePicker from './components/date-picker'
+import datePickerRange from './components/date-range-picker'
+import inputTag from './components/input-tag'
+
 export const componentsMenusSchema = [
-  {
-    label: '占位盒子',
-    as: ''
-  },
   {
     label: '输入框',
     fieldType: '',
     as: 'input',
+    schema: inputScheme,
     props: {
+      clearable: true,
       type: 'text',
       align: 'left'
+    }
+  },
+  {
+    label: '文本域',
+    fieldType: '',
+    as: 'textarea',
+    schema: textareaScheme,
+    props: {
+      clearable: true,
+      showCount: true,
+      maxLength: 500
     }
   },
   {
     label: '数字输入',
     fieldType: '',
     as: 'input-number',
-    props: {}
-  },
-  //   {
-  //     label: '滑块',
-  //     fieldType: '',
-  //     as: 'slider',
-  //     props: {
-  //       showCount: true,
-  //       maxLength: 30
-  //     }
-  //   },
-  //   {
-  //     label: '范围滑块',
-  //     fieldType: [],
-  //     as: 'slider-range',
-  //     props: {
-  //       showCount: true,
-  //       maxLength: 30
-  //     }
-  //   },
-  {
-    label: '文本域',
-    fieldType: '',
-    as: 'textarea',
+    schema: inputNumberScheme,
     props: {
-      clearable: true,
-      showCount: true,
-      maxLength: 300
+      align: 'left',
+      width: 100
+    }
+  },
+  {
+    label: '单选框',
+    fieldType: '',
+    as: 'radio-group',
+    schema: radioGroup,
+    props: {
+      round: true,
+      direction: 'x',
+      iconable: false,
+      options: [
+        {
+          label: '男',
+          value: '1'
+        },
+        {
+          label: '女',
+          value: '2'
+        },
+        {
+          label: '不公开',
+          value: '3'
+        }
+      ]
+    }
+  },
+  {
+    label: '选框',
+    fieldType: false,
+    as: 'checkbox',
+    schema: checkbox,
+    props: {
+      iconable: false,
+      label: '选框文本'
+    }
+  },
+  {
+    label: '复选框',
+    fieldType: [],
+    as: 'checkbox-group',
+    schema: checkboxGroup,
+    props: {
+      iconable: false,
+      direction: 'x',
+      options: [
+        {
+          label: '唱歌',
+          value: '1'
+        },
+        {
+          label: '跳舞',
+          value: '2'
+        },
+        {
+          label: 'Rap',
+          value: '3'
+        },
+        {
+          label: '上海',
+          value: '4'
+        }
+      ]
     }
   },
   {
     label: '下拉单选',
     fieldType: '',
     as: 'select',
+    schema: selectScheme,
     props: {
       clearable: true,
+      trigger: 'click',
+      align: 'left',
+      showCheckIcon: true,
       options: [
         {
           label: '广东',
@@ -81,11 +149,14 @@ export const componentsMenusSchema = [
     fieldType: [],
     label: '下拉多选',
     as: 'select-multiple',
+    schema: selectMultipleScheme,
     props: {
-      change: (e: any) => {
-        console.log(e)
-      },
       clearable: true,
+      valueTextSplit: '、',
+      trigger: 'click',
+      align: 'left',
+      valueLayout: 'text',
+      showCheckIcon: true,
       options: [
         {
           label: '广东',
@@ -111,118 +182,10 @@ export const componentsMenusSchema = [
     }
   },
   {
-    label: '单选框',
-    fieldType: '',
-    as: 'radio-group',
-    props: {
-      options: [
-        {
-          label: '男',
-          value: '1'
-        },
-        {
-          label: '女',
-          value: '2'
-        },
-        {
-          label: '不公开',
-          value: '3'
-        }
-      ]
-    }
-  },
-  {
-    label: '复选框',
-    fieldType: [],
-    as: 'checkbox-group',
-    props: {
-      options: [
-        {
-          label: '唱歌',
-          value: '1'
-        },
-        {
-          label: '跳舞',
-          value: '2'
-        },
-        {
-          label: 'Rap',
-          value: '3'
-        },
-        {
-          label: '上海',
-          value: '4'
-        }
-      ]
-    }
-  },
-  {
-    label: '选项卡',
-    fieldType: '',
-    as: 'tabs',
-    props: {
-      options: [
-        {
-          label: 'Beijing',
-          value: '1'
-        },
-        {
-          label: 'Shanghai',
-          value: '2'
-        },
-        {
-          label: 'Guangzhou',
-          value: '3'
-        }
-      ]
-    }
-  },
-  {
-    label: '日期',
-    fieldType: '',
-    as: 'date-picker',
-    props: {
-      options: [
-        {
-          label: 'Beijing',
-          value: '1'
-        },
-        {
-          label: 'Shanghai',
-          value: '2'
-        },
-        {
-          label: 'Guangzhou',
-          value: '3'
-        }
-      ]
-    }
-  },
-  {
-    label: '日期范围',
-    fieldType: '',
-    as: 'date-range-picker',
-    props: {
-      options: [
-        {
-          label: 'Beijing',
-          value: '1'
-        },
-        {
-          label: 'Shanghai',
-          value: '2'
-        },
-        {
-          label: 'Guangzhou',
-          value: '3'
-        }
-      ]
-    }
-  },
-  {
     label: '级联选择',
     fieldType: '',
     as: 'cascader',
+    schema: cascader,
     props: {
       label: '是否同意',
       free: true,
@@ -312,23 +275,84 @@ export const componentsMenusSchema = [
     }
   },
   {
-    label: '选框',
-    fieldType: false,
-    as: 'checkbox',
+    label: '选项卡',
+    fieldType: '',
+    as: 'tabs',
+    schema: tabsScheme,
     props: {
-      label: '是否同意'
+      options: [
+        {
+          label: 'Beijing',
+          value: '1'
+        },
+        {
+          label: 'Shanghai',
+          value: '2'
+        },
+        {
+          label: 'Guangzhou',
+          value: '3'
+        }
+      ]
     }
   },
+  {
+    label: '日期',
+    fieldType: '',
+    as: 'date-picker',
+    schema: datePicker,
+    props: {
+      options: [
+        {
+          label: 'Beijing',
+          value: '1'
+        },
+        {
+          label: 'Shanghai',
+          value: '2'
+        },
+        {
+          label: 'Guangzhou',
+          value: '3'
+        }
+      ]
+    }
+  },
+  {
+    label: '日期范围',
+    fieldType: '',
+    as: 'date-range-picker',
+    schema: datePickerRange,
+    props: {
+      options: [
+        {
+          label: 'Beijing',
+          value: '1'
+        },
+        {
+          label: 'Shanghai',
+          value: '2'
+        },
+        {
+          label: 'Guangzhou',
+          value: '3'
+        }
+      ]
+    }
+  },
+
   {
     label: '标签输入框',
     fieldType: [],
     as: 'input-tag',
+    schema: inputTag,
     props: {}
   },
   {
     label: '开关',
     fieldType: false,
     as: 'switch',
+    schema: _switch,
     props: {
       round: 1
     }
@@ -337,6 +361,29 @@ export const componentsMenusSchema = [
     label: '上传',
     fieldType: [],
     as: 'upload',
+    schema: upload,
     props: {}
+  },
+  {
+    label: '占位盒子',
+    as: ''
   }
 ]
+//   {
+//     label: '滑块',
+//     fieldType: '',
+//     as: 'slider',
+//     props: {
+//       showCount: true,
+//       maxLength: 30
+//     }
+//   },
+//   {
+//     label: '范围滑块',
+//     fieldType: [],
+//     as: 'slider-range',
+//     props: {
+//       showCount: true,
+//       maxLength: 30
+//     }
+//   },

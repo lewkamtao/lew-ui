@@ -104,7 +104,7 @@ button {
 
 .lew-form-icon-ani-enter-active,
 .lew-form-icon-ani-leave-active {
-  transition: var(--lew-form-transition);
+  transition: var(--lew-form-transition-bezier);
 }
 
 .lew-form-icon-clear {

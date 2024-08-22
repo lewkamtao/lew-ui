@@ -95,7 +95,6 @@ if (props.closeByEsc) {
                 v-bind="{
                   type: 'text',
                   text: '取消',
-                  round: true,
                   color: 'normal',
                   ...(cancelProps as any)
                 }"
@@ -106,7 +105,6 @@ if (props.closeByEsc) {
                 v-bind="{
                   text: '确定',
                   color: 'primary',
-                  round: true,
                   ...(okProps as any)
                 }"
                 @click="ok"

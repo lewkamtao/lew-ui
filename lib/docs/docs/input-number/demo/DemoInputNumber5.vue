@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const n = ref(1123.232323)
+const n = ref(6732)
 </script>
 
 <template>

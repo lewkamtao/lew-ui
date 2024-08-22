@@ -22,7 +22,7 @@ if (!isString(treeSelectValue.value)) {
 
 const lewSelectRef = ref()
 const inputRef = ref()
-const lewPopverRef = ref()
+const lewPopoverRef = ref()
 const lewTreeRef = ref()
 
 const state = reactive({
@@ -41,11 +41,11 @@ const getSelectWidth = () => {
 }
 
 const show = () => {
-  lewPopverRef.value.show()
+  lewPopoverRef.value.show()
 }
 
 const hide = () => {
-  lewPopverRef.value.hide()
+  lewPopoverRef.value.hide()
 }
 
 const searchDebounce = useDebounceFn(async (e: any) => {
@@ -181,7 +181,7 @@ defineExpose({ show, hide })
 
 <template>
   <lew-popover
-    ref="lewPopverRef"
+    ref="lewPopoverRef"
     popoverBodyClassName="lew-select-popover-body"
     class="lew-select-view"
     :class="getSelectViewClassName"
@@ -241,7 +241,7 @@ defineExpose({ show, hide })
         <slot name="header"></slot>
 
         <div class="lew-select-options-box">
-          <div v-if="searchable && (state.treeList || []).length > 0" class="reslut-count">
+          <div v-if="searchable && (state.treeList || []).length > 0" class="result-count">
             共
             {{ numFormat(searchCount) }}
             条结果
@@ -285,10 +285,11 @@ defineExpose({ show, hide })
   width: 100%;
   border-radius: var(--lew-border-radius-small);
   background-color: var(--lew-form-bgcolor);
-  transition: all 0.15s ease;
+  transition:var(--lew-form-transition-ease);
   box-sizing: border-box;
   outline: 0px var(--lew-color-primary-light) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  box-shadow: var(--lew-form-box-shadow);
 
   > div {
     width: 100%;
@@ -309,7 +310,7 @@ defineExpose({ show, hide })
       top: 50%;
       right: 9px;
       transform: translateY(-50%) rotate(0deg);
-      transition: var(--lew-form-transition);
+      transition: var(--lew-form-transition-bezier);
       padding: 2px;
     }
 
@@ -411,7 +412,7 @@ defineExpose({ show, hide })
 .lew-select-view.lew-select-view-focus {
   background-color: var(--lew-form-bgcolor-focus);
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-ouline);
+  outline: var(--lew-form-outline);
 
   .icon-select {
     transform: translateY(-50%) rotate(180deg);
@@ -461,7 +462,7 @@ defineExpose({ show, hide })
     max-height: 280px;
     overflow: auto;
   }
-  .reslut-count {
+  .result-count {
     padding-left: 8px;
     margin: 5px 0px;
     opacity: 0.4;

@@ -8,7 +8,7 @@ const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
-const emit = defineEmits(['clear', 'blur', 'focus', 'change', 'input', 'ok'])
+const emit = defineEmits(['blur', 'focus', 'change', 'input'])
 
 const props = defineProps(inputNumberProps)
 const modelValue: Ref<number | undefined> = defineModel({ required: true })
@@ -93,7 +93,7 @@ const plus = () => {
     longClickTimer.value = setInterval(() => {
       lewInputRef.value.stepUp()
       modelValue.value = lewInputRef.value.value
-      if (lewInputRef.value.value >= Number(props.max)) {
+      if (props.max !== '' && lewInputRef.value.value >= Number(props.max || 0)) {
         clearTimer()
       }
     }, 80)
@@ -106,7 +106,7 @@ const minus = () => {
     longClickTimer.value = setInterval(() => {
       lewInputRef.value.stepDown()
       modelValue.value = lewInputRef.value.value
-      if (lewInputRef.value.value <= Number(props.min)) {
+      if (props.min !== '' && lewInputRef.value.value <= Number(props.min || 0)) {
         clearTimer()
       }
     }, 80)
@@ -140,8 +140,6 @@ defineExpose({ toFocus })
       v-model="modelValue"
       class="lew-input-number"
       :placeholder="placeholder"
-      :readonly="readonly"
-      :disabled="disabled"
       :min="min"
       :max="max"
       :step="step"
@@ -166,7 +164,7 @@ defineExpose({ toFocus })
         @mouseleave="clearTimer"
         class="lew-input-number-icon"
         :size="getIconSize"
-        type="plus"
+        type="chevron-up"
       ></lew-icon>
       <lew-icon
         @mousedown="minus"
@@ -174,7 +172,7 @@ defineExpose({ toFocus })
         @mouseleave="clearTimer"
         class="lew-input-number-icon"
         :size="getIconSize"
-        type="minus"
+        type="chevron-down"
       ></lew-icon>
     </lew-flex>
   </div>
@@ -189,10 +187,11 @@ defineExpose({ toFocus })
   width: 100%;
   border-radius: var(--lew-border-radius-small);
   background-color: var(--lew-form-bgcolor);
-  transition: var(--lew-form-transition);
+  transition: var(--lew-form-transition-ease);
   box-sizing: border-box;
   outline: 0px var(--lew-form-border-color) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  box-shadow: var(--lew-form-box-shadow);
   overflow: hidden;
 
   .lew-input-number {
@@ -235,10 +234,7 @@ defineExpose({ toFocus })
       border-radius: 4px;
       cursor: pointer;
       transition: all 0.1s;
-    }
-
-    .lew-input-number-icon:hover {
-      transform: scale(1.05);
+      transform: scale(1);
     }
 
     .lew-input-number-icon:active {
@@ -259,24 +255,24 @@ defineExpose({ toFocus })
 
 .lew-input-number-view:focus-within {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-ouline);
+  outline: var(--lew-form-outline);
   background-color: var(--lew-form-bgcolor-focus);
 
   .lew-input-number-control {
     .lew-input-number-icon {
-      background-color: var(--lew-bgcolor-4);
+      background-color: var(--lew-bgcolor-3);
     }
   }
 }
 
 .lew-input-number-view-focus {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-ouline);
+  outline: var(--lew-form-outline);
   background-color: var(--lew-form-bgcolor-focus) !important;
 
   .lew-input-number-control {
     .lew-input-number-icon {
-      background-color: var(--lew-bgcolor-4) !important;
+      background-color: var(--lew-bgcolor-3) !important;
     }
   }
 }

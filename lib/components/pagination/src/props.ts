@@ -49,6 +49,11 @@ export const paginationModel = {
 }
 
 export const paginationProps = {
+  size: {
+    type: String,
+    default: 'small',
+    description: '尺寸，可选值为 small、medium、large'
+  },
   visiblePagesCount: {
     type: Number,
     default: 5,

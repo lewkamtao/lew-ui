@@ -106,13 +106,9 @@ const getInputStyle = computed(() => {
     medium: 30 + countWidth,
     large: 30 + countWidth
   }
-  const wMap2: Record<string, number> = {
-    small: 14,
-    medium: 16,
-    large: 20
-  }
+
   return {
-    width: `calc(100% - ${clearable ? wMap[size] : wMap2[size]}px)`
+    width: `calc(100% - ${clearable ? wMap[size] : 0}px)`
   }
 })
 
@@ -355,10 +351,11 @@ defineExpose({ toFocus })
   width: 100%;
   border-radius: var(--lew-border-radius-small);
   background-color: var(--lew-form-bgcolor);
-  transition: var(--lew-form-transition);
+  transition: var(--lew-form-transition-ease);
   box-sizing: border-box;
   outline: 0px var(--lew-form-border-color) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  box-shadow: var(--lew-form-box-shadow);
   overflow: hidden;
 
   .lew-input-box {
@@ -396,7 +393,7 @@ defineExpose({ toFocus })
     align-items: center;
 
     .icon-select {
-      transition: var(--lew-form-transition);
+      transition: var(--lew-form-transition-bezier);
     }
 
     .icon-select-up {
@@ -520,6 +517,9 @@ defineExpose({ toFocus })
     height: 1px;
     visibility: hidden;
     box-sizing: border-box;
+  }
+  .lew-input-box {
+    padding: 0px;
   }
 }
 
@@ -672,19 +672,19 @@ defineExpose({ toFocus })
 
 .lew-input-view-size-small.lew-input-view-autoWidth {
   .lew-input {
-    left: 7px;
+    padding: var(--lew-form-input-padding-small);
     width: calc(100% - 18px);
   }
 }
 .lew-input-view-size-medium.lew-input-view-autoWidth {
   .lew-input {
-    left: 9px;
+    padding: var(--lew-form-input-padding-small);
     width: calc(100% - 24px);
   }
 }
 .lew-input-view-size-large.lew-input-view-autoWidth {
   .lew-input {
-    left: 12px;
+    padding: var(--lew-form-input-padding-small);
     width: calc(100% - 30px);
   }
 }
@@ -695,7 +695,7 @@ defineExpose({ toFocus })
 
 .lew-input-view:focus-within {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-ouline);
+  outline: var(--lew-form-outline);
   background-color: var(--lew-form-bgcolor-focus);
 }
 

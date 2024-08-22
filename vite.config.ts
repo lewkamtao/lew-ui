@@ -5,7 +5,6 @@ import AutoImport from 'unplugin-auto-import/vite'
 import dts from 'vite-plugin-dts'
 import checker from 'vite-plugin-checker'
 import zipPack from 'vite-plugin-zip-pack'
-import dayjs from 'dayjs'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { fileURLToPath, URL } from 'node:url'
 
@@ -38,7 +37,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       zipPack({
-        outFileName: `lew-ui_${mode}_${dayjs().format('YYYY_MM_DD_HH_mm')}.zip`
+        outFileName: `lew-ui_${mode}.zip`
       }),
       vue(),
       vueJsx(),

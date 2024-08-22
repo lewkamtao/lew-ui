@@ -19,6 +19,10 @@ const props = defineProps({
   componentWidth: {
     type: [String, Number]
   },
+  direction: {
+    type: String,
+    default: 'x'
+  },
   props: {
     type: Object
   },
@@ -41,7 +45,7 @@ const asMap: Record<string, any> = {
 </script>
 
 <template>
-  <div class="set-form-item">
+  <div x="start" class="set-form-item" :class="[`set-form-item-${direction}`]">
     <lew-flex x="start" gap="5" class="set-form-item-label" v-if="as">
       {{ label || '标签' }}
       <lew-icon
@@ -75,14 +79,23 @@ const asMap: Record<string, any> = {
     }
   }
   .lew-form-item-main {
-    width: 200px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     min-height: 34px;
+    width: 150px;
+    flex-shrink: 0;
   }
 }
 .set-form-item:last-child {
   border-bottom: none;
+}
+
+.set-form-item-y {
+  flex-direction: column;
+  gap: 10px;
+  .lew-form-item-main {
+    width: 100%;
+  }
 }
 </style>

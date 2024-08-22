@@ -94,7 +94,6 @@ defineExpose({ show, hide })
             {{ modelValue }}
           </div>
           <lew-icon
-            v-if="!readonly"
             class="icon-calendar"
             :size="getIconSize"
             :class="{
@@ -164,12 +163,13 @@ defineExpose({ show, hide })
     border-radius: var(--lew-border-radius-small);
     background-color: var(--lew-form-bgcolor);
     box-sizing: border-box;
-    transition: all 0.15s ease;
+	transition:var(--lew-form-transition-ease);
     cursor: pointer;
     user-select: none;
     outline: 0px var(--lew-form-border-color) solid;
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-  }
+	box-shadow: var(--lew-form-box-shadow);
+}
 
   .lew-date-picker-input {
     width: 100%;
@@ -182,7 +182,7 @@ defineExpose({ show, hide })
       top: 50%;
       right: 9px;
       transform: translateY(-50%);
-      transition: var(--lew-form-transition);
+      transition: var(--lew-form-transition-bezier);
       opacity: var(--lew-form-icon-opacity);
     }
 
@@ -203,7 +203,7 @@ defineExpose({ show, hide })
   .lew-date-picker-view.lew-date-picker-focus {
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-    outline: var(--lew-form-ouline);
+    outline: var(--lew-form-outline);
   }
 
   .lew-date-picker-size-small {
