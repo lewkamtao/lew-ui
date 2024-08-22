@@ -1,4 +1,5 @@
 # Lew UI
+
 A Component Library for Vue3. Doc address: https://lew.kamtao.com
 
 English | [中文](./README.zh-CN.md)
@@ -6,22 +7,19 @@ English | [中文](./README.zh-CN.md)
 ## Install
 
 ```bash
-npm install lew-ui --save
+npm install lew-ui
 ```
 
 ## How to use
-
-main.ts
 
 ```js
 // main.ts
 import 'lew-ui/style'
 ```
 
-page.vue
-
 ```vue
 <script setup lang="ts">
+// page.vue
 import { LewButton } from 'lew-ui'
 </script>
 

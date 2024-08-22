@@ -1,12 +1,13 @@
 # Lew UI
+
 一个用于 Vue3 的组件库。文档地址：https://lew.kamtao.com
 
-英文 | [中文](./README.zh-CN.md)
+[英文](./README.md) | 中文
 
 ## 安装
 
 ```bash
-npm install lew-ui --save
+npm install lew-ui
 ```
 
 ## 如何使用
@@ -18,10 +19,9 @@ main.ts
 import 'lew-ui/style'
 ```
 
-page.vue
-
 ```vue
 <script setup lang="ts">
+// page.vue
 import { LewButton } from 'lew-ui'
 </script>
 
