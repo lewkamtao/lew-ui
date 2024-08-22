@@ -1,5 +1,6 @@
 # Lew UI
 一个用于 Vue3 的组件库。文档地址：https://lew.kamtao.com
+
 英文 | [中文](./README.zh-CN.md)
 
 ## 安装

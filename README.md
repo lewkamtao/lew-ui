@@ -1,5 +1,6 @@
 # Lew UI
 A Component Library for Vue3. Doc address: https://lew.kamtao.com
+
 English | [中文](./README.zh-CN.md)
 
 ## Install
