@@ -20,7 +20,7 @@ export type ButtonColor =
   | 'error'
   | 'info'
 
-export type ButtonSize = 'small' | 'medium' | 'large'
+export type ButtonSize = 'mini' | 'small' | 'medium' | 'large'
 export type ButtonType = 'fill' | 'light' | 'ghost' | 'text'
 
 export const buttonProps = {

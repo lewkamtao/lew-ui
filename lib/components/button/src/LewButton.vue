@@ -110,7 +110,13 @@ const getStyle = computed(() => {
       />
     </div>
     <template v-if="iconPosition === 'left'">
-      <lew-icon strokeWidth="2" v-if="icon" class="lew-button-icon" :size="getIconSize" :type="icon" />
+      <lew-icon
+        strokeWidth="2"
+        v-if="icon"
+        class="lew-button-icon"
+        :size="getIconSize"
+        :type="icon"
+      />
     </template>
     <div v-if="$slots.default || text" class="lew-button-content">
       <span class="lew-button-text">
@@ -153,7 +159,6 @@ const getStyle = computed(() => {
   border-radius: var(--lew-border-radius-small);
   box-sizing: border-box;
   overflow: hidden;
-  padding: 0px 20px;
   box-shadow: var(--lew-form-box-shadow);
   outline: none;
   .lew-loading-icon {
@@ -231,34 +236,49 @@ const getStyle = computed(() => {
   opacity: 1;
 }
 
+.lew-button-size-mini {
+  min-width: 30px;
+  height: calc(var(--lew-form-item-height-mini) + 4px);
+  line-height: calc(var(--lew-form-item-height-mini) + 4px);
+  font-size: var(--lew-form-font-size-mini);
+  gap: 2px;
+  padding: 0px 12px;
+  .lew-loading-icon {
+    left: 8px;
+  }
+}
+
 .lew-button-size-small {
-  min-width: 50px;
+  min-width: 40px;
   height: calc(var(--lew-form-item-height-small) + 4px);
   line-height: calc(var(--lew-form-item-height-small) + 4px);
   font-size: var(--lew-form-font-size-small);
   gap: 4px;
+  padding: 0px 16px;
   .lew-loading-icon {
     left: 9px;
   }
 }
 
 .lew-button-size-medium {
-  min-width: 60px;
+  min-width: 50px;
   height: calc(var(--lew-form-item-height-medium) + 4px);
   line-height: calc(var(--lew-form-item-height-medium) + 4px);
   font-size: var(--lew-form-font-size-medium);
   gap: 6px;
+  padding: 0px 16px;
   .lew-loading-icon {
     left: 9.5px;
   }
 }
 
 .lew-button-size-large {
-  min-width: 70px;
+  min-width: 60px;
   height: calc(var(--lew-form-item-height-large) + 4px);
   line-height: calc(var(--lew-form-item-height-large) + 4px);
   font-size: var(--lew-form-font-size-large);
   gap: 8px;
+  padding: 0px 20px;
   .lew-loading-icon {
     left: 10px;
   }
