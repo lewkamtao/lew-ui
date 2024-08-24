@@ -12,7 +12,7 @@ useDOMCreate('lew-modal')
 
 const props = defineProps(modalProps)
 
-const emit = defineEmits(['ok', 'cancel', 'show', 'close'])
+const emit = defineEmits(['ok', 'cancel', 'close'])
 
 const visible: Ref<boolean | undefined> = defineModel('visible')
 const transformOrigin = ref('0 0')
@@ -34,6 +34,11 @@ const ok = () => {
   emit('ok')
 }
 
+const close = () => {
+  visible.value = false
+  emit('close')
+}
+
 const cancel = () => {
   emit('cancel')
 }
@@ -43,9 +48,6 @@ watch(
   (newVal) => {
     if (newVal) {
       transformOrigin.value = `${x.value}px ${y.value}px`
-      emit('show')
-    } else {
-      emit('close')
     }
   }
 )
@@ -81,7 +83,7 @@ if (props.closeByEsc) {
             </div>
             <lew-flex v-else-if="title" mode="between" y="center" class="header">
               <lew-text-trim class="title" :text="title" />
-              <lew-icon size="18" class="lew-form-icon-clear" type="x" @click="visible = false" />
+              <lew-icon size="18" class="lew-form-icon-clear" type="x" @click="close" />
             </lew-flex>
 
             <slot></slot>

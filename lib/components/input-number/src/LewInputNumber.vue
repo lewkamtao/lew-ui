@@ -115,9 +115,14 @@ const minus = () => {
 
 const checkValidationMessage = () => {
   validationMessage.value = lewInputRef.value.validationMessage
+  return (validationMessage.value || '').length === 0
 }
 
-defineExpose({ toFocus })
+const validCheck = () => {
+  return ((lewInputRef.value && lewInputRef.value.validationMessage) || '').length === 0
+}
+
+defineExpose({ toFocus, validCheck })
 </script>
 
 <template>
