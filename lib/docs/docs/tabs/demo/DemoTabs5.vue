@@ -32,7 +32,6 @@ const change = (e: Options) => {
     <lew-tabs
       v-model="value2"
       round
-      width="300px"
       itemWidth="calc(300px / 4)"
       :options="options2"
       @change="change"

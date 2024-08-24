@@ -42,10 +42,61 @@ const getSwitchClassName = computed(() => {
     readonly
   })
 })
+
+const getSwitchStyle = computed(() => {
+  const { size } = props
+  switch (size) {
+    case 'small':
+      return {
+        '--lew-switch-view-width': '36px',
+        '--lew-switch-view-height': '22px',
+        '--lew-switch-dot-width': '14px',
+        '--lew-switch-dot-height': '14px',
+        '--lew-switch-dot-width-active': '16px',
+        '--lew-switch-dot-transform': 'translate(4px, 4px)',
+        '--lew-switch-dot-transform-active': 'translate(16px, 4px)'
+      }
+    case 'medium':
+      return {
+        '--lew-switch-view-width': '38px',
+        '--lew-switch-view-height': '24px',
+        '--lew-switch-dot-width': '16px',
+        '--lew-switch-dot-height': '16px',
+        '--lew-switch-dot-width-active': '18px',
+        '--lew-switch-dot-transform': 'translate(4px, 4px)',
+        '--lew-switch-dot-transform-active': 'translate(16px, 4px)'
+      }
+    case 'large':
+      return {
+        '--lew-switch-view-width': '40px',
+        '--lew-switch-view-height': '26px',
+        '--lew-switch-dot-width': '18px',
+        '--lew-switch-dot-height': '18px',
+        '--lew-switch-dot-width-active': '20px',
+        '--lew-switch-dot-transform': 'translate(4px, 4px)',
+        '--lew-switch-dot-transform-active': 'translate(16px, 4px)'
+      }
+    default:
+      return {
+        '--lew-switch-view-width': '38px',
+        '--lew-switch-view-height': '24px',
+        '--lew-switch-dot-width': '16px',
+        '--lew-switch-dot-height': '16px',
+        '--lew-switch-dot-width-active': '20px',
+        '--lew-switch-dot-transform': 'translate(4px, 4px)',
+        '--lew-switch-dot-transform-active': 'translate(14px, 4px)'
+      }
+  }
+})
 </script>
 
 <template>
-  <div class="lew-switch-view" :class="getSwitchClassName" @click="handleClick">
+  <div
+    class="lew-switch-view"
+    :class="getSwitchClassName"
+    :style="getSwitchStyle"
+    @click="handleClick"
+  >
     <input v-show="false" v-model="modelValue" type="checkbox" :disabled="disabled" />
     <div class="lew-switch-dot"></div>
   </div>
@@ -55,25 +106,25 @@ const getSwitchClassName = computed(() => {
 .lew-switch-view {
   position: relative;
   display: block;
-  width: 38px;
-  height: 24px;
+  cursor: pointer;
+  width: var(--lew-switch-view-width);
+  height: var(--lew-switch-view-height);
   background: var(--lew-bgcolor-3);
   border-radius: var(--lew-border-radius-small);
   transition: var(--lew-form-transition-ease);
-  cursor: pointer;
   outline: 0px var(--lew-color-primary-light) solid;
   box-shadow: var(--lew-form-box-shadow);
 
   .lew-switch-dot {
     position: absolute;
-    width: 16px;
-    height: 16px;
     left: 0px;
     top: 0px;
+    width: var(--lew-switch-dot-width);
+    height: var(--lew-switch-dot-height);
     border-radius: 4px;
     background: var(--lew-color-white);
     transition: var(--lew-form-transition-ease);
-    transform: translate(4px, 4px);
+    transform: var(--lew-switch-dot-transform);
   }
 
   .lew-switch-dot::after {
@@ -111,7 +162,7 @@ const getSwitchClassName = computed(() => {
   cursor: progress;
 
   .lew-switch-dot::after {
-    border: var(--lew-form-border-width)  solid rgba(0, 0, 0, 0);
+    border: var(--lew-form-border-width) solid rgba(0, 0, 0, 0);
     border-left: 2px solid var(--lew-color-primary);
     width: 10px;
     height: 10px;
@@ -135,7 +186,7 @@ const getSwitchClassName = computed(() => {
   background: var(--lew-bgcolor-5);
 
   .lew-switch-dot {
-    width: 20px;
+    width: var(--lew-switch-dot-width-active);
   }
 }
 
@@ -151,19 +202,19 @@ const getSwitchClassName = computed(() => {
   background: var(--lew-color-primary);
 
   .lew-switch-dot {
-    width: 20px;
-    transform: translate(14px, 4px);
+    width: var(--lew-switch-dot-width-active);
+    transform: var(--lew-switch-dot-transform-active);
   }
 }
 
-.lew-switch-view.lew-switch-request {
+.lew-switch-view.lew-switch-view-request {
   .lew-switch-dot {
     width: 16px;
     transform: translate(4px, 4px);
   }
 }
 
-.lew-switch-view.lew-switch-checked.lew-switch-request {
+.lew-switch-view.lew-switch-view-checked.lew-switch-view-request {
   .lew-switch-dot {
     width: 16px;
     transform: translate(18px, 4px);

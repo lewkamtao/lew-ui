@@ -49,7 +49,7 @@ const cascaderValue: Ref<string | number | undefined> = defineModel({
 })
 
 const lewCascaderRef = ref()
-const lewPopverRef = ref()
+const lewPopoverRef = ref()
 
 const state = reactive({
   visible: false,
@@ -212,11 +212,11 @@ const checkItem = (item: CascaderOptions) => {
 }
 
 const show = async () => {
-  lewPopverRef.value.show()
+  lewPopoverRef.value.show()
 }
 
 const hide = () => {
-  lewPopverRef.value.hide()
+  lewPopoverRef.value.hide()
 }
 
 const clearHandle = () => {
@@ -307,7 +307,7 @@ defineExpose({ show, hide })
 
 <template>
   <lew-popover
-    ref="lewPopverRef"
+    ref="lewPopoverRef"
     class="lew-cascader-view"
     :class="getCascaderViewClassName"
     :trigger="trigger"
@@ -652,7 +652,7 @@ defineExpose({ show, hide })
     opacity: 0.4;
   }
 
-  .reslut-count {
+  .result-count {
     padding-left: 8px;
     margin: 5px 0px;
     opacity: 0.4;

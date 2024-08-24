@@ -1,6 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 
-export type TagSize = 'small' | 'medium' | 'large'
 export type TagType = 'fill' | 'light' | 'ghost'
 export type TagColor =
   | 'red'
@@ -34,7 +33,7 @@ export const tagProps = {
     description: '颜色'
   },
   size: {
-    type: String as PropType<TagSize>,
+    type: String,
     default: 'medium',
     description: '大小'
   },

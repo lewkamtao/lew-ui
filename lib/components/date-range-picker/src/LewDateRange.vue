@@ -294,17 +294,41 @@ defineExpose({ init })
       <lew-flex x="start" mode="between" class="lew-date-control">
         <div class="lew-date-control-left">
           <!-- 上一年 -->
-          <lew-button type="light" round icon="chevrons-left" @click="prveYear1" />
+          <lew-button
+            type="light"
+            color="gray"
+            size="small"
+            icon="chevrons-left"
+            @click="prveYear1"
+          />
           <!-- 上一月 -->
-          <lew-button type="light" round icon="chevron-left" @click="prveMonth1" />
+          <lew-button
+            type="light"
+            color="gray"
+            size="small"
+            icon="chevron-left"
+            @click="prveMonth1"
+          />
         </div>
         <!-- 日期 -->
         <div class="cur-date">{{ dateState.year1 }} 年 {{ dateState.month1 }} 月</div>
         <div class="lew-date-control-right">
           <!-- 下一月 -->
-          <lew-button type="light" round icon="chevron-right" @click="nextMonth1" />
+          <lew-button
+            type="light"
+            color="gray"
+            size="small"
+            icon="chevron-right"
+            @click="nextMonth1"
+          />
           <!-- 下一年 -->
-          <lew-button type="light" round icon="chevrons-right" @click="nextYear1" />
+          <lew-button
+            type="light"
+            color="gray"
+            size="small"
+            icon="chevrons-right"
+            @click="nextYear1"
+          />
         </div>
       </lew-flex>
       <div class="lew-date-box">
@@ -335,17 +359,41 @@ defineExpose({ init })
       <lew-flex x="start" mode="between" class="lew-date-control">
         <div class="lew-date-control-left">
           <!-- 上一年 -->
-          <lew-button type="light" round icon="chevrons-left" size="small" @click="prveYear2" />
+          <lew-button
+            type="light"
+            color="gray"
+            size="small"
+            icon="chevrons-left"
+            @click="prveYear2"
+          />
           <!-- 上一月 -->
-          <lew-button type="light" round icon="chevron-left" size="small" @click="prveMonth2" />
+          <lew-button
+            type="light"
+            color="gray"
+            size="small"
+            icon="chevron-left"
+            @click="prveMonth2"
+          />
         </div>
         <!-- 日期 -->
         <div class="cur-date">{{ dateState.year2 }} 年 {{ dateState.month2 }} 月</div>
         <div class="lew-date-control-right">
           <!-- 下一月 -->
-          <lew-button type="light" round icon="chevron-right" size="small" @click="nextMonth2" />
+          <lew-button
+            type="light"
+            color="gray"
+            size="small"
+            icon="chevron-right"
+            @click="nextMonth2"
+          />
           <!-- 下一年 -->
-          <lew-button type="light" round icon="chevrons-right" size="small" @click="nextYear2" />
+          <lew-button
+            type="light"
+            color="gray"
+            size="small"
+            icon="chevrons-right"
+            @click="nextYear2"
+          />
         </div>
       </lew-flex>
       <div class="lew-date-box">
@@ -402,6 +450,7 @@ defineExpose({ init })
       font-size: 15px;
       font-weight: bold;
       color: var(--lew-text-color-0);
+	  white-space: nowrap;
     }
 
     .lew-date-control-left,
@@ -457,13 +506,13 @@ defineExpose({ init })
           color: var(--lew-text-color-7);
           border-radius: 50%;
           transition: all 0.1s ease;
-          border: var(--lew-form-border-width)  var(--lew-form-border-color) solid;
+          border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
         }
 
         .lew-date-value-selected {
           background: var(--lew-color-primary);
           color: var(--lew-color-white-text);
-          border: var(--lew-form-border-width)  var(--lew-color-primary-light) solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
 
         .lew-date-item-today {

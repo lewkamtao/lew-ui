@@ -7,7 +7,7 @@
   >
     <template #handle>
       <lew-flex style="margin-top: 30px">
-        <lew-button text="返回" />
+        <lew-button type="light" color="gray" text="返回" />
         <lew-button text="前往" />
       </lew-flex>
     </template>

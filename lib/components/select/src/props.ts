@@ -60,10 +60,10 @@ export const selectProps = {
     default: (params: SelectSearchMethodParams) => {
       const { options, keyword } = params
       if (options && keyword) {
-        const reslut = options.filter((e) => {
+        const result = options.filter((e) => {
           return keyword && e.label.indexOf(keyword) >= 0
         })
-        return reslut
+        return result
       }
       return []
     },
@@ -88,11 +88,6 @@ export const selectProps = {
     type: Boolean,
     default: () => false,
     description: '是否禁用'
-  },
-  align: {
-    type: String,
-    default: 'left',
-    description: '对齐方式，可选值为 left、center、right'
   },
   showCheckIcon: {
     type: Boolean,

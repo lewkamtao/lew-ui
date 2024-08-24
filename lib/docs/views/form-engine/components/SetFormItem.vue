@@ -83,7 +83,7 @@ const asMap: Record<string, any> = {
     align-items: center;
     justify-content: flex-end;
     min-height: 34px;
-    width: 150px;
+    width: 160px;
     flex-shrink: 0;
   }
 }

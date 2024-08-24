@@ -106,6 +106,7 @@ const clear = () => {
           v-for="(item, index) in modelValue"
           :key="index"
           type="light"
+          :size="size"
           :closable="!readonly"
           @close="delTag(index)"
           >{{ item }}
@@ -232,11 +233,6 @@ const clear = () => {
   .lew-input-tag {
     height: 20px;
   }
-  :deep() {
-    .lew-tag {
-      height: 20px;
-    }
-  }
 }
 
 .lew-input-tag-view-size-medium {
@@ -249,11 +245,6 @@ const clear = () => {
   .lew-input-tag {
     height: 24px;
   }
-  :deep() {
-    .lew-tag {
-      height: 24px;
-    }
-  }
 }
 
 .lew-input-tag-view-size-large {
@@ -265,11 +256,6 @@ const clear = () => {
   }
   .lew-input-tag {
     height: 28px;
-  }
-  :deep() {
-    .lew-tag {
-      height: 28px;
-    }
   }
 }
 

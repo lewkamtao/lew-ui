@@ -93,10 +93,9 @@ if (props.closeByEsc) {
               <lew-button
                 v-if="!hideCancelButton"
                 v-bind="{
-                  type: 'text',
+                  type: 'light',
+                  color: 'gray',
                   text: '取消',
-                  color: 'normal',
-                  size: 'small',
                   ...(cancelProps as any)
                 }"
                 @click="cancel"
@@ -106,7 +105,6 @@ if (props.closeByEsc) {
                 v-bind="{
                   text: '确定',
                   color: 'primary',
-                  size: 'small',
                   ...(okProps as any)
                 }"
                 @click="ok"

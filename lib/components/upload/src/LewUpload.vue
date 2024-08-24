@@ -6,12 +6,12 @@ import { any2px, getUniqueId, formatBytes, getFileIcon, object2class } from 'lew
 import { useClipboardItems } from '@vueuse/core'
 const { isSupported } = useClipboardItems({ read: true })
 const tipFontSizeMap: Record<string, number> = {
-  small: 12,
+  small: 14,
   medium: 14,
   large: 16
 }
 const fileIconSizeMap: Record<string, number> = {
-  small: 28,
+  small: 30,
   medium: 36,
   large: 44
 }
@@ -21,22 +21,22 @@ const uploadItemPaddingMap: Record<string, number> = {
   large: 12
 }
 const maxSizeFontSizeMap: Record<string, number> = {
-  small: 10,
+  small: 12,
   medium: 12,
   large: 14
 }
 const footerFontSizeMap: Record<string, number> = {
-  small: 10,
+  small: 11,
   medium: 12,
   large: 14
 }
 const fileNameFontSizeMap: Record<string, number> = {
-  small: 12,
+  small: 13,
   medium: 14,
   large: 16
 }
 const uploadIconFontSizeMap: Record<string, number> = {
-  small: 25,
+  small: 32,
   medium: 35,
   large: 45
 }

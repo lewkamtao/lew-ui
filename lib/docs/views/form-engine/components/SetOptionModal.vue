@@ -7,7 +7,6 @@ const open = () => {
 }
 
 const rule = Yup.string().required()
-const rulestr = JSON.stringify(rule)
 
 defineExpose({ open })
 </script>

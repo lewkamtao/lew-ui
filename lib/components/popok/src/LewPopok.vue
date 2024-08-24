@@ -58,10 +58,10 @@ const emit = defineEmits(['show', 'ok', 'cancel'])
           <div class="footer">
             <lew-button
               v-bind="{
-                type: 'text',
+                type: 'light',
                 text: '取消',
                 round: true,
-                color: 'normal',
+                color: 'gray',
                 size: 'small',
                 ...(cancelProps as any)
               }"

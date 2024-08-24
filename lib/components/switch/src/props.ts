@@ -7,10 +7,10 @@ export const switchModel = {
 }
 
 export const switchProps = {
-  modelValue: {
-    type: Boolean,
-    default: false,
-    description: '绑定值'
+  size: {
+    type: String,
+    default: 'medium',
+    description: '尺寸，可选值为 small、medium、large'
   },
   round: {
     type: [Boolean, Number],
