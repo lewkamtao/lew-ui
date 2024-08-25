@@ -187,6 +187,7 @@ export const componentsMenusSchema = [
     as: 'cascader',
     schema: cascader,
     props: {
+      clearable: true,
       label: '是否同意',
       free: true,
       options: [
@@ -302,6 +303,7 @@ export const componentsMenusSchema = [
     as: 'date-picker',
     schema: datePicker,
     props: {
+      clearable: true,
       options: [
         {
           label: 'Beijing',
@@ -324,6 +326,7 @@ export const componentsMenusSchema = [
     as: 'date-range-picker',
     schema: datePickerRange,
     props: {
+      clearable: true,
       options: [
         {
           label: 'Beijing',
@@ -346,7 +349,9 @@ export const componentsMenusSchema = [
     fieldType: [],
     as: 'input-tag',
     schema: inputTag,
-    props: {}
+    props: {
+      clearable: true
+    }
   },
   {
     label: '开关',

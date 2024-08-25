@@ -76,12 +76,12 @@ export const selectProps = {
   },
   clearable: {
     type: Boolean,
-    default: () => false,
+    default: false,
     description: '是否使用清空按钮'
   },
   readonly: {
     type: Boolean,
-    default: () => false,
+    default: false,
     description: '是否只读'
   },
   disabled: {

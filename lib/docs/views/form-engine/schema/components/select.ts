@@ -5,6 +5,11 @@ export default [
     field: 'placeholder'
   },
   {
+    label: '选项配置',
+    as: 'set-option-modal',
+    field: 'options'
+  },
+  {
     label: '触发方式',
     as: 'tabs',
     field: 'trigger',

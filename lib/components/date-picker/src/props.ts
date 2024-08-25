@@ -18,7 +18,7 @@ export const datePickerProps = {
   },
   clearable: {
     type: Boolean,
-    default: '',
+    default: true,
     description: '是否显示清除按钮'
   },
   readonly: {

@@ -27,7 +27,7 @@ export const dateRangePickerProps = {
   },
   clearable: {
     type: Boolean,
-    default: false,
+    default: true,
     description: '是否显示清除按钮'
   },
   readonly: {
