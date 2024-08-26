@@ -1,59 +1,126 @@
 <script setup lang="ts">
+import FormModal from './FormModal.vue'
 import { inputTableProps } from './props'
-import { LewIcon, LewFlex, LewTitle } from 'lew-ui'
+import { any2px } from 'lew-ui/utils'
 
-defineProps(inputTableProps)
+const modelValue: Ref<Array<any>> = defineModel({ required: true })
+
+const props = defineProps(inputTableProps)
+
+const inputTableColumns = computed(() => {
+  return [
+    ...props.columns,
+    {
+      title: '操作',
+      width: 120,
+      field: 'action',
+      x: 'center',
+      fixed: 'right'
+    }
+  ]
+})
+
+const formOptions = computed(() => {
+  return props.columns.map((e: any) => {
+    const { as, title, field, props } = e
+    return {
+      label: title,
+      field: field,
+      as: as || 'input',
+      props: props
+    }
+  })
+})
+
+const formModalRef = ref()
+const edit = ({ row, index }: { row: any; index: number }) => {
+  formModalRef.value.open({ row, index })
+}
+const del = ({ index }: { index: number }) => {
+  LewDialog.error({
+    title: '删除确认',
+    okText: '删除',
+    content: '你是否要删除该数据，此操作会立即生效，请谨慎操作！',
+    closeOnClickOverlay: true,
+    closeByEsc: true,
+    ok: () => {
+      modelValue.value.splice(index, 1)
+    }
+  })
+}
+const addSuccess = ({ row }: { row: any }) => {
+  modelValue.value.push(row)
+}
+const editSuccess = ({ row, index }: { row: any; index: number }) => {
+  modelValue.value.splice(index, 1, row)
+}
 </script>
 
 <template>
-  <lew-flex direction="y" class="lew-result">
-    <lew-flex class="lew-result-icon" :class="`lew-result-icon-${type}`">
-      <lew-icon v-if="type === `normal`" size="60" type="light" color="blue" />
-      <lew-icon v-if="type === `warning`" size="60" type="alert-triangle" />
-      <lew-icon v-if="type === `success`" size="60" type="smile" />
-      <lew-icon v-if="type === `error`" size="60" type="alert-circle" />
-      <lew-icon v-if="type === `info`" size="60" type="bell" />
-    </lew-flex>
-    <lew-title class="lew-result-title">{{ title }}</lew-title>
-    <div class="lew-result-content">{{ content }}</div>
-    <div>
-      <slot name="handle"></slot>
-    </div>
+  <lew-flex
+    x="start"
+    y="start"
+    direction="y"
+    :style="{
+      width: any2px(width)
+    }"
+  >
+    <lew-table :columns="inputTableColumns" :data-source="modelValue">
+      <template #table-footer>
+        <lew-flex @click="formModalRef.open({})" class="add-btn"
+          ><lew-icon size="16" type="plus"></lew-icon> 添加一条
+        </lew-flex>
+      </template>
+      <template #empty> </template>
+      <template #action="{ row, index }">
+        <lew-button
+          v-tooltip="{
+            content: '编辑数据',
+            trigger: 'mouseenter',
+            delay: [500, 0]
+          }"
+          icon="edit-3"
+          round
+          size="small"
+          type="text"
+          @click="edit({ row, index })"
+        />
+        <lew-button
+          v-tooltip="{
+            content: '删除数据',
+            trigger: 'mouseenter',
+            delay: [500, 0]
+          }"
+          icon="trash"
+          round
+          size="small"
+          color="red"
+          type="text"
+          @click="del({ index })"
+        />
+      </template>
+    </lew-table>
+    <FormModal
+      :options="formOptions"
+      ref="formModalRef"
+      @addSuccess="addSuccess"
+      @editSuccess="editSuccess"
+    />
   </lew-flex>
 </template>
 
 <style lang="scss" scoped>
-.lew-result {
-  .lew-result-icon {
-    width: 100px;
-  }
-
-  .lew-result-title {
-    font-size: 22px;
-  }
-
-  .lew-result-content {
-    max-width: 50%;
-  }
-
-  .lew-result-icon-success {
-    color: var(--lew-color-success);
-  }
-
-  .lew-result-icon-warning {
-    color: var(--lew-color-warning);
-  }
-
-  .lew-result-icon-normal {
-    color: var(--lew-color-normal-dark);
-  }
-
-  .lew-result-icon-error {
-    color: var(--lew-color-error);
-  }
-
-  .lew-result-icon-info {
-    color: var(--lew-color-info);
-  }
+.add-btn {
+  width: 100%;
+  padding: 10px 0px;
+  background-color: var(--lew-bgcolor-2);
+  cursor: pointer;
+  transition: var(--lew-form-transition-ease);
+}
+.add-btn:hover {
+  background-color: var(--lew-bgcolor-3);
+}
+.add-btn:active {
+  background-color: var(--lew-bgcolor-5);
 }
 </style>

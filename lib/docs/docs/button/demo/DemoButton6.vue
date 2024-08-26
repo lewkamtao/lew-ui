@@ -13,7 +13,7 @@ const mockFn = () => {
   <lew-flex wrap x="start" y="end" gap="20">
     <lew-button size="small" :request="mockFn" round color="red" text="Small" type="fill" />
     <lew-button
-      size="small"
+      size="medium"
       icon="check"
       loading
       :request="mockFn"

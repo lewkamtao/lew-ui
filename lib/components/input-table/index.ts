@@ -1,2 +1,2 @@
-export { default as LewResult } from './src/LewResult.vue'
+export { default as LewInputTable } from './src/LewInputTable.vue'
 export * from './src/props'

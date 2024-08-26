@@ -234,6 +234,9 @@ onUnmounted(() => {
       }"
       class="lew-table-scroll-line-right"
     ></div>
+    <div class="lew-table-header">
+      <slot name="table-header"></slot>
+    </div>
     <div
       ref="tableRef"
       class="lew-table lew-scrollbar"
@@ -363,6 +366,7 @@ onUnmounted(() => {
                 :name="column.field"
                 :row="row"
                 :column="column"
+                :index="i"
               ></slot>
               <template v-else>
                 <lew-text-trim
@@ -411,6 +415,7 @@ onUnmounted(() => {
                 :name="column.field"
                 :row="row"
                 :column="column"
+                :index="i"
               ></slot>
               <template v-else>
                 <lew-text-trim
@@ -447,6 +452,7 @@ onUnmounted(() => {
                 :name="column.field"
                 :row="row"
                 :column="column"
+                :index="i"
               ></slot>
               <template v-else>
                 <lew-text-trim
@@ -460,9 +466,15 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
-    <lew-flex v-if="dataSource.length === 0" style="padding: 50px 0px">
-      <lew-empty />
-    </lew-flex>
+    <div class="lew-table-footer">
+      <slot name="table-footer"></slot>
+    </div>
+    <template v-if="dataSource.length === 0">
+      <slot v-if="$slots.empty" name="empty"></slot>
+      <lew-flex v-else style="padding: 50px 0px">
+        <lew-empty />
+      </lew-flex>
+    </template>
   </div>
 </template>
 
@@ -474,7 +486,11 @@ onUnmounted(() => {
   border-bottom: 0px solid transparent;
   box-sizing: border-box;
   background-color: var(--lew-bgcolor-0);
-
+  .lew-table-header,
+  .lew-table-footer {
+    position: relative;
+    z-index: 999;
+  }
   .lew-table-scroll-line-left {
     position: absolute;
     left: 0px;

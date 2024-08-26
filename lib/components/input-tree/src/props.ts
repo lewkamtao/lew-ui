@@ -1,4 +1,4 @@
-export const resultProps = {
+export const inputTreeProps = {
   type: {
     type: String,
     default: 'info',
