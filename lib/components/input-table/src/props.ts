@@ -20,10 +20,10 @@ export const inputTableProps = {
     type: Array,
     default: [
       {
-        title: '标签',
+        title: '标题',
         width: 120,
         field: 'label',
-        as: 'input'
+        as: 'input',
       },
       {
         title: '值',

@@ -12,9 +12,11 @@ const form = ref({})
 const editIndex = ref(-1)
 const open = ({ row = {}, index = -1 }: { row: any; index: number }) => {
   visible.value = true
+  editIndex.value = index
   if (index >= 0) {
-    editIndex.value = index
     form.value = cloneDeep(row)
+  } else {
+    form.value = {}
   }
 }
 const emit = defineEmits(['addSuccess', 'editSuccess'])

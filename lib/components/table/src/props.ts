@@ -16,6 +16,7 @@ export const tableProps = {
     default: 'id',
     description: '行key'
   },
+
   dataSource: {
     type: Array as any,
     default: [],

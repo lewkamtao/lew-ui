@@ -2,7 +2,7 @@
 import { tableProps } from './props'
 import { any2px } from 'lew-ui/utils'
 import { LewFlex, LewCheckbox, LewTextTrim } from 'lew-ui'
-import { isEmpty, throttle, mapValues, keyBy, pickBy, difference, keys } from 'lodash-es'
+import { isEmpty, throttle, mapValues, keyBy, pickBy, difference, keys, isNumber } from 'lodash-es'
 
 const props = defineProps(tableProps)
 const tableRef = ref()
@@ -94,20 +94,8 @@ const resizeTableHandle = throttle(() => {
   checkScroll()
 }, 200)
 
-const getTdNotWidth = computed(() => {
-  let totalWidth = 0
-  const countWidth: number = props.columns.filter((e) => !!e.width).length
-  props.columns.forEach((item: any) => {
-    if (item.width !== undefined) {
-      totalWidth += item.width
-    }
-  })
-  const width = totalWidth / countWidth || totalWidth / props.columns.length
-  return width
-})
-
 const getTdStyle = computed(() => (column: any, row?: any) => {
-  const width = column.width || getTdNotWidth.value
+  const width = column.width
   const tdStyle = row && row.tdStyle?.[column.field]
   if (state.scrollbarVisible) {
     return `width: ${width}px;${tdStyle}`
@@ -119,10 +107,8 @@ const getTdTotalWidth = computed(() => {
   let width = 0
 
   props.columns.forEach((item: any) => {
-    if (item.width !== undefined) {
+    if (isNumber(item.width)) {
       width += item.width
-    } else {
-      width += getTdNotWidth.value
     }
   })
 

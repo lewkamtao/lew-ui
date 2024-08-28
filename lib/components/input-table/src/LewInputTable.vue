@@ -65,7 +65,17 @@ const editSuccess = ({ row, index }: { row: any; index: number }) => {
       width: any2px(width)
     }"
   >
-    <lew-table :columns="inputTableColumns" :data-source="modelValue">
+    <lew-table checkable :columns="inputTableColumns" :data-source="modelValue">
+      <template #table-header>
+        <lew-flex class="header-action">
+          <lew-flex x="start">
+            <lew-button size="small" type="text" color="blue">批量删除</lew-button>
+          </lew-flex>
+          <lew-flex x="end">
+            <lew-button size="small" type="text" color="blue">排序</lew-button>
+          </lew-flex>
+        </lew-flex>
+      </template>
       <template #table-footer>
         <lew-flex @click="formModalRef.open({})" class="add-btn"
           ><lew-icon size="16" type="plus"></lew-icon> 添加一条
@@ -110,6 +120,11 @@ const editSuccess = ({ row, index }: { row: any; index: number }) => {
 </template>
 
 <style lang="scss" scoped>
+.header-action {
+  background-color: var(--lew-table-header-bgColor);
+  border-bottom: 1px var(--lew-bgcolor-3) solid;
+  padding: 7px;
+}
 .add-btn {
   width: 100%;
   padding: 10px 0px;
