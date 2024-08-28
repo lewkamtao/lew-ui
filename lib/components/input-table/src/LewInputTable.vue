@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import FormModal from './FormModal.vue'
 import { inputTableProps } from './props'
-import { any2px } from 'lew-ui/utils'
+import { any2px, getUniqueId } from 'lew-ui/utils'
 
 const modelValue: Ref<Array<any>> = defineModel({ required: true })
 
@@ -12,7 +12,7 @@ const inputTableColumns = computed(() => {
     ...props.columns,
     {
       title: '操作',
-      width: 120,
+      width: 100,
       field: 'action',
       x: 'center',
       fixed: 'right'
@@ -48,7 +48,15 @@ const del = ({ index }: { index: number }) => {
     }
   })
 }
+const add = () => {
+  let row: any = {}
+  if (props.autoUniqueId) {
+    row['id'] = getUniqueId()
+  }
+  formModalRef.value.open({ row })
+}
 const addSuccess = ({ row }: { row: any }) => {
+  console.log(row)
   modelValue.value.push(row)
 }
 const editSuccess = ({ row, index }: { row: any; index: number }) => {
@@ -65,19 +73,21 @@ const editSuccess = ({ row, index }: { row: any; index: number }) => {
       width: any2px(width)
     }"
   >
-    <lew-table checkable :columns="inputTableColumns" :data-source="modelValue">
+    <lew-table checkable :row-key="rowKey" :columns="inputTableColumns" :data-source="modelValue">
       <template #table-header>
         <lew-flex class="header-action">
           <lew-flex x="start">
-            <lew-button size="small" type="text" color="blue">批量删除</lew-button>
+            <lew-button size="small" type="text" color="gray">批量删除</lew-button>
           </lew-flex>
+
           <lew-flex x="end">
-            <lew-button size="small" type="text" color="blue">排序</lew-button>
+            <lew-button size="small" type="text" color="gray">清空</lew-button>
+            <lew-button size="small" type="text" color="gray">排序</lew-button>
           </lew-flex>
         </lew-flex>
       </template>
       <template #table-footer>
-        <lew-flex @click="formModalRef.open({})" class="add-btn"
+        <lew-flex @click="add" class="add-btn"
           ><lew-icon size="16" type="plus"></lew-icon> 添加一条
         </lew-flex>
       </template>

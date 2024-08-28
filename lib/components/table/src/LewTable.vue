@@ -2,7 +2,7 @@
 import { tableProps } from './props'
 import { any2px } from 'lew-ui/utils'
 import { LewFlex, LewCheckbox, LewTextTrim } from 'lew-ui'
-import { isEmpty, throttle, mapValues, keyBy, pickBy, difference, keys, isNumber } from 'lodash-es'
+import { isEmpty, throttle, mapValues, keyBy, pickBy, difference, keys, sumBy } from 'lodash-es'
 
 const props = defineProps(tableProps)
 const tableRef = ref()
@@ -28,7 +28,11 @@ onActivated(() => {
   checkScroll()
   resizeTableHandle()
   if (props.checkable && !props.rowKey) {
-    throw new Error('当checkable开启的时候，必须设置rowKey！')
+    throw new Error('LewTable error: 当checkable开启的时候，必须设置rowKey！')
+  }
+
+  if (props.columns.findIndex((e: any) => !e.width) > -1) {
+    throw new Error('LewTable error: 必须设置每一列的宽度')
   }
 })
 
@@ -97,25 +101,23 @@ const resizeTableHandle = throttle(() => {
 const getTdStyle = computed(() => (column: any, row?: any) => {
   const width = column.width
   const tdStyle = row && row.tdStyle?.[column.field]
-  if (state.scrollbarVisible) {
+  if (state.scrollbarVisible || column.fixed) {
     return `width: ${width}px;${tdStyle}`
   }
-  return `width: ${(width / getTdTotalWidth.value) * state.scrollClientWidth}px;${tdStyle}`
+
+  const fixedWidth =
+    sumBy(
+      props.columns.filter((e) => e.fixed),
+      'width'
+    ) + (props.checkable ? 50 : 0)
+  const tdWidth =
+    (width / (getTdTotalWidth.value - fixedWidth)) * (state.scrollClientWidth - fixedWidth)
+  return `width: ${tdWidth}px;${tdStyle}`
 })
 
 const getTdTotalWidth = computed(() => {
-  let width = 0
-
-  props.columns.forEach((item: any) => {
-    if (isNumber(item.width)) {
-      width += item.width
-    }
-  })
-
-  if (props.checkable) {
-    width += 50
-  }
-
+  let width = sumBy(props.columns, 'width')
+  if (props.checkable) width += 50
   return width
 })
 
@@ -235,14 +237,13 @@ onUnmounted(() => {
         :style="`width: ${getTdTotalWidth}px`"
         @mouseenter="state.hoverIndex = -1"
       >
-        <div v-if="fixedColumns('left').length > 0" ref="fixedLeftRef" class="lew-table-fixed-left">
+        <div
+          v-if="fixedColumns('left').length > 0 || checkable"
+          ref="fixedLeftRef"
+          class="lew-table-fixed-left"
+        >
           <div class="lew-table-tr">
-            <lew-flex
-              v-if="checkable && fixedColumns('left').length > 0"
-              style="width: 50px"
-              class="lew-table-td"
-              x="center"
-            >
+            <lew-flex v-if="checkable" style="width: 50px" class="lew-table-td" x="center">
               <lew-checkbox
                 v-if="!singleSelect"
                 v-model="state.checkAll"
@@ -266,19 +267,6 @@ onUnmounted(() => {
         </div>
         <div class="lew-table-main">
           <div class="lew-table-tr">
-            <lew-flex
-              v-if="checkable && fixedColumns('left').length === 0"
-              style="width: 50px"
-              x="center"
-            >
-              <lew-checkbox
-                v-if="!singleSelect"
-                v-model="state.checkAll"
-                :disabled="dataSource.length === 0"
-                :certain="checkCertain && !state.checkAll"
-                @change="setAllChecked($event)"
-              />
-            </lew-flex>
             <lew-flex
               v-for="(column, index) in newColumns"
               :key="`columns${index}`"
@@ -315,7 +303,7 @@ onUnmounted(() => {
         class="lew-table-body"
         :style="`width: ${getTdTotalWidth}px`"
       >
-        <div v-if="fixedColumns('left').length > 0" class="lew-table-fixed-left">
+        <div v-if="fixedColumns('left').length > 0 || checkable" class="lew-table-fixed-left">
           <div
             v-for="(row, i) in dataSource"
             :key="`data${i}`"
@@ -328,7 +316,7 @@ onUnmounted(() => {
             @mouseenter="state.hoverIndex = i"
           >
             <lew-flex
-              v-if="checkable && fixedColumns('left').length > 0"
+              v-if="checkable"
               style="width: 50px"
               x="center"
               class="lew-table-checkbox-wrapper"
@@ -376,17 +364,6 @@ onUnmounted(() => {
             @click="selectTr(row)"
             @mouseenter="state.hoverIndex = i"
           >
-            <lew-flex
-              v-if="checkable && fixedColumns('left').length === 0"
-              style="width: 50px"
-              x="center"
-              class="lew-table-checkbox-wrapper"
-            >
-              <lew-checkbox
-                class="lew-table-checkbox"
-                :checked="state.selectedKeysMap[row[rowKey]]"
-              />
-            </lew-flex>
             <lew-flex
               v-for="(column, j) in newColumns"
               :key="`col${j}`"

@@ -6,8 +6,9 @@ export default [
   },
   {
     label: '选项配置',
-    as: 'set-option-modal',
-    field: 'options'
+    as: 'input-table',
+    field: 'options',
+    direction: 'y'
   },
   {
     label: '触发方式',

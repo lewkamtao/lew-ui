@@ -1,5 +1,11 @@
 export default [
   {
+    label: '选项配置',
+    as: 'input-table',
+    field: 'options',
+    direction: 'y'
+  },
+  {
     label: '排版方向',
     as: 'tabs',
     field: 'direction',

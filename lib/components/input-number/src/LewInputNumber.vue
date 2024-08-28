@@ -240,10 +240,12 @@ defineExpose({ toFocus, validCheck })
       cursor: pointer;
       transition: all 0.1s;
       transform: scale(1);
+      opacity: 1;
     }
 
     .lew-input-number-icon:active {
       transform: scale(0.95);
+      opacity: 0.7;
     }
   }
 }

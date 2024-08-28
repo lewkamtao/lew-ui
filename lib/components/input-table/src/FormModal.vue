@@ -10,9 +10,11 @@ const visible = ref(false)
 const formRef = ref()
 const form = ref({})
 const editIndex = ref(-1)
+const id = ref('')
 const open = ({ row = {}, index = -1 }: { row: any; index: number }) => {
   visible.value = true
   editIndex.value = index
+  id.value = row.id
   if (index >= 0) {
     form.value = cloneDeep(row)
   } else {
@@ -24,9 +26,12 @@ const ok = () => {
   formRef.value.validate().then((res: boolean) => {
     if (res) {
       if (editIndex.value >= 0) {
-        emit('editSuccess', { row: formRef.value.getForm(), index: editIndex.value })
+        emit('editSuccess', {
+          row: { ...formRef.value.getForm(), id: id.value },
+          index: editIndex.value
+        })
       } else {
-        emit('addSuccess', { row: formRef.value.getForm() })
+        emit('addSuccess', { row: { ...formRef.value.getForm(), id: id.value } })
       }
       visible.value = false
     } else {

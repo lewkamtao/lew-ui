@@ -16,6 +16,20 @@ export const inputTableProps = {
     default: '',
     description: '表格宽度'
   },
+  batchDelete: {
+    type: Boolean,
+    default: false,
+    description: '是否显示批量删除'
+  },
+  rowKey: {
+    type: String,
+    default: 'id',
+    description: '行key'
+  },
+  autoUniqueId: {
+    type: Boolean,
+    default: true
+  },
   columns: {
     type: Array,
     default: [
@@ -23,7 +37,7 @@ export const inputTableProps = {
         title: '标题',
         width: 120,
         field: 'label',
-        as: 'input',
+        as: 'input'
       },
       {
         title: '值',
