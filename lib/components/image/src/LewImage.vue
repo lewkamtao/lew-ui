@@ -2,6 +2,8 @@
 import { useImage } from '@vueuse/core'
 import { any2px } from 'lew-ui/utils'
 import { imageProps } from './props'
+import { Fancybox } from '@fancyapps/ui'
+import '@fancyapps/ui/dist/fancybox/fancybox.css'
 
 const props = defineProps(imageProps)
 const { isLoading, error } = useImage({ src: props.src })
@@ -18,6 +20,9 @@ const getIconSize = computed(() => {
   const { width, height } = props
   return Math.min(Number(width), Number(height)) * 0.45 + 'px'
 })
+onMounted(() => {
+  Fancybox.bind('[data-fancybox]', {})
+})
 </script>
 
 <template>
@@ -27,16 +32,31 @@ const getIconSize = computed(() => {
       <slot v-if="$slots.error" name="error" />
       <lew-icon stroke-width="1" class="lew-image-icon" v-else type="image" :size="getIconSize" />
     </template>
-    <img
-      v-else
-      :src
-      class="lew-image"
-      :lazy="lazy"
-      :style="{
-        'object-fit': objectFit,
-        'object-position': objectPosition
-      }"
-    />
+
+    <template v-else>
+      <div v-if="!previewKey" class="lew-image-box">
+        <img
+          class="lew-image"
+          :src
+          :lazy="lazy"
+          :style="{
+            'object-fit': objectFit,
+            'object-position': objectPosition
+          }"
+        />
+      </div>
+      <a v-else :href="src" :data-fancybox="previewKey" class="lew-image-box">
+        <img
+          class="lew-image"
+          :src
+          :lazy="lazy"
+          :style="{
+            'object-fit': objectFit,
+            'object-position': objectPosition
+          }"
+        />
+      </a>
+    </template>
   </lew-flex>
 </template>
 
@@ -46,12 +66,16 @@ const getIconSize = computed(() => {
   .lew-image-icon {
     opacity: 0.4;
   }
-  .lew-image {
+  .lew-image-box {
     width: 100%;
     height: 100%;
-    animation: img-enter 0.25s ease;
-    animation-fill-mode: forwards;
-    opacity: 0;
+    .lew-image {
+      width: 100%;
+      height: 100%;
+      animation: img-enter 0.25s ease;
+      animation-fill-mode: forwards;
+      opacity: 0;
+    }
   }
   @keyframes img-enter {
     0% {

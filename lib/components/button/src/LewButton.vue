@@ -8,6 +8,12 @@ const props = defineProps(buttonProps)
 
 const _loading = ref(false)
 
+const buttonRef = ref()
+
+const focus = () => {
+  buttonRef.value?.focus()
+}
+
 const handleClick = async (e: MouseEvent) => {
   if (props.disabled || _loading.value || props.loading) return
   emit('click', e)
@@ -87,10 +93,13 @@ const getStyle = computed(() => {
   styleObj.borderRadius = round ? '50px' : 'none'
   return styleObj
 })
+
+defineExpose({ focus })
 </script>
 
 <template>
   <button
+    ref="buttonRef"
     class="lew-button"
     :class="getButtonClass"
     :disabled="disabled"

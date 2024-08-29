@@ -12,6 +12,8 @@ const emit = defineEmits(['close'])
 const visible = ref<boolean>(false)
 const okLoading = ref<boolean>(false)
 const cancelLoading = ref<boolean>(false)
+const okRef1 = ref()
+const okRef2 = ref()
 
 const maskClick = () => {
   if (props?.closeOnClickOverlay) {
@@ -21,6 +23,10 @@ const maskClick = () => {
 
 onMounted(() => {
   visible.value = true
+  nextTick(() => {
+    okRef1.value && okRef1.value.focus()
+    okRef2.value && okRef2.value.focus()
+  })
 })
 
 watch(
@@ -112,6 +118,7 @@ if (props.closeByEsc) {
                 @click.stop="cancel"
               />
               <lew-button
+                ref="okRef1"
                 v-if="okText"
                 :text="okText"
                 size="small"
@@ -146,6 +153,7 @@ if (props.closeByEsc) {
                   @click.stop="cancel"
                 />
                 <lew-button
+                  ref="okRef2"
                   v-if="okText"
                   :text="okText"
                   type="fill"

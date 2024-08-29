@@ -31,10 +31,10 @@ export const imageProps = {
     default: '',
     description: '图片位置'
   },
-  preview: {
-    type: Boolean,
-    default: false,
-    description: '是否可预览'
+  previewKey: {
+    type: String,
+    default: '',
+    description: '预览同组图片内的 key，有值时，自动触发预览'
   },
   alt: {
     type: String,

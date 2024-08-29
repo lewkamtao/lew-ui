@@ -56,7 +56,6 @@ const add = () => {
   formModalRef.value.open({ row })
 }
 const addSuccess = ({ row }: { row: any }) => {
-  console.log(row)
   modelValue.value.push(row)
 }
 const editSuccess = ({ row, index }: { row: any; index: number }) => {

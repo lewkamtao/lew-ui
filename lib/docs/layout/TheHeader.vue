@@ -56,7 +56,7 @@ const goHome = () => {
 <style lang="scss" scoped>
 .Header {
   position: relative;
-  z-index: 2001;
+  z-index: 1001;
   display: flex;
   align-items: center;
   justify-content: space-between;

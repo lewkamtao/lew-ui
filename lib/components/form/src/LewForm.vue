@@ -62,8 +62,15 @@ const setForm = (value: any = {}) => {
       formMap.value[item.field] = v
     }
   })
-  // 触发 change 事件
-  emit('change', getForm())
+}
+
+const resetError = () => {
+  componentOptions.forEach((item: any) => {
+    // 重置error
+    if (item.field) {
+      formItemRefMap.value[item.field]?.setError('')
+    }
+  })
 }
 
 const getNestedFieldValue = (obj: any, field: string) => {
@@ -129,7 +136,7 @@ watch(
   }
 )
 
-defineExpose({ getForm, setForm, validate })
+defineExpose({ getForm, setForm, resetError, validate })
 </script>
 
 <template>
