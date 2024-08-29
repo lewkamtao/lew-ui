@@ -78,16 +78,11 @@ const getIconSize = computed(() => {
 })
 
 const getInputStyle = computed(() => {
-  const { size, clearable } = props
+  const { clearable } = props
   const countWidth = (lewInputCountRef.value && lewInputCountRef.value.offsetWidth) || 0
-  const wMap: Record<string, number> = {
-    small: 18 + countWidth + 4,
-    medium: 20 + countWidth + 2,
-    large: 22 + countWidth
-  }
 
   return {
-    width: `calc(100% - ${clearable ? wMap[size] : 0}px)`
+    width: `calc(100% - ${clearable ? 20 + countWidth + (props.showCount ? 12 : 0) : 0}px)`
   }
 })
 
@@ -248,13 +243,13 @@ defineExpose({ toFocus })
       <div v-if="showPassword || clearable || showCount" class="lew-input-controls">
         <div
           ref="lewInputCountRef"
-          v-if="modelValue"
+          v-if="modelValue && showCount"
           class="lew-input-count"
           :class="{
             'lew-input-count-clearable': clearable && modelValue
           }"
         >
-          {{ modelValue.length }}
+          {{ modelValue.length }}{{ maxLength ? ' / ' + maxLength : '' }}
         </div>
         <div
           v-if="showPassword && type === 'password'"

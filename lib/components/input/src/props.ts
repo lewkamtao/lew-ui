@@ -92,7 +92,7 @@ export const inputProps = {
   },
   maxLength: {
     type: [Number, String],
-    default: null,
+    default: undefined,
     description: '最大输入长度'
   },
   showCount: {
