@@ -47,25 +47,6 @@ const state = reactive({
   isFocus: false
 })
 
-const updateValue = () => {
-  if (
-    props.maxLength &&
-    props.renderCount(modelValue.value) >= Number(props.maxLength) &&
-    modelValue.value
-  ) {
-    modelValue.value = modelValue.value.slice(0, toNumber(props.maxLength))
-  }
-}
-
-let isFirst = true
-const inputFn = () => {
-  updateValue()
-  if (!isFirst) {
-    emit('input', modelValue.value)
-  }
-  isFirst = false
-}
-
 const clear = (): void => {
   modelValue.value = undefined
   emit('clear')
@@ -171,7 +152,8 @@ defineExpose({ toFocus })
       :disabled="disabled"
       :readonly="readonly"
       :placeholder="placeholder"
-      @input="inputFn"
+      :maxlength="maxLength"
+      @input="emit('input', modelValue)"
       @change="emit('change', modelValue)"
       @blur="blur"
       @focus="focus"
@@ -233,14 +215,19 @@ defineExpose({ toFocus })
   .lew-textarea-count {
     position: absolute;
     bottom: 2px;
+    right: 2px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 4px;
-    opacity: var(--lew-form-icon-opacity);
-    transition: opacity 0.25s;
+    background-color: var(--lew-bgcolor-1);
+    padding: 0px 4px;
     z-index: 2;
     user-select: none;
+    transition: var(--lew-form-transition-ease);
+  }
+  .lew-textarea-count:hover {
+    opacity: 0.2;
   }
 }
 
@@ -257,7 +244,6 @@ defineExpose({ toFocus })
 
   .lew-textarea-count {
     font-size: 12px;
-    right: 13px;
   }
 }
 
@@ -271,10 +257,8 @@ defineExpose({ toFocus })
   .lew-textarea {
     min-height: var(--lew-form-item-height-medium);
   }
-
   .lew-textarea-count {
     font-size: 13px;
-    right: 14px;
   }
 }
 
@@ -291,7 +275,6 @@ defineExpose({ toFocus })
 
   .lew-textarea-count {
     font-size: 14px;
-    right: 15px;
   }
 }
 

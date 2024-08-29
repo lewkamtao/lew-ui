@@ -100,13 +100,6 @@ export const inputProps = {
     default: false,
     description: '是否显示输入字数统计，只在 type = text 时有效'
   },
-  renderCount: {
-    type: Function,
-    default: (value: string) => {
-      return value?.length || 0
-    },
-    description: '自定义输入字数统计方法'
-  },
   prefixes: {
     type: String as PropType<InputPrefixesType>,
     default: '',

@@ -21,7 +21,7 @@ const getIconSize = computed(() => {
   return Math.min(Number(width), Number(height)) * 0.45 + 'px'
 })
 onMounted(() => {
-  Fancybox.bind('[data-fancybox]', {})
+  Fancybox.bind('[data-fancybox]', { Hash: false })
 })
 </script>
 

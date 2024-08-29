@@ -172,6 +172,7 @@ defineExpose({ focus })
   overflow: hidden;
   box-shadow: var(--lew-form-box-shadow);
   outline: none;
+
   .lew-loading-icon {
     position: absolute;
     opacity: 0;
@@ -294,6 +295,13 @@ defineExpose({ focus })
     left: 10px;
   }
 }
+.lew-button-singleIcon {
+  .lew-loading-icon {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
 .lew-button-size-mini.lew-button-singleIcon {
   min-width: auto;
   padding: 0px;
@@ -339,15 +347,15 @@ defineExpose({ focus })
 }
 
 .lew-button-size-mini.lew-button-loading {
-  padding-left: 22px;
+  padding-left: 23px;
 }
 
 .lew-button-size-small.lew-button-loading {
-  padding-left: 26px;
+  padding-left: 27px;
 }
 
 .lew-button-size-medium.lew-button-loading {
-  padding-left: 30px;
+  padding-left: 31px;
 }
 
 .lew-button-size-large.lew-button-loading {
