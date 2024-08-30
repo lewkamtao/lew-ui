@@ -1,45 +1,72 @@
 import type { PropType } from 'vue'
 
-export type TableColumns = {
-  title: string
-  field: string
-  fixed: string
-  x: string
-  y: string
-  width: number
-  columnStyle: string
+export interface TableColumn {
+  title: string;
+  field: string;
+  fixed?: 'left' | 'right';
+  x?: string;
+  y?: string;
+  width?: number;
+  columnStyle?: string;
 }
 
 export const tableProps = {
   rowKey: {
     type: String,
     default: 'id',
-    description: '行key'
+    description: '用于标识每一行数据的唯一键',
+    validator: (value: string) => {
+      if (!value) {
+        console.warn('[LewTable] rowKey 不能为空');
+        return false;
+      }
+      return true;
+    },
   },
-
   dataSource: {
-    type: Array as any,
-    default: [],
-    description: '数据源'
+    type: Array as PropType<Record<string, any>[]>,
+    default: () => [],
+    description: '表格的数据源',
+    validator: (value: any[]) => {
+      if (!Array.isArray(value)) {
+        console.warn('[LewTable] dataSource 必须是一个数组');
+        return false;
+      }
+      return true;
+    },
   },
   columns: {
-    type: Array as PropType<TableColumns[]>,
-    default: [],
-    description: '列配置'
+    type: Array as PropType<TableColumn[]>,
+    default: () => [],
+    description: '表格列的配置描述',
+    validator: (value: TableColumn[]) => {
+      if (!Array.isArray(value)) {
+        console.warn('[LewTable] columns 必须是一个数组');
+        return false;
+      }
+      return true;
+    },
   },
   maxHeight: {
     type: [Number, String],
     default: '',
-    description: '最大高度'
+    description: '表格的最大高度，超出后会出现滚动条',
+    validator: (value: number | string) => {
+      if (typeof value === 'number' && value <= 0) {
+        console.warn('[LewTable] maxHeight 必须大于 0');
+        return false;
+      }
+      return true;
+    },
   },
   checkable: {
     type: Boolean,
     default: false,
-    description: '是否显示复选框'
+    description: '是否显示复选框列',
   },
   singleSelect: {
     type: Boolean,
     default: false,
-    description: '是否单选'
-  }
+    description: '是否只允许单选',
+  },
 }

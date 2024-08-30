@@ -1,208 +1,62 @@
 <script setup lang="ts">
-const v = ref('')
-const prefixesValue = ref(1)
-
-const http = ref({
-  value: '',
-  prefixes: 1,
-  suffix: 1
+const inputValues = reactive({
+  email: '',
+  website: '',
+  address: ''
 })
+
+const selectValues = reactive({
+  protocol: 'https://',
+  domain: '.com',
+  city: '北京'
+})
+
+const options = {
+  cities: [
+    { label: '北京', value: '北京' },
+    { label: '上海', value: '上海' },
+    { label: '广州', value: '广州' }
+  ],
+  protocols: [
+    { label: 'http://', value: 'http://' },
+    { label: 'https://', value: 'https://' }
+  ],
+  domains: [
+    { label: '.com', value: '.com' },
+    { label: '.cn', value: '.cn' },
+    { label: '.org', value: '.org' },
+    { label: '.net', value: '.net' }
+  ]
+}
 </script>
 
 <template>
   <lew-flex style="width: 450px" :gap="20" x="start" direction="y">
     <lew-input
-      v-model="v"
-      size="small"
-      prefixes="text"
-      suffix="text"
-      clearable
-      prefixesValue="https://"
-      suffixValue=".com"
-      placeholder="请输入网址"
-    />
-    <lew-input
-      v-model="v"
-      size="medium"
-      prefixes="text"
-      suffix="text"
-      prefixesValue="https://"
-      suffixValue=".com"
-      placeholder="请输入网址"
-    />
-    <lew-input
-      v-model="v"
-      size="large"
-      prefixes="text"
-      suffix="text"
-      prefixesValue="https://"
-      suffixValue=".com"
-      placeholder="请输入网址"
-    />
-    <lew-input
+      v-model="inputValues.email"
       auto-width
       min-width="180px"
-      v-model="v"
       clearable
       suffix="text"
       suffixValue="@gmail.com"
-      placeholder="请输入"
+      placeholder="请输入邮箱"
     />
     <lew-input
-      v-model="v"
-      prefixes="icon"
-      prefixesValue="phone"
-      suffix="icon"
-      suffixValue="alert-circle"
-      suffixTooltip="必须填写手机号"
-      clearable
-      placeholder="请输入手机号"
-    />
-    <lew-input
-      v-model="v"
-      v-model:prefixesValue="prefixesValue"
+      v-model="inputValues.website"
+      v-model:prefixesValue="selectValues.protocol"
+      v-model:suffixValue="selectValues.domain"
       prefixes="select"
-      :prefixesOptions="[
-        {
-          label: '北京',
-          value: 1
-        },
-        {
-          label: '上海',
-          value: 2
-        },
-        {
-          label: '广州',
-          value: 3
-        },
-        {
-          label: '上海',
-          value: 4
-        }
-      ]"
-      placeholder="请输入手机号"
-    />
-    <lew-input
-      v-model="http.value"
-      v-model:prefixesValue="http.prefixes"
-      v-model:suffixValue="http.suffix"
-      size="small"
-      prefixes="select"
-      :prefixesOptions="[
-        {
-          label: 'http://',
-          value: 1
-        },
-        {
-          label: 'https://',
-          value: 2
-        }
-      ]"
+      :prefixesOptions="options.protocols"
       suffix="select"
-      :suffixOptions="[
-        {
-          label: '.com',
-          value: 1
-        },
-        {
-          label: '.cn',
-          value: 2
-        },
-        {
-          label: '.com.cn',
-          value: 3
-        },
-        {
-          label: '.org',
-          value: 4
-        },
-        {
-          label: '.net',
-          value: 5
-        }
-      ]"
-      placeholder="请输入网址"
+      :suffixOptions="options.domains"
+      placeholder="请输入网站名"
     />
     <lew-input
-      v-model="http.value"
-      v-model:prefixesValue="http.prefixes"
-      v-model:suffixValue="http.suffix"
+      v-model="inputValues.address"
+      v-model:prefixesValue="selectValues.city"
       prefixes="select"
-      :prefixesOptions="[
-        {
-          label: 'http://',
-          value: 1
-        },
-        {
-          label: 'https://',
-          value: 2
-        }
-      ]"
-      suffix="select"
-      :suffixOptions="[
-        {
-          label: '.com',
-          value: 1
-        },
-        {
-          label: '.cn',
-          value: 2
-        },
-        {
-          label: '.com.cn',
-          value: 3
-        },
-        {
-          label: '.org',
-          value: 4
-        },
-        {
-          label: '.net',
-          value: 5
-        }
-      ]"
-      placeholder="请输入网址"
-    />
-    <lew-input
-      v-model="http.value"
-      v-model:prefixesValue="http.prefixes"
-      v-model:suffixValue="http.suffix"
-      size="large"
-      prefixes="select"
-      :prefixesOptions="[
-        {
-          label: 'http://',
-          value: 1
-        },
-        {
-          label: 'https://',
-          value: 2
-        }
-      ]"
-      suffix="select"
-      :suffixOptions="[
-        {
-          label: '.com',
-          value: 1
-        },
-        {
-          label: '.cn',
-          value: 2
-        },
-        {
-          label: '.com.cn',
-          value: 3
-        },
-        {
-          label: '.org',
-          value: 4
-        },
-        {
-          label: '.net',
-          value: 5
-        }
-      ]"
-      placeholder="请输入网址"
+      :prefixesOptions="options.cities"
+      placeholder="请输入详细地址"
     />
   </lew-flex>
 </template>

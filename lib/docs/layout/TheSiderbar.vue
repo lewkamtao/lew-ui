@@ -21,15 +21,15 @@ const toPath = (item: MenuOptions) => {
     return
   }
   router.push(item.value as string)
-  actived.value = item.value as string
+  active.value = item.value as string
 }
 
-let actived = ref(route.path)
+let active = ref(route.path)
 </script>
 
 <template>
   <div class="siderbar lew-scrollbar">
-    <lew-menu :options="options" :actived="actived" @change="toPath" />
+    <lew-menu :options="options" :active="active" @change="toPath" />
   </div>
 </template>
 

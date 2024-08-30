@@ -26,7 +26,8 @@ const getMagicNumberStyle = computed(() => {
 const getItemStyle = computed(() => (item: string) => {
   const { size } = props
   const index = parseInt(item)
-  return `transform: translateY(-${size * index}px)`
+  const numericSize = typeof size === 'string' ? parseInt(size) : size
+  return `transform: translateY(-${numericSize * index}px)`
 })
 const getNumStyle = computed(() => {
   const { size } = props

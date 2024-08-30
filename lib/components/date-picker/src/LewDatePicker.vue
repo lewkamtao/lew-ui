@@ -135,7 +135,7 @@ defineExpose({ show, hide })
               placement: 'right',
               delay: [500, 80]
             }"
-            :class="[dayjs(modelValue).isSame(item.value, 'day') ? 'item-actived' : '']"
+            :class="[dayjs(modelValue).isSame(item.value, 'day') ? 'item-active' : '']"
           >
             {{ item.label }}
           </div>
@@ -267,7 +267,7 @@ defineExpose({ show, hide })
     .item:hover {
       background-color: var(--lew-form-bgcolor-hover);
     }
-    .item-actived {
+    .item-active {
       background-color: var(--lew-color-blue) !important;
       color: var(--lew-color-white);
     }

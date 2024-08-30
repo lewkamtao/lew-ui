@@ -3,6 +3,7 @@ import { tableProps } from './props'
 import { any2px } from 'lew-ui/utils'
 import { LewFlex, LewCheckbox, LewTextTrim } from 'lew-ui'
 import { isEmpty, throttle, mapValues, keyBy, pickBy, difference, keys, sumBy } from 'lodash-es'
+import type { FlexAlignment, TextTrimAlignment } from 'lew-ui'
 
 const props = defineProps(tableProps)
 const tableRef = ref()
@@ -75,7 +76,7 @@ const resizeTableHandle = throttle(() => {
   props.columns
     .map((e) => e.width)
     .forEach((w) => {
-      clientWidth += w
+      clientWidth += Number(w)
     })
 
   if (props.checkable) {
@@ -257,8 +258,8 @@ onUnmounted(() => {
               v-for="(column, index) in fixedColumns('left')"
               :key="`columns${index}`"
               class="lew-table-td"
-              :x="column.x || 'start'"
-              :y="column.y"
+              :x="(column.x as FlexAlignment) || 'start'"
+              :y="column.y as FlexAlignment"
               :style="getTdStyle(column)"
             >
               {{ column.title }}
@@ -271,8 +272,8 @@ onUnmounted(() => {
               v-for="(column, index) in newColumns"
               :key="`columns${index}`"
               class="lew-table-td"
-              :x="column.x || 'start'"
-              :y="column.y"
+              :x="(column.x as FlexAlignment) || 'start'"
+              :y="column.y as FlexAlignment"
               :style="getTdStyle(column)"
             >
               {{ column.title }}
@@ -289,8 +290,8 @@ onUnmounted(() => {
               v-for="(column, index) in fixedColumns('right')"
               :key="`columns${index}`"
               class="lew-table-td"
-              :x="column.x || 'start'"
-              :y="column.y"
+              :x="(column.x as FlexAlignment) || 'start'"
+              :y="column.y as FlexAlignment"
               :style="getTdStyle(column)"
             >
               {{ column.title }}
@@ -330,8 +331,8 @@ onUnmounted(() => {
               v-for="(column, j) in fixedColumns('left')"
               :key="`col${j}`"
               class="lew-table-td"
-              :x="column.x || 'start'"
-              :y="column.y"
+              :x="(column.x as FlexAlignment) || 'start'"
+              :y="column.y as FlexAlignment"
               :style="getTdStyle(column, row)"
             >
               <!-- 模板 -->
@@ -344,7 +345,7 @@ onUnmounted(() => {
               ></slot>
               <template v-else>
                 <lew-text-trim
-                  :x="column.x || 'start'"
+                  :x="column.x as TextTrimAlignment"
                   style="width: 100%"
                   :text="row[column.field]"
                 />
@@ -368,8 +369,8 @@ onUnmounted(() => {
               v-for="(column, j) in newColumns"
               :key="`col${j}`"
               class="lew-table-td"
-              :x="column.x || 'start'"
-              :y="column.y"
+              :x="(column.x as FlexAlignment) || 'start'"
+              :y="column.y as FlexAlignment"
               :style="getTdStyle(column, row)"
             >
               <!-- 模板 -->
@@ -382,7 +383,7 @@ onUnmounted(() => {
               ></slot>
               <template v-else>
                 <lew-text-trim
-                  :x="column.x || 'start'"
+                  :x="(column.x as FlexAlignment) || 'start'"
                   style="width: 100%"
                   :text="row[column.field]"
                 />
@@ -405,8 +406,8 @@ onUnmounted(() => {
               v-for="(column, j) in fixedColumns('right')"
               :key="`col${j}`"
               class="lew-table-td"
-              :x="column.x || 'start'"
-              :y="column.y"
+              :x="(column.x as FlexAlignment) || 'start'"
+              :y="column.y as FlexAlignment"
               :style="getTdStyle(column, row)"
             >
               <!-- 模板 -->
@@ -419,7 +420,7 @@ onUnmounted(() => {
               ></slot>
               <template v-else>
                 <lew-text-trim
-                  :x="column.x || 'start'"
+                  :x="column.x as TextTrimAlignment"
                   style="width: 100%"
                   :text="row[column.field]"
                 />

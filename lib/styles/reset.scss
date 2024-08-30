@@ -1,3 +1,4 @@
+/* 重置基本元素样式 */
 body,
 dl,
 dt,
@@ -12,29 +13,37 @@ th,
 td,
 a,
 button,
-select {
-  margin: 0;
-  padding: 0;
-}
-
+select,
 h1,
 h2,
 h3,
 h4,
-h4,
-h5 {
+h5,
+h6 {
   margin: 0;
   padding: 0;
 }
 
+/* 表单元素样式 */
 select {
   font-size: 14px;
 }
 
+/* 表格样式 */
 table {
   border-collapse: collapse;
 }
 
+caption,
+th {
+  text-align: left;
+}
+
+table caption {
+  margin-left: -var(--lew-border-width);
+}
+
+/* 图片和字段集样式 */
 fieldset,
 img {
   border: 0 none;
@@ -54,21 +63,14 @@ legend {
   display: none;
 }
 
-table caption {
-  margin-left: -var(--lew-border-width);
-}
-
+/* 列表样式 */
 ol,
 ul {
   list-style-image: none;
   list-style-position: outside;
 }
 
-caption,
-th {
-  text-align: left;
-}
-
+/* 引用样式 */
 q:before,
 q:after,
 blockquote:before,
@@ -76,16 +78,18 @@ blockquote:after {
   content: '';
 }
 
+/* 链接样式 */
 a {
   text-decoration: none;
 }
 
+/* 输入框自动填充样式 */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  transition-delay: 9999999s;
   -webkit-transition:
     color 9999999s ease-out,
     background-color 9999999s ease-out;
+  transition-delay: 9999999s;
 }

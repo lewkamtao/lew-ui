@@ -464,7 +464,7 @@ const notification = (type: string) => {
           <lew-form row-gap="30" ref="formRef" :options="options" />
         </lew-flex>
         <lew-flex class="item" direction="y" gap="20">
-          <LewAlert :list="list" />
+          <lew-alert :options="list" />
           <lew-flex wrap x="start" gap="20">
             <lew-button
               text="Like"

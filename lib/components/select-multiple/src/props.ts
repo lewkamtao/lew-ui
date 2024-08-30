@@ -13,100 +13,96 @@ export type SelectSearchMultipleMethodParams = {
 
 export const selectMultipleModel = {
   modelValue: {
-    type: (Array as PropType<string[] | number[]>) || undefined,
-    default: [],
-    description: '绑定值'
+    type: Array as PropType<(string | number)[]>,
+    default: () => [],
+    description: '多选框的选中值数组'
   }
 }
 
 export const selectMultipleProps = {
   options: {
     type: Array as PropType<SelectMultipleOptions[]>,
-    default: [],
-    description: '配置列表'
+    default: () => [],
+    description: '可选项列表'
   },
   trigger: {
-    type: String,
+    type: String as PropType<'click' | 'hover'>,
     default: 'click',
-    description: '触发方式，可选值为 click 或 hover'
+    description: '触发下拉菜单的方式'
   },
   valueLayout: {
-    type: String,
+    type: String as PropType<'tag' | 'text'>,
     default: 'text',
-    description: '值的布局方式，可选值为 tag 或 text'
+    description: '选中值的显示方式'
   },
   valueTextSplit: {
     type: String,
     default: '、',
-    description: '值的分隔符，仅在 valueLayout 为 text 时有效'
+    description: '文本模式下选中值的分隔符'
   },
   placeholder: {
     type: String,
     default: '请选择',
-    description: '默认提示语'
+    description: '选择框默认文本'
   },
   size: {
-    type: String,
+    type: String as PropType<'small' | 'medium' | 'large'>,
     default: 'medium',
-    description: '尺寸，可选值为 small、medium、large'
+    description: '选择框尺寸'
   },
   itemHeight: {
     type: Number,
     default: 38,
-    description: '选项高度，单位 px，没用插槽时无需设置，用于计算虚拟列表的高度'
+    description: '选项高度（像素），用于虚拟列表计算'
   },
   searchable: {
     type: Boolean,
     default: false,
-    description: '是否可搜索'
+    description: '是否启用搜索功能'
   },
   searchPlaceholder: {
     type: String,
     default: '',
-    description: '搜索提示语'
+    description: '搜索框占位文本'
   },
   searchMethod: {
-    type: Function as PropType<(e: SelectSearchMultipleMethodParams) => void>,
-    default: (params: SelectSearchMultipleMethodParams) => {
-      const { options, keyword } = params
+    type: Function as PropType<(params: SelectSearchMultipleMethodParams) => SelectMultipleOptions[]>,
+    default: ({ options, keyword }: { options: SelectMultipleOptions[], keyword: string }) => {
       if (options && keyword) {
-        const result = options.filter((e) => {
-          return keyword && e.label.indexOf(keyword) >= 0
-        })
-        return result
+        return options.filter((option: SelectMultipleOptions) => option.label.includes(keyword))
       }
       return []
     },
-    description: '搜索方法'
+    description: '自定义搜索方法'
   },
   searchDelay: {
     type: Number,
     default: 250,
-    description: '搜索延迟，单位毫秒'
+    description: '搜索防抖延迟时间（毫秒）'
   },
   clearable: {
     type: Boolean,
     default: false,
-    description: '是否可清空'
+    description: '是否显示清空按钮'
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读'
+    description: '是否为只读状态'
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用'
+    description: '是否禁用选择框'
   },
   showCheckIcon: {
     type: Boolean,
     default: true,
-    description: '是否显示选中图标'
+    description: '是否在选项旁显示勾选图标'
   },
   defaultValue: {
-    type: (Array as PropType<string[] | number[]>) || undefined,
-    default: [],
-    description: '默认值'
+    type: Array as PropType<(string | number)[]>,
+    default: () => [],
+    description: '选择框默认值'
   }
 }

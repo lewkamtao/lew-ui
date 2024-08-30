@@ -1,25 +1,52 @@
-import type { ExtractPropTypes, PropType } from 'vue'
-
-export type DatePickerSize = 'small' | 'medium' | 'large'
+import type { ExtractPropTypes } from 'vue'
+import type { LewSize } from 'lew-ui'
+import { validSizes } from 'lew-ui/constants'
+export type DatePickerValueFormat = string
+export type DatePickerPresetsOption = {
+  label: string
+  value: string
+}
 
 export const datePickerModel = {
   modelValue: {
     type: String,
     default: '',
-    description: '绑定值'
+    description: '当前选中的日期值'
   }
 }
 
 export const datePickerProps = {
+  modelValue: {
+    type: String,
+    default: '',
+    description: '当前选中的日期值'
+  },
+  valueFormat: {
+    type: String,
+    default: 'YYYY-MM-DD',
+    description: '日期输出格式'
+  },
   size: {
-    type: String as PropType<DatePickerSize>,
+    type: String as PropType<LewSize>,
     default: 'medium',
-    description: '尺寸，可选值为 small、medium、large'
+    description: '选择器尺寸',
+    validator(value: LewSize): boolean {
+      if (!validSizes.includes(value)) {
+        console.warn('[LewDatePicker] size 必须是 "small"、"medium" 或 "large"')
+        return false
+      }
+      return true
+    }
+  },
+  placeholder: {
+    type: String,
+    default: '请选择日期',
+    description: '输入框占位文本'
   },
   clearable: {
     type: Boolean,
     default: true,
-    description: '是否显示清除按钮'
+    description: '是否可清除'
   },
   readonly: {
     type: Boolean,
@@ -31,37 +58,28 @@ export const datePickerProps = {
     default: false,
     description: '是否禁用'
   },
-  valueFormat: {
-    type: String,
-    default: 'YYYY-MM-DD',
-    description: '日期格式'
-  },
-  placeholder: {
-    type: String,
-    default: () => {
-      return '请选择日期'
-    },
-    description: '默认提示语'
-  },
   presets: {
-    type: Array as PropType<DatePickerPresetsOptions[]>,
-    default: () => {
-      return []
-    },
-    description: '预设时间范围'
+    type: Array,
+    default: () => [],
+    description: '预设日期选项',
+    validator(value: DatePickerPresetsOption[]): boolean {
+      if (
+        !Array.isArray(value) ||
+        !value.every((item) => typeof item.label === 'string' && typeof item.value === 'string')
+      ) {
+        console.warn('[LewDatePicker] presets 必须是包含 label 和 value 字符串的对象数组')
+        return false
+      }
+      return true
+    }
   }
-}
-
-export type DatePickerPresetsOptions = {
-  label: string
-  value: string
 }
 
 export const dateProps = {
   valueFormat: {
     type: String,
     default: 'YYYY-MM-DD',
-    description: '日期格式'
+    description: '日期格式化字符串'
   }
 }
 

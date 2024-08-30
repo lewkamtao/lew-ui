@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import RequiredIcon from './RequiredIcon.vue'
 import { requiredIconSizeMap } from './props'
+import type { LewSize } from 'lew-ui'
+
 defineProps({
   size: {
-    type: String,
+    type: String as PropType<LewSize>,
     default: 'medium'
   },
   options: {

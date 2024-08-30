@@ -1,47 +1,46 @@
-import type { PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
+
+export type InputTagSize = 'small' | 'medium' | 'large'
 
 export const inputTagModel = {
-  // 绑定值
   modelValue: {
-    type: Array as PropType<string[]> | undefined,
-    default: [],
-    description: '绑定值'
+    type: Array as PropType<string[]>,
+    default: () => [],
+    description: '标签输入框的值，支持双向绑定'
   }
 }
+
 export const inputTagProps = {
   size: {
-    type: String,
+    type: String as PropType<InputTagSize>,
     default: 'medium',
-    description: '尺寸，可选值为 small、medium、large'
+    description: '标签输入框的尺寸，可选值为 small、medium 或 large'
   },
-  // 禁用
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用'
+    description: '是否禁用标签输入框'
   },
-  // 是否使用清空按钮
   clearable: {
     type: Boolean,
     default: false,
-    description: '是否使用清空按钮'
+    description: '是否显示清空按钮，点击可清空所有标签'
   },
-  // 默认提示语
   placeholder: {
     type: String,
     default: '按Enter添加标签',
-    description: '默认提示语'
+    description: '输入框的占位文本，当没有标签时显示'
   },
-  // 是否只读
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读'
+    description: '是否将标签输入框设为只读，只读状态下无法添加或删除标签'
   },
-  // 是否允许重复
   allowDuplicates: {
     type: Boolean,
     default: false,
-    description: '是否允许重复'
+    description: '是否允许添加重复的标签'
   }
 }
+
+export type InputTagProps = ExtractPropTypes<typeof inputTagProps>

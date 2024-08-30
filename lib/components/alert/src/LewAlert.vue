@@ -15,7 +15,7 @@ const alertClassName = (item: AlertItem) => {
 
 <template>
   <div class="lew-alert-group">
-    <div v-for="(item, i) in list" :key="i" class="lew-alert" :class="alertClassName(item)">
+    <div v-for="(item, i) in options" :key="i" class="lew-alert" :class="alertClassName(item)">
       <div class="alert-icon" v-html="getStatusIcon(item.type)"></div>
       <div class="message">
         <div class="title">{{ item.title }}</div>

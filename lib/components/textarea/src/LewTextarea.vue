@@ -56,16 +56,6 @@ const toFocus = () => {
   lewTextareaRef.value?.focus()
 }
 
-const getCheckNumStr = computed(() => {
-  if (props.showCount && props.maxLength) {
-    return `${props.renderCount(modelValue.value)} / ${props.maxLength}`
-  }
-  if (props.showCount) {
-    return props.renderCount(modelValue.value)
-  }
-  return false
-})
-
 const getTextareaClassNames = computed(() => {
   const { size, readonly, disabled } = props
   return object2class('lew-textarea-view', {
@@ -149,31 +139,31 @@ defineExpose({ toFocus })
       ref="lewTextareaRef"
       v-model="modelValue"
       class="lew-textarea lew-scrollbar"
-      :disabled="disabled"
-      :readonly="readonly"
       :placeholder="placeholder"
       :maxlength="maxLength"
+      :disabled="disabled"
+      :readonly="readonly"
+      @focus="focus"
+      @blur="blur"
       @input="emit('input', modelValue)"
       @change="emit('change', modelValue)"
-      @blur="blur"
-      @focus="focus"
     ></textarea>
 
-    <div v-if="getCheckNumStr && showCount" class="lew-textarea-count">
-      {{ getCheckNumStr }}
+    <div v-if="modelValue && showCount" class="lew-textarea-count">
+      {{ modelValue.length }}{{ maxLength ? ' / ' + maxLength : '' }}
     </div>
     <transition name="lew-form-icon-ani">
       <lew-icon
         v-if="clearable && modelValue && !readonly"
+        :size="getIconSize"
+        type="x"
         class="lew-form-icon-clear"
         :class="{
           'lew-form-icon-clear-focus': state.isFocus
         }"
-        :size="getIconSize"
         style="top: 14px"
-        type="x"
-        @mousedown.prevent=""
         @click="clear"
+        @mousedown.prevent=""
       />
     </transition>
   </div>
@@ -181,15 +171,15 @@ defineExpose({ toFocus })
 
 <style lang="scss" scoped>
 .lew-textarea-view {
-  display: inline-flex;
   position: relative;
-  overflow: hidden;
+  display: inline-flex;
   width: 100%;
-  border-radius: var(--lew-border-radius-small);
-  background-color: var(--lew-form-bgcolor);
+  overflow: hidden;
   box-sizing: border-box;
-  outline: 0px var(--lew-form-border-color) solid;
+  border-radius: var(--lew-border-radius-small);
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  outline: 0px var(--lew-form-border-color) solid;
+  background-color: var(--lew-form-bgcolor);
   box-shadow: var(--lew-form-box-shadow);
   transition:
     var(--lew-form-transition-ease),

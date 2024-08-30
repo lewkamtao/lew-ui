@@ -1,16 +1,17 @@
 <script setup lang="ts">
-const options = ref([
-  { label: '宋朝', value: '1' },
-  { label: '唐朝', value: '2' },
-  { label: '明朝', value: '3' },
-  { label: '清朝', value: '4' }
+const 冰淇淋口味选项 = ref([
+  { label: '香草', value: 'vanilla' },
+  { label: '巧克力', value: 'chocolate' },
+  { label: '草莓', value: 'strawberry' },
+  { label: '抹茶', value: 'matcha' },
+  { label: '芒果', value: 'mango' }
 ])
 
-const value = ref('')
+const 选中的口味 = ref('')
 </script>
 
 <template>
-  <lew-radio-group v-model="value" size="small" direction="x" :options="options" />
-  <lew-radio-group v-model="value" size="medium" direction="x" :options="options" />
-  <lew-radio-group v-model="value" size="large" direction="x" :options="options" />
+  <lew-radio-group v-model="选中的口味" size="small" direction="x" :options="冰淇淋口味选项" />
+  <lew-radio-group v-model="选中的口味" size="medium" direction="x" :options="冰淇淋口味选项" />
+  <lew-radio-group v-model="选中的口味" size="large" direction="x" :options="冰淇淋口味选项" />
 </template>

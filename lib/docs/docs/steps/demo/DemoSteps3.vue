@@ -14,7 +14,7 @@ const options = [
   }
 ]
 
-const status = ref('pending')
+const status = ref('loading')
 const currentStep = ref(2)
 </script>
 

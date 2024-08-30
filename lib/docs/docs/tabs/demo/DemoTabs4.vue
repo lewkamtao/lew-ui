@@ -1,37 +1,31 @@
 <script setup lang="ts">
-const value = ref(1)
-type Options = {
+const selectedDepartment = ref('sales')
+
+interface DepartmentOption {
   label: string
   value: string
-  activeIndex: number
 }
-const change = (e: Options) => {
-  console.log(e)
-  LewMessage.info(e.label)
+
+const departmentOptions: DepartmentOption[] = [
+  { label: '销售部', value: 'sales' },
+  { label: '市场部', value: 'marketing' },
+  { label: '财务部', value: 'finance' }
+]
+
+const handleDepartmentChange = (option: DepartmentOption) => {
+  console.log(option)
+  LewMessage.info(`您选择了: ${option.label}`)
 }
 </script>
 
 <template>
   <lew-flex direction="y" x="start" y="start">
     <lew-tabs
-      v-model="value"
+      v-model="selectedDepartment"
       style="width: 100%"
       type="line"
-      :options="[
-        {
-          label: '北京市',
-          value: 0
-        },
-        {
-          label: '广州市',
-          value: 1
-        },
-        {
-          label: '上海市',
-          value: 2
-        }
-      ]"
-      @change="change"
+      :options="departmentOptions"
+      @change="handleDepartmentChange"
     />
   </lew-flex>
 </template>

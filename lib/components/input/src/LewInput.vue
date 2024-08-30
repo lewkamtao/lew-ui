@@ -442,6 +442,7 @@ defineExpose({ toFocus })
   .lew-input-controls {
     display: inline-flex;
     align-items: center;
+	z-index: 9;
 
     > div {
       display: inline-flex;

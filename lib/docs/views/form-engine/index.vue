@@ -10,6 +10,7 @@ import SetForm from './components/SetForm.vue'
 import { baseSchema, componentsMenusSchema, globalSchema } from './schema'
 import LewGetLabelWidth from 'lew-ui/components/form/src/LewGetLabelWidth.vue'
 import { debounce, cloneDeep, has } from 'lodash-es'
+import { LewSize } from 'lew-ui/types'
 
 const isDark = useDark({
   selector: 'html',
@@ -25,7 +26,7 @@ const itemRefMap = ref<Record<string, any>>({})
 const formMainRef = ref()
 
 const settingTab = ref('options')
-const activedId = ref('')
+const activeId = ref('')
 const formLabelRef = ref()
 const autoLabelWidth = ref(0)
 
@@ -187,7 +188,7 @@ const addComponent = (item: any) => {
 
 <template>
   <div class="playground">
-    <LewGetLabelWidth ref="formLabelRef" :size="formGlobal.size" :options="options" />
+    <LewGetLabelWidth ref="formLabelRef" :size="formGlobal.size as LewSize" :options="options" />
     <div class="lew-form-component lew-scrollbar">
       <draggable
         :group="{ name: 'form', pull: 'clone', put: false }"
@@ -215,7 +216,7 @@ const addComponent = (item: any) => {
         </template>
       </draggable>
     </div>
-    <div class="lew-form-wrapper" @click="(settingTab = 'options'), (activedId = '')">
+    <div class="lew-form-wrapper" @click="(settingTab = 'options'), (activeId = '')">
       <lew-flex x="center" y="center" class="lew-form-select-columns">
         <lew-tabs
           width="320px"
@@ -260,11 +261,11 @@ const addComponent = (item: any) => {
             <div
               :ref="(el) => (itemRefMap[element.id] = el)"
               class="lew-form-wrapper-draggable-item"
-              :class="{ 'lew-form-wrapper-draggable-item-actived': activedId === element.id }"
+              :class="{ 'lew-form-wrapper-draggable-item-active': activeId === element.id }"
               @click.stop="
-                activedId === element.id || element.as === ''
-                  ? (activedId = '')
-                  : (activedId = element.id),
+                activeId === element.id || element.as === ''
+                  ? (activeId = '')
+                  : (activeId = element.id),
                   (settingTab = 'options')
               "
               :style="{ 'grid-column-end': `span ${element.spanMap[formGlobal.columns]}` }"
@@ -347,19 +348,19 @@ const addComponent = (item: any) => {
               <div class="title">全局属性</div>
               <set-form v-model="formGlobal" :options="globalSchema" />
             </lew-flex>
-            <lew-flex v-if="activedId" direction="y" x="start" gap="0">
+            <lew-flex v-if="activeId" direction="y" x="start" gap="0">
               <div class="title">基础属性</div>
               <set-form
                 :collapse-height="200"
-                v-model="options[options.findIndex((e: any) => e.id === activedId)]"
+                v-model="options[options.findIndex((e: any) => e.id === activeId)]"
                 :options="baseSchema"
               />
             </lew-flex>
             <lew-flex
               v-if="
-                activedId &&
-                options.findIndex((e: any) => e.id === activedId) >= 0 &&
-                options[options.findIndex((e: any) => e.id === activedId)].as !== ''
+                activeId &&
+                options.findIndex((e: any) => e.id === activeId) >= 0 &&
+                options[options.findIndex((e: any) => e.id === activeId)].as !== ''
               "
               direction="y"
               x="start"
@@ -369,10 +370,10 @@ const addComponent = (item: any) => {
                 <span>组件属性</span>
               </lew-flex>
               <set-form
-                v-if="options[options.findIndex((e: any) => e.id === activedId)].schema.length > 0"
-                :key="activedId"
-                v-model="options[options.findIndex((e: any) => e.id === activedId)].props"
-                :options="options[options.findIndex((e: any) => e.id === activedId)].schema"
+                v-if="options[options.findIndex((e: any) => e.id === activeId)].schema.length > 0"
+                :key="activeId"
+                v-model="options[options.findIndex((e: any) => e.id === activeId)].props"
+                :options="options[options.findIndex((e: any) => e.id === activeId)].schema"
               />
               <lew-flex v-else>
                 <lew-empty title="开发中，敬请期待"></lew-empty>
@@ -561,7 +562,7 @@ const addComponent = (item: any) => {
   .lew-form-wrapper-draggable-item:hover {
     border: var(--lew-form-border-width) dashed var(--lew-bgcolor-5);
   }
-  .lew-form-wrapper-draggable-item-actived {
+  .lew-form-wrapper-draggable-item-active {
     border: var(--lew-form-border-width) dashed var(--lew-color-blue-dark) !important;
   }
   .blank-box {

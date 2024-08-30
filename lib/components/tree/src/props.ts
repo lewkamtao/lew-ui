@@ -24,25 +24,32 @@ export const treeModel = {
   modelValue: {
     type: [Array, String],
     default: [],
-    description: '值（双向绑定）'
+    description: '树组件的选中值，支持v-model双向绑定'
   },
   expandedKeys: {
     type: [Array, String],
     default: [],
-    description: '展开节点的 key 的集合'
+    description: '展开节点的key集合'
   }
 }
 
 export const treeProps = {
   dataSource: {
     type: Array as PropType<TreeDataSource[]>,
-    default: [],
-    description: '配置项'
+    default: () => [],
+    description: '树组件的数据源',
+    validator: (value: TreeDataSource[]) => {
+      if (!Array.isArray(value)) {
+        console.warn('[LewTree] dataSource必须是一个数组')
+        return false
+      }
+      return true
+    }
   },
   multiple: {
     type: Boolean,
     default: false,
-    description: '多选的'
+    description: '是否允许多选'
   },
   showCheckbox: {
     type: Boolean,
@@ -52,12 +59,12 @@ export const treeProps = {
   expandAll: {
     type: Boolean,
     default: false,
-    description: '默认全部展开'
+    description: '是否默认展开所有节点'
   },
   free: {
     type: Boolean,
     default: true,
-    description: '自由模式（是否严格的遵循父子互相关联）'
+    description: '是否为自由模式（不严格遵循父子节点关联）'
   },
   showLine: {
     type: Boolean,
@@ -67,42 +74,48 @@ export const treeProps = {
   trigger: {
     type: String as PropType<TreeTriggerType>,
     default: 'click',
-    description: '触发方式'
+    description: '节点展开收起的触发方式',
+    validator: (value: TreeTriggerType) => {
+      if (!['click', 'hover'].includes(value)) {
+        console.warn('[LewTree] trigger必须是 "click" 或 "hover"')
+        return false
+      }
+      return true
+    }
   },
   placeholder: {
     type: String,
     default: '请选择',
-    description: '默认提示文案'
+    description: '选择框默认文本'
   },
   keyField: {
     type: String,
     default: 'key',
-    description: '替代 TreeDataSource 中的 key 字段名，该字段值必须唯一。'
+    description: '指定作为唯一标识的字段名'
   },
   labelField: {
     type: String,
     default: 'label',
-    description: '替代 TreeDataSource 中的 label 字段名'
+    description: '指定作为显示文本的字段名'
   },
   disabledField: {
     type: String,
     default: 'disabled',
-    description: '替代 TreeDataSource 中的 disabled 字段名'
+    description: '指定作为禁用状态的字段名'
   },
   initTree: {
-    type: Function as PropType<() => void> | undefined,
+    type: Function as PropType<() => void>,
     default: undefined,
-    description: '初始化加载树形数据'
+    description: '初始化树形数据的方法'
   },
   onload: {
-    type: Function as PropType<(item: TreeDataSource) => void> | undefined,
+    type: Function as PropType<(item: TreeDataSource) => void>,
     default: undefined,
-    description: '异步加载数据'
+    description: '异步加载子节点数据的方法'
   },
   isSelect: {
     type: Boolean,
     default: false,
-    hidden: true,
-    description: '选择器模型'
+    description: '是否作为选择器使用'
   }
 }

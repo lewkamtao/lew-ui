@@ -380,7 +380,7 @@ const getTips = computed(() => {
 
     <lew-alert
       v-if="!isFunction(uploadHelper)"
-      :list="[
+      :options="[
         {
           type: 'error',
           title: 'uploadHelper Error: 未配置上传方法'
@@ -532,7 +532,7 @@ const getTips = computed(() => {
     box-sizing: border-box;
     transition: var(--lew-form-transition-ease);
     cursor: pointer;
-	box-shadow: var(--lew-form-box-shadow);
+    box-shadow: var(--lew-form-box-shadow);
 
     .lew-upload-icon {
       color: var(--lew-color-primary-dark);

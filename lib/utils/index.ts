@@ -13,6 +13,7 @@ export const getIconType = (type: string | undefined): string => {
   // @ts-ignore
   return map[type] || 'info'
 }
+
 // type: The type of message to display in the tooltip.
 export const getColorType = (type: string | undefined): string => {
   const typeMap = {
@@ -27,6 +28,7 @@ export const getColorType = (type: string | undefined): string => {
   // @ts-ignore
   return typeMap[type] || type
 }
+
 export const object2class = (prefix: string, props: Object) => {
   let className = ''
   for (const [key, value] of Object.entries(props)) {
@@ -51,43 +53,43 @@ export const numFormat = (num: number) => {
 }
 
 export const any2px = (value: number | string | undefined): string => {
-  if (!value) {
+  if (value === undefined || value === null || value === '') {
     return ''
   }
 
-  const autoRegex = /^auto$/i
-  const calcRegex = /^calc\((.+)\)$/
-  const percentRegex = /^-?\d+(\.\d+)?%$/
-  const pixelRegex = /^-?\d+(\.\d+)?(px)?$/
-  const numericRegex = /^-?\d+(\.\d+)?$/
+  const _value = String(value).trim().toLowerCase()
 
-  const _value = String(value)
-
-  if (_value.startsWith('calc')) {
+  // 处理特殊值
+  if (['auto', 'inherit', 'initial', 'unset'].includes(_value)) {
     return _value
   }
 
-  if (numericRegex.test(_value)) {
-    return `${value}px`
-  }
-  if (autoRegex.test(_value)) {
+  // 处理calc、var等CSS函数
+  if (/^(calc|var|min|max|clamp)\(.*\)$/.test(_value)) {
     return _value
   }
-  if (percentRegex.test(_value)) {
+
+  // 处理带单位的值
+  const unitRegex = /^(-?\d*\.?\d+)(px|em|rem|vh|vw|vmin|vmax|cm|mm|in|pt|pc|ex|ch)?$/
+  const match = _value.match(unitRegex)
+  if (match) {
+    const [, num, unit] = match
+    return unit ? _value : `${num}px`
+  }
+
+  // 处理百分比
+  if (_value.endsWith('%')) {
     return _value
   }
-  if (calcRegex.test(_value)) {
-    return _value
-  }
-  if (pixelRegex.test(_value)) {
-    return `${_value}`
-  }
+
+  // 处理纯数字
   const numValue = parseFloat(_value)
   if (!isNaN(numValue)) {
     return `${numValue}px`
   }
 
-  return ''
+  // 无法处理的情况，返回原值
+  return String(value)
 }
 
 export const lewSetForm = ({
@@ -179,13 +181,11 @@ export const getFileIcon = (fileName: string = '') => {
       return getAssetsFile({ name: 'file_word.svg', type: 'icon' })
     case 'pdf':
     case 'PDF':
-    case 'PDFX':
       return getAssetsFile({ name: 'file_pdf.svg', type: 'icon' })
     case 'ppt':
     case 'pptx':
       return getAssetsFile({ name: 'file_ppt.svg', type: 'icon' })
     case 'txt':
-    case 'txtx':
       return getAssetsFile({ name: 'file_txt.svg', type: 'icon' })
     case 'xls':
     case 'xlsx':
@@ -198,7 +198,6 @@ export const getFileIcon = (fileName: string = '') => {
     case 'zip':
     case 'rar':
     case '7z':
-    case 'zipx':
     case 'gz':
       return getAssetsFile({ name: 'file_rar.svg', type: 'icon' })
     case 'mp3':
@@ -221,7 +220,6 @@ export const getFileIcon = (fileName: string = '') => {
     case 'ico':
       return getAssetsFile({ name: 'file_img.svg', type: 'icon' })
     case 'psd':
-    case 'psdx':
       return getAssetsFile({ name: 'file_psd.svg', type: 'icon' })
     case 'ai':
     case 'cdr':

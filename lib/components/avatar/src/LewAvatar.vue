@@ -17,14 +17,14 @@ const dotClassName = computed(() => {
 
 const avatarClassName = computed(() => {
   return object2class('lew-avatar', {
-    round: props.round
+    round: props.shape === 'circle'
   })
 })
 
 const avatarStyleObject = computed(() => {
   return {
-    width: any2px(props.width),
-    height: any2px(props.height)
+    width: any2px(props.size),
+    height: any2px(props.size)
   }
 })
 </script>
@@ -79,7 +79,7 @@ const avatarStyleObject = computed(() => {
     height: 0.6rem;
     border-radius: 50%;
     z-index: 99;
-    border: var(--lew-form-border-width)  var(--lew-color-white) solid;
+    border: var(--lew-form-border-width) var(--lew-color-white) solid;
   }
 
   .dot-status-online {

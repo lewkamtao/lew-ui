@@ -1,40 +1,40 @@
 <script setup lang="ts">
-type Options = {
+interface TabOption {
   label: string
   value: string
   activeIndex: number
 }
 
-const options = ref([
-  { label: 'Light', value: '1' },
-  { label: 'Dark', value: '2' }
+const departmentOptions = ref([
+  { label: '市场部', value: 'marketing' },
+  { label: '财务部', value: 'finance' }
 ])
 
-const options2 = ref([
-  { label: 'red', value: '1' },
-  { label: 'blue', value: '2' },
-  { label: 'black', value: '3' },
-  { label: 'white', value: '4' }
+const projectOptions = ref([
+  { label: '产品开发', value: 'product_development' },
+  { label: '市场调研', value: 'market_research' },
+  { label: '财务分析', value: 'financial_analysis' },
+  { label: '人力资源', value: 'human_resources' }
 ])
 
-const value = ref('1')
-const value2 = ref('1')
+const selectedDepartment = ref('marketing')
+const selectedProject = ref('product_development')
 
-const change = (e: Options) => {
-  console.log(e)
-  LewMessage.info(e.label)
+const handleOptionChange = (option: TabOption) => {
+  console.log(option)
+  LewMessage.info(`您选择了：${option.label}`)
 }
 </script>
 
 <template>
   <lew-flex direction="y" x="start" y="start">
-    <lew-tabs v-model="value" width="auto" round :options="options" @change="change" />
+    <lew-tabs v-model="selectedDepartment" width="auto" round :options="departmentOptions" @change="handleOptionChange" />
     <lew-tabs
-      v-model="value2"
+      v-model="selectedProject"
       round
       itemWidth="calc(300px / 4)"
-      :options="options2"
-      @change="change"
+      :options="projectOptions"
+      @change="handleOptionChange"
     />
   </lew-flex>
 </template>

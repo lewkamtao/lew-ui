@@ -1,68 +1,75 @@
-import type { ExtractPropTypes } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 import type { ButtonProps } from '../../button/index'
+
 export const drawerModel = {
   visible: {
-    type: String,
-    default: '',
-    description: '绑定值'
+    type: Boolean,
+    default: false,
+    description: '控制抽屉的显示状态'
   }
 }
+
 export const drawerProps = {
   title: {
     type: String,
     default: '',
-    description: '标题'
-  },
-  width: {
-    type: Number,
-    default: 500,
-    description: '宽度'
-  },
-  height: {
-    type: Number,
-    default: 500,
-    description: '高度'
+    description: '抽屉的标题'
   },
   position: {
     type: String,
     default: 'right',
-    description: '位置，可选值为 left、right、top、bottom'
+    validator: (value: string) => ['left', 'right', 'top', 'bottom'].includes(value),
+    description: '抽屉的弹出位置'
   },
-  hideFooter: {
-    type: Boolean,
-    default: false,
-    description: '隐藏底部'
-  },
-  closeByEsc: {
-    type: Boolean,
-    default: false,
-    description: '是否允许esc关闭'
-  },
-  okProps: {
-    type: Object as PropType<ButtonProps>,
-    default: () => {
-      return {
-        text: '确定',
-        color: 'primary'
-      }
+  width: {
+    type: [Number, String],
+    default: 500,
+    validator: (value: number | string) => {
+      const numValue = typeof value === 'string' ? parseFloat(value) : value
+      return !Number.isNaN(numValue) && numValue > 0
     },
-    description: '确定按钮文字'
+    description: '抽屉的宽度，单位为像素或百分比'
   },
-  cancelProps: {
-    type: Object as PropType<ButtonProps>,
-    default: () => {
-      return {
-        type: 'text',
-        text: '取消',
-        color: 'normal'
-      }
+  height: {
+    type: [Number, String],
+    default: 500,
+    validator: (value: number | string) => {
+      const numValue = typeof value === 'string' ? parseFloat(value) : value
+      return !Number.isNaN(numValue) && numValue > 0
     },
-    description: '确定按钮文字'
+    description: '抽屉的高度，单位为像素或百分比'
   },
   closeOnClickOverlay: {
     type: Boolean,
     default: false,
-    description: '点击遮罩层是否关闭'
+    description: '是否允许点击遮罩层关闭抽屉'
+  },
+  closeByEsc: {
+    type: Boolean,
+    default: false,
+    description: '是否允许按 ESC 键关闭抽屉'
+  },
+  hideFooter: {
+    type: Boolean,
+    default: false,
+    description: '是否隐藏抽屉底部的操作区域'
+  },
+  okProps: {
+    type: Object as PropType<ButtonProps>,
+    default: () => ({
+      text: '确定',
+      color: 'primary'
+    }),
+    description: '确定按钮的属性配置'
+  },
+  cancelProps: {
+    type: Object as PropType<ButtonProps>,
+    default: () => ({
+      type: 'text',
+      text: '取消',
+      color: 'normal'
+    }),
+    description: '取消按钮的属性配置'
   }
 }
 

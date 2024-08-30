@@ -1,57 +1,57 @@
 <script setup lang="ts">
-const options = ref([
-  { label: '宋朝', value: 1 },
-  { label: '唐朝', value: 2 },
-  { label: '明朝', value: 3 },
-  { label: '清朝', value: 4 },
-  { label: '隋朝', value: 5 },
-  { label: '秦朝', value: 6 }
+const pizzaToppings = ref([
+  { label: '芝士', value: 'cheese' },
+  { label: '香肠', value: 'sausage' },
+  { label: '蘑菇', value: 'mushroom' },
+  { label: '菠萝', value: 'pineapple' },
+  { label: '橄榄', value: 'olive' },
+  { label: '青椒', value: 'pepper' }
 ])
 
-const value = ref([])
+const selectedToppings = ref([])
 </script>
 
 <template>
   <lew-flex direction="y" x="start">
-    <lew-title :size="14">无图标</lew-title>
+    <lew-title :size="14">无图标选择</lew-title>
     <lew-checkbox-group
-      v-model="value"
+      v-model="selectedToppings"
       block
       round
       :iconable="false"
       direction="x"
-      :options="options"
+      :options="pizzaToppings"
     />
-    <lew-checkbox-group v-model="value" block :iconable="false" direction="x" :options="options" />
+    <lew-checkbox-group v-model="selectedToppings" block :iconable="false" direction="x" :options="pizzaToppings" />
     <br />
     <br />
-    <lew-title :size="14">有图标</lew-title>
-    <lew-checkbox-group v-model="value" block size="small" round direction="x" :options="options" />
+    <lew-title :size="14">有图标选择</lew-title>
+    <lew-checkbox-group v-model="selectedToppings" block size="small" round direction="x" :options="pizzaToppings" />
 
-    <lew-checkbox-group v-model="value" block round direction="x" :options="options" />
+    <lew-checkbox-group v-model="selectedToppings" block round direction="x" :options="pizzaToppings" />
 
-    <lew-checkbox-group v-model="value" block round size="large" direction="x" :options="options" />
+    <lew-checkbox-group v-model="selectedToppings" block round size="large" direction="x" :options="pizzaToppings" />
     <br />
     <br />
-    <lew-title :size="14">禁用</lew-title>
+    <lew-title :size="14">禁用选项</lew-title>
     <lew-checkbox-group
-      v-model="value"
+      v-model="selectedToppings"
       block
       size="small"
       disabled
       direction="x"
-      :options="options"
+      :options="pizzaToppings"
     />
     <br />
     <br />
-    <lew-title :size="14">只读</lew-title>
+    <lew-title :size="14">只读选项</lew-title>
     <lew-checkbox-group
-      v-model="value"
+      v-model="selectedToppings"
       block
       size="small"
       readonly
       direction="x"
-      :options="options"
+      :options="pizzaToppings"
     />
   </lew-flex>
 </template>

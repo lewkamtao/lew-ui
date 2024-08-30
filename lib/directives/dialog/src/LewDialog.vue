@@ -4,7 +4,7 @@ import { useMagicKeys } from '@vueuse/core'
 import { dialogProps } from './props'
 import { getStatusIcon } from 'lew-ui/utils'
 import { useDOMCreate } from 'lew-ui/hooks'
-
+import type { LewColor } from 'lew-ui'
 const { Escape } = useMagicKeys()
 useDOMCreate('lew-dialog')
 const props = defineProps(dialogProps)
@@ -100,7 +100,6 @@ if (props.closeByEsc) {
               <div class="right">
                 <header>
                   <slot name="title"></slot>
-                  <span class="gulu-dialog-close" @click="visible = false"></span>
                 </header>
                 <main>
                   <slot name="content"></slot>
@@ -123,7 +122,7 @@ if (props.closeByEsc) {
                 :text="okText"
                 size="small"
                 type="fill"
-                :color="type"
+                :color="type as LewColor"
                 :loading="okLoading"
                 @click.stop="ok"
               />
@@ -159,7 +158,7 @@ if (props.closeByEsc) {
                   type="fill"
                   size="small"
                   round
-                  :color="type"
+                  :color="type as LewColor"
                   :loading="okLoading"
                   @click.stop="ok"
                 />

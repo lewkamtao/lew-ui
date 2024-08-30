@@ -80,7 +80,6 @@ const selectItem = (value: string | number | undefined, type?: string) => {
       emit('change', {
         label: _item.label,
         value: _item.value,
-        activeIndex: index
       })
     }
     state.curIndex = index

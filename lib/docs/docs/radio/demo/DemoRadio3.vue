@@ -1,31 +1,32 @@
 <script setup lang="ts">
-const options = ref([
-  { label: '宋朝', value: '1' },
-  { label: '唐朝', value: '2' },
-  { label: '明朝', value: '3' },
-  { label: '清朝', value: '4' }
+const fantasyCreatureOptions = ref([
+  { label: '独角兽', value: 'unicorn' },
+  { label: '凤凰', value: 'phoenix' },
+  { label: '龙', value: 'dragon' },
+  { label: '美人鱼', value: 'mermaid' },
+  { label: '精灵', value: 'elf' }
 ])
 
-const value = ref('')
+const selectedCreature = ref('')
 </script>
 
 <template>
   <lew-flex direction="y" x="start">
-    <lew-title :size="14">无图标</lew-title>
-    <lew-radio-group v-model="value" block :iconable="false" :options="options" />
+    <lew-title :size="14">无图标选择</lew-title>
+    <lew-radio-group v-model="selectedCreature" block :iconable="false" :options="fantasyCreatureOptions" />
     <br />
     <br />
-    <lew-title :size="14">有图标</lew-title>
-    <lew-radio-group v-model="value" block size="small" :options="options" />
-    <lew-radio-group v-model="value" block :options="options" />
-    <lew-radio-group v-model="value" block size="large" :options="options" />
+    <lew-title :size="14">有图标选择</lew-title>
+    <lew-radio-group v-model="selectedCreature" block size="small" :options="fantasyCreatureOptions" />
+    <lew-radio-group v-model="selectedCreature" block :options="fantasyCreatureOptions" />
+    <lew-radio-group v-model="selectedCreature" block size="large" :options="fantasyCreatureOptions" />
     <br />
     <br />
-    <lew-title :size="14">禁用</lew-title>
-    <lew-radio-group v-model="value" disabled block size="large" :options="options" />
+    <lew-title :size="14">禁用选项</lew-title>
+    <lew-radio-group v-model="selectedCreature" disabled block size="large" :options="fantasyCreatureOptions" />
     <br />
     <br />
-    <lew-title :size="14">只读</lew-title>
-    <lew-radio-group v-model="value" readonly block size="large" :options="options" />
+    <lew-title :size="14">只读选项</lew-title>
+    <lew-radio-group v-model="selectedCreature" readonly block size="large" :options="fantasyCreatureOptions" />
   </lew-flex>
 </template>

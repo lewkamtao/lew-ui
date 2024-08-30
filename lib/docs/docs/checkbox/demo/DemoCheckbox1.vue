@@ -1,16 +1,18 @@
 <script setup lang="ts">
-const options = ref([
-  { label: '宋朝', value: 1 },
-  { label: '唐朝', value: 2 },
-  { label: '明朝', value: 3 },
-  { label: '清朝', value: 4 }
+const fruitOptions = ref([
+  { label: '苹果', value: 'apple' },
+  { label: '香蕉', value: 'banana' },
+  { label: '橙子', value: 'orange' },
+  { label: '葡萄', value: 'grape' }
 ])
 
-const value = ref([])
+const selectedFruits = ref([])
 </script>
 
 <template>
-  <lew-checkbox-group v-model="value" size="small" :options="options" />
-  <lew-checkbox-group v-model="value" size="medium" :options="options" />
-  <lew-checkbox-group v-model="value" size="large" :options="options" />
+  <lew-flex direction="y" :gap="10">
+    <lew-checkbox-group v-model="selectedFruits" size="small" :options="fruitOptions" />
+    <lew-checkbox-group v-model="selectedFruits" size="medium" :options="fruitOptions" />
+    <lew-checkbox-group v-model="selectedFruits" size="large" :options="fruitOptions" />
+  </lew-flex>
 </template>

@@ -40,7 +40,7 @@ const options = ref(
       <lew-alert
         style="margin-top: 20px"
         :size="16"
-        :list="[
+        :options="[
           {
             type: 'warning',
             title: '注意',
@@ -54,7 +54,7 @@ const options = ref(
       <lew-alert
         style="margin-top: 20px"
         :size="16"
-        :list="[
+        :options="[
           {
             type: 'info',
             title: '提示',
@@ -67,7 +67,7 @@ const options = ref(
       <demo-table3 />
       <lew-alert
         style="margin-top: 20px"
-        :list="[
+        :options="[
           {
             type: 'info',
             title: '提示',
@@ -82,7 +82,7 @@ const options = ref(
       <lew-alert
         style="margin-top: 20px"
         :size="16"
-        :list="[
+        :options="[
           {
             type: 'info',
             title: '提示',
@@ -97,7 +97,7 @@ const options = ref(
       <lew-alert
         style="margin-top: 20px"
         :size="16"
-        :list="[
+        :options="[
           {
             type: 'info',
             title: '提示',
@@ -111,7 +111,7 @@ const options = ref(
       <lew-alert
         style="margin-top: 20px"
         :size="16"
-        :list="[
+        :options="[
           {
             type: 'warning',
             title: '警告',
@@ -128,7 +128,7 @@ const options = ref(
       <lew-alert
         style="margin-top: 20px"
         :size="16"
-        :list="[
+        :options="[
           {
             type: 'success',
             title: '功能介绍',

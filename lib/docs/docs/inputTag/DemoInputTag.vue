@@ -36,7 +36,7 @@ const options = ref(
       <lew-alert
         style="margin-top: 20px"
         :size="16"
-        :list="[
+        :options="[
           {
             type: 'info',
             title: '提示',
