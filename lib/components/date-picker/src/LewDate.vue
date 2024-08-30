@@ -99,7 +99,11 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
         <lew-button type="light" color="gray" size="small" icon="chevron-left" @click="prveMonth" />
       </div>
       <!-- 日期 -->
-      <div class="cur-date">{{ dateState.year }} 年 {{ dateState.month }} 月</div>
+      <div class="cur-date">
+        {{ dateState.year }} 年
+        <span style="width: 22px; text-align: center">{{ dateState.month }}</span>
+        月
+      </div>
       <div class="lew-date-control-right">
         <!-- 下一月 -->
         <lew-button

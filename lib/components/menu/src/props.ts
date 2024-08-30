@@ -14,9 +14,10 @@ export type MenuOptions = {
 
 export const menuProps = {
   options: {
-    type: Array,
-    default: () => [],
+    type: Array as PropType<MenuOptions[]>,
+    default: [],
     description: '菜单选项配置',
+    typeDesc: 'MenuOptions[]',
     validator: (value: unknown): boolean => {
       if (!Array.isArray(value)) {
         console.warn('[LewMenu] options 必须是一个数组')

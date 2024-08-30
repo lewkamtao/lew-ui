@@ -63,7 +63,7 @@ const getIconSize = computed(() => {
 })
 
 const getStyle = computed(() => {
-  const { round, type, color } = props
+  const { round, type, color, dashed } = props
   const styleObj: Record<string, string> = {}
   const _color = getColorType(color) || 'primary'
   switch (type) {
@@ -77,7 +77,7 @@ const getStyle = computed(() => {
       break
     case 'ghost':
       styleObj.backgroundColor = 'transparent'
-      styleObj.border = `var(--lew-form-border-width) solid var(--lew-color-${_color})`
+      styleObj.border = `var(--lew-form-border-width) ${dashed ? 'dashed' : 'solid'} var(--lew-color-${_color})`
       styleObj.color = `var(--lew-color-${_color}-dark)`
       styleObj.boxShadow = 'none'
       break
@@ -256,7 +256,7 @@ defineExpose({ focus })
   gap: 2px;
   padding: 0px 10px;
   .lew-loading-icon {
-    left: 8px;
+    left: 7px;
   }
 }
 
@@ -268,7 +268,7 @@ defineExpose({ focus })
   gap: 4px;
   padding: 0px 14px;
   .lew-loading-icon {
-    left: 9px;
+    left: 8px;
   }
 }
 
@@ -280,7 +280,7 @@ defineExpose({ focus })
   gap: 6px;
   padding: 0px 16px;
   .lew-loading-icon {
-    left: 9.5px;
+    left: 9px;
   }
 }
 

@@ -28,7 +28,7 @@ const options = ref(
 <template>
   <div class="demo-wrapper">
     <lew-title>Tag</lew-title>
-    <lew-demo-box title="基本用法" :code="DemoTag1Code">
+    <lew-demo-box title="类型" :code="DemoTag1Code">
       <demo-tag1 />
     </lew-demo-box>
     <lew-demo-box title="尺寸" :code="DemoTag2Code">

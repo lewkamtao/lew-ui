@@ -102,24 +102,24 @@ const avatarStyleObject = computed(() => {
     background-color: var(--lew-color-warning);
   }
 
-  .dot-statusPosition-top-left {
+  .dot-statusPlacement-top-left {
     top: -0.25rem;
     left: -0.25rem;
   }
 
-  .dot-statusPosition-top-right {
+  .dot-statusPlacement-top-right {
     top: -0.25rem;
     left: auto;
     right: -0.25rem;
   }
 
-  .dot-statusPosition-bottom-left {
+  .dot-statusPlacement-bottom-left {
     top: auto;
     bottom: -0.25rem;
     left: -0.25rem;
   }
 
-  .dot-statusPosition-bottom-right {
+  .dot-statusPlacement-bottom-right {
     top: auto;
     bottom: -0.25rem;
     left: auto;

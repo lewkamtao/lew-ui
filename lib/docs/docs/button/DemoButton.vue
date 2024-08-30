@@ -31,16 +31,16 @@ const options = ref(
   <div class="demo-wrapper">
     <lew-title>Button</lew-title>
     <p class="sub-title">赏心悦目的异步效果</p>
-    <lew-demo-box title="基本用法" :code="DemoButton1Code">
+    <lew-demo-box title="类型" :code="DemoButton1Code">
       <demo-button1 />
     </lew-demo-box>
     <lew-demo-box title="尺寸" :code="DemoButton7Code"><demo-button7 /> </lew-demo-box>
-    <lew-demo-box title="色彩系统" :code="DemoButton2Code"><demo-button2 /> </lew-demo-box>
-    <lew-demo-box title="Icon Text" :code="DemoButton3Code"><demo-button3 /> </lew-demo-box>
-    <lew-demo-box title="Loading" :code="DemoButton4Code">
+    <lew-demo-box title="色彩" :code="DemoButton2Code"><demo-button2 /> </lew-demo-box>
+    <lew-demo-box title="图标" :code="DemoButton3Code"><demo-button3 /> </lew-demo-box>
+    <lew-demo-box title="加载状态" :code="DemoButton4Code">
       <demo-button4 />
     </lew-demo-box>
-    <lew-demo-box title="Disabled" :code="DemoButton5Code">
+    <lew-demo-box title="不可用状态" :code="DemoButton5Code">
       <demo-button5 />
     </lew-demo-box>
     <lew-demo-box title="模拟请求" :code="DemoButton6Code">

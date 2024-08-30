@@ -1,73 +1,73 @@
-import type { ExtractPropTypes } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 
 type AvatarPlacement = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-type AvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy'
+type AvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy' 
+type AvatarShape = 'circle' | 'square'
 type AvatarSize = number | string
 
 export const avatarProps = {
-  src: {
-    type: String,
-    default: '',
-    description: '头像图片的 URL 地址'
-  },
-  alt: {
-    type: String,
-    default: '',
-    description: '头像图片的替代文本，用于无法显示图片时的描述',
-    validator(value: string): boolean {
-      if (value.length > 100) {
-        console.warn('[LewAvatar] alt 文本不应超过100个字符')
-        return false
-      }
-      return true
-    }
-  },
   size: {
-    type: [Number, String],
+    type: [Number, String] as PropType<AvatarSize>,
     default: 40,
-    description: '头像的尺寸，可以是数字（单位：像素）或字符串（如 "40px"、"2.5rem"）',
+    description: '头像尺寸，可为数字（单位：像素）或字符串',
     validator(value: AvatarSize): boolean {
       if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewAvatar] size 必须大于0')
+        console.warn('[LewAvatar] size 必须大于 0')
         return false
       }
       return true
     }
   },
   shape: {
-    type: String,
+    type: String as PropType<AvatarShape>,
     default: 'square',
-    description: '头像的形状',
+    description: '头像形状',
+    validator(value: AvatarShape): boolean {
+      if (!['circle', 'square'].includes(value)) {
+        console.warn(`[LewAvatar] shape 必须是 'circle' 或 'square'`)
+        return false
+      }
+      return true
+    }
+  },
+  src: {
+    type: String,
+    default: '',
+    description: '头像图片的 URL'
+  },
+  alt: {
+    type: String,
+    default: '',
+    description: '图片无法显示时的替代文本',
     validator(value: string): boolean {
-      const validShapes = ['circle', 'square']
-      if (!validShapes.includes(value)) {
-        console.warn(`[LewAvatar] 无效的形状: ${value}。请使用 ${validShapes.join(', ')} 中的一个`)
+      if (value.length > 100) {
+        console.warn('[LewAvatar] alt 文本不应超过 100 个字符')
         return false
       }
       return true
     }
   },
   status: {
-    type: String,
+    type: String as PropType<AvatarStatus | undefined>,
     default: undefined,
-    description: '头像的当前状态',
+    description: '头像状态',
     validator(value: AvatarStatus): boolean {
       const validStatus = ['online', 'processing', 'away', 'offline', 'busy']
       if (!validStatus.includes(value)) {
-        console.warn(`[LewAvatar] 无效的状态值: ${value}。请使用 ${validStatus.join(', ')} 中的一个`)
+        console.warn(`[LewAvatar] status 必须是 ${validStatus.join(', ')} 之一`)
         return false
       }
       return true
     }
-  },
+  }, 
   statusPlacement: {
-    type: String,
+    type: String as PropType<AvatarPlacement>,
     default: 'top-right',
-    description: '状态标识的显示位置',
+    description: '状态标识的位置',
     validator(value: AvatarPlacement): boolean {
       const validPlacements = ['top-left', 'top-right', 'bottom-left', 'bottom-right']
       if (!validPlacements.includes(value)) {
-        console.warn(`[LewAvatar] 无效的状态位置: ${value}。请使用 ${validPlacements.join(', ')} 中的一个`)
+        console.warn(`[LewAvatar] statusPlacement 必须是 ${validPlacements.join(', ')} 之一`)
         return false
       }
       return true

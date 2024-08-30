@@ -26,7 +26,9 @@ export const buttonProps = {
     validator(value: ButtonType): boolean {
       const validTypes: ButtonType[] = ['fill', 'light', 'ghost', 'text']
       if (!validTypes.includes(value)) {
-        console.warn(`[LewButton] 无效的按钮类型: ${value}。请使用 ${validTypes.join(', ')} 中的一个`)
+        console.warn(
+          `[LewButton] 无效的按钮类型: ${value}。请使用 ${validTypes.join(', ')} 中的一个`
+        )
         return false
       }
       return true
@@ -39,7 +41,9 @@ export const buttonProps = {
     validator(value: ButtonSize): boolean {
       const buttonSizes: ButtonSize[] = ['mini', ...validSizes]
       if (!buttonSizes.includes(value)) {
-        console.warn(`[LewButton] 无效的按钮尺寸: ${value}。请使用 ${buttonSizes.join(', ')} 中的一个`)
+        console.warn(
+          `[LewButton] 无效的按钮尺寸: ${value}。请使用 ${buttonSizes.join(', ')} 中的一个`
+        )
         return false
       }
       return true
@@ -51,7 +55,9 @@ export const buttonProps = {
     description: '按钮颜色',
     validator(value: LewColor): boolean {
       if (!validColors.includes(value)) {
-        console.warn(`[LewButton] 无效的颜色值: ${value}。请使用 ${validColors.join(', ')} 中的一个`)
+        console.warn(
+          `[LewButton] 无效的颜色值: ${value}。请使用 ${validColors.join(', ')} 中的一个`
+        )
         return false
       }
       return true
@@ -69,7 +75,9 @@ export const buttonProps = {
     validator(value: IconPosition): boolean {
       const validPositions: IconPosition[] = ['left', 'right']
       if (!validPositions.includes(value)) {
-        console.warn(`[LewButton] 无效的图标位置: ${value}。请使用 ${validPositions.join(', ')} 中的一个`)
+        console.warn(
+          `[LewButton] 无效的图标位置: ${value}。请使用 ${validPositions.join(', ')} 中的一个`
+        )
         return false
       }
       return true
@@ -90,6 +98,11 @@ export const buttonProps = {
     type: Boolean,
     default: false,
     description: '是否为圆角按钮'
+  },
+  dashed: {
+    type: Boolean,
+    default: false,
+    description: '是否为虚线按钮'
   },
   loading: {
     type: Boolean,

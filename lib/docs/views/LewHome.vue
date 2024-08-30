@@ -420,12 +420,12 @@ const notification = (type: string) => {
             <lew-avatar
               src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
               status="online"
-              statusPosition="bottom-left"
+              statusPlacement="bottom-left"
             />
             <lew-avatar
               src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
               status="processing"
-              statusPosition="bottom-right"
+              statusPlacement="bottom-right"
             />
           </lew-flex>
           <lew-flex x="end" gap="10">

@@ -6,7 +6,7 @@ import { Fancybox } from '@fancyapps/ui'
 import '@fancyapps/ui/dist/fancybox/fancybox.css'
 
 const props = defineProps(imageProps)
-const { isLoading, error } = useImage({ src: props.src })
+const { isLoading, error } = useImage({ src: props.src || '' })
 
 const imageStyleObject = computed(() => {
   const { width, height } = props

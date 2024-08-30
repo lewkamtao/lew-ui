@@ -311,7 +311,10 @@ defineExpose({ init })
           />
         </div>
         <!-- 日期 -->
-        <div class="cur-date">{{ dateState.year1 }} 年 {{ dateState.month1 }} 月</div>
+        <div class="cur-date">
+          {{ dateState.year1 }} 年
+          <span style="width: 22px; text-align: center">{{ dateState.month1 }}</span> 月
+        </div>
         <div class="lew-date-control-right">
           <!-- 下一月 -->
           <lew-button
@@ -376,7 +379,10 @@ defineExpose({ init })
           />
         </div>
         <!-- 日期 -->
-        <div class="cur-date">{{ dateState.year2 }} 年 {{ dateState.month2 }} 月</div>
+        <div class="cur-date">
+          {{ dateState.year2 }} 年
+          <span style="width: 22px; text-align: center">{{ dateState.month2 }}</span> 月
+        </div>
         <div class="lew-date-control-right">
           <!-- 下一月 -->
           <lew-button
@@ -450,7 +456,7 @@ defineExpose({ init })
       font-size: 15px;
       font-weight: bold;
       color: var(--lew-text-color-0);
-	  white-space: nowrap;
+      white-space: nowrap;
     }
 
     .lew-date-control-left,

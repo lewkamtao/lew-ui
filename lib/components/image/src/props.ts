@@ -6,10 +6,10 @@ export const imageProps = {
   src: {
     type: String,
     required: true,
-    description: '图片的源URL地址',
+    description: '图片源URL',
     validator: (value: string) => {
       if (!value) {
-        console.warn('[LewImage] src 属性不能为空')
+        console.warn('[LewImage] src 不能为空')
         return false
       }
       return true
@@ -18,15 +18,22 @@ export const imageProps = {
   alt: {
     type: String,
     default: '',
-    description: '图片的替代文本，用于无法加载图片时显示，同时提高可访问性'
+    description: '图片替代文本',
+    validator: (value: string) => {
+      if (value.length > 100) {
+        console.warn('[LewImage] alt 文本不应超过100个字符')
+        return false
+      }
+      return true
+    }
   },
   width: {
     type: [Number, String],
     default: '',
-    description: '图片宽度，支持数字（单位：像素）或百分比字符串',
+    description: '图片宽度',
     validator: (value: number | string) => {
       if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewImage] width 必须大于 0')
+        console.warn('[LewImage] width 必须大于0')
         return false
       }
       return true
@@ -35,10 +42,10 @@ export const imageProps = {
   height: {
     type: [Number, String],
     default: '',
-    description: '图片高度，支持数字（单位：像素）或百分比字符串',
+    description: '图片高度',
     validator: (value: number | string) => {
       if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewImage] height 必须大于 0')
+        console.warn('[LewImage] height 必须大于0')
         return false
       }
       return true
@@ -47,7 +54,7 @@ export const imageProps = {
   objectFit: {
     type: String as PropType<ObjectFit>,
     default: 'cover',
-    description: '指定图片如何适应容器，影响图片的缩放和裁剪方式',
+    description: '图片适应容器方式',
     validator: (value: ObjectFit) => {
       const validValues: ObjectFit[] = ['fill', 'contain', 'cover', 'none', 'scale-down']
       if (!validValues.includes(value)) {
@@ -60,27 +67,62 @@ export const imageProps = {
   objectPosition: {
     type: String,
     default: 'center',
-    description: '指定图片在容器中的位置，支持 CSS 位置值（如："center"、"top left"）'
-  },
-  title: {
-    type: String,
-    default: '',
-    description: '图片的标题，鼠标悬停时显示的提示文本'
+    description: '图片在容器中的位置',
+    validator: (value: string) => {
+      const validPositions = [
+        'center',
+        'top',
+        'bottom',
+        'left',
+        'right',
+        'top left',
+        'top right',
+        'bottom left',
+        'bottom right'
+      ]
+      if (
+        !validPositions.includes(value) &&
+        !/^\d+(%|px|em|rem)(\s+\d+(%|px|em|rem))?$/.test(value)
+      ) {
+        console.warn('[LewImage] objectPosition 格式不正确')
+        return false
+      }
+      return true
+    }
   },
   lazy: {
     type: Boolean,
     default: false,
-    description: '是否启用图片懒加载，可提高页面加载性能'
+    description: '是否启用懒加载'
   },
   loading: {
     type: Boolean,
     default: false,
-    description: '指示图片是否处于加载状态'
+    description: '是否处于加载状态'
+  },
+  title: {
+    type: String,
+    default: '',
+    description: '图片标题',
+    validator: (value: string) => {
+      if (value.length > 50) {
+        console.warn('[LewImage] title 不应超过50个字符')
+        return false
+      }
+      return true
+    }
   },
   previewKey: {
     type: String,
     default: '',
-    description: '用于预览同组图片的唯一标识，设置后自动启用预览功能'
+    description: '预览组标识',
+    validator: (value: string) => {
+      if (value && !/^[a-zA-Z0-9_-]+$/.test(value)) {
+        console.warn('[LewImage] previewKey 只能包含字母、数字、下划线和连字符')
+        return false
+      }
+      return true
+    }
   }
 }
 

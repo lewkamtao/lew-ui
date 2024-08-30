@@ -149,12 +149,16 @@ defineExpose({ show, hide, refresh })
     </div>
     <div
       ref="bodyRef"
+      class="lew-popover-body"
       v-loading="{
         visible: loading,
         iconSize: 16
       }"
-      class="lew-popover-body"
       :class="popoverBodyClassName"
+      :style="{
+        borderRadius: 'var(--lew-border-radius-small)',
+        overflow: loading ? 'hidden' : ''
+      }"
     >
       <slot name="popover-body" :show="show" :hide="hide"></slot>
     </div>
@@ -169,6 +173,5 @@ defineExpose({ show, hide, refresh })
 }
 .lew-popover-body {
   border-radius: var(--lew-border-radius-small);
-  overflow: hidden;
 }
 </style>

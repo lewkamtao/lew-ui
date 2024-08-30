@@ -28,7 +28,7 @@ const options = ref(
     <lew-demo-box title="状态" :code="DemoSteps2Code">
       <demo-steps2 />
     </lew-demo-box>
-    <lew-demo-box title="Pending" :code="DemoSteps3Code">
+    <lew-demo-box title="Loading" :code="DemoSteps3Code">
       <demo-steps3 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
