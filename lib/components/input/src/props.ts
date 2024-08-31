@@ -38,7 +38,7 @@ export const inputProps = {
     description: '输入框类型',
     validator: (value: InputType) => {
       if (!['text', 'password'].includes(value)) {
-        console.warn('[LewInput] type 属性必须是 "text" 或 "password"')
+        console.warn(`[LewInput] type 属性 ${value} 无效，必须是 "text" 或 "password"`)
         return false
       }
       return true

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const open = () => {
   LewDialog.info({
-    content: '确定要上架该产品？',
+    content: '您确定要在 App Store 上发布这个应用吗？',
     closeOnClickOverlay: true,
     layout: 'mini',
     ok: () => {
@@ -9,17 +9,17 @@ const open = () => {
         setTimeout(() => {
           resolve(true)
           LewMessage.success({
-            content: '删除成功'
+            content: '应用已成功提交审核'
           })
         }, 1000)
       })
     },
     cancel: () => {
-      // 取消
+      // 取消发布
     }
   })
 }
 </script>
 <template>
-  <lew-button text="立即上架" round type="light" @click="open()" />
+  <lew-button text="提交审核" round type="light" @click="open()" />
 </template>

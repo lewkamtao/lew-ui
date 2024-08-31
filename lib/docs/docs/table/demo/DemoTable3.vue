@@ -2,82 +2,127 @@
 const data: any = [
   {
     id: 1,
-    name: '小明',
-    age: '14',
-    sex: 1,
-    intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
-    hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野']
+    name: 'Intel Core i9-12900K',
+    cores: '16 (8P+8E)',
+    threads: '24',
+    baseFrequency: '3.2 GHz',
+    boostFrequency: '5.2 GHz',
+    tdp: '125W',
+    architecture: 'Alder Lake',
+    socket: 'LGA 1700',
+    features: ['PCIe 5.0', 'DDR5', 'Intel UHD Graphics 770', 'Turbo Boost Max 3.0']
   },
   {
     id: 2,
-    name: '小卢',
-    age: '24',
-    sex: 1,
-    intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
-    hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野']
+    name: 'AMD Ryzen 9 5950X',
+    cores: '16',
+    threads: '32',
+    baseFrequency: '3.4 GHz',
+    boostFrequency: '4.9 GHz',
+    tdp: '105W',
+    architecture: 'Zen 3',
+    socket: 'AM4',
+    features: ['PCIe 4.0', 'DDR4', 'AMD StoreMI', 'Precision Boost 2']
   },
   {
     id: 3,
-    name: '小娟',
-    age: '25',
-    sex: 0,
-    intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
-    hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野']
+    name: 'Apple M1 Ultra',
+    cores: '20',
+    threads: '20',
+    baseFrequency: 'N/A',
+    boostFrequency: 'N/A',
+    tdp: 'N/A',
+    architecture: 'ARM',
+    socket: 'SoC',
+    features: ['Neural Engine', 'Apple ProRes', 'Unified Memory', 'Metal-optimized GPU']
   },
   {
     id: 4,
-    name: '小贝',
-    age: '22',
-    sex: 0,
-    intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
-    hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野']
+    name: 'AMD EPYC 7763',
+    cores: '64',
+    threads: '128',
+    baseFrequency: '2.45 GHz',
+    boostFrequency: '3.5 GHz',
+    tdp: '280W',
+    architecture: 'Zen 3',
+    socket: 'SP3',
+    features: ['PCIe 4.0', 'DDR4', 'AMD Infinity Guard', 'AMD Infinity Fabric']
   },
   {
     id: 5,
-    name: '小飞',
-    age: '13',
-    sex: 3,
-    intro: '从小独立呼吸，讲卫生懂礼貌，不会随便捡地上的东西吃。',
-    hobby: ['唱', '跳', 'rap', '游泳', '爬山', '看电影', '越野']
+    name: 'Intel Xeon Platinum 8380',
+    cores: '40',
+    threads: '80',
+    baseFrequency: '2.3 GHz',
+    boostFrequency: '3.4 GHz',
+    tdp: '270W',
+    architecture: 'Ice Lake-SP',
+    socket: 'LGA 4189',
+    features: ['PCIe 4.0', 'DDR4', 'Intel SGX', 'Intel Optane Persistent Memory']
   }
 ]
 
 const columns = [
   {
-    title: 'id',
+    title: 'ID',
     width: 50,
     field: 'id',
     x: 'center',
     fixed: 'left'
   },
   {
-    title: '姓名',
-    width: 120,
+    title: '处理器名称',
+    width: 180,
     field: 'name',
-    x: 'center',
+    x: 'start',
     fixed: 'left'
   },
   {
-    title: '年龄',
-    width: 120,
-    field: 'age',
+    title: '核心数',
+    width: 130,
+    field: 'cores',
     x: 'center'
   },
   {
-    title: '性别',
-    width: 120,
-    field: 'sex',
+    title: '线程数',
+    width: 100,
+    field: 'threads',
     x: 'center'
   },
   {
-    title: '爱好',
-    width: 1200,
-    field: 'hobby'
+    title: '基础频率',
+    width: 120,
+    field: 'baseFrequency',
+    x: 'center'
   },
   {
-    title: '介绍',
+    title: '加速频率',
+    width: 120,
+    field: 'boostFrequency',
+    x: 'center'
+  },
+  {
+    title: 'TDP',
+    width: 100,
+    field: 'tdp',
+    x: 'center'
+  },
+  {
+    title: '架构',
+    width: 120,
+    field: 'architecture',
+    x: 'center'
+  },
+  {
+    title: '插槽',
+    width: 120,
+    field: 'socket',
+    x: 'center'
+  },
+  {
+    title: '特性',
     width: 400,
-    field: 'intro'
+    field: 'features'
   },
   {
     title: '操作',
@@ -88,45 +133,35 @@ const columns = [
   }
 ]
 
-const formatSex = (sex: number) => {
-  switch (true) {
-    case sex === 0:
-      return '女'
-    case sex === 1:
-      return '男'
-    default:
-      return '未知'
-  }
-}
-
-const set = (row: any, column: any) => {
-  LewMessage.info(`你可以拿到这一行的数据，例如：id=${row.id}`)
+const viewDetails = (row: any, column: any) => {
+  LewMessage.info(`查看处理器详情：${row.name}`)
   console.log(row, column)
 }
-const del = (row: any, column: any) => {
-  LewMessage.warning(`你也可以拿到这一列的数据，例如：field=${column.field}`)
+
+const compare = (row: any, column: any) => {
+  LewMessage.info(`添加到对比：${row.name}`)
+  console.log(row, column)
 }
 </script>
 
 <template>
   <lew-table :data-source="data" :columns="columns">
-    <template #sex="{ row }"> {{ formatSex(row.sex) }} </template>
-    <template #hobby="{ row }">
+    <template #features="{ row }">
       <lew-flex gap="5" x="start">
         <lew-tag
-          v-for="(item, index) in row.hobby"
+          v-for="(item, index) in row.features"
           :key="index"
           type="light"
           color="blue"
           size="small"
           >{{ item }}
-        </lew-tag></lew-flex
-      >
+        </lew-tag>
+      </lew-flex>
     </template>
     <template #action="{ row, column }">
       <lew-flex gap="5">
-        <lew-button text="管理" size="small" type="text" @click="set(row, column)" />
-        <lew-button text="删除" size="small" type="text" @click="del(row, column)" />
+        <lew-button text="详情" size="small" type="text" @click="viewDetails(row, column)" />
+        <lew-button text="对比" size="small" type="text" @click="compare(row, column)" />
       </lew-flex>
     </template>
   </lew-table>

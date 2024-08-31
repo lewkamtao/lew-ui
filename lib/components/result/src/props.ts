@@ -1,14 +1,14 @@
-export type ResultType = 'success' | 'warning' | 'error' | 'info' | 'normal' | 'primary'
-
+import { PropType } from 'vue'
+import { LewStatusColor } from 'lew-ui'
+import { validStatusColors } from 'lew-ui/constants'
 export const resultProps = {
   type: {
-    type: String,
+    type: String as PropType<LewStatusColor>,
     default: 'info',
-    validator(value: ResultType): boolean {
-      const validTypes = ['success', 'warning', 'error', 'info', 'normal']
-      if (!validTypes.includes(value)) {
+    validator(value: LewStatusColor): boolean {
+      if (!validStatusColors.includes(value)) {
         console.warn(
-          `[LewResult] 无效的结果类型: ${value}。请使用 ${validTypes.join(', ')} 中的一个。`
+          `[LewResult] 无效的结果类型: ${value}。请使用 ${validStatusColors.join(', ')} 中的一个。`
         )
         return false
       }

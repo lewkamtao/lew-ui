@@ -13,17 +13,12 @@ export const inputNumberModel = {
 }
 
 export const inputNumberProps = {
-  modelValue: {
-    type: Number,
-    default: undefined,
-    description: '输入框的数值'
-  },
   min: {
     type: [Number, String],
-    default: undefined,
+    default: '',
     description: '最小值',
     validator(value: number | string) {
-      if (typeof value === 'string' && isNaN(Number(value))) {
+      if (value && typeof value === 'string' && isNaN(Number(value))) {
         console.warn('[LewInputNumber] min 必须是有效的数字')
         return false
       }
@@ -32,10 +27,10 @@ export const inputNumberProps = {
   },
   max: {
     type: [Number, String],
-    default: undefined,
+    default: '',
     description: '最大值',
     validator(value: number | string) {
-      if (typeof value === 'string' && isNaN(Number(value))) {
+      if (value && typeof value === 'string' && isNaN(Number(value))) {
         console.warn('[LewInputNumber] max 必须是有效的数字')
         return false
       }

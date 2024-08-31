@@ -5,17 +5,10 @@ export type TextTrimAlignment = 'start' | 'center' | 'end'
 
 export const textTrimProps = {
   text: {
-    type: [String, Number, Boolean, Array] as PropType<string | number | boolean | any[]>,
+    type: [String, Number, Boolean, Array, Object],
     default: '',
     required: true,
-    description: '要显示的文本内容',
-    validator(value: unknown): boolean {
-      if (value === null || value === undefined) {
-        console.warn('[LewTextTrim] text 属性不能为 null 或 undefined')
-        return false
-      }
-      return true
-    }
+    description: '要显示的文本内容'
   },
   lineClamp: {
     type: Number,

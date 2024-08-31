@@ -30,15 +30,15 @@ export const formProps = {
     }
   },
   width: {
-    type: [Number, String, undefined],
-    default: undefined,
+    type: [Number, String],
+    default: '',
     description: '表单整体宽度，支持数字（像素）或百分比字符串',
     validator(value: number | string): boolean {
       if (typeof value === 'number' && value < 0) {
         console.warn('[LewForm] width 不能为负数')
         return false
       }
-      if (typeof value === 'string' && !/^\d+(%|px)?$/.test(value)) {
+      if (value && typeof value === 'string' && !/^\d+(%|px)?$/.test(value)) {
         console.warn('[LewForm] width 字符串必须是有效的 CSS 宽度值')
         return false
       }
@@ -138,15 +138,15 @@ export const formItemProps = {
     }
   },
   width: {
-    type: [Number, String, undefined],
-    default: undefined,
+    type: [Number, String],
+    default: '',
     description: '单个表单项的宽度，支持数字（像素）或百分比字符串',
     validator(value: number | string): boolean {
       if (typeof value === 'number' && value < 0) {
         console.warn('[LewFormItem] width 不能为负数')
         return false
       }
-      if (typeof value === 'string' && !/^\d+(%|px)?$/.test(value)) {
+      if (value && typeof value === 'string' && !/^\d+(%|px)?$/.test(value)) {
         console.warn('[LewFormItem] width 字符串必须是有效的 CSS 宽度值')
         return false
       }

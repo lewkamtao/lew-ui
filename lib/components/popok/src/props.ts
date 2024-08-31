@@ -1,4 +1,5 @@
 import type { ButtonProps } from '../../button/index'
+import type { PopoverPlacement, PopoverTrigger } from '../../popover/index'
 
 export const popokProps = {
   type: {
@@ -27,7 +28,7 @@ export const popokProps = {
     }
   },
   trigger: {
-    type: String,
+    type: String as PropType<PopoverTrigger>,
     default: 'click',
     description: '触发方式',
     validator: (value: string) => {
@@ -67,7 +68,7 @@ export const popokProps = {
     description: '弹出框内容'
   },
   placement: {
-    type: String,
+    type: String as PropType<PopoverPlacement>,
     default: 'top',
     description: '弹出框位置',
     validator: (value: string) => {

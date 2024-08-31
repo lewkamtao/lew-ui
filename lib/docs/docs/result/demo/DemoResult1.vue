@@ -40,7 +40,6 @@
   </lew-result>
   <lew-result
     style="height: 60vh"
-    type="light"
     color="blue"
     title="操作提示"
     content="你可以前往个人中心，继续完善信息。"

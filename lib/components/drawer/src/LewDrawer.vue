@@ -50,7 +50,7 @@ if (props.closeByEsc) {
   })
 }
 
-const getStyle = (position: string, width: number, height: number) => {
+const getStyle = (position: string, width: number | string, height: number | string) => {
   switch (true) {
     case !position:
       return 'width:30%;height:100%'

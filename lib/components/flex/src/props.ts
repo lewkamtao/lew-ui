@@ -72,15 +72,15 @@ export const flexProps = {
     }
   },
   width: {
-    type: [String, Number, undefined],
-    default: undefined,
+    type: [String, Number],
+    default: '',
     description: 'Flex 容器的宽度（单位：像素或百分比）',
     validator(value: string | number): boolean {
       if (typeof value === 'number' && value < 0) {
         console.warn(`[LewFlex] width 值必须是非负数。`)
         return false
       }
-      if (typeof value === 'string' && !/^(\d+(\.\d+)?(px|%)?|\d+)$/.test(value)) {
+      if (value && typeof value === 'string' && !/^(\d+(\.\d+)?(px|%)?|\d+)$/.test(value)) {
         console.warn(`[LewFlex] width 字符串值必须是有效的 CSS 宽度值（如 '100px' 或 '50%'）。`)
         return false
       }

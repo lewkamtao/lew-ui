@@ -3,7 +3,6 @@ import { useMagicKeys, useDebounceFn } from '@vueuse/core'
 import { object2class, any2px } from 'lew-ui/utils'
 import { LewIcon, LewTooltip } from 'lew-ui'
 import { textareaProps } from './props'
-import { toNumber } from 'lodash-es'
 import { useResizeObserver } from '@vueuse/core'
 
 const { shift, enter } = useMagicKeys()
@@ -87,7 +86,7 @@ const getIconSize = computed(() => {
   return size[props.size]
 })
 
-const getTextareaStyle = computed(() => {
+const getTextareaStyle: any = computed(() => {
   const { width, height, size, resize, maxHeight, minHeight, maxWidth, minWidth } = props
   const heightMap: Record<string, number> = {
     small: 60,
@@ -95,7 +94,7 @@ const getTextareaStyle = computed(() => {
     large: 90
   }
   const obj = {
-    resize,
+    resize: resize as string,
     minWidth: any2px(minWidth || width),
     minHeight: any2px(minHeight || (height ? height : heightMap[size])),
     maxWidth: any2px(maxWidth),

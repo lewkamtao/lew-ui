@@ -23,8 +23,7 @@ const value = ref('')
           <lew-avatar
             round
             :key="props.label"
-            width="30"
-            height="30"
+            size="30"
             :src="`https://api.lew.kamtao.com/manage/common/avatar/350/4B78CA/${props.label}`"
           />
           <div class="info">

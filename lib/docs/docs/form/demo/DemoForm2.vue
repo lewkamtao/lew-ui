@@ -72,14 +72,13 @@ const options = ref([
   {
     field: 'intro',
     label: '介绍',
-    as: 'input',
+    as: 'textarea',
     rule: Yup.string()
       .matches(/^[\u4e00-\u9fa5]+$/, '必须为纯中文')
       .min(30, '长度必须至少为30')
       .max(300, '长度不能超过8')
       .required('不能为空'),
     props: {
-      type: 'textarea',
       clearable: true
     }
   },

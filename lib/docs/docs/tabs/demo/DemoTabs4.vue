@@ -1,31 +1,43 @@
 <script setup lang="ts">
-const selectedDepartment = ref('sales')
+const selectedLang = ref('python');
 
-interface DepartmentOption {
-  label: string
-  value: string
+interface LangOption {
+  label: string;
+  value: string;
 }
 
-const departmentOptions: DepartmentOption[] = [
-  { label: '销售部', value: 'sales' },
-  { label: '市场部', value: 'marketing' },
-  { label: '财务部', value: 'finance' }
-]
+const langOptions: LangOption[] = [
+  { label: 'Python', value: 'python' },
+  { label: 'JavaScript', value: 'js' },
+  { label: 'Java', value: 'java' },
+  { label: 'C++', value: 'cpp' },
+  { label: 'TypeScript', value: 'ts' },
+  { label: 'Go', value: 'go' },
+  { label: 'Rust', value: 'rust' },
+  { label: 'Swift', value: 'swift' },
+  { label: 'Kotlin', value: 'kotlin' },
+  { label: 'PHP', value: 'php' },
+  { label: 'Ruby', value: 'ruby' },
+  { label: 'C#', value: 'cs' },
+  { label: 'Scala', value: 'scala' },
+  { label: 'R', value: 'r' },
+  { label: 'Dart', value: 'dart' }
+];
 
-const handleDepartmentChange = (option: DepartmentOption) => {
-  console.log(option)
-  LewMessage.info(`您选择了: ${option.label}`)
-}
+const handleLangChange = (option: LangOption) => {
+  console.log(option);
+  LewMessage.info(`您选择了: ${option.label}`);
+};
 </script>
 
 <template>
   <lew-flex direction="y" x="start" y="start">
     <lew-tabs
-      v-model="selectedDepartment"
+      v-model="selectedLang"
       style="width: 100%"
       type="line"
-      :options="departmentOptions"
-      @change="handleDepartmentChange"
+      :options="langOptions"
+      @change="handleLangChange"
     />
   </lew-flex>
 </template>

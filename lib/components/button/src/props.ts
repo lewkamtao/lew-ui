@@ -20,7 +20,7 @@ export const buttonProps = {
     }
   },
   type: {
-    type: String,
+    type: String as PropType<ButtonType>,
     default: 'fill',
     description: '按钮类型',
     validator(value: ButtonType): boolean {
@@ -50,7 +50,7 @@ export const buttonProps = {
     }
   },
   color: {
-    type: String,
+    type: String as PropType<LewColor>,
     default: 'blue',
     description: '按钮颜色',
     validator(value: LewColor): boolean {
@@ -69,7 +69,7 @@ export const buttonProps = {
     description: '按钮图标名称'
   },
   iconPosition: {
-    type: String,
+    type: String as PropType<IconPosition>,
     default: 'left',
     description: '图标位置',
     validator(value: IconPosition): boolean {

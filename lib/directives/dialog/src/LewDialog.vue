@@ -110,7 +110,6 @@ if (props.closeByEsc) {
               <lew-button
                 v-if="cancelText"
                 :text="cancelText"
-                size="small"
                 color="gray"
                 type="light"
                 :loading="cancelLoading"
@@ -120,7 +119,6 @@ if (props.closeByEsc) {
                 ref="okRef1"
                 v-if="okText"
                 :text="okText"
-                size="small"
                 type="fill"
                 :color="type as LewColor"
                 :loading="okLoading"
@@ -204,11 +202,11 @@ if (props.closeByEsc) {
     border: var(--lew-dialog-box-border);
     box-shadow: var(--lew-dialog-box-shadow);
     .lew-dialog-icon:deep() {
-      width: 30px;
-      height: 30px;
+      width: 36px;
+      height: 36px;
       svg {
-        width: 30px;
-        height: 30px;
+        width: 36px;
+        height: 36px;
       }
     }
 

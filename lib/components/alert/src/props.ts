@@ -11,7 +11,7 @@ export interface AlertItem {
 
 export const alertProps = {
   options: {
-    type: Array,
+    type: Array as PropType<AlertItem[]>,
     default: () => [],
     description: '警告框配置列表',
     validator: (value: AlertItem[]): boolean => {

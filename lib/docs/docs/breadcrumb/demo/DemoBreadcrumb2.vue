@@ -1,29 +1,29 @@
 <script lang="ts" setup>
 const options = ref([
   {
-    label: 'Avatar',
-    to: '/Avatar'
+    label: '用户管理',
+    value: '/users'
   },
   {
-    label: 'Breadcrumb',
-    to: '/Breadcrumb',
+    label: '用户列表',
+    value: '/users/list'
+  },
+  {
+    label: '用户详情',
+    value: '/users/details',
     active: true
   },
   {
-    label: 'Input',
-    to: '/Input'
-  },
-  {
-    label: 'Dialog',
-    to: '/Dialog'
-  },
-  {
-    label: 'Flex',
-    to: '/Flex'
+    label: '编辑用户',
+    value: '/users/edit'
   }
 ])
+// 模拟面包屑点击事件
+const handleBreadcrumbClick = (item: any) => {
+  LewMessage.success('点击了面包屑项:' + item.label)
+}
 </script>
 
 <template>
-  <lew-breadcrumb :options="options" />
+  <lew-breadcrumb :options="options" @change="handleBreadcrumbClick" />
 </template>

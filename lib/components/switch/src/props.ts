@@ -53,7 +53,7 @@ export const switchProps = {
     description: '是否禁用开关'
   },
   request: {
-    type: Function as PropType<() => Promise<any>>,
+    type: Function,
     default: null,
     description: '切换状态时的异步请求函数'
   },

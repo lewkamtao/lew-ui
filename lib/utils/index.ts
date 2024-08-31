@@ -53,43 +53,43 @@ export const numFormat = (num: number) => {
 }
 
 export const any2px = (value: number | string | undefined): string => {
-  if (value === undefined || value === null || value === '') {
+  if (!value) {
     return ''
   }
 
-  const _value = String(value).trim().toLowerCase()
+  const autoRegex = /^auto$/i
+  const calcRegex = /^calc\((.+)\)$/
+  const percentRegex = /^-?\d+(\.\d+)?%$/
+  const pixelRegex = /^-?\d+(\.\d+)?(px)?$/
+  const numericRegex = /^-?\d+(\.\d+)?$/
 
-  // 处理特殊值
-  if (['auto', 'inherit', 'initial', 'unset'].includes(_value)) {
+  const _value = String(value)
+
+  if (_value.startsWith('calc')) {
     return _value
   }
 
-  // 处理calc、var等CSS函数
-  if (/^(calc|var|min|max|clamp)\(.*\)$/.test(_value)) {
+  if (numericRegex.test(_value)) {
+    return `${value}px`
+  }
+  if (autoRegex.test(_value)) {
     return _value
   }
-
-  // 处理带单位的值
-  const unitRegex = /^(-?\d*\.?\d+)(px|em|rem|vh|vw|vmin|vmax|cm|mm|in|pt|pc|ex|ch)?$/
-  const match = _value.match(unitRegex)
-  if (match) {
-    const [, num, unit] = match
-    return unit ? _value : `${num}px`
-  }
-
-  // 处理百分比
-  if (_value.endsWith('%')) {
+  if (percentRegex.test(_value)) {
     return _value
   }
-
-  // 处理纯数字
+  if (calcRegex.test(_value)) {
+    return _value
+  }
+  if (pixelRegex.test(_value)) {
+    return `${_value}`
+  }
   const numValue = parseFloat(_value)
   if (!isNaN(numValue)) {
     return `${numValue}px`
   }
 
-  // 无法处理的情况，返回原值
-  return String(value)
+  return ''
 }
 
 export const lewSetForm = ({

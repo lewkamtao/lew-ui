@@ -16,11 +16,6 @@ export const datePickerModel = {
 }
 
 export const datePickerProps = {
-  modelValue: {
-    type: String,
-    default: '',
-    description: '当前选中的日期值'
-  },
   valueFormat: {
     type: String,
     default: 'YYYY-MM-DD',
@@ -59,7 +54,7 @@ export const datePickerProps = {
     description: '是否禁用'
   },
   presets: {
-    type: Array,
+    type: Array as PropType<DatePickerPresetsOption[]>,
     default: () => [],
     description: '预设日期选项',
     validator(value: DatePickerPresetsOption[]): boolean {

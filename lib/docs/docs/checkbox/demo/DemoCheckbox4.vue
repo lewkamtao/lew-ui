@@ -1,57 +1,57 @@
 <script setup lang="ts">
-const pizzaToppings = ref([
-  { label: '芝士', value: 'cheese' },
-  { label: '香肠', value: 'sausage' },
-  { label: '蘑菇', value: 'mushroom' },
-  { label: '菠萝', value: 'pineapple' },
-  { label: '橄榄', value: 'olive' },
-  { label: '青椒', value: 'pepper' }
+const productFeatures = ref([
+  { label: '免费送货', value: 'freeShipping' },
+  { label: '24小时客服', value: 'customerService' },
+  { label: '30天退换', value: 'return' },
+  { label: '价格保护', value: 'priceProtection' },
+  { label: '礼品包装', value: 'giftWrap' },
+  { label: '延长保修', value: 'extendedWarranty' }
 ])
 
-const selectedToppings = ref([])
+const selectedFeatures = ref([])
 </script>
 
 <template>
   <lew-flex direction="y" x="start">
     <lew-title :size="14">无图标选择</lew-title>
     <lew-checkbox-group
-      v-model="selectedToppings"
+      v-model="selectedFeatures"
       block
       round
       :iconable="false"
       direction="x"
-      :options="pizzaToppings"
+      :options="productFeatures"
     />
-    <lew-checkbox-group v-model="selectedToppings" block :iconable="false" direction="x" :options="pizzaToppings" />
+    <lew-checkbox-group v-model="selectedFeatures" block :iconable="false" direction="x" :options="productFeatures" />
     <br />
     <br />
     <lew-title :size="14">有图标选择</lew-title>
-    <lew-checkbox-group v-model="selectedToppings" block size="small" round direction="x" :options="pizzaToppings" />
+    <lew-checkbox-group v-model="selectedFeatures" block size="small" round direction="x" :options="productFeatures" />
 
-    <lew-checkbox-group v-model="selectedToppings" block round direction="x" :options="pizzaToppings" />
+    <lew-checkbox-group v-model="selectedFeatures" block round direction="x" :options="productFeatures" />
 
-    <lew-checkbox-group v-model="selectedToppings" block round size="large" direction="x" :options="pizzaToppings" />
+    <lew-checkbox-group v-model="selectedFeatures" block round size="large" direction="x" :options="productFeatures" />
     <br />
     <br />
     <lew-title :size="14">禁用选项</lew-title>
     <lew-checkbox-group
-      v-model="selectedToppings"
+      v-model="selectedFeatures"
       block
       size="small"
       disabled
       direction="x"
-      :options="pizzaToppings"
+      :options="productFeatures"
     />
     <br />
     <br />
     <lew-title :size="14">只读选项</lew-title>
     <lew-checkbox-group
-      v-model="selectedToppings"
+      v-model="selectedFeatures"
       block
       size="small"
       readonly
       direction="x"
-      :options="pizzaToppings"
+      :options="productFeatures"
     />
   </lew-flex>
 </template>

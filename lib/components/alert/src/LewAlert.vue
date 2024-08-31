@@ -70,7 +70,7 @@ const alertClassName = (item: AlertItem) => {
     }
 
     .message {
-      width: calc(100% - 80px);
+      width: calc(100% - 30px);
       margin-left: 5px;
 
       .title {

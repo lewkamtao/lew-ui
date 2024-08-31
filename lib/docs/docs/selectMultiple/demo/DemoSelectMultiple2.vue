@@ -1,64 +1,59 @@
 <script setup lang="ts">
 const options = ref([
   {
-    label: '宋太宗',
+    label: 'Java开发工程师',
     value: '1'
   },
   {
-    label: '明神宗',
+    label: 'Python数据分析师',
     value: '2',
     disabled: true
   },
   {
-    label: '雍正帝',
+    label: 'UI设计师',
     disabled: true,
-    value: '121'
-  },
-  {
-    disabled: true,
-    label: '雍正帝',
     value: '3'
   },
   {
-    label: '宋宁宗',
+    label: '前端开发工程师',
     value: '4'
   },
   {
-    label: '陈高祖陈霸先',
+    label: '产品经理',
     value: '5'
   },
   {
-    label: '宋钦宗',
+    label: '运维工程师',
     value: '6'
   },
   {
-    label: '唐高宗',
+    label: '测试工程师',
     value: '7'
   },
   {
-    label: '齐高帝萧道成',
+    label: '人工智能工程师',
     disabled: true,
     value: '8'
   },
   {
-    label: '晋武帝',
+    label: '项目经理',
     value: '9'
   },
   {
-    label: '唐中宗',
+    label: '网络安全工程师',
     value: '10'
   },
   {
-    label: '唐睿宗',
+    label: '数据库管理员',
     value: '11'
   },
   {
     disabled: true,
-    label: '汉献帝',
+    label: '技术总监',
     value: '12'
   },
   {
-    label: '齐武帝',
+    label: '系统架构师',
     value: '13'
   }
 ])
@@ -67,7 +62,7 @@ const value = ref([])
 
 <template>
   <lew-flex style="width: 320px" direction="y">
-    <lew-select-multiple v-model="value" :options="options" placeholder="click" />
-    <lew-select-multiple v-model="value" :options="options" trigger="hover" placeholder="hover" />
+    <lew-select-multiple v-model="value" :options="options" placeholder="点击选择职位" />
+    <lew-select-multiple v-model="value" :options="options" trigger="hover" placeholder="悬停选择职位" />
   </lew-flex>
 </template>

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-const seasonOptions = ref([
-  { label: '春天', value: 'spring' },
-  { label: '夏天', value: 'summer' },
-  { label: '秋天', value: 'autumn' },
-  { label: '冬天', value: 'winter' }
+const productOptions = ref([
+  { label: '智能手机', value: 'smartphone' },
+  { label: '平板电脑', value: 'tablet' },
+  { label: '笔记本电脑', value: 'laptop' },
+  { label: '智能手表', value: 'smartwatch' }
 ])
 
-const selectedSeasons = ref([])
+const selectedProducts = ref([])
 </script>
 
 <template>
-  <lew-checkbox-group v-model="selectedSeasons" direction="y" :options="seasonOptions" />
+  <lew-checkbox-group v-model="selectedProducts" direction="y" :options="productOptions" />
 </template>
