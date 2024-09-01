@@ -108,6 +108,7 @@ const clearAll = () => {
 
 const sortRows = () => {
   // 实现排序逻辑
+  LewMessage.info('该功能正在开发中，敬请期待')
 }
 
 const isMaxRowsReached = computed(() => modelValue.value.length >= props.maxRows)
