@@ -9,7 +9,6 @@ const columns = [
     title: 'id',
     field: 'id',
     width: 100,
-    fixed: 'left',
     x: 'center'
   },
   {
@@ -86,14 +85,16 @@ const getSelectedKeys = () => {
     LewMessage.info('未选择')
   }
 }
+
+const selectedKeys = ref("35503077")
 </script>
 
 <template>
-  <lew-button style="margin-bottom: 10px" @click="getSelectedKeys">获取选择</lew-button>
+  <div style="margin-bottom: 10px">{{ selectedKeys }}</div>
   <lew-table
     ref="tableRef"
     checkable
-    singleSelect
+    v-model:selectedKeys="selectedKeys"
     :data-source="data"
     :columns="columns"
     :max-height="400"
@@ -117,16 +118,18 @@ const getSelectedKeys = () => {
     </template>
 
     <template #action="{ row, column }">
-      <lew-button size="small" text="管理" type="text" @click.stop="get({ row, column })" />
-      <lew-popok
-        title="删除确认"
-        content="删除之后无法恢复，请确认！"
-        placement="left"
-        width="200px"
-        @click.stop
-      >
-        <lew-button size="small" text="删除" type="text" />
-      </lew-popok>
+      <lew-flex gap="0">
+        <lew-button size="small" text="管理" type="text" @click.stop="get({ row, column })" />
+        <lew-popok
+          title="删除确认"
+          content="删除之后无法恢复，请确认！"
+          placement="left"
+          width="200px"
+          @click.stop
+        >
+          <lew-button size="small" text="删除" type="text" />
+        </lew-popok>
+      </lew-flex>
     </template>
     <template #type="{ row }">
       <lew-tag color="green" type="light" round size="small"

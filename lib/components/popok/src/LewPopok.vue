@@ -6,7 +6,6 @@ import { popokProps } from './props'
 
 const props = defineProps(popokProps)
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const lewPopoverRef = ref()
 
 const ok = () => {

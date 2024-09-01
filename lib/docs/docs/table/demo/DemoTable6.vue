@@ -90,6 +90,8 @@ const columns = [
   }
 ]
 
+const selectedKeys = ref<number[]>([])
+
 const viewDetails = (row: any, column: any) => {
   console.log('查看详情', row, column)
 }
@@ -98,16 +100,8 @@ const addToFavorites = (row: any, column: any) => {
 }
 const tableRef = ref()
 
-const getSelectedBrands = () => {
-  const keys = tableRef.value.getSelectedKeys()
-  if (keys.length > 0) {
-    LewMessage.info(`已选择品牌ID：${keys}`)
-  } else {
-    LewMessage.info('未选择任何品牌')
-  }
-}
 const setSelectedBrands = () => {
-  tableRef.value.setSelectedKeys([2, 3])
+  selectedKeys.value = [2, 3]
 }
 </script>
 
@@ -116,8 +110,16 @@ const setSelectedBrands = () => {
     <lew-button style="margin-bottom: 10px" @click="setSelectedBrands">
       设置默认选中品牌
     </lew-button>
-    <lew-button style="margin-bottom: 10px" @click="getSelectedBrands"> 获取选中品牌 </lew-button>
-    <lew-table ref="tableRef" :data-source="data" :columns="columns" checkable rowKey="id">
+    <div>{{ selectedKeys }}</div>
+    <lew-table
+      ref="tableRef"
+      :data-source="data"
+      :columns="columns"
+      checkable
+      multiple
+      v-model:selectedKeys="selectedKeys"
+      rowKey="id"
+    >
       <template #popularItems="{ row }">
         <lew-flex gap="5" x="start">
           <lew-tag v-for="(item, index) in row.popularItems" :key="index" type="light" color="blue">
@@ -126,7 +128,7 @@ const setSelectedBrands = () => {
         </lew-flex>
       </template>
       <template #action="{ row, column }">
-        <lew-flex>
+        <lew-flex gap="0">
           <lew-button size="small" text="详情" type="text" @click="viewDetails(row, column)" />
           <lew-button size="small" text="收藏" type="text" @click="addToFavorites(row, column)" />
         </lew-flex>

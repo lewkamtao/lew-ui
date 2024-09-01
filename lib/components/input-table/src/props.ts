@@ -79,10 +79,59 @@ export const inputTableProps = {
       return true
     }
   },
-  batchDelete: {
+  batchDeletable: {
     type: Boolean,
-    default: false,
+    default: true,
     description: '是否显示批量删除功能'
+  },
+  // 添加新行
+  addable: {
+    type: Boolean,
+    default: true,
+    description: '是否允许添加新行'
+  },
+  // 删除行
+  deletable: {
+    type: Boolean,
+    default: true,
+    description: '是否允许删除行'
+  },
+  // 最大行数
+  maxRows: {
+    type: Number,
+    default: Infinity,
+    description: '最大允许的行数',
+    validator(value: number): boolean {
+      if (value < 1) {
+        console.warn('[LewInputTable] maxRows 必须大于等于 1')
+        return false
+      }
+      return true
+    }
+  },
+  // 最小行数  
+  minRows: {
+    type: Number,
+    default: 0,
+    description: '最小允许的行数',
+    validator(value: number): boolean {
+      if (value < 1) {
+        console.warn('[LewInputTable] minRows 必须大于等于 1')
+        return false
+      }
+      return true
+    }
+  },
+  clearable: {
+    type: Boolean,
+    default: true,
+    description: '是否显示清空按钮'
+  },
+  //  排序
+  sortable: {
+    type: Boolean,
+    default: true,
+    description: '是否启用排序功能'
   },
   autoUniqueId: {
     type: Boolean,

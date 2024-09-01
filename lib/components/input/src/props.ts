@@ -27,11 +27,6 @@ export const inputModel = {
 }
 
 export const inputProps = {
-  modelValue: {
-    type: [String, Number],
-    default: '',
-    description: '输入框的值，支持 v-model 双向绑定'
-  },
   type: {
     type: String,
     default: 'text',

@@ -126,7 +126,7 @@ const columns = [
   },
   {
     title: '操作',
-    width: 120,
+    width: 140,
     field: 'action',
     fixed: 'right',
     x: 'center'

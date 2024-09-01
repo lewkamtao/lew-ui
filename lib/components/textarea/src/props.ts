@@ -11,11 +11,6 @@ export const textareaModel = {
 }
 
 export const textareaProps = {
-  modelValue: {
-    type: String,
-    default: '',
-    description: '文本域的值'
-  },
   placeholder: {
     type: String,
     default: '请输入',

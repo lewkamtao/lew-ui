@@ -109,7 +109,7 @@ const columns = [
   },
   {
     title: '操作',
-    width: 120,
+    width: 180,
     field: 'action',
     fixed: 'right',
     x: 'center'
@@ -144,7 +144,7 @@ const error = (e: any) => {
       <lew-tag type="light" color="green" size="small">{{ row.industry }}</lew-tag>
     </template>
     <template #action>
-      <lew-flex gap="5">
+      <lew-flex gap="0">
         <lew-popover trigger="click" placement="top">
           <template #trigger>
             <lew-button size="small" text="更新价格" type="text" />

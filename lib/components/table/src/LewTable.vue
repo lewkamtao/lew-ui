@@ -9,6 +9,7 @@ const props = defineProps(tableProps)
 const tableRef = ref()
 const fixedLeftRef = ref()
 const fixedRightRef = ref()
+const selectedKeys = defineModel('selectedKeys')
 
 let obs: any
 
@@ -24,6 +25,15 @@ const state = reactive({
   selectedKeysMap: {} as any,
   isInit: false
 })
+
+watch(
+  () => props.dataSource,
+  () => {
+    state.selectedKeysMap = mapValues(keyBy(props.dataSource, props.rowKey), () => false)
+    checkIsAll()
+  },
+  { deep: true }
+)
 
 onActivated(() => {
   checkScroll()
@@ -136,40 +146,29 @@ const setAllChecked = (checked: boolean) => {
   } else {
     state.selectedKeysMap = mapValues(keyBy(props.dataSource, props.rowKey), () => false)
   }
-}
-
-const setSelectedKeys = (keys: any) => {
-  state.selectedKeysMap = {}
-  keys.forEach((key: any) => {
-    state.selectedKeysMap[key] = true
-  })
-  checkIsAll()
-}
-
-const getSelectedKeys = () => {
-  return keys(pickBy(state.selectedKeysMap, (value: boolean) => value === true))
+  if (props.multiple) {
+    selectedKeys.value = keys(pickBy(state.selectedKeysMap, (value: boolean) => value === true))
+  }
 }
 
 const checkIsAll = () => {
   const filteredKeys = keys(pickBy(state.selectedKeysMap, (value: boolean) => value === true))
   const dataKey = props.dataSource.map((e: any) => String(e[props.rowKey]))
   const diffArr = difference(dataKey, filteredKeys)
-  state.checkAll = isEmpty(diffArr)
+  state.checkAll = isEmpty(diffArr) && props.multiple && props.checkable && (selectedKeys.value as String[]).length > 0
 }
-
 const selectTr = (row: any) => {
   if (!props.checkable) return
-  const checked = state.selectedKeysMap[row[props.rowKey]]
-  if (props.singleSelect) {
-    state.selectedKeysMap = {}
-  }
+  const rowKey = row[props.rowKey]
+  const checked = state.selectedKeysMap[rowKey]
 
-  if (checked) {
-    state.selectedKeysMap[row[props.rowKey]] = false
+  if (props.multiple) {
+    state.selectedKeysMap[rowKey] = !checked
+    selectedKeys.value = keys(pickBy(state.selectedKeysMap, Boolean))
   } else {
-    state.selectedKeysMap[row[props.rowKey]] = true
+    state.selectedKeysMap = { [rowKey]: !checked }
+    selectedKeys.value = checked ? undefined : rowKey
   }
-
   checkIsAll()
 }
 
@@ -184,13 +183,33 @@ const checkCertain = computed(() => {
   return i >= 0
 })
 
-defineExpose({ setSelectedKeys, getSelectedKeys })
-
 onMounted(() => {
   tableObserve()
   checkScroll()
   resizeTableHandle()
+  if (props.checkable) {
+    setSelectedKeys(selectedKeys.value)
+  }
 })
+
+// 监听selectedKeys的变化
+watch(selectedKeys, (newVal: any) => {
+  if (props.checkable) {
+    setSelectedKeys(newVal)
+  }
+})
+
+const setSelectedKeys = (keys: any) => {
+  if (props.multiple) {
+    state.selectedKeysMap = mapValues(keyBy(props.dataSource, props.rowKey), () => false)
+    keys.forEach((key: string) => {
+      state.selectedKeysMap[key] = true
+    })
+  } else {
+    state.selectedKeysMap = {}
+    state.selectedKeysMap[keys] = true
+  }
+}
 
 onUnmounted(() => {
   if (obs) {
@@ -246,7 +265,7 @@ onUnmounted(() => {
           <div class="lew-table-tr">
             <lew-flex v-if="checkable" style="width: 50px" class="lew-table-td" x="center">
               <lew-checkbox
-                v-if="!singleSelect"
+                v-if="multiple"
                 v-model="state.checkAll"
                 :disabled="dataSource.length === 0"
                 :certain="checkCertain && !state.checkAll"
@@ -311,7 +330,7 @@ onUnmounted(() => {
             class="lew-table-tr"
             :class="{
               'lew-table-tr-hover': state.hoverIndex === i,
-              'lew-table-tr-selected': checkable && state.selectedKeysMap[row[rowKey]]
+              'lew-table-tr-selected': state.selectedKeysMap[row[rowKey]]
             }"
             @click="selectTr(row)"
             @mouseenter="state.hoverIndex = i"

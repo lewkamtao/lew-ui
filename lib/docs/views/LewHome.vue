@@ -405,7 +405,7 @@ const notification = (type: string) => {
           <div class="text"><span>多</span> <span>美</span></div>
         </div>
       </div>
-      <p>专业、易用、高效的企业级 Vue 3 组件库</p>
+      <p>一个好看易用的 Vue3 组件库</p>
       <lew-flex x="start">
         <lew-button
           round

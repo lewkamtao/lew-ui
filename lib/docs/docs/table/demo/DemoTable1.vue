@@ -91,7 +91,7 @@ const columns = [
 </script>
 
 <template>
-  <div style="height: 300px">
+  <div style="height: 350px">
     <lew-table :data-source="data" :columns="columns">
       <template #info="{ row }">
         <lew-flex direction="y" x="start" gap="0px" class="info">

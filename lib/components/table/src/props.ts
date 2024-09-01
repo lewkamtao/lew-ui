@@ -10,6 +10,21 @@ export interface TableColumn {
   columnStyle?: string
 }
 
+export const tableModel = {
+  selectedKeys: {
+    type: [Array, String] as PropType<string[] | string>,
+    default: () => [],
+    description: '选中的行键值',
+    validator: (value: string[] | string) => {
+      if (!Array.isArray(value) && typeof value !== 'string') {
+        console.warn('[LewTable] selectedKey 必须是一个数组或字符串')
+        return false
+      }
+      return true
+    }
+  }
+}
+
 export const tableProps = {
   rowKey: {
     type: String,
@@ -64,9 +79,9 @@ export const tableProps = {
     default: false,
     description: '是否显示复选框列'
   },
-  singleSelect: {
+  multiple: {
     type: Boolean,
     default: false,
-    description: '是否只允许单选'
+    description: '是否允许多选'
   }
 }

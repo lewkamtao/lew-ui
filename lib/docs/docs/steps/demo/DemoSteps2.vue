@@ -1,16 +1,16 @@
 <script setup lang="ts">
 const options = [
   {
-    title: 'Step 1',
-    description: 'This is step 1'
+    title: '填写基本信息',
+    description: '请输入您的姓名和联系方式'
   },
   {
-    title: 'Step 2',
-    description: 'This is step 2'
+    title: '选择服务类型',
+    description: '请选择您需要的服务类型'
   },
   {
-    title: 'Step 3',
-    description: 'This is step 3'
+    title: '确认提交',
+    description: '请确认并提交您的信息'
   }
 ]
 

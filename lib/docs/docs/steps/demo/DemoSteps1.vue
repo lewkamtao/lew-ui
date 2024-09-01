@@ -1,21 +1,21 @@
 <script setup lang="ts">
 const options = [
   {
-    title: '基本信息',
+    title: '注册账号',
     description:
-      '包括姓名、性别、年龄、身份证号码、电话号码、Email地址及家庭住址等在内的个人基本信息'
+      '填写个人信息，创建一个新的用户账号'
   },
   {
-    title: '家庭信息',
-    description: '父母的姓名,工作单位、职务、政治面貌、联系电话、身份证号等学生主要实际'
+    title: '验证邮箱',
+    description: '通过邮件中的链接验证您的邮箱地址'
   },
   {
-    title: '就业信息',
-    description: '就业机会、招聘活动、职位要求、行业动态、求职技巧等方面的信息'
+    title: '设置密码',
+    description: '为您的账号设置一个安全的密码'
   },
   {
     title: '完成',
-    description: '系统会在七个工作日内完成审核'
+    description: '账号注册完成，您现在可以登录'
   }
 ]
 
