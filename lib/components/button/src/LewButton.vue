@@ -8,6 +8,12 @@ const props = defineProps(buttonProps)
 
 const _loading = ref(false)
 
+const buttonRef = ref()
+
+const focus = () => {
+  buttonRef.value?.focus()
+}
+
 const handleClick = async (e: MouseEvent) => {
   if (props.disabled || _loading.value || props.loading) return
   emit('click', e)
@@ -43,19 +49,21 @@ const getButtonClass = computed(() => {
 const getIconSize = computed(() => {
   const { size, iconSize } = props
   switch (size) {
+    case 'mini':
+      return iconSize ? Number(iconSize) : 12
     case 'small':
-      return iconSize ? iconSize : 14
+      return iconSize ? Number(iconSize) : 14
     case 'medium':
-      return iconSize ? iconSize : 16
+      return iconSize ? Number(iconSize) : 16
     case 'large':
-      return iconSize ? iconSize : 18
+      return iconSize ? Number(iconSize) : 18
     default:
-      return iconSize ? iconSize : 16
+      return iconSize ? Number(iconSize) : 16
   }
 })
 
 const getStyle = computed(() => {
-  const { round, type, color } = props
+  const { round, type, color, dashed } = props
   const styleObj: Record<string, string> = {}
   const _color = getColorType(color) || 'primary'
   switch (type) {
@@ -69,7 +77,7 @@ const getStyle = computed(() => {
       break
     case 'ghost':
       styleObj.backgroundColor = 'transparent'
-      styleObj.border = `1px solid var(--lew-color-${_color})`
+      styleObj.border = `var(--lew-form-border-width) ${dashed ? 'dashed' : 'solid'} var(--lew-color-${_color})`
       styleObj.color = `var(--lew-color-${_color}-dark)`
       styleObj.boxShadow = 'none'
       break
@@ -85,10 +93,13 @@ const getStyle = computed(() => {
   styleObj.borderRadius = round ? '50px' : 'none'
   return styleObj
 })
+
+defineExpose({ focus })
 </script>
 
 <template>
   <button
+    ref="buttonRef"
     class="lew-button"
     :class="getButtonClass"
     :disabled="disabled"
@@ -110,7 +121,14 @@ const getStyle = computed(() => {
       />
     </div>
     <template v-if="iconPosition === 'left'">
-      <lew-icon strokeWidth="2" v-if="icon" class="lew-button-icon" :size="getIconSize" :type="icon" />
+      <slot v-if="$slots.icon" name="icon"> </slot>
+      <lew-icon
+        v-else-if="icon"
+        strokeWidth="2"
+        class="lew-button-icon"
+        :size="getIconSize"
+        :type="icon"
+      />
     </template>
     <div v-if="$slots.default || text" class="lew-button-content">
       <span class="lew-button-text">
@@ -123,8 +141,9 @@ const getStyle = computed(() => {
       </span>
     </div>
     <template v-if="iconPosition === 'right'">
+      <slot v-if="$slots.icon" name="icon"> </slot>
       <lew-icon
-        v-if="icon"
+        v-else-if="icon"
         class="lew-button-icon"
         strokeWidth="2"
         :size="getIconSize"
@@ -153,9 +172,9 @@ const getStyle = computed(() => {
   border-radius: var(--lew-border-radius-small);
   box-sizing: border-box;
   overflow: hidden;
-  padding: 0px 20px;
   box-shadow: var(--lew-form-box-shadow);
   outline: none;
+
   .lew-loading-icon {
     position: absolute;
     opacity: 0;
@@ -231,58 +250,85 @@ const getStyle = computed(() => {
   opacity: 1;
 }
 
+.lew-button-size-mini {
+  min-width: 30px;
+  height: calc(var(--lew-form-item-height-mini));
+  line-height: calc(var(--lew-form-item-height-mini));
+  font-size: var(--lew-form-font-size-mini);
+  gap: 2px;
+  padding: 0px 10px;
+  .lew-loading-icon {
+    left: 7px;
+  }
+}
+
 .lew-button-size-small {
-  min-width: 50px;
-  height: calc(var(--lew-form-item-height-small) + 4px);
-  line-height: calc(var(--lew-form-item-height-small) + 4px);
+  min-width: 40px;
+  height: calc(var(--lew-form-item-height-small));
+  line-height: calc(var(--lew-form-item-height-small));
   font-size: var(--lew-form-font-size-small);
+  gap: 3px;
+  padding: 0px 14px;
+  .lew-loading-icon {
+    left: 8px;
+  }
+}
+
+.lew-button-size-medium {
+  min-width: 50px;
+  height: calc(var(--lew-form-item-height-medium));
+  line-height: calc(var(--lew-form-item-height-medium));
+  font-size: var(--lew-form-font-size-medium);
   gap: 4px;
+  padding: 0px 16px;
   .lew-loading-icon {
     left: 9px;
   }
 }
 
-.lew-button-size-medium {
-  min-width: 60px;
-  height: calc(var(--lew-form-item-height-medium) + 4px);
-  line-height: calc(var(--lew-form-item-height-medium) + 4px);
-  font-size: var(--lew-form-font-size-medium);
-  gap: 6px;
-  .lew-loading-icon {
-    left: 9.5px;
-  }
-}
-
 .lew-button-size-large {
-  min-width: 70px;
-  height: calc(var(--lew-form-item-height-large) + 4px);
-  line-height: calc(var(--lew-form-item-height-large) + 4px);
+  min-width: 60px;
+  height: calc(var(--lew-form-item-height-large));
+  line-height: calc(var(--lew-form-item-height-large));
   font-size: var(--lew-form-font-size-large);
-  gap: 8px;
+  gap: 5px;
+  padding: 0px 20px;
   .lew-loading-icon {
     left: 10px;
   }
 }
-
+.lew-button-singleIcon {
+  .lew-loading-icon {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+.lew-button-size-mini.lew-button-singleIcon {
+  min-width: auto;
+  padding: 0px;
+  width: calc(var(--lew-form-item-height-mini));
+  height: calc(var(--lew-form-item-height-mini));
+}
 .lew-button-size-small.lew-button-singleIcon {
   min-width: auto;
   padding: 0px;
-  width: calc(var(--lew-form-item-height-small) + 4px);
-  height: calc(var(--lew-form-item-height-small) + 4px);
+  width: calc(var(--lew-form-item-height-small));
+  height: calc(var(--lew-form-item-height-small));
 }
 
 .lew-button-size-medium.lew-button-singleIcon {
   min-width: auto;
   padding: 0px;
-  width: calc(var(--lew-form-item-height-medium) + 4px);
-  height: calc(var(--lew-form-item-height-medium) + 4px);
+  width: calc(var(--lew-form-item-height-medium));
+  height: calc(var(--lew-form-item-height-medium));
 }
 
 .lew-button-size-large.lew-button-singleIcon {
   min-width: auto;
   padding: 0px;
-  width: calc(var(--lew-form-item-height-large) + 4px);
-  height: calc(var(--lew-form-item-height-large) + 4px);
+  width: calc(var(--lew-form-item-height-large));
+  height: calc(var(--lew-form-item-height-large));
 }
 
 .lew-button.lew-button-loading.lew-button-singleIcon {
@@ -302,12 +348,16 @@ const getStyle = computed(() => {
   padding-left: 0px;
 }
 
+.lew-button-size-mini.lew-button-loading {
+  padding-left: 23px;
+}
+
 .lew-button-size-small.lew-button-loading {
-  padding-left: 26px;
+  padding-left: 27px;
 }
 
 .lew-button-size-medium.lew-button-loading {
-  padding-left: 30px;
+  padding-left: 31px;
 }
 
 .lew-button-size-large.lew-button-loading {

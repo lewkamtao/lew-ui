@@ -19,6 +19,7 @@ import * as directives from './directives'
 export * from './components'
 export * from './directives'
 export * from './utils'
+export * from './types'
 
 const install = function (Vue: App): void {
   const _components = Object.keys(components).map(

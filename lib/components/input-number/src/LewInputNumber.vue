@@ -115,9 +115,14 @@ const minus = () => {
 
 const checkValidationMessage = () => {
   validationMessage.value = lewInputRef.value.validationMessage
+  return (validationMessage.value || '').length === 0
 }
 
-defineExpose({ toFocus })
+const validCheck = () => {
+  return ((lewInputRef.value && lewInputRef.value.validationMessage) || '').length === 0
+}
+
+defineExpose({ toFocus, validCheck })
 </script>
 
 <template>
@@ -235,10 +240,12 @@ defineExpose({ toFocus })
       cursor: pointer;
       transition: all 0.1s;
       transform: scale(1);
+      opacity: 1;
     }
 
     .lew-input-number-icon:active {
       transform: scale(0.95);
+      opacity: 0.7;
     }
   }
 }

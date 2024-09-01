@@ -4,7 +4,7 @@ import { useMagicKeys } from '@vueuse/core'
 import { dialogProps } from './props'
 import { getStatusIcon } from 'lew-ui/utils'
 import { useDOMCreate } from 'lew-ui/hooks'
-
+import type { LewColor } from 'lew-ui'
 const { Escape } = useMagicKeys()
 useDOMCreate('lew-dialog')
 const props = defineProps(dialogProps)
@@ -12,6 +12,8 @@ const emit = defineEmits(['close'])
 const visible = ref<boolean>(false)
 const okLoading = ref<boolean>(false)
 const cancelLoading = ref<boolean>(false)
+const okRef1 = ref()
+const okRef2 = ref()
 
 const maskClick = () => {
   if (props?.closeOnClickOverlay) {
@@ -21,6 +23,10 @@ const maskClick = () => {
 
 onMounted(() => {
   visible.value = true
+  nextTick(() => {
+    okRef1.value && okRef1.value.focus()
+    okRef2.value && okRef2.value.focus()
+  })
 })
 
 watch(
@@ -94,7 +100,6 @@ if (props.closeByEsc) {
               <div class="right">
                 <header>
                   <slot name="title"></slot>
-                  <span class="gulu-dialog-close" @click="visible = false"></span>
                 </header>
                 <main>
                   <slot name="content"></slot>
@@ -111,10 +116,11 @@ if (props.closeByEsc) {
                 @click.stop="cancel"
               />
               <lew-button
+                ref="okRef1"
                 v-if="okText"
                 :text="okText"
                 type="fill"
-                :color="type"
+                :color="type as LewColor"
                 :loading="okLoading"
                 @click.stop="ok"
               />
@@ -144,12 +150,13 @@ if (props.closeByEsc) {
                   @click.stop="cancel"
                 />
                 <lew-button
+                  ref="okRef2"
                   v-if="okText"
                   :text="okText"
                   type="fill"
                   size="small"
                   round
-                  :color="type"
+                  :color="type as LewColor"
                   :loading="okLoading"
                   @click.stop="ok"
                 />

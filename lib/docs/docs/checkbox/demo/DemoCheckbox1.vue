@@ -1,16 +1,18 @@
 <script setup lang="ts">
-const options = ref([
-  { label: '宋朝', value: 1 },
-  { label: '唐朝', value: 2 },
-  { label: '明朝', value: 3 },
-  { label: '清朝', value: 4 }
+const socialMediaOptions = ref([
+  { label: '谷歌', value: 'google' },
+  { label: '苹果', value: 'apple' },
+  { label: '微软', value: 'microsoft' },
+  { label: '亚马逊', value: 'amazon' }
 ])
 
-const value = ref([])
+const selectedPlatforms = ref([])
 </script>
 
 <template>
-  <lew-checkbox-group v-model="value" size="small" :options="options" />
-  <lew-checkbox-group v-model="value" size="medium" :options="options" />
-  <lew-checkbox-group v-model="value" size="large" :options="options" />
+  <lew-flex direction="y" :gap="10">
+    <lew-checkbox-group v-model="selectedPlatforms" size="small" :options="socialMediaOptions" />
+    <lew-checkbox-group v-model="selectedPlatforms" size="medium" :options="socialMediaOptions" />
+    <lew-checkbox-group v-model="selectedPlatforms" size="large" :options="socialMediaOptions" />
+  </lew-flex>
 </template>

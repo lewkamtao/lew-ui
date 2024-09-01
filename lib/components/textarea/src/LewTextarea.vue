@@ -3,7 +3,6 @@ import { useMagicKeys, useDebounceFn } from '@vueuse/core'
 import { object2class, any2px } from 'lew-ui/utils'
 import { LewIcon, LewTooltip } from 'lew-ui'
 import { textareaProps } from './props'
-import { toNumber } from 'lodash-es'
 import { useResizeObserver } from '@vueuse/core'
 
 const { shift, enter } = useMagicKeys()
@@ -47,25 +46,6 @@ const state = reactive({
   isFocus: false
 })
 
-const updateValue = () => {
-  if (
-    props.maxLength &&
-    props.renderCount(modelValue.value) >= Number(props.maxLength) &&
-    modelValue.value
-  ) {
-    modelValue.value = modelValue.value.slice(0, toNumber(props.maxLength))
-  }
-}
-
-let isFirst = true
-const inputFn = () => {
-  updateValue()
-  if (!isFirst) {
-    emit('input', modelValue.value)
-  }
-  isFirst = false
-}
-
 const clear = (): void => {
   modelValue.value = undefined
   emit('clear')
@@ -74,16 +54,6 @@ const clear = (): void => {
 const toFocus = () => {
   lewTextareaRef.value?.focus()
 }
-
-const getCheckNumStr = computed(() => {
-  if (props.showCount && props.maxLength) {
-    return `${props.renderCount(modelValue.value)} / ${props.maxLength}`
-  }
-  if (props.showCount) {
-    return props.renderCount(modelValue.value)
-  }
-  return false
-})
 
 const getTextareaClassNames = computed(() => {
   const { size, readonly, disabled } = props
@@ -116,7 +86,7 @@ const getIconSize = computed(() => {
   return size[props.size]
 })
 
-const getTextareaStyle = computed(() => {
+const getTextareaStyle: any = computed(() => {
   const { width, height, size, resize, maxHeight, minHeight, maxWidth, minWidth } = props
   const heightMap: Record<string, number> = {
     small: 60,
@@ -124,7 +94,7 @@ const getTextareaStyle = computed(() => {
     large: 90
   }
   const obj = {
-    resize,
+    resize: resize as string,
     minWidth: any2px(minWidth || width),
     minHeight: any2px(minHeight || (height ? height : heightMap[size])),
     maxWidth: any2px(maxWidth),
@@ -168,30 +138,31 @@ defineExpose({ toFocus })
       ref="lewTextareaRef"
       v-model="modelValue"
       class="lew-textarea lew-scrollbar"
+      :placeholder="placeholder"
+      :maxlength="maxLength"
       :disabled="disabled"
       :readonly="readonly"
-      :placeholder="placeholder"
-      @input="inputFn"
-      @change="emit('change', modelValue)"
-      @blur="blur"
       @focus="focus"
+      @blur="blur"
+      @input="emit('input', modelValue)"
+      @change="emit('change', modelValue)"
     ></textarea>
 
-    <div v-if="getCheckNumStr && showCount" class="lew-textarea-count">
-      {{ getCheckNumStr }}
+    <div v-if="modelValue && showCount" class="lew-textarea-count">
+      {{ modelValue.length }}{{ maxLength ? ' / ' + maxLength : '' }}
     </div>
     <transition name="lew-form-icon-ani">
       <lew-icon
         v-if="clearable && modelValue && !readonly"
+        :size="getIconSize"
+        type="x"
         class="lew-form-icon-clear"
         :class="{
           'lew-form-icon-clear-focus': state.isFocus
         }"
-        :size="getIconSize"
         style="top: 14px"
-        type="x"
-        @mousedown.prevent=""
         @click="clear"
+        @mousedown.prevent=""
       />
     </transition>
   </div>
@@ -199,15 +170,15 @@ defineExpose({ toFocus })
 
 <style lang="scss" scoped>
 .lew-textarea-view {
-  display: inline-flex;
   position: relative;
-  overflow: hidden;
+  display: inline-flex;
   width: 100%;
-  border-radius: var(--lew-border-radius-small);
-  background-color: var(--lew-form-bgcolor);
+  overflow: hidden;
   box-sizing: border-box;
-  outline: 0px var(--lew-form-border-color) solid;
+  border-radius: var(--lew-border-radius-small);
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  outline: 0px var(--lew-form-border-color) solid;
+  background-color: var(--lew-form-bgcolor);
   box-shadow: var(--lew-form-box-shadow);
   transition:
     var(--lew-form-transition-ease),
@@ -233,14 +204,19 @@ defineExpose({ toFocus })
   .lew-textarea-count {
     position: absolute;
     bottom: 2px;
+    right: 2px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 4px;
-    opacity: var(--lew-form-icon-opacity);
-    transition: opacity 0.25s;
+    background-color: var(--lew-bgcolor-1);
+    padding: 0px 4px;
     z-index: 2;
     user-select: none;
+    transition: var(--lew-form-transition-ease);
+  }
+  .lew-textarea-count:hover {
+    opacity: 0.2;
   }
 }
 
@@ -257,7 +233,6 @@ defineExpose({ toFocus })
 
   .lew-textarea-count {
     font-size: 12px;
-    right: 13px;
   }
 }
 
@@ -271,10 +246,8 @@ defineExpose({ toFocus })
   .lew-textarea {
     min-height: var(--lew-form-item-height-medium);
   }
-
   .lew-textarea-count {
     font-size: 13px;
-    right: 14px;
   }
 }
 
@@ -291,7 +264,6 @@ defineExpose({ toFocus })
 
   .lew-textarea-count {
     font-size: 14px;
-    right: 15px;
   }
 }
 

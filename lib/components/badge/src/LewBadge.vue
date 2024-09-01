@@ -8,7 +8,7 @@ const getStyle = computed(() => {
   const { color } = props
   let styleObj: Record<string, string> = {}
   let _color = getColorType(color)
-  styleObj.backgroundColor = `var(--lew-color-${_color})`
+  styleObj.backgroundColor = `var(--lew-color-${_color}-dark)`
   return styleObj
 })
 </script>
@@ -30,14 +30,13 @@ const getStyle = computed(() => {
   .lew-badge-dot {
     position: absolute;
     left: 100%;
-    width: 10px;
-    height: 10px;
-    bottom: calc(100% - 5px);
+    width: 6px;
+    height: 6px;
+    top: -2.5px;
     transform: translateX(-50%);
     z-index: 1;
     cursor: normal;
     border-radius: 50%;
-    border: 1px var(--lew-color-white) solid;
     box-sizing: border-box;
   }
 

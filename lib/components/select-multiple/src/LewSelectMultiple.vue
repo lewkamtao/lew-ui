@@ -16,8 +16,8 @@ const emit = defineEmits(['change', 'select', 'clear', 'delete', 'blur'])
 const selectValue: any = defineModel()
 
 const lewSelectRef = ref()
-const lewPopverRef = ref()
-const lewPopverValueRef = ref()
+const lewPopoverRef = ref()
+const lewPopoverValueRef = ref()
 const searchInputRef = ref()
 
 const state = reactive({
@@ -38,11 +38,11 @@ const getSelectWidth = () => {
 }
 
 const show = () => {
-  lewPopverRef.value && lewPopverRef.value.show()
+  lewPopoverRef.value && lewPopoverRef.value.show()
 }
 
 const hide = () => {
-  lewPopverRef.value && lewPopverRef.value.hide()
+  lewPopoverRef.value && lewPopoverRef.value.hide()
 }
 
 const searchDebounce = useDebounceFn(async (e: any) => {
@@ -74,7 +74,7 @@ const clearHandle = () => {
   emit('clear')
   // 刷新位置
   setTimeout(() => {
-    lewPopverRef.value && lewPopverRef.value.refresh()
+    lewPopoverRef.value && lewPopoverRef.value.refresh()
   }, 100)
   emit('change', selectValue.value)
 }
@@ -85,10 +85,10 @@ const deleteTag = (index: number) => {
   emit('delete', item)
   // 刷新位置
   if (selectValue.value.length === 0) {
-    lewPopverValueRef.value && lewPopverValueRef.value.hide()
+    lewPopoverValueRef.value && lewPopoverValueRef.value.hide()
   }
   setTimeout(() => {
-    lewPopverRef.value && lewPopverRef.value.refresh()
+    lewPopoverRef.value && lewPopoverRef.value.refresh()
   }, 100)
   emit('change', selectValue.value)
 }
@@ -112,7 +112,7 @@ const selectHandle = (item: SelectMultipleOptions) => {
   emit('select', item)
   // 刷新位置
   setTimeout(() => {
-    lewPopverRef.value && lewPopverRef.value.refresh()
+    lewPopoverRef.value && lewPopoverRef.value.refresh()
   }, 100)
   emit('change', selectValue.value)
 }
@@ -137,9 +137,9 @@ const getLabels = computed(() => {
 })
 
 const getSelectClassName = computed(() => {
-  let { clearable, size, align } = props
+  let { clearable, size } = props
   clearable = clearable ? !!selectValue.value : false
-  return object2class('lew-select', { clearable, size, align })
+  return object2class('lew-select', { clearable, size })
 })
 
 const getBodyClassName = computed(() => {
@@ -156,11 +156,9 @@ const getSelectViewClassName = computed(() => {
 const getSelectItemClassName = (e: any) => {
   const { disabled } = e
   const active = getChecked.value(e.value)
-  const { align } = props
 
   return object2class('lew-select-item', {
     disabled,
-    align,
     active
   })
 }
@@ -201,7 +199,7 @@ defineExpose({ show, hide })
 
 <template>
   <lew-popover
-    ref="lewPopverRef"
+    ref="lewPopoverRef"
     popoverBodyClassName="lew-select-multiple-popover-body"
     class="lew-select-view"
     :class="getSelectViewClassName"
@@ -261,7 +259,7 @@ defineExpose({ show, hide })
           </lew-flex>
           <template v-else>
             <lew-popover
-              ref="lewPopverValueRef"
+              ref="lewPopoverValueRef"
               trigger="hover"
               popoverBodyClassName="lew-select-multiple-popover-tag"
               :offset="[-1, 10]"
@@ -324,7 +322,7 @@ defineExpose({ show, hide })
               <lew-empty title="暂无结果" />
             </lew-flex>
           </template>
-          <div v-if="searchable && state.options && state.options.length > 0" class="reslut-count">
+          <div v-if="searchable && state.options && state.options.length > 0" class="result-count">
             共
             {{ numFormat(state.options && state.options.length) }}
             条结果
@@ -453,18 +451,6 @@ defineExpose({ show, hide })
       text-overflow: ellipsis;
       overflow: hidden;
     }
-  }
-
-  .lew-select-align-left {
-    text-align: left;
-  }
-
-  .lew-select-align-center {
-    text-align: center;
-  }
-
-  .lew-select-align-right {
-    text-align: right;
   }
 
   .lew-select-size-small {
@@ -604,7 +590,7 @@ defineExpose({ show, hide })
     }
   }
 
-  .reslut-count {
+  .result-count {
     padding-left: 8px;
     margin: 5px 0px;
     opacity: 0.4;
@@ -655,18 +641,6 @@ defineExpose({ show, hide })
     .lew-select-item-disabled {
       opacity: var(--lew-disabled-opacity);
       pointer-events: none; //鼠标点击不可修改
-    }
-
-    .lew-select-item-align-left {
-      text-align: left;
-    }
-
-    .lew-select-item-align-center {
-      text-align: center;
-    }
-
-    .lew-select-item-align-right {
-      text-align: right;
     }
 
     .lew-select-item:hover {

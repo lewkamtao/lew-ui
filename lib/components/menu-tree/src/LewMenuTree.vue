@@ -52,7 +52,7 @@ _options.value = generateEnterpriseMenu(props.options)
           class="lew-menu-item lew-menu-item-child"
           :class="{
             'lew-menu-item-last': item.children && index === item.children.length - 1,
-            'lew-menu-item-actived': cItem.value === actived
+            'lew-menu-item-active': cItem.value === active
           }"
           @click="emit('change', cItem)"
         >
@@ -107,12 +107,12 @@ _options.value = generateEnterpriseMenu(props.options)
     background-color: var(--lew-bgcolor-2);
     color: var(--lew-text-color-1);
   }
-  .lew-menu-item-actived {
+  .lew-menu-item-active {
     background-color: var(--lew-color-primary-light);
     color: var(--lew-color-primary-dark);
     font-weight: bold;
   }
-  .lew-menu-item-actived:hover {
+  .lew-menu-item-active:hover {
     background-color: var(--lew-color-primary-light);
     color: var(--lew-color-primary-dark);
   }

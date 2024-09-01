@@ -1,49 +1,30 @@
 :root {
-  // 背景
-  --lew-bgcolor-0: rgb(255, 255, 255);
-  --lew-bgcolor-1: rgb(250, 250, 250);
-  --lew-bgcolor-2: rgb(245, 245, 245);
-  --lew-bgcolor-3: rgb(235, 235, 235);
-  --lew-bgcolor-4: rgb(225, 225, 225);
-  --lew-bgcolor-5: rgb(215, 215, 215);
-  --lew-bgcolor-6: rgb(205, 205, 205);
-  --lew-bgcolor-7: rgb(195, 195, 195);
-  --lew-bgcolor-8: rgb(185, 185, 185);
-  --lew-bgcolor-9: rgb(175, 175, 175);
-  // 背景反相
-  --lew-bgcolor-0-invert: rgb(20, 20, 20);
-  --lew-bgcolor-1-invert: rgb(30, 30, 30);
-  --lew-bgcolor-2-invert: rgb(40, 40, 40);
-  --lew-bgcolor-3-invert: rgb(50, 50, 50);
-  --lew-bgcolor-4-invert: rgb(60, 60, 60);
-  --lew-bgcolor-5-invert: rgb(70, 70, 70);
-  --lew-bgcolor-6-invert: rgb(80, 80, 80);
-  --lew-bgcolor-7-invert: rgb(90, 90, 90);
-  --lew-bgcolor-8-invert: rgb(110, 110, 110);
-  --lew-bgcolor-9-invert: rgb(120, 120, 120);
-  // 字体颜色
-  --lew-text-color-0: rgb(20, 20, 20);
-  --lew-text-color-1: rgb(30, 30, 30);
-  --lew-text-color-2: rgb(50, 50, 50);
-  --lew-text-color-3: rgb(70, 70, 70);
-  --lew-text-color-4: rgb(90, 90, 90);
-  --lew-text-color-5: rgb(110, 110, 110);
-  --lew-text-color-6: rgb(130, 130, 130);
-  --lew-text-color-7: rgb(150, 150, 150);
-  --lew-text-color-8: rgb(170, 170, 170);
-  --lew-text-color-9: rgb(190, 190, 190);
-  // 反相
-  --lew-text-color-0-invert: rgb(255, 255, 255);
-  --lew-text-color-1-invert: rgb(235, 235, 235);
-  --lew-text-color-2-invert: rgb(215, 215, 215);
-  --lew-text-color-3-invert: rgb(195, 195, 195);
-  --lew-text-color-4-invert: rgb(175, 175, 175);
-  --lew-text-color-5-invert: rgb(155, 155, 155);
-  --lew-text-color-6-invert: rgb(135, 135, 135);
-  --lew-text-color-7-invert: rgb(115, 115, 115);
-  --lew-text-color-8-invert: rgb(95, 95, 95);
-  --lew-text-color-9-invert: rgb(75, 75, 75);
-  // 色彩系统
+  // 主题色
+  --lew-color-primary: var(--lew-color-blue);
+  --lew-color-primary-dark: var(--lew-color-blue-dark);
+  --lew-color-primary-light: var(--lew-color-blue-light);
+
+  // 功能色
+  --lew-color-success: var(--lew-color-green);
+  --lew-color-success-dark: var(--lew-color-green-dark);
+  --lew-color-success-light: var(--lew-color-green-light);
+  --lew-color-normal: var(--lew-color-gray);
+  --lew-color-normal-dark: var(--lew-color-gray-dark);
+  --lew-color-normal-light: var(--lew-color-gray-light);
+  --lew-color-danger: var(--lew-color-red);
+  --lew-color-danger-dark: var(--lew-color-red-dark);
+  --lew-color-danger-light: var(--lew-color-red-light);
+  --lew-color-error: var(--lew-color-red);
+  --lew-color-error-dark: var(--lew-color-red-dark);
+  --lew-color-error-light: var(--lew-color-red-light);
+  --lew-color-warning: var(--lew-color-orange);
+  --lew-color-warning-dark: var(--lew-color-orange-dark);
+  --lew-color-warning-light: var(--lew-color-orange-light);
+  --lew-color-info: var(--lew-color-blue);
+  --lew-color-info-dark: var(--lew-color-blue-dark);
+  --lew-color-info-light: var(--lew-color-blue-light);
+
+  // 基础色彩
   --lew-color-red: rgb(235, 78, 61);
   --lew-color-red-dark: rgb(202, 52, 35);
   --lew-color-red-light: rgba(202, 52, 35, 0.0918);
@@ -86,48 +67,62 @@
   --lew-color-black: var(--lew-bgcolor-2-invert);
   --lew-color-black-dark: var(--lew-bgcolor-0-invert);
   --lew-color-black-light: var(--lew-bgcolor-5);
-  // 成功
-  --lew-color-success: var(--lew-color-green);
-  --lew-color-success-dark: var(--lew-color-green-dark);
-  --lew-color-success-light: var(--lew-color-green-light);
-  // 常规
-  --lew-color-normal: var(--lew-color-gray);
-  --lew-color-normal-dark: var(--lew-color-gray-dark);
-  --lew-color-normal-light: var(--lew-color-gray-light);
-  // 危险
-  --lew-color-danger: var(--lew-color-red);
-  --lew-color-danger-dark: var(--lew-color-red-dark);
-  --lew-color-danger-light: var(--lew-color-red-light);
-  // 错误
-  --lew-color-error: var(--lew-color-red);
-  --lew-color-error-dark: var(--lew-color-red-dark);
-  --lew-color-error-light: var(--lew-color-red-light);
-  // 警告
-  --lew-color-warning: var(--lew-color-orange);
-  --lew-color-warning-dark: var(--lew-color-orange-dark);
-  --lew-color-warning-light: var(--lew-color-orange-light);
-  // 提示
-  --lew-color-info: var(--lew-color-blue);
-  --lew-color-info-dark: var(--lew-color-blue-dark);
-  --lew-color-info-light: var(--lew-color-blue-light);
-  // 主题色
-  --lew-color-primary: var(--lew-color-blue);
-  --lew-color-primary-dark: var(--lew-color-blue-dark);
-  --lew-color-primary-light: var(--lew-color-blue-light);
+
+  // 背景色
+  --lew-bgcolor-0: rgb(255, 255, 255);
+  --lew-bgcolor-1: rgb(250, 250, 250);
+  --lew-bgcolor-2: rgb(245, 245, 245);
+  --lew-bgcolor-3: rgb(235, 235, 235);
+  --lew-bgcolor-4: rgb(225, 225, 225);
+  --lew-bgcolor-5: rgb(215, 215, 215);
+  --lew-bgcolor-6: rgb(205, 205, 205);
+  --lew-bgcolor-7: rgb(195, 195, 195);
+  --lew-bgcolor-8: rgb(185, 185, 185);
+  --lew-bgcolor-9: rgb(175, 175, 175);
+
+  // 背景色反相
+  --lew-bgcolor-0-invert: rgb(20, 20, 20);
+  --lew-bgcolor-1-invert: rgb(30, 30, 30);
+  --lew-bgcolor-2-invert: rgb(40, 40, 40);
+  --lew-bgcolor-3-invert: rgb(50, 50, 50);
+  --lew-bgcolor-4-invert: rgb(60, 60, 60);
+  --lew-bgcolor-5-invert: rgb(70, 70, 70);
+  --lew-bgcolor-6-invert: rgb(80, 80, 80);
+  --lew-bgcolor-7-invert: rgb(90, 90, 90);
+  --lew-bgcolor-8-invert: rgb(110, 110, 110);
+  --lew-bgcolor-9-invert: rgb(120, 120, 120);
+
+  // 文本颜色
+  --lew-text-color-0: rgb(20, 20, 20);
+  --lew-text-color-1: rgb(30, 30, 30);
+  --lew-text-color-2: rgb(50, 50, 50);
+  --lew-text-color-3: rgb(70, 70, 70);
+  --lew-text-color-4: rgb(90, 90, 90);
+  --lew-text-color-5: rgb(110, 110, 110);
+  --lew-text-color-6: rgb(130, 130, 130);
+  --lew-text-color-7: rgb(150, 150, 150);
+  --lew-text-color-8: rgb(170, 170, 170);
+  --lew-text-color-9: rgb(190, 190, 190);
+
+  // 文本颜色反相
+  --lew-text-color-0-invert: rgb(255, 255, 255);
+  --lew-text-color-1-invert: rgb(235, 235, 235);
+  --lew-text-color-2-invert: rgb(215, 215, 215);
+  --lew-text-color-3-invert: rgb(195, 195, 195);
+  --lew-text-color-4-invert: rgb(175, 175, 175);
+  --lew-text-color-5-invert: rgb(155, 155, 155);
+  --lew-text-color-6-invert: rgb(135, 135, 135);
+  --lew-text-color-7-invert: rgb(115, 115, 115);
+  --lew-text-color-8-invert: rgb(95, 95, 95);
+  --lew-text-color-9-invert: rgb(75, 75, 75);
 
   // 全局
   --lew-color-white: #fff;
   --lew-color-white-text: rgba(255, 255, 255, 0.9);
-
   --lew-disabled-opacity: 0.5;
   --lew-box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.5);
 
-  // 圆角
-  --lew-border-radius-mini: 4px;
-  --lew-border-radius-small: 8px;
-  --lew-border-radius-medium: 12px;
-  --lew-border-radius-large: 16px;
-  // 边界
+  // 边框
   --lew-border-0: 1px solid rgb(245, 245, 245);
   --lew-border-1: 1px solid rgb(235, 235, 235);
   --lew-border-2: 1px solid rgb(225, 225, 225);
@@ -138,10 +133,18 @@
   --lew-border-7: 1px solid rgb(175, 175, 175);
   --lew-border-8: 1px solid rgb(165, 165, 165);
   --lew-border-9: 1px solid rgb(155, 155, 155);
+
+  // 圆角
+  --lew-border-radius-mini: 4px;
+  --lew-border-radius-small: 8px;
+  --lew-border-radius-medium: 12px;
+  --lew-border-radius-large: 16px;
+
   // 标题
   --lew-title-bold: 800;
-  // 表单样式
-  --lew-form-border-width: 0.15em;
+
+  // 表单
+  --lew-form-border-width: 0.1rem;
   --lew-form-transition-ease: all 0.2s ease;
   --lew-form-transition-bezier: all 0.25s cubic-bezier(0.3, 1.3, 0.3, 1);
   --lew-form-outline: 0px var(--lew-color-primary-light) solid;
@@ -153,32 +156,38 @@
   --lew-form-border-color-hover: rgb(211, 209, 209);
   --lew-form-border-color-active: rgba(0, 0, 0, 0.22);
   --lew-form-border-color-focus: var(--lew-color-primary);
-  // 表单尺寸
-  --lew-form-input-padding-small: 2px 10px;
-  --lew-form-input-padding-medium: 4px 12px;
-  --lew-form-input-padding-large: 6px 14px;
-  --lew-form-upload-padding-small: 14px 10px;
-  --lew-form-upload-padding-medium: 18px 12px;
-  --lew-form-upload-padding-large: 22px 14px;
-  --lew-form-upload-item-padding-small: 8px;
-  --lew-form-upload-item-padding-medium: 10px;
-  --lew-form-upload-item-padding-large: 12px;
-  --lew-form-item-height-small: 30px;
-  --lew-form-item-height-medium: 34px;
-  --lew-form-item-height-large: 38px;
-  --lew-form-input-line-height-small: 22px;
-  --lew-form-input-line-height-medium: 24px;
-  --lew-form-input-line-height-large: 26px;
-  --lew-form-font-size-small: 13px;
-  --lew-form-font-size-medium: 14px;
-  --lew-form-font-size-large: 16px;
-  // shadow
   --lew-form-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
-  // form icon
   --lew-form-icon-opacity: 1;
   --lew-form-icon-opacity-hover: 0.8;
   --lew-form-icon-opacity-active: 1;
-  // checkbox
+
+  // 表单尺寸
+  --lew-form-input-padding-mini: 1px 8px;
+  --lew-form-input-padding-small: 2px 10px;
+  --lew-form-input-padding-medium: 4px 12px;
+  --lew-form-input-padding-large: 6px 14px;
+  --lew-form-upload-padding-mini: 10px 8px;
+  --lew-form-upload-padding-small: 14px 10px;
+  --lew-form-upload-padding-medium: 18px 12px;
+  --lew-form-upload-padding-large: 22px 14px;
+  --lew-form-upload-item-padding-mini: 6px;
+  --lew-form-upload-item-padding-small: 8px;
+  --lew-form-upload-item-padding-medium: 10px;
+  --lew-form-upload-item-padding-large: 12px;
+  --lew-form-item-height-mini: 26px;
+  --lew-form-item-height-small: 30px;
+  --lew-form-item-height-medium: 34px;
+  --lew-form-item-height-large: 38px;
+  --lew-form-input-line-height-mini: 20px;
+  --lew-form-input-line-height-small: 22px;
+  --lew-form-input-line-height-medium: 24px;
+  --lew-form-input-line-height-large: 26px;
+  --lew-form-font-size-mini: 12px;
+  --lew-form-font-size-small: 13px;
+  --lew-form-font-size-medium: 14px;
+  --lew-form-font-size-large: 16px;
+
+  // 复选框和单选框
   --lew-checkbox-block-color: var(--lew-bgcolor-2);
   --lew-checkbox-border-color: var(--lew-bgcolor-4);
   --lew-checkbox-color: var(--lew-color-primary);
@@ -189,12 +198,17 @@
   --lew-radio-border-color-hover: var(--lew-color-primary);
   --lew-radio-color: var(--lew-color-primary);
   --lew-radio-color-light: var(--lew-color-primary-light);
-  // tabs
+
+  // 标签页
   --lew-tabs-active-color: #fff;
-  // dialog / modal
+
+  // 对话框和模态框
   --lew-modal-bgcolor: rgba(0, 0, 0, 0.3);
   --lew-modal-header-border: 1px rgb(227, 227, 233) solid;
   --lew-modal-footer-border: 1px rgb(227, 227, 233) solid;
+  --lew-modal-box-bgcolor: #fff;
+
+  // 抽屉
   // drawer
   --lew-drawer-bgcolor: rgba(0, 0, 0, 0.6);
   --lew-drawer-header-border: 1px rgb(227, 227, 233) solid;

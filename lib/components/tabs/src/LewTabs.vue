@@ -79,8 +79,7 @@ const selectItem = (value: string | number | undefined, type?: string) => {
     if (type !== 'watch' && value !== tabsValue.value) {
       emit('change', {
         label: _item.label,
-        value: _item.value,
-        activeIndex: index
+        value: _item.value
       })
     }
     state.curIndex = index
@@ -296,7 +295,7 @@ onUnmounted(() => {
   }
 
   .lew-tabs-item-isInit {
-    transition: all 0.15s cubic-bezier(0.65, 0, 0.35, 1);
+    transition: var(--lew-form-transition-bezier);
   }
 }
 
@@ -341,12 +340,12 @@ onUnmounted(() => {
     }
 
     .lew-tabs-item-active {
-      background: none;
+      background: transparent;
     }
 
     .lew-tabs-item-active:hover {
       transition: all 0.25s cubic-bezier(0.65, 0, 0.35, 1);
-      background: none;
+      background: transparent;
     }
 
     .lew-tabs-item-animation-active {

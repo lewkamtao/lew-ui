@@ -1,4 +1,5 @@
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPropTypes } from 'vue'
+import { validColors } from 'lew-ui/constants'
 
 export type BadgeColor =
   | 'red'
@@ -7,6 +8,7 @@ export type BadgeColor =
   | 'green'
   | 'mint'
   | 'teal'
+  | 'black'
   | 'cyan'
   | 'blue'
   | 'indigo'
@@ -14,17 +16,37 @@ export type BadgeColor =
   | 'pink'
   | 'gray'
   | 'brown'
+  | 'success'
+  | 'normal'
+  | 'warning'
+  | 'error'
+  | 'info'
+  | 'primary'
 
 export const badgeProps = {
-  value: {
-    type: String,
-    default: '',
-    description: '此项为空时，则默认显示一个点。'
-  },
   color: {
-    type: String as PropType<BadgeColor>,
+    type: String,
     default: 'red',
-    description: '颜色'
+    description: '徽章颜色，可选值包括多种预定义颜色',
+    validator: (value: string) => {
+      if (!validColors.includes(value as BadgeColor)) {
+        console.warn(`[LewBadge] 无效的颜色值: ${value}。请使用预定义的颜色之一。`)
+        return false
+      }
+      return true
+    }
+  },
+  value: {
+    type: [String, Number],
+    default: '',
+    description: '徽章显示的内容，为空时显示为小圆点',
+    validator: (value: string | number) => {
+      if (typeof value !== 'string' && typeof value !== 'number') {
+        console.warn('[LewBadge] value 属性必须是字符串或数字类型。')
+        return false
+      }
+      return true
+    }
   }
 }
 

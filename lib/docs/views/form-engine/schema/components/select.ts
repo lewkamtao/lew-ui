@@ -5,25 +5,10 @@ export default [
     field: 'placeholder'
   },
   {
-    label: '对齐方式',
-    as: 'tabs',
-    field: 'align',
-    props: {
-      options: [
-        {
-          label: '居左',
-          value: 'left'
-        },
-        {
-          label: '居中',
-          value: 'center'
-        },
-        {
-          label: '居右',
-          value: 'right'
-        }
-      ]
-    }
+    label: '选项配置',
+    as: 'input-table',
+    field: 'options',
+    direction: 'y'
   },
   {
     label: '触发方式',

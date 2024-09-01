@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { breadcrumbProps } from './props'
-const emit = defineEmits(['click'])
+const emit = defineEmits(['change'])
 
 defineProps(breadcrumbProps)
 </script>
@@ -13,7 +13,7 @@ defineProps(breadcrumbProps)
       class="lew-breadcrumb-item"
       :class="{ 'lew-breadcrumb-active': item.active }"
     >
-      <span :class="{ 'lew-breadcrumb-isPath': !!item.value }" @click="emit('click', item)">
+      <span :class="{ 'lew-breadcrumb-isPath': !!item.value }" @click="emit('change', item)">
         {{ item.label }}
       </span>
       <div v-if="index != options.length - 1" class="lew-breadcrumb-parting">
@@ -58,6 +58,7 @@ defineProps(breadcrumbProps)
     font-weight: 400;
     color: var(--lew-text-color-5);
     user-select: none;
+    white-space: nowrap;
     span {
       cursor: default;
       padding: 2px 4px;

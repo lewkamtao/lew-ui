@@ -9,7 +9,6 @@ const props = defineProps(radioGroupProps)
 const modelValue: Ref<string | number | undefined> = defineModel()
 
 const change = ({ item }: { item: RadioOptions }) => {
-  console.log('change', item)
   modelValue.value = item.value
   emit('change', {
     value: item.value,
@@ -29,17 +28,17 @@ const getRadioGroupClassName = computed(() => {
 </script>
 
 <template>
-  <lew-flex x="start" gap="5" class="lew-radio-group" :class="getRadioGroupClassName">
+  <lew-flex x="start" gap="10" class="lew-radio-group" :class="getRadioGroupClassName">
     <lew-radio
       v-for="item in options"
       :key="item.value"
+      :checked="modelValue === item.value"
+      :disabled="item.disabled || disabled"
+      :size="size"
+      :round="round"
       :block="block"
       :iconable="iconable"
       :label="item.label"
-      :disabled="item.disabled || disabled"
-      :round="round"
-      :size="size"
-      :checked="modelValue === item.value"
       @change="change({ item })"
     />
   </lew-flex>

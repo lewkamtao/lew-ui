@@ -1,42 +1,33 @@
 import { useMouse } from '@vueuse/core'
+import { createApp, h } from 'vue'
 import _LewDialog from './LewDialog.vue'
-import type { ButtonColor } from 'lew-ui'
+import type { LewColor } from 'lew-ui'
 
 const { x, y } = useMouse()
 
 type Options = {
   title: string
   content: string
-  ok: Function
-  cancel: Function
-  layout: string
-  okText: string
-  cancelText: string
+  ok?: () => boolean | Promise<boolean>
+  cancel?: () => boolean | Promise<boolean>
+  layout?: string
+  okText?: string
+  cancelText?: string
   closeOnClickOverlay?: boolean
   closeByEsc?: boolean
 }
 
-const warning = (options: Options) => {
-  dialog('warning', options)
-}
+type DialogType = 'warning' | 'error' | 'info' | 'normal' | 'success'
 
-const error = (options: Options) => {
-  dialog('error', options)
-}
+const createDialog = (type: DialogType) => (options: Options) => dialog(type as LewColor, options)
 
-const info = (options: Options) => {
-  dialog('info', options)
-}
+const warning = createDialog('warning')
+const error = createDialog('error')
+const info = createDialog('info')
+const normal = createDialog('normal')
+const success = createDialog('success')
 
-const normal = (options: Options) => {
-  dialog('normal', options)
-}
-
-const success = (options: Options) => {
-  dialog('success', options)
-}
-
-const dialog = (type: ButtonColor, options: Options) => {
+const dialog = (type: LewColor, options: Options) => {
   const {
     title,
     content,
@@ -48,9 +39,10 @@ const dialog = (type: ButtonColor, options: Options) => {
     closeOnClickOverlay,
     closeByEsc
   } = options
-  const div: HTMLDivElement = document.createElement('div')
+  const div = document.createElement('div')
   const transformOrigin = `${x.value}px ${y.value}px`
   document.body.appendChild(div)
+
   const app = createApp({
     render() {
       return h(
@@ -63,22 +55,12 @@ const dialog = (type: ButtonColor, options: Options) => {
           okText,
           cancelText,
           transformOrigin,
-          ok:
-            ok ||
-            (() => {
-              return true
-            }),
+          ok: ok || (() => true),
           onClose: () => {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            app.unmount(div)
+            app.unmount()
             div.remove()
           },
-          cancel:
-            cancel ||
-            (() => {
-              return true
-            })
+          cancel: cancel || (() => true)
         },
         {
           title: () => title,
@@ -87,8 +69,8 @@ const dialog = (type: ButtonColor, options: Options) => {
       )
     }
   })
+
   app.mount(div)
-  div.remove()
 }
 
 export const LewDialog = {

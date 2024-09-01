@@ -120,28 +120,7 @@ export const componentsMenusSchema = [
       trigger: 'click',
       align: 'left',
       showCheckIcon: true,
-      options: [
-        {
-          label: '广东',
-          value: '1'
-        },
-        {
-          label: '深圳',
-          value: '2'
-        },
-        {
-          label: '杭州',
-          value: '3'
-        },
-        {
-          label: '上海',
-          value: '4'
-        },
-        {
-          label: '北京',
-          value: '5'
-        }
-      ]
+      options: []
     }
   },
   {
@@ -187,6 +166,7 @@ export const componentsMenusSchema = [
     as: 'cascader',
     schema: cascader,
     props: {
+      clearable: true,
       label: '是否同意',
       free: true,
       options: [
@@ -302,6 +282,7 @@ export const componentsMenusSchema = [
     as: 'date-picker',
     schema: datePicker,
     props: {
+      clearable: true,
       options: [
         {
           label: 'Beijing',
@@ -324,6 +305,7 @@ export const componentsMenusSchema = [
     as: 'date-range-picker',
     schema: datePickerRange,
     props: {
+      clearable: true,
       options: [
         {
           label: 'Beijing',
@@ -346,7 +328,9 @@ export const componentsMenusSchema = [
     fieldType: [],
     as: 'input-tag',
     schema: inputTag,
-    props: {}
+    props: {
+      clearable: true
+    }
   },
   {
     label: '开关',

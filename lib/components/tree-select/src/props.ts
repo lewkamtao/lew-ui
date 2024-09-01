@@ -1,9 +1,11 @@
 import type { PropType } from 'vue'
 import type { TreeDataSource } from '../../tree'
+import type { LewSize } from 'lew-ui'
+import { validSizes } from 'lew-ui/constants'
 
 export type TreeSelectOptions = {
   label: string
-  value: [string, number]
+  value: string | number
   labelPaths?: string[]
   keysPaths?: string[]
   level: number
@@ -17,12 +19,13 @@ export type TreeSelectOptions = {
 }
 
 export type TreeSelectTriggerType = 'click' | 'hover'
+export type TreeSelectAlign = 'left' | 'center' | 'right'
 
 export const treeSelectModel = {
   modelValue: {
-    type: [String, Number, undefined],
-    default: '',
-    description: '绑定值'
+    type: [String, Number],
+    default: undefined,
+    description: '当前选中的值'
   }
 }
 
@@ -32,101 +35,69 @@ export type TreeSelectSearchMethodParams = {
 }
 
 export const treeSelectProps = {
+  modelValue: {
+    type: [String, Number],
+    default: undefined,
+    description: '当前选中的值'
+  },
   dataSource: {
     type: Array as PropType<TreeDataSource[]>,
-    default: [],
-    description: '配置列表'
+    default: () => [],
+    description: '树形数据源',
+    validator: (value: TreeDataSource[]) => {
+      if (!Array.isArray(value)) {
+        console.warn('[LewTreeSelect] dataSource 必须是一个数组')
+        return false
+      }
+      return true
+    }
   },
-  trigger: {
-    type: String,
-    default: 'click',
-    description: '触发方式，可选值为 click 或 hover'
+  defaultValue: {
+    type: [String, Number],
+    default: '',
+    description: '默认选中值'
   },
   placeholder: {
     type: String,
     default: '请选择',
-    description: '默认提示语'
+    description: '占位文本'
   },
   size: {
-    type: String,
+    type: String as PropType<LewSize>,
     default: 'medium',
-    description: '尺寸，可选值为 small、medium、large'
-  },
-  showAllLevels: {
-    type: Boolean,
-    default: true,
-    description: '是否展示所有层级'
-  },
-  searchable: {
-    type: Boolean,
-    default: false,
-    description: '是否可搜索'
-  },
-
-  searchDelay: {
-    type: Number,
-    default: 250,
-    description: '搜索延迟，单位毫秒'
-  },
-  clearable: {
-    type: Boolean,
-    default: false,
-    description: '是否可清空'
-  },
-  readonly: {
-    type: Boolean,
-    default: false,
-    description: '是否只读'
+    description: '组件尺寸',
+    validator: (value: LewSize) => {
+      if (!validSizes.includes(value)) {
+        console.warn('[LewTreeSelect] size 必须是 small、medium 或 large')
+        return false
+      }
+      return true
+    }
   },
   disabled: {
     type: Boolean,
     default: false,
     description: '是否禁用'
   },
-  align: {
-    type: String,
-    default: 'left',
-    description: '对齐方式，可选值为 left、center、right'
-  },
-  showCheckIcon: {
+  clearable: {
     type: Boolean,
-    default: true,
-    description: '是否显示选中图标'
-  },
-  keyField: {
-    type: String,
-    default: 'key',
-    description: '替代 TreeDataSource 中的 key 字段名，该字段值必须唯一。'
-  },
-  labelField: {
-    type: String,
-    default: 'label',
-    description: '替代 TreeDataSource 中的 label 字段名'
-  },
-  disabledField: {
-    type: String,
-    default: 'disabled',
-    description: '替代 TreeDataSource 中的 disabled 字段名'
-  },
-  defaultValue: {
-    type: String,
-    default: '',
-    description: '默认值'
+    default: false,
+    description: '是否可清空'
   },
   showCheckbox: {
     type: Boolean,
     default: false,
     description: '是否显示复选框'
   },
-  initTree: {
-    type: Function as PropType<() => void> | undefined,
-    default: undefined,
-    description: '初始化加载树形数据，会覆盖searchMethod方法'
+  showAllLevels: {
+    type: Boolean,
+    default: true,
+    description: '是否显示完整路径'
   },
-  onload: {
-    type: Function as PropType<() => void> | undefined,
-    default: undefined,
-    description: '异步加载数据'
+  showCheckIcon: {
+    type: Boolean,
+    default: true,
+    description: '是否显示选中图标'
   },
   showLine: {
     type: Boolean,
@@ -136,11 +107,82 @@ export const treeSelectProps = {
   expandAll: {
     type: Boolean,
     default: false,
-    description: '默认全部展开'
+    description: '是否默认展开所有节点'
+  },
+  searchable: {
+    type: Boolean,
+    default: false,
+    description: '是否可搜索'
+  },
+  searchDelay: {
+    type: Number,
+    default: 250,
+    description: '搜索防抖延迟（毫秒）',
+    validator: (value: number) => {
+      if (value < 0) {
+        console.warn('[LewTreeSelect] searchDelay 必须大于或等于 0')
+        return false
+      }
+      return true
+    }
+  },
+  readonly: {
+    type: Boolean,
+    default: false,
+    description: '是否只读'
   },
   free: {
     type: Boolean,
     default: true,
-    description: '自由模式（是否严格的遵循父子互相关联）'
+    description: '是否为自由模式（父子节点选中状态不关联）'
+  },
+  align: {
+    type: String as PropType<TreeSelectAlign>,
+    default: 'left',
+    description: '文本对齐方式',
+    validator: (value: TreeSelectAlign) => {
+      if (!['left', 'center', 'right'].includes(value)) {
+        console.warn('[LewTreeSelect] align 必须是 left、center 或 right')
+        return false
+      }
+      return true
+    }
+  },
+  trigger: {
+    type: String as PropType<TreeSelectTriggerType>,
+    default: 'click',
+    description: '子菜单触发方式',
+    validator: (value: TreeSelectTriggerType) => {
+      if (!['click', 'hover'].includes(value)) {
+        console.warn('[LewTreeSelect] trigger 必须是 click 或 hover')
+        return false
+      }
+      return true
+    }
+  },
+  keyField: {
+    type: String,
+    default: 'key',
+    description: '节点标识字段名'
+  },
+  labelField: {
+    type: String,
+    default: 'label',
+    description: '节点标签字段名'
+  },
+  disabledField: {
+    type: String,
+    default: 'disabled',
+    description: '节点禁用状态字段名'
+  },
+  initTree: {
+    type: Function as PropType<() => void>,
+    default: undefined,
+    description: '初始化树数据的方法'
+  },
+  onload: {
+    type: Function as PropType<() => void>,
+    default: undefined,
+    description: '异步加载子节点数据的方法'
   }
 }

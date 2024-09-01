@@ -11,92 +11,87 @@ export type SelectSearchMethodParams = {
   keyword?: string
 }
 
+export type SelectSize = 'small' | 'medium' | 'large'
+export type SelectTrigger = 'click' | 'hover'
+
 export const selectModel = {
   modelValue: {
-    type: [String, Number, undefined],
+    type: [String, Number, undefined] as PropType<string | number | undefined>,
     default: '',
-    description: '绑定值'
+    description: '选择器的当前值，支持双向绑定'
   }
 }
 
 export const selectProps = {
   defaultValue: {
-    type: [String, Number],
+    type: [String, Number] as PropType<string | number>,
     default: '',
-    description: '默认值，用于异步列表的情况，无法映射label和value，需要手动传入'
+    description: '选择器的默认值，用于异步加载选项时设置初始值'
   },
   options: {
     type: Array as PropType<SelectOptions[]>,
-    default: [],
-    description: '配置列表'
+    default: () => [],
+    description: '选择器的选项列表'
   },
   trigger: {
-    type: String,
+    type: String as PropType<SelectTrigger>,
     default: 'click',
-    description: '触发方式，可选值为 click 或 hover'
+    description: '触发下拉菜单的方式，可选值为 "click" 或 "hover"'
   },
   placeholder: {
     type: String,
     default: '请选择',
-    description: '默认提示语'
+    description: '选择器的占位文本'
   },
   size: {
-    type: String,
+    type: String as PropType<SelectSize>,
     default: 'medium',
-    description: '尺寸，可选值为 small、medium、large'
+    description: '选择器的尺寸，可选值为 "small"、"medium" 或 "large"'
   },
   itemHeight: {
     type: Number,
     default: 38,
-    description: '选项高度，单位 px，没用插槽时无需设置，用于计算虚拟列表的高度'
+    description: '选项的高度（单位：像素），用于计算虚拟列表的高度'
   },
   searchable: {
     type: Boolean,
     default: false,
-    description: '是否可搜索'
+    description: '是否启用搜索功能'
   },
   searchMethod: {
-    type: Function as PropType<(e: SelectSearchMethodParams) => SelectOptions[]>,
+    type: Function as PropType<(params: SelectSearchMethodParams) => SelectOptions[]>,
     default: (params: SelectSearchMethodParams) => {
       const { options, keyword } = params
       if (options && keyword) {
-        const reslut = options.filter((e) => {
-          return keyword && e.label.indexOf(keyword) >= 0
-        })
-        return reslut
+        return options.filter((option) => option.label.indexOf(keyword) >= 0)
       }
       return []
     },
-    description: '搜索方法，返回搜索结果列表。'
+    description: '自定义搜索方法，接收搜索参数并返回过滤后的选项列表'
   },
   searchDelay: {
     type: Number,
     default: 250,
-    description: '搜索延迟，单位毫秒，仅在 searchable 为 true 时有效'
+    description: '搜索延迟时间（单位：毫秒），仅在 searchable 为 true 时生效'
   },
   clearable: {
     type: Boolean,
-    default: () => false,
-    description: '是否使用清空按钮'
+    default: false,
+    description: '是否显示清空按钮'
   },
   readonly: {
     type: Boolean,
-    default: () => false,
-    description: '是否只读'
+    default: false,
+    description: '是否将选择器设为只读状态'
   },
   disabled: {
     type: Boolean,
-    default: () => false,
-    description: '是否禁用'
-  },
-  align: {
-    type: String,
-    default: 'left',
-    description: '对齐方式，可选值为 left、center、right'
+    default: false,
+    description: '是否禁用选择器'
   },
   showCheckIcon: {
     type: Boolean,
-    default: () => true,
-    description: '是否显示选中图标'
+    default: true,
+    description: '是否在选中项旁显示勾选图标'
   }
 }

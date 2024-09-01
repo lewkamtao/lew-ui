@@ -135,7 +135,7 @@ defineExpose({ show, hide })
               placement: 'right',
               delay: [500, 80]
             }"
-            :class="[dayjs(modelValue).isSame(item.value, 'day') ? 'item-actived' : '']"
+            :class="[dayjs(modelValue).isSame(item.value, 'day') ? 'item-active' : '']"
           >
             {{ item.label }}
           </div>
@@ -163,13 +163,13 @@ defineExpose({ show, hide })
     border-radius: var(--lew-border-radius-small);
     background-color: var(--lew-form-bgcolor);
     box-sizing: border-box;
-	transition:var(--lew-form-transition-ease);
+    transition: var(--lew-form-transition-ease);
     cursor: pointer;
     user-select: none;
     outline: 0px var(--lew-form-border-color) solid;
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-	box-shadow: var(--lew-form-box-shadow);
-}
+    box-shadow: var(--lew-form-box-shadow);
+  }
 
   .lew-date-picker-input {
     width: 100%;
@@ -267,7 +267,7 @@ defineExpose({ show, hide })
     .item:hover {
       background-color: var(--lew-form-bgcolor-hover);
     }
-    .item-actived {
+    .item-active {
       background-color: var(--lew-color-blue) !important;
       color: var(--lew-color-white);
     }

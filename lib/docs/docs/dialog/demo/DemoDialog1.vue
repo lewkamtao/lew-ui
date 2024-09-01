@@ -1,9 +1,10 @@
 <script setup lang="ts">
 const open = () => {
   LewDialog.error({
-    title: '销毁确认',
-    okText: '销毁',
-    content: '你是否要销毁该仓库，此操作会立即生效，请谨慎操作！',
+    title: 'iCloud 数据删除确认',
+    okText: '删除',
+    content:
+      '您确定要永久删除所有 iCloud 数据吗？此操作无法撤销，可能会导致您的设备上的数据丢失。请谨慎操作！',
     closeOnClickOverlay: true,
     closeByEsc: true,
     ok: () => {
@@ -11,18 +12,18 @@ const open = () => {
         setTimeout(() => {
           resolve(true)
           LewMessage.success({
-            content: '删除成功'
+            content: 'iCloud 数据已成功删除'
           })
         }, 1000)
       })
     },
     cancel: () => {
-      // 取消
+      // 取消操作
     }
   })
 }
 </script>
 
 <template>
-  <lew-button color="error" type="fill" text="销毁" @click="open()" />
+  <lew-button color="error" type="fill" text="删除 iCloud 数据" @click="open()" />
 </template>

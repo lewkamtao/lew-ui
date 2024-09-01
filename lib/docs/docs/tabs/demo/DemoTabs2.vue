@@ -1,64 +1,73 @@
 <script setup lang="ts">
-type Options = {
+interface TabOption {
   label: string
   value: string
-  activeIndex: number
 }
-const provinces = [
-  '北京市',
-  '上海市',
-  '天津市',
-  '重庆市',
-  '河北省',
-  '山西省',
-  '辽宁省',
-  '吉林省',
-  '黑龙江省',
-  '江苏省',
-  '浙江省',
-  '安徽省',
-  '福建省',
-  '江西省',
-  '山东省',
-  '河南省',
-  '湖北省',
-  '湖南省',
-  '广东省',
-  '海南省',
-  '四川省',
-  '贵州省',
-  '云南省',
-  '陕西省',
-  '甘肃省',
-  '青海省',
-  '台湾省',
-  '内蒙古自治区',
-  '广西壮族自治区',
-  '西藏自治区',
-  '宁夏回族自治区',
-  '新疆维吾尔自治区',
-  '香港特别行政区',
-  '澳门特别行政区'
+
+const samCategories = [
+  '新鲜水果',
+  '蔬菜',
+  '肉类',
+  '海鲜水产',
+  '乳制品',
+  '零食',
+  '饮料',
+  '家居用品',
+  '个人护理',
+  '母婴',
+  '烘焙',
+  '冷冻食品',
+  '调味品',
+  '干货',
+  '酒水',
+  '方便速食',
+  '休闲食品',
+  '进口食品',
+  '有机食品',
+  '保健品',
+  '清洁用品',
+  '美容护肤',
+  '厨房用具',
+  '家用电器',
+  '手机数码',
+  '服装鞋帽',
+  '运动户外',
+  '文具',
+  '办公用品',
+  '图书音像',
+  '玩具',
+  '宠物用品',
+  '汽车用品',
+  '茶叶',
+  '咖啡',
+  '营养保健',
+  '电子产品',
+  '园艺用品',
+  '节日礼品',
+  '箱包'
 ]
 
-const options = ref(
-  provinces.map((e, i) => {
-    return {
-      label: e,
-      value: i
-    }
-  })
+const tabOptions = ref<TabOption[]>(
+  samCategories.map((category, index) => ({
+    label: category,
+    value: `category_${index}`
+  }))
 )
 
-const value = ref(1)
+const selectedCategory = ref('category_0')
 
-const change = (e: Options) => {
-  LewMessage.info(e.label)
+const handleCategoryChange = (option: TabOption) => {
+  LewMessage.info(`您选择了：${option.label}`)
 }
 </script>
 
 <template>
   <lew-flex direction="y" x="start" y="start">
-    <lew-tabs v-model="value" style="width: 100%" :options="options" @change="change" />
+    <lew-tabs
+      v-model="selectedCategory"
+      style="width: 100%"
+      :options="tabOptions"
+      @change="handleCategoryChange"
+    />
   </lew-flex>
 </template>

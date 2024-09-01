@@ -1,19 +1,36 @@
 <script setup lang="ts">
-import { schools } from '@/lib/data'
+const options = ref([
+  { label: '标准配送', value: 'standard' },
+  { label: '快速配送', value: 'express' },
+  { label: '次日达', value: 'nextDay' },
+  { label: '同城急送', value: 'sameDay' }
+])
 
-const schoolsOptions = schools.map((e, i) => {
-  return { label: e, value: i + 1 }
-})
-
-const options = ref(schoolsOptions)
-
-const value = ref('')
+const selectedShipping = ref('')
 </script>
 
 <template>
   <lew-flex style="width: 320px" direction="y">
-    <lew-select v-model="value" clearable size="small" placeholder="小" :options="options" />
-    <lew-select v-model="value" clearable size="medium" placeholder="中" :options="options" />
-    <lew-select v-model="value" clearable size="large" placeholder="大" :options="options" />
+    <lew-select
+      v-model="selectedShipping"
+      clearable
+      size="small"
+      placeholder="选择配送方式"
+      :options="options"
+    />
+    <lew-select
+      v-model="selectedShipping"
+      clearable
+      size="medium"
+      placeholder="选择配送方式"
+      :options="options"
+    />
+    <lew-select
+      v-model="selectedShipping"
+      clearable
+      size="large"
+      placeholder="选择配送方式"
+      :options="options"
+    />
   </lew-flex>
 </template>

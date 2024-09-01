@@ -18,7 +18,7 @@ const selectValue: Ref<string | number | undefined> = defineModel()
 
 const lewSelectRef = ref()
 const inputRef = ref()
-const lewPopverRef = ref()
+const lewPopoverRef = ref()
 
 const state = reactive({
   selectWidth: 0,
@@ -35,11 +35,11 @@ const getSelectWidth = () => {
 }
 
 const show = () => {
-  lewPopverRef.value.show()
+  lewPopoverRef.value.show()
 }
 
 const hide = () => {
-  lewPopverRef.value.hide()
+  lewPopoverRef.value.hide()
 }
 
 const searchDebounce = useDebounceFn(async (e: any) => {
@@ -109,9 +109,9 @@ const findKeyword = () => {
 findKeyword()
 
 const getSelectClassName = computed(() => {
-  let { clearable, size, align } = props
+  let { clearable, size } = props
   clearable = clearable ? !!selectValue.value : false
-  return object2class('lew-select', { clearable, size, align })
+  return object2class('lew-select', { clearable, size })
 })
 
 const getBodyClassName = computed(() => {
@@ -133,11 +133,9 @@ const getSelectViewClassName = computed(() => {
 const getSelectItemClassName = (e: any) => {
   const { disabled } = e
   const active = getChecked.value(e.value)
-  const { align } = props
 
   return object2class('lew-select-item', {
     disabled,
-    align,
     active
   })
 }
@@ -192,7 +190,7 @@ defineExpose({ show, hide })
 
 <template>
   <lew-popover
-    ref="lewPopverRef"
+    ref="lewPopoverRef"
     popoverBodyClassName="lew-select-popover-body"
     class="lew-select-view"
     :class="getSelectViewClassName"
@@ -251,7 +249,7 @@ defineExpose({ show, hide })
               <lew-empty title="暂无结果" />
             </lew-flex>
           </template>
-          <div v-if="searchable && state.options && state.options.length > 0" class="reslut-count">
+          <div v-if="searchable && state.options && state.options.length > 0" class="result-count">
             共
             {{ numFormat(state.options && state.options.length) }}
             条结果
@@ -359,17 +357,6 @@ defineExpose({ show, hide })
       color: rgb(165, 165, 165);
     }
   }
-  .lew-select-align-left {
-    text-align: left;
-  }
-
-  .lew-select-align-center {
-    text-align: center;
-  }
-
-  .lew-select-align-right {
-    text-align: right;
-  }
 
   .lew-select-placeholder {
     color: rgb(165, 165, 165);
@@ -462,7 +449,7 @@ defineExpose({ show, hide })
   .lew-select-options-list {
     padding: 2px 0px;
   }
-  .reslut-count {
+  .result-count {
     padding-left: 8px;
     margin: 5px 0px;
     opacity: 0.4;
@@ -498,18 +485,6 @@ defineExpose({ show, hide })
     .lew-select-item-disabled {
       opacity: var(--lew-disabled-opacity);
       cursor: no-drop;
-    }
-
-    .lew-select-item-align-left {
-      text-align: left;
-    }
-
-    .lew-select-item-align-center {
-      text-align: center;
-    }
-
-    .lew-select-item-align-right {
-      text-align: right;
     }
 
     .lew-select-label {

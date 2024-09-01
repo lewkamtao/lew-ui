@@ -1,17 +1,24 @@
 <script setup lang="ts">
-const options = ref([
-  { label: '宋朝', value: 1 },
-  { label: '唐朝', value: 2 },
-  { label: '明朝', value: 3, disabled: true },
-  { label: '清朝', value: 4 }
+const socialMediaFeatures = ref([
+  { label: '朋友圈', value: 'moments' },
+  { label: '直播', value: 'live' },
+  { label: '短视频', value: 'shortVideo', disabled: true },
+  { label: '群聊', value: 'groupChat' },
+  { label: '视频通话', value: 'videoCall' }
 ])
 
-const value = ref([1, 2])
-const change = (e: any) => {
-  console.log(e)
+const selectedFeatures = ref(['moments', 'live'])
+
+const handleFeatureChange = (selectedValues: string[]) => {
+  console.log('选中的社交媒体功能:', selectedValues)
 }
 </script>
 
 <template>
-  <lew-checkbox-group v-model="value" block :options="options" @change="change" />
+  <lew-checkbox-group
+    v-model="selectedFeatures"
+    block
+    :options="socialMediaFeatures"
+    @change="handleFeatureChange"
+  />
 </template>

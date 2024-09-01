@@ -6,5 +6,9 @@ const change = (e: boolean) => {
 </script>
 
 <template>
-  <lew-switch v-model="value" @change="change" />
+  <lew-flex x="start" y="end">
+    <lew-switch size="small" v-model="value" @change="change" />
+    <lew-switch size="medium" v-model="value" @change="change" />
+    <lew-switch size="large" v-model="value" @change="change" />
+  </lew-flex>
 </template>

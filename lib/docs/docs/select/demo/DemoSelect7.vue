@@ -4,11 +4,17 @@ const value = ref('')
 </script>
 
 <template>
-  <lew-select v-model="value" style="width: 320px" :options="options" clearable>
+  <lew-select
+    v-model="value"
+    style="width: 320px"
+    :options="options"
+    clearable
+    placeholder="请选择部门"
+  >
     <template #empty>
       <div class="empty">
-        <lew-icon size="30" type="box" />
-        暂无内容
+        <lew-icon size="30" type="search" />
+        暂无匹配的部门
       </div>
     </template>
   </lew-select>
@@ -23,6 +29,6 @@ const value = ref('')
   height: 220px;
   gap: 10px;
   text-align: center;
-  color: #aaa;
+  color: #999;
 }
 </style>

@@ -20,7 +20,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
     >
       <div class="lew-steps-item-index">
         <lew-icon
-          v-if="index === (stepsValue || 1) - 1 && status === 'pending'"
+          v-if="index === (stepsValue || 1) - 1 && status === 'loading'"
           size="16"
           stroke-width="3"
           animation="spin"

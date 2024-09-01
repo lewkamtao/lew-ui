@@ -1,28 +1,42 @@
-import type { ExtractPropTypes, PropType } from 'vue'
-import type { TagColor } from 'lew-ui'
+import type { ExtractPropTypes } from 'vue'
+import type { LewColor } from 'lew-ui'
 
 export type MenuOptions = {
   label: string // 标题
   value?: string // 值
-  children?: MenuOptions[] // 子类
+  children?: MenuOptions[] // 子菜单
   disabled?: boolean // 是否禁用
-  level?: number // 层级
+  level?: number // 菜单层级
   icon?: string // 图标
-  tagText?: string // 文本
-  tagColor?: TagColor // 颜色
+  tagText?: string // 标签文本
+  tagColor?: LewColor // 标签颜色
 }
 
 export const menuProps = {
   options: {
     type: Array as PropType<MenuOptions[]>,
     default: [],
+    description: '菜单选项配置',
     typeDesc: 'MenuOptions[]',
-    description: '颜色'
+    validator: (value: unknown): boolean => {
+      if (!Array.isArray(value)) {
+        console.warn('[LewMenu] options 必须是一个数组')
+        return false
+      }
+      return true
+    }
   },
-  actived: {
+  active: {
     type: String,
     default: '',
-    description: '选中的值'
+    description: '当前激活的菜单项的值',
+    validator: (value: unknown): boolean => {
+      if (typeof value !== 'string') {
+        console.warn('[LewMenu] active 必须是一个字符串')
+        return false
+      }
+      return true
+    }
   }
 }
 

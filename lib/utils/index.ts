@@ -13,6 +13,7 @@ export const getIconType = (type: string | undefined): string => {
   // @ts-ignore
   return map[type] || 'info'
 }
+
 // type: The type of message to display in the tooltip.
 export const getColorType = (type: string | undefined): string => {
   const typeMap = {
@@ -27,6 +28,7 @@ export const getColorType = (type: string | undefined): string => {
   // @ts-ignore
   return typeMap[type] || type
 }
+
 export const object2class = (prefix: string, props: Object) => {
   let className = ''
   for (const [key, value] of Object.entries(props)) {
@@ -179,13 +181,11 @@ export const getFileIcon = (fileName: string = '') => {
       return getAssetsFile({ name: 'file_word.svg', type: 'icon' })
     case 'pdf':
     case 'PDF':
-    case 'PDFX':
       return getAssetsFile({ name: 'file_pdf.svg', type: 'icon' })
     case 'ppt':
     case 'pptx':
       return getAssetsFile({ name: 'file_ppt.svg', type: 'icon' })
     case 'txt':
-    case 'txtx':
       return getAssetsFile({ name: 'file_txt.svg', type: 'icon' })
     case 'xls':
     case 'xlsx':
@@ -198,7 +198,6 @@ export const getFileIcon = (fileName: string = '') => {
     case 'zip':
     case 'rar':
     case '7z':
-    case 'zipx':
     case 'gz':
       return getAssetsFile({ name: 'file_rar.svg', type: 'icon' })
     case 'mp3':
@@ -221,7 +220,6 @@ export const getFileIcon = (fileName: string = '') => {
     case 'ico':
       return getAssetsFile({ name: 'file_img.svg', type: 'icon' })
     case 'psd':
-    case 'psdx':
       return getAssetsFile({ name: 'file_psd.svg', type: 'icon' })
     case 'ai':
     case 'cdr':

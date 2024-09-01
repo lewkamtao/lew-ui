@@ -1,7 +1,7 @@
 <template>
-  <lew-flex x="start" wrap>
-    <lew-tag type="fill">fill</lew-tag>
-    <lew-tag type="light">light</lew-tag>
-    <lew-tag type="ghost">ghost</lew-tag>
+  <lew-flex x="start" y="start">
+    <lew-tag type="fill">填充标签</lew-tag>
+    <lew-tag type="light">浅色标签</lew-tag>
+    <lew-tag type="ghost">幽灵标签</lew-tag>
   </lew-flex>
 </template>

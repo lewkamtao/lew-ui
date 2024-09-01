@@ -65,7 +65,8 @@ initCheckbox()
 <template>
   <lew-flex
     x="start"
-    gap="5"
+    gap="10"
+    wrap
     :direction="direction"
     class="lew-checkbox-group"
     :class="getCheckboxGroupClassName"

@@ -49,7 +49,7 @@ const cascaderValue: Ref<string | number | undefined> = defineModel({
 })
 
 const lewCascaderRef = ref()
-const lewPopverRef = ref()
+const lewPopoverRef = ref()
 
 const state = reactive({
   visible: false,
@@ -57,8 +57,8 @@ const state = reactive({
   okLoading: false,
   optionsGroup: [] as CascaderOptions[][], // 分组
   optionsTree: [] as any, // 树
-  activelabels: [] as string[], // 激活
-  tobelabels: [] as string[], // 待确认
+  activeLabels: [] as string[], // 激活
+  tobeLabels: [] as string[], // 待确认
   tobeItem: {} as CascaderOptions,
   keyword: ''
 })
@@ -150,7 +150,7 @@ init()
 
 // 选择
 const selectItem = async (item: CascaderOptions, level: number) => {
-  if (!item.isLeaf && item.labelPaths !== state.activelabels) {
+  if (!item.isLeaf && item.labelPaths !== state.activeLabels) {
     state.optionsGroup = state.optionsGroup.slice(0, level + 1)
     if (props.onload && !item.isLeaf) {
       item.loading = true
@@ -179,13 +179,13 @@ const selectItem = async (item: CascaderOptions, level: number) => {
       state.optionsGroup.push(_options)
     }
   }
-  if (item.labelPaths === state.activelabels) {
-    state.activelabels = item.parentLabelPaths as string[]
+  if (item.labelPaths === state.activeLabels) {
+    state.activeLabels = item.parentLabelPaths as string[]
     if (level < state.optionsGroup.length - 1) {
       state.optionsGroup.pop()
     }
   } else {
-    state.activelabels = item.labelPaths as string[]
+    state.activeLabels = item.labelPaths as string[]
   }
   state.tobeItem = { ...item, children: undefined }
   if (props.free) {
@@ -199,30 +199,30 @@ const selectItem = async (item: CascaderOptions, level: number) => {
 // 检查Item
 const checkItem = (item: CascaderOptions) => {
   if (props.showAllLevels) {
-    if (state.tobelabels === item.labelPaths) {
-      state.tobelabels = item.parentLabelPaths as string[]
+    if (state.tobeLabels === item.labelPaths) {
+      state.tobeLabels = item.parentLabelPaths as string[]
     } else {
-      state.tobelabels = item.labelPaths as string[]
+      state.tobeLabels = item.labelPaths as string[]
     }
-  } else if (state.tobelabels[0] === (item.label as string)) {
-    state.tobelabels = [] as string[]
+  } else if (state.tobeLabels[0] === (item.label as string)) {
+    state.tobeLabels = [] as string[]
   } else {
-    state.tobelabels = [item.label] as any
+    state.tobeLabels = [item.label] as any
   }
 }
 
 const show = async () => {
-  lewPopverRef.value.show()
+  lewPopoverRef.value.show()
 }
 
 const hide = () => {
-  lewPopverRef.value.hide()
+  lewPopoverRef.value.hide()
 }
 
 const clearHandle = () => {
   cascaderValue.value = undefined as any
-  state.tobelabels = []
-  state.activelabels = []
+  state.tobeLabels = []
+  state.activeLabels = []
   hide()
   init()
   emit('clear')
@@ -269,8 +269,8 @@ const showHandle = () => {
 const hideHandle = () => {
   state.visible = false
   if (!cascaderValue.value) {
-    state.tobelabels = []
-    state.activelabels = []
+    state.tobeLabels = []
+    state.activeLabels = []
     state.optionsGroup = [state.optionsGroup[0]]
   }
   emit('blur')
@@ -307,7 +307,7 @@ defineExpose({ show, hide })
 
 <template>
   <lew-popover
-    ref="lewPopverRef"
+    ref="lewPopoverRef"
     class="lew-cascader-view"
     :class="getCascaderViewClassName"
     :trigger="trigger"
@@ -389,23 +389,23 @@ defineExpose({ show, hide })
                     class="lew-cascader-item"
                     :class="{
                       'lew-cascader-item-disabled': templateProps.disabled,
-                      'lew-cascader-item-hover': state.activelabels.includes(templateProps.label),
+                      'lew-cascader-item-hover': state.activeLabels.includes(templateProps.label),
                       'lew-cascader-item-active': free
-                        ? state.activelabels.includes(templateProps.label) &&
-                          state.tobelabels.includes(templateProps.label)
-                        : state.activelabels.includes(templateProps.label),
-                      'lew-cascader-item-tobe': state.tobelabels.includes(templateProps.label),
+                        ? state.activeLabels.includes(templateProps.label) &&
+                          state.tobeLabels.includes(templateProps.label)
+                        : state.activeLabels.includes(templateProps.label),
+                      'lew-cascader-item-tobe': state.tobeLabels.includes(templateProps.label),
                       'lew-cascader-item-selected':
                         getLabel &&
                         getLabel.includes(templateProps.label) &&
-                        state.tobelabels.includes(templateProps.label)
+                        state.tobeLabels.includes(templateProps.label)
                     }"
                     @click="selectItem(templateProps, oIndex)"
                   >
                     <lew-checkbox
                       v-if="free"
                       class="lew-cascader-checkbox"
-                      :checked="state.tobelabels.includes(templateProps.label)"
+                      :checked="state.tobeLabels.includes(templateProps.label)"
                     />
                     <lew-text-trim
                       class="lew-cascader-label"
@@ -652,7 +652,7 @@ defineExpose({ show, hide })
     opacity: 0.4;
   }
 
-  .reslut-count {
+  .result-count {
     padding-left: 8px;
     margin: 5px 0px;
     opacity: 0.4;

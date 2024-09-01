@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { useDark } from '@vueuse/core'
 
-const version = ref('2.2.7')
+const version = ref('2.3.8')
 
 const isDark = useDark({
   selector: 'html',
@@ -56,7 +56,7 @@ const goHome = () => {
 <style lang="scss" scoped>
 .Header {
   position: relative;
-  z-index: 2001;
+  z-index: 1001;
   display: flex;
   align-items: center;
   justify-content: space-between;

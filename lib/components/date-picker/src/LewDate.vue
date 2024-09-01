@@ -94,17 +94,33 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
     <lew-flex x="start" mode="between" class="lew-date-control">
       <div class="lew-date-control-left">
         <!-- 上一年 -->
-        <lew-button type="light" icon="chevrons-left" round @click="prveYear" />
+        <lew-button type="light" color="gray" size="small" icon="chevrons-left" @click="prveYear" />
         <!-- 上一月 -->
-        <lew-button type="light" icon="chevron-left" round @click="prveMonth" />
+        <lew-button type="light" color="gray" size="small" icon="chevron-left" @click="prveMonth" />
       </div>
       <!-- 日期 -->
-      <div class="cur-date">{{ dateState.year }} 年 {{ dateState.month }} 月</div>
+      <div class="cur-date">
+        {{ dateState.year }} 年
+        <span style="width: 22px; text-align: center">{{ dateState.month }}</span>
+        月
+      </div>
       <div class="lew-date-control-right">
         <!-- 下一月 -->
-        <lew-button type="light" icon="chevron-right" round @click="nextMonth" />
+        <lew-button
+          type="light"
+          color="gray"
+          size="small"
+          icon="chevron-right"
+          @click="nextMonth"
+        />
         <!-- 下一年 -->
-        <lew-button type="light" icon="chevrons-right" round @click="nextYear" />
+        <lew-button
+          type="light"
+          color="gray"
+          size="small"
+          icon="chevrons-right"
+          @click="nextYear"
+        />
       </div>
     </lew-flex>
     <div class="lew-date-box">
@@ -212,7 +228,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
           color: var(--lew-text-color-7);
           border-radius: 50%;
           transition: all 0.1s ease;
-          border: var(--lew-form-border-width)  var(--lew-form-border-color) solid;
+          border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
         }
         .lew-date-value:active {
           transform: scale(1.1);
@@ -264,7 +280,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
         .lew-date-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white-text);
-          border: var(--lew-form-border-width)  var(--lew-color-primary-light) solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
     }
@@ -273,7 +289,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
         .lew-date-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white-text);
-          border: var(--lew-form-border-width)  var(--lew-color-primary-light) solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
     }
@@ -282,7 +298,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
         .lew-date-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white-text);
-          border: var(--lew-form-border-width)  var(--lew-color-primary-light) solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
         }
       }
     }

@@ -1,57 +1,77 @@
 import type { ExtractPropTypes } from 'vue'
+import { validSizes } from 'lew-ui/constants'
+import { LewSize } from 'lew-ui/types'
+
+export type InputNumberAlign = 'left' | 'center' | 'right'
 
 export const inputNumberModel = {
   modelValue: {
-    type: [Number, undefined],
-    default: '',
-    description: '值（双向绑定）'
+    type: Number,
+    default: undefined,
+    description: '输入框的数值'
   }
 }
 
 export const inputNumberProps = {
-  size: {
-    type: String,
-    default: 'medium',
-    description: '尺寸，可选值为 small、medium、large'
-  },
-  step: {
-    type: [Number, String],
-    default: 1,
-    description: '允许小数值，步长默认为 0.01，精确到小数点后 2 位'
-  },
   min: {
     type: [Number, String],
     default: '',
-    description: '最小值'
+    description: '最小值',
+    validator(value: number | string) {
+      if (value && typeof value === 'string' && isNaN(Number(value))) {
+        console.warn('[LewInputNumber] min 必须是有效的数字')
+        return false
+      }
+      return true
+    }
   },
   max: {
     type: [Number, String],
     default: '',
-    description: '最大值'
+    description: '最大值',
+    validator(value: number | string) {
+      if (value && typeof value === 'string' && isNaN(Number(value))) {
+        console.warn('[LewInputNumber] max 必须是有效的数字')
+        return false
+      }
+      return true
+    }
   },
-  selectByFocus: {
-    type: Boolean,
-    default: true,
-    description: '是否聚焦选中文本'
+  step: {
+    type: [Number, String],
+    default: 1,
+    description: '步长',
+    validator(value: number | string) {
+      const numValue = Number(value)
+      if (isNaN(numValue) || numValue <= 0) {
+        console.warn('[LewInputNumber] step 必须是大于 0 的数字')
+        return false
+      }
+      return true
+    }
   },
-  align: {
-    type: String,
-    default: 'left',
-    description: '对齐方式，可选值为 left、center、right'
-  },
-  // 禁用
   disabled: {
     type: Boolean,
     default: false,
     description: '是否禁用'
   },
-  // 默认提示语
+  size: {
+    type: String as PropType<LewSize>,
+    default: 'medium',
+    description: '尺寸',
+    validator(value: LewSize) {
+      if (!validSizes.includes(value)) {
+        console.warn(`[LewInputNumber] size 必须是 ${validSizes.join('、')} 之一`)
+        return false
+      }
+      return true
+    }
+  },
   placeholder: {
     type: String,
     default: '请输入',
-    description: '默认提示语'
+    description: '占位文本'
   },
-  // 是否只读
   readonly: {
     type: Boolean,
     default: false,
@@ -60,7 +80,35 @@ export const inputNumberProps = {
   width: {
     type: [Number, String],
     default: '150px',
-    description: '宽度'
+    description: '宽度',
+    validator(value: number | string) {
+      if (typeof value === 'number' && value <= 0) {
+        console.warn('[LewInputNumber] width 必须大于 0')
+        return false
+      }
+      if (typeof value === 'string' && !/^\d+(%|px|em|rem)?$/.test(value)) {
+        console.warn('[LewInputNumber] width 必须是有效的 CSS 宽度值')
+        return false
+      }
+      return true
+    }
+  },
+  align: {
+    type: String as PropType<InputNumberAlign>,
+    default: 'left',
+    description: '对齐方式',
+    validator(value: InputNumberAlign) {
+      if (!['left', 'center', 'right'].includes(value)) {
+        console.warn('[LewInputNumber] align 必须是 left、center 或 right')
+        return false
+      }
+      return true
+    }
+  },
+  selectByFocus: {
+    type: Boolean,
+    default: true,
+    description: '聚焦时是否选中内容'
   }
 }
 

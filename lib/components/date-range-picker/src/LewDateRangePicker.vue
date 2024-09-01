@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { LewPopover, LewIcon, LewDateRange, LewTooltip } from 'lew-ui'
-import type { DatePickerSize } from 'lew-ui'
 import { dateRangePickerProps } from './props'
 import { object2class } from 'lew-ui/utils'
-
+import type { LewSize } from 'lew-ui'
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -34,12 +33,12 @@ const hide = () => {
 }
 
 const getIconSize = computed(() => {
-  const size: { [key in DatePickerSize]: number } = {
+  const size: { [key in LewSize]: number } = {
     small: 13,
     medium: 14,
     large: 15
   }
-  const _propsSize: DatePickerSize = props.size as DatePickerSize
+  const _propsSize: LewSize = props.size as LewSize
   return size[_propsSize]
 })
 
@@ -156,13 +155,13 @@ defineExpose({ show, hide })
     border-radius: var(--lew-border-radius-small);
     background-color: var(--lew-form-bgcolor);
     box-sizing: border-box;
-    transition:var(--lew-form-transition-ease);
+    transition: var(--lew-form-transition-ease);
     cursor: pointer;
     user-select: none;
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     outline: 0px var(--lew-color-primary-light) solid;
-	box-shadow: var(--lew-form-box-shadow);
-}
+    box-shadow: var(--lew-form-box-shadow);
+  }
 
   .lew-date-picker-input {
     width: 100%;

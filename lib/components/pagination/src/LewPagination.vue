@@ -190,7 +190,6 @@ const getPaginationClassNmae = computed(() => {
       <lew-select
         v-model="state.pageSize"
         style="width: 100px"
-        align="center"
         :size="size"
         :showCheckIcon="false"
         :options="pageSizeOptions"
@@ -269,20 +268,23 @@ const getPaginationClassNmae = computed(() => {
 }
 .lew-pagination-size-small {
   .btn {
-    height: calc(var(--lew-form-item-height-small) + 4px);
-    min-width: calc(var(--lew-form-item-height-small) + 4px);
+    height: calc(var(--lew-form-item-height-small) - 2px);
+    min-width: calc(var(--lew-form-item-height-small) - 2px);
+    padding: 0px 4px;
   }
 }
 .lew-pagination-size-medium {
   .btn {
-    height: calc(var(--lew-form-item-height-medium) + 4px);
-    min-width: calc(var(--lew-form-item-height-medium) + 4px);
+    height: calc(var(--lew-form-item-height-medium) - 2px);
+    min-width: calc(var(--lew-form-item-height-medium) - 2px);
+    padding: 0px 6px;
   }
 }
 .lew-pagination-size-large {
   .btn {
-    height: calc(var(--lew-form-item-height-large) + 4px);
-    min-width: calc(var(--lew-form-item-height-large) + 4px);
+    height: calc(var(--lew-form-item-height-large) - 2px);
+    min-width: calc(var(--lew-form-item-height-large) - 2px);
+    padding: 0px 8px;
   }
 }
 </style>

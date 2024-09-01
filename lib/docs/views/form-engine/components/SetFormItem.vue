@@ -1,7 +1,16 @@
 <script setup lang="ts">
 import { any2px } from 'lew-ui/utils'
-import { LewInput, LewSelect, LewDatePicker, LewTabs, LewSwitch, LewTextarea } from 'lew-ui'
-import LewInputNumber from 'lew-ui/components/input-number/src/LewInputNumber.vue'
+import {
+  LewInput,
+  LewSelect,
+  LewDatePicker,
+  LewTabs,
+  LewSwitch,
+  LewTextarea,
+  LewInputNumber,
+  LewInputTable
+} from 'lew-ui'
+import SetOptionModal from './SetOptionModal.vue'
 
 const props = defineProps({
   as: {
@@ -40,7 +49,9 @@ const asMap: Record<string, any> = {
   'date-picker': LewDatePicker,
   tabs: LewTabs,
   switch: LewSwitch,
-  'input-number': LewInputNumber
+  'input-number': LewInputNumber,
+  'set-option-modal': SetOptionModal,
+  'input-table': LewInputTable
 }
 </script>
 
@@ -83,7 +94,7 @@ const asMap: Record<string, any> = {
     align-items: center;
     justify-content: flex-end;
     min-height: 34px;
-    width: 150px;
+    width: 160px;
     flex-shrink: 0;
   }
 }

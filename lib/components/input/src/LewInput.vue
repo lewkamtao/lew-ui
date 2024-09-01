@@ -3,23 +3,22 @@ import { useMagicKeys, useDebounceFn } from '@vueuse/core'
 import { object2class, any2px } from 'lew-ui/utils'
 import { LewIcon, LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui'
 import { inputProps } from './props'
-import { cloneDeep } from 'lodash-es'
 
 const { enter } = useMagicKeys()
-// 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
-const emit = defineEmits(['clear', 'blur', 'focus', 'change', 'input', 'ok'])
 
+const emit = defineEmits(['clear', 'blur', 'focus', 'change', 'input', 'ok'])
 const props = defineProps(inputProps)
-const modelValue: Ref<string | undefined> = defineModel({ required: true })
-const prefixesValue: Ref<string | undefined> = defineModel('prefixesValue')
-const suffixValue: Ref<string | undefined> = defineModel('suffixValue')
+const modelValue = defineModel({ required: true })
+const prefixesValue = defineModel('prefixesValue')
+const suffixValue = defineModel('suffixValue')
+
 const lewInputRef = ref()
-const isCopy = ref<boolean>(false)
-let timer: any = null
+const lewInputCountRef = ref()
+const isCopy = ref(false)
 const _type = ref(props.type)
 const isFocus = ref(false)
 const state = reactive({
@@ -27,7 +26,7 @@ const state = reactive({
   suffixDropdown: 'hide'
 })
 
-const lewInputCountRef = ref()
+let timer: NodeJS.Timeout | null = null
 
 watch(
   () => props.type,
@@ -38,47 +37,20 @@ watch(
   }
 )
 
-const inputFn = (e: any) => {
-  if (
-    props.maxLength &&
-    props.renderCount(modelValue.value) >= Number(props.maxLength) &&
-    modelValue.value
-  ) {
-    modelValue.value = cloneDeep(modelValue.value.slice(0, Number(props.maxLength)))
-  }
-  emit('input', modelValue.value, e)
-}
-
-const clear = (): void => {
+const clear = () => {
   modelValue.value = undefined
   emit('clear')
 }
 
-const toFocus = () => {
-  lewInputRef.value?.focus()
+const toFocus = () => lewInputRef.value?.focus()
+
+const showPasswordFn = () => {
+  _type.value = _type.value === 'text' ? 'password' : 'text'
 }
 
-const showPasswordFn = (): void => {
-  if (_type.value === 'text') {
-    _type.value = 'password'
-  } else {
-    _type.value = 'text'
-  }
-}
-
-const getCheckNumStr = computed(() => {
-  if (props.showCount && props.maxLength) {
-    return `${props.renderCount(modelValue.value)} / ${props.maxLength}`
-  }
-  if (props.showCount) {
-    return props.renderCount(modelValue.value)
-  }
-  return false
-})
-
-const focus = (e: any) => {
+const focus = (e: FocusEvent) => {
   if (props.selectByFocus) {
-    e?.currentTarget?.select()
+    ;(e.currentTarget as HTMLInputElement)?.select()
   }
   emit('focus')
   isFocus.value = true
@@ -89,70 +61,54 @@ const blur = () => {
   isFocus.value = false
 }
 
-const getIconSize = computed(() => {
-  const size: any = {
-    small: 13,
-    medium: 14,
-    large: 16
-  }
-  return size[props.size]
-})
+const getIconSize = computed(
+  () =>
+    ({
+      small: 13,
+      medium: 14,
+      large: 16
+    })[props.size]
+)
 
 const getInputStyle = computed(() => {
-  const { size, clearable } = props
-  const countWidth = (lewInputCountRef.value && lewInputCountRef.value.offsetWidth) || 0
-  const wMap: Record<string, number> = {
-    small: 30 + countWidth,
-    medium: 30 + countWidth,
-    large: 30 + countWidth
-  }
-
+  const { clearable, showCount } = props
+  const countWidth = lewInputCountRef.value?.offsetWidth || 0
   return {
-    width: `calc(100% - ${clearable ? wMap[size] : 0}px)`
+    width: `calc(100% - ${clearable ? 20 + countWidth + (showCount ? 12 : 0) : 0}px)`
   }
 })
 
-const getType = computed(() => {
-  if (props.type === 'password') {
-    return _type.value
-  }
-  return props.type
-})
+const getType = computed(() => (props.type === 'password' ? _type.value : props.type))
 
 const getInputClassNames = computed(() => {
   const { size, readonly, disabled, align, autoWidth } = props
-  return object2class('lew-input-view', {
-    size,
-    readonly,
-    disabled,
-    align,
-    autoWidth
-  })
+  return object2class('lew-input-view', { size, readonly, disabled, align, autoWidth })
 })
 
-const prefixesChange = (item: any) => {
+const prefixesChange = (item: { value: string }) => {
   prefixesValue.value = item.value
 }
-const suffixChange = (item: any) => {
+
+const suffixChange = (item: { value: string }) => {
   suffixValue.value = item.value
 }
+
 const getPrefixesLabel = computed(() => {
-  const item: any = props.prefixesOptions.find((e: any) => e.value === prefixesValue.value)
-  return item?.label || ''
+  return props.prefixesOptions.find((e) => e.value === prefixesValue.value)?.label || ''
 })
+
 const getSuffixLabel = computed(() => {
-  const item: any = props.suffixOptions.find((e: any) => e.value === suffixValue.value)
-  return item?.label || ''
+  return props.suffixOptions.find((e) => e.value === suffixValue.value)?.label || ''
 })
 
 const copy = () => {
   const textarea = document.createElement('textarea')
-  textarea.style.position = 'fixed'
-  textarea.style.top = '-200vh'
+  textarea.style.cssText = 'position:fixed;top:-200vh;'
   textarea.value = modelValue.value as string
 
   document.body.appendChild(textarea)
   textarea.select()
+
   if (document.execCommand('copy')) {
     LewMessage.success('复制成功！')
     isCopy.value = true
@@ -162,6 +118,7 @@ const copy = () => {
   } else {
     LewMessage.error('复制失败！')
   }
+
   document.body.removeChild(textarea)
 }
 
@@ -177,18 +134,15 @@ const ok = useDebounceFn(() => {
   emit('ok', modelValue.value)
 }, 250)
 
-const changeFn = () => {
-  emit('change', modelValue.value)
-}
-
 onUnmounted(() => {
-  clearTimeout(timer)
+  if (timer) clearTimeout(timer)
 })
+
 defineExpose({ toFocus })
 </script>
 
 <template>
-  <div class="lew-input-view" :class="getInputClassNames" :style="{ minWidth: any2px(minWidth) }">
+  <div class="lew-input-view" :class="getInputClassNames">
     <div
       v-if="prefixes"
       v-tooltip="{
@@ -197,13 +151,11 @@ defineExpose({ toFocus })
       }"
       class="lew-input-prefixes"
     >
-      <lew-text-trim
-        v-if="prefixes === 'text'"
-        :text="prefixesValue"
-        class="lew-input-prefixes-text"
-      />
+      <div v-if="prefixes === 'text'">
+        {{ prefixesValue }}
+      </div>
       <div v-if="prefixes === 'icon'" class="lew-input-prefixes-icon">
-        <lew-icon :size="getIconSize" :type="prefixesValue" />
+        <lew-icon :size="getIconSize" :type="prefixesValue as string" />
       </div>
       <div v-if="prefixes === 'select'" class="lew-input-prefixes-select">
         <lew-dropdown
@@ -222,7 +174,9 @@ defineExpose({ toFocus })
               'lew-input-prefixes-dropdown-open': state.prefixesDropdown === 'show'
             }"
           >
-            <lew-text-trim :text="getPrefixesLabel" class="lew-input-prefixes-text" />
+            <div>
+              {{ getPrefixesLabel }}
+            </div>
             <lew-icon :size="getIconSize" type="chevron-down" class="icon-select" />
           </lew-flex>
         </lew-dropdown>
@@ -242,8 +196,7 @@ defineExpose({ toFocus })
     <div
       class="lew-input-box"
       :style="{
-        paddingLeft: prefixes ? '0px' : '',
-        paddingRight: suffix ? '0px' : ''
+        minWidth: any2px(minWidth)
       }"
     >
       <input
@@ -256,25 +209,28 @@ defineExpose({ toFocus })
         :placeholder="placeholder"
         :type="getType"
         :readonly="readonly"
+        :maxlength="maxLength"
         onkeypress="if(window.event.keyCode==13) this.blur()"
-        @input="inputFn"
-        @change="changeFn"
+        @input="emit('input', modelValue)"
+        @change="emit('change', modelValue)"
         @blur="blur"
         @focus="focus"
       />
       <label v-if="autoWidth" class="lew-input-auto-width">
         {{ modelValue }}
       </label>
+      <label v-if="autoWidth && clearable" class="lew-input-auto-width-clear"> </label>
       <div v-if="showPassword || clearable || showCount" class="lew-input-controls">
         <div
           ref="lewInputCountRef"
-          v-if="getCheckNumStr"
+          v-if="modelValue && showCount"
           class="lew-input-count"
           :class="{
             'lew-input-count-clearable': clearable && modelValue
           }"
         >
-          {{ getCheckNumStr }}
+          {{ typeof modelValue === 'string' ? modelValue.length : 0
+          }}{{ maxLength ? ' / ' + maxLength : '' }}
         </div>
         <div
           v-if="showPassword && type === 'password'"
@@ -291,9 +247,6 @@ defineExpose({ toFocus })
             class="lew-form-icon-clear"
             :class="{
               'lew-form-icon-clear-focus': isFocus
-            }"
-            :style="{
-              right: suffix ? '0px' : ''
             }"
             :size="getIconSize"
             type="x"
@@ -312,9 +265,9 @@ defineExpose({ toFocus })
       }"
       class="lew-input-suffix"
     >
-      <lew-text-trim v-if="suffix === 'text'" :text="suffixValue" class="lew-input-suffix-text" />
+      <div v-if="suffix === 'text'">{{ suffixValue }}</div>
       <div v-if="suffix === 'icon'" class="lew-input-suffix-icon">
-        <lew-icon :size="getIconSize" :type="suffixValue" />
+        <lew-icon :size="getIconSize" :type="suffixValue as string" />
       </div>
       <div v-if="suffix === 'select'" class="lew-input-suffix-select">
         <lew-dropdown
@@ -333,7 +286,7 @@ defineExpose({ toFocus })
               'lew-input-suffix-dropdown-open': state.suffixDropdown === 'show'
             }"
           >
-            <lew-text-trim :text="getSuffixLabel" class="lew-input-suffix-text" />
+            <div>{{ getSuffixLabel }}</div>
             <lew-icon :size="getIconSize" type="chevron-down" class="icon-select" />
           </lew-flex>
         </lew-dropdown>
@@ -360,11 +313,12 @@ defineExpose({ toFocus })
 
   .lew-input-box {
     position: relative;
-    width: 100%;
     box-sizing: border-box;
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
+    flex-shrink: 0;
+    flex: 1;
     .lew-input {
       height: 100%;
     }
@@ -387,6 +341,7 @@ defineExpose({ toFocus })
 
   .lew-input-prefixes,
   .lew-input-suffix {
+    position: relative;
     white-space: nowrap;
     user-select: none;
     display: inline-flex;
@@ -400,7 +355,26 @@ defineExpose({ toFocus })
       transform: rotate(180deg);
     }
   }
-
+  .lew-input-prefixes::after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    content: '';
+    transition: var(--lew-form-transition-ease);
+    background: var(--lew-bgcolor-4);
+  }
+  .lew-input-suffix::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    content: '';
+    transition: var(--lew-form-transition-ease);
+    background: var(--lew-bgcolor-4);
+  }
   .lew-input-prefixes-dropdown,
   .lew-input-suffix-dropdown {
     cursor: pointer;
@@ -449,6 +423,7 @@ defineExpose({ toFocus })
   .lew-input-controls {
     display: inline-flex;
     align-items: center;
+    z-index: 9;
 
     > div {
       display: inline-flex;
@@ -513,11 +488,12 @@ defineExpose({ toFocus })
 
   .lew-input-auto-width {
     width: auto;
-    min-width: 45px;
+    min-width: 60px;
     height: 1px;
     visibility: hidden;
     box-sizing: border-box;
   }
+
   .lew-input-box {
     padding: 0px;
   }
@@ -540,11 +516,7 @@ defineExpose({ toFocus })
   .lew-input-copy-btn {
     right: 7px;
   }
-  .lew-input-prefixes-text,
-  .lew-input-suffix-text {
-    font-size: var(--lew-form-font-size-small);
-    max-width: 80px;
-  }
+
   .lew-input-prefixes,
   .lew-input-suffix {
     padding: 0px 7px;
@@ -571,6 +543,9 @@ defineExpose({ toFocus })
     font-size: var(--lew-form-font-size-small);
     line-height: var(--lew-form-input-line-height-small);
   }
+  .lew-input-auto-width-clear {
+    width: 18px;
+  }
 }
 
 .lew-input-view-size-medium {
@@ -586,16 +561,11 @@ defineExpose({ toFocus })
   .lew-input-suffix-dropdown {
     line-height: var(--lew-form-input-line-height-medium);
     height: var(--lew-form-item-height-medium);
-    max-width: 100px;
   }
   .lew-input-copy-btn {
     right: 9px;
   }
-  .lew-input-prefixes-text,
-  .lew-input-suffix-text {
-    font-size: var(--lew-form-font-size-medium);
-    max-width: 100px;
-  }
+
   .lew-input-prefixes,
   .lew-input-suffix {
     padding: 0px 9px;
@@ -620,6 +590,9 @@ defineExpose({ toFocus })
     font-size: var(--lew-form-font-size-medium);
     line-height: var(--lew-form-input-line-height-medium);
   }
+  .lew-input-auto-width-clear {
+    width: 20px;
+  }
 }
 
 .lew-input-view-size-large {
@@ -639,11 +612,7 @@ defineExpose({ toFocus })
   .lew-input-copy-btn {
     right: 12px;
   }
-  .lew-input-prefixes-text,
-  .lew-input-suffix-text {
-    font-size: var(--lew-form-font-size-large);
-    max-width: 120px;
-  }
+
   .lew-input-prefixes,
   .lew-input-suffix {
     padding: 0px 12px;
@@ -668,35 +637,50 @@ defineExpose({ toFocus })
     font-size: var(--lew-form-font-size-large);
     line-height: var(--lew-form-input-line-height-large);
   }
+  .lew-input-auto-width-clear {
+    width: 22px;
+  }
 }
 
 .lew-input-view-size-small.lew-input-view-autoWidth {
   .lew-input {
     padding: var(--lew-form-input-padding-small);
-    width: calc(100% - 18px);
+    width: calc(100% - 12px);
   }
 }
 .lew-input-view-size-medium.lew-input-view-autoWidth {
   .lew-input {
-    padding: var(--lew-form-input-padding-small);
-    width: calc(100% - 24px);
+    padding: var(--lew-form-input-padding-medium);
+    width: calc(100% - 18px);
   }
 }
 .lew-input-view-size-large.lew-input-view-autoWidth {
   .lew-input {
-    padding: var(--lew-form-input-padding-small);
-    width: calc(100% - 30px);
+    padding: var(--lew-form-input-padding-large);
+    width: calc(100% - 24px);
   }
 }
 
 .lew-input-view:hover {
   background-color: var(--lew-form-bgcolor-hover);
+  .lew-input-prefixes::after {
+    background: var(--lew-bgcolor-6);
+  }
+  .lew-input-suffix::before {
+    background: var(--lew-bgcolor-6);
+  }
 }
 
 .lew-input-view:focus-within {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
   outline: var(--lew-form-outline);
   background-color: var(--lew-form-bgcolor-focus);
+  .lew-input-prefixes::after {
+    background: var(--lew-bgcolor-4);
+  }
+  .lew-input-suffix::before {
+    background: var(--lew-bgcolor-4);
+  }
 }
 
 .lew-input-view-readonly {

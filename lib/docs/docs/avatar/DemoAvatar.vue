@@ -3,9 +3,11 @@ import {
   DemoAvatar1,
   DemoAvatar2,
   DemoAvatar3,
+  DemoAvatar4,
   DemoAvatar1Code,
   DemoAvatar2Code,
-  DemoAvatar3Code
+  DemoAvatar3Code,
+  DemoAvatar4Code
 } from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
@@ -36,6 +38,9 @@ const { push } = useRouter()
     </lew-demo-box>
     <lew-demo-box title="加载失败" :code="DemoAvatar3Code">
       <demo-avatar3 />
+    </lew-demo-box>
+    <lew-demo-box title="形状" :code="DemoAvatar4Code">
+      <demo-avatar4 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>

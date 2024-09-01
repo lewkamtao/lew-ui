@@ -1,11 +1,12 @@
 .tippy-box {
-  border-radius: var(--lew-border-radius-small) !important;
   box-sizing: border-box !important;
   color: var(--lew-text-color-0) !important;
+  border-radius: var(--lew-border-radius-small) !important;
   transition-timing-function: cubic-bezier(0.1, -0.2, 0.1, 1.5) !important;
+
   .tippy-content {
-    padding: 0px;
     box-sizing: border-box !important;
+    padding: 0;
     word-wrap: break-word;
   }
 }
@@ -17,32 +18,37 @@
 }
 
 .tippy-box[data-lew~='tooltip'] {
-  background-color: var(--lew-tooltip-bg) !important;
   color: var(--lew-tooltip-color) !important;
+  background-color: var(--lew-tooltip-bg) !important;
   box-shadow: none !important;
   filter: drop-shadow(var(--lew-tooltip-shadow));
+
   .tippy-content {
-    padding: 6px 10px;
-    font-size: 14px;
     max-height: 300px;
+    padding: 6px 10px;
     overflow-y: auto;
+    font-size: 14px;
+
     &::-webkit-scrollbar {
       width: 6px;
       height: 6px;
       background-color: var(--lew-bgcolor-2);
       border-radius: 4px;
     }
-    &::-webkit-scrollbar-thumb:hover {
-      background-color: var(--lew-bgcolor-6);
-    }
+
     &::-webkit-scrollbar-thumb {
-      border-radius: 4px;
       background-color: var(--lew-bgcolor-4);
+      border-radius: 4px;
+
+      &:hover {
+        background-color: var(--lew-bgcolor-6);
+      }
     }
-    /* 修改滚动条角的颜色为蓝色 */
+
     &::-webkit-scrollbar-corner {
       background-color: var(--lew-bgcolor-0);
     }
+
     .scrollbar-corner {
       background-color: var(--lew-bgcolor-0);
     }
@@ -55,44 +61,53 @@
 
 .tippy-box[data-placement^='top'] > .tippy-svg-arrow {
   bottom: 0;
+
+  &:after,
+  & > svg {
+    top: 16px;
+    transform: scale(1.1) rotate(180deg);
+  }
 }
-.tippy-box[data-placement^='top'] > .tippy-svg-arrow:after,
-.tippy-box[data-placement^='top'] > .tippy-svg-arrow > svg {
-  top: 16px;
-  transform: scale(1.1) rotate(180deg);
-}
+
 .tippy-box[data-placement^='bottom'] > .tippy-svg-arrow {
   top: 0;
+
+  & > svg {
+    bottom: 16px;
+    transform: scale(1.1);
+  }
 }
-.tippy-box[data-placement^='bottom'] > .tippy-svg-arrow > svg {
-  transform: scale(1.1);
-  bottom: 16px;
-}
+
 .tippy-box[data-placement^='left'] > .tippy-svg-arrow {
   right: 0;
+
+  &:after,
+  & > svg {
+    top: calc(50% - 3px);
+    left: 11px;
+    transform: scale(1.1) rotate(90deg);
+  }
 }
-.tippy-box[data-placement^='left'] > .tippy-svg-arrow:after,
-.tippy-box[data-placement^='left'] > .tippy-svg-arrow > svg {
-  transform: scale(1.1) rotate(90deg);
-  top: calc(50% - 3px);
-  left: 11px;
-}
+
 .tippy-box[data-placement^='right'] > .tippy-svg-arrow {
   left: 0;
+
+  &:after,
+  & > svg {
+    top: calc(50% - 3px);
+    right: 11px;
+    transform: scale(1.1) rotate(-90deg);
+  }
 }
-.tippy-box[data-placement^='right'] > .tippy-svg-arrow:after,
-.tippy-box[data-placement^='right'] > .tippy-svg-arrow > svg {
-  transform: scale(1.1) rotate(-90deg);
-  top: calc(50% - 3px);
-  right: 11px;
-}
+
 .tippy-svg-arrow {
+  position: absolute;
   width: 16px;
   height: 16px;
   fill: #333;
   text-align: initial;
-}
-.tippy-svg-arrow,
-.tippy-svg-arrow > svg {
-  position: absolute;
+
+  & > svg {
+    position: absolute;
+  }
 }

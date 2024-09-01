@@ -1,70 +1,47 @@
 <script setup lang="ts">
-type Options = {
+interface TabOption {
   label: string
   value: string
   activeIndex: number
 }
-const provinces = [
-  '北京市',
-  '上海市',
-  '天津市',
-  '重庆市',
-  '河北省',
-  '山西省',
-  '辽宁省',
-  '吉林省',
-  '黑龙江省',
-  '江苏省',
-  '浙江省',
-  '安徽省',
-  '福建省',
-  '江西省',
-  '山东省',
-  '河南省',
-  '湖北省',
-  '湖南省',
-  '广东省',
-  '海南省',
-  '四川省',
-  '贵州省',
-  '云南省',
-  '陕西省',
-  '甘肃省',
-  '青海省',
-  '台湾省',
-  '内蒙古自治区',
-  '广西壮族自治区',
-  '西藏自治区',
-  '宁夏回族自治区',
-  '新疆维吾尔自治区',
-  '香港特别行政区',
-  '澳门特别行政区'
+
+const businessDepartments = [
+  '销售部',
+  '市场部',
+  '财务部',
+  '人力资源部',
+  '研发部',
+  '客户服务部',
+  '法务部',
+  '采购部',
+  '生产部',
+  '质量控制部'
 ]
 
-const options = ref(
-  provinces.map((e, i) => {
+const departmentOptions = ref(
+  businessDepartments.map((department, index) => {
     return {
-      label: e,
-      value: i
+      label: department,
+      value: `department_${index}`
     }
   })
 )
 
-const value = ref(1)
+const selectedDepartment = ref('department_0')
 
-const change = (e: Options) => {
-  LewMessage.info(e.label)
+const handleDepartmentChange = (selectedOption: TabOption) => {
+  LewMessage.info(`您选择了: ${selectedOption.label}`)
 }
 </script>
 
 <template>
   <lew-flex direction="y" x="start" y="start">
     <lew-tabs
-      v-model="value"
+      v-model="selectedDepartment"
       style="width: 100%"
-      :options="options"
+      :options="departmentOptions"
       :itemWidth="120"
-      @change="change"
+      @change="handleDepartmentChange"
     />
   </lew-flex>
 </template>

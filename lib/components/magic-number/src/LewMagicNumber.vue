@@ -26,7 +26,8 @@ const getMagicNumberStyle = computed(() => {
 const getItemStyle = computed(() => (item: string) => {
   const { size } = props
   const index = parseInt(item)
-  return `transform: translateY(-${size * index}px)`
+  const numericSize = typeof size === 'string' ? parseInt(size) : size
+  return `transform: translateY(-${numericSize * index}px)`
 })
 const getNumStyle = computed(() => {
   const { size } = props
@@ -62,7 +63,7 @@ const getNumStyle = computed(() => {
   .lew-magic-number-item {
     display: inline-flex;
     flex-direction: column;
-    transition:var(--lew-form-transition-ease);
+    transition: var(--lew-form-transition-ease);
     .lew-magic-number-num {
       overflow: hidden;
       flex-shrink: 0;

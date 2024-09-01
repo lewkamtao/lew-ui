@@ -7,25 +7,27 @@ const open = () => {
 }
 
 const rule = Yup.string().required()
-const rulestr = JSON.stringify(rule)
 
 defineExpose({ open })
 </script>
 
 <template>
-  <lew-modal
-    v-model:visible="visible"
-    closeOnClickOverlay
-    closeByEsc
-    width="550px"
-    title="设置表单配置"
-    @ok="visible = false"
-    @cancel="visible = false"
-  >
-    <div class="modal-body">
-      <div>A beautiful component library based on vue3</div>
-    </div>
-  </lew-modal>
+  <div>
+    <lew-button type="light" color="gray" size="small" @click="open">设置</lew-button>
+    <lew-modal
+      v-model:visible="visible"
+      closeOnClickOverlay
+      closeByEsc
+      width="550px"
+      title="设置选项"
+      @ok="visible = false"
+      @cancel="visible = false"
+    >
+      <div class="modal-body">
+        <div>A beautiful component library based on vue3</div>
+      </div>
+    </lew-modal>
+  </div>
 </template>
 
 <style lang="scss" scoped>

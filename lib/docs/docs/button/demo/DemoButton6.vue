@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const mockFn = () => {
-  return new Promise((resolve) => {
+const handleRequest = () => {
+  return new Promise<void>((resolve) => {
     setTimeout(() => {
-      resolve(true)
+      resolve()
       LewMessage.success('发送成功')
     }, 1000)
   })
@@ -11,18 +11,6 @@ const mockFn = () => {
 
 <template>
   <lew-flex wrap x="start" y="end" gap="20">
-    <lew-button size="small" :request="mockFn" round color="red" text="Small" type="fill" />
-    <lew-button
-      size="small"
-      icon="check"
-      loading
-      :request="mockFn"
-      round
-      text="Medium"
-      type="light"
-    />
-    <lew-button size="large" :request="mockFn" round text="Large" type="light" />
-    <lew-button type="fill" color="green" round :request="mockFn" icon="message-circle" />
-    <lew-button type="light" color="purple" round :request="mockFn" icon="message-circle" />
+    <lew-button :request="handleRequest" text="发送短信" type="light" />
   </lew-flex>
 </template>

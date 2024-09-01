@@ -183,6 +183,12 @@ const options: MenuOptions[] = [
         tagColor: 'success'
       },
       {
+        label: 'InputTable',
+        value: '/InputTable',
+        tagText: 'Dev',
+        tagColor: 'blue'
+      },
+      {
         label: 'Switch',
         value: '/Switch'
       },

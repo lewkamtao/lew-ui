@@ -1,67 +1,63 @@
 <script setup lang="ts">
-type Options = {
+type TabOption = {
   label: string
   value: string
   activeIndex: number
 }
-const provinces = [
-  '北京市',
-  '上海市',
-  '天津市',
-  '重庆市',
-  '河北省',
-  '山西省',
-  '辽宁省',
-  '吉林省',
-  '黑龙江省',
-  '江苏省',
-  '浙江省',
-  '安徽省',
-  '福建省',
-  '江西省',
-  '山东省',
-  '河南省',
-  '湖北省',
-  '湖南省',
-  '广东省',
-  '海南省',
-  '四川省',
-  '贵州省',
-  '云南省',
-  '陕西省',
-  '甘肃省',
-  '青海省',
-  '台湾省',
-  '内蒙古自治区',
-  '广西壮族自治区',
-  '西藏自治区',
-  '宁夏回族自治区',
-  '新疆维吾尔自治区',
-  '香港特别行政区',
-  '澳门特别行政区'
+
+const businessCategories = [
+  '智能手机',
+  '可穿戴设备',
+  '智能家居系统',
+  '人工智能助手',
+  '虚拟现实头盔',
+  '无人机',
+  '电动汽车',
+  '5G网络设备',
+  '量子计算机',
+  '机器人',
+  '3D打印机',
+  '生物识别技术',
+  '区块链应用',
+  '增强现实眼镜',
+  '物联网设备'
 ]
 
-const options = ref(
-  provinces.map((e, i) => {
+const tabOptions = ref(
+  businessCategories.map((category, index) => {
     return {
-      label: e,
-      value: i
+      label: category,
+      value: `category_${index}`
     }
   })
 )
 
-const value = ref(1)
+const selectedCategory = ref('category_1')
 
-const change = (e: Options) => {
-  LewMessage.info(e.label)
+const handleCategoryChange = (selectedOption: TabOption) => {
+  LewMessage.info(`您选择了: ${selectedOption.label}`)
 }
 </script>
 
 <template>
-  <lew-flex style="width: 300px" direction="y" x="start">
-    <lew-title :size="14">限制整体宽度</lew-title>
-    <lew-tabs v-model="value" size="small" :options="options" @change="change" />
-    <lew-tabs v-model="value" size="medium" :options="options" @change="change" />
-    <lew-tabs v-model="value" size="large" :options="options" @change="change" />
+  <lew-flex style="width: 500px" direction="y" x="start">
+    <lew-tabs
+      v-model="selectedCategory"
+      size="small"
+      :options="tabOptions"
+      @change="handleCategoryChange"
+    />
+    <lew-tabs
+      v-model="selectedCategory"
+      size="medium"
+      :options="tabOptions"
+      @change="handleCategoryChange"
+    />
+    <lew-tabs
+      v-model="selectedCategory"
+      size="large"
+      :options="tabOptions"
+      @change="handleCategoryChange"
+    />
   </lew-flex>
 </template>

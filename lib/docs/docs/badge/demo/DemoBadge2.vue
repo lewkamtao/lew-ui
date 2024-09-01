@@ -1,19 +1,13 @@
 <template>
   <lew-flex wrap x="start" gap="30">
     <lew-badge round>
-      <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" />
+      <lew-icon type="home" />
     </lew-badge>
-    <lew-badge round type="light" color="blue">
-      <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" />
+    <lew-badge round>
+      <lew-icon type="message-circle" />
     </lew-badge>
-    <lew-badge round color="warning">
-      <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" />
-    </lew-badge>
-    <lew-badge round color="red">
-      <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" />
-    </lew-badge>
-    <lew-badge round color="green">
-      <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" />
+    <lew-badge round>
+      <lew-icon type="bell" />
     </lew-badge>
   </lew-flex>
 </template>
