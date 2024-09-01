@@ -73,12 +73,23 @@ export const popokProps = {
     description: '弹出框位置',
     validator: (value: string) => {
       const validPlacements = [
-        'top', 'bottom', 'left', 'right',
-        'top-start', 'top-end', 'bottom-start', 'bottom-end',
-        'left-start', 'left-end', 'right-start', 'right-end'
+        'top',
+        'bottom',
+        'left',
+        'right',
+        'top-start',
+        'top-end',
+        'bottom-start',
+        'bottom-end',
+        'left-start',
+        'left-end',
+        'right-start',
+        'right-end'
       ]
       if (!validPlacements.includes(value)) {
-        console.warn(`[LewPopok] 位置 "${value}" 无效。请使用 ${validPlacements.join(', ')} 中的一个。`)
+        console.warn(
+          `[LewPopok] 位置 "${value}" 无效。请使用 ${validPlacements.join(', ')} 中的一个。`
+        )
         return false
       }
       return true

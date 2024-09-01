@@ -385,7 +385,7 @@ const cols = ref(2)
       height: 50px;
       background-color: var(--lew-bgcolor-2);
       border-radius: var(--lew-border-radius-small);
-      border: var(--lew-form-border-width)  solid transparent;
+      border: var(--lew-form-border-width) solid transparent;
       cursor: move;
     }
   }
@@ -426,7 +426,7 @@ const cols = ref(2)
       padding: 10px;
       background-color: var(--lew-bgcolor-0);
       box-sizing: border-box;
-      border: var(--lew-form-border-width)  dashed transparent;
+      border: var(--lew-form-border-width) dashed transparent;
     }
   }
   .lew-form-wrapper-draggable-item {
@@ -434,7 +434,7 @@ const cols = ref(2)
     padding: 20px 20px 30px 20px;
     background-color: var(--lew-bgcolor-0);
     box-sizing: border-box;
-    border: var(--lew-form-border-width)  dashed transparent;
+    border: var(--lew-form-border-width) dashed transparent;
     .handle {
       position: absolute;
       left: 0px;
@@ -511,6 +511,6 @@ const cols = ref(2)
 }
 
 .chosen {
-  border: var(--lew-form-border-width)  dashed #333 !important;
+  border: var(--lew-form-border-width) dashed #333 !important;
 }
 </style>

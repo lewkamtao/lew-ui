@@ -1,7 +1,7 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 
 type AvatarPlacement = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-type AvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy' 
+type AvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy'
 type AvatarShape = 'circle' | 'square'
 type AvatarSize = number | string
 
@@ -59,7 +59,7 @@ export const avatarProps = {
       }
       return true
     }
-  }, 
+  },
   statusPlacement: {
     type: String as PropType<AvatarPlacement>,
     default: 'top-right',

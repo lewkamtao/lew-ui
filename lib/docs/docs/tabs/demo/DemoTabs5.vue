@@ -40,7 +40,13 @@ const handleOptionChange = (option: TabOption) => {
 
 <template>
   <lew-flex direction="y" x="start" y="start">
-    <lew-tabs v-model="selectedDepartment" width="auto" round :options="departmentOptions" @change="handleOptionChange" />
+    <lew-tabs
+      v-model="selectedDepartment"
+      width="auto"
+      round
+      :options="departmentOptions"
+      @change="handleOptionChange"
+    />
     <lew-tabs
       v-model="selectedProject"
       round

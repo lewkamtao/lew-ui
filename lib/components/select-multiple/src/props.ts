@@ -66,8 +66,10 @@ export const selectMultipleProps = {
     description: '搜索框占位文本'
   },
   searchMethod: {
-    type: Function as PropType<(params: SelectSearchMultipleMethodParams) => SelectMultipleOptions[]>,
-    default: ({ options, keyword }: { options: SelectMultipleOptions[], keyword: string }) => {
+    type: Function as PropType<
+      (params: SelectSearchMultipleMethodParams) => SelectMultipleOptions[]
+    >,
+    default: ({ options, keyword }: { options: SelectMultipleOptions[]; keyword: string }) => {
       if (options && keyword) {
         return options.filter((option: SelectMultipleOptions) => option.label.includes(keyword))
       }

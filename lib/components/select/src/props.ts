@@ -1,14 +1,14 @@
 import type { PropType } from 'vue'
 
 export type SelectOptions = {
-  label: string;
-  value: string | number;
-  disabled?: boolean;
+  label: string
+  value: string | number
+  disabled?: boolean
 }
 
 export type SelectSearchMethodParams = {
-  options?: SelectOptions[];
-  keyword?: string;
+  options?: SelectOptions[]
+  keyword?: string
 }
 
 export type SelectSize = 'small' | 'medium' | 'large'

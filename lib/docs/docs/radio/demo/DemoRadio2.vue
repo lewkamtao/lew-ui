@@ -14,5 +14,10 @@ const handleSpaceshipChange = (selectedValue: string) => {
 </script>
 
 <template>
-  <lew-radio-group v-model="selectedSpaceship" direction="y" :options="spaceshipOptions" @change="handleSpaceshipChange" />
+  <lew-radio-group
+    v-model="selectedSpaceship"
+    direction="y"
+    :options="spaceshipOptions"
+    @change="handleSpaceshipChange"
+  />
 </template>

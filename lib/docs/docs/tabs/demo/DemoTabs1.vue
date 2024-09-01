@@ -41,8 +41,23 @@ const handleCategoryChange = (selectedOption: TabOption) => {
 
 <template>
   <lew-flex style="width: 500px" direction="y" x="start">
-    <lew-tabs v-model="selectedCategory" size="small" :options="tabOptions" @change="handleCategoryChange" />
-    <lew-tabs v-model="selectedCategory" size="medium" :options="tabOptions" @change="handleCategoryChange" />
-    <lew-tabs v-model="selectedCategory" size="large" :options="tabOptions" @change="handleCategoryChange" />
+    <lew-tabs
+      v-model="selectedCategory"
+      size="small"
+      :options="tabOptions"
+      @change="handleCategoryChange"
+    />
+    <lew-tabs
+      v-model="selectedCategory"
+      size="medium"
+      :options="tabOptions"
+      @change="handleCategoryChange"
+    />
+    <lew-tabs
+      v-model="selectedCategory"
+      size="large"
+      :options="tabOptions"
+      @change="handleCategoryChange"
+    />
   </lew-flex>
 </template>

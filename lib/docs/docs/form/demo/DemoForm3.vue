@@ -5,7 +5,7 @@ const options = ref([
   {
     field: 'username',
     label: '用户名',
-    
+
     as: 'input',
     rule: Yup.string().required()
   },
@@ -13,7 +13,7 @@ const options = ref([
     field: 'password',
     label: '密码',
     as: 'input',
-    
+
     rule: Yup.string().min(6).required(),
     props: {
       type: 'password'
@@ -21,7 +21,7 @@ const options = ref([
   },
   {
     field: 'phone',
-    
+
     label: '手机',
     as: 'input'
   }

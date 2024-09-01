@@ -7,7 +7,7 @@ export const collapseModel = {
     description: '折叠面板的当前值，用于双向绑定。数组类型表示多选模式，字符串类型表示手风琴模式。',
     validator(value: string[] | number[] | string): boolean {
       if (Array.isArray(value)) {
-        if (!value.every(item => typeof item === 'string' || typeof item === 'number')) {
+        if (!value.every((item) => typeof item === 'string' || typeof item === 'number')) {
           console.warn('[LewCollapse] modelValue 数组中的元素必须是字符串或数字类型。')
           return false
         }
@@ -91,7 +91,7 @@ export const collapseItemProps = {
     description: '折叠项内容的内边距，支持 CSS padding 值。',
     validator(value: string): boolean {
       const parts = value.split(' ')
-      if (parts.length > 4 || parts.some(part => !/^\d+(%|px|em|rem)$/.test(part))) {
+      if (parts.length > 4 || parts.some((part) => !/^\d+(%|px|em|rem)$/.test(part))) {
         console.warn('[LewCollapseItem] padding 属性必须是有效的 CSS padding 值。')
         return false
       }

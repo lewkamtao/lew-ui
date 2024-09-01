@@ -453,8 +453,6 @@ defineExpose({ show, hide })
     }
   }
 
-
-
   .lew-select-size-small {
     min-height: var(--lew-form-item-height-small);
 
@@ -644,8 +642,6 @@ defineExpose({ show, hide })
       opacity: var(--lew-disabled-opacity);
       pointer-events: none; //鼠标点击不可修改
     }
-
- 
 
     .lew-select-item:hover {
       color: var(--lew-text-color-0);

@@ -1,13 +1,13 @@
 import type { PropType } from 'vue'
 
 export interface TableColumn {
-  title: string;
-  field: string;
-  fixed?: 'left' | 'right';
-  x?: string;
-  y?: string;
-  width?: number;
-  columnStyle?: string;
+  title: string
+  field: string
+  fixed?: 'left' | 'right'
+  x?: string
+  y?: string
+  width?: number
+  columnStyle?: string
 }
 
 export const tableProps = {
@@ -17,11 +17,11 @@ export const tableProps = {
     description: '用于标识每一行数据的唯一键',
     validator: (value: string) => {
       if (!value) {
-        console.warn('[LewTable] rowKey 不能为空');
-        return false;
+        console.warn('[LewTable] rowKey 不能为空')
+        return false
       }
-      return true;
-    },
+      return true
+    }
   },
   dataSource: {
     type: Array as PropType<Record<string, any>[]>,
@@ -29,11 +29,11 @@ export const tableProps = {
     description: '表格的数据源',
     validator: (value: any[]) => {
       if (!Array.isArray(value)) {
-        console.warn('[LewTable] dataSource 必须是一个数组');
-        return false;
+        console.warn('[LewTable] dataSource 必须是一个数组')
+        return false
       }
-      return true;
-    },
+      return true
+    }
   },
   columns: {
     type: Array as PropType<TableColumn[]>,
@@ -41,11 +41,11 @@ export const tableProps = {
     description: '表格列的配置描述',
     validator: (value: TableColumn[]) => {
       if (!Array.isArray(value)) {
-        console.warn('[LewTable] columns 必须是一个数组');
-        return false;
+        console.warn('[LewTable] columns 必须是一个数组')
+        return false
       }
-      return true;
-    },
+      return true
+    }
   },
   maxHeight: {
     type: [Number, String],
@@ -53,20 +53,20 @@ export const tableProps = {
     description: '表格的最大高度，超出后会出现滚动条',
     validator: (value: number | string) => {
       if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewTable] maxHeight 必须大于 0');
-        return false;
+        console.warn('[LewTable] maxHeight 必须大于 0')
+        return false
       }
-      return true;
-    },
+      return true
+    }
   },
   checkable: {
     type: Boolean,
     default: false,
-    description: '是否显示复选框列',
+    description: '是否显示复选框列'
   },
   singleSelect: {
     type: Boolean,
     default: false,
-    description: '是否只允许单选',
-  },
+    description: '是否只允许单选'
+  }
 }

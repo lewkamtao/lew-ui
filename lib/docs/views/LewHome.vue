@@ -187,10 +187,13 @@ const options = ref([
 let formRef = ref()
 
 onMounted(() => {
-  sprs()
+  setTimeout(() => {
+    sprs()
+  }, 1000)
   formRef.value.setForm({
     componentName: 'Lew UI',
-    componentDescription: 'Lew-UI是一个基于 Vue3 的轻量级组件库，专注于提供简洁实用的UI组件，适合快速构建中小型项目。',
+    componentDescription:
+      'Lew-UI 是一个基于 Vue3 的轻量级组件库，专注于提供简洁实用的UI组件，适合快速构建中小型项目。',
     category: '1',
     features: ['1', '2', '4'],
     usageFramework: 'vue',
@@ -202,7 +205,7 @@ onMounted(() => {
         start: '2022-05-24',
         end: '2099-10-24'
       },
-      keywordTags: ['Vue 3', '响应式设计', '主题定制'],
+      keywordTags: ['高效', '易用', '灵活'],
       isOpenSource: true
     }
   })
@@ -410,7 +413,7 @@ const notification = (type: string) => {
           iconPosition="right"
           text="开始使用"
           style="margin-top: 20px"
-          @click="router.push('/Avatar')"
+          @click="router.push('/Image')"
         />
         <a href="/#/form-engine" target="_blank">
           <lew-button round text="表单引擎" style="margin-top: 20px" color="primary" type="light" />
@@ -484,7 +487,7 @@ const notification = (type: string) => {
             </lew-dropdown>
           </lew-flex>
         </lew-flex>
-        <lew-flex style="width: 450px; margin-top: 30px" class="item">
+        <lew-flex style="width: 450px; margin-top: 0px" class="item">
           <lew-form row-gap="30" ref="formRef" :options="options" />
         </lew-flex>
         <lew-flex class="item" direction="y" gap="20">
@@ -579,18 +582,15 @@ const notification = (type: string) => {
 
 .home-wrapper {
   width: 100%;
-  perspective: 800;
   overflow: hidden;
-  -webkit-perspective: 800;
 
   .startbox {
     position: fixed;
     left: 50px;
-    top: 50px;
+    top: 120px;
     z-index: 99;
     animation: start 3s ease;
     animation-fill-mode: forwards;
-    animation-delay: 0.5s;
     opacity: 0;
 
     .slogan {
@@ -620,10 +620,8 @@ const notification = (type: string) => {
   .home {
     min-height: 100vh;
     box-sizing: border-box;
-    animation: demo 3s ease;
-    transform: scale(1) rotateX(0deg) rotateY(0deg);
+    animation: demo 4s ease;
     animation-fill-mode: forwards;
-    animation-delay: 0.5s;
     opacity: 0;
     margin-top: -50px;
 
@@ -637,12 +635,14 @@ const notification = (type: string) => {
   @keyframes demo {
     from {
       opacity: 0;
-      transform: scale(0.8) rotateX(0deg) rotateY(0deg);
+      transform: scale(0.8) perspective(800px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)
+        translate(0px, 0px);
     }
 
     to {
       opacity: 1;
-      transform: scale(1.2) rotateX(15deg) rotateY(-15deg);
+      transform: scale(1.2) perspective(1000px) rotateX(12deg) rotateY(-24deg) rotateZ(8deg)
+        translate(-30px, 50px);
     }
   }
 

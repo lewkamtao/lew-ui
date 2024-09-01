@@ -132,7 +132,9 @@ const formatNoiseLevel = (level: string) => {
 
 <template>
   <lew-table :data-source="data" :columns="columns">
-    <template #noiseLevel="{ row }"> {{ row.noiseLevel }} ({{ formatNoiseLevel(row.noiseLevel) }}) </template>
+    <template #noiseLevel="{ row }">
+      {{ row.noiseLevel }} ({{ formatNoiseLevel(row.noiseLevel) }})
+    </template>
     <template #features="{ row }">
       <lew-flex gap="5" x="start">
         <lew-tag

@@ -25,7 +25,9 @@ export const alertProps = {
           return false
         }
         if (!validStatusColors.includes(item.type)) {
-          console.warn(`[LewAlert] options[${index}].type 必须是 "${validStatusColors.join('", "')}" 之一`)
+          console.warn(
+            `[LewAlert] options[${index}].type 必须是 "${validStatusColors.join('", "')}" 之一`
+          )
           return false
         }
         if (typeof item.title !== 'string' || item.title.trim() === '') {

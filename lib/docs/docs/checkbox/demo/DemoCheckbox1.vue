@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const socialMediaOptions = ref([
-  { label: '微信', value: 'wechat' },
-  { label: '微博', value: 'weibo' },
-  { label: '抖音', value: 'douyin' },
-  { label: '小红书', value: 'xiaohongshu' }
+  { label: '谷歌', value: 'google' },
+  { label: '苹果', value: 'apple' },
+  { label: '微软', value: 'microsoft' },
+  { label: '亚马逊', value: 'amazon' }
 ])
 
 const selectedPlatforms = ref([])

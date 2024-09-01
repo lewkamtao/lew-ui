@@ -12,28 +12,40 @@ const options = [
         value: 'smartphone',
         label: '智能手机',
         children: [
-          { value: 'ios', label: 'iOS设备', children: [
-            { value: 'iphone', label: 'iPhone' },
-            { value: 'ipad', label: 'iPad', disabled: true }
-          ]},
-          { value: 'android', label: 'Android设备', children: [
-            { value: 'samsung', label: '三星' },
-            { value: 'huawei', label: '华为' },
-            { value: 'xiaomi', label: '小米' },
-            { value: 'oppo', label: 'OPPO', disabled: true }
-          ]}
+          {
+            value: 'ios',
+            label: 'iOS设备',
+            children: [
+              { value: 'iphone', label: 'iPhone' },
+              { value: 'ipad', label: 'iPad', disabled: true }
+            ]
+          },
+          {
+            value: 'android',
+            label: 'Android设备',
+            children: [
+              { value: 'samsung', label: '三星' },
+              { value: 'huawei', label: '华为' },
+              { value: 'xiaomi', label: '小米' },
+              { value: 'oppo', label: 'OPPO', disabled: true }
+            ]
+          }
         ]
       },
       {
         value: 'computer',
         label: '电脑',
         children: [
-          { value: 'laptop', label: '笔记本', children: [
-            { value: 'macbook', label: 'MacBook' },
-            { value: 'surface', label: 'Surface' },
-            { value: 'thinkpad', label: 'ThinkPad' },
-            { value: 'dell', label: 'Dell', disabled: true }
-          ]},
+          {
+            value: 'laptop',
+            label: '笔记本',
+            children: [
+              { value: 'macbook', label: 'MacBook' },
+              { value: 'surface', label: 'Surface' },
+              { value: 'thinkpad', label: 'ThinkPad' },
+              { value: 'dell', label: 'Dell', disabled: true }
+            ]
+          },
           { value: 'desktop', label: '台式机', disabled: true }
         ]
       },
@@ -101,7 +113,13 @@ const change = (e: any) => {
 
 <template>
   <lew-flex direction="y" gap="20px" style="width: 300px">
-    <lew-cascader v-model="v" size="small" :options="options" @change="change" placeholder="选择小型科技产品" />
+    <lew-cascader
+      v-model="v"
+      size="small"
+      :options="options"
+      @change="change"
+      placeholder="选择小型科技产品"
+    />
     <lew-cascader v-model="v" :options="options" placeholder="浏览科技产品目录" />
     <lew-cascader v-model="v" size="large" :options="options" placeholder="探索高端科技产品" />
   </lew-flex>

@@ -3,7 +3,8 @@ const open = () => {
   LewDialog.error({
     title: 'iCloud 数据删除确认',
     okText: '删除',
-    content: '您确定要永久删除所有 iCloud 数据吗？此操作无法撤销，可能会导致您的设备上的数据丢失。请谨慎操作！',
+    content:
+      '您确定要永久删除所有 iCloud 数据吗？此操作无法撤销，可能会导致您的设备上的数据丢失。请谨慎操作！',
     closeOnClickOverlay: true,
     closeByEsc: true,
     ok: () => {

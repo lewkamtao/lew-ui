@@ -79,7 +79,7 @@ const selectItem = (value: string | number | undefined, type?: string) => {
     if (type !== 'watch' && value !== tabsValue.value) {
       emit('change', {
         label: _item.label,
-        value: _item.value,
+        value: _item.value
       })
     }
     state.curIndex = index
@@ -295,7 +295,7 @@ onUnmounted(() => {
   }
 
   .lew-tabs-item-isInit {
-    transition:var(--lew-form-transition-bezier);
+    transition: var(--lew-form-transition-bezier);
   }
 }
 

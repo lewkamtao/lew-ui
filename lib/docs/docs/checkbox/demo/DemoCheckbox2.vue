@@ -1,14 +1,14 @@
 <script setup lang="ts">
-const productOptions = ref([
-  { label: '智能手机', value: 'smartphone' },
-  { label: '平板电脑', value: 'tablet' },
-  { label: '笔记本电脑', value: 'laptop' },
-  { label: '智能手表', value: 'smartwatch' }
+const techOptions = ref([
+  { label: '人工智能', value: 'ai' },
+  { label: '区块链', value: 'blockchain' },
+  { label: '虚拟现实', value: 'vr' },
+  { label: '量子计算', value: 'quantum' }
 ])
 
-const selectedProducts = ref([])
+const selectedTech = ref([])
 </script>
 
 <template>
-  <lew-checkbox-group v-model="selectedProducts" direction="y" :options="productOptions" />
+  <lew-checkbox-group v-model="selectedTech" direction="y" :options="techOptions" />
 </template>

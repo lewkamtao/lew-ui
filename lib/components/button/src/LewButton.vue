@@ -121,9 +121,10 @@ defineExpose({ focus })
       />
     </div>
     <template v-if="iconPosition === 'left'">
+      <slot v-if="$slots.icon" name="icon"> </slot>
       <lew-icon
+        v-else-if="icon"
         strokeWidth="2"
-        v-if="icon"
         class="lew-button-icon"
         :size="getIconSize"
         :type="icon"
@@ -140,8 +141,9 @@ defineExpose({ focus })
       </span>
     </div>
     <template v-if="iconPosition === 'right'">
+      <slot v-if="$slots.icon" name="icon"> </slot>
       <lew-icon
-        v-if="icon"
+        v-else-if="icon"
         class="lew-button-icon"
         strokeWidth="2"
         :size="getIconSize"
@@ -265,7 +267,7 @@ defineExpose({ focus })
   height: calc(var(--lew-form-item-height-small));
   line-height: calc(var(--lew-form-item-height-small));
   font-size: var(--lew-form-font-size-small);
-  gap: 4px;
+  gap: 3px;
   padding: 0px 14px;
   .lew-loading-icon {
     left: 8px;
@@ -277,7 +279,7 @@ defineExpose({ focus })
   height: calc(var(--lew-form-item-height-medium));
   line-height: calc(var(--lew-form-item-height-medium));
   font-size: var(--lew-form-font-size-medium);
-  gap: 6px;
+  gap: 4px;
   padding: 0px 16px;
   .lew-loading-icon {
     left: 9px;
@@ -289,7 +291,7 @@ defineExpose({ focus })
   height: calc(var(--lew-form-item-height-large));
   line-height: calc(var(--lew-form-item-height-large));
   font-size: var(--lew-form-font-size-large);
-  gap: 8px;
+  gap: 5px;
   padding: 0px 20px;
   .lew-loading-icon {
     left: 10px;

@@ -113,7 +113,9 @@ const setSelectedBrands = () => {
 
 <template>
   <lew-flex style="width: 100%" direction="y" x="start">
-    <lew-button style="margin-bottom: 10px" @click="setSelectedBrands"> 设置默认选中品牌 </lew-button>
+    <lew-button style="margin-bottom: 10px" @click="setSelectedBrands">
+      设置默认选中品牌
+    </lew-button>
     <lew-button style="margin-bottom: 10px" @click="getSelectedBrands"> 获取选中品牌 </lew-button>
     <lew-table ref="tableRef" :data-source="data" :columns="columns" checkable rowKey="id">
       <template #popularItems="{ row }">

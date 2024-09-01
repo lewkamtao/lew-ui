@@ -25,11 +25,24 @@ export const markProps = {
     default: 'blue',
     validator: (value: MarkColor): boolean => {
       const validColors: MarkColor[] = [
-        'red', 'orange', 'yellow', 'green', 'mint', 'teal',
-        'cyan', 'blue', 'indigo', 'purple', 'pink', 'gray', 'brown'
+        'red',
+        'orange',
+        'yellow',
+        'green',
+        'mint',
+        'teal',
+        'cyan',
+        'blue',
+        'indigo',
+        'purple',
+        'pink',
+        'gray',
+        'brown'
       ]
       if (!validColors.includes(value)) {
-        console.warn(`[LewMark] 无效的颜色值: ${value}。请使用以下有效颜色之一: ${validColors.join(', ')}`)
+        console.warn(
+          `[LewMark] 无效的颜色值: ${value}。请使用以下有效颜色之一: ${validColors.join(', ')}`
+        )
         return false
       }
       return true
@@ -60,7 +73,9 @@ export const markProps = {
     validator: (value: CursorStyle): boolean => {
       const validCursors: CursorStyle[] = ['pointer', 'default', 'text', 'move', 'not-allowed']
       if (!validCursors.includes(value)) {
-        console.warn(`[LewMark] 无效的鼠标样式: ${value}。请使用以下有效样式之一: ${validCursors.join(', ')}`)
+        console.warn(
+          `[LewMark] 无效的鼠标样式: ${value}。请使用以下有效样式之一: ${validCursors.join(', ')}`
+        )
         return false
       }
       return true

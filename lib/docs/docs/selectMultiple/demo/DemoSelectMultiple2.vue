@@ -63,6 +63,11 @@ const value = ref([])
 <template>
   <lew-flex style="width: 320px" direction="y">
     <lew-select-multiple v-model="value" :options="options" placeholder="点击选择职位" />
-    <lew-select-multiple v-model="value" :options="options" trigger="hover" placeholder="悬停选择职位" />
+    <lew-select-multiple
+      v-model="value"
+      :options="options"
+      trigger="hover"
+      placeholder="悬停选择职位"
+    />
   </lew-flex>
 </template>

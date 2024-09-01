@@ -64,6 +64,6 @@ const handleChange = (val: string) => {
       placeholder="选择职位（部分职位暂不可选）"
       @change="handleChange"
     />
-    <div v-if="value">当前选中: {{ options.find(opt => opt.value === value)?.label }}</div>
+    <div v-if="value">当前选中: {{ options.find((opt) => opt.value === value)?.label }}</div>
   </lew-flex>
 </template>

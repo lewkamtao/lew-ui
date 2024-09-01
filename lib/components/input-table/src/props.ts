@@ -3,10 +3,10 @@ import type { LewSize } from 'lew-ui'
 import { validSizes } from 'lew-ui/constants'
 
 interface InputTableColumn {
-  title: string;
-  width?: number;
-  field: string;
-  as: string;
+  title: string
+  width?: number
+  field: string
+  as: string
 }
 
 export const inputTableModel = {

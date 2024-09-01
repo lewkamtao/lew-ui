@@ -285,7 +285,7 @@ defineExpose({ show, hide })
   width: 100%;
   border-radius: var(--lew-border-radius-small);
   background-color: var(--lew-form-bgcolor);
-  transition:var(--lew-form-transition-ease);
+  transition: var(--lew-form-transition-ease);
   box-sizing: border-box;
   outline: 0px var(--lew-color-primary-light) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;

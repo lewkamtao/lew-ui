@@ -22,15 +22,41 @@ const selectedFeatures = ref([])
       direction="x"
       :options="productFeatures"
     />
-    <lew-checkbox-group v-model="selectedFeatures" block :iconable="false" direction="x" :options="productFeatures" />
+    <lew-checkbox-group
+      v-model="selectedFeatures"
+      block
+      :iconable="false"
+      direction="x"
+      :options="productFeatures"
+    />
     <br />
     <br />
     <lew-title :size="14">有图标选择</lew-title>
-    <lew-checkbox-group v-model="selectedFeatures" block size="small" round direction="x" :options="productFeatures" />
+    <lew-checkbox-group
+      v-model="selectedFeatures"
+      block
+      size="small"
+      round
+      direction="x"
+      :options="productFeatures"
+    />
 
-    <lew-checkbox-group v-model="selectedFeatures" block round direction="x" :options="productFeatures" />
+    <lew-checkbox-group
+      v-model="selectedFeatures"
+      block
+      round
+      direction="x"
+      :options="productFeatures"
+    />
 
-    <lew-checkbox-group v-model="selectedFeatures" block round size="large" direction="x" :options="productFeatures" />
+    <lew-checkbox-group
+      v-model="selectedFeatures"
+      block
+      round
+      size="large"
+      direction="x"
+      :options="productFeatures"
+    />
     <br />
     <br />
     <lew-title :size="14">禁用选项</lew-title>
