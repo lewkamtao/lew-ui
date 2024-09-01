@@ -90,7 +90,7 @@ const selectedKeys = ref("35503077")
 </script>
 
 <template>
-  <div style="margin-bottom: 10px">{{ selectedKeys }}</div>
+  <div style="margin-bottom: 10px"> 已选择： {{ selectedKeys }}</div>
   <lew-table
     ref="tableRef"
     checkable

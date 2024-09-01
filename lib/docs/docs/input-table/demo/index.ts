@@ -1,24 +1,16 @@
-import DemoInputNumber1 from './DemoInputNumber1.vue'
-import DemoInputNumber2 from './DemoInputNumber2.vue'
-import DemoInputNumber3 from './DemoInputNumber3.vue'
-import DemoInputNumber4 from './DemoInputNumber4.vue'
-import DemoInputNumber5 from './DemoInputNumber5.vue'
+import DemoInputTable1 from './DemoInputTable1.vue'
+import DemoInputTable2 from './DemoInputTable2.vue'
+import DemoInputTable3 from './DemoInputTable3.vue'
 
-import DemoInputNumber1Code from './DemoInputNumber1.vue?raw'
-import DemoInputNumber2Code from './DemoInputNumber2.vue?raw'
-import DemoInputNumber3Code from './DemoInputNumber3.vue?raw'
-import DemoInputNumber4Code from './DemoInputNumber4.vue?raw'
-import DemoInputNumber5Code from './DemoInputNumber5.vue?raw'
+import DemoInputTable1Code from './DemoInputTable1.vue?raw'
+import DemoInputTable2Code from './DemoInputTable2.vue?raw'
+import DemoInputTable3Code from './DemoInputTable3.vue?raw'
 
 export {
-  DemoInputNumber1,
-  DemoInputNumber1Code,
-  DemoInputNumber2,
-  DemoInputNumber2Code,
-  DemoInputNumber3,
-  DemoInputNumber3Code,
-  DemoInputNumber4,
-  DemoInputNumber4Code,
-  DemoInputNumber5,
-  DemoInputNumber5Code
+  DemoInputTable1,
+  DemoInputTable1Code,
+  DemoInputTable2,
+  DemoInputTable2Code,
+  DemoInputTable3,
+  DemoInputTable3Code
 }

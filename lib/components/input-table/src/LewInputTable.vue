@@ -123,7 +123,6 @@ const showHeaderAction = computed(() => props.batchDeletable || props.clearable 
       width: any2px(width)
     }"
   >
-    {{ selectedKeys }}
     <lew-table
       :checkable="batchDeletable"
       :row-key="rowKey"

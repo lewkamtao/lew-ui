@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import {
-  DemoInputNumber1,
-  DemoInputNumber1Code,
-  DemoInputNumber2,
-  DemoInputNumber2Code,
-  DemoInputNumber3,
-  DemoInputNumber3Code,
-  DemoInputNumber4,
-  DemoInputNumber4Code,
-  DemoInputNumber5,
-  DemoInputNumber5Code
+  DemoInputTable1,
+  DemoInputTable1Code,
+  DemoInputTable2,
+  DemoInputTable2Code,
+  DemoInputTable3,
+  DemoInputTable3Code
 } from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
@@ -25,22 +21,16 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>InputNumber</lew-title>
-    <p class="sub-title">仅允许输入数字值的输入框</p>
-    <lew-demo-box title="尺寸" :code="DemoInputNumber1Code">
-      <demo-input-number1 />
+    <lew-title>InputTable</lew-title>
+    <p class="sub-title">输入表格组件</p>
+    <lew-demo-box title="基础用法" :code="DemoInputTable1Code">
+      <demo-input-table1 />
     </lew-demo-box>
-    <lew-demo-box title="聚焦时全选" :code="DemoInputNumber2Code">
-      <demo-input-number2 />
+    <lew-demo-box title="高级控件" :code="DemoInputTable2Code">
+      <demo-input-table2 />
     </lew-demo-box>
-    <lew-demo-box title="限制范围" :code="DemoInputNumber3Code">
-      <demo-input-number3 />
-    </lew-demo-box>
-    <lew-demo-box title="精确数值" :code="DemoInputNumber4Code">
-      <demo-input-number4 />
-    </lew-demo-box>
-    <lew-demo-box title="禁用和只读" :code="DemoInputNumber5Code">
-      <demo-input-number5 />
+    <lew-demo-box v-if="false" title="尺寸" :code="DemoInputTable3Code">
+      <demo-input-table3 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>

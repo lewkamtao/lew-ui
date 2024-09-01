@@ -110,7 +110,7 @@ const setSelectedBrands = () => {
     <lew-button style="margin-bottom: 10px" @click="setSelectedBrands">
       设置默认选中品牌
     </lew-button>
-    <div>{{ selectedKeys }}</div>
+    <div>已选择：{{ selectedKeys }}</div>
     <lew-table
       ref="tableRef"
       :data-source="data"

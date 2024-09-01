@@ -81,7 +81,7 @@ export const inputTableProps = {
   },
   batchDeletable: {
     type: Boolean,
-    default: true,
+    default: false,
     description: '是否显示批量删除功能'
   },
   // 添加新行
@@ -124,13 +124,13 @@ export const inputTableProps = {
   },
   clearable: {
     type: Boolean,
-    default: true,
+    default: false,
     description: '是否显示清空按钮'
   },
   //  排序
   sortable: {
     type: Boolean,
-    default: true,
+    default: false,
     description: '是否启用排序功能'
   },
   autoUniqueId: {
