@@ -171,7 +171,7 @@ onMounted(() => {
 
     .lew-context-menu-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bg-active);
+      background-color: var(--lew-pop-bgcolor-active);
     }
   }
   .lew-context-menu-box-disabled {

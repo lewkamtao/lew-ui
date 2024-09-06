@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import { cloneDeep } from 'lodash-es'
-defineProps({
-  options: {
-    type: Object
-  }
-})
 
 const visible = ref(false)
 const formRef = ref()
 const form = ref({})
 const editIndex = ref(-1)
 const id = ref('')
+
+defineProps({
+  options: {
+    type: Object
+  }
+})
+
+const emit = defineEmits(['addSuccess', 'editSuccess'])
+
 const open = ({ row = {}, index = -1 }: { row: any; index: number }) => {
   visible.value = true
   editIndex.value = index
@@ -21,7 +25,7 @@ const open = ({ row = {}, index = -1 }: { row: any; index: number }) => {
     form.value = {}
   }
 }
-const emit = defineEmits(['addSuccess', 'editSuccess'])
+
 const ok = () => {
   formRef.value.validate().then((res: boolean) => {
     if (res) {
@@ -39,9 +43,11 @@ const ok = () => {
     }
   })
 }
+
 const formMounted = () => {
   formRef.value.setForm(form.value)
 }
+
 defineExpose({ open })
 </script>
 
@@ -63,14 +69,16 @@ defineExpose({ open })
     </div>
   </lew-modal>
 </template>
+
 <style lang="scss" scoped>
-.footer {
-  padding: 5px 15px;
-}
 .form-modal {
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
   max-height: 80vh;
+}
+
+.footer {
+  padding: 5px 15px;
 }
 </style>

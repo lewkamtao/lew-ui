@@ -1,8 +1,8 @@
 import tippy from 'tippy.js'
 import type { App, DirectiveBinding } from 'vue'
 import { getUniqueId } from 'lew-ui/utils'
-import _LewContextMenu from './LewContextMenu.vue'
 import { isFunction } from 'lodash-es'
+import _LewContextMenu from './LewContextMenu.vue'
 
 export const initLewContextMenu = () => {
   window.LewContextMenu = {
@@ -25,32 +25,41 @@ export const initLewContextMenu = () => {
   window.LewContextMenu.instance.popper.children[0].setAttribute('data-lew', 'popover')
 }
 
+const findContextMenuId = (el: HTMLElement): string => {
+  try {
+    const id = el.getAttribute('lew-context-menu-id')
+    if (id) return id
+    return el.parentNode ? findContextMenuId(el.parentNode as HTMLElement) : ''
+  } catch {
+    return ''
+  }
+}
+
 export const LewVContextMenu = {
   install(app: App) {
     app.directive('context-menu', {
-      mounted(el: any, binding: DirectiveBinding) {
-        // 创建右键索引
+      mounted(el: HTMLElement, binding: DirectiveBinding) {
         if (!window.LewContextMenu) {
           initLewContextMenu()
         }
 
         if (!el.id) {
-          const _id = getUniqueId()
-          el.setAttribute('lew-context-menu-id', _id)
+          const id = getUniqueId()
+          el.setAttribute('lew-context-menu-id', id)
           const { options } = binding.value
-          window.LewContextMenu.menu[_id] = options || []
+          window.LewContextMenu.menu[id] = options || []
         }
 
         if (!window.LewContextMenu.contextMenu) {
-          window.LewContextMenu.contextMenu = (e: any) => {
-            const _id = findContextMenuId(e.target)
-            if (!_id) return
+          window.LewContextMenu.contextMenu = (e: MouseEvent) => {
+            const id = findContextMenuId(e.target as HTMLElement)
+            if (!id) return
             e.preventDefault()
-            const options = window.LewContextMenu.menu[_id]
+            const options = window.LewContextMenu.menu[id]
             const { instance } = window.LewContextMenu
-            instance.hide() // 隐藏上一个菜单
+            instance.hide()
             const menuDom = document.createElement('div')
-            // 清除上一个菜单
+
             Object.keys(window.LewContextMenu.menuInstance).forEach((key: string) => {
               window.LewContextMenu.menuInstance[key].destroy()
               delete window.LewContextMenu.menuInstance[key]
@@ -62,18 +71,17 @@ export const LewVContextMenu = {
                   options,
                   onSelect: (item: ContextMenus) => {
                     const { selectHandler } = binding.value
-                    // 执行回调
                     if (isFunction(selectHandler)) {
                       selectHandler(item)
                     }
-                    if ((item.children || []).length === 0) {
-                      // 隐藏
+                    if (!(item.children || []).length) {
                       instance.hide()
                     }
                   }
                 })
               }
             }).mount(menuDom)
+
             setTimeout(() => {
               instance.setProps({
                 content: menuDom,
@@ -92,32 +100,16 @@ export const LewVContextMenu = {
           window.addEventListener('contextmenu', window.LewContextMenu.contextMenu)
         }
       },
-      updated(el: any, binding: DirectiveBinding) {
-        const _id = findContextMenuId(el)
-        if (_id) {
-          // 更新右键索引
+      updated(el: HTMLElement, binding: DirectiveBinding) {
+        const id = findContextMenuId(el)
+        if (id) {
           const { options } = binding.value
-          window.LewContextMenu.menu[_id] = options || []
+          window.LewContextMenu.menu[id] = options || []
         } else {
           console.error('发生未知错误！找不到 lew-context-menu-id。')
         }
       }
     })
-  }
-}
-
-const findContextMenuId = (el: HTMLElement): string => {
-  try {
-    const _id = el.getAttribute('lew-context-menu-id')
-    if (_id) {
-      return _id
-    }
-    if (el.parentNode) {
-      return findContextMenuId(el.parentNode as HTMLElement)
-    }
-    return ''
-  } catch {
-    return ''
   }
 }
 
@@ -136,7 +128,7 @@ export interface ContextMenus {
 export const contextMenuProps = {
   options: {
     type: Array as PropType<ContextMenus[]>,
-    default: [],
+    default: () => [],
     description: '右键菜单配置'
   }
 }

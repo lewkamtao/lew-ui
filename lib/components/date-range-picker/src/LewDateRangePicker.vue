@@ -11,13 +11,13 @@ if (app && !app.directive('tooltip')) {
 
 type DateRangePickerModel =
   | {
-      [key in typeof startKey | typeof endKey]: string | undefined
+      [key in typeof startKey | typeof endKey]: string
     }
   | undefined
 
+const modelValue = defineModel<DateRangePickerModel>()
 const props = defineProps(dateRangePickerProps)
 const emit = defineEmits(['change', 'clear'])
-const modelValue: Ref<DateRangePickerModel> = defineModel()
 const visible = ref(false)
 const lewPopoverRef = ref()
 const { startKey, endKey } = props

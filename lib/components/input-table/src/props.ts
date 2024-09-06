@@ -109,7 +109,7 @@ export const inputTableProps = {
       return true
     }
   },
-  // 最小行数  
+  // 最小行数
   minRows: {
     type: Number,
     default: 0,

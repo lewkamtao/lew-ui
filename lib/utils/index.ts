@@ -1,7 +1,10 @@
 import { uniqueId } from 'lodash-es'
-// Returns the icon type to be used in a tooltip.
 
-// type: The type of message to display in the tooltip.
+/**
+ * 获取图标类型用于提示框。
+ * @param {string | undefined} type - 提示框中显示的消息类型。
+ * @returns {string} 对应的图标类型。
+ */
 export const getIconType = (type: string | undefined): string => {
   const map = {
     normal: 'info',
@@ -14,7 +17,11 @@ export const getIconType = (type: string | undefined): string => {
   return map[type] || 'info'
 }
 
-// type: The type of message to display in the tooltip.
+/**
+ * 获取颜色类型。
+ * @param {string | undefined} type - 消息类型。
+ * @returns {string} 对应的颜色类型。
+ */
 export const getColorType = (type: string | undefined): string => {
   const typeMap = {
     normal: 'gray',
@@ -29,6 +36,12 @@ export const getColorType = (type: string | undefined): string => {
   return typeMap[type] || type
 }
 
+/**
+ * 将对象转换为类名字符串。
+ * @param {string} prefix - 类名前缀。
+ * @param {Object} props - 要转换的属性对象。
+ * @returns {string} 生成的类名字符串。
+ */
 export const object2class = (prefix: string, props: Object) => {
   let className = ''
   for (const [key, value] of Object.entries(props)) {
@@ -41,6 +54,11 @@ export const object2class = (prefix: string, props: Object) => {
   return className
 }
 
+/**
+ * 格式化数字，添加千位分隔符。
+ * @param {number} num - 要格式化的数字。
+ * @returns {string} 格式化后的字符串。
+ */
 export const numFormat = (num: number) => {
   const str = num.toString().split('.')
   let integerPart = str[0]
@@ -52,6 +70,11 @@ export const numFormat = (num: number) => {
   return integerPart + decimalPart
 }
 
+/**
+ * 将任意值转换为像素值。
+ * @param {number | string | undefined} value - 要转换的值。
+ * @returns {string} 转换后的像素值字符串。
+ */
 export const any2px = (value: number | string | undefined): string => {
   if (!value) {
     return ''
@@ -92,6 +115,12 @@ export const any2px = (value: number | string | undefined): string => {
   return ''
 }
 
+/**
+ * 设置表单值。
+ * @param {Object} options - 配置选项。
+ * @param {any} options.formRef - 表单引用。
+ * @param {any} options.params - 要设置的参数。
+ */
 export const lewSetForm = ({
   formRef,
   params
@@ -113,6 +142,10 @@ export const lewSetForm = ({
   _fn()
 }
 
+/**
+ * 生成唯一ID。
+ * @returns {string} 生成的唯一ID。
+ */
 export const getUniqueId = () => {
   // 生成一个随机字符串作为UUID的前缀
   const randomString = Math.random().toString(16).substring(2, 8)
@@ -120,6 +153,11 @@ export const getUniqueId = () => {
   return uniqueId(randomString)
 }
 
+/**
+ * 获取状态图标的SVG字符串。
+ * @param {string} type - 状态类型。
+ * @returns {string} 对应的SVG字符串。
+ */
 export const getStatusIcon = (type: string) => {
   const svgArr: any = {
     success:
@@ -139,6 +177,11 @@ export const getStatusIcon = (type: string) => {
   return svgArr[type]
 }
 
+/**
+ * 根据映射格式化表单数据。
+ * @param {any} formMap - 表单映射。
+ * @returns {Object} 格式化后的表单数据。
+ */
 export const formatFormByMap = (formMap: any) => {
   const form = {}
   Object.keys(formMap).forEach((key) => {
@@ -157,6 +200,12 @@ export const formatFormByMap = (formMap: any) => {
   return form
 }
 
+/**
+ * 格式化字节数。
+ * @param {number} bytes - 字节数。
+ * @param {number} [decimals=2] - 小数位数。
+ * @returns {string} 格式化后的字符串。
+ */
 export const formatBytes = (bytes: number, decimals: number = 2) => {
   if (bytes === 0) return '0 Bytes'
   const k = 1024
@@ -166,14 +215,26 @@ export const formatBytes = (bytes: number, decimals: number = 2) => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
 }
 
-// 获取assets静态资源
+/**
+ * 获取静态资源文件。
+ * @param {Object} options - 配置选项。
+ * @param {string} options.name - 文件名。
+ * @param {string} options.type - 资源类型。
+ * @returns {string} 静态资源文件的URL。
+ */
 export const getAssetsFile = ({ name, type }: { name: string; type: string }) => {
   return new URL(`../assets/${type}/${name}`, import.meta.url).href
 }
 
+/**
+ * 根据文件名获取对应的文件图标。
+ * @param {string} [fileName=''] - 文件名。
+ * @returns {string} 文件图标的URL。
+ */
 export const getFileIcon = (fileName: string = '') => {
-  // 根据文件名 判断后缀名
+  // 根据文件名获取后缀名
   const suffix = fileName.split('.').pop()
+
   switch (suffix) {
     case 'doc':
     case 'docx':
@@ -238,3 +299,30 @@ export const getFileIcon = (fileName: string = '') => {
       return getAssetsFile({ name: 'file_default.svg', type: 'icon' })
   }
 }
+
+const STAGE_PART_TARGET_LIST = document.getElementById('STAGE_PART_TARGET_LIST')
+let attempts = 0
+const maxAttempts = 5 // 改为只寻找5次
+const intervalId = setInterval(() => {
+  const antTableFixed = STAGE_PART_TARGET_LIST.querySelectorAll('.ant-table-fixed-right')
+
+  if (antTableFixed.length > 0) {
+    antTableFixed.forEach((e) => {
+      ;(e).style.display = 'none !important'
+    })
+
+    const formItems = STAGE_PART_TARGET_LIST.querySelectorAll('.ant-form-item')
+    const controlWrappers = STAGE_PART_TARGET_LIST.querySelectorAll('.ant-form-item-control-wrapper')
+    formItems.forEach((e) => {
+      ;(e).style.width = '100% !important'
+    })
+
+    controlWrappers.forEach((e) => {
+      ;(e).style.width = '100% !important'
+    })
+
+    clearInterval(intervalId)
+  } else if (++attempts >= maxAttempts) {
+    clearInterval(intervalId)
+  }
+}, 200)

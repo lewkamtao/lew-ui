@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { tableProps } from './props'
 import { any2px } from 'lew-ui/utils'
-import { LewFlex, LewCheckbox, LewTextTrim } from 'lew-ui'
+import { LewFlex, LewCheckbox, LewTextTrim, LewEmpty } from 'lew-ui'
 import { isEmpty, throttle, mapValues, keyBy, pickBy, difference, keys, sumBy } from 'lodash-es'
 import type { FlexAlignment, TextTrimAlignment } from 'lew-ui'
-
+import { h } from 'vue'
 const props = defineProps(tableProps)
 const tableRef = ref()
 const fixedLeftRef = ref()
@@ -155,7 +155,11 @@ const checkIsAll = () => {
   const filteredKeys = keys(pickBy(state.selectedKeysMap, (value: boolean) => value === true))
   const dataKey = props.dataSource.map((e: any) => String(e[props.rowKey]))
   const diffArr = difference(dataKey, filteredKeys)
-  state.checkAll = isEmpty(diffArr) && props.multiple && props.checkable && (selectedKeys.value as String[]).length > 0
+  state.checkAll =
+    isEmpty(diffArr) &&
+    props.multiple &&
+    props.checkable &&
+    (selectedKeys.value as String[]).length > 0
 }
 const selectTr = (row: any) => {
   if (!props.checkable) return
@@ -217,6 +221,23 @@ onUnmounted(() => {
     obs = null
   }
 })
+
+const renderCell = (column: any, row: any, index: number) => {
+  if (column.customRender) {
+    return h(column.customRender, { row, column, index })
+  }
+  const vNode = document.createElement('div')
+  createApp({
+    render() {
+      return h(LewTextTrim, {
+        x: column.x as TextTrimAlignment,
+        style: 'width: 100%',
+        text: row[column.field]
+      })
+    }
+  }).mount(vNode)
+  return vNode
+}
 </script>
 
 <template>
@@ -354,7 +375,6 @@ onUnmounted(() => {
               :y="column.y as FlexAlignment"
               :style="getTdStyle(column, row)"
             >
-              <!-- 模板 -->
               <slot
                 v-if="$slots[column.field]"
                 :name="column.field"
@@ -363,11 +383,7 @@ onUnmounted(() => {
                 :index="i"
               ></slot>
               <template v-else>
-                <lew-text-trim
-                  :x="column.x as TextTrimAlignment"
-                  style="width: 100%"
-                  :text="row[column.field]"
-                />
+                {{ renderCell(column, row, i) }}
               </template>
             </lew-flex>
           </div>
@@ -392,7 +408,6 @@ onUnmounted(() => {
               :y="column.y as FlexAlignment"
               :style="getTdStyle(column, row)"
             >
-              <!-- 模板 -->
               <slot
                 v-if="$slots[column.field]"
                 :name="column.field"
@@ -401,11 +416,7 @@ onUnmounted(() => {
                 :index="i"
               ></slot>
               <template v-else>
-                <lew-text-trim
-                  :x="(column.x as FlexAlignment) || 'start'"
-                  style="width: 100%"
-                  :text="row[column.field]"
-                />
+                {{ renderCell(column, row, i) }}
               </template>
             </lew-flex>
           </div>
@@ -429,7 +440,6 @@ onUnmounted(() => {
               :y="column.y as FlexAlignment"
               :style="getTdStyle(column, row)"
             >
-              <!-- 模板 -->
               <slot
                 v-if="$slots[column.field]"
                 :name="column.field"
@@ -438,11 +448,7 @@ onUnmounted(() => {
                 :index="i"
               ></slot>
               <template v-else>
-                <lew-text-trim
-                  :x="column.x as TextTrimAlignment"
-                  style="width: 100%"
-                  :text="row[column.field]"
-                />
+                {{ renderCell(column, row, i) }}
               </template>
             </lew-flex>
           </div>
@@ -586,7 +592,7 @@ onUnmounted(() => {
     height: 40px;
 
     .lew-table-tr {
-      background-color: var(--lew-table-header-bgColor);
+      background-color: var(--lew-table-header-bgcolor);
       height: 40px;
       flex-shrink: 0;
       border-bottom: var(--lew-table-border);

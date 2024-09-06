@@ -222,7 +222,7 @@ const showHeaderAction = computed(() => props.batchDeletable || props.clearable 
 
 <style lang="scss" scoped>
 .header-action {
-  background-color: var(--lew-table-header-bgColor);
+  background-color: var(--lew-table-header-bgcolor);
   border-bottom: 1px var(--lew-bgcolor-3) solid;
   padding: 7px;
 }

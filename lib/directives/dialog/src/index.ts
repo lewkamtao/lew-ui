@@ -21,24 +21,27 @@ type DialogType = 'warning' | 'error' | 'info' | 'normal' | 'success'
 
 const createDialog = (type: DialogType) => (options: Options) => dialog(type as LewColor, options)
 
-const warning = createDialog('warning')
-const error = createDialog('error')
-const info = createDialog('info')
-const normal = createDialog('normal')
-const success = createDialog('success')
+const dialogTypes: Record<DialogType, (options: Options) => void> = {
+  warning: createDialog('warning'),
+  error: createDialog('error'),
+  info: createDialog('info'),
+  normal: createDialog('normal'),
+  success: createDialog('success')
+}
 
 const dialog = (type: LewColor, options: Options) => {
   const {
     title,
     content,
-    ok,
-    cancel,
+    ok = () => true,
+    cancel = () => true,
     okText,
     cancelText,
     layout,
     closeOnClickOverlay,
     closeByEsc
   } = options
+
   const div = document.createElement('div')
   const transformOrigin = `${x.value}px ${y.value}px`
   document.body.appendChild(div)
@@ -55,12 +58,12 @@ const dialog = (type: LewColor, options: Options) => {
           okText,
           cancelText,
           transformOrigin,
-          ok: ok || (() => true),
+          ok,
           onClose: () => {
             app.unmount()
             div.remove()
           },
-          cancel: cancel || (() => true)
+          cancel
         },
         {
           title: () => title,
@@ -75,20 +78,11 @@ const dialog = (type: LewColor, options: Options) => {
 
 export const LewDialog = {
   name: 'LewDialog',
-  warning,
-  info,
-  normal,
-  success,
-  error
+  ...dialogTypes
 }
 
 export type LewDialog = {
   name: string
-  warning: (options: Options) => void
-  info: (options: Options) => void
-  normal: (options: Options) => void
-  success: (options: Options) => void
-  error: (options: Options) => void
-}
+} & Record<DialogType, (options: Options) => void>
 
 export * from './props'

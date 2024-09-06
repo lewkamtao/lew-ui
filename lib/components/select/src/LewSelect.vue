@@ -300,13 +300,13 @@ defineExpose({ show, hide })
 <style lang="scss" scoped>
 .lew-select-view {
   width: 100%;
-  border-radius: var(--lew-border-radius-small);
-  background-color: var(--lew-form-bgcolor);
-  transition: var(--lew-form-transition-ease);
   box-sizing: border-box;
-  outline: 0px var(--lew-color-primary-light) solid;
+  background-color: var(--lew-form-bgcolor);
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  border-radius: var(--lew-border-radius-small);
+  outline: 0px var(--lew-color-primary-light) solid;
   box-shadow: var(--lew-form-box-shadow);
+  transition: var(--lew-form-transition-ease);
 
   > div {
     width: 100%;
@@ -315,20 +315,20 @@ defineExpose({ show, hide })
   .lew-select {
     position: relative;
     width: 100%;
+    box-sizing: border-box;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     cursor: pointer;
     user-select: none;
-    box-sizing: border-box;
 
     .icon-select {
       position: absolute;
       top: 50%;
       right: 9px;
+      padding: 2px;
       transform: translateY(-50%) rotate(0deg);
       transition: var(--lew-form-transition-bezier);
-      padding: 2px;
     }
 
     .icon-select {
@@ -341,16 +341,17 @@ defineExpose({ show, hide })
     }
 
     .value {
-      width: calc(100% - 24px);
       display: inline-flex;
+      width: calc(100% - 24px);
       align-items: center;
       box-sizing: border-box;
-      transition: all 0.2s;
+      padding: 0;
       border: none;
       outline: none;
       background: none;
-      cursor: pointer;
       color: var(--lew-text-color-1);
+      cursor: pointer;
+      transition: all 0.2s;
     }
 
     .value::placeholder {
@@ -364,28 +365,28 @@ defineExpose({ show, hide })
 
   .lew-select-size-small {
     .value {
-      padding: var(--lew-form-input-padding-small);
       height: var(--lew-form-item-height-small);
-      line-height: var(--lew-form-input-line-height-small);
+      padding: var(--lew-form-input-padding-small);
       font-size: var(--lew-form-font-size-small);
+      line-height: var(--lew-form-input-line-height-small);
     }
   }
 
   .lew-select-size-medium {
     .value {
-      padding: var(--lew-form-input-padding-medium);
-      line-height: var(--lew-form-input-line-height-medium);
       height: var(--lew-form-item-height-medium);
+      padding: var(--lew-form-input-padding-medium);
       font-size: var(--lew-form-font-size-medium);
+      line-height: var(--lew-form-input-line-height-medium);
     }
   }
 
   .lew-select-size-large {
     .value {
-      padding: var(--lew-form-input-padding-large);
       height: var(--lew-form-item-height-large);
-      line-height: var(--lew-form-input-line-height-large);
+      padding: var(--lew-form-input-padding-large);
       font-size: var(--lew-form-font-size-large);
+      line-height: var(--lew-form-input-line-height-large);
     }
   }
 }
@@ -404,8 +405,8 @@ defineExpose({ show, hide })
   outline: var(--lew-form-outline);
 
   .icon-select {
-    transform: translateY(-50%) rotate(180deg);
     color: var(--lew-text-color-1);
+    transform: translateY(-50%) rotate(180deg);
   }
 
   .icon-select-hide {
@@ -416,16 +417,17 @@ defineExpose({ show, hide })
 
 .lew-select-view-disabled {
   opacity: var(--lew-disabled-opacity);
-  pointer-events: none; //鼠标点击不可修改
+  pointer-events: none;
 }
 
 .lew-select-view-readonly {
-  pointer-events: none; //鼠标点击不可修改
+  pointer-events: none;
 
   .lew-select {
     user-select: text;
   }
 }
+
 .lew-select-view-searchable {
   .lew-select {
     .value {
@@ -433,53 +435,57 @@ defineExpose({ show, hide })
     }
   }
 }
+
 .lew-select-view-disabled:hover {
   background-color: var(--lew-form-bgcolor);
-  outline: 0px var(--lew-color-primary-light) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  outline: 0px var(--lew-color-primary-light) solid;
 }
 </style>
 <style lang="scss">
 .lew-select-popover-body {
   padding: 6px;
 }
+
 .lew-select-body {
   width: 100%;
   box-sizing: border-box;
+
   .lew-select-options-list {
     padding: 2px 0px;
   }
+
   .result-count {
-    padding-left: 8px;
     margin: 5px 0px;
-    opacity: 0.4;
+    padding-left: 8px;
     font-size: 13px;
+    opacity: 0.4;
   }
 
   .lew-select-options-box {
-    overflow-y: auto;
-    overflow-x: hidden;
     height: auto;
     box-sizing: border-box;
-    transition: all 0.25s ease;
     margin-top: -4px;
     margin-bottom: -4px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: all 0.25s ease;
 
     .lew-select-item {
       position: relative;
       display: inline-flex;
-      align-items: center;
       width: 100%;
+      height: 34px;
+      margin-top: 2px;
+      align-items: center;
+      box-sizing: border-box;
+      border-radius: var(--lew-border-radius-small);
+      color: var(--lew-text-color-1);
       font-size: 14px;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
       cursor: pointer;
-      color: var(--lew-text-color-1);
-      box-sizing: border-box;
-      border-radius: var(--lew-border-radius-small);
-      height: 34px;
-      margin-top: 2px;
     }
 
     .lew-select-item-disabled {
@@ -489,18 +495,18 @@ defineExpose({ show, hide })
 
     .lew-select-label {
       width: 100%;
-      user-select: none;
-      font-size: 14px;
-      padding: 0px 12px;
       height: 30px;
-      line-height: 30px;
+      padding: 0px 12px;
       box-sizing: border-box;
+      font-size: 14px;
+      line-height: 30px;
+      user-select: none;
       cursor: pointer !important;
     }
 
     .lew-select-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bg-active);
+      background-color: var(--lew-pop-bgcolor-active);
     }
 
     .lew-select-slot-item {
@@ -510,13 +516,13 @@ defineExpose({ show, hide })
 
     .lew-select-slot-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bg-active);
+      background-color: var(--lew-pop-bgcolor-active);
     }
 
     .lew-select-item-active {
       color: var(--lew-checkbox-color);
+      background-color: var(--lew-pop-bgcolor-active);
       font-weight: bold;
-      background-color: var(--lew-pop-bg-active);
 
       .icon-check {
         margin-right: 10px;
@@ -525,8 +531,8 @@ defineExpose({ show, hide })
 
     .lew-select-item-active:hover {
       color: var(--lew-checkbox-color);
+      background-color: var(--lew-pop-bgcolor-active);
       font-weight: bold;
-      background-color: var(--lew-pop-bg-active);
     }
   }
 }

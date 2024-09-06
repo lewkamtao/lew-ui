@@ -117,7 +117,10 @@ const add = (type: string, title: string, content: string, delay: number) => {
 
   setTimeout(() => {
     lock = false
-    newMessage.setAttribute('class', `lew-notification lew-notification-${type} lew-notificatishow`)
+    newMessage.setAttribute(
+      'class',
+      `lew-notification lew-notification-${type} lew-notification-show`
+    )
     delay > 0 && startTimer()
   }, 10)
 }

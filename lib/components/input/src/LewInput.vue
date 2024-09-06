@@ -297,42 +297,44 @@ defineExpose({ toFocus })
 
 <style lang="scss" scoped>
 .lew-input-view {
+  position: relative;
   display: inline-flex;
+  box-sizing: border-box;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
-  position: relative;
-  width: 100%;
-  border-radius: var(--lew-border-radius-small);
-  background-color: var(--lew-form-bgcolor);
-  transition: var(--lew-form-transition-ease);
-  box-sizing: border-box;
-  outline: 0px var(--lew-form-border-color) solid;
-  border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-  box-shadow: var(--lew-form-box-shadow);
   overflow: hidden;
+  background-color: var(--lew-form-bgcolor);
+  border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  border-radius: var(--lew-border-radius-small);
+  outline: 0px var(--lew-form-border-color) solid;
+  box-shadow: var(--lew-form-box-shadow);
+  transition: var(--lew-form-transition-ease);
 
   .lew-input-box {
     position: relative;
-    box-sizing: border-box;
     display: inline-flex;
+    flex: 1;
+    flex-shrink: 0;
+    box-sizing: border-box;
     align-items: center;
     justify-content: space-between;
-    flex-shrink: 0;
-    flex: 1;
+
     .lew-input {
       height: 100%;
     }
   }
+
   .lew-input-copy-btn {
     position: absolute;
-    display: flex;
-    align-items: center;
     top: 50%;
     z-index: 2;
-    transform: translateY(-50%);
-    cursor: pointer;
-    opacity: var(--lew-form-icon-opacity);
+    display: flex;
+    align-items: center;
     pointer-events: all;
+    opacity: var(--lew-form-icon-opacity);
+    cursor: pointer;
+    transform: translateY(-50%);
   }
 
   .lew-input-copy-btn:hover {
@@ -342,10 +344,10 @@ defineExpose({ toFocus })
   .lew-input-prefixes,
   .lew-input-suffix {
     position: relative;
-    white-space: nowrap;
-    user-select: none;
     display: inline-flex;
     align-items: center;
+    white-space: nowrap;
+    user-select: none;
 
     .icon-select {
       transition: var(--lew-form-transition-bezier);
@@ -355,26 +357,29 @@ defineExpose({ toFocus })
       transform: rotate(180deg);
     }
   }
+
   .lew-input-prefixes::after {
     position: absolute;
-    right: 0;
     top: 0;
-    height: 100%;
+    right: 0;
     width: 1px;
+    height: 100%;
+    background: var(--lew-bgcolor-4);
     content: '';
     transition: var(--lew-form-transition-ease);
-    background: var(--lew-bgcolor-4);
   }
+
   .lew-input-suffix::before {
     position: absolute;
-    left: 0;
     top: 0;
-    height: 100%;
+    left: 0;
     width: 1px;
+    height: 100%;
+    background: var(--lew-bgcolor-4);
     content: '';
     transition: var(--lew-form-transition-ease);
-    background: var(--lew-bgcolor-4);
   }
+
   .lew-input-prefixes-dropdown,
   .lew-input-suffix-dropdown {
     cursor: pointer;
@@ -402,14 +407,14 @@ defineExpose({ toFocus })
   }
 
   .lew-input {
-    width: 100%;
-    text-overflow: ellipsis;
-    border: none;
-    background: none;
-    color: var(--lew-text-color-1);
-    outline: none;
     box-sizing: border-box;
+    width: 100%;
     overflow: hidden;
+    color: var(--lew-text-color-1);
+    text-overflow: ellipsis;
+    background: none;
+    border: none;
+    outline: none;
   }
 
   .lew-input:invalid {
@@ -421,32 +426,32 @@ defineExpose({ toFocus })
   }
 
   .lew-input-controls {
+    z-index: 9;
     display: inline-flex;
     align-items: center;
-    z-index: 9;
 
     > div {
       display: inline-flex;
+      padding: 0px 4px;
+      white-space: nowrap;
       justify-content: center;
       align-items: center;
-      white-space: nowrap;
-      padding: 0px 4px;
     }
 
     .lew-input-count {
+      z-index: 2;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       border-radius: 4px;
       opacity: var(--lew-form-icon-opacity);
       transition: transform 0.25s;
-      z-index: 2;
     }
 
     .lew-input-show-password {
       opacity: var(--lew-form-icon-opacity);
-      transition: all 0.25s;
       cursor: pointer;
+      transition: all 0.25s;
     }
 
     .lew-input-show-password:hover {
@@ -480,18 +485,18 @@ defineExpose({ toFocus })
   .lew-input {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
     left: 0px;
     display: inline-block;
     width: 100%;
+    transform: translateY(-50%);
   }
 
   .lew-input-auto-width {
+    box-sizing: border-box;
     width: auto;
     min-width: 60px;
     height: 1px;
     visibility: hidden;
-    box-sizing: border-box;
   }
 
   .lew-input-box {
@@ -501,11 +506,12 @@ defineExpose({ toFocus })
 
 .lew-input-view-size-small {
   .lew-input-box {
+    height: var(--lew-form-item-height-small);
     padding: var(--lew-form-input-padding-small);
     font-size: var(--lew-form-font-size-small);
-    height: var(--lew-form-item-height-small);
     line-height: var(--lew-form-input-line-height-small);
   }
+
   .lew-input-prefixes,
   .lew-input-suffix,
   .lew-input-prefixes-dropdown,
@@ -513,6 +519,7 @@ defineExpose({ toFocus })
     height: var(--lew-form-item-height-small);
     line-height: var(--lew-form-input-line-height-small);
   }
+
   .lew-input-copy-btn {
     right: 7px;
   }
@@ -523,8 +530,8 @@ defineExpose({ toFocus })
   }
 
   .lew-input {
-    font-size: var(--lew-form-font-size-small);
     height: var(--lew-form-item-height-small);
+    font-size: var(--lew-form-font-size-small);
   }
 
   .lew-input-controls {
@@ -543,6 +550,7 @@ defineExpose({ toFocus })
     font-size: var(--lew-form-font-size-small);
     line-height: var(--lew-form-input-line-height-small);
   }
+
   .lew-input-auto-width-clear {
     width: 18px;
   }
@@ -550,18 +558,20 @@ defineExpose({ toFocus })
 
 .lew-input-view-size-medium {
   .lew-input-box {
+    height: var(--lew-form-item-height-medium);
     padding: var(--lew-form-input-padding-medium);
     font-size: var(--lew-form-font-size-medium);
     line-height: var(--lew-form-input-line-height-medium);
-    height: var(--lew-form-item-height-medium);
   }
+
   .lew-input-prefixes,
   .lew-input-suffix,
   .lew-input-prefixes-dropdown,
   .lew-input-suffix-dropdown {
-    line-height: var(--lew-form-input-line-height-medium);
     height: var(--lew-form-item-height-medium);
+    line-height: var(--lew-form-input-line-height-medium);
   }
+
   .lew-input-copy-btn {
     right: 9px;
   }
@@ -570,10 +580,12 @@ defineExpose({ toFocus })
   .lew-input-suffix {
     padding: 0px 9px;
   }
+
   .lew-input {
-    font-size: var(--lew-form-font-size-medium);
     height: var(--lew-form-item-height-medium);
+    font-size: var(--lew-form-font-size-medium);
   }
+
   .lew-input-controls {
     height: var(--lew-form-item-height-medium);
 
@@ -590,6 +602,7 @@ defineExpose({ toFocus })
     font-size: var(--lew-form-font-size-medium);
     line-height: var(--lew-form-input-line-height-medium);
   }
+
   .lew-input-auto-width-clear {
     width: 20px;
   }
@@ -597,18 +610,20 @@ defineExpose({ toFocus })
 
 .lew-input-view-size-large {
   .lew-input-box {
+    height: var(--lew-form-item-height-large);
     padding: var(--lew-form-input-padding-large);
     font-size: var(--lew-form-font-size-large);
     line-height: var(--lew-form-input-line-height-large);
-    height: var(--lew-form-item-height-large);
   }
+
   .lew-input-prefixes,
   .lew-input-suffix,
   .lew-input-prefixes-dropdown,
   .lew-input-suffix-dropdown {
-    line-height: var(--lew-form-input-line-height-large);
     height: var(--lew-form-item-height-large);
+    line-height: var(--lew-form-input-line-height-large);
   }
+
   .lew-input-copy-btn {
     right: 12px;
   }
@@ -617,10 +632,12 @@ defineExpose({ toFocus })
   .lew-input-suffix {
     padding: 0px 12px;
   }
+
   .lew-input {
-    font-size: var(--lew-form-font-size-large);
     height: var(--lew-form-item-height-large);
+    font-size: var(--lew-form-font-size-large);
   }
+
   .lew-input-controls {
     height: var(--lew-form-item-height-large);
 
@@ -637,6 +654,7 @@ defineExpose({ toFocus })
     font-size: var(--lew-form-font-size-large);
     line-height: var(--lew-form-input-line-height-large);
   }
+
   .lew-input-auto-width-clear {
     width: 22px;
   }
@@ -644,40 +662,46 @@ defineExpose({ toFocus })
 
 .lew-input-view-size-small.lew-input-view-autoWidth {
   .lew-input {
-    padding: var(--lew-form-input-padding-small);
     width: calc(100% - 12px);
+    padding: var(--lew-form-input-padding-small);
   }
 }
+
 .lew-input-view-size-medium.lew-input-view-autoWidth {
   .lew-input {
-    padding: var(--lew-form-input-padding-medium);
     width: calc(100% - 18px);
+    padding: var(--lew-form-input-padding-medium);
   }
 }
+
 .lew-input-view-size-large.lew-input-view-autoWidth {
   .lew-input {
-    padding: var(--lew-form-input-padding-large);
     width: calc(100% - 24px);
+    padding: var(--lew-form-input-padding-large);
   }
 }
 
 .lew-input-view:hover {
   background-color: var(--lew-form-bgcolor-hover);
+
   .lew-input-prefixes::after {
     background: var(--lew-bgcolor-6);
   }
+
   .lew-input-suffix::before {
     background: var(--lew-bgcolor-6);
   }
 }
 
 .lew-input-view:focus-within {
+  background-color: var(--lew-form-bgcolor-focus);
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
   outline: var(--lew-form-outline);
-  background-color: var(--lew-form-bgcolor-focus);
+
   .lew-input-prefixes::after {
     background: var(--lew-bgcolor-4);
   }
+
   .lew-input-suffix::before {
     background: var(--lew-bgcolor-4);
   }
@@ -689,21 +713,21 @@ defineExpose({ toFocus })
 
 .lew-input-view-disabled {
   opacity: var(--lew-disabled-opacity);
-  pointer-events: none; //鼠标点击不可修改
+  pointer-events: none;
 }
 
 .lew-input-view-disabled:hover {
-  border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
   background-color: var(--lew-form-bgcolor);
+  border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
 }
 
 .lew-input-view-disabled:active {
-  border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
   background-color: var(--lew-form-bgcolor);
+  border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
 }
 
 .lew-input-view-disabled:focus-within {
-  border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
   background-color: var(--lew-form-bgcolor);
+  border: var(--lew-form-border-width) rgba(0, 0, 0, 0) solid;
 }
 </style>

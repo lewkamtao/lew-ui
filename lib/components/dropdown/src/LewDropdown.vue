@@ -5,7 +5,8 @@ import type { DropdownOptions } from './props'
 
 defineProps(dropdownProps)
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const emit = defineEmits(['change'])
+
 const lewPopoverRef = ref()
 
 const show = () => {
@@ -16,28 +17,29 @@ const hide = () => {
   lewPopoverRef.value.hide()
 }
 
-const emit = defineEmits(['change'])
-
 const change = (item: DropdownOptions) => {
   emit('change', item)
   hide()
 }
 
-defineExpose({ show, hide })
+defineExpose({
+  show,
+  hide
+})
 </script>
 
 <template>
   <lew-popover
     ref="lewPopoverRef"
-    popoverBodyClassName="lew-dropdown-popover-body"
+    popover-body-class-name="lew-dropdown-popover-body"
     :trigger="trigger"
     :placement="placement"
   >
     <template #trigger>
-      <slot></slot>
+      <slot />
     </template>
     <template #popover-body>
-      <lew-context-menu :options="options" @select="change"></lew-context-menu>
+      <lew-context-menu :options="options" @select="change" />
     </template>
   </lew-popover>
 </template>

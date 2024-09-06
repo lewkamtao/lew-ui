@@ -526,7 +526,7 @@ const getTips = computed(() => {
   .lew-upload {
     position: relative;
     width: 100%;
-    border: var(--lew-form-border-width) var(--lew-form-border-color-hover) dashed;
+    border: var(--lew-form-border-width) var(--lew-bgcolor-4) dashed;
     background-color: var(--lew-form-bgcolor);
     border-radius: var(--lew-border-radius-small);
     box-sizing: border-box;

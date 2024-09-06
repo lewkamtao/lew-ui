@@ -11,10 +11,10 @@ button {
   overflow-y: auto;
   -ms-overflow-style: none; /* IE 10+ */
   scrollbar-width: none; /* Firefox */
-}
 
-.hidden-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
 }
 
 /* 骨架屏加载动画 */
@@ -121,7 +121,7 @@ button {
   opacity: var(--lew-form-icon-opacity);
   cursor: pointer;
   border-radius: var(--lew-border-radius-small);
-  transform: translate(0%, -50%);
+  transform: translate(0, -50%);
   transition: all 0.2s;
 
   &:hover {

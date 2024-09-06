@@ -96,7 +96,7 @@ const columns = [
       <template #info="{ row }">
         <lew-flex direction="y" x="start" gap="0px" class="info">
           <div class="name">{{ row.name }}</div>
-          <div class="mail">{{ row.brand }}</div>
+          <div class="brand">{{ row.brand }}</div>
         </lew-flex>
       </template>
       <template #rating="{ row }">
@@ -119,13 +119,13 @@ const columns = [
     font-weight: bold;
   }
 
-  .mail {
+  .brand {
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 12px;
     white-space: nowrap;
-    color: var(--lew-text-color-9);
+    color: var(--lew-text-color-7);
   }
 }
 </style>
