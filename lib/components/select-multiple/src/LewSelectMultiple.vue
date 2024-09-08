@@ -2,9 +2,9 @@
 import { useDebounceFn } from '@vueuse/core'
 import { LewPopover, LewIcon, LewTooltip } from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
-import { UseVirtualList } from '@vueuse/components'
 import type { SelectMultipleOptions } from './props'
 import { selectMultipleProps } from './props'
+import { UseVirtualList } from '@vueuse/components'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app

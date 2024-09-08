@@ -1,4 +1,6 @@
 import type { PropType } from 'vue'
+import type { LewSize } from 'lew-ui'
+import { validSizes } from 'lew-ui/constants'
 
 export interface TableColumn {
   title: string
@@ -26,13 +28,13 @@ export const tableModel = {
 }
 
 export const tableProps = {
-  rowKey: {
-    type: String,
-    default: 'id',
-    description: '用于标识每一行数据的唯一键',
-    validator: (value: string) => {
-      if (!value) {
-        console.warn('[LewTable] rowKey 不能为空')
+  columns: {
+    type: Array as PropType<TableColumn[]>,
+    default: () => [],
+    description: '表格列的配置描述',
+    validator: (value: TableColumn[]) => {
+      if (!Array.isArray(value)) {
+        console.warn('[LewTable] columns 必须是一个数组')
         return false
       }
       return true
@@ -50,17 +52,24 @@ export const tableProps = {
       return true
     }
   },
-  columns: {
-    type: Array as PropType<TableColumn[]>,
-    default: () => [],
-    description: '表格列的配置描述',
-    validator: (value: TableColumn[]) => {
-      if (!Array.isArray(value)) {
-        console.warn('[LewTable] columns 必须是一个数组')
+  size: {
+    type: String as PropType<LewSize>,
+    default: 'medium',
+    description: '标签的尺寸',
+    validator(value: LewSize): boolean {
+      if (!validSizes.includes(value)) {
+        console.warn(
+          `[LewTable] 无效的标签尺寸: ${value}。请使用 ${validSizes.join(', ')} 中的一个。`
+        )
         return false
       }
       return true
     }
+  },
+  checkable: {
+    type: Boolean,
+    default: false,
+    description: '是否显示复选框列'
   },
   maxHeight: {
     type: [Number, String],
@@ -74,14 +83,21 @@ export const tableProps = {
       return true
     }
   },
-  checkable: {
-    type: Boolean,
-    default: false,
-    description: '是否显示复选框列'
-  },
   multiple: {
     type: Boolean,
     default: false,
     description: '是否允许多选'
+  },
+  rowKey: {
+    type: String,
+    default: 'id',
+    description: '用于标识每一行数据的唯一键',
+    validator: (value: string) => {
+      if (!value) {
+        console.warn('[LewTable] rowKey 不能为空')
+        return false
+      }
+      return true
+    }
   }
 }

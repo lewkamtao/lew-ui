@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { cityTree } from '@/lib/data'
 
 const selectedProduct = ref()
 

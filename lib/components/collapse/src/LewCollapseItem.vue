@@ -3,44 +3,35 @@ import { collapseItemProps } from './props'
 import LewCollapseTransition from './LewCollapseTransition.vue'
 import { isArray } from 'lodash-es'
 import { any2px } from 'lew-ui/utils'
+
 const props = defineProps(collapseItemProps)
 const modelValue = defineModel()
 
 const expandKeys: any = inject('expandKeys')
+
 const setModelValue = () => {
-  if (isArray(expandKeys.value)) {
-    modelValue.value = expandKeys.value.includes(props.collapseKey)
-  } else {
-    modelValue.value = props.collapseKey === expandKeys.value
-  }
+  modelValue.value = isArray(expandKeys.value)
+    ? expandKeys.value.includes(props.collapseKey)
+    : props.collapseKey === expandKeys.value
 }
 
-watch(
-  () => expandKeys.value,
-  () => {
-    setModelValue()
-  },
-  {
-    deep: true
-  }
-)
+watch(() => expandKeys.value, setModelValue, { deep: true })
+
 setModelValue()
 
 const change = () => {
   modelValue.value = !modelValue.value
+  
   if (isArray(expandKeys.value)) {
-    if (expandKeys.value.includes(props.collapseKey)) {
-      expandKeys.value = expandKeys.value.filter((item: string) => item !== props.collapseKey)
-    } else {
-      expandKeys.value.push(props.collapseKey)
-    }
+    expandKeys.value = modelValue.value
+      ? [...expandKeys.value, props.collapseKey]
+      : expandKeys.value.filter((item: string) => item !== props.collapseKey)
   } else {
-    if (modelValue.value) {
-      expandKeys.value = props.collapseKey
-    }
+    expandKeys.value = modelValue.value ? props.collapseKey : null
   }
 }
 </script>
+
 <template>
   <div class="lew-collapse-box">
     <lew-flex
@@ -51,7 +42,7 @@ const change = () => {
       :style="{ borderRadius: any2px(radius) }"
       @click="change"
     >
-      <slot v-if="$slots.title" name="title" :props="props"></slot>
+      <slot v-if="$slots.title" name="title" :props="props" />
       <template v-else>
         <lew-icon
           size="16"
@@ -61,14 +52,12 @@ const change = () => {
           }"
           type="chevron-right"
         />
-        <lew-text-trim :style="{ width: `calc(100% - 50px)` }" :text="title"></lew-text-trim>
+        <lew-text-trim :style="{ width: 'calc(100% - 50px)' }" :text="title" />
       </template>
     </lew-flex>
     <Lew-collapse-transition>
-      <div v-if="modelValue">
-        <div :style="{ padding }" class="lew-collapse-main">
-          <slot />
-        </div>
+      <div v-if="modelValue" class="lew-collapse-main" :style="{ padding }">
+        <slot />
       </div>
     </Lew-collapse-transition>
   </div>

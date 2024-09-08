@@ -2,7 +2,6 @@
 import { useRouter } from 'vue-router'
 import * as Yup from 'yup'
 import { random } from 'lodash-es'
-import { start } from 'repl'
 
 const viewTotal = ref(1000000000)
 

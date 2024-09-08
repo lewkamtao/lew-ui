@@ -1,4 +1,6 @@
 import type { PropType } from 'vue'
+import type { LewSize } from 'lew-ui'
+import { validSizes } from 'lew-ui/constants'
 
 export type SelectOptions = {
   label: string
@@ -11,7 +13,6 @@ export type SelectSearchMethodParams = {
   keyword?: string
 }
 
-export type SelectSize = 'small' | 'medium' | 'large'
 export type SelectTrigger = 'click' | 'hover'
 
 export const selectModel = {
@@ -44,9 +45,18 @@ export const selectProps = {
     description: '选择器的占位文本'
   },
   size: {
-    type: String as PropType<SelectSize>,
+    type: String as PropType<LewSize>,
     default: 'medium',
-    description: '选择器的尺寸，可选值为 "small"、"medium" 或 "large"'
+    description: '标签的尺寸',
+    validator(value: LewSize): boolean {
+      if (!validSizes.includes(value)) {
+        console.warn(
+          `[LewSelect] 无效的标签尺寸: ${value}。请使用 ${validSizes.join(', ')} 中的一个。`
+        )
+        return false
+      }
+      return true
+    }
   },
   itemHeight: {
     type: Number,

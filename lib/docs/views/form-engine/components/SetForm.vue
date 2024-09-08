@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SetFormItem from './SetFormItem.vue'
 
-const props = defineProps({
+defineProps({
   options: {
     type: Array as PropType<any>,
     default: () => []

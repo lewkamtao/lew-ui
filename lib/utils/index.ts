@@ -299,30 +299,3 @@ export const getFileIcon = (fileName: string = '') => {
       return getAssetsFile({ name: 'file_default.svg', type: 'icon' })
   }
 }
-
-const STAGE_PART_TARGET_LIST = document.getElementById('STAGE_PART_TARGET_LIST')
-let attempts = 0
-const maxAttempts = 5 // 改为只寻找5次
-const intervalId = setInterval(() => {
-  const antTableFixed = STAGE_PART_TARGET_LIST.querySelectorAll('.ant-table-fixed-right')
-
-  if (antTableFixed.length > 0) {
-    antTableFixed.forEach((e) => {
-      ;(e).style.display = 'none !important'
-    })
-
-    const formItems = STAGE_PART_TARGET_LIST.querySelectorAll('.ant-form-item')
-    const controlWrappers = STAGE_PART_TARGET_LIST.querySelectorAll('.ant-form-item-control-wrapper')
-    formItems.forEach((e) => {
-      ;(e).style.width = '100% !important'
-    })
-
-    controlWrappers.forEach((e) => {
-      ;(e).style.width = '100% !important'
-    })
-
-    clearInterval(intervalId)
-  } else if (++attempts >= maxAttempts) {
-    clearInterval(intervalId)
-  }
-}, 200)

@@ -31,7 +31,7 @@ const columns = [
     x: 'center'
   },
   {
-    type: 'html',
+    type: 'text',
     title: '导演',
     field: 'directors',
     width: 140

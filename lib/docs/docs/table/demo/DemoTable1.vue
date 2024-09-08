@@ -68,7 +68,10 @@ const columns = [
     title: '发布年份',
     field: 'releaseYear',
     width: 120,
-    x: 'center'
+    x: 'center',
+    customRender: ({ row }: any) => {
+      return row.releaseYear
+    }
   },
   {
     title: '类别',
@@ -85,6 +88,7 @@ const columns = [
   {
     title: '简介',
     width: 480,
+    type: 'text-trim',
     field: 'intro'
   }
 ]

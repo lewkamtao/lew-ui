@@ -1,14 +1,4 @@
 <script lang="ts" setup>
-import {
-  ref,
-  reactive,
-  computed,
-  defineEmits,
-  defineProps,
-  defineModel,
-  defineExpose,
-  toRaw
-} from 'vue'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash-es'
 import { getMonthDate, getHeadDate } from '../../date-picker/src/date'

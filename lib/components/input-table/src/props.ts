@@ -90,6 +90,7 @@ export const inputTableProps = {
     default: true,
     description: '是否允许添加新行'
   },
+  defaultForm: { type: Object, default: {}, description: '默认表单值' },
   // 删除行
   deletable: {
     type: Boolean,

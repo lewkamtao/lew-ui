@@ -13,7 +13,7 @@ if (app && !app.directive('tooltip')) {
 }
 const props = defineProps(treeSelectProps)
 const emit = defineEmits(['change', 'blur', 'clear'])
-const treeSelectValue: Ref<string | undefined> = defineModel()
+const treeSelectValue: Ref<any> = defineModel()
 
 // 校验 Model
 if (!isString(treeSelectValue.value)) {

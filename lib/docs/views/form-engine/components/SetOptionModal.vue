@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import * as Yup from 'yup'
 const visible = ref(false)
 
 const open = () => {
   visible.value = true
 }
-
-const rule = Yup.string().required()
 
 defineExpose({ open })
 </script>

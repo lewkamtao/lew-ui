@@ -30,11 +30,10 @@ const columns = [
     title: '在线观看',
     field: 'has_linewatch',
     width: 100,
-
     x: 'center'
   },
   {
-    type: 'html',
+    type: 'text',
     title: '导演',
     field: 'directors',
     width: 140
@@ -74,15 +73,6 @@ const columns = [
 const get = (e: any) => {
   if (e.column.field === 'action') {
     LewMessage.info(`点击了 id=>${e.row.id}`)
-  }
-}
-
-const getSelectedKeys = () => {
-  const keys = tableRef.value.getSelectedKeys()
-  if (keys.length > 0) {
-    LewMessage.info(`已选择：${keys}`)
-  } else {
-    LewMessage.info('未选择')
   }
 }
 
