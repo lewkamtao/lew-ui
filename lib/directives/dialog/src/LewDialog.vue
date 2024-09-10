@@ -106,7 +106,7 @@ if (props.closeByEsc) {
                 v-if="cancelText"
                 :text="cancelText"
                 color="gray"
-                type="light"
+                type="text"
                 :loading="cancelLoading"
                 @click.stop="cancel"
               />

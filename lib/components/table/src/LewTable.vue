@@ -673,7 +673,7 @@ onUnmounted(() => {
     width: 100%;
     box-sizing: border-box;
     flex-grow: 1;
-    transition: opacity 0.25s;
+    transition: all 0.25s;
   }
 
   .lew-table-td {

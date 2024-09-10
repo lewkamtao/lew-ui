@@ -256,10 +256,10 @@ const getAddButtonStyle = computed(() => {
   transition: var(--lew-form-transition-ease);
 }
 .add-btn:hover {
-  background-color: var(--lew-bgcolor-3);
+  background-color: var(--lew-table-header-bgcolor-hover);
 }
 .add-btn:active {
-  background-color: var(--lew-bgcolor-5);
+  background-color: var(--lew-table-header-bgcolor-active);
 }
 .add-btn.disabled {
   opacity: 0.5;
