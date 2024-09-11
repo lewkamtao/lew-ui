@@ -260,6 +260,16 @@ defineExpose({ toFocus, validCheck })
   }
 }
 
+.lew-dark {
+  .lew-input-number-view:hover {
+    .lew-input-number-control {
+      .lew-input-number-icon {
+        background-color: var(--lew-bgcolor-5);
+      }
+    }
+  }
+}
+
 .lew-input-number-view:focus-within {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
   outline: var(--lew-form-outline);

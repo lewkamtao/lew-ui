@@ -28,7 +28,7 @@
     font-size: 14px;
     border-radius: var(--lew-border-radius-medium);
     overflow: hidden;
-    background-color: var(--lew-pop-bg) !important;
+    background-color: var(--lew-pop-bgcolor) !important;
 
     .lew-notification-box {
       display: flex;
@@ -102,7 +102,7 @@
   .lew-notification-warning .lew-notification-icon {
     color: var(--lew-color-warning);
   }
-  .lew-notificatishow {
+  .lew-notification-show {
     max-height: 100vh;
     opacity: 1;
   }

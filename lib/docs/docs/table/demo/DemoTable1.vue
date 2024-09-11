@@ -68,7 +68,10 @@ const columns = [
     title: '发布年份',
     field: 'releaseYear',
     width: 120,
-    x: 'center'
+    x: 'center',
+    customRender: ({ row }: any) => {
+      return row.releaseYear
+    }
   },
   {
     title: '类别',
@@ -85,18 +88,19 @@ const columns = [
   {
     title: '简介',
     width: 480,
+    type: 'text-trim',
     field: 'intro'
   }
 ]
 </script>
 
 <template>
-  <div style="height: 350px">
+  <div style="height: 380px">
     <lew-table :data-source="data" :columns="columns">
       <template #info="{ row }">
         <lew-flex direction="y" x="start" gap="0px" class="info">
           <div class="name">{{ row.name }}</div>
-          <div class="mail">{{ row.brand }}</div>
+          <div class="brand">{{ row.brand }}</div>
         </lew-flex>
       </template>
       <template #rating="{ row }">
@@ -119,13 +123,13 @@ const columns = [
     font-weight: bold;
   }
 
-  .mail {
+  .brand {
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 12px;
     white-space: nowrap;
-    color: var(--lew-text-color-9);
+    color: var(--lew-text-color-7);
   }
 }
 </style>

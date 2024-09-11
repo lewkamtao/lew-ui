@@ -2,9 +2,9 @@
 import { useDebounceFn } from '@vueuse/core'
 import { LewPopover, LewIcon, LewTooltip } from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
-import { UseVirtualList } from '@vueuse/components'
 import type { SelectMultipleOptions } from './props'
 import { selectMultipleProps } from './props'
+import { UseVirtualList } from '@vueuse/components'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -645,13 +645,13 @@ defineExpose({ show, hide })
 
     .lew-select-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bg-active);
+      background-color: var(--lew-pop-bgcolor-active);
     }
 
     .lew-select-item-active {
       color: var(--lew-checkbox-color);
       font-weight: bold;
-      background-color: var(--lew-pop-bg-active);
+      background-color: var(--lew-pop-bgcolor-active);
 
       .icon-check {
         margin-right: 10px;
@@ -661,7 +661,7 @@ defineExpose({ show, hide })
     .lew-select-item-active:hover {
       color: var(--lew-checkbox-color);
       font-weight: bold;
-      background-color: var(--lew-pop-bg-active);
+      background-color: var(--lew-pop-bgcolor-active);
     }
   }
 }

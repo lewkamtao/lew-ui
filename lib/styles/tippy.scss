@@ -12,7 +12,7 @@
 }
 
 .tippy-box[data-lew~='popover'] {
-  background-color: var(--lew-pop-bg) !important;
+  background-color: var(--lew-pop-bgcolor) !important;
   border: var(--lew-pop-border) !important;
   box-shadow: var(--lew-pop-box-shadow) !important;
 }
@@ -62,7 +62,7 @@
 .tippy-box[data-placement^='top'] > .tippy-svg-arrow {
   bottom: 0;
 
-  &:after,
+  &::after,
   & > svg {
     top: 16px;
     transform: scale(1.1) rotate(180deg);
@@ -81,7 +81,7 @@
 .tippy-box[data-placement^='left'] > .tippy-svg-arrow {
   right: 0;
 
-  &:after,
+  &::after,
   & > svg {
     top: calc(50% - 3px);
     left: 11px;
@@ -92,7 +92,7 @@
 .tippy-box[data-placement^='right'] > .tippy-svg-arrow {
   left: 0;
 
-  &:after,
+  &::after,
   & > svg {
     top: calc(50% - 3px);
     right: 11px;

@@ -30,11 +30,10 @@ const columns = [
     title: '在线观看',
     field: 'has_linewatch',
     width: 100,
-
     x: 'center'
   },
   {
-    type: 'html',
+    type: 'text',
     title: '导演',
     field: 'directors',
     width: 140
@@ -77,20 +76,11 @@ const get = (e: any) => {
   }
 }
 
-const getSelectedKeys = () => {
-  const keys = tableRef.value.getSelectedKeys()
-  if (keys.length > 0) {
-    LewMessage.info(`已选择：${keys}`)
-  } else {
-    LewMessage.info('未选择')
-  }
-}
-
-const selectedKeys = ref("35503077")
+const selectedKeys = ref('35503077')
 </script>
 
 <template>
-  <div style="margin-bottom: 10px"> 已选择： {{ selectedKeys }}</div>
+  <div style="margin-bottom: 10px">已选择： {{ selectedKeys }}</div>
   <lew-table
     ref="tableRef"
     checkable

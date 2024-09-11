@@ -2,8 +2,7 @@
 const options = [
   {
     title: '注册账号',
-    description:
-      '填写个人信息，创建一个新的用户账号'
+    description: '填写个人信息，创建一个新的用户账号'
   },
   {
     title: '验证邮箱',

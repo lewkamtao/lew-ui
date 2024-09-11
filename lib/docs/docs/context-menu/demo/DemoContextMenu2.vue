@@ -74,6 +74,7 @@ const options: ContextMenus = [
               }
             ]
           },
+
           {
             label: '主题',
             value: 'theme',
@@ -99,6 +100,9 @@ const options: ContextMenus = [
       {
         label: '关于',
         value: 'about'
+      },
+      {
+        isDividerLine: true
       },
       {
         label: '帮助',

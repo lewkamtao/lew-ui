@@ -13,7 +13,7 @@ if (app && !app.directive('tooltip')) {
 }
 const props = defineProps(treeSelectProps)
 const emit = defineEmits(['change', 'blur', 'clear'])
-const treeSelectValue: Ref<string | undefined> = defineModel()
+const treeSelectValue: Ref<any> = defineModel()
 
 // 校验 Model
 if (!isString(treeSelectValue.value)) {
@@ -524,7 +524,7 @@ defineExpose({ show, hide })
 
     .lew-select-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bg-active);
+      background-color: var(--lew-pop-bgcolor-active);
     }
 
     .lew-select-slot-item {
@@ -534,13 +534,13 @@ defineExpose({ show, hide })
 
     .lew-select-slot-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bg-active);
+      background-color: var(--lew-pop-bgcolor-active);
     }
 
     .lew-select-item-active {
       color: var(--lew-checkbox-color);
       font-weight: bold;
-      background-color: var(--lew-pop-bg-active);
+      background-color: var(--lew-pop-bgcolor-active);
 
       .icon-check {
         margin-right: 10px;
@@ -550,7 +550,7 @@ defineExpose({ show, hide })
     .lew-select-item-active:hover {
       color: var(--lew-checkbox-color);
       font-weight: bold;
-      background-color: var(--lew-pop-bg-active);
+      background-color: var(--lew-pop-bgcolor-active);
     }
   }
 }

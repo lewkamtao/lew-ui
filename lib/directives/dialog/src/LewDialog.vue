@@ -1,22 +1,26 @@
 <script lang="ts" setup name="dialog">
+import { ref, watch, onMounted, nextTick } from 'vue'
 import { LewButton, LewFlex } from 'lew-ui'
 import { useMagicKeys } from '@vueuse/core'
 import { dialogProps } from './props'
 import { getStatusIcon } from 'lew-ui/utils'
 import { useDOMCreate } from 'lew-ui/hooks'
 import type { LewColor } from 'lew-ui'
+
 const { Escape } = useMagicKeys()
 useDOMCreate('lew-dialog')
+
 const props = defineProps(dialogProps)
 const emit = defineEmits(['close'])
-const visible = ref<boolean>(false)
-const okLoading = ref<boolean>(false)
-const cancelLoading = ref<boolean>(false)
+
+const visible = ref(false)
+const okLoading = ref(false)
+const cancelLoading = ref(false)
 const okRef1 = ref()
 const okRef2 = ref()
 
 const maskClick = () => {
-  if (props?.closeOnClickOverlay) {
+  if (props.closeOnClickOverlay) {
     visible.value = false
   }
 }
@@ -24,43 +28,33 @@ const maskClick = () => {
 onMounted(() => {
   visible.value = true
   nextTick(() => {
-    okRef1.value && okRef1.value.focus()
-    okRef2.value && okRef2.value.focus()
+    if (okRef1.value) okRef1.value.focus()
+    if (okRef2.value) okRef2.value.focus()
   })
 })
 
-watch(
-  () => visible.value,
-  (newVal) => {
-    if (!newVal) {
-      setTimeout(() => {
-        emit('close')
-      }, 500)
-    }
+watch(visible, (newVal) => {
+  if (!newVal) {
+    setTimeout(() => emit('close'), 500)
   }
-)
+})
 
-const ok = async () => {
-  if (typeof props.ok === 'function') {
-    okLoading.value = true
-    const isOk = await props.ok()
-    if (isOk !== false) {
+const handleAction = async (action: 'ok' | 'cancel') => {
+  const actionFunction = props[action]
+  const loadingRef = action === 'ok' ? okLoading : cancelLoading
+
+  if (typeof actionFunction === 'function') {
+    loadingRef.value = true
+    const result = await actionFunction()
+    if (result !== false) {
       visible.value = false
     }
-    okLoading.value = false
+    loadingRef.value = false
   }
 }
 
-const cancel = async () => {
-  if (typeof props.cancel === 'function') {
-    cancelLoading.value = true
-    const isCancel = await props.cancel()
-    if (isCancel !== false) {
-      visible.value = false
-    }
-    cancelLoading.value = false
-  }
-}
+const ok = () => handleAction('ok')
+const cancel = () => handleAction('cancel')
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
@@ -70,6 +64,7 @@ if (props.closeByEsc) {
   })
 }
 </script>
+
 <template>
   <teleport to="#lew-dialog">
     <div
@@ -79,14 +74,14 @@ if (props.closeByEsc) {
       }"
     >
       <transition name="lew-dialog-mask">
-        <div v-if="visible" class="lew-dialog-mask"></div>
+        <div v-if="visible" class="lew-dialog-mask" />
       </transition>
       <transition name="lew-dialog">
         <div v-if="visible" class="lew-dialog" @click="maskClick">
           <lew-flex
+            v-if="layout === 'normal'"
             direction="y"
             gap="20"
-            v-if="layout === 'normal'"
             class="lew-dialog-box lew-dialog-box-normal"
             @click.stop
           >
@@ -95,14 +90,14 @@ if (props.closeByEsc) {
                 <div
                   :class="`lew-dialog-icon lew-dialog-icon-${type}`"
                   v-html="getStatusIcon(type)"
-                ></div>
+                />
               </div>
               <div class="right">
                 <header>
-                  <slot name="title"></slot>
+                  <slot name="title" />
                 </header>
                 <main>
-                  <slot name="content"></slot>
+                  <slot name="content" />
                 </main>
               </div>
             </lew-flex>
@@ -111,7 +106,7 @@ if (props.closeByEsc) {
                 v-if="cancelText"
                 :text="cancelText"
                 color="gray"
-                type="light"
+                type="text"
                 :loading="cancelLoading"
                 @click.stop="cancel"
               />
@@ -132,11 +127,11 @@ if (props.closeByEsc) {
               <div
                 :class="`lew-dialog-icon lew-dialog-icon-${type}`"
                 v-html="getStatusIcon(type)"
-              ></div>
+              />
             </div>
             <lew-flex class="right" y="start">
               <main>
-                <slot name="content"></slot>
+                <slot name="content" />
               </main>
               <lew-flex x="end">
                 <lew-button
@@ -182,8 +177,8 @@ if (props.closeByEsc) {
 
 .lew-dialog {
   position: fixed;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -201,6 +196,7 @@ if (props.closeByEsc) {
     background-color: var(--lew-modal-box-bgcolor);
     border: var(--lew-dialog-box-border);
     box-shadow: var(--lew-dialog-box-shadow);
+
     .lew-dialog-icon:deep() {
       width: 36px;
       height: 36px;
@@ -210,24 +206,10 @@ if (props.closeByEsc) {
       }
     }
 
-    .lew-dialog-icon-success {
-      color: var(--lew-color-success);
-    }
-
-    .lew-dialog-icon-warning {
-      color: var(--lew-color-warning);
-    }
-
-    .lew-dialog-icon-normal {
-      color: var(--lew-color-normal);
-    }
-
-    .lew-dialog-icon-info {
-      color: var(--lew-color-info);
-    }
-
-    .lew-dialog-icon-error {
-      color: var(--lew-color-error);
+    @each $type in (success, warning, normal, info, error) {
+      .lew-dialog-icon-#{$type} {
+        color: var(--lew-color-#{$type});
+      }
     }
 
     header {
@@ -244,7 +226,7 @@ if (props.closeByEsc) {
 
     footer {
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
       gap: 10px;
       width: 100%;
     }
@@ -252,28 +234,28 @@ if (props.closeByEsc) {
     .btn-close {
       position: absolute;
       top: 8px;
+      right: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       width: 25px;
       height: 25px;
-      right: 10px;
       border-radius: var(--lew-border-radius-small);
       box-sizing: border-box;
       cursor: pointer;
       user-select: none;
       z-index: 2051;
       color: var(--lew-text-color-5);
-    }
 
-    .btn-close:hover {
-      background: rgba($color: #000000, $alpha: 0.05);
-      color: var(--lew-text-color-1);
-    }
+      &:hover {
+        background: rgba(0, 0, 0, 0.05);
+        color: var(--lew-text-color-1);
+      }
 
-    .btn-close:active {
-      background: rgba($color: #000000, $alpha: 0.15);
-      color: var(--lew-text-color-0);
+      &:active {
+        background: rgba(0, 0, 0, 0.15);
+        color: var(--lew-text-color-0);
+      }
     }
   }
 
@@ -288,6 +270,7 @@ if (props.closeByEsc) {
       top: 1px;
       width: calc(450px - 15px - 30px);
     }
+
     main {
       margin-top: 10px;
     }
@@ -304,6 +287,7 @@ if (props.closeByEsc) {
       margin-top: 6px;
       margin-right: 10px;
       display: flex;
+
       .lew-dialog-icon:deep() {
         svg {
           width: 24px;
@@ -315,9 +299,6 @@ if (props.closeByEsc) {
     .right {
       position: relative;
       top: 1px;
-    }
-
-    .right {
       display: flex;
       justify-content: space-between;
       align-items: center;

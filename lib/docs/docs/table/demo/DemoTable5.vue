@@ -71,7 +71,8 @@ const data: any = [
     tdStyle: {
       suction: 'background:var(--lew-color-error);color:#fff',
       price: 'font-weight: bold; font-size: 16px; color: var(--lew-color-error)',
-      batteryLife: 'background: var(--lew-color-success-light); border-radius: 4px; padding: 2px 4px'
+      batteryLife:
+        'background: var(--lew-color-success-light); border-radius: 4px; padding: 2px 4px'
     },
     weight: '4.2kg',
     dustBinCapacity: '800ml',
@@ -90,7 +91,8 @@ const data: any = [
     features: ['碰撞感应', '自动回充', 'APP控制', '防跌落'],
     tdStyle: {
       price: 'color: var(--lew-color-success); font-weight: bold',
-      noiseLevel: 'background: var(--lew-color-error-light); border: 1px solid var(--lew-color-error)'
+      noiseLevel:
+        'background: var(--lew-color-error-light); border: 1px solid var(--lew-color-error)'
     },
     weight: '3.0kg',
     dustBinCapacity: '500ml',

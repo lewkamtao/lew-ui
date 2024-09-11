@@ -64,10 +64,8 @@ const goHome = () => {
   width: 100%;
   height: 60px;
   box-sizing: border-box;
-  border-bottom: var(--lew-border-1);
   user-select: none;
   white-space: nowrap;
-  background: var(--lew-bgcolor-0);
 
   .logo {
     display: flex;
@@ -113,7 +111,7 @@ const goHome = () => {
     span:hover,
     .menu-item:hover {
       opacity: 1;
-      background-color: var(--lew-bgcolor-3);
+      background-color: var(--lew-bgcolor-6);
     }
   }
 }

@@ -40,7 +40,7 @@ export const dialogProps = {
     default: 'normal',
     description: '对话框布局方式',
     validator: (value: string) => {
-      const validLayouts = ['normal', 'fullscreen']
+      const validLayouts = ['normal', 'mini']
       if (!validLayouts.includes(value)) {
         console.warn(
           `[LewDialog] 无效的布局: ${value}。请使用 ${validLayouts.join(', ')} 中的一个。`

@@ -5,7 +5,7 @@ import { object2class } from 'lew-ui/utils'
 import { LewCheckbox } from 'lew-ui'
 import { cloneDeep } from 'lodash-es'
 
-const props = defineProps(checkboxGroupProps as any)
+const props = defineProps(checkboxGroupProps)
 const emit = defineEmits(['change'])
 const modelValue: Ref<String[] | Number[] | undefined> = defineModel({
   default: () => [],
@@ -29,7 +29,7 @@ const change = ({ item, checked }: { item: CheckboxOptions; checked: boolean }) 
   if (checked) {
     _value.push(item.value as string & number)
   } else {
-    const index = _value.findIndex((e) => e === item.value)
+    const index = _value.findIndex((e: any) => e === item.value)
     if (index >= 0) {
       _value.splice(index, 1)
     }

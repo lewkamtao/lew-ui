@@ -35,6 +35,7 @@ const options = ref(
   <div class="demo-wrapper">
     <lew-title>Table</lew-title>
     <p class="sub-title">这是用div取代传统的table，看起来很简单，但其实功能没少。</p>
+
     <lew-demo-box title="常规" :code="DemoTable1Code">
       <demo-table1 />
       <lew-alert
@@ -120,7 +121,7 @@ const options = ref(
         ]"
       />
     </lew-demo-box>
-    <lew-demo-box v-if="false" title="固定列" :code="DemoTable7Code">
+    <lew-demo-box title="自定义渲染" :code="DemoTable7Code">
       <demo-table7 />
     </lew-demo-box>
     <lew-demo-box title="完整功能" :code="DemoTable8Code">

@@ -110,9 +110,11 @@ const check = () => {
   if (isEllipsis) {
     element.style.cursor = 'pointer'
     instance.enable()
+    instance.show()
   } else {
     element.style.cursor = 'text'
     instance.disable()
+    instance.hide()
   }
   width = element.offsetWidth
 }

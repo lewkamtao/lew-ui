@@ -2,7 +2,7 @@
 import { useRouter } from 'vue-router'
 import * as Yup from 'yup'
 import { random } from 'lodash-es'
-import { start } from 'repl'
+import LewBg from '../layout/LewBg.vue'
 
 const viewTotal = ref(1000000000)
 
@@ -212,13 +212,13 @@ onMounted(() => {
 })
 
 const sprs = () => {
-  const duration = 3 * 1000
+  const duration = 5 * 1000 // 增加持续时间到5秒
   const animationEnd = Date.now() + duration
   const defaults = {
-    startVelocity: 30,
+    startVelocity: 30, // 增加初始速度
     spread: 360,
-    ticks: 60,
-    zIndex: 0
+    ticks: 50, // 增加碎片数量
+    zIndex: 999
   }
 
   function randomInRange(min: number, max: number) {
@@ -231,7 +231,7 @@ const sprs = () => {
       return clearInterval(interval)
     }
 
-    const particleCount = 50 * (timeLeft / duration)
+    const particleCount = 50 * (timeLeft / duration) // 增加碎片数量
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -253,7 +253,7 @@ const sprs = () => {
         y: Math.random() - 0.2
       }
     })
-  }, 300)
+  }, 250) // 稍微减少间隔时间以增加密度
 }
 
 const router = useRouter()
@@ -398,6 +398,7 @@ const notification = (type: string) => {
 
 <template>
   <div class="home-wrapper">
+    <LewBg />
     <div class="startbox">
       <div class="slogan">
         少即是
@@ -428,7 +429,7 @@ const notification = (type: string) => {
             <lew-title size="24px" :bold="400"> Lew Design 24px </lew-title>
             <lew-title size="32px" :bold="600"> Lew Design 32px </lew-title>
             <lew-title size="40px" :bold="600">
-              幻想使用用户： <lew-magic-number sep :value="viewTotal" :size="40" /> 人
+              本月流水： $<lew-magic-number sep :value="viewTotal" :size="40" />
             </lew-title>
           </lew-flex>
           <lew-flex x="end" gap="20">
@@ -530,11 +531,35 @@ const notification = (type: string) => {
             />
           </lew-flex>
           <lew-flex wrap x="start" gap="10">
-            <lew-button round text="成功" color="green" @click="notification('success')" />
-            <lew-button round text="警告提示" color="yellow" @click="notification('warning')" />
-            <lew-button round text="错误信息通知" color="red" @click="notification('error')" />
-            <lew-button round text="信息" color="blue" @click="notification('info')" />
-            <lew-button round text="普通消息提醒" color="normal" @click="notification('normal')" />
+            <lew-button
+              round
+              text="成功通知"
+              type="light"
+              color="green"
+              @click="notification('success')"
+            />
+            <lew-button
+              round
+              text="警告提示"
+              type="light"
+              color="yellow"
+              @click="notification('warning')"
+            />
+            <lew-button
+              round
+              text="错误信息通知"
+              type="light"
+              color="red"
+              @click="notification('error')"
+            />
+            <lew-button round text="信息" type="light" color="blue" @click="notification('info')" />
+            <lew-button
+              round
+              text="普通消息提醒"
+              type="light"
+              color="normal"
+              @click="notification('normal')"
+            />
           </lew-flex>
           <lew-flex wrap x="start" gap="10">
             <lew-button text="删除" type="light" color="error" @click="open('error')" />
@@ -587,7 +612,7 @@ const notification = (type: string) => {
   .startbox {
     position: fixed;
     left: 50px;
-    top: 120px;
+    top: 90px;
     z-index: 99;
     animation: start 3s ease;
     animation-fill-mode: forwards;
@@ -618,13 +643,14 @@ const notification = (type: string) => {
   }
 
   .home {
+    position: relative;
     min-height: 100vh;
     box-sizing: border-box;
     animation: demo 4s ease;
     animation-fill-mode: forwards;
     opacity: 0;
     margin-top: -50px;
-
+    z-index: 99;
     .item {
       flex-shrink: 0;
       width: 350px;
@@ -641,7 +667,7 @@ const notification = (type: string) => {
 
     to {
       opacity: 1;
-      transform: scale(1.2) perspective(1000px) rotateX(12deg) rotateY(-24deg) rotateZ(8deg)
+      transform: scale(1) perspective(1000px) rotateX(12deg) rotateY(-24deg) rotateZ(8deg)
         translate(-30px, 50px);
     }
   }

@@ -170,7 +170,7 @@ onUnmounted(() => {
         :class="{ 'lew-tabs-item-isInit': state.isInit }"
       ></div>
       <div
-        v-for="item in options"
+        v-for="item in props.options"
         :key="String(item.value)"
         :ref="(el) => itemRef.push(el)"
         class="lew-tabs-item"
@@ -295,7 +295,7 @@ onUnmounted(() => {
   }
 
   .lew-tabs-item-isInit {
-    transition: var(--lew-form-transition-bezier);
+    transition: var(--lew-form-transition-ease);
   }
 }
 

@@ -1,28 +1,33 @@
 <script setup lang="ts">
 import { cloneDeep } from 'lodash-es'
-defineProps({
-  options: {
-    type: Object
-  }
-})
 
 const visible = ref(false)
 const formRef = ref()
 const form = ref({})
 const editIndex = ref(-1)
 const id = ref('')
+
+defineProps({
+  options: {
+    type: Object
+  },
+  size: {
+    type: String,
+    default: ''
+  }
+})
+
+const emit = defineEmits(['addSuccess', 'editSuccess'])
+
 const open = ({ row = {}, index = -1 }: { row: any; index: number }) => {
   visible.value = true
   editIndex.value = index
   id.value = row.id
-  if (index >= 0) {
-    form.value = cloneDeep(row)
-  } else {
-    form.value = {}
-  }
+  form.value = cloneDeep(row)
 }
-const emit = defineEmits(['addSuccess', 'editSuccess'])
+
 const ok = () => {
+  console.log(formRef.value.getForm())
   formRef.value.validate().then((res: boolean) => {
     if (res) {
       if (editIndex.value >= 0) {
@@ -39,9 +44,11 @@ const ok = () => {
     }
   })
 }
+
 const formMounted = () => {
   formRef.value.setForm(form.value)
 }
+
 defineExpose({ open })
 </script>
 
@@ -59,18 +66,20 @@ defineExpose({ open })
     :title="`${editIndex >= 0 ? '编辑' : '新增'}数据`"
   >
     <div class="form-modal lew-scrollbar">
-      <lew-form @mounted="formMounted" ref="formRef" width="350" :options="options" />
+      <lew-form :size @mounted="formMounted" ref="formRef" width="350" :options="options" />
     </div>
   </lew-modal>
 </template>
+
 <style lang="scss" scoped>
-.footer {
-  padding: 5px 15px;
-}
 .form-modal {
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
   max-height: 80vh;
+}
+
+.footer {
+  padding: 5px 15px;
 }
 </style>

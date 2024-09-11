@@ -4,7 +4,9 @@
   "description": "A Component Library for Vue3.js.",
   "keywords": [
     "vue3",
-    "components"
+    "components",
+    "ui library",
+    "frontend"
   ],
   "author": "lewkamtao",
   "license": "MIT",
@@ -15,25 +17,18 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write lib/",
     "test": "vitest",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "prepare": "husky install"
   },
   "files": [
-    "dist/components/**/*.ts",
-    "dist/directives/**/*.ts",
-    "dist/hooks/**/*.ts",
-    "dist/utils/**/*.ts",
-    "dist/index.mjs",
-    "dist/index.umd.js",
-    "dist/style.css",
-    "dist/index.d.ts",
+    "dist",
     "package.json",
     "README.md",
     "LICENSE"
   ],
-  "module": "./dist/index.mjs",
   "main": "./dist/index.umd.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "typings": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
@@ -45,17 +40,17 @@
   "dependencies": {
     "@fancyapps/ui": "^5.0.36",
     "@highlightjs/vue-plugin": "^2.1.0",
-    "@vueuse/components": "^9.13.0",
+    "@vueuse/components": "^11.0.3",
     "@vueuse/core": "^10.11.0",
     "axios": "^1.6.7",
     "dayjs": "^1.11.7",
     "feather-icons": "^4.29.0",
     "highlight.js": "^11.9.0",
     "lodash-es": "^4.17.21",
-    "terser": "^5.28.1",
+    "terser": "^5.31.6",
     "tippy.js": "^6.3.7",
     "vee-validate": "^4.5.8",
-    "vue": "^3.4.21",
+    "vue": "^3.5.3",
     "vue-feather": "^2.0.0",
     "vue-router": "^4.0.13",
     "vuedraggable": "^4.1.0",
@@ -81,6 +76,7 @@
     "eslint-plugin-html": "^7.1.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-vue": "^9.23.0",
+    "husky": "^8.0.0",
     "jsdom": "^20.0.0",
     "lint-staged": "^13.2.2",
     "prettier": "^3.2.5",
@@ -104,5 +100,9 @@
     "cz-customizable": {
       "config": ".cz-config.cjs"
     }
+  },
+  "lint-staged": {
+    "*.{js,ts,vue}": "eslint --fix",
+    "*.{css,scss,vue}": "prettier --write"
   }
 }

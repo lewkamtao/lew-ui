@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inputTreeProps } from './props'
-import { LewIcon, LewFlex, LewTitle } from 'lew-ui'
+import { LewFlex } from 'lew-ui'
 
 defineProps(inputTreeProps)
 </script>

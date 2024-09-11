@@ -20,7 +20,9 @@ componentOptions.forEach((item: any) => {
   let { rule } = item
   if (item.required) {
     if (!rule) {
-      item.rule = Yup.mixed().required('此项必填')
+      item.rule = Yup.mixed()
+        .required('此项必填')
+        .test('非空', '此项必填', (value) => value !== '')
     } else if (rule?.spec?.optional === true) {
       item.rule = merge(rule, Yup.mixed().required('此项必填'))
     }

@@ -13,6 +13,8 @@ declare module 'highlight.js'
 declare const hljs
 declare module '@vueuse/core'
 declare module '@vueuse/components'
+declare module 'lodash-es'
+
 declare interface Window {
   LewContextMenu: LewContextMenu
   LewFancybox: Fancybox

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { cloneDeep } from 'lodash-es'
 import FormModal from './FormModal.vue'
 import { inputTableProps } from './props'
 import { any2px, getUniqueId } from 'lew-ui/utils'
@@ -26,12 +27,13 @@ const inputTableColumns = computed(() => {
 
 const formOptions = computed(() => {
   return props.columns.map((e: any) => {
-    const { as, title, field, props } = e
+    const { as, title, field, props, required } = e
     return {
       label: title,
-      field: field,
+      field,
       as: as || 'input',
-      props: props
+      required,
+      props
     }
   })
 })
@@ -61,7 +63,7 @@ const add = () => {
     LewMessage.warning('已达到最大行数限制，无法添加')
     return
   }
-  let row: any = {}
+  let row: any = cloneDeep(props.defaultForm)
   if (props.autoUniqueId) {
     row['id'] = getUniqueId()
   }
@@ -113,6 +115,23 @@ const sortRows = () => {
 
 const isMaxRowsReached = computed(() => modelValue.value.length >= props.maxRows)
 const showHeaderAction = computed(() => props.batchDeletable || props.clearable || props.sortable)
+
+const getAddButtonStyle = computed(() => {
+  const paddingMap = {
+    small: '8px',
+    medium: '10px',
+    large: '12px'
+  }
+  const fontSizeMap = {
+    small: 13,
+    medium: 14,
+    large: 16
+  }
+  return {
+    padding: paddingMap[props.size],
+    fontSize: fontSizeMap[props.size] + 'px'
+  }
+})
 </script>
 
 <template>
@@ -125,6 +144,7 @@ const showHeaderAction = computed(() => props.batchDeletable || props.clearable 
     }"
   >
     <lew-table
+      :size="size"
       :checkable="batchDeletable"
       :row-key="rowKey"
       multiple
@@ -138,7 +158,7 @@ const showHeaderAction = computed(() => props.batchDeletable || props.clearable 
             <lew-button
               v-if="batchDeletable"
               :disabled="selectedKeys.length === 0"
-              size="small"
+              :size="size"
               type="text"
               color="gray"
               @click="batchDelete"
@@ -149,7 +169,7 @@ const showHeaderAction = computed(() => props.batchDeletable || props.clearable 
             <lew-button
               v-if="clearable && !minRows"
               :disabled="modelValue.length === 0"
-              size="small"
+              :size="size"
               type="text"
               color="gray"
               @click="clearAll"
@@ -158,7 +178,7 @@ const showHeaderAction = computed(() => props.batchDeletable || props.clearable 
             <lew-button
               v-if="sortable"
               :disabled="modelValue.length === 0"
-              size="small"
+              :size="size"
               type="text"
               color="gray"
               @click="sortRows"
@@ -175,6 +195,7 @@ const showHeaderAction = computed(() => props.batchDeletable || props.clearable 
             @click="add"
             class="add-btn"
             :class="{ disabled: isMaxRowsReached }"
+            :style="getAddButtonStyle"
           >
             <lew-icon size="16" type="plus"></lew-icon> 添加一条
           </lew-flex>
@@ -191,7 +212,7 @@ const showHeaderAction = computed(() => props.batchDeletable || props.clearable 
           }"
           icon="edit-3"
           round
-          size="small"
+          :size="size"
           type="text"
           @click="edit({ row, index })"
         />
@@ -204,7 +225,7 @@ const showHeaderAction = computed(() => props.batchDeletable || props.clearable 
           }"
           icon="trash"
           round
-          size="small"
+          :size="size"
           color="red"
           type="text"
           @click="del({ index })"
@@ -213,6 +234,7 @@ const showHeaderAction = computed(() => props.batchDeletable || props.clearable 
     </lew-table>
     <FormModal
       :options="formOptions"
+      :size="size"
       ref="formModalRef"
       @addSuccess="addSuccess"
       @editSuccess="editSuccess"
@@ -222,22 +244,22 @@ const showHeaderAction = computed(() => props.batchDeletable || props.clearable 
 
 <style lang="scss" scoped>
 .header-action {
-  background-color: var(--lew-table-header-bgColor);
+  background-color: var(--lew-table-header-bgcolor);
   border-bottom: 1px var(--lew-bgcolor-3) solid;
   padding: 7px;
 }
 .add-btn {
   width: 100%;
   padding: 10px 0px;
-  background-color: var(--lew-bgcolor-2);
+  background-color: var(--lew-table-header-bgcolor);
   cursor: pointer;
   transition: var(--lew-form-transition-ease);
 }
 .add-btn:hover {
-  background-color: var(--lew-bgcolor-3);
+  background-color: var(--lew-table-header-bgcolor-hover);
 }
 .add-btn:active {
-  background-color: var(--lew-bgcolor-5);
+  background-color: var(--lew-table-header-bgcolor-active);
 }
 .add-btn.disabled {
   opacity: 0.5;

@@ -756,7 +756,7 @@ defineExpose({ show, hide })
 
     .lew-cascader-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bg-active);
+      background-color: var(--lew-pop-bgcolor-active);
     }
 
     .lew-cascader-slot-item {
@@ -765,11 +765,11 @@ defineExpose({ show, hide })
 
     .lew-cascader-slot-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bg-active);
+      background-color: var(--lew-pop-bgcolor-active);
     }
 
     .lew-cascader-item-hover {
-      background-color: var(--lew-pop-bg-active);
+      background-color: var(--lew-pop-bgcolor-active);
       .icon-check {
         margin-right: 10px;
       }

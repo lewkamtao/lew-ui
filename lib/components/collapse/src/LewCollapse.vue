@@ -1,15 +1,25 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { any2px } from 'lew-ui/utils'
 import { collapseProps } from './props'
+
+const props = defineProps(collapseProps)
 const modelValue = defineModel()
+
 provide('expandKeys', modelValue)
-defineProps(collapseProps)
+
+const collapseStyle = computed(() => ({
+  width: any2px(props.width),
+  gap: any2px(props.gap)
+}))
 </script>
+
 <template>
-  <div :style="{ width: any2px(width), gap: any2px(gap) }" class="lew-collapse">
+  <div :style="collapseStyle" class="lew-collapse">
     <slot />
   </div>
 </template>
+
 <style scoped lang="scss">
 .lew-collapse {
   display: flex;

@@ -1,27 +1,41 @@
 <script lang="ts" setup>
 import dayjs from 'dayjs'
+import { cloneDeep } from 'lodash-es'
 import { getMonthDate, getHeadDate } from '../../date-picker/src/date'
 import type { RetItemType } from '../../date-picker/src/date'
-
 import { dateRangeProps } from './props'
 import { LewFlex, LewButton } from 'lew-ui'
-import { cloneDeep } from 'lodash-es'
 
-const emit = defineEmits(['change'])
+// Props
 const props = defineProps(dateRangeProps)
-const modelValue: Ref<any> = defineModel()
-const hoverValue: Ref<any> = ref(toRaw(modelValue.value))
+
+// Emits
+const emit = defineEmits(['change'])
+
+// Model
+const modelValue = defineModel<
+  | {
+      [key: string]: string
+    }
+  | undefined
+>()
+
+// Refs
+const hoverValue = ref<{
+  [key: string]: string
+}>({})
+
+// Destructuring
 const { startKey, endKey } = props
 
-// 获取当天日期对象
+// Constants
 const today = new Date()
-// 获取当前年份
 const curYear = today.getFullYear()
-// 获取当前月份
 const curMonth = today.getMonth() + 1
 const curDay = today.getDate()
 const _curDate = dayjs(`${curYear}-${curMonth}-${curDay}`)
 
+// Reactive state
 const dateState = reactive({
   year1: 0,
   year2: 0,
@@ -33,6 +47,75 @@ const state = reactive({
   leftPanel: getMonthDate(1),
   rightPanel: getMonthDate(2)
 })
+
+// Computed
+const object2class = computed(() => (type: string, item: RetItemType) => {
+  if (!item.year || !item.month || !item.showDate) {
+    return
+  }
+
+  const _date = dayjs(`${item.year}-${item.month}-${item.showDate}`)
+  const hoverStart = dayjs(hoverValue.value[startKey])
+  const hoverEnd = dayjs(hoverValue.value[endKey])
+
+  switch (type) {
+    case 'today':
+      if (_curDate.isSame(_date) && item.date === item.showDate) {
+        return true
+      }
+      break
+    case 'rangeMonth':
+      if (item.date === item.showDate) {
+        return 'lew-date-item-curMonth'
+      }
+      break
+    case 'notRangeMonth':
+      if (item.date !== item.showDate) {
+        return ''
+      }
+      break
+    case 'selected':
+      if ((hoverStart.isSame(_date) || hoverEnd.isSame(_date)) && item.date === item.showDate) {
+        return 'lew-date-value-selected'
+      }
+      break
+    case 'rangeSelected':
+      if (item.date !== item.showDate) {
+        return
+      }
+      if (hoverStart.isSame(_date)) {
+        if (hoverStart.isAfter(hoverEnd)) {
+          return 'lew-date-label-selected-end'
+        }
+        return 'lew-date-label-selected-start'
+      }
+      if (hoverEnd.isSame(_date)) {
+        if (hoverStart.isAfter(hoverEnd)) {
+          return 'lew-date-label-selected-start'
+        }
+        return 'lew-date-label-selected-end'
+      }
+      if (hoverStart.isBefore(hoverEnd)) {
+        if (hoverStart.isBefore(_date) && hoverEnd.isAfter(_date) && item.date === item.showDate) {
+          return 'lew-date-label-selected'
+        }
+      } else if (hoverEnd.isBefore(_date) && hoverStart.isAfter(_date)) {
+        return 'lew-date-label-selected'
+      }
+      break
+    default:
+      return ''
+  }
+})
+
+// Methods
+const setMonthDate = (type: string) => {
+  if (type === 'left') {
+    state.leftPanel = getMonthDate(dateState.year1, dateState.month1)
+  } else {
+    state.rightPanel = getMonthDate(dateState.year2, dateState.month2)
+  }
+}
 
 const prveMonth1 = () => {
   if (dateState.month1 > 1) {
@@ -65,6 +148,7 @@ const nextMonth1 = () => {
   setMonthDate('left')
   setMonthDate('right')
 }
+
 const prveMonth2 = () => {
   if (dateState.month2 > 1) {
     dateState.month2 -= 1
@@ -119,6 +203,7 @@ const nextYear1 = () => {
   setMonthDate('left')
   setMonthDate('right')
 }
+
 const prveYear2 = () => {
   dateState.year2 -= 1
   if (dateState.year2 < dateState.year1) {
@@ -141,19 +226,9 @@ const nextYear2 = () => {
   setMonthDate('right')
 }
 
-const setMonthDate = (type: string) => {
-  if (type === 'left') {
-    state.leftPanel = getMonthDate(dateState.year1, dateState.month1)
-  } else {
-    state.rightPanel = getMonthDate(dateState.year2, dateState.month2)
-  }
-}
-
-setMonthDate('left')
-setMonthDate('right')
-
 let i = 0
 let startBackup = ''
+
 const hoverValueFn = (item: RetItemType) => {
   if (item.date != item.showDate || i % 2 === 0) {
     return
@@ -167,10 +242,6 @@ const hoverValueFn = (item: RetItemType) => {
 
 const setValue = (item: RetItemType) => {
   i += 1
-
-  if (!hoverValue.value) {
-    return
-  }
 
   if (item.date != item.showDate) {
     return
@@ -194,85 +265,26 @@ const setValue = (item: RetItemType) => {
   }
 }
 
-const object2class = computed(() => (type: string, item: RetItemType) => {
-  if (!item.year || !item.month || !item.showDate) {
-    return
-  }
-
-  const _date = dayjs(`${item.year}-${item.month}-${item.showDate}`)
-  const hoverStart = dayjs(hoverValue.value?.start)
-  const hoverEnd = dayjs(hoverValue.value?.end)
-
-  switch (type) {
-    case 'today':
-      if (_curDate.isSame(_date) && item.date === item.showDate) {
-        return true
-      }
-      break
-    case 'rangeMonth':
-      if (item.date === item.showDate) {
-        return 'lew-date-item-curMonth'
-      }
-      break
-    case 'notRangeMonth':
-      if (item.date !== item.showDate) {
-        return ''
-      }
-      break
-    case 'selected':
-      if ((hoverStart.isSame(_date) || hoverEnd.isSame(_date)) && item.date === item.showDate) {
-        return 'lew-date-value-selected'
-      }
-      break
-    case 'rangeSelected':
-      if (item.date !== item.showDate) {
-        return
-      }
-      if (hoverStart.isSame(_date)) {
-        if (hoverStart.isAfter(hoverEnd)) {
-          return 'lew-date-label-selected-end'
-        }
-        return 'lew-date-label-selected-start'
-      }
-      if (hoverEnd.isSame(_date)) {
-        if (hoverStart.isAfter(hoverEnd)) {
-          return 'lew-date-label-selected-start'
-        }
-        return 'lew-date-label-selected-end'
-      }
-      if (hoverStart.isBefore(hoverEnd)) {
-        if (hoverStart.isBefore(_date) && hoverEnd.isAfter(_date) && item.date === item.showDate) {
-          return 'lew-date-label-selected'
-        }
-      } else if (hoverEnd.isBefore(_date) && hoverStart.isAfter(_date)) {
-        return 'lew-date-label-selected'
-      }
-      break
-    default:
-      return ''
-  }
-})
-
 const init = () => {
   let _value = cloneDeep(modelValue.value)
 
   if (!_value) {
     _value = {
-      [startKey]: undefined,
-      [endKey]: undefined
+      [startKey]: '',
+      [endKey]: ''
     }
   }
 
   hoverValue.value = _value
 
   // 年
-  dateState.year1 = dayjs(_value[startKey]).year()
+  dateState.year1 = _value[startKey] ? dayjs(_value[startKey]).year() : curYear
   // 月
-  dateState.month1 = dayjs(_value[startKey]).month() + 1
+  dateState.month1 = _value[startKey] ? dayjs(_value[startKey]).month() + 1 : curMonth
   // 年
-  dateState.year2 = dayjs(_value[endKey]).year()
+  dateState.year2 = _value[endKey] ? dayjs(_value[endKey]).year() : curYear
   // 月
-  dateState.month2 = dayjs(_value[endKey]).month() + 1
+  dateState.month2 = _value[endKey] ? dayjs(_value[endKey]).month() + 1 : curMonth + 1
   if (dateState.year1 === dateState.year2 && dateState.month1 === dateState.month2) {
     dateState.month2 += 1
   }
@@ -284,10 +296,13 @@ const init = () => {
   setMonthDate('right')
 }
 
+// Lifecycle hooks
 init()
 
+// Expose
 defineExpose({ init })
 </script>
+
 <template>
   <div class="lew-date-range">
     <div class="lew-date">

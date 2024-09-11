@@ -20,16 +20,6 @@ const options = ref([
   }
 ])
 
-// 模拟当前页面标题
-const pageTitle = ref('iPhone 13 商品详情')
-
-// 模拟商品信息
-const productInfo = ref({
-  name: 'iPhone 13',
-  price: 5999,
-  stock: 100
-})
-
 // 模拟面包屑点击事件
 const handleBreadcrumbClick = (item: any) => {
   LewMessage.success('点击了面包屑项:' + item.label)
