@@ -36,7 +36,7 @@
   width: 50vw;
   height: 20vh;
   transform: rotate(30deg);
-  background: #00eeff;
+  background: #0077ff;
   clip-path: polygon(0 10%, 30% 0, 100% 40%, 70% 100%, 20% 90%);
   animation-delay: 0s;
 }
@@ -49,7 +49,7 @@
   width: 50vw;
   height: 20vh;
   transform: rotate(-10deg);
-  background: #e950d1;
+  background: #ff006f;
   clip-path: polygon(10% 0, 100% 70%, 100% 100%, 20% 90%);
   animation-delay: -5s;
 }
@@ -62,7 +62,7 @@
   width: 50vw;
   height: 20vh;
   transform: rotate(80deg);
-  background: rgba(87, 80, 233);
+  background: rgb(200, 0, 255);
   clip-path: polygon(80% 0, 100% 70%, 100% 100%, 20% 90%);
   animation-delay: -10s;
 }
@@ -74,13 +74,13 @@
   bottom: 0;
   right: 0;
   backdrop-filter: blur(150px);
-  background-color: rgba($color: #fff, $alpha: 1);
+  background-color: rgba($color: #fff, $alpha: .9);
   z-index: 5;
 }
 
 .lew-dark {
   .g-bg::before {
-    background-color: rgba($color: #000000, $alpha: 0.3);
+    background-color: rgba($color: #000000, $alpha: 0.4);
   }
 }
 

@@ -612,7 +612,7 @@ const notification = (type: string) => {
   .startbox {
     position: fixed;
     left: 50px;
-    top: 120px;
+    top: 90px;
     z-index: 99;
     animation: start 3s ease;
     animation-fill-mode: forwards;
@@ -667,7 +667,7 @@ const notification = (type: string) => {
 
     to {
       opacity: 1;
-      transform: scale(1.2) perspective(1000px) rotateX(12deg) rotateY(-24deg) rotateZ(8deg)
+      transform: scale(1) perspective(1000px) rotateX(12deg) rotateY(-24deg) rotateZ(8deg)
         translate(-30px, 50px);
     }
   }
