@@ -35,6 +35,11 @@ const columns = ref([
 </script>
 <template>
   <lew-flex direction="y" x="start">
-    <lew-input-table width="500px" :columns="columns" v-model="tableData"></lew-input-table>
+    <lew-input-table
+      width="500px"
+      uniqueField="name"
+      :columns="columns"
+      v-model="tableData"
+    ></lew-input-table>
   </lew-flex>
 </template>

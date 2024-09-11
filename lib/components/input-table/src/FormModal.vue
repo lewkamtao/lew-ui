@@ -7,13 +7,17 @@ const form = ref({})
 const editIndex = ref(-1)
 const id = ref('')
 
-defineProps({
+const props = defineProps({
   options: {
     type: Object
   },
   size: {
     type: String,
     default: ''
+  },
+  checkUniqueFieldFn: {
+    type: Function,
+    default: () => true
   }
 })
 
@@ -27,7 +31,6 @@ const open = ({ row = {}, index = -1 }: { row: any; index: number }) => {
 }
 
 const ok = () => {
-  console.log(formRef.value.getForm())
   formRef.value.validate().then((res: boolean) => {
     if (res) {
       if (editIndex.value >= 0) {
@@ -36,11 +39,17 @@ const ok = () => {
           index: editIndex.value
         })
       } else {
-        emit('addSuccess', { row: { ...formRef.value.getForm(), id: id.value } })
+        const _form = formRef.value.getForm()
+
+        if (!props.checkUniqueFieldFn(_form)) {
+          return
+        }
+
+        emit('addSuccess', { row: { ..._form, id: id.value } })
       }
       visible.value = false
     } else {
-      LewMessage.error('请根据提示填写表单')
+      LewMessage.warning('请根据提示填写表单')
     }
   })
 }

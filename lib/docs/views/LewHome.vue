@@ -667,7 +667,7 @@ const notification = (type: string) => {
 
     to {
       opacity: 1;
-      transform: scale(1) perspective(1000px) rotateX(12deg) rotateY(-24deg) rotateZ(8deg)
+      transform: scale(1.1) perspective(1000px) rotateX(12deg) rotateY(-24deg) rotateZ(8deg)
         translate(-30px, 50px);
     }
   }

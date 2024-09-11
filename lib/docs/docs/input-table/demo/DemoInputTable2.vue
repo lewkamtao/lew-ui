@@ -47,11 +47,12 @@ const columns = ref([
   <lew-flex direction="y" x="start">
     <lew-input-table
       width="800px"
-      batch-deletable
-      clearable
-      sortable
+      :batch-deletable="false"
+      :clearable="false"
+      :sortable="false"
       :columns="columns"
       v-model="tableData"
+	  uniqueField="productName"
       :default-form="{
         stockQuantity: 1000,
         supplier: '某某供应商',

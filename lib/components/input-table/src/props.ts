@@ -22,14 +22,14 @@ export const inputTableProps = {
     type: Array as PropType<InputTableColumn[]>,
     default: () => [
       {
-        title: '标题',
-        width: 120,
+        title: '标签',
+        width: 100,
         field: 'label',
         as: 'input'
       },
       {
         title: '值',
-        width: 120,
+        width: 100,
         field: 'value',
         as: 'input'
       }
@@ -81,7 +81,7 @@ export const inputTableProps = {
   },
   batchDeletable: {
     type: Boolean,
-    default: false,
+    default: true,
     description: '是否显示批量删除功能'
   },
   // 添加新行
@@ -125,18 +125,23 @@ export const inputTableProps = {
   },
   clearable: {
     type: Boolean,
-    default: false,
+    default: true,
     description: '是否显示清空按钮'
   },
   //  排序
   sortable: {
     type: Boolean,
-    default: false,
+    default: true,
     description: '是否启用排序功能'
   },
   autoUniqueId: {
     type: Boolean,
     default: true,
     description: '是否自动生成行数据唯一标识'
+  },
+  uniqueField: {
+    type: String,
+    default: '',
+    description: '指定一个不可重复的字段，用于添加数据时检查重复'
   }
 }
