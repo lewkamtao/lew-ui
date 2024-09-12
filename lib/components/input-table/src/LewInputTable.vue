@@ -6,6 +6,19 @@ import { any2px, getUniqueId } from 'lew-ui/utils'
 
 const modelValue: Ref<Array<any>> = defineModel({ required: true })
 
+const setUseId = () => {
+  modelValue.value.forEach((e: any) => {
+    if (!e.id) {
+      e.id = getUniqueId()
+    }
+  })
+}
+
+setUseId()
+watch(modelValue.value, () => {
+  setUseId()
+})
+
 const props = defineProps(inputTableProps)
 
 const inputTableColumns = computed(() => {
@@ -15,7 +28,7 @@ const inputTableColumns = computed(() => {
       ? [
           {
             title: '操作',
-            width: 100,
+            width: 90,
             field: 'action',
             x: 'center',
             fixed: 'right'
@@ -26,7 +39,7 @@ const inputTableColumns = computed(() => {
 })
 
 const formOptions = computed(() => {
-  return props.columns.map((e: any) => {
+  return (props.columns || []).map((e: any) => {
     const { as, title, field, props, required } = e
     return {
       label: title,
@@ -106,6 +119,20 @@ const clearAll = () => {
       modelValue.value = []
     }
   })
+}
+
+const checkUniqueFieldFn = (form: any) => {
+  if (!props.uniqueField) {
+    return true
+  }
+  const fieldValue = form[props.uniqueField]
+  const vail = !modelValue.value.some((item) => item[props.uniqueField] === fieldValue)
+  if (!vail) {
+    const label = formOptions.value.find((e: any) => e.field === props.uniqueField)?.label
+    LewMessage.warning(`该${label}已存在。请输入一个不重复的${label}。`)
+    return false
+  }
+  return true
 }
 
 const sortRows = () => {
@@ -233,9 +260,10 @@ const getAddButtonStyle = computed(() => {
       </template>
     </lew-table>
     <FormModal
+      ref="formModalRef"
       :options="formOptions"
       :size="size"
-      ref="formModalRef"
+      :checkUniqueFieldFn="checkUniqueFieldFn"
       @addSuccess="addSuccess"
       @editSuccess="editSuccess"
     />

@@ -26,7 +26,7 @@ const options = ref(
     <lew-demo-box title="基础用法" :code="DemoInputTable1Code">
       <demo-input-table1 />
     </lew-demo-box>
-    <lew-demo-box title="高级控件" :code="DemoInputTable2Code">
+    <lew-demo-box title="简洁的" :code="DemoInputTable2Code">
       <demo-input-table2 />
     </lew-demo-box>
     <lew-demo-box v-if="false" title="尺寸" :code="DemoInputTable3Code">

@@ -624,7 +624,7 @@ const addComponent = (item: any) => {
 .lew-form-options-main {
   width: 100%;
   height: calc(100vh - 60px - 60px);
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
 }
 
