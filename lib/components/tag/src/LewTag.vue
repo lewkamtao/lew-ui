@@ -65,7 +65,8 @@ const getStyle = computed(() => {
       <slot name="left"></slot>
     </div>
     <div class="lew-tag-value">
-      <slot></slot>
+      <lew-text-trim v-if="text" :text="text"></lew-text-trim>
+      <lew-text-trim v-else><slot /></lew-text-trim>
     </div>
     <div class="lew-tag-right">
       <slot name="right"></slot>
@@ -85,11 +86,13 @@ const getStyle = computed(() => {
   box-sizing: border-box;
   overflow: hidden;
   flex-shrink: 0;
+  
   .lew-tag-value {
     font-weight: normal;
     padding: 0px 3px;
     box-sizing: border-box;
     white-space: nowrap;
+    max-width: 250px;
   }
 
   .lew-tag-close {

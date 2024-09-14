@@ -1,5 +1,4 @@
 import { useMouse } from '@vueuse/core'
-import { createApp, h } from 'vue'
 import _LewDialog from './LewDialog.vue'
 import type { LewColor } from 'lew-ui'
 

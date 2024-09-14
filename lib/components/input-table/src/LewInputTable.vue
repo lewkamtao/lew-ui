@@ -269,19 +269,18 @@ const getAddButtonStyle = computed(() => {
     />
   </lew-flex>
 </template>
-
 <style lang="scss" scoped>
 .header-action {
-  background-color: var(--lew-table-header-bgcolor);
-  border-bottom: 1px var(--lew-bgcolor-3) solid;
   padding: 7px;
+  border-bottom: 1px var(--lew-bgcolor-3) solid;
+  background-color: var(--lew-table-header-bgcolor);
 }
 .add-btn {
-  width: 100%;
   padding: 10px 0px;
-  background-color: var(--lew-table-header-bgcolor);
+  width: 100%;
   cursor: pointer;
   transition: var(--lew-form-transition-ease);
+  background-color: var(--lew-table-header-bgcolor);
 }
 .add-btn:hover {
   background-color: var(--lew-table-header-bgcolor-hover);
@@ -290,8 +289,8 @@ const getAddButtonStyle = computed(() => {
   background-color: var(--lew-table-header-bgcolor-active);
 }
 .add-btn.disabled {
-  opacity: 0.5;
   cursor: not-allowed;
+  opacity: 0.5;
 }
 .add-btn.disabled:hover,
 .add-btn.disabled:active {

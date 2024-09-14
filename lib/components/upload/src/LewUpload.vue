@@ -535,12 +535,8 @@ const getTips = computed(() => {
     box-shadow: var(--lew-form-box-shadow);
 
     .lew-upload-icon {
-      color: var(--lew-color-primary-dark);
+      color: var(--lew-color-primary);
       transition: var(--lew-form-transition-ease);
-    }
-    .click-upload {
-      color: var(--lew-color-primary-dark);
-      border-bottom: 2px var(--lew-color-primary-dark) solid;
     }
     .lew-upload-tip {
       transition: var(--lew-form-transition-ease);

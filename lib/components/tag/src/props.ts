@@ -5,6 +5,11 @@ import type { LewColor, LewSize } from 'lew-ui'
 export type TagType = 'fill' | 'light' | 'ghost'
 
 export const tagProps = {
+  text: {
+    type: String,
+    default: '',
+    description: '标签的文本，优先级大于插槽，超出宽度会触发 text-trim 效果'
+  },
   type: {
     type: String as PropType<TagType>,
     default: 'fill',
@@ -46,6 +51,7 @@ export const tagProps = {
       return true
     }
   },
+
   round: {
     type: Boolean,
     default: false,

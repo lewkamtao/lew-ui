@@ -15,7 +15,6 @@ const props = defineProps(modalProps)
 const emit = defineEmits(['ok', 'cancel', 'close'])
 
 const visible: Ref<boolean | undefined> = defineModel('visible')
-const transformOrigin = ref('0 0')
 
 const maskClick = () => {
   if (props.closeOnClickOverlay) {
@@ -43,15 +42,6 @@ const cancel = () => {
   emit('cancel')
 }
 
-watch(
-  () => visible.value,
-  (newVal) => {
-    if (newVal) {
-      transformOrigin.value = `${x.value}px ${y.value}px`
-    }
-  }
-)
-
 if (props.closeByEsc) {
   watch(Escape, (v) => {
     const dialogEl = document.getElementById('lew-dialog')
@@ -66,12 +56,7 @@ if (props.closeByEsc) {
 
 <template>
   <teleport to="#lew-modal">
-    <div
-      :style="{
-        '--lew-modal-transform-origin': transformOrigin
-      }"
-      class="lew-modal-container"
-    >
+    <div class="lew-modal-container">
       <transition name="lew-modal-mask">
         <div v-if="visible" class="lew-modal-mask"></div>
       </transition>
@@ -182,7 +167,7 @@ if (props.closeByEsc) {
 
 .lew-modal-mask-enter-active,
 .lew-modal-mask-leave-active {
-  transition: all 0.25s;
+  transition: var(--lew-form-transition-ease);
 }
 
 .lew-modal-mask-enter-from,
@@ -192,15 +177,12 @@ if (props.closeByEsc) {
 
 .lew-modal-enter-active,
 .lew-modal-leave-active {
-  transition:
-    opacity 0.4s cubic-bezier(0.3, 1.3, 0.3, 1),
-    transform 0.4s cubic-bezier(0.3, 1.3, 0.3, 1);
-  transform-origin: var(--lew-modal-transform-origin);
+  transition: var(--lew-form-transition-bezier);
 }
 
 .lew-modal-leave-to,
 .lew-modal-enter-from {
   opacity: 0;
-  transform: scale(0.2);
+  transform: scale(0.7);
 }
 </style>

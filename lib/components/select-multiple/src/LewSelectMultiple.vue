@@ -244,7 +244,7 @@ defineExpose({ show, hide })
             wrap
             class="value"
           >
-            <TransitionGroup name="list">
+            <transition-group name="list">
               <lew-tag
                 v-for="(item, index) in getLabels"
                 :key="index"
@@ -255,7 +255,7 @@ defineExpose({ show, hide })
               >
                 {{ item }}
               </lew-tag>
-            </TransitionGroup>
+            </transition-group>
           </lew-flex>
           <template v-else>
             <lew-popover
