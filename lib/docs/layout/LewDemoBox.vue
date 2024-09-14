@@ -81,6 +81,7 @@ const isShowCode = ref(false)
     overflow-y: auto;
     overflow-x: hidden;
     border-top: var(--lew-border-1);
+	max-height: 500px;
 
     .pre-box {
       border-radius: var(--lew-border-radius-small);
