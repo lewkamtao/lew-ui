@@ -48,6 +48,4 @@ const install = (Vue: App): void => {
   })
 }
 
-export default {
-  install
-}
+export default { install }

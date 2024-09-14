@@ -77,7 +77,7 @@ export default defineConfig(({ mode }) => {
       ...commonPlugins,
       ...libPlugins,
       visualizer({
-        open: false,
+        open: true,
         filename: 'stats.html',
         gzipSize: true,
         brotliSize: true
