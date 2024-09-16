@@ -9,6 +9,7 @@ import {
   DemoTable7,
   DemoTable8,
   DemoTable9,
+  DemoTable10,
   DemoTable1Code,
   DemoTable2Code,
   DemoTable3Code,
@@ -17,7 +18,8 @@ import {
   DemoTable6Code,
   DemoTable7Code,
   DemoTable8Code,
-  DemoTable9Code
+  DemoTable9Code,
+  DemoTable10Code
 } from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
@@ -117,6 +119,20 @@ const options = ref(
             type: 'warning',
             title: '警告',
             content: `当checkable开启时，必须设置rowKey。`
+          }
+        ]"
+      />
+    </lew-demo-box>
+    <lew-demo-box title="可排序" :code="DemoTable10Code">
+      <demo-table10 />
+      <lew-alert
+        style="margin-top: 20px"
+        :size="16"
+        :options="[
+          {
+            type: 'warning',
+            title: '警告',
+            content: `你可以选择对某几个字段进行排序`
           }
         ]"
       />

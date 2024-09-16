@@ -18,6 +18,7 @@ import type { FlexAlignment, TextTrimAlignment } from 'lew-ui'
 
 const props = defineProps(tableProps)
 const selectedKeys = defineModel('selectedKeys')
+const sortOptions = defineModel('sortOptions')
 const tableRef = ref()
 const fixedLeftRef = ref()
 const fixedRightRef = ref()
@@ -408,11 +409,13 @@ onUnmounted(() => {
               v-for="(column, index) in nonFixedColumns"
               :key="`columns${index}`"
               class="lew-table-td"
+              :class="{ 'lew-table-td-sortable': column.sortable }"
               :x="(column.x as FlexAlignment) || 'start'"
               :y="column.y as FlexAlignment"
               :style="getColumnStyle(column)"
             >
               {{ column.title }}
+              <lew-icon></lew-icon>
             </lew-flex>
           </div>
         </div>
@@ -705,6 +708,13 @@ onUnmounted(() => {
       .lew-table-td {
         color: var(--lew-text-color-1);
         white-space: nowrap;
+        transition: background 0.1s;
+      }
+      .lew-table-td-sortable {
+        cursor: pointer;
+      }
+      .lew-table-td-sortable:hover {
+        background: var(--lew-bgcolor-3);
       }
     }
   }

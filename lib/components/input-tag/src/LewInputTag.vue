@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inputTagProps } from './props'
 import { LewInput, LewTag } from 'lew-ui'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, set } from 'lodash-es'
 import { object2class } from 'lew-ui/utils'
 
 const emit = defineEmits(['close', 'change'])
@@ -14,6 +14,7 @@ const isFocus = ref(false)
 let isEnter = false
 
 const openInput = () => {
+  if (isFocus.value) return
   isFocus.value = true
   nextTick(() => {
     lewInputRef.value.toFocus()
@@ -106,7 +107,7 @@ const clear = () => {
           v-for="(item, index) in modelValue"
           :key="index"
           type="light"
-		  style="max-width: 100%;"
+          style="max-width: 100%"
           :size="size"
           :closable="!readonly"
           @close="delTag(index)"
@@ -170,7 +171,7 @@ const clear = () => {
     gap: 5px;
     box-sizing: border-box;
     transition: var(--lew-form-transition-bezier);
-	width: 100%;
+    width: 100%;
     :deep() {
       .lew-input-view {
         border-radius: 0px !important;

@@ -10,7 +10,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig(({ mode }) => {
   const isLibMode = mode === 'lib'
-  
+
   const commonPlugins = [
     zipPack({ outFileName: `lew-ui_${mode}.zip` }),
     vue(),
@@ -19,7 +19,9 @@ export default defineConfig(({ mode }) => {
     checker({ typescript: true })
   ]
 
-  const libPlugins = isLibMode ? [dts({ include: ['lib/**/*.vue', 'lib/**/*.ts', 'lib/**/*.tsx'] })] : []
+  const libPlugins = isLibMode
+    ? [dts({ include: ['lib/**/*.vue', 'lib/**/*.ts', 'lib/**/*.tsx'] })]
+    : []
 
   const buildOptions = isLibMode
     ? {

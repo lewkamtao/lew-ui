@@ -82,20 +82,18 @@ export const LewVContextMenu = {
               }
             }).mount(menuDom)
 
-            setTimeout(() => {
-              instance.setProps({
-                content: menuDom,
-                getReferenceClientRect: () => ({
-                  width: 0,
-                  height: 0,
-                  top: e.clientY,
-                  bottom: e.clientY,
-                  left: e.clientX,
-                  right: e.clientX
-                })
+            instance.setProps({
+              content: menuDom,
+              getReferenceClientRect: () => ({
+                width: 0,
+                height: 0,
+                top: e.clientY,
+                bottom: e.clientY,
+                left: e.clientX,
+                right: e.clientX
               })
-              instance.show()
-            }, 120)
+            })
+            instance.show()
           }
           window.addEventListener('contextmenu', window.LewContextMenu.contextMenu)
         }

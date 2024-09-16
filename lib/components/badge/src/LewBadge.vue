@@ -8,7 +8,7 @@ const getStyle = computed(() => {
   const { color } = props
   let styleObj: Record<string, string> = {}
   let _color = getColorType(color)
-  styleObj.backgroundColor = `var(--lew-color-${_color}-dark)`
+  styleObj.backgroundColor = `var(--lew-color-${_color})`
   return styleObj
 })
 </script>

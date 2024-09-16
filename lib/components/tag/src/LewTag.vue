@@ -45,7 +45,7 @@ const getStyle = computed(() => {
       break
     case 'ghost':
       styleObj.backgroundColor = 'transparent'
-      styleObj.border = `1px solid var(--lew-color-${_color})`
+      styleObj.border = `1px solid var(--lew-color-${_color}-dark)`
       styleObj.color = `var(--lew-color-${_color}-dark)`
       styleObj.boxShadow = 'none'
       break
