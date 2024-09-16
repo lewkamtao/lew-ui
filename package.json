@@ -44,13 +44,10 @@
     "@vueuse/core": "^10.11.0",
     "axios": "^1.6.7",
     "dayjs": "^1.11.7",
-    "feather-icons": "^4.29.0",
     "highlight.js": "^11.9.0",
     "lodash-es": "^4.17.21",
     "lucide-vue-next": "^0.441.0",
-    "svgson": "^5.3.1",
     "tippy.js": "^6.3.7",
-    "vue-feather": "^2.0.0",
     "vue-router": "^4.0.13",
     "vuedraggable": "^4.1.0",
     "yup": "^1.2.0"

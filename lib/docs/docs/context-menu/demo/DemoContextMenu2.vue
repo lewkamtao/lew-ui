@@ -82,12 +82,10 @@ const options: ContextMenus = [
               {
                 label: 'Light',
                 value: 'light',
-                icon: 'sun'
               },
               {
                 label: 'Dark',
                 value: 'dark',
-                icon: 'moon'
               }
             ]
           },

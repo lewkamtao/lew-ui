@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { object2class } from 'lew-ui/utils'
 import { checkboxProps } from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const props = defineProps(checkboxProps)
 
@@ -50,9 +51,19 @@ const getCheckboxClassName = computed(() => {
   <label class="lew-checkbox" :class="getCheckboxClassName">
     <div v-if="iconable || (!iconable && !block)" class="icon-checkbox-box">
       <i v-show="certain" class="icon-certain"></i>
-      <lew-icon stroke-width="4" class="icon-checkbox" type="check" :size="getIconSize" />
+      <Icon
+        stroke-width="4"
+        class="icon-checkbox"
+        type="check"
+        :size="getIconSize"
+      />
     </div>
-    <input v-show="false" type="checkbox" :checked="modelValue" @change="setChecked" />
+    <input
+      v-show="false"
+      type="checkbox"
+      :checked="modelValue"
+      @change="setChecked"
+    />
     <span v-if="label" class="lew-checkbox-label"> {{ label }}</span>
   </label>
 </template>
@@ -155,7 +166,8 @@ const getCheckboxClassName = computed(() => {
 
 .lew-checkbox:hover {
   .icon-checkbox-box {
-    border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
+    border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover)
+      solid;
     background: var(--lew-form-bgcolor);
   }
 }
@@ -197,7 +209,8 @@ const getCheckboxClassName = computed(() => {
 .lew-checkbox-block:hover {
   background: var(--lew-form-bgcolor-hover);
   .icon-checkbox-box {
-    border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
+    border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover)
+      solid;
   }
 }
 

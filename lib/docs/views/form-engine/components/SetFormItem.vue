@@ -11,6 +11,7 @@ import {
   LewInputTable
 } from 'lew-ui'
 import SetOptionModal from './SetOptionModal.vue'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const props = defineProps({
   as: {
@@ -59,16 +60,23 @@ const asMap: Record<string, any> = {
   <div x="start" class="set-form-item" :class="[`set-form-item-${direction}`]">
     <lew-flex x="start" gap="5" class="set-form-item-label" v-if="as">
       {{ label || '标签' }}
-      <lew-icon
+      <Icon
         class="set-form-item-tips"
         v-if="props?.tips"
-        size="14"
+        :size="14"
         type="info"
         v-tooltip="{ content: props?.tips }"
-      ></lew-icon>
+      ></Icon>
     </lew-flex>
-    <div :style="{ width: any2px(props?.componentWidth) }" class="lew-form-item-main">
-      <component v-model="modelValue" :is="asMap[as]" v-bind="{ ...props.props, size: 'small' }" />
+    <div
+      :style="{ width: any2px(props?.componentWidth) }"
+      class="lew-form-item-main"
+    >
+      <component
+        v-model="modelValue"
+        :is="asMap[as]"
+        v-bind="{ ...props.props, size: 'small' }"
+      />
     </div>
   </div>
 </template>

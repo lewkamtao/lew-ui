@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { resultProps } from './props'
-import { LewIcon, LewFlex, LewTitle } from 'lew-ui'
+import {  LewFlex, LewTitle } from 'lew-ui'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 defineProps(resultProps)
 </script>
@@ -8,11 +9,7 @@ defineProps(resultProps)
 <template>
   <lew-flex direction="y" class="lew-result">
     <lew-flex class="lew-result-icon" :class="`lew-result-icon-${type}`">
-      <lew-icon v-if="type === `normal`" size="60" type="light" color="blue" />
-      <lew-icon v-if="type === `warning`" size="60" type="alert-triangle" />
-      <lew-icon v-if="type === `success`" size="60" type="smile" />
-      <lew-icon v-if="type === `error`" size="60" type="alert-circle" />
-      <lew-icon v-if="type === `info`" size="60" type="bell" />
+      <Icon :size="60" :type="type" />
     </lew-flex>
     <lew-title class="lew-result-title">{{ title }}</lew-title>
     <div class="lew-result-content">{{ content }}</div>

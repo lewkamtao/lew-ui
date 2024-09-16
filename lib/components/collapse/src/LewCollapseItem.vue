@@ -3,6 +3,7 @@ import { collapseItemProps } from './props'
 import LewCollapseTransition from './LewCollapseTransition.vue'
 import { isArray } from 'lodash-es'
 import { any2px } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const props = defineProps(collapseItemProps)
 const modelValue = defineModel()
@@ -44,8 +45,8 @@ const change = () => {
     >
       <slot v-if="$slots.title" name="title" :props="props" />
       <template v-else>
-        <lew-icon
-          size="16"
+        <Icon
+          :size="16"
           :style="{
             transform: `rotate(${modelValue ? 90 : 0}deg)`,
             transition: 'all 0.3s'

@@ -1,8 +1,10 @@
 <script lang="ts" setup>
-import { LewPopover, LewIcon, LewDateRange, LewTooltip } from 'lew-ui'
+import { LewPopover,  LewDateRange, LewTooltip } from 'lew-ui'
 import { dateRangePickerProps } from './props'
 import { object2class } from 'lew-ui/utils'
 import type { LewSize } from 'lew-ui'
+import Icon from 'lew-ui/utils/Icon.vue'
+
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -97,7 +99,7 @@ defineExpose({ show, hide })
             {{ modelValue[startKey] }}
           </div>
           <div class="lew-date-picker-mid">
-            <lew-icon size="14" type="minus" />
+            <Icon :size="14" type="minus" />
           </div>
           <div v-if="!modelValue || !modelValue[endKey]" class="lew-date-picker-placeholder">
             {{ placeholderEnd }}
@@ -105,7 +107,7 @@ defineExpose({ show, hide })
           <div v-else class="lew-date-picker-dateValue lew-date-picker-end">
             {{ modelValue[endKey] }}
           </div>
-          <lew-icon
+          <Icon
             class="icon-calendar"
             :size="getIconSize"
             :class="{
@@ -114,10 +116,10 @@ defineExpose({ show, hide })
             type="calendar"
           />
           <transition name="lew-form-icon-ani">
-            <lew-icon
+            <Icon
               v-if="clearable && checkClear && !readonly"
               :size="getIconSize"
-              type="x"
+              type="close"
               class="lew-form-icon-clear"
               :class="{
                 'lew-form-icon-clear-focus': visible

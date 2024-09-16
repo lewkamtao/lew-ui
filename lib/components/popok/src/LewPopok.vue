@@ -1,7 +1,8 @@
 <!-- filename: Popover.vue -->
 <script setup lang="ts">
 import { LewButton, LewPopover } from 'lew-ui'
-import { any2px, getStatusIcon } from 'lew-ui/utils'
+import { any2px } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
 import { popokProps } from './props'
 
 const props = defineProps(popokProps)
@@ -49,7 +50,7 @@ const emit = defineEmits(['show', 'ok', 'cancel'])
         }"
       >
         <div class="left">
-          <div :class="`lew-popok-icon lew-popok-icon-${type}`" v-html="getStatusIcon(type)"></div>
+          <Icon :size="24" :type />
         </div>
         <div class="right">
           <div v-if="title" class="title">{{ title }}</div>
@@ -95,12 +96,7 @@ const emit = defineEmits(['show', 'ok', 'cancel'])
   .left {
     width: 30px;
     margin-right: 12px;
-    .lew-popok-icon:deep() {
-      svg {
-        width: 26px;
-        height: 26px;
-      }
-    }
+
     .lew-popok-icon-success {
       color: var(--lew-color-success);
     }

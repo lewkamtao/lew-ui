@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { LewFlex, LewIcon, LewEmpty, LewLoading } from 'lew-ui'
+import { LewFlex,  LewEmpty, LewLoading } from 'lew-ui'
 import { treeProps } from './props'
 import type { TreeDataSource } from './props'
 import { forEach, cloneDeep, isArray, findIndex, difference, uniq, intersection } from 'lodash-es'
 import { tree2List } from './tree2list'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -205,15 +206,15 @@ defineExpose({ init, getTreeList })
           }"
         >
           <div class="lew-tree-chevron-right" @click.stop="expandHandle(item)">
-            <lew-icon
+            <Icon
               v-if="loadingKeys.includes(item.key)"
-              size="14px"
+              :size="14"
               animation="spin"
               animationSpeed="fast"
               class="lew-cascader-loading-icon"
               type="loader"
             />
-            <lew-icon v-else class="lew-tree-chevron-right-icon" size="14px" type="chevron-right" />
+            <Icon v-else class="lew-tree-chevron-right-icon" :size="14" type="chevron-right" />
           </div>
 
           <div class="lew-tree-item-label" @click="select(item)">

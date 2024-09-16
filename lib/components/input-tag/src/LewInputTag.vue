@@ -3,6 +3,7 @@ import { inputTagProps } from './props'
 import { LewInput, LewTag } from 'lew-ui'
 import { cloneDeep, set } from 'lodash-es'
 import { object2class } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const emit = defineEmits(['close', 'change'])
 
@@ -127,14 +128,14 @@ const clear = () => {
       </transition-group>
 
       <transition name="lew-form-icon-ani">
-        <lew-icon
+        <Icon
           v-if="clearable && (modelValue || []).length > 0 && !readonly"
           class="lew-form-icon-clear"
           :class="{
             'lew-form-icon-clear-focus': isFocus
           }"
           :size="getIconSize"
-          type="x"
+          type="close"
           @mousedown.prevent=""
           @click="clear"
         />

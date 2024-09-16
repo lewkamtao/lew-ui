@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router'
 import TheSiderbar from '../layout/TheSiderbar.vue'
 import LewRightNav from '../layout/LewRightNav.vue'
 import type { MenuOptions } from 'lew-ui'
+import { Menu } from 'lucide-vue-next'
 
 const isShowSider = ref(false)
 const route = useRoute()
@@ -72,10 +73,6 @@ const options: MenuOptions[] = [
       {
         label: 'Mark',
         value: '/Mark'
-      },
-      {
-        label: 'Icon',
-        value: '/icon'
       }
     ]
   },
@@ -298,8 +295,12 @@ const options: MenuOptions[] = [
 
 <template>
   <div class="container">
-    <div class="mb-btn" :class="{ 'mb-btn-open': isShowSider }" @click="isShowSider = !isShowSider">
-      <lew-icon type="menu" size="24px" />
+    <div
+      class="mb-btn"
+      :class="{ 'mb-btn-open': isShowSider }"
+      @click="isShowSider = !isShowSider"
+    >
+      <Menu :size="24" />
     </div>
     <div class="sider" :class="{ 'sider-open': isShowSider }">
       <the-siderbar :options="options" />

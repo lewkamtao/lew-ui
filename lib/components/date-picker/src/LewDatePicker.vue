@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import { object2class } from 'lew-ui/utils'
-import { LewPopover, LewIcon, LewDate, LewTooltip } from 'lew-ui'
+import { LewPopover,  LewDate, LewTooltip } from 'lew-ui'
 import { datePickerProps } from './props'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash-es'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -93,7 +94,7 @@ defineExpose({ show, hide })
           <div v-show="modelValue" class="lew-date-picker-dateValue">
             {{ modelValue }}
           </div>
-          <lew-icon
+          <Icon
             class="icon-calendar"
             :size="getIconSize"
             :class="{
@@ -102,10 +103,10 @@ defineExpose({ show, hide })
             type="calendar"
           />
           <transition name="lew-form-icon-ani">
-            <lew-icon
+            <Icon
               v-if="modelValue && clearable && !readonly"
               :size="getIconSize"
-              type="x"
+              type="close"
               class="lew-form-icon-clear"
               :class="{
                 'lew-form-icon-clear-focus': visible

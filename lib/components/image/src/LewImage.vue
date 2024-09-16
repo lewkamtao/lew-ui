@@ -4,6 +4,7 @@ import { any2px } from 'lew-ui/utils'
 import { imageProps } from './props'
 import { Fancybox } from '@fancyapps/ui'
 import '@fancyapps/ui/dist/fancybox/fancybox.css'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const props = defineProps(imageProps)
 const { isLoading, error } = useImage({ src: props.src || '' })
@@ -30,7 +31,13 @@ onMounted(() => {
     <div class="skeletons" v-if="isLoading || loading"></div>
     <template v-else-if="error">
       <slot v-if="$slots.error" name="error" />
-      <lew-icon stroke-width="1" class="lew-image-icon" v-else type="image" :size="getIconSize" />
+      <Icon
+        stroke-width="1"
+        class="lew-image-icon"
+        v-else
+        type="image"
+        :size="Number(getIconSize)"
+      />
     </template>
 
     <template v-else>

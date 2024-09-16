@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
-import { LewPopover, LewTree, LewIcon, LewTooltip } from 'lew-ui'
+import { LewPopover, LewTree,  LewTooltip } from 'lew-ui'
 import type { TreeDataSource } from '../../tree'
 import { object2class, numFormat } from 'lew-ui/utils'
 import { treeSelectProps } from './props'
 import { cloneDeep, isString } from 'lodash-es'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -196,24 +197,24 @@ defineExpose({ show, hide })
   >
     <template #trigger>
       <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
-        <lew-icon
+        <Icon
           v-if="!readonly && !state.initLoading"
           :size="getIconSize"
           type="chevron-down"
           class="icon-select"
           :class="{ 'icon-select-hide': clearable && state.keyword }"
         />
-        <lew-icon
+        <Icon
           v-else-if="state.initLoading"
           type="loader"
           :size="getIconSize"
           class="icon-loader"
         />
         <transition name="lew-form-icon-ani">
-          <lew-icon
+          <Icon
             v-if="clearable && state.keyword && !readonly"
             :size="getIconSize"
-            type="x"
+            type="close"
             class="lew-form-icon-clear"
             :class="{
               'lew-form-icon-clear-focus': state.visible

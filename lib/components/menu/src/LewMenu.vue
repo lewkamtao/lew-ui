@@ -3,6 +3,7 @@ import { watchDebounced } from '@vueuse/core'
 import { LewTextTrim, LewTag } from 'lew-ui'
 import type { MenuOptions } from './props'
 import { menuProps } from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const props = defineProps(menuProps)
 
@@ -56,7 +57,7 @@ _options.value = generateEnterpriseMenu(props.options)
           }"
           @click="emit('change', cItem)"
         >
-          <lew-icon v-if="cItem.icon" class="lew-menu-icon" :type="cItem.icon" size="14" />
+          <Icon v-if="cItem.icon" class="lew-menu-icon" :type="cItem.icon" :size="14" />
           <lew-text-trim :text="cItem.label" />
           <lew-tag v-if="cItem.tagText" :color="cItem.tagColor" round size="small" type="light"
             >{{ cItem.tagText }}

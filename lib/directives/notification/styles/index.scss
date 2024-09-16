@@ -36,13 +36,7 @@
       padding: 15px 36px 15px 20px;
       box-sizing: border-box;
       .lew-notification-icon {
-        width: 24px;
-        height: 24px;
         margin-right: 10px;
-        svg {
-          width: 24px;
-          height: 24px;
-        }
       }
       .lew-notification-body {
         width: calc(100% - 40px);
@@ -50,6 +44,7 @@
           font-size: 14px;
           font-weight: bold;
           color: var(--lew-text-color-0);
+          margin-top: -1px;
         }
         .lew-notification-content {
           width: 100%;

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import axios from '@/axios/http'
+import { Box } from 'lucide-vue-next'
 
 const initTree = () => {
   return new Promise<any[]>((resolve) => {
@@ -74,7 +75,7 @@ const v = ref<string>('')
     >
       <template #empty>
         <div class="empty">
-          <lew-icon size="30" type="box" />
+          <Box :size="30" />
           暂无内容
         </div>
       </template>

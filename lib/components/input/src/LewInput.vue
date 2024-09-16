@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useMagicKeys, useDebounceFn } from '@vueuse/core'
 import { object2class, any2px } from 'lew-ui/utils'
-import { LewIcon, LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui'
+import {  LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui'
 import { inputProps } from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const { enter } = useMagicKeys()
 const app = getCurrentInstance()?.appContext.app
@@ -155,7 +156,7 @@ defineExpose({ toFocus })
         {{ prefixesValue }}
       </div>
       <div v-if="prefixes === 'icon'" class="lew-input-prefixes-icon">
-        <lew-icon :size="getIconSize" :type="prefixesValue as string" />
+        <Icon :size="getIconSize" :type="prefixesValue as string" />
       </div>
       <div v-if="prefixes === 'select'" class="lew-input-prefixes-select">
         <lew-dropdown
@@ -177,7 +178,7 @@ defineExpose({ toFocus })
             <div>
               {{ getPrefixesLabel }}
             </div>
-            <lew-icon :size="getIconSize" type="chevron-down" class="icon-select" />
+            <Icon :size="getIconSize" type="chevron-down" class="icon-select" />
           </lew-flex>
         </lew-dropdown>
       </div>
@@ -187,7 +188,7 @@ defineExpose({ toFocus })
       class="lew-input-copy-btn"
       @click="copy"
     >
-      <lew-icon
+      <Icon
         :size="getIconSize"
         :type="isCopy ? 'check' : 'copy'"
         :class="{ 'lew-input-copy-btn-check': isCopy }"
@@ -238,18 +239,18 @@ defineExpose({ toFocus })
           @mousedown.prevent=""
           @click="showPasswordFn"
         >
-          <lew-icon v-show="_type === 'text'" :size="getIconSize" type="eye" />
-          <lew-icon v-show="_type === 'password'" :size="getIconSize" type="eye-off" />
+          <Icon v-show="_type === 'text'" :size="getIconSize" type="eye" />
+          <Icon v-show="_type === 'password'" :size="getIconSize" type="eye-off" />
         </div>
         <transition name="lew-form-icon-ani">
-          <lew-icon
+          <Icon
             v-if="clearable && modelValue && !readonly"
             class="lew-form-icon-clear"
             :class="{
               'lew-form-icon-clear-focus': isFocus
             }"
             :size="getIconSize"
-            type="x"
+            type="close"
             @mousedown.prevent=""
             @click="clear"
           />
@@ -267,7 +268,7 @@ defineExpose({ toFocus })
     >
       <div v-if="suffix === 'text'">{{ suffixValue }}</div>
       <div v-if="suffix === 'icon'" class="lew-input-suffix-icon">
-        <lew-icon :size="getIconSize" :type="suffixValue as string" />
+        <Icon :size="getIconSize" :type="suffixValue as string" />
       </div>
       <div v-if="suffix === 'select'" class="lew-input-suffix-select">
         <lew-dropdown
@@ -287,7 +288,7 @@ defineExpose({ toFocus })
             }"
           >
             <div>{{ getSuffixLabel }}</div>
-            <lew-icon :size="getIconSize" type="chevron-down" class="icon-select" />
+            <Icon :size="getIconSize" type="chevron-down" class="icon-select" />
           </lew-flex>
         </lew-dropdown>
       </div>

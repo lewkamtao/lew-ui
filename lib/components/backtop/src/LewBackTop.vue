@@ -2,7 +2,7 @@
 import { throttle } from 'lodash-es'
 import { backTopProps } from './props'
 import { useEventListener } from '../../../hooks'
-import { LewIcon } from 'lew-ui'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const props = defineProps(backTopProps)
 
@@ -36,7 +36,8 @@ useEventListener(window, 'scroll', throttledScrollHandler)
 onMounted(() => {
   dom.value = document.documentElement
   if (props.target) {
-    dom.value = document.querySelector<HTMLElement>(`.${props.target}`) ?? undefined
+    dom.value =
+      document.querySelector<HTMLElement>(`.${props.target}`) ?? undefined
     if (!dom.value) {
       throw new Error(`target is not existed: ${props.target}`)
     }
@@ -46,9 +47,14 @@ onMounted(() => {
 
 <template>
   <transition name="fade">
-    <div v-if="showBackTop" class="backTop" :style="backTopStyle" @click="toBackUp">
+    <div
+      v-if="showBackTop"
+      class="backTop"
+      :style="backTopStyle"
+      @click="toBackUp"
+    >
       <slot>
-        <lew-icon size="20" type="chevron-up" />
+        <Icon :size="20" type="chevron-up" />
       </slot>
     </div>
   </transition>

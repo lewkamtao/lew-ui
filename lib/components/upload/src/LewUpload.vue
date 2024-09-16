@@ -2,8 +2,16 @@
 import { cloneDeep, isFunction } from 'lodash-es'
 import { uploadProps } from './props'
 import type { UploadFileItem, UploadStatus } from './props'
-import { any2px, getUniqueId, formatBytes, getFileIcon, object2class } from 'lew-ui/utils'
+import {
+  any2px,
+  getUniqueId,
+  formatBytes,
+  getFileIcon,
+  object2class
+} from 'lew-ui/utils'
 import { useClipboardItems } from '@vueuse/core'
+import Icon from 'lew-ui/utils/Icon.vue'
+
 const { isSupported } = useClipboardItems({ read: true })
 const tipFontSizeMap: Record<string, number> = {
   small: 14,
@@ -76,15 +84,6 @@ const statusColorMap: Record<UploadStatus, string> = {
   complete: 'gray',
   wrong_type: 'red',
   wrong_size: 'red'
-}
-const statusIconMap: Record<UploadStatus, string> = {
-  success: 'check',
-  fail: 'alert-circle',
-  uploading: 'loader',
-  pending: 'coffee',
-  complete: 'check',
-  wrong_type: 'alert-circle',
-  wrong_size: 'alert-circle'
 }
 
 const props = defineProps(uploadProps)
@@ -335,7 +334,7 @@ const getTips = computed(() => {
         }"
         gap="5"
       >
-        <lew-icon
+        <Icon
           stroke-width="1.5"
           class="lew-upload-icon"
           :size="uploadIconFontSizeMap[size]"
@@ -407,7 +406,10 @@ const getTips = computed(() => {
           }"
         >
           <lew-flex
-            :style="{ width: `${fileIconSizeMap[size]}px`, height: `${fileIconSizeMap[size]}px` }"
+            :style="{
+              width: `${fileIconSizeMap[size]}px`,
+              height: `${fileIconSizeMap[size]}px`
+            }"
             class="lew-upload-icon-wrapper"
           >
             <lew-image
@@ -415,7 +417,11 @@ const getTips = computed(() => {
               class="lew-upload-file-image"
               :src="item.url"
             />
-            <img v-else class="lew-upload-file-icon" :src="getFileIcon(item.name as string)" />
+            <img
+              v-else
+              class="lew-upload-file-icon"
+              :src="getFileIcon(item.name as string)"
+            />
           </lew-flex>
           <lew-flex
             class="lew-upload-file-info"
@@ -439,7 +445,7 @@ const getTips = computed(() => {
               }"
               class="lew-upload-reupload-btn"
             >
-              <lew-icon :size="rightTopBtnIconSizeMap[size]" type="rotate-cw" />
+              <Icon :size="rightTopBtnIconSizeMap[size]" type="rotate-cw" />
             </lew-flex>
 
             <lew-flex
@@ -457,7 +463,7 @@ const getTips = computed(() => {
               }"
               class="lew-upload-delete-btn"
             >
-              <lew-icon :size="rightTopBtnIconSizeMap[size]" type="x"></lew-icon>
+              <Icon :size="rightTopBtnIconSizeMap[size]" type="close"></Icon>
             </lew-flex>
             <lew-flex mode="between" gap="5" y="center">
               <lew-flex y="center" x="start" gap="5">
@@ -479,7 +485,9 @@ const getTips = computed(() => {
               <lew-flex y="center" class="lew-upload-progress-box">
                 <span class="lew-upload-progress-bar"></span>
                 <span
-                  :style="{ width: `${item.percent > 100 ? 100 : item.percent}%` }"
+                  :style="{
+                    width: `${item.percent > 100 ? 100 : item.percent}%`
+                  }"
                   class="lew-upload-progress-bar-upload"
                 >
                 </span>
@@ -491,7 +499,11 @@ const getTips = computed(() => {
                   fontSize: `${any2px(footerFontSizeMap[size])}`
                 }"
               >
-                <template v-if="item.status === 'uploading' && item.percent && item.size">
+                <template
+                  v-if="
+                    item.status === 'uploading' && item.percent && item.size
+                  "
+                >
                   {{ formatBytes((item.percent / 100) * item.size) + ' / ' }}
                 </template>
                 <span v-if="item.size"> {{ formatBytes(item.size) }}</span>
@@ -503,9 +515,10 @@ const getTips = computed(() => {
                   :color="statusColorMap[item.status || 'complete']"
                 >
                   <template #left>
-                    <lew-icon
-                      size="12"
-                      :type="statusIconMap[item.status || 'complete']"
+                    <Icon
+                      :size="12"
+                      :type="item.status"
+                      dark
                       :animation="item.status === 'uploading' ? 'spin' : ''"
                     />
                   </template>

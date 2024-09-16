@@ -1,6 +1,7 @@
 import '../styles/index.scss'
 import { useTimeoutFn } from '@vueuse/core'
-import { getStatusIcon } from 'lew-ui/utils'
+import { getIconInnerHTML } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 export type NotificationParamsTyped = {
   title: string
@@ -45,7 +46,12 @@ const createMessageList = () => {
   document.body.appendChild(div)
 }
 
-const notification = (type: string, title: string, content: string, delay: number) => {
+const notification = (
+  type: string,
+  title: string,
+  content: string,
+  delay: number
+) => {
   if (!document.getElementById('lew-notification')) {
     createMessageList()
     notification(type, title, content, delay)
@@ -60,16 +66,16 @@ const add = (type: string, title: string, content: string, delay: number) => {
   newMessage.innerHTML = `
                 <div class="lew-notification-box"> 
                     <div class="lew-notification-icon">
-                      ${getStatusIcon(type)}
+                          ${getIconInnerHTML({ type, size: 18 })}
                     </div>
                     <div class="lew-notification-body">
                       <div class="lew-notification-title">${title}</div>
                      	 ${content ? `<div class="lew-notification-content">${content}</div>` : ''}
                     </div> 
                     <div class="lew-notification-close-icon">
-						${getStatusIcon('close')}
+						${getIconInnerHTML({ type: 'close', size: 16 })}
                     </div>
-                </div>
+      </div>
     `
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore

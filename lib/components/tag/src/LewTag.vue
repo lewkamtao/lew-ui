@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { object2class, getColorType } from 'lew-ui/utils'
-import { LewIcon } from 'lew-ui'
 import { tagProps } from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const props = defineProps(tagProps)
 const emit = defineEmits(['close'])
@@ -72,7 +72,7 @@ const getStyle = computed(() => {
       <slot name="right"></slot>
     </div>
     <div v-if="closable" class="lew-tag-close" @click.stop="close">
-      <lew-icon :size="getSize" type="x" />
+      <Icon :size="getSize" type="close" />
     </div>
   </div>
 </template>
@@ -86,7 +86,7 @@ const getStyle = computed(() => {
   box-sizing: border-box;
   overflow: hidden;
   flex-shrink: 0;
-  
+
   .lew-tag-value {
     font-weight: normal;
     padding: 0px 3px;

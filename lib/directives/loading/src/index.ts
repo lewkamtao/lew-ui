@@ -1,5 +1,5 @@
 import type { App as Application, DirectiveBinding } from 'vue'
-import { LewIcon } from 'lew-ui'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 import { createApp } from 'vue'
 import '../styles/index.scss'
@@ -16,11 +16,10 @@ export const LewLoading = {
 
         el.classList.add('lew-loading')
         //  add loading icon
-        const loader = createApp(LewIcon, {
+        const loader = createApp(Icon, {
           type: 'loader',
-          animation: 'spin',
-          'animation-speed': 'fast',
-          size: iconSize
+          spinning: true,
+          size: iconSize || 24
         })
         loader.mount(loadingBox)
         // // add loading text

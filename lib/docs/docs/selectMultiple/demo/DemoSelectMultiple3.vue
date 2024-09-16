@@ -38,7 +38,6 @@ const searchFn = (event: any) => {
     >
       <template #empty>
         <div class="empty">
-          <lew-icon size="30" type="box" />
           暂无内容
         </div>
       </template>

@@ -44,10 +44,12 @@ const filterOptions = (keyword: string) => {
       placeholder="选择感兴趣的书籍类型"
       @change="handleChange"
     />
-    <lew-select-multiple v-model="value" :options="options" placeholder="查看已选书籍类型" readonly>
-      <template #prefix>
-        <lew-icon type="book" />
-      </template>
+    <lew-select-multiple
+      v-model="value"
+      :options="options"
+      placeholder="查看已选书籍类型"
+      readonly
+    >
     </lew-select-multiple>
     <lew-select-multiple
       v-model="value"
@@ -55,7 +57,9 @@ const filterOptions = (keyword: string) => {
       :disabled="disabled"
       placeholder="书籍类型暂不可选"
     />
-    <lew-button @click="toggleDisabled"> {{ disabled ? '启用' : '禁用' }}选择 </lew-button>
+    <lew-button @click="toggleDisabled">
+      {{ disabled ? '启用' : '禁用' }}选择
+    </lew-button>
     <p>已选择 {{ selectedCount }} 种书籍类型</p>
   </lew-flex>
 </template>

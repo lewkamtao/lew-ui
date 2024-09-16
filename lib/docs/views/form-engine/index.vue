@@ -11,6 +11,7 @@ import { baseSchema, componentsMenusSchema, globalSchema } from './schema'
 import LewGetLabelWidth from 'lew-ui/components/form/src/LewGetLabelWidth.vue'
 import { debounce, cloneDeep, has } from 'lodash-es'
 import { LewSize } from 'lew-ui/types'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const isDark = useDark({
   selector: 'html',
@@ -289,39 +290,39 @@ const addComponent = (item: any) => {
             >
               <lew-flex x="end" y="center" class="handle-box">
                 <lew-flex x="end" gap="5" y="center">
-                  <lew-icon
+                  <Icon
                     v-if="element.spanMap[formGlobal.columns] > 1"
                     @click="minimize(element)"
                     class="handle-icon handle-resize"
-                    size="14"
+                    :size="14"
                     type="minimize-2"
-                  ></lew-icon>
-                  <lew-icon
+                  ></Icon>
+                  <Icon
                     v-if="
                       element.spanMap[formGlobal.columns] < formGlobal.columns
                     "
                     @click="maximize(element)"
                     class="handle-icon handle-resize"
-                    size="14"
+                    :size="14"
                     type="maximize-2"
-                  ></lew-icon>
-                  <lew-icon
+                  ></Icon>
+                  <Icon
                     @click="deleteItem(element)"
                     class="handle-icon"
-                    size="14"
+                    :size="14"
                     type="trash"
-                  ></lew-icon>
+                  ></Icon>
                 </lew-flex>
               </lew-flex>
-              <lew-icon
+              <Icon
                 v-tooltip="{
                   content: '未绑定字段',
                   trigger: 'mouseenter'
                 }"
                 v-if="!element.field"
                 class="tips-icon"
-                size="14"
-                type="alert-circle"
+                :size="14"
+                type="error"
               />
               <lew-flex
                 x="center"

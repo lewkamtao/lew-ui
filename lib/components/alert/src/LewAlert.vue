@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { object2class, LewIcon } from 'lew-ui/utils'
+import { object2class } from 'lew-ui/utils'
 import type { AlertItem } from './props'
 import { alertProps } from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 defineProps(alertProps)
 
@@ -14,21 +15,26 @@ const alertClassName = (item: AlertItem) => {
 
 <template>
   <div class="lew-alert-group">
-    <div v-for="(item, i) in options" :key="i" class="lew-alert" :class="alertClassName(item)">
-      <div class="alert-icon" v-html="getStatusIcon(item.type)"></div>
+    <div
+      v-for="(item, i) in options"
+      :key="i"
+      class="lew-alert"
+      :class="alertClassName(item)"
+    >
+      <Icon dark :size="18" :type="item.type"></Icon>
       <div class="message">
         <div class="title">{{ item.title }}</div>
         <div v-show="item.content" class="content">
           {{ item.content }}
         </div>
       </div>
-      <lew-icon
+
+      <Icon
         v-if="item.closeable"
-        :size="16"
-        class="lew-form-icon-clear"
-        type="x"
         @click="emit('close', i)"
-      />
+        class="lew-form-icon-clear"
+        type="close"
+      ></Icon>
     </div>
   </div>
 </template>
@@ -59,7 +65,6 @@ const alertClassName = (item: AlertItem) => {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      margin-top: 1px;
     }
 
     .lew-form-icon-clear {
@@ -70,8 +75,8 @@ const alertClassName = (item: AlertItem) => {
 
     .message {
       width: calc(100% - 30px);
-      margin-left: 5px;
-
+      margin-left: 12px;
+      margin-top: -1px;
       .title {
         font-size: 14px;
         width: 100%;

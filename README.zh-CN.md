@@ -35,7 +35,7 @@ import { LewButton } from 'lew-ui'
 Lew UI 使用了以下开源库：
 
 - [tippy.js](https://atomiks.github.io/tippyjs/): 用于创建工具提示和弹出框
-- [feather-icons](https://feathericons.com/): 提供简洁美观的图标集
+- [Lucide](https://github.com/lucide-icons/lucide): 提供简洁美观的图标集
 - [fancyapps](https://fancyapps.com/): 用于创建图片画廊和轮播
 - [VueUse](https://vueuse.org/): Vue Composition API 实用工具集合
 - [Day.js](https://day.js.org/): 轻量级日期处理库

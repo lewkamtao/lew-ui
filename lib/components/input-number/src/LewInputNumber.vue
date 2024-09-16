@@ -2,6 +2,7 @@
 import { object2class, any2px } from 'lew-ui/utils'
 import { LewTooltip } from 'lew-ui'
 import { inputNumberProps } from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -70,7 +71,7 @@ const getIconSize = computed(() => {
     medium: 14,
     large: 16
   }
-  return `${sizeMap[size]}px`
+  return sizeMap[size]
 })
 
 const getControlStyle = computed(() => {
@@ -93,7 +94,10 @@ const plus = () => {
     longClickTimer.value = setInterval(() => {
       lewInputRef.value.stepUp()
       modelValue.value = lewInputRef.value.value
-      if (props.max !== '' && lewInputRef.value.value >= Number(props.max || 0)) {
+      if (
+        props.max !== '' &&
+        lewInputRef.value.value >= Number(props.max || 0)
+      ) {
         clearTimer()
       }
     }, 80)
@@ -106,7 +110,10 @@ const minus = () => {
     longClickTimer.value = setInterval(() => {
       lewInputRef.value.stepDown()
       modelValue.value = lewInputRef.value.value
-      if (props.min !== '' && lewInputRef.value.value <= Number(props.min || 0)) {
+      if (
+        props.min !== '' &&
+        lewInputRef.value.value <= Number(props.min || 0)
+      ) {
         clearTimer()
       }
     }, 80)
@@ -119,7 +126,10 @@ const checkValidationMessage = () => {
 }
 
 const validCheck = () => {
-  return ((lewInputRef.value && lewInputRef.value.validationMessage) || '').length === 0
+  return (
+    ((lewInputRef.value && lewInputRef.value.validationMessage) || '')
+      .length === 0
+  )
 }
 
 defineExpose({ toFocus, validCheck })
@@ -163,22 +173,22 @@ defineExpose({ toFocus, validCheck })
       gap="2px"
       class="lew-input-number-control"
     >
-      <lew-icon
+      <Icon
         @mousedown="plus"
         @mouseup="clearTimer"
         @mouseleave="clearTimer"
         class="lew-input-number-icon"
         :size="getIconSize"
         type="chevron-up"
-      ></lew-icon>
-      <lew-icon
+      ></Icon>
+      <Icon
         @mousedown="minus"
         @mouseup="clearTimer"
         @mouseleave="clearTimer"
         class="lew-input-number-icon"
         :size="getIconSize"
         type="chevron-down"
-      ></lew-icon>
+      ></Icon>
     </lew-flex>
   </div>
 </template>

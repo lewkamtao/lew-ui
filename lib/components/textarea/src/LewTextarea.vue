@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { useMagicKeys, useDebounceFn } from '@vueuse/core'
 import { object2class, any2px } from 'lew-ui/utils'
-import { LewIcon, LewTooltip } from 'lew-ui'
+import {  LewTooltip } from 'lew-ui'
 import { textareaProps } from './props'
 import { useResizeObserver } from '@vueuse/core'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const { shift, enter } = useMagicKeys()
 // 获取app
@@ -152,10 +153,10 @@ defineExpose({ toFocus })
       {{ modelValue.length }}{{ maxLength ? ' / ' + maxLength : '' }}
     </div>
     <transition name="lew-form-icon-ani">
-      <lew-icon
+      <Icon
         v-if="clearable && modelValue && !readonly"
         :size="getIconSize"
-        type="x"
+        type="close"
         class="lew-form-icon-clear"
         :class="{
           'lew-form-icon-clear-focus': state.isFocus

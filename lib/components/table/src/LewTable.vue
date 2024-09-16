@@ -415,7 +415,6 @@ onUnmounted(() => {
               :style="getColumnStyle(column)"
             >
               {{ column.title }}
-              <lew-icon></lew-icon>
             </lew-flex>
           </div>
         </div>
