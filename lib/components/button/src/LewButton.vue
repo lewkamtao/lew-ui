@@ -185,9 +185,11 @@ defineExpose({ focus })
     align-items: center;
     justify-content: center;
   }
+
   .lew-loading-isShow {
     opacity: 1;
   }
+
   .lew-button-content {
     position: relative;
     z-index: 2;
@@ -257,6 +259,7 @@ defineExpose({ focus })
   font-size: var(--lew-form-font-size-mini);
   gap: 2px;
   padding: 0px 10px;
+
   .lew-loading-icon {
     left: 7px;
   }
@@ -269,6 +272,7 @@ defineExpose({ focus })
   font-size: var(--lew-form-font-size-small);
   gap: 3px;
   padding: 0px 14px;
+
   .lew-loading-icon {
     left: 8px;
   }
@@ -281,6 +285,7 @@ defineExpose({ focus })
   font-size: var(--lew-form-font-size-medium);
   gap: 4px;
   padding: 0px 16px;
+
   .lew-loading-icon {
     left: 9px;
   }
@@ -293,10 +298,12 @@ defineExpose({ focus })
   font-size: var(--lew-form-font-size-large);
   gap: 5px;
   padding: 0px 20px;
+
   .lew-loading-icon {
     left: 10px;
   }
 }
+
 .lew-button-singleIcon {
   .lew-loading-icon {
     left: 50%;
@@ -304,12 +311,14 @@ defineExpose({ focus })
     transform: translate(-50%, -50%);
   }
 }
+
 .lew-button-size-mini.lew-button-singleIcon {
   min-width: auto;
   padding: 0px;
   width: calc(var(--lew-form-item-height-mini));
   height: calc(var(--lew-form-item-height-mini));
 }
+
 .lew-button-size-small.lew-button-singleIcon {
   min-width: auto;
   padding: 0px;
@@ -368,12 +377,15 @@ defineExpose({ focus })
   pointer-events: none; //鼠标点击不可修改
   opacity: var(--lew-disabled-opacity);
 }
+
 .lew-button-type-text:hover {
   background-color: var(--lew-bgcolor-2) !important;
 }
+
 .lew-button-type-ghost:hover {
   background-color: var(--lew-bgcolor-2) !important;
 }
+
 .lew-button-type-ghost:active {
   background-color: var(--lew-color-normal-light) !important;
 }

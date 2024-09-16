@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { object2class, getStatusIcon } from 'lew-ui/utils'
+import { object2class, LewIcon } from 'lew-ui/utils'
 import type { AlertItem } from './props'
 import { alertProps } from './props'
-import { LewIcon } from 'lew-ui'
 
 defineProps(alertProps)
 

@@ -103,7 +103,8 @@ const getModel = () => {
 
   const _options = cloneDeep(options.value)
   _options.forEach((item: any) => {
-    const rowStart = Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1
+    const rowStart =
+      Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1
     const rowEnd = rowStart + item.spanMap[formGlobal.value.columns]
     item.gridArea = `auto  / ${rowStart} / auto  / ${rowEnd}`
     delete item.spanMap
@@ -188,7 +189,11 @@ const addComponent = (item: any) => {
 
 <template>
   <div class="playground">
-    <LewGetLabelWidth ref="formLabelRef" :size="formGlobal.size as LewSize" :options="options" />
+    <LewGetLabelWidth
+      ref="formLabelRef"
+      :size="formGlobal.size as LewSize"
+      :options="options"
+    />
     <div class="lew-form-component lew-scrollbar">
       <draggable
         :group="{ name: 'form', pull: 'clone', put: false }"
@@ -210,13 +215,20 @@ const addComponent = (item: any) => {
             gap="5"
             class="lew-form-component-box"
           >
-            <img :src="getComponentIcon(element.as || 'blank')" alt="" srcset="" />
+            <img
+              :src="getComponentIcon(element.as || 'blank')"
+              alt=""
+              srcset=""
+            />
             {{ element.label }}
           </lew-flex>
         </template>
       </draggable>
     </div>
-    <div class="lew-form-wrapper" @click="(settingTab = 'options'), (activeId = '')">
+    <div
+      class="lew-form-wrapper"
+      @click="(settingTab = 'options'), (activeId = '')"
+    >
       <lew-flex x="center" y="center" class="lew-form-select-columns">
         <lew-tabs
           width="320px"
@@ -261,14 +273,19 @@ const addComponent = (item: any) => {
             <div
               :ref="(el) => (itemRefMap[element.id] = el)"
               class="lew-form-wrapper-draggable-item"
-              :class="{ 'lew-form-wrapper-draggable-item-active': activeId === element.id }"
+              :class="{
+                'lew-form-wrapper-draggable-item-active':
+                  activeId === element.id
+              }"
               @click.stop="
                 activeId === element.id || element.as === ''
                   ? (activeId = '')
                   : (activeId = element.id),
                   (settingTab = 'options')
               "
-              :style="{ 'grid-column-end': `span ${element.spanMap[formGlobal.columns]}` }"
+              :style="{
+                'grid-column-end': `span ${element.spanMap[formGlobal.columns]}`
+              }"
             >
               <lew-flex x="end" y="center" class="handle-box">
                 <lew-flex x="end" gap="5" y="center">
@@ -280,7 +297,9 @@ const addComponent = (item: any) => {
                     type="minimize-2"
                   ></lew-icon>
                   <lew-icon
-                    v-if="element.spanMap[formGlobal.columns] < formGlobal.columns"
+                    v-if="
+                      element.spanMap[formGlobal.columns] < formGlobal.columns
+                    "
                     @click="maximize(element)"
                     class="handle-icon handle-resize"
                     size="14"
@@ -304,7 +323,11 @@ const addComponent = (item: any) => {
                 size="14"
                 type="alert-circle"
               />
-              <lew-flex x="center" y="center" class="blank-box" v-if="element.as === ''"
+              <lew-flex
+                x="center"
+                y="center"
+                class="blank-box"
+                v-if="element.as === ''"
                 >占位盒子</lew-flex
               >
               <lew-form-item
@@ -323,11 +346,19 @@ const addComponent = (item: any) => {
         </draggable>
       </div>
     </div>
-    <lew-flex direction="y" gap="0" x="start" y="start" class="lew-form-options lew-scrollbar">
+    <lew-flex
+      direction="y"
+      gap="0"
+      x="start"
+      y="start"
+      class="lew-form-options lew-scrollbar"
+    >
       <lew-flex x="end" class="lew-form-options-btns">
         <lew-button icon="monitor" @click="preview"> 预览 </lew-button>
         <lew-flex x="end">
-          <lew-button type="light" icon="upload" @click="exportFile"> 导出配置文件 </lew-button>
+          <lew-button type="light" icon="upload" @click="exportFile">
+            导出配置文件
+          </lew-button>
         </lew-flex>
       </lew-flex>
       <lew-flex class="lew-form-setting-tabs">
@@ -352,7 +383,9 @@ const addComponent = (item: any) => {
               <div class="title">基础属性</div>
               <set-form
                 :collapse-height="200"
-                v-model="options[options.findIndex((e: any) => e.id === activeId)]"
+                v-model="
+                  options[options.findIndex((e: any) => e.id === activeId)]
+                "
                 :options="baseSchema"
               />
             </lew-flex>
@@ -360,7 +393,8 @@ const addComponent = (item: any) => {
               v-if="
                 activeId &&
                 options.findIndex((e: any) => e.id === activeId) >= 0 &&
-                options[options.findIndex((e: any) => e.id === activeId)].as !== ''
+                options[options.findIndex((e: any) => e.id === activeId)].as !==
+                  ''
               "
               direction="y"
               x="start"
@@ -370,10 +404,19 @@ const addComponent = (item: any) => {
                 <span>组件属性</span>
               </lew-flex>
               <set-form
-                v-if="options[options.findIndex((e: any) => e.id === activeId)].schema.length > 0"
+                v-if="
+                  options[options.findIndex((e: any) => e.id === activeId)]
+                    .schema.length > 0
+                "
                 :key="activeId"
-                v-model="options[options.findIndex((e: any) => e.id === activeId)].props"
-                :options="options[options.findIndex((e: any) => e.id === activeId)].schema"
+                v-model="
+                  options[options.findIndex((e: any) => e.id === activeId)]
+                    .props
+                "
+                :options="
+                  options[options.findIndex((e: any) => e.id === activeId)]
+                    .schema
+                "
               />
               <lew-flex v-else>
                 <lew-empty title="开发中，敬请期待"></lew-empty>
@@ -407,10 +450,12 @@ const addComponent = (item: any) => {
     user-select: none;
     box-sizing: border-box;
   }
+
   .lew-form-component-draggable {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+
     .lew-form-component-box {
       display: flex;
       align-items: center;
@@ -421,6 +466,7 @@ const addComponent = (item: any) => {
       cursor: move;
       font-size: 12px;
       color: var(--lew-text-color-5);
+
       img {
         width: 100%;
         height: auto;
@@ -429,17 +475,20 @@ const addComponent = (item: any) => {
         transition: all 0.15s;
       }
     }
+
     .lew-form-component-box:hover {
       img {
         background-color: var(--lew-bgcolor-4);
       }
     }
+
     .lew-form-component-box:active {
       img {
         transform: scale(0.9);
       }
     }
   }
+
   .lew-form-wrapper {
     display: flex;
     flex-direction: column;
@@ -458,6 +507,7 @@ const addComponent = (item: any) => {
       background-color: var(--lew-bgcolor-0);
       transition: all 0.25s;
     }
+
     .lew-form-select-columns {
       position: relative;
       padding: 0px 12px;
@@ -466,6 +516,7 @@ const addComponent = (item: any) => {
       background-color: var(--lew-bgcolor-0);
       flex-shrink: 0;
       border-bottom: 1px solid var(--lew-bgcolor-3);
+
       .set-theme-btn {
         position: absolute;
         right: 20px;
@@ -482,6 +533,7 @@ const addComponent = (item: any) => {
       box-sizing: border-box;
       padding: 5px;
     }
+
     .lew-form-component-box {
       display: flex;
       justify-content: center;
@@ -491,18 +543,21 @@ const addComponent = (item: any) => {
       background-color: var(--lew-bgcolor-0);
       box-sizing: border-box;
       border: var(--lew-form-border-width) dashed transparent;
+
       img {
         height: 40px;
         width: auto;
       }
     }
   }
+
   .lew-form-wrapper-draggable-item {
     position: relative;
     padding: 15px 13px 15px 13px;
     box-sizing: border-box;
     border: var(--lew-form-border-width) dashed transparent;
     cursor: pointer;
+
     .tips-icon {
       position: absolute;
       right: 10px;
@@ -510,12 +565,14 @@ const addComponent = (item: any) => {
       color: var(--lew-color-error-dark);
       z-index: 9;
     }
+
     .handle-box {
       position: absolute;
       top: 0px;
       left: 0px;
       padding: 0px 5px;
       z-index: 9;
+
       .handle-icon {
         transition: all 0.2s;
         opacity: 0;
@@ -523,19 +580,24 @@ const addComponent = (item: any) => {
         padding: 5px;
         transform: scale(1);
       }
+
       .handle-icon:hover {
         transform: scale(1.1);
       }
+
       .handle-icon:active {
         transform: scale(0.95);
         opacity: 0;
       }
+
       .handle-resize {
         transform: rotate(45deg);
       }
+
       .handle-resize:hover {
         transform: scale(1.1) rotate(45deg);
       }
+
       .handle-resize:active {
         transform: scale(0.95) rotate(45deg);
       }
@@ -559,30 +621,37 @@ const addComponent = (item: any) => {
       background-color: transparent;
     }
   }
+
   .lew-form-wrapper-draggable-item:hover {
     border: var(--lew-form-border-width) dashed var(--lew-bgcolor-5);
   }
+
   .lew-form-wrapper-draggable-item-active {
     border: var(--lew-form-border-width) dashed var(--lew-color-blue-dark) !important;
   }
+
   .blank-box {
     height: 100%;
     opacity: 0.4;
     font-size: 16px;
   }
+
   .lew-form-wrapper-draggable-item:hover {
     .handle-icon {
       opacity: 0.4;
     }
+
     .handle-icon:hover {
       opacity: 1;
     }
   }
+
   .lew-form-options {
     width: 350px;
     background-color: var(--lew-bgcolor-0);
     flex-shrink: 0;
     overflow-y: auto;
+
     .lew-form-options-btns {
       border-bottom: 1px solid var(--lew-bgcolor-3);
       height: 60px;
@@ -596,6 +665,7 @@ const addComponent = (item: any) => {
     position: relative;
     align-content: start;
   }
+
   .lew-form-wrapper-draggable-empty::after {
     position: absolute;
     content: '从左侧拖动组件到当前区域';
@@ -607,17 +677,24 @@ const addComponent = (item: any) => {
     text-align: center;
     transform: translate(-50%, -50%);
   }
+
   .lew-form-wrapper-draggable-1 {
     grid-template-columns: minmax(0, 1fr);
   }
+
   .lew-form-wrapper-draggable-2 {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
+
   .lew-form-wrapper-draggable-3 {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
   }
+
   .lew-form-wrapper-draggable-4 {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(
+        0,
+        1fr
+      );
   }
 }
 
@@ -637,9 +714,11 @@ const addComponent = (item: any) => {
   flex-shrink: 0;
   background-color: var(--lew-bgcolor-0);
 }
+
 .lew-form-options-panel {
   width: 100%;
   box-sizing: border-box;
+
   .title {
     width: 100%;
     padding: 10px 15px;
@@ -648,12 +727,14 @@ const addComponent = (item: any) => {
     border-top: 1px solid var(--lew-bgcolor-3);
     font-size: 14px;
     font-weight: bold;
+
     .component-name {
       font-weight: normal;
       color: var(--lew-text-color-7);
     }
   }
 }
+
 .lew-form-model {
   width: 100%;
   border-top: 1px solid var(--lew-bgcolor-3);

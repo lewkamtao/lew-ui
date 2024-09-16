@@ -1,5 +1,6 @@
 import { uniqueId } from 'lodash-es'
 
+
 /**
  * 获取图标类型用于提示框。
  * @param {string | undefined} type - 提示框中显示的消息类型。
@@ -7,14 +8,14 @@ import { uniqueId } from 'lodash-es'
  */
 export const getIconType = (type: string | undefined): string => {
   const map = {
-    normal: 'info',
-    warning: 'alert-triangle',
-    success: 'check-circle',
-    error: 'alert-circle',
-    info: 'bell'
+    normal: Info,
+    warning: TriangleAlert,
+    success: CircleCheck,
+    error: CircleAlert,
+    info: BellRing
   }
   // @ts-ignore
-  return map[type] || 'info'
+  return map[type]
 }
 
 /**
@@ -222,7 +223,13 @@ export const formatBytes = (bytes: number, decimals: number = 2) => {
  * @param {string} options.type - 资源类型。
  * @returns {string} 静态资源文件的URL。
  */
-export const getAssetsFile = ({ name, type }: { name: string; type: string }) => {
+export const getAssetsFile = ({
+  name,
+  type
+}: {
+  name: string
+  type: string
+}) => {
   return new URL(`../assets/${type}/${name}`, import.meta.url).href
 }
 
