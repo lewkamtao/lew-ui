@@ -54,7 +54,7 @@ const props = defineProps({
   },
   speed: {
     type: Number,
-    default: 1
+    default: 1.5
   }
 })
 const iconMap: any = {
@@ -101,7 +101,7 @@ const iconMap: any = {
       'lew-icon-spinning': spinning
     }"
     :style="{
-      'animation-duration': speed,
+      'animation-duration': speed + 's',
       color: iconColorType[type]
         ? `var(--lew-color-${getColorType(type)}${dark ? '-dark' : ''})`
         : ''
@@ -112,7 +112,7 @@ const iconMap: any = {
   ></component>
 </template>
 <style lang="scss" scoped>
-@keyframes vue-feather--spin {
+@keyframes spin {
   from {
     transform: rotate(0);
   }
@@ -123,6 +123,6 @@ const iconMap: any = {
 }
 
 .lew-icon-spinning {
-  animation: vue-feather--spin 1s linear infinite;
+  animation: spin 1s linear infinite;
 }
 </style>

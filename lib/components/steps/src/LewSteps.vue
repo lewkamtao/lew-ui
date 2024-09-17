@@ -23,20 +23,20 @@ const stepsValue: Ref<number | undefined> = defineModel()
         <Icon
           v-if="index === (stepsValue || 1) - 1 && status === 'loading'"
           :size="16"
-          stroke-width="3"
+          :stroke-width="3"
           spinning
           type="loader"
         />
         <Icon
           v-else-if="index === (stepsValue || 1) - 1 && status === 'warning'"
           :size="16"
-          stroke-width="3"
+          :stroke-width="3"
           type="alert-circle"
         />
         <Icon
           v-else-if="index === (stepsValue || 1) - 1 && status === 'error'"
           :size="16"
-          stroke-width="3"
+          :stroke-width="3"
           type="close"
         />
 
@@ -46,7 +46,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
             index < (stepsValue || 1) - 1 || (index === (stepsValue || 1) - 1 && status === 'done')
           "
           :size="16"
-          stroke-width="3"
+          :stroke-width="3"
           type="check"
         />
         <span v-else class="index">{{ index + 1 }}</span>

@@ -52,7 +52,7 @@ const getCheckboxClassName = computed(() => {
     <div v-if="iconable || (!iconable && !block)" class="icon-checkbox-box">
       <i v-show="certain" class="icon-certain"></i>
       <Icon
-        stroke-width="4"
+        :stroke-width="4"
         class="icon-checkbox"
         type="check"
         :size="getIconSize"

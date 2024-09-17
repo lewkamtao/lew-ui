@@ -23,7 +23,7 @@ const alertClassName = computed(() => {
 
       <!-- 内容 -->
       <div v-if="$slots.content" class="content"><slot name="content" /></div>
-      <div v-else class="content">{{ content }}</div>
+      <div v-else-if="content" class="content">{{ content }}</div>
 
       <!-- 底部 -->
       <div v-if="$slots.footer" class="footer">
@@ -77,7 +77,7 @@ const alertClassName = computed(() => {
       width: 100%;
       word-wrap: break-word;
       white-space: pre-line;
-      font-weight: 800;
+      font-weight: 400;
     }
 
     .content {

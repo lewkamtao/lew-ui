@@ -43,7 +43,7 @@ const getRadioClassName = computed(() => {
 <template>
   <label class="lew-radio" :class="getRadioClassName">
     <div v-if="iconable || (!iconable && !block)" class="icon-radio-box">
-      <Icon stroke-width="4" class="icon-radio" type="check" :size="getIconSize" />
+      <Icon :stroke-width="4" class="icon-radio" type="check" :size="getIconSize" />
     </div>
     <input v-show="false" type="radio" :checked="checked" @change="setChecked" />
     <span v-if="label" class="lew-radio-label"> {{ label }}</span>

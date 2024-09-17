@@ -19,7 +19,7 @@ const imageStyleObject = computed(() => {
 
 const getIconSize = computed(() => {
   const { width, height } = props
-  return Math.min(Number(width), Number(height)) * 0.45 + 'px'
+  return Math.min(Number(width), Number(height)) * 0.45
 })
 onMounted(() => {
   Fancybox.bind('[data-fancybox]', { Hash: false })
@@ -32,7 +32,7 @@ onMounted(() => {
     <template v-else-if="error">
       <slot v-if="$slots.error" name="error" />
       <Icon
-        stroke-width="1"
+        :stroke-width="1"
         class="lew-image-icon"
         v-else
         type="image"
