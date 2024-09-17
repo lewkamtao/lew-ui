@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import {
-  LewPopover,
-  LewFlex,
-  LewButton,
-  LewTooltip,
-  LewTextTrim
-} from 'lew-ui'
+import { LewPopover, LewFlex, LewButton, LewTooltip, LewTextTrim } from 'lew-ui'
 import { object2class } from 'lew-ui/utils'
 import type { CascaderOptions } from './props'
 import { cascaderProps } from './props'
@@ -355,9 +349,9 @@ defineExpose({ show, hide })
             v-if="clearable && getLabel && getLabel.length > 0 && !readonly"
             :size="getIconSize"
             type="close"
-            class="lew-form-icon-clear"
+            class="lew-form-icon-close"
             :class="{
-              'lew-form-icon-clear-focus': state.visible
+              'lew-form-icon-close-focus': state.visible
             }"
             @click.stop="clearHandle"
           />
@@ -394,7 +388,7 @@ defineExpose({ show, hide })
         <slot name="header"></slot>
         <div
           class="lew-cascader-options-box"
-          :style="{ height: free ? 'calc(100% - 45px)' : '100%' }"
+          :style="{ height: free ? 'calc(100% - 48px)' : '100%' }"
         >
           <template v-for="(oItem, oIndex) in state.optionsGroup" :key="oIndex">
             <use-virtual-list
@@ -460,7 +454,7 @@ defineExpose({ show, hide })
                     />
                     <Icon
                       v-else-if="!templateProps.isLeaf"
-                      :size="14"
+                      :size="16"
                       class="lew-cascader-icon"
                       type="chevron-right"
                     />
@@ -692,7 +686,7 @@ defineExpose({ show, hide })
   width: 100%;
   box-sizing: border-box;
   min-width: 200px;
-  height: 300px;
+  height: 320px;
   overflow: hidden;
   transition: var(--lew-form-transition-bezier);
   user-select: none;
@@ -842,7 +836,7 @@ defineExpose({ show, hide })
 
   .lew-cascader-control {
     border-top: var(--lew-pop-border);
-    height: 45px;
+    height: 48px;
     padding-right: 10px;
   }
 }

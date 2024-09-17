@@ -64,7 +64,7 @@ const asMap: Record<string, any> = {
         class="set-form-item-tips"
         v-if="props?.tips"
         :size="14"
-        type="info"
+        type="tips"
         v-tooltip="{ content: props?.tips }"
       ></Icon>
     </lew-flex>

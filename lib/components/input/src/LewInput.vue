@@ -245,9 +245,9 @@ defineExpose({ toFocus })
         <transition name="lew-form-icon-ani">
           <Icon
             v-if="clearable && modelValue && !readonly"
-            class="lew-form-icon-clear"
+            class="lew-form-icon-close"
             :class="{
-              'lew-form-icon-clear-focus': isFocus
+              'lew-form-icon-close-focus': isFocus
             }"
             :size="getIconSize"
             type="close"
@@ -552,7 +552,7 @@ defineExpose({ toFocus })
     line-height: var(--lew-form-input-line-height-small);
   }
 
-  .lew-input-auto-width-clear {
+  .lew-input-auto-width-close{
     width: 18px;
   }
 }
@@ -604,7 +604,7 @@ defineExpose({ toFocus })
     line-height: var(--lew-form-input-line-height-medium);
   }
 
-  .lew-input-auto-width-clear {
+  .lew-input-auto-width-close{
     width: 20px;
   }
 }
@@ -656,7 +656,7 @@ defineExpose({ toFocus })
     line-height: var(--lew-form-input-line-height-large);
   }
 
-  .lew-input-auto-width-clear {
+  .lew-input-auto-width-close{
     width: 22px;
   }
 }

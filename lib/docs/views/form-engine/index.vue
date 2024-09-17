@@ -12,6 +12,7 @@ import LewGetLabelWidth from 'lew-ui/components/form/src/LewGetLabelWidth.vue'
 import { debounce, cloneDeep, has } from 'lodash-es'
 import { LewSize } from 'lew-ui/types'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { Sun, Moon, Monitor, Upload } from 'lucide-vue-next'
 
 const isDark = useDark({
   selector: 'html',
@@ -239,12 +240,16 @@ const addComponent = (item: any) => {
         />
         <lew-button
           class="set-theme-btn"
-          round
-          color="gray"
           type="light"
-          :icon="isDark ? 'moon' : 'sun'"
+          color="gray"
+          size="small"
+          round
+          single-icon
           @click="isDark = !isDark"
-        />
+        >
+          <Sun :size="16" v-if="!isDark" />
+          <Moon :size="16" v-else />
+        </lew-button>
       </lew-flex>
       <div
         ref="formMainRef"
@@ -355,10 +360,13 @@ const addComponent = (item: any) => {
       class="lew-form-options lew-scrollbar"
     >
       <lew-flex x="end" class="lew-form-options-btns">
-        <lew-button icon="monitor" @click="preview"> 预览 </lew-button>
+        <lew-button @click="preview">
+          <Monitor :size="16" />
+          预览
+        </lew-button>
         <lew-flex x="end">
-          <lew-button type="light" icon="upload" @click="exportFile">
-            导出配置文件
+          <lew-button type="light" @click="exportFile">
+            导出配置 <Upload :size="16" />
           </lew-button>
         </lew-flex>
       </lew-flex>

@@ -335,7 +335,7 @@ const getTips = computed(() => {
         gap="5"
       >
         <Icon
-          stroke-width="1.5"
+          :stroke-width="1.5"
           class="lew-upload-icon"
           :size="uploadIconFontSizeMap[size]"
           type="upload-cloud" />
@@ -379,12 +379,8 @@ const getTips = computed(() => {
 
     <lew-alert
       v-if="!isFunction(uploadHelper)"
-      :options="[
-        {
-          type: 'error',
-          title: 'uploadHelper Error: 未配置上传方法'
-        }
-      ]"
+      type="error"
+      title="uploadHelper Error: 未配置上传方法"
     >
     </lew-alert>
 
@@ -519,7 +515,7 @@ const getTips = computed(() => {
                       :size="12"
                       :type="item.status"
                       dark
-                      :animation="item.status === 'uploading' ? 'spin' : ''"
+                      :spinning="item.status === 'uploading'"
                     />
                   </template>
                   {{ statusMap[item.status || 'complete'] }}

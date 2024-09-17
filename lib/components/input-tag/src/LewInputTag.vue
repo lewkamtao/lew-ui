@@ -130,9 +130,9 @@ const clear = () => {
       <transition name="lew-form-icon-ani">
         <Icon
           v-if="clearable && (modelValue || []).length > 0 && !readonly"
-          class="lew-form-icon-clear"
+          class="lew-form-icon-close"
           :class="{
-            'lew-form-icon-clear-focus': isFocus
+            'lew-form-icon-close-focus': isFocus
           }"
           :size="getIconSize"
           type="close"

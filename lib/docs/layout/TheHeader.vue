@@ -44,7 +44,7 @@ const goHome = () => {
       <a class="menu-item" href="/#/Image">组件</a>
       <a class="menu-item" target="_blank" href="/#/form-engine">
         <lew-flex gap="5">
-          表单引擎<lew-tag size="small" round> Dev </lew-tag>
+          表单引擎<lew-tag size="small" type="ghost" round> Dev </lew-tag>
         </lew-flex>
       </a>
     </lew-flex>
@@ -122,7 +122,7 @@ const goHome = () => {
     span:hover,
     .menu-item:hover {
       opacity: 1;
-      background-color: var(--lew-bgcolor-6);
+      background-color: var(--lew-bgcolor-4);
     }
   }
 }

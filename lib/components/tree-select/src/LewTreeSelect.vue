@@ -215,9 +215,9 @@ defineExpose({ show, hide })
             v-if="clearable && state.keyword && !readonly"
             :size="getIconSize"
             type="close"
-            class="lew-form-icon-clear"
+            class="lew-form-icon-close"
             :class="{
-              'lew-form-icon-clear-focus': state.visible
+              'lew-form-icon-close-focus': state.visible
             }"
             @click.stop="clearHandle"
           />

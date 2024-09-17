@@ -15,7 +15,7 @@ onMounted(() => {
     LewDialog.info({
       title: '温馨提示',
       content:
-        '当前组件库仍处于开发测试状态，请勿用于生产环境，当前文档仍有很多地方未完善，持续更新中，敬请期待。',
+        '当前组件库仍处于开发测试状态，请勿用于生产环境，当前文档仍有很多地方未完善，持续更New中，敬请期待。',
       cancelText: '',
       okText: '知道了',
       ok: () => {
@@ -73,6 +73,12 @@ const options: MenuOptions[] = [
       {
         label: 'Mark',
         value: '/Mark'
+      },
+      {
+        label: 'Icon',
+        value: '/icon',
+        tagText: 'Deprecated',
+        tagColor: 'black'
       }
     ]
   },
@@ -234,7 +240,9 @@ const options: MenuOptions[] = [
     children: [
       {
         label: 'Alert',
-        value: '/Alert'
+        value: '/Alert',
+        tagText: 'Refactor',
+        tagColor: 'info'
       },
       {
         label: 'Message',

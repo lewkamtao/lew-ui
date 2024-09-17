@@ -1,7 +1,6 @@
 import '../styles/index.scss'
 import { useTimeoutFn } from '@vueuse/core'
 import { getIconInnerHTML } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
 
 export type NotificationParamsTyped = {
   title: string

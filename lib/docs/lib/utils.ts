@@ -15,7 +15,7 @@ export const convertProps = (json: any) => {
         const prop = {
           name: key,
           description: json[key].description,
-          type: json[key].typeDesc ? json[key].typeDesc : type,
+          type: json[key].typeGhost ? json[key].typeGhost : type,
           default: JSON.stringify(json[key].default)
         }
         props.push(prop)

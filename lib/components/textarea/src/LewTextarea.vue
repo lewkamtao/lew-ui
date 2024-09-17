@@ -157,9 +157,9 @@ defineExpose({ toFocus })
         v-if="clearable && modelValue && !readonly"
         :size="getIconSize"
         type="close"
-        class="lew-form-icon-clear"
+        class="lew-form-icon-close"
         :class="{
-          'lew-form-icon-clear-focus': state.isFocus
+          'lew-form-icon-close-focus': state.isFocus
         }"
         style="top: 14px"
         @click="clear"

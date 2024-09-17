@@ -16,7 +16,7 @@ export const menuTreeProps = {
   options: {
     type: Array as PropType<MenuTreeOptions[]>,
     default: [],
-    typeDesc: 'MenuOptions[]',
+    typeGhost: 'MenuOptions[]',
     description: '颜色'
   },
   active: {

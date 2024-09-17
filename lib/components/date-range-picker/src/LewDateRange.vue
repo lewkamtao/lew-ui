@@ -5,6 +5,7 @@ import { getMonthDate, getHeadDate } from '../../date-picker/src/date'
 import type { RetItemType } from '../../date-picker/src/date'
 import { dateRangeProps } from './props'
 import { LewFlex, LewButton } from 'lew-ui'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 // Props
 const props = defineProps(dateRangeProps)
@@ -75,7 +76,10 @@ const object2class = computed(() => (type: string, item: RetItemType) => {
       }
       break
     case 'selected':
-      if ((hoverStart.isSame(_date) || hoverEnd.isSame(_date)) && item.date === item.showDate) {
+      if (
+        (hoverStart.isSame(_date) || hoverEnd.isSame(_date)) &&
+        item.date === item.showDate
+      ) {
         return 'lew-date-value-selected'
       }
       break
@@ -96,7 +100,11 @@ const object2class = computed(() => (type: string, item: RetItemType) => {
         return 'lew-date-label-selected-end'
       }
       if (hoverStart.isBefore(hoverEnd)) {
-        if (hoverStart.isBefore(_date) && hoverEnd.isAfter(_date) && item.date === item.showDate) {
+        if (
+          hoverStart.isBefore(_date) &&
+          hoverEnd.isAfter(_date) &&
+          item.date === item.showDate
+        ) {
           return 'lew-date-label-selected'
         }
       } else if (hoverEnd.isBefore(_date) && hoverStart.isAfter(_date)) {
@@ -137,7 +145,10 @@ const nextMonth1 = () => {
   if (dateState.year1 > dateState.year2) {
     dateState.year2 = dateState.year1
   }
-  if (dateState.year1 === dateState.year2 && dateState.month1 >= dateState.month2) {
+  if (
+    dateState.year1 === dateState.year2 &&
+    dateState.month1 >= dateState.month2
+  ) {
     if (dateState.month1 === 12) {
       dateState.month2 = 1
       dateState.year2 += 1
@@ -159,7 +170,10 @@ const prveMonth2 = () => {
   if (dateState.year2 < dateState.year1) {
     dateState.year1 = dateState.year2
   }
-  if (dateState.year1 === dateState.year2 && dateState.month2 <= dateState.month1) {
+  if (
+    dateState.year1 === dateState.year2 &&
+    dateState.month2 <= dateState.month1
+  ) {
     if (dateState.month2 === 1) {
       dateState.month1 = 12
       dateState.year1 -= 1
@@ -191,7 +205,10 @@ const nextYear1 = () => {
   if (dateState.year1 > dateState.year2) {
     dateState.year2 = dateState.year1
   }
-  if (dateState.year1 === dateState.year2 && dateState.month1 >= dateState.month2) {
+  if (
+    dateState.year1 === dateState.year2 &&
+    dateState.month1 >= dateState.month2
+  ) {
     if (dateState.month1 === 12) {
       dateState.month2 = 1
       dateState.year2 += 1
@@ -209,7 +226,10 @@ const prveYear2 = () => {
   if (dateState.year2 < dateState.year1) {
     dateState.year1 = dateState.year2
   }
-  if (dateState.year1 === dateState.year2 && dateState.month2 <= dateState.month1) {
+  if (
+    dateState.year1 === dateState.year2 &&
+    dateState.month2 <= dateState.month1
+  ) {
     if (dateState.month2 === 1) {
       dateState.month1 = 12
       dateState.year1 -= 1
@@ -280,12 +300,19 @@ const init = () => {
   // 年
   dateState.year1 = _value[startKey] ? dayjs(_value[startKey]).year() : curYear
   // 月
-  dateState.month1 = _value[startKey] ? dayjs(_value[startKey]).month() + 1 : curMonth
+  dateState.month1 = _value[startKey]
+    ? dayjs(_value[startKey]).month() + 1
+    : curMonth
   // 年
   dateState.year2 = _value[endKey] ? dayjs(_value[endKey]).year() : curYear
   // 月
-  dateState.month2 = _value[endKey] ? dayjs(_value[endKey]).month() + 1 : curMonth + 1
-  if (dateState.year1 === dateState.year2 && dateState.month1 === dateState.month2) {
+  dateState.month2 = _value[endKey]
+    ? dayjs(_value[endKey]).month() + 1
+    : curMonth + 1
+  if (
+    dateState.year1 === dateState.year2 &&
+    dateState.month1 === dateState.month2
+  ) {
     dateState.month2 += 1
   }
   if (dateState.month2 > 12) {
@@ -302,7 +329,6 @@ init()
 // Expose
 defineExpose({ init })
 </script>
-
 <template>
   <div class="lew-date-range">
     <div class="lew-date">
@@ -313,22 +339,27 @@ defineExpose({ init })
             type="light"
             color="gray"
             size="small"
-            icon="chevrons-left"
+            single-icon
             @click="prveYear1"
-          />
+          >
+            <Icon type="chevrons-left" />
+          </lew-button>
           <!-- 上一月 -->
           <lew-button
             type="light"
             color="gray"
             size="small"
-            icon="chevron-left"
+            single-icon
             @click="prveMonth1"
-          />
+          >
+            <Icon type="chevron-left" />
+          </lew-button>
         </div>
         <!-- 日期 -->
         <div class="cur-date">
           {{ dateState.year1 }} 年
-          <span style="width: 22px; text-align: center">{{ dateState.month1 }}</span> 月
+          <span style="width: 22px; text-align: center">{{ dateState.month1 }}</span>
+          月
         </div>
         <div class="lew-date-control-right">
           <!-- 下一月 -->
@@ -336,22 +367,30 @@ defineExpose({ init })
             type="light"
             color="gray"
             size="small"
-            icon="chevron-right"
+            single-icon
             @click="nextMonth1"
-          />
+          >
+            <Icon type="chevron-right" />
+          </lew-button>
           <!-- 下一年 -->
           <lew-button
             type="light"
             color="gray"
             size="small"
-            icon="chevrons-right"
+            single-icon
             @click="nextYear1"
-          />
+          >
+            <Icon type="chevrons-right" />
+          </lew-button>
         </div>
       </lew-flex>
       <div class="lew-date-box">
         <!-- 表头 周 -->
-        <div v-for="(item, index) in getHeadDate" :key="`h${index}`" class="lew-date-item">
+        <div
+          v-for="(item, index) in getHeadDate"
+          :key="`h${index}`"
+          class="lew-date-item"
+        >
           <div class="lew-date-num">{{ item }}</div>
         </div>
 
@@ -364,8 +403,14 @@ defineExpose({ init })
           @click="setValue(item)"
           @mouseenter="hoverValueFn(item)"
         >
-          <div class="lew-date-label" :class="object2class('rangeSelected', item)">
-            <div v-if="object2class('today', item)" class="lew-date-item-today"></div>
+          <div
+            class="lew-date-label"
+            :class="object2class('rangeSelected', item)"
+          >
+            <div
+              v-if="object2class('today', item)"
+              class="lew-date-item-today"
+            ></div>
             <div class="lew-date-value" :class="object2class('selected', item)">
               {{ item.showDate }}
             </div>
@@ -381,22 +426,27 @@ defineExpose({ init })
             type="light"
             color="gray"
             size="small"
-            icon="chevrons-left"
+            single-icon
             @click="prveYear2"
-          />
+          >
+            <Icon type="chevrons-left" />
+          </lew-button>
           <!-- 上一月 -->
           <lew-button
             type="light"
             color="gray"
             size="small"
-            icon="chevron-left"
+            single-icon
             @click="prveMonth2"
-          />
+          >
+            <Icon type="chevron-left" />
+          </lew-button>
         </div>
         <!-- 日期 -->
         <div class="cur-date">
           {{ dateState.year2 }} 年
-          <span style="width: 22px; text-align: center">{{ dateState.month2 }}</span> 月
+          <span style="width: 22px; text-align: center">{{ dateState.month2 }}</span>
+          月
         </div>
         <div class="lew-date-control-right">
           <!-- 下一月 -->
@@ -404,22 +454,31 @@ defineExpose({ init })
             type="light"
             color="gray"
             size="small"
-            icon="chevron-right"
+            single-icon
             @click="nextMonth2"
-          />
+          >
+            <Icon type="chevron-right" />
+          </lew-button>
           <!-- 下一年 -->
           <lew-button
             type="light"
             color="gray"
             size="small"
-            icon="chevrons-right"
+            single-icon
+            
             @click="nextYear2"
-          />
+          >
+            <Icon type="chevrons-right" />
+          </lew-button>
         </div>
       </lew-flex>
       <div class="lew-date-box">
         <!-- 表头 周 -->
-        <div v-for="(item, index) in getHeadDate" :key="`h${index}`" class="lew-date-item">
+        <div
+          v-for="(item, index) in getHeadDate"
+          :key="`h${index}`"
+          class="lew-date-item"
+        >
           <div class="lew-date-num">{{ item }}</div>
         </div>
 
@@ -432,8 +491,14 @@ defineExpose({ init })
           @click="setValue(item)"
           @mouseenter="hoverValueFn(item)"
         >
-          <div class="lew-date-label" :class="object2class('rangeSelected', item)">
-            <div v-if="object2class('today', item)" class="lew-date-item-today"></div>
+          <div
+            class="lew-date-label"
+            :class="object2class('rangeSelected', item)"
+          >
+            <div
+              v-if="object2class('today', item)"
+              class="lew-date-item-today"
+            ></div>
             <div class="lew-date-value" :class="object2class('selected', item)">
               {{ item.showDate }}
             </div>
@@ -527,13 +592,15 @@ defineExpose({ init })
           color: var(--lew-text-color-7);
           border-radius: 50%;
           transition: all 0.1s ease;
-          border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+          border: var(--lew-form-border-width) var(--lew-form-border-color)
+            solid;
         }
 
         .lew-date-value-selected {
           background: var(--lew-color-primary);
           color: var(--lew-color-white-text);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light)
+            solid;
         }
 
         .lew-date-item-today {

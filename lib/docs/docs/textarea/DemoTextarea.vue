@@ -46,14 +46,9 @@ const options = ref(
       <demo-textarea7 />
       <lew-alert
         style="margin-top: 20px"
-        :size="16"
-        :options="[
-          {
-            type: 'info',
-            title: '提示',
-            content: '当开启时，按下 shift +  enter 可以进行换行。'
-          }
-        ]"
+        type="info"
+        title="提示"
+        content="当开启时，按下 shift +  enter 可以进行换行。"
       />
     </lew-demo-box>
     <lew-docs-tables :options="options" />

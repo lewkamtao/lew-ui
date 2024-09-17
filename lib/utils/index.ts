@@ -5,16 +5,20 @@ import Icon from './Icon.vue'
  * @param {string | undefined} type - 消息类型。
  * @returns {string} 对应的颜色类型。
  */
-export const getColorType = (type: string | undefined): string => {
-  const typeMap: any = {
-    normal: 'gray',
-    warning: 'orange',
-    success: 'green',
-    error: 'red',
-    danger: 'red',
-    info: 'blue',
-    primary: 'blue'
-  }
+
+export const iconColorType: Record<string, string> = {
+  normal: 'gray',
+  warning: 'orange',
+  success: 'green',
+  error: 'red',
+  danger: 'red',
+  info: 'blue',
+  primary: 'blue',
+  tips: 'blue'
+}
+
+export const getColorType = (type: string): string => {
+  const typeMap: Record<string, string> = iconColorType
   return typeMap[type as string] || type
 }
 

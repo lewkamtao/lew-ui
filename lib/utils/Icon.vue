@@ -11,6 +11,8 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
   Loader,
   Check,
   Calendar,
@@ -23,10 +25,11 @@ import {
   Minus,
   Image,
   Plus,
-  MoreHorizontal
+  MoreHorizontal,
+  RotateCw,
+  Edit2
 } from 'lucide-vue-next'
-import { getColorType } from './index'
-import { isString } from 'lodash-es'
+import { iconColorType, getColorType } from './index'
 
 const props = defineProps({
   type: {
@@ -36,6 +39,10 @@ const props = defineProps({
   dark: {
     type: Boolean,
     default: false
+  },
+  strokeWidth: {
+    type: Number,
+    default: 2
   },
   size: {
     type: Number,
@@ -52,19 +59,23 @@ const props = defineProps({
 })
 const iconMap: any = {
   success: CircleCheck,
-  normal: BellRing,
+  normal: Info,
   warning: TriangleAlert,
   error: CircleAlert,
-  info: Info,
+  info: BellRing,
+  tips: Info,
   close: X,
   copy: Copy,
   loader: Loader,
+  loading: Loader,
   check: Check,
   calendar: Calendar,
   'chevron-up': ChevronUp,
   'chevron-down': ChevronDown,
   'chevron-left': ChevronLeft,
   'chevron-right': ChevronRight,
+  'chevrons-left': ChevronsLeft,
+  'chevrons-right': ChevronsRight,
   trash: Trash,
   'minimize-2': Minimize2,
   'maximize-2': Maximize2,
@@ -77,18 +88,10 @@ const iconMap: any = {
   minus: Minus,
   image: Image,
   plus: Plus,
-  'more-horizontal': MoreHorizontal
+  'rotate-cw': RotateCw,
+  'more-horizontal': MoreHorizontal,
+  'edit-2': Edit2
 }
-
-const status = [
-  'normal',
-  'warning',
-  'success',
-  'error',
-  'danger',
-  'info',
-  'primary'
-]
 </script>
 
 <template>
@@ -99,10 +102,11 @@ const status = [
     }"
     :style="{
       'animation-duration': speed,
-      color: status.includes(type)
+      color: iconColorType[type]
         ? `var(--lew-color-${getColorType(type)}${dark ? '-dark' : ''})`
         : ''
     }"
+    :strokeWidth
     :size
     :is="iconMap[props.type]"
   ></component>

@@ -69,7 +69,7 @@ if (props.closeByEsc) {
             </div>
             <lew-flex v-else-if="title" mode="between" y="center" class="header">
               <lew-text-trim class="title" :text="title" />
-              <Icon :size="18" class="lew-form-icon-clear" type="close" @click="close" />
+              <Icon :size="18" class="lew-form-icon-close" type="close" @click="close" />
             </lew-flex>
 
             <slot></slot>
@@ -143,10 +143,10 @@ if (props.closeByEsc) {
         font-size: 16px;
         font-weight: bold;
       }
-      .lew-form-icon-clear {
+      .lew-form-icon-close {
         right: 15px;
       }
-      .lew-form-icon-clear:hover {
+      .lew-form-icon-close:hover {
         background-color: var(--lew-bgcolor-5);
       }
     }

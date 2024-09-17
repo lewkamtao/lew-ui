@@ -104,7 +104,9 @@ const batchDelete = () => {
     closeOnClickOverlay: true,
     closeByEsc: true,
     ok: () => {
-      modelValue.value = modelValue.value.filter((row) => !selectedKeys.value.includes(row.id))
+      modelValue.value = modelValue.value.filter(
+        (row) => !selectedKeys.value.includes(row.id)
+      )
       selectedKeys.value = []
     }
   })
@@ -127,9 +129,13 @@ const checkUniqueFieldFn = (form: any) => {
     return true
   }
   const fieldValue = form[props.uniqueField]
-  const vail = !modelValue.value.some((item) => item[props.uniqueField] === fieldValue)
+  const vail = !modelValue.value.some(
+    (item) => item[props.uniqueField] === fieldValue
+  )
   if (!vail) {
-    const label = formOptions.value.find((e: any) => e.field === props.uniqueField)?.label
+    const label = formOptions.value.find(
+      (e: any) => e.field === props.uniqueField
+    )?.label
     LewMessage.warning(`该${label}已存在。请输入一个不重复的${label}。`)
     return false
   }
@@ -141,8 +147,12 @@ const sortRows = () => {
   LewMessage.info('该功能正在开发中，敬请期待')
 }
 
-const isMaxRowsReached = computed(() => modelValue.value.length >= props.maxRows)
-const showHeaderAction = computed(() => props.batchDeletable || props.clearable || props.sortable)
+const isMaxRowsReached = computed(
+  () => modelValue.value.length >= props.maxRows
+)
+const showHeaderAction = computed(
+  () => props.batchDeletable || props.clearable || props.sortable
+)
 
 const getAddButtonStyle = computed(() => {
   const paddingMap = {
@@ -217,7 +227,10 @@ const getAddButtonStyle = computed(() => {
       </template>
       <template #table-footer>
         <lew-flex direction="y">
-          <lew-empty v-if="modelValue.length === 0" description="暂无数据"></lew-empty>
+          <lew-empty
+            v-if="modelValue.length === 0"
+            description="暂无数据"
+          ></lew-empty>
           <lew-flex
             v-if="addable"
             @click="add"
@@ -231,33 +244,30 @@ const getAddButtonStyle = computed(() => {
       </template>
       <template #empty> </template>
       <template #action="{ row, index }">
-        <lew-button
-          v-if="addable"
-          v-tooltip="{
-            content: '编辑数据',
-            trigger: 'mouseenter',
-            delay: [500, 0]
-          }"
-          icon="edit-3"
-          round
-          :size="size"
-          type="text"
-          @click="edit({ row, index })"
-        />
-        <lew-button
-          v-if="deletable"
-          v-tooltip="{
-            content: '删除数据',
-            trigger: 'mouseenter',
-            delay: [500, 0]
-          }"
-          icon="trash"
-          round
-          :size="size"
-          color="red"
-          type="text"
-          @click="del({ index })"
-        />
+        <lew-flex gap="5">
+          <lew-button
+            v-if="addable"
+            type="text"
+            color="gray"
+            size="small"
+            single-icon
+            round
+            @click="edit({ row, index })"
+          >
+            <Icon :size="14" type="edit-2" />
+          </lew-button>
+          <lew-button
+            v-if="deletable"
+            type="text"
+            color="red"
+            size="small"
+            round
+            single-icon
+            @click="del({ index })"
+          >
+            <Icon :size="14" type="trash" />
+          </lew-button>
+        </lew-flex>
       </template>
     </lew-table>
     <FormModal

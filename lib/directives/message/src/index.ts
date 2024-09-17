@@ -1,5 +1,5 @@
 import '../styles/index.scss'
-import Icon from 'lew-ui/utils/Icon.vue'
+import { getIconInnerHTML } from 'lew-ui/utils'
 
 type MessageFnOptions = {
   id: string
@@ -28,15 +28,7 @@ const showMessage = ({ type, e }: MessageOptions) => {
     : false
   const messageElement = hasMessageById || document.createElement('div')
 
-  const icon = createApp({
-    render() {
-      return h(Icon, { type })
-    }
-  })
-
-  icon.mount(messageElement)
-
-  messageElement.innerHTML += `<div class="content">${content || e}</div>`
+  messageElement.innerHTML = `${getIconInnerHTML({ type, strokeWidth: type === 'loading' ? 2.5 : undefined, spinning: type === 'loading' })}<div class="content">${content || e}</div>`
 
   if (!hasMessageById) {
     if (id) {
