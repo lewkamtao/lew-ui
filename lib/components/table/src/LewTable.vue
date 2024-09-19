@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { tableProps } from './props'
 import { any2px } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
 import { LewFlex, LewCheckbox, LewTextTrim, LewEmpty } from 'lew-ui'
 import {
   isEmpty,
@@ -12,13 +13,16 @@ import {
   keys,
   sumBy,
   isString,
-  template
+  template,
+  cloneDeep
 } from 'lodash-es'
 import type { FlexAlignment, TextTrimAlignment } from 'lew-ui'
+import SortIcon from './SortIcon.vue'
 
 const props = defineProps(tableProps)
 const selectedKeys = defineModel('selectedKeys')
-const sortOptions = defineModel('sortOptions')
+const sortValue: any = defineModel('sortValue', { default: {} })
+const emit = defineEmits(['sortChange', 'selectChange'])
 const tableRef = ref()
 const fixedLeftRef = ref()
 const fixedRightRef = ref()
@@ -75,14 +79,18 @@ const getColumnStyle = computed(() => (column: any, row?: any) => {
       'width'
     ) + (props.checkable ? getCheckableWidth.value : 0)
   const tdWidth =
-    (width / (totalColumnWidth.value - fixedWidth)) * (state.scrollClientWidth - fixedWidth)
+    (width / (totalColumnWidth.value - fixedWidth)) *
+    (state.scrollClientWidth - fixedWidth)
   return `${sizeStyle};width: ${tdWidth}px;${customStyle}`
 })
 
 watch(
   () => props.dataSource,
   () => {
-    state.selectedRowsMap = mapValues(keyBy(props.dataSource, props.rowKey), () => false)
+    state.selectedRowsMap = mapValues(
+      keyBy(props.dataSource, props.rowKey),
+      () => false
+    )
     updateAllCheckedState()
   },
   { deep: true }
@@ -136,7 +144,10 @@ const handleTableResize = throttle(() => {
     })
   })
 
-  let totalWidth = props.columns.reduce((sum, col) => sum + Number(col.width), 0)
+  let totalWidth = props.columns.reduce(
+    (sum, col) => sum + Number(col.width),
+    0
+  )
 
   if (props.checkable) {
     totalWidth += getCheckableWidth.value
@@ -160,7 +171,10 @@ const handleTableResize = throttle(() => {
 }, 250)
 
 const setAllRowsChecked = (checked: boolean) => {
-  state.selectedRowsMap = mapValues(keyBy(props.dataSource, props.rowKey), () => checked)
+  state.selectedRowsMap = mapValues(
+    keyBy(props.dataSource, props.rowKey),
+    () => checked
+  )
   if (props.multiple) {
     selectedKeys.value = checked ? keys(state.selectedRowsMap) : []
   }
@@ -168,10 +182,15 @@ const setAllRowsChecked = (checked: boolean) => {
 
 const updateAllCheckedState = () => {
   const checkedKeys = keys(pickBy(state.selectedRowsMap, Boolean))
-  const allDataKeys = props.dataSource.map((row: any) => String(row[props.rowKey]))
+  const allDataKeys = props.dataSource.map((row: any) =>
+    String(row[props.rowKey])
+  )
   const uncheckedKeys = difference(allDataKeys, checkedKeys)
   state.isAllChecked =
-    isEmpty(uncheckedKeys) && props.multiple && props.checkable && checkedKeys.length > 0
+    isEmpty(uncheckedKeys) &&
+    props.multiple &&
+    props.checkable &&
+    checkedKeys.length > 0
 }
 
 const toggleRowSelection = (row: any) => {
@@ -186,12 +205,16 @@ const toggleRowSelection = (row: any) => {
     state.selectedRowsMap = { [rowKey]: !isChecked }
     selectedKeys.value = isChecked ? undefined : rowKey
   }
+  emit('selectChange', cloneDeep(selectedKeys.value))
   updateAllCheckedState()
 }
 
 const updateSelectedKeys = (keys: any) => {
   if (props.multiple) {
-    state.selectedRowsMap = mapValues(keyBy(props.dataSource, props.rowKey), () => false)
+    state.selectedRowsMap = mapValues(
+      keyBy(props.dataSource, props.rowKey),
+      () => false
+    )
     keys.forEach((key: string) => {
       state.selectedRowsMap[key] = true
     })
@@ -200,7 +223,15 @@ const updateSelectedKeys = (keys: any) => {
   }
 }
 
-const renderCell = ({ column, row, index }: { column: any; row: any; index: number }) => {
+const renderCell = ({
+  column,
+  row,
+  index
+}: {
+  column: any
+  row: any
+  index: number
+}) => {
   if (column.customRender) {
     return column.customRender({ row, column, index, text: row[column.field] })
   }
@@ -283,6 +314,31 @@ const getEmptyProps: any = computed(() => {
   }
 })
 
+const sort = (column: any) => {
+  if (column.sortable) {
+    let value = sortValue.value?.[column.field]
+
+    switch (value) {
+      case 'desc':
+        value = 'asc'
+        break
+      case 'asc':
+        value = undefined
+        break
+      default:
+        value = 'desc'
+        break
+    }
+
+    sortValue.value = {
+      ...(sortValue.value || {}),
+      [column.field]: value
+    }
+
+    emit('sortChange', cloneDeep(sortValue.value))
+  }
+}
+
 watch(
   () => props.size,
   () => {
@@ -316,7 +372,9 @@ onActivated(() => {
   updateScrollState()
   handleTableResize()
   if (props.checkable && !props.rowKey) {
-    throw new Error('LewTable error: rowKey is required when checkable is enabled!')
+    throw new Error(
+      'LewTable error: rowKey is required when checkable is enabled!'
+    )
   }
 
   if (props.columns.some((col: any) => !col.width)) {
@@ -366,7 +424,10 @@ onUnmounted(() => {
     >
       <div
         class="lew-table-head"
-        :style="{ width: totalColumnWidth + 'px', height: getHeadHeight + 'px' }"
+        :style="{
+          width: totalColumnWidth + 'px',
+          height: getHeadHeight + 'px'
+        }"
         @mouseenter="state.hoverRowIndex = -1"
       >
         <div
@@ -395,11 +456,22 @@ onUnmounted(() => {
               v-for="(column, index) in getFixedColumns('left')"
               :key="`columns${index}`"
               class="lew-table-td"
+              :class="{ 'lew-table-td-sortable': column.sortable }"
               :x="(column.x as FlexAlignment) || 'start'"
               :y="column.y as FlexAlignment"
               :style="getColumnStyle(column)"
+              gap="5"
+              @click="sort(column)"
             >
-              {{ column.title }}
+              <span class="title-span">
+                {{ column.title }}
+                <sort-icon
+                  v-if="column.sortable"
+                  :sort-value="sortValue[column.field]"
+                  :size="size"
+                  class="lew-table-sorter"
+                />
+              </span>
             </lew-flex>
           </div>
         </div>
@@ -413,8 +485,18 @@ onUnmounted(() => {
               :x="(column.x as FlexAlignment) || 'start'"
               :y="column.y as FlexAlignment"
               :style="getColumnStyle(column)"
+              gap="5"
+              @click="sort(column)"
             >
-              {{ column.title }}
+              <span class="title-span">
+                {{ column.title }}
+                <sort-icon
+                  v-if="column.sortable"
+                  :sort-value="sortValue[column.field]"
+                  :size="size"
+                  class="lew-table-sorter"
+                />
+              </span>
             </lew-flex>
           </div>
         </div>
@@ -428,11 +510,22 @@ onUnmounted(() => {
               v-for="(column, index) in getFixedColumns('right')"
               :key="`columns${index}`"
               class="lew-table-td"
+              :class="{ 'lew-table-td-sortable': column.sortable }"
               :x="(column.x as FlexAlignment) || 'start'"
               :y="column.y as FlexAlignment"
               :style="getColumnStyle(column)"
+              gap="5"
+              @click="sort(column)"
             >
-              {{ column.title }}
+              <span class="title-span">
+                {{ column.title }}
+                <sort-icon
+                  v-if="column.sortable"
+                  :sort-value="sortValue[column.field]"
+                  :size="size"
+                  class="lew-table-sorter"
+                />
+              </span>
             </lew-flex>
           </div>
         </div>
@@ -442,7 +535,10 @@ onUnmounted(() => {
         class="lew-table-body"
         :style="`width: ${totalColumnWidth}px`"
       >
-        <div v-if="getFixedColumns('left').length > 0 || checkable" class="lew-table-fixed-left">
+        <div
+          v-if="getFixedColumns('left').length > 0 || checkable"
+          class="lew-table-fixed-left"
+        >
           <div
             v-for="(row, i) in dataSource"
             :key="`data${i}`"
@@ -524,7 +620,10 @@ onUnmounted(() => {
             </lew-flex>
           </div>
         </div>
-        <div v-if="getFixedColumns('right').length > 0" class="lew-table-fixed-right">
+        <div
+          v-if="getFixedColumns('right').length > 0"
+          class="lew-table-fixed-right"
+        >
           <div
             v-for="(row, i) in dataSource"
             :key="`data${i}`"
@@ -711,8 +810,22 @@ onUnmounted(() => {
       }
       .lew-table-td-sortable {
         cursor: pointer;
+        user-select: none;
+      }
+      .title-span {
+        position: relative;
+        .lew-table-sorter {
+          position: absolute;
+          top: 50%;
+          right: 0px;
+          transform: translate(30px, -50%);
+          transition: all 0.2s;
+        }
       }
       .lew-table-td-sortable:hover {
+        background: var(--lew-bgcolor-2);
+      }
+      .lew-table-td-sortable:active {
         background: var(--lew-bgcolor-3);
       }
     }

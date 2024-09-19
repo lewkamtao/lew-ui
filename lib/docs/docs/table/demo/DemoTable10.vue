@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-const data: any = [
+import { orderBy } from 'lodash-es'
+const data: any = ref([
   {
     id: 1,
     brand: 'Supreme',
@@ -36,7 +37,7 @@ const data: any = [
     popularItems: ['Tri-Ferg Logo T恤', '运动外套', '滑板配件'],
     description: '源于伦敦滑板文化，以三角形logo和幽默设计而著名。'
   }
-]
+])
 
 const columns = [
   {
@@ -53,7 +54,7 @@ const columns = [
   },
   {
     title: '成立年份',
-    width: 100,
+    width: 180,
     field: 'founded',
     sortable: true,
     x: 'center'
@@ -80,19 +81,43 @@ const columns = [
     title: '品牌简介',
     width: 350,
     field: 'description',
+    type: 'text-trim',
     x: 'start'
   }
 ]
 
-const tableRef = ref()
+const sortValue = ref<any>({
+  founded: 'desc'
+})
+
+const sortChange = () => {
+  if (sortValue.value['founded']) {
+    data.value = orderBy(data.value, 'founded', sortValue.value['founded'])
+  } else {
+    data.value = orderBy(data.value, 'id', 'asc')
+  }
+}
 </script>
 
 <template>
   <lew-flex style="width: 100%" direction="y" x="start">
-    <lew-table ref="tableRef" :data-source="data" :columns="columns" multiple rowKey="id">
+    <lew-table
+      v-model:sortValue="sortValue"
+      ref="tableRef"
+      :data-source="data"
+      :columns="columns"
+      multiple
+      rowKey="id"
+      @sort-change="sortChange"
+    >
       <template #popularItems="{ row }">
         <lew-flex gap="5" x="start">
-          <lew-tag v-for="(item, index) in row.popularItems" :key="index" type="light" color="blue">
+          <lew-tag
+            v-for="(item, index) in row.popularItems"
+            :key="index"
+            type="light"
+            color="blue"
+          >
             {{ item }}
           </lew-tag>
         </lew-flex>

@@ -105,7 +105,7 @@ const columnsMap: any = {
     }
   ]
 }
-const sortOptions = computed(() => {
+const sortValue = computed(() => {
   return props.options
     .map((e: any) => {
       return {
@@ -119,7 +119,7 @@ const sortOptions = computed(() => {
 
 <template>
   <lew-flex direction="y" gap="70px" class="docs-wrapper">
-    <lew-flex v-for="(item, index) in sortOptions" :key="index" direction="y" x="start">
+    <lew-flex v-for="(item, index) in sortValue" :key="index" direction="y" x="start">
       <lew-title :id="item.title" :size="18" class="demo-docs-title">{{ item.title }}</lew-title>
       <lew-table :data-source="item.data" :columns="columnsMap[item.columnsKey]" />
     </lew-flex>
