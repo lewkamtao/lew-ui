@@ -1,21 +1,31 @@
 <script lang="ts" setup>
+import { h } from 'vue'
 import type { ContextMenus } from 'lew-ui/directives'
-
+import {
+  Home,
+  CornerUpRight,
+  RotateCw,
+  DownloadCloud,
+  File,
+  Navigation,
+  Search,
+  Eye
+} from 'lucide-vue-next'
 const options1: ContextMenus = [
   {
     label: '返回',
     value: 1,
-    icon: 'corner-up-left'
+    renderIcon: () => h(Home, { size: 14 })
   },
   {
     label: '前进',
     value: 2,
-    icon: 'corner-up-right'
+    renderIcon: () => h(CornerUpRight, { size: 14 })
   },
   {
     label: '重新加载',
     value: 3,
-    icon: 'rotate-cw'
+    renderIcon: () => h(RotateCw, { size: 14 })
   },
   {
     isDividerLine: true
@@ -23,28 +33,28 @@ const options1: ContextMenus = [
   {
     label: '另存为',
     value: 4,
-    icon: 'download-cloud'
+    renderIcon: () => h(DownloadCloud, { size: 14 })
   },
   {
     label: '打印',
     value: 4,
     disabled: true,
-    icon: 'file'
+    renderIcon: () => h(File, { size: 14 })
   },
   {
     label: '投放',
     value: 4,
-    icon: 'navigation'
+    renderIcon: () => h(Navigation, { size: 14 })
   },
   {
     label: '使用 Google 搜索图片',
     value: 4,
-    icon: 'search'
+    renderIcon: () => h(Search, { size: 14 })
   },
   {
     label: '在阅读模式下打开',
     value: 4,
-    icon: 'eye'
+    renderIcon: () => h(Eye, { size: 14 })
   }
 ]
 

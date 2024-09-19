@@ -10,6 +10,7 @@ export interface TableColumn {
   y?: string
   width?: number
   columnStyle?: string
+  sortable?: boolean
 }
 
 export const tableModel = {

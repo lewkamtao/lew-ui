@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { LewIcon } from 'lew-ui'
 import { object2class, getColorType } from 'lew-ui/utils'
 import { buttonProps } from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const emit = defineEmits(['click'])
 const props = defineProps(buttonProps)
@@ -34,9 +34,8 @@ if (instance?.slots.default) {
 }
 
 const getButtonClass = computed(() => {
-  const { size, type, icon, text, color } = props
+  const { size, type, text, color, singleIcon } = props
   const loading = _loading.value || props.loading
-  const singleIcon = !!(!text && icon && !hasDefaultSlot.value)
   return object2class('lew-button', {
     size,
     type,
@@ -47,18 +46,18 @@ const getButtonClass = computed(() => {
 })
 
 const getIconSize = computed(() => {
-  const { size, iconSize } = props
+  const { size } = props
   switch (size) {
     case 'mini':
-      return iconSize ? Number(iconSize) : 12
+      return 12
     case 'small':
-      return iconSize ? Number(iconSize) : 14
+      return 14
     case 'medium':
-      return iconSize ? Number(iconSize) : 16
+      return 16
     case 'large':
-      return iconSize ? Number(iconSize) : 18
+      return 18
     default:
-      return iconSize ? Number(iconSize) : 16
+      return 16
   }
 })
 
@@ -77,7 +76,7 @@ const getStyle = computed(() => {
       break
     case 'ghost':
       styleObj.backgroundColor = 'transparent'
-      styleObj.border = `var(--lew-form-border-width) ${dashed ? 'dashed' : 'solid'} var(--lew-color-${_color})`
+      styleObj.border = `var(--lew-form-border-width) ${dashed ? 'dashed' : 'solid'} var(--lew-color-${_color}-dark)`
       styleObj.color = `var(--lew-color-${_color}-dark)`
       styleObj.boxShadow = 'none'
       break
@@ -112,24 +111,8 @@ defineExpose({ focus })
         'lew-loading-isShow': (_loading || loading) && !disabled
       }"
     >
-      <lew-icon
-        :size="getIconSize"
-        animation="spin"
-        strokeWidth="2"
-        animationSpeed="fast"
-        type="loader"
-      />
+      <Icon :size="getIconSize" spinning type="loader" />
     </div>
-    <template v-if="iconPosition === 'left'">
-      <slot v-if="$slots.icon" name="icon"> </slot>
-      <lew-icon
-        v-else-if="icon"
-        strokeWidth="2"
-        class="lew-button-icon"
-        :size="getIconSize"
-        :type="icon"
-      />
-    </template>
     <div v-if="$slots.default || text" class="lew-button-content">
       <span class="lew-button-text">
         <template v-if="$slots.default">
@@ -140,16 +123,6 @@ defineExpose({ focus })
         </template>
       </span>
     </div>
-    <template v-if="iconPosition === 'right'">
-      <slot v-if="$slots.icon" name="icon"> </slot>
-      <lew-icon
-        v-else-if="icon"
-        class="lew-button-icon"
-        strokeWidth="2"
-        :size="getIconSize"
-        :type="icon"
-      />
-    </template>
   </button>
 </template>
 
@@ -185,19 +158,27 @@ defineExpose({ focus })
     align-items: center;
     justify-content: center;
   }
+
   .lew-loading-isShow {
     opacity: 1;
   }
+
   .lew-button-content {
     position: relative;
     z-index: 2;
+    font-size: 0px;
   }
 
   .lew-loading-isShow {
     opacity: 1;
   }
 }
-
+.lew-button-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
 .lew-button::after {
   position: absolute;
   left: 0px;
@@ -257,6 +238,10 @@ defineExpose({ focus })
   font-size: var(--lew-form-font-size-mini);
   gap: 2px;
   padding: 0px 10px;
+  .lew-button-text {
+    font-size: var(--lew-form-font-size-mini);
+    gap: 2px;
+  }
   .lew-loading-icon {
     left: 7px;
   }
@@ -266,9 +251,12 @@ defineExpose({ focus })
   min-width: 40px;
   height: calc(var(--lew-form-item-height-small));
   line-height: calc(var(--lew-form-item-height-small));
-  font-size: var(--lew-form-font-size-small);
   gap: 3px;
   padding: 0px 14px;
+  .lew-button-text {
+    font-size: var(--lew-form-font-size-small);
+    gap: 3px;
+  }
   .lew-loading-icon {
     left: 8px;
   }
@@ -278,9 +266,13 @@ defineExpose({ focus })
   min-width: 50px;
   height: calc(var(--lew-form-item-height-medium));
   line-height: calc(var(--lew-form-item-height-medium));
-  font-size: var(--lew-form-font-size-medium);
   gap: 4px;
   padding: 0px 16px;
+  .lew-button-text {
+    font-size: var(--lew-form-font-size-medium);
+    gap: 4px;
+  }
+
   .lew-loading-icon {
     left: 9px;
   }
@@ -290,13 +282,17 @@ defineExpose({ focus })
   min-width: 60px;
   height: calc(var(--lew-form-item-height-large));
   line-height: calc(var(--lew-form-item-height-large));
-  font-size: var(--lew-form-font-size-large);
   gap: 5px;
   padding: 0px 20px;
+  .lew-button-text {
+    font-size: var(--lew-form-font-size-large);
+    gap: 5px;
+  }
   .lew-loading-icon {
     left: 10px;
   }
 }
+
 .lew-button-singleIcon {
   .lew-loading-icon {
     left: 50%;
@@ -304,12 +300,14 @@ defineExpose({ focus })
     transform: translate(-50%, -50%);
   }
 }
+
 .lew-button-size-mini.lew-button-singleIcon {
   min-width: auto;
   padding: 0px;
   width: calc(var(--lew-form-item-height-mini));
   height: calc(var(--lew-form-item-height-mini));
 }
+
 .lew-button-size-small.lew-button-singleIcon {
   min-width: auto;
   padding: 0px;
@@ -368,12 +366,15 @@ defineExpose({ focus })
   pointer-events: none; //鼠标点击不可修改
   opacity: var(--lew-disabled-opacity);
 }
+
 .lew-button-type-text:hover {
   background-color: var(--lew-bgcolor-2) !important;
 }
+
 .lew-button-type-ghost:hover {
   background-color: var(--lew-bgcolor-2) !important;
 }
+
 .lew-button-type-ghost:active {
   background-color: var(--lew-color-normal-light) !important;
 }

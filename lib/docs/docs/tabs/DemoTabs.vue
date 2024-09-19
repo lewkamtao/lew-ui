@@ -32,13 +32,9 @@ const options = ref(
       <lew-alert
         style="margin-top: 20px"
         :size="16"
-        :options="[
-          {
-            type: 'info',
-            title: '提示',
-            content: `值得注意的是，按住Shift，上下滑动滚轮，可以实现横向滑动。`
-          }
-        ]"
+        type="info"
+        title="提示"
+        content="值得注意的是，按住Shift，上下滑动滚轮，可以实现横向滑动。"
       />
     </lew-demo-box>
     <lew-demo-box title="自适应宽度" :code="DemoTabs2Code"> <demo-tabs2 /></lew-demo-box>

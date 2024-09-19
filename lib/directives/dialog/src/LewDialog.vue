@@ -3,7 +3,7 @@ import { ref, watch, onMounted, nextTick } from 'vue'
 import { LewButton, LewFlex } from 'lew-ui'
 import { useMagicKeys } from '@vueuse/core'
 import { dialogProps } from './props'
-import { getStatusIcon } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
 import { useDOMCreate } from 'lew-ui/hooks'
 import type { LewColor } from 'lew-ui'
 
@@ -87,10 +87,7 @@ if (props.closeByEsc) {
           >
             <lew-flex y="start">
               <div class="left">
-                <div
-                  :class="`lew-dialog-icon lew-dialog-icon-${type}`"
-                  v-html="getStatusIcon(type)"
-                />
+                <Icon :type :size="30" />
               </div>
               <div class="right">
                 <header>
@@ -122,14 +119,15 @@ if (props.closeByEsc) {
             </footer>
           </lew-flex>
 
-          <div v-if="layout === 'mini'" class="lew-dialog-box lew-dialog-box-mini" @click.stop>
+          <div
+            v-if="layout === 'mini'"
+            class="lew-dialog-box lew-dialog-box-mini"
+            @click.stop
+          >
             <div class="left">
-              <div
-                :class="`lew-dialog-icon lew-dialog-icon-${type}`"
-                v-html="getStatusIcon(type)"
-              />
+              <Icon :size="24" :type />
             </div>
-            <lew-flex class="right" y="start">
+            <lew-flex class="right">
               <main>
                 <slot name="content" />
               </main>
@@ -284,7 +282,6 @@ if (props.closeByEsc) {
     align-items: center;
 
     .left {
-      margin-top: 6px;
       margin-right: 10px;
       display: flex;
 

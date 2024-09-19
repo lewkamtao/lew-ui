@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { inputTagProps } from './props'
 import { LewInput, LewTag } from 'lew-ui'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, set } from 'lodash-es'
 import { object2class } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const emit = defineEmits(['close', 'change'])
 
@@ -14,6 +15,7 @@ const isFocus = ref(false)
 let isEnter = false
 
 const openInput = () => {
+  if (isFocus.value) return
   isFocus.value = true
   nextTick(() => {
     lewInputRef.value.toFocus()
@@ -101,36 +103,39 @@ const clear = () => {
 <template>
   <div class="lew-input-tag-view" @click="openInput" :class="getInputClassNames">
     <div :style="{ padding: (modelValue || []).length > 0 ? '5px' : '' }" class="lew-input-tag-box">
-      <TransitionGroup name="list">
+      <transition-group name="tag-list">
         <lew-tag
           v-for="(item, index) in modelValue"
           :key="index"
           type="light"
+          style="max-width: 100%"
           :size="size"
           :closable="!readonly"
           @close="delTag(index)"
           >{{ item }}
         </lew-tag>
-      </TransitionGroup>
-      <lew-input
-        v-if="isFocus || (modelValue || []).length === 0"
-        ref="lewInputRef"
-        v-model="inputValue"
-        class="lew-input-tag"
-        :size="size"
-        :readonly="!isFocus"
-        :placeholder="(modelValue || []).length > 0 ? '' : placeholder"
-        @blur="blurFn"
-      />
+        <lew-input
+          v-if="isFocus || (modelValue || []).length === 0"
+          ref="lewInputRef"
+          :auto-width="(modelValue || []).length > 0"
+          v-model="inputValue"
+          class="lew-input-tag"
+          :size="size"
+          :readonly="!isFocus"
+          :placeholder="(modelValue || []).length > 0 ? '' : placeholder"
+          @blur="blurFn"
+        />
+      </transition-group>
+
       <transition name="lew-form-icon-ani">
-        <lew-icon
+        <Icon
           v-if="clearable && (modelValue || []).length > 0 && !readonly"
-          class="lew-form-icon-clear"
+          class="lew-form-icon-close"
           :class="{
-            'lew-form-icon-clear-focus': isFocus
+            'lew-form-icon-close-focus': isFocus
           }"
           :size="getIconSize"
-          type="x"
+          type="close"
           @mousedown.prevent=""
           @click="clear"
         />
@@ -167,6 +172,7 @@ const clear = () => {
     gap: 5px;
     box-sizing: border-box;
     transition: var(--lew-form-transition-bezier);
+    width: 100%;
     :deep() {
       .lew-input-view {
         border-radius: 0px !important;
@@ -181,7 +187,7 @@ const clear = () => {
     box-shadow: none !important;
     margin-left: 2px;
     overflow: hidden;
-    width: auto !important;
+    width: auto;
     :deep() {
       .lew-input-view {
         border-radius: 0px !important;
@@ -195,6 +201,9 @@ const clear = () => {
       }
     }
   }
+  :deep(.lew-input) {
+    padding: 0 !important;
+  }
 }
 
 .lew-input-tag-view:hover {
@@ -205,22 +214,25 @@ const clear = () => {
   outline: var(--lew-form-outline);
   background-color: var(--lew-form-bgcolor-focus);
 
-  :deep() {
-    .lew-tag {
-      background-color: var(--lew-color-primary-light) !important;
-    }
+  :deep(.lew-tag) {
+    background-color: var(--lew-color-primary-light) !important;
   }
 }
 
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.15s ease-in-out;
+.tag-list-move,
+.tag-list-enter-active,
+.tag-list-leave-active {
+  transition: var(--lew-form-transition-bezier);
 }
 
-.list-enter-from,
-.list-leave-to {
+.tag-list-enter-from,
+.tag-list-leave-to {
   opacity: 0;
-  transform: translateX(-5px);
+  transform: translateX(-12px);
+}
+
+.tag-list-leave-active {
+  position: absolute !important;
 }
 
 .lew-input-tag-view-size-small {
@@ -237,7 +249,7 @@ const clear = () => {
 
 .lew-input-tag-view-size-medium {
   .lew-input-tag-box {
-    padding: var(--lew-form-input-padding-small);
+    padding: var(--lew-form-input-padding-medium);
     font-size: var(--lew-form-font-size-medium);
     line-height: var(--lew-form-input-line-height-medium);
     min-height: var(--lew-form-item-height-medium);
@@ -249,7 +261,7 @@ const clear = () => {
 
 .lew-input-tag-view-size-large {
   .lew-input-tag-box {
-    padding: var(--lew-form-input-padding-small);
+    padding: var(--lew-form-input-padding-large);
     font-size: var(--lew-form-font-size-large);
     line-height: var(--lew-form-input-line-height-large);
     min-height: var(--lew-form-item-height-large);

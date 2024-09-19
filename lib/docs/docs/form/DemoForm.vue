@@ -11,6 +11,7 @@ import {
   DemoForm5,
   DemoForm5Code
 } from './demo'
+import { Send } from 'lucide-vue-next'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
@@ -22,14 +23,35 @@ const options = ref(
   })
 )
 
-const { push } = useRouter()
+const toFormEngine = () => {
+  window.open('/#/form-engine')
+}
 </script>
 
 <template>
   <div class="demo-wrapper">
     <lew-title>Form</lew-title>
     <p class="sub-title">这是一个基于Yup实现的表单校验引擎。</p>
-
+    <br />
+    <lew-alert type="info">
+      <template #title>特别的</template>
+      <template #content>
+        我们重磅推出快速构建表单的引擎，可以根据自己的需求快速定制表单。<br /><br />
+        该引擎的
+        <strong>强校验</strong>
+        功能能够提高数据的准确性和可靠性。<br />
+        同时，
+        <strong>强布局</strong>
+        功能具有较强的约束性，让开发者不需要为布局而烦恼。<br /><br />
+        现邀请您体验新一代的表单构建方式，感受<strong>强校验和强布局</strong>带来的便捷和效率提升。
+      </template>
+      <template #footer>
+        <lew-button @click="toFormEngine" round size="small">
+          立即前往
+          <Send :size="14" />
+        </lew-button>
+      </template>
+    </lew-alert>
     <lew-demo-box title="普通表单" :code="DemoForm1Code">
       <demo-form1 />
     </lew-demo-box>
@@ -47,7 +69,7 @@ const { push } = useRouter()
       <template #desc>
         <div>
           你可以通过
-          <lew-mark cursor="pointer" @click="push('/form-engine')">表单引擎</lew-mark>
+          <lew-mark cursor="pointer" @click="toFormEngine">表单引擎</lew-mark>
           进行快捷布局表单
         </div>
       </template>

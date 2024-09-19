@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { LewFlex, LewIcon, LewEmpty } from 'lew-ui/components'
+import { LewFlex, LewEmpty } from 'lew-ui/components'
 import tippy from 'tippy.js'
 import LewContextMenu from './LewContextMenu.vue'
 import { getUniqueId } from 'lew-ui/utils'
 import { ContextMenus, contextMenuProps, initLewContextMenu } from './index'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const props = defineProps(contextMenuProps)
 
@@ -53,11 +54,15 @@ const initTippy = () => {
       zIndex: 9999,
       content: menuDom
     })
-    window.LewContextMenu.menuInstance[uniqueId].popper.children[0].setAttribute(
-      'data-lew',
-      'popover'
-    )
+    window.LewContextMenu.menuInstance[
+      uniqueId
+    ].popper.children[0].setAttribute('data-lew', 'popover')
   })
+}
+
+const renderIcon = ({ renderIcon }: any) => {
+  if (renderIcon) return renderIcon()
+  return ''
 }
 
 onMounted(() => {
@@ -84,23 +89,27 @@ onMounted(() => {
           :style="{ 'animation-delay': index * 15 + 'ms' }"
         >
           <div class="lew-context-menu-label">
-            <lew-icon
-              v-if="options.findIndex((item) => item.icon) !== -1"
-              :style="{ opacity: item.icon ? 1 : 0 }"
-              size="14"
-              :type="item.icon"
-            ></lew-icon>
-            <div :title="item.label" class="lew-context-menu-label-text">{{ item.label }}</div>
+            <renderIcon v-if="item.renderIcon" :renderIcon="item.renderIcon" />
+            <div :title="item.label" class="lew-context-menu-label-text">
+              {{ item.label }}
+            </div>
           </div>
-          <lew-icon
+          <Icon
             v-if="(item.children || []).length > 0"
-            size="14"
+            :size="14"
             type="chevron-right"
-          ></lew-icon>
+          ></Icon>
         </div>
       </div>
     </template>
-    <lew-empty width="120px" padding="5px" font-size="12px" v-else type="search" title="暂无操作" />
+    <lew-empty
+      width="120px"
+      padding="5px"
+      font-size="12px"
+      v-else
+      type="search"
+      title="暂无操作"
+    />
   </lew-flex>
 </template>
 

@@ -268,13 +268,15 @@ onUnmounted(() => {
     cursor: pointer;
     flex-shrink: 0;
     height: calc(100% - 6px);
-    transition: all 0.25s;
+    transition: var(--lew-form-transition-ease);
   }
 
   .lew-tabs-item:hover {
     background-color: var(--lew-form-bgcolor-hover);
   }
-
+  .lew-tabs-item-active {
+    background-color: rgba(0, 0, 0, 0);
+  }
   .lew-tabs-item-active:hover {
     background-color: rgba(0, 0, 0, 0);
   }
@@ -295,7 +297,7 @@ onUnmounted(() => {
   }
 
   .lew-tabs-item-isInit {
-    transition: var(--lew-form-transition-ease);
+    transition: var(--lew-form-transition-bezier);
   }
 }
 

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { LewPopover, LewFlex, LewButton, LewIcon, LewTooltip, LewTextTrim } from 'lew-ui'
+import { LewPopover, LewFlex, LewButton, LewTooltip, LewTextTrim } from 'lew-ui'
 import { object2class } from 'lew-ui/utils'
 import type { CascaderOptions } from './props'
 import { cascaderProps } from './props'
 import { UseVirtualList } from '@vueuse/components'
 import { cloneDeep } from 'lodash-es'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 // 格式化 获取 path
 const formatTree = (
@@ -107,7 +108,10 @@ function findAndAddChildrenByValue(
   return []
 }
 // 通过值查找子集
-function findChildrenByValue(tree: CascaderOptions[], value: string): CascaderOptions[] {
+function findChildrenByValue(
+  tree: CascaderOptions[],
+  value: string
+): CascaderOptions[] {
   for (const node of tree) {
     if (node.value === value) {
       return node.children || []
@@ -155,7 +159,8 @@ const selectItem = async (item: CascaderOptions, level: number) => {
     if (props.onload && !item.isLeaf) {
       item.loading = true
       state.okLoading = true
-      const new_options = (await props.onload(cloneDeep({ ...item, level }))) || []
+      const new_options =
+        (await props.onload(cloneDeep({ ...item, level }))) || []
       let _tree = findAndAddChildrenByValue(
         cloneDeep(state.optionsTree),
         cloneDeep(item.value),
@@ -278,7 +283,9 @@ const hideHandle = () => {
 
 // 获取宽度
 const getCascaderWidth = computed(() => {
-  const _hasChildOptions = state.optionsGroup.filter((e) => e && e.length > 0).length
+  const _hasChildOptions = state.optionsGroup.filter(
+    (e) => e && e.length > 0
+  ).length
   if (_hasChildOptions > 1) {
     return _hasChildOptions * 200
   }
@@ -286,7 +293,10 @@ const getCascaderWidth = computed(() => {
 })
 
 const getLabel = computed(() => {
-  const item = findObjectByValue(state.optionsTree, cascaderValue.value as string)
+  const item = findObjectByValue(
+    state.optionsTree,
+    cascaderValue.value as string
+  )
   return item?.labelPaths || []
 })
 
@@ -320,9 +330,13 @@ defineExpose({ show, hide })
     @hide="hideHandle"
   >
     <template #trigger>
-      <div ref="lewCascaderRef" class="lew-cascader" :class="getCascaderClassName">
+      <div
+        ref="lewCascaderRef"
+        class="lew-cascader"
+        :class="getCascaderClassName"
+      >
         <transition name="lew-form-icon-ani">
-          <lew-icon
+          <Icon
             v-if="!(clearable && getLabel && getLabel.length > 0)"
             :size="getIconSize"
             type="chevron-down"
@@ -331,19 +345,23 @@ defineExpose({ show, hide })
         </transition>
 
         <transition name="lew-form-icon-ani">
-          <lew-icon
+          <Icon
             v-if="clearable && getLabel && getLabel.length > 0 && !readonly"
             :size="getIconSize"
-            type="x"
-            class="lew-form-icon-clear"
+            type="close"
+            class="lew-form-icon-close"
             :class="{
-              'lew-form-icon-clear-focus': state.visible
+              'lew-form-icon-close-focus': state.visible
             }"
             @click.stop="clearHandle"
           />
         </transition>
 
-        <div v-show="getLabel && getLabel.length > 0" :style="getValueStyle" class="value">
+        <div
+          v-show="getLabel && getLabel.length > 0"
+          :style="getValueStyle"
+          class="value"
+        >
           <template v-if="showAllLevels">
             <lew-text-trim :text="getLabel.join(' / ')" />
           </template>
@@ -351,7 +369,10 @@ defineExpose({ show, hide })
             <span>{{ getLabel[getLabel.length - 1] }}</span>
           </template>
         </div>
-        <div v-show="!getLabel || (getLabel && getLabel.length === 0)" class="placeholder">
+        <div
+          v-show="!getLabel || (getLabel && getLabel.length === 0)"
+          class="placeholder"
+        >
           {{ placeholder }}
         </div>
       </div>
@@ -367,7 +388,7 @@ defineExpose({ show, hide })
         <slot name="header"></slot>
         <div
           class="lew-cascader-options-box"
-          :style="{ height: free ? 'calc(100% - 45px)' : '100%' }"
+          :style="{ height: free ? 'calc(100% - 48px)' : '100%' }"
         >
           <template v-for="(oItem, oIndex) in state.optionsGroup" :key="oIndex">
             <use-virtual-list
@@ -380,21 +401,29 @@ defineExpose({ show, hide })
               :height="`${38 * oItem.length}`"
               :style="{
                 zIndex: 20 - oIndex,
-                transform: oItem.length > 0 ? `translateX(${200 * oIndex}px)` : ''
+                transform:
+                  oItem.length > 0 ? `translateX(${200 * oIndex}px)` : ''
               }"
             >
               <template #default="{ data: templateProps }">
-                <div class="lew-cascader-item-padding" :style="{ height: 38 + 'px' }">
+                <div
+                  class="lew-cascader-item-padding"
+                  :style="{ height: 38 + 'px' }"
+                >
                   <div
                     class="lew-cascader-item"
                     :class="{
                       'lew-cascader-item-disabled': templateProps.disabled,
-                      'lew-cascader-item-hover': state.activeLabels.includes(templateProps.label),
+                      'lew-cascader-item-hover': state.activeLabels.includes(
+                        templateProps.label
+                      ),
                       'lew-cascader-item-active': free
                         ? state.activeLabels.includes(templateProps.label) &&
                           state.tobeLabels.includes(templateProps.label)
                         : state.activeLabels.includes(templateProps.label),
-                      'lew-cascader-item-tobe': state.tobeLabels.includes(templateProps.label),
+                      'lew-cascader-item-tobe': state.tobeLabels.includes(
+                        templateProps.label
+                      ),
                       'lew-cascader-item-selected':
                         getLabel &&
                         getLabel.includes(templateProps.label) &&
@@ -415,17 +444,17 @@ defineExpose({ show, hide })
                       :text="templateProps.label"
                       :delay="[500, 0]"
                     />
-                    <lew-icon
+                    <Icon
                       v-if="templateProps.loading"
-                      size="14px"
+                      :size="14"
                       animation="spin"
                       animationSpeed="fast"
                       class="lew-cascader-loading-icon"
                       type="loader"
                     />
-                    <lew-icon
+                    <Icon
                       v-else-if="!templateProps.isLeaf"
-                      size="14px"
+                      :size="16"
                       class="lew-cascader-icon"
                       type="chevron-right"
                     />
@@ -436,8 +465,21 @@ defineExpose({ show, hide })
           </template>
         </div>
         <lew-flex v-if="free" x="end" class="lew-cascader-control">
-          <lew-button round color="gray" type="text" size="small" @click="cancel">取消</lew-button>
-          <lew-button :disabled="state.okLoading" round type="light" size="small" @click="ok()">
+          <lew-button
+            round
+            color="gray"
+            type="text"
+            size="small"
+            @click="cancel"
+            >取消</lew-button
+          >
+          <lew-button
+            :disabled="state.okLoading"
+            round
+            type="light"
+            size="small"
+            @click="ok()"
+          >
             确认
           </lew-button>
         </lew-flex>
@@ -608,7 +650,8 @@ defineExpose({ show, hide })
 
 .lew-cascader-item:hover {
   .lew-checkbox:deep(.icon-checkbox-box) {
-    border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
+    border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover)
+      solid;
     outline: var(--lew-form-outline);
     background: var(--lew-form-bgcolor);
   }
@@ -643,7 +686,7 @@ defineExpose({ show, hide })
   width: 100%;
   box-sizing: border-box;
   min-width: 200px;
-  height: 300px;
+  height: 320px;
   overflow: hidden;
   transition: var(--lew-form-transition-bezier);
   user-select: none;
@@ -793,7 +836,7 @@ defineExpose({ show, hide })
 
   .lew-cascader-control {
     border-top: var(--lew-pop-border);
-    height: 45px;
+    height: 48px;
     padding-right: 10px;
   }
 }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { any2px } from 'lew-ui/utils'
 import { expandProps } from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const props = defineProps(expandProps)
 
@@ -29,12 +30,12 @@ onMounted(() => {
   >
     <slot />
     <lew-flex @click="collapse = !collapse" gap="5" v-if="collapseHeight" class="expand-btn">
-      <lew-icon
+      <Icon
         :style="{ transform: collapse ? 'rotate(0deg)' : 'rotate(180deg)' }"
         class="expand-icon"
         type="chevron-down"
-        size="14"
-      ></lew-icon>
+        :size="14"
+      ></Icon>
       {{ collapse ? '展开更多' : '收起' }}
     </lew-flex>
   </div>

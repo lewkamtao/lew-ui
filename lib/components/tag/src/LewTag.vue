@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { object2class, getColorType } from 'lew-ui/utils'
-import { LewIcon } from 'lew-ui'
 import { tagProps } from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const props = defineProps(tagProps)
 const emit = defineEmits(['close'])
@@ -45,7 +45,7 @@ const getStyle = computed(() => {
       break
     case 'ghost':
       styleObj.backgroundColor = 'transparent'
-      styleObj.border = `1px solid var(--lew-color-${_color})`
+      styleObj.border = `1px solid var(--lew-color-${_color}-dark)`
       styleObj.color = `var(--lew-color-${_color}-dark)`
       styleObj.boxShadow = 'none'
       break
@@ -65,13 +65,14 @@ const getStyle = computed(() => {
       <slot name="left"></slot>
     </div>
     <div class="lew-tag-value">
-      <slot></slot>
+      <lew-text-trim v-if="text" :text="text"></lew-text-trim>
+      <lew-text-trim v-else><slot /></lew-text-trim>
     </div>
     <div class="lew-tag-right">
       <slot name="right"></slot>
     </div>
     <div v-if="closable" class="lew-tag-close" @click.stop="close">
-      <lew-icon :size="getSize" type="x" />
+      <Icon :size="getSize" type="close" />
     </div>
   </div>
 </template>
@@ -85,11 +86,13 @@ const getStyle = computed(() => {
   box-sizing: border-box;
   overflow: hidden;
   flex-shrink: 0;
+
   .lew-tag-value {
     font-weight: normal;
     padding: 0px 3px;
     box-sizing: border-box;
     white-space: nowrap;
+    max-width: 250px;
   }
 
   .lew-tag-close {

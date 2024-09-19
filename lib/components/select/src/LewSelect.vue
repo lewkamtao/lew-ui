@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
-import { LewPopover, LewFlex, LewIcon, LewTooltip } from 'lew-ui'
+import { LewPopover, LewFlex,  LewTooltip } from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
 import { UseVirtualList } from '@vueuse/components'
 import type { SelectOptions } from './props'
 import { selectProps } from './props'
 import { cloneDeep } from 'lodash-es'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -205,20 +206,20 @@ defineExpose({ show, hide })
   >
     <template #trigger>
       <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
-        <lew-icon
+        <Icon
           :size="getIconSize"
           type="chevron-down"
           class="icon-select"
           :class="{ 'icon-select-hide': clearable && state.keyword }"
         />
         <transition name="lew-form-icon-ani">
-          <lew-icon
+          <Icon
             v-if="clearable && state.keyword && !readonly"
             :size="getIconSize"
-            type="x"
-            class="lew-form-icon-clear"
+            type="close"
+            class="lew-form-icon-close"
             :class="{
-              'lew-form-icon-clear-focus': state.visible
+              'lew-form-icon-close-focus': state.visible
             }"
             @click.stop="clearHandle"
           />
@@ -280,10 +281,10 @@ defineExpose({ show, hide })
                     :delay="[500, 0]"
                     class="lew-select-label"
                   />
-                  <lew-icon
+                  <Icon
                     v-if="getChecked(templateProps.value) && showCheckIcon"
                     class="icon-check"
-                    size="14"
+                    :size="14"
                     type="check"
                   />
                 </div>

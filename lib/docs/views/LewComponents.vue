@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router'
 import TheSiderbar from '../layout/TheSiderbar.vue'
 import LewRightNav from '../layout/LewRightNav.vue'
 import type { MenuOptions } from 'lew-ui'
+import { Menu } from 'lucide-vue-next'
 
 const isShowSider = ref(false)
 const route = useRoute()
@@ -14,7 +15,7 @@ onMounted(() => {
     LewDialog.info({
       title: '温馨提示',
       content:
-        '当前组件库仍处于开发测试状态，请勿用于生产环境，当前文档仍有很多地方未完善，持续更新中，敬请期待。',
+        '当前组件库仍处于开发测试状态，请勿用于生产环境，当前文档仍有很多地方未完善，持续更New中，敬请期待。',
       cancelText: '',
       okText: '知道了',
       ok: () => {
@@ -75,7 +76,9 @@ const options: MenuOptions[] = [
       },
       {
         label: 'Icon',
-        value: '/icon'
+        value: '/icon',
+        tagText: 'Deprecated',
+        tagColor: 'black'
       }
     ]
   },
@@ -237,7 +240,9 @@ const options: MenuOptions[] = [
     children: [
       {
         label: 'Alert',
-        value: '/Alert'
+        value: '/Alert',
+        tagText: 'Refactor',
+        tagColor: 'info'
       },
       {
         label: 'Message',
@@ -298,8 +303,12 @@ const options: MenuOptions[] = [
 
 <template>
   <div class="container">
-    <div class="mb-btn" :class="{ 'mb-btn-open': isShowSider }" @click="isShowSider = !isShowSider">
-      <lew-icon type="menu" size="24px" />
+    <div
+      class="mb-btn"
+      :class="{ 'mb-btn-open': isShowSider }"
+      @click="isShowSider = !isShowSider"
+    >
+      <Menu :size="24" />
     </div>
     <div class="sider" :class="{ 'sider-open': isShowSider }">
       <the-siderbar :options="options" />

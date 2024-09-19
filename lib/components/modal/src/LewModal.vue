@@ -1,10 +1,11 @@
 <script lang="ts" setup name="Modal">
 import { useMagicKeys, useMouse } from '@vueuse/core'
 import { any2px } from 'lew-ui/utils'
-import { LewFlex, LewButton, LewIcon } from 'lew-ui'
+import { LewFlex, LewButton,  } from 'lew-ui'
 import { useDOMCreate } from '../../../hooks'
 import { LewTextTrim } from '../../text-trim'
 import { modalProps } from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const { x, y } = useMouse()
 const { Escape } = useMagicKeys()
@@ -15,7 +16,6 @@ const props = defineProps(modalProps)
 const emit = defineEmits(['ok', 'cancel', 'close'])
 
 const visible: Ref<boolean | undefined> = defineModel('visible')
-const transformOrigin = ref('0 0')
 
 const maskClick = () => {
   if (props.closeOnClickOverlay) {
@@ -43,15 +43,6 @@ const cancel = () => {
   emit('cancel')
 }
 
-watch(
-  () => visible.value,
-  (newVal) => {
-    if (newVal) {
-      transformOrigin.value = `${x.value}px ${y.value}px`
-    }
-  }
-)
-
 if (props.closeByEsc) {
   watch(Escape, (v) => {
     const dialogEl = document.getElementById('lew-dialog')
@@ -66,12 +57,7 @@ if (props.closeByEsc) {
 
 <template>
   <teleport to="#lew-modal">
-    <div
-      :style="{
-        '--lew-modal-transform-origin': transformOrigin
-      }"
-      class="lew-modal-container"
-    >
+    <div class="lew-modal-container">
       <transition name="lew-modal-mask">
         <div v-if="visible" class="lew-modal-mask"></div>
       </transition>
@@ -83,7 +69,7 @@ if (props.closeByEsc) {
             </div>
             <lew-flex v-else-if="title" mode="between" y="center" class="header">
               <lew-text-trim class="title" :text="title" />
-              <lew-icon size="18" class="lew-form-icon-clear" type="x" @click="close" />
+              <Icon :size="18" class="lew-form-icon-close" type="close" @click="close" />
             </lew-flex>
 
             <slot></slot>
@@ -157,10 +143,10 @@ if (props.closeByEsc) {
         font-size: 16px;
         font-weight: bold;
       }
-      .lew-form-icon-clear {
+      .lew-form-icon-close {
         right: 15px;
       }
-      .lew-form-icon-clear:hover {
+      .lew-form-icon-close:hover {
         background-color: var(--lew-bgcolor-5);
       }
     }
@@ -182,7 +168,7 @@ if (props.closeByEsc) {
 
 .lew-modal-mask-enter-active,
 .lew-modal-mask-leave-active {
-  transition: all 0.25s;
+  transition: var(--lew-form-transition-ease);
 }
 
 .lew-modal-mask-enter-from,
@@ -192,15 +178,12 @@ if (props.closeByEsc) {
 
 .lew-modal-enter-active,
 .lew-modal-leave-active {
-  transition:
-    opacity 0.4s cubic-bezier(0.3, 1.3, 0.3, 1),
-    transform 0.4s cubic-bezier(0.3, 1.3, 0.3, 1);
-  transform-origin: var(--lew-modal-transform-origin);
+  transition: var(--lew-form-transition-bezier);
 }
 
 .lew-modal-leave-to,
 .lew-modal-enter-from {
   opacity: 0;
-  transform: scale(0.2);
+  transform: scale(0.7);
 }
 </style>

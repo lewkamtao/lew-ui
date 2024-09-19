@@ -6,6 +6,7 @@ import { dateProps } from './props'
 import dayjs from 'dayjs'
 import { object2class } from 'lew-ui/utils'
 import { LewFlex, LewButton } from 'lew-ui'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const emit = defineEmits(['change'])
 const props = defineProps(dateProps)
@@ -94,9 +95,25 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
     <lew-flex x="start" mode="between" class="lew-date-control">
       <div class="lew-date-control-left">
         <!-- 上一年 -->
-        <lew-button type="light" color="gray" size="small" icon="chevrons-left" @click="prveYear" />
+        <lew-button
+          type="light"
+          color="gray"
+          size="small"
+          single-icon
+          @click="prveYear"
+        >
+          <Icon type="chevrons-left" />
+        </lew-button>
         <!-- 上一月 -->
-        <lew-button type="light" color="gray" size="small" icon="chevron-left" @click="prveMonth" />
+        <lew-button
+          type="light"
+          color="gray"
+          size="small"
+          single-icon
+          @click="prveMonth"
+        >
+          <Icon type="chevron-left" />
+        </lew-button>
       </div>
       <!-- 日期 -->
       <div class="cur-date">
@@ -110,17 +127,21 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
           type="light"
           color="gray"
           size="small"
-          icon="chevron-right"
+          single-icon
           @click="nextMonth"
-        />
+        >
+          <Icon type="chevron-right" />
+        </lew-button>
         <!-- 下一年 -->
         <lew-button
           type="light"
           color="gray"
           size="small"
-          icon="chevrons-right"
+          single-icon
           @click="nextYear"
-        />
+        >
+          <Icon type="chevrons-right" />
+        </lew-button>
       </div>
     </lew-flex>
     <div class="lew-date-box">

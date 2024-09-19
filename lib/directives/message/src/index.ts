@@ -1,5 +1,5 @@
-import { getStatusIcon } from 'lew-ui/utils'
 import '../styles/index.scss'
+import { getIconInnerHTML } from 'lew-ui/utils'
 
 type MessageFnOptions = {
   id: string
@@ -23,27 +23,42 @@ const showMessage = ({ type, e }: MessageOptions) => {
   const { id, content, duration } = e
 
   const messageContainer: any = document.getElementById('lew-message')
-  const hasMessageById = id ? document.getElementById(`message-id-${id}`) : false
+  const hasMessageById = id
+    ? document.getElementById(`message-id-${id}`)
+    : false
   const messageElement = hasMessageById || document.createElement('div')
-  messageElement.innerHTML = `${getStatusIcon(type)}<div class="content">${content || e}</div>`
+
+  messageElement.innerHTML = `${getIconInnerHTML({ type, strokeWidth: type === 'loading' ? 2.5 : undefined, spinning: type === 'loading' })}<div class="content">${content || e}</div>`
 
   if (!hasMessageById) {
     if (id) {
       messageElement.setAttribute('id', `message-id-${id}`)
     }
-    messageContainer?.appendChild(messageElement, messageContainer?.childNodes[0])
+    messageContainer?.appendChild(
+      messageElement,
+      messageContainer?.childNodes[0]
+    )
   } else {
     clearTimeout(LewMessage.timer[id])
   }
 
-  messageElement.setAttribute('class', `message message-${type} message-id-${id}`)
+  messageElement.setAttribute(
+    'class',
+    `message message-${type} message-id-${id}`
+  )
 
   setTimeout(() => {
     nextTick(() => {
-      messageElement.setAttribute('class', `message message-${type} message-show`)
+      messageElement.setAttribute(
+        'class',
+        `message message-${type} message-show`
+      )
       LewMessage.timer[id] = setTimeout(
         () => {
-          messageElement.setAttribute('class', `message message-${type} message-hidden`)
+          messageElement.setAttribute(
+            'class',
+            `message message-${type} message-hidden`
+          )
           setTimeout(() => {
             if (messageElement) messageContainer?.removeChild(messageElement)
           }, 250)
@@ -85,7 +100,10 @@ const LewMessage: any = {
     }
   },
 
-  request: async ({ loadingMessage }: { loadingMessage: string }, asyncFn: Function) => {
+  request: async (
+    { loadingMessage }: { loadingMessage: string },
+    asyncFn: Function
+  ) => {
     try {
       // 显示loading消息
       LewMessage.loading({
@@ -112,7 +130,9 @@ const LewMessage: any = {
             const endTime = new Date().getTime()
             const delay = 250
             if (endTime - startTime < delay) {
-              await new Promise((resolve) => setTimeout(resolve, delay - (endTime - startTime)))
+              await new Promise((resolve) =>
+                setTimeout(resolve, delay - (endTime - startTime))
+              )
             }
             LewMessage.close({ id: 'request-loading' })
             // 显示success消息
@@ -123,7 +143,13 @@ const LewMessage: any = {
           }
         )
         .catch(
-          ({ content = '加载失败！', duration = 3000 }: { content: string; duration: number }) => {
+          ({
+            content = '加载失败！',
+            duration = 3000
+          }: {
+            content: string
+            duration: number
+          }) => {
             // 隐藏loading消息
             LewMessage.close({ id: 'request-loading' })
             // 显示success消息
@@ -150,11 +176,17 @@ const LewMessage: any = {
   timer: {} as any
 }
 
-LewMessage.warning = (e: MessageFnOptions) => LewMessage.message({ type: 'warning', e })
-LewMessage.error = (e: MessageFnOptions) => LewMessage.message({ type: 'error', e })
-LewMessage.info = (e: MessageFnOptions) => LewMessage.message({ type: 'info', e })
-LewMessage.normal = (e: MessageFnOptions) => LewMessage.message({ type: 'normal', e })
-LewMessage.success = (e: MessageFnOptions) => LewMessage.message({ type: 'success', e })
-LewMessage.loading = (e: MessageFnOptions) => LewMessage.message({ type: 'loading', e })
+LewMessage.warning = (e: MessageFnOptions) =>
+  LewMessage.message({ type: 'warning', e })
+LewMessage.error = (e: MessageFnOptions) =>
+  LewMessage.message({ type: 'error', e })
+LewMessage.info = (e: MessageFnOptions) =>
+  LewMessage.message({ type: 'info', e })
+LewMessage.normal = (e: MessageFnOptions) =>
+  LewMessage.message({ type: 'normal', e })
+LewMessage.success = (e: MessageFnOptions) =>
+  LewMessage.message({ type: 'success', e })
+LewMessage.loading = (e: MessageFnOptions) =>
+  LewMessage.message({ type: 'loading', e })
 
 export default LewMessage

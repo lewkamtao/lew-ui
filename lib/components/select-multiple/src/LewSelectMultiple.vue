@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
-import { LewPopover, LewIcon, LewTooltip } from 'lew-ui'
+import { LewPopover, LewTooltip } from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
 import type { SelectMultipleOptions } from './props'
 import { selectMultipleProps } from './props'
 import { UseVirtualList } from '@vueuse/components'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -129,7 +130,8 @@ const getLabels = computed(() => {
     const labels =
       selectValue.value &&
       selectValue.value.map((v: number | string) => {
-        return state.options.find((e: SelectMultipleOptions) => v === e.value)?.label
+        return state.options.find((e: SelectMultipleOptions) => v === e.value)
+          ?.label
       })
     return labels || []
   }
@@ -214,7 +216,7 @@ defineExpose({ show, hide })
   >
     <template #trigger>
       <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
-        <lew-icon
+        <Icon
           :size="getIconSize"
           type="chevron-down"
           class="icon-select"
@@ -223,13 +225,13 @@ defineExpose({ show, hide })
           }"
         />
         <transition name="lew-form-icon-ani">
-          <lew-icon
+          <Icon
             v-if="clearable && getLabels && getLabels.length > 0 && !readonly"
             :size="getIconSize"
-            type="x"
-            class="lew-form-icon-clear"
+            type="close"
+            class="lew-form-icon-close"
             :class="{
-              'lew-form-icon-clear-focus': state.visible
+              'lew-form-icon-close-focus': state.visible
             }"
             @click.stop="clearHandle"
           />
@@ -244,7 +246,7 @@ defineExpose({ show, hide })
             wrap
             class="value"
           >
-            <TransitionGroup name="list">
+            <transition-group name="list">
               <lew-tag
                 v-for="(item, index) in getLabels"
                 :key="index"
@@ -255,7 +257,7 @@ defineExpose({ show, hide })
               >
                 {{ item }}
               </lew-tag>
-            </TransitionGroup>
+            </transition-group>
           </lew-flex>
           <template v-else>
             <lew-popover
@@ -322,7 +324,10 @@ defineExpose({ show, hide })
               <lew-empty title="暂无结果" />
             </lew-flex>
           </template>
-          <div v-if="searchable && state.options && state.options.length > 0" class="result-count">
+          <div
+            v-if="searchable && state.options && state.options.length > 0"
+            class="result-count"
+          >
             共
             {{ numFormat(state.options && state.options.length) }}
             条结果
@@ -341,7 +346,10 @@ defineExpose({ show, hide })
           >
             <template #default="{ data: templateProps }">
               <!-- you can get current item of list here -->
-              <div :style="{ height: itemHeight + 'px' }" @click="selectHandle(templateProps)">
+              <div
+                :style="{ height: itemHeight + 'px' }"
+                @click="selectHandle(templateProps)"
+              >
                 <slot
                   v-if="$slots.item"
                   name="item"
@@ -669,7 +677,8 @@ defineExpose({ show, hide })
 .lew-select-item:hover {
   .lew-checkbox {
     .icon-checkbox-box {
-      border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
+      border: var(--lew-form-border-width)
+        var(--lew-checkbox-border-color-hover) solid;
       outline: var(--lew-form-outline);
       background: var(--lew-form-bgcolor);
     }

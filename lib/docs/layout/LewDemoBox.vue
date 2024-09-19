@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { LewCollapseTransition } from 'lew-ui'
+import { ChevronDown, ChevronUp } from 'lucide-vue-next'
 
 defineProps({
   title: {
@@ -29,7 +30,12 @@ const isShowCode = ref(false)
   <div class="demo-box">
     <lew-title :id="title" :size="18" class="demo-docs-title"
       >{{ title }}
-      <lew-tag v-if="tag" type="light" color="blue" style="margin: 2px 0px 0px 5px">
+      <lew-tag
+        v-if="tag"
+        type="light"
+        color="blue"
+        style="margin: 2px 0px 0px 5px"
+      >
         {{ tag }}
       </lew-tag>
     </lew-title>
@@ -49,8 +55,8 @@ const isShowCode = ref(false)
       </LewCollapseTransition>
       <div class="show-bar" @click="isShowCode = !isShowCode">
         <div class="icon">
-          <lew-icon v-if="!isShowCode" :size="16" type="chevron-down" />
-          <lew-icon v-else :size="16" type="chevron-up" />
+          <ChevronDown v-if="!isShowCode" :size="16" />
+          <ChevronUp v-else :size="16" />
         </div>
         {{ isShowCode ? '关闭' : '显示源码' }}
       </div>
@@ -81,6 +87,7 @@ const isShowCode = ref(false)
     overflow-y: auto;
     overflow-x: hidden;
     border-top: var(--lew-border-1);
+    max-height: 500px;
 
     .pre-box {
       border-radius: var(--lew-border-radius-small);

@@ -13,7 +13,6 @@ const value = ref('')
   >
     <template #empty>
       <div class="empty">
-        <lew-icon size="30" type="search" />
         暂无匹配的部门
       </div>
     </template>

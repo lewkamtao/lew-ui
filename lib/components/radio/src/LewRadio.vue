@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { object2class } from 'lew-ui/utils'
 import { radioProps } from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const props = defineProps(radioProps)
 
@@ -42,7 +43,7 @@ const getRadioClassName = computed(() => {
 <template>
   <label class="lew-radio" :class="getRadioClassName">
     <div v-if="iconable || (!iconable && !block)" class="icon-radio-box">
-      <lew-icon stroke-width="4" class="icon-radio" type="check" :size="getIconSize" />
+      <Icon :stroke-width="4" class="icon-radio" type="check" :size="getIconSize" />
     </div>
     <input v-show="false" type="radio" :checked="checked" @change="setChecked" />
     <span v-if="label" class="lew-radio-label"> {{ label }}</span>

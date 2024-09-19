@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { stepsProps } from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
 defineProps(stepsProps)
 const stepsValue: Ref<number | undefined> = defineModel()
 </script>
@@ -19,34 +20,33 @@ const stepsValue: Ref<number | undefined> = defineModel()
       }"
     >
       <div class="lew-steps-item-index">
-        <lew-icon
+        <Icon
           v-if="index === (stepsValue || 1) - 1 && status === 'loading'"
-          size="16"
-          stroke-width="3"
-          animation="spin"
-          animationSpeed="fast"
+          :size="16"
+          :stroke-width="3"
+          spinning
           type="loader"
         />
-        <lew-icon
+        <Icon
           v-else-if="index === (stepsValue || 1) - 1 && status === 'warning'"
-          size="16"
-          stroke-width="3"
+          :size="16"
+          :stroke-width="3"
           type="alert-circle"
         />
-        <lew-icon
+        <Icon
           v-else-if="index === (stepsValue || 1) - 1 && status === 'error'"
-          size="16"
-          stroke-width="3"
-          type="x"
+          :size="16"
+          :stroke-width="3"
+          type="close"
         />
 
-        <lew-icon
+        <Icon
           :style="{ color: 'var(--lew-color-primary)' }"
           v-else-if="
             index < (stepsValue || 1) - 1 || (index === (stepsValue || 1) - 1 && status === 'done')
           "
-          size="16"
-          stroke-width="3"
+          :size="16"
+          :stroke-width="3"
           type="check"
         />
         <span v-else class="index">{{ index + 1 }}</span>

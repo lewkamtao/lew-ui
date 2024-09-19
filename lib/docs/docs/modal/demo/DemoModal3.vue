@@ -32,7 +32,6 @@ const ok = () => {
     <template #footer>
       <lew-flex x="end" y="center" class="footer">
         <lew-flex x="start" gap="5" class="tips">
-          <lew-icon size="15" type="alert-circle" />
           提交后立即生效
         </lew-flex>
         <lew-flex x="end" y="center">

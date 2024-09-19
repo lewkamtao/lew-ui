@@ -22,7 +22,10 @@ export const initLewContextMenu = () => {
     }),
     menuInstance: {}
   }
-  window.LewContextMenu.instance.popper.children[0].setAttribute('data-lew', 'popover')
+  window.LewContextMenu.instance.popper.children[0].setAttribute(
+    'data-lew',
+    'popover'
+  )
 }
 
 const findContextMenuId = (el: HTMLElement): string => {
@@ -60,10 +63,12 @@ export const LewVContextMenu = {
             instance.hide()
             const menuDom = document.createElement('div')
 
-            Object.keys(window.LewContextMenu.menuInstance).forEach((key: string) => {
-              window.LewContextMenu.menuInstance[key].destroy()
-              delete window.LewContextMenu.menuInstance[key]
-            })
+            Object.keys(window.LewContextMenu.menuInstance).forEach(
+              (key: string) => {
+                window.LewContextMenu.menuInstance[key].destroy()
+                delete window.LewContextMenu.menuInstance[key]
+              }
+            )
 
             createApp({
               render() {
@@ -81,7 +86,6 @@ export const LewVContextMenu = {
                 })
               }
             }).mount(menuDom)
-
             setTimeout(() => {
               instance.setProps({
                 content: menuDom,
@@ -97,7 +101,10 @@ export const LewVContextMenu = {
               instance.show()
             }, 120)
           }
-          window.addEventListener('contextmenu', window.LewContextMenu.contextMenu)
+          window.addEventListener(
+            'contextmenu',
+            window.LewContextMenu.contextMenu
+          )
         }
       },
       updated(el: HTMLElement, binding: DirectiveBinding) {

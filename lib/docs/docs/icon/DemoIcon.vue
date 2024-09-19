@@ -1,37 +1,13 @@
-<script setup lang="ts">
-import { DemoIcon1, DemoIcon1Code, DemoIcon2, DemoIcon2Code } from './demo'
-import LewDemoBox from '../../layout/LewDemoBox.vue'
+<script setup lang="ts"></script>
 
-const open = (url: string) => {
-  window.open(url)
-}
-</script>
 <template>
   <div class="demo-wrapper">
     <lew-title>Icon</lew-title>
-    <p class="sub-title">
-      这是直接照搬
-      <lew-mark
-        cursor="pointer"
-        type="light"
-        color="blue"
-        @click="open('https://fengyuanchen.github.io/vue-feather/')"
-        >vue-feather</lew-mark
-      >
-    </p>
-    <lew-demo-box title="图标" :code="DemoIcon1Code">
-      <demo-icon1 />
-    </lew-demo-box>
-    <lew-demo-box title="旋转动画" :code="DemoIcon2Code">
-      <demo-icon2 />
-    </lew-demo-box>
+    <lew-alert
+      type="error"
+    >
+      <template #title>重要通知</template>
+      <template #content>我们很抱歉地宣布，Icon组件将在<b>v2.4.0</b> 版本中被废弃。 <br>这个决定是为了减少组件库的整体体积，除了组件本身所需的组件，将不再内置任何图标。<br><br>我们感谢您的理解和支持。</template>
+    </lew-alert>
   </div>
 </template>
-
-<style scoped lang="scss">
-.icon {
-  --bg-color: rgba(255, 255, 255);
-  background-image: radial-gradient(transparent 1px, var(--bg-color) 1px);
-  background-size: 4px 4px;
-}
-</style>

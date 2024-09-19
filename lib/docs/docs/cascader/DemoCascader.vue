@@ -42,43 +42,27 @@ const options = ref(
       <demo-cascader2 />
       <lew-alert
         style="margin-top: 20px"
-        :size="16"
-        :options="[
-          {
-            type: 'info',
-            title: '提示',
-            content: '开启free之后，可选择任意层级。关闭则仅可选择最后一级。'
-          }
-        ]"
+        type="info"
+        title="提示"
+        content="开启free之后，可选择任意层级。关闭则仅可选择最后一级。"
       />
     </lew-demo-box>
     <lew-demo-box title="仅展示最后层级" :code="DemoCascader3Code">
       <demo-cascader3 />
       <lew-alert
         style="margin-top: 20px"
-        :size="16"
-        :options="[
-          {
-            type: 'info',
-            title: '提示',
-            content: '开启show-all-levels之后，搭配free模式，可选择任意层级。且仅展示最后层级。'
-          }
-        ]"
+        type="info"
+        title="提示"
+        content="开启show-all-levels之后，搭配free模式，可选择任意层级。且仅展示最后层级。"
       />
     </lew-demo-box>
     <lew-demo-box title="异步加载" :code="DemoCascader4Code">
       <demo-cascader4 />
       <lew-alert
         style="margin-top: 20px"
-        :size="16"
-        :options="[
-          {
-            type: 'info',
-            title: '提示',
-            content:
-              '你可以传入一个异步的请求方法，当返回的树结构中，下钻数据中的 isLeaf 为 true 时，onload 不再触发。'
-          }
-        ]"
+        type="info"
+        title="提示"
+        content="你可以传入一个异步的请求方法，当返回的树结构中，下钻数据中的 isLeaf 为 true 时，onload 不再触发。"
       />
     </lew-demo-box>
     <lew-demo-box title="可清空的" :code="DemoCascader5Code">

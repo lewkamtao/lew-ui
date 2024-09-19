@@ -49,6 +49,11 @@ export const buttonProps = {
       return true
     }
   },
+  singleIcon: {
+    type: Boolean,
+    default: false,
+    description: '是否为单图标模式'
+  },
   color: {
     type: String as PropType<LewColor>,
     default: 'blue',
@@ -58,37 +63,6 @@ export const buttonProps = {
         console.warn(
           `[LewButton] 无效的颜色值: ${value}。请使用 ${validColors.join(', ')} 中的一个`
         )
-        return false
-      }
-      return true
-    }
-  },
-  icon: {
-    type: String,
-    default: '',
-    description: '按钮图标名称'
-  },
-  iconPosition: {
-    type: String as PropType<IconPosition>,
-    default: 'left',
-    description: '图标位置',
-    validator(value: IconPosition): boolean {
-      const validPositions: IconPosition[] = ['left', 'right']
-      if (!validPositions.includes(value)) {
-        console.warn(
-          `[LewButton] 无效的图标位置: ${value}。请使用 ${validPositions.join(', ')} 中的一个`
-        )
-        return false
-      }
-      return true
-    }
-  },
-  iconSize: {
-    type: [Number, String],
-    description: '图标大小',
-    validator(value: number | string): boolean {
-      if (typeof value === 'number' && (value < 12 || value > 48)) {
-        console.warn('[LewButton] 图标尺寸应在12到48之间')
         return false
       }
       return true

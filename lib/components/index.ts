@@ -1,6 +1,5 @@
 export * from './flex'
 export * from './mark'
-export * from './icon'
 export * from './cascader'
 export * from './tree'
 export * from './tree-select'

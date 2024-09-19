@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router'
 import * as Yup from 'yup'
 import { random } from 'lodash-es'
 import LewBg from '../layout/LewBg.vue'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const viewTotal = ref(1000000000)
 
@@ -70,7 +71,9 @@ const options = ref([
     field: 'features',
     label: '组件库特性',
     as: 'select-multiple',
-    rule: Yup.array().min(1, '请至少选择一项组件库的核心特性').required('请选择组件库的主要特性'),
+    rule: Yup.array()
+      .min(1, '请至少选择一项组件库的核心特性')
+      .required('请选择组件库的主要特性'),
     props: {
       change: (e: any) => {
         console.log(e)
@@ -128,7 +131,9 @@ const options = ref([
     field: 'targetUsers',
     label: '目标用户',
     as: 'checkbox-group',
-    rule: Yup.array().min(1, '请至少选择一个目标用户群体').required('请选择组件库的主要目标用户'),
+    rule: Yup.array()
+      .min(1, '请至少选择一个目标用户群体')
+      .required('请选择组件库的主要目标用户'),
     props: {
       options: [
         { label: '前端', value: '1' },
@@ -363,14 +368,17 @@ const message = (type: string) => {
     warning: 'Apple ID提醒：请验证您的Apple ID电子邮件地址。',
     error: '安全警告：检测到您的账户有异常登录活动。'
   }
-  LewMessage[type](messages[type as keyof typeof messages] || '这是一条来自Apple的通知')
+  LewMessage[type](
+    messages[type as keyof typeof messages] || '这是一条来自Apple的通知'
+  )
 }
 
 const notification = (type: string) => {
   const notifications = {
     info: {
       title: 'iOS 更新提醒',
-      content: '新版 iOS 17 现已推出，带来更智能的体验。立即更新以享受最新功能。'
+      content:
+        '新版 iOS 17 现已推出，带来更智能的体验。立即更新以享受最新功能。'
     },
     success: {
       title: 'Apple ID 验证成功',
@@ -410,14 +418,20 @@ const notification = (type: string) => {
       <lew-flex x="start">
         <lew-button
           round
-          icon="arrow-right"
-          iconPosition="right"
-          text="开始使用"
           style="margin-top: 20px"
           @click="router.push('/Image')"
-        />
+        >
+          立即开始
+          <Icon type="chevron-right" />
+        </lew-button>
         <a href="/#/form-engine" target="_blank">
-          <lew-button round text="表单引擎" style="margin-top: 20px" color="primary" type="light" />
+          <lew-button
+            round
+            text="表单引擎"
+            style="margin-top: 20px"
+            color="primary"
+            type="light"
+          />
         </a>
       </lew-flex>
     </div>
@@ -435,13 +449,19 @@ const notification = (type: string) => {
           <lew-flex x="end" gap="20">
             <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" />
             <lew-badge round value="3">
-              <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" />
+              <lew-avatar
+                src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+              />
             </lew-badge>
             <lew-badge round value="99+">
-              <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" />
+              <lew-avatar
+                src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+              />
             </lew-badge>
             <lew-badge type="light" color="blue" round value="99+">
-              <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" />
+              <lew-avatar
+                src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+              />
             </lew-badge>
             <lew-avatar
               src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
@@ -483,7 +503,11 @@ const notification = (type: string) => {
             <lew-dropdown :options="dropdown_options">
               <lew-button text="悬停" type="light" color="normal" />
             </lew-dropdown>
-            <lew-dropdown :options="dropdown_options" trigger="click" placement="top">
+            <lew-dropdown
+              :options="dropdown_options"
+              trigger="click"
+              placement="top"
+            >
               <lew-button text="点击" type="light" color="normal" />
             </lew-dropdown>
           </lew-flex>
@@ -492,7 +516,23 @@ const notification = (type: string) => {
           <lew-form row-gap="30" ref="formRef" :options="options" />
         </lew-flex>
         <lew-flex class="item" direction="y" gap="20">
-          <lew-alert :options="list" />
+          <lew-alert type="info">
+            <template #title>新功能</template>
+            <template #content
+              >Google Photos 现已推出，提供更多照片管理功能。</template
+            >
+          </lew-alert>
+
+          <lew-alert
+            type="error"
+            title="支付失败"
+            content="您的 Apple Pay 支付失败，请检查卡信息。"
+          />
+
+          <lew-alert type="success">
+            <template #title>更新完成</template>
+            <template #content>您的设备已成功更新至最新版本</template>
+          </lew-alert>
           <lew-flex wrap x="start" gap="10">
             <lew-button
               text="错误"
@@ -552,7 +592,13 @@ const notification = (type: string) => {
               color="red"
               @click="notification('error')"
             />
-            <lew-button round text="信息" type="light" color="blue" @click="notification('info')" />
+            <lew-button
+              round
+              text="信息"
+              type="light"
+              color="blue"
+              @click="notification('info')"
+            />
             <lew-button
               round
               text="普通消息提醒"
@@ -562,18 +608,37 @@ const notification = (type: string) => {
             />
           </lew-flex>
           <lew-flex wrap x="start" gap="10">
-            <lew-button text="删除" type="light" color="error" @click="open('error')" />
-            <lew-button text="取消预订" type="light" color="warning" @click="open('warning')" />
+            <lew-button
+              text="删除"
+              type="light"
+              color="error"
+              @click="open('error')"
+            />
+            <lew-button
+              text="取消预订"
+              type="light"
+              color="warning"
+              @click="open('warning')"
+            />
             <lew-button
               text="提交新的申请表单"
               type="light"
               color="success"
               @click="open('success')"
             />
-            <lew-button text="查看" type="light" color="info" @click="open('info')" />
+            <lew-button
+              text="查看"
+              type="light"
+              color="info"
+              @click="open('info')"
+            />
           </lew-flex>
           <lew-flex x="start" gap="10">
-            <lew-popover ref="lewPopoverRef" trigger="click" placement="bottom-start">
+            <lew-popover
+              ref="lewPopoverRef"
+              trigger="click"
+              placement="bottom-start"
+            >
               <template #trigger>
                 <lew-button text="修改密码" />
               </template>
@@ -661,14 +726,14 @@ const notification = (type: string) => {
   @keyframes demo {
     from {
       opacity: 0;
-      transform: scale(0.8) perspective(800px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)
-        translate(0px, 0px);
+      transform: scale(0.8) perspective(800px) rotateX(0deg) rotateY(0deg)
+        rotateZ(0deg) translate(0px, 0px);
     }
 
     to {
       opacity: 1;
-      transform: scale(1.1) perspective(1000px) rotateX(12deg) rotateY(-24deg) rotateZ(8deg)
-        translate(-30px, 50px);
+      transform: scale(1.1) perspective(1000px) rotateX(12deg) rotateY(-24deg)
+        rotateZ(8deg) translate(-30px, 50px);
     }
   }
 
@@ -714,7 +779,8 @@ const notification = (type: string) => {
 
       to {
         opacity: 1;
-        transform: scale(0.5) translate(0px, 200px) rotateX(15deg) rotateY(-15deg);
+        transform: scale(0.5) translate(0px, 200px) rotateX(15deg)
+          rotateY(-15deg);
       }
     }
 

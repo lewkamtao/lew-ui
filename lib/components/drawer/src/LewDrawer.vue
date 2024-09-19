@@ -5,6 +5,7 @@ import { useDOMCreate } from '../../../hooks'
 import { drawerProps } from './props'
 import { useMagicKeys } from '@vueuse/core'
 const { Escape } = useMagicKeys()
+import Icon from 'lew-ui/utils/Icon.vue'
 
 useDOMCreate('lew-drawer')
 const emit = defineEmits(['ok', 'cancel'])
@@ -92,7 +93,7 @@ const getStyle = (position: string, width: number | string, height: number | str
           </div>
           <lew-flex v-else-if="title" mode="between" y="center" class="header">
             <lew-text-trim class="title" :text="title" />
-            <lew-icon size="18" class="lew-form-icon-clear" type="x" @click="visible = false" />
+            <Icon :size="18" class="lew-form-icon-close" type="close" @click="visible = false" />
           </lew-flex>
           <div class="main-slot">
             <slot></slot>
@@ -151,10 +152,10 @@ const getStyle = (position: string, width: number | string, height: number | str
       font-size: 16px;
       font-weight: bold;
     }
-    .lew-form-icon-clear {
+    .lew-form-icon-close {
       right: 15px;
     }
-    .lew-form-icon-clear:hover {
+    .lew-form-icon-close:hover {
       background-color: var(--lew-bgcolor-5);
     }
   }

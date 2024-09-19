@@ -35,14 +35,9 @@ const options = ref(
       <demo-input-tag1 />
       <lew-alert
         style="margin-top: 20px"
-        :size="16"
-        :options="[
-          {
-            type: 'info',
-            title: '提示',
-            content: '在focus状态下，按下Enter新增标签。'
-          }
-        ]"
+        type="info"
+        title="提示"
+        content="在focus状态下，按下Enter新增标签。"
       />
     </lew-demo-box>
     <lew-demo-box title="提示语" :code="DemoInputTag2Code">

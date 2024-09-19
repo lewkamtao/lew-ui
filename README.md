@@ -33,7 +33,7 @@ import { LewButton } from 'lew-ui'
 Lew UI uses the following open source libraries:
 
 - [tippy.js](https://atomiks.github.io/tippyjs/): For creating tooltips and popovers
-- [feather-icons](https://feathericons.com/): Provides a clean and beautiful icon set
+- [Lucide](https://github.com/lucide-icons/lucide): Provides a clean and beautiful icon set
 - [fancyapps](https://fancyapps.com/): For creating image galleries and carousels
 - [VueUse](https://vueuse.org/): Collection of Vue Composition API utilities
 - [Day.js](https://day.js.org/): Lightweight library for date manipulation
