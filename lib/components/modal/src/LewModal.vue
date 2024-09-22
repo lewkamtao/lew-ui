@@ -1,13 +1,12 @@
 <script lang="ts" setup name="Modal">
-import { useMagicKeys, useMouse } from '@vueuse/core'
+import { useMagicKeys } from '@vueuse/core'
 import { any2px } from 'lew-ui/utils'
-import { LewFlex, LewButton,  } from 'lew-ui'
+import { LewFlex, LewButton } from 'lew-ui'
 import { useDOMCreate } from '../../../hooks'
 import { LewTextTrim } from '../../text-trim'
 import { modalProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
 
-const { x, y } = useMouse()
 const { Escape } = useMagicKeys()
 useDOMCreate('lew-modal')
 
@@ -67,9 +66,19 @@ if (props.closeByEsc) {
             <div v-if="$slots.header" class="header-slot">
               <slot name="header"></slot>
             </div>
-            <lew-flex v-else-if="title" mode="between" y="center" class="header">
+            <lew-flex
+              v-else-if="title"
+              mode="between"
+              y="center"
+              class="header"
+            >
               <lew-text-trim class="title" :text="title" />
-              <Icon :size="18" class="lew-form-icon-close" type="close" @click="close" />
+              <Icon
+                :size="18"
+                class="lew-form-icon-close"
+                type="close"
+                @click="close"
+              />
             </lew-flex>
 
             <slot></slot>

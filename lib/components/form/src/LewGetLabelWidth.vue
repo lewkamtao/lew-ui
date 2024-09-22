@@ -34,7 +34,10 @@ defineExpose({
       v-for="(item, index) in options"
       :key="index"
     >
-      <RequiredIcon :size="requiredIconSizeMap[size]" v-if="item.required && item.label" />
+      <RequiredIcon
+        :size="requiredIconSizeMap[size]"
+        v-if="item.required && item.label"
+      />
       {{ item.label }}
     </lew-flex>
   </div>

@@ -25,7 +25,9 @@ export const dropdownProps = {
     description: '触发方式',
     validator(value: DropdownTrigger): boolean {
       if (!['hover', 'click'].includes(value)) {
-        console.warn(`[LewDropdown] 无效的触发方式: ${value}。请使用 'hover' 或 'click'`)
+        console.warn(
+          `[LewDropdown] 无效的触发方式: ${value}。请使用 'hover' 或 'click'`
+        )
         return false
       }
       return true
@@ -51,7 +53,9 @@ export const dropdownProps = {
         'right-end'
       ]
       if (!validPlacements.includes(value)) {
-        console.warn(`[LewDropdown] 无效的弹出位置: ${value}。请使用有效的位置值`)
+        console.warn(
+          `[LewDropdown] 无效的弹出位置: ${value}。请使用有效的位置值`
+        )
         return false
       }
       return true

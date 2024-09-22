@@ -133,7 +133,11 @@ const columns = [
     align: 'center',
     customRender: ({ row }: any) => {
       const popularityColor =
-        row.popularity >= 95 ? '#ff4d4f' : row.popularity >= 90 ? '#faad14' : '#52c41a'
+        row.popularity >= 95
+          ? '#ff4d4f'
+          : row.popularity >= 90
+            ? '#faad14'
+            : '#52c41a'
       return h('div', { class: 'popularity-price-container' }, [
         h('div', { class: 'popularity', style: `color: ${popularityColor};` }, [
           h('span', { class: 'popularity-value' }, `${row.popularity}%`)

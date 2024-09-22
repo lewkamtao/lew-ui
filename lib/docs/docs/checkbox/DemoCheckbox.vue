@@ -44,7 +44,9 @@ const open = (url: string) => {
     <lew-demo-box title="常规" :code="DemoCheckbox1Code">
       <demo-checkbox1 />
     </lew-demo-box>
-    <lew-demo-box title="y 布局" :code="DemoCheckbox2Code"> <demo-checkbox2 /></lew-demo-box>
+    <lew-demo-box title="y 布局" :code="DemoCheckbox2Code">
+      <demo-checkbox2
+    /></lew-demo-box>
     <lew-demo-box title="块" :code="DemoCheckbox3Code" tag="方的">
       <demo-checkbox3 />
     </lew-demo-box>

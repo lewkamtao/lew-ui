@@ -31,7 +31,9 @@ const options = ref(
     </lew-demo-box>
     <lew-demo-box title="手风琴" :code="DemoCollapse3Code">
       <template #desc>
-        <div>当 <lew-mark>v-model</lew-mark> 绑定值为字符串类型，会开启手风琴模式。</div>
+        <div>
+          当 <lew-mark>v-model</lew-mark> 绑定值为字符串类型，会开启手风琴模式。
+        </div>
       </template>
       <demo-collapse3 />
     </lew-demo-box>

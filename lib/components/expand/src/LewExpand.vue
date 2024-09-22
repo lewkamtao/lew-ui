@@ -29,7 +29,12 @@ onMounted(() => {
     }"
   >
     <slot />
-    <lew-flex @click="collapse = !collapse" gap="5" v-if="collapseHeight" class="expand-btn">
+    <lew-flex
+      @click="collapse = !collapse"
+      gap="5"
+      v-if="collapseHeight"
+      class="expand-btn"
+    >
       <Icon
         :style="{ transform: collapse ? 'rotate(0deg)' : 'rotate(180deg)' }"
         class="expand-icon"

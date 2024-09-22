@@ -61,7 +61,9 @@ export const inputNumberProps = {
     description: '尺寸',
     validator(value: LewSize) {
       if (!validSizes.includes(value)) {
-        console.warn(`[LewInputNumber] size 必须是 ${validSizes.join('、')} 之一`)
+        console.warn(
+          `[LewInputNumber] size 必须是 ${validSizes.join('、')} 之一`
+        )
         return false
       }
       return true

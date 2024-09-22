@@ -75,7 +75,13 @@ defineExpose({ open })
     :title="`${editIndex >= 0 ? '编辑' : '新增'}数据`"
   >
     <div class="form-modal lew-scrollbar">
-      <lew-form :size @mounted="formMounted" ref="formRef" width="350" :options="options" />
+      <lew-form
+        :size
+        @mounted="formMounted"
+        ref="formRef"
+        width="350"
+        :options="options"
+      />
     </div>
   </lew-modal>
 </template>

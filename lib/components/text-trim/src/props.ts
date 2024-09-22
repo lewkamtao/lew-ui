@@ -31,7 +31,12 @@ export const textTrimProps = {
     default: 'top',
     description: '提示框的显示位置',
     validator(value: TextTrimPlacement): boolean {
-      const validPlacements: TextTrimPlacement[] = ['top', 'bottom', 'left', 'right']
+      const validPlacements: TextTrimPlacement[] = [
+        'top',
+        'bottom',
+        'left',
+        'right'
+      ]
       if (!validPlacements.includes(value)) {
         console.warn(
           `[LewTextTrim] 无效的 placement 值: ${value}。请使用 ${validPlacements.join(', ')} 中的一个。`
@@ -75,7 +80,8 @@ export const textTrimProps = {
   delay: {
     type: Array as PropType<number[]>,
     default: () => [250, 250],
-    description: '显示和隐藏提示框的延迟时间 [显示延迟, 隐藏延迟]（单位：毫秒）',
+    description:
+      '显示和隐藏提示框的延迟时间 [显示延迟, 隐藏延迟]（单位：毫秒）',
     validator(value: [number, number]): boolean {
       if (
         !Array.isArray(value) ||

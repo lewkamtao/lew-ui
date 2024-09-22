@@ -25,7 +25,10 @@ export const findAllNodes = (tree: TreeDataSource[] = [], keyField = 'key') => {
   return Array.from(nodes) || []
 }
 
-export const findLeafNodes = (tree: TreeDataSource[] = [], keyField = 'key') => {
+export const findLeafNodes = (
+  tree: TreeDataSource[] = [],
+  keyField = 'key'
+) => {
   const leafNodes = new Set()
   function traverse(node: any) {
     if (!node.children || node.children.length === 0) {
@@ -127,7 +130,9 @@ export const tree2List = async ({
         free
       })
     } else {
-      return new Error('The initTree function should return a Promise that resolves to an array')
+      return new Error(
+        'The initTree function should return a Promise that resolves to an array'
+      )
     }
   } else if (dataSource && dataSource.length > 0) {
     tree = formatTree({ dataSource, keyField, labelField, free })

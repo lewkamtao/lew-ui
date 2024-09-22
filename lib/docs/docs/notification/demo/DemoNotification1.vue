@@ -43,9 +43,24 @@ const openWarning = () => {
 <template>
   <lew-flex wrap x="start" gap="20">
     <lew-button text="错误通知" type="light" color="red" @click="openError" />
-    <lew-button text="成功通知" type="light" color="green" @click="openSuccess" />
-    <lew-button text="常规通知" type="light" color="normal" @click="openNormal" />
+    <lew-button
+      text="成功通知"
+      type="light"
+      color="green"
+      @click="openSuccess"
+    />
+    <lew-button
+      text="常规通知"
+      type="light"
+      color="normal"
+      @click="openNormal"
+    />
     <lew-button text="信息通知" type="light" color="blue" @click="openInfo" />
-    <lew-button text="警告通知" type="light" color="warning" @click="openWarning" />
+    <lew-button
+      text="警告通知"
+      type="light"
+      color="warning"
+      @click="openWarning"
+    />
   </lew-flex>
 </template>

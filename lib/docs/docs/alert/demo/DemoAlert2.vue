@@ -17,7 +17,9 @@
 
     <lew-alert type="info">
       <template #title>新功能</template>
-      <template #content>Google Photos 现已推出，提供更多照片管理功能。</template>
+      <template #content
+        >Google Photos 现已推出，提供更多照片管理功能。</template
+      >
     </lew-alert>
 
     <lew-alert type="normal">

@@ -343,23 +343,6 @@ const dropdown_options = ref([
     value: 6
   }
 ])
-const list = ref([
-  {
-    type: 'info',
-    title: '新功能提示',
-    content: '探索全新的iOS 17,体验更智能的iPhone'
-  },
-  {
-    type: 'normal',
-    title: 'Apple ID提醒',
-    content: '请验证您的Apple ID电子邮件地址'
-  },
-  {
-    type: 'success',
-    title: '更新完成',
-    content: '您的设备已成功更新至最新版本'
-  }
-])
 
 const message = (type: string) => {
   const messages = {

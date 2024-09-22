@@ -22,7 +22,7 @@ setModelValue()
 
 const change = () => {
   modelValue.value = !modelValue.value
-  
+
   if (isArray(expandKeys.value)) {
     expandKeys.value = modelValue.value
       ? [...expandKeys.value, props.collapseKey]
@@ -57,7 +57,7 @@ const change = () => {
       </template>
     </lew-flex>
     <Lew-collapse-transition>
-      <div v-if="modelValue" class="lew-collapse-main" :style="{ padding }">
+      <div v-if="modelValue" class="lew-collapse-main">
         <slot />
       </div>
     </Lew-collapse-transition>

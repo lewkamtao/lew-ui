@@ -23,7 +23,9 @@ export const flexProps = {
     description: '子元素在水平方向上的对齐方式',
     validator(value: FlexAlignment): boolean {
       if (!['start', 'center', 'end'].includes(value)) {
-        console.warn(`[LewFlex] 无效的水平对齐值: ${value}。请使用 'start'、'center' 或 'end'。`)
+        console.warn(
+          `[LewFlex] 无效的水平对齐值: ${value}。请使用 'start'、'center' 或 'end'。`
+        )
         return false
       }
       return true
@@ -35,7 +37,9 @@ export const flexProps = {
     description: '子元素在垂直方向上的对齐方式',
     validator(value: FlexAlignment): boolean {
       if (!['start', 'center', 'end'].includes(value)) {
-        console.warn(`[LewFlex] 无效的垂直对齐值: ${value}。请使用 'start'、'center' 或 'end'。`)
+        console.warn(
+          `[LewFlex] 无效的垂直对齐值: ${value}。请使用 'start'、'center' 或 'end'。`
+        )
         return false
       }
       return true
@@ -44,10 +48,13 @@ export const flexProps = {
   mode: {
     type: String as PropType<FlexMode>,
     default: '',
-    description: '子元素的分布模式，会覆盖 x 或 y 的对齐设置，具体影响取决于 direction 的值',
+    description:
+      '子元素的分布模式，会覆盖 x 或 y 的对齐设置，具体影响取决于 direction 的值',
     validator(value: FlexMode): boolean {
       if (value && !['around', 'between'].includes(value)) {
-        console.warn(`[LewFlex] 无效的分布模式: ${value}。请使用 'around' 或 'between'。`)
+        console.warn(
+          `[LewFlex] 无效的分布模式: ${value}。请使用 'around' 或 'between'。`
+        )
         return false
       }
       return true
@@ -80,8 +87,14 @@ export const flexProps = {
         console.warn(`[LewFlex] width 值必须是非负数。`)
         return false
       }
-      if (value && typeof value === 'string' && !/^(\d+(\.\d+)?(px|%)?|\d+)$/.test(value)) {
-        console.warn(`[LewFlex] width 字符串值必须是有效的 CSS 宽度值（如 '100px' 或 '50%'）。`)
+      if (
+        value &&
+        typeof value === 'string' &&
+        !/^(\d+(\.\d+)?(px|%)?|\d+)$/.test(value)
+      ) {
+        console.warn(
+          `[LewFlex] width 字符串值必须是有效的 CSS 宽度值（如 '100px' 或 '50%'）。`
+        )
         return false
       }
       return true

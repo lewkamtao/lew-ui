@@ -66,7 +66,11 @@ let active = ref('Guides')
 </script>
 <template>
   <div class="menu lew-scrollbar">
-    <lew-menu :options="options" :active="active" @change="(item: any) => (active = item.value)" />
+    <lew-menu
+      :options="options"
+      :active="active"
+      @change="(item: any) => (active = item.value)"
+    />
   </div>
 </template>
 

@@ -23,7 +23,9 @@ export const formProps = {
     description: '表单整体尺寸，影响所有表单项大小',
     validator(value: LewSize): boolean {
       if (!validSizes.includes(value)) {
-        console.warn(`[LewForm] 无效的 size 值: ${value}。请使用 'small', 'medium' 或 'large'`)
+        console.warn(
+          `[LewForm] 无效的 size 值: ${value}。请使用 'small', 'medium' 或 'large'`
+        )
         return false
       }
       return true
@@ -67,7 +69,11 @@ export const formProps = {
         console.warn('[LewForm] labelWidth 不能为负数')
         return false
       }
-      if (typeof value === 'string' && value !== 'auto' && !/^\d+px$/.test(value)) {
+      if (
+        typeof value === 'string' &&
+        value !== 'auto' &&
+        !/^\d+px$/.test(value)
+      ) {
         console.warn('[LewForm] labelWidth 字符串必须是 "auto" 或有效的像素值')
         return false
       }
@@ -90,7 +96,9 @@ export const formProps = {
     description: '表单项排列方向，"x" 为水平，"y" 为垂直',
     validator(value: FormDirection): boolean {
       if (!['x', 'y'].includes(value)) {
-        console.warn(`[LewForm] 无效的 direction 值: ${value}。请使用 'x' 或 'y'`)
+        console.warn(
+          `[LewForm] 无效的 direction 值: ${value}。请使用 'x' 或 'y'`
+        )
         return false
       }
       return true
@@ -131,7 +139,9 @@ export const formItemProps = {
     description: '单个表单项的尺寸，可覆盖表单整体设置',
     validator(value: LewSize): boolean {
       if (!['small', 'medium', 'large'].includes(value)) {
-        console.warn(`[LewFormItem] 无效的 size 值: ${value}。请使用 'small', 'medium' 或 'large'`)
+        console.warn(
+          `[LewFormItem] 无效的 size 值: ${value}。请使用 'small', 'medium' 或 'large'`
+        )
         return false
       }
       return true
@@ -162,8 +172,14 @@ export const formItemProps = {
         console.warn('[LewFormItem] labelWidth 不能为负数')
         return false
       }
-      if (typeof value === 'string' && value !== 'auto' && !/^\d+px$/.test(value)) {
-        console.warn('[LewFormItem] labelWidth 字符串必须是 "auto" 或有效的像素值')
+      if (
+        typeof value === 'string' &&
+        value !== 'auto' &&
+        !/^\d+px$/.test(value)
+      ) {
+        console.warn(
+          '[LewFormItem] labelWidth 字符串必须是 "auto" 或有效的像素值'
+        )
         return false
       }
       return true
@@ -175,7 +191,9 @@ export const formItemProps = {
     description: '单个表单项的排列方向，"x" 为水平，"y" 为垂直',
     validator(value: FormDirection): boolean {
       if (!['x', 'y'].includes(value)) {
-        console.warn(`[LewFormItem] 无效的 direction 值: ${value}。请使用 'x' 或 'y'`)
+        console.warn(
+          `[LewFormItem] 无效的 direction 值: ${value}。请使用 'x' 或 'y'`
+        )
         return false
       }
       return true

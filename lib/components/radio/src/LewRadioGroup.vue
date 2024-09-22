@@ -28,7 +28,12 @@ const getRadioGroupClassName = computed(() => {
 </script>
 
 <template>
-  <lew-flex x="start" gap="10" class="lew-radio-group" :class="getRadioGroupClassName">
+  <lew-flex
+    x="start"
+    gap="10"
+    class="lew-radio-group"
+    :class="getRadioGroupClassName"
+  >
     <lew-radio
       v-for="item in options"
       :key="item.value"

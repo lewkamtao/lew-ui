@@ -18,7 +18,8 @@ export const drawerProps = {
   position: {
     type: String,
     default: 'right',
-    validator: (value: string) => ['left', 'right', 'top', 'bottom'].includes(value),
+    validator: (value: string) =>
+      ['left', 'right', 'top', 'bottom'].includes(value),
     description: '抽屉的弹出位置'
   },
   width: {

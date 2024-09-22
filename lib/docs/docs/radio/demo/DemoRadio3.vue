@@ -28,7 +28,11 @@ const selectedCreature = ref('')
       size="small"
       :options="fantasyCreatureOptions"
     />
-    <lew-radio-group v-model="selectedCreature" block :options="fantasyCreatureOptions" />
+    <lew-radio-group
+      v-model="selectedCreature"
+      block
+      :options="fantasyCreatureOptions"
+    />
     <lew-radio-group
       v-model="selectedCreature"
       block

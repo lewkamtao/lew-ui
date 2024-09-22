@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { DemoTooltip1, DemoTooltip2, DemoTooltip1Code, DemoTooltip2Code } from './demo'
+import {
+  DemoTooltip1,
+  DemoTooltip2,
+  DemoTooltip1Code,
+  DemoTooltip2Code
+} from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LewPopover,  LewDateRange, LewTooltip } from 'lew-ui'
+import { LewPopover, LewDateRange, LewTooltip } from 'lew-ui'
 import { dateRangePickerProps } from './props'
 import { object2class } from 'lew-ui/utils'
 import type { LewSize } from 'lew-ui'
@@ -92,7 +92,10 @@ defineExpose({ show, hide })
     <template #trigger>
       <div class="lew-date-picker-view" :class="lewDateRangeClassNames">
         <div class="lew-date-picker-input">
-          <div v-if="!modelValue || !modelValue[startKey]" class="lew-date-picker-placeholder">
+          <div
+            v-if="!modelValue || !modelValue[startKey]"
+            class="lew-date-picker-placeholder"
+          >
             {{ placeholderStart }}
           </div>
           <div v-else class="lew-date-picker-dateValue lew-date-picker-start">
@@ -101,7 +104,10 @@ defineExpose({ show, hide })
           <div class="lew-date-picker-mid">
             <Icon :size="14" type="minus" />
           </div>
-          <div v-if="!modelValue || !modelValue[endKey]" class="lew-date-picker-placeholder">
+          <div
+            v-if="!modelValue || !modelValue[endKey]"
+            class="lew-date-picker-placeholder"
+          >
             {{ placeholderEnd }}
           </div>
           <div v-else class="lew-date-picker-dateValue lew-date-picker-end">
@@ -203,7 +209,8 @@ defineExpose({ show, hide })
 
   .lew-date-picker-view.lew-date-picker-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+      solid;
     outline: var(--lew-form-outline);
   }
 

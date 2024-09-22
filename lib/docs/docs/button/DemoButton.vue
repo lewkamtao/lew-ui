@@ -34,9 +34,15 @@ const options = ref(
     <lew-demo-box title="类型" :code="DemoButton1Code">
       <demo-button1 />
     </lew-demo-box>
-    <lew-demo-box title="尺寸" :code="DemoButton7Code"><demo-button7 /> </lew-demo-box>
-    <lew-demo-box title="色彩" :code="DemoButton2Code"><demo-button2 /> </lew-demo-box>
-    <lew-demo-box title="图标" :code="DemoButton3Code"><demo-button3 /> </lew-demo-box>
+    <lew-demo-box title="尺寸" :code="DemoButton7Code"
+      ><demo-button7 />
+    </lew-demo-box>
+    <lew-demo-box title="色彩" :code="DemoButton2Code"
+      ><demo-button2 />
+    </lew-demo-box>
+    <lew-demo-box title="图标" :code="DemoButton3Code"
+      ><demo-button3 />
+    </lew-demo-box>
     <lew-demo-box title="加载状态" :code="DemoButton4Code">
       <demo-button4 />
     </lew-demo-box>

@@ -48,7 +48,12 @@ onMounted(() => {
 <template>
   <div class="right-nav">
     <lew-title class="item title" size="14px">目录</lew-title>
-    <div v-for="(item, index) in navMenus" :key="index" class="item" @click="toScroll(item)">
+    <div
+      v-for="(item, index) in navMenus"
+      :key="index"
+      class="item"
+      @click="toScroll(item)"
+    >
       {{ item.label }}
     </div>
   </div>

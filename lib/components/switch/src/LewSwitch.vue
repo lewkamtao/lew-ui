@@ -97,7 +97,12 @@ const getSwitchStyle = computed(() => {
     :style="getSwitchStyle"
     @click="handleClick"
   >
-    <input v-show="false" v-model="modelValue" type="checkbox" :disabled="disabled" />
+    <input
+      v-show="false"
+      v-model="modelValue"
+      type="checkbox"
+      :disabled="disabled"
+    />
     <div class="lew-switch-dot"></div>
   </div>
 </template>

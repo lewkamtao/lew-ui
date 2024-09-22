@@ -25,5 +25,10 @@ const open = () => {
 </script>
 
 <template>
-  <lew-button color="error" type="fill" text="删除 iCloud 数据" @click="open()" />
+  <lew-button
+    color="error"
+    type="fill"
+    text="删除 iCloud 数据"
+    @click="open()"
+  />
 </template>

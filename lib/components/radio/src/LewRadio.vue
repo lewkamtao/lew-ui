@@ -43,9 +43,19 @@ const getRadioClassName = computed(() => {
 <template>
   <label class="lew-radio" :class="getRadioClassName">
     <div v-if="iconable || (!iconable && !block)" class="icon-radio-box">
-      <Icon :stroke-width="4" class="icon-radio" type="check" :size="getIconSize" />
+      <Icon
+        :stroke-width="4"
+        class="icon-radio"
+        type="check"
+        :size="getIconSize"
+      />
     </div>
-    <input v-show="false" type="radio" :checked="checked" @change="setChecked" />
+    <input
+      v-show="false"
+      type="radio"
+      :checked="checked"
+      @change="setChecked"
+    />
     <span v-if="label" class="lew-radio-label"> {{ label }}</span>
   </label>
 </template>
@@ -148,7 +158,8 @@ const getRadioClassName = computed(() => {
 
 .lew-radio:hover {
   .icon-radio-box {
-    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover) solid;
+    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover)
+      solid;
     background: var(--lew-form-bgcolor);
   }
 }
@@ -190,7 +201,8 @@ const getRadioClassName = computed(() => {
 .lew-radio-block:hover {
   background: var(--lew-form-bgcolor-hover);
   .icon-radio-box {
-    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover) solid;
+    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover)
+      solid;
   }
 }
 

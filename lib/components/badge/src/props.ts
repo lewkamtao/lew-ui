@@ -30,7 +30,9 @@ export const badgeProps = {
     description: '徽章颜色，可选值包括多种预定义颜色',
     validator: (value: string) => {
       if (!validColors.includes(value as BadgeColor)) {
-        console.warn(`[LewBadge] 无效的颜色值: ${value}。请使用预定义的颜色之一。`)
+        console.warn(
+          `[LewBadge] 无效的颜色值: ${value}。请使用预定义的颜色之一。`
+        )
         return false
       }
       return true

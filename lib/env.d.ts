@@ -6,7 +6,12 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
-import { LewNotification, LewDialog, LewMessage, LewContextMenu } from '../directives'
+import {
+  LewNotification,
+  LewDialog,
+  LewMessage,
+  LewContextMenu
+} from '../directives'
 import { Fancybox } from '@fancyapps/ui'
 
 declare module 'highlight.js'

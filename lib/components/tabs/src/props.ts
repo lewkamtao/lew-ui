@@ -90,7 +90,8 @@ export const tabsProps = {
   itemWidth: {
     type: [Number, String],
     default: '',
-    description: '单个标签页选项宽度，可以是数字（单位：像素）或字符串（如 "50%"）',
+    description:
+      '单个标签页选项宽度，可以是数字（单位：像素）或字符串（如 "50%"）',
     validator: (value: number | string) => {
       if (typeof value === 'number' && value <= 0) {
         console.warn('[LewTabs] itemWidth 必须大于 0')

@@ -80,7 +80,11 @@ const options = ref(
     <lew-demo-box v-if="false" title="多选模式" :code="DemoCascader9Code">
       <demo-cascader9 />
     </lew-demo-box>
-    <lew-demo-box v-if="false" title="可选任意一级选项" :code="DemoCascader10Code">
+    <lew-demo-box
+      v-if="false"
+      title="可选任意一级选项"
+      :code="DemoCascader10Code"
+    >
       <demo-cascader10 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />

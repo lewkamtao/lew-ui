@@ -51,7 +51,11 @@ if (props.closeByEsc) {
   })
 }
 
-const getStyle = (position: string, width: number | string, height: number | string) => {
+const getStyle = (
+  position: string,
+  width: number | string,
+  height: number | string
+) => {
   switch (true) {
     case !position:
       return 'width:30%;height:100%'
@@ -93,7 +97,12 @@ const getStyle = (position: string, width: number | string, height: number | str
           </div>
           <lew-flex v-else-if="title" mode="between" y="center" class="header">
             <lew-text-trim class="title" :text="title" />
-            <Icon :size="18" class="lew-form-icon-close" type="close" @click="visible = false" />
+            <Icon
+              :size="18"
+              class="lew-form-icon-close"
+              type="close"
+              @click="visible = false"
+            />
           </lew-flex>
           <div class="main-slot">
             <slot></slot>

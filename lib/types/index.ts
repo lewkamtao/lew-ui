@@ -14,7 +14,13 @@ export type LewThemeColor =
   | 'teal'
   | 'yellow'
 
-export type LewStatusColor = 'error' | 'success' | 'warning' | 'info' | 'normal' | 'primary'
+export type LewStatusColor =
+  | 'error'
+  | 'success'
+  | 'warning'
+  | 'info'
+  | 'normal'
+  | 'primary'
 
 // 合并主题色和状态色
 export type LewColor = LewThemeColor | LewStatusColor

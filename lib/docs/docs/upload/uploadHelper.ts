@@ -1,7 +1,13 @@
 import axios from '@/axios/http'
 import type { UploadFileItem } from 'lew-ui'
 
-export default ({ fileItem, setFileItem }: { fileItem: UploadFileItem; setFileItem: Function }) => {
+export default ({
+  fileItem,
+  setFileItem
+}: {
+  fileItem: UploadFileItem
+  setFileItem: Function
+}) => {
   const { id, file } = fileItem
   const formdata = new FormData()
   formdata.append('file', file as File)
@@ -18,7 +24,10 @@ export default ({ fileItem, setFileItem }: { fileItem: UploadFileItem; setFileIt
     .then((res: any) => {
       if (res.success) {
         const { fileName } = res.data
-        console.log('上传成功：', `https://app.tngeek.com/api_sso/open/file/${fileName}`)
+        console.log(
+          '上传成功：',
+          `https://app.tngeek.com/api_sso/open/file/${fileName}`
+        )
         setFileItem({
           id,
           status: 'success',

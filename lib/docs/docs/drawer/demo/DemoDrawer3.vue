@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useClipboard } from '@vueuse/core'
 const visible = ref(false)
 const ok = () => {
   return new Promise<void>(() => {
@@ -33,9 +32,7 @@ const ok = () => {
     </div>
     <template #footer>
       <lew-flex x="end" y="center" class="footer">
-        <lew-flex x="start" gap="5" class="tips">
-          提交后立即生效
-        </lew-flex>
+        <lew-flex x="start" gap="5" class="tips"> 提交后立即生效 </lew-flex>
         <lew-flex x="end" y="center">
           <lew-button type="text" color="gray" :request="ok">取消</lew-button>
           <lew-button :request="ok">提交</lew-button>

@@ -49,7 +49,9 @@ export const inputTableProps = {
     description: '表格尺寸',
     validator(value: LewSize): boolean {
       if (!validSizes.includes(value)) {
-        console.warn(`[LewInputTable] size 必须是 ${validSizes.join('、')} 之一`)
+        console.warn(
+          `[LewInputTable] size 必须是 ${validSizes.join('、')} 之一`
+        )
         return false
       }
       return true

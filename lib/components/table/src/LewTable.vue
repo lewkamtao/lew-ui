@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { tableProps } from './props'
 import { any2px } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
 import { LewFlex, LewCheckbox, LewTextTrim, LewEmpty } from 'lew-ui'
 import {
   isEmpty,
@@ -13,7 +12,6 @@ import {
   keys,
   sumBy,
   isString,
-  template,
   cloneDeep
 } from 'lodash-es'
 import type { FlexAlignment, TextTrimAlignment } from 'lew-ui'
@@ -591,7 +589,7 @@ onUnmounted(() => {
             v-for="(row, i) in dataSource"
             :key="`data${i}`"
             class="lew-table-tr"
-            :ref="(e) => (trRefArr[i] = e)"
+            :ref="(e: any) => (trRefArr[i] = e)"
             :class="{
               'lew-table-tr-hover': state.hoverRowIndex === i,
               'lew-table-tr-selected': state.selectedRowsMap[row[rowKey]]

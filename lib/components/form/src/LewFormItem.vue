@@ -111,7 +111,10 @@ defineExpose({ validate, setError })
       'grid-area': gridArea || ''
     }"
   >
-    <div :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''" class="label-box-wrapper">
+    <div
+      :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''"
+      class="label-box-wrapper"
+    >
       <div
         class="label-box"
         v-tooltip="{
@@ -120,7 +123,10 @@ defineExpose({ validate, setError })
         v-if="as"
         :class="{ 'label-tips': tips }"
       >
-        <RequiredIcon :size="requiredIconSizeMap[size]" v-if="required && label" />
+        <RequiredIcon
+          :size="requiredIconSizeMap[size]"
+          v-if="required && label"
+        />
         {{ label }}
       </div>
     </div>
@@ -142,7 +148,12 @@ defineExpose({ validate, setError })
         @change="change"
       />
       <transition name="slide-fade">
-        <lew-text-trim style="width: 100%" :text="errMsg" v-if="errMsg" class="error-message">
+        <lew-text-trim
+          style="width: 100%"
+          :text="errMsg"
+          v-if="errMsg"
+          class="error-message"
+        >
         </lew-text-trim>
       </transition>
     </div>

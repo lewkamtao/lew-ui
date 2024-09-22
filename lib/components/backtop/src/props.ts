@@ -35,19 +35,27 @@ export const backTopProps = {
       }
       return true
     },
-    description: '设置页面滚动高度的阈值，当滚动高度超过此值时显示回到顶部按钮，单位为像素。'
+    description:
+      '设置页面滚动高度的阈值，当滚动高度超过此值时显示回到顶部按钮，单位为像素。'
   },
   target: {
     type: String,
     default: '',
     validator(value: string): boolean {
-      if (value && typeof document !== 'undefined' && !document.querySelector(value)) {
-        console.warn(`[LewBackTop] 未找到目标元素：${value}。请确保提供了有效的 CSS 选择器。`)
+      if (
+        value &&
+        typeof document !== 'undefined' &&
+        !document.querySelector(value)
+      ) {
+        console.warn(
+          `[LewBackTop] 未找到目标元素：${value}。请确保提供了有效的 CSS 选择器。`
+        )
         return false
       }
       return true
     },
-    description: '指定触发滚动事件的目标元素，使用 CSS 选择器。如果为空，则默认为整个窗口。'
+    description:
+      '指定触发滚动事件的目标元素，使用 CSS 选择器。如果为空，则默认为整个窗口。'
   }
 }
 

@@ -56,7 +56,9 @@ export const emptyProps = {
     default: '14px',
     validator: (value: string | number) => {
       if (typeof value !== 'string' && typeof value !== 'number') {
-        console.warn('[LewEmpty] 无效的字体大小: fontSize 应该是一个字符串或数字')
+        console.warn(
+          '[LewEmpty] 无效的字体大小: fontSize 应该是一个字符串或数字'
+        )
         return false
       }
       return true
@@ -76,11 +78,13 @@ export const emptyProps = {
     description: '空状态组件的内边距，用于调整内容与边界的距离'
   },
   width: {
-    type: String,
+    type: [String, Number],
     default: '200px',
-    validator: (value: string) => {
-      if (typeof value !== 'string') {
-        console.warn('[LewEmpty] 无效的宽度: width 应该是一个字符串')
+    validator: (value: string | number) => {
+      if (typeof value !== 'string' && typeof value !== 'number') {
+        console.warn(
+          '[LewEmpty] 无效的宽度: width 应该是一个字符串或数字'
+        )
         return false
       }
       return true

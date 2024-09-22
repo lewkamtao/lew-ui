@@ -34,7 +34,7 @@ if (instance?.slots.default) {
 }
 
 const getButtonClass = computed(() => {
-  const { size, type, text, color, singleIcon } = props
+  const { size, type, color, singleIcon } = props
   const loading = _loading.value || props.loading
   return object2class('lew-button', {
     size,

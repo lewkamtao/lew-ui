@@ -1,8 +1,16 @@
 <script lang="ts" setup>
-import { LewFlex,  LewEmpty, LewLoading } from 'lew-ui'
+import { LewFlex, LewEmpty, LewLoading } from 'lew-ui'
 import { treeProps } from './props'
 import type { TreeDataSource } from './props'
-import { forEach, cloneDeep, isArray, findIndex, difference, uniq, intersection } from 'lodash-es'
+import {
+  forEach,
+  cloneDeep,
+  isArray,
+  findIndex,
+  difference,
+  uniq,
+  intersection
+} from 'lodash-es'
 import { tree2List } from './tree2list'
 import Icon from 'lew-ui/utils/Icon.vue'
 
@@ -19,9 +27,12 @@ const modelValue: Ref<string | (string | number)[] | undefined> = defineModel({
   default: undefined
 })
 
-const expandedKeys: Ref<(string | number)[] | undefined> = defineModel('expandedKeys', {
-  default: []
-})
+const expandedKeys: Ref<(string | number)[] | undefined> = defineModel(
+  'expandedKeys',
+  {
+    default: []
+  }
+)
 const certainKeys: any = ref<string[]>([])
 const loadingKeys = ref<string[]>([])
 const loading = ref<boolean>(false)
@@ -66,10 +77,13 @@ const expandHandle = async (item: TreeDataSource) => {
     _expandedKeys.splice(i, 1)
     expandedKeys.value = _expandedKeys
   } else if (props.onload && !loadingKeys.value.includes(item.key)) {
-    const index = treeList.value.findIndex((e: TreeDataSource) => e.parentKey === item.key)
+    const index = treeList.value.findIndex(
+      (e: TreeDataSource) => e.parentKey === item.key
+    )
     if (index < 0) {
       loadingKeys.value.push(item.key)
-      let _tree = ((await props.onload(cloneDeep(item) as TreeDataSource)) as any) || []
+      let _tree =
+        ((await props.onload(cloneDeep(item) as TreeDataSource)) as any) || []
       insertChildByKey(treeBackup, item.key, _tree)
       const { newTree, newTreeList }: any = (await tree2List({
         dataSource: treeBackup,
@@ -84,14 +98,21 @@ const expandHandle = async (item: TreeDataSource) => {
         loadingKeys.value.splice(i, 1)
       }
     }
-    expandedKeys.value = [...(expandedKeys.value as (string | number)[]), item.key]
+    expandedKeys.value = [
+      ...(expandedKeys.value as (string | number)[]),
+      item.key
+    ]
   } else {
     expandedKeys.value = [..._expandedKeys, item.key]
   }
 }
 
 // 定义插入子节点的函数
-const insertChildByKey = (tree: TreeDataSource[], key: string, newChild: TreeDataSource[]) => {
+const insertChildByKey = (
+  tree: TreeDataSource[],
+  key: string,
+  newChild: TreeDataSource[]
+) => {
   const index = findIndex(tree, (node: TreeDataSource) => node.key === key)
   if (index !== -1) {
     tree[index].children = newChild
@@ -103,7 +124,8 @@ const insertChildByKey = (tree: TreeDataSource[], key: string, newChild: TreeDat
 }
 
 const select = (item: TreeDataSource) => {
-  let _modelValue: (string | number)[] | undefined | string = cloneDeep(modelValue.value) || []
+  let _modelValue: (string | number)[] | undefined | string =
+    cloneDeep(modelValue.value) || []
   if (props.multiple && isArray(_modelValue)) {
     if (_modelValue && isArray(_modelValue) && _modelValue.includes(item.key)) {
       // @ts-ignore
@@ -111,7 +133,9 @@ const select = (item: TreeDataSource) => {
       // @ts-ignore
       _modelValue.splice(i, 1)
       if (!props.free) {
-        _modelValue = uniq(difference(_modelValue, item.allNodeValues)) as string[]
+        _modelValue = uniq(
+          difference(_modelValue, item.allNodeValues)
+        ) as string[]
       }
     } else {
       // @ts-ignore
@@ -147,7 +171,9 @@ const formatValues = ({ tree, values }: any): any => {
     const currentNode: any = stack.pop()
     const key = currentNode.key
     const childValues = currentNode.leafNodeValues || []
-    const isAllChildValuesInValues = childValues.every((value: string) => _modelValue.has(value))
+    const isAllChildValuesInValues = childValues.every((value: string) =>
+      _modelValue.has(value)
+    )
     if (!isAllChildValuesInValues && childValues.length > 0) {
       _modelValue.delete(key)
     } else if (childValues.length > 0) {
@@ -180,7 +206,13 @@ defineExpose({ init, getTreeList })
     }"
   >
     <template v-if="treeList && treeList.length > 0 && !loading">
-      <lew-flex v-for="(item, index) in treeList" :key="index" direction="y" gap="0px" x="start">
+      <lew-flex
+        v-for="(item, index) in treeList"
+        :key="index"
+        direction="y"
+        gap="0px"
+        x="start"
+      >
         <div
           v-if="
             expandAll ||
@@ -194,7 +226,9 @@ defineExpose({ init, getTreeList })
             'lew-tree-item-expand-all': expandAll,
             'lew-tree-item-expand': (expandedKeys || []).includes(item.key),
             'lew-tree-item-certain':
-              multiple && certainKeys.includes(item.key) && !(modelValue || []).includes(item.key),
+              multiple &&
+              certainKeys.includes(item.key) &&
+              !(modelValue || []).includes(item.key),
             'lew-tree-item-selected': multiple
               ? (modelValue || []).includes(item.key)
               : modelValue === item.key,
@@ -214,7 +248,12 @@ defineExpose({ init, getTreeList })
               class="lew-cascader-loading-icon"
               type="loader"
             />
-            <Icon v-else class="lew-tree-chevron-right-icon" :size="14" type="chevron-right" />
+            <Icon
+              v-else
+              class="lew-tree-chevron-right-icon"
+              :size="14"
+              type="chevron-right"
+            />
           </div>
 
           <div class="lew-tree-item-label" @click="select(item)">
@@ -222,9 +261,15 @@ defineExpose({ init, getTreeList })
             <lew-checkbox
               v-if="showCheckbox"
               :certain="
-                multiple && certainKeys.includes(item.key) && !(modelValue || []).includes(item.key)
+                multiple &&
+                certainKeys.includes(item.key) &&
+                !(modelValue || []).includes(item.key)
               "
-              :checked="multiple ? (modelValue || []).includes(item.key) : modelValue === item.key"
+              :checked="
+                multiple
+                  ? (modelValue || []).includes(item.key)
+                  : modelValue === item.key
+              "
               class="lew-tree-checkbox"
             />
             <slot
@@ -232,7 +277,9 @@ defineExpose({ init, getTreeList })
               name="item"
               :props="{
                 ...item,
-                checked: multiple ? (modelValue || []).includes(item.key) : modelValue === item.key
+                checked: multiple
+                  ? (modelValue || []).includes(item.key)
+                  : modelValue === item.key
               }"
             ></slot>
             <span v-else>{{ item.label }}</span>
@@ -311,7 +358,8 @@ defineExpose({ init, getTreeList })
     background-color: var(--lew-bgcolor-3);
     user-select: none;
     .lew-checkbox:deep(.icon-checkbox-box) {
-      border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
+      border: var(--lew-form-border-width)
+        var(--lew-checkbox-border-color-hover) solid;
       outline: var(--lew-form-outline);
       background: var(--lew-form-bgcolor);
     }

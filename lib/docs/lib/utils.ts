@@ -5,11 +5,16 @@ export const convertProps = (json: any) => {
       let type = ''
       if (Array.isArray(json[key].type)) {
         type = json[key].type
-          .map((item: any) => (item ? item.toString().match(/function\s+(\w+)/)[1] : ''))
+          .map((item: any) =>
+            item ? item.toString().match(/function\s+(\w+)/)[1] : ''
+          )
           .filter((item: any) => item !== '')
           .join(' | ')
       } else {
-        type = json[key].type !== null ? json[key].type.toString().match(/function\s+(\w+)/)[1] : ''
+        type =
+          json[key].type !== null
+            ? json[key].type.toString().match(/function\s+(\w+)/)[1]
+            : ''
       }
       if (!json[key].hidden) {
         const prop = {
@@ -52,7 +57,13 @@ export const downloadObjectAsFile = (data: any, filename: string) => {
 }
 
 // 获取assets静态资源
-export const getAssetsFile = ({ name, type }: { name: string; type: string }) => {
+export const getAssetsFile = ({
+  name,
+  type
+}: {
+  name: string
+  type: string
+}) => {
   return new URL(`../assets/images/${type}/${name}`, import.meta.url).href
 }
 

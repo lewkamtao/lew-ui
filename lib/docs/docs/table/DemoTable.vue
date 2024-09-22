@@ -36,7 +36,9 @@ const options = ref(
 <template>
   <div class="demo-wrapper">
     <lew-title>Table</lew-title>
-    <p class="sub-title">这是用div取代传统的table，看起来很简单，但其实功能没少。</p>
+    <p class="sub-title">
+      这是用div取代传统的table，看起来很简单，但其实功能没少。
+    </p>
 
     <lew-demo-box title="常规" :code="DemoTable1Code">
       <demo-table1 />

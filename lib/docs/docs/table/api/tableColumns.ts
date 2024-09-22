@@ -22,7 +22,8 @@ export default {
     },
     {
       name: 'type',
-      description: '列数据类型，text 为普通文本，text-trim 为自动省略的文本，template 为自定义模板',
+      description:
+        '列数据类型，text 为普通文本，text-trim 为自动省略的文本，template 为自定义模板',
       type: 'text | text-trim | template',
       default: 'text'
     },

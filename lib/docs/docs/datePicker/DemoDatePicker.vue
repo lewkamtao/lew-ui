@@ -30,8 +30,9 @@ const options = ref(
     <lew-demo-box title="常规" :code="DemoDatePicker1Code">
       <template #desc>
         <div>
-          设置 <lew-mark>size</lew-mark> 可以使用四种尺寸 <lew-mark>small</lew-mark
-          ><lew-mark>medium</lew-mark><lew-mark>large</lew-mark> 的输入框。
+          设置 <lew-mark>size</lew-mark> 可以使用四种尺寸
+          <lew-mark>small</lew-mark><lew-mark>medium</lew-mark
+          ><lew-mark>large</lew-mark> 的输入框。
         </div>
       </template>
       <demo-date-picker1 />
@@ -44,7 +45,10 @@ const options = ref(
     </lew-demo-box>
     <lew-demo-box title="格式化" :code="DemoDatePicker3Code">
       <template #desc>
-        <div><lew-mark>valueFormat</lew-mark> 可以设置日期格式，默认格式为 YYYY-MM-DD</div>
+        <div>
+          <lew-mark>valueFormat</lew-mark> 可以设置日期格式，默认格式为
+          YYYY-MM-DD
+        </div>
       </template>
       <demo-date-picker3 />
     </lew-demo-box>

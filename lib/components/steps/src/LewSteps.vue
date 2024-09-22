@@ -14,9 +14,12 @@ const stepsValue: Ref<number | undefined> = defineModel()
       :class="{
         'lew-steps-item-active': index === (stepsValue || 1) - 1,
         'lew-steps-item-succeeded': index < (stepsValue || 1) - 1,
-        'lew-steps-item-error': index === (stepsValue || 1) - 1 && status === 'error',
-        'lew-steps-item-warning': index === (stepsValue || 1) - 1 && status === 'warning',
-        'lew-steps-item-done': index === (stepsValue || 1) - 1 && status === 'done'
+        'lew-steps-item-error':
+          index === (stepsValue || 1) - 1 && status === 'error',
+        'lew-steps-item-warning':
+          index === (stepsValue || 1) - 1 && status === 'warning',
+        'lew-steps-item-done':
+          index === (stepsValue || 1) - 1 && status === 'done'
       }"
     >
       <div class="lew-steps-item-index">
@@ -43,7 +46,8 @@ const stepsValue: Ref<number | undefined> = defineModel()
         <Icon
           :style="{ color: 'var(--lew-color-primary)' }"
           v-else-if="
-            index < (stepsValue || 1) - 1 || (index === (stepsValue || 1) - 1 && status === 'done')
+            index < (stepsValue || 1) - 1 ||
+            (index === (stepsValue || 1) - 1 && status === 'done')
           "
           :size="16"
           :stroke-width="3"
@@ -56,7 +60,12 @@ const stepsValue: Ref<number | undefined> = defineModel()
           <lew-text-trim placement="bottom" :text="item.title" />
         </div>
         <div class="lew-steps-item-description">
-          <lew-text-trim allowHTML :lineClamp="2" placement="bottom" :text="item.description" />
+          <lew-text-trim
+            allowHTML
+            :lineClamp="2"
+            placement="bottom"
+            :text="item.description"
+          />
         </div>
       </div>
     </div>

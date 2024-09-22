@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useMagicKeys, useDebounceFn } from '@vueuse/core'
 import { object2class, any2px } from 'lew-ui/utils'
-import {  LewTooltip } from 'lew-ui'
+import { LewTooltip } from 'lew-ui'
 import { textareaProps } from './props'
 import { useResizeObserver } from '@vueuse/core'
 import Icon from 'lew-ui/utils/Icon.vue'
@@ -88,7 +88,16 @@ const getIconSize = computed(() => {
 })
 
 const getTextareaStyle: any = computed(() => {
-  const { width, height, size, resize, maxHeight, minHeight, maxWidth, minWidth } = props
+  const {
+    width,
+    height,
+    size,
+    resize,
+    maxHeight,
+    minHeight,
+    maxWidth,
+    minWidth
+  } = props
   const heightMap: Record<string, number> = {
     small: 60,
     medium: 75,

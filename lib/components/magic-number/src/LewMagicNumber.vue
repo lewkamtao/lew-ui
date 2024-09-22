@@ -43,7 +43,9 @@ const getNumStyle = computed(() => {
       :style="getItemStyle(item)"
       class="lew-magic-number-item"
     >
-      <span v-if="item === '.' || item === ','" :style="getNumStyle">{{ item }} </span>
+      <span v-if="item === '.' || item === ','" :style="getNumStyle"
+        >{{ item }}
+      </span>
       <span
         v-for="n in state.numberArr"
         v-else

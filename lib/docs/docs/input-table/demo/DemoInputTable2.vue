@@ -52,7 +52,7 @@ const columns = ref([
       :sortable="false"
       :columns="columns"
       v-model="tableData"
-	  uniqueField="productName"
+      uniqueField="productName"
       :default-form="{
         stockQuantity: 1000,
         supplier: '某某供应商',

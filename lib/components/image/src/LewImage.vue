@@ -4,7 +4,6 @@ import { any2px } from 'lew-ui/utils'
 import { imageProps } from './props'
 import { Fancybox } from '@fancyapps/ui'
 import '@fancyapps/ui/dist/fancybox/fancybox.css'
-import Icon from 'lew-ui/utils/Icon.vue'
 
 const props = defineProps(imageProps)
 const { isLoading, error } = useImage({ src: props.src || '' })
@@ -17,29 +16,22 @@ const imageStyleObject = computed(() => {
   }
 })
 
-const getIconSize = computed(() => {
-  const { width, height } = props
-  return Math.min(Number(width), Number(height)) * 0.45
-})
 onMounted(() => {
   Fancybox.bind('[data-fancybox]', { Hash: false })
 })
 </script>
-
 <template>
   <lew-flex gap="0" class="lew-image-wrapper" :style="imageStyleObject">
     <div class="skeletons" v-if="isLoading || loading"></div>
     <template v-else-if="error">
       <slot v-if="$slots.error" name="error" />
-      <Icon
-        :stroke-width="1"
-        class="lew-image-icon"
+      <img
         v-else
-        type="image"
-        :size="Number(getIconSize)"
+        class="lew-image-fail-icon"
+        src="./image_fail_icon.svg"
+        alt="图片加载失败"
       />
     </template>
-
     <template v-else>
       <div v-if="!previewKey" class="lew-image-box">
         <img
@@ -50,6 +42,7 @@ onMounted(() => {
             'object-fit': objectFit,
             'object-position': objectPosition
           }"
+          :alt
         />
       </div>
       <a v-else :href="src" :data-fancybox="previewKey" class="lew-image-box">
@@ -61,6 +54,7 @@ onMounted(() => {
             'object-fit': objectFit,
             'object-position': objectPosition
           }"
+          :alt
         />
       </a>
     </template>
@@ -70,6 +64,10 @@ onMounted(() => {
 <style lang="scss" scoped>
 .lew-image-wrapper {
   background-color: var(--lew-bgcolor-2);
+  .lew-image-fail-icon {
+    width: 50%;
+    height: auto;
+  }
   .lew-image-icon {
     opacity: 0.4;
   }

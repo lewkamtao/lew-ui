@@ -67,7 +67,9 @@ export const textareaProps = {
     validator: (value: string) => {
       const validResizes = ['none', 'both', 'horizontal', 'vertical']
       if (!validResizes.includes(value)) {
-        console.warn('[LewTextarea] resize 必须是 none、both、horizontal 或 vertical')
+        console.warn(
+          '[LewTextarea] resize 必须是 none、both、horizontal 或 vertical'
+        )
         return false
       }
       return true

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inputTagProps } from './props'
 import { LewInput, LewTag } from 'lew-ui'
-import { cloneDeep, set } from 'lodash-es'
+import { cloneDeep } from 'lodash-es'
 import { object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
 
@@ -101,8 +101,15 @@ const clear = () => {
 </script>
 
 <template>
-  <div class="lew-input-tag-view" @click="openInput" :class="getInputClassNames">
-    <div :style="{ padding: (modelValue || []).length > 0 ? '5px' : '' }" class="lew-input-tag-box">
+  <div
+    class="lew-input-tag-view"
+    @click="openInput"
+    :class="getInputClassNames"
+  >
+    <div
+      :style="{ padding: (modelValue || []).length > 0 ? '5px' : '' }"
+      class="lew-input-tag-box"
+    >
       <transition-group name="tag-list">
         <lew-tag
           v-for="(item, index) in modelValue"

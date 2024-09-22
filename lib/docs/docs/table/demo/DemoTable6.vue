@@ -122,15 +122,30 @@ const setSelectedBrands = () => {
     >
       <template #popularItems="{ row }">
         <lew-flex gap="5" x="start">
-          <lew-tag v-for="(item, index) in row.popularItems" :key="index" type="light" color="blue">
+          <lew-tag
+            v-for="(item, index) in row.popularItems"
+            :key="index"
+            type="light"
+            color="blue"
+          >
             {{ item }}
           </lew-tag>
         </lew-flex>
       </template>
       <template #action="{ row, column }">
         <lew-flex gap="0">
-          <lew-button size="small" text="详情" type="text" @click="viewDetails(row, column)" />
-          <lew-button size="small" text="收藏" type="text" @click="addToFavorites(row, column)" />
+          <lew-button
+            size="small"
+            text="详情"
+            type="text"
+            @click="viewDetails(row, column)"
+          />
+          <lew-button
+            size="small"
+            text="收藏"
+            type="text"
+            @click="addToFavorites(row, column)"
+          />
         </lew-flex>
       </template>
     </lew-table>

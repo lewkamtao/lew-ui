@@ -23,7 +23,13 @@ const data: any = [
     memory: '24GB GDDR6',
     performance: 9,
     price: 8999,
-    features: ['FSR 3', 'Ray Tracing', '4K Gaming', 'PCIe 4.0', 'DisplayPort 2.1'],
+    features: [
+      'FSR 3',
+      'Ray Tracing',
+      '4K Gaming',
+      'PCIe 4.0',
+      'DisplayPort 2.1'
+    ],
     releaseDate: '2022-12-13',
     powerConsumption: '355W',
     architecture: 'RDNA 3',
@@ -155,7 +161,9 @@ const formatPerformance = (performance: number) => {
 
 <template>
   <lew-table :data-source="data" :max-height="300" :columns="columns">
-    <template #performance="{ row }"> {{ formatPerformance(row.performance) }} </template>
+    <template #performance="{ row }">
+      {{ formatPerformance(row.performance) }}
+    </template>
     <template #features="{ row }">
       <lew-flex :gap="5" x="start" wrap>
         <lew-tag
@@ -170,6 +178,8 @@ const formatPerformance = (performance: number) => {
     </template>
     <template #price="{ row }"> ¥{{ row.price }} </template>
     <template #tdp="{ row }"> {{ row.tdp }}W </template>
-    <template #manufacturingProcess="{ row }"> {{ row.manufacturingProcess }} </template>
+    <template #manufacturingProcess="{ row }">
+      {{ row.manufacturingProcess }}
+    </template>
   </lew-table>
 </template>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { object2class } from 'lew-ui/utils'
-import { LewPopover,  LewDate, LewTooltip } from 'lew-ui'
+import { LewPopover, LewDate, LewTooltip } from 'lew-ui'
 import { datePickerProps } from './props'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash-es'
@@ -136,13 +136,20 @@ defineExpose({ show, hide })
               placement: 'right',
               delay: [500, 80]
             }"
-            :class="[dayjs(modelValue).isSame(item.value, 'day') ? 'item-active' : '']"
+            :class="[
+              dayjs(modelValue).isSame(item.value, 'day') ? 'item-active' : ''
+            ]"
           >
             {{ item.label }}
           </div>
         </lew-flex>
         <lew-flex class="lew-date-picker-date-panel">
-          <lew-date ref="lewDateRef" v-model="modelValue" v-bind="props" @change="change" />
+          <lew-date
+            ref="lewDateRef"
+            v-model="modelValue"
+            v-bind="props"
+            @change="change"
+          />
         </lew-flex>
       </lew-flex>
     </template>
@@ -203,7 +210,8 @@ defineExpose({ show, hide })
 
   .lew-date-picker-view.lew-date-picker-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+      solid;
     outline: var(--lew-form-outline);
   }
 

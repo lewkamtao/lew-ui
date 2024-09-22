@@ -142,8 +142,16 @@ defineExpose({ getForm, setForm, resetError, validate })
 </script>
 
 <template>
-  <div class="lew-form" :style="{ width: any2px(width), minWidth: 320 }" :class="getFormClassNames">
-    <LewGetLabelWidth ref="formLabelRef" :size="size" :options="componentOptions" />
+  <div
+    class="lew-form"
+    :style="{ width: any2px(width), minWidth: 320 }"
+    :class="getFormClassNames"
+  >
+    <LewGetLabelWidth
+      ref="formLabelRef"
+      :size="size"
+      :options="componentOptions"
+    />
     <lew-form-item
       :ref="(el) => (formItemRefMap[item.field] = el)"
       v-for="item in componentOptions"
@@ -152,7 +160,8 @@ defineExpose({ getForm, setForm, resetError, validate })
       v-bind="{
         direction,
         size,
-        labelWidth: labelWidth === 'auto' ? autoLabelWidth || labelWidth : labelWidth,
+        labelWidth:
+          labelWidth === 'auto' ? autoLabelWidth || labelWidth : labelWidth,
         disabled,
         readonly,
         ...item
@@ -187,6 +196,9 @@ defineExpose({ getForm, setForm, resetError, validate })
 }
 
 .lew-form-columns-4 {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(
+      0,
+      1fr
+    );
 }
 </style>

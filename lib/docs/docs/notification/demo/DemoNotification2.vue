@@ -17,7 +17,17 @@ const openWithoutDelay = () => {
 
 <template>
   <lew-flex wrap x="start" gap="20">
-    <lew-button text="系统更新" type="light" color="blue" @click="openWithDelay" />
-    <lew-button text="存储警告" type="light" color="orange" @click="openWithoutDelay" />
+    <lew-button
+      text="系统更新"
+      type="light"
+      color="blue"
+      @click="openWithDelay"
+    />
+    <lew-button
+      text="存储警告"
+      type="light"
+      color="orange"
+      @click="openWithoutDelay"
+    />
   </lew-flex>
 </template>

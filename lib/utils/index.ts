@@ -1,4 +1,4 @@
-import { uniqueId } from 'lodash-es'
+import { isNumber, uniqueId } from 'lodash-es'
 import Icon from './Icon.vue'
 /**
  * 获取颜色类型。
@@ -99,6 +99,43 @@ export const any2px = (value: number | string | undefined): string => {
   }
 
   return ''
+}
+
+/**
+ * 针对上面的 any2px 写一个类型校验方法，确保输入的值是有效的 CSS 值，可以是百分比或者 calc 计算。
+ * @param {number | string | undefined} value - 要校验的值。
+ * @returns {boolean} 如果输入的值是有效的 CSS 值，则返回 true，否则返回 false。
+ */
+export const isValidCssValue = ({
+  name,
+  field,
+  value
+}: {
+  name: string
+  field: string
+  value: number | string | undefined
+}): boolean => {
+  if (!value) {
+    return false
+  }
+  const autoRegex = /^auto$/i
+  const calcRegex = /^calc\((.+)\)$/
+  const percentRegex = /^-?\d+(\.\d+)?%$/
+  const pixelRegex = /^-?\d+(\.\d+)?(px)?$/
+  const numericRegex = /^-?\d+(\.\d+)?$/
+
+  const _value = String(value)
+  if (
+    autoRegex.test(_value) ||
+    calcRegex.test(_value) ||
+    percentRegex.test(_value) ||
+    pixelRegex.test(_value) ||
+    numericRegex.test(_value)
+  ) {
+    return true
+  }
+  console.warn(`[${name}] ${field} 属性的值 ${_value} 不是有效的 CSS 值。`)
+  return false
 }
 
 /**

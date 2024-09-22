@@ -37,10 +37,40 @@ const showWarningMessage = () => {
 
 <template>
   <lew-flex wrap x="start" gap="20">
-    <lew-button text="支付失败" round type="light" color="red" @click="showErrorMessage" />
-    <lew-button text="订单成功" round type="light" color="green" @click="showSuccessMessage" />
-    <lew-button text="订单处理" round type="light" color="normal" @click="showNormalMessage" />
-    <lew-button text="新品提醒" round type="light" color="blue" @click="showInfoMessage" />
-    <lew-button text="库存提示" round type="light" color="warning" @click="showWarningMessage" />
+    <lew-button
+      text="支付失败"
+      round
+      type="light"
+      color="red"
+      @click="showErrorMessage"
+    />
+    <lew-button
+      text="订单成功"
+      round
+      type="light"
+      color="green"
+      @click="showSuccessMessage"
+    />
+    <lew-button
+      text="订单处理"
+      round
+      type="light"
+      color="normal"
+      @click="showNormalMessage"
+    />
+    <lew-button
+      text="新品提醒"
+      round
+      type="light"
+      color="blue"
+      @click="showInfoMessage"
+    />
+    <lew-button
+      text="库存提示"
+      round
+      type="light"
+      color="warning"
+      @click="showWarningMessage"
+    />
   </lew-flex>
 </template>

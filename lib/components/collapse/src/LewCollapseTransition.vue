@@ -63,7 +63,9 @@ export default {
       let transitions = []
 
       Object.keys(this.cachedStyles).forEach((key) => {
-        transitions.push(`${this.convertToCssProperty(key)} ${this.duration}ms ${this.easing}`)
+        transitions.push(
+          `${this.convertToCssProperty(key)} ${this.duration}ms ${this.easing}`
+        )
       })
 
       return transitions.join(', ')
@@ -217,8 +219,10 @@ export default {
         return {
           height: el.offsetHeight + 'px',
           opacity: 1,
-          paddingTop: el.style.paddingTop || this.getCssValue(el, 'padding-top'),
-          paddingBottom: el.style.paddingBottom || this.getCssValue(el, 'padding-bottom')
+          paddingTop:
+            el.style.paddingTop || this.getCssValue(el, 'padding-top'),
+          paddingBottom:
+            el.style.paddingBottom || this.getCssValue(el, 'padding-bottom')
         }
       }
 
@@ -226,8 +230,10 @@ export default {
         return {
           width: el.offsetWidth + 'px',
           opacity: 1,
-          paddingLeft: el.style.paddingLeft || this.getCssValue(el, 'padding-left'),
-          paddingRight: el.style.paddingRight || this.getCssValue(el, 'padding-right')
+          paddingLeft:
+            el.style.paddingLeft || this.getCssValue(el, 'padding-left'),
+          paddingRight:
+            el.style.paddingRight || this.getCssValue(el, 'padding-right')
         }
       }
 
@@ -288,7 +294,10 @@ export default {
       }
 
       for (let i = 0, n = upperChars.length; i < n; i++) {
-        style = style.replace(new RegExp(upperChars[i]), '-' + upperChars[i].toLowerCase())
+        style = style.replace(
+          new RegExp(upperChars[i]),
+          '-' + upperChars[i].toLowerCase()
+        )
       }
 
       if (style.slice(0, 1) === '-') {

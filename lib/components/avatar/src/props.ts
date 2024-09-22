@@ -65,9 +65,16 @@ export const avatarProps = {
     default: 'top-right',
     description: '状态标识的位置',
     validator(value: AvatarPlacement): boolean {
-      const validPlacements = ['top-left', 'top-right', 'bottom-left', 'bottom-right']
+      const validPlacements = [
+        'top-left',
+        'top-right',
+        'bottom-left',
+        'bottom-right'
+      ]
       if (!validPlacements.includes(value)) {
-        console.warn(`[LewAvatar] statusPlacement 必须是 ${validPlacements.join(', ')} 之一`)
+        console.warn(
+          `[LewAvatar] statusPlacement 必须是 ${validPlacements.join(', ')} 之一`
+        )
         return false
       }
       return true

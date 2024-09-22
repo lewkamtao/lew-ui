@@ -141,7 +141,9 @@ const error = (e: any) => {
     <template #price="{ row }"> {{ formatPrice(row.price) }} </template>
     <template #industry="{ row }">
       <lew-tag type="light" color="blue" size="small">{{ row.sector }}</lew-tag>
-      <lew-tag type="light" color="green" size="small">{{ row.industry }}</lew-tag>
+      <lew-tag type="light" color="green" size="small">{{
+        row.industry
+      }}</lew-tag>
     </template>
     <template #action>
       <lew-flex gap="0">
@@ -153,8 +155,17 @@ const error = (e: any) => {
             <lew-flex direction="y" gap="20" class="popover-body">
               <lew-input v-model="v" placeholder="输入新的股价" />
               <lew-flex x="end" gap="5">
-                <lew-button text="取消" type="text" size="small" @click="hide()" />
-                <lew-button text="确认" size="small" @click="hide(), submit()" />
+                <lew-button
+                  text="取消"
+                  type="text"
+                  size="small"
+                  @click="hide()"
+                />
+                <lew-button
+                  text="确认"
+                  size="small"
+                  @click="hide(), submit()"
+                />
               </lew-flex>
             </lew-flex>
           </template>

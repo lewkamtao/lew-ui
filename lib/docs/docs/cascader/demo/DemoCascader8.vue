@@ -42,7 +42,11 @@ const options = [
         value: 15,
         label: '法国',
         children: [
-          { value: 16, label: '巴黎', desc: '埃菲尔铁塔、卢浮宫、香榭丽舍大街' },
+          {
+            value: 16,
+            label: '巴黎',
+            desc: '埃菲尔铁塔、卢浮宫、香榭丽舍大街'
+          },
           { value: 17, label: '马赛', desc: '老港口、地中海风情、肥皂' },
           { value: 18, label: '里昂', desc: '美食之都、丝绸、灯光节' }
         ]
@@ -67,7 +71,11 @@ const options = [
         label: '美国',
         children: [
           { value: 25, label: '纽约', desc: '自由女神像、百老汇、中央公园' },
-          { value: 26, label: '洛杉矶', desc: '好莱坞、迪士尼乐园、比佛利山庄' },
+          {
+            value: 26,
+            label: '洛杉矶',
+            desc: '好莱坞、迪士尼乐园、比佛利山庄'
+          },
           { value: 27, label: '华盛顿', desc: '白宫、国会大厦、林肯纪念堂' }
         ]
       },
@@ -88,6 +96,10 @@ const v = ref()
 
 <template>
   <div style="width: 300px">
-    <lew-cascader v-model="v" :options="options" placeholder="请选择您的旅游目的地" />
+    <lew-cascader
+      v-model="v"
+      :options="options"
+      placeholder="请选择您的旅游目的地"
+    />
   </div>
 </template>

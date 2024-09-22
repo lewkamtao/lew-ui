@@ -22,10 +22,15 @@ const currentStep = ref(2)
   <lew-flex direction="y">
     <lew-steps :options="options" v-model="currentStep" :status="status" />
     <lew-flex>
-      <lew-button :disabled="currentStep === 1" @click="currentStep -= 1" type="light"
+      <lew-button
+        :disabled="currentStep === 1"
+        @click="currentStep -= 1"
+        type="light"
         >上一步</lew-button
       >
-      <lew-button :disabled="currentStep === options.length" @click="currentStep += 1"
+      <lew-button
+        :disabled="currentStep === options.length"
+        @click="currentStep += 1"
         >下一步</lew-button
       >
     </lew-flex>

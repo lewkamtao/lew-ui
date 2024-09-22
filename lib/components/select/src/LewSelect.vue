@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
-import { LewPopover, LewFlex,  LewTooltip } from 'lew-ui'
+import { LewPopover, LewFlex, LewTooltip } from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
 import { UseVirtualList } from '@vueuse/components'
 import type { SelectOptions } from './props'
@@ -250,7 +250,10 @@ defineExpose({ show, hide })
               <lew-empty title="暂无结果" />
             </lew-flex>
           </template>
-          <div v-if="searchable && state.options && state.options.length > 0" class="result-count">
+          <div
+            v-if="searchable && state.options && state.options.length > 0"
+            class="result-count"
+          >
             共
             {{ numFormat(state.options && state.options.length) }}
             条结果
@@ -266,7 +269,10 @@ defineExpose({ show, hide })
             :height="getVirtualHeight"
           >
             <template #default="{ data: templateProps }">
-              <div :style="{ height: itemHeight + 'px' }" @click="selectHandle(templateProps)">
+              <div
+                :style="{ height: itemHeight + 'px' }"
+                @click="selectHandle(templateProps)"
+              >
                 <slot
                   v-if="$slots.item"
                   name="item"
@@ -275,7 +281,11 @@ defineExpose({ show, hide })
                     checked: getChecked(templateProps.value)
                   }"
                 ></slot>
-                <div v-else class="lew-select-item" :class="getSelectItemClassName(templateProps)">
+                <div
+                  v-else
+                  class="lew-select-item"
+                  :class="getSelectItemClassName(templateProps)"
+                >
                   <lew-text-trim
                     :text="templateProps.label"
                     :delay="[500, 0]"

@@ -13,7 +13,10 @@ defineProps(breadcrumbProps)
       class="lew-breadcrumb-item"
       :class="{ 'lew-breadcrumb-active': item.active }"
     >
-      <span :class="{ 'lew-breadcrumb-isPath': !!item.value }" @click="emit('change', item)">
+      <span
+        :class="{ 'lew-breadcrumb-isPath': !!item.value }"
+        @click="emit('change', item)"
+      >
         {{ item.label }}
       </span>
       <div v-if="index != options.length - 1" class="lew-breadcrumb-parting">

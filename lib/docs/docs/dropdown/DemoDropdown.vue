@@ -26,7 +26,12 @@ const { push } = useRouter()
     <lew-title>Dropdown</lew-title>
     <p class="sub-title">
       你可以使用
-      <lew-mark cursor="pointer" k @click="push('/Popover')" type="light" color="blue"
+      <lew-mark
+        cursor="pointer"
+        k
+        @click="push('/Popover')"
+        type="light"
+        color="blue"
         >Popover</lew-mark
       >
       进行高度自定义下拉菜单
@@ -43,7 +48,11 @@ const { push } = useRouter()
     <lew-docs-tables :options="options" />
     <p class="demo-tips">
       你可以在
-      <lew-mark cursor="pointer" @click="push('/Tooltip')" type="light" color="blue"
+      <lew-mark
+        cursor="pointer"
+        @click="push('/Tooltip')"
+        type="light"
+        color="blue"
         >Tooltip</lew-mark
       >
       找到你需要的位置参数。

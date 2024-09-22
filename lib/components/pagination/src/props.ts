@@ -69,7 +69,9 @@ export const paginationProps = {
     description: '分页组件的尺寸',
     validator: (value: LewSize) => {
       if (!validSizes.includes(value)) {
-        console.warn(`[LewPagination] size 必须是 ${validSizes.join(', ')} 之一`)
+        console.warn(
+          `[LewPagination] size 必须是 ${validSizes.join(', ')} 之一`
+        )
         return false
       }
       return true

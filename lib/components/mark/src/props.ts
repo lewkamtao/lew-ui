@@ -54,8 +54,15 @@ export const markProps = {
     default: 400,
     validator: (value: BoldValue | string): boolean => {
       const numValue = typeof value === 'string' ? parseInt(value, 10) : value
-      if (isNaN(numValue) || numValue < 100 || numValue > 900 || numValue % 100 !== 0) {
-        console.warn(`[LewMark] 无效的加粗值: ${value}。请使用 100 到 900 之间的 100 的倍数`)
+      if (
+        isNaN(numValue) ||
+        numValue < 100 ||
+        numValue > 900 ||
+        numValue % 100 !== 0
+      ) {
+        console.warn(
+          `[LewMark] 无效的加粗值: ${value}。请使用 100 到 900 之间的 100 的倍数`
+        )
         return false
       }
       return true
@@ -71,7 +78,13 @@ export const markProps = {
     type: String as PropType<CursorStyle>,
     default: 'default',
     validator: (value: CursorStyle): boolean => {
-      const validCursors: CursorStyle[] = ['pointer', 'default', 'text', 'move', 'not-allowed']
+      const validCursors: CursorStyle[] = [
+        'pointer',
+        'default',
+        'text',
+        'move',
+        'not-allowed'
+      ]
       if (!validCursors.includes(value)) {
         console.warn(
           `[LewMark] 无效的鼠标样式: ${value}。请使用以下有效样式之一: ${validCursors.join(', ')}`

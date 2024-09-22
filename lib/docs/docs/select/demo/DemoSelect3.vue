@@ -20,7 +20,9 @@ const filterFn = (params: any) => {
 const searchFn = (event: any) => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const res = options.value.filter((e) => e.label.indexOf(event.keyword) >= 0)
+      const res = options.value.filter(
+        (e) => e.label.indexOf(event.keyword) >= 0
+      )
       resolve(res)
     }, 500)
   })

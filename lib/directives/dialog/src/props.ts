@@ -7,9 +7,17 @@ export const dialogProps = {
     default: 'error',
     description: '对话框类型',
     validator: (value: string) => {
-      const validTypes: LewColor[] = ['primary', 'success', 'warning', 'error', 'info']
+      const validTypes: LewColor[] = [
+        'primary',
+        'success',
+        'warning',
+        'error',
+        'info'
+      ]
       if (!validTypes.includes(value as LewColor)) {
-        console.warn(`[LewDialog] 无效的类型: ${value}。请使用 ${validTypes.join(', ')} 中的一个。`)
+        console.warn(
+          `[LewDialog] 无效的类型: ${value}。请使用 ${validTypes.join(', ')} 中的一个。`
+        )
         return false
       }
       return true

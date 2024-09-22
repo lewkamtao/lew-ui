@@ -15,7 +15,9 @@ export interface TableColumn {
 
 export const tableModel = {
   selectedKeys: {
-    type: [Array, String, Number, undefined] as PropType<string[] | string | number | undefined>,
+    type: [Array, String, Number, undefined] as PropType<
+      string[] | string | number | undefined
+    >,
     default: undefined,
     description: '选中的行键值，当 multiple 为 true 时，为数组，否则为字符串',
     validator: (value: string[] | string) => {

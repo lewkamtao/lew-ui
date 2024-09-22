@@ -60,9 +60,14 @@ export const datePickerProps = {
     validator(value: DatePickerPresetsOption[]): boolean {
       if (
         !Array.isArray(value) ||
-        !value.every((item) => typeof item.label === 'string' && typeof item.value === 'string')
+        !value.every(
+          (item) =>
+            typeof item.label === 'string' && typeof item.value === 'string'
+        )
       ) {
-        console.warn('[LewDatePicker] presets 必须是包含 label 和 value 字符串的对象数组')
+        console.warn(
+          '[LewDatePicker] presets 必须是包含 label 和 value 字符串的对象数组'
+        )
         return false
       }
       return true

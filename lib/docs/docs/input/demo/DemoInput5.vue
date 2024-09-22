@@ -4,6 +4,12 @@ const v = ref('')
 
 <template>
   <lew-flex style="width: 300px" :gap="20" x="start" direction="y">
-    <lew-input v-model="v" type="password" placeholder="密码可见" showPassword :maxLength="30" />
+    <lew-input
+      v-model="v"
+      type="password"
+      placeholder="密码可见"
+      showPassword
+      :maxLength="30"
+    />
   </lew-flex>
 </template>

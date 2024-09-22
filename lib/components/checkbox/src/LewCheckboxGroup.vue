@@ -24,7 +24,13 @@ watch(
   }
 )
 
-const change = ({ item, checked }: { item: CheckboxOptions; checked: boolean }) => {
+const change = ({
+  item,
+  checked
+}: {
+  item: CheckboxOptions
+  checked: boolean
+}) => {
   let _value = modelValue.value || []
   if (checked) {
     _value.push(item.value as string & number)
@@ -43,7 +49,10 @@ const change = ({ item, checked }: { item: CheckboxOptions; checked: boolean }) 
 
 const initCheckbox = () => {
   checkList.value = props.options.map((item: CheckboxOptions) => {
-    if (modelValue.value && modelValue.value.includes(item.value as string & number)) {
+    if (
+      modelValue.value &&
+      modelValue.value.includes(item.value as string & number)
+    ) {
       return true
     }
     return false
