@@ -34,12 +34,12 @@ const change = () => {
 </script>
 
 <template>
-  <div class="lew-collapse-box">
+  <div class="lew-collapse-item">
     <lew-flex
       x="start"
       y="center"
-      class="lew-collapse-title"
-      :class="{ 'lew-collapse-title-active': modelValue }"
+      class="lew-collapse-item-title"
+      :class="{ 'lew-collapse-item-title-active': modelValue }"
       :style="{ borderRadius: any2px(radius) }"
       @click="change"
     >
@@ -57,39 +57,39 @@ const change = () => {
       </template>
     </lew-flex>
     <Lew-collapse-transition>
-      <div v-if="modelValue" class="lew-collapse-main">
+      <div v-if="modelValue" class="lew-collapse-item-main">
         <slot />
       </div>
     </Lew-collapse-transition>
   </div>
 </template>
 <style scoped lang="scss">
-.lew-collapse-box {
-  .lew-collapse-title {
+.lew-collapse-item {
+  .lew-collapse-item-title {
     cursor: pointer;
     padding: 10px;
     box-sizing: border-box;
     background-color: var(--lew-bgcolor-2);
     transition: all 0.15s;
   }
-  .lew-collapse-title-active {
+  .lew-collapse-item-title-active {
     background-color: var(--lew-bgcolor-4);
     font-weight: bold;
   }
-  .lew-collapse-title-active:hover {
+  .lew-collapse-item-title-active:hover {
     background-color: var(--lew-bgcolor-4);
     font-weight: bold;
   }
-  .lew-collapse-title:hover {
+  .lew-collapse-item-title:hover {
     background-color: var(--lew-bgcolor-4);
     font-weight: bold;
   }
 
-  .lew-collapse-main {
+  .lew-collapse-item-main {
     box-sizing: border-box;
   }
 }
-.lew-collapse-box:last-child {
+.lew-collapse-item:last-child {
   border-bottom: none;
 }
 </style>

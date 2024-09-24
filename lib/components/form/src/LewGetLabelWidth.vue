@@ -25,7 +25,7 @@ defineExpose({
 </script>
 
 <template>
-  <div ref="formLabelRef" class="lew-form-label-box">
+  <div ref="formLabelRef" class="lew-get-label-width-box">
     <lew-flex
       gap="5"
       :style="{
@@ -44,7 +44,7 @@ defineExpose({
 </template>
 
 <style lang="scss" scoped>
-.lew-form-label-box {
+.lew-get-label-width-box {
   position: fixed;
   width: auto;
   display: inline-flex;

@@ -20,7 +20,6 @@ const getRadioGroupClassName = computed(() => {
   const { size, direction, disabled, readonly } = props
   return object2class('lew-radio-group', {
     size,
-    direction,
     disabled,
     readonly
   })
@@ -32,6 +31,7 @@ const getRadioGroupClassName = computed(() => {
     x="start"
     gap="10"
     class="lew-radio-group"
+    :direction
     :class="getRadioGroupClassName"
   >
     <lew-radio
@@ -68,15 +68,6 @@ const getRadioGroupClassName = computed(() => {
   min-height: var(--lew-form-item-height-large);
 }
 
-.lew-radio-group.lew-radio-group-direction-x {
-  flex-direction: row;
-}
-
-.lew-radio-group.lew-radio-group-direction-y {
-  flex-direction: column;
-  align-items: start;
-  justify-content: flex-start;
-}
 .lew-radio-group-disabled {
   opacity: var(--lew-disabled-opacity);
   pointer-events: none;

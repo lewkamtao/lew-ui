@@ -106,9 +106,9 @@ defineExpose({ focus })
     @click="handleClick"
   >
     <div
-      class="lew-loading-icon"
+      class="lew-button-loading-icon"
       :class="{
-        'lew-loading-isShow': (_loading || loading) && !disabled
+        'lew-button-loading-isShow': (_loading || loading) && !disabled
       }"
     >
       <Icon :size="getIconSize" spinning type="loader" />
@@ -148,7 +148,7 @@ defineExpose({ focus })
   box-shadow: var(--lew-form-box-shadow);
   outline: none;
 
-  .lew-loading-icon {
+  .lew-button-loading-icon {
     position: absolute;
     opacity: 0;
     top: 50%;
@@ -159,7 +159,7 @@ defineExpose({ focus })
     justify-content: center;
   }
 
-  .lew-loading-isShow {
+  .lew-button-loading-isShow {
     opacity: 1;
   }
 
@@ -169,7 +169,7 @@ defineExpose({ focus })
     font-size: 0px;
   }
 
-  .lew-loading-isShow {
+  .lew-button-loading-isShow {
     opacity: 1;
   }
 }
@@ -242,7 +242,7 @@ defineExpose({ focus })
     font-size: var(--lew-form-font-size-mini);
     gap: 2px;
   }
-  .lew-loading-icon {
+  .lew-button-loading-icon {
     left: 7px;
   }
 }
@@ -257,7 +257,7 @@ defineExpose({ focus })
     font-size: var(--lew-form-font-size-small);
     gap: 3px;
   }
-  .lew-loading-icon {
+  .lew-button-loading-icon {
     left: 8px;
   }
 }
@@ -273,7 +273,7 @@ defineExpose({ focus })
     gap: 4px;
   }
 
-  .lew-loading-icon {
+  .lew-button-loading-icon {
     left: 9px;
   }
 }
@@ -288,13 +288,13 @@ defineExpose({ focus })
     font-size: var(--lew-form-font-size-large);
     gap: 5px;
   }
-  .lew-loading-icon {
+  .lew-button-loading-icon {
     left: 10px;
   }
 }
 
 .lew-button-singleIcon {
-  .lew-loading-icon {
+  .lew-button-loading-icon {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);

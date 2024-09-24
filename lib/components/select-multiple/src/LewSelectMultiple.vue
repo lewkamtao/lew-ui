@@ -219,9 +219,9 @@ defineExpose({ show, hide })
         <Icon
           :size="getIconSize"
           type="chevron-down"
-          class="icon-select"
+          class="lew-icon-select"
           :class="{
-            'icon-select-hide': clearable && getLabels && getLabels.length > 0
+            'lew-icon-select-hide': clearable && getLabels && getLabels.length > 0
           }"
         />
         <transition name="lew-form-icon-ani">
@@ -244,7 +244,7 @@ defineExpose({ show, hide })
             y="center"
             :gap="5"
             wrap
-            class="value"
+            class="lew-value"
           >
             <transition-group name="list">
               <lew-tag
@@ -297,7 +297,7 @@ defineExpose({ show, hide })
             </lew-popover>
           </template>
         </template>
-        <div v-show="getLabels && getLabels.length === 0" class="placeholder">
+        <div v-show="getLabels && getLabels.length === 0" class="lew-placeholder">
           {{ placeholder }}
         </div>
       </div>
@@ -309,7 +309,7 @@ defineExpose({ show, hide })
         :style="`width:${state.selectWidth}px`"
       >
         <slot name="header"></slot>
-        <div v-if="searchable" class="search-input">
+        <div v-if="searchable" class="lew-search-input">
           <input
             ref="searchInputRef"
             v-model="state.keyword"
@@ -320,13 +320,13 @@ defineExpose({ show, hide })
         <div class="lew-select-options-box">
           <template v-if="state.options && state.options.length === 0">
             <slot v-if="$slots.empty" name="empty"></slot>
-            <lew-flex v-else direction="y" class="not-found">
+            <lew-flex v-else direction="y" class="lew-not-found">
               <lew-empty title="暂无结果" />
             </lew-flex>
           </template>
           <div
             v-if="searchable && state.options && state.options.length > 0"
-            class="result-count"
+            class="lew-result-count"
           >
             共
             {{ numFormat(state.options && state.options.length) }}
@@ -409,7 +409,7 @@ defineExpose({ show, hide })
     box-sizing: border-box;
     overflow: hidden;
 
-    .icon-select {
+    .lew-icon-select {
       position: absolute;
       top: 50%;
       right: 9px;
@@ -419,12 +419,12 @@ defineExpose({ show, hide })
       padding: 2px;
     }
 
-    .icon-select-hide {
+    .lew-icon-select-hide {
       opacity: 0;
       transform: translate(100%, -50%);
     }
 
-    .placeholder {
+    .lew-placeholder {
       color: rgb(165, 165, 165);
     }
 
@@ -448,8 +448,8 @@ defineExpose({ show, hide })
         background-color: var(--lew-bgcolor-0) !important;
       }
     }
-    .placeholder,
-    .value {
+    .lew-placeholder,
+    .lew-value {
       width: calc(100% - 24px);
       transition: all 0.2s;
       height: 100%;
@@ -464,7 +464,7 @@ defineExpose({ show, hide })
   .lew-select-size-small {
     min-height: var(--lew-form-item-height-small);
 
-    .placeholder,
+    .lew-placeholder,
     .lew-select-multiple-text-value {
       font-size: var(--lew-form-font-size-small);
       line-height: var(--lew-form-item-height-small);
@@ -478,7 +478,7 @@ defineExpose({ show, hide })
   .lew-select-size-medium {
     min-height: var(--lew-form-item-height-medium);
 
-    .placeholder,
+    .lew-placeholder,
     .lew-select-multiple-text-value {
       font-size: var(--lew-form-font-size-medium);
       line-height: var(--lew-form-item-height-medium);
@@ -492,7 +492,7 @@ defineExpose({ show, hide })
   .lew-select-size-large {
     min-height: var(--lew-form-item-height-large);
 
-    .placeholder,
+    .lew-placeholder,
     .lew-select-multiple-text-value {
       font-size: var(--lew-form-font-size-large);
       line-height: var(--lew-form-item-height-large);
@@ -521,12 +521,12 @@ defineExpose({ show, hide })
       background-color: var(--lew-color-primary-light) !important;
     }
   }
-  .icon-select {
+  .lew-icon-select {
     transform: translateY(-50%) rotate(180deg);
     color: var(--lew-text-color-1);
   }
 
-  .icon-select-hide {
+  .lew-icon-select-hide {
     opacity: 0;
     transform: translate(100%, -50%) rotate(180deg);
   }
@@ -577,7 +577,7 @@ defineExpose({ show, hide })
 .lew-select-body {
   width: 100%;
   box-sizing: border-box;
-  .search-input {
+  .lew-search-input {
     margin-bottom: 5px;
 
     input {
@@ -598,7 +598,7 @@ defineExpose({ show, hide })
     }
   }
 
-  .result-count {
+  .lew-result-count {
     padding-left: 8px;
     margin: 5px 0px;
     opacity: 0.4;

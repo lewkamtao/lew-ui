@@ -8,7 +8,7 @@
   left: 50%;
   transform: translateX(-50%);
   top: 80px;
-  .message {
+  .lew-message {
     width: auto;
     display: flex;
     flex-shrink: 0;
@@ -27,7 +27,7 @@
     border-radius: 12px;
     background-color: var(--lew-pop-bgcolor) !important;
 
-    .content {
+    .lew-message-content {
       max-width: 500px;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -45,32 +45,32 @@
       height: 16px;
     }
   }
-  .message-normal {
+  .lew-message-normal {
     color: var(--lew-color-normal);
   }
-  .message-error {
+  .lew-message-error {
     color: var(--lew-color-error);
   }
-  .message-success {
+  .lew-message-success {
     color: var(--lew-color-success);
   }
-  .message-info {
+  .lew-message-info {
     color: var(--lew-color-info);
   }
-  .message-warning {
+  .lew-message-warning {
     color: var(--lew-color-warning);
   }
-  .message-loading {
+  .lew-message-loading {
     color: var(--lew-color-normal);
   }
-  .message-icon {
+  .lew-message-icon {
     display: flex;
   }
-  .message-show {
+  .lew-message-show {
     opacity: 1;
     transform: translateY(0px);
   }
-  .message-hidden {
+  .lew-message-hidden {
     opacity: 0;
     margin-top: -50px;
   }

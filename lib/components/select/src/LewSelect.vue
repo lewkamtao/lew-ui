@@ -209,8 +209,8 @@ defineExpose({ show, hide })
         <Icon
           :size="getIconSize"
           type="chevron-down"
-          class="icon-select"
-          :class="{ 'icon-select-hide': clearable && state.keyword }"
+          class="lew-icon-select"
+          :class="{ 'lew-icon-select-hide': clearable && state.keyword }"
         />
         <transition name="lew-form-icon-ani">
           <Icon
@@ -227,7 +227,7 @@ defineExpose({ show, hide })
         <input
           ref="inputRef"
           v-model="state.keyword"
-          class="value"
+          class="lew-value"
           :style="getValueStyle"
           :readonly="!searchable"
           :placeholder="state.keywordBackup || placeholder"
@@ -246,13 +246,13 @@ defineExpose({ show, hide })
         <div class="lew-select-options-box">
           <template v-if="state.options && state.options.length === 0">
             <slot v-if="$slots.empty" name="empty"></slot>
-            <lew-flex v-else direction="y" class="not-found">
+            <lew-flex v-else direction="y" class="lew-not-found">
               <lew-empty title="暂无结果" />
             </lew-flex>
           </template>
           <div
             v-if="searchable && state.options && state.options.length > 0"
-            class="result-count"
+            class="lew-result-count"
           >
             共
             {{ numFormat(state.options && state.options.length) }}
@@ -293,7 +293,7 @@ defineExpose({ show, hide })
                   />
                   <Icon
                     v-if="getChecked(templateProps.value) && showCheckIcon"
-                    class="icon-check"
+                    class="lew-icon-check"
                     :size="14"
                     type="check"
                   />
@@ -333,7 +333,7 @@ defineExpose({ show, hide })
     cursor: pointer;
     user-select: none;
 
-    .icon-select {
+    .lew-icon-select {
       position: absolute;
       top: 50%;
       right: 9px;
@@ -342,16 +342,16 @@ defineExpose({ show, hide })
       transition: var(--lew-form-transition-bezier);
     }
 
-    .icon-select {
+    .lew-icon-select {
       opacity: var(--lew-form-icon-opacity);
     }
 
-    .icon-select-hide {
+    .lew-icon-select-hide {
       opacity: 0;
       transform: translate(100%, -50%);
     }
 
-    .value {
+    .lew-value {
       display: inline-flex;
       width: calc(100% - 24px);
       align-items: center;
@@ -365,7 +365,7 @@ defineExpose({ show, hide })
       transition: all 0.2s;
     }
 
-    .value::placeholder {
+    .lew-value::placeholder {
       color: rgb(165, 165, 165);
     }
   }
@@ -375,7 +375,7 @@ defineExpose({ show, hide })
   }
 
   .lew-select-size-small {
-    .value {
+    .lew-value {
       height: var(--lew-form-item-height-small);
       padding: var(--lew-form-input-padding-small);
       font-size: var(--lew-form-font-size-small);
@@ -384,7 +384,7 @@ defineExpose({ show, hide })
   }
 
   .lew-select-size-medium {
-    .value {
+    .lew-value {
       height: var(--lew-form-item-height-medium);
       padding: var(--lew-form-input-padding-medium);
       font-size: var(--lew-form-font-size-medium);
@@ -393,7 +393,7 @@ defineExpose({ show, hide })
   }
 
   .lew-select-size-large {
-    .value {
+    .lew-value {
       height: var(--lew-form-item-height-large);
       padding: var(--lew-form-input-padding-large);
       font-size: var(--lew-form-font-size-large);
@@ -415,12 +415,12 @@ defineExpose({ show, hide })
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
   outline: var(--lew-form-outline);
 
-  .icon-select {
+  .lew-icon-select {
     color: var(--lew-text-color-1);
     transform: translateY(-50%) rotate(180deg);
   }
 
-  .icon-select-hide {
+  .lew-icon-select-hide {
     opacity: 0;
     transform: translate(100%, -50%) rotate(180deg);
   }
@@ -441,7 +441,7 @@ defineExpose({ show, hide })
 
 .lew-select-view-searchable {
   .lew-select {
-    .value {
+    .lew-value {
       cursor: text;
     }
   }
@@ -466,7 +466,7 @@ defineExpose({ show, hide })
     padding: 2px 0px;
   }
 
-  .result-count {
+  .lew-result-count {
     margin: 5px 0px;
     padding-left: 8px;
     font-size: 13px;
@@ -535,7 +535,7 @@ defineExpose({ show, hide })
       background-color: var(--lew-pop-bgcolor-active);
       font-weight: bold;
 
-      .icon-check {
+      .lew-icon-check {
         margin-right: 10px;
       }
     }

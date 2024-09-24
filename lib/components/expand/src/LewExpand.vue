@@ -22,7 +22,7 @@ onMounted(() => {
 <template>
   <div
     ref="expandRef"
-    class="expand-wrapper"
+    class="lew-expand-wrapper"
     :style="{
       height: collapse ? any2px(collapseHeight) : any2px(expandHeight),
       paddingBottom: collapse ? '0px' : '40px'
@@ -33,11 +33,11 @@ onMounted(() => {
       @click="collapse = !collapse"
       gap="5"
       v-if="collapseHeight"
-      class="expand-btn"
+      class="lew-expand-btn"
     >
       <Icon
         :style="{ transform: collapse ? 'rotate(0deg)' : 'rotate(180deg)' }"
-        class="expand-icon"
+        class="lew-expand-icon"
         type="chevron-down"
         :size="14"
       ></Icon>
@@ -47,12 +47,12 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-.expand-wrapper {
+.lew-expand-wrapper {
   position: relative;
   width: 100%;
   overflow: hidden;
   transition: var(--lew-form-transition-ease);
-  .expand-btn {
+  .lew-expand-btn {
     position: absolute;
     bottom: 0px;
     left: 0px;
@@ -64,7 +64,7 @@ onMounted(() => {
     text-align: center;
     background-image: var(--lew-expand-control-bg-gradient);
     cursor: pointer;
-    .expand-icon {
+    .lew-expand-icon {
       transition: var(--lew-form-transition-ease);
     }
   }

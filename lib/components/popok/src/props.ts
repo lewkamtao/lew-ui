@@ -53,19 +53,12 @@ export const popokProps = {
   },
   okProps: {
     type: Object as PropType<ButtonProps>,
-    default: () => ({
-      text: '确定',
-      color: 'primary'
-    }),
+    default: () => ({}),
     description: '确定按钮的属性'
   },
   cancelProps: {
     type: Object as PropType<ButtonProps>,
-    default: () => ({
-      type: 'text',
-      text: '取消',
-      color: 'normal'
-    }),
+    default: () => ({}),
     description: '取消按钮的属性'
   },
   content: {

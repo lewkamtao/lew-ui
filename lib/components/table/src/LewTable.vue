@@ -393,7 +393,7 @@ onUnmounted(() => {
     <i
       :style="{ left: any2px(state.fixedLeftWidth) }"
       :class="{
-        'hide-line-left':
+        'lew-hide-line-left':
           !state.isScrollbarVisible ||
           !state.isInitialized ||
           ['all', 'left'].includes(state.hiddenScrollLine)
@@ -403,7 +403,7 @@ onUnmounted(() => {
     <i
       :style="{ right: any2px(state.fixedRightWidth) }"
       :class="{
-        'hide-line-right':
+        'lew-hide-line-right':
           !state.isScrollbarVisible ||
           !state.isInitialized ||
           ['all', 'right'].includes(state.hiddenScrollLine)
@@ -461,7 +461,7 @@ onUnmounted(() => {
               gap="5"
               @click="sort(column)"
             >
-              <span class="title-span">
+              <span class="lew-table-title-span">
                 {{ column.title }}
                 <sort-icon
                   v-if="column.sortable"
@@ -486,7 +486,7 @@ onUnmounted(() => {
               gap="5"
               @click="sort(column)"
             >
-              <span class="title-span">
+              <span class="lew-table-title-span">
                 {{ column.title }}
                 <sort-icon
                   v-if="column.sortable"
@@ -515,7 +515,7 @@ onUnmounted(() => {
               gap="5"
               @click="sort(column)"
             >
-              <span class="title-span">
+              <span class="lew-table-title-span">
                 {{ column.title }}
                 <sort-icon
                   v-if="column.sortable"
@@ -674,7 +674,6 @@ onUnmounted(() => {
 .lew-table-wrapper {
   position: relative;
   width: 100%;
-  height: 100%;
   border-bottom: 0px solid transparent;
   box-sizing: border-box;
   background-color: var(--lew-bgcolor-0);
@@ -718,8 +717,8 @@ onUnmounted(() => {
     );
     transition: opacity 0.25s;
   }
-  .hide-line-left,
-  .hide-line-right {
+  .lew-hide-line-left,
+  .lew-hide-line-right {
     opacity: 0;
   }
 }
@@ -810,7 +809,7 @@ onUnmounted(() => {
         cursor: pointer;
         user-select: none;
       }
-      .title-span {
+      .lew-table-title-span {
         position: relative;
         .lew-table-sorter {
           position: absolute;

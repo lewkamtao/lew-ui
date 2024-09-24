@@ -74,7 +74,7 @@ defineExpose({ open })
     @cancel="visible = false"
     :title="`${editIndex >= 0 ? '编辑' : '新增'}数据`"
   >
-    <div class="form-modal lew-scrollbar">
+    <div class="lew-form-modal lew-scrollbar">
       <lew-form
         :size
         @mounted="formMounted"
@@ -87,14 +87,14 @@ defineExpose({ open })
 </template>
 
 <style lang="scss" scoped>
-.form-modal {
+.lew-form-modal {
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
   max-height: 80vh;
 }
 
-.footer {
+.lew-form-modal-footer {
   padding: 5px 15px;
 }
 </style>

@@ -144,7 +144,7 @@ defineExpose({ show, hide, refresh })
 
 <template>
   <div class="lew-popover">
-    <div ref="triggerRef" class="trigger">
+    <div ref="triggerRef" class="lew-popover-trigger">
       <slot name="trigger"></slot>
     </div>
     <div
@@ -167,7 +167,7 @@ defineExpose({ show, hide, refresh })
 
 <style lang="scss">
 .lew-popover {
-  .trigger {
+  .lew-popover-trigger {
     display: flex;
   }
 }
