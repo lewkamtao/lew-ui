@@ -24,15 +24,15 @@ const showMessage = ({ type, e }: MessageOptions) => {
 
   const messageContainer: any = document.getElementById('lew-message')
   const hasMessageById = id
-    ? document.getElementById(`message-id-${id}`)
+    ? document.getElementById(`lew-message-id-${id}`)
     : false
   const messageElement = hasMessageById || document.createElement('div')
 
-  messageElement.innerHTML = `${getIconInnerHTML({ type, strokeWidth: type === 'loading' ? 2.5 : undefined, spinning: type === 'loading' })}<div class="content">${content || e}</div>`
+  messageElement.innerHTML = `${getIconInnerHTML({ type, strokeWidth: type === 'loading' ? 2.5 : undefined, spinning: type === 'loading' })}<div class="lew-message-content">${content || e}</div>`
 
   if (!hasMessageById) {
     if (id) {
-      messageElement.setAttribute('id', `message-id-${id}`)
+      messageElement.setAttribute('id', `lew-message-id-${id}`)
     }
     messageContainer?.appendChild(
       messageElement,
@@ -44,20 +44,20 @@ const showMessage = ({ type, e }: MessageOptions) => {
 
   messageElement.setAttribute(
     'class',
-    `message message-${type} message-id-${id}`
+    `lew-message lew-message-${type} lew-message-id-${id}`
   )
 
   setTimeout(() => {
     nextTick(() => {
       messageElement.setAttribute(
         'class',
-        `message message-${type} message-show`
+        `lew-message lew-message-${type} lew-message-show`
       )
       LewMessage.timer[id] = setTimeout(
         () => {
           messageElement.setAttribute(
             'class',
-            `message message-${type} message-hidden`
+            `lew-message lew-message-${type} lew-message-hidden`
           )
           setTimeout(() => {
             if (messageElement) messageContainer?.removeChild(messageElement)
@@ -88,11 +88,11 @@ const LewMessage: any = {
   },
 
   close: ({ id }: { id: string }) => {
-    const messageElement = document.getElementById(`message-id-${id}`)
+    const messageElement = document.getElementById(`lew-message-id-${id}`)
 
     if (messageElement) {
-      removeClass(messageElement, 'message-show')
-      addClass(messageElement, 'message-hidden')
+      removeClass(messageElement, 'lew-message-show')
+      addClass(messageElement, 'lew-message-hidden')
       setTimeout(() => {
         clearTimeout(LewMessage.timer[id])
         messageElement.remove()
@@ -107,7 +107,7 @@ const LewMessage: any = {
     try {
       // 显示loading消息
       LewMessage.loading({
-        id: 'request-loading',
+        id: 'lew-request-loading',
         content: loadingMessage,
         duration: 0
       })
@@ -134,7 +134,7 @@ const LewMessage: any = {
                 setTimeout(resolve, delay - (endTime - startTime))
               )
             }
-            LewMessage.close({ id: 'request-loading' })
+            LewMessage.close({ id: 'lew-request-loading' })
             // 显示success消息
             LewMessage[type]({
               content,
@@ -151,10 +151,10 @@ const LewMessage: any = {
             duration: number
           }) => {
             // 隐藏loading消息
-            LewMessage.close({ id: 'request-loading' })
+            LewMessage.close({ id: 'lew-request-loading' })
             // 显示success消息
             LewMessage.error({
-              id: 'request-fail',
+              id: 'lew-request-fail',
               content,
               duration
             })
@@ -163,7 +163,7 @@ const LewMessage: any = {
     } catch (error) {
       // 处理异步方法执行出错的情况
       LewMessage.error({
-        id: 'request-loading',
+        id: 'lew-request-loading',
         content: 'An error occurred',
         duration: 3000,
         onClose: () => {

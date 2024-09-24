@@ -8,8 +8,8 @@
     <lew-title :size="14"> 毁灭性的变化 </lew-title>
     <ul>
       <li>
-        废弃<lew-mark>LewTextarea</lew-mark>，改为使用<lew-mark>LewInput</lew-mark>的 type
-        控制多行文本框，如 type="textarea"
+        废弃<lew-mark>LewTextarea</lew-mark>，改为使用<lew-mark>LewInput</lew-mark>的
+        type 控制多行文本框，如 type="textarea"
       </li>
     </ul>
     <lew-title :size="14"> 新特性 </lew-title>
@@ -20,7 +20,9 @@
         <lew-mark>Notification</lew-mark>、 <lew-mark>Pagination</lew-mark>、
         <lew-mark>Drawer</lew-mark>、 <lew-mark>BackTop</lew-mark>。
       </li>
-      <li>新增<lew-mark>Input</lew-mark>的长度限制、清空、密码可见、尺寸、显示字数。</li>
+      <li>
+        新增<lew-mark>Input</lew-mark>的长度限制、清空、密码可见、尺寸、显示字数。
+      </li>
       <li>新增<lew-mark>Checkbox</lew-mark>的纯 tag 样式。</li>
     </ul>
     <lew-title :size="14"> 修复 </lew-title>

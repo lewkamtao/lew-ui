@@ -12,9 +12,7 @@ const value = ref('')
     placeholder="请选择部门"
   >
     <template #empty>
-      <div class="empty">
-        暂无匹配的部门
-      </div>
+      <div class="empty">暂无匹配的部门</div>
     </template>
   </lew-select>
 </template>

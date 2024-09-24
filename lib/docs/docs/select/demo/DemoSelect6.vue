@@ -15,8 +15,23 @@ const value = ref('')
 
 <template>
   <lew-flex style="width: 320px" direction="y">
-    <lew-select v-model="value" :options="options" placeholder="选择您喜欢的车型" clearable />
-    <lew-select v-model="value" :options="options" placeholder="仅供展示，无法修改" readonly />
-    <lew-select v-model="value" :options="options" placeholder="暂时无法选择" disabled />
+    <lew-select
+      v-model="value"
+      :options="options"
+      placeholder="选择您喜欢的车型"
+      clearable
+    />
+    <lew-select
+      v-model="value"
+      :options="options"
+      placeholder="仅供展示，无法修改"
+      readonly
+    />
+    <lew-select
+      v-model="value"
+      :options="options"
+      placeholder="暂时无法选择"
+      disabled
+    />
   </lew-flex>
 </template>

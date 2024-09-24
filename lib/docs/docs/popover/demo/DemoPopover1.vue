@@ -139,7 +139,11 @@ const columns = [
               @click="lewPopoverRef2.hide()"
             />
 
-            <lew-button text="提交" size="small" @click="lewPopoverRef2.hide()" />
+            <lew-button
+              text="提交"
+              size="small"
+              @click="lewPopoverRef2.hide()"
+            />
           </lew-flex>
         </div>
       </template>

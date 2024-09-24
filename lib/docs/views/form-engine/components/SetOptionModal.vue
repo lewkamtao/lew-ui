@@ -10,7 +10,9 @@ defineExpose({ open })
 
 <template>
   <div>
-    <lew-button type="light" color="gray" size="small" @click="open">设置</lew-button>
+    <lew-button type="light" color="gray" size="small" @click="open"
+      >设置</lew-button
+    >
     <lew-modal
       v-model:visible="visible"
       closeOnClickOverlay

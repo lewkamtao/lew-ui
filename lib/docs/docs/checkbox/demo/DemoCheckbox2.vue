@@ -10,5 +10,9 @@ const selectedTech = ref([])
 </script>
 
 <template>
-  <lew-checkbox-group v-model="selectedTech" direction="y" :options="techOptions" />
+  <lew-checkbox-group
+    v-model="selectedTech"
+    direction="y"
+    :options="techOptions"
+  />
 </template>

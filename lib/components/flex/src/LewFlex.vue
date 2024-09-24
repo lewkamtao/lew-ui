@@ -24,16 +24,32 @@ function getJustifyContent() {
   if (props.mode === 'between') return 'space-between'
   if (props.mode === 'around') return 'space-around'
   if (props.direction === 'x') {
-    return props.x === 'start' ? 'flex-start' : props.x === 'end' ? 'flex-end' : 'center'
+    return props.x === 'start'
+      ? 'flex-start'
+      : props.x === 'end'
+        ? 'flex-end'
+        : 'center'
   }
-  return props.y === 'start' ? 'flex-start' : props.y === 'end' ? 'flex-end' : 'center'
+  return props.y === 'start'
+    ? 'flex-start'
+    : props.y === 'end'
+      ? 'flex-end'
+      : 'center'
 }
 
 function getAlignItems() {
   if (props.direction === 'x') {
-    return props.y === 'start' ? 'flex-start' : props.y === 'end' ? 'flex-end' : 'center'
+    return props.y === 'start'
+      ? 'flex-start'
+      : props.y === 'end'
+        ? 'flex-end'
+        : 'center'
   }
-  return props.x === 'start' ? 'flex-start' : props.x === 'end' ? 'flex-end' : 'center'
+  return props.x === 'start'
+    ? 'flex-start'
+    : props.x === 'end'
+      ? 'flex-end'
+      : 'center'
 }
 </script>
 

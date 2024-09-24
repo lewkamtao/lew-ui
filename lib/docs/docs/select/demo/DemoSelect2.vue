@@ -63,7 +63,12 @@ const value = ref('')
 
 <template>
   <lew-flex style="width: 320px" direction="y">
-    <lew-select v-model="value" placeholder="点击选择餐饮职位" clearable :options="options" />
+    <lew-select
+      v-model="value"
+      placeholder="点击选择餐饮职位"
+      clearable
+      :options="options"
+    />
     <lew-select
       v-model="value"
       :options="options"

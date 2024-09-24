@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
-import { LewPopover, LewTree,  LewTooltip } from 'lew-ui'
+import { LewPopover, LewTree, LewTooltip } from 'lew-ui'
 import type { TreeDataSource } from '../../tree'
 import { object2class, numFormat } from 'lew-ui/utils'
 import { treeSelectProps } from './props'
@@ -96,7 +96,11 @@ const findKeyword = () => {
       return e[props.keyField] === treeSelectValue.value
     })
     if (treeItem !== undefined) {
-      if (props.showAllLevels && treeItem.labelPaths && treeItem.labelPaths.length > 0) {
+      if (
+        props.showAllLevels &&
+        treeItem.labelPaths &&
+        treeItem.labelPaths.length > 0
+      ) {
         state.keyword = treeItem.labelPaths.join(' / ')
       } else {
         state.keyword = treeItem.label[0]
@@ -242,7 +246,10 @@ defineExpose({ show, hide })
         <slot name="header"></slot>
 
         <div class="lew-select-options-box">
-          <div v-if="searchable && (state.treeList || []).length > 0" class="result-count">
+          <div
+            v-if="searchable && (state.treeList || []).length > 0"
+            class="result-count"
+          >
             共
             {{ numFormat(searchCount) }}
             条结果

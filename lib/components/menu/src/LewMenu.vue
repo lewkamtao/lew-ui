@@ -9,7 +9,10 @@ const props = defineProps(menuProps)
 
 const emit = defineEmits(['change'])
 
-const generateEnterpriseMenu = (menuData: MenuOptions[], level = 1): MenuOptions[] => {
+const generateEnterpriseMenu = (
+  menuData: MenuOptions[],
+  level = 1
+): MenuOptions[] => {
   return menuData.map((item) => {
     const { children } = item
     const menuItem: MenuOptions = {
@@ -44,7 +47,12 @@ _options.value = generateEnterpriseMenu(props.options)
     <template v-for="item in _options" :key="item.label">
       <div class="lew-menu-item">
         <lew-text-trim :text="item.label" />
-        <lew-tag v-if="item.tagText" :color="item.tagColor" round size="small" type="light"
+        <lew-tag
+          v-if="item.tagText"
+          :color="item.tagColor"
+          round
+          size="small"
+          type="light"
           >{{ item.tagText }}
         </lew-tag>
       </div>
@@ -52,14 +60,25 @@ _options.value = generateEnterpriseMenu(props.options)
         <div
           class="lew-menu-item lew-menu-item-child"
           :class="{
-            'lew-menu-item-last': item.children && index === item.children.length - 1,
+            'lew-menu-item-last':
+              item.children && index === item.children.length - 1,
             'lew-menu-item-active': cItem.value === active
           }"
           @click="emit('change', cItem)"
         >
-          <Icon v-if="cItem.icon" class="lew-menu-icon" :type="cItem.icon" :size="14" />
+          <Icon
+            v-if="cItem.icon"
+            class="lew-menu-icon"
+            :type="cItem.icon"
+            :size="14"
+          />
           <lew-text-trim :text="cItem.label" />
-          <lew-tag v-if="cItem.tagText" :color="cItem.tagColor" round size="small" type="light"
+          <lew-tag
+            v-if="cItem.tagText"
+            :color="cItem.tagColor"
+            round
+            size="small"
+            type="light"
             >{{ cItem.tagText }}
           </lew-tag>
         </div>

@@ -20,7 +20,9 @@ const filterFn = (params: any) => {
 const searchFn = (event: any) => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const res = options.value.filter((e) => e.label.indexOf(event.keyword) >= 0)
+      const res = options.value.filter(
+        (e) => e.label.indexOf(event.keyword) >= 0
+      )
       resolve(res)
     }, 500)
   })
@@ -37,9 +39,7 @@ const searchFn = (event: any) => {
       placeholder="默认过滤"
     >
       <template #empty>
-        <div class="empty">
-          暂无内容
-        </div>
+        <div class="empty">暂无内容</div>
       </template>
     </lew-select-multiple>
     <lew-select-multiple

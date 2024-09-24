@@ -11,7 +11,22 @@ const 选中的口味 = ref('')
 </script>
 
 <template>
-  <lew-radio-group v-model="选中的口味" size="small" direction="x" :options="冰淇淋口味选项" />
-  <lew-radio-group v-model="选中的口味" size="medium" direction="x" :options="冰淇淋口味选项" />
-  <lew-radio-group v-model="选中的口味" size="large" direction="x" :options="冰淇淋口味选项" />
+  <lew-radio-group
+    v-model="选中的口味"
+    size="small"
+    direction="x"
+    :options="冰淇淋口味选项"
+  />
+  <lew-radio-group
+    v-model="选中的口味"
+    size="medium"
+    direction="x"
+    :options="冰淇淋口味选项"
+  />
+  <lew-radio-group
+    v-model="选中的口味"
+    size="large"
+    direction="x"
+    :options="冰淇淋口味选项"
+  />
 </template>

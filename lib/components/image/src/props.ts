@@ -56,9 +56,17 @@ export const imageProps = {
     default: 'cover',
     description: '图片适应容器方式',
     validator: (value: ObjectFit) => {
-      const validValues: ObjectFit[] = ['fill', 'contain', 'cover', 'none', 'scale-down']
+      const validValues: ObjectFit[] = [
+        'fill',
+        'contain',
+        'cover',
+        'none',
+        'scale-down'
+      ]
       if (!validValues.includes(value)) {
-        console.warn(`[LewImage] objectFit 必须是以下值之一: ${validValues.join(', ')}`)
+        console.warn(
+          `[LewImage] objectFit 必须是以下值之一: ${validValues.join(', ')}`
+        )
         return false
       }
       return true

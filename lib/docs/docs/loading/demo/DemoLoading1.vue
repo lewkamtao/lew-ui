@@ -75,6 +75,9 @@ const options = ref([
       </lew-flex>
     </lew-flex>
     <br />
-    <lew-button :text="visible ? '取消加载' : '加载'" @click="visible = !visible" />
+    <lew-button
+      :text="visible ? '取消加载' : '加载'"
+      @click="visible = !visible"
+    />
   </div>
 </template>

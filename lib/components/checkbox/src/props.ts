@@ -54,7 +54,9 @@ export const checkboxProps = {
     description: '复选框的尺寸',
     validator: (value: LewSize) => {
       if (!validSizes.includes(value)) {
-        console.warn('[LewCheckbox] 无效的 size 值，请使用 "small"、"medium" 或 "large"')
+        console.warn(
+          '[LewCheckbox] 无效的 size 值，请使用 "small"、"medium" 或 "large"'
+        )
         return false
       }
       return true
@@ -89,7 +91,10 @@ export const checkboxGroupProps = {
     required: true,
     description: '复选框组的选项配置数组',
     validator: (value: CheckboxOptions[]) => {
-      if (!Array.isArray(value) || value.some((item) => typeof item !== 'object')) {
+      if (
+        !Array.isArray(value) ||
+        value.some((item) => typeof item !== 'object')
+      ) {
         console.warn('[LewCheckboxGroup] options 必须是一个对象数组')
         return false
       }
@@ -112,7 +117,9 @@ export const checkboxGroupProps = {
     description: '复选框组中复选框的尺寸',
     validator: (value: LewSize) => {
       if (!validSizes.includes(value)) {
-        console.warn('[LewCheckboxGroup] 无效的 size 值，请使用 "small"、"medium" 或 "large"')
+        console.warn(
+          '[LewCheckboxGroup] 无效的 size 值，请使用 "small"、"medium" 或 "large"'
+        )
         return false
       }
       return true
@@ -124,7 +131,9 @@ export const checkboxGroupProps = {
     description: '复选框组的排列方向',
     validator: (value: string) => {
       if (!['x', 'y'].includes(value)) {
-        console.warn('[LewCheckboxGroup] 无效的 direction 值，请使用 "x" 或 "y"')
+        console.warn(
+          '[LewCheckboxGroup] 无效的 direction 值，请使用 "x" 或 "y"'
+        )
         return false
       }
       return true

@@ -33,9 +33,15 @@ export const stepsProps = {
         return false
       }
       if (
-        value.some((item) => typeof item.title !== 'string' || typeof item.description !== 'string')
+        value.some(
+          (item) =>
+            typeof item.title !== 'string' ||
+            typeof item.description !== 'string'
+        )
       ) {
-        console.warn('[LewSteps] options 数组中的每个项目必须包含 title 和 description 字符串属性')
+        console.warn(
+          '[LewSteps] options 数组中的每个项目必须包含 title 和 description 字符串属性'
+        )
         return false
       }
       return true
@@ -48,7 +54,9 @@ export const stepsProps = {
     validator: (value: StepsStatus) => {
       const validStatus = ['pending', 'loading', 'done', 'error', 'warning']
       if (!validStatus.includes(value)) {
-        console.warn(`[LewSteps] status 必须是 ${validStatus.join(', ')} 中的一个`)
+        console.warn(
+          `[LewSteps] status 必须是 ${validStatus.join(', ')} 中的一个`
+        )
         return false
       }
       return true

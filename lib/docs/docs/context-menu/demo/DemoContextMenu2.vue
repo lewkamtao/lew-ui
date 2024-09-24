@@ -81,11 +81,11 @@ const options: ContextMenus = [
             children: [
               {
                 label: 'Light',
-                value: 'light',
+                value: 'light'
               },
               {
                 label: 'Dark',
-                value: 'dark',
+                value: 'dark'
               }
             ]
           },

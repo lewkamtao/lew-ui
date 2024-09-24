@@ -42,10 +42,20 @@ const getRadioClassName = computed(() => {
 
 <template>
   <label class="lew-radio" :class="getRadioClassName">
-    <div v-if="iconable || (!iconable && !block)" class="icon-radio-box">
-      <Icon :stroke-width="4" class="icon-radio" type="check" :size="getIconSize" />
+    <div v-if="iconable || (!iconable && !block)" class="lew-icon-radio-box">
+      <Icon
+        :stroke-width="4"
+        class="lew-icon-radio"
+        type="check"
+        :size="getIconSize"
+      />
     </div>
-    <input v-show="false" type="radio" :checked="checked" @change="setChecked" />
+    <input
+      v-show="false"
+      type="radio"
+      :checked="checked"
+      @change="setChecked"
+    />
     <span v-if="label" class="lew-radio-label"> {{ label }}</span>
   </label>
 </template>
@@ -63,7 +73,7 @@ const getRadioClassName = computed(() => {
   box-sizing: border-box;
   border: var(--lew-form-border-width) transparent solid;
 
-  .icon-radio-box {
+  .lew-icon-radio-box {
     position: relative;
     width: 18px;
     height: 18px;
@@ -74,7 +84,7 @@ const getRadioClassName = computed(() => {
     background-color: var(--lew-bgcolor-1);
     overflow: hidden;
 
-    .icon-radio {
+    .lew-icon-radio {
       position: absolute;
       left: 50%;
       top: 50%;
@@ -93,7 +103,7 @@ const getRadioClassName = computed(() => {
 .lew-radio-size-small {
   font-size: 13px;
 
-  .icon-radio-box {
+  .lew-icon-radio-box {
     width: 16px;
     height: 16px;
     border-radius: 4px;
@@ -103,7 +113,7 @@ const getRadioClassName = computed(() => {
 .lew-radio-size-medium {
   font-size: 14px;
 
-  .icon-radio-box {
+  .lew-icon-radio-box {
     width: 18px;
     height: 18px;
     border-radius: 5px;
@@ -113,7 +123,7 @@ const getRadioClassName = computed(() => {
 .lew-radio-size-large {
   font-size: 15px;
 
-  .icon-radio-box {
+  .lew-icon-radio-box {
     width: 20px;
     height: 20px;
     border-radius: 6px;
@@ -147,8 +157,9 @@ const getRadioClassName = computed(() => {
 }
 
 .lew-radio:hover {
-  .icon-radio-box {
-    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover) solid;
+  .lew-icon-radio-box {
+    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover)
+      solid;
     background: var(--lew-form-bgcolor);
   }
 }
@@ -158,8 +169,8 @@ const getRadioClassName = computed(() => {
   border: var(--lew-form-border-width) transparent solid;
   border-radius: var(--lew-border-radius-small);
   box-shadow: var(--lew-form-box-shadow);
-  .icon-radio-box {
-    .icon-radio {
+  .lew-icon-radio-box {
+    .lew-icon-radio {
       padding: 1px;
     }
   }
@@ -182,24 +193,25 @@ const getRadioClassName = computed(() => {
 .lew-radio-round {
   border-radius: 50px;
 
-  .icon-radio-box {
+  .lew-icon-radio-box {
     border-radius: 50%;
   }
 }
 
 .lew-radio-block:hover {
   background: var(--lew-form-bgcolor-hover);
-  .icon-radio-box {
-    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover) solid;
+  .lew-icon-radio-box {
+    border: var(--lew-form-border-width) var(--lew-radio-border-color-hover)
+      solid;
   }
 }
 
 .lew-radio-checked {
-  .icon-radio-box {
+  .lew-icon-radio-box {
     border: var(--lew-form-border-width) var(--lew-radio-color) solid;
     background: var(--lew-radio-color);
 
-    .icon-radio {
+    .lew-icon-radio {
       transform: translate(-50%, -50%) scale(0.7);
       opacity: 1;
     }
@@ -207,18 +219,18 @@ const getRadioClassName = computed(() => {
 }
 
 .lew-radio-checked:hover {
-  .icon-radio-box {
+  .lew-icon-radio-box {
     border: var(--lew-form-border-width) var(--lew-radio-color) solid;
     background: var(--lew-radio-color);
   }
 }
 
 .lew-radio-block.lew-radio-checked {
-  .icon-radio-box {
+  .lew-icon-radio-box {
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     background: transparent;
 
-    .icon-radio {
+    .lew-icon-radio {
       color: var(--lew-radio-color);
       opacity: 1;
     }
@@ -226,7 +238,7 @@ const getRadioClassName = computed(() => {
 }
 
 .lew-radio-block.lew-radio-checked:hover {
-  .icon-radio-box {
+  .lew-icon-radio-box {
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   }
 }

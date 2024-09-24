@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LewPopover,  LewDateRange, LewTooltip } from 'lew-ui'
+import { LewPopover, LewDateRange, LewTooltip } from 'lew-ui'
 import { dateRangePickerProps } from './props'
 import { object2class } from 'lew-ui/utils'
 import type { LewSize } from 'lew-ui'
@@ -66,7 +66,7 @@ const clearHandle = () => {
 const lewDateRangeClassNames = computed(() => {
   const focus = visible.value
   const { size, readonly, disabled } = props
-  return object2class('lew-date-picker', { focus, size, readonly, disabled })
+  return object2class('lew-date-range-picker', { focus, size, readonly, disabled })
 })
 
 const checkClear = computed(() => {
@@ -90,28 +90,34 @@ defineExpose({ show, hide })
     @hide="hideHandle"
   >
     <template #trigger>
-      <div class="lew-date-picker-view" :class="lewDateRangeClassNames">
-        <div class="lew-date-picker-input">
-          <div v-if="!modelValue || !modelValue[startKey]" class="lew-date-picker-placeholder">
+      <div class="lew-date-range-picker-view" :class="lewDateRangeClassNames">
+        <div class="lew-date-range-picker-input">
+          <div
+            v-if="!modelValue || !modelValue[startKey]"
+            class="lew-date-range-picker-placeholder"
+          >
             {{ placeholderStart }}
           </div>
-          <div v-else class="lew-date-picker-dateValue lew-date-picker-start">
+          <div v-else class="lew-date-range-picker-dateValue lew-date-range-picker-start">
             {{ modelValue[startKey] }}
           </div>
-          <div class="lew-date-picker-mid">
+          <div class="lew-date-range-picker-mid">
             <Icon :size="14" type="minus" />
           </div>
-          <div v-if="!modelValue || !modelValue[endKey]" class="lew-date-picker-placeholder">
+          <div
+            v-if="!modelValue || !modelValue[endKey]"
+            class="lew-date-range-picker-placeholder"
+          >
             {{ placeholderEnd }}
           </div>
-          <div v-else class="lew-date-picker-dateValue lew-date-picker-end">
+          <div v-else class="lew-date-range-picker-dateValue lew-date-range-picker-end">
             {{ modelValue[endKey] }}
           </div>
           <Icon
-            class="icon-calendar"
+            class="lew-date-range-picker-icon-calendar"
             :size="getIconSize"
             :class="{
-              'icon-calendar-hide': checkClear
+              'lew-date-range-picker-icon-calendar-hide': checkClear
             }"
             type="calendar"
           />
@@ -120,7 +126,7 @@ defineExpose({ show, hide })
               v-if="clearable && checkClear && !readonly"
               :size="getIconSize"
               type="close"
-              class="lew-form-icon-close"
+              class="lew-form-icon-close lew-date-range-picker-form-icon-close"
               :class="{
                 'lew-form-icon-close-focus': visible
               }"
@@ -145,7 +151,7 @@ defineExpose({ show, hide })
 .lew-popover {
   width: 100%;
 
-  .lew-date-picker-view {
+  .lew-date-range-picker-view {
     display: inline-flex;
     align-items: center;
     position: relative;
@@ -165,20 +171,20 @@ defineExpose({ show, hide })
     box-shadow: var(--lew-form-box-shadow);
   }
 
-  .lew-date-picker-input {
+  .lew-date-range-picker-input {
     width: 100%;
     display: inline-flex;
     gap: 5px;
     align-items: center;
     box-sizing: border-box;
 
-    .lew-date-picker-mid {
+    .lew-date-range-picker-mid {
       display: flex;
       align-items: center;
       color: var(--lew-text-color-8);
     }
 
-    .icon-calendar {
+    .lew-date-range-picker-icon-calendar {
       position: absolute;
       top: 50%;
       right: 9px;
@@ -187,28 +193,29 @@ defineExpose({ show, hide })
       opacity: var(--lew-form-icon-opacity);
     }
 
-    .icon-calendar-hide {
+    .lew-date-range-picker-icon-calendar-hide {
       opacity: 0;
       transform: translateY(-50%) translateX(100%);
     }
 
-    .lew-date-picker-placeholder {
+    .lew-date-range-picker-placeholder {
       color: rgb(165, 165, 165);
     }
   }
 
-  .lew-date-picker-view:hover {
+  .lew-date-range-picker-view:hover {
     background-color: var(--lew-form-bgcolor-hover);
   }
 
-  .lew-date-picker-view.lew-date-picker-focus {
+  .lew-date-range-picker-view.lew-date-range-picker-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+      solid;
     outline: var(--lew-form-outline);
   }
 
-  .lew-date-picker-size-small {
-    .lew-date-picker-input {
+  .lew-date-range-picker-size-small {
+    .lew-date-range-picker-input {
       height: var(--lew-form-item-height-small);
       padding: var(--lew-form-input-padding-small);
       font-size: var(--lew-form-font-size-small);
@@ -216,8 +223,8 @@ defineExpose({ show, hide })
     }
   }
 
-  .lew-date-picker-size-medium {
-    .lew-date-picker-input {
+  .lew-date-range-picker-size-medium {
+    .lew-date-range-picker-input {
       height: var(--lew-form-item-height-medium);
       padding: var(--lew-form-input-padding-medium);
       font-size: var(--lew-form-font-size-medium);
@@ -225,8 +232,8 @@ defineExpose({ show, hide })
     }
   }
 
-  .lew-date-picker-size-large {
-    .lew-date-picker-input {
+  .lew-date-range-picker-size-large {
+    .lew-date-range-picker-input {
       height: var(--lew-form-item-height-large);
       padding: var(--lew-form-input-padding-large);
       font-size: var(--lew-form-font-size-large);
@@ -235,10 +242,10 @@ defineExpose({ show, hide })
   }
 }
 
-.lew-date-picker-readonly {
+.lew-date-range-picker-readonly {
   pointer-events: none;
 }
-.lew-date-picker-disabled {
+.lew-date-range-picker-disabled {
   pointer-events: none;
   opacity: var(--lew-disabled-opacity);
 }

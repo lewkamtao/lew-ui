@@ -25,7 +25,7 @@ defineExpose({
 </script>
 
 <template>
-  <div ref="formLabelRef" class="lew-form-label-box">
+  <div ref="formLabelRef" class="lew-get-label-width-box">
     <lew-flex
       gap="5"
       :style="{
@@ -34,14 +34,17 @@ defineExpose({
       v-for="(item, index) in options"
       :key="index"
     >
-      <RequiredIcon :size="requiredIconSizeMap[size]" v-if="item.required && item.label" />
+      <RequiredIcon
+        :size="requiredIconSizeMap[size]"
+        v-if="item.required && item.label"
+      />
       {{ item.label }}
     </lew-flex>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.lew-form-label-box {
+.lew-get-label-width-box {
   position: fixed;
   width: auto;
   display: inline-flex;

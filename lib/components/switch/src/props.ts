@@ -24,7 +24,9 @@ export const switchProps = {
     description: '开关的尺寸',
     validator: (value: LewSize) => {
       if (!validSizes.includes(value)) {
-        console.warn(`[LewSwitch] size 必须是 ${validSizes.join('、')} 中的一个`)
+        console.warn(
+          `[LewSwitch] size 必须是 ${validSizes.join('、')} 中的一个`
+        )
         return false
       }
       return true

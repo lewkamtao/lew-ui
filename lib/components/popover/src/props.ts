@@ -22,7 +22,9 @@ export const popoverProps = {
     description: '触发弹出的方式',
     validator(value: PopoverTrigger): boolean {
       if (!['click', 'hover', 'focus'].includes(value)) {
-        console.warn(`[LewPopover] 无效的触发方式: ${value}。请使用 'click'、'hover' 或 'focus'。`)
+        console.warn(
+          `[LewPopover] 无效的触发方式: ${value}。请使用 'click'、'hover' 或 'focus'。`
+        )
         return false
       }
       return true
@@ -48,7 +50,9 @@ export const popoverProps = {
         'right-end'
       ]
       if (!validPlacements.includes(value)) {
-        console.warn(`[LewPopover] 无效的弹出位置: ${value}。请使用有效的位置值。`)
+        console.warn(
+          `[LewPopover] 无效的弹出位置: ${value}。请使用有效的位置值。`
+        )
         return false
       }
       return true

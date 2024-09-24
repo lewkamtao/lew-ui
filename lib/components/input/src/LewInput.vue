@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useMagicKeys, useDebounceFn } from '@vueuse/core'
 import { object2class, any2px } from 'lew-ui/utils'
-import {  LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui'
+import { LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui'
 import { inputProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
 
@@ -79,11 +79,19 @@ const getInputStyle = computed(() => {
   }
 })
 
-const getType = computed(() => (props.type === 'password' ? _type.value : props.type))
+const getType = computed(() =>
+  props.type === 'password' ? _type.value : props.type
+)
 
 const getInputClassNames = computed(() => {
   const { size, readonly, disabled, align, autoWidth } = props
-  return object2class('lew-input-view', { size, readonly, disabled, align, autoWidth })
+  return object2class('lew-input-view', {
+    size,
+    readonly,
+    disabled,
+    align,
+    autoWidth
+  })
 })
 
 const prefixesChange = (item: { value: string }) => {
@@ -95,11 +103,16 @@ const suffixChange = (item: { value: string }) => {
 }
 
 const getPrefixesLabel = computed(() => {
-  return props.prefixesOptions.find((e) => e.value === prefixesValue.value)?.label || ''
+  return (
+    props.prefixesOptions.find((e) => e.value === prefixesValue.value)?.label ||
+    ''
+  )
 })
 
 const getSuffixLabel = computed(() => {
-  return props.suffixOptions.find((e) => e.value === suffixValue.value)?.label || ''
+  return (
+    props.suffixOptions.find((e) => e.value === suffixValue.value)?.label || ''
+  )
 })
 
 const copy = () => {
@@ -172,7 +185,8 @@ defineExpose({ toFocus })
             x="start"
             class="lew-input-prefixes-dropdown"
             :class="{
-              'lew-input-prefixes-dropdown-open': state.prefixesDropdown === 'show'
+              'lew-input-prefixes-dropdown-open':
+                state.prefixesDropdown === 'show'
             }"
           >
             <div>
@@ -220,8 +234,12 @@ defineExpose({ toFocus })
       <label v-if="autoWidth" class="lew-input-auto-width">
         {{ modelValue }}
       </label>
-      <label v-if="autoWidth && clearable" class="lew-input-auto-width-clear"> </label>
-      <div v-if="showPassword || clearable || showCount" class="lew-input-controls">
+      <label v-if="autoWidth && clearable" class="lew-input-auto-width-clear">
+      </label>
+      <div
+        v-if="showPassword || clearable || showCount"
+        class="lew-input-controls"
+      >
         <div
           ref="lewInputCountRef"
           v-if="modelValue && showCount"
@@ -240,7 +258,11 @@ defineExpose({ toFocus })
           @click="showPasswordFn"
         >
           <Icon v-show="_type === 'text'" :size="getIconSize" type="eye" />
-          <Icon v-show="_type === 'password'" :size="getIconSize" type="eye-off" />
+          <Icon
+            v-show="_type === 'password'"
+            :size="getIconSize"
+            type="eye-off"
+          />
         </div>
         <transition name="lew-form-icon-ani">
           <Icon
@@ -552,7 +574,7 @@ defineExpose({ toFocus })
     line-height: var(--lew-form-input-line-height-small);
   }
 
-  .lew-input-auto-width-close{
+  .lew-input-auto-width-close {
     width: 18px;
   }
 }
@@ -604,7 +626,7 @@ defineExpose({ toFocus })
     line-height: var(--lew-form-input-line-height-medium);
   }
 
-  .lew-input-auto-width-close{
+  .lew-input-auto-width-close {
     width: 20px;
   }
 }
@@ -656,7 +678,7 @@ defineExpose({ toFocus })
     line-height: var(--lew-form-input-line-height-large);
   }
 
-  .lew-input-auto-width-close{
+  .lew-input-auto-width-close {
     width: 22px;
   }
 }

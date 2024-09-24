@@ -33,7 +33,9 @@ export const inputProps = {
     description: '输入框类型',
     validator: (value: InputType) => {
       if (!['text', 'password'].includes(value)) {
-        console.warn(`[LewInput] type 属性 ${value} 无效，必须是 "text" 或 "password"`)
+        console.warn(
+          `[LewInput] type 属性 ${value} 无效，必须是 "text" 或 "password"`
+        )
         return false
       }
       return true
@@ -131,7 +133,8 @@ export const inputProps = {
   copyable: {
     type: Boolean,
     default: false,
-    description: '是否允许复制内容（仅在 readonly 为 true 且 suffix 为 false 时生效）'
+    description:
+      '是否允许复制内容（仅在 readonly 为 true 且 suffix 为 false 时生效）'
   },
   prefixes: {
     type: String,
@@ -139,7 +142,9 @@ export const inputProps = {
     description: '输入框前缀类型',
     validator: (value: InputPrefixesType) => {
       if (value && !['icon', 'select', 'text'].includes(value)) {
-        console.warn('[LewInput] prefixes 属性必须是 "icon"、"select" 或 "text"')
+        console.warn(
+          '[LewInput] prefixes 属性必须是 "icon"、"select" 或 "text"'
+        )
         return false
       }
       return true

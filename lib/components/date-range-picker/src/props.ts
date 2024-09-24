@@ -45,7 +45,9 @@ export const dateRangePickerProps = {
     description: '选择器尺寸',
     validator(value: LewSize) {
       if (!validSizes.includes(value)) {
-        console.warn(`[LewDateRangePicker] size 必须是 'small'、'medium' 或 'large'`)
+        console.warn(
+          `[LewDateRangePicker] size 必须是 'small'、'medium' 或 'large'`
+        )
         return false
       }
       return true

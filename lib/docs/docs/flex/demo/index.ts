@@ -6,4 +6,11 @@ import DemoFlex1Code from './DemoFlex1.vue?raw'
 import DemoFlex2Code from './DemoFlex2.vue?raw'
 import DemoFlex3Code from './DemoFlex3.vue?raw'
 
-export { DemoFlex1, DemoFlex1Code, DemoFlex2, DemoFlex2Code, DemoFlex3, DemoFlex3Code }
+export {
+  DemoFlex1,
+  DemoFlex1Code,
+  DemoFlex2,
+  DemoFlex2Code,
+  DemoFlex3,
+  DemoFlex3Code
+}

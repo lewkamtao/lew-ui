@@ -393,7 +393,7 @@ defineExpose({ show, hide })
           <template v-for="(oItem, oIndex) in state.optionsGroup" :key="oIndex">
             <use-virtual-list
               v-if="oItem.length > 0"
-              class="lew-cascader-item-warpper lew-scrollbar-hover"
+              class="lew-cascader-item-wrapper lew-scrollbar-hover"
               :list="oItem"
               :options="{
                 itemHeight: 38
@@ -707,7 +707,7 @@ defineExpose({ show, hide })
     display: flex;
     box-sizing: border-box;
 
-    .lew-cascader-item-warpper {
+    .lew-cascader-item-wrapper {
       position: absolute;
       overflow-y: scroll;
       height: 100%;
@@ -718,7 +718,7 @@ defineExpose({ show, hide })
       gap: 4px;
     }
 
-    .lew-cascader-item-warpper:last-child {
+    .lew-cascader-item-wrapper:last-child {
       border-right: 0px var(--lew-form-border-color) solid;
     }
 

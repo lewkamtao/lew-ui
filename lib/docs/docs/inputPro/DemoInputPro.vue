@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { DemoInputPro1, DemoInputPro2, DemoInputPro1Code, DemoInputPro2Code } from './demo'
+import {
+  DemoInputPro1,
+  DemoInputPro2,
+  DemoInputPro1Code,
+  DemoInputPro2Code
+} from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 
 const docsTable = reactive([

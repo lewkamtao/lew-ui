@@ -32,7 +32,9 @@ class xwlRequest {
         if (res.code && res.code !== 200) {
           if (res.code === 401) {
             const redirectUrl = window.location.href
-            window.location.replace(`http://app.tngeek.com/sso?redirectUrl=${redirectUrl}`)
+            window.location.replace(
+              `http://app.tngeek.com/sso?redirectUrl=${redirectUrl}`
+            )
           } else if (res.code === 403) {
             LewNotification.warning({
               title: '通知',

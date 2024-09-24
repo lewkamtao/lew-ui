@@ -10,7 +10,12 @@ const data: any = [
     tdp: '125W',
     architecture: 'Alder Lake',
     socket: 'LGA 1700',
-    features: ['PCIe 5.0', 'DDR5', 'Intel UHD Graphics 770', 'Turbo Boost Max 3.0']
+    features: [
+      'PCIe 5.0',
+      'DDR5',
+      'Intel UHD Graphics 770',
+      'Turbo Boost Max 3.0'
+    ]
   },
   {
     id: 2,
@@ -34,7 +39,12 @@ const data: any = [
     tdp: 'N/A',
     architecture: 'ARM',
     socket: 'SoC',
-    features: ['Neural Engine', 'Apple ProRes', 'Unified Memory', 'Metal-optimized GPU']
+    features: [
+      'Neural Engine',
+      'Apple ProRes',
+      'Unified Memory',
+      'Metal-optimized GPU'
+    ]
   },
   {
     id: 4,
@@ -58,7 +68,12 @@ const data: any = [
     tdp: '270W',
     architecture: 'Ice Lake-SP',
     socket: 'LGA 4189',
-    features: ['PCIe 4.0', 'DDR4', 'Intel SGX', 'Intel Optane Persistent Memory']
+    features: [
+      'PCIe 4.0',
+      'DDR4',
+      'Intel SGX',
+      'Intel Optane Persistent Memory'
+    ]
   }
 ]
 
@@ -160,8 +175,18 @@ const compare = (row: any, column: any) => {
     </template>
     <template #action="{ row, column }">
       <lew-flex gap="5">
-        <lew-button text="详情" size="small" type="text" @click="viewDetails(row, column)" />
-        <lew-button text="对比" size="small" type="text" @click="compare(row, column)" />
+        <lew-button
+          text="详情"
+          size="small"
+          type="text"
+          @click="viewDetails(row, column)"
+        />
+        <lew-button
+          text="对比"
+          size="small"
+          type="text"
+          @click="compare(row, column)"
+        />
       </lew-flex>
     </template>
   </lew-table>

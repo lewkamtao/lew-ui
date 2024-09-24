@@ -47,7 +47,9 @@ export const radioProps = {
     description: '单选框尺寸',
     validator(value: RadioSize): boolean {
       if (!validSizes.includes(value)) {
-        console.warn(`[LewRadio] 无效的尺寸: ${value}。请使用 ${validSizes.join(', ')} 中的一个。`)
+        console.warn(
+          `[LewRadio] 无效的尺寸: ${value}。请使用 ${validSizes.join(', ')} 中的一个。`
+        )
         return false
       }
       return true

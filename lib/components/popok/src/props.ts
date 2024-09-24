@@ -9,7 +9,9 @@ export const popokProps = {
     validator: (value: string) => {
       const validTypes = ['success', 'warning', 'error', 'info']
       if (!validTypes.includes(value)) {
-        console.warn(`[LewPopok] 类型 "${value}" 无效。请使用 ${validTypes.join(', ')} 中的一个。`)
+        console.warn(
+          `[LewPopok] 类型 "${value}" 无效。请使用 ${validTypes.join(', ')} 中的一个。`
+        )
         return false
       }
       return true
@@ -21,7 +23,9 @@ export const popokProps = {
     description: '弹出框宽度',
     validator: (value: string | number) => {
       if (typeof value === 'string' && !/^\d+(%|px|em|rem|vw)$/.test(value)) {
-        console.warn(`[LewPopok] 宽度 "${value}" 无效。请使用有效的 CSS 宽度值。`)
+        console.warn(
+          `[LewPopok] 宽度 "${value}" 无效。请使用有效的 CSS 宽度值。`
+        )
         return false
       }
       return true
@@ -34,7 +38,9 @@ export const popokProps = {
     validator: (value: string) => {
       const validTriggers = ['hover', 'click']
       if (!validTriggers.includes(value)) {
-        console.warn(`[LewPopok] 触发方式 "${value}" 无效。请使用 ${validTriggers.join(' 或 ')}。`)
+        console.warn(
+          `[LewPopok] 触发方式 "${value}" 无效。请使用 ${validTriggers.join(' 或 ')}。`
+        )
         return false
       }
       return true
@@ -47,19 +53,12 @@ export const popokProps = {
   },
   okProps: {
     type: Object as PropType<ButtonProps>,
-    default: () => ({
-      text: '确定',
-      color: 'primary'
-    }),
+    default: () => ({}),
     description: '确定按钮的属性'
   },
   cancelProps: {
     type: Object as PropType<ButtonProps>,
-    default: () => ({
-      type: 'text',
-      text: '取消',
-      color: 'normal'
-    }),
+    default: () => ({}),
     description: '取消按钮的属性'
   },
   content: {

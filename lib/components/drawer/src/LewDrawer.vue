@@ -51,7 +51,11 @@ if (props.closeByEsc) {
   })
 }
 
-const getStyle = (position: string, width: number | string, height: number | string) => {
+const getStyle = (
+  position: string,
+  width: number | string,
+  height: number | string
+) => {
   switch (true) {
     case !position:
       return 'width:30%;height:100%'
@@ -88,20 +92,25 @@ const getStyle = (position: string, width: number | string, height: number | str
           :class="object2class('lew-drawer-main', { position })"
           @click.stop
         >
-          <div v-if="$slots.header" class="header-slot">
+          <div v-if="$slots.header" class="lew-drawer-header-slot">
             <slot name="header"></slot>
           </div>
-          <lew-flex v-else-if="title" mode="between" y="center" class="header">
-            <lew-text-trim class="title" :text="title" />
-            <Icon :size="18" class="lew-form-icon-close" type="close" @click="visible = false" />
+          <lew-flex v-else-if="title" mode="between" y="center" class="lew-drawer-header">
+            <lew-text-trim class="lew-drawer-title" :text="title" />
+            <Icon
+              :size="18"
+              class="lew-form-icon-close lew-drawer-icon-close"
+              type="close"
+              @click="visible = false"
+            />
           </lew-flex>
-          <div class="main-slot">
+          <div class="lew-drawer-main-slot">
             <slot></slot>
           </div>
-          <div v-if="$slots.footer" class="footer-slot">
+          <div v-if="$slots.footer" class="lew-drawer-footer-slot">
             <slot name="footer"></slot>
           </div>
-          <lew-flex v-else-if="!hideFooter" x="end" y="center" class="footer">
+          <lew-flex v-else-if="!hideFooter" x="end" y="center" class="lew-drawer-footer">
             <lew-button
               v-bind="{
                 type: 'text',
@@ -137,41 +146,41 @@ const getStyle = (position: string, width: number | string, height: number | str
   background-color: var(--lew-drawer-bgcolor);
   outline: 200vw solid var(--lew-modal-bgcolor);
   z-index: 2002;
-  .main-slot {
+  .lew-drawer-main-slot {
     flex: 1;
     overflow: hidden;
   }
-  .header {
+  .lew-drawer-header {
     position: relative;
     height: 50px;
     padding: 10px 20px;
     border-bottom: var(--lew-modal-header-border);
     flex: 0;
 
-    .title {
+    .lew-drawer-title {
       font-size: 16px;
       font-weight: bold;
     }
-    .lew-form-icon-close {
+    .lew-drawer-icon-close {
       right: 15px;
     }
-    .lew-form-icon-close:hover {
+    .lew-drawer-icon-close:hover {
       background-color: var(--lew-bgcolor-5);
     }
   }
 
-  .footer {
+  .lew-drawer-footer {
     padding: 10px 20px;
     border-top: var(--lew-modal-footer-border);
     flex: 0;
   }
 
-  .header-slot {
+  .lew-drawer-header-slot {
     background-color: var(--lew-bgcolor-1);
     flex: 0;
   }
 
-  .footer-slot {
+  .lew-drawer-footer-slot {
     background-color: var(--lew-bgcolor-1);
     flex: 0;
   }

@@ -32,7 +32,9 @@ export const breadcrumbProps = {
           typeof item.value !== 'string' &&
           typeof item.value !== 'number'
         ) {
-          console.warn('[LewBreadcrumb] options 中的 value 必须是字符串或数字类型')
+          console.warn(
+            '[LewBreadcrumb] options 中的 value 必须是字符串或数字类型'
+          )
           return false
         }
         if (item.active !== undefined && typeof item.active !== 'boolean') {
@@ -50,7 +52,9 @@ export const breadcrumbProps = {
     validator(value: string): boolean {
       const validTypes: BreadcrumbIconType[] = ['shoulder', 'sprit']
       if (!validTypes.includes(value as BreadcrumbIconType)) {
-        console.warn(`[LewBreadcrumb] iconType 必须是 ${validTypes.join(' 或 ')}`)
+        console.warn(
+          `[LewBreadcrumb] iconType 必须是 ${validTypes.join(' 或 ')}`
+        )
         return false
       }
       return true

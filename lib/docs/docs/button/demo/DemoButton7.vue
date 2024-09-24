@@ -13,7 +13,7 @@ import { Home } from 'lucide-vue-next'
       小型
     </lew-button>
     <lew-button size="medium">
-      <Home :size="18"/>
+      <Home :size="18" />
       中型
     </lew-button>
     <lew-button size="large">

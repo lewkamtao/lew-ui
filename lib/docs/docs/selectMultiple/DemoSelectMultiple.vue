@@ -30,7 +30,9 @@ const options = ref(
 <template>
   <div class="demo-wrapper">
     <lew-title>SelectMultiple</lew-title>
-    <p class="sub-title">或许你需要选择更多，多选选择器和单选选择器的 Props 大同小异。</p>
+    <p class="sub-title">
+      或许你需要选择更多，多选选择器和单选选择器的 Props 大同小异。
+    </p>
     <lew-demo-box title="常规" :code="DemoSelectMultiple1Code">
       <demo-select-multiple1 />
     </lew-demo-box>

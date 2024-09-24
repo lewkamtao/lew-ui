@@ -49,11 +49,11 @@ const getCheckboxClassName = computed(() => {
 </script>
 <template>
   <label class="lew-checkbox" :class="getCheckboxClassName">
-    <div v-if="iconable || (!iconable && !block)" class="icon-checkbox-box">
-      <i v-show="certain" class="icon-certain"></i>
+    <div v-if="iconable || (!iconable && !block)" class="lew-checkbox-icon-box">
+      <i v-show="certain" class="lew-checkbox-icon-certain"></i>
       <Icon
         :stroke-width="4"
-        class="icon-checkbox"
+        class="lew-checkbox-icon"
         type="check"
         :size="getIconSize"
       />
@@ -81,7 +81,7 @@ const getCheckboxClassName = computed(() => {
   box-sizing: border-box;
   border: var(--lew-form-border-width) transparent solid;
 
-  .icon-checkbox-box {
+  .lew-checkbox-icon-box {
     position: relative;
     width: 18px;
     height: 18px;
@@ -92,7 +92,7 @@ const getCheckboxClassName = computed(() => {
     background-color: var(--lew-bgcolor-1);
     overflow: hidden;
 
-    .icon-checkbox {
+    .lew-checkbox-icon {
       position: absolute;
       left: 50%;
       top: 50%;
@@ -111,7 +111,7 @@ const getCheckboxClassName = computed(() => {
 .lew-checkbox-size-small {
   font-size: 13px;
 
-  .icon-checkbox-box {
+  .lew-checkbox-icon-box {
     width: 16px;
     height: 16px;
     border-radius: 6px;
@@ -121,7 +121,7 @@ const getCheckboxClassName = computed(() => {
 .lew-checkbox-size-medium {
   font-size: 14px;
 
-  .icon-checkbox-box {
+  .lew-checkbox-icon-box {
     width: 18px;
     height: 18px;
     border-radius: 7px;
@@ -131,7 +131,7 @@ const getCheckboxClassName = computed(() => {
 .lew-checkbox-size-large {
   font-size: 15px;
 
-  .icon-checkbox-box {
+  .lew-checkbox-icon-box {
     width: 20px;
     height: 20px;
     border-radius: 8px;
@@ -165,7 +165,7 @@ const getCheckboxClassName = computed(() => {
 }
 
 .lew-checkbox:hover {
-  .icon-checkbox-box {
+  .lew-checkbox-icon-box {
     border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover)
       solid;
     background: var(--lew-form-bgcolor);
@@ -177,8 +177,8 @@ const getCheckboxClassName = computed(() => {
   border: var(--lew-form-border-width) transparent solid;
   border-radius: var(--lew-border-radius-small);
   box-shadow: var(--lew-form-box-shadow);
-  .icon-checkbox-box {
-    .icon-checkbox {
+  .lew-checkbox-icon-box {
+    .lew-checkbox-icon {
       padding: 1px;
     }
   }
@@ -201,25 +201,25 @@ const getCheckboxClassName = computed(() => {
 .lew-checkbox-round {
   border-radius: 50px;
 
-  .icon-checkbox-box {
+  .lew-checkbox-icon-box {
     border-radius: 50%;
   }
 }
 
 .lew-checkbox-block:hover {
   background: var(--lew-form-bgcolor-hover);
-  .icon-checkbox-box {
+  .lew-checkbox-icon-box {
     border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover)
       solid;
   }
 }
 
 .lew-checkbox-checked {
-  .icon-checkbox-box {
+  .lew-checkbox-icon-box {
     border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
     background: var(--lew-checkbox-color);
 
-    .icon-checkbox {
+    .lew-checkbox-icon {
       transform: translate(-50%, -50%) scale(0.7);
       opacity: 1;
     }
@@ -227,18 +227,18 @@ const getCheckboxClassName = computed(() => {
 }
 
 .lew-checkbox-checked:hover {
-  .icon-checkbox-box {
+  .lew-checkbox-icon-box {
     border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
     background: var(--lew-checkbox-color);
   }
 }
 
 .lew-checkbox-block.lew-checkbox-checked {
-  .icon-checkbox-box {
+  .lew-checkbox-icon-box {
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     background: transparent;
 
-    .icon-checkbox {
+    .lew-checkbox-icon {
       color: var(--lew-checkbox-color);
       opacity: 1;
     }
@@ -246,7 +246,7 @@ const getCheckboxClassName = computed(() => {
 }
 
 .lew-checkbox-block.lew-checkbox-checked:hover {
-  .icon-checkbox-box {
+  .lew-checkbox-icon-box {
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   }
 }
@@ -261,10 +261,10 @@ const getCheckboxClassName = computed(() => {
 }
 
 .lew-checkbox-certain {
-  .icon-checkbox-box {
+  .lew-checkbox-icon-box {
     border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
     background: var(--lew-checkbox-color);
-    .icon-certain {
+    .lew-checkbox-icon-certain {
       position: absolute;
       left: 50%;
       top: 50%;
@@ -277,7 +277,7 @@ const getCheckboxClassName = computed(() => {
   }
 }
 .lew-checkbox-certain:hover {
-  .icon-checkbox-box {
+  .lew-checkbox-icon-box {
     border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
     background: var(--lew-checkbox-color);
   }

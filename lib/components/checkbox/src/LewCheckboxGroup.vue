@@ -24,7 +24,13 @@ watch(
   }
 )
 
-const change = ({ item, checked }: { item: CheckboxOptions; checked: boolean }) => {
+const change = ({
+  item,
+  checked
+}: {
+  item: CheckboxOptions
+  checked: boolean
+}) => {
   let _value = modelValue.value || []
   if (checked) {
     _value.push(item.value as string & number)
@@ -43,7 +49,10 @@ const change = ({ item, checked }: { item: CheckboxOptions; checked: boolean }) 
 
 const initCheckbox = () => {
   checkList.value = props.options.map((item: CheckboxOptions) => {
-    if (modelValue.value && modelValue.value.includes(item.value as string & number)) {
+    if (
+      modelValue.value &&
+      modelValue.value.includes(item.value as string & number)
+    ) {
       return true
     }
     return false
@@ -51,10 +60,9 @@ const initCheckbox = () => {
 }
 
 const getCheckboxGroupClassName = computed(() => {
-  const { size, direction, readonly, disabled } = props as any
+  const { size, readonly, disabled } = props as any
   return object2class('lew-checkbox-group', {
     size,
-    direction,
     readonly,
     disabled
   })
@@ -67,7 +75,7 @@ initCheckbox()
     x="start"
     gap="10"
     wrap
-    :direction="direction"
+    :direction
     class="lew-checkbox-group"
     :class="getCheckboxGroupClassName"
   >
@@ -105,14 +113,6 @@ initCheckbox()
   min-height: var(--lew-form-item-height-large);
 }
 
-.lew-checkbox-group.lew-checkbox-group-direction-x {
-  flex-direction: row;
-}
-
-.lew-checkbox-group.lew-checkbox-group-direction-y {
-  align-items: flex-start;
-  flex-direction: column;
-}
 .lew-checkbox-group-disabled {
   opacity: var(--lew-disabled-opacity);
   pointer-events: none;

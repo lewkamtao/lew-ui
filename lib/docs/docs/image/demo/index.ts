@@ -6,4 +6,11 @@ import DemoImage1Code from './DemoImage1.vue?raw'
 import DemoImage2Code from './DemoImage2.vue?raw'
 import DemoImage3Code from './DemoImage3.vue?raw'
 
-export { DemoImage1, DemoImage2, DemoImage3, DemoImage1Code, DemoImage2Code, DemoImage3Code }
+export {
+  DemoImage1,
+  DemoImage2,
+  DemoImage3,
+  DemoImage1Code,
+  DemoImage2Code,
+  DemoImage3Code
+}

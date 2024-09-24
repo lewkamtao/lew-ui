@@ -19,7 +19,11 @@ const { push } = useRouter()
     <lew-title>Popover</lew-title>
     <p class="sub-title">
       如果你需要信息提示，请可以尝试一下
-      <lew-mark cursor="pointer" type="light" color="blue" @click="push('/Tooltip')"
+      <lew-mark
+        cursor="pointer"
+        type="light"
+        color="blue"
+        @click="push('/Tooltip')"
         >Tooltip</lew-mark
       >
     </p>

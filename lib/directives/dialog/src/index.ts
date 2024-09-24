@@ -18,7 +18,8 @@ type Options = {
 
 type DialogType = 'warning' | 'error' | 'info' | 'normal' | 'success'
 
-const createDialog = (type: DialogType) => (options: Options) => dialog(type as LewColor, options)
+const createDialog = (type: DialogType) => (options: Options) =>
+  dialog(type as LewColor, options)
 
 const dialogTypes: Record<DialogType, (options: Options) => void> = {
   warning: createDialog('warning'),

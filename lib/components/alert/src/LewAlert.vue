@@ -16,24 +16,28 @@ const alertClassName = computed(() => {
 <template>
   <div class="lew-alert" :class="alertClassName">
     <Icon dark :size="18" :type></Icon>
-    <div class="message">
+    <div class="lew-alert-message">
       <!-- 标题 -->
-      <div v-if="$slots.title" class="title"><slot name="title" /></div>
-      <div v-else class="title">{{ title }}</div>
+      <div v-if="$slots.title" class="lew-alert-title">
+        <slot name="title" />
+      </div>
+      <div v-else class="lew-alert-title">{{ title }}</div>
 
       <!-- 内容 -->
-      <div v-if="$slots.content" class="content"><slot name="content" /></div>
-      <div v-else-if="content" class="content">{{ content }}</div>
+      <div v-if="$slots.content" class="lew-alert-content">
+        <slot name="content" />
+      </div>
+      <div v-else-if="content" class="lew-alert-content">{{ content }}</div>
 
       <!-- 底部 -->
-      <div v-if="$slots.footer" class="footer">
+      <div v-if="$slots.footer" class="lew-alert-footer">
         <slot name="footer" />
       </div>
     </div>
     <Icon
       v-if="closeable"
       @click="emit('close')"
-      class="lew-form-icon-close"
+      class="lew-form-icon-close lew-alert-close-icon"
       type="close"
     ></Icon>
   </div>
@@ -54,25 +58,11 @@ const alertClassName = computed(() => {
   background-color: var(--lew-bgcolor-1);
   overflow: hidden;
 
-  .alert-icon {
-    width: 18px;
-    height: 18px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .lew-form-icon-close {
-    top: 11px;
-    right: 11px;
-    transform: none;
-  }
-
-  .message {
+  .lew-alert-message {
     width: calc(100% - 30px);
     margin-left: 12px;
     margin-top: -1px;
-    .title {
+    .lew-alert-title {
       font-size: 14px;
       width: 100%;
       word-wrap: break-word;
@@ -80,7 +70,7 @@ const alertClassName = computed(() => {
       font-weight: 400;
     }
 
-    .content {
+    .lew-alert-content {
       margin-top: 8px;
       font-size: 14px;
       width: 100%;
@@ -88,9 +78,15 @@ const alertClassName = computed(() => {
       word-wrap: break-word;
       white-space: pre-line;
     }
-    .footer {
+    .lew-alert-footer {
       margin-top: 8px;
     }
+  }
+
+  .lew-alert-close-icon {
+    top: 11px;
+    right: 11px;
+    transform: none;
   }
 }
 

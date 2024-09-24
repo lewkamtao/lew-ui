@@ -1,13 +1,12 @@
 <script lang="ts" setup name="Modal">
-import { useMagicKeys, useMouse } from '@vueuse/core'
+import { useMagicKeys } from '@vueuse/core'
 import { any2px } from 'lew-ui/utils'
-import { LewFlex, LewButton,  } from 'lew-ui'
+import { LewFlex, LewButton } from 'lew-ui'
 import { useDOMCreate } from '../../../hooks'
 import { LewTextTrim } from '../../text-trim'
 import { modalProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
 
-const { x, y } = useMouse()
 const { Escape } = useMagicKeys()
 useDOMCreate('lew-modal')
 
@@ -64,20 +63,30 @@ if (props.closeByEsc) {
       <transition name="lew-modal">
         <div v-if="visible" class="lew-modal" @click="maskClick">
           <div :style="getModalStyle" class="lew-modal-box" @click.stop>
-            <div v-if="$slots.header" class="header-slot">
+            <div v-if="$slots.header" class="lew-modal-header-slot">
               <slot name="header"></slot>
             </div>
-            <lew-flex v-else-if="title" mode="between" y="center" class="header">
-              <lew-text-trim class="title" :text="title" />
-              <Icon :size="18" class="lew-form-icon-close" type="close" @click="close" />
+            <lew-flex
+              v-else-if="title"
+              mode="between"
+              y="center"
+              class="lew-modal-header"
+            >
+              <lew-text-trim class="lew-modal-title" :text="title" />
+              <Icon
+                :size="18"
+                class="lew-form-icon-close lew-modal-icon-close"
+                type="close"
+                @click="close"
+              />
             </lew-flex>
 
             <slot></slot>
 
-            <div v-if="$slots.footer" class="footer-slot">
+            <div v-if="$slots.footer" class="lew-modal-footer-slot">
               <slot name="footer"></slot>
             </div>
-            <lew-flex v-else-if="!hideFooter" x="end" y="center" class="footer">
+            <lew-flex v-else-if="!hideFooter" x="end" y="center" class="lew-modal-footer">
               <lew-button
                 v-if="!hideCancelButton"
                 v-bind="{
@@ -133,34 +142,34 @@ if (props.closeByEsc) {
     border: var(--lew-modal-border);
     overflow: hidden;
 
-    .header {
+    .lew-modal-header {
       position: relative;
       height: 50px;
       padding: 10px 20px;
       border-bottom: var(--lew-modal-header-border);
 
-      .title {
+      .lew-modal-title {
         font-size: 16px;
         font-weight: bold;
       }
-      .lew-form-icon-close {
+      .lew-modal-icon-close {
         right: 15px;
       }
-      .lew-form-icon-close:hover {
+      .lew-modal-icon-close:hover {
         background-color: var(--lew-bgcolor-5);
       }
     }
 
-    .footer {
+    .lew-modal-footer {
       padding: 10px 20px;
       border-top: var(--lew-modal-footer-border);
     }
 
-    .header-slot {
+    .lew-modal-header-slot {
       background-color: var(--lew-bgcolor-1);
     }
 
-    .footer-slot {
+    .lew-modal-footer-slot {
       background-color: var(--lew-bgcolor-1);
     }
   }

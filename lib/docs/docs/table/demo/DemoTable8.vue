@@ -109,7 +109,12 @@ const selectedKeys = ref('35503077')
 
     <template #action="{ row, column }">
       <lew-flex gap="0">
-        <lew-button size="small" text="管理" type="text" @click.stop="get({ row, column })" />
+        <lew-button
+          size="small"
+          text="管理"
+          type="text"
+          @click.stop="get({ row, column })"
+        />
         <lew-popok
           title="删除确认"
           content="删除之后无法恢复，请确认！"

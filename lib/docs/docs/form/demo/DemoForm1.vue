@@ -86,7 +86,11 @@ const options = ref([
     field: 'input-number',
     label: '数字输入框',
     as: 'input-number',
-    rule: Yup.number().min(0).max(100).typeError('请输入数字').required('此项必填'),
+    rule: Yup.number()
+      .min(0)
+      .max(100)
+      .typeError('请输入数字')
+      .required('此项必填'),
     props: {}
   },
   {

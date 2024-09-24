@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { DemoAlert1, DemoAlert1Code, DemoAlert2, DemoAlert2Code, DemoAlert3, DemoAlert3Code } from './demo'
+import {
+  DemoAlert1,
+  DemoAlert1Code,
+  DemoAlert2,
+  DemoAlert2Code,
+  DemoAlert3,
+  DemoAlert3Code
+} from './demo'
 import LewDemoBox from '@/layout/LewDemoBox.vue'
 import LewDocsTables from '@/layout/LewDocsTables.vue'
 import * as API from './api'

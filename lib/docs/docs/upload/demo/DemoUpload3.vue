@@ -7,6 +7,10 @@ const fileList = ref<UploadFileItem[]>([])
 
 <template>
   <lew-flex width="400px">
-    <lew-upload v-model="fileList" :uploadHelper="uploadHelper" accept="image/*" />
+    <lew-upload
+      v-model="fileList"
+      :uploadHelper="uploadHelper"
+      accept="image/*"
+    />
   </lew-flex>
 </template>

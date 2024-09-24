@@ -26,7 +26,8 @@ export const resultProps = {
       }
       return true
     },
-    description: '结果的主标题，用于简明扼要地展示结果信息。建议不超过50个字符。'
+    description:
+      '结果的主标题，用于简明扼要地展示结果信息。建议不超过50个字符。'
   },
   content: {
     type: String,
@@ -38,6 +39,7 @@ export const resultProps = {
       }
       return true
     },
-    description: '结果的详细内容，用于提供额外的说明或后续操作指引。建议不超过200个字符。'
+    description:
+      '结果的详细内容，用于提供额外的说明或后续操作指引。建议不超过200个字符。'
   }
 }

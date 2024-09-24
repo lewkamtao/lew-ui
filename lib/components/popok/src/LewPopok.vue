@@ -49,20 +49,19 @@ const emit = defineEmits(['show', 'ok', 'cancel'])
           width: any2px(width)
         }"
       >
-        <div class="left">
+        <div class="lew-popok-left">
           <Icon :size="24" :type />
         </div>
-        <div class="right">
-          <div v-if="title" class="title">{{ title }}</div>
-          <div v-if="content" class="content">{{ content }}</div>
-          <div class="footer">
+        <div class="lew-popok-right">
+          <div v-if="title" class="lew-popok-title">{{ title }}</div>
+          <div v-if="content" class="lew-popok-content">{{ content }}</div>
+          <div class="lew-popok-footer">
             <lew-button
               v-bind="{
-                type: 'light',
                 text: '取消',
-                round: true,
-                color: 'gray',
                 size: 'small',
+                type: 'text',
+                color: 'normal',
                 ...(cancelProps as any)
               }"
               @click="cancel"
@@ -71,7 +70,6 @@ const emit = defineEmits(['show', 'ok', 'cancel'])
               v-bind="{
                 text: '确定',
                 color: 'primary',
-                round: true,
                 size: 'small',
                 ...(okProps as any)
               }"
@@ -93,7 +91,7 @@ const emit = defineEmits(['show', 'ok', 'cancel'])
   display: flex;
   padding: 15px;
 
-  .left {
+  .lew-popok-left {
     width: 30px;
     margin-right: 12px;
 
@@ -118,22 +116,22 @@ const emit = defineEmits(['show', 'ok', 'cancel'])
     }
   }
 
-  .right {
+  .lew-popok-right {
     width: calc(100% - 30px);
 
-    .title {
+    .lew-popok-title {
       width: 100%;
       font-weight: 600;
       margin-bottom: 5px;
     }
 
-    .content {
+    .lew-popok-content {
       width: 100%;
       font-size: 14px;
       margin-bottom: 15px;
     }
 
-    .footer {
+    .lew-popok-footer {
       width: 100%;
       display: flex;
       justify-content: end;

@@ -14,7 +14,9 @@ const itemRef = ref([] as any)
 
 const state = reactive({
   activeItemStyle: {} as any,
-  curIndex: (props.options || []).findIndex((e: TabsOptions) => tabsValue.value === e.value),
+  curIndex: (props.options || []).findIndex(
+    (e: TabsOptions) => tabsValue.value === e.value
+  ),
   hidLine: 'all',
   isInit: false
 })
@@ -33,9 +35,14 @@ watch(
 const initActiveItemStyle = (index: number) => {
   const activeRef = itemRef.value[index]
 
-  if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth && activeRef?.offsetLeft >= 0) {
+  if (
+    tabsRef.value.scrollWidth > tabsRef.value.clientWidth &&
+    activeRef?.offsetLeft >= 0
+  ) {
     tabsRef.value.scrollLeft =
-      activeRef?.offsetLeft - tabsRef.value.clientWidth / 2 + activeRef?.offsetWidth / 2
+      activeRef?.offsetLeft -
+      tabsRef.value.clientWidth / 2 +
+      activeRef?.offsetWidth / 2
   }
 
   state.activeItemStyle = {
@@ -50,7 +57,9 @@ watch(
   () => {
     nextTick(() => {
       setTimeout(() => {
-        const index = props.options.findIndex((e) => tabsValue.value === e.value)
+        const index = props.options.findIndex(
+          (e) => tabsValue.value === e.value
+        )
         initActiveItemStyle(index)
       }, 250)
     })
@@ -118,7 +127,10 @@ const getTabsClassName = computed(() => {
 const tabsScroll = () => {
   if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
     if (tabsRef.value.scrollLeft > 5) {
-      if (tabsRef.value.scrollLeft >= tabsRef.value.scrollWidth - tabsRef.value.clientWidth - 5) {
+      if (
+        tabsRef.value.scrollLeft >=
+        tabsRef.value.scrollWidth - tabsRef.value.clientWidth - 5
+      ) {
         state.hidLine = 'right'
       } else {
         state.hidLine = ''
@@ -155,7 +167,11 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div :style="getTabsStyle" class="lew-tabs-wrapper" :class="getTabsWrapperClassName">
+  <div
+    :style="getTabsStyle"
+    class="lew-tabs-wrapper"
+    :class="getTabsWrapperClassName"
+  >
     <div
       ref="tabsRef"
       :style="getTabsStyle"

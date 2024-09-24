@@ -49,7 +49,7 @@ onMounted(() => {
   <transition name="fade">
     <div
       v-if="showBackTop"
-      class="backTop"
+      class="lew-back-top"
       :style="backTopStyle"
       @click="toBackUp"
     >
@@ -61,7 +61,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-.backTop {
+.lew-back-top {
   position: fixed;
   width: 40px;
   height: 40px;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { resultProps } from './props'
-import {  LewFlex, LewTitle } from 'lew-ui'
+import { LewFlex, LewTitle } from 'lew-ui'
 import Icon from 'lew-ui/utils/Icon.vue'
 
 defineProps(resultProps)

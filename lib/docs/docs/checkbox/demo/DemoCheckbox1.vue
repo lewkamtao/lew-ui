@@ -11,8 +11,20 @@ const selectedPlatforms = ref([])
 
 <template>
   <lew-flex direction="y" :gap="10">
-    <lew-checkbox-group v-model="selectedPlatforms" size="small" :options="socialMediaOptions" />
-    <lew-checkbox-group v-model="selectedPlatforms" size="medium" :options="socialMediaOptions" />
-    <lew-checkbox-group v-model="selectedPlatforms" size="large" :options="socialMediaOptions" />
+    <lew-checkbox-group
+      v-model="selectedPlatforms"
+      size="small"
+      :options="socialMediaOptions"
+    />
+    <lew-checkbox-group
+      v-model="selectedPlatforms"
+      size="medium"
+      :options="socialMediaOptions"
+    />
+    <lew-checkbox-group
+      v-model="selectedPlatforms"
+      size="large"
+      :options="socialMediaOptions"
+    />
   </lew-flex>
 </template>

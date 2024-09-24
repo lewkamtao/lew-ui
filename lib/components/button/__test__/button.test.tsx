@@ -16,9 +16,13 @@ describe('Button', () => {
   it('default-props', () => {
     const buttonComponent = shallowMount(LewButton)
     // 默认type为primary
-    expect(buttonComponent.find('.lew-button').classes()).toContain('lew-button-primary')
+    expect(buttonComponent.find('.lew-button').classes()).toContain(
+      'lew-button-primary'
+    )
     // 默认size为medium
-    expect(buttonComponent.find('.lew-button').classes()).toContain('lew-button-medium')
+    expect(buttonComponent.find('.lew-button').classes()).toContain(
+      'lew-button-medium'
+    )
   })
 
   it('set-props', () => {
@@ -28,8 +32,12 @@ describe('Button', () => {
         size: 'small'
       }
     })
-    expect(buttonComponent.find('.lew-button').classes()).toContain('lew-button-success')
-    expect(buttonComponent.find('.lew-button').classes()).toContain('lew-button-small')
+    expect(buttonComponent.find('.lew-button').classes()).toContain(
+      'lew-button-success'
+    )
+    expect(buttonComponent.find('.lew-button').classes()).toContain(
+      'lew-button-small'
+    )
   })
 
   it('click', () => {

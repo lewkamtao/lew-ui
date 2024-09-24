@@ -132,7 +132,7 @@ const getPaginationClassName = computed(() => {
 
 <template>
   <div class="lew-pagination" :class="getPaginationClassName">
-    <lew-flex class="control" gap="10">
+    <lew-flex class="lew-pagination-control" gap="10">
       <slot name="left"></slot>
       <lew-flex class="lew-pagination-page-box" gap="5">
         <lew-button
@@ -145,14 +145,14 @@ const getPaginationClassName = computed(() => {
         </lew-button>
         <div
           v-if="showOne"
-          class="btn lew-pagination-page-btn"
+          class="lew-pagination-page-btn"
           @click="changePage(1)"
         >
           1
         </div>
         <div
           v-if="startEllipsis"
-          class="btn control-btn"
+          class="lew-pagination-control-btn"
           @click="changePage(visiblePages[0] - 1)"
         >
           <Icon :size="14" type="more-horizontal" />
@@ -162,7 +162,7 @@ const getPaginationClassName = computed(() => {
             currentPage > visiblePages.length / 2 + 2 &&
             visiblePagesCount < totalPages
           "
-          class="btn"
+          class="lew-pagination-page-btn"
           @click="changePage(2)"
         >
           2
@@ -170,7 +170,7 @@ const getPaginationClassName = computed(() => {
         <div
           v-for="(page, index) in visiblePages"
           :key="index"
-          class="btn"
+          class="lew-pagination-page-btn"
           :class="{
             active: Number(page) === Number(currentPage)
           }"
@@ -180,7 +180,7 @@ const getPaginationClassName = computed(() => {
         </div>
         <div
           v-if="endEllipsis"
-          class="btn control-btn"
+          class="lew-pagination-control-btn"
           @click="changePage(visiblePages[visiblePages.length - 1] + 1)"
         >
           <Icon :size="14" type="more-horizontal" />
@@ -190,14 +190,14 @@ const getPaginationClassName = computed(() => {
             currentPage < totalPages - visiblePages.length / 2 - 1 &&
             visiblePagesCount < totalPages
           "
-          class="btn"
+          class="lew-pagination-page-btn"
           @click="changePage(2)"
         >
           {{ totalPages - 1 }}
         </div>
         <div
           v-if="showMax"
-          class="btn lew-pagination-page-btn"
+          class="lew-pagination-page-btn"
           @click="changePage(totalPages)"
         >
           {{ totalPages }}
@@ -241,11 +241,11 @@ const getPaginationClassName = computed(() => {
   user-select: none;
   font-size: 14px;
 
-  .control {
+  .lew-pagination-control {
     height: 100%;
   }
 
-  .btn {
+  .lew-pagination-page-btn {
     position: relative;
     z-index: 2;
     display: inline-flex;
@@ -259,7 +259,7 @@ const getPaginationClassName = computed(() => {
     cursor: pointer;
   }
 
-  .btn:hover {
+  .lew-pagination-page-btn:hover {
     background-color: var(--lew-color-primary-light);
     color: var(--lew-color-primary-dark);
   }
@@ -280,32 +280,32 @@ const getPaginationClassName = computed(() => {
       color: var(--lew-color-white-text);
     }
 
-    .control-btn {
+    .lew-pagination-control-btn {
       padding: 0px;
     }
   }
 
-  .page-label {
+  .lew-pagination-page-label {
     white-space: nowrap;
     padding: 0px 5px;
   }
 }
 .lew-pagination-size-small {
-  .btn {
+  .lew-pagination-page-btn {
     height: calc(var(--lew-form-item-height-small) - 2px);
     min-width: calc(var(--lew-form-item-height-small) - 2px);
     padding: 0px 4px;
   }
 }
 .lew-pagination-size-medium {
-  .btn {
+  .lew-pagination-page-btn {
     height: calc(var(--lew-form-item-height-medium) - 2px);
     min-width: calc(var(--lew-form-item-height-medium) - 2px);
     padding: 0px 6px;
   }
 }
 .lew-pagination-size-large {
-  .btn {
+  .lew-pagination-page-btn {
     height: calc(var(--lew-form-item-height-large) - 2px);
     min-width: calc(var(--lew-form-item-height-large) - 2px);
     padding: 0px 8px;

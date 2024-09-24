@@ -118,7 +118,9 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
       <!-- 日期 -->
       <div class="cur-date">
         {{ dateState.year }} 年
-        <span style="width: 22px; text-align: center">{{ dateState.month }}</span>
+        <span style="width: 22px; text-align: center">{{
+          dateState.month
+        }}</span>
         月
       </div>
       <div class="lew-date-control-right">
@@ -146,7 +148,11 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
     </lew-flex>
     <div class="lew-date-box">
       <!-- 表头 周 -->
-      <div v-for="(item, index) in getHeadDate" :key="`h${index}`" class="lew-date-item">
+      <div
+        v-for="(item, index) in getHeadDate"
+        :key="`h${index}`"
+        class="lew-date-item"
+      >
         <div class="lew-date-num">{{ item }}</div>
       </div>
 
@@ -249,7 +255,8 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
           color: var(--lew-text-color-7);
           border-radius: 50%;
           transition: all 0.1s ease;
-          border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+          border: var(--lew-form-border-width) var(--lew-form-border-color)
+            solid;
         }
         .lew-date-value:active {
           transform: scale(1.1);
@@ -301,7 +308,8 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
         .lew-date-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white-text);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light)
+            solid;
         }
       }
     }
@@ -310,7 +318,8 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
         .lew-date-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white-text);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light)
+            solid;
         }
       }
     }
@@ -319,7 +328,8 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
         .lew-date-value {
           background: var(--lew-color-primary);
           color: var(--lew-color-white-text);
-          border: var(--lew-form-border-width) var(--lew-color-primary-light) solid;
+          border: var(--lew-form-border-width) var(--lew-color-primary-light)
+            solid;
         }
       }
     }

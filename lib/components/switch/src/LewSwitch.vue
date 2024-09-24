@@ -33,13 +33,13 @@ const getSwitchClassName = computed(() => {
 
   let loading = props.loading || _loading.value
 
-  return object2class('lew-switch-view', {
+  return object2class('lew-switch', {
     checked: modelValue.value,
     round: !!round,
     request: !!request,
-    loading,
-    disabled,
-    readonly
+    loading: loading,
+    disabled: disabled,
+    readonly: readonly
   })
 })
 
@@ -48,8 +48,8 @@ const getSwitchStyle = computed(() => {
   switch (size) {
     case 'small':
       return {
-        '--lew-switch-view-width': '36px',
-        '--lew-switch-view-height': '22px',
+        '--lew-switch-width': '36px',
+        '--lew-switch-height': '22px',
         '--lew-switch-dot-width': '14px',
         '--lew-switch-dot-height': '14px',
         '--lew-switch-dot-width-active': '16px',
@@ -58,8 +58,8 @@ const getSwitchStyle = computed(() => {
       }
     case 'medium':
       return {
-        '--lew-switch-view-width': '38px',
-        '--lew-switch-view-height': '24px',
+        '--lew-switch-width': '38px',
+        '--lew-switch-height': '24px',
         '--lew-switch-dot-width': '16px',
         '--lew-switch-dot-height': '16px',
         '--lew-switch-dot-width-active': '18px',
@@ -68,8 +68,8 @@ const getSwitchStyle = computed(() => {
       }
     case 'large':
       return {
-        '--lew-switch-view-width': '40px',
-        '--lew-switch-view-height': '26px',
+        '--lew-switch-width': '40px',
+        '--lew-switch-height': '26px',
         '--lew-switch-dot-width': '18px',
         '--lew-switch-dot-height': '18px',
         '--lew-switch-dot-width-active': '20px',
@@ -78,8 +78,8 @@ const getSwitchStyle = computed(() => {
       }
     default:
       return {
-        '--lew-switch-view-width': '38px',
-        '--lew-switch-view-height': '24px',
+        '--lew-switch-width': '38px',
+        '--lew-switch-height': '24px',
         '--lew-switch-dot-width': '16px',
         '--lew-switch-dot-height': '16px',
         '--lew-switch-dot-width-active': '20px',
@@ -92,23 +92,28 @@ const getSwitchStyle = computed(() => {
 
 <template>
   <div
-    class="lew-switch-view"
+    class="lew-switch"
     :class="getSwitchClassName"
     :style="getSwitchStyle"
     @click="handleClick"
   >
-    <input v-show="false" v-model="modelValue" type="checkbox" :disabled="disabled" />
+    <input
+      v-show="false"
+      v-model="modelValue"
+      type="checkbox"
+      :disabled="disabled"
+    />
     <div class="lew-switch-dot"></div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.lew-switch-view {
+.lew-switch {
   position: relative;
   display: block;
   cursor: pointer;
-  width: var(--lew-switch-view-width);
-  height: var(--lew-switch-view-height);
+  width: var(--lew-switch-width);
+  height: var(--lew-switch-height);
   background: var(--lew-bgcolor-3);
   border-radius: var(--lew-border-radius-small);
   transition: var(--lew-form-transition-ease);
@@ -158,7 +163,7 @@ const getSwitchStyle = computed(() => {
   }
 }
 
-.lew-switch-view-loading {
+.lew-switch-loading {
   cursor: progress;
 
   .lew-switch-dot::after {
@@ -169,7 +174,7 @@ const getSwitchStyle = computed(() => {
   }
 }
 
-.lew-switch-view-round {
+.lew-switch-round {
   border-radius: 20px;
 
   .lew-switch-dot {
@@ -177,12 +182,12 @@ const getSwitchStyle = computed(() => {
   }
 }
 
-.lew-switch-view:hover {
+.lew-switch:hover {
   background: var(--lew-bgcolor-4);
   outline: var(--lew-form-outline);
 }
 
-.lew-switch-view:active {
+.lew-switch:active {
   background: var(--lew-bgcolor-5);
 
   .lew-switch-dot {
@@ -190,15 +195,15 @@ const getSwitchStyle = computed(() => {
   }
 }
 
-.lew-switch-view.lew-switch-view-checked {
+.lew-switch.lew-switch-checked {
   background: var(--lew-color-primary);
 }
 
-.lew-switch-view.lew-switch-view-checked:hover {
+.lew-switch.lew-switch-checked:hover {
   background: var(--lew-color-primary);
 }
 
-.lew-switch-view.lew-switch-view-checked:active {
+.lew-switch.lew-switch-checked:active {
   background: var(--lew-color-primary);
 
   .lew-switch-dot {
@@ -207,26 +212,26 @@ const getSwitchStyle = computed(() => {
   }
 }
 
-.lew-switch-view.lew-switch-view-request {
+.lew-switch.lew-switch-request {
   .lew-switch-dot {
     width: 16px;
     transform: translate(4px, 4px);
   }
 }
 
-.lew-switch-view.lew-switch-view-checked.lew-switch-view-request {
+.lew-switch.lew-switch-checked.lew-switch-request {
   .lew-switch-dot {
     width: 16px;
     transform: translate(18px, 4px);
   }
 }
 
-.lew-switch-view-disabled {
+.lew-switch-disabled {
   opacity: var(--lew-disabled-opacity);
   pointer-events: none; //鼠标点击不可修改
 }
 
-.lew-switch-view-readonly {
+.lew-switch-readonly {
   pointer-events: none; //鼠标点击不可修改
 }
 </style>

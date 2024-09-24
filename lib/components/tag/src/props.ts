@@ -31,7 +31,9 @@ export const tagProps = {
     description: '标签的颜色主题',
     validator(value: LewColor): boolean {
       if (!validColors.includes(value)) {
-        console.warn(`[LewTag] 无效的颜色值: ${value}。请使用 ${validColors.join(', ')} 中的一个。`)
+        console.warn(
+          `[LewTag] 无效的颜色值: ${value}。请使用 ${validColors.join(', ')} 中的一个。`
+        )
         return false
       }
       return true

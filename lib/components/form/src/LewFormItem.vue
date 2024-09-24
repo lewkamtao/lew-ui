@@ -111,16 +111,22 @@ defineExpose({ validate, setError })
       'grid-area': gridArea || ''
     }"
   >
-    <div :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''" class="label-box-wrapper">
+    <div
+      :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''"
+      class="lew-label-box-wrapper"
+    >
       <div
-        class="label-box"
+        class="lew-label-box"
         v-tooltip="{
           content: tips
         }"
         v-if="as"
-        :class="{ 'label-tips': tips }"
+        :class="{ 'lew-label-tips': tips }"
       >
-        <RequiredIcon :size="requiredIconSizeMap[size]" v-if="required && label" />
+        <RequiredIcon
+          :size="requiredIconSizeMap[size]"
+          v-if="required && label"
+        />
         {{ label }}
       </div>
     </div>
@@ -141,8 +147,13 @@ defineExpose({ validate, setError })
         v-bind="{ size, readonly, disabled, ...props.props }"
         @change="change"
       />
-      <transition name="slide-fade">
-        <lew-text-trim style="width: 100%" :text="errMsg" v-if="errMsg" class="error-message">
+      <transition name="lew-slide-fade">
+        <lew-text-trim
+          style="width: 100%"
+          :text="errMsg"
+          v-if="errMsg"
+          class="lew-error-message"
+        >
         </lew-text-trim>
       </transition>
     </div>
@@ -152,9 +163,9 @@ defineExpose({ validate, setError })
 <style lang="scss" scoped>
 .lew-form-item {
   transition: opacity 0.25s;
-  .label-box-wrapper {
+  .lew-label-box-wrapper {
     transition: all 0.25s;
-    .label-box {
+    .lew-label-box {
       display: inline-flex;
       align-items: center;
       gap: 5px;
@@ -163,7 +174,7 @@ defineExpose({ validate, setError })
 }
 
 .lew-form-item-size-small {
-  .label-box-wrapper {
+  .lew-label-box-wrapper {
     font-size: var(--lew-form-font-size-small);
     margin-top: 6px;
   }
@@ -174,7 +185,7 @@ defineExpose({ validate, setError })
 }
 
 .lew-form-item-size-medium {
-  .label-box-wrapper {
+  .lew-label-box-wrapper {
     font-size: var(--lew-form-font-size-medium);
     margin-top: 8px;
   }
@@ -185,7 +196,7 @@ defineExpose({ validate, setError })
 }
 
 .lew-form-item-size-large {
-  .label-box-wrapper {
+  .lew-label-box-wrapper {
     font-size: var(--lew-form-font-size-large);
     margin-top: 10px;
   }
@@ -198,7 +209,7 @@ defineExpose({ validate, setError })
   display: flex;
   align-items: center;
 }
-.label-tips {
+.lew-label-tips {
   cursor: pointer;
   border-bottom: 2px dashed var(--lew-color-blue);
 }
@@ -207,7 +218,7 @@ defineExpose({ validate, setError })
   align-items: flex-start;
   gap: 10px;
 
-  .label-box-wrapper {
+  .lew-label-box-wrapper {
     display: inline-flex;
     justify-content: flex-end;
     flex-shrink: 0;
@@ -225,7 +236,7 @@ defineExpose({ validate, setError })
   flex-direction: column;
   gap: 5px;
 
-  .label-box-wrapper {
+  .lew-label-box-wrapper {
     display: inline-flex;
     justify-content: flex-start;
     box-sizing: border-box;
@@ -237,7 +248,7 @@ defineExpose({ validate, setError })
   .lew-form-item-main {
     position: relative;
   }
-  .error-message {
+  .lew-error-message {
     position: absolute;
     left: 0px;
     bottom: 0px;
@@ -261,13 +272,13 @@ defineExpose({ validate, setError })
   --lew-form-outline: 0px var(--lew-color-error-light) solid;
 }
 
-.slide-fade-leave-active,
-.slide-fade-enter-active {
+.lew-slide-fade-leave-active,
+.lew-slide-fade-enter-active {
   transition: all 0.15s ease;
 }
 
-.slide-fade-enter-from,
-.slide-fade-leave-to {
+.lew-slide-fade-enter-from,
+.lew-slide-fade-leave-to {
   transform: translateY(100%) !important;
   opacity: 0;
 }

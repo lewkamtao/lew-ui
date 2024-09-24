@@ -2,7 +2,8 @@
 const open = () => {
   LewMessage.warning({
     id: 'concert-ticket-alert',
-    content: '热门演唱会门票即将开售！请密切关注官方售票平台，以免错过购票机会。',
+    content:
+      '热门演唱会门票即将开售！请密切关注官方售票平台，以免错过购票机会。',
     duration: 300000
   })
 }

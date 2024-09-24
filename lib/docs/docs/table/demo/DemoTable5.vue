@@ -10,7 +10,8 @@ const data: any = [
     cleanArea: '200平方米',
     features: ['激光导航', '自动回充', 'APP控制', '语音控制', '防跌落'],
     tdStyle: {
-      price: 'background:var(--lew-color-primary-light);color:var(--lew-color-primary-dark)',
+      price:
+        'background:var(--lew-color-primary-light);color:var(--lew-color-primary-dark)',
       suction: 'font-weight: bold; color: var(--lew-color-success)',
       batteryLife: 'font-style: italic; color: var(--lew-color-info)'
     },
@@ -28,7 +29,14 @@ const data: any = [
     batteryLife: '200分钟',
     noiseLevel: '62dB',
     cleanArea: '250平方米',
-    features: ['激光导航', '自动回充', 'APP控制', '语音控制', '防跌落', '自动倒垃圾'],
+    features: [
+      '激光导航',
+      '自动回充',
+      'APP控制',
+      '语音控制',
+      '防跌落',
+      '自动倒垃圾'
+    ],
     tdStyle: {
       name: 'background: var(--lew-color-success-light); font-weight: bold',
       cleanArea: 'text-decoration: underline; color: var(--lew-color-primary)'
@@ -67,10 +75,19 @@ const data: any = [
     batteryLife: '240分钟',
     noiseLevel: '60dB',
     cleanArea: '300平方米',
-    features: ['激光导航', '自动回充', 'APP控制', '语音控制', '防跌落', '自动倒垃圾', '拖地功能'],
+    features: [
+      '激光导航',
+      '自动回充',
+      'APP控制',
+      '语音控制',
+      '防跌落',
+      '自动倒垃圾',
+      '拖地功能'
+    ],
     tdStyle: {
       suction: 'background:var(--lew-color-error);color:#fff',
-      price: 'font-weight: bold; font-size: 16px; color: var(--lew-color-error)',
+      price:
+        'font-weight: bold; font-size: 16px; color: var(--lew-color-error)',
       batteryLife:
         'background: var(--lew-color-success-light); border-radius: 4px; padding: 2px 4px'
     },
@@ -205,7 +222,11 @@ const formatNoiseLevel = (level: string) => {
   return '较大'
 }
 
-const calculateValueForMoney = (price: string, suction: number, batteryLife: string) => {
+const calculateValueForMoney = (
+  price: string,
+  suction: number,
+  batteryLife: string
+) => {
   const priceNum = parseInt(price)
   const batteryMinutes = parseInt(batteryLife)
   const score = (suction * batteryMinutes) / priceNum

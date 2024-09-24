@@ -35,16 +35,13 @@ defineExpose({ open })
     @cancel="visible = false"
     title="预览表单"
   >
-    <div class="form-modal lew-scrollbar">
+    <div class="preview-modal-content lew-scrollbar">
       <lew-form ref="formRef" v-bind="bindOptions" />
     </div>
   </lew-modal>
 </template>
 <style lang="scss" scoped>
-.footer {
-  padding: 5px 15px;
-}
-.form-modal {
+.preview-modal-content {
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;

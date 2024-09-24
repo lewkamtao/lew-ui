@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { object2class } from 'lew-ui/utils'
-import { LewPopover,  LewDate, LewTooltip } from 'lew-ui'
+import { LewPopover, LewDate, LewTooltip } from 'lew-ui'
 import { datePickerProps } from './props'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash-es'
@@ -95,10 +95,10 @@ defineExpose({ show, hide })
             {{ modelValue }}
           </div>
           <Icon
-            class="icon-calendar"
+            class="lew-date-picker-icon-calendar"
             :size="getIconSize"
             :class="{
-              'icon-calendar-hide': modelValue && clearable
+              'lew-date-picker-icon-calendar-hide': modelValue && clearable
             }"
             type="calendar"
           />
@@ -107,7 +107,7 @@ defineExpose({ show, hide })
               v-if="modelValue && clearable && !readonly"
               :size="getIconSize"
               type="close"
-              class="lew-form-icon-close"
+              class="lew-form-icon-close lew-date-picker-icon-close"
               :class="{
                 'lew-form-icon-close-focus': visible
               }"
@@ -130,19 +130,28 @@ defineExpose({ show, hide })
             v-for="(item, index) in presets"
             @click="selectPresets(item)"
             :key="index"
-            class="item"
+            class="lew-date-picker-presets-item"
             v-tooltip="{
               content: dayjs(item.value).format(valueFormat),
               placement: 'right',
               delay: [500, 80]
             }"
-            :class="[dayjs(modelValue).isSame(item.value, 'day') ? 'item-active' : '']"
+            :class="[
+              dayjs(modelValue).isSame(item.value, 'day')
+                ? 'lew-date-picker-presets-item-active'
+                : ''
+            ]"
           >
             {{ item.label }}
           </div>
         </lew-flex>
         <lew-flex class="lew-date-picker-date-panel">
-          <lew-date ref="lewDateRef" v-model="modelValue" v-bind="props" @change="change" />
+          <lew-date
+            ref="lewDateRef"
+            v-model="modelValue"
+            v-bind="props"
+            @change="change"
+          />
         </lew-flex>
       </lew-flex>
     </template>
@@ -178,7 +187,7 @@ defineExpose({ show, hide })
     align-items: center;
     box-sizing: border-box;
 
-    .icon-calendar {
+    .lew-date-picker-icon-calendar {
       position: absolute;
       top: 50%;
       right: 9px;
@@ -187,7 +196,7 @@ defineExpose({ show, hide })
       opacity: var(--lew-form-icon-opacity);
     }
 
-    .icon-calendar-hide {
+    .lew-date-picker-icon-calendar-hide {
       opacity: 0;
       transform: translateY(-50%) translateX(100%);
     }
@@ -203,7 +212,8 @@ defineExpose({ show, hide })
 
   .lew-date-picker-view.lew-date-picker-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+      solid;
     outline: var(--lew-form-outline);
   }
 
@@ -256,7 +266,7 @@ defineExpose({ show, hide })
     box-sizing: border-box;
     width: 120px;
     border-right: var(--lew-pop-border);
-    .item {
+    .lew-date-picker-presets-item {
       width: 100%;
       height: 30px;
       line-height: 30px;
@@ -265,10 +275,10 @@ defineExpose({ show, hide })
       background-color: var(--lew-form-bgcolor);
       cursor: pointer;
     }
-    .item:hover {
+    .lew-date-picker-presets-item:hover {
       background-color: var(--lew-form-bgcolor-hover);
     }
-    .item-active {
+    .lew-date-picker-presets-item-active {
       background-color: var(--lew-color-blue) !important;
       color: var(--lew-color-white);
     }

@@ -69,9 +69,17 @@ export const selectMultipleProps = {
     type: Function as PropType<
       (params: SelectSearchMultipleMethodParams) => SelectMultipleOptions[]
     >,
-    default: ({ options, keyword }: { options: SelectMultipleOptions[]; keyword: string }) => {
+    default: ({
+      options,
+      keyword
+    }: {
+      options: SelectMultipleOptions[]
+      keyword: string
+    }) => {
       if (options && keyword) {
-        return options.filter((option: SelectMultipleOptions) => option.label.includes(keyword))
+        return options.filter((option: SelectMultipleOptions) =>
+          option.label.includes(keyword)
+        )
       }
       return []
     },

@@ -25,8 +25,12 @@ const options = ref(
     <lew-demo-box title="常规" :code="DemoRadio1Code">
       <demo-radio1 />
     </lew-demo-box>
-    <lew-demo-box title="y 布局" :code="DemoRadio2Code"> <demo-radio2 /></lew-demo-box>
-    <lew-demo-box title="块" :code="DemoRadio3Code"><demo-radio3 /> </lew-demo-box>
+    <lew-demo-box title="y 布局" :code="DemoRadio2Code">
+      <demo-radio2
+    /></lew-demo-box>
+    <lew-demo-box title="块" :code="DemoRadio3Code"
+      ><demo-radio3 />
+    </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>
 </template>

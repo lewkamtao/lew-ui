@@ -120,7 +120,16 @@ const change = (e: any) => {
       @change="change"
       placeholder="选择小型科技产品"
     />
-    <lew-cascader v-model="v" :options="options" placeholder="浏览科技产品目录" />
-    <lew-cascader v-model="v" size="large" :options="options" placeholder="探索高端科技产品" />
+    <lew-cascader
+      v-model="v"
+      :options="options"
+      placeholder="浏览科技产品目录"
+    />
+    <lew-cascader
+      v-model="v"
+      size="large"
+      :options="options"
+      placeholder="探索高端科技产品"
+    />
   </lew-flex>
 </template>

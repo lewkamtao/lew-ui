@@ -74,7 +74,7 @@
   bottom: 0;
   right: 0;
   backdrop-filter: blur(150px);
-  background-color: rgba($color: #fff, $alpha: .9);
+  background-color: rgba($color: #fff, $alpha: 0.9);
   z-index: 5;
 }
 
