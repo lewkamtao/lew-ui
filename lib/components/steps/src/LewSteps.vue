@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { stepsProps } from './props'
+import { LewTextTrim } from 'lew-ui'
 import Icon from 'lew-ui/utils/Icon.vue'
 defineProps(stepsProps)
 const stepsValue: Ref<number | undefined> = defineModel()

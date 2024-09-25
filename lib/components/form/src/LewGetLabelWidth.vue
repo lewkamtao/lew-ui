@@ -2,6 +2,7 @@
 import RequiredIcon from './RequiredIcon.vue'
 import { requiredIconSizeMap } from './props'
 import type { LewSize } from 'lew-ui'
+import { LewFlex } from 'lew-ui'
 
 defineProps({
   size: {

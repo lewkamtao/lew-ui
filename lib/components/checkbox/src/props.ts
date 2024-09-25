@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import type { LewSize } from 'lew-ui'
-import { validSizes } from 'lew-ui/constants'
+import type { LewSize, LewDirection } from 'lew-ui'
+import { validSizes, validDirection } from 'lew-ui/constants'
 
 export type CheckboxGroupDirectionType = 'x' | 'y'
 export type CheckboxValue = string | number
@@ -126,11 +126,11 @@ export const checkboxGroupProps = {
     }
   },
   direction: {
-    type: String,
+    type: String as PropType<LewDirection>,
     default: 'x',
     description: '复选框组的排列方向',
-    validator: (value: string) => {
-      if (!['x', 'y'].includes(value)) {
+    validator: (value: LewDirection) => {
+      if (!validDirection.includes(value)) {
         console.warn(
           '[LewCheckboxGroup] 无效的 direction 值，请使用 "x" 或 "y"'
         )

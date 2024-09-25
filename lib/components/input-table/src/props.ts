@@ -2,7 +2,7 @@ import type { PropType } from 'vue'
 import type { LewSize } from 'lew-ui'
 import { validSizes } from 'lew-ui/constants'
 
-interface InputTableColumn {
+export interface InputTableColumn {
   title: string
   width?: number
   field: string

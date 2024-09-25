@@ -26,3 +26,5 @@ export type LewStatusColor =
 export type LewColor = LewThemeColor | LewStatusColor
 
 export type LewSize = 'small' | 'medium' | 'large'
+
+export type LewDirection = 'x' | 'y'

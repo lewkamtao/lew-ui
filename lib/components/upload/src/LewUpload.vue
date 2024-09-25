@@ -3,6 +3,15 @@ import { cloneDeep, isFunction } from 'lodash-es'
 import { uploadProps } from './props'
 import type { UploadFileItem, UploadStatus } from './props'
 import {
+  LewFlex,
+  LewAlert,
+  LewTag,
+  LewImage,
+  LewTextTrim,
+  LewTooltip
+} from 'lew-ui'
+import type { LewColor } from 'lew-ui'
+import {
   any2px,
   getUniqueId,
   formatBytes,
@@ -11,6 +20,12 @@ import {
 } from 'lew-ui/utils'
 import { useClipboardItems } from '@vueuse/core'
 import Icon from 'lew-ui/utils/Icon.vue'
+
+// 获取app
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
+}
 
 const { isSupported } = useClipboardItems({ read: true })
 const tipFontSizeMap: Record<string, number> = {
@@ -508,7 +523,7 @@ const getTips = computed(() => {
                 <lew-tag
                   type="light"
                   size="small"
-                  :color="statusColorMap[item.status || 'complete']"
+                  :color="statusColorMap[item.status || 'complete'] as LewColor"
                 >
                   <template #left>
                     <Icon

@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { LewPopover, LewFlex, LewButton, LewTooltip, LewTextTrim } from 'lew-ui'
+import {
+  LewPopover,
+  LewFlex,
+  LewButton,
+  LewTooltip,
+  LewTextTrim,
+  LewCheckbox
+} from 'lew-ui'
 import { object2class } from 'lew-ui/utils'
 import type { CascaderOptions } from './props'
 import { cascaderProps } from './props'

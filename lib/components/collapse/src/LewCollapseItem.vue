@@ -2,6 +2,7 @@
 import { collapseItemProps } from './props'
 import LewCollapseTransition from './LewCollapseTransition.vue'
 import { isArray } from 'lodash-es'
+import { LewFlex } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
 
@@ -56,11 +57,11 @@ const change = () => {
         <lew-text-trim :style="{ width: 'calc(100% - 50px)' }" :text="title" />
       </template>
     </lew-flex>
-    <Lew-collapse-transition>
+    <lew-collapse-transition>
       <div v-if="modelValue" class="lew-collapse-item-main">
         <slot />
       </div>
-    </Lew-collapse-transition>
+    </lew-collapse-transition>
   </div>
 </template>
 <style scoped lang="scss">

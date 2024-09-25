@@ -1,7 +1,6 @@
-
 <script setup lang="ts">
 import { object2class, any2px } from 'lew-ui/utils'
-import { LewTooltip } from 'lew-ui'
+import { LewTooltip, LewFlex } from 'lew-ui'
 import { inputNumberProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
 

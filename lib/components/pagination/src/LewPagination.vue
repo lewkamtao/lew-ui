@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LewInput, LewSelect, LewFlex } from 'lew-ui'
+import { LewInput, LewSelect, LewFlex, LewButton } from 'lew-ui'
 import { paginationProps } from './props'
 import type { PaginationOptions } from './props'
 import { object2class } from 'lew-ui/utils'

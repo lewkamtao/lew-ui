@@ -2,8 +2,10 @@
 import { cloneDeep } from 'lodash-es'
 import FormModal from './FormModal.vue'
 import { inputTableProps } from './props'
+import type { InputTableColumn } from './props'
 import { any2px, getUniqueId } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { LewTable, LewButton, LewFlex, LewEmpty } from 'lew-ui'
 
 const modelValue: Ref<Array<any>> = defineModel({ required: true })
 
@@ -186,7 +188,7 @@ const getAddButtonStyle = computed(() => {
       :checkable="batchDeletable"
       :row-key="rowKey"
       multiple
-      :columns="inputTableColumns"
+      :columns="inputTableColumns as InputTableColumn[]"
       :data-source="modelValue"
       v-model:selectedKeys="selectedKeys"
     >

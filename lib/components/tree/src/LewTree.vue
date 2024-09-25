@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LewFlex, LewEmpty, LewLoading } from 'lew-ui'
+import { LewFlex, LewEmpty, LewLoading, LewCheckbox } from 'lew-ui'
 import { treeProps } from './props'
 import type { TreeDataSource } from './props'
 import {

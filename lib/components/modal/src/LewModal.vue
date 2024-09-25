@@ -1,9 +1,8 @@
 <script lang="ts" setup name="Modal">
 import { useMagicKeys } from '@vueuse/core'
 import { any2px } from 'lew-ui/utils'
-import { LewFlex, LewButton } from 'lew-ui'
-import { useDOMCreate } from '../../../hooks'
-import { LewTextTrim } from '../../text-trim'
+import { LewFlex, LewButton, LewTextTrim } from 'lew-ui'
+import { useDOMCreate } from 'lew-ui/hooks'
 import { modalProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
 
@@ -86,7 +85,12 @@ if (props.closeByEsc) {
             <div v-if="$slots.footer" class="lew-modal-footer-slot">
               <slot name="footer"></slot>
             </div>
-            <lew-flex v-else-if="!hideFooter" x="end" y="center" class="lew-modal-footer">
+            <lew-flex
+              v-else-if="!hideFooter"
+              x="end"
+              y="center"
+              class="lew-modal-footer"
+            >
               <lew-button
                 v-if="!hideCancelButton"
                 v-bind="{

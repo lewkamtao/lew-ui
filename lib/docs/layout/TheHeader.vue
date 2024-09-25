@@ -3,7 +3,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useDark } from '@vueuse/core'
 import { Sun, Moon, Github } from 'lucide-vue-next'
 
-const version = ref('v2.4.2')
+const version = ref('v2.4.8')
 
 const isDark = useDark({
   selector: 'html',

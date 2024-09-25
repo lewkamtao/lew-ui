@@ -6,44 +6,36 @@ import 'tippy.js/animations/scale.css'
 import 'tippy.js/themes/light.css'
 
 // 引入样式
-import './styles/reset.scss'
-import './styles/main.scss'
-import './styles/var.scss'
-import './styles/tippy.scss'
+import './styles/index.scss'
 
 // 全局 => 定义 install 方法
 import * as components from './components'
 import * as directives from './directives'
+import * as methods from './methods'
 
 export * from './components'
 export * from './directives'
+export * from './methods'
+
 export * from './types'
 export * from './utils'
 
 const install = (Vue: App): void => {
-  const componentList = Object.keys(components).map(
-    (key) => components[key as keyof typeof components]
-  )
-
-  const directiveList = Object.keys(directives).map(
-    (key) => directives[key as keyof typeof directives]
-  )
-
-  componentList.forEach((component: any) => {
-    if (
-      Object.prototype.hasOwnProperty.call(component, 'name') ||
-      Object.prototype.hasOwnProperty.call(component, '__name')
-    ) {
-      Vue.component(`${component.name || component.__name}`, component)
+  Object.keys(components).forEach((key) => {
+    const component: any = components[key as keyof typeof components]
+    if (component.name || component.__name) {
+      Vue.component(component.name || component.__name, component)
     }
   })
 
-  directiveList.forEach((directive: any) => {
-    if (Object.prototype.hasOwnProperty.call(directive, 'install')) {
-      Vue.use(directive)
-    } else if (Object.prototype.hasOwnProperty.call(directive, 'name')) {
-      window[directive.name] = directive
-      Vue.config.globalProperties[directive.name] = directive
+  Object.keys(directives).forEach((key) => {
+    Vue.use(directives[key as keyof typeof directives] as any)
+  })
+
+  Object.keys(methods).forEach((key) => {
+    const methodInstance = methods[key as keyof typeof methods]
+    if (methodInstance.name) {
+      window[methodInstance.name] = methodInstance
     }
   })
 }

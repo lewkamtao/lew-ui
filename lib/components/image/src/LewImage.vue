@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useImage } from '@vueuse/core'
 import { any2px } from 'lew-ui/utils'
+import { LewFlex } from 'lew-ui'
 import { imageProps } from './props'
 import { Fancybox } from '@fancyapps/ui'
 import '@fancyapps/ui/dist/fancybox/fancybox.css'

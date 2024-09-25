@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 import { object2class, any2px } from 'lew-ui/utils'
-import { useDOMCreate } from '../../../hooks'
+import { useDOMCreate } from 'lew-ui/hooks'
+import { LewButton, LewFlex } from 'lew-ui'
 import { drawerProps } from './props'
 import { useMagicKeys } from '@vueuse/core'
 const { Escape } = useMagicKeys()
@@ -95,7 +96,12 @@ const getStyle = (
           <div v-if="$slots.header" class="lew-drawer-header-slot">
             <slot name="header"></slot>
           </div>
-          <lew-flex v-else-if="title" mode="between" y="center" class="lew-drawer-header">
+          <lew-flex
+            v-else-if="title"
+            mode="between"
+            y="center"
+            class="lew-drawer-header"
+          >
             <lew-text-trim class="lew-drawer-title" :text="title" />
             <Icon
               :size="18"
@@ -110,7 +116,12 @@ const getStyle = (
           <div v-if="$slots.footer" class="lew-drawer-footer-slot">
             <slot name="footer"></slot>
           </div>
-          <lew-flex v-else-if="!hideFooter" x="end" y="center" class="lew-drawer-footer">
+          <lew-flex
+            v-else-if="!hideFooter"
+            x="end"
+            y="center"
+            class="lew-drawer-footer"
+          >
             <lew-button
               v-bind="{
                 type: 'text',

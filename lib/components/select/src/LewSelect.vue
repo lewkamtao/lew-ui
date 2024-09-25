@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
-import { LewPopover, LewFlex, LewTooltip } from 'lew-ui'
+import { LewPopover, LewFlex, LewTooltip, LewTextTrim, LewEmpty } from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
 import { UseVirtualList } from '@vueuse/components'
 import type { SelectOptions } from './props'

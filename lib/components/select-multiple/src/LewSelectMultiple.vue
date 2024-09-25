@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
-import { LewPopover, LewTooltip } from 'lew-ui'
+import {
+  LewPopover,
+  LewTooltip,
+  LewCheckbox,
+  LewFlex,
+  LewTag,
+  LewTextTrim,
+  LewEmpty
+} from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
 import type { SelectMultipleOptions } from './props'
 import { selectMultipleProps } from './props'
@@ -221,7 +229,8 @@ defineExpose({ show, hide })
           type="chevron-down"
           class="lew-icon-select"
           :class="{
-            'lew-icon-select-hide': clearable && getLabels && getLabels.length > 0
+            'lew-icon-select-hide':
+              clearable && getLabels && getLabels.length > 0
           }"
         />
         <transition name="lew-form-icon-ani">
@@ -297,7 +306,10 @@ defineExpose({ show, hide })
             </lew-popover>
           </template>
         </template>
-        <div v-show="getLabels && getLabels.length === 0" class="lew-placeholder">
+        <div
+          v-show="getLabels && getLabels.length === 0"
+          class="lew-placeholder"
+        >
           {{ placeholder }}
         </div>
       </div>

@@ -2,7 +2,7 @@
 import { checkboxGroupProps } from './props'
 import type { CheckboxOptions } from './props'
 import { object2class } from 'lew-ui/utils'
-import { LewCheckbox } from 'lew-ui'
+import { LewCheckbox, LewFlex } from 'lew-ui'
 import { cloneDeep } from 'lodash-es'
 
 const props = defineProps(checkboxGroupProps)

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { any2px } from 'lew-ui/utils'
+import { LewFlex } from 'lew-ui'
 import { expandProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
 

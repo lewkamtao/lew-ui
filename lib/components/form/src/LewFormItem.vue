@@ -3,6 +3,7 @@ import { any2px, object2class } from 'lew-ui/utils'
 import RequiredIcon from './RequiredIcon.vue'
 import {
   LewInput,
+  LewTextTrim,
   LewTextarea,
   LewInputTag,
   LewCheckboxGroup,
@@ -17,7 +18,8 @@ import {
   LewSwitch,
   LewButton,
   LewUpload,
-  LewInputNumber
+  LewInputNumber,
+  LewTooltip
 } from 'lew-ui'
 import { debounce, cloneDeep } from 'lodash-es'
 
@@ -40,6 +42,11 @@ const asMap: Record<string, any> = {
   button: LewButton,
   upload: LewUpload,
   'input-number': LewInputNumber
+}
+// 获取app
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
 }
 
 const getFormItemClassNames = computed(() => {

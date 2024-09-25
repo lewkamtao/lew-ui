@@ -147,7 +147,7 @@ defineExpose({ getForm, setForm, resetError, validate })
     :style="{ width: any2px(width), minWidth: 320 }"
     :class="getFormClassNames"
   >
-    <LewGetLabelWidth
+    <lew-get-label-width
       ref="formLabelRef"
       :size="size"
       :options="componentOptions"
