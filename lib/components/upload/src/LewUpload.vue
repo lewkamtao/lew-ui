@@ -8,7 +8,8 @@ import {
   LewTag,
   LewImage,
   LewTextTrim,
-  LewTooltip
+  LewTooltip,
+  LewDialog
 } from 'lew-ui'
 import type { LewColor } from 'lew-ui'
 import {
