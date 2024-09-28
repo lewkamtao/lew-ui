@@ -76,7 +76,7 @@ const options = ref([
     field: 'input',
     label: '文本框',
     as: 'input',
-    rule: Yup.string().required(),
+    required: Yup.string().required(),
     props: {
       showCount: true,
       maxLength: 30
@@ -376,6 +376,8 @@ const resetForm = () => {
 onMounted(() => {
   setForm()
 })
+
+const v = ref('')
 </script>
 
 <template>

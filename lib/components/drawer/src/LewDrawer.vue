@@ -4,7 +4,7 @@ import { object2class, any2px } from 'lew-ui/utils'
 import { useDOMCreate } from 'lew-ui/hooks'
 import { LewButton, LewFlex } from 'lew-ui'
 import { drawerProps } from './props'
-import { useMagicKeys } from '@vueuse/core'
+import { useMagicKeys, onClickOutside } from '@vueuse/core'
 const { Escape } = useMagicKeys()
 import Icon from 'lew-ui/utils/Icon.vue'
 
@@ -16,6 +16,16 @@ const visible: Ref<boolean | undefined> = defineModel('visible')
 const props = defineProps(drawerProps)
 const isShowMain = ref(false)
 const _visible = ref(false)
+const drawerBodyRef = ref(null)
+
+onClickOutside(drawerBodyRef, (e) => {
+  if (visible.value && props.closeOnClickOverlay) {
+    const { className } = e?.target as Element
+    if (className.indexOf('lew-drawer') >= 0) {
+      visible.value = false
+    }
+  }
+})
 
 watch(
   () => visible.value,
@@ -85,13 +95,12 @@ const getStyle = (
         v-if="_visible"
         class="lew-drawer"
         :class="{ 'lew-drawer-show': isShowMain }"
-        @click="visible = false"
       >
         <div
+          ref="drawerBodyRef"
           :style="getStyle(position, width, height)"
           class="lew-drawer-main"
           :class="object2class('lew-drawer-main', { position })"
-          @click.stop
         >
           <div v-if="$slots.header" class="lew-drawer-header-slot">
             <slot name="header"></slot>
@@ -156,7 +165,7 @@ const getStyle = (
   height: 100%;
   background-color: var(--lew-drawer-bgcolor);
   outline: 200vw solid var(--lew-modal-bgcolor);
-  z-index: 2002;
+  z-index: 1002;
   .lew-drawer-main-slot {
     flex: 1;
     overflow: hidden;

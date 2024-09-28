@@ -115,7 +115,7 @@ export const inputTableProps = {
   // 最小行数
   minRows: {
     type: Number,
-    default: 0,
+    default: 1,
     description: '最小允许的行数',
     validator(value: number): boolean {
       if (value < 1) {

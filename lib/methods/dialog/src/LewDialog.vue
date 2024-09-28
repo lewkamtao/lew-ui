@@ -87,7 +87,7 @@ if (props.closeByEsc) {
           >
             <lew-flex y="start">
               <div class="left">
-                <Icon :type :size="30" />
+                <Icon :type :size="24" />
               </div>
               <div class="right">
                 <header>
@@ -125,7 +125,7 @@ if (props.closeByEsc) {
             @click.stop
           >
             <div class="left">
-              <Icon :size="24" :type />
+              <Icon :size="20" :type />
             </div>
             <lew-flex class="right">
               <main>
@@ -194,6 +194,7 @@ if (props.closeByEsc) {
     background-color: var(--lew-modal-box-bgcolor);
     border: var(--lew-dialog-box-border);
     box-shadow: var(--lew-dialog-box-shadow);
+    font-size: 0;
 
     .lew-dialog-icon:deep() {
       width: 36px;
@@ -259,7 +260,7 @@ if (props.closeByEsc) {
 
   .lew-dialog-box-normal {
     .left {
-      width: 36px;
+      width: 28px;
       margin-left: -2px;
     }
 
@@ -275,7 +276,7 @@ if (props.closeByEsc) {
   }
 
   .lew-dialog-box-mini {
-    padding: 12px 20px;
+    padding: 15px 20px;
     border-radius: 50px;
     max-width: 480px;
     width: auto;
@@ -299,7 +300,6 @@ if (props.closeByEsc) {
       display: flex;
       justify-content: space-between;
       align-items: center;
-
       main {
         flex-shrink: 0;
         margin-right: 20px;

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { object2class, any2px, formatFormByMap } from 'lew-ui/utils'
 import LewGetLabelWidth from './LewGetLabelWidth.vue'
-import { formProps } from './props'
-import { cloneDeep, reduce, merge } from 'lodash-es'
+import { formProps, formTypeAsMap } from './props'
+import { cloneDeep, reduce, merge, isString } from 'lodash-es'
 import LewFormItem from './LewFormItem.vue'
 import * as Yup from 'yup'
 
@@ -13,37 +13,6 @@ const formLabelRef = ref()
 const autoLabelWidth = ref(0)
 
 let componentOptions: any[] = cloneDeep(props.options) || []
-
-// 处理 options 里的 rule 字段
-// 如果 options 中的 required 字段为 true，则
-componentOptions.forEach((item: any) => {
-  let { rule } = item
-  if (item.required) {
-    if (!rule) {
-      item.rule = Yup.mixed()
-        .required('此项必填')
-        .test('非空', '此项必填', (value) => value !== '')
-    } else if (rule?.spec?.optional === true) {
-      item.rule = merge(rule, Yup.mixed().required('此项必填'))
-    }
-  } else {
-    item.required = rule?.spec?.optional === false
-  }
-})
-
-const formRulesmap: any = () => {
-  return reduce(
-    cloneDeep(componentOptions),
-    (acc: Record<string, any> = {}, cur: any) => {
-      const { field, rule } = cur
-      if (field) {
-        acc[field] = rule
-      }
-      return acc
-    },
-    {}
-  )
-}
 
 const getFormClassNames = computed(() => {
   const { columns } = cloneDeep(props)
@@ -96,12 +65,17 @@ const formItemRefMap = ref<Record<string, any>>({})
 const validate = () => {
   return new Promise<boolean>((resolve) => {
     // 定义校验规则
-    const schema = Yup.object().shape(formRulesmap())
+    const schemaMap: Record<string, any> = {}
 
     // 清除错误信息
     Object.keys(formItemRefMap.value).forEach((key) => {
+      if (formItemRefMap.value[key].curRule) {
+        schemaMap[key] = formItemRefMap.value[key].curRule
+      }
       formItemRefMap.value[key].setError('')
     })
+
+    const schema = Yup.object().shape(schemaMap)
 
     // 校验对象
     schema

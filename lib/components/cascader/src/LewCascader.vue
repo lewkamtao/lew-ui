@@ -454,8 +454,7 @@ defineExpose({ show, hide })
                     <Icon
                       v-if="templateProps.loading"
                       :size="14"
-                      animation="spin"
-                      animationSpeed="fast"
+                      spinning
                       class="lew-cascader-loading-icon"
                       type="loader"
                     />

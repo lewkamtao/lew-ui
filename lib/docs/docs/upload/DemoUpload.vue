@@ -11,6 +11,7 @@ import {
 } from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
+import uploadHelper from './uploadHelper.ts?raw'
 import * as API from './api'
 
 const options = ref(
@@ -37,6 +38,10 @@ const options = ref(
     <lew-demo-box title="自定义tips" :code="DemoUpload4Code">
       <demo-upload4 />
     </lew-demo-box>
+    <lew-title size="18">uploadHelper 上传方法处理例子</lew-title>
+    <div class="pre-box">
+      <highlightjs autodetect :code="uploadHelper" />
+    </div>
     <lew-docs-tables :options="options" />
   </div>
 </template>
@@ -44,5 +49,8 @@ const options = ref(
 <style lang="scss" scoped>
 .lew-avatar {
   margin: 10px;
+}
+.pre-box {
+  margin-bottom: 30px;
 }
 </style>

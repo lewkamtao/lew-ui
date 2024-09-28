@@ -29,7 +29,10 @@ const install = (Vue: App): void => {
   })
 
   Object.keys(directives).forEach((key) => {
-    Vue.use(directives[key as keyof typeof directives] as any)
+    const directive = directives[key as keyof typeof directives]
+    if (typeof directive === 'object' && 'install' in directive) {
+      Vue.use(directive)
+    }
   })
 
   Object.keys(methods).forEach((key) => {

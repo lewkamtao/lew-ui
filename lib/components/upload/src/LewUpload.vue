@@ -28,6 +28,8 @@ if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
 
+const previewGroupKey = getUniqueId()
+
 const { isSupported } = useClipboardItems({ read: true })
 const tipFontSizeMap: Record<string, number> = {
   small: 14,
@@ -426,6 +428,7 @@ const getTips = computed(() => {
           >
             <lew-image
               v-if="checkUrlIsImg(item.url)"
+              :previewGroupKey="previewGroupKey"
               class="lew-upload-file-image"
               :src="item.url"
             />

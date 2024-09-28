@@ -121,7 +121,8 @@ const minus = () => {
 }
 
 const checkValidationMessage = () => {
-  validationMessage.value = lewInputRef.value.validationMessage
+  validationMessage.value =
+    lewInputRef.value && lewInputRef.value.validationMessage
   return (validationMessage.value || '').length === 0
 }
 

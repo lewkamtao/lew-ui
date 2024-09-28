@@ -18,7 +18,6 @@ const ok = () => {
     closeOnClickOverlay
     width="750px"
     :okProps="{ request: ok }"
-    closeable
     @cancel="visible = false"
   >
     <template #header>

@@ -169,6 +169,7 @@ export const componentsMenusSchema = [
       clearable: true,
       label: '是否同意',
       free: true,
+      trigger: 'click',
       options: [
         {
           value: 1,

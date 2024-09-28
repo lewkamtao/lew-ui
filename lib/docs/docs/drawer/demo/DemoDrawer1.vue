@@ -19,6 +19,13 @@ const open4 = (): void => {
 <template>
   <lew-flex gap="20" x="start">
     <lew-drawer title="新建商品" v-model:visible="visible1" position="right">
+      <lew-image
+        previewGroupKey="cover"
+        object-position="top"
+        :width="150"
+        :height="150"
+        src="https://app.tngeek.com/api_sso/open/file/b4c64ae_cat-8321993_1280.webp"
+      />
     </lew-drawer>
     <lew-button text="右边" @click="open1" />
     <lew-drawer title="新建商品" v-model:visible="visible2" position="bottom" />

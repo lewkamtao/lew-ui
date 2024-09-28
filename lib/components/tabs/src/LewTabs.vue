@@ -144,7 +144,9 @@ const tabsScroll = () => {
 }
 
 onMounted(() => {
-  init()
+  nextTick(() => {
+    init()
+  })
   window.addEventListener('resize', debounce, false)
 })
 

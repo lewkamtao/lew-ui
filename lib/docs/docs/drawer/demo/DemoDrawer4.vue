@@ -10,6 +10,7 @@ const open = (): void => {
       title="新建商品"
       close-by-esc
       v-model:visible="visible"
+      closeOnClickOverlay
       position="right"
     >
     </lew-drawer>

@@ -28,9 +28,7 @@
     background-color: var(--lew-pop-bgcolor) !important;
 
     .lew-message-content {
-      max-width: 500px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      max-width: 350px;
       overflow: hidden;
       color: var(--lew-text-color-1);
       font-weight: 400;
@@ -39,6 +37,7 @@
       width: 18px;
       height: 18px;
       margin-right: 10px;
+      flex-shrink: 0;
     }
     .vue-feather--spin {
       width: 16px;

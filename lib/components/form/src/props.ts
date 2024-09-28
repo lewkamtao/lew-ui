@@ -1,6 +1,7 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 import type { LewSize } from 'lew-ui'
 import { validSizes } from 'lew-ui/constants'
+
 export type FormDirection = 'x' | 'y'
 
 export const formProps = {
@@ -220,7 +221,7 @@ export const formItemProps = {
     description: '自定义验证失败时的错误提示'
   },
   rule: {
-    type: Object as PropType<Record<string, any>>,
+    type: [Object, String] as PropType<any | string>,
     description: '表单项的验证规则'
   },
   props: {
@@ -254,3 +255,22 @@ export const requiredIconSizeMap: Record<LewSize, number> = {
 
 export type FormProps = ExtractPropTypes<typeof formProps>
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>
+
+export const formTypeAsMap: Record<string, any> = {
+  input: 'string',
+  textarea: 'string',
+  'input-tag': 'array',
+  'checkbox-group': 'array',
+  'radio-group': 'string',
+  checkbox: 'boolean',
+  select: 'string',
+  'select-multiple': 'array',
+  'date-picker': 'date',
+  'date-range-picker': 'array',
+  tabs: 'string',
+  cascader: 'string',
+  switch: 'boolean',
+  button: 'void',
+  upload: 'array',
+  'input-number': 'number'
+}

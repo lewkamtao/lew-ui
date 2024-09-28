@@ -34,7 +34,7 @@ onMounted(() => {
       />
     </template>
     <template v-else>
-      <div v-if="!previewKey" class="lew-image-box">
+      <div v-if="!previewGroupKey" class="lew-image-box">
         <img
           class="lew-image"
           :src
@@ -46,7 +46,12 @@ onMounted(() => {
           :alt
         />
       </div>
-      <a v-else :href="src" :data-fancybox="previewKey" class="lew-image-box">
+      <a
+        v-else
+        :href="src"
+        :data-fancybox="previewGroupKey"
+        class="lew-image-box lew-image-box-fancybox"
+      >
         <img
           class="lew-image"
           :src
@@ -82,6 +87,9 @@ onMounted(() => {
       animation-fill-mode: forwards;
       opacity: 0;
     }
+  }
+  .lew-image-box-fancybox {
+    cursor: zoom-in;
   }
   @keyframes img-enter {
     0% {

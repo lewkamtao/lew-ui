@@ -185,7 +185,6 @@ const addComponent = (item: any) => {
       field: `${getUniqueId()}`
     })
   )
-  console.log(item)
 }
 </script>
 
@@ -338,7 +337,6 @@ const addComponent = (item: any) => {
               >
               <lew-form-item
                 v-else
-                v-model="formMap[element.field]"
                 v-bind="{
                   size: formGlobal.size,
                   direction: formGlobal.direction,
