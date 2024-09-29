@@ -317,7 +317,7 @@ defineExpose({ show, hide })
   border-radius: var(--lew-border-radius-small);
   outline: 0px var(--lew-color-primary-light) solid;
   box-shadow: var(--lew-form-box-shadow);
-  transition: var(--lew-form-transition-ease);
+  transition: all var(--lew-form-transition-ease);
 
   > div {
     width: 100%;
@@ -339,7 +339,7 @@ defineExpose({ show, hide })
       right: 9px;
       padding: 2px;
       transform: translateY(-50%) rotate(0deg);
-      transition: var(--lew-form-transition-bezier);
+      transition: all var(--lew-form-transition-bezier);
     }
 
     .lew-icon-select {

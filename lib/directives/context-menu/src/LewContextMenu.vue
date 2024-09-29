@@ -51,7 +51,7 @@ const initTippy = () => {
       offset: [0, 0],
       allowHTML: true,
       hideOnClick: false,
-      zIndex: 9999,
+      zIndex: 2001,
       content: menuDom
     })
     window.LewContextMenu.menuInstance[

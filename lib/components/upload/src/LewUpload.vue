@@ -558,20 +558,20 @@ const getTips = computed(() => {
     background-color: var(--lew-form-bgcolor);
     border-radius: var(--lew-border-radius-small);
     box-sizing: border-box;
-    transition: var(--lew-form-transition-ease);
+    transition: all var(--lew-form-transition-ease);
     cursor: pointer;
     box-shadow: var(--lew-form-box-shadow);
 
     .lew-upload-icon {
       color: var(--lew-color-primary);
-      transition: var(--lew-form-transition-ease);
+      transition: all var(--lew-form-transition-ease);
     }
     .lew-upload-tip {
-      transition: var(--lew-form-transition-ease);
+      transition: all var(--lew-form-transition-ease);
     }
     .lew-upload-max-size {
       color: var(--lew-text-color-5);
-      transition: var(--lew-form-transition-ease);
+      transition: all var(--lew-form-transition-ease);
     }
     .lew-upload-input {
       position: fixed;
@@ -630,7 +630,7 @@ const getTips = computed(() => {
         width: 20px;
         height: 20px;
         box-sizing: border-box;
-        transition: var(--lew-form-transition-ease);
+        transition: all var(--lew-form-transition-ease);
         cursor: pointer;
         transition: all 0.15s;
         &:hover {
@@ -748,7 +748,7 @@ const getTips = computed(() => {
 .upload-list-move,
 .upload-list-enter-active,
 .upload-list-leave-active {
-  transition: var(--lew-form-transition-bezier);
+  transition: all var(--lew-form-transition-bezier);
 }
 
 .upload-list-enter-from,

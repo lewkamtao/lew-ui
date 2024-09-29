@@ -78,7 +78,7 @@ const avatarStyleObject = computed(() => {
     width: 0.6rem;
     height: 0.6rem;
     border-radius: 50%;
-    z-index: 99;
+    z-index: 9;
     border: var(--lew-form-border-width) var(--lew-color-white) solid;
   }
 

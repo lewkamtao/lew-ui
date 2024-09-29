@@ -308,7 +308,7 @@ defineExpose({ init, getTreeList })
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: var(--lew-form-transition-bezier);
+    transition: all var(--lew-form-transition-bezier);
     width: 14px;
     height: 14px;
     padding: 4px;
@@ -316,7 +316,7 @@ defineExpose({ init, getTreeList })
     margin-left: 5px;
     .lew-tree-chevron-right-icon {
       transform: rotate(0deg);
-      transition: var(--lew-form-transition-bezier);
+      transition: all var(--lew-form-transition-bezier);
     }
   }
   .lew-tree-chevron-right:hover {

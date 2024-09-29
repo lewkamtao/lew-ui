@@ -499,7 +499,7 @@ defineExpose({ show, hide })
   width: 100%;
   border-radius: var(--lew-border-radius-small);
   background-color: var(--lew-form-bgcolor);
-  transition: var(--lew-form-transition-ease);
+  transition: all var(--lew-form-transition-ease);
   box-sizing: border-box;
   outline: 0px var(--lew-color-primary-light) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
@@ -524,7 +524,7 @@ defineExpose({ show, hide })
       top: 50%;
       right: 9px;
       transform: translateY(-50%) rotate(0deg);
-      transition: var(--lew-form-transition-bezier);
+      transition: all var(--lew-form-transition-bezier);
       padding: 2px;
     }
 
@@ -546,7 +546,7 @@ defineExpose({ show, hide })
       display: inline-flex;
       align-items: center;
       box-sizing: border-box;
-      transition: var(--lew-form-transition-bezier);
+      transition: all var(--lew-form-transition-bezier);
       gap: 2px;
       overflow: hidden;
 
@@ -694,7 +694,7 @@ defineExpose({ show, hide })
   min-width: 200px;
   height: 320px;
   overflow: hidden;
-  transition: var(--lew-form-transition-bezier);
+  transition: all var(--lew-form-transition-bezier);
   user-select: none;
 
   .not-found {

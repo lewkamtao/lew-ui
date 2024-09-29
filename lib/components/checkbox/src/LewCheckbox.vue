@@ -76,7 +76,7 @@ const getCheckboxClassName = computed(() => {
   cursor: pointer;
   color: var(--lew-text-color-1);
   font-size: 14px;
-  transition: var(--lew-form-transition-ease);
+  transition: all var(--lew-form-transition-ease);
   white-space: nowrap;
   box-sizing: border-box;
   border: var(--lew-form-border-width) transparent solid;
@@ -88,7 +88,7 @@ const getCheckboxClassName = computed(() => {
     border: var(--lew-form-border-width) var(--lew-checkbox-border-color) solid;
     box-sizing: border-box;
     border-radius: 6px;
-    transition: var(--lew-form-transition-bezier);
+    transition: all var(--lew-form-transition-bezier);
     background-color: var(--lew-bgcolor-1);
     overflow: hidden;
 
@@ -97,7 +97,7 @@ const getCheckboxClassName = computed(() => {
       left: 50%;
       top: 50%;
       transform: translate(-50%, 5px) scale(0);
-      transition: var(--lew-form-transition-bezier);
+      transition: all var(--lew-form-transition-bezier);
       opacity: 0;
       color: var(--lew-color-white);
     }

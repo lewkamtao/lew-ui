@@ -52,7 +52,7 @@ onMounted(() => {
   position: relative;
   width: 100%;
   overflow: hidden;
-  transition: var(--lew-form-transition-ease);
+  transition: all var(--lew-form-transition-ease);
   .lew-expand-btn {
     position: absolute;
     bottom: 0px;
@@ -66,7 +66,7 @@ onMounted(() => {
     background-image: var(--lew-expand-control-bg-gradient);
     cursor: pointer;
     .lew-expand-icon {
-      transition: var(--lew-form-transition-ease);
+      transition: all var(--lew-form-transition-ease);
     }
   }
 }

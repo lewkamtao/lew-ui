@@ -139,7 +139,7 @@ defineExpose({ focus })
   width: auto;
   white-space: nowrap;
   box-sizing: border-box;
-  transition: var(--lew-form-transition-ease);
+  transition: all var(--lew-form-transition-ease);
   border: none;
   cursor: pointer;
   border-radius: var(--lew-border-radius-small);
@@ -165,7 +165,6 @@ defineExpose({ focus })
 
   .lew-button-content {
     position: relative;
-    z-index: 2;
     font-size: 0px;
   }
 
@@ -186,7 +185,7 @@ defineExpose({ focus })
   width: 100%;
   height: 100%;
   background-color: rgba($color: #000, $alpha: 0.2);
-  transition: var(--lew-form-transition-ease);
+  transition: all var(--lew-form-transition-ease);
   opacity: 0;
   content: '';
 }

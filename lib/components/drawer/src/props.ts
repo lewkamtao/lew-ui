@@ -71,6 +71,11 @@ export const drawerProps = {
       color: 'normal'
     }),
     description: '取消按钮的属性配置'
+  },
+  zIndex: {
+    type: Number,
+    default: 1001,
+    description: '层级'
   }
 }
 

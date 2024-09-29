@@ -680,14 +680,14 @@ onUnmounted(() => {
   .lew-table-header,
   .lew-table-footer {
     position: relative;
-    z-index: 999;
+    z-index: 9;
   }
   .lew-table-scroll-line-left {
     position: absolute;
     left: 0px;
     top: 0px;
     height: 100%;
-    z-index: 90;
+    z-index: 9;
     width: 8px;
     background: linear-gradient(
       to right,
@@ -705,7 +705,7 @@ onUnmounted(() => {
     right: 0px;
     top: 0px;
     height: 100%;
-    z-index: 90;
+    z-index: 9;
     width: 8px;
     background: linear-gradient(
       to left,
@@ -749,7 +749,7 @@ onUnmounted(() => {
   .lew-table-fixed-right {
     position: sticky;
     right: 0px;
-    z-index: 10;
+    z-index: 9;
     display: flex;
     flex-grow: 1;
     flex-direction: column;
@@ -792,7 +792,7 @@ onUnmounted(() => {
     position: sticky;
     top: 0;
     width: 100%;
-    z-index: 12;
+    z-index: 9;
     box-sizing: border-box;
 
     .lew-table-tr {

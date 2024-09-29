@@ -286,7 +286,7 @@ onUnmounted(() => {
     cursor: pointer;
     flex-shrink: 0;
     height: calc(100% - 6px);
-    transition: var(--lew-form-transition-ease);
+    transition: all var(--lew-form-transition-ease);
   }
 
   .lew-tabs-item:hover {
@@ -315,7 +315,7 @@ onUnmounted(() => {
   }
 
   .lew-tabs-item-isInit {
-    transition: var(--lew-form-transition-bezier);
+    transition: all var(--lew-form-transition-bezier);
   }
 }
 

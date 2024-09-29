@@ -162,7 +162,7 @@ const clear = () => {
   outline: 0px var(--lew-form-border-color) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   box-shadow: var(--lew-form-box-shadow);
-  transition: var(--lew-form-transition-ease);
+  transition: all var(--lew-form-transition-ease);
   overflow: hidden;
   width: 100%;
   cursor: text;
@@ -178,7 +178,7 @@ const clear = () => {
     flex-wrap: wrap;
     gap: 5px;
     box-sizing: border-box;
-    transition: var(--lew-form-transition-bezier);
+    transition: all var(--lew-form-transition-bezier);
     width: 100%;
     :deep() {
       .lew-input-view {
@@ -229,7 +229,7 @@ const clear = () => {
 .tag-list-move,
 .tag-list-enter-active,
 .tag-list-leave-active {
-  transition: var(--lew-form-transition-bezier);
+  transition: all var(--lew-form-transition-bezier);
 }
 
 .tag-list-enter-from,

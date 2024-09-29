@@ -68,7 +68,7 @@ onMounted(() => {
   border-radius: 50%;
   background-color: var(--lew-bgcolor-0);
   box-shadow: var(--lew-box-shadow);
-  z-index: 999;
+  z-index: 99;
   display: flex;
   justify-content: center;
   align-items: center;

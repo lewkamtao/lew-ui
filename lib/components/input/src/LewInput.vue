@@ -332,7 +332,7 @@ defineExpose({ toFocus })
   border-radius: var(--lew-border-radius-small);
   outline: 0px var(--lew-form-border-color) solid;
   box-shadow: var(--lew-form-box-shadow);
-  transition: var(--lew-form-transition-ease);
+  transition: all var(--lew-form-transition-ease);
 
   .lew-input-box {
     position: relative;
@@ -373,7 +373,7 @@ defineExpose({ toFocus })
     user-select: none;
 
     .icon-select {
-      transition: var(--lew-form-transition-bezier);
+      transition: all var(--lew-form-transition-bezier);
     }
 
     .icon-select-up {
@@ -389,7 +389,7 @@ defineExpose({ toFocus })
     height: 100%;
     background: var(--lew-bgcolor-4);
     content: '';
-    transition: var(--lew-form-transition-ease);
+    transition: all var(--lew-form-transition-ease);
   }
 
   .lew-input-suffix::before {
@@ -400,7 +400,7 @@ defineExpose({ toFocus })
     height: 100%;
     background: var(--lew-bgcolor-4);
     content: '';
-    transition: var(--lew-form-transition-ease);
+    transition: all var(--lew-form-transition-ease);
   }
 
   .lew-input-prefixes-dropdown,

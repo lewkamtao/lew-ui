@@ -292,7 +292,7 @@ const getAddButtonStyle = computed(() => {
   padding: 10px 0px;
   width: 100%;
   cursor: pointer;
-  transition: var(--lew-form-transition-ease);
+  transition: all var(--lew-form-transition-ease);
   background-color: var(--lew-table-header-bgcolor);
 }
 .add-btn:hover {

@@ -1,10 +1,11 @@
 <script lang="ts" setup name="Modal">
-import { useMagicKeys } from '@vueuse/core'
-import { any2px } from 'lew-ui/utils'
+import { useMagicKeys, onClickOutside } from '@vueuse/core'
+import { any2px, getUniqueId } from 'lew-ui/utils'
 import { LewFlex, LewButton, LewTextTrim } from 'lew-ui'
 import { useDOMCreate } from 'lew-ui/hooks'
 import { modalProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { isString } from 'lodash-es'
 
 const { Escape } = useMagicKeys()
 useDOMCreate('lew-modal')
@@ -15,16 +16,23 @@ const emit = defineEmits(['ok', 'cancel', 'close'])
 
 const visible: Ref<boolean | undefined> = defineModel('visible')
 
-const maskClick = () => {
-  if (props.closeOnClickOverlay) {
-    visible.value = false
+const modalBodyRef = ref(null)
+const modalId = `lew-modal-${getUniqueId()}`
+
+onClickOutside(modalBodyRef, (e) => {
+  if (visible.value && props.closeOnClickOverlay) {
+    const { className } = e?.target as Element
+    if (isString(className) && className?.indexOf(modalId) >= 0) {
+      visible.value = false
+    }
   }
-}
+})
 
 const getModalStyle = computed(() => {
+  const { width, height } = props
   return {
-    width: any2px(props.width),
-    height: any2px(props.height)
+    width: any2px(width),
+    height: any2px(height)
   }
 })
 
@@ -57,11 +65,16 @@ if (props.closeByEsc) {
   <teleport to="#lew-modal">
     <div class="lew-modal-container">
       <transition name="lew-modal-mask">
-        <div v-if="visible" class="lew-modal-mask"></div>
+        <div :style="{ zIndex }" v-if="visible" class="lew-modal-mask"></div>
       </transition>
       <transition name="lew-modal">
-        <div v-if="visible" class="lew-modal" @click="maskClick">
-          <div :style="getModalStyle" class="lew-modal-box" @click.stop>
+        <div
+          v-if="visible"
+          :style="{ zIndex }"
+          class="lew-modal"
+          :class="modalId"
+        >
+          <div ref="modalBodyRef" :style="getModalStyle" class="lew-modal-body">
             <div v-if="$slots.header" class="lew-modal-header-slot">
               <slot name="header"></slot>
             </div>
@@ -126,7 +139,6 @@ if (props.closeByEsc) {
   width: 100vw;
   height: 100vh;
   background-color: var(--lew-modal-bgcolor);
-  z-index: 2001;
 }
 
 .lew-modal {
@@ -138,11 +150,10 @@ if (props.closeByEsc) {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2001;
 
-  .lew-modal-box {
+  .lew-modal-body {
     border-radius: var(--lew-border-radius-large);
-    background-color: var(--lew-modal-box-bgcolor);
+    background-color: var(--lew-modal-body-bgcolor);
     border: var(--lew-modal-border);
     overflow: hidden;
 
@@ -181,7 +192,7 @@ if (props.closeByEsc) {
 
 .lew-modal-mask-enter-active,
 .lew-modal-mask-leave-active {
-  transition: var(--lew-form-transition-ease);
+  transition: all var(--lew-form-transition-ease);
 }
 
 .lew-modal-mask-enter-from,
@@ -191,7 +202,7 @@ if (props.closeByEsc) {
 
 .lew-modal-enter-active,
 .lew-modal-leave-active {
-  transition: var(--lew-form-transition-bezier);
+  transition: all var(--lew-form-transition-bezier);
 }
 
 .lew-modal-leave-to,

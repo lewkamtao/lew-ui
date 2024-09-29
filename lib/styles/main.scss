@@ -117,7 +117,7 @@ button {
 
 .lew-form-icon-ani-enter-active,
 .lew-form-icon-ani-leave-active {
-  transition: var(--lew-form-transition-bezier);
+  transition: all var(--lew-form-transition-bezier);
 }
 
 /* 表单清除图标 */

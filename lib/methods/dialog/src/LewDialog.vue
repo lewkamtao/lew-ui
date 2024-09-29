@@ -191,7 +191,7 @@ if (props.closeByEsc) {
     height: auto;
     padding: 20px;
     border-radius: var(--lew-border-radius-medium);
-    background-color: var(--lew-modal-box-bgcolor);
+    background-color: var(--lew-modal-body-bgcolor);
     border: var(--lew-dialog-box-border);
     box-shadow: var(--lew-dialog-box-shadow);
     font-size: 0;
