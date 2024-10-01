@@ -41,6 +41,10 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  color: {
+    type: String,
+    default: 'black'
+  },
   strokeWidth: {
     type: Number,
     default: 2
@@ -105,7 +109,7 @@ const iconMap: any = {
     :style="{
       'animation-duration': speed + 's',
       color: iconColorType[type]
-        ? `var(--lew-color-${getColorType(type)}${dark ? '-dark' : ''})`
+        ? `var(--lew-color-${color ? color : getColorType(type)}${dark ? '-dark' : ''})`
         : ''
     }"
     :strokeWidth

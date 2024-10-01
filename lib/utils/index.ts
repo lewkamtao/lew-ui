@@ -139,33 +139,6 @@ export const isValidCssValue = ({
 }
 
 /**
- * 设置表单值。
- * @param {Object} options - 配置选项。
- * @param {any} options.formRef - 表单引用。
- * @param {any} options.params - 要设置的参数。
- */
-export const lewSetForm = ({
-  formRef,
-  params
-}: {
-  formRef: any // 传入formRef.value
-  params: any // 需要设置的参数
-}) => {
-  let timeout = 0
-  const _fn = () => {
-    timeout += 10
-    if (formRef && formRef.value) {
-      formRef.value.setForm(params)
-    } else {
-      setTimeout(() => {
-        _fn()
-      }, timeout)
-    }
-  }
-  _fn()
-}
-
-/**
  * 生成唯一ID。
  * @returns {string} 生成的唯一ID。
  */

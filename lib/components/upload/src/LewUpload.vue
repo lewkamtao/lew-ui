@@ -410,8 +410,8 @@ const getTips = computed(() => {
     >
       <transition-group name="upload-list">
         <lew-flex
-          v-for="item in modelValue"
-          :key="item.id"
+          v-for="(item, index) in modelValue"
+          :key="`${item.id}_${index}`"
           class="lew-upload-file-item"
           mode="between"
           gap="8"

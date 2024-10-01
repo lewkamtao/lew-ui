@@ -7,7 +7,6 @@ import { Fancybox } from '@fancyapps/ui'
 import '@fancyapps/ui/dist/fancybox/fancybox.css'
 
 const props = defineProps(imageProps)
-const { isLoading, error } = useImage({ src: props.src || '' })
 
 const imageStyleObject = computed(() => {
   const { width, height } = props
@@ -17,14 +16,39 @@ const imageStyleObject = computed(() => {
   }
 })
 
+let _loading = ref()
+let _error = ref()
+
+const init = () => {
+  const { isLoading, error } = useImage({
+    src: props.src as string
+  })
+  _loading = isLoading
+  _error = error
+}
+
+init()
+
+watch(
+  () => props.src,
+  () => {
+    const { isLoading, error } = useImage({
+      src: props.src as string
+    })
+    _loading = isLoading
+    _error = error
+    console.log(_loading)
+  }
+)
+
 onMounted(() => {
   Fancybox.bind('[data-fancybox]', { Hash: false })
 })
 </script>
 <template>
   <lew-flex gap="0" class="lew-image-wrapper" :style="imageStyleObject">
-    <div class="skeletons" v-if="isLoading || loading"></div>
-    <template v-else-if="error">
+    <div class="skeletons" v-if="_loading || loading || !src"></div>
+    <template v-else-if="_error">
       <slot v-if="$slots.error" name="error" />
       <img
         v-else

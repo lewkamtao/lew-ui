@@ -2,7 +2,7 @@
   <lew-flex wrap x="start" y="end" gap="20">
     <lew-avatar
       :size="30"
-      src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/王"
+      src="https://api.lew.kamtao.com/manage/common/avatar/123/4B78CA/王"
       alt="avatar"
     />
     <lew-avatar
