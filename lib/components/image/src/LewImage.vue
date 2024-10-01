@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import { useImage } from '@vueuse/core'
 import { any2px } from 'lew-ui/utils'
-import { LewFlex } from 'lew-ui'
+import { LewFlex, LewTooltip } from 'lew-ui'
 import { imageProps } from './props'
 import { Fancybox } from '@fancyapps/ui'
 import '@fancyapps/ui/dist/fancybox/fancybox.css'
+
+// 获取app
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
+}
 
 const props = defineProps(imageProps)
 
@@ -52,6 +58,10 @@ onMounted(() => {
       <slot v-if="$slots.error" name="error" />
       <img
         v-else
+        v-tooltip="{
+          content: '图片加载失败',
+          trigger: 'mouseenter'
+        }"
         class="lew-image-fail-icon"
         src="./image_fail_icon.svg"
         alt="图片加载失败"

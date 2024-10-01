@@ -1,4 +1,4 @@
-import { isNumber, uniqueId } from 'lodash-es'
+import { uniqueId } from 'lodash-es'
 import Icon from './Icon.vue'
 /**
  * 获取颜色类型。
@@ -287,4 +287,10 @@ export const getIconInnerHTML = (e: any = {}) => {
   })
   icon.mount(el)
   return el.innerHTML
+}
+
+export const checkUrlIsImage = (url: string = ''): boolean => {
+  const imageRegex =
+    /\.(jpg|jpeg|png|webp|bmp|gif|svg|tiff|ico|heif|jfif|pjpeg|pjp|avif)$/i
+  return imageRegex.test(url)
 }

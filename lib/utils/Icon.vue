@@ -30,7 +30,7 @@ import {
   Edit2,
   ArrowDown
 } from 'lucide-vue-next'
-import { iconColorType, getColorType } from './index'
+import { getColorType, iconColorType } from './index'
 
 const props = defineProps({
   type: {
@@ -43,7 +43,7 @@ const props = defineProps({
   },
   color: {
     type: String,
-    default: 'black'
+    default: ''
   },
   strokeWidth: {
     type: Number,
