@@ -30,14 +30,14 @@ const maxSizeFontSizeMap: Record<string, number> = {
   large: 14
 }
 const uploadIconFontSizeMap: Record<string, number> = {
-  small: props.listType === 'list' ? 32 : 24,
-  medium: props.listType === 'list' ? 35 : 26,
-  large: props.listType === 'list' ? 45 : 28
+  small: props.viewMode === 'list' ? 32 : 24,
+  medium: props.viewMode === 'list' ? 35 : 26,
+  large: props.viewMode === 'list' ? 45 : 28
 }
 const uploadPaddingMap: Record<string, string> = {
-  small: props.listType === 'list' ? '10px 8px' : '14px',
-  medium: props.listType === 'list' ? '14px 10px' : '16px',
-  large: props.listType === 'list' ? '18px 12px' : '20px'
+  small: props.viewMode === 'list' ? '10px 8px' : '14px',
+  medium: props.viewMode === 'list' ? '14px 10px' : '16px',
+  large: props.viewMode === 'list' ? '18px 12px' : '20px'
 }
 
 const getCardSize: Record<string, number> = {
@@ -52,6 +52,17 @@ const inputPasteRef = ref<HTMLInputElement | null>(null)
 const dropActive = ref(false)
 const modelValue = defineModel<UploadFileItem[]>()
 const isFocus = ref(false)
+
+const formMethods: any = inject('formMethods', {})
+
+let _uploadHelper = computed(() => {
+  if (isFunction(props.uploadHelper)) {
+    return props.uploadHelper
+  } else if (props.uploadHelperId) {
+    return formMethods[props.uploadHelperId]
+  }
+  return false
+})
 
 const addImageToList = (files: any) => {
   if ((files || []).length > 0) {
@@ -78,8 +89,8 @@ const addImageToList = (files: any) => {
     emit('change', modelValue.value)
     nextTick(() => {
       if (fileItem.status === 'wrong_config') {
-        isFunction(props.uploadHelper)
-          ? props.uploadHelper({ fileItem: cloneDeep(fileItem), setFileItem })
+        isFunction(_uploadHelper.value)
+          ? _uploadHelper.value({ fileItem: cloneDeep(fileItem), setFileItem })
           : LewMessage.error('未配置上传 uploadHelper')
       }
       setTimeout(() => {
@@ -121,8 +132,8 @@ const reUpload = (id: string) => {
   if (index >= 0) {
     const item = (modelValue.value || [])[index]
     setFileItem({ id, percent: 0, status: 'uploading' })
-    isFunction(props.uploadHelper)
-      ? props.uploadHelper({ fileItem: cloneDeep(item), setFileItem })
+    isFunction(_uploadHelper.value)
+      ? _uploadHelper.value({ fileItem: cloneDeep(item), setFileItem })
       : LewMessage.error('未配置上传 uploadHelper')
   } else {
     LewMessage.error('文件不存在')
@@ -231,8 +242,8 @@ const setFileItem = (item: UploadFileItem) => {
 }
 
 const getUploadLabelClass = computed(() => {
-  const { disabled, readonly, listType } = props
-  return object2class('lew-upload-label', { disabled, readonly, listType })
+  const { disabled, readonly, viewMode } = props
+  return object2class('lew-upload-label', { disabled, readonly, viewMode })
 })
 
 const getTips = computed(() => {
@@ -258,14 +269,14 @@ const getTips = computed(() => {
 <template>
   <lew-flex
     class="lew-upload-wrapper"
-    :direction="listType === 'list' ? 'y' : 'x'"
+    :direction="viewMode === 'list' ? 'y' : 'x'"
     gap="10"
     :style="{
-      width: listType === 'list' ? '100%' : 'auto'
+      width: viewMode === 'list' ? '100%' : 'auto'
     }"
   >
     <lew-upload-by-card
-      v-if="listType === 'card'"
+      v-if="viewMode === 'card'"
       :size
       v-model="modelValue"
       @re-upload="reUpload"
@@ -278,8 +289,8 @@ const getTips = computed(() => {
       class="lew-upload-label"
       :class="getUploadLabelClass"
       :style="{
-        width: listType === 'list' ? '100%' : `${any2px(getCardSize[size])}`,
-        height: listType === 'list' ? 'auto' : `${any2px(getCardSize[size])}`
+        width: viewMode === 'list' ? '100%' : `${any2px(getCardSize[size])}`,
+        height: viewMode === 'list' ? 'auto' : `${any2px(getCardSize[size])}`
       }"
     >
       <lew-flex
@@ -301,7 +312,7 @@ const getTips = computed(() => {
           type="upload-cloud" />
 
         <div
-          v-if="listType === 'list'"
+          v-if="viewMode === 'list'"
           :style="{
             fontSize: `${any2px(tipFontSizeMap[size])}`
           }"
@@ -314,7 +325,7 @@ const getTips = computed(() => {
           }}
         </div>
         <div
-          v-if="listType === 'list'"
+          v-if="viewMode === 'list'"
           :style="{
             fontSize: `${any2px(maxSizeFontSizeMap[size])}`
           }"
@@ -338,14 +349,8 @@ const getTips = computed(() => {
           type="text"
       /></lew-flex>
     </label>
-    <lew-alert
-      v-if="!isFunction(uploadHelper)"
-      type="error"
-      title="uploadHelper Error: 未配置上传方法"
-    >
-    </lew-alert>
     <lew-upload-by-list
-      v-if="listType === 'list'"
+      v-if="viewMode === 'list'"
       :size
       v-model="modelValue"
       @re-upload="reUpload"
@@ -390,6 +395,7 @@ const getTips = computed(() => {
     min-width: 280px;
     width: 100%;
     flex-shrink: 0;
+    transition: all var(--lew-form-transition-ease);
   }
   .lew-upload-label-readonly {
     user-select: text;
@@ -400,7 +406,7 @@ const getTips = computed(() => {
     opacity: var(--lew-disabled-opacity);
     pointer-events: none; //鼠标点击不可修改
   }
-  .lew-upload-label-listType-card {
+  .lew-upload-label-viewMode-card {
     display: flex;
     justify-content: center;
     align-items: center;

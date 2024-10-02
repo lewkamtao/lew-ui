@@ -103,6 +103,8 @@ onMounted(() => {
   emit('mounted')
 })
 
+provide('formMethods', props.formMethods)
+
 watch(
   () => props.size,
   () => {

@@ -5,7 +5,7 @@ import { object2class, numFormat } from 'lew-ui/utils'
 import { UseVirtualList } from '@vueuse/components'
 import type { SelectOptions } from './props'
 import { selectProps } from './props'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, isFunction } from 'lodash-es'
 import Icon from 'lew-ui/utils/Icon.vue'
 
 // 获取app
@@ -20,6 +20,16 @@ const selectValue: Ref<string | number | undefined> = defineModel()
 const lewSelectRef = ref()
 const inputRef = ref()
 const lewPopoverRef = ref()
+const formMethods: any = inject('formMethods', {})
+
+let _searchMethod = computed(() => {
+  if (isFunction(props.searchMethod)) {
+    return props.searchMethod
+  } else if (props.searchMethodId) {
+    return formMethods[props.searchMethodId]
+  }
+  return false
+})
 
 const state = reactive({
   selectWidth: 0,
@@ -56,7 +66,7 @@ const search = async (e: any) => {
     if (!keyword && props.options.length > 0) {
       result = props.options
     } else {
-      result = await props.searchMethod({
+      result = await _searchMethod.value({
         options: props.options,
         keyword
       })

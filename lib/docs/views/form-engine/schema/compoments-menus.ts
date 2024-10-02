@@ -368,7 +368,9 @@ export const componentsMenusSchema = [
     fieldType: [],
     as: 'upload',
     schema: upload,
-    props: {}
+    props: {
+      viewMode: 'list'
+    }
   },
   {
     label: '占位盒子',

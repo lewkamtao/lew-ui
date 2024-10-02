@@ -94,7 +94,7 @@ export const uploadProps = {
   },
   uploadHelper: {
     type: Function,
-    default: () => Promise.resolve(),
+    default: undefined,
     description: '自定义文件上传处理函数',
     validator: (value: Function) => {
       if (typeof value !== 'function') {
@@ -104,13 +104,19 @@ export const uploadProps = {
       return true
     }
   },
-  listType: {
+  uploadHelperId: {
+    type: String,
+    default: '',
+    hidden: true,
+    description: '上传函数的标识'
+  },
+  viewMode: {
     type: String,
     default: 'list',
     description: '列表类型',
     validator: (value: string) => {
       if (!['list', 'card'].includes(value)) {
-        console.warn('[LewUpload] listType 必须是 list 或 card')
+        console.warn('[LewUpload] viewMode 必须是 list 或 card')
         return false
       }
       return true

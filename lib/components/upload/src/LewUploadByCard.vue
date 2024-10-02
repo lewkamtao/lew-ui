@@ -83,7 +83,7 @@ const modelValue = defineModel<UploadFileItem[]>()
         </lew-flex>
 
         <lew-flex
-          v-else
+          v-else-if="!['complete', 'success'].includes(item.status as string)"
           v-tooltip="{
             content: statusMap[item.status || 'complete'],
             trigger: 'mouseenter'

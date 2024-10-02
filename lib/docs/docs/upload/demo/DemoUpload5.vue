@@ -9,7 +9,8 @@ const fileList = ref<UploadFileItem[]>([])
   <lew-flex x="start">
     <lew-upload
       v-model="fileList"
-      list-type="card"
+      view-mode="card"
+      :uploadHelper
       limit="3"
     />
   </lew-flex>
