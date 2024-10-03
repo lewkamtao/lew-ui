@@ -129,18 +129,33 @@ const updateScrollState = () => {
   state.hiddenScrollLine = ''
 }
 
+const compTrHeight = () => {
+  nextTick(() => {
+    ;(trRefArr.value || []).forEach(
+      (element: HTMLElement | null, index: number) => {
+        if (element) {
+          trHeightArr.value[index] = element.getBoundingClientRect().height
+        }
+      }
+    )
+  })
+}
+
+watch(
+  () => trRefArr.value,
+  () => {
+    compTrHeight()
+  },
+  {
+    deep: true
+  }
+)
+
 const handleTableResize = throttle(() => {
   const table = tableRef.value
 
   if (!table) return
-
-  nextTick(() => {
-    trRefArr.value.forEach((element: HTMLElement | null, index: number) => {
-      if (element) {
-        trHeightArr.value[index] = element.getBoundingClientRect().height
-      }
-    })
-  })
+  compTrHeight()
 
   let totalWidth = props.columns.reduce(
     (sum, col) => sum + Number(col.width),
@@ -367,8 +382,7 @@ onMounted(() => {
 })
 
 onActivated(() => {
-  updateScrollState()
-  handleTableResize()
+  init()
   if (props.checkable && !props.rowKey) {
     throw new Error(
       'LewTable error: rowKey is required when checkable is enabled!'
@@ -687,7 +701,7 @@ onUnmounted(() => {
     left: 0px;
     top: 0px;
     height: 100%;
-    z-index: 9;
+    z-index: 11;
     width: 8px;
     background: linear-gradient(
       to right,
@@ -705,7 +719,7 @@ onUnmounted(() => {
     right: 0px;
     top: 0px;
     height: 100%;
-    z-index: 9;
+    z-index: 11;
     width: 8px;
     background: linear-gradient(
       to left,

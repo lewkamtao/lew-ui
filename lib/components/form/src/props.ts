@@ -110,6 +110,11 @@ export const formProps = {
     default: '',
     description: '表单的唯一标识符',
     hidden: true
+  },
+  formMethods: {
+    type: Object as PropType<Record<string, Function>>,
+    default: () => ({}),
+    description: '表单项的方法集合，包含用于操作表单的函数'
   }
 }
 
@@ -125,7 +130,7 @@ export const formItemProps = {
     description: '表单项对应的字段名，用于数据绑定和验证'
   },
   required: {
-    type: Boolean,
+    type: [Boolean, Function],
     default: false,
     description: '是否为必填项'
   },

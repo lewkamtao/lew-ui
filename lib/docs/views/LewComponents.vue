@@ -76,9 +76,7 @@ const options: MenuOptions[] = [
       },
       {
         label: 'Icon',
-        value: '/icon',
-        tagText: 'Deprecated',
-        tagColor: 'black'
+        value: '/icon'
       }
     ]
   },
@@ -93,9 +91,7 @@ const options: MenuOptions[] = [
       },
       {
         label: 'Steps',
-        value: '/Steps',
-        tagText: 'New',
-        tagColor: 'success'
+        value: '/Steps'
       },
       {
         label: 'Menu',
@@ -113,7 +109,7 @@ const options: MenuOptions[] = [
         label: 'ContextMenu',
         value: '/ContextMenu',
         tagText: 'Beta',
-        tagColor: 'red'
+        tagColor: 'green'
       }
     ]
   },
@@ -123,9 +119,7 @@ const options: MenuOptions[] = [
     children: [
       {
         label: 'Form',
-        value: '/Form',
-        tagText: 'New',
-        tagColor: 'success'
+        value: '/Form'
       },
       {
         label: 'Input',
@@ -133,9 +127,7 @@ const options: MenuOptions[] = [
       },
       {
         label: 'InputNumber',
-        value: '/InputNumber',
-        tagText: 'Beta',
-        tagColor: 'red'
+        value: '/InputNumber'
       },
       {
         label: 'Textarea',
@@ -175,15 +167,11 @@ const options: MenuOptions[] = [
       },
       {
         label: 'Cascader',
-        value: '/Cascader',
-        tagText: 'New',
-        tagColor: 'green'
+        value: '/Cascader'
       },
       {
         label: 'TreeSelect',
-        value: '/TreeSelect',
-        tagText: 'New',
-        tagColor: 'success'
+        value: '/TreeSelect'
       },
       {
         label: 'InputTable',
@@ -198,9 +186,7 @@ const options: MenuOptions[] = [
 
       {
         label: 'Upload',
-        value: '/Upload',
-        tagText: 'Beta',
-        tagColor: 'red'
+        value: '/Upload'
       }
     ]
   },
@@ -222,15 +208,11 @@ const options: MenuOptions[] = [
       },
       {
         label: 'Tree',
-        value: '/Tree',
-        tagText: 'New',
-        tagColor: 'success'
+        value: '/Tree'
       },
       {
         label: 'Collapse',
-        value: '/Collapse',
-        tagText: 'New',
-        tagColor: 'success'
+        value: '/Collapse'
       }
     ]
   },
@@ -240,9 +222,7 @@ const options: MenuOptions[] = [
     children: [
       {
         label: 'Alert',
-        value: '/Alert',
-        tagText: 'Refactor',
-        tagColor: 'info'
+        value: '/Alert'
       },
       {
         label: 'Message',
@@ -287,9 +267,7 @@ const options: MenuOptions[] = [
       },
       {
         label: 'Empty',
-        value: '/Empty',
-        tagText: 'New',
-        tagColor: 'success'
+        value: '/Empty'
       }
     ]
   }

@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { useImage } from '@vueuse/core'
 import { any2px } from 'lew-ui/utils'
-import { LewFlex } from 'lew-ui'
+import { LewFlex, LewTooltip } from 'lew-ui'
 import { imageProps } from './props'
 import { Fancybox } from '@fancyapps/ui'
 import '@fancyapps/ui/dist/fancybox/fancybox.css'
 
+// 获取app
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
+}
+
 const props = defineProps(imageProps)
-const { isLoading, error } = useImage({ src: props.src || '' })
 
 const imageStyleObject = computed(() => {
   const { width, height } = props
@@ -17,17 +22,46 @@ const imageStyleObject = computed(() => {
   }
 })
 
+let _loading = ref()
+let _error = ref()
+
+const init = () => {
+  const { isLoading, error } = useImage({
+    src: props.src as string
+  })
+  _loading = isLoading
+  _error = error
+}
+
+init()
+
+watch(
+  () => props.src,
+  () => {
+    const { isLoading, error } = useImage({
+      src: props.src as string
+    })
+    _loading = isLoading
+    _error = error
+    console.log(_loading)
+  }
+)
+
 onMounted(() => {
   Fancybox.bind('[data-fancybox]', { Hash: false })
 })
 </script>
 <template>
   <lew-flex gap="0" class="lew-image-wrapper" :style="imageStyleObject">
-    <div class="skeletons" v-if="isLoading || loading"></div>
-    <template v-else-if="error">
+    <div class="skeletons" v-if="_loading || loading || !src"></div>
+    <template v-else-if="_error">
       <slot v-if="$slots.error" name="error" />
       <img
         v-else
+        v-tooltip="{
+          content: '图片加载失败',
+          trigger: 'mouseenter'
+        }"
         class="lew-image-fail-icon"
         src="./image_fail_icon.svg"
         alt="图片加载失败"

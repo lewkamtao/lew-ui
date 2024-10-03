@@ -65,8 +65,9 @@ const options = ref([
       .min(3, '至少包含3个元素')
       .required('此项必填'),
     props: {
-      uploadHelper,
+      uploadHelperId: 'uploadHelper',
       multiple: true,
+      viewMode: 'card',
       limit: 3,
       accept: 'image/jpeg,image/png',
       tips: '只能上传jpg/png文件，且不超过500kb，最多上传3个文件'
@@ -76,7 +77,7 @@ const options = ref([
     field: 'input',
     label: '文本框',
     as: 'input',
-    required: Yup.string().required(),
+    rule: Yup.string().required(),
     props: {
       showCount: true,
       maxLength: 30
@@ -385,6 +386,9 @@ const v = ref('')
     <lew-form
       ref="formRef"
       :size="form.size"
+      :formMethods="{
+        uploadHelper
+      }"
       class="form-box"
       :options="options"
       @mounted="setForm"

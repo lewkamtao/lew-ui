@@ -1,5 +1,23 @@
 export default [
   {
+    label: '视图模式',
+    as: 'tabs',
+    field: 'viewMode',
+    props: {
+      itemWidth: '50px',
+      options: [
+        {
+          label: '列表',
+          value: 'list'
+        },
+        {
+          label: '卡片',
+          value: 'card'
+        }
+      ]
+    }
+  },
+  {
     label: '接受上传的文件类型',
     as: 'input',
     field: 'accept'

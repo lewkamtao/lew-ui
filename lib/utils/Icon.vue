@@ -31,7 +31,7 @@ import {
   ArrowDown,
   ChevronsUpDown
 } from 'lucide-vue-next'
-import { iconColorType, getColorType } from './index'
+import { getColorType, iconColorType } from './index'
 
 const props = defineProps({
   type: {
@@ -41,6 +41,10 @@ const props = defineProps({
   dark: {
     type: Boolean,
     default: false
+  },
+  color: {
+    type: String,
+    default: ''
   },
   strokeWidth: {
     type: Number,
@@ -107,7 +111,7 @@ const iconMap: any = {
     :style="{
       'animation-duration': speed + 's',
       color: iconColorType[type]
-        ? `var(--lew-color-${getColorType(type)}${dark ? '-dark' : ''})`
+        ? `var(--lew-color-${color ? color : getColorType(type)}${dark ? '-dark' : ''})`
         : ''
     }"
     :strokeWidth

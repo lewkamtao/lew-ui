@@ -1,4 +1,4 @@
-import { isNumber, uniqueId } from 'lodash-es'
+import { uniqueId } from 'lodash-es'
 import Icon from './Icon.vue'
 /**
  * 获取颜色类型。
@@ -136,33 +136,6 @@ export const isValidCssValue = ({
   }
   console.warn(`[${name}] ${field} 属性的值 ${_value} 不是有效的 CSS 值。`)
   return false
-}
-
-/**
- * 设置表单值。
- * @param {Object} options - 配置选项。
- * @param {any} options.formRef - 表单引用。
- * @param {any} options.params - 要设置的参数。
- */
-export const lewSetForm = ({
-  formRef,
-  params
-}: {
-  formRef: any // 传入formRef.value
-  params: any // 需要设置的参数
-}) => {
-  let timeout = 0
-  const _fn = () => {
-    timeout += 10
-    if (formRef && formRef.value) {
-      formRef.value.setForm(params)
-    } else {
-      setTimeout(() => {
-        _fn()
-      }, timeout)
-    }
-  }
-  _fn()
 }
 
 /**
@@ -314,4 +287,10 @@ export const getIconInnerHTML = (e: any = {}) => {
   })
   icon.mount(el)
   return el.innerHTML
+}
+
+export const checkUrlIsImage = (url: string = ''): boolean => {
+  const imageRegex =
+    /\.(jpg|jpeg|png|webp|bmp|gif|svg|tiff|ico|heif|jfif|pjpeg|pjp|avif)$/i
+  return imageRegex.test(url)
 }

@@ -5,7 +5,7 @@ export type UploadStatus =
   | 'success'
   | 'fail'
   | 'uploading'
-  | 'pending'
+  | 'wrong_config'
   | 'complete'
   | 'wrong_type'
   | 'wrong_size'
@@ -94,7 +94,7 @@ export const uploadProps = {
   },
   uploadHelper: {
     type: Function,
-    default: () => Promise.resolve(),
+    default: undefined,
     description: '自定义文件上传处理函数',
     validator: (value: Function) => {
       if (typeof value !== 'function') {
@@ -103,7 +103,75 @@ export const uploadProps = {
       }
       return true
     }
+  },
+  uploadHelperId: {
+    type: String,
+    default: '',
+    hidden: true,
+    description: '上传函数的标识'
+  },
+  viewMode: {
+    type: String,
+    default: 'list',
+    description: '列表类型',
+    validator: (value: string) => {
+      if (!['list', 'card'].includes(value)) {
+        console.warn('[LewUpload] viewMode 必须是 list 或 card')
+        return false
+      }
+      return true
+    }
   }
+}
+
+export const uploadByListProps = {
+  size: {
+    type: String as PropType<LewSize>,
+    default: 'medium',
+    description: '上传组件的尺寸',
+    validator: (value: LewSize) => {
+      if (!validSizes.includes(value)) {
+        console.warn('[LewUpload] size 必须是 small、medium 或 large')
+        return false
+      }
+      return true
+    }
+  }
+}
+
+export const uploadByCardProps = {
+  size: {
+    type: String as PropType<LewSize>,
+    default: 'medium',
+    description: '上传组件的尺寸',
+    validator: (value: LewSize) => {
+      if (!validSizes.includes(value)) {
+        console.warn('[LewUpload] size 必须是 small、medium 或 large')
+        return false
+      }
+      return true
+    }
+  }
+}
+
+export const statusMap: Record<UploadStatus, string> = {
+  success: '上传成功',
+  fail: '上传失败',
+  uploading: '上传中',
+  wrong_config: '未配置上传服务',
+  complete: '已上传',
+  wrong_type: '非法格式',
+  wrong_size: '文件大小超出限制'
+}
+
+export const statusColorMap: Record<UploadStatus, string> = {
+  success: 'green',
+  fail: 'red',
+  uploading: 'blue',
+  wrong_config: 'warning',
+  complete: 'gray',
+  wrong_type: 'red',
+  wrong_size: 'red'
 }
 
 export type UploadProps = ExtractPropTypes<typeof uploadProps>
