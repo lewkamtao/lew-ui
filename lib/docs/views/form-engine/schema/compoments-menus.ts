@@ -57,18 +57,10 @@ export const componentsMenusSchema = [
       direction: 'x',
       iconable: false,
       options: [
-        {
-          label: '男',
-          value: '1'
-        },
-        {
-          label: '女',
-          value: '2'
-        },
-        {
-          label: '不公开',
-          value: '3'
-        }
+        { label: '选项 A', value: '1' },
+        { label: '选项 B', value: '2' },
+        { label: '选项 C', value: '3' },
+        { label: '选项 D', value: '4' }
       ]
     }
   },
@@ -79,7 +71,7 @@ export const componentsMenusSchema = [
     schema: checkbox,
     props: {
       iconable: false,
-      label: '选框文本'
+      label: '我同意服务条款'
     }
   },
   {
@@ -91,22 +83,10 @@ export const componentsMenusSchema = [
       iconable: false,
       direction: 'x',
       options: [
-        {
-          label: '唱歌',
-          value: '1'
-        },
-        {
-          label: '跳舞',
-          value: '2'
-        },
-        {
-          label: 'Rap',
-          value: '3'
-        },
-        {
-          label: '上海',
-          value: '4'
-        }
+        { label: '选项 A', value: '1' },
+        { label: '选项 B', value: '2' },
+        { label: '选项 C', value: '3' },
+        { label: '选项 D', value: '4' }
       ]
     }
   },
@@ -121,26 +101,11 @@ export const componentsMenusSchema = [
       align: 'left',
       showCheckIcon: true,
       options: [
-        {
-          label: '广东',
-          value: '1'
-        },
-        {
-          label: '深圳',
-          value: '2'
-        },
-        {
-          label: '杭州',
-          value: '3'
-        },
-        {
-          label: '上海',
-          value: '4'
-        },
-        {
-          label: '北京',
-          value: '5'
-        }
+        { label: '选项一', value: '1' },
+        { label: '选项二', value: '2' },
+        { label: '选项三', value: '3' },
+        { label: '选项四', value: '4' },
+        { label: '选项五', value: '5' }
       ]
     }
   },
@@ -158,26 +123,10 @@ export const componentsMenusSchema = [
       valueLayout: 'text',
       showCheckIcon: true,
       options: [
-        {
-          label: '广东',
-          value: '1'
-        },
-        {
-          label: '深圳',
-          value: '2'
-        },
-        {
-          label: '杭州',
-          value: '3'
-        },
-        {
-          label: '上海',
-          value: '4'
-        },
-        {
-          label: '北京',
-          value: '5'
-        }
+        { label: '选项 A', value: '1' },
+        { label: '选项 B', value: '2' },
+        { label: '选项 C', value: '3' },
+        { label: '选项 D', value: '4' }
       ]
     }
   },
@@ -188,87 +137,54 @@ export const componentsMenusSchema = [
     schema: cascader,
     props: {
       clearable: true,
-      label: '是否同意',
+      label: '请选择',
       free: true,
       trigger: 'click',
       options: [
         {
           value: 1,
-          label: 'Asia',
+          label: '食品',
           children: [
             {
               value: 2,
-              label: 'China',
+              label: '水果',
               children: [
-                { value: 3, label: 'Beijing' },
-                { value: 4, label: 'Shanghai' },
-                { value: 5, label: 'Hangzhou' }
+                { value: 3, label: '苹果' },
+                { value: 4, label: '香蕉' },
+                { value: 5, label: '橙子' }
               ]
             },
             {
               value: 6,
-              label: 'Japan',
+              label: '蔬菜',
               children: [
-                { value: 7, label: 'Tokyo' },
-                { value: 8, label: 'Osaka' },
-                { value: 9, label: 'Kyoto' }
-              ]
-            },
-            {
-              value: 10,
-              label: 'Korea',
-              children: [
-                { value: 11, label: 'Seoul' },
-                { value: 12, label: 'Busan' },
-                { value: 13, label: 'Taegu' }
+                { value: 7, label: '西红柿' },
+                { value: 8, label: '黄瓜' },
+                { value: 9, label: '胡萝卜' }
               ]
             }
           ]
         },
         {
-          value: 14,
-          label: 'Europe',
+          value: 10,
+          label: '饮料',
           children: [
+            {
+              value: 11,
+              label: '碳酸饮料',
+              children: [
+                { value: 12, label: '可乐' },
+                { value: 13, label: '雪碧' },
+                { value: 14, label: '芬达' }
+              ]
+            },
             {
               value: 15,
-              label: 'France',
+              label: '果汁',
               children: [
-                { value: 16, label: 'Paris' },
-                { value: 17, label: 'Marseille' },
-                { value: 18, label: 'Lyon' }
-              ]
-            },
-            {
-              value: 19,
-              label: 'UK',
-              children: [
-                { value: 20, label: 'London' },
-                { value: 21, label: 'Birmingham' },
-                { value: 22, label: 'Manchester' }
-              ]
-            }
-          ]
-        },
-        {
-          value: 23,
-          label: 'North America',
-          children: [
-            {
-              value: 24,
-              label: 'US',
-              children: [
-                { value: 25, label: 'New York' },
-                { value: 26, label: 'Los Angeles' },
-                { value: 27, label: 'Washington' }
-              ]
-            },
-            {
-              value: 28,
-              label: 'Canada',
-              children: [
-                { value: 29, label: 'Toronto' },
-                { value: 30, label: 'Montreal' },
-                { value: 31, label: 'Ottawa' }
+                { value: 16, label: '橙汁' },
+                { value: 17, label: '苹果汁' },
+                { value: 18, label: '葡萄汁' }
               ]
             }
           ]
@@ -283,18 +199,10 @@ export const componentsMenusSchema = [
     schema: tabsScheme,
     props: {
       options: [
-        {
-          label: 'Beijing',
-          value: '1'
-        },
-        {
-          label: 'Shanghai',
-          value: '2'
-        },
-        {
-          label: 'Guangzhou',
-          value: '3'
-        }
+        { label: '选项一', value: '1' },
+        { label: '选项二', value: '2' },
+        { label: '选项三', value: '3' },
+        { label: '选项四', value: '4' }
       ]
     }
   },
@@ -304,21 +212,7 @@ export const componentsMenusSchema = [
     as: 'date-picker',
     schema: datePicker,
     props: {
-      clearable: true,
-      options: [
-        {
-          label: 'Beijing',
-          value: '1'
-        },
-        {
-          label: 'Shanghai',
-          value: '2'
-        },
-        {
-          label: 'Guangzhou',
-          value: '3'
-        }
-      ]
+      clearable: true
     }
   },
   {
@@ -327,24 +221,9 @@ export const componentsMenusSchema = [
     as: 'date-range-picker',
     schema: datePickerRange,
     props: {
-      clearable: true,
-      options: [
-        {
-          label: 'Beijing',
-          value: '1'
-        },
-        {
-          label: 'Shanghai',
-          value: '2'
-        },
-        {
-          label: 'Guangzhou',
-          value: '3'
-        }
-      ]
+      clearable: true
     }
   },
-
   {
     label: '标签输入框',
     fieldType: [],
@@ -375,6 +254,8 @@ export const componentsMenusSchema = [
     as: ''
   }
 ]
+
+// 以下是被注释的代码，保留原样
 //   {
 //     label: '滑块',
 //     fieldType: '',

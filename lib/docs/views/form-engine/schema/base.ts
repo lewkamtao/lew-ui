@@ -15,6 +15,16 @@ export const baseSchema = [
     field: 'required'
   },
   {
+    label: '是否只读',
+    as: 'switch',
+    field: 'readonly'
+  },
+  {
+    label: '是否禁用',
+    as: 'switch',
+    field: 'disabled'
+  },
+  {
     label: '校验规则',
     as: 'textarea',
     direction: 'y',
@@ -26,16 +36,5 @@ export const baseSchema = [
     as: 'textarea',
     direction: 'y',
     field: 'tips'
-  },
-
-  {
-    label: '是否只读',
-    as: 'switch',
-    field: 'readonly'
-  },
-  {
-    label: '是否禁用',
-    as: 'switch',
-    field: 'disabled'
   }
 ]

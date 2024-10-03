@@ -28,7 +28,8 @@ import {
   MoreHorizontal,
   RotateCw,
   Edit2,
-  ArrowDown
+  ArrowDown,
+  ChevronsUpDown
 } from 'lucide-vue-next'
 import { iconColorType, getColorType } from './index'
 
@@ -92,7 +93,8 @@ const iconMap: any = {
   'rotate-cw': RotateCw,
   'more-horizontal': MoreHorizontal,
   'edit-2': Edit2,
-  'arrow-down': ArrowDown
+  'arrow-down': ArrowDown,
+  'chevrons-up-down': ChevronsUpDown
 }
 </script>
 
