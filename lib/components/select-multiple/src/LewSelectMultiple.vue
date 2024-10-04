@@ -14,6 +14,7 @@ import type { SelectMultipleOptions } from './props'
 import { selectMultipleProps } from './props'
 import { UseVirtualList } from '@vueuse/components'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { isFunction } from 'lodash-es'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -35,6 +36,17 @@ const state = reactive({
   loading: false,
   options: props.options,
   keyword: ''
+})
+
+const formMethods: any = inject('formMethods', {})
+
+let _searchMethod = computed(() => {
+  if (isFunction(props.searchMethod)) {
+    return props.searchMethod
+  } else if (props.searchMethodId) {
+    return formMethods[props.searchMethodId]
+  }
+  return false
 })
 
 const getSelectWidth = () => {
@@ -68,7 +80,7 @@ const search = async (e?: any) => {
     if (!keyword && props.options.length > 0) {
       result = props.options
     } else {
-      result = await props.searchMethod({
+      result = await _searchMethod.value({
         options: props.options,
         keyword
       })

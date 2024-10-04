@@ -54,13 +54,13 @@ const props = defineProps({
     type: Number,
     default: 16
   },
-  spinning: {
+  loading: {
     type: Boolean,
     default: false
   },
   speed: {
     type: Number,
-    default: 1.5
+    default: 1
   }
 })
 const iconMap: any = {
@@ -106,7 +106,7 @@ const iconMap: any = {
   <component
     class="lew-icon"
     :class="{
-      'lew-icon-spinning': spinning
+      'lew-icon-loading': loading
     }"
     :style="{
       'animation-duration': speed + 's',
@@ -130,7 +130,7 @@ const iconMap: any = {
   }
 }
 
-.lew-icon-spinning {
+.lew-icon-loading {
   animation: spin 1s linear infinite;
 }
 </style>

@@ -68,7 +68,7 @@ setInterval(() => {
       :key="item.id"
     >
       <template v-if="item.name === 'Apple'">
-        <lew-collapse width="100%" style="padding-left: 20px;" v-model="value">
+        <lew-collapse width="100%" style="padding-left: 20px" v-model="value">
           <lew-collapse-item
             :title="item.name"
             :collapse-key="item.id"

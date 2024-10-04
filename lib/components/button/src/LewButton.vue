@@ -111,7 +111,7 @@ defineExpose({ focus })
         'lew-button-loading-isShow': (_loading || loading) && !disabled
       }"
     >
-      <Icon :size="getIconSize" spinning type="loader" />
+      <Icon :size="getIconSize" loading type="loader" />
     </div>
     <div v-if="$slots.default || text" class="lew-button-content">
       <span class="lew-button-text">

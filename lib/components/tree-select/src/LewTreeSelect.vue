@@ -210,6 +210,7 @@ defineExpose({ show, hide })
         />
         <Icon
           v-else-if="state.initLoading"
+		  loading
           type="loader"
           :size="getIconSize"
           class="icon-loader"
@@ -265,7 +266,7 @@ defineExpose({ show, hide })
                 showLine,
                 showCheckbox,
                 dataSource,
-                onload,
+                loadMethod,
                 initTree,
                 expandAll
               }"

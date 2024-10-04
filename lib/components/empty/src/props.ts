@@ -82,9 +82,7 @@ export const emptyProps = {
     default: '200px',
     validator: (value: string | number) => {
       if (typeof value !== 'string' && typeof value !== 'number') {
-        console.warn(
-          '[LewEmpty] 无效的宽度: width 应该是一个字符串或数字'
-        )
+        console.warn('[LewEmpty] 无效的宽度: width 应该是一个字符串或数字')
         return false
       }
       return true

@@ -29,17 +29,22 @@ const maxSizeFontSizeMap: Record<string, number> = {
   medium: 12,
   large: 14
 }
-const uploadIconFontSizeMap: Record<string, number> = {
-  small: props.viewMode === 'list' ? 32 : 24,
-  medium: props.viewMode === 'list' ? 35 : 26,
-  large: props.viewMode === 'list' ? 45 : 28
-}
-const uploadPaddingMap: Record<string, string> = {
-  small: props.viewMode === 'list' ? '10px 8px' : '14px',
-  medium: props.viewMode === 'list' ? '14px 10px' : '16px',
-  large: props.viewMode === 'list' ? '18px 12px' : '20px'
-}
-
+const uploadIconFontSizeMap: ComputedRef<Record<string, number>> = computed(
+  () => {
+    return {
+      small: props.viewMode === 'list' ? 28 : 22,
+      medium: props.viewMode === 'list' ? 30 : 24,
+      large: props.viewMode === 'list' ? 32 : 26
+    }
+  }
+)
+const uploadPaddingMap: ComputedRef<Record<string, string>> = computed(() => {
+  return {
+    small: props.viewMode === 'list' ? '10px 8px' : '14px',
+    medium: props.viewMode === 'list' ? '14px 10px' : '16px',
+    large: props.viewMode === 'list' ? '18px 12px' : '20px'
+  }
+})
 const getCardSize: Record<string, number> = {
   small: 72,
   medium: 80,
@@ -366,7 +371,8 @@ const getTips = computed(() => {
   .lew-upload {
     position: relative;
     width: 100%;
-    border: var(--lew-form-border-width) var(--lew-bgcolor-5) dashed;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-hover)
+      dashed;
     background-color: var(--lew-form-bgcolor);
     border-radius: var(--lew-border-radius-small);
     box-sizing: border-box;

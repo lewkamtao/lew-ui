@@ -43,7 +43,11 @@ export default defineConfig(({ mode }) => {
             assetFileNames: 'assets/static/[name]-[hash].[ext]',
             manualChunks(id) {
               if (id.includes('node_modules')) {
-                return id.toString().split('node_modules/')[1].split('/')[0].toString()
+                return id
+                  .toString()
+                  .split('node_modules/')[1]
+                  .split('/')[0]
+                  .toString()
               }
             }
           }
@@ -66,6 +70,13 @@ export default defineConfig(({ mode }) => {
           target: 'https://app.tngeek.com/api_sso',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api_sso/, '')
+        }
+      }
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler' // or "modern", "legacy"
         }
       }
     },

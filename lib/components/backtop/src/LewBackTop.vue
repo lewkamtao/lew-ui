@@ -76,5 +76,4 @@ onMounted(() => {
   cursor: pointer;
   color: var(--lew-color-primary);
 }
-
 </style>

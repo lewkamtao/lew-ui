@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import axios from '@/axios/http'
 
-const onload = (item?: any) => {
+const loadMethod = (item?: any) => {
   const levelMap: any = {
     0: 'province',
     1: 'city',
@@ -39,6 +39,6 @@ const v = ref()
 </script>
 <template>
   <div style="width: 300px">
-    <lew-cascader v-model="v" free :onload="onload" @change="change" />
+    <lew-cascader v-model="v" free :loadMethod="loadMethod" @change="change" />
   </div>
 </template>

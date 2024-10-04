@@ -28,7 +28,7 @@ const showMessage = ({ type, e }: MessageOptions) => {
     : false
   const messageElement = hasMessageById || document.createElement('div')
 
-  messageElement.innerHTML = `${getIconInnerHTML({ type, strokeWidth: type === 'loading' ? 2.5 : undefined, spinning: type === 'loading' })}<div class="lew-message-content">${content || e}</div>`
+  messageElement.innerHTML = `${getIconInnerHTML({ type, strokeWidth: type === 'loading' ? 2.5 : undefined, loading: type === 'loading' })}<div class="lew-message-content">${content || e}</div>`
 
   if (!hasMessageById) {
     if (id) {

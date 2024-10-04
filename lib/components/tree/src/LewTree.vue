@@ -76,14 +76,14 @@ const expandHandle = async (item: TreeDataSource) => {
   if (i >= 0) {
     _expandedKeys.splice(i, 1)
     expandedKeys.value = _expandedKeys
-  } else if (props.onload && !loadingKeys.value.includes(item.key)) {
+  } else if (props.loadMethod && !loadingKeys.value.includes(item.key)) {
     const index = treeList.value.findIndex(
       (e: TreeDataSource) => e.parentKey === item.key
     )
     if (index < 0) {
       loadingKeys.value.push(item.key)
       let _tree =
-        ((await props.onload(cloneDeep(item) as TreeDataSource)) as any) || []
+        ((await props.loadMethod(cloneDeep(item) as TreeDataSource)) as any) || []
       insertChildByKey(treeBackup, item.key, _tree)
       const { newTree, newTreeList }: any = (await tree2List({
         dataSource: treeBackup,
@@ -243,8 +243,7 @@ defineExpose({ init, getTreeList })
             <Icon
               v-if="loadingKeys.includes(item.key)"
               :size="14"
-              animation="spin"
-              animationSpeed="fast"
+              loading
               class="lew-cascader-loading-icon"
               type="loader"
             />

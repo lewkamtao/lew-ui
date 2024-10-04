@@ -31,7 +31,9 @@ const ok = () => {
     </div>
     <template #footer>
       <lew-flex x="end" y="center" class="lew-drawer-footer">
-        <lew-flex x="start" gap="5" class="lew-drawer-footer-tips"> 提交后立即生效 </lew-flex>
+        <lew-flex x="start" gap="5" class="lew-drawer-footer-tips">
+          提交后立即生效
+        </lew-flex>
         <lew-flex x="end" y="center">
           <lew-button type="text" color="gray" :request="ok">取消</lew-button>
           <lew-button :request="ok">提交</lew-button>

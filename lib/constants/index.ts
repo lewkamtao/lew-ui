@@ -1,4 +1,10 @@
-import type { LewColor, LewDirection, LewSize, LewStatusColor, LewThemeColor } from '../types'
+import type {
+  LewColor,
+  LewDirection,
+  LewSize,
+  LewStatusColor,
+  LewThemeColor
+} from '../types'
 
 export const validColors: LewColor[] = [
   'blue',

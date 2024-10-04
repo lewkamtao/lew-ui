@@ -200,7 +200,7 @@ const getLastValueAfterSlash = (url: string = '') => {
                     :size="12"
                     :type="item.status"
                     dark
-                    :spinning="item.status === 'uploading'"
+                    :loading="item.status === 'uploading'"
                   />
                 </template>
                 {{ statusMap[item.status || 'complete'] }}

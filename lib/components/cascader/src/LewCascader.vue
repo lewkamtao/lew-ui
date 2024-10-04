@@ -11,7 +11,7 @@ import { object2class } from 'lew-ui/utils'
 import type { CascaderOptions } from './props'
 import { cascaderProps } from './props'
 import { UseVirtualList } from '@vueuse/components'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, isFunction } from 'lodash-es'
 import Icon from 'lew-ui/utils/Icon.vue'
 
 // 格式化 获取 path
@@ -69,6 +69,17 @@ const state = reactive({
   tobeLabels: [] as string[], // 待确认
   tobeItem: {} as CascaderOptions,
   keyword: ''
+})
+
+const formMethods: any = inject('formMethods', {})
+
+let _loadMethod = computed(() => {
+  if (isFunction(props.loadMethod)) {
+    return props.loadMethod
+  } else if (props.loadMethodId) {
+    return formMethods[props.loadMethodId]
+  }
+  return false
 })
 
 // 通过值获取对象
@@ -138,9 +149,9 @@ function findChildrenByValue(
 // 初始化
 const init = async () => {
   let _tree: CascaderOptions[] = []
-  if (props.onload && !state.loading) {
+  if (_loadMethod.value && !state.loading) {
     state.loading = true
-    _tree = (await props.onload()) || []
+    _tree = (await _loadMethod.value()) || []
     state.loading = false
   } else if (props.options && props.options.length > 0) {
     _tree =
@@ -163,11 +174,11 @@ init()
 const selectItem = async (item: CascaderOptions, level: number) => {
   if (!item.isLeaf && item.labelPaths !== state.activeLabels) {
     state.optionsGroup = state.optionsGroup.slice(0, level + 1)
-    if (props.onload && !item.isLeaf) {
+    if (_loadMethod.value && !item.isLeaf) {
       item.loading = true
       state.okLoading = true
       const new_options =
-        (await props.onload(cloneDeep({ ...item, level }))) || []
+        (await _loadMethod.value(cloneDeep({ ...item, level }))) || []
       let _tree = findAndAddChildrenByValue(
         cloneDeep(state.optionsTree),
         cloneDeep(item.value),
@@ -454,7 +465,7 @@ defineExpose({ show, hide })
                     <Icon
                       v-if="templateProps.loading"
                       :size="14"
-                      spinning
+                      loading
                       class="lew-cascader-loading-icon"
                       type="loader"
                     />

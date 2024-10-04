@@ -28,7 +28,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
           v-if="index === (stepsValue || 1) - 1 && status === 'loading'"
           :size="16"
           :stroke-width="3"
-          spinning
+          loading
           type="loader"
         />
         <Icon

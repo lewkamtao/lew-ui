@@ -65,6 +65,7 @@ export const selectMultipleProps = {
     default: '',
     description: '搜索框占位文本'
   },
+
   searchMethod: {
     type: Function as PropType<
       (params: SelectSearchMultipleMethodParams) => SelectMultipleOptions[]
@@ -84,6 +85,12 @@ export const selectMultipleProps = {
       return []
     },
     description: '自定义搜索方法'
+  },
+  searchMethodId: {
+    type: String,
+    default: '',
+    hidden: true,
+    description: '上传函数的标识'
   },
   searchDelay: {
     type: Number,

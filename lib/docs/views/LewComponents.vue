@@ -326,7 +326,7 @@ const options: MenuOptions[] = [
   box-sizing: border-box;
 
   .component-main {
-    width: calc(100% - 200px);
+    width: calc(100% - 280px);
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -337,7 +337,7 @@ const options: MenuOptions[] = [
 
   .component-nav {
     height: 100%;
-    width: 200px;
+    width: 280px;
   }
 }
 
