@@ -111,6 +111,7 @@ const getModel = () => {
     item.gridArea = `auto  / ${rowStart} / auto  / ${rowEnd}`
     delete item.spanMap
     delete item.fieldType
+    delete item.schema
   })
   const componentModel = {
     ...formGlobal.value,

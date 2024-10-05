@@ -83,7 +83,10 @@ const modelValue = defineModel<UploadFileItem[]>()
         </lew-flex>
 
         <lew-flex
-          v-else-if="!['complete', 'success'].includes(item.status as string)"
+          v-else-if="
+            item.status &&
+            !['complete', 'success'].includes(item.status as string)
+          "
           v-tooltip="{
             content: statusMap[item.status || 'complete'],
             trigger: 'mouseenter'
@@ -144,7 +147,7 @@ const modelValue = defineModel<UploadFileItem[]>()
         </lew-flex>
         <transition name="fade">
           <lew-flex
-            v-if="item.percent && item.status === 'uploading'"
+            v-if="item.status === 'uploading'"
             class="lew-upload-progress"
             x="start"
           >

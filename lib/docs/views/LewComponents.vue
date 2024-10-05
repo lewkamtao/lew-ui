@@ -26,9 +26,14 @@ onMounted(() => {
 })
 
 watch(route, () => {
-  setTimeout(() => {
-    if (mainRef.value) mainRef.value.scrollTop = 0
-  }, 50)
+  nextTick(() => {
+    const componentMain = document.getElementById('component-main')
+    if (componentMain) {
+      componentMain.style.scrollBehavior = ''
+      componentMain.scrollTop = 0
+      componentMain.style.scrollBehavior = 'smooth'
+    }
+  })
   isShowSider.value = false
 })
 
@@ -291,7 +296,7 @@ const options: MenuOptions[] = [
     <div class="sider" :class="{ 'sider-open': isShowSider }">
       <the-siderbar :options="options" />
     </div>
-    <div ref="mainRef" class="app-main lew-scrollbar">
+    <div class="app-main lew-scrollbar">
       <div id="component-main" class="component-main lew-scrollbar">
         <router-view v-slot="{ Component }">
           <keep-alive>
@@ -332,7 +337,6 @@ const options: MenuOptions[] = [
     overflow-x: hidden;
     box-sizing: border-box;
     padding: 50px 50px 150px 50px;
-    scroll-behavior: smooth;
   }
 
   .component-nav {
