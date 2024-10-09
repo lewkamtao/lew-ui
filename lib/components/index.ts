@@ -8,6 +8,7 @@ export * from './tabs'
 export * from './breadcrumb'
 export * from './dropdown'
 export * from './steps'
+export * from './slider'
 
 export * from './input'
 export * from './input-number'

@@ -190,6 +190,11 @@ const options: MenuOptions[] = [
       },
 
       {
+        label: 'Slider',
+        value: '/Slider'
+      },
+
+      {
         label: 'Upload',
         value: '/Upload'
       }

@@ -45,7 +45,7 @@ export const radioProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '复选框组中复选框的尺寸',
+    description: '尺寸',
     validator: (value: LewSize) => {
       if (!validSizes.includes(value)) {
         console.warn(

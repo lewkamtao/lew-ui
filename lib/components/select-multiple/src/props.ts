@@ -1,4 +1,6 @@
 import type { PropType } from 'vue'
+import type { LewSize } from 'lew-ui'
+import { validSizes } from 'lew-ui/constants'
 
 export type SelectMultipleOptions = {
   label: string
@@ -46,9 +48,18 @@ export const selectMultipleProps = {
     description: '选择框默认文本'
   },
   size: {
-    type: String as PropType<'small' | 'medium' | 'large'>,
+    type: String as PropType<LewSize>,
     default: 'medium',
-    description: '选择框尺寸'
+    description: '尺寸',
+    validator(value: LewSize) {
+      if (!validSizes.includes(value)) {
+        console.warn(
+          `[LewSelectMultiple] size 必须是 ${validSizes.join('、')} 之一`
+        )
+        return false
+      }
+      return true
+    }
   },
   itemHeight: {
     type: Number,

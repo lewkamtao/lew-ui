@@ -47,11 +47,11 @@ export const selectProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '标签的尺寸',
+    description: '尺寸',
     validator(value: LewSize): boolean {
       if (!validSizes.includes(value)) {
         console.warn(
-          `[LewSelect] 无效的标签尺寸: ${value}。请使用 ${validSizes.join(', ')} 中的一个。`
+          `[LewSelect] 尺寸: ${value}。请使用 ${validSizes.join(', ')} 中的一个。`
         )
         return false
       }
