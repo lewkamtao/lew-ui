@@ -24,6 +24,7 @@ export const LewTooltip = {
           appendTo: () => document.body,
           placement,
           allowHTML,
+          hideOnClick: false,
           arrow: roundArrow,
           maxWidth: 250,
           duration: [250, 250],
@@ -38,7 +39,7 @@ export const LewTooltip = {
       },
       updated(el: any, binding: DirectiveBinding) {
         const { triggerFrom, content } = binding.value
-        if (!content) {
+        if (!content && content != 0) {
           el.instance?.disable()
         } else {
           el.instance?.enable()

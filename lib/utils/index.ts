@@ -294,3 +294,93 @@ export const checkUrlIsImage = (url: string = ''): boolean => {
     /\.(jpg|jpeg|png|webp|bmp|gif|svg|tiff|ico|heif|jfif|pjpeg|pjp|avif)$/i
   return imageRegex.test(url)
 }
+
+export const dragmove = ({
+  el,
+  parentEl,
+  direction = 'both',
+  callback
+}: {
+  el: HTMLElement
+  parentEl: HTMLElement
+  direction?: 'horizontal' | 'vertical' | 'both'
+  callback?: (position: {
+    x: number
+    y: number
+    percentX: number
+    percentY: number
+  }) => void
+}) => {
+  let isDragging = false
+  let startX: number, startY: number
+  let elRect: DOMRect, parentRect: DOMRect
+  let elWidth = el.offsetWidth
+  let elHeight = el.offsetHeight
+
+  const onMouseDown = (e: MouseEvent) => {
+    isDragging = true
+    startX = e.clientX - el.offsetLeft
+    startY = e.clientY - el.offsetTop
+    elRect = el.getBoundingClientRect()
+    parentRect = parentEl.getBoundingClientRect()
+  }
+
+  const onMouseMove = (e: MouseEvent) => {
+    if (!isDragging) return
+
+    let newX = e.clientX - startX
+    let newY = e.clientY - startY
+
+    if (direction === 'horizontal' || direction === 'both') {
+      newX = Math.max(
+        0,
+        Math.min(newX, parentRect.width + elWidth - elRect.width)
+      )
+      el.style.left =
+        newX > parentRect.width - elWidth
+          ? `${parentRect.width - elWidth}px`
+          : `${newX}px`
+    }
+
+    if (direction === 'vertical' || direction === 'both') {
+      newY = Math.max(
+        0,
+        Math.min(newY, parentRect.height + elHeight - elRect.height)
+      )
+      el.style.top =
+        newY > parentRect.height - elHeight
+          ? `${parentRect.height - elHeight}px`
+          : `${newY}px`
+    }
+
+    if (callback) {
+      callback({
+        x: Number(newX.toFixed(2)),
+        y: Number(newY.toFixed(2)),
+        percentX: Number((newX / parentRect.width).toFixed(2)),
+        percentY: Number((newY / parentRect.height).toFixed(2))
+      })
+    }
+  }
+
+  const onMouseUp = () => {
+    isDragging = false
+  }
+
+  el.addEventListener('mousedown', onMouseDown)
+  document.addEventListener('mousemove', onMouseMove)
+  document.addEventListener('mouseup', onMouseUp)
+  // 解决有些时候,在鼠标松开的时候,元素仍然可以拖动;
+  document.ondragstart = function (ev) {
+    ev.preventDefault()
+  }
+  document.ondragend = function (ev) {
+    ev.preventDefault()
+  }
+
+  return () => {
+    el.removeEventListener('mousedown', onMouseDown)
+    document.removeEventListener('mousemove', onMouseMove)
+    document.removeEventListener('mouseup', onMouseUp)
+  }
+}
