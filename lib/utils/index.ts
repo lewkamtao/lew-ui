@@ -299,7 +299,12 @@ export const dragmove = ({
   el,
   parentEl,
   direction = 'both',
-  callback
+  callback,
+  max,
+  min,
+  step = 1,
+  trackMax,
+  trackMin
 }: {
   el: HTMLElement
   parentEl: HTMLElement
@@ -310,12 +315,23 @@ export const dragmove = ({
     percentX: number
     percentY: number
   }) => void
+  max: number
+  min: number
+  step?: number
+  trackMax: number
+  trackMin: number
 }) => {
   let isDragging = false
   let startX: number, startY: number
   let elRect: DOMRect, parentRect: DOMRect
-  let elWidth = el.offsetWidth
-  let elHeight = el.offsetHeight
+
+  // 确保min和max在trackMin和trackMax的范围内
+  const clampedMinValue = Math.max(min, trackMin)
+  const clampedMaxValue = Math.min(max, trackMax)
+
+  const snapToGrid = (value: number, gridSize: number) => {
+    return Math.round(value / gridSize) * gridSize
+  }
 
   const onMouseDown = (e: MouseEvent) => {
     isDragging = true
@@ -323,6 +339,7 @@ export const dragmove = ({
     startY = e.clientY - el.offsetTop
     elRect = el.getBoundingClientRect()
     parentRect = parentEl.getBoundingClientRect()
+    document.body.style.userSelect = 'none'
   }
 
   const onMouseMove = (e: MouseEvent) => {
@@ -332,25 +349,27 @@ export const dragmove = ({
     let newY = e.clientY - startY
 
     if (direction === 'horizontal' || direction === 'both') {
-      newX = Math.max(
-        0,
-        Math.min(newX, parentRect.width + elWidth - elRect.width)
-      )
-      el.style.left =
-        newX > parentRect.width - elWidth
-          ? `${parentRect.width - elWidth}px`
-          : `${newX}px`
+      const trackWidth = parentRect.width
+      const minX =
+        ((clampedMinValue - trackMin) / (trackMax - trackMin)) * trackWidth
+      const maxX =
+        ((clampedMaxValue - trackMin) / (trackMax - trackMin)) * trackWidth
+      newX = Math.max(minX, Math.min(newX, maxX))
+      const stepSize = trackWidth / ((trackMax - trackMin) / step)
+      newX = snapToGrid(newX, stepSize)
+      el.style.left = `${newX}px`
     }
 
     if (direction === 'vertical' || direction === 'both') {
-      newY = Math.max(
-        0,
-        Math.min(newY, parentRect.height + elHeight - elRect.height)
-      )
-      el.style.top =
-        newY > parentRect.height - elHeight
-          ? `${parentRect.height - elHeight}px`
-          : `${newY}px`
+      const trackHeight = parentRect.height
+      const minY =
+        ((clampedMinValue - trackMin) / (trackMax - trackMin)) * trackHeight
+      const maxY =
+        ((clampedMaxValue - trackMin) / (trackMax - trackMin)) * trackHeight
+      newY = Math.max(minY, Math.min(newY, maxY))
+      const stepSize = trackHeight / ((trackMax - trackMin) / step)
+      newY = snapToGrid(newY, stepSize)
+      el.style.top = `${newY}px`
     }
 
     if (callback) {
@@ -365,6 +384,7 @@ export const dragmove = ({
 
   const onMouseUp = () => {
     isDragging = false
+    document.body.style.userSelect = 'auto'
   }
 
   el.addEventListener('mousedown', onMouseDown)

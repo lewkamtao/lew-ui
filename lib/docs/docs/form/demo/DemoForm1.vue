@@ -326,6 +326,12 @@ const options = ref([
     }
   },
   {
+    field: 'info.a.b.c.slider',
+    label: '滑块',
+    as: 'slider',
+    rule: Yup.number().required('不能为空')
+  },
+  {
     field: 'info.a.b.c.input_tag',
     label: '标签输入框',
     as: 'input-tag',

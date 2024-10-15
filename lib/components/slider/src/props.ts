@@ -10,7 +10,7 @@ export type SliderOptions = {
 export const sliderProps = {
   min: {
     type: [Number, String],
-    default: 0,
+    default: '0',
     description: '最小值',
     validator(value: number | string) {
       if (value && typeof value === 'string' && isNaN(Number(value))) {
@@ -22,7 +22,7 @@ export const sliderProps = {
   },
   max: {
     type: [Number, String],
-    default: 100,
+    default: '',
     description: '最大值',
     validator(value: number | string) {
       if (value && typeof value === 'string' && isNaN(Number(value))) {
@@ -87,7 +87,16 @@ export const sliderProps = {
   },
   options: {
     type: Array as PropType<SliderOptions[]>,
-    default: () => [],
+    default: () => [
+      {
+        label: '0',
+        value: 0
+      },
+      {
+        label: '100',
+        value: 100
+      }
+    ],
     description: '步进器配置'
   }
 }
