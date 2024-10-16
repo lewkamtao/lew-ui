@@ -8,6 +8,20 @@ export type SliderOptions = {
 }
 
 export const sliderProps = {
+  size: {
+    type: String as PropType<LewSize>,
+    default: 'medium',
+    description: '尺寸',
+    validator(value: LewSize) {
+      if (!validSizes.includes(value)) {
+        console.warn(
+          `[LewInputNumber] size 必须是 ${validSizes.join('、')} 之一`
+        )
+        return false
+      }
+      return true
+    }
+  },
   min: {
     type: [Number, String],
     default: '0',
@@ -45,45 +59,16 @@ export const sliderProps = {
       return true
     }
   },
-  disabled: {
-    type: Boolean,
-    default: false,
-    description: '是否禁用'
-  },
-  size: {
-    type: String as PropType<LewSize>,
-    default: 'medium',
-    description: '尺寸',
-    validator(value: LewSize) {
-      if (!validSizes.includes(value)) {
-        console.warn(
-          `[LewInputNumber] size 必须是 ${validSizes.join('、')} 之一`
-        )
-        return false
-      }
-      return true
-    }
-  },
+
   readonly: {
     type: Boolean,
     default: false,
     description: '是否只读'
   },
-  width: {
-    type: [Number, String],
-    default: '150px',
-    description: '宽度',
-    validator(value: number | string) {
-      if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewInputNumber] width 必须大于 0')
-        return false
-      }
-      if (typeof value === 'string' && !/^\d+(%|px|em|rem)?$/.test(value)) {
-        console.warn('[LewInputNumber] width 必须是有效的 CSS 宽度值')
-        return false
-      }
-      return true
-    }
+  disabled: {
+    type: Boolean,
+    default: false,
+    description: '是否禁用'
   },
   options: {
     type: Array as PropType<SliderOptions[]>,

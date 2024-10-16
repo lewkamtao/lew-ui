@@ -8,7 +8,6 @@ let v = ref(50)
       style="width: 500px"
       v-model="v"
       size="small"
-      step="5"
       :options="[
         {
           label: '低',
@@ -27,7 +26,6 @@ let v = ref(50)
     <lew-slider
       style="width: 500px"
       v-model="v"
-      step="5"
       :options="[
         {
           label: '低',
@@ -46,7 +44,6 @@ let v = ref(50)
     <lew-slider
       style="width: 500px"
       v-model="v"
-      step="5"
       size="large"
       :options="[
         {

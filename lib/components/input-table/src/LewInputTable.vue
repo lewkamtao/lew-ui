@@ -10,7 +10,7 @@ import { LewTable, LewButton, LewFlex, LewEmpty } from 'lew-ui'
 const modelValue: Ref<Array<any>> = defineModel({ required: true })
 
 const setUseId = () => {
-  modelValue.value.forEach((e: any) => {
+  ;(modelValue.value || []).forEach((e: any) => {
     if (!e.id) {
       e.id = getUniqueId()
     }
@@ -59,7 +59,7 @@ const edit = ({ row, index }: { row: any; index: number }) => {
   formModalRef.value.open({ row, index })
 }
 const del = ({ index }: { index: number }) => {
-  if (modelValue.value.length <= props.minRows) {
+  if ((modelValue.value || []).length <= props.minRows) {
     LewMessage.warning('已达到最小行数限制，无法删除')
     return
   }
@@ -75,7 +75,7 @@ const del = ({ index }: { index: number }) => {
   })
 }
 const add = () => {
-  if (modelValue.value.length >= props.maxRows) {
+  if ((modelValue.value || []).length >= props.maxRows) {
     LewMessage.warning('已达到最大行数限制，无法添加')
     return
   }
@@ -85,9 +85,15 @@ const add = () => {
   }
   formModalRef.value.open({ row })
 }
+
 const addSuccess = ({ row }: { row: any }) => {
-  modelValue.value.push(row)
+  if (!Array.isArray(modelValue.value)) {
+    modelValue.value = [row]
+  } else {
+    modelValue.value.push(row)
+  }
 }
+
 const editSuccess = ({ row, index }: { row: any; index: number }) => {
   modelValue.value.splice(index, 1, row)
 }
@@ -95,14 +101,14 @@ const editSuccess = ({ row, index }: { row: any; index: number }) => {
 const selectedKeys = ref<string[]>([])
 
 const batchDelete = () => {
-  if (selectedKeys.value.length === 0) {
+  if ((selectedKeys.value || []).length === 0) {
     LewMessage.warning('请先选择要删除的数据')
     return
   }
   LewDialog.error({
     title: '批量删除确认',
     okText: '删除',
-    content: `你是否要删除选中的 ${selectedKeys.value.length} 条数据，此操作会立即生效，请谨慎操作！`,
+    content: `你是否要删除选中的 ${(selectedKeys.value || []).length} 条数据，此操作会立即生效，请谨慎操作！`,
     closeOnClickOverlay: true,
     closeByEsc: true,
     ok: () => {
@@ -150,7 +156,7 @@ const sortRows = () => {
 }
 
 const isMaxRowsReached = computed(
-  () => modelValue.value.length >= props.maxRows
+  () => (modelValue.value || []).length >= props.maxRows
 )
 const showHeaderAction = computed(
   () => props.batchDeletable || props.clearable || props.sortable
@@ -197,7 +203,7 @@ const getAddButtonStyle = computed(() => {
           <lew-flex x="start">
             <lew-button
               v-if="batchDeletable"
-              :disabled="selectedKeys.length === 0"
+              :disabled="(selectedKeys || []).length === 0"
               :size="size"
               type="text"
               color="gray"
@@ -208,7 +214,7 @@ const getAddButtonStyle = computed(() => {
           <lew-flex x="end">
             <lew-button
               v-if="clearable && !minRows"
-              :disabled="modelValue.length === 0"
+              :disabled="(modelValue || []).length === 0"
               :size="size"
               type="text"
               color="gray"
@@ -217,7 +223,7 @@ const getAddButtonStyle = computed(() => {
             >
             <lew-button
               v-if="sortable"
-              :disabled="modelValue.length === 0"
+              :disabled="(modelValue || []).length === 0"
               :size="size"
               type="text"
               color="gray"
@@ -230,7 +236,7 @@ const getAddButtonStyle = computed(() => {
       <template #table-footer>
         <lew-flex direction="y">
           <lew-empty
-            v-if="modelValue.length === 0"
+            v-if="(modelValue || []).length === 0"
             description="暂无数据"
           ></lew-empty>
           <lew-flex

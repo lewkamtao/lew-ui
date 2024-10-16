@@ -57,7 +57,8 @@ const calculateValue = (position: number) => {
 }
 
 const setDot = (e: MouseEvent) => {
-  if (!trackRef.value || !dotRef.value) return
+  if (props.readonly || props.disabled || !trackRef.value || !dotRef.value)
+    return
   const trackRect = trackRef.value.getBoundingClientRect()
   const clickX = Math.max(
     0,
@@ -94,6 +95,7 @@ const calculateNearestStep = (value: number) => {
 }
 
 const setDotByClick = (value: number) => {
+  if (props.readonly || props.disabled) return
   if (value >= getMin.value && value <= getMax.value) {
     modelValue.value = value
     setDotByValue(value)
@@ -112,7 +114,7 @@ const init = () => {
   const el = dotRef.value
   const parentEl = trackRef.value
   const { step } = props
-  if (el && parentEl) {
+  if (el && parentEl && !props.readonly && !props.disabled) {
     _dragmove = dragmove({
       el,
       parentEl,
@@ -130,10 +132,19 @@ const init = () => {
   setDotByValue(modelValue.value)
 }
 
-// 监听 max、min、step 的变化，重新初始化
-watch([() => props.max, () => props.min, () => props.step], () => {
-  init()
-})
+// 监听 max、min、step、readonly、disabled 的变化，重新初始化
+watch(
+  [
+    () => props.max,
+    () => props.min,
+    () => props.step,
+    () => props.readonly,
+    () => props.disabled
+  ],
+  () => {
+    init()
+  }
+)
 
 onMounted(() => {
   init()
@@ -191,7 +202,14 @@ const getStyle = computed(() => {
 </script>
 
 <template>
-  <div class="lew-slider" :style="getStyle">
+  <div
+    class="lew-slider"
+    :style="getStyle"
+    :class="{
+      'lew-slider-disabled': disabled,
+      'lew-slider-readonly': readonly
+    }"
+  >
     <div ref="trackRef" @click="setDot" class="lew-slider-track">
       <div
         :style="{
@@ -280,6 +298,7 @@ const getStyle = computed(() => {
   position: relative;
   display: flex;
   align-items: center;
+  padding-bottom: 10px;
 
   .lew-slider-track {
     position: relative;
@@ -360,6 +379,7 @@ const getStyle = computed(() => {
       .lew-slider-track-step-label-text {
         text-align: center;
         color: var(--lew-color-text-2);
+        white-space: nowrap;
       }
       .lew-slider-track-step-label-text-disabled {
         cursor: not-allowed;
@@ -396,5 +416,14 @@ const getStyle = computed(() => {
   width: calc(var(--lew-slider-track-dot-size) / 2);
   height: var(--lew-slider-track-line-height);
   background-color: var(--lew-form-bgcolor);
+}
+
+.lew-slider-disabled {
+  opacity: var(--lew-disabled-opacity);
+  pointer-events: none;
+}
+
+.lew-slider-readonly {
+  pointer-events: none;
 }
 </style>

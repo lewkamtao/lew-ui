@@ -356,7 +356,7 @@ defineExpose({ init, getTreeList })
   .lew-tree-item-label:hover {
     background-color: var(--lew-bgcolor-3);
     user-select: none;
-    .lew-checkbox:deep(.icon-checkbox-box) {
+    .lew-checkbox:deep(.lew-checkbox-icon-box) {
       border: var(--lew-form-border-width)
         var(--lew-checkbox-border-color-hover) solid;
       outline: var(--lew-form-outline);
@@ -370,7 +370,7 @@ defineExpose({ init, getTreeList })
     font-weight: 600;
   }
   .lew-tree-item-label:hover {
-    .lew-checkbox:deep(.icon-checkbox-box) {
+    .lew-checkbox:deep(.lew-checkbox-icon-box) {
       border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
       background: var(--lew-checkbox-color);
       .icon-checkbox {
@@ -383,7 +383,7 @@ defineExpose({ init, getTreeList })
 
 .lew-tree-item-certain {
   .lew-tree-item-label:hover {
-    .lew-checkbox:deep(.icon-checkbox-box) {
+    .lew-checkbox:deep(.lew-checkbox-icon-box) {
       border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
       background: var(--lew-checkbox-color);
     }

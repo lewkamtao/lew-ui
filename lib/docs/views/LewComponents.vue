@@ -191,7 +191,9 @@ const options: MenuOptions[] = [
 
       {
         label: 'Slider',
-        value: '/Slider'
+        value: '/Slider',
+        tagText: 'Dev',
+        tagColor: 'blue'
       },
 
       {

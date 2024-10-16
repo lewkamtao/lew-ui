@@ -864,7 +864,7 @@ onUnmounted(() => {
   .lew-table-tr-hover {
     background-color: var(--lew-bgcolor-1);
     .lew-table-checkbox {
-      .icon-checkbox-box {
+      .lew-checkbox-icon-box {
         border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
       }
     }

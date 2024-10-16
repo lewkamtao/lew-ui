@@ -13,6 +13,7 @@ import cascader from './components/cascader'
 import datePicker from './components/date-picker'
 import datePickerRange from './components/date-range-picker'
 import inputTag from './components/input-tag'
+import slider from './components/slider'
 
 export const componentsMenusSchema = [
   {
@@ -44,6 +45,7 @@ export const componentsMenusSchema = [
     schema: inputNumberScheme,
     props: {
       align: 'left',
+      step: 1,
       width: 100
     }
   },
@@ -252,21 +254,32 @@ export const componentsMenusSchema = [
     }
   },
   {
+    label: '滑块',
+    fieldType: '',
+    as: 'slider',
+    schema: slider,
+    props: {
+      step: 1,
+      options: [
+        {
+          label: '0',
+          value: 0
+        },
+        {
+          label: '100',
+          value: 100
+        }
+      ]
+    }
+  },
+  {
     label: '占位盒子',
     as: ''
   }
 ]
 
 // 以下是被注释的代码，保留原样
-//   {
-//     label: '滑块',
-//     fieldType: '',
-//     as: 'slider',
-//     props: {
-//       showCount: true,
-//       maxLength: 30
-//     }
-//   },
+
 //   {
 //     label: '范围滑块',
 //     fieldType: [],

@@ -700,7 +700,7 @@ defineExpose({ show, hide })
 
 .lew-select-item:hover {
   .lew-checkbox {
-    .icon-checkbox-box {
+    .lew-checkbox-icon-box {
       border: var(--lew-form-border-width)
         var(--lew-checkbox-border-color-hover) solid;
       outline: var(--lew-form-outline);
@@ -711,7 +711,7 @@ defineExpose({ show, hide })
 
 .lew-select-item-active:hover {
   .lew-checkbox {
-    .icon-checkbox-box {
+    .lew-checkbox-icon-box {
       border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
       background: var(--lew-checkbox-color);
 

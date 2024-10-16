@@ -666,7 +666,7 @@ defineExpose({ show, hide })
 }
 
 .lew-cascader-item:hover {
-  .lew-checkbox:deep(.icon-checkbox-box) {
+  .lew-checkbox:deep(.lew-checkbox-icon-box) {
     border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover)
       solid;
     outline: var(--lew-form-outline);
@@ -675,7 +675,7 @@ defineExpose({ show, hide })
 }
 
 .lew-cascader-item-tobe:hover {
-  .lew-checkbox:deep(.icon-checkbox-box) {
+  .lew-checkbox:deep(.lew-checkbox-icon-box) {
     border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
     background: var(--lew-checkbox-color);
 
@@ -687,7 +687,7 @@ defineExpose({ show, hide })
 }
 
 .lew-cascader-item-selected:hover {
-  .lew-checkbox:deep(.icon-checkbox-box) {
+  .lew-checkbox:deep(.lew-checkbox-icon-box) {
     border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
     background: var(--lew-checkbox-color);
 
