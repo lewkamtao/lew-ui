@@ -119,11 +119,11 @@ const init = () => {
       el,
       parentEl,
       direction: 'horizontal',
-      step: Number(step),
-      max: getMax.value,
-      min: getMin.value,
-      trackMax: getTrackMax.value,
-      trackMin: getTrackMin.value,
+      step: () => Number(step),
+      max: () => getMax.value,
+      min: () => getMin.value,
+      trackMax: () => getTrackMax.value,
+      trackMin: () => getTrackMin.value,
       callback: (e: any) => {
         modelValue.value = calculateValue(e.x)
       }
@@ -400,6 +400,7 @@ const getStyle = computed(() => {
     transition: transform var(--lew-form-transition-ease);
     cursor: pointer;
     box-sizing: border-box;
+    z-index: 3;
   }
   .lew-slider-track-dot:hover {
     transform: translate(calc(var(--lew-slider-track-dot-size) / 2 * -1), -50%)

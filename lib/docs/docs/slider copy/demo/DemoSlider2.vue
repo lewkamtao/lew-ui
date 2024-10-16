@@ -1,14 +1,12 @@
 <script setup lang="ts">
-let v = ref([25, 30])
+let v = ref(50)
 </script>
 
 <template>
-  <lew-slider-range
+  <lew-slider
     style="width: 500px"
     v-model="v"
     step="5"
-    min="20"
-    max="50"
     :options="[
       {
         label: '低',

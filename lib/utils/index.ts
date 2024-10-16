@@ -294,7 +294,6 @@ export const checkUrlIsImage = (url: string = ''): boolean => {
     /\.(jpg|jpeg|png|webp|bmp|gif|svg|tiff|ico|heif|jfif|pjpeg|pjp|avif)$/i
   return imageRegex.test(url)
 }
-
 export const dragmove = ({
   el,
   parentEl,
@@ -302,7 +301,7 @@ export const dragmove = ({
   callback,
   max,
   min,
-  step = 1,
+  step = () => 1,
   trackMax,
   trackMin
 }: {
@@ -315,19 +314,21 @@ export const dragmove = ({
     percentX: number
     percentY: number
   }) => void
-  max: number
-  min: number
-  step?: number
-  trackMax: number
-  trackMin: number
+  max: () => number
+  min: () => number
+  step?: () => number
+  trackMax: () => number
+  trackMin: () => number
 }) => {
   let isDragging = false
   let startX: number, startY: number
   let elRect: DOMRect, parentRect: DOMRect
 
-  // 确保min和max在trackMin和trackMax的范围内
-  const clampedMinValue = Math.max(min, trackMin)
-  const clampedMaxValue = Math.min(max, trackMax)
+  const getClampedValues = () => {
+    const clampedMinValue = Math.max(min(), trackMin())
+    const clampedMaxValue = Math.min(max(), trackMax())
+    return { clampedMinValue, clampedMaxValue }
+  }
 
   const snapToGrid = (value: number, gridSize: number) => {
     return Math.round(value / gridSize) * gridSize
@@ -347,15 +348,18 @@ export const dragmove = ({
 
     let newX = e.clientX - startX
     let newY = e.clientY - startY
+    const { clampedMinValue, clampedMaxValue } = getClampedValues()
 
     if (direction === 'horizontal' || direction === 'both') {
       const trackWidth = parentRect.width
       const minX =
-        ((clampedMinValue - trackMin) / (trackMax - trackMin)) * trackWidth
+        ((clampedMinValue - trackMin()) / (trackMax() - trackMin())) *
+        trackWidth
       const maxX =
-        ((clampedMaxValue - trackMin) / (trackMax - trackMin)) * trackWidth
+        ((clampedMaxValue - trackMin()) / (trackMax() - trackMin())) *
+        trackWidth
       newX = Math.max(minX, Math.min(newX, maxX))
-      const stepSize = trackWidth / ((trackMax - trackMin) / step)
+      const stepSize = trackWidth / ((trackMax() - trackMin()) / step())
       newX = snapToGrid(newX, stepSize)
       el.style.left = `${newX}px`
     }
@@ -363,11 +367,13 @@ export const dragmove = ({
     if (direction === 'vertical' || direction === 'both') {
       const trackHeight = parentRect.height
       const minY =
-        ((clampedMinValue - trackMin) / (trackMax - trackMin)) * trackHeight
+        ((clampedMinValue - trackMin()) / (trackMax() - trackMin())) *
+        trackHeight
       const maxY =
-        ((clampedMaxValue - trackMin) / (trackMax - trackMin)) * trackHeight
+        ((clampedMaxValue - trackMin()) / (trackMax() - trackMin())) *
+        trackHeight
       newY = Math.max(minY, Math.min(newY, maxY))
-      const stepSize = trackHeight / ((trackMax - trackMin) / step)
+      const stepSize = trackHeight / ((trackMax() - trackMin()) / step())
       newY = snapToGrid(newY, stepSize)
       el.style.top = `${newY}px`
     }
