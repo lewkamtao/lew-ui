@@ -294,6 +294,7 @@ export const checkUrlIsImage = (url: string = ''): boolean => {
     /\.(jpg|jpeg|png|webp|bmp|gif|svg|tiff|ico|heif|jfif|pjpeg|pjp|avif)$/i
   return imageRegex.test(url)
 }
+
 export const dragmove = ({
   el,
   parentEl,
@@ -341,6 +342,8 @@ export const dragmove = ({
     elRect = el.getBoundingClientRect()
     parentRect = parentEl.getBoundingClientRect()
     document.body.style.userSelect = 'none'
+    document.addEventListener('mousemove', onMouseMove)
+    document.addEventListener('mouseup', onMouseUp)
   }
 
   const onMouseMove = (e: MouseEvent) => {
@@ -391,22 +394,13 @@ export const dragmove = ({
   const onMouseUp = () => {
     isDragging = false
     document.body.style.userSelect = 'auto'
+    document.removeEventListener('mousemove', onMouseMove)
+    document.removeEventListener('mouseup', onMouseUp)
   }
 
   el.addEventListener('mousedown', onMouseDown)
-  document.addEventListener('mousemove', onMouseMove)
-  document.addEventListener('mouseup', onMouseUp)
-  // 解决有些时候,在鼠标松开的时候,元素仍然可以拖动;
-  document.ondragstart = function (ev) {
-    ev.preventDefault()
-  }
-  document.ondragend = function (ev) {
-    ev.preventDefault()
-  }
 
   return () => {
     el.removeEventListener('mousedown', onMouseDown)
-    document.removeEventListener('mousemove', onMouseMove)
-    document.removeEventListener('mouseup', onMouseUp)
   }
 }

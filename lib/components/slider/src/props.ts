@@ -6,6 +6,13 @@ export type SliderOptions = {
   label: string
   value: string | number
 }
+export const sliderModel = {
+  modelValue: {
+    type: [Number, undefined] as PropType<number | undefined>,
+    default: '',
+    description: '滑块的绑定值'
+  }
+}
 
 export const sliderProps = {
   size: {
@@ -83,6 +90,11 @@ export const sliderProps = {
       }
     ],
     description: '步进器配置'
+  },
+  formatTooltip: {
+    type: Function as PropType<(value: number) => string>,
+    default: (value: number) => value.toString(),
+    description: '格式化 tooltip 内容'
   }
 }
 

@@ -7,6 +7,14 @@ export type SliderRangeOptions = {
   value: string | number
 }
 
+export const sliderRangeModel = {
+  modelValue: {
+    type: Array as PropType<number[] | undefined>,
+    default: undefined,
+    description: '滑块范围的绑定值'
+  }
+}
+
 export const sliderRangeProps = {
   size: {
     type: String as PropType<LewSize>,
@@ -83,6 +91,11 @@ export const sliderRangeProps = {
       }
     ],
     description: '步进器配置'
+  },
+  formatTooltip: {
+    type: Function as PropType<(value: number) => string>,
+    default: (value: number) => value.toString(),
+    description: '格式化 tooltip 内容'
   }
 }
 

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-let v = ref(50)
+let v = ref([25, 75])
 </script>
 
 <template>
   <lew-flex direction="y" x="start">
-    <lew-slider
+    <lew-slider-range
       style="width: 500px"
       v-model="v"
       size="small"
@@ -23,7 +23,7 @@ let v = ref(50)
         }
       ]" />
 
-    <lew-slider
+    <lew-slider-range
       style="width: 500px"
       v-model="v"
       :options="[
@@ -41,7 +41,7 @@ let v = ref(50)
         }
       ]" />
 
-    <lew-slider
+    <lew-slider-range
       style="width: 500px"
       v-model="v"
       size="large"

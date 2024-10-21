@@ -5,7 +5,13 @@ import { dragmove } from 'lew-ui/utils'
 const props = defineProps(sliderRangeProps)
 
 // @ts-ignore
-const modelValue: Ref<number[]> = defineModel() // 修改为数组以支持范围
+const modelValue: Ref<number[] | undefined> = defineModel('modelValue', {
+  get(val) {
+    if (val) return val
+    return [getMin.value, getMax.value] // 初始值设置为可选范围内的最小值和最大值
+  }
+})
+// 修改为数组以支持范围
 const dotRef1 = ref<HTMLElement | null>(null) // 左侧滑块
 const dotRef2 = ref<HTMLElement | null>(null) // 右侧滑块
 const trackRef = ref<HTMLElement | null>(null)
@@ -59,25 +65,27 @@ const calculateValue = (position: number) => {
 
 // 根据当前值计算最近的刻度位置
 const calculateNearestStep = (value: number) => {
-  const trackWidth = trackRef.value?.clientWidth || 0
-  const stepSize =
-    (trackWidth / (Number(getTrackMax.value) - Number(getTrackMin.value))) *
-    Number(props.step)
   const steps = Math.round(
     (value - Number(getTrackMin.value)) / Number(props.step)
   )
-  return steps * stepSize
+  return (
+    ((steps * Number(props.step) +
+      Number(getTrackMin.value) -
+      Number(getTrackMin.value)) /
+      (Number(getTrackMax.value) - Number(getTrackMin.value))) *
+    100
+  )
 }
 
 const setDotByValue = (value: number, isLeft: boolean) => {
   if (isLeft) {
     if (!dotRef1.value) return
-    const nearestStep = calculateNearestStep(value)
-    dotRef1.value.style.left = `${nearestStep}px`
+    const nearestStepPercentage = calculateNearestStep(value)
+    dotRef1.value.style.left = `${nearestStepPercentage}%`
   } else {
     if (!dotRef2.value) return
-    const nearestStep = calculateNearestStep(value)
-    dotRef2.value.style.left = `${nearestStep}px`
+    const nearestStepPercentage = calculateNearestStep(value)
+    dotRef2.value.style.left = `${nearestStepPercentage}%`
   }
 }
 
@@ -94,11 +102,16 @@ const init = () => {
       parentEl,
       direction: 'horizontal',
       step: () => Number(step),
-      max: () => Math.min(getMax.value, modelValue.value[1]), // 动态最大值
+      max: () =>
+        Math.min(
+          getMax.value,
+          modelValue.value ? modelValue.value[1] : getMax.value
+        ), // 动态最大值
       min: () => getMin.value,
       trackMax: () => getTrackMax.value,
       trackMin: () => getTrackMin.value,
       callback: (e: any) => {
+        modelValue.value = modelValue.value || [0, 0]
         modelValue.value[0] = calculateValue(e.x)
       }
     })
@@ -108,16 +121,21 @@ const init = () => {
       direction: 'horizontal',
       step: () => Number(step),
       max: () => getMax.value,
-      min: () => Math.max(getMin.value, modelValue.value[0]), // 动态最小值
+      min: () =>
+        Math.max(
+          getMin.value,
+          modelValue.value ? modelValue.value[0] : getMin.value
+        ), // 动态最小值
       trackMax: () => getTrackMax.value,
       trackMin: () => getTrackMin.value,
       callback: (e: any) => {
+        modelValue.value = modelValue.value || [0, 0]
         modelValue.value[1] = calculateValue(e.x)
       }
     })
   }
-  setDotByValue(modelValue.value[0], true)
-  setDotByValue(modelValue.value[1], false)
+  setDotByValue(modelValue.value ? modelValue.value[0] : 0, true)
+  setDotByValue(modelValue.value ? modelValue.value[1] : 0, false)
 }
 
 // 监听 max、min、step、readonly、disabled 的变化，重新初始化
@@ -143,10 +161,16 @@ onUnmounted(() => {
 })
 
 // 监听 modelValue 的变化，实时更新 dot 的位置
-watch(modelValue, (newValue) => {
-  setDotByValue(newValue[0], true)
-  setDotByValue(newValue[1], false)
-})
+watch(
+  modelValue,
+  (newValue) => {
+    setDotByValue(newValue ? newValue[0] : 0, true)
+    setDotByValue(newValue ? newValue[1] : 0, false)
+  },
+  {
+    deep: true
+  }
+)
 
 const getStyle = computed(() => {
   const { size } = props
@@ -227,8 +251,8 @@ const getStyle = computed(() => {
         <div
           class="lew-slider-track-line-selected"
           :style="{
-            width: `${Math.max(0, Math.min(100, ((modelValue[1] - modelValue[0]) / (getTrackMax - getTrackMin)) * 100))}%`,
-            left: `${getMarkPosition(modelValue[0])}%`
+            width: `${Math.max(0, Math.min(100, (((modelValue?.[1] ?? 0) - (modelValue?.[0] ?? 0)) / (getTrackMax - getTrackMin)) * 100))}%`,
+            left: `${getMarkPosition(modelValue?.[0] ?? 0)}%`
           }"
         ></div>
 
@@ -238,8 +262,8 @@ const getStyle = computed(() => {
           class="lew-slider-track-step-mark"
           :class="{
             'lew-slider-track-step-mark-selected':
-              Number(item.value) <= Number(modelValue[1]) &&
-              Number(item.value) >= Number(modelValue[0])
+              Number(item.value) <= Number(modelValue?.[1] ?? 0) &&
+              Number(item.value) >= Number(modelValue?.[0] ?? 0)
           }"
           :style="{
             left: `${getMarkPosition(item.value)}%`
@@ -268,28 +292,28 @@ const getStyle = computed(() => {
       <div
         ref="dotRef1"
         v-tooltip="{
-          content: modelValue[0],
+          content: formatTooltip(modelValue?.[0] ?? 0),
           placement: 'top',
           trigger: 'mouseenter',
           delay: [0, 1000],
           key: dotX
         }"
         :style="{
-          opacity: modelValue[0] || modelValue[0] === 0 ? '1' : '0'
+          opacity: modelValue?.[0] !== undefined ? '1' : '0'
         }"
         class="lew-slider-track-dot"
       ></div>
       <div
         ref="dotRef2"
         v-tooltip="{
-          content: modelValue[1],
+          content: formatTooltip(modelValue?.[1] ?? 0),
           placement: 'top',
           trigger: 'mouseenter',
           delay: [0, 1000],
           key: dotX
         }"
         :style="{
-          opacity: modelValue[1] || modelValue[1] === 0 ? '1' : '0'
+          opacity: modelValue?.[1] !== undefined ? '1' : '0'
         }"
         class="lew-slider-track-dot"
       ></div>

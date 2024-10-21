@@ -20,7 +20,8 @@ import {
   LewUpload,
   LewInputNumber,
   LewTooltip,
-  LewSlider
+  LewSlider,
+  LewSliderRange
 } from 'lew-ui'
 import { debounce, cloneDeep, isString, merge } from 'lodash-es'
 import * as Yup from 'yup'
@@ -43,7 +44,8 @@ const asMap: Record<string, any> = {
   button: LewButton,
   upload: LewUpload,
   'input-number': LewInputNumber,
-  slider: LewSlider
+  slider: LewSlider,
+  'slider-range': LewSliderRange
 }
 // 获取app
 const app = getCurrentInstance()?.appContext.app

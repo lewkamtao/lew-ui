@@ -3,9 +3,15 @@ import { sliderProps } from './props'
 import { dragmove } from 'lew-ui/utils'
 
 const props = defineProps(sliderProps)
+const emit = defineEmits(['change'])
 
 // @ts-ignore
-const modelValue: Ref<number> = defineModel()
+const modelValue: Ref<number> = defineModel('modelValue', {
+  get(val) {
+    if (val !== undefined) return val
+    return getMin.value // 初始值设置为最小值
+  }
+})
 const dotRef = ref<HTMLElement | null>(null)
 const trackRef = ref<HTMLElement | null>(null)
 const dotX = ref(0)
@@ -79,19 +85,17 @@ const setDot = (e: MouseEvent) => {
     // 设置点的位置
     dotRef.value.style.left = `${nearestStep}px`
     modelValue.value = _modelValue
+    emit('change', _modelValue)
   }
 }
 
-// 根据当前值计算最近的刻度位置
+// 根据当前值计算最近的刻度位置的百分比
 const calculateNearestStep = (value: number) => {
-  const trackWidth = trackRef.value?.clientWidth || 0
-  const stepSize =
-    (trackWidth / (Number(getTrackMax.value) - Number(getTrackMin.value))) *
-    Number(props.step)
+  const range = Number(getTrackMax.value) - Number(getTrackMin.value)
   const steps = Math.round(
     (value - Number(getTrackMin.value)) / Number(props.step)
   )
-  return steps * stepSize
+  return ((steps * Number(props.step)) / range) * 100
 }
 
 const setDotByClick = (value: number) => {
@@ -99,13 +103,14 @@ const setDotByClick = (value: number) => {
   if (value >= getMin.value && value <= getMax.value) {
     modelValue.value = value
     setDotByValue(value)
+    emit('change', value)
   }
 }
 
 const setDotByValue = (value: number) => {
   if (!dotRef.value) return
   const nearestStep = calculateNearestStep(value)
-  dotRef.value.style.left = `${nearestStep}px`
+  dotRef.value.style.left = `${nearestStep}%`
 }
 
 let _dragmove = () => {}
@@ -125,7 +130,9 @@ const init = () => {
       trackMax: () => getTrackMax.value,
       trackMin: () => getTrackMin.value,
       callback: (e: any) => {
-        modelValue.value = calculateValue(e.x)
+        const newValue = calculateValue(e.x)
+        modelValue.value = newValue
+        emit('change', newValue)
       }
     })
   }
@@ -276,7 +283,7 @@ const getStyle = computed(() => {
         @click.stop
         ref="dotRef"
         v-tooltip="{
-          content: modelValue,
+          content: formatTooltip(modelValue),
           placement: 'top',
           trigger: 'mouseenter',
           delay: [0, 1000],

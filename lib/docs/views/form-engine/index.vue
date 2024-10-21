@@ -413,8 +413,10 @@ const addComponent = (item: any) => {
               </lew-flex>
               <set-form
                 v-if="
-                  options[options.findIndex((e: any) => e.id === activeId)]
-                    .schema.length > 0
+                  (
+                    options[options.findIndex((e: any) => e.id === activeId)]
+                      ?.schema || []
+                  ).length > 0
                 "
                 :key="activeId"
                 v-model="

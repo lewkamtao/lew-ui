@@ -273,6 +273,15 @@ export const componentsMenusSchema = [
     }
   },
   {
+    label: '范围滑块',
+    fieldType: [],
+    as: 'slider-range',
+    props: {
+      showCount: true,
+      maxLength: 30
+    }
+  },
+  {
     label: '占位盒子',
     as: ''
   }

@@ -117,7 +117,7 @@ const clear = () => {
           type="light"
           style="max-width: 100%"
           :size="size"
-          :closable="!readonly"
+          :closable="!readonly && !disabled"
           @close="delTag(index)"
           >{{ item }}
         </lew-tag>
@@ -136,7 +136,9 @@ const clear = () => {
 
       <transition name="lew-form-icon-ani">
         <Icon
-          v-if="clearable && (modelValue || []).length > 0 && !readonly"
+          v-if="
+            clearable && (modelValue || []).length > 0 && !readonly && !disabled
+          "
           class="lew-form-icon-close"
           :class="{
             'lew-form-icon-close-focus': isFocus

@@ -195,7 +195,12 @@ const options: MenuOptions[] = [
         tagText: 'Dev',
         tagColor: 'blue'
       },
-
+      {
+        label: 'SliderRange',
+        value: '/SliderRange',
+        tagText: 'Dev',
+        tagColor: 'blue'
+      },
       {
         label: 'Upload',
         value: '/Upload'

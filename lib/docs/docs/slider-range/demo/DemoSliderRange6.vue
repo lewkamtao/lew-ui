@@ -1,13 +1,14 @@
 <script setup lang="ts">
-let v = ref(0)
+let v = ref([-10, 40])
 </script>
 
 <template>
-  <lew-slider
+  <lew-slider-range
     style="width: 700px"
     v-model="v"
     max="100"
     min="-30"
+    range
     :options="[
       {
         label: '极冷',
