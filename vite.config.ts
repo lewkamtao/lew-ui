@@ -90,7 +90,7 @@ export default defineConfig(({ mode }) => {
       ...commonPlugins,
       ...libPlugins,
       visualizer({
-        open: true,
+        open: false,
         filename: 'stats.html',
         gzipSize: true,
         brotliSize: true
