@@ -21,8 +21,8 @@ const modalId = `lew-modal-${getUniqueId()}`
 
 onClickOutside(modalBodyRef, (e) => {
   if (visible.value && props.closeOnClickOverlay) {
-    const { className } = e?.target as Element
-    if (isString(className) && className?.indexOf(modalId) >= 0) {
+    const { parentElement } = e?.target as Element
+    if (parentElement?.id === modalId) {
       visible.value = false
     }
   }
@@ -51,10 +51,26 @@ const cancel = () => {
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
+    if (!visible.value || !v) {
+      return
+    }
+
     const dialogEl = document.getElementById('lew-dialog')
+    const modalEl = document.getElementById(modalId)
     const hasDialog = dialogEl && dialogEl.children.length > 0
-    // 且 dialogEl 不为空
-    if (v && visible.value && !hasDialog) {
+
+    const isOpenModal = Array.from(modalEl?.parentElement?.childNodes ?? [])
+      .filter((e): e is Element => e instanceof Element)
+      .filter((e) => e.children.length > 0)
+
+    const topModal =
+      isOpenModal[isOpenModal.length - 1]?.id === modalId && modalEl
+
+    // 判断 html 元素的 className 是否包含 'with-fancybox'
+    const hasFancybox =
+      document.documentElement.classList.contains('with-fancybox')
+
+    if (!hasDialog && topModal && !hasFancybox) {
       visible.value = false
     }
   })
@@ -63,17 +79,12 @@ if (props.closeByEsc) {
 
 <template>
   <teleport to="#lew-modal">
-    <div class="lew-modal-container">
+    <div class="lew-modal-container" :id="modalId">
       <transition name="lew-modal-mask">
         <div :style="{ zIndex }" v-if="visible" class="lew-modal-mask"></div>
       </transition>
       <transition name="lew-modal">
-        <div
-          v-if="visible"
-          :style="{ zIndex }"
-          class="lew-modal"
-          :class="modalId"
-        >
+        <div v-if="visible" :style="{ zIndex }" class="lew-modal">
           <div ref="modalBodyRef" :style="getModalStyle" class="lew-modal-body">
             <div v-if="$slots.header" class="lew-modal-header-slot">
               <slot name="header"></slot>

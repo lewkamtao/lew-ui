@@ -25,23 +25,5 @@ export default [
       align: 'center'
     },
     field: 'step'
-  },
-  {
-    label: '样式类型',
-    as: 'tabs',
-    field: 'type',
-    props: {
-      itemWidth: '50px',
-      options: [
-        {
-          label: '块状',
-          value: 'block '
-        },
-        {
-          label: '线形',
-          value: 'line'
-        }
-      ]
-    }
   }
 ]

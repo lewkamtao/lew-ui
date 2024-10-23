@@ -10,6 +10,7 @@ const visible2 = ref(false)
   <lew-modal
     v-model:visible="visible"
     closeOnClickOverlay
+    closeByEsc
     width="350px"
     title="About Lew-UI"
     @ok="visible = false"
@@ -32,6 +33,7 @@ const visible2 = ref(false)
       <lew-modal
         v-model:visible="visible2"
         closeOnClickOverlay
+        closeByEsc
         width="350px"
         title="About Lew-UI"
         @ok="visible2 = false"

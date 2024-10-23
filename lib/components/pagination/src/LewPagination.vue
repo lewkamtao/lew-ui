@@ -128,6 +128,34 @@ const getPaginationClassName = computed(() => {
     size
   })
 })
+
+const getSelectWidth = computed(() => {
+  const { size } = props
+  switch (size) {
+    case 'small':
+      return '100px'
+    case 'medium':
+      return '120px'
+    case 'large':
+      return '140px'
+    default:
+      return '120px'
+  }
+})
+
+const getIconSize = computed(() => {
+  const { size } = props
+  switch (size) {
+    case 'small':
+      return 16
+    case 'medium':
+      return 18
+    case 'large':
+      return 20
+    default:
+      return 18
+  }
+})
 </script>
 
 <template>
@@ -137,11 +165,11 @@ const getPaginationClassName = computed(() => {
       <lew-flex class="lew-pagination-page-box" gap="5">
         <lew-button
           @click="changePage(currentPage - 1)"
-          type="light"
+          type="text"
           singleIcon
           :size="size"
         >
-          <Icon type="chevron-left" :size="18" />
+          <Icon type="chevron-left" :size="getIconSize" />
         </lew-button>
         <div
           v-if="showOne"
@@ -152,10 +180,10 @@ const getPaginationClassName = computed(() => {
         </div>
         <div
           v-if="startEllipsis"
-          class="lew-pagination-control-btn"
+          class="lew-pagination-page-btn"
           @click="changePage(visiblePages[0] - 1)"
         >
-          <Icon :size="14" type="more-horizontal" />
+          <Icon :size="getIconSize" type="more-horizontal" />
         </div>
         <div
           v-else-if="
@@ -180,10 +208,10 @@ const getPaginationClassName = computed(() => {
         </div>
         <div
           v-if="endEllipsis"
-          class="lew-pagination-control-btn"
+          class="lew-pagination-page-btn"
           @click="changePage(visiblePages[visiblePages.length - 1] + 1)"
         >
-          <Icon :size="14" type="more-horizontal" />
+          <Icon :size="getIconSize" type="more-horizontal" />
         </div>
         <div
           v-else-if="
@@ -203,17 +231,19 @@ const getPaginationClassName = computed(() => {
           {{ totalPages }}
         </div>
         <lew-button
-          type="light"
           singleIcon
+          type="text"
           :size="size"
           @click="changePage(currentPage + 1)"
         >
-          <Icon type="chevron-right" :size="18" />
+          <Icon type="chevron-right" :size="getIconSize" />
         </lew-button>
       </lew-flex>
       <lew-select
         v-model="state.pageSize"
-        style="width: 100px"
+        :style="{
+          width: getSelectWidth
+        }"
         :size="size"
         :showCheckIcon="false"
         :options="pageSizeOptions"
@@ -232,7 +262,7 @@ const getPaginationClassName = computed(() => {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .lew-pagination {
   display: inline-block;
   box-sizing: border-box;
@@ -279,10 +309,6 @@ const getPaginationClassName = computed(() => {
       background-color: var(--lew-color-primary);
       color: var(--lew-color-white-text);
     }
-
-    .lew-pagination-control-btn {
-      padding: 0px;
-    }
   }
 
   .lew-pagination-page-label {
@@ -291,23 +317,50 @@ const getPaginationClassName = computed(() => {
   }
 }
 .lew-pagination-size-small {
+  .lew-pagination-page-box {
+    :deep() {
+      .lew-button {
+        height: calc(var(--lew-form-item-height-small) - 4px);
+        width: calc(var(--lew-form-item-height-small) - 4px);
+      }
+    }
+  }
   .lew-pagination-page-btn {
-    height: calc(var(--lew-form-item-height-small) - 2px);
-    min-width: calc(var(--lew-form-item-height-small) - 2px);
+    height: calc(var(--lew-form-item-height-small) - 4px);
+    min-width: calc(var(--lew-form-item-height-small) - 4px);
+    font-size: var(--lew-form-font-size-small);
     padding: 0px 4px;
   }
 }
 .lew-pagination-size-medium {
+  .lew-pagination-page-box {
+    :deep() {
+      .lew-button {
+        height: calc(var(--lew-form-item-height-medium) - 4px);
+        width: calc(var(--lew-form-item-height-medium) - 4px);
+      }
+    }
+  }
   .lew-pagination-page-btn {
-    height: calc(var(--lew-form-item-height-medium) - 2px);
-    min-width: calc(var(--lew-form-item-height-medium) - 2px);
+    height: calc(var(--lew-form-item-height-medium) - 4px);
+    min-width: calc(var(--lew-form-item-height-medium) - 4px);
+    font-size: var(--lew-form-font-size-medium);
     padding: 0px 6px;
   }
 }
 .lew-pagination-size-large {
+  .lew-pagination-page-box {
+    :deep() {
+      .lew-button {
+        height: calc(var(--lew-form-item-height-large) - 4px);
+        width: calc(var(--lew-form-item-height-large) - 4px);
+      }
+    }
+  }
   .lew-pagination-page-btn {
-    height: calc(var(--lew-form-item-height-large) - 2px);
-    min-width: calc(var(--lew-form-item-height-large) - 2px);
+    height: calc(var(--lew-form-item-height-large) - 4px);
+    min-width: calc(var(--lew-form-item-height-large) - 4px);
+    font-size: var(--lew-form-font-size-large);
     padding: 0px 8px;
   }
 }

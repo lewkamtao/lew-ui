@@ -49,7 +49,7 @@ export const LewTooltip = {
           if (content) {
             el.instance?.show()
           } else {
-            el.instance?.hide()
+            el.instance?.disable()
           }
         }
       },

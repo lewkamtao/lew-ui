@@ -696,13 +696,18 @@ onUnmounted(() => {
     position: relative;
     z-index: 9;
   }
-  .lew-table-scroll-line-left {
+  .lew-table-scroll-line {
     position: absolute;
-    left: 0px;
     top: 0px;
     height: 100%;
     z-index: 11;
-    width: 8px;
+    width: 5px;
+    transition: opacity 0.25s;
+  }
+
+  .lew-table-scroll-line-left {
+    @extend .lew-table-scroll-line;
+    left: 0px;
     background: linear-gradient(
       to right,
       rgba(0, 0, 0, 0.15),
@@ -711,16 +716,11 @@ onUnmounted(() => {
       rgba(0, 0, 0, 0.01),
       rgba(0, 0, 0, 0)
     );
-    transition: opacity 0.25s;
   }
 
   .lew-table-scroll-line-right {
-    position: absolute;
+    @extend .lew-table-scroll-line;
     right: 0px;
-    top: 0px;
-    height: 100%;
-    z-index: 11;
-    width: 8px;
     background: linear-gradient(
       to left,
       rgba(0, 0, 0, 0.15),
@@ -729,7 +729,6 @@ onUnmounted(() => {
       rgba(0, 0, 0, 0.01),
       rgba(0, 0, 0, 0)
     );
-    transition: opacity 0.25s;
   }
   .lew-hide-line-left,
   .lew-hide-line-right {

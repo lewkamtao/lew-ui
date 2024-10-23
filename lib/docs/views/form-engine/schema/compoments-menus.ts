@@ -14,6 +14,7 @@ import datePicker from './components/date-picker'
 import datePickerRange from './components/date-range-picker'
 import inputTag from './components/input-tag'
 import slider from './components/slider'
+import sliderRange from './components/slider-range'
 
 export const componentsMenusSchema = [
   {
@@ -276,9 +277,19 @@ export const componentsMenusSchema = [
     label: '范围滑块',
     fieldType: [],
     as: 'slider-range',
+    schema: sliderRange,
     props: {
-      showCount: true,
-      maxLength: 30
+      step: 1,
+      options: [
+        {
+          label: '0',
+          value: 0
+        },
+        {
+          label: '100',
+          value: 100
+        }
+      ]
     }
   },
   {
