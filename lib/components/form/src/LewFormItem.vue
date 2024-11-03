@@ -25,7 +25,13 @@ import {
 } from 'lew-ui'
 import { debounce, cloneDeep, isString, merge } from 'lodash-es'
 import * as Yup from 'yup'
-import { formItemProps, requiredIconSizeMap, formTypeAsMap } from './props'
+import {
+  formItemProps,
+  requiredIconSizeMap,
+  formTypeAsMap,
+  tipsIconSizeMap
+} from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const asMap: Record<string, any> = {
   input: LewInput,
@@ -172,19 +178,22 @@ defineExpose({ validate, setError, curRule })
       :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''"
       class="lew-label-box-wrapper"
     >
-      <div
-        class="lew-label-box"
-        v-tooltip="{
-          content: tips
-        }"
-        v-if="as"
-        :class="{ 'lew-label-tips': tips }"
-      >
+      <div class="lew-label-box" v-if="as">
         <RequiredIcon
           :size="requiredIconSizeMap[size]"
           v-if="curRequired && label"
         />
         {{ label }}
+        <Icon
+          style="margin-top: 1px"
+          v-if="tips"
+          v-tooltip="{
+            content: tips
+          }"
+          :size="tipsIconSizeMap[size]"
+          type="normal"
+          color="black"
+        ></Icon>
       </div>
     </div>
     <div
@@ -233,7 +242,7 @@ defineExpose({ validate, setError, curRule })
 .lew-form-item-size-small {
   .lew-label-box-wrapper {
     font-size: var(--lew-form-font-size-small);
-    margin-top: 6px;
+    margin-top: 7px;
   }
 
   .lew-form-item-main {
@@ -255,7 +264,7 @@ defineExpose({ validate, setError, curRule })
 .lew-form-item-size-large {
   .lew-label-box-wrapper {
     font-size: var(--lew-form-font-size-large);
-    margin-top: 10px;
+    margin-top: 9px;
   }
 
   .lew-form-item-main {

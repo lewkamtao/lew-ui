@@ -7,7 +7,6 @@ import { Menu } from 'lucide-vue-next'
 
 const isShowSider = ref(false)
 const route = useRoute()
-const mainRef = ref()
 
 onMounted(() => {
   const isInfo = localStorage.getItem('isInfo')
@@ -230,6 +229,10 @@ const options: MenuOptions[] = [
       {
         label: 'Collapse',
         value: '/Collapse'
+      },
+      {
+        label: 'Desc',
+        value: '/Desc'
       }
     ]
   },
