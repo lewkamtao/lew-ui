@@ -62,7 +62,7 @@ const showTextAndEmpty = () => {
       <div class="lew-label-box" :style="{ 'justify-content': x }">
         {{ label }}
         <Icon
-          style="margin-top: 1px"
+          class="lew-label-tips-icon"
           v-if="tips"
           v-tooltip="{
             content: tips
@@ -101,6 +101,10 @@ const showTextAndEmpty = () => {
       color: var(--lew-color-gray);
       width: 100%;
       height: 100%;
+      .lew-label-tips-icon {
+        cursor: pointer;
+        margin-top: 1px;
+      }
     }
   }
   .lew-form-item-main {
