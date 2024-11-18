@@ -1,35 +1,35 @@
 <script lang="ts" setup>
 import {
-  CircleCheck,
-  Info,
-  TriangleAlert,
-  CircleAlert,
+  ArrowDown,
   BellRing,
-  X,
-  Copy,
-  ChevronUp,
+  Calendar,
+  Check,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   ChevronsLeft,
   ChevronsRight,
-  Loader,
-  Check,
-  Calendar,
-  Minimize2,
-  Maximize2,
-  Trash,
+  ChevronsUpDown,
+  CircleAlert,
+  CircleCheck,
   ClockArrowUp,
-  FileCheck,
-  UploadCloud,
-  Minus,
-  Image,
-  Plus,
-  MoreHorizontal,
-  RotateCw,
+  Copy,
   Edit2,
-  ArrowDown,
-  ChevronsUpDown
+  FileCheck,
+  Image,
+  Info,
+  Loader,
+  Maximize2,
+  Minimize2,
+  Minus,
+  MoreHorizontal,
+  Plus,
+  RotateCw,
+  Trash,
+  TriangleAlert,
+  UploadCloud,
+  X
 } from 'lucide-vue-next'
 import { getColorType, iconColorType } from './index'
 
@@ -63,42 +63,43 @@ const props = defineProps({
     default: 1
   }
 })
+
 const iconMap: any = {
-  success: CircleCheck,
-  normal: Info,
-  warning: TriangleAlert,
-  error: CircleAlert,
-  info: BellRing,
-  tips: Info,
-  close: X,
-  copy: Copy,
-  loader: Loader,
-  loading: Loader,
-  check: Check,
-  calendar: Calendar,
-  'chevron-up': ChevronUp,
+  'arrow-down': ArrowDown,
   'chevron-down': ChevronDown,
   'chevron-left': ChevronLeft,
   'chevron-right': ChevronRight,
+  'chevron-up': ChevronUp,
   'chevrons-left': ChevronsLeft,
   'chevrons-right': ChevronsRight,
-  trash: Trash,
-  'minimize-2': Minimize2,
-  'maximize-2': Maximize2,
-  uploading: Loader,
-  pending: ClockArrowUp,
-  complete: FileCheck,
-  wrong_type: CircleAlert,
-  wrong_size: CircleAlert,
-  'upload-cloud': UploadCloud,
-  minus: Minus,
-  image: Image,
-  plus: Plus,
-  'rotate-cw': RotateCw,
-  'more-horizontal': MoreHorizontal,
+  'chevrons-up-down': ChevronsUpDown,
   'edit-2': Edit2,
-  'arrow-down': ArrowDown,
-  'chevrons-up-down': ChevronsUpDown
+  'maximize-2': Maximize2,
+  'minimize-2': Minimize2,
+  'more-horizontal': MoreHorizontal,
+  'rotate-cw': RotateCw,
+  'upload-cloud': UploadCloud,
+  calendar: Calendar,
+  check: Check,
+  close: X,
+  complete: FileCheck,
+  copy: Copy,
+  error: CircleAlert,
+  image: Image,
+  info: BellRing,
+  loader: Loader,
+  loading: Loader,
+  minus: Minus,
+  normal: Info,
+  pending: ClockArrowUp,
+  plus: Plus,
+  success: CircleCheck,
+  tips: Info,
+  trash: Trash,
+  uploading: Loader,
+  warning: TriangleAlert,
+  wrong_size: CircleAlert,
+  wrong_type: CircleAlert
 }
 </script>
 
@@ -119,6 +120,7 @@ const iconMap: any = {
     :is="iconMap[props.type]"
   ></component>
 </template>
+
 <style lang="scss" scoped>
 @keyframes spin {
   from {
