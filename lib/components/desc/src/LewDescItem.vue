@@ -15,7 +15,7 @@ if (app && !app.directive('tooltip')) {
 
 const getDescItemClassNames = computed(() => {
   const { direction, size } = cloneDeep(props)
-  return object2class('lew-form-item', { direction, size })
+  return object2class('lew-desc-item', { direction, size })
 })
 
 const descItemRef = ref()
@@ -48,7 +48,7 @@ const showTextAndEmpty = () => {
 
 <template>
   <div
-    class="lew-form-item"
+    class="lew-desc-item"
     ref="descItemRef"
     :class="getDescItemClassNames"
     :style="{
@@ -73,7 +73,7 @@ const showTextAndEmpty = () => {
       </div>
     </div>
     <div
-      class="lew-form-item-main"
+      class="lew-desc-item-main"
       :style="{
         width:
           direction === 'x'
@@ -88,7 +88,7 @@ const showTextAndEmpty = () => {
 </template>
 
 <style lang="scss" scoped>
-.lew-form-item {
+.lew-desc-item {
   position: relative;
   transition: opacity 0.25s;
   .lew-label-box-wrapper {
@@ -107,37 +107,37 @@ const showTextAndEmpty = () => {
       }
     }
   }
-  .lew-form-item-main {
+  .lew-desc-item-main {
     height: 100%;
   }
 }
 
-.lew-form-item-size-small {
+.lew-desc-item-size-small {
   min-height: var(--lew-form-item-height-small);
   .lew-label-box-wrapper {
-    font-size: var(--lew-desc-font-size-small);
+    font-size: var(--lew-form-font-size-small);
   }
 }
 
-.lew-form-item-size-medium {
+.lew-desc-item-size-medium {
   min-height: var(--lew-form-item-height-medium);
   .lew-label-box-wrapper {
-    font-size: var(--lew-desc-font-size-medium);
+    font-size: var(--lew-form-font-size-medium);
   }
 }
 
-.lew-form-item-size-large {
+.lew-desc-item-size-large {
   min-height: var(--lew-form-item-height-large);
   .lew-label-box-wrapper {
-    font-size: var(--lew-desc-font-size-large);
+    font-size: var(--lew-form-font-size-large);
   }
 }
-.lew-form-item-main {
+.lew-desc-item-main {
   display: flex;
   align-items: center;
 }
 
-.lew-form-item-direction-x {
+.lew-desc-item-direction-x {
   display: flex;
   align-items: flex-start;
   gap: 10px;
@@ -148,12 +148,12 @@ const showTextAndEmpty = () => {
     flex-shrink: 0;
     white-space: nowrap;
   }
-  .lew-form-item-main {
+  .lew-desc-item-main {
     flex: 1;
   }
 }
 
-.lew-form-item-direction-y {
+.lew-desc-item-direction-y {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -168,8 +168,8 @@ const showTextAndEmpty = () => {
     white-space: nowrap;
   }
 }
-.lew-form-item {
-  .lew-form-item-main {
+.lew-desc-item {
+  .lew-desc-item-main {
     position: relative;
   }
   .lew-error-message {
@@ -183,7 +183,7 @@ const showTextAndEmpty = () => {
   }
 }
 
-.lew-form-item-error {
+.lew-desc-item-error {
   --lew-desc-border-color-focus: var(--lew-color-error-dark);
   --lew-radio-border-color-hover: var(--lew-color-error);
   --lew-checkbox-border-color-hover: var(--lew-color-error);
@@ -207,10 +207,10 @@ const showTextAndEmpty = () => {
   opacity: 0;
 }
 
-.lew-form-item-readonly {
+.lew-desc-item-readonly {
   pointer-events: none;
 }
-.lew-form-item-disabled {
+.lew-desc-item-disabled {
   opacity: var(--lew-disabled-opacity);
   pointer-events: none;
   user-select: none;

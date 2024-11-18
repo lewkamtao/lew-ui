@@ -36,7 +36,7 @@ defineExpose({ open })
     title="预览表单"
   >
     <div class="preview-modal-content lew-scrollbar">
-      <lew-form ref="formRef" v-bind="bindOptions" />
+      <lew-desc ref="formRef" v-bind="bindOptions" />
     </div>
   </lew-modal>
 </template>
