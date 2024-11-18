@@ -20,8 +20,8 @@ const drawerId = `lew-drawer-${getUniqueId()}`
 
 onClickOutside(drawerBodyRef, (e) => {
   if (visible.value && props.closeOnClickOverlay) {
-    const { className } = e?.target as Element
-    if (isString(className) && className.indexOf(drawerId) >= 0) {
+    const { parentElement } = e?.target as Element
+    if (parentElement?.id === drawerId) {
       visible.value = false
     }
   }
@@ -37,7 +37,26 @@ const cancel = () => {
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
-    if (v && visible.value) {
+    if (!visible.value || !v) {
+      return
+    }
+
+    const dialogEl = document.getElementById('lew-dialog')
+    const drawerEl = document.getElementById(drawerId)
+    const hasDialog = dialogEl && dialogEl.children.length > 0
+
+    const isOpenDrawer = Array.from(drawerEl?.parentElement?.childNodes ?? [])
+      .filter((e): e is Element => e instanceof Element)
+      .filter((e) => e.children.length > 0)
+
+    const topDrawer =
+      isOpenDrawer[isOpenDrawer.length - 1]?.id === drawerId && drawerEl
+
+    // 判断 html 元素的 className 是否包含 'with-fancybox'
+    const hasFancybox =
+      document.documentElement.classList.contains('with-fancybox')
+
+    if (!hasDialog && topDrawer && !hasFancybox) {
       visible.value = false
     }
   })
@@ -71,14 +90,9 @@ const getStyle = (
 </script>
 <template>
   <teleport to="#lew-drawer">
-    <div class="lew-modal-container">
+    <div class="lew-modal-container" :id="drawerId">
       <transition name="lew-drawer-mask">
-        <div
-          :style="{ zIndex }"
-          v-if="visible"
-          class="lew-drawer-mask"
-          :class="drawerId"
-        ></div>
+        <div :style="{ zIndex }" v-if="visible" class="lew-drawer-mask"></div>
       </transition>
       <div
         ref="drawerBodyRef"
@@ -156,10 +170,12 @@ const getStyle = (
   display: flex;
   flex-direction: column;
 }
+
 .lew-drawer-body-slot {
   flex: 1;
   overflow: hidden;
 }
+
 .lew-drawer-header {
   position: relative;
   height: 50px;
@@ -171,9 +187,11 @@ const getStyle = (
     font-size: 16px;
     font-weight: bold;
   }
+
   .lew-drawer-icon-close {
     right: 15px;
   }
+
   .lew-drawer-icon-close:hover {
     background-color: var(--lew-bgcolor-5);
   }
@@ -222,6 +240,7 @@ const getStyle = (
 .lew-drawer-body-show {
   transform: translate(0, 0);
 }
+
 .lew-drawer-mask-enter-active,
 .lew-drawer-mask-leave-active {
   transition: all var(--lew-form-transition-ease);

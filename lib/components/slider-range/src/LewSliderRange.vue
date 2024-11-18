@@ -366,7 +366,7 @@ const getStyle = computed(() => {
       position: absolute;
       height: 100%;
       top: 0;
-      background-color: var(--lew-form-bgcolor-active);
+      background-color: var(--lew-form-bgcolor-hover);
     }
     .lew-slider-track-line-selected {
       position: absolute;

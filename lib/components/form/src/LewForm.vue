@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { object2class, any2px, formatFormByMap } from 'lew-ui/utils'
 import LewGetLabelWidth from './LewGetLabelWidth.vue'
-import { formProps, formTypeAsMap } from './props'
-import { cloneDeep, reduce, merge, isString } from 'lodash-es'
+import { formProps } from './props'
+import { cloneDeep } from 'lodash-es'
 import LewFormItem from './LewFormItem.vue'
 import * as Yup from 'yup'
 
