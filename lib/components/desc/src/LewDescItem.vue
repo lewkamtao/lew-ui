@@ -7,42 +7,43 @@ import { descItemProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { tipsIconSizeMap } from 'lew-ui/components/form/src/props'
 
-// 获取app
+// 获取app实例并注册tooltip指令
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
 
+const props = defineProps(descItemProps)
+const descItemRef = ref()
+
+// 计算class名称
 const getDescItemClassNames = computed(() => {
   const { direction, size } = cloneDeep(props)
   return object2class('lew-desc-item', { direction, size })
 })
 
-const descItemRef = ref()
+// 处理显示文本和空值
+const showTextAndEmpty = () => {
+  const text = props.dataSource[props.field]
+  if (text === null || text === undefined || text === '') {
+    return '--'
+  }
+  return isString(text) ? text : JSON.stringify(text)
+}
 
-const props = defineProps(descItemProps)
-
+// 渲染内容
 const renderItem = () => {
   if (props.customRender) {
-    const { value, label } = props
-    return props.customRender({ value, label })
+    const { field, label } = props
+    return props.customRender({ field, label, dataSource })
   }
   return props.type === 'text-trim'
     ? h(LewTextTrim, {
-        x: props.x as TextTrimAlignment,
+        x: props.valueX as TextTrimAlignment,
         style: 'width: 100%',
-        text: props.value
+        text: showTextAndEmpty()
       })
     : showTextAndEmpty()
-}
-
-const showTextAndEmpty = () => {
-  const text = props.value
-  if (text === null || text === undefined || text === '') {
-    return '--'
-  } else {
-    return isString(text) ? text : JSON.stringify(text)
-  }
 }
 </script>
 
@@ -59,7 +60,12 @@ const showTextAndEmpty = () => {
       :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''"
       class="lew-label-box-wrapper"
     >
-      <div class="lew-label-box" :style="{ 'justify-content': x }">
+      <div
+        class="lew-label-box"
+        :style="{
+          'justify-content': labelX === 'center' ? labelX : `flex-${labelX}`
+        }"
+      >
         {{ label }}
         <Icon
           class="lew-label-tips-icon"
@@ -79,64 +85,76 @@ const showTextAndEmpty = () => {
           direction === 'x'
             ? `calc(${descItemRef?.offsetWidth}px - ${any2px(labelWidth)} - 10px)`
             : '100%',
-        justifyContent: direction === 'x' && between ? 'flex-end' : 'flex-start'
+        justifyContent: valueX === 'center' ? valueX : `flex-${valueX}`
       }"
     >
-      {{ renderItem() }}
+      <renderItem />
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+// 基础样式
 .lew-desc-item {
   position: relative;
   transition: opacity 0.25s;
+
   .lew-label-box-wrapper {
     transition: all 0.25s;
     height: 100%;
+
     .lew-label-box {
       display: inline-flex;
-      align-items: center;
       gap: 5px;
       color: var(--lew-color-gray);
       width: 100%;
       height: 100%;
+
       .lew-label-tips-icon {
         cursor: pointer;
-        margin-top: 1px;
+        margin-top: 3px;
       }
     }
   }
+
   .lew-desc-item-main {
     height: 100%;
+	display: flex;
+    word-break: break-word;
+    position: relative;
+  }
+
+  .lew-error-message {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    font-size: 12px;
+    transition: all 0.1s;
+    transform: translateY(calc(100% + 2px));
+    color: var(--lew-color-error-dark);
   }
 }
 
+// 尺寸相关样式
 .lew-desc-item-size-small {
-  min-height: var(--lew-form-item-height-small);
   .lew-label-box-wrapper {
     font-size: var(--lew-form-font-size-small);
   }
 }
 
 .lew-desc-item-size-medium {
-  min-height: var(--lew-form-item-height-medium);
   .lew-label-box-wrapper {
     font-size: var(--lew-form-font-size-medium);
   }
 }
 
 .lew-desc-item-size-large {
-  min-height: var(--lew-form-item-height-large);
   .lew-label-box-wrapper {
     font-size: var(--lew-form-font-size-large);
   }
 }
-.lew-desc-item-main {
-  display: flex;
-  align-items: center;
-}
 
+// 布局方向相关样式
 .lew-desc-item-direction-x {
   display: flex;
   align-items: flex-start;
@@ -148,6 +166,7 @@ const showTextAndEmpty = () => {
     flex-shrink: 0;
     white-space: nowrap;
   }
+
   .lew-desc-item-main {
     flex: 1;
   }
@@ -168,21 +187,8 @@ const showTextAndEmpty = () => {
     white-space: nowrap;
   }
 }
-.lew-desc-item {
-  .lew-desc-item-main {
-    position: relative;
-  }
-  .lew-error-message {
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-    font-size: 12px;
-    transition: all 0.1s;
-    transform: translateY(calc(100% + 2px));
-    color: var(--lew-color-error-dark);
-  }
-}
 
+// 错误状态样式
 .lew-desc-item-error {
   --lew-desc-border-color-focus: var(--lew-color-error-dark);
   --lew-radio-border-color-hover: var(--lew-color-error);
@@ -196,6 +202,7 @@ const showTextAndEmpty = () => {
   --lew-desc-outline: 0px var(--lew-color-error-light) solid;
 }
 
+// 动画相关样式
 .lew-slide-fade-leave-active,
 .lew-slide-fade-enter-active {
   transition: all 0.15s ease;
@@ -207,9 +214,11 @@ const showTextAndEmpty = () => {
   opacity: 0;
 }
 
+// 状态相关样式
 .lew-desc-item-readonly {
   pointer-events: none;
 }
+
 .lew-desc-item-disabled {
   opacity: var(--lew-disabled-opacity);
   pointer-events: none;

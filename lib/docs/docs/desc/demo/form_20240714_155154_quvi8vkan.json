@@ -5,9 +5,10 @@
   "id": "form_20240810_42aeb6115",
   "options": [
     {
-      "label": "复选框",
+      "label": "复选框复选",
       "gridArea": "auto  / 1 / auto  / 2",
       "tips": "擦肩瓯绍啤酒就从",
+      "type": "text-trim",
       "field": "checkbox_1"
     },
     {

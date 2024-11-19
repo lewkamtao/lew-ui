@@ -47,7 +47,8 @@ watch(
     <lew-desc-item
       v-for="item in componentOptions"
       :key="item.field"
-      :value="values[item.field]"
+      :field="item.field"
+      :data-source="dataSource"
       v-bind="{
         direction,
         size,

@@ -252,7 +252,7 @@ const renderCell = ({
     ? h(LewTextTrim, {
         x: column.x as TextTrimAlignment,
         style: 'width: 100%',
-        text: row[column.field]
+        text: showTextAndEmpty(row[column.field])
       })
     : showTextAndEmpty(row[column.field])
 }

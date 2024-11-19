@@ -18,7 +18,7 @@ export const descProps = {
       return true
     }
   },
-  values: {
+  dataSource: {
     type: Object as PropType<Record<string, any>>,
     default: () => ({}),
     description: '表单项的值'
@@ -39,7 +39,7 @@ export const descProps = {
   },
   gap: {
     type: [String, Number],
-    default: 20,
+    default: 30,
     description: '子元素之间的间距（单位：像素）',
     validator(value: string | number): boolean {
       const numValue = typeof value === 'string' ? parseInt(value, 10) : value
@@ -125,17 +125,17 @@ export const descItemProps = {
   label: {
     type: String,
     default: '',
-    description: '表单项的标签文本'
+    description: '标签文本'
   },
-  value: {
-    type: [String, Number, Boolean, Array, Object],
+  field: {
+    type: String,
     default: '',
-    description: '表单项的值'
+    description: '字段'
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '单个表单项的尺寸，可覆盖表单整体设置',
+    description: '单项的尺寸，可覆盖表单整体设置',
     validator(value: LewSize): boolean {
       if (!['small', 'medium', 'large'].includes(value)) {
         console.warn(
@@ -208,16 +208,15 @@ export const descItemProps = {
     default: '',
     description: '表单项类型'
   },
-  x: {
+  labelX: {
     type: String as PropType<TextTrimAlignment>,
     default: 'end',
     description: 'label 对齐方式'
   },
-
-  between: {
-    type: Boolean,
-    default: false,
-    description: '水平排列时是否在表单项之间添加间隔'
+  valueX: {
+    type: String as PropType<TextTrimAlignment>,
+    default: 'start',
+    description: 'value 对齐方式'
   },
   gridArea: {
     type: String,
@@ -233,6 +232,11 @@ export const descItemProps = {
     type: String,
     default: '',
     description: '表单项的唯一标识符',
+    hidden: true
+  },
+  dataSource: {
+    type: Object,
+    default: {},
     hidden: true
   }
 }
