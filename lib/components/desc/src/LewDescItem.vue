@@ -26,7 +26,7 @@ const getDescItemClassNames = computed(() => {
 const showTextAndEmpty = () => {
   const text = props.dataSource[props.field]
   if (text === null || text === undefined || text === '') {
-    return '--'
+    return '-'
   }
   return isString(text) ? text : JSON.stringify(text)
 }
@@ -35,7 +35,7 @@ const showTextAndEmpty = () => {
 const renderItem = () => {
   if (props.customRender) {
     const { field, label } = props
-    return props.customRender({ field, label, dataSource })
+    return props.customRender({ field, label, dataSource: props.dataSource })
   }
   return props.type === 'text-trim'
     ? h(LewTextTrim, {
@@ -57,7 +57,7 @@ const renderItem = () => {
     }"
   >
     <div
-      :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''"
+      :style="direction === 'x' ? `width:${any2px(labelWidth)}` : 'width:100%'"
       class="lew-label-box-wrapper"
     >
       <div
@@ -119,7 +119,7 @@ const renderItem = () => {
 
   .lew-desc-item-main {
     height: 100%;
-	display: flex;
+    display: flex;
     word-break: break-word;
     position: relative;
   }

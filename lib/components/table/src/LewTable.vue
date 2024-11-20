@@ -259,7 +259,7 @@ const renderCell = ({
 
 const showTextAndEmpty = (text: any) => {
   if (text === null || text === undefined || text === '') {
-    return '--'
+    return '-'
   } else {
     return isString(text) ? text : JSON.stringify(text)
   }

@@ -37,6 +37,16 @@ export const descProps = {
       return true
     }
   },
+  labelX: {
+    type: String as PropType<TextTrimAlignment>,
+    default: 'start',
+    description: 'label 对齐方式'
+  },
+  valueX: {
+    type: String as PropType<TextTrimAlignment>,
+    default: 'start',
+    description: 'value 对齐方式'
+  },
   gap: {
     type: [String, Number],
     default: 30,
@@ -210,7 +220,7 @@ export const descItemProps = {
   },
   labelX: {
     type: String as PropType<TextTrimAlignment>,
-    default: 'end',
+    default: 'start',
     description: 'label 对齐方式'
   },
   valueX: {

@@ -132,6 +132,15 @@ watch(
     deep: true
   }
 )
+watch(
+  () => formGlobal.value,
+  () => {
+    refreshForm()
+  },
+  {
+    deep: true
+  }
+)
 
 const deleteItem = (item: any) => {
   LewDialog.error({

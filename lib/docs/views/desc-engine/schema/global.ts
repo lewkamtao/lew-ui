@@ -14,7 +14,7 @@ export const globalSchema = [
     }
   },
   {
-    label: '标签方向',
+    label: '方向',
     as: 'tabs',
     field: 'direction',
     componentWidth: 'auto',
@@ -23,6 +23,32 @@ export const globalSchema = [
       options: [
         { label: '水平', value: 'x' },
         { label: '垂直', value: 'y' }
+      ]
+    }
+  },
+  {
+    label: '标签对齐方式',
+    as: 'tabs',
+    field: 'labelX',
+    componentWidth: 'auto',
+    props: {
+      itemWidth: '50px',
+      options: [
+        { label: '左对齐', value: 'start' },
+        { label: '右对齐', value: 'end' }
+      ]
+    }
+  },
+  {
+    label: '值对齐方式',
+    as: 'tabs',
+    field: 'valueX',
+    componentWidth: 'auto',
+    props: {
+      itemWidth: '50px',
+      options: [
+        { label: '左对齐', value: 'start' },
+        { label: '右对齐', value: 'end' }
       ]
     }
   }

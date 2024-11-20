@@ -7,7 +7,7 @@ import { getUniqueId } from 'lew-ui/utils'
 import { downloadObjectAsFile } from 'lew-ui/docs/lib/utils'
 import { useDark } from '@vueuse/core'
 import SetForm from '../form-engine/components/SetForm.vue'
-import { globalSchema, fieldsSchema } from './schema'
+import { baseSchema, globalSchema } from './schema'
 import LewGetLabelWidth from 'lew-ui/components/form/src/LewGetLabelWidth.vue'
 import { debounce, cloneDeep, has } from 'lodash-es'
 import { LewSize } from 'lew-ui/types'
@@ -34,6 +34,8 @@ const autoLabelWidth = ref(0)
 const formGlobal = ref({
   direction: 'x',
   columns: 1,
+  labelX: 'start',
+  valueX: 'start',
   size: 'medium'
 })
 
@@ -110,6 +112,16 @@ const getModel = () => {
 
 watch(
   () => options.value,
+  () => {
+    refreshForm()
+  },
+  {
+    deep: true
+  }
+)
+
+watch(
+  () => formGlobal.value,
   () => {
     refreshForm()
   },
@@ -291,8 +303,7 @@ const addField = () => {
               />
               <lew-desc-item
                 v-bind="{
-                  size: formGlobal.size,
-                  direction: formGlobal.direction,
+                  ...formGlobal,
                   labelWidth: autoLabelWidth,
                   ...element
                 }"
@@ -340,21 +351,14 @@ const addField = () => {
               <set-form v-model="formGlobal" :options="globalSchema" />
             </lew-flex>
           </lew-flex>
-          <lew-flex
-            v-if="
-              activeId &&
-              options.findIndex((e: any) => e.id === activeId) >= 0 &&
-              options[options.findIndex((e: any) => e.id === activeId)].as !==
-                ''
-            "
-            direction="y"
-            x="start"
-            gap="0"
-          >
-            <lew-flex class="title" mode="between">
-              <span>字段属性</span>
-            </lew-flex>
-            <set-form v-model="formGlobal" :options="fieldsSchema" />
+          <lew-flex v-if="activeId" direction="y" x="start" gap="0">
+            <div class="title">基础属性</div>
+            <set-form
+              v-model="
+                options[options.findIndex((e: any) => e.id === activeId)]
+              "
+              :options="baseSchema"
+            />
           </lew-flex>
         </div>
         <div v-show="settingTab === 'model'" class="lew-form-model pre-box">
