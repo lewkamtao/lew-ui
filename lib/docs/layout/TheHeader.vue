@@ -47,6 +47,13 @@ const goHome = () => {
           表单引擎<lew-tag size="small" type="ghost" round> Dev </lew-tag>
         </lew-flex>
       </a>
+      <a class="menu-item" target="_blank" href="/#/desc-engine">
+        <lew-flex gap="5">
+          描述引擎<lew-tag size="small" color="green" type="ghost" round>
+            New
+          </lew-tag>
+        </lew-flex>
+      </a>
     </lew-flex>
     <lew-flex gap="15" x="end" class="menu">
       <div class="menu-item menu-item-icon" @click="isDark = !isDark">
@@ -114,7 +121,7 @@ const goHome = () => {
       width: 30px;
       padding: 0px;
     }
-    .menu-item:nth-child(4) {
+    .menu-item:nth-child(5) {
       margin-right: 50px;
     }
 

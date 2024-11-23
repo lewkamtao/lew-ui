@@ -21,7 +21,41 @@ const isDark = useDark({
 })
 
 const previewModalRef = ref()
-const options = ref<any>([])
+const options = ref<any>([
+  {
+    id: 'desc_20230201_1',
+    label: '姓名',
+    spanMap: {
+      1: 1,
+      2: 1,
+      3: 1,
+      4: 1
+    },
+    field: 'name'
+  },
+  {
+    id: 'desc_20230201_2',
+    label: '年龄',
+    spanMap: {
+      1: 1,
+      2: 1,
+      3: 1,
+      4: 1
+    },
+    field: 'age'
+  },
+  {
+    id: 'desc_20230201_3',
+    label: '性别',
+    spanMap: {
+      1: 1,
+      2: 1,
+      3: 1,
+      4: 1
+    },
+    field: 'gender'
+  }
+])
 const formMap = ref<Record<string, any>>({})
 const itemRefMap = ref<Record<string, any>>({})
 const formMainRef = ref()
@@ -40,9 +74,7 @@ const formGlobal = ref({
 })
 
 const formWidth = computed(() => {
-  return formGlobal.value.direction === 'x'
-    ? (320 + autoLabelWidth.value) * formGlobal.value.columns
-    : 320 * formGlobal.value.columns
+  return 320 * formGlobal.value.columns
 })
 
 const refreshForm = debounce(() => {
@@ -69,7 +101,7 @@ const formatFormMap = () => {
   let _formMap: Record<string, any> = {}
   cloneDeep(options.value).forEach((item: any) => {
     if (!has(_formMap, item.field) && item.field) {
-      _formMap[item.field] = item.fieldType
+      _formMap[item.field] = ''
     }
   })
   formMap.value = _formMap
@@ -155,20 +187,6 @@ const preview = () => {
   }
 }
 
-const isInfo = localStorage.getItem('isAlertByFormEngine')
-if (!isInfo) {
-  LewDialog.warning({
-    title: '温馨提示',
-    content:
-      '当前表单引擎仍处于开发测试状态，请勿用于生产环境，当前配置项仍未完善，持续更新中，敬请期待。',
-    cancelText: '',
-    okText: '知道了',
-    ok: () => {
-      localStorage.setItem('isAlertByFormEngine', '1')
-    }
-  })
-}
-
 const addField = () => {
   const field = `${getUniqueId()}`
   options.value.push(
@@ -185,6 +203,10 @@ const addField = () => {
     })
   )
 }
+
+onMounted(() => {
+  refreshForm()
+})
 </script>
 
 <template>
@@ -201,10 +223,9 @@ const addField = () => {
       <lew-flex
         x="center"
         y="center"
-        mode="between"
         class="lew-form-select-columns"
       >
-        <lew-button @click="addField">新增字段</lew-button>
+        <lew-button class="add-btn" @click="addField">新增字段</lew-button>
         <lew-tabs
           width="320px"
           item-width="auto"
@@ -212,6 +233,7 @@ const addField = () => {
           v-model="formGlobal.columns"
         />
         <lew-button
+          class="dark-btn"
           type="light"
           color="gray"
           size="small"
@@ -453,6 +475,18 @@ const addField = () => {
       background-color: var(--lew-bgcolor-0);
       flex-shrink: 0;
       border-bottom: 1px solid var(--lew-bgcolor-3);
+      .add-btn {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .dark-btn {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
     }
 
     .lew-form-wrapper-draggable {

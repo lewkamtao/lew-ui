@@ -52,6 +52,8 @@ watch(
       v-bind="{
         direction,
         size,
+        labelX,
+        valueX,
         labelWidth:
           labelWidth === 'auto' ? autoLabelWidth || labelWidth : labelWidth,
         ...item

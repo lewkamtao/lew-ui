@@ -45,6 +45,21 @@ const renderItem = () => {
       })
     : showTextAndEmpty()
 }
+
+const getGap = computed(() => {
+  const { size, direction } = props
+  const gapXMap = {
+    small: 10,
+    medium: 14,
+    large: 16
+  }
+  const gapYMap = {
+    small: 8,
+    medium: 10,
+    large: 12
+  }
+  return direction === 'x' ? gapXMap[size] : gapYMap[size]
+})
 </script>
 
 <template>
@@ -53,7 +68,8 @@ const renderItem = () => {
     ref="descItemRef"
     :class="getDescItemClassNames"
     :style="{
-      'grid-area': gridArea || ''
+      'grid-area': gridArea || '',
+      gap: `${getGap}px`
     }"
   >
     <div
@@ -137,19 +153,22 @@ const renderItem = () => {
 
 // 尺寸相关样式
 .lew-desc-item-size-small {
-  .lew-label-box-wrapper {
+  .lew-label-box-wrapper,
+  .lew-desc-item-main {
     font-size: var(--lew-form-font-size-small);
   }
 }
 
 .lew-desc-item-size-medium {
-  .lew-label-box-wrapper {
+  .lew-label-box-wrapper,
+  .lew-desc-item-main {
     font-size: var(--lew-form-font-size-medium);
   }
 }
 
 .lew-desc-item-size-large {
-  .lew-label-box-wrapper {
+  .lew-label-box-wrapper,
+  .lew-desc-item-main {
     font-size: var(--lew-form-font-size-large);
   }
 }
