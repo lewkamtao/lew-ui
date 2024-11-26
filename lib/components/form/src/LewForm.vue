@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { object2class, any2px, formatFormByMap } from 'lew-ui/utils'
+import {
+  object2class,
+  any2px,
+  formatFormByMap,
+  retrieveNestedFieldValue
+} from 'lew-ui/utils'
 import LewGetLabelWidth from './LewGetLabelWidth.vue'
 import { formProps } from './props'
 import { cloneDeep } from 'lodash-es'
@@ -25,7 +30,7 @@ const getForm = () => formatFormByMap(cloneDeep(formMap.value))
 const setForm = (value: any = {}) => {
   // 把对象的值给 formMap
   componentOptions.forEach((item: any) => {
-    const v = getNestedFieldValue(value, item.field)
+    const v = retrieveNestedFieldValue(value, item.field)
     if (value !== undefined && item.field) {
       // 重置error
       formItemRefMap.value[item.field]?.setError('')
@@ -42,22 +47,6 @@ const resetError = () => {
       formItemRefMap.value[item.field]?.setError('')
     }
   })
-}
-
-const getNestedFieldValue = (obj: any, field: string) => {
-  if (!field) {
-    return undefined
-  }
-  const keys = field.split('.') // 将字符串的嵌套字段按照 '.' 分割成数组
-  let value = obj
-  for (const key of keys) {
-    if (value && Object.prototype.hasOwnProperty.call(value, key)) {
-      value = value[key]
-    } else {
-      return undefined // 如果找不到字段，返回 undefined
-    }
-  }
-  return value // 返回目标字段的值
 }
 
 const formItemRefMap = ref<Record<string, any>>({})

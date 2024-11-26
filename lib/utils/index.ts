@@ -171,6 +171,50 @@ export const formatFormByMap = (formMap: any) => {
   })
   return form
 }
+/**
+ * 将嵌套对象转换为以 a.b.c.d 形式表示的扁平对象。
+ * @param {Object} form - 嵌套的表单数据。
+ * @returns {any} 转换后的扁平对象映射。
+ */
+export const flattenNestedObject = (form: any) => {
+  const formMap: Record<string, any> = {}
+
+  const buildMap = (obj: any, prefix: string = '') => {
+    for (const key in obj) {
+      const value = obj[key]
+      const newKey = prefix ? `${prefix}.${key}` : key
+      if (typeof value === 'object' && value !== null) {
+        buildMap(value, newKey)
+      } else {
+        formMap[newKey] = value
+      }
+    }
+  }
+
+  buildMap(form)
+  return formMap
+}
+/**
+ * 获取嵌套对象中指定字段的值。
+ * @param {Object} obj - 要查询的对象。
+ * @param {string} field - 嵌套字段的字符串表示，使用 '.' 分隔。
+ * @returns {any} 返回目标字段的值，如果字段不存在则返回 undefined。
+ */
+export const retrieveNestedFieldValue = (obj: any, field: string) => {
+  if (!field) {
+    return undefined
+  }
+  const keys = field.split('.') // 将字符串的嵌套字段按照 '.' 分割成数组
+  let value = obj
+  for (const key of keys) {
+    if (value && Object.prototype.hasOwnProperty.call(value, key)) {
+      value = value[key]
+    } else {
+      return undefined // 如果找不到字段，返回 undefined
+    }
+  }
+  return value // 返回目标字段的值
+}
 
 /**
  * 格式化字节数。
@@ -323,7 +367,7 @@ export const dragmove = ({
 }) => {
   let isDragging = false
   let startX: number, startY: number
-  let elRect: DOMRect, parentRect: DOMRect
+  let parentRect: DOMRect
 
   const getClampedValues = () => {
     const clampedMinValue = Math.max(min(), trackMin())
@@ -339,7 +383,7 @@ export const dragmove = ({
     isDragging = true
     startX = e.clientX - el.offsetLeft
     startY = e.clientY - el.offsetTop
-    elRect = el.getBoundingClientRect()
+
     parentRect = parentEl.getBoundingClientRect()
     document.body.style.userSelect = 'none'
     document.addEventListener('mousemove', onMouseMove)

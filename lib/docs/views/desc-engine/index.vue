@@ -2,7 +2,8 @@
 import draggable from 'vuedraggable'
 import dayjs from 'dayjs'
 import PreviewModal from './components/PreviewModal.vue'
-import { formatFormByMap } from 'lew-ui/utils'
+import ImportModal from './components/ImportModal.vue'
+import { formatFormByMap, flattenNestedObject } from 'lew-ui/utils'
 import { getUniqueId } from 'lew-ui/utils'
 import { downloadObjectAsFile } from 'lew-ui/docs/lib/utils'
 import { useDark } from '@vueuse/core'
@@ -21,6 +22,7 @@ const isDark = useDark({
 })
 
 const previewModalRef = ref()
+const importModalRef = ref()
 const options = ref<any>([
   {
     id: 'desc_20230201_1',
@@ -136,7 +138,7 @@ const getModel = () => {
     ...formGlobal.value,
     columns: formGlobal.value.columns,
     width: formWidth.value,
-    id: `form_${dayjs().format('YYYYMMDD')}_${getUniqueId()}`,
+    id: `desc_${dayjs().format('YYYYMMDD')}_${getUniqueId()}`,
     options: _options
   }
   return componentModel
@@ -204,6 +206,29 @@ const addField = () => {
   )
 }
 
+const importField = () => {
+  importModalRef.value.open()
+}
+
+const importFieldOptions = (_options: any) => {
+  console.log(flattenNestedObject(_options))
+  options.value = Object.keys(flattenNestedObject(_options)).map(
+    (key: string) => {
+      return {
+        id: `desc_${dayjs().format('YYYYMMDD')}_${key}`,
+        label: `字段 ${key}`,
+        spanMap: {
+          1: 1,
+          2: 1,
+          3: 1,
+          4: 1
+        },
+        field: key
+      }
+    }
+  )
+}
+
 onMounted(() => {
   refreshForm()
 })
@@ -220,12 +245,11 @@ onMounted(() => {
       class="lew-form-wrapper"
       @click="(settingTab = 'options'), (activeId = '')"
     >
-      <lew-flex
-        x="center"
-        y="center"
-        class="lew-form-select-columns"
-      >
+      <lew-flex x="center" y="center" class="lew-form-select-columns">
         <lew-button class="add-btn" @click="addField">新增字段</lew-button>
+        <lew-button class="import-btn" type="light" @click="importField">
+          导入字段
+        </lew-button>
         <lew-tabs
           width="320px"
           item-width="auto"
@@ -388,6 +412,7 @@ onMounted(() => {
         </div>
       </div>
     </lew-flex>
+    <import-modal ref="importModalRef" @import="importFieldOptions" />
     <preview-modal ref="previewModalRef" />
   </div>
 </template>
@@ -478,6 +503,12 @@ onMounted(() => {
       .add-btn {
         position: absolute;
         left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .import-btn {
+        position: absolute;
+        left: 110px;
         top: 50%;
         transform: translateY(-50%);
       }
