@@ -1,191 +1,147 @@
 <script setup lang="ts">
-import * as Yup from 'yup'
+import { ref } from 'vue'
 
-const form = ref({} as any)
-
-const formRef = ref()
-
-const submit = () => {
-  formRef.value.validate().then((res: any) => {
-    console.log(res)
-  })
-}
-
-onMounted(() => {
-  // 设置表单
-  formRef.value.setForm({
-    size: 'medium'
-  })
+// 定义数据源
+const dataSource = ref({
+  species: '狮子',
+  name: '辛巴',
+  gender: '雄性',
+  age: '5岁',
+  weight: '200kg',
+  height: '1.2m',
+  color: '金黄色',
+  diet: '肉食',
+  habitat: '非洲草原',
+  lifespan: '15年',
+  gestationPeriod: '110天',
+  litterSize: '2-4',
+  socialStructure: '群居',
+  communication: '咆哮',
+  hunting: '夜间',
+  prey: '大型哺乳动物',
+  predators: '人类、鬣狗、鳄鱼',
+  conservationStatus: '易危',
+  populationTrend: '下降',
+  threats: '栖息地丧失、猎杀'
 })
+// 定义选项
 const options = ref([
   {
-    label: '表单大小',
-    as: 'tabs',
-    field: 'size',
-    props: {
-      itemWidth: 'auto',
-      width: '100%',
-      options: [
-        {
-          label: 'small',
-          value: 'small'
-        },
-        {
-          label: 'medium',
-          value: 'medium'
-        },
-        {
-          label: 'large',
-          value: 'large'
-        }
-      ]
-    }
+    field: 'species',
+    gridArea: '1 / 1 / 1 / 2',
+    label: '物种',
   },
   {
     field: 'name',
-    label: '姓名',
-    as: 'input',
-    rule: Yup.string()
-      .matches(/^[a-zA-Z]+$/, '必须为纯英文字母')
-      .min(4, '长度必须至少为4')
-      .max(16, '长度不能超过16')
-      .required('不能为空'),
-
-    props: {
-      clearable: true
-    }
+    gridArea: '1 / 2 / 1 / 3',
+    label: '名称'
   },
-  {
-    field: 'remark',
-    label: '备注',
-    as: 'input',
-    rule: Yup.string()
-      .matches(/^[a-zA-Z]+$/, '必须为纯英文字母')
-      .min(4, '长度必须至少为4')
-      .max(16, '长度不能超过16')
-      .required('不能为空'),
-
-    props: {
-      clearable: true
-    }
+  { 
+    field: 'gender', 
+    gridArea: '1 / 3 / 1 / 4', 
+    label: '性别'
   },
-  {
-    field: 'intro',
-    label: '介绍',
-    as: 'textarea',
-    rule: Yup.string()
-      .matches(/^[\u4e00-\u9fa5]+$/, '必须为纯中文')
-      .min(30, '长度必须至少为30')
-      .max(300, '长度不能超过8')
-      .required('不能为空'),
-    props: {
-      clearable: true
-    }
+  { 
+    field: 'age', 
+    gridArea: '2 / 1 / 2 / 2', 
+    label: '年龄'
   },
-  {
-    field: 'birth',
-    label: '生日',
-    as: 'date-picker',
-    rule: Yup.string().required('不能为空'),
-
-    props: {
-      clearable: true
-    }
+  { 
+    field: 'weight', 
+    gridArea: '2 / 2 / 2 / 3', 
+    label: '体重'
   },
-  {
-    field: 'date.birth',
-    label: '有效期',
-    as: 'date-range-picker',
-    rule: Yup.object().required('不能为空'),
-
-    props: {
-      clearable: true
-    }
+  { 
+    field: 'height', 
+    gridArea: '2 / 3 / 2 / 4', 
+    label: '身高'
   },
-  {
-    field: 'user.city',
-    label: '城市',
-    as: 'select',
-
-    rule: Yup.string().required('此项必填'),
-    props: {
-      change: (e: any) => {
-        console.log(e)
-      },
-      clearable: true,
-      options: [
-        {
-          label: '广东',
-          value: '1'
-        },
-        {
-          label: '深圳',
-          value: '2'
-        },
-        {
-          label: '杭州',
-          value: '3'
-        },
-        {
-          label: '上海',
-          value: '4'
-        },
-        {
-          label: '北京',
-          value: '5'
-        }
-      ]
-    }
+  { 
+    field: 'color', 
+    gridArea: '3 / 1 / 3 / 2', 
+    label: '颜色'
   },
-  {
-    field: 'user.agree',
-    label: '',
-    as: 'checkbox',
-    rule: Yup.boolean().oneOf([true], '请同意').required('请同意'),
-    props: {
-      label: '是否同意'
-    }
+  { 
+    field: 'diet', 
+    gridArea: '3 / 2 / 3 / 3', 
+    label: '饮食'
   },
-  {
-    as: 'button',
-    props: {
-      text: '提交',
-      request: submit
-    }
+  { 
+    field: 'habitat', 
+    gridArea: '3 / 3 / 3 / 4', 
+    label: '栖息地'
+  },
+  { 
+    field: 'lifespan', 
+    gridArea: '4 / 1 / 4 / 2', 
+    label: '寿命'
+  },
+  { 
+    field: 'gestationPeriod', 
+    gridArea: '4 / 2 / 4 / 3', 
+    label: '妊娠期',
+    tips: '狮子的妊娠期通常为110天。'
+  },
+  { 
+    field: 'litterSize', 
+    gridArea: '4 / 3 / 4 / 4', 
+    label: '产仔数'
+  },
+  { 
+    field: 'socialStructure', 
+    gridArea: '5 / 1 / 5 / 2', 
+    label: '社会结构',
+    tips: '狮子通常以群体形式生活，形成社会结构。'
+  },
+  { 
+    field: 'communication', 
+    gridArea: '5 / 2 / 5 / 3', 
+    label: '交流方式',
+    tips: '狮子通过咆哮、吼叫等方式进行交流。'
+  },
+  { 
+    field: 'hunting', 
+    gridArea: '5 / 3 / 5 / 4', 
+    label: '狩猎方式'
+  },
+  { 
+    field: 'prey', 
+    gridArea: '6 / 1 / 6 / 2', 
+    label: '猎物'
+  },
+  { 
+    field: 'predators', 
+    gridArea: '6 / 2 / 6 / 3', 
+    label: '天敌'
+  },
+  { 
+    field: 'conservationStatus', 
+    gridArea: '6 / 3 / 6 / 4', 
+    label: '保护状况',
+    tips: '狮子被列为易危物种，面临栖息地丧失等威胁。'
+  },
+  { 
+    field: 'populationTrend', 
+    gridArea: '7 / 1 / 7 / 2', 
+    label: '种群趋势',
+    tips: '狮子的种群数量正在下降，需采取保护措施。'
+  },
+  { 
+    field: 'threats', 
+    gridArea: '7 / 2 / 7 / 3', 
+    label: '威胁'
   }
 ])
 </script>
 
 <template>
-  <lew-flex width="500" x="start" y="start" :gap="50">
-    <lew-form
-      ref="formRef"
+  <lew-flex x="start" y="start" :gap="50">
+    <lew-desc
+      width="600"
       direction="y"
-      class="form-box"
-      :size="form.size"
+      :columns="3"
+      :dataSource="dataSource"
       :options="options"
-      @change="
-        (e: any) => {
-          form = e
-        }
-      "
     />
-    <pre>{{ form }}</pre>
   </lew-flex>
 </template>
-<style scoped lang="scss">
-.form-box {
-  width: 380px;
-}
-pre {
-  width: 350px;
-  background-color: var(--lew-bgcolor-2);
-  padding: 30px;
-  flex-shrink: 0;
-}
-@media (max-width: 767px) {
-  .form-box {
-    width: 100%;
-  }
-}
-</style>

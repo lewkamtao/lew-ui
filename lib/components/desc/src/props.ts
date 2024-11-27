@@ -9,7 +9,7 @@ export const descProps = {
     type: Array as PropType<Array<Record<string, any>>>,
     required: true,
     default: () => [],
-    description: '定义表单结构和内容的配置选项数组',
+    description: '配置选项数组，用于定义描述组件的结构和内容',
     validator(value: Array<Record<string, any>>): boolean {
       if (!Array.isArray(value)) {
         console.warn('[LewDesc] options 必须是一个数组')
@@ -21,12 +21,12 @@ export const descProps = {
   dataSource: {
     type: Object as PropType<Record<string, any>>,
     default: () => ({}),
-    description: '表单项的值'
+    description: '包含描述项值的对象'
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '表单整体尺寸，影响所有表单项大小',
+    description: '描述组件的整体尺寸，影响所有描述项的大小',
     validator(value: LewSize): boolean {
       if (!validSizes.includes(value)) {
         console.warn(
@@ -40,17 +40,17 @@ export const descProps = {
   labelX: {
     type: String as PropType<TextTrimAlignment>,
     default: 'start',
-    description: 'label 对齐方式'
+    description: '描述项标签的对齐方式'
   },
   valueX: {
     type: String as PropType<TextTrimAlignment>,
     default: 'start',
-    description: 'value 对齐方式'
+    description: '描述项值的对齐方式'
   },
   gap: {
     type: [String, Number],
     default: 30,
-    description: '子元素之间的间距（单位：像素）',
+    description: '描述项之间的间距，单位为像素',
     validator(value: string | number): boolean {
       const numValue = typeof value === 'string' ? parseInt(value, 10) : value
       if (isNaN(numValue) || numValue < 0) {
@@ -63,7 +63,7 @@ export const descProps = {
   width: {
     type: [Number, String],
     default: '',
-    description: '表单整体宽度，支持数字（像素）或百分比字符串',
+    description: '描述组件的整体宽度，可以是数字（像素）或百分比字符串',
     validator(value: number | string): boolean {
       if (typeof value === 'number' && value < 0) {
         console.warn('[LewDesc] width 不能为负数')
@@ -79,7 +79,7 @@ export const descProps = {
   columns: {
     type: [Number, String],
     default: 1,
-    description: '每行显示的表单项数量，最大值为4',
+    description: '每行显示的描述项数量，范围为1到4',
     validator(value: number | string): boolean {
       const numValue = Number(value)
       if (isNaN(numValue) || numValue < 1 || numValue > 4) {
@@ -92,7 +92,7 @@ export const descProps = {
   labelWidth: {
     type: [Number, String],
     default: 'auto',
-    description: '表单项标签宽度，支持数字（像素）或 "auto"',
+    description: '描述项标签的宽度，可以是数字（像素）或 "auto"',
     validator(value: number | string): boolean {
       if (typeof value === 'number' && value < 0) {
         console.warn('[LewDesc] labelWidth 不能为负数')
@@ -112,7 +112,7 @@ export const descProps = {
   direction: {
     type: String as PropType<DescDirection>,
     default: 'x',
-    description: '表单项排列方向，"x" 为水平，"y" 为垂直',
+    description: '描述项的排列方向，"x" 表示水平排列，"y" 表示垂直排列',
     validator(value: DescDirection): boolean {
       if (!['x', 'y'].includes(value)) {
         console.warn(
@@ -126,7 +126,7 @@ export const descProps = {
   id: {
     type: String,
     default: '',
-    description: '表单的唯一标识符',
+    description: '描述组件的唯一标识符，用于区分不同的描述',
     hidden: true
   }
 }
@@ -135,17 +135,17 @@ export const descItemProps = {
   label: {
     type: String,
     default: '',
-    description: '标签文本'
+    description: '描述项的标签文本'
   },
   field: {
     type: String,
     default: '',
-    description: '字段'
+    description: '描述项对应的数据字段'
   },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '单项的尺寸，可覆盖表单整体设置',
+    description: '单个描述项的尺寸，可以覆盖整体设置',
     validator(value: LewSize): boolean {
       if (!['small', 'medium', 'large'].includes(value)) {
         console.warn(
@@ -159,7 +159,7 @@ export const descItemProps = {
   width: {
     type: [Number, String],
     default: '',
-    description: '单个表单项的宽度，支持数字（像素）或百分比字符串',
+    description: '单个描述项的宽度，可以是数字（像素）或百分比字符串',
     validator(value: number | string): boolean {
       if (typeof value === 'number' && value < 0) {
         console.warn('[LewDescItem] width 不能为负数')
@@ -175,7 +175,7 @@ export const descItemProps = {
   labelWidth: {
     type: [Number, String],
     default: 'auto',
-    description: '单个表单项标签宽度，支持数字（像素）或 "auto"',
+    description: '单个描述项标签的宽度，可以是数字（像素）或 "auto"',
     validator(value: number | string): boolean {
       if (typeof value === 'number' && value < 0) {
         console.warn('[LewDescItem] labelWidth 不能为负数')
@@ -197,7 +197,7 @@ export const descItemProps = {
   direction: {
     type: String as PropType<DescDirection>,
     default: 'x',
-    description: '单个表单项的排列方向，"x" 为水平，"y" 为垂直',
+    description: '单个描述项的排列方向，"x" 表示水平，"y" 表示垂直',
     validator(value: DescDirection): boolean {
       if (!['x', 'y'].includes(value)) {
         console.warn(
@@ -211,22 +211,22 @@ export const descItemProps = {
   tips: {
     type: String,
     default: '',
-    description: '表单项的提示信息'
+    description: '描述项的提示信息，用于提供额外的说明'
   },
   type: {
     type: String as PropType<'text-trim'>,
     default: '',
-    description: '表单项类型'
+    description: '描述项的类型，例如文本截断'
   },
   labelX: {
     type: String as PropType<TextTrimAlignment>,
     default: 'start',
-    description: 'label 对齐方式'
+    description: '描述项标签的对齐方式'
   },
   valueX: {
     type: String as PropType<TextTrimAlignment>,
     default: 'start',
-    description: 'value 对齐方式'
+    description: '描述项值的对齐方式'
   },
   gridArea: {
     type: String,
@@ -236,12 +236,12 @@ export const descItemProps = {
   customRender: {
     type: Function as PropType<(value: any) => any>,
     default: null,
-    description: '自定义渲染函数'
+    description: '自定义渲染函数，用于自定义描述项的显示'
   },
   id: {
     type: String,
     default: '',
-    description: '表单项的唯一标识符',
+    description: '单个描述项的唯一标识符，用于区分不同的描述项',
     hidden: true
   },
   dataSource: {

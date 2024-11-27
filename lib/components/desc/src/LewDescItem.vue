@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { any2px, object2class } from 'lew-ui/utils'
+import { any2px, object2class, retrieveNestedFieldValue } from 'lew-ui/utils'
 import { LewTooltip, LewTextTrim } from 'lew-ui'
 import type { TextTrimAlignment } from 'lew-ui'
 import { cloneDeep, isString } from 'lodash-es'
@@ -24,7 +24,7 @@ const getDescItemClassNames = computed(() => {
 
 // 处理显示文本和空值
 const showTextAndEmpty = () => {
-  const text = props.dataSource[props.field]
+  const text = retrieveNestedFieldValue(props.dataSource, props.field)
   if (text === null || text === undefined || text === '') {
     return '-'
   }
