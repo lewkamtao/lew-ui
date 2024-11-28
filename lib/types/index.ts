@@ -3,7 +3,7 @@
  */
 export type LewThemeColor =
   | 'black'
-  | 'blue' 
+  | 'blue'
   | 'brown'
   | 'cyan'
   | 'gray'

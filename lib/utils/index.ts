@@ -448,3 +448,15 @@ export const dragmove = ({
     el.removeEventListener('mousedown', onMouseDown)
   }
 }
+/**
+ * 将字符串转换为标准的 JSON 格式。
+ * 兼容单引号、双引号以及无引号的字段名。
+ * @param {string} str - 要转换的字符串。
+ * @returns {any} 解析后的 JSON 对象。
+ */
+export const parseToStandardJSON = (str: string) => {
+  const modifiedStr = str
+    .replace(/'/g, '"') // 替换单引号为双引号
+    .replace(/({|,)\s*([a-zA-Z0-9_]+)\s*:/g, '$1"$2":') // 给没有引号的字段名加上双引号
+  return JSON.parse(modifiedStr)
+}

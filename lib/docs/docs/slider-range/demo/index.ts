@@ -12,4 +12,17 @@ import DemoSliderRange4Code from './DemoSliderRange4.vue?raw'
 import DemoSliderRange5Code from './DemoSliderRange5.vue?raw'
 import DemoSliderRange6Code from './DemoSliderRange6.vue?raw'
 
-export { DemoSliderRange1, DemoSliderRange1Code, DemoSliderRange2, DemoSliderRange2Code, DemoSliderRange3, DemoSliderRange3Code, DemoSliderRange4, DemoSliderRange4Code, DemoSliderRange5, DemoSliderRange5Code, DemoSliderRange6, DemoSliderRange6Code }
+export {
+  DemoSliderRange1,
+  DemoSliderRange1Code,
+  DemoSliderRange2,
+  DemoSliderRange2Code,
+  DemoSliderRange3,
+  DemoSliderRange3Code,
+  DemoSliderRange4,
+  DemoSliderRange4Code,
+  DemoSliderRange5,
+  DemoSliderRange5Code,
+  DemoSliderRange6,
+  DemoSliderRange6Code
+}

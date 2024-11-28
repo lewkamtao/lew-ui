@@ -62,7 +62,7 @@ const total = ref(100)
     <lew-pagination
       v-model:current-page="pageNum"
       :pageSize="pageSize"
-	  size="large"
+      size="large"
       :pageSizeOptions="[
         {
           label: '10 / 页',

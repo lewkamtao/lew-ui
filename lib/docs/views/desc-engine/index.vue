@@ -216,7 +216,7 @@ const importFieldOptions = (_options: any) => {
     (key: string) => {
       return {
         id: `desc_${dayjs().format('YYYYMMDD')}_${key}`,
-        label: `字段 ${key}`,
+        label: _options[key],
         spanMap: {
           1: 1,
           2: 1,

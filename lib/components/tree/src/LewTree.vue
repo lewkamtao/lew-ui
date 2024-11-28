@@ -83,7 +83,8 @@ const expandHandle = async (item: TreeDataSource) => {
     if (index < 0) {
       loadingKeys.value.push(item.key)
       let _tree =
-        ((await props.loadMethod(cloneDeep(item) as TreeDataSource)) as any) || []
+        ((await props.loadMethod(cloneDeep(item) as TreeDataSource)) as any) ||
+        []
       insertChildByKey(treeBackup, item.key, _tree)
       const { newTree, newTreeList }: any = (await tree2List({
         dataSource: treeBackup,

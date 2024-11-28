@@ -1,5 +1,18 @@
 <script setup lang="ts">
-import { DemoSlider1, DemoSlider1Code, DemoSlider2, DemoSlider2Code, DemoSlider3, DemoSlider3Code, DemoSlider4, DemoSlider4Code, DemoSlider5, DemoSlider5Code, DemoSlider6, DemoSlider6Code } from './demo'
+import {
+  DemoSlider1,
+  DemoSlider1Code,
+  DemoSlider2,
+  DemoSlider2Code,
+  DemoSlider3,
+  DemoSlider3Code,
+  DemoSlider4,
+  DemoSlider4Code,
+  DemoSlider5,
+  DemoSlider5Code,
+  DemoSlider6,
+  DemoSlider6Code
+} from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
