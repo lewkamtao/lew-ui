@@ -3,6 +3,7 @@ import tippy, { roundArrow } from 'tippy.js'
 import { object2class } from 'lew-ui/utils'
 import { textTrimProps } from './props'
 import { escape } from 'lodash-es'
+import { useMouse } from '@vueuse/core'
 
 const props = defineProps(textTrimProps)
 
@@ -27,9 +28,7 @@ const initTippy = () => {
   if (isEllipsis) {
     element.style.cursor = 'pointer'
     // 如果没有init
-    if (instance) {
-      instance.show()
-    } else {
+    if (!instance) {
       instance = tippy(element, {
         theme: 'light',
         delay: props.delay as any,
@@ -46,12 +45,44 @@ const initTippy = () => {
         maxWidth: 250
       })
       instance.popper.children[0].setAttribute('data-lew', 'tooltip')
-      instance.show()
+      showTippy()
     }
   } else {
     element.style.cursor = ''
     // 如果没溢出
     destroyTippy()
+  }
+}
+
+const showTippy = () => {
+  const { x, y } = useMouse()
+  if (props.delay && Array.isArray(props.delay) && props.delay[0] > 0) {
+    setTimeout(() => {
+      try {
+        // 判断当前鼠标是否在元素范围内
+        const element = lewTextTrimRef.value
+        if (!element) return
+
+        const rect = element.getBoundingClientRect()
+        // 检查鼠标坐标是否在元素矩形区域内
+        if (
+          x.value >= rect.left &&
+          x.value <= rect.right &&
+          y.value >= rect.top &&
+          y.value <= rect.bottom
+        ) {
+          instance?.show()
+        }
+      } catch (error) {
+        console.error('显示提示时发生错误:', error)
+      }
+    }, props.delay[0])
+  } else {
+    try {
+      instance?.show()
+    } catch (error) {
+      console.error('显示提示时发生错误:', error)
+    }
   }
 }
 

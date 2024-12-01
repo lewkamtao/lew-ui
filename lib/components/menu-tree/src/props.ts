@@ -1,29 +1,97 @@
-import type { ExtractPropTypes, PropType } from 'vue'
-import type { LewColor } from 'lew-ui'
+import type { ExtractPropTypes } from 'vue'
+import { isValidCssValue } from 'lew-ui/utils'
 
-export type MenuTreeOptions = {
-  label: string // 标题
-  value?: string // 值
-  children?: MenuTreeOptions[] // 子类
-  disabled?: boolean // 是否禁用
-  level?: number // 层级
-  icon?: string // 图标
-  tagText?: string // 文本
-  tagColor?: LewColor // 颜色
+export type MenuTreeItem = {
+  key: string | number
+  title: string
+  disabled?: boolean
+  renderIcon: () => any
+  children?: MenuTreeItem[]
+}
+
+export const menuTreeModel = {
+  modelValue: {
+    type: String,
+    default: '',
+    description: '菜单树的当前展开项，用于双向绑定。字符串类型表示单选模式。',
+    validator(value: string): boolean {
+      if (typeof value !== 'string') {
+        console.warn('[LewMenuTree] modelValue 必须是字符串类型。')
+        return false
+      }
+      return true
+    }
+  }
+}
+
+export const menuTreeItemModel = {
+  modelValue: {
+    type: Boolean,
+    default: false,
+    description: '菜单树项的展开状态，true 表示展开，false 表示折叠。'
+  }
 }
 
 export const menuTreeProps = {
   options: {
-    type: Array as PropType<MenuTreeOptions[]>,
+    type: Array as PropType<MenuTreeItem[]>,
     default: [],
-    typeGhost: 'MenuOptions[]',
-    description: '颜色'
+    description: '菜单树的数据源，支持嵌套结构。'
   },
-  active: {
+  width: {
+    type: [String, Number],
+    default: '100%',
+    description: '菜单树的宽度，支持 CSS 宽度值。',
+    validator(value: string | number): boolean {
+      return isValidCssValue({
+        name: 'LewMenuTree',
+        field: 'width',
+        value
+      })
+    }
+  }
+}
+
+export const menuTreeItemProps = {
+  menuKey: {
+    type: [String, Number],
+    required: true,
+    description: '菜单树项的唯一标识符。',
+    validator(value: string | number): boolean {
+      if (value === '') {
+        console.warn('[LewMenuTreeItem] menuKey 不能为空。')
+        return false
+      }
+      return true
+    }
+  },
+  renderIcon: {
+    type: Function,
+    default: () => {},
+    description: '菜单树项的图标。'
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+    description: '菜单树项是否禁用。'
+  },
+  title: {
     type: String,
     default: '',
-    description: '选中的值'
+    description:
+      '菜单树项的标题文本。也可以使用具名插槽 "title" 自定义标题内容。'
+  },
+  level: {
+    type: Number,
+    default: 1,
+    description: '菜单树项的层级，从 1 开始。'
+  },
+  isLeaf: {
+    type: Boolean,
+    default: false,
+    description: '是否为叶子节点。'
   }
 }
 
 export type MenuTreeProps = ExtractPropTypes<typeof menuTreeProps>
+export type MenuTreeItemProps = ExtractPropTypes<typeof menuTreeItemProps>

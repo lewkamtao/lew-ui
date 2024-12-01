@@ -27,6 +27,13 @@ const avatarStyleObject = computed(() => {
   }
 })
 
+const imageStyleObject = computed(() => {
+  return {
+    objectFit: props.objectFit,
+    objectPosition: props.objectPosition
+  }
+})
+
 let _loading = ref()
 let _error = ref()
 
@@ -56,9 +63,21 @@ watch(
 <template>
   <div class="lew-avatar" :style="avatarStyleObject">
     <div class="lew-avatar-box" :class="avatarClassName">
-      <div class="skeletons" v-if="_loading || !src"></div>
-      <img v-else-if="_error" :src="errorSrc" alt="" srcset="" />
-      <img v-else-if="src" :src="src" :alt="alt" lazy />
+      <div class="skeletons" v-if="_loading || loading || !src"></div>
+      <img
+        v-else-if="_error"
+        :src="errorSrc"
+        alt=""
+        srcset=""
+        :style="imageStyleObject"
+      />
+      <img
+        v-else-if="src"
+        :src="src"
+        :alt="alt"
+        lazy
+        :style="imageStyleObject"
+      />
     </div>
     <span v-if="status" class="lew-dot" :class="dotClassName"> </span>
   </div>
