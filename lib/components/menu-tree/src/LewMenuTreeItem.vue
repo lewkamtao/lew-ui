@@ -7,7 +7,7 @@ import { cloneDeep } from 'lodash-es'
 
 const props = defineProps(menuTreeItemProps)
 
-const { modelValue, expandKeys }: any = inject('menu-tree')
+const { modelValue, expandKeys, modelValueKeyPath }: any = inject('menu-tree')
 const emit = defineEmits(['change'])
 
 const change = () => {
@@ -40,6 +40,9 @@ const change = () => {
       class="lew-menu-tree-item-title"
       :class="{
         'lew-menu-tree-item-title-active': modelValue === menuKey,
+        'lew-menu-tree-item-title-selected': modelValueKeyPath?.includes(
+          menuKey as string | number
+        ),
         'lew-menu-tree-item-title-leaf': isLeaf,
         'lew-menu-tree-item-title-disabled': disabled
       }"
@@ -102,6 +105,14 @@ const change = () => {
   }
   .lew-menu-tree-item-title-active:hover {
     background-color: var(--lew-color-primary-light);
+    color: var(--lew-color-primary-dark);
+    font-weight: bold;
+  }
+  .lew-menu-tree-item-title-selected {
+    color: var(--lew-color-primary-dark);
+    font-weight: bold;
+  }
+  .lew-menu-tree-item-title-selected:hover {
     color: var(--lew-color-primary-dark);
     font-weight: bold;
   }

@@ -9,7 +9,30 @@ const props = defineProps(menuTreeProps)
 const modelValue = defineModel()
 const expandKeys = defineModel('expandKeys', { required: false, default: [] })
 
-provide('menu-tree', { modelValue, expandKeys })
+const getModelValueKeyPath = computed(() => {
+  const findKeyPath = (
+    items: MenuTreeItem[],
+    parentPath: (string | number)[] = []
+  ): (string | number)[] | undefined => {
+    for (const item of items) {
+      const currentPath = [...parentPath, item.key]
+      if (item.key === modelValue.value) {
+        return currentPath
+      }
+      if (item.children?.length) {
+        const found = findKeyPath(item.children, currentPath)
+        if (found) return found
+      }
+    }
+  }
+  return findKeyPath(props.options) || []
+})
+
+provide('menu-tree', {
+  modelValue,
+  expandKeys,
+  modelValueKeyPath: getModelValueKeyPath
+})
 
 const menuTreeStyle = computed(() => ({
   width: any2px(props.width)
@@ -34,6 +57,7 @@ const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
     }
   )
 }
+
 const emit = defineEmits(['change'])
 </script>
 
