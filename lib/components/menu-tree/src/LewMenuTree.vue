@@ -7,10 +7,9 @@ import LewMenuTreeItem from './LewMenuTreeItem.vue'
 
 const props = defineProps(menuTreeProps)
 const modelValue = defineModel()
-const expandKeys = defineModel('expandKeys', { required: false })
+const expandKeys = defineModel('expandKeys', { required: false, default: [] })
 
-provide('expandKeys', modelValue)
-provide('modelValue', expandKeys)
+provide('menu-tree', { modelValue, expandKeys })
 
 const menuTreeStyle = computed(() => ({
   width: any2px(props.width)

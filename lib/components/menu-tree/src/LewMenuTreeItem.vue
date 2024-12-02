@@ -3,16 +3,16 @@ import { menuTreeItemProps } from './props'
 import { LewCollapseTransition } from 'lew-ui'
 import { LewFlex } from 'lew-ui'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { cloneDeep } from 'lodash-es'
 
 const props = defineProps(menuTreeItemProps)
 
-const expandKeys: any = inject('expandKeys')
-const modelValue: any = inject('modelValue')
+const { modelValue, expandKeys }: any = inject('menu-tree')
 const emit = defineEmits(['change'])
 
 const change = () => {
   if (props.disabled) return
-  
+
   if (!props.isLeaf) {
     const index = expandKeys.value.indexOf(props.menuKey)
     if (index > -1) {
@@ -27,6 +27,7 @@ const change = () => {
       modelValue.value = ''
     }
   }
+  expandKeys.value = cloneDeep(expandKeys.value)
   emit('change')
 }
 </script>
@@ -42,7 +43,7 @@ const change = () => {
         'lew-menu-tree-item-title-leaf': isLeaf,
         'lew-menu-tree-item-title-disabled': disabled
       }"
-      @click="change"
+      @click.stop="change"
     >
       <slot v-if="$slots.title" name="title" :props="props" />
       <template v-else>

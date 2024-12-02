@@ -1,18 +1,35 @@
 <script lang="ts" setup>
 import type { MenuTreeItem } from 'lew-ui'
-import { Home, ShoppingCart, Users, Target, BarChart2, Package, Truck, MessageSquare, DollarSign, Settings } from 'lucide-vue-next'
-const value = ref(['1', '1-1', '1-1-1'])
+import {
+  Home,
+  ShoppingCart,
+  Users,
+  Target,
+  BarChart2,
+  Package,
+  Truck,
+  MessageSquare,
+  DollarSign,
+  Settings
+} from 'lucide-vue-next'
+const selectKey = ref('1-1-1')
+const expandKeys = ref(['1', '1-1', '1-1-1'])
 const options = [
   {
     key: '1',
-    title: '商品管理商品管理商品管理商品管理商品管理商品管理商品管理商品管理商品管理商品管理',
+    title:
+      '商品管理商品管理商品管理商品管理商品管理商品管理商品管理商品管理商品管理商品管理',
     renderIcon: () => h(Home, { size: 14 }),
     children: [
       {
         key: '1-1',
         title: '商品管理商品管理商品管理商品管理商品管理',
         children: [
-          { key: '1-1-1', title: '上架商品上架商品上架商品上架商品上架商品上架商品上架商品上架商品' },
+          {
+            key: '1-1-1',
+            title:
+              '上架商品上架商品上架商品上架商品上架商品上架商品上架商品上架商品'
+          },
           { key: '1-1-2', title: '下架商品' },
           { key: '1-1-3', title: '商品审核' }
         ]
@@ -246,7 +263,8 @@ const change = (item: MenuTreeItem) => {
 <template>
   <lew-menu-tree
     width="300"
-    v-model="value"
+    v-model="selectKey"
+    v-model:expandKeys="expandKeys"
     :options="options"
     @change="change"
   />
