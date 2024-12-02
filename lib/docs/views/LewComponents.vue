@@ -102,6 +102,10 @@ const options: MenuOptions[] = [
         value: '/Menu'
       },
       {
+        label: 'MenuTree',
+        value: '/MenuTree'
+      },
+      {
         label: 'Dropdown',
         value: '/Dropdown'
       },
@@ -226,6 +230,7 @@ const options: MenuOptions[] = [
         label: 'Tree',
         value: '/Tree'
       },
+
       {
         label: 'Collapse',
         value: '/Collapse'
