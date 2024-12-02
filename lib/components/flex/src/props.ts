@@ -1,7 +1,7 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 
 export type FlexDirection = 'x' | 'y'
-export type FlexAlignment = 'start' | 'center' | 'end'
+export type FlexAlignment = 'start' | 'center' | 'end' | 'left' | 'right'
 export type FlexMode = 'around' | 'between'
 
 export const flexProps = {
@@ -20,11 +20,11 @@ export const flexProps = {
   x: {
     type: String as PropType<FlexAlignment>,
     default: 'center',
-    description: '子元素在水平方向上的对齐方式',
+    description: '子元素在水平方向上的对齐方式。可选值: start | center | end | left | right',
     validator(value: FlexAlignment): boolean {
-      if (!['start', 'center', 'end'].includes(value)) {
+      if (!['start', 'center', 'end', 'left', 'right'].includes(value)) {
         console.warn(
-          `[LewFlex] 无效的水平对齐值: ${value}。请使用 'start'、'center' 或 'end'。`
+          `[LewFlex] 无效的水平对齐值: ${value}。请使用 'start'、'center'、'end'、'left' 或 'right'。`
         )
         return false
       }
@@ -34,11 +34,11 @@ export const flexProps = {
   y: {
     type: String as PropType<FlexAlignment>,
     default: 'center',
-    description: '子元素在垂直方向上的对齐方式',
+    description: '子元素在垂直方向上的对齐方式。可选值: start | center | end | left | right',
     validator(value: FlexAlignment): boolean {
-      if (!['start', 'center', 'end'].includes(value)) {
+      if (!['start', 'center', 'end', 'left', 'right'].includes(value)) {
         console.warn(
-          `[LewFlex] 无效的垂直对齐值: ${value}。请使用 'start'、'center' 或 'end'。`
+          `[LewFlex] 无效的垂直对齐值: ${value}。请使用 'start'、'center'、'end'、'left' 或 'right'。`
         )
         return false
       }

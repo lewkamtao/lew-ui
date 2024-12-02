@@ -249,6 +249,16 @@ export const formItemProps = {
     default: '',
     description: '表单项的唯一标识符',
     hidden: true
+  },
+  outputFormat: {
+    type: Function as PropType<(params: { value: unknown }) => unknown>,
+    default: ({ value }: { value: unknown }) => value,
+    description: '出参时的格式化方法'
+  },
+  inputFormat: {
+    type: Function as PropType<(params: { value: unknown }) => unknown>, 
+    default: ({ value }: { value: unknown }) => value,
+    description: '入参时的格式化方法'
   }
 }
 

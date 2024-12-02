@@ -25,13 +25,31 @@ const getFormClassNames = computed(() => {
 })
 
 // 将 formMap.value 中 xx.xx.xx 形式的字段，转换成嵌套对象
-const getForm = () => formatFormByMap(cloneDeep(formMap.value))
+const getForm = () => {
+  const formData: Record<string, any> = formatFormByMap(
+    cloneDeep(formMap.value)
+  )
+  // 应用 outputFormat
+  componentOptions.forEach((item) => {
+    if (item.outputFormat && item.field && formData[item.field]) {
+      formData[item.field] = item.outputFormat({
+        item,
+        value: formData[item.field]
+      })
+    }
+  })
+  return formData
+}
 
 const setForm = (value: any = {}) => {
   // 把对象的值给 formMap
   componentOptions.forEach((item: any) => {
-    const v = retrieveNestedFieldValue(value, item.field)
+    let v = retrieveNestedFieldValue(value, item.field)
     if (value !== undefined && item.field) {
+      // 应用 inputFormat
+      if (item.inputFormat) {
+        v = item.inputFormat({ item, value: v })
+      }
       // 重置error
       formItemRefMap.value[item.field]?.setError('')
       // 如果有值，就把值给 formMap
