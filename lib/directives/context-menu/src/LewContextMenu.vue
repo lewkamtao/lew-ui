@@ -14,6 +14,8 @@ const clickItem = (item: ContextMenus) => {
   emit('select', item)
 }
 
+const uniqueId = getUniqueId()
+
 let itemRefs = ref<(Element | globalThis.ComponentPublicInstance | null)[]>([])
 const initTippy = () => {
   itemRefs.value.forEach((el: any, index: number) => {
@@ -32,8 +34,6 @@ const initTippy = () => {
         })
       }
     }).mount(menuDom)
-    const uniqueId = getUniqueId()
-
     // 创建右键索引
     if (!window.LewContextMenu) {
       initLewContextMenu()
@@ -67,6 +67,12 @@ const renderIcon = ({ renderIcon }: any) => {
 
 onMounted(() => {
   initTippy()
+})
+onUnmounted(() => {
+  if (window.LewContextMenu?.menuInstance[uniqueId]?.destroy) {
+    window.LewContextMenu.menuInstance[uniqueId].destroy()
+    delete window.LewContextMenu.menuInstance[uniqueId]
+  }
 })
 </script>
 

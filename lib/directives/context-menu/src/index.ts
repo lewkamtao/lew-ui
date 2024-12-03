@@ -55,6 +55,7 @@ export const LewVContextMenu = {
 
         if (!window.LewContextMenu.contextMenu) {
           window.LewContextMenu.contextMenu = (e: MouseEvent) => {
+            console.log('lew', window.LewContextMenu)
             const id = findContextMenuId(e.target as HTMLElement)
             if (!id) return
             e.preventDefault()
@@ -63,12 +64,12 @@ export const LewVContextMenu = {
             instance.hide()
             const menuDom = document.createElement('div')
 
-            Object.keys(window.LewContextMenu.menuInstance).forEach(
-              (key: string) => {
-                window.LewContextMenu.menuInstance[key].destroy()
-                delete window.LewContextMenu.menuInstance[key]
-              }
-            )
+            // Object.keys(window.LewContextMenu.menuInstance).forEach(
+            //   (key: string) => {
+            //     window.LewContextMenu.menuInstance[key].destroy()
+            //     delete window.LewContextMenu.menuInstance[key]
+            //   }
+            // )
 
             createApp({
               render() {

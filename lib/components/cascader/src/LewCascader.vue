@@ -82,6 +82,9 @@ let _loadMethod = computed(() => {
   return false
 })
 
+// 创建一个对象来存储已加载的数据
+const loadedData = reactive<Record<string, CascaderOptions[]>>({})
+
 // 通过值获取对象
 const findObjectByValue = (treeList: CascaderOptions[], value: string) => {
   for (let i = 0; i < treeList.length; i++) {
@@ -122,7 +125,6 @@ function findAndAddChildrenByValue(
       }
     }
   }
-
   return []
 }
 // 通过值查找子集
@@ -175,20 +177,28 @@ const selectItem = async (item: CascaderOptions, level: number) => {
   if (!item.isLeaf && item.labelPaths !== state.activeLabels) {
     state.optionsGroup = state.optionsGroup.slice(0, level + 1)
     if (_loadMethod.value && !item.isLeaf) {
-      item.loading = true
-      state.okLoading = true
-      const new_options =
-        (await _loadMethod.value(cloneDeep({ ...item, level }))) || []
-      let _tree = findAndAddChildrenByValue(
-        cloneDeep(state.optionsTree),
-        cloneDeep(item.value),
-        new_options
-      )
-      state.optionsTree = formatTree(_tree)
-      const _options = findChildrenByValue(state.optionsTree, item.value)
-      state.optionsGroup.push(_options)
-      item.loading = false
-      state.okLoading = false
+      if (loadedData[item.value]) {
+        // 如果数据已经加载过，直接使用缓存的数据
+        const _options = loadedData[item.value]
+        state.optionsGroup.push(_options)
+      } else {
+        item.loading = true
+        state.okLoading = true
+        const new_options =
+          (await _loadMethod.value(cloneDeep({ ...item, level }))) || []
+        let _tree = findAndAddChildrenByValue(
+          cloneDeep(state.optionsTree),
+          cloneDeep(item.value),
+          new_options
+        )
+        state.optionsTree = formatTree(_tree)
+        const _options = findChildrenByValue(state.optionsTree, item.value)
+        state.optionsGroup.push(_options)
+        // 将新加载的数据存储到对象中
+        loadedData[item.value] = _options
+        item.loading = false
+        state.okLoading = false
+      }
     } else if (!item.isLeaf) {
       const _options =
         (item.children &&

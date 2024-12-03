@@ -91,7 +91,7 @@ const change = () => {
     cursor: pointer;
     padding: 10px 15px;
     box-sizing: border-box;
-    transition: all 0.15s;
+    transition: background-color 0.25s, color 0.25s;
     border-radius: var(--lew-border-radius-small);
     overflow: hidden;
   }
@@ -101,20 +101,18 @@ const change = () => {
   .lew-menu-tree-item-title-active {
     background-color: var(--lew-color-primary-light);
     color: var(--lew-color-primary-dark);
-    font-weight: bold;
+    font-weight: 600;
   }
   .lew-menu-tree-item-title-active:hover {
     background-color: var(--lew-color-primary-light);
     color: var(--lew-color-primary-dark);
-    font-weight: bold;
   }
   .lew-menu-tree-item-title-selected {
     color: var(--lew-color-primary-dark);
-    font-weight: bold;
+    font-weight: 600;
   }
   .lew-menu-tree-item-title-selected:hover {
     color: var(--lew-color-primary-dark);
-    font-weight: bold;
   }
   .lew-menu-tree-item-main {
     box-sizing: border-box;

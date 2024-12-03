@@ -68,7 +68,7 @@ const init = async (keyword = '') => {
 init()
 
 const expandHandle = async (item: TreeDataSource) => {
-  if (props.expandAll) {
+  if (props.expandAll || item.isLeaf) {
     return
   }
   let _expandedKeys = cloneDeep(expandedKeys.value || [])
@@ -394,6 +394,9 @@ defineExpose({ init, getTreeList })
 .lew-tree-item-leaf {
   .lew-tree-chevron-right {
     opacity: 0;
+  }
+  .lew-tree-chevron-right {
+    cursor: default;
   }
 }
 .lew-tree-item-disabled {
