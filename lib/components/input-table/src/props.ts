@@ -1,8 +1,8 @@
-import type { PropType } from 'vue'
+import type { PropType, ExtractPropTypes } from 'vue'
 import type { LewSize } from 'lew-ui'
 import { validSizes } from 'lew-ui/constants'
 
-export interface InputTableColumn {
+export type InputTableColumn = {
   title: string
   width?: number
   field: string
@@ -147,3 +147,5 @@ export const inputTableProps = {
     description: '指定一个不可重复的字段，用于添加数据时检查重复'
   }
 }
+
+export type InputTableProps = ExtractPropTypes<typeof inputTableProps>
