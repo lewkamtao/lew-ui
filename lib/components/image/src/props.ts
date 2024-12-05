@@ -119,20 +119,6 @@ export const imageProps = {
       }
       return true
     }
-  },
-  previewGroupKey: {
-    type: String,
-    default: '',
-    description: '预览组标识，存在此值会自动开启预览功能',
-    validator: (value: string) => {
-      if (value && !/^[a-zA-Z0-9_-]+$/.test(value)) {
-        console.warn(
-          '[LewImage] previewGroupKey 只能包含字母、数字、下划线和连字符'
-        )
-        return false
-      }
-      return true
-    }
   }
 }
 

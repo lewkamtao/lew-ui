@@ -3,8 +3,6 @@ import { useImage } from '@vueuse/core'
 import { any2px } from 'lew-ui/utils'
 import { LewFlex, LewTooltip } from 'lew-ui'
 import { imageProps } from './props'
-import { Fancybox } from '@fancyapps/ui'
-import '@fancyapps/ui/dist/fancybox/fancybox.css'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -46,10 +44,6 @@ watch(
     console.log(_loading)
   }
 )
-
-onMounted(() => {
-  Fancybox.bind('[data-fancybox]', { Hash: false })
-})
 </script>
 <template>
   <lew-flex gap="0" class="lew-image-wrapper" :style="imageStyleObject">
@@ -68,7 +62,7 @@ onMounted(() => {
       />
     </template>
     <template v-else>
-      <div v-if="!previewGroupKey" class="lew-image-box">
+      <div class="lew-image-box">
         <img
           class="lew-image"
           :src
@@ -80,23 +74,6 @@ onMounted(() => {
           :alt
         />
       </div>
-      <a
-        v-else
-        :href="src"
-        :data-fancybox="previewGroupKey"
-        class="lew-image-box lew-image-box-fancybox"
-      >
-        <img
-          class="lew-image"
-          :src
-          :lazy="lazy"
-          :style="{
-            'object-fit': objectFit,
-            'object-position': objectPosition
-          }"
-          :alt
-        />
-      </a>
     </template>
   </lew-flex>
 </template>
@@ -122,9 +99,7 @@ onMounted(() => {
       opacity: 0;
     }
   }
-  .lew-image-box-fancybox {
-    cursor: zoom-in;
-  }
+
   @keyframes img-enter {
     0% {
       opacity: 0;

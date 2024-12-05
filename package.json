@@ -1,6 +1,6 @@
 {
   "name": "lew-ui",
-  "version": "2.4.17",
+  "version": "2.4.19",
   "description": "A Component Library for Vue3.js.",
   "keywords": [
     "vue3",
@@ -38,7 +38,6 @@
     "./style": "./dist/style.css"
   },
   "dependencies": {
-    "@fancyapps/ui": "^5.0.36",
     "@highlightjs/vue-plugin": "^2.1.0",
     "@vueuse/components": "^11.0.3",
     "@vueuse/core": "^10.11.0",

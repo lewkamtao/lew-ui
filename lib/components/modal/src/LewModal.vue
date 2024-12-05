@@ -66,11 +66,7 @@ if (props.closeByEsc) {
     const topModal =
       isOpenModal[isOpenModal.length - 1]?.id === modalId && modalEl
 
-    // 判断 html 元素的 className 是否包含 'with-fancybox'
-    const hasFancybox =
-      document.documentElement.classList.contains('with-fancybox')
-
-    if (!hasDialog && topModal && !hasFancybox) {
+    if (!hasDialog && topModal) {
       visible.value = false
     }
   })

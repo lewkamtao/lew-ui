@@ -34,7 +34,6 @@ Lew UI uses the following open source libraries:
 
 - [Tippy.js](https://atomiks.github.io/tippyjs/): For creating tooltips and popovers
 - [Lucide](https://github.com/lucide-icons/lucide): Provides a clean and beautiful icon set
-- [Fancybox](https://fancyapps.com/): For creating image galleries and carousels
 - [VueUse](https://vueuse.org/): Collection of Vue Composition API utilities
 - [Day.js](https://day.js.org/): Lightweight library for date manipulation
 - [Yup](https://github.com/jquense/yup): Object schema validation library

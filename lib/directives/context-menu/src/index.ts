@@ -55,7 +55,6 @@ export const LewVContextMenu = {
 
         if (!window.LewContextMenu.contextMenu) {
           window.LewContextMenu.contextMenu = (e: MouseEvent) => {
-            console.log('lew', window.LewContextMenu)
             const id = findContextMenuId(e.target as HTMLElement)
             if (!id) return
             e.preventDefault()

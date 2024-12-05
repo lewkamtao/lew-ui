@@ -1,98 +1,104 @@
 <script lang="ts" setup>
 import type { MenuTreeItem } from 'lew-ui'
-import { Home, ShoppingCart, Users, Target, BarChart2, Package, Truck, MessageSquare, DollarSign, Settings } from 'lucide-vue-next'
+import { FileText, Users, MessageSquare, Tag, BarChart2, Settings } from 'lucide-vue-next'
 const value = ref(['1', '1-1', '1-1-1'])
 const options = [
   {
     key: '1',
-    title: '商品管理商品管理商品管理商品管理商品管理商品管理商品管理商品管理商品管理商品管理',
-    renderIcon: () => h(Home, { size: 14 }),
+    title: '文章管理',
+    renderIcon: () => h(FileText, { size: 14 }),
     children: [
       {
         key: '1-1',
-        title: '商品管理商品管理商品管理商品管理商品管理',
+        title: '文章列表',
         children: [
-          { key: '1-1-1', title: '上架商品上架商品上架商品上架商品上架商品上架商品上架商品上架商品' },
-          { key: '1-1-2', title: '下架商品' },
-          { key: '1-1-3', title: '商品审核' }
+          { key: '1-1-1', title: '已发布' },
+          { key: '1-1-2', title: '草稿箱' },
+          { key: '1-1-3', title: '回收站' }
         ]
       },
       {
         key: '1-2',
-        title: '分类管理',
+        title: '写文章',
         children: [
-          { key: '1-2-1', title: '添加分类' },
-          { key: '1-2-2', title: '分类列表' }
+          { key: '1-2-1', title: '新建文章' },
+          { key: '1-2-2', title: '导入文章' },
+          { key: '1-2-3', title: '批量操作' }
         ]
       }
     ]
   },
   {
     key: '2',
-    title: '订单管理',
-    renderIcon: () => h(ShoppingCart, { size: 14 }),
+    title: '用户管理',
+    renderIcon: () => h(Users, { size: 14 }),
     children: [
       {
         key: '2-1',
-        title: '订单列表',
+        title: '用户列表',
         children: [
-          { key: '2-1-1', title: '待付款' },
-          { key: '2-1-2', title: '待发货' },
-          { key: '2-1-3', title: '已完成' }
+          { key: '2-1-1', title: '普通用户' },
+          { key: '2-1-2', title: '管理员' },
+          { key: '2-1-3', title: '黑名单' }
         ]
       },
       {
         key: '2-2',
-        title: '退款管理',
+        title: '用户权限',
         children: [
-          { key: '2-2-1', title: '退款申请' },
-          { key: '2-2-2', title: '退款记录' }
+          { key: '2-2-1', title: '角色管理' },
+          { key: '2-2-2', title: '权限分配' },
+          { key: '2-2-3', title: '访问控制' }
         ]
       }
     ]
   },
   {
-    key: '3',
-    title: '用户管理',
-    renderIcon: () => h(Users, { size: 14 }),
+    key: '3', 
+    title: '评论管理',
+    renderIcon: () => h(MessageSquare, { size: 14 }),
     children: [
       {
         key: '3-1',
-        title: '用户列表',
+        title: '评论列表',
         children: [
-          { key: '3-1-1', title: '普通用户' },
-          { key: '3-1-2', title: 'VIP用户' }
+          { key: '3-1-1', title: '待审核' },
+          { key: '3-1-2', title: '已通过' },
+          { key: '3-1-3', title: '已拒绝' }
         ]
       },
       {
         key: '3-2',
-        title: '用户反馈',
+        title: '评论设置',
         children: [
-          { key: '3-2-1', title: '意见箱' },
-          { key: '3-2-2', title: '投诉处理' }
+          { key: '3-2-1', title: '审核规则' },
+          { key: '3-2-2', title: '敏感词过滤' },
+          { key: '3-2-3', title: '评论开关' }
         ]
       }
     ]
   },
   {
     key: '4',
-    title: '营销管理',
-    renderIcon: () => h(Target, { size: 14 }),
+    title: '标签管理',
+    renderIcon: () => h(Tag, { size: 14 }),
     children: [
       {
         key: '4-1',
-        title: '优惠券',
+        title: '标签列表',
         children: [
-          { key: '4-1-1', title: '优惠券列表' },
-          { key: '4-1-2', title: '新增优惠券' }
+          { key: '4-1-1', title: '热门标签' },
+          { key: '4-1-2', title: '最新标签' },
+          { key: '4-1-3', title: '标签审核' }
         ]
       },
       {
         key: '4-2',
-        title: '活动管理',
+        title: '分类管理',
         children: [
-          { key: '4-2-1', title: '秒杀活动' },
-          { key: '4-2-2', title: '团购活动' }
+          { key: '4-2-1', title: '分类列表' },
+          { key: '4-2-2', title: '添加分类' },
+          { key: '4-2-3', title: '分类排序' }
         ]
       }
     ]
@@ -104,134 +110,45 @@ const options = [
     children: [
       {
         key: '5-1',
-        title: '销售统计',
+        title: '访问统计',
         children: [
-          { key: '5-1-1', title: '日销售额' },
-          { key: '5-1-2', title: '月销售额' }
+          { key: '5-1-1', title: '访问趋势' },
+          { key: '5-1-2', title: '来源分析' },
+          { key: '5-1-3', title: '访问明细' }
         ]
       },
       {
         key: '5-2',
-        title: '用户统计',
+        title: '内容统计',
         children: [
-          { key: '5-2-1', title: '新增用户' },
-          { key: '5-2-2', title: '活跃用户' }
+          { key: '5-2-1', title: '热门文章' },
+          { key: '5-2-2', title: '作者排行' },
+          { key: '5-2-3', title: '互动数据' }
         ]
       }
     ]
   },
   {
     key: '6',
-    title: '库存管理',
-    renderIcon: () => h(Package, { size: 14 }),
-    children: [
-      {
-        key: '6-1',
-        title: '库存查询',
-        children: [
-          { key: '6-1-1', title: '实时库存' },
-          { key: '6-1-2', title: '库存预警' }
-        ]
-      },
-      {
-        key: '6-2',
-        title: '入库管理',
-        children: [
-          { key: '6-2-1', title: '新增入库' },
-          { key: '6-2-2', title: '入库记录' }
-        ]
-      }
-    ]
-  },
-  {
-    key: '7',
-    title: '物流管理',
-    renderIcon: () => h(Truck, { size: 14 }),
-    children: [
-      {
-        key: '7-1',
-        title: '配送设置',
-        children: [
-          { key: '7-1-1', title: '运费模板' },
-          { key: '7-1-2', title: '配送区域' }
-        ]
-      },
-      {
-        key: '7-2',
-        title: '物流跟踪',
-        children: [
-          { key: '7-2-1', title: '查询物流' },
-          { key: '7-2-2', title: '异常处理' }
-        ]
-      }
-    ]
-  },
-  {
-    key: '8',
-    title: '评价管理',
-    renderIcon: () => h(MessageSquare, { size: 14 }),
-    children: [
-      {
-        key: '8-1',
-        title: '评价列表',
-        children: [
-          { key: '8-1-1', title: '好评' },
-          { key: '8-1-2', title: '中评' },
-          { key: '8-1-3', title: '差评' }
-        ]
-      },
-      {
-        key: '8-2',
-        title: '评价回复',
-        children: [
-          { key: '8-2-1', title: '自动回复' },
-          { key: '8-2-2', title: '人工回复' }
-        ]
-      }
-    ]
-  },
-  {
-    key: '9',
-    title: '财务管理',
-    renderIcon: () => h(DollarSign, { size: 14 }),
-    children: [
-      {
-        key: '9-1',
-        title: '收入统计',
-        children: [
-          { key: '9-1-1', title: '销售收入' },
-          { key: '9-1-2', title: '其他收入' }
-        ]
-      },
-      {
-        key: '9-2',
-        title: '支出管理',
-        children: [
-          { key: '9-2-1', title: '运营成本' },
-          { key: '9-2-2', title: '人工成本' }
-        ]
-      }
-    ]
-  },
-  {
-    key: '10',
     title: '系统设置',
     renderIcon: () => h(Settings, { size: 14 }),
     children: [
       {
-        key: '10-1',
-        title: '权限管理',
+        key: '6-1',
+        title: '基础设置',
         children: [
-          { key: '10-1-1', title: '角色设置' },
-          { key: '10-1-2', title: '权限分配' }
+          { key: '6-1-1', title: '网站信息' },
+          { key: '6-1-2', title: '主题设置' },
+          { key: '6-1-3', title: '邮件配置' }
         ]
       },
       {
-        key: '10-2',
-        title: '系统维护',
+        key: '6-2',
+        title: '安全设置',
         children: [
-          { key: '10-2-1', title: '系统日志' },
-          { key: '10-2-2', title: '数据备份' }
+          { key: '6-2-1', title: '登录设置' },
+          { key: '6-2-2', title: '备份恢复' },
+          { key: '6-2-3', title: '操作日志' }
         ]
       }
     ]

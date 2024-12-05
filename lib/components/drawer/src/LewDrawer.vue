@@ -52,11 +52,7 @@ if (props.closeByEsc) {
     const topDrawer =
       isOpenDrawer[isOpenDrawer.length - 1]?.id === drawerId && drawerEl
 
-    // 判断 html 元素的 className 是否包含 'with-fancybox'
-    const hasFancybox =
-      document.documentElement.classList.contains('with-fancybox')
-
-    if (!hasDialog && topDrawer && !hasFancybox) {
+    if (!hasDialog && topDrawer) {
       visible.value = false
     }
   })
