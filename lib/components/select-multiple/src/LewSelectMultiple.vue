@@ -1,11 +1,20 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
-import { LewPopover, LewTooltip } from 'lew-ui'
+import {
+  LewPopover,
+  LewTooltip,
+  LewCheckbox,
+  LewFlex,
+  LewTag,
+  LewTextTrim,
+  LewEmpty
+} from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
 import type { SelectMultipleOptions } from './props'
 import { selectMultipleProps } from './props'
 import { UseVirtualList } from '@vueuse/components'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { isFunction } from 'lodash-es'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -27,6 +36,17 @@ const state = reactive({
   loading: false,
   options: props.options,
   keyword: ''
+})
+
+const formMethods: any = inject('formMethods', {})
+
+let _searchMethod = computed(() => {
+  if (isFunction(props.searchMethod)) {
+    return props.searchMethod
+  } else if (props.searchMethodId) {
+    return formMethods[props.searchMethodId]
+  }
+  return false
 })
 
 const getSelectWidth = () => {
@@ -60,7 +80,7 @@ const search = async (e?: any) => {
     if (!keyword && props.options.length > 0) {
       result = props.options
     } else {
-      result = await props.searchMethod({
+      result = await _searchMethod.value({
         options: props.options,
         keyword
       })
@@ -221,7 +241,8 @@ defineExpose({ show, hide })
           type="chevron-down"
           class="lew-icon-select"
           :class="{
-            'lew-icon-select-hide': clearable && getLabels && getLabels.length > 0
+            'lew-icon-select-hide':
+              clearable && getLabels && getLabels.length > 0
           }"
         />
         <transition name="lew-form-icon-ani">
@@ -297,7 +318,10 @@ defineExpose({ show, hide })
             </lew-popover>
           </template>
         </template>
-        <div v-show="getLabels && getLabels.length === 0" class="lew-placeholder">
+        <div
+          v-show="getLabels && getLabels.length === 0"
+          class="lew-placeholder"
+        >
           {{ placeholder }}
         </div>
       </div>
@@ -389,7 +413,7 @@ defineExpose({ show, hide })
   width: 100%;
   border-radius: var(--lew-border-radius-small);
   background-color: var(--lew-form-bgcolor);
-  transition: var(--lew-form-transition-ease);
+  transition: all var(--lew-form-transition-ease);
   box-sizing: border-box;
   outline: 0px var(--lew-color-primary-light) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
@@ -414,7 +438,7 @@ defineExpose({ show, hide })
       top: 50%;
       right: 9px;
       transform: translateY(-50%) rotate(0deg);
-      transition: var(--lew-form-transition-bezier);
+      transition: all var(--lew-form-transition-bezier);
       opacity: var(--lew-form-icon-opacity);
       padding: 2px;
     }
@@ -590,7 +614,7 @@ defineExpose({ show, hide })
       padding: 0px 10px;
       box-sizing: border-box;
       color: var(--lew-form-color);
-      transition: var(--lew-form-transition-bezier);
+      transition: all var(--lew-form-transition-bezier);
     }
 
     input:focus {
@@ -676,7 +700,7 @@ defineExpose({ show, hide })
 
 .lew-select-item:hover {
   .lew-checkbox {
-    .icon-checkbox-box {
+    .lew-checkbox-icon-box {
       border: var(--lew-form-border-width)
         var(--lew-checkbox-border-color-hover) solid;
       outline: var(--lew-form-outline);
@@ -687,7 +711,7 @@ defineExpose({ show, hide })
 
 .lew-select-item-active:hover {
   .lew-checkbox {
-    .icon-checkbox-box {
+    .lew-checkbox-icon-box {
       border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
       background: var(--lew-checkbox-color);
 

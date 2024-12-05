@@ -45,6 +45,15 @@ export default [
     field: 'max'
   },
   {
+    label: '步长',
+    as: 'input-number',
+    componentWidth: 100,
+    props: {
+      align: 'center'
+    },
+    field: 'step'
+  },
+  {
     label: '宽度',
     as: 'input-number',
     componentWidth: 100,

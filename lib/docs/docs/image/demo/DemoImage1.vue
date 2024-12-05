@@ -1,18 +1,18 @@
 <template>
   <lew-flex wrap x="start" y="end" gap="20">
     <lew-image
-      previewKey="cover"
+      previewGroupKey="cover"
       object-position="top"
       :width="150"
       :height="150"
-      src="https://cdn.pixabay.com/photo/2016/12/06/10/03/lighthouse-1886076_1280.jpg"
+      src="https://app.tngeek.com/api_sso/open/file/b4c64ae_cat-8321993_1280.webp"
     />
     <lew-image
-      previewKey="cover"
+      previewGroupKey="cover"
       object-position="center"
       :width="150"
       :height="150"
-      src="https://cdn.pixabay.com/photo/2020/07/23/14/48/cat-5431546_1280.jpg"
+      src="https://app.tngeek.com/api_sso/open/file/1f3e439_goat-9017896_1280.webp"
     />
   </lew-flex>
 </template>

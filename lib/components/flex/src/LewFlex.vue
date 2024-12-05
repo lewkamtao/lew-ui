@@ -19,37 +19,23 @@ const styleObject = computed((): CSSProperties => {
     boxSizing: 'border-box'
   }
 })
+const alignmentMap = {
+  start: 'flex-start',
+  left: 'flex-start', 
+  end: 'flex-end',
+  right: 'flex-end',
+  center: 'center'
+}
 
 function getJustifyContent() {
-  if (props.mode === 'between') return 'space-between'
-  if (props.mode === 'around') return 'space-around'
-  if (props.direction === 'x') {
-    return props.x === 'start'
-      ? 'flex-start'
-      : props.x === 'end'
-        ? 'flex-end'
-        : 'center'
-  }
-  return props.y === 'start'
-    ? 'flex-start'
-    : props.y === 'end'
-      ? 'flex-end'
-      : 'center'
+  if (props.mode) return `space-${props.mode}`
+  const mainAxis = props.direction === 'x' ? props.x : props.y
+  return alignmentMap[mainAxis] || 'center'
 }
 
 function getAlignItems() {
-  if (props.direction === 'x') {
-    return props.y === 'start'
-      ? 'flex-start'
-      : props.y === 'end'
-        ? 'flex-end'
-        : 'center'
-  }
-  return props.x === 'start'
-    ? 'flex-start'
-    : props.x === 'end'
-      ? 'flex-end'
-      : 'center'
+  const crossAxis = props.direction === 'x' ? props.y : props.x
+  return alignmentMap[crossAxis] || 'center'
 }
 </script>
 

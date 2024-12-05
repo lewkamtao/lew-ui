@@ -3,7 +3,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useDark } from '@vueuse/core'
 import { Sun, Moon, Github } from 'lucide-vue-next'
 
-const version = ref('v2.4.2')
+const version = ref('v2.4.17')
 
 const isDark = useDark({
   selector: 'html',
@@ -45,6 +45,13 @@ const goHome = () => {
       <a class="menu-item" target="_blank" href="/#/form-engine">
         <lew-flex gap="5">
           表单引擎<lew-tag size="small" type="ghost" round> Dev </lew-tag>
+        </lew-flex>
+      </a>
+      <a class="menu-item" target="_blank" href="/#/desc-engine">
+        <lew-flex gap="5">
+          描述引擎<lew-tag size="small" color="green" type="ghost" round>
+            New
+          </lew-tag>
         </lew-flex>
       </a>
     </lew-flex>
@@ -114,7 +121,7 @@ const goHome = () => {
       width: 30px;
       padding: 0px;
     }
-    .menu-item:nth-child(4) {
+    .menu-item:nth-child(5) {
       margin-right: 50px;
     }
 

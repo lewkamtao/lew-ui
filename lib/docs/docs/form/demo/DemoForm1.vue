@@ -65,8 +65,9 @@ const options = ref([
       .min(3, '至少包含3个元素')
       .required('此项必填'),
     props: {
-      uploadHelper,
+      uploadHelperId: 'uploadHelper',
       multiple: true,
+      viewMode: 'card',
       limit: 3,
       accept: 'image/jpeg,image/png',
       tips: '只能上传jpg/png文件，且不超过500kb，最多上传3个文件'
@@ -325,6 +326,12 @@ const options = ref([
     }
   },
   {
+    field: 'info.a.b.c.slider',
+    label: '滑块',
+    as: 'slider',
+    rule: Yup.number().required('不能为空')
+  },
+  {
     field: 'info.a.b.c.input_tag',
     label: '标签输入框',
     as: 'input-tag',
@@ -376,6 +383,8 @@ const resetForm = () => {
 onMounted(() => {
   setForm()
 })
+
+const v = ref('')
 </script>
 
 <template>
@@ -383,6 +392,9 @@ onMounted(() => {
     <lew-form
       ref="formRef"
       :size="form.size"
+      :formMethods="{
+        uploadHelper
+      }"
       class="form-box"
       :options="options"
       @mounted="setForm"

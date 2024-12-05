@@ -7,7 +7,6 @@ import { Menu } from 'lucide-vue-next'
 
 const isShowSider = ref(false)
 const route = useRoute()
-const mainRef = ref()
 
 onMounted(() => {
   const isInfo = localStorage.getItem('isInfo')
@@ -26,9 +25,14 @@ onMounted(() => {
 })
 
 watch(route, () => {
-  setTimeout(() => {
-    if (mainRef.value) mainRef.value.scrollTop = 0
-  }, 50)
+  nextTick(() => {
+    const componentMain = document.getElementById('component-main')
+    if (componentMain) {
+      componentMain.style.scrollBehavior = ''
+      componentMain.scrollTop = 0
+      componentMain.style.scrollBehavior = 'smooth'
+    }
+  })
   isShowSider.value = false
 })
 
@@ -76,9 +80,7 @@ const options: MenuOptions[] = [
       },
       {
         label: 'Icon',
-        value: '/icon',
-        tagText: 'Deprecated',
-        tagColor: 'black'
+        value: '/icon'
       }
     ]
   },
@@ -93,13 +95,15 @@ const options: MenuOptions[] = [
       },
       {
         label: 'Steps',
-        value: '/Steps',
-        tagText: 'New',
-        tagColor: 'success'
+        value: '/Steps'
       },
       {
         label: 'Menu',
         value: '/Menu'
+      },
+      {
+        label: 'MenuTree',
+        value: '/MenuTree'
       },
       {
         label: 'Dropdown',
@@ -113,7 +117,7 @@ const options: MenuOptions[] = [
         label: 'ContextMenu',
         value: '/ContextMenu',
         tagText: 'Beta',
-        tagColor: 'red'
+        tagColor: 'green'
       }
     ]
   },
@@ -123,9 +127,7 @@ const options: MenuOptions[] = [
     children: [
       {
         label: 'Form',
-        value: '/Form',
-        tagText: 'New',
-        tagColor: 'success'
+        value: '/Form'
       },
       {
         label: 'Input',
@@ -133,9 +135,7 @@ const options: MenuOptions[] = [
       },
       {
         label: 'InputNumber',
-        value: '/InputNumber',
-        tagText: 'Beta',
-        tagColor: 'red'
+        value: '/InputNumber'
       },
       {
         label: 'Textarea',
@@ -175,15 +175,11 @@ const options: MenuOptions[] = [
       },
       {
         label: 'Cascader',
-        value: '/Cascader',
-        tagText: 'New',
-        tagColor: 'green'
+        value: '/Cascader'
       },
       {
         label: 'TreeSelect',
-        value: '/TreeSelect',
-        tagText: 'New',
-        tagColor: 'success'
+        value: '/TreeSelect'
       },
       {
         label: 'InputTable',
@@ -197,10 +193,20 @@ const options: MenuOptions[] = [
       },
 
       {
-        label: 'Upload',
-        value: '/Upload',
+        label: 'Slider',
+        value: '/Slider',
         tagText: 'Beta',
-        tagColor: 'red'
+        tagColor: 'blue'
+      },
+      {
+        label: 'SliderRange',
+        value: '/SliderRange',
+        tagText: 'Beta',
+        tagColor: 'blue'
+      },
+      {
+        label: 'Upload',
+        value: '/Upload'
       }
     ]
   },
@@ -222,15 +228,16 @@ const options: MenuOptions[] = [
       },
       {
         label: 'Tree',
-        value: '/Tree',
-        tagText: 'New',
-        tagColor: 'success'
+        value: '/Tree'
       },
+
       {
         label: 'Collapse',
-        value: '/Collapse',
-        tagText: 'New',
-        tagColor: 'success'
+        value: '/Collapse'
+      },
+      {
+        label: 'Desc',
+        value: '/Desc'
       }
     ]
   },
@@ -240,9 +247,7 @@ const options: MenuOptions[] = [
     children: [
       {
         label: 'Alert',
-        value: '/Alert',
-        tagText: 'Refactor',
-        tagColor: 'info'
+        value: '/Alert'
       },
       {
         label: 'Message',
@@ -287,9 +292,7 @@ const options: MenuOptions[] = [
       },
       {
         label: 'Empty',
-        value: '/Empty',
-        tagText: 'New',
-        tagColor: 'success'
+        value: '/Empty'
       }
     ]
   }
@@ -313,7 +316,7 @@ const options: MenuOptions[] = [
     <div class="sider" :class="{ 'sider-open': isShowSider }">
       <the-siderbar :options="options" />
     </div>
-    <div ref="mainRef" class="app-main lew-scrollbar">
+    <div class="app-main lew-scrollbar">
       <div id="component-main" class="component-main lew-scrollbar">
         <router-view v-slot="{ Component }">
           <keep-alive>
@@ -348,18 +351,17 @@ const options: MenuOptions[] = [
   box-sizing: border-box;
 
   .component-main {
-    width: calc(100% - 200px);
+    width: calc(100% - 280px);
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
     box-sizing: border-box;
     padding: 50px 50px 150px 50px;
-    scroll-behavior: smooth;
   }
 
   .component-nav {
     height: 100%;
-    width: 200px;
+    width: 280px;
   }
 }
 

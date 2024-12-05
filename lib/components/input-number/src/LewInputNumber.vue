@@ -1,7 +1,6 @@
-
 <script setup lang="ts">
 import { object2class, any2px } from 'lew-ui/utils'
-import { LewTooltip } from 'lew-ui'
+import { LewTooltip, LewFlex } from 'lew-ui'
 import { inputNumberProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
 
@@ -122,7 +121,8 @@ const minus = () => {
 }
 
 const checkValidationMessage = () => {
-  validationMessage.value = lewInputRef.value.validationMessage
+  validationMessage.value =
+    lewInputRef.value && lewInputRef.value.validationMessage
   return (validationMessage.value || '').length === 0
 }
 
@@ -203,7 +203,7 @@ defineExpose({ toFocus, validCheck })
   width: 100%;
   border-radius: var(--lew-border-radius-small);
   background-color: var(--lew-form-bgcolor);
-  transition: var(--lew-form-transition-ease);
+  transition: all var(--lew-form-transition-ease);
   box-sizing: border-box;
   outline: 0px var(--lew-form-border-color) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;

@@ -87,6 +87,11 @@ export const modalProps = {
     type: Boolean,
     default: false,
     description: '是否在点击遮罩层时关闭模态框'
+  },
+  zIndex: {
+    type: Number,
+    default: 1001,
+    description: '层级'
   }
 }
 

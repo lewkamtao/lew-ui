@@ -65,7 +65,7 @@ const getNumStyle = computed(() => {
   .lew-magic-number-item {
     display: inline-flex;
     flex-direction: column;
-    transition: var(--lew-form-transition-ease);
+    transition: all var(--lew-form-transition-ease);
     .lew-magic-number-num {
       overflow: hidden;
       flex-shrink: 0;

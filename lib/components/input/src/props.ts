@@ -44,7 +44,7 @@ export const inputProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '输入框尺寸',
+    description: '尺寸',
     validator: (value: LewSize) => {
       if (!validSizes.includes(value)) {
         console.warn('[LewInput] size 属性必须是 "small"、"medium" 或 "large"')

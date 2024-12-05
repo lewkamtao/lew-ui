@@ -12,7 +12,7 @@ import {
   LewMessage,
   LewContextMenu
 } from '../directives'
-import { Fancybox } from '@fancyapps/ui'
+
 
 declare module 'highlight.js'
 declare const hljs
@@ -22,7 +22,6 @@ declare module 'lodash-es'
 
 declare interface Window {
   LewContextMenu: LewContextMenu
-  LewFancybox: Fancybox
   LewNotification: LewNotification
   LewDialog: LewDialog
   LewMessage: LewMessage

@@ -1,10 +1,17 @@
 <script setup lang="ts">
-import { LewPopover, LewFlex, LewButton, LewTooltip, LewTextTrim } from 'lew-ui'
+import {
+  LewPopover,
+  LewFlex,
+  LewButton,
+  LewTooltip,
+  LewTextTrim,
+  LewCheckbox
+} from 'lew-ui'
 import { object2class } from 'lew-ui/utils'
 import type { CascaderOptions } from './props'
 import { cascaderProps } from './props'
 import { UseVirtualList } from '@vueuse/components'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, isFunction } from 'lodash-es'
 import Icon from 'lew-ui/utils/Icon.vue'
 
 // 格式化 获取 path
@@ -64,6 +71,20 @@ const state = reactive({
   keyword: ''
 })
 
+const formMethods: any = inject('formMethods', {})
+
+let _loadMethod = computed(() => {
+  if (isFunction(props.loadMethod)) {
+    return props.loadMethod
+  } else if (props.loadMethodId) {
+    return formMethods[props.loadMethodId]
+  }
+  return false
+})
+
+// 创建一个对象来存储已加载的数据
+const loadedData = reactive<Record<string, CascaderOptions[]>>({})
+
 // 通过值获取对象
 const findObjectByValue = (treeList: CascaderOptions[], value: string) => {
   for (let i = 0; i < treeList.length; i++) {
@@ -104,7 +125,6 @@ function findAndAddChildrenByValue(
       }
     }
   }
-
   return []
 }
 // 通过值查找子集
@@ -131,9 +151,9 @@ function findChildrenByValue(
 // 初始化
 const init = async () => {
   let _tree: CascaderOptions[] = []
-  if (props.onload && !state.loading) {
+  if (_loadMethod.value && !state.loading) {
     state.loading = true
-    _tree = (await props.onload()) || []
+    _tree = (await _loadMethod.value()) || []
     state.loading = false
   } else if (props.options && props.options.length > 0) {
     _tree =
@@ -156,21 +176,29 @@ init()
 const selectItem = async (item: CascaderOptions, level: number) => {
   if (!item.isLeaf && item.labelPaths !== state.activeLabels) {
     state.optionsGroup = state.optionsGroup.slice(0, level + 1)
-    if (props.onload && !item.isLeaf) {
-      item.loading = true
-      state.okLoading = true
-      const new_options =
-        (await props.onload(cloneDeep({ ...item, level }))) || []
-      let _tree = findAndAddChildrenByValue(
-        cloneDeep(state.optionsTree),
-        cloneDeep(item.value),
-        new_options
-      )
-      state.optionsTree = formatTree(_tree)
-      const _options = findChildrenByValue(state.optionsTree, item.value)
-      state.optionsGroup.push(_options)
-      item.loading = false
-      state.okLoading = false
+    if (_loadMethod.value && !item.isLeaf) {
+      if (loadedData[item.value]) {
+        // 如果数据已经加载过，直接使用缓存的数据
+        const _options = loadedData[item.value]
+        state.optionsGroup.push(_options)
+      } else {
+        item.loading = true
+        state.okLoading = true
+        const new_options =
+          (await _loadMethod.value(cloneDeep({ ...item, level }))) || []
+        let _tree = findAndAddChildrenByValue(
+          cloneDeep(state.optionsTree),
+          cloneDeep(item.value),
+          new_options
+        )
+        state.optionsTree = formatTree(_tree)
+        const _options = findChildrenByValue(state.optionsTree, item.value)
+        state.optionsGroup.push(_options)
+        // 将新加载的数据存储到对象中
+        loadedData[item.value] = _options
+        item.loading = false
+        state.okLoading = false
+      }
     } else if (!item.isLeaf) {
       const _options =
         (item.children &&
@@ -447,8 +475,7 @@ defineExpose({ show, hide })
                     <Icon
                       v-if="templateProps.loading"
                       :size="14"
-                      animation="spin"
-                      animationSpeed="fast"
+                      loading
                       class="lew-cascader-loading-icon"
                       type="loader"
                     />
@@ -493,7 +520,7 @@ defineExpose({ show, hide })
   width: 100%;
   border-radius: var(--lew-border-radius-small);
   background-color: var(--lew-form-bgcolor);
-  transition: var(--lew-form-transition-ease);
+  transition: all var(--lew-form-transition-ease);
   box-sizing: border-box;
   outline: 0px var(--lew-color-primary-light) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
@@ -518,7 +545,7 @@ defineExpose({ show, hide })
       top: 50%;
       right: 9px;
       transform: translateY(-50%) rotate(0deg);
-      transition: var(--lew-form-transition-bezier);
+      transition: all var(--lew-form-transition-bezier);
       padding: 2px;
     }
 
@@ -540,7 +567,7 @@ defineExpose({ show, hide })
       display: inline-flex;
       align-items: center;
       box-sizing: border-box;
-      transition: var(--lew-form-transition-bezier);
+      transition: all var(--lew-form-transition-bezier);
       gap: 2px;
       overflow: hidden;
 
@@ -649,7 +676,7 @@ defineExpose({ show, hide })
 }
 
 .lew-cascader-item:hover {
-  .lew-checkbox:deep(.icon-checkbox-box) {
+  .lew-checkbox:deep(.lew-checkbox-icon-box) {
     border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover)
       solid;
     outline: var(--lew-form-outline);
@@ -658,7 +685,7 @@ defineExpose({ show, hide })
 }
 
 .lew-cascader-item-tobe:hover {
-  .lew-checkbox:deep(.icon-checkbox-box) {
+  .lew-checkbox:deep(.lew-checkbox-icon-box) {
     border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
     background: var(--lew-checkbox-color);
 
@@ -670,7 +697,7 @@ defineExpose({ show, hide })
 }
 
 .lew-cascader-item-selected:hover {
-  .lew-checkbox:deep(.icon-checkbox-box) {
+  .lew-checkbox:deep(.lew-checkbox-icon-box) {
     border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
     background: var(--lew-checkbox-color);
 
@@ -688,7 +715,7 @@ defineExpose({ show, hide })
   min-width: 200px;
   height: 320px;
   overflow: hidden;
-  transition: var(--lew-form-transition-bezier);
+  transition: all var(--lew-form-transition-bezier);
   user-select: none;
 
   .not-found {

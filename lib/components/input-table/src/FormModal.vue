@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { cloneDeep } from 'lodash-es'
+import { LewModal, LewForm } from 'lew-ui'
+import type { ButtonProps } from 'lew-ui'
 
 const visible = ref(false)
 const formRef = ref()
@@ -64,23 +66,27 @@ defineExpose({ open })
 <template>
   <lew-modal
     v-model:visible="visible"
-    :cancelProps="{
-      text: '取消'
-    }"
-    :okProps="{
-      text: '保存'
-    }"
+    :cancelProps="
+      {
+        text: '取消'
+      } as ButtonProps
+    "
+    :okProps="
+      {
+        text: '保存'
+      } as ButtonProps
+    "
     @ok="ok"
     @cancel="visible = false"
     :title="`${editIndex >= 0 ? '编辑' : '新增'}数据`"
   >
     <div class="lew-form-modal lew-scrollbar">
       <lew-form
-        :size
+        :siz="size"
         @mounted="formMounted"
         ref="formRef"
         width="350"
-        :options="options"
+        :options="options as Record<string, any>[]"
       />
     </div>
   </lew-modal>

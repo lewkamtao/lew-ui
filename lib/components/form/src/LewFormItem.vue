@@ -3,6 +3,7 @@ import { any2px, object2class } from 'lew-ui/utils'
 import RequiredIcon from './RequiredIcon.vue'
 import {
   LewInput,
+  LewTextTrim,
   LewTextarea,
   LewInputTag,
   LewCheckboxGroup,
@@ -17,11 +18,20 @@ import {
   LewSwitch,
   LewButton,
   LewUpload,
-  LewInputNumber
+  LewInputNumber,
+  LewTooltip,
+  LewSlider,
+  LewSliderRange
 } from 'lew-ui'
-import { debounce, cloneDeep } from 'lodash-es'
-
-import { formItemProps, requiredIconSizeMap } from './props'
+import { debounce, cloneDeep, isString, merge } from 'lodash-es'
+import * as Yup from 'yup'
+import {
+  formItemProps,
+  requiredIconSizeMap,
+  formTypeAsMap,
+  tipsIconSizeMap
+} from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 const asMap: Record<string, any> = {
   input: LewInput,
@@ -39,7 +49,14 @@ const asMap: Record<string, any> = {
   switch: LewSwitch,
   button: LewButton,
   upload: LewUpload,
-  'input-number': LewInputNumber
+  'input-number': LewInputNumber,
+  slider: LewSlider,
+  'slider-range': LewSliderRange
+}
+// 获取app
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
 }
 
 const getFormItemClassNames = computed(() => {
@@ -67,17 +84,17 @@ watch(
 
 const validateField = debounce(() => {
   validate()
-}, 50)
+}, 120)
 
 const errMsg = ref('')
 
 const validate = () => {
-  if (!props.required && !modelValue.value) {
+  if (!curRequired.value && !modelValue.value) {
     errMsg.value = ''
     return
   }
-  if (props.rule) {
-    props.rule
+  if (curRule.value) {
+    curRule.value
       .validate(modelValue.value)
       .then(() => {
         errMsg.value = ''
@@ -99,7 +116,53 @@ const change = () => {
   emit('change', cloneDeep({ value: modelValue.value, field, label }))
 }
 
-defineExpose({ validate, setError })
+const getRequiredRuleByMap = (as: string) => {
+  const type = formTypeAsMap[as]
+  switch (type) {
+    case 'string':
+      return Yup.string().required('此项必填')
+    case 'array':
+      return Yup.array().min(1, '至少选择一个').required('此项必填')
+    case 'number':
+      return Yup.number().required('此项必填')
+    case 'boolean':
+      return Yup.boolean().oneOf([true], '此项必填').required('此项必填')
+    default:
+      return Yup.mixed().required('此项必填')
+  }
+}
+
+const curRule = computed(() => {
+  const { rule, required, as } = props
+  let _rule
+  try {
+    _rule = isString(rule) ? eval(rule) : rule
+  } catch {
+    _rule = null
+  }
+  if (required) {
+    if (!_rule) {
+      return getRequiredRuleByMap(as)
+    } else if (_rule?.spec?.optional === true) {
+      return merge(_rule, getRequiredRuleByMap(as))
+    }
+  }
+  return _rule
+})
+
+const curRequired = computed(() => {
+  const { rule, required } = props
+  let _rule
+  try {
+    _rule = isString(rule) ? eval(rule) : rule
+  } catch {
+    _rule = null
+  }
+  if (!required) return _rule?.spec?.optional === false
+  return required
+})
+
+defineExpose({ validate, setError, curRule })
 </script>
 
 <template>
@@ -115,19 +178,22 @@ defineExpose({ validate, setError })
       :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''"
       class="lew-label-box-wrapper"
     >
-      <div
-        class="lew-label-box"
-        v-tooltip="{
-          content: tips
-        }"
-        v-if="as"
-        :class="{ 'lew-label-tips': tips }"
-      >
+      <div class="lew-label-box" v-if="as">
         <RequiredIcon
           :size="requiredIconSizeMap[size]"
-          v-if="required && label"
+          v-if="curRequired && label"
         />
         {{ label }}
+        <Icon
+          style="margin-top: 1px"
+          v-if="tips"
+          v-tooltip="{
+            content: tips
+          }"
+          :size="tipsIconSizeMap[size]"
+          type="normal"
+          color="black"
+        ></Icon>
       </div>
     </div>
     <div
@@ -176,7 +242,7 @@ defineExpose({ validate, setError })
 .lew-form-item-size-small {
   .lew-label-box-wrapper {
     font-size: var(--lew-form-font-size-small);
-    margin-top: 6px;
+    margin-top: 7px;
   }
 
   .lew-form-item-main {
@@ -198,7 +264,7 @@ defineExpose({ validate, setError })
 .lew-form-item-size-large {
   .lew-label-box-wrapper {
     font-size: var(--lew-form-font-size-large);
-    margin-top: 10px;
+    margin-top: 9px;
   }
 
   .lew-form-item-main {

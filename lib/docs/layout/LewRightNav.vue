@@ -1,33 +1,25 @@
 <script setup lang="ts">
-const initNav = () => {
-  const titleDoms = document.getElementsByClassName('demo-docs-title')
+const initNav = (titleDoms: any = []) => {
   navMenus.value = Array.from(titleDoms).map((e: any) => {
     return {
       label: e.textContent,
       top: e.offsetTop
     }
   })
+  // @ts-ignore
+  window.LewRightNavTimer = setTimeout(() => {
+    init()
+  }, 500)
 }
 
 const navMenus = ref([] as any)
 
 const init = () => {
   // 选取需要监听的DOM元素
-  const targetNode: any = document.getElementById('component-main')
-
-  // 实例化MutationObserver对象，传入回调函数
-  const observer = new MutationObserver((mutationsList) => {
-    for (const mutation of mutationsList) {
-      if (mutation.type === 'childList') {
-        targetNode.scrollTop = 0
-        initNav()
-      }
-    }
-  })
-
-  // 调用MutationObserver实例对象的observe方法，传入需要监听的DOM元素和需要监听的选项
-  const config = { attributes: true, childList: true, characterData: true }
-  observer.observe(targetNode, config)
+  const titleDoms = document.getElementsByClassName('demo-docs-title')
+  if (titleDoms.length > 0) {
+    initNav(titleDoms)
+  }
 }
 
 const toScroll = (item: any) => {
@@ -36,11 +28,12 @@ const toScroll = (item: any) => {
     mainDom.scrollTop = item.top - 100
   }
 }
+// @ts-ignore
+clearTimeout(window.LewRightNavTimer)
 
 onMounted(() => {
   nextTick(() => {
     init()
-    initNav()
   })
 })
 </script>

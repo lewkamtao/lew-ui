@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-
+import type { ObjectFit } from 'lew-ui/components/image/src/props'
 type AvatarPlacement = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 type AvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy'
 type AvatarShape = 'circle' | 'square'
@@ -17,6 +17,11 @@ export const avatarProps = {
       }
       return true
     }
+  },
+  loading: {
+    type: Boolean,
+    default: false,
+    description: '是否处于加载状态'
   },
   shape: {
     type: String as PropType<AvatarShape>,
@@ -55,6 +60,53 @@ export const avatarProps = {
       const validStatus = ['online', 'processing', 'away', 'offline', 'busy']
       if (!validStatus.includes(value)) {
         console.warn(`[LewAvatar] status 必须是 ${validStatus.join(', ')} 之一`)
+        return false
+      }
+      return true
+    }
+  },
+  objectFit: {
+    type: String as PropType<ObjectFit>,
+    default: 'cover',
+    description: '图片适应容器方式',
+    validator: (value: ObjectFit) => {
+      const validValues: ObjectFit[] = [
+        'fill',
+        'contain',
+        'cover',
+        'none',
+        'scale-down'
+      ]
+      if (!validValues.includes(value)) {
+        console.warn(
+          `[LewImage] objectFit 必须是以下值之一: ${validValues.join(', ')}`
+        )
+        return false
+      }
+      return true
+    }
+  },
+  objectPosition: {
+    type: String,
+    default: 'center',
+    description: '图片在容器中的位置',
+    validator: (value: string) => {
+      const validPositions = [
+        'center',
+        'top',
+        'bottom',
+        'left',
+        'right',
+        'top left',
+        'top right',
+        'bottom left',
+        'bottom right'
+      ]
+      if (
+        !validPositions.includes(value) &&
+        !/^\d+(%|px|em|rem)(\s+\d+(%|px|em|rem))?$/.test(value)
+      ) {
+        console.warn('[LewImage] objectPosition 格式不正确')
         return false
       }
       return true

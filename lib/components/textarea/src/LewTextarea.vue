@@ -191,7 +191,7 @@ defineExpose({ toFocus })
   background-color: var(--lew-form-bgcolor);
   box-shadow: var(--lew-form-box-shadow);
   transition:
-    var(--lew-form-transition-ease),
+    all var(--lew-form-transition-ease),
     width 0s,
     height 0s;
 
@@ -223,7 +223,7 @@ defineExpose({ toFocus })
     padding: 0px 4px;
     z-index: 2;
     user-select: none;
-    transition: var(--lew-form-transition-ease);
+    transition: all var(--lew-form-transition-ease);
   }
   .lew-textarea-count:hover {
     opacity: 0.2;

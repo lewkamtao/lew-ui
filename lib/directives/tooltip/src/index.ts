@@ -24,36 +24,37 @@ export const LewTooltip = {
           appendTo: () => document.body,
           placement,
           allowHTML,
+          hideOnClick: false,
           arrow: roundArrow,
           maxWidth: 250,
           duration: [250, 250],
           delay: trigger === 'mouseenter' ? delay || [80, 80] : undefined
         })
 
-        el.instance.popper.children[0].setAttribute('data-lew', 'tooltip')
+        el.instance?.popper.children[0].setAttribute('data-lew', 'tooltip')
 
         if (!binding?.value?.content) {
-          el.instance.disable()
+          el.instance?.disable()
         }
       },
       updated(el: any, binding: DirectiveBinding) {
         const { triggerFrom, content } = binding.value
-        if (!content) {
-          el.instance.disable()
+        if (!content && content != 0) {
+          el.instance?.disable()
         } else {
-          el.instance.enable()
-          el.instance.setContent(content)
+          el.instance?.enable()
+          el.instance?.setContent(content)
         }
         if (triggerFrom === 'input-number') {
           if (content) {
-            el.instance.show()
+            el.instance?.show()
           } else {
-            el.instance.hide()
+            el.instance?.disable()
           }
         }
       },
       unmounted(el: any) {
-        el.instance.hide()
+        el.instance?.hide()
         el.instance = null
       }
     })

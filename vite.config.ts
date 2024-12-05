@@ -11,6 +11,7 @@ import { fileURLToPath, URL } from 'node:url'
 export default defineConfig(({ mode }) => {
   const isLibMode = mode === 'lib'
 
+  // 插件配置
   const commonPlugins = [
     zipPack({ outFileName: `lew-ui_${mode}.zip` }),
     vue(),
@@ -19,39 +20,50 @@ export default defineConfig(({ mode }) => {
     checker({ typescript: true })
   ]
 
-  const libPlugins = isLibMode
-    ? [dts({ include: ['lib/**/*.vue', 'lib/**/*.ts', 'lib/**/*.tsx'] })]
-    : []
+  const libPlugins = isLibMode ? [
+    dts({
+      include: ['lib/**/*.vue', 'lib/**/*.ts', 'lib/**/*.tsx'],
+      exclude: ['lib/docs/**/*']
+    })
+  ] : []
 
-  const buildOptions = isLibMode
-    ? {
-        lib: {
-          entry: fileURLToPath(new URL('./lib/index.ts', import.meta.url)),
-          name: 'lew-ui',
-          fileName: 'index'
-        },
-        rollupOptions: {
-          external: ['vue'],
-          output: { globals: { vue: 'Vue' } }
-        }
-      }
-    : {
-        rollupOptions: {
-          output: {
-            chunkFileNames: 'assets/js/[name]-[hash].js',
-            entryFileNames: 'assets/js/[name]-[hash].js',
-            assetFileNames: 'assets/static/[name]-[hash].[ext]',
-            manualChunks(id) {
-              if (id.includes('node_modules')) {
-                return id.toString().split('node_modules/')[1].split('/')[0].toString()
-              }
-            }
+  // 构建配置
+  const libBuildOptions = {
+    lib: {
+      entry: fileURLToPath(new URL('./lib/index.ts', import.meta.url)),
+      name: 'lew-ui',
+      fileName: 'index'
+    },
+    rollupOptions: {
+      external: ['vue'],
+      output: { globals: { vue: 'Vue' } }
+    },
+    copyPublicDir: false // lib模式下不复制public文件夹
+  }
+
+  const docsBuildOptions = {
+    rollupOptions: {
+      output: {
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/static/[name]-[hash].[ext]',
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return id
+              .toString()
+              .split('node_modules/')[1]
+              .split('/')[0]
+              .toString()
           }
         }
       }
+    }
+  }
 
   return {
     base: '',
+
+    // 开发服务器配置
     server: {
       open: true,
       port: 10034,
@@ -69,24 +81,39 @@ export default defineConfig(({ mode }) => {
         }
       }
     },
+
+    // CSS 配置
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler'
+        }
+      }
+    },
+
+    // 路径解析配置
     resolve: {
       alias: {
         'lew-ui': fileURLToPath(new URL('./lib', import.meta.url)),
         '@': fileURLToPath(new URL('./lib/docs', import.meta.url))
       }
     },
+
+    // 插件配置
     plugins: [
       ...commonPlugins,
       ...libPlugins,
       visualizer({
-        open: true,
+        open: false,
         filename: 'stats.html',
         gzipSize: true,
         brotliSize: true
       })
     ],
+
+    // 构建配置
     build: {
-      ...buildOptions,
+      ...(isLibMode ? libBuildOptions : docsBuildOptions),
       minify: 'terser',
       emptyOutDir: true,
       terserOptions: {

@@ -18,7 +18,7 @@ export const LewLoading = {
         //  add loading icon
         const loader = createApp(Icon, {
           type: 'loader',
-          spinning: true,
+          loading: true,
           size: iconSize || 24
         })
         loader.mount(loadingBox)

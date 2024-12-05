@@ -1,4 +1,4 @@
-import { isNumber, uniqueId } from 'lodash-es'
+import { uniqueId } from 'lodash-es'
 import Icon from './Icon.vue'
 /**
  * 获取颜色类型。
@@ -139,33 +139,6 @@ export const isValidCssValue = ({
 }
 
 /**
- * 设置表单值。
- * @param {Object} options - 配置选项。
- * @param {any} options.formRef - 表单引用。
- * @param {any} options.params - 要设置的参数。
- */
-export const lewSetForm = ({
-  formRef,
-  params
-}: {
-  formRef: any // 传入formRef.value
-  params: any // 需要设置的参数
-}) => {
-  let timeout = 0
-  const _fn = () => {
-    timeout += 10
-    if (formRef && formRef.value) {
-      formRef.value.setForm(params)
-    } else {
-      setTimeout(() => {
-        _fn()
-      }, timeout)
-    }
-  }
-  _fn()
-}
-
-/**
  * 生成唯一ID。
  * @returns {string} 生成的唯一ID。
  */
@@ -197,6 +170,50 @@ export const formatFormByMap = (formMap: any) => {
     obj[keys[keys.length - 1]] = value
   })
   return form
+}
+/**
+ * 将嵌套对象转换为以 a.b.c.d 形式表示的扁平对象。
+ * @param {Object} form - 嵌套的表单数据。
+ * @returns {any} 转换后的扁平对象映射。
+ */
+export const flattenNestedObject = (form: any) => {
+  const formMap: Record<string, any> = {}
+
+  const buildMap = (obj: any, prefix: string = '') => {
+    for (const key in obj) {
+      const value = obj[key]
+      const newKey = prefix ? `${prefix}.${key}` : key
+      if (typeof value === 'object' && value !== null) {
+        buildMap(value, newKey)
+      } else {
+        formMap[newKey] = value
+      }
+    }
+  }
+
+  buildMap(form)
+  return formMap
+}
+/**
+ * 获取嵌套对象中指定字段的值。
+ * @param {Object} obj - 要查询的对象。
+ * @param {string} field - 嵌套字段的字符串表示，使用 '.' 分隔。
+ * @returns {any} 返回目标字段的值，如果字段不存在则返回 undefined。
+ */
+export const retrieveNestedFieldValue = (obj: any, field: string) => {
+  if (!field) {
+    return undefined
+  }
+  const keys = field.split('.') // 将字符串的嵌套字段按照 '.' 分割成数组
+  let value = obj
+  for (const key of keys) {
+    if (value && Object.prototype.hasOwnProperty.call(value, key)) {
+      value = value[key]
+    } else {
+      return undefined // 如果找不到字段，返回 undefined
+    }
+  }
+  return value // 返回目标字段的值
 }
 
 /**
@@ -314,4 +331,132 @@ export const getIconInnerHTML = (e: any = {}) => {
   })
   icon.mount(el)
   return el.innerHTML
+}
+
+export const checkUrlIsImage = (url: string = ''): boolean => {
+  const imageRegex =
+    /\.(jpg|jpeg|png|webp|bmp|gif|svg|tiff|ico|heif|jfif|pjpeg|pjp|avif)$/i
+  return imageRegex.test(url)
+}
+
+export const dragmove = ({
+  el,
+  parentEl,
+  direction = 'both',
+  callback,
+  max,
+  min,
+  step = () => 1,
+  trackMax,
+  trackMin
+}: {
+  el: HTMLElement
+  parentEl: HTMLElement
+  direction?: 'horizontal' | 'vertical' | 'both'
+  callback?: (position: {
+    x: number
+    y: number
+    percentX: number
+    percentY: number
+  }) => void
+  max: () => number
+  min: () => number
+  step?: () => number
+  trackMax: () => number
+  trackMin: () => number
+}) => {
+  let isDragging = false
+  let startX: number, startY: number
+  let parentRect: DOMRect
+
+  const getClampedValues = () => {
+    const clampedMinValue = Math.max(min(), trackMin())
+    const clampedMaxValue = Math.min(max(), trackMax())
+    return { clampedMinValue, clampedMaxValue }
+  }
+
+  const snapToGrid = (value: number, gridSize: number) => {
+    return Math.round(value / gridSize) * gridSize
+  }
+
+  const onMouseDown = (e: MouseEvent) => {
+    isDragging = true
+    startX = e.clientX - el.offsetLeft
+    startY = e.clientY - el.offsetTop
+
+    parentRect = parentEl.getBoundingClientRect()
+    document.body.style.userSelect = 'none'
+    document.addEventListener('mousemove', onMouseMove)
+    document.addEventListener('mouseup', onMouseUp)
+  }
+
+  const onMouseMove = (e: MouseEvent) => {
+    if (!isDragging) return
+
+    let newX = e.clientX - startX
+    let newY = e.clientY - startY
+    const { clampedMinValue, clampedMaxValue } = getClampedValues()
+
+    if (direction === 'horizontal' || direction === 'both') {
+      const trackWidth = parentRect.width
+      const minX =
+        ((clampedMinValue - trackMin()) / (trackMax() - trackMin())) *
+        trackWidth
+      const maxX =
+        ((clampedMaxValue - trackMin()) / (trackMax() - trackMin())) *
+        trackWidth
+      newX = Math.max(minX, Math.min(newX, maxX))
+      const stepSize = trackWidth / ((trackMax() - trackMin()) / step())
+      newX = snapToGrid(newX, stepSize)
+      el.style.left = `${newX}px`
+    }
+
+    if (direction === 'vertical' || direction === 'both') {
+      const trackHeight = parentRect.height
+      const minY =
+        ((clampedMinValue - trackMin()) / (trackMax() - trackMin())) *
+        trackHeight
+      const maxY =
+        ((clampedMaxValue - trackMin()) / (trackMax() - trackMin())) *
+        trackHeight
+      newY = Math.max(minY, Math.min(newY, maxY))
+      const stepSize = trackHeight / ((trackMax() - trackMin()) / step())
+      newY = snapToGrid(newY, stepSize)
+      el.style.top = `${newY}px`
+    }
+
+    if (callback) {
+      callback({
+        x: Number(newX.toFixed(2)),
+        y: Number(newY.toFixed(2)),
+        percentX: Number((newX / parentRect.width).toFixed(2)),
+        percentY: Number((newY / parentRect.height).toFixed(2))
+      })
+    }
+  }
+
+  const onMouseUp = () => {
+    isDragging = false
+    document.body.style.userSelect = 'auto'
+    document.removeEventListener('mousemove', onMouseMove)
+    document.removeEventListener('mouseup', onMouseUp)
+  }
+
+  el.addEventListener('mousedown', onMouseDown)
+
+  return () => {
+    el.removeEventListener('mousedown', onMouseDown)
+  }
+}
+/**
+ * 将字符串转换为标准的 JSON 格式。
+ * 兼容单引号、双引号以及无引号的字段名。
+ * @param {string} str - 要转换的字符串。
+ * @returns {any} 解析后的 JSON 对象。
+ */
+export const parseToStandardJSON = (str: string) => {
+  const modifiedStr = str
+    .replace(/'/g, '"') // 替换单引号为双引号
+    .replace(/({|,)\s*([a-zA-Z0-9_]+)\s*:/g, '$1"$2":') // 给没有引号的字段名加上双引号
+  return JSON.parse(modifiedStr)
 }

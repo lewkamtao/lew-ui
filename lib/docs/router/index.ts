@@ -41,6 +41,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/form-engine',
     name: 'FormEngine',
     component: () => import('../views/form-engine/index.vue')
+  },
+  {
+    path: '/desc-engine',
+    name: 'DescEngine',
+    component: () => import('../views/desc-engine/index.vue')
   }
 ]
 const router = createRouter({

@@ -63,12 +63,12 @@ export const LewVContextMenu = {
             instance.hide()
             const menuDom = document.createElement('div')
 
-            Object.keys(window.LewContextMenu.menuInstance).forEach(
-              (key: string) => {
-                window.LewContextMenu.menuInstance[key].destroy()
-                delete window.LewContextMenu.menuInstance[key]
-              }
-            )
+            // Object.keys(window.LewContextMenu.menuInstance).forEach(
+            //   (key: string) => {
+            //     window.LewContextMenu.menuInstance[key].destroy()
+            //     delete window.LewContextMenu.menuInstance[key]
+            //   }
+            // )
 
             createApp({
               render() {

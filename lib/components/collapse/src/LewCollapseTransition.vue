@@ -37,7 +37,7 @@ export default {
     duration: {
       type: Number,
       required: false,
-      default: 250
+      default: 150
     },
     easing: {
       type: String,

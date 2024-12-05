@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { LewTextTrim } from 'lew-ui'
 import { object2class, getColorType } from 'lew-ui/utils'
 import { tagProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'

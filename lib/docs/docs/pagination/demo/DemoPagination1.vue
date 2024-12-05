@@ -59,5 +59,31 @@ const total = ref(100)
         <div style="margin-left: 20px">共 {{ total }} 条</div>
       </template>
     </lew-pagination>
+    <lew-pagination
+      v-model:current-page="pageNum"
+      :pageSize="pageSize"
+      size="large"
+      :pageSizeOptions="[
+        {
+          label: '10 / 页',
+          value: 10
+        },
+        {
+          label: '20 / 页',
+          value: 20
+        },
+        {
+          label: '30 / 页',
+          value: 30
+        }
+      ]"
+      :total="total"
+      round
+      @change="change"
+    >
+      <template #right>
+        <div style="margin-left: 20px">共 {{ total }} 条</div>
+      </template>
+    </lew-pagination>
   </lew-flex>
 </template>

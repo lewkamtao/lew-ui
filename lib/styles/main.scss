@@ -1,4 +1,3 @@
-/* 基础元素样式 */
 input,
 textarea,
 button {
@@ -118,7 +117,7 @@ button {
 
 .lew-form-icon-ani-enter-active,
 .lew-form-icon-ani-leave-active {
-  transition: var(--lew-form-transition-bezier);
+  transition: all var(--lew-form-transition-bezier);
 }
 
 /* 表单清除图标 */
@@ -153,4 +152,14 @@ button {
   &:active {
     opacity: var(--lew-form-icon-opacity-active);
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }

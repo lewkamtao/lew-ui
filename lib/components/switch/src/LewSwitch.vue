@@ -116,7 +116,7 @@ const getSwitchStyle = computed(() => {
   height: var(--lew-switch-height);
   background: var(--lew-bgcolor-3);
   border-radius: var(--lew-border-radius-small);
-  transition: var(--lew-form-transition-ease);
+  transition: all var(--lew-form-transition-ease);
   outline: 0px var(--lew-color-primary-light) solid;
   box-shadow: var(--lew-form-box-shadow);
 
@@ -128,7 +128,7 @@ const getSwitchStyle = computed(() => {
     height: var(--lew-switch-dot-height);
     border-radius: 4px;
     background: var(--lew-color-white);
-    transition: var(--lew-form-transition-ease);
+    transition: all var(--lew-form-transition-ease);
     transform: var(--lew-switch-dot-transform);
   }
 

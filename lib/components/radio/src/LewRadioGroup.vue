@@ -2,6 +2,7 @@
 import { radioGroupProps } from './props'
 import type { RadioOptions } from './props'
 import { object2class } from 'lew-ui/utils'
+import { LewFlex } from 'lew-ui'
 import LewRadio from './LewRadio.vue'
 
 const emit = defineEmits(['change'])

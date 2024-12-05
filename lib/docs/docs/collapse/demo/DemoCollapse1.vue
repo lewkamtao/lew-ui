@@ -53,10 +53,6 @@ const companies1 = [
       'Google is a technology company that specializes in Internet-related services and products. Founded in 1998 by Larry Page and Sergey Brin while they were Ph.D. students at Stanford University, Google is now one of the most valuable companies in the world, known for its search engine, online advertising, and cloud computing services.'
   }
 ]
-const index = ref(1)
-setInterval(() => {
-  index.value = index.value + 1
-}, 1000)
 </script>
 
 <template>
@@ -68,7 +64,7 @@ setInterval(() => {
       :key="item.id"
     >
       <template v-if="item.name === 'Apple'">
-        <lew-collapse width="100%" style="padding-left: 20px;" v-model="value">
+        <lew-collapse width="100%" style="padding-left: 20px" v-model="value">
           <lew-collapse-item
             :title="item.name"
             :collapse-key="item.id"

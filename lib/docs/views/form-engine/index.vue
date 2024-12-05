@@ -111,6 +111,7 @@ const getModel = () => {
     item.gridArea = `auto  / ${rowStart} / auto  / ${rowEnd}`
     delete item.spanMap
     delete item.fieldType
+    delete item.schema
   })
   const componentModel = {
     ...formGlobal.value,
@@ -124,6 +125,15 @@ const getModel = () => {
 
 watch(
   () => options.value,
+  () => {
+    refreshForm()
+  },
+  {
+    deep: true
+  }
+)
+watch(
+  () => formGlobal.value,
   () => {
     refreshForm()
   },
@@ -185,7 +195,6 @@ const addComponent = (item: any) => {
       field: `${getUniqueId()}`
     })
   )
-  console.log(item)
 }
 </script>
 
@@ -338,7 +347,6 @@ const addComponent = (item: any) => {
               >
               <lew-form-item
                 v-else
-                v-model="formMap[element.field]"
                 v-bind="{
                   size: formGlobal.size,
                   direction: formGlobal.direction,
@@ -414,8 +422,10 @@ const addComponent = (item: any) => {
               </lew-flex>
               <set-form
                 v-if="
-                  options[options.findIndex((e: any) => e.id === activeId)]
-                    .schema.length > 0
+                  (
+                    options[options.findIndex((e: any) => e.id === activeId)]
+                      ?.schema || []
+                  ).length > 0
                 "
                 :key="activeId"
                 v-model="

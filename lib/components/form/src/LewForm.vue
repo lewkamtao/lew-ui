@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { object2class, any2px, formatFormByMap } from 'lew-ui/utils'
+import {
+  object2class,
+  any2px,
+  formatFormByMap,
+  retrieveNestedFieldValue
+} from 'lew-ui/utils'
 import LewGetLabelWidth from './LewGetLabelWidth.vue'
 import { formProps } from './props'
-import { cloneDeep, reduce, merge } from 'lodash-es'
+import { cloneDeep } from 'lodash-es'
 import LewFormItem from './LewFormItem.vue'
 import * as Yup from 'yup'
 
@@ -14,50 +19,37 @@ const autoLabelWidth = ref(0)
 
 let componentOptions: any[] = cloneDeep(props.options) || []
 
-// 处理 options 里的 rule 字段
-// 如果 options 中的 required 字段为 true，则
-componentOptions.forEach((item: any) => {
-  let { rule } = item
-  if (item.required) {
-    if (!rule) {
-      item.rule = Yup.mixed()
-        .required('此项必填')
-        .test('非空', '此项必填', (value) => value !== '')
-    } else if (rule?.spec?.optional === true) {
-      item.rule = merge(rule, Yup.mixed().required('此项必填'))
-    }
-  } else {
-    item.required = rule?.spec?.optional === false
-  }
-})
-
-const formRulesmap: any = () => {
-  return reduce(
-    cloneDeep(componentOptions),
-    (acc: Record<string, any> = {}, cur: any) => {
-      const { field, rule } = cur
-      if (field) {
-        acc[field] = rule
-      }
-      return acc
-    },
-    {}
-  )
-}
-
 const getFormClassNames = computed(() => {
   const { columns } = cloneDeep(props)
   return object2class('lew-form', { columns })
 })
 
 // 将 formMap.value 中 xx.xx.xx 形式的字段，转换成嵌套对象
-const getForm = () => formatFormByMap(cloneDeep(formMap.value))
+const getForm = () => {
+  const formData: Record<string, any> = formatFormByMap(
+    cloneDeep(formMap.value)
+  )
+  // 应用 outputFormat
+  componentOptions.forEach((item) => {
+    if (item.outputFormat && item.field && formData[item.field]) {
+      formData[item.field] = item.outputFormat({
+        item,
+        value: formData[item.field]
+      })
+    }
+  })
+  return formData
+}
 
 const setForm = (value: any = {}) => {
   // 把对象的值给 formMap
   componentOptions.forEach((item: any) => {
-    const v = getNestedFieldValue(value, item.field)
+    let v = retrieveNestedFieldValue(value, item.field)
     if (value !== undefined && item.field) {
+      // 应用 inputFormat
+      if (item.inputFormat) {
+        v = item.inputFormat({ item, value: v })
+      }
       // 重置error
       formItemRefMap.value[item.field]?.setError('')
       // 如果有值，就把值给 formMap
@@ -75,33 +67,22 @@ const resetError = () => {
   })
 }
 
-const getNestedFieldValue = (obj: any, field: string) => {
-  if (!field) {
-    return undefined
-  }
-  const keys = field.split('.') // 将字符串的嵌套字段按照 '.' 分割成数组
-  let value = obj
-  for (const key of keys) {
-    if (value && Object.prototype.hasOwnProperty.call(value, key)) {
-      value = value[key]
-    } else {
-      return undefined // 如果找不到字段，返回 undefined
-    }
-  }
-  return value // 返回目标字段的值
-}
-
 const formItemRefMap = ref<Record<string, any>>({})
 
 const validate = () => {
   return new Promise<boolean>((resolve) => {
     // 定义校验规则
-    const schema = Yup.object().shape(formRulesmap())
+    const schemaMap: Record<string, any> = {}
 
     // 清除错误信息
     Object.keys(formItemRefMap.value).forEach((key) => {
+      if (formItemRefMap.value[key].curRule) {
+        schemaMap[key] = formItemRefMap.value[key].curRule
+      }
       formItemRefMap.value[key].setError('')
     })
+
+    const schema = Yup.object().shape(schemaMap)
 
     // 校验对象
     schema
@@ -129,6 +110,8 @@ onMounted(() => {
   emit('mounted')
 })
 
+provide('formMethods', props.formMethods)
+
 watch(
   () => props.size,
   () => {
@@ -147,7 +130,7 @@ defineExpose({ getForm, setForm, resetError, validate })
     :style="{ width: any2px(width), minWidth: 320 }"
     :class="getFormClassNames"
   >
-    <LewGetLabelWidth
+    <lew-get-label-width
       ref="formLabelRef"
       :size="size"
       :options="componentOptions"

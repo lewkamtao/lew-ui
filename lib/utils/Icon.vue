@@ -1,36 +1,37 @@
 <script lang="ts" setup>
 import {
-  CircleCheck,
-  Info,
-  TriangleAlert,
-  CircleAlert,
+  ArrowDown,
   BellRing,
-  X,
-  Copy,
-  ChevronUp,
+  Calendar,
+  Check,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   ChevronsLeft,
   ChevronsRight,
-  Loader,
-  Check,
-  Calendar,
-  Minimize2,
-  Maximize2,
-  Trash,
+  ChevronsUpDown,
+  CircleAlert,
+  CircleCheck,
   ClockArrowUp,
-  FileCheck,
-  UploadCloud,
-  Minus,
-  Image,
-  Plus,
-  MoreHorizontal,
-  RotateCw,
+  Copy,
   Edit2,
-  ArrowDown
+  FileCheck,
+  Image,
+  Info,
+  Loader,
+  Maximize2,
+  Minimize2,
+  Minus,
+  MoreHorizontal,
+  Plus,
+  RotateCw,
+  Trash,
+  TriangleAlert,
+  UploadCloud,
+  X
 } from 'lucide-vue-next'
-import { iconColorType, getColorType } from './index'
+import { getColorType, iconColorType } from './index'
 
 const props = defineProps({
   type: {
@@ -41,6 +42,10 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  color: {
+    type: String,
+    default: ''
+  },
   strokeWidth: {
     type: Number,
     default: 2
@@ -49,50 +54,52 @@ const props = defineProps({
     type: Number,
     default: 16
   },
-  spinning: {
+  loading: {
     type: Boolean,
     default: false
   },
   speed: {
     type: Number,
-    default: 1.5
+    default: 1
   }
 })
+
 const iconMap: any = {
-  success: CircleCheck,
-  normal: Info,
-  warning: TriangleAlert,
-  error: CircleAlert,
-  info: BellRing,
-  tips: Info,
-  close: X,
-  copy: Copy,
-  loader: Loader,
-  loading: Loader,
-  check: Check,
-  calendar: Calendar,
-  'chevron-up': ChevronUp,
+  'arrow-down': ArrowDown,
   'chevron-down': ChevronDown,
   'chevron-left': ChevronLeft,
   'chevron-right': ChevronRight,
+  'chevron-up': ChevronUp,
   'chevrons-left': ChevronsLeft,
   'chevrons-right': ChevronsRight,
-  trash: Trash,
-  'minimize-2': Minimize2,
-  'maximize-2': Maximize2,
-  uploading: Loader,
-  pending: ClockArrowUp,
-  complete: FileCheck,
-  wrong_type: CircleAlert,
-  wrong_size: CircleAlert,
-  'upload-cloud': UploadCloud,
-  minus: Minus,
-  image: Image,
-  plus: Plus,
-  'rotate-cw': RotateCw,
-  'more-horizontal': MoreHorizontal,
+  'chevrons-up-down': ChevronsUpDown,
   'edit-2': Edit2,
-  'arrow-down': ArrowDown
+  'maximize-2': Maximize2,
+  'minimize-2': Minimize2,
+  'more-horizontal': MoreHorizontal,
+  'rotate-cw': RotateCw,
+  'upload-cloud': UploadCloud,
+  calendar: Calendar,
+  check: Check,
+  close: X,
+  complete: FileCheck,
+  copy: Copy,
+  error: CircleAlert,
+  image: Image,
+  info: BellRing,
+  loader: Loader,
+  loading: Loader,
+  minus: Minus,
+  normal: Info,
+  pending: ClockArrowUp,
+  plus: Plus,
+  success: CircleCheck,
+  tips: Info,
+  trash: Trash,
+  uploading: Loader,
+  warning: TriangleAlert,
+  wrong_size: CircleAlert,
+  wrong_type: CircleAlert
 }
 </script>
 
@@ -100,12 +107,12 @@ const iconMap: any = {
   <component
     class="lew-icon"
     :class="{
-      'lew-icon-spinning': spinning
+      'lew-icon-loading': loading
     }"
     :style="{
       'animation-duration': speed + 's',
       color: iconColorType[type]
-        ? `var(--lew-color-${getColorType(type)}${dark ? '-dark' : ''})`
+        ? `var(--lew-color-${color ? color : getColorType(type)}${dark ? '-dark' : ''})`
         : ''
     }"
     :strokeWidth
@@ -113,6 +120,7 @@ const iconMap: any = {
     :is="iconMap[props.type]"
   ></component>
 </template>
+
 <style lang="scss" scoped>
 @keyframes spin {
   from {
@@ -124,7 +132,7 @@ const iconMap: any = {
   }
 }
 
-.lew-icon-spinning {
+.lew-icon-loading {
   animation: spin 1s linear infinite;
 }
 </style>

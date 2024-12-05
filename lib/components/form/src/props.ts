@@ -1,6 +1,7 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 import type { LewSize } from 'lew-ui'
 import { validSizes } from 'lew-ui/constants'
+
 export type FormDirection = 'x' | 'y'
 
 export const formProps = {
@@ -109,6 +110,11 @@ export const formProps = {
     default: '',
     description: '表单的唯一标识符',
     hidden: true
+  },
+  formMethods: {
+    type: Object as PropType<Record<string, Function>>,
+    default: () => ({}),
+    description: '表单项的方法集合，包含用于操作表单的函数'
   }
 }
 
@@ -124,7 +130,7 @@ export const formItemProps = {
     description: '表单项对应的字段名，用于数据绑定和验证'
   },
   required: {
-    type: Boolean,
+    type: [Boolean, Function],
     default: false,
     description: '是否为必填项'
   },
@@ -220,7 +226,7 @@ export const formItemProps = {
     description: '自定义验证失败时的错误提示'
   },
   rule: {
-    type: Object as PropType<Record<string, any>>,
+    type: [Object, String] as PropType<any | string>,
     description: '表单项的验证规则'
   },
   props: {
@@ -243,6 +249,16 @@ export const formItemProps = {
     default: '',
     description: '表单项的唯一标识符',
     hidden: true
+  },
+  outputFormat: {
+    type: Function as PropType<(params: { value: unknown }) => unknown>,
+    default: ({ value }: { value: unknown }) => value,
+    description: '出参时的格式化方法'
+  },
+  inputFormat: {
+    type: Function as PropType<(params: { value: unknown }) => unknown>, 
+    default: ({ value }: { value: unknown }) => value,
+    description: '入参时的格式化方法'
   }
 }
 
@@ -252,5 +268,30 @@ export const requiredIconSizeMap: Record<LewSize, number> = {
   large: 8
 }
 
+export const tipsIconSizeMap: Record<LewSize, number> = {
+  small: 13,
+  medium: 14,
+  large: 16
+}
+
 export type FormProps = ExtractPropTypes<typeof formProps>
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>
+
+export const formTypeAsMap: Record<string, any> = {
+  input: 'string',
+  textarea: 'string',
+  'input-tag': 'array',
+  'checkbox-group': 'array',
+  'radio-group': 'string',
+  checkbox: 'boolean',
+  select: 'string',
+  'select-multiple': 'array',
+  'date-picker': 'date',
+  'date-range-picker': 'array',
+  tabs: 'string',
+  cascader: 'string',
+  switch: 'boolean',
+  button: 'void',
+  upload: 'array',
+  'input-number': 'number'
+}

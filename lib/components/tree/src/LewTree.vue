@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { LewFlex, LewEmpty, LewLoading } from 'lew-ui'
+import { LewFlex, LewEmpty, LewLoading, LewCheckbox } from 'lew-ui'
 import { treeProps } from './props'
 import type { TreeDataSource } from './props'
 import {
@@ -68,7 +68,7 @@ const init = async (keyword = '') => {
 init()
 
 const expandHandle = async (item: TreeDataSource) => {
-  if (props.expandAll) {
+  if (props.expandAll || item.isLeaf) {
     return
   }
   let _expandedKeys = cloneDeep(expandedKeys.value || [])
@@ -76,14 +76,15 @@ const expandHandle = async (item: TreeDataSource) => {
   if (i >= 0) {
     _expandedKeys.splice(i, 1)
     expandedKeys.value = _expandedKeys
-  } else if (props.onload && !loadingKeys.value.includes(item.key)) {
+  } else if (props.loadMethod && !loadingKeys.value.includes(item.key)) {
     const index = treeList.value.findIndex(
       (e: TreeDataSource) => e.parentKey === item.key
     )
     if (index < 0) {
       loadingKeys.value.push(item.key)
       let _tree =
-        ((await props.onload(cloneDeep(item) as TreeDataSource)) as any) || []
+        ((await props.loadMethod(cloneDeep(item) as TreeDataSource)) as any) ||
+        []
       insertChildByKey(treeBackup, item.key, _tree)
       const { newTree, newTreeList }: any = (await tree2List({
         dataSource: treeBackup,
@@ -243,8 +244,7 @@ defineExpose({ init, getTreeList })
             <Icon
               v-if="loadingKeys.includes(item.key)"
               :size="14"
-              animation="spin"
-              animationSpeed="fast"
+              loading
               class="lew-cascader-loading-icon"
               type="loader"
             />
@@ -308,7 +308,7 @@ defineExpose({ init, getTreeList })
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: var(--lew-form-transition-bezier);
+    transition: all var(--lew-form-transition-bezier);
     width: 14px;
     height: 14px;
     padding: 4px;
@@ -316,7 +316,7 @@ defineExpose({ init, getTreeList })
     margin-left: 5px;
     .lew-tree-chevron-right-icon {
       transform: rotate(0deg);
-      transition: var(--lew-form-transition-bezier);
+      transition: all var(--lew-form-transition-bezier);
     }
   }
   .lew-tree-chevron-right:hover {
@@ -357,7 +357,7 @@ defineExpose({ init, getTreeList })
   .lew-tree-item-label:hover {
     background-color: var(--lew-bgcolor-3);
     user-select: none;
-    .lew-checkbox:deep(.icon-checkbox-box) {
+    .lew-checkbox:deep(.lew-checkbox-icon-box) {
       border: var(--lew-form-border-width)
         var(--lew-checkbox-border-color-hover) solid;
       outline: var(--lew-form-outline);
@@ -371,7 +371,7 @@ defineExpose({ init, getTreeList })
     font-weight: 600;
   }
   .lew-tree-item-label:hover {
-    .lew-checkbox:deep(.icon-checkbox-box) {
+    .lew-checkbox:deep(.lew-checkbox-icon-box) {
       border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
       background: var(--lew-checkbox-color);
       .icon-checkbox {
@@ -384,7 +384,7 @@ defineExpose({ init, getTreeList })
 
 .lew-tree-item-certain {
   .lew-tree-item-label:hover {
-    .lew-checkbox:deep(.icon-checkbox-box) {
+    .lew-checkbox:deep(.lew-checkbox-icon-box) {
       border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
       background: var(--lew-checkbox-color);
     }
@@ -394,6 +394,9 @@ defineExpose({ init, getTreeList })
 .lew-tree-item-leaf {
   .lew-tree-chevron-right {
     opacity: 0;
+  }
+  .lew-tree-chevron-right {
+    cursor: default;
   }
 }
 .lew-tree-item-disabled {

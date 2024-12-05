@@ -66,7 +66,12 @@ const clearHandle = () => {
 const lewDateRangeClassNames = computed(() => {
   const focus = visible.value
   const { size, readonly, disabled } = props
-  return object2class('lew-date-range-picker', { focus, size, readonly, disabled })
+  return object2class('lew-date-range-picker', {
+    focus,
+    size,
+    readonly,
+    disabled
+  })
 })
 
 const checkClear = computed(() => {
@@ -98,7 +103,10 @@ defineExpose({ show, hide })
           >
             {{ placeholderStart }}
           </div>
-          <div v-else class="lew-date-range-picker-dateValue lew-date-range-picker-start">
+          <div
+            v-else
+            class="lew-date-range-picker-dateValue lew-date-range-picker-start"
+          >
             {{ modelValue[startKey] }}
           </div>
           <div class="lew-date-range-picker-mid">
@@ -110,7 +118,10 @@ defineExpose({ show, hide })
           >
             {{ placeholderEnd }}
           </div>
-          <div v-else class="lew-date-range-picker-dateValue lew-date-range-picker-end">
+          <div
+            v-else
+            class="lew-date-range-picker-dateValue lew-date-range-picker-end"
+          >
             {{ modelValue[endKey] }}
           </div>
           <Icon
@@ -163,7 +174,7 @@ defineExpose({ show, hide })
     border-radius: var(--lew-border-radius-small);
     background-color: var(--lew-form-bgcolor);
     box-sizing: border-box;
-    transition: var(--lew-form-transition-ease);
+    transition: all var(--lew-form-transition-ease);
     cursor: pointer;
     user-select: none;
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
@@ -189,7 +200,7 @@ defineExpose({ show, hide })
       top: 50%;
       right: 9px;
       transform: translateY(-50%);
-      transition: var(--lew-form-transition-bezier);
+      transition: all var(--lew-form-transition-bezier);
       opacity: var(--lew-form-icon-opacity);
     }
 

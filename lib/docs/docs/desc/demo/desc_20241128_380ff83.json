@@ -1,0 +1,147 @@
+{
+  "direction": "x",
+  "columns": 2,
+  "labelX": "end",
+  "valueX": "start",
+  "size": "medium",
+  "width": 640,
+  "id": "desc_20241128_380ff83",
+  "options": [
+    {
+      "id": "desc_20241128_companyName",
+      "label": "公司名称",
+      "field": "companyName",
+      "gridArea": "auto  / 1 / auto  / 2"
+    },
+    {
+      "id": "desc_20241128_establishedYear",
+      "label": "成立年份",
+      "field": "establishedYear",
+      "gridArea": "auto  / 2 / auto  / 3",
+      "tips": "公司正式成立的年份"
+    },
+    {
+      "id": "desc_20241128_industry",
+      "label": "所属行业",
+      "field": "industry",
+      "gridArea": "auto  / 1 / auto  / 3"
+    },
+    {
+      "id": "desc_20241128_headquarters",
+      "label": "总部所在地",
+      "field": "headquarters",
+      "gridArea": "auto  / 1 / auto  / 2",
+      "tips": "公司主要办公地点"
+    },
+    {
+      "id": "desc_20241128_numberOfEmployees",
+      "label": "员工数量",
+      "field": "numberOfEmployees",
+      "gridArea": "auto  / 2 / auto  / 3"
+    },
+    {
+      "id": "desc_20241128_revenue",
+      "label": "年收入",
+      "field": "revenue",
+      "gridArea": "auto  / 1 / auto  / 2",
+      "tips": "最近一个财年的总收入"
+    },
+    {
+      "id": "desc_20241128_ceo",
+      "label": "首席执行官",
+      "field": "ceo",
+      "gridArea": "auto  / 2 / auto  / 3"
+    },
+    {
+      "id": "desc_20241128_products",
+      "label": "主要产品",
+      "field": "products",
+      "gridArea": "auto  / 1 / auto  / 2",
+      "tips": "公司最知名的产品线"
+    },
+    {
+      "id": "desc_20241128_majorCompetitors",
+      "label": "主要竞争对手",
+      "field": "majorCompetitors",
+      "gridArea": "auto  / 1 / auto  / 3"
+    },
+    {
+      "id": "desc_20241128_corporateCulture",
+      "label": "企业文化",
+      "field": "corporateCulture",
+      "gridArea": "auto  / 1 / auto  / 3",
+      "tips": "公司的核心价值观和工作理念"
+    },
+    {
+      "id": "desc_20241128_sustainabilityInitiatives",
+      "label": "可持续发展计划",
+      "field": "sustainabilityInitiatives",
+      "gridArea": "auto  / 1 / auto  / 3",
+      "tips": "公司为环境保护和社会责任所做的努力"
+    },
+    {
+      "id": "desc_20241128_customerSatisfaction",
+      "label": "客户满意度",
+      "field": "customerSatisfaction",
+      "gridArea": "auto  / 1 / auto  / 2"
+    },
+    {
+      "id": "desc_20241128_marketShare",
+      "label": "市场份额",
+      "field": "marketShare",
+      "gridArea": "auto  / 2 / auto  / 3",
+      "tips": "在全球智能手机市场中的占比"
+    },
+    {
+      "id": "desc_20241128_batteryTechnology",
+      "label": "电池技术",
+      "field": "batteryTechnology",
+      "gridArea": "auto  / 1 / auto  / 3"
+    },
+    {
+      "id": "desc_20241128_autopilotFeatures",
+      "label": "自动驾驶功能",
+      "field": "autopilotFeatures",
+      "gridArea": "auto  / 1 / auto  / 3"
+    },
+    {
+      "id": "desc_20241128_superchargerNetwork",
+      "label": "超级充电网络",
+      "field": "superchargerNetwork",
+      "gridArea": "auto  / 1 / auto  / 2"
+    },
+    {
+      "id": "desc_20241128_safetyRatings",
+      "label": "安全评级",
+      "field": "safetyRatings",
+      "gridArea": "auto  / 2 / auto  / 3",
+      "tips": "产品在各项安全测试中的表现"
+    },
+    {
+      "id": "desc_20241128_deliveryTime",
+      "label": "交付时间",
+      "field": "deliveryTime",
+      "gridArea": "auto  / 1 / auto  / 2"
+    },
+    {
+      "id": "desc_20241128_electricRange",
+      "label": "电动续航里程",
+      "field": "electricRange",
+      "gridArea": "auto  / 2 / auto  / 3"
+    },
+    {
+      "id": "desc_20241128_userInterface",
+      "label": "用户界面",
+      "field": "userInterface",
+      "gridArea": "auto  / 1 / auto  / 3",
+      "tips": "产品操作系统的设计特点"
+    },
+    {
+      "id": "desc_20241128_afterSalesService",
+      "label": "售后服务",
+      "field": "afterSalesService",
+      "gridArea": "auto  / 1 / auto  / 3",
+      "tips": "包括保修、维修和客户支持等服务"
+    }
+  ]
+}

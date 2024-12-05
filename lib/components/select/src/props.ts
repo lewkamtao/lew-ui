@@ -47,11 +47,11 @@ export const selectProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '标签的尺寸',
+    description: '尺寸',
     validator(value: LewSize): boolean {
       if (!validSizes.includes(value)) {
         console.warn(
-          `[LewSelect] 无效的标签尺寸: ${value}。请使用 ${validSizes.join(', ')} 中的一个。`
+          `[LewSelect] 尺寸: ${value}。请使用 ${validSizes.join(', ')} 中的一个。`
         )
         return false
       }
@@ -72,14 +72,14 @@ export const selectProps = {
     type: Function as PropType<
       (params: SelectSearchMethodParams) => SelectOptions[]
     >,
-    default: (params: SelectSearchMethodParams) => {
-      const { options, keyword } = params
-      if (options && keyword) {
-        return options.filter((option) => option.label.indexOf(keyword) >= 0)
-      }
-      return []
-    },
+    default: undefined,
     description: '自定义搜索方法，接收搜索参数并返回过滤后的选项列表'
+  },
+  searchMethodId: {
+    type: String,
+    default: '',
+    hidden: true,
+    description: '上传函数的标识'
   },
   searchDelay: {
     type: Number,

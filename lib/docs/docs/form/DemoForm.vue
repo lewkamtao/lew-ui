@@ -43,7 +43,8 @@ const toFormEngine = () => {
         同时，
         <strong>强布局</strong>
         功能具有较强的约束性，让开发者不需要为布局而烦恼。<br /><br />
-        现邀请您体验新一代的表单构建方式，感受<strong>强校验和强布局</strong>带来的便捷和效率提升。
+        现邀请您体验新一代的表单构建方式，感受
+        <strong>强校验和强布局</strong> 带来的便捷和效率提升。
       </template>
       <template #footer>
         <lew-button @click="toFormEngine" round size="small">

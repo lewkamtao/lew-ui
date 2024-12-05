@@ -24,7 +24,7 @@ const initTree = () => {
   })
 }
 
-const onload = (item?: any) => {
+const loadMethod = (item?: any) => {
   const levelMap: any = {
     0: 'province',
     1: 'city',
@@ -67,7 +67,7 @@ const v = ref<string>('')
       v-model="v"
       keyField="value"
       labelField="label"
-      :onload="onload"
+      :loadMethod="loadMethod"
       :initTree="initTree"
       @change="change"
     />

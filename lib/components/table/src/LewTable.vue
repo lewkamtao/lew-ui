@@ -129,18 +129,33 @@ const updateScrollState = () => {
   state.hiddenScrollLine = ''
 }
 
+const compTrHeight = () => {
+  nextTick(() => {
+    ;(trRefArr.value || []).forEach(
+      (element: HTMLElement | null, index: number) => {
+        if (element) {
+          trHeightArr.value[index] = element.getBoundingClientRect().height
+        }
+      }
+    )
+  })
+}
+
+watch(
+  () => trRefArr.value,
+  () => {
+    compTrHeight()
+  },
+  {
+    deep: true
+  }
+)
+
 const handleTableResize = throttle(() => {
   const table = tableRef.value
 
   if (!table) return
-
-  nextTick(() => {
-    trRefArr.value.forEach((element: HTMLElement | null, index: number) => {
-      if (element) {
-        trHeightArr.value[index] = element.getBoundingClientRect().height
-      }
-    })
-  })
+  compTrHeight()
 
   let totalWidth = props.columns.reduce(
     (sum, col) => sum + Number(col.width),
@@ -237,14 +252,14 @@ const renderCell = ({
     ? h(LewTextTrim, {
         x: column.x as TextTrimAlignment,
         style: 'width: 100%',
-        text: row[column.field]
+        text: showTextAndEmpty(row[column.field])
       })
     : showTextAndEmpty(row[column.field])
 }
 
 const showTextAndEmpty = (text: any) => {
   if (text === null || text === undefined || text === '') {
-    return '--'
+    return '-'
   } else {
     return isString(text) ? text : JSON.stringify(text)
   }
@@ -367,8 +382,7 @@ onMounted(() => {
 })
 
 onActivated(() => {
-  updateScrollState()
-  handleTableResize()
+  init()
   if (props.checkable && !props.rowKey) {
     throw new Error(
       'LewTable error: rowKey is required when checkable is enabled!'
@@ -680,15 +694,20 @@ onUnmounted(() => {
   .lew-table-header,
   .lew-table-footer {
     position: relative;
-    z-index: 999;
+    z-index: 9;
   }
-  .lew-table-scroll-line-left {
+  .lew-table-scroll-line {
     position: absolute;
-    left: 0px;
     top: 0px;
     height: 100%;
-    z-index: 90;
-    width: 8px;
+    z-index: 11;
+    width: 5px;
+    transition: opacity 0.25s;
+  }
+
+  .lew-table-scroll-line-left {
+    @extend .lew-table-scroll-line;
+    left: 0px;
     background: linear-gradient(
       to right,
       rgba(0, 0, 0, 0.15),
@@ -697,16 +716,11 @@ onUnmounted(() => {
       rgba(0, 0, 0, 0.01),
       rgba(0, 0, 0, 0)
     );
-    transition: opacity 0.25s;
   }
 
   .lew-table-scroll-line-right {
-    position: absolute;
+    @extend .lew-table-scroll-line;
     right: 0px;
-    top: 0px;
-    height: 100%;
-    z-index: 90;
-    width: 8px;
     background: linear-gradient(
       to left,
       rgba(0, 0, 0, 0.15),
@@ -715,7 +729,6 @@ onUnmounted(() => {
       rgba(0, 0, 0, 0.01),
       rgba(0, 0, 0, 0)
     );
-    transition: opacity 0.25s;
   }
   .lew-hide-line-left,
   .lew-hide-line-right {
@@ -749,7 +762,7 @@ onUnmounted(() => {
   .lew-table-fixed-right {
     position: sticky;
     right: 0px;
-    z-index: 10;
+    z-index: 9;
     display: flex;
     flex-grow: 1;
     flex-direction: column;
@@ -792,7 +805,7 @@ onUnmounted(() => {
     position: sticky;
     top: 0;
     width: 100%;
-    z-index: 12;
+    z-index: 9;
     box-sizing: border-box;
 
     .lew-table-tr {
@@ -850,7 +863,7 @@ onUnmounted(() => {
   .lew-table-tr-hover {
     background-color: var(--lew-bgcolor-1);
     .lew-table-checkbox {
-      .icon-checkbox-box {
+      .lew-checkbox-icon-box {
         border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
       }
     }

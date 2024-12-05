@@ -68,22 +68,12 @@ onMounted(() => {
   border-radius: 50%;
   background-color: var(--lew-bgcolor-0);
   box-shadow: var(--lew-box-shadow);
-  z-index: 999;
+  z-index: 99;
   display: flex;
   justify-content: center;
   align-items: center;
   user-select: none;
   cursor: pointer;
   color: var(--lew-color-primary);
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>

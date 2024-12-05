@@ -89,9 +89,15 @@ export const cascaderProps = {
       return ['click', 'hover'].includes(value)
     }
   },
-  onload: {
+  loadMethod: {
     type: Function,
     description: '动态加载子节点数据的函数'
+  },
+  loadMethodId: {
+    type: String,
+    default: '',
+    hidden: true,
+    description: '动态加载子节点数据函数的标识'
   },
   readonly: {
     type: Boolean,
