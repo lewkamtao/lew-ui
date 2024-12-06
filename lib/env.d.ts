@@ -10,7 +10,8 @@ import {
   LewNotification,
   LewDialog,
   LewMessage,
-  LewContextMenu
+  LewContextMenu,
+  LewHoverMenu
 } from '../directives'
 
 
@@ -22,6 +23,7 @@ declare module 'lodash-es'
 
 declare interface Window {
   LewContextMenu: LewContextMenu
+  LewHoverMenu: LewHoverMenu
   LewNotification: LewNotification
   LewDialog: LewDialog
   LewMessage: LewMessage

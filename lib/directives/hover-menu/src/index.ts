@@ -3,17 +3,19 @@ import tippy from 'tippy.js'
 import type { App, DirectiveBinding } from 'vue'
 import { getUniqueId } from 'lew-ui/utils'
 import { isFunction } from 'lodash-es'
-import _LewContextMenu from './LewContextMenu.vue'
+import _LewContextMenu from '../../context-menu/src/LewContextMenu.vue'
 
 /**
- * 初始化右键菜单
- * 创建全局右键菜单实例和相关配置
+ * 初始化悬浮菜单
+ * 创建全局悬浮菜单实例和相关配置
  */
-export const initLewContextMenu = () => {
-  window.LewContextMenu = {
+export const initLewHoverMenu = () => {
+  window.LewHoverMenu = {
     menu: {}, // 存储菜单配置
-    disabledIds: [], // 禁用右键菜单的元素ID
-    contextMenu: null, // 右键菜单事件处理函数
+    disabledIds: [], // 禁用悬浮菜单的元素ID
+    hoverMenu: null, // 悬浮菜单事件处理函数
+    prevId: '', // 上一个触发元素ID,用于防止重复触发
+    // 创建tippy实例
     instance: tippy(document.body, {
       theme: 'light',
       animation: 'shift-away-subtle',
@@ -28,82 +30,83 @@ export const initLewContextMenu = () => {
     }),
     menuInstance: {} // 存储子菜单实例
   }
-  
+
   // 为菜单添加自定义属性
-  window.LewContextMenu.instance.popper.children[0].setAttribute(
+  window.LewHoverMenu.instance.popper.children[0].setAttribute(
     'data-lew',
     'popover'
   )
 }
 
 /**
- * 递归查找元素的右键菜单ID
+ * 递归查找元素的悬浮菜单ID
  * @param el - 目标HTML元素
- * @returns 元素的右键菜单ID
+ * @returns 元素的悬浮菜单ID
  */
-const findContextMenuId = (el: HTMLElement): string => {
+const findHoverMenuId = (el: HTMLElement): string => {
   try {
-    const id = el.getAttribute('lew-context-menu-id')
+    const id = el.getAttribute('lew-hover-menu-id')
     if (id) return id
-    return el.parentNode ? findContextMenuId(el.parentNode as HTMLElement) : ''
+    return el.parentNode ? findHoverMenuId(el.parentNode as HTMLElement) : ''
   } catch {
     return ''
   }
 }
 
 /**
- * 右键菜单指令
- * 提供右键菜单功能的Vue指令
+ * 悬浮菜单指令
+ * 提供悬浮菜单功能的Vue指令
  */
-export const LewVContextMenu = {
+export const LewVHoverMenu = {
   install(app: App) {
-    app.directive('context-menu', {
+    app.directive('hover-menu', {
       // 指令挂载时的处理
       mounted(el: HTMLElement, binding: DirectiveBinding) {
-        // 确保全局右键菜单对象存在
-        if (!window.LewContextMenu) {
-          initLewContextMenu()
+        // 确保全局悬浮菜单对象存在
+        if (!window.LewHoverMenu) {
+          initLewHoverMenu()
         }
 
         let elId = el.id
         // 为元素设置唯一ID并保存菜单配置
         if (!elId) {
           elId = getUniqueId()
-          el.setAttribute('lew-context-menu-id', elId)
+          el.setAttribute('lew-hover-menu-id', elId)
           const { options } = binding.value
-          window.LewContextMenu.menu[elId] = options || []
+          window.LewHoverMenu.menu[elId] = options || []
         }
 
-        // 注册全局右键菜单事件处理
-        if (!window.LewContextMenu.contextMenu) {
+        // 注册全局悬浮菜单事件处理
+        if (!window.LewHoverMenu.hoverMenu) {
+          // 处理禁用状态
           const { disabled } = binding.value
           if (disabled) {
-            window.LewContextMenu.disabledIds.push(elId)
+            window.LewHoverMenu.disabledIds.push(elId)
           }
 
-          // 右键菜单事件处理函数
-          window.LewContextMenu.contextMenu = (e: MouseEvent) => {
-            e.preventDefault() // 阻止默认右键菜单
+          // 悬浮菜单事件处理函数
+          window.LewHoverMenu.hoverMenu = (e: MouseEvent) => {
+            const id = findHoverMenuId(e.target as HTMLElement)
+            // 处理禁用和重复触发
+            if (window.LewHoverMenu.disabledIds.includes(id)) return
+            if (window.LewHoverMenu.prevId === id) return
             
-            const id = findContextMenuId(e.target as HTMLElement)
-            // 处理禁用和无效情况
-            if (window.LewContextMenu.disabledIds.includes(id) || !id) {
-              return
-            }
+            window.LewHoverMenu.prevId = id
+            if (!id) return
 
-            const options = window.LewContextMenu.menu[id]
-            const { instance } = window.LewContextMenu
+            const options = window.LewHoverMenu.menu[id]
+            const { instance } = window.LewHoverMenu
             instance.hide() // 隐藏已存在的菜单
-            
+
             // 创建菜单容器
             const menuDom = document.createElement('div')
 
-            // 创建右键菜单组件实例
+            // 创建悬浮菜单组件实例
             createApp({
               render() {
                 return h(_LewContextMenu, {
                   options,
-                  onSelect: (item: ContextMenus) => {
+                  onSelect: (item: HoverMenus) => {
                     // 处理选择事件
                     const { selectHandler } = binding.value
                     if (isFunction(selectHandler)) {
@@ -120,47 +123,48 @@ export const LewVContextMenu = {
 
             // 显示菜单
             setTimeout(() => {
-              instance.setProps({
+              const target = e.target as HTMLElement
+              const rect = target.getBoundingClientRect()
+              const props = {
                 content: menuDom,
                 getReferenceClientRect: () => ({
                   width: 0,
                   height: 0,
-                  top: e.clientY,
-                  bottom: e.clientY,
-                  left: e.clientX,
-                  right: e.clientX
+                  top: rect.top,
+                  bottom: rect.top,
+                  left: rect.right,
+                  right: rect.right
                 })
-              })
+              }
+              instance.setProps(props)
               instance.show()
             }, 120)
           }
 
-          // 绑定全局右键事件
-          window.addEventListener('contextmenu', (e) => {
-            window.LewContextMenu.contextMenu(e, 'contextmenu')
-          })
+          // 绑定全局悬浮事件
+          window.addEventListener('mouseover', window.LewHoverMenu.hoverMenu)
         }
       },
 
       // 指令更新时的处理
       updated(el: HTMLElement, binding: DirectiveBinding) {
-        const id = findContextMenuId(el)
+        const id = findHoverMenuId(el)
         if (id) {
           // 更新菜单配置
           const { options, disabled } = binding.value
-          window.LewContextMenu.menu[id] = options || []
+          window.LewHoverMenu.menu[id] = options || []
           
           // 更新禁用状态
           if (disabled) {
-            window.LewContextMenu.disabledIds.push(id)
+            window.LewHoverMenu.disabledIds.push(id)
           } else {
-            window.LewContextMenu.disabledIds =
-              window.LewContextMenu.disabledIds.filter(
+            window.LewHoverMenu.disabledIds =
+              window.LewHoverMenu.disabledIds.filter(
                 (item: string) => item !== id
               )
           }
         } else {
-          console.error('发生未知错误！找不到 lew-context-menu-id。')
+          console.error('发生未知错误！找不到 lew-hover-menu-id。')
         }
       }
     })
@@ -168,14 +172,14 @@ export const LewVContextMenu = {
 }
 
 /**
- * 右键菜单项目接口定义
+ * 悬浮菜单项目接口定义
  */
-export interface ContextMenus {
+export interface HoverMenus {
   label?: string // 显示文本
   value?: string // 值
   type?: string // 类型
   icon?: string // 图标
-  children?: ContextMenus[] // 子菜单
+  children?: HoverMenus[] // 子菜单
   disabled?: boolean // 是否禁用
   level?: number // 层级
   isDividerLine?: false // 是否为分割线
@@ -183,18 +187,18 @@ export interface ContextMenus {
 }
 
 /**
- * 右键菜单组件属性定义
+ * 悬浮菜单组件属性定义
  */
-export const contextMenuProps = {
+export const hoverMenuProps = {
   options: {
-    type: Array as PropType<ContextMenus[]>,
+    type: Array as PropType<HoverMenus[]>,
     default: () => [],
-    description: '右键菜单配置'
+    description: '悬浮菜单配置'
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用右键菜单'
+    description: '是否禁用悬浮菜单'
   },
   selectHandler: {
     type: Function,

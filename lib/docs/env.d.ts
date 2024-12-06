@@ -16,6 +16,7 @@ declare const LewNotification: (typeof import('../directives'))['LewNotification
 
 declare interface Window {
   LewContextMenu: LewContextMenu
+  LewHoverMenu: LewHoverMenu
   LewNotification: LewNotification
   LewDialog: LewDialog
   LewMessage: LewMessage

@@ -1,15 +1,10 @@
 <script lang="ts" setup>
 import type { MenuTreeItem } from 'lew-ui'
-import {
-  Smartphone,
-  Laptop,
-  Watch,
-  Headphones,
-  Tv
-} from 'lucide-vue-next'
+import { Smartphone, Laptop, Watch, Headphones, Tv } from 'lucide-vue-next'
 
 const selectKey = ref('1-1-1-1')
-const expandKeys = ref(['1', '1-1', '1-1-1', '1-1-1-1'])
+const expandKeys = ref(['1', '1-1', '1-1-1'])
+const collapsed = ref(false)
 const options = [
   {
     key: '1',
@@ -119,9 +114,7 @@ const options = [
       {
         key: '3-2',
         title: 'Apple Watch Ultra',
-        children: [
-          { key: '3-2-1', title: '49mm 钛金属表壳' }
-        ]
+        children: [{ key: '3-2-1', title: '49mm 钛金属表壳' }]
       }
     ]
   },
@@ -203,11 +196,24 @@ const change = (item: MenuTreeItem) => {
 </script>
 
 <template>
-  <lew-menu-tree
-    width="300"
-    v-model="selectKey"
-    v-model:expandKeys="expandKeys"
-    :options="options"
-    @change="change"
-  />
+  <div class="wrapper">
+    <lew-button @click="collapsed = !collapsed">
+      {{ collapsed ? '展开' : '折叠' }}
+    </lew-button>
+    <lew-menu-tree
+      width="300"
+      v-model="selectKey"
+      v-model:expandKeys="expandKeys"
+      v-model:collapsed="collapsed"
+      :options="options"
+      @change="change"
+    />
+  </div>
 </template>
+
+<style scoped lang="scss">
+.wrapper {
+  background-color: var(--lew-bgcolor-2);
+  padding: 20px;
+}
+</style>

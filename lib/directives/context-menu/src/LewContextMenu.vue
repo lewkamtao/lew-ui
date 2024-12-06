@@ -93,6 +93,9 @@ onUnmounted(() => {
           @click="clickItem(item)"
           class="lew-context-menu-item"
           :style="{ 'animation-delay': index * 15 + 'ms' }"
+          :class="{
+            'lew-context-menu-item-active': item.active
+          }"
         >
           <div class="lew-context-menu-label">
             <renderIcon v-if="item.renderIcon" :renderIcon="item.renderIcon" />
@@ -189,6 +192,7 @@ onUnmounted(() => {
       background-color: var(--lew-pop-bgcolor-active);
     }
   }
+
   .lew-context-menu-box-disabled {
     opacity: var(--lew-disabled-opacity);
     pointer-events: none;
@@ -210,6 +214,11 @@ onUnmounted(() => {
     width: calc(100% - 20px);
     height: 1px;
     background-color: var(--lew-bgcolor-3);
+  }
+}
+.lew-context-menu-item-active {
+  .lew-context-menu-label-text {
+    color: var(--lew-color-primary-dark);
   }
 }
 </style>

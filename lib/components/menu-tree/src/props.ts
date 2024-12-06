@@ -21,6 +21,16 @@ export const menuTreeModel = {
       }
       return true
     }
+  },
+  expandKeys: {
+    type: Array as PropType<(string | number)[]>,
+    default: () => [],
+    description: '菜单树的当前展开项，用于双向绑定。'
+  },
+  collapsed: {
+    type: Boolean,
+    default: false,
+    description: '菜单树是否折叠。'
   }
 }
 
@@ -40,7 +50,7 @@ export const menuTreeProps = {
   },
   width: {
     type: [String, Number],
-    default: '100%',
+    default: '240px',
     description: '菜单树的宽度，支持 CSS 宽度值。',
     validator(value: string | number): boolean {
       return isValidCssValue({
