@@ -72,7 +72,7 @@ defineExpose({ open })
     }"
     @ok="ok"
     @cancel="visible = false"
-    title="预览表单"
+    title="导入字段"
   >
     <div class="import-modal-content lew-scrollbar">
       <lew-textarea

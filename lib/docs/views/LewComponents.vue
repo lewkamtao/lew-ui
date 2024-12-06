@@ -103,7 +103,9 @@ const options: MenuOptions[] = [
       },
       {
         label: 'MenuTree',
-        value: '/MenuTree'
+        value: '/MenuTree',
+        tagText: 'New',
+        tagColor: 'green'
       },
       {
         label: 'Dropdown',
@@ -116,7 +118,7 @@ const options: MenuOptions[] = [
       {
         label: 'ContextMenu',
         value: '/ContextMenu',
-        tagText: 'Beta',
+        tagText: 'New',
         tagColor: 'green'
       }
     ]

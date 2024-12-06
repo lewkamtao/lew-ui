@@ -261,10 +261,10 @@ export const descItemProps = {
   }
 }
 
-export const sizePaddingMap = {
-  small: 8,
-  medium: 14,
-  large: 18
+export const lewDescSizePaddingMap: Record<LewSize, number> = {
+  small: 14,
+  medium: 20,
+  large: 26
 }
 
 export type DescProps = ExtractPropTypes<typeof descProps>

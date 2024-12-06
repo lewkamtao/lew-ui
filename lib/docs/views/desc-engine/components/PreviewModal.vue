@@ -5,12 +5,10 @@ const formRef = ref()
 const open = (options: any) => {
   visible.value = true
   bindOptions.value = options
-  console.log(options)
 }
 const ok = () => {
   formRef.value.validate().then((res: boolean) => {
     if (res) {
-      console.log(formRef.value.getForm())
       LewMessage.success('校验成功')
     } else {
       LewMessage.error('校验失败')
@@ -28,12 +26,10 @@ defineExpose({ open })
     :cancelProps="{
       text: '关闭'
     }"
-    :okProps="{
-      text: '校验表单'
-    }"
+    hideOkButton
     @ok="ok"
     @cancel="visible = false"
-    title="预览表单"
+    title="预览效果"
   >
     <div class="preview-modal-content lew-scrollbar">
       <lew-desc ref="formRef" v-bind="bindOptions" />

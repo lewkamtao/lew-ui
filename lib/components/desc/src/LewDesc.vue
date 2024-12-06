@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { object2class, any2px } from 'lew-ui/utils'
 import LewGetLabelWidth from '../../form/src/LewGetLabelWidth.vue'
-import { descProps, sizePaddingMap } from './props'
+import { descProps, lewDescSizePaddingMap } from './props'
 import { cloneDeep } from 'lodash-es'
 import LewDescItem from './LewDescItem.vue'
 
@@ -21,7 +21,7 @@ onMounted(() => {
   // 计算 label 的宽度
   autoLabelWidth.value =
     descLabelRef.value?.getWidth() +
-    (props.bordered ? sizePaddingMap[props.size] * 2 : 0)
+    (props.bordered ? lewDescSizePaddingMap[props.size] * 2 : 0)
   emit('mounted')
 })
 
@@ -31,7 +31,7 @@ watch(
     nextTick(() => {
       autoLabelWidth.value =
         descLabelRef.value?.getWidth() +
-        (props.bordered ? sizePaddingMap[props.size] * 2 : 0)
+        (props.bordered ? lewDescSizePaddingMap[props.size] * 2 : 0)
     })
   }
 )

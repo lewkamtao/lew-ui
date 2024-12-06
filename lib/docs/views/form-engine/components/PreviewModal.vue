@@ -5,12 +5,10 @@ const formRef = ref()
 const open = (options: any) => {
   visible.value = true
   bindOptions.value = options
-  console.log(options)
 }
 const ok = () => {
   formRef.value.validate().then((res: boolean) => {
     if (res) {
-      console.log(formRef.value.getForm())
       LewMessage.success('校验成功')
     } else {
       LewMessage.error('校验失败')

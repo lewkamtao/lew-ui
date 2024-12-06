@@ -3,7 +3,7 @@ import { any2px, object2class, retrieveNestedFieldValue } from 'lew-ui/utils'
 import { LewTooltip, LewTextTrim } from 'lew-ui'
 import type { TextTrimAlignment } from 'lew-ui'
 import { cloneDeep, isString } from 'lodash-es'
-import { descItemProps, sizePaddingMap } from './props'
+import { descItemProps, lewDescSizePaddingMap } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { tipsIconSizeMap } from 'lew-ui/components/form/src/props'
 
@@ -60,6 +60,13 @@ const getGap = computed(() => {
   }
   return direction === 'x' ? gapXMap[size] : gapYMap[size]
 })
+
+const getPadding = computed(() => {
+  const { bordered, size } = props
+  return bordered
+    ? `${any2px(lewDescSizePaddingMap[size] - 10)} ${any2px(lewDescSizePaddingMap[size])}`
+    : 0
+})
 </script>
 
 <template>
@@ -80,7 +87,7 @@ const getGap = computed(() => {
         class="lew-label-box"
         :style="{
           'justify-content': labelX === 'center' ? labelX : `flex-${labelX}`,
-          padding: bordered ? any2px(sizePaddingMap[size]) : 0
+          padding: getPadding
         }"
       >
         {{ label
@@ -103,7 +110,7 @@ const getGap = computed(() => {
             ? `calc(${descItemRef?.offsetWidth}px - ${any2px(labelWidth)} - 10px)`
             : '100%',
         justifyContent: valueX === 'center' ? valueX : `flex-${valueX}`,
-        padding: bordered ? any2px(sizePaddingMap[size]) : 0
+        padding: getPadding
       }"
     >
       <renderItem />

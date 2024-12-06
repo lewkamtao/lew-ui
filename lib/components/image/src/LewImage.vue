@@ -41,7 +41,6 @@ watch(
     })
     _loading = isLoading
     _error = error
-    console.log(_loading)
   }
 )
 </script>
