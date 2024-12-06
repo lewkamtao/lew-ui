@@ -28,7 +28,7 @@ export const initLewContextMenu = () => {
     }),
     menuInstance: {} // 存储子菜单实例
   }
-  
+
   // 为菜单添加自定义属性
   window.LewContextMenu.instance.popper.children[0].setAttribute(
     'data-lew',
@@ -73,18 +73,16 @@ export const LewVContextMenu = {
           const { options } = binding.value
           window.LewContextMenu.menu[elId] = options || []
         }
-
+        const { disabled } = binding.value
+        if (disabled) {
+          window.LewContextMenu.disabledIds.push(elId)
+        }
         // 注册全局右键菜单事件处理
         if (!window.LewContextMenu.contextMenu) {
-          const { disabled } = binding.value
-          if (disabled) {
-            window.LewContextMenu.disabledIds.push(elId)
-          }
-
           // 右键菜单事件处理函数
           window.LewContextMenu.contextMenu = (e: MouseEvent) => {
             e.preventDefault() // 阻止默认右键菜单
-            
+
             const id = findContextMenuId(e.target as HTMLElement)
             // 处理禁用和无效情况
             if (window.LewContextMenu.disabledIds.includes(id) || !id) {
@@ -94,7 +92,7 @@ export const LewVContextMenu = {
             const options = window.LewContextMenu.menu[id]
             const { instance } = window.LewContextMenu
             instance.hide() // 隐藏已存在的菜单
-            
+
             // 创建菜单容器
             const menuDom = document.createElement('div')
 
@@ -149,7 +147,7 @@ export const LewVContextMenu = {
           // 更新菜单配置
           const { options, disabled } = binding.value
           window.LewContextMenu.menu[id] = options || []
-          
+
           // 更新禁用状态
           if (disabled) {
             window.LewContextMenu.disabledIds.push(id)

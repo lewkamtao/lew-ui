@@ -75,14 +75,15 @@ export const LewVHoverMenu = {
           const { options } = binding.value
           window.LewHoverMenu.menu[elId] = options || []
         }
+        
+        const { disabled } = binding.value
+        if (disabled) {
+          window.LewHoverMenu.disabledIds.push(elId)
+        }
 
         // 注册全局悬浮菜单事件处理
         if (!window.LewHoverMenu.hoverMenu) {
           // 处理禁用状态
-          const { disabled } = binding.value
-          if (disabled) {
-            window.LewHoverMenu.disabledIds.push(elId)
-          }
 
           // 悬浮菜单事件处理函数
           window.LewHoverMenu.hoverMenu = (e: MouseEvent) => {
@@ -90,7 +91,7 @@ export const LewVHoverMenu = {
             // 处理禁用和重复触发
             if (window.LewHoverMenu.disabledIds.includes(id)) return
             if (window.LewHoverMenu.prevId === id) return
-            
+
             window.LewHoverMenu.prevId = id
             if (!id) return
 
@@ -153,7 +154,7 @@ export const LewVHoverMenu = {
           // 更新菜单配置
           const { options, disabled } = binding.value
           window.LewHoverMenu.menu[id] = options || []
-          
+
           // 更新禁用状态
           if (disabled) {
             window.LewHoverMenu.disabledIds.push(id)
