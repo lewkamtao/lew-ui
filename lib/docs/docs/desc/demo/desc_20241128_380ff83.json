@@ -56,7 +56,7 @@
       "id": "desc_20241128_products",
       "label": "主要产品",
       "field": "products",
-      "gridArea": "auto  / 1 / auto  / 2",
+      "gridArea": "auto  / 1 / auto  / 3",
       "tips": "公司最知名的产品线"
     },
     {

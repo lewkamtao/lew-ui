@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { object2class, any2px } from 'lew-ui/utils'
 import LewGetLabelWidth from '../../form/src/LewGetLabelWidth.vue'
-import { descProps } from './props'
+import { descProps, sizePaddingMap } from './props'
 import { cloneDeep } from 'lodash-es'
 import LewDescItem from './LewDescItem.vue'
 
@@ -19,7 +19,9 @@ const getDescClassNames = computed(() => {
 
 onMounted(() => {
   // 计算 label 的宽度
-  autoLabelWidth.value = descLabelRef.value?.getWidth()
+  autoLabelWidth.value =
+    descLabelRef.value?.getWidth() +
+    (props.bordered ? sizePaddingMap[props.size] * 2 : 0)
   emit('mounted')
 })
 
@@ -27,7 +29,9 @@ watch(
   () => props.size,
   () => {
     nextTick(() => {
-      autoLabelWidth.value = descLabelRef.value?.getWidth()
+      autoLabelWidth.value =
+        descLabelRef.value?.getWidth() +
+        (props.bordered ? sizePaddingMap[props.size] * 2 : 0)
     })
   }
 )
@@ -36,8 +40,12 @@ watch(
 <template>
   <div
     class="lew-desc"
-    :style="{ width: any2px(width), minWidth: 320, gap: any2px(gap) }"
-    :class="getDescClassNames"
+    :style="{
+      width: any2px(width),
+      minWidth: 320,
+      gap: bordered ? 0 : any2px(gap)
+    }"
+    :class="[getDescClassNames, { 'lew-desc-bordered': bordered }]"
   >
     <lew-get-label-width
       ref="descLabelRef"
@@ -54,6 +62,7 @@ watch(
         size,
         labelX,
         valueX,
+        bordered,
         labelWidth:
           labelWidth === 'auto' ? autoLabelWidth || labelWidth : labelWidth,
         ...item
@@ -86,5 +95,9 @@ watch(
       0,
       1fr
     );
+}
+
+.lew-desc-bordered {
+  border: var(--lew-desc-border);
 }
 </style>

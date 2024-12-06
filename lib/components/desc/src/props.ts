@@ -128,6 +128,11 @@ export const descProps = {
     default: '',
     description: '描述组件的唯一标识符，用于区分不同的描述',
     hidden: true
+  },
+  bordered: {
+    type: Boolean,
+    default: false,
+    description: '是否显示边框和标签背景'
   }
 }
 
@@ -155,6 +160,11 @@ export const descItemProps = {
       }
       return true
     }
+  },
+  bordered: {
+    type: Boolean,
+    default: false,
+    description: '是否显示边框和标签背景'
   },
   width: {
     type: [Number, String],
@@ -249,6 +259,12 @@ export const descItemProps = {
     default: {},
     hidden: true
   }
+}
+
+export const sizePaddingMap = {
+  small: 8,
+  medium: 14,
+  large: 18
 }
 
 export type DescProps = ExtractPropTypes<typeof descProps>

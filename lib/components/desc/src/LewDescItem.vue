@@ -3,7 +3,7 @@ import { any2px, object2class, retrieveNestedFieldValue } from 'lew-ui/utils'
 import { LewTooltip, LewTextTrim } from 'lew-ui'
 import type { TextTrimAlignment } from 'lew-ui'
 import { cloneDeep, isString } from 'lodash-es'
-import { descItemProps } from './props'
+import { descItemProps, sizePaddingMap } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { tipsIconSizeMap } from 'lew-ui/components/form/src/props'
 
@@ -66,10 +66,10 @@ const getGap = computed(() => {
   <div
     class="lew-desc-item"
     ref="descItemRef"
-    :class="getDescItemClassNames"
+    :class="[getDescItemClassNames, { 'lew-desc-item-bordered': bordered }]"
     :style="{
       'grid-area': gridArea || '',
-      gap: `${getGap}px`
+      gap: bordered ? 0 : any2px(getGap)
     }"
   >
     <div
@@ -79,11 +79,12 @@ const getGap = computed(() => {
       <div
         class="lew-label-box"
         :style="{
-          'justify-content': labelX === 'center' ? labelX : `flex-${labelX}`
+          'justify-content': labelX === 'center' ? labelX : `flex-${labelX}`,
+          padding: bordered ? any2px(sizePaddingMap[size]) : 0
         }"
       >
-        {{ label }}
-        <Icon
+        {{ label
+        }}<Icon
           class="lew-label-tips-icon"
           v-if="tips"
           v-tooltip="{
@@ -101,7 +102,8 @@ const getGap = computed(() => {
           direction === 'x'
             ? `calc(${descItemRef?.offsetWidth}px - ${any2px(labelWidth)} - 10px)`
             : '100%',
-        justifyContent: valueX === 'center' ? valueX : `flex-${valueX}`
+        justifyContent: valueX === 'center' ? valueX : `flex-${valueX}`,
+        padding: bordered ? any2px(sizePaddingMap[size]) : 0
       }"
     >
       <renderItem />
@@ -114,6 +116,7 @@ const getGap = computed(() => {
 .lew-desc-item {
   position: relative;
   transition: opacity 0.25s;
+  flex-shrink: 0;
 
   .lew-label-box-wrapper {
     transition: all 0.25s;
@@ -121,14 +124,16 @@ const getGap = computed(() => {
 
     .lew-label-box {
       display: inline-flex;
+      white-space: nowrap;
       gap: 5px;
-      color: var(--lew-color-gray);
+      color: var(--lew-text-color-6);
       width: 100%;
       height: 100%;
 
       .lew-label-tips-icon {
         cursor: pointer;
         margin-top: 3px;
+        flex-shrink: 0;
       }
     }
   }
@@ -242,5 +247,30 @@ const getGap = computed(() => {
   opacity: var(--lew-disabled-opacity);
   pointer-events: none;
   user-select: none;
+}
+
+.lew-desc-item-bordered {
+  border-bottom: var(--lew-desc-border);
+
+  .lew-label-box-wrapper,
+  .lew-desc-item-main {
+    box-sizing: border-box;
+    outline: var(--lew-desc-border);
+  }
+  .lew-label-box-wrapper {
+    background-color: var(--lew-desc-label-bgcolor);
+    .lew-label-box {
+      color: var(--lew-text-color-2);
+      .lew-label-tips-icon {
+        color: var(--lew-text-color-4);
+      }
+    }
+  }
+  .lew-desc-item-main {
+    background: var(--lew-bgcolor-0);
+  }
+}
+.lew-desc-item-bordered:last-child {
+  border-bottom: none;
 }
 </style>

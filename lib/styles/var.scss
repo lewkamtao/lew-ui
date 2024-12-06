@@ -134,6 +134,11 @@
   --lew-border-8: 1px solid rgb(165, 165, 165);
   --lew-border-9: 1px solid rgb(155, 155, 155);
 
+  // 描述
+  --lew-desc-border: 1px solid var(--lew-bgcolor-3);
+  --lew-desc-label-bgcolor: var(--lew-bgcolor-1);
+  --lew-desc-bgcolor: var(--lew-bgcolor-2);
+
   // 圆角
   --lew-border-radius-mini: 4px;
   --lew-border-radius-small: 8px;
