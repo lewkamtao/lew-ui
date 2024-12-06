@@ -99,7 +99,7 @@ onUnmounted(() => {
         >
           <div class="lew-context-menu-label">
             <renderIcon v-if="item.renderIcon" :renderIcon="item.renderIcon" />
-            <div :title="item.label" class="lew-context-menu-label-text">
+            <div class="lew-context-menu-label-text">
               {{ item.label }}
             </div>
           </div>
