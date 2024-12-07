@@ -7,183 +7,183 @@ const expandKeys = ref(['1', '1-1', '1-1-1'])
 const collapsed = ref(false)
 const options = [
   {
-    key: '1',
-    title: 'iPhone',
+    value: '1',
+    label: 'iPhone',
     renderIcon: () => h(Smartphone, { size: 14 }),
     children: [
       {
-        key: '1-1',
-        title: 'iPhone 系列',
+        value: '1-1',
+        label: 'iPhone 系列',
         children: [
           {
-            key: '1-1-1',
-            title: 'iPhone 14',
+            value: '1-1-1',
+            label: 'iPhone 14',
             children: [
-              { key: '1-1-1-1', title: 'iPhone 14 Pro Max' },
-              { key: '1-1-1-2', title: 'iPhone 14 Pro' },
-              { key: '1-1-1-3', title: 'iPhone 14' },
-              { key: '1-1-1-4', title: 'iPhone 14 Plus' }
+              { value: '1-1-1-1', label: 'iPhone 14 Pro Max' },
+              { value: '1-1-1-2', label: 'iPhone 14 Pro' },
+              { value: '1-1-1-3', label: 'iPhone 14' },
+              { value: '1-1-1-4', label: 'iPhone 14 Plus' }
             ]
           },
           {
-            key: '1-1-2',
-            title: 'iPhone 13',
+            value: '1-1-2',
+            label: 'iPhone 13',
             children: [
-              { key: '1-1-2-1', title: 'iPhone 13 Pro Max' },
-              { key: '1-1-2-2', title: 'iPhone 13 Pro' },
-              { key: '1-1-2-3', title: 'iPhone 13' },
-              { key: '1-1-2-4', title: 'iPhone 13 mini' }
+              { value: '1-1-2-1', label: 'iPhone 13 Pro Max' },
+              { value: '1-1-2-2', label: 'iPhone 13 Pro' },
+              { value: '1-1-2-3', label: 'iPhone 13' },
+              { value: '1-1-2-4', label: 'iPhone 13 mini' }
             ]
           }
         ]
       },
       {
-        key: '1-2',
-        title: 'iPhone SE',
+        value: '1-2',
+        label: 'iPhone SE',
         children: [
-          { key: '1-2-1', title: 'iPhone SE (第3代)' },
-          { key: '1-2-2', title: 'iPhone SE (第2代)' }
+          { value: '1-2-1', label: 'iPhone SE (第3代)' },
+          { value: '1-2-2', label: 'iPhone SE (第2代)' }
         ]
       }
     ]
   },
   {
-    key: '2',
-    title: 'Mac',
+    value: '2',
+    label: 'Mac',
     renderIcon: () => h(Laptop, { size: 14 }),
     children: [
       {
-        key: '2-1',
-        title: 'MacBook',
+        value: '2-1',
+        label: 'MacBook',
         children: [
           {
-            key: '2-1-1',
-            title: 'MacBook Air',
+            value: '2-1-1',
+            label: 'MacBook Air',
             children: [
-              { key: '2-1-1-1', title: 'MacBook Air (M2)' },
-              { key: '2-1-1-2', title: 'MacBook Air (M1)' }
+              { value: '2-1-1-1', label: 'MacBook Air (M2)' },
+              { value: '2-1-1-2', label: 'MacBook Air (M1)' }
             ]
           },
           {
-            key: '2-1-2',
-            title: 'MacBook Pro',
+            value: '2-1-2',
+            label: 'MacBook Pro',
             children: [
-              { key: '2-1-2-1', title: 'MacBook Pro 14"' },
-              { key: '2-1-2-2', title: 'MacBook Pro 16"' }
+              { value: '2-1-2-1', label: 'MacBook Pro 14"' },
+              { value: '2-1-2-2', label: 'MacBook Pro 16"' }
             ]
           }
         ]
       },
       {
-        key: '2-2',
-        title: 'iMac',
+        value: '2-2',
+        label: 'iMac',
         children: [
-          { key: '2-2-1', title: 'iMac 24"' },
-          { key: '2-2-2', title: 'iMac 27"' }
+          { value: '2-2-1', label: 'iMac 24"' },
+          { value: '2-2-2', label: 'iMac 27"' }
         ]
       }
     ]
   },
   {
-    key: '3',
-    title: 'Watch',
+    value: '3',
+    label: 'Watch',
     renderIcon: () => h(Watch, { size: 14 }),
     children: [
       {
-        key: '3-1',
-        title: 'Apple Watch 系列',
+        value: '3-1',
+        label: 'Apple Watch 系列',
         children: [
           {
-            key: '3-1-1',
-            title: 'Apple Watch Series 8',
+            value: '3-1-1',
+            label: 'Apple Watch Series 8',
             children: [
-              { key: '3-1-1-1', title: '41mm' },
-              { key: '3-1-1-2', title: '45mm' }
+              { value: '3-1-1-1', label: '41mm' },
+              { value: '3-1-1-2', label: '45mm' }
             ]
           },
           {
-            key: '3-1-2',
-            title: 'Apple Watch SE',
+            value: '3-1-2',
+            label: 'Apple Watch SE',
             children: [
-              { key: '3-1-2-1', title: '40mm' },
-              { key: '3-1-2-2', title: '44mm' }
+              { value: '3-1-2-1', label: '40mm' },
+              { value: '3-1-2-2', label: '44mm' }
             ]
           }
         ]
       },
       {
-        key: '3-2',
-        title: 'Apple Watch Ultra',
-        children: [{ key: '3-2-1', title: '49mm 钛金属表壳' }]
+        value: '3-2',
+        label: 'Apple Watch Ultra',
+        children: [{ value: '3-2-1', label: '49mm 钛金属表壳' }]
       }
     ]
   },
   {
-    key: '4',
-    title: 'AirPods',
+    value: '4',
+    label: 'AirPods',
     renderIcon: () => h(Headphones, { size: 14 }),
     children: [
       {
-        key: '4-1',
-        title: 'AirPods',
+        value: '4-1',
+        label: 'AirPods',
         children: [
           {
-            key: '4-1-1',
-            title: 'AirPods Pro',
+            value: '4-1-1',
+            label: 'AirPods Pro',
             children: [
-              { key: '4-1-1-1', title: 'AirPods Pro (第2代)' },
-              { key: '4-1-1-2', title: 'AirPods Pro (第1代)' }
+              { value: '4-1-1-1', label: 'AirPods Pro (第2代)' },
+              { value: '4-1-1-2', label: 'AirPods Pro (第1代)' }
             ]
           },
           {
-            key: '4-1-2',
-            title: 'AirPods',
+            value: '4-1-2',
+            label: 'AirPods',
             children: [
-              { key: '4-1-2-1', title: 'AirPods (第3代)' },
-              { key: '4-1-2-2', title: 'AirPods (第2代)' }
+              { value: '4-1-2-1', label: 'AirPods (第3代)' },
+              { value: '4-1-2-2', label: 'AirPods (第2代)' }
             ]
           }
         ]
       },
       {
-        key: '4-2',
-        title: 'AirPods Max',
+        value: '4-2',
+        label: 'AirPods Max',
         children: [
-          { key: '4-2-1', title: '太空灰色' },
-          { key: '4-2-2', title: '银色' },
-          { key: '4-2-3', title: '绿色' },
-          { key: '4-2-4', title: '粉色' },
-          { key: '4-2-5', title: '天蓝色' }
+          { value: '4-2-1', label: '太空灰色' },
+          { value: '4-2-2', label: '银色' },
+          { value: '4-2-3', label: '绿色' },
+          { value: '4-2-4', label: '粉色' },
+          { value: '4-2-5', label: '天蓝色' }
         ]
       }
     ]
   },
   {
-    key: '5',
-    title: 'TV 和家居',
+    value: '5',
+    label: 'TV 和家居',
     renderIcon: () => h(Tv, { size: 14 }),
     children: [
       {
-        key: '5-1',
-        title: 'Apple TV 4K',
+        value: '5-1',
+        label: 'Apple TV 4K',
         children: [
           {
-            key: '5-1-1',
-            title: '第3代',
+            value: '5-1-1',
+            label: '第3代',
             children: [
-              { key: '5-1-1-1', title: 'Wi-Fi' },
-              { key: '5-1-1-2', title: 'Wi-Fi + 以太网' }
+              { value: '5-1-1-1', label: 'Wi-Fi' },
+              { value: '5-1-1-2', label: 'Wi-Fi + 以太网' }
             ]
           },
-          { key: '5-1-2', title: '第2代' }
+          { value: '5-1-2', label: '第2代' }
         ]
       },
       {
-        key: '5-2',
-        title: 'HomePod',
+        value: '5-2',
+        label: 'HomePod',
         children: [
-          { key: '5-2-1', title: 'HomePod (第2代)' },
-          { key: '5-2-2', title: 'HomePod mini' }
+          { value: '5-2-1', label: 'HomePod (第2代)' },
+          { value: '5-2-2', label: 'HomePod mini' }
         ]
       }
     ]
@@ -197,7 +197,7 @@ const change = (item: MenuTreeItem) => {
 
 <template>
   <div class="wrapper">
-    <lew-button @click="collapsed = !collapsed">
+    <lew-button style="margin-bottom: 10px" @click="collapsed = !collapsed">
       {{ collapsed ? '展开' : '折叠' }}
     </lew-button>
     <lew-menu-tree

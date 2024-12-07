@@ -83,7 +83,6 @@ const change = () => {
   }
   .lew-collapse-item-title:hover {
     background-color: var(--lew-bgcolor-4);
-    font-weight: bold;
   }
 
   .lew-collapse-item-main {

@@ -38,29 +38,29 @@ const change = () => {
     <lew-flex
       x="start"
       y="center"
-      class="lew-menu-tree-item-title"
+      class="lew-menu-tree-item-label"
       :class="{
-        'lew-menu-tree-item-title-active': modelValue === menuKey,
-        'lew-menu-tree-item-title-selected': modelValueKeyPath?.includes(
+        'lew-menu-tree-item-label-active': modelValue === menuKey,
+        'lew-menu-tree-item-label-selected': modelValueKeyPath?.includes(
           menuKey as string | number
         ),
-        'lew-menu-tree-item-title-leaf': isLeaf,
-        'lew-menu-tree-item-title-disabled': disabled,
-        'lew-menu-tree-item-title-collapsed': collapsed
+        'lew-menu-tree-item-label-leaf': isLeaf,
+        'lew-menu-tree-item-label-disabled': disabled,
+        'lew-menu-tree-item-label-collapsed': collapsed
       }"
       :style="{
         paddingLeft: collapsed ? '0px' : renderIcon() ? '40px' : '15px'
       }"
       @click.stop="change"
     >
-      <slot v-if="$slots.title" name="title" :props="props" />
+      <slot v-if="$slots.label" name="label" :props="props" />
       <template v-else>
         <component class="lew-menu-tree-item-icon" :is="renderIcon()" />
         <lew-text-trim
           class="lew-menu-tree-item-text"
           placement="right"
           :style="{ width: `calc(100% - ${renderIcon() ? 50 : 20}px)` }"
-          :text="title"
+          :text="label"
           :delay="[250, 250]"
         />
         <Icon
@@ -93,7 +93,7 @@ const change = () => {
   position: relative;
   user-select: none;
 
-  .lew-menu-tree-item-title {
+  .lew-menu-tree-item-label {
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -105,24 +105,27 @@ const change = () => {
       color 0.25s;
     border-radius: var(--lew-border-radius-small);
     overflow: hidden;
+    .lew-menu-tree-item-text {
+      transition: opacity 1s;
+    }
   }
-  .lew-menu-tree-item-title:hover {
+  .lew-menu-tree-item-label:hover {
     background-color: var(--lew-bgcolor-3);
   }
-  .lew-menu-tree-item-title-active {
+  .lew-menu-tree-item-label-active {
     background-color: var(--lew-color-primary-light);
     color: var(--lew-color-primary-dark);
     font-weight: 600;
   }
-  .lew-menu-tree-item-title-active:hover {
+  .lew-menu-tree-item-label-active:hover {
     background-color: var(--lew-color-primary-light);
     color: var(--lew-color-primary-dark);
   }
-  .lew-menu-tree-item-title-selected {
+  .lew-menu-tree-item-label-selected {
     color: var(--lew-color-primary-dark);
     font-weight: 600;
   }
-  .lew-menu-tree-item-title-selected:hover {
+  .lew-menu-tree-item-label-selected:hover {
     color: var(--lew-color-primary-dark);
   }
   .lew-menu-tree-item-main {
@@ -138,14 +141,14 @@ const change = () => {
     right: 15px;
     top: 12px;
   }
-  .lew-menu-tree-item-title-disabled {
+  .lew-menu-tree-item-label-disabled {
     cursor: not-allowed;
     opacity: 0.5;
   }
-  .lew-menu-tree-item-title-disabled:hover {
+  .lew-menu-tree-item-label-disabled:hover {
     background-color: transparent;
   }
-  .lew-menu-tree-item-title-collapsed {
+  .lew-menu-tree-item-label-collapsed {
     padding: 0px;
     width: 40px;
 
