@@ -207,6 +207,12 @@ const options: MenuOptions[] = [
         tagColor: 'blue'
       },
       {
+        label: 'ColorPicker',
+        value: '/ColorPicker',
+        tagText: 'Beta',
+        tagColor: 'blue'
+      },
+      {
         label: 'Upload',
         value: '/Upload'
       }
