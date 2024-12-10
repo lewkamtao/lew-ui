@@ -3,9 +3,7 @@ import {
   DemoCollapse1,
   DemoCollapse1Code,
   DemoCollapse2,
-  DemoCollapse2Code,
-  DemoCollapse3,
-  DemoCollapse3Code
+  DemoCollapse2Code
 } from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
@@ -21,28 +19,25 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Collapse</lew-title>
-    <p class="sub-title">折叠面板</p>
-    <lew-demo-box title="常规" :code="DemoCollapse1Code">
+    <lew-title>Color Picker</lew-title>
+    <p class="sub-title">颜色选择器</p>
+    <lew-demo-box title="基础用法" :code="DemoCollapse1Code">
       <demo-collapse1 />
     </lew-demo-box>
-    <lew-demo-box title="标题插槽" :code="DemoCollapse2Code">
-      <demo-collapse2 />
-    </lew-demo-box>
-    <lew-demo-box title="手风琴" :code="DemoCollapse3Code">
+    <lew-demo-box title="预定义颜色" :code="DemoCollapse2Code">
       <template #desc>
         <div>
-          当 <lew-mark>v-model</lew-mark> 绑定值为字符串类型，会开启手风琴模式。
+          使用 <lew-mark>predefine-colors</lew-mark> 属性预定义颜色选项。
         </div>
       </template>
-      <demo-collapse3 />
+      <demo-collapse2 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.lew-avatar {
+.lew-color-picker {
   margin: 10px;
 }
 </style>

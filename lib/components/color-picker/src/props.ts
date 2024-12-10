@@ -20,18 +20,18 @@ export const colorPickerProps = {
     description: '颜色选择器尺寸'
   },
   width: {
-    type: Number,
-    default: 140,
+    type: [Number, String],
+    default: 'auto',
     description: '颜色选择器宽度'
-  },
-  trigger: {
-    type: String as PropType<ColorPickerTrigger>,
-    default: 'click',
-    description: '触发下拉菜单的方式，可选值为 "click" 或 "hover"'
   },
   disabled: {
     type: Boolean,
     default: false,
     description: '是否禁用'
+  },
+  readonly: {
+    type: Boolean,
+    default: false,
+    description: '是否只读'
   }
 }
