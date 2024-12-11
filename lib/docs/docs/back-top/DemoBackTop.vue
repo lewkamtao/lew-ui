@@ -21,7 +21,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>BackTop</lew-title>
+    <lew-title>Back Top</lew-title>
     <lew-demo-box title="基础用法" :code="DemoBackTop1Code">
       <demo-back-top1 />
     </lew-demo-box>

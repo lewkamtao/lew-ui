@@ -29,7 +29,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>InputTag</lew-title>
+    <lew-title>Input Tag</lew-title>
     <p class="sub-title">这是一个标签的输入框</p>
     <lew-demo-box title="常规" :code="DemoInputTag1Code">
       <demo-input-tag1 />

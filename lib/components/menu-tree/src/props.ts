@@ -14,7 +14,7 @@ export const menuTreeModel = {
   modelValue: {
     type: String,
     default: '',
-    description: '菜单树的当前展开项，用于双向绑定。字符串类型表示单选模式。',
+    description: '双向绑定值',
     validator(value: string): boolean {
       if (typeof value !== 'string') {
         console.warn('[LewMenuTree] modelValue 必须是字符串类型。')

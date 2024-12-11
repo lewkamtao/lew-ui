@@ -9,11 +9,6 @@ export const colorPickerModel = {
 
 export type ColorPickerTrigger = 'click' | 'hover'
 export const colorPickerProps = {
-  modelValue: {
-    type: String,
-    default: '#000000',
-    description: '颜色值'
-  },
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',

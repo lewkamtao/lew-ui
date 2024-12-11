@@ -1,16 +1,24 @@
-import DemoCollapse1 from './DemoCollapse1.vue'
-import DemoCollapse2 from './DemoCollapse2.vue'
-import DemoCollapse3 from './DemoCollapse3.vue'
+import DemoColorPicker1 from './DemoColorPicker1.vue'
+import DemoColorPicker2 from './DemoColorPicker2.vue'
+import DemoColorPicker3 from './DemoColorPicker3.vue'
+import DemoColorPicker4 from './DemoColorPicker4.vue'
+import DemoColorPicker5 from './DemoColorPicker5.vue'
 
-import DemoCollapse1Code from './DemoCollapse1.vue?raw'
-import DemoCollapse2Code from './DemoCollapse2.vue?raw'
-import DemoCollapse3Code from './DemoCollapse3.vue?raw'
+import DemoColorPicker1Code from './DemoColorPicker1.vue?raw'
+import DemoColorPicker2Code from './DemoColorPicker2.vue?raw'
+import DemoColorPicker3Code from './DemoColorPicker3.vue?raw'
+import DemoColorPicker4Code from './DemoColorPicker4.vue?raw'
+import DemoColorPicker5Code from './DemoColorPicker5.vue?raw'
 
 export {
-  DemoCollapse1,
-  DemoCollapse1Code,
-  DemoCollapse2,
-  DemoCollapse2Code,
-  DemoCollapse3,
-  DemoCollapse3Code
+  DemoColorPicker1,
+  DemoColorPicker1Code,
+  DemoColorPicker2,
+  DemoColorPicker2Code,
+  DemoColorPicker3,
+  DemoColorPicker3Code,
+  DemoColorPicker4,
+  DemoColorPicker4Code,
+  DemoColorPicker5,
+  DemoColorPicker5Code
 }
