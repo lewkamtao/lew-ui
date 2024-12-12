@@ -21,7 +21,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>DatePicker</lew-title>
+    <lew-title>DateRangePicker</lew-title>
     <p class="sub-title">一个很漂亮的、支持双向绑定的日期选择器。</p>
     <lew-demo-box title="常规" :code="DemoDateRangePicker1Code">
       <demo-date-range-picker1 />
