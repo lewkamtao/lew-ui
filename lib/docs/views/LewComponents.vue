@@ -197,20 +197,14 @@ const options: MenuOptions[] = [
       {
         label: 'Slider',
         value: '/Slider',
-        tagText: 'Beta',
-        tagColor: 'blue'
       },
       {
         label: 'SliderRange',
         value: '/SliderRange',
-        tagText: 'Beta',
-        tagColor: 'blue'
       },
       {
         label: 'ColorPicker',
         value: '/ColorPicker',
-        tagText: 'Beta',
-        tagColor: 'blue'
       },
       {
         label: 'Upload',

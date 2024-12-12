@@ -23,7 +23,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>ContextMenu</lew-title>
+    <lew-title>Context Menu</lew-title>
     <p class="sub-title">通过右键点击触发弹出菜单</p>
     <lew-demo-box title="基本用法" :code="DemoContextMenu1Code">
       <demo-context-menu1 />

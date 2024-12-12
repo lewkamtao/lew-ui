@@ -23,8 +23,8 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>菜单树</lew-title>
-    <p class="sub-title">树形菜单组件</p>
+    <lew-title>Menu Tree</lew-title>
+    <p class="sub-title">一个树形菜单组件，支持多级菜单结构。</p>
     <lew-demo-box title="基础用法" :code="DemoMenuTree1Code">
       <demo-menu-tree1 />
     </lew-demo-box>

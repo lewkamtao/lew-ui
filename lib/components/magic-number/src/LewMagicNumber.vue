@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { numFormat } from 'lew-ui/utils'
+import { any2px, numFormat } from 'lew-ui/utils'
 import { magicNumberProps } from './props'
 
 const props = defineProps(magicNumberProps)
@@ -19,19 +19,29 @@ const getValueArr = computed(() => {
   return String(props.value).split('')
 })
 
-const getMagicNumberStyle = computed(() => {
+const getSize = computed(() => {
   const { size } = props
-  return `height:${size}px;`
+  return typeof size === 'string' ? parseInt(size) : size
+})
+
+const getMagicNumberStyle = computed(() => {
+  return {
+    height: any2px(getSize.value)
+  }
 })
 const getItemStyle = computed(() => (item: string) => {
-  const { size } = props
   const index = parseInt(item)
-  const numericSize = typeof size === 'string' ? parseInt(size) : size
-  return `transform: translateY(-${numericSize * index}px)`
+  return {
+    transform: `translateY(-${getSize.value * index}px)`
+  }
 })
 const getNumStyle = computed(() => {
   const { size } = props
-  return `font-size:${size}px; line-height:${size}px; height:${size}px;`
+  return {
+    fontSize: any2px(size),
+    lineHeight: any2px(getSize.value),
+    height: any2px(getSize.value)
+  }
 })
 </script>
 

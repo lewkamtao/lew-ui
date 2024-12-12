@@ -25,7 +25,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>InputNumber</lew-title>
+    <lew-title>Input Number</lew-title>
     <p class="sub-title">仅允许输入数字值的输入框</p>
     <lew-demo-box title="尺寸" :code="DemoInputNumber1Code">
       <demo-input-number1 />

@@ -1,58 +1,37 @@
 <script setup lang="ts">
-import { LewPopover } from 'lew-ui'
-import { object2class } from 'lew-ui/utils'
+import { any2px, object2class } from 'lew-ui/utils'
 import { colorPickerProps } from './props'
-import { any2px } from 'lew-ui/utils'
 const props = defineProps(colorPickerProps)
 
 const modelValue = defineModel()
-const emit = defineEmits(['change'])
 
-const lewPickerRef = ref()
-const lewPopoverRef = ref()
-
-const state = reactive({
-  pickerWidth: 0,
-  visible: false
-})
-
-const show = () => {
-  lewPopoverRef.value.show()
-}
-
-const hide = () => {
-  lewPopoverRef.value.hide()
-}
+const isFocus = ref(false)
 
 const getPickerClassName = computed(() => {
   return object2class('lew-color-picker', {})
 })
 
 const getPickerViewClassName = computed(() => {
-  const { disabled } = props
-  const focus = state.visible
+  const { disabled, readonly } = props
   return object2class('lew-color-picker-view', {
-    focus,
-    disabled
+    disabled,
+    readonly,
+    focus: isFocus.value
   })
 })
 
-const getIconSize = computed(() => {
-  const size = {
-    small: 14,
-    medium: 15,
-    large: 16
+const getPickerViewStyle = computed(() => {
+  const { size, width } = props
+  const _width = {
+    small: 110,
+    medium: 117,
+    large: 130
   }
-  return size.medium
+  return {
+    width: width === 'auto' ? any2px(_width[size]) : any2px(width)
+  }
 })
 
-const showHandle = () => {
-  state.visible = true
-}
-
-const hideHandle = () => {
-  state.visible = false
-}
 const getPickerStyle = computed(() => {
   const { size } = props
   return {
@@ -63,55 +42,97 @@ const getPickerStyle = computed(() => {
   }
 })
 
-defineExpose({ show, hide })
+const getPickerInputStyle = computed(() => {
+  const { size } = props
+  return {
+    width: `calc(var(--lew-form-item-height-${size}) - 8px)`,
+    height: `calc(var(--lew-form-item-height-${size}) - 8px)`
+  }
+})
+
+const getPickerValueInputStyle = computed(() => {
+  const { size } = props
+  return {
+    fontSize: `var(--lew-form-font-size-${size})`
+  }
+})
+let pickerValueInputRef = ref()
+const focus = () => {
+  isFocus.value = true
+  // 全选选中值
+  pickerValueInputRef.value.select()
+}
+
+const blur = () => {
+  isFocus.value = false
+  // 转化成有效的色值
+  modelValue.value = convertToHex(modelValue.value as string)
+}
+
+// 将任意格式的颜色值转换为标准的hex格式
+const convertToHex = (color: string): string => {
+  // 去除空格
+  color = color.trim()
+
+  // 如果已经是6位hex格式,直接返回(添加#号)
+  if (/^#?[0-9a-fA-F]{6}$/.test(color)) {
+    return color.startsWith('#') ? color : `#${color}`
+  }
+
+  // 处理3位hex缩写,例如#f93
+  if (/^#?[0-9a-fA-F]{3}$/.test(color)) {
+    const hex = color.replace('#', '')
+    return `#${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`
+  }
+
+  // 处理rgb/rgba格式
+  const rgbMatch = color.match(
+    /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*\d+(?:\.\d+)?)?\)$/
+  )
+  if (rgbMatch) {
+    const r = parseInt(rgbMatch[1]).toString(16).padStart(2, '0')
+    const g = parseInt(rgbMatch[2]).toString(16).padStart(2, '0')
+    const b = parseInt(rgbMatch[3]).toString(16).padStart(2, '0')
+    return `#${r}${g}${b}`
+  }
+
+  // 无效的颜色值返回黑色
+  return '#000000'
+}
 </script>
 
 <template>
-  <lew-popover
-    ref="lewPopoverRef"
-    popoverBodyClassName="lew-color-picker-popover-body"
+  <div
     class="lew-color-picker-view"
+    :style="getPickerViewStyle"
     :class="getPickerViewClassName"
-    :trigger="trigger"
-    :disabled="disabled"
-    placement="bottom-start"
-    :style="{
-      width: any2px(width)
-    }"
-    :offset="[-1, 10]"
-    @show="showHandle"
-    @hide="hideHandle"
   >
-    <template #trigger>
-      <div
-        ref="lewPickerRef"
-        class="lew-color-picker"
-        :style="getPickerStyle"
-        :class="getPickerClassName"
-      >
-        <div
-          class="lew-color-preview"
-          :style="{ backgroundColor: modelValue as string }"
-        ></div>
-        <div class="lew-color-value">{{ modelValue }}</div>
-      </div>
-    </template>
-    <template #popover-body>
-      <div
-        class="lew-color-picker-body"
-        :style="`width:${state.pickerWidth}px`"
-      >
-        <div class="lew-color-panel">
-          <!-- 这里添加颜色选择面板的具体实现 -->
-        </div>
-      </div>
-    </template>
-  </lew-popover>
+    <div
+      class="lew-color-picker"
+      :style="getPickerStyle"
+      :class="getPickerClassName"
+    >
+      <input
+        class="lew-color-picker-input"
+        :style="getPickerInputStyle"
+        type="color"
+        v-model="modelValue"
+      />
+      <input
+        ref="pickerValueInputRef"
+        :style="getPickerValueInputStyle"
+        class="lew-color-value-input"
+        type="text"
+        @focus="focus"
+        @blur="blur"
+        v-model="modelValue"
+      />
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 .lew-color-picker-view {
-  width: 100%;
   box-sizing: border-box;
   background-color: var(--lew-form-bgcolor);
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
@@ -119,6 +140,35 @@ defineExpose({ show, hide })
   outline: 0px var(--lew-color-primary-light) solid;
   box-shadow: var(--lew-form-box-shadow);
   transition: all var(--lew-form-transition-ease);
+  display: inline-block;
+
+  .lew-color-picker-input {
+    border: none;
+    outline: none;
+    margin-left: -4px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  .lew-color-value-input {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    padding-left: 8px;
+  }
+
+  .lew-color-value {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   > div {
     width: 100%;
@@ -126,12 +176,13 @@ defineExpose({ show, hide })
 
   .lew-color-picker {
     position: relative;
-    width: 100%;
+    width: auto;
     box-sizing: border-box;
     cursor: pointer;
     user-select: none;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     padding: 0 8px;
 
     .lew-color-preview {
@@ -170,21 +221,5 @@ defineExpose({ show, hide })
 
 .lew-color-picker-view-readonly {
   pointer-events: none;
-}
-</style>
-
-<style lang="scss">
-.lew-color-picker-popover-body {
-  padding: 6px;
-}
-
-.lew-color-picker-body {
-  width: 100%;
-  box-sizing: border-box;
-
-  .lew-color-panel {
-    padding: 8px;
-    border-radius: var(--lew-border-radius-small);
-  }
 }
 </style>
