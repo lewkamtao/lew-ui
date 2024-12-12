@@ -472,9 +472,6 @@ defineExpose({ show, hide })
   width: 100%;
   box-sizing: border-box;
 
-  .lew-select-options-list {
-    padding: 2px 0px;
-  }
 
   .lew-result-count {
     margin: 5px 0px;
