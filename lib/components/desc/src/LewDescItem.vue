@@ -18,8 +18,8 @@ const descItemRef = ref()
 
 // 计算class名称
 const getDescItemClassNames = computed(() => {
-  const { direction, size } = cloneDeep(props)
-  return object2class('lew-desc-item', { direction, size })
+  const { direction, size, bordered } = props
+  return object2class('lew-desc-item', { direction, size, bordered })
 })
 
 // 处理显示文本和空值
@@ -67,31 +67,55 @@ const getPadding = computed(() => {
     ? `${any2px(lewDescSizePaddingMap[size] - 10)} ${any2px(lewDescSizePaddingMap[size])}`
     : 0
 })
+
+const getDescItemStyle = computed(() => {
+  const { bordered, gridArea } = props
+  return {
+    gap: bordered ? 0 : any2px(getGap.value),
+    'grid-area': gridArea || ''
+  }
+})
+
+const getLabelBoxStyle = computed(() => {
+  const { labelX } = props
+  return {
+    'justify-content': labelX === 'center' ? labelX : `flex-${labelX}`,
+    padding: getPadding.value
+  }
+})
+
+const getDescItemMainStyle = computed(() => {
+  const { direction, labelWidth, valueX } = props
+  return {
+    width:
+      direction === 'x'
+        ? `calc(${descItemRef.value?.offsetWidth}px - ${any2px(labelWidth)} - 10px)`
+        : '100%',
+    'justify-content': valueX === 'center' ? valueX : `flex-${valueX}`,
+    padding: getPadding.value
+  }
+})
+
+const getLabelBoxWidth = computed(() => {
+  const { direction, labelWidth } = props
+  return direction === 'x' ? any2px(labelWidth) : '100%'
+})
 </script>
 
 <template>
   <div
     class="lew-desc-item"
     ref="descItemRef"
-    :class="[getDescItemClassNames, { 'lew-desc-item-bordered': bordered }]"
-    :style="{
-      'grid-area': gridArea || '',
-      gap: bordered ? 0 : any2px(getGap)
-    }"
+    :class="getDescItemClassNames"
+    :style="getDescItemStyle"
   >
     <div
-      :style="direction === 'x' ? `width:${any2px(labelWidth)}` : 'width:100%'"
+      :style="`width:${getLabelBoxWidth}`"
       class="lew-label-box-wrapper"
     >
-      <div
-        class="lew-label-box"
-        :style="{
-          'justify-content': labelX === 'center' ? labelX : `flex-${labelX}`,
-          padding: getPadding
-        }"
-      >
-        {{ label
-        }}<Icon
+      <div class="lew-label-box" :style="getLabelBoxStyle">
+        {{ label }}
+        <Icon
           class="lew-label-tips-icon"
           v-if="tips"
           v-tooltip="{
@@ -102,17 +126,7 @@ const getPadding = computed(() => {
         ></Icon>
       </div>
     </div>
-    <div
-      class="lew-desc-item-main"
-      :style="{
-        width:
-          direction === 'x'
-            ? `calc(${descItemRef?.offsetWidth}px - ${any2px(labelWidth)} - 10px)`
-            : '100%',
-        justifyContent: valueX === 'center' ? valueX : `flex-${valueX}`,
-        padding: getPadding
-      }"
-    >
+    <div class="lew-desc-item-main" :style="getDescItemMainStyle">
       <renderItem />
     </div>
   </div>
