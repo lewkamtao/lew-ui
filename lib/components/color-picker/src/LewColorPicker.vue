@@ -4,6 +4,7 @@ import { colorPickerProps } from './props'
 const props = defineProps(colorPickerProps)
 
 const modelValue = defineModel()
+const emit = defineEmits(['change'])
 
 const isFocus = ref(false)
 
@@ -28,7 +29,7 @@ const getPickerViewStyle = computed(() => {
     large: 130
   }
   return {
-    width: width === 'auto' ? any2px(_width[size]) : any2px(width)
+    width: width === 'auto' || !width ? any2px(_width[size]) : any2px(width)
   }
 })
 
@@ -67,6 +68,7 @@ const blur = () => {
   isFocus.value = false
   // 转化成有效的色值
   modelValue.value = convertToHex(modelValue.value as string)
+  emit('change', modelValue.value)
 }
 
 // 将任意格式的颜色值转换为标准的hex格式
@@ -97,7 +99,11 @@ const convertToHex = (color: string): string => {
   }
 
   // 无效的颜色值返回黑色
-  return '#000000'
+  return ''
+}
+
+const change = () => {
+  emit('change', modelValue.value)
 }
 </script>
 
@@ -117,12 +123,14 @@ const convertToHex = (color: string): string => {
         :style="getPickerInputStyle"
         type="color"
         v-model="modelValue"
+        @change="change"
       />
       <input
         ref="pickerValueInputRef"
         :style="getPickerValueInputStyle"
         class="lew-color-value-input"
         type="text"
+        :placeholder="placeholder"
         @focus="focus"
         @blur="blur"
         v-model="modelValue"

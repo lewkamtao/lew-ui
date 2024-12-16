@@ -19,6 +19,11 @@ export const colorPickerProps = {
     default: 'auto',
     description: '颜色选择器宽度'
   },
+  placeholder: {
+    type: String,
+    default: '请选择',
+    description: '颜色选择器占位文本'
+  },
   disabled: {
     type: Boolean,
     default: false,
