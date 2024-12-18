@@ -4,13 +4,21 @@ import { validSizes } from 'lew-ui/constants'
 
 export type DescDirection = 'x' | 'y'
 
+export type DescOptions = {
+  label: string
+  field: string
+  gridArea: string
+  direction: DescDirection
+  customRender: (value: any) => any
+}
+
 export const descProps = {
   options: {
-    type: Array as PropType<Array<Record<string, any>>>,
+    type: Array as PropType<Array<DescOptions>>,
     required: true,
     default: () => [],
     description: '配置选项数组，用于定义描述组件的结构和内容',
-    validator(value: Array<Record<string, any>>): boolean {
+    validator(value: Array<DescOptions>): boolean {
       if (!Array.isArray(value)) {
         console.warn('[LewDesc] options 必须是一个数组')
         return false

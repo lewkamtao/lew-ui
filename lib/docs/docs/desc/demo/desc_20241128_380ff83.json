@@ -1,7 +1,7 @@
 {
   "direction": "x",
   "columns": 2,
-  "labelX": "end",
+  "labelX": "start  ",
   "valueX": "start",
   "size": "medium",
   "width": 640,
@@ -95,6 +95,7 @@
     {
       "id": "desc_20241128_batteryTechnology",
       "label": "电池技术",
+      "direction": "y",
       "field": "batteryTechnology",
       "gridArea": "auto  / 1 / auto  / 3"
     },

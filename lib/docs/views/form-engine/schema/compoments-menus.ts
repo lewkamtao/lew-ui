@@ -15,6 +15,7 @@ import datePickerRange from './components/date-range-picker'
 import inputTag from './components/input-tag'
 import slider from './components/slider'
 import sliderRange from './components/slider-range'
+import colorPicker from './components/color-picker'
 
 export const componentsMenusSchema = [
   {
@@ -290,6 +291,15 @@ export const componentsMenusSchema = [
           value: 100
         }
       ]
+    }
+  },
+  {
+    label: '颜色选择器',
+    fieldType: '',
+    as: 'color-picker',
+    schema: colorPicker,
+    props: {
+      clearable: true
     }
   },
   {
