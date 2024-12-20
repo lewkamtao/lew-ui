@@ -661,7 +661,7 @@ const notification = (type: string) => {
     position: fixed;
     left: 50px;
     top: 90px;
-    z-index: 99;
+    z-index: 999;
     animation: start 3s ease;
     animation-fill-mode: forwards;
     opacity: 0;
@@ -689,7 +689,10 @@ const notification = (type: string) => {
       }
     }
   }
-
+  .home-start-button {
+    position: relative;
+    z-index: 9999;
+  }
   .home {
     position: relative;
     min-height: 100vh;

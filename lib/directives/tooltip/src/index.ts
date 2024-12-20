@@ -39,7 +39,7 @@ export const LewTooltip = {
       },
       updated(el: any, binding: DirectiveBinding) {
         const { triggerFrom, content } = binding.value
-        if (!content && content != 0) {
+        if (!content && content !== 0) {
           el.instance?.disable()
         } else {
           el.instance?.enable()
