@@ -47,7 +47,7 @@ provide('menu-tree', {
 
 // 计算菜单树的样式
 const menuTreeStyle = computed(() => ({
-  width: collapsed.value ? any2px(48) : any2px(props.width)
+  width: collapsed.value ? any2px(44) : any2px(props.width)
 }))
 
 // 获取悬浮菜单指令

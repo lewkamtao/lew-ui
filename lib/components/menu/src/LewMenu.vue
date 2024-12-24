@@ -88,8 +88,8 @@ const select = (item: MenuOptions) => {
   .lew-menu-item-child {
     color: var(--lew-text-color-1);
     font-size: 14px;
-    height: 40px;
-    line-height: 40px;
+    height: 36px;
+    line-height: 36px;
     cursor: pointer;
     border-radius: var(--lew-border-radius-small);
   }

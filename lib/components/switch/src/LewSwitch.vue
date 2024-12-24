@@ -117,7 +117,6 @@ const getSwitchStyle = computed(() => {
   background: var(--lew-bgcolor-3);
   border-radius: var(--lew-border-radius-small);
   transition: all var(--lew-form-transition-ease);
-  outline: 0px var(--lew-color-primary-light) solid;
   box-shadow: var(--lew-form-box-shadow);
 
   .lew-switch-dot {
@@ -184,7 +183,7 @@ const getSwitchStyle = computed(() => {
 
 .lew-switch:hover {
   background: var(--lew-bgcolor-4);
-  outline: var(--lew-form-outline);
+  
 }
 
 .lew-switch:active {

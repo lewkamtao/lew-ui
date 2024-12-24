@@ -49,7 +49,7 @@ const change = () => {
         'lew-menu-tree-item-label-collapsed': collapsed
       }"
       :style="{
-        paddingLeft: collapsed ? '0px' : renderIcon() ? '40px' : '15px'
+        paddingLeft: collapsed ? '0px' : renderIcon() ? '36px' : '15px'
       }"
       @click.stop="change"
     >
@@ -98,7 +98,7 @@ const change = () => {
     align-items: center;
     cursor: pointer;
     padding: 0px 15px;
-    height: 40px;
+    height: 36px;
     box-sizing: border-box;
     transition:
       background-color 0.25s,
@@ -133,8 +133,8 @@ const change = () => {
   }
   .lew-menu-tree-item-icon {
     position: absolute;
-    left: 13px;
-    top: 13px;
+    left: 11px;
+    top: 11px;
   }
   .lew-menu-tree-item-chevron-right {
     position: absolute;
@@ -150,7 +150,7 @@ const change = () => {
   }
   .lew-menu-tree-item-label-collapsed {
     padding: 0px;
-    width: 40px;
+    width: 36px;
 
     .lew-menu-tree-item-chevron-right {
       opacity: 0;

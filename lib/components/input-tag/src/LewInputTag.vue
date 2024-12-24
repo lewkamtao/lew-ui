@@ -161,7 +161,6 @@ const clear = () => {
   border-radius: var(--lew-border-radius-small);
   background-color: var(--lew-form-bgcolor);
   box-sizing: border-box;
-  outline: 0px var(--lew-form-border-color) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   box-shadow: var(--lew-form-box-shadow);
   transition: all var(--lew-form-transition-ease);
@@ -220,7 +219,7 @@ const clear = () => {
 }
 .lew-input-tag-view:focus-within {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-outline);
+  
   background-color: var(--lew-form-bgcolor-focus);
 
   :deep(.lew-tag) {

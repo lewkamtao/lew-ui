@@ -337,7 +337,6 @@ defineExpose({ validate, setError, curRule })
   --lew-radio-color: var(--lew-color-error);
   --lew-radio-color: var(--lew-color-error-dark);
   --lew-radio-color-light: var(--lew-color-error-light);
-  --lew-form-outline: 0px var(--lew-color-error-light) solid;
 }
 
 .lew-slide-fade-leave-active,

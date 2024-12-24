@@ -145,7 +145,6 @@ const change = () => {
   background-color: var(--lew-form-bgcolor);
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   border-radius: var(--lew-border-radius-small);
-  outline: 0px var(--lew-color-primary-light) solid;
   box-shadow: var(--lew-form-box-shadow);
   transition: all var(--lew-form-transition-ease);
   display: inline-block;
@@ -219,7 +218,7 @@ const change = () => {
 .lew-color-picker-view.lew-color-picker-view-focus {
   background-color: var(--lew-form-bgcolor-focus);
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-outline);
+  
 }
 
 .lew-color-picker-view-disabled {

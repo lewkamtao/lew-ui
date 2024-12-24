@@ -296,7 +296,6 @@ defineExpose({ show, hide })
   background-color: var(--lew-form-bgcolor);
   transition: all var(--lew-form-transition-ease);
   box-sizing: border-box;
-  outline: 0px var(--lew-color-primary-light) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   box-shadow: var(--lew-form-box-shadow);
 
@@ -421,7 +420,7 @@ defineExpose({ show, hide })
 .lew-select-view.lew-select-view-focus {
   background-color: var(--lew-form-bgcolor-focus);
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-outline);
+  
 
   .icon-select {
     transform: translateY(-50%) rotate(180deg);
@@ -455,7 +454,6 @@ defineExpose({ show, hide })
 }
 .lew-select-view-disabled:hover {
   background-color: var(--lew-form-bgcolor);
-  outline: 0px var(--lew-color-primary-light) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
 }
 </style>

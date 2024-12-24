@@ -59,6 +59,16 @@ const lewDateClassNames = computed(() => {
   return object2class('lew-date-picker', { focus, size, readonly, disabled })
 })
 
+const getDatePickerInputStyle = computed(() => {
+  const { size } = props
+  return {
+    height: `var(--lew-form-item-height-${size})`,
+    lineHeight: `var(--lew-form-input-line-height-${size})`,
+    padding: `var(--lew-form-input-padding-${size})`,
+    fontSize: `var(--lew-form-font-size-${size})`
+  }
+})
+
 const clearHandle = () => {
   modelValue.value = undefined
   change(modelValue.value)
@@ -87,7 +97,7 @@ defineExpose({ show, hide })
   >
     <template #trigger>
       <div class="lew-date-picker-view" :class="lewDateClassNames">
-        <div class="lew-date-picker-input">
+        <div class="lew-date-picker-input" :style="getDatePickerInputStyle">
           <div v-show="!modelValue" class="lew-date-picker-placeholder">
             {{ placeholder }}
           </div>
@@ -176,7 +186,7 @@ defineExpose({ show, hide })
     transition: all var(--lew-form-transition-ease);
     cursor: pointer;
     user-select: none;
-    outline: 0px var(--lew-form-border-color) solid;
+
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     box-shadow: var(--lew-form-box-shadow);
   }
@@ -214,35 +224,8 @@ defineExpose({ show, hide })
     background-color: var(--lew-form-bgcolor-focus);
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
       solid;
-    outline: var(--lew-form-outline);
   }
 
-  .lew-date-picker-size-small {
-    .lew-date-picker-input {
-      height: var(--lew-form-item-height-small);
-      padding: var(--lew-form-input-padding-small);
-      font-size: var(--lew-form-font-size-small);
-      line-height: var(--lew-form-input-line-height-small);
-    }
-  }
-
-  .lew-date-picker-size-medium {
-    .lew-date-picker-input {
-      height: var(--lew-form-item-height-medium);
-      padding: var(--lew-form-input-padding-medium);
-      font-size: var(--lew-form-font-size-medium);
-      line-height: var(--lew-form-input-line-height-medium);
-    }
-  }
-
-  .lew-date-picker-size-large {
-    .lew-date-picker-input {
-      height: var(--lew-form-item-height-large);
-      padding: var(--lew-form-input-padding-large);
-      font-size: var(--lew-form-font-size-large);
-      line-height: var(--lew-form-input-line-height-large);
-    }
-  }
 }
 .lew-date-picker-readonly {
   pointer-events: none;

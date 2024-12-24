@@ -120,25 +120,22 @@ const findKeyword = () => {
 findKeyword()
 
 const getSelectClassName = computed(() => {
-  let { clearable, size } = props
+  let { clearable, size, disabled, readonly, searchable } = props
   clearable = clearable ? !!selectValue.value : false
-  return object2class('lew-select', { clearable, size })
+  const focus = state.visible
+  return object2class('lew-select', {
+    clearable,
+    size,
+    disabled,
+    readonly,
+    searchable,
+    focus
+  })
 })
 
 const getBodyClassName = computed(() => {
   const { size, disabled } = props
   return object2class('lew-select-body', { size, disabled })
-})
-
-const getSelectViewClassName = computed(() => {
-  const { disabled, readonly, searchable } = props
-  const focus = state.visible
-  return object2class('lew-select-view', {
-    focus,
-    searchable,
-    disabled,
-    readonly
-  })
 })
 
 const getSelectItemClassName = (e: any) => {
@@ -204,7 +201,6 @@ defineExpose({ show, hide })
     ref="lewPopoverRef"
     popoverBodyClassName="lew-select-popover-body"
     class="lew-select-view"
-    :class="getSelectViewClassName"
     :trigger="trigger"
     :disabled="disabled"
     placement="bottom-start"
@@ -321,13 +317,6 @@ defineExpose({ show, hide })
 <style lang="scss" scoped>
 .lew-select-view {
   width: 100%;
-  box-sizing: border-box;
-  background-color: var(--lew-form-bgcolor);
-  border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-  border-radius: var(--lew-border-radius-small);
-  outline: 0px var(--lew-color-primary-light) solid;
-  box-shadow: var(--lew-form-box-shadow);
-  transition: all var(--lew-form-transition-ease);
 
   > div {
     width: 100%;
@@ -342,6 +331,12 @@ defineExpose({ show, hide })
     text-overflow: ellipsis;
     cursor: pointer;
     user-select: none;
+    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    border-radius: var(--lew-border-radius-small);
+    box-shadow: var(--lew-form-box-shadow);
+    background-color: var(--lew-form-bgcolor);
+    box-sizing: border-box;
+    transition: all var(--lew-form-transition-ease);
 
     .lew-icon-select {
       position: absolute;
@@ -373,6 +368,7 @@ defineExpose({ show, hide })
       color: var(--lew-text-color-1);
       cursor: pointer;
       transition: all 0.2s;
+      height: 100%;
     }
 
     .lew-value::placeholder {
@@ -385,82 +381,82 @@ defineExpose({ show, hide })
   }
 
   .lew-select-size-small {
+    height: var(--lew-form-item-height-small);
+    line-height: var(--lew-form-input-line-height-small);
     .lew-value {
-      height: var(--lew-form-item-height-small);
       padding: var(--lew-form-input-padding-small);
       font-size: var(--lew-form-font-size-small);
-      line-height: var(--lew-form-input-line-height-small);
     }
   }
 
   .lew-select-size-medium {
+    height: var(--lew-form-item-height-medium);
+    line-height: var(--lew-form-input-line-height-medium);
     .lew-value {
-      height: var(--lew-form-item-height-medium);
       padding: var(--lew-form-input-padding-medium);
       font-size: var(--lew-form-font-size-medium);
-      line-height: var(--lew-form-input-line-height-medium);
     }
   }
 
   .lew-select-size-large {
+    height: var(--lew-form-item-height-large);
+    line-height: var(--lew-form-input-line-height-large);
     .lew-value {
-      height: var(--lew-form-item-height-large);
       padding: var(--lew-form-input-padding-large);
       font-size: var(--lew-form-font-size-large);
-      line-height: var(--lew-form-input-line-height-large);
     }
   }
-}
 
-.lew-select-view:hover {
-  background-color: var(--lew-form-bgcolor-hover);
-}
-
-.lew-select-view:active {
-  background-color: var(--lew-form-bgcolor-active);
-}
-
-.lew-select-view.lew-select-view-focus {
-  background-color: var(--lew-form-bgcolor-focus);
-  border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-outline);
-
-  .lew-icon-select {
-    color: var(--lew-text-color-1);
-    transform: translateY(-50%) rotate(180deg);
+  .lew-select-disabled {
+    opacity: var(--lew-disabled-opacity);
+    pointer-events: none;
   }
 
-  .lew-icon-select-hide {
-    opacity: 0;
-    transform: translate(100%, -50%) rotate(180deg);
-  }
-}
+  .lew-select-readonly {
+    pointer-events: none;
 
-.lew-select-view-disabled {
-  opacity: var(--lew-disabled-opacity);
-  pointer-events: none;
-}
-
-.lew-select-view-readonly {
-  pointer-events: none;
-
-  .lew-select {
-    user-select: text;
-  }
-}
-
-.lew-select-view-searchable {
-  .lew-select {
-    .lew-value {
-      cursor: text;
+    .lew-select {
+      user-select: text;
     }
   }
-}
 
-.lew-select-view-disabled:hover {
-  background-color: var(--lew-form-bgcolor);
-  border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-  outline: 0px var(--lew-color-primary-light) solid;
+  .lew-select-searchable {
+    .lew-select {
+      .lew-value {
+        cursor: text;
+      }
+    }
+  }
+  .lew-select:hover {
+    background-color: var(--lew-form-bgcolor-hover);
+  }
+
+  .lew-select:active {
+    background-color: var(--lew-form-bgcolor-active);
+  }
+
+  .lew-select-disabled:hover {
+    background-color: var(--lew-form-bgcolor);
+    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  }
+
+  .lew-select-focus {
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+      solid;
+    background-color: var(--lew-form-bgcolor-focus);
+    .lew-icon-select {
+      color: var(--lew-text-color-1);
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    .lew-icon-select-hide {
+      opacity: 0;
+      transform: translate(100%, -50%) rotate(180deg);
+    }
+  }
+  .lew-select-focus:hover {
+    background-color: var(--lew-form-bgcolor-focus-hover);
+  }
 }
 </style>
 <style lang="scss">
@@ -471,7 +467,6 @@ defineExpose({ show, hide })
 .lew-select-body {
   width: 100%;
   box-sizing: border-box;
-
 
   .lew-result-count {
     margin: 5px 0px;

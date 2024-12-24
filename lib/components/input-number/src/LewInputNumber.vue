@@ -58,7 +58,14 @@ const getInputNumberStyle: any = computed(() => {
   return {
     textAlign: align,
     padding: `var(--lew-form-input-padding-${size})`,
-    fontSize: `var(--lew-form-font-size-${size})`,
+    fontSize: `var(--lew-form-font-size-${size})`
+  }
+})
+
+const getInputNumberViewStyle = computed(() => {
+  const { width, size } = props
+  return {
+    width: any2px(width),
     height: `var(--lew-form-item-height-${size})`,
     lineHeight: `var(--lew-form-input-line-height-${size})`
   }
@@ -143,7 +150,7 @@ defineExpose({ toFocus, validCheck })
     @mouseleave="validationMessage = ''"
     class="lew-input-number-view"
     :class="getInputClassNames"
-    :style="{ width: any2px(width) }"
+    :style="getInputNumberViewStyle"
   >
     <input
       v-tooltip="{
@@ -205,7 +212,6 @@ defineExpose({ toFocus, validCheck })
   background-color: var(--lew-form-bgcolor);
   transition: all var(--lew-form-transition-ease);
   box-sizing: border-box;
-  outline: 0px var(--lew-form-border-color) solid;
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   box-shadow: var(--lew-form-box-shadow);
   overflow: hidden;
@@ -283,7 +289,7 @@ defineExpose({ toFocus, validCheck })
 
 .lew-input-number-view:focus-within {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-outline);
+
   background-color: var(--lew-form-bgcolor-focus);
 
   .lew-input-number-control {
@@ -295,7 +301,7 @@ defineExpose({ toFocus, validCheck })
 
 .lew-input-number-view-focus {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-outline);
+
   background-color: var(--lew-form-bgcolor-focus) !important;
 
   .lew-input-number-control {

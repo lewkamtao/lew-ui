@@ -244,7 +244,6 @@ const getLabelBoxWidth = computed(() => {
   --lew-radio-color: var(--lew-color-error);
   --lew-radio-color: var(--lew-color-error-dark);
   --lew-radio-color-light: var(--lew-color-error-light);
-  --lew-desc-outline: 0px var(--lew-color-error-light) solid;
 }
 
 // 动画相关样式
