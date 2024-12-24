@@ -65,31 +65,41 @@ const getStyle = computed(() => {
   const { round, type, color, dashed } = props
   const styleObj: Record<string, string> = {}
   const _color = getColorType(color) || 'primary'
-  switch (type) {
-    case 'fill':
-      styleObj.backgroundColor = `var(--lew-color-${_color})`
-      styleObj.color = 'var(--lew-color-white)'
-      break
-    case 'light':
-      styleObj.backgroundColor = `var(--lew-color-${_color}-light)`
-      styleObj.color = `var(--lew-color-${_color}-dark)`
-      break
-    case 'ghost':
-      styleObj.backgroundColor = 'transparent'
-      styleObj.border = `var(--lew-form-border-width) ${dashed ? 'dashed' : 'solid'} var(--lew-color-${_color}-dark)`
-      styleObj.color = `var(--lew-color-${_color}-dark)`
-      styleObj.boxShadow = 'none'
-      break
-    case 'text':
-      styleObj.backgroundColor = 'transparent'
-      styleObj.color = `var(--lew-color-${_color}-dark)`
-      styleObj.boxShadow = 'none'
-      break
-    default:
-      styleObj.backgroundColor = `var(--lew-color-${_color})`
-      break
+
+  // 基础样式
+  const baseStyle = {
+    fill: {
+      backgroundColor: `var(--lew-color-${_color})`,
+      color: 'var(--lew-color-white)'
+    },
+    light: {
+      backgroundColor: `var(--lew-color-${_color}-light)`,
+      color: `var(--lew-color-${_color}-dark)`
+    },
+    ghost: {
+      backgroundColor: 'transparent',
+      border: `var(--lew-form-border-width) ${dashed ? 'dashed' : 'solid'} var(--lew-color-${_color}-dark)`,
+      color: `var(--lew-color-${_color}-dark)`,
+      boxShadow: 'none'
+    },
+    text: {
+      backgroundColor: 'transparent',
+      color: `var(--lew-color-${_color}-dark)`,
+      boxShadow: 'none'
+    }
   }
+
+  // 合并样式
+  Object.assign(
+    styleObj,
+    baseStyle[type as keyof typeof baseStyle] || {
+      backgroundColor: `var(--lew-color-${_color})`
+    }
+  )
+
+  // 圆角样式
   styleObj.borderRadius = round ? '50px' : 'none'
+
   return styleObj
 })
 

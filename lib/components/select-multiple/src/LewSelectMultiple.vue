@@ -263,7 +263,7 @@ defineExpose({ show, hide })
             style="padding: 4px"
             x="start"
             y="center"
-            :gap="5"
+            :gap="4"
             wrap
             class="lew-value"
           >

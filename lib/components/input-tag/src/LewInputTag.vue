@@ -107,7 +107,7 @@ const clear = () => {
     :class="getInputClassNames"
   >
     <div
-      :style="{ padding: (modelValue || []).length > 0 ? '5px' : '' }"
+      :style="{ padding: (modelValue || []).length > 0 ? '4px' : '' }"
       class="lew-input-tag-box"
     >
       <transition-group name="tag-list">
@@ -177,7 +177,7 @@ const clear = () => {
     display: inline-flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 4px;
     box-sizing: border-box;
     transition: all var(--lew-form-transition-bezier);
     width: 100%;
@@ -202,6 +202,7 @@ const clear = () => {
       }
       .lew-input-box {
         padding: 0px !important;
+        height: 100%;
       }
       input {
         height: 26px;
@@ -219,7 +220,7 @@ const clear = () => {
 }
 .lew-input-tag-view:focus-within {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  
+
   background-color: var(--lew-form-bgcolor-focus);
 
   :deep(.lew-tag) {
@@ -244,11 +245,13 @@ const clear = () => {
 }
 
 .lew-input-tag-view-size-small {
+  min-height: var(--lew-form-item-height-small);
+  line-height: var(--lew-form-input-line-height-small);
   .lew-input-tag-box {
     padding: var(--lew-form-input-padding-small);
     font-size: var(--lew-form-font-size-small);
-    min-height: var(--lew-form-item-height-small);
-    line-height: var(--lew-form-input-line-height-small);
+    padding-top: 0px;
+    padding-bottom: 0px;
   }
   .lew-input-tag {
     height: 20px;
@@ -256,11 +259,13 @@ const clear = () => {
 }
 
 .lew-input-tag-view-size-medium {
+  line-height: var(--lew-form-input-line-height-medium);
+  min-height: var(--lew-form-item-height-medium);
   .lew-input-tag-box {
     padding: var(--lew-form-input-padding-medium);
     font-size: var(--lew-form-font-size-medium);
-    line-height: var(--lew-form-input-line-height-medium);
-    min-height: var(--lew-form-item-height-medium);
+    padding-top: 0px;
+    padding-bottom: 0px;
   }
   .lew-input-tag {
     height: 24px;
@@ -268,11 +273,13 @@ const clear = () => {
 }
 
 .lew-input-tag-view-size-large {
+  line-height: var(--lew-form-input-line-height-large);
+  min-height: var(--lew-form-item-height-large);
   .lew-input-tag-box {
     padding: var(--lew-form-input-padding-large);
     font-size: var(--lew-form-font-size-large);
-    line-height: var(--lew-form-input-line-height-large);
-    min-height: var(--lew-form-item-height-large);
+    padding-top: 0px;
+    padding-bottom: 0px;
   }
   .lew-input-tag {
     height: 28px;

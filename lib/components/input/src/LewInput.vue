@@ -341,6 +341,7 @@ defineExpose({ toFocus })
     box-sizing: border-box;
     align-items: center;
     justify-content: space-between;
+    height: 100%;
 
     .lew-input {
       height: 100%;

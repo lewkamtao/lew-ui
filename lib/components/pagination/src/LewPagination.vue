@@ -317,49 +317,25 @@ const getIconSize = computed(() => {
   }
 }
 .lew-pagination-size-small {
-  .lew-pagination-page-box {
-    :deep() {
-      .lew-button {
-        height: calc(var(--lew-form-item-height-small) - 4px);
-        width: calc(var(--lew-form-item-height-small) - 4px);
-      }
-    }
-  }
   .lew-pagination-page-btn {
-    height: calc(var(--lew-form-item-height-small) - 4px);
-    min-width: calc(var(--lew-form-item-height-small) - 4px);
+    height: var(--lew-form-item-height-small);
+    min-width: var(--lew-form-item-height-small);
     font-size: var(--lew-form-font-size-small);
     padding: 0px 4px;
   }
 }
 .lew-pagination-size-medium {
-  .lew-pagination-page-box {
-    :deep() {
-      .lew-button {
-        height: calc(var(--lew-form-item-height-medium) - 4px);
-        width: calc(var(--lew-form-item-height-medium) - 4px);
-      }
-    }
-  }
   .lew-pagination-page-btn {
-    height: calc(var(--lew-form-item-height-medium) - 4px);
-    min-width: calc(var(--lew-form-item-height-medium) - 4px);
+    height: var(--lew-form-item-height-medium);
+    min-width: var(--lew-form-item-height-medium);
     font-size: var(--lew-form-font-size-medium);
     padding: 0px 6px;
   }
 }
 .lew-pagination-size-large {
-  .lew-pagination-page-box {
-    :deep() {
-      .lew-button {
-        height: calc(var(--lew-form-item-height-large) - 4px);
-        width: calc(var(--lew-form-item-height-large) - 4px);
-      }
-    }
-  }
   .lew-pagination-page-btn {
-    height: calc(var(--lew-form-item-height-large) - 4px);
-    min-width: calc(var(--lew-form-item-height-large) - 4px);
+    height: var(--lew-form-item-height-large);
+    min-width: var(--lew-form-item-height-large);
     font-size: var(--lew-form-font-size-large);
     padding: 0px 8px;
   }
