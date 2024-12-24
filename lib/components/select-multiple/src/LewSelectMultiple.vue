@@ -260,7 +260,7 @@ defineExpose({ show, hide })
         <template v-if="getLabels && getLabels.length > 0">
           <lew-flex
             v-if="valueLayout === 'tag'"
-            style="padding: 4px"
+            :style="{ padding: '4px' }"
             x="start"
             y="center"
             :gap="4"
@@ -290,7 +290,12 @@ defineExpose({ show, hide })
               style="width: 100%"
             >
               <template #trigger>
-                <div class="lew-select-multiple-text-value">
+                <div
+                  :style="{
+                    opacity: state.visible ? 0.6 : 1
+                  }"
+                  class="lew-select-multiple-text-value"
+                >
                   {{ getLabels.join(valueTextSplit) }}
                 </div>
               </template>
@@ -300,7 +305,9 @@ defineExpose({ show, hide })
                   y="center"
                   :gap="5"
                   wrap
-                  :style="`max-width:${state.selectWidth + 12}px`"
+                  :style="{
+                    maxWidth: `${state.selectWidth + 12}px`
+                  }"
                   class="lew-select-multiple-tag-value"
                 >
                   <lew-tag
@@ -320,6 +327,9 @@ defineExpose({ show, hide })
         </template>
         <div
           v-show="getLabels && getLabels.length === 0"
+          :style="{
+            opacity: state.visible ? 0.6 : 1
+          }"
           class="lew-placeholder"
         >
           {{ placeholder }}
