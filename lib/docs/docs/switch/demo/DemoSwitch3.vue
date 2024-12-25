@@ -16,5 +16,9 @@ const change = (e: unknown) => {
 </script>
 
 <template>
-  <lew-switch v-model="value" :request="mockFn" @change="change" />
+  <lew-flex direction="y" x="start" y="end">
+    <lew-switch v-model="value" size="small" :request="mockFn" @change="change" />
+    <lew-switch v-model="value" size="medium" :request="mockFn" @change="change" />
+    <lew-switch v-model="value" size="large" :request="mockFn" @change="change" />
+  </lew-flex>
 </template>

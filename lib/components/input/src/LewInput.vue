@@ -139,6 +139,8 @@ const copy = () => {
 if (props.okByEnter) {
   watch(enter, (v) => {
     if (v && isFocus.value) {
+      // 失焦
+      lewInputRef.value?.blur()
       ok()
     }
   })
@@ -225,7 +227,6 @@ defineExpose({ toFocus })
         :type="getType"
         :readonly="readonly"
         :maxlength="maxLength"
-        onkeypress="if(window.event.keyCode==13) this.blur()"
         @input="emit('input', modelValue)"
         @change="emit('change', modelValue)"
         @blur="blur"
