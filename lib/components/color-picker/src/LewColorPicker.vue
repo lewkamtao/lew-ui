@@ -9,12 +9,8 @@ const emit = defineEmits(['change'])
 const isFocus = ref(false)
 
 const getPickerClassName = computed(() => {
-  return object2class('lew-color-picker', {})
-})
-
-const getPickerViewClassName = computed(() => {
   const { disabled, readonly } = props
-  return object2class('lew-color-picker-view', {
+  return object2class('lew-color-picker', {
     disabled,
     readonly,
     focus: isFocus.value
@@ -46,8 +42,8 @@ const getPickerStyle = computed(() => {
 const getPickerInputStyle = computed(() => {
   const { size } = props
   return {
-    width: `calc(var(--lew-form-item-height-${size}) - 8px)`,
-    height: `calc(var(--lew-form-item-height-${size}) - 8px)`
+    width: `calc(var(--lew-form-item-height-${size}) - 12px)`,
+    height: `calc(var(--lew-form-item-height-${size}) - 12px)`
   }
 })
 
@@ -108,11 +104,7 @@ const change = () => {
 </script>
 
 <template>
-  <div
-    class="lew-color-picker-view"
-    :style="getPickerViewStyle"
-    :class="getPickerViewClassName"
-  >
+  <div class="lew-color-picker-view" :style="getPickerViewStyle">
     <div
       class="lew-color-picker"
       :style="getPickerStyle"
@@ -141,20 +133,22 @@ const change = () => {
 
 <style lang="scss" scoped>
 .lew-color-picker-view {
-  box-sizing: border-box;
-  background-color: var(--lew-form-bgcolor);
-  border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-  border-radius: var(--lew-border-radius-small);
-  box-shadow: var(--lew-form-box-shadow);
-  transition: all var(--lew-form-transition-ease);
-  display: inline-block;
+  .lew-color-picker {
+    cursor: pointer;
+    display: inline-block;
+    box-sizing: border-box;
+    background-color: var(--lew-form-bgcolor);
+    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    border-radius: var(--lew-border-radius-small);
+    box-shadow: var(--lew-form-box-shadow);
+    transition: all var(--lew-form-transition-ease);
+  }
 
   .lew-color-picker-input {
     border: none;
     outline: none;
     margin-left: -4px;
     flex-shrink: 0;
-    cursor: pointer;
   }
 
   .lew-color-value-input {
@@ -205,28 +199,31 @@ const change = () => {
       color: var(--lew-text-color);
     }
   }
-}
+  .lew-color-picker:hover {
+    background-color: var(--lew-form-bgcolor-hover);
+  }
 
-.lew-color-picker-view:hover {
-  background-color: var(--lew-form-bgcolor-hover);
-}
+  .lew-color-picker:active {
+    background-color: var(--lew-form-bgcolor-active);
+  }
 
-.lew-color-picker-view:active {
-  background-color: var(--lew-form-bgcolor-active);
-}
+  .lew-color-picker-focus {
+    background-color: var(--lew-form-bgcolor-focus);
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+      solid;
+  }
 
-.lew-color-picker-view.lew-color-picker-view-focus {
-  background-color: var(--lew-form-bgcolor-focus);
-  border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  
-}
+  .lew-color-picker-focus:hover {
+    background-color: var(--lew-form-bgcolor-focus-hover);
+  }
 
-.lew-color-picker-view-disabled {
-  opacity: var(--lew-disabled-opacity);
-  pointer-events: none;
-}
+  .lew-color-picker-disabled {
+    opacity: var(--lew-disabled-opacity);
+    pointer-events: none;
+  }
 
-.lew-color-picker-view-readonly {
-  pointer-events: none;
+  .lew-color-picker-readonly {
+    pointer-events: none;
+  }
 }
 </style>
