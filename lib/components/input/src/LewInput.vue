@@ -141,14 +141,10 @@ if (props.okByEnter) {
     if (v && isFocus.value) {
       // 失焦
       lewInputRef.value?.blur()
-      ok()
+      emit('ok', modelValue.value)
     }
   })
 }
-
-const ok = useDebounceFn(() => {
-  emit('ok', modelValue.value)
-}, 250)
 
 onUnmounted(() => {
   if (timer) clearTimeout(timer)
