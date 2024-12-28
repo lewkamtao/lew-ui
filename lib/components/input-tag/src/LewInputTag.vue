@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { inputTagProps } from './props'
-import { LewInput, LewTag } from 'lew-ui'
+import { LewInput, LewTag, LewMessage } from 'lew-ui'
 import { cloneDeep } from 'lodash-es'
 import { object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
 
+// 获取app
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewMessage)
+}
 const emit = defineEmits(['close', 'change'])
 
 const props = defineProps(inputTagProps)
@@ -42,6 +47,8 @@ const blurFn = () => {
   } else {
     if (!(modelValue.value || []).includes(inputValue.value)) {
       addTag()
+    } else {
+      LewMessage.warning('不允许重复标签')
     }
   }
   if (isEnter) {
@@ -130,6 +137,7 @@ const clear = () => {
           :size="size"
           :readonly="!isFocus"
           :placeholder="(modelValue || []).length > 0 ? '' : placeholder"
+          ok-by-enter
           @blur="blurFn"
         />
       </transition-group>
