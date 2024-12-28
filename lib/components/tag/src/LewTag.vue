@@ -83,7 +83,7 @@ const tagStyle: any = computed(() => {
     ...sizeConfig,
     borderRadius: round ? '20px' : sizeConfig.borderRadius,
     opacity: disabled ? 'var(--lew-disabled-opacity)' : undefined,
-    pointerEvents: disabled ? 'none' : 'auto'
+    pointerEvents: disabled ? 'none' : undefined
   }
 })
 </script>

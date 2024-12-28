@@ -118,8 +118,10 @@ const clear = () => {
           style="max-width: 100%"
           :size="size"
           :closable="!readonly && !disabled"
+          :disabled="disabled"
           @close="delTag(index)"
-          >{{ item }}
+        >
+          {{ item }}
         </lew-tag>
         <lew-input
           v-if="isFocus || (modelValue || []).length === 0"
@@ -287,8 +289,8 @@ const clear = () => {
 }
 
 .lew-input-tag-view-disabled {
-  pointer-events: none;
   opacity: var(--lew-disabled-opacity);
+  pointer-events: none;
 }
 .lew-input-tag-view-readonly {
   pointer-events: none;
