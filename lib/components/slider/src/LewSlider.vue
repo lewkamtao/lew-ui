@@ -404,7 +404,9 @@ const getStyle = computed(() => {
     border-radius: 50%;
     border: var(--lew-color-blue) solid 2px;
     background: var(--lew-bgcolor-0);
-    transition: transform var(--lew-form-transition-ease);
+    transition:
+      transform var(--lew-form-transition-ease),
+      border-width 0.1s ease;
     cursor: pointer;
     box-sizing: border-box;
     z-index: 3;
@@ -416,6 +418,7 @@ const getStyle = computed(() => {
   .lew-slider-track-dot:active {
     transform: translate(calc(var(--lew-slider-track-dot-size) / 2 * -1), -50%)
       scale(1.05);
+    border-width: 4px;
   }
 }
 .lew-slider::before,
