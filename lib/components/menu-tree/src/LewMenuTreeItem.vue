@@ -24,8 +24,6 @@ const change = () => {
   } else {
     if (modelValue.value !== props.menuKey) {
       modelValue.value = props.menuKey
-    } else {
-      modelValue.value = ''
     }
   }
   expandKeys.value = cloneDeep(expandKeys.value)

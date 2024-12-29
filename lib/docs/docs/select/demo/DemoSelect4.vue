@@ -23,10 +23,9 @@ const value = ref('')
         :class="{ 'custom-select-checked': props.checked }"
       >
         <div class="custom-select-content">
-          <lew-avatar
-            round
-            :key="props.label"
-            size="30"
+          <img
+            width="28"
+            height="28"
             :src="`https://api.lew.kamtao.com/manage/common/avatar/350/4B78CA/${props.label}`"
           />
           <div class="info">

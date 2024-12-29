@@ -300,7 +300,8 @@ defineExpose({ show, hide })
                   <Icon
                     v-if="getChecked(templateProps.value) && showCheckIcon"
                     class="lew-icon-check"
-                    :size="14"
+                    :size="16"
+                    :strokeWidth="3"
                     type="check"
                   />
                 </div>

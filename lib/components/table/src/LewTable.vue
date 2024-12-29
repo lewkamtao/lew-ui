@@ -700,7 +700,7 @@ onUnmounted(() => {
     position: absolute;
     top: 0px;
     height: 100%;
-    z-index: 11;
+    z-index: 16;
     width: 5px;
     transition: opacity 0.25s;
   }
@@ -805,7 +805,7 @@ onUnmounted(() => {
     position: sticky;
     top: 0;
     width: 100%;
-    z-index: 9;
+    z-index: 15;
     box-sizing: border-box;
 
     .lew-table-tr {
