@@ -151,6 +151,16 @@ watch(
   }
 )
 
+watch(
+  () => props.dataSource,
+  () => {
+    compTrHeight()
+  },
+  {
+    deep: true
+  }
+)
+
 const handleTableResize = throttle(() => {
   const table = tableRef.value
 
