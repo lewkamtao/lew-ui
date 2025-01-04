@@ -1,43 +1,34 @@
 <script setup lang="ts">
-import {
-  DemoMagicNumber1,
-  DemoMagicNumber1Code,
-  DemoMagicNumber2,
-  DemoMagicNumber2Code,
-  DemoMagicNumber3,
-  DemoMagicNumber3Code
-} from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
-import LewDocsTables from '../../layout/LewDocsTables.vue'
-import * as API from './api'
-
-const options = ref(
-  Object.keys(API).map((key: any) => {
-    // @ts-ignore
-    return API[key]
-  })
-)
 </script>
 
 <template>
   <div class="demo-wrapper">
     <lew-title>MagicNumber</lew-title>
-    <p class="sub-title">这是一个很酷数值变化效果。</p>
-    <lew-demo-box title="任意值" :code="DemoMagicNumber1Code">
-      <demo-magic-number1 />
+    <lew-demo-box title="组件升级通知">
+      <lew-alert type="info">
+        <template #title>MagicNumber 组件废弃通知</template>
+        <template #content>
+          我们将在 <b>v2.5.7</b> 版本中废弃 MagicNumber 组件。<br /><br />
+
+          在不断追求卓越的过程中，我们很高兴发现了
+          <a href="https://github.com/barvian/number-flow" target="_blank">
+            https://github.com/barvian/number-flow
+          </a>
+          这个令人惊叹的库。<br />它不仅完全符合我们对高品质的追求，更能为您带来前所未有的动画体验。<br />我们推荐使用
+          number-flow 作为数字动画解决方案。 <br /><br />
+
+          <b>为什么选择 number-flow:</b><br />
+          <br />
+          1. 惊艳动画更具吸引力
+          <br />
+          2. 极致灵活的配置选项
+          <br />
+          3. 卓越的性能表现
+          <br /><br />
+          我们诚挚推荐您使用 number-flow，相信它将为您的项目注入新的活力。
+        </template>
+      </lew-alert>
     </lew-demo-box>
-    <lew-demo-box title="自增" :code="DemoMagicNumber2Code">
-      <demo-magic-number2 />
-    </lew-demo-box>
-    <lew-demo-box title="天然支持千分位" :code="DemoMagicNumber3Code">
-      <demo-magic-number3 />
-    </lew-demo-box>
-    <lew-docs-tables :options="options" />
   </div>
 </template>
-
-<style lang="scss" scoped>
-.lew-avatar {
-  margin: 10px;
-}
-</style>

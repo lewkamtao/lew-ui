@@ -29,7 +29,8 @@ import {
   Trash,
   TriangleAlert,
   UploadCloud,
-  X
+  X,
+  UserRound
 } from 'lucide-vue-next'
 import { getColorType, iconColorType } from './index'
 
@@ -99,7 +100,8 @@ const iconMap: any = {
   uploading: Loader,
   warning: TriangleAlert,
   wrong_size: CircleAlert,
-  wrong_type: CircleAlert
+  wrong_type: CircleAlert,
+  user: UserRound
 }
 </script>
 

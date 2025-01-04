@@ -196,15 +196,15 @@ const options: MenuOptions[] = [
 
       {
         label: 'Slider',
-        value: '/Slider',
+        value: '/Slider'
       },
       {
         label: 'SliderRange',
-        value: '/SliderRange',
+        value: '/SliderRange'
       },
       {
         label: 'ColorPicker',
-        value: '/ColorPicker',
+        value: '/ColorPicker'
       },
       {
         label: 'Upload',
@@ -226,7 +226,7 @@ const options: MenuOptions[] = [
       },
       {
         label: 'MagicNumber',
-        value: '/MagicNumber'
+        value: '/MagicNumber',
       },
       {
         label: 'Tree',

@@ -1,24 +1,24 @@
 <template>
   <lew-flex wrap x="start" gap="20">
     <lew-avatar
-      src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/杨"
+      src=" https://cdn.jsdelivr.net/gh/lewkamtao/LewCloud@master/lew/apple_leader_4_7cwenb_.jpeg"
       status="online"
+      shape="circle"
       statusPlacement="top-left"
     />
     <lew-avatar
-      src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/卢"
+      src=" https://cdn.jsdelivr.net/gh/lewkamtao/LewCloud@master/lew/apple_leader_5_8h51sk_.jpeg"
       status="busy"
+      shape="circle"
       statusPlacement="top-right"
     />
     <lew-avatar
-      src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/黄"
-      round
+      src=" https://cdn.jsdelivr.net/gh/lewkamtao/LewCloud@master/lew/apple_leader_6_7ytti9_.jpeg"
       status="away"
       statusPlacement="bottom-left"
     />
     <lew-avatar
-      src="https://api.lew.kamtao.com/manage/common/avatar/550/4B78CA/王"
-      round
+      src=" https://cdn.jsdelivr.net/gh/lewkamtao/LewCloud@master/lew/apple_leader_7_djk4ui_.jpeg"
       status="offline"
       statusPlacement="bottom-right"
     />

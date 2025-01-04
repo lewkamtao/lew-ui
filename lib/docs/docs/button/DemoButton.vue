@@ -30,26 +30,26 @@ const options = ref(
 <template>
   <div class="demo-wrapper">
     <lew-title>Button</lew-title>
-    <p class="sub-title">赏心悦目的异步效果</p>
-    <lew-demo-box title="类型" :code="DemoButton1Code">
+    <p class="sub-title">Pleasant asynchronous effects</p>
+    <lew-demo-box title="Type" :code="DemoButton1Code">
       <demo-button1 />
     </lew-demo-box>
-    <lew-demo-box title="尺寸" :code="DemoButton7Code"
+    <lew-demo-box title="Size" :code="DemoButton7Code"
       ><demo-button7 />
     </lew-demo-box>
-    <lew-demo-box title="色彩" :code="DemoButton2Code"
+    <lew-demo-box title="Color" :code="DemoButton2Code"
       ><demo-button2 />
     </lew-demo-box>
-    <lew-demo-box title="图标" :code="DemoButton3Code"
+    <lew-demo-box title="Icon" :code="DemoButton3Code"
       ><demo-button3 />
     </lew-demo-box>
-    <lew-demo-box title="加载状态" :code="DemoButton4Code">
+    <lew-demo-box title="Loading State" :code="DemoButton4Code">
       <demo-button4 />
     </lew-demo-box>
-    <lew-demo-box title="不可用状态" :code="DemoButton5Code">
+    <lew-demo-box title="Disabled State" :code="DemoButton5Code">
       <demo-button5 />
     </lew-demo-box>
-    <lew-demo-box title="模拟请求" :code="DemoButton6Code">
+    <lew-demo-box title="Simulate Request" :code="DemoButton6Code">
       <demo-button6 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />

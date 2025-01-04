@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { Home } from 'lucide-vue-next'
+import { Star, Heart, Bell, User } from 'lucide-vue-next'
 </script>
 
 <template>
   <lew-flex x="start" y="end" gap="10px">
     <lew-button size="mini">
-      <Home :size="14" />
-      迷你
+      <Star :size="14" />
+      Mini
     </lew-button>
     <lew-button size="small">
-      <Home :size="16" />
-      小型
+      <Heart :size="16" />
+      Small
     </lew-button>
     <lew-button size="medium">
-      <Home :size="18" />
-      中型
+      <Bell :size="18" />
+      Medium
     </lew-button>
     <lew-button size="large">
-      <Home :size="20" />
-      大型
+      <User :size="20" />
+      Large
     </lew-button>
   </lew-flex>
 </template>

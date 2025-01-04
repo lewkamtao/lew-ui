@@ -2,12 +2,12 @@
   <lew-flex wrap x="start" gap="20">
     <lew-avatar
       :size="40"
-      src="https://api.lew.kamtao.com/manage/common/avatar/1000/4B78CA/张"
+      src=" https://cdn.jsdelivr.net/gh/lewkamtao/LewCloud@master/lew/apple_leader_1_ctd06i_.jpeg"
       shape="square"
     />
     <lew-avatar
       :size="40"
-      src="https://api.lew.kamtao.com/manage/common/avatar/1000/4B78CA/李"
+      src=" https://cdn.jsdelivr.net/gh/lewkamtao/LewCloud@master/lew/apple_leader_3_kntap6_.jpeg"
       shape="circle"
     />
   </lew-flex>

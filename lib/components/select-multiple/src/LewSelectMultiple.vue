@@ -226,7 +226,7 @@ defineExpose({ show, hide })
     popoverBodyClassName="lew-select-multiple-popover-body"
     class="lew-select-view"
     :trigger="trigger"
-    :disabled="disabled"
+    :disabled="disabled || readonly"
     placement="bottom-start"
     style="width: 100%"
     :offset="[-1, 10]"

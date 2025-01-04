@@ -77,7 +77,7 @@ const select = (item: MenuOptions) => {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--lew-text-color-8);
+    color: var(--lew-text-color-5);
     height: 28px;
     line-height: 28px;
     font-size: 12px;

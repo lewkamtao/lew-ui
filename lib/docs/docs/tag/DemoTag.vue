@@ -28,19 +28,19 @@ const options = ref(
 <template>
   <div class="demo-wrapper">
     <lew-title>Tag</lew-title>
-    <lew-demo-box title="类型" :code="DemoTag1Code">
+    <lew-demo-box title="Type" :code="DemoTag1Code">
       <demo-tag1 />
     </lew-demo-box>
-    <lew-demo-box title="尺寸" :code="DemoTag2Code">
+    <lew-demo-box title="Size" :code="DemoTag2Code">
       <demo-tag2 />
     </lew-demo-box>
-    <lew-demo-box title="色彩系统" :code="DemoTag3Code">
+    <lew-demo-box title="Color System" :code="DemoTag3Code">
       <demo-tag3 />
     </lew-demo-box>
-    <lew-demo-box title="禁用与关闭" :code="DemoTag4Code">
+    <lew-demo-box title="Disabled and Closable" :code="DemoTag4Code">
       <demo-tag4 />
     </lew-demo-box>
-    <lew-demo-box title="前后插槽" :code="DemoTag5Code">
+    <lew-demo-box title="Left and Right Slots" :code="DemoTag5Code">
       <demo-tag5 />
     </lew-demo-box>
     <lew-demo-box v-if="false" title="Disabled" :code="DemoTag6Code">

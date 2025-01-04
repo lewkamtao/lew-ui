@@ -385,12 +385,30 @@ const notification = (type: string) => {
     }
   )
 }
+
+const logoLeft = ref('')
+
+const getLogoLeft = () => {
+  const logoElement = document.getElementById('logo')
+  if (logoElement) {
+    const rect = logoElement.getBoundingClientRect()
+    logoLeft.value = rect.left + window.scrollX + 'px' // 获取绝对定位的left
+  }
+}
+
+onMounted(() => {
+  getLogoLeft()
+  window.addEventListener('resize', getLogoLeft)
+})
+onUnmounted(() => {
+  window.removeEventListener('resize', getLogoLeft)
+})
 </script>
 
 <template>
   <div class="home-wrapper">
     <LewBg />
-    <div class="startbox">
+    <div :style="{ left: logoLeft }" class="startbox">
       <div class="slogan">
         少即是
         <div class="dm">
@@ -423,38 +441,37 @@ const notification = (type: string) => {
         <lew-flex class="item" direction="y" x="end" gap="40">
           <lew-flex direction="y" x="end" gap="0px">
             <lew-title :size="16" :bold="200"> Lew Design 16px </lew-title>
-            <lew-title size="24px" :bold="400"> Lew Design 24px </lew-title>
-            <lew-title size="32px" :bold="600"> Lew Design 32px </lew-title>
-            <lew-title size="40px" :bold="600">
-              本月流水： $<lew-magic-number sep :value="viewTotal" :size="40" />
-            </lew-title>
+            <lew-title :size="24" :bold="400"> Lew Design 24px </lew-title>
+            <lew-title :size="32" :bold="600"> Lew Design 32px </lew-title>
+            <lew-title :size="40" :bold="800"> Lew Design 40px </lew-title>
           </lew-flex>
-          <lew-flex x="end" gap="20">
-            <lew-avatar src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668" />
-            <lew-badge round value="3">
-              <lew-avatar
-                src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
-              />
-            </lew-badge>
-            <lew-badge round value="99+">
-              <lew-avatar
-                src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
-              />
-            </lew-badge>
-            <lew-badge type="light" color="blue" round value="99+">
-              <lew-avatar
-                src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
-              />
-            </lew-badge>
+          <lew-flex style="width: 500px" x="end" gap="20">
+            <lew-avatar size="40" shape="circle" />
+            <lew-avatar alt="李彦宏" size="40" shape="circle" />
+            <lew-avatar alt="Tim Cook" size="40" shape="circle" />
             <lew-avatar
-              src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
+              shape="circle"
               status="online"
-              statusPlacement="bottom-left"
+              src="https://cdn.jsdelivr.net/gh/lewkamtao/LewCloud@master/lew/apple_leader_1_ctd06i_.jpeg"
+              alt="avatar"
             />
             <lew-avatar
-              src="https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668"
-              status="processing"
-              statusPlacement="bottom-right"
+              src=" https://cdn.jsdelivr.net/gh/lewkamtao/LewCloud@master/lew/apple_leader_4_7cwenb_.jpeg"
+              status="online"
+              shape="circle"
+            />
+
+            <lew-avatar
+              shape="circle"
+              src="https://cdn.jsdelivr.net/gh/lewkamtao/LewCloud@master/lew/apple_leader_2_2s0nai_.jpeg"
+              status="away"
+              alt="avatar"
+            />
+            <lew-avatar
+              shape="circle"
+              status="offline"
+              src="https://cdn.jsdelivr.net/gh/lewkamtao/LewCloud@master/lew/apple_leader_3_kntap6_.jpeg"
+              alt="avatar"
             />
           </lew-flex>
           <lew-flex x="end" gap="10">
@@ -655,7 +672,6 @@ const notification = (type: string) => {
 
 .home-wrapper {
   width: 100%;
-  overflow: hidden;
 
   .startbox {
     position: fixed;

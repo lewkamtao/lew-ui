@@ -3,7 +3,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useDark } from '@vueuse/core'
 import { Sun, Moon, Github } from 'lucide-vue-next'
 
-const version = ref('v2.5.3')
+const version = ref('v2.5.8')
 
 const isDark = useDark({
   selector: 'html',
@@ -25,7 +25,7 @@ const goHome = () => {
 
 <template>
   <lew-flex mode="between" class="Header">
-    <lew-flex class="logo" x="start" @click="goHome">
+    <lew-flex class="logo" id="logo" x="start" @click="goHome">
       <img
         src="../assets/images/logo.png"
         alt="logo"

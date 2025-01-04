@@ -56,7 +56,7 @@ const TYPE_STYLES = {
   }),
   ghost: (color: string) => ({
     backgroundColor: 'transparent',
-    border: `1px solid var(--lew-color-${color}-dark)`,
+    border: `var(--lew-form-border-width) solid var(--lew-color-${color}-dark)`,
     color: `var(--lew-color-${color}-dark)`,
     boxShadow: 'none'
   }),

@@ -43,7 +43,6 @@ export * from './upload'
 // 数据展示
 export * from './table'
 export * from './pagination'
-export * from './magic-number'
 export * from './tree'
 export * from './collapse'
 export * from './desc'

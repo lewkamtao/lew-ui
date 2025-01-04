@@ -1,8 +1,7 @@
 <template>
   <lew-flex wrap x="start" gap="20">
-    <lew-avatar
-      src="https://api.lew.kamtao.com/manage/common/avatar/51150/4B78CA/杨"
-      status="online"
-    />
+    <lew-avatar size="40" shape="circle" />
+    <lew-avatar alt="李彦宏" size="40" shape="circle" />
+    <lew-avatar alt="Tim Cook" size="40" shape="circle" />
   </lew-flex>
 </template>

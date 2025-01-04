@@ -81,13 +81,13 @@ export const LewVContextMenu = {
         if (!window.LewContextMenu.contextMenu) {
           // 右键菜单事件处理函数
           window.LewContextMenu.contextMenu = (e: MouseEvent) => {
-            e.preventDefault() // 阻止默认右键菜单
 
             const id = findContextMenuId(e.target as HTMLElement)
             // 处理禁用和无效情况
             if (window.LewContextMenu.disabledIds.includes(id) || !id) {
               return
             }
+            e.preventDefault() // 阻止默认右键菜单
 
             const options = window.LewContextMenu.menu[id]
             const { instance } = window.LewContextMenu
