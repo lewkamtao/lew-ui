@@ -5,8 +5,12 @@ import { inputTableProps } from './props'
 import type { InputTableColumn } from './props'
 import { any2px, getUniqueId } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { LewTable, LewButton, LewFlex, LewEmpty } from 'lew-ui'
-
+import { LewTable, LewButton, LewFlex, LewEmpty, LewMessage } from 'lew-ui'
+// 获取app
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewMessage)
+}
 const modelValue: Ref<Array<any>> = defineModel({ required: true })
 
 const setUseId = () => {

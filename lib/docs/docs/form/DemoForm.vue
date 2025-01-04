@@ -16,6 +16,7 @@ import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
 
+const router = useRouter()
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -24,7 +25,8 @@ const options = ref(
 )
 
 const toFormEngine = () => {
-  window.open('/#/form-engine')
+  const URL = router.resolve('/form-engine').href
+  window.open(URL, '_blank')
 }
 </script>
 

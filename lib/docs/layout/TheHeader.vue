@@ -21,6 +21,19 @@ const goHome = () => {
     router.push('/')
   }
 }
+
+const goToPage = (path: string, isNewTab = false) => {
+  if (isNewTab) {
+    const URL = router.resolve(path).href
+    window.open(URL, '_blank')
+  } else {
+    router.push(path)
+  }
+}
+
+const goToGithub = () => {
+  window.open('https://github.com/lewkamtao/Lew-UI', '_blank')
+}
 </script>
 
 <template>
@@ -39,34 +52,30 @@ const goHome = () => {
       </lew-tag>
     </lew-flex>
     <lew-flex gap="15" class="menu">
-      <a class="menu-item" href="/#/">首页</a>
-      <a class="menu-item" href="/#/Install">指南</a>
-      <a class="menu-item" href="/#/Image">组件</a>
-      <a class="menu-item" target="_blank" href="/#/form-engine">
+      <div class="menu-item" @click="goToPage('/')">首页</div>
+      <div class="menu-item" @click="goToPage('/Install')">指南</div>
+      <div class="menu-item" @click="goToPage('/Image')">组件</div>
+      <div class="menu-item" @click="goToPage('/form-engine', true)">
         <lew-flex gap="5">
           表单引擎<lew-tag size="small" type="ghost" round> Dev </lew-tag>
         </lew-flex>
-      </a>
-      <a class="menu-item" target="_blank" href="/#/desc-engine">
+      </div>
+      <div class="menu-item" @click="goToPage('/desc-engine', true)">
         <lew-flex gap="5">
           描述引擎<lew-tag size="small" color="green" type="ghost" round>
             New
           </lew-tag>
         </lew-flex>
-      </a>
+      </div>
     </lew-flex>
     <lew-flex gap="15" x="end" class="menu">
       <div class="menu-item menu-item-icon" @click="isDark = !isDark">
         <Sun class="icon-mode-sunny" :size="18" />
         <Moon class="icon-mode-moon" :size="18" />
       </div>
-      <a
-        class="menu-item menu-item-icon"
-        target="_blank"
-        href="https://github.com/lewkamtao/Lew-UI"
-      >
+      <div class="menu-item menu-item-icon" @click="goToGithub">
         <Github :size="18" />
-      </a>
+      </div>
     </lew-flex>
   </lew-flex>
 </template>
