@@ -66,27 +66,18 @@ const change = () => {
 </template>
 <style scoped lang="scss">
 .lew-collapse-item {
+  border-bottom: 1px solid var(--lew-bgcolor-4);
   .lew-collapse-item-title {
     cursor: pointer;
-    padding: 10px;
+    padding: 10px 0px;
     box-sizing: border-box;
-    background-color: var(--lew-bgcolor-2);
     transition: all 0.15s;
-  }
-  .lew-collapse-item-title-active {
-    background-color: var(--lew-bgcolor-4);
-    font-weight: bold;
-  }
-  .lew-collapse-item-title-active:hover {
-    background-color: var(--lew-bgcolor-4);
-    font-weight: bold;
-  }
-  .lew-collapse-item-title:hover {
-    background-color: var(--lew-bgcolor-4);
+    user-select: none;
   }
 
   .lew-collapse-item-main {
     box-sizing: border-box;
+    padding-bottom: 10px;
   }
 }
 .lew-collapse-item:last-child {

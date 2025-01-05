@@ -10,8 +10,8 @@ const value = ref('')
 
 const filterFn = (params: any) => {
   // 自定义过滤方法
-  const { keyword } = params
-  const result = options.value.filter((e: any) => {
+  const { keyword, options } = params
+  const result = options.filter((e: any) => {
     return e.label.indexOf(keyword) >= 0
   })
   return result
@@ -42,6 +42,7 @@ const searchFn = (event: any) => {
     <lew-select
       v-model="value"
       searchable
+      :options="options"
       :defaultValue="value"
       :searchMethod="filterFn"
       placeholder="自定义过滤方法"

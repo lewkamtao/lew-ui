@@ -7,6 +7,7 @@ import type { SelectOptions } from './props'
 import { selectProps } from './props'
 import { cloneDeep, isFunction } from 'lodash-es'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { flattenOptions, defaultSearchMethod } from './util'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -27,15 +28,16 @@ let _searchMethod = computed(() => {
     return props.searchMethod
   } else if (props.searchMethodId) {
     return formMethods[props.searchMethodId]
+  } else {
+    return defaultSearchMethod
   }
-  return false
 })
 
 const state = reactive({
   selectWidth: 0,
   visible: false,
   loading: false,
-  options: props.options,
+  options: flattenOptions(props.options),
   hideBySelect: false, // 记录是否通过选择隐藏
   keyword: props.defaultValue || (selectValue.value as any),
   keywordBackup: props.defaultValue as any
@@ -64,10 +66,10 @@ const search = async (e: any) => {
     let result: SelectOptions[] = []
     // 如果没输入关键词
     if (!keyword && props.options.length > 0) {
-      result = props.options
+      result = flattenOptions(props.options)
     } else {
       result = await _searchMethod.value({
-        options: props.options,
+        options: flattenOptions(props.options),
         keyword
       })
     }
@@ -85,7 +87,7 @@ const clearHandle = () => {
 }
 
 const selectHandle = (item: SelectOptions) => {
-  if (item.disabled) {
+  if (item.disabled || item.isGroup) {
     return
   }
   state.hideBySelect = true
@@ -139,12 +141,13 @@ const getBodyClassName = computed(() => {
 })
 
 const getSelectItemClassName = (e: any) => {
-  const { disabled } = e
+  const { disabled, isGroup } = e
   const active = getChecked.value(e.value)
 
   return object2class('lew-select-item', {
     disabled,
-    active
+    active,
+    'is-group': isGroup
   })
 }
 
@@ -192,6 +195,20 @@ watch(
     findKeyword()
   }
 )
+
+watch(
+  () => props.options,
+  () => {
+    state.options = flattenOptions(props.options)
+  },
+  {
+    deep: true
+  }
+)
+
+const getResultNum = computed(() => {
+  return numFormat(state.options.filter((e: any) => !e.isGroup).length)
+})
 
 defineExpose({ show, hide })
 </script>
@@ -261,7 +278,7 @@ defineExpose({ show, hide })
             class="lew-result-count"
           >
             共
-            {{ numFormat(state.options && state.options.length) }}
+            {{ getResultNum }}
             条结果
           </div>
           <use-virtual-list
@@ -293,7 +310,11 @@ defineExpose({ show, hide })
                   :class="getSelectItemClassName(templateProps)"
                 >
                   <lew-text-trim
-                    :text="templateProps.label"
+                    :text="
+                      templateProps.isGroup
+                        ? `${templateProps.label} (${templateProps.total})`
+                        : templateProps.label
+                    "
                     :delay="[500, 0]"
                     class="lew-select-label"
                   />
@@ -422,10 +443,8 @@ defineExpose({ show, hide })
   }
 
   .lew-select-searchable {
-    .lew-select {
-      .lew-value {
-        cursor: text;
-      }
+    .lew-value {
+      cursor: text;
     }
   }
   .lew-select:hover {
@@ -470,8 +489,7 @@ defineExpose({ show, hide })
   box-sizing: border-box;
 
   .lew-result-count {
-    margin: 5px 0px;
-    padding-left: 8px;
+    padding: 5px 12px;
     font-size: 13px;
     opacity: 0.4;
   }
@@ -547,6 +565,20 @@ defineExpose({ show, hide })
       color: var(--lew-checkbox-color);
       background-color: var(--lew-pop-bgcolor-active);
       font-weight: bold;
+    }
+
+    .lew-select-item-is-group {
+      color: var(--lew-text-color-7);
+      background-color: var(--lew-pop-bgcolor);
+      cursor: default;
+      box-sizing: border-box;
+      cursor: no-drop;
+      pointer-events: none;
+      .lew-select-label {
+        font-size: 12px;
+        box-sizing: border-box;
+        padding-top: 4px;
+      }
     }
   }
 }

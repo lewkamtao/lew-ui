@@ -6,6 +6,14 @@ export type SelectMultipleOptions = {
   label: string
   value: string | number
   disabled?: boolean
+  isGroup?: boolean
+  groupValue?: string | number
+  groupLabel?: string
+}
+
+export type SelectMultipleOptionsGroup = {
+  label: string
+  children: SelectMultipleOptions[]
 }
 
 export type SelectSearchMultipleMethodParams = {

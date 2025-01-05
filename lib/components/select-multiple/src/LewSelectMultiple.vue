@@ -10,11 +10,12 @@ import {
   LewEmpty
 } from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
-import type { SelectMultipleOptions } from './props'
+import type { SelectMultipleOptions, SelectMultipleOptionsGroup } from './props'
 import { selectMultipleProps } from './props'
 import { UseVirtualList } from '@vueuse/components'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { isFunction } from 'lodash-es'
+import { flattenOptions, defaultSearchMethod } from '../../select/src/util'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -30,11 +31,12 @@ const lewPopoverRef = ref()
 const lewPopoverValueRef = ref()
 const searchInputRef = ref()
 
+
 const state = reactive({
   selectWidth: 0,
   visible: false,
   loading: false,
-  options: props.options,
+  options: flattenOptions(props.options),
   keyword: ''
 })
 
@@ -45,8 +47,9 @@ let _searchMethod = computed(() => {
     return props.searchMethod
   } else if (props.searchMethodId) {
     return formMethods[props.searchMethodId]
+  } else {
+    return defaultSearchMethod
   }
-  return false
 })
 
 const getSelectWidth = () => {
@@ -71,17 +74,16 @@ const searchDebounce = useDebounceFn(async (e: any) => {
 }, props.searchDelay)
 
 const search = async (e?: any) => {
-  // loading
   state.loading = true
   const keyword = e?.target.value
   if (props.searchable) {
     let result: any = []
     // 如果没输入关键词
     if (!keyword && props.options.length > 0) {
-      result = props.options
+      result = flattenOptions(props.options)
     } else {
       result = await _searchMethod.value({
-        options: props.options,
+        options: flattenOptions(props.options),
         keyword
       })
     }
@@ -115,7 +117,7 @@ const deleteTag = (index: number) => {
 }
 
 const selectHandle = (item: SelectMultipleOptions) => {
-  if (item.disabled) {
+  if (item.disabled || item.isGroup) {
     return
   }
 
@@ -177,12 +179,13 @@ const getSelectClassName = computed(() => {
 })
 
 const getSelectItemClassName = (e: any) => {
-  const { disabled } = e
+  const { disabled, isGroup } = e
   const active = getChecked.value(e.value)
 
   return object2class('lew-select-item', {
     disabled,
-    active
+    active,
+    'is-group': isGroup
   })
 }
 
@@ -218,6 +221,20 @@ onMounted(() => {
 })
 
 defineExpose({ show, hide })
+
+watch(
+  () => props.options,
+  () => {
+    state.options = flattenOptions(props.options)
+  },
+  {
+    deep: true
+  }
+)
+
+const getResultNum = computed(() => {
+  return numFormat(state.options.filter((e: any) => !e.isGroup).length)
+})
 </script>
 
 <template>
@@ -363,7 +380,7 @@ defineExpose({ show, hide })
             class="lew-result-count"
           >
             共
-            {{ numFormat(state.options && state.options.length) }}
+            {{ getResultNum }}
             条结果
           </div>
 
@@ -379,7 +396,6 @@ defineExpose({ show, hide })
             :height="getVirtualHeight"
           >
             <template #default="{ data: templateProps }">
-              <!-- you can get current item of list here -->
               <div
                 :style="{ height: itemHeight + 'px' }"
                 @click="selectHandle(templateProps)"
@@ -398,14 +414,20 @@ defineExpose({ show, hide })
                   :class="getSelectItemClassName(templateProps)"
                 >
                   <lew-checkbox
+                    v-if="!templateProps.isGroup"
                     :key="templateProps.value"
                     class="lew-select-checkbox"
                     :checked="getChecked(templateProps.value)"
                   />
                   <lew-text-trim
-                    :text="templateProps.label"
+                    :text="
+                      templateProps.isGroup
+                        ? `${templateProps.label} (${templateProps.total})`
+                        : templateProps.label
+                    "
                     :delay="[500, 0]"
                     class="lew-select-label"
+                    :class="{ 'is-group': templateProps.isGroup }"
                   />
                 </div>
               </div>
@@ -655,13 +677,6 @@ defineExpose({ show, hide })
     }
   }
 
-  .lew-result-count {
-    padding-left: 8px;
-    margin: 5px 0px;
-    opacity: 0.4;
-    font-size: 13px;
-  }
-
   .lew-select-options-box {
     overflow-y: auto;
     overflow-x: hidden;
@@ -701,6 +716,14 @@ defineExpose({ show, hide })
           padding-left: 38px;
           box-sizing: border-box;
           cursor: pointer !important;
+
+          &.is-group {
+            padding-left: 12px;
+            color: var(--lew-text-color-7);
+            font-size: 12px;
+            pointer-events: none;
+            padding-top: 4px;
+          }
         }
       }
 
@@ -751,6 +774,12 @@ defineExpose({ show, hide })
         }
       }
     }
+  }
+
+  .lew-result-count {
+    padding: 5px 12px;
+    font-size: 13px;
+    opacity: 0.4;
   }
 }
 </style>

@@ -6,6 +6,14 @@ export type SelectOptions = {
   label: string
   value: string | number
   disabled?: boolean
+  isGroup?: boolean
+  groupValue?: string | number
+  groupLabel?: string
+}
+
+export interface SelectOptionsGroup {
+  label: string
+  children: SelectOptions[]
 }
 
 export type SelectSearchMethodParams = {
@@ -30,7 +38,7 @@ export const selectProps = {
     description: '选择器的默认值，用于异步加载选项时设置初始值'
   },
   options: {
-    type: Array as PropType<SelectOptions[]>,
+    type: Array as PropType<SelectOptions[] | SelectOptionsGroup[]>,
     default: () => [],
     description: '选择器的选项列表'
   },

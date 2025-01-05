@@ -67,7 +67,7 @@ const getRadioClassName = computed(() => {
   user-select: none;
   cursor: pointer;
   color: var(--lew-text-color-1);
-  font-size: 14px;
+  font-size: 0px;
   transition: all var(--lew-form-transition-ease);
   white-space: nowrap;
   box-sizing: border-box;
@@ -101,7 +101,9 @@ const getRadioClassName = computed(() => {
 }
 
 .lew-radio-size-small {
-  font-size: 13px;
+  .lew-radio-label {
+    font-size: 13px;
+  }
 
   .lew-icon-radio-box {
     width: 16px;
@@ -111,7 +113,9 @@ const getRadioClassName = computed(() => {
 }
 
 .lew-radio-size-medium {
-  font-size: 14px;
+  .lew-radio-label {
+    font-size: 14px;
+  }
 
   .lew-icon-radio-box {
     width: 18px;
@@ -121,7 +125,9 @@ const getRadioClassName = computed(() => {
 }
 
 .lew-radio-size-large {
-  font-size: 15px;
+  .lew-radio-label {
+    font-size: 15px;
+  }
 
   .lew-icon-radio-box {
     width: 20px;

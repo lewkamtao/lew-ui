@@ -7,13 +7,16 @@ import {
   DemoSelectMultiple5,
   DemoSelectMultiple6,
   DemoSelectMultiple7,
+  DemoSelectMultiple8,
+
   DemoSelectMultiple1Code,
   DemoSelectMultiple2Code,
   DemoSelectMultiple3Code,
   DemoSelectMultiple4Code,
   DemoSelectMultiple5Code,
   DemoSelectMultiple6Code,
-  DemoSelectMultiple7Code
+  DemoSelectMultiple7Code,
+  DemoSelectMultiple8Code
 } from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
@@ -53,6 +56,9 @@ const options = ref(
     </lew-demo-box>
     <lew-demo-box title="空状态插槽" :code="DemoSelectMultiple7Code">
       <demo-select-multiple7 />
+    </lew-demo-box>
+    <lew-demo-box title="分组" :code="DemoSelectMultiple8Code">
+      <demo-select-multiple8 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>

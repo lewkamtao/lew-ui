@@ -113,7 +113,7 @@ const goToGithub = () => {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 10px 15px;
+      padding: 5px 10px;
       font-size: 16px;
       transition: all 0.25s;
       color: var(--lew-text-color-1);

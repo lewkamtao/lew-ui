@@ -48,18 +48,6 @@ export const collapseProps = {
         value
       })
     }
-  },
-  gap: {
-    type: [String, Number],
-    default: '0px',
-    description: '折叠项之间的间距，支持 CSS 长度值。',
-    validator(value: string | number): boolean {
-      return isValidCssValue({
-        name: 'LewCollapseItem',
-        field: 'radius',
-        value
-      })
-    }
   }
 }
 
