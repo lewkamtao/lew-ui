@@ -158,7 +158,7 @@ const value = ref([])
     <lew-select-multiple
       v-model="value"
       :options="options"
-      placeholder="选择宜家产品"
+      placeholder="选择产品"
       searchable
     />
   </lew-flex>

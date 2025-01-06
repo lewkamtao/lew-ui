@@ -31,7 +31,6 @@ const lewPopoverRef = ref()
 const lewPopoverValueRef = ref()
 const searchInputRef = ref()
 
-
 const state = reactive({
   selectWidth: 0,
   visible: false,
@@ -505,9 +504,12 @@ const getResultNum = computed(() => {
 
     .lew-placeholder,
     .lew-value {
+      display: flex;
+      align-items: center;
       width: calc(100% - 24px);
       transition: all 0.2s;
       height: 100%;
+      line-height: 100%;
     }
 
     .lew-select-multiple-text-value {
@@ -528,9 +530,6 @@ const getResultNum = computed(() => {
   .lew-select-size {
     &-small {
       min-height: var(--lew-form-item-height-small);
-      line-height: calc(
-        var(--lew-form-item-height-small) - (var(--lew-form-border-width) * 2)
-      );
 
       .lew-placeholder,
       .lew-select-multiple-text-value {
@@ -540,14 +539,14 @@ const getResultNum = computed(() => {
 
       .lew-select-multiple-text-value {
         padding-right: 26px;
+        line-height: calc(
+          var(--lew-form-item-height-small) - (var(--lew-form-border-width) * 2)
+        );
       }
     }
 
     &-medium {
       min-height: var(--lew-form-item-height-medium);
-      line-height: calc(
-        var(--lew-form-item-height-medium) - (var(--lew-form-border-width) * 2)
-      );
 
       .lew-placeholder,
       .lew-select-multiple-text-value {
@@ -557,14 +556,15 @@ const getResultNum = computed(() => {
 
       .lew-select-multiple-text-value {
         padding-right: 28px;
+        line-height: calc(
+          var(--lew-form-item-height-medium) -
+            (var(--lew-form-border-width) * 2)
+        );
       }
     }
 
     &-large {
       min-height: var(--lew-form-item-height-large);
-      line-height: calc(
-        var(--lew-form-item-height-large) - (var(--lew-form-border-width) * 2)
-      );
 
       .lew-placeholder,
       .lew-select-multiple-text-value {
@@ -574,6 +574,9 @@ const getResultNum = computed(() => {
 
       .lew-select-multiple-text-value {
         padding-right: 30px;
+        line-height: calc(
+          var(--lew-form-item-height-large) - (var(--lew-form-border-width) * 2)
+        );
       }
     }
   }

@@ -34,6 +34,7 @@ export const flattenOptions = (options: (Options | OptionsGroup)[]) => {
 
 export const defaultSearchMethod = (params: any) => {
   const { options, keyword } = params
+  console.log(options, keyword)
   const result: any = options.filter((e: any) => {
     return e.label.indexOf(keyword) >= 0 && !e.isGroup
   })
