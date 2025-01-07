@@ -8,30 +8,30 @@ export default ({
   fileItem: UploadFileItem
   setFileItem: Function
 }) => {
-  const { id, file } = fileItem
+  const { key, file } = fileItem
   const formData = new FormData()
   formData.append('file', file as File)
-  setFileItem({ id, status: 'uploading' })
+  setFileItem({ key, status: 'uploading' })
   axios
     .post({
       url: '/open/upload',
       data: formData,
       baseURL: '/api_sso',
       onUploadProgress: (e: any) => {
-        setFileItem({ id, percent: e.progress * 100 })
+        setFileItem({ key, percent: e.progress * 100 })
       }
     })
     .then((res: any) => {
       if (res.success) {
         const { fileName } = res.data
         setFileItem({
-          id,
+          key,
           status: 'success',
           url: `https://app.tngeek.com/api_sso/open/file/${fileName}`,
           percent: 100
         })
       } else {
-        setFileItem({ id, status: 'fail' })
+        setFileItem({ key, status: 'fail' })
       }
     })
 }

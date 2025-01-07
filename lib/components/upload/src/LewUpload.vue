@@ -51,7 +51,7 @@ const getCardSize: Record<string, number> = {
   large: 88
 }
 
-const emit = defineEmits(['change'])
+const emit = defineEmits(['change', 'delete'])
 const inputClickRef = ref<HTMLInputElement | null>(null)
 const inputPasteRef = ref<HTMLInputElement | null>(null)
 const dropActive = ref(false)
@@ -73,15 +73,17 @@ const addImageToList = (files: any) => {
   if ((files || []).length > 0) {
     const item = files.pop()
     const { size, type, name, lastModifiedDate, lastModified } = item
-    let status: UploadStatus = 'wrong_config'
+    let status: UploadStatus = 'pending'
+
     if (!checkFileAccept({ ...item, file: item })) {
       status = 'wrong_type'
     }
     if (size && size > props.maxFileSize) {
       status = 'wrong_size'
     }
+
     const fileItem = {
-      id: getUniqueId(),
+      key: getUniqueId(),
       status,
       size,
       type,
@@ -90,13 +92,15 @@ const addImageToList = (files: any) => {
       lastModified,
       file: item
     }
+
     modelValue.value = [fileItem, ...cloneDeep(modelValue.value || [])]
     emit('change', modelValue.value)
+
     nextTick(() => {
-      if (fileItem.status === 'wrong_config') {
-        isFunction(_uploadHelper.value)
-          ? _uploadHelper.value({ fileItem: cloneDeep(fileItem), setFileItem })
-          : LewMessage.error('未配置上传 uploadHelper')
+      // 如果配置了uploadHelper且文件格式和大小都符合要求，则开始上传
+      if (status === 'pending' && isFunction(_uploadHelper.value)) {
+        setFileItem({ key: fileItem.key, status: 'uploading', percent: 0 })
+        _uploadHelper.value({ fileItem: cloneDeep(fileItem), setFileItem })
       }
       setTimeout(() => {
         if ((modelValue.value || []).length < props.limit) {
@@ -107,12 +111,12 @@ const addImageToList = (files: any) => {
   }
 }
 
-const deleteFile = (id: string) => {
+const deleteFile = (key: string) => {
   let fileList = cloneDeep(modelValue.value) || []
-  const index = (fileList || []).findIndex((e: UploadFileItem) => e.id === id)
+  const index = (fileList || []).findIndex((e: UploadFileItem) => e.key === key)
   if (index >= 0) {
     const { status } = fileList[index]
-    if (['wrong_type', 'wrong_size', 'wrong_config'].includes(status || '')) {
+    if (['wrong_type', 'wrong_size', 'pending'].includes(status || '')) {
       fileList.splice(index, 1)
       modelValue.value = fileList
     } else {
@@ -125,6 +129,7 @@ const deleteFile = (id: string) => {
         ok: () => {
           fileList.splice(index, 1)
           modelValue.value = fileList
+          emit('delete', key)
           return true
         }
       })
@@ -132,14 +137,14 @@ const deleteFile = (id: string) => {
   }
 }
 
-const reUpload = (id: string) => {
-  const index = (modelValue.value || []).findIndex((e) => e.id === id)
+const reUpload = (key: string) => {
+  const index = (modelValue.value || []).findIndex((e) => e.key === key)
   if (index >= 0) {
     const item = (modelValue.value || [])[index]
-    setFileItem({ id, percent: 0, status: 'uploading' })
-    isFunction(_uploadHelper.value)
-      ? _uploadHelper.value({ fileItem: cloneDeep(item), setFileItem })
-      : LewMessage.error('未配置上传 uploadHelper')
+    if (isFunction(_uploadHelper.value)) {
+      setFileItem({ key, percent: 0, status: 'uploading' })
+      _uploadHelper.value({ fileItem: cloneDeep(item), setFileItem })
+    }
   } else {
     LewMessage.error('文件不存在')
   }
@@ -229,9 +234,9 @@ onMounted(() => {
 })
 
 const setFileItem = (item: UploadFileItem) => {
-  const { id, percent } = item
+  const { key, percent } = item
   let fileList = cloneDeep(modelValue.value) || []
-  const index = (fileList || []).findIndex((e: UploadFileItem) => e.id === id)
+  const index = (fileList || []).findIndex((e: UploadFileItem) => e.key === key)
   let _percent = percent || 0
   if (index >= 0) {
     if (percent) {

@@ -58,7 +58,7 @@ const modelValue = defineModel<UploadFileItem[]>()
     <transition-group name="lew-upload-card">
       <lew-flex
         v-for="item in modelValue"
-        :key="item.id || item.url"
+        :key="item.key || item.url"
         class="lew-upload-file-item"
         mode="between"
         gap="8"
@@ -69,7 +69,7 @@ const modelValue = defineModel<UploadFileItem[]>()
       >
         <lew-flex
           v-if="item.status === 'fail'"
-          @click.stop="emit('reUpload', item.id)"
+          @click.stop="emit('reUpload', item.key)"
           x="center"
           y="center"
           :style="{
@@ -85,7 +85,7 @@ const modelValue = defineModel<UploadFileItem[]>()
         <lew-flex
           v-else-if="
             item.status &&
-            !['complete', 'success'].includes(item.status as string)
+            !['complete', 'success', 'none', 'uploading'].includes(item.status as string)
           "
           v-tooltip="{
             content: statusMap[item.status || 'complete'],
@@ -108,7 +108,7 @@ const modelValue = defineModel<UploadFileItem[]>()
         </lew-flex>
 
         <lew-flex
-          @click.stop="emit('deleteFile', item.id)"
+          @click.stop="emit('deleteFile', item.key)"
           x="center"
           y="center"
           :style="{
