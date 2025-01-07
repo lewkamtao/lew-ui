@@ -21,7 +21,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>InputTable</lew-title>
+    <lew-title>Input Table</lew-title>
     <p class="sub-title">输入表格组件</p>
     <lew-demo-box title="基础用法" :code="DemoInputTable1Code">
       <demo-input-table1 />

@@ -7,9 +7,24 @@ export type MenuOptions = {
   children?: MenuOptions[] // 子菜单
   disabled?: boolean // 是否禁用
   level?: number // 菜单层级
-  icon?: string // 图标
+  renderIcon?: string // 图标
   tagText?: string // 标签文本
   tagColor?: LewColor // 标签颜色
+}
+
+export const menuModel = {
+  modelValue: {
+    type: String,
+    default: '',
+    description: '双向绑定值',
+    validator(value: string): boolean {
+      if (typeof value !== 'string') {
+        console.warn('[LewMenuTree] modelValue 必须是字符串类型。')
+        return false
+      }
+      return true
+    }
+  }
 }
 
 export const menuProps = {
@@ -21,18 +36,6 @@ export const menuProps = {
     validator: (value: unknown): boolean => {
       if (!Array.isArray(value)) {
         console.warn('[LewMenu] options 必须是一个数组')
-        return false
-      }
-      return true
-    }
-  },
-  active: {
-    type: String,
-    default: '',
-    description: '当前激活的菜单项的值',
-    validator: (value: unknown): boolean => {
-      if (typeof value !== 'string') {
-        console.warn('[LewMenu] active 必须是一个字符串')
         return false
       }
       return true

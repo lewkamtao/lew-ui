@@ -1,50 +1,23 @@
 <script lang="ts" setup>
-import { watchDebounced } from '@vueuse/core'
 import { LewTextTrim, LewTag } from 'lew-ui'
 import type { MenuOptions } from './props'
 import { menuProps } from './props'
-import Icon from 'lew-ui/utils/Icon.vue'
 
-const props = defineProps(menuProps)
+defineProps(menuProps)
+
+const modelValue = defineModel()
 
 const emit = defineEmits(['change'])
 
-const generateEnterpriseMenu = (
-  menuData: MenuOptions[],
-  level = 1
-): MenuOptions[] => {
-  return menuData.map((item) => {
-    const { children } = item
-    const menuItem: MenuOptions = {
-      ...item,
-      level // 添加 level 属性
-    }
-
-    if (level < 3 && children && children.length > 0) {
-      menuItem.children = generateEnterpriseMenu(children, level + 1)
-    }
-
-    return menuItem
-  })
+const select = (item: MenuOptions) => {
+  modelValue.value = item.value
+  emit('change', item)
 }
-
-const watchOptions = { deep: true, debounce: 250, maxWait: 1000 }
-const _options = ref<MenuOptions[]>([])
-
-watchDebounced(
-  () => props.options,
-  () => {
-    _options.value = generateEnterpriseMenu(props.options)
-  },
-  watchOptions
-)
-
-_options.value = generateEnterpriseMenu(props.options)
 </script>
 
 <template>
   <div class="lew-menu">
-    <template v-for="item in _options" :key="item.label">
+    <template v-for="item in options" :key="item.label">
       <div class="lew-menu-item">
         <lew-text-trim :text="item.label" />
         <lew-tag
@@ -62,14 +35,14 @@ _options.value = generateEnterpriseMenu(props.options)
           :class="{
             'lew-menu-item-last':
               item.children && index === item.children.length - 1,
-            'lew-menu-item-active': cItem.value === active
+            'lew-menu-item-active': cItem.value === modelValue
           }"
-          @click="emit('change', cItem)"
+          @click="select(cItem)"
         >
-          <Icon
-            v-if="cItem.icon"
+          <component
+            v-if="cItem.renderIcon"
             class="lew-menu-icon"
-            :type="cItem.icon"
+            :is="cItem.renderIcon"
             :size="14"
           />
           <lew-text-trim :text="cItem.label" />
@@ -104,7 +77,7 @@ _options.value = generateEnterpriseMenu(props.options)
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--lew-text-color-8);
+    color: var(--lew-text-color-5);
     height: 28px;
     line-height: 28px;
     font-size: 12px;
@@ -115,8 +88,8 @@ _options.value = generateEnterpriseMenu(props.options)
   .lew-menu-item-child {
     color: var(--lew-text-color-1);
     font-size: 14px;
-    height: 40px;
-    line-height: 40px;
+    height: 36px;
+    line-height: 36px;
     cursor: pointer;
     border-radius: var(--lew-border-radius-small);
   }

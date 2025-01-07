@@ -9,8 +9,7 @@ const modelValue = defineModel()
 provide('expandKeys', modelValue)
 
 const collapseStyle = computed(() => ({
-  width: any2px(props.width),
-  gap: any2px(props.gap)
+  width: any2px(props.width)
 }))
 </script>
 

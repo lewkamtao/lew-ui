@@ -2,8 +2,9 @@ import type { ExtractPropTypes } from 'vue'
 import { isValidCssValue } from 'lew-ui/utils'
 
 export type MenuTreeItem = {
-  key: string | number
-  title: string
+  label: string
+  value: string | number
+  active?: boolean
   disabled?: boolean
   renderIcon: () => any
   children?: MenuTreeItem[]
@@ -13,7 +14,7 @@ export const menuTreeModel = {
   modelValue: {
     type: String,
     default: '',
-    description: '菜单树的当前展开项，用于双向绑定。字符串类型表示单选模式。',
+    description: '双向绑定值',
     validator(value: string): boolean {
       if (typeof value !== 'string') {
         console.warn('[LewMenuTree] modelValue 必须是字符串类型。')
@@ -21,6 +22,16 @@ export const menuTreeModel = {
       }
       return true
     }
+  },
+  expandKeys: {
+    type: Array as PropType<(string | number)[]>,
+    default: () => [],
+    description: '菜单树的当前展开项，用于双向绑定。'
+  },
+  collapsed: {
+    type: Boolean,
+    default: false,
+    description: '菜单树是否折叠。'
   }
 }
 
@@ -40,7 +51,7 @@ export const menuTreeProps = {
   },
   width: {
     type: [String, Number],
-    default: '100%',
+    default: '240px',
     description: '菜单树的宽度，支持 CSS 宽度值。',
     validator(value: string | number): boolean {
       return isValidCssValue({
@@ -75,11 +86,11 @@ export const menuTreeItemProps = {
     default: false,
     description: '菜单树项是否禁用。'
   },
-  title: {
+  label: {
     type: String,
     default: '',
     description:
-      '菜单树项的标题文本。也可以使用具名插槽 "title" 自定义标题内容。'
+      '菜单树项的标题文本。也可以使用具名插槽 "label" 自定义标题内容。'
   },
   level: {
     type: Number,

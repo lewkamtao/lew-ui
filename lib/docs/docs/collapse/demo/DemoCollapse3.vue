@@ -41,7 +41,7 @@ const companies = [
 </script>
 
 <template>
-  <lew-collapse width="400" gap="10px" v-model="value">
+  <lew-collapse width="400" v-model="value">
     <lew-collapse-item
       padding="10px"
       radius="5px"

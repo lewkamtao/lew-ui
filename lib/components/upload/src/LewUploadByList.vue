@@ -87,7 +87,7 @@ const getLastValueAfterSlash = (url: string = '') => {
     <transition-group name="lew-upload-list">
       <lew-flex
         v-for="item in modelValue"
-        :key="item.id || item.url"
+        :key="item.key || item.url"
         class="lew-upload-file-item"
         mode="between"
         gap="8"
@@ -122,7 +122,7 @@ const getLastValueAfterSlash = (url: string = '') => {
         >
           <lew-flex
             v-if="item.status === 'fail'"
-            @click.stop="emit('reUpload', item.id)"
+            @click.stop="emit('reUpload', item.key)"
             x="center"
             y="center"
             :style="{
@@ -136,7 +136,7 @@ const getLastValueAfterSlash = (url: string = '') => {
           </lew-flex>
 
           <lew-flex
-            @click.stop="emit('deleteFile', item.id)"
+            @click.stop="emit('deleteFile', item.key)"
             x="center"
             y="center"
             :style="{
@@ -153,7 +153,7 @@ const getLastValueAfterSlash = (url: string = '') => {
               <lew-text-trim
                 :text="getFileName(item)"
                 :style="{
-                  width: `calc(100% - 60px)`,
+                  width: `calc(100% - 30px)`,
                   fontSize: `${any2px(fileNameFontSizeMap[size])}`
                 }"
                 class="lew-upload-file-name"
@@ -191,6 +191,7 @@ const getLastValueAfterSlash = (url: string = '') => {
             </span>
             <lew-flex style="max-width: 200px" y="center" x="end">
               <lew-tag
+                v-if="item.status && item.status !== 'pending'"
                 type="light"
                 size="small"
                 :color="statusColorMap[item.status || 'complete'] as LewColor"

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-const value = ref([1])
+import { ChevronLeft } from 'lucide-vue-next'
+const value = ref<string[]>(['1'])
 const companies = [
   {
     id: '1',
@@ -49,8 +50,15 @@ const companies = [
       :key="item.id"
     >
       <template #title>
-        <lew-flex x="start">
-          {{ item.name }} <lew-tag v-if="item.id === '1'">全球领先</lew-tag>
+        <lew-flex
+          x="start"
+          :class="{ active: value.includes(item.id) }"
+          mode="between"
+        >
+          <div class="title">
+            {{ item.name }} <lew-tag v-if="item.id === '1'">全球领先</lew-tag>
+          </div>
+          <ChevronLeft class="icon" :size="16" />
         </lew-flex>
       </template>
       <div>
@@ -59,3 +67,13 @@ const companies = [
     </lew-collapse-item>
   </lew-collapse>
 </template>
+<style scoped lang="scss">
+.icon {
+  transition: all 0.3s;
+}
+.active {
+  .icon {
+    transform: rotate(-90deg);
+  }
+}
+</style>

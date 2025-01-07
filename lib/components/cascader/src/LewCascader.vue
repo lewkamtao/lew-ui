@@ -263,24 +263,38 @@ const clearHandle = () => {
 }
 
 const getValueStyle = computed(() => {
-  return state.visible ? 'opacity:0.4' : ''
+  const { size } = props
+
+  const widthMap = {
+    small: 'calc(100% - 24px)',
+    medium: 'calc(100% - 24px)',
+    large: 'calc(100% - 24px)'
+  }
+  return {
+    width: widthMap[size],
+    padding: `var(--lew-form-input-padding-${size})`,
+    fontSize: `var(--lew-form-font-size-${size})`,
+    lineHeight: `calc(var(--lew-form-item-height-${size}) - (var(--lew-form-border-width) * 2))`,
+    opacity: state.visible ? 0.4 : 1
+  }
 })
 
 const getCascaderClassName = computed(() => {
-  let { clearable, size } = props
+  let { clearable, disabled, readonly } = props
   clearable = clearable ? !!cascaderValue.value : false
-  return object2class('lew-cascader', { clearable, size })
+  const focus = state.visible
+
+  return object2class('lew-cascader', {
+    clearable,
+    disabled,
+    readonly,
+    focus
+  })
 })
 
 const getBodyClassName = computed(() => {
   const { size, disabled } = props
   return object2class('lew-cascader-body', { size, disabled })
-})
-
-const getCascaderViewClassName = computed(() => {
-  const { disabled, readonly } = props
-  const focus = state.visible
-  return object2class('lew-cascader-view', { focus, disabled, readonly })
 })
 
 // 获取图标大小
@@ -320,6 +334,14 @@ const getCascaderWidth = computed(() => {
   return _hasChildOptions * 200
 })
 
+const getCascaderStyle = computed(() => {
+  const { size } = props
+
+  return {
+    height: `var(--lew-form-item-height-${size})`
+  }
+})
+
 const getLabel = computed(() => {
   const item = findObjectByValue(
     state.optionsTree,
@@ -347,11 +369,9 @@ defineExpose({ show, hide })
   <lew-popover
     ref="lewPopoverRef"
     class="lew-cascader-view"
-    :class="getCascaderViewClassName"
     :trigger="trigger"
     :disabled="disabled"
     placement="bottom-start"
-    style="width: 100%"
     :offset="[-1, 10]"
     :loading="state.loading"
     @show="showHandle"
@@ -362,6 +382,7 @@ defineExpose({ show, hide })
         ref="lewCascaderRef"
         class="lew-cascader"
         :class="getCascaderClassName"
+        :style="getCascaderStyle"
       >
         <transition name="lew-form-icon-ani">
           <Icon
@@ -386,9 +407,9 @@ defineExpose({ show, hide })
         </transition>
 
         <div
+          class="lew-cascader-value"
           v-show="getLabel && getLabel.length > 0"
           :style="getValueStyle"
-          class="value"
         >
           <template v-if="showAllLevels">
             <lew-text-trim :text="getLabel.join(' / ')" />
@@ -399,7 +420,8 @@ defineExpose({ show, hide })
         </div>
         <div
           v-show="!getLabel || (getLabel && getLabel.length === 0)"
-          class="placeholder"
+          class="lew-cascader-placeholder"
+          :style="getValueStyle"
         >
           {{ placeholder }}
         </div>
@@ -518,13 +540,6 @@ defineExpose({ show, hide })
 <style lang="scss" scoped>
 .lew-cascader-view {
   width: 100%;
-  border-radius: var(--lew-border-radius-small);
-  background-color: var(--lew-form-bgcolor);
-  transition: all var(--lew-form-transition-ease);
-  box-sizing: border-box;
-  outline: 0px var(--lew-color-primary-light) solid;
-  border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-  box-shadow: var(--lew-form-box-shadow);
 
   > div {
     width: 100%;
@@ -539,6 +554,12 @@ defineExpose({ show, hide })
     cursor: pointer;
     user-select: none;
     box-sizing: border-box;
+    border-radius: var(--lew-border-radius-small);
+    background-color: var(--lew-form-bgcolor);
+    transition: all var(--lew-form-transition-ease);
+    box-sizing: border-box;
+    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    box-shadow: var(--lew-form-box-shadow);
 
     .icon-select {
       position: absolute;
@@ -558,18 +579,19 @@ defineExpose({ show, hide })
       transform: translate(100%, -50%);
     }
 
-    .placeholder {
+    .lew-cascader-placeholder {
       color: rgb(165, 165, 165);
     }
 
-    .placeholder,
-    .value {
+    .lew-cascader-placeholder,
+    .lew-cascader-value {
       display: inline-flex;
       align-items: center;
       box-sizing: border-box;
       transition: all var(--lew-form-transition-bezier);
       gap: 2px;
       overflow: hidden;
+      height: 100%;
 
       span {
         display: inline-flex;
@@ -598,112 +620,82 @@ defineExpose({ show, hide })
     color: rgb(165, 165, 165);
   }
 
-  .lew-cascader-size-small {
-    .value,
-    .placeholder {
-      width: calc(100% - 20px);
-      padding: var(--lew-form-input-padding-small);
-      height: var(--lew-form-item-height-small);
-      line-height: var(--lew-form-input-line-height-small);
-      font-size: var(--lew-form-font-size-small);
-    }
+  .lew-cascader:hover {
+    background-color: var(--lew-form-bgcolor-hover);
   }
 
-  .lew-cascader-size-medium {
-    .value,
-    .placeholder {
-      width: calc(100% - 22px);
-      padding: var(--lew-form-input-padding-medium);
-      line-height: var(--lew-form-input-line-height-medium);
-      height: var(--lew-form-item-height-medium);
-      font-size: var(--lew-form-font-size-medium);
-    }
+  .lew-cascader:active {
+    background-color: var(--lew-form-bgcolor-active);
   }
 
-  .lew-cascader-size-large {
-    .value,
-    .placeholder {
-      width: calc(100% - 24px);
-      padding: var(--lew-form-input-padding-large);
-      height: var(--lew-form-item-height-large);
-      line-height: var(--lew-form-input-line-height-large);
-      font-size: var(--lew-form-font-size-large);
-    }
-  }
-}
-
-.lew-cascader-view:hover {
-  background-color: var(--lew-form-bgcolor-hover);
-}
-
-.lew-cascader-view:active {
-  background-color: var(--lew-form-bgcolor-active);
-}
-
-.lew-cascader-view.lew-cascader-view-focus {
-  background-color: var(--lew-form-bgcolor-focus);
-  border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-outline);
-
-  .icon-select {
-    transform: translateY(-50%) rotate(180deg);
-    color: var(--lew-text-color-1);
-  }
-
-  .icon-select-hide {
-    opacity: 0;
-    transform: translate(100%, -50%) rotate(180deg);
-  }
-}
-
-.lew-cascader-view-disabled {
-  opacity: var(--lew-disabled-opacity);
-  pointer-events: none; //鼠标点击不可修改
-}
-
-.lew-cascader-view-readonly {
-  pointer-events: none; //鼠标点击不可修改
-
-  .lew-cascader {
-    user-select: text;
-  }
-}
-
-.lew-cascader-view-disabled:hover {
-  background-color: var(--lew-form-bgcolor);
-  outline: 0px var(--lew-color-primary-light) solid;
-  border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-}
-
-.lew-cascader-item:hover {
-  .lew-checkbox:deep(.lew-checkbox-icon-box) {
-    border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover)
+  .lew-cascader-focus {
+    background-color: var(--lew-form-bgcolor-focus);
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
       solid;
-    outline: var(--lew-form-outline);
-    background: var(--lew-form-bgcolor);
-  }
-}
 
-.lew-cascader-item-tobe:hover {
-  .lew-checkbox:deep(.lew-checkbox-icon-box) {
-    border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-    background: var(--lew-checkbox-color);
+    .icon-select {
+      transform: translateY(-50%) rotate(180deg);
+      color: var(--lew-text-color-1);
+    }
 
-    .icon-checkbox {
-      transform: translate(-50%, -50%) scale(0.7);
-      opacity: 1;
+    .icon-select-hide {
+      opacity: 0;
+      transform: translate(100%, -50%) rotate(180deg);
     }
   }
-}
 
-.lew-cascader-item-selected:hover {
-  .lew-checkbox:deep(.lew-checkbox-icon-box) {
-    border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-    background: var(--lew-checkbox-color);
+  .lew-cascader-focus:hover {
+    background-color: var(--lew-form-bgcolor-focus);
+  }
 
-    .icon-checkbox {
-      transform: translate(-50%, -50%) scale(0.7);
-      opacity: 1;
+  .lew-cascader-disabled {
+    opacity: var(--lew-disabled-opacity);
+    pointer-events: none; //鼠标点击不可修改
+  }
+
+  .lew-cascader-readonly {
+    pointer-events: none; //鼠标点击不可修改
+
+    .lew-cascader {
+      user-select: text;
+    }
+  }
+
+  .lew-cascader-disabled:hover {
+    background-color: var(--lew-form-bgcolor);
+    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  }
+
+  .lew-cascader-item:hover {
+    .lew-checkbox:deep(.lew-checkbox-icon-box) {
+      border: var(--lew-form-border-width)
+        var(--lew-checkbox-border-color-hover) solid;
+
+      background: var(--lew-form-bgcolor);
+    }
+  }
+
+  .lew-cascader-item-tobe:hover {
+    .lew-checkbox:deep(.lew-checkbox-icon-box) {
+      border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+      background: var(--lew-checkbox-color);
+
+      .icon-checkbox {
+        transform: translate(-50%, -50%) scale(0.7);
+        opacity: 1;
+      }
+    }
+  }
+
+  .lew-cascader-item-selected:hover {
+    .lew-checkbox:deep(.lew-checkbox-icon-box) {
+      border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
+      background: var(--lew-checkbox-color);
+
+      .icon-checkbox {
+        transform: translate(-50%, -50%) scale(0.7);
+        opacity: 1;
+      }
     }
   }
 }

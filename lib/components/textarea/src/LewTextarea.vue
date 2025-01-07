@@ -187,7 +187,6 @@ defineExpose({ toFocus })
   box-sizing: border-box;
   border-radius: var(--lew-border-radius-small);
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-  outline: 0px var(--lew-form-border-color) solid;
   background-color: var(--lew-form-bgcolor);
   box-shadow: var(--lew-form-box-shadow);
   transition:
@@ -231,14 +230,11 @@ defineExpose({ toFocus })
 }
 
 .lew-textarea-view-size-small {
+  min-height: var(--lew-form-item-height-small);
+  line-height: var(--lew-form-input-line-height-small);
   .lew-textarea {
     padding: var(--lew-form-input-padding-small);
     font-size: var(--lew-form-font-size-small);
-    line-height: var(--lew-form-input-line-height-small);
-  }
-
-  .lew-textarea {
-    min-height: var(--lew-form-item-height-small);
   }
 
   .lew-textarea-count {
@@ -247,29 +243,24 @@ defineExpose({ toFocus })
 }
 
 .lew-textarea-view-size-medium {
+  min-height: var(--lew-form-item-height-medium);
+  line-height: var(--lew-form-input-line-height-medium);
   .lew-textarea {
     padding: var(--lew-form-input-padding-medium);
     font-size: var(--lew-form-font-size-medium);
-    line-height: var(--lew-form-input-line-height-medium);
   }
 
-  .lew-textarea {
-    min-height: var(--lew-form-item-height-medium);
-  }
   .lew-textarea-count {
     font-size: 13px;
   }
 }
 
 .lew-textarea-view-size-large {
+  line-height: var(--lew-form-input-line-height-large);
+  min-height: var(--lew-form-item-height-large);
   .lew-textarea {
     padding: var(--lew-form-input-padding-large);
     font-size: var(--lew-form-font-size-large);
-    line-height: var(--lew-form-input-line-height-large);
-  }
-
-  .lew-textarea {
-    min-height: var(--lew-form-item-height-large);
   }
 
   .lew-textarea-count {
@@ -325,7 +316,7 @@ defineExpose({ toFocus })
 
 .lew-textarea-view:focus-within {
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-outline);
+
   background-color: var(--lew-form-bgcolor-focus);
 
   .lew-textarea-controls {

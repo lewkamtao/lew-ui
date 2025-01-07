@@ -112,25 +112,24 @@ const findKeyword = () => {
 findKeyword()
 
 const getSelectClassName = computed(() => {
-  let { clearable, size, align } = props
+  let { clearable, size, align, disabled, readonly, searchable } = props
   clearable = clearable ? !!treeSelectValue.value : false
-  return object2class('lew-select', { clearable, size, align })
+  const focus = state.visible
+
+  return object2class('lew-select', {
+    clearable,
+    size,
+    align,
+    disabled,
+    readonly,
+    searchable,
+    focus
+  })
 })
 
 const getBodyClassName = computed(() => {
   const { size, disabled } = props
   return object2class('lew-select-body', { size, disabled })
-})
-
-const getSelectViewClassName = computed(() => {
-  const { disabled, readonly, searchable } = props
-  const focus = state.visible
-  return object2class('lew-select-view', {
-    focus,
-    searchable,
-    disabled,
-    readonly: readonly || state.initLoading
-  })
 })
 
 const getIconSize = computed(() => {
@@ -189,7 +188,6 @@ defineExpose({ show, hide })
     ref="lewPopoverRef"
     popoverBodyClassName="lew-select-popover-body"
     class="lew-select-view"
-    :class="getSelectViewClassName"
     :trigger="trigger"
     :disabled="disabled"
     placement="bottom-start"
@@ -292,13 +290,6 @@ defineExpose({ show, hide })
 <style lang="scss" scoped>
 .lew-select-view {
   width: 100%;
-  border-radius: var(--lew-border-radius-small);
-  background-color: var(--lew-form-bgcolor);
-  transition: all var(--lew-form-transition-ease);
-  box-sizing: border-box;
-  outline: 0px var(--lew-color-primary-light) solid;
-  border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-  box-shadow: var(--lew-form-box-shadow);
 
   > div {
     width: 100%;
@@ -307,12 +298,20 @@ defineExpose({ show, hide })
   .lew-select {
     position: relative;
     width: 100%;
+    display: inline-flex;
+    align-items: center;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     cursor: pointer;
     user-select: none;
     box-sizing: border-box;
+    border-radius: var(--lew-border-radius-small);
+    background-color: var(--lew-form-bgcolor);
+    transition: all var(--lew-form-transition-ease);
+    box-sizing: border-box;
+    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    box-shadow: var(--lew-form-box-shadow);
 
     .icon-select {
       position: absolute;
@@ -382,81 +381,85 @@ defineExpose({ show, hide })
     color: rgb(165, 165, 165);
   }
 
+  .lew-select:hover {
+    background-color: var(--lew-form-bgcolor-hover);
+  }
+
+  .lew-select:active {
+    background-color: var(--lew-form-bgcolor-active);
+  }
+
+  .lew-select-focus {
+    background-color: var(--lew-form-bgcolor-focus);
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+      solid;
+
+    .icon-select {
+      transform: translateY(-50%) rotate(180deg);
+      color: var(--lew-text-color-1);
+    }
+
+    .icon-select-hide {
+      opacity: 0;
+      transform: translate(100%, -50%) rotate(180deg);
+    }
+  }
+
+  .lew-select-focus:hover {
+    background-color: var(--lew-form-bgcolor-focus-hover);
+  }
+
+  .lew-select-disabled {
+    opacity: var(--lew-disabled-opacity);
+    pointer-events: none; //鼠标点击不可修改
+  }
+
+  .lew-select-readonly {
+    pointer-events: none; //鼠标点击不可修改
+
+    .lew-select {
+      user-select: text;
+    }
+  }
+  .lew-select-searchable {
+    .lew-select {
+      .value {
+        cursor: text;
+      }
+    }
+  }
+  .lew-select-disabled:hover {
+    background-color: var(--lew-form-bgcolor);
+    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  }
   .lew-select-size-small {
+    height: var(--lew-form-item-height-small);
+    line-height: var(--lew-form-input-line-height-small);
     .value {
       padding: var(--lew-form-input-padding-small);
-      height: var(--lew-form-item-height-small);
-      line-height: var(--lew-form-input-line-height-small);
       font-size: var(--lew-form-font-size-small);
     }
   }
 
   .lew-select-size-medium {
+    height: var(--lew-form-item-height-medium);
+    line-height: var(--lew-form-input-line-height-medium);
     .value {
       padding: var(--lew-form-input-padding-medium);
-      line-height: var(--lew-form-input-line-height-medium);
-      height: var(--lew-form-item-height-medium);
+
       font-size: var(--lew-form-font-size-medium);
     }
   }
 
   .lew-select-size-large {
+    height: var(--lew-form-item-height-large);
+    line-height: var(--lew-form-input-line-height-large);
     .value {
       padding: var(--lew-form-input-padding-large);
-      height: var(--lew-form-item-height-large);
-      line-height: var(--lew-form-input-line-height-large);
+
       font-size: var(--lew-form-font-size-large);
     }
   }
-}
-
-.lew-select-view:hover {
-  background-color: var(--lew-form-bgcolor-hover);
-}
-
-.lew-select-view:active {
-  background-color: var(--lew-form-bgcolor-active);
-}
-
-.lew-select-view.lew-select-view-focus {
-  background-color: var(--lew-form-bgcolor-focus);
-  border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-outline);
-
-  .icon-select {
-    transform: translateY(-50%) rotate(180deg);
-    color: var(--lew-text-color-1);
-  }
-
-  .icon-select-hide {
-    opacity: 0;
-    transform: translate(100%, -50%) rotate(180deg);
-  }
-}
-
-.lew-select-view-disabled {
-  opacity: var(--lew-disabled-opacity);
-  pointer-events: none; //鼠标点击不可修改
-}
-
-.lew-select-view-readonly {
-  pointer-events: none; //鼠标点击不可修改
-
-  .lew-select {
-    user-select: text;
-  }
-}
-.lew-select-view-searchable {
-  .lew-select {
-    .value {
-      cursor: text;
-    }
-  }
-}
-.lew-select-view-disabled:hover {
-  background-color: var(--lew-form-bgcolor);
-  outline: 0px var(--lew-color-primary-light) solid;
-  border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
 }
 </style>
 <style lang="scss">
@@ -486,81 +489,6 @@ defineExpose({ show, hide })
     transition: all 0.25s ease;
     margin-top: -2px;
     margin-bottom: -2px;
-
-    .lew-select-item {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      width: 100%;
-      font-size: 14px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      cursor: pointer;
-      color: var(--lew-text-color-1);
-      box-sizing: border-box;
-      border-radius: 6px;
-      height: 30px;
-    }
-
-    .lew-select-item-disabled {
-      opacity: var(--lew-disabled-opacity);
-      cursor: no-drop;
-    }
-
-    .lew-select-item-align-left {
-      text-align: left;
-    }
-
-    .lew-select-item-align-center {
-      text-align: center;
-    }
-
-    .lew-select-item-align-right {
-      text-align: right;
-    }
-
-    .lew-select-label {
-      width: 100%;
-      user-select: none;
-      font-size: 14px;
-      padding: 0px 8px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      box-sizing: border-box;
-    }
-
-    .lew-select-item:hover {
-      color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bgcolor-active);
-    }
-
-    .lew-select-slot-item {
-      width: 100%;
-      border-radius: 6px;
-    }
-
-    .lew-select-slot-item:hover {
-      color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bgcolor-active);
-    }
-
-    .lew-select-item-active {
-      color: var(--lew-checkbox-color);
-      font-weight: bold;
-      background-color: var(--lew-pop-bgcolor-active);
-
-      .icon-check {
-        margin-right: 10px;
-      }
-    }
-
-    .lew-select-item-active:hover {
-      color: var(--lew-checkbox-color);
-      font-weight: bold;
-      background-color: var(--lew-pop-bgcolor-active);
-    }
   }
 }
 </style>

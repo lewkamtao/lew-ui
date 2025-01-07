@@ -7,6 +7,7 @@ import type { SelectOptions } from './props'
 import { selectProps } from './props'
 import { cloneDeep, isFunction } from 'lodash-es'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { flattenOptions, defaultSearchMethod } from './util'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -27,15 +28,16 @@ let _searchMethod = computed(() => {
     return props.searchMethod
   } else if (props.searchMethodId) {
     return formMethods[props.searchMethodId]
+  } else {
+    return defaultSearchMethod
   }
-  return false
 })
 
 const state = reactive({
   selectWidth: 0,
   visible: false,
   loading: false,
-  options: props.options,
+  options: flattenOptions(props.options),
   hideBySelect: false, // 记录是否通过选择隐藏
   keyword: props.defaultValue || (selectValue.value as any),
   keywordBackup: props.defaultValue as any
@@ -64,10 +66,10 @@ const search = async (e: any) => {
     let result: SelectOptions[] = []
     // 如果没输入关键词
     if (!keyword && props.options.length > 0) {
-      result = props.options
+      result = flattenOptions(props.options)
     } else {
       result = await _searchMethod.value({
-        options: props.options,
+        options: flattenOptions(props.options),
         keyword
       })
     }
@@ -85,7 +87,7 @@ const clearHandle = () => {
 }
 
 const selectHandle = (item: SelectOptions) => {
-  if (item.disabled) {
+  if (item.disabled || item.isGroup) {
     return
   }
   state.hideBySelect = true
@@ -120,9 +122,17 @@ const findKeyword = () => {
 findKeyword()
 
 const getSelectClassName = computed(() => {
-  let { clearable, size } = props
+  let { clearable, size, disabled, readonly, searchable } = props
   clearable = clearable ? !!selectValue.value : false
-  return object2class('lew-select', { clearable, size })
+  const focus = state.visible
+  return object2class('lew-select', {
+    clearable,
+    size,
+    disabled,
+    readonly,
+    searchable,
+    focus
+  })
 })
 
 const getBodyClassName = computed(() => {
@@ -130,24 +140,14 @@ const getBodyClassName = computed(() => {
   return object2class('lew-select-body', { size, disabled })
 })
 
-const getSelectViewClassName = computed(() => {
-  const { disabled, readonly, searchable } = props
-  const focus = state.visible
-  return object2class('lew-select-view', {
-    focus,
-    searchable,
-    disabled,
-    readonly
-  })
-})
-
 const getSelectItemClassName = (e: any) => {
-  const { disabled } = e
+  const { disabled, isGroup } = e
   const active = getChecked.value(e.value)
 
   return object2class('lew-select-item', {
     disabled,
-    active
+    active,
+    'is-group': isGroup
   })
 }
 
@@ -196,6 +196,20 @@ watch(
   }
 )
 
+watch(
+  () => props.options,
+  () => {
+    state.options = flattenOptions(props.options)
+  },
+  {
+    deep: true
+  }
+)
+
+const getResultNum = computed(() => {
+  return numFormat(state.options.filter((e: any) => !e.isGroup).length)
+})
+
 defineExpose({ show, hide })
 </script>
 
@@ -204,9 +218,8 @@ defineExpose({ show, hide })
     ref="lewPopoverRef"
     popoverBodyClassName="lew-select-popover-body"
     class="lew-select-view"
-    :class="getSelectViewClassName"
     :trigger="trigger"
-    :disabled="disabled"
+    :disabled="disabled || readonly"
     placement="bottom-start"
     style="width: 100%"
     :offset="[-1, 10]"
@@ -265,7 +278,7 @@ defineExpose({ show, hide })
             class="lew-result-count"
           >
             共
-            {{ numFormat(state.options && state.options.length) }}
+            {{ getResultNum }}
             条结果
           </div>
           <use-virtual-list
@@ -297,14 +310,19 @@ defineExpose({ show, hide })
                   :class="getSelectItemClassName(templateProps)"
                 >
                   <lew-text-trim
-                    :text="templateProps.label"
+                    :text="
+                      templateProps.isGroup
+                        ? `${templateProps.label} (${templateProps.total})`
+                        : templateProps.label
+                    "
                     :delay="[500, 0]"
                     class="lew-select-label"
                   />
                   <Icon
                     v-if="getChecked(templateProps.value) && showCheckIcon"
                     class="lew-icon-check"
-                    :size="14"
+                    :size="16"
+                    :strokeWidth="3"
                     type="check"
                   />
                 </div>
@@ -321,13 +339,6 @@ defineExpose({ show, hide })
 <style lang="scss" scoped>
 .lew-select-view {
   width: 100%;
-  box-sizing: border-box;
-  background-color: var(--lew-form-bgcolor);
-  border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-  border-radius: var(--lew-border-radius-small);
-  outline: 0px var(--lew-color-primary-light) solid;
-  box-shadow: var(--lew-form-box-shadow);
-  transition: all var(--lew-form-transition-ease);
 
   > div {
     width: 100%;
@@ -342,6 +353,12 @@ defineExpose({ show, hide })
     text-overflow: ellipsis;
     cursor: pointer;
     user-select: none;
+    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    border-radius: var(--lew-border-radius-small);
+    box-shadow: var(--lew-form-box-shadow);
+    background-color: var(--lew-form-bgcolor);
+    box-sizing: border-box;
+    transition: all var(--lew-form-transition-ease);
 
     .lew-icon-select {
       position: absolute;
@@ -373,6 +390,7 @@ defineExpose({ show, hide })
       color: var(--lew-text-color-1);
       cursor: pointer;
       transition: all 0.2s;
+      height: 100%;
     }
 
     .lew-value::placeholder {
@@ -385,82 +403,80 @@ defineExpose({ show, hide })
   }
 
   .lew-select-size-small {
+    height: var(--lew-form-item-height-small);
+    line-height: var(--lew-form-input-line-height-small);
     .lew-value {
-      height: var(--lew-form-item-height-small);
       padding: var(--lew-form-input-padding-small);
       font-size: var(--lew-form-font-size-small);
-      line-height: var(--lew-form-input-line-height-small);
     }
   }
 
   .lew-select-size-medium {
+    height: var(--lew-form-item-height-medium);
+    line-height: var(--lew-form-input-line-height-medium);
     .lew-value {
-      height: var(--lew-form-item-height-medium);
       padding: var(--lew-form-input-padding-medium);
       font-size: var(--lew-form-font-size-medium);
-      line-height: var(--lew-form-input-line-height-medium);
     }
   }
 
   .lew-select-size-large {
+    height: var(--lew-form-item-height-large);
+    line-height: var(--lew-form-input-line-height-large);
     .lew-value {
-      height: var(--lew-form-item-height-large);
       padding: var(--lew-form-input-padding-large);
       font-size: var(--lew-form-font-size-large);
-      line-height: var(--lew-form-input-line-height-large);
     }
   }
-}
 
-.lew-select-view:hover {
-  background-color: var(--lew-form-bgcolor-hover);
-}
-
-.lew-select-view:active {
-  background-color: var(--lew-form-bgcolor-active);
-}
-
-.lew-select-view.lew-select-view-focus {
-  background-color: var(--lew-form-bgcolor-focus);
-  border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-outline);
-
-  .lew-icon-select {
-    color: var(--lew-text-color-1);
-    transform: translateY(-50%) rotate(180deg);
+  .lew-select-disabled {
+    opacity: var(--lew-disabled-opacity);
+    pointer-events: none;
   }
 
-  .lew-icon-select-hide {
-    opacity: 0;
-    transform: translate(100%, -50%) rotate(180deg);
+  .lew-select-readonly {
+    pointer-events: none;
+
+    .lew-select {
+      user-select: text;
+    }
   }
-}
 
-.lew-select-view-disabled {
-  opacity: var(--lew-disabled-opacity);
-  pointer-events: none;
-}
-
-.lew-select-view-readonly {
-  pointer-events: none;
-
-  .lew-select {
-    user-select: text;
-  }
-}
-
-.lew-select-view-searchable {
-  .lew-select {
+  .lew-select-searchable {
     .lew-value {
       cursor: text;
     }
   }
-}
+  .lew-select:hover {
+    background-color: var(--lew-form-bgcolor-hover);
+  }
 
-.lew-select-view-disabled:hover {
-  background-color: var(--lew-form-bgcolor);
-  border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-  outline: 0px var(--lew-color-primary-light) solid;
+  .lew-select:active {
+    background-color: var(--lew-form-bgcolor-active);
+  }
+
+  .lew-select-disabled:hover {
+    background-color: var(--lew-form-bgcolor);
+    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  }
+
+  .lew-select-focus {
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+      solid;
+    background-color: var(--lew-form-bgcolor-focus);
+    .lew-icon-select {
+      color: var(--lew-text-color-1);
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    .lew-icon-select-hide {
+      opacity: 0;
+      transform: translate(100%, -50%) rotate(180deg);
+    }
+  }
+  .lew-select-focus:hover {
+    background-color: var(--lew-form-bgcolor-focus-hover);
+  }
 }
 </style>
 <style lang="scss">
@@ -472,13 +488,8 @@ defineExpose({ show, hide })
   width: 100%;
   box-sizing: border-box;
 
-  .lew-select-options-list {
-    padding: 2px 0px;
-  }
-
   .lew-result-count {
-    margin: 5px 0px;
-    padding-left: 8px;
+    padding: 5px 12px;
     font-size: 13px;
     opacity: 0.4;
   }
@@ -554,6 +565,20 @@ defineExpose({ show, hide })
       color: var(--lew-checkbox-color);
       background-color: var(--lew-pop-bgcolor-active);
       font-weight: bold;
+    }
+
+    .lew-select-item-is-group {
+      color: var(--lew-text-color-7);
+      background-color: var(--lew-pop-bgcolor);
+      cursor: default;
+      box-sizing: border-box;
+      cursor: no-drop;
+      pointer-events: none;
+      .lew-select-label {
+        font-size: 12px;
+        box-sizing: border-box;
+        padding-top: 4px;
+      }
     }
   }
 }

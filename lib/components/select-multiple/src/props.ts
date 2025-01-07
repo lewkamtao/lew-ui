@@ -6,6 +6,14 @@ export type SelectMultipleOptions = {
   label: string
   value: string | number
   disabled?: boolean
+  isGroup?: boolean
+  groupValue?: string | number
+  groupLabel?: string
+}
+
+export type SelectMultipleOptionsGroup = {
+  label: string
+  children: SelectMultipleOptions[]
 }
 
 export type SelectSearchMultipleMethodParams = {
@@ -76,26 +84,12 @@ export const selectMultipleProps = {
     default: '',
     description: '搜索框占位文本'
   },
-
   searchMethod: {
     type: Function as PropType<
       (params: SelectSearchMultipleMethodParams) => SelectMultipleOptions[]
     >,
-    default: ({
-      options,
-      keyword
-    }: {
-      options: SelectMultipleOptions[]
-      keyword: string
-    }) => {
-      if (options && keyword) {
-        return options.filter((option: SelectMultipleOptions) =>
-          option.label.includes(keyword)
-        )
-      }
-      return []
-    },
-    description: '自定义搜索方法'
+    default: undefined,
+    description: '自定义搜索方法，接收搜索参数并返回过滤后的选项列表'
   },
   searchMethodId: {
     type: String,

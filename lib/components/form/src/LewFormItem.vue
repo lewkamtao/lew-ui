@@ -21,7 +21,8 @@ import {
   LewInputNumber,
   LewTooltip,
   LewSlider,
-  LewSliderRange
+  LewSliderRange,
+  LewColorPicker
 } from 'lew-ui'
 import { debounce, cloneDeep, isString, merge } from 'lodash-es'
 import * as Yup from 'yup'
@@ -51,7 +52,8 @@ const asMap: Record<string, any> = {
   upload: LewUpload,
   'input-number': LewInputNumber,
   slider: LewSlider,
-  'slider-range': LewSliderRange
+  'slider-range': LewSliderRange,
+  'color-picker': LewColorPicker
 }
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -162,6 +164,19 @@ const curRequired = computed(() => {
   return required
 })
 
+const getFormItemMainStyle = computed(() => {
+  if (!formItemRef.value) return {}
+  const { direction, labelWidth, between } = props
+  const { offsetWidth } = formItemRef.value
+  return {
+    width:
+      direction === 'x'
+        ? `calc(${offsetWidth}px - ${any2px(labelWidth)} - 10px)`
+        : '100%',
+    justifyContent: direction === 'x' && between ? 'flex-end' : 'flex-start'
+  }
+})
+
 defineExpose({ validate, setError, curRule })
 </script>
 
@@ -171,7 +186,7 @@ defineExpose({ validate, setError, curRule })
     ref="formItemRef"
     :class="getFormItemClassNames"
     :style="{
-      'grid-area': gridArea || ''
+      'grid-area': gridArea
     }"
   >
     <div
@@ -198,13 +213,7 @@ defineExpose({ validate, setError, curRule })
     </div>
     <div
       class="lew-form-item-main"
-      :style="{
-        width:
-          direction === 'x'
-            ? `calc(${formItemRef?.offsetWidth}px - ${any2px(labelWidth)} - 10px)`
-            : '100%',
-        justifyContent: direction === 'x' && between ? 'flex-end' : 'flex-start'
-      }"
+      :style="getFormItemMainStyle"
       :class="{ 'lew-form-item-error': errMsg }"
     >
       <component
@@ -215,9 +224,9 @@ defineExpose({ validate, setError, curRule })
       />
       <transition name="lew-slide-fade">
         <lew-text-trim
+          v-if="errMsg"
           style="width: 100%"
           :text="errMsg"
-          v-if="errMsg"
           class="lew-error-message"
         >
         </lew-text-trim>
@@ -246,7 +255,7 @@ defineExpose({ validate, setError, curRule })
   }
 
   .lew-form-item-main {
-    min-height: calc(var(--lew-form-item-height-small) + 2px);
+    min-height: var(--lew-form-item-height-small);
   }
 }
 
@@ -257,7 +266,7 @@ defineExpose({ validate, setError, curRule })
   }
 
   .lew-form-item-main {
-    min-height: calc(var(--lew-form-item-height-medium) + 2px);
+    min-height: var(--lew-form-item-height-medium);
   }
 }
 
@@ -268,7 +277,7 @@ defineExpose({ validate, setError, curRule })
   }
 
   .lew-form-item-main {
-    min-height: calc(var(--lew-form-item-height-large) + 2px);
+    min-height: var(--lew-form-item-height-large);
   }
 }
 .lew-form-item-main {
@@ -335,7 +344,6 @@ defineExpose({ validate, setError, curRule })
   --lew-radio-color: var(--lew-color-error);
   --lew-radio-color: var(--lew-color-error-dark);
   --lew-radio-color-light: var(--lew-color-error-light);
-  --lew-form-outline: 0px var(--lew-color-error-light) solid;
 }
 
 .lew-slide-fade-leave-active,

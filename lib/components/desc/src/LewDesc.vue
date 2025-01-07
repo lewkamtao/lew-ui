@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { object2class, any2px } from 'lew-ui/utils'
 import LewGetLabelWidth from '../../form/src/LewGetLabelWidth.vue'
-import { descProps } from './props'
+import { descProps, lewDescSizePaddingMap } from './props'
 import { cloneDeep } from 'lodash-es'
 import LewDescItem from './LewDescItem.vue'
 
@@ -13,13 +13,15 @@ const autoLabelWidth = ref(0)
 let componentOptions: any[] = cloneDeep(props.options) || []
 
 const getDescClassNames = computed(() => {
-  const { columns } = cloneDeep(props)
-  return object2class('lew-desc', { columns })
+  const { columns, bordered } = props
+  return object2class('lew-desc', { columns, bordered })
 })
 
 onMounted(() => {
   // 计算 label 的宽度
-  autoLabelWidth.value = descLabelRef.value?.getWidth()
+  autoLabelWidth.value =
+    descLabelRef.value?.getWidth() +
+    (props.bordered ? lewDescSizePaddingMap[props.size] * 2 : 0)
   emit('mounted')
 })
 
@@ -27,18 +29,40 @@ watch(
   () => props.size,
   () => {
     nextTick(() => {
-      autoLabelWidth.value = descLabelRef.value?.getWidth()
+      autoLabelWidth.value =
+        descLabelRef.value?.getWidth() +
+        (props.bordered ? lewDescSizePaddingMap[props.size] * 2 : 0)
     })
   }
 )
+
+const getDescStyle = computed(() => {
+  const { width, gap, bordered } = props
+  return {
+    width: any2px(width),
+    minWidth: 320,
+    gap: bordered ? 0 : any2px(gap)
+  }
+})
+
+const getBind = computed(() => (item: any) => {
+  const { direction, size, labelX, valueX, bordered, labelWidth } =
+    props
+  return {
+    direction,
+    size,
+    labelX,
+    valueX,
+    bordered,
+    labelWidth:
+      labelWidth === 'auto' ? autoLabelWidth.value || labelWidth : labelWidth,
+    ...item
+  }
+})
 </script>
 
 <template>
-  <div
-    class="lew-desc"
-    :style="{ width: any2px(width), minWidth: 320, gap: any2px(gap) }"
-    :class="getDescClassNames"
-  >
+  <div class="lew-desc" :style="getDescStyle" :class="getDescClassNames">
     <lew-get-label-width
       ref="descLabelRef"
       :size="size"
@@ -49,15 +73,7 @@ watch(
       :key="item.field"
       :field="item.field"
       :data-source="dataSource"
-      v-bind="{
-        direction,
-        size,
-        labelX,
-        valueX,
-        labelWidth:
-          labelWidth === 'auto' ? autoLabelWidth || labelWidth : labelWidth,
-        ...item
-      }"
+      v-bind="getBind(item)"
     />
   </div>
 </template>
@@ -86,5 +102,9 @@ watch(
       0,
       1fr
     );
+}
+
+.lew-desc-bordered {
+  border: var(--lew-desc-border);
 }
 </style>

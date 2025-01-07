@@ -320,29 +320,29 @@ onUnmounted(() => {
 }
 
 .lew-tabs-size-small {
-  height: calc(var(--lew-form-item-height-small) + 4px);
+  height: var(--lew-form-item-height-small);
 
   .lew-tabs-item {
     padding: var(--lew-form-input-padding-small);
-    min-width: calc(var(--lew-form-item-height-small) - 2px);
+    min-width: var(--lew-form-item-height-small);
     font-size: var(--lew-form-font-size-small);
   }
 }
 .lew-tabs-size-medium {
-  height: calc(var(--lew-form-item-height-medium) + 4px);
+  height: var(--lew-form-item-height-medium);
 
   .lew-tabs-item {
     padding: var(--lew-form-input-padding-medium);
-    min-width: calc(var(--lew-form-item-height-medium) - 2px);
+    min-width: var(--lew-form-item-height-medium);
     font-size: 14px;
   }
 }
 .lew-tabs-size-large {
-  height: calc(var(--lew-form-item-height-large) + 4px);
+  height: var(--lew-form-item-height-large);
 
   .lew-tabs-item {
     padding: var(--lew-form-input-padding-large);
-    min-width: calc(var(--lew-form-item-height-large) - 2px);
+    min-width: var(--lew-form-item-height-large);
     font-size: 15px;
   }
 }

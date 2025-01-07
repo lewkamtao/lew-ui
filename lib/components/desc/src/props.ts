@@ -4,13 +4,21 @@ import { validSizes } from 'lew-ui/constants'
 
 export type DescDirection = 'x' | 'y'
 
+export type DescOptions = {
+  label: string
+  field: string
+  gridArea: string
+  direction: DescDirection
+  customRender: (value: any) => any
+}
+
 export const descProps = {
   options: {
-    type: Array as PropType<Array<Record<string, any>>>,
+    type: Array as PropType<Array<DescOptions>>,
     required: true,
     default: () => [],
     description: '配置选项数组，用于定义描述组件的结构和内容',
-    validator(value: Array<Record<string, any>>): boolean {
+    validator(value: Array<DescOptions>): boolean {
       if (!Array.isArray(value)) {
         console.warn('[LewDesc] options 必须是一个数组')
         return false
@@ -128,6 +136,11 @@ export const descProps = {
     default: '',
     description: '描述组件的唯一标识符，用于区分不同的描述',
     hidden: true
+  },
+  bordered: {
+    type: Boolean,
+    default: false,
+    description: '是否显示边框和标签背景'
   }
 }
 
@@ -155,6 +168,11 @@ export const descItemProps = {
       }
       return true
     }
+  },
+  bordered: {
+    type: Boolean,
+    default: false,
+    description: '是否显示边框和标签背景'
   },
   width: {
     type: [Number, String],
@@ -249,6 +267,12 @@ export const descItemProps = {
     default: {},
     hidden: true
   }
+}
+
+export const lewDescSizePaddingMap: Record<LewSize, number> = {
+  small: 14,
+  medium: 20,
+  large: 26
 }
 
 export type DescProps = ExtractPropTypes<typeof descProps>

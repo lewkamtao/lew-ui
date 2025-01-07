@@ -5,13 +5,13 @@ export type UploadStatus =
   | 'success'
   | 'fail'
   | 'uploading'
-  | 'wrong_config'
   | 'complete'
   | 'wrong_type'
   | 'wrong_size'
+  | 'pending'
 
 export type UploadFileItem = {
-  id: string
+  key: string
   name?: string
   url?: string
   status?: UploadStatus
@@ -19,7 +19,7 @@ export type UploadFileItem = {
   file?: File
   size?: number
   type?: string
-  lastModifiedDate?: Date
+  lastModifiedDate?: string
   lastModified?: number
 }
 
@@ -28,6 +28,11 @@ export const uploadProps = {
     type: String,
     default: '',
     description: '允许上传的文件类型'
+  },
+  immediate: {
+    type: Boolean,
+    default: true,
+    description: '是否在选择文件后立即上传，为false时仅保存文件信息不上传'
   },
   multiple: {
     type: Boolean,
@@ -155,20 +160,20 @@ export const uploadByCardProps = {
 }
 
 export const statusMap: Record<UploadStatus, string> = {
+  pending: '待上传',
   success: '上传成功',
   fail: '上传失败',
   uploading: '上传中',
-  wrong_config: '未配置上传服务',
   complete: '已上传',
   wrong_type: '非法格式',
   wrong_size: '文件大小超出限制'
 }
 
 export const statusColorMap: Record<UploadStatus, string> = {
+  pending: 'gray',
   success: 'green',
   fail: 'red',
   uploading: 'blue',
-  wrong_config: 'warning',
   complete: 'gray',
   wrong_type: 'red',
   wrong_size: 'red'

@@ -14,7 +14,7 @@ export const LewTooltip = {
         if (!trigger) {
           _trigger = 'mouseenter'
         }
-
+		
         el.instance = tippy(el, {
           theme: 'light',
           trigger: _trigger,
@@ -28,7 +28,7 @@ export const LewTooltip = {
           arrow: roundArrow,
           maxWidth: 250,
           duration: [250, 250],
-          delay: trigger === 'mouseenter' ? delay || [80, 80] : undefined
+          delay: _trigger === 'mouseenter' ? delay || [120, 120] : undefined
         })
 
         el.instance?.popper.children[0].setAttribute('data-lew', 'tooltip')
@@ -39,7 +39,7 @@ export const LewTooltip = {
       },
       updated(el: any, binding: DirectiveBinding) {
         const { triggerFrom, content } = binding.value
-        if (!content && content != 0) {
+        if (!content && content !== 0) {
           el.instance?.disable()
         } else {
           el.instance?.enable()

@@ -3,7 +3,7 @@ const handleRequest = () => {
   return new Promise<void>((resolve) => {
     setTimeout(() => {
       resolve()
-      LewMessage.success('发送成功')
+      LewMessage.success('Submit success')
     }, 1000)
   })
 }
@@ -11,6 +11,6 @@ const handleRequest = () => {
 
 <template>
   <lew-flex wrap x="start" y="end" gap="20">
-    <lew-button :request="handleRequest" text="发送短信" type="light" />
+    <lew-button :request="handleRequest" text="Submit" type="light" />
   </lew-flex>
 </template>

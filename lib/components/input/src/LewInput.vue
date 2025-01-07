@@ -139,14 +139,12 @@ const copy = () => {
 if (props.okByEnter) {
   watch(enter, (v) => {
     if (v && isFocus.value) {
-      ok()
+      // 失焦
+      lewInputRef.value?.blur()
+      emit('ok', modelValue.value)
     }
   })
 }
-
-const ok = useDebounceFn(() => {
-  emit('ok', modelValue.value)
-}, 250)
 
 onUnmounted(() => {
   if (timer) clearTimeout(timer)
@@ -225,7 +223,6 @@ defineExpose({ toFocus })
         :type="getType"
         :readonly="readonly"
         :maxlength="maxLength"
-        onkeypress="if(window.event.keyCode==13) this.blur()"
         @input="emit('input', modelValue)"
         @change="emit('change', modelValue)"
         @blur="blur"
@@ -330,7 +327,6 @@ defineExpose({ toFocus })
   background-color: var(--lew-form-bgcolor);
   border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   border-radius: var(--lew-border-radius-small);
-  outline: 0px var(--lew-form-border-color) solid;
   box-shadow: var(--lew-form-box-shadow);
   transition: all var(--lew-form-transition-ease);
 
@@ -342,6 +338,7 @@ defineExpose({ toFocus })
     box-sizing: border-box;
     align-items: center;
     justify-content: space-between;
+    height: 100%;
 
     .lew-input {
       height: 100%;
@@ -528,11 +525,11 @@ defineExpose({ toFocus })
 }
 
 .lew-input-view-size-small {
+  height: var(--lew-form-item-height-small);
+  line-height: var(--lew-form-input-line-height-small);
   .lew-input-box {
-    height: var(--lew-form-item-height-small);
     padding: var(--lew-form-input-padding-small);
     font-size: var(--lew-form-font-size-small);
-    line-height: var(--lew-form-input-line-height-small);
   }
 
   .lew-input-prefixes,
@@ -580,11 +577,11 @@ defineExpose({ toFocus })
 }
 
 .lew-input-view-size-medium {
+  height: var(--lew-form-item-height-medium);
+  line-height: var(--lew-form-input-line-height-medium);
   .lew-input-box {
-    height: var(--lew-form-item-height-medium);
     padding: var(--lew-form-input-padding-medium);
     font-size: var(--lew-form-font-size-medium);
-    line-height: var(--lew-form-input-line-height-medium);
   }
 
   .lew-input-prefixes,
@@ -632,11 +629,11 @@ defineExpose({ toFocus })
 }
 
 .lew-input-view-size-large {
+  height: var(--lew-form-item-height-large);
+  line-height: var(--lew-form-input-line-height-large);
   .lew-input-box {
-    height: var(--lew-form-item-height-large);
     padding: var(--lew-form-input-padding-large);
     font-size: var(--lew-form-font-size-large);
-    line-height: var(--lew-form-input-line-height-large);
   }
 
   .lew-input-prefixes,
@@ -719,7 +716,6 @@ defineExpose({ toFocus })
 .lew-input-view:focus-within {
   background-color: var(--lew-form-bgcolor-focus);
   border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-outline);
 
   .lew-input-prefixes::after {
     background: var(--lew-bgcolor-4);

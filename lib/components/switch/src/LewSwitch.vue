@@ -42,49 +42,48 @@ const getSwitchClassName = computed(() => {
     readonly: readonly
   })
 })
-
 const getSwitchStyle = computed(() => {
   const { size } = props
   switch (size) {
     case 'small':
       return {
-        '--lew-switch-width': '36px',
-        '--lew-switch-height': '22px',
-        '--lew-switch-dot-width': '14px',
-        '--lew-switch-dot-height': '14px',
-        '--lew-switch-dot-width-active': '16px',
-        '--lew-switch-dot-transform': 'translate(4px, 4px)',
-        '--lew-switch-dot-transform-active': 'translate(16px, 4px)'
-      }
-    case 'medium':
-      return {
-        '--lew-switch-width': '38px',
-        '--lew-switch-height': '24px',
-        '--lew-switch-dot-width': '16px',
-        '--lew-switch-dot-height': '16px',
-        '--lew-switch-dot-width-active': '18px',
-        '--lew-switch-dot-transform': 'translate(4px, 4px)',
-        '--lew-switch-dot-transform-active': 'translate(16px, 4px)'
-      }
-    case 'large':
-      return {
-        '--lew-switch-width': '40px',
+        '--lew-switch-width': '42px',
         '--lew-switch-height': '26px',
         '--lew-switch-dot-width': '18px',
         '--lew-switch-dot-height': '18px',
         '--lew-switch-dot-width-active': '20px',
         '--lew-switch-dot-transform': 'translate(4px, 4px)',
-        '--lew-switch-dot-transform-active': 'translate(16px, 4px)'
+        '--lew-switch-dot-transform-active': 'translate(17px, 4px)'
+      }
+    case 'medium':
+      return {
+        '--lew-switch-width': '44px',
+        '--lew-switch-height': '28px',
+        '--lew-switch-dot-width': '20px',
+        '--lew-switch-dot-height': '20px',
+        '--lew-switch-dot-width-active': '22px',
+        '--lew-switch-dot-transform': 'translate(4px, 4px)',
+        '--lew-switch-dot-transform-active': 'translate(17px, 4px)'
+      }
+    case 'large':
+      return {
+        '--lew-switch-width': '46px',
+        '--lew-switch-height': '30px',
+        '--lew-switch-dot-width': '22px',
+        '--lew-switch-dot-height': '22px',
+        '--lew-switch-dot-width-active': '24px',
+        '--lew-switch-dot-transform': 'translate(4px, 4px)',
+        '--lew-switch-dot-transform-active': 'translate(17px, 4px)'
       }
     default:
       return {
-        '--lew-switch-width': '38px',
-        '--lew-switch-height': '24px',
-        '--lew-switch-dot-width': '16px',
-        '--lew-switch-dot-height': '16px',
-        '--lew-switch-dot-width-active': '20px',
+        '--lew-switch-width': '44px',
+        '--lew-switch-height': '28px',
+        '--lew-switch-dot-width': '20px',
+        '--lew-switch-dot-height': '20px',
+        '--lew-switch-dot-width-active': '24px',
         '--lew-switch-dot-transform': 'translate(4px, 4px)',
-        '--lew-switch-dot-transform-active': 'translate(14px, 4px)'
+        '--lew-switch-dot-transform-active': 'translate(17px, 4px)'
       }
   }
 })
@@ -117,7 +116,6 @@ const getSwitchStyle = computed(() => {
   background: var(--lew-bgcolor-3);
   border-radius: var(--lew-border-radius-small);
   transition: all var(--lew-form-transition-ease);
-  outline: 0px var(--lew-color-primary-light) solid;
   box-shadow: var(--lew-form-box-shadow);
 
   .lew-switch-dot {
@@ -145,7 +143,7 @@ const getSwitchStyle = computed(() => {
 
   input:checked + .lew-switch-dot {
     background: #fff;
-    transform: translate(18px, 4px);
+    transform: translate(19px, 4px);
   }
 
   input:checked + .lew-switch-dot:after {
@@ -214,14 +212,14 @@ const getSwitchStyle = computed(() => {
 
 .lew-switch.lew-switch-request {
   .lew-switch-dot {
-    width: 16px;
-    transform: translate(4px, 4px);
+    width: var(--lew-switch-dot-width);
+    transform: var(--lew-switch-dot-transform);
   }
 }
 
 .lew-switch.lew-switch-checked.lew-switch-request {
   .lew-switch-dot {
-    width: 16px;
+    width: var(--lew-switch-dot-width);
     transform: translate(18px, 4px);
   }
 }

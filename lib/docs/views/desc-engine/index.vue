@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import PreviewModal from './components/PreviewModal.vue'
 import ImportModal from './components/ImportModal.vue'
 import { formatFormByMap, flattenNestedObject } from 'lew-ui/utils'
+import { lewDescSizePaddingMap } from 'lew-ui'
 import { getUniqueId } from 'lew-ui/utils'
 import { downloadObjectAsFile } from 'lew-ui/docs/lib/utils'
 import { useDark } from '@vueuse/core'
@@ -72,7 +73,8 @@ const formGlobal = ref({
   columns: 1,
   labelX: 'start',
   valueX: 'start',
-  size: 'medium'
+  size: 'medium',
+  bordered: 0
 })
 
 const formWidth = computed(() => {
@@ -82,7 +84,13 @@ const formWidth = computed(() => {
 const refreshForm = debounce(() => {
   nextTick(() => {
     if (formLabelRef.value) {
-      autoLabelWidth.value = formLabelRef.value.$el.offsetWidth
+      const { bordered, size } = formGlobal.value
+      autoLabelWidth.value =
+        formLabelRef.value.$el.offsetWidth +
+        (bordered
+          ? lewDescSizePaddingMap[size as keyof typeof lewDescSizePaddingMap] *
+            2
+          : 0)
     }
   })
   formatFormMap()
@@ -211,7 +219,6 @@ const importField = () => {
 }
 
 const importFieldOptions = (_options: any) => {
-  console.log(flattenNestedObject(_options))
   options.value = Object.keys(flattenNestedObject(_options)).map(
     (key: string) => {
       return {
@@ -308,7 +315,8 @@ onMounted(() => {
                   (settingTab = 'options')
               "
               :style="{
-                'grid-column-end': `span ${element.spanMap[formGlobal.columns]}`
+                'grid-column-end': `span ${element.spanMap[formGlobal.columns]}`,
+                padding: formGlobal.bordered ? 0 : `15px 13px 15px 13px`
               }"
             >
               <lew-flex x="end" y="center" class="handle-box">
@@ -548,7 +556,6 @@ onMounted(() => {
 
   .lew-form-wrapper-draggable-item {
     position: relative;
-    padding: 15px 13px 15px 13px;
     box-sizing: border-box;
     border: var(--lew-form-border-width) dashed transparent;
     cursor: pointer;

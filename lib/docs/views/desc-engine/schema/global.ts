@@ -14,6 +14,12 @@ export const globalSchema = [
     }
   },
   {
+    label: '是否显示边框',
+    as: 'switch',
+    field: 'bordered',
+    componentWidth: 'auto'
+  },
+  {
     label: '方向',
     as: 'tabs',
     field: 'direction',

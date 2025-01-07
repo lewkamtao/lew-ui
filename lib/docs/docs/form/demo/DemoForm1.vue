@@ -383,8 +383,6 @@ const resetForm = () => {
 onMounted(() => {
   setForm()
 })
-
-const v = ref('')
 </script>
 
 <template>
@@ -399,11 +397,6 @@ const v = ref('')
       :options="options"
       @mounted="setForm"
       :width="450"
-      @change="
-        (e: any) => {
-          form = e
-        }
-      "
     />
     <lew-flex direction="y" x="start">
       <lew-flex x="start">

@@ -10,11 +10,12 @@ import {
   LewEmpty
 } from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
-import type { SelectMultipleOptions } from './props'
+import type { SelectMultipleOptions, SelectMultipleOptionsGroup } from './props'
 import { selectMultipleProps } from './props'
 import { UseVirtualList } from '@vueuse/components'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { isFunction } from 'lodash-es'
+import { flattenOptions, defaultSearchMethod } from '../../select/src/util'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -34,7 +35,7 @@ const state = reactive({
   selectWidth: 0,
   visible: false,
   loading: false,
-  options: props.options,
+  options: flattenOptions(props.options),
   keyword: ''
 })
 
@@ -45,8 +46,9 @@ let _searchMethod = computed(() => {
     return props.searchMethod
   } else if (props.searchMethodId) {
     return formMethods[props.searchMethodId]
+  } else {
+    return defaultSearchMethod
   }
-  return false
 })
 
 const getSelectWidth = () => {
@@ -71,17 +73,16 @@ const searchDebounce = useDebounceFn(async (e: any) => {
 }, props.searchDelay)
 
 const search = async (e?: any) => {
-  // loading
   state.loading = true
   const keyword = e?.target.value
   if (props.searchable) {
     let result: any = []
     // 如果没输入关键词
     if (!keyword && props.options.length > 0) {
-      result = props.options
+      result = flattenOptions(props.options)
     } else {
       result = await _searchMethod.value({
-        options: props.options,
+        options: flattenOptions(props.options),
         keyword
       })
     }
@@ -115,7 +116,7 @@ const deleteTag = (index: number) => {
 }
 
 const selectHandle = (item: SelectMultipleOptions) => {
-  if (item.disabled) {
+  if (item.disabled || item.isGroup) {
     return
   }
 
@@ -158,30 +159,32 @@ const getLabels = computed(() => {
   return props?.defaultValue || selectValue.value || []
 })
 
-const getSelectClassName = computed(() => {
-  let { clearable, size } = props
-  clearable = clearable ? !!selectValue.value : false
-  return object2class('lew-select', { clearable, size })
-})
-
 const getBodyClassName = computed(() => {
   const { size, disabled } = props
   return object2class('lew-select-body', { size, disabled })
 })
 
-const getSelectViewClassName = computed(() => {
-  const { disabled, readonly } = props
+const getSelectClassName = computed(() => {
+  let { clearable, size, disabled, readonly } = props
+  clearable = clearable ? !!selectValue.value : false
   const focus = state.visible
-  return object2class('lew-select-view', { focus, disabled, readonly })
+  return object2class('lew-select', {
+    clearable,
+    size,
+    disabled,
+    readonly,
+    focus
+  })
 })
 
 const getSelectItemClassName = (e: any) => {
-  const { disabled } = e
+  const { disabled, isGroup } = e
   const active = getChecked.value(e.value)
 
   return object2class('lew-select-item', {
     disabled,
-    active
+    active,
+    'is-group': isGroup
   })
 }
 
@@ -217,6 +220,20 @@ onMounted(() => {
 })
 
 defineExpose({ show, hide })
+
+watch(
+  () => props.options,
+  () => {
+    state.options = flattenOptions(props.options)
+  },
+  {
+    deep: true
+  }
+)
+
+const getResultNum = computed(() => {
+  return numFormat(state.options.filter((e: any) => !e.isGroup).length)
+})
 </script>
 
 <template>
@@ -224,9 +241,8 @@ defineExpose({ show, hide })
     ref="lewPopoverRef"
     popoverBodyClassName="lew-select-multiple-popover-body"
     class="lew-select-view"
-    :class="getSelectViewClassName"
     :trigger="trigger"
-    :disabled="disabled"
+    :disabled="disabled || readonly"
     placement="bottom-start"
     style="width: 100%"
     :offset="[-1, 10]"
@@ -260,10 +276,10 @@ defineExpose({ show, hide })
         <template v-if="getLabels && getLabels.length > 0">
           <lew-flex
             v-if="valueLayout === 'tag'"
-            style="padding: 5px"
+            :style="{ padding: '4px' }"
             x="start"
             y="center"
-            :gap="5"
+            :gap="4"
             wrap
             class="lew-value"
           >
@@ -290,7 +306,12 @@ defineExpose({ show, hide })
               style="width: 100%"
             >
               <template #trigger>
-                <div class="lew-select-multiple-text-value">
+                <div
+                  :style="{
+                    opacity: state.visible ? 0.6 : 1
+                  }"
+                  class="lew-select-multiple-text-value"
+                >
                   {{ getLabels.join(valueTextSplit) }}
                 </div>
               </template>
@@ -300,7 +321,9 @@ defineExpose({ show, hide })
                   y="center"
                   :gap="5"
                   wrap
-                  :style="`max-width:${state.selectWidth + 12}px`"
+                  :style="{
+                    maxWidth: `${state.selectWidth + 12}px`
+                  }"
                   class="lew-select-multiple-tag-value"
                 >
                   <lew-tag
@@ -320,6 +343,9 @@ defineExpose({ show, hide })
         </template>
         <div
           v-show="getLabels && getLabels.length === 0"
+          :style="{
+            opacity: state.visible ? 0.6 : 1
+          }"
           class="lew-placeholder"
         >
           {{ placeholder }}
@@ -353,7 +379,7 @@ defineExpose({ show, hide })
             class="lew-result-count"
           >
             共
-            {{ numFormat(state.options && state.options.length) }}
+            {{ getResultNum }}
             条结果
           </div>
 
@@ -369,7 +395,6 @@ defineExpose({ show, hide })
             :height="getVirtualHeight"
           >
             <template #default="{ data: templateProps }">
-              <!-- you can get current item of list here -->
               <div
                 :style="{ height: itemHeight + 'px' }"
                 @click="selectHandle(templateProps)"
@@ -388,14 +413,20 @@ defineExpose({ show, hide })
                   :class="getSelectItemClassName(templateProps)"
                 >
                   <lew-checkbox
+                    v-if="!templateProps.isGroup"
                     :key="templateProps.value"
                     class="lew-select-checkbox"
                     :checked="getChecked(templateProps.value)"
                   />
                   <lew-text-trim
-                    :text="templateProps.label"
+                    :text="
+                      templateProps.isGroup
+                        ? `${templateProps.label} (${templateProps.total})`
+                        : templateProps.label
+                    "
                     :delay="[500, 0]"
                     class="lew-select-label"
+                    :class="{ 'is-group': templateProps.isGroup }"
                   />
                 </div>
               </div>
@@ -411,13 +442,6 @@ defineExpose({ show, hide })
 <style lang="scss" scoped>
 .lew-select-view {
   width: 100%;
-  border-radius: var(--lew-border-radius-small);
-  background-color: var(--lew-form-bgcolor);
-  transition: all var(--lew-form-transition-ease);
-  box-sizing: border-box;
-  outline: 0px var(--lew-color-primary-light) solid;
-  border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-  box-shadow: var(--lew-form-box-shadow);
 
   > div {
     width: 100%;
@@ -432,7 +456,11 @@ defineExpose({ show, hide })
     user-select: none;
     box-sizing: border-box;
     overflow: hidden;
-
+    border-radius: var(--lew-border-radius-small);
+    background-color: var(--lew-form-bgcolor);
+    transition: all var(--lew-form-transition-ease);
+    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    box-shadow: var(--lew-form-box-shadow);
     .lew-icon-select {
       position: absolute;
       top: 50%;
@@ -441,11 +469,11 @@ defineExpose({ show, hide })
       transition: all var(--lew-form-transition-bezier);
       opacity: var(--lew-form-icon-opacity);
       padding: 2px;
-    }
 
-    .lew-icon-select-hide {
-      opacity: 0;
-      transform: translate(100%, -50%);
+      &-hide {
+        opacity: 0;
+        transform: translate(100%, -50%);
+      }
     }
 
     .lew-placeholder {
@@ -467,140 +495,170 @@ defineExpose({ show, hide })
         }
       }
     }
+
     :deep() {
       .lew-tag {
         background-color: var(--lew-bgcolor-0) !important;
       }
     }
+
     .lew-placeholder,
     .lew-value {
+      display: flex;
+      align-items: center;
       width: calc(100% - 24px);
       transition: all 0.2s;
       height: 100%;
+      line-height: 100%;
     }
+
     .lew-select-multiple-text-value {
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
     }
-  }
 
-  .lew-select-size-small {
-    min-height: var(--lew-form-item-height-small);
-
-    .lew-placeholder,
-    .lew-select-multiple-text-value {
-      font-size: var(--lew-form-font-size-small);
-      line-height: var(--lew-form-item-height-small);
-      margin-left: 10px;
+    &:hover {
+      background-color: var(--lew-form-bgcolor-hover);
     }
-    .lew-select-multiple-text-value {
-      padding-right: 26px;
+
+    &:active {
+      background-color: var(--lew-form-bgcolor-active);
     }
   }
 
-  .lew-select-size-medium {
-    min-height: var(--lew-form-item-height-medium);
+  .lew-select-size {
+    &-small {
+      min-height: var(--lew-form-item-height-small);
 
-    .lew-placeholder,
-    .lew-select-multiple-text-value {
-      font-size: var(--lew-form-font-size-medium);
-      line-height: var(--lew-form-item-height-medium);
-      margin-left: 12px;
+      .lew-placeholder,
+      .lew-select-multiple-text-value {
+        font-size: var(--lew-form-font-size-small);
+        margin-left: 10px;
+      }
+
+      .lew-select-multiple-text-value {
+        padding-right: 26px;
+        line-height: calc(
+          var(--lew-form-item-height-small) - (var(--lew-form-border-width) * 2)
+        );
+      }
     }
-    .lew-select-multiple-text-value {
-      padding-right: 28px;
+
+    &-medium {
+      min-height: var(--lew-form-item-height-medium);
+
+      .lew-placeholder,
+      .lew-select-multiple-text-value {
+        font-size: var(--lew-form-font-size-medium);
+        margin-left: 12px;
+      }
+
+      .lew-select-multiple-text-value {
+        padding-right: 28px;
+        line-height: calc(
+          var(--lew-form-item-height-medium) -
+            (var(--lew-form-border-width) * 2)
+        );
+      }
+    }
+
+    &-large {
+      min-height: var(--lew-form-item-height-large);
+
+      .lew-placeholder,
+      .lew-select-multiple-text-value {
+        font-size: var(--lew-form-font-size-large);
+        margin-left: 14px;
+      }
+
+      .lew-select-multiple-text-value {
+        padding-right: 30px;
+        line-height: calc(
+          var(--lew-form-item-height-large) - (var(--lew-form-border-width) * 2)
+        );
+      }
     }
   }
 
-  .lew-select-size-large {
-    min-height: var(--lew-form-item-height-large);
+  .lew-select-focus {
+    background-color: var(--lew-form-bgcolor-focus);
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
+      solid;
 
-    .lew-placeholder,
-    .lew-select-multiple-text-value {
-      font-size: var(--lew-form-font-size-large);
-      line-height: var(--lew-form-item-height-large);
-      margin-left: 14px;
+    :deep() {
+      .lew-tag {
+        background-color: var(--lew-color-primary-light) !important;
+      }
     }
-    .lew-select-multiple-text-value {
-      padding-right: 30px;
+
+    .lew-icon-select {
+      transform: translateY(-50%) rotate(180deg);
+      color: var(--lew-text-color-1);
+
+      &-hide {
+        opacity: 0;
+        transform: translate(100%, -50%) rotate(180deg);
+      }
+    }
+  }
+
+  .lew-select-focus:hover {
+    background-color: var(--lew-form-bgcolor-focus);
+  }
+
+  .lew-select-readonly {
+    pointer-events: none;
+
+    .lew-select {
+      user-select: text;
+    }
+  }
+
+  .lew-select-disabled {
+    opacity: var(--lew-disabled-opacity);
+    pointer-events: none;
+
+    &:hover {
+      border-radius: var(--lew-border-radius-small);
+      background-color: var(--lew-form-bgcolor);
+      border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     }
   }
 }
 
-.lew-select-view:hover {
-  background-color: var(--lew-form-bgcolor-hover);
-}
-
-.lew-select-view:active {
-  background-color: var(--lew-form-bgcolor-active);
-}
-
-.lew-select-view.lew-select-view-focus {
-  background-color: var(--lew-form-bgcolor-focus);
-  border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
-  outline: var(--lew-form-outline);
-  :deep() {
-    .lew-tag {
-      background-color: var(--lew-color-primary-light) !important;
-    }
-  }
-  .lew-icon-select {
-    transform: translateY(-50%) rotate(180deg);
-    color: var(--lew-text-color-1);
+.list {
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.08s ease-in-out;
   }
 
-  .lew-icon-select-hide {
+  &-enter-from,
+  &-leave-to {
     opacity: 0;
-    transform: translate(100%, -50%) rotate(180deg);
+    transform: translateX(-5px);
   }
-}
-
-.lew-select-view-readonly {
-  pointer-events: none; //鼠标点击不可修改
-
-  .lew-select {
-    user-select: text;
-  }
-}
-
-.lew-select-view-disabled {
-  opacity: var(--lew-disabled-opacity);
-  pointer-events: none; //鼠标点击不可修改
-}
-
-.lew-select-view-disabled:hover {
-  border-radius: var(--lew-border-radius-small);
-  background-color: var(--lew-form-bgcolor);
-  outline: 0px var(--lew-color-primary-light) solid;
-  border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
-}
-
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.08s ease-in-out;
-}
-
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateX(-5px);
 }
 </style>
+
 <style lang="scss">
-.lew-select-multiple-popover-body {
-  padding: 6px;
-}
-.lew-select-multiple-popover-tag {
-  .lew-select-multiple-tag-value {
-    padding: 5px;
-    box-sizing: border-box;
+.lew-select-multiple-popover {
+  &-body {
+    padding: 6px;
+  }
+
+  &-tag {
+    .lew-select-multiple-tag-value {
+      padding: 5px;
+      box-sizing: border-box;
+    }
   }
 }
 
 .lew-select-body {
   width: 100%;
   box-sizing: border-box;
+
   .lew-search-input {
     margin-bottom: 5px;
 
@@ -615,18 +673,11 @@ defineExpose({ show, hide })
       box-sizing: border-box;
       color: var(--lew-form-color);
       transition: all var(--lew-form-transition-bezier);
-    }
 
-    input:focus {
-      background-color: var(--lew-bgcolor-3);
+      &:focus {
+        background-color: var(--lew-bgcolor-3);
+      }
     }
-  }
-
-  .lew-result-count {
-    padding-left: 8px;
-    margin: 5px 0px;
-    opacity: 0.4;
-    font-size: 13px;
   }
 
   .lew-select-options-box {
@@ -638,88 +689,100 @@ defineExpose({ show, hide })
     margin-top: -4px;
     margin-bottom: -4px;
 
-    .lew-select-item-mul {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      width: 100%;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      cursor: pointer;
-      color: var(--lew-text-color-1);
-      box-sizing: border-box;
-      margin-top: 2px;
-
-      .lew-select-checkbox {
-        position: absolute;
-        left: 0px;
-        top: 50%;
-        transform: translateY(-50%);
-        padding-left: 12px;
-      }
-
-      .lew-select-label {
+    .lew-select-item {
+      &-mul {
         position: relative;
-        z-index: 5;
-        height: 30px;
-        line-height: 30px;
-        padding-left: 38px;
+        display: inline-flex;
+        align-items: center;
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        cursor: pointer;
+        color: var(--lew-text-color-1);
         box-sizing: border-box;
-        cursor: pointer !important;
+        margin-top: 2px;
+
+        .lew-select-checkbox {
+          position: absolute;
+          left: 0px;
+          top: 50%;
+          transform: translateY(-50%);
+          padding-left: 12px;
+        }
+
+        .lew-select-label {
+          position: relative;
+          z-index: 5;
+          height: 30px;
+          line-height: 30px;
+          padding-left: 38px;
+          box-sizing: border-box;
+          cursor: pointer !important;
+
+          &.is-group {
+            padding-left: 12px;
+            color: var(--lew-text-color-7);
+            font-size: 12px;
+            pointer-events: none;
+            padding-top: 4px;
+          }
+        }
       }
-    }
 
-    .lew-select-item-disabled {
-      opacity: var(--lew-disabled-opacity);
-      pointer-events: none; //鼠标点击不可修改
-    }
-
-    .lew-select-item:hover {
-      color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bgcolor-active);
-    }
-
-    .lew-select-item-active {
-      color: var(--lew-checkbox-color);
-      font-weight: bold;
-      background-color: var(--lew-pop-bgcolor-active);
-
-      .icon-check {
-        margin-right: 10px;
+      &-disabled {
+        opacity: var(--lew-disabled-opacity);
+        pointer-events: none;
       }
-    }
 
-    .lew-select-item-active:hover {
-      color: var(--lew-checkbox-color);
-      font-weight: bold;
-      background-color: var(--lew-pop-bgcolor-active);
+      &:hover {
+        color: var(--lew-text-color-0);
+        background-color: var(--lew-pop-bgcolor-active);
+
+        .lew-checkbox {
+          .lew-checkbox-icon-box {
+            border: var(--lew-form-border-width)
+              var(--lew-checkbox-border-color-hover) solid;
+            background: var(--lew-form-bgcolor);
+          }
+        }
+      }
+
+      &-active {
+        color: var(--lew-checkbox-color);
+        font-weight: bold;
+        background-color: var(--lew-pop-bgcolor-active);
+
+        .icon-check {
+          margin-right: 10px;
+        }
+
+        &:hover {
+          color: var(--lew-checkbox-color);
+          font-weight: bold;
+          background-color: var(--lew-pop-bgcolor-active);
+
+          .lew-checkbox {
+            .lew-checkbox-icon-box {
+              border: var(--lew-form-border-width) var(--lew-checkbox-color)
+                solid;
+              background: var(--lew-checkbox-color);
+
+              .icon-checkbox {
+                transform: translate(-50%, -50%) scale(0.7);
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
     }
   }
-}
 
-.lew-select-item:hover {
-  .lew-checkbox {
-    .lew-checkbox-icon-box {
-      border: var(--lew-form-border-width)
-        var(--lew-checkbox-border-color-hover) solid;
-      outline: var(--lew-form-outline);
-      background: var(--lew-form-bgcolor);
-    }
-  }
-}
-
-.lew-select-item-active:hover {
-  .lew-checkbox {
-    .lew-checkbox-icon-box {
-      border: var(--lew-form-border-width) var(--lew-checkbox-color) solid;
-      background: var(--lew-checkbox-color);
-
-      .icon-checkbox {
-        transform: translate(-50%, -50%) scale(0.7);
-        opacity: 1;
-      }
-    }
+  .lew-result-count {
+    padding: 5px 12px;
+    font-size: 13px;
+    opacity: 0.4;
   }
 }
 </style>

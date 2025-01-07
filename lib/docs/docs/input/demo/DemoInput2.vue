@@ -28,6 +28,26 @@ const options = {
     { label: '.net', value: '.net' }
   ]
 }
+
+const getSuffixTooltip = () => {
+  const domainDesc = {
+    '.com': '商业网站的通用顶级域名',
+    '.cn': '中国国家顶级域名',
+    '.org': '非营利组织域名',
+    '.net': '网络服务提供商域名'
+  }[selectValues.domain]
+
+  return domainDesc
+}
+
+const getPrefixesTooltip = () => {
+  const protocolDesc =
+    selectValues.protocol === 'https://'
+      ? '安全加密的超文本传输协议'
+      : '标准超文本传输协议'
+
+  return protocolDesc
+}
 </script>
 
 <template>
@@ -49,6 +69,8 @@ const options = {
       :prefixesOptions="options.protocols"
       suffix="select"
       :suffixOptions="options.domains"
+      :suffixTooltip="getSuffixTooltip"
+      :prefixesTooltip="getPrefixesTooltip"
       placeholder="请输入网站名"
     />
     <lew-input

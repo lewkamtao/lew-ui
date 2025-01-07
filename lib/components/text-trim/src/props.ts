@@ -79,7 +79,7 @@ export const textTrimProps = {
   },
   delay: {
     type: Array as PropType<number[]>,
-    default: () => [250, 250],
+    default: [120, 120],
     description:
       '显示和隐藏提示框的延迟时间 [显示延迟, 隐藏延迟]（单位：毫秒）',
     validator(value: [number, number]): boolean {

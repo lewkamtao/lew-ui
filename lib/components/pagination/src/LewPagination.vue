@@ -320,14 +320,14 @@ const getIconSize = computed(() => {
   .lew-pagination-page-box {
     :deep() {
       .lew-button {
-        height: calc(var(--lew-form-item-height-small) - 4px);
-        width: calc(var(--lew-form-item-height-small) - 4px);
+        height: calc(var(--lew-form-item-height-small) - 6px);
+        width: calc(var(--lew-form-item-height-small) - 6px);
       }
     }
   }
   .lew-pagination-page-btn {
-    height: calc(var(--lew-form-item-height-small) - 4px);
-    min-width: calc(var(--lew-form-item-height-small) - 4px);
+    height: calc(var(--lew-form-item-height-small) - 6px);
+    min-width: calc(var(--lew-form-item-height-small) - 6px);
     font-size: var(--lew-form-font-size-small);
     padding: 0px 4px;
   }
@@ -336,14 +336,14 @@ const getIconSize = computed(() => {
   .lew-pagination-page-box {
     :deep() {
       .lew-button {
-        height: calc(var(--lew-form-item-height-medium) - 4px);
-        width: calc(var(--lew-form-item-height-medium) - 4px);
+        height: calc(var(--lew-form-item-height-medium) - 8px);
+        width: calc(var(--lew-form-item-height-medium) - 8px);
       }
     }
   }
   .lew-pagination-page-btn {
-    height: calc(var(--lew-form-item-height-medium) - 4px);
-    min-width: calc(var(--lew-form-item-height-medium) - 4px);
+    height: calc(var(--lew-form-item-height-medium) - 8px);
+    min-width: calc(var(--lew-form-item-height-medium) - 8px);
     font-size: var(--lew-form-font-size-medium);
     padding: 0px 6px;
   }
@@ -352,14 +352,14 @@ const getIconSize = computed(() => {
   .lew-pagination-page-box {
     :deep() {
       .lew-button {
-        height: calc(var(--lew-form-item-height-large) - 4px);
-        width: calc(var(--lew-form-item-height-large) - 4px);
+        height: calc(var(--lew-form-item-height-large) - 10px);
+        width: calc(var(--lew-form-item-height-large) - 10px);
       }
     }
   }
   .lew-pagination-page-btn {
-    height: calc(var(--lew-form-item-height-large) - 4px);
-    min-width: calc(var(--lew-form-item-height-large) - 4px);
+    height: calc(var(--lew-form-item-height-large) - 10px);
+    min-width: calc(var(--lew-form-item-height-large) - 10px);
     font-size: var(--lew-form-font-size-large);
     padding: 0px 8px;
   }
