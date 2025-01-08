@@ -93,6 +93,18 @@ export const textTrimProps = {
       }
       return true
     }
+  },
+  reserveEnd: {
+    type: Number,
+    default: 0,
+    description: '保留末尾的字符数量，当文本溢出时会在中间显示省略号，保留开头和指定数量的末尾字符',
+    validator(value: number): boolean {
+      if (value < 0) {
+        console.warn('[LewTextTrim] reserveEnd 属性必须大于等于 0')
+        return false
+      }
+      return true
+    }
   }
 }
 

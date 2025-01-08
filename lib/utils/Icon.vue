@@ -30,7 +30,9 @@ import {
   TriangleAlert,
   UploadCloud,
   X,
-  UserRound
+  UserRound,
+  Eye,
+  EyeOff
 } from 'lucide-vue-next'
 import { getColorType, iconColorType } from './index'
 
@@ -101,7 +103,9 @@ const iconMap: any = {
   warning: TriangleAlert,
   wrong_size: CircleAlert,
   wrong_type: CircleAlert,
-  user: UserRound
+  user: UserRound,
+  eye: Eye,
+  eye_off: EyeOff
 }
 </script>
 

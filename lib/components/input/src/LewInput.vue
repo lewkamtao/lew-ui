@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMagicKeys, useDebounceFn } from '@vueuse/core'
+import { useMagicKeys } from '@vueuse/core'
 import { object2class, any2px } from 'lew-ui/utils'
 import { LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui'
 import { inputProps } from './props'
@@ -258,7 +258,7 @@ defineExpose({ toFocus })
           <Icon
             v-show="_type === 'password'"
             :size="getIconSize"
-            type="eye-off"
+            type="eye_off"
           />
         </div>
         <transition name="lew-form-icon-ani">
@@ -452,7 +452,6 @@ defineExpose({ toFocus })
 
     > div {
       display: inline-flex;
-      padding: 0px 4px;
       white-space: nowrap;
       justify-content: center;
       align-items: center;
@@ -541,7 +540,7 @@ defineExpose({ toFocus })
   }
 
   .lew-input-copy-btn {
-    right: 7px;
+    right: 10px;
   }
 
   .lew-input-prefixes,
@@ -593,7 +592,7 @@ defineExpose({ toFocus })
   }
 
   .lew-input-copy-btn {
-    right: 9px;
+    right: 12px;
   }
 
   .lew-input-prefixes,
@@ -645,7 +644,7 @@ defineExpose({ toFocus })
   }
 
   .lew-input-copy-btn {
-    right: 12px;
+    right: 14px;
   }
 
   .lew-input-prefixes,
