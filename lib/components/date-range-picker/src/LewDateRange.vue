@@ -696,7 +696,7 @@ defineExpose({ init })
     .lew-date-item-curMonth:active {
       .lew-date-label {
         .lew-date-value {
-          transform: scale(1.1);
+          transform: scale(.9);
         }
       }
     }

@@ -91,7 +91,7 @@ const options: MenuOptions[] = [
     children: [
       {
         label: 'Back Top',
-        value: '/Back Top'
+        value: '/BackTop'
       },
       {
         label: 'Steps',
