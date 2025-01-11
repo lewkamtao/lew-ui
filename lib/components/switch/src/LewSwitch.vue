@@ -70,7 +70,7 @@ const getSwitchStyle = computed(() => {
         '--lew-switch-width': '46px',
         '--lew-switch-height': '30px',
         '--lew-switch-dot-width': '22px',
-        '--lew-switch-dot-height': '22px', 
+        '--lew-switch-dot-height': '22px',
         '--lew-switch-dot-width-active': '26px',
         '--lew-switch-dot-transform': 'translate(4px, 4px)',
         '--lew-switch-dot-transform-active': 'translate(15px, 4px)'

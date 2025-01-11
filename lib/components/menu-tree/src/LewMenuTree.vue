@@ -109,7 +109,7 @@ const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
           ]
         ]
       : []
-
+  const { tagText, tagType,tagColor } = item
   // 渲染菜单项组件
   return withDirectives(
     h(
@@ -120,7 +120,11 @@ const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
         level,
         isLeaf: !item.children?.length,
         disabled: item.disabled,
+        tagText,
+        tagType,
+        tagColor,
         renderIcon: () => item.renderIcon,
+        renderLabel: () => item.renderLabel,
         onChange: () => emit('change', item)
       },
       // 递归渲染子项

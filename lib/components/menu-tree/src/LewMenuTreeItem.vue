@@ -5,7 +5,14 @@ import { LewFlex } from 'lew-ui'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { cloneDeep } from 'lodash-es'
 
-const props = defineProps(menuTreeItemProps)
+const props = defineProps({
+  ...menuTreeItemProps,
+  renderLabel: {
+    type: Function,
+    default: () => {},
+    description: '自定义渲染标签内容的函数。'
+  }
+})
 
 const { modelValue, expandKeys, modelValueKeyPath, collapsed }: any =
   inject('menu-tree')
@@ -54,13 +61,28 @@ const change = () => {
       <slot v-if="$slots.label" name="label" :props="props" />
       <template v-else>
         <component class="lew-menu-tree-item-icon" :is="renderIcon()" />
+        <component
+          v-if="renderLabel()"
+          :is="renderLabel()"
+          class="lew-menu-tree-item-text"
+        />
         <lew-text-trim
+          v-else
           class="lew-menu-tree-item-text"
           placement="right"
-          :style="{ width: `calc(100% - ${renderIcon() ? 50 : 20}px)` }"
+          :style="{ maxWidth: `calc(100% - ${renderIcon() || tagText ? 70 : 0}px)` }"
           :text="label"
           :delay="[250, 250]"
         />
+        <lew-tag
+          v-if="tagText"
+          :color="tagColor"
+          :type="tagType"
+          round
+          size="small"
+        >
+          {{ tagText }}
+        </lew-tag>
         <Icon
           v-if="!isLeaf"
           class="lew-menu-tree-item-chevron-right"

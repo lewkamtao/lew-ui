@@ -8,42 +8,40 @@ import {
   BarChart2,
   Settings
 } from 'lucide-vue-next'
-import { h } from 'vue'
-
+import { LewTag, LewFlex } from 'lew-ui'
 const value = ref('')
-const expandKeys = ref([
-  '1',
-  '1-1',
-  '1-1-1',
-  '1-1-2',
-  '1-1-3',
-  '1-2',
-  '1-2-1',
-  '1-2-2',
-  '1-2-3',
-  '2',
-  '2-1',
-  '2-1-1',
-  '2-1-2'
-])
+const expandKeys = ref([])
 
 const options = [
   {
     value: '1',
     label: '文章管理',
     renderIcon: () => h(FileText, { size: 14 }),
-    tagText: '10',
-    tagType: 'light',
+    renderLabel: () =>
+      h(LewFlex, { x: 'start', style: 'width: 100%' }, [
+        h('span', '文章管理'),
+        h(
+          LewTag,
+          { type: 'light', color: 'error', round: true, size: 'small' },
+          () => '10'
+        )
+      ]),
     children: [
       {
         value: '1-1',
         label: '文章列表',
-        tagText: 'New',
-        tagType: 'ghost',
-        tagColor: 'green',
+        renderLabel: () =>
+          h(LewFlex, { x: 'start', style: 'width: 100%' }, [
+            h('span', '文章列表'),
+            h(
+              LewTag,
+              { type: 'light', color: 'primary', size: 'small' },
+              () => 'New'
+            )
+          ]),
         children: [
-          { value: '1-1-1', label: '已发布', tagText: '8', tagType: 'light' },
-          { value: '1-1-2', label: '草稿箱', tagText: '3', tagType: 'light' },
+          { value: '1-1-1', label: '已发布' },
+          { value: '1-1-2', label: '草稿箱' },
           { value: '1-1-3', label: '回收站' }
         ]
       },
@@ -62,19 +60,32 @@ const options = [
     value: '2',
     label: '用户管理',
     renderIcon: () => h(Users, { size: 14 }),
-    tagText: '5',
-    tagType: 'light',
+    renderLabel: () =>
+      h(LewFlex, { x: 'start', style: 'width: 100%' }, [
+        h('span', '用户管理'),
+        h(
+          LewTag,
+          { type: 'light', color: 'error', round: true, size: 'small' },
+          () => '5'
+        )
+      ]),
     children: [
       {
         value: '2-1',
         label: '用户列表',
-        tagText: 'New',
-        tagType: 'ghost',
-        tagColor: 'green',
+        renderLabel: () =>
+          h(LewFlex, { x: 'start', style: 'width: 100%' }, [
+            h('span', '用户列表'),
+            h(
+              LewTag,
+              { type: 'light', color: 'primary', size: 'small' },
+              () => 'New'
+            )
+          ]),
         children: [
           { value: '2-1-1', label: '普通用户' },
-          { value: '2-1-2', label: '管理员', tagText: '2', tagType: 'light' },
-          { value: '2-1-3', label: '黑名单', tagText: '3', tagType: 'light' }
+          { value: '2-1-2', label: '管理员' },
+          { value: '2-1-3', label: '黑名单' }
         ]
       },
       {
@@ -92,16 +103,14 @@ const options = [
     value: '3',
     label: '评论管理',
     renderIcon: () => h(MessageSquare, { size: 14 }),
-    tagText: '12',
-    tagType: 'light',
     children: [
       {
         value: '3-1',
         label: '评论列表',
         children: [
-          { value: '3-1-1', label: '待审核', tagText: '7', tagType: 'light' },
+          { value: '3-1-1', label: '待审核' },
           { value: '3-1-2', label: '已通过' },
-          { value: '3-1-3', label: '已拒绝', tagText: '5', tagType: 'light' }
+          { value: '3-1-3', label: '已拒绝' }
         ]
       },
       {

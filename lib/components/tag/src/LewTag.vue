@@ -13,7 +13,7 @@ const SIZE_CONFIG = {
   small: {
     height: '20px',
     minWidth: '20px',
-    fontSize: '11px',
+    fontSize: '13px',
     borderRadius: '5px',
     padding: '0px 2px',
     closeIconSize: 12,
@@ -24,7 +24,7 @@ const SIZE_CONFIG = {
   medium: {
     height: '24px',
     minWidth: '24px',
-    fontSize: '13px',
+    fontSize: '14px',
     borderRadius: '6px',
     padding: '0px 2px',
     closeIconSize: 14,
@@ -142,7 +142,6 @@ const tagStyle: any = computed(() => {
     box-sizing: border-box;
     max-width: 250px;
     padding: 0 3px;
-
     // Text
     font-weight: normal;
     white-space: nowrap;

@@ -51,8 +51,9 @@ const select = (item: MenuOptions) => {
             :color="cItem.tagColor"
             round
             size="small"
-            type="light"
-            >{{ cItem.tagText }}
+            :type="cItem.tagType || 'light'"
+          >
+            {{ cItem.tagText }}
           </lew-tag>
         </div>
       </template>

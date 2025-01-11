@@ -5,7 +5,6 @@ import { LewFlex, LewButton, LewTextTrim } from 'lew-ui'
 import { useDOMCreate } from 'lew-ui/hooks'
 import { modalProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { isString } from 'lodash-es'
 
 const { Escape } = useMagicKeys()
 useDOMCreate('lew-modal')
@@ -29,10 +28,10 @@ onClickOutside(modalBodyRef, (e) => {
 })
 
 const getModalStyle = computed(() => {
-  const { width, height } = props
+  const { width, top } = props
   return {
     width: any2px(width),
-    height: any2px(height)
+    top: any2px(top)
   }
 })
 
@@ -99,9 +98,9 @@ if (props.closeByEsc) {
                 @click="close"
               />
             </lew-flex>
-
-            <slot></slot>
-
+            <div class="lew-modal-body-main lew-scrollbar">
+              <slot></slot>
+            </div>
             <div v-if="$slots.footer" class="lew-modal-footer-slot">
               <slot name="footer"></slot>
             </div>
@@ -156,14 +155,18 @@ if (props.closeByEsc) {
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
 
   .lew-modal-body {
+    position: relative;
     border-radius: var(--lew-border-radius-large);
     background-color: var(--lew-modal-body-bgcolor);
     border: var(--lew-modal-border);
     overflow: hidden;
-
+    .lew-modal-body-main {
+      max-height: 80vh;
+      overflow-y: auto;
+    }
     .lew-modal-header {
       position: relative;
       height: 50px;
@@ -215,6 +218,6 @@ if (props.closeByEsc) {
 .lew-modal-leave-to,
 .lew-modal-enter-from {
   opacity: 0;
-  transform: scale(0.7);
+  transform: translateY(-30px);
 }
 </style>

@@ -34,17 +34,11 @@ export const modalProps = {
       return true
     }
   },
-  height: {
+  top: {
     type: [String, Number],
-    default: 'auto',
-    description: '模态框高度，可以是数字（单位：像素）或字符串（如 "50%"）',
-    validator: (value: string | number) => {
-      if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewModal] 高度必须大于0')
-        return false
-      }
-      return true
-    }
+    default: 250,
+    description:
+      '模态框距离顶部的距离，可以是数字（单位：像素）或字符串（如 "50%"）'
   },
   hideFooter: {
     type: Boolean,
