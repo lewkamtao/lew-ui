@@ -93,7 +93,6 @@ const goToGithub = () => {
   box-sizing: border-box;
   user-select: none;
   white-space: nowrap;
-
   .logo {
     display: flex;
     align-items: center;
