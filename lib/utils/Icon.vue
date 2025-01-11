@@ -32,7 +32,8 @@ import {
   X,
   UserRound,
   Eye,
-  EyeOff
+  EyeOff,
+  Star
 } from 'lucide-vue-next'
 import { getColorType, iconColorType } from './index'
 
@@ -64,6 +65,10 @@ const props = defineProps({
   speed: {
     type: Number,
     default: 1
+  },
+  fill: {
+    type: String,
+    default: 'transparent'
   }
 })
 
@@ -105,7 +110,8 @@ const iconMap: any = {
   wrong_type: CircleAlert,
   user: UserRound,
   eye: Eye,
-  eye_off: EyeOff
+  eye_off: EyeOff,
+  star: Star
 }
 </script>
 
@@ -123,6 +129,7 @@ const iconMap: any = {
     }"
     :strokeWidth
     :size
+    :fill
     :is="iconMap[props.type]"
   ></component>
 </template>

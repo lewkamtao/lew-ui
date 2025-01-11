@@ -39,6 +39,7 @@ export * from './slider'
 export * from './slider-range'
 export * from './color-picker'
 export * from './upload'
+export * from './rate'
 
 // 数据展示
 export * from './table'

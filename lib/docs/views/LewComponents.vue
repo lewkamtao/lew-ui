@@ -67,7 +67,7 @@ const options: MenuOptions[] = [
         value: '/Title'
       },
       {
-        label: 'Text Trim',
+        label: 'TextTrim',
         value: '/TextTrim'
       },
       {
@@ -90,7 +90,7 @@ const options: MenuOptions[] = [
     value: '导航',
     children: [
       {
-        label: 'Back Top',
+        label: 'BackTop',
         value: '/BackTop'
       },
       {
@@ -102,7 +102,7 @@ const options: MenuOptions[] = [
         value: '/Menu'
       },
       {
-        label: 'Menu Tree',
+        label: 'MenuTree',
         value: '/MenuTree',
         tagText: 'New',
         tagColor: 'green'
@@ -116,7 +116,7 @@ const options: MenuOptions[] = [
         value: '/Breadcrumb'
       },
       {
-        label: 'Context Menu',
+        label: 'ContextMenu',
         value: '/ContextMenu',
         tagText: 'New',
         tagColor: 'green'
@@ -136,7 +136,7 @@ const options: MenuOptions[] = [
         value: '/Input'
       },
       {
-        label: 'Input Number',
+        label: 'InputNumber',
         value: '/InputNumber'
       },
       {
@@ -144,7 +144,7 @@ const options: MenuOptions[] = [
         value: '/Textarea'
       },
       {
-        label: 'Input Tag',
+        label: 'InputTag',
         value: '/InputTag'
       },
       {
@@ -164,15 +164,15 @@ const options: MenuOptions[] = [
         value: '/Select'
       },
       {
-        label: 'Select Multiple',
+        label: 'SelectMultiple',
         value: '/SelectMultiple'
       },
       {
-        label: 'Date Picker',
+        label: 'DatePicker',
         value: '/DatePicker'
       },
       {
-        label: 'Date Range Picker',
+        label: 'DateRangePicker',
         value: '/DateRangePicker'
       },
       {
@@ -180,11 +180,11 @@ const options: MenuOptions[] = [
         value: '/Cascader'
       },
       {
-        label: 'Tree Select',
+        label: 'TreeSelect',
         value: '/TreeSelect'
       },
       {
-        label: 'Input Table',
+        label: 'InputTable',
         value: '/InputTable',
         tagText: 'Dev',
         tagColor: 'blue'
@@ -193,17 +193,20 @@ const options: MenuOptions[] = [
         label: 'Switch',
         value: '/Switch'
       },
-
+      {
+        label: 'Rate',
+        value: '/Rate'
+      },
       {
         label: 'Slider',
         value: '/Slider'
       },
       {
-        label: 'Slider Range',
+        label: 'SliderRange',
         value: '/SliderRange'
       },
       {
-        label: 'Color Picker',
+        label: 'ColorPicker',
         value: '/ColorPicker'
       },
       {
@@ -225,8 +228,8 @@ const options: MenuOptions[] = [
         value: '/Pagination'
       },
       {
-        label: 'Magic Number',
-        value: '/MagicNumber',
+        label: 'MagicNumber',
+        value: '/MagicNumber'
       },
       {
         label: 'Tree',

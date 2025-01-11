@@ -4,8 +4,6 @@ import { any2px } from 'lew-ui/utils'
 import { avatarProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
 const props = defineProps(avatarProps)
-const errorSrc =
-  'https://cdn.jsdelivr.net/gh/lewkamtao/LewCloud@master/lew/860c86003d44981cd2c120d3440774e_6hkjkl_.jpeg'
 
 const avatarBoxStyleObject = computed(() => {
   const { shape } = props
@@ -114,7 +112,7 @@ const STATUS_COLOR_CONFIG = {
 }
 
 const dotStyleObject: any = computed(() => {
-  const { status, statusPlacement } = props
+  const { status, statusPlacement, size } = props
   const STATUS_PLACEMENT_CONFIG =
     props.shape === 'circle'
       ? STATUS_PLACEMENT_CONFIG_CIRCLE
@@ -125,10 +123,10 @@ const dotStyleObject: any = computed(() => {
     backgroundColor: status ? STATUS_COLOR_CONFIG[status] : '',
     position: 'absolute',
     content: '',
-    width: '0.6rem',
-    height: '0.6rem',
+    width: any2px(Number(size) * 0.2),
+    height: any2px(Number(size) * 0.2),
     borderRadius: '50%',
-    zIndex: 9,
+    zIndex: 19,
     border: 'var(--lew-form-border-width) var(--lew-color-white) solid'
   }
 })

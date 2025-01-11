@@ -45,7 +45,7 @@
     "dayjs": "^1.11.7",
     "highlight.js": "^11.9.0",
     "lodash-es": "^4.17.21",
-    "lucide-vue-next": "^0.441.0",
+    "lucide-vue-next": "^0.471.0",
     "tippy.js": "^6.3.7",
     "vue-router": "^4.0.13",
     "vuedraggable": "^4.1.0",
