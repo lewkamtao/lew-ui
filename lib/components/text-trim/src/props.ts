@@ -65,7 +65,7 @@ export const textTrimProps = {
   x: {
     type: String as PropType<TextTrimAlignment>,
     default: 'start',
-    description: '提示框在水平方向的对齐方式',
+    description: '文本在水平方向的对齐方式',
     validator(value: TextTrimAlignment): boolean {
       const validAlignments: TextTrimAlignment[] = ['start', 'center', 'end']
       if (!validAlignments.includes(value)) {
