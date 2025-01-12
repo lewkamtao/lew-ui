@@ -193,10 +193,7 @@ const options: MenuOptions[] = [
         label: 'Switch',
         value: '/Switch'
       },
-      {
-        label: 'Rate',
-        value: '/Rate'
-      },
+
       {
         label: 'Slider',
         value: '/Slider'
@@ -204,6 +201,12 @@ const options: MenuOptions[] = [
       {
         label: 'SliderRange',
         value: '/SliderRange'
+      },
+      {
+        label: 'Rate',
+        value: '/Rate',
+        tagText: 'New',
+        tagColor: 'green'
       },
       {
         label: 'ColorPicker',

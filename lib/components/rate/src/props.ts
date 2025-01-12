@@ -24,33 +24,22 @@ export const rateProps = {
       }
       return true
     }
-  } /**
-   * 评分的总数
-   */,
+  },
   count: {
     type: Number,
     default: 5,
     description: '评分的总数'
   },
-  /**
-   * 是否允许半选
-   */
-  allowHalf: {
-    type: Boolean,
-    default: false,
-    description: '是否允许半选'
+  tips: {
+    type: [Array, String] as PropType<string[] | string>,
+    default: () => [],
+    description: '评分的提示文字,使用逗号分隔每个等级的提示文字,或者使用数组'
   },
-  /**
-   * 是否只读
-   */
   readonly: {
     type: Boolean,
     default: false,
     description: '是否只读'
   },
-  /**
-   * 是否禁用
-   */
   disabled: {
     type: Boolean,
     default: false,

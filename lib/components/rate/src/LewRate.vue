@@ -2,7 +2,12 @@
 import { rateProps } from './props'
 import { any2px, object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-
+import { LewTooltip } from 'lew-ui'
+// 获取app
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
+}
 const props = defineProps(rateProps)
 const modelValue: Ref<number | undefined> = defineModel()
 const tobeValue = ref(modelValue.value)
@@ -10,15 +15,7 @@ const iconRef: any = ref<Element[]>([])
 
 const handleMouseMove = (e: MouseEvent, index: number) => {
   if (props.disabled || props.readonly) return
-
-  if (props.allowHalf) {
-    const target = e.currentTarget as HTMLElement
-    const rect = target.getBoundingClientRect()
-    const half = e.clientX - rect.left < rect.width / 2
-    tobeValue.value = half ? index - 0.5 : index
-  } else {
-    tobeValue.value = index
-  }
+  tobeValue.value = index
 }
 
 const handleMouseLeave = () => {
@@ -29,17 +26,10 @@ const handleMouseLeave = () => {
 const handleClick = async (index: number) => {
   if (props.disabled || props.readonly) return
 
-  let newValue: number
-  if (props.allowHalf) {
-    newValue = modelValue.value === index ? index - 0.5 : index
-  } else {
-    newValue = index
-  }
-
-  modelValue.value = newValue
+  modelValue.value = index
 
   // 创建动画效果
-  const selectedIcons = iconRef.value.slice(0, newValue)
+  const selectedIcons = iconRef.value.slice(0, index)
   selectedIcons.forEach((icon: any, index: number) => {
     setTimeout(() => {
       // 放大动画
@@ -52,21 +42,20 @@ const handleClick = async (index: number) => {
   })
 }
 
-const getRateClass = () => {
-  const { size, disabled, readonly } = props
+const getRateClass = computed(() => {
+  const { disabled, readonly } = props
   return object2class('lew-rate', {
-    size,
     disabled,
     readonly
   })
-}
+})
 
 const getRateIconStyle = computed(() => {
   const { size } = props
   const sizeMap = {
-    small: 22,
-    medium: 26,
-    large: 30
+    small: 24,
+    medium: 30,
+    large: 34
   }
   return {
     width: any2px(sizeMap[size]),
@@ -90,11 +79,28 @@ watch(
     tobeValue.value = v
   }
 )
+
+const getCount = computed(() => {
+  // 最大十个 最小三个
+  const count = Number(props.count)
+  if (count > 10) return 10
+  if (count < 3) return 3
+  return count
+})
+
+const getTips = computed(() => (index: number) => {
+  const tips = props.tips
+  if (Array.isArray(tips)) {
+    return tips[index - 1]
+  } else if (typeof tips === 'string') {
+    return tips.split(',')[index - 1]
+  }
+})
 </script>
 <template>
-  <lew-flex :gap="10" x="start" class="lew-rate" :class="getRateClass">
+  <lew-flex :gap="5" x="start" class="lew-rate" :class="getRateClass">
     <div
-      v-for="i in count"
+      v-for="i in getCount"
       :key="i"
       :ref="(el) => (iconRef[i - 1] = el)"
       @mousemove="handleMouseMove($event, i)"
@@ -104,6 +110,10 @@ watch(
       class="lew-rate-icon"
     >
       <icon
+        v-tooltip="{
+          content: getTips(i),
+          trigger: 'hover'
+        }"
         class="lew-rate-star"
         :style="{
           fill:
@@ -129,7 +139,25 @@ watch(
     transition: all var(--lew-form-transition-ease);
   }
 }
-.lew-rate-icon:hover {
+.lew-rate-star:hover {
   transform: scale(1.1);
+}
+
+.lew-rate-disabled {
+  opacity: var(--lew-disabled-opacity);
+  .lew-rate-icon {
+    cursor: default;
+  }
+}
+.lew-rate-readonly {
+  .lew-rate-icon {
+    cursor: default;
+  }
+}
+.lew-rate-readonly,
+.lew-rate-disabled {
+  .lew-rate-star:hover {
+    transform: scale(1);
+  }
 }
 </style>

@@ -8,7 +8,8 @@ import {
   LewSwitch,
   LewTextarea,
   LewInputNumber,
-  LewInputTable
+  LewInputTable,
+  LewInputTag
 } from 'lew-ui'
 import SetOptionModal from './SetOptionModal.vue'
 import Icon from 'lew-ui/utils/Icon.vue'
@@ -52,7 +53,8 @@ const asMap: Record<string, any> = {
   switch: LewSwitch,
   'input-number': LewInputNumber,
   'set-option-modal': SetOptionModal,
-  'input-table': LewInputTable
+  'input-table': LewInputTable,
+  'input-tag': LewInputTag
 }
 </script>
 

@@ -198,6 +198,15 @@ const options = ref([
     }
   },
   {
+    field: 'rate',
+    label: '评分',
+    as: 'rate',
+    rule: Yup.number().required('此项必填'),
+    props: {
+      max: 10
+    }
+  },
+  {
     field: 'tabs',
     label: '选项卡',
     as: 'tabs',

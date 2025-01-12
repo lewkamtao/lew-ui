@@ -2,7 +2,6 @@
 import { useDebounceFn } from '@vueuse/core'
 import {
   LewPopover,
-  LewTooltip,
   LewCheckbox,
   LewFlex,
   LewTag,
@@ -10,18 +9,13 @@ import {
   LewEmpty
 } from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
-import type { SelectMultipleOptions, SelectMultipleOptionsGroup } from './props'
+import type { SelectMultipleOptions } from './props'
 import { selectMultipleProps } from './props'
 import { UseVirtualList } from '@vueuse/components'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { isFunction } from 'lodash-es'
 import { flattenOptions, defaultSearchMethod } from '../../select/src/util'
 
-// 获取app
-const app = getCurrentInstance()?.appContext.app
-if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
-}
 const props = defineProps(selectMultipleProps)
 const emit = defineEmits(['change', 'select', 'clear', 'delete', 'blur'])
 const selectValue: any = defineModel()

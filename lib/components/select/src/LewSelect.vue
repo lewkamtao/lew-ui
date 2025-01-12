@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
-import { LewPopover, LewFlex, LewTooltip, LewTextTrim, LewEmpty } from 'lew-ui'
+import { LewPopover, LewFlex, LewTextTrim, LewEmpty } from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
 import { UseVirtualList } from '@vueuse/components'
 import type { SelectOptions } from './props'
@@ -9,11 +9,6 @@ import { cloneDeep, isFunction } from 'lodash-es'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { flattenOptions, defaultSearchMethod } from './util'
 
-// 获取app
-const app = getCurrentInstance()?.appContext.app
-if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
-}
 const props = defineProps(selectProps)
 const emit = defineEmits(['change', 'blur', 'clear'])
 const selectValue: Ref<string | number | undefined> = defineModel()

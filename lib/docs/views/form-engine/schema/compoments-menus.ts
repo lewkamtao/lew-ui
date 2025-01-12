@@ -16,6 +16,7 @@ import inputTag from './components/input-tag'
 import slider from './components/slider'
 import sliderRange from './components/slider-range'
 import colorPicker from './components/color-picker'
+import rate from './components/rate'
 
 export const componentsMenusSchema = [
   {
@@ -51,6 +52,7 @@ export const componentsMenusSchema = [
       width: 100
     }
   },
+
   {
     label: '单选框',
     fieldType: '',
@@ -94,6 +96,7 @@ export const componentsMenusSchema = [
       ]
     }
   },
+
   {
     label: '下拉单选',
     fieldType: '',
@@ -207,7 +210,17 @@ export const componentsMenusSchema = [
         { label: '选项二', value: '2' },
         { label: '选项三', value: '3' },
         { label: '选项四', value: '4' }
-      ]
+      ],
+      type: 'block'
+    }
+  },
+  {
+    label: '评分',
+    fieldType: '',
+    as: 'rate',
+    schema: rate,
+    props: {
+      count: 5
     }
   },
   {

@@ -33,7 +33,7 @@ export default [
       options: [
         {
           label: '块状',
-          value: 'block '
+          value: 'block'
         },
         {
           label: '线形',
