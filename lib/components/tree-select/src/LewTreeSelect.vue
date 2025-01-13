@@ -192,7 +192,6 @@ defineExpose({ show, hide })
     :disabled="disabled || readonly"
     placement="bottom-start"
     style="width: 100%"
-    :offset="[-1, 10]"
     :loading="state.searchLoading"
     @show="showHandle"
     @hide="hideHandle"

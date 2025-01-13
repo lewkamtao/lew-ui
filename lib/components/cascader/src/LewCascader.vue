@@ -372,7 +372,6 @@ defineExpose({ show, hide })
     :trigger="trigger"
     :disabled="disabled || readonly"
     placement="bottom-start"
-    :offset="[-1, 10]"
     :loading="state.loading"
     @show="showHandle"
     @hide="hideHandle"

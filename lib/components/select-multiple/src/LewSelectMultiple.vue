@@ -239,7 +239,6 @@ const getResultNum = computed(() => {
     :disabled="disabled || readonly"
     placement="bottom-start"
     style="width: 100%"
-    :offset="[-1, 10]"
     :loading="state.loading"
     @show="showHandle"
     @hide="hideHandle"
@@ -295,7 +294,6 @@ const getResultNum = computed(() => {
               ref="lewPopoverValueRef"
               trigger="hover"
               popoverBodyClassName="lew-select-multiple-popover-tag"
-              :offset="[-1, 10]"
               placement="top-start"
               style="width: 100%"
             >

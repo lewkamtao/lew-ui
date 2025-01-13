@@ -384,7 +384,7 @@ onUnmounted(() => {
       bottom: 1px;
       left: 0px;
       z-index: 9;
-      height: 2px;
+      height: 2.5px;
       border-radius: 0px;
       background: var(--lew-color-primary);
       transform: translateX(3px);
