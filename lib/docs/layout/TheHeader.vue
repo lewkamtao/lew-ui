@@ -37,14 +37,10 @@ const goToGithub = () => {
   window.open('https://github.com/lewkamtao/Lew-UI', '_blank')
 }
 
-const changeLanguage = () => {
-  if (locale.getLocale() === 'en') {
-    locale.use('zh')
-    docsLocale.use('zh')
-  } else {
-    locale.use('en')
-    docsLocale.use('en')
-  }
+const changeLanguage = (e: any) => {
+  const { value } = e
+  locale.use(value)
+  docsLocale.use(value)
 }
 </script>
 
@@ -64,20 +60,22 @@ const changeLanguage = () => {
       </lew-tag>
     </lew-flex>
     <lew-flex gap="15" class="menu">
-      <div class="menu-item" @click="goToPage('/')">首页</div>
-      <div class="menu-item" @click="goToPage('/Install')">指南</div>
-      <div class="menu-item" @click="goToPage('/Image')">组件</div>
+      <div class="menu-item" @click="goToPage('/')">
+        {{ docsLocale.t('home.home') }}
+      </div>
+      <div class="menu-item" @click="goToPage('/Install')">
+        {{ docsLocale.t('home.install') }}
+      </div>
+      <div class="menu-item" @click="goToPage('/Image')">
+        {{ docsLocale.t('home.components') }}
+      </div>
       <div class="menu-item" @click="goToPage('/form-engine', true)">
         <lew-flex gap="5">
-          表单引擎<lew-tag size="small" type="ghost" round> Dev </lew-tag>
+          {{ docsLocale.t('home.formEngine') }}
         </lew-flex>
       </div>
       <div class="menu-item" @click="goToPage('/desc-engine', true)">
-        <lew-flex gap="5">
-          描述引擎<lew-tag size="small" color="green" type="ghost" round>
-            New
-          </lew-tag>
-        </lew-flex>
+        <lew-flex gap="5"> {{ docsLocale.t('home.descEngine') }} </lew-flex>
       </div>
     </lew-flex>
     <lew-flex gap="15" x="end" class="menu">
@@ -85,9 +83,51 @@ const changeLanguage = () => {
         <Sun class="icon-mode-sunny" :size="18" />
         <Moon class="icon-mode-moon" :size="18" />
       </div>
-      <div class="menu-item menu-item-icon" @click="changeLanguage">
-        <Languages :size="18" />
-      </div>
+      <lew-dropdown
+        :options="[
+          {
+            label: '简体中文',
+            value: 'zh'
+          },
+          {
+            label: 'English',
+            value: 'en'
+          },
+          {
+            label: '日本語',
+            value: 'ja'
+          },
+          {
+            label: '한국어',
+            value: 'ko'
+          },
+          {
+            label: 'Español',
+            value: 'es'
+          },
+          {
+            label: 'Français',
+            value: 'fr'
+          },
+          {
+            label: 'Deutsch',
+            value: 'de'
+          },
+          {
+            label: 'Português',
+            value: 'pt'
+          },
+          {
+            label: 'Italiano',
+            value: 'it'
+          }
+        ]"
+        @change="changeLanguage"
+      >
+        <div class="menu-item menu-item-icon">
+          <Languages :size="18" />
+        </div>
+      </lew-dropdown>
       <div class="menu-item menu-item-icon" @click="goToGithub">
         <Github :size="18" />
       </div>

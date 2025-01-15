@@ -4,7 +4,7 @@ import { object2class, any2px } from 'lew-ui/utils'
 import { LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui'
 import { inputProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
-import {locale } from 'lew-ui'
+import { locale } from 'lew-ui'
 const { enter } = useMagicKeys()
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -219,7 +219,7 @@ defineExpose({ toFocus })
         :style="getInputStyle"
         autocomplete="new-password"
         :disabled="disabled"
-        :placeholder="placeholder ? placeholder : $t('input.placeholder')"
+        :placeholder="placeholder ? placeholder : locale.t('input.placeholder')"
         :type="getType"
         :readonly="readonly"
         :maxlength="maxLength"

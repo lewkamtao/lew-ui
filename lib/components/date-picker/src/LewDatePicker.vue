@@ -5,6 +5,7 @@ import { datePickerProps } from './props'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash-es'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { locale } from 'lew-ui'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -110,7 +111,7 @@ defineExpose({ show, hide })
             }"
           >
             <div v-show="!modelValue" class="lew-date-picker-placeholder">
-              {{ placeholder ? placeholder : $t('datePicker.placeholder') }}
+              {{ placeholder ? placeholder : locale.t('datePicker.placeholder') }}
             </div>
             <div v-show="modelValue" class="lew-date-picker-dateValue">
               {{ modelValue }}

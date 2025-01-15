@@ -4,6 +4,7 @@ import { dateRangePickerProps } from './props'
 import { object2class } from 'lew-ui/utils'
 import type { LewSize } from 'lew-ui'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { locale } from 'lew-ui'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -125,7 +126,7 @@ defineExpose({ show, hide })
               {{
                 placeholderStart
                   ? placeholderStart
-                  : $t('datePicker.placeholderStart')
+                  : locale.t('datePicker.placeholderStart')
               }}
             </div>
             <div
@@ -144,7 +145,7 @@ defineExpose({ show, hide })
               {{
                 placeholderEnd
                   ? placeholderEnd
-                  : $t('datePicker.placeholderEnd')
+                  : locale.t('datePicker.placeholderEnd')
               }}
             </div>
             <div

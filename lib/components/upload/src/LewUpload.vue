@@ -335,8 +335,8 @@ const getTips = computed(() => {
         >
           {{
             dropActive
-              ? $t('upload.dropActive')
-              : `${$t('upload.click')}${isSupported && isFocus ? $t('upload.paste') : ''}${$t(
+              ? locale.t('upload.dropActive')
+              : `${locale.t('upload.click')}${isSupported && isFocus ? locale.t('upload.paste') : ''}${locale.t(
                   'upload.drag'
                 )}`
           }}

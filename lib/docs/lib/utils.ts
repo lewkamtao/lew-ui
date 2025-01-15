@@ -18,6 +18,7 @@ export const convertProps = (json: any) => {
       }
       if (!json[key].hidden) {
         const prop = {
+          ...json[key],
           name: key,
           description: json[key].description,
           type: json[key].typeGhost ? json[key].typeGhost : type,

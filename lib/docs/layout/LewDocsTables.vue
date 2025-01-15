@@ -26,7 +26,11 @@ const columnsMap: any = {
     {
       title: '描述',
       width: 250,
-      field: 'description'
+      field: 'description',
+      customRender: ({ row }: any) => {
+        const { name } = row
+        return docsLocale.t(`components.${getComponentName()}.model.${name}`)
+      }
     },
     {
       title: '类型',
@@ -35,7 +39,7 @@ const columnsMap: any = {
     },
     {
       title: '默认值',
-      width: 80,
+      width: 120,
       field: 'default'
     }
   ],
@@ -51,7 +55,7 @@ const columnsMap: any = {
       field: 'description',
       customRender: ({ row }: any) => {
         const { name } = row
-        return docsLocale.t(`${getComponentName()}.props.${name}`)
+        return docsLocale.t(`components.${getComponentName()}.props.${name}`)
       }
     },
     {
@@ -64,9 +68,9 @@ const columnsMap: any = {
       width: 120,
       field: 'default',
       customRender: ({ text, row }: any) => {
-        const { name } = row
-        return text === '"i18n"'
-          ? docsLocale.t(`${getComponentName()}.default.${name}`)
+        const { name, defaultLocale } = row
+        return defaultLocale
+          ? docsLocale.t(`components.${getComponentName()}.default.${name}`)
           : text
       }
     }
@@ -133,6 +137,13 @@ const sortValue = computed(() => {
     })
     .sort((a: any, b: any) => a.orderNum - b.orderNum)
 })
+const copyObjectAsFile = (item: any) => {
+  const result = item.data.reduce((acc: Record<string, string>, cur: any) => {
+    acc[cur.name] = cur.description
+    return acc
+  }, {})
+  console.log(result)
+}
 </script>
 
 <template>
@@ -143,9 +154,14 @@ const sortValue = computed(() => {
       direction="y"
       x="start"
     >
-      <lew-title :id="item.title" :size="18" class="demo-docs-title">{{
-        item.title
-      }}</lew-title>
+      <lew-title
+        @click="copyObjectAsFile(item)"
+        :id="item.title"
+        :size="18"
+        class="demo-docs-title"
+      >
+        {{ item.title }}
+      </lew-title>
       <lew-table
         :data-source="item.data"
         :columns="columnsMap[item.columnsKey]"

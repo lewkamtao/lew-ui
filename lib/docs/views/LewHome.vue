@@ -409,12 +409,7 @@ onUnmounted(() => {
   <div class="home-wrapper">
     <LewBg />
     <div :style="{ left: logoLeft }" class="startbox">
-      <div class="slogan">
-        少即是
-        <div class="dm">
-          <div class="text"><span>多</span> <span>美</span></div>
-        </div>
-      </div>
+      <div class="slogan">少即是多</div>
       <p>一个好看易用的 Vue3 组件库</p>
       <lew-flex x="start">
         <lew-button
@@ -686,23 +681,6 @@ onUnmounted(() => {
       display: flex;
       font-size: 50px;
       font-weight: 900;
-      cursor: pointer;
-
-      .dm {
-        width: 50px;
-        overflow: hidden;
-
-        .text {
-          display: flex;
-          transition: all 0.5s ease;
-        }
-      }
-    }
-
-    .slogan:hover {
-      .text {
-        transform: translateX(-100%);
-      }
     }
   }
   .home-start-button {
