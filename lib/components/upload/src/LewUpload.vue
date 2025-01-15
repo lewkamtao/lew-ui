@@ -3,11 +3,12 @@ import { uploadProps } from './props'
 import type { UploadFileItem, UploadStatus } from './props'
 import LewUploadByList from './LewUploadByList.vue'
 import LewUploadByCard from './LewUploadByCard.vue'
-import { LewFlex, LewAlert, LewTooltip, LewDialog } from 'lew-ui'
+import { LewFlex, LewTooltip, LewDialog } from 'lew-ui'
 import { any2px, getUniqueId, formatBytes, object2class } from 'lew-ui/utils'
 import { useClipboardItems } from '@vueuse/core'
 import { cloneDeep, isFunction } from 'lodash-es'
 import Icon from 'lew-ui/utils/Icon.vue'
+import {locale } from 'lew-ui'
 
 const props = defineProps(uploadProps)
 
@@ -263,13 +264,17 @@ const getTips = computed(() => {
   } else {
     let tips = []
     if (accept) {
-      tips.push(`支持 ${accept}`)
+      tips.push(locale.t('upload.accept', { accept }))
     }
     if (limit) {
-      tips.push(`最多上传 ${limit} 个文件`)
+      tips.push(locale.t('upload.limit', { limit }))
     }
     if (maxFileSize) {
-      tips.push(`文件大小限制 ${formatBytes(maxFileSize)}`)
+      tips.push(
+       locale.t('upload.maxFileSize', {
+          maxFileSize: formatBytes(maxFileSize)
+        })
+      )
     }
     return tips.join('，') + '。'
   }
@@ -330,8 +335,10 @@ const getTips = computed(() => {
         >
           {{
             dropActive
-              ? '松开鼠标上传文件'
-              : `点击、${isSupported && isFocus ? 'Ctrl + V 粘贴、' : ''}拖拽文件到此处`
+              ? $t('upload.dropActive')
+              : `${$t('upload.click')}${isSupported && isFocus ? $t('upload.paste') : ''}${$t(
+                  'upload.drag'
+                )}`
           }}
         </div>
         <div

@@ -2,7 +2,7 @@ import type { ExtractPropTypes, PropType } from 'vue'
 import type { ContextMenus } from 'lew-ui'
 import type { LewSize } from 'lew-ui'
 import { validSizes } from 'lew-ui/constants'
-
+import { locale } from 'lew-ui'
 export type InputType = 'text' | 'password'
 export type InputAlign = 'left' | 'center' | 'right'
 export type InputPrefixesType = 'icon' | 'select' | 'text'
@@ -55,7 +55,7 @@ export const inputProps = {
   },
   placeholder: {
     type: String,
-    default: '请输入',
+    default: 'i18n',
     description: '输入框占位文本'
   },
   disabled: {

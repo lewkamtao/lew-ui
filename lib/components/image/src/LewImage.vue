@@ -3,7 +3,7 @@ import { useImage } from '@vueuse/core'
 import { any2px } from 'lew-ui/utils'
 import { LewFlex, LewTooltip } from 'lew-ui'
 import { imageProps } from './props'
-
+import {locale } from 'lew-ui'
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -52,12 +52,12 @@ watch(
       <img
         v-else
         v-tooltip="{
-          content: '图片加载失败',
+          content:locale.t('image.fail'),
           trigger: 'mouseenter'
         }"
         class="lew-image-fail-icon"
         src="./image_fail_icon.svg"
-        alt="图片加载失败"
+        :alt="locale.t('image.fail')"
       />
     </template>
     <template v-else>

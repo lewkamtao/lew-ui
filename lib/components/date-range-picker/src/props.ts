@@ -55,12 +55,12 @@ export const dateRangePickerProps = {
   },
   placeholderStart: {
     type: String,
-    default: '开始日期',
+    default: '',
     description: '开始日期占位文本'
   },
   placeholderEnd: {
     type: String,
-    default: '结束日期',
+    default: '',
     description: '结束日期占位文本'
   },
   clearable: {

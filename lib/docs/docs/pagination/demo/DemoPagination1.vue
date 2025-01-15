@@ -13,20 +13,6 @@ const total = ref(100)
       v-model:current-page="pageNum"
       :pageSize="pageSize"
       size="small"
-      :pageSizeOptions="[
-        {
-          label: '10 / 页',
-          value: 10
-        },
-        {
-          label: '20 / 页',
-          value: 20
-        },
-        {
-          label: '30 / 页',
-          value: 30
-        }
-      ]"
       :total="total"
       @change="change"
     >
@@ -37,20 +23,6 @@ const total = ref(100)
     <lew-pagination
       v-model:current-page="pageNum"
       :pageSize="pageSize"
-      :pageSizeOptions="[
-        {
-          label: '10 / 页',
-          value: 10
-        },
-        {
-          label: '20 / 页',
-          value: 20
-        },
-        {
-          label: '30 / 页',
-          value: 30
-        }
-      ]"
       :total="total"
       round
       @change="change"
@@ -63,20 +35,6 @@ const total = ref(100)
       v-model:current-page="pageNum"
       :pageSize="pageSize"
       size="large"
-      :pageSizeOptions="[
-        {
-          label: '10 / 页',
-          value: 10
-        },
-        {
-          label: '20 / 页',
-          value: 20
-        },
-        {
-          label: '30 / 页',
-          value: 30
-        }
-      ]"
       :total="total"
       round
       @change="change"

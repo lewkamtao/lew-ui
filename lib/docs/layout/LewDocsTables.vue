@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import docsLocale from '@/locals'
 const props = defineProps({
   options: {
     type: Object,
@@ -7,6 +8,13 @@ const props = defineProps({
     }
   }
 })
+const getComponentName = () => {
+  const { path } = useRoute()
+  return path
+    .replace('/', '')
+    .replace(/-(\w)/g, (_, letter) => letter.toUpperCase())
+    .replace(/^[A-Z]/, (letter) => letter.toLowerCase())
+}
 
 const columnsMap: any = {
   model: [
@@ -40,7 +48,11 @@ const columnsMap: any = {
     {
       title: '描述',
       width: 250,
-      field: 'description'
+      field: 'description',
+      customRender: ({ row }: any) => {
+        const { name } = row
+        return docsLocale.t(`${getComponentName()}.props.${name}`)
+      }
     },
     {
       title: '类型',
@@ -49,8 +61,14 @@ const columnsMap: any = {
     },
     {
       title: '默认值',
-      width: 80,
-      field: 'default'
+      width: 120,
+      field: 'default',
+      customRender: ({ text, row }: any) => {
+        const { name } = row
+        return text === '"i18n"'
+          ? docsLocale.t(`${getComponentName()}.default.${name}`)
+          : text
+      }
     }
   ],
   slots: [

@@ -35,7 +35,6 @@ export const datePickerProps = {
   },
   placeholder: {
     type: String,
-    default: '请选择日期',
     description: '输入框占位文本'
   },
   clearable: {

@@ -122,7 +122,11 @@ defineExpose({ show, hide })
               v-if="!modelValue || !modelValue[startKey]"
               class="lew-date-range-picker-placeholder"
             >
-              {{ placeholderStart }}
+              {{
+                placeholderStart
+                  ? placeholderStart
+                  : $t('datePicker.placeholderStart')
+              }}
             </div>
             <div
               v-else
@@ -137,7 +141,11 @@ defineExpose({ show, hide })
               v-if="!modelValue || !modelValue[endKey]"
               class="lew-date-range-picker-placeholder"
             >
-              {{ placeholderEnd }}
+              {{
+                placeholderEnd
+                  ? placeholderEnd
+                  : $t('datePicker.placeholderEnd')
+              }}
             </div>
             <div
               v-else

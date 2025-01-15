@@ -4,40 +4,26 @@ import { paginationProps } from './props'
 import type { PaginationOptions } from './props'
 import { object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-
+import {locale } from 'lew-ui'
 const props = defineProps(paginationProps)
 const emit = defineEmits(['change', 'update:currentPage', 'update:pageSize'])
 
 const total: Ref<number> = defineModel('total', { default: 0 })
 const currentPage: Ref<number> = defineModel('currentPage', { default: 1 })
 const pageSize: Ref<number> = defineModel('pageSize', { default: 10 })
-const pageSizeOptions: Ref<PaginationOptions[]> = defineModel(
-  'pageSizeOptions',
-  {
-    default: [
-      {
-        label: '10 / 页',
-        value: 10
-      },
-      {
-        label: '20 / 页',
-        value: 20
-      },
-      {
-        label: '30 / 页',
-        value: 30
-      },
-      {
-        label: '50 / 页',
-        value: 50
-      },
-      {
-        label: '100 / 页',
-        value: 100
-      }
-    ]
+
+const getPageSizeOptions = computed(() => {
+  if (Array.isArray(props.pageSizeOptions)) {
+    if (typeof props.pageSizeOptions[0] === 'string' || typeof props.pageSizeOptions[0] === 'number') {
+      return props.pageSizeOptions.map((item) => ({
+        label:locale.t('pagination.pageSize', { pageSize: item }),
+        value: item
+      }))
+    }
+    return props.pageSizeOptions
   }
-)
+  return []
+})
 
 const state = reactive({
   toPage: undefined,
@@ -133,13 +119,13 @@ const getSelectWidth = computed(() => {
   const { size } = props
   switch (size) {
     case 'small':
-      return '100px'
+      return '120px'
     case 'medium':
-      return '120px'
-    case 'large':
       return '140px'
+    case 'large':
+      return '160px'
     default:
-      return '120px'
+      return '140px'
   }
 })
 
@@ -246,7 +232,7 @@ const getIconSize = computed(() => {
         }"
         :size="size"
         :showCheckIcon="false"
-        :options="pageSizeOptions"
+        :options="getPageSizeOptions as PaginationOptions[]"
         @change="checkPageSize"
       />
       <lew-input

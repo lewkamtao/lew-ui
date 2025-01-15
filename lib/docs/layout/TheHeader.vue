@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
 import { useDark } from '@vueuse/core'
-import { Sun, Moon, Github } from 'lucide-vue-next'
+import { Sun, Moon, Github, Languages } from 'lucide-vue-next'
+import { locale } from 'lew-ui'
+import docsLocale from '@/locals'
 
 const version = ref('v2.5.15')
 
@@ -33,6 +35,16 @@ const goToPage = (path: string, isNewTab = false) => {
 
 const goToGithub = () => {
   window.open('https://github.com/lewkamtao/Lew-UI', '_blank')
+}
+
+const changeLanguage = () => {
+  if (locale.getLocale() === 'en') {
+    locale.use('zh')
+    docsLocale.use('zh')
+  } else {
+    locale.use('en')
+    docsLocale.use('en')
+  }
 }
 </script>
 
@@ -72,6 +84,9 @@ const goToGithub = () => {
       <div class="menu-item menu-item-icon" @click="isDark = !isDark">
         <Sun class="icon-mode-sunny" :size="18" />
         <Moon class="icon-mode-moon" :size="18" />
+      </div>
+      <div class="menu-item menu-item-icon" @click="changeLanguage">
+        <Languages :size="18" />
       </div>
       <div class="menu-item menu-item-icon" @click="goToGithub">
         <Github :size="18" />

@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import type { Ref } from 'vue'
-import { getMonthDate, getHeadDate } from './date'
+import { getMonthDate } from './date'
 import type { RetType, RetItemType } from './date'
 import { dateProps } from './props'
 import dayjs from 'dayjs'
 import { object2class } from 'lew-ui/utils'
 import { LewFlex, LewButton } from 'lew-ui'
 import Icon from 'lew-ui/utils/Icon.vue'
+import {locale } from 'lew-ui'
 
 const emit = defineEmits(['change'])
 const props = defineProps(dateProps)
@@ -89,6 +90,18 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
   }
   return object2class('lew-date-item', { e, selected })
 })
+
+const headDate = computed(() => {
+  return [
+   locale.t('datePicker.Mon'),
+   locale.t('datePicker.Tue'),
+   locale.t('datePicker.Wed'),
+   locale.t('datePicker.Thu'),
+   locale.t('datePicker.Fri'),
+   locale.t('datePicker.Sat'),
+   locale.t('datePicker.Sun')
+  ]
+})
 </script>
 <template>
   <div class="lew-date">
@@ -117,11 +130,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
       </div>
       <!-- 日期 -->
       <div class="cur-date">
-        {{ dateState.year }} 年
-        <span style="width: 22px; text-align: center">{{
-          dateState.month
-        }}</span>
-        月
+        {{ dayjs(`${dateState.year}-${dateState.month}`).format('YYYY-MM') }}
       </div>
       <div class="lew-date-control-right">
         <!-- 下一月 -->
@@ -149,7 +158,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
     <div class="lew-date-box">
       <!-- 表头 周 -->
       <div
-        v-for="(item, index) in getHeadDate"
+        v-for="(item, index) in headDate"
         :key="`h${index}`"
         class="lew-date-item"
       >
@@ -259,7 +268,7 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
             solid;
         }
         .lew-date-value:active {
-          transform: scale(.9);
+          transform: scale(0.9);
         }
       }
     }

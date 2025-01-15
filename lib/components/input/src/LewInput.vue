@@ -4,7 +4,7 @@ import { object2class, any2px } from 'lew-ui/utils'
 import { LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui'
 import { inputProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
-
+import {locale } from 'lew-ui'
 const { enter } = useMagicKeys()
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -15,7 +15,7 @@ const emit = defineEmits(['clear', 'blur', 'focus', 'change', 'input', 'ok'])
 const props = defineProps(inputProps)
 const modelValue = defineModel({ required: true })
 const prefixesValue = defineModel('prefixesValue')
-const suffixValue = defineModel('suffixValue')
+const suffixValue: any = defineModel('suffixValue')
 
 const lewInputRef = ref()
 const lewInputCountRef = ref()
@@ -124,13 +124,13 @@ const copy = () => {
   textarea.select()
 
   if (document.execCommand('copy')) {
-    LewMessage.success('复制成功！')
+    LewMessage.success(locale.t('input.copySuccess'))
     isCopy.value = true
     timer = setTimeout(() => {
       isCopy.value = false
     }, 2000)
   } else {
-    LewMessage.error('复制失败！')
+    LewMessage.error(locale.t('input.copyFailed'))
   }
 
   document.body.removeChild(textarea)
@@ -219,7 +219,7 @@ defineExpose({ toFocus })
         :style="getInputStyle"
         autocomplete="new-password"
         :disabled="disabled"
-        :placeholder="placeholder"
+        :placeholder="placeholder ? placeholder : $t('input.placeholder')"
         :type="getType"
         :readonly="readonly"
         :maxlength="maxLength"
@@ -287,7 +287,7 @@ defineExpose({ toFocus })
     >
       <div v-if="suffix === 'text'">{{ suffixValue }}</div>
       <div v-if="suffix === 'icon'" class="lew-input-suffix-icon">
-        <Icon :size="getIconSize" :type="suffixValue as string" />
+        <Icon :size="getIconSize" :type="suffixValue" />
       </div>
       <div v-if="suffix === 'select'" class="lew-input-suffix-select">
         <lew-dropdown

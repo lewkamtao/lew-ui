@@ -12,7 +12,7 @@ import 'highlight.js/styles/atom-one-dark.css'
 import 'highlight.js/lib/common'
 import '@/assets/style/hljs.scss'
 import lew from 'lew-ui'
-
+import { i18n } from '@/locals'
 const app = createApp(AppVue)
 // 自定义一个代码高亮指令
 app.directive('highlight', {
@@ -24,4 +24,4 @@ app.directive('highlight', {
   }
 })
 
-app.use(lew).use(HljsVuePlugin).use(router).mount('#app')
+app.use(lew).use(i18n).use(HljsVuePlugin).use(router).mount('#app')
