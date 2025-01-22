@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import LewDemoBox from '../../layout/LewDemoBox.vue'
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 </script>
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Icon</lew-title>
+    <lew-component-info />
+
     <lew-demo-box title="图标废弃通知">
       <lew-alert type="info">
         <template #title>Icon 组件废弃通知</template>

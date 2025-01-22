@@ -14,33 +14,18 @@ import {
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
-
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
     return API[key]
   })
 )
-
-const open = (url: string) => {
-  window.open(url)
-}
 </script>
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Checkbox</lew-title>
-    <p class="sub-title">
-      通过复选框选择一个或多个数据。单选框可移步
-      <lew-mark
-        type="light"
-        cursor="pointer"
-        color="blue"
-        @click="open('https://fengyuanchen.github.io/vue-feather/')"
-      >
-        Radio
-      </lew-mark>
-    </p>
+    <lew-component-info />
     <lew-demo-box title="常规" :code="DemoCheckbox1Code">
       <demo-checkbox1 />
     </lew-demo-box>

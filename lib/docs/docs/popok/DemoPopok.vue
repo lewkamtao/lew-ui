@@ -3,7 +3,7 @@ import { DemoPopok1, DemoPopok2, DemoPopok1Code, DemoPopok2Code } from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
-
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -14,7 +14,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Popok</lew-title>
+    <lew-component-info />
     <lew-demo-box title="简单的询问" tag="click" :code="DemoPopok1Code">
       <demo-popok1 />
     </lew-demo-box>

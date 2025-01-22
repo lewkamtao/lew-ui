@@ -12,7 +12,7 @@ import {
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
-
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -23,8 +23,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Modal</lew-title>
-    <p class="sub-title">一个拥有丝滑动画的模态对话框，提供了多种配置方式。</p>
+    <lew-component-info />
     <lew-demo-box title="基本" :code="DemoModal1Code">
       <demo-modal1 />
     </lew-demo-box>

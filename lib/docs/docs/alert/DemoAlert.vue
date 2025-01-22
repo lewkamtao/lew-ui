@@ -9,6 +9,7 @@ import {
 } from './demo'
 import LewDemoBox from '@/layout/LewDemoBox.vue'
 import LewDocsTables from '@/layout/LewDocsTables.vue'
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 import * as API from './api'
 
 const options = ref(
@@ -17,23 +18,11 @@ const options = ref(
     return API[key]
   })
 )
-
-const { push } = useRouter()
 </script>
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Alert</lew-title>
-    <p class="sub-title">
-      如果你需要使用全局的提示，请可以尝试一下
-      <lew-mark
-        type="light"
-        cursor="pointer"
-        color="blue"
-        @click="push('/Message')"
-        >Message</lew-mark
-      >
-    </p>
+    <lew-component-info />
     <lew-demo-box title="基础用法" :code="DemoAlert1Code">
       <demo-alert1 />
     </lew-demo-box>

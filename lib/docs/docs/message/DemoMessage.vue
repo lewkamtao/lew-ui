@@ -10,7 +10,7 @@ import {
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
-
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -21,8 +21,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Message</lew-title>
-    <p class="sub-title">一个全局反馈的提示，很简单，很有灵性。</p>
+    <lew-component-info />
     <lew-demo-box title="基本" :code="DemoMessage1Code">
       <demo-message1 />
     </lew-demo-box>

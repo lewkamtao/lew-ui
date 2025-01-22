@@ -8,6 +8,7 @@ const props = defineProps({
     }
   }
 })
+
 const getComponentName = () => {
   const { path } = useRoute()
   return path

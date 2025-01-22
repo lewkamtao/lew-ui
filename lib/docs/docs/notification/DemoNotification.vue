@@ -8,7 +8,7 @@ import {
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
-
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -19,7 +19,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Notification</lew-title>
+    <lew-component-info />
     <lew-demo-box title="快捷唤起" :code="DemoNotification1Code">
       <demo-notification1>删除</demo-notification1></lew-demo-box
     >

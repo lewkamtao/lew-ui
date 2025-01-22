@@ -8,11 +8,12 @@ import {
   DemoSpace3Code
 } from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 </script>
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Space</lew-title>
+    <lew-component-info />
     <lew-demo-box title="row" :code="DemoSpace1Code">
       <demo-space1 />
     </lew-demo-box>

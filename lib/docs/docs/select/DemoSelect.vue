@@ -20,7 +20,7 @@ import {
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
-
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -31,10 +31,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Select</lew-title>
-    <p class="sub-title">
-      一个自带搜索的、支持异步请求、支持虚拟列表、支持插槽的选择器
-    </p>
+    <lew-component-info />
     <lew-demo-box title="常规" :code="DemoSelect1Code">
       <demo-select1 />
     </lew-demo-box>

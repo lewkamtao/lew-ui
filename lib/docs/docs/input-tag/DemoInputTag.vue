@@ -18,7 +18,7 @@ import {
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
-
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'    
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -29,8 +29,8 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Input Tag</lew-title>
-    <p class="sub-title">这是一个标签的输入框</p>
+    <lew-component-info />
+
     <lew-demo-box title="常规" :code="DemoInputTag1Code">
       <demo-input-tag1 />
       <lew-alert

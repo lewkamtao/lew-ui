@@ -11,6 +11,7 @@ export default {
     descEngine: 'Desc Engine'
   },
   components: {
+    button: {},
     image: {
       name: 'Image',
       description: 'Image',

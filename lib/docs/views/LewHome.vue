@@ -18,18 +18,20 @@ onUnmounted(() => {
 const options = ref([
   {
     field: 'componentName',
-    label: '组件库名称',
+    label: 'Library Name',
     as: 'input',
-    rule: Yup.string().required('请输入组件库的完整名称'),
+    rule: Yup.string().required('Please enter the complete library name'),
     props: {
       clearable: true
     }
   },
   {
     field: 'componentDescription',
-    label: '组件库描述',
+    label: 'Description',
     as: 'textarea',
-    rule: Yup.string().required('请简要描述组件库的主要特点和优势'),
+    rule: Yup.string().required(
+      'Please describe the key features and advantages'
+    ),
     props: {
       clearable: true,
       showCount: true,
@@ -38,30 +40,30 @@ const options = ref([
   },
   {
     field: 'category',
-    label: '组件库类型',
+    label: 'Category',
     as: 'select',
-    rule: Yup.string().required('请选择组件库所属的类型'),
+    rule: Yup.string().required('Please select the library category'),
     props: {
       clearable: true,
       options: [
         {
-          label: 'UI组件库',
+          label: 'UI Components',
           value: '1'
         },
         {
-          label: '功能组件库',
+          label: 'Utility Components',
           value: '2'
         },
         {
-          label: '布局组件库',
+          label: 'Layout Components',
           value: '3'
         },
         {
-          label: '表单组件库',
+          label: 'Form Components',
           value: '4'
         },
         {
-          label: '数据展示组件库',
+          label: 'Data Display Components',
           value: '5'
         }
       ]
@@ -69,47 +71,47 @@ const options = ref([
   },
   {
     field: 'features',
-    label: '组件库特性',
+    label: 'Features',
     as: 'select-multiple',
     rule: Yup.array()
-      .min(1, '请至少选择一项组件库的核心特性')
-      .required('请选择组件库的主要特性'),
+      .min(1, 'Please select at least one core feature')
+      .required('Please select the main features'),
     props: {
       change: (e: any) => {
         console.log(e)
       },
       clearable: true,
       options: [
-        { label: '响应式设计', value: '1' },
-        { label: '优雅的用法', value: '2' },
-        { label: '多语言支持', value: '3' },
-        { label: '丰富的动画效果', value: '4' },
-        { label: '无障碍访问', value: '5' },
-        { label: '强大的事件系统', value: '6' },
-        { label: '灵活的状态管理', value: '7' },
-        { label: '丰富的插槽支持', value: '8' }
+        { label: 'Responsive Design', value: '1' },
+        { label: 'Elegant API', value: '2' },
+        { label: 'I18n Support', value: '3' },
+        { label: 'Rich Animations', value: '4' },
+        { label: 'Accessibility', value: '5' },
+        { label: 'Event System', value: '6' },
+        { label: 'State Management', value: '7' },
+        { label: 'Slot Support', value: '8' }
       ]
     }
   },
   {
     field: 'info.releaseDate',
-    label: '发布日期',
+    label: 'Release Date',
     as: 'date-picker',
-    rule: Yup.string().required('请选择组件库的首次发布日期'),
+    rule: Yup.string().required('Please select the initial release date'),
     props: {}
   },
   {
     field: 'info.availabilityPeriod',
-    label: '支持周期',
+    label: 'Support Period',
     as: 'date-range-picker',
-    rule: Yup.object().required('请选择组件库的长期支持周期'),
+    rule: Yup.object().required('Please select the long-term support period'),
     props: {}
   },
   {
     field: 'usageFramework',
-    label: '适用框架',
+    label: 'Framework',
     as: 'radio-group',
-    rule: Yup.string().required('请选择组件库适用的前端框架'),
+    rule: Yup.string().required('Please select the compatible framework'),
     props: {
       options: [
         {
@@ -129,41 +131,41 @@ const options = ref([
   },
   {
     field: 'targetUsers',
-    label: '目标用户',
+    label: 'Target Users',
     as: 'checkbox-group',
     rule: Yup.array()
-      .min(1, '请至少选择一个目标用户群体')
-      .required('请选择组件库的主要目标用户'),
+      .min(1, 'Please select at least one target user group')
+      .required('Please select the primary target users'),
     props: {
       options: [
-        { label: '前端', value: '1' },
-        { label: '全栈', value: '2' },
-        { label: 'UI设计师', value: '3' },
-        { label: '产品经理', value: '4' }
+        { label: 'FE Dev', value: '1' },
+        { label: 'FS Dev', value: '2' },
+        { label: 'UI/UX', value: '3' },
+        { label: 'PM', value: '4' }
       ]
     }
   },
   {
     field: 'developmentFocus',
-    label: '开发重点',
+    label: 'Development Focus',
     as: 'tabs',
-    rule: Yup.string().required('请选择组件库的主要开发重点'),
+    rule: Yup.string().required('Please select the main development focus'),
     props: {
       options: [
         {
-          label: '功能创新',
+          label: 'Innovation',
           value: '1'
         },
         {
-          label: '性能优化',
+          label: 'Performance',
           value: '2'
         },
         {
-          label: '用户体验',
+          label: 'User Experience',
           value: '3'
         },
         {
-          label: '稳定性',
+          label: 'Stability',
           value: '4'
         }
       ]
@@ -171,20 +173,22 @@ const options = ref([
   },
   {
     field: 'info.keywordTags',
-    label: '关键词标签',
+    label: 'Keywords',
     as: 'input-tag',
     rule: Yup.array()
-      .min(1, '请至少输入一个描述组件库特点的关键词')
-      .required('请输入能够突出组件库特色的关键词标签'),
+      .min(1, 'Please enter at least one keyword')
+      .required('Please enter keywords that highlight library features'),
     props: {
       clearable: true
     }
   },
   {
     field: 'info.isOpenSource',
-    label: '开源状态',
+    label: 'Open Source',
     as: 'switch',
-    rule: Yup.boolean().required('请指明组件库是否为开源项目'),
+    rule: Yup.boolean().required(
+      'Please specify if the library is open source'
+    ),
     props: {}
   }
 ])
@@ -198,7 +202,7 @@ onMounted(() => {
   formRef.value.setForm({
     componentName: 'Lew UI',
     componentDescription:
-      'Lew-UI 是一个基于 Vue3 的轻量级组件库，专注于提供简洁实用的UI组件，适合快速构建中小型项目。',
+      'Lew-UI is a lightweight Vue 3 component library focused on providing clean and practical UI components for rapid development of small to medium-sized projects.',
     category: '1',
     features: ['1', '2', '4'],
     usageFramework: 'vue',
@@ -210,19 +214,19 @@ onMounted(() => {
         start: '2022-05-24',
         end: '2099-10-24'
       },
-      keywordTags: ['高效', '易用', '灵活'],
+      keywordTags: ['Efficient', 'Easy-to-use', 'Flexible'],
       isOpenSource: true
     }
   })
 })
 
 const sprs = () => {
-  const duration = 5 * 1000 // 增加持续时间到5秒
+  const duration = 5 * 1000
   const animationEnd = Date.now() + duration
   const defaults = {
-    startVelocity: 30, // 增加初始速度
+    startVelocity: 30,
     spread: 360,
-    ticks: 50, // 增加碎片数量
+    ticks: 50,
     zIndex: 999
   }
 
@@ -236,7 +240,7 @@ const sprs = () => {
       return clearInterval(interval)
     }
 
-    const particleCount = 50 * (timeLeft / duration) // 增加碎片数量
+    const particleCount = 50 * (timeLeft / duration)
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -258,47 +262,47 @@ const sprs = () => {
         y: Math.random() - 0.2
       }
     })
-  }, 250) // 稍微减少间隔时间以增加密度
+  }, 250)
 }
 
 const router = useRouter()
 const v = ref('')
 const lewPopoverRef = ref()
 const submit = () => {
-  LewMessage.error(v.value || '密码不能为空')
+  LewMessage.error(v.value || 'Password cannot be empty')
   lewPopoverRef.value.hide()
 }
 const open = (type: string) => {
   LewDialog[type]({
-    title: '确认操作',
-    content: '此操作不可逆，请确认是否继续？',
+    title: 'Confirm Action',
+    content: 'This action cannot be undone. Are you sure you want to continue?',
     ok: () => {
-      console.log('确认')
+      console.log('Confirmed')
     },
     cancel: () => {
-      console.log('取消')
+      console.log('Cancelled')
     }
   })
 }
 
 const breadcrumb_options = ref([
   {
-    label: '腾讯云',
+    label: 'Shop',
     value: '/',
     type: 'light'
   },
   {
-    label: '云服务器',
-    value: '/cvm',
+    label: 'Electronics',
+    value: '/electronics',
     type: 'light'
   },
   {
-    label: '实例',
-    value: '/cvm/instance',
+    label: 'Smartphones',
+    value: '/electronics/smartphones',
     type: 'light'
   },
   {
-    label: 'CVM-1234567890',
+    label: 'iPhone 14 Pro Max',
     value: '',
     active: true,
     type: 'light'
@@ -306,82 +310,85 @@ const breadcrumb_options = ref([
 ])
 
 const tab_options = ref([
-  { label: '空调', value: '1', type: 'light' },
-  { label: '冰箱', value: '2', type: 'light' },
-  { label: '洗衣机', value: '3', type: 'light' },
-  { label: '热水器', value: '4', type: 'light' },
-  { label: '厨房电器', value: '5', type: 'light' },
-  { label: '生活电器', value: '6', type: 'light' },
-  { label: '智能家居系统', value: '7', type: 'light' },
-  { label: '商用空调', value: '8', type: 'light' }
+  { label: 'Electronics', value: '1', type: 'light' },
+  { label: 'Fashion', value: '2', type: 'light' },
+  { label: 'Home & Garden', value: '3', type: 'light' },
+  { label: 'Sports', value: '4', type: 'light' },
+  { label: 'Beauty', value: '5', type: 'light' },
+  { label: 'Toys & Games', value: '6', type: 'light' },
+  { label: 'Books', value: '7', type: 'light' },
+  { label: 'Jewelry', value: '8', type: 'light' }
 ])
 
 const tabValue = ref('4')
 const dropdown_options = ref([
   {
-    label: '红烧肉',
+    label: 'Espresso',
     value: 1
   },
   {
-    label: '小笼包',
+    label: 'Cappuccino',
     value: 2
   },
   {
-    label: '麻婆豆腐',
+    label: 'Latte',
     value: 3
   },
   {
-    label: '糖醋鱼',
+    label: 'Mocha',
     value: 4
   },
   {
-    label: '宫保鸡丁',
+    label: 'Americano',
     value: 5
   },
   {
-    label: '水煮鱼',
+    label: 'Cold Brew',
     value: 6
   }
 ])
 
 const message = (type: string) => {
   const messages = {
-    info: '新功能提示：探索全新的iOS 17，体验更智能的iPhone。',
-    success: '更新完成：您的设备已成功更新至最新版本。',
-    warning: 'Apple ID提醒：请验证您的Apple ID电子邮件地址。',
-    error: '安全警告：检测到您的账户有异常登录活动。'
+    info: 'New Feature: Explore iOS 17 with enhanced iPhone intelligence.',
+    success: 'Update Complete: Your device has been successfully updated.',
+    warning: 'Apple ID Alert: Please verify your Apple ID email.',
+    error: 'Security Alert: Unusual login activity detected on your account.'
   }
   LewMessage[type](
-    messages[type as keyof typeof messages] || '这是一条来自Apple的通知'
+    messages[type as keyof typeof messages] || 'Notification from Apple'
   )
 }
 
 const notification = (type: string) => {
   const notifications = {
     info: {
-      title: 'iOS 更新提醒',
+      title: 'iOS Update Available',
       content:
-        '新版 iOS 17 现已推出，带来更智能的体验。立即更新以享受最新功能。'
+        'iOS 17 is now available with smarter features. Update now to experience the latest innovations.'
     },
     success: {
-      title: 'Apple ID 验证成功',
-      content: '您的 Apple ID 已成功验证。感谢您保护账户安全。'
+      title: 'Apple ID Verified',
+      content:
+        'Your Apple ID has been successfully verified. Thank you for keeping your account secure.'
     },
     warning: {
-      title: 'iCloud 存储空间不足',
-      content: '您的 iCloud 存储空间即将用完。升级存储计划以确保数据安全备份。'
+      title: 'iCloud Storage Low',
+      content:
+        'Your iCloud storage is almost full. Upgrade your storage plan to ensure data backup.'
     },
     error: {
-      title: '安全警告',
-      content: '检测到您的 Apple ID 有异常登录活动。请立即检查并更新密码。'
+      title: 'Security Alert',
+      content:
+        'Unusual login activity detected on your Apple ID. Please review and update your password.'
     }
   }
 
   // @ts-ignore
   LewNotification[type](
     notifications[type as keyof typeof notifications] || {
-      title: 'Apple 通知',
-      content: '这是一条来自 Apple 的重要通知'
+      title: 'Apple Notification',
+      content: 'Important notification from Apple'
     }
   )
 }
@@ -392,7 +399,7 @@ const getLogoLeft = () => {
   const logoElement = document.getElementById('logo')
   if (logoElement) {
     const rect = logoElement.getBoundingClientRect()
-    logoLeft.value = rect.left + window.scrollX + 'px' // 获取绝对定位的left
+    logoLeft.value = rect.left + window.scrollX + 'px'
   }
 }
 
@@ -409,21 +416,21 @@ onUnmounted(() => {
   <div class="home-wrapper">
     <LewBg />
     <div :style="{ left: logoLeft }" class="startbox">
-      <div class="slogan">少即是多</div>
-      <p>一个好看易用的 Vue3 组件库</p>
+      <div class="slogan">{{ $t('home.sloganTitle') }}</div>
+      <p>{{ $t('home.slogan') }}</p>
       <lew-flex x="start">
         <lew-button
           round
           style="margin-top: 20px"
           @click="router.push('/Image')"
         >
-          立即开始
+          {{ $t('home.getStarted') }}
           <Icon type="chevron-right" />
         </lew-button>
         <a href="/#/form-engine" target="_blank">
           <lew-button
             round
-            text="表单引擎"
+            :text="$t('home.formEngine')"
             style="margin-top: 20px"
             color="primary"
             type="light"
@@ -442,7 +449,7 @@ onUnmounted(() => {
           </lew-flex>
           <lew-flex style="width: 500px" x="end" gap="20">
             <lew-avatar size="40" shape="circle" />
-            <lew-avatar alt="李彦宏" size="40" shape="circle" />
+            <lew-avatar alt="Larry Page" size="40" shape="circle" />
             <lew-avatar alt="Tim Cook" size="40" shape="circle" />
             <lew-avatar
               shape="circle"
@@ -470,21 +477,21 @@ onUnmounted(() => {
             />
           </lew-flex>
           <lew-flex x="end" gap="10">
-            <lew-tag type="light">911</lew-tag>
-            <lew-tag type="light" color="green">Cayenne</lew-tag>
-            <lew-tag type="light" color="red">Panamera</lew-tag>
-            <lew-tag type="light" color="warning">718 Boxster</lew-tag>
-            <lew-tag type="light" color="normal">Macan</lew-tag>
-            <lew-tag type="light" color="blue">Taycan Cross Turismo</lew-tag>
+            <lew-tag type="light">MacBook</lew-tag>
+            <lew-tag type="light" color="green">iPad</lew-tag>
+            <lew-tag type="light" color="red">iPhone</lew-tag>
+            <lew-tag type="light" color="warning">Watch</lew-tag>
+            <lew-tag type="light" color="normal">AirPods</lew-tag>
+            <lew-tag type="light" color="blue">Vision Pro</lew-tag>
           </lew-flex>
 
           <lew-flex x="end" gap="20">
-            <lew-button round text="御 Mavic" color="red" type="light" />
-            <lew-button round text="经纬 Matrice" color="yellow" type="light" />
-            <lew-button text="精灵 Phantom" color="orange" type="light" />
-            <lew-button text="悟 Inspire" color="blue" type="light" />
-            <lew-button text="如影 Ronin" color="cyan" type="light" />
-            <lew-button text="禅思 Zenmuse" color="green" type="light" />
+            <lew-button round text="Explore" color="red" type="light" />
+            <lew-button round text="Shop" color="yellow" type="light" />
+            <lew-button text="Learn" color="orange" type="light" />
+            <lew-button text="Support" color="blue" type="light" />
+            <lew-button text="Services" color="cyan" type="light" />
+            <lew-button text="Business" color="green" type="light" />
           </lew-flex>
           <lew-flex x="end">
             <lew-breadcrumb :options="breadcrumb_options" />
@@ -496,14 +503,14 @@ onUnmounted(() => {
 
           <lew-flex gap="20" x="end">
             <lew-dropdown :options="dropdown_options">
-              <lew-button text="悬停" type="light" color="normal" />
+              <lew-button text="Hover" type="light" color="normal" />
             </lew-dropdown>
             <lew-dropdown
               :options="dropdown_options"
               trigger="click"
               placement="top"
             >
-              <lew-button text="点击" type="light" color="normal" />
+              <lew-button text="Click" type="light" color="normal" />
             </lew-dropdown>
           </lew-flex>
         </lew-flex>
@@ -512,53 +519,56 @@ onUnmounted(() => {
         </lew-flex>
         <lew-flex class="item" direction="y" gap="20">
           <lew-alert type="info">
-            <template #title>新功能</template>
+            <template #title>New Feature</template>
             <template #content
-              >Google Photos 现已推出，提供更多照片管理功能。</template
+              >Google Photos now offers enhanced photo management
+              features.</template
             >
           </lew-alert>
 
           <lew-alert
             type="error"
-            title="支付失败"
-            content="您的 Apple Pay 支付失败，请检查卡信息。"
+            title="Payment Failed"
+            content="Your Apple Pay transaction failed. Please check your card details."
           />
 
           <lew-alert type="success">
-            <template #title>更新完成</template>
-            <template #content>您的设备已成功更新至最新版本</template>
+            <template #title>Update Complete</template>
+            <template #content
+              >Your device has been successfully updated</template
+            >
           </lew-alert>
           <lew-flex wrap x="start" gap="10">
             <lew-button
-              text="错误"
+              text="Error"
               color="pink"
               size="small"
               type="light"
               @click="message('error')"
             />
             <lew-button
-              text="成功"
+              text="Success"
               size="small"
               color="green"
               type="light"
               @click="message('success')"
             />
             <lew-button
-              text="警告"
+              text="Warning"
               size="small"
               color="yellow"
               type="light"
               @click="message('warning')"
             />
             <lew-button
-              text="信息"
+              text="Info"
               size="small"
               color="blue"
               type="light"
               @click="message('info')"
             />
             <lew-button
-              text="普通"
+              text="Normal"
               size="small"
               color="normal"
               type="light"
@@ -568,35 +578,35 @@ onUnmounted(() => {
           <lew-flex wrap x="start" gap="10">
             <lew-button
               round
-              text="成功通知"
+              text="Success"
               type="light"
               color="green"
               @click="notification('success')"
             />
             <lew-button
               round
-              text="警告提示"
+              text="Warning"
               type="light"
               color="yellow"
               @click="notification('warning')"
             />
             <lew-button
               round
-              text="错误信息通知"
+              text="Error"
               type="light"
               color="red"
               @click="notification('error')"
             />
             <lew-button
               round
-              text="信息"
+              text="Info"
               type="light"
               color="blue"
               @click="notification('info')"
             />
             <lew-button
               round
-              text="普通消息提醒"
+              text="Normal"
               type="light"
               color="normal"
               @click="notification('normal')"
@@ -604,25 +614,25 @@ onUnmounted(() => {
           </lew-flex>
           <lew-flex wrap x="start" gap="10">
             <lew-button
-              text="删除"
+              text="Delete"
               type="light"
               color="error"
               @click="open('error')"
             />
             <lew-button
-              text="取消预订"
+              text="Cancel"
               type="light"
               color="warning"
               @click="open('warning')"
             />
             <lew-button
-              text="提交新的申请表单"
+              text="Submit"
               type="light"
               color="success"
               @click="open('success')"
             />
             <lew-button
-              text="查看"
+              text="View"
               type="light"
               color="info"
               @click="open('info')"
@@ -635,19 +645,19 @@ onUnmounted(() => {
               placement="bottom-start"
             >
               <template #trigger>
-                <lew-button text="修改密码" />
+                <lew-button text="Change Password" />
               </template>
               <template #popover-body>
                 <div class="popover-body" style="width: 240px">
-                  <lew-input v-model="v" placeholder="请输入密码" />
+                  <lew-input v-model="v" placeholder="Enter password" />
                   <lew-flex x="end" style="margin-top: 15px">
                     <lew-button
-                      text="取消"
+                      text="Cancel"
                       type="text"
                       size="small"
                       @click="lewPopoverRef.hide()"
                     />
-                    <lew-button text="提交" size="small" @click="submit()" />
+                    <lew-button text="Submit" size="small" @click="submit()" />
                   </lew-flex>
                 </div>
               </template>

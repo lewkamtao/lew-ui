@@ -10,6 +10,7 @@ import {
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 
 const options = ref(
   Object.keys(API).map((key: any) => {
@@ -21,8 +22,8 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Flex</lew-title>
-    <p class="sub-title">这是一个专门为弹性布局写的组件</p>
+    <lew-component-info />
+
     <lew-demo-box title="row" :code="DemoFlex1Code">
       <demo-flex1 />
     </lew-demo-box>

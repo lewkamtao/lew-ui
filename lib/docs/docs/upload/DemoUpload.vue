@@ -19,7 +19,7 @@ import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import uploadHelper from './uploadHelper.ts?raw'
 import * as API from './api'
-
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -30,8 +30,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Upload</lew-title>
-    <p class="sub-title">上传组件</p>
+    <lew-component-info />
     <lew-demo-box title="常规" :code="DemoUpload1Code">
       <demo-upload1 />
     </lew-demo-box>

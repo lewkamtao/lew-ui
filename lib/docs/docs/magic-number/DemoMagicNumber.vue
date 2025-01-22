@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import LewDemoBox from '../../layout/LewDemoBox.vue'
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 </script>
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>MagicNumber</lew-title>
+    <lew-component-info />
     <lew-demo-box title="组件升级通知">
       <lew-alert type="info">
         <template #title>MagicNumber 组件废弃通知</template>

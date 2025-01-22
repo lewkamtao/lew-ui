@@ -15,6 +15,30 @@ defineProps({
       return ''
     }
   },
+  tipsContent: {
+    type: String,
+    default() {
+      return ''
+    }
+  },
+  tipsType: {
+    type: String,
+    default() {
+      return 'info'
+    }
+  },
+  tipsTitle: {
+    type: String,
+    default() {
+      return ''
+    }
+  },
+  desc: {
+    type: String,
+    default() {
+      return ''
+    }
+  },
   code: {
     type: String,
     default() {
@@ -39,9 +63,7 @@ const isShowCode = ref(false)
         {{ tag }}
       </lew-tag>
     </lew-title>
-    <div class="desc">
-      <slot name="desc"></slot>
-    </div>
+    <div class="desc">{{ desc }}</div>
     <div class="demo-item">
       <div class="demo-cp lew-scrollbar">
         <slot></slot>
@@ -61,6 +83,12 @@ const isShowCode = ref(false)
         {{ isShowCode ? '关闭' : '显示源码' }}
       </div>
     </div>
+    <lew-alert
+      v-if="tipsType && tipsContent"
+      :type="tipsType"
+      :title="tipsTitle"
+      :content="tipsContent"
+    />
   </div>
 </template>
 

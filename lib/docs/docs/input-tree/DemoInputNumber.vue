@@ -14,7 +14,7 @@ import {
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
-
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -25,8 +25,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Input Number</lew-title>
-    <p class="sub-title">仅允许输入数字值的输入框</p>
+    <lew-component-info />
     <lew-demo-box title="尺寸" :code="DemoInputNumber1Code">
       <demo-input-number1 />
     </lew-demo-box>

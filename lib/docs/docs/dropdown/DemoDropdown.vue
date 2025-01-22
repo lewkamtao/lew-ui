@@ -10,7 +10,7 @@ import {
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
-
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -23,19 +23,7 @@ const { push } = useRouter()
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Dropdown</lew-title>
-    <p class="sub-title">
-      你可以使用
-      <lew-mark
-        cursor="pointer"
-        k
-        @click="push('/Popover')"
-        type="light"
-        color="blue"
-        >Popover</lew-mark
-      >
-      进行高度自定义下拉菜单
-    </p>
+    <lew-component-info />
     <lew-demo-box title="常规" :code="DemoDropdown1Code">
       <demo-dropdown1 />
     </lew-demo-box>

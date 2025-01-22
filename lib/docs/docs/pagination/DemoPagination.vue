@@ -10,7 +10,7 @@ import {
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
-
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -21,8 +21,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Pagination</lew-title>
-    <p class="sub-title">一个高颜值的、支持双向绑定的分页器</p>
+    <lew-component-info />
     <lew-demo-box title="常规" :code="DemoPagination1Code">
       <demo-pagination1 />
     </lew-demo-box>

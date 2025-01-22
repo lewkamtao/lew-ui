@@ -15,7 +15,7 @@ import { Send } from 'lucide-vue-next'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
-
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 const router = useRouter()
 const options = ref(
   Object.keys(API).map((key: any) => {
@@ -32,9 +32,8 @@ const toFormEngine = () => {
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Form</lew-title>
-    <p class="sub-title">这是一个基于Yup实现的表单校验引擎。</p>
-    <br />
+    <lew-component-info />
+
     <lew-alert type="info">
       <template #title>特别的</template>
       <template #content>

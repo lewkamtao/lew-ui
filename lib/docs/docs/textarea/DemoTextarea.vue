@@ -18,7 +18,7 @@ import {
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
-
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -29,7 +29,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Textarea</lew-title>
+    <lew-component-info />
     <lew-demo-box title="尺寸" :code="DemoTextarea1Code">
       <demo-textarea1 />
     </lew-demo-box>

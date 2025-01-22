@@ -14,7 +14,7 @@ import {
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
 import * as API from './api'
-
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -25,8 +25,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>DatePicker</lew-title>
-    <p class="sub-title">一个很漂亮的、支持双向绑定的日期选择器。</p>
+    <lew-component-info />
     <lew-demo-box title="常规" :code="DemoDatePicker1Code">
       <template #desc>
         <div>

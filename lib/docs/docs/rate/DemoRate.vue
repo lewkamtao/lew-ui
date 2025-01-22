@@ -12,7 +12,7 @@ import {
   DemoRate4Code
 } from './demo'
 import * as API from './api'
-
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -23,7 +23,7 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Rate</lew-title>
+    <lew-component-info />
     <lew-demo-box title="常规" :code="DemoRate1Code">
       <demo-rate1 />
     </lew-demo-box>
