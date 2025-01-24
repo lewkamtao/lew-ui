@@ -274,7 +274,8 @@ const getStyle = computed(() => {
           :key="index"
           class="lew-slider-track-step-label"
           :style="{
-            left: `${getMarkPosition(item.value)}%`
+            left: `${getMarkPosition(item.value)}%`,
+            top: `calc(var(--lew-slider-height) - 20px)`
           }"
         >
           <div
@@ -399,7 +400,6 @@ const getStyle = computed(() => {
 
     .lew-slider-track-step-label {
       position: absolute;
-      top: 10px;
       text-align: center;
       width: 0px;
       display: flex;

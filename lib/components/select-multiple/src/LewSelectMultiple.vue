@@ -148,9 +148,12 @@ const getLabels = computed(() => {
         return state.options.find((e: SelectMultipleOptions) => v === e.value)
           ?.label
       })
-    return labels || []
+    if (!labels || labels.length === 0) {
+      return props.defaultValue || []
+    }
+    return labels
   }
-  return props?.defaultValue || selectValue.value || []
+  return props.defaultValue || selectValue.value || []
 })
 
 const getBodyClassName = computed(() => {

@@ -38,6 +38,13 @@ const state = reactive({
   keywordBackup: props.defaultValue as any
 })
 
+watch(
+  () => props.defaultValue,
+  () => {
+    state.keyword = props.defaultValue
+  }
+)
+
 const getSelectWidth = () => {
   state.selectWidth = lewSelectRef.value?.clientWidth - 12
 }
@@ -217,7 +224,6 @@ defineExpose({ show, hide })
     :disabled="disabled || readonly"
     placement="bottom-start"
     style="width: 100%"
-    
     :loading="state.loading"
     @show="showHandle"
     @hide="hideHandle"
