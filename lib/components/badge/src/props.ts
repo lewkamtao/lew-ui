@@ -24,6 +24,27 @@ export type BadgeColor =
   | 'primary'
 
 export const badgeProps = {
+  text: {
+    type: String,
+    default: '',
+    description: '自定义提示内容'
+  },
+  offset: {
+    type: Array,
+    default: () => [0, 0],
+    description: '徽章偏移量，格式为 [x, y]'
+  },
+  processing: {
+    type: Boolean,
+    default: false,
+    description: '徽章是否为处理中状态'
+  },
+  // 超过多少转化成加号
+  max: {
+    type: Number,
+    default: 99,
+    description: '超过多少转化成加号'
+  },
   color: {
     type: String,
     default: 'red',
