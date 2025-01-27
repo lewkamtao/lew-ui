@@ -3,9 +3,11 @@ import {
   DemoBadge1,
   DemoBadge2,
   DemoBadge3,
+  DemoBadge4,
   DemoBadge1Code,
   DemoBadge2Code,
-  DemoBadge3Code
+  DemoBadge3Code,
+  DemoBadge4Code
 } from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
@@ -30,6 +32,9 @@ const options = ref(
     </lew-demo-box>
     <lew-demo-box title="直接使用" :code="DemoBadge3Code">
       <demo-badge3 />
+    </lew-demo-box>
+    <lew-demo-box title="处理中" :code="DemoBadge4Code">
+      <demo-badge4 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>
