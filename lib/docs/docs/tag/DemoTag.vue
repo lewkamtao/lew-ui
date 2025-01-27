@@ -6,12 +6,14 @@ import {
   DemoTag4,
   DemoTag5,
   DemoTag6,
+  DemoTag7,
   DemoTag1Code,
   DemoTag2Code,
   DemoTag3Code,
   DemoTag4Code,
   DemoTag5Code,
-  DemoTag6Code
+  DemoTag6Code,
+  DemoTag7Code
 } from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
@@ -28,23 +30,47 @@ const options = ref(
 <template>
   <div class="demo-wrapper">
     <lew-component-info />
-    <lew-demo-box title="Type" :code="DemoTag1Code">
+    <lew-demo-box
+      :title="$t('components.tag.demo1.title')"
+      :code="DemoTag1Code"
+    >
       <demo-tag1 />
     </lew-demo-box>
-    <lew-demo-box title="Size" :code="DemoTag2Code">
+    <lew-demo-box
+      :title="$t('components.tag.demo2.title')"
+      :code="DemoTag2Code"
+    >
       <demo-tag2 />
     </lew-demo-box>
-    <lew-demo-box title="Color System" :code="DemoTag3Code">
+    <lew-demo-box
+      :title="$t('components.tag.demo3.title')"
+      :code="DemoTag3Code"
+    >
       <demo-tag3 />
     </lew-demo-box>
-    <lew-demo-box title="Disabled and Closable" :code="DemoTag4Code">
+    <lew-demo-box
+      :title="$t('components.tag.demo4.title')"
+      :code="DemoTag4Code"
+    >
       <demo-tag4 />
     </lew-demo-box>
-    <lew-demo-box title="Left and Right Slots" :code="DemoTag5Code">
+    <lew-demo-box
+      :title="$t('components.tag.demo5.title')"
+      :code="DemoTag5Code"
+    >
       <demo-tag5 />
     </lew-demo-box>
-    <lew-demo-box v-if="false" title="Disabled" :code="DemoTag6Code">
+    <lew-demo-box
+      :title="$t('components.tag.demo6.title')"
+      :code="DemoTag6Code"
+    >
       <demo-tag6 />
+    </lew-demo-box>
+    <lew-demo-box
+      :title="$t('components.tag.demo7.title')"
+      :code="DemoTag7Code"
+    >
+      <demo-tag7 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>

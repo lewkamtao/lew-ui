@@ -109,11 +109,53 @@ export default {
     },
     tag: {
       name: '标签 Tag',
-      description: '小巧而强大的标记利器，为内容分类添姿添彩'
+      description: '小巧而强大的标记利器，为内容分类添姿添彩',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '类型'
+      },
+      demo3: {
+        title: '尺寸'
+      },
+      demo4: {
+        title: '色彩'
+      },
+      demo5: {
+        title: '禁用'
+      },
+      demo6: {
+        title: '可关闭'
+      },
+      demo7: {
+        title: '插槽'
+      },
+      props: {
+        text: '标签文字',
+        type: '类型',
+        size: '尺寸',
+        color: '颜色',
+        closable: '是否可关闭',
+        disabled: '是否禁用',
+        round: '是否圆角'
+      }
     },
     badge: {
       name: '徽章 Badge',
-      description: '在右上角绽放的小红点，让提醒更加醒目'
+      description: '在右上角绽放的小红点，让提醒更加醒目',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '自定义内容'
+      },
+      demo3: {
+        title: '尺寸'
+      },
+      demo4: {
+        title: '颜色'
+      }
     },
     title: {
       name: '标题 Title',
