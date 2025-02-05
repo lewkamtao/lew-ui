@@ -38,6 +38,13 @@ const measureText = (text: string, style: CSSStyleDeclaration): number => {
   return width
 }
 
+// 配置参数
+const TOLERANCE_RATIO = 0.98 // 容忍度
+const MIN_WIDTH_DIFFERENCE = 2 // 最小宽度差
+const ELLIPSIS = '.....' // 省略号
+const MIN_VISIBLE_CHARS = 1 // 最小可见字符数
+const WIDTH_SAFETY_MARGIN = 12 // 宽度安全边距
+
 export const getDisplayText = ({
   text,
   reserveEnd = 0,
@@ -47,13 +54,6 @@ export const getDisplayText = ({
   reserveEnd: number
   target: HTMLElement
 }) => {
-  // 配置参数
-  const TOLERANCE_RATIO = 0.98
-  const MIN_WIDTH_DIFFERENCE = 2
-  const ELLIPSIS = '.....'
-  const MIN_VISIBLE_CHARS = 1
-  const WIDTH_SAFETY_MARGIN = 5
-
   // 快速返回条件
   if (!text || !target) return { text, isEllipsis: false }
   if (reserveEnd >= text.length) return { text, isEllipsis: false }

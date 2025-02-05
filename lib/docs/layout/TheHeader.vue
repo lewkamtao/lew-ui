@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { useDark } from '@vueuse/core'
 import { Sun, Moon, Github, Languages } from 'lucide-vue-next'
-import { locale } from 'lew-ui'
+import { setLocale } from 'lew-ui'
 import docsLocale from '@/locals'
 
 const version = ref('v2.5.15')
@@ -39,7 +39,7 @@ const goToGithub = () => {
 
 const changeLanguage = (e: any) => {
   const { value } = e
-  locale.use(value)
+  setLocale(value)
   docsLocale.use(value)
 }
 </script>

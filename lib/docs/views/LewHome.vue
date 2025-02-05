@@ -146,8 +146,8 @@ const options = ref([
     }
   },
   {
-    field: 'developmentFocus',
-    label: 'Development Focus',
+    field: 'devFocus',
+    label: 'Dev Focus',
     as: 'tabs',
     rule: Yup.string().required('Please select the main development focus'),
     props: {
@@ -505,19 +505,13 @@ onUnmounted(() => {
             <lew-dropdown :options="dropdown_options">
               <lew-button text="Hover" type="light" color="normal" />
             </lew-dropdown>
-            <lew-dropdown
-              :options="dropdown_options"
-              trigger="click"
-              placement="top"
-            >
-              <lew-button text="Click" type="light" color="normal" />
-            </lew-dropdown>
           </lew-flex>
         </lew-flex>
         <lew-flex style="width: 450px; margin-top: 0px" class="item">
           <lew-form row-gap="30" ref="formRef" :options="options" />
         </lew-flex>
         <lew-flex class="item" direction="y" gap="20">
+          <lew-alert type="warning" title="Please confirm deletion" />
           <lew-alert type="info">
             <template #title>New Feature</template>
             <template #content
@@ -567,13 +561,6 @@ onUnmounted(() => {
               type="light"
               @click="message('info')"
             />
-            <lew-button
-              text="Normal"
-              size="small"
-              color="normal"
-              type="light"
-              @click="message('normal')"
-            />
           </lew-flex>
           <lew-flex wrap x="start" gap="10">
             <lew-button
@@ -603,13 +590,6 @@ onUnmounted(() => {
               type="light"
               color="blue"
               @click="notification('info')"
-            />
-            <lew-button
-              round
-              text="Normal"
-              type="light"
-              color="normal"
-              @click="notification('normal')"
             />
           </lew-flex>
           <lew-flex wrap x="start" gap="10">
@@ -705,6 +685,7 @@ onUnmounted(() => {
     animation-fill-mode: forwards;
     opacity: 0;
     margin-top: -50px;
+    margin-left: 30px;
     z-index: 99;
     .item {
       flex-shrink: 0;

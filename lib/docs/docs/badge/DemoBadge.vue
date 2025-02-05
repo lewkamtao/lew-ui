@@ -4,10 +4,12 @@ import {
   DemoBadge2,
   DemoBadge3,
   DemoBadge4,
+  DemoBadge5,
   DemoBadge1Code,
   DemoBadge2Code,
   DemoBadge3Code,
-  DemoBadge4Code
+  DemoBadge4Code,
+  DemoBadge5Code
 } from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
@@ -24,17 +26,35 @@ const options = ref(
 <template>
   <div class="demo-wrapper">
     <lew-component-info />
-    <lew-demo-box title="普通" :code="DemoBadge1Code">
+    <lew-demo-box
+      :title="$t('components.badge.demo1.title')"
+      :code="DemoBadge1Code"
+    >
       <demo-badge1 />
     </lew-demo-box>
-    <lew-demo-box title="点" :code="DemoBadge2Code">
+    <lew-demo-box
+      :title="$t('components.badge.demo2.title')"
+      :code="DemoBadge2Code"
+    >
       <demo-badge2 />
     </lew-demo-box>
-    <lew-demo-box title="直接使用" :code="DemoBadge3Code">
+    <lew-demo-box
+      :title="$t('components.badge.demo3.title')"
+      :code="DemoBadge3Code"
+    >
       <demo-badge3 />
     </lew-demo-box>
-    <lew-demo-box title="处理中" :code="DemoBadge4Code">
+    <lew-demo-box
+      :title="$t('components.badge.demo4.title')"
+      :code="DemoBadge4Code"
+    >
       <demo-badge4 />
+    </lew-demo-box>
+    <lew-demo-box
+      :title="$t('components.badge.demo5.title')"
+      :code="DemoBadge5Code"
+    >
+      <demo-badge5 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>

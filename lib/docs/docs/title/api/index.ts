@@ -1,1 +1,1 @@
-export { default as titleProps } from './titleProps'
+export { default as Props } from './props'

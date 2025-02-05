@@ -21,13 +21,22 @@ const options = ref(
 <template>
   <div class="demo-wrapper">
     <lew-component-info />
-    <lew-demo-box title="普通" :code="DemoTitle1Code">
+    <lew-demo-box
+      :title="$t('components.title.demo1.title')"
+      :code="DemoTitle1Code"
+    >
       <demo-title1 />
     </lew-demo-box>
-    <lew-demo-box title="粗体" :code="DemoTitle2Code">
+    <lew-demo-box
+      :title="$t('components.title.demo2.title')"
+      :code="DemoTitle2Code"
+    >
       <demo-title2 />
     </lew-demo-box>
-    <lew-demo-box title="主题色" :code="DemoTitle3Code">
+    <lew-demo-box
+      :title="$t('components.title.demo3.title')"
+      :code="DemoTitle3Code"
+    >
       <demo-title3 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />

@@ -1,18 +1,16 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 
 export type TextTrimPlacement = 'top' | 'bottom' | 'left' | 'right'
-export type TextTrimAlignment = 'start' | 'center' | 'end'
+export type TextTrimAlignment = 'left' | 'center' | 'right'
 
 export const textTrimProps = {
   text: {
-    type: [String, Number, Boolean, Array, Object],
-    default: '',
-    description: '要显示的文本内容'
+    type: [String, Number],
+    default: ''
   },
   lineClamp: {
     type: Number,
     default: undefined,
-    description: '文本显示的最大行数，超出部分将被截断',
     validator(value: number): boolean {
       if (value <= 0) {
         console.warn('[LewTextTrim] lineClamp 属性必须大于 0')
@@ -23,13 +21,12 @@ export const textTrimProps = {
   },
   allowHTML: {
     type: Boolean,
-    default: false,
-    description: '是否允许渲染 HTML 标签'
+    default: false
   },
   placement: {
     type: String as PropType<TextTrimPlacement>,
     default: 'top',
-    description: '提示框的显示位置',
+    typeDesc: 'top | bottom | left | right',
     validator(value: TextTrimPlacement): boolean {
       const validPlacements: TextTrimPlacement[] = [
         'top',
@@ -48,8 +45,7 @@ export const textTrimProps = {
   },
   offset: {
     type: Array as PropType<number[]>,
-    default: () => [0, 15],
-    description: '提示框相对于目标元素的偏移量 [x, y]（单位：像素）',
+    default: [0, 15],
     validator(value: [number, number]): boolean {
       if (
         !Array.isArray(value) ||
@@ -62,12 +58,12 @@ export const textTrimProps = {
       return true
     }
   },
-  x: {
+  textAlign: {
     type: String as PropType<TextTrimAlignment>,
-    default: 'start',
-    description: '文本在水平方向的对齐方式',
+    typeDesc: 'left | center | right',
+    default: 'left',
     validator(value: TextTrimAlignment): boolean {
-      const validAlignments: TextTrimAlignment[] = ['start', 'center', 'end']
+      const validAlignments: TextTrimAlignment[] = ['left', 'center', 'right']
       if (!validAlignments.includes(value)) {
         console.warn(
           `[LewTextTrim] 无效的 x 值: ${value}。请使用 ${validAlignments.join(', ')} 中的一个。`
@@ -80,8 +76,6 @@ export const textTrimProps = {
   delay: {
     type: Array as PropType<number[]>,
     default: [120, 120],
-    description:
-      '显示和隐藏提示框的延迟时间 [显示延迟, 隐藏延迟]（单位：毫秒）',
     validator(value: [number, number]): boolean {
       if (
         !Array.isArray(value) ||
@@ -97,7 +91,6 @@ export const textTrimProps = {
   reserveEnd: {
     type: Number,
     default: 0,
-    description: '保留末尾的字符数量，当文本溢出时会在中间显示省略号，保留开头和指定数量的末尾字符',
     validator(value: number): boolean {
       if (value < 0) {
         console.warn('[LewTextTrim] reserveEnd 属性必须大于等于 0')

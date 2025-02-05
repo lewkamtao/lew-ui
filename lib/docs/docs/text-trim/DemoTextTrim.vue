@@ -5,7 +5,9 @@ import {
   DemoTextTrim2,
   DemoTextTrim2Code,
   DemoTextTrim3,
-  DemoTextTrim3Code
+  DemoTextTrim3Code,
+  DemoTextTrim4,
+  DemoTextTrim4Code
 } from './demo'
 import LewDemoBox from '../../layout/LewDemoBox.vue'
 import LewDocsTables from '../../layout/LewDocsTables.vue'
@@ -31,9 +33,14 @@ const options = ref(
     <lew-demo-box title="文件名省略" :code="DemoTextTrim3Code">
       <demo-text-trim3 />
       <template #description>
-        使用 <code>reserve-end</code> 属性可以在文本溢出时保留末尾的指定数量字符，这在处理文件名时特别有用。
+        使用
+        <code>reserve-end</code>
+        属性可以在文本溢出时保留末尾的指定数量字符，这在处理文件名时特别有用。
         例如，可以保留文件扩展名，使文件类型一目了然。
       </template>
+    </lew-demo-box>
+    <lew-demo-box title="x轴对齐方向" :code="DemoTextTrim4Code">
+      <demo-text-trim4 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>

@@ -7,7 +7,7 @@ import dayjs from 'dayjs'
 import { object2class } from 'lew-ui/utils'
 import { LewFlex, LewButton } from 'lew-ui'
 import Icon from 'lew-ui/utils/Icon.vue'
-import {locale } from 'lew-ui'
+import { locale } from 'lew-ui'
 
 const emit = defineEmits(['change'])
 const props = defineProps(dateProps)
@@ -93,13 +93,13 @@ const lewDateItemClassNames = computed(() => (item: RetItemType) => {
 
 const headDate = computed(() => {
   return [
-   locale.t('datePicker.Mon'),
-   locale.t('datePicker.Tue'),
-   locale.t('datePicker.Wed'),
-   locale.t('datePicker.Thu'),
-   locale.t('datePicker.Fri'),
-   locale.t('datePicker.Sat'),
-   locale.t('datePicker.Sun')
+    locale.t('datePicker.Mon'),
+    locale.t('datePicker.Tue'),
+    locale.t('datePicker.Wed'),
+    locale.t('datePicker.Thu'),
+    locale.t('datePicker.Fri'),
+    locale.t('datePicker.Sat'),
+    locale.t('datePicker.Sun')
   ]
 })
 </script>

@@ -21,12 +21,12 @@ const columnsMap: any = {
   model: [
     {
       title: '参数名',
-      width: 150,
+      width: 120,
       field: 'name'
     },
     {
       title: '描述',
-      width: 250,
+      width: 200,
       field: 'description',
       customRender: ({ row }: any) => {
         const { name } = row
@@ -35,8 +35,12 @@ const columnsMap: any = {
     },
     {
       title: '类型',
-      width: 120,
-      field: 'type'
+      width: 200,
+      field: 'type',
+      customRender: ({ row }: any) => {
+        const { typeDesc, type } = row
+        return typeDesc || type
+      }
     },
     {
       title: '默认值',
@@ -47,12 +51,12 @@ const columnsMap: any = {
   props: [
     {
       title: '参数名',
-      width: 150,
+      width: 120,
       field: 'name'
     },
     {
       title: '描述',
-      width: 250,
+      width: 200,
       field: 'description',
       customRender: ({ row }: any) => {
         const { name } = row
@@ -61,8 +65,12 @@ const columnsMap: any = {
     },
     {
       title: '类型',
-      width: 120,
-      field: 'type'
+      width: 200,
+      field: 'type',
+      customRender: ({ row }: any) => {
+        const { typeDesc, type } = row
+        return typeDesc || type
+      }
     },
     {
       title: '默认值',
@@ -72,7 +80,7 @@ const columnsMap: any = {
         const { name, defaultLocale } = row
         return defaultLocale
           ? docsLocale.t(`components.${getComponentName()}.default.${name}`)
-          : text
+          : text || '-'
       }
     }
   ],

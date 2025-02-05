@@ -6,14 +6,14 @@ const props = defineProps(markProps)
 
 const getStyle = computed(() => {
   const { color, round, bold, cursor } = props
-  let styleObj = {} as any
   let _color = getColorType(color)
-  styleObj.borderRadius = round ? '20px' : 'var(--lew-border-radius-mini)'
-  styleObj.fontWeight = bold || ''
-  styleObj.color = `var(--lew-color-${_color}-dark)`
-  styleObj.backgroundColor = `var(--lew-color-${_color}-light)`
-  styleObj.cursor = cursor ? cursor : ''
-  return styleObj
+  return {
+    borderRadius: round ? '20px' : 'var(--lew-border-radius-mini)',
+    fontWeight: bold || '',
+    color: `var(--lew-color-${_color}-dark)`,
+    backgroundColor: `var(--lew-color-${_color}-light)`,
+    cursor: cursor || ''
+  }
 })
 
 const emit = defineEmits(['click'])

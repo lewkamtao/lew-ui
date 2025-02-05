@@ -132,10 +132,10 @@ export default {
         title: '插槽'
       },
       props: {
-        text: '标签文字',
-        type: '类型',
+        text: '标签文本，优先级大于插槽，超出宽度会触发 text-trim 效果',
+        type: '样式类型',
         size: '尺寸',
-        color: '颜色',
+        color: '颜色主题',
         closable: '是否可关闭',
         disabled: '是否禁用',
         round: '是否圆角'
@@ -148,30 +148,104 @@ export default {
         title: '基础用法'
       },
       demo2: {
-        title: '自定义内容'
+        title: '点'
       },
       demo3: {
-        title: '尺寸'
+        title: '直接使用'
       },
       demo4: {
-        title: '颜色'
+        title: '文本'
+      },
+      demo5: {
+        title: '处理中'
+      },
+      props: {
+        text: '标签文字',
+        offset: '徽章的偏移量',
+        processing: '是否处理中',
+        max: '最大值，超过最大值会显示为 max+',
+        color: '徽章颜色',
+        disabled: '是否禁用',
+        value: '徽章值（为空时，会显示为点）'
       }
     },
     title: {
       name: '标题 Title',
-      description: '不只是标题，更是内容的灵魂提示'
+      description: '不只是标题，更是内容的灵魂提示',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '粗体'
+      },
+      demo3: {
+        title: '色彩'
+      },
+      props: {
+        text: '文本内容',
+        size: '标题文字大小，可以是数字（单位：像素）或字符串（如 "1.5em"）',
+        bold: '标题文字粗细程度，可选值为 100 到 900 之间的整百数',
+        color: '标题文字颜色，可选值包括预定义的颜色名称或自定义的颜色值'
+      }
     },
     textTrim: {
       name: '文本截断 TextTrim',
-      description: '优雅地处理过长文本，不让它破坏布局的美感'
+      description: '优雅地处理过长文本，不让它破坏布局的美感',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '多行省略'
+      },
+      demo3: {
+        title: '末端文本'
+      },
+      props: {
+        text: '文本内容',
+        lineClamp: '文本显示的最大行数，超出部分将被截断',
+        allowHTML: '是否允许渲染 HTML 标签',
+        placement: '提示框的显示位置',
+        offset: '提示框相对于目标元素的偏移量 [x, y]（单位：像素）',
+        textAlign: 'x轴对齐方向（当宽度小于容器宽度时）',
+        delay: '显示和隐藏提示框的延迟时间 [显示延迟, 隐藏延迟]（单位：毫秒）',
+        reserveEnd:
+          '保留末尾的字符数量，当文本溢出时会在中间显示省略号，保留开头和指定数量的末尾字符'
+      }
     },
     flex: {
       name: '弹性布局 Flex',
-      description: '灵活的布局方案，让页面排版如臂使指'
+      description: '灵活的布局方案，让页面排版如臂使指',
+      demo1: {
+        title: 'Row'
+      },
+      demo2: {
+        title: 'Column'
+      },
+      demo3: {
+        title: 'Mode'
+      },
+      props: {
+        direction: '子元素的排列方向',
+        x: '子元素在水平方向上的对齐方式',
+        y: '子元素在垂直方向上的对齐方式',
+        mode: '子元素的分布模式，会覆盖 x 或 y 的对齐设置，具体影响取决于 direction 的值',
+        wrap: '是否允许子元素在空间不足时自动换行',
+        gap: '子元素之间的间距（单位：像素）',
+        width: 'Flex 容器的宽度（单位：像素或百分比）'
+      }
     },
     mark: {
       name: '标记 Mark',
-      description: '为文字添加高亮标记，让重点内容一目了然'
+      description: '为文字添加高亮标记，让重点内容一目了然',
+      demo1: {
+        title: '基础用法'
+      },
+      props: {
+        color: '颜色主题',
+        round: '是否圆角',
+        bold: '是否加粗',
+        cursor: '鼠标悬停时的光标样式'
+      }
     },
     icon: {
       name: '图标 Icon',

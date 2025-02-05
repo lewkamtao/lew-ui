@@ -2,35 +2,37 @@ import { createI18n } from 'vue-i18n'
 import en from './en'
 import zh from './zh'
 
-export type Language = 'en' | 'zh'
+let i18nInstance: any = null
+let currentLocale = 'zh'
 
-export const messages = {
-  en,
-  zh
-}
-
-const i18n = createI18n({
-  legacy: false,
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages
-})
-
-export const useLocale = () => {
-  return {
-    use: (locale: Language) => {
-      i18n.global.locale.value = locale
-    },
-    t: (key: string, params: Record<string, any> = {}) => {
-      return i18n.global.t(key, params)
-    },
-    getLocale: (): Language => {
-      return i18n.global.locale.value as Language
-    }
+export const setLocale = (locale: string) => {
+  if (i18nInstance) {
+    i18nInstance.global.locale.value = locale
   }
+  currentLocale = locale
 }
 
-export { i18n, en, zh }
+export const getLocale = () => {
+  if (!i18nInstance) {
+    return currentLocale
+  }
+  return i18nInstance.global.locale.value
+}
 
-const locale = useLocale()
-export default locale
+export const useI18n = () => {
+  if (!i18nInstance) {
+    i18nInstance = createI18n({
+      legacy: false,
+      locale: currentLocale,
+      fallbackLocale: currentLocale,
+      messages: {
+        en,
+        zh
+      }
+    })
+  }
+  return i18nInstance.global
+}
+
+export const locale = useI18n()
+export { en, zh }

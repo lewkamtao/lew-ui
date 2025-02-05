@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import tippy, { roundArrow } from 'tippy.js'
-import { object2class } from 'lew-ui/utils'
 import { textTrimProps } from './props'
 import { escape } from 'lodash-es'
 import { useMouse, useDebounceFn } from '@vueuse/core'
@@ -97,13 +96,9 @@ const getTextTrimStyleObject = computed(() => {
   }
   return {
     'text-overflow': props.reserveEnd > 0 ? '' : 'ellipsis',
-    'white-space': 'nowrap'
+    'white-space': 'nowrap',
+    'text-align': props.textAlign
   }
-})
-
-const getClassNames = computed(() => {
-  const { x } = props
-  return object2class('lew-text-trim', { x })
 })
 
 const destroyTippy = () => {
@@ -128,8 +123,15 @@ const calculateDisplayText = () => {
   }
 }
 
-// 使用 VueUse 的防抖函数
-const debouncedCalculate = useDebounceFn(calculateDisplayText, 200)
+// 使用 requestAnimationFrame 优化初始化计算
+const initCalculateDisplayText = () => {
+  requestAnimationFrame(() => {
+    calculateDisplayText()
+  })
+}
+
+// 使用 VueUse 的防抖函数处理后续更新
+const debouncedCalculate = useDebounceFn(calculateDisplayText, 150)
 
 // 监听窗口大小变化
 const setupResizeObserver = () => {
@@ -148,7 +150,7 @@ const setupResizeObserver = () => {
 }
 
 onMounted(() => {
-  calculateDisplayText()
+  initCalculateDisplayText()
   setupResizeObserver()
 })
 
@@ -161,7 +163,7 @@ onUnmounted(() => {
 watch(
   () => [props.text, props.reserveEnd],
   () => {
-    calculateDisplayText()
+    debouncedCalculate()
   }
 )
 </script>
@@ -170,7 +172,6 @@ watch(
   <div
     ref="lewTextTrimRef"
     class="lew-text-trim-wrapper"
-    :class="getClassNames"
     :style="getTextTrimStyleObject"
     @mouseenter="initTippy"
   >
@@ -186,23 +187,12 @@ watch(
 
 <style lang="scss" scoped>
 .lew-text-trim-wrapper {
+  width: 100%;
   overflow: hidden;
   .lew-text-trim-pop {
     position: fixed;
     opacity: 0;
     z-index: -9;
   }
-}
-
-.lew-text-trim-x-start {
-  text-align: left;
-}
-
-.lew-text-trim-x-center {
-  text-align: center;
-}
-
-.lew-text-trim-x-end {
-  text-align: right;
 }
 </style>

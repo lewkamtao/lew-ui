@@ -12,7 +12,6 @@ import './styles/index.scss'
 import * as components from './components'
 import * as directives from './directives'
 import * as methods from './methods'
-import locale, { i18n } from './locals'
 
 export * from './components'
 export * from './directives'
@@ -20,14 +19,9 @@ export * from './methods'
 
 export * from './types'
 export * from './utils'
-
-export { locale }
-export { default as en } from './locals/en'
-export { default as zh } from './locals/zh'
+export * from './locals'
 
 const install = (Vue: App): void => {
-  Vue.use(i18n)
-
   Object.keys(components).forEach((key) => {
     const component: any = components[key as keyof typeof components]
     if (component.name || component.__name) {

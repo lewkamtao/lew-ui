@@ -45,7 +45,7 @@ watch(
 )
 </script>
 <template>
-  <lew-flex gap="0" class="lew-image-wrapper" :style="imageStyleObject">
+  <lew-flex gap="0" x="center" y="center" class="lew-image-wrapper" :style="imageStyleObject">
     <div class="skeletons" v-if="_loading || loading || !src"></div>
     <template v-else-if="_error">
       <slot v-if="$slots.error" name="error" />

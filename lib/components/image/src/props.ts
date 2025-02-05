@@ -5,8 +5,6 @@ export type ObjectFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down'
 export const imageProps = {
   src: {
     type: String,
-    required: true,
-    description: '图片源URL',
     validator: (value: string) => {
       if (!value) {
         console.warn('[LewImage] src 不能为空')
@@ -17,8 +15,6 @@ export const imageProps = {
   },
   alt: {
     type: String,
-    default: '',
-    description: '图片替代文本',
     validator: (value: string) => {
       if (value.length > 100) {
         console.warn('[LewImage] alt 文本不应超过100个字符')
@@ -29,8 +25,7 @@ export const imageProps = {
   },
   width: {
     type: [Number, String],
-    default: '',
-    description: '图片宽度',
+    default: 200,
     validator: (value: number | string) => {
       if (typeof value === 'number' && value <= 0) {
         console.warn('[LewImage] width 必须大于0')
@@ -41,8 +36,7 @@ export const imageProps = {
   },
   height: {
     type: [Number, String],
-    default: '',
-    description: '图片高度',
+    default: 200,
     validator: (value: number | string) => {
       if (typeof value === 'number' && value <= 0) {
         console.warn('[LewImage] height 必须大于0')
@@ -54,7 +48,7 @@ export const imageProps = {
   objectFit: {
     type: String as PropType<ObjectFit>,
     default: 'cover',
-    description: '图片适应容器方式',
+    typeDesc: `fill | contain | cover | none | scale-down`,
     validator: (value: ObjectFit) => {
       const validValues: ObjectFit[] = [
         'fill',
@@ -75,7 +69,7 @@ export const imageProps = {
   objectPosition: {
     type: String,
     default: 'center',
-    description: '图片在容器中的位置',
+    typeDesc: `center | top | bottom | left | right | top left | top right | bottom left | bottom right`,
     validator: (value: string) => {
       const validPositions = [
         'center',
@@ -101,17 +95,14 @@ export const imageProps = {
   lazy: {
     type: Boolean,
     default: false,
-    description: '是否启用懒加载'
   },
   loading: {
     type: Boolean,
     default: false,
-    description: '是否处于加载状态'
   },
   title: {
     type: String,
     default: '',
-    description: '图片标题',
     validator: (value: string) => {
       if (value.length > 50) {
         console.warn('[LewImage] title 不应超过50个字符')

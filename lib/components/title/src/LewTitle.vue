@@ -20,7 +20,8 @@ const titleStyle = computed(() => {
 
 <template>
   <div class="lew-title" :style="titleStyle">
-    <slot></slot>
+    <template v-if="text">{{ text }}</template>
+    <slot v-else></slot>
   </div>
 </template>
 

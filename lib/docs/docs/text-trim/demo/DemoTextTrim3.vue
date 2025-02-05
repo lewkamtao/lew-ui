@@ -80,10 +80,6 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { LewTextTrim } from 'lew-ui'
-</script>
-
 <style lang="scss" scoped>
 .demo-text-trim-3 {
   display: flex;

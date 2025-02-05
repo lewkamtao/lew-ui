@@ -14,7 +14,7 @@ const getStyle = computed<CSSProperties>(() => {
       position: 'absolute',
       left: '0',
       top: '50%',
-      transform: 'translateY(calc(-50% + 1px))'
+      transform: 'translateY(-50%)'
     }
   }
 
