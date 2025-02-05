@@ -22,14 +22,23 @@ const options = ref(
 <template>
   <div class="demo-wrapper">
     <lew-component-info />
-    <lew-demo-box title="基础用法" :code="DemoBackTop1Code">
+    <lew-demo-box
+      :title="$t('components.backTop.demo1.title')"
+      :code="DemoBackTop1Code"
+    >
       <demo-back-top1 />
     </lew-demo-box>
-    <lew-demo-box title="自定义内容" :code="DemoBackTop2Code">
+    <lew-demo-box
+      :title="$t('components.backTop.demo2.title')"
+      :code="DemoBackTop2Code"
+    >
       <demo-back-top2 />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
-    <lew-demo-box title="指令" :code="DemoBackTop3Code">
+    <lew-demo-box
+      :title="$t('components.backTop.demo3.title')"
+      :code="DemoBackTop3Code"
+    >
       <demo-back-top3 />
     </lew-demo-box>
   </div>

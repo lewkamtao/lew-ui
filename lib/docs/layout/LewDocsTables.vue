@@ -93,7 +93,11 @@ const columnsMap: any = {
     {
       title: '描述',
       width: 250,
-      field: 'description'
+      field: 'description',
+      customRender: ({ row }: any) => {
+        const { name } = row
+        return docsLocale.t(`components.${getComponentName()}.slots.${name}`)
+      }
     },
     {
       title: '参数',
@@ -110,7 +114,11 @@ const columnsMap: any = {
     {
       title: '描述',
       width: 220,
-      field: 'description'
+      field: 'description',
+      customRender: ({ row }: any) => {
+        const { name } = row
+        return docsLocale.t(`components.${getComponentName()}.events.${name}`)
+      }
     },
     {
       title: '参数',
@@ -127,7 +135,11 @@ const columnsMap: any = {
     {
       title: '描述',
       width: 240,
-      field: 'description'
+      field: 'description',
+      customRender: ({ row }: any) => {
+        const { name } = row
+        return docsLocale.t(`components.${getComponentName()}.methods.${name}`)
+      }
     },
     {
       title: '参数',

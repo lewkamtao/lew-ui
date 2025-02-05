@@ -253,7 +253,27 @@ export default {
     },
     backTop: {
       name: '返回顶部 BackTop',
-      description: '一键回到顶部，让长页面浏览不再烦恼'
+      description: '一键回到顶部，让长页面浏览不再烦恼',
+      demo1: {
+        title: '基本用法'
+      },
+      demo2: {
+        title: '自定义内容'
+      },
+      demo3: {
+        title: '指令方式触发'
+      },
+      props: {
+        target:
+          '指定触发滚动事件的目标元素，使用 CSS 选择器。如果为空，则默认为整个窗口。',
+        right: '设置组件距离页面右侧的距离，单位为像素。',
+        bottom: '设置组件距离页面底部的距离，单位为像素。',
+        valveHeight:
+          '设置页面滚动高度的阈值，当滚动高度超过此值时显示回到顶部按钮，单位为像素。'
+      },
+      events: {
+        click: '回到顶部事件回调'
+      }
     },
     steps: {
       name: '步骤条 Steps',
