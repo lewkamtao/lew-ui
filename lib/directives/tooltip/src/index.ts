@@ -14,7 +14,7 @@ export const LewTooltip = {
         if (!trigger) {
           _trigger = 'mouseenter'
         }
-		
+
         el.instance = tippy(el, {
           theme: 'light',
           trigger: _trigger,

@@ -14,7 +14,7 @@ import {
   isString,
   cloneDeep
 } from 'lodash-es'
-import type { FlexAlignment, TextTrimAlignment } from 'lew-ui'
+import type { FlexXAlignment, FlexYAlignment, TextTrimAlignment } from 'lew-ui'
 import SortIcon from './SortIcon.vue'
 
 const props = defineProps(tableProps)
@@ -479,8 +479,8 @@ onUnmounted(() => {
               :key="`columns${index}`"
               class="lew-table-td"
               :class="{ 'lew-table-td-sortable': column.sortable }"
-              :x="(column.x as FlexAlignment) || 'start'"
-              :y="column.y as FlexAlignment"
+              :x="(column.x as FlexXAlignment) || 'start'"
+              :y="column.y as FlexYAlignment"
               :style="getColumnStyle(column)"
               gap="5"
               @click="sort(column)"
@@ -504,8 +504,8 @@ onUnmounted(() => {
               :key="`columns${index}`"
               class="lew-table-td"
               :class="{ 'lew-table-td-sortable': column.sortable }"
-              :x="(column.x as FlexAlignment) || 'start'"
-              :y="column.y as FlexAlignment"
+              :x="(column.x as FlexXAlignment) || 'start'"
+              :y="column.y as FlexYAlignment"
               :style="getColumnStyle(column)"
               gap="5"
               @click="sort(column)"
@@ -533,8 +533,8 @@ onUnmounted(() => {
               :key="`columns${index}`"
               class="lew-table-td"
               :class="{ 'lew-table-td-sortable': column.sortable }"
-              :x="(column.x as FlexAlignment) || 'start'"
-              :y="column.y as FlexAlignment"
+              :x="(column.x as FlexXAlignment) || 'start'"
+              :y="column.y as FlexYAlignment"
               :style="getColumnStyle(column)"
               gap="5"
               @click="sort(column)"
@@ -591,8 +591,8 @@ onUnmounted(() => {
               v-for="(column, j) in getFixedColumns('left')"
               :key="`col${j}`"
               class="lew-table-td"
-              :x="(column.x as FlexAlignment) || 'start'"
-              :y="column.y as FlexAlignment"
+              :x="(column.x as FlexXAlignment) || 'start'"
+              :y="column.y as FlexYAlignment"
               :style="getColumnStyle(column, row)"
             >
               <slot
@@ -625,8 +625,8 @@ onUnmounted(() => {
               v-for="(column, j) in nonFixedColumns"
               :key="`col${j}`"
               class="lew-table-td"
-              :x="(column.x as FlexAlignment) || 'start'"
-              :y="column.y as FlexAlignment"
+              :x="(column.x as FlexXAlignment) || 'start'"
+              :y="column.y as FlexYAlignment"
               :style="getColumnStyle(column, row)"
             >
               <slot
@@ -663,8 +663,8 @@ onUnmounted(() => {
               v-for="(column, j) in getFixedColumns('right')"
               :key="`col${j}`"
               class="lew-table-td"
-              :x="(column.x as FlexAlignment) || 'start'"
-              :y="column.y as FlexAlignment"
+              :x="(column.x as FlexXAlignment) || 'start'"
+              :y="column.y as FlexYAlignment"
               :style="getColumnStyle(column, row)"
             >
               <slot
@@ -687,7 +687,12 @@ onUnmounted(() => {
     </div>
     <template v-if="dataSource.length === 0">
       <slot v-if="$slots.empty" name="empty"></slot>
-      <lew-flex v-else :style="{ padding: getEmptyPadding + 'px' }">
+      <lew-flex
+        v-else
+        x="center"
+        y="center"
+        :style="{ padding: getEmptyPadding + 'px' }"
+      >
         <lew-empty v-bind="getEmptyProps" />
       </lew-flex>
     </template>

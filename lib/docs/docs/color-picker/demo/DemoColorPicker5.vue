@@ -4,9 +4,6 @@ const color = ref('#409EFF')
 
 <template>
   <div style="width: 300px">
-    <lew-color-picker
-      v-model="color"
-      readonly
-    />
+    <lew-color-picker v-model="color" readonly />
   </div>
 </template>

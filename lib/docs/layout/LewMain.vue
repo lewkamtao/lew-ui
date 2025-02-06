@@ -22,7 +22,7 @@ onMounted(() => {
   <div class="wrapper">
     <the-header
       :style="{
-        background: route.path === '/' ? 'transparent' : 'var(--lew-bgcolor-0)',
+        background: route.path === '/' ? 'transparent' : 'var(--lew-bgcolor-0)'
       }"
     />
     <router-view />

@@ -18,19 +18,26 @@ const { modelValue, expandKeys, modelValueKeyPath, collapsed }: any =
   inject('menu-tree')
 const emit = defineEmits(['change'])
 
+const tagRef = ref()
+const tagWidth = ref(0)
+
+onMounted(() => {
+  tagWidth.value = tagRef.value?.$el?.offsetWidth
+})
+
 const change = () => {
   if (props.disabled) return
 
   if (!props.isLeaf) {
-    const index = expandKeys.value.indexOf(props.menuKey)
+    const index = expandKeys.value.indexOf(props.value)
     if (index > -1) {
       expandKeys.value.splice(index, 1)
     } else {
-      expandKeys.value.push(props.menuKey)
+      expandKeys.value.push(props.value)
     }
   } else {
-    if (modelValue.value !== props.menuKey) {
-      modelValue.value = props.menuKey
+    if (modelValue.value !== props.value) {
+      modelValue.value = props.value
     }
   }
   expandKeys.value = cloneDeep(expandKeys.value)
@@ -45,9 +52,9 @@ const change = () => {
       y="center"
       class="lew-menu-tree-item-label"
       :class="{
-        'lew-menu-tree-item-label-active': modelValue === menuKey,
+        'lew-menu-tree-item-label-active': modelValue === value,
         'lew-menu-tree-item-label-selected': modelValueKeyPath?.includes(
-          menuKey as string | number
+          value as string | number
         ),
         'lew-menu-tree-item-label-leaf': isLeaf,
         'lew-menu-tree-item-label-disabled': disabled,
@@ -70,11 +77,14 @@ const change = () => {
           v-else
           class="lew-menu-tree-item-text"
           placement="right"
-          :style="{ maxWidth: `calc(100% - ${renderIcon() || tagText ? 70 : 0}px)` }"
+          :style="{
+            maxWidth: `calc(100% - ${renderIcon() || tagText ? tagWidth + 30 - (isLeaf ? 30 : 0) : 0}px)`
+          }"
           :text="label"
           :delay="[250, 250]"
         />
         <lew-tag
+          ref="tagRef"
           v-if="tagText"
           :color="tagColor"
           :type="tagType"
@@ -88,7 +98,7 @@ const change = () => {
           class="lew-menu-tree-item-chevron-right"
           :size="14"
           :style="{
-            transform: `rotate(${expandKeys.includes(menuKey) ? 270 : 90}deg)`,
+            transform: `rotate(${expandKeys.includes(value) ? 270 : 90}deg)`,
             transition: 'all 0.2s'
           }"
           type="chevron-right"
@@ -97,7 +107,7 @@ const change = () => {
     </lew-flex>
     <lew-collapse-transition v-if="!isLeaf">
       <div
-        v-if="expandKeys.includes(menuKey) && !collapsed"
+        v-if="expandKeys.includes(value) && !collapsed"
         :style="{
           marginTop: level === 1 ? '5px' : 0
         }"

@@ -75,7 +75,7 @@ export const LewVHoverMenu = {
           const { options } = binding.value
           window.LewHoverMenu.menu[elId] = options || []
         }
-        
+
         const { disabled } = binding.value
         if (disabled) {
           window.LewHoverMenu.disabledIds.push(elId)

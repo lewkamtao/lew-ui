@@ -6,11 +6,6 @@ import DemoMessage1Code from './DemoMessage1.vue?raw'
 import DemoMessage2Code from './DemoMessage2.vue?raw'
 import DemoMessage3Code from './DemoMessage3.vue?raw'
 
-export {
-  DemoMessage1,
-  DemoMessage2,
-  DemoMessage3,
-  DemoMessage1Code,
-  DemoMessage2Code,
-  DemoMessage3Code
-}
+export const demoGroup = [DemoMessage1, DemoMessage2, DemoMessage3]
+
+export const codeGroup = [DemoMessage1Code, DemoMessage2Code, DemoMessage3Code]

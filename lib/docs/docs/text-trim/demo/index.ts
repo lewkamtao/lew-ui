@@ -7,13 +7,16 @@ import DemoTextTrim3Code from './DemoTextTrim3.vue?raw'
 import DemoTextTrim4 from './DemoTextTrim4.vue'
 import DemoTextTrim4Code from './DemoTextTrim4.vue?raw'
 
-export {
+export const demoGroup = [
   DemoTextTrim1,
-  DemoTextTrim1Code,
   DemoTextTrim2,
-  DemoTextTrim2Code,
   DemoTextTrim3,
+  DemoTextTrim4
+]
+
+export const codeGroup = [
+  DemoTextTrim1Code,
+  DemoTextTrim2Code,
   DemoTextTrim3Code,
-  DemoTextTrim4,
   DemoTextTrim4Code
-}
+]

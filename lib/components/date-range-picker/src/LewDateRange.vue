@@ -6,7 +6,7 @@ import type { RetItemType } from '../../date-picker/src/date'
 import { dateRangeProps } from './props'
 import { LewFlex, LewButton } from 'lew-ui'
 import Icon from 'lew-ui/utils/Icon.vue'
-import {locale } from 'lew-ui'
+import { locale } from 'lew-ui'
 // Props
 const props = defineProps(dateRangeProps)
 
@@ -331,13 +331,13 @@ defineExpose({ init })
 
 const headDate = computed(() => {
   return [
-   locale.t('datePicker.Mon'),
-   locale.t('datePicker.Tue'),
-   locale.t('datePicker.Wed'),
-   locale.t('datePicker.Thu'),
-   locale.t('datePicker.Fri'),
-   locale.t('datePicker.Sat'),
-   locale.t('datePicker.Sun')
+    locale.t('datePicker.Mon'),
+    locale.t('datePicker.Tue'),
+    locale.t('datePicker.Wed'),
+    locale.t('datePicker.Thu'),
+    locale.t('datePicker.Fri'),
+    locale.t('datePicker.Sat'),
+    locale.t('datePicker.Sun')
   ]
 })
 </script>

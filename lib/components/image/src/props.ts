@@ -94,11 +94,11 @@ export const imageProps = {
   },
   lazy: {
     type: Boolean,
-    default: false,
+    default: false
   },
   loading: {
     type: Boolean,
-    default: false,
+    default: false
   },
   title: {
     type: String,

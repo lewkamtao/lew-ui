@@ -111,7 +111,9 @@ defineExpose({ show, hide })
             }"
           >
             <div v-show="!modelValue" class="lew-date-picker-placeholder">
-              {{ placeholder ? placeholder : locale.t('datePicker.placeholder') }}
+              {{
+                placeholder ? placeholder : locale.t('datePicker.placeholder')
+              }}
             </div>
             <div v-show="modelValue" class="lew-date-picker-dateValue">
               {{ modelValue }}

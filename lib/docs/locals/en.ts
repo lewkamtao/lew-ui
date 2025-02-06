@@ -22,14 +22,16 @@ export default {
   components: {
     image: {
       name: 'Image',
-      description: 'Enhanced image display with lazy loading, loading states and error handling',
+      description:
+        'Enhanced image display with lazy loading, loading states and error handling',
       demo1: {
         title: 'Basic Usage'
       },
       demo2: {
         title: 'Loading State',
         tipsTitle: 'Tips',
-        tipsContent: 'Width and height must be set for placeholder loading effect.'
+        tipsContent:
+          'Width and height must be set for placeholder loading effect.'
       },
       demo3: {
         title: 'Load Failed'
@@ -38,7 +40,7 @@ export default {
         src: 'Image source URL',
         alt: 'Image alternative text',
         width: 'Width',
-        height: 'Height', 
+        height: 'Height',
         objectFit: 'Object-fit mode',
         objectPosition: 'Object position',
         lazy: 'Enable lazy loading',
@@ -48,7 +50,8 @@ export default {
     },
     avatar: {
       name: 'Avatar',
-      description: 'A refined avatar component supporting images, icons and text',
+      description:
+        'A refined avatar component supporting images, icons and text',
       demo1: {
         title: 'Basic Usage'
       },
@@ -109,7 +112,8 @@ export default {
     },
     tag: {
       name: 'Tag',
-      description: 'A compact yet powerful labeling tool for content categorization',
+      description:
+        'A compact yet powerful labeling tool for content categorization',
       demo1: {
         title: 'Basic Usage'
       },
@@ -143,7 +147,8 @@ export default {
     },
     badge: {
       name: 'Badge',
-      description: 'A small red dot in the top-right corner for eye-catching notifications',
+      description:
+        'A small red dot in the top-right corner for eye-catching notifications',
       demo1: {
         title: 'Basic Usage'
       },
@@ -280,7 +285,8 @@ export default {
     },
     form: {
       name: 'Form',
-      description: 'Powerful form handling capabilities for effortless data collection'
+      description:
+        'Powerful form handling capabilities for effortless data collection'
     },
     input: {
       name: 'Input',
@@ -332,7 +338,8 @@ export default {
     },
     treeSelect: {
       name: 'TreeSelect',
-      description: 'Tree-structured selector for intuitive hierarchical selection'
+      description:
+        'Tree-structured selector for intuitive hierarchical selection'
     },
     inputTable: {
       name: 'InputTable',
@@ -384,7 +391,8 @@ export default {
     },
     desc: {
       name: 'Desc',
-      description: 'Organized field display for standardized information presentation'
+      description:
+        'Organized field display for standardized information presentation'
     },
     alert: {
       name: 'Alert',
@@ -412,7 +420,8 @@ export default {
     },
     popok: {
       name: 'Popok',
-      description: 'Lightweight confirmation popup for quick action verification'
+      description:
+        'Lightweight confirmation popup for quick action verification'
     },
     popover: {
       name: 'Popover',

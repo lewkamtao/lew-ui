@@ -1,18 +1,15 @@
 <script setup lang="ts">
-import {
-  DemoSwitch1,
-  DemoSwitch2,
-  DemoSwitch3,
-  DemoSwitch4,
-  DemoSwitch1Code,
-  DemoSwitch2Code,
-  DemoSwitch3Code,
-  DemoSwitch4Code
-} from './demo'
-import LewDemoBox from '../../layout/LewDemoBox.vue'
-import LewDocsTables from '../../layout/LewDocsTables.vue'
+import { demoGroup, codeGroup } from './demo'
+import LewDemoBox from '@/layout/LewDemoBox.vue'
+import LewDocsTables from '@/layout/LewDocsTables.vue'
 import * as API from './api'
 import LewComponentInfo from '@/layout/LewComponentInfo.vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+// 转小写
+const componentName: string = (route.name as string)
+  .replace('R-Lew', '')
+  .replace(/^[A-Z]/, (match) => match.toLowerCase())
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -24,17 +21,16 @@ const options = ref(
 <template>
   <div class="demo-wrapper">
     <lew-component-info />
-    <lew-demo-box title="圆的" :code="DemoSwitch1Code">
-      <demo-switch1 />
-    </lew-demo-box>
-    <lew-demo-box title="方的" :code="DemoSwitch2Code">
-      <demo-switch2 />
-    </lew-demo-box>
-    <lew-demo-box title="异步" :code="DemoSwitch3Code">
-      <demo-switch3 />
-    </lew-demo-box>
-    <lew-demo-box title="只读和禁用" :code="DemoSwitch4Code">
-      <demo-switch4 />
+    <lew-demo-box
+      v-for="(item, index) in demoGroup"
+      :key="index"
+      :title="$t(`components.${componentName}.demo${index + 1}.title`)"
+      :description="
+        $t(`components.${componentName}.demo${index + 1}.description`)
+      "
+      :code="codeGroup[index]"
+    >
+      <component :is="item" />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>

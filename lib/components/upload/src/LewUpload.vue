@@ -8,7 +8,7 @@ import { any2px, getUniqueId, formatBytes, object2class } from 'lew-ui/utils'
 import { useClipboardItems } from '@vueuse/core'
 import { cloneDeep, isFunction } from 'lodash-es'
 import Icon from 'lew-ui/utils/Icon.vue'
-import {locale } from 'lew-ui'
+import { locale } from 'lew-ui'
 
 const props = defineProps(uploadProps)
 
@@ -271,7 +271,7 @@ const getTips = computed(() => {
     }
     if (maxFileSize) {
       tips.push(
-       locale.t('upload.maxFileSize', {
+        locale.t('upload.maxFileSize', {
           maxFileSize: formatBytes(maxFileSize)
         })
       )

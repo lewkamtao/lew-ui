@@ -13,14 +13,18 @@ import DemoUpload4Code from './DemoUpload4.vue?raw'
 import DemoUpload5Code from './DemoUpload5.vue?raw'
 import DemoUpload6Code from './DemoUpload6.vue?raw'
 import DemoUpload7Code from './DemoUpload7.vue?raw'
-export {
+
+export const demoGroup = [
   DemoUpload1,
   DemoUpload2,
   DemoUpload3,
   DemoUpload4,
   DemoUpload5,
   DemoUpload6,
-  DemoUpload7,
+  DemoUpload7
+]
+
+export const codeGroup = [
   DemoUpload1Code,
   DemoUpload2Code,
   DemoUpload3Code,
@@ -28,4 +32,4 @@ export {
   DemoUpload5Code,
   DemoUpload6Code,
   DemoUpload7Code
-}
+]

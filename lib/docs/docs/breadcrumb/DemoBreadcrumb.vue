@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import {
-  DemoBreadcrumb1,
-  DemoBreadcrumb2,
-  DemoBreadcrumb3,
-  DemoBreadcrumb1Code,
-  DemoBreadcrumb2Code,
-  DemoBreadcrumb3Code
-} from './demo'
-import LewDemoBox from '../../layout/LewDemoBox.vue'
-import LewDocsTables from '../../layout/LewDocsTables.vue'
+import { demoGroup, codeGroup } from './demo'
+import LewDemoBox from '@/layout/LewDemoBox.vue'
+import LewDocsTables from '@/layout/LewDocsTables.vue'
 import * as API from './api'
 import LewComponentInfo from '@/layout/LewComponentInfo.vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+// 转小写
+const componentName: string = (route.name as string)
+  .replace('R-Lew', '')
+  .replace(/^[A-Z]/, (match) => match.toLowerCase())
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -22,14 +21,16 @@ const options = ref(
 <template>
   <div class="demo-wrapper">
     <lew-component-info />
-    <lew-demo-box title="常规" :code="DemoBreadcrumb1Code">
-      <demo-breadcrumb1 />
-    </lew-demo-box>
-    <lew-demo-box title="自定义当前选中" :code="DemoBreadcrumb2Code">
-      <demo-breadcrumb2 />
-    </lew-demo-box>
-    <lew-demo-box title="图标类型" :code="DemoBreadcrumb3Code">
-      <demo-breadcrumb3 />
+    <lew-demo-box
+      v-for="(item, index) in demoGroup"
+      :key="index"
+      :title="$t(`components.${componentName}.demo${index + 1}.title`)"
+      :description="
+        $t(`components.${componentName}.demo${index + 1}.description`)
+      "
+      :code="codeGroup[index]"
+    >
+      <component :is="item" />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>

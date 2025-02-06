@@ -111,7 +111,7 @@ const getCheckboxClassName = computed(() => {
   }
 }
 
-    .lew-checkbox-size-small {
+.lew-checkbox-size-small {
   .lew-checkbox-label {
     font-size: 13px;
   }

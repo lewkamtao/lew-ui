@@ -1,6 +1,13 @@
 <script lang="ts" setup>
 import type { MenuTreeItem } from 'lew-ui'
-import { Home, ShoppingCart, Users, Target, BarChart2, Settings } from 'lucide-vue-next'
+import {
+  Home,
+  ShoppingCart,
+  Users,
+  Target,
+  BarChart2,
+  Settings
+} from 'lucide-vue-next'
 const value = ref(['1', '1-1', '1-1-1'])
 const options = [
   {

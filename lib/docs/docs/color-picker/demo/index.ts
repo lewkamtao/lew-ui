@@ -10,15 +10,18 @@ import DemoColorPicker3Code from './DemoColorPicker3.vue?raw'
 import DemoColorPicker4Code from './DemoColorPicker4.vue?raw'
 import DemoColorPicker5Code from './DemoColorPicker5.vue?raw'
 
-export {
+export const demoGroup = [
   DemoColorPicker1,
-  DemoColorPicker1Code,
   DemoColorPicker2,
-  DemoColorPicker2Code,
   DemoColorPicker3,
-  DemoColorPicker3Code,
   DemoColorPicker4,
+  DemoColorPicker5
+]
+
+export const codeGroup = [
+  DemoColorPicker1Code,
+  DemoColorPicker2Code,
+  DemoColorPicker3Code,
   DemoColorPicker4Code,
-  DemoColorPicker5,
   DemoColorPicker5Code
-}
+]

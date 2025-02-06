@@ -17,137 +17,60 @@ const getComponentName = () => {
     .replace(/^[A-Z]/, (letter) => letter.toLowerCase())
 }
 
-const columnsMap: any = {
-  model: [
-    {
-      title: '参数名',
-      width: 120,
-      field: 'name'
-    },
-    {
-      title: '描述',
-      width: 200,
-      field: 'description',
-      customRender: ({ row }: any) => {
-        const { name } = row
-        return docsLocale.t(`components.${getComponentName()}.model.${name}`)
+const getColumns = computed(
+  () =>
+    ({ columnsKey, title }: { columnsKey: string; title: string }) => {
+      const nameMap: Record<string, string> = {
+        model: '参数名称',
+        props: '参数名称',
+        slots: '插槽名称',
+        events: '事件名称',
+        methods: '方法名称'
       }
-    },
-    {
-      title: '类型',
-      width: 200,
-      field: 'type',
-      customRender: ({ row }: any) => {
-        const { typeDesc, type } = row
-        return typeDesc || type
+      const columns = [
+        {
+          title: nameMap[columnsKey],
+          width: 120,
+          field: 'name'
+        },
+        {
+          title: '描述',
+          width: 200,
+          field: 'description',
+          customRender: ({ row }: any) => {
+            const { name } = row
+            return docsLocale.t(
+              `components.${getComponentName()}.${title.replace(/^[A-Z]/, (match) => match.toLowerCase())}.${name}`
+            )
+          }
+        },
+        {
+          title: '类型',
+          width: 200,
+          field: 'type',
+          customRender: ({ row }: any) => {
+            const { typeDesc, type } = row
+            return typeDesc || type
+          }
+        }
+      ]
+
+      if (columnsKey !== 'events') {
+        columns.push({
+          title: '默认值',
+          width: 120,
+          field: 'default',
+          customRender: ({ text, row }: any) => {
+            const { name, defaultLocale } = row
+            return defaultLocale
+              ? docsLocale.t(`components.${getComponentName()}.default.${name}`)
+              : text || '-'
+          }
+        })
       }
-    },
-    {
-      title: '默认值',
-      width: 120,
-      field: 'default'
+      return columns
     }
-  ],
-  props: [
-    {
-      title: '参数名',
-      width: 120,
-      field: 'name'
-    },
-    {
-      title: '描述',
-      width: 200,
-      field: 'description',
-      customRender: ({ row }: any) => {
-        const { name } = row
-        return docsLocale.t(`components.${getComponentName()}.props.${name}`)
-      }
-    },
-    {
-      title: '类型',
-      width: 200,
-      field: 'type',
-      customRender: ({ row }: any) => {
-        const { typeDesc, type } = row
-        return typeDesc || type
-      }
-    },
-    {
-      title: '默认值',
-      width: 120,
-      field: 'default',
-      customRender: ({ text, row }: any) => {
-        const { name, defaultLocale } = row
-        return defaultLocale
-          ? docsLocale.t(`components.${getComponentName()}.default.${name}`)
-          : text || '-'
-      }
-    }
-  ],
-  slots: [
-    {
-      title: '插槽名',
-      width: 150,
-      field: 'name'
-    },
-    {
-      title: '描述',
-      width: 250,
-      field: 'description',
-      customRender: ({ row }: any) => {
-        const { name } = row
-        return docsLocale.t(`components.${getComponentName()}.slots.${name}`)
-      }
-    },
-    {
-      title: '参数',
-      width: 120,
-      field: 'params'
-    }
-  ],
-  events: [
-    {
-      title: '事件名',
-      width: 150,
-      field: 'name'
-    },
-    {
-      title: '描述',
-      width: 220,
-      field: 'description',
-      customRender: ({ row }: any) => {
-        const { name } = row
-        return docsLocale.t(`components.${getComponentName()}.events.${name}`)
-      }
-    },
-    {
-      title: '参数',
-      width: 240,
-      field: 'params'
-    }
-  ],
-  methods: [
-    {
-      title: '方法名',
-      width: 150,
-      field: 'name'
-    },
-    {
-      title: '描述',
-      width: 240,
-      field: 'description',
-      customRender: ({ row }: any) => {
-        const { name } = row
-        return docsLocale.t(`components.${getComponentName()}.methods.${name}`)
-      }
-    },
-    {
-      title: '参数',
-      width: 120,
-      field: 'params'
-    }
-  ]
-}
+)
 const sortValue = computed(() => {
   return props.options
     .map((e: any) => {
@@ -183,10 +106,7 @@ const copyObjectAsFile = (item: any) => {
       >
         {{ item.title }}
       </lew-title>
-      <lew-table
-        :data-source="item.data"
-        :columns="columnsMap[item.columnsKey]"
-      />
+      <lew-table :data-source="item.data" :columns="getColumns(item)" />
     </lew-flex>
   </lew-flex>
 </template>

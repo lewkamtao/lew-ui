@@ -8,13 +8,11 @@ import DemoRate2Code from './DemoRate2.vue?raw'
 import DemoRate3Code from './DemoRate3.vue?raw'
 import DemoRate4Code from './DemoRate4.vue?raw'
 
-export {
-  DemoRate1,
-  DemoRate2,
-  DemoRate3,
-  DemoRate4,
+export const demoGroup = [DemoRate1, DemoRate2, DemoRate3, DemoRate4]
+
+export const codeGroup = [
   DemoRate1Code,
   DemoRate2Code,
   DemoRate3Code,
   DemoRate4Code
-}
+]

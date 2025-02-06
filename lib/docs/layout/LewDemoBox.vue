@@ -33,7 +33,7 @@ defineProps({
       return ''
     }
   },
-  desc: {
+  description: {
     type: String,
     default() {
       return ''
@@ -48,6 +48,13 @@ defineProps({
 })
 
 const isShowCode = ref(false)
+const checkHasContent = computed(() => (text: string) => {
+  const pattern = /^components\.[a-zA-Z-]+\.demo\d+\.[a-z]+$/
+  if (text && !pattern.test(text)) {
+    return true
+  }
+  return false
+})
 </script>
 
 <template>
@@ -55,7 +62,7 @@ const isShowCode = ref(false)
     <lew-title :id="title" :size="18" class="demo-docs-title"
       >{{ title }}
       <lew-tag
-        v-if="tag"
+        v-if="checkHasContent(tag)"
         type="light"
         color="blue"
         style="margin: 2px 0px 0px 5px"
@@ -63,7 +70,9 @@ const isShowCode = ref(false)
         {{ tag }}
       </lew-tag>
     </lew-title>
-    <div class="desc">{{ desc }}</div>
+    <div v-if="checkHasContent(description)" class="desc">
+      {{ description }}
+    </div>
     <div class="demo-item">
       <div class="demo-cp lew-scrollbar">
         <slot></slot>

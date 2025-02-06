@@ -45,15 +45,16 @@ export const breadcrumbProps = {
       })
     }
   },
-  iconType: {
+  separator: {
     type: String,
     default: 'sprit',
+    typeDesc: 'shoulder | sprit',
     description: '分隔图标类型',
     validator(value: string): boolean {
       const validTypes: BreadcrumbIconType[] = ['shoulder', 'sprit']
       if (!validTypes.includes(value as BreadcrumbIconType)) {
         console.warn(
-          `[LewBreadcrumb] iconType 必须是 ${validTypes.join(' 或 ')}`
+          `[LewBreadcrumb] separator 必须是 ${validTypes.join(' 或 ')}`
         )
         return false
       }

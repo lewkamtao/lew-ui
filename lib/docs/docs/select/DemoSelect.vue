@@ -1,26 +1,15 @@
 <script setup lang="ts">
-import {
-  DemoSelect1,
-  DemoSelect2,
-  DemoSelect3,
-  DemoSelect4,
-  DemoSelect5,
-  DemoSelect6,
-  DemoSelect7,
-  DemoSelect8,
-  DemoSelect1Code,
-  DemoSelect2Code,
-  DemoSelect3Code,
-  DemoSelect4Code,
-  DemoSelect5Code,
-  DemoSelect6Code,
-  DemoSelect7Code,
-  DemoSelect8Code
-} from './demo'
-import LewDemoBox from '../../layout/LewDemoBox.vue'
-import LewDocsTables from '../../layout/LewDocsTables.vue'
+import { demoGroup, codeGroup } from './demo'
+import LewDemoBox from '@/layout/LewDemoBox.vue'
+import LewDocsTables from '@/layout/LewDocsTables.vue'
 import * as API from './api'
 import LewComponentInfo from '@/layout/LewComponentInfo.vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+// 转小写
+const componentName: string = (route.name as string)
+  .replace('R-Lew', '')
+  .replace(/^[A-Z]/, (match) => match.toLowerCase())
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -32,29 +21,16 @@ const options = ref(
 <template>
   <div class="demo-wrapper">
     <lew-component-info />
-    <lew-demo-box title="常规" :code="DemoSelect1Code">
-      <demo-select1 />
-    </lew-demo-box>
-    <lew-demo-box title="触发方式" :code="DemoSelect2Code">
-      <demo-select2 />
-    </lew-demo-box>
-    <lew-demo-box title="支持搜索" :code="DemoSelect3Code">
-      <demo-select3 />
-    </lew-demo-box>
-    <lew-demo-box title="插槽" :code="DemoSelect4Code">
-      <demo-select4 />
-    </lew-demo-box>
-    <lew-demo-box title="禁用项" :code="DemoSelect5Code">
-      <demo-select5 />
-    </lew-demo-box>
-    <lew-demo-box title="其他" :code="DemoSelect6Code">
-      <demo-select6 />
-    </lew-demo-box>
-    <lew-demo-box title="空状态插槽" :code="DemoSelect7Code">
-      <demo-select7 />
-    </lew-demo-box>
-    <lew-demo-box title="分组" :code="DemoSelect8Code">
-      <demo-select8 />
+    <lew-demo-box
+      v-for="(item, index) in demoGroup"
+      :key="index"
+      :title="$t(`components.${componentName}.demo${index + 1}.title`)"
+      :description="
+        $t(`components.${componentName}.demo${index + 1}.description`)
+      "
+      :code="codeGroup[index]"
+    >
+      <component :is="item" />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>

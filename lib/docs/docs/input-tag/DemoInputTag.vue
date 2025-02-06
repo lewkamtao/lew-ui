@@ -1,24 +1,15 @@
 <script setup lang="ts">
-import {
-  DemoInputTag1,
-  DemoInputTag2,
-  DemoInputTag3,
-  DemoInputTag4,
-  DemoInputTag5,
-  DemoInputTag6,
-  DemoInputTag7,
-  DemoInputTag1Code,
-  DemoInputTag2Code,
-  DemoInputTag3Code,
-  DemoInputTag4Code,
-  DemoInputTag5Code,
-  DemoInputTag6Code,
-  DemoInputTag7Code
-} from './demo'
-import LewDemoBox from '../../layout/LewDemoBox.vue'
-import LewDocsTables from '../../layout/LewDocsTables.vue'
+import { demoGroup, codeGroup } from './demo'
+import LewDemoBox from '@/layout/LewDemoBox.vue'
+import LewDocsTables from '@/layout/LewDocsTables.vue'
 import * as API from './api'
-import LewComponentInfo from '@/layout/LewComponentInfo.vue'    
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+// 转小写
+const componentName: string = (route.name as string)
+  .replace('R-Lew', '')
+  .replace(/^[A-Z]/, (match) => match.toLowerCase())
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -30,33 +21,16 @@ const options = ref(
 <template>
   <div class="demo-wrapper">
     <lew-component-info />
-
-    <lew-demo-box title="常规" :code="DemoInputTag1Code">
-      <demo-input-tag1 />
-      <lew-alert
-        style="margin-top: 20px"
-        type="info"
-        title="提示"
-        content="在focus状态下，按下Enter新增标签。"
-      />
-    </lew-demo-box>
-    <lew-demo-box title="提示语" :code="DemoInputTag2Code">
-      <demo-input-tag2 />
-    </lew-demo-box>
-    <lew-demo-box title="是否允许重复" :code="DemoInputTag3Code">
-      <demo-input-tag3 />
-    </lew-demo-box>
-    <lew-demo-box title="受控默认值" :code="DemoInputTag4Code">
-      <demo-input-tag4 />
-    </lew-demo-box>
-    <lew-demo-box title="可清空的" :code="DemoInputTag5Code">
-      <demo-input-tag5 />
-    </lew-demo-box>
-    <lew-demo-box title="只读状态" :code="DemoInputTag6Code">
-      <demo-input-tag6 />
-    </lew-demo-box>
-    <lew-demo-box title="禁用状态" :code="DemoInputTag7Code">
-      <demo-input-tag7 />
+    <lew-demo-box
+      v-for="(item, index) in demoGroup"
+      :key="index"
+      :title="$t(`components.${componentName}.demo${index + 1}.title`)"
+      :description="
+        $t(`components.${componentName}.demo${index + 1}.description`)
+      "
+      :code="codeGroup[index]"
+    >
+      <component :is="item" />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>

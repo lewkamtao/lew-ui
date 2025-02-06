@@ -85,7 +85,9 @@ const modelValue = defineModel<UploadFileItem[]>()
         <lew-flex
           v-else-if="
             item.status &&
-            !['complete', 'success', 'none', 'uploading'].includes(item.status as string)
+            !['complete', 'success', 'none', 'uploading'].includes(
+              item.status as string
+            )
           "
           v-tooltip="{
             content: statusMap[item.status || 'complete'],

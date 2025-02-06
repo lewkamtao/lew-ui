@@ -1,20 +1,15 @@
 <script setup lang="ts">
-import {
-  DemoMenuTree1,
-  DemoMenuTree1Code,
-  DemoMenuTree2,
-  DemoMenuTree2Code,
-  DemoMenuTree3,
-  DemoMenuTree3Code,
-  DemoMenuTree4,
-  DemoMenuTree4Code,
-  DemoMenuTree5,
-  DemoMenuTree5Code
-} from './demo'
-import LewDemoBox from '../../layout/LewDemoBox.vue'
-import LewDocsTables from '../../layout/LewDocsTables.vue'
+import { demoGroup, codeGroup } from './demo'
+import LewDemoBox from '@/layout/LewDemoBox.vue'
+import LewDocsTables from '@/layout/LewDocsTables.vue'
 import * as API from './api'
 import LewComponentInfo from '@/layout/LewComponentInfo.vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+// 转小写
+const componentName: string = (route.name as string)
+  .replace('R-Lew', '')
+  .replace(/^[A-Z]/, (match) => match.toLowerCase())
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore
@@ -26,23 +21,16 @@ const options = ref(
 <template>
   <div class="demo-wrapper">
     <lew-component-info />
-    <lew-demo-box title="基础用法" :code="DemoMenuTree1Code">
-      <demo-menu-tree1 />
-    </lew-demo-box>
-    <lew-demo-box title="自定义图标" :code="DemoMenuTree2Code">
-      <demo-menu-tree2 />
-    </lew-demo-box>
-    <lew-demo-box title="默认展开" :code="DemoMenuTree3Code">
-      <template #desc>
-        <div>通过 <lew-mark>v-model</lew-mark> 控制默认展开的菜单项。</div>
-      </template>
-      <demo-menu-tree3 />
-    </lew-demo-box>
-    <lew-demo-box title="标签" :code="DemoMenuTree4Code">
-      <demo-menu-tree4 />
-    </lew-demo-box>
-    <lew-demo-box title="自定义样式" :code="DemoMenuTree5Code">
-      <demo-menu-tree5 />
+    <lew-demo-box
+      v-for="(item, index) in demoGroup"
+      :key="index"
+      :title="$t(`components.${componentName}.demo${index + 1}.title`)"
+      :description="
+        $t(`components.${componentName}.demo${index + 1}.description`)
+      "
+      :code="codeGroup[index]"
+    >
+      <component :is="item" />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
   </div>

@@ -20,7 +20,7 @@ import DemoTable8Code from './DemoTable8.vue?raw'
 import DemoTable9Code from './DemoTable9.vue?raw'
 import DemoTable10Code from './DemoTable10.vue?raw'
 
-export {
+export const demoGroup = [
   DemoTable1,
   DemoTable2,
   DemoTable3,
@@ -30,7 +30,10 @@ export {
   DemoTable7,
   DemoTable8,
   DemoTable9,
-  DemoTable10,
+  DemoTable10
+]
+
+export const codeGroup = [
   DemoTable1Code,
   DemoTable2Code,
   DemoTable3Code,
@@ -41,4 +44,4 @@ export {
   DemoTable8Code,
   DemoTable9Code,
   DemoTable10Code
-}
+]

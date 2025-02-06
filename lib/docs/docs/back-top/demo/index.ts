@@ -6,11 +6,6 @@ import DemoBackTop1Code from './DemoBackTop1.vue?raw'
 import DemoBackTop2Code from './DemoBackTop2.vue?raw'
 import DemoBackTop3Code from './DemoBackTop3.vue?raw'
 
-export {
-  DemoBackTop1,
-  DemoBackTop1Code,
-  DemoBackTop2,
-  DemoBackTop2Code,
-  DemoBackTop3,
-  DemoBackTop3Code
-}
+export const demoGroup = [DemoBackTop1, DemoBackTop2, DemoBackTop3]
+
+export const codeGroup = [DemoBackTop1Code, DemoBackTop2Code, DemoBackTop3Code]

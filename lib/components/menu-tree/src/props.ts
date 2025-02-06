@@ -1,6 +1,7 @@
 import type { ExtractPropTypes } from 'vue'
 import { isValidCssValue } from 'lew-ui/utils'
 import type { TagType, LewColor } from 'lew-ui'
+
 export type MenuTreeItem = {
   label: string
   value: string | number
@@ -68,13 +69,19 @@ export const menuTreeProps = {
 }
 
 export const menuTreeItemProps = {
-  menuKey: {
+  label: {
+    type: String,
+    default: '',
+    description:
+      '菜单树项的标题文本。也可以使用具名插槽 "label" 自定义标题内容。'
+  },
+  value: {
     type: [String, Number],
     required: true,
     description: '菜单树项的唯一标识符。',
     validator(value: string | number): boolean {
       if (value === '') {
-        console.warn('[LewMenuTreeItem] menuKey 不能为空。')
+        console.warn('[LewMenuTreeItem] value 不能为空。')
         return false
       }
       return true
@@ -104,12 +111,6 @@ export const menuTreeItemProps = {
     type: Boolean,
     default: false,
     description: '菜单树项是否禁用。'
-  },
-  label: {
-    type: String,
-    default: '',
-    description:
-      '菜单树项的标题文本。也可以使用具名插槽 "label" 自定义标题内容。'
   },
   level: {
     type: Number,

@@ -81,7 +81,6 @@ export const LewVContextMenu = {
         if (!window.LewContextMenu.contextMenu) {
           // 右键菜单事件处理函数
           window.LewContextMenu.contextMenu = (e: MouseEvent) => {
-
             const id = findContextMenuId(e.target as HTMLElement)
             // 处理禁用和无效情况
             if (window.LewContextMenu.disabledIds.includes(id) || !id) {
@@ -171,7 +170,6 @@ export const LewVContextMenu = {
 export interface ContextMenus {
   label?: string // 显示文本
   value?: string // 值
-  type?: string // 类型
   icon?: string // 图标
   children?: ContextMenus[] // 子菜单
   disabled?: boolean // 是否禁用

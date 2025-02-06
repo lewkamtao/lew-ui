@@ -6,7 +6,6 @@ export type MenuOptions = {
   value?: string // 值
   children?: MenuOptions[] // 子菜单
   disabled?: boolean // 是否禁用
-  level?: number // 菜单层级
   renderIcon?: string // 图标
   tagText?: string // 标签文本
   tagColor?: LewColor // 标签颜色

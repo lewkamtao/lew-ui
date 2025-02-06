@@ -4,7 +4,7 @@ import { paginationProps } from './props'
 import type { PaginationOptions } from './props'
 import { object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import {locale } from 'lew-ui'
+import { locale } from 'lew-ui'
 const props = defineProps(paginationProps)
 const emit = defineEmits(['change', 'update:currentPage', 'update:pageSize'])
 
@@ -14,9 +14,12 @@ const pageSize: Ref<number> = defineModel('pageSize', { default: 10 })
 
 const getPageSizeOptions = computed(() => {
   if (Array.isArray(props.pageSizeOptions)) {
-    if (typeof props.pageSizeOptions[0] === 'string' || typeof props.pageSizeOptions[0] === 'number') {
+    if (
+      typeof props.pageSizeOptions[0] === 'string' ||
+      typeof props.pageSizeOptions[0] === 'number'
+    ) {
       return props.pageSizeOptions.map((item) => ({
-        label:locale.t('pagination.pageSize', { pageSize: item }),
+        label: locale.t('pagination.pageSize', { pageSize: item }),
         value: item
       }))
     }

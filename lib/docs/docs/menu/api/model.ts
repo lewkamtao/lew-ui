@@ -3,7 +3,7 @@ import { convertProps } from '@/lib/utils'
 
 export default {
   title: 'Model',
-  columnsKey: 'props',
+  columnsKey: 'model',
   orderNum: 10,
   data: convertProps(menuModel)
 }

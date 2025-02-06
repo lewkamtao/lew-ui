@@ -65,6 +65,7 @@ export const dropdownProps = {
     type: Array as PropType<DropdownOptions[]>,
     default: () => [],
     description: '选项列表',
+    typeDesc: 'ContextMenus[]',
     validator(value: DropdownOptions[]): boolean {
       if (!Array.isArray(value)) {
         console.warn('[LewDropdown] 选项列表必须是一个数组')

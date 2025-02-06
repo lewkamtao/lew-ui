@@ -8,15 +8,19 @@ import DemoMenuTree2Code from './DemoMenuTree2.vue?raw'
 import DemoMenuTree3Code from './DemoMenuTree3.vue?raw'
 import DemoMenuTree4Code from './DemoMenuTree4.vue?raw'
 import DemoMenuTree5Code from './DemoMenuTree5.vue?raw'
-export {
+
+export const demoGroup = [
   DemoMenuTree1,
-  DemoMenuTree1Code,
   DemoMenuTree2,
-  DemoMenuTree2Code,
   DemoMenuTree3,
-  DemoMenuTree3Code,
   DemoMenuTree4,
+  DemoMenuTree5
+]
+
+export const codeGroup = [
+  DemoMenuTree1Code,
+  DemoMenuTree2Code,
+  DemoMenuTree3Code,
   DemoMenuTree4Code,
-  DemoMenuTree5,
   DemoMenuTree5Code
-}
+]

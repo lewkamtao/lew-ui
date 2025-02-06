@@ -14,14 +14,17 @@ import DemoInputTag5Code from './DemoInputTag5.vue?raw'
 import DemoInputTag6Code from './DemoInputTag6.vue?raw'
 import DemoInputTag7Code from './DemoInputTag7.vue?raw'
 
-export {
+export const demoGroup = [
   DemoInputTag1,
   DemoInputTag2,
   DemoInputTag3,
   DemoInputTag4,
   DemoInputTag5,
   DemoInputTag6,
-  DemoInputTag7,
+  DemoInputTag7
+]
+
+export const codeGroup = [
   DemoInputTag1Code,
   DemoInputTag2Code,
   DemoInputTag3Code,
@@ -29,4 +32,4 @@ export {
   DemoInputTag5Code,
   DemoInputTag6Code,
   DemoInputTag7Code
-}
+]

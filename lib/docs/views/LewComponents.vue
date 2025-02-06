@@ -77,10 +77,6 @@ const options: MenuOptions[] = [
       {
         label: 'Mark',
         value: '/Mark'
-      },
-      {
-        label: 'Icon',
-        value: '/icon'
       }
     ]
   },
@@ -229,10 +225,6 @@ const options: MenuOptions[] = [
       {
         label: 'Pagination',
         value: '/Pagination'
-      },
-      {
-        label: 'MagicNumber',
-        value: '/MagicNumber'
       },
       {
         label: 'Tree',

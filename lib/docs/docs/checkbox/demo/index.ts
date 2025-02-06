@@ -10,15 +10,18 @@ import DemoCheckbox3Code from './DemoCheckbox3.vue?raw'
 import DemoCheckbox4Code from './DemoCheckbox4.vue?raw'
 import DemoCheckbox5Code from './DemoCheckbox5.vue?raw'
 
-export {
+export const demoGroup = [
   DemoCheckbox1,
   DemoCheckbox2,
   DemoCheckbox3,
   DemoCheckbox4,
-  DemoCheckbox5,
+  DemoCheckbox5
+]
+
+export const codeGroup = [
   DemoCheckbox1Code,
   DemoCheckbox2Code,
   DemoCheckbox3Code,
   DemoCheckbox4Code,
   DemoCheckbox5Code
-}
+]

@@ -1,12 +1,14 @@
 import { createI18n } from 'vue-i18n'
 import en from './en'
 import zh from './zh'
+import ja from './ja'
 
 export type Language = 'en' | 'zh'
 
 export const messages = {
   en,
-  zh
+  zh,
+  ja
 }
 
 const i18n = createI18n({

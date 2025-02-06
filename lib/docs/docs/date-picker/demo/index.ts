@@ -9,15 +9,18 @@ import DemoDatePicker3Code from './DemoDatePicker3.vue?raw'
 import DemoDatePicker4Code from './DemoDatePicker4.vue?raw'
 import DemoDatePicker5Code from './DemoDatePicker5.vue?raw'
 
-export {
+export const demoGroup = [
   DemoDatePicker1,
   DemoDatePicker2,
   DemoDatePicker3,
   DemoDatePicker4,
-  DemoDatePicker5,
+  DemoDatePicker5
+]
+
+export const codeGroup = [
   DemoDatePicker1Code,
   DemoDatePicker2Code,
   DemoDatePicker3Code,
   DemoDatePicker4Code,
   DemoDatePicker5Code
-}
+]

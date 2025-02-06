@@ -24,7 +24,7 @@ const currentStep = ref(1)
 <template>
   <lew-flex direction="y">
     <lew-steps :options="options" v-model="currentStep" />
-    <lew-flex>
+    <lew-flex x="center" y="center">
       <lew-button
         :disabled="currentStep === 1"
         @click="currentStep -= 1"

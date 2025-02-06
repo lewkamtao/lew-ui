@@ -14,14 +14,17 @@ import DemoTextarea5Code from './DemoTextarea5.vue?raw'
 import DemoTextarea6Code from './DemoTextarea6.vue?raw'
 import DemoTextarea7Code from './DemoTextarea7.vue?raw'
 
-export {
+export const demoGroup = [
   DemoTextarea1,
   DemoTextarea2,
   DemoTextarea3,
   DemoTextarea4,
   DemoTextarea5,
   DemoTextarea6,
-  DemoTextarea7,
+  DemoTextarea7
+]
+
+export const codeGroup = [
   DemoTextarea1Code,
   DemoTextarea2Code,
   DemoTextarea3Code,
@@ -29,4 +32,4 @@ export {
   DemoTextarea5Code,
   DemoTextarea6Code,
   DemoTextarea7Code
-}
+]

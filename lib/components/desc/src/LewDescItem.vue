@@ -109,10 +109,7 @@ const getLabelBoxWidth = computed(() => {
     :class="getDescItemClassNames"
     :style="getDescItemStyle"
   >
-    <div
-      :style="`width:${getLabelBoxWidth}`"
-      class="lew-label-box-wrapper"
-    >
+    <div :style="`width:${getLabelBoxWidth}`" class="lew-label-box-wrapper">
       <div class="lew-label-box" :style="getLabelBoxStyle">
         {{ label }}
         <Icon

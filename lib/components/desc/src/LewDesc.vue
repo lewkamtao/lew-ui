@@ -46,8 +46,7 @@ const getDescStyle = computed(() => {
 })
 
 const getBind = computed(() => (item: any) => {
-  const { direction, size, labelX, valueX, bordered, labelWidth } =
-    props
+  const { direction, size, labelX, valueX, bordered, labelWidth } = props
   return {
     direction,
     size,

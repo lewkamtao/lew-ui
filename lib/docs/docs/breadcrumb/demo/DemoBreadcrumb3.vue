@@ -31,7 +31,7 @@ const handleBreadcrumbClick = (item: any) => {
 <template>
   <lew-breadcrumb
     :options="options"
-    iconType="shoulder"
+    separator="shoulder"
     @change="handleBreadcrumbClick"
   />
 </template>

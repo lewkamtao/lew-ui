@@ -1,3 +1,12 @@
+const contextMenu = {
+  label: '显示文本',
+  value: '值',
+  renderIcon: '渲染图标函数',
+  children: '子节点集合',
+  disabled: '禁用选项',
+  isDividerLine: '是否是分割线'
+}
+
 export default {
   name: 'zh',
   home: {
@@ -200,6 +209,9 @@ export default {
       demo3: {
         title: '末端文本'
       },
+      demo4: {
+        title: '对齐方式'
+      },
       props: {
         text: '文本内容',
         lineClamp: '文本显示的最大行数，超出部分将被截断',
@@ -277,35 +289,281 @@ export default {
     },
     steps: {
       name: '步骤条 Steps',
-      description: '清晰展示操作流程，让用户知道自己在哪'
+      description: '清晰展示操作流程，让用户知道自己在哪',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '状态'
+      },
+      demo3: {
+        title: '加载中'
+      },
+      model: {
+        modelValue: '当前激活步骤的索引值'
+      },
+      props: {
+        options: '步骤配置项数组',
+        status: '步骤条的当前状态'
+      }
     },
     menu: {
       name: '菜单 Menu',
-      description: '优雅的垂直菜单，让导航层次分明'
+      description: '优雅的垂直菜单，让导航层次分明',
+      demo1: {
+        title: '基础用法'
+      },
+      model: {
+        modelValue: '当前激活菜单的绑定值'
+      },
+      props: {
+        options: '菜单配置项数组'
+      },
+      menuOptions: {
+        label: '菜单项的文本',
+        value: '菜单项的值',
+        children: '子菜单项数组',
+        disabled: '是否禁用菜单项',
+        icon: '菜单项的图标',
+        tagText: '菜单项的徽章文本',
+        tagColor: '菜单项的徽章颜色'
+      }
     },
     menuTree: {
       name: '菜单树 MenuTree',
-      description: '层级分明的树形菜单，轻松展示复杂的结构关系'
+      description: '层级分明的树形菜单，轻松展示复杂的结构关系',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '自定义图标'
+      },
+      demo3: {
+        title: '默认展开',
+        description: '通过 v-model 控制默认展开的菜单项。'
+      },
+      demo4: {
+        title: '标签'
+      },
+      demo5: {
+        title: '自定义样式'
+      },
+      model: {
+        modelValue: '当前激活菜单的绑定值',
+        expandKeys: '默认展开的菜单项的 key 值数组',
+        collapsed: '是否折叠菜单'
+      },
+      props: {
+        options: '菜单树的数据源，支持嵌套结构。',
+        width: '菜单树的宽度，支持 CSS 宽度值。'
+      },
+      menuTreeItem: {
+        label:
+          '菜单树项的标题文本。也可以使用具名插槽 "label" 自定义标题内容。',
+        value: '菜单项的值，用于标识菜单项的唯一性。',
+        level: '菜单树项的层级，从 1 开始。',
+        renderIcon: '图标渲染函数',
+        renderLabel: '标签渲染函数',
+        tagText: '菜单项的徽章文本',
+        tagType: '菜单项的徽章类型',
+        tagColor: '菜单项的徽章颜色',
+        disabled: '是否禁用菜单项',
+        isLeaf: '是否为叶子节点'
+      }
     },
     dropdown: {
       name: '下拉菜单 Dropdown',
-      description: '点击触发的悬浮菜单，让操作更加便捷'
+      description: '点击触发的悬浮菜单，让操作更加便捷',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '不仅仅是按钮'
+      },
+      demo3: {
+        title: '禁用项'
+      },
+      props: {
+        options: '菜单选项配置',
+        trigger: '触发方式',
+        placement: '菜单弹出位置'
+      },
+      'options (ContextMenus)': contextMenu,
+      events: {
+        show: '菜单显示事件回调',
+        hide: '菜单隐藏事件回调',
+        change: '菜单项选择事件回调'
+      }
     },
     breadcrumb: {
       name: '面包屑 Breadcrumb',
-      description: '清晰的路径导航，让用户不会迷失方向'
+      description: '清晰的路径导航，让用户不会迷失方向',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '自定义当前选中'
+      },
+      demo3: {
+        title: '分割图标类型'
+      },
+      props: {
+        options: '面包屑配置项数组',
+        separator: '分隔符图标类型'
+      },
+      breadcrumbOptions: {
+        label: '面包屑项的文本',
+        value: '面包屑项的值',
+        active: '是否为当前选中项'
+      },
+      events: {
+        change: '面包屑项发生变化时触发'
+      }
     },
     contextMenu: {
       name: '上下文菜单 ContextMenu',
-      description: '优雅的右键菜单，让操作更加自然'
+      description: '优雅的右键菜单，让操作更加自然',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '支持多级嵌套'
+      },
+      demo3: {
+        title: '支持动态更新'
+      },
+      props: {
+        options: '右键菜单配置',
+        disabled: '是否禁用右键菜单',
+        selectHandler: '选中菜单项时的回调函数'
+      },
+      'options (ContextMenus)': contextMenu
     },
     form: {
       name: '表单 Form',
-      description: '强大的表单处理能力，让数据收集得心应手'
+      description: '强大的表单处理能力，让数据收集得心应手',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '方向'
+      },
+      demo3: {
+        title: '自定义校验'
+      },
+      demo4: {
+        title: '支持网格布局'
+      },
+      demo5: {
+        title: '搭配表单引擎配置'
+      },
+      props: {
+        options: '定义表单结构和内容的配置选项数组',
+        size: '表单整体尺寸，影响所有表单项大小',
+        width: '表单整体宽度，支持数字（像素）或百分比字符串',
+        columns: '每行显示的表单项数量，最大值为4',
+        labelWidth: '表单项标签宽度，支持数字（像素）或 "auto"',
+        disabled: '是否禁用整个表单',
+        readonly: '是否将整个表单设为只读',
+        direction: '表单项排列方向，"x" 为水平，"y" 为垂直',
+        formMethods: '表单项的方法集合，包含用于操作表单的函数'
+      },
+      formItemProps: {
+        label: '表单项的标签文本',
+        field: '表单项对应的字段名，用于数据绑定和验证',
+        required: '是否为必填项',
+        as: '指定表单项的类型，如 "input"、"select" 等',
+        size: '单个表单项的尺寸，可覆盖表单整体设置',
+        width: '单个表单项的宽度，支持数字（像素）或百分比字符串',
+        labelWidth: '单个表单项标签宽度，支持数字（像素）或 "auto"',
+        direction: '单个表单项的排列方向，"x" 为水平，"y" 为垂直',
+        disabled: '是否禁用该表单项',
+        readonly: '是否将该表单项设为只读',
+        tips: '表单项的提示信息',
+        errMessage: '自定义验证失败时的错误提示',
+        rule: '表单项的验证规则',
+        props: '传递给表单项组件的额外属性',
+        between: '水平排列时是否在表单项之间添加间隔',
+        gridArea: '在网格布局中的位置',
+        outputFormat: '出参时的格式化方法',
+        inputFormat: '入参时的格式化方法'
+      },
+      events: {
+        mounted: '表单项挂载时触发'
+      },
+      methods: {
+        getForm: '获取表单',
+        setForm: '设置表单'
+      }
     },
     input: {
       name: '输入框 Input',
-      description: '功能丰富的输入框，让数据录入更加便捷'
+      description: '功能丰富的输入框，让数据录入更加便捷',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '前后缀'
+      },
+      demo3: {
+        title: '字数限制'
+      },
+      demo4: {
+        title: '对齐方式'
+      },
+      demo5: {
+        title: '密码可见'
+      },
+      demo6: {
+        title: '宽度自适应'
+      },
+      demo7: {
+        title: '聚焦后选择全部文本'
+      },
+      demo8: {
+        title: '可清空的'
+      },
+      demo9: {
+        title: '只读状态'
+      },
+      demo10: {
+        title: '禁用状态'
+      },
+      demo11: {
+        title: '按下回车键触发事件'
+      },
+      props: {
+        type: '输入框类型',
+        size: '输入框尺寸',
+        placeholder: '输入框占位文本',
+        disabled: '是否禁用输入框',
+        readonly: '是否将输入框设为只读',
+        clearable: '是否启用清除按钮',
+        showPassword: '是否启用密码可见',
+        maxLength: '最大输入长度',
+        showCount: '是否显示字符计数（仅在 type 为 text 时有效）',
+        align: '输入框文本对齐方式',
+        minWidth: '输入框最小宽度，支持数字（单位：像素）或带单位的字符串',
+        autoWidth: '是否根据内容自动调整宽度',
+        selectByFocus: '是否启用聚焦后选择全部文本',
+        copyable:
+          '是否允许复制内容（仅在 readonly 为 true 且 suffix 为 false 时生效）',
+        prefixes: '输入框前缀类型',
+        prefixesOptions: '输入框前缀选项列表，当 prefixes 为 select 时使用',
+        prefixesTooltip: '输入框前缀的 tooltip 提示文本',
+        suffix: '输入框后缀类型',
+        suffixOptions: '输入框后缀选项列表，当 suffix 为 select 时使用',
+        suffixTooltip: '输入框后缀的 tooltip 提示文本',
+        okByEnter: '是否允许通过回车键确认输入'
+      },
+      events: {
+        change: '输入框值发生变化时触发',
+        focus: '输入框获得焦点时触发',
+        blur: '输入框失去焦点时触发',
+        input: '输入框输入内容时触发',
+        clear: '输入框清空时触发',
+        ok: '输入框确认时触发'
+      }
     },
     inputNumber: {
       name: '数字输入框 InputNumber',

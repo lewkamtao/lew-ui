@@ -4,23 +4,23 @@ export default {
   data: [
     {
       name: 'change',
-      description: '值变化',
-      params: '() => void'
+      type: '() => void'
     },
     {
       name: 'blur',
-      description: '失焦',
-      params: '() => void'
+      type: '() => void'
     },
     {
       name: 'focus',
-      description: '聚焦',
-      params: '() => void'
+      type: '() => void'
+    },
+    {
+      name: 'clear',
+      type: '() => void'
     },
     {
       name: 'ok',
-      description: 'okByEnter 为 true 时触发',
-      params: '() => void'
+      type: '() => void'
     }
   ]
 }
