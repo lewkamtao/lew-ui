@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import docsLocale from '@/locals'
+import { locale, LewTag, LewFlex } from 'lew-ui'
+
 const props = defineProps({
   options: {
     type: Object,
@@ -27,12 +29,61 @@ const getColumns = computed(
         events: '事件名称',
         methods: '方法名称'
       }
-      const columns = [
+      let columns: any = [
         {
           title: nameMap[columnsKey],
           width: 120,
           field: 'name'
-        },
+        }
+      ]
+
+      if (!['events', 'methods', 'model'].includes(columnsKey)) {
+        columns = [
+          ...columns,
+          {
+            title: '类型',
+            width: 120,
+            field: 'type',
+            customRender: ({ row }: any) => {
+              const { typeDesc, type } = row
+              const tags = (typeDesc || type || '').split('|').map((e: any) => {
+                return h(
+                  LewTag,
+                  {
+                    type: 'light',
+                    color: 'mint',
+                    size: 'small'
+                  },
+                  e
+                )
+              })
+              return h(
+                LewFlex,
+                {
+                  x: 'start',
+                  y: 'center',
+                  gap: 5,
+                  wrap: true
+                },
+                tags
+              )
+            }
+          },
+          {
+            title: '默认值',
+            width: 120,
+            field: 'default',
+            customRender: ({ text, row }: any) => {
+              const { name, defaultLocale } = row
+              return defaultLocale
+                ? locale.t(`${getComponentName()}.${name}`)
+                : text || '-'
+            }
+          }
+        ]
+      }
+      columns = [
+        ...columns,
         {
           title: '描述',
           width: 200,
@@ -43,31 +94,8 @@ const getColumns = computed(
               `components.${getComponentName()}.${title.replace(/^[A-Z]/, (match) => match.toLowerCase())}.${name}`
             )
           }
-        },
-        {
-          title: '类型',
-          width: 200,
-          field: 'type',
-          customRender: ({ row }: any) => {
-            const { typeDesc, type } = row
-            return typeDesc || type
-          }
         }
       ]
-
-      if (columnsKey !== 'events') {
-        columns.push({
-          title: '默认值',
-          width: 120,
-          field: 'default',
-          customRender: ({ text, row }: any) => {
-            const { name, defaultLocale } = row
-            return defaultLocale
-              ? docsLocale.t(`components.${getComponentName()}.default.${name}`)
-              : text || '-'
-          }
-        })
-      }
       return columns
     }
 )

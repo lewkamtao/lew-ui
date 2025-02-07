@@ -28,6 +28,18 @@ let _searchMethod = computed(() => {
   }
 })
 
+watch(
+  () => props.options,
+  () => {
+    state.keyword = props.options.find(
+      (e: any) => e.value === selectValue.value
+    )?.label
+  },
+  {
+    deep: true
+  }
+)
+
 const state = reactive({
   selectWidth: 0,
   visible: false,

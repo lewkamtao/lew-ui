@@ -135,9 +135,6 @@ const change = () => {
       color 0.25s;
     border-radius: var(--lew-border-radius-small);
     overflow: hidden;
-    .lew-menu-tree-item-text {
-      transition: opacity 1s;
-    }
   }
   .lew-menu-tree-item-label:hover {
     background-color: var(--lew-bgcolor-3);

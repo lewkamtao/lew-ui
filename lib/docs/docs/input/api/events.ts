@@ -3,24 +3,19 @@ export default {
   columnsKey: 'events',
   data: [
     {
-      name: 'change',
-      type: '() => void'
+      name: 'change'
     },
     {
-      name: 'blur',
-      type: '() => void'
+      name: 'blur'
     },
     {
-      name: 'focus',
-      type: '() => void'
+      name: 'focus'
     },
     {
-      name: 'clear',
-      type: '() => void'
+      name: 'clear'
     },
     {
-      name: 'ok',
-      type: '() => void'
+      name: 'ok'
     }
   ]
 }
