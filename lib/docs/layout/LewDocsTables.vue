@@ -37,7 +37,7 @@ const getColumns = computed(
         }
       ]
 
-      if (!['events', 'methods', 'model'].includes(columnsKey)) {
+      if (!['events', 'methods'].includes(columnsKey)) {
         columns = [
           ...columns,
           {
@@ -46,17 +46,20 @@ const getColumns = computed(
             field: 'type',
             customRender: ({ row }: any) => {
               const { typeDesc, type } = row
-              const tags = (typeDesc || type || '').split('|').map((e: any) => {
-                return h(
-                  LewTag,
-                  {
-                    type: 'light',
-                    color: 'mint',
-                    size: 'small'
-                  },
-                  e
-                )
-              })
+              const tags = (typeDesc || type || '')
+                .split('|')
+                .map((text: any) => {
+                  // 去除前后的空格
+                  return h(
+                    LewTag,
+                    {
+                      type: 'light',
+                      color: 'mint',
+                      size: 'small'
+                    },
+                    text.trim()
+                  )
+                })
               return h(
                 LewFlex,
                 {
