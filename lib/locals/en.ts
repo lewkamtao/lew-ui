@@ -12,6 +12,9 @@ export default {
   textarea: {
     placeholder: 'Please input'
   },
+  inputTag: {
+    placeholder: 'Press Enter to add'
+  },
   datePicker: {
     Mon: 'Mon',
     Tue: 'Tue',

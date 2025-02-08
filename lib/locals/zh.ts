@@ -9,6 +9,9 @@ export default {
     copySuccess: '复制成功！',
     copyFailed: '复制失败！'
   },
+  inputTag: {
+    placeholder: '按回车添加'
+  },
   textarea: {
     placeholder: '请输入'
   },

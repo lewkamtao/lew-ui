@@ -4,6 +4,7 @@ import { LewInput, LewTag, LewMessage } from 'lew-ui'
 import { cloneDeep } from 'lodash-es'
 import { object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { locale } from 'lew-ui'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -18,6 +19,7 @@ const inputValue = ref()
 const lewInputRef = ref()
 const isFocus = ref(false)
 let isEnter = false
+let isConfirm = ref(false)
 
 const openInput = () => {
   if (isFocus.value) return
@@ -28,12 +30,20 @@ const openInput = () => {
   document.onkeydown = function (event) {
     if (!inputValue.value) {
       if (event.keyCode === 8 || event.keyCode === 46) {
-        if (modelValue.value && modelValue.value.length > 0) {
+        if (
+          modelValue.value &&
+          modelValue.value.length > 0 &&
+          isConfirm.value
+        ) {
           modelValue.value.splice(modelValue.value.length - 1, 1)
           emit('change', cloneDeep(modelValue.value))
+          isConfirm.value = false
+        } else {
+          isConfirm.value = true
         }
       }
     } else if (event.keyCode === 13) {
+      isConfirm.value = true
       isEnter = true
     }
   }
@@ -42,6 +52,7 @@ const openInput = () => {
 const blurFn = () => {
   document.onkeydown = null
   isFocus.value = false
+  isConfirm.value = false
   if (props.allowDuplicates) {
     addTag()
   } else {
@@ -122,7 +133,13 @@ const clear = () => {
           v-for="(item, index) in modelValue"
           :key="index"
           type="light"
-          style="max-width: 100%"
+          :style="{
+            maxWidth: '100%',
+            backgroundColor:
+              isConfirm && index === (modelValue || []).length - 1
+                ? 'var(--lew-color-red-light)'
+                : ''
+          }"
           :size="size"
           :closable="!readonly && !disabled"
           :disabled="disabled"
@@ -138,8 +155,13 @@ const clear = () => {
           class="lew-input-tag"
           :size="size"
           :readonly="!isFocus"
-          :placeholder="(modelValue || []).length > 0 ? '' : placeholder"
+          :placeholder="
+            (modelValue || []).length === 0
+              ? locale.t('inputTag.placeholder')
+              : ' '
+          "
           ok-by-enter
+          @input="isConfirm = false"
           @blur="blurFn"
         />
       </transition-group>
@@ -179,7 +201,7 @@ const clear = () => {
   cursor: text;
   :deep() {
     .lew-tag {
-      background-color: var(--lew-bgcolor-0) !important;
+      background-color: var(--lew-bgcolor-0);
     }
   }
 
@@ -234,7 +256,7 @@ const clear = () => {
   background-color: var(--lew-form-bgcolor-focus);
 
   :deep(.lew-tag) {
-    background-color: var(--lew-color-primary-light) !important;
+    background-color: var(--lew-color-primary-light);
   }
 }
 

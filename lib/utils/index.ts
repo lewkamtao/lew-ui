@@ -460,3 +460,42 @@ export const parseToStandardJSON = (str: string) => {
     .replace(/({|,)\s*([a-zA-Z0-9_]+)\s*:/g, '$1"$2":') // 给没有引号的字段名加上双引号
   return JSON.parse(modifiedStr)
 }
+
+/**
+ * 轮询方法
+ * @param {number} interval - 轮询间隔时间(ms)
+ * @param {number} timeout - 轮询总时长(ms)
+ * @param {Function} callback - 轮询回调函数
+ * @param {Function} vail - 判断依据 如果 true 停止轮询
+ */
+export const poll = ({
+  interval = 10,
+  timeout = 1000 * 3,
+  callback,
+  vail
+}: {
+  interval?: number
+  timeout?: number
+  callback: () => void
+  vail: () => boolean
+}) => {
+  const startTime = Date.now()
+  let timer: NodeJS.Timeout | null = null
+
+  const execute = () => {
+    if (Date.now() - startTime > timeout) {
+      if (timer) clearTimeout(timer)
+      return
+    }
+
+    if (vail()) {
+      if (timer) clearTimeout(timer)
+      callback()
+      return
+    }
+
+    timer = setTimeout(execute, interval)
+  }
+
+  execute()
+}

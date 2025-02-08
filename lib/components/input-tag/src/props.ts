@@ -1,4 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue'
+import { defaultLocale } from 'yup'
 
 export type InputTagSize = 'small' | 'medium' | 'large'
 
@@ -28,7 +29,7 @@ export const inputTagProps = {
   },
   placeholder: {
     type: String,
-    default: '按Enter添加标签',
+    defaultLocale: true,
     description: '输入框的占位文本，当没有标签时显示'
   },
   readonly: {

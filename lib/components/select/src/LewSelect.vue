@@ -2,13 +2,13 @@
 import { useDebounceFn } from '@vueuse/core'
 import { LewPopover, LewFlex, LewTextTrim, LewEmpty } from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
-import { UseVirtualList } from '@vueuse/components'
+import { VirtList } from 'vue-virt-list'
 import type { SelectOptions } from './props'
 import { selectProps } from './props'
 import { cloneDeep, isFunction } from 'lodash-es'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { flattenOptions, defaultSearchMethod } from './util'
-
+import { poll } from 'lew-ui/utils'
 const props = defineProps(selectProps)
 const emit = defineEmits(['change', 'blur', 'clear'])
 const selectValue: Ref<string | number | undefined> = defineModel()
@@ -39,6 +39,8 @@ watch(
     deep: true
   }
 )
+
+const virtListRef = ref()
 
 const state = reactive({
   selectWidth: 0,
@@ -177,7 +179,7 @@ const getIconSize = computed(() => {
 const getVirtualHeight = computed(() => {
   let height = state.options.length * props.itemHeight
   height = height >= 280 ? 280 : height
-  return `${height}px`
+  return height
 })
 
 const showHandle = () => {
@@ -191,6 +193,19 @@ const showHandle = () => {
   getSelectWidth()
   if (props.searchable) {
     search({ target: { value: '' } })
+  }
+  const index = state.options.findIndex(
+    (e: any) => e.value === selectValue.value
+  )
+  if (index > -1) {
+    poll({
+      callback: () => {
+        virtListRef.value.scrollToIndex(index)
+      },
+      vail: () => {
+        return !!virtListRef.value
+      }
+    })
   }
 }
 
@@ -294,54 +309,62 @@ defineExpose({ show, hide })
             {{ getResultNum }}
             条结果
           </div>
-          <use-virtual-list
-            v-if="state.options.length > 0"
-            :key="state.options.length"
-            class="lew-select-options-list lew-scrollbar"
-            :list="state.options"
-            :options="{
-              itemHeight
+          <div
+            class="lew-select-options-list"
+            :style="{
+              height: `${getVirtualHeight}px`
             }"
-            :height="getVirtualHeight"
           >
-            <template #default="{ data: templateProps }">
-              <div
-                :style="{ height: itemHeight + 'px' }"
-                @click="selectHandle(templateProps)"
+            <transition name="fade">
+              <virt-list
+                ref="virtListRef"
+                v-if="state.options.length > 0 && state.visible"
+                :list="state.options"
+                :minSize="itemHeight"
+                :buffer="20"
+                item-key="value"
+                class="lew-scrollbar"
               >
-                <slot
-                  v-if="$slots.item"
-                  name="item"
-                  :props="{
-                    ...templateProps,
-                    checked: getChecked(templateProps.value)
-                  }"
-                ></slot>
-                <div
-                  v-else
-                  class="lew-select-item"
-                  :class="getSelectItemClassName(templateProps)"
-                >
-                  <lew-text-trim
-                    :text="
-                      templateProps.isGroup
-                        ? `${templateProps.label} (${templateProps.total})`
-                        : templateProps.label
-                    "
-                    :delay="[500, 0]"
-                    class="lew-select-label"
-                  />
-                  <Icon
-                    v-if="getChecked(templateProps.value) && showCheckIcon"
-                    class="lew-icon-check"
-                    :size="16"
-                    :strokeWidth="3"
-                    type="check"
-                  />
-                </div>
-              </div>
-            </template>
-          </use-virtual-list>
+                <template #default="{ itemData: templateProps }">
+                  <div
+                    :style="{ height: itemHeight + 'px' }"
+                    @click="selectHandle(templateProps)"
+                  >
+                    <slot
+                      v-if="$slots.item"
+                      name="item"
+                      :props="{
+                        ...templateProps,
+                        checked: getChecked(templateProps.value)
+                      }"
+                    ></slot>
+                    <div
+                      v-else
+                      class="lew-select-item"
+                      :class="getSelectItemClassName(templateProps)"
+                    >
+                      <lew-text-trim
+                        :text="
+                          templateProps.isGroup
+                            ? `${templateProps.label} (${templateProps.total})`
+                            : templateProps.label
+                        "
+                        :delay="[500, 0]"
+                        class="lew-select-label"
+                      />
+                      <Icon
+                        v-if="getChecked(templateProps.value) && showCheckIcon"
+                        class="lew-icon-check"
+                        :size="16"
+                        :strokeWidth="3"
+                        type="check"
+                      />
+                    </div>
+                  </div>
+                </template>
+              </virt-list>
+            </transition>
+          </div>
         </div>
         <slot name="footer"></slot>
       </div>
@@ -500,6 +523,11 @@ defineExpose({ show, hide })
 .lew-select-body {
   width: 100%;
   box-sizing: border-box;
+
+  .lew-select-options-list {
+    width: 100%;
+    overflow: hidden;
+  }
 
   .lew-result-count {
     padding: 5px 12px;

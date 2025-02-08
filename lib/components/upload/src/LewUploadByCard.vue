@@ -125,6 +125,8 @@ const modelValue = defineModel<UploadFileItem[]>()
         <lew-flex class="lew-upload-icon-wrapper">
           <lew-flex
             class="lew-upload-icon-box"
+            x="center"
+            y="center"
             :style="{
               transform: item.status === 'uploading' ? 'translateY(-7px)' : ''
             }"
@@ -148,7 +150,7 @@ const modelValue = defineModel<UploadFileItem[]>()
           </lew-flex>
         </lew-flex>
         <transition name="fade">
-          <lew-flex
+          <lew-flex 
             v-if="item.status === 'uploading'"
             class="lew-upload-progress"
             x="start"

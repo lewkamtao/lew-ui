@@ -10,7 +10,7 @@ import {
 import { object2class } from 'lew-ui/utils'
 import type { CascaderOptions } from './props'
 import { cascaderProps } from './props'
-import { UseVirtualList } from '@vueuse/components'
+import { VirtList } from 'vue-virt-list'
 import { cloneDeep, isFunction } from 'lodash-es'
 import Icon from 'lew-ui/utils/Icon.vue'
 
@@ -171,6 +171,8 @@ const init = async () => {
 }
 
 init()
+
+const virtListRefs = ref<any[]>([])
 
 // 选择
 const selectItem = async (item: CascaderOptions, level: number) => {
@@ -435,83 +437,102 @@ defineExpose({ show, hide })
         :class="getBodyClassName"
       >
         <slot name="header"></slot>
-        <div
-          class="lew-cascader-options-box"
-          :style="{ height: free ? 'calc(100% - 48px)' : '100%' }"
-        >
-          <template v-for="(oItem, oIndex) in state.optionsGroup" :key="oIndex">
-            <use-virtual-list
-              v-if="oItem.length > 0"
-              class="lew-cascader-item-wrapper lew-scrollbar-hover"
-              :list="oItem"
-              :options="{
-                itemHeight: 38
-              }"
-              :height="`${38 * oItem.length}`"
-              :style="{
-                zIndex: 20 - oIndex,
-                transform:
-                  oItem.length > 0 ? `translateX(${200 * oIndex}px)` : ''
-              }"
+        <transition name="fade">
+          <div
+            v-if="state.visible"
+            class="lew-cascader-options-box"
+            :style="{ height: free ? 'calc(100% - 48px)' : '100%' }"
+          >
+            <template
+              v-for="(oItem, oIndex) in state.optionsGroup"
+              :key="oIndex"
             >
-              <template #default="{ data: templateProps }">
-                <div
-                  class="lew-cascader-item-padding"
-                  :style="{ height: 38 + 'px' }"
+              <div
+                class="lew-cascader-item-wrapper"
+                :style="{
+                  zIndex: 20 - oIndex,
+                  borderRadius: `0 ${oIndex === state.optionsGroup.length - 1 ? 'var(--lew-border-radius-small)' : '0'} 0 0`,
+                  transform:
+                    oItem.length > 0 ? `translateX(${200 * oIndex}px)` : ''
+                }"
+              >
+                <virt-list
+                  :key="oItem"
+                  :ref="(el: any) => (virtListRefs[oIndex] = el)"
+                  class="lew-scrollbar-hover"
+                  :list="oItem"
+                  :minSize="38"
+                  :buffer="5"
+                  itemKey="value"
+                  :style="{
+                    padding: `6px 6px 2px 6px`,
+                    boxSizing: 'border-box'
+                  }"
                 >
-                  <div
-                    class="lew-cascader-item"
-                    :class="{
-                      'lew-cascader-item-disabled': templateProps.disabled,
-                      'lew-cascader-item-hover': state.activeLabels.includes(
-                        templateProps.label
-                      ),
-                      'lew-cascader-item-active': free
-                        ? state.activeLabels.includes(templateProps.label) &&
-                          state.tobeLabels.includes(templateProps.label)
-                        : state.activeLabels.includes(templateProps.label),
-                      'lew-cascader-item-tobe': state.tobeLabels.includes(
-                        templateProps.label
-                      ),
-                      'lew-cascader-item-selected':
-                        getLabel &&
-                        getLabel.includes(templateProps.label) &&
-                        state.tobeLabels.includes(templateProps.label)
-                    }"
-                    @click="selectItem(templateProps, oIndex)"
-                  >
-                    <lew-checkbox
-                      v-if="free"
-                      class="lew-cascader-checkbox"
-                      :checked="state.tobeLabels.includes(templateProps.label)"
-                    />
-                    <lew-text-trim
-                      class="lew-cascader-label"
-                      :class="{
-                        'lew-cascader-label-free': free
-                      }"
-                      :text="templateProps.label"
-                      :delay="[500, 0]"
-                    />
-                    <Icon
-                      v-if="templateProps.loading"
-                      :size="14"
-                      loading
-                      class="lew-cascader-loading-icon"
-                      type="loader"
-                    />
-                    <Icon
-                      v-else-if="!templateProps.isLeaf"
-                      :size="16"
-                      class="lew-cascader-icon"
-                      type="chevron-right"
-                    />
-                  </div>
-                </div>
-              </template>
-            </use-virtual-list>
-          </template>
-        </div>
+                  <template #default="{ itemData: templateProps }">
+                    <div
+                      class="lew-cascader-item-padding"
+                      :style="{ height: 38 + 'px' }"
+                    >
+                      <div
+                        class="lew-cascader-item"
+                        :class="{
+                          'lew-cascader-item-disabled': templateProps.disabled,
+                          'lew-cascader-item-hover':
+                            state.activeLabels.includes(templateProps.label),
+                          'lew-cascader-item-active': free
+                            ? state.activeLabels.includes(
+                                templateProps.label
+                              ) &&
+                              state.tobeLabels.includes(templateProps.label)
+                            : state.activeLabels.includes(templateProps.label),
+                          'lew-cascader-item-tobe': state.tobeLabels.includes(
+                            templateProps.label
+                          ),
+                          'lew-cascader-item-selected':
+                            getLabel &&
+                            getLabel.includes(templateProps.label) &&
+                            state.tobeLabels.includes(templateProps.label)
+                        }"
+                        @click="selectItem(templateProps, oIndex)"
+                      >
+                        <lew-checkbox
+                          v-if="free"
+                          class="lew-cascader-checkbox"
+                          :checked="
+                            state.tobeLabels.includes(templateProps.label)
+                          "
+                        />
+                        <lew-text-trim
+                          class="lew-cascader-label"
+                          :class="{
+                            'lew-cascader-label-free': free
+                          }"
+                          :text="templateProps.label"
+                          :delay="[500, 0]"
+                        />
+                        <Icon
+                          v-if="templateProps.loading"
+                          :size="14"
+                          loading
+                          class="lew-cascader-loading-icon"
+                          type="loader"
+                        />
+                        <Icon
+                          v-else-if="!templateProps.isLeaf"
+                          :size="16"
+                          class="lew-cascader-icon"
+                          type="chevron-right"
+                        />
+                      </div>
+                    </div>
+                  </template>
+                </virt-list>
+              </div>
+            </template>
+          </div>
+        </transition>
+
         <lew-flex v-if="free" x="end" class="lew-cascader-control">
           <lew-button
             round
@@ -727,10 +748,9 @@ defineExpose({ show, hide })
 
     .lew-cascader-item-wrapper {
       position: absolute;
-      overflow-y: scroll;
+      overflow: hidden;
       height: 100%;
       width: 200px;
-      padding: 6px 6px 2px 6px;
       border-right: var(--lew-pop-border);
       box-sizing: border-box;
       gap: 4px;
