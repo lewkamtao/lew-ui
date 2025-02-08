@@ -80,6 +80,13 @@ const tagStyle: any = computed(() => {
     pointerEvents: disabled ? 'none' : undefined
   }
 })
+
+const slots: any = useSlots()
+
+const displayText = computed(() => {
+  // 或者等于插槽的内容
+  return props.text || slots.default?.()?.[0]?.children
+})
 </script>
 
 <template>
@@ -89,10 +96,7 @@ const tagStyle: any = computed(() => {
     </div>
 
     <div class="lew-tag-value">
-      <lew-text-trim v-if="text" :text="text" />
-      <lew-text-trim v-else>
-        <slot />
-      </lew-text-trim>
+      <lew-text-trim :text="displayText" />
     </div>
 
     <div v-if="$slots.right" class="lew-tag-right">
