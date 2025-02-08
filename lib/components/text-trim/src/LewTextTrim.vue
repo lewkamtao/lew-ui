@@ -147,7 +147,7 @@ const setupResizeObserver = () => {
   onBeforeUnmount(() => {
     resizeObserver.disconnect()
   })
-}
+} 
 
 onMounted(() => {
   initCalculateDisplayText()
@@ -163,7 +163,7 @@ onUnmounted(() => {
 watch(
   () => [props.text, props.reserveEnd],
   () => {
-    debouncedCalculate()
+    calculateDisplayText()
   }
 )
 </script>
