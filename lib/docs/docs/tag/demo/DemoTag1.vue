@@ -1,3 +1,4 @@
 <template>
-  <lew-tag type="light" color="red">HOTHOTHOTHOTHOTHOTHOTHOTHOT</lew-tag>
+  <lew-tag type="light" color="red">HOT</lew-tag>
 </template>
+ 

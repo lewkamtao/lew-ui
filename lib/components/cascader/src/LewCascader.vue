@@ -317,11 +317,6 @@ const showHandle = () => {
 // 隐藏
 const hideHandle = () => {
   state.visible = false
-  if (!cascaderValue.value) {
-    state.tobeLabels = []
-    state.activeLabels = []
-    state.optionsGroup = [state.optionsGroup[0]]
-  }
   emit('blur')
 }
 
@@ -457,7 +452,7 @@ defineExpose({ show, hide })
                 }"
               >
                 <virt-list
-                  :key="oItem"
+                  :key="oItem[0]?.parentValuePaths?.join('-') || 'root'"
                   :ref="(el: any) => (virtListRefs[oIndex] = el)"
                   class="lew-scrollbar-hover"
                   :list="oItem"
