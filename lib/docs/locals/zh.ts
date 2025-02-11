@@ -567,15 +567,138 @@ export default {
     },
     inputNumber: {
       name: '数字输入框 InputNumber',
-      description: '专门用于数字输入的框，让数字处理更加精准'
+      description: '专门用于数字输入的框，让数字处理更加精准',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '聚焦时全选'
+      },
+      demo3: {
+        title: '限制范围'
+      },
+      demo4: {
+        title: '精确数值'
+      },
+      demo5: {
+        title: '禁用和只读'
+      },
+      props: {
+        min: '最小值',
+        max: '最大值',
+        step: '步进值',
+        disabled: '精度',
+        size: '尺寸大小，可选值：small、medium、large',
+        placeholder: '占位提示文本',
+        readonly: '是否只读',
+        width: '宽度，支持数字（单位：像素）或带单位的字符串',
+        align: '对齐方式',
+        selectByFocus: '聚焦后选择全部文本'
+      },
+      model: {
+        modelValue: '绑定值'
+      }
     },
     textarea: {
       name: '文本域 Textarea',
-      description: '多行文本输入框，让长文本输入更加舒适'
+      description: '多行文本输入框，让长文本输入更加舒适',
+
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '字数限制'
+      },
+      demo3: {
+        title: '聚焦后选择全部文本'
+      },
+      demo4: {
+        title: '可清空的'
+      },
+      demo5: {
+        title: '只读和禁用'
+      },
+      demo6: {
+        title: '缩放模式'
+      },
+      demo7: {
+        title: '按下回车键触发事件'
+      },
+      model: {
+        modelValue: '绑定值'
+      },
+      props: {
+        placeholder: '占位提示文本',
+        disabled: '是否禁用文本域',
+        readonly: '是否为只读状态',
+        clearable: '是否显示清空按钮',
+        showCount: '是否显示字符计数',
+        maxLength: '最大输入字符数',
+        size: '文本域尺寸',
+        resize: '调整尺寸的方向',
+        width: '宽度',
+        height: '高度',
+        minWidth: '最小宽度',
+        minHeight: '最小高度',
+        maxWidth: '最大宽度',
+        maxHeight: '最大高度',
+        selectByFocus: '聚焦后选择全部文本',
+        okByEnter: '是否启用回车键确认（启用后，Shift+Enter可换行）'
+      },
+      events: {
+        change: '值发生变化时触发',
+        focus: '获得焦点时触发',
+        blur: '失去焦点时触发',
+        input: '输入内容时触发',
+        clear: '清空时触发',
+        ok: '确认时触发'
+      }
     },
     inputTag: {
       name: '标签输入框 InputTag',
-      description: '轻松输入和管理多个标签，让数据整理更加清晰'
+      description: '轻松输入和管理多个标签，让数据整理更加清晰',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '尺寸'
+      },
+      demo3: {
+        title: '是否允许重复'
+      },
+      demo4: {
+        title: '受控默认值'
+      },
+      demo5: {
+        title: '可清空的'
+      },
+      demo6: {
+        title: '只读状态'
+      },
+      demo7: {
+        title: '禁用状态'
+      },
+      demo8: {
+        title: '最大输入长度'
+      },
+      model: {
+        modelValue: '绑定值'
+      },
+      props: {
+        size: '尺寸大小',
+        disabled: '是否禁用',
+        clearable: '是否可清空',
+        placeholder: '占位提示文本',
+        readonly: '是否只读',
+        allowDuplicates: '是否允许重复',
+        maxLength: '允许添加标签的最大数量'
+      },
+      events: {
+        change: '值发生变化时触发',
+        clear: '清空时触发',
+        add: '添加标签时触发',
+        remove: '删除标签时触发'
+      }
     },
     checkbox: {
       name: '复选框 Checkbox',

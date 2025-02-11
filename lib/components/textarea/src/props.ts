@@ -5,7 +5,7 @@ import { validSizes } from 'lew-ui/constants'
 export const textareaModel = {
   modelValue: {
     type: String,
-    default: '',
+    default: undefined,
     description: '文本域的值'
   }
 }

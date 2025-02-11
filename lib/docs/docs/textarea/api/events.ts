@@ -1,3 +1,4 @@
+// 'clear', 'blur', 'input', 'focus', 'change', 'ok'
 export default {
   title: 'Events',
   columnsKey: 'events',
@@ -16,6 +17,21 @@ export default {
     {
       name: 'focus',
       description: '聚焦',
+      params: '() => void'
+    },
+    {
+      name: 'input',
+      description: '输入内容',
+      params: '() => void'
+    },
+    {
+      name: 'ok',
+      description: '按下回车键触发事件',
+      params: '() => void'
+    },
+    {
+      name: 'clear',
+      description: '清空文本域',
       params: '() => void'
     }
   ]

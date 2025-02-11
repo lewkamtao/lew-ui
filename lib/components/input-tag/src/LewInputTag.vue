@@ -11,7 +11,7 @@ const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewMessage)
 }
-const emit = defineEmits(['close', 'change'])
+const emit = defineEmits(['remove', 'change', 'clear', 'add'])
 
 const props = defineProps(inputTagProps)
 const modelValue: Ref<string[] | undefined> = defineModel()
@@ -23,6 +23,15 @@ let isConfirm = ref(false)
 
 const openInput = () => {
   if (isFocus.value) return
+  if (
+    props.maxLength > 0 &&
+    (modelValue.value || []).length >= props.maxLength
+  ) {
+    LewMessage.warning(
+      locale.t('inputTag.maxLength', { maxLength: props.maxLength })
+    )
+    return
+  }
   isFocus.value = true
   nextTick(() => {
     lewInputRef.value.toFocus()
@@ -59,7 +68,7 @@ const blurFn = () => {
     if (!(modelValue.value || []).includes(inputValue.value)) {
       addTag()
     } else {
-      LewMessage.warning('不允许重复标签')
+      LewMessage.warning(locale.t('inputTag.duplicate'))
     }
   }
   if (isEnter) {
@@ -71,16 +80,23 @@ const blurFn = () => {
 const addTag = () => {
   let _value = modelValue.value || []
   if (inputValue.value) {
+    if (props.maxLength > 0 && _value.length >= props.maxLength) {
+      inputValue.value = ''
+      isFocus.value = false
+      return
+    }
     _value.push(inputValue.value)
     inputValue.value = ''
     modelValue.value = _value
     emit('change', _value)
+    emit('add', inputValue.value)
   }
 }
 
 const autoWidthDelay = ref(false)
 
 const delTag = (index: number) => {
+  const removedTag = modelValue.value?.[index]
   modelValue.value && modelValue.value.splice(index, 1)
   if (modelValue.value && modelValue.value.length === 0) {
     autoWidthDelay.value = true
@@ -89,7 +105,7 @@ const delTag = (index: number) => {
     }, 550)
   }
   emit('change', modelValue.value)
-  emit('close', modelValue.value)
+  emit('remove', removedTag)
 }
 
 const getInputClassNames = computed(() => {
@@ -115,6 +131,7 @@ const clear = () => {
   modelValue.value = []
   inputValue.value = ''
   emit('change', [])
+  emit('clear')
 }
 </script>
 
@@ -142,7 +159,7 @@ const clear = () => {
           }"
           :size="size"
           :closable="!readonly && !disabled"
-          :disabled="disabled"
+          :readonly="readonly || disabled"
           @close="delTag(index)"
         >
           {{ item }}

@@ -57,6 +57,7 @@ export const inputNumberProps = {
   },
   size: {
     type: String as PropType<LewSize>,
+    typeDesc: 'small | medium | large',
     default: 'medium',
     description: '尺寸',
     validator(value: LewSize) {
@@ -97,6 +98,7 @@ export const inputNumberProps = {
   },
   align: {
     type: String as PropType<InputNumberAlign>,
+    typeDesc: 'left | center | right',
     default: 'left',
     description: '对齐方式',
     validator(value: InputNumberAlign) {

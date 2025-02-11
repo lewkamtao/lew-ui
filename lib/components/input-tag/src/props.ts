@@ -41,6 +41,11 @@ export const inputTagProps = {
     type: Boolean,
     default: false,
     description: '是否允许添加重复的标签'
+  },
+  maxLength: {
+    type: Number,
+    default: 0,
+    description: '允许添加标签的最大数量'
   }
 }
 

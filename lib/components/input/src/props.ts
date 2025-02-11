@@ -10,17 +10,17 @@ export type InputSuffixType = 'icon' | 'select' | 'text'
 export const inputModel = {
   modelValue: {
     type: [String, Number],
-    default: '',
+    default: undefined,
     description: '输入框的值，支持 v-model 双向绑定'
   },
   prefixesValue: {
     type: [String, Number],
-    default: '',
+    default: undefined,
     description: '输入框前缀的值'
   },
   suffixValue: {
     type: [String, Number],
-    default: '',
+    default: undefined,
     description: '输入框后缀的值'
   }
 }

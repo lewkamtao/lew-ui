@@ -30,16 +30,7 @@ useResizeObserver(lewTextareaViewRef, () => {
   }
 })
 
-const emit = defineEmits([
-  'update:type',
-  'clear',
-  'blur',
-  'input',
-  'focus',
-  'change',
-  'textarea',
-  'ok'
-])
+const emit = defineEmits(['clear', 'blur', 'input', 'focus', 'change', 'ok'])
 
 const props = defineProps(textareaProps)
 const modelValue: Ref<string | undefined> = defineModel()

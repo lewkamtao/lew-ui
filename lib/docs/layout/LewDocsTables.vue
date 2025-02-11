@@ -89,7 +89,7 @@ const getColumns = computed(
         ...columns,
         {
           title: '描述',
-          width: 200,
+          width: ['events', 'methods'].includes(columnsKey) ? 400 : 200,
           field: 'description',
           customRender: ({ row }: any) => {
             const { name } = row

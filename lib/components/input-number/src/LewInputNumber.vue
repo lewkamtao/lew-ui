@@ -145,7 +145,7 @@ defineExpose({ toFocus, validCheck })
 
 <template>
   <div
-    @wheel="(e) => e.preventDefault()"
+    @wheel="(e: any) => e.preventDefault()"
     @mouseenter="checkValidationMessage"
     @mouseleave="validationMessage = ''"
     class="lew-input-number-view"
