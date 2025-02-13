@@ -2,8 +2,8 @@ import { checkboxGroupProps } from 'lew-ui'
 import { convertProps } from '@/lib/utils'
 
 export default {
-  title: 'Props (checkbox-group)',
+  title: 'Props (CheckboxGroup)',
   columnsKey: 'props',
-  orderNum: 4,
+  orderNum: 3,
   data: convertProps(checkboxGroupProps)
 }

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-const isSuperheroFan = ref(false)
+const hasReadPrivacyPolicy = ref(false)
 </script>
 
 <template>
   <lew-checkbox
-    v-model="isSuperheroFan"
-    size="small"
-    label="是否阅读隐私协议"
+    v-model="hasReadPrivacyPolicy"
+    label="Have you read the privacy policy?"
   />
 </template>

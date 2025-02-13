@@ -802,6 +802,7 @@ const getResultNum = computed(() => {
     padding: 5px 12px;
     font-size: 13px;
     opacity: 0.4;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   }
 }
 </style>

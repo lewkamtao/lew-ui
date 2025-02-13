@@ -723,6 +723,39 @@ export default {
       },
       demo7: {
         title: '单个模式'
+      },
+      'model (CheckboxGroup)': {
+        modelValue: '绑定值'
+      },
+      'model (Checkbox)': {
+        modelValue: '绑定值'
+      },
+      'props (CheckboxGroup)': {
+        options: '选项',
+        disabled: '是否禁用',
+        readonly: '是否只读',
+        size: '尺寸大小',
+        direction: '排列方向',
+        block: '块状显示',
+        round: '圆角样式',
+        iconable: '是否可使用图标'
+      },
+      'props (Checkbox)': {
+        label: '标题',
+        value: '值',
+        disabled: '禁用',
+        readonly: '只读',
+        checked: '选中状态',
+        size: '尺寸',
+        block: '块状显示',
+        round: '圆角样式',
+        iconable: '是否可使用图标',
+        certain: '确定状态'
+      },
+      options: {
+        label: '标题',
+        value: '值',
+        disabled: '禁用'
       }
     },
     radio: {
