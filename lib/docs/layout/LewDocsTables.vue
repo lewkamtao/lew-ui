@@ -97,7 +97,7 @@ const getColumns = computed(
               `components.${getComponentName()}.${title.replace(/^[A-Z]/, (match) => match.toLowerCase())}.${name}`
             )
           }
-        }
+        } 
       ]
       return columns
     }

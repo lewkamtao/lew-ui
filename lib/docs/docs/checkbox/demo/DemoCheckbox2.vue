@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const techOptions = ref([
-  { label: '人工智能', value: 'ai' },
-  { label: '区块链', value: 'blockchain' },
-  { label: '虚拟现实', value: 'vr' },
-  { label: '量子计算', value: 'quantum' }
+  { label: 'Artificial Intelligence', value: 'ai' },
+  { label: 'Blockchain', value: 'blockchain' },
+  { label: 'Virtual Reality', value: 'vr' },
+  { label: 'Quantum Computing', value: 'quantum' }
 ])
 
 const selectedTech = ref([])

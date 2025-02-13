@@ -1,11 +1,11 @@
 <script setup lang="ts">
 const productFeatures = ref([
-  { label: '免费送货', value: 'freeShipping' },
-  { label: '24小时客服', value: 'customerService' },
-  { label: '30天退换', value: 'return' },
-  { label: '价格保护', value: 'priceProtection' },
-  { label: '礼品包装', value: 'giftWrap' },
-  { label: '延长保修', value: 'extendedWarranty' }
+  { label: 'Dog', value: 'dog' },
+  { label: 'Cat', value: 'cat' },
+  { label: 'Rabbit', value: 'rabbit' },
+  { label: 'Bird', value: 'bird' },
+  { label: 'Fish', value: 'fish' },
+  { label: 'Hamster', value: 'hamster' }
 ])
 
 const selectedFeatures = ref([])
@@ -13,7 +13,7 @@ const selectedFeatures = ref([])
 
 <template>
   <lew-flex direction="y" x="start">
-    <lew-title :size="14">无图标选择</lew-title>
+    <lew-title :size="14">Without Icon Selection</lew-title>
     <lew-checkbox-group
       v-model="selectedFeatures"
       block
@@ -31,7 +31,7 @@ const selectedFeatures = ref([])
     />
     <br />
     <br />
-    <lew-title :size="14">有图标选择</lew-title>
+    <lew-title :size="14">With Icon Selection</lew-title>
     <lew-checkbox-group
       v-model="selectedFeatures"
       block
@@ -54,28 +54,6 @@ const selectedFeatures = ref([])
       block
       round
       size="large"
-      direction="x"
-      :options="productFeatures"
-    />
-    <br />
-    <br />
-    <lew-title :size="14">禁用选项</lew-title>
-    <lew-checkbox-group
-      v-model="selectedFeatures"
-      block
-      size="small"
-      disabled
-      direction="x"
-      :options="productFeatures"
-    />
-    <br />
-    <br />
-    <lew-title :size="14">只读选项</lew-title>
-    <lew-checkbox-group
-      v-model="selectedFeatures"
-      block
-      size="small"
-      readonly
       direction="x"
       :options="productFeatures"
     />

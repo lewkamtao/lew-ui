@@ -702,7 +702,28 @@ export default {
     },
     checkbox: {
       name: '复选框 Checkbox',
-      description: '支持多选的选择器，让多项选择更加直观'
+      description: '支持多选的选择器，让多项选择更加直观',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '垂直分布'
+      },
+      demo3: {
+        title: '块状'
+      },
+      demo4: {
+        title: '圆形'
+      },
+      demo5: {
+        title: '只读状态'
+      },
+      demo6: {
+        title: '禁用状态'
+      },
+      demo7: {
+        title: '单个模式'
+      }
     },
     radio: {
       name: '单选框 Radio',
