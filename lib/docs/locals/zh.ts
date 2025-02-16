@@ -752,6 +752,12 @@ export default {
         iconable: '是否可使用图标',
         certain: '确定状态'
       },
+      'events(Checkbox)': {
+        change: '值发生变化时触发'
+      },
+      'events(CheckboxGroup)': {
+        change: '值发生变化时触发'
+      },
       options: {
         label: '标题',
         value: '值',
@@ -760,7 +766,46 @@ export default {
     },
     radio: {
       name: '单选框 Radio',
-      description: '只能选择一项的选择器，让单项选择更加明确'
+      description: '只能选择一项的选择器，让单项选择更加明确',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '垂直分布'
+      },
+      demo3: {
+        title: '块状'
+      },
+      demo4: {
+        title: '形状'
+      },
+      demo5: {
+        title: '只读状态'
+      },
+      demo6: {
+        title: '禁用状态'
+      },
+      model: {
+        modelValue: '绑定值'
+      },
+      'props (RadioGroup)': {
+        size: '尺寸大小',
+        block: '块状显示',
+        direction: '排列方向',
+        disabled: '是否禁用',
+        iconable: '是否可使用图标',
+        options: '选项',
+        readonly: '是否只读',
+        round: '圆角样式'
+      },
+      options: {
+        label: '标题',
+        value: '值',
+        disabled: '禁用'
+      },
+      events: {
+        change: '值发生变化时触发'
+      }
     },
     tabs: {
       name: '标签页 Tabs',

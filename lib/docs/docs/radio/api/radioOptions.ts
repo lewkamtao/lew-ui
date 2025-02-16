@@ -1,6 +1,7 @@
 export default {
-  title: 'RadioOptions',
+  title: 'Options',
   columnsKey: 'props',
+  orderNum: 5,
   data: [
     {
       name: 'label',
