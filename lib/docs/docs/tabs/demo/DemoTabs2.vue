@@ -3,71 +3,52 @@ interface TabOption {
   label: string
   value: string
 }
-
-const samCategories = [
-  '新鲜水果',
-  '蔬菜',
-  '肉类',
-  '海鲜水产',
-  '乳制品',
-  '零食',
-  '饮料',
-  '家居用品',
-  '个人护理',
-  '母婴',
-  '烘焙',
-  '冷冻食品',
-  '调味品',
-  '干货',
-  '酒水',
-  '方便速食',
-  '休闲食品',
-  '进口食品',
-  '有机食品',
-  '保健品',
-  '清洁用品',
-  '美容护肤',
-  '厨房用具',
-  '家用电器',
-  '手机数码',
-  '服装鞋帽',
-  '运动户外',
-  '文具',
-  '办公用品',
-  '图书音像',
-  '玩具',
-  '宠物用品',
-  '汽车用品',
-  '茶叶',
-  '咖啡',
-  '营养保健',
-  '电子产品',
-  '园艺用品',
-  '节日礼品',
-  '箱包'
+const options: TabOption[] = [
+  { label: 'Fresh Fruits', value: 'fresh_fruit' },
+  { label: 'Vegetables', value: 'vegetables' },
+  { label: 'Meat', value: 'meat' },
+  { label: 'Seafood', value: 'seafood' },
+  { label: 'Dairy', value: 'dairy' },
+  { label: 'Snacks', value: 'snacks' },
+  { label: 'Drinks', value: 'drinks' },
+  { label: 'Household Items', value: 'household_items' },
+  { label: 'Personal Care', value: 'personal_care' },
+  { label: 'Baby Care', value: 'baby_care' },
+  { label: 'Baking', value: 'baking' },   
+  { label: 'Frozen Food', value: 'frozen_food' },
+  { label: 'Seasonings', value: 'seasonings' },
+  { label: 'Dry Goods', value: 'dry_goods' },
+  { label: 'Liquor', value: 'liquor' },
+  { label: 'Instant Food', value: 'instant_food' },
+  { label: 'Snack Food', value: 'snack_food' },
+  { label: 'Imported Food', value: 'imported_food' },
+  { label: 'Organic Food', value: 'organic_food' },
+  { label: 'Health Supplements', value: 'health_supplements' },
+  { label: 'Cleaning Products', value: 'cleaning_products' },
+  { label: 'Beauty Care', value: 'beauty_care' },
+  { label: 'Kitchen Ware', value: 'kitchen_ware' },
+  { label: 'Household Appliances', value: 'household_appliances' },
+  { label: 'Mobile Electronics', value: 'mobile_electronics' },
+  { label: 'Clothing and Footwear', value: 'clothing_footwear' },
+  { label: 'Sports and Outdoors', value: 'sports_outdoors' },
+  { label: 'Office Supplies', value: 'office_supplies' },
+  { label: 'Books and Audio Video', value: 'books_audio_video' },
+  { label: 'Toys', value: 'toys' },
+  { label: 'Pet Supplies', value: 'pet_supplies' },
+  { label: 'Car Supplies', value: 'car_supplies' },
+  { label: 'Tea', value: 'tea' },
+  { label: 'Coffee', value: 'coffee' },
+  { label: 'Nutrition and Health', value: 'nutrition_health' },
+  { label: 'Electronics', value: 'electronics' },
+  { label: 'Garden Supplies', value: 'garden_supplies' },
+  { label: 'Holiday Gifts', value: 'holiday_gifts' },
+  { label: 'Bags', value: 'bags' }
 ]
 
-const tabOptions = ref<TabOption[]>(
-  samCategories.map((category, index) => ({
-    label: category,
-    value: `category_${index}`
-  }))
-)
 
-const selectedCategory = ref('category_0')
-
-const handleCategoryChange = (option: TabOption) => {
-  LewMessage.info(`您选择了：${option.label}`)
-}
+const modelValue = ref('meat')
 </script>
 
 <template>
-  <lew-flex direction="y" x="start" y="start">
-    <lew-tabs
-      v-model="selectedCategory"
-      style="width: 100%"
-      :options="tabOptions"
-      @change="handleCategoryChange"
-    />
-  </lew-flex>
+  <lew-tabs v-model="modelValue" :options="options" />
 </template>

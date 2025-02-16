@@ -724,13 +724,13 @@ export default {
       demo7: {
         title: '单个模式'
       },
-      'model (CheckboxGroup)': {
+      'model(CheckboxGroup)': {
         modelValue: '绑定值'
       },
-      'model (Checkbox)': {
+      'model(Checkbox)': {
         modelValue: '绑定值'
       },
-      'props (CheckboxGroup)': {
+      'props(CheckboxGroup)': {
         options: '选项',
         disabled: '是否禁用',
         readonly: '是否只读',
@@ -740,7 +740,7 @@ export default {
         round: '圆角样式',
         iconable: '是否可使用图标'
       },
-      'props (Checkbox)': {
+      'props(Checkbox)': {
         label: '标题',
         value: '值',
         disabled: '禁用',
@@ -788,7 +788,7 @@ export default {
       model: {
         modelValue: '绑定值'
       },
-      'props (RadioGroup)': {
+      'props(RadioGroup)': {
         size: '尺寸大小',
         block: '块状显示',
         direction: '排列方向',
@@ -809,7 +809,39 @@ export default {
     },
     tabs: {
       name: '标签页 Tabs',
-      description: '让内容分类展示更加清晰，切换更加流畅'
+      description: '让内容分类展示更加清晰，切换更加流畅',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '自适应宽度'
+      },
+      demo3: {
+        title: '自定义item宽度'
+      },
+      demo4: {
+        title: '线'
+      },
+      demo5: {
+        title: '圆角的'
+      },
+      model: {
+        modelValue: '绑定值'
+      },
+      props: {
+        options: '选项',
+        type: '类型',
+        size: '尺寸大小',
+        width: '宽度',
+        itemWidth: '项宽度',
+        round: '圆角样式',
+        disabled: '禁用状态',
+        readonly: '只读状态'
+      },
+      options: {
+        label: '标题',
+        value: '值'
+      }
     },
     select: {
       name: '选择器 Select',

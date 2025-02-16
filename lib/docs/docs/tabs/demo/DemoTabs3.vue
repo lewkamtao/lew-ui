@@ -2,46 +2,29 @@
 interface TabOption {
   label: string
   value: string
-  activeIndex: number
 }
 
-const businessDepartments = [
-  '销售部',
-  '市场部',
-  '财务部',
-  '人力资源部',
-  '研发部',
-  '客户服务部',
-  '法务部',
-  '采购部',
-  '生产部',
-  '质量控制部'
+// Start of Selection
+const options: TabOption[] = [
+  { label: 'Sales', value: 'sales' },
+  { label: 'Marketing', value: 'marketing' },
+  { label: 'Finance', value: 'finance' },
+  { label: 'HR', value: 'hr' },
+  { label: 'R&D', value: 'rd' },
+  { label: 'Support', value: 'customer_service' },
+  { label: 'Legal', value: 'legal' },
+  { label: 'Procurement', value: 'procurement' },
+  { label: 'Production', value: 'production' },
+  { label: 'Quality', value: 'quality_control' }
 ]
-
-const departmentOptions = ref(
-  businessDepartments.map((department, index) => {
-    return {
-      label: department,
-      value: `department_${index}`
-    }
-  })
-)
-
-const selectedDepartment = ref('department_0')
-
-const handleDepartmentChange = (selectedOption: TabOption) => {
-  LewMessage.info(`您选择了: ${selectedOption.label}`)
-}
+const modelValue = ref('hr')
 </script>
 
 <template>
-  <lew-flex direction="y" x="start" y="start">
-    <lew-tabs
-      v-model="selectedDepartment"
-      style="width: 100%"
-      :options="departmentOptions"
-      :itemWidth="120"
-      @change="handleDepartmentChange"
-    />
-  </lew-flex>
+  <lew-tabs
+    v-model="modelValue"
+    style="width: 100%"
+    :options="options"
+    :itemWidth="120"
+  />
 </template>
