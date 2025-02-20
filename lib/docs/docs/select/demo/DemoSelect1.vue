@@ -1,37 +1,20 @@
 <script setup lang="ts">
 import { SelectOptions } from 'lew-ui'
 const options = ref<SelectOptions[]>([
-  { label: '标准配送', value: 'standard' },
-  { label: '快速配送', value: 'express' },
-  { label: '次日达', value: 'nextDay' },
-  { label: '同城急送', value: 'sameDay' }
+  { label: 'Standard Delivery', value: 'standard' },
+  { label: 'Express Delivery', value: 'express' },
+  { label: 'Next Day Delivery', value: 'nextDay' },
+  { label: 'Same Day Delivery', value: 'sameDay' }
 ])
-
 const value = ref('')
 </script>
 
 <template>
-  <lew-flex style="width: 320px" direction="y">
-    <lew-select
-      v-model="value"
-      clearable
-      size="small"
-      placeholder="选择配送方式"
-      :options="options"
-    />
-    <lew-select
-      v-model="value"
-      clearable
-      size="medium"
-      placeholder="选择配送方式"
-      :options="options"
-    />
-    <lew-select
-      v-model="value"
-      clearable
-      size="large"
-      placeholder="选择配送方式"
-      :options="options"
-    />
-  </lew-flex>
+  <lew-select
+    style="width: 320px"
+    v-model="value"
+    clearable
+    placeholder="Select delivery method"
+    :options="options"
+  />
 </template>

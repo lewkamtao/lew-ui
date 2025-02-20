@@ -10,7 +10,7 @@ import Icon from 'lew-ui/utils/Icon.vue'
 import { flattenOptions, defaultSearchMethod } from './util'
 import { poll } from 'lew-ui/utils'
 const props = defineProps(selectProps)
-const emit = defineEmits(['change', 'blur', 'clear'])
+const emit = defineEmits(['change', 'blur', 'clear', 'focus'])
 const selectValue: Ref<string | number | undefined> = defineModel()
 
 const lewSelectRef = ref()
@@ -185,6 +185,7 @@ const getVirtualHeight = computed(() => {
 const showHandle = () => {
   state.visible = true
   state.keywordBackup = cloneDeep(state.keyword)
+  emit('focus')
 
   if (props.searchable) {
     state.keyword = ''

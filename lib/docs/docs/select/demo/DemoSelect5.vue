@@ -1,68 +1,22 @@
 <script setup lang="ts">
-const options = ref([
-  {
-    label: '初级软件工程师',
-    value: '1'
-  },
-  {
-    label: '中级软件工程师',
-    value: '2'
-  },
-  {
-    label: '高级软件工程师',
-    value: '3',
-    disabled: true
-  },
-  {
-    label: '技术主管',
-    disabled: true,
-    value: '4'
-  },
-  {
-    label: '产品经理',
-    value: '5'
-  },
-  {
-    label: '项目经理',
-    value: '6'
-  },
-  {
-    label: 'UI/UX设计师',
-    value: '7'
-  },
-  {
-    label: '测试工程师',
-    value: '8'
-  },
-  {
-    label: '运维工程师',
-    value: '9'
-  },
-  {
-    label: '数据分析师',
-    value: '10'
-  },
-  {
-    label: '首席技术官',
-    value: '11',
-    disabled: true
-  }
+import { SelectOptions } from 'lew-ui'
+const options = ref<SelectOptions[]>([
+  { label: 'Facial Cleanser', value: 'cleanser' },
+  { label: 'Moisturizer', value: 'moisturizer' },
+  { label: 'Sunscreen', value: 'sunscreen' },
+  { label: 'Face Mask', value: 'mask' },
+  { label: 'Eye Cream', value: 'eyeCream' },
+  { label: 'Serum', value: 'serum' }
 ])
-
-const value = ref('')
-
-const handleChange = (val: string) => {
-  console.log('选中的职位:', val)
-}
+const value = ref('mask')
 </script>
 
 <template>
-  <lew-flex style="width: 320px" direction="y" gap="10px">
-    <lew-select
-      v-model="value"
-      :options="options"
-      placeholder="选择职位"
-      @change="handleChange"
-    />
-  </lew-flex>
+  <lew-select
+    style="width: 320px"
+    v-model="value"
+    readonly
+    placeholder="Select product"
+    :options="options"
+  />
 </template>

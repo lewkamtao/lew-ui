@@ -388,7 +388,7 @@ export default {
         trigger: '触发方式',
         placement: '菜单弹出位置'
       },
-      'options (ContextMenus)': contextMenu,
+      'options(ContextMenus)': contextMenu,
       events: {
         show: '菜单显示事件回调',
         hide: '菜单隐藏事件回调',
@@ -437,7 +437,7 @@ export default {
         disabled: '是否禁用右键菜单',
         selectHandler: '选中菜单项时的回调函数'
       },
-      'options (ContextMenus)': contextMenu
+      'options(ContextMenus)': contextMenu
     },
     form: {
       name: '表单 Form',
@@ -845,7 +845,47 @@ export default {
     },
     select: {
       name: '选择器 Select',
-      description: '下拉选择框，让选择更加便捷'
+      description: '下拉选择框，让选择更加便捷',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '搜索'
+      },
+      demo3: {
+        title: '支持插槽'
+      },
+      demo4: {
+        title: '禁用选项'
+      },
+      demo5: {
+        title: '只读'
+      },
+      demo6: {
+        title: '禁用'
+      },
+      demo7: {
+        title: '自定义空状态'
+      },
+      demo8: {
+        title: '分组'
+      },
+      model: {
+        modelValue: '绑定值'
+      },
+      props: {
+        options: '选项',
+        size: '尺寸大小',
+        placeholder: '占位提示文本'
+      },
+      events: {
+        change: '值发生变化时触发',
+        clear: '清空时触发',
+        blur: '失去焦点时触发',
+        focus: '获得焦点时触发'
+      },
+      options: { label: '标题', value: '值', disabled: '禁用' },
+      slots: { item: '自定义选项内容', empty: '自定义空状态内容' }
     },
     selectMultiple: {
       name: '多选选择器 SelectMultiple',

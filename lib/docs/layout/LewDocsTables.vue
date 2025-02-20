@@ -37,7 +37,7 @@ const getColumns = computed(
         }
       ]
 
-      if (!['events', 'methods'].includes(columnsKey)) {
+      if (!['events', 'methods', 'slots'].includes(columnsKey)) {
         columns = [
           ...columns,
           {
@@ -97,7 +97,7 @@ const getColumns = computed(
               `components.${getComponentName()}.${title.replace(/^[A-Z]/, (match) => match.toLowerCase())}.${name}`
             )
           }
-        } 
+        }
       ]
       return columns
     }

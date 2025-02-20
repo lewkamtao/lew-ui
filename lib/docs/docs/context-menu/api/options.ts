@@ -1,5 +1,5 @@
 export default {
-  title: 'Options (ContextMenus)',
+  title: 'Options(ContextMenus)',
   columnsKey: 'props',
   orderNum: 2,
   data: [

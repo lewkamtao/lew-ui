@@ -1,145 +1,145 @@
 <script setup lang="ts">
 const options = ref([
   {
-    label: '客厅家具',
+    label: 'Living Room Furniture',
     children: [
       {
-        label: 'KIVIK 希维克 沙发',
+        label: 'KIVIK Sofa',
         value: 'kivik'
       },
       {
-        label: 'BILLY 比利 书柜',
+        label: 'BILLY Bookcase',
         value: 'billy'
       },
       {
-        label: 'KALLAX 卡莱克斯 储物架',
+        label: 'KALLAX Shelf Unit',
         value: 'kallax'
       },
       {
-        label: 'POÄNG 波昂 扶手椅',
+        label: 'POÄNG Armchair',
         value: 'poang'
       },
       {
-        label: 'LACK 拉克 茶几',
+        label: 'LACK Coffee Table',
         value: 'lack'
       },
       {
-        label: 'EKTORP 爱克托 沙发',
+        label: 'EKTORP Sofa',
         value: 'ektorp'
       },
       {
-        label: 'VITTSJÖ 维特索 电视柜',
+        label: 'VITTSJÖ TV Unit',
         value: 'vittsjo'
       },
       {
-        label: 'BESTÅ 贝达 电视柜组合',
+        label: 'BESTÅ TV Storage Combination',
         value: 'besta'
       }
     ]
   },
   {
-    label: '卧室家具',
+    label: 'Bedroom Furniture',
     children: [
       {
-        label: 'MALM 马尔姆 床',
+        label: 'MALM Bed',
         value: 'malm'
       },
       {
-        label: 'PAX 帕克斯 衣柜',
+        label: 'PAX Wardrobe',
         value: 'pax'
       },
       {
-        label: 'HEMNES 汉尼斯 床头柜',
+        label: 'HEMNES Bedside Table',
         value: 'hemnes'
       },
       {
-        label: 'BRIMNES 布里姆内斯 床架',
+        label: 'BRIMNES Bed Frame',
         value: 'brimnes'
       },
       {
-        label: 'SONGESAND 松吉桑 衣柜',
+        label: 'SONGESAND Wardrobe',
         value: 'songesand'
       },
       {
-        label: 'TRYSIL 特利斯 床架',
+        label: 'TRYSIL Bed Frame',
         value: 'trysil'
       },
       {
-        label: 'NORDLI 诺德里 床头柜',
+        label: 'NORDLI Bedside Table',
         value: 'nordli'
       },
       {
-        label: 'KULLEN 库伦 五斗柜',
+        label: 'KULLEN 5-drawer Chest',
         value: 'kullen'
       }
     ]
   },
   {
-    label: '厨房用品',
+    label: 'Kitchen Items',
     children: [
       {
-        label: 'METOD 米多 橱柜',
+        label: 'METOD Cabinet',
         value: 'metod'
       },
       {
-        label: 'KNOXHULT 诺克胡特 厨房操作台',
+        label: 'KNOXHULT Kitchen Base Cabinet',
         value: 'knoxhult'
       },
       {
-        label: 'SUNNERSTA 苏纳思 迷你厨房',
+        label: 'SUNNERSTA Mini-kitchen',
         value: 'sunnersta'
       },
       {
-        label: 'TORNVIKEN 托恩维肯 厨房中岛',
+        label: 'TORNVIKEN Kitchen Island',
         value: 'tornviken'
       },
       {
-        label: 'ENHET 安纳特 厨房储物组合',
+        label: 'ENHET Kitchen Storage Combination',
         value: 'enhet'
       },
       {
-        label: 'RÅSKOG 拉斯克 厨用推车',
+        label: 'RÅSKOG Kitchen Cart',
         value: 'raskog'
       },
       {
-        label: 'KUNGSFORS 孔斯福斯 厨房挂杆',
+        label: 'KUNGSFORS Kitchen Rail',
         value: 'kungsfors'
       }
     ]
   },
   {
-    label: '办公家具',
+    label: 'Office Furniture',
     children: [
       {
-        label: 'MICKE 米克 书桌',
+        label: 'MICKE Desk',
         value: 'micke'
       },
       {
-        label: 'MARKUS 马库斯 办公椅',
+        label: 'MARKUS Office Chair',
         value: 'markus'
       },
       {
-        label: 'ALEX 阿来斯 抽屉柜',
+        label: 'ALEX Drawer Unit',
         value: 'alex'
       },
       {
-        label: 'BEKANT 贝肯特 升降式办公桌',
+        label: 'BEKANT Sit/Stand Desk',
         value: 'bekant'
       },
       {
-        label: 'MILLBERGET 米伯格 转椅',
+        label: 'MILLBERGET Swivel Chair',
         value: 'millberget'
       },
       {
-        label: 'FLINTAN 福通 办公椅',
+        label: 'FLINTAN Office Chair',
         value: 'flintan'
       },
       {
-        label: 'GALANT 加兰特 文件柜',
+        label: 'GALANT Filing Cabinet',
         value: 'galant'
       },
       {
-        label: 'LÅNGFJÄLL 朗菲尔 办公椅',
+        label: 'LÅNGFJÄLL Office Chair',
         value: 'langfjall'
       }
     ]
@@ -154,7 +154,7 @@ const value = ref('')
     <lew-select
       v-model="value"
       :options="options"
-      placeholder="选择宜家产品"
+      placeholder="Select IKEA Product"
       searchable
     />
   </lew-flex>
