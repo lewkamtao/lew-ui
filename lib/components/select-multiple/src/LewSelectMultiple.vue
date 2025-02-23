@@ -16,7 +16,7 @@ import Icon from 'lew-ui/utils/Icon.vue'
 import { isFunction } from 'lodash-es'
 import { flattenOptions, defaultSearchMethod } from '../../select/src/util'
 import { poll } from 'lew-ui/utils'
-
+import { locale } from 'lew-ui'
 const props = defineProps(selectMultipleProps)
 const emit = defineEmits(['change', 'select', 'clear', 'delete', 'blur'])
 const selectValue: any = defineModel()
@@ -203,7 +203,7 @@ const showHandle = () => {
     search({ target: { value: '' } })
   }
   // 找到所有选中值的index，取最小的
-  if (selectValue.value.length > 0) {
+  if ((selectValue.value || []).length > 0) {
     const indexes = selectValue.value
       .map((value: any) =>
         state.options.findIndex((e: any) => e.value === value)
@@ -365,7 +365,9 @@ const getResultNum = computed(() => {
           }"
           class="lew-placeholder"
         >
-          {{ placeholder }}
+          {{
+            placeholder ? placeholder : locale.t('selectMultiple.placeholder')
+          }}
         </div>
       </div>
     </template>
@@ -802,7 +804,7 @@ const getResultNum = computed(() => {
     padding: 5px 12px;
     font-size: 13px;
     opacity: 0.4;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
   }
 }
 </style>

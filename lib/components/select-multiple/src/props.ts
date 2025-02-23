@@ -52,7 +52,7 @@ export const selectMultipleProps = {
   },
   placeholder: {
     type: String,
-    default: '请选择',
+    defaultLocale: true,
     description: '选择框默认文本'
   },
   size: {

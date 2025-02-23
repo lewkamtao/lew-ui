@@ -12,6 +12,9 @@ export default {
   textarea: {
     placeholder: 'Please input'
   },
+  select: {
+    placeholder: 'Please select'
+  },
   inputTag: {
     placeholder: 'Press Enter to add'
   },

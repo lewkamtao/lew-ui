@@ -49,7 +49,7 @@ export const selectProps = {
   },
   placeholder: {
     type: String,
-    default: '请选择',
+    defaultLocale: true,
     description: '选择器的占位文本'
   },
   size: {

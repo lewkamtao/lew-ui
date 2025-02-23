@@ -4,7 +4,7 @@ export default {
     fail: '暂时无法加载图片，请稍后再试'
   },
   input: {
-    placeholder: '输入内容',
+    placeholder: '请输入',
     copy: '复制',
     copySuccess: '已复制到剪贴板',
     copyFailed: '复制未成功，请重试'
@@ -14,8 +14,14 @@ export default {
     maxLength: '已达到 {maxLength} 个标签上限，删除一些标签后即可继续添加',
     duplicate: '已存在相同标签，请输入新的标签'
   },
+  select: {
+    placeholder: '请选择'
+  },
+  selectMultiple: {
+    placeholder: '请选择'
+  },
   textarea: {
-    placeholder: '输入内容'
+    placeholder: '请输入'
   },
   datePicker: {
     Mon: '一',

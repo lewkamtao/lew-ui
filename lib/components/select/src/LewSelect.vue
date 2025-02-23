@@ -9,6 +9,7 @@ import { cloneDeep, isFunction } from 'lodash-es'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { flattenOptions, defaultSearchMethod } from './util'
 import { poll } from 'lew-ui/utils'
+import { locale } from 'lew-ui'
 const props = defineProps(selectProps)
 const emit = defineEmits(['change', 'blur', 'clear', 'focus'])
 const selectValue: Ref<string | number | undefined> = defineModel()
@@ -282,7 +283,11 @@ defineExpose({ show, hide })
           class="lew-value"
           :style="getValueStyle"
           :readonly="!searchable"
-          :placeholder="state.keywordBackup || placeholder"
+          :placeholder="
+            state.keywordBackup || placeholder
+              ? placeholder
+              : locale.t('select.placeholder')
+          "
           @input="searchDebounce"
         />
       </div>
@@ -322,7 +327,7 @@ defineExpose({ show, hide })
                 v-if="state.options.length > 0 && state.visible"
                 :list="state.options"
                 :minSize="itemHeight"
-                :buffer="20"
+                :buffer="5"
                 item-key="value"
                 class="lew-scrollbar"
               >
@@ -534,7 +539,7 @@ defineExpose({ show, hide })
     padding: 5px 12px;
     font-size: 13px;
     opacity: 0.4;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
   }
 
   .lew-select-options-box {
