@@ -52,6 +52,11 @@ export const inputProps = {
       return true
     }
   },
+  width: {
+    type: [String, Number],
+    default: '300px',
+    description: '输入框宽度，支持数字（单位：像素）或带单位的字符串'
+  },
   placeholder: {
     type: String,
     defaultLocale: true,

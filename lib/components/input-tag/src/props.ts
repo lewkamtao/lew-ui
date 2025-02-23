@@ -1,5 +1,4 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import { defaultLocale } from 'yup'
 
 export type InputTagSize = 'small' | 'medium' | 'large'
 
@@ -46,6 +45,11 @@ export const inputTagProps = {
     type: Number,
     default: 0,
     description: '允许添加标签的最大数量'
+  },
+  width: {
+    type: [String, Number],
+    default: '320px',
+    description: '输入框宽度，支持数字（单位：像素）或带单位的字符串'
   }
 }
 

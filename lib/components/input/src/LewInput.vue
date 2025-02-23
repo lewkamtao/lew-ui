@@ -154,7 +154,11 @@ defineExpose({ toFocus })
 </script>
 
 <template>
-  <div class="lew-input-view" :class="getInputClassNames">
+  <div
+    class="lew-input-view"
+    :class="getInputClassNames"
+    :style="{ width: autoWidth ? 'auto' : any2px(width) }"
+  >
     <div
       v-if="prefixes"
       v-tooltip="{

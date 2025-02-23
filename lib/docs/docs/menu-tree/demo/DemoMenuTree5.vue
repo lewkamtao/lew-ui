@@ -15,11 +15,11 @@ const expandKeys = ref([])
 const options = [
   {
     value: '1',
-    label: '文章管理',
+    label: 'Article Mgmt',
     renderIcon: () => h(FileText, { size: 14 }),
     renderLabel: () =>
       h(LewFlex, { x: 'start', style: 'width: 100%' }, [
-        h('span', '文章管理'),
+        h('span', 'Article Mgmt'),
         h(
           LewTag,
           { type: 'light', color: 'error', round: true, size: 'small' },
@@ -29,10 +29,10 @@ const options = [
     children: [
       {
         value: '1-1',
-        label: '文章列表',
+        label: 'Article List',
         renderLabel: () =>
           h(LewFlex, { x: 'start', style: 'width: 100%' }, [
-            h('span', '文章列表'),
+            h('span', 'Article List'),
             h(
               LewTag,
               { type: 'light', color: 'primary', size: 'small' },
@@ -40,29 +40,29 @@ const options = [
             )
           ]),
         children: [
-          { value: '1-1-1', label: '已发布' },
-          { value: '1-1-2', label: '草稿箱' },
-          { value: '1-1-3', label: '回收站' }
+          { value: '1-1-1', label: 'Published' },
+          { value: '1-1-2', label: 'Drafts' },
+          { value: '1-1-3', label: 'Recycle Bin' }
         ]
       },
       {
         value: '1-2',
-        label: '写文章',
+        label: 'Write Article',
         children: [
-          { value: '1-2-1', label: '新建文章' },
-          { value: '1-2-2', label: '导入文章' },
-          { value: '1-2-3', label: '批量操作' }
+          { value: '1-2-1', label: 'New Article' },
+          { value: '1-2-2', label: 'Import Article' },
+          { value: '1-2-3', label: 'Batch Actions' }
         ]
       }
     ]
   },
   {
     value: '2',
-    label: '用户管理',
+    label: 'User Mgmt',
     renderIcon: () => h(Users, { size: 14 }),
     renderLabel: () =>
       h(LewFlex, { x: 'start', style: 'width: 100%' }, [
-        h('span', '用户管理'),
+        h('span', 'User Mgmt'),
         h(
           LewTag,
           { type: 'light', color: 'error', round: true, size: 'small' },
@@ -72,10 +72,10 @@ const options = [
     children: [
       {
         value: '2-1',
-        label: '用户列表',
+        label: 'User List',
         renderLabel: () =>
           h(LewFlex, { x: 'start', style: 'width: 100%' }, [
-            h('span', '用户列表'),
+            h('span', 'User List'),
             h(
               LewTag,
               { type: 'light', color: 'primary', size: 'small' },
@@ -83,118 +83,118 @@ const options = [
             )
           ]),
         children: [
-          { value: '2-1-1', label: '普通用户' },
-          { value: '2-1-2', label: '管理员' },
-          { value: '2-1-3', label: '黑名单' }
+          { value: '2-1-1', label: 'Regular Users' },
+          { value: '2-1-2', label: 'Admins' },
+          { value: '2-1-3', label: 'Blacklist' }
         ]
       },
       {
         value: '2-2',
-        label: '用户权限',
+        label: 'User Permissions',
         children: [
-          { value: '2-2-1', label: '角色管理' },
-          { value: '2-2-2', label: '权限分配' },
-          { value: '2-2-3', label: '访问控制' }
+          { value: '2-2-1', label: 'Role Mgmt' },
+          { value: '2-2-2', label: 'Permission Assign' },
+          { value: '2-2-3', label: 'Access Control' }
         ]
       }
     ]
   },
   {
     value: '3',
-    label: '评论管理',
+    label: 'Comment Mgmt',
     renderIcon: () => h(MessageSquare, { size: 14 }),
     children: [
       {
         value: '3-1',
-        label: '评论列表',
+        label: 'Comment List',
         children: [
-          { value: '3-1-1', label: '待审核' },
-          { value: '3-1-2', label: '已通过' },
-          { value: '3-1-3', label: '已拒绝' }
+          { value: '3-1-1', label: 'Pending Review' },
+          { value: '3-1-2', label: 'Approved' },
+          { value: '3-1-3', label: 'Rejected' }
         ]
       },
       {
         value: '3-2',
-        label: '评论设置',
+        label: 'Comment Settings',
         children: [
-          { value: '3-2-1', label: '审核规则' },
-          { value: '3-2-2', label: '敏感词过滤' },
-          { value: '3-2-3', label: '评论开关' }
+          { value: '3-2-1', label: 'Review Rules' },
+          { value: '3-2-2', label: 'Sensitive Word Filter' },
+          { value: '3-2-3', label: 'Comment Switch' }
         ]
       }
     ]
   },
   {
     value: '4',
-    label: '标签管理',
+    label: 'Tag Mgmt',
     renderIcon: () => h(Tag, { size: 14 }),
     children: [
       {
         value: '4-1',
-        label: '标签列表',
+        label: 'Tag List',
         children: [
-          { value: '4-1-1', label: '热门标签' },
-          { value: '4-1-2', label: '最新标签' },
-          { value: '4-1-3', label: '标签审核' }
+          { value: '4-1-1', label: 'Popular Tags' },
+          { value: '4-1-2', label: 'Latest Tags' },
+          { value: '4-1-3', label: 'Tag Review' }
         ]
       },
       {
         value: '4-2',
-        label: '分类管理',
+        label: 'Category Mgmt',
         children: [
-          { value: '4-2-1', label: '分类列表' },
-          { value: '4-2-2', label: '添加分类' },
-          { value: '4-2-3', label: '分类排序' }
+          { value: '4-2-1', label: 'Category List' },
+          { value: '4-2-2', label: 'Add Category' },
+          { value: '4-2-3', label: 'Category Sort' }
         ]
       }
     ]
   },
   {
     value: '5',
-    label: '数据统计',
+    label: 'Data Stats',
     renderIcon: () => h(BarChart2, { size: 14 }),
     children: [
       {
         value: '5-1',
-        label: '访问统计',
+        label: 'Visit Stats',
         children: [
-          { value: '5-1-1', label: '访问趋势' },
-          { value: '5-1-2', label: '来源分析' },
-          { value: '5-1-3', label: '访问明细' }
+          { value: '5-1-1', label: 'Visit Trends' },
+          { value: '5-1-2', label: 'Source Analysis' },
+          { value: '5-1-3', label: 'Visit Details' }
         ]
       },
       {
         value: '5-2',
-        label: '内容统计',
+        label: 'Content Stats',
         children: [
-          { value: '5-2-1', label: '热门文章' },
-          { value: '5-2-2', label: '作者排行' },
-          { value: '5-2-3', label: '互动数据' }
+          { value: '5-2-1', label: 'Popular Articles' },
+          { value: '5-2-2', label: 'Author Ranking' },
+          { value: '5-2-3', label: 'Engagement Data' }
         ]
       }
     ]
   },
   {
     value: '6',
-    label: '系统设置',
+    label: 'System Settings',
     renderIcon: () => h(Settings, { size: 14 }),
     children: [
       {
         value: '6-1',
-        label: '基础设置',
+        label: 'Basic Settings',
         children: [
-          { value: '6-1-1', label: '网站信息' },
-          { value: '6-1-2', label: '主题设置' },
-          { value: '6-1-3', label: '邮件配置' }
+          { value: '6-1-1', label: 'Site Info' },
+          { value: '6-1-2', label: 'Theme Settings' },
+          { value: '6-1-3', label: 'Email Config' }
         ]
       },
       {
         value: '6-2',
-        label: '安全设置',
+        label: 'Security Settings',
         children: [
-          { value: '6-2-1', label: '登录设置' },
-          { value: '6-2-2', label: '备份恢复' },
-          { value: '6-2-3', label: '操作日志' }
+          { value: '6-2-1', label: 'Login Settings' },
+          { value: '6-2-2', label: 'Backup & Restore' },
+          { value: '6-2-3', label: 'Action Logs' }
         ]
       }
     ]

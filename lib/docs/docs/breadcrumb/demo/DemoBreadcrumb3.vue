@@ -1,19 +1,19 @@
 <script lang="ts" setup>
 const options = ref([
   {
-    label: '首页',
+    label: 'Home',
     value: '/'
   },
   {
-    label: '电子产品',
+    label: 'Electronics',
     value: '/electronics'
   },
   {
-    label: '手机',
+    label: 'Phones',
     value: '/electronics/phones'
   },
   {
-    label: '智能手机',
+    label: 'Smartphones',
     value: '/electronics/phones/smartphones'
   },
   {
@@ -22,9 +22,9 @@ const options = ref([
     active: true
   }
 ])
-// 模拟面包屑点击事件
+// Simulate breadcrumb click event
 const handleBreadcrumbClick = (item: any) => {
-  LewMessage.success('点击了面包屑项:' + item.label)
+  LewMessage.success('Clicked breadcrumb item: ' + item.label)
 }
 </script>
 

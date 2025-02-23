@@ -889,11 +889,97 @@ export default {
     },
     selectMultiple: {
       name: '多选选择器 SelectMultiple',
-      description: '支持多选的下拉框，让多项选择更加灵活'
+      description: '支持多选的下拉框，让多项选择更加灵活',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '自定义过滤方法'
+      },
+      demo3: {
+        title: '支持插槽'
+      },
+      demo4: {
+        title: '禁用选项'
+      },
+      demo5: {
+        title: '只读'
+      },
+      demo6: {
+        title: '禁用'
+      },
+      demo7: {
+        title: '空状态插槽'
+      },
+      demo8: {
+        title: '分组'
+      },
+      props: {
+        options: '选项',
+        trigger: '触发方式',
+        width: '宽度',
+        valueLayout: '值布局',
+        valueTextSplit: '值文本分隔符',
+        placeholder: '占位提示文本',
+        size: '尺寸大小',
+        itemHeight: '项高度',
+        searchable: '是否可搜索',
+        searchPlaceholder: '搜索占位提示文本',
+        searchMethod: '搜索方法',
+        searchDelay: '搜索延迟',
+        clearable: '是否可清空',
+        readonly: '只读',
+        disabled: '禁用',
+        showCheckIcon: '显示勾选图标',
+        defaultValue: '默认值'
+      },
+      model: {
+        modelValue: '绑定值'
+      },
+      events: { change: '值变化', blur: '失去焦点', focus: '获得焦点' },
+      options: { label: '标签', value: '值', disabled: '禁用' },
+      slots: { item: '自定义选项内容', empty: '自定义空状态内容' }
     },
     datePicker: {
       name: '日期选择器 DatePicker',
-      description: '简单直观的日期选择工具，让时间选择更加精确'
+      description: '简单直观的日期选择工具，让时间选择更加精确',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '可清空的'
+      },
+      demo3: {
+        title: '自定义格式'
+      },
+      demo4: {
+        title: '预设'
+      },
+      demo5: {
+        title: '只读'
+      },
+      demo6: {
+        title: '禁用'
+      },
+      model: {
+        modelValue: '绑定值'
+      },
+      props: {
+        valueFormat: '值格式',
+        size: '尺寸',
+        width: '宽度',
+        placeholder: '占位提示文本',
+        clearable: '是否可清空',
+        readonly: '只读',
+        disabled: '禁用',
+        presets: '预设值'
+      },
+      events: {
+        change: '值变化',
+        focus: '获得焦点',
+        blur: '失去焦点',
+        clear: '清空'
+      }
     },
     dateRangePicker: {
       name: '日期范围选择器 DateRangePicker',

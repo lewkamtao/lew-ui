@@ -30,7 +30,7 @@ const searchFn = (event: any) => {
 </script>
 
 <template>
-  <lew-flex style="width: 320px" direction="y">
+  <lew-flex style="width: 320px" :gap="20" direction="y">
     <lew-select
       v-model="value"
       searchable

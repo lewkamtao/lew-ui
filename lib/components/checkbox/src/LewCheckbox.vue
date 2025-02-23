@@ -2,6 +2,7 @@
 import { object2class } from 'lew-ui/utils'
 import { checkboxProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { cloneDeep } from 'lodash-es'
 
 const props = defineProps(checkboxProps)
 
@@ -10,10 +11,12 @@ const modelValue: Ref<boolean | undefined> = defineModel({
   default: false
 })
 
-const setChecked = (e: Event) => {
-  const { checked } = e.target as HTMLInputElement
-  modelValue.value = checked
-  emit('change', checked)
+const setChecked = () => {
+  if (props.disabled || props.readonly) return
+
+  const newValue = !modelValue.value
+  modelValue.value = newValue
+  emit('change', cloneDeep(newValue))
 }
 
 const getIconSize = computed(() => {
@@ -48,7 +51,11 @@ const getCheckboxClassName = computed(() => {
 })
 </script>
 <template>
-  <label class="lew-checkbox" :class="getCheckboxClassName">
+  <div
+    class="lew-checkbox"
+    :class="getCheckboxClassName"
+    @click.stop="setChecked"
+  >
     <div v-if="iconable || (!iconable && !block)" class="lew-checkbox-icon-box">
       <i v-show="certain" class="lew-checkbox-icon-certain"></i>
       <Icon
@@ -58,14 +65,8 @@ const getCheckboxClassName = computed(() => {
         :size="getIconSize"
       />
     </div>
-    <input
-      v-show="false"
-      type="checkbox"
-      :checked="modelValue"
-      @change="setChecked"
-    />
     <span v-if="label" class="lew-checkbox-label"> {{ label }}</span>
-  </label>
+  </div>
 </template>
 
 <style lang="scss" scoped>

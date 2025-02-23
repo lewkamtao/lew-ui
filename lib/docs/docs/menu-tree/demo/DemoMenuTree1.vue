@@ -13,7 +13,7 @@ const options = [
     children: [
       {
         value: '1-1',
-        label: 'iPhone 系列',
+        label: 'iPhone Series',
         children: [
           {
             value: '1-1-1',
@@ -41,8 +41,8 @@ const options = [
         value: '1-2',
         label: 'iPhone SE',
         children: [
-          { value: '1-2-1', label: 'iPhone SE (第3代)' },
-          { value: '1-2-2', label: 'iPhone SE (第2代)' }
+          { value: '1-2-1', label: 'iPhone SE (3rd Gen)' },
+          { value: '1-2-2', label: 'iPhone SE (2nd Gen)' }
         ]
       }
     ]
@@ -91,7 +91,7 @@ const options = [
     children: [
       {
         value: '3-1',
-        label: 'Apple Watch 系列',
+        label: 'Apple Watch Series',
         children: [
           {
             value: '3-1-1',
@@ -114,7 +114,7 @@ const options = [
       {
         value: '3-2',
         label: 'Apple Watch Ultra',
-        children: [{ value: '3-2-1', label: '49mm 钛金属表壳' }]
+        children: [{ value: '3-2-1', label: '49mm Titanium' }]
       }
     ]
   },
@@ -131,16 +131,16 @@ const options = [
             value: '4-1-1',
             label: 'AirPods Pro',
             children: [
-              { value: '4-1-1-1', label: 'AirPods Pro (第2代)' },
-              { value: '4-1-1-2', label: 'AirPods Pro (第1代)' }
+              { value: '4-1-1-1', label: 'AirPods Pro (2nd Gen)' },
+              { value: '4-1-1-2', label: 'AirPods Pro (1st Gen)' }
             ]
           },
           {
             value: '4-1-2',
             label: 'AirPods',
             children: [
-              { value: '4-1-2-1', label: 'AirPods (第3代)' },
-              { value: '4-1-2-2', label: 'AirPods (第2代)' }
+              { value: '4-1-2-1', label: 'AirPods (3rd Gen)' },
+              { value: '4-1-2-2', label: 'AirPods (2nd Gen)' }
             ]
           }
         ]
@@ -149,18 +149,18 @@ const options = [
         value: '4-2',
         label: 'AirPods Max',
         children: [
-          { value: '4-2-1', label: '太空灰色' },
-          { value: '4-2-2', label: '银色' },
-          { value: '4-2-3', label: '绿色' },
-          { value: '4-2-4', label: '粉色' },
-          { value: '4-2-5', label: '天蓝色' }
+          { value: '4-2-1', label: 'Space Gray' },
+          { value: '4-2-2', label: 'Silver' },
+          { value: '4-2-3', label: 'Green' },
+          { value: '4-2-4', label: 'Pink' },
+          { value: '4-2-5', label: 'Sky Blue' }
         ]
       }
     ]
   },
   {
     value: '5',
-    label: 'TV 和家居',
+    label: 'TV & Home',
     renderIcon: () => h(Tv, { size: 14 }),
     children: [
       {
@@ -169,20 +169,20 @@ const options = [
         children: [
           {
             value: '5-1-1',
-            label: '第3代',
+            label: '3rd Gen',
             children: [
               { value: '5-1-1-1', label: 'Wi-Fi' },
-              { value: '5-1-1-2', label: 'Wi-Fi + 以太网' }
+              { value: '5-1-1-2', label: 'Wi-Fi + Ethernet' }
             ]
           },
-          { value: '5-1-2', label: '第2代' }
+          { value: '5-1-2', label: '2nd Gen' }
         ]
       },
       {
         value: '5-2',
         label: 'HomePod',
         children: [
-          { value: '5-2-1', label: 'HomePod (第2代)' },
+          { value: '5-2-1', label: 'HomePod (2nd Gen)' },
           { value: '5-2-2', label: 'HomePod mini' }
         ]
       }
@@ -198,7 +198,7 @@ const change = (item: MenuTreeItem) => {
 <template>
   <div class="wrapper">
     <lew-button style="margin-bottom: 10px" @click="collapsed = !collapsed">
-      {{ collapsed ? '展开' : '折叠' }}
+      {{ collapsed ? 'Expand' : 'Collapse' }}
     </lew-button>
     <lew-menu-tree
       width="300"

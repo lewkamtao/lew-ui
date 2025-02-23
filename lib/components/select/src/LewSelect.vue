@@ -10,6 +10,7 @@ import Icon from 'lew-ui/utils/Icon.vue'
 import { flattenOptions, defaultSearchMethod } from './util'
 import { poll } from 'lew-ui/utils'
 import { locale } from 'lew-ui'
+import { any2px } from 'lew-ui/utils'
 const props = defineProps(selectProps)
 const emit = defineEmits(['change', 'blur', 'clear', 'focus'])
 const selectValue: Ref<string | number | undefined> = defineModel()
@@ -252,7 +253,7 @@ defineExpose({ show, hide })
     :trigger="trigger"
     :disabled="disabled || readonly"
     placement="bottom-start"
-    style="width: 100%"
+    :style="{ width: any2px(width) }"
     :loading="state.loading"
     @show="showHandle"
     @hide="hideHandle"

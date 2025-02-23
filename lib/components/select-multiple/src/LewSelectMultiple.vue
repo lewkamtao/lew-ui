@@ -17,6 +17,7 @@ import { isFunction } from 'lodash-es'
 import { flattenOptions, defaultSearchMethod } from '../../select/src/util'
 import { poll } from 'lew-ui/utils'
 import { locale } from 'lew-ui'
+import { any2px } from 'lew-ui/utils'
 const props = defineProps(selectMultipleProps)
 const emit = defineEmits(['change', 'select', 'clear', 'delete', 'blur'])
 const selectValue: any = defineModel()
@@ -263,7 +264,7 @@ const getResultNum = computed(() => {
     :trigger="trigger"
     :disabled="disabled || readonly"
     placement="bottom-start"
-    style="width: 100%"
+    :style="{ width: any2px(width) }"
     :loading="state.loading"
     @show="showHandle"
     @hide="hideHandle"
@@ -307,7 +308,7 @@ const getResultNum = computed(() => {
                 :key="index"
                 type="light"
                 :size="size"
-                closable
+                :closable="!disabled && !readonly"
                 @close="deleteTag(index)"
               >
                 {{ item }}
@@ -348,7 +349,7 @@ const getResultNum = computed(() => {
                     :key="index"
                     type="light"
                     :size="size"
-                    closable
+                    :closable="!disabled && !readonly"
                     @close="deleteTag(index)"
                   >
                     {{ item }}

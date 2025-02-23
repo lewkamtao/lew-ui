@@ -61,6 +61,11 @@ export const stepsProps = {
       }
       return true
     }
+  },
+  minWidth: {
+    type: String as PropType<string>,
+    default: '300px',
+    description: '步骤条的最小宽度'
   }
 }
 

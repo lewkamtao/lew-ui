@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-// 定义面包屑导航选项
+// Define breadcrumb navigation options
 const options = ref([
   {
-    label: '商品管理',
+    label: 'Product Mgmt',
     value: '/products'
   },
   {
-    label: '电子产品',
+    label: 'Electronics',
     value: '/products/electronics'
   },
   {
-    label: '手机',
+    label: 'Phones',
     value: '/products/electronics/phones'
   },
   {
@@ -20,9 +20,9 @@ const options = ref([
   }
 ])
 
-// 模拟面包屑点击事件
+// Simulate breadcrumb click event
 const handleBreadcrumbClick = (item: any) => {
-  LewMessage.success('点击了面包屑项:' + item.label)
+  LewMessage.success('Clicked breadcrumb item: ' + item.label)
 }
 </script>
 

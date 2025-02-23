@@ -3,7 +3,5 @@ const value = ref(3)
 </script>
 
 <template>
-  <lew-flex gap="10" direction="y">
-    <lew-rate v-model="value" disabled />
-  </lew-flex>
+  <lew-rate v-model="value" disabled />
 </template>

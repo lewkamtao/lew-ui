@@ -8,14 +8,16 @@ const inputValues = reactive({
 const selectValues = reactive({
   protocol: 'https://',
   domain: '.com',
-  city: '北京'
+  city: 'New York'
 })
 
 const options = {
   cities: [
-    { label: '北京', value: '北京' },
-    { label: '上海', value: '上海' },
-    { label: '广州', value: '广州' }
+    { label: 'New York', value: 'New York' },
+    { label: 'London', value: 'London' },
+    { label: 'Tokyo', value: 'Tokyo' },
+    { label: 'Berlin', value: 'Berlin' },
+    { label: 'Canberra', value: 'Canberra' }
   ],
   protocols: [
     { label: 'http://', value: 'http://' },
@@ -31,10 +33,10 @@ const options = {
 
 const getSuffixTooltip = () => {
   const domainDesc = {
-    '.com': '商业网站的通用顶级域名',
-    '.cn': '中国国家顶级域名',
-    '.org': '非营利组织域名',
-    '.net': '网络服务提供商域名'
+    '.com': 'The common top-level domain for commercial websites',
+    '.cn': 'The national top-level domain for China',
+    '.org': 'Domain for non-profit organizations',
+    '.net': 'Domain for network service providers'
   }[selectValues.domain]
 
   return domainDesc
@@ -43,15 +45,15 @@ const getSuffixTooltip = () => {
 const getPrefixesTooltip = () => {
   const protocolDesc =
     selectValues.protocol === 'https://'
-      ? '安全加密的超文本传输协议'
-      : '标准超文本传输协议'
+      ? 'Secure encrypted hypertext transfer protocol'
+      : 'Standard hypertext transfer protocol'
 
   return protocolDesc
 }
 </script>
 
 <template>
-  <lew-flex style="width: 450px" :gap="20" x="start" direction="y">
+  <lew-flex :gap="20" x="start" direction="y">
     <lew-input
       v-model="inputValues.email"
       auto-width
@@ -59,7 +61,7 @@ const getPrefixesTooltip = () => {
       clearable
       suffix="text"
       suffixValue="@gmail.com"
-      placeholder="请输入邮箱"
+      placeholder="Please enter your email"
     />
     <lew-input
       v-model="inputValues.website"
@@ -68,17 +70,19 @@ const getPrefixesTooltip = () => {
       prefixes="select"
       :prefixesOptions="options.protocols"
       suffix="select"
+      width="500px"
       :suffixOptions="options.domains"
       :suffixTooltip="getSuffixTooltip"
       :prefixesTooltip="getPrefixesTooltip"
-      placeholder="请输入网站名"
+      placeholder="Please enter the website name"
     />
     <lew-input
       v-model="inputValues.address"
       v-model:prefixesValue="selectValues.city"
       prefixes="select"
+      width="500px"
       :prefixesOptions="options.cities"
-      placeholder="请输入详细地址"
+      placeholder="Please enter the detailed address"
     />
   </lew-flex>
 </template>

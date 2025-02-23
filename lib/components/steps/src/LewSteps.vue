@@ -2,6 +2,7 @@
 import { stepsProps } from './props'
 import { LewTextTrim } from 'lew-ui'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { any2px } from 'lew-ui/utils'
 defineProps(stepsProps)
 const stepsValue: Ref<number | undefined> = defineModel()
 </script>
@@ -12,6 +13,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
       v-for="(item, index) in options"
       :key="index"
       class="lew-steps-item"
+      :style="{ minWidth: any2px(minWidth) }"
       :class="{
         'lew-steps-item-active': index === (stepsValue || 1) - 1,
         'lew-steps-item-succeeded': index < (stepsValue || 1) - 1,
@@ -57,10 +59,16 @@ const stepsValue: Ref<number | undefined> = defineModel()
         <span v-else class="index">{{ index + 1 }}</span>
       </div>
       <div class="lew-steps-item-info">
-        <div class="lew-steps-item-title">
+        <div
+          :style="{ maxWidth: any2px(minWidth) }"
+          class="lew-steps-item-title"
+        >
           <lew-text-trim placement="bottom" :text="item.title" />
         </div>
-        <div class="lew-steps-item-description">
+        <div
+          :style="{ maxWidth: any2px(minWidth) }"
+          class="lew-steps-item-description"
+        >
           <lew-text-trim
             allowHTML
             :lineClamp="2"
@@ -90,7 +98,6 @@ const stepsValue: Ref<number | undefined> = defineModel()
     flex: 1;
     overflow: hidden;
     padding: 0px 15px;
-    min-width: 200px;
     box-sizing: border-box;
     transition: 0.25s all;
 
@@ -105,6 +112,11 @@ const stepsValue: Ref<number | undefined> = defineModel()
       font-size: 16px;
       background-color: var(--lew-bgcolor-3);
       transition: 0.25s all;
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
 
     .lew-steps-item-info {
@@ -114,7 +126,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
       justify-content: center;
       width: 100%;
       gap: 5px;
-      margin-top: 5px;
+      margin-top: 4px;
       margin-left: 10px;
       transition: 0.25s all;
     }
@@ -124,7 +136,6 @@ const stepsValue: Ref<number | undefined> = defineModel()
       background-color: var(--lew-bgcolor-0);
       padding-right: 15px;
       box-sizing: border-box;
-      max-width: 150px;
       white-space: nowrap;
     }
     .lew-steps-item-title::before {
@@ -151,6 +162,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
     .lew-steps-item-description {
       font-size: 14px;
       max-width: 200px;
+      padding-right: 10px;
       color: var(--lew-text-color-5);
     }
   }

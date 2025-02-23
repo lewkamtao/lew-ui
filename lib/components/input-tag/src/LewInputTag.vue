@@ -5,7 +5,7 @@ import { cloneDeep } from 'lodash-es'
 import { object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { locale } from 'lew-ui'
-
+import { any2px } from 'lew-ui/utils'
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -140,6 +140,7 @@ const clear = () => {
     class="lew-input-tag-view"
     @click="openInput"
     :class="getInputClassNames"
+    :style="{ width: any2px(width) }"
   >
     <div
       :style="{ padding: (modelValue || []).length > 0 ? '4px' : '' }"

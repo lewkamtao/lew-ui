@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const options = ref([
   {
-    label: '智能手机',
+    label: 'Smartphones',
     children: [
       {
         label: 'Pixel 6',
@@ -38,7 +38,7 @@ const options = ref([
     ]
   },
   {
-    label: '智能家居',
+    label: 'Smart Home',
     children: [
       {
         label: 'Nest Hub',
@@ -75,7 +75,7 @@ const options = ref([
     ]
   },
   {
-    label: '笔记本',
+    label: 'Laptops',
     children: [
       {
         label: 'Pixelbook Go',
@@ -112,7 +112,7 @@ const options = ref([
     ]
   },
   {
-    label: '配件',
+    label: 'Accessories',
     children: [
       {
         label: 'Pixel Buds',
@@ -123,34 +123,34 @@ const options = ref([
         value: 'google_pixel_stand'
       },
       {
-        label: '充电器',
+        label: 'Charger',
         value: 'google_charger'
       },
       {
-        label: '手机壳',
+        label: 'Phone Case',
         value: 'google_phone_case'
       },
       {
-        label: '耳机',
+        label: 'Headphones',
         value: 'google_headphones'
       },
       {
-        label: '键盘',
+        label: 'Keyboard',
         value: 'google_keyboard'
       },
       {
-        label: '鼠标',
+        label: 'Mouse',
         value: 'google_mouse'
       },
       {
-        label: '充电底座',
+        label: 'Charging Dock',
         value: 'google_charging_dock'
       }
     ]
   }
 ])
 
-const value = ref([])
+const value = ref(['google_pixel_buds', 'google_pixel_stand'])
 </script>
 
 <template>
@@ -158,7 +158,8 @@ const value = ref([])
     <lew-select-multiple
       v-model="value"
       :options="options"
-      placeholder="选择产品"
+      value-layout="tag"
+      placeholder="Select Products"
       searchable
     />
   </lew-flex>

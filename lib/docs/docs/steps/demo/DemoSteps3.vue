@@ -1,16 +1,16 @@
 <script setup lang="ts">
 const options = [
   {
-    title: '选择产品',
-    description: '请选择您想购买的产品'
+    title: 'Choose Product',
+    description: 'Please select the product you want to purchase'
   },
   {
-    title: '填写收货信息',
-    description: '请输入您的收货地址和联系方式'
+    title: 'Enter Shipping Info',
+    description: 'Please enter your shipping address and contact information'
   },
   {
-    title: '确认订单',
-    description: '请确认您的订单信息'
+    title: 'Review Order',
+    description: 'Please confirm your order information'
   }
 ]
 
@@ -20,19 +20,26 @@ const currentStep = ref(2)
 
 <template>
   <lew-flex direction="y">
-    <lew-steps :options="options" v-model="currentStep" :status="status" />
+    <lew-steps
+      minWidth="350px"
+      :options="options"
+      v-model="currentStep"
+      :status="status"
+    />
     <lew-flex x="center" y="center">
       <lew-button
         :disabled="currentStep === 1"
         @click="currentStep -= 1"
         type="light"
-        >上一步</lew-button
       >
+        Previous
+      </lew-button>
       <lew-button
         :disabled="currentStep === options.length"
         @click="currentStep += 1"
-        >下一步</lew-button
       >
+        Next
+      </lew-button>
     </lew-flex>
   </lew-flex>
 </template>

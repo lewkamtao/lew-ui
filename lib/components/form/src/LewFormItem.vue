@@ -221,7 +221,7 @@ defineExpose({ validate, setError, curRule })
       <component
         :is="asMap[as]"
         v-model="modelValue"
-        v-bind="{ size, readonly, disabled, ...props.props }"
+        v-bind="{ size, readonly, disabled, ...props.props, width: '100%' }"
         @change="change"
       />
       <transition name="lew-slide-fade">
