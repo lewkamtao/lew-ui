@@ -1,11 +1,7 @@
 <script setup lang="ts">
-const v1 = ref('这是只读状态')
-const v2 = ref('这是禁用状态')
+const v = ref('This is a read-only state')
 </script>
 
 <template>
-  <lew-flex style="width: 300px" :gap="20" x="start" direction="y">
-    <lew-textarea v-model="v1" placeholder="只读" readonly copyable />
-    <lew-textarea v-model="v2" disabled />
-  </lew-flex>
+  <lew-textarea width="300px" v-model="v" placeholder="Read-only" readonly />
 </template>

@@ -13,7 +13,7 @@ export const textareaModel = {
 export const textareaProps = {
   placeholder: {
     type: String,
-    default: '请输入',
+    defaultLocale: true,
     description: '占位文本'
   },
   disabled: {

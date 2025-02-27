@@ -1,9 +1,7 @@
 <script setup lang="ts">
-const v = ref('这是一段文本')
+const v = ref('This is a textarea')
 </script>
 
 <template>
-  <lew-flex style="width: 300px" :gap="20" x="start" direction="y">
-    <lew-textarea v-model="v" clearable />
-  </lew-flex>
+  <lew-textarea width="300px" v-model="v" clearable />
 </template>

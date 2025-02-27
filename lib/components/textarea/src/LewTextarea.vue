@@ -5,6 +5,7 @@ import { LewTooltip } from 'lew-ui'
 import { textareaProps } from './props'
 import { useResizeObserver } from '@vueuse/core'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { locale } from 'lew-ui'
 
 const { shift, enter } = useMagicKeys()
 // 获取app
@@ -139,7 +140,9 @@ defineExpose({ toFocus })
       ref="lewTextareaRef"
       v-model="modelValue"
       class="lew-textarea lew-scrollbar"
-      :placeholder="placeholder"
+      :placeholder="
+        placeholder ? placeholder : locale.t('textarea.placeholder')
+      "
       :maxlength="maxLength"
       :disabled="disabled"
       :readonly="readonly"
