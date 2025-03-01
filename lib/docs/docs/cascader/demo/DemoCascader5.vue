@@ -6,48 +6,48 @@ const selectedProduct = ref()
 const productCategories = [
   {
     value: 'skincare',
-    label: '护肤品',
+    label: 'Skincare',
     children: [
       {
         value: 'cleanser',
-        label: '洁面产品',
+        label: 'Cleansers',
         children: [
-          { value: 'foam', label: '泡沫洁面乳' },
-          { value: 'gel', label: '凝胶洁面乳' },
-          { value: 'oil', label: '卸妆油' }
+          { value: 'foam', label: 'Foam Cleanser' },
+          { value: 'gel', label: 'Gel Cleanser' },
+          { value: 'oil', label: 'Cleansing Oil' }
         ]
       },
       {
         value: 'moisturizer',
-        label: '保湿产品',
+        label: 'Moisturizers',
         children: [
-          { value: 'cream', label: '面霜' },
-          { value: 'lotion', label: '乳液' },
-          { value: 'essence', label: '精华液' }
+          { value: 'cream', label: 'Cream' },
+          { value: 'lotion', label: 'Lotion' },
+          { value: 'essence', label: 'Essence' }
         ]
       }
     ]
   },
   {
     value: 'makeup',
-    label: '彩妆',
+    label: 'Makeup',
     children: [
       {
         value: 'face',
-        label: '底妆',
+        label: 'Face Makeup',
         children: [
-          { value: 'foundation', label: '粉底液' },
-          { value: 'concealer', label: '遮瑕' },
-          { value: 'powder', label: '散粉' }
+          { value: 'foundation', label: 'Foundation' },
+          { value: 'concealer', label: 'Concealer' },
+          { value: 'powder', label: 'Powder' }
         ]
       },
       {
         value: 'eye',
-        label: '眼部彩妆',
+        label: 'Eye Makeup',
         children: [
-          { value: 'eyeshadow', label: '眼影' },
-          { value: 'eyeliner', label: '眼线' },
-          { value: 'mascara', label: '睫毛膏' }
+          { value: 'eyeshadow', label: 'Eyeshadow' },
+          { value: 'eyeliner', label: 'Eyeliner' },
+          { value: 'mascara', label: 'Mascara' }
         ]
       }
     ]
@@ -55,7 +55,7 @@ const productCategories = [
 ]
 
 const handleChange = (value: string[]) => {
-  console.log('选择的产品类别:', value)
+  console.log('Selected product categories:', value)
 }
 </script>
 
@@ -65,7 +65,7 @@ const handleChange = (value: string[]) => {
       v-model="selectedProduct"
       clearable
       :options="productCategories"
-      placeholder="选择您感兴趣的美妆产品"
+      placeholder="Select Beauty Products"
       @change="handleChange"
     />
   </div>

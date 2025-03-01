@@ -26,7 +26,9 @@ export default {
     navigator: '导航',
     form: '表单',
     data: '数据组件',
-    feedback: '反馈'
+    feedback: '反馈',
+    close: '关闭',
+    showCode: '显示源码'
   },
   components: {
     image: {
@@ -691,7 +693,8 @@ export default {
         placeholder: '占位提示文本',
         readonly: '是否只读',
         allowDuplicates: '是否允许重复',
-        maxLength: '允许添加标签的最大数量'
+        maxLength: '允许添加标签的最大数量',
+        width: '宽度'
       },
       events: {
         change: '值发生变化时触发',
@@ -874,9 +877,20 @@ export default {
         modelValue: '绑定值'
       },
       props: {
+        defaultValue: '默认值',
         options: '选项',
+        width: '宽度',
+        trigger: '触发方式',
+        placeholder: '占位提示文本',
         size: '尺寸大小',
-        placeholder: '占位提示文本'
+        itemHeight: '项高度',
+        searchable: '是否可搜索',
+        searchMethod: '搜索方法',
+        searchDelay: '搜索延迟',
+        clearable: '是否可清空',
+        readonly: '只读状态',
+        disabled: '禁用状态',
+        showCheckIcon: '显示勾选图标'
       },
       events: {
         change: '值发生变化时触发',
@@ -983,11 +997,79 @@ export default {
     },
     dateRangePicker: {
       name: '日期范围选择器 DateRangePicker',
-      description: '选择时间范围的利器，让区间选择更加方便'
+      description: '选择时间范围的利器，让区间选择更加方便',
+      model: {
+        modelValue: '绑定值'
+      },
+      props: {
+        startKey: '开始键',
+        endKey: '结束键',
+        valueFormat: '值格式',
+        size: '尺寸',
+        width: '宽度',
+        placeholderStart: '开始占位提示文本',
+        placeholderEnd: '结束占位提示文本',
+        clearable: '是否可清空',
+        readonly: '只读',
+        disabled: '禁用'
+      },
+      events: {
+        change: '值变化',
+        focus: '获得焦点',
+        blur: '失去焦点',
+        clear: '清空'
+      }
     },
     cascader: {
       name: '级联选择器 Cascader',
-      description: '处理多层级数据的选择器，让分类选择更加清晰'
+      description: '处理多层级数据的选择器，让分类选择更加清晰',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '自由模式'
+      },
+      demo3: {
+        title: '仅展示最后层级'
+      },
+      demo4: {
+        title: '异步加载'
+      },
+      demo5: {
+        title: '可清空的'
+      },
+      demo6: {
+        title: '只读'
+      },
+      demo7: {
+        title: '禁用'
+      },
+      demo8: {
+        title: '选项禁用'
+      },
+      model: {
+        modelValue: '绑定值'
+      },
+      props: {
+        options: '选项',
+        placeholder: '占位提示文本',
+        disabled: '禁用',
+        clearable: '是否可清空',
+        showAllLevels: '显示所有层级',
+        multiple: '是否多选',
+        free: '自由选择',
+        size: '尺寸',
+        trigger: '触发方式',
+        loadMethod: '加载方法',
+        readonly: '只读'
+      },
+      options: {
+        label: '标签',
+        value: '值',
+        isLeaf: '是否叶子节点',
+        children: '子节点',
+        disabled: '禁用'
+      }
     },
     treeSelect: {
       name: '树形选择器 TreeSelect',

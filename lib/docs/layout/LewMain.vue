@@ -16,13 +16,14 @@ const setBackgroundColor = () => {
 onMounted(() => {
   setBackgroundColor()
 })
+console.log(route.name)
 </script>
 
 <template>
   <div class="wrapper">
     <the-header
       :style="{
-        background: route.path === '/' ? 'transparent' : 'var(--lew-bgcolor-0)'
+        background: route.name === 'R-LewHome' ? 'transparent' : 'var(--lew-bgcolor-0)'
       }"
     />
     <router-view />

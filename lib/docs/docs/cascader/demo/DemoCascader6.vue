@@ -5,6 +5,6 @@ const v = ref(26)
 
 <template>
   <div style="width: 300px">
-    <lew-cascader v-model="v" disabled :options="cityTree" />
+    <lew-cascader v-model="v" readonly :options="cityTree" />
   </div>
 </template>

@@ -1,5 +1,5 @@
 export default {
-  title: 'CascaderOptions',
+  title: 'Options',
   columnsKey: 'props',
   data: [
     {

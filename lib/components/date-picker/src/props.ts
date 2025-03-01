@@ -35,11 +35,12 @@ export const datePickerProps = {
   },
   width: {
     type: [String, Number],
-    default: '320px',
+    default: '300px',
     description: '选择器宽度，支持数字（单位：像素）或带单位的字符串'
   },
   placeholder: {
     type: String,
+    defaultLocale: true,
     description: '输入框占位文本'
   },
   clearable: {

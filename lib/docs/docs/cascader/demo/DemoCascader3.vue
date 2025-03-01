@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
 const v = ref()
 
 const techProductOptions = [
   {
     value: 'smartphones',
-    label: '智能手机',
+    label: 'Smartphones',
     children: [
       {
         value: 'apple',
-        label: '苹果',
+        label: 'Apple',
         children: [
           { value: 'iphone13', label: 'iPhone 13' },
           { value: 'iphone12', label: 'iPhone 12' },
@@ -19,18 +17,18 @@ const techProductOptions = [
       },
       {
         value: 'android',
-        label: '安卓',
+        label: 'Android',
         children: [
-          { value: 'samsung', label: '三星 Galaxy' },
-          { value: 'huawei', label: '华为 Mate' },
-          { value: 'xiaomi', label: '小米', disabled: true }
+          { value: 'samsung', label: 'Samsung Galaxy' },
+          { value: 'huawei', label: 'Huawei Mate' },
+          { value: 'xiaomi', label: 'Xiaomi', disabled: true }
         ]
       }
     ]
   },
   {
     value: 'laptops',
-    label: '笔记本电脑',
+    label: 'Laptops',
     children: [
       {
         value: 'macbook',
@@ -42,7 +40,7 @@ const techProductOptions = [
       },
       {
         value: 'windows',
-        label: 'Windows笔记本',
+        label: 'Windows Laptops',
         children: [
           { value: 'dell', label: 'Dell XPS' },
           { value: 'lenovo', label: 'Lenovo ThinkPad' },
@@ -53,30 +51,23 @@ const techProductOptions = [
   },
   {
     value: 'wearables',
-    label: '可穿戴设备',
+    label: 'Wearables',
     children: [
-      { value: 'smartwatch', label: '智能手表' },
-      { value: 'fitnesstracker', label: '健身追踪器' },
-      { value: 'vr', label: 'VR头显', disabled: true }
+      { value: 'smartwatch', label: 'Smartwatch' },
+      { value: 'fitnesstracker', label: 'Fitness Tracker' },
+      { value: 'vr', label: 'VR Headset', disabled: true }
     ]
   }
 ]
-
-const handleChange = (selectedValue: string[]) => {
-  console.log('选择的科技产品:', selectedValue)
-}
 </script>
 
 <template>
-  <lew-flex direction="y" style="width: 300px" gap="16px">
-    <lew-cascader
-      v-model="v"
-      free
-      :showAllLevels="false"
-      :options="techProductOptions"
-      placeholder="选择您感兴趣的科技产品"
-      @change="handleChange"
-    />
-    <p>提示：某些产品可能暂时缺货或停产，已被禁用选择。</p>
-  </lew-flex>
+  <lew-cascader
+    v-model="v"
+    free
+    width="300px"
+    :showAllLevels="false"
+    :options="techProductOptions"
+    placeholder="Select Tech Products"
+  />
 </template>

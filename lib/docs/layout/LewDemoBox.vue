@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { LewCollapseTransition } from 'lew-ui'
 import { ChevronDown, ChevronUp } from 'lucide-vue-next'
+import docsLocale from '@/locals'
 
 defineProps({
   title: {
@@ -89,7 +90,7 @@ const checkHasContent = computed(() => (text: string) => {
           <ChevronDown v-if="!isShowCode" :size="16" />
           <ChevronUp v-else :size="16" />
         </div>
-        {{ isShowCode ? '关闭' : '显示源码' }}
+        {{ isShowCode ? docsLocale.t('base.close') : docsLocale.t('base.showCode') }}
       </div>
     </div>
     <lew-alert

@@ -44,7 +44,7 @@ export const selectProps = {
   },
   width: {
     type: [String, Number],
-    default: '320px',
+    default: '300px',
     description: '选择器宽度，支持数字（单位：像素）或带单位的字符串'
   },
   trigger: {

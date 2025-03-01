@@ -13,7 +13,8 @@ import { cascaderProps } from './props'
 import { VirtList } from 'vue-virt-list'
 import { cloneDeep, isFunction } from 'lodash-es'
 import Icon from 'lew-ui/utils/Icon.vue'
-
+import { any2px } from 'lew-ui/utils'
+import { locale } from 'lew-ui'
 // 格式化 获取 path
 const formatTree = (
   tree: CascaderOptions[],
@@ -370,6 +371,7 @@ defineExpose({ show, hide })
     :disabled="disabled || readonly"
     placement="bottom-start"
     :loading="state.loading"
+    :style="{ width: any2px(width) }"
     @show="showHandle"
     @hide="hideHandle"
   >
@@ -419,7 +421,7 @@ defineExpose({ show, hide })
           class="lew-cascader-placeholder"
           :style="getValueStyle"
         >
-          {{ placeholder }}
+          {{ placeholder ? placeholder : locale.t('cascader.placeholder') }}
         </div>
       </div>
     </template>
@@ -567,7 +569,6 @@ defineExpose({ show, hide })
     white-space: nowrap;
     text-overflow: ellipsis;
     cursor: pointer;
-    user-select: none;
     box-sizing: border-box;
     border-radius: var(--lew-border-radius-small);
     background-color: var(--lew-form-bgcolor);
@@ -671,8 +672,9 @@ defineExpose({ show, hide })
   .lew-cascader-readonly {
     pointer-events: none; //鼠标点击不可修改
 
-    .lew-cascader {
+    :deep(.lew-text-trim-wrapper) {
       user-select: text;
+      cursor: text;
     }
   }
 

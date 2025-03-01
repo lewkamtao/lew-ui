@@ -20,6 +20,9 @@ export default {
   selectMultiple: {
     placeholder: '请选择'
   },
+  cascader: {
+    placeholder: '请选择'
+  },
   textarea: {
     placeholder: '请输入'
   },

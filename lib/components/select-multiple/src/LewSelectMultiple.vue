@@ -97,18 +97,26 @@ const clearHandle = () => {
   emit('change', selectValue.value)
 }
 
-const deleteTag = (index: number) => {
-  const item = selectValue.value[index]
-  selectValue.value && selectValue.value.splice(index, 1)
-  emit('delete', item)
-  // 刷新位置
-  if (selectValue.value.length === 0) {
-    lewPopoverValueRef.value && lewPopoverValueRef.value.hide()
+const deleteTag = ({ value }: { value: any }) => {
+  const valueIndex = selectValue.value.findIndex(
+    (_value: any) => value === _value
+  )
+
+  if (valueIndex > -1) {
+    const item = selectValue.value[valueIndex]
+    selectValue.value.splice(valueIndex, 1)
+    console.log(selectValue.value)
+    emit('delete', { item, value: selectValue.value })
+
+    // 刷新位置
+    if (selectValue.value.length === 0) {
+      lewPopoverValueRef.value && lewPopoverValueRef.value.hide()
+    }
+    setTimeout(() => {
+      lewPopoverRef.value && lewPopoverRef.value.refresh()
+    }, 100)
+    emit('change', selectValue.value)
   }
-  setTimeout(() => {
-    lewPopoverRef.value && lewPopoverRef.value.refresh()
-  }, 100)
-  emit('change', selectValue.value)
 }
 
 const selectHandle = (item: SelectMultipleOptions) => {
@@ -142,20 +150,25 @@ const getChecked = computed(() => (value: string | number) => {
   return false
 })
 
-const getLabels = computed(() => {
+const getSelectedRows = computed(() => {
+  let _defaultValue = (props.defaultValue || []).map((e: any) => {
+    return {
+      label: e,
+      value: e
+    }
+  })
   if (state.options.length > 0) {
-    const labels =
+    const selectedRows =
       selectValue.value &&
       selectValue.value.map((v: number | string) => {
         return state.options.find((e: SelectMultipleOptions) => v === e.value)
-          ?.label
       })
-    if (!labels || labels.length === 0) {
-      return props.defaultValue || []
+    if (!selectedRows || selectedRows.length === 0) {
+      return _defaultValue
     }
-    return labels
+    return selectedRows
   }
-  return props.defaultValue || selectValue.value || []
+  return _defaultValue
 })
 
 const getBodyClassName = computed(() => {
@@ -277,12 +290,17 @@ const getResultNum = computed(() => {
           class="lew-icon-select"
           :class="{
             'lew-icon-select-hide':
-              clearable && getLabels && getLabels.length > 0
+              clearable && getSelectedRows && getSelectedRows.length > 0
           }"
         />
         <transition name="lew-form-icon-ani">
           <Icon
-            v-if="clearable && getLabels && getLabels.length > 0 && !readonly"
+            v-if="
+              clearable &&
+              getSelectedRows &&
+              getSelectedRows.length > 0 &&
+              !readonly
+            "
             :size="getIconSize"
             type="close"
             class="lew-form-icon-close"
@@ -292,7 +310,7 @@ const getResultNum = computed(() => {
             @click.stop="clearHandle"
           />
         </transition>
-        <template v-if="getLabels && getLabels.length > 0">
+        <template v-if="getSelectedRows && getSelectedRows.length > 0">
           <lew-flex
             v-if="valueLayout === 'tag'"
             :style="{ padding: '4px' }"
@@ -304,14 +322,14 @@ const getResultNum = computed(() => {
           >
             <transition-group name="list">
               <lew-tag
-                v-for="(item, index) in getLabels"
-                :key="index"
+                v-for="item in getSelectedRows"
+                :key="item.value"
                 type="light"
                 :size="size"
                 :closable="!disabled && !readonly"
-                @close="deleteTag(index)"
+                @close="deleteTag(item)"
               >
-                {{ item }}
+                {{ item.label }}
               </lew-tag>
             </transition-group>
           </lew-flex>
@@ -330,7 +348,11 @@ const getResultNum = computed(() => {
                   }"
                   class="lew-select-multiple-text-value"
                 >
-                  {{ getLabels.join(valueTextSplit) }}
+                  {{
+                    getSelectedRows
+                      .map((item: any) => item.label)
+                      .join(valueTextSplit)
+                  }}
                 </div>
               </template>
               <template #popover-body>
@@ -345,14 +367,14 @@ const getResultNum = computed(() => {
                   class="lew-select-multiple-tag-value"
                 >
                   <lew-tag
-                    v-for="(item, index) in getLabels"
-                    :key="index"
+                    v-for="item in getSelectedRows"
+                    :key="item.value"
                     type="light"
                     :size="size"
                     :closable="!disabled && !readonly"
-                    @close="deleteTag(index)"
+                    @close="deleteTag(item)"
                   >
-                    {{ item }}
+                    {{ item.label }}
                   </lew-tag>
                 </lew-flex>
               </template>
@@ -360,7 +382,7 @@ const getResultNum = computed(() => {
           </template>
         </template>
         <div
-          v-show="getLabels && getLabels.length === 0"
+          v-show="getSelectedRows && getSelectedRows.length === 0"
           :style="{
             opacity: state.visible ? 0.6 : 1
           }"
@@ -531,7 +553,6 @@ const getResultNum = computed(() => {
       width: calc(100% - 24px);
       transition: all 0.2s;
       height: 100%;
-      line-height: 100%;
     }
 
     .lew-select-multiple-text-value {

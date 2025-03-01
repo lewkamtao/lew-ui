@@ -26,7 +26,9 @@ export default {
     navigator: 'Navigation',
     form: 'Form',
     data: 'Data Components',
-    feedback: 'Feedback'
+    feedback: 'Feedback',
+    close: 'Close',
+    showCode: 'Show Code'
   },
   components: {
     image: {
