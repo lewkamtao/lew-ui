@@ -17,7 +17,8 @@ export const demoGroup = [
   DemoRadio3,
   DemoRadio4,
   DemoRadio5,
-  DemoRadio6]
+  DemoRadio6
+]
 
 export const codeGroup = [
   DemoRadio1Code,
@@ -25,4 +26,5 @@ export const codeGroup = [
   DemoRadio3Code,
   DemoRadio4Code,
   DemoRadio5Code,
-  DemoRadio6Code]
+  DemoRadio6Code
+]

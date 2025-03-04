@@ -150,7 +150,7 @@ const modelValue = defineModel<UploadFileItem[]>()
           </lew-flex>
         </lew-flex>
         <transition name="fade">
-          <lew-flex 
+          <lew-flex
             v-if="item.status === 'uploading'"
             class="lew-upload-progress"
             x="start"

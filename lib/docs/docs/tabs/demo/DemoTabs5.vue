@@ -19,10 +19,5 @@ const modelValue = ref('microsoft')
 </script>
 
 <template>
-  <lew-tabs
-    v-model="modelValue"
-    width="auto"
-    round
-    :options="options"
-  />
+  <lew-tabs v-model="modelValue" width="auto" round :options="options" />
 </template>

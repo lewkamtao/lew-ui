@@ -1,5 +1,5 @@
 export default {
-  title: 'v-loading',
+  title: 'Props',
   columnsKey: 'props',
   data: [
     {

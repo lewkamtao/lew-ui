@@ -12,6 +12,10 @@ const maxLength = ref(50)
       show-count
       :max-length="maxLength"
     />
-    <lew-input v-model="inputValue" placeholder="Please enter content" show-count />
+    <lew-input
+      v-model="inputValue"
+      placeholder="Please enter content"
+      show-count
+    />
   </lew-flex>
 </template>

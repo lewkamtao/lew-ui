@@ -42,7 +42,12 @@ const options = [
         tagType: 'ghost',
         tagColor: 'green',
         children: [
-          { value: '1-1-1', label: 'Published', tagText: '8', tagType: 'light' },
+          {
+            value: '1-1-1',
+            label: 'Published',
+            tagText: '8',
+            tagType: 'light'
+          },
           { value: '1-1-2', label: 'Drafts', tagText: '3', tagType: 'light' },
           { value: '1-1-3', label: 'Recycle Bin' }
         ]
@@ -99,7 +104,12 @@ const options = [
         value: '3-1',
         label: 'Comment List',
         children: [
-          { value: '3-1-1', label: 'Pending Review', tagText: '7', tagType: 'light' },
+          {
+            value: '3-1-1',
+            label: 'Pending Review',
+            tagText: '7',
+            tagType: 'light'
+          },
           { value: '3-1-2', label: 'Approved' },
           { value: '3-1-3', label: 'Rejected', tagText: '5', tagType: 'light' }
         ]

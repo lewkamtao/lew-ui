@@ -147,7 +147,7 @@ const setupResizeObserver = () => {
   onBeforeUnmount(() => {
     resizeObserver.disconnect()
   })
-} 
+}
 
 onMounted(() => {
   initCalculateDisplayText()

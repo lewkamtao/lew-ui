@@ -3,8 +3,8 @@ const visible = ref(false)
 const ok = () => {
   return new Promise<void>((resolve: any) => {
     setTimeout(() => {
-      resolve(true)
       visible.value = false
+      resolve(true)
     }, 1000)
   })
 }

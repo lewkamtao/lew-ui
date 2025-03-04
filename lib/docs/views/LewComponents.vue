@@ -22,6 +22,21 @@ onMounted(() => {
       }
     })
   }
+
+  const isComplete: string[] = []
+
+  setTimeout(() => {
+    const menuItems = document.getElementsByClassName('lew-menu-item')
+    for (let i = 0; i < menuItems.length; i++) {
+      // 寻找lew-text-trim-wrapper
+      const dom = menuItems[i].querySelector('.lew-text-trim-wrapper')
+      if (dom) {
+        if (isComplete.includes(dom.textContent as string)) {
+          ;(dom as HTMLElement).style.opacity = '0.2'
+        }
+      }
+    }
+  }, 500)
 })
 
 watch(route, () => {

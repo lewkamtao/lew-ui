@@ -23,7 +23,8 @@ console.log(route.name)
   <div class="wrapper">
     <the-header
       :style="{
-        background: route.name === 'R-LewHome' ? 'transparent' : 'var(--lew-bgcolor-0)'
+        background:
+          route.name === 'R-LewHome' ? 'transparent' : 'var(--lew-bgcolor-0)'
       }"
     />
     <router-view />

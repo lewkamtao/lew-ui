@@ -90,7 +90,11 @@ const checkHasContent = computed(() => (text: string) => {
           <ChevronDown v-if="!isShowCode" :size="16" />
           <ChevronUp v-else :size="16" />
         </div>
-        {{ isShowCode ? docsLocale.t('base.close') : docsLocale.t('base.showCode') }}
+        {{
+          isShowCode
+            ? docsLocale.t('base.close')
+            : docsLocale.t('base.showCode')
+        }}
       </div>
     </div>
     <lew-alert

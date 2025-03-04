@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import { schools } from '@/lib/data'
 import { padStart } from 'lodash-es'

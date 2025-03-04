@@ -5,7 +5,7 @@ const options = ref([
     value: '1'
   },
   {
-    label: 'Mid-level Software Engineer', 
+    label: 'Mid-level Software Engineer',
     value: '2'
   },
   {

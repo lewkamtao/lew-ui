@@ -14,7 +14,7 @@ const options: TabOption[] = [
   { label: 'Household Items', value: 'household_items' },
   { label: 'Personal Care', value: 'personal_care' },
   { label: 'Baby Care', value: 'baby_care' },
-  { label: 'Baking', value: 'baking' },   
+  { label: 'Baking', value: 'baking' },
   { label: 'Frozen Food', value: 'frozen_food' },
   { label: 'Seasonings', value: 'seasonings' },
   { label: 'Dry Goods', value: 'dry_goods' },
@@ -44,7 +44,6 @@ const options: TabOption[] = [
   { label: 'Holiday Gifts', value: 'holiday_gifts' },
   { label: 'Bags', value: 'bags' }
 ]
-
 
 const modelValue = ref('meat')
 </script>

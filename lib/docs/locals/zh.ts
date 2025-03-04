@@ -1125,55 +1125,296 @@ export default {
     },
     desc: {
       name: '描述列表 Desc',
-      description: '整齐的展示多个字段，让信息展示更加规范'
+      description: '整齐的展示多个字段，让信息展示更加规范',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '方向'
+      },
+      demo3: {
+        title: '丰富的'
+      },
+      demo4: {
+        title: '支持在线配置'
+      },
+      props: {
+        options: '选项',
+        dataSource: '数据源',
+        size: '尺寸',
+        labelX: '标签X',
+        valueX: '值X',
+        gap: '间距',
+        width: '宽度',
+        columns: '列',
+        labelWidth: '标签宽度',
+        direction: '方向',
+        bordered: '是否有边框'
+      },
+      descItemProps: {
+        label: '标签',
+        field: '字段',
+        size: '尺寸',
+        bordered: '是否有边框',
+        width: '宽度',
+        labelWidth: '标签宽度',
+        direction: '方向',
+        tips: '提示信息',
+        type: '类型',
+        labelX: '标签X',
+        valueX: '值X',
+        gridArea: '网格区域',
+        customRender: '自定义渲染'
+      }
     },
     alert: {
       name: '警告提示 Alert',
-      description: '醒目的信息提示框，让警告更加温和'
+      description: '醒目的信息提示框，让警告更加温和',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '支持插槽'
+      },
+      demo3: {
+        title: '更多场景'
+      },
+      props: {
+        type: '类型',
+        title: '标题',
+        content: '提示内容',
+        closeable: '是否可关闭',
+        footer: '底部内容'
+      }
     },
     message: {
       name: '全局提示 Message',
-      description: '轻量级的信息反馈，让提示更加简洁'
+      description: '轻量级的信息反馈，让提示更加简洁',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '可控制的'
+      },
+      demo3: {
+        title: '模拟请求'
+      },
+      events: {
+        close: '关闭时触发'
+      },
+      props: {
+        type: '类型',
+        content: '提示内容',
+        duration: '持续时间'
+      }
     },
     notification: {
       name: '通知提醒框 Notification',
-      description: '优雅的通知提醒，让消息推送更加友好'
+      description: '优雅的通知提醒，让消息推送更加友好',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '自定义展示时间'
+      },
+      props: {
+        type: '类型',
+        title: '标题',
+        content: '提示内容',
+        delay: '延迟时间'
+      }
     },
     drawer: {
       name: '抽屉 Drawer',
-      description: '从屏幕边缘滑出的面板，让临时操作更加流畅'
+      description: '从屏幕边缘滑出的面板，让临时操作更加流畅',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '异步关闭'
+      },
+      demo3: {
+        title: '自定义头部和底部'
+      },
+      demo4: {
+        title: '是否允许esc关闭'
+      },
+      model: {
+        visible: '是否显示'
+      },
+      props: {
+        title: '标题',
+        width: '宽度',
+        position: '位置',
+        height: '高度',
+        closeOnClickOverlay: '是否可通过点击遮罩关闭',
+        closeByEsc: '是否可通过按下 ESC 关闭',
+        hideFooter: '是否隐藏底部',
+        okProps: '确认按钮的属性',
+        cancelProps: '取消按钮的属性',
+        zIndex: '层级'
+      }
     },
     dialog: {
       name: '对话框 Dialog',
-      description: '模态对话框，让重要信息交互更加突出'
+      description: '模态对话框，让重要信息交互更加突出',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '简单的'
+      },
+      props: {
+        type: '类型',
+        width: '宽度',
+        trigger: '触发方式',
+        title: '标题',
+        okText: '确认按钮文本',
+        cancelText: '取消按钮文本',
+        ok: '确认回调',
+        cancel: '取消回调',
+        layout: '布局方式',
+        closeOnClickOverlay: '是否可通过点击遮罩关闭',
+        closeByEsc: '是否可通过按下 ESC 关闭',
+        transformOrigin: '动画原点'
+      },
+      events: {
+        ok: '点击确认按钮时触发',
+        cancel: '点击取消按钮时触发'
+      }
     },
     modal: {
       name: '模态框 Modal',
-      description: '更加灵活的模态窗口，让弹窗交互更加丰富'
+      description: '更加灵活的模态窗口，让弹窗交互更加丰富',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '异步关闭'
+      },
+      demo3: {
+        title: '自定义头部和底部'
+      },
+      demo4: {
+        title: '是否允许esc关闭'
+      },
+      model: {
+        visible: '是否显示'
+      },
+      props: {
+        title: '标题',
+        width: '宽度',
+        top: '距离顶部的距离',
+        hideFooter: '是否隐藏底部',
+        closeByEsc: '是否可通过按下 ESC 关闭',
+        okProps: '确认按钮属性',
+        cancelProps: '取消按钮属性',
+        hideOkButton: '是否隐藏确认按钮',
+        hideCancelButton: '是否隐藏取消按钮',
+        closeOnClickOverlay: '是否可通过点击遮罩关闭',
+        zIndex: '层级'
+      }
     },
     popok: {
       name: '气泡确认框 Popok',
-      description: '轻量级的确认提示，让操作确认更加便捷'
+      description: '轻量级的确认提示，让操作确认更加便捷',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '触发方式'
+      },
+      props: {
+        type: '类型',
+        width: '宽度',
+        trigger: '触发方式',
+        title: '标题',
+        okProps: '确认按钮属性',
+        cancelProps: '取消按钮属性',
+        content: '内容',
+        placement: '位置'
+      }
     },
     popover: {
       name: '气泡卡片 Popover',
-      description: '鼠标悬停时的信息卡片，让提示更加优雅'
+      description: '鼠标悬停时的信息卡片，让提示更加优雅',
+      demo1: {
+        title: '基础用法'
+      },
+      props: {
+        trigger: '触发方式',
+        placement: '位置',
+        disabled: '禁用状态',
+        loading: '加载状态',
+        hideOnClick: '点击时隐藏',
+        offset: '偏移量',
+        popoverBodyClassName: '气泡内容类名',
+        triggerTarget: '触发目标'
+      },
+      slots: {
+        trigger: '触发插槽',
+        'popover-body': '气泡内容插槽'
+      }
     },
     tooltip: {
       name: '文字提示 Tooltip',
-      description: '简单的文字提示气泡，让提示更加轻巧'
+      description: '简单的文字提示气泡，让提示更加轻巧',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '点击触发'
+      },
+      props: {
+        tips: '提示内容',
+        placement: '位置',
+        trigger: '触发方式',
+        allowHTML: '是否支持HTML',
+        delay: '延迟时间'
+      }
     },
     loading: {
       name: '加载 Loading',
-      description: '优雅的加载效果，让等待更加轻松'
+      description: '优雅的加载效果，让等待更加轻松',
+      demo1: {
+        title: '基础用法'
+      },
+      props: {
+        tip: '提示信息',
+        placement: '提示位置',
+        trigger: '触发方式',
+        allowHTML: '允许 HTML'
+      }
     },
     result: {
       name: '结果 Result',
-      description: '用于反馈操作结果，让结果展示更加完整'
+      description: '用于反馈操作结果，让结果展示更加完整',
+      demo1: {
+        title: '基础用法'
+      },
+      props: {
+        type: '类型',
+        title: '标题',
+        content: '内容'
+      },
+      slots: {
+        handle: '插槽处理'
+      }
     },
     empty: {
       name: '空状态 Empty',
-      description: '空数据状态展示，让空白页面更加友好'
+      description: '空数据状态展示，让空白页面更加友好',
+      demo1: {
+        title: '基础用法'
+      },
+      props: {
+        type: '类型',
+        title: '标题',
+        fontSize: '字体大小',
+        padding: '内边距',
+        width: '宽度',
+        height: '高度'
+      }
     }
   }
 }

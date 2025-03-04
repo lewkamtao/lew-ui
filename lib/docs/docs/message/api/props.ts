@@ -1,6 +1,7 @@
 export default {
   title: 'Props',
   columnsKey: 'props',
+  orderNum: 1,
   data: [
     {
       name: 'type',
