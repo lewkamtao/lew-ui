@@ -54,7 +54,7 @@ const getColumns = computed(
                     LewTag,
                     {
                       type: 'light',
-                      color: 'mint',
+                      color: 'pink',
                       size: 'small'
                     },
                     text.trim()
@@ -112,12 +112,16 @@ const sortValue = computed(() => {
     })
     .sort((a: any, b: any) => a.orderNum - b.orderNum)
 })
-const copyObjectAsFile = (item: any) => {
-  const result = item.data.reduce((acc: Record<string, string>, cur: any) => {
-    acc[cur.name] = cur.description
-    return acc
-  }, {})
-  console.log(result)
+
+const getTag = (title: string) => {
+  // 获取用括号包裹的内容
+  const match = title.match(/\((.*?)\)/)
+  return match ? match[1] : ''
+}
+
+const getTitle = (title: string) => {
+  // 过滤掉括号
+  return title.replace(/\((.*?)\)/, '')
 }
 </script>
 
@@ -129,13 +133,16 @@ const copyObjectAsFile = (item: any) => {
       direction="y"
       x="start"
     >
-      <lew-title
-        @click="copyObjectAsFile(item)"
-        :id="item.title"
-        :size="18"
-        class="demo-docs-title"
-      >
-        {{ item.title }}
+      <lew-title :id="item.title" :size="18" class="demo-docs-title">
+        {{ getTitle(item.title) }}
+        <lew-tag
+          style="margin-left: 5px"
+          v-if="getTag(item.title)"
+          type="light"
+          color="orange"
+        >
+          {{ getTag(item.title) }}
+        </lew-tag>
       </lew-title>
       <lew-table :data-source="item.data" :columns="getColumns(item)" />
     </lew-flex>
@@ -146,5 +153,9 @@ const copyObjectAsFile = (item: any) => {
 .demo-docs-title {
   text-transform: capitalize;
   letter-spacing: 0.8px;
+}
+:deep(.lew-tag-value) {
+  letter-spacing: 1px;
+  text-transform: capitalize;
 }
 </style>

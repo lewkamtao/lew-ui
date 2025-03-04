@@ -389,6 +389,11 @@ const resetForm = () => {
   formRef.value.setForm({ size: 'medium' })
 }
 
+const change = () => {
+  // 获取表单
+  form.value = formRef.value.getForm()
+}
+
 onMounted(() => {
   setForm()
 })
@@ -405,6 +410,7 @@ onMounted(() => {
       class="form-box"
       :options="options"
       @mounted="setForm"
+      @change="change"
       :width="450"
     />
     <lew-flex direction="y" x="start">

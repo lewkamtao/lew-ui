@@ -34,7 +34,9 @@ export default {
     Fri: '五',
     Sat: '六',
     Sun: '日',
-    placeholder: '选择日期',
+    placeholder: '选择日期'
+  },
+  dateRangePicker: {
     placeholderStart: '开始日期',
     placeholderEnd: '结束日期'
   },

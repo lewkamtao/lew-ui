@@ -127,7 +127,7 @@ defineExpose({ show, hide })
               {{
                 placeholderStart
                   ? placeholderStart
-                  : locale.t('datePicker.placeholderStart')
+                  : locale.t('dateRangePicker.placeholderStart')
               }}
             </div>
             <div
@@ -146,7 +146,7 @@ defineExpose({ show, hide })
               {{
                 placeholderEnd
                   ? placeholderEnd
-                  : locale.t('datePicker.placeholderEnd')
+                  : locale.t('dateRangePicker.placeholderEnd')
               }}
             </div>
             <div

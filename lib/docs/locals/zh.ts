@@ -1051,6 +1051,7 @@ export default {
         modelValue: '绑定值'
       },
       props: {
+        width: '宽度',
         options: '选项',
         placeholder: '占位提示文本',
         disabled: '禁用',
@@ -1077,39 +1078,163 @@ export default {
     },
     inputTable: {
       name: '表格输入框 InputTable',
-      description: '在表格中快速输入数据，让批量处理更加高效'
+      description: '在表格中快速输入数据，让批量处理更加高效',
+      props: {
+        columns: '列配置',
+        size: '尺寸',
+        width: '宽度',
+        rowKey: '行键',
+        batchDeletable: '是否支持批量删除',
+        addable: '是否可添加',
+        defaultForm: '默认表单',
+        deletable: '是否可删除',
+        maxRows: '最大行数',
+        minRows: '最小行数',
+        clearable: '是否可清空',
+        sortable: '是否可排序',
+        autoUniqueId: '是否自动生成唯一ID',
+        uniqueField: '唯一字段'
+      }
     },
     switch: {
       name: '开关 Switch',
-      description: '简洁的开关选择器，让状态切换更加明确'
+      description: '简洁的开关选择器，让状态切换更加明确',
+      model: {
+        modelValue: '参数名称'
+      },
+      props: {
+        size: '尺寸',
+        round: '圆角',
+        readonly: '只读',
+        disabled: '禁用',
+        request: '请求',
+        loading: '加载中'
+      },
+      events: {
+        change: '事件名称'
+      }
     },
     slider: {
       name: '滑块 Slider',
-      description: '通过拖动选择数值，让数值选择更加直观'
+      description: '通过拖动选择数值，让数值选择更加直观',
+      model: {
+        modelValue: '参数名称'
+      },
+      props: {
+        size: '尺寸',
+        min: '最小值',
+        max: '最大值',
+        step: '步长',
+        readonly: '只读',
+        disabled: '禁用',
+        options: '选项',
+        formatTooltip: '格式化提示'
+      }
     },
     sliderRange: {
       name: '滑块范围 SliderRange',
-      description: '选择数值范围的滑块，让范围选择更加灵活'
+      description: '选择数值范围的滑块，让范围选择更加灵活',
+      model: {
+        modelValue: '参数名称'
+      },
+      props: {
+        size: '尺寸',
+        min: '最小值',
+        max: '最大值',
+        step: '步长',
+        readonly: '只读',
+        disabled: '禁用',
+        options: '选项',
+        formatTooltip: '格式化提示'
+      }
     },
     rate: {
       name: '评分 Rate',
-      description: '星星评分组件，让打分更加生动有趣'
+      description: '星星评分组件，让打分更加生动有趣',
+      model: {
+        modelValue: '参数名称'
+      },
+      props: {
+        size: '尺寸',
+        count: '数量',
+        tips: '提示',
+        readonly: '只读',
+        disabled: '禁用'
+      }
     },
     colorPicker: {
       name: '颜色选择器 ColorPicker',
-      description: '丰富的颜色选择工具，让配色更加精准'
+      description: '丰富的颜色选择工具，让配色更加精准',
+      model: {
+        modelValue: '参数名称'
+      },
+      props: {
+        size: '尺寸',
+        width: '宽度',
+        placeholder: '占位符',
+        disabled: '禁用',
+        readonly: '只读'
+      }
     },
     upload: {
       name: '上传 Upload',
-      description: '文件上传组件，让文件处理更加简单'
+      description: '文件上传组件，让文件处理更加简单',
+      props: {
+        accept: '接受的文件类型',
+        immediate: '立即上传',
+        multiple: '多文件上传',
+        disabled: '禁用',
+        readonly: '只读',
+        limit: '文件数量限制',
+        maxFileSize: '最大文件大小',
+        size: '尺寸',
+        tips: '提示信息',
+        uploadHelper: '上传助手',
+        viewMode: '查看模式'
+      }
     },
     table: {
       name: '表格 Table',
-      description: '功能强大的表格组件，让数据展示更加清晰'
+      description: '功能强大的表格组件，让数据展示更加清晰',
+      model: {
+        modelValue: '参数名称',
+        selectedKeys: '选中的键'
+      },
+      props: {
+        columns: '列',
+        dataSource: '数据源',
+        size: '尺寸',
+        checkable: '可选',
+        maxHeight: '最大高度',
+        multiple: '多选',
+        rowKey: '行键'
+      },
+      tableColumns: {
+        field: '字段',
+        fixed: '固定',
+        title: '标题',
+        type: '类型',
+        width: '宽度',
+        x: 'X轴',
+        customRender: '自定义渲染'
+      }
     },
     pagination: {
       name: '分页 Pagination',
-      description: '清晰的分页导航，让数据浏览更加轻松'
+      description: '清晰的分页导航，让数据浏览更加轻松',
+      model: {
+        total: '参数名称',
+        currentPage: '当前页',
+        pageSize: '每页大小'
+      },
+      props: {
+        size: '尺寸',
+        pageSizeOptions: '每页大小选项',
+        visiblePagesCount: '可见页数'
+      },
+      events: {
+        change: '事件名称'
+      }
     },
     magicNumber: {
       name: '魔法数字 MagicNumber',
@@ -1121,7 +1246,21 @@ export default {
     },
     collapse: {
       name: '折叠面板 Collapse',
-      description: '可折叠和展开的内容区域，让信息展示更加整洁'
+      description: '可折叠和展开的内容区域，让信息展示更加整洁',
+      model: {
+        modelValue: '参数名称'
+      },
+      'model(CollapseItem)': {
+        modelValue: '参数名称'
+      },
+      props: {
+        width: '宽度'
+      },
+      'props(CollapseItem)': {
+        collapseKey: '折叠键',
+        title: '标题',
+        radius: '半径'
+      }
     },
     desc: {
       name: '描述列表 Desc',
