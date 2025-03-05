@@ -1441,14 +1441,15 @@ export default {
       model: {
         total: '参数名称',
         currentPage: '当前页',
-        props: {
-          size: '尺寸',
-          pageSizeOptions: '每页大小选项',
-          visiblePagesCount: '可见页数'
-        },
-        events: {
-          change: '事件名称'
-        }
+        pageSize: '每页大小'
+      },
+      props: {
+        size: '尺寸',
+        pageSizeOptions: '每页大小选项',
+        visiblePagesCount: '可见页数'
+      },
+      events: {
+        change: '事件名称'
       }
     },
     magicNumber: {

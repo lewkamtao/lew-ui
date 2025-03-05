@@ -1493,16 +1493,17 @@ export default {
         title: 'Simulate Asynchronous'
       },
       model: {
-        total: 'Parameter Name',
+        total: 'Total',
         currentPage: 'Current Page',
-        props: {
-          size: 'Size',
-          pageSizeOptions: 'Page Size Options',
-          visiblePagesCount: 'Visible Pages Count'
-        },
-        events: {
-          change: 'Event Name'
-        }
+        pageSize: 'Page Size'
+      },
+      props: {
+        size: 'Size',
+        pageSizeOptions: 'Page Size Options',
+        visiblePagesCount: 'Visible Pages Count'
+      },
+      events: {
+        change: 'Change Event'
       }
     },
     magicNumber: {
