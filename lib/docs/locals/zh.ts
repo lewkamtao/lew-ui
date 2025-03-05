@@ -1074,7 +1074,61 @@ export default {
     },
     treeSelect: {
       name: '树形选择器 TreeSelect',
-      description: '树形结构的选择框，让层级选择更加直观'
+      description: '树形结构的选择框，让层级选择更加直观',
+      demo1: {
+        title: '常规'
+      },
+      demo2: {
+        title: '异步加载数据'
+      },
+      demo3: {
+        title: '自定义插槽'
+      },
+      demo4: {
+        title: '禁用项'
+      },
+      demo5: {
+        title: '默认展开全部'
+      },
+      demo6: {
+        title: '可搜索'
+      },
+      demo7: {
+        title: '空状态插槽'
+      },
+      demo8: {
+        title: '其他'
+      },
+      model: {
+        modelValue: '绑定值'
+      },
+      props: {
+        dataSource: '树形数据源',
+        defaultValue: '默认选中值',
+        placeholder: '占位文本',
+        size: '组件尺寸大小',
+        disabled: '是否禁用',
+        clearable: '是否可清空',
+        showCheckbox: '是否显示复选框',
+        showAllLevels: '是否显示所有层级',
+        showCheckIcon: '是否显示选择图标',
+        showLine: '是否显示连接线',
+        expandAll: '是否展开全部节点',
+        searchable: '是否可搜索',
+        searchDelay: '搜索延迟时间（毫秒）',
+        readonly: '是否只读',
+        free: '是否为自由模式（父子节点选中状态不关联）',
+        align: '文本对齐方式',
+        trigger: '子节点触发方式',
+        keyField: '节点标识字段',
+        labelField: '节点标签字段',
+        disabledField: '禁用节点字段',
+        initTree: '初始化树节点的方法',
+        loadMethod: '异步加载子节点数据的方法'
+      },
+      slots: {
+        handle: '插槽名'
+      }
     },
     inputTable: {
       name: '表格输入框 InputTable',
@@ -1165,6 +1219,21 @@ export default {
     colorPicker: {
       name: '颜色选择器 ColorPicker',
       description: '丰富的颜色选择工具，让配色更加精准',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '不同尺寸'
+      },
+      demo3: {
+        title: '自定义宽度'
+      },
+      demo4: {
+        title: '禁用状态'
+      },
+      demo5: {
+        title: '只读状态'
+      },
       model: {
         modelValue: '参数名称'
       },
@@ -1179,6 +1248,30 @@ export default {
     upload: {
       name: '上传 Upload',
       description: '文件上传组件，让文件处理更加简单',
+      demo1: {
+        title: '常规'
+      },
+      demo2: {
+        title: '限制格式和大小'
+      },
+      demo3: {
+        title: '上传图片'
+      },
+      demo4: {
+        title: '自定义tips'
+      },
+      demo5: {
+        title: '照片墙'
+      },
+      demo6: {
+        title: '不上传'
+      },
+      demo7: {
+        title: '回显'
+      },
+      model: {
+        modelValue: '绑定值'
+      },
       props: {
         accept: '接受的文件类型',
         immediate: '立即上传',
@@ -1199,6 +1292,36 @@ export default {
       model: {
         modelValue: '参数名称',
         selectedKeys: '选中的键'
+      },
+      demo1: {
+        title: '常规'
+      },
+      demo2: {
+        title: '固定行列'
+      },
+      demo3: {
+        title: '自定义操作'
+      },
+      demo4: {
+        title: '插槽'
+      },
+      demo5: {
+        title: '自定义样式'
+      },
+      demo6: {
+        title: '选择'
+      },
+      demo7: {
+        title: '可排序'
+      },
+      demo8: {
+        title: '自定义渲染'
+      },
+      demo9: {
+        title: '完整功能'
+      },
+      demo10: {
+        title: '暂无数据'
       },
       props: {
         columns: '列',
@@ -1222,18 +1345,26 @@ export default {
     pagination: {
       name: '分页 Pagination',
       description: '清晰的分页导航，让数据浏览更加轻松',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '巨量'
+      },
+      demo3: {
+        title: '模拟异步'
+      },
       model: {
         total: '参数名称',
         currentPage: '当前页',
-        pageSize: '每页大小'
-      },
-      props: {
-        size: '尺寸',
-        pageSizeOptions: '每页大小选项',
-        visiblePagesCount: '可见页数'
-      },
-      events: {
-        change: '事件名称'
+        props: {
+          size: '尺寸',
+          pageSizeOptions: '每页大小选项',
+          visiblePagesCount: '可见页数'
+        },
+        events: {
+          change: '事件名称'
+        }
       }
     },
     magicNumber: {
@@ -1247,6 +1378,15 @@ export default {
     collapse: {
       name: '折叠面板 Collapse',
       description: '可折叠和展开的内容区域，让信息展示更加整洁',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '标题插槽'
+      },
+      demo3: {
+        title: '手风琴'
+      },
       model: {
         modelValue: '参数名称'
       },

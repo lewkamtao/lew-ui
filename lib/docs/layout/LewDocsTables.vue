@@ -156,6 +156,5 @@ const getTitle = (title: string) => {
 }
 :deep(.lew-tag-value) {
   letter-spacing: 1px;
-  text-transform: capitalize;
 }
 </style>

@@ -35,11 +35,6 @@ export type TreeSelectSearchMethodParams = {
 }
 
 export const treeSelectProps = {
-  modelValue: {
-    type: [String, Number],
-    default: undefined,
-    description: '当前选中的值'
-  },
   dataSource: {
     type: Array as PropType<TreeDataSource[]>,
     default: () => [],
