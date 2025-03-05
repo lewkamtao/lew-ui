@@ -618,13 +618,16 @@ export default {
         title: '可清空的'
       },
       demo5: {
-        title: '只读和禁用'
+        title: '只读'
       },
       demo6: {
-        title: '缩放模式'
+        title: '禁用'
       },
       demo7: {
         title: '按下回车键触发事件'
+      },
+      demo8: {
+        title: '可缩放的'
       },
       model: {
         modelValue: '绑定值'
@@ -998,6 +1001,15 @@ export default {
     dateRangePicker: {
       name: '日期范围选择器 DateRangePicker',
       description: '选择时间范围的利器，让区间选择更加方便',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '可清空的'
+      },
+      demo3: {
+        title: '其他'
+      },
       model: {
         modelValue: '绑定值'
       },
@@ -1133,6 +1145,15 @@ export default {
     inputTable: {
       name: '表格输入框 InputTable',
       description: '在表格中快速输入数据，让批量处理更加高效',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '默认值'
+      },
+      demo3: {
+        title: '更丰富'
+      },
       props: {
         columns: '列配置',
         size: '尺寸',
@@ -1153,6 +1174,21 @@ export default {
     switch: {
       name: '开关 Switch',
       description: '简洁的开关选择器，让状态切换更加明确',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '方形'
+      },
+      demo3: {
+        title: '模拟请求'
+      },
+      demo4: {
+        title: '只读'
+      },
+      demo5: {
+        title: '禁用'
+      },
       model: {
         modelValue: '参数名称'
       },
@@ -1171,6 +1207,24 @@ export default {
     slider: {
       name: '滑块 Slider',
       description: '通过拖动选择数值，让数值选择更加直观',
+      demo1: {
+        title: '尺寸'
+      },
+      demo2: {
+        title: '不同步长'
+      },
+      demo3: {
+        title: '限定范围'
+      },
+      demo4: {
+        title: '只读'
+      },
+      demo5: {
+        title: '禁用'
+      },
+      demo6: {
+        title: '配置项'
+      },
       model: {
         modelValue: '参数名称'
       },
@@ -1188,6 +1242,24 @@ export default {
     sliderRange: {
       name: '滑块范围 SliderRange',
       description: '选择数值范围的滑块，让范围选择更加灵活',
+      demo1: {
+        title: '尺寸'
+      },
+      demo2: {
+        title: '不同步长'
+      },
+      demo3: {
+        title: '限定范围'
+      },
+      demo4: {
+        title: '只读'
+      },
+      demo5: {
+        title: '禁用'
+      },
+      demo6: {
+        title: '配置项'
+      },
       model: {
         modelValue: '参数名称'
       },
@@ -1205,6 +1277,18 @@ export default {
     rate: {
       name: '评分 Rate',
       description: '星星评分组件，让打分更加生动有趣',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '只读'
+      },
+      demo3: {
+        title: '禁用'
+      },
+      demo4: {
+        title: '提示'
+      },
       model: {
         modelValue: '参数名称'
       },
@@ -1373,7 +1457,61 @@ export default {
     },
     tree: {
       name: '树形控件 Tree',
-      description: '展示层级数据结构的利器，让数据层次更加分明'
+      description: '展示层级数据结构的利器，让数据层次更加分明',
+      demo1: {
+        title: '常规'
+      },
+      demo2: {
+        title: '是否显示复选框'
+      },
+      demo3: {
+        title: '多选'
+      },
+      demo4: {
+        title: '父子节点关联模式'
+      },
+      demo5: {
+        title: '异步请求'
+      },
+      demo6: {
+        title: '默认全部展开'
+      },
+      demo7: {
+        title: '是否显示辅助线'
+      },
+      demo8: {
+        title: '插槽'
+      },
+      model: {
+        modelValue: '参数名称',
+        expandedKeys: '展开的节点键'
+      },
+      props: {
+        dataSource: '数据源',
+        multiple: '多选',
+        showCheckbox: '显示复选框',
+        expandAll: '默认全部展开',
+        free: '自由选择',
+        showLine: '显示连接线',
+        trigger: '触发方式',
+        placeholder: '占位文本',
+        keyField: '节点标识字段',
+        labelField: '节点标签字段',
+        disabledField: '禁用节点字段',
+        initTree: '初始化树节点的方法',
+        loadMethod: '异步加载子节点数据的方法',
+        isSelect: '是否选中'
+      },
+      slots: {
+        handle: '插槽名'
+      },
+      treeDataSource: {
+        label: '标签',
+        key: '键',
+        isLeaf: '是否叶子节点',
+        children: '子节点',
+        disabled: '禁用'
+      }
     },
     collapse: {
       name: '折叠面板 Collapse',

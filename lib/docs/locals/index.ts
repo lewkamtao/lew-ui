@@ -14,8 +14,8 @@ export const messages = {
 const i18n = createI18n({
   globalInjection: true,
   legacy: false,
-  locale: 'zh',
-  fallbackLocale: 'zh',
+  locale: 'en',
+  fallbackLocale: 'en',
   messages
 })
 

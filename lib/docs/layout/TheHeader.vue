@@ -5,7 +5,7 @@ import { Sun, Moon, Github, Languages } from 'lucide-vue-next'
 import { setLocale } from 'lew-ui'
 import docsLocale from '@/locals'
 
-const version = ref('v2.5.15')
+const version = ref('v2.6.0')
 
 const isDark = useDark({
   selector: 'html',
@@ -92,34 +92,6 @@ const changeLanguage = (e: any) => {
           {
             label: 'English',
             value: 'en'
-          },
-          {
-            label: '日本語',
-            value: 'ja'
-          },
-          {
-            label: '한국어',
-            value: 'ko'
-          },
-          {
-            label: 'Español',
-            value: 'es'
-          },
-          {
-            label: 'Français',
-            value: 'fr'
-          },
-          {
-            label: 'Deutsch',
-            value: 'de'
-          },
-          {
-            label: 'Português',
-            value: 'pt'
-          },
-          {
-            label: 'Italiano',
-            value: 'it'
           }
         ]"
         @change="changeLanguage"
