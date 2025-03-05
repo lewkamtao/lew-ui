@@ -1,20 +1,29 @@
 <script setup lang="ts">
 const options = ref([
   {
-    label: '西游记',
-    value: '1'
+    label: 'Mac',
+    value: 'mac'
   },
   {
-    label: '水浒传',
-    value: '2'
+    label: 'iPad',
+    value: 'ipad'
   },
   {
-    label: '三国演义',
-    value: '3'
+    label: 'iPhone',
+    value: 'iphone'
   },
   {
-    label: '红楼梦',
-    value: '4'
+    label: 'Watch',
+    value: 'watch',
+    disabled: true
+  },
+  {
+    label: 'AirPods',
+    value: 'airpods'
+  },
+  {
+    label: 'TV & Home',
+    value: 'tv'
   }
 ])
 

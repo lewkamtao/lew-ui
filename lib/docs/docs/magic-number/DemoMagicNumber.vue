@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import LewDemoBox from '../../layout/LewDemoBox.vue'
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+// 转小写
+const componentName: string = (route.name as string)
+  .replace('R-Lew', '')
+  .replace(/^[A-Z]/, (match) => match.toLowerCase())
 </script>
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>MagicNumber</lew-title>
+    <lew-component-info />
     <lew-demo-box title="组件升级通知">
       <lew-alert type="info">
         <template #title>MagicNumber 组件废弃通知</template>

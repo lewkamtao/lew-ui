@@ -5,6 +5,7 @@ import { LewTooltip } from 'lew-ui'
 import { textareaProps } from './props'
 import { useResizeObserver } from '@vueuse/core'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { locale } from 'lew-ui'
 
 const { shift, enter } = useMagicKeys()
 // 获取app
@@ -30,16 +31,7 @@ useResizeObserver(lewTextareaViewRef, () => {
   }
 })
 
-const emit = defineEmits([
-  'update:type',
-  'clear',
-  'blur',
-  'input',
-  'focus',
-  'change',
-  'textarea',
-  'ok'
-])
+const emit = defineEmits(['clear', 'blur', 'input', 'focus', 'change', 'ok'])
 
 const props = defineProps(textareaProps)
 const modelValue: Ref<string | undefined> = defineModel()
@@ -148,7 +140,9 @@ defineExpose({ toFocus })
       ref="lewTextareaRef"
       v-model="modelValue"
       class="lew-textarea lew-scrollbar"
-      :placeholder="placeholder"
+      :placeholder="
+        placeholder ? placeholder : locale.t('textarea.placeholder')
+      "
       :maxlength="maxLength"
       :disabled="disabled"
       :readonly="readonly"
@@ -239,6 +233,7 @@ defineExpose({ toFocus })
 
   .lew-textarea-count {
     font-size: 12px;
+    line-height: 18px;
   }
 }
 
@@ -252,6 +247,7 @@ defineExpose({ toFocus })
 
   .lew-textarea-count {
     font-size: 13px;
+    line-height: 20px;
   }
 }
 
@@ -265,6 +261,7 @@ defineExpose({ toFocus })
 
   .lew-textarea-count {
     font-size: 14px;
+    line-height: 22px;
   }
 }
 

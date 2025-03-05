@@ -22,7 +22,8 @@ import {
   LewTooltip,
   LewSlider,
   LewSliderRange,
-  LewColorPicker
+  LewColorPicker,
+  LewRate
 } from 'lew-ui'
 import { debounce, cloneDeep, isString, merge } from 'lodash-es'
 import * as Yup from 'yup'
@@ -53,7 +54,8 @@ const asMap: Record<string, any> = {
   'input-number': LewInputNumber,
   slider: LewSlider,
   'slider-range': LewSliderRange,
-  'color-picker': LewColorPicker
+  'color-picker': LewColorPicker,
+  rate: LewRate
 }
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -219,7 +221,13 @@ defineExpose({ validate, setError, curRule })
       <component
         :is="asMap[as]"
         v-model="modelValue"
-        v-bind="{ size, readonly, disabled, ...props.props }"
+        v-bind="{
+          size,
+          readonly,
+          disabled,
+          ...props.props,
+          width: ['input-number', 'tabs'].includes(as) ? undefined : '100%'
+        }"
         @change="change"
       />
       <transition name="lew-slide-fade">

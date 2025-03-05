@@ -51,9 +51,9 @@ const getSwitchStyle = computed(() => {
         '--lew-switch-height': '26px',
         '--lew-switch-dot-width': '18px',
         '--lew-switch-dot-height': '18px',
-        '--lew-switch-dot-width-active': '20px',
+        '--lew-switch-dot-width-active': '22px',
         '--lew-switch-dot-transform': 'translate(4px, 4px)',
-        '--lew-switch-dot-transform-active': 'translate(17px, 4px)'
+        '--lew-switch-dot-transform-active': 'translate(15px, 4px)'
       }
     case 'medium':
       return {
@@ -61,9 +61,9 @@ const getSwitchStyle = computed(() => {
         '--lew-switch-height': '28px',
         '--lew-switch-dot-width': '20px',
         '--lew-switch-dot-height': '20px',
-        '--lew-switch-dot-width-active': '22px',
+        '--lew-switch-dot-width-active': '24px',
         '--lew-switch-dot-transform': 'translate(4px, 4px)',
-        '--lew-switch-dot-transform-active': 'translate(17px, 4px)'
+        '--lew-switch-dot-transform-active': 'translate(15px, 4px)'
       }
     case 'large':
       return {
@@ -71,9 +71,9 @@ const getSwitchStyle = computed(() => {
         '--lew-switch-height': '30px',
         '--lew-switch-dot-width': '22px',
         '--lew-switch-dot-height': '22px',
-        '--lew-switch-dot-width-active': '24px',
+        '--lew-switch-dot-width-active': '26px',
         '--lew-switch-dot-transform': 'translate(4px, 4px)',
-        '--lew-switch-dot-transform-active': 'translate(17px, 4px)'
+        '--lew-switch-dot-transform-active': 'translate(15px, 4px)'
       }
     default:
       return {
@@ -83,7 +83,7 @@ const getSwitchStyle = computed(() => {
         '--lew-switch-dot-height': '20px',
         '--lew-switch-dot-width-active': '24px',
         '--lew-switch-dot-transform': 'translate(4px, 4px)',
-        '--lew-switch-dot-transform-active': 'translate(17px, 4px)'
+        '--lew-switch-dot-transform-active': 'translate(15px, 4px)'
       }
   }
 })
@@ -117,6 +117,7 @@ const getSwitchStyle = computed(() => {
   border-radius: var(--lew-border-radius-small);
   transition: all var(--lew-form-transition-ease);
   box-shadow: var(--lew-form-box-shadow);
+  flex-shrink: 0;
 
   .lew-switch-dot {
     position: absolute;
@@ -220,7 +221,7 @@ const getSwitchStyle = computed(() => {
 .lew-switch.lew-switch-checked.lew-switch-request {
   .lew-switch-dot {
     width: var(--lew-switch-dot-width);
-    transform: translate(18px, 4px);
+    transform: translate(19px, 4px);
   }
 }
 

@@ -2,7 +2,6 @@ import type { ExtractPropTypes, PropType } from 'vue'
 import type { ContextMenus } from 'lew-ui'
 import type { LewSize } from 'lew-ui'
 import { validSizes } from 'lew-ui/constants'
-
 export type InputType = 'text' | 'password'
 export type InputAlign = 'left' | 'center' | 'right'
 export type InputPrefixesType = 'icon' | 'select' | 'text'
@@ -11,17 +10,17 @@ export type InputSuffixType = 'icon' | 'select' | 'text'
 export const inputModel = {
   modelValue: {
     type: [String, Number],
-    default: '',
+    default: undefined,
     description: '输入框的值，支持 v-model 双向绑定'
   },
   prefixesValue: {
     type: [String, Number],
-    default: '',
+    default: undefined,
     description: '输入框前缀的值'
   },
   suffixValue: {
     type: [String, Number],
-    default: '',
+    default: undefined,
     description: '输入框后缀的值'
   }
 }
@@ -53,9 +52,14 @@ export const inputProps = {
       return true
     }
   },
+  width: {
+    type: [String, Number],
+    default: '300px',
+    description: '输入框宽度，支持数字（单位：像素）或带单位的字符串'
+  },
   placeholder: {
     type: String,
-    default: '请输入',
+    defaultLocale: true,
     description: '输入框占位文本'
   },
   disabled: {

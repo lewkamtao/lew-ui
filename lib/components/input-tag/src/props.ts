@@ -28,7 +28,7 @@ export const inputTagProps = {
   },
   placeholder: {
     type: String,
-    default: '按Enter添加标签',
+    defaultLocale: true,
     description: '输入框的占位文本，当没有标签时显示'
   },
   readonly: {
@@ -40,6 +40,16 @@ export const inputTagProps = {
     type: Boolean,
     default: false,
     description: '是否允许添加重复的标签'
+  },
+  maxLength: {
+    type: Number,
+    default: 0,
+    description: '允许添加标签的最大数量'
+  },
+  width: {
+    type: [String, Number],
+    default: '300px',
+    description: '输入框宽度，支持数字（单位：像素）或带单位的字符串'
   }
 }
 

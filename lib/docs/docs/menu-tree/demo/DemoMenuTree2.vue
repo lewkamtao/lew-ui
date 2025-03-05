@@ -1,154 +1,161 @@
 <script lang="ts" setup>
 import type { MenuTreeItem } from 'lew-ui'
-import { Home, ShoppingCart, Users, Target, BarChart2, Settings } from 'lucide-vue-next'
+import {
+  Home,
+  ShoppingCart,
+  Users,
+  Target,
+  BarChart2,
+  Settings
+} from 'lucide-vue-next'
 const value = ref(['1', '1-1', '1-1-1'])
 const options = [
   {
     value: '1',
-    label: '宠物管理',
+    label: 'Pet Mgmt',
     renderIcon: () => h(Home, { size: 14 }),
     children: [
       {
         value: '1-1',
-        label: '宠物档案',
+        label: 'Pet Records',
         children: [
-          { value: '1-1-1', label: '宠物信息登记' },
-          { value: '1-1-2', label: '健康档案' },
-          { value: '1-1-3', label: '疫苗记录' }
+          { value: '1-1-1', label: 'Reg. Pets' },
+          { value: '1-1-2', label: 'Health Records' },
+          { value: '1-1-3', label: 'Vaccine Records' }
         ]
       },
       {
         value: '1-2',
-        label: '品种管理',
+        label: 'Breed Mgmt',
         children: [
-          { value: '1-2-1', label: '犬类品种' },
-          { value: '1-2-2', label: '猫类品种' },
-          { value: '1-2-3', label: '其他宠物' }
+          { value: '1-2-1', label: 'Dog Breeds' },
+          { value: '1-2-2', label: 'Cat Breeds' },
+          { value: '1-2-3', label: 'Other Pets' }
         ]
       }
     ]
   },
   {
     value: '2',
-    label: '医疗服务',
+    label: 'Med Services',
     renderIcon: () => h(ShoppingCart, { size: 14 }),
     children: [
       {
         value: '2-1',
-        label: '就诊管理',
+        label: 'Consultation',
         children: [
-          { value: '2-1-1', label: '预约挂号' },
-          { value: '2-1-2', label: '诊疗记录' },
-          { value: '2-1-3', label: '处方管理' }
+          { value: '2-1-1', label: 'Appt. Booking' },
+          { value: '2-1-2', label: 'Treatment Records' },
+          { value: '2-1-3', label: 'Prescriptions' }
         ]
       },
       {
         value: '2-2',
-        label: '手术管理',
+        label: 'Surgery Mgmt',
         children: [
-          { value: '2-2-1', label: '手术预约' },
-          { value: '2-2-2', label: '手术记录' },
-          { value: '2-2-3', label: '术后护理' }
+          { value: '2-2-1', label: 'Surgery Booking' },
+          { value: '2-2-2', label: 'Surgery Records' },
+          { value: '2-2-3', label: 'Post-Op Care' }
         ]
       }
     ]
   },
   {
     value: '3',
-    label: '客户管理',
+    label: 'Client Mgmt',
     renderIcon: () => h(Users, { size: 14 }),
     children: [
       {
         value: '3-1',
-        label: '会员管理',
+        label: 'Member Mgmt',
         children: [
-          { value: '3-1-1', label: '会员信息' },
-          { value: '3-1-2', label: '会员等级' },
-          { value: '3-1-3', label: '积分管理' }
+          { value: '3-1-1', label: 'Member Info' },
+          { value: '3-1-2', label: 'Member Levels' },
+          { value: '3-1-3', label: 'Points Mgmt' }
         ]
       },
       {
         value: '3-2',
-        label: '服务反馈',
+        label: 'Feedback',
         children: [
-          { value: '3-2-1', label: '满意度调查' },
-          { value: '3-2-2', label: '投诉处理' },
-          { value: '3-2-3', label: '建议反馈' }
+          { value: '3-2-1', label: 'Satisfaction Survey' },
+          { value: '3-2-2', label: 'Complaints' },
+          { value: '3-2-3', label: 'Suggestions' }
         ]
       }
     ]
   },
   {
     value: '4',
-    label: '商品管理',
+    label: 'Product Mgmt',
     renderIcon: () => h(Target, { size: 14 }),
     children: [
       {
         value: '4-1',
-        label: '商品分类',
+        label: 'Product Categories',
         children: [
-          { value: '4-1-1', label: '宠物食品' },
-          { value: '4-1-2', label: '医疗用品' },
-          { value: '4-1-3', label: '日常用品' }
+          { value: '4-1-1', label: 'Pet Food' },
+          { value: '4-1-2', label: 'Med Supplies' },
+          { value: '4-1-3', label: 'Daily Supplies' }
         ]
       },
       {
         value: '4-2',
-        label: '库存管理',
+        label: 'Inventory Mgmt',
         children: [
-          { value: '4-2-1', label: '入库管理' },
-          { value: '4-2-2', label: '出库管理' },
-          { value: '4-2-3', label: '库存预警' }
+          { value: '4-2-1', label: 'Stock In' },
+          { value: '4-2-2', label: 'Stock Out' },
+          { value: '4-2-3', label: 'Inventory Alerts' }
         ]
       }
     ]
   },
   {
     value: '5',
-    label: '数据统计',
+    label: 'Data Analysis',
     renderIcon: () => h(BarChart2, { size: 14 }),
     children: [
       {
         value: '5-1',
-        label: '营收统计',
+        label: 'Revenue Analysis',
         children: [
-          { value: '5-1-1', label: '收入分析' },
-          { value: '5-1-2', label: '支出分析' },
-          { value: '5-1-3', label: '利润报表' }
+          { value: '5-1-1', label: 'Income Analysis' },
+          { value: '5-1-2', label: 'Expense Analysis' },
+          { value: '5-1-3', label: 'Profit Report' }
         ]
       },
       {
         value: '5-2',
-        label: '运营分析',
+        label: 'Operational Analysis',
         children: [
-          { value: '5-2-1', label: '就诊统计' },
-          { value: '5-2-2', label: '商品销量' },
-          { value: '5-2-3', label: '客流分析' }
+          { value: '5-2-1', label: 'Consultation Stats' },
+          { value: '5-2-2', label: 'Product Sales' },
+          { value: '5-2-3', label: 'Customer Flow' }
         ]
       }
     ]
   },
   {
     value: '6',
-    label: '系统设置',
+    label: 'System Settings',
     renderIcon: () => h(Settings, { size: 14 }),
     children: [
       {
         value: '6-1',
-        label: '员工管理',
+        label: 'Employee Mgmt',
         children: [
-          { value: '6-1-1', label: '员工信息' },
-          { value: '6-1-2', label: '角色权限' },
-          { value: '6-1-3', label: '考勤管理' }
+          { value: '6-1-1', label: 'Employee Info' },
+          { value: '6-1-2', label: 'Role Permissions' },
+          { value: '6-1-3', label: 'Attendance Mgmt' }
         ]
       },
       {
         value: '6-2',
-        label: '基础设置',
+        label: 'Basic Settings',
         children: [
-          { value: '6-2-1', label: '诊所信息' },
-          { value: '6-2-2', label: '服务项目' },
-          { value: '6-2-3', label: '收费标准' }
+          { value: '6-2-1', label: 'Clinic Info' },
+          { value: '6-2-2', label: 'Service Items' },
+          { value: '6-2-3', label: 'Fee Standards' }
         ]
       }
     ]

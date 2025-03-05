@@ -14,7 +14,7 @@ const value = ref([])
     <template #empty>
       <div class="empty">
         <Box :size="30" />
-        暂无内容
+        No Content
       </div>
     </template>
   </lew-select-multiple>

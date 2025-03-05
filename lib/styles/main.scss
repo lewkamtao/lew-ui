@@ -124,7 +124,7 @@ button {
 .lew-form-icon-close {
   position: absolute;
   top: 50%;
-  right: 9px;
+  right: 10px;
   z-index: 9;
   padding: 2px;
   opacity: var(--lew-form-icon-opacity);
@@ -156,7 +156,7 @@ button {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s ease;
+  transition: opacity 0.2s ease;
 }
 
 .fade-enter-from,

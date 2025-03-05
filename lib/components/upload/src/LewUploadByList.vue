@@ -104,6 +104,8 @@ const getLastValueAfterSlash = (url: string = '') => {
         >
           <lew-image
             v-if="checkUrlIsImage(item.url)"
+            width="100%"
+            height="100%"
             :previewGroupKey="previewGroupKey"
             class="lew-upload-file-image"
             :src="item.url"
@@ -264,8 +266,6 @@ const getLastValueAfterSlash = (url: string = '') => {
         overflow: hidden;
       }
       .lew-upload-file-image {
-        width: 100%;
-        height: 100%;
         object-fit: contain;
         border-radius: 4px;
         overflow: hidden;

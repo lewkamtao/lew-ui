@@ -6,9 +6,6 @@ import DemoNotification2 from './DemoNotification2.vue'
 
 import DemoNotification2Code from './DemoNotification2.vue?raw'
 
-export {
-  DemoNotification1,
-  DemoNotification1Code,
-  DemoNotification2,
-  DemoNotification2Code
-}
+export const demoGroup = [DemoNotification1, DemoNotification2]
+
+export const codeGroup = [DemoNotification1Code, DemoNotification2Code]

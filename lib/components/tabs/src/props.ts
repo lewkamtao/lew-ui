@@ -77,7 +77,7 @@ export const tabsProps = {
   },
   width: {
     type: [Number, String],
-    default: '',
+    default: 'auto',
     description: '标签页容器宽度，可以是数字（单位：像素）或字符串（如 "50%"）',
     validator: (value: number | string) => {
       if (typeof value === 'number' && value <= 0) {

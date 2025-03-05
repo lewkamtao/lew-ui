@@ -1,7 +1,7 @@
 <template>
-  <lew-title :bold="400" :size="14">产品简介</lew-title>
-  <lew-title :bold="400" :size="16">客户评价</lew-title>
-  <lew-title :bold="400" :size="18">特色功能</lew-title>
-  <lew-title :bold="400" :size="22">限时优惠</lew-title>
-  <lew-title :bold="400" :size="26">公司愿景</lew-title>
+  <lew-title :bold="400" :size="14">Product Introduction</lew-title>
+  <lew-title :bold="400" :size="16">Customer Reviews</lew-title>
+  <lew-title :bold="400" :size="18">Featured Functions</lew-title>
+  <lew-title :bold="400" :size="22">Limited Time Offer</lew-title>
+  <lew-title :bold="400" :size="26">Company Vision</lew-title>
 </template>

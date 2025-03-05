@@ -17,6 +17,11 @@ type TitleColor =
   | 'brown'
 
 export const titleProps = {
+  text: {
+    type: String,
+    default: '',
+    description: '标题文字'
+  },
   size: {
     type: [Number, String],
     default: 24,

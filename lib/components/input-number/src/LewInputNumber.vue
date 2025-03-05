@@ -101,6 +101,7 @@ const plus = () => {
     longClickTimer.value = setInterval(() => {
       lewInputRef.value.stepUp()
       modelValue.value = lewInputRef.value.value
+      emit('change', modelValue.value)
       if (
         props.max !== '' &&
         lewInputRef.value.value >= Number(props.max || 0)
@@ -117,6 +118,7 @@ const minus = () => {
     longClickTimer.value = setInterval(() => {
       lewInputRef.value.stepDown()
       modelValue.value = lewInputRef.value.value
+      emit('change', modelValue.value)
       if (
         props.min !== '' &&
         lewInputRef.value.value <= Number(props.min || 0)
@@ -145,7 +147,7 @@ defineExpose({ toFocus, validCheck })
 
 <template>
   <div
-    @wheel="(e) => e.preventDefault()"
+    @wheel="(e: any) => e.preventDefault()"
     @mouseenter="checkValidationMessage"
     @mouseleave="validationMessage = ''"
     class="lew-input-number-view"

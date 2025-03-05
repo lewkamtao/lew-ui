@@ -5,7 +5,7 @@ import { validSizes } from 'lew-ui/constants'
 export const textareaModel = {
   modelValue: {
     type: String,
-    default: '',
+    default: undefined,
     description: '文本域的值'
   }
 }
@@ -13,7 +13,7 @@ export const textareaModel = {
 export const textareaProps = {
   placeholder: {
     type: String,
-    default: '请输入',
+    defaultLocale: true,
     description: '占位文本'
   },
   disabled: {

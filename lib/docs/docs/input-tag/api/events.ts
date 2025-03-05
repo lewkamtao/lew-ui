@@ -2,15 +2,19 @@ export default {
   title: 'Events',
   columnsKey: 'events',
   data: [
+    // 'remove', 'change', 'clear', 'add'
     {
-      name: 'change',
-      description: '值变化',
-      params: '() => void'
+      name: 'change'
     },
     {
-      name: 'close',
-      description: '关闭某个tag',
-      params: '() => void'
+      name: 'remove'
+    },
+
+    {
+      name: 'clear'
+    },
+    {
+      name: 'add'
     }
   ]
 }

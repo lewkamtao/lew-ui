@@ -1,7 +1,7 @@
 <template>
-  <lew-title :size="14">微型机器人医疗</lew-title>
-  <lew-title :size="16">时空旅行理论</lew-title>
-  <lew-title :size="18">海底城市建设</lew-title>
-  <lew-title :size="22">反重力交通系统</lew-title>
-  <lew-title :size="26">星际移民计划</lew-title>
+  <lew-title :size="14">Micro Robot Medical Care</lew-title>
+  <lew-title :size="16">Space-Time Travel Theory</lew-title>
+  <lew-title :size="18">Underwater City Construction</lew-title>
+  <lew-title :size="22">Anti-Gravity Transport System</lew-title>
+  <lew-title :size="26">Interstellar Migration Plan</lew-title>
 </template>

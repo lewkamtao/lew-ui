@@ -100,7 +100,7 @@ const columns = [
       </template>
       <template #popover-body>
         <div class="popover-body" style="width: 240px">
-          <lew-input v-model="v" placeholder="请输入密码" />
+          <lew-input width="100%" v-model="v" placeholder="请输入密码" />
           <lew-flex x="end" style="margin-top: 15px">
             <lew-button
               text="取消"
@@ -130,7 +130,7 @@ const columns = [
               </lew-flex>
             </template>
           </lew-table>
-          <lew-flex x="end">
+          <lew-flex x="end" style="margin-top: 15px">
             <lew-button
               text="取消"
               color="normal"

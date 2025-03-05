@@ -21,10 +21,12 @@ const styleObject = computed((): CSSProperties => {
 })
 const alignmentMap = {
   start: 'flex-start',
-  left: 'flex-start', 
+  left: 'flex-start',
   end: 'flex-end',
   right: 'flex-end',
-  center: 'center'
+  center: 'center',
+  top: 'flex-start',
+  bottom: 'flex-end'
 }
 
 function getJustifyContent() {

@@ -5,6 +5,8 @@ import { datePickerProps } from './props'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash-es'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { locale } from 'lew-ui'
+import { any2px } from 'lew-ui/utils'
 
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -42,6 +44,10 @@ const selectPresets = (item: { label: string; value: string }) => {
       change(modelValue.value)
     })
   }, 100)
+}
+
+if (props.valueFormat && modelValue.value) {
+  modelValue.value = dayjs(modelValue.value).format(props.valueFormat)
 }
 
 const getIconSize = computed(() => {
@@ -92,6 +98,7 @@ defineExpose({ show, hide })
     placement="bottom-start"
     :disabled="disabled || readonly"
     :offset="[0, 8]"
+    :style="{ width: any2px(width) }"
     @show="showHandle"
     @hide="hideHandle"
   >
@@ -110,7 +117,9 @@ defineExpose({ show, hide })
             }"
           >
             <div v-show="!modelValue" class="lew-date-picker-placeholder">
-              {{ placeholder }}
+              {{
+                placeholder ? placeholder : locale.t('datePicker.placeholder')
+              }}
             </div>
             <div v-show="modelValue" class="lew-date-picker-dateValue">
               {{ modelValue }}
@@ -182,7 +191,6 @@ defineExpose({ show, hide })
 
 <style lang="scss" scoped>
 .lew-popover {
-  width: 100%;
   .lew-date-picker-view {
     width: 100%;
   }

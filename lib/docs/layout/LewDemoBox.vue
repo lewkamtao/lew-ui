@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { LewCollapseTransition } from 'lew-ui'
 import { ChevronDown, ChevronUp } from 'lucide-vue-next'
+import docsLocale from '@/locals'
 
 defineProps({
   title: {
@@ -15,6 +16,30 @@ defineProps({
       return ''
     }
   },
+  tipsContent: {
+    type: String,
+    default() {
+      return ''
+    }
+  },
+  tipsType: {
+    type: String,
+    default() {
+      return 'info'
+    }
+  },
+  tipsTitle: {
+    type: String,
+    default() {
+      return ''
+    }
+  },
+  description: {
+    type: String,
+    default() {
+      return ''
+    }
+  },
   code: {
     type: String,
     default() {
@@ -24,6 +49,13 @@ defineProps({
 })
 
 const isShowCode = ref(false)
+const checkHasContent = computed(() => (text: string) => {
+  const pattern = /^components\.[a-zA-Z-]+\.demo\d+\.[a-z]+$/
+  if (text && !pattern.test(text)) {
+    return true
+  }
+  return false
+})
 </script>
 
 <template>
@@ -31,7 +63,7 @@ const isShowCode = ref(false)
     <lew-title :id="title" :size="18" class="demo-docs-title"
       >{{ title }}
       <lew-tag
-        v-if="tag"
+        v-if="checkHasContent(tag)"
         type="light"
         color="blue"
         style="margin: 2px 0px 0px 5px"
@@ -39,8 +71,8 @@ const isShowCode = ref(false)
         {{ tag }}
       </lew-tag>
     </lew-title>
-    <div class="desc">
-      <slot name="desc"></slot>
+    <div v-if="checkHasContent(description)" class="desc">
+      {{ description }}
     </div>
     <div class="demo-item">
       <div class="demo-cp lew-scrollbar">
@@ -58,9 +90,19 @@ const isShowCode = ref(false)
           <ChevronDown v-if="!isShowCode" :size="16" />
           <ChevronUp v-else :size="16" />
         </div>
-        {{ isShowCode ? '关闭' : '显示源码' }}
+        {{
+          isShowCode
+            ? docsLocale.t('base.close')
+            : docsLocale.t('base.showCode')
+        }}
       </div>
     </div>
+    <lew-alert
+      v-if="tipsType && tipsContent"
+      :type="tipsType"
+      :title="tipsTitle"
+      :content="tipsContent"
+    />
   </div>
 </template>
 

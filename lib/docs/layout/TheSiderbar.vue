@@ -29,7 +29,7 @@ let active = ref(route.path)
 
 <template>
   <div class="siderbar lew-scrollbar">
-    <lew-menu :options="options" :active="active" @change="toPath" />
+    <lew-menu :options="options" v-model="active" @change="toPath" />
   </div>
 </template>
 

@@ -41,7 +41,7 @@ const getRadioClassName = computed(() => {
 </script>
 
 <template>
-  <label class="lew-radio" :class="getRadioClassName">
+  <div class="lew-radio" :class="getRadioClassName" @click.stop="setChecked">
     <div v-if="iconable || (!iconable && !block)" class="lew-icon-radio-box">
       <Icon
         :stroke-width="4"
@@ -50,14 +50,8 @@ const getRadioClassName = computed(() => {
         :size="getIconSize"
       />
     </div>
-    <input
-      v-show="false"
-      type="radio"
-      :checked="checked"
-      @change="setChecked"
-    />
     <span v-if="label" class="lew-radio-label"> {{ label }}</span>
-  </label>
+  </div>
 </template>
 
 <style lang="scss" scoped>

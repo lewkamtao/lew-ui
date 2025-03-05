@@ -1,58 +1,86 @@
 <script setup lang="ts">
 import { schools } from '@/lib/data'
+import { padStart } from 'lodash-es'
 
-const schoolsOptions = schools.map((e) => {
-  return { label: e, value: e }
+const schoolsOptions = schools.map((e, i) => {
+  return { label: e, value: padStart(String(i), 8, '0') }
 })
 
-const options = ref(schoolsOptions)
 const value = ref('')
-
-const filterFn = (params: any) => {
-  // 自定义过滤方法
-  const { keyword, options } = params
-  const result = options.filter((e: any) => {
-    return e.label.indexOf(keyword) >= 0
-  })
-  return result
-}
-
-const searchFn = (event: any) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const res = options.value.filter(
-        (e) => e.label.indexOf(event.keyword) >= 0
-      )
-      resolve(res)
-    }, 500)
-  })
-}
 </script>
 
 <template>
-  <lew-flex style="width: 320px" direction="y">
-    <lew-select
-      v-model="value"
-      searchable
-      :defaultValue="value"
-      :options="options"
-      clearable
-      placeholder="默认过滤"
-    />
-    <lew-select
-      v-model="value"
-      searchable
-      :options="options"
-      :defaultValue="value"
-      :searchMethod="filterFn"
-      placeholder="自定义过滤方法"
-    />
-    <lew-select
-      v-model="value"
-      searchable
-      :defaultValue="value"
-      :searchMethod="searchFn"
-      placeholder="模拟请求"
-    />
-  </lew-flex>
+  <lew-select
+    v-model="value"
+    style="width: 320px"
+    :itemHeight="48"
+    :options="schoolsOptions"
+    placeholder="Support slots"
+  >
+    <template #item="{ props }">
+      <div
+        class="custom-select-box"
+        :class="{ 'custom-select-checked': props.checked }"
+      >
+        <div class="custom-select-content">
+          <img
+            width="28"
+            height="28"
+            :src="`https://api.lew.kamtao.com/manage/common/avatar/350/4B78CA/${props.label}`"
+          />
+          <div class="info">
+            <div class="label">{{ props.label }}</div>
+            <div class="desc">
+              {{ props.value }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </lew-select>
 </template>
+
+<style lang="scss">
+.custom-select-box {
+  width: 100%;
+  height: 48px;
+  user-select: none;
+  padding: 2px 0px;
+  box-sizing: border-box;
+  cursor: pointer;
+  overflow: hidden;
+  .custom-select-content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0px 8px;
+    height: 100%;
+    border-radius: var(--lew-border-radius-small);
+    box-sizing: border-box;
+    .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .label {
+        color: var(--lew-text-color-1);
+        font-size: 14px;
+      }
+      .desc {
+        color: var(--lew-text-color-8);
+        font-size: 12px;
+      }
+    }
+  }
+}
+.custom-select-box:hover {
+  .custom-select-content {
+    background: var(--lew-color-primary-light);
+  }
+}
+.custom-select-checked {
+  .custom-select-content {
+    background: var(--lew-color-primary-light);
+  }
+}
+</style>

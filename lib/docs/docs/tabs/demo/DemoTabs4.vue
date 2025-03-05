@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const selectedLang = ref('python')
+const selectedLang = ref('go')
 
 interface LangOption {
   label: string

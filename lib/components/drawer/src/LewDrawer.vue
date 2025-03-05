@@ -6,7 +6,6 @@ import { LewButton, LewFlex } from 'lew-ui'
 import { drawerProps } from './props'
 import { useMagicKeys, onClickOutside } from '@vueuse/core'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { isString } from 'lodash-es'
 const { Escape } = useMagicKeys()
 
 useDOMCreate('lew-drawer')

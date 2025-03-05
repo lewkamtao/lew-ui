@@ -107,7 +107,7 @@ const columns = [
       </lew-flex>
     </template>
     <template #rating="{ row }">
-      <lew-flex>
+      <lew-flex x="center" y="center">
         <lew-badge v-if="row.rating >= 90" round color="green" />
         <lew-badge v-else-if="row.rating >= 80" round color="blue" />
         <lew-badge v-else round color="orange" />

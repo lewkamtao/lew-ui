@@ -174,29 +174,29 @@ onUnmounted(() => {
     class="lew-tabs-wrapper"
     :class="getTabsWrapperClassName"
   >
-    <div
-      ref="tabsRef"
-      :style="getTabsStyle"
-      class="lew-tabs hidden-scrollbar"
-      :class="getTabsClassName"
-      @scroll="tabsScroll"
-    >
+    <div :style="getTabsStyle" class="lew-tabs" :class="getTabsClassName">
       <div
-        v-if="tabsValue || tabsValue === 0"
-        :style="state.activeItemStyle"
-        class="lew-tabs-item-animation-active"
-        :class="{ 'lew-tabs-item-isInit': state.isInit }"
-      ></div>
-      <div
-        v-for="item in props.options"
-        :key="String(item.value)"
-        :ref="(el) => itemRef.push(el)"
-        class="lew-tabs-item"
-        :style="getItemStyle"
-        :class="{ 'lew-tabs-item-active': tabsValue === item.value }"
-        @click="selectItem(item.value)"
+        ref="tabsRef"
+        @scroll="tabsScroll"
+        class="lew-tabs-main hidden-scrollbar"
       >
-        {{ item.label }}
+        <div
+          v-if="tabsValue || tabsValue === 0"
+          :style="state.activeItemStyle"
+          class="lew-tabs-item-animation-active"
+          :class="{ 'lew-tabs-item-isInit': state.isInit }"
+        ></div>
+        <div
+          v-for="item in props.options"
+          :key="String(item.value)"
+          :ref="(el) => itemRef.push(el)"
+          class="lew-tabs-item"
+          :style="getItemStyle"
+          :class="{ 'lew-tabs-item-active': tabsValue === item.value }"
+          @click="selectItem(item.value)"
+        >
+          {{ item.label }}
+        </div>
       </div>
     </div>
   </div>
@@ -260,19 +260,27 @@ onUnmounted(() => {
 }
 
 .lew-tabs {
-  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  position: relative;
   background: var(--lew-form-bgcolor);
   border-radius: var(--lew-border-radius-small);
-  overflow-x: auto;
-  overflow-y: hidden;
   user-select: none;
-  scroll-behavior: smooth;
   width: 100%;
+  height: 100%;
   box-sizing: border-box;
-  padding: 0px 3px;
+  .lew-tabs-main {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 3px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    padding: 0px 3px;
+  }
   .lew-tabs-item {
     position: relative;
     display: inline-flex;
@@ -353,8 +361,10 @@ onUnmounted(() => {
     position: relative;
     background: none;
     border: none;
-    padding-bottom: 5px;
     border-radius: 0px;
+    .lew-tabs-main {
+      padding-bottom: 5px;
+    }
     .lew-tabs-item:hover {
       background: var(--lew-bgcolor-2);
     }
@@ -374,7 +384,7 @@ onUnmounted(() => {
       bottom: 1px;
       left: 0px;
       z-index: 9;
-      height: 2px;
+      height: 2.5px;
       border-radius: 0px;
       background: var(--lew-color-primary);
       transform: translateX(3px);
@@ -384,7 +394,7 @@ onUnmounted(() => {
 .lew-tabs-type-line:after {
   position: absolute;
   content: '';
-  bottom: 1px;
+  bottom: 0px;
   left: 3px;
   height: 2px;
   background-color: var(--lew-form-bgcolor);

@@ -12,17 +12,20 @@ import DemoSlider4Code from './DemoSlider4.vue?raw'
 import DemoSlider5Code from './DemoSlider5.vue?raw'
 import DemoSlider6Code from './DemoSlider6.vue?raw'
 
-export {
+export const demoGroup = [
   DemoSlider1,
-  DemoSlider1Code,
   DemoSlider2,
-  DemoSlider2Code,
   DemoSlider3,
-  DemoSlider3Code,
   DemoSlider4,
-  DemoSlider4Code,
   DemoSlider5,
+  DemoSlider6
+]
+
+export const codeGroup = [
+  DemoSlider1Code,
+  DemoSlider2Code,
+  DemoSlider3Code,
+  DemoSlider4Code,
   DemoSlider5Code,
-  DemoSlider6,
   DemoSlider6Code
-}
+]

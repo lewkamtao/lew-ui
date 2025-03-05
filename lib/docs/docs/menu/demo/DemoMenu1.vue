@@ -12,68 +12,68 @@ import {
 
 const options = ref([
   {
-    label: '数据分析',
-    value: '数据分析',
+    label: 'Data Analysis',
+    value: 'Data Analysis',
     children: [
       {
-        label: '仪表盘',
-        value: '仪表盘',
+        label: 'Dashboard',
+        value: 'Dashboard',
         renderIcon: () => h(PieChart, { size: 14 })
       },
       {
-        label: '性能监控',
-        value: '性能监控',
+        label: 'Performance',
+        value: 'Performance Monitoring',
         renderIcon: () => h(BarChart, { size: 14 })
       }
     ]
   },
   {
-    label: '内容管理',
-    value: '内容管理',
+    label: 'Content Management',
+    value: 'Content Management',
     children: [
       {
-        label: '使用指南',
-        value: '使用指南',
+        label: 'User Guide',
+        value: 'User Guide',
         renderIcon: () => h(Book, { size: 14 }),
         tagText: 'Beta',
         tagColor: 'success'
       },
       {
-        label: '热点管理',
-        value: '热点管理',
+        label: 'Hotspot Mgmt',
+        value: 'Hotspot Management',
         renderIcon: () => h(Flame, { size: 14 })
       },
       {
-        label: '检查清单',
-        value: '检查清单',
+        label: 'Checklist',
+        value: 'Checklist',
         renderIcon: () => h(CheckSquare, { size: 14 })
       },
       {
-        label: '满意度调查',
-        value: '满意度调查',
+        label: 'Satisfaction Survey',
+        value: 'Satisfaction Survey',
         renderIcon: () => h(Smile, { size: 14 })
       }
     ]
   },
   {
-    label: '个性化设置',
-    value: '个性化设置',
+    label: 'Settings',
+    value: 'Personalized Settings',
     children: [
       {
-        label: '分组管理',
-        value: '分组管理',
+        label: 'Group Mgmt',
+        value: 'Group Management',
         renderIcon: () => h(Users, { size: 14 })
       },
       {
-        label: '主题设置',
-        value: '主题设置',
+        label: 'Theme Settings',
+        value: 'Theme Settings',
         renderIcon: () => h(Palette, { size: 14 })
       }
     ]
   }
 ])
 
-let modelValue = ref('使用指南')
+let modelValue = ref('User Guide')
 
 const change = (item: any) => {
   console.log(item)

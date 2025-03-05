@@ -22,6 +22,21 @@ onMounted(() => {
       }
     })
   }
+
+  const isComplete: string[] = []
+
+  setTimeout(() => {
+    const menuItems = document.getElementsByClassName('lew-menu-item')
+    for (let i = 0; i < menuItems.length; i++) {
+      // 寻找lew-text-trim-wrapper
+      const dom = menuItems[i].querySelector('.lew-text-trim-wrapper')
+      if (dom) {
+        if (isComplete.includes(dom.textContent as string)) {
+          ;(dom as HTMLElement).style.opacity = '0.2'
+        }
+      }
+    }
+  }, 500)
 })
 
 watch(route, () => {
@@ -67,7 +82,7 @@ const options: MenuOptions[] = [
         value: '/Title'
       },
       {
-        label: 'Text Trim',
+        label: 'TextTrim',
         value: '/TextTrim'
       },
       {
@@ -77,10 +92,6 @@ const options: MenuOptions[] = [
       {
         label: 'Mark',
         value: '/Mark'
-      },
-      {
-        label: 'Icon',
-        value: '/icon'
       }
     ]
   },
@@ -90,8 +101,8 @@ const options: MenuOptions[] = [
     value: '导航',
     children: [
       {
-        label: 'Back Top',
-        value: '/Back Top'
+        label: 'BackTop',
+        value: '/BackTop'
       },
       {
         label: 'Steps',
@@ -102,7 +113,7 @@ const options: MenuOptions[] = [
         value: '/Menu'
       },
       {
-        label: 'Menu Tree',
+        label: 'MenuTree',
         value: '/MenuTree',
         tagText: 'New',
         tagColor: 'green'
@@ -116,7 +127,7 @@ const options: MenuOptions[] = [
         value: '/Breadcrumb'
       },
       {
-        label: 'Context Menu',
+        label: 'ContextMenu',
         value: '/ContextMenu',
         tagText: 'New',
         tagColor: 'green'
@@ -136,7 +147,7 @@ const options: MenuOptions[] = [
         value: '/Input'
       },
       {
-        label: 'Input Number',
+        label: 'InputNumber',
         value: '/InputNumber'
       },
       {
@@ -144,7 +155,7 @@ const options: MenuOptions[] = [
         value: '/Textarea'
       },
       {
-        label: 'Input Tag',
+        label: 'InputTag',
         value: '/InputTag'
       },
       {
@@ -164,15 +175,15 @@ const options: MenuOptions[] = [
         value: '/Select'
       },
       {
-        label: 'Select Multiple',
+        label: 'SelectMultiple',
         value: '/SelectMultiple'
       },
       {
-        label: 'Date Picker',
+        label: 'DatePicker',
         value: '/DatePicker'
       },
       {
-        label: 'Date Range Picker',
+        label: 'DateRangePicker',
         value: '/DateRangePicker'
       },
       {
@@ -180,11 +191,11 @@ const options: MenuOptions[] = [
         value: '/Cascader'
       },
       {
-        label: 'Tree Select',
+        label: 'TreeSelect',
         value: '/TreeSelect'
       },
       {
-        label: 'Input Table',
+        label: 'InputTable',
         value: '/InputTable',
         tagText: 'Dev',
         tagColor: 'blue'
@@ -199,11 +210,17 @@ const options: MenuOptions[] = [
         value: '/Slider'
       },
       {
-        label: 'Slider Range',
+        label: 'SliderRange',
         value: '/SliderRange'
       },
       {
-        label: 'Color Picker',
+        label: 'Rate',
+        value: '/Rate',
+        tagText: 'New',
+        tagColor: 'green'
+      },
+      {
+        label: 'ColorPicker',
         value: '/ColorPicker'
       },
       {
@@ -223,10 +240,6 @@ const options: MenuOptions[] = [
       {
         label: 'Pagination',
         value: '/Pagination'
-      },
-      {
-        label: 'Magic Number',
-        value: '/MagicNumber',
       },
       {
         label: 'Tree',

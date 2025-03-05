@@ -85,7 +85,9 @@ const modelValue = defineModel<UploadFileItem[]>()
         <lew-flex
           v-else-if="
             item.status &&
-            !['complete', 'success', 'none', 'uploading'].includes(item.status as string)
+            !['complete', 'success', 'none', 'uploading'].includes(
+              item.status as string
+            )
           "
           v-tooltip="{
             content: statusMap[item.status || 'complete'],
@@ -123,6 +125,8 @@ const modelValue = defineModel<UploadFileItem[]>()
         <lew-flex class="lew-upload-icon-wrapper">
           <lew-flex
             class="lew-upload-icon-box"
+            x="center"
+            y="center"
             :style="{
               transform: item.status === 'uploading' ? 'translateY(-7px)' : ''
             }"
@@ -131,6 +135,8 @@ const modelValue = defineModel<UploadFileItem[]>()
               v-if="checkUrlIsImage(item.url)"
               :previewGroupKey="previewGroupKey"
               object-fit="contain"
+              width="100%"
+              height="100%"
               class="lew-upload-file-image"
               :src="item.url"
             />
@@ -250,8 +256,6 @@ const modelValue = defineModel<UploadFileItem[]>()
       background-color: var(--lew-bgcolor-0);
 
       .lew-upload-file-icon {
-        width: 100%;
-        height: 100%;
         border-radius: 4px;
         overflow: hidden;
       }

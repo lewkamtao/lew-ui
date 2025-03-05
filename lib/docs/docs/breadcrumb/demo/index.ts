@@ -6,11 +6,10 @@ import DemoBreadcrumb1Code from './DemoBreadcrumb1.vue?raw'
 import DemoBreadcrumb2Code from './DemoBreadcrumb2.vue?raw'
 import DemoBreadcrumb3Code from './DemoBreadcrumb3.vue?raw'
 
-export {
-  DemoBreadcrumb1,
-  DemoBreadcrumb2,
-  DemoBreadcrumb3,
+export const demoGroup = [DemoBreadcrumb1, DemoBreadcrumb2, DemoBreadcrumb3]
+
+export const codeGroup = [
   DemoBreadcrumb1Code,
   DemoBreadcrumb2Code,
   DemoBreadcrumb3Code
-}
+]

@@ -17,19 +17,18 @@ const alertClassName = computed(() => {
   <div class="lew-alert" :class="alertClassName">
     <Icon dark :size="18" :type></Icon>
     <div class="lew-alert-message">
-      <!-- 标题 -->
       <div v-if="$slots.title" class="lew-alert-title">
         <slot name="title" />
       </div>
-      <div v-else class="lew-alert-title">{{ title }}</div>
+      <div v-else class="lew-alert-title">
+        {{ title }}
+      </div>
 
-      <!-- 内容 -->
       <div v-if="$slots.content" class="lew-alert-content">
         <slot name="content" />
       </div>
       <div v-else-if="content" class="lew-alert-content">{{ content }}</div>
 
-      <!-- 底部 -->
       <div v-if="$slots.footer" class="lew-alert-footer">
         <slot name="footer" />
       </div>

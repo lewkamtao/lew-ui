@@ -53,14 +53,19 @@ export const dateRangePickerProps = {
       return true
     }
   },
+  width: {
+    type: [String, Number],
+    default: '300px',
+    description: '选择器宽度，支持数字（单位：像素）或带单位的字符串'
+  },
   placeholderStart: {
     type: String,
-    default: '开始日期',
+    defaultLocale: true,
     description: '开始日期占位文本'
   },
   placeholderEnd: {
     type: String,
-    default: '结束日期',
+    defaultLocale: true,
     description: '结束日期占位文本'
   },
   clearable: {

@@ -2,7 +2,6 @@
 import { useDebounceFn } from '@vueuse/core'
 import {
   LewPopover,
-  LewTooltip,
   LewCheckbox,
   LewFlex,
   LewTag,
@@ -10,18 +9,15 @@ import {
   LewEmpty
 } from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
-import type { SelectMultipleOptions, SelectMultipleOptionsGroup } from './props'
+import type { SelectMultipleOptions } from './props'
 import { selectMultipleProps } from './props'
-import { UseVirtualList } from '@vueuse/components'
+import { VirtList } from 'vue-virt-list'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { isFunction } from 'lodash-es'
 import { flattenOptions, defaultSearchMethod } from '../../select/src/util'
-
-// 获取app
-const app = getCurrentInstance()?.appContext.app
-if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
-}
+import { poll } from 'lew-ui/utils'
+import { locale } from 'lew-ui'
+import { any2px } from 'lew-ui/utils'
 const props = defineProps(selectMultipleProps)
 const emit = defineEmits(['change', 'select', 'clear', 'delete', 'blur'])
 const selectValue: any = defineModel()
@@ -30,7 +26,7 @@ const lewSelectRef = ref()
 const lewPopoverRef = ref()
 const lewPopoverValueRef = ref()
 const searchInputRef = ref()
-
+const virtListRef = ref()
 const state = reactive({
   selectWidth: 0,
   visible: false,
@@ -101,18 +97,26 @@ const clearHandle = () => {
   emit('change', selectValue.value)
 }
 
-const deleteTag = (index: number) => {
-  const item = selectValue.value[index]
-  selectValue.value && selectValue.value.splice(index, 1)
-  emit('delete', item)
-  // 刷新位置
-  if (selectValue.value.length === 0) {
-    lewPopoverValueRef.value && lewPopoverValueRef.value.hide()
+const deleteTag = ({ value }: { value: any }) => {
+  const valueIndex = selectValue.value.findIndex(
+    (_value: any) => value === _value
+  )
+
+  if (valueIndex > -1) {
+    const item = selectValue.value[valueIndex]
+    selectValue.value.splice(valueIndex, 1)
+    console.log(selectValue.value)
+    emit('delete', { item, value: selectValue.value })
+
+    // 刷新位置
+    if (selectValue.value.length === 0) {
+      lewPopoverValueRef.value && lewPopoverValueRef.value.hide()
+    }
+    setTimeout(() => {
+      lewPopoverRef.value && lewPopoverRef.value.refresh()
+    }, 100)
+    emit('change', selectValue.value)
   }
-  setTimeout(() => {
-    lewPopoverRef.value && lewPopoverRef.value.refresh()
-  }, 100)
-  emit('change', selectValue.value)
 }
 
 const selectHandle = (item: SelectMultipleOptions) => {
@@ -146,17 +150,25 @@ const getChecked = computed(() => (value: string | number) => {
   return false
 })
 
-const getLabels = computed(() => {
+const getSelectedRows = computed(() => {
+  let _defaultValue = (props.defaultValue || []).map((e: any) => {
+    return {
+      label: e,
+      value: e
+    }
+  })
   if (state.options.length > 0) {
-    const labels =
+    const selectedRows =
       selectValue.value &&
       selectValue.value.map((v: number | string) => {
         return state.options.find((e: SelectMultipleOptions) => v === e.value)
-          ?.label
       })
-    return labels || []
+    if (!selectedRows || selectedRows.length === 0) {
+      return _defaultValue
+    }
+    return selectedRows
   }
-  return props?.defaultValue || selectValue.value || []
+  return _defaultValue
 })
 
 const getBodyClassName = computed(() => {
@@ -204,11 +216,32 @@ const showHandle = () => {
   if (state.options && state.options.length === 0 && props.searchable) {
     search({ target: { value: '' } })
   }
+  // 找到所有选中值的index，取最小的
+  if ((selectValue.value || []).length > 0) {
+    const indexes = selectValue.value
+      .map((value: any) =>
+        state.options.findIndex((e: any) => e.value === value)
+      )
+      .filter((index: number) => index > -1)
+
+    if (indexes.length > 0) {
+      const minIndex = Math.min(...indexes)
+      poll({
+        callback: () => {
+          virtListRef.value.scrollToIndex(minIndex)
+        },
+        vail: () => {
+          return !!virtListRef.value
+        }
+      })
+    }
+  }
 }
+
 const getVirtualHeight = computed(() => {
   let height = state.options.length * props.itemHeight
   height = height >= 280 ? 280 : height
-  return `${height}px`
+  return height
 })
 
 const hideHandle = () => {
@@ -244,8 +277,7 @@ const getResultNum = computed(() => {
     :trigger="trigger"
     :disabled="disabled || readonly"
     placement="bottom-start"
-    style="width: 100%"
-    :offset="[-1, 10]"
+    :style="{ width: any2px(width) }"
     :loading="state.loading"
     @show="showHandle"
     @hide="hideHandle"
@@ -258,12 +290,17 @@ const getResultNum = computed(() => {
           class="lew-icon-select"
           :class="{
             'lew-icon-select-hide':
-              clearable && getLabels && getLabels.length > 0
+              clearable && getSelectedRows && getSelectedRows.length > 0
           }"
         />
         <transition name="lew-form-icon-ani">
           <Icon
-            v-if="clearable && getLabels && getLabels.length > 0 && !readonly"
+            v-if="
+              clearable &&
+              getSelectedRows &&
+              getSelectedRows.length > 0 &&
+              !readonly
+            "
             :size="getIconSize"
             type="close"
             class="lew-form-icon-close"
@@ -273,7 +310,7 @@ const getResultNum = computed(() => {
             @click.stop="clearHandle"
           />
         </transition>
-        <template v-if="getLabels && getLabels.length > 0">
+        <template v-if="getSelectedRows && getSelectedRows.length > 0">
           <lew-flex
             v-if="valueLayout === 'tag'"
             :style="{ padding: '4px' }"
@@ -285,14 +322,14 @@ const getResultNum = computed(() => {
           >
             <transition-group name="list">
               <lew-tag
-                v-for="(item, index) in getLabels"
-                :key="index"
+                v-for="item in getSelectedRows"
+                :key="item.value"
                 type="light"
                 :size="size"
-                closable
-                @close="deleteTag(index)"
+                :closable="!disabled && !readonly"
+                @close="deleteTag(item)"
               >
-                {{ item }}
+                {{ item.label }}
               </lew-tag>
             </transition-group>
           </lew-flex>
@@ -301,7 +338,6 @@ const getResultNum = computed(() => {
               ref="lewPopoverValueRef"
               trigger="hover"
               popoverBodyClassName="lew-select-multiple-popover-tag"
-              :offset="[-1, 10]"
               placement="top-start"
               style="width: 100%"
             >
@@ -312,7 +348,11 @@ const getResultNum = computed(() => {
                   }"
                   class="lew-select-multiple-text-value"
                 >
-                  {{ getLabels.join(valueTextSplit) }}
+                  {{
+                    getSelectedRows
+                      .map((item: any) => item.label)
+                      .join(valueTextSplit)
+                  }}
                 </div>
               </template>
               <template #popover-body>
@@ -327,14 +367,14 @@ const getResultNum = computed(() => {
                   class="lew-select-multiple-tag-value"
                 >
                   <lew-tag
-                    v-for="(item, index) in getLabels"
-                    :key="index"
+                    v-for="item in getSelectedRows"
+                    :key="item.value"
                     type="light"
                     :size="size"
-                    closable
-                    @close="deleteTag(index)"
+                    :closable="!disabled && !readonly"
+                    @close="deleteTag(item)"
                   >
-                    {{ item }}
+                    {{ item.label }}
                   </lew-tag>
                 </lew-flex>
               </template>
@@ -342,13 +382,15 @@ const getResultNum = computed(() => {
           </template>
         </template>
         <div
-          v-show="getLabels && getLabels.length === 0"
+          v-show="getSelectedRows && getSelectedRows.length === 0"
           :style="{
             opacity: state.visible ? 0.6 : 1
           }"
           class="lew-placeholder"
         >
-          {{ placeholder }}
+          {{
+            placeholder ? placeholder : locale.t('selectMultiple.placeholder')
+          }}
         </div>
       </div>
     </template>
@@ -382,56 +424,58 @@ const getResultNum = computed(() => {
             {{ getResultNum }}
             条结果
           </div>
-
-          <use-virtual-list
-            v-if="state.options.length > 0"
-            :key="getVirtualHeight"
-            class="lew-select-options-list lew-scrollbar"
-            :list="state.options"
-            :options="{
-              itemHeight
-            }"
-            :overscan="100"
-            :height="getVirtualHeight"
-          >
-            <template #default="{ data: templateProps }">
-              <div
-                :style="{ height: itemHeight + 'px' }"
-                @click="selectHandle(templateProps)"
-              >
-                <slot
-                  v-if="$slots.item"
-                  name="item"
-                  :props="{
-                    ...templateProps,
-                    checked: getChecked(templateProps.value)
-                  }"
-                ></slot>
+          <transition name="fade">
+            <virt-list
+              v-if="state.options.length > 0 && state.visible"
+              ref="virtListRef"
+              :list="state.options"
+              :minSize="itemHeight"
+              :buffer="5"
+              itemKey="value"
+              :style="{
+                height: `${getVirtualHeight}px`
+              }"
+              class="lew-select-options-list lew-scrollbar"
+            >
+              <template #default="{ itemData: templateProps }">
                 <div
-                  v-else
-                  class="lew-select-item lew-select-item-mul"
-                  :class="getSelectItemClassName(templateProps)"
+                  :style="{ height: itemHeight + 'px' }"
+                  @click="selectHandle(templateProps)"
                 >
-                  <lew-checkbox
-                    v-if="!templateProps.isGroup"
-                    :key="templateProps.value"
-                    class="lew-select-checkbox"
-                    :checked="getChecked(templateProps.value)"
-                  />
-                  <lew-text-trim
-                    :text="
-                      templateProps.isGroup
-                        ? `${templateProps.label} (${templateProps.total})`
-                        : templateProps.label
-                    "
-                    :delay="[500, 0]"
-                    class="lew-select-label"
-                    :class="{ 'is-group': templateProps.isGroup }"
-                  />
+                  <slot
+                    v-if="$slots.item"
+                    name="item"
+                    :props="{
+                      ...templateProps,
+                      checked: getChecked(templateProps.value)
+                    }"
+                  ></slot>
+                  <div
+                    v-else
+                    class="lew-select-item lew-select-item-mul"
+                    :class="getSelectItemClassName(templateProps)"
+                  >
+                    <lew-checkbox
+                      v-if="!templateProps.isGroup"
+                      :key="templateProps.value"
+                      class="lew-select-checkbox"
+                      :checked="getChecked(templateProps.value)"
+                    />
+                    <lew-text-trim
+                      :text="
+                        templateProps.isGroup
+                          ? `${templateProps.label} (${templateProps.total})`
+                          : templateProps.label
+                      "
+                      :delay="[500, 0]"
+                      class="lew-select-label"
+                      :class="{ 'is-group': templateProps.isGroup }"
+                    />
+                  </div>
                 </div>
-              </div>
-            </template>
-          </use-virtual-list>
+              </template>
+            </virt-list>
+          </transition>
         </div>
         <slot name="footer"></slot>
       </div>
@@ -509,7 +553,6 @@ const getResultNum = computed(() => {
       width: calc(100% - 24px);
       transition: all 0.2s;
       height: 100%;
-      line-height: 100%;
     }
 
     .lew-select-multiple-text-value {
@@ -783,6 +826,7 @@ const getResultNum = computed(() => {
     padding: 5px 12px;
     font-size: 13px;
     opacity: 0.4;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
   }
 }
 </style>

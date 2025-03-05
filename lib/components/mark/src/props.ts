@@ -46,8 +46,7 @@ export const markProps = {
         return false
       }
       return true
-    },
-    description: '标记的颜色'
+    }
   },
   bold: {
     type: [Number, String] as PropType<BoldValue | string>,
@@ -66,13 +65,11 @@ export const markProps = {
         return false
       }
       return true
-    },
-    description: '文本的加粗程度（100-900）'
+    }
   },
   round: {
     type: Boolean,
-    default: false,
-    description: '是否使用圆角样式'
+    default: false
   },
   cursor: {
     type: String as PropType<CursorStyle>,
@@ -93,7 +90,7 @@ export const markProps = {
       }
       return true
     },
-    description: '鼠标悬停时的光标样式'
+    typeDesc: `pointer | default | text | move | not-allowed`
   }
 }
 

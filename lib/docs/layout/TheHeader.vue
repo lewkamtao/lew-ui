@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
 import { useDark } from '@vueuse/core'
-import { Sun, Moon, Github } from 'lucide-vue-next'
+import { Sun, Moon, Github, Languages } from 'lucide-vue-next'
+import { setLocale } from 'lew-ui'
+import docsLocale from '@/locals'
 
-const version = ref('v2.5.9')
+const version = ref('v2.6.0')
 
 const isDark = useDark({
   selector: 'html',
@@ -34,6 +36,12 @@ const goToPage = (path: string, isNewTab = false) => {
 const goToGithub = () => {
   window.open('https://github.com/lewkamtao/Lew-UI', '_blank')
 }
+
+const changeLanguage = (e: any) => {
+  const { value } = e
+  setLocale(value)
+  docsLocale.use(value)
+}
 </script>
 
 <template>
@@ -52,20 +60,22 @@ const goToGithub = () => {
       </lew-tag>
     </lew-flex>
     <lew-flex gap="15" class="menu">
-      <div class="menu-item" @click="goToPage('/')">首页</div>
-      <div class="menu-item" @click="goToPage('/Install')">指南</div>
-      <div class="menu-item" @click="goToPage('/Image')">组件</div>
+      <div class="menu-item" @click="goToPage('/')">
+        {{ docsLocale.t('home.home') }}
+      </div>
+      <div class="menu-item" @click="goToPage('/Install')">
+        {{ docsLocale.t('home.install') }}
+      </div>
+      <div class="menu-item" @click="goToPage('/Image')">
+        {{ docsLocale.t('home.components') }}
+      </div>
       <div class="menu-item" @click="goToPage('/form-engine', true)">
         <lew-flex gap="5">
-          表单引擎<lew-tag size="small" type="ghost" round> Dev </lew-tag>
+          {{ docsLocale.t('home.formEngine') }}
         </lew-flex>
       </div>
       <div class="menu-item" @click="goToPage('/desc-engine', true)">
-        <lew-flex gap="5">
-          描述引擎<lew-tag size="small" color="green" type="ghost" round>
-            New
-          </lew-tag>
-        </lew-flex>
+        <lew-flex gap="5"> {{ docsLocale.t('home.descEngine') }} </lew-flex>
       </div>
     </lew-flex>
     <lew-flex gap="15" x="end" class="menu">
@@ -73,6 +83,23 @@ const goToGithub = () => {
         <Sun class="icon-mode-sunny" :size="18" />
         <Moon class="icon-mode-moon" :size="18" />
       </div>
+      <lew-dropdown
+        :options="[
+          {
+            label: '简体中文',
+            value: 'zh'
+          },
+          {
+            label: 'English',
+            value: 'en'
+          }
+        ]"
+        @change="changeLanguage"
+      >
+        <div class="menu-item menu-item-icon">
+          <Languages :size="18" />
+        </div>
+      </lew-dropdown>
       <div class="menu-item menu-item-icon" @click="goToGithub">
         <Github :size="18" />
       </div>
@@ -93,7 +120,6 @@ const goToGithub = () => {
   box-sizing: border-box;
   user-select: none;
   white-space: nowrap;
-
   .logo {
     display: flex;
     align-items: center;

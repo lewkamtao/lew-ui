@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import {
-  DemoBackTop1,
-  DemoBackTop1Code,
-  DemoBackTop2,
-  DemoBackTop2Code,
-  DemoBackTop3,
-  DemoBackTop3Code
-} from './demo'
-import LewDemoBox from '../../layout/LewDemoBox.vue'
-import LewDocsTables from '../../layout/LewDocsTables.vue'
+import { demoGroup, codeGroup } from './demo'
+import LewDemoBox from '@/layout/LewDemoBox.vue'
+import LewDocsTables from '@/layout/LewDocsTables.vue'
 import * as API from './api'
+import LewComponentInfo from '@/layout/LewComponentInfo.vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+// 转小写
+const componentName: string = (route.name as string)
+  .replace('R-Lew', '')
+  .replace(/^[A-Z]/, (match) => match.toLowerCase()) // 修正:第一个字母转小写
 
 const options = ref(
   Object.keys(API).map((key: any) => {
@@ -21,27 +21,18 @@ const options = ref(
 
 <template>
   <div class="demo-wrapper">
-    <lew-title>Back Top</lew-title>
-    <lew-demo-box title="基础用法" :code="DemoBackTop1Code">
-      <demo-back-top1 />
-    </lew-demo-box>
-    <lew-demo-box title="自定义内容" :code="DemoBackTop2Code">
-      <demo-back-top2 />
+    <lew-component-info />
+    <lew-demo-box
+      v-for="(item, index) in demoGroup"
+      :key="index"
+      :title="$t(`components.${componentName}.demo${index + 1}.title`)"
+      :description="
+        $t(`components.${componentName}.demo${index + 1}.description`)
+      "
+      :code="codeGroup[index]"
+    >
+      <component :is="item" />
     </lew-demo-box>
     <lew-docs-tables :options="options" />
-    <lew-demo-box title="指令" :code="DemoBackTop3Code">
-      <demo-back-top3 />
-    </lew-demo-box>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.main {
-  width: 100%;
-  margin: 0 auto;
-
-  > div {
-    margin-bottom: 40px;
-  }
-}
-</style>

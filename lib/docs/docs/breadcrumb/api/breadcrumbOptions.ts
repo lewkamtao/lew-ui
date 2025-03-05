@@ -1,18 +1,15 @@
 export default {
   title: 'BreadcrumbOptions',
   columnsKey: 'props',
+  orderNum: 12,
   data: [
     {
       name: 'label',
-      description: '文本内容',
-      type: 'String',
-      default: "''"
+      type: 'String'
     },
     {
-      name: 'to',
-      description: '绑定跳转链接',
-      type: 'String',
-      default: "''"
+      name: 'value',
+      type: 'String'
     },
     {
       name: 'active',

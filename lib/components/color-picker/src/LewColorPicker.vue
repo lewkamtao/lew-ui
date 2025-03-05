@@ -161,6 +161,7 @@ const change = () => {
     outline: none;
     background-color: transparent;
     padding-left: 8px;
+    color: var(--lew-text-color-1);
   }
 
   .lew-color-value {

@@ -3,19 +3,19 @@ import type { DropdownOptions } from 'lew-ui'
 
 const options = ref<DropdownOptions[]>([
   {
-    label: '西游记',
+    label: 'Edit Profile',
     value: '1'
   },
   {
-    label: '水浒传',
+    label: 'Account Settings',
     value: '2'
   },
   {
-    label: '三国演义',
+    label: 'Notifications',
     value: '3'
   },
   {
-    label: '红楼梦',
+    label: 'Sign Out',
     value: '4'
   }
 ])
@@ -27,10 +27,10 @@ const change = (e: DropdownOptions) => {
 <template>
   <lew-flex gap="30" x="start">
     <lew-dropdown :options="options" @change="change">
-      <lew-button text="hover" />
+      <lew-button text="Hover" type="light" />
     </lew-dropdown>
     <lew-dropdown :options="options" trigger="click" @change="change">
-      <lew-button text="click" />
+      <lew-button text="Click" type="light" />
     </lew-dropdown>
   </lew-flex>
 </template>

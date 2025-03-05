@@ -40,6 +40,11 @@ export const selectMultipleProps = {
     default: 'click',
     description: '触发下拉菜单的方式'
   },
+  width: {
+    type: [String, Number],
+    default: '300px',
+    description: '选择框宽度，支持数字（单位：像素）或带单位的字符串'
+  },
   valueLayout: {
     type: String as PropType<'tag' | 'text'>,
     default: 'text',
@@ -52,7 +57,7 @@ export const selectMultipleProps = {
   },
   placeholder: {
     type: String,
-    default: '请选择',
+    defaultLocale: true,
     description: '选择框默认文本'
   },
   size: {

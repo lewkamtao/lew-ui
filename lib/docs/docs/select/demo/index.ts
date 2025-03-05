@@ -14,15 +14,19 @@ import DemoSelect5Code from './DemoSelect5.vue?raw'
 import DemoSelect6Code from './DemoSelect6.vue?raw'
 import DemoSelect7Code from './DemoSelect7.vue?raw'
 import DemoSelect8Code from './DemoSelect8.vue?raw'
-export {
-  DemoSelect2,
+
+export const demoGroup = [
   DemoSelect1,
+  DemoSelect2,
   DemoSelect3,
   DemoSelect4,
   DemoSelect5,
   DemoSelect6,
   DemoSelect7,
-  DemoSelect8,
+  DemoSelect8
+]
+
+export const codeGroup = [
   DemoSelect1Code,
   DemoSelect2Code,
   DemoSelect3Code,
@@ -31,4 +35,4 @@ export {
   DemoSelect6Code,
   DemoSelect7Code,
   DemoSelect8Code
-}
+]

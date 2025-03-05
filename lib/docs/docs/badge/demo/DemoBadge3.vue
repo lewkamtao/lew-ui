@@ -9,6 +9,6 @@
     <lew-badge round type="light" color="blue" />
     <lew-badge round color="green" />
     <lew-badge round color="warning" />
-    <lew-badge round color="red" />
+    <lew-badge round />
   </lew-flex>
 </template>

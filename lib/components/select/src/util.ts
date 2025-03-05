@@ -1,5 +1,8 @@
 import type { SelectOptions, SelectOptionsGroup } from './props'
-import type { SelectMultipleOptions, SelectMultipleOptionsGroup } from 'lew-ui/components/select-multiple/src/props'
+import type {
+  SelectMultipleOptions,
+  SelectMultipleOptionsGroup
+} from 'lew-ui/components/select-multiple/src/props'
 
 type Options = SelectOptions | SelectMultipleOptions
 type OptionsGroup = SelectOptionsGroup | SelectMultipleOptionsGroup

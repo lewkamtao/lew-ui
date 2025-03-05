@@ -39,6 +39,7 @@ Lew UI 使用了以下开源库：
 - [VueUse](https://vueuse.org/): Vue Composition API 实用工具集合
 - [Day.js](https://day.js.org/): 轻量级日期处理库
 - [Yup](https://github.com/jquense/yup): 对象模式验证库
+- [vue-virt-list](https://github.com/kolarorz/vue-virt-list): 虚拟列表
 
 我们感谢这些优秀的开源项目为 Lew UI 提供的支持。
 

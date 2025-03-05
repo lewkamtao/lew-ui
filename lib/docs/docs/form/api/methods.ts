@@ -5,12 +5,12 @@ export default {
     {
       name: 'getForm',
       description: '获取表单值',
-      params: '() => {}'
+      type: '() => {}'
     },
     {
       name: 'setForm',
       description: '设置表单值',
-      params: '() => {}'
+      type: '() => {}'
     }
   ]
 }

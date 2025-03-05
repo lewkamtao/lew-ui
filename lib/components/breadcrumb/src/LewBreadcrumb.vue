@@ -21,7 +21,7 @@ defineProps(breadcrumbProps)
       </span>
       <div v-if="index != options.length - 1" class="lew-breadcrumb-parting">
         <svg
-          v-if="iconType === 'sprit'"
+          v-if="separator === 'sprit'"
           viewBox="0 0 48 48"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +34,7 @@ defineProps(breadcrumbProps)
         </svg>
 
         <svg
-          v-if="iconType === 'shoulder'"
+          v-if="separator === 'shoulder'"
           viewBox="0 0 48 48"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

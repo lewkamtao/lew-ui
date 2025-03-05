@@ -10,15 +10,12 @@ import DemoForm3Code from './DemoForm3.vue?raw'
 import DemoForm4Code from './DemoForm4.vue?raw'
 import DemoForm5Code from './DemoForm5.vue?raw'
 
-export {
-  DemoForm1,
+export const demoGroup = [DemoForm1, DemoForm2, DemoForm3, DemoForm4, DemoForm5]
+
+export const codeGroup = [
   DemoForm1Code,
-  DemoForm2,
   DemoForm2Code,
-  DemoForm3,
   DemoForm3Code,
-  DemoForm4,
   DemoForm4Code,
-  DemoForm5,
   DemoForm5Code
-}
+]

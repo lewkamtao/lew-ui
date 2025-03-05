@@ -22,7 +22,7 @@ import DemoInput9Code from './DemoInput9.vue?raw'
 import DemoInput10Code from './DemoInput10.vue?raw'
 import DemoInput11Code from './DemoInput11.vue?raw'
 
-export {
+export const demoGroup = [
   DemoInput1,
   DemoInput2,
   DemoInput3,
@@ -33,7 +33,10 @@ export {
   DemoInput8,
   DemoInput9,
   DemoInput10,
-  DemoInput11,
+  DemoInput11
+]
+
+export const codeGroup = [
   DemoInput1Code,
   DemoInput2Code,
   DemoInput3Code,
@@ -45,4 +48,4 @@ export {
   DemoInput9Code,
   DemoInput10Code,
   DemoInput11Code
-}
+]

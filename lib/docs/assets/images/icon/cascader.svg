@@ -1,10 +1,10 @@
 <svg style="margin-left:2.5px" width="72" height="54" viewBox="0 0 72 54" fill="none"
 	xmlns="http://www.w3.org/2000/svg">
-	<rect x="9" y="10" width="50" height="30" rx="5" stroke="#3478f6"></rect>
+	<rect x="9" y="10" width="50" height="30" rx="5" stroke="#0a84ff"></rect>
 	<g clip-path="url(#clip0_6580_8574)">
 		<path d="M12 14C12 11.7909 13.7909 10 16 10H34V44H16C13.7909 44 12 42.2091 12 40V14Z"
 		></path>
-		<rect x="12" y="15" width="22" height="8" fill="#3478f6"></rect>
+		<rect x="12" y="15" width="22" height="8" fill="#0a84ff"></rect>
 		<rect x="16" y="18" width="9" height="2" rx="1" fill="#fff"></rect>
 		<rect x="28" y="18" width="2" height="2" rx="1" fill="#fff"></rect>
 		<rect x="16" y="26" width="9" height="2" rx="1" fill="#999"></rect>
@@ -15,7 +15,7 @@
 	<g clip-path="url(#clip1_6580_8574)">
 		<path d="M34 10H52C54.2091 10 56 11.7909 56 14V40C56 42.2091 54.2091 44 52 44H34V10Z"
 		></path>
-		<rect x="34" y="23" width="22" height="8" fill="#3478f6"></rect>
+		<rect x="34" y="23" width="22" height="8" fill="#0a84ff"></rect>
 		<rect x="39" y="26" width="9" height="2" rx="1" fill="#fff"></rect>
 		<rect x="50" y="26" width="2" height="2" rx="1" fill="#fff"></rect>
 		<rect x="39" y="18" width="9" height="2" rx="1" fill="#999"></rect>

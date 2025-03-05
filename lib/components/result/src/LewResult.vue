@@ -7,8 +7,12 @@ defineProps(resultProps)
 </script>
 
 <template>
-  <lew-flex direction="y" class="lew-result">
-    <lew-flex class="lew-result-icon" :class="`lew-result-icon-${type}`">
+  <lew-flex x="center" direction="y" class="lew-result">
+    <lew-flex
+      x="center"
+      class="lew-result-icon"
+      :class="`lew-result-icon-${type}`"
+    >
       <Icon :size="60" :type="type" />
     </lew-flex>
     <lew-title class="lew-result-title">{{ title }}</lew-title>

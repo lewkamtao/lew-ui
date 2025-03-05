@@ -3,24 +3,19 @@ export default {
   columnsKey: 'events',
   data: [
     {
-      name: 'change',
-      description: '值变化',
-      params: '() => void'
+      name: 'change'
     },
     {
-      name: 'blur',
-      description: '失焦',
-      params: '() => void'
+      name: 'blur'
     },
     {
-      name: 'focus',
-      description: '聚焦',
-      params: '() => void'
+      name: 'focus'
     },
     {
-      name: 'ok',
-      description: 'okByEnter 为 true 时触发',
-      params: '() => void'
+      name: 'clear'
+    },
+    {
+      name: 'ok'
     }
   ]
 }

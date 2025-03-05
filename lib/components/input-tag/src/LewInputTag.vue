@@ -4,13 +4,14 @@ import { LewInput, LewTag, LewMessage } from 'lew-ui'
 import { cloneDeep } from 'lodash-es'
 import { object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-
+import { locale } from 'lew-ui'
+import { any2px } from 'lew-ui/utils'
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewMessage)
 }
-const emit = defineEmits(['close', 'change'])
+const emit = defineEmits(['remove', 'change', 'clear', 'add'])
 
 const props = defineProps(inputTagProps)
 const modelValue: Ref<string[] | undefined> = defineModel()
@@ -18,9 +19,19 @@ const inputValue = ref()
 const lewInputRef = ref()
 const isFocus = ref(false)
 let isEnter = false
+let isConfirm = ref(false)
 
 const openInput = () => {
   if (isFocus.value) return
+  if (
+    props.maxLength > 0 &&
+    (modelValue.value || []).length >= props.maxLength
+  ) {
+    LewMessage.warning(
+      locale.t('inputTag.maxLength', { maxLength: props.maxLength })
+    )
+    return
+  }
   isFocus.value = true
   nextTick(() => {
     lewInputRef.value.toFocus()
@@ -28,12 +39,20 @@ const openInput = () => {
   document.onkeydown = function (event) {
     if (!inputValue.value) {
       if (event.keyCode === 8 || event.keyCode === 46) {
-        if (modelValue.value && modelValue.value.length > 0) {
+        if (
+          modelValue.value &&
+          modelValue.value.length > 0 &&
+          isConfirm.value
+        ) {
           modelValue.value.splice(modelValue.value.length - 1, 1)
           emit('change', cloneDeep(modelValue.value))
+          isConfirm.value = false
+        } else {
+          isConfirm.value = true
         }
       }
     } else if (event.keyCode === 13) {
+      isConfirm.value = true
       isEnter = true
     }
   }
@@ -42,13 +61,14 @@ const openInput = () => {
 const blurFn = () => {
   document.onkeydown = null
   isFocus.value = false
+  isConfirm.value = false
   if (props.allowDuplicates) {
     addTag()
   } else {
     if (!(modelValue.value || []).includes(inputValue.value)) {
       addTag()
     } else {
-      LewMessage.warning('不允许重复标签')
+      LewMessage.warning(locale.t('inputTag.duplicate'))
     }
   }
   if (isEnter) {
@@ -60,16 +80,23 @@ const blurFn = () => {
 const addTag = () => {
   let _value = modelValue.value || []
   if (inputValue.value) {
+    if (props.maxLength > 0 && _value.length >= props.maxLength) {
+      inputValue.value = ''
+      isFocus.value = false
+      return
+    }
     _value.push(inputValue.value)
     inputValue.value = ''
     modelValue.value = _value
     emit('change', _value)
+    emit('add', inputValue.value)
   }
 }
 
 const autoWidthDelay = ref(false)
 
 const delTag = (index: number) => {
+  const removedTag = modelValue.value?.[index]
   modelValue.value && modelValue.value.splice(index, 1)
   if (modelValue.value && modelValue.value.length === 0) {
     autoWidthDelay.value = true
@@ -78,7 +105,7 @@ const delTag = (index: number) => {
     }, 550)
   }
   emit('change', modelValue.value)
-  emit('close', modelValue.value)
+  emit('remove', removedTag)
 }
 
 const getInputClassNames = computed(() => {
@@ -104,6 +131,7 @@ const clear = () => {
   modelValue.value = []
   inputValue.value = ''
   emit('change', [])
+  emit('clear')
 }
 </script>
 
@@ -112,6 +140,7 @@ const clear = () => {
     class="lew-input-tag-view"
     @click="openInput"
     :class="getInputClassNames"
+    :style="{ width: any2px(width) }"
   >
     <div
       :style="{ padding: (modelValue || []).length > 0 ? '4px' : '' }"
@@ -122,10 +151,16 @@ const clear = () => {
           v-for="(item, index) in modelValue"
           :key="index"
           type="light"
-          style="max-width: 100%"
+          :style="{
+            maxWidth: '100%',
+            backgroundColor:
+              isConfirm && index === (modelValue || []).length - 1
+                ? 'var(--lew-color-red-light)'
+                : ''
+          }"
           :size="size"
           :closable="!readonly && !disabled"
-          :disabled="disabled"
+          :readonly="readonly || disabled"
           @close="delTag(index)"
         >
           {{ item }}
@@ -138,8 +173,13 @@ const clear = () => {
           class="lew-input-tag"
           :size="size"
           :readonly="!isFocus"
-          :placeholder="(modelValue || []).length > 0 ? '' : placeholder"
+          :placeholder="
+            (modelValue || []).length === 0
+              ? locale.t('inputTag.placeholder')
+              : ' '
+          "
           ok-by-enter
+          @input="isConfirm = false"
           @blur="blurFn"
         />
       </transition-group>
@@ -179,7 +219,7 @@ const clear = () => {
   cursor: text;
   :deep() {
     .lew-tag {
-      background-color: var(--lew-bgcolor-0) !important;
+      background-color: var(--lew-bgcolor-0);
     }
   }
 
@@ -234,7 +274,7 @@ const clear = () => {
   background-color: var(--lew-form-bgcolor-focus);
 
   :deep(.lew-tag) {
-    background-color: var(--lew-color-primary-light) !important;
+    background-color: var(--lew-color-primary-light);
   }
 }
 

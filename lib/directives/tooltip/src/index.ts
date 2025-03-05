@@ -14,7 +14,7 @@ export const LewTooltip = {
         if (!trigger) {
           _trigger = 'mouseenter'
         }
-		
+
         el.instance = tippy(el, {
           theme: 'light',
           trigger: _trigger,
@@ -24,7 +24,7 @@ export const LewTooltip = {
           appendTo: () => document.body,
           placement,
           allowHTML,
-          hideOnClick: false,
+          hideOnClick: _trigger === 'click' ? true : false,
           arrow: roundArrow,
           maxWidth: 250,
           duration: [250, 250],

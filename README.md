@@ -37,6 +37,7 @@ Lew UI uses the following open source libraries:
 - [VueUse](https://vueuse.org/): Collection of Vue Composition API utilities
 - [Day.js](https://day.js.org/): Lightweight library for date manipulation
 - [Yup](https://github.com/jquense/yup): Object schema validation library
+- [vue-virt-list](https://github.com/kolarorz/vue-virt-list): Virtual list
 
 We are grateful for the support these excellent open source projects provide to Lew UI.
 

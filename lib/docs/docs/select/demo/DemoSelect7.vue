@@ -9,10 +9,10 @@ const value = ref('')
     style="width: 320px"
     :options="options"
     clearable
-    placeholder="请选择部门"
+    placeholder="Please select department"
   >
     <template #empty>
-      <div class="empty">暂无匹配的部门</div>
+      <div class="empty">No matching departments</div>
     </template>
   </lew-select>
 </template>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useMagicKeys, useDebounceFn } from '@vueuse/core'
+import { useMagicKeys } from '@vueuse/core'
 import { object2class, any2px } from 'lew-ui/utils'
 import { LewDropdown, LewFlex, LewMessage, LewTooltip } from 'lew-ui'
 import { inputProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
-
+import { locale } from 'lew-ui'
 const { enter } = useMagicKeys()
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -15,7 +15,7 @@ const emit = defineEmits(['clear', 'blur', 'focus', 'change', 'input', 'ok'])
 const props = defineProps(inputProps)
 const modelValue = defineModel({ required: true })
 const prefixesValue = defineModel('prefixesValue')
-const suffixValue = defineModel('suffixValue')
+const suffixValue: any = defineModel('suffixValue')
 
 const lewInputRef = ref()
 const lewInputCountRef = ref()
@@ -124,13 +124,13 @@ const copy = () => {
   textarea.select()
 
   if (document.execCommand('copy')) {
-    LewMessage.success('复制成功！')
+    LewMessage.success(locale.t('input.copySuccess'))
     isCopy.value = true
     timer = setTimeout(() => {
       isCopy.value = false
     }, 2000)
   } else {
-    LewMessage.error('复制失败！')
+    LewMessage.error(locale.t('input.copyFailed'))
   }
 
   document.body.removeChild(textarea)
@@ -154,7 +154,11 @@ defineExpose({ toFocus })
 </script>
 
 <template>
-  <div class="lew-input-view" :class="getInputClassNames">
+  <div
+    class="lew-input-view"
+    :class="getInputClassNames"
+    :style="{ width: autoWidth ? 'auto' : any2px(width) }"
+  >
     <div
       v-if="prefixes"
       v-tooltip="{
@@ -219,7 +223,7 @@ defineExpose({ toFocus })
         :style="getInputStyle"
         autocomplete="new-password"
         :disabled="disabled"
-        :placeholder="placeholder"
+        :placeholder="placeholder ? placeholder : locale.t('input.placeholder')"
         :type="getType"
         :readonly="readonly"
         :maxlength="maxLength"
@@ -258,7 +262,7 @@ defineExpose({ toFocus })
           <Icon
             v-show="_type === 'password'"
             :size="getIconSize"
-            type="eye-off"
+            type="eye_off"
           />
         </div>
         <transition name="lew-form-icon-ani">
@@ -287,7 +291,7 @@ defineExpose({ toFocus })
     >
       <div v-if="suffix === 'text'">{{ suffixValue }}</div>
       <div v-if="suffix === 'icon'" class="lew-input-suffix-icon">
-        <Icon :size="getIconSize" :type="suffixValue as string" />
+        <Icon :size="getIconSize" :type="suffixValue" />
       </div>
       <div v-if="suffix === 'select'" class="lew-input-suffix-select">
         <lew-dropdown
@@ -452,7 +456,6 @@ defineExpose({ toFocus })
 
     > div {
       display: inline-flex;
-      padding: 0px 4px;
       white-space: nowrap;
       justify-content: center;
       align-items: center;
@@ -541,7 +544,7 @@ defineExpose({ toFocus })
   }
 
   .lew-input-copy-btn {
-    right: 7px;
+    right: 10px;
   }
 
   .lew-input-prefixes,
@@ -593,7 +596,7 @@ defineExpose({ toFocus })
   }
 
   .lew-input-copy-btn {
-    right: 9px;
+    right: 12px;
   }
 
   .lew-input-prefixes,
@@ -645,7 +648,7 @@ defineExpose({ toFocus })
   }
 
   .lew-input-copy-btn {
-    right: 12px;
+    right: 14px;
   }
 
   .lew-input-prefixes,

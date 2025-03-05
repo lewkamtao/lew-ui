@@ -1,6 +1,6 @@
 export default {
-  title: 'options',
-  columnsKey: 'props',
+  title: 'Options',
+  columnsKey: 'options',
   orderNum: 5,
   data: [
     {

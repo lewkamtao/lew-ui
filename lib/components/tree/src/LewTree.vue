@@ -360,7 +360,7 @@ defineExpose({ init, getTreeList })
     .lew-checkbox:deep(.lew-checkbox-icon-box) {
       border: var(--lew-form-border-width)
         var(--lew-checkbox-border-color-hover) solid;
-      
+
       background: var(--lew-form-bgcolor);
     }
   }

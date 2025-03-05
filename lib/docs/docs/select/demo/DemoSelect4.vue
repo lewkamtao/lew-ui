@@ -1,86 +1,67 @@
 <script setup lang="ts">
-import { schools } from '@/lib/data'
-import { padStart } from 'lodash-es'
-
-const schoolsOptions = schools.map((e, i) => {
-  return { label: e, value: padStart(String(i), 8, '0') }
-})
+const options = ref([
+  {
+    label: 'Junior Software Engineer',
+    value: '1'
+  },
+  {
+    label: 'Mid-level Software Engineer',
+    value: '2'
+  },
+  {
+    label: 'Senior Software Engineer',
+    value: '3',
+    disabled: true
+  },
+  {
+    label: 'Technical Lead',
+    disabled: true,
+    value: '4'
+  },
+  {
+    label: 'Product Manager',
+    value: '5'
+  },
+  {
+    label: 'Project Manager',
+    value: '6'
+  },
+  {
+    label: 'UI/UX Designer',
+    value: '7'
+  },
+  {
+    label: 'Test Engineer',
+    value: '8'
+  },
+  {
+    label: 'Operations Engineer',
+    value: '9'
+  },
+  {
+    label: 'Data Analyst',
+    value: '10'
+  },
+  {
+    label: 'Chief Technology Officer',
+    value: '11',
+    disabled: true
+  }
+])
 
 const value = ref('')
+
+const handleChange = (val: string) => {
+  console.log('Selected position:', val)
+}
 </script>
 
 <template>
   <lew-select
-    v-model="value"
     style="width: 320px"
-    :itemHeight="48"
-    :options="schoolsOptions"
-    placeholder="支持插槽"
-  >
-    <template #item="{ props }">
-      <div
-        class="custom-select-box"
-        :class="{ 'custom-select-checked': props.checked }"
-      >
-        <div class="custom-select-content">
-          <img
-            width="28"
-            height="28"
-            :src="`https://api.lew.kamtao.com/manage/common/avatar/350/4B78CA/${props.label}`"
-          />
-          <div class="info">
-            <div class="label">{{ props.label }}</div>
-            <div class="desc">
-              {{ props.value }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </template>
-  </lew-select>
+    v-model="value"
+    :options="options"
+    placeholder="Select position"
+    @change="handleChange"
+  />
 </template>
-
-<style lang="scss">
-.custom-select-box {
-  width: 100%;
-  height: 48px;
-  user-select: none;
-  padding: 2px 0px;
-  box-sizing: border-box;
-  cursor: pointer;
-  overflow: hidden;
-  .custom-select-content {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0px 8px;
-    height: 100%;
-    border-radius: var(--lew-border-radius-small);
-    box-sizing: border-box;
-    .info {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      .label {
-        color: var(--lew-text-color-1);
-        font-size: 14px;
-      }
-      .desc {
-        color: var(--lew-text-color-8);
-        font-size: 12px;
-      }
-    }
-  }
-}
-.custom-select-box:hover {
-  .custom-select-content {
-    background: var(--lew-color-primary-light);
-  }
-}
-.custom-select-checked {
-  .custom-select-content {
-    background: var(--lew-color-primary-light);
-  }
-}
-</style>

@@ -19,6 +19,7 @@ export * from './methods'
 
 export * from './types'
 export * from './utils'
+export * from './locals'
 
 const install = (Vue: App): void => {
   Object.keys(components).forEach((key) => {

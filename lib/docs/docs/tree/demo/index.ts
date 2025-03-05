@@ -16,7 +16,7 @@ import DemoTree6Code from './DemoTree6.vue?raw'
 import DemoTree7Code from './DemoTree7.vue?raw'
 import DemoTree8Code from './DemoTree8.vue?raw'
 
-export {
+export const demoGroup = [
   DemoTree1,
   DemoTree2,
   DemoTree3,
@@ -24,7 +24,10 @@ export {
   DemoTree5,
   DemoTree6,
   DemoTree7,
-  DemoTree8,
+  DemoTree8
+]
+
+export const codeGroup = [
   DemoTree1Code,
   DemoTree2Code,
   DemoTree3Code,
@@ -33,4 +36,4 @@ export {
   DemoTree6Code,
   DemoTree7Code,
   DemoTree8Code
-}
+]

@@ -4,7 +4,8 @@ import { dateRangePickerProps } from './props'
 import { object2class } from 'lew-ui/utils'
 import type { LewSize } from 'lew-ui'
 import Icon from 'lew-ui/utils/Icon.vue'
-
+import { locale } from 'lew-ui'
+import { any2px } from 'lew-ui/utils'
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -101,6 +102,7 @@ defineExpose({ show, hide })
     placement="bottom-start"
     :offset="[1, 8]"
     :disabled="disabled || readonly"
+    :style="{ width: any2px(width) }"
     @show="showHandle"
     @hide="hideHandle"
   >
@@ -122,7 +124,11 @@ defineExpose({ show, hide })
               v-if="!modelValue || !modelValue[startKey]"
               class="lew-date-range-picker-placeholder"
             >
-              {{ placeholderStart }}
+              {{
+                placeholderStart
+                  ? placeholderStart
+                  : locale.t('dateRangePicker.placeholderStart')
+              }}
             </div>
             <div
               v-else
@@ -137,7 +143,11 @@ defineExpose({ show, hide })
               v-if="!modelValue || !modelValue[endKey]"
               class="lew-date-range-picker-placeholder"
             >
-              {{ placeholderEnd }}
+              {{
+                placeholderEnd
+                  ? placeholderEnd
+                  : locale.t('dateRangePicker.placeholderEnd')
+              }}
             </div>
             <div
               v-else
@@ -182,8 +192,6 @@ defineExpose({ show, hide })
 
 <style lang="scss" scoped>
 .lew-popover {
-  width: 100%;
-
   .lew-date-range-picker-view {
     width: 100%;
   }

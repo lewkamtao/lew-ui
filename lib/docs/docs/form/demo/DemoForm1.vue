@@ -198,6 +198,15 @@ const options = ref([
     }
   },
   {
+    field: 'rate',
+    label: '评分',
+    as: 'rate',
+    rule: Yup.number().required('此项必填'),
+    props: {
+      max: 10
+    }
+  },
+  {
     field: 'tabs',
     label: '选项卡',
     as: 'tabs',
@@ -380,6 +389,11 @@ const resetForm = () => {
   formRef.value.setForm({ size: 'medium' })
 }
 
+const change = () => {
+  // 获取表单
+  form.value = formRef.value.getForm()
+}
+
 onMounted(() => {
   setForm()
 })
@@ -396,6 +410,7 @@ onMounted(() => {
       class="form-box"
       :options="options"
       @mounted="setForm"
+      @change="change"
       :width="450"
     />
     <lew-flex direction="y" x="start">

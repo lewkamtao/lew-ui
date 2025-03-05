@@ -41,24 +41,6 @@ export const paginationModel = {
       }
       return true
     }
-  },
-  pageSizeOptions: {
-    type: Array as PropType<PaginationOptions[]>,
-    default: () => [
-      { label: '10 条/页', value: 10 },
-      { label: '20 条/页', value: 20 },
-      { label: '30 条/页', value: 30 },
-      { label: '50 条/页', value: 50 },
-      { label: '100 条/页', value: 100 }
-    ],
-    description: '每页显示条目数的选项列表',
-    validator: (value: PaginationOptions[]) => {
-      if (!Array.isArray(value) || value.length === 0) {
-        console.warn('[LewPagination] pageSizeOptions 必须是非空数组')
-        return false
-      }
-      return true
-    }
   }
 }
 
@@ -72,6 +54,18 @@ export const paginationProps = {
         console.warn(
           `[LewPagination] size 必须是 ${validSizes.join(', ')} 之一`
         )
+        return false
+      }
+      return true
+    }
+  },
+  pageSizeOptions: {
+    type: Array as PropType<number[] | SelectOptions[]>,
+    default: () => [10, 20, 30, 50, 100],
+    description: '每页显示条目数的选项列表',
+    validator: (value: number[] | SelectOptions[]) => {
+      if (!Array.isArray(value) || value.length === 0) {
+        console.warn('[LewPagination] pageSizeOptions 必须是非空数组')
         return false
       }
       return true

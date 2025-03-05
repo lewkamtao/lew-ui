@@ -238,12 +238,14 @@ const getAddButtonStyle = computed(() => {
         </lew-flex>
       </template>
       <template #table-footer>
-        <lew-flex direction="y">
+        <lew-flex direction="y" x="center" y="center">
           <lew-empty
             v-if="(modelValue || []).length === 0"
             description="暂无数据"
           ></lew-empty>
           <lew-flex
+            x="center"
+            y="center"
             v-if="addable"
             @click="add"
             class="add-btn"

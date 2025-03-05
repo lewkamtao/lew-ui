@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash-es'
-import { getMonthDate, getHeadDate } from '../../date-picker/src/date'
+import { getMonthDate } from '../../date-picker/src/date'
 import type { RetItemType } from '../../date-picker/src/date'
 import { dateRangeProps } from './props'
 import { LewFlex, LewButton } from 'lew-ui'
 import Icon from 'lew-ui/utils/Icon.vue'
-
+import { locale } from 'lew-ui'
 // Props
 const props = defineProps(dateRangeProps)
 
@@ -328,13 +328,24 @@ init()
 
 // Expose
 defineExpose({ init })
+
+const headDate = computed(() => {
+  return [
+    locale.t('datePicker.Mon'),
+    locale.t('datePicker.Tue'),
+    locale.t('datePicker.Wed'),
+    locale.t('datePicker.Thu'),
+    locale.t('datePicker.Fri'),
+    locale.t('datePicker.Sat'),
+    locale.t('datePicker.Sun')
+  ]
+})
 </script>
 <template>
   <div class="lew-date-range">
     <div class="lew-date">
       <lew-flex x="start" mode="between" class="lew-date-control">
         <div class="lew-date-control-left">
-          <!-- 上一年 -->
           <lew-button
             type="light"
             color="gray"
@@ -344,7 +355,6 @@ defineExpose({ init })
           >
             <Icon type="chevrons-left" />
           </lew-button>
-          <!-- 上一月 -->
           <lew-button
             type="light"
             color="gray"
@@ -357,11 +367,9 @@ defineExpose({ init })
         </div>
         <!-- 日期 -->
         <div class="cur-date">
-          {{ dateState.year1 }} 年
-          <span style="width: 22px; text-align: center">{{
-            dateState.month1
-          }}</span>
-          月
+          {{
+            dayjs(`${dateState.year1}-${dateState.month1}`).format('YYYY-MM')
+          }}
         </div>
         <div class="lew-date-control-right">
           <!-- 下一月 -->
@@ -374,7 +382,6 @@ defineExpose({ init })
           >
             <Icon type="chevron-right" />
           </lew-button>
-          <!-- 下一年 -->
           <lew-button
             type="light"
             color="gray"
@@ -389,7 +396,7 @@ defineExpose({ init })
       <div class="lew-date-box">
         <!-- 表头 周 -->
         <div
-          v-for="(item, index) in getHeadDate"
+          v-for="(item, index) in headDate"
           :key="`h${index}`"
           class="lew-date-item"
         >
@@ -423,7 +430,6 @@ defineExpose({ init })
     <div class="lew-date">
       <lew-flex x="start" mode="between" class="lew-date-control">
         <div class="lew-date-control-left">
-          <!-- 上一年 -->
           <lew-button
             type="light"
             color="gray"
@@ -433,7 +439,6 @@ defineExpose({ init })
           >
             <Icon type="chevrons-left" />
           </lew-button>
-          <!-- 上一月 -->
           <lew-button
             type="light"
             color="gray"
@@ -444,16 +449,12 @@ defineExpose({ init })
             <Icon type="chevron-left" />
           </lew-button>
         </div>
-        <!-- 日期 -->
         <div class="cur-date">
-          {{ dateState.year2 }} 年
-          <span style="width: 22px; text-align: center">{{
-            dateState.month2
-          }}</span>
-          月
+          {{
+            dayjs(`${dateState.year2}-${dateState.month2}`).format('YYYY-MM')
+          }}
         </div>
         <div class="lew-date-control-right">
-          <!-- 下一月 -->
           <lew-button
             type="light"
             color="gray"
@@ -476,16 +477,13 @@ defineExpose({ init })
         </div>
       </lew-flex>
       <div class="lew-date-box">
-        <!-- 表头 周 -->
         <div
-          v-for="(item, index) in getHeadDate"
+          v-for="(item, index) in headDate"
           :key="`h${index}`"
           class="lew-date-item"
         >
           <div class="lew-date-num">{{ item }}</div>
         </div>
-
-        <!-- 表格 -->
         <div
           v-for="(item, index) in state.rightPanel"
           :key="`d${index}`"
@@ -696,7 +694,7 @@ defineExpose({ init })
     .lew-date-item-curMonth:active {
       .lew-date-label {
         .lew-date-value {
-          transform: scale(1.1);
+          transform: scale(0.9);
         }
       }
     }

@@ -109,18 +109,31 @@ const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
           ]
         ]
       : []
-
+  const {
+    tagText,
+    tagType,
+    tagColor,
+    disabled,
+    renderIcon,
+    renderLabel,
+    label,
+    value
+  } = item
   // 渲染菜单项组件
   return withDirectives(
     h(
       LewMenuTreeItem,
       {
-        menuKey: item.value,
-        label: item.label,
+        label,
+        value,
         level,
         isLeaf: !item.children?.length,
-        disabled: item.disabled,
-        renderIcon: () => item.renderIcon,
+        disabled,
+        tagText,
+        tagType,
+        tagColor,
+        renderIcon: () => renderIcon,
+        renderLabel: () => renderLabel,
         onChange: () => emit('change', item)
       },
       // 递归渲染子项

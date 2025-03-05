@@ -6,11 +6,10 @@ import DemoCollapse1Code from './DemoCollapse1.vue?raw'
 import DemoCollapse2Code from './DemoCollapse2.vue?raw'
 import DemoCollapse3Code from './DemoCollapse3.vue?raw'
 
-export {
-  DemoCollapse1,
+export const demoGroup = [DemoCollapse1, DemoCollapse2, DemoCollapse3]
+
+export const codeGroup = [
   DemoCollapse1Code,
-  DemoCollapse2,
   DemoCollapse2Code,
-  DemoCollapse3,
   DemoCollapse3Code
-}
+]

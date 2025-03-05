@@ -1,7 +1,7 @@
 <template>
   <p>
     春，是生死的负重；夏，是<lew-mark>情欲的勃发</lew-mark>；秋，是因果的了断；冬，是
-    <lew-mark color="red">自我的修行</lew-mark
+    <lew-mark bold="800" color="red">自我的修行</lew-mark
     >。春夏秋冬又一春，就是整个生命的轮回。淫欲唤醒了<lew-mark color="mint"
       >占有的欲望</lew-mark
     >，这会导致杀身之祸的——你喜欢的东西，别人也会喜欢。

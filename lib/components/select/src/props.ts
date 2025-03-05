@@ -42,6 +42,11 @@ export const selectProps = {
     default: () => [],
     description: '选择器的选项列表'
   },
+  width: {
+    type: [String, Number],
+    default: '300px',
+    description: '选择器宽度，支持数字（单位：像素）或带单位的字符串'
+  },
   trigger: {
     type: String as PropType<SelectTrigger>,
     default: 'click',
@@ -49,7 +54,7 @@ export const selectProps = {
   },
   placeholder: {
     type: String,
-    default: '请选择',
+    defaultLocale: true,
     description: '选择器的占位文本'
   },
   size: {

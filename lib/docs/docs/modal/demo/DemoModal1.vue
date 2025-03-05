@@ -11,7 +11,7 @@ const visible2 = ref(false)
     v-model:visible="visible"
     closeOnClickOverlay
     closeByEsc
-    width="350px"
+    width="450px"
     title="About Lew-UI"
     @ok="visible = false"
     @cancel="visible = false"
@@ -24,6 +24,9 @@ const visible2 = ref(false)
         :height="150"
         src="https://app.tngeek.com/api_sso/open/file/b4c64ae_cat-8321993_1280.webp"
       />
+      <div style="margin-top: 20px">
+        A beautiful component library based on vue3
+      </div>
       <div style="margin-top: 20px">
         A beautiful component library based on vue3
       </div>
@@ -59,8 +62,6 @@ const visible2 = ref(false)
 <style lang="scss" scoped>
 .modal-body {
   width: 100%;
-  height: 100%;
-  max-height: 400px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;

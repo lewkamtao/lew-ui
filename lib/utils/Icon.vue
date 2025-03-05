@@ -30,7 +30,10 @@ import {
   TriangleAlert,
   UploadCloud,
   X,
-  UserRound
+  UserRound,
+  Eye,
+  EyeOff,
+  Star
 } from 'lucide-vue-next'
 import { getColorType, iconColorType } from './index'
 
@@ -62,6 +65,10 @@ const props = defineProps({
   speed: {
     type: Number,
     default: 1
+  },
+  fill: {
+    type: String,
+    default: 'transparent'
   }
 })
 
@@ -101,7 +108,10 @@ const iconMap: any = {
   warning: TriangleAlert,
   wrong_size: CircleAlert,
   wrong_type: CircleAlert,
-  user: UserRound
+  user: UserRound,
+  eye: Eye,
+  eye_off: EyeOff,
+  star: Star
 }
 </script>
 
@@ -119,6 +129,7 @@ const iconMap: any = {
     }"
     :strokeWidth
     :size
+    :fill
     :is="iconMap[props.type]"
   ></component>
 </template>

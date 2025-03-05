@@ -7,13 +7,12 @@ export type TagType = 'fill' | 'light' | 'ghost'
 export const tagProps = {
   text: {
     type: String,
-    default: '',
-    description: '标签的文本，优先级大于插槽，超出宽度会触发 text-trim 效果'
+    default: ''
   },
   type: {
     type: String as PropType<TagType>,
-    default: 'fill',
-    description: '标签的样式类型',
+    default: 'light',
+    typeDesc: `fill | light | ghost`,
     validator(value: TagType): boolean {
       const validTypes: TagType[] = ['fill', 'light', 'ghost']
       if (!validTypes.includes(value)) {
@@ -28,7 +27,6 @@ export const tagProps = {
   color: {
     type: String as PropType<LewColor>,
     default: 'primary',
-    description: '标签的颜色主题',
     validator(value: LewColor): boolean {
       if (!validColors.includes(value)) {
         console.warn(
@@ -42,7 +40,6 @@ export const tagProps = {
   size: {
     type: String as PropType<LewSize>,
     default: 'medium',
-    description: '标签的尺寸',
     validator(value: LewSize): boolean {
       if (!validSizes.includes(value)) {
         console.warn(
@@ -56,18 +53,15 @@ export const tagProps = {
 
   round: {
     type: Boolean,
-    default: false,
-    description: '是否为圆角标签'
+    default: false
   },
   closable: {
     type: Boolean,
-    default: false,
-    description: '是否可关闭标签'
+    default: false
   },
   disabled: {
     type: Boolean,
-    default: false,
-    description: '是否禁用标签'
+    default: false
   }
 }
 

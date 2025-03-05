@@ -26,11 +26,6 @@ export const cascaderModel = {
 }
 
 export const cascaderProps = {
-  modelValue: {
-    type: [String, Number],
-    default: '',
-    description: '当前选中的值'
-  },
   options: {
     type: Array as PropType<CascaderOptions[]>,
     default: () => [],
@@ -43,9 +38,14 @@ export const cascaderProps = {
       return true
     }
   },
+  width: {
+    type: String,
+    default: '300px',
+    description: '宽度'
+  },
   placeholder: {
     type: String,
-    default: '请选择',
+    defaultLocale: true,
     description: '输入框占位文本'
   },
   disabled: {

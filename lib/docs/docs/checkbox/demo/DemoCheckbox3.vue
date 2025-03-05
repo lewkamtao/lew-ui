@@ -1,16 +1,16 @@
 <script setup lang="ts">
 const socialMediaFeatures = ref([
-  { label: '朋友圈', value: 'moments' },
-  { label: '直播', value: 'live' },
-  { label: '短视频', value: 'shortVideo', disabled: true },
-  { label: '群聊', value: 'groupChat' },
-  { label: '视频通话', value: 'videoCall' }
+  { label: 'Moments', value: 'moments' },
+  { label: 'Live', value: 'live' },
+  { label: 'Short Video', value: 'shortVideo', disabled: true },
+  { label: 'Group Chat', value: 'groupChat' },
+  { label: 'Video Call', value: 'videoCall' }
 ])
 
 const selectedFeatures = ref(['moments', 'live'])
 
 const handleFeatureChange = (selectedValues: string[]) => {
-  console.log('选中的社交媒体功能:', selectedValues)
+  console.log('Selected social media features:', selectedValues)
 }
 </script>
 

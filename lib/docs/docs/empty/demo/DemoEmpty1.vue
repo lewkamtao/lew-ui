@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <lew-flex direction="x" wrap="wrap" gap="100">
+  <lew-flex x="center" y="center" direction="x" wrap="wrap" gap="100">
     <lew-empty type="404" title="未找到" />
     <lew-empty type="address" title="暂无地址" />
     <lew-empty type="article" title="暂无文章" />

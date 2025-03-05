@@ -1,27 +1,24 @@
 <script setup lang="ts">
-const isSuperheroFan = ref(false)
-const isTimeTravel = ref(false)
-const isAlien = ref(false)
+const fruitOptions = ref([
+  { label: 'Apple', value: 'apple' },
+  { label: 'Banana', value: 'banana' },
+  { label: 'Cherry', value: 'cherry' },
+  { label: 'Date', value: 'date' },
+  { label: 'Grape', value: 'grape' }
+])
+
+const selectedFruits = ref(['apple', 'banana'])
+
+const handleFruitChange = (selectedValues: string[]) => {
+  console.log('选中的水果:', selectedValues)
+}
 </script>
 
 <template>
-  <lew-flex x="start" gap="15" direction="y">
-    <lew-checkbox
-      v-model="isSuperheroFan"
-      size="small"
-      label="是否阅读隐私协议"
-    />
-    <lew-checkbox
-      v-model="isTimeTravel"
-      disabled
-      round
-      label="是否阅读隐私协议"
-    />
-    <lew-checkbox
-      v-model="isAlien"
-      size="large"
-      round
-      label="是否阅读隐私协议"
-    />
-  </lew-flex>
+  <lew-checkbox-group
+    v-model="selectedFruits"
+    readonly
+    :options="fruitOptions"
+    @change="handleFruitChange"
+  />
 </template>

@@ -1,14 +1,15 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 
 export type FlexDirection = 'x' | 'y'
-export type FlexAlignment = 'start' | 'center' | 'end' | 'left' | 'right'
+export type FlexXAlignment = 'start' | 'center' | 'end' | 'left' | 'right'
+export type FlexYAlignment = 'start' | 'center' | 'end' | 'top' | 'bottom'
 export type FlexMode = 'around' | 'between'
 
 export const flexProps = {
   direction: {
     type: String as PropType<FlexDirection>,
     default: 'x',
-    description: '子元素的排列方向',
+    typeDesc: 'x | y',
     validator(value: FlexDirection): boolean {
       if (!['x', 'y'].includes(value)) {
         console.warn(`[LewFlex] 无效的方向值: ${value}。请使用 'x' 或 'y'。`)
@@ -18,10 +19,10 @@ export const flexProps = {
     }
   },
   x: {
-    type: String as PropType<FlexAlignment>,
-    default: 'center',
-    description: '子元素在水平方向上的对齐方式。可选值: start | center | end | left | right',
-    validator(value: FlexAlignment): boolean {
+    type: String as PropType<FlexXAlignment>,
+    default: 'start',
+    typeDesc: 'start | center | end',
+    validator(value: FlexXAlignment): boolean {
       if (!['start', 'center', 'end', 'left', 'right'].includes(value)) {
         console.warn(
           `[LewFlex] 无效的水平对齐值: ${value}。请使用 'start'、'center'、'end'、'left' 或 'right'。`
@@ -32,13 +33,13 @@ export const flexProps = {
     }
   },
   y: {
-    type: String as PropType<FlexAlignment>,
+    type: String as PropType<FlexYAlignment>,
     default: 'center',
-    description: '子元素在垂直方向上的对齐方式。可选值: start | center | end | left | right',
-    validator(value: FlexAlignment): boolean {
-      if (!['start', 'center', 'end', 'left', 'right'].includes(value)) {
+    typeDesc: 'start | center | end',
+    validator(value: FlexYAlignment): boolean {
+      if (!['start', 'center', 'end', 'top', 'bottom'].includes(value)) {
         console.warn(
-          `[LewFlex] 无效的垂直对齐值: ${value}。请使用 'start'、'center'、'end'、'left' 或 'right'。`
+          `[LewFlex] 无效的垂直对齐值: ${value}。请使用 'start'、'center'、'end'、'top' 或 'bottom'。`
         )
         return false
       }
@@ -48,8 +49,7 @@ export const flexProps = {
   mode: {
     type: String as PropType<FlexMode>,
     default: '',
-    description:
-      '子元素的分布模式，会覆盖 x 或 y 的对齐设置，具体影响取决于 direction 的值',
+    typeDesc: 'around | between',
     validator(value: FlexMode): boolean {
       if (value && !['around', 'between'].includes(value)) {
         console.warn(
@@ -62,13 +62,11 @@ export const flexProps = {
   },
   wrap: {
     type: Boolean,
-    default: false,
-    description: '是否允许子元素在空间不足时自动换行'
+    default: false
   },
   gap: {
     type: [String, Number],
     default: 10,
-    description: '子元素之间的间距（单位：像素）',
     validator(value: string | number): boolean {
       const numValue = typeof value === 'string' ? parseInt(value, 10) : value
       if (isNaN(numValue) || numValue < 0) {
@@ -81,7 +79,6 @@ export const flexProps = {
   width: {
     type: [String, Number],
     default: '',
-    description: 'Flex 容器的宽度（单位：像素或百分比）',
     validator(value: string | number): boolean {
       if (typeof value === 'number' && value < 0) {
         console.warn(`[LewFlex] width 值必须是非负数。`)

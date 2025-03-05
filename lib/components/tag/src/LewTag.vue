@@ -13,35 +13,29 @@ const SIZE_CONFIG = {
   small: {
     height: '20px',
     minWidth: '20px',
-    fontSize: '11px',
+    fontSize: '13px',
     borderRadius: '5px',
-    padding: '0px 2px',
-    closeIconSize: 12,
-    closeMargin: '-2px 4px -2px -2px',
-    contentPadding: '0px 3px',
-    leftMargin: '4px'
+    padding: '0px 4px',
+    gap: '2px',
+    closeIconSize: 12
   },
   medium: {
     height: '24px',
     minWidth: '24px',
-    fontSize: '13px',
+    fontSize: '14px',
     borderRadius: '6px',
-    padding: '0px 2px',
+    padding: '0px 6px',
     closeIconSize: 14,
-    closeMargin: '-3px 2px -3px -3px',
-    contentPadding: '0px 4px',
-    leftMargin: '4px'
+    gap: '3px'
   },
   large: {
     height: '28px',
     minWidth: '28px',
     fontSize: '15px',
-    borderRadius: '8px',
-    padding: '0px 6px',
+    borderRadius: '7px',
+    padding: '0px 8px',
     closeIconSize: 16,
-    closeMargin: '-4px 0 -4px -4px',
-    contentPadding: '0px 5px',
-    leftMargin: '4px'
+    gap: '4px'
   }
 }
 
@@ -86,35 +80,30 @@ const tagStyle: any = computed(() => {
     pointerEvents: disabled ? 'none' : undefined
   }
 })
+
+const slots: any = useSlots()
+
+const displayText = computed(() => {
+  // 或者等于插槽的内容
+  return props.text || slots.default?.()?.[0]?.children
+})
 </script>
 
 <template>
   <div class="lew-tag" :style="tagStyle">
-    <div
-      class="lew-tag-left"
-      v-if="$slots.left"
-      :style="{ marginLeft: tagStyle.leftMargin }"
-    >
+    <div v-if="$slots.left" class="lew-tag-left">
       <slot name="left" />
     </div>
 
-    <div class="lew-tag-value" :style="{ padding: tagStyle.contentPadding }">
-      <lew-text-trim v-if="text" :text="text" />
-      <lew-text-trim v-else>
-        <slot />
-      </lew-text-trim>
+    <div class="lew-tag-value">
+      <lew-text-trim :text="displayText" />
     </div>
 
     <div v-if="$slots.right" class="lew-tag-right">
       <slot name="right" />
     </div>
 
-    <div
-      v-if="closable"
-      class="lew-tag-close"
-      :style="{ margin: tagStyle.closeMargin }"
-      @click.stop="close"
-    >
+    <div v-if="closable" class="lew-tag-close" @click.stop="close">
       <Icon :size="tagStyle.closeIconSize" type="close" />
     </div>
   </div>
@@ -135,14 +124,11 @@ const tagStyle: any = computed(() => {
   // Other
   align-items: center;
   justify-content: center;
-  user-select: none;
 
   .lew-tag-value {
     // Display & Box Model
     box-sizing: border-box;
     max-width: 250px;
-    padding: 0 3px;
-
     // Text
     font-weight: normal;
     white-space: nowrap;

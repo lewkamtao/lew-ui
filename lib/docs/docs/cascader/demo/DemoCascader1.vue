@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
 const v = ref()
-
 const options = [
   {
     value: 'electronics',
-    label: '电子产品',
+    label: 'Electronics',
     children: [
       {
         value: 'smartphone',
-        label: '智能手机',
+        label: 'Smartphone',
         children: [
           {
             value: 'ios',
-            label: 'iOS设备',
+            label: 'iOS Devices',
             children: [
               { value: 'iphone', label: 'iPhone' },
               { value: 'ipad', label: 'iPad', disabled: true }
@@ -22,11 +19,11 @@ const options = [
           },
           {
             value: 'android',
-            label: 'Android设备',
+            label: 'Android Devices',
             children: [
-              { value: 'samsung', label: '三星' },
-              { value: 'huawei', label: '华为' },
-              { value: 'xiaomi', label: '小米' },
+              { value: 'samsung', label: 'Samsung' },
+              { value: 'huawei', label: 'Huawei' },
+              { value: 'xiaomi', label: 'Xiaomi' },
               { value: 'oppo', label: 'OPPO', disabled: true }
             ]
           }
@@ -34,11 +31,11 @@ const options = [
       },
       {
         value: 'computer',
-        label: '电脑',
+        label: 'Computers',
         children: [
           {
             value: 'laptop',
-            label: '笔记本',
+            label: 'Laptops',
             children: [
               { value: 'macbook', label: 'MacBook' },
               { value: 'surface', label: 'Surface' },
@@ -46,90 +43,72 @@ const options = [
               { value: 'dell', label: 'Dell', disabled: true }
             ]
           },
-          { value: 'desktop', label: '台式机', disabled: true }
+          { value: 'desktop', label: 'Desktops', disabled: true }
         ]
       },
       {
         value: 'wearables',
-        label: '可穿戴设备',
+        label: 'Wearable Devices',
         children: [
-          { value: 'smartwatch', label: '智能手表' },
-          { value: 'fitnesstracker', label: '健身追踪器', disabled: true }
+          { value: 'smartwatch', label: 'Smartwatch' },
+          { value: 'fitnesstracker', label: 'Fitness Tracker', disabled: true }
         ]
       }
     ]
   },
   {
     value: 'appliances',
-    label: '家用电器',
+    label: 'Home Appliances',
     children: [
       {
         value: 'kitchen',
-        label: '厨房电器',
+        label: 'Kitchen Appliances',
         children: [
-          { value: 'refrigerator', label: '冰箱' },
-          { value: 'microwave', label: '微波炉' },
-          { value: 'dishwasher', label: '洗碗机', disabled: true }
+          { value: 'refrigerator', label: 'Refrigerator' },
+          { value: 'microwave', label: 'Microwave' },
+          { value: 'dishwasher', label: 'Dishwasher', disabled: true }
         ]
       },
       {
         value: 'laundry',
-        label: '洗衣设备',
+        label: 'Laundry Appliances',
         children: [
-          { value: 'washingmachine', label: '洗衣机' },
-          { value: 'dryer', label: '烘干机', disabled: true }
+          { value: 'washingmachine', label: 'Washing Machine' },
+          { value: 'dryer', label: 'Dryer', disabled: true }
         ]
       }
     ]
   },
   {
     value: 'entertainment',
-    label: '娱乐设备',
+    label: 'Entertainment Devices',
     children: [
       {
         value: 'gaming',
-        label: '游戏设备',
+        label: 'Gaming Devices',
         children: [
-          { value: 'console', label: '游戏主机' },
-          { value: 'vr', label: 'VR设备', disabled: true }
+          { value: 'console', label: 'Game Console' },
+          { value: 'vr', label: 'VR Devices', disabled: true }
         ]
       },
       {
         value: 'audio',
-        label: '音频设备',
+        label: 'Audio Devices',
         children: [
-          { value: 'speakers', label: '音箱' },
-          { value: 'headphones', label: '耳机' }
+          { value: 'speakers', label: 'Speakers' },
+          { value: 'headphones', label: 'Headphones' }
         ]
       }
     ]
   }
 ]
-
-const change = (e: any) => {
-  console.log('选择的科技产品:', e)
-}
 </script>
 
 <template>
-  <lew-flex direction="y" gap="20px" style="width: 300px">
-    <lew-cascader
-      v-model="v"
-      size="small"
-      :options="options"
-      @change="change"
-      placeholder="选择小型科技产品"
-    />
-    <lew-cascader
-      v-model="v"
-      :options="options"
-      placeholder="浏览科技产品目录"
-    />
-    <lew-cascader
-      v-model="v"
-      size="large"
-      :options="options"
-      placeholder="探索高端科技产品"
-    />
-  </lew-flex>
+  <lew-cascader
+    width="300px"
+    v-model="v"
+    :options="options"
+    placeholder="Explore high-end tech products"
+  />
 </template>

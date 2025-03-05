@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import tippy, { roundArrow } from 'tippy.js'
-import { object2class } from 'lew-ui/utils'
 import { textTrimProps } from './props'
 import { escape } from 'lodash-es'
-import { useMouse } from '@vueuse/core'
+import { useMouse, useDebounceFn } from '@vueuse/core'
+import { getDisplayText, clearMeasureCache } from './text-trim'
 
 const props = defineProps(textTrimProps)
 
@@ -25,7 +25,7 @@ const initTippy = () => {
     isEllipsis = element.offsetWidth < element.scrollWidth
   }
   // 如果溢出
-  if (isEllipsis) {
+  if (isEllipsis || isEllipsisByTextTrim.value) {
     element.style.cursor = 'pointer'
     // 如果没有init
     if (!instance) {
@@ -94,30 +94,89 @@ const getTextTrimStyleObject = computed(() => {
   if (props.lineClamp) {
     return `display: -webkit-box;-webkit-line-clamp: ${props.lineClamp};-webkit-box-orient: vertical;`
   }
-  return 'white-space: nowrap;'
-})
-
-const getClassNames = computed(() => {
-  const { x } = props
-  return object2class('lew-text-trim', { x })
+  return {
+    'text-overflow': props.reserveEnd > 0 ? '' : 'ellipsis',
+    'white-space': 'nowrap',
+    'text-align': props.textAlign
+  }
 })
 
 const destroyTippy = () => {
   instance && instance.destroy()
   instance = null
 }
+
+const displayText = ref('')
+const isEllipsisByTextTrim = ref(false)
+
+// 计算显示文本
+const calculateDisplayText = () => {
+  const { text, reserveEnd } = props
+  if (lewTextTrimRef.value) {
+    const result = getDisplayText({
+      text: String(text),
+      reserveEnd,
+      target: lewTextTrimRef.value
+    })
+    displayText.value = result.text
+    isEllipsisByTextTrim.value = result.isEllipsis
+  }
+}
+
+// 使用 requestAnimationFrame 优化初始化计算
+const initCalculateDisplayText = () => {
+  requestAnimationFrame(() => {
+    calculateDisplayText()
+  })
+}
+
+// 使用 VueUse 的防抖函数处理后续更新
+const debouncedCalculate = useDebounceFn(calculateDisplayText, 150)
+
+// 监听窗口大小变化
+const setupResizeObserver = () => {
+  if (!lewTextTrimRef.value) return
+
+  const resizeObserver = new ResizeObserver(() => {
+    debouncedCalculate()
+  })
+
+  resizeObserver.observe(lewTextTrimRef.value)
+
+  // 在组件卸载时清理
+  onBeforeUnmount(() => {
+    resizeObserver.disconnect()
+  })
+}
+
+onMounted(() => {
+  initCalculateDisplayText()
+  setupResizeObserver()
+})
+
+onUnmounted(() => {
+  destroyTippy()
+  clearMeasureCache()
+})
+
+// 监听 text 和 reserveEnd 的变化
+watch(
+  () => [props.text, props.reserveEnd],
+  () => {
+    calculateDisplayText()
+  }
+)
 </script>
 
 <template>
   <div
     ref="lewTextTrimRef"
     class="lew-text-trim-wrapper"
-    :class="getClassNames"
     :style="getTextTrimStyleObject"
     @mouseenter="initTippy"
   >
     <template v-if="text">
-      {{ text }}
+      {{ displayText }}
     </template>
     <slot v-else />
     <div ref="lewTextTrimPopRef" class="lew-text-trim-pop">
@@ -128,24 +187,12 @@ const destroyTippy = () => {
 
 <style lang="scss" scoped>
 .lew-text-trim-wrapper {
+  width: 100%;
   overflow: hidden;
-  text-overflow: ellipsis; //文本溢出显示省略号
   .lew-text-trim-pop {
     position: fixed;
     opacity: 0;
     z-index: -9;
   }
-}
-
-.lew-text-trim-x-start {
-  text-align: left;
-}
-
-.lew-text-trim-x-center {
-  text-align: center;
-}
-
-.lew-text-trim-x-end {
-  text-align: right;
 }
 </style>

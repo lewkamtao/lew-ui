@@ -5,25 +5,39 @@ import { LewFlex } from 'lew-ui'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { cloneDeep } from 'lodash-es'
 
-const props = defineProps(menuTreeItemProps)
+const props = defineProps({
+  ...menuTreeItemProps,
+  renderLabel: {
+    type: Function,
+    default: () => {},
+    description: '自定义渲染标签内容的函数。'
+  }
+})
 
 const { modelValue, expandKeys, modelValueKeyPath, collapsed }: any =
   inject('menu-tree')
 const emit = defineEmits(['change'])
 
+const tagRef = ref()
+const tagWidth = ref(0)
+
+onMounted(() => {
+  tagWidth.value = tagRef.value?.$el?.offsetWidth
+})
+
 const change = () => {
   if (props.disabled) return
 
   if (!props.isLeaf) {
-    const index = expandKeys.value.indexOf(props.menuKey)
+    const index = expandKeys.value.indexOf(props.value)
     if (index > -1) {
       expandKeys.value.splice(index, 1)
     } else {
-      expandKeys.value.push(props.menuKey)
+      expandKeys.value.push(props.value)
     }
   } else {
-    if (modelValue.value !== props.menuKey) {
-      modelValue.value = props.menuKey
+    if (modelValue.value !== props.value) {
+      modelValue.value = props.value
     }
   }
   expandKeys.value = cloneDeep(expandKeys.value)
@@ -38,9 +52,9 @@ const change = () => {
       y="center"
       class="lew-menu-tree-item-label"
       :class="{
-        'lew-menu-tree-item-label-active': modelValue === menuKey,
+        'lew-menu-tree-item-label-active': modelValue === value,
         'lew-menu-tree-item-label-selected': modelValueKeyPath?.includes(
-          menuKey as string | number
+          value as string | number
         ),
         'lew-menu-tree-item-label-leaf': isLeaf,
         'lew-menu-tree-item-label-disabled': disabled,
@@ -54,19 +68,37 @@ const change = () => {
       <slot v-if="$slots.label" name="label" :props="props" />
       <template v-else>
         <component class="lew-menu-tree-item-icon" :is="renderIcon()" />
+        <component
+          v-if="renderLabel()"
+          :is="renderLabel()"
+          class="lew-menu-tree-item-text"
+        />
         <lew-text-trim
+          v-else
           class="lew-menu-tree-item-text"
           placement="right"
-          :style="{ width: `calc(100% - ${renderIcon() ? 50 : 20}px)` }"
+          :style="{
+            maxWidth: `calc(100% - ${renderIcon() || tagText ? tagWidth + 30 - (isLeaf ? 30 : 0) : 0}px)`
+          }"
           :text="label"
           :delay="[250, 250]"
         />
+        <lew-tag
+          ref="tagRef"
+          v-if="tagText"
+          :color="tagColor"
+          :type="tagType"
+          round
+          size="small"
+        >
+          {{ tagText }}
+        </lew-tag>
         <Icon
           v-if="!isLeaf"
           class="lew-menu-tree-item-chevron-right"
           :size="14"
           :style="{
-            transform: `rotate(${expandKeys.includes(menuKey) ? 270 : 90}deg)`,
+            transform: `rotate(${expandKeys.includes(value) ? 270 : 90}deg)`,
             transition: 'all 0.2s'
           }"
           type="chevron-right"
@@ -75,7 +107,7 @@ const change = () => {
     </lew-flex>
     <lew-collapse-transition v-if="!isLeaf">
       <div
-        v-if="expandKeys.includes(menuKey) && !collapsed"
+        v-if="expandKeys.includes(value) && !collapsed"
         :style="{
           marginTop: level === 1 ? '5px' : 0
         }"
@@ -103,9 +135,6 @@ const change = () => {
       color 0.25s;
     border-radius: var(--lew-border-radius-small);
     overflow: hidden;
-    .lew-menu-tree-item-text {
-      transition: opacity 1s;
-    }
   }
   .lew-menu-tree-item-label:hover {
     background-color: var(--lew-bgcolor-3);

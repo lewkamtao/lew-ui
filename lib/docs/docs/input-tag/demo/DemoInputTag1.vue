@@ -2,9 +2,5 @@
 const v = ref([])
 </script>
 <template>
-  <lew-flex style="width: 320px" direction="y" x="start" gap="10px">
-    <lew-input-tag size="small" v-model="v" />
-    <lew-input-tag size="medium" v-model="v" />
-    <lew-input-tag size="large" v-model="v" />
-  </lew-flex>
+  <lew-input-tag style="width: 320px" v-model="v" />
 </template>
