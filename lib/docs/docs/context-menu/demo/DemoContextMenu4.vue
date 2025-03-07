@@ -12,7 +12,9 @@ const options: ContextMenus = [
         children: [
           {
             label: '中文（Chinese',
-            value: 'chinese'
+            value: 'chinese',
+            checked: true,
+            checkbox: true
           },
           {
             label: '英语（English）',
@@ -27,7 +29,9 @@ const options: ContextMenus = [
         children: [
           {
             label: 'Light',
-            value: 'light'
+            value: 'light',
+            checked: true,
+            checkbox: true
           },
           {
             label: 'Dark',
@@ -59,10 +63,10 @@ const options: ContextMenus = [
     value: 'check-update'
   }
 ]
-const selectedKeys = ref<string[]>([])
 const selectHandler = (item: ContextMenus) => {
-  LewMessage.info(`你点击了：${item.label} `)
-  selectedKeys.value = [item.value as string]
+  if (item.checkbox) {
+    item.checked = true
+  }
 }
 </script>
 <template>
@@ -70,9 +74,7 @@ const selectHandler = (item: ContextMenus) => {
     <div
       v-context-menu="{
         options,
-        checkbox: true,
-        selectHandler,
-        selectedKeys
+        selectHandler
       }"
       class="box"
     >
