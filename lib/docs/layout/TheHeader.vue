@@ -37,11 +37,142 @@ const goToGithub = () => {
   window.open('https://github.com/lewkamtao/Lew-UI', '_blank')
 }
 
+const localeOptions = ref([
+  {
+    label: '简体中文',
+    value: 'zh',
+    checkbox: true,
+    renderIcon: () => {
+      return h('img', {
+        src: 'https://goodies.icons8.com/web/common/header/flags/zh.svg',
+        alt: '简体中文',
+        width: 16,
+        height: 16
+      })
+    }
+  },
+  {
+    label: 'English',
+    value: 'en',
+    checkbox: true,
+    renderIcon: () => {
+      return h('img', {
+        src: 'https://goodies.icons8.com/web/common/header/flags/us.svg',
+        alt: 'English',
+        width: 16,
+        height: 16
+      })
+    }
+  },
+
+  {
+    label: '日本語',
+    value: 'ja',
+    checkbox: true,
+    renderIcon: () => {
+      return h('img', {
+        src: 'https://goodies.icons8.com/web/common/header/flags/ja.svg',
+        alt: '日本語',
+        width: 16,
+        height: 16
+      })
+    }
+  },
+  {
+    label: '한국어',
+    value: 'ko',
+    checkbox: true,
+    renderIcon: () => {
+      return h('img', {
+        src: 'https://goodies.icons8.com/web/common/header/flags/ko.svg',
+        alt: '한국어',
+        width: 16,
+        height: 16
+      })
+    }
+  },
+  {
+    label: 'Español',
+    value: 'es',
+    checkbox: true,
+    renderIcon: () => {
+      return h('img', {
+        src: 'https://goodies.icons8.com/web/common/header/flags/es.svg',
+        alt: 'Español',
+        width: 16,
+        height: 16
+      })
+    }
+  },
+  {
+    label: 'Français',
+    value: 'fr',
+    checkbox: true,
+    renderIcon: () => {
+      return h('img', {
+        src: 'https://goodies.icons8.com/web/common/header/flags/fr.svg',
+        alt: 'Français',
+        width: 16,
+        height: 16
+      })
+    }
+  },
+  {
+    label: 'Deutsch',
+    value: 'de',
+    checkbox: true,
+    renderIcon: () => {
+      return h('img', {
+        src: 'https://goodies.icons8.com/web/common/header/flags/de.svg',
+        alt: 'Deutsch',
+        width: 16,
+        height: 16
+      })
+    }
+  },
+  {
+    label: 'Português',
+    value: 'pt',
+    checkbox: true,
+    renderIcon: () => {
+      return h('img', {
+        src: 'https://goodies.icons8.com/web/common/header/flags/br.svg',
+        alt: 'Português',
+        width: 16,
+        height: 16
+      })
+    }
+  },
+  {
+    label: 'Italiano',
+    value: 'it',
+    checkbox: true,
+    renderIcon: () => {
+      return h('img', {
+        src: 'https://goodies.icons8.com/web/common/header/flags/it.svg',
+        alt: 'Italiano',
+        width: 16,
+        height: 16
+      })
+    }
+  }
+])
+
 const changeLanguage = (e: any) => {
   const { value } = e
   setLocale(value)
   docsLocale.use(value)
+  localeOptions.value.map((item: any) => {
+    if (item.value === e.value) {
+      item.checked = true
+    } else {
+      item.checked = false
+    }
+  })
 }
+
+const defaultLocale = docsLocale.getLocale()
+changeLanguage({ value: defaultLocale })
 </script>
 
 <template>
@@ -83,19 +214,7 @@ const changeLanguage = (e: any) => {
         <Sun class="icon-mode-sunny" :size="18" />
         <Moon class="icon-mode-moon" :size="18" />
       </div>
-      <lew-dropdown
-        :options="[
-          {
-            label: '简体中文',
-            value: 'zh'
-          },
-          {
-            label: 'English',
-            value: 'en'
-          }
-        ]"
-        @change="changeLanguage"
-      >
+      <lew-dropdown :options="localeOptions" @change="changeLanguage">
         <div class="menu-item menu-item-icon">
           <Languages :size="18" />
         </div>

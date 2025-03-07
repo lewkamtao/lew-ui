@@ -323,7 +323,8 @@ export default {
       },
       props: {
         options: 'Array of step configuration items',
-        status: 'Current status of the step bar'
+        status: 'Current status of the step bar',
+        minWidth: 'Minimum step width'
       }
     },
     menu: {

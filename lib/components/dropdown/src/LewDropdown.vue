@@ -5,6 +5,8 @@ import type { DropdownOptions } from './props'
 
 defineProps(dropdownProps)
 
+const selectedKeys = defineModel<string[]>('selectedKeys')
+
 const emit = defineEmits(['change'])
 
 const lewPopoverRef = ref()
@@ -39,7 +41,12 @@ defineExpose({
       <slot />
     </template>
     <template #popover-body>
-      <lew-context-menu :options="options" @select="change" />
+      <lew-context-menu
+        v-model:selected-keys="selectedKeys"
+        :checkbox="checkbox"
+        :options="options"
+        @select="change"
+      />
     </template>
   </lew-popover>
 </template>

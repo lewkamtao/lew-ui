@@ -2,20 +2,24 @@ import { createI18n } from 'vue-i18n'
 import en from './en'
 import zh from './zh'
 import ja from './ja'
+import ko from './ko'
 
-export type Language = 'en' | 'zh'
+export type Language = 'en' | 'zh' | 'ja' | 'ko'
+
+const currentLocale = 'zh'
 
 export const messages = {
   en,
   zh,
-  ja
+  ja,
+  ko
 }
 
 const i18n = createI18n({
   globalInjection: true,
   legacy: false,
-  locale: 'en',
-  fallbackLocale: 'en',
+  locale: currentLocale,
+  fallbackLocale: currentLocale,
   messages
 })
 

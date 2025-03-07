@@ -18,6 +18,14 @@ export type DropdownPlacement =
 
 export type DropdownOptions = ContextMenus
 
+export const dropdownModel = {
+  selectedKeys: {
+    type: Array as PropType<string[]>,
+    default: () => [],
+    description: '选中项的key值'
+  }
+}
+
 export const dropdownProps = {
   trigger: {
     type: String as PropType<DropdownTrigger>,
@@ -73,6 +81,11 @@ export const dropdownProps = {
       }
       return true
     }
+  },
+  checkbox: {
+    type: Boolean,
+    default: false,
+    description: '是否开启checkbox模式'
   }
 }
 

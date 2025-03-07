@@ -306,7 +306,8 @@ export default {
       },
       props: {
         options: '步骤配置项数组',
-        status: '步骤条的当前状态'
+        status: '步骤条的当前状态',
+        minWidth: '最小步骤宽度'
       }
     },
     menu: {
@@ -385,6 +386,7 @@ export default {
       demo3: {
         title: '禁用项'
       },
+
       props: {
         options: '菜单选项配置',
         trigger: '触发方式',
@@ -434,6 +436,7 @@ export default {
       demo3: {
         title: '支持动态更新'
       },
+
       props: {
         options: '右键菜单配置',
         disabled: '是否禁用右键菜单',
