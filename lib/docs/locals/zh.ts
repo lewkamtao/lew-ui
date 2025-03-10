@@ -4,7 +4,9 @@ const contextMenu = {
   renderIcon: '渲染图标函数',
   children: '子节点集合',
   disabled: '禁用选项',
-  isDividerLine: '是否是分割线'
+  isDividerLine: '是否是分割线',
+  checkbox: '是否是复选框',
+  checked: '是否选中'
 }
 
 export default {

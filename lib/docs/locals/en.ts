@@ -4,7 +4,9 @@ const contextMenu = {
   renderIcon: 'Render Icon Function',
   children: 'Children Collection',
   disabled: 'Disabled Option',
-  isDividerLine: 'Is Divider Line'
+  isDividerLine: 'Is Divider Line',
+  checkbox: 'Is Checkbox',
+  checked: 'Is Checked'
 }
 
 export default {

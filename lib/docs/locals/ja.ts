@@ -4,7 +4,9 @@ const contextMenu = {
   renderIcon: 'アイコン描画関数',
   children: '子ノード集合',
   disabled: '無効化オプション',
-  isDividerLine: '区切り線の有無'
+  isDividerLine: '区切り線の有無',
+  checkbox: 'チェックボックスの有無',
+  checked: 'チェックボックスの選択状態'
 }
 
 export default {
