@@ -436,7 +436,9 @@ export default {
       demo3: {
         title: '支持动态更新'
       },
-
+      demo4: {
+        title: 'Checkbox'
+      },
       props: {
         options: '右键菜单配置',
         disabled: '是否禁用右键菜单',

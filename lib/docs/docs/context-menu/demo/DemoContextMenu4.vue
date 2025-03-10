@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import type { ContextMenus } from 'lew-ui/directives'
-
-const options: ContextMenus = [
+const options = ref([
   {
     label: '设置',
     value: 'setting',
@@ -18,7 +16,8 @@ const options: ContextMenus = [
           },
           {
             label: '英语（English）',
-            value: 'english'
+            value: 'english',
+            checkbox: true
           }
         ]
       },
@@ -30,12 +29,15 @@ const options: ContextMenus = [
           {
             label: 'Light',
             value: 'light',
+            type: 'radio',
             checked: true,
             checkbox: true
           },
           {
             label: 'Dark',
-            value: 'dark'
+            type: 'radio',
+            value: 'dark',
+            checkbox: true
           }
         ]
       },
@@ -62,11 +64,14 @@ const options: ContextMenus = [
     checked: true,
     value: 'check-update'
   }
-]
-const selectHandler = (item: ContextMenus) => {
-  if (item.checkbox) {
-    item.checked = true
-  }
+])
+const selectHandler = (e: any) => {
+  const { item, parent } = e
+  parent.forEach((item: any) => {
+    item.checked = false
+  })
+  item.checked = true
+  LewMessage.info(`你点击了：${item.value} `)
 }
 </script>
 <template>
@@ -78,7 +83,7 @@ const selectHandler = (item: ContextMenus) => {
       }"
       class="box"
     >
-      右键点击此处1
+      右键点击此处
     </div>
   </lew-flex>
 </template>

@@ -444,6 +444,9 @@ export default {
       demo3: {
         title: '動的更新をサポート'
       },
+      demo4: {
+        title: 'Checkbox'
+      },
       props: {
         options: '右クリックメニューの設定',
         disabled: '右クリックメニューを無効化するかどうか',

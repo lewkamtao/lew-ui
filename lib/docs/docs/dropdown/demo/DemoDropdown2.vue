@@ -40,6 +40,9 @@ const options = ref([
       {
         label: 'Light Mode',
         value: 'light',
+        disabled: true,
+        checkbox: true,
+        checked: true,
         icon: 'sun'
       },
       {
@@ -65,7 +68,7 @@ const options = ref([
 ])
 
 const change = (e: any) => {
-  LewMessage.info(e.label)
+  LewMessage.info(e.value)
 }
 </script>
 <template>

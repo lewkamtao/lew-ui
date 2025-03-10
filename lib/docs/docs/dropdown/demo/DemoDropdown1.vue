@@ -21,7 +21,7 @@ const options = ref<DropdownOptions[]>([
 ])
 
 const change = (e: DropdownOptions) => {
-  LewMessage.info(e.label)
+  LewMessage.info(e.value)
 }
 </script>
 <template>

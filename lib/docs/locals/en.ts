@@ -455,6 +455,9 @@ export default {
       demo3: {
         title: 'Support Dynamic Update'
       },
+      demo4: {
+        title: 'Checkbox'
+      },
       props: {
         options: 'Right-click menu configuration',
         disabled: 'Disable right-click menu',

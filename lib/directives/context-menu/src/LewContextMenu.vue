@@ -5,15 +5,16 @@ import LewContextMenu from './LewContextMenu.vue'
 import { getUniqueId } from 'lew-ui/utils'
 import { ContextMenus, contextMenuProps, initLewContextMenu } from './index'
 import Icon from 'lew-ui/utils/Icon.vue'
-
 const props = defineProps(contextMenuProps)
-
-const selectedKeys = defineModel<string[]>('selectedKeys')
 
 const emit = defineEmits(['select'])
 
-const clickItem = (item: ContextMenus) => {
-  emit('select', item)
+const clickItem = (item: ContextMenus, options: ContextMenus[]) => {
+  emit('select', {
+    item,
+    parent: options,
+    value: item.value
+  })
 }
 
 const uniqueId = getUniqueId()
@@ -30,8 +31,8 @@ const initTippy = () => {
       render() {
         return h(LewContextMenu, {
           options: item.children,
-          onSelect: (item: ContextMenus) => {
-            emit('select', item)
+          onSelect: (e: any) => {
+            emit('select', e)
           }
         })
       }
@@ -92,7 +93,7 @@ onUnmounted(() => {
       >
         <div
           :ref="(el) => itemRefs.push(el)"
-          @click="clickItem(item)"
+          @click="clickItem(item, options)"
           class="lew-context-menu-item"
           :style="{ 'animation-delay': index * 15 + 'ms' }"
           :class="{

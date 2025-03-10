@@ -77,8 +77,7 @@ const options2 = [
 ]
 
 const selectHandler = (item: ContextMenus) => {
-  console.log(item)
-  LewMessage.info(`你点击了：${item.label} `)
+  LewMessage.info(`你点击了：${item.value} `)
 }
 </script>
 <template>

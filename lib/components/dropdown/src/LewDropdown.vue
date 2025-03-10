@@ -20,6 +20,7 @@ const hide = () => {
 }
 
 const change = (item: DropdownOptions) => {
+    console.log(item)
   emit('change', item)
   hide()
 }
