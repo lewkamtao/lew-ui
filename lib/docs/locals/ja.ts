@@ -1,12 +1,12 @@
 const contextMenu = {
-  label: 'テキストを表示',
+  label: '表示テキスト',
   value: '値',
   renderIcon: 'アイコン描画関数',
-  children: '子ノード集合',
-  disabled: '無効化オプション',
+  children: '子ノードコレクション',
+  disabled: '無効オプション',
   isDividerLine: '区切り線の有無',
   checkbox: 'チェックボックスの有無',
-  checked: 'チェックボックスの選択状態'
+  checked: '選択状態'
 }
 
 export default {
@@ -27,7 +27,7 @@ export default {
     base: '基本',
     navigator: 'ナビゲーション',
     form: 'フォーム',
-    data: 'データ',
+    data: 'データコンポーネント',
     feedback: 'フィードバック',
     close: '閉じる',
     showCode: 'コードを表示'
@@ -35,19 +35,17 @@ export default {
   components: {
     image: {
       name: '画像 Image',
-      description:
-        '画像をより優雅に表示し、遅延読み込み、ローディング状態、エラー処理などをサポート',
+      description: '遅延読み込み、ローディング状態、エラー処理などをサポートする洗練された画像表示',
       demo1: {
         title: '基本的な使い方'
       },
       demo2: {
         title: 'ローディング状態',
         tipsTitle: 'ヒント',
-        tipsContent:
-          'プレースホルダー効果を得るには、width と height の設定が必要です。'
+        tipsContent: 'プレースホルダー効果を得るには、width と height を設定する必要があります。'
       },
       demo3: {
-        title: '読み込み失敗'
+        title: 'ローディング失敗'
       },
       props: {
         src: '画像のURL',
@@ -63,8 +61,7 @@ export default {
     },
     avatar: {
       name: 'アバター Avatar',
-      description:
-        '洗練されたアバターコンポーネント。画像、アイコン、テキストの3つの形式をサポート',
+      description: '画像、アイコン、テキストの3つの形式をサポートする洗練されたアバターコンポーネント',
       demo1: {
         title: '基本的な使い方'
       },
@@ -91,7 +88,7 @@ export default {
     },
     button: {
       name: 'ボタン Button',
-      description: 'スムーズなインタラクションを実現するボタン',
+      description: 'クリックでスムーズなインタラクションを実現',
       demo1: {
         title: '基本的な使い方'
       },
@@ -115,7 +112,7 @@ export default {
         type: 'タイプ',
         size: 'サイズ',
         singleIcon: 'アイコンのみ表示',
-        color: '色',
+        color: 'カラー',
         round: '角丸',
         dashed: '破線',
         loading: 'ローディング状態の表示',
@@ -1708,46 +1705,46 @@ export default {
     },
     dialog: {
       name: 'ダイアログ Dialog',
-      description: 'モーダルダイアログで、重要な情報のやり取りをより目立たせる',
+      description: 'モーダルダイアログで、重要な情報のやり取りをより際立たせます',
       demo1: {
         title: '基本的な使い方'
       },
       demo2: {
-        title: 'シンプル'
+        title: 'シンプルな例'
       },
       props: {
         type: 'タイプ',
         width: '幅',
         trigger: 'トリガー方式',
         title: 'タイトル',
-        okText: '確認ボタンテキスト',
-        cancelText: 'キャンセルボタンテキスト',
-        ok: '確認コールバック',
-        cancel: 'キャンセルコールバック',
+        okText: '確認ボタンのテキスト',
+        cancelText: 'キャンセルボタンのテキスト',
+        ok: '確認時のコールバック',
+        cancel: 'キャンセル時のコールバック',
         layout: 'レイアウト方式',
-        closeOnClickOverlay: 'オーバーレイクリックで閉じるかどうか',
-        closeByEsc: 'ESCキーで閉じるかどうか',
+        closeOnClickOverlay: 'オーバーレイクリックによる閉じる',
+        closeByEsc: 'ESCキーによる閉じる',
         transformOrigin: 'アニメーション原点'
       },
       events: {
-        ok: '確認ボタンクリック時に発火',
-        cancel: 'キャンセルボタンクリック時に発火'
+        ok: '確認ボタンクリック時のイベント',
+        cancel: 'キャンセルボタンクリック時のイベント'
       }
     },
     modal: {
       name: 'モーダル Modal',
-      description: 'より柔軟なモーダルウィンドウで、ポップアップをより豊かに',
+      description: 'より柔軟なモーダルウィンドウで、ポップアップの対話をより豊かに表現します',
       demo1: {
         title: '基本的な使い方'
       },
       demo2: {
-        title: '非同期で閉じる'
+        title: '非同期での閉じる'
       },
       demo3: {
         title: 'ヘッダーとフッターのカスタマイズ'
       },
       demo4: {
-        title: 'ESCキーでの閉じる可否'
+        title: 'ESCキーでの閉じる設定'
       },
       model: {
         visible: '表示状態'
@@ -1755,20 +1752,20 @@ export default {
       props: {
         title: 'タイトル',
         width: '幅',
-        top: '上からの距離',
+        top: '上端からの距離',
         hideFooter: 'フッターを非表示にするかどうか',
-        closeByEsc: 'ESCキーで閉じるかどうか',
+        closeByEsc: 'ESCキーでの閉じる可否',
         okProps: '確認ボタンのプロパティ',
         cancelProps: 'キャンセルボタンのプロパティ',
         hideOkButton: '確認ボタンを非表示にするかどうか',
         hideCancelButton: 'キャンセルボタンを非表示にするかどうか',
-        closeOnClickOverlay: 'オーバーレイクリックで閉じるかどうか',
-        zIndex: '重なり順'
+        closeOnClickOverlay: 'オーバーレイクリックでの閉じる可否',
+        zIndex: '重なり順序'
       }
     },
     popok: {
-      name: '確認ポップオーバー Popok',
-      description: '軽量な確認プロンプトで、操作の確認をより便利に',
+      name: 'ポップ確認 Popok',
+      description: '軽量な確認ポップアップで、操作の確認をより便利にします',
       demo1: {
         title: '基本的な使い方'
       },
@@ -1783,20 +1780,20 @@ export default {
         okProps: '確認ボタンのプロパティ',
         cancelProps: 'キャンセルボタンのプロパティ',
         content: '内容',
-        placement: '配置位置'
+        placement: '表示位置'
       }
     },
     popover: {
       name: 'ポップオーバー Popover',
-      description: 'マウスホバー時の情報カード、ヒントをよりエレガントに',
+      description: 'マウスホバー時の情報カードで、ヒントをより優雅に表示します',
       demo1: {
         title: '基本的な使い方'
       },
       props: {
         trigger: 'トリガー方式',
-        placement: '配置位置',
+        placement: '表示位置',
         disabled: '無効状態',
-        loading: '読み込み状態',
+        loading: '読み込み中',
         hideOnClick: 'クリック時に非表示',
         offset: 'オフセット',
         popoverBodyClassName: 'ポップオーバー本体のクラス名',
@@ -1809,7 +1806,7 @@ export default {
     },
     tooltip: {
       name: 'ツールチップ Tooltip',
-      description: 'シンプルなテキストヒント、提示をよりコンパクトに',
+      description: 'シンプルなテキストヒントで、情報をより軽やかに表示します',
       demo1: {
         title: '基本的な使い方'
       },
@@ -1818,9 +1815,9 @@ export default {
       },
       props: {
         tips: 'ヒント内容',
-        placement: '配置位置',
+        placement: '表示位置',
         trigger: 'トリガー方式',
-        allowHTML: 'HTMLを許可するかどうか',
+        allowHTML: 'HTMLの許可',
         delay: '遅延時間'
       }
     },
@@ -1838,18 +1835,18 @@ export default {
       }
     },
     result: {
-      name: '結果 Result',
-      description: '操作結果のフィードバック、結果表示をより完全に',
+      name: '結果表示 Result',
+      description: '操作結果をフィードバックし、より完全な結果表示を実現します',
       demo1: {
         title: '基本的な使い方'
       },
       props: {
         type: 'タイプ',
         title: 'タイトル',
-        content: '内容'
+        content: '表示内容'
       },
       slots: {
-        handle: 'スロット処理'
+        handle: 'カスタム処理用スロット'
       }
     },
     empty: {

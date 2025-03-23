@@ -1,231 +1,230 @@
 const contextMenu = {
-    label: '显示文本',
-    value: '值',
-    renderIcon: '渲染图标函数',
-    children: '子节点集合',
-    disabled: '禁用选项',
-    isDividerLine: '是否是分割线',
-    checkbox: '是否是复选框',
-    checked: '是否选中'
+    label: 'Angezeigter Text',
+    value: 'Wert',
+    renderIcon: 'Icon-Renderfunktion',
+    children: 'Unterknoten-Sammlung',
+    disabled: 'Deaktivierte Option',
+    isDividerLine: 'Ist Trennlinie',
+    checkbox: 'Ist Kontrollkästchen',
+    checked: 'Ist ausgewählt'
   }
   
   export default {
-    name: 'zh',
+    name: 'de',
     home: {
       title: 'Lew UI',
-      description: '一个好看易用的 Vue3 组件库',
-      getStarted: '立即开始',
-      sloganTitle: '少即是多',
-      slogan: '一个好看易用的 Vue3 组件库',
-      home: '首页',
-      install: '安装',
-      components: '组件',
-      formEngine: '表单引擎',
-      descEngine: '描述引擎'
+      description: 'Eine schöne und benutzerfreundliche Vue3-Komponentenbibliothek',
+      getStarted: 'Loslegen',
+      sloganTitle: 'Weniger ist mehr',
+      slogan: 'Eine schöne und benutzerfreundliche Vue3-Komponentenbibliothek',
+      home: 'Startseite',
+      install: 'Installation',
+      components: 'Komponenten',
+      formEngine: 'Formular-Engine',
+      descEngine: 'Beschreibungs-Engine'
     },
     base: {
-      base: '基础',
-      navigator: '导航',
-      form: '表单',
-      data: '数据组件',
-      feedback: '反馈',
-      close: '关闭',
-      showCode: '显示源码'
+      base: 'Basis',
+      navigator: 'Navigation',
+      form: 'Formular',
+      data: 'Datenkomponenten',
+      feedback: 'Rückmeldung',
+      close: 'Schließen',
+      showCode: 'Code anzeigen'
     },
     components: {
       image: {
-        name: '图片 Image',
-        description: '让图片展示更优雅，支持懒加载、加载状态、失败处理等特性',
+        name: 'Bild',
+        description: 'Elegante Bildanzeige mit Unterstützung für Lazy Loading, Ladezustände und Fehlerbehandlung',
         demo1: {
-          title: '基础用法'
+          title: 'Grundlegende Verwendung'
         },
         demo2: {
-          title: '加载状态',
-          tipsTitle: '提示',
-          tipsContent: '需要设置 width 和 height，才会有占位加载效果。'
+          title: 'Ladezustand',
+          tipsTitle: 'Tipps',
+          tipsContent: 'Sie müssen Breite und Höhe festlegen, um einen Platzhalter-Ladeeffekt zu erhalten.'
         },
         demo3: {
-          title: '加载失败'
+          title: 'Ladefehler'
         },
         props: {
-          src: '图片地址',
-          alt: '图片描述',
-          width: '宽度',
-          height: '高度',
-          objectFit: '图片填充模式',
-          objectPosition: '图片位置',
-          lazy: '是否开启懒加载',
-          loading: '是否显示加载中状态',
-          title: '图片标题'
+          src: 'Bild-URL',
+          alt: 'Bildbeschreibung',
+          width: 'Breite',
+          height: 'Höhe',
+          objectFit: 'Anpassungsmodus',
+          objectPosition: 'Bildposition',
+          lazy: 'Lazy Loading aktivieren',
+          loading: 'Ladezustand anzeigen',
+          title: 'Bildtitel'
         }
       },
       avatar: {
-        name: '头像 Avatar',
-        description: '一个精致的头像组件，支持图片、图标和文字三种形式',
+        name: 'Avatar',
+        description: 'Eine elegante Avatar-Komponente, die Bild-, Icon- und Textformate unterstützt',
         demo1: {
-          title: '基础用法'
+          title: 'Grundlegende Verwendung'
         },
         demo2: {
-          title: '状态'
+          title: 'Status'
         },
         demo3: {
-          title: '默认头像'
+          title: 'Standard-Avatar'
         },
         demo4: {
-          title: '形状'
+          title: 'Form'
         },
         props: {
-          size: '尺寸',
-          loading: '是否显示加载中状态',
-          shape: '形状',
-          src: '图片地址',
-          alt: '图片描述',
-          status: '状态',
-          objectFit: '图片填充模式',
-          objectPosition: '图片位置',
-          statusPlacement: '状态位置'
+          size: 'Größe',
+          loading: 'Ladezustand anzeigen',
+          shape: 'Form',
+          src: 'Bild-URL',
+          alt: 'Bildbeschreibung',
+          status: 'Status',
+          objectFit: 'Anpassungsmodus',
+          objectPosition: 'Bildposition',
+          statusPlacement: 'Statusposition'
         }
       },
       button: {
-        name: '按钮 Button',
-        description: '点击它，让交互更加丝滑流畅',
+        name: 'Schaltfläche',
+        description: 'Machen Sie Ihre Interaktionen flüssiger mit einem einfachen Klick',
         demo1: {
-          title: '基础用法'
+          title: 'Grundlegende Verwendung'
         },
         demo2: {
-          title: '色彩'
+          title: 'Farbe'
         },
         demo3: {
-          title: '图标'
+          title: 'Icon'
         },
         demo4: {
-          title: '加载状态'
+          title: 'Ladezustand'
         },
         demo5: {
-          title: '禁用状态'
+          title: 'Deaktivierter Zustand'
         },
         demo6: {
-          title: '支持 Promise'
+          title: 'Promise-Unterstützung'
         },
         props: {
-          text: '按钮文字',
-          type: '类型',
-          size: '尺寸',
-          singleIcon: '是否只显示图标',
-          color: '颜色',
-          round: '是否圆角',
-          dashed: '是否虚线',
-          loading: '是否显示加载中状态',
-          disabled: '是否禁用状态',
-          request: '是否请求'
+          text: 'Schaltflächentext',
+          type: 'Typ',
+          size: 'Größe',
+          singleIcon: 'Nur Icon anzeigen',
+          color: 'Farbe',
+          round: 'Abgerundet',
+          dashed: 'Gestrichelt',
+          loading: 'Ladezustand anzeigen',
+          disabled: 'Deaktivierter Zustand',
+          request: 'Anfrage'
         }
       },
       tag: {
-        name: '标签 Tag',
-        description: '小巧而强大的标记利器，为内容分类添姿添彩',
+        name: 'Etikett',
+        description: 'Ein kleines, aber leistungsstarkes Markierungswerkzeug, das der Inhaltsklassifizierung Farbe verleiht',
         demo1: {
-          title: '基础用法'
+          title: 'Grundlegende Verwendung'
         },
         demo2: {
-          title: '类型'
+          title: 'Typ'
         },
         demo3: {
-          title: '尺寸'
+          title: 'Größe'
         },
         demo4: {
-          title: '色彩'
+          title: 'Farbe'
         },
         demo5: {
-          title: '禁用'
+          title: 'Deaktiviert'
         },
         demo6: {
-          title: '可关闭'
+          title: 'Schließbar'
         },
         demo7: {
-          title: '插槽'
+          title: 'Slot'
         },
         props: {
-          text: '标签文本，优先级大于插槽，超出宽度会触发 text-trim 效果',
-          type: '样式类型',
-          size: '尺寸',
-          color: '颜色主题',
-          closable: '是否可关闭',
-          disabled: '是否禁用',
-          round: '是否圆角'
+          text: 'Etikettentext, hat Vorrang vor Slot, Text-Trim-Effekt wird bei Überschreitung der Breite ausgelöst',
+          type: 'Stiltyp',
+          size: 'Größe',
+          color: 'Farbthema',
+          closable: 'Schließbar',
+          disabled: 'Deaktiviert',
+          round: 'Abgerundet'
         }
       },
       badge: {
-        name: '徽章 Badge',
-        description: '在右上角绽放的小红点，让提醒更加醒目',
+        name: 'Abzeichen',
+        description: 'Ein kleiner roter Punkt, der in der oberen rechten Ecke erscheint und Benachrichtigungen auffälliger macht',
         demo1: {
-          title: '基础用法'
+          title: 'Grundlegende Verwendung'
         },
         demo2: {
-          title: '点'
+          title: 'Punkt'
         },
         demo3: {
-          title: '直接使用'
+          title: 'Direkte Verwendung'
         },
         demo4: {
-          title: '文本'
+          title: 'Text'
         },
         demo5: {
-          title: '处理中'
+          title: 'In Bearbeitung'
         },
         props: {
-          text: '标签文字',
-          offset: '徽章的偏移量',
-          processing: '是否处理中',
-          max: '最大值，超过最大值会显示为 max+',
-          color: '徽章颜色',
-          disabled: '是否禁用',
-          value: '徽章值（为空时，会显示为点）'
+          text: 'Abzeichentext',
+          offset: 'Abzeichenversatz',
+          processing: 'In Bearbeitung',
+          max: 'Maximalwert, wird als max+ angezeigt wenn überschritten',
+          color: 'Abzeichenfarbe',
+          disabled: 'Deaktiviert',
+          value: 'Abzeichenwert (wird als Punkt angezeigt wenn leer)'
         }
       },
       title: {
-        name: '标题 Title',
-        description: '不只是标题，更是内容的灵魂提示',
+        name: 'Titel',
+        description: 'Nicht nur ein Titel, sondern die Essenz, die dem Inhalt Leben einhaucht',
         demo1: {
-          title: '基础用法'
+          title: 'Grundlegende Verwendung'
         },
         demo2: {
-          title: '粗体'
+          title: 'Fett'
         },
         demo3: {
-          title: '色彩'
+          title: 'Farbe'
         },
         props: {
-          text: '文本内容',
-          size: '标题文字大小，可以是数字（单位：像素）或字符串（如 "1.5em"）',
-          bold: '标题文字粗细程度，可选值为 100 到 900 之间的整百数',
-          color: '标题文字颜色，可选值包括预定义的颜色名称或自定义的颜色值'
+          text: 'Textinhalt',
+          size: 'Titeltext-Größe, kann eine Zahl (Einheit: Pixel) oder eine Zeichenkette (z.B. "1.5em") sein',
+          bold: 'Titeltext-Stärke, optionale Werte sind ganze Zahlen zwischen 100 und 900',
+          color: 'Titeltext-Farbe, optionale Werte umfassen vordefinierte Farbnamen oder benutzerdefinierte Farbwerte'
         }
       },
       textTrim: {
-        name: '文本截断 TextTrim',
-        description: '优雅地处理过长文本，不让它破坏布局的美感',
+        name: 'Textkürzung',
+        description: 'Elegante Handhabung langer Texte ohne die Ästhetik des Layouts zu beeinträchtigen',
         demo1: {
-          title: '基础用法'
+          title: 'Grundlegende Verwendung'
         },
         demo2: {
-          title: '多行省略'
+          title: 'Mehrzeilige Auslassungspunkte'
         },
         demo3: {
-          title: '末端文本'
+          title: 'Endtext'
         },
         demo4: {
-          title: '对齐方式'
+          title: 'Ausrichtung'
         },
         props: {
-          text: '文本内容',
-          lineClamp: '文本显示的最大行数，超出部分将被截断',
-          allowHTML: '是否允许渲染 HTML 标签',
-          placement: '提示框的显示位置',
-          offset: '提示框相对于目标元素的偏移量 [x, y]（单位：像素）',
-          textAlign: 'x轴对齐方向（当宽度小于容器宽度时）',
-          delay: '显示和隐藏提示框的延迟时间 [显示延迟, 隐藏延迟]（单位：毫秒）',
-          reserveEnd:
-            '保留末尾的字符数量，当文本溢出时会在中间显示省略号，保留开头和指定数量的末尾字符'
+          text: 'Textinhalt',
+          lineClamp: 'Maximale Anzahl der anzuzeigenden Zeilen, Überschuss wird abgeschnitten',
+          allowHTML: 'Rendering von HTML-Tags erlauben',
+          placement: 'Position der Tooltip-Anzeige',
+          offset: 'Tooltip-Versatz relativ zum Zielelement [x, y] (Einheit: Pixel)',
+          textAlign: 'Horizontale Ausrichtung (wenn Breite kleiner als Container-Breite)',
+          delay: 'Verzögerungszeit für das Ein- und Ausblenden des Tooltips [Einblendverzögerung, Ausblendverzögerung] (Einheit: Millisekunden)',
+          reserveEnd: 'Anzahl der am Ende zu behaltenden Zeichen, zeigt Auslassungspunkte in der Mitte an, wenn Text überläuft, behält Anfang und angegebene Anzahl von Endzeichen bei'
         }
       },
       flex: {

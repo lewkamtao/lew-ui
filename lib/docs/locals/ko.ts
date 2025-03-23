@@ -1,12 +1,12 @@
 const contextMenu = {
-  label: '텍스트 표시',
+  label: '표시 텍스트',
   value: '값',
   renderIcon: '아이콘 렌더링 함수',
-  children: '하위 노드 집합',
+  children: '하위 노드 모음',
   disabled: '비활성화 옵션',
   isDividerLine: '구분선 여부',
   checkbox: '체크박스 여부',
-  checked: '체크 여부'
+  checked: '선택 여부'
 }
 
 export default {
@@ -15,7 +15,7 @@ export default {
     title: 'Lew UI',
     description: '아름답고 사용하기 쉬운 Vue3 컴포넌트 라이브러리',
     getStarted: '시작하기',
-    sloganTitle: '적은 것이 많은 것',
+    sloganTitle: '단순함이 최고',
     slogan: '아름답고 사용하기 쉬운 Vue3 컴포넌트 라이브러리',
     home: '홈',
     install: '설치',
@@ -30,41 +30,38 @@ export default {
     data: '데이터 컴포넌트',
     feedback: '피드백',
     close: '닫기',
-    showCode: '소스 코드 보기'
+    showCode: '코드 보기'
   },
   components: {
     image: {
       name: '이미지 Image',
-      description:
-        '이미지를 더 우아하게 표시하며, 지연 로딩, 로딩 상태, 실패 처리 등을 지원합니다',
+      description: '지연 로딩, 로딩 상태, 오류 처리 등을 지원하는 세련된 이미지 표시',
       demo1: {
         title: '기본 사용법'
       },
       demo2: {
         title: '로딩 상태',
         tipsTitle: '팁',
-        tipsContent:
-          '너비와 높이를 설정해야 로딩 플레이스홀더 효과가 나타납니다.'
+        tipsContent: '플레이스홀더 효과를 얻으려면 width와 height를 설정해야 합니다.'
       },
       demo3: {
         title: '로딩 실패'
       },
       props: {
-        src: '이미지 주소',
+        src: '이미지 URL',
         alt: '이미지 설명',
         width: '너비',
         height: '높이',
-        objectFit: '이미지 채우기 모드',
+        objectFit: '이미지 맞춤 모드',
         objectPosition: '이미지 위치',
-        lazy: '지연 로딩 활성화 여부',
-        loading: '로딩 중 상태 표시 여부',
+        lazy: '지연 로딩 활성화',
+        loading: '로딩 상태 표시',
         title: '이미지 제목'
       }
     },
     avatar: {
       name: '아바타 Avatar',
-      description:
-        '세련된 아바타 컴포넌트로, 이미지, 아이콘, 텍스트 세 가지 형태를 지원합니다',
+      description: '이미지, 아이콘, 텍스트 세 가지 형식을 지원하는 세련된 아바타 컴포넌트',
       demo1: {
         title: '기본 사용법'
       },
@@ -79,19 +76,19 @@ export default {
       },
       props: {
         size: '크기',
-        loading: '로딩 중 상태 표시 여부',
+        loading: '로딩 상태 표시',
         shape: '모양',
-        src: '이미지 주소',
+        src: '이미지 URL',
         alt: '이미지 설명',
         status: '상태',
-        objectFit: '이미지 채우기 모드',
+        objectFit: '이미지 맞춤 모드',
         objectPosition: '이미지 위치',
         statusPlacement: '상태 위치'
       }
     },
     button: {
       name: '버튼 Button',
-      description: '클릭하면 더 부드럽고 유연한 상호작용이 가능합니다',
+      description: '클릭으로 부드러운 상호작용 구현',
       demo1: {
         title: '기본 사용법'
       },
@@ -114,13 +111,13 @@ export default {
         text: '버튼 텍스트',
         type: '타입',
         size: '크기',
-        singleIcon: '아이콘만 표시 여부',
+        singleIcon: '아이콘만 표시',
         color: '색상',
-        round: '둥근 모서리 여부',
-        dashed: '점선 여부',
-        loading: '로딩 중 상태 표시 여부',
-        disabled: '비활성화 상태 여부',
-        request: '요청 여부'
+        round: '둥근 모서리',
+        dashed: '점선',
+        loading: '로딩 상태 표시',
+        disabled: '비활성화 상태',
+        request: '요청'
       }
     },
     tag: {
@@ -1467,6 +1464,38 @@ export default {
         width: '너비',
         x: 'X축',
         customRender: '사용자 정의 렌더링'
+      }
+    },
+    dialog: {
+      name: '모달 Modal',
+      description: '더욱 유연한 모달 창으로 팝업 상호작용을 더욱 풍부하게 만듭니다',
+      demo1: {
+        title: '기본 사용법'
+      },
+      demo2: {
+        title: '비동기 닫기'
+      },
+      demo3: {
+        title: '헤더와 푸터 사용자 정의'
+      },
+      demo4: {
+        title: 'ESC 키로 닫기 설정'
+      },
+      model: {
+        visible: '표시 여부'
+      },
+      props: {
+        title: '제목',
+        width: '너비',
+        top: '상단 여백',
+        hideFooter: '푸터 숨김 여부',
+        closeByEsc: 'ESC 키로 닫기 여부',
+        okProps: '확인 버튼 속성',
+        cancelProps: '취소 버튼 속성',
+        hideOkButton: '확인 버튼 숨김 여부',
+        hideCancelButton: '취소 버튼 숨김 여부',
+        closeOnClickOverlay: '오버레이 클릭으로 닫기 여부',
+        zIndex: '층위'
       }
     }
   }

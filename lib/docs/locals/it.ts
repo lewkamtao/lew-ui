@@ -1,185 +1,185 @@
 const contextMenu = {
-    label: '显示文本',
-    value: '值',
-    renderIcon: '渲染图标函数',
-    children: '子节点集合',
-    disabled: '禁用选项',
-    isDividerLine: '是否是分割线',
-    checkbox: '是否是复选框',
-    checked: '是否选中'
+    label: 'Testo visualizzato',
+    value: 'Valore',
+    renderIcon: 'Funzione di rendering icona',
+    children: 'Collezione di nodi figli',
+    disabled: 'Opzione disabilitata',
+    isDividerLine: 'È una linea divisoria',
+    checkbox: 'È una casella di controllo',
+    checked: 'È selezionato'
   }
   
   export default {
-    name: 'zh',
+    name: 'it',
     home: {
       title: 'Lew UI',
-      description: '一个好看易用的 Vue3 组件库',
-      getStarted: '立即开始',
-      sloganTitle: '少即是多',
-      slogan: '一个好看易用的 Vue3 组件库',
-      home: '首页',
-      install: '安装',
-      components: '组件',
-      formEngine: '表单引擎',
-      descEngine: '描述引擎'
+      description: 'Una bellissima e facile da usare libreria di componenti Vue3',
+      getStarted: 'Inizia ora',
+      sloganTitle: 'Meno è più',
+      slogan: 'Una bellissima e facile da usare libreria di componenti Vue3',
+      home: 'Home',
+      install: 'Installazione',
+      components: 'Componenti',
+      formEngine: 'Motore dei form',
+      descEngine: 'Motore delle descrizioni'
     },
     base: {
-      base: '基础',
-      navigator: '导航',
-      form: '表单',
-      data: '数据组件',
-      feedback: '反馈',
-      close: '关闭',
-      showCode: '显示源码'
+      base: 'Base',
+      navigator: 'Navigazione',
+      form: 'Form',
+      data: 'Componenti dati',
+      feedback: 'Feedback',
+      close: 'Chiudi',
+      showCode: 'Mostra codice'
     },
     components: {
       image: {
-        name: '图片 Image',
-        description: '让图片展示更优雅，支持懒加载、加载状态、失败处理等特性',
+        name: 'Immagine',
+        description: 'Visualizzazione elegante delle immagini con supporto per caricamento lazy, stati di caricamento e gestione degli errori',
         demo1: {
-          title: '基础用法'
+          title: 'Utilizzo base'
         },
         demo2: {
-          title: '加载状态',
-          tipsTitle: '提示',
-          tipsContent: '需要设置 width 和 height，才会有占位加载效果。'
+          title: 'Stato di caricamento',
+          tipsTitle: 'Suggerimenti',
+          tipsContent: 'È necessario impostare larghezza e altezza per avere un effetto placeholder durante il caricamento.'
         },
         demo3: {
-          title: '加载失败'
+          title: 'Errore di caricamento'
         },
         props: {
-          src: '图片地址',
-          alt: '图片描述',
-          width: '宽度',
-          height: '高度',
-          objectFit: '图片填充模式',
-          objectPosition: '图片位置',
-          lazy: '是否开启懒加载',
-          loading: '是否显示加载中状态',
-          title: '图片标题'
+          src: 'URL dell\'immagine',
+          alt: 'Descrizione dell\'immagine',
+          width: 'Larghezza',
+          height: 'Altezza',
+          objectFit: 'Modalità di riempimento',
+          objectPosition: 'Posizione dell\'immagine',
+          lazy: 'Attiva caricamento lazy',
+          loading: 'Mostra stato di caricamento',
+          title: 'Titolo dell\'immagine'
         }
       },
       avatar: {
-        name: '头像 Avatar',
-        description: '一个精致的头像组件，支持图片、图标和文字三种形式',
+        name: 'Avatar',
+        description: 'Un elegante componente avatar che supporta formati immagine, icona e testo',
         demo1: {
-          title: '基础用法'
+          title: 'Utilizzo base'
         },
         demo2: {
-          title: '状态'
+          title: 'Stato'
         },
         demo3: {
-          title: '默认头像'
+          title: 'Avatar predefinito'
         },
         demo4: {
-          title: '形状'
+          title: 'Forma'
         },
         props: {
-          size: '尺寸',
-          loading: '是否显示加载中状态',
-          shape: '形状',
-          src: '图片地址',
-          alt: '图片描述',
-          status: '状态',
-          objectFit: '图片填充模式',
-          objectPosition: '图片位置',
-          statusPlacement: '状态位置'
+          size: 'Dimensione',
+          loading: 'Mostra stato di caricamento',
+          shape: 'Forma',
+          src: 'URL dell\'immagine',
+          alt: 'Descrizione dell\'immagine',
+          status: 'Stato',
+          objectFit: 'Modalità di riempimento',
+          objectPosition: 'Posizione dell\'immagine',
+          statusPlacement: 'Posizione dello stato'
         }
       },
       button: {
-        name: '按钮 Button',
-        description: '点击它，让交互更加丝滑流畅',
+        name: 'Pulsante',
+        description: 'Rendi le tue interazioni più fluide con un semplice clic',
         demo1: {
-          title: '基础用法'
+          title: 'Utilizzo base'
         },
         demo2: {
-          title: '色彩'
+          title: 'Colore'
         },
         demo3: {
-          title: '图标'
+          title: 'Icona'
         },
         demo4: {
-          title: '加载状态'
+          title: 'Stato di caricamento'
         },
         demo5: {
-          title: '禁用状态'
+          title: 'Stato disabilitato'
         },
         demo6: {
-          title: '支持 Promise'
+          title: 'Supporto Promise'
         },
         props: {
-          text: '按钮文字',
-          type: '类型',
-          size: '尺寸',
-          singleIcon: '是否只显示图标',
-          color: '颜色',
-          round: '是否圆角',
-          dashed: '是否虚线',
-          loading: '是否显示加载中状态',
-          disabled: '是否禁用状态',
-          request: '是否请求'
+          text: 'Testo del pulsante',
+          type: 'Tipo',
+          size: 'Dimensione',
+          singleIcon: 'Mostra solo icona',
+          color: 'Colore',
+          round: 'Arrotondato',
+          dashed: 'Tratteggiato',
+          loading: 'Mostra stato di caricamento',
+          disabled: 'Stato disabilitato',
+          request: 'Richiesta'
         }
       },
       tag: {
-        name: '标签 Tag',
-        description: '小巧而强大的标记利器，为内容分类添姿添彩',
+        name: 'Etichetta',
+        description: 'Uno strumento di marcatura piccolo ma potente che aggiunge colore alla classificazione dei contenuti',
         demo1: {
-          title: '基础用法'
+          title: 'Utilizzo base'
         },
         demo2: {
-          title: '类型'
+          title: 'Tipo'
         },
         demo3: {
-          title: '尺寸'
+          title: 'Dimensione'
         },
         demo4: {
-          title: '色彩'
+          title: 'Colore'
         },
         demo5: {
-          title: '禁用'
+          title: 'Disabilitato'
         },
         demo6: {
-          title: '可关闭'
+          title: 'Chiudibile'
         },
         demo7: {
-          title: '插槽'
+          title: 'Slot'
         },
         props: {
-          text: '标签文本，优先级大于插槽，超出宽度会触发 text-trim 效果',
-          type: '样式类型',
-          size: '尺寸',
-          color: '颜色主题',
-          closable: '是否可关闭',
-          disabled: '是否禁用',
-          round: '是否圆角'
+          text: 'Testo dell\'etichetta, ha priorità sullo slot, l\'effetto text-trim si attiva quando viene superata la larghezza',
+          type: 'Tipo di stile',
+          size: 'Dimensione',
+          color: 'Tema colore',
+          closable: 'Chiudibile',
+          disabled: 'Disabilitato',
+          round: 'Arrotondato'
         }
       },
       badge: {
-        name: '徽章 Badge',
-        description: '在右上角绽放的小红点，让提醒更加醒目',
+        name: 'Badge',
+        description: 'Un piccolo punto rosso che fiorisce nell\'angolo superiore destro, rendendo le notifiche più evidenti',
         demo1: {
-          title: '基础用法'
+          title: 'Utilizzo base'
         },
         demo2: {
-          title: '点'
+          title: 'Punto'
         },
         demo3: {
-          title: '直接使用'
+          title: 'Utilizzo diretto'
         },
         demo4: {
-          title: '文本'
+          title: 'Testo'
         },
         demo5: {
-          title: '处理中'
+          title: 'In elaborazione'
         },
         props: {
-          text: '标签文字',
-          offset: '徽章的偏移量',
-          processing: '是否处理中',
-          max: '最大值，超过最大值会显示为 max+',
-          color: '徽章颜色',
-          disabled: '是否禁用',
-          value: '徽章值（为空时，会显示为点）'
+          text: 'Testo del badge',
+          offset: 'Offset del badge',
+          processing: 'In elaborazione',
+          max: 'Valore massimo, verrà mostrato come max+ se superato',
+          color: 'Colore del badge',
+          disabled: 'Disabilitato',
+          value: 'Valore del badge (verrà mostrato come punto se vuoto)'
         }
       },
       title: {
@@ -1681,63 +1681,63 @@ const contextMenu = {
         }
       },
       dialog: {
-        name: '对话框 Dialog',
-        description: '模态对话框，让重要信息交互更加突出',
+        name: 'Finestra di Dialogo',
+        description: 'Finestra di dialogo modale per rendere più evidenti le interazioni con informazioni importanti',
         demo1: {
-          title: '基础用法'
+          title: 'Utilizzo Base'
         },
         demo2: {
-          title: '简单的'
+          title: 'Esempio Semplice'
         },
         props: {
-          type: '类型',
-          width: '宽度',
-          trigger: '触发方式',
-          title: '标题',
-          okText: '确认按钮文本',
-          cancelText: '取消按钮文本',
-          ok: '确认回调',
-          cancel: '取消回调',
-          layout: '布局方式',
-          closeOnClickOverlay: '是否可通过点击遮罩关闭',
-          closeByEsc: '是否可通过按下 ESC 关闭',
-          transformOrigin: '动画原点'
+          type: 'Tipo',
+          width: 'Larghezza',
+          trigger: 'Metodo di Attivazione',
+          title: 'Titolo',
+          okText: 'Testo del Pulsante di Conferma',
+          cancelText: 'Testo del Pulsante di Annullamento',
+          ok: 'Callback di Conferma',
+          cancel: 'Callback di Annullamento',
+          layout: 'Tipo di Layout',
+          closeOnClickOverlay: 'Chiudi al Click su Overlay',
+          closeByEsc: 'Chiudi con Tasto ESC',
+          transformOrigin: 'Origine Animazione'
         },
         events: {
-          ok: '点击确认按钮时触发',
-          cancel: '点击取消按钮时触发'
+          ok: 'Evento Click su Conferma',
+          cancel: 'Evento Click su Annulla'
         }
       },
       modal: {
-        name: '模态框 Modal',
-        description: '更加灵活的模态窗口，让弹窗交互更加丰富',
+        name: 'Finestra Modale',
+        description: 'Una finestra modale più flessibile per interazioni di popup più ricche',
         demo1: {
-          title: '基础用法'
+          title: 'Utilizzo Base'
         },
         demo2: {
-          title: '异步关闭'
+          title: 'Chiusura Asincrona'
         },
         demo3: {
-          title: '自定义头部和底部'
+          title: 'Intestazione e Piè di Pagina Personalizzati'
         },
         demo4: {
-          title: '是否允许esc关闭'
+          title: 'Chiusura con Tasto ESC'
         },
         model: {
-          visible: '是否显示'
+          visible: 'Stato di Visibilità'
         },
         props: {
-          title: '标题',
-          width: '宽度',
-          top: '距离顶部的距离',
-          hideFooter: '是否隐藏底部',
-          closeByEsc: '是否可通过按下 ESC 关闭',
-          okProps: '确认按钮属性',
-          cancelProps: '取消按钮属性',
-          hideOkButton: '是否隐藏确认按钮',
-          hideCancelButton: '是否隐藏取消按钮',
-          closeOnClickOverlay: '是否可通过点击遮罩关闭',
-          zIndex: '层级'
+          title: 'Titolo',
+          width: 'Larghezza',
+          top: 'Distanza dal Bordo Superiore',
+          hideFooter: 'Nascondi Piè di Pagina',
+          closeByEsc: 'Chiudi con Tasto ESC',
+          okProps: 'Proprietà Pulsante Conferma',
+          cancelProps: 'Proprietà Pulsante Annulla',
+          hideOkButton: 'Nascondi Pulsante Conferma',
+          hideCancelButton: 'Nascondi Pulsante Annulla',
+          closeOnClickOverlay: 'Chiudi al Click su Overlay',
+          zIndex: 'Livello di Sovrapposizione'
         }
       },
       popok: {

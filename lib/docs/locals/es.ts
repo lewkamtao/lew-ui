@@ -1,242 +1,230 @@
 const contextMenu = {
-  label: 'Display Text',
-  value: 'Value',
-  renderIcon: 'Render Icon Function',
-  children: 'Children Collection',
-  disabled: 'Disabled Option',
-  isDividerLine: 'Is Divider Line',
-  checkbox: 'Is Checkbox',
-  checked: 'Is Checked'
+  label: 'Texto mostrado',
+  value: 'Valor',
+  renderIcon: 'Función de renderizado de icono',
+  children: 'Colección de nodos hijos',
+  disabled: 'Opción deshabilitada',
+  isDividerLine: 'Es línea divisoria',
+  checkbox: 'Es casilla de verificación',
+  checked: 'Está marcado'
 }
 
 export default {
-  name: 'en',
+  name: 'es',
   home: {
     title: 'Lew UI',
-    description: 'A beautiful and easy-to-use Vue3 component library',
-    getStarted: 'Get Started',
-    sloganTitle: 'Less is More',
-    slogan: 'A beautiful and easy-to-use Vue3 component library',
-    home: 'Home',
-    install: 'Install',
-    components: 'Components',
-    formEngine: 'Form Engine',
-    descEngine: 'Description Engine'
+    description: 'Una hermosa y fácil de usar biblioteca de componentes Vue3',
+    getStarted: 'Comenzar',
+    sloganTitle: 'Menos es más',
+    slogan: 'Una hermosa y fácil de usar biblioteca de componentes Vue3',
+    home: 'Inicio',
+    install: 'Instalación',
+    components: 'Componentes',
+    formEngine: 'Motor de formularios',
+    descEngine: 'Motor de descripción'
   },
   base: {
     base: 'Base',
-    navigator: 'Navigator',
-    form: 'Form',
-    data: 'Data Components',
-    feedback: 'Feedback',
-    close: 'Close',
-    showCode: 'Show Code'
+    navigator: 'Navegación',
+    form: 'Formulario',
+    data: 'Componentes de datos',
+    feedback: 'Retroalimentación',
+    close: 'Cerrar',
+    showCode: 'Mostrar código'
   },
   components: {
     image: {
-      name: 'Image',
-      description:
-        'Make image display more elegant, supporting lazy loading, loading status, failure handling, and other features',
+      name: 'Imagen',
+      description: 'Visualización elegante de imágenes con soporte para carga diferida, estados de carga y manejo de errores',
       demo1: {
-        title: 'Basic Usage'
+        title: 'Uso básico'
       },
       demo2: {
-        title: 'Loading Status',
-        tipsTitle: 'Tips',
-        tipsContent:
-          'You need to set width and height to have a placeholder loading effect.'
+        title: 'Estado de carga',
+        tipsTitle: 'Consejos',
+        tipsContent: 'Necesitas establecer el ancho y alto para tener un efecto de marcador de posición durante la carga.'
       },
       demo3: {
-        title: 'Loading Failure'
+        title: 'Error de carga'
       },
       props: {
-        src: 'Image Source',
-        alt: 'Image Description',
-        width: 'Width',
-        height: 'Height',
-        objectFit: 'Image Fill Mode',
-        objectPosition: 'Image Position',
-        lazy: 'Enable Lazy Loading',
-        loading: 'Show Loading Status',
-        title: 'Image Title'
+        src: 'URL de la imagen',
+        alt: 'Descripción de la imagen',
+        width: 'Ancho',
+        height: 'Alto',
+        objectFit: 'Modo de ajuste',
+        objectPosition: 'Posición de la imagen',
+        lazy: 'Activar carga diferida',
+        loading: 'Mostrar estado de carga',
+        title: 'Título de la imagen'
       }
     },
     avatar: {
       name: 'Avatar',
-      description:
-        'A delicate avatar component, supporting image, icon, and text forms',
+      description: 'Un elegante componente de avatar que admite formatos de imagen, icono y texto',
       demo1: {
-        title: 'Basic Usage'
+        title: 'Uso básico'
       },
       demo2: {
-        title: 'Status'
+        title: 'Estado'
       },
       demo3: {
-        title: 'Default Avatar'
+        title: 'Avatar predeterminado'
       },
       demo4: {
-        title: 'Shape'
+        title: 'Forma'
       },
       props: {
-        size: 'Size',
-        loading: 'Show Loading Status',
-        shape: 'Shape',
-        src: 'Image Source',
-        alt: 'Image Description',
-        status: 'Status',
-        objectFit: 'Image Fill Mode',
-        objectPosition: 'Image Position',
-        statusPlacement: 'Status Placement'
+        size: 'Tamaño',
+        loading: 'Mostrar estado de carga',
+        shape: 'Forma',
+        src: 'URL de la imagen',
+        alt: 'Descripción de la imagen',
+        status: 'Estado',
+        objectFit: 'Modo de ajuste',
+        objectPosition: 'Posición de la imagen',
+        statusPlacement: 'Posición del estado'
       }
     },
     button: {
-      name: 'Button',
-      description: 'Click it to make interactions smoother',
+      name: 'Botón',
+      description: 'Haz que tus interacciones sean más fluidas con un simple clic',
       demo1: {
-        title: 'Basic Usage'
+        title: 'Uso básico'
       },
       demo2: {
         title: 'Color'
       },
       demo3: {
-        title: 'Icon'
+        title: 'Icono'
       },
       demo4: {
-        title: 'Loading Status'
+        title: 'Estado de carga'
       },
       demo5: {
-        title: 'Disabled Status'
+        title: 'Estado deshabilitado'
       },
       demo6: {
-        title: 'Support Promise'
+        title: 'Soporte de Promise'
       },
       props: {
-        text: 'Button Text',
-        type: 'Type',
-        size: 'Size',
-        singleIcon: 'Show Icon Only',
+        text: 'Texto del botón',
+        type: 'Tipo',
+        size: 'Tamaño',
+        singleIcon: 'Mostrar solo icono',
         color: 'Color',
-        round: 'Round',
-        dashed: 'Dashed',
-        loading: 'Show Loading Status',
-        disabled: 'Disabled Status',
-        request: 'Request'
+        round: 'Redondeado',
+        dashed: 'Punteado',
+        loading: 'Mostrar estado de carga',
+        disabled: 'Estado deshabilitado',
+        request: 'Solicitud'
       }
     },
     tag: {
-      name: 'Tag',
-      description:
-        'A small but powerful marking tool, adding color to content classification',
+      name: 'Etiqueta',
+      description: 'Una herramienta de marcado pequeña pero poderosa que añade color a la clasificación del contenido',
       demo1: {
-        title: 'Basic Usage'
+        title: 'Uso básico'
       },
       demo2: {
-        title: 'Type'
+        title: 'Tipo'
       },
       demo3: {
-        title: 'Size'
+        title: 'Tamaño'
       },
       demo4: {
         title: 'Color'
       },
       demo5: {
-        title: 'Disabled'
+        title: 'Deshabilitado'
       },
       demo6: {
-        title: 'Closable'
+        title: 'Cerrable'
       },
       demo7: {
         title: 'Slot'
       },
       props: {
-        text: 'Tag Text, priority over slot, text-trim effect will be triggered when width is exceeded',
-        type: 'Style Type',
-        size: 'Size',
-        color: 'Color Theme',
-        closable: 'Closable',
-        disabled: 'Disabled',
-        round: 'Round'
+        text: 'Texto de la etiqueta, tiene prioridad sobre el slot, se activará el efecto text-trim cuando se exceda el ancho',
+        type: 'Tipo de estilo',
+        size: 'Tamaño',
+        color: 'Tema de color',
+        closable: 'Permite cerrar',
+        disabled: 'Deshabilitado',
+        round: 'Bordes redondeados'
       }
     },
     badge: {
-      name: 'Badge',
-      description:
-        'A small red dot blooming in the upper right corner, making reminders more eye-catching',
+      name: 'Insignia',
+      description: 'Un pequeño punto rojo que florece en la esquina superior derecha, haciendo que las notificaciones sean más llamativas',
       demo1: {
-        title: 'Basic Usage'
+        title: 'Uso básico'
       },
       demo2: {
-        title: 'Dot'
+        title: 'Punto'
       },
       demo3: {
-        title: 'Direct Use'
+        title: 'Uso directo'
       },
       demo4: {
-        title: 'Text'
+        title: 'Texto'
       },
       demo5: {
-        title: 'Processing'
+        title: 'Procesando'
       },
       props: {
-        text: 'Badge Text',
-        offset: 'Badge Offset',
-        processing: 'Processing',
-        max: 'Max Value, will display as max+ if exceeded',
-        color: 'Badge Color',
-        disabled: 'Disabled',
-        value: 'Badge Value (will display as dot if empty)'
+        text: 'Texto de la insignia',
+        offset: 'Desplazamiento de la insignia',
+        processing: 'En procesamiento',
+        max: 'Valor máximo, se mostrará como max+ si se excede',
+        color: 'Color de la insignia',
+        disabled: 'Deshabilitado',
+        value: 'Valor de la insignia (se mostrará como punto si está vacío)'
       }
     },
     title: {
-      name: 'Title',
-      description: 'Not just a title, but a soul hint of the content',
+      name: 'Título',
+      description: 'No solo un título, sino una esencia que da vida al contenido',
       demo1: {
-        title: 'Basic Usage'
+        title: 'Uso básico'
       },
       demo2: {
-        title: 'Bold'
+        title: 'Negrita'
       },
       demo3: {
         title: 'Color'
       },
       props: {
-        text: 'Text Content',
-        size: 'Title Text Size, can be a number (unit: pixel) or a string (e.g., "1.5em")',
-        bold: 'Title Text Boldness, optional values are integers between 100 and 900',
-        color:
-          'Title Text Color, optional values include predefined color names or custom color values'
+        text: 'Contenido del texto',
+        size: 'Tamaño del texto del título, puede ser un número (unidad: píxeles) o una cadena (ej., "1.5em")',
+        bold: 'Grosor del texto del título, valores opcionales son números enteros entre 100 y 900',
+        color: 'Color del texto del título, los valores opcionales incluyen nombres de colores predefinidos o valores de color personalizados'
       }
     },
     textTrim: {
-      name: 'Text Trim',
-      description:
-        'Elegantly handle long text without ruining the layout aesthetics',
+      name: 'Recorte de Texto',
+      description: 'Maneja elegantemente textos largos sin arruinar la estética del diseño',
       demo1: {
-        title: 'Basic Usage'
+        title: 'Uso básico'
       },
       demo2: {
-        title: 'Multi-line Ellipsis'
+        title: 'Elipsis multilínea'
       },
       demo3: {
-        title: 'End Text'
+        title: 'Texto final'
       },
       demo4: {
-        title: 'Alignment'
+        title: 'Alineación'
       },
       props: {
-        text: 'Text Content',
-        lineClamp:
-          'Maximum number of lines to display, excess will be truncated',
-        allowHTML: 'Allow rendering HTML tags',
-        placement: 'Tooltip display position',
-        offset:
-          'Tooltip offset relative to the target element [x, y] (unit: pixel)',
-        textAlign:
-          'Horizontal alignment direction (when width is less than container width)',
-        delay:
-          'Delay time for showing and hiding the tooltip [show delay, hide delay] (unit: millisecond)',
-        reserveEnd:
-          'Number of characters to retain at the end, will show ellipsis in the middle when text overflows, retaining the beginning and specified number of ending characters'
+        text: 'Contenido del texto',
+        lineClamp: 'Número máximo de líneas a mostrar, el exceso será truncado',
+        allowHTML: 'Permitir renderizar etiquetas HTML',
+        placement: 'Posición de visualización del tooltip',
+        offset: 'Desplazamiento del tooltip relativo al elemento objetivo [x, y] (unidad: píxeles)',
+        textAlign: 'Dirección de alineación horizontal (cuando el ancho es menor que el ancho del contenedor)',
+        delay: 'Tiempo de retraso para mostrar y ocultar el tooltip [retraso de mostrar, retraso de ocultar] (unidad: milisegundos)',
+        reserveEnd: 'Número de caracteres a conservar al final, mostrará puntos suspensivos en el medio cuando el texto se desborde, conservando el inicio y el número especificado de caracteres finales'
       }
     },
     flex: {

@@ -1,204 +1,204 @@
 const contextMenu = {
-    label: '显示文本',
-    value: '值',
-    renderIcon: '渲染图标函数',
-    children: '子节点集合',
-    disabled: '禁用选项',
-    isDividerLine: '是否是分割线',
-    checkbox: '是否是复选框',
-    checked: '是否选中'
+    label: 'Texto exibido',
+    value: 'Valor',
+    renderIcon: 'Função de renderização de ícone',
+    children: 'Coleção de nós filhos',
+    disabled: 'Opção desativada',
+    isDividerLine: 'É linha divisória',
+    checkbox: 'É caixa de seleção',
+    checked: 'Está marcado'
   }
   
   export default {
-    name: 'zh',
+    name: 'pt',
     home: {
       title: 'Lew UI',
-      description: '一个好看易用的 Vue3 组件库',
-      getStarted: '立即开始',
-      sloganTitle: '少即是多',
-      slogan: '一个好看易用的 Vue3 组件库',
-      home: '首页',
-      install: '安装',
-      components: '组件',
-      formEngine: '表单引擎',
-      descEngine: '描述引擎'
+      description: 'Uma biblioteca de componentes Vue3 bonita e fácil de usar',
+      getStarted: 'Começar',
+      sloganTitle: 'Menos é mais',
+      slogan: 'Uma biblioteca de componentes Vue3 bonita e fácil de usar',
+      home: 'Início',
+      install: 'Instalação',
+      components: 'Componentes',
+      formEngine: 'Motor de formulários',
+      descEngine: 'Motor de descrição'
     },
     base: {
-      base: '基础',
-      navigator: '导航',
-      form: '表单',
-      data: '数据组件',
-      feedback: '反馈',
-      close: '关闭',
-      showCode: '显示源码'
+      base: 'Base',
+      navigator: 'Navegação',
+      form: 'Formulário',
+      data: 'Componentes de dados',
+      feedback: 'Feedback',
+      close: 'Fechar',
+      showCode: 'Mostrar código'
     },
     components: {
       image: {
-        name: '图片 Image',
-        description: '让图片展示更优雅，支持懒加载、加载状态、失败处理等特性',
+        name: 'Imagem',
+        description: 'Exibição elegante de imagens com suporte para carregamento preguiçoso, estados de carregamento e tratamento de erros',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '加载状态',
-          tipsTitle: '提示',
-          tipsContent: '需要设置 width 和 height，才会有占位加载效果。'
+          title: 'Estado de carregamento',
+          tipsTitle: 'Dicas',
+          tipsContent: 'Você precisa definir largura e altura para ter um efeito de carregamento com placeholder.'
         },
         demo3: {
-          title: '加载失败'
+          title: 'Erro de carregamento'
         },
         props: {
-          src: '图片地址',
-          alt: '图片描述',
-          width: '宽度',
-          height: '高度',
-          objectFit: '图片填充模式',
-          objectPosition: '图片位置',
-          lazy: '是否开启懒加载',
-          loading: '是否显示加载中状态',
-          title: '图片标题'
+          src: 'URL da imagem',
+          alt: 'Descrição da imagem',
+          width: 'Largura',
+          height: 'Altura',
+          objectFit: 'Modo de ajuste',
+          objectPosition: 'Posição da imagem',
+          lazy: 'Ativar carregamento preguiçoso',
+          loading: 'Mostrar estado de carregamento',
+          title: 'Título da imagem'
         }
       },
       avatar: {
-        name: '头像 Avatar',
-        description: '一个精致的头像组件，支持图片、图标和文字三种形式',
+        name: 'Avatar',
+        description: 'Um elegante componente de avatar que suporta formatos de imagem, ícone e texto',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '状态'
+          title: 'Estado'
         },
         demo3: {
-          title: '默认头像'
+          title: 'Avatar padrão'
         },
         demo4: {
-          title: '形状'
+          title: 'Forma'
         },
         props: {
-          size: '尺寸',
-          loading: '是否显示加载中状态',
-          shape: '形状',
-          src: '图片地址',
-          alt: '图片描述',
-          status: '状态',
-          objectFit: '图片填充模式',
-          objectPosition: '图片位置',
-          statusPlacement: '状态位置'
+          size: 'Tamanho',
+          loading: 'Mostrar estado de carregamento',
+          shape: 'Forma',
+          src: 'URL da imagem',
+          alt: 'Descrição da imagem',
+          status: 'Estado',
+          objectFit: 'Modo de ajuste',
+          objectPosition: 'Posição da imagem',
+          statusPlacement: 'Posição do estado'
         }
       },
       button: {
-        name: '按钮 Button',
-        description: '点击它，让交互更加丝滑流畅',
+        name: 'Botão',
+        description: 'Torne suas interações mais fluidas com um simples clique',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '色彩'
+          title: 'Cor'
         },
         demo3: {
-          title: '图标'
+          title: 'Ícone'
         },
         demo4: {
-          title: '加载状态'
+          title: 'Estado de carregamento'
         },
         demo5: {
-          title: '禁用状态'
+          title: 'Estado desativado'
         },
         demo6: {
-          title: '支持 Promise'
+          title: 'Suporte a Promise'
         },
         props: {
-          text: '按钮文字',
-          type: '类型',
-          size: '尺寸',
-          singleIcon: '是否只显示图标',
-          color: '颜色',
-          round: '是否圆角',
-          dashed: '是否虚线',
-          loading: '是否显示加载中状态',
-          disabled: '是否禁用状态',
-          request: '是否请求'
+          text: 'Texto do botão',
+          type: 'Tipo',
+          size: 'Tamanho',
+          singleIcon: 'Mostrar apenas ícone',
+          color: 'Cor',
+          round: 'Arredondado',
+          dashed: 'Tracejado',
+          loading: 'Mostrar estado de carregamento',
+          disabled: 'Estado desativado',
+          request: 'Requisição'
         }
       },
       tag: {
-        name: '标签 Tag',
-        description: '小巧而强大的标记利器，为内容分类添姿添彩',
+        name: 'Etiqueta',
+        description: 'Uma ferramenta de marcação pequena mas poderosa que adiciona cor à classificação de conteúdo',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '类型'
+          title: 'Tipo'
         },
         demo3: {
-          title: '尺寸'
+          title: 'Tamanho'
         },
         demo4: {
-          title: '色彩'
+          title: 'Cor'
         },
         demo5: {
-          title: '禁用'
+          title: 'Desativado'
         },
         demo6: {
-          title: '可关闭'
+          title: 'Fechável'
         },
         demo7: {
-          title: '插槽'
+          title: 'Slot'
         },
         props: {
-          text: '标签文本，优先级大于插槽，超出宽度会触发 text-trim 效果',
-          type: '样式类型',
-          size: '尺寸',
-          color: '颜色主题',
-          closable: '是否可关闭',
-          disabled: '是否禁用',
-          round: '是否圆角'
+          text: 'Texto da etiqueta, tem prioridade sobre o slot, o efeito text-trim será ativado quando a largura for excedida',
+          type: 'Tipo de estilo',
+          size: 'Tamanho',
+          color: 'Tema de cor',
+          closable: 'Fechável',
+          disabled: 'Desativado',
+          round: 'Arredondado'
         }
       },
       badge: {
-        name: '徽章 Badge',
-        description: '在右上角绽放的小红点，让提醒更加醒目',
+        name: 'Emblema',
+        description: 'Um pequeno ponto vermelho que floresce no canto superior direito, tornando as notificações mais chamativas',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '点'
+          title: 'Ponto'
         },
         demo3: {
-          title: '直接使用'
+          title: 'Uso direto'
         },
         demo4: {
-          title: '文本'
+          title: 'Texto'
         },
         demo5: {
-          title: '处理中'
+          title: 'Processando'
         },
         props: {
-          text: '标签文字',
-          offset: '徽章的偏移量',
-          processing: '是否处理中',
-          max: '最大值，超过最大值会显示为 max+',
-          color: '徽章颜色',
-          disabled: '是否禁用',
-          value: '徽章值（为空时，会显示为点）'
+          text: 'Texto do emblema',
+          offset: 'Deslocamento do emblema',
+          processing: 'Em processamento',
+          max: 'Valor máximo, será exibido como max+ se excedido',
+          color: 'Cor do emblema',
+          disabled: 'Desativado',
+          value: 'Valor do emblema (será exibido como ponto se vazio)'
         }
       },
       title: {
-        name: '标题 Title',
-        description: '不只是标题，更是内容的灵魂提示',
+        name: 'Título',
+        description: 'Não apenas um título, mas a essência que dá vida ao conteúdo',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '粗体'
+          title: 'Negrito'
         },
         demo3: {
-          title: '色彩'
+          title: 'Cor'
         },
         props: {
-          text: '文本内容',
-          size: '标题文字大小，可以是数字（单位：像素）或字符串（如 "1.5em"）',
-          bold: '标题文字粗细程度，可选值为 100 到 900 之间的整百数',
-          color: '标题文字颜色，可选值包括预定义的颜色名称或自定义的颜色值'
+          text: 'Conteúdo do texto',
+          size: 'Tamanho do texto do título, pode ser um número (unidade: pixels) ou uma string (ex: "1.5em")',
+          bold: 'Espessura do texto do título, valores opcionais são números inteiros entre 100 e 900',
+          color: 'Cor do texto do título, os valores opcionais incluem nomes de cores predefinidas ou valores de cor personalizados'
         }
       },
       textTrim: {
