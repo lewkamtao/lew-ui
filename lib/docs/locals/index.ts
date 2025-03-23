@@ -3,8 +3,22 @@ import en from './en'
 import zh from './zh'
 import ja from './ja'
 import ko from './ko'
+import fr from './fr'
+import it from './it'
+import es from './es'
+import de from './de'
+import pt from './pt'
 
-export type Language = 'en' | 'zh' | 'ja' | 'ko'
+export type Language =
+  | 'en'
+  | 'zh'
+  | 'ja'
+  | 'ko'
+  | 'fr'
+  | 'it'
+  | 'es'
+  | 'de'
+  | 'pt'
 
 const currentLocale = 'zh'
 
@@ -12,7 +26,12 @@ export const messages = {
   en,
   zh,
   ja,
-  ko
+  ko,
+  fr,
+  it,
+  es,
+  de,
+  pt
 }
 
 const i18n = createI18n({
