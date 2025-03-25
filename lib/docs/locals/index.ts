@@ -36,8 +36,6 @@ import pt from './pt'
 // 4. 质量检查:
 //    - 母语者审校
 //    - 术语表一致性检查 
-//    - 文案显示测试
-//    - 本地化测试
 
 export type Language =
   | 'en'
