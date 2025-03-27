@@ -1636,71 +1636,82 @@ export default {
     },
     message: {
       name: 'メッセージ Message',
-      description: '軽量なフィードバックで、通知をよりシンプルに',
+      description: '画面上部に表示される簡潔なメッセージで、操作の結果をすばやく伝えます',
       demo1: {
         title: '基本的な使い方'
       },
       demo2: {
-        title: '制御可能'
+        title: 'タイプ'
       },
-      demo3: {
-        title: 'リクエストのシミュレーション'
-      },
-      events: {
-        close: '閉じる時に発火'
-      },
-      props: {
-        type: 'タイプ',
-        content: 'メッセージ内容',
-        duration: '表示時間'
+      methods: {
+        info: '情報タイプのメッセージを表示',
+        success: '成功タイプのメッセージを表示',
+        warning: '警告タイプのメッセージを表示',
+        error: 'エラータイプのメッセージを表示',
+        clear: 'すべてのメッセージをクリア'
       }
     },
     notification: {
       name: '通知 Notification',
-      description: 'エレガントな通知で、メッセージプッシュをより親しみやすく',
+      description: '画面の隅に表示される通知メッセージで、重要な情報をより効果的に伝達します',
       demo1: {
         title: '基本的な使い方'
       },
       demo2: {
-        title: '表示時間のカスタマイズ'
+        title: 'タイプ'
+      },
+      demo3: {
+        title: '位置'
+      },
+      demo4: {
+        title: '自動クローズなし'
+      },
+      methods: {
+        info: '情報タイプの通知を表示するメソッド',
+        success: '成功タイプの通知を表示するメソッド',
+        warning: '警告タイプの通知を表示するメソッド',
+        error: 'エラータイプの通知を表示するメソッド',
+        open: '通知を開くメソッド',
+        close: '通知を閉じるメソッド',
+        closeAll: 'すべての通知を閉じるメソッド'
       },
       props: {
-        type: 'タイプ',
+        id: '通知ID',
+        type: '通知タイプ',
         title: 'タイトル',
+        duration: '表示時間',
         content: '通知内容',
-        delay: '遅延時間'
+        showClose: '閉じるボタンを表示するかどうか',
+        offset: '画面端からのオフセット',
+        placement: '位置',
+        zIndex: '重なり順序'
       }
     },
     drawer: {
       name: 'ドロワー Drawer',
-      description:
-        '画面端からスライドするパネルで、一時的な操作をよりスムーズに',
+      description: 'サイドから滑り出す面板で、よりスムーズな操作体験を提供します',
       demo1: {
         title: '基本的な使い方'
       },
       demo2: {
-        title: '非同期で閉じる'
+        title: '位置'
       },
       demo3: {
-        title: 'ヘッダーとフッターのカスタマイズ'
-      },
-      demo4: {
-        title: 'ESCキーでの閉じる可否'
+        title: 'ヘッダーレス'
       },
       model: {
         visible: '表示状態'
       },
       props: {
         title: 'タイトル',
+        hideHeader: 'ヘッダーを非表示にするかどうか',
+        header: 'ヘッダーコンテンツ',
+        placement: '表示位置',
         width: '幅',
-        position: '位置',
         height: '高さ',
         closeOnClickOverlay: 'オーバーレイクリックで閉じるかどうか',
         closeByEsc: 'ESCキーで閉じるかどうか',
-        hideFooter: 'フッターを非表示にするかどうか',
-        okProps: '確認ボタンのプロパティ',
-        cancelProps: 'キャンセルボタンのプロパティ',
-        zIndex: '重なり順'
+        zIndex: '重なり順序'
       }
     },
     dialog: {

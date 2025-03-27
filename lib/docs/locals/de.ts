@@ -1,1845 +1,1914 @@
 const contextMenu = {
-    label: 'Angezeigter Text',
-    value: 'Wert',
-    renderIcon: 'Icon-Renderfunktion',
-    children: 'Unterknoten-Sammlung',
-    disabled: 'Deaktivierte Option',
-    isDividerLine: 'Ist Trennlinie',
-    checkbox: 'Ist Kontrollkästchen',
-    checked: 'Ist ausgewählt'
-  }
-  
-  export default {
-    name: 'de',
-    home: {
-      title: 'Lew UI',
-      description: 'Eine schöne und benutzerfreundliche Vue3-Komponentenbibliothek',
-      getStarted: 'Loslegen',
-      sloganTitle: 'Weniger ist mehr',
-      slogan: 'Eine schöne und benutzerfreundliche Vue3-Komponentenbibliothek',
-      home: 'Startseite',
-      install: 'Installation',
-      components: 'Komponenten',
-      formEngine: 'Formular-Engine',
-      descEngine: 'Beschreibungs-Engine'
+  label: 'Angezeigter Text',
+  value: 'Wert',
+  renderIcon: 'Icon-Renderfunktion',
+  children: 'Unterknoten-Sammlung',
+  disabled: 'Deaktivierte Option',
+  isDividerLine: 'Ist Trennlinie',
+  checkbox: 'Ist Kontrollkästchen',
+  checked: 'Ist ausgewählt'
+}
+
+export default {
+  name: 'de',
+  home: {
+    title: 'Lew UI',
+    description:
+      'Eine schöne und benutzerfreundliche Vue3-Komponentenbibliothek',
+    getStarted: 'Loslegen',
+    sloganTitle: 'Weniger ist mehr',
+    slogan: 'Eine schöne und benutzerfreundliche Vue3-Komponentenbibliothek',
+    home: 'Startseite',
+    install: 'Installation',
+    components: 'Komponenten',
+    formEngine: 'Formular-Engine',
+    descEngine: 'Beschreibungs-Engine'
+  },
+  base: {
+    base: 'Basis',
+    navigator: 'Navigation',
+    form: 'Formular',
+    data: 'Datenkomponenten',
+    feedback: 'Rückmeldung',
+    close: 'Schließen',
+    showCode: 'Code anzeigen'
+  },
+  components: {
+    image: {
+      name: 'Bild',
+      description:
+        'Elegante Bildanzeige mit Unterstützung für Lazy Loading, Ladezustände und Fehlerbehandlung',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Ladezustand',
+        tipsTitle: 'Tipps',
+        tipsContent:
+          'Sie müssen Breite und Höhe festlegen, um einen Platzhalter-Ladeeffekt zu erhalten.'
+      },
+      demo3: {
+        title: 'Ladefehler'
+      },
+      props: {
+        src: 'Bild-URL',
+        alt: 'Bildbeschreibung',
+        width: 'Breite',
+        height: 'Höhe',
+        objectFit: 'Anpassungsmodus',
+        objectPosition: 'Bildposition',
+        lazy: 'Lazy Loading aktivieren',
+        loading: 'Ladezustand anzeigen',
+        title: 'Bildtitel'
+      }
     },
-    base: {
-      base: 'Basis',
-      navigator: 'Navigation',
-      form: 'Formular',
-      data: 'Datenkomponenten',
-      feedback: 'Rückmeldung',
-      close: 'Schließen',
-      showCode: 'Code anzeigen'
+    avatar: {
+      name: 'Avatar',
+      description:
+        'Eine elegante Avatar-Komponente, die Bild-, Icon- und Textformate unterstützt',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Status'
+      },
+      demo3: {
+        title: 'Standard-Avatar'
+      },
+      demo4: {
+        title: 'Form'
+      },
+      props: {
+        size: 'Größe',
+        loading: 'Ladezustand anzeigen',
+        shape: 'Form',
+        src: 'Bild-URL',
+        alt: 'Bildbeschreibung',
+        status: 'Status',
+        objectFit: 'Anpassungsmodus',
+        objectPosition: 'Bildposition',
+        statusPlacement: 'Statusposition'
+      }
     },
-    components: {
-      image: {
-        name: 'Bild',
-        description: 'Elegante Bildanzeige mit Unterstützung für Lazy Loading, Ladezustände und Fehlerbehandlung',
-        demo1: {
-          title: 'Grundlegende Verwendung'
-        },
-        demo2: {
-          title: 'Ladezustand',
-          tipsTitle: 'Tipps',
-          tipsContent: 'Sie müssen Breite und Höhe festlegen, um einen Platzhalter-Ladeeffekt zu erhalten.'
-        },
-        demo3: {
-          title: 'Ladefehler'
-        },
-        props: {
-          src: 'Bild-URL',
-          alt: 'Bildbeschreibung',
-          width: 'Breite',
-          height: 'Höhe',
-          objectFit: 'Anpassungsmodus',
-          objectPosition: 'Bildposition',
-          lazy: 'Lazy Loading aktivieren',
-          loading: 'Ladezustand anzeigen',
-          title: 'Bildtitel'
-        }
+    button: {
+      name: 'Schaltfläche',
+      description:
+        'Machen Sie Ihre Interaktionen flüssiger mit einem einfachen Klick',
+      demo1: {
+        title: 'Grundlegende Verwendung'
       },
-      avatar: {
-        name: 'Avatar',
-        description: 'Eine elegante Avatar-Komponente, die Bild-, Icon- und Textformate unterstützt',
-        demo1: {
-          title: 'Grundlegende Verwendung'
-        },
-        demo2: {
-          title: 'Status'
-        },
-        demo3: {
-          title: 'Standard-Avatar'
-        },
-        demo4: {
-          title: 'Form'
-        },
-        props: {
-          size: 'Größe',
-          loading: 'Ladezustand anzeigen',
-          shape: 'Form',
-          src: 'Bild-URL',
-          alt: 'Bildbeschreibung',
-          status: 'Status',
-          objectFit: 'Anpassungsmodus',
-          objectPosition: 'Bildposition',
-          statusPlacement: 'Statusposition'
-        }
+      demo2: {
+        title: 'Farbe'
       },
-      button: {
-        name: 'Schaltfläche',
-        description: 'Machen Sie Ihre Interaktionen flüssiger mit einem einfachen Klick',
-        demo1: {
-          title: 'Grundlegende Verwendung'
-        },
-        demo2: {
-          title: 'Farbe'
-        },
-        demo3: {
-          title: 'Icon'
-        },
-        demo4: {
-          title: 'Ladezustand'
-        },
-        demo5: {
-          title: 'Deaktivierter Zustand'
-        },
-        demo6: {
-          title: 'Promise-Unterstützung'
-        },
-        props: {
-          text: 'Schaltflächentext',
-          type: 'Typ',
-          size: 'Größe',
-          singleIcon: 'Nur Icon anzeigen',
-          color: 'Farbe',
-          round: 'Abgerundet',
-          dashed: 'Gestrichelt',
-          loading: 'Ladezustand anzeigen',
-          disabled: 'Deaktivierter Zustand',
-          request: 'Anfrage'
-        }
+      demo3: {
+        title: 'Icon'
       },
-      tag: {
-        name: 'Etikett',
-        description: 'Ein kleines, aber leistungsstarkes Markierungswerkzeug, das der Inhaltsklassifizierung Farbe verleiht',
-        demo1: {
-          title: 'Grundlegende Verwendung'
-        },
-        demo2: {
-          title: 'Typ'
-        },
-        demo3: {
-          title: 'Größe'
-        },
-        demo4: {
-          title: 'Farbe'
-        },
-        demo5: {
-          title: 'Deaktiviert'
-        },
-        demo6: {
-          title: 'Schließbar'
-        },
-        demo7: {
-          title: 'Slot'
-        },
-        props: {
-          text: 'Etikettentext, hat Vorrang vor Slot, Text-Trim-Effekt wird bei Überschreitung der Breite ausgelöst',
-          type: 'Stiltyp',
-          size: 'Größe',
-          color: 'Farbthema',
-          closable: 'Schließbar',
-          disabled: 'Deaktiviert',
-          round: 'Abgerundet'
-        }
+      demo4: {
+        title: 'Ladezustand'
       },
-      badge: {
-        name: 'Abzeichen',
-        description: 'Ein kleiner roter Punkt, der in der oberen rechten Ecke erscheint und Benachrichtigungen auffälliger macht',
-        demo1: {
-          title: 'Grundlegende Verwendung'
-        },
-        demo2: {
-          title: 'Punkt'
-        },
-        demo3: {
-          title: 'Direkte Verwendung'
-        },
-        demo4: {
-          title: 'Text'
-        },
-        demo5: {
-          title: 'In Bearbeitung'
-        },
-        props: {
-          text: 'Abzeichentext',
-          offset: 'Abzeichenversatz',
-          processing: 'In Bearbeitung',
-          max: 'Maximalwert, wird als max+ angezeigt wenn überschritten',
-          color: 'Abzeichenfarbe',
-          disabled: 'Deaktiviert',
-          value: 'Abzeichenwert (wird als Punkt angezeigt wenn leer)'
-        }
+      demo5: {
+        title: 'Deaktivierter Zustand'
       },
-      title: {
-        name: 'Titel',
-        description: 'Nicht nur ein Titel, sondern die Essenz, die dem Inhalt Leben einhaucht',
-        demo1: {
-          title: 'Grundlegende Verwendung'
-        },
-        demo2: {
-          title: 'Fett'
-        },
-        demo3: {
-          title: 'Farbe'
-        },
-        props: {
-          text: 'Textinhalt',
-          size: 'Titeltext-Größe, kann eine Zahl (Einheit: Pixel) oder eine Zeichenkette (z.B. "1.5em") sein',
-          bold: 'Titeltext-Stärke, optionale Werte sind ganze Zahlen zwischen 100 und 900',
-          color: 'Titeltext-Farbe, optionale Werte umfassen vordefinierte Farbnamen oder benutzerdefinierte Farbwerte'
-        }
+      demo6: {
+        title: 'Promise-Unterstützung'
       },
-      textTrim: {
-        name: 'Textkürzung',
-        description: 'Elegante Handhabung langer Texte ohne die Ästhetik des Layouts zu beeinträchtigen',
-        demo1: {
-          title: 'Grundlegende Verwendung'
-        },
-        demo2: {
-          title: 'Mehrzeilige Auslassungspunkte'
-        },
-        demo3: {
-          title: 'Endtext'
-        },
-        demo4: {
-          title: 'Ausrichtung'
-        },
-        props: {
-          text: 'Textinhalt',
-          lineClamp: 'Maximale Anzahl der anzuzeigenden Zeilen, Überschuss wird abgeschnitten',
-          allowHTML: 'Rendering von HTML-Tags erlauben',
-          placement: 'Position der Tooltip-Anzeige',
-          offset: 'Tooltip-Versatz relativ zum Zielelement [x, y] (Einheit: Pixel)',
-          textAlign: 'Horizontale Ausrichtung (wenn Breite kleiner als Container-Breite)',
-          delay: 'Verzögerungszeit für das Ein- und Ausblenden des Tooltips [Einblendverzögerung, Ausblendverzögerung] (Einheit: Millisekunden)',
-          reserveEnd: 'Anzahl der am Ende zu behaltenden Zeichen, zeigt Auslassungspunkte in der Mitte an, wenn Text überläuft, behält Anfang und angegebene Anzahl von Endzeichen bei'
-        }
+      props: {
+        text: 'Schaltflächentext',
+        type: 'Typ',
+        size: 'Größe',
+        singleIcon: 'Nur Icon anzeigen',
+        color: 'Farbe',
+        round: 'Abgerundet',
+        dashed: 'Gestrichelt',
+        loading: 'Ladezustand anzeigen',
+        disabled: 'Deaktivierter Zustand',
+        request: 'Anfrage'
+      }
+    },
+    tag: {
+      name: 'Etikett',
+      description:
+        'Ein kleines, aber leistungsstarkes Markierungswerkzeug, das der Inhaltsklassifizierung Farbe verleiht',
+      demo1: {
+        title: 'Grundlegende Verwendung'
       },
-      flex: {
-        name: '弹性布局 Flex',
-        description: '灵活的布局方案，让页面排版如臂使指',
-        demo1: {
-          title: 'Row'
-        },
-        demo2: {
-          title: 'Column'
-        },
-        demo3: {
-          title: 'Mode'
-        },
-        props: {
-          direction: '子元素的排列方向',
-          x: '子元素在水平方向上的对齐方式',
-          y: '子元素在垂直方向上的对齐方式',
-          mode: '子元素的分布模式，会覆盖 x 或 y 的对齐设置，具体影响取决于 direction 的值',
-          wrap: '是否允许子元素在空间不足时自动换行',
-          gap: '子元素之间的间距（单位：像素）',
-          width: 'Flex 容器的宽度（单位：像素或百分比）'
-        }
+      demo2: {
+        title: 'Typ'
       },
-      mark: {
-        name: '标记 Mark',
-        description: '为文字添加高亮标记，让重点内容一目了然',
-        demo1: {
-          title: '基础用法'
-        },
-        props: {
-          color: '颜色主题',
-          round: '是否圆角',
-          bold: '是否加粗',
-          cursor: '鼠标悬停时的光标样式'
-        }
+      demo3: {
+        title: 'Größe'
       },
-      icon: {
-        name: '图标 Icon',
-        description: '精美的图标集合，为界面增添视觉语言'
+      demo4: {
+        title: 'Farbe'
       },
-      backTop: {
-        name: '返回顶部 BackTop',
-        description: '一键回到顶部，让长页面浏览不再烦恼',
-        demo1: {
-          title: '基本用法'
-        },
-        demo2: {
-          title: '自定义内容'
-        },
-        demo3: {
-          title: '指令方式触发'
-        },
-        props: {
-          target:
-            '指定触发滚动事件的目标元素，使用 CSS 选择器。如果为空，则默认为整个窗口。',
-          right: '设置组件距离页面右侧的距离，单位为像素。',
-          bottom: '设置组件距离页面底部的距离，单位为像素。',
-          valveHeight:
-            '设置页面滚动高度的阈值，当滚动高度超过此值时显示回到顶部按钮，单位为像素。'
-        },
-        events: {
-          click: '回到顶部事件回调'
-        }
+      demo5: {
+        title: 'Deaktiviert'
       },
-      steps: {
-        name: '步骤条 Steps',
-        description: '清晰展示操作流程，让用户知道自己在哪',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '状态'
-        },
-        demo3: {
-          title: '加载中'
-        },
-        model: {
-          modelValue: '当前激活步骤的索引值'
-        },
-        props: {
-          options: '步骤配置项数组',
-          status: '步骤条的当前状态',
-          minWidth: '最小步骤宽度'
-        }
+      demo6: {
+        title: 'Schließbar'
       },
-      menu: {
-        name: '菜单 Menu',
-        description: '优雅的垂直菜单，让导航层次分明',
-        demo1: {
-          title: '基础用法'
-        },
-        model: {
-          modelValue: '当前激活菜单的绑定值'
-        },
-        props: {
-          options: '菜单配置项数组'
-        },
-        menuOptions: {
-          label: '菜单项的文本',
-          value: '菜单项的值',
-          children: '子菜单项数组',
-          disabled: '是否禁用菜单项',
-          icon: '菜单项的图标',
-          tagText: '菜单项的徽章文本',
-          tagColor: '菜单项的徽章颜色'
-        }
+      demo7: {
+        title: 'Slot'
       },
-      menuTree: {
-        name: '菜单树 MenuTree',
-        description: '层级分明的树形菜单，轻松展示复杂的结构关系',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '自定义图标'
-        },
-        demo3: {
-          title: '默认展开',
-          description: '通过 v-model 控制默认展开的菜单项。'
-        },
-        demo4: {
-          title: '标签'
-        },
-        demo5: {
-          title: '自定义样式'
-        },
-        model: {
-          modelValue: '当前激活菜单的绑定值',
-          expandKeys: '默认展开的菜单项的 key 值数组',
-          collapsed: '是否折叠菜单'
-        },
-        props: {
-          options: '菜单树的数据源，支持嵌套结构。',
-          width: '菜单树的宽度，支持 CSS 宽度值。'
-        },
-        menuTreeItem: {
-          label:
-            '菜单树项的标题文本。也可以使用具名插槽 "label" 自定义标题内容。',
-          value: '菜单项的值，用于标识菜单项的唯一性。',
-          level: '菜单树项的层级，从 1 开始。',
-          renderIcon: '图标渲染函数',
-          renderLabel: '标签渲染函数',
-          tagText: '菜单项的徽章文本',
-          tagType: '菜单项的徽章类型',
-          tagColor: '菜单项的徽章颜色',
-          disabled: '是否禁用菜单项',
-          isLeaf: '是否为叶子节点'
-        }
+      props: {
+        text: 'Etikettentext, hat Vorrang vor Slot, Text-Trim-Effekt wird bei Überschreitung der Breite ausgelöst',
+        type: 'Stiltyp',
+        size: 'Größe',
+        color: 'Farbthema',
+        closable: 'Schließbar',
+        disabled: 'Deaktiviert',
+        round: 'Abgerundet'
+      }
+    },
+    badge: {
+      name: 'Abzeichen',
+      description:
+        'Ein kleiner roter Punkt, der in der oberen rechten Ecke erscheint und Benachrichtigungen auffälliger macht',
+      demo1: {
+        title: 'Grundlegende Verwendung'
       },
-      dropdown: {
-        name: '下拉菜单 Dropdown',
-        description: '点击触发的悬浮菜单，让操作更加便捷',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '不仅仅是按钮'
-        },
-        demo3: {
-          title: '禁用项'
-        },
-  
-        props: {
-          options: '菜单选项配置',
-          trigger: '触发方式',
-          placement: '菜单弹出位置'
-        },
-        'options(ContextMenus)': contextMenu,
-        events: {
-          show: '菜单显示事件回调',
-          hide: '菜单隐藏事件回调',
-          change: '菜单项选择事件回调'
-        }
+      demo2: {
+        title: 'Punkt'
       },
-      breadcrumb: {
-        name: '面包屑 Breadcrumb',
-        description: '清晰的路径导航，让用户不会迷失方向',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '自定义当前选中'
-        },
-        demo3: {
-          title: '分割图标类型'
-        },
-        props: {
-          options: '面包屑配置项数组',
-          separator: '分隔符图标类型'
-        },
-        breadcrumbOptions: {
-          label: '面包屑项的文本',
-          value: '面包屑项的值',
-          active: '是否为当前选中项'
-        },
-        events: {
-          change: '面包屑项发生变化时触发'
-        }
+      demo3: {
+        title: 'Direkte Verwendung'
       },
-      contextMenu: {
-        name: '上下文菜单 ContextMenu',
-        description: '优雅的右键菜单，让操作更加自然',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '支持多级嵌套'
-        },
-        demo3: {
-          title: '支持动态更新'
-        },
-        demo4: {
-          title: 'Checkbox'
-        },
-        props: {
-          options: '右键菜单配置',
-          disabled: '是否禁用右键菜单',
-          selectHandler: '选中菜单项时的回调函数'
-        },
-        'options(ContextMenus)': contextMenu
+      demo4: {
+        title: 'Text'
       },
-      form: {
-        name: '表单 Form',
-        description: '强大的表单处理能力，让数据收集得心应手',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '方向'
-        },
-        demo3: {
-          title: '自定义校验'
-        },
-        demo4: {
-          title: '支持网格布局'
-        },
-        demo5: {
-          title: '搭配表单引擎配置'
-        },
-        props: {
-          options: '定义表单结构和内容的配置选项数组',
-          size: '表单整体尺寸，影响所有表单项大小',
-          width: '表单整体宽度，支持数字（像素）或百分比字符串',
-          columns: '每行显示的表单项数量，最大值为4',
-          labelWidth: '表单项标签宽度，支持数字（像素）或 "auto"',
-          disabled: '是否禁用整个表单',
-          readonly: '是否将整个表单设为只读',
-          direction: '表单项排列方向，"x" 为水平，"y" 为垂直',
-          formMethods: '表单项的方法集合，包含用于操作表单的函数'
-        },
-        formItemProps: {
-          label: '表单项的标签文本',
-          field: '表单项对应的字段名，用于数据绑定和验证',
-          required: '是否为必填项',
-          as: '指定表单项的类型，如 "input"、"select" 等',
-          size: '单个表单项的尺寸，可覆盖表单整体设置',
-          width: '单个表单项的宽度，支持数字（像素）或百分比字符串',
-          labelWidth: '单个表单项标签宽度，支持数字（像素）或 "auto"',
-          direction: '单个表单项的排列方向，"x" 为水平，"y" 为垂直',
-          disabled: '是否禁用该表单项',
-          readonly: '是否将该表单项设为只读',
-          tips: '表单项的提示信息',
-          errMessage: '自定义验证失败时的错误提示',
-          rule: '表单项的验证规则',
-          props: '传递给表单项组件的额外属性',
-          between: '水平排列时是否在表单项之间添加间隔',
-          gridArea: '在网格布局中的位置',
-          outputFormat: '出参时的格式化方法',
-          inputFormat: '入参时的格式化方法'
-        },
-        events: {
-          mounted: '表单项挂载时触发'
-        },
-        methods: {
-          getForm: '获取表单',
-          setForm: '设置表单'
-        }
+      demo5: {
+        title: 'In Bearbeitung'
       },
-      input: {
-        name: '输入框 Input',
-        description: '功能丰富的输入框，让数据录入更加便捷',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '前后缀'
-        },
-        demo3: {
-          title: '字数限制'
-        },
-        demo4: {
-          title: '对齐方式'
-        },
-        demo5: {
-          title: '密码可见'
-        },
-        demo6: {
-          title: '宽度自适应'
-        },
-        demo7: {
-          title: '聚焦后选择全部文本'
-        },
-        demo8: {
-          title: '可清空的'
-        },
-        demo9: {
-          title: '只读状态'
-        },
-        demo10: {
-          title: '禁用状态'
-        },
-        demo11: {
-          title: '按下回车键触发事件'
-        },
-        props: {
-          type: '输入框类型',
-          size: '输入框尺寸',
-          placeholder: '输入框占位文本',
-          disabled: '是否禁用输入框',
-          readonly: '是否将输入框设为只读',
-          clearable: '是否启用清除按钮',
-          showPassword: '是否启用密码可见',
-          maxLength: '最大输入长度',
-          showCount: '是否显示字符计数（仅在 type 为 text 时有效）',
-          align: '输入框文本对齐方式',
-          minWidth: '输入框最小宽度，支持数字（单位：像素）或带单位的字符串',
-          autoWidth: '是否根据内容自动调整宽度',
-          selectByFocus: '是否启用聚焦后选择全部文本',
-          copyable:
-            '是否允许复制内容（仅在 readonly 为 true 且 suffix 为 false 时生效）',
-          prefixes: '输入框前缀类型',
-          prefixesOptions: '输入框前缀选项列表，当 prefixes 为 select 时使用',
-          prefixesTooltip: '输入框前缀的 tooltip 提示文本',
-          suffix: '输入框后缀类型',
-          suffixOptions: '输入框后缀选项列表，当 suffix 为 select 时使用',
-          suffixTooltip: '输入框后缀的 tooltip 提示文本',
-          okByEnter: '是否允许通过回车键确认输入'
-        },
-        events: {
-          change: '输入框值发生变化时触发',
-          focus: '输入框获得焦点时触发',
-          blur: '输入框失去焦点时触发',
-          input: '输入框输入内容时触发',
-          clear: '输入框清空时触发',
-          ok: '输入框确认时触发'
-        }
+      props: {
+        text: 'Abzeichentext',
+        offset: 'Abzeichenversatz',
+        processing: 'In Bearbeitung',
+        max: 'Maximalwert, wird als max+ angezeigt wenn überschritten',
+        color: 'Abzeichenfarbe',
+        disabled: 'Deaktiviert',
+        value: 'Abzeichenwert (wird als Punkt angezeigt wenn leer)'
+      }
+    },
+    title: {
+      name: 'Titel',
+      description:
+        'Nicht nur ein Titel, sondern die Essenz, die dem Inhalt Leben einhaucht',
+      demo1: {
+        title: 'Grundlegende Verwendung'
       },
-      inputNumber: {
-        name: '数字输入框 InputNumber',
-        description: '专门用于数字输入的框，让数字处理更加精准',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '聚焦时全选'
-        },
-        demo3: {
-          title: '限制范围'
-        },
-        demo4: {
-          title: '精确数值'
-        },
-        demo5: {
-          title: '禁用和只读'
-        },
-        props: {
-          min: '最小值',
-          max: '最大值',
-          step: '步进值',
-          disabled: '精度',
-          size: '尺寸大小，可选值：small、medium、large',
-          placeholder: '占位提示文本',
-          readonly: '是否只读',
-          width: '宽度，支持数字（单位：像素）或带单位的字符串',
-          align: '对齐方式',
-          selectByFocus: '聚焦后选择全部文本'
-        },
-        model: {
-          modelValue: '绑定值'
-        }
+      demo2: {
+        title: 'Fett'
       },
-      textarea: {
-        name: '文本域 Textarea',
-        description: '多行文本输入框，让长文本输入更加舒适',
-  
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '字数限制'
-        },
-        demo3: {
-          title: '聚焦后选择全部文本'
-        },
-        demo4: {
-          title: '可清空的'
-        },
-        demo5: {
-          title: '只读'
-        },
-        demo6: {
-          title: '禁用'
-        },
-        demo7: {
-          title: '按下回车键触发事件'
-        },
-        demo8: {
-          title: '可缩放的'
-        },
-        model: {
-          modelValue: '绑定值'
-        },
-        props: {
-          placeholder: '占位提示文本',
-          disabled: '是否禁用文本域',
-          readonly: '是否为只读状态',
-          clearable: '是否显示清空按钮',
-          showCount: '是否显示字符计数',
-          maxLength: '最大输入字符数',
-          size: '文本域尺寸',
-          resize: '调整尺寸的方向',
-          width: '宽度',
-          height: '高度',
-          minWidth: '最小宽度',
-          minHeight: '最小高度',
-          maxWidth: '最大宽度',
-          maxHeight: '最大高度',
-          selectByFocus: '聚焦后选择全部文本',
-          okByEnter: '是否启用回车键确认（启用后，Shift+Enter可换行）'
-        },
-        events: {
-          change: '值发生变化时触发',
-          focus: '获得焦点时触发',
-          blur: '失去焦点时触发',
-          input: '输入内容时触发',
-          clear: '清空时触发',
-          ok: '确认时触发'
-        }
+      demo3: {
+        title: 'Farbe'
       },
-      inputTag: {
-        name: '标签输入框 InputTag',
-        description: '轻松输入和管理多个标签，让数据整理更加清晰',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '尺寸'
-        },
-        demo3: {
-          title: '是否允许重复'
-        },
-        demo4: {
-          title: '受控默认值'
-        },
-        demo5: {
-          title: '可清空的'
-        },
-        demo6: {
-          title: '只读状态'
-        },
-        demo7: {
-          title: '禁用状态'
-        },
-        demo8: {
-          title: '最大输入长度'
-        },
-        model: {
-          modelValue: '绑定值'
-        },
-        props: {
-          size: '尺寸大小',
-          disabled: '是否禁用',
-          clearable: '是否可清空',
-          placeholder: '占位提示文本',
-          readonly: '是否只读',
-          allowDuplicates: '是否允许重复',
-          maxLength: '允许添加标签的最大数量',
-          width: '宽度'
-        },
-        events: {
-          change: '值发生变化时触发',
-          clear: '清空时触发',
-          add: '添加标签时触发',
-          remove: '删除标签时触发'
-        }
+      props: {
+        text: 'Textinhalt',
+        size: 'Titeltext-Größe, kann eine Zahl (Einheit: Pixel) oder eine Zeichenkette (z.B. "1.5em") sein',
+        bold: 'Titeltext-Stärke, optionale Werte sind ganze Zahlen zwischen 100 und 900',
+        color:
+          'Titeltext-Farbe, optionale Werte umfassen vordefinierte Farbnamen oder benutzerdefinierte Farbwerte'
+      }
+    },
+    textTrim: {
+      name: 'Textkürzung',
+      description:
+        'Elegante Handhabung langer Texte ohne die Ästhetik des Layouts zu beeinträchtigen',
+      demo1: {
+        title: 'Grundlegende Verwendung'
       },
-      checkbox: {
-        name: '复选框 Checkbox',
-        description: '支持多选的选择器，让多项选择更加直观',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '垂直分布'
-        },
-        demo3: {
-          title: '块状'
-        },
-        demo4: {
-          title: '圆形'
-        },
-        demo5: {
-          title: '只读状态'
-        },
-        demo6: {
-          title: '禁用状态'
-        },
-        demo7: {
-          title: '单个模式'
-        },
-        'model(CheckboxGroup)': {
-          modelValue: '绑定值'
-        },
-        'model(Checkbox)': {
-          modelValue: '绑定值'
-        },
-        'props(CheckboxGroup)': {
-          options: '选项',
-          disabled: '是否禁用',
-          readonly: '是否只读',
-          size: '尺寸大小',
-          direction: '排列方向',
-          block: '块状显示',
-          round: '圆角样式',
-          iconable: '是否可使用图标'
-        },
-        'props(Checkbox)': {
-          label: '标题',
-          value: '值',
-          disabled: '禁用',
-          readonly: '只读',
-          checked: '选中状态',
-          size: '尺寸',
-          block: '块状显示',
-          round: '圆角样式',
-          iconable: '是否可使用图标',
-          certain: '确定状态'
-        },
-        'events(Checkbox)': {
-          change: '值发生变化时触发'
-        },
-        'events(CheckboxGroup)': {
-          change: '值发生变化时触发'
-        },
-        options: {
-          label: '标题',
-          value: '值',
-          disabled: '禁用'
-        }
+      demo2: {
+        title: 'Mehrzeilige Auslassungspunkte'
       },
-      radio: {
-        name: '单选框 Radio',
-        description: '只能选择一项的选择器，让单项选择更加明确',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '垂直分布'
-        },
-        demo3: {
-          title: '块状'
-        },
-        demo4: {
-          title: '形状'
-        },
-        demo5: {
-          title: '只读状态'
-        },
-        demo6: {
-          title: '禁用状态'
-        },
-        model: {
-          modelValue: '绑定值'
-        },
-        'props(RadioGroup)': {
-          size: '尺寸大小',
-          block: '块状显示',
-          direction: '排列方向',
-          disabled: '是否禁用',
-          iconable: '是否可使用图标',
-          options: '选项',
-          readonly: '是否只读',
-          round: '圆角样式'
-        },
-        options: {
-          label: '标题',
-          value: '值',
-          disabled: '禁用'
-        },
-        events: {
-          change: '值发生变化时触发'
-        }
+      demo3: {
+        title: 'Endtext'
       },
-      tabs: {
-        name: '标签页 Tabs',
-        description: '让内容分类展示更加清晰，切换更加流畅',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '自适应宽度'
-        },
-        demo3: {
-          title: '自定义item宽度'
-        },
-        demo4: {
-          title: '线'
-        },
-        demo5: {
-          title: '圆角的'
-        },
-        model: {
-          modelValue: '绑定值'
-        },
-        props: {
-          options: '选项',
-          type: '类型',
-          size: '尺寸大小',
-          width: '宽度',
-          itemWidth: '项宽度',
-          round: '圆角样式',
-          disabled: '禁用状态',
-          readonly: '只读状态'
-        },
-        options: {
-          label: '标题',
-          value: '值'
-        }
+      demo4: {
+        title: 'Ausrichtung'
       },
-      select: {
-        name: '选择器 Select',
-        description: '下拉选择框，让选择更加便捷',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '搜索'
-        },
-        demo3: {
-          title: '支持插槽'
-        },
-        demo4: {
-          title: '禁用选项'
-        },
-        demo5: {
-          title: '只读'
-        },
-        demo6: {
-          title: '禁用'
-        },
-        demo7: {
-          title: '自定义空状态'
-        },
-        demo8: {
-          title: '分组'
-        },
-        model: {
-          modelValue: '绑定值'
-        },
-        props: {
-          defaultValue: '默认值',
-          options: '选项',
-          width: '宽度',
-          trigger: '触发方式',
-          placeholder: '占位提示文本',
-          size: '尺寸大小',
-          itemHeight: '项高度',
-          searchable: '是否可搜索',
-          searchMethod: '搜索方法',
-          searchDelay: '搜索延迟',
-          clearable: '是否可清空',
-          readonly: '只读状态',
-          disabled: '禁用状态',
-          showCheckIcon: '显示勾选图标'
-        },
-        events: {
-          change: '值发生变化时触发',
-          clear: '清空时触发',
-          blur: '失去焦点时触发',
-          focus: '获得焦点时触发'
-        },
-        options: { label: '标题', value: '值', disabled: '禁用' },
-        slots: { item: '自定义选项内容', empty: '自定义空状态内容' }
+      props: {
+        text: 'Textinhalt',
+        lineClamp:
+          'Maximale Anzahl der anzuzeigenden Zeilen, Überschuss wird abgeschnitten',
+        allowHTML: 'Rendering von HTML-Tags erlauben',
+        placement: 'Position der Tooltip-Anzeige',
+        offset:
+          'Tooltip-Versatz relativ zum Zielelement [x, y] (Einheit: Pixel)',
+        textAlign:
+          'Horizontale Ausrichtung (wenn Breite kleiner als Container-Breite)',
+        delay:
+          'Verzögerungszeit für das Ein- und Ausblenden des Tooltips [Einblendverzögerung, Ausblendverzögerung] (Einheit: Millisekunden)',
+        reserveEnd:
+          'Anzahl der am Ende zu behaltenden Zeichen, zeigt Auslassungspunkte in der Mitte an, wenn Text überläuft, behält Anfang und angegebene Anzahl von Endzeichen bei'
+      }
+    },
+    flex: {
+      name: 'Flex-Layout',
+      description: 'Flexibles Layout-System für mühelose Seitengestaltung',
+      demo1: {
+        title: 'Zeile'
       },
-      selectMultiple: {
-        name: '多选选择器 SelectMultiple',
-        description: '支持多选的下拉框，让多项选择更加灵活',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '自定义过滤方法'
-        },
-        demo3: {
-          title: '支持插槽'
-        },
-        demo4: {
-          title: '禁用选项'
-        },
-        demo5: {
-          title: '只读'
-        },
-        demo6: {
-          title: '禁用'
-        },
-        demo7: {
-          title: '空状态插槽'
-        },
-        demo8: {
-          title: '分组'
-        },
-        props: {
-          options: '选项',
-          trigger: '触发方式',
-          width: '宽度',
-          valueLayout: '值布局',
-          valueTextSplit: '值文本分隔符',
-          placeholder: '占位提示文本',
-          size: '尺寸大小',
-          itemHeight: '项高度',
-          searchable: '是否可搜索',
-          searchPlaceholder: '搜索占位提示文本',
-          searchMethod: '搜索方法',
-          searchDelay: '搜索延迟',
-          clearable: '是否可清空',
-          readonly: '只读',
-          disabled: '禁用',
-          showCheckIcon: '显示勾选图标',
-          defaultValue: '默认值'
-        },
-        model: {
-          modelValue: '绑定值'
-        },
-        events: { change: '值变化', blur: '失去焦点', focus: '获得焦点' },
-        options: { label: '标签', value: '值', disabled: '禁用' },
-        slots: { item: '自定义选项内容', empty: '自定义空状态内容' }
+      demo2: {
+        title: 'Spalte'
       },
-      datePicker: {
-        name: '日期选择器 DatePicker',
-        description: '简单直观的日期选择工具，让时间选择更加精确',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '可清空的'
-        },
-        demo3: {
-          title: '自定义格式'
-        },
-        demo4: {
-          title: '预设'
-        },
-        demo5: {
-          title: '只读'
-        },
-        demo6: {
-          title: '禁用'
-        },
-        model: {
-          modelValue: '绑定值'
-        },
-        props: {
-          valueFormat: '值格式',
-          size: '尺寸',
-          width: '宽度',
-          placeholder: '占位提示文本',
-          clearable: '是否可清空',
-          readonly: '只读',
-          disabled: '禁用',
-          presets: '预设值'
-        },
-        events: {
-          change: '值变化',
-          focus: '获得焦点',
-          blur: '失去焦点',
-          clear: '清空'
-        }
+      demo3: {
+        title: 'Modus'
       },
-      dateRangePicker: {
-        name: '日期范围选择器 DateRangePicker',
-        description: '选择时间范围的利器，让区间选择更加方便',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '可清空的'
-        },
-        demo3: {
-          title: '其他'
-        },
-        model: {
-          modelValue: '绑定值'
-        },
-        props: {
-          startKey: '开始键',
-          endKey: '结束键',
-          valueFormat: '值格式',
-          size: '尺寸',
-          width: '宽度',
-          placeholderStart: '开始占位提示文本',
-          placeholderEnd: '结束占位提示文本',
-          clearable: '是否可清空',
-          readonly: '只读',
-          disabled: '禁用'
-        },
-        events: {
-          change: '值变化',
-          focus: '获得焦点',
-          blur: '失去焦点',
-          clear: '清空'
-        }
+      props: {
+        direction: 'Ausrichtung der Kindelemente',
+        x: 'Horizontale Ausrichtung der Kindelemente',
+        y: 'Vertikale Ausrichtung der Kindelemente',
+        mode: 'Verteilungsmodus der Kindelemente, überschreibt x- oder y-Ausrichtung abhängig von der direction-Einstellung',
+        wrap: 'Erlaubt Zeilenumbruch bei Platzmangel',
+        gap: 'Abstand zwischen Kindelementen (Einheit: Pixel)',
+        width: 'Breite des Flex-Containers (Einheit: Pixel oder Prozent)'
+      }
+    },
+    mark: {
+      name: 'Markierung',
+      description:
+        'Fügt Hervorhebungen zu Texten hinzu, um wichtige Inhalte klar zu machen',
+      demo1: {
+        title: 'Grundlegende Verwendung'
       },
-      cascader: {
-        name: '级联选择器 Cascader',
-        description: '处理多层级数据的选择器，让分类选择更加清晰',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '自由模式'
-        },
-        demo3: {
-          title: '仅展示最后层级'
-        },
-        demo4: {
-          title: '异步加载'
-        },
-        demo5: {
-          title: '可清空的'
-        },
-        demo6: {
-          title: '只读'
-        },
-        demo7: {
-          title: '禁用'
-        },
-        demo8: {
-          title: '选项禁用'
-        },
-        model: {
-          modelValue: '绑定值'
-        },
-        props: {
-          width: '宽度',
-          options: '选项',
-          placeholder: '占位提示文本',
-          disabled: '禁用',
-          clearable: '是否可清空',
-          showAllLevels: '显示所有层级',
-          multiple: '是否多选',
-          free: '自由选择',
-          size: '尺寸',
-          trigger: '触发方式',
-          loadMethod: '加载方法',
-          readonly: '只读'
-        },
-        options: {
-          label: '标签',
-          value: '值',
-          isLeaf: '是否叶子节点',
-          children: '子节点',
-          disabled: '禁用'
-        }
+      demo2: {
+        title: 'Farbe'
       },
-      treeSelect: {
-        name: '树形选择器 TreeSelect',
-        description: '树形结构的选择框，让层级选择更加直观',
-        demo1: {
-          title: '常规'
-        },
-        demo2: {
-          title: '异步加载数据'
-        },
-        demo3: {
-          title: '自定义插槽'
-        },
-        demo4: {
-          title: '禁用项'
-        },
-        demo5: {
-          title: '默认展开全部'
-        },
-        demo6: {
-          title: '可搜索'
-        },
-        demo7: {
-          title: '空状态插槽'
-        },
-        demo8: {
-          title: '其他'
-        },
-        model: {
-          modelValue: '绑定值'
-        },
-        props: {
-          dataSource: '树形数据源',
-          defaultValue: '默认选中值',
-          placeholder: '占位文本',
-          size: '组件尺寸大小',
-          disabled: '是否禁用',
-          clearable: '是否可清空',
-          showCheckbox: '是否显示复选框',
-          showAllLevels: '是否显示所有层级',
-          showCheckIcon: '是否显示选择图标',
-          showLine: '是否显示连接线',
-          expandAll: '是否展开全部节点',
-          searchable: '是否可搜索',
-          searchDelay: '搜索延迟时间（毫秒）',
-          readonly: '是否只读',
-          free: '是否为自由模式（父子节点选中状态不关联）',
-          align: '文本对齐方式',
-          trigger: '子节点触发方式',
-          keyField: '节点标识字段',
-          labelField: '节点标签字段',
-          disabledField: '禁用节点字段',
-          initTree: '初始化树节点的方法',
-          loadMethod: '异步加载子节点数据的方法'
-        },
-        slots: {
-          handle: '插槽名'
-        }
+      demo3: {
+        title: 'Grundlegende Verwendung'
       },
-      inputTable: {
-        name: '表格输入框 InputTable',
-        description: '在表格中快速输入数据，让批量处理更加高效',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '默认值'
-        },
-        demo3: {
-          title: '更丰富'
-        },
-        props: {
-          columns: '列配置',
-          size: '尺寸',
-          width: '宽度',
-          rowKey: '行键',
-          batchDeletable: '是否支持批量删除',
-          addable: '是否可添加',
-          defaultForm: '默认表单',
-          deletable: '是否可删除',
-          maxRows: '最大行数',
-          minRows: '最小行数',
-          clearable: '是否可清空',
-          sortable: '是否可排序',
-          autoUniqueId: '是否自动生成唯一ID',
-          uniqueField: '唯一字段'
-        }
+      props: {
+        color: 'Farbthema',
+        round: 'Abgerundete Ecken aktivieren',
+        bold: 'Fettschrift aktivieren',
+        cursor: 'Mauszeiger-Stil beim Hover'
+      }
+    },
+    icon: {
+      name: 'Icon',
+      description:
+        'Eine schöne Icon-Sammlung zur visuellen Verbesserung der Benutzeroberfläche'
+    },
+    backTop: {
+      name: 'Nach oben scrollen',
+      description:
+        'Mit einem Klick zurück nach oben - macht das Scrollen auf langen Seiten angenehmer',
+      demo1: {
+        title: 'Grundlegende Verwendung'
       },
-      switch: {
-        name: '开关 Switch',
-        description: '简洁的开关选择器，让状态切换更加明确',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '方形'
-        },
-        demo3: {
-          title: '模拟请求'
-        },
-        demo4: {
-          title: '只读'
-        },
-        demo5: {
-          title: '禁用'
-        },
-        model: {
-          modelValue: '参数名称'
-        },
-        props: {
-          size: '尺寸',
-          round: '圆角',
-          readonly: '只读',
-          disabled: '禁用',
-          request: '请求',
-          loading: '加载中'
-        },
-        events: {
-          change: '事件名称'
-        }
+      demo2: {
+        title: 'Benutzerdefinierter Inhalt'
       },
-      slider: {
-        name: '滑块 Slider',
-        description: '通过拖动选择数值，让数值选择更加直观',
-        demo1: {
-          title: '尺寸'
-        },
-        demo2: {
-          title: '不同步长'
-        },
-        demo3: {
-          title: '限定范围'
-        },
-        demo4: {
-          title: '只读'
-        },
-        demo5: {
-          title: '禁用'
-        },
-        demo6: {
-          title: '配置项'
-        },
-        model: {
-          modelValue: '参数名称'
-        },
-        props: {
-          size: '尺寸',
-          min: '最小值',
-          max: '最大值',
-          step: '步长',
-          readonly: '只读',
-          disabled: '禁用',
-          options: '选项',
-          formatTooltip: '格式化提示'
-        }
+      demo3: {
+        title: 'Direktiven-basierte Auslösung'
       },
-      sliderRange: {
-        name: '滑块范围 SliderRange',
-        description: '选择数值范围的滑块，让范围选择更加灵活',
-        demo1: {
-          title: '尺寸'
-        },
-        demo2: {
-          title: '不同步长'
-        },
-        demo3: {
-          title: '限定范围'
-        },
-        demo4: {
-          title: '只读'
-        },
-        demo5: {
-          title: '禁用'
-        },
-        demo6: {
-          title: '配置项'
-        },
-        model: {
-          modelValue: '参数名称'
-        },
-        props: {
-          size: '尺寸',
-          min: '最小值',
-          max: '最大值',
-          step: '步长',
-          readonly: '只读',
-          disabled: '禁用',
-          options: '选项',
-          formatTooltip: '格式化提示'
-        }
+      props: {
+        target:
+          'Zielelement für das Scroll-Event (CSS-Selektor). Standardmäßig das gesamte Fenster, wenn leer.',
+        right: 'Abstand zur rechten Seite in Pixeln',
+        bottom: 'Abstand zum unteren Rand in Pixeln',
+        valveHeight:
+          'Schwellenwert der Scroll-Höhe in Pixeln, ab dem der Button angezeigt wird'
       },
-      rate: {
-        name: '评分 Rate',
-        description: '星星评分组件，让打分更加生动有趣',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '只读'
-        },
-        demo3: {
-          title: '禁用'
-        },
-        demo4: {
-          title: '提示'
-        },
-        model: {
-          modelValue: '参数名称'
-        },
-        props: {
-          size: '尺寸',
-          count: '数量',
-          tips: '提示',
-          readonly: '只读',
-          disabled: '禁用'
-        }
+      events: {
+        click: 'Callback beim Klick auf den Button'
+      }
+    },
+    steps: {
+      name: 'Schrittanzeige',
+      description: 'Zeigt Prozessabläufe klar an und orientiert den Benutzer',
+      demo1: {
+        title: 'Grundlegende Verwendung'
       },
-      colorPicker: {
-        name: '颜色选择器 ColorPicker',
-        description: '丰富的颜色选择工具，让配色更加精准',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '不同尺寸'
-        },
-        demo3: {
-          title: '自定义宽度'
-        },
-        demo4: {
-          title: '禁用状态'
-        },
-        demo5: {
-          title: '只读状态'
-        },
-        model: {
-          modelValue: '参数名称'
-        },
-        props: {
-          size: '尺寸',
-          width: '宽度',
-          placeholder: '占位符',
-          disabled: '禁用',
-          readonly: '只读'
-        }
+      demo2: {
+        title: 'Status'
       },
-      upload: {
-        name: '上传 Upload',
-        description: '文件上传组件，让文件处理更加简单',
-        demo1: {
-          title: '常规'
-        },
-        demo2: {
-          title: '限制格式和大小'
-        },
-        demo3: {
-          title: '上传图片'
-        },
-        demo4: {
-          title: '自定义tips'
-        },
-        demo5: {
-          title: '照片墙'
-        },
-        demo6: {
-          title: '不上传'
-        },
-        demo7: {
-          title: '回显'
-        },
-        model: {
-          modelValue: '绑定值'
-        },
-        props: {
-          accept: '接受的文件类型',
-          immediate: '立即上传',
-          multiple: '多文件上传',
-          disabled: '禁用',
-          readonly: '只读',
-          limit: '文件数量限制',
-          maxFileSize: '最大文件大小',
-          size: '尺寸',
-          tips: '提示信息',
-          uploadHelper: '上传助手',
-          viewMode: '查看模式'
-        }
+      demo3: {
+        title: 'Laden'
       },
-      table: {
-        name: '表格 Table',
-        description: '功能强大的表格组件，让数据展示更加清晰',
-        model: {
-          modelValue: '参数名称',
-          selectedKeys: '选中的键'
-        },
-        demo1: {
-          title: '常规'
-        },
-        demo2: {
-          title: '固定行列'
-        },
-        demo3: {
-          title: '自定义操作'
-        },
-        demo4: {
-          title: '插槽'
-        },
-        demo5: {
-          title: '自定义样式'
-        },
-        demo6: {
-          title: '选择'
-        },
-        demo7: {
-          title: '可排序'
-        },
-        demo8: {
-          title: '自定义渲染'
-        },
-        demo9: {
-          title: '完整功能'
-        },
-        demo10: {
-          title: '暂无数据'
-        },
-        props: {
-          columns: '列',
-          dataSource: '数据源',
-          size: '尺寸',
-          checkable: '可选',
-          maxHeight: '最大高度',
-          multiple: '多选',
-          rowKey: '行键'
-        },
-        tableColumns: {
-          field: '字段',
-          fixed: '固定',
-          title: '标题',
-          type: '类型',
-          width: '宽度',
-          x: 'X轴',
-          customRender: '自定义渲染'
-        }
+      model: {
+        modelValue: 'Index des aktiven Schritts'
       },
-      pagination: {
-        name: '分页 Pagination',
-        description: '清晰的分页导航，让数据浏览更加轻松',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '巨量'
-        },
-        demo3: {
-          title: '模拟异步'
-        },
-        model: {
-          total: '参数名称',
-          currentPage: '当前页',
-          pageSize: '每页大小'
-        },
-        props: {
-          size: '尺寸',
-          pageSizeOptions: '每页大小选项',
-          visiblePagesCount: '可见页数'
-        },
-        events: {
-          change: '事件名称'
-        }
+      props: {
+        options: 'Array der Schritt-Konfigurationen',
+        status: 'Aktueller Status der Schrittanzeige',
+        minWidth: 'Minimale Schrittbreite'
+      }
+    },
+    menu: {
+      name: 'Menü',
+      description: 'Elegantes vertikales Menü für klare Navigation',
+      demo1: {
+        title: 'Grundlegende Verwendung'
       },
-      magicNumber: {
-        name: '魔法数字 MagicNumber',
-        description: '让数字展示更加生动有趣的动效组件'
+      model: {
+        modelValue: 'Wert des aktiven Menüpunkts'
       },
-      tree: {
-        name: '树形控件 Tree',
-        description: '展示层级数据结构的利器，让数据层次更加分明',
-        demo1: {
-          title: '常规'
-        },
-        demo2: {
-          title: '是否显示复选框'
-        },
-        demo3: {
-          title: '多选'
-        },
-        demo4: {
-          title: '父子节点关联模式'
-        },
-        demo5: {
-          title: '异步请求'
-        },
-        demo6: {
-          title: '默认全部展开'
-        },
-        demo7: {
-          title: '是否显示辅助线'
-        },
-        demo8: {
-          title: '插槽'
-        },
-        model: {
-          modelValue: '参数名称',
-          expandedKeys: '展开的节点键'
-        },
-        props: {
-          dataSource: '数据源',
-          multiple: '多选',
-          showCheckbox: '显示复选框',
-          expandAll: '默认全部展开',
-          free: '自由选择',
-          showLine: '显示连接线',
-          trigger: '触发方式',
-          placeholder: '占位文本',
-          keyField: '节点标识字段',
-          labelField: '节点标签字段',
-          disabledField: '禁用节点字段',
-          initTree: '初始化树节点的方法',
-          loadMethod: '异步加载子节点数据的方法',
-          isSelect: '是否选中'
-        },
-        slots: {
-          handle: '插槽名'
-        },
-        treeDataSource: {
-          label: '标签',
-          key: '键',
-          isLeaf: '是否叶子节点',
-          children: '子节点',
-          disabled: '禁用'
-        }
+      props: {
+        options: 'Array der Menü-Konfigurationen'
       },
-      collapse: {
-        name: '折叠面板 Collapse',
-        description: '可折叠和展开的内容区域，让信息展示更加整洁',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '标题插槽'
-        },
-        demo3: {
-          title: '手风琴'
-        },
-        model: {
-          modelValue: '参数名称'
-        },
-        'model(CollapseItem)': {
-          modelValue: '参数名称'
-        },
-        props: {
-          width: '宽度'
-        },
-        'props(CollapseItem)': {
-          collapseKey: '折叠键',
-          title: '标题',
-          radius: '半径'
-        }
+      menuOptions: {
+        label: 'Text des Menüpunkts',
+        value: 'Wert des Menüpunkts',
+        children: 'Array der Untermenüpunkte',
+        disabled: 'Menüpunkt deaktivieren',
+        icon: 'Icon des Menüpunkts',
+        tagText: 'Badge-Text des Menüpunkts',
+        tagColor: 'Badge-Farbe des Menüpunkts'
+      }
+    },
+    menuTree: {
+      name: 'Menübaum',
+      description:
+        'Hierarchisches Baummenü zur übersichtlichen Darstellung komplexer Strukturbeziehungen',
+      demo1: {
+        title: 'Grundlegende Verwendung'
       },
-      desc: {
-        name: '描述列表 Desc',
-        description: '整齐的展示多个字段，让信息展示更加规范',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '方向'
-        },
-        demo3: {
-          title: '丰富的'
-        },
-        demo4: {
-          title: '支持在线配置'
-        },
-        props: {
-          options: '选项',
-          dataSource: '数据源',
-          size: '尺寸',
-          labelX: '标签X',
-          valueX: '值X',
-          gap: '间距',
-          width: '宽度',
-          columns: '列',
-          labelWidth: '标签宽度',
-          direction: '方向',
-          bordered: '是否有边框'
-        },
-        descItemProps: {
-          label: '标签',
-          field: '字段',
-          size: '尺寸',
-          bordered: '是否有边框',
-          width: '宽度',
-          labelWidth: '标签宽度',
-          direction: '方向',
-          tips: '提示信息',
-          type: '类型',
-          labelX: '标签X',
-          valueX: '值X',
-          gridArea: '网格区域',
-          customRender: '自定义渲染'
-        }
+      demo2: {
+        title: 'Benutzerdefinierte Icons'
       },
-      alert: {
-        name: '警告提示 Alert',
-        description: '醒目的信息提示框，让警告更加温和',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '支持插槽'
-        },
-        demo3: {
-          title: '更多场景'
-        },
-        props: {
-          type: '类型',
-          title: '标题',
-          content: '提示内容',
-          closeable: '是否可关闭',
-          footer: '底部内容'
-        }
+      demo3: {
+        title: 'Standardmäßig ausgeklappt',
+        description:
+          'Steuern Sie die standardmäßig ausgeklappten Menüpunkte über v-model.'
       },
-      message: {
-        name: '全局提示 Message',
-        description: '轻量级的信息反馈，让提示更加简洁',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '可控制的'
-        },
-        demo3: {
-          title: '模拟请求'
-        },
-        events: {
-          close: '关闭时触发'
-        },
-        props: {
-          type: '类型',
-          content: '提示内容',
-          duration: '持续时间'
-        }
+      demo4: {
+        title: 'Badges'
       },
-      notification: {
-        name: '通知提醒框 Notification',
-        description: '优雅的通知提醒，让消息推送更加友好',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '自定义展示时间'
-        },
-        props: {
-          type: '类型',
-          title: '标题',
-          content: '提示内容',
-          delay: '延迟时间'
-        }
+      demo5: {
+        title: 'Benutzerdefiniertes Styling'
       },
-      drawer: {
-        name: '抽屉 Drawer',
-        description: '从屏幕边缘滑出的面板，让临时操作更加流畅',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '异步关闭'
-        },
-        demo3: {
-          title: '自定义头部和底部'
-        },
-        demo4: {
-          title: '是否允许esc关闭'
-        },
-        model: {
-          visible: '是否显示'
-        },
-        props: {
-          title: '标题',
-          width: '宽度',
-          position: '位置',
-          height: '高度',
-          closeOnClickOverlay: '是否可通过点击遮罩关闭',
-          closeByEsc: '是否可通过按下 ESC 关闭',
-          hideFooter: '是否隐藏底部',
-          okProps: '确认按钮的属性',
-          cancelProps: '取消按钮的属性',
-          zIndex: '层级'
-        }
+      model: {
+        modelValue: 'Wert des aktiven Menüpunkts',
+        expandKeys:
+          'Array der Schlüssel der standardmäßig ausgeklappten Menüpunkte',
+        collapsed: 'Ist das Menü eingeklappt'
       },
-      dialog: {
-        name: '对话框 Dialog',
-        description: '模态对话框，让重要信息交互更加突出',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '简单的'
-        },
-        props: {
-          type: '类型',
-          width: '宽度',
-          trigger: '触发方式',
-          title: '标题',
-          okText: '确认按钮文本',
-          cancelText: '取消按钮文本',
-          ok: '确认回调',
-          cancel: '取消回调',
-          layout: '布局方式',
-          closeOnClickOverlay: '是否可通过点击遮罩关闭',
-          closeByEsc: '是否可通过按下 ESC 关闭',
-          transformOrigin: '动画原点'
-        },
-        events: {
-          ok: '点击确认按钮时触发',
-          cancel: '点击取消按钮时触发'
-        }
+      props: {
+        options:
+          'Datenquelle des Menübaums, unterstützt verschachtelte Strukturen',
+        width: 'Breite des Menübaums, unterstützt CSS-Breitenwerte'
       },
-      modal: {
-        name: '模态框 Modal',
-        description: '更加灵活的模态窗口，让弹窗交互更加丰富',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '异步关闭'
-        },
-        demo3: {
-          title: '自定义头部和底部'
-        },
-        demo4: {
-          title: '是否允许esc关闭'
-        },
-        model: {
-          visible: '是否显示'
-        },
-        props: {
-          title: '标题',
-          width: '宽度',
-          top: '距离顶部的距离',
-          hideFooter: '是否隐藏底部',
-          closeByEsc: '是否可通过按下 ESC 关闭',
-          okProps: '确认按钮属性',
-          cancelProps: '取消按钮属性',
-          hideOkButton: '是否隐藏确认按钮',
-          hideCancelButton: '是否隐藏取消按钮',
-          closeOnClickOverlay: '是否可通过点击遮罩关闭',
-          zIndex: '层级'
-        }
+      menuTreeItem: {
+        label:
+          'Titel des Menübaum-Elements. Kann auch über den benannten Slot "label" angepasst werden',
+        value: 'Wert des Menüpunkts zur eindeutigen Identifizierung',
+        level: 'Ebene des Menübaum-Elements, beginnt bei 1',
+        renderIcon: 'Icon-Renderfunktion',
+        renderLabel: 'Label-Renderfunktion',
+        tagText: 'Badge-Text des Menüpunkts',
+        tagType: 'Badge-Typ des Menüpunkts',
+        tagColor: 'Badge-Farbe des Menüpunkts',
+        disabled: 'Ist der Menüpunkt deaktiviert',
+        isLeaf: 'Ist es ein Blattknoten'
+      }
+    },
+    dropdown: {
+      name: 'Dropdown-Menü',
+      description: 'Klickaktiviertes Schwebendes Menü für bequemere Bedienung',
+      demo1: {
+        title: 'Grundlegende Verwendung'
       },
-      popok: {
-        name: '气泡确认框 Popok',
-        description: '轻量级的确认提示，让操作确认更加便捷',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '触发方式'
-        },
-        props: {
-          type: '类型',
-          width: '宽度',
-          trigger: '触发方式',
-          title: '标题',
-          okProps: '确认按钮属性',
-          cancelProps: '取消按钮属性',
-          content: '内容',
-          placement: '位置'
-        }
+      demo2: {
+        title: 'Nicht nur Buttons'
       },
-      popover: {
-        name: '气泡卡片 Popover',
-        description: '鼠标悬停时的信息卡片，让提示更加优雅',
-        demo1: {
-          title: '基础用法'
-        },
-        props: {
-          trigger: '触发方式',
-          placement: '位置',
-          disabled: '禁用状态',
-          loading: '加载状态',
-          hideOnClick: '点击时隐藏',
-          offset: '偏移量',
-          popoverBodyClassName: '气泡内容类名',
-          triggerTarget: '触发目标'
-        },
-        slots: {
-          trigger: '触发插槽',
-          'popover-body': '气泡内容插槽'
-        }
+      demo3: {
+        title: 'Deaktivierte Einträge'
       },
-      tooltip: {
-        name: '文字提示 Tooltip',
-        description: '简单的文字提示气泡，让提示更加轻巧',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '点击触发'
-        },
-        props: {
-          tips: '提示内容',
-          placement: '位置',
-          trigger: '触发方式',
-          allowHTML: '是否支持HTML',
-          delay: '延迟时间'
-        }
+      props: {
+        options: 'Menüoptionen-Konfiguration',
+        trigger: 'Auslösemethode',
+        placement: 'Position des Menüs'
       },
-      loading: {
-        name: '加载 Loading',
-        description: '优雅的加载效果，让等待更加轻松',
-        demo1: {
-          title: '基础用法'
-        },
-        props: {
-          tip: '提示信息',
-          placement: '提示位置',
-          trigger: '触发方式',
-          allowHTML: '允许 HTML'
-        }
+      'options(ContextMenus)': contextMenu,
+      events: {
+        show: 'Callback beim Anzeigen des Menüs',
+        hide: 'Callback beim Ausblenden des Menüs',
+        change: 'Callback bei Auswahl eines Menüpunkts'
+      }
+    },
+    breadcrumb: {
+      name: 'Brotkrümelnavigation',
+      description:
+        'Klare Pfadnavigation, damit Benutzer nicht die Orientierung verlieren',
+      demo1: {
+        title: 'Grundlegende Verwendung'
       },
-      result: {
-        name: '结果 Result',
-        description: '用于反馈操作结果，让结果展示更加完整',
-        demo1: {
-          title: '基础用法'
-        },
-        props: {
-          type: '类型',
-          title: '标题',
-          content: '内容'
-        },
-        slots: {
-          handle: '插槽处理'
-        }
+      demo2: {
+        title: 'Benutzerdefinierte Auswahl'
       },
-      empty: {
-        name: '空状态 Empty',
-        description: '空数据状态展示，让空白页面更加友好',
-        demo1: {
-          title: '基础用法'
-        },
-        props: {
-          type: '类型',
-          title: '标题',
-          fontSize: '字体大小',
-          padding: '内边距',
-          width: '宽度',
-          height: '高度'
-        }
+      demo3: {
+        title: 'Trennzeichen-Icon-Typen'
+      },
+      props: {
+        options: 'Array der Brotkrümel-Konfigurationen',
+        separator: 'Trennzeichen-Icon-Typ'
+      },
+      breadcrumbOptions: {
+        label: 'Text des Brotkrümels',
+        value: 'Wert des Brotkrümels',
+        active: 'Ist aktuell ausgewählt'
+      },
+      events: {
+        change: 'Wird ausgelöst, wenn sich der Brotkrümel ändert'
+      }
+    },
+    contextMenu: {
+      name: 'Kontextmenü',
+      description: 'Elegantes Rechtsklickmenü für natürlichere Bedienung',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Unterstützt mehrere Ebenen'
+      },
+      demo3: {
+        title: 'Unterstützt dynamische Aktualisierung'
+      },
+      demo4: {
+        title: 'Kontrollkästchen'
+      },
+      props: {
+        options: 'Kontextmenü-Konfiguration',
+        disabled: 'Kontextmenü deaktivieren',
+        selectHandler: 'Callback-Funktion bei Menüpunkt-Auswahl'
+      },
+      'options(ContextMenus)': contextMenu
+    },
+    form: {
+      name: 'Formular',
+      description:
+        'Leistungsstarke Formularverarbeitung für mühelose Datenerfassung',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Ausrichtung'
+      },
+      demo3: {
+        title: 'Benutzerdefinierte Validierung'
+      },
+      demo4: {
+        title: 'Unterstützt Rasterlayout'
+      },
+      demo5: {
+        title: 'Mit Formular-Engine-Konfiguration'
+      },
+      props: {
+        options:
+          'Array der Optionen zur Definition von Formularstruktur und -inhalt',
+        size: 'Gesamtgröße des Formulars, beeinflusst alle Formularelemente',
+        width:
+          'Gesamtbreite des Formulars, unterstützt Zahlen (Pixel) oder Prozentangaben',
+        columns: 'Anzahl der Formularelemente pro Zeile, maximal 4',
+        labelWidth:
+          'Breite der Formularelement-Labels, unterstützt Zahlen (Pixel) oder "auto"',
+        disabled: 'Gesamtes Formular deaktivieren',
+        readonly: 'Gesamtes Formular schreibgeschützt setzen',
+        direction:
+          'Ausrichtung der Formularelemente, "x" für horizontal, "y" für vertikal',
+        formMethods:
+          'Sammlung von Formularmethoden mit Funktionen zur Formularsteuerung'
+      },
+      formItemProps: {
+        label: 'Label-Text des Formularelements',
+        field: 'Feldname des Formularelements für Datenbindung und Validierung',
+        required: 'Ist Pflichtfeld',
+        as: 'Typ des Formularelements, z.B. "input", "select" etc.',
+        size: 'Größe des einzelnen Formularelements, überschreibt Gesamteinstellung',
+        width:
+          'Breite des einzelnen Formularelements, unterstützt Zahlen (Pixel) oder Prozentangaben',
+        labelWidth:
+          'Label-Breite des einzelnen Formularelements, unterstützt Zahlen (Pixel) oder "auto"',
+        direction:
+          'Ausrichtung des einzelnen Formularelements, "x" für horizontal, "y" für vertikal',
+        disabled: 'Formularelement deaktivieren',
+        readonly: 'Formularelement schreibgeschützt setzen',
+        tips: 'Hinweistext für das Formularelement',
+        errMessage:
+          'Benutzerdefinierte Fehlermeldung bei fehlgeschlagener Validierung',
+        rule: 'Validierungsregel für das Formularelement',
+        props: 'Zusätzliche Eigenschaften für die Formularelement-Komponente',
+        between:
+          'Bei horizontaler Ausrichtung Abstand zwischen Formularelementen hinzufügen',
+        gridArea: 'Position im Rasterlayout',
+        outputFormat: 'Formatierungsmethode für Ausgabeparameter',
+        inputFormat: 'Formatierungsmethode für Eingabeparameter'
+      },
+      events: {
+        mounted: 'Wird ausgelöst, wenn das Formularelement eingebunden wird'
+      },
+      methods: {
+        getForm: 'Formular abrufen',
+        setForm: 'Formular setzen'
+      }
+    },
+    input: {
+      name: 'Eingabefeld',
+      description: 'Funktionsreiches Eingabefeld für bequemere Dateneingabe',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Präfix und Suffix'
+      },
+      demo3: {
+        title: 'Zeichenlimit'
+      },
+      demo4: {
+        title: 'Ausrichtung'
+      },
+      demo5: {
+        title: 'Passwort sichtbar'
+      },
+      demo6: {
+        title: 'Automatische Breitenanpassung'
+      },
+      demo7: {
+        title: 'Gesamten Text bei Fokus auswählen'
+      },
+      demo8: {
+        title: 'Löschbar'
+      },
+      demo9: {
+        title: 'Schreibgeschützt'
+      },
+      demo10: {
+        title: 'Deaktiviert'
+      },
+      demo11: {
+        title: 'Enter-Taste löst Event aus'
+      },
+      props: {
+        type: 'Eingabefeld-Typ',
+        size: 'Eingabefeld-Größe',
+        placeholder: 'Platzhaltertext',
+        disabled: 'Deaktiviert',
+        readonly: 'Schreibgeschützt',
+        clearable: 'Löschbar',
+        showPassword: 'Passwort sichtbar',
+        maxLength: 'Maximale Eingabelänge',
+        showCount: 'Zeichenzähler anzeigen (nur bei type="text")',
+        align: 'Textausrichtung',
+        minWidth: 'Minimale Breite, unterstützt Zahlen (Pixel) oder Einheiten',
+        autoWidth: 'Breite automatisch an Inhalt anpassen',
+        selectByFocus: 'Gesamten Text bei Fokus auswählen',
+        copyable: 'Kopieren erlauben (nur bei readonly=true und suffix=false)',
+        prefixes: 'Präfix-Typ',
+        prefixesOptions: 'Präfix-Optionen, wenn prefixes="select"',
+        prefixesTooltip: 'Präfix-Tooltip-Text',
+        suffix: 'Suffix-Typ',
+        suffixOptions: 'Suffix-Optionen, wenn suffix="select"',
+        suffixTooltip: 'Suffix-Tooltip-Text',
+        okByEnter: 'Enter-Taste zur Bestätigung erlauben'
+      },
+      events: {
+        change: 'Wird bei Wertänderung ausgelöst',
+        focus: 'Wird bei Fokus ausgelöst',
+        blur: 'Wird bei Fokusverlust ausgelöst',
+        input: 'Wird bei Eingabe ausgelöst',
+        clear: 'Wird beim Löschen ausgelöst',
+        ok: 'Wird bei Bestätigung ausgelöst'
+      }
+    },
+    inputNumber: {
+      name: 'Zahleneingabe',
+      description: 'Spezielles Eingabefeld für präzise Zahleneingabe',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Bei Fokus alles auswählen'
+      },
+      demo3: {
+        title: 'Bereichsbegrenzung'
+      },
+      demo4: {
+        title: 'Präzise Werte'
+      },
+      demo5: {
+        title: 'Deaktiviert und schreibgeschützt'
+      },
+      props: {
+        min: 'Minimalwert',
+        max: 'Maximalwert',
+        step: 'Schrittweite',
+        disabled: 'Präzision',
+        size: 'Größe (small, medium, large)',
+        placeholder: 'Platzhaltertext',
+        readonly: 'Schreibgeschützt',
+        width: 'Breite, unterstützt Zahlen (Pixel) oder Einheiten',
+        align: 'Ausrichtung',
+        selectByFocus: 'Bei Fokus alles auswählen'
+      },
+      model: {
+        modelValue: 'Gebundener Wert'
+      }
+    },
+    textarea: {
+      name: 'Textbereich',
+      description: 'Mehrzeiliges Eingabefeld für komfortablere Texteingabe',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Zeichenlimit'
+      },
+      demo3: {
+        title: 'Bei Fokus alles auswählen'
+      },
+      demo4: {
+        title: 'Löschbar'
+      },
+      demo5: {
+        title: 'Schreibgeschützt'
+      },
+      demo6: {
+        title: 'Deaktiviert'
+      },
+      demo7: {
+        title: 'Enter-Taste löst Event aus'
+      },
+      demo8: {
+        title: 'Größenänderung möglich'
+      },
+      model: {
+        modelValue: 'Gebundener Wert'
+      },
+      props: {
+        placeholder: 'Platzhaltertext',
+        disabled: 'Deaktiviert',
+        readonly: 'Schreibgeschützt',
+        clearable: 'Löschbar',
+        showCount: 'Zeichenzähler anzeigen',
+        maxLength: 'Maximale Zeichenanzahl',
+        size: 'Größe',
+        resize: 'Richtung der Größenänderung',
+        width: 'Breite',
+        height: 'Höhe',
+        minWidth: 'Minimale Breite',
+        minHeight: 'Minimale Höhe',
+        maxWidth: 'Maximale Breite',
+        maxHeight: 'Maximale Höhe',
+        selectByFocus: 'Bei Fokus alles auswählen',
+        okByEnter: 'Enter-Taste zur Bestätigung (Shift+Enter für Zeilenumbruch)'
+      },
+      events: {
+        change: 'Wird bei Wertänderung ausgelöst',
+        focus: 'Wird bei Fokus ausgelöst',
+        blur: 'Wird bei Fokusverlust ausgelöst',
+        input: 'Wird bei Eingabe ausgelöst',
+        clear: 'Wird beim Löschen ausgelöst',
+        ok: 'Wird bei Bestätigung ausgelöst'
+      }
+    },
+    inputTag: {
+      name: 'Tag-Eingabe',
+      description:
+        'Einfache Eingabe und Verwaltung mehrerer Tags für übersichtlichere Datenorganisation',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Größe'
+      },
+      demo3: {
+        title: 'Duplikate erlauben'
+      },
+      demo4: {
+        title: 'Kontrollierter Standardwert'
+      },
+      demo5: {
+        title: 'Löschbar'
+      },
+      demo6: {
+        title: 'Schreibgeschützt'
+      },
+      demo7: {
+        title: 'Deaktiviert'
+      },
+      demo8: {
+        title: 'Maximale Eingabelänge'
+      },
+      model: {
+        modelValue: 'Gebundener Wert'
+      },
+      props: {
+        size: 'Größe',
+        disabled: 'Deaktiviert',
+        clearable: 'Löschbar',
+        placeholder: 'Platzhaltertext',
+        readonly: 'Schreibgeschützt',
+        allowDuplicates: 'Duplikate erlauben',
+        maxLength: 'Maximale Anzahl von Tags',
+        width: 'Breite'
+      },
+      events: {
+        change: 'Wird bei Wertänderung ausgelöst',
+        clear: 'Wird beim Löschen ausgelöst',
+        add: 'Wird beim Hinzufügen eines Tags ausgelöst',
+        remove: 'Wird beim Entfernen eines Tags ausgelöst'
+      }
+    },
+    checkbox: {
+      name: 'Kontrollkästchen',
+      description:
+        'Mehrfachauswahl-Komponente für intuitive Auswahlmöglichkeiten',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Vertikale Anordnung'
+      },
+      demo3: {
+        title: 'Block-Darstellung'
+      },
+      demo4: {
+        title: 'Abgerundet'
+      },
+      demo5: {
+        title: 'Schreibgeschützt'
+      },
+      demo6: {
+        title: 'Deaktiviert'
+      },
+      demo7: {
+        title: 'Einzelmodus'
+      },
+      'model(CheckboxGroup)': {
+        modelValue: 'Gebundener Wert'
+      },
+      'model(Checkbox)': {
+        modelValue: 'Gebundener Wert'
+      },
+      'props(CheckboxGroup)': {
+        options: 'Optionen',
+        disabled: 'Deaktiviert',
+        readonly: 'Schreibgeschützt',
+        size: 'Größe',
+        direction: 'Ausrichtung',
+        block: 'Block-Darstellung',
+        round: 'Abgerundet',
+        iconable: 'Icon aktivieren'
+      },
+      'props(Checkbox)': {
+        label: 'Beschriftung',
+        value: 'Wert',
+        disabled: 'Deaktiviert',
+        readonly: 'Schreibgeschützt',
+        checked: 'Ausgewählt',
+        size: 'Größe',
+        block: 'Block-Darstellung',
+        round: 'Abgerundet',
+        iconable: 'Icon aktivieren',
+        certain: 'Bestimmter Zustand'
+      },
+      'events(Checkbox)': {
+        change: 'Wird bei Wertänderung ausgelöst'
+      },
+      'events(CheckboxGroup)': {
+        change: 'Wird bei Wertänderung ausgelöst'
+      },
+      options: {
+        label: 'Beschriftung',
+        value: 'Wert',
+        disabled: 'Deaktiviert'
+      }
+    },
+    radio: {
+      name: 'Optionsfeld',
+      description: 'Einzelauswahl-Komponente für klare Auswahlmöglichkeiten',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Vertikale Anordnung'
+      },
+      demo3: {
+        title: 'Block-Darstellung'
+      },
+      demo4: {
+        title: 'Form'
+      },
+      demo5: {
+        title: 'Schreibgeschützt'
+      },
+      demo6: {
+        title: 'Deaktiviert'
+      },
+      model: {
+        modelValue: 'Gebundener Wert'
+      },
+      'props(RadioGroup)': {
+        size: 'Größe',
+        block: 'Block-Darstellung',
+        direction: 'Ausrichtung',
+        disabled: 'Deaktiviert',
+        iconable: 'Icon aktivieren',
+        options: 'Optionen',
+        readonly: 'Schreibgeschützt',
+        round: 'Abgerundet'
+      },
+      options: {
+        label: 'Beschriftung',
+        value: 'Wert',
+        disabled: 'Deaktiviert'
+      },
+      events: {
+        change: 'Wird bei Wertänderung ausgelöst'
+      }
+    },
+    tabs: {
+      name: 'Registerkarten',
+      description:
+        'Klare Inhaltsorganisation mit flüssigem Wechsel zwischen Kategorien',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Adaptive Breite'
+      },
+      demo3: {
+        title: 'Benutzerdefinierte Elementbreite'
+      },
+      demo4: {
+        title: 'Linie'
+      },
+      demo5: {
+        title: 'Abgerundet'
+      },
+      model: {
+        modelValue: 'Gebundener Wert'
+      },
+      props: {
+        options: 'Optionen',
+        type: 'Typ',
+        size: 'Größe',
+        width: 'Breite',
+        itemWidth: 'Elementbreite',
+        round: 'Abgerundet',
+        disabled: 'Deaktiviert',
+        readonly: 'Schreibgeschützt'
+      },
+      options: {
+        label: 'Beschriftung',
+        value: 'Wert'
+      }
+    },
+    select: {
+      name: 'Auswahlfeld',
+      description: 'Dropdown-Auswahlfeld für bequeme Auswahl',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Suche'
+      },
+      demo3: {
+        title: 'Slot-Unterstützung'
+      },
+      demo4: {
+        title: 'Deaktivierte Optionen'
+      },
+      demo5: {
+        title: 'Schreibgeschützt'
+      },
+      demo6: {
+        title: 'Deaktiviert'
+      },
+      demo7: {
+        title: 'Benutzerdefinierter Leerzustand'
+      },
+      demo8: {
+        title: 'Gruppierung'
+      },
+      model: {
+        modelValue: 'Gebundener Wert'
+      },
+      props: {
+        defaultValue: 'Standardwert',
+        options: 'Optionen',
+        width: 'Breite',
+        trigger: 'Auslösemethode',
+        placeholder: 'Platzhaltertext',
+        size: 'Größe',
+        itemHeight: 'Elementhöhe',
+        searchable: 'Durchsuchbar',
+        searchMethod: 'Suchmethode',
+        searchDelay: 'Suchverzögerung',
+        clearable: 'Löschbar',
+        readonly: 'Schreibgeschützt',
+        disabled: 'Deaktiviert',
+        showCheckIcon: 'Häkchen-Icon anzeigen'
+      },
+      events: {
+        change: 'Wird bei Wertänderung ausgelöst',
+        clear: 'Wird beim Löschen ausgelöst',
+        blur: 'Wird bei Fokusverlust ausgelöst',
+        focus: 'Wird bei Fokus ausgelöst'
+      },
+      options: {
+        label: 'Beschriftung',
+        value: 'Wert',
+        disabled: 'Deaktiviert'
+      },
+      slots: {
+        item: 'Benutzerdefinierter Optionsinhalt',
+        empty: 'Benutzerdefinierter Leerzustand'
+      }
+    },
+    selectMultiple: {
+      name: 'Mehrfachauswahl',
+      description:
+        'Dropdown-Auswahlfeld mit Mehrfachauswahl für flexible Auswahlmöglichkeiten',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Benutzerdefinierte Filtermethode'
+      },
+      demo3: {
+        title: 'Slot-Unterstützung'
+      },
+      demo4: {
+        title: 'Deaktivierte Optionen'
+      },
+      demo5: {
+        title: 'Schreibgeschützt'
+      },
+      demo6: {
+        title: 'Deaktiviert'
+      },
+      demo7: {
+        title: 'Leerzustand-Slot'
+      },
+      demo8: {
+        title: 'Gruppierung'
+      },
+      props: {
+        options: 'Optionen',
+        trigger: 'Auslösemethode',
+        width: 'Breite',
+        valueLayout: 'Wert-Layout',
+        valueTextSplit: 'Wert-Text-Trennzeichen',
+        placeholder: 'Platzhaltertext',
+        size: 'Größe',
+        itemHeight: 'Elementhöhe',
+        searchable: 'Durchsuchbar',
+        searchPlaceholder: 'Such-Platzhaltertext',
+        searchMethod: 'Suchmethode',
+        searchDelay: 'Suchverzögerung',
+        clearable: 'Löschbar',
+        readonly: 'Schreibgeschützt',
+        disabled: 'Deaktiviert',
+        showCheckIcon: 'Häkchen-Icon anzeigen',
+        defaultValue: 'Standardwert'
+      },
+      model: {
+        modelValue: 'Gebundener Wert'
+      },
+      events: { change: 'Wertänderung', blur: 'Fokusverlust', focus: 'Fokus' },
+      options: {
+        label: 'Beschriftung',
+        value: 'Wert',
+        disabled: 'Deaktiviert'
+      },
+      slots: {
+        item: 'Benutzerdefinierter Optionsinhalt',
+        empty: 'Benutzerdefinierter Leerzustand'
+      }
+    },
+    datePicker: {
+      name: 'Datumsauswahl',
+      description: 'Intuitive Datumsauswahl für präzise Zeitauswahl',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Löschbar'
+      },
+      demo3: {
+        title: 'Benutzerdefiniertes Format'
+      },
+      demo4: {
+        title: 'Voreinstellungen'
+      },
+      demo5: {
+        title: 'Schreibgeschützt'
+      },
+      demo6: {
+        title: 'Deaktiviert'
+      },
+      model: {
+        modelValue: 'Gebundener Wert'
+      },
+      props: {
+        valueFormat: 'Wertformat',
+        size: 'Größe',
+        width: 'Breite',
+        placeholder: 'Platzhaltertext',
+        clearable: 'Löschbar',
+        readonly: 'Schreibgeschützt',
+        disabled: 'Deaktiviert',
+        presets: 'Voreinstellungen'
+      },
+      events: {
+        change: 'Wertänderung',
+        focus: 'Fokus',
+        blur: 'Fokusverlust',
+        clear: 'Löschen'
+      }
+    },
+    dateRangePicker: {
+      name: 'Datumsbereichsauswahl',
+      description:
+        'Werkzeug zur Auswahl von Zeitbereichen für bequeme Bereichsauswahl',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Löschbar'
+      },
+      demo3: {
+        title: 'Weitere'
+      },
+      model: {
+        modelValue: 'Gebundener Wert'
+      },
+      props: {
+        startKey: 'Startschlüssel',
+        endKey: 'Endschlüssel',
+        valueFormat: 'Wertformat',
+        size: 'Größe',
+        width: 'Breite',
+        placeholderStart: 'Start-Platzhaltertext',
+        placeholderEnd: 'End-Platzhaltertext',
+        clearable: 'Löschbar',
+        readonly: 'Schreibgeschützt',
+        disabled: 'Deaktiviert'
+      },
+      events: {
+        change: 'Wertänderung',
+        focus: 'Fokus',
+        blur: 'Fokusverlust',
+        clear: 'Löschen'
+      }
+    },
+    cascader: {
+      name: 'Kaskadierendes Auswahlfeld',
+      description:
+        'Auswahlfeld für mehrstufige Daten mit klarer Kategorieauswahl',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Freier Modus'
+      },
+      demo3: {
+        title: 'Nur letzte Ebene anzeigen'
+      },
+      demo4: {
+        title: 'Asynchrones Laden'
+      },
+      demo5: {
+        title: 'Löschbar'
+      },
+      demo6: {
+        title: 'Schreibgeschützt'
+      },
+      demo7: {
+        title: 'Deaktiviert'
+      },
+      demo8: {
+        title: 'Deaktivierte Optionen'
+      },
+      model: {
+        modelValue: 'Gebundener Wert'
+      },
+      props: {
+        width: 'Breite',
+        options: 'Optionen',
+        placeholder: 'Platzhaltertext',
+        disabled: 'Deaktiviert',
+        clearable: 'Löschbar',
+        showAllLevels: 'Alle Ebenen anzeigen',
+        multiple: 'Mehrfachauswahl',
+        free: 'Freie Auswahl',
+        size: 'Größe',
+        trigger: 'Auslösemethode',
+        loadMethod: 'Lademethode',
+        readonly: 'Schreibgeschützt'
+      },
+      options: {
+        label: 'Beschriftung',
+        value: 'Wert',
+        isLeaf: 'Ist Blattknoten',
+        children: 'Unterknoten',
+        disabled: 'Deaktiviert'
+      }
+    },
+    treeSelect: {
+      name: 'Baumauswahl',
+      description:
+        'Baumstrukturiertes Auswahlfeld für intuitive hierarchische Auswahl',
+      demo1: {
+        title: 'Standard'
+      },
+      demo2: {
+        title: 'Asynchrones Laden von Daten'
+      },
+      demo3: {
+        title: 'Benutzerdefinierte Slots'
+      },
+      demo4: {
+        title: 'Deaktivierte Elemente'
+      },
+      demo5: {
+        title: 'Standardmäßig alle ausgeklappt'
+      },
+      demo6: {
+        title: 'Durchsuchbar'
+      },
+      demo7: {
+        title: 'Leerzustand-Slot'
+      },
+      demo8: {
+        title: 'Weitere'
+      },
+      model: {
+        modelValue: 'Gebundener Wert'
+      },
+      props: {
+        dataSource: 'Baumdatenquelle',
+        defaultValue: 'Standardwert',
+        placeholder: 'Platzhaltertext',
+        size: 'Komponentengröße',
+        disabled: 'Deaktiviert',
+        clearable: 'Löschbar',
+        showCheckbox: 'Kontrollkästchen anzeigen',
+        showAllLevels: 'Alle Ebenen anzeigen',
+        showCheckIcon: 'Häkchen-Icon anzeigen',
+        showLine: 'Verbindungslinien anzeigen',
+        expandAll: 'Alle Knoten ausklappen',
+        searchable: 'Durchsuchbar',
+        searchDelay: 'Suchverzögerung (Millisekunden)',
+        readonly: 'Schreibgeschützt',
+        free: 'Freier Modus (Eltern-Kind-Knoten unabhängig)',
+        align: 'Textausrichtung',
+        trigger: 'Auslösemethode für Unterknoten',
+        keyField: 'Knotenschlüsselfeld',
+        labelField: 'Knotenbeschriftungsfeld',
+        disabledField: 'Deaktiviertes Knotenfeld',
+        initTree: 'Methode zur Initialisierung von Baumknoten',
+        loadMethod: 'Methode zum asynchronen Laden von Unterknoten'
+      },
+      slots: {
+        handle: 'Slot-Name'
+      }
+    },
+    inputTable: {
+      name: 'Tabelleneingabe',
+      description:
+        'Schnelle Dateneingabe in Tabellen für effiziente Stapelverarbeitung',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Standardwert'
+      },
+      demo3: {
+        title: 'Erweitert'
+      },
+      props: {
+        columns: 'Spaltenkonfiguration',
+        size: 'Größe',
+        width: 'Breite',
+        rowKey: 'Zeilenschlüssel',
+        batchDeletable: 'Stapellöschung unterstützen',
+        addable: 'Hinzufügbar',
+        defaultForm: 'Standardformular',
+        deletable: 'Löschbar',
+        maxRows: 'Maximale Zeilenanzahl',
+        minRows: 'Minimale Zeilenanzahl',
+        clearable: 'Löschbar',
+        sortable: 'Sortierbar',
+        autoUniqueId: 'Automatische eindeutige ID',
+        uniqueField: 'Eindeutiges Feld'
+      }
+    },
+    switch: {
+      name: 'Schalter',
+      description: 'Klarer Umschalter für eindeutige Statuswechsel',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Quadratisch'
+      },
+      demo3: {
+        title: 'Anfrage simulieren'
+      },
+      demo4: {
+        title: 'Schreibgeschützt'
+      },
+      demo5: {
+        title: 'Deaktiviert'
+      },
+      model: {
+        modelValue: 'Parametername'
+      },
+      props: {
+        size: 'Größe',
+        round: 'Abgerundet',
+        readonly: 'Schreibgeschützt',
+        disabled: 'Deaktiviert',
+        request: 'Anfrage',
+        loading: 'Wird geladen'
+      },
+      events: {
+        change: 'Ereignisname'
+      }
+    },
+    slider: {
+      name: 'Schieberegler',
+      description: 'Intuitive Wertauswahl durch Ziehen',
+      demo1: {
+        title: 'Größe'
+      },
+      demo2: {
+        title: 'Verschiedene Schrittweiten'
+      },
+      demo3: {
+        title: 'Begrenzter Bereich'
+      },
+      demo4: {
+        title: 'Schreibgeschützt'
+      },
+      demo5: {
+        title: 'Deaktiviert'
+      },
+      demo6: {
+        title: 'Konfigurationsoptionen'
+      },
+      model: {
+        modelValue: 'Parametername'
+      },
+      props: {
+        size: 'Größe',
+        min: 'Minimalwert',
+        max: 'Maximalwert',
+        step: 'Schrittweite',
+        readonly: 'Schreibgeschützt',
+        disabled: 'Deaktiviert',
+        options: 'Optionen',
+        formatTooltip: 'Tooltip formatieren'
+      }
+    },
+    sliderRange: {
+      name: 'Bereichsschieberegler',
+      description: 'Flexibler Schieberegler zur Auswahl von Wertebereichen',
+      demo1: {
+        title: 'Größe'
+      },
+      demo2: {
+        title: 'Verschiedene Schrittweiten'
+      },
+      demo3: {
+        title: 'Begrenzter Bereich'
+      },
+      demo4: {
+        title: 'Schreibgeschützt'
+      },
+      demo5: {
+        title: 'Deaktiviert'
+      },
+      demo6: {
+        title: 'Konfigurationsoptionen'
+      },
+      model: {
+        modelValue: 'Parametername'
+      },
+      props: {
+        size: 'Größe',
+        min: 'Minimalwert',
+        max: 'Maximalwert',
+        step: 'Schrittweite',
+        readonly: 'Schreibgeschützt',
+        disabled: 'Deaktiviert',
+        options: 'Optionen',
+        formatTooltip: 'Tooltip formatieren'
+      }
+    },
+    rate: {
+      name: 'Bewertung',
+      description: 'Lebendige Sternbewertungskomponente',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Schreibgeschützt'
+      },
+      demo3: {
+        title: 'Deaktiviert'
+      },
+      demo4: {
+        title: 'Tipps'
+      },
+      model: {
+        modelValue: 'Parametername'
+      },
+      props: {
+        size: 'Größe',
+        count: 'Anzahl',
+        tips: 'Tipps',
+        readonly: 'Schreibgeschützt',
+        disabled: 'Deaktiviert'
+      }
+    },
+    colorPicker: {
+      name: 'Farbwähler',
+      description: 'Umfassendes Farbauswahltool für präzise Farbauswahl',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Verschiedene Größen'
+      },
+      demo3: {
+        title: 'Benutzerdefinierte Breite'
+      },
+      demo4: {
+        title: 'Deaktivierter Zustand'
+      },
+      demo5: {
+        title: 'Schreibgeschützter Zustand'
+      },
+      model: {
+        modelValue: 'Parametername'
+      },
+      props: {
+        size: 'Größe',
+        width: 'Breite',
+        placeholder: 'Platzhalter',
+        disabled: 'Deaktiviert',
+        readonly: 'Schreibgeschützt'
+      }
+    },
+    upload: {
+      name: 'Datei-Upload',
+      description: 'Einfache Dateiupload-Komponente',
+      demo1: {
+        title: 'Standard'
+      },
+      demo2: {
+        title: 'Format- und Größenbeschränkung'
+      },
+      demo3: {
+        title: 'Bild-Upload'
+      },
+      demo4: {
+        title: 'Benutzerdefinierte Tipps'
+      },
+      demo5: {
+        title: 'Fotowand'
+      },
+      demo6: {
+        title: 'Kein Upload'
+      },
+      demo7: {
+        title: 'Vorschau'
+      },
+      model: {
+        modelValue: 'Gebundener Wert'
+      },
+      props: {
+        accept: 'Akzeptierte Dateitypen',
+        immediate: 'Sofortiger Upload',
+        multiple: 'Mehrere Dateien',
+        disabled: 'Deaktiviert',
+        readonly: 'Schreibgeschützt',
+        limit: 'Dateianzahlbegrenzung',
+        maxFileSize: 'Maximale Dateigröße',
+        size: 'Größe',
+        tips: 'Hinweise',
+        uploadHelper: 'Upload-Helfer',
+        viewMode: 'Ansichtsmodus'
+      }
+    },
+    table: {
+      name: 'Tabelle',
+      description:
+        'Leistungsstarke Tabellenkomponente für übersichtliche Datenanzeige',
+      model: {
+        modelValue: 'Parametername',
+        selectedKeys: 'Ausgewählte Schlüssel'
+      },
+      demo1: {
+        title: 'Standard'
+      },
+      demo2: {
+        title: 'Fixierte Zeilen und Spalten'
+      },
+      demo3: {
+        title: 'Benutzerdefinierte Aktionen'
+      },
+      demo4: {
+        title: 'Slots'
+      },
+      demo5: {
+        title: 'Benutzerdefinierter Stil'
+      },
+      demo6: {
+        title: 'Auswahl'
+      },
+      demo7: {
+        title: 'Sortierbar'
+      },
+      demo8: {
+        title: 'Benutzerdefiniertes Rendering'
+      },
+      demo9: {
+        title: 'Vollständige Funktionalität'
+      },
+      demo10: {
+        title: 'Keine Daten'
+      },
+      props: {
+        columns: 'Spalten',
+        dataSource: 'Datenquelle',
+        size: 'Größe',
+        checkable: 'Auswählbar',
+        maxHeight: 'Maximale Höhe',
+        multiple: 'Mehrfachauswahl',
+        rowKey: 'Zeilenschlüssel'
+      },
+      tableColumns: {
+        field: 'Feld',
+        fixed: 'Fixiert',
+        title: 'Titel',
+        type: 'Typ',
+        width: 'Breite',
+        x: 'X-Achse',
+        customRender: 'Benutzerdefiniertes Rendering'
+      }
+    },
+    pagination: {
+      name: 'Seitennummerierung',
+      description:
+        'Klare Seitennavigation für einfaches Durchblättern von Daten',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Große Datenmengen'
+      },
+      demo3: {
+        title: 'Asynchrone Simulation'
+      },
+      model: {
+        total: 'Parametername',
+        currentPage: 'Aktuelle Seite',
+        pageSize: 'Seitengröße'
+      },
+      props: {
+        size: 'Größe',
+        pageSizeOptions: 'Seitengrößenoptionen',
+        visiblePagesCount: 'Anzahl sichtbarer Seiten'
+      },
+      events: {
+        change: 'Ereignisname'
+      }
+    },
+    magicNumber: {
+      name: 'Magische Zahl',
+      description: 'Animierte Komponente für lebendige Zahlenanzeige'
+    },
+    tree: {
+      name: 'Baumstruktur',
+      description:
+        'Werkzeug zur Anzeige hierarchischer Datenstrukturen mit klaren Ebenen',
+      demo1: {
+        title: 'Standard'
+      },
+      demo2: {
+        title: 'Kontrollkästchen anzeigen'
+      },
+      demo3: {
+        title: 'Mehrfachauswahl'
+      },
+      demo4: {
+        title: 'Eltern-Kind-Verknüpfungsmodus'
+      },
+      demo5: {
+        title: 'Asynchrone Anfrage'
+      },
+      demo6: {
+        title: 'Standardmäßig alle ausgeklappt'
+      },
+      demo7: {
+        title: 'Hilfslinien anzeigen'
+      },
+      demo8: {
+        title: 'Slots'
+      },
+      model: {
+        modelValue: 'Parametername',
+        expandedKeys: 'Ausgeklappte Knotenschlüssel'
+      },
+      props: {
+        dataSource: 'Datenquelle',
+        multiple: 'Mehrfachauswahl',
+        showCheckbox: 'Kontrollkästchen anzeigen',
+        expandAll: 'Standardmäßig alle ausgeklappt',
+        free: 'Freie Auswahl',
+        showLine: 'Verbindungslinien anzeigen',
+        trigger: 'Auslösemethode',
+        placeholder: 'Platzhaltertext',
+        keyField: 'Knotenschlüsselfeld',
+        labelField: 'Knotenbeschriftungsfeld',
+        disabledField: 'Deaktiviertes Knotenfeld',
+        initTree: 'Methode zur Initialisierung von Baumknoten',
+        loadMethod: 'Methode zum asynchronen Laden von Unterknoten',
+        isSelect: 'Ist ausgewählt'
+      },
+      slots: {
+        handle: 'Slot-Name'
+      },
+      treeDataSource: {
+        label: 'Beschriftung',
+        key: 'Schlüssel',
+        isLeaf: 'Ist Blattknoten',
+        children: 'Unterknoten',
+        disabled: 'Deaktiviert'
+      }
+    },
+    collapse: {
+      name: 'Akkordeon',
+      description:
+        'Zusammenklappbare und erweiterbare Inhaltsbereiche, um Informationen übersichtlicher darzustellen',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Titel-Slot'
+      },
+      demo3: {
+        title: 'Akkordeon-Modus'
+      },
+      model: {
+        modelValue: 'Parametername'
+      },
+      'model(CollapseItem)': {
+        modelValue: 'Parametername'
+      },
+      props: {
+        width: 'Breite'
+      },
+      'props(CollapseItem)': {
+        collapseKey: 'Zusammenklapp-Schlüssel',
+        title: 'Titel',
+        radius: 'Radius'
+      }
+    },
+    desc: {
+      name: 'Beschreibungsliste',
+      description:
+        'Ordentliche Darstellung mehrerer Felder für eine strukturiertere Informationsanzeige',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Richtung'
+      },
+      demo3: {
+        title: 'Umfangreich'
+      },
+      demo4: {
+        title: 'Unterstützt Online-Konfiguration'
+      },
+      props: {
+        options: 'Optionen',
+        dataSource: 'Datenquelle',
+        size: 'Größe',
+        labelX: 'Beschriftung X',
+        valueX: 'Wert X',
+        gap: 'Abstand',
+        width: 'Breite',
+        columns: 'Spalten',
+        labelWidth: 'Beschriftungsbreite',
+        direction: 'Richtung',
+        bordered: 'Mit Rahmen'
+      },
+      descItemProps: {
+        label: 'Beschriftung',
+        field: 'Feld',
+        size: 'Größe',
+        bordered: 'Mit Rahmen',
+        width: 'Breite',
+        labelWidth: 'Beschriftungsbreite',
+        direction: 'Richtung',
+        tips: 'Hinweise',
+        type: 'Typ',
+        labelX: 'Beschriftung X',
+        valueX: 'Wert X',
+        gridArea: 'Rasterbereich',
+        customRender: 'Benutzerdefinierte Darstellung'
+      }
+    },
+    alert: {
+      name: 'Warnhinweis',
+      description: 'Auffällige Informationsboxen für sanftere Warnungen',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Unterstützt Slots'
+      },
+      demo3: {
+        title: 'Weitere Szenarien'
+      },
+      props: {
+        type: 'Typ',
+        title: 'Titel',
+        content: 'Hinweisinhalt',
+        closeable: 'Schließbar',
+        footer: 'Fußzeileninhalt'
+      }
+    },
+    message: {
+      name: 'Globale Benachrichtigung',
+      description: 'Leichtgewichtiges Feedback für prägnantere Hinweise',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Steuerbar'
+      },
+      demo3: {
+        title: 'Anfrage simulieren'
+      },
+      events: {
+        close: 'Wird beim Schließen ausgelöst'
+      },
+      props: {
+        type: 'Typ',
+        content: 'Hinweisinhalt',
+        duration: 'Anzeigedauer'
+      }
+    },
+    notification: {
+      name: 'Benachrichtigungsfeld',
+      description: 'Elegante Benachrichtigungen für freundlichere Mitteilungen',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Benutzerdefinierte Anzeigezeit'
+      },
+      props: {
+        type: 'Typ',
+        title: 'Titel',
+        content: 'Hinweisinhalt',
+        delay: 'Verzögerungszeit'
+      }
+    },
+    drawer: {
+      name: 'Schublade',
+      description:
+        'Panel, das vom Bildschirmrand eingeblendet wird, für flüssigere temporäre Operationen',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Asynchrones Schließen'
+      },
+      demo3: {
+        title: 'Benutzerdefinierter Kopf- und Fußbereich'
+      },
+      demo4: {
+        title: 'ESC zum Schließen erlauben'
+      },
+      model: {
+        visible: 'Sichtbarkeit'
+      },
+      props: {
+        title: 'Titel',
+        width: 'Breite',
+        position: 'Position',
+        height: 'Höhe',
+        closeOnClickOverlay: 'Durch Klick auf Overlay schließen',
+        closeByEsc: 'Durch ESC-Taste schließen',
+        hideFooter: 'Fußbereich ausblenden',
+        okProps: 'Eigenschaften der Bestätigungsschaltfläche',
+        cancelProps: 'Eigenschaften der Abbruchschaltfläche',
+        zIndex: 'Z-Index'
+      }
+    },
+    dialog: {
+      name: 'Dialogfeld',
+      description: 'Modaler Dialog für hervorgehobene wichtige Interaktionen',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Einfach'
+      },
+      props: {
+        type: 'Typ',
+        width: 'Breite',
+        trigger: 'Auslösemethode',
+        title: 'Titel',
+        okText: 'Bestätigungstext',
+        cancelText: 'Abbruchtext',
+        ok: 'Bestätigungscallback',
+        cancel: 'Abbruchcallback',
+        layout: 'Layout',
+        closeOnClickOverlay: 'Durch Klick auf Overlay schließen',
+        closeByEsc: 'Durch ESC-Taste schließen',
+        transformOrigin: 'Animationsursprung'
+      },
+      events: {
+        ok: 'Wird beim Klick auf die Bestätigungsschaltfläche ausgelöst',
+        cancel: 'Wird beim Klick auf die Abbruchschaltfläche ausgelöst'
+      }
+    },
+    modal: {
+      name: 'Modalfenster',
+      description:
+        'Flexibleres modales Fenster für reichhaltigere Popup-Interaktionen',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Asynchrones Schließen'
+      },
+      demo3: {
+        title: 'Benutzerdefinierter Kopf- und Fußbereich'
+      },
+      demo4: {
+        title: 'ESC zum Schließen erlauben'
+      },
+      model: {
+        visible: 'Sichtbarkeit'
+      },
+      props: {
+        title: 'Titel',
+        width: 'Breite',
+        top: 'Abstand zum oberen Rand',
+        hideFooter: 'Fußbereich ausblenden',
+        closeByEsc: 'Durch ESC-Taste schließen',
+        okProps: 'Eigenschaften der Bestätigungsschaltfläche',
+        cancelProps: 'Eigenschaften der Abbruchschaltfläche',
+        hideOkButton: 'Bestätigungsschaltfläche ausblenden',
+        hideCancelButton: 'Abbruchschaltfläche ausblenden',
+        closeOnClickOverlay: 'Durch Klick auf Overlay schließen',
+        zIndex: 'Z-Index'
+      }
+    },
+    popok: {
+      name: 'Popup-Bestätigung',
+      description:
+        'Leichtgewichtige Bestätigungshinweise für bequemere Operationsbestätigungen',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Auslösemethode'
+      },
+      props: {
+        type: 'Typ',
+        width: 'Breite',
+        trigger: 'Auslösemethode',
+        title: 'Titel',
+        okProps: 'Eigenschaften der Bestätigungsschaltfläche',
+        cancelProps: 'Eigenschaften der Abbruchschaltfläche',
+        content: 'Inhalt',
+        placement: 'Position'
+      }
+    },
+    popover: {
+      name: 'Popup-Karte',
+      description:
+        'Informationskarte bei Mauszeigerhalt für elegantere Hinweise',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      props: {
+        trigger: 'Auslösemethode',
+        placement: 'Position',
+        disabled: 'Deaktiviert',
+        loading: 'Ladezustand',
+        hideOnClick: 'Bei Klick ausblenden',
+        offset: 'Versatz',
+        popoverBodyClassName: 'Klassenname für Popup-Inhalt',
+        triggerTarget: 'Auslöseziel'
+      },
+      slots: {
+        trigger: 'Auslöse-Slot',
+        'popover-body': 'Popup-Inhalts-Slot'
+      }
+    },
+    tooltip: {
+      name: 'Texthinweis',
+      description: 'Einfache Texthinweis-Popups für leichtere Hinweise',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Klick-Auslösung'
+      },
+      props: {
+        tips: 'Hinweisinhalt',
+        placement: 'Position',
+        trigger: 'Auslösemethode',
+        allowHTML: 'HTML unterstützen',
+        delay: 'Verzögerungszeit'
+      }
+    },
+    loading: {
+      name: 'Laden',
+      description: 'Elegante Ladeeffekte für entspannteres Warten',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      props: {
+        tip: 'Hinweistext',
+        placement: 'Hinweisposition',
+        trigger: 'Auslösemethode',
+        allowHTML: 'HTML erlauben'
+      }
+    },
+    result: {
+      name: 'Ergebnis',
+      description:
+        'Zur Rückmeldung von Operationsergebnissen für vollständigere Ergebnisdarstellung',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      props: {
+        type: 'Typ',
+        title: 'Titel',
+        content: 'Inhalt'
+      },
+      slots: {
+        handle: 'Slot-Behandlung'
+      }
+    },
+    empty: {
+      name: 'Leerzustand',
+      description:
+        'Anzeige für leere Datenzustände für freundlichere leere Seiten',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      props: {
+        type: 'Typ',
+        title: 'Titel',
+        fontSize: 'Schriftgröße',
+        padding: 'Innenabstand',
+        width: 'Breite',
+        height: 'Höhe'
       }
     }
   }
-  
+}

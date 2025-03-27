@@ -3,6 +3,11 @@ import en from './en'
 import zh from './zh'
 import ja from './ja'
 import ko from './ko'
+import fr from './fr'
+import it from './it'
+import es from './es'
+import de from './de'
+import pt from './pt'
 
 let i18nInstance: any = null
 let currentLocale = 'zh'
@@ -32,7 +37,12 @@ export const useI18n = () => {
         en,
         zh,
         ja,
-        ko
+        ko,
+        de,
+        pt,
+        fr,
+        it,
+        es
       }
     })
   }
@@ -40,4 +50,4 @@ export const useI18n = () => {
 }
 
 export const locale = useI18n()
-export { en, zh }
+export { en, zh, de, pt, fr, it, es, ko, ja }

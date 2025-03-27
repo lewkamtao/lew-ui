@@ -1,7 +1,7 @@
 export default {
   name: 'ja',
   image: {
-    fail: '画像を読み込めません。後でもう一度お試しください'
+    fail: '画像を読み込めませんでした。後でもう一度お試しください。'
   },
   input: {
     placeholder: '入力してください',

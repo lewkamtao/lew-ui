@@ -35,14 +35,16 @@ export default {
   components: {
     image: {
       name: 'Imagen',
-      description: 'Visualización elegante de imágenes con soporte para carga diferida, estados de carga y manejo de errores',
+      description:
+        'Visualización elegante de imágenes con soporte para carga diferida, estados de carga y manejo de errores',
       demo1: {
         title: 'Uso básico'
       },
       demo2: {
         title: 'Estado de carga',
         tipsTitle: 'Consejos',
-        tipsContent: 'Necesitas establecer el ancho y alto para tener un efecto de marcador de posición durante la carga.'
+        tipsContent:
+          'Necesitas establecer el ancho y alto para tener un efecto de marcador de posición durante la carga.'
       },
       demo3: {
         title: 'Error de carga'
@@ -61,7 +63,8 @@ export default {
     },
     avatar: {
       name: 'Avatar',
-      description: 'Un elegante componente de avatar que admite formatos de imagen, icono y texto',
+      description:
+        'Un elegante componente de avatar que admite formatos de imagen, icono y texto',
       demo1: {
         title: 'Uso básico'
       },
@@ -88,7 +91,8 @@ export default {
     },
     button: {
       name: 'Botón',
-      description: 'Haz que tus interacciones sean más fluidas con un simple clic',
+      description:
+        'Haz que tus interacciones sean más fluidas con un simple clic',
       demo1: {
         title: 'Uso básico'
       },
@@ -122,7 +126,8 @@ export default {
     },
     tag: {
       name: 'Etiqueta',
-      description: 'Una herramienta de marcado pequeña pero poderosa que añade color a la clasificación del contenido',
+      description:
+        'Una herramienta de marcado pequeña pero poderosa que añade color a la clasificación del contenido',
       demo1: {
         title: 'Uso básico'
       },
@@ -156,7 +161,8 @@ export default {
     },
     badge: {
       name: 'Insignia',
-      description: 'Un pequeño punto rojo que florece en la esquina superior derecha, haciendo que las notificaciones sean más llamativas',
+      description:
+        'Un pequeño punto rojo que florece en la esquina superior derecha, haciendo que las notificaciones sean más llamativas',
       demo1: {
         title: 'Uso básico'
       },
@@ -184,7 +190,8 @@ export default {
     },
     title: {
       name: 'Título',
-      description: 'No solo un título, sino una esencia que da vida al contenido',
+      description:
+        'No solo un título, sino una esencia que da vida al contenido',
       demo1: {
         title: 'Uso básico'
       },
@@ -198,12 +205,14 @@ export default {
         text: 'Contenido del texto',
         size: 'Tamaño del texto del título, puede ser un número (unidad: píxeles) o una cadena (ej., "1.5em")',
         bold: 'Grosor del texto del título, valores opcionales son números enteros entre 100 y 900',
-        color: 'Color del texto del título, los valores opcionales incluyen nombres de colores predefinidos o valores de color personalizados'
+        color:
+          'Color del texto del título, los valores opcionales incluyen nombres de colores predefinidos o valores de color personalizados'
       }
     },
     textTrim: {
       name: 'Recorte de Texto',
-      description: 'Maneja elegantemente textos largos sin arruinar la estética del diseño',
+      description:
+        'Maneja elegantemente textos largos sin arruinar la estética del diseño',
       demo1: {
         title: 'Uso básico'
       },
@@ -221,10 +230,14 @@ export default {
         lineClamp: 'Número máximo de líneas a mostrar, el exceso será truncado',
         allowHTML: 'Permitir renderizar etiquetas HTML',
         placement: 'Posición de visualización del tooltip',
-        offset: 'Desplazamiento del tooltip relativo al elemento objetivo [x, y] (unidad: píxeles)',
-        textAlign: 'Dirección de alineación horizontal (cuando el ancho es menor que el ancho del contenedor)',
-        delay: 'Tiempo de retraso para mostrar y ocultar el tooltip [retraso de mostrar, retraso de ocultar] (unidad: milisegundos)',
-        reserveEnd: 'Número de caracteres a conservar al final, mostrará puntos suspensivos en el medio cuando el texto se desborde, conservando el inicio y el número especificado de caracteres finales'
+        offset:
+          'Desplazamiento del tooltip relativo al elemento objetivo [x, y] (unidad: píxeles)',
+        textAlign:
+          'Dirección de alineación horizontal (cuando el ancho es menor que el ancho del contenedor)',
+        delay:
+          'Tiempo de retraso para mostrar y ocultar el tooltip [retraso de mostrar, retraso de ocultar] (unidad: milisegundos)',
+        reserveEnd:
+          'Número de caracteres a conservar al final, mostrará puntos suspensivos en el medio cuando el texto se desborde, conservando el inicio y el número especificado de caracteres finales'
       }
     },
     flex: {

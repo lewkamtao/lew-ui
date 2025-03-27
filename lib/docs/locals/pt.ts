@@ -202,1645 +202,1655 @@ const contextMenu = {
         }
       },
       textTrim: {
-        name: '文本截断 TextTrim',
-        description: '优雅地处理过长文本，不让它破坏布局的美感',
+        name: 'Corte de texto TextTrim',
+        description: 'Trata textos longos com elegância, sem quebrar o layout',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '多行省略'
+          title: 'Múltiplas linhas'
         },
         demo3: {
-          title: '末端文本'
+          title: 'Texto final'
         },
         demo4: {
-          title: '对齐方式'
+          title: 'Alinhamento'
         },
         props: {
-          text: '文本内容',
-          lineClamp: '文本显示的最大行数，超出部分将被截断',
-          allowHTML: '是否允许渲染 HTML 标签',
-          placement: '提示框的显示位置',
-          offset: '提示框相对于目标元素的偏移量 [x, y]（单位：像素）',
-          textAlign: 'x轴对齐方向（当宽度小于容器宽度时）',
-          delay: '显示和隐藏提示框的延迟时间 [显示延迟, 隐藏延迟]（单位：毫秒）',
-          reserveEnd:
-            '保留末尾的字符数量，当文本溢出时会在中间显示省略号，保留开头和指定数量的末尾字符'
+          text: 'Conteúdo do texto',
+          lineClamp: 'Número máximo de linhas a exibir, o excesso será truncado',
+          allowHTML: 'Permite renderizar tags HTML',
+          placement: 'Posição da dica',
+          offset: 'Deslocamento da dica em relação ao elemento alvo [x, y] (pixels)',
+          textAlign: 'Alinhamento no eixo x (quando a largura é menor que o container)',
+          delay: 'Atraso para mostrar/ocultar a dica [mostrar, ocultar] (ms)',
+          reserveEnd: 'Número de caracteres a preservar no final, mostrando reticências no meio'
         }
       },
       flex: {
-        name: '弹性布局 Flex',
-        description: '灵活的布局方案，让页面排版如臂使指',
+        name: 'Layout flexível Flex',
+        description: 'Solução flexível de layout para organizar elementos com facilidade',
         demo1: {
-          title: 'Row'
+          title: 'Linha'
         },
         demo2: {
-          title: 'Column'
+          title: 'Coluna'
         },
         demo3: {
-          title: 'Mode'
+          title: 'Modo'
         },
         props: {
-          direction: '子元素的排列方向',
-          x: '子元素在水平方向上的对齐方式',
-          y: '子元素在垂直方向上的对齐方式',
-          mode: '子元素的分布模式，会覆盖 x 或 y 的对齐设置，具体影响取决于 direction 的值',
-          wrap: '是否允许子元素在空间不足时自动换行',
-          gap: '子元素之间的间距（单位：像素）',
-          width: 'Flex 容器的宽度（单位：像素或百分比）'
+          direction: 'Direção dos elementos filhos',
+          x: 'Alinhamento horizontal dos elementos filhos',
+          y: 'Alinhamento vertical dos elementos filhos',
+          mode: 'Modo de distribuição dos elementos, sobrepõe x ou y dependendo da direção',
+          wrap: 'Permite quebra de linha quando não há espaço',
+          gap: 'Espaçamento entre elementos (pixels)',
+          width: 'Largura do container Flex (pixels ou porcentagem)'
         }
       },
       mark: {
-        name: '标记 Mark',
-        description: '为文字添加高亮标记，让重点内容一目了然',
+        name: 'Marcador Mark',
+        description: 'Destaca texto importante com realce visual',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         props: {
-          color: '颜色主题',
-          round: '是否圆角',
-          bold: '是否加粗',
-          cursor: '鼠标悬停时的光标样式'
+          color: 'Cor do tema',
+          round: 'Bordas arredondadas',
+          bold: 'Texto em negrito',
+          cursor: 'Estilo do cursor ao passar o mouse'
         }
       },
       icon: {
-        name: '图标 Icon',
-        description: '精美的图标集合，为界面增添视觉语言'
+        name: 'Ícone Icon',
+        description: 'Coleção de ícones elegantes para enriquecer a interface'
       },
       backTop: {
-        name: '返回顶部 BackTop',
-        description: '一键回到顶部，让长页面浏览不再烦恼',
+        name: 'Voltar ao topo BackTop',
+        description: 'Retorna ao topo da página com um clique',
         demo1: {
-          title: '基本用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '自定义内容'
+          title: 'Conteúdo personalizado'
         },
         demo3: {
-          title: '指令方式触发'
+          title: 'Via diretiva'
         },
         props: {
-          target:
-            '指定触发滚动事件的目标元素，使用 CSS 选择器。如果为空，则默认为整个窗口。',
-          right: '设置组件距离页面右侧的距离，单位为像素。',
-          bottom: '设置组件距离页面底部的距离，单位为像素。',
-          valveHeight:
-            '设置页面滚动高度的阈值，当滚动高度超过此值时显示回到顶部按钮，单位为像素。'
+          target: 'Seletor CSS do elemento alvo. Se vazio, usa a janela inteira',
+          right: 'Distância da direita da página (pixels)',
+          bottom: 'Distância do fundo da página (pixels)',
+          valveHeight: 'Altura de rolagem para exibir o botão (pixels)'
         },
         events: {
-          click: '回到顶部事件回调'
+          click: 'Callback ao clicar para voltar ao topo'
         }
       },
       steps: {
-        name: '步骤条 Steps',
-        description: '清晰展示操作流程，让用户知道自己在哪',
+        name: 'Passos Steps',
+        description: 'Mostra claramente o progresso do processo',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '状态'
+          title: 'Estado'
         },
         demo3: {
-          title: '加载中'
+          title: 'Carregando'
         },
         model: {
-          modelValue: '当前激活步骤的索引值'
+          modelValue: 'Índice do passo ativo'
         },
         props: {
-          options: '步骤配置项数组',
-          status: '步骤条的当前状态',
-          minWidth: '最小步骤宽度'
+          options: 'Array de configuração dos passos',
+          status: 'Estado atual',
+          minWidth: 'Largura mínima do passo'
         }
       },
       menu: {
-        name: '菜单 Menu',
-        description: '优雅的垂直菜单，让导航层次分明',
+        name: 'Menu Menu',
+        description: 'Menu vertical elegante para navegação clara',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         model: {
-          modelValue: '当前激活菜单的绑定值'
+          modelValue: 'Valor do menu ativo'
         },
         props: {
-          options: '菜单配置项数组'
+          options: 'Array de configuração do menu'
         },
         menuOptions: {
-          label: '菜单项的文本',
-          value: '菜单项的值',
-          children: '子菜单项数组',
-          disabled: '是否禁用菜单项',
-          icon: '菜单项的图标',
-          tagText: '菜单项的徽章文本',
-          tagColor: '菜单项的徽章颜色'
+          label: 'Texto do item',
+          value: 'Valor do item',
+          children: 'Array de subitens',
+          disabled: 'Desabilita o item',
+          icon: 'Ícone do item',
+          tagText: 'Texto do badge',
+          tagColor: 'Cor do badge'
         }
       },
       menuTree: {
-        name: '菜单树 MenuTree',
-        description: '层级分明的树形菜单，轻松展示复杂的结构关系',
+        name: 'Árvore de menu MenuTree',
+        description: 'Menu em árvore para estruturas complexas',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '自定义图标'
+          title: 'Ícones personalizados'
         },
         demo3: {
-          title: '默认展开',
-          description: '通过 v-model 控制默认展开的菜单项。'
+          title: 'Expansão padrão',
+          description: 'Controle os itens expandidos via v-model.'
         },
         demo4: {
-          title: '标签'
+          title: 'Tags'
         },
         demo5: {
-          title: '自定义样式'
+          title: 'Estilo personalizado'
         },
         model: {
-          modelValue: '当前激活菜单的绑定值',
-          expandKeys: '默认展开的菜单项的 key 值数组',
-          collapsed: '是否折叠菜单'
+          modelValue: 'Valor do menu ativo',
+          expandKeys: 'Array de chaves dos itens expandidos',
+          collapsed: 'Menu recolhido'
         },
         props: {
-          options: '菜单树的数据源，支持嵌套结构。',
-          width: '菜单树的宽度，支持 CSS 宽度值。'
+          options: 'Dados do menu em árvore, suporta estrutura aninhada',
+          width: 'Largura do menu em árvore, aceita valores CSS'
         },
         menuTreeItem: {
-          label:
-            '菜单树项的标题文本。也可以使用具名插槽 "label" 自定义标题内容。',
-          value: '菜单项的值，用于标识菜单项的唯一性。',
-          level: '菜单树项的层级，从 1 开始。',
-          renderIcon: '图标渲染函数',
-          renderLabel: '标签渲染函数',
-          tagText: '菜单项的徽章文本',
-          tagType: '菜单项的徽章类型',
-          tagColor: '菜单项的徽章颜色',
-          disabled: '是否禁用菜单项',
-          isLeaf: '是否为叶子节点'
+          label: 'Texto do título. Pode usar slot "label" para personalizar',
+          value: 'Valor único do item',
+          level: 'Nível do item, começa em 1',
+          renderIcon: 'Função de renderização do ícone',
+          renderLabel: 'Função de renderização do rótulo',
+          tagText: 'Texto do badge',
+          tagType: 'Tipo do badge',
+          tagColor: 'Cor do badge',
+          disabled: 'Desabilita o item',
+          isLeaf: 'É um nó folha'
         }
       },
       dropdown: {
-        name: '下拉菜单 Dropdown',
-        description: '点击触发的悬浮菜单，让操作更加便捷',
+        name: 'Menu suspenso Dropdown',
+        description: 'Menu flutuante acionado por clique',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '不仅仅是按钮'
+          title: 'Além de botões'
         },
         demo3: {
-          title: '禁用项'
+          title: 'Itens desabilitados'
         },
-  
         props: {
-          options: '菜单选项配置',
-          trigger: '触发方式',
-          placement: '菜单弹出位置'
+          options: 'Configuração das opções',
+          trigger: 'Modo de acionamento',
+          placement: 'Posição do menu'
         },
         'options(ContextMenus)': contextMenu,
         events: {
-          show: '菜单显示事件回调',
-          hide: '菜单隐藏事件回调',
-          change: '菜单项选择事件回调'
+          show: 'Callback ao mostrar menu',
+          hide: 'Callback ao ocultar menu',
+          change: 'Callback ao selecionar item'
         }
       },
       breadcrumb: {
-        name: '面包屑 Breadcrumb',
-        description: '清晰的路径导航，让用户不会迷失方向',
+        name: 'Navegação estrutural Breadcrumb',
+        description: 'Navegação clara do caminho para orientar usuários',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '自定义当前选中'
+          title: 'Seleção atual personalizada'
         },
         demo3: {
-          title: '分割图标类型'
+          title: 'Tipo de separador'
         },
         props: {
-          options: '面包屑配置项数组',
-          separator: '分隔符图标类型'
+          options: 'Array de configuração',
+          separator: 'Tipo de ícone separador'
         },
         breadcrumbOptions: {
-          label: '面包屑项的文本',
-          value: '面包屑项的值',
-          active: '是否为当前选中项'
+          label: 'Texto do item',
+          value: 'Valor do item',
+          active: 'Item atual'
         },
         events: {
-          change: '面包屑项发生变化时触发'
+          change: 'Dispara ao mudar item'
         }
       },
       contextMenu: {
-        name: '上下文菜单 ContextMenu',
-        description: '优雅的右键菜单，让操作更加自然',
+        name: 'Menu de contexto ContextMenu',
+        description: 'Menu elegante do botão direito',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '支持多级嵌套'
+          title: 'Suporta múltiplos níveis'
         },
         demo3: {
-          title: '支持动态更新'
+          title: 'Atualização dinâmica'
         },
         demo4: {
           title: 'Checkbox'
         },
         props: {
-          options: '右键菜单配置',
-          disabled: '是否禁用右键菜单',
-          selectHandler: '选中菜单项时的回调函数'
+          options: 'Configuração do menu',
+          disabled: 'Desabilita o menu',
+          selectHandler: 'Callback ao selecionar item'
         },
         'options(ContextMenus)': contextMenu
       },
       form: {
-        name: '表单 Form',
-        description: '强大的表单处理能力，让数据收集得心应手',
+        name: 'Formulário Form',
+        description: 'Poderosa capacidade de processamento de formulários para coleta de dados eficiente',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '方向'
+          title: 'Direção'
         },
         demo3: {
-          title: '自定义校验'
+          title: 'Validação personalizada'
         },
         demo4: {
-          title: '支持网格布局'
+          title: 'Suporte a layout em grade'
         },
         demo5: {
-          title: '搭配表单引擎配置'
+          title: 'Configuração com motor de formulário'
         },
         props: {
-          options: '定义表单结构和内容的配置选项数组',
-          size: '表单整体尺寸，影响所有表单项大小',
-          width: '表单整体宽度，支持数字（像素）或百分比字符串',
-          columns: '每行显示的表单项数量，最大值为4',
-          labelWidth: '表单项标签宽度，支持数字（像素）或 "auto"',
-          disabled: '是否禁用整个表单',
-          readonly: '是否将整个表单设为只读',
-          direction: '表单项排列方向，"x" 为水平，"y" 为垂直',
-          formMethods: '表单项的方法集合，包含用于操作表单的函数'
+          options: 'Array de opções que definem a estrutura e conteúdo do formulário',
+          size: 'Tamanho geral do formulário, afeta todos os itens',
+          width: 'Largura geral do formulário, aceita número (pixels) ou porcentagem',
+          columns: 'Número de itens por linha, máximo 4',
+          labelWidth: 'Largura do rótulo do item, aceita número (pixels) ou "auto"',
+          disabled: 'Desabilita todo o formulário',
+          readonly: 'Define todo o formulário como somente leitura',
+          direction: 'Direção dos itens, "x" para horizontal, "y" para vertical',
+          formMethods: 'Conjunto de métodos para manipular o formulário'
         },
         formItemProps: {
-          label: '表单项的标签文本',
-          field: '表单项对应的字段名，用于数据绑定和验证',
-          required: '是否为必填项',
-          as: '指定表单项的类型，如 "input"、"select" 等',
-          size: '单个表单项的尺寸，可覆盖表单整体设置',
-          width: '单个表单项的宽度，支持数字（像素）或百分比字符串',
-          labelWidth: '单个表单项标签宽度，支持数字（像素）或 "auto"',
-          direction: '单个表单项的排列方向，"x" 为水平，"y" 为垂直',
-          disabled: '是否禁用该表单项',
-          readonly: '是否将该表单项设为只读',
-          tips: '表单项的提示信息',
-          errMessage: '自定义验证失败时的错误提示',
-          rule: '表单项的验证规则',
-          props: '传递给表单项组件的额外属性',
-          between: '水平排列时是否在表单项之间添加间隔',
-          gridArea: '在网格布局中的位置',
-          outputFormat: '出参时的格式化方法',
-          inputFormat: '入参时的格式化方法'
+          label: 'Texto do rótulo do item',
+          field: 'Nome do campo para vinculação e validação',
+          required: 'Se o campo é obrigatório',
+          as: 'Tipo do item de formulário, ex: "input", "select"',
+          size: 'Tamanho individual do item',
+          width: 'Largura individual do item',
+          labelWidth: 'Largura do rótulo individual',
+          direction: 'Direção individual do item',
+          disabled: 'Desabilita o item',
+          readonly: 'Define o item como somente leitura',
+          tips: 'Texto de ajuda do item',
+          errMessage: 'Mensagem de erro personalizada',
+          rule: 'Regra de validação',
+          props: 'Propriedades adicionais',
+          between: 'Adiciona espaço entre itens horizontais',
+          gridArea: 'Posição no layout em grade',
+          outputFormat: 'Formatação de saída',
+          inputFormat: 'Formatação de entrada'
         },
         events: {
-          mounted: '表单项挂载时触发'
+          mounted: 'Disparado quando o item é montado'
         },
         methods: {
-          getForm: '获取表单',
-          setForm: '设置表单'
+          getForm: 'Obtém o formulário',
+          setForm: 'Define o formulário'
         }
       },
       input: {
-        name: '输入框 Input',
-        description: '功能丰富的输入框，让数据录入更加便捷',
+        name: 'Campo de entrada Input',
+        description: 'Campo de entrada rico em recursos para entrada de dados conveniente',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '前后缀'
+          title: 'Prefixo e sufixo'
         },
         demo3: {
-          title: '字数限制'
+          title: 'Limite de caracteres'
         },
         demo4: {
-          title: '对齐方式'
+          title: 'Alinhamento'
         },
         demo5: {
-          title: '密码可见'
+          title: 'Senha visível'
         },
         demo6: {
-          title: '宽度自适应'
+          title: 'Largura automática'
         },
         demo7: {
-          title: '聚焦后选择全部文本'
+          title: 'Selecionar tudo ao focar'
         },
         demo8: {
-          title: '可清空的'
+          title: 'Limpável'
         },
         demo9: {
-          title: '只读状态'
+          title: 'Somente leitura'
         },
         demo10: {
-          title: '禁用状态'
+          title: 'Desabilitado'
         },
         demo11: {
-          title: '按下回车键触发事件'
+          title: 'Evento ao pressionar Enter'
         },
         props: {
-          type: '输入框类型',
-          size: '输入框尺寸',
-          placeholder: '输入框占位文本',
-          disabled: '是否禁用输入框',
-          readonly: '是否将输入框设为只读',
-          clearable: '是否启用清除按钮',
-          showPassword: '是否启用密码可见',
-          maxLength: '最大输入长度',
-          showCount: '是否显示字符计数（仅在 type 为 text 时有效）',
-          align: '输入框文本对齐方式',
-          minWidth: '输入框最小宽度，支持数字（单位：像素）或带单位的字符串',
-          autoWidth: '是否根据内容自动调整宽度',
-          selectByFocus: '是否启用聚焦后选择全部文本',
-          copyable:
-            '是否允许复制内容（仅在 readonly 为 true 且 suffix 为 false 时生效）',
-          prefixes: '输入框前缀类型',
-          prefixesOptions: '输入框前缀选项列表，当 prefixes 为 select 时使用',
-          prefixesTooltip: '输入框前缀的 tooltip 提示文本',
-          suffix: '输入框后缀类型',
-          suffixOptions: '输入框后缀选项列表，当 suffix 为 select 时使用',
-          suffixTooltip: '输入框后缀的 tooltip 提示文本',
-          okByEnter: '是否允许通过回车键确认输入'
+          type: 'Tipo do campo',
+          size: 'Tamanho do campo',
+          placeholder: 'Texto de placeholder',
+          disabled: 'Desabilita o campo',
+          readonly: 'Define como somente leitura',
+          clearable: 'Permite limpar o campo',
+          showPassword: 'Permite mostrar/ocultar senha',
+          maxLength: 'Comprimento máximo',
+          showCount: 'Mostra contador de caracteres',
+          align: 'Alinhamento do texto',
+          minWidth: 'Largura mínima',
+          autoWidth: 'Ajusta largura automaticamente',
+          selectByFocus: 'Seleciona todo o texto ao focar',
+          copyable: 'Permite copiar (apenas com readonly=true e suffix=false)',
+          prefixes: 'Tipo de prefixo',
+          prefixesOptions: 'Opções de prefixo para tipo select',
+          prefixesTooltip: 'Tooltip do prefixo',
+          suffix: 'Tipo de sufixo',
+          suffixOptions: 'Opções de sufixo para tipo select',
+          suffixTooltip: 'Tooltip do sufixo',
+          okByEnter: 'Permite confirmar com Enter'
         },
         events: {
-          change: '输入框值发生变化时触发',
-          focus: '输入框获得焦点时触发',
-          blur: '输入框失去焦点时触发',
-          input: '输入框输入内容时触发',
-          clear: '输入框清空时触发',
-          ok: '输入框确认时触发'
+          change: 'Ao alterar valor',
+          focus: 'Ao receber foco',
+          blur: 'Ao perder foco',
+          input: 'Ao digitar',
+          clear: 'Ao limpar',
+          ok: 'Ao confirmar'
         }
       },
       inputNumber: {
-        name: '数字输入框 InputNumber',
-        description: '专门用于数字输入的框，让数字处理更加精准',
+        name: 'Campo numérico InputNumber',
+        description: 'Campo específico para entrada de números com precisão',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '聚焦时全选'
+          title: 'Selecionar ao focar'
         },
         demo3: {
-          title: '限制范围'
+          title: 'Limites'
         },
         demo4: {
-          title: '精确数值'
+          title: 'Precisão'
         },
         demo5: {
-          title: '禁用和只读'
+          title: 'Desabilitado e somente leitura'
         },
         props: {
-          min: '最小值',
-          max: '最大值',
-          step: '步进值',
-          disabled: '精度',
-          size: '尺寸大小，可选值：small、medium、large',
-          placeholder: '占位提示文本',
-          readonly: '是否只读',
-          width: '宽度，支持数字（单位：像素）或带单位的字符串',
-          align: '对齐方式',
-          selectByFocus: '聚焦后选择全部文本'
+          min: 'Valor mínimo',
+          max: 'Valor máximo',
+          step: 'Incremento',
+          disabled: 'Precisão',
+          size: 'Tamanho: small, medium, large',
+          placeholder: 'Texto de placeholder',
+          readonly: 'Somente leitura',
+          width: 'Largura',
+          align: 'Alinhamento',
+          selectByFocus: 'Seleciona ao focar'
         },
         model: {
-          modelValue: '绑定值'
+          modelValue: 'Valor vinculado'
         }
       },
       textarea: {
-        name: '文本域 Textarea',
-        description: '多行文本输入框，让长文本输入更加舒适',
-  
+        name: 'Área de texto Textarea',
+        description: 'Campo para entrada de texto multilinha',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '字数限制'
+          title: 'Limite de caracteres'
         },
         demo3: {
-          title: '聚焦后选择全部文本'
+          title: 'Selecionar ao focar'
         },
         demo4: {
-          title: '可清空的'
+          title: 'Limpável'
         },
         demo5: {
-          title: '只读'
+          title: 'Somente leitura'
         },
         demo6: {
-          title: '禁用'
+          title: 'Desabilitado'
         },
         demo7: {
-          title: '按下回车键触发事件'
+          title: 'Evento ao pressionar Enter'
         },
         demo8: {
-          title: '可缩放的'
+          title: 'Redimensionável'
         },
         model: {
-          modelValue: '绑定值'
+          modelValue: 'Valor vinculado'
         },
         props: {
-          placeholder: '占位提示文本',
-          disabled: '是否禁用文本域',
-          readonly: '是否为只读状态',
-          clearable: '是否显示清空按钮',
-          showCount: '是否显示字符计数',
-          maxLength: '最大输入字符数',
-          size: '文本域尺寸',
-          resize: '调整尺寸的方向',
-          width: '宽度',
-          height: '高度',
-          minWidth: '最小宽度',
-          minHeight: '最小高度',
-          maxWidth: '最大宽度',
-          maxHeight: '最大高度',
-          selectByFocus: '聚焦后选择全部文本',
-          okByEnter: '是否启用回车键确认（启用后，Shift+Enter可换行）'
+          placeholder: 'Texto de placeholder',
+          disabled: 'Desabilita o campo',
+          readonly: 'Somente leitura',
+          clearable: 'Permite limpar',
+          showCount: 'Mostra contador',
+          maxLength: 'Comprimento máximo',
+          size: 'Tamanho',
+          resize: 'Direção de redimensionamento',
+          width: 'Largura',
+          height: 'Altura',
+          minWidth: 'Largura mínima',
+          minHeight: 'Altura mínima',
+          maxWidth: 'Largura máxima',
+          maxHeight: 'Altura máxima',
+          selectByFocus: 'Seleciona ao focar',
+          okByEnter: 'Confirma com Enter (Shift+Enter para nova linha)'
         },
         events: {
-          change: '值发生变化时触发',
-          focus: '获得焦点时触发',
-          blur: '失去焦点时触发',
-          input: '输入内容时触发',
-          clear: '清空时触发',
-          ok: '确认时触发'
+          change: 'Ao alterar valor',
+          focus: 'Ao receber foco',
+          blur: 'Ao perder foco',
+          input: 'Ao digitar',
+          clear: 'Ao limpar',
+          ok: 'Ao confirmar'
         }
       },
       inputTag: {
-        name: '标签输入框 InputTag',
-        description: '轻松输入和管理多个标签，让数据整理更加清晰',
+        name: 'Campo de tags InputTag',
+        description: 'Entrada e gerenciamento fácil de múltiplas tags',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '尺寸'
+          title: 'Tamanho'
         },
         demo3: {
-          title: '是否允许重复'
+          title: 'Permitir duplicatas'
         },
         demo4: {
-          title: '受控默认值'
+          title: 'Valor padrão controlado'
         },
         demo5: {
-          title: '可清空的'
+          title: 'Limpável'
         },
         demo6: {
-          title: '只读状态'
+          title: 'Somente leitura'
         },
         demo7: {
-          title: '禁用状态'
+          title: 'Desabilitado'
         },
         demo8: {
-          title: '最大输入长度'
+          title: 'Comprimento máximo'
         },
         model: {
-          modelValue: '绑定值'
+          modelValue: 'Valor vinculado'
         },
         props: {
-          size: '尺寸大小',
-          disabled: '是否禁用',
-          clearable: '是否可清空',
-          placeholder: '占位提示文本',
-          readonly: '是否只读',
-          allowDuplicates: '是否允许重复',
-          maxLength: '允许添加标签的最大数量',
-          width: '宽度'
+          size: 'Tamanho',
+          disabled: 'Desabilitado',
+          clearable: 'Limpável',
+          placeholder: 'Texto de placeholder',
+          readonly: 'Somente leitura',
+          allowDuplicates: 'Permite duplicatas',
+          maxLength: 'Número máximo de tags',
+          width: 'Largura'
         },
         events: {
-          change: '值发生变化时触发',
-          clear: '清空时触发',
-          add: '添加标签时触发',
-          remove: '删除标签时触发'
+          change: 'Ao alterar valor',
+          clear: 'Ao limpar',
+          add: 'Ao adicionar tag',
+          remove: 'Ao remover tag'
         }
       },
       checkbox: {
-        name: '复选框 Checkbox',
-        description: '支持多选的选择器，让多项选择更加直观',
+        name: 'Caixa de seleção Checkbox',
+        description: 'Seletor que suporta múltipla escolha',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '垂直分布'
+          title: 'Distribuição vertical'
         },
         demo3: {
-          title: '块状'
+          title: 'Em bloco'
         },
         demo4: {
-          title: '圆形'
+          title: 'Arredondado'
         },
         demo5: {
-          title: '只读状态'
+          title: 'Somente leitura'
         },
         demo6: {
-          title: '禁用状态'
+          title: 'Desabilitado'
         },
         demo7: {
-          title: '单个模式'
+          title: 'Modo único'
         },
         'model(CheckboxGroup)': {
-          modelValue: '绑定值'
+          modelValue: 'Valor vinculado'
         },
         'model(Checkbox)': {
-          modelValue: '绑定值'
+          modelValue: 'Valor vinculado'
         },
         'props(CheckboxGroup)': {
-          options: '选项',
-          disabled: '是否禁用',
-          readonly: '是否只读',
-          size: '尺寸大小',
-          direction: '排列方向',
-          block: '块状显示',
-          round: '圆角样式',
-          iconable: '是否可使用图标'
+          options: 'Opções',
+          disabled: 'Desabilitado',
+          readonly: 'Somente leitura',
+          size: 'Tamanho',
+          direction: 'Direção',
+          block: 'Em bloco',
+          round: 'Arredondado',
+          iconable: 'Permite ícone'
         },
         'props(Checkbox)': {
-          label: '标题',
-          value: '值',
-          disabled: '禁用',
-          readonly: '只读',
-          checked: '选中状态',
-          size: '尺寸',
-          block: '块状显示',
-          round: '圆角样式',
-          iconable: '是否可使用图标',
-          certain: '确定状态'
+          label: 'Rótulo',
+          value: 'Valor',
+          disabled: 'Desabilitado',
+          readonly: 'Somente leitura',
+          checked: 'Marcado',
+          size: 'Tamanho',
+          block: 'Em bloco',
+          round: 'Arredondado',
+          iconable: 'Permite ícone',
+          certain: 'Estado definido'
         },
         'events(Checkbox)': {
-          change: '值发生变化时触发'
+          change: 'Ao alterar valor'
         },
         'events(CheckboxGroup)': {
-          change: '值发生变化时触发'
+          change: 'Ao alterar valor'
         },
         options: {
-          label: '标题',
-          value: '值',
-          disabled: '禁用'
+          label: 'Rótulo',
+          value: 'Valor',
+          disabled: 'Desabilitado'
         }
       },
       radio: {
-        name: '单选框 Radio',
-        description: '只能选择一项的选择器，让单项选择更加明确',
+        name: 'Botão de opção Radio',
+        description: 'Seletor que permite apenas uma escolha',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '垂直分布'
+          title: 'Distribuição vertical'
         },
         demo3: {
-          title: '块状'
+          title: 'Em bloco'
         },
         demo4: {
-          title: '形状'
+          title: 'Forma'
         },
         demo5: {
-          title: '只读状态'
+          title: 'Somente leitura'
         },
         demo6: {
-          title: '禁用状态'
+          title: 'Desabilitado'
         },
         model: {
-          modelValue: '绑定值'
+          modelValue: 'Valor vinculado'
         },
         'props(RadioGroup)': {
-          size: '尺寸大小',
-          block: '块状显示',
-          direction: '排列方向',
-          disabled: '是否禁用',
-          iconable: '是否可使用图标',
-          options: '选项',
-          readonly: '是否只读',
-          round: '圆角样式'
+          size: 'Tamanho',
+          block: 'Em bloco',
+          direction: 'Direção',
+          disabled: 'Desabilitado',
+          iconable: 'Permite ícone',
+          options: 'Opções',
+          readonly: 'Somente leitura',
+          round: 'Arredondado'
         },
         options: {
-          label: '标题',
-          value: '值',
-          disabled: '禁用'
+          label: 'Rótulo',
+          value: 'Valor',
+          disabled: 'Desabilitado'
         },
         events: {
-          change: '值发生变化时触发'
+          change: 'Ao alterar valor'
         }
       },
       tabs: {
-        name: '标签页 Tabs',
-        description: '让内容分类展示更加清晰，切换更加流畅',
+        name: 'Abas Tabs',
+        description: 'Exibe conteúdo categorizado de forma clara, com transições suaves',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '自适应宽度'
+          title: 'Largura adaptável'
         },
         demo3: {
-          title: '自定义item宽度'
+          title: 'Largura personalizada do item'
         },
         demo4: {
-          title: '线'
+          title: 'Linha'
         },
         demo5: {
-          title: '圆角的'
+          title: 'Arredondado'
         },
         model: {
-          modelValue: '绑定值'
+          modelValue: 'Valor vinculado'
         },
         props: {
-          options: '选项',
-          type: '类型',
-          size: '尺寸大小',
-          width: '宽度',
-          itemWidth: '项宽度',
-          round: '圆角样式',
-          disabled: '禁用状态',
-          readonly: '只读状态'
+          options: 'Opções',
+          type: 'Tipo',
+          size: 'Tamanho',
+          width: 'Largura',
+          itemWidth: 'Largura do item',
+          round: 'Estilo arredondado',
+          disabled: 'Desabilitado',
+          readonly: 'Somente leitura'
         },
         options: {
-          label: '标题',
-          value: '值'
+          label: 'Título',
+          value: 'Valor'
         }
       },
       select: {
-        name: '选择器 Select',
-        description: '下拉选择框，让选择更加便捷',
+        name: 'Seletor Select',
+        description: 'Caixa de seleção suspensa para escolhas mais convenientes',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '搜索'
+          title: 'Pesquisa'
         },
         demo3: {
-          title: '支持插槽'
+          title: 'Suporte a slots'
         },
         demo4: {
-          title: '禁用选项'
+          title: 'Opções desabilitadas'
         },
         demo5: {
-          title: '只读'
+          title: 'Somente leitura'
         },
         demo6: {
-          title: '禁用'
+          title: 'Desabilitado'
         },
         demo7: {
-          title: '自定义空状态'
+          title: 'Estado vazio personalizado'
         },
         demo8: {
-          title: '分组'
+          title: 'Agrupamento'
         },
         model: {
-          modelValue: '绑定值'
+          modelValue: 'Valor vinculado'
         },
         props: {
-          defaultValue: '默认值',
-          options: '选项',
-          width: '宽度',
-          trigger: '触发方式',
-          placeholder: '占位提示文本',
-          size: '尺寸大小',
-          itemHeight: '项高度',
-          searchable: '是否可搜索',
-          searchMethod: '搜索方法',
-          searchDelay: '搜索延迟',
-          clearable: '是否可清空',
-          readonly: '只读状态',
-          disabled: '禁用状态',
-          showCheckIcon: '显示勾选图标'
+          defaultValue: 'Valor padrão',
+          options: 'Opções',
+          width: 'Largura',
+          trigger: 'Modo de acionamento',
+          placeholder: 'Texto de placeholder',
+          size: 'Tamanho',
+          itemHeight: 'Altura do item',
+          searchable: 'Permite pesquisa',
+          searchMethod: 'Método de pesquisa',
+          searchDelay: 'Atraso da pesquisa',
+          clearable: 'Permite limpar',
+          readonly: 'Somente leitura',
+          disabled: 'Desabilitado',
+          showCheckIcon: 'Exibir ícone de seleção'
         },
         events: {
-          change: '值发生变化时触发',
-          clear: '清空时触发',
-          blur: '失去焦点时触发',
-          focus: '获得焦点时触发'
+          change: 'Ao alterar valor',
+          clear: 'Ao limpar',
+          blur: 'Ao perder foco',
+          focus: 'Ao ganhar foco'
         },
-        options: { label: '标题', value: '值', disabled: '禁用' },
-        slots: { item: '自定义选项内容', empty: '自定义空状态内容' }
+        options: {
+          label: 'Título',
+          value: 'Valor',
+          disabled: 'Desabilitado'
+        },
+        slots: {
+          item: 'Conteúdo personalizado do item',
+          empty: 'Conteúdo personalizado quando vazio'
+        }
       },
       selectMultiple: {
-        name: '多选选择器 SelectMultiple',
-        description: '支持多选的下拉框，让多项选择更加灵活',
+        name: 'Seletor Múltiplo SelectMultiple',
+        description: 'Caixa de seleção múltipla para escolhas mais flexíveis',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '自定义过滤方法'
+          title: 'Método de filtro personalizado'
         },
         demo3: {
-          title: '支持插槽'
+          title: 'Suporte a slots'
         },
         demo4: {
-          title: '禁用选项'
+          title: 'Opções desabilitadas'
         },
         demo5: {
-          title: '只读'
+          title: 'Somente leitura'
         },
         demo6: {
-          title: '禁用'
+          title: 'Desabilitado'
         },
         demo7: {
-          title: '空状态插槽'
+          title: 'Slot de estado vazio'
         },
         demo8: {
-          title: '分组'
+          title: 'Agrupamento'
         },
         props: {
-          options: '选项',
-          trigger: '触发方式',
-          width: '宽度',
-          valueLayout: '值布局',
-          valueTextSplit: '值文本分隔符',
-          placeholder: '占位提示文本',
-          size: '尺寸大小',
-          itemHeight: '项高度',
-          searchable: '是否可搜索',
-          searchPlaceholder: '搜索占位提示文本',
-          searchMethod: '搜索方法',
-          searchDelay: '搜索延迟',
-          clearable: '是否可清空',
-          readonly: '只读',
-          disabled: '禁用',
-          showCheckIcon: '显示勾选图标',
-          defaultValue: '默认值'
+          options: 'Opções',
+          trigger: 'Modo de acionamento',
+          width: 'Largura',
+          valueLayout: 'Layout do valor',
+          valueTextSplit: 'Separador de texto do valor',
+          placeholder: 'Texto de placeholder',
+          size: 'Tamanho',
+          itemHeight: 'Altura do item',
+          searchable: 'Permite pesquisa',
+          searchPlaceholder: 'Texto de placeholder da pesquisa',
+          searchMethod: 'Método de pesquisa',
+          searchDelay: 'Atraso da pesquisa',
+          clearable: 'Permite limpar',
+          readonly: 'Somente leitura',
+          disabled: 'Desabilitado',
+          showCheckIcon: 'Exibir ícone de seleção',
+          defaultValue: 'Valor padrão'
         },
         model: {
-          modelValue: '绑定值'
-        },
-        events: { change: '值变化', blur: '失去焦点', focus: '获得焦点' },
-        options: { label: '标签', value: '值', disabled: '禁用' },
-        slots: { item: '自定义选项内容', empty: '自定义空状态内容' }
-      },
-      datePicker: {
-        name: '日期选择器 DatePicker',
-        description: '简单直观的日期选择工具，让时间选择更加精确',
-        demo1: {
-          title: '基础用法'
-        },
-        demo2: {
-          title: '可清空的'
-        },
-        demo3: {
-          title: '自定义格式'
-        },
-        demo4: {
-          title: '预设'
-        },
-        demo5: {
-          title: '只读'
-        },
-        demo6: {
-          title: '禁用'
-        },
-        model: {
-          modelValue: '绑定值'
-        },
-        props: {
-          valueFormat: '值格式',
-          size: '尺寸',
-          width: '宽度',
-          placeholder: '占位提示文本',
-          clearable: '是否可清空',
-          readonly: '只读',
-          disabled: '禁用',
-          presets: '预设值'
+          modelValue: 'Valor vinculado'
         },
         events: {
-          change: '值变化',
-          focus: '获得焦点',
-          blur: '失去焦点',
-          clear: '清空'
+          change: 'Ao alterar valor',
+          blur: 'Ao perder foco',
+          focus: 'Ao ganhar foco'
+        },
+        options: {
+          label: 'Rótulo',
+          value: 'Valor',
+          disabled: 'Desabilitado'
+        },
+        slots: {
+          item: 'Conteúdo personalizado do item',
+          empty: 'Conteúdo personalizado quando vazio'
+        }
+      },
+      datePicker: {
+        name: 'Seletor de Data DatePicker',
+        description: 'Ferramenta intuitiva para seleção precisa de datas',
+        demo1: {
+          title: 'Uso básico'
+        },
+        demo2: {
+          title: 'Permite limpar'
+        },
+        demo3: {
+          title: 'Formato personalizado'
+        },
+        demo4: {
+          title: 'Predefinições'
+        },
+        demo5: {
+          title: 'Somente leitura'
+        },
+        demo6: {
+          title: 'Desabilitado'
+        },
+        model: {
+          modelValue: 'Valor vinculado'
+        },
+        props: {
+          valueFormat: 'Formato do valor',
+          size: 'Tamanho',
+          width: 'Largura',
+          placeholder: 'Texto de placeholder',
+          clearable: 'Permite limpar',
+          readonly: 'Somente leitura',
+          disabled: 'Desabilitado',
+          presets: 'Valores predefinidos'
+        },
+        events: {
+          change: 'Ao alterar valor',
+          focus: 'Ao ganhar foco',
+          blur: 'Ao perder foco',
+          clear: 'Ao limpar'
         }
       },
       dateRangePicker: {
-        name: '日期范围选择器 DateRangePicker',
-        description: '选择时间范围的利器，让区间选择更加方便',
+        name: 'Seletor de Intervalo de Data DateRangePicker',
+        description: 'Ferramenta para seleção conveniente de intervalos de datas',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '可清空的'
+          title: 'Permite limpar'
         },
         demo3: {
-          title: '其他'
+          title: 'Outros'
         },
         model: {
-          modelValue: '绑定值'
+          modelValue: 'Valor vinculado'
         },
         props: {
-          startKey: '开始键',
-          endKey: '结束键',
-          valueFormat: '值格式',
-          size: '尺寸',
-          width: '宽度',
-          placeholderStart: '开始占位提示文本',
-          placeholderEnd: '结束占位提示文本',
-          clearable: '是否可清空',
-          readonly: '只读',
-          disabled: '禁用'
+          startKey: 'Chave inicial',
+          endKey: 'Chave final',
+          valueFormat: 'Formato do valor',
+          size: 'Tamanho',
+          width: 'Largura',
+          placeholderStart: 'Texto de placeholder inicial',
+          placeholderEnd: 'Texto de placeholder final',
+          clearable: 'Permite limpar',
+          readonly: 'Somente leitura',
+          disabled: 'Desabilitado'
         },
         events: {
-          change: '值变化',
-          focus: '获得焦点',
-          blur: '失去焦点',
-          clear: '清空'
+          change: 'Ao alterar valor',
+          focus: 'Ao ganhar foco',
+          blur: 'Ao perder foco',
+          clear: 'Ao limpar'
         }
       },
       cascader: {
-        name: '级联选择器 Cascader',
-        description: '处理多层级数据的选择器，让分类选择更加清晰',
+        name: 'Seletor em Cascata Cascader',
+        description: 'Seletor para dados multinível, tornando a seleção categorizada mais clara',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '自由模式'
+          title: 'Modo livre'
         },
         demo3: {
-          title: '仅展示最后层级'
+          title: 'Exibir apenas último nível'
         },
         demo4: {
-          title: '异步加载'
+          title: 'Carregamento assíncrono'
         },
         demo5: {
-          title: '可清空的'
+          title: 'Permite limpar'
         },
         demo6: {
-          title: '只读'
+          title: 'Somente leitura'
         },
         demo7: {
-          title: '禁用'
+          title: 'Desabilitado'
         },
         demo8: {
-          title: '选项禁用'
+          title: 'Opções desabilitadas'
         },
         model: {
-          modelValue: '绑定值'
+          modelValue: 'Valor vinculado'
         },
         props: {
-          width: '宽度',
-          options: '选项',
-          placeholder: '占位提示文本',
-          disabled: '禁用',
-          clearable: '是否可清空',
-          showAllLevels: '显示所有层级',
-          multiple: '是否多选',
-          free: '自由选择',
-          size: '尺寸',
-          trigger: '触发方式',
-          loadMethod: '加载方法',
-          readonly: '只读'
+          width: 'Largura',
+          options: 'Opções',
+          placeholder: 'Texto de placeholder',
+          disabled: 'Desabilitado',
+          clearable: 'Permite limpar',
+          showAllLevels: 'Exibir todos os níveis',
+          multiple: 'Seleção múltipla',
+          free: 'Seleção livre',
+          size: 'Tamanho',
+          trigger: 'Modo de acionamento',
+          loadMethod: 'Método de carregamento',
+          readonly: 'Somente leitura'
         },
         options: {
-          label: '标签',
-          value: '值',
-          isLeaf: '是否叶子节点',
-          children: '子节点',
-          disabled: '禁用'
+          label: 'Rótulo',
+          value: 'Valor',
+          isLeaf: 'É nó folha',
+          children: 'Filhos',
+          disabled: 'Desabilitado'
         }
       },
       treeSelect: {
-        name: '树形选择器 TreeSelect',
-        description: '树形结构的选择框，让层级选择更加直观',
+        name: 'Seletor em Árvore TreeSelect',
+        description: 'Caixa de seleção em estrutura de árvore para seleção hierárquica mais intuitiva',
         demo1: {
-          title: '常规'
+          title: 'Normal'
         },
         demo2: {
-          title: '异步加载数据'
+          title: 'Carregamento assíncrono'
         },
         demo3: {
-          title: '自定义插槽'
+          title: 'Slots personalizados'
         },
         demo4: {
-          title: '禁用项'
+          title: 'Itens desabilitados'
         },
         demo5: {
-          title: '默认展开全部'
+          title: 'Expandir tudo por padrão'
         },
         demo6: {
-          title: '可搜索'
+          title: 'Pesquisável'
         },
         demo7: {
-          title: '空状态插槽'
+          title: 'Slot de estado vazio'
         },
         demo8: {
-          title: '其他'
+          title: 'Outros'
         },
         model: {
-          modelValue: '绑定值'
+          modelValue: 'Valor vinculado'
         },
         props: {
-          dataSource: '树形数据源',
-          defaultValue: '默认选中值',
-          placeholder: '占位文本',
-          size: '组件尺寸大小',
-          disabled: '是否禁用',
-          clearable: '是否可清空',
-          showCheckbox: '是否显示复选框',
-          showAllLevels: '是否显示所有层级',
-          showCheckIcon: '是否显示选择图标',
-          showLine: '是否显示连接线',
-          expandAll: '是否展开全部节点',
-          searchable: '是否可搜索',
-          searchDelay: '搜索延迟时间（毫秒）',
-          readonly: '是否只读',
-          free: '是否为自由模式（父子节点选中状态不关联）',
-          align: '文本对齐方式',
-          trigger: '子节点触发方式',
-          keyField: '节点标识字段',
-          labelField: '节点标签字段',
-          disabledField: '禁用节点字段',
-          initTree: '初始化树节点的方法',
-          loadMethod: '异步加载子节点数据的方法'
+          dataSource: 'Fonte de dados em árvore',
+          defaultValue: 'Valor padrão selecionado',
+          placeholder: 'Texto de placeholder',
+          size: 'Tamanho do componente',
+          disabled: 'Desabilitado',
+          clearable: 'Permite limpar',
+          showCheckbox: 'Exibir checkbox',
+          showAllLevels: 'Exibir todos os níveis',
+          showCheckIcon: 'Exibir ícone de seleção',
+          showLine: 'Exibir linhas de conexão',
+          expandAll: 'Expandir todos os nós',
+          searchable: 'Permite pesquisa',
+          searchDelay: 'Atraso da pesquisa (ms)',
+          readonly: 'Somente leitura',
+          free: 'Modo livre (estados pai/filho não relacionados)',
+          align: 'Alinhamento do texto',
+          trigger: 'Modo de acionamento dos filhos',
+          keyField: 'Campo identificador do nó',
+          labelField: 'Campo rótulo do nó',
+          disabledField: 'Campo de desabilitação do nó',
+          initTree: 'Método de inicialização dos nós',
+          loadMethod: 'Método de carregamento assíncrono dos filhos'
         },
         slots: {
-          handle: '插槽名'
+          handle: 'Nome do slot'
         }
       },
       inputTable: {
-        name: '表格输入框 InputTable',
-        description: '在表格中快速输入数据，让批量处理更加高效',
+        name: 'Tabela de entrada InputTable',
+        description: 'Entrada rápida de dados em tabela para processamento em lote mais eficiente',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '默认值'
+          title: 'Valor padrão'
         },
         demo3: {
-          title: '更丰富'
+          title: 'Mais recursos'
         },
         props: {
-          columns: '列配置',
-          size: '尺寸',
-          width: '宽度',
-          rowKey: '行键',
-          batchDeletable: '是否支持批量删除',
-          addable: '是否可添加',
-          defaultForm: '默认表单',
-          deletable: '是否可删除',
-          maxRows: '最大行数',
-          minRows: '最小行数',
-          clearable: '是否可清空',
-          sortable: '是否可排序',
-          autoUniqueId: '是否自动生成唯一ID',
-          uniqueField: '唯一字段'
+          columns: 'Configuração das colunas',
+          size: 'Tamanho',
+          width: 'Largura',
+          rowKey: 'Chave da linha',
+          batchDeletable: 'Permite exclusão em lote',
+          addable: 'Permite adicionar',
+          defaultForm: 'Formulário padrão',
+          deletable: 'Permite excluir',
+          maxRows: 'Número máximo de linhas',
+          minRows: 'Número mínimo de linhas', 
+          clearable: 'Permite limpar',
+          sortable: 'Permite ordenar',
+          autoUniqueId: 'Gera ID único automaticamente',
+          uniqueField: 'Campo único'
         }
       },
       switch: {
-        name: '开关 Switch',
-        description: '简洁的开关选择器，让状态切换更加明确',
+        name: 'Interruptor Switch',
+        description: 'Seletor de alternância simples para mudanças de estado mais claras',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '方形'
+          title: 'Quadrado'
         },
         demo3: {
-          title: '模拟请求'
+          title: 'Simulação de requisição'
         },
         demo4: {
-          title: '只读'
+          title: 'Somente leitura'
         },
         demo5: {
-          title: '禁用'
+          title: 'Desabilitado'
         },
         model: {
-          modelValue: '参数名称'
+          modelValue: 'Nome do parâmetro'
         },
         props: {
-          size: '尺寸',
-          round: '圆角',
-          readonly: '只读',
-          disabled: '禁用',
-          request: '请求',
-          loading: '加载中'
+          size: 'Tamanho',
+          round: 'Arredondado',
+          readonly: 'Somente leitura',
+          disabled: 'Desabilitado',
+          request: 'Requisição',
+          loading: 'Carregando'
         },
         events: {
-          change: '事件名称'
+          change: 'Nome do evento'
         }
       },
       slider: {
-        name: '滑块 Slider',
-        description: '通过拖动选择数值，让数值选择更加直观',
+        name: 'Controle deslizante Slider',
+        description: 'Selecione valores arrastando para uma seleção mais intuitiva',
         demo1: {
-          title: '尺寸'
+          title: 'Tamanho'
         },
         demo2: {
-          title: '不同步长'
+          title: 'Diferentes passos'
         },
         demo3: {
-          title: '限定范围'
+          title: 'Intervalo limitado'
         },
         demo4: {
-          title: '只读'
+          title: 'Somente leitura'
         },
         demo5: {
-          title: '禁用'
+          title: 'Desabilitado'
         },
         demo6: {
-          title: '配置项'
+          title: 'Opções'
         },
         model: {
-          modelValue: '参数名称'
+          modelValue: 'Nome do parâmetro'
         },
         props: {
-          size: '尺寸',
-          min: '最小值',
-          max: '最大值',
-          step: '步长',
-          readonly: '只读',
-          disabled: '禁用',
-          options: '选项',
-          formatTooltip: '格式化提示'
+          size: 'Tamanho',
+          min: 'Valor mínimo',
+          max: 'Valor máximo',
+          step: 'Passo',
+          readonly: 'Somente leitura',
+          disabled: 'Desabilitado',
+          options: 'Opções',
+          formatTooltip: 'Formatar dica'
         }
       },
       sliderRange: {
-        name: '滑块范围 SliderRange',
-        description: '选择数值范围的滑块，让范围选择更加灵活',
+        name: 'Intervalo deslizante SliderRange',
+        description: 'Controle deslizante para selecionar intervalos de valores de forma mais flexível',
         demo1: {
-          title: '尺寸'
+          title: 'Tamanho'
         },
         demo2: {
-          title: '不同步长'
+          title: 'Diferentes passos'
         },
         demo3: {
-          title: '限定范围'
+          title: 'Intervalo limitado'
         },
         demo4: {
-          title: '只读'
+          title: 'Somente leitura'
         },
         demo5: {
-          title: '禁用'
+          title: 'Desabilitado'
         },
         demo6: {
-          title: '配置项'
+          title: 'Opções'
         },
         model: {
-          modelValue: '参数名称'
+          modelValue: 'Nome do parâmetro'
         },
         props: {
-          size: '尺寸',
-          min: '最小值',
-          max: '最大值',
-          step: '步长',
-          readonly: '只读',
-          disabled: '禁用',
-          options: '选项',
-          formatTooltip: '格式化提示'
+          size: 'Tamanho',
+          min: 'Valor mínimo',
+          max: 'Valor máximo',
+          step: 'Passo',
+          readonly: 'Somente leitura',
+          disabled: 'Desabilitado',
+          options: 'Opções',
+          formatTooltip: 'Formatar dica'
         }
       },
       rate: {
-        name: '评分 Rate',
-        description: '星星评分组件，让打分更加生动有趣',
+        name: 'Avaliação Rate',
+        description: 'Componente de avaliação com estrelas para uma pontuação mais divertida',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '只读'
+          title: 'Somente leitura'
         },
         demo3: {
-          title: '禁用'
+          title: 'Desabilitado'
         },
         demo4: {
-          title: '提示'
+          title: 'Dicas'
         },
         model: {
-          modelValue: '参数名称'
+          modelValue: 'Nome do parâmetro'
         },
         props: {
-          size: '尺寸',
-          count: '数量',
-          tips: '提示',
-          readonly: '只读',
-          disabled: '禁用'
+          size: 'Tamanho',
+          count: 'Quantidade',
+          tips: 'Dicas',
+          readonly: 'Somente leitura',
+          disabled: 'Desabilitado'
         }
       },
       colorPicker: {
-        name: '颜色选择器 ColorPicker',
-        description: '丰富的颜色选择工具，让配色更加精准',
+        name: 'Seletor de cores ColorPicker',
+        description: 'Ferramenta rica para seleção de cores mais precisa',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '不同尺寸'
+          title: 'Diferentes tamanhos'
         },
         demo3: {
-          title: '自定义宽度'
+          title: 'Largura personalizada'
         },
         demo4: {
-          title: '禁用状态'
+          title: 'Estado desabilitado'
         },
         demo5: {
-          title: '只读状态'
+          title: 'Estado somente leitura'
         },
         model: {
-          modelValue: '参数名称'
+          modelValue: 'Nome do parâmetro'
         },
         props: {
-          size: '尺寸',
-          width: '宽度',
-          placeholder: '占位符',
-          disabled: '禁用',
-          readonly: '只读'
+          size: 'Tamanho',
+          width: 'Largura',
+          placeholder: 'Placeholder',
+          disabled: 'Desabilitado',
+          readonly: 'Somente leitura'
         }
       },
       upload: {
-        name: '上传 Upload',
-        description: '文件上传组件，让文件处理更加简单',
+        name: 'Upload',
+        description: 'Componente de upload de arquivos para processamento mais simples',
         demo1: {
-          title: '常规'
+          title: 'Normal'
         },
         demo2: {
-          title: '限制格式和大小'
+          title: 'Limitar formato e tamanho'
         },
         demo3: {
-          title: '上传图片'
+          title: 'Upload de imagem'
         },
         demo4: {
-          title: '自定义tips'
+          title: 'Dicas personalizadas'
         },
         demo5: {
-          title: '照片墙'
+          title: 'Mural de fotos'
         },
         demo6: {
-          title: '不上传'
+          title: 'Sem upload'
         },
         demo7: {
-          title: '回显'
+          title: 'Pré-visualização'
         },
         model: {
-          modelValue: '绑定值'
+          modelValue: 'Valor vinculado'
         },
         props: {
-          accept: '接受的文件类型',
-          immediate: '立即上传',
-          multiple: '多文件上传',
-          disabled: '禁用',
-          readonly: '只读',
-          limit: '文件数量限制',
-          maxFileSize: '最大文件大小',
-          size: '尺寸',
-          tips: '提示信息',
-          uploadHelper: '上传助手',
-          viewMode: '查看模式'
+          accept: 'Tipos de arquivo aceitos',
+          immediate: 'Upload imediato',
+          multiple: 'Upload múltiplo',
+          disabled: 'Desabilitado',
+          readonly: 'Somente leitura',
+          limit: 'Limite de arquivos',
+          maxFileSize: 'Tamanho máximo do arquivo',
+          size: 'Tamanho',
+          tips: 'Mensagens de dica',
+          uploadHelper: 'Auxiliar de upload',
+          viewMode: 'Modo de visualização'
         }
       },
       table: {
-        name: '表格 Table',
-        description: '功能强大的表格组件，让数据展示更加清晰',
+        name: 'Tabela Table',
+        description: 'Componente de tabela poderoso para exibição mais clara dos dados',
         model: {
-          modelValue: '参数名称',
-          selectedKeys: '选中的键'
+          modelValue: 'Nome do parâmetro',
+          selectedKeys: 'Chaves selecionadas'
         },
         demo1: {
-          title: '常规'
+          title: 'Normal'
         },
         demo2: {
-          title: '固定行列'
+          title: 'Fixar linhas e colunas'
         },
         demo3: {
-          title: '自定义操作'
+          title: 'Operações personalizadas'
         },
         demo4: {
-          title: '插槽'
+          title: 'Slots'
         },
         demo5: {
-          title: '自定义样式'
+          title: 'Estilo personalizado'
         },
         demo6: {
-          title: '选择'
+          title: 'Seleção'
         },
         demo7: {
-          title: '可排序'
+          title: 'Ordenável'
         },
         demo8: {
-          title: '自定义渲染'
+          title: 'Renderização personalizada'
         },
         demo9: {
-          title: '完整功能'
+          title: 'Funcionalidade completa'
         },
         demo10: {
-          title: '暂无数据'
+          title: 'Sem dados'
         },
         props: {
-          columns: '列',
-          dataSource: '数据源',
-          size: '尺寸',
-          checkable: '可选',
-          maxHeight: '最大高度',
-          multiple: '多选',
-          rowKey: '行键'
+          columns: 'Colunas',
+          dataSource: 'Fonte de dados',
+          size: 'Tamanho',
+          checkable: 'Selecionável',
+          maxHeight: 'Altura máxima',
+          multiple: 'Múltipla seleção',
+          rowKey: 'Chave da linha'
         },
         tableColumns: {
-          field: '字段',
-          fixed: '固定',
-          title: '标题',
-          type: '类型',
-          width: '宽度',
-          x: 'X轴',
-          customRender: '自定义渲染'
+          field: 'Campo',
+          fixed: 'Fixo',
+          title: 'Título',
+          type: 'Tipo',
+          width: 'Largura',
+          x: 'Eixo X',
+          customRender: 'Renderização personalizada'
         }
       },
       pagination: {
-        name: '分页 Pagination',
-        description: '清晰的分页导航，让数据浏览更加轻松',
+        name: 'Paginação Pagination',
+        description: 'Navegação clara por páginas para uma navegação mais fácil pelos dados',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '巨量'
+          title: 'Grande volume'
         },
         demo3: {
-          title: '模拟异步'
+          title: 'Simulação assíncrona'
         },
         model: {
-          total: '参数名称',
-          currentPage: '当前页',
-          pageSize: '每页大小'
+          total: 'Nome do parâmetro',
+          currentPage: 'Página atual',
+          pageSize: 'Tamanho da página'
         },
         props: {
-          size: '尺寸',
-          pageSizeOptions: '每页大小选项',
-          visiblePagesCount: '可见页数'
+          size: 'Tamanho',
+          pageSizeOptions: 'Opções de tamanho da página',
+          visiblePagesCount: 'Número de páginas visíveis'
         },
         events: {
-          change: '事件名称'
+          change: 'Nome do evento'
         }
       },
       magicNumber: {
-        name: '魔法数字 MagicNumber',
-        description: '让数字展示更加生动有趣的动效组件'
+        name: 'Número mágico MagicNumber',
+        description: 'Componente de animação para tornar a exibição de números mais dinâmica e interessante'
       },
       tree: {
-        name: '树形控件 Tree',
-        description: '展示层级数据结构的利器，让数据层次更加分明',
+        name: 'Árvore Tree',
+        description: 'Ferramenta poderosa para exibir estruturas de dados hierárquicas com clareza',
         demo1: {
-          title: '常规'
+          title: 'Normal'
         },
         demo2: {
-          title: '是否显示复选框'
+          title: 'Exibir checkbox'
         },
         demo3: {
-          title: '多选'
+          title: 'Múltipla seleção'
         },
         demo4: {
-          title: '父子节点关联模式'
+          title: 'Modo de relação pai-filho'
         },
         demo5: {
-          title: '异步请求'
+          title: 'Requisição assíncrona'
         },
         demo6: {
-          title: '默认全部展开'
+          title: 'Expandir tudo por padrão'
         },
         demo7: {
-          title: '是否显示辅助线'
+          title: 'Exibir linhas guia'
         },
         demo8: {
-          title: '插槽'
+          title: 'Slots'
         },
         model: {
-          modelValue: '参数名称',
-          expandedKeys: '展开的节点键'
+          modelValue: 'Nome do parâmetro',
+          expandedKeys: 'Chaves expandidas'
         },
         props: {
-          dataSource: '数据源',
-          multiple: '多选',
-          showCheckbox: '显示复选框',
-          expandAll: '默认全部展开',
-          free: '自由选择',
-          showLine: '显示连接线',
-          trigger: '触发方式',
-          placeholder: '占位文本',
-          keyField: '节点标识字段',
-          labelField: '节点标签字段',
-          disabledField: '禁用节点字段',
-          initTree: '初始化树节点的方法',
-          loadMethod: '异步加载子节点数据的方法',
-          isSelect: '是否选中'
+          dataSource: 'Fonte de dados',
+          multiple: 'Múltipla seleção',
+          showCheckbox: 'Exibir checkbox',
+          expandAll: 'Expandir tudo por padrão',
+          free: 'Seleção livre',
+          showLine: 'Exibir linhas de conexão',
+          trigger: 'Modo de acionamento',
+          placeholder: 'Texto placeholder',
+          keyField: 'Campo identificador do nó',
+          labelField: 'Campo rótulo do nó',
+          disabledField: 'Campo de desabilitação do nó',
+          initTree: 'Método de inicialização da árvore',
+          loadMethod: 'Método de carregamento assíncrono',
+          isSelect: 'Está selecionado'
         },
         slots: {
-          handle: '插槽名'
+          handle: 'Nome do slot'
         },
         treeDataSource: {
-          label: '标签',
-          key: '键',
-          isLeaf: '是否叶子节点',
-          children: '子节点',
-          disabled: '禁用'
+          label: 'Rótulo',
+          key: 'Chave',
+          isLeaf: 'É nó folha',
+          children: 'Filhos',
+          disabled: 'Desabilitado'
         }
       },
       collapse: {
-        name: '折叠面板 Collapse',
-        description: '可折叠和展开的内容区域，让信息展示更加整洁',
+        name: 'Painel Expansível (Collapse)',
+        description: 'Área de conteúdo que pode ser expandida e recolhida, tornando a exibição de informações mais organizada',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '标题插槽'
+          title: 'Slot de título'
         },
         demo3: {
-          title: '手风琴'
+          title: 'Modo acordeão'
         },
         model: {
-          modelValue: '参数名称'
+          modelValue: 'Nome do parâmetro'
         },
         'model(CollapseItem)': {
-          modelValue: '参数名称'
+          modelValue: 'Nome do parâmetro'
         },
         props: {
-          width: '宽度'
+          width: 'Largura'
         },
         'props(CollapseItem)': {
-          collapseKey: '折叠键',
-          title: '标题',
-          radius: '半径'
+          collapseKey: 'Chave de expansão',
+          title: 'Título',
+          radius: 'Raio'
         }
       },
       desc: {
-        name: '描述列表 Desc',
-        description: '整齐的展示多个字段，让信息展示更加规范',
+        name: 'Lista de Descrição (Desc)',
+        description: 'Exibe múltiplos campos de forma organizada, tornando a apresentação de informações mais padronizada',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '方向'
+          title: 'Direção'
         },
         demo3: {
-          title: '丰富的'
+          title: 'Rico em recursos'
         },
         demo4: {
-          title: '支持在线配置'
+          title: 'Suporta configuração online'
         },
         props: {
-          options: '选项',
-          dataSource: '数据源',
-          size: '尺寸',
-          labelX: '标签X',
-          valueX: '值X',
-          gap: '间距',
-          width: '宽度',
-          columns: '列',
-          labelWidth: '标签宽度',
-          direction: '方向',
-          bordered: '是否有边框'
+          options: 'Opções',
+          dataSource: 'Fonte de dados',
+          size: 'Tamanho',
+          labelX: 'Rótulo X',
+          valueX: 'Valor X',
+          gap: 'Espaçamento',
+          width: 'Largura',
+          columns: 'Colunas',
+          labelWidth: 'Largura do rótulo',
+          direction: 'Direção',
+          bordered: 'Com borda'
         },
         descItemProps: {
-          label: '标签',
-          field: '字段',
-          size: '尺寸',
-          bordered: '是否有边框',
-          width: '宽度',
-          labelWidth: '标签宽度',
-          direction: '方向',
-          tips: '提示信息',
-          type: '类型',
-          labelX: '标签X',
-          valueX: '值X',
-          gridArea: '网格区域',
-          customRender: '自定义渲染'
+          label: 'Rótulo',
+          field: 'Campo',
+          size: 'Tamanho',
+          bordered: 'Com borda',
+          width: 'Largura',
+          labelWidth: 'Largura do rótulo',
+          direction: 'Direção',
+          tips: 'Dicas',
+          type: 'Tipo',
+          labelX: 'Rótulo X',
+          valueX: 'Valor X',
+          gridArea: 'Área da grade',
+          customRender: 'Renderização personalizada'
         }
       },
       alert: {
-        name: '警告提示 Alert',
-        description: '醒目的信息提示框，让警告更加温和',
+        name: 'Alerta (Alert)',
+        description: 'Caixa de alerta chamativa para exibir avisos de forma mais suave',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '支持插槽'
+          title: 'Suporte a slots'
         },
         demo3: {
-          title: '更多场景'
+          title: 'Mais cenários'
         },
         props: {
-          type: '类型',
-          title: '标题',
-          content: '提示内容',
-          closeable: '是否可关闭',
-          footer: '底部内容'
+          type: 'Tipo',
+          title: 'Título',
+          content: 'Conteúdo do alerta',
+          closeable: 'Pode ser fechado',
+          footer: 'Conteúdo do rodapé'
         }
       },
       message: {
-        name: '全局提示 Message',
-        description: '轻量级的信息反馈，让提示更加简洁',
+        name: 'Mensagem Global (Message)',
+        description: 'Feedback leve de informações, tornando as notificações mais concisas',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '可控制的'
+          title: 'Controlável'
         },
         demo3: {
-          title: '模拟请求'
+          title: 'Simulação de requisição'
         },
         events: {
-          close: '关闭时触发'
+          close: 'Disparado ao fechar'
         },
         props: {
-          type: '类型',
-          content: '提示内容',
-          duration: '持续时间'
+          type: 'Tipo',
+          content: 'Conteúdo da mensagem',
+          duration: 'Duração'
         }
       },
       notification: {
-        name: '通知提醒框 Notification',
-        description: '优雅的通知提醒，让消息推送更加友好',
+        name: 'Notificação (Notification)',
+        description: 'Notificações elegantes, tornando as mensagens push mais amigáveis',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '自定义展示时间'
+          title: 'Tempo de exibição personalizado'
         },
         props: {
-          type: '类型',
-          title: '标题',
-          content: '提示内容',
-          delay: '延迟时间'
+          type: 'Tipo',
+          title: 'Título',
+          content: 'Conteúdo da notificação',
+          delay: 'Tempo de atraso'
         }
       },
       drawer: {
-        name: '抽屉 Drawer',
-        description: '从屏幕边缘滑出的面板，让临时操作更加流畅',
+        name: 'Gaveta (Drawer)',
+        description: 'Painel deslizante que surge das bordas da tela, tornando operações temporárias mais fluidas',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '异步关闭'
+          title: 'Fechamento assíncrono'
         },
         demo3: {
-          title: '自定义头部和底部'
+          title: 'Cabeçalho e rodapé personalizados'
         },
         demo4: {
-          title: '是否允许esc关闭'
+          title: 'Permitir fechamento com ESC'
         },
         model: {
-          visible: '是否显示'
+          visible: 'Visibilidade'
         },
         props: {
-          title: '标题',
-          width: '宽度',
-          position: '位置',
-          height: '高度',
-          closeOnClickOverlay: '是否可通过点击遮罩关闭',
-          closeByEsc: '是否可通过按下 ESC 关闭',
-          hideFooter: '是否隐藏底部',
-          okProps: '确认按钮的属性',
-          cancelProps: '取消按钮的属性',
-          zIndex: '层级'
+          title: 'Título',
+          width: 'Largura',
+          position: 'Posição',
+          height: 'Altura',
+          closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
+          closeByEsc: 'Fechar com tecla ESC',
+          hideFooter: 'Ocultar rodapé',
+          okProps: 'Propriedades do botão OK',
+          cancelProps: 'Propriedades do botão Cancelar',
+          zIndex: 'Índice Z'
         }
       },
       dialog: {
-        name: '对话框 Dialog',
-        description: '模态对话框，让重要信息交互更加突出',
+        name: 'Diálogo (Dialog)',
+        description: 'Caixa de diálogo modal para interações importantes mais destacadas',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '简单的'
+          title: 'Simples'
         },
         props: {
-          type: '类型',
-          width: '宽度',
-          trigger: '触发方式',
-          title: '标题',
-          okText: '确认按钮文本',
-          cancelText: '取消按钮文本',
-          ok: '确认回调',
-          cancel: '取消回调',
-          layout: '布局方式',
-          closeOnClickOverlay: '是否可通过点击遮罩关闭',
-          closeByEsc: '是否可通过按下 ESC 关闭',
-          transformOrigin: '动画原点'
+          type: 'Tipo',
+          width: 'Largura',
+          trigger: 'Modo de acionamento',
+          title: 'Título',
+          okText: 'Texto do botão OK',
+          cancelText: 'Texto do botão Cancelar',
+          ok: 'Callback de confirmação',
+          cancel: 'Callback de cancelamento',
+          layout: 'Layout',
+          closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
+          closeByEsc: 'Fechar com tecla ESC',
+          transformOrigin: 'Origem da transformação'
         },
         events: {
-          ok: '点击确认按钮时触发',
-          cancel: '点击取消按钮时触发'
+          ok: 'Disparado ao clicar no botão OK',
+          cancel: 'Disparado ao clicar no botão Cancelar'
         }
       },
       modal: {
-        name: '模态框 Modal',
-        description: '更加灵活的模态窗口，让弹窗交互更加丰富',
+        name: 'Modal (Modal)',
+        description: 'Janela modal mais flexível para interações mais ricas',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '异步关闭'
+          title: 'Fechamento assíncrono'
         },
         demo3: {
-          title: '自定义头部和底部'
+          title: 'Cabeçalho e rodapé personalizados'
         },
         demo4: {
-          title: '是否允许esc关闭'
+          title: 'Permitir fechamento com ESC'
         },
         model: {
-          visible: '是否显示'
+          visible: 'Visibilidade'
         },
         props: {
-          title: '标题',
-          width: '宽度',
-          top: '距离顶部的距离',
-          hideFooter: '是否隐藏底部',
-          closeByEsc: '是否可通过按下 ESC 关闭',
-          okProps: '确认按钮属性',
-          cancelProps: '取消按钮属性',
-          hideOkButton: '是否隐藏确认按钮',
-          hideCancelButton: '是否隐藏取消按钮',
-          closeOnClickOverlay: '是否可通过点击遮罩关闭',
-          zIndex: '层级'
+          title: 'Título',
+          width: 'Largura',
+          top: 'Distância do topo',
+          hideFooter: 'Ocultar rodapé',
+          closeByEsc: 'Fechar com tecla ESC',
+          okProps: 'Propriedades do botão OK',
+          cancelProps: 'Propriedades do botão Cancelar',
+          hideOkButton: 'Ocultar botão OK',
+          hideCancelButton: 'Ocultar botão Cancelar',
+          closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
+          zIndex: 'Índice Z'
         }
       },
       popok: {
-        name: '气泡确认框 Popok',
-        description: '轻量级的确认提示，让操作确认更加便捷',
+        name: 'Confirmação em Popover (Popok)',
+        description: 'Confirmação leve em popover para confirmações de operações mais convenientes',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '触发方式'
+          title: 'Modo de acionamento'
         },
         props: {
-          type: '类型',
-          width: '宽度',
-          trigger: '触发方式',
-          title: '标题',
-          okProps: '确认按钮属性',
-          cancelProps: '取消按钮属性',
-          content: '内容',
-          placement: '位置'
+          type: 'Tipo',
+          width: 'Largura',
+          trigger: 'Modo de acionamento',
+          title: 'Título',
+          okProps: 'Propriedades do botão OK',
+          cancelProps: 'Propriedades do botão Cancelar',
+          content: 'Conteúdo',
+          placement: 'Posicionamento'
         }
       },
       popover: {
-        name: '气泡卡片 Popover',
-        description: '鼠标悬停时的信息卡片，让提示更加优雅',
+        name: 'Cartão Popover (Popover)',
+        description: 'Cartão de informações ao passar o mouse, tornando as dicas mais elegantes',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         props: {
-          trigger: '触发方式',
-          placement: '位置',
-          disabled: '禁用状态',
-          loading: '加载状态',
-          hideOnClick: '点击时隐藏',
-          offset: '偏移量',
-          popoverBodyClassName: '气泡内容类名',
-          triggerTarget: '触发目标'
+          trigger: 'Modo de acionamento',
+          placement: 'Posicionamento',
+          disabled: 'Desabilitado',
+          loading: 'Carregando',
+          hideOnClick: 'Ocultar ao clicar',
+          offset: 'Deslocamento',
+          popoverBodyClassName: 'Classe do corpo do popover',
+          triggerTarget: 'Alvo do acionamento'
         },
         slots: {
-          trigger: '触发插槽',
-          'popover-body': '气泡内容插槽'
+          trigger: 'Slot de acionamento',
+          'popover-body': 'Slot do corpo do popover'
         }
       },
       tooltip: {
-        name: '文字提示 Tooltip',
-        description: '简单的文字提示气泡，让提示更加轻巧',
+        name: 'Dica de Texto (Tooltip)',
+        description: 'Balão de dica de texto simples, tornando as dicas mais leves',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         demo2: {
-          title: '点击触发'
+          title: 'Acionamento por clique'
         },
         props: {
-          tips: '提示内容',
-          placement: '位置',
-          trigger: '触发方式',
-          allowHTML: '是否支持HTML',
-          delay: '延迟时间'
+          tips: 'Conteúdo da dica',
+          placement: 'Posicionamento',
+          trigger: 'Modo de acionamento',
+          allowHTML: 'Permitir HTML',
+          delay: 'Atraso'
         }
       },
       loading: {
-        name: '加载 Loading',
-        description: '优雅的加载效果，让等待更加轻松',
+        name: 'Carregamento (Loading)',
+        description: 'Efeito de carregamento elegante, tornando a espera mais agradável',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         props: {
-          tip: '提示信息',
-          placement: '提示位置',
-          trigger: '触发方式',
-          allowHTML: '允许 HTML'
+          tip: 'Dica',
+          placement: 'Posicionamento da dica',
+          trigger: 'Modo de acionamento',
+          allowHTML: 'Permitir HTML'
         }
       },
       result: {
-        name: '结果 Result',
-        description: '用于反馈操作结果，让结果展示更加完整',
+        name: 'Resultado (Result)',
+        description: 'Usado para feedback de resultados de operações, tornando a exibição mais completa',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         props: {
-          type: '类型',
-          title: '标题',
-          content: '内容'
+          type: 'Tipo',
+          title: 'Título',
+          content: 'Conteúdo'
         },
         slots: {
-          handle: '插槽处理'
+          handle: 'Slot de manipulação'
         }
       },
       empty: {
-        name: '空状态 Empty',
-        description: '空数据状态展示，让空白页面更加友好',
+        name: 'Estado Vazio (Empty)',
+        description: 'Exibição de estado de dados vazios, tornando páginas em branco mais amigáveis',
         demo1: {
-          title: '基础用法'
+          title: 'Uso básico'
         },
         props: {
-          type: '类型',
-          title: '标题',
-          fontSize: '字体大小',
-          padding: '内边距',
-          width: '宽度',
-          height: '高度'
+          type: 'Tipo',
+          title: 'Título',
+          fontSize: 'Tamanho da fonte',
+          padding: 'Preenchimento',
+          width: 'Largura',
+          height: 'Altura'
         }
       }
     }
   }
-  
