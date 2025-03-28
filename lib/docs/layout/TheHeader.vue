@@ -3,7 +3,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useDark } from '@vueuse/core'
 import { Sun, Moon, Github, Languages } from 'lucide-vue-next'
 import { setLocale } from 'lew-ui'
-import docsLocale from '@/locals'
+import docsLocale, { getInitialLocale } from '@/locals'
 
 const version = ref('v2.6.0')
 
@@ -171,8 +171,10 @@ const changeLanguage = (e: any) => {
   })
 }
 
-const defaultLocale = docsLocale.getLocale()
-changeLanguage({ value: defaultLocale })
+// 初始化语言（异步）
+getInitialLocale().then((locale) => {
+  changeLanguage({ value: locale })
+})
 </script>
 
 <template>

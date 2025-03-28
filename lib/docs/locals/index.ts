@@ -65,7 +65,7 @@ export const messages = {
 }
 
 // 获取初始语言
-const getInitialLocale = async (): Promise<Language> => {
+export const getInitialLocale = async (): Promise<Language> => {
   // 优先从本地存储获取用户上次选择的语言
   const savedLocale = localStorage.getItem(LOCALE_STORAGE_KEY) as Language
   if (savedLocale && Object.keys(messages).includes(savedLocale)) {
@@ -157,14 +157,6 @@ const i18n = createI18n({
   locale: currentLocale,
   fallbackLocale: 'zh',
   messages
-})
-
-// 初始化语言（异步）
-getInitialLocale().then((locale) => {
-  currentLocale = locale
-  if (i18n.global) {
-    i18n.global.locale.value = locale
-  }
 })
 
 export const useLocale = () => {
