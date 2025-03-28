@@ -338,7 +338,7 @@ const getStyle = computed(() => {
     width: 100%;
     height: var(--lew-slider-height);
     position: relative;
-    cursor: pointer;
+    cursor: default;
 
     .lew-slider-track-disabled-area {
       position: absolute;

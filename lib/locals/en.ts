@@ -1,22 +1,31 @@
 export default {
   name: 'en',
   image: {
-    fail: 'Image load failed'
+    fail: 'Unable to load image, please try again later'
   },
   input: {
     placeholder: 'Please input',
     copy: 'Copy',
-    copySuccess: 'Copy success!',
-    copyFailed: 'Copy failed!'
+    copySuccess: 'Copied to clipboard',
+    copyFailed: 'Copy failed, please try again'
   },
-  textarea: {
-    placeholder: 'Please input'
+  inputTag: {
+    placeholder: 'Press Enter after input to add tag',
+    maxLength:
+      'Reached the limit of {maxLength} tags, delete some tags to continue adding',
+    duplicate: 'Tag already exists, please input a new tag'
   },
   select: {
     placeholder: 'Please select'
   },
-  inputTag: {
-    placeholder: 'Press Enter to add'
+  selectMultiple: {
+    placeholder: 'Please select'
+  },
+  cascader: {
+    placeholder: 'Please select'
+  },
+  textarea: {
+    placeholder: 'Please input'
   },
   datePicker: {
     Mon: 'Mon',
@@ -26,20 +35,22 @@ export default {
     Fri: 'Fri',
     Sat: 'Sat',
     Sun: 'Sun',
-    placeholder: 'Please select date',
+    placeholder: 'Select date'
+  },
+  dateRangePicker: {
     placeholderStart: 'Start date',
     placeholderEnd: 'End date'
   },
   upload: {
-    dropActive: 'Drop to upload file',
-    click: 'Click,',
-    paste: 'Ctrl + V paste,',
-    drag: 'Drag file to here',
-    accept: 'Support {accept}',
-    limit: 'Upload up to {limit} files',
-    maxFileSize: 'File size limit {maxFileSize}'
+    dropActive: 'Release to start uploading',
+    click: 'Click to upload, ',
+    paste: 'paste, ',
+    drag: 'or drag files here',
+    accept: 'Support uploading {accept}',
+    limit: 'Maximum {limit} files can be uploaded',
+    maxFileSize: 'Single file should not exceed {maxFileSize}'
   },
   pagination: {
-    pageSize: '{pageSize} / Page'
+    pageSize: '{pageSize} items/page'
   }
 }

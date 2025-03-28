@@ -26,12 +26,22 @@ export default {
     {
       name: 'disabled',
       type: 'Boolean',
-      default: false
+      default: 'false'
     },
     {
       name: 'isDividerLine',
       type: 'Boolean',
-      default: false
+      default: 'false'
+    },
+    {
+      name: 'checkbox',
+      type: 'Boolean',
+      default: 'false'
+    },
+    {
+      name: 'checked',
+      type: 'Boolean',
+      default: 'false'
     }
   ]
 }

@@ -5,13 +5,16 @@ import LewContextMenu from './LewContextMenu.vue'
 import { getUniqueId } from 'lew-ui/utils'
 import { ContextMenus, contextMenuProps, initLewContextMenu } from './index'
 import Icon from 'lew-ui/utils/Icon.vue'
-
 const props = defineProps(contextMenuProps)
 
 const emit = defineEmits(['select'])
 
-const clickItem = (item: ContextMenus) => {
-  emit('select', item)
+const clickItem = (item: ContextMenus, options: ContextMenus[]) => {
+  emit('select', {
+    item,
+    parent: options,
+    value: item.value
+  })
 }
 
 const uniqueId = getUniqueId()
@@ -28,8 +31,8 @@ const initTippy = () => {
       render() {
         return h(LewContextMenu, {
           options: item.children,
-          onSelect: (item: ContextMenus) => {
-            emit('select', item)
+          onSelect: (e: any) => {
+            emit('select', e)
           }
         })
       }
@@ -90,13 +93,24 @@ onUnmounted(() => {
       >
         <div
           :ref="(el) => itemRefs.push(el)"
-          @click="clickItem(item)"
+          @click="clickItem(item, options)"
           class="lew-context-menu-item"
           :style="{ 'animation-delay': index * 15 + 'ms' }"
           :class="{
             'lew-context-menu-item-active': item.active
           }"
         >
+          <div
+            v-if="options.filter((e) => e.checkbox).length > 0"
+            class="lew-context-menu-checkbox"
+          >
+            <Icon
+              v-if="item.checked"
+              :size="12"
+              :stroke-width="2.5"
+              type="check"
+            />
+          </div>
           <div class="lew-context-menu-label">
             <renderIcon v-if="item.renderIcon" :renderIcon="item.renderIcon" />
             <div class="lew-context-menu-label-text">
@@ -104,7 +118,11 @@ onUnmounted(() => {
             </div>
           </div>
           <Icon
-            v-if="(item.children || []).length > 0"
+            v-if="options.filter((e) => e.children).length > 0"
+            class="lew-context-menu-item-chevron"
+            :style="{
+              opacity: (item.children || []).length > 0 ? 1 : 0
+            }"
             :size="14"
             type="chevron-right"
           ></Icon>
@@ -161,11 +179,20 @@ onUnmounted(() => {
           opacity: 1;
         }
       }
+      .lew-context-menu-checkbox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
       .lew-context-menu-label {
         display: flex;
         align-items: center;
+        flex: 1;
         gap: 5px;
-        width: 100%;
+        width: fit-content;
         user-select: none;
         font-size: 14px;
         height: 30px;
@@ -179,6 +206,9 @@ onUnmounted(() => {
           text-overflow: ellipsis;
           white-space: nowrap;
         }
+      }
+      .lew-context-menu-item-chevron {
+        flex-shrink: 0;
       }
     }
 

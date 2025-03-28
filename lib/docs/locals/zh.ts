@@ -4,7 +4,9 @@ const contextMenu = {
   renderIcon: '渲染图标函数',
   children: '子节点集合',
   disabled: '禁用选项',
-  isDividerLine: '是否是分割线'
+  isDividerLine: '是否是分割线',
+  checkbox: '是否是复选框',
+  checked: '是否选中'
 }
 
 export default {
@@ -306,7 +308,8 @@ export default {
       },
       props: {
         options: '步骤配置项数组',
-        status: '步骤条的当前状态'
+        status: '步骤条的当前状态',
+        minWidth: '最小步骤宽度'
       }
     },
     menu: {
@@ -385,6 +388,7 @@ export default {
       demo3: {
         title: '禁用项'
       },
+
       props: {
         options: '菜单选项配置',
         trigger: '触发方式',
@@ -433,6 +437,9 @@ export default {
       },
       demo3: {
         title: '支持动态更新'
+      },
+      demo4: {
+        title: 'Checkbox'
       },
       props: {
         options: '右键菜单配置',
@@ -1441,14 +1448,15 @@ export default {
       model: {
         total: '参数名称',
         currentPage: '当前页',
-        props: {
-          size: '尺寸',
-          pageSizeOptions: '每页大小选项',
-          visiblePagesCount: '可见页数'
-        },
-        events: {
-          change: '事件名称'
-        }
+        pageSize: '每页大小'
+      },
+      props: {
+        size: '尺寸',
+        pageSizeOptions: '每页大小选项',
+        visiblePagesCount: '可见页数'
+      },
+      events: {
+        change: '事件名称'
       }
     },
     magicNumber: {

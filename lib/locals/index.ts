@@ -1,6 +1,13 @@
 import { createI18n } from 'vue-i18n'
 import en from './en'
 import zh from './zh'
+import ja from './ja'
+import ko from './ko'
+import fr from './fr'
+import it from './it'
+import es from './es'
+import de from './de'
+import pt from './pt'
 
 let i18nInstance: any = null
 let currentLocale = 'zh'
@@ -22,12 +29,20 @@ export const getLocale = () => {
 export const useI18n = () => {
   if (!i18nInstance) {
     i18nInstance = createI18n({
+      globalInjection: true,
       legacy: false,
       locale: currentLocale,
       fallbackLocale: currentLocale,
       messages: {
         en,
-        zh
+        zh,
+        ja,
+        ko,
+        de,
+        pt,
+        fr,
+        it,
+        es
       }
     })
   }
@@ -35,4 +50,4 @@ export const useI18n = () => {
 }
 
 export const locale = useI18n()
-export { en, zh }
+export { en, zh, de, pt, fr, it, es, ko, ja }

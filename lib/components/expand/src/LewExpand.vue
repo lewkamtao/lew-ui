@@ -34,6 +34,7 @@ onMounted(() => {
       @click="collapse = !collapse"
       gap="5"
       v-if="collapseHeight"
+      x="center"
       class="lew-expand-btn"
     >
       <Icon
