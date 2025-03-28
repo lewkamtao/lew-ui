@@ -32,23 +32,16 @@ const options = [
     value: '1',
     label: 'Article Mgmt',
     renderIcon: () => h(FileText, { size: 14 }),
-    tagText: '10',
-    tagType: 'light',
     children: [
       {
         value: '1-1',
         label: 'Article List',
-        tagText: 'New',
-        tagType: 'ghost',
-        tagColor: 'green',
         children: [
           {
             value: '1-1-1',
-            label: 'Published',
-            tagText: '8',
-            tagType: 'light'
+            label: 'Published'
           },
-          { value: '1-1-2', label: 'Drafts', tagText: '3', tagType: 'light' },
+          { value: '1-1-2', label: 'Drafts' },
           { value: '1-1-3', label: 'Recycle Bin' }
         ]
       },
@@ -67,19 +60,14 @@ const options = [
     value: '2',
     label: 'User Mgmt',
     renderIcon: () => h(Users, { size: 14 }),
-    tagText: '5',
-    tagType: 'light',
     children: [
       {
         value: '2-1',
         label: 'User List',
-        tagText: 'New',
-        tagType: 'ghost',
-        tagColor: 'green',
         children: [
           { value: '2-1-1', label: 'Regular Users' },
-          { value: '2-1-2', label: 'Admins', tagText: '2', tagType: 'light' },
-          { value: '2-1-3', label: 'Blacklist', tagText: '3', tagType: 'light' }
+          { value: '2-1-2', label: 'Admins' },
+          { value: '2-1-3', label: 'Blacklist' }
         ]
       },
       {
@@ -97,8 +85,6 @@ const options = [
     value: '3',
     label: 'Comment Mgmt',
     renderIcon: () => h(MessageSquare, { size: 14 }),
-    tagText: '12',
-    tagType: 'light',
     children: [
       {
         value: '3-1',
@@ -106,12 +92,10 @@ const options = [
         children: [
           {
             value: '3-1-1',
-            label: 'Pending Review',
-            tagText: '7',
-            tagType: 'light'
+            label: 'Pending Review'
           },
           { value: '3-1-2', label: 'Approved' },
-          { value: '3-1-3', label: 'Rejected', tagText: '5', tagType: 'light' }
+          { value: '3-1-3', label: 'Rejected' }
         ]
       },
       {

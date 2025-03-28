@@ -1128,7 +1128,7 @@ export default {
         size: '组件尺寸大小',
         disabled: '是否禁用',
         clearable: '是否可清空',
-        showCheckbox: '是否显示复选框',
+        checkable: '是否显示复选框',
         showAllLevels: '是否显示所有层级',
         showCheckIcon: '是否显示选择图标',
         showLine: '是否显示连接线',
@@ -1497,7 +1497,7 @@ export default {
       props: {
         dataSource: '数据源',
         multiple: '多选',
-        showCheckbox: '显示复选框',
+        checkable: '显示复选框',
         expandAll: '默认全部展开',
         free: '自由选择',
         showLine: '显示连接线',

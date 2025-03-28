@@ -1139,7 +1139,7 @@ const contextMenu = {
           size: 'Tamanho do componente',
           disabled: 'Desabilitado',
           clearable: 'Permite limpar',
-          showCheckbox: 'Exibir checkbox',
+          checkable: 'Exibir checkbox',
           showAllLevels: 'Exibir todos os níveis',
           showCheckIcon: 'Exibir ícone de seleção',
           showLine: 'Exibir linhas de conexão',
@@ -1508,7 +1508,7 @@ const contextMenu = {
         props: {
           dataSource: 'Fonte de dados',
           multiple: 'Múltipla seleção',
-          showCheckbox: 'Exibir checkbox',
+          checkable: 'Exibir checkbox',
           expandAll: 'Expandir tudo por padrão',
           free: 'Seleção livre',
           showLine: 'Exibir linhas de conexão',

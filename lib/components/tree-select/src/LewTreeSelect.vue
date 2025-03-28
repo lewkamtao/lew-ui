@@ -261,7 +261,7 @@ defineExpose({ show, hide })
                 labelField,
                 disabledField,
                 showLine,
-                showCheckbox,
+                checkable,
                 dataSource,
                 loadMethod,
                 initTree,

@@ -1,6 +1,5 @@
 import type { ExtractPropTypes } from 'vue'
 import { isValidCssValue } from 'lew-ui/utils'
-import type { TagType, LewColor } from 'lew-ui'
 
 export type MenuTreeItem = {
   label: string
@@ -8,9 +7,6 @@ export type MenuTreeItem = {
   active?: boolean
   disabled?: boolean
   children?: MenuTreeItem[]
-  tagText?: string
-  tagType?: TagType
-  tagColor?: LewColor
   renderIcon?: () => any
   renderLabel?: () => any
 }
@@ -37,14 +33,6 @@ export const menuTreeModel = {
     type: Boolean,
     default: false,
     description: '菜单树是否折叠。'
-  }
-}
-
-export const menuTreeItemModel = {
-  modelValue: {
-    type: Boolean,
-    default: false,
-    description: '菜单树项的展开状态，true 表示展开，false 表示折叠。'
   }
 }
 
@@ -92,20 +80,10 @@ export const menuTreeItemProps = {
     default: () => {},
     description: '菜单树项的图标。'
   },
-  tagText: {
-    type: String,
-    default: '',
-    description: '菜单树项的标签文本。'
-  },
-  tagType: {
-    type: String,
-    default: 'light',
-    description: '菜单树项的标签类型。'
-  },
-  tagColor: {
-    type: String,
-    default: 'error',
-    description: '菜单树项的标签颜色。'
+  renderLabel: {
+    type: Function,
+    default: () => {},
+    description: '自定义渲染标签内容的函数。'
   },
   disabled: {
     type: Boolean,

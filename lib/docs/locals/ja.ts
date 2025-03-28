@@ -1146,7 +1146,7 @@ export default {
         size: 'コンポーネントサイズ',
         disabled: '無効化するかどうか',
         clearable: 'クリア可能にするかどうか',
-        showCheckbox: 'チェックボックスを表示',
+        checkable: 'チェックボックスを表示',
         showAllLevels: '全レベルを表示',
         showCheckIcon: '選択アイコンを表示',
         showLine: '接続線を表示',
@@ -1518,7 +1518,7 @@ export default {
       props: {
         dataSource: 'データソース',
         multiple: '複数選択',
-        showCheckbox: 'チェックボックス表示',
+        checkable: 'チェックボックス表示',
         expandAll: 'デフォルトで全展開',
         free: '自由選択',
         showLine: 'ガイドライン表示',

@@ -38,7 +38,7 @@ const loadMethod = (item?: any) => {
     // item 不存在的时候 是第一层加载
     axios
       .get({
-        url: `/common/region/${levelMap[_typeKey] || 'province'}/${item ? item.value : 0}`
+        url: `/common/region/${levelMap[_typeKey] || 'province'}/${item ? item.key : 0}`
       })
       .then((res: any) => {
         const { data, success } = res
@@ -66,7 +66,7 @@ const v = ref([])
     <lew-tree
       v-model="v"
       multiple
-      showCheckbox
+      checkable
       keyField="value"
       :initTree="initTree"
       :loadMethod="loadMethod"

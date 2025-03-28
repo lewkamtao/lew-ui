@@ -1154,7 +1154,7 @@ export default {
         size: 'Dimensione componente',
         disabled: 'Disabilitato',
         clearable: 'Cancellabile',
-        showCheckbox: 'Mostra checkbox',
+        checkable: 'Mostra checkbox',
         showAllLevels: 'Mostra tutti i livelli',
         showCheckIcon: 'Mostra icona selezione',
         showLine: 'Mostra linee connessione',
@@ -1524,7 +1524,7 @@ export default {
       props: {
         dataSource: 'Sorgente dati',
         multiple: 'Selezione multipla',
-        showCheckbox: 'Mostra checkbox',
+        checkable: 'Mostra checkbox',
         expandAll: 'Espandi tutto di default',
         free: 'Selezione libera',
         showLine: 'Mostra linee connessione',

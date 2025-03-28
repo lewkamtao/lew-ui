@@ -1123,7 +1123,7 @@ const contextMenu = {
           size: 'Taille du composant',
           disabled: 'Désactivé',
           clearable: 'Effaçable',
-          showCheckbox: 'Afficher les cases à cocher',
+          checkable: 'Afficher les cases à cocher',
           showAllLevels: 'Afficher tous les niveaux',
           showCheckIcon: 'Afficher l\'icône de sélection',
           showLine: 'Afficher les lignes de connexion',
@@ -1492,7 +1492,7 @@ const contextMenu = {
         props: {
           dataSource: 'Source de données',
           multiple: 'Sélection multiple',
-          showCheckbox: 'Afficher les cases à cocher',
+          checkable: 'Afficher les cases à cocher',
           expandAll: 'Tout déplier par défaut',
           free: 'Sélection libre',
           showLine: 'Afficher les lignes de connexion',

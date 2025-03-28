@@ -1185,7 +1185,7 @@ export default {
         size: 'Komponentengröße',
         disabled: 'Deaktiviert',
         clearable: 'Löschbar',
-        showCheckbox: 'Kontrollkästchen anzeigen',
+        checkable: 'Kontrollkästchen anzeigen',
         showAllLevels: 'Alle Ebenen anzeigen',
         showCheckIcon: 'Häkchen-Icon anzeigen',
         showLine: 'Verbindungslinien anzeigen',
@@ -1558,7 +1558,7 @@ export default {
       props: {
         dataSource: 'Datenquelle',
         multiple: 'Mehrfachauswahl',
-        showCheckbox: 'Kontrollkästchen anzeigen',
+        checkable: 'Kontrollkästchen anzeigen',
         expandAll: 'Standardmäßig alle ausgeklappt',
         free: 'Freie Auswahl',
         showLine: 'Verbindungslinien anzeigen',

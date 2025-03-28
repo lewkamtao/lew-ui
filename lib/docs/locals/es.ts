@@ -1177,7 +1177,7 @@ export default {
         size: 'Component Size',
         disabled: 'Disabled',
         clearable: 'Clearable',
-        showCheckbox: 'Show Checkbox',
+        checkable: 'Show Checkbox',
         showAllLevels: 'Show All Levels',
         showCheckIcon: 'Show Check Icon',
         showLine: 'Show Connection Line',
@@ -1553,7 +1553,7 @@ export default {
       props: {
         dataSource: 'Data Source',
         multiple: 'Multiple Selection',
-        showCheckbox: 'Show Checkbox',
+        checkable: 'Show Checkbox',
         expandAll: 'Expand All by Default',
         free: 'Free Selection',
         showLine: 'Show Connection Line',

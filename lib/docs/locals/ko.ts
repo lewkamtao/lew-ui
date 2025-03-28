@@ -1158,7 +1158,7 @@ export default {
         size: '컴포넌트 크기',
         disabled: '비활성화 여부',
         clearable: '지우기 가능 여부',
-        showCheckbox: '체크박스 표시 여부',
+        checkable: '체크박스 표시 여부',
         showAllLevels: '모든 레벨 표시 여부',
         showCheckIcon: '선택 아이콘 표시 여부',
         showLine: '연결선 표시 여부',

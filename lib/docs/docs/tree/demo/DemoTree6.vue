@@ -27,7 +27,7 @@ const change = (e: any) => {
     v-model="v"
     multiple
     expandAll
-    :showCheckbox="false"
+    :checkable="false"
     :data-source="options"
     @change="change"
   />

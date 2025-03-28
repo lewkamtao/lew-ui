@@ -79,7 +79,7 @@ export const treeSelectProps = {
     default: false,
     description: '是否可清空'
   },
-  showCheckbox: {
+  checkable: {
     type: Boolean,
     default: false,
     description: '是否显示复选框'

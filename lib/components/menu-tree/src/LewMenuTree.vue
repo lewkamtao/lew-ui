@@ -38,7 +38,7 @@ const getModelValueKeyPath = computed(() => {
 })
 
 // 注入菜单树相关的数据
-provide('menu-tree', {
+provide('lew-menu-tree', {
   modelValue,
   expandKeys,
   collapsed,
@@ -109,16 +109,7 @@ const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
           ]
         ]
       : []
-  const {
-    tagText,
-    tagType,
-    tagColor,
-    disabled,
-    renderIcon,
-    renderLabel,
-    label,
-    value
-  } = item
+  const { disabled, renderIcon, renderLabel, label, value } = item
   // 渲染菜单项组件
   return withDirectives(
     h(
@@ -129,9 +120,6 @@ const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
         level,
         isLeaf: !item.children?.length,
         disabled,
-        tagText,
-        tagType,
-        tagColor,
         renderIcon: () => renderIcon,
         renderLabel: () => renderLabel,
         onChange: () => emit('change', item)
@@ -148,6 +136,11 @@ const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
 
 // 定义事件
 const emit = defineEmits(['change'])
+
+onMounted(() => {
+  expandKeys.value = cloneDeep(expandKeys.value)
+  modelValue.value = cloneDeep(modelValue.value)
+})
 </script>
 
 <template>
