@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { treeItemProps, TreeDataSource } from './props'
+import { treeItemProps } from './props'
 import {
   LewCollapseTransition,
   LewTextTrim,
@@ -8,7 +8,12 @@ import {
 } from 'lew-ui'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { cloneDeep } from 'lodash-es'
-import transformTree from './transformTree'
+import transformTree, { formatTree } from './transformTree'
+import {
+  findAllChildrenKeys,
+  findNodeByKey,
+  insertChildByKey
+} from 'lew-ui/utils'
 
 const props = defineProps(treeItemProps)
 
@@ -22,60 +27,14 @@ const {
   loadMethod,
   keyField,
   labelField,
-  free
+  free,
+  cacheDataSource
 }: any = inject('lew-tree')
 
-const emit = defineEmits(['change'])
+const emit = defineEmits(['change', 'expand'])
 
 const loading = ref(false)
 const loaded = ref(false)
-
-const insertChildByKey = (
-  tree: any,
-  key: string | number,
-  newChild: TreeDataSource[]
-): boolean => {
-  for (let i = 0; i < tree.length; i++) {
-    if (tree[i].key === key) {
-      tree[i].children = newChild
-      return true
-    }
-
-    if (tree[i].children?.length) {
-      if (insertChildByKey(tree[i].children, key, newChild)) {
-        return true
-      }
-    }
-  }
-  return false
-}
-
-const findAllChildrenKeys = (node: any): (string | number)[] => {
-  const keys: (string | number)[] = []
-
-  const traverse = (item: TreeDataSource) => {
-    if (item.key !== undefined) keys.push(item.key)
-    item.children?.forEach(traverse)
-  }
-
-  node.children?.forEach(traverse)
-
-  return keys
-}
-
-const findNodeByKey = (key: string | number): TreeDataSource | null => {
-  const queue: TreeDataSource[] = [..._dataSource.value]
-
-  while (queue.length > 0) {
-    const node = queue.shift()!
-    if (node.key === key) return node
-    if (node.children?.length) {
-      queue.push(...node.children)
-    }
-  }
-
-  return null
-}
 
 const areSomeChildrenSelected = (node: any): boolean => {
   if (!node.children || node.children.length === 0) return false
@@ -86,9 +45,9 @@ const areSomeChildrenSelected = (node: any): boolean => {
     !childKeys.every((key) => modelValue.value.includes(key))
   )
 }
-const select = () => {
-  console.time('select')
 
+const select = () => {
+  if (props.disabled) return
   // 创建一个变量来存储最终的绑定值
   let newModelValue = cloneDeep(modelValue.value)
 
@@ -146,11 +105,13 @@ const select = () => {
         props.extend.parentKeyPaths
       ) {
         const parentKey = props.extend.parentKey
-        const parentNode = findNodeByKey(parentKey)
+        const parentNode = findNodeByKey(parentKey, _dataSource.value)
         const siblingKeys = (parentNode?.children || []).map((e: any) => e.key)
         if (
           siblingKeys.length > 0 &&
-          siblingKeys.every((key) => newModelValue.includes(key))
+          siblingKeys.every((key: string | number) =>
+            newModelValue.includes(key)
+          )
         ) {
           if (!newModelValue.includes(parentKey)) {
             newModelValue.push(parentKey)
@@ -168,8 +129,6 @@ const select = () => {
 
   // 最终结果赋值给modelValue
   modelValue.value = newModelValue
-
-  console.timeEnd('select')
   emit('change')
 }
 
@@ -203,6 +162,17 @@ const expand = async () => {
           props.__key as string | number,
           result
         )
+
+        _dataSource.value = formatTree({
+          dataSource: _dataSource.value,
+          keyField,
+          labelField,
+          free
+        })
+
+        cacheDataSource.value = cloneDeep(_dataSource.value)
+
+        console.log(_dataSource.value, 'lew-tree-item')
         expandKeys.value = [
           ...(expandKeys.value as (string | number)[]),
           props.__key
@@ -217,7 +187,7 @@ const expand = async () => {
     }
   }
   expandKeys.value = cloneDeep(expandKeys.value)
-  emit('change')
+  emit('expand')
 }
 
 // 计算节点的选中状态
@@ -429,6 +399,6 @@ const isNodePartiallySelected = computed(() => {
   display: flex;
   flex-direction: column;
   margin-left: 15.5px;
-  width: calc(100% - 20px);
+  width: calc(100% - 15.5px);
 }
 </style>

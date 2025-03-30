@@ -27,6 +27,7 @@ const change = (e: any) => {
     v-model="v"
     multiple
     checkable
+    searchable
     :free="false"
     :data-source="options"
     @change="change"

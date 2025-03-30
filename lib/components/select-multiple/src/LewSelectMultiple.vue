@@ -244,6 +244,10 @@ const getVirtualHeight = computed(() => {
   return height
 })
 
+const isShowScrollBar = computed(() => {
+  return getVirtualHeight.value >= 280
+})
+
 const hideHandle = () => {
   state.visible = false
   emit('blur')
@@ -412,7 +416,7 @@ const getResultNum = computed(() => {
         <div class="lew-select-options-box">
           <template v-if="state.options && state.options.length === 0">
             <slot v-if="$slots.empty" name="empty"></slot>
-            <lew-flex v-else direction="y" class="lew-not-found">
+            <lew-flex v-else direction="y" x="center" class="lew-not-found">
               <lew-empty title="暂无结果" />
             </lew-flex>
           </template>
@@ -433,7 +437,8 @@ const getResultNum = computed(() => {
               :buffer="5"
               itemKey="value"
               :style="{
-                height: `${getVirtualHeight}px`
+                height: `${getVirtualHeight}px`,
+                paddingRight: isShowScrollBar ? '5px' : '0px'
               }"
               class="lew-select-options-list lew-scrollbar"
             >
@@ -708,7 +713,7 @@ const getResultNum = computed(() => {
     input {
       outline: none;
       border: none;
-      background-color: var(--lew-bgcolor-2);
+      background-color: var(--lew-bgcolor-3);
       width: 100%;
       height: 32px;
       border-radius: var(--lew-border-radius-small);
@@ -718,7 +723,7 @@ const getResultNum = computed(() => {
       transition: all var(--lew-form-transition-bezier);
 
       &:focus {
-        background-color: var(--lew-bgcolor-3);
+        background-color: var(--lew-form-bgcolor);
       }
     }
   }

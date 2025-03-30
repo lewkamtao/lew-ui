@@ -1,4 +1,4 @@
-import { uniqueId } from 'lodash-es'
+import { cloneDeep, uniqueId } from 'lodash-es'
 import Icon from './Icon.vue'
 /**
  * 获取颜色类型。
@@ -498,4 +498,50 @@ export const poll = ({
   }
 
   execute()
+}
+
+export const insertChildByKey = (
+  tree: any,
+  key: string | number,
+  newChild: any
+): boolean => {
+  for (let i = 0; i < tree.length; i++) {
+    if (tree[i].key === key) {
+      tree[i].children = newChild
+      return true
+    }
+    if (tree[i].children?.length) {
+      if (insertChildByKey(tree[i].children, key, newChild)) {
+        return true
+      }
+    }
+  }
+  return false
+}
+
+export const findAllChildrenKeys = (node: any) => {
+  const keys: (string | number)[] = []
+
+  const traverse = (item: any) => {
+    if (item.key !== undefined) keys.push(item.key)
+    item.children?.forEach(traverse)
+  }
+
+  node.children?.forEach(traverse)
+
+  return keys
+}
+
+export const findNodeByKey = (key: string | number, tree: any) => {
+  const queue: any = cloneDeep(tree)
+
+  while (queue.length > 0) {
+    const node = queue.shift()!
+    if (node.key === key) return node
+    if (node.children?.length) {
+      queue.push(...node.children)
+    }
+  }
+
+  return null
 }

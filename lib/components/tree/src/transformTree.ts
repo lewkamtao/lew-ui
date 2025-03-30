@@ -52,7 +52,7 @@ const findLeafNodes = (tree: TreeDataSource[] = [], keyField = 'key') => {
  * @param options 格式化选项
  * @returns 格式化后的树结构
  */
-const formatTree = ({
+export const formatTree = ({
   dataSource,
   parent = null,
   parentKeyPaths = [],

@@ -377,7 +377,7 @@ defineExpose({ focus })
 }
 
 .lew-button-type-text:hover {
-  background-color: var(--lew-bgcolor-2) !important;
+  background-color: var(--lew-bgcolor-1) !important;
 }
 
 .lew-button-type-ghost:hover {
@@ -385,7 +385,7 @@ defineExpose({ focus })
 }
 
 .lew-button-type-ghost:active {
-  background-color: var(--lew-color-normal-light) !important;
+  background-color: var(--lew-bgcolor-3) !important;
 }
 </style>
 <style lang="scss">

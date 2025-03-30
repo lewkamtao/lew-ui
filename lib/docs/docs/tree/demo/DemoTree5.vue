@@ -62,11 +62,12 @@ const v = ref([])
 </script>
 
 <template>
-  <div class="tree lew-scrollbar">
+  <div class="tree">
     <lew-tree
       v-model="v"
       multiple
       checkable
+      height="500px"
       keyField="value"
       :initTree="initTree"
       :loadMethod="loadMethod"
@@ -76,8 +77,6 @@ const v = ref([])
 </template>
 <style lang="scss" scoped>
 .tree {
-  height: 500px;
   width: 300px;
-  overflow-y: auto;
 }
 </style>

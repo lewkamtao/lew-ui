@@ -225,10 +225,10 @@ defineExpose({ toFocus })
 
 .lew-textarea-view-size-small {
   min-height: var(--lew-form-item-height-small);
-  line-height: var(--lew-form-input-line-height-small);
   .lew-textarea {
     padding: var(--lew-form-input-padding-small);
     font-size: var(--lew-form-font-size-small);
+    line-height: var(--lew-form-input-line-height-medium);
   }
 
   .lew-textarea-count {
@@ -239,10 +239,10 @@ defineExpose({ toFocus })
 
 .lew-textarea-view-size-medium {
   min-height: var(--lew-form-item-height-medium);
-  line-height: var(--lew-form-input-line-height-medium);
   .lew-textarea {
     padding: var(--lew-form-input-padding-medium);
     font-size: var(--lew-form-font-size-medium);
+    line-height: var(--lew-form-input-line-height-medium);
   }
 
   .lew-textarea-count {
@@ -253,10 +253,10 @@ defineExpose({ toFocus })
 
 .lew-textarea-view-size-large {
   line-height: var(--lew-form-input-line-height-large);
-  min-height: var(--lew-form-item-height-large);
   .lew-textarea {
     padding: var(--lew-form-input-padding-large);
     font-size: var(--lew-form-font-size-large);
+    line-height: var(--lew-form-input-line-height-medium);
   }
 
   .lew-textarea-count {

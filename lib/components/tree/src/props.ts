@@ -46,6 +46,11 @@ export const treeProps = {
       return true
     }
   },
+  height: {
+    type: String,
+    default: '100%',
+    description: '树组件的高度'
+  },
   multiple: {
     type: Boolean,
     default: false,
@@ -55,6 +60,11 @@ export const treeProps = {
     type: Boolean,
     default: false,
     description: '是否显示选框'
+  },
+  searchable: {
+    type: Boolean,
+    default: false,
+    description: '是否显示搜索框'
   },
   expandAll: {
     type: Boolean,

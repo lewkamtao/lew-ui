@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { uploadByListProps, statusColorMap, statusMap } from './props'
+import { uploadByListProps, statusConfig } from './props'
 import type { UploadFileItem } from './props'
 import { LewFlex, LewTag, LewImage, LewTextTrim, LewTooltip } from 'lew-ui'
 import type { LewColor } from 'lew-ui'
@@ -75,6 +75,10 @@ const getLastValueAfterSlash = (url: string = '') => {
   const urlParts = url.split('/')
   return urlParts[urlParts.length - 1]
 }
+
+const getStatus = computed(() => (item: UploadFileItem) => {
+  return statusConfig[item.status || 'complete']
+})
 </script>
 
 <template>
@@ -196,7 +200,8 @@ const getLastValueAfterSlash = (url: string = '') => {
                 v-if="item.status && item.status !== 'pending'"
                 type="light"
                 size="small"
-                :color="statusColorMap[item.status || 'complete'] as LewColor"
+                :key="item.status"
+                :color="getStatus(item).color as LewColor"
               >
                 <template #left>
                   <Icon
@@ -206,7 +211,7 @@ const getLastValueAfterSlash = (url: string = '') => {
                     :loading="item.status === 'uploading'"
                   />
                 </template>
-                {{ statusMap[item.status || 'complete'] }}
+                {{ getStatus(item).text }}
               </lew-tag>
             </lew-flex>
           </lew-flex>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { uploadByCardProps, statusColorMap, statusMap } from './props'
+import { uploadByCardProps, statusConfig } from './props'
 import type { UploadFileItem } from './props'
 import { LewFlex, LewImage, LewTooltip, LewColor } from 'lew-ui'
 import { any2px, getUniqueId, getFileIcon, checkUrlIsImage } from 'lew-ui/utils'
@@ -41,6 +41,10 @@ const getCardSize: Record<string, number> = {
   medium: 80,
   large: 88
 }
+
+const getStatus = computed(() => (item: UploadFileItem) => {
+  return statusConfig[item.status || 'complete']
+})
 
 defineProps(uploadByCardProps)
 
@@ -90,7 +94,7 @@ const modelValue = defineModel<UploadFileItem[]>()
             )
           "
           v-tooltip="{
-            content: statusMap[item.status || 'complete'],
+            content: getStatus(item).text,
             trigger: 'mouseenter'
           }"
           x="center"
@@ -105,7 +109,7 @@ const modelValue = defineModel<UploadFileItem[]>()
           <Icon
             :size="rightTopBtnIconSizeMap[size]"
             type="tips"
-            :color="statusColorMap[item.status || 'complete'] as LewColor"
+            :color="getStatus(item).color as LewColor"
           />
         </lew-flex>
 
