@@ -194,7 +194,6 @@ onMounted(() => {
   box-sizing: border-box;
   transition: width 0.2s;
   box-sizing: border-box;
-  background-color: var(--lew-bgcolor-0);
   overflow-y: auto;
   padding-right: 5px;
 }
