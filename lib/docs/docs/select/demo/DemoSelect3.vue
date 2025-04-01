@@ -67,7 +67,7 @@ const value = ref('')
         font-size: 14px;
       }
       .desc {
-        color: var(--lew-text-color-8);
+        color: var(--lew-text-color-5);
         font-size: 12px;
       }
     }

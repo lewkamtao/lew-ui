@@ -74,7 +74,7 @@ const ok = () => {
 .lew-modal-footer-tips {
   font-size: 14px;
   font-weight: normal;
-  color: var(--lew-text-color-8);
+  color: var(--lew-text-color-5);
   padding-left: 10px;
 }
 </style>

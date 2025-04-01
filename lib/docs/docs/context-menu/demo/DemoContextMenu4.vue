@@ -98,6 +98,6 @@ const selectHandler = (e: any) => {
   background-color: var(--lew-bgcolor-2);
   border-radius: var(--lew-border-radius-small);
   font-size: 16px;
-  color: var(--lew-text-color-7);
+  color: var(--lew-text-color-5);
 }
 </style>
