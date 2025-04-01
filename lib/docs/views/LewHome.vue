@@ -629,7 +629,11 @@ onUnmounted(() => {
               </template>
               <template #popover-body>
                 <div class="popover-body" style="width: 240px">
-                  <lew-input v-model="v" placeholder="Enter password" />
+                  <lew-input
+                    width="100%"
+                    v-model="v"
+                    placeholder="Enter password"
+                  />
                   <lew-flex x="end" style="margin-top: 15px">
                     <lew-button
                       text="Cancel"
