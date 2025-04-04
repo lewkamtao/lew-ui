@@ -44,6 +44,7 @@ const clear = () => {
 }
 
 const toFocus = () => lewInputRef.value?.focus()
+const toBlur = () => lewInputRef.value?.blur()
 
 const showPasswordFn = () => {
   _type.value = _type.value === 'text' ? 'password' : 'text'
@@ -150,7 +151,7 @@ onUnmounted(() => {
   if (timer) clearTimeout(timer)
 })
 
-defineExpose({ toFocus })
+defineExpose({ toFocus, toBlur })
 </script>
 
 <template>

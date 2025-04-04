@@ -113,7 +113,7 @@ const getSwitchStyle = computed(() => {
   cursor: pointer;
   width: var(--lew-switch-width);
   height: var(--lew-switch-height);
-  background: var(--lew-bgcolor-3);
+  background: var(--lew-form-bgcolor-2);
   border-radius: var(--lew-border-radius-small);
   transition: all var(--lew-form-transition-ease);
   box-shadow: var(--lew-form-box-shadow);

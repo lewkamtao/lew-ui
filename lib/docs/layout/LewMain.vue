@@ -6,7 +6,7 @@ watch(route, () => {
 })
 
 const setBackgroundColor = () => {
-  if (route.path === '/') {
+  if (route.name === 'R-LewHome') {
     document.body.style.backgroundColor = 'var(--lew-bgcolor-0)'
   } else {
     document.body.style.backgroundColor = 'var(--lew-bgcolor-4)'
@@ -16,7 +16,6 @@ const setBackgroundColor = () => {
 onMounted(() => {
   setBackgroundColor()
 })
-console.log(route.name)
 </script>
 
 <template>
@@ -38,6 +37,7 @@ console.log(route.name)
   max-width: 1440px;
   border-left: var(--lew-border-2);
   border-right: var(--lew-border-2);
+  background-color: var(--lew-bgcolor-0);
 }
 
 @media (max-width: 767px) {

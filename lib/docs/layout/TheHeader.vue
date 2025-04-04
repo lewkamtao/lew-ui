@@ -5,7 +5,7 @@ import { Sun, Moon, Github, Languages } from 'lucide-vue-next'
 import { setLocale } from 'lew-ui'
 import docsLocale, { getInitialLocale } from '@/locals'
 
-const version = ref('v2.6.2')
+const version = ref('v2.6.3')
 
 const isDark = useDark({
   selector: 'html',

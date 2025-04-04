@@ -17,12 +17,12 @@ const props = defineProps(inputTagProps)
 const modelValue: Ref<string[] | undefined> = defineModel()
 const inputValue = ref()
 const lewInputRef = ref()
-const isFocus = ref(false)
-let isEnter = false
-let isConfirm = ref(false)
+const isInputActive = ref(false)
+let shouldReopenInput = false
+const isTagMarkedForDeletion = ref(false)
 
 const openInput = () => {
-  if (isFocus.value) return
+  if (isInputActive.value) return
   if (
     props.maxLength > 0 &&
     (modelValue.value || []).length >= props.maxLength
@@ -32,49 +32,59 @@ const openInput = () => {
     )
     return
   }
-  isFocus.value = true
+  isInputActive.value = true
   nextTick(() => {
     lewInputRef.value.toFocus()
   })
   document.onkeydown = function (event) {
     if (!inputValue.value) {
+      // 处理删除键（Backspace或Delete）
       if (event.keyCode === 8 || event.keyCode === 46) {
         if (
           modelValue.value &&
           modelValue.value.length > 0 &&
-          isConfirm.value
+          isTagMarkedForDeletion.value
         ) {
+          // 第二次按删除键，确认删除最后一个标签
           modelValue.value.splice(modelValue.value.length - 1, 1)
           emit('change', cloneDeep(modelValue.value))
-          isConfirm.value = false
+          isTagMarkedForDeletion.value = false
         } else {
-          isConfirm.value = true
+          // 第一次按删除键，标记最后一个标签为待删除状态
+          isTagMarkedForDeletion.value = true
         }
       }
     } else if (event.keyCode === 13) {
-      isConfirm.value = true
-      isEnter = true
+      // 处理回车键
+      isTagMarkedForDeletion.value = false
+      shouldReopenInput = true
     }
   }
 }
 
 const blurFn = () => {
   document.onkeydown = null
-  isFocus.value = false
-  isConfirm.value = false
-  if (props.allowDuplicates) {
-    addTag()
-  } else {
-    if (!(modelValue.value || []).includes(inputValue.value)) {
+  isInputActive.value = false
+  isTagMarkedForDeletion.value = false
+
+  // 处理添加标签
+  if (inputValue.value) {
+    if (props.allowDuplicates) {
       addTag()
     } else {
-      LewMessage.warning(locale.t('inputTag.duplicate'))
+      if (!(modelValue.value || []).includes(inputValue.value)) {
+        addTag()
+      } else {
+        LewMessage.warning(locale.t('inputTag.duplicate'))
+      }
     }
   }
-  if (isEnter) {
+
+  // 如果是回车触发的失焦，重新打开输入框
+  if (shouldReopenInput) {
     openInput()
+    shouldReopenInput = false
   }
-  isEnter = false
 }
 
 const addTag = () => {
@@ -82,7 +92,7 @@ const addTag = () => {
   if (inputValue.value) {
     if (props.maxLength > 0 && _value.length >= props.maxLength) {
       inputValue.value = ''
-      isFocus.value = false
+      isInputActive.value = false
       return
     }
     _value.push(inputValue.value)
@@ -154,7 +164,7 @@ const clear = () => {
           :style="{
             maxWidth: '100%',
             backgroundColor:
-              isConfirm && index === (modelValue || []).length - 1
+              isTagMarkedForDeletion && index === (modelValue || []).length - 1
                 ? 'var(--lew-color-red-light)'
                 : ''
           }"
@@ -166,20 +176,20 @@ const clear = () => {
           {{ item }}
         </lew-tag>
         <lew-input
-          v-if="isFocus || (modelValue || []).length === 0"
+          v-if="isInputActive || (modelValue || []).length === 0"
           ref="lewInputRef"
           :auto-width="(modelValue || []).length > 0"
           v-model="inputValue"
           class="lew-input-tag"
           :size="size"
-          :readonly="!isFocus"
+          :readonly="!isInputActive"
           :placeholder="
             (modelValue || []).length === 0
               ? locale.t('inputTag.placeholder')
               : ' '
           "
           ok-by-enter
-          @input="isConfirm = false"
+          @input="isTagMarkedForDeletion = false"
           @blur="blurFn"
         />
       </transition-group>
@@ -191,7 +201,7 @@ const clear = () => {
           "
           class="lew-form-icon-close"
           :class="{
-            'lew-form-icon-close-focus': isFocus
+            'lew-form-icon-close-focus': isInputActive
           }"
           :size="getIconSize"
           type="close"

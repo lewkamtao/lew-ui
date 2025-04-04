@@ -427,15 +427,6 @@ onUnmounted(() => {
           {{ $t('home.getStarted') }}
           <Icon type="chevron-right" />
         </lew-button>
-        <a href="/#/form-engine" target="_blank">
-          <lew-button
-            round
-            :text="$t('home.formEngine')"
-            style="margin-top: 20px"
-            color="primary"
-            type="light"
-          />
-        </a>
       </lew-flex>
     </div>
     <div class="home">
