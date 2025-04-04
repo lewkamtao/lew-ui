@@ -37,6 +37,9 @@ const goToGithub = () => {
   window.open('https://github.com/lewkamtao/Lew-UI', '_blank')
 }
 
+const getLocaleIcon = (locale: string) => {
+  return new URL(`../assets/images/local/${locale}.svg`, import.meta.url).href
+}
 const localeOptions = ref([
   {
     label: '简体中文',
@@ -44,7 +47,7 @@ const localeOptions = ref([
     checkbox: true,
     renderIcon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/zh.svg',
+        src: getLocaleIcon('zh'),
         alt: '简体中文',
         width: 16,
         height: 16
@@ -57,7 +60,7 @@ const localeOptions = ref([
     checkbox: true,
     renderIcon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/us.svg',
+        src: getLocaleIcon('us'),
         alt: 'English',
         width: 16,
         height: 16
@@ -71,7 +74,7 @@ const localeOptions = ref([
     checkbox: true,
     renderIcon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/ja.svg',
+        src: getLocaleIcon('ja'),
         alt: '日本語',
         width: 16,
         height: 16
@@ -84,7 +87,7 @@ const localeOptions = ref([
     checkbox: true,
     renderIcon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/ko.svg',
+        src: getLocaleIcon('ko'),
         alt: '한국어',
         width: 16,
         height: 16
@@ -97,7 +100,7 @@ const localeOptions = ref([
     checkbox: true,
     renderIcon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/es.svg',
+        src: getLocaleIcon('es'),
         alt: 'Español',
         width: 16,
         height: 16
@@ -110,7 +113,7 @@ const localeOptions = ref([
     checkbox: true,
     renderIcon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/fr.svg',
+        src: getLocaleIcon('fr'),
         alt: 'Français',
         width: 16,
         height: 16
@@ -123,7 +126,7 @@ const localeOptions = ref([
     checkbox: true,
     renderIcon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/de.svg',
+        src: getLocaleIcon('de'),
         alt: 'Deutsch',
         width: 16,
         height: 16
@@ -136,7 +139,7 @@ const localeOptions = ref([
     checkbox: true,
     renderIcon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/br.svg',
+        src: getLocaleIcon('br'),
         alt: 'Português',
         width: 16,
         height: 16
@@ -149,7 +152,7 @@ const localeOptions = ref([
     checkbox: true,
     renderIcon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/it.svg',
+        src: getLocaleIcon('it'),
         alt: 'Italiano',
         width: 16,
         height: 16
