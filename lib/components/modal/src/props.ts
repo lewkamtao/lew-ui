@@ -36,7 +36,7 @@ export const modalProps = {
   },
   top: {
     type: [String, Number],
-    default: 250,
+    default: 120,
     description:
       '模态框距离顶部的距离，可以是数字（单位：像素）或字符串（如 "50%"）'
   },

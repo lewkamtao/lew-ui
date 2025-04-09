@@ -283,7 +283,7 @@ defineExpose({ toFocus, validCheck })
   .lew-input-number-view:hover {
     .lew-input-number-control {
       .lew-input-number-icon {
-        background-color: var(--lew-bgcolor-5);
+        background-color: var(--lew-bgcolor-0);
       }
     }
   }

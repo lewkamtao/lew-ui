@@ -377,7 +377,7 @@ defineExpose({ focus })
 }
 
 .lew-button-type-text:hover {
-  background-color: var(--lew-bgcolor-1) !important;
+  background-color: var(--lew-bgcolor-2) !important;
 }
 
 .lew-button-type-ghost:hover {
