@@ -1,150 +1,136 @@
 <script lang="ts" setup>
-import { LewInput, LewSelect, LewFlex, LewButton } from 'lew-ui'
-import { paginationProps } from './props'
-import type { PaginationOptions } from './props'
-import { object2class } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
-const props = defineProps(paginationProps)
-const emit = defineEmits(['change', 'update:currentPage', 'update:pageSize'])
+import { LewInput, LewSelect, LewFlex, LewButton } from "lew-ui";
+import { paginationProps } from "./props";
+import type { PaginationOptions } from "./props";
+import { object2class } from "lew-ui/utils";
+import Icon from "lew-ui/utils/Icon.vue";
+import { locale } from "lew-ui";
+const props = defineProps(paginationProps);
+const emit = defineEmits(["change", "update:currentPage", "update:pageSize"]);
 
-const total: Ref<number> = defineModel('total', { default: 0 })
-const currentPage: Ref<number> = defineModel('currentPage', { default: 1 })
-const pageSize: Ref<number> = defineModel('pageSize', { default: 10 })
+const total: Ref<number> = defineModel("total", { default: 0 });
+const currentPage: Ref<number> = defineModel("currentPage", { default: 1 });
+const pageSize: Ref<number> = defineModel("pageSize", { default: 10 });
 
 const getPageSizeOptions = computed(() => {
   if (Array.isArray(props.pageSizeOptions)) {
     if (
-      typeof props.pageSizeOptions[0] === 'string' ||
-      typeof props.pageSizeOptions[0] === 'number'
+      typeof props.pageSizeOptions[0] === "string" ||
+      typeof props.pageSizeOptions[0] === "number"
     ) {
       return props.pageSizeOptions.map((item) => ({
-        label: locale.t('pagination.pageSize', { pageSize: item }),
-        value: item
-      }))
+        label: locale.t("pagination.pageSize", { pageSize: item }),
+        value: item,
+      }));
     }
-    return props.pageSizeOptions
+    return props.pageSizeOptions;
   }
-  return []
-})
+  return [];
+});
 
 const state = reactive({
   toPage: undefined,
   pageSize: pageSize.value,
-  visiblePagesCount: props.visiblePagesCount
-})
+  visiblePagesCount: props.visiblePagesCount,
+});
 
 onMounted(() => {
   // Ensure that the number of visible pages is at least 5 and at most 12.
-  state.visiblePagesCount = Math.max(state.visiblePagesCount, 5)
-  state.visiblePagesCount = Math.min(state.visiblePagesCount, 12)
-})
+  state.visiblePagesCount = Math.max(state.visiblePagesCount, 5);
+  state.visiblePagesCount = Math.min(state.visiblePagesCount, 12);
+});
 
-const totalPages = computed(() => Math.ceil(total.value / state.pageSize))
+const totalPages = computed(() => Math.ceil(total.value / state.pageSize));
 
 const visiblePages = computed(() => {
-  const _currentPage = currentPage.value
-  const totalPages = Math.ceil(total.value / state.pageSize)
+  const _currentPage = currentPage.value;
+  const totalPages = Math.ceil(total.value / state.pageSize);
 
-  let startPage = _currentPage - Math.floor(state.visiblePagesCount / 2)
+  let startPage = _currentPage - Math.floor(state.visiblePagesCount / 2);
   if (_currentPage < state.visiblePagesCount / 2 + 2) {
-    startPage = 1
+    startPage = 1;
   }
 
   if (startPage < 1) {
-    startPage = 1
+    startPage = 1;
   }
-  let endPage = startPage + state.visiblePagesCount - 1
+  let endPage = startPage + state.visiblePagesCount - 1;
   if (endPage > totalPages) {
-    endPage = totalPages
-    startPage = endPage - state.visiblePagesCount + 1
+    endPage = totalPages;
+    startPage = endPage - state.visiblePagesCount + 1;
     if (startPage < 1) {
-      startPage = 1
+      startPage = 1;
     }
   }
-  const visiblePages = []
+  const visiblePages = [];
   for (let i = startPage; i <= endPage; i++) {
-    visiblePages.push(i)
+    visiblePages.push(i);
   }
-  return visiblePages
-})
+  return visiblePages;
+});
 
 const changePage = (page: number) => {
-  page = Math.floor(page)
+  page = Math.floor(page);
 
   if (page < 1 || page > totalPages.value) {
-    return
+    return;
   }
 
-  currentPage.value = page
-  pageSize.value = state.pageSize
-  emit('change', {
+  currentPage.value = page;
+  pageSize.value = state.pageSize;
+  emit("change", {
     currentPage: currentPage.value,
-    pageSize: state.pageSize
-  })
-}
+    pageSize: state.pageSize,
+  });
+};
 
 // 是否显示省略号
-const startEllipsis = computed(() => visiblePages.value[0] > 2 + 1)
+const startEllipsis = computed(() => visiblePages.value[0] > 2 + 1);
 const endEllipsis = computed(
   () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value - 2
-)
+);
 
 // 是否显示最大和最小页码
-const showOne = computed(() => visiblePages.value[0] > 1)
+const showOne = computed(() => visiblePages.value[0] > 1);
 const showMax = computed(
   () => visiblePages.value[visiblePages.value.length - 1] < totalPages.value
-)
+);
 
 const checkPageSize = (value: any) => {
-  state.pageSize = value
-  changePage(currentPage.value)
-}
+  state.pageSize = value;
+  changePage(currentPage.value);
+};
 
 const checkPageNum = (value: any) => {
-  const page = Number(value)
-  state.toPage = undefined
+  const page = Number(value);
+  state.toPage = undefined;
   if (page > totalPages.value || page < 1) {
-    return
+    return;
   }
-  currentPage.value = page
-  changePage(value)
-}
+  currentPage.value = page;
+  changePage(value);
+};
 
 const getPaginationClassName = computed(() => {
-  const { size } = props
-  return object2class('lew-pagination', {
-    size
-  })
-})
-
-const getSelectWidth = computed(() => {
-  const { size } = props
-  switch (size) {
-    case 'small':
-      return '120px'
-    case 'medium':
-      return '140px'
-    case 'large':
-      return '160px'
-    default:
-      return '140px'
-  }
-})
+  const { size } = props;
+  return object2class("lew-pagination", {
+    size,
+  });
+});
 
 const getIconSize = computed(() => {
-  const { size } = props
+  const { size } = props;
   switch (size) {
-    case 'small':
-      return 16
-    case 'medium':
-      return 18
-    case 'large':
-      return 20
+    case "small":
+      return 16;
+    case "medium":
+      return 18;
+    case "large":
+      return 20;
     default:
-      return 18
+      return 18;
   }
-})
+});
 </script>
 
 <template>
@@ -160,13 +146,7 @@ const getIconSize = computed(() => {
         >
           <Icon type="chevron-left" :size="getIconSize" />
         </lew-button>
-        <div
-          v-if="showOne"
-          class="lew-pagination-page-btn"
-          @click="changePage(1)"
-        >
-          1
-        </div>
+        <div v-if="showOne" class="lew-pagination-page-btn" @click="changePage(1)">1</div>
         <div
           v-if="startEllipsis"
           class="lew-pagination-page-btn"
@@ -176,8 +156,7 @@ const getIconSize = computed(() => {
         </div>
         <div
           v-else-if="
-            currentPage > visiblePages.length / 2 + 2 &&
-            visiblePagesCount < totalPages
+            currentPage > visiblePages.length / 2 + 2 && visiblePagesCount < totalPages
           "
           class="lew-pagination-page-btn"
           @click="changePage(2)"
@@ -189,7 +168,7 @@ const getIconSize = computed(() => {
           :key="index"
           class="lew-pagination-page-btn"
           :class="{
-            active: Number(page) === Number(currentPage)
+            active: Number(page) === Number(currentPage),
           }"
           @click="changePage(page)"
         >
@@ -230,9 +209,8 @@ const getIconSize = computed(() => {
       </lew-flex>
       <lew-select
         v-model="state.pageSize"
-        :style="{
-          width: getSelectWidth
-        }"
+        auto-width
+        :popover-width="150"
         :size="size"
         :showCheckIcon="false"
         :options="getPageSizeOptions as PaginationOptions[]"

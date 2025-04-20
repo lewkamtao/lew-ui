@@ -44,8 +44,18 @@ export const selectProps = {
   },
   width: {
     type: [String, Number],
-    default: '300px',
+    default: '240px',
     description: '选择器宽度，支持数字（单位：像素）或带单位的字符串'
+  },
+  popoverWidth: {
+    type: [String, Number],
+    default: '240px',
+    description: '下拉菜单宽度，支持数字（单位：像素）或带单位的字符串'
+  },
+  autoWidth: {
+    type: Boolean,
+    default: false,
+    description: '是否自动调整宽度'
   },
   trigger: {
     type: String as PropType<SelectTrigger>,
