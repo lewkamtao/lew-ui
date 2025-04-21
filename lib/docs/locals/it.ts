@@ -897,6 +897,8 @@ export default {
         defaultValue: 'Valore predefinito',
         options: 'Opzioni',
         width: 'Larghezza',
+        autoWidth: 'Larghezza automatica',
+        popoverWidth: 'Larghezza popover',
         trigger: 'Attivazione',
         placeholder: 'Testo segnaposto',
         size: 'Dimensione',

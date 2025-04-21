@@ -897,6 +897,8 @@ export default {
         defaultValue: 'デフォルト値',
         options: 'オプション',
         width: '幅',
+        autoWidth: '自動幅',
+        popoverWidth: 'ポップオーバー幅',
         trigger: 'トリガー方式',
         placeholder: 'プレースホルダーテキスト',
         size: 'サイズ',

@@ -202,7 +202,7 @@ if (props.closeByEsc) {
 
 .lew-modal-mask-enter-active,
 .lew-modal-mask-leave-active {
-  transition: all var(--lew-form-transition-ease);
+  transition: all 0.1s;
 }
 
 .lew-modal-mask-enter-from,

@@ -929,6 +929,8 @@ export default {
         defaultValue: 'Standardwert',
         options: 'Optionen',
         width: 'Breite',
+        autoWidth: 'Auto Width',
+        popoverWidth: 'Popover Width',
         trigger: 'Auslösemethode',
         placeholder: 'Platzhaltertext',
         size: 'Größe',

@@ -885,6 +885,8 @@ const contextMenu = {
           defaultValue: 'Valeur par défaut',
           options: 'Options',
           width: 'Largeur',
+          autoWidth: 'Largeur automatique',
+          popoverWidth: 'Largeur du popover',
           trigger: 'Mode de déclenchement',
           placeholder: 'Texte d\'espace réservé',
           size: 'Taille',

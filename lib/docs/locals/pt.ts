@@ -882,7 +882,9 @@ const contextMenu = {
         props: {
           defaultValue: 'Valor padrão',
           options: 'Opções',
+          autoWidth: 'Largura automática',
           width: 'Largura',
+          popoverWidth: 'Largura do popover',
           trigger: 'Modo de acionamento',
           placeholder: 'Texto de placeholder',
           size: 'Tamanho',
@@ -1509,6 +1511,8 @@ const contextMenu = {
           dataSource: 'Fonte de dados',
           multiple: 'Múltipla seleção',
           checkable: 'Exibir checkbox',
+          height: 'Altura',
+          searchable: 'Pesquisável',
           expandAll: 'Expandir tudo por padrão',
           free: 'Seleção livre',
           showLine: 'Exibir linhas de conexão',

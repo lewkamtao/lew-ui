@@ -927,6 +927,8 @@ export default {
         defaultValue: 'Default Value',
         options: 'Options',
         width: 'Width',
+        autoWidth: 'Auto Width',
+        popoverWidth: 'Popover Width',
         trigger: 'Trigger Method',
         placeholder: 'Placeholder Text',
         size: 'Size',

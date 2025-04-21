@@ -889,7 +889,9 @@ export default {
       props: {
         defaultValue: '默认值',
         options: '选项',
+        autoWidth: '是否自动宽度',
         width: '宽度',
+        popoverWidth: '弹窗宽度',
         trigger: '触发方式',
         placeholder: '占位提示文本',
         size: '尺寸大小',
@@ -1497,6 +1499,8 @@ export default {
       props: {
         dataSource: '数据源',
         multiple: '多选',
+        height: '高度',
+        searchable: '是否可搜索',
         checkable: '显示复选框',
         expandAll: '默认全部展开',
         free: '自由选择',
