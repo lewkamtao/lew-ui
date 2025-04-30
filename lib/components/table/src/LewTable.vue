@@ -338,7 +338,7 @@ const readerHeaderTd = ({ column }: any) => {
           sort(column)
         }
       },
-      style: `display: flex; flex-direction: column; width: ${any2px(column.width)}; justify-content: center; align-items: center;`
+      style: `display: flex; flex-direction: column; width: ${any2px(column.width)}; justify-content: center; align-items: ${column.x || 'start'};`
     },
     [
       h(
