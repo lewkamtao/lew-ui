@@ -16,19 +16,23 @@ import {
 } from 'lodash-es'
 import type { FlexXAlignment, FlexYAlignment, TextTrimAlignment } from 'lew-ui'
 import SortIcon from './SortIcon.vue'
+import { h } from 'vue'
 
+// ==================== Props & Emits ====================
 const props = defineProps(tableProps)
 const selectedKeys = defineModel('selectedKeys')
 const sortValue: any = defineModel('sortValue', { default: {} })
 const emit = defineEmits(['sortChange', 'selectChange'])
+
+// ==================== Refs ====================
 const tableRef = ref()
 const fixedLeftRef = ref()
 const fixedRightRef = ref()
 const trRefArr = ref<any>([])
 const trHeightArr = ref<any>([])
-
 let resizeObserver: any
 
+// ==================== State ====================
 const state = reactive({
   isInitialized: false,
   columns: [],
@@ -42,239 +46,7 @@ const state = reactive({
   selectedRowsMap: {} as any
 })
 
-const totalColumnWidth = computed(() => {
-  let width = sumBy(props.columns, 'width')
-  if (props.checkable) width += getCheckableWidth.value
-  return width
-})
-
-const nonFixedColumns = computed(() => {
-  return props.columns.filter((col) => !col.fixed)
-})
-
-const getFixedColumns = computed(() => (direction: string) => {
-  return props.columns.filter((col) => col.fixed === direction)
-})
-
-const hasPartialSelection = computed(() => {
-  const selectedRowsMap = state.selectedRowsMap
-  return props.dataSource.some((row: any) => selectedRowsMap[row[props.rowKey]])
-})
-
-const getColumnStyle = computed(() => (column: any, row?: any) => {
-  const width = column.width
-  const customStyle = row && row.tdStyle?.[column.field]
-
-  const sizeStyle = `padding:${getPadding.value};fontSize:${getFontSize.value}px;`
-
-  if (state.isScrollbarVisible || column.fixed) {
-    return `${sizeStyle};width: ${width}px;${customStyle}`
-  }
-
-  const fixedWidth =
-    sumBy(
-      props.columns.filter((col) => col.fixed),
-      'width'
-    ) + (props.checkable ? getCheckableWidth.value : 0)
-  const tdWidth =
-    (width / (totalColumnWidth.value - fixedWidth)) *
-    (state.scrollClientWidth - fixedWidth)
-  return `${sizeStyle};width: ${tdWidth}px;${customStyle}`
-})
-
-watch(
-  () => props.dataSource,
-  () => {
-    state.selectedRowsMap = mapValues(
-      keyBy(props.dataSource, props.rowKey),
-      () => false
-    )
-    updateAllCheckedState()
-  },
-  { deep: true }
-)
-
-watch(selectedKeys, (newVal: any) => {
-  if (props.checkable) {
-    updateSelectedKeys(newVal)
-  }
-})
-
-const initTableObserver = () => {
-  resizeObserver = new ResizeObserver(() => {
-    state.isInitialized = false
-    handleTableResize()
-  })
-  resizeObserver.observe(tableRef.value)
-}
-
-const updateScrollState = () => {
-  const element = tableRef.value
-  const { clientWidth, scrollWidth, scrollLeft } = element
-  const scrollThreshold = 10
-
-  if (scrollWidth === clientWidth) {
-    state.hiddenScrollLine = 'all'
-    return
-  }
-  if (scrollLeft < scrollThreshold) {
-    state.hiddenScrollLine = 'left'
-    return
-  }
-  if (scrollLeft + clientWidth > scrollWidth - scrollThreshold) {
-    state.hiddenScrollLine = 'right'
-    return
-  }
-
-  state.hiddenScrollLine = ''
-}
-
-const compTrHeight = () => {
-  nextTick(() => {
-    ;(trRefArr.value || []).forEach(
-      (element: HTMLElement | null, index: number) => {
-        if (element) {
-          trHeightArr.value[index] = element.getBoundingClientRect().height
-        }
-      }
-    )
-  })
-}
-
-watch(
-  () => trRefArr.value,
-  () => {
-    compTrHeight()
-  },
-  {
-    deep: true
-  }
-)
-
-watch(
-  () => props.dataSource,
-  () => {
-    compTrHeight()
-  },
-  {
-    deep: true
-  }
-)
-
-const handleTableResize = throttle(() => {
-  const table = tableRef.value
-
-  if (!table) return
-  compTrHeight()
-
-  let totalWidth = props.columns.reduce(
-    (sum, col) => sum + Number(col.width),
-    0
-  )
-
-  if (props.checkable) {
-    totalWidth += getCheckableWidth.value
-  }
-
-  if (fixedLeftRef.value) {
-    state.fixedLeftWidth = fixedLeftRef.value.clientWidth || 0
-  }
-  if (fixedRightRef.value) {
-    state.fixedRightWidth = fixedRightRef.value.clientWidth || 0
-    if (table.clientHeight < table.scrollHeight) {
-      state.fixedRightWidth += 6
-    }
-  }
-
-  state.scrollClientWidth = table.clientWidth
-  state.isScrollbarVisible = totalWidth > state.scrollClientWidth
-  state.isInitialized = true
-
-  updateScrollState()
-}, 250)
-
-const setAllRowsChecked = (checked: boolean) => {
-  state.selectedRowsMap = mapValues(
-    keyBy(props.dataSource, props.rowKey),
-    () => checked
-  )
-  if (props.multiple) {
-    selectedKeys.value = checked ? keys(state.selectedRowsMap) : []
-  }
-}
-
-const updateAllCheckedState = () => {
-  const checkedKeys = keys(pickBy(state.selectedRowsMap, Boolean))
-  const allDataKeys = props.dataSource.map((row: any) =>
-    String(row[props.rowKey])
-  )
-  const uncheckedKeys = difference(allDataKeys, checkedKeys)
-  state.isAllChecked =
-    isEmpty(uncheckedKeys) &&
-    props.multiple &&
-    props.checkable &&
-    checkedKeys.length > 0
-}
-
-const toggleRowSelection = (row: any) => {
-  if (!props.checkable) return
-  const rowKey = row[props.rowKey]
-  const isChecked = state.selectedRowsMap[rowKey]
-
-  if (props.multiple) {
-    state.selectedRowsMap[rowKey] = !isChecked
-    selectedKeys.value = keys(pickBy(state.selectedRowsMap, Boolean))
-  } else {
-    state.selectedRowsMap = { [rowKey]: !isChecked }
-    selectedKeys.value = isChecked ? undefined : rowKey
-  }
-  emit('selectChange', cloneDeep(selectedKeys.value))
-  updateAllCheckedState()
-}
-
-const updateSelectedKeys = (keys: any) => {
-  if (props.multiple) {
-    state.selectedRowsMap = mapValues(
-      keyBy(props.dataSource, props.rowKey),
-      () => false
-    )
-    keys.forEach((key: string) => {
-      state.selectedRowsMap[key] = true
-    })
-  } else {
-    state.selectedRowsMap = { [keys]: true }
-  }
-}
-
-const renderCell = ({
-  column,
-  row,
-  index
-}: {
-  column: any
-  row: any
-  index: number
-}) => {
-  if (column.customRender) {
-    return column.customRender({ row, column, index, text: row[column.field] })
-  }
-  return column.type === 'text-trim'
-    ? h(LewTextTrim, {
-        x: column.x as TextTrimAlignment,
-        style: 'width: 100%',
-        text: showTextAndEmpty(row[column.field])
-      })
-    : showTextAndEmpty(row[column.field])
-}
-
-const showTextAndEmpty = (text: any) => {
-  if (text === null || text === undefined || text === '') {
-    return '-'
-  } else {
-    return isString(text) ? text : JSON.stringify(text)
-  }
-}
-
+// ==================== Size Related Computed ====================
 const getCheckableWidth = computed(() => {
   const sizeMap = {
     small: 50,
@@ -337,6 +109,279 @@ const getEmptyProps: any = computed(() => {
   }
 })
 
+// ==================== Column Related Computed ====================
+const calculateColumnWidth = (column: any): number => {
+  if (column.children && column.children.length > 0) {
+    const totalChildWidth = column.children.reduce(
+      (sum: number, child: any) => {
+        return sum + (calculateColumnWidth(child) || 100)
+      },
+      0
+    )
+    column.width = totalChildWidth
+    return totalChildWidth
+  }
+
+  if (!column.width || column.width === 0) {
+    column.width = 100
+  }
+
+  return column.width
+}
+
+const processColumnsWidth = (columns: any[]) => {
+  return columns.map((col) => {
+    const cloneCol = { ...col }
+    cloneCol.width = calculateColumnWidth(cloneCol)
+    return cloneCol
+  })
+}
+
+const formatColumns = computed(() => {
+  return processColumnsWidth(props.columns)
+})
+
+const totalColumnWidth = computed(() => {
+  let width = sumBy(formatColumns.value, 'width')
+  if (props.checkable) width += getCheckableWidth.value
+  return width
+})
+
+const nonFixedHeaderColumns = computed(() => {
+  return formatColumns.value.filter((col) => !col.fixed)
+})
+
+const getFixedHeaderColumns = computed(() => (direction: string) => {
+  return formatColumns.value.filter((col) => col.fixed === direction)
+})
+
+const getLeafColumns = (columns: any[]) => {
+  const result: any[] = []
+  const traverse = (cols: any[]) => {
+    cols.forEach((col) => {
+      if (col.children && col.children.length > 0) {
+        traverse(col.children)
+      } else {
+        result.push(col)
+      }
+    })
+  }
+  traverse(columns)
+  return result
+}
+
+const nonFixedColumns = computed(() => {
+  return getLeafColumns(formatColumns.value).filter((col) => !col.fixed)
+})
+
+const getFixedColumns = computed(() => (direction: string) => {
+  return getLeafColumns(formatColumns.value).filter(
+    (col) => col.fixed === direction
+  )
+})
+
+const columnLevel = computed(() => {
+  const findMaxDepth = (columns: any[], currentDepth = 1): number => {
+    if (!columns || columns.length === 0) return currentDepth
+
+    let maxDepth = currentDepth
+    for (const col of columns) {
+      if (col.children && col.children.length > 0) {
+        const childDepth = findMaxDepth(col.children, currentDepth + 1)
+        maxDepth = Math.max(maxDepth, childDepth)
+      }
+    }
+    return maxDepth
+  }
+  return findMaxDepth(props.columns)
+})
+
+// ==================== Selection Related Computed & Methods ====================
+const hasPartialSelection = computed(() => {
+  const selectedRowsMap = state.selectedRowsMap
+  return props.dataSource.some((row: any) => selectedRowsMap[row[props.rowKey]])
+})
+
+const updateAllCheckedState = () => {
+  const checkedKeys = keys(pickBy(state.selectedRowsMap, Boolean))
+  const allDataKeys = props.dataSource.map((row: any) =>
+    String(row[props.rowKey])
+  )
+  const uncheckedKeys = difference(allDataKeys, checkedKeys)
+  state.isAllChecked =
+    isEmpty(uncheckedKeys) &&
+    props.multiple &&
+    props.checkable &&
+    checkedKeys.length > 0
+}
+
+const setAllRowsChecked = (checked: boolean) => {
+  state.selectedRowsMap = mapValues(
+    keyBy(props.dataSource, props.rowKey),
+    () => checked
+  )
+  if (props.multiple) {
+    selectedKeys.value = checked ? keys(state.selectedRowsMap) : []
+  }
+}
+
+const toggleRowSelection = (row: any) => {
+  if (!props.checkable) return
+  const rowKey = row[props.rowKey]
+  const isChecked = state.selectedRowsMap[rowKey]
+
+  if (props.multiple) {
+    state.selectedRowsMap[rowKey] = !isChecked
+    selectedKeys.value = keys(pickBy(state.selectedRowsMap, Boolean))
+  } else {
+    state.selectedRowsMap = { [rowKey]: !isChecked }
+    selectedKeys.value = isChecked ? undefined : rowKey
+  }
+  emit('selectChange', cloneDeep(selectedKeys.value))
+  updateAllCheckedState()
+}
+
+const updateSelectedKeys = (keys: any) => {
+  if (props.multiple) {
+    state.selectedRowsMap = mapValues(
+      keyBy(props.dataSource, props.rowKey),
+      () => false
+    )
+    keys.forEach((key: string) => {
+      state.selectedRowsMap[key] = true
+    })
+  } else {
+    state.selectedRowsMap = { [keys]: true }
+  }
+}
+
+// ==================== Style Related Computed ====================
+const getHeaderColumnStyle = computed(() => (column: any, row?: any) => {
+  const width = column.width
+  const customStyle = row && row.tdStyle?.[column.field]
+
+  const sizeStyle = `fontSize:${getFontSize.value}px;`
+
+  if (state.isScrollbarVisible || column.fixed) {
+    return `${sizeStyle};width: ${width}px;${customStyle}`
+  }
+
+  const fixedWidth =
+    sumBy(
+      formatColumns.value.filter((col) => col.fixed),
+      'width'
+    ) + (props.checkable ? getCheckableWidth.value : 0)
+  const tdWidth =
+    (width / (totalColumnWidth.value - fixedWidth)) *
+    (state.scrollClientWidth - fixedWidth)
+  return `${sizeStyle};width: ${tdWidth}px;${customStyle}`
+})
+
+const getColumnStyle = computed(() => (column: any, row?: any) => {
+  const width = column.width
+  const customStyle = row && row.tdStyle?.[column.field]
+
+  const sizeStyle = `padding: ${getPadding.value}; fontSize:${getFontSize.value}px;`
+
+  if (state.isScrollbarVisible || column.fixed) {
+    return `${sizeStyle};width: ${width}px;${customStyle}`
+  }
+
+  const fixedWidth =
+    sumBy(
+      formatColumns.value.filter((col) => col.fixed),
+      'width'
+    ) + (props.checkable ? getCheckableWidth.value : 0)
+  const tdWidth =
+    (width / (totalColumnWidth.value - fixedWidth)) *
+    (state.scrollClientWidth - fixedWidth)
+  return `${sizeStyle};width: ${tdWidth}px;${customStyle}`
+})
+
+// ==================== Render Methods ====================
+const renderCell = ({
+  column,
+  row,
+  index
+}: {
+  column: any
+  row: any
+  index: number
+}) => {
+  if (column.customRender) {
+    return column.customRender({ row, column, index, text: row[column.field] })
+  }
+  return column.type === 'text-trim'
+    ? h(LewTextTrim, {
+        x: column.x as TextTrimAlignment,
+        style: 'width: 100%',
+        text: showTextAndEmpty(row[column.field])
+      })
+    : showTextAndEmpty(row[column.field])
+}
+
+const showTextAndEmpty = (text: any) => {
+  if (text === null || text === undefined || text === '') {
+    return '-'
+  } else {
+    return isString(text) ? text : JSON.stringify(text)
+  }
+}
+
+const readerHeaderTd = ({ column }: any) => {
+  return h(
+    'div',
+    {
+      class: ['lew-table-td', column.sortable ? 'lew-table-td-sortable' : ''],
+      onClick: () => {
+        if (column.sortable) {
+          sort(column)
+        }
+      },
+      style: `display: flex; flex-direction: column; width: ${any2px(column.width)}; justify-content: center; align-items: center;`
+    },
+    [
+      h(
+        'span',
+        {
+          style: `padding: ${getPadding.value}; 
+		   display: flex; align-items:center;  justify-content: ${column.x};width: ${any2px(column.width)}; height:100%; box-sizing: border-box; `
+        },
+        [
+          h(
+            'span',
+            {
+              class: 'lew-table-title-span'
+            },
+            [
+              column?.title,
+              column.sortable &&
+                h(SortIcon, {
+                  'sort-value': sortValue.value[column.field],
+                  size: props.size,
+                  class: 'lew-table-sorter'
+                })
+            ]
+          )
+        ]
+      ),
+      column?.children && column.children.length > 0
+        ? h(
+            'div',
+            {
+              class: 'lew-table-td-group',
+              style: `display: flex;`
+            },
+            column.children.map((child: any) =>
+              readerHeaderTd({ column: child })
+            )
+          )
+        : null
+    ]
+  )
+}
+
+// ==================== Sort Methods ====================
 const sort = (column: any) => {
   if (column.sortable) {
     let value = sortValue.value?.[column.field]
@@ -362,20 +407,81 @@ const sort = (column: any) => {
   }
 }
 
-watch(
-  () => props.size,
-  () => {
-    nextTick(() => {
-      initTableObserver()
-      updateScrollState()
-      handleTableResize()
-      if (props.checkable) {
-        updateSelectedKeys(selectedKeys.value)
-      }
-    })
-  }
-)
+// ==================== Scroll & Resize Methods ====================
+const updateScrollState = () => {
+  const element = tableRef.value
+  const { clientWidth, scrollWidth, scrollLeft } = element
+  const scrollThreshold = 10
 
+  if (scrollWidth === clientWidth) {
+    state.hiddenScrollLine = 'all'
+    return
+  }
+  if (scrollLeft < scrollThreshold) {
+    state.hiddenScrollLine = 'left'
+    return
+  }
+  if (scrollLeft + clientWidth > scrollWidth - scrollThreshold) {
+    state.hiddenScrollLine = 'right'
+    return
+  }
+
+  state.hiddenScrollLine = ''
+}
+
+const compTrHeight = () => {
+  nextTick(() => {
+    ;(trRefArr.value || []).forEach(
+      (element: HTMLElement | null, index: number) => {
+        if (element) {
+          trHeightArr.value[index] = element.getBoundingClientRect().height
+        }
+      }
+    )
+  })
+}
+
+const handleTableResize = throttle(() => {
+  const table = tableRef.value
+
+  if (!table) return
+  compTrHeight()
+
+  let totalWidth = formatColumns.value.reduce(
+    (sum, col) => sum + Number(col.width),
+    0
+  )
+
+  if (props.checkable) {
+    totalWidth += getCheckableWidth.value
+  }
+
+  if (fixedLeftRef.value) {
+    state.fixedLeftWidth = fixedLeftRef.value.clientWidth || 0
+  }
+  if (fixedRightRef.value) {
+    state.fixedRightWidth = fixedRightRef.value.clientWidth || 0
+    if (table.clientHeight < table.scrollHeight) {
+      state.fixedRightWidth += 6
+    }
+  }
+
+  state.scrollClientWidth = table.clientWidth
+  state.isScrollbarVisible = totalWidth > state.scrollClientWidth
+  state.isInitialized = true
+
+  updateScrollState()
+}, 250)
+
+const initTableObserver = () => {
+  resizeObserver = new ResizeObserver(() => {
+    state.isInitialized = false
+    handleTableResize()
+  })
+  resizeObserver.observe(tableRef.value)
+}
+
+// ==================== Lifecycle Methods ====================
 const init = () => {
   nextTick(() => {
     initTableObserver()
@@ -398,8 +504,11 @@ onActivated(() => {
       'LewTable error: rowKey is required when checkable is enabled!'
     )
   }
-
-  if (props.columns.some((col: any) => !col.width)) {
+  if (
+    props.columns.some(
+      (col: any) => !col.width && (!col.children || col.children.length === 0)
+    )
+  ) {
     throw new Error('LewTable error: width must be set for every column')
   }
 })
@@ -410,6 +519,59 @@ onUnmounted(() => {
     resizeObserver = null
   }
 })
+
+// ==================== Watchers ====================
+watch(
+  () => props.dataSource,
+  () => {
+    state.selectedRowsMap = mapValues(
+      keyBy(props.dataSource, props.rowKey),
+      () => false
+    )
+    updateAllCheckedState()
+  },
+  { deep: true }
+)
+
+watch(selectedKeys, (newVal: any) => {
+  if (props.checkable) {
+    updateSelectedKeys(newVal)
+  }
+})
+
+watch(
+  () => trRefArr.value,
+  () => {
+    compTrHeight()
+  },
+  {
+    deep: true
+  }
+)
+
+watch(
+  () => props.dataSource,
+  () => {
+    compTrHeight()
+  },
+  {
+    deep: true
+  }
+)
+
+watch(
+  () => props.size,
+  () => {
+    nextTick(() => {
+      initTableObserver()
+      updateScrollState()
+      handleTableResize()
+      if (props.checkable) {
+        updateSelectedKeys(selectedKeys.value)
+      }
+    })
+  }
+)
 </script>
 
 <template>
@@ -440,6 +602,7 @@ onUnmounted(() => {
     <div
       ref="tableRef"
       class="lew-table lew-scrollbar"
+      :class="{ 'lew-table-bordered': bordered }"
       :style="`max-height: ${any2px(maxHeight)}`"
       @scroll="updateScrollState"
       @mouseleave="state.hoverRowIndex = -1"
@@ -448,12 +611,12 @@ onUnmounted(() => {
         class="lew-table-head"
         :style="{
           width: totalColumnWidth + 'px',
-          height: getHeadHeight + 'px'
+          height: getHeadHeight * columnLevel + columnLevel * 1 + 'px'
         }"
         @mouseenter="state.hoverRowIndex = -1"
       >
         <div
-          v-if="getFixedColumns('left').length > 0 || checkable"
+          v-if="getFixedHeaderColumns('left').length > 0 || checkable"
           ref="fixedLeftRef"
           class="lew-table-fixed-left"
         >
@@ -474,81 +637,47 @@ onUnmounted(() => {
               />
               <template v-else>单选</template>
             </lew-flex>
-            <lew-flex
-              v-for="(column, index) in getFixedColumns('left')"
+            <readerHeaderTd
+              :column="column"
+              v-for="(column, index) in getFixedHeaderColumns('left')"
               :key="`columns${index}`"
-              class="lew-table-td"
-              :class="{ 'lew-table-td-sortable': column.sortable }"
               :x="(column.x as FlexXAlignment) || 'start'"
               :y="column.y as FlexYAlignment"
-              :style="getColumnStyle(column)"
+              :style="getHeaderColumnStyle(column)"
               gap="5"
-              @click="sort(column)"
-            >
-              <span class="lew-table-title-span">
-                {{ column.title }}
-                <sort-icon
-                  v-if="column.sortable"
-                  :sort-value="sortValue[column.field]"
-                  :size="size"
-                  class="lew-table-sorter"
-                />
-              </span>
-            </lew-flex>
+            />
           </div>
         </div>
         <div class="lew-table-main">
           <div class="lew-table-tr">
-            <lew-flex
-              v-for="(column, index) in nonFixedColumns"
+            <readerHeaderTd
+              v-for="(column, index) in nonFixedHeaderColumns"
+              :column="column"
               :key="`columns${index}`"
-              class="lew-table-td"
-              :class="{ 'lew-table-td-sortable': column.sortable }"
               :x="(column.x as FlexXAlignment) || 'start'"
               :y="column.y as FlexYAlignment"
-              :style="getColumnStyle(column)"
+              :style="getHeaderColumnStyle(column)"
               gap="5"
-              @click="sort(column)"
-            >
-              <span class="lew-table-title-span">
-                {{ column.title }}
-                <sort-icon
-                  v-if="column.sortable"
-                  :sort-value="sortValue[column.field]"
-                  :size="size"
-                  class="lew-table-sorter"
-                />
-              </span>
-            </lew-flex>
+            />
           </div>
         </div>
         <div
-          v-if="getFixedColumns('right').length > 0"
+          v-if="getFixedHeaderColumns('right').length > 0"
           ref="fixedRightRef"
           class="lew-table-fixed-right"
         >
           <div class="lew-table-tr">
-            <lew-flex
-              v-for="(column, index) in getFixedColumns('right')"
+            <readerHeaderTd
+              v-for="(column, index) in getFixedHeaderColumns('right')"
+              :column="column"
               :key="`columns${index}`"
               class="lew-table-td"
               :class="{ 'lew-table-td-sortable': column.sortable }"
               :x="(column.x as FlexXAlignment) || 'start'"
               :y="column.y as FlexYAlignment"
-              :style="getColumnStyle(column)"
+              :style="getHeaderColumnStyle(column)"
               gap="5"
-              @click="sort(column)"
-            >
-              <span class="lew-table-title-span">
-                {{ column.title }}
-                <sort-icon
-                  v-if="column.sortable"
-                  :sort-value="sortValue[column.field]"
-                  :size="size"
-                  class="lew-table-sorter"
-                />
-              </span>
-            </lew-flex>
+            />
           </div>
         </div>
       </div>
@@ -885,6 +1014,23 @@ onUnmounted(() => {
   }
   .lew-table-tr-selected {
     background-color: var(--lew-table-tr-selected);
+  }
+}
+.lew-table-td-group {
+  display: flex;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  margin-left: 1px;
+}
+.lew-table-bordered {
+  .lew-table-td {
+    border-right: var(--lew-table-border);
+  }
+  .lew-table-td-group {
+    border-top: var(--lew-table-border);
+    .lew-table-td:last-child {
+      border-right: none;
+    }
   }
 }
 </style>

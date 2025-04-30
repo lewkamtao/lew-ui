@@ -43,6 +43,11 @@ export const tableProps = {
       return true
     }
   },
+  bordered: {
+    type: Boolean,
+    default: false,
+    description: '是否显示边框'
+  },
   dataSource: {
     type: Array as PropType<Record<string, any>[]>,
     default: () => [],
