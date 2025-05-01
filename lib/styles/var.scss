@@ -143,11 +143,6 @@
   // 标题
   --lew-title-bold: 800;
 
-  // 描述
-  --lew-desc-border: 1px solid var(--lew-bgcolor-3);
-  --lew-desc-label-bgcolor: var(--lew-bgcolor-1);
-  --lew-desc-bgcolor: var(--lew-bgcolor-2);
-
   // 表单
   --lew-form-border-width: 0.1rem;
   --lew-form-transition-ease: 0.2s ease;
@@ -223,13 +218,22 @@
   --lew-tooltip-shadow: 0 0px 20px #0000002c;
 
   // 表格
+  --lew-table-bgcolor: rgb(255, 255, 255);
+  --lew-table-bgcolor-hover: rgb(235, 235, 240);
+  --lew-table-bgcolor-active: rgb(225, 225, 230);
   --lew-table-header-bgcolor: rgb(250, 250, 250);
-  --lew-table-header-bgcolor-hover: rgb(242, 242, 247);
-  --lew-table-header-bgcolor-active: rgb(229, 229, 234);
-  --lew-table-border: 1px #f0f0f0 solid;
-  --lew-table-tr-selected: #eef3ff;
+  --lew-table-header-bgcolor-hover: rgb(240, 240, 240);
+  --lew-table-header-bgcolor-active: rgb(230, 230, 230);
+  --lew-table-tr-hover-bgcolor: rgb(250, 250, 250);
+  --lew-table-border: 1px rgb(230, 230, 230) solid;
+  --lew-table-tr-selected: rgb(238, 243, 255);
   --lew-table-scroll-line-color-start: rgba(0, 0, 0, 0);
   --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.15);
+
+  // 描述
+  --lew-desc-border: var(--lew-table-border);
+  --lew-desc-label-bgcolor: var(--lew-table-header-bgcolor);
+  --lew-desc-bgcolor: var(--lew-table-bgcolor);
 
   // 渐变背景
   --lew-expand-control-bg-gradient: linear-gradient(
@@ -419,13 +423,17 @@
   --lew-tooltip-shadow: 0 0px 20px rgba(0, 0, 0, 0.5);
 
   // 表格
-  --lew-table-header-bgcolor: rgb(44, 44, 46);
-  --lew-table-header-bgcolor-hover: rgb(58, 58, 60);
-  --lew-table-header-bgcolor-active: rgb(28, 28, 30);
-  --lew-table-border: 1px rgba(255, 255, 255, 0.05) solid;
-  --lew-table-tr-selected: rgb(72, 72, 74);
+  --lew-table-bgcolor: var(--lew-bgcolor-0);
+  --lew-table-bgcolor-hover: rgb(40, 41, 44);
+  --lew-table-bgcolor-active: rgb(48, 49, 52);
+  --lew-table-header-bgcolor: rgb(49, 49, 53);
+  --lew-table-header-bgcolor-hover: rgb(36, 36, 38);
+  --lew-table-header-bgcolor-active: rgb(44, 44, 46);
+  --lew-table-tr-hover-bgcolor: rgb(40, 41, 44);
+  --lew-table-border: 1px rgba(255, 255, 255, 0.076) solid;
+  --lew-table-tr-selected: rgb(29, 35, 42);
   --lew-table-scroll-line-color-start: rgba(0, 0, 0, 0);
-  --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.7);
+  --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.2);
 
   // 渐变背景
   --lew-expand-control-bg-gradient: linear-gradient(

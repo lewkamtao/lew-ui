@@ -631,7 +631,7 @@ defineExpose({ show, hide })
       margin-top: 2px;
       align-items: center;
       box-sizing: border-box;
-      border-radius: var(--lew-border-radius-small);
+      border-radius: calc(var(--lew-border-radius-small) - 2px);
       color: var(--lew-text-color-1);
       font-size: 14px;
       overflow: hidden;
@@ -663,7 +663,7 @@ defineExpose({ show, hide })
 
     .lew-select-slot-item {
       width: 100%;
-      border-radius: var(--lew-border-radius-small);
+      border-radius: calc(var(--lew-border-radius-small) - 2px);
     }
 
     .lew-select-slot-item:hover {

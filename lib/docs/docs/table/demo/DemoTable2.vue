@@ -2,165 +2,159 @@
 const data: any = [
   {
     id: 1,
-    name: 'GeForce RTX 4090',
-    brand: 'NVIDIA',
-    memory: '24GB GDDR6X',
+    name: "GeForce RTX 4090",
+    brand: "NVIDIA",
+    memory: "24GB GDDR6X",
     performance: 10,
     price: 9999,
-    features: ['DLSS 3', 'Ray Tracing', '8K Gaming', 'PCIe 4.0', 'HDMI 2.1'],
-    releaseDate: '2022-10-12',
-    powerConsumption: '450W',
-    architecture: 'Ada Lovelace',
+    features: ["DLSS 3", "Ray Tracing", "8K Gaming", "PCIe 4.0", "HDMI 2.1"],
+    releaseDate: "2022-10-12",
+    powerConsumption: "450W",
+    architecture: "Ada Lovelace",
     coreCount: 16384,
-    boostClock: '2.52 GHz',
+    boostClock: "2.52 GHz",
     tdp: 450,
-    manufacturingProcess: '4nm'
+    manufacturingProcess: "4nm",
   },
   {
     id: 2,
-    name: 'Radeon RX 7900 XTX',
-    brand: 'AMD',
-    memory: '24GB GDDR6',
+    name: "Radeon RX 7900 XTX",
+    brand: "AMD",
+    memory: "24GB GDDR6",
     performance: 9,
     price: 8999,
-    features: [
-      'FSR 3',
-      'Ray Tracing',
-      '4K Gaming',
-      'PCIe 4.0',
-      'DisplayPort 2.1'
-    ],
-    releaseDate: '2022-12-13',
-    powerConsumption: '355W',
-    architecture: 'RDNA 3',
+    features: ["FSR 3", "Ray Tracing", "4K Gaming", "PCIe 4.0", "DisplayPort 2.1"],
+    releaseDate: "2022-12-13",
+    powerConsumption: "355W",
+    architecture: "RDNA 3",
     coreCount: 12288,
-    boostClock: '2.5 GHz',
+    boostClock: "2.5 GHz",
     tdp: 355,
-    manufacturingProcess: '5nm'
+    manufacturingProcess: "5nm",
   },
   {
     id: 3,
-    name: 'GeForce RTX 4080',
-    brand: 'NVIDIA',
-    memory: '16GB GDDR6X',
+    name: "GeForce RTX 4080",
+    brand: "NVIDIA",
+    memory: "16GB GDDR6X",
     performance: 8,
     price: 7999,
-    features: ['DLSS 3', 'Ray Tracing', '4K Gaming', 'PCIe 4.0', 'HDMI 2.1'],
-    releaseDate: '2022-11-16',
-    powerConsumption: '320W',
-    architecture: 'Ada Lovelace',
+    features: ["DLSS 3", "Ray Tracing", "4K Gaming", "PCIe 4.0", "HDMI 2.1"],
+    releaseDate: "2022-11-16",
+    powerConsumption: "320W",
+    architecture: "Ada Lovelace",
     coreCount: 9728,
-    boostClock: '2.51 GHz',
+    boostClock: "2.51 GHz",
     tdp: 320,
-    manufacturingProcess: '4nm'
-  }
-]
+    manufacturingProcess: "4nm",
+  },
+];
 
 const columns = [
   {
-    title: 'ID',
+    title: "ID",
     width: 80,
-    field: 'id',
-    x: 'center',
-    fixed: 'left'
+    field: "id",
+    x: "center",
+    fixed: "left",
   },
   {
-    title: '品牌',
+    title: "品牌",
     width: 120,
-    field: 'brand',
-    x: 'start'
+    field: "brand",
+    x: "start",
   },
   {
-    title: '型号',
+    title: "型号",
     width: 180,
-    field: 'name',
-    x: 'start'
+    field: "name",
+    x: "start",
   },
   {
-    title: '显存',
+    title: "显存",
     width: 140,
-    field: 'memory',
-    x: 'start'
+    field: "memory",
+    x: "start",
   },
   {
-    title: '性能评分',
+    title: "性能评分",
     width: 120,
-    field: 'performance',
-    x: 'center'
+    field: "performance",
+    x: "center",
   },
   {
-    title: '特性',
+    title: "特性",
     width: 420,
-    field: 'features',
-    x: 'start'
+    field: "features",
+    x: "start",
   },
   {
-    title: '发布日期',
+    title: "发布日期",
     width: 140,
-    field: 'releaseDate',
-    x: 'center'
+    field: "releaseDate",
+    x: "center",
   },
   {
-    title: '功耗',
+    title: "功耗",
     width: 100,
-    field: 'powerConsumption',
-    x: 'center'
+    field: "powerConsumption",
+    x: "center",
   },
   {
-    title: '架构',
+    title: "架构",
     width: 140,
-    field: 'architecture',
-    x: 'start'
+    field: "architecture",
+    x: "start",
   },
   {
-    title: '核心数量',
+    title: "核心数量",
     width: 120,
-    field: 'coreCount',
-    x: 'center'
+    field: "coreCount",
+    x: "center",
   },
   {
-    title: '加速频率',
+    title: "加速频率",
     width: 120,
-    field: 'boostClock',
-    x: 'center'
+    field: "boostClock",
+    x: "center",
   },
   {
-    title: 'TDP',
+    title: "TDP",
     width: 100,
-    field: 'tdp',
-    x: 'center'
+    field: "tdp",
+    x: "center",
   },
   {
-    title: '制程',
+    title: "制程",
     width: 100,
-    field: 'manufacturingProcess',
-    x: 'center'
+    field: "manufacturingProcess",
+    x: "center",
   },
   {
-    title: '价格',
+    title: "价格",
     width: 120,
-    fixed: 'right',
-    field: 'price',
-    x: 'center'
-  }
-]
+    fixed: "right",
+    field: "price",
+    x: "center",
+  },
+];
 
 const formatPerformance = (performance: number) => {
   switch (true) {
     case performance >= 9:
-      return '顶级'
+      return "顶级";
     case performance >= 7:
-      return '高端'
+      return "高端";
     case performance >= 5:
-      return '中端'
+      return "中端";
     default:
-      return '入门'
+      return "入门";
   }
-}
+};
 </script>
 
 <template>
-  <lew-table :data-source="data" :max-height="300" :columns="columns">
+  <lew-table bordered :data-source="data" :max-height="300" :columns="columns">
     <template #performance="{ row }">
       {{ formatPerformance(row.performance) }}
     </template>

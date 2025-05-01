@@ -34,7 +34,7 @@ const initTippy = () => {
         delay: props.delay as any,
         duration: [250, 250],
         content: text ? sanitizeHtml(text) : lewTextTrimPopRef.value,
-        animation: 'scale',
+        animation: 'scale-subtle',
         hideOnClick: false,
         interactive: true,
         appendTo: () => document.body,

@@ -1,53 +1,53 @@
 <script setup lang="ts">
-import { LewFlex, LewEmpty } from 'lew-ui/components'
-import tippy from 'tippy.js'
-import LewContextMenu from './LewContextMenu.vue'
-import { getUniqueId } from 'lew-ui/utils'
-import { ContextMenus, contextMenuProps, initLewContextMenu } from './index'
-import Icon from 'lew-ui/utils/Icon.vue'
-const props = defineProps(contextMenuProps)
+import { LewFlex, LewEmpty } from "lew-ui/components";
+import tippy from "tippy.js";
+import LewContextMenu from "./LewContextMenu.vue";
+import { getUniqueId } from "lew-ui/utils";
+import { ContextMenus, contextMenuProps, initLewContextMenu } from "./index";
+import Icon from "lew-ui/utils/Icon.vue";
+const props = defineProps(contextMenuProps);
 
-const emit = defineEmits(['select'])
+const emit = defineEmits(["select"]);
 
 const clickItem = (item: ContextMenus, options: ContextMenus[]) => {
-  emit('select', {
+  emit("select", {
     item,
     parent: options,
-    value: item.value
-  })
-}
+    value: item.value,
+  });
+};
 
-const uniqueId = getUniqueId()
+const uniqueId = getUniqueId();
 
-let itemRefs = ref<(Element | globalThis.ComponentPublicInstance | null)[]>([])
+let itemRefs = ref<(Element | globalThis.ComponentPublicInstance | null)[]>([]);
 const initTippy = () => {
   itemRefs.value.forEach((el: any, index: number) => {
-    const item = props.options[index]
+    const item = props.options[index];
     if (!el || item.disabled || (item.children || []).length === 0) {
-      return
+      return;
     }
-    const menuDom = document.createElement('div')
+    const menuDom = document.createElement("div");
     createApp({
       render() {
         return h(LewContextMenu, {
           options: item.children,
           onSelect: (e: any) => {
-            emit('select', e)
-          }
-        })
-      }
-    }).mount(menuDom)
+            emit("select", e);
+          },
+        });
+      },
+    }).mount(menuDom);
     // 创建右键索引
     if (!window.LewContextMenu) {
-      initLewContextMenu()
+      initLewContextMenu();
     }
 
     window.LewContextMenu.menuInstance[uniqueId] = tippy(el, {
-      theme: 'light',
-      animation: 'shift-away-subtle',
-      trigger: 'mouseenter',
+      theme: "light",
+      animation: "shift-away-subtle",
+      trigger: "mouseenter",
       interactive: true,
-      placement: 'right-start',
+      placement: "right-start",
       duration: [250, 250],
       delay: [120, 120],
       arrow: false,
@@ -55,28 +55,30 @@ const initTippy = () => {
       allowHTML: true,
       hideOnClick: false,
       zIndex: 2001,
-      content: menuDom
-    })
-    window.LewContextMenu.menuInstance[
-      uniqueId
-    ].popper.children[0].setAttribute('data-lew', 'popover')
-  })
-}
+      content: menuDom,
+    });
+
+    window.LewContextMenu.menuInstance[uniqueId].popper.children[0].setAttribute(
+      "data-lew",
+      "popover"
+    );
+  });
+};
 
 const renderIcon = ({ renderIcon }: any) => {
-  if (renderIcon) return renderIcon()
-  return ''
-}
+  if (renderIcon) return renderIcon();
+  return "";
+};
 
 onMounted(() => {
-  initTippy()
-})
+  initTippy();
+});
 onUnmounted(() => {
   if (window.LewContextMenu?.menuInstance[uniqueId]?.destroy) {
-    window.LewContextMenu.menuInstance[uniqueId].destroy()
-    delete window.LewContextMenu.menuInstance[uniqueId]
+    window.LewContextMenu.menuInstance[uniqueId].destroy();
+    delete window.LewContextMenu.menuInstance[uniqueId];
   }
-})
+});
 </script>
 
 <template>
@@ -88,28 +90,23 @@ onUnmounted(() => {
         class="lew-context-menu-box"
         :class="{
           'lew-context-menu-box-disabled': item.disabled,
-          'lew-context-menu-box-divider-line': item.isDividerLine
+          'lew-context-menu-box-divider-line': item.isDividerLine,
         }"
       >
         <div
           :ref="(el) => itemRefs.push(el)"
           @click="clickItem(item, options)"
           class="lew-context-menu-item"
-          :style="{ 'animation-delay': index * 15 + 'ms' }"
+          :style="{ 'animation-delay': index * 10 + 'ms' }"
           :class="{
-            'lew-context-menu-item-active': item.active
+            'lew-context-menu-item-active': item.active,
           }"
         >
           <div
             v-if="options.filter((e) => e.checkbox).length > 0"
             class="lew-context-menu-checkbox"
           >
-            <Icon
-              v-if="item.checked"
-              :size="12"
-              :stroke-width="2.5"
-              type="check"
-            />
+            <Icon v-if="item.checked" :size="12" :stroke-width="2.5" type="check" />
           </div>
           <div class="lew-context-menu-label">
             <renderIcon v-if="item.renderIcon" :renderIcon="item.renderIcon" />
@@ -121,7 +118,7 @@ onUnmounted(() => {
             v-if="options.filter((e) => e.children).length > 0"
             class="lew-context-menu-item-chevron"
             :style="{
-              opacity: (item.children || []).length > 0 ? 1 : 0
+              opacity: (item.children || []).length > 0 ? 1 : 0,
             }"
             :size="14"
             type="chevron-right"
@@ -165,9 +162,9 @@ onUnmounted(() => {
       cursor: pointer;
       color: var(--lew-text-color-1);
       box-sizing: border-box;
-      border-radius: var(--lew-border-radius-small);
+      border-radius: calc(var(--lew-border-radius-small) - 2px);
       padding: 0px 5px;
-      animation: enterAni 0.2s ease forwards;
+      animation: enterAni 0.3s cubic-bezier(0.3, 1.3, 0.3, 1) forwards;
       opacity: 0;
       @keyframes enterAni {
         0% {
@@ -240,7 +237,7 @@ onUnmounted(() => {
     }
   }
   .lew-context-menu-box-divider-line::after {
-    content: '';
+    content: "";
     width: calc(100% - 20px);
     height: 1px;
     background-color: var(--lew-bgcolor-3);
