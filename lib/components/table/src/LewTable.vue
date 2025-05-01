@@ -650,6 +650,17 @@ watch(
           </div>
         </div>
       </div>
+      <div class="lew-table-empty" v-if="dataSource.length === 0">
+        <slot v-if="$slots.empty" name="empty"></slot>
+        <lew-flex
+          v-else
+          x="center"
+          y="center"
+          :style="{ padding: getEmptyPadding + 'px' }"
+        >
+          <lew-empty v-bind="getEmptyProps" />
+        </lew-flex>
+      </div>
       <div
         v-if="dataSource.length > 0"
         class="lew-table-body"
@@ -780,12 +791,6 @@ watch(
     <div class="lew-table-footer">
       <slot name="table-footer"></slot>
     </div>
-    <template v-if="dataSource.length === 0">
-      <slot v-if="$slots.empty" name="empty"></slot>
-      <lew-flex v-else x="center" y="center" :style="{ padding: getEmptyPadding + 'px' }">
-        <lew-empty v-bind="getEmptyProps" />
-      </lew-flex>
-    </template>
   </div>
 </template>
 
@@ -976,6 +981,16 @@ watch(
   .lew-table-tr-selected {
     background-color: var(--lew-table-tr-selected);
   }
+
+  .lew-table-empty {
+    position: sticky;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 .lew-table-td-group {
   display: flex;
@@ -997,9 +1012,11 @@ watch(
   }
   .lew-table-fixed-left,
   .lew-table-fixed-right {
-    .lew-table-td:last-child,
-    .lew-table-td:first-child {
+    .lew-table-td:last-child {
       border-right: none;
+      border-left: none;
+    }
+    .lew-table-td:first-child {
       border-left: none;
     }
   }
@@ -1020,9 +1037,11 @@ watch(
   }
   .lew-table-fixed-left,
   .lew-table-fixed-right {
-    .lew-table-td:last-child,
-    .lew-table-td:first-child {
+    .lew-table-td:last-child {
       border-right: none;
+      border-left: none;
+    }
+    .lew-table-td:first-child {
       border-left: none;
     }
   }

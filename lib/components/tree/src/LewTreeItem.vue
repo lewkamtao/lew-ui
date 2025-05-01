@@ -269,7 +269,7 @@ const isNodePartiallySelected = computed(() => {
     cursor: pointer;
     display: flex;
     align-items: center;
-    border-radius: calc(var(--lew-border-radius-small) - 2px);
+    border-radius: calc(var(--lew-border-radius-small) - 1px);
     cursor: pointer;
     width: 100%;
     box-sizing: border-box;

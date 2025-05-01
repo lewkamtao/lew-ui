@@ -208,8 +208,9 @@
 
   // 弹出框
   --lew-pop-bgcolor: #fff;
-  --lew-pop-border: 1px rgba(209, 209, 214, 0.693) solid;
-  --lew-pop-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  --lew-pop-border: 1px rgba(142, 147, 154, 0.15) solid;
+  --lew-pop-box-shadow: rgba(142, 147, 154, 0.1) 0px 0px 0px 1px,
+    rgba(0, 0, 0, 0.04) 0px 2px 8px, rgba(0, 0, 0, 0.05) 0px 30px 70px;
   --lew-pop-bgcolor-active: rgba(0, 0, 0, 0.05);
 
   // 提示框
@@ -414,8 +415,9 @@
   // 弹出框
   --lew-pop-bgcolor: rgb(36, 36, 38);
   --lew-pop-bgcolor-active: rgba(255, 255, 255, 0.05);
-  --lew-pop-border: 1px rgba(255, 255, 255, 0.1) solid;
-  --lew-pop-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+  --lew-pop-border: 1px rgba(255, 255, 255, 0.08) solid;
+  --lew-pop-box-shadow: rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset,
+    rgba(0, 0, 0, 0.04) 0px 2px 8px, rgba(0, 0, 0, 0.05) 0px 30px 70px;
 
   // 提示框
   --lew-tooltip-bg: rgb(36, 36, 38);

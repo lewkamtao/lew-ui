@@ -1,95 +1,95 @@
 <script lang="ts" setup>
-import { object2class } from 'lew-ui/utils'
-import { LewPopover, LewDate, LewTooltip } from 'lew-ui'
-import { datePickerProps } from './props'
-import dayjs from 'dayjs'
-import { cloneDeep } from 'lodash-es'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
+import { object2class } from "lew-ui/utils";
+import { LewPopover, LewDate, LewTooltip } from "lew-ui";
+import { datePickerProps } from "./props";
+import dayjs from "dayjs";
+import { cloneDeep } from "lodash-es";
+import Icon from "lew-ui/utils/Icon.vue";
+import { locale } from "lew-ui";
+import { any2px } from "lew-ui/utils";
 
 // 获取app
-const app = getCurrentInstance()?.appContext.app
-if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
+const app = getCurrentInstance()?.appContext.app;
+if (app && !app.directive("tooltip")) {
+  app.use(LewTooltip);
 }
-const emit = defineEmits(['change', 'clear'])
-const props = defineProps(datePickerProps)
-const modelValue: Ref<string | undefined> = defineModel()
+const emit = defineEmits(["change", "clear"]);
+const props = defineProps(datePickerProps);
+const modelValue: Ref<string | undefined> = defineModel();
 
-const visible = ref(false)
+const visible = ref(false);
 
-const lewPopoverRef = ref()
+const lewPopoverRef = ref();
 
-const lewDateRef = ref()
+const lewDateRef = ref();
 
 const show = () => {
-  lewPopoverRef.value.show()
-}
+  lewPopoverRef.value.show();
+};
 
 const hide = () => {
-  lewPopoverRef.value.hide()
-}
+  lewPopoverRef.value.hide();
+};
 
 const change = (date: string | undefined) => {
-  emit('change', { date, value: cloneDeep(modelValue.value) })
-  hide()
-}
+  emit("change", { date, value: cloneDeep(modelValue.value) });
+  hide();
+};
 
 const selectPresets = (item: { label: string; value: string }) => {
-  modelValue.value = dayjs(item.value).format(props.valueFormat)
-  lewDateRef.value && lewDateRef.value.init(item.value)
+  modelValue.value = dayjs(item.value).format(props.valueFormat);
+  lewDateRef.value && lewDateRef.value.init(item.value);
   setTimeout(() => {
     nextTick(() => {
-      change(modelValue.value)
-    })
-  }, 100)
-}
+      change(modelValue.value);
+    });
+  }, 100);
+};
 
 if (props.valueFormat && modelValue.value) {
-  modelValue.value = dayjs(modelValue.value).format(props.valueFormat)
+  modelValue.value = dayjs(modelValue.value).format(props.valueFormat);
 }
 
 const getIconSize = computed(() => {
   const size: Record<string, number> = {
     small: 13,
     medium: 14,
-    large: 15
-  }
-  return size[props.size]
-})
+    large: 15,
+  };
+  return size[props.size];
+});
 
 const lewDatePickerClassNames = computed(() => {
-  const focus = visible.value
-  const { size, readonly, disabled } = props
-  return object2class('lew-date-picker', { focus, size, readonly, disabled })
-})
+  const focus = visible.value;
+  const { size, readonly, disabled } = props;
+  return object2class("lew-date-picker", { focus, size, readonly, disabled });
+});
 
 const getDatePickerInputStyle = computed(() => {
-  const { size } = props
+  const { size } = props;
   return {
     height: `var(--lew-form-item-height-${size})`,
     lineHeight: `var(--lew-form-input-line-height-${size})`,
     padding: `var(--lew-form-input-padding-${size})`,
-    fontSize: `var(--lew-form-font-size-${size})`
-  }
-})
+    fontSize: `var(--lew-form-font-size-${size})`,
+  };
+});
 
 const clearHandle = () => {
-  modelValue.value = undefined
-  change(modelValue.value)
-  emit('clear')
-}
+  modelValue.value = undefined;
+  change(modelValue.value);
+  emit("clear");
+};
 
 const showHandle = () => {
-  visible.value = true
-  lewDateRef.value && lewDateRef.value.init(modelValue.value)
-}
+  visible.value = true;
+  lewDateRef.value && lewDateRef.value.init(modelValue.value);
+};
 const hideHandle = () => {
-  visible.value = false
-}
+  visible.value = false;
+};
 
-defineExpose({ show, hide })
+defineExpose({ show, hide });
 </script>
 <template>
   <lew-popover
@@ -113,13 +113,11 @@ defineExpose({ show, hide })
             x="start"
             y="center"
             :style="{
-              opacity: visible ? 0.6 : 1
+              opacity: visible ? 0.6 : 1,
             }"
           >
             <div v-show="!modelValue" class="lew-date-picker-placeholder">
-              {{
-                placeholder ? placeholder : locale.t('datePicker.placeholder')
-              }}
+              {{ placeholder ? placeholder : locale.t("datePicker.placeholder") }}
             </div>
             <div v-show="modelValue" class="lew-date-picker-dateValue">
               {{ modelValue }}
@@ -129,7 +127,7 @@ defineExpose({ show, hide })
             class="lew-date-picker-icon-calendar"
             :size="getIconSize"
             :class="{
-              'lew-date-picker-icon-calendar-hide': modelValue && clearable
+              'lew-date-picker-icon-calendar-hide': modelValue && clearable,
             }"
             type="calendar"
           />
@@ -140,7 +138,7 @@ defineExpose({ show, hide })
               type="close"
               class="lew-form-icon-close lew-date-picker-icon-close"
               :class="{
-                'lew-form-icon-close-focus': visible
+                'lew-form-icon-close-focus': visible,
               }"
               @click.stop="clearHandle"
             />
@@ -165,12 +163,12 @@ defineExpose({ show, hide })
             v-tooltip="{
               content: dayjs(item.value).format(valueFormat),
               placement: 'right',
-              delay: [500, 80]
+              delay: [500, 80],
             }"
             :class="[
               dayjs(modelValue).isSame(item.value, 'day')
                 ? 'lew-date-picker-presets-item-active'
-                : ''
+                : '',
             ]"
           >
             {{ item.label }}
@@ -236,8 +234,7 @@ defineExpose({ show, hide })
 
   .lew-date-picker-focus {
     background-color: var(--lew-form-bgcolor-focus);
-    border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
-      solid;
+    border: var(--lew-form-border-width) var(--lew-form-border-color-focus) solid;
   }
   .lew-date-picker-focus:hover {
     background-color: var(--lew-form-bgcolor-focus);
@@ -253,7 +250,7 @@ defineExpose({ show, hide })
 
 :deep() {
   .lew-date-picker-date-panel {
-    width: 273px;
+    width: 260px;
     flex-shrink: 0;
   }
 

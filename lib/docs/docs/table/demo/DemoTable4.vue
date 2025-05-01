@@ -104,7 +104,7 @@ const columns = [
   },
   {
     title: '行业',
-    width: 150,
+    width: 220,
     field: 'industry'
   },
   {

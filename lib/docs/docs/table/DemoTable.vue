@@ -28,7 +28,15 @@ const options = ref(
       :description="
         $t(`components.${componentName}.demo${index + 1}.description`)
       "
-      :code="codeGroup[index]"
+      :tips-type="
+        $t(`components.${componentName}.demo${index + 1}.tipsType`)
+      "
+      :tips-title="
+        $t(`components.${componentName}.demo${index + 1}.tipsTitle`)
+      "
+      :tips-content="
+        $t(`components.${componentName}.demo${index + 1}.tipsContent`)
+      "
     >
       <component :is="item" />
     </lew-demo-box>

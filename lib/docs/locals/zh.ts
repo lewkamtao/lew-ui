@@ -1384,7 +1384,8 @@ export default {
       description: '功能强大的表格组件，让数据展示更加清晰',
       model: {
         modelValue: '参数名称',
-        selectedKeys: '选中的键'
+        selectedKeys: '选中的键',
+        sortValue: '排序值'
       },
       demo1: {
         title: '常规'
@@ -1416,9 +1417,15 @@ export default {
       demo10: {
         title: '暂无数据'
       },
+      demo11: {
+        title: '分组表头',
+        tipsTitle: '受限提示',
+        tipsContent: '如果你希望分组的表头拥有固定列的效果，你需要给所有固定列表头都设定好宽度，包括所有的父级节点，否则可能产生错位。'
+      },
       props: {
         columns: '列',
         dataSource: '数据源',
+        bordered: '边框',
         size: '尺寸',
         checkable: '可选',
         maxHeight: '最大高度',

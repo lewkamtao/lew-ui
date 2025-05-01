@@ -1,61 +1,46 @@
 <script setup lang="ts">
-import { LewCollapseTransition } from 'lew-ui'
-import { ChevronDown, ChevronUp } from 'lucide-vue-next'
-import docsLocale from '@/locals'
+import { LewCollapseTransition } from "lew-ui";
+import { ChevronDown, ChevronUp } from "lucide-vue-next";
+import docsLocale from "@/locals";
 
 defineProps({
   title: {
     type: String,
-    default() {
-      return ''
-    }
+    default: "",
   },
   tag: {
     type: String,
-    default() {
-      return ''
-    }
+    default: "",
   },
   tipsContent: {
     type: String,
-    default() {
-      return ''
-    }
+    default: "",
   },
   tipsType: {
     type: String,
-    default() {
-      return 'info'
-    }
+    default: "info",
   },
   tipsTitle: {
     type: String,
-    default() {
-      return ''
-    }
+    default: "",
   },
   description: {
     type: String,
-    default() {
-      return ''
-    }
+    default: "",
   },
   code: {
     type: String,
-    default() {
-      return ''
-    }
-  }
-})
+    default: "",
+  },
+});
 
-const isShowCode = ref(false)
+const isShowCode = ref(false);
 const checkHasContent = computed(() => (text: string) => {
-  const pattern = /^components\.[a-zA-Z-]+\.demo\d+\.[a-z]+$/
-  if (text && !pattern.test(text)) {
-    return true
+  if (text && text.indexOf("components.") !== 0) {
+    return true;
   }
-  return false
-})
+  return false;
+});
 </script>
 
 <template>
@@ -71,6 +56,12 @@ const checkHasContent = computed(() => (text: string) => {
         {{ tag }}
       </lew-tag>
     </lew-title>
+    <lew-alert
+      v-if="checkHasContent(tipsContent)"
+      :type="checkHasContent(tipsType) ? tipsType : 'info'"
+      :title="tipsTitle"
+      :content="tipsContent"
+    />
     <div v-if="checkHasContent(description)" class="desc">
       {{ description }}
     </div>
@@ -90,19 +81,9 @@ const checkHasContent = computed(() => (text: string) => {
           <ChevronDown v-if="!isShowCode" :size="16" />
           <ChevronUp v-else :size="16" />
         </div>
-        {{
-          isShowCode
-            ? docsLocale.t('base.close')
-            : docsLocale.t('base.showCode')
-        }}
+        {{ isShowCode ? docsLocale.t("base.close") : docsLocale.t("base.showCode") }}
       </div>
     </div>
-    <lew-alert
-      v-if="tipsType && tipsContent"
-      :type="tipsType"
-      :title="tipsTitle"
-      :content="tipsContent"
-    />
   </div>
 </template>
 

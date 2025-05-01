@@ -162,7 +162,7 @@ onUnmounted(() => {
       cursor: pointer;
       color: var(--lew-text-color-1);
       box-sizing: border-box;
-      border-radius: calc(var(--lew-border-radius-small) - 2px);
+      border-radius: calc(var(--lew-border-radius-small) - 1px);
       padding: 0px 5px;
       animation: enterAni 0.3s cubic-bezier(0.3, 1.3, 0.3, 1) forwards;
       opacity: 0;
