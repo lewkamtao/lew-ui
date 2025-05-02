@@ -239,8 +239,8 @@ onUnmounted(() => {
   .lew-context-menu-box-divider-line::after {
     content: "";
     width: calc(100% - 20px);
-    height: 1px;
-    background-color: var(--lew-bgcolor-3);
+    height: 0px;
+    border-bottom: var(--lew-pop-border);
   }
 }
 .lew-context-menu-item-active {
