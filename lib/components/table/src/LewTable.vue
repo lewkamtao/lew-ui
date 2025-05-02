@@ -39,6 +39,7 @@ const state = reactive({
   hoverRowIndex: -1,
   isAllChecked: false,
   isScrollbarVisible: false,
+  isScroll: false,
   scrollClientWidth: 0,
   hiddenScrollLine: "all",
   fixedLeftWidth: 0,
@@ -406,8 +407,7 @@ const updateScrollState = () => {
 
   state.hiddenScrollLine = "";
 };
-
-const compTrHeight = () => {
+const computeTableRowHeight = () => {
   nextTick(() => {
     (trRefArr.value || []).forEach((element: HTMLElement | null, index: number) => {
       if (element) {
@@ -421,7 +421,7 @@ const handleTableResize = throttle(() => {
   const table = tableRef.value;
 
   if (!table) return;
-  compTrHeight();
+  computeTableRowHeight();
 
   let totalWidth = formatColumns.value.reduce((sum, col) => sum + Number(col.width), 0);
 
@@ -442,9 +442,9 @@ const handleTableResize = throttle(() => {
   state.scrollClientWidth = table.clientWidth;
   state.isScrollbarVisible = totalWidth > state.scrollClientWidth;
   state.isInitialized = true;
-
+  state.isScroll = tableRef.value?.scrollWidth > tableRef.value?.clientWidth + 5;
   updateScrollState();
-}, 250);
+}, 120);
 
 const initTableObserver = () => {
   resizeObserver = new ResizeObserver(() => {
@@ -510,7 +510,7 @@ watch(selectedKeys, (newVal: any) => {
 watch(
   () => trRefArr.value,
   () => {
-    compTrHeight();
+    computeTableRowHeight();
   },
   {
     deep: true,
@@ -520,7 +520,7 @@ watch(
 watch(
   () => props.dataSource,
   () => {
-    compTrHeight();
+    computeTableRowHeight();
   },
   {
     deep: true,
@@ -570,7 +570,7 @@ watch(
     <div
       ref="tableRef"
       class="lew-table lew-scrollbar"
-      :class="{ 'lew-table-bordered': bordered }"
+      :class="{ 'lew-table-bordered': bordered, 'lew-table-scroll': state.isScroll }"
       :style="`max-height: ${any2px(maxHeight)}`"
       @scroll="updateScrollState"
       @mouseleave="state.hoverRowIndex = -1"
@@ -849,7 +849,7 @@ watch(
 .lew-table {
   height: 100%;
   width: 100%;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: auto;
   background-color: var(--lew-table-bgcolor);
 
@@ -991,6 +991,10 @@ watch(
     align-items: center;
     justify-content: center;
   }
+}
+
+.lew-table-scroll {
+  overflow-x: auto;
 }
 .lew-table-td-group {
   display: flex;
