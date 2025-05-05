@@ -208,14 +208,15 @@
 
   // 弹出框
   --lew-pop-bgcolor: #fff;
-  --lew-pop-bgcolor-active: rgba(0, 0, 0, 0.05);
-  --lew-pop-border: 1px rgba(142, 147, 154, 0.25) solid;
+  --lew-pop-bgcolor-hover: rgba(0, 0, 0, 0.05);
+  --lew-pop-bgcolor-active: rgba(0, 0, 0, 0.08);
+  --lew-pop-border: 1px rgba(142, 147, 154, 0.3) solid;
   --lew-pop-box-shadow: rgba(0, 0, 0, 0.04) 0px 2px 8px,
     rgba(0, 0, 0, 0.05) 0px 30px 70px;
 
   // 提示框
   --lew-tooltip-bgcolor: var(--lew-pop-bgcolor);
-  --lew-tooltip-bgcolor-active: var(--lew-pop-bgcolor-active);
+  --lew-tooltip-bgcolor-active: var(--lew-pop-bgcolor-hover);
   --lew-tooltip-box-shadow: drop-shadow(0px 0px 1px rgba(142, 147, 154, 0.45))
     drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.04))
     drop-shadow(0px 30px 70px rgba(0, 0, 0, 0.1));
@@ -416,14 +417,14 @@
 
   // 弹出框
   --lew-pop-bgcolor: rgb(36, 36, 38);
-  --lew-pop-bgcolor-active: rgba(255, 255, 255, 0.05);
+  --lew-pop-bgcolor-hover: rgba(255, 255, 255, 0.05);
   --lew-pop-border: 1px rgba(255, 255, 255, 0.15) solid;
   --lew-pop-box-shadow: rgba(0, 0, 0, 0.04) 0px 2px 8px,
     rgba(0, 0, 0, 0.05) 0px 30px 70px;
 
   // 提示框
   --lew-tooltip-bgcolor: rgb(39, 39, 41);
-  --lew-tooltip-bgcolor-active: var(--lew-pop-bgcolor-active);
+  --lew-tooltip-bgcolor-active: var(--lew-pop-bgcolor-hover);
   --lew-tooltip-box-shadow: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.25))
     drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.04))
     drop-shadow(0px 30px 70px rgba(0, 0, 0, 0.1));

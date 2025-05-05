@@ -1,7 +1,7 @@
 const contextMenu = {
   label: '表示テキスト',
   value: '値',
-  renderIcon: 'アイコン描画関数',
+  icon: 'アイコン描画関数',
   children: '子ノードコレクション',
   disabled: '無効オプション',
   isDividerLine: '区切り線の有無',
@@ -371,8 +371,7 @@ export default {
           'メニューツリー項目のタイトルテキスト。名前付きスロット "label" でカスタマイズ可能',
         value: 'メニュー項目の値（一意性を識別）',
         level: 'メニューツリー項目のレベル（1から開始）',
-        renderIcon: 'アイコン描画関数',
-        renderLabel: 'ラベル描画関数',
+        icon: 'アイコン描画関数',
         tagText: 'メニュー項目のバッジテキスト',
         tagType: 'メニュー項目のバッジタイプ',
         tagColor: 'メニュー項目のバッジカラー',
@@ -449,7 +448,6 @@ export default {
       props: {
         options: '右クリックメニューの設定',
         disabled: '右クリックメニューを無効化するかどうか',
-        selectHandler: 'メニュー項目選択時のコールバック関数'
       },
       'options(ContextMenus)': contextMenu
     },

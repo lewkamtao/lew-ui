@@ -1,7 +1,7 @@
 const contextMenu = {
   label: 'Etichetta',
   value: 'Valore',
-  renderIcon: 'Funzione di rendering icona',
+  icon: 'Funzione di rendering icona',
   children: 'Elementi figlio',
   disabled: 'Disabilitato',
   isDividerLine: 'Linea divisoria',
@@ -371,8 +371,7 @@ export default {
         label: 'Titolo voce (personalizzabile con slot "label")',
         value: 'Identificatore univoco voce',
         level: 'Livello gerarchico (da 1)',
-        renderIcon: 'Funzione rendering icona',
-        renderLabel: 'Funzione rendering etichetta',
+        icon: 'Funzione rendering icona',
         tagText: 'Testo badge',
         tagType: 'Tipo badge',
         tagColor: 'Colore badge',
@@ -448,7 +447,6 @@ export default {
       props: {
         options: 'Configurazione menu',
         disabled: 'Menu disabilitato',
-        selectHandler: 'Callback selezione voce'
       },
       'options(ContextMenus)': contextMenu
     },

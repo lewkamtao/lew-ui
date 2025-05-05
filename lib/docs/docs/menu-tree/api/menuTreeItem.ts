@@ -4,7 +4,7 @@ export default {
   data: [
     {
       name: 'label',
-      type: 'string',
+      type: 'string | Function',
       default: "''"
     },
     {
@@ -23,12 +23,7 @@ export default {
       default: 'false'
     },
     {
-      name: 'renderIcon',
-      type: 'Function',
-      default: '() => {}'
-    },
-    {
-      name: 'renderLabel',
+      name: 'icon',
       type: 'Function',
       default: '() => {}'
     },

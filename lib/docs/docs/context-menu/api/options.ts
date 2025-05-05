@@ -14,7 +14,12 @@ export default {
       default: '-'
     },
     {
-      name: 'renderIcon',
+      name: 'icon',
+      type: 'Function',
+      default: '-'
+    },
+    {
+      name: 'onClick',
       type: 'Function',
       default: '-'
     },
@@ -34,7 +39,7 @@ export default {
       default: 'false'
     },
     {
-      name: 'checkbox',
+      name: 'checkable',
       type: 'Boolean',
       default: 'false'
     },

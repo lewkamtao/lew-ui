@@ -2,13 +2,12 @@ import type { ExtractPropTypes } from 'vue'
 import { isValidCssValue } from 'lew-ui/utils'
 
 export type MenuTreeItem = {
-  label: string
+  label: string | (() => any)
   value: string | number
   active?: boolean
   disabled?: boolean
   children?: MenuTreeItem[]
-  renderIcon?: () => any
-  renderLabel?: () => any
+  icon?: () => any
 }
 
 export const menuTreeModel = {
@@ -58,7 +57,7 @@ export const menuTreeProps = {
 
 export const menuTreeItemProps = {
   label: {
-    type: String,
+    type: [String, Function],
     default: '',
     description:
       '菜单树项的标题文本。也可以使用具名插槽 "label" 自定义标题内容。'
@@ -75,15 +74,10 @@ export const menuTreeItemProps = {
       return true
     }
   },
-  renderIcon: {
+  icon: {
     type: Function,
     default: () => {},
     description: '菜单树项的图标。'
-  },
-  renderLabel: {
-    type: Function,
-    default: () => {},
-    description: '自定义渲染标签内容的函数。'
   },
   disabled: {
     type: Boolean,

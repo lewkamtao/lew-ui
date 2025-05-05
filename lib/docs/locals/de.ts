@@ -1,7 +1,7 @@
 const contextMenu = {
   label: 'Angezeigter Text',
   value: 'Wert',
-  renderIcon: 'Icon-Renderfunktion',
+  icon: 'Icon-Renderfunktion',
   children: 'Unterknoten-Sammlung',
   disabled: 'Deaktivierte Option',
   isDividerLine: 'Ist Trennlinie',
@@ -394,8 +394,7 @@ export default {
           'Titel des Menübaum-Elements. Kann auch über den benannten Slot "label" angepasst werden',
         value: 'Wert des Menüpunkts zur eindeutigen Identifizierung',
         level: 'Ebene des Menübaum-Elements, beginnt bei 1',
-        renderIcon: 'Icon-Renderfunktion',
-        renderLabel: 'Label-Renderfunktion',
+        icon: 'Icon-Renderfunktion',
         tagText: 'Badge-Text des Menüpunkts',
         tagType: 'Badge-Typ des Menüpunkts',
         tagColor: 'Badge-Farbe des Menüpunkts',
@@ -471,7 +470,6 @@ export default {
       props: {
         options: 'Kontextmenü-Konfiguration',
         disabled: 'Kontextmenü deaktivieren',
-        selectHandler: 'Callback-Funktion bei Menüpunkt-Auswahl'
       },
       'options(ContextMenus)': contextMenu
     },

@@ -9,6 +9,10 @@ export const tagProps = {
     type: String,
     default: ''
   },
+  oversize: {
+    type: Boolean,
+    default: false
+  },
   type: {
     type: String as PropType<TagType>,
     default: 'light',

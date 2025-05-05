@@ -1,7 +1,7 @@
 const contextMenu = {
     label: 'Texte affiché',
     value: 'Valeur',
-    renderIcon: 'Fonction de rendu d\'icône',
+    icon: 'Fonction de rendu d\'icône',
     children: 'Collection de nœuds enfants',
     disabled: 'Option désactivée',
     isDividerLine: 'Est une ligne de séparation',
@@ -363,8 +363,7 @@ const contextMenu = {
           label: 'Texte du titre de l\'élément d\'arborescence de menu. Vous pouvez également utiliser le slot nommé "label" pour personnaliser le contenu du titre.',
           value: 'Valeur de l\'élément de menu, utilisée pour identifier l\'unicité de l\'élément de menu.',
           level: 'Niveau de l\'élément d\'arborescence de menu, commençant à 1.',
-          renderIcon: 'Fonction de rendu d\'icône',
-          renderLabel: 'Fonction de rendu d\'étiquette',
+          icon: 'Fonction de rendu d\'icône',
           tagText: 'Texte du badge de l\'élément de menu',
           tagType: 'Type du badge de l\'élément de menu',
           tagColor: 'Couleur du badge de l\'élément de menu',
@@ -440,7 +439,6 @@ const contextMenu = {
         props: {
           options: 'Configuration du menu contextuel',
           disabled: 'Désactiver le menu contextuel',
-          selectHandler: 'Fonction de rappel lors de la sélection d\'un élément de menu'
         },
         'options(ContextMenus)': contextMenu
       },

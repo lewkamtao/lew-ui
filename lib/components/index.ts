@@ -9,7 +9,6 @@ export * from './text-trim'
 export * from './flex'
 export * from './mark'
 export * from './expand'
-
 // 导航
 export * from './back-top'
 export * from './steps'
@@ -17,6 +16,7 @@ export * from './menu'
 export * from './menu-tree'
 export * from './dropdown'
 export * from './breadcrumb'
+export * from './action-box'
 
 // 表单
 export * from './form'

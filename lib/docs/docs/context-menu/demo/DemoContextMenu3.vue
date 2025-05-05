@@ -1,35 +1,30 @@
 <script lang="ts" setup>
-import type { ContextMenus } from 'lew-ui/directives'
-import dayjs from 'dayjs'
+import type { ContextMenus } from "lew-ui/directives";
+import dayjs from "dayjs";
 
 const options = ref<ContextMenus[]>([
   {
-    label: '新建文件',
-    value: 'new-file'
+    label: "新建文件",
+    value: "new-file",
   },
   {
-    label: '保存文件',
-    value: 'save-file'
-  }
-])
+    label: "保存文件",
+    value: "save-file",
+  },
+]);
 
 setInterval(() => {
   options.value[0] = {
     ...options.value[0],
-    label: dayjs().format('YYYY-MM-DD HH:mm:ss')
-  }
-}, 1000)
-
-const selectHandler = (item: ContextMenus) => {
-  LewMessage.info(`你点击了：${item.value} `)
-}
+    label: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+  };
+}, 1000);
 </script>
 <template>
   <lew-flex>
     <div
       v-context-menu="{
         options,
-        selectHandler
       }"
       class="box"
     >

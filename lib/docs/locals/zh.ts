@@ -1,7 +1,7 @@
 const contextMenu = {
   label: '显示文本',
   value: '值',
-  renderIcon: '渲染图标函数',
+  icon: '渲染图标函数',
   children: '子节点集合',
   disabled: '禁用选项',
   isDividerLine: '是否是分割线',
@@ -367,8 +367,7 @@ export default {
           '菜单树项的标题文本。也可以使用具名插槽 "label" 自定义标题内容。',
         value: '菜单项的值，用于标识菜单项的唯一性。',
         level: '菜单树项的层级，从 1 开始。',
-        renderIcon: '图标渲染函数',
-        renderLabel: '标签渲染函数',
+        icon: '图标渲染函数',
         tagText: '菜单项的徽章文本',
         tagType: '菜单项的徽章类型',
         tagColor: '菜单项的徽章颜色',
@@ -443,8 +442,7 @@ export default {
       },
       props: {
         options: '右键菜单配置',
-        disabled: '是否禁用右键菜单',
-        selectHandler: '选中菜单项时的回调函数'
+        disabled: '是否禁用右键菜单'
       },
       'options(ContextMenus)': contextMenu
     },
@@ -1420,7 +1418,8 @@ export default {
       demo11: {
         title: '分组表头',
         tipsTitle: '受限提示',
-        tipsContent: '如果你希望分组的表头拥有固定列的效果，你需要给所有固定列表头都设定好宽度，包括所有的父级节点，否则可能产生错位。'
+        tipsContent:
+          '如果你希望分组的表头拥有固定列的效果，你需要给所有固定列表头都设定好宽度，包括所有的父级节点，否则可能产生错位。'
       },
       props: {
         columns: '列',

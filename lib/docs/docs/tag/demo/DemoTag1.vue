@@ -1,3 +1,3 @@
 <template>
-  <lew-tag type="light" color="red">HOT</lew-tag>
+  <lew-tag type="light" color="red">待处理</lew-tag>
 </template>

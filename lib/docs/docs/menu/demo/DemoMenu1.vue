@@ -18,12 +18,12 @@ const options = ref([
       {
         label: 'Dashboard',
         value: 'Dashboard',
-        renderIcon: () => h(PieChart, { size: 14 })
+        icon: () => h(PieChart, { size: 14 })
       },
       {
         label: 'Performance',
         value: 'Performance Monitoring',
-        renderIcon: () => h(BarChart, { size: 14 })
+        icon: () => h(BarChart, { size: 14 })
       }
     ]
   },
@@ -34,24 +34,24 @@ const options = ref([
       {
         label: 'User Guide',
         value: 'User Guide',
-        renderIcon: () => h(Book, { size: 14 }),
+        icon: () => h(Book, { size: 14 }),
         tagText: 'Beta',
         tagColor: 'success'
       },
       {
         label: 'Hotspot Mgmt',
         value: 'Hotspot Management',
-        renderIcon: () => h(Flame, { size: 14 })
+        icon: () => h(Flame, { size: 14 })
       },
       {
         label: 'Checklist',
         value: 'Checklist',
-        renderIcon: () => h(CheckSquare, { size: 14 })
+        icon: () => h(CheckSquare, { size: 14 })
       },
       {
         label: 'Satisfaction Survey',
         value: 'Satisfaction Survey',
-        renderIcon: () => h(Smile, { size: 14 })
+        icon: () => h(Smile, { size: 14 })
       }
     ]
   },
@@ -62,12 +62,12 @@ const options = ref([
       {
         label: 'Group Mgmt',
         value: 'Group Management',
-        renderIcon: () => h(Users, { size: 14 })
+        icon: () => h(Users, { size: 14 })
       },
       {
         label: 'Theme Settings',
         value: 'Theme Settings',
-        renderIcon: () => h(Palette, { size: 14 })
+        icon: () => h(Palette, { size: 14 })
       }
     ]
   }

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { stepsProps } from './props'
-import { LewTextTrim } from 'lew-ui'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { any2px } from 'lew-ui/utils'
-defineProps(stepsProps)
-const stepsValue: Ref<number | undefined> = defineModel()
+import { stepsProps } from "./props";
+import { LewTextTrim } from "lew-ui";
+import Icon from "lew-ui/utils/Icon.vue";
+import { any2px } from "lew-ui/utils";
+defineProps(stepsProps);
+const stepsValue: Ref<number | undefined> = defineModel();
 </script>
 
 <template>
@@ -22,7 +22,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
         'lew-steps-item-warning':
           index === (stepsValue || 1) - 1 && status === 'warning',
         'lew-steps-item-done':
-          index === (stepsValue || 1) - 1 && status === 'done'
+          index === (stepsValue || 1) - 1 && status === 'done',
       }"
     >
       <div class="lew-steps-item-index">
@@ -140,7 +140,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
     }
     .lew-steps-item-title::before {
       position: absolute;
-      content: '';
+      content: "";
       top: 50%;
       left: 100%;
       transform: translateY(-50%);
@@ -150,7 +150,7 @@ const stepsValue: Ref<number | undefined> = defineModel()
     }
     .lew-steps-item-title::after {
       position: absolute;
-      content: '';
+      content: "";
       top: 50%;
       left: 100%;
       transform: translateY(-50%);

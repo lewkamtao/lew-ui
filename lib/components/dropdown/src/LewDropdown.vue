@@ -1,34 +1,23 @@
 <script setup lang="ts">
-import { LewPopover, LewContextMenu } from 'lew-ui'
-import { dropdownProps } from './props'
-import type { DropdownOptions } from './props'
+import { LewPopover, LewContextMenu } from "lew-ui";
+import { dropdownProps } from "./props";
 
-defineProps(dropdownProps)
+defineProps(dropdownProps);
 
-const selectedKeys = defineModel<string[]>('selectedKeys')
-
-const emit = defineEmits(['change'])
-
-const lewPopoverRef = ref()
+const lewPopoverRef = ref();
 
 const show = () => {
-  lewPopoverRef.value.show()
-}
+  lewPopoverRef.value.show();
+};
 
 const hide = () => {
-  lewPopoverRef.value.hide()
-}
-
-const change = (item: DropdownOptions) => {
-    console.log(item)
-  emit('change', item)
-  hide()
-}
+  lewPopoverRef.value.hide();
+};
 
 defineExpose({
   show,
-  hide
-})
+  hide,
+});
 </script>
 
 <template>
@@ -43,10 +32,9 @@ defineExpose({
     </template>
     <template #popover-body>
       <lew-context-menu
-        v-model:selected-keys="selectedKeys"
-        :checkbox="checkbox"
+        :checkable="checkable"
         :options="options"
-        @select="change"
+        @select="hide"
       />
     </template>
   </lew-popover>

@@ -1,183 +1,210 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
-import { useDark } from '@vueuse/core'
-import { Sun, Moon, Github, Languages } from 'lucide-vue-next'
-import { setLocale } from 'lew-ui'
-import docsLocale, { getInitialLocale } from '@/locals'
+import { useRoute, useRouter } from "vue-router";
+import { useDark } from "@vueuse/core";
+import { Sun, Moon, Github, Languages } from "lucide-vue-next";
+import { setLocale } from "lew-ui";
+import docsLocale, { getInitialLocale } from "@/locals";
 
-const version = ref('v2.6.8')
+const version = ref("v2.6.8");
 
 const isDark = useDark({
-  selector: 'html',
-  valueDark: 'lew-dark',
-  valueLight: 'lew-light'
-})
+  selector: "html",
+  valueDark: "lew-dark",
+  valueLight: "lew-light",
+});
 
-const router = useRouter()
-const route = useRoute()
+const router = useRouter();
+const route = useRoute();
 
 const goHome = () => {
-  if (route.name === 'R-LewHome') {
-    LewMessage.warning('你已经在首页了！')
+  if (route.name === "R-LewHome") {
+    LewMessage.warning("你已经在首页了！");
   } else {
-    router.push('/')
+    router.push("/");
   }
-}
+};
 
 const goToPage = (path: string, isNewTab = false) => {
   if (isNewTab) {
-    const URL = router.resolve(path).href
-    window.open(URL, '_blank')
+    const URL = router.resolve(path).href;
+    window.open(URL, "_blank");
   } else {
-    router.push(path)
+    router.push(path);
   }
-}
+};
 
 const goToGithub = () => {
-  window.open('https://github.com/lewkamtao/Lew-UI', '_blank')
-}
+  window.open("https://github.com/lewkamtao/Lew-UI", "_blank");
+};
 
 const getLocaleIcon = (locale: string) => {
-  return new URL(`../assets/images/local/${locale}.svg`, import.meta.url).href
-}
+  return new URL(`../assets/images/local/${locale}.svg`, import.meta.url).href;
+};
 const localeOptions = ref([
   {
-    label: '简体中文',
-    value: 'zh',
-    checkbox: true,
-    renderIcon: () => {
-      return h('img', {
-        src: getLocaleIcon('zh'),
-        alt: '简体中文',
+    label: "简体中文",
+    value: "zh",
+    checkable: true,
+    icon: () => {
+      return h("img", {
+        src: getLocaleIcon("zh"),
+        alt: "简体中文",
         width: 16,
-        height: 16
-      })
-    }
+        height: 16,
+      });
+    },
+    onClick: (e: any) => {
+      changeLanguage(e);
+    },
   },
   {
-    label: 'English',
-    value: 'en',
-    checkbox: true,
-    renderIcon: () => {
-      return h('img', {
-        src: getLocaleIcon('us'),
-        alt: 'English',
+    label: "English",
+    value: "en",
+    checkable: true,
+    icon: () => {
+      return h("img", {
+        src: getLocaleIcon("us"),
+        alt: "English",
         width: 16,
-        height: 16
-      })
-    }
+        height: 16,
+      });
+    },
+    onClick: (e: any) => {
+      changeLanguage(e);
+    },
   },
 
   {
-    label: '日本語',
-    value: 'ja',
-    checkbox: true,
-    renderIcon: () => {
-      return h('img', {
-        src: getLocaleIcon('ja'),
-        alt: '日本語',
+    label: "日本語",
+    value: "ja",
+    checkable: true,
+    icon: () => {
+      return h("img", {
+        src: getLocaleIcon("ja"),
+        alt: "日本語",
         width: 16,
-        height: 16
-      })
-    }
+        height: 16,
+      });
+    },
+    onClick: (e: any) => {
+      changeLanguage(e);
+    },
   },
   {
-    label: '한국어',
-    value: 'ko',
-    checkbox: true,
-    renderIcon: () => {
-      return h('img', {
-        src: getLocaleIcon('ko'),
-        alt: '한국어',
+    label: "한국어",
+    value: "ko",
+    checkable: true,
+    icon: () => {
+      return h("img", {
+        src: getLocaleIcon("ko"),
+        alt: "한국어",
         width: 16,
-        height: 16
-      })
-    }
+        height: 16,
+      });
+    },
+    onClick: (e: any) => {
+      changeLanguage(e);
+    },
   },
   {
-    label: 'Español',
-    value: 'es',
-    checkbox: true,
-    renderIcon: () => {
-      return h('img', {
-        src: getLocaleIcon('es'),
-        alt: 'Español',
+    label: "Español",
+    value: "es",
+    checkable: true,
+    icon: () => {
+      return h("img", {
+        src: getLocaleIcon("es"),
+        alt: "Español",
         width: 16,
-        height: 16
-      })
-    }
+        height: 16,
+      });
+    },
+    onClick: (e: any) => {
+      changeLanguage(e);
+    },
   },
   {
-    label: 'Français',
-    value: 'fr',
-    checkbox: true,
-    renderIcon: () => {
-      return h('img', {
-        src: getLocaleIcon('fr'),
-        alt: 'Français',
+    label: "Français",
+    value: "fr",
+    checkable: true,
+    icon: () => {
+      return h("img", {
+        src: getLocaleIcon("fr"),
+        alt: "Français",
         width: 16,
-        height: 16
-      })
-    }
+        height: 16,
+      });
+    },
+    onClick: (e: any) => {
+      changeLanguage(e);
+    },
   },
   {
-    label: 'Deutsch',
-    value: 'de',
-    checkbox: true,
-    renderIcon: () => {
-      return h('img', {
-        src: getLocaleIcon('de'),
-        alt: 'Deutsch',
+    label: "Deutsch",
+    value: "de",
+    checkable: true,
+    icon: () => {
+      return h("img", {
+        src: getLocaleIcon("de"),
+        alt: "Deutsch",
         width: 16,
-        height: 16
-      })
-    }
+        height: 16,
+      });
+    },
+    onClick: (e: any) => {
+      changeLanguage(e);
+    },
   },
   {
-    label: 'Português',
-    value: 'pt',
-    checkbox: true,
-    renderIcon: () => {
-      return h('img', {
-        src: getLocaleIcon('br'),
-        alt: 'Português',
+    label: "Português",
+    value: "pt",
+    checkable: true,
+    icon: () => {
+      return h("img", {
+        src: getLocaleIcon("br"),
+        alt: "Português",
         width: 16,
-        height: 16
-      })
-    }
+        height: 16,
+      });
+    },
+    onClick: (e: any) => {
+      changeLanguage(e);
+    },
   },
   {
-    label: 'Italiano',
-    value: 'it',
-    checkbox: true,
-    renderIcon: () => {
-      return h('img', {
-        src: getLocaleIcon('it'),
-        alt: 'Italiano',
+    label: "Italiano",
+    value: "it",
+    checkable: true,
+    icon: () => {
+      return h("img", {
+        src: getLocaleIcon("it"),
+        alt: "Italiano",
         width: 16,
-        height: 16
-      })
-    }
-  }
-])
+        height: 16,
+      });
+    },
+    onClick: (e: any) => {
+      changeLanguage(e);
+    },
+  },
+]);
 
 const changeLanguage = (e: any) => {
-  const { value } = e
-  setLocale(value)
-  docsLocale.use(value)
+  const { value } = e;
+  setLocale(value);
+  docsLocale.use(value);
   localeOptions.value.map((item: any) => {
     if (item.value === e.value) {
-      item.checked = true
+      item.checked = true;
     } else {
-      item.checked = false
+      item.checked = false;
     }
-  })
-}
+  });
+};
 
 // 初始化语言（异步）
 getInitialLocale().then((locale) => {
-  changeLanguage({ value: locale })
-})
+  changeLanguage({ value: locale });
+});
 </script>
 
 <template>
@@ -197,21 +224,21 @@ getInitialLocale().then((locale) => {
     </lew-flex>
     <lew-flex gap="15" class="menu">
       <div class="menu-item" @click="goToPage('/')">
-        {{ docsLocale.t('home.home') }}
+        {{ docsLocale.t("home.home") }}
       </div>
       <div class="menu-item" @click="goToPage('/Install')">
-        {{ docsLocale.t('home.install') }}
+        {{ docsLocale.t("home.install") }}
       </div>
       <div class="menu-item" @click="goToPage('/Image')">
-        {{ docsLocale.t('home.components') }}
+        {{ docsLocale.t("home.components") }}
       </div>
       <div class="menu-item" @click="goToPage('/form-engine', true)">
         <lew-flex gap="5">
-          {{ docsLocale.t('home.formEngine') }}
+          {{ docsLocale.t("home.formEngine") }}
         </lew-flex>
       </div>
       <div class="menu-item" @click="goToPage('/desc-engine', true)">
-        <lew-flex gap="5"> {{ docsLocale.t('home.descEngine') }} </lew-flex>
+        <lew-flex gap="5"> {{ docsLocale.t("home.descEngine") }} </lew-flex>
       </div>
     </lew-flex>
     <lew-flex gap="15" x="end" class="menu">
@@ -219,7 +246,7 @@ getInitialLocale().then((locale) => {
         <Sun class="icon-mode-sunny" :size="18" />
         <Moon class="icon-mode-moon" :size="18" />
       </div>
-      <lew-dropdown :options="localeOptions" @change="changeLanguage">
+      <lew-dropdown :options="localeOptions">
         <div class="menu-item menu-item-icon">
           <Languages :size="18" />
         </div>

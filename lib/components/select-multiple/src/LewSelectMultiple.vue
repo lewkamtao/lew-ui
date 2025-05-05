@@ -785,7 +785,7 @@ const getResultNum = computed(() => {
 
       &:hover {
         color: var(--lew-text-color-0);
-        background-color: var(--lew-pop-bgcolor-active);
+        background-color: var(--lew-pop-bgcolor-hover);
 
         .lew-checkbox {
           .lew-checkbox-icon-box {
@@ -799,7 +799,7 @@ const getResultNum = computed(() => {
       &-active {
         color: var(--lew-checkbox-color);
         font-weight: bold;
-        background-color: var(--lew-pop-bgcolor-active);
+        background-color: var(--lew-pop-bgcolor-hover);
 
         .icon-check {
           margin-right: 10px;
@@ -808,7 +808,7 @@ const getResultNum = computed(() => {
         &:hover {
           color: var(--lew-checkbox-color);
           font-weight: bold;
-          background-color: var(--lew-pop-bgcolor-active);
+          background-color: var(--lew-pop-bgcolor-hover);
 
           .lew-checkbox {
             .lew-checkbox-icon-box {

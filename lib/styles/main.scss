@@ -4,6 +4,15 @@ html {
   background: var(--lew-bgcolor-4);
   overflow: hidden;
   font-size: 14px;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol';
 }
 
 input,

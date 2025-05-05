@@ -651,7 +651,7 @@ defineExpose({ show, hide });
 
     .lew-select-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bgcolor-active);
+      background-color: var(--lew-pop-bgcolor-hover);
     }
 
     .lew-select-slot-item {
@@ -661,12 +661,12 @@ defineExpose({ show, hide });
 
     .lew-select-slot-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bgcolor-active);
+      background-color: var(--lew-pop-bgcolor-hover);
     }
 
     .lew-select-item-active {
       color: var(--lew-checkbox-color);
-      background-color: var(--lew-pop-bgcolor-active);
+      background-color: var(--lew-pop-bgcolor-hover);
       font-weight: bold;
 
       .lew-icon-check {
@@ -676,7 +676,7 @@ defineExpose({ show, hide });
 
     .lew-select-item-active:hover {
       color: var(--lew-checkbox-color);
-      background-color: var(--lew-pop-bgcolor-active);
+      background-color: var(--lew-pop-bgcolor-hover);
       font-weight: bold;
     }
 

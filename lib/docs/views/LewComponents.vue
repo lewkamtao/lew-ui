@@ -116,6 +116,12 @@ const options: MenuOptions[] = [
         tagText: "New",
         tagColor: "green",
       },
+      {
+        label: "ActionBox",
+        value: "/ActionBox",
+        tagText: "New",
+        tagColor: "green",
+      },
     ],
   },
   {

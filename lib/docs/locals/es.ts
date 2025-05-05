@@ -1,7 +1,7 @@
 const contextMenu = {
   label: 'Texto mostrado',
   value: 'Valor',
-  renderIcon: 'Función de renderizado de icono',
+  icon: 'Función de renderizado de icono',
   children: 'Colección de nodos hijos',
   disabled: 'Opción deshabilitada',
   isDividerLine: 'Es línea divisoria',
@@ -387,8 +387,7 @@ export default {
         value:
           'Value of the menu item, used to identify the uniqueness of the menu item.',
         level: 'Level of the menu tree item, starting from 1.',
-        renderIcon: 'Icon rendering function',
-        renderLabel: 'Label rendering function',
+        icon: 'Icon rendering function',
         tagText: 'Badge text of the menu item',
         tagType: 'Badge type of the menu item',
         tagColor: 'Badge color of the menu item',
@@ -464,7 +463,6 @@ export default {
       props: {
         options: 'Right-click menu configuration',
         disabled: 'Disable right-click menu',
-        selectHandler: 'Callback function when a menu item is selected'
       },
       'options(ContextMenus)': contextMenu
     },

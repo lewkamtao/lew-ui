@@ -1,10 +1,19 @@
 <script setup lang="ts">
 import { treeItemProps } from "./props";
-import { LewCollapseTransition, LewTextTrim, LewCheckbox, LewMessage } from "lew-ui";
+import {
+  LewCollapseTransition,
+  LewTextTrim,
+  LewCheckbox,
+  LewMessage,
+} from "lew-ui";
 import Icon from "lew-ui/utils/Icon.vue";
 import { cloneDeep } from "lodash-es";
 import transformTree, { formatTree } from "./transformTree";
-import { findAllChildrenKeys, findNodeByKey, insertChildByKey } from "lew-ui/utils";
+import {
+  findAllChildrenKeys,
+  findNodeByKey,
+  insertChildByKey,
+} from "lew-ui/utils";
 
 const props = defineProps(treeItemProps);
 
@@ -53,7 +62,11 @@ const select = () => {
     } else {
       if (index > -1) {
         newModelValue.splice(index, 1);
-        if (props.extend && props.extend.children && props.extend.children.length > 0) {
+        if (
+          props.extend &&
+          props.extend.children &&
+          props.extend.children.length > 0
+        ) {
           const childKeys = findAllChildrenKeys(props.extend);
           newModelValue = newModelValue.filter(
             (key: string | number) => !childKeys.includes(key)
@@ -73,7 +86,11 @@ const select = () => {
         }
       } else {
         newModelValue.push(props.__key);
-        if (props.extend && props.extend.children && props.extend.children.length > 0) {
+        if (
+          props.extend &&
+          props.extend.children &&
+          props.extend.children.length > 0
+        ) {
           const childKeys = findAllChildrenKeys(props.extend);
           childKeys.forEach((key: string | number) => {
             if (!newModelValue.includes(key)) {
@@ -82,13 +99,19 @@ const select = () => {
           });
         }
       }
-      if (props.extend && props.extend.parentKey && props.extend.parentKeyPaths) {
+      if (
+        props.extend &&
+        props.extend.parentKey &&
+        props.extend.parentKeyPaths
+      ) {
         const parentKey = props.extend.parentKey;
         const parentNode = findNodeByKey(parentKey, _dataSource.value);
         const siblingKeys = (parentNode?.children || []).map((e: any) => e.key);
         if (
           siblingKeys.length > 0 &&
-          siblingKeys.every((key: string | number) => newModelValue.includes(key))
+          siblingKeys.every((key: string | number) =>
+            newModelValue.includes(key)
+          )
         ) {
           if (!newModelValue.includes(parentKey)) {
             newModelValue.push(parentKey);
@@ -134,7 +157,11 @@ const expand = async () => {
       })) as any;
       if (status === "success") {
         loaded.value = true;
-        insertChildByKey(_dataSource.value, props.__key as string | number, result);
+        insertChildByKey(
+          _dataSource.value,
+          props.__key as string | number,
+          result
+        );
 
         _dataSource.value = formatTree({
           dataSource: _dataSource.value,
@@ -146,7 +173,10 @@ const expand = async () => {
         cacheDataSource.value = cloneDeep(_dataSource.value);
 
         console.log(_dataSource.value, "lew-tree-item");
-        expandKeys.value = [...(expandKeys.value as (string | number)[]), props.__key];
+        expandKeys.value = [
+          ...(expandKeys.value as (string | number)[]),
+          props.__key,
+        ];
       } else {
         loaded.value = false;
         LewMessage.error(error.message);
@@ -197,7 +227,12 @@ const isNodePartiallySelected = computed(() => {
         class="lew-cascader-loading-icon"
         type="loader"
       />
-      <Icon v-else class="lew-tree-chevron-right-icon" :size="14" type="chevron-right" />
+      <Icon
+        v-else
+        class="lew-tree-chevron-right-icon"
+        :size="14"
+        type="chevron-right"
+      />
     </div>
     <div class="lew-tree-item-label" @click="select">
       <lew-checkbox
@@ -229,7 +264,10 @@ const isNodePartiallySelected = computed(() => {
   </div>
   <lew-collapse-transition v-if="!isLeaf">
     <div
-      v-if="((expandKeys || []).length > 0 && expandKeys.includes(__key)) || expandAll"
+      v-if="
+        ((expandKeys || []).length > 0 && expandKeys.includes(__key)) ||
+        expandAll
+      "
       class="lew-tree-item-main"
     >
       <slot />
@@ -261,7 +299,7 @@ const isNodePartiallySelected = computed(() => {
     }
   }
   .lew-tree-chevron-right:hover {
-    background-color: var(--lew-bgcolor-3);
+    background-color: var(--lew-pop-bgcolor-hover);
   }
   .lew-tree-item-label {
     position: relative;
@@ -288,10 +326,11 @@ const isNodePartiallySelected = computed(() => {
     margin-right: 6px;
   }
   .lew-tree-item-label:hover {
-    background-color: var(--lew-bgcolor-3);
+    background-color: var(--lew-pop-bgcolor-hover);
     user-select: none;
     .lew-checkbox:deep(.lew-checkbox-icon-box) {
-      border: var(--lew-form-border-width) var(--lew-checkbox-border-color-hover) solid;
+      border: var(--lew-form-border-width)
+        var(--lew-checkbox-border-color-hover) solid;
 
       background: var(--lew-form-bgcolor);
     }

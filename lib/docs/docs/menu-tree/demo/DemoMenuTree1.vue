@@ -9,7 +9,7 @@ const options = [
   {
     value: '1',
     label: 'iPhone',
-    renderIcon: () => h(Smartphone, { size: 14 }),
+    icon: () => h(Smartphone, { size: 14 }),
     children: [
       {
         value: '1-1',
@@ -50,7 +50,7 @@ const options = [
   {
     value: '2',
     label: 'Mac',
-    renderIcon: () => h(Laptop, { size: 14 }),
+    icon: () => h(Laptop, { size: 14 }),
     children: [
       {
         value: '2-1',
@@ -87,7 +87,7 @@ const options = [
   {
     value: '3',
     label: 'Watch',
-    renderIcon: () => h(Watch, { size: 14 }),
+    icon: () => h(Watch, { size: 14 }),
     children: [
       {
         value: '3-1',
@@ -121,7 +121,7 @@ const options = [
   {
     value: '4',
     label: 'AirPods',
-    renderIcon: () => h(Headphones, { size: 14 }),
+    icon: () => h(Headphones, { size: 14 }),
     children: [
       {
         value: '4-1',
@@ -161,7 +161,7 @@ const options = [
   {
     value: '5',
     label: 'TV & Home',
-    renderIcon: () => h(Tv, { size: 14 }),
+    icon: () => h(Tv, { size: 14 }),
     children: [
       {
         value: '5-1',

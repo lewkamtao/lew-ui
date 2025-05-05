@@ -1,7 +1,7 @@
 const contextMenu = {
   label: '표시 텍스트',
   value: '값',
-  renderIcon: '아이콘 렌더링 함수',
+  icon: '아이콘 렌더링 함수',
   children: '하위 항목 컬렉션',
   disabled: '비활성화 옵션',
   isDividerLine: '구분선 여부',
@@ -377,8 +377,7 @@ export default {
           '메뉴 트리 항목의 제목 텍스트. "label" 이름이 지정된 슬롯을 사용하여 제목 내용을 사용자 정의할 수도 있습니다.',
         value: '메뉴 항목의 값, 메뉴 항목의 고유성을 식별하는 데 사용됩니다.',
         level: '메뉴 트리 항목의 레벨, 1부터 시작.',
-        renderIcon: '아이콘 렌더링 함수',
-        renderLabel: '라벨 렌더링 함수',
+        icon: '아이콘 렌더링 함수',
         tagText: '메뉴 항목의 배지 텍스트',
         tagType: '메뉴 항목의 배지 유형',
         tagColor: '메뉴 항목의 배지 색상',
@@ -455,7 +454,6 @@ export default {
       props: {
         options: '우클릭 메뉴 구성',
         disabled: '우클릭 메뉴 비활성화 여부',
-        selectHandler: '메뉴 항목 선택 시 콜백 함수'
       },
       'options(ContextMenus)': contextMenu
     },

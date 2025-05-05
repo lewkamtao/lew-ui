@@ -33,15 +33,16 @@ const select = (item: MenuOptions) => {
         <div
           class="lew-menu-item lew-menu-item-child"
           :class="{
-            'lew-menu-item-last': item.children && index === item.children.length - 1,
+            'lew-menu-item-last':
+              item.children && index === item.children.length - 1,
             'lew-menu-item-active': cItem.value === modelValue,
           }"
           @click="select(cItem)"
         >
           <component
-            v-if="cItem.renderIcon"
+            v-if="cItem.icon"
             class="lew-menu-icon"
-            :is="cItem.renderIcon"
+            :is="cItem.icon"
             :size="14"
           />
           <lew-text-trim :text="cItem.label" />
@@ -92,12 +93,13 @@ const select = (item: MenuOptions) => {
     line-height: 36px;
     cursor: pointer;
     border-radius: var(--lew-border-radius-small);
+    transition: background-color 0.25s, color 0.25s;
   }
   .lew-menu-icon {
     flex-shrink: 0;
   }
   .lew-menu-item-child:hover {
-    background-color: var(--lew-bgcolor-2);
+    background-color: var(--lew-form-bgcolor-hover);
     color: var(--lew-text-color-1);
   }
   .lew-menu-item-active {

@@ -5,17 +5,6 @@ import { getUniqueId } from 'lew-ui/utils'
 import { isFunction } from 'lodash-es'
 import _LewContextMenu from './LewContextMenu.vue'
 
-interface SelectHandlerParams {
-  item: ContextMenus
-  parent: ContextMenus[]
-  value: string
-  menuConfig: any
-}
-interface OnSelectHandlerParams {
-  item: ContextMenus
-  parent: ContextMenus[]
-  value: string
-}
 /**
  * 全局右键菜单配置接口
  */
@@ -24,7 +13,6 @@ interface LewContextMenuConfig {
     string,
     {
       options: ContextMenus[]
-      selectHandler: (params: SelectHandlerParams) => void
       disabled: boolean
     }
   >
@@ -84,14 +72,11 @@ const findContextMenuId = (el: HTMLElement): string => {
 /**
  * 创建右键菜单组件实例
  */
-const createContextMenu = (
-  options: ContextMenus[],
-  onSelect: (e: OnSelectHandlerParams) => void
-) => {
+const createContextMenu = (options: ContextMenus[]) => {
   const menuDom = document.createElement('div')
   createApp({
     render() {
-      return h(_LewContextMenu, { options, onSelect })
+      return h(_LewContextMenu, { options })
     }
   }).mount(menuDom)
   return menuDom
@@ -108,15 +93,11 @@ export const LewVContextMenu = {
           initLewContextMenu()
         }
 
-        const {
-          options = [],
-          disabled = false,
-          selectHandler = () => {}
-        } = binding.value
+        const { options = [], disabled = false } = binding.value
         const elId = el.id || getUniqueId()
 
         el.setAttribute('lew-context-menu-id', elId)
-        window.LewContextMenu.menu[elId] = { options, selectHandler, disabled }
+        window.LewContextMenu.menu[elId] = { options, disabled }
 
         if (!window.LewContextMenu.contextMenu) {
           window.LewContextMenu.contextMenu = (e: MouseEvent) => {
@@ -130,22 +111,7 @@ export const LewVContextMenu = {
             const { instance } = window.LewContextMenu
             instance.hide()
 
-            const menuDom = createContextMenu(
-              menuConfig.options,
-              ({ item, parent, value }: OnSelectHandlerParams) => {
-                if (isFunction(menuConfig.selectHandler)) {
-                  menuConfig.selectHandler({
-                    item,
-                    parent,
-                    value,
-                    menuConfig
-                  })
-                }
-                if (!(item.children || []).length) {
-                  instance.hide()
-                }
-              }
-            )
+            const menuDom = createContextMenu(menuConfig.options)
 
             setTimeout(() => {
               instance.setProps({
@@ -172,12 +138,8 @@ export const LewVContextMenu = {
       updated(el: HTMLElement, binding: DirectiveBinding) {
         const id = findContextMenuId(el)
         if (id) {
-          const {
-            options = [],
-            disabled = false,
-            selectHandler = () => {}
-          } = binding.value
-          window.LewContextMenu.menu[id] = { options, disabled, selectHandler }
+          const { options = [], disabled = false } = binding.value
+          window.LewContextMenu.menu[id] = { options, disabled }
         } else {
           console.error('发生未知错误！找不到 lew-context-menu-id。')
         }
@@ -204,8 +166,9 @@ export interface ContextMenus {
   disabled?: boolean
   level?: number
   isDividerLine?: boolean
-  checkbox?: boolean
+  checkable?: boolean
   checked?: boolean
+  onClick?: (item: ContextMenus) => void
   [key: string]: any
 }
 
@@ -222,10 +185,5 @@ export const contextMenuProps = {
     type: Boolean,
     default: false,
     description: '是否禁用右键菜单'
-  },
-  selectHandler: {
-    type: Function as PropType<(item: ContextMenus) => void>,
-    default: () => {},
-    description: '选中菜单项时的回调函数'
   }
 }

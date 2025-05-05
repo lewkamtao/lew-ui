@@ -1,85 +1,111 @@
 <script lang="ts" setup>
-const options = ref([
+const options = ref<any[]>([
   {
-    label: '设置',
-    value: 'setting',
+    label: "语言",
+    value: "language",
     children: [
       {
-        label: '语言',
-        value: 'language',
-        children: [
-          {
-            label: '中文（Chinese',
-            value: 'chinese',
-            checked: true,
-            checkbox: true
-          },
-          {
-            label: '英语（English）',
-            value: 'english',
-            checkbox: true
-          }
-        ]
-      },
-
-      {
-        label: '主题',
-        value: 'theme',
-        children: [
-          {
-            label: 'Light',
-            value: 'light',
-            type: 'radio',
-            checked: true,
-            checkbox: true
-          },
-          {
-            label: 'Dark',
-            type: 'radio',
-            value: 'dark',
-            checkbox: true
-          }
-        ]
+        label: "中文（Chinese",
+        value: "chinese",
+        checked: true,
+        checkable: true,
+        onClick: (item: any) => setTheme(item, "language"),
       },
       {
-        label: '字体样式（编译器）',
-        value: 'font'
-      }
-    ]
+        label: "英语（English）",
+        value: "english",
+        checkable: true,
+        onClick: (item: any) => setTheme(item, "language"),
+      },
+    ],
   },
   {
-    label: '关于',
-    value: 'about'
+    label: "主题",
+    value: "theme",
+    children: [
+      {
+        label: "Light",
+        value: "light",
+        type: "radio",
+        checked: true,
+        checkable: true,
+        onClick: (item: any) => setTheme(item, "theme"),
+      },
+      {
+        label: "Dark",
+        type: "radio",
+        value: "dark",
+        checkable: true,
+        onClick: (item: any) => setTheme(item, "theme"),
+      },
+    ],
   },
   {
-    isDividerLine: true
+    label: "字体样式（编译器）",
+    value: "font",
   },
   {
-    label: '帮助',
-    value: 'help'
+    label: "关于",
+    value: "about",
   },
   {
-    label: '是否为最新',
-    checkbox: true,
+    isDividerLine: true,
+  },
+  {
+    label: "帮助",
+    value: "help",
+  },
+  {
+    label: "是否为最新",
+    checkable: true,
     checked: true,
-    value: 'check-update'
+    value: "check-update",
+    onClick: (item: any) => setUpdate(item),
+  },
+]);
+
+const setTheme = (item: any, type = "theme") => {
+  // 找到label Theme 的item的索引
+  const themeIndex = options.value.findIndex(
+    (item: any) => item.value === type
+  );
+  if (themeIndex !== -1 && options.value[themeIndex].children) {
+    // 创建新的children数组以保持响应式
+    const newChildren = options.value[themeIndex].children!.map(
+      (child: any) => {
+        if (child.checkable) {
+          return {
+            ...child,
+            checked: child.label === item.label,
+          };
+        }
+        return child;
+      }
+    );
+
+    // 更新整个options数组以触发响应式更新
+    let newOptions = options.value.map((item: any, index: number) => {
+      if (index === themeIndex) {
+        return {
+          ...item,
+          children: newChildren,
+        };
+      }
+      return item;
+    });
+    options.value = newOptions;
   }
-])
-const selectHandler = (e: any) => {
-  const { item, parent } = e
-  parent.forEach((item: any) => {
-    item.checked = false
-  })
-  item.checked = true
-  LewMessage.info(`你点击了：${item.value} `)
-}
+};
+
+const setUpdate = (item: any) => {
+  item.checked = !item.checked;
+};
 </script>
 <template>
   <lew-flex>
     <div
       v-context-menu="{
         options,
-        selectHandler
       }"
       class="box"
     >

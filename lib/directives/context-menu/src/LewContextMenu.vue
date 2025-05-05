@@ -1,20 +1,40 @@
 <script setup lang="ts">
-import { LewFlex, LewEmpty } from "lew-ui/components";
+import { LewFlex, LewEmpty } from "lew-ui";
 import tippy from "tippy.js";
 import LewContextMenu from "./LewContextMenu.vue";
-import { getUniqueId } from "lew-ui/utils";
+import { getUniqueId, isVueComponent } from "lew-ui/utils";
 import { ContextMenus, contextMenuProps, initLewContextMenu } from "./index";
 import Icon from "lew-ui/utils/Icon.vue";
+import { isFunction } from "lodash-es";
 const props = defineProps(contextMenuProps);
 
 const emit = defineEmits(["select"]);
 
-const clickItem = (item: ContextMenus, options: ContextMenus[]) => {
-  emit("select", {
-    item,
-    parent: options,
-    value: item.value,
-  });
+const clickItem = (item: ContextMenus) => {
+  if (isFunction(item.onClick)) {
+    // 创建一个item的代理
+    const proxy = new Proxy(item, {
+      get(target, prop, receiver) {
+        return Reflect.get(target, prop, receiver);
+      },
+    });
+    item.onClick(proxy);
+  }
+  if (window.LewContextMenu) {
+    const { instance } = window.LewContextMenu;
+    if (instance) {
+      instance.hide();
+    }
+  }
+
+  if (window.LewHoverMenu) {
+    const { instance } = window.LewHoverMenu;
+    if (instance) {
+      instance.hide();
+    }
+  }
+
+  emit("select", item);
 };
 
 const uniqueId = getUniqueId();
@@ -22,17 +42,20 @@ const uniqueId = getUniqueId();
 let itemRefs = ref<(Element | globalThis.ComponentPublicInstance | null)[]>([]);
 const initTippy = () => {
   itemRefs.value.forEach((el: any, index: number) => {
-    const item = props.options[index];
-    if (!el || item.disabled || (item.children || []).length === 0) {
+    if (
+      !el ||
+      props.options[index].disabled ||
+      (props.options[index].children || []).length === 0
+    ) {
       return;
     }
     const menuDom = document.createElement("div");
     createApp({
       render() {
         return h(LewContextMenu, {
-          options: item.children,
-          onSelect: (e: any) => {
-            emit("select", e);
+          options: props.options[index].children,
+          onSelect: (item: any) => {
+            emit("select", item);
           },
         });
       },
@@ -58,16 +81,10 @@ const initTippy = () => {
       content: menuDom,
     });
 
-    window.LewContextMenu.menuInstance[uniqueId].popper.children[0].setAttribute(
-      "data-lew",
-      "popover"
-    );
+    window.LewContextMenu.menuInstance[
+      uniqueId
+    ].popper.children[0].setAttribute("data-lew", "popover");
   });
-};
-
-const renderIcon = ({ renderIcon }: any) => {
-  if (renderIcon) return renderIcon();
-  return "";
 };
 
 onMounted(() => {
@@ -95,7 +112,7 @@ onUnmounted(() => {
       >
         <div
           :ref="(el) => itemRefs.push(el)"
-          @click="clickItem(item, options)"
+          @click="clickItem(item)"
           class="lew-context-menu-item"
           :style="{ 'animation-delay': index * 10 + 'ms' }"
           :class="{
@@ -103,13 +120,21 @@ onUnmounted(() => {
           }"
         >
           <div
-            v-if="options.filter((e) => e.checkbox).length > 0"
-            class="lew-context-menu-checkbox"
+            v-if="options.filter((e) => e.checkable).length > 0"
+            class="lew-context-menu-checkable"
           >
-            <Icon v-if="item.checked" :size="12" :stroke-width="2.5" type="check" />
+            <Icon
+              v-if="item.checked"
+              :size="12"
+              :stroke-width="2.5"
+              type="check"
+            />
           </div>
           <div class="lew-context-menu-label">
-            <renderIcon v-if="item.renderIcon" :renderIcon="item.renderIcon" />
+            <component
+              v-if="isVueComponent(item.icon)"
+              :is="isFunction(item.icon) ? item.icon() : item.icon"
+            />
             <div class="lew-context-menu-label-text">
               {{ item.label }}
             </div>
@@ -176,7 +201,7 @@ onUnmounted(() => {
           opacity: 1;
         }
       }
-      .lew-context-menu-checkbox {
+      .lew-context-menu-checkable {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -216,7 +241,7 @@ onUnmounted(() => {
 
     .lew-context-menu-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bgcolor-active);
+      background-color: var(--lew-pop-bgcolor-hover);
     }
   }
 

@@ -1,7 +1,7 @@
 const contextMenu = {
     label: 'Texto exibido',
     value: 'Valor',
-    renderIcon: 'Função de renderização de ícone',
+    icon: 'Função de renderização de ícone',
     children: 'Coleção de nós filhos',
     disabled: 'Opção desativada',
     isDividerLine: 'É linha divisória',
@@ -363,8 +363,7 @@ const contextMenu = {
           label: 'Texto do título. Pode usar slot "label" para personalizar',
           value: 'Valor único do item',
           level: 'Nível do item, começa em 1',
-          renderIcon: 'Função de renderização do ícone',
-          renderLabel: 'Função de renderização do rótulo',
+          icon: 'Função de renderização do ícone',
           tagText: 'Texto do badge',
           tagType: 'Tipo do badge',
           tagColor: 'Cor do badge',
@@ -439,7 +438,6 @@ const contextMenu = {
         props: {
           options: 'Configuração do menu',
           disabled: 'Desabilita o menu',
-          selectHandler: 'Callback ao selecionar item'
         },
         'options(ContextMenus)': contextMenu
       },

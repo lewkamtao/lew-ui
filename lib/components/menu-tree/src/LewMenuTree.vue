@@ -53,6 +53,26 @@ const menuTreeStyle = computed(() => ({
 // 获取悬浮菜单指令
 const hoverMenu = resolveDirective("hover-menu");
 
+// 处理菜单项选择
+const handleMenuSelect = (item: MenuTreeItem) => {
+  if (item.disabled) return;
+
+  if (item.children?.length) {
+    // 处理展开/收起
+    const index = expandKeys.value.indexOf(item.value as never);
+    if (index > -1) {
+      expandKeys.value.splice(index, 1);
+    } else {
+      expandKeys.value.push(item.value as never);
+    }
+  } else {
+    // 处理选中/取消选中
+    modelValue.value = modelValue.value !== item.value ? item.value : "";
+  }
+  // 克隆展开键数组以触发响应式更新
+  expandKeys.value = cloneDeep(expandKeys.value);
+  emit("change", item);
+};
 // 递归这棵树，给每个节点添加一个 active 字段，用于标识当前选中项
 const transformTree = (tree: MenuTreeItem[]): MenuTreeItem[] => {
   return tree.map((item) => ({
@@ -60,6 +80,7 @@ const transformTree = (tree: MenuTreeItem[]): MenuTreeItem[] => {
     active:
       item.value === modelValue.value ||
       getModelValueKeyPath.value.includes(item.value as never),
+    onClick: handleMenuSelect,
     children: item.children?.length ? transformTree(item.children) : undefined,
   }));
 };
@@ -74,26 +95,6 @@ const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
     ];
   };
 
-  // 处理菜单项选择
-  const handleMenuSelect = (item: MenuTreeItem) => {
-    if (item.disabled) return;
-
-    if (item.children?.length) {
-      // 处理展开/收起
-      const index = expandKeys.value.indexOf(item.value as never);
-      if (index > -1) {
-        expandKeys.value.splice(index, 1);
-      } else {
-        expandKeys.value.push(item.value as never);
-      }
-    } else {
-      // 处理选中/取消选中
-      modelValue.value = modelValue.value !== item.value ? item.value : "";
-    }
-    // 克隆展开键数组以触发响应式更新
-    expandKeys.value = cloneDeep(expandKeys.value);
-  };
-
   // 只有第一层级才添加悬浮菜单指令
   const directives: any =
     level === 1
@@ -102,14 +103,12 @@ const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
             hoverMenu,
             {
               options: buildHoverMenuOptions(item),
-              type: "mouseover",
               disabled: !collapsed.value,
-              selectHandler: handleMenuSelect,
             },
           ],
         ]
       : [];
-  const { disabled, renderIcon, renderLabel, label, value } = item;
+  const { disabled, icon, label, value } = item;
   // 渲染菜单项组件
   return withDirectives(
     h(
@@ -120,12 +119,14 @@ const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
         level,
         isLeaf: !item.children?.length,
         disabled,
-        renderIcon: () => renderIcon,
-        renderLabel: () => renderLabel,
+        icon: () => icon,
         onChange: () => emit("change", item),
       },
       // 递归渲染子项
-      () => (item.children || []).map((child) => renderMenuTreeItem(child, level + 1))
+      () =>
+        (item.children || []).map((child) =>
+          renderMenuTreeItem(child, level + 1)
+        )
     ),
     directives
   );
