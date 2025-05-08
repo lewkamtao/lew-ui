@@ -5,8 +5,9 @@ const contextMenu = {
   children: '子ノードコレクション',
   disabled: '無効オプション',
   isDividerLine: '区切り線の有無',
-  checkbox: 'チェックボックスの有無',
-  checked: '選択状態'
+  checkable: 'チェックボックスの有無',
+  checked: '選択状態',
+  onClick: 'クリックイベント'
 }
 
 export default {
@@ -35,14 +36,16 @@ export default {
   components: {
     image: {
       name: '画像 Image',
-      description: '遅延読み込み、ローディング状態、エラー処理などをサポートする洗練された画像表示',
+      description:
+        '遅延読み込み、ローディング状態、エラー処理などをサポートする洗練された画像表示',
       demo1: {
         title: '基本的な使い方'
       },
       demo2: {
         title: 'ローディング状態',
         tipsTitle: 'ヒント',
-        tipsContent: 'プレースホルダー効果を得るには、width と height を設定する必要があります。'
+        tipsContent:
+          'プレースホルダー効果を得るには、width と height を設定する必要があります。'
       },
       demo3: {
         title: 'ローディング失敗'
@@ -61,7 +64,8 @@ export default {
     },
     avatar: {
       name: 'アバター Avatar',
-      description: '画像、アイコン、テキストの3つの形式をサポートする洗練されたアバターコンポーネント',
+      description:
+        '画像、アイコン、テキストの3つの形式をサポートする洗練されたアバターコンポーネント',
       demo1: {
         title: '基本的な使い方'
       },
@@ -151,7 +155,8 @@ export default {
         color: 'カラーテーマ',
         closable: '閉じることができるか',
         disabled: '無効状態',
-        round: '角丸'
+        round: '角丸',
+        oversize: 'よりゆったりとしたサイズ'
       }
     },
     badge: {
@@ -296,24 +301,29 @@ export default {
       }
     },
     steps: {
-      name: 'ステップ Steps',
-      description: '操作プロセスを明確に表示し、ユーザーの現在位置を把握',
+      name: 'ステップ',
+      description:
+        '操作プロセスを明確に表示し、ユーザーが現在の位置を把握できるようにします',
       demo1: {
-        title: '基本的な使い方'
+        title: '基本的な使用法'
       },
       demo2: {
         title: 'ステータス'
       },
       demo3: {
-        title: 'ローディング中'
+        title: '読み込み中'
       },
       model: {
-        modelValue: '現在のアクティブステップのインデックス'
+        modelValue: '現在アクティブなステップのインデックス値'
       },
       props: {
         options: 'ステップ設定項目の配列',
         status: 'ステップの現在のステータス',
         minWidth: '最小ステップ幅'
+      },
+      options: {
+        title: 'ステップのタイトル',
+        description: 'ステップの説明'
       }
     },
     menu: {
@@ -396,7 +406,8 @@ export default {
       props: {
         options: 'メニューオプション設定',
         trigger: 'トリガー方式',
-        placement: 'メニューの表示位置'
+        placement: 'メニューの表示位置',
+        checkable: '選択可能'
       },
       'options(ContextMenus)': contextMenu,
       events: {
@@ -447,7 +458,7 @@ export default {
       },
       props: {
         options: '右クリックメニューの設定',
-        disabled: '右クリックメニューを無効化するかどうか',
+        disabled: '右クリックメニューを無効化するかどうか'
       },
       'options(ContextMenus)': contextMenu
     },
@@ -556,6 +567,7 @@ export default {
         showCount:
           '文字数カウントを表示するかどうか（typeがtextの場合のみ有効）',
         align: 'テキストの配置',
+        width: '入力フィールドの幅',
         minWidth: '最小幅（数値またはCSSの単位付き文字列）',
         autoWidth: 'コンテンツに応じて幅を自動調整するかどうか',
         selectByFocus: 'フォーカス時に全テキストを選択するかどうか',
@@ -578,6 +590,11 @@ export default {
         input: '入力時に発火',
         clear: 'クリア時に発火',
         ok: '確定時に発火'
+      },
+      model: {
+        modelValue: 'バインド値',
+        prefixValue: 'プレフィックスのバインド値',
+        suffixValue: 'サフィックスのバインド値'
       }
     },
     inputNumber: {
@@ -1401,7 +1418,8 @@ export default {
       description: '強力なテーブルコンポーネント、よりクリアなデータ表示を実現',
       model: {
         modelValue: 'パラメータ名',
-        selectedKeys: '選択されたキー'
+        selectedKeys: '選択されたキー',
+        sortValue: 'ソート値'
       },
       demo1: {
         title: '通常'
@@ -1433,9 +1451,16 @@ export default {
       demo10: {
         title: 'データなし'
       },
+      demo11: {
+        title: 'グループヘッダー',
+        tipsTitle: '制限に関する注意',
+        tipsContent:
+          'グループヘッダーで固定列の効果を得たい場合、すべての固定列ヘッダーに幅を設定する必要があります。すべての親ノードを含め、そうしないと位置ずれが発生する可能性があります。'
+      },
       props: {
         columns: '列',
         dataSource: 'データソース',
+        bordered: '境界線',
         size: 'サイズ',
         checkable: '選択可能',
         maxHeight: '最大高さ',
@@ -1518,6 +1543,8 @@ export default {
       props: {
         dataSource: 'データソース',
         multiple: '複数選択',
+        height: '高さ',
+        searchable: '検索可能',
         checkable: 'チェックボックス表示',
         expandAll: 'デフォルトで全展開',
         free: '自由選択',
@@ -1636,24 +1663,8 @@ export default {
     },
     message: {
       name: 'メッセージ Message',
-      description: '画面上部に表示される簡潔なメッセージで、操作の結果をすばやく伝えます',
-      demo1: {
-        title: '基本的な使い方'
-      },
-      demo2: {
-        title: 'タイプ'
-      },
-      methods: {
-        info: '情報タイプのメッセージを表示',
-        success: '成功タイプのメッセージを表示',
-        warning: '警告タイプのメッセージを表示',
-        error: 'エラータイプのメッセージを表示',
-        clear: 'すべてのメッセージをクリア'
-      }
-    },
-    notification: {
-      name: '通知 Notification',
-      description: '画面の隅に表示される通知メッセージで、重要な情報をより効果的に伝達します',
+      description:
+        '画面上部に表示される簡潔なメッセージで、操作の結果をすばやく伝えます',
       demo1: {
         title: '基本的な使い方'
       },
@@ -1661,35 +1672,38 @@ export default {
         title: 'タイプ'
       },
       demo3: {
-        title: '位置'
+        title: 'リクエストのシミュレーション'
       },
-      demo4: {
-        title: '自動クローズなし'
-      },
-      methods: {
-        info: '情報タイプの通知を表示するメソッド',
-        success: '成功タイプの通知を表示するメソッド',
-        warning: '警告タイプの通知を表示するメソッド',
-        error: 'エラータイプの通知を表示するメソッド',
-        open: '通知を開くメソッド',
-        close: '通知を閉じるメソッド',
-        closeAll: 'すべての通知を閉じるメソッド'
+      events: {
+        close: '閉じられたときに発火'
       },
       props: {
-        id: '通知ID',
+        type: 'タイプ',
+        content: '内容',
+        duration: '表示時間'
+      }
+    },
+    notification: {
+      name: '通知 Notification',
+      description:
+        '画面の隅に表示される通知メッセージで、重要な情報をより効果的に伝達します',
+      demo1: {
+        title: '基本的な使い方'
+      },
+      demo2: {
+        title: 'タイプ'
+      },
+      props: {
         type: '通知タイプ',
         title: 'タイトル',
-        duration: '表示時間',
         content: '通知内容',
-        showClose: '閉じるボタンを表示するかどうか',
-        offset: '画面端からのオフセット',
-        placement: '位置',
-        zIndex: '重なり順序'
+        delay: '遅延時間'
       }
     },
     drawer: {
       name: 'ドロワー Drawer',
-      description: 'サイドから滑り出す面板で、よりスムーズな操作体験を提供します',
+      description:
+        'サイドから滑り出す面板で、よりスムーズな操作体験を提供します',
       demo1: {
         title: '基本的な使い方'
       },
@@ -1699,24 +1713,29 @@ export default {
       demo3: {
         title: 'ヘッダーレス'
       },
+      demo4: {
+        title: 'ESCキーで閉じる設定'
+      },
       model: {
         visible: '表示状態'
       },
       props: {
         title: 'タイトル',
-        hideHeader: 'ヘッダーを非表示にするかどうか',
-        header: 'ヘッダーコンテンツ',
-        placement: '表示位置',
         width: '幅',
         height: '高さ',
         closeOnClickOverlay: 'オーバーレイクリックで閉じるかどうか',
         closeByEsc: 'ESCキーで閉じるかどうか',
-        zIndex: '重なり順序'
+        zIndex: '重なり順序',
+        position: '位置',
+        hideFooter: 'フッターを非表示にするかどうか',
+        okProps: '確認ボタンのプロパティ',
+        cancelProps: 'キャンセルボタンのプロパティ'
       }
     },
     dialog: {
       name: 'ダイアログ Dialog',
-      description: 'モーダルダイアログで、重要な情報のやり取りをより際立たせます',
+      description:
+        'モーダルダイアログで、重要な情報のやり取りをより際立たせます',
       demo1: {
         title: '基本的な使い方'
       },
@@ -1744,7 +1763,8 @@ export default {
     },
     modal: {
       name: 'モーダル Modal',
-      description: 'より柔軟なモーダルウィンドウで、ポップアップの対話をより豊かに表現します',
+      description:
+        'より柔軟なモーダルウィンドウで、ポップアップの対話をより豊かに表現します',
       demo1: {
         title: '基本的な使い方'
       },
@@ -1873,6 +1893,35 @@ export default {
         padding: 'パディング',
         width: '幅',
         height: '高さ'
+      }
+    },
+    actionBox: {
+      name: 'アクションボックス',
+      description: '柔軟な操作ボタンで、ユーザーが素早く操作できます',
+      demo1: {
+        title: '基本的な使い方'
+      },
+      demo2: {
+        title: 'ドロップダウンメニュー'
+      },
+      demo3: {
+        title: 'カスタムアイコン'
+      },
+      demo4: {
+        title: 'カスタムスタイル'
+      },
+      props: {
+        options: 'アクションボタンの設定',
+        dropdownThreshold: 'ドロップダウンメニューのしきい値',
+        dropdownLabel: 'ドロップダウンメニューのテキスト',
+        dropdownIcon: 'ドロップダウンメニューのアイコン',
+        divider: '区切り線の表示'
+      },
+      options: {
+        label: 'アクションボタンのテキスト',
+        icon: 'アクションボタンのアイコン',
+        onClick: 'アクションボタンのクリックイベント',
+        customRender: 'カスタムレンダリング内容'
       }
     }
   }

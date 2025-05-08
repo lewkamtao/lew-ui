@@ -5,8 +5,9 @@ const contextMenu = {
   children: 'Elementi figlio',
   disabled: 'Disabilitato',
   isDividerLine: 'Linea divisoria',
-  checkbox: 'Casella di controllo',
-  checked: 'Selezionato'
+  checkable: 'Casella di controllo',
+  checked: 'Selezionato',
+  onClick: 'Evento click'
 }
 
 export default {
@@ -155,7 +156,8 @@ export default {
         color: 'Tema colore',
         closable: 'Chiudibile',
         disabled: 'Disabilitato',
-        round: 'Bordi arrotondati'
+        round: 'Bordi arrotondati',
+        oversize: 'Dimensione più ampia'
       }
     },
     badge: {
@@ -297,8 +299,9 @@ export default {
       }
     },
     steps: {
-      name: 'Step',
-      description: 'Mostra chiaramente il progresso del processo',
+      name: 'Passi',
+      description:
+        "Mostra chiaramente il processo di operazione, permettendo all'utente di sapere dove si trova",
       demo1: {
         title: 'Uso base'
       },
@@ -309,12 +312,16 @@ export default {
         title: 'Caricamento'
       },
       model: {
-        modelValue: 'Indice step attivo'
+        modelValue: 'Indice del passo attualmente attivo'
       },
       props: {
-        options: 'Array configurazione step',
-        status: 'Stato corrente',
-        minWidth: 'Larghezza minima step'
+        options: 'Array di configurazione dei passi',
+        status: 'Stato attuale dei passi',
+        minWidth: 'Larghezza minima del passo'
+      },
+      options: {
+        title: 'Titolo del passo',
+        description: 'Descrizione del passo'
       }
     },
     menu: {
@@ -395,7 +402,8 @@ export default {
       props: {
         options: 'Configurazione menu',
         trigger: 'Modalità attivazione',
-        placement: 'Posizione menu'
+        placement: 'Posizione menu',
+        checkable: 'Selezionabile'
       },
       'options(ContextMenus)': contextMenu,
       events: {
@@ -446,7 +454,7 @@ export default {
       },
       props: {
         options: 'Configurazione menu',
-        disabled: 'Menu disabilitato',
+        disabled: 'Menu disabilitato'
       },
       'options(ContextMenus)': contextMenu
     },
@@ -546,6 +554,7 @@ export default {
       props: {
         type: 'Tipo input',
         size: 'Dimensione',
+        width: 'Larghezza input',
         placeholder: 'Testo segnaposto',
         disabled: 'Disabilitato',
         readonly: 'Sola lettura',
@@ -573,6 +582,11 @@ export default {
         input: 'Callback input',
         clear: 'Callback cancellazione',
         ok: 'Callback conferma'
+      },
+      model: {
+        modelValue: 'Valore legato',
+        prefixValue: 'Valore prefisso',
+        suffixValue: 'Valore suffisso'
       }
     },
     inputNumber: {
@@ -1148,7 +1162,7 @@ export default {
         modelValue: 'Valore legato'
       },
       props: {
-        dataSource: 'Sorgente dati albero',
+        dataSource: 'Sorgente dati',
         defaultValue: 'Valore predefinito',
         placeholder: 'Testo segnaposto',
         size: 'Dimensione componente',
@@ -1409,7 +1423,8 @@ export default {
       description: 'Potente componente tabella per visualizzazione dati',
       model: {
         modelValue: 'Nome parametro',
-        selectedKeys: 'Chiavi selezionate'
+        selectedKeys: 'Chiavi selezionate',
+        sortValue: 'Valore ordinamento'
       },
       demo1: {
         title: 'Base'
@@ -1441,6 +1456,12 @@ export default {
       demo10: {
         title: 'Nessun dato'
       },
+      demo11: {
+        title: 'Intestazioni raggruppate',
+        tipsTitle: 'Avviso limitazione',
+        tipsContent:
+          'Se desideri che le intestazioni raggruppate abbiano colonne fisse, devi impostare la larghezza per tutte le colonne fisse, inclusi tutti i nodi padre, altrimenti potrebbero verificarsi disallineamenti.'
+      },
       props: {
         columns: 'Colonne',
         dataSource: 'Sorgente dati',
@@ -1448,7 +1469,8 @@ export default {
         checkable: 'Selezionabile',
         maxHeight: 'Altezza massima',
         multiple: 'Selezione multipla',
-        rowKey: 'Chiave riga'
+        rowKey: 'Chiave riga',
+        bordered: 'Bordi'
       },
       tableColumns: {
         field: 'Campo',
@@ -1525,7 +1547,9 @@ export default {
         dataSource: 'Sorgente dati',
         multiple: 'Selezione multipla',
         checkable: 'Mostra checkbox',
-        expandAll: 'Espandi tutto di default',
+        height: 'Altezza',
+        searchable: 'Ricercabile',
+        expandAll: 'Espandi tutti i nodi di default',
         free: 'Selezione libera',
         showLine: 'Mostra linee connessione',
         trigger: 'Modalità attivazione',
@@ -1877,6 +1901,35 @@ export default {
         padding: 'Padding',
         width: 'Larghezza',
         height: 'Altezza'
+      }
+    },
+    actionBox: {
+      name: 'Box azioni',
+      description: 'Pulsanti di azione flessibili per operazioni rapide',
+      demo1: {
+        title: 'Utilizzo base'
+      },
+      demo2: {
+        title: 'Menu a discesa'
+      },
+      demo3: {
+        title: 'Icone personalizzate'
+      },
+      demo4: {
+        title: 'Stili personalizzati'
+      },
+      props: {
+        options: 'Configurazione pulsanti azione',
+        dropdownThreshold: 'Soglia menu a discesa',
+        dropdownLabel: 'Testo menu a discesa',
+        dropdownIcon: 'Icona menu a discesa',
+        divider: 'Mostra divisore'
+      },
+      options: {
+        label: 'Testo pulsante azione',
+        icon: 'Icona pulsante azione',
+        onClick: 'Evento click pulsante azione',
+        customRender: 'Contenuto rendering personalizzato'
       }
     }
   }

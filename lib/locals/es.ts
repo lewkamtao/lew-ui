@@ -11,7 +11,8 @@ export default {
   },
   inputTag: {
     placeholder: 'Escriba y presione Enter para añadir una etiqueta',
-    maxLength: 'Ha alcanzado el límite de {maxLength} etiquetas, elimine algunas para continuar añadiendo',
+    maxLength:
+      'Ha alcanzado el límite de {maxLength} etiquetas, elimine algunas para continuar añadiendo',
     duplicate: 'Esta etiqueta ya existe, por favor introduzca una nueva'
   },
   select: {

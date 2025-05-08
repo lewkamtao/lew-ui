@@ -5,8 +5,9 @@ const contextMenu = {
   children: '하위 항목 컬렉션',
   disabled: '비활성화 옵션',
   isDividerLine: '구분선 여부',
-  checkbox: '체크박스 여부',
-  checked: '선택 여부'
+  checkable: '체크박스 여부',
+  checked: '선택 여부',
+  onClick: '클릭 이벤트'
 }
 
 export default {
@@ -154,7 +155,8 @@ export default {
         color: '색상 테마',
         closable: '닫기 가능 여부',
         disabled: '비활성화 여부',
-        round: '둥근 모서리 여부'
+        round: '둥근 모서리 여부',
+        oversize: '더 여유로운 크기'
       }
     },
     badge: {
@@ -303,7 +305,7 @@ export default {
     steps: {
       name: '단계 Steps',
       description:
-        '작업 프로세스를 명확하게 표시하여 사용자가 현재 위치를 알 수 있게 합니다',
+        '작업 과정을 명확하게 표시하여 사용자가 현재 위치를 알 수 있게 합니다',
       demo1: {
         title: '기본 사용법'
       },
@@ -320,6 +322,10 @@ export default {
         options: '단계 구성 항목 배열',
         status: '단계의 현재 상태',
         minWidth: '최소 단계 너비'
+      },
+      options: {
+        title: '단계 제목',
+        description: '단계 설명'
       }
     },
     menu: {
@@ -402,7 +408,8 @@ export default {
       props: {
         options: '메뉴 옵션 구성',
         trigger: '트리거 방식',
-        placement: '메뉴 표시 위치'
+        placement: '메뉴 팝업 위치',
+        checkable: '선택 가능 여부'
       },
       'options(ContextMenus)': contextMenu,
       events: {
@@ -453,9 +460,38 @@ export default {
       },
       props: {
         options: '우클릭 메뉴 구성',
-        disabled: '우클릭 메뉴 비활성화 여부',
+        disabled: '우클릭 메뉴 비활성화 여부'
       },
       'options(ContextMenus)': contextMenu
+    },
+    actionBox: {
+      name: '액션 박스',
+      description: '유연한 작업 버튼으로 사용자가 빠르게 작업할 수 있습니다',
+      demo1: {
+        title: '기본 사용법'
+      },
+      demo2: {
+        title: '드롭다운 메뉴'
+      },
+      demo3: {
+        title: '사용자 정의 아이콘'
+      },
+      demo4: {
+        title: '사용자 정의 스타일'
+      },
+      props: {
+        options: '작업 버튼 설정',
+        dropdownThreshold: '드롭다운 메뉴 임계값',
+        dropdownLabel: '드롭다운 메뉴 텍스트',
+        dropdownIcon: '드롭다운 메뉴 아이콘',
+        divider: '구분선 표시'
+      },
+      options: {
+        label: '작업 버튼 텍스트',
+        icon: '작업 버튼 아이콘',
+        onClick: '작업 버튼 클릭 이벤트',
+        customRender: '사용자 정의 렌더링 내용'
+      }
     },
     form: {
       name: '폼 Form',
@@ -554,6 +590,7 @@ export default {
       props: {
         type: '입력 상자 유형',
         size: '입력 상자 크기',
+        width: '입력 상자 너비',
         placeholder: '입력 상자 플레이스홀더 텍스트',
         disabled: '입력 상자 비활성화 여부',
         readonly: '입력 상자 읽기 전용 설정 여부',
@@ -584,6 +621,11 @@ export default {
         input: '입력 상자 내용 입력 시 트리거',
         clear: '입력 상자 지우기 시 트리거',
         ok: '입력 상자 확인 시 트리거'
+      },
+      model: {
+        modelValue: '입력 상자 바인딩 값',
+        prefixValue: '접두사 바인딩 값',
+        suffixValue: '접미사 바인딩 값'
       }
     },
     inputNumber: {
@@ -1416,7 +1458,8 @@ export default {
         '강력한 기능의 테이블 컴포넌트로 데이터 표시를 더욱 명확하게 합니다',
       model: {
         modelValue: '바인딩 값',
-        selectedKeys: '선택된 키'
+        selectedKeys: '선택된 키',
+        sortValue: '정렬 값'
       },
       demo1: {
         title: '일반'
@@ -1448,9 +1491,16 @@ export default {
       demo10: {
         title: '데이터 없음'
       },
+      demo11: {
+        title: '그룹 헤더',
+        tipsTitle: '제한 참고사항',
+        tipsContent:
+          '그룹 헤더에서 고정 열 효과를 원하는 경우, 모든 고정 열 헤더에 너비를 설정해야 합니다. 모든 부모 노드를 포함하지 않으면 위치가 어긋날 수 있습니다.'
+      },
       props: {
         columns: '열',
         dataSource: '데이터 소스',
+        bordered: '테두리',
         size: '크기',
         checkable: '선택 가능',
         maxHeight: '최대 높이',

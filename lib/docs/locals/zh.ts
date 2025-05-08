@@ -5,8 +5,9 @@ const contextMenu = {
   children: '子节点集合',
   disabled: '禁用选项',
   isDividerLine: '是否是分割线',
-  checkbox: '是否是复选框',
-  checked: '是否选中'
+  checkable: '是否是复选框',
+  checked: '是否选中',
+  onClick: '点击事件'
 }
 
 export default {
@@ -151,7 +152,8 @@ export default {
         color: '颜色主题',
         closable: '是否可关闭',
         disabled: '是否禁用',
-        round: '是否圆角'
+        round: '是否圆角',
+        oversize: '更宽松的尺寸'
       }
     },
     badge: {
@@ -310,6 +312,10 @@ export default {
         options: '步骤配置项数组',
         status: '步骤条的当前状态',
         minWidth: '最小步骤宽度'
+      },
+      options: {
+        title: '步骤标题',
+        description: '步骤描述'
       }
     },
     menu: {
@@ -391,7 +397,8 @@ export default {
       props: {
         options: '菜单选项配置',
         trigger: '触发方式',
-        placement: '菜单弹出位置'
+        placement: '菜单弹出位置',
+        checkable: '是否可选择'
       },
       'options(ContextMenus)': contextMenu,
       events: {
@@ -446,6 +453,35 @@ export default {
       },
       'options(ContextMenus)': contextMenu
     },
+    actionBox: {
+      name: '操作按钮 ActionBox',
+      description: '灵活的操作按钮，让用户可以快速进行操作',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '下拉菜单'
+      },
+      demo3: {
+        title: '自定义图标'
+      },
+      demo4: {
+        title: '自定义样式'
+      },
+      props: {
+        options: '操作按钮配置',
+        dropdownThreshold: '下拉菜单的阈值',
+        dropdownLabel: '下拉菜单的文本',
+        dropdownIcon: '下拉菜单的图标',
+        divider: '是否显示分割线'
+      },
+      options: {
+        label: '操作按钮的文本',
+        icon: '操作按钮的图标',
+        onClick: '操作按钮的点击事件',
+        customRender: '自定义渲染内容'
+      }
+    },
     form: {
       name: '表单 Form',
       description: '强大的表单处理能力，让数据收集得心应手',
@@ -498,6 +534,7 @@ export default {
       events: {
         mounted: '表单项挂载时触发'
       },
+     
       methods: {
         getForm: '获取表单',
         setForm: '设置表单'
@@ -542,6 +579,7 @@ export default {
       props: {
         type: '输入框类型',
         size: '输入框尺寸',
+        width: '输入框宽度',
         placeholder: '输入框占位文本',
         disabled: '是否禁用输入框',
         readonly: '是否将输入框设为只读',
@@ -570,6 +608,11 @@ export default {
         input: '输入框输入内容时触发',
         clear: '输入框清空时触发',
         ok: '输入框确认时触发'
+      },
+      model: {
+        modelValue: '输入框的绑定值',
+        prefixValue: '输入框前缀的绑定值',
+        suffixValue: '输入框后缀的绑定值'
       }
     },
     inputNumber: {

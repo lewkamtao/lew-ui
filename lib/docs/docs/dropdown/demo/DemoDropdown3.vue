@@ -1,31 +1,31 @@
 <script setup lang="ts">
 const options = ref([
   {
-    label: "Mac",
-    value: "mac",
+    label: 'Mac',
+    value: 'mac'
   },
   {
-    label: "iPad",
-    value: "ipad",
+    label: 'iPad',
+    value: 'ipad'
   },
   {
-    label: "iPhone",
-    value: "iphone",
+    label: 'iPhone',
+    value: 'iphone'
   },
   {
-    label: "Watch",
-    value: "watch",
-    disabled: true,
+    label: 'Watch',
+    value: 'watch',
+    disabled: true
   },
   {
-    label: "AirPods",
-    value: "airpods",
+    label: 'AirPods',
+    value: 'airpods'
   },
   {
-    label: "TV & Home",
-    value: "tv",
-  },
-]);
+    label: 'TV & Home',
+    value: 'tv'
+  }
+])
 </script>
 <template>
   <lew-flex gap="50" x="start">

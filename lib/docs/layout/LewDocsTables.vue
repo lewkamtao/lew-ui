@@ -13,7 +13,7 @@ const props = defineProps({
 
 const getComponentName = () => {
   const { path } = useRoute()
-  return path  
+  return path
     .replace('/', '')
     .replace(/-(\w)/g, (_, letter) => letter.toUpperCase())
     .replace(/^[A-Z]/, (letter) => letter.toLowerCase())

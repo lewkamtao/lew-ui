@@ -1,77 +1,80 @@
 <script setup lang="ts">
-import { template } from "lodash-es";
 import {
   MoreHorizontal,
   Edit,
-  Delete,
+  Trash,
   Copy,
   Download,
   Share,
   View,
   Archive,
-  Settings,
-} from "lucide-vue-next";
-import { ref, h } from "vue";
-
+  Settings
+} from 'lucide-vue-next'
 const options = ref([
   {
-    label: "Edit",
-    icon: () => h(Edit, { size: 14 }),
+    label: 'Edit',
+    icon: h(Edit, { size: 14 }),
     onClick: () => {
-      console.log("Edit");
-    },
+      LewMessage.info('Edit')
+    }
   },
   {
-    label: "Delete",
-    icon: () => h(Delete, { size: 14 }),
+    label: 'Delete',
+    icon: () => h(Trash, { size: 14 }),
     onClick: () => {
-      console.log("Delete");
-    },
+      LewMessage.info('Delete')
+    }
   },
   {
-    label: "Copy",
+    label: 'Copy',
     icon: () => h(Copy, { size: 14 }),
     onClick: () => {
-      console.log("Copy");
-    },
+      LewMessage.info('Copy')
+    }
   },
   {
-    label: "Download",
+    label: 'Download',
     icon: () => h(Download, { size: 14 }),
     onClick: () => {
-      console.log("Download");
-    },
+      LewMessage.info('Download')
+    }
   },
   {
-    label: "Share",
+    label: 'Share',
     icon: () => h(Share, { size: 14 }),
     onClick: () => {
-      console.log("Share");
-    },
+      LewMessage.info('Share')
+    }
   },
   {
-    label: "View",
+    label: 'View',
     icon: () => h(View, { size: 14 }),
     onClick: () => {
-      console.log("View");
-    },
+      LewMessage.info('View')
+    }
   },
   {
-    label: "Archive",
+    label: 'Archive',
     icon: () => h(Archive, { size: 14 }),
     onClick: () => {
-      console.log("Archive");
-    },
+      LewMessage.info('Archive')
+    }
   },
   {
-    label: "Settings",
+    label: 'Settings',
     icon: () => h(Settings, { size: 14 }),
     onClick: () => {
-      console.log("Settings");
-    },
-  },
-]);
+      LewMessage.info('Settings')
+    }
+  }
+])
+
+const dropdownIcon = h(MoreHorizontal, { size: 14 })
 </script>
 <template>
-  <lew-action-box :options="options" :dropdown-threshold="2" />
+  <lew-action-box
+    :options="options"
+    :dropdown-threshold="2"
+    :dropdown-icon="dropdownIcon"
+  />
 </template>

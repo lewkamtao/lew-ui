@@ -133,9 +133,9 @@ export const treeItemProps = {
       return true
     }
   },
-  render: {
-    type: Function,
-    default: () => {},
+  icon: {
+    type: Function as PropType<() => any>,
+    default: undefined,
     description: '菜单树项的图标。'
   },
   disabled: {

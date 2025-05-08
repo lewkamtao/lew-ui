@@ -1,68 +1,72 @@
 <script setup lang="ts">
-import { actionBoxProps } from "./props";
-import { computed } from "vue";
-import { isString, isFunction } from "lodash-es";
-import { isVueComponent } from "lew-ui/utils";
-
-const props = defineProps(actionBoxProps);
+import { actionBoxProps } from './props'
+import { computed } from 'vue'
+import { isVueComponent, formatComponent } from 'lew-ui/utils'
+import { LewDropdown, LewFlex } from 'lew-ui'
+import type { ContextMenus } from 'lew-ui'
+const props = defineProps(actionBoxProps)
 
 const visibleOptions = computed(() => {
   if (props.dropdownThreshold <= 0) {
-    return props.options;
+    return props.options
   }
-  return props.options.slice(0, props.dropdownThreshold);
-});
+  return props.options.slice(0, props.dropdownThreshold)
+})
 
 const dropdownOptions = computed(() => {
   if (props.dropdownThreshold <= 0) {
-    return [];
+    return []
   }
-  return props.options.slice(props.dropdownThreshold);
-});
+  return props.options.slice(props.dropdownThreshold)
+})
 </script>
 
 <template>
-  <lew-flex class="lew-action-box" :gap="4">
-    <template v-for="option in visibleOptions">
+  <lew-flex class="lew-action-box" :gap="5">
+    <template v-for="(option, index) in visibleOptions">
       <component
         @click="option.onClick?.()"
         v-if="isVueComponent(option.customRender)"
-        :is="
-          isFunction(option.customRender)
-            ? option.customRender()
-            : option.customRender
-        "
+        :is="formatComponent(option.customRender)"
       />
       <div v-else @click="option.onClick?.()" class="lew-action-box-item">
         <component
           v-if="isVueComponent(option.icon)"
-          :is="isFunction(option.icon) ? option.icon() : option.icon"
+          :is="formatComponent(option.icon)"
           class="lew-action-box-icon"
         />
         <component
           v-if="isVueComponent(option.label)"
           @click="option.onClick?.()"
-          :is="isFunction(option.label) ? option.label() : option.label"
+          :is="formatComponent(option.label)"
         />
         <template v-else>
           {{ option.label }}
         </template>
       </div>
       <i
-        v-if="divider && dropdownOptions.length > 0"
+        v-if="
+          divider &&
+          (dropdownOptions.length > 0 ||
+            (visibleOptions.length === options.length &&
+              index !== options.length - 1))
+        "
         class="lew-action-box-divider"
       />
     </template>
-    <lew-dropdown v-if="dropdownOptions.length > 0" :options="dropdownOptions">
+    <lew-dropdown
+      v-if="dropdownOptions.length > 0"
+      :options="dropdownOptions as ContextMenus[]"
+    >
       <div class="lew-action-box-item">
         <component
-          v-if="isVueComponent(props.dropdownIcon)"
-          :is="isFunction(props.dropdownIcon) ? props.dropdownIcon() : props.dropdownIcon"
+          v-if="isVueComponent(dropdownIcon)"
+          :is="formatComponent(dropdownIcon)"
           class="lew-action-box-icon"
         />
         <component
-          v-if="isVueComponent(props.dropdownLabel)"
-          :is="isFunction(props.dropdownLabel) ? props.dropdownLabel() : props.dropdownLabel"
+          v-if="isVueComponent(dropdownLabel)"
+          :is="formatComponent(dropdownLabel)"
         />
         <template v-else>
           {{ dropdownLabel }}
@@ -79,9 +83,9 @@ const dropdownOptions = computed(() => {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 2px 5px;
+    padding: 3px 4px;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 5px;
     color: var(--lew-color-primary-dark);
     user-select: none;
     transition: all 0.2s ease;

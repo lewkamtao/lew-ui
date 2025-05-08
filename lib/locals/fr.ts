@@ -1,7 +1,7 @@
 export default {
   name: 'fr',
   image: {
-    fail: 'Impossible de charger l\'image pour le moment, veuillez réessayer plus tard'
+    fail: "Impossible de charger l'image pour le moment, veuillez réessayer plus tard"
   },
   input: {
     placeholder: 'Veuillez saisir',
@@ -10,8 +10,9 @@ export default {
     copyFailed: 'La copie a échoué, veuillez réessayer'
   },
   inputTag: {
-    placeholder: 'Saisissez une étiquette et appuyez sur Entrée pour l\'ajouter',
-    maxLength: 'Vous avez atteint la limite de {maxLength} étiquettes, supprimez-en quelques-unes pour continuer',
+    placeholder: "Saisissez une étiquette et appuyez sur Entrée pour l'ajouter",
+    maxLength:
+      'Vous avez atteint la limite de {maxLength} étiquettes, supprimez-en quelques-unes pour continuer',
     duplicate: 'Cette étiquette existe déjà, veuillez en saisir une nouvelle'
   },
   select: {
@@ -46,7 +47,7 @@ export default {
     paste: 'collez, ',
     drag: 'ou faites glisser les fichiers ici',
     accept: 'Prend en charge le téléchargement de {accept}',
-    limit: 'Vous pouvez télécharger jusqu\'à {limit} fichiers',
+    limit: "Vous pouvez télécharger jusqu'à {limit} fichiers",
     maxFileSize: 'Chaque fichier ne doit pas dépasser {maxFileSize}'
   },
   pagination: {

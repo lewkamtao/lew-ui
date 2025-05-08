@@ -1,35 +1,34 @@
 <script setup lang="ts">
-import { menuTreeItemProps } from "./props";
-import { LewCollapseTransition } from "lew-ui";
-import { LewFlex } from "lew-ui";
-import Icon from "lew-ui/utils/Icon.vue";
-import { cloneDeep, isFunction } from "lodash-es";
+import { menuTreeItemProps } from './props'
+import { LewCollapseTransition } from 'lew-ui'
+import { LewFlex } from 'lew-ui'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { cloneDeep } from 'lodash-es'
+import { isVueComponent, formatComponent } from 'lew-ui/utils'
+const props = defineProps(menuTreeItemProps)
 
-const props = defineProps(menuTreeItemProps);
-
-const { modelValue, expandKeys, modelValueKeyPath, collapsed }: any = inject(
-  "lew-menu-tree"
-);
-const emit = defineEmits(["change"]);
+const { modelValue, expandKeys, modelValueKeyPath, collapsed }: any =
+  inject('lew-menu-tree')
+const emit = defineEmits(['change'])
 
 const change = () => {
-  if (props.disabled) return;
+  if (props.disabled) return
 
   if (!props.isLeaf) {
-    const index = expandKeys.value.indexOf(props.value);
+    const index = expandKeys.value.indexOf(props.value)
     if (index > -1) {
-      expandKeys.value.splice(index, 1);
+      expandKeys.value.splice(index, 1)
     } else {
-      expandKeys.value.push(props.value);
+      expandKeys.value.push(props.value)
     }
   } else {
     if (modelValue.value !== props.value) {
-      modelValue.value = props.value;
+      modelValue.value = props.value
     }
   }
-  expandKeys.value = cloneDeep(expandKeys.value);
-  emit("change");
-};
+  expandKeys.value = cloneDeep(expandKeys.value)
+  emit('change')
+}
 </script>
 
 <template>
@@ -48,16 +47,24 @@ const change = () => {
         'lew-menu-tree-item-label-collapsed': collapsed
       }"
       :style="{
-        paddingLeft: collapsed ? '0px' : icon() ? '36px' : '11.5px',
+        paddingLeft: collapsed
+          ? '0px'
+          : isVueComponent(icon)
+            ? '36px'
+            : '11.5px'
       }"
       @click.stop="change"
     >
       <slot v-if="$slots.label" name="label" :props="props" />
       <template v-else>
-        <component class="lew-menu-tree-item-icon" :is="icon()" />
         <component
-          v-if="isFunction(label)"
-          :is="label()"
+          v-if="isVueComponent(icon)"
+          class="lew-menu-tree-item-icon"
+          :is="formatComponent(icon)"
+        />
+        <component
+          v-if="isVueComponent(label)"
+          :is="formatComponent(label)"
           class="lew-menu-tree-item-text"
         />
         <lew-text-trim
@@ -65,7 +72,7 @@ const change = () => {
           class="lew-menu-tree-item-text"
           placement="right"
           :style="{
-            maxWidth: `calc(100% - ${icon() ? 30 : 0}px)`,
+            maxWidth: `calc(100% - ${isVueComponent(icon) ? 30 : 0}px)`
           }"
           :text="label"
           :delay="[250, 250]"
@@ -77,7 +84,7 @@ const change = () => {
           :size="14"
           :style="{
             transform: `rotate(${expandKeys.includes(value) ? 270 : 90}deg)`,
-            transition: 'all 0.2s',
+            transition: 'all 0.2s'
           }"
           type="chevron-right"
         />
@@ -87,7 +94,7 @@ const change = () => {
       <div
         v-if="expandKeys.includes(value) && !collapsed"
         :style="{
-          marginTop: level === 1 ? '5px' : 0,
+          marginTop: level === 1 ? '5px' : 0
         }"
         class="lew-menu-tree-item-main"
       >
@@ -109,7 +116,9 @@ const change = () => {
     padding: 0px 11.5px;
     height: 36px;
     box-sizing: border-box;
-    transition: background-color 0.25s, color 0.25s;
+    transition:
+      background-color 0.25s,
+      color 0.25s;
     border-radius: var(--lew-border-radius-small);
     overflow: hidden;
   }

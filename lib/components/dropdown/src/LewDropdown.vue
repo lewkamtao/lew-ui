@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { LewPopover, LewContextMenu } from "lew-ui";
-import { dropdownProps } from "./props";
+import { LewPopover, LewContextMenu } from 'lew-ui'
+import { dropdownProps } from './props'
 
-defineProps(dropdownProps);
+defineProps(dropdownProps)
 
-const lewPopoverRef = ref();
+const lewPopoverRef = ref()
 
 const show = () => {
-  lewPopoverRef.value.show();
-};
+  lewPopoverRef.value.show()
+}
 
 const hide = () => {
-  lewPopoverRef.value.hide();
-};
+  lewPopoverRef.value.hide()
+}
 
 defineExpose({
   show,
-  hide,
-});
+  hide
+})
 </script>
 
 <template>

@@ -1,46 +1,46 @@
 <script setup lang="ts">
-import { LewCollapseTransition } from "lew-ui";
-import { ChevronDown, ChevronUp } from "lucide-vue-next";
-import docsLocale from "@/locals";
+import { LewCollapseTransition } from 'lew-ui'
+import { ChevronDown, ChevronUp } from 'lucide-vue-next'
+import docsLocale from '@/locals'
 
 defineProps({
   title: {
     type: String,
-    default: "",
+    default: ''
   },
   tag: {
     type: String,
-    default: "",
+    default: ''
   },
   tipsContent: {
     type: String,
-    default: "",
+    default: ''
   },
   tipsType: {
     type: String,
-    default: "info",
+    default: 'info'
   },
   tipsTitle: {
     type: String,
-    default: "",
+    default: ''
   },
   description: {
     type: String,
-    default: "",
+    default: ''
   },
   code: {
     type: String,
-    default: "",
-  },
-});
-
-const isShowCode = ref(false);
-const checkHasContent = computed(() => (text: string) => {
-  if (text && text.indexOf("components.") !== 0) {
-    return true;
+    default: ''
   }
-  return false;
-});
+})
+
+const isShowCode = ref(false)
+const checkHasContent = computed(() => (text: string) => {
+  if (text && text.indexOf('components.') !== 0) {
+    return true
+  }
+  return false
+})
 </script>
 
 <template>
@@ -81,7 +81,11 @@ const checkHasContent = computed(() => (text: string) => {
           <ChevronDown v-if="!isShowCode" :size="16" />
           <ChevronUp v-else :size="16" />
         </div>
-        {{ isShowCode ? docsLocale.t("base.close") : docsLocale.t("base.showCode") }}
+        {{
+          isShowCode
+            ? docsLocale.t('base.close')
+            : docsLocale.t('base.showCode')
+        }}
       </div>
     </div>
   </div>

@@ -11,7 +11,8 @@ export default {
   },
   inputTag: {
     placeholder: 'Digite e pressione Enter para adicionar uma tag',
-    maxLength: 'Atingiu o limite de {maxLength} tags, remova algumas para continuar adicionando',
+    maxLength:
+      'Atingiu o limite de {maxLength} tags, remova algumas para continuar adicionando',
     duplicate: 'Esta tag já existe, por favor digite uma nova tag'
   },
   select: {

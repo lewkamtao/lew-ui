@@ -1,4 +1,4 @@
-import { cloneDeep, uniqueId } from 'lodash-es'
+import { cloneDeep, isFunction, uniqueId } from 'lodash-es'
 import Icon from './Icon.vue'
 /**
  * 获取颜色类型。
@@ -561,13 +561,7 @@ export const isVueComponent = (value: any): boolean => {
 
     // 检查函数式组件 (返回 VNode 的函数)
     if (typeof value === 'function') {
-      const str = value.toString()
-      if (
-        str.includes('return h(') ||
-        str.includes('() => h(') ||
-        str.includes('createElement')
-      )
-        return true
+      return true
     }
 
     // 检查对象类型组件
@@ -595,4 +589,16 @@ export const isVueComponent = (value: any): boolean => {
   } catch {
     return false
   }
+}
+
+/**
+ * 格式化组件
+ * @param {any} value - 要格式化的值
+ * @returns {any} 格式化后的值
+ */
+export const formatComponent = (value: any) => {
+  if (isFunction(value)) {
+    return value()
+  }
+  return value
 }

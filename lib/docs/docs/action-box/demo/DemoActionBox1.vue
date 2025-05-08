@@ -1,58 +1,31 @@
 <script setup lang="ts">
-import { MoreHorizontal } from "lucide-vue-next";
-import { ref, h } from "vue";
-
 const options = ref([
   {
-    label: "Edit",
+    label: 'Edit',
     onClick: () => {
-      console.log("Edit");
-    },
+      LewMessage.info('Edit')
+    }
   },
   {
-    label: "Delete",
+    label: 'Delete',
     onClick: () => {
-      console.log("Delete");
-    },
+      LewMessage.info('Delete')
+    }
   },
   {
-    label: "Copy",
+    label: 'Copy',
     onClick: () => {
-      console.log("Copy");
-    },
+      LewMessage.info('Copy')
+    }
   },
   {
-    label: "Download",
+    label: 'Download',
     onClick: () => {
-      console.log("Download");
-    },
-  },
-  {
-    label: "Share",
-    onClick: () => {
-      console.log("Share");
-    },
-  },
-  {
-    label: "View",
-    onClick: () => {
-      console.log("View");
-    },
-  },
-  {
-    label: "Archive",
-    onClick: () => {
-      console.log("Archive");
-    },
-  },
-  {
-    label: "Settings",
-    onClick: () => {
-      console.log("Settings");
-    },
-  },
-]);
+      LewMessage.info('Download')
+    }
+  }
+])
 </script>
 <template>
-  <lew-action-box :options="options" :dropdown-threshold="2" />
+  <lew-action-box :options="options" />
 </template>

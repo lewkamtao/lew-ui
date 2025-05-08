@@ -5,8 +5,9 @@ const contextMenu = {
   children: 'Unterknoten-Sammlung',
   disabled: 'Deaktivierte Option',
   isDividerLine: 'Ist Trennlinie',
-  checkbox: 'Ist Kontrollkästchen',
-  checked: 'Ist ausgewählt'
+  checkable: 'Ist Kontrollkästchen',
+  checked: 'Ist ausgewählt',
+  onClick: 'Klick-Ereignis'
 }
 
 export default {
@@ -157,7 +158,8 @@ export default {
         color: 'Farbthema',
         closable: 'Schließbar',
         disabled: 'Deaktiviert',
-        round: 'Abgerundet'
+        round: 'Abgerundet',
+        oversize: 'Großzügigere Größe'
       }
     },
     badge: {
@@ -271,15 +273,9 @@ export default {
       demo1: {
         title: 'Grundlegende Verwendung'
       },
-      demo2: {
-        title: 'Farbe'
-      },
-      demo3: {
-        title: 'Grundlegende Verwendung'
-      },
       props: {
         color: 'Farbthema',
-        round: 'Abgerundete Ecken aktivieren',
+        round: 'Abgerundet',
         bold: 'Fettschrift aktivieren',
         cursor: 'Mauszeiger-Stil beim Hover'
       }
@@ -315,8 +311,9 @@ export default {
       }
     },
     steps: {
-      name: 'Schrittanzeige',
-      description: 'Zeigt Prozessabläufe klar an und orientiert den Benutzer',
+      name: 'Schritte',
+      description:
+        'Zeigt den Betriebsablauf klar an und lässt den Benutzer wissen, wo er sich befindet',
       demo1: {
         title: 'Grundlegende Verwendung'
       },
@@ -324,15 +321,19 @@ export default {
         title: 'Status'
       },
       demo3: {
-        title: 'Laden'
+        title: 'Wird geladen'
       },
       model: {
-        modelValue: 'Index des aktiven Schritts'
+        modelValue: 'Index des aktuell aktiven Schritts'
       },
       props: {
-        options: 'Array der Schritt-Konfigurationen',
-        status: 'Aktueller Status der Schrittanzeige',
+        options: 'Array der Schrittkonfigurationen',
+        status: 'Aktueller Status der Schritte',
         minWidth: 'Minimale Schrittbreite'
+      },
+      options: {
+        title: 'Schritttitel',
+        description: 'Schrittbeschreibung'
       }
     },
     menu: {
@@ -417,7 +418,8 @@ export default {
       props: {
         options: 'Menüoptionen-Konfiguration',
         trigger: 'Auslösemethode',
-        placement: 'Position des Menüs'
+        placement: 'Position',
+        checkable: 'Ist auswählbar'
       },
       'options(ContextMenus)': contextMenu,
       events: {
@@ -469,7 +471,7 @@ export default {
       },
       props: {
         options: 'Kontextmenü-Konfiguration',
-        disabled: 'Kontextmenü deaktivieren',
+        disabled: 'Kontextmenü deaktivieren'
       },
       'options(ContextMenus)': contextMenu
     },
@@ -580,6 +582,7 @@ export default {
       props: {
         type: 'Eingabefeld-Typ',
         size: 'Eingabefeld-Größe',
+        width: 'Eingabefeld-Breite',
         placeholder: 'Platzhaltertext',
         disabled: 'Deaktiviert',
         readonly: 'Schreibgeschützt',
@@ -607,6 +610,11 @@ export default {
         input: 'Wird bei Eingabe ausgelöst',
         clear: 'Wird beim Löschen ausgelöst',
         ok: 'Wird bei Bestätigung ausgelöst'
+      },
+      model: {
+        modelValue: 'Eingabefeld-Wert',
+        prefixValue: 'Präfix-Wert',
+        suffixValue: 'Suffix-Wert'
       }
     },
     inputNumber: {
@@ -1179,7 +1187,7 @@ export default {
         modelValue: 'Gebundener Wert'
       },
       props: {
-        dataSource: 'Baumdatenquelle',
+        dataSource: 'Datenquelle',
         defaultValue: 'Standardwert',
         placeholder: 'Platzhaltertext',
         size: 'Komponentengröße',
@@ -1441,7 +1449,8 @@ export default {
         'Leistungsstarke Tabellenkomponente für übersichtliche Datenanzeige',
       model: {
         modelValue: 'Parametername',
-        selectedKeys: 'Ausgewählte Schlüssel'
+        selectedKeys: 'Ausgewählte Schlüssel',
+        sortValue: 'Sortierwert'
       },
       demo1: {
         title: 'Standard'
@@ -1473,9 +1482,16 @@ export default {
       demo10: {
         title: 'Keine Daten'
       },
+      demo11: {
+        title: 'Gruppierte Kopfzeilen',
+        tipsTitle: 'Einschränkungshinweis',
+        tipsContent:
+          'Wenn Sie fixierte Spalten in gruppierten Kopfzeilen verwenden möchten, müssen Sie allen fixierten Spaltenköpfen eine Breite zuweisen, einschließlich aller übergeordneten Knoten, sonst können Positionierungsprobleme auftreten.'
+      },
       props: {
         columns: 'Spalten',
         dataSource: 'Datenquelle',
+        bordered: 'Umrandet',
         size: 'Größe',
         checkable: 'Auswählbar',
         maxHeight: 'Maximale Höhe',
@@ -1558,6 +1574,8 @@ export default {
       props: {
         dataSource: 'Datenquelle',
         multiple: 'Mehrfachauswahl',
+        height: 'Höhe',
+        searchable: 'Ist durchsuchbar',
         checkable: 'Kontrollkästchen anzeigen',
         expandAll: 'Standardmäßig alle ausgeklappt',
         free: 'Freie Auswahl',
@@ -1908,6 +1926,36 @@ export default {
         padding: 'Innenabstand',
         width: 'Breite',
         height: 'Höhe'
+      }
+    },
+    actionBox: {
+      name: 'Aktionsbox',
+      description:
+        'Flexible Aktionsschaltflächen für schnelle Benutzeroperationen',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Dropdown-Menü'
+      },
+      demo3: {
+        title: 'Benutzerdefinierte Symbole'
+      },
+      demo4: {
+        title: 'Benutzerdefinierte Stile'
+      },
+      props: {
+        options: 'Aktionsschaltflächen-Konfiguration',
+        dropdownThreshold: 'Dropdown-Menü-Schwellenwert',
+        dropdownLabel: 'Dropdown-Menü-Text',
+        dropdownIcon: 'Dropdown-Menü-Symbol',
+        divider: 'Trennlinie anzeigen'
+      },
+      options: {
+        label: 'Aktionsschaltflächen-Text',
+        icon: 'Aktionsschaltflächen-Symbol',
+        onClick: 'Aktionsschaltflächen-Klickereignis',
+        customRender: 'Benutzerdefinierter Renderinhalt'
       }
     }
   }

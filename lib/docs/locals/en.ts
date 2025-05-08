@@ -5,8 +5,9 @@ const contextMenu = {
   children: 'Children Collection',
   disabled: 'Disabled Option',
   isDividerLine: 'Is Divider Line',
-  checkbox: 'Is Checkbox',
-  checked: 'Is Checked'
+  checkable: 'Is Checkbox',
+  checked: 'Is Checked',
+  onClick: 'Click Event'
 }
 
 export default {
@@ -155,7 +156,8 @@ export default {
         color: 'Color Theme',
         closable: 'Closable',
         disabled: 'Disabled',
-        round: 'Round'
+        round: 'Round',
+        oversize: 'More Relaxed Size'
       }
     },
     badge: {
@@ -310,7 +312,7 @@ export default {
     steps: {
       name: 'Steps',
       description:
-        'Clearly display the operation process, letting users know where they are',
+        'Clearly displays the operation process, letting users know where they are',
       demo1: {
         title: 'Basic Usage'
       },
@@ -325,8 +327,12 @@ export default {
       },
       props: {
         options: 'Array of step configuration items',
-        status: 'Current status of the step bar',
+        status: 'Current status of the steps',
         minWidth: 'Minimum step width'
+      },
+      options: {
+        title: 'Step title',
+        description: 'Step description'
       }
     },
     menu: {
@@ -410,7 +416,8 @@ export default {
       props: {
         options: 'Menu options configuration',
         trigger: 'Trigger method',
-        placement: 'Menu pop-up position'
+        placement: 'Menu pop-up position',
+        checkable: 'Selectable'
       },
       'options(ContextMenus)': contextMenu,
       events: {
@@ -579,6 +586,7 @@ export default {
         maxLength: 'Maximum Input Length',
         showCount: 'Show Character Count (only effective when type is text)',
         align: 'Input Box Text Alignment',
+        width: 'Input Box Width',
         minWidth:
           'Minimum Width of the Input Box, supporting numbers (unit: pixel) or strings with units',
         autoWidth: 'Automatically Adjust Width Based on Content',
@@ -602,6 +610,11 @@ export default {
         input: 'Triggered when inputting content in the input box',
         clear: 'Triggered when the input box is cleared',
         ok: 'Triggered when confirming the input box'
+      },
+      model: {
+        modelValue: 'Input Box Bound Value',
+        prefixValue: 'Input Box Prefix Value',
+        suffixValue: 'Input Box Suffix Value'
       }
     },
     inputNumber: {
@@ -1435,7 +1448,8 @@ export default {
       description: 'Powerful table component, making data display clearer',
       model: {
         modelValue: 'Parameter Name',
-        selectedKeys: 'Selected Keys'
+        selectedKeys: 'Selected Keys',
+        sortValue: 'Sort Value'
       },
       demo1: {
         title: 'Regular'
@@ -1467,9 +1481,16 @@ export default {
       demo10: {
         title: 'No Data'
       },
+      demo11: {
+        title: 'Grouped Headers',
+        tipsTitle: 'Limitation Note',
+        tipsContent:
+          'If you want the grouped headers to have fixed columns, you need to set the width for all fixed column headers, including all parent nodes, otherwise misalignment may occur.'
+      },
       props: {
         columns: 'Columns',
         dataSource: 'Data Source',
+        bordered: 'Bordered',
         size: 'Size',
         checkable: 'Checkable',
         maxHeight: 'Maximum Height',
@@ -1552,6 +1573,8 @@ export default {
       props: {
         dataSource: 'Data Source',
         multiple: 'Multiple Selection',
+        height: 'Height',
+        searchable: 'Searchable',
         checkable: 'Show Checkbox',
         expandAll: 'Expand All by Default',
         free: 'Free Selection',
@@ -1905,6 +1928,35 @@ export default {
         padding: 'Padding',
         width: 'Width',
         height: 'Height'
+      }
+    },
+    actionBox: {
+      name: 'Action Box',
+      description: 'Flexible action buttons for quick user operations',
+      demo1: {
+        title: 'Basic Usage'
+      },
+      demo2: {
+        title: 'Dropdown Menu'
+      },
+      demo3: {
+        title: 'Custom Icons'
+      },
+      demo4: {
+        title: 'Custom Styles'
+      },
+      props: {
+        options: 'Action button configuration',
+        dropdownThreshold: 'Dropdown menu threshold',
+        dropdownLabel: 'Dropdown menu text',
+        dropdownIcon: 'Dropdown menu icon',
+        divider: 'Show divider'
+      },
+      options: {
+        label: 'Action button text',
+        icon: 'Action button icon',
+        onClick: 'Action button click event',
+        customRender: 'Custom render content'
       }
     }
   }

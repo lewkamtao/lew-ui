@@ -28,12 +28,8 @@ const options = ref(
       :description="
         $t(`components.${componentName}.demo${index + 1}.description`)
       "
-      :tips-type="
-        $t(`components.${componentName}.demo${index + 1}.tipsType`)
-      "
-      :tips-title="
-        $t(`components.${componentName}.demo${index + 1}.tipsTitle`)
-      "
+      :tips-type="$t(`components.${componentName}.demo${index + 1}.tipsType`)"
+      :tips-title="$t(`components.${componentName}.demo${index + 1}.tipsTitle`)"
       :tips-content="
         $t(`components.${componentName}.demo${index + 1}.tipsContent`)
       "

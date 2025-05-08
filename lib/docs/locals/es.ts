@@ -5,8 +5,9 @@ const contextMenu = {
   children: 'Colección de nodos hijos',
   disabled: 'Opción deshabilitada',
   isDividerLine: 'Es línea divisoria',
-  checkbox: 'Es casilla de verificación',
-  checked: 'Está marcado'
+  checkable: 'Es casilla de verificación',
+  checked: 'Está marcado',
+  onClick: 'Evento de clic'
 }
 
 export default {
@@ -156,7 +157,8 @@ export default {
         color: 'Tema de color',
         closable: 'Permite cerrar',
         disabled: 'Deshabilitado',
-        round: 'Bordes redondeados'
+        round: 'Bordes redondeados',
+        oversize: 'Tamaño más holgado'
       }
     },
     badge: {
@@ -309,25 +311,29 @@ export default {
       }
     },
     steps: {
-      name: 'Steps',
+      name: 'Pasos',
       description:
-        'Clearly display the operation process, letting users know where they are',
+        'Muestra claramente el proceso de operación, permitiendo al usuario saber dónde se encuentra',
       demo1: {
-        title: 'Basic Usage'
+        title: 'Uso básico'
       },
       demo2: {
-        title: 'Status'
+        title: 'Estado'
       },
       demo3: {
-        title: 'Loading'
+        title: 'Cargando'
       },
       model: {
-        modelValue: 'Index value of the current active step'
+        modelValue: 'Índice del paso actualmente activo'
       },
       props: {
-        options: 'Array of step configuration items',
-        status: 'Current status of the step bar',
-        minWidth: 'Minimum step width'
+        options: 'Array de configuración de pasos',
+        status: 'Estado actual de los pasos',
+        minWidth: 'Ancho mínimo del paso'
+      },
+      options: {
+        title: 'Título del paso',
+        description: 'Descripción del paso'
       }
     },
     menu: {
@@ -409,9 +415,10 @@ export default {
         title: 'Disabled Item'
       },
       props: {
-        options: 'Menu options configuration',
+        options: 'Menú options configuration',
         trigger: 'Trigger method',
-        placement: 'Menu pop-up position'
+        placement: 'Menu pop-up position',
+        checkable: 'Permite selección'
       },
       'options(ContextMenus)': contextMenu,
       events: {
@@ -462,7 +469,7 @@ export default {
       },
       props: {
         options: 'Right-click menu configuration',
-        disabled: 'Disable right-click menu',
+        disabled: 'Disable right-click menu'
       },
       'options(ContextMenus)': contextMenu
     },
@@ -572,6 +579,7 @@ export default {
       props: {
         type: 'Input Box Type',
         size: 'Input Box Size',
+        width: 'Ancho del campo de entrada',
         placeholder: 'Input Box Placeholder Text',
         disabled: 'Disable Input Box',
         readonly: 'Set Input Box to Read-only',
@@ -603,6 +611,11 @@ export default {
         input: 'Triggered when inputting content in the input box',
         clear: 'Triggered when the input box is cleared',
         ok: 'Triggered when confirming the input box'
+      },
+      model: { 
+        modelValue: 'Input Box Bound Value',
+        prefixValue: 'Input Box Prefix Value',
+        suffixValue: 'Input Box Suffix Value'
       }
     },
     inputNumber: {
@@ -1171,7 +1184,7 @@ export default {
         modelValue: 'Bound Value'
       },
       props: {
-        dataSource: 'Tree Data Source',
+        dataSource: 'Data Source',
         defaultValue: 'Default Selected Value',
         placeholder: 'Placeholder Text',
         size: 'Component Size',
@@ -1432,59 +1445,68 @@ export default {
       }
     },
     table: {
-      name: 'Table',
-      description: 'Powerful table component, making data display clearer',
+      name: 'Tabla',
+      description:
+        'Componente de tabla potente para una visualización de datos más clara',
       model: {
-        modelValue: 'Parameter Name',
-        selectedKeys: 'Selected Keys'
+        modelValue: 'Nombre del parámetro',
+        selectedKeys: 'Claves seleccionadas',
+        sortValue: 'Valor de ordenación'
       },
       demo1: {
         title: 'Regular'
       },
       demo2: {
-        title: 'Fixed Rows and Columns'
+        title: 'Filas y columnas fijas'
       },
       demo3: {
-        title: 'Custom Operations'
+        title: 'Operaciones personalizadas'
       },
       demo4: {
         title: 'Slots'
       },
       demo5: {
-        title: 'Custom Styles'
+        title: 'Estilos personalizados'
       },
       demo6: {
-        title: 'Selection'
+        title: 'Selección'
       },
       demo7: {
-        title: 'Sortable'
+        title: 'Ordenable'
       },
       demo8: {
-        title: 'Custom Rendering'
+        title: 'Renderizado personalizado'
       },
       demo9: {
-        title: 'Full Functionality'
+        title: 'Funcionalidad completa'
       },
       demo10: {
-        title: 'No Data'
+        title: 'Sin datos'
+      },
+      demo11: {
+        title: 'Encabezados agrupados',
+        tipsTitle: 'Nota de limitación',
+        tipsContent:
+          'Si desea que los encabezados agrupados tengan columnas fijas, debe establecer el ancho para todos los encabezados de columnas fijas, incluidos todos los nodos padre, de lo contrario puede producirse un desalineamiento.'
       },
       props: {
-        columns: 'Columns',
-        dataSource: 'Data Source',
-        size: 'Size',
-        checkable: 'Checkable',
-        maxHeight: 'Maximum Height',
-        multiple: 'Multiple Selection',
-        rowKey: 'Row Key'
+        columns: 'Columnas',
+        dataSource: 'Fuente de datos',
+        bordered: 'Con bordes',
+        size: 'Tamaño',
+        checkable: 'Seleccionable',
+        maxHeight: 'Altura máxima',
+        multiple: 'Selección múltiple',
+        rowKey: 'Clave de fila'
       },
       tableColumns: {
-        field: 'Field',
-        fixed: 'Fixed',
-        title: 'Title',
-        type: 'Type',
-        width: 'Width',
-        x: 'X-axis',
-        customRender: 'Custom Render'
+        field: 'Campo',
+        fixed: 'Fijo',
+        title: 'Título',
+        type: 'Tipo',
+        width: 'Ancho',
+        x: 'Eje X',
+        customRender: 'Renderizado personalizado'
       }
     },
     pagination: {
@@ -1551,10 +1573,12 @@ export default {
         expandedKeys: 'Expanded Node Keys'
       },
       props: {
-        dataSource: 'Data Source',
-        multiple: 'Multiple Selection',
-        checkable: 'Show Checkbox',
-        expandAll: 'Expand All by Default',
+        dataSource: 'Data source',
+        multiple: 'Multiple selection',
+        height: 'Altura del árbol',
+        searchable: 'Permite búsqueda en el árbol',
+        checkable: 'Show checkbox',
+        expandAll: 'Default expand all',
         free: 'Free Selection',
         showLine: 'Show Connection Line',
         trigger: 'Trigger Method',
@@ -1906,6 +1930,35 @@ export default {
         padding: 'Padding',
         width: 'Width',
         height: 'Height'
+      }
+    },
+    actionBox: {
+      name: 'Caja de acción',
+      description: 'Botones de acción flexibles para operaciones rápidas',
+      demo1: {
+        title: 'Uso básico'
+      },
+      demo2: {
+        title: 'Menú desplegable'
+      },
+      demo3: {
+        title: 'Iconos personalizados'
+      },
+      demo4: {
+        title: 'Estilos personalizados'
+      },
+      props: {
+        options: 'Configuración de botones de acción',
+        dropdownThreshold: 'Umbral del menú desplegable',
+        dropdownLabel: 'Texto del menú desplegable',
+        dropdownIcon: 'Icono del menú desplegable',
+        divider: 'Mostrar divisor'
+      },
+      options: {
+        label: 'Texto del botón de acción',
+        icon: 'Icono del botón de acción',
+        onClick: 'Evento de clic del botón de acción',
+        customRender: 'Contenido de renderizado personalizado'
       }
     }
   }

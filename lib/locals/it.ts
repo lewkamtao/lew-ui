@@ -1,7 +1,7 @@
 export default {
   name: 'it',
   image: {
-    fail: 'Impossibile caricare l\'immagine, si prega di riprovare più tardi'
+    fail: "Impossibile caricare l'immagine, si prega di riprovare più tardi"
   },
   input: {
     placeholder: 'Inserisci',
@@ -11,7 +11,8 @@ export default {
   },
   inputTag: {
     placeholder: 'Digita e premi Invio per aggiungere un tag',
-    maxLength: 'Hai raggiunto il limite di {maxLength} tag, rimuovine alcuni per continuare',
+    maxLength:
+      'Hai raggiunto il limite di {maxLength} tag, rimuovine alcuni per continuare',
     duplicate: 'Questo tag esiste già, inserisci un nuovo tag'
   },
   select: {
