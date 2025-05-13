@@ -12,20 +12,24 @@ export const actionBoxProps = {
     default: () => []
   },
   dropdownThreshold: {
-    type: Number,
+    type: [Number, String],
     default: 0
   },
   dropdownLabel: {
-    type: [String, Function] as PropType<string | (() => any)>,
+    type: [String, Function, Object] as PropType<string | (() => any) | any>,
     default: 'More'
   },
   dropdownIcon: {
-    type: Function as PropType<() => any>,
+    type: [Function, Object] as PropType<(() => any) | any>,
     default: undefined
   },
   divider: {
     type: Boolean,
     default: true
+  },
+  iconOnly: {
+    type: Boolean,
+    default: false
   }
 }
 

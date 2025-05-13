@@ -156,6 +156,8 @@ const i18n = createI18n({
   legacy: false,
   locale: currentLocale,
   fallbackLocale: 'zh',
+  fallbackWarn: false,
+  missingWarn: false,
   messages
 })
 

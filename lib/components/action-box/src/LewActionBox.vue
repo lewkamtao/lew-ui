@@ -3,21 +3,22 @@ import { actionBoxProps } from './props'
 import { computed } from 'vue'
 import { isVueComponent, formatComponent } from 'lew-ui/utils'
 import { LewDropdown, LewFlex } from 'lew-ui'
-import type { ContextMenus } from 'lew-ui'
 const props = defineProps(actionBoxProps)
 
+const threshold = computed(() => Number(props.dropdownThreshold))
+
 const visibleOptions = computed(() => {
-  if (props.dropdownThreshold <= 0) {
+  if (threshold.value <= 0) {
     return props.options
   }
-  return props.options.slice(0, props.dropdownThreshold)
+  return props.options.slice(0, threshold.value)
 })
 
 const dropdownOptions = computed(() => {
-  if (props.dropdownThreshold <= 0) {
+  if (threshold.value <= 0) {
     return []
   }
-  return props.options.slice(props.dropdownThreshold)
+  return props.options.slice(threshold.value)
 })
 </script>
 
@@ -36,11 +37,11 @@ const dropdownOptions = computed(() => {
           class="lew-action-box-icon"
         />
         <component
-          v-if="isVueComponent(option.label)"
+          v-if="isVueComponent(option.label) && !iconOnly"
           @click="option.onClick?.()"
           :is="formatComponent(option.label)"
         />
-        <template v-else>
+        <template v-else-if="!iconOnly">
           {{ option.label }}
         </template>
       </div>
@@ -54,10 +55,7 @@ const dropdownOptions = computed(() => {
         class="lew-action-box-divider"
       />
     </template>
-    <lew-dropdown
-      v-if="dropdownOptions.length > 0"
-      :options="dropdownOptions as ContextMenus[]"
-    >
+    <lew-dropdown v-if="dropdownOptions.length > 0" :options="dropdownOptions">
       <div class="lew-action-box-item">
         <component
           v-if="isVueComponent(dropdownIcon)"

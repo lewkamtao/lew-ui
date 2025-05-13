@@ -15,6 +15,12 @@ type TitleColor =
   | 'pink'
   | 'gray'
   | 'brown'
+  | 'warning'
+  | 'error'
+  | 'success'
+  | 'normal'
+  | 'primary'
+  | 'info'
 
 export const titleProps = {
   text: {
@@ -52,7 +58,13 @@ export const titleProps = {
         'purple',
         'pink',
         'gray',
-        'brown'
+        'brown',
+        'warning',
+        'error',
+        'success',
+        'normal',
+        'primary',
+        'info'
       ]
       if (
         value &&

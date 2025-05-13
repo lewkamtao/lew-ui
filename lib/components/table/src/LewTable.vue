@@ -17,6 +17,7 @@ import {
 import type { FlexXAlignment, FlexYAlignment, TextTrimAlignment } from 'lew-ui'
 import SortIcon from './SortIcon.vue'
 import { h } from 'vue'
+import { isVueComponent } from 'lew-ui/utils'
 
 // ==================== Props & Emits ====================
 const props = defineProps(tableProps)
@@ -300,32 +301,11 @@ const getColumnStyle = computed(() => (column: any, row?: any) => {
 })
 
 // ==================== Render Methods ====================
-const renderCell = ({
-  column,
-  row,
-  index
-}: {
-  column: any
-  row: any
-  index: number
-}) => {
-  if (column.customRender) {
-    return column.customRender({ row, column, index, text: row[column.field] })
-  }
-  return column.type === 'text-trim'
-    ? h(LewTextTrim, {
-        x: column.x as TextTrimAlignment,
-        style: 'width: 100%',
-        text: showTextAndEmpty(row[column.field])
-      })
-    : showTextAndEmpty(row[column.field])
-}
-
 const showTextAndEmpty = (text: any) => {
   if (text === null || text === undefined || text === '') {
     return '-'
   } else {
-    return isString(text) ? text : JSON.stringify(text)
+    return isString(text) ? text : String(text)
   }
 }
 
@@ -576,6 +556,34 @@ watch(
     })
   }
 )
+
+const renderCustomCell = ({
+  row,
+  column,
+  index
+}: {
+  row: any
+  column: any
+  index: number
+}) => {
+  try {
+    const customContent = column.customRender({
+      row,
+      column,
+      index,
+      text: row[column.field]
+    })
+    // 如果返回的是VNode或者组件，直接返回
+    if (isVueComponent(customContent)) {
+      return customContent
+    }
+    // 如果返回的是普通值，包装成文本节点
+    return h('span', {}, String(customContent))
+  } catch (e) {
+    console.error('Error in customRender:', e)
+    return h('span', {}, showTextAndEmpty(row[column.field]))
+  }
+}
 </script>
 
 <template>
@@ -743,15 +751,30 @@ watch(
               :y="column.y as FlexYAlignment"
               :style="getColumnStyle(column, row)"
             >
-              <slot
-                v-if="$slots[column.field]"
-                :name="column.field"
-                :row="row"
-                :column="column"
-                :index="i"
-              ></slot>
+              <template v-if="$slots[column.field]">
+                <slot
+                  :name="column.field"
+                  :row="row"
+                  :column="column"
+                  :index="i"
+                />
+              </template>
               <template v-else>
-                <renderCell :column="column" :row="row" :index="i" />
+                <lew-flex
+                  v-if="column.type === 'text-trim'"
+                  :x="column.x"
+                  style="width: 100%"
+                >
+                  <lew-text-trim :text="showTextAndEmpty(row[column.field])" />
+                </lew-flex>
+                <template v-else-if="column.customRender">
+                  <component
+                    :is="renderCustomCell({ row, column, index: i })"
+                  />
+                </template>
+                <template v-else>
+                  {{ showTextAndEmpty(row[column.field]) }}
+                </template>
               </template>
             </lew-flex>
           </div>
@@ -777,15 +800,30 @@ watch(
               :y="column.y as FlexYAlignment"
               :style="getColumnStyle(column, row)"
             >
-              <slot
-                v-if="$slots[column.field]"
-                :name="column.field"
-                :row="row"
-                :column="column"
-                :index="i"
-              ></slot>
+              <template v-if="$slots[column.field]">
+                <slot
+                  :name="column.field"
+                  :row="row"
+                  :column="column"
+                  :index="i"
+                />
+              </template>
               <template v-else>
-                <renderCell :column="column" :row="row" :index="i" />
+                <lew-flex
+                  v-if="column.type === 'text-trim'"
+                  :x="column.x"
+                  style="width: 100%"
+                >
+                  <lew-text-trim :text="showTextAndEmpty(row[column.field])" />
+                </lew-flex>
+                <template v-else-if="column.customRender">
+                  <component
+                    :is="renderCustomCell({ row, column, index: i })"
+                  />
+                </template>
+                <template v-else>
+                  {{ showTextAndEmpty(row[column.field]) }}
+                </template>
               </template>
             </lew-flex>
           </div>
@@ -815,15 +853,30 @@ watch(
               :y="column.y as FlexYAlignment"
               :style="getColumnStyle(column, row)"
             >
-              <slot
-                v-if="$slots[column.field]"
-                :name="column.field"
-                :row="row"
-                :column="column"
-                :index="i"
-              ></slot>
+              <template v-if="$slots[column.field]">
+                <slot
+                  :name="column.field"
+                  :row="row"
+                  :column="column"
+                  :index="i"
+                />
+              </template>
               <template v-else>
-                <renderCell :column="column" :row="row" :index="i" />
+                <lew-flex
+                  v-if="column.type === 'text-trim'"
+                  :x="column.x"
+                  style="width: 100%"
+                >
+                  <lew-text-trim :text="showTextAndEmpty(row[column.field])" />
+                </lew-flex>
+                <template v-else-if="column.customRender">
+                  <component
+                    :is="renderCustomCell({ row, column, index: i })"
+                  />
+                </template>
+                <template v-else>
+                  {{ showTextAndEmpty(row[column.field]) }}
+                </template>
               </template>
             </lew-flex>
           </div>

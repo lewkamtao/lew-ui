@@ -13,12 +13,14 @@ import {
 
 const options = ref([
   {
+    label: 'Edit',
     icon: () => h(Edit, { size: 14 }),
     onClick: () => {
       LewMessage.info('Edit')
     }
   },
   {
+    label: 'Delete',
     icon: () => h(Trash, { size: 14 }),
     onClick: () => {
       LewMessage.info('Delete')
@@ -76,5 +78,6 @@ const dropdownIcon = h(MoreHorizontal, { size: 14 })
     :dropdown-threshold="2"
     dropdown-label=""
     :dropdown-icon="dropdownIcon"
+    icon-only
   />
 </template>

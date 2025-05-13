@@ -122,11 +122,10 @@ const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
         icon: () => icon,
         onChange: () => emit('change', item)
       },
-      // 递归渲染子项
       () =>
-        (item.children || []).map((child) =>
-          renderMenuTreeItem(child, level + 1)
-        )
+        item.children?.length
+          ? item.children.map((child) => renderMenuTreeItem(child, level + 1))
+          : []
     ),
     directives
   )

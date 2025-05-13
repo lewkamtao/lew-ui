@@ -25,6 +25,7 @@ const options = ref(
       v-for="(item, index) in demoGroup"
       :key="index"
       :title="$t(`components.${componentName}.demo${index + 1}.title`)"
+      :code="codeGroup[index]"
       :description="
         $t(`components.${componentName}.demo${index + 1}.description`)
       "

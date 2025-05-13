@@ -555,7 +555,6 @@ export const isVueComponent = (value: any): boolean => {
   try {
     // 检查是否为函数类型
     if (typeof value !== 'function' && typeof value !== 'object') {
-      console.warn('[isVueComponent] 提供的值不是组件类型，应为函数或对象类型')
       return false
     }
 
