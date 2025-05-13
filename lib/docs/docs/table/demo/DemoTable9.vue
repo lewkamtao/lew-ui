@@ -57,24 +57,8 @@ const columns = [
     align: 'start',
     field: 'actors',
     width: 450
-  },
-
-  {
-    type: 'template',
-    title: '执行',
-    field: 'action',
-    width: 150,
-    align: 'center',
-    fixed: 'right',
-    x: 'center'
   }
 ]
-
-const get = (e: any) => {
-  if (e.column.field === 'action') {
-    LewMessage.info(`点击了 id=>${e.row.id}`)
-  }
-}
 
 const selectedKeys = ref('35503077')
 </script>
@@ -107,25 +91,6 @@ const selectedKeys = ref('35503077')
       <lew-text-trim style="width: 100%" :text="row.info" />
     </template>
 
-    <template #action="{ row, column }">
-      <lew-flex gap="0">
-        <lew-button
-          size="small"
-          text="管理"
-          type="text"
-          @click.stop="get({ row, column })"
-        />
-        <lew-popok
-          title="删除确认"
-          content="删除之后无法恢复，请确认！"
-          placement="left"
-          width="200px"
-          @click.stop
-        >
-          <lew-button size="small" text="删除" type="text" />
-        </lew-popok>
-      </lew-flex>
-    </template>
     <template #type="{ row }">
       <lew-tag color="green" type="light" round size="small"
         >{{ row.type === 'movie' ? '电影' : '电视剧' }}

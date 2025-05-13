@@ -14,7 +14,7 @@ const visibleOptions = computed(() => {
   return props.options.slice(0, threshold.value)
 })
 
-const dropdownOptions = computed(() => {
+const dropdownOptions: any = computed(() => {
   if (threshold.value <= 0) {
     return []
   }
@@ -88,6 +88,7 @@ const dropdownOptions = computed(() => {
     user-select: none;
     transition: all 0.2s ease;
     gap: 4px;
+    white-space: nowrap;
     &:hover {
       background-color: var(--lew-form-bgcolor-hover);
     }

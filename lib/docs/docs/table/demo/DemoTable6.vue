@@ -80,24 +80,11 @@ const columns = [
     width: 350,
     field: 'description',
     x: 'start'
-  },
-  {
-    title: '操作',
-    width: 120,
-    field: 'action',
-    fixed: 'right',
-    x: 'center'
   }
 ]
 
 const selectedKeys = ref<number[]>([])
 
-const viewDetails = (row: any, column: any) => {
-  console.log('查看详情', row, column)
-}
-const addToFavorites = (row: any, column: any) => {
-  console.log('添加收藏', row, column)
-}
 const tableRef = ref()
 
 const setSelectedBrands = () => {
@@ -130,22 +117,6 @@ const setSelectedBrands = () => {
           >
             {{ item }}
           </lew-tag>
-        </lew-flex>
-      </template>
-      <template #action="{ row, column }">
-        <lew-flex gap="0">
-          <lew-button
-            size="small"
-            text="详情"
-            type="text"
-            @click="viewDetails(row, column)"
-          />
-          <lew-button
-            size="small"
-            text="收藏"
-            type="text"
-            @click="addToFavorites(row, column)"
-          />
         </lew-flex>
       </template>
     </lew-table>

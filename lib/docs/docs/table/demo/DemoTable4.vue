@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { h } from 'vue'
+
 const data: any = [
   {
     id: 1,
@@ -109,7 +111,7 @@ const columns = [
   },
   {
     title: '操作',
-    width: 180,
+    width: 115,
     field: 'action',
     fixed: 'right',
     x: 'center'
@@ -120,19 +122,33 @@ const formatPrice = (price: number) => {
   return `$${price.toFixed(2)}`
 }
 
-const v = ref('')
-
-const submit = () => {
-  LewMessage.error(v.value || '请输入有效的股票价格')
-  v.value = ''
-}
-const success = (e: any) => {
-  e.hide()
-  LewMessage.success('操作成功')
-}
-const error = (e: any) => {
-  e.hide()
-  LewMessage.error('操作取消')
+const options = (row: any, column: any) => {
+  return [
+    {
+      label: 'Edit',
+      onClick: () => {
+        LewMessage.success('编辑')
+      }
+    },
+    {
+      label: 'Delete',
+      onClick: () => {
+        LewMessage.success('删除')
+      }
+    },
+    {
+      label: 'View',
+      onClick: () => {
+        LewMessage.success('查看')
+      }
+    },
+    {
+      label: 'Detail',
+      onClick: () => {
+        LewMessage.success('详情')
+      }
+    }
+  ]
 }
 </script>
 
@@ -145,42 +161,14 @@ const error = (e: any) => {
         row.industry
       }}</lew-tag>
     </template>
-    <template #action>
-      <lew-flex gap="0">
-        <lew-popover trigger="click" placement="top">
-          <template #trigger>
-            <lew-button size="small" text="更新价格" type="text" />
-          </template>
-          <template #popover-body="{ hide }">
-            <lew-flex direction="y" gap="20" class="popover-body">
-              <lew-input v-model="v" placeholder="输入新的股价" />
-              <lew-flex x="end" gap="5">
-                <lew-button
-                  text="取消"
-                  type="text"
-                  size="small"
-                  @click="hide()"
-                />
-                <lew-button
-                  text="确认"
-                  size="small"
-                  @click="hide(), submit()"
-                />
-              </lew-flex>
-            </lew-flex>
-          </template>
-        </lew-popover>
-        <lew-popok
-          title="关注确认"
-          content="是否将该股票添加到您的关注列表？"
-          placement="top"
-          width="200px"
-          @ok="success"
-          @cancel="error"
-        >
-          <lew-button size="small" text="关注" type="text" />
-        </lew-popok>
-      </lew-flex>
+    <template #action="{ row, column }">
+      <lew-action-box
+        :key="row.id"
+        :options="options(row, column)"
+        dropdown-threshold="1"
+        dropdown-label="More"
+      >
+      </lew-action-box>
     </template>
   </lew-table>
 </template>

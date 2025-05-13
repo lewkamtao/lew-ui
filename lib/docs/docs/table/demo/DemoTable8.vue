@@ -97,8 +97,7 @@ const columns = [
     title: 'ID',
     field: 'id',
     width: 60,
-    align: 'center',
-    fixed: 'left'
+    align: 'center'
   },
   {
     title: '产品信息',
@@ -110,8 +109,7 @@ const columns = [
         h('div', { style: 'font-weight: bold; margin-bottom: 5px;' }, row.name),
         h('div', { class: 'brand' }, `${row.brand} (${row.category})`)
       ])
-    },
-    fixed: 'left'
+    }
   },
   {
     title: '发布年份',
@@ -206,14 +204,12 @@ const columns = [
     title: '产地',
     field: 'origin',
     width: 100,
-    fixed: 'right',
     align: 'center'
   },
   {
     title: '保修',
     field: 'warranty',
     width: 100,
-    fixed: 'right',
     align: 'center'
   }
 ]

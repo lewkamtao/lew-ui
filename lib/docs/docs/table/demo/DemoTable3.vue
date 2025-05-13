@@ -240,17 +240,15 @@ const dropdownIcon = h(MoreHorizontal, { size: 14 })
       </lew-flex>
     </template>
     <template #action="{ row, column }">
-      <div>
-        <lew-action-box
-          :key="row.id"
-          :options="options(row, column)"
-          dropdown-threshold="2"
-          dropdown-label=""
-          :dropdown-icon="dropdownIcon"
-          icon-only
-        >
-        </lew-action-box>
-      </div>
+      <lew-action-box
+        :key="row.id"
+        :options="options(row, column)"
+        dropdown-threshold="2"
+        dropdown-label=""
+        :dropdown-icon="dropdownIcon"
+        icon-only
+      >
+      </lew-action-box>
     </template>
   </lew-table>
 </template>

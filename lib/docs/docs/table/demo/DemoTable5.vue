@@ -208,7 +208,7 @@ const columns = [
   },
   {
     title: '操作',
-    width: 180,
+    width: 170,
     field: 'action',
     fixed: 'right',
     x: 'center'
@@ -236,6 +236,13 @@ const calculateValueForMoney = (
   if (score > 100) return '一般'
   return '较低'
 }
+
+const options = (row: any, column: any) => {
+  return [
+    { label: '查看详情', onClick: () => {} },
+    { label: '添加对比', onClick: () => {} }
+  ]
+}
 </script>
 
 <template>
@@ -258,11 +265,12 @@ const calculateValueForMoney = (
     <template #valueForMoney="{ row }">
       {{ calculateValueForMoney(row.price, row.suction, row.batteryLife) }}
     </template>
-    <template #action>
-      <lew-flex gap="0">
-        <lew-button size="small" text="查看详情" type="text" />
-        <lew-button size="small" text="添加对比" type="text" />
-      </lew-flex>
+    <template #action="{ row, column }">
+      <lew-action-box
+        :key="row.id"
+        :options="options(row, column)"
+      >
+      </lew-action-box>
     </template>
   </lew-table>
 </template>
