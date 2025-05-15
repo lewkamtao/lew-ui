@@ -99,32 +99,32 @@ const columns = [
     fixed: 'left'
   },
   {
-    title: '处理器名称',
+    title: 'Processor Name',
     width: 180,
     field: 'name',
     x: 'start',
     fixed: 'left'
   },
   {
-    title: '核心数',
+    title: 'Cores',
     width: 130,
     field: 'cores',
     x: 'center'
   },
   {
-    title: '线程数',
+    title: 'Threads',
     width: 100,
     field: 'threads',
     x: 'center'
   },
   {
-    title: '基础频率',
+    title: 'Base Frequency',
     width: 120,
     field: 'baseFrequency',
     x: 'center'
   },
   {
-    title: '加速频率',
+    title: 'Boost Frequency',
     width: 120,
     field: 'boostFrequency',
     x: 'center'
@@ -136,24 +136,24 @@ const columns = [
     x: 'center'
   },
   {
-    title: '架构',
+    title: 'Architecture',
     width: 120,
     field: 'architecture',
     x: 'center'
   },
   {
-    title: '插槽',
+    title: 'Socket',
     width: 120,
     field: 'socket',
     x: 'center'
   },
   {
-    title: '特性',
+    title: 'Features',
     width: 400,
     field: 'features'
   },
   {
-    title: '操作',
+    title: 'Actions',
     width: 110,
     field: 'action',
     fixed: 'right',

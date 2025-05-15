@@ -84,6 +84,8 @@ const transformTree = (tree: MenuTreeItem[]): MenuTreeItem[] => {
     children: item.children?.length ? transformTree(item.children) : undefined
   }))
 }
+
+
 // 渲染菜单树项
 const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
   // 构建悬浮菜单选项
@@ -119,7 +121,7 @@ const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
         level,
         isLeaf: !item.children?.length,
         disabled,
-        icon: () => icon,
+        icon,
         onChange: () => emit('change', item)
       },
       () =>
@@ -138,6 +140,7 @@ onMounted(() => {
   expandKeys.value = cloneDeep(expandKeys.value)
   modelValue.value = cloneDeep(modelValue.value)
 })
+
 </script>
 
 <template>

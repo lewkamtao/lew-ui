@@ -2,13 +2,19 @@
 const data: any = [
   {
     id: 1,
-    name: '智能清洁者X1',
+    name: 'Smart Cleaner X1',
     price: '1999',
     suction: 4000,
-    batteryLife: '180分钟',
+    batteryLife: '180 minutes',
     noiseLevel: '65dB',
-    cleanArea: '200平方米',
-    features: ['激光导航', '自动回充', 'APP控制', '语音控制', '防跌落'],
+    cleanArea: '200 sq.m',
+    features: [
+      'Laser Navigation',
+      'Auto Recharge',
+      'APP Control',
+      'Voice Control',
+      'Anti-fall'
+    ],
     tdStyle: {
       price:
         'background:var(--lew-color-primary-light);color:var(--lew-color-primary-dark)',
@@ -19,23 +25,23 @@ const data: any = [
     dustBinCapacity: '600ml',
     waterTankCapacity: '300ml',
     filterType: 'HEPA',
-    warranty: '2年'
+    warranty: '2 years'
   },
   {
     id: 2,
-    name: '全能清洁大师',
+    name: 'All-in-One Cleaning Master',
     price: '2499',
     suction: 4500,
-    batteryLife: '200分钟',
+    batteryLife: '200 minutes',
     noiseLevel: '62dB',
-    cleanArea: '250平方米',
+    cleanArea: '250 sq.m',
     features: [
-      '激光导航',
-      '自动回充',
-      'APP控制',
-      '语音控制',
-      '防跌落',
-      '自动倒垃圾'
+      'Laser Navigation',
+      'Auto Recharge',
+      'APP Control',
+      'Voice Control',
+      'Anti-fall',
+      'Auto Empty'
     ],
     tdStyle: {
       name: 'background: var(--lew-color-success-light); font-weight: bold',
@@ -45,17 +51,17 @@ const data: any = [
     dustBinCapacity: '700ml',
     waterTankCapacity: '350ml',
     filterType: 'HEPA',
-    warranty: '3年'
+    warranty: '3 years'
   },
   {
     id: 3,
-    name: '家居清洁精灵',
+    name: 'Home Cleaning Elf',
     price: '1799',
     suction: 3800,
-    batteryLife: '160分钟',
+    batteryLife: '160 minutes',
     noiseLevel: '68dB',
-    cleanArea: '180平方米',
-    features: ['激光导航', '自动回充', 'APP控制', '防跌落'],
+    cleanArea: '180 sq.m',
+    features: ['Laser Navigation', 'Auto Recharge', 'APP Control', 'Anti-fall'],
     tdStyle: {
       batteryLife: 'color:var(--lew-color-warning-dark);',
       noiseLevel: 'background:var(--lew-color-warning);color:#fff',
@@ -64,25 +70,25 @@ const data: any = [
     weight: '3.2kg',
     dustBinCapacity: '550ml',
     waterTankCapacity: '250ml',
-    filterType: '普通',
-    warranty: '1年'
+    filterType: 'Regular',
+    warranty: '1 year'
   },
   {
     id: 4,
-    name: '超强吸尘王',
+    name: 'Super Suction King',
     price: '2999',
     suction: 5000,
-    batteryLife: '240分钟',
+    batteryLife: '240 minutes',
     noiseLevel: '60dB',
-    cleanArea: '300平方米',
+    cleanArea: '300 sq.m',
     features: [
-      '激光导航',
-      '自动回充',
-      'APP控制',
-      '语音控制',
-      '防跌落',
-      '自动倒垃圾',
-      '拖地功能'
+      'Laser Navigation',
+      'Auto Recharge',
+      'APP Control',
+      'Voice Control',
+      'Anti-fall',
+      'Auto Empty',
+      'Mopping Function'
     ],
     tdStyle: {
       suction: 'background:var(--lew-color-error);color:#fff',
@@ -95,17 +101,22 @@ const data: any = [
     dustBinCapacity: '800ml',
     waterTankCapacity: '400ml',
     filterType: 'HEPA',
-    warranty: '3年'
+    warranty: '3 years'
   },
   {
     id: 5,
-    name: '经济实惠清洁器',
+    name: 'Budget Friendly Cleaner',
     price: '1299',
     suction: 3500,
-    batteryLife: '140分钟',
+    batteryLife: '140 minutes',
     noiseLevel: '70dB',
-    cleanArea: '150平方米',
-    features: ['碰撞感应', '自动回充', 'APP控制', '防跌落'],
+    cleanArea: '150 sq.m',
+    features: [
+      'Collision Sensing',
+      'Auto Recharge',
+      'APP Control',
+      'Anti-fall'
+    ],
     tdStyle: {
       price: 'color: var(--lew-color-success); font-weight: bold',
       noiseLevel:
@@ -114,8 +125,8 @@ const data: any = [
     weight: '3.0kg',
     dustBinCapacity: '500ml',
     waterTankCapacity: '200ml',
-    filterType: '普通',
-    warranty: '1年'
+    filterType: 'Regular',
+    warranty: '1 year'
   }
 ]
 
@@ -128,86 +139,86 @@ const columns = [
     fixed: 'left'
   },
   {
-    title: '型号',
+    title: 'Model',
     width: 150,
     field: 'name',
     x: 'start',
     fixed: 'left'
   },
   {
-    title: '价格 (元)',
+    title: 'Price ($)',
     width: 120,
     field: 'price',
     x: 'center'
   },
   {
-    title: '吸力 (Pa)',
+    title: 'Suction (Pa)',
     width: 120,
     field: 'suction',
     x: 'center'
   },
   {
-    title: '续航时间',
+    title: 'Battery Life',
     width: 120,
     field: 'batteryLife',
     x: 'center'
   },
   {
-    title: '噪音水平',
+    title: 'Noise Level',
     width: 120,
     field: 'noiseLevel',
     x: 'center'
   },
   {
-    title: '清洁面积',
+    title: 'Cleaning Area',
     width: 120,
     field: 'cleanArea',
     x: 'center'
   },
   {
-    title: '功能特点',
+    title: 'Features',
     width: 550,
     field: 'features',
     x: 'start'
   },
   {
-    title: '性价比',
+    title: 'Value for Money',
     width: 120,
     field: 'valueForMoney',
     x: 'center'
   },
   {
-    title: '重量',
+    title: 'Weight',
     width: 100,
     field: 'weight',
     x: 'center'
   },
   {
-    title: '尘盒容量',
+    title: 'Dust Bin Capacity',
     width: 120,
     field: 'dustBinCapacity',
     x: 'center'
   },
   {
-    title: '水箱容量',
+    title: 'Water Tank Capacity',
     width: 120,
     field: 'waterTankCapacity',
     x: 'center'
   },
   {
-    title: '滤网类型',
+    title: 'Filter Type',
     width: 120,
     field: 'filterType',
     x: 'center'
   },
   {
-    title: '保修期',
+    title: 'Warranty',
     width: 100,
     field: 'warranty',
     x: 'center'
   },
   {
-    title: '操作',
+    title: 'Actions',
     width: 170,
     field: 'action',
     fixed: 'right',
@@ -217,9 +228,9 @@ const columns = [
 
 const formatNoiseLevel = (level: string) => {
   const noise = parseInt(level)
-  if (noise <= 62) return '安静'
-  if (noise <= 66) return '适中'
-  return '较大'
+  if (noise <= 62) return 'Quiet'
+  if (noise <= 66) return 'Moderate'
+  return 'Loud'
 }
 
 const calculateValueForMoney = (
@@ -230,17 +241,17 @@ const calculateValueForMoney = (
   const priceNum = parseInt(price)
   const batteryMinutes = parseInt(batteryLife)
   const score = (suction * batteryMinutes) / priceNum
-  if (score > 400) return '极高'
-  if (score > 300) return '很高'
-  if (score > 200) return '高'
-  if (score > 100) return '一般'
-  return '较低'
+  if (score > 400) return 'Excellent'
+  if (score > 300) return 'Very High'
+  if (score > 200) return 'High'
+  if (score > 100) return 'Average'
+  return 'Low'
 }
 
 const options = (row: any, column: any) => {
   return [
-    { label: '查看详情', onClick: () => {} },
-    { label: '添加对比', onClick: () => {} }
+    { label: 'View Details', onClick: () => {} },
+    { label: 'Add to Compare', onClick: () => {} }
   ]
 }
 </script>
@@ -251,7 +262,7 @@ const options = (row: any, column: any) => {
       {{ row.noiseLevel }} ({{ formatNoiseLevel(row.noiseLevel) }})
     </template>
     <template #features="{ row }">
-      <lew-flex gap="5" x="start">
+      <lew-flex gap="5" x="start" wrap>
         <lew-tag
           v-for="(item, index) in row.features"
           :key="index"
@@ -266,10 +277,7 @@ const options = (row: any, column: any) => {
       {{ calculateValueForMoney(row.price, row.suction, row.batteryLife) }}
     </template>
     <template #action="{ row, column }">
-      <lew-action-box
-        :key="row.id"
-        :options="options(row, column)"
-      >
+      <lew-action-box :key="row.id" :options="options(row, column)">
       </lew-action-box>
     </template>
   </lew-table>

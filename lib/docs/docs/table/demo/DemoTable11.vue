@@ -8,11 +8,11 @@ const data: any = ref([
     releaseYear: 2030,
     rating: 95,
     brand: 'Apple',
-    category: '智能手机',
-    intro: '搭载A20仿生芯片，支持8G网络，配备超级视网膜XDR显示屏。',
-    price: 9999,
+    category: 'Smartphone',
+    intro: 'Equipped with A20 Bionic chip, supports 8G network, features Super Retina XDR display.',
+    price: 999,
     stock: 1000,
-    color: '深空黑',
+    color: 'Space Black',
     storage: '512GB',
     camera: '108MP',
     battery: '5000mAh'
@@ -24,11 +24,11 @@ const data: any = ref([
     releaseYear: 2020,
     rating: 92,
     brand: 'Samsung',
-    category: '智能手机',
-    intro: '采用Exynos 2100处理器，支持8K视频录制，配备动态AMOLED 2X显示屏。',
-    price: 7999,
+    category: 'Smartphone',
+    intro: 'Powered by Exynos 2100 processor, supports 8K video recording, features Dynamic AMOLED 2X display.',
+    price: 799,
     stock: 800,
-    color: '幻境银',
+    color: 'Phantom Silver',
     storage: '256GB',
     camera: '64MP',
     battery: '4800mAh'
@@ -40,12 +40,12 @@ const data: any = ref([
     releaseYear: 2025,
     rating: 88,
     brand: 'Apple',
-    category: '笔记本电脑',
+    category: 'Laptop',
     intro:
-      '搭载M1 Pro或M1 Max芯片，配备Liquid Retina XDR显示屏，支持ProMotion自适应刷新率。',
-    price: 15999,
+      'Featuring M1 Pro or M1 Max chip, Liquid Retina XDR display, and ProMotion adaptive refresh rate technology.',
+    price: 1599,
     stock: 500,
-    color: '银色',
+    color: 'Silver',
     storage: '1TB',
     processor: 'M1 Pro',
     memory: '32GB'
@@ -57,12 +57,12 @@ const data: any = ref([
     releaseYear: 2024,
     rating: 85,
     brand: 'Microsoft',
-    category: '笔记本电脑',
+    category: 'Laptop',
     intro:
-      '搭载Intel Core或AMD Ryzen处理器，配备PixelSense触摸屏，支持Windows Hello面部识别。',
-    price: 12999,
+      'Powered by Intel Core or AMD Ryzen processors, features PixelSense touchscreen, supports Windows Hello facial recognition.',
+    price: 1299,
     stock: 600,
-    color: '铂金色',
+    color: 'Platinum',
     storage: '512GB',
     processor: 'Intel i7',
     memory: '16GB'
@@ -74,12 +74,12 @@ const data: any = ref([
     releaseYear: 2021,
     rating: 90,
     brand: 'Apple',
-    category: '平板电脑',
+    category: 'Tablet',
     intro:
-      '搭载M1芯片，支持5G网络，配备Liquid Retina XDR显示屏，支持ProMotion技术。',
-    price: 8999,
+      'Powered by M1 chip, supports 5G network, features Liquid Retina XDR display with ProMotion technology.',
+    price: 899,
     stock: 750,
-    color: '太空灰',
+    color: 'Space Gray',
     storage: '256GB',
     processor: 'M1',
     memory: '8GB'
@@ -95,27 +95,27 @@ const columns = [
     fixed: 'left'
   },
   {
-    title: '产品信息',
+    title: 'Product Info',
     x: 'center',
     children: [
       {
-        title: '基本信息',
+        title: 'Basic Info',
         x: 'center',
         fixed: 'left',
         children: [
           {
-            title: '名称',
+            title: 'Name',
             width: 150,
             field: 'name'
           },
           {
-            title: '品牌',
+            title: 'Brand',
             field: 'brand',
             width: 100,
             x: 'center'
           },
           {
-            title: '类别',
+            title: 'Category',
             field: 'category',
             width: 100,
             x: 'center'
@@ -123,47 +123,47 @@ const columns = [
         ]
       },
       {
-        title: '发布年份',
+        title: 'Release Year',
         field: 'releaseYear',
         width: 120,
         x: 'center',
         customRender: ({ row }: any) => {
-          return row.releaseYear + '年'
+          return row.releaseYear
         }
       },
       {
-        title: '价格',
+        title: 'Price',
         field: 'price',
         width: 120,
         x: 'center',
         sortable: true,
         customRender: ({ row }: any) => {
-          return '￥' + row.price
+          return '$' + row.price
         }
       }
     ]
   },
   {
-    title: '规格参数',
+    title: 'Specifications',
     fixed: 'right',
     x: 'center',
     children: [
       {
-        title: '存储',
+        title: 'Storage',
         field: 'storage',
         fixed: 'right',
         width: 80,
         x: 'center'
       },
       {
-        title: '颜色',
+        title: 'Color',
         field: 'color',
         fixed: 'right',
         width: 80,
         x: 'center'
       },
       {
-        title: '库存',
+        title: 'Stock',
         field: 'stock',
         fixed: 'right',
         width: 80,
@@ -172,14 +172,14 @@ const columns = [
     ]
   },
   {
-    title: '评分',
+    title: 'Rating',
     width: 80,
     field: 'rating',
     x: 'center',
     fixed: 'right'
   },
   {
-    title: '简介',
+    title: 'Description',
     width: 300,
     field: 'intro',
     type: 'text-trim'
@@ -220,7 +220,7 @@ const sortChange = () => {
         <lew-badge v-else-if="row.rating >= 80" round color="blue" />
         <lew-badge v-else round color="orange" />
         <span>{{
-          row.rating >= 90 ? '优秀' : row.rating >= 80 ? '良好' : '一般'
+          row.rating >= 90 ? 'Excellent' : row.rating >= 80 ? 'Good' : 'Average'
         }}</span>
       </lew-flex>
     </template>

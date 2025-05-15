@@ -6,54 +6,54 @@ const tableRef = ref()
 const columns = [
   {
     type: 'text',
-    title: 'id',
+    title: 'ID',
     field: 'id',
     width: 100,
     x: 'center'
   },
   {
     type: 'text',
-    title: '名称',
+    title: 'Title',
     field: 'title',
     width: 180
   },
 
   {
     type: 'text',
-    title: '上线日期',
+    title: 'Release Date',
     field: 'release_date',
-    width: 100,
+    width: 150,
     x: 'center'
   },
   {
     type: 'template',
-    title: '在线观看',
+    title: 'Available Online',
     field: 'has_linewatch',
-    width: 100,
+    width: 150,
     x: 'center'
   },
   {
     type: 'text',
-    title: '导演',
+    title: 'Directors',
     field: 'directors',
-    width: 140
+    width: 150
   },
   {
     type: 'text',
-    title: '简介',
+    title: 'Synopsis',
     field: 'info',
-    width: 120
+    width: 320
   },
   {
     type: 'template',
-    title: '类型',
+    title: 'Category',
     field: 'type',
     width: 100,
     x: 'center'
   },
   {
     type: 'template',
-    title: '主演',
+    title: 'Cast',
     align: 'start',
     field: 'actors',
     width: 450
@@ -64,7 +64,7 @@ const selectedKeys = ref('35503077')
 </script>
 
 <template>
-  <div style="margin-bottom: 10px">已选择： {{ selectedKeys }}</div>
+  <div style="margin-bottom: 10px">Selected: {{ selectedKeys }}</div>
   <lew-table
     ref="tableRef"
     checkable
@@ -80,36 +80,28 @@ const selectedKeys = ref('35503077')
         v-for="(item, index) in row.directors"
         :key="index"
         round
+        oversize
         size="small"
         type="light"
         color="gray"
       >
-        {{ item }}</lew-tag
-      >
+        {{ item }}
+      </lew-tag>
     </template>
     <template #info="{ row }">
       <lew-text-trim style="width: 100%" :text="row.info" />
     </template>
 
     <template #type="{ row }">
-      <lew-tag color="green" type="light" round size="small"
-        >{{ row.type === 'movie' ? '电影' : '电视剧' }}
+      <lew-tag oversize color="green" type="light" round size="small">
+        {{ row.type }}
       </lew-tag>
     </template>
     <template #has_linewatch="{ row }">
-      <span>{{ row.has_linewatch ? '是' : '否' }}</span>
+      <span>{{ row.has_linewatch ? 'Yes' : 'No' }}</span>
     </template>
     <template #actors="{ row }">
-      <lew-flex
-        v-tooltip="{
-          content: row.actors.join(' <br /> '),
-          placement: 'left',
-          trigger: 'mouseenter',
-          allowHTML: true
-        }"
-        x="start"
-        gap="5"
-      >
+      <lew-flex x="start" gap="5" wrap>
         <lew-tag
           v-for="(actor, index) in row.actors"
           :key="index"

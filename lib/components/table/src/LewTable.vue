@@ -18,6 +18,7 @@ import type { FlexXAlignment, FlexYAlignment, TextTrimAlignment } from 'lew-ui'
 import SortIcon from './SortIcon.vue'
 import { h } from 'vue'
 import { isVueComponent } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
 
 // ==================== Props & Emits ====================
 const props = defineProps(tableProps)
@@ -651,7 +652,7 @@ const renderCustomCell = ({
                 :certain="hasPartialSelection && !state.isAllChecked"
                 @change="setAllRowsChecked($event)"
               />
-              <template v-else>单选</template>
+              <Icon v-else type="square-mouse-pointer" />
             </lew-flex>
             <readerHeaderTd
               :column="column"

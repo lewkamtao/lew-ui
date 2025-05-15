@@ -50,6 +50,8 @@ const setForm = (value: any = {}) => {
       if (item.inputFormat) {
         v = item.inputFormat({ item, value: v })
       }
+      // 重置 ignoreValidate
+      formItemRefMap.value[item.field]?.setIgnoreValidate(true)
       // 重置error
       formItemRefMap.value[item.field]?.setError('')
       // 如果有值，就把值给 formMap

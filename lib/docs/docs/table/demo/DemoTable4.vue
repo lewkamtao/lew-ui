@@ -4,58 +4,58 @@ import { h } from 'vue'
 const data: any = [
   {
     id: 1,
-    name: '苹果',
+    name: 'Apple',
     ticker: 'AAPL',
     price: 150.25,
     marketCap: '2.5T',
     peRatio: 28.5,
     dividend: '0.88%',
-    sector: '科技',
-    industry: '消费电子'
+    sector: 'Technology',
+    industry: 'Consumer Electronics'
   },
   {
     id: 2,
-    name: '微软',
+    name: 'Microsoft',
     ticker: 'MSFT',
     price: 305.75,
     marketCap: '2.3T',
     peRatio: 32.1,
     dividend: '0.75%',
-    sector: '科技',
-    industry: '软件'
+    sector: 'Technology',
+    industry: 'Software'
   },
   {
     id: 3,
-    name: '亚马逊',
+    name: 'Amazon',
     ticker: 'AMZN',
     price: 3300.5,
     marketCap: '1.7T',
     peRatio: 58.7,
     dividend: 'N/A',
-    sector: '消费者周期性',
-    industry: '电子商务'
+    sector: 'Consumer Cyclical',
+    industry: 'E-Commerce'
   },
   {
     id: 4,
-    name: '谷歌',
+    name: 'Google',
     ticker: 'GOOGL',
     price: 2750.25,
     marketCap: '1.8T',
     peRatio: 27.8,
     dividend: 'N/A',
-    sector: '通信服务',
-    industry: '互联网内容与信息'
+    sector: 'Communication Services',
+    industry: 'Internet Content & Information'
   },
   {
     id: 5,
-    name: '特斯拉',
+    name: 'Tesla',
     ticker: 'TSLA',
     price: 725.6,
     marketCap: '730B',
     peRatio: 370.2,
     dividend: 'N/A',
-    sector: '消费者周期性',
-    industry: '汽车制造'
+    sector: 'Consumer Cyclical',
+    industry: 'Auto Manufacturers'
   }
 ]
 
@@ -68,49 +68,49 @@ const columns = [
     fixed: 'left'
   },
   {
-    title: '公司名称',
+    title: 'Company Name',
     width: 100,
     field: 'name',
     x: 'center',
     fixed: 'left'
   },
   {
-    title: '股票代码',
+    title: 'Ticker',
     width: 100,
     field: 'ticker',
     x: 'center'
   },
   {
-    title: '股价',
+    title: 'Price',
     width: 100,
     field: 'price',
     x: 'center'
   },
   {
-    title: '市值',
+    title: 'Market Cap',
     width: 100,
     field: 'marketCap',
     x: 'center'
   },
   {
-    title: '市盈率',
+    title: 'P/E Ratio',
     width: 100,
     field: 'peRatio',
     x: 'center'
   },
   {
-    title: '股息率',
+    title: 'Dividend',
     width: 100,
     field: 'dividend',
     x: 'center'
   },
   {
-    title: '行业',
+    title: 'Industry',
     width: 220,
     field: 'industry'
   },
   {
-    title: '操作',
+    title: 'Actions',
     width: 115,
     field: 'action',
     fixed: 'right',
@@ -127,25 +127,25 @@ const options = (row: any, column: any) => {
     {
       label: 'Edit',
       onClick: () => {
-        LewMessage.success('编辑')
+        LewMessage.success('Edit')
       }
     },
     {
       label: 'Delete',
       onClick: () => {
-        LewMessage.success('删除')
+        LewMessage.success('Delete')
       }
     },
     {
       label: 'View',
       onClick: () => {
-        LewMessage.success('查看')
+        LewMessage.success('View')
       }
     },
     {
       label: 'Detail',
       onClick: () => {
-        LewMessage.success('详情')
+        LewMessage.success('Detail')
       }
     }
   ]

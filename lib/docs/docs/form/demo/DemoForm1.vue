@@ -360,27 +360,7 @@ const form = ref({} as any)
 const setForm = () => {
   // 设置表单
   formRef.value.setForm({
-    size: 'medium',
-    input: '文本框',
-    textarea: '多行文本',
-    select: '1',
-    select_multiple: [1, 2],
-    radio_group: '2',
-    checkbox_group: ['2'],
-    tabs: '2',
-    user: {
-      address: 30,
-      addd: true
-    },
-    info: {
-      a: {
-        b: {
-          c: {
-            input_tag: ['测试', '小芳']
-          }
-        }
-      }
-    }
+    size: 'medium'
   })
 }
 

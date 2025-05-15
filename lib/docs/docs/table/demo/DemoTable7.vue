@@ -5,37 +5,37 @@ const data: any = ref([
     id: 1,
     brand: 'Supreme',
     founded: '1994',
-    origin: '美国',
-    style: '街头潮流',
-    popularItems: ['Box Logo T恤', '连帽卫衣', '滑板'],
-    description: '以其标志性的红色盒子logo和限量发售策略而闻名。'
+    origin: 'USA',
+    style: 'Streetwear',
+    popularItems: ['Box Logo T-shirt', 'Hoodies', 'Skateboards'],
+    description: 'Famous for its iconic red box logo and limited release strategy.'
   },
   {
     id: 2,
     brand: 'Off-White',
     founded: '2012',
-    origin: '意大利',
-    style: '高端街头',
-    popularItems: ['工业腰带', '箭头T恤', '引号设计鞋'],
-    description: '结合高端时尚与街头文化，以独特的引号设计和斜条纹标志著称。'
+    origin: 'Italy',
+    style: 'High-end Streetwear',
+    popularItems: ['Industrial Belt', 'Arrow T-shirt', 'Quotation Mark Shoes'],
+    description: 'Combines high fashion with street culture, known for unique quotation designs and diagonal stripe logo.'
   },
   {
     id: 3,
     brand: 'BAPE',
     founded: '1993',
-    origin: '日本',
-    style: '日式街头',
-    popularItems: ['鲨鱼连帽衫', 'Camo图案', 'Bapesta运动鞋'],
-    description: '以其独特的迷彩图案和卡通猿人头像而闻名于世。'
+    origin: 'Japan',
+    style: 'Japanese Streetwear',
+    popularItems: ['Shark Hoodie', 'Camo Pattern', 'Bapesta Sneakers'],
+    description: 'Known worldwide for its distinctive camouflage patterns and cartoon ape head logo.'
   },
   {
     id: 4,
     brand: 'Palace',
     founded: '2009',
-    origin: '英国',
-    style: '滑板文化',
-    popularItems: ['Tri-Ferg Logo T恤', '运动外套', '滑板配件'],
-    description: '源于伦敦滑板文化，以三角形logo和幽默设计而著名。'
+    origin: 'UK',
+    style: 'Skate Culture',
+    popularItems: ['Tri-Ferg Logo Tee', 'Track Jackets', 'Skate Accessories'],
+    description: 'Originated from London skate culture, famous for its triangular logo and humorous designs.'
   }
 ])
 
@@ -47,38 +47,38 @@ const columns = [
     x: 'center'
   },
   {
-    title: '品牌',
+    title: 'Brand',
     width: 100,
     field: 'brand',
     x: 'start'
   },
   {
-    title: '成立年份',
+    title: 'Founded',
     width: 180,
     field: 'founded',
     sortable: true,
     x: 'center'
   },
   {
-    title: '发源地',
+    title: 'Origin',
     width: 80,
     field: 'origin',
     x: 'center'
   },
   {
-    title: '风格',
+    title: 'Style',
     width: 100,
     field: 'style',
     x: 'start'
   },
   {
-    title: '热门单品',
+    title: 'Popular Items',
     width: 300,
     field: 'popularItems',
     x: 'start'
   },
   {
-    title: '品牌简介',
+    title: 'Description',
     width: 350,
     field: 'description',
     type: 'text-trim',

@@ -2,93 +2,93 @@
 const data: any = ref([
   {
     id: 1,
-    name: 'Supreme Box Logo连帽衫',
+    name: 'Supreme Box Logo Hoodie',
     releaseYear: '2020',
     popularity: 98,
     brand: 'Supreme',
-    category: '上衣',
+    category: 'Tops',
     price: 3999,
     stock: 50,
     sales: 1200,
     rating: 4.8,
-    intro: '经典Box Logo设计，采用优质棉料，舒适保暖，街头潮流必备单品。',
-    material: '100%棉',
+    intro: 'Classic Box Logo design, made with premium cotton, comfortable and warm, a must-have for street fashion.',
+    material: '100% Cotton',
     size: 'M/L/XL',
-    color: '黑色/白色/红色',
-    origin: '美国',
-    warranty: '30天'
+    color: 'Black/White/Red',
+    origin: 'USA',
+    warranty: '30 days'
   },
   {
     id: 2,
-    name: 'Off-White工业风腰带',
+    name: 'Off-White Industrial Belt',
     releaseYear: '2019',
     popularity: 95,
     brand: 'Off-White',
-    category: '配饰',
+    category: 'Accessories',
     price: 1999,
     stock: 100,
     sales: 800,
     rating: 4.6,
-    intro: '标志性工业风格设计，采用尼龙材质，可调节长度，彰显个性。',
-    material: '尼龙',
-    size: '均码',
-    color: '黑色/黄色',
-    origin: '意大利',
-    warranty: '1年'
+    intro: 'Signature industrial style design, made of nylon material, adjustable length, showcasing personality.',
+    material: 'Nylon',
+    size: 'One Size',
+    color: 'Black/Yellow',
+    origin: 'Italy',
+    warranty: '1 year'
   },
   {
     id: 3,
-    name: 'BAPE鲨鱼头连帽衫',
+    name: 'BAPE Shark Hoodie',
     releaseYear: '2021',
     popularity: 92,
     brand: 'BAPE',
-    category: '上衣',
+    category: 'Tops',
     price: 2999,
     stock: 75,
     sales: 950,
     rating: 4.7,
-    intro: '经典鲨鱼头设计，采用迷彩印花，拉链可拉至顶部形成鲨鱼嘴造型。',
-    material: '80%棉 20%聚酯纤维',
+    intro: 'Classic shark head design, featuring camo print, zipper extends to the top to form a shark mouth shape.',
+    material: '80% Cotton 20% Polyester',
     size: 'S/M/L/XL',
-    color: '迷彩绿/迷彩蓝',
-    origin: '日本',
-    warranty: '14天'
+    color: 'Camo Green/Camo Blue',
+    origin: 'Japan',
+    warranty: '14 days'
   },
   {
     id: 4,
-    name: 'Yeezy Boost 350 V2运动鞋',
+    name: 'Yeezy Boost 350 V2 Sneakers',
     releaseYear: '2022',
     popularity: 97,
     brand: 'Adidas',
-    category: '鞋履',
+    category: 'Footwear',
     price: 2499,
     stock: 60,
     sales: 1500,
     rating: 4.9,
-    intro: 'Kanye West设计，Boost缓震科技，编织鞋面，舒适时尚。',
-    material: 'Primeknit编织面料',
+    intro: 'Designed by Kanye West, featuring Boost cushioning technology, knitted upper, comfortable and stylish.',
+    material: 'Primeknit Fabric',
     size: '36-45',
-    color: '斑马纹/黑红/冰蓝',
-    origin: '中国',
-    warranty: '1年'
+    color: 'Zebra/Black Red/Ice Blue',
+    origin: 'China',
+    warranty: '1 year'
   },
   {
     id: 5,
-    name: 'Palace Tri-Ferg短袖T恤',
+    name: 'Palace Tri-Ferg T-Shirt',
     releaseYear: '2021',
     popularity: 90,
     brand: 'Palace',
-    category: '上衣',
+    category: 'Tops',
     price: 799,
     stock: 120,
     sales: 700,
     rating: 4.5,
-    intro: '标志性三角logo设计，采用优质棉料，简约百搭，街头潮流必备。',
-    material: '100%棉',
+    intro: 'Iconic triangle logo design, made with premium cotton, simple and versatile, a street fashion essential.',
+    material: '100% Cotton',
     size: 'S/M/L/XL',
-    color: '白色/黑色/灰色',
-    origin: '英国',
-    warranty: '7天'
+    color: 'White/Black/Gray',
+    origin: 'UK',
+    warranty: '7 days'
   }
 ])
 
@@ -100,7 +100,7 @@ const columns = [
     align: 'center'
   },
   {
-    title: '产品信息',
+    title: 'Product Info',
     width: 240,
     field: 'productInfo',
     align: 'start',
@@ -112,7 +112,7 @@ const columns = [
     }
   },
   {
-    title: '发布年份',
+    title: 'Release Year',
     field: 'releaseYear',
     width: 100,
     align: 'center',
@@ -121,12 +121,12 @@ const columns = [
       const age = currentYear - parseInt(row.releaseYear)
       return h('div', [
         h('div', row.releaseYear),
-        h('div', { style: 'font-size: 12px; color: #999;' }, `${age}年前`)
+        h('div', { style: 'font-size: 12px; color: #999;' }, `${age} years ago`)
       ])
     }
   },
   {
-    title: '人气与价格',
+    title: 'Popularity & Price',
     width: 140,
     align: 'center',
     customRender: ({ row }: any) => {
@@ -147,19 +147,19 @@ const columns = [
     }
   },
   {
-    title: '库存',
+    title: 'Stock',
     field: 'stock',
     width: 80,
     align: 'center'
   },
   {
-    title: '销量',
+    title: 'Sales',
     field: 'sales',
     width: 100,
     align: 'center'
   },
   {
-    title: '评分',
+    title: 'Rating',
     field: 'rating',
     width: 100,
     align: 'center',
@@ -171,7 +171,7 @@ const columns = [
     }
   },
   {
-    title: '简介',
+    title: 'Description',
     width: 300,
     field: 'intro',
     align: 'start',
@@ -183,31 +183,31 @@ const columns = [
     }
   },
   {
-    title: '材质',
+    title: 'Material',
     field: 'material',
     width: 120,
     align: 'center'
   },
   {
-    title: '尺码',
+    title: 'Size',
     field: 'size',
     width: 100,
     align: 'center'
   },
   {
-    title: '颜色',
+    title: 'Color',
     field: 'color',
     width: 150,
     align: 'center'
   },
   {
-    title: '产地',
+    title: 'Origin',
     field: 'origin',
     width: 100,
     align: 'center'
   },
   {
-    title: '保修',
+    title: 'Warranty',
     field: 'warranty',
     width: 100,
     align: 'center'

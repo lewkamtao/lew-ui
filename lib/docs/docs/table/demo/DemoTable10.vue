@@ -2,7 +2,7 @@
 const columns = [
   {
     type: 'text',
-    title: 'id',
+    title: 'ID',
     field: 'id',
     width: 100,
     fixed: 'left',
@@ -10,21 +10,20 @@ const columns = [
   },
   {
     type: 'text',
-    title: '名称',
+    title: 'Title',
     field: 'title',
     width: 180
   },
-
   {
     type: 'text',
-    title: '上线日期',
+    title: 'Release Date',
     field: 'release_date',
     width: 100,
     x: 'center'
   },
   {
     type: 'template',
-    title: '在线观看',
+    title: 'Watch Online',
     field: 'has_linewatch',
     width: 100,
 
@@ -32,26 +31,26 @@ const columns = [
   },
   {
     type: 'text',
-    title: '导演',
+    title: 'Director',
     field: 'directors',
     width: 140
   },
   {
     type: 'text',
-    title: '简介',
+    title: 'Synopsis',
     field: 'info',
     width: 120
   },
   {
     type: 'template',
-    title: '类型',
+    title: 'Genre',
     field: 'type',
     width: 100,
     x: 'center'
   },
   {
     type: 'template',
-    title: '主演',
+    title: 'Cast',
     align: 'start',
     field: 'actors',
     width: 450
@@ -59,7 +58,7 @@ const columns = [
 
   {
     type: 'template',
-    title: '执行',
+    title: 'Actions',
     field: 'action',
     width: 120,
     align: 'center',

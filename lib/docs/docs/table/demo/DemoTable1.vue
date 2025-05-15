@@ -3,55 +3,42 @@ const data: any = ref([
   {
     id: 1,
     name: 'iPhone 20',
-    avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
     releaseYear: 2030,
     rating: 95,
     brand: 'Apple',
-    category: '智能手机',
-    intro: '搭载A20仿生芯片，支持8G网络，配备超级视网膜XDR显示屏。'
+    category: 'Smartphone'
   },
   {
     id: 2,
     name: 'Galaxy S21',
-    avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
     releaseYear: 2020,
     rating: 92,
     brand: 'Samsung',
-    category: '智能手机',
-    intro: '采用Exynos 2100处理器，支持8K视频录制，配备动态AMOLED 2X显示屏。'
+    category: 'Smartphone'
   },
   {
     id: 3,
     name: 'MacBook Pro',
-    avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
     releaseYear: 2025,
     rating: 88,
     brand: 'Apple',
-    category: '笔记本电脑',
-    intro:
-      '搭载M1 Pro或M1 Max芯片，配备Liquid Retina XDR显示屏，支持ProMotion自适应刷新率。'
+    category: 'Laptop'
   },
   {
     id: 4,
     name: 'Surface Laptop 4',
-    avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
     releaseYear: 2024,
     rating: 85,
     brand: 'Microsoft',
-    category: '笔记本电脑',
-    intro:
-      '搭载Intel Core或AMD Ryzen处理器，配备PixelSense触摸屏，支持Windows Hello面部识别。'
+    category: 'Laptop'
   },
   {
     id: 5,
     name: 'iPad Pro',
-    avatar: 'https://q1.qlogo.cn/g?b=qq&s=100&nk=1057072668',
     releaseYear: 2021,
     rating: 90,
     brand: 'Apple',
-    category: '平板电脑',
-    intro:
-      '搭载M1芯片，支持5G网络，配备Liquid Retina XDR显示屏，支持ProMotion技术。'
+    category: 'Tablet'
   }
 ])
 
@@ -64,36 +51,31 @@ const columns = [
     fixed: 'left'
   },
   {
-    title: '产品信息',
+    title: 'Product Info',
     width: 150,
     field: 'info'
   },
   {
-    title: '发布年份',
+    title: 'Release Year',
     field: 'releaseYear',
     width: 120,
     x: 'center',
     customRender: ({ row }: any) => {
-      return row.releaseYear + '年'
+      return row.releaseYear
     }
   },
   {
-    title: '类别',
+    title: 'Category',
     field: 'category',
     width: 120,
     x: 'center'
   },
   {
-    title: '评分',
+    title: 'Rating',
     width: 80,
     field: 'rating',
     x: 'center',
     fixed: 'right'
-  },
-  {
-    title: '简介',
-    width: 300,
-    field: 'intro'
   }
 ]
 </script>

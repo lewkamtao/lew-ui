@@ -65,61 +65,61 @@ const columns = [
     fixed: 'left'
   },
   {
-    title: '品牌',
+    title: 'Brand',
     width: 120,
     field: 'brand',
     x: 'start'
   },
   {
-    title: '型号',
+    title: 'Model',
     width: 180,
     field: 'name',
     x: 'start'
   },
   {
-    title: '显存',
+    title: 'Memory',
     width: 140,
     field: 'memory',
     x: 'start'
   },
   {
-    title: '性能评分',
+    title: 'Performance',
     width: 120,
     field: 'performance',
     x: 'center'
   },
   {
-    title: '特性',
+    title: 'Features',
     width: 420,
     field: 'features',
     x: 'start'
   },
   {
-    title: '发布日期',
+    title: 'Release Date',
     width: 140,
     field: 'releaseDate',
     x: 'center'
   },
   {
-    title: '功耗',
+    title: 'Power',
     width: 100,
     field: 'powerConsumption',
     x: 'center'
   },
   {
-    title: '架构',
+    title: 'Architecture',
     width: 140,
     field: 'architecture',
     x: 'start'
   },
   {
-    title: '核心数量',
+    title: 'Core Count',
     width: 120,
     field: 'coreCount',
     x: 'center'
   },
   {
-    title: '加速频率',
+    title: 'Boost Clock',
     width: 120,
     field: 'boostClock',
     x: 'center'
@@ -131,13 +131,13 @@ const columns = [
     x: 'center'
   },
   {
-    title: '制程',
+    title: 'Process',
     width: 100,
     field: 'manufacturingProcess',
     x: 'center'
   },
   {
-    title: '价格',
+    title: 'Price',
     width: 120,
     fixed: 'right',
     field: 'price',
@@ -148,19 +148,19 @@ const columns = [
 const formatPerformance = (performance: number) => {
   switch (true) {
     case performance >= 9:
-      return '顶级'
+      return 'Top-tier'
     case performance >= 7:
-      return '高端'
+      return 'High-end'
     case performance >= 5:
-      return '中端'
+      return 'Mid-range'
     default:
-      return '入门'
+      return 'Entry-level'
   }
 }
 </script>
 
 <template>
-  <lew-table bordered :data-source="data" :max-height="300" :columns="columns">
+  <lew-table :data-source="data" :max-height="300" :columns="columns">
     <template #performance="{ row }">
       {{ formatPerformance(row.performance) }}
     </template>

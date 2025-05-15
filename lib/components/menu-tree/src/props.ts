@@ -75,8 +75,8 @@ export const menuTreeItemProps = {
     }
   },
   icon: {
-    type: Function,
-    default: () => {},
+    type: [String, Function],
+    default: undefined,
     description: '菜单树项的图标。'
   },
   disabled: {

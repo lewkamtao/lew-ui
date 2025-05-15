@@ -79,12 +79,22 @@ const modelValue: Ref<any> = defineModel({
 watch(
   () => modelValue.value,
   () => {
-    validateField()
+    if (!ignoreValidate.value) {
+      validateField()
+    } else {
+      ignoreValidate.value = false
+    }
   },
   {
     deep: true
   }
 )
+
+const ignoreValidate = ref(false)
+
+const setIgnoreValidate = (value: boolean) => {
+  ignoreValidate.value = value
+}
 
 const validateField = debounce(() => {
   validate()
@@ -179,7 +189,7 @@ const getFormItemMainStyle = computed(() => {
   }
 })
 
-defineExpose({ validate, setError, curRule })
+defineExpose({ validate, setError, curRule, setIgnoreValidate })
 </script>
 
 <template>

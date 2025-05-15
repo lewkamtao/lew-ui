@@ -2,7 +2,12 @@
 import { messages, Language } from '../../locals/index'
 import { en, zh, de, pt, fr, it, es, ko, ja } from '../../../locals/index'
 import { ref, computed } from 'vue'
-
+import { useDark } from '@vueuse/core'
+useDark({
+  selector: 'html',
+  valueDark: 'lew-dark',
+  valueLight: 'lew-light'
+})
 const docs_langs = messages
 const component_langs = { en, zh, de, pt, fr, it, es, ko, ja }
 
@@ -214,13 +219,13 @@ function getDiffItemClass(diff: string): string {
       font-size: 32px;
       font-weight: 600;
       margin-bottom: 12px;
-      color: #1d1d1f;
+      color: var(--lew-text-color-1);
       letter-spacing: -0.02em;
       line-height: 1.2;
     }
 
     p {
-      color: #86868b;
+      color: var(--lew-text-color-4);
       font-size: 17px;
       line-height: 1.5;
       margin-bottom: 32px;
@@ -230,9 +235,9 @@ function getDiffItemClass(diff: string): string {
 
   .source-selector {
     margin-bottom: 20px;
-    background: #f5f5f7;
+    background: var(--lew-bgcolor-2);
     padding: 4px;
-    border-radius: 12px;
+    border-radius: var(--lew-border-radius-medium);
     display: inline-block;
 
     .source-tabs {
@@ -241,24 +246,24 @@ function getDiffItemClass(diff: string): string {
 
       .source-tab {
         padding: 10px 20px;
-        border-radius: 8px;
+        border-radius: var(--lew-border-radius-small);
         background-color: transparent;
         cursor: pointer;
         transition: all 0.2s ease;
         font-size: 14px;
         font-weight: 500;
-        color: #666;
+        color: var(--lew-text-color-4);
         border: none;
         position: relative;
         user-select: none;
         outline: none;
 
         &:hover {
-          color: #333;
+          color: var(--lew-text-color-2);
         }
 
         &:focus-visible {
-          box-shadow: 0 0 0 2px rgba(0, 125, 250, 0.6);
+          box-shadow: 0 0 0 2px var(--lew-color-primary-light);
           outline: none;
         }
 
@@ -267,13 +272,13 @@ function getDiffItemClass(diff: string): string {
         }
 
         &.active {
-          background-color: white;
-          color: #0071e3;
+          background-color: var(--lew-bgcolor-0);
+          color: var(--lew-color-primary);
           font-weight: 600;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+          box-shadow: var(--lew-box-shadow);
 
           &:hover {
-            background-color: white;
+            background-color: var(--lew-bgcolor-0);
           }
         }
       }
@@ -287,7 +292,7 @@ function getDiffItemClass(diff: string): string {
 
     span {
       font-size: 15px;
-      color: #1d1d1f;
+      color: var(--lew-text-color-1);
       font-weight: 500;
     }
 
@@ -302,12 +307,12 @@ function getDiffItemClass(diff: string): string {
         padding: 8px 12px;
         width: 50px;
         border-radius: 24px;
-        background-color: #f5f5f7;
+        background-color: var(--lew-bgcolor-2);
         cursor: pointer;
         transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
         font-size: 14px;
         font-weight: 500;
-        color: #1d1d1f;
+        color: var(--lew-text-color-1);
         border: 1px solid transparent;
         display: flex;
         align-items: center;
@@ -325,24 +330,24 @@ function getDiffItemClass(diff: string): string {
           font-weight: 600;
           line-height: 1;
           border-radius: 9px;
-          background-color: rgba(0, 0, 0, 0.08);
-          color: #1d1d1f;
+          background-color: var(--lew-bgcolor-4);
+          color: var(--lew-text-color-1);
 
           &.badge-success {
-            background-color: #52c41a;
-            color: white;
+            background-color: var(--lew-color-success);
+            color: var(--lew-color-white-text);
           }
         }
 
         &:hover {
-          background-color: #e8e8ed;
+          background-color: var(--lew-bgcolor-3);
           transform: translateY(-1px);
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+          box-shadow: var(--lew-box-shadow);
         }
 
         &:focus-visible {
-          box-shadow: 0 0 0 3px rgba(0, 125, 250, 0.6);
-          border-color: #0071e3;
+          box-shadow: 0 0 0 3px var(--lew-color-primary-light);
+          border-color: var(--lew-color-primary);
           outline: none;
         }
 
@@ -351,22 +356,22 @@ function getDiffItemClass(diff: string): string {
         }
 
         &.active {
-          background-color: #0071e3;
-          color: white;
-          box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
+          background-color: var(--lew-color-primary);
+          color: var(--lew-color-white-text);
+          box-shadow: 0 2px 8px var(--lew-color-primary-light);
 
           .badge {
             background-color: rgba(255, 255, 255, 0.25);
-            color: white;
+            color: var(--lew-color-white-text);
 
             &.badge-success {
               background-color: rgba(255, 255, 255, 0.5);
-              color: white;
+              color: var(--lew-color-white-text);
             }
           }
 
           &:hover {
-            background-color: #0077ed;
+            background-color: var(--lew-color-primary-dark);
           }
         }
       }
@@ -376,54 +381,56 @@ function getDiffItemClass(diff: string): string {
   .diff-results {
     overflow-y: auto;
     max-height: calc(100vh - 240px);
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    background-color: white;
+    border-radius: var(--lew-border-radius-large);
+    box-shadow: var(--lew-box-shadow);
+    background-color: var(--lew-bgcolor-0);
     backdrop-filter: blur(20px);
 
     .diff-summary {
       padding: 18px 20px;
-      background-color: #fff1f0;
-      border-radius: 16px 16px 0 0;
+      background-color: var(--lew-color-danger-light);
+      border-radius: var(--lew-border-radius-large)
+        var(--lew-border-radius-large) 0 0;
       margin-bottom: 0;
-      color: #cf1322;
+      color: var(--lew-color-danger);
       font-weight: 500;
       font-size: 15px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      border-bottom: var(--lew-border-1);
       letter-spacing: -0.01em;
 
       &.complete {
-        background-color: #f6ffed;
-        color: #52c41a;
+        background-color: var(--lew-color-success-light);
+        color: var(--lew-color-success);
       }
     }
 
     .diff-list {
-      border-radius: 0 0 16px 16px;
+      border-radius: 0 0 var(--lew-border-radius-large)
+        var(--lew-border-radius-large);
       overflow: hidden;
 
       .diff-item {
         padding: 16px 20px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        border-bottom: var(--lew-border-1);
         font-family: 'SF Mono', SFMono-Regular, Menlo, Monaco, Consolas,
           monospace;
         font-size: 13px;
         line-height: 1.6;
         white-space: pre-wrap;
         word-break: break-all;
-        color: #333;
+        color: var(--lew-text-color-2);
         letter-spacing: 0;
 
         &.missing {
-          background-color: #fff1f0;
-          color: #cf1322;
-          border-left: 3px solid #cf1322;
+          background-color: var(--lew-color-danger-light);
+          color: var(--lew-color-danger);
+          border-left: 3px solid var(--lew-color-danger);
         }
 
         &.extra {
-          background-color: #e6f7ff;
-          color: #1890ff;
-          border-left: 3px solid #1890ff;
+          background-color: var(--lew-color-info-light);
+          color: var(--lew-color-info);
+          border-left: 3px solid var(--lew-color-info);
         }
 
         &:last-child {
@@ -431,11 +438,11 @@ function getDiffItemClass(diff: string): string {
         }
 
         &:nth-child(odd):not(.missing):not(.extra) {
-          background-color: #fafafa;
+          background-color: var(--lew-bgcolor-1);
         }
 
         &:hover:not(.missing):not(.extra) {
-          background-color: #f5f5f7;
+          background-color: var(--lew-bgcolor-2);
         }
       }
     }
