@@ -656,7 +656,7 @@ const dragStart = (event: DragEvent, row: any, index: number) => {
   state.dragRowId = row._lew_table_tr_id;
   state.isDragging = true;
   // 设置鼠标样式
-  document.body.style.cursor = "grab";
+  document.body.style.cursor = "grabbing";
 
   // 设置初始拖拽位置，用于计算是否达到了足够的移动距离
   state.initialDragY = event.clientY;
@@ -1481,6 +1481,7 @@ const setTrRef = (el: HTMLElement | null, row: any) => {
   // 拖拽相关样式
   .lew-table-drag-handle {
     position: relative;
+    cursor: grab;
 
     &:active {
       cursor: grabbing;
