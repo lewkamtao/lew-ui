@@ -71,7 +71,7 @@ const columns = [
   },
   {
     title: 'Popular Items',
-    width: 300,
+    width: 500,
     field: 'popularItems',
     x: 'start'
   },

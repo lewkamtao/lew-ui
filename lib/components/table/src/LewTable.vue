@@ -1550,7 +1550,7 @@ const setTrRef = (el: HTMLElement | null, row: any) => {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: var(--lew-table-tr-dragging-bgcolor);
 }
 
 .lew-table-scroll {

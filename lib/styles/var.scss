@@ -233,6 +233,7 @@
   --lew-table-tr-selected: rgb(238, 243, 255);
   --lew-table-scroll-line-color-start: rgba(0, 0, 0, 0);
   --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.15);
+  --lew-table-tr-dragging-bgcolor: rgba(255, 255, 255, 0.8);
 
   // 描述
   --lew-desc-border: var(--lew-table-border);
@@ -441,6 +442,8 @@
   --lew-table-tr-selected: rgb(29, 35, 42);
   --lew-table-scroll-line-color-start: rgba(0, 0, 0, 0);
   --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.2);
+  --lew-table-tr-dragging-bgcolor: rgba(0, 0, 0, 0.4);
+  
 
   // 渐变背景
   --lew-expand-control-bg-gradient: linear-gradient(

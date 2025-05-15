@@ -106,7 +106,7 @@ const columns = [
   },
   {
     title: 'Industry',
-    width: 220,
+    width: 420,
     field: 'industry'
   },
   {
