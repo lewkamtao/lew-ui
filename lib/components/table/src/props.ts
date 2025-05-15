@@ -79,6 +79,16 @@ export const tableProps = {
     default: false,
     description: '是否显示复选框列'
   },
+  sortable: {
+    type: Boolean,
+    default: false,
+    description: '是否启用行拖拽排序功能'
+  },
+  sortTooltipCustomRender: {
+    type: Function as PropType<(row: Record<string, any>) => string>,
+    default: undefined,
+    description: '自定义行拖拽排序的提示'
+  },
   maxHeight: {
     type: [Number, String],
     default: '',

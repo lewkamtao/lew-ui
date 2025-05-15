@@ -34,7 +34,8 @@ import {
   Eye,
   EyeOff,
   Star,
-  SquareMousePointer
+  SquareMousePointer,
+  Grip
 } from 'lucide-vue-next'
 import { getColorType, iconColorType } from './index'
 
@@ -113,7 +114,8 @@ const iconMap: any = {
   eye: Eye,
   eye_off: EyeOff,
   star: Star,
-  'square-mouse-pointer': SquareMousePointer
+  'square-mouse-pointer': SquareMousePointer,
+  grip: Grip
 }
 </script>
 
