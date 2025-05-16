@@ -997,7 +997,7 @@ const setTrRef = (el: HTMLElement | null, row: any) => {
               :style="{ width: getDragColumnWidth + 'px', padding: getPadding }"
               x="center"
             >
-              <Icon :size="14" type="grip" />
+              <Icon :size="16" type="grip-vertical" />
             </lew-flex>
             <lew-flex
               v-if="checkable"
@@ -1104,7 +1104,7 @@ const setTrRef = (el: HTMLElement | null, row: any) => {
                 class="lew-table-drag-handle"
                 @mousedown="dragStart($event, row, i)"
               >
-                <Icon :size="14" type="grip" class="lew-table-drag-icon" />
+                <Icon :size="16" type="grip-vertical" class="lew-table-drag-icon" />
               </lew-flex>
               <lew-flex
                 v-if="checkable"
