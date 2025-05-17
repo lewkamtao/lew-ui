@@ -81,11 +81,6 @@ export const inputTableProps = {
       return true
     }
   },
-  batchDeletable: {
-    type: Boolean,
-    default: true,
-    description: '是否显示批量删除功能'
-  },
   // 添加新行
   addable: {
     type: Boolean,

@@ -161,7 +161,6 @@ if (props.closeByEsc) {
     position: relative;
     border-radius: var(--lew-border-radius-large);
     background-color: var(--lew-modal-body-bgcolor);
-    border: var(--lew-modal-border);
     overflow: hidden;
     .lew-modal-body-main {
       max-height: 80vh;
@@ -171,7 +170,6 @@ if (props.closeByEsc) {
       position: relative;
       height: 50px;
       padding: 10px 20px;
-      border-bottom: var(--lew-modal-header-border);
 
       .lew-modal-title {
         font-size: 16px;
@@ -187,7 +185,6 @@ if (props.closeByEsc) {
 
     .lew-modal-footer {
       padding: 10px 20px;
-      border-top: var(--lew-modal-footer-border);
     }
 
     .lew-modal-header-slot {

@@ -6,29 +6,29 @@ let visibleInfo = ref(true)
 <template>
   <lew-flex style="width: 500px" direction="y">
     <lew-alert type="error">
-      <template #title>登录失败</template>
-      <template #content>您的登录尝试失败，请检查用户名和密码。</template>
+      <template #title>Sign In Failed</template>
+      <template #content>Your sign-in attempt failed. Please check your username and password.</template>
       <template #footer>
         <lew-flex x="end">
           <lew-button round type="text" color="gray" size="small"
-            >不再提示</lew-button
+            >Don't Show Again</lew-button
           >
           <lew-button round type="light" color="red" size="small"
-            >重试登录</lew-button
+            >Try Again</lew-button
           >
         </lew-flex>
       </template>
     </lew-alert>
 
     <lew-alert type="success">
-      <template #title>注册成功</template>
-      <template #content>您已成功注册 Google 服务。</template>
+      <template #title>Registration Complete</template>
+      <template #content>You have successfully registered for Google services.</template>
       <template #footer>
         <lew-flex x="end">
           <lew-button type="text" color="gray" size="small"
-            >不再提示</lew-button
+            >Don't Show Again</lew-button
           >
-          <lew-button round color="success" size="small">继续</lew-button>
+          <lew-button round color="success" size="small">Continue</lew-button>
         </lew-flex>
       </template>
     </lew-alert>
@@ -39,14 +39,14 @@ let visibleInfo = ref(true)
       closeable
       @close="visibleWarning = false"
     >
-      <template #title>系统维护</template>
-      <template #content>系统将在今晚进行维护，请提前完成您的工作。</template>
+      <template #title>System Maintenance</template>
+      <template #content>The system will be under maintenance tonight. Please complete your work in advance.</template>
       <template #footer>
         <lew-flex x="end">
           <lew-button type="text" color="gray" size="small"
-            >不再提示</lew-button
+            >Don't Show Again</lew-button
           >
-          <lew-button color="warning" size="small">了解更多</lew-button>
+          <lew-button color="warning" size="small">Learn More</lew-button>
         </lew-flex>
       </template>
     </lew-alert>
@@ -57,16 +57,16 @@ let visibleInfo = ref(true)
       closeable
       @close="visibleInfo = false"
     >
-      <template #title>新功能</template>
+      <template #title>New Feature Available</template>
       <template #content
-        >Google Photos 现已推出，提供更多照片管理功能。</template
+        >Google Photos is now available with enhanced photo management features.</template
       >
       <template #footer>
         <lew-flex x="end">
           <lew-button type="text" color="gray" size="small"
-            >不再提示</lew-button
+            >Don't Show Again</lew-button
           >
-          <lew-button type="light" size="small">探索新功能</lew-button>
+          <lew-button type="light" size="small">Explore</lew-button>
         </lew-flex>
       </template>
     </lew-alert>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { cloneDeep } from 'lodash-es'
 import { LewModal, LewForm } from 'lew-ui'
-import type { ButtonProps } from 'lew-ui'
+import type { ButtonProps, LewSize } from 'lew-ui'
 
 const visible = ref(false)
 const formRef = ref()
@@ -82,7 +82,7 @@ defineExpose({ open })
   >
     <div class="lew-form-modal lew-scrollbar">
       <lew-form
-        :siz="size"
+        :size="size as LewSize"
         @mounted="formMounted"
         ref="formRef"
         width="350"

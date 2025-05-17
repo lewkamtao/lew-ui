@@ -175,7 +175,6 @@ const getStyle = (
   position: relative;
   height: 50px;
   padding: 10px 20px;
-  border-bottom: var(--lew-modal-header-border);
   flex: 0;
 
   .lew-drawer-title {
@@ -194,7 +193,6 @@ const getStyle = (
 
 .lew-drawer-footer {
   padding: 10px 20px;
-  border-top: var(--lew-modal-footer-border);
   flex: 0;
 }
 

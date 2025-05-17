@@ -90,8 +90,8 @@ const getDragColumnWidth = computed(() => {
 const getHeadHeight = computed(() => {
   const sizeMap = {
     small: 34,
-    medium: 42,
-    large: 50,
+    medium: 38,
+    large: 44,
   };
   return sizeMap[props.size];
 });
@@ -105,11 +105,20 @@ const getFontSize = computed(() => {
   return sizeMap[props.size];
 });
 
+const getIconSize = computed(() => {
+  const sizeMap = {
+    small: 15,
+    medium: 16,
+    large: 17,
+  };
+  return sizeMap[props.size];
+});
+
 const getPadding = computed(() => {
   const paddingMap = {
-    small: "8px 10px",
-    medium: "10px 14px",
-    large: "12px 18px",
+    small: "8px",
+    medium: "10px",
+    large: "12px",
   };
   return paddingMap[props.size];
 });
@@ -997,7 +1006,7 @@ const setTrRef = (el: HTMLElement | null, row: any) => {
               :style="{ width: getDragColumnWidth + 'px', padding: getPadding }"
               x="center"
             >
-              <Icon :size="16" type="grip-vertical" />
+              <Icon :size="getIconSize" type="grip-vertical" />
             </lew-flex>
             <lew-flex
               v-if="checkable"
@@ -1013,7 +1022,7 @@ const setTrRef = (el: HTMLElement | null, row: any) => {
                 :certain="hasPartialSelection && !state.isAllChecked"
                 @change="setAllRowsChecked($event)"
               />
-              <Icon v-else type="square-mouse-pointer" />
+              <Icon v-else :size="getIconSize" type="square-mouse-pointer" />
             </lew-flex>
             <readerHeaderTd
               :column="column"
@@ -1104,7 +1113,11 @@ const setTrRef = (el: HTMLElement | null, row: any) => {
                 class="lew-table-drag-handle"
                 @mousedown="dragStart($event, row, i)"
               >
-                <Icon :size="16" type="grip-vertical" class="lew-table-drag-icon" />
+                <Icon
+                  :size="getIconSize"
+                  type="grip-vertical"
+                  class="lew-table-drag-icon"
+                />
               </lew-flex>
               <lew-flex
                 v-if="checkable"
@@ -1411,7 +1424,7 @@ const setTrRef = (el: HTMLElement | null, row: any) => {
     width: 100%;
     box-sizing: border-box;
     flex-grow: 1;
-    transition: background 0.2s cubic-bezier(0.55, 0, 0.1, 1);
+    transition: background 0.08s;
     position: relative;
   }
 
@@ -1444,7 +1457,7 @@ const setTrRef = (el: HTMLElement | null, row: any) => {
       .lew-table-td {
         color: var(--lew-text-color-1);
         white-space: nowrap;
-        transition: background 0.1s;
+        transition: background 0.08s;
       }
       .lew-table-td-sortable {
         cursor: pointer;
@@ -1523,8 +1536,7 @@ const setTrRef = (el: HTMLElement | null, row: any) => {
 
 .lew-table-dragging {
   .lew-table-tr {
-    transition: background 0.2s cubic-bezier(0.55, 0, 0.1, 1),
-      transform 0.2s cubic-bezier(0.55, 0, 0.1, 1),
+    transition: background 0.08s, transform 0.2s cubic-bezier(0.55, 0, 0.1, 1),
       opacity 0.2s cubic-bezier(0.55, 0, 0.1, 1);
   }
 }
