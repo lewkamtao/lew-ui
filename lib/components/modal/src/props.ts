@@ -1,6 +1,7 @@
 import type { ExtractPropTypes } from 'vue'
 import type { ButtonProps } from '../../button/index'
-
+import type { LewSize } from 'lew-ui'
+import { validSizes } from 'lew-ui/constants'
 export const modalModel = {
   visible: {
     type: Boolean,
@@ -17,6 +18,18 @@ export const modalProps = {
     validator: (value: string) => {
       if (value.length > 50) {
         console.warn('[LewModal] 标题长度不应超过50个字符')
+        return false
+      }
+      return true
+    }
+  },
+  size: {
+    type: String as PropType<LewSize>,
+    default: 'medium',
+    description: '尺寸',
+    validator: (value: LewSize) => {
+      if (!validSizes.includes(value)) {
+        console.warn('[LewInput] size 属性必须是 "small"、"medium" 或 "large"')
         return false
       }
       return true
@@ -50,22 +63,20 @@ export const modalProps = {
     default: false,
     description: '是否允许通过按下 ESC 键关闭模态框'
   },
-  okProps: {
+  okButtonProps: {
     type: Object as PropType<ButtonProps>,
     default: () => ({
-      text: '确定',
       color: 'primary'
     }),
     description: '确定按钮的属性配置'
   },
-  cancelProps: {
+  closeButtonProps: {
     type: Object as PropType<ButtonProps>,
     default: () => ({
       type: 'text',
-      text: '取消',
       color: 'normal'
     }),
-    description: '取消按钮的属性配置'
+    description: '关闭按钮的属性配置'
   },
   hideOkButton: {
     type: Boolean,

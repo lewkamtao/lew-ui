@@ -128,8 +128,13 @@ export const inputTableProps = {
   //  排序
   sortable: {
     type: Boolean,
-    default: true,
+    default: false,
     description: '是否启用排序功能'
+  },
+  sortTooltipCustomRender: {
+    type: Function as PropType<(row: Record<string, any>) => string>,
+    default: undefined,
+    description: '自定义行拖拽排序的提示'
   },
   autoUniqueId: {
     type: Boolean,

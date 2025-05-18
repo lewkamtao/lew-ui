@@ -146,7 +146,7 @@ button {
   padding: 2px;
   opacity: var(--lew-form-icon-opacity);
   cursor: pointer;
-  border-radius: var(--lew-border-radius-small);
+  border-radius: 50%;
   transform: translate(0, -50%);
   transition: all 0.2s;
 

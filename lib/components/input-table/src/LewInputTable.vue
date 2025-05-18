@@ -6,6 +6,8 @@ import type { InputTableColumn } from "./props";
 import { any2px, getUniqueId } from "lew-ui/utils";
 import Icon from "lew-ui/utils/Icon.vue";
 import { LewTable, LewButton, LewFlex, LewEmpty, LewMessage } from "lew-ui";
+import { locale } from "lew-ui";
+
 // 获取app
 const app = getCurrentInstance()?.appContext.app;
 if (app && !app.directive("tooltip")) {
@@ -64,13 +66,14 @@ const edit = ({ row, index }: { row: any; index: number }) => {
 };
 const del = ({ index }: { index: number }) => {
   if ((modelValue.value || []).length <= props.minRows) {
-    LewMessage.warning("已达到最小行数限制，无法删除");
+    LewMessage.warning(locale.t("inputTable.minRows"));
     return;
   }
   LewDialog.error({
-    title: "删除确认",
-    okText: "删除",
-    content: "你是否要删除该数据，此操作会立即生效，请谨慎操作！",
+    title: locale.t("inputTable.deleteConfirm"),
+    okText: locale.t("inputTable.delete"),
+    cancelText: locale.t("inputTable.cancel"),
+    content: locale.t("inputTable.deleteConfirmContent"),
     closeOnClickOverlay: true,
     closeByEsc: true,
     ok: () => {
@@ -80,7 +83,7 @@ const del = ({ index }: { index: number }) => {
 };
 const add = () => {
   if ((modelValue.value || []).length >= props.maxRows) {
-    LewMessage.warning("已达到最大行数限制，无法添加");
+    LewMessage.warning(locale.t("inputTable.maxRows"));
     return;
   }
   let row: any = cloneDeep(props.defaultForm);
@@ -116,7 +119,7 @@ const checkUniqueFieldFn = (form: any) => {
     const label = formOptions.value.find(
       (e: any) => e.field === props.uniqueField
     )?.label;
-    LewMessage.warning(`该${label}已存在。请输入一个不重复的${label}。`);
+    LewMessage.warning(locale.t("inputTable.uniqueFieldExist", { label }));
     return false;
   }
   return true;
@@ -150,7 +153,7 @@ const getIconStyle = computed(() => {
     large: "28px",
   };
   return {
-    width: sizeMap[props.size] ,
+    width: sizeMap[props.size],
     height: sizeMap[props.size],
   };
 });
@@ -178,6 +181,7 @@ const getIconSize = computed(() => {
       :size="size"
       :sortable="sortable"
       :row-key="rowKey"
+      :sortTooltipCustomRender="sortTooltipCustomRender"
       multiple
       :columns="inputTableColumns as InputTableColumn[]"
       :data-source="modelValue"
@@ -197,7 +201,8 @@ const getIconSize = computed(() => {
             :class="{ disabled: isMaxRowsReached }"
             :style="getAddButtonStyle"
           >
-            <Icon :size="getIconSize" type="plus"></Icon> 添加一条
+            <Icon :size="getIconSize" type="plus"></Icon>
+            {{ locale.t("inputTable.addText") }}
           </lew-flex>
         </lew-flex>
       </template>
@@ -235,6 +240,7 @@ const getIconSize = computed(() => {
       :options="formOptions"
       :size="size"
       :checkUniqueFieldFn="checkUniqueFieldFn"
+      :okText="locale.t('inputTable.save')"
       @addSuccess="addSuccess"
       @editSuccess="editSuccess"
     />

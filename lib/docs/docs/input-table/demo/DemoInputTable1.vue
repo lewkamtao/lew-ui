@@ -1,32 +1,72 @@
 <script setup lang="ts">
 const tableData = ref([
   {
-    name: "张三",
+    name: "John",
     age: 18,
-    gender: "男",
+    gender: "Male",
   },
   {
-    name: "李四",
+    name: "Mary",
     age: 20,
-    gender: "女",
+    gender: "Female",
+  },
+  {
+    name: "David",
+    age: 25,
+    gender: "Male",
+  },
+  {
+    name: "Sarah",
+    age: 22,
+    gender: "Female",
+  },
+  {
+    name: "Michael",
+    age: 30,
+    gender: "Male",
+  },
+  {
+    name: "Emma",
+    age: 19,
+    gender: "Female",
+  },
+  {
+    name: "James",
+    age: 27,
+    gender: "Male",
+  },
+  {
+    name: "Lisa",
+    age: 24,
+    gender: "Female",
+  },
+  {
+    name: "Robert",
+    age: 32,
+    gender: "Male",
+  },
+  {
+    name: "Anna",
+    age: 21,
+    gender: "Female",
   },
 ]);
 const columns = ref([
   {
-    title: "姓名",
+    title: "Name",
     field: "name",
     required: true,
     width: 100,
   },
   {
-    title: "年龄",
+    title: "Age",
     field: "age",
     required: true,
     as: "input-number",
     width: 100,
   },
   {
-    title: "性别",
+    title: "Gender",
     field: "gender",
     as: "tabs",
     required: true,
@@ -34,12 +74,12 @@ const columns = ref([
       itemWidth: 80,
       options: [
         {
-          label: "男",
-          value: "男",
+          label: "Male",
+          value: "Male",
         },
         {
-          label: "女",
-          value: "女",
+          label: "Female",
+          value: "Female",
         },
       ],
     },
@@ -50,23 +90,28 @@ const columns = ref([
 const size = ref("medium");
 const sizeOptions = ref([
   {
-    label: "小",
+    label: "Small",
     value: "small",
   },
   {
-    label: "中",
+    label: "Medium",
     value: "medium",
   },
   {
-    label: "大",
+    label: "Large",
     value: "large",
   },
 ]);
+const sortTooltipCustomRender = (row: Record<string, any>) => {
+  return h("div", {}, `${row.name} ${row.age} ${row.gender}`);
+};
 </script>
 <template>
   <lew-flex direction="y" x="start">
-    <lew-tabs v-model="size" item-width="50px" round :options="sizeOptions" />
+    <lew-tabs v-model="size" item-width="80px" round :options="sizeOptions" />
     <lew-input-table
+      sortable
+      :sortTooltipCustomRender="sortTooltipCustomRender"
       :size="size"
       width="500px"
       uniqueField="name"

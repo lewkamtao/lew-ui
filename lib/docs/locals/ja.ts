@@ -1728,8 +1728,8 @@ export default {
         zIndex: '重なり順序',
         position: '位置',
         hideFooter: 'フッターを非表示にするかどうか',
-        okProps: '確認ボタンのプロパティ',
-        cancelProps: 'キャンセルボタンのプロパティ'
+        okButtonProps: '確認ボタンのプロパティ',
+        cancelButtonProps: 'キャンセルボタンのプロパティ'
       }
     },
     dialog: {
@@ -1786,8 +1786,8 @@ export default {
         top: '上端からの距離',
         hideFooter: 'フッターを非表示にするかどうか',
         closeByEsc: 'ESCキーでの閉じる可否',
-        okProps: '確認ボタンのプロパティ',
-        cancelProps: 'キャンセルボタンのプロパティ',
+        okButtonProps: '確認ボタンのプロパティ',
+        cancelButtonProps: 'キャンセルボタンのプロパティ',
         hideOkButton: '確認ボタンを非表示にするかどうか',
         hideCancelButton: 'キャンセルボタンを非表示にするかどうか',
         closeOnClickOverlay: 'オーバーレイクリックでの閉じる可否',
@@ -1808,8 +1808,8 @@ export default {
         width: '幅',
         trigger: 'トリガー方式',
         title: 'タイトル',
-        okProps: '確認ボタンのプロパティ',
-        cancelProps: 'キャンセルボタンのプロパティ',
+        okButtonProps: '確認ボタンのプロパティ',
+        cancelButtonProps: 'キャンセルボタンのプロパティ',
         content: '内容',
         placement: '表示位置'
       }

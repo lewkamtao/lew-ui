@@ -1766,8 +1766,8 @@ export default {
         closeOnClickOverlay: '오버레이 클릭으로 닫기 가능 여부',
         closeByEsc: 'ESC 키로 닫기 가능 여부',
         hideFooter: '푸터 숨김 여부',
-        okProps: '확인 버튼 속성',
-        cancelProps: '취소 버튼 속성',
+        okButtonProps: '확인 버튼 속성',
+        cancelButtonProps: '취소 버튼 속성',
         zIndex: '층 레벨'
       }
     },
@@ -1825,8 +1825,8 @@ export default {
         top: '상단으로부터의 거리',
         hideFooter: '푸터 숨김 여부',
         closeByEsc: 'ESC 키로 닫기 가능 여부',
-        okProps: '확인 버튼 속성',
-        cancelProps: '취소 버튼 속성',
+        okButtonProps: '확인 버튼 속성',
+        cancelButtonProps: '취소 버튼 속성',
         hideOkButton: '확인 버튼 숨김 여부',
         hideCancelButton: '취소 버튼 숨김 여부',
         closeOnClickOverlay: '오버레이 클릭으로 닫기 가능 여부',
@@ -1847,8 +1847,8 @@ export default {
         width: '너비',
         trigger: '트리거 방식',
         title: '제목',
-        okProps: '확인 버튼 속성',
-        cancelProps: '취소 버튼 속성',
+        okButtonProps: '확인 버튼 속성',
+        cancelButtonProps: '취소 버튼 속성',
         content: '내용',
         placement: '위치'
       }

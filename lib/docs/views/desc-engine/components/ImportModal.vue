@@ -64,14 +64,14 @@ defineExpose({ open })
   <lew-modal
     v-model:visible="visible"
     width="500"
-    :cancelProps="{
-      text: '取消'
+    :closeButtonProps="{
+      request: () => {
+        visible = false
+      }
     }"
-    :okProps="{
-      text: '导入'
+    :okButtonProps="{
+      request: ok
     }"
-    @ok="ok"
-    @cancel="visible = false"
     title="导入字段"
   >
     <div class="import-modal-content lew-scrollbar">

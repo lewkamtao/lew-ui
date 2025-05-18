@@ -1731,8 +1731,8 @@ export default {
         closeOnClickOverlay: 'Chiudi al click overlay',
         closeByEsc: 'Chiudi con ESC',
         hideFooter: 'Nascondi footer',
-        okProps: 'Proprietà pulsante OK',
-        cancelProps: 'Proprietà pulsante Annulla',
+        okButtonProps: 'Proprietà pulsante OK',
+        cancelButtonProps: 'Proprietà pulsante Annulla',
         zIndex: 'Z-index'
       }
     },
@@ -1790,8 +1790,8 @@ export default {
         top: "Distanza dall'alto",
         hideFooter: 'Nascondi footer',
         closeByEsc: 'Chiudi con ESC',
-        okProps: 'Proprietà OK',
-        cancelProps: 'Proprietà Annulla',
+        okButtonProps: 'Proprietà OK',
+        cancelButtonProps: 'Proprietà Annulla',
         hideOkButton: 'Nascondi pulsante OK',
         hideCancelButton: 'Nascondi pulsante Annulla',
         closeOnClickOverlay: 'Chiudi al click overlay',
@@ -1813,8 +1813,8 @@ export default {
         width: 'Larghezza',
         trigger: 'Trigger',
         title: 'Titolo',
-        okProps: 'Proprietà OK',
-        cancelProps: 'Proprietà Annulla',
+        okButtonProps: 'Proprietà OK',
+        cancelButtonProps: 'Proprietà Annulla',
         content: 'Contenuto',
         placement: 'Posizione'
       }

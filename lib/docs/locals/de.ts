@@ -1757,8 +1757,8 @@ export default {
         closeOnClickOverlay: 'Durch Klick auf Overlay schließen',
         closeByEsc: 'Durch ESC-Taste schließen',
         hideFooter: 'Fußbereich ausblenden',
-        okProps: 'Eigenschaften der Bestätigungsschaltfläche',
-        cancelProps: 'Eigenschaften der Abbruchschaltfläche',
+        okButtonProps: 'Eigenschaften der Bestätigungsschaltfläche',
+        cancelButtonProps: 'Eigenschaften der Abbruchschaltfläche',
         zIndex: 'Z-Index'
       }
     },
@@ -1815,8 +1815,8 @@ export default {
         top: 'Abstand zum oberen Rand',
         hideFooter: 'Fußbereich ausblenden',
         closeByEsc: 'Durch ESC-Taste schließen',
-        okProps: 'Eigenschaften der Bestätigungsschaltfläche',
-        cancelProps: 'Eigenschaften der Abbruchschaltfläche',
+        okButtonProps: 'Eigenschaften der Bestätigungsschaltfläche',
+        cancelButtonProps: 'Eigenschaften der Abbruchschaltfläche',
         hideOkButton: 'Bestätigungsschaltfläche ausblenden',
         hideCancelButton: 'Abbruchschaltfläche ausblenden',
         closeOnClickOverlay: 'Durch Klick auf Overlay schließen',
@@ -1838,8 +1838,8 @@ export default {
         width: 'Breite',
         trigger: 'Auslösemethode',
         title: 'Titel',
-        okProps: 'Eigenschaften der Bestätigungsschaltfläche',
-        cancelProps: 'Eigenschaften der Abbruchschaltfläche',
+        okButtonProps: 'Eigenschaften der Bestätigungsschaltfläche',
+        cancelButtonProps: 'Eigenschaften der Abbruchschaltfläche',
         content: 'Inhalt',
         placement: 'Position'
       }

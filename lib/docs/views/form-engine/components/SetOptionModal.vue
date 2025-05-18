@@ -19,8 +19,16 @@ defineExpose({ open })
       closeByEsc
       width="550px"
       title="设置选项"
-      @ok="visible = false"
-      @cancel="visible = false"
+      :closeButtonProps="{
+        request: () => {
+          visible = false
+        }
+      }"
+      :okButtonProps="{
+        request: () => {
+          visible = false
+        }
+      }"
     >
       <div class="modal-body">
         <div>A beautiful component library based on vue3</div>

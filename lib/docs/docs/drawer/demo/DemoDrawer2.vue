@@ -8,6 +8,10 @@ const ok = () => {
     }, 1000)
   })
 }
+
+const close = () => {
+  visible.value = false
+}
 </script>
 
 <template>
@@ -19,8 +23,8 @@ const ok = () => {
     closeOnClickOverlay
     width="350px"
     title="模拟异步请求"
-    :okProps="{ request: ok }"
-    @cancel="visible = false"
+    :okButtonProps="{ request: ok }"
+    :closeButtonProps="{ request: close }"
   >
     <div class="drawer-body">
       <div>点击确定，对话框将在1秒后关闭。</div>

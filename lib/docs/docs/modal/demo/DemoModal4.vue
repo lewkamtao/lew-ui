@@ -12,8 +12,16 @@ const visible = ref(false)
     closeByEsc
     width="350px"
     title="About Lew-UI"
-    @ok="visible = false"
-    @cancel="visible = false"
+    :closeButtonProps="{
+      request: () => {
+        visible = false
+      }
+    }"
+    :okButtonProps="{
+      request: () => {
+        visible = false
+      }
+    }"
   >
     <div class="modal-body">
       <div>A beautiful component library based on vue3</div>

@@ -6,6 +6,7 @@ import { dialogProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { useDOMCreate } from 'lew-ui/hooks'
 import type { LewColor } from 'lew-ui'
+import { locale } from 'lew-ui'
 
 const { Escape } = useMagicKeys()
 useDOMCreate('lew-dialog')
@@ -100,8 +101,7 @@ if (props.closeByEsc) {
             </lew-flex>
             <footer>
               <lew-button
-                v-if="cancelText"
-                :text="cancelText"
+                :text="cancelText || locale.t('dialog.cancel')"
                 color="gray"
                 type="text"
                 :loading="cancelLoading"
@@ -109,8 +109,7 @@ if (props.closeByEsc) {
               />
               <lew-button
                 ref="okRef1"
-                v-if="okText"
-                :text="okText"
+                :text="okText || locale.t('dialog.ok')"
                 type="fill"
                 :color="type as LewColor"
                 :loading="okLoading"

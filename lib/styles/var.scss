@@ -64,9 +64,9 @@
   --lew-color-gray: rgb(142, 142, 147);
   --lew-color-gray-dark: rgb(99, 99, 102);
   --lew-color-gray-light: rgba(142, 142, 147, 0.1);
-  --lew-color-black: var(--lew-bgcolor-2-invert);
-  --lew-color-black-dark: var(--lew-bgcolor-0-invert);
-  --lew-color-black-light: var(--lew-bgcolor-5);
+  --lew-color-black: rgba(0, 0, 0, 0.9);
+  --lew-color-black-dark: rgba(0, 0, 0, 1);
+  --lew-color-black-light: rgba(0, 0, 0, 0.1);
   --lew-color-white: #fff;
   --lew-color-white-text: rgba(255, 255, 255, 0.9);
 
@@ -439,7 +439,6 @@
   --lew-table-scroll-line-color-start: rgba(0, 0, 0, 0);
   --lew-table-scroll-line-color-end: rgba(0, 0, 0, 0.2);
   --lew-table-tr-dragging-bgcolor: rgba(0, 0, 0, 0.4);
-  
 
   // 渐变背景
   --lew-expand-control-bg-gradient: linear-gradient(

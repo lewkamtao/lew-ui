@@ -1728,8 +1728,8 @@ export default {
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
         closeByEsc: '是否可通过按下 ESC 关闭',
         hideFooter: '是否隐藏底部',
-        okProps: '确认按钮的属性',
-        cancelProps: '取消按钮的属性',
+        okButtonProps: '确认按钮的属性',
+        cancelButtonProps: '取消按钮的属性',
         zIndex: '层级'
       }
     },
@@ -1785,8 +1785,8 @@ export default {
         top: '距离顶部的距离',
         hideFooter: '是否隐藏底部',
         closeByEsc: '是否可通过按下 ESC 关闭',
-        okProps: '确认按钮属性',
-        cancelProps: '取消按钮属性',
+        okButtonProps: '确认按钮属性',
+        cancelButtonProps: '取消按钮属性',
         hideOkButton: '是否隐藏确认按钮',
         hideCancelButton: '是否隐藏取消按钮',
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
@@ -1807,8 +1807,8 @@ export default {
         width: '宽度',
         trigger: '触发方式',
         title: '标题',
-        okProps: '确认按钮属性',
-        cancelProps: '取消按钮属性',
+        okButtonProps: '确认按钮属性',
+        cancelButtonProps: '取消按钮属性',
         content: '内容',
         placement: '位置'
       }

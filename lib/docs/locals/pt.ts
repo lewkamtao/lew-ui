@@ -1774,8 +1774,8 @@ export default {
         closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
         closeByEsc: 'Fechar com tecla ESC',
         hideFooter: 'Ocultar rodapé',
-        okProps: 'Propriedades do botão OK',
-        cancelProps: 'Propriedades do botão Cancelar',
+        okButtonProps: 'Propriedades do botão OK',
+        cancelButtonProps: 'Propriedades do botão Cancelar',
         zIndex: 'Índice Z'
       }
     },
@@ -1832,8 +1832,8 @@ export default {
         top: 'Distância do topo',
         hideFooter: 'Ocultar rodapé',
         closeByEsc: 'Fechar com tecla ESC',
-        okProps: 'Propriedades do botão OK',
-        cancelProps: 'Propriedades do botão Cancelar',
+        okButtonProps: 'Propriedades do botão OK',
+        cancelButtonProps: 'Propriedades do botão Cancelar',
         hideOkButton: 'Ocultar botão OK',
         hideCancelButton: 'Ocultar botão Cancelar',
         closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
@@ -1855,8 +1855,8 @@ export default {
         width: 'Largura',
         trigger: 'Modo de acionamento',
         title: 'Título',
-        okProps: 'Propriedades do botão OK',
-        cancelProps: 'Propriedades do botão Cancelar',
+        okButtonProps: 'Propriedades do botão OK',
+        cancelButtonProps: 'Propriedades do botão Cancelar',
         content: 'Conteúdo',
         placement: 'Posicionamento'
       }

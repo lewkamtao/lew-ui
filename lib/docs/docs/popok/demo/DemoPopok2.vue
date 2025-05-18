@@ -1,23 +1,27 @@
 <script setup lang="ts">
-// 确认
+// Confirm
 const ok = () => {
-  LewMessage.success('确定')
+  LewMessage.success('Confirmed')
 }
-// 取消
+// Cancel
 const cancel = () => {
-  LewMessage.info('取消')
+  LewMessage.info('Cancelled')
 }
 </script>
 
 <template>
   <lew-popok
-    title="删除确认"
+    width="400px"
+    title="Delete Confirmation"
     type="error"
-    content="删除之后无法恢复，请确认！"
+    content="This action cannot be undone. Please confirm!"
+    placement="bottom-start"
+    okText="Delete"
+    cancelText="Cancel"
     :ok="ok"
     :cancel="cancel"
     trigger="hover"
   >
-    <lew-button text="hover 触发" />
+    <lew-button text="Hover to trigger" type="text" color="red" />
   </lew-popok>
 </template>

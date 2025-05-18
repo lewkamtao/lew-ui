@@ -1,12 +1,16 @@
 <script setup lang="ts">
-const visible = ref(false)
+const visible = ref(false);
 const ok = () => {
   return new Promise<void>((resolve: any) => {
     setTimeout(() => {
-      resolve(true)
-      visible.value = false
-    }, 1000)
-  })
+      resolve(true);
+      visible.value = false;
+    }, 1000);
+  });
+};
+
+const close = () => {
+  visible.value = false
 }
 </script>
 
@@ -19,8 +23,8 @@ const ok = () => {
     closeOnClickOverlay
     width="350px"
     title="模拟异步请求"
-    :okProps="{ request: ok }"
-    @cancel="visible = false"
+    :okButtonProps="{ request: ok }"
+    :closeButtonProps="{ request: close }"
   >
     <div class="modal-body">
       <div>点击确定，对话框将在1秒后关闭。</div>

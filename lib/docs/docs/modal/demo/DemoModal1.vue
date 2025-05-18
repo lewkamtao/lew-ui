@@ -1,20 +1,59 @@
 <script setup lang="ts">
-const visible = ref(false)
-const visible2 = ref(false)
+const visible1 = ref(false);
+const visible2 = ref(false);
+
+const ok1 = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      visible1.value = false;
+      resolve(true);
+    }, 1000);
+  });
+};
+
+const ok2 = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      visible2.value = false;
+      resolve(true);
+    }, 1000);
+  });
+};
+const close1 = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      visible1.value = false;
+      resolve(true);
+    }, 1000);
+  });
+};
+
+const close2 = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      visible2.value = false;
+      resolve(true);
+    }, 1000);
+  });
+};
 </script>
 
 <template>
   <lew-flex x="start">
-    <lew-button @click="visible = true">Modal</lew-button>
+    <lew-button @click="visible1 = true">Modal</lew-button>
   </lew-flex>
   <lew-modal
-    v-model:visible="visible"
+    v-model:visible="visible1"
     closeOnClickOverlay
     closeByEsc
     width="450px"
     title="About Lew-UI"
-    @ok="visible = false"
-    @cancel="visible = false"
+    :closeButtonProps="{
+      request: close1,
+    }"
+    :okButtonProps="{
+      request: ok1,
+    }"
   >
     <div class="modal-body">
       <lew-image
@@ -39,8 +78,12 @@ const visible2 = ref(false)
         closeByEsc
         width="350px"
         title="About Lew-UI"
-        @ok="visible2 = false"
-        @cancel="visible2 = false"
+        :okButtonProps="{
+          request: ok2,
+        }"
+        :closeButtonProps="{
+          request: close2,
+        }"
       >
         <div class="modal-body">
           <lew-image

@@ -1,75 +1,86 @@
 <script lang="ts" setup name="Modal">
-import { useMagicKeys, onClickOutside } from '@vueuse/core'
-import { any2px, getUniqueId } from 'lew-ui/utils'
-import { LewFlex, LewButton, LewTextTrim } from 'lew-ui'
-import { useDOMCreate } from 'lew-ui/hooks'
-import { modalProps } from './props'
-import Icon from 'lew-ui/utils/Icon.vue'
+import { useMagicKeys, onClickOutside } from "@vueuse/core";
+import { any2px, getUniqueId } from "lew-ui/utils";
+import { LewFlex, LewButton, LewTextTrim } from "lew-ui";
+import { useDOMCreate } from "lew-ui/hooks";
+import { modalProps } from "./props";
+import Icon from "lew-ui/utils/Icon.vue";
+import { locale } from "lew-ui";
+const { Escape } = useMagicKeys();
 
-const { Escape } = useMagicKeys()
-useDOMCreate('lew-modal')
+const emit = defineEmits(["close"]);
 
-const props = defineProps(modalProps)
+useDOMCreate("lew-modal");
 
-const emit = defineEmits(['ok', 'cancel', 'close'])
+const props = defineProps(modalProps);
 
-const visible: Ref<boolean | undefined> = defineModel('visible')
+const visible: Ref<boolean | undefined> = defineModel("visible");
 
-const modalBodyRef = ref(null)
-const modalId = `lew-modal-${getUniqueId()}`
+const modalBodyRef = ref(null);
+const modalId = `lew-modal-${getUniqueId()}`;
 
 onClickOutside(modalBodyRef, (e) => {
   if (visible.value && props.closeOnClickOverlay) {
-    const { parentElement } = e?.target as Element
+    const { parentElement } = e?.target as Element;
     if (parentElement?.id === modalId) {
-      visible.value = false
+      visible.value = false;
     }
   }
-})
+});
 
 const getModalStyle = computed(() => {
-  const { width, top } = props
+  const { width, top } = props;
   return {
     width: any2px(width),
-    top: any2px(top)
-  }
-})
-
-const ok = () => {
-  emit('ok')
-}
+    top: any2px(top),
+  };
+});
 
 const close = () => {
-  visible.value = false
-  emit('close')
-}
-
-const cancel = () => {
-  emit('cancel')
-}
+  visible.value = false;
+  emit("close");
+};
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
     if (!visible.value || !v) {
-      return
+      return;
     }
 
-    const dialogEl = document.getElementById('lew-dialog')
-    const modalEl = document.getElementById(modalId)
-    const hasDialog = dialogEl && dialogEl.children.length > 0
+    const dialogEl = document.getElementById("lew-dialog");
+    const modalEl = document.getElementById(modalId);
+    const hasDialog = dialogEl && dialogEl.children.length > 0;
 
     const isOpenModal = Array.from(modalEl?.parentElement?.childNodes ?? [])
       .filter((e): e is Element => e instanceof Element)
-      .filter((e) => e.children.length > 0)
+      .filter((e) => e.children.length > 0);
 
     const topModal =
-      isOpenModal[isOpenModal.length - 1]?.id === modalId && modalEl
+      isOpenModal[isOpenModal.length - 1]?.id === modalId && modalEl;
 
     if (!hasDialog && topModal) {
-      visible.value = false
+      visible.value = false;
     }
-  })
+  });
 }
+
+const getIconSize = computed(() => {
+  const sizeMap = {
+    small: 14,
+    medium: 16,
+    large: 18,
+  };
+  return sizeMap[props.size as keyof typeof sizeMap];
+});
+
+const getTitleSize = computed(() => {
+  const sizeMap = {
+    small: 14,
+    medium: 16,
+    large: 18,
+  };
+  return sizeMap[props.size as keyof typeof sizeMap];
+});
 </script>
 
 <template>
@@ -90,13 +101,22 @@ if (props.closeByEsc) {
               y="center"
               class="lew-modal-header"
             >
-              <lew-text-trim class="lew-modal-title" :text="title" />
-              <Icon
-                :size="18"
-                class="lew-form-icon-close lew-modal-icon-close"
-                type="close"
-                @click="close"
+              <lew-text-trim
+                class="lew-modal-title"
+                :text="title"
+                :style="{ fontSize: getTitleSize + 'px' }"
               />
+              <lew-button
+                type="light"
+                color="gray"
+                round
+                single-icon
+                size="small"
+                class="lew-modal-icon-close"
+                @click="close"
+              >
+                <Icon :size="getIconSize" type="close" />
+              </lew-button>
             </lew-flex>
             <div class="lew-modal-body-main lew-scrollbar">
               <slot></slot>
@@ -113,21 +133,22 @@ if (props.closeByEsc) {
               <lew-button
                 v-if="!hideCancelButton"
                 v-bind="{
+                  size,
                   type: 'light',
                   color: 'gray',
-                  text: '取消',
-                  ...(cancelProps as any)
+                  text: locale.t('modal.close'),
+                  request: close,
+                  ...(closeButtonProps as any)
                 }"
-                @click="cancel"
               />
               <lew-button
                 v-if="!hideOkButton"
                 v-bind="{
-                  text: '确定',
+                  size,
+                  text: locale.t('modal.ok'),
                   color: 'primary',
-                  ...(okProps as any)
+                  ...(okButtonProps as any)
                 }"
-                @click="ok"
               />
             </lew-flex>
           </div>
@@ -168,23 +189,24 @@ if (props.closeByEsc) {
     }
     .lew-modal-header {
       position: relative;
-      height: 50px;
-      padding: 10px 20px;
+      padding: 15px 20px;
 
       .lew-modal-title {
         font-size: 16px;
         font-weight: bold;
       }
       .lew-modal-icon-close {
-        right: 15px;
-      }
-      .lew-modal-icon-close:hover {
-        background-color: var(--lew-bgcolor-5);
+        position: absolute;
+        width: auto;
+        height: auto;
+        padding: 5px;
+        top: 10px;
+        right: 10px;
       }
     }
 
     .lew-modal-footer {
-      padding: 10px 20px;
+      padding: 20px;
     }
 
     .lew-modal-header-slot {

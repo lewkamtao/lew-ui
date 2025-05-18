@@ -1785,8 +1785,8 @@ export default {
         closeOnClickOverlay: 'Fermeture au clic sur le masque',
         closeByEsc: 'Fermeture par touche ESC',
         hideFooter: 'Masquer le pied',
-        okProps: 'Propriétés du bouton de confirmation',
-        cancelProps: "Propriétés du bouton d'annulation",
+        okButtonProps: 'Propriétés du bouton de confirmation',
+        cancelButtonProps: "Propriétés du bouton d'annulation",
         zIndex: 'Niveau de couche'
       }
     },
@@ -1844,8 +1844,8 @@ export default {
         top: 'Distance du haut',
         hideFooter: 'Masquer le pied',
         closeByEsc: 'Fermeture par touche ESC',
-        okProps: 'Propriétés du bouton de confirmation',
-        cancelProps: "Propriétés du bouton d'annulation",
+        okButtonProps: 'Propriétés du bouton de confirmation',
+        cancelButtonProps: "Propriétés du bouton d'annulation",
         hideOkButton: 'Masquer le bouton de confirmation',
         hideCancelButton: "Masquer le bouton d'annulation",
         closeOnClickOverlay: 'Fermeture au clic sur le masque',
@@ -1867,8 +1867,8 @@ export default {
         width: 'Largeur',
         trigger: 'Mode de déclenchement',
         title: 'Titre',
-        okProps: 'Propriétés du bouton de confirmation',
-        cancelProps: "Propriétés du bouton d'annulation",
+        okButtonProps: 'Propriétés du bouton de confirmation',
+        cancelButtonProps: "Propriétés du bouton d'annulation",
         content: 'Contenu',
         placement: 'Position'
       }

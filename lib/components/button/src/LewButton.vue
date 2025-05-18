@@ -246,7 +246,7 @@ defineExpose({ focus })
   line-height: calc(var(--lew-form-item-height-mini));
   font-size: var(--lew-form-font-size-mini);
   gap: 2px;
-  padding: 0px 10px;
+  padding: 0px 14px;
   .lew-button-text {
     font-size: var(--lew-form-font-size-mini);
     gap: 2px;
@@ -261,7 +261,7 @@ defineExpose({ focus })
   height: calc(var(--lew-form-item-height-small));
   line-height: calc(var(--lew-form-item-height-small));
   gap: 3px;
-  padding: 0px 14px;
+  padding: 0px 16px;
   .lew-button-text {
     font-size: var(--lew-form-font-size-small);
     gap: 3px;
@@ -276,7 +276,7 @@ defineExpose({ focus })
   height: calc(var(--lew-form-item-height-medium));
   line-height: calc(var(--lew-form-item-height-medium));
   gap: 4px;
-  padding: 0px 16px;
+  padding: 0px 18px;
   .lew-button-text {
     font-size: var(--lew-form-font-size-medium);
     gap: 4px;
@@ -356,7 +356,7 @@ defineExpose({ focus })
 }
 
 .lew-button-size-mini.lew-button-loading {
-  padding-left: 23px;
+  padding-left: 24px;
 }
 
 .lew-button-size-small.lew-button-loading {

@@ -1761,8 +1761,8 @@ export default {
         closeOnClickOverlay: 'Close on Click Overlay',
         closeByEsc: 'Close by ESC',
         hideFooter: 'Hide Footer',
-        okProps: 'OK Button Props',
-        cancelProps: 'Cancel Button Props',
+        okButtonProps: 'OK Button Props',
+        cancelButtonProps: 'Cancel Button Props',
         zIndex: 'Z Index'
       }
     },
@@ -1820,8 +1820,8 @@ export default {
         top: 'Top',
         hideFooter: 'Hide Footer',
         closeByEsc: 'Close by ESC',
-        okProps: 'OK Button Props',
-        cancelProps: 'Cancel Button Props',
+        okButtonProps: 'OK Button Props',
+        cancelButtonProps: 'Cancel Button Props',
         hideOkButton: 'Hide OK Button',
         hideCancelButton: 'Hide Cancel Button',
         closeOnClickOverlay: 'Close on Click Overlay',
@@ -1843,8 +1843,8 @@ export default {
         width: 'Width',
         trigger: 'Trigger',
         title: 'Title',
-        okProps: 'OK Button Props',
-        cancelProps: 'Cancel Button Props',
+        okButtonProps: 'OK Button Props',
+        cancelButtonProps: 'Cancel Button Props',
         content: 'Content',
         placement: 'Placement'
       }
