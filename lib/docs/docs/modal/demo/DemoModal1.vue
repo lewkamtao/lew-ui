@@ -46,7 +46,7 @@ const close2 = () => {
     v-model:visible="visible1"
     closeOnClickOverlay
     closeByEsc
-    width="450px"
+    width="750px"
     title="About Lew-UI"
     :closeButtonProps="{
       request: close1,

@@ -22,10 +22,13 @@ export default {
   },
   cascader: {
     placeholder: '请选择',
-    close: '关闭',
-    ok: '确定'
+    closeText: '关闭',
+    okText: '确定'
   },
   textarea: {
+    placeholder: '请输入'
+  },
+  inputNumber: {
     placeholder: '请输入'
   },
   datePicker: {
@@ -56,14 +59,21 @@ export default {
     editTitle: '编辑数据'
   },
   drawer: {
-    close: '关闭',
-    ok: '确定'
+    closeText: '关闭',
+    okText: '确定'
   },
   modal: {
-    close: '关闭',
-    ok: '确定'
+    closeText: '关闭',
+    okText: '确定'
   },
-
+  dialog: {
+    cancelText: '取消',
+    okText: '确定'
+  },
+  popok: {
+    cancelText: '取消',
+    okText: '确定'
+  },
   upload: {
     dropActive: '松开即可开始上传',
     click: '点击上传、',

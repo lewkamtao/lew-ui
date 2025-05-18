@@ -22,9 +22,14 @@ export default {
     placeholder: 'Por favor, seleccione'
   },
   cascader: {
-    placeholder: 'Por favor, seleccione'
+    placeholder: 'Por favor, seleccione',
+    close: 'Cerrar',
+    ok: 'Aceptar'
   },
   textarea: {
+    placeholder: 'Por favor, introduzca'
+  },
+  inputNumber: {
     placeholder: 'Por favor, introduzca'
   },
   datePicker: {
@@ -40,6 +45,35 @@ export default {
   dateRangePicker: {
     placeholderStart: 'Fecha de inicio',
     placeholderEnd: 'Fecha de fin'
+  },
+  inputTable: {
+    addText: 'Añadir',
+    deleteConfirm: 'Confirmar eliminación',
+    delete: 'Eliminar',
+    cancel: 'Cancelar',
+    deleteConfirmContent: '¿Está seguro de que desea eliminar estos datos? Esta operación se aplicará inmediatamente, ¡por favor tenga cuidado!',
+    minRows: 'Se ha alcanzado el límite mínimo de filas, no se puede eliminar',
+    maxRows: 'Se ha alcanzado el límite máximo de filas, no se puede añadir',
+    uniqueFieldExist: 'Este {label} ya existe. Por favor, introduzca un {label} único.',
+    save: 'Guardar',
+    modelTitle: 'Añadir datos',
+    editTitle: 'Editar datos'
+  },
+  drawer: {
+    close: 'Cerrar',
+    ok: 'Aceptar'
+  },
+  modal: {
+    close: 'Cerrar',
+    ok: 'Aceptar'
+  },
+  dialog: {
+    cancel: 'Cancelar',
+    ok: 'Aceptar'
+  },
+  popok: {
+    cancel: 'Cancelar',
+    ok: 'Aceptar'
   },
   upload: {
     dropActive: 'Suelte para comenzar la carga',

@@ -22,9 +22,14 @@ export default {
     placeholder: 'Seleziona'
   },
   cascader: {
-    placeholder: 'Seleziona'
+    placeholder: 'Seleziona',
+    close: 'Chiudi',
+    ok: 'OK'
   },
   textarea: {
+    placeholder: 'Inserisci'
+  },
+  inputNumber: {
     placeholder: 'Inserisci'
   },
   datePicker: {
@@ -40,6 +45,35 @@ export default {
   dateRangePicker: {
     placeholderStart: 'Data iniziale',
     placeholderEnd: 'Data finale'
+  },
+  inputTable: {
+    addText: 'Aggiungi',
+    deleteConfirm: 'Conferma eliminazione',
+    delete: 'Elimina',
+    cancel: 'Annulla',
+    deleteConfirmContent: 'Sei sicuro di voler eliminare questi dati? Questa operazione avrà effetto immediato, procedi con cautela!',
+    minRows: 'Raggiunto il limite minimo di righe, impossibile eliminare',
+    maxRows: 'Raggiunto il limite massimo di righe, impossibile aggiungere',
+    uniqueFieldExist: 'Questo {label} esiste già. Inserisci un {label} univoco.',
+    save: 'Salva',
+    modelTitle: 'Aggiungi dati',
+    editTitle: 'Modifica dati'
+  },
+  drawer: {
+    close: 'Chiudi',
+    ok: 'OK'
+  },
+  modal: {
+    close: 'Chiudi',
+    ok: 'OK'
+  },
+  dialog: {
+    cancel: 'Annulla',
+    ok: 'OK'
+  },
+  popok: {
+    cancel: 'Annulla',
+    ok: 'OK'
   },
   upload: {
     dropActive: 'Rilascia per iniziare il caricamento',

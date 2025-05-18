@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const open = () => {
   LewDialog.info({
-    content: '您确定要在 App Store 上发布这个应用吗？',
+    content: 'Are you sure you want to publish this app to the App Store?',
     closeOnClickOverlay: true,
     layout: 'mini',
     ok: () => {
@@ -9,17 +9,17 @@ const open = () => {
         setTimeout(() => {
           resolve(true)
           LewMessage.success({
-            content: '应用已成功提交审核'
+            content: 'App has been successfully submitted for review'
           })
         }, 1000)
       })
     },
     cancel: () => {
-      // 取消发布
+      // Cancel publishing
     }
   })
 }
 </script>
 <template>
-  <lew-button text="提交审核" round type="light" @click="open()" />
+  <lew-button text="Submit for Review" round type="light" @click="open()" />
 </template>

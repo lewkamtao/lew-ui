@@ -22,9 +22,14 @@ export default {
     placeholder: '선택해주세요'
   },
   cascader: {
-    placeholder: '선택해주세요'
+    placeholder: '선택해주세요',
+    close: '닫기',
+    ok: '확인'
   },
   textarea: {
+    placeholder: '입력해주세요'
+  },
+  inputNumber: {
     placeholder: '입력해주세요'
   },
   datePicker: {
@@ -40,6 +45,35 @@ export default {
   dateRangePicker: {
     placeholderStart: '시작일',
     placeholderEnd: '종료일'
+  },
+  inputTable: {
+    addText: '추가',
+    deleteConfirm: '삭제 확인',
+    delete: '삭제',
+    cancel: '취소',
+    deleteConfirmContent: '이 데이터를 삭제하시겠습니까? 이 작업은 즉시 적용되므로 주의해주세요!',
+    minRows: '최소 행 수에 도달하여 삭제할 수 없습니다',
+    maxRows: '최대 행 수에 도달하여 추가할 수 없습니다',
+    uniqueFieldExist: '이 {label}이(가) 이미 존재합니다. 중복되지 않는 {label}을(를) 입력해주세요.',
+    save: '저장',
+    modelTitle: '데이터 추가',
+    editTitle: '데이터 편집'
+  },
+  drawer: {
+    close: '닫기',
+    ok: '확인'
+  },
+  modal: {
+    close: '닫기',
+    ok: '확인'
+  },
+  dialog: {
+    cancel: '취소',
+    ok: '확인'
+  },
+  popok: {
+    cancel: '취소',
+    ok: '확인'
   },
   upload: {
     dropActive: '파일을 놓으면 업로드가 시작됩니다',

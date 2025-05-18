@@ -63,24 +63,6 @@ if (props.closeByEsc) {
     }
   });
 }
-
-const getIconSize = computed(() => {
-  const sizeMap = {
-    small: 14,
-    medium: 16,
-    large: 18,
-  };
-  return sizeMap[props.size as keyof typeof sizeMap];
-});
-
-const getTitleSize = computed(() => {
-  const sizeMap = {
-    small: 14,
-    medium: 16,
-    large: 18,
-  };
-  return sizeMap[props.size as keyof typeof sizeMap];
-});
 </script>
 
 <template>
@@ -101,11 +83,7 @@ const getTitleSize = computed(() => {
               y="center"
               class="lew-modal-header"
             >
-              <lew-text-trim
-                class="lew-modal-title"
-                :text="title"
-                :style="{ fontSize: getTitleSize + 'px' }"
-              />
+              <lew-text-trim class="lew-modal-title" :text="title" />
               <lew-button
                 type="light"
                 color="gray"
@@ -115,7 +93,7 @@ const getTitleSize = computed(() => {
                 class="lew-modal-icon-close"
                 @click="close"
               >
-                <Icon :size="getIconSize" type="close" />
+                <Icon :size="14" type="close" />
               </lew-button>
             </lew-flex>
             <div class="lew-modal-body-main lew-scrollbar">
@@ -133,10 +111,10 @@ const getTitleSize = computed(() => {
               <lew-button
                 v-if="!hideCancelButton"
                 v-bind="{
-                  size,
+                  size: 'small',
                   type: 'light',
                   color: 'gray',
-                  text: locale.t('modal.close'),
+                  text: locale.t('modal.closeText'),
                   request: close,
                   ...(closeButtonProps as any)
                 }"
@@ -144,8 +122,8 @@ const getTitleSize = computed(() => {
               <lew-button
                 v-if="!hideOkButton"
                 v-bind="{
-                  size,
-                  text: locale.t('modal.ok'),
+                  size: 'small',
+                  text: locale.t('modal.okText'),
                   color: 'primary',
                   ...(okButtonProps as any)
                 }"
@@ -237,6 +215,6 @@ const getTitleSize = computed(() => {
 .lew-modal-leave-to,
 .lew-modal-enter-from {
   opacity: 0;
-  transform: translateY(-30px);
+  transform: translateY(120px);
 }
 </style>

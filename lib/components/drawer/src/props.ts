@@ -1,7 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 import type { ButtonProps } from '../../button/index'
-import type { LewSize } from 'lew-ui'
-import { validSizes } from 'lew-ui/constants'
+
 
 export const drawerModel = {
   visible: {
@@ -23,18 +22,6 @@ export const drawerProps = {
     validator: (value: string) =>
       ['left', 'right', 'top', 'bottom'].includes(value),
     description: '抽屉的弹出位置'
-  },
-  size: {
-    type: String as PropType<LewSize>,
-    default: 'medium',
-    description: '尺寸',
-    validator: (value: LewSize) => {
-      if (!validSizes.includes(value)) {
-        console.warn('[LewInput] size 属性必须是 "small"、"medium" 或 "large"')
-        return false
-      }
-      return true
-    }
   },
   width: {
     type: [Number, String],
@@ -71,17 +58,12 @@ export const drawerProps = {
   },
   okButtonProps: {
     type: Object as PropType<ButtonProps>,
-    default: () => ({
-      color: 'primary'
-    }),
+    default: () => ({}),
     description: '确定按钮的属性配置'
   },
   closeButtonProps: {
     type: Object as PropType<ButtonProps>,
-    default: () => ({
-      type: 'text',
-      color: 'normal'
-    }),
+    default: () => ({}),
     description: '取消按钮的属性配置'
   },
   zIndex: {

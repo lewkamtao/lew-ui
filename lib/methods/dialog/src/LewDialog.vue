@@ -1,68 +1,68 @@
 <script lang="ts" setup name="dialog">
-import { ref, watch, onMounted, nextTick } from 'vue'
-import { LewButton, LewFlex } from 'lew-ui'
-import { useMagicKeys } from '@vueuse/core'
-import { dialogProps } from './props'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { useDOMCreate } from 'lew-ui/hooks'
-import type { LewColor } from 'lew-ui'
-import { locale } from 'lew-ui'
+import { ref, watch, onMounted, nextTick } from "vue";
+import { LewButton, LewFlex } from "lew-ui";
+import { useMagicKeys } from "@vueuse/core";
+import { dialogProps } from "./props";
+import Icon from "lew-ui/utils/Icon.vue";
+import { useDOMCreate } from "lew-ui/hooks";
+import type { LewColor } from "lew-ui";
+import { locale } from "lew-ui";
 
-const { Escape } = useMagicKeys()
-useDOMCreate('lew-dialog')
+const { Escape } = useMagicKeys();
+useDOMCreate("lew-dialog");
 
-const props = defineProps(dialogProps)
-const emit = defineEmits(['close'])
+const props = defineProps(dialogProps);
+const emit = defineEmits(["close"]);
 
-const visible = ref(false)
-const okLoading = ref(false)
-const cancelLoading = ref(false)
-const okRef1 = ref()
-const okRef2 = ref()
+const visible = ref(false);
+const okLoading = ref(false);
+const cancelLoading = ref(false);
+const okRef1 = ref();
+const okRef2 = ref();
 
 const maskClick = () => {
   if (props.closeOnClickOverlay) {
-    visible.value = false
+    visible.value = false;
   }
-}
+};
 
 onMounted(() => {
-  visible.value = true
+  visible.value = true;
   nextTick(() => {
-    if (okRef1.value) okRef1.value.focus()
-    if (okRef2.value) okRef2.value.focus()
-  })
-})
+    if (okRef1.value) okRef1.value.focus();
+    if (okRef2.value) okRef2.value.focus();
+  });
+});
 
 watch(visible, (newVal) => {
   if (!newVal) {
-    setTimeout(() => emit('close'), 500)
+    setTimeout(() => emit("close"), 500);
   }
-})
+});
 
-const handleAction = async (action: 'ok' | 'cancel') => {
-  const actionFunction = props[action]
-  const loadingRef = action === 'ok' ? okLoading : cancelLoading
+const handleAction = async (action: "ok" | "cancel") => {
+  const actionFunction = props[action];
+  const loadingRef = action === "ok" ? okLoading : cancelLoading;
 
-  if (typeof actionFunction === 'function') {
-    loadingRef.value = true
-    const result = await actionFunction()
+  if (typeof actionFunction === "function") {
+    loadingRef.value = true;
+    const result = await actionFunction();
     if (result !== false) {
-      visible.value = false
+      visible.value = false;
     }
-    loadingRef.value = false
+    loadingRef.value = false;
   }
-}
+};
 
-const ok = () => handleAction('ok')
-const cancel = () => handleAction('cancel')
+const ok = () => handleAction("ok");
+const cancel = () => handleAction("cancel");
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
     if (v && visible.value) {
-      visible.value = false
+      visible.value = false;
     }
-  })
+  });
 }
 </script>
 
@@ -71,7 +71,7 @@ if (props.closeByEsc) {
     <div
       class="lew-dialog-container"
       :style="{
-        '--lew-dialog-transform-origin': transformOrigin
+        '--lew-dialog-transform-origin': transformOrigin,
       }"
     >
       <transition name="lew-dialog-mask">
@@ -80,7 +80,6 @@ if (props.closeByEsc) {
       <transition name="lew-dialog">
         <div v-if="visible" class="lew-dialog" @click="maskClick">
           <lew-flex
-            v-if="layout === 'normal'"
             direction="y"
             gap="20"
             class="lew-dialog-box lew-dialog-box-normal"
@@ -101,60 +100,24 @@ if (props.closeByEsc) {
             </lew-flex>
             <footer>
               <lew-button
-                :text="cancelText || locale.t('dialog.cancel')"
+                :text="cancelText || locale.t('dialog.cancelText')"
                 color="gray"
-                type="text"
+                type="light"
+                size="small"
                 :loading="cancelLoading"
                 @click.stop="cancel"
               />
               <lew-button
                 ref="okRef1"
-                :text="okText || locale.t('dialog.ok')"
+                :text="okText || locale.t('dialog.okText')"
                 type="fill"
+                size="small"
                 :color="type as LewColor"
                 :loading="okLoading"
                 @click.stop="ok"
               />
             </footer>
           </lew-flex>
-
-          <div
-            v-if="layout === 'mini'"
-            class="lew-dialog-box lew-dialog-box-mini"
-            @click.stop
-          >
-            <div class="left">
-              <Icon :size="20" :type />
-            </div>
-            <lew-flex class="right">
-              <main>
-                <slot name="content" />
-              </main>
-              <lew-flex x="end">
-                <lew-button
-                  v-if="cancelText"
-                  :text="cancelText"
-                  type="text"
-                  size="small"
-                  color="gray"
-                  round
-                  :loading="cancelLoading"
-                  @click.stop="cancel"
-                />
-                <lew-button
-                  ref="okRef2"
-                  v-if="okText"
-                  :text="okText"
-                  type="fill"
-                  size="small"
-                  round
-                  :color="type as LewColor"
-                  :loading="okLoading"
-                  @click.stop="ok"
-                />
-              </lew-flex>
-            </lew-flex>
-          </div>
         </div>
       </transition>
     </div>
@@ -191,8 +154,7 @@ if (props.closeByEsc) {
     padding: 20px;
     border-radius: var(--lew-border-radius-medium);
     background-color: var(--lew-modal-body-bgcolor);
-    border: var(--lew-dialog-box-border);
-    box-shadow: var(--lew-dialog-box-shadow);
+
     font-size: 0;
 
     .lew-dialog-icon:deep() {
@@ -273,43 +235,6 @@ if (props.closeByEsc) {
       margin-top: 10px;
     }
   }
-
-  .lew-dialog-box-mini {
-    padding: 15px 20px;
-    border-radius: 50px;
-    max-width: 480px;
-    width: auto;
-    align-items: center;
-
-    .left {
-      margin-right: 10px;
-      display: flex;
-
-      .lew-dialog-icon:deep() {
-        svg {
-          width: 24px;
-          height: 24px;
-        }
-      }
-    }
-
-    .right {
-      position: relative;
-      top: 1px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      main {
-        flex-shrink: 0;
-        margin-right: 20px;
-        max-width: calc(480px - 180px);
-      }
-
-      footer {
-        width: 80px;
-      }
-    }
-  }
 }
 
 .lew-dialog-mask-enter-active,
@@ -324,8 +249,7 @@ if (props.closeByEsc) {
 
 .lew-dialog-enter-active,
 .lew-dialog-leave-active {
-  transition:
-    opacity 0.4s cubic-bezier(0.3, 1.3, 0.3, 1),
+  transition: opacity 0.4s cubic-bezier(0.3, 1.3, 0.3, 1),
     transform 0.4s cubic-bezier(0.3, 1.3, 0.3, 1);
   transform-origin: var(--lew-dialog-transform-origin);
 }

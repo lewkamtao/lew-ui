@@ -77,28 +77,10 @@ const getStyle = (
   }
 };
 
-const getIconSize = computed(() => {
-  const sizeMap = {
-    small: 14,
-    medium: 16,
-    large: 18,
-  };
-  return sizeMap[props.size as keyof typeof sizeMap];
-});
-
 const close = () => {
   visible.value = false;
   emit("close");
 };
-
-const getTitleSize = computed(() => {
-  const sizeMap = {
-    small: 14,
-    medium: 16,
-    large: 18,
-  };
-  return sizeMap[props.size as keyof typeof sizeMap];
-});
 </script>
 <template>
   <teleport to="#lew-drawer">
@@ -123,11 +105,7 @@ const getTitleSize = computed(() => {
           y="center"
           class="lew-drawer-header"
         >
-          <lew-text-trim
-            class="lew-drawer-title"
-            :text="title"
-            :style="{ fontSize: getTitleSize + 'px' }"
-          />
+          <lew-text-trim class="lew-drawer-title" :text="title" />
           <lew-button
             type="light"
             color="gray"
@@ -137,7 +115,7 @@ const getTitleSize = computed(() => {
             class="lew-drawer-icon-close"
             @click="close"
           >
-            <Icon :size="getIconSize" type="close" />
+            <Icon :size="14" type="close" />
           </lew-button>
         </lew-flex>
         <div class="lew-drawer-body-slot">
@@ -154,8 +132,9 @@ const getTitleSize = computed(() => {
         >
           <lew-button
             v-bind="{
-              type: 'text',
-              text: locale.t('drawer.close'),
+              size: 'small',
+              text: locale.t('drawer.closeText'),
+              type: 'light',
               color: 'normal',
               request: close,
               ...(closeButtonProps as any)
@@ -163,7 +142,8 @@ const getTitleSize = computed(() => {
           />
           <lew-button
             v-bind="{
-              text: locale.t('drawer.ok'),
+              size: 'small',
+              text: locale.t('drawer.okText'),
               color: 'primary',
               ...(okButtonProps as any)
             }"

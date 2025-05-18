@@ -1810,7 +1810,11 @@ export default {
         okButtonProps: '确认按钮属性',
         cancelButtonProps: '取消按钮属性',
         content: '内容',
-        placement: '位置'
+        placement: '位置',
+        okText: '确认按钮文本',
+        cancelText: '取消按钮文本',
+        ok: '确认回调',
+        cancel: '取消回调'
       }
     },
     popover: {

@@ -541,14 +541,14 @@ defineExpose({ show, hide });
             size="small"
             @click="close"
           >
-            {{ locale.t("cascader.close") }}
+            {{ locale.t("cascader.closeText") }}
           </lew-button>
           <lew-button
             :disabled="state.okLoading"
             size="small"
             @click="ok()"
           >
-            {{ locale.t("cascader.ok") }}
+            {{ locale.t("cascader.okText") }}
           </lew-button>
         </lew-flex>
       </div>

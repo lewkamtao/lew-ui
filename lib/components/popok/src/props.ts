@@ -1,6 +1,5 @@
 import { LewColor } from 'lew-ui'
 import type { PopoverPlacement, PopoverTrigger } from '../../popover/index'
-
 export const popokButtonProps = {
   type: {
     type: String,
@@ -25,12 +24,12 @@ export const popokButtonProps = {
   },
   okText: {
     type: String,
-    default: '确定',
+    defaultLocale: true,
     description: '确认按钮文本'
   },
   cancelText: {
     type: String,
-    default: '取消',
+    defaultLocale: true,
     description: '取消按钮文本'
   },
   ok: {

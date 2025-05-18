@@ -1,34 +1,35 @@
 <script setup lang="ts">
 const open = () => {
   LewDialog.error({
-    title: 'iCloud 数据删除确认',
-    okText: '删除',
+    title: "Delete GitHub Repository",
+    okText: "Delete",
+    size: "large", 
     content:
-      '您确定要永久删除所有 iCloud 数据吗？此操作无法撤销，可能会导致您的设备上的数据丢失。请谨慎操作！',
+      "Are you sure you want to permanently delete this repository? This action cannot be undone and will remove all code, issues, and pull requests. Please be certain before proceeding.",
     closeOnClickOverlay: true,
     closeByEsc: true,
     ok: () => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve(true)
+          resolve(true);
           LewMessage.success({
-            content: 'iCloud 数据已成功删除'
-          })
-        }, 1000)
-      })
+            content: "Repository has been successfully deleted",
+          });
+        }, 1000);
+      });
     },
     cancel: () => {
-      // 取消操作
-    }
-  })
-}
+      // Cancel deletion
+    },
+  });
+};
 </script>
 
 <template>
   <lew-button
     color="error"
     type="fill"
-    text="删除 iCloud 数据"
+    text="Delete Repository"
     @click="open()"
   />
 </template>

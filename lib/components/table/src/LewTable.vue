@@ -16,26 +16,21 @@ import {
 } from "lodash-es";
 import type { FlexXAlignment, FlexYAlignment } from "lew-ui";
 import SortIcon from "./SortIcon.vue";
-import { h } from "vue";
 import { isVueComponent, getUniqueId } from "lew-ui/utils";
 import Icon from "lew-ui/utils/Icon.vue";
 
-// ==================== Props & Emits ====================
 const props = defineProps(tableProps);
 const selectedKeys = defineModel("selectedKeys");
 const sortValue: any = defineModel("sortValue", { default: {} });
 const emit = defineEmits(["sortChange", "selectChange", "sortOrderChange"]);
 
-// ==================== Refs ====================
 const tableRef = ref();
 const fixedLeftRef = ref();
 const fixedRightRef = ref();
 const trRefMap = ref<Record<string, HTMLElement | null>>({});
 let resizeObserver: any;
-// 新增动画帧引用
 let tooltipAnimationFrame: number | null = null;
 
-// ==================== State ====================
 const state = reactive({
   isInitialized: false,
   columns: [],
@@ -48,27 +43,22 @@ const state = reactive({
   fixedLeftWidth: 0,
   fixedRightWidth: 0,
   selectedRowsMap: {} as any,
-  // 拖拽排序相关
   dragIndex: -1,
   targetIndex: -1,
   isDragging: false,
   showTooltip: false,
   tooltipStyle: ``,
-  // 克隆的数据源
   dataSource: [] as any[],
-  // 表格容器的位置信息，使用Map存储
   trPositionsMap: {} as Record<string, any>,
   trHeightMap: {} as Record<string, number | undefined>,
   isAboveTarget: false,
   initialDragY: 0 as number,
   lastMouseY: 0 as number,
-  // 拖拽的行ID
   dragRowId: "",
   targetRowId: "",
   tooltipComponent: null as any,
 });
 
-// ==================== Size Related Computed ====================
 const getCheckableWidth = computed(() => {
   const sizeMap = {
     small: 50,
@@ -149,7 +139,6 @@ const getEmptyProps: any = computed(() => {
   };
 });
 
-// ==================== Column Related Computed ====================
 const calculateColumnWidth = (column: any): number => {
   if (column.children && column.children.length > 0) {
     const totalChildWidth = column.children.reduce(
@@ -237,7 +226,6 @@ const columnLevel = computed(() => {
   return findMaxDepth(props.columns);
 });
 
-// ==================== Selection Related Computed & Methods ====================
 const hasPartialSelection = computed(() => {
   const selectedRowsMap = state.selectedRowsMap;
   return state.dataSource.some(
@@ -298,7 +286,6 @@ const updateSelectedKeys = (keys: any) => {
   }
 };
 
-// ==================== Style Related Computed ====================
 const getHeaderColumnStyle = computed(() => (column: any, row?: any) => {
   const width = column.width;
   const customStyle = row && row.tdStyle?.[column.field];
@@ -341,7 +328,6 @@ const getColumnStyle = computed(() => (column: any, row?: any) => {
   return `${sizeStyle};width: ${tdWidth}px;${customStyle}`;
 });
 
-// ==================== Render Methods ====================
 const showTextAndEmpty = (text: any) => {
   if (text === null || text === undefined || text === "") {
     return "-";
@@ -433,7 +419,6 @@ const sort = (column: any) => {
   }
 };
 
-// ==================== Scroll & Resize Methods ====================
 const updateScrollState = () => {
   const element = tableRef.value;
   const { clientWidth, scrollWidth, scrollLeft } = element;
@@ -457,15 +442,12 @@ const updateScrollState = () => {
 
 const computeTableRowHeight = () => {
   nextTick(() => {
-    // 使用Object.entries遍历trRefMap
     Object.entries(trRefMap.value).forEach(([rowId, element]) => {
       if (element) {
         const rect = element.getBoundingClientRect();
 
-        // 使用行的唯一ID作为键存储高度信息
         state.trHeightMap[rowId] = rect.height;
 
-        // 使用行的唯一ID作为键存储位置信息
         state.trPositionsMap[rowId] = {
           top: rect.top,
           bottom: rect.bottom,
@@ -518,7 +500,6 @@ const initTableObserver = () => {
   resizeObserver.observe(tableRef.value);
 };
 
-// ==================== Lifecycle Methods ====================
 const init = () => {
   nextTick(() => {
     initTableObserver();
@@ -527,19 +508,13 @@ const init = () => {
     if (props.checkable) {
       updateSelectedKeys(selectedKeys.value);
     }
-    // 初始化克隆的数据源，并添加唯一ID
     initDragState();
     state.dataSource = addUniqueIdToDataSource(cloneDeep(props.dataSource));
-    // 确保计算行高和位置
     computeTableRowHeight();
   });
 };
 
 onMounted(() => {
-  init();
-});
-
-onActivated(() => {
   init();
   if (props.checkable && !props.rowKey) {
     throw new Error(
@@ -561,19 +536,19 @@ onUnmounted(() => {
     resizeObserver = null;
   }
 
-  // 清理任何挂起的动画帧
   if (tooltipAnimationFrame) {
     cancelAnimationFrame(tooltipAnimationFrame);
     tooltipAnimationFrame = null;
   }
 });
 
-// ==================== Watchers ====================
 watch(
   () => props.dataSource,
   (newVal) => {
-    // 当props.dataSource变化时，更新克隆的数据源，并添加唯一ID
     state.dataSource = addUniqueIdToDataSource(cloneDeep(newVal));
+    initTableObserver();
+    updateScrollState();
+    handleTableResize();
     state.selectedRowsMap = mapValues(keyBy(newVal, props.rowKey), () => false);
     updateAllCheckedState();
     initDragState();
@@ -594,7 +569,7 @@ watch(selectedKeys, (newVal: any) => {
 watch(
   () => trRefMap.value,
   () => {
-    computeTableRowHeight(); // 使用防抖版本
+    computeTableRowHeight();
   },
   {
     deep: true,
@@ -631,11 +606,9 @@ const renderCustomCell = ({
       index,
       text: row[column.field],
     });
-    // 如果返回的是VNode或者组件，直接返回
     if (isVueComponent(customContent)) {
       return customContent;
     }
-    // 如果返回的是普通值，包装成文本节点
     return h("span", {}, String(customContent));
   } catch (e) {
     console.error("Error in customRender:", e);
@@ -643,9 +616,7 @@ const renderCustomCell = ({
   }
 };
 
-// ==================== Drag & Sort Methods ====================
 const initDragState = () => {
-  // 清空拖拽相关状态
   state.dragIndex = -1;
   state.targetIndex = -1;
   state.dragRowId = "";
@@ -660,71 +631,56 @@ const dragStart = (event: DragEvent, row: any, index: number) => {
   if (!props.sortable) return;
   initDragState();
   computeTableRowHeight();
-  // 设置新的拖拽状态
   state.dragIndex = index;
   state.dragRowId = row._lew_table_tr_id;
   state.isDragging = true;
-  // 设置鼠标样式
   document.body.style.cursor = "grabbing";
 
-  // 设置初始拖拽位置，用于计算是否达到了足够的移动距离
   state.initialDragY = event.clientY;
   state.lastMouseY = event.clientY;
 
-  // 设置拖拽时的半透明效果
   if (event.dataTransfer) {
     event.dataTransfer.effectAllowed = "move";
 
-    // 创建一个画布作为拖拽图像
     const canvas = document.createElement("canvas");
     event.dataTransfer.setDragImage(canvas, 0, 0);
   }
 
-  // 禁止用户选择表格文本
   document.body.style.userSelect = "none";
   document.body.style.webkitUserSelect = "none";
 
-  // 显示悬浮提示
   state.showTooltip = true;
   state.tooltipStyle = `transform: translate(calc(${event.clientX}px - 2px), calc(${event.clientY}px - 2px))`;
   state.tooltipComponent = props.sortTooltipCustomRender
     ? props.sortTooltipCustomRender(row)
     : h("div", {}, `Row ${row[props.rowKey]}`);
-  // 使用RAFThrottledTooltipUpdate替代直接监听mousemove
   document.addEventListener("mousemove", throttledTooltipUpdate);
   document.addEventListener("mouseup", dragEnd);
 };
 
-// 使用requestAnimationFrame优化tooltip更新
 const updateTooltipPosition = (event: MouseEvent) => {
-  // 取消之前的动画帧请求
   if (tooltipAnimationFrame) {
     cancelAnimationFrame(tooltipAnimationFrame);
   }
 
-  // 请求新的动画帧来更新tooltip位置
   tooltipAnimationFrame = requestAnimationFrame(() => {
     state.tooltipStyle = `transform: translate(calc(${event.clientX}px - 2px), calc(${event.clientY}px - 2px))`;
     updateDragTarget(event.clientY);
   });
 };
 
-// 使用lodash的throttle函数进一步限制更新频率
-const throttledTooltipUpdate = throttle(updateTooltipPosition, 16); // 约60fps
+const throttledTooltipUpdate = throttle(updateTooltipPosition, 16);
 
 const dragEnd = () => {
-  // 计算拖拽距离，如果小于阈值，则不执行排序
   const dragDistance = Math.abs(state.initialDragY - state.lastMouseY);
-  const minDragDistance = 10; // 最小拖拽距离阈值，单位像素
-  // 设置鼠标样式
+  const minDragDistance = 10;
   document.body.style.cursor = "default";
   if (
     state.dragRowId &&
     state.targetRowId &&
     state.dragRowId !== state.targetRowId &&
-    dragDistance >= minDragDistance // 确保拖拽距离超过阈值
+    dragDistance >= minDragDistance
   ) {
-    // 根据ID获取当前索引
     const dragIndex = state.dataSource.findIndex(
       (row) => row._lew_table_tr_id === state.dragRowId
     );
@@ -732,43 +688,33 @@ const dragEnd = () => {
       (row) => row._lew_table_tr_id === state.targetRowId
     );
     if (dragIndex !== -1 && targetIndex !== -1 && dragIndex !== targetIndex) {
-      // 还需确认目标位置与拖拽位置不是相邻的
       const targetPosition = state.isAboveTarget
         ? targetIndex
         : targetIndex + 1;
 
-      // 计算实际的目标索引位置（考虑拖拽行的影响）
       let actualTargetPosition = targetPosition;
       if (dragIndex < targetPosition) {
-        actualTargetPosition--; // 如果拖拽行在目标位置之前，需要调整
+        actualTargetPosition--;
       }
 
-      // 确保拖拽行的最终位置与原始位置不同
       if (actualTargetPosition !== dragIndex) {
-        // 重新排序数据
         const newDataSource = [...state.dataSource];
         const [movedItem] = newDataSource.splice(dragIndex, 1);
         newDataSource.splice(actualTargetPosition, 0, movedItem);
-
-        // 更新克隆的数据源
         state.dataSource = newDataSource;
-        // 发送排序变更事件
         emit("sortOrderChange", newDataSource);
       }
     }
   }
 
-  // 取消任何挂起的动画帧
   if (tooltipAnimationFrame) {
     cancelAnimationFrame(tooltipAnimationFrame);
     tooltipAnimationFrame = null;
   }
 
-  // 恢复文本选择
   document.body.style.userSelect = "";
   document.body.style.webkitUserSelect = "";
 
-  // 重置状态
   state.dragIndex = -1;
   state.targetIndex = -1;
   state.dragRowId = "";
@@ -783,34 +729,26 @@ const dragEnd = () => {
   document.removeEventListener("mousemove", throttledTooltipUpdate);
   document.removeEventListener("mouseup", dragEnd);
 
-  // 拖拽结束后更新行高和位置
   setTimeout(() => {
     computeTableRowHeight();
   }, 250);
 };
 
 const updateDragTarget = (mouseY: number) => {
-  // 记录最后的鼠标Y位置
   state.lastMouseY = mouseY;
 
-  // 如果没有拖拽或者没有行位置信息，则不执行
   if (!state.dragRowId || Object.keys(state.trPositionsMap).length === 0)
     return;
 
-  // 计算拖拽距离
   const dragDistance = Math.abs(state.initialDragY - mouseY);
-  const minDragDistance = 5; // 指示器显示的最小拖拽距离阈值
+  const minDragDistance = 5;
 
-  // 如果拖拽距离过小，不更新目标行
   if (dragDistance < minDragDistance) {
     return;
   }
 
-  // 查找鼠标位置所在的行
   let targetRowId = "";
   let isAbove = false;
-
-  // 将位置信息转换为数组以便排序
   const positionEntries = Object.entries(state.trPositionsMap).map(
     ([id, pos]) => ({
       id,
@@ -818,29 +756,22 @@ const updateDragTarget = (mouseY: number) => {
     })
   );
 
-  // 按照top值排序
   positionEntries.sort((a, b) => a.top - b.top);
 
-  // 遍历所有行位置信息
   for (const entry of positionEntries) {
-    // 跳过正在拖拽的行
     if (entry.id === state.dragRowId) continue;
 
     const position = entry;
 
-    // 检查鼠标是否在当前行的范围内
     if (mouseY >= position.top && mouseY <= position.bottom) {
       targetRowId = position.id;
 
-      // 计算鼠标是否在行的上半部分
       isAbove = mouseY < position.top + position.height / 2;
       break;
     }
   }
 
-  // 处理鼠标在行之间的情况
   if (!targetRowId) {
-    // 查找相邻的两行
     for (let i = 0; i < positionEntries.length - 1; i++) {
       if (positionEntries[i].id === state.dragRowId) continue;
       if (positionEntries[i + 1].id === state.dragRowId) continue;
@@ -849,23 +780,21 @@ const updateDragTarget = (mouseY: number) => {
         mouseY > positionEntries[i].bottom &&
         mouseY < positionEntries[i + 1].top
       ) {
-        // 选择更接近的行
         if (
           mouseY - positionEntries[i].bottom <
           positionEntries[i + 1].top - mouseY
         ) {
           targetRowId = positionEntries[i].id;
-          isAbove = false; // 在上一行的下方
+          isAbove = false;
         } else {
           targetRowId = positionEntries[i + 1].id;
-          isAbove = true; // 在当前行的上方
+          isAbove = true;
         }
         break;
       }
     }
   }
 
-  // 如果还没找到目标行，检查是否在第一行上方或最后一行下方
   if (!targetRowId && positionEntries.length > 0) {
     if (mouseY < positionEntries[0].top) {
       targetRowId = positionEntries[0].id;
@@ -876,7 +805,6 @@ const updateDragTarget = (mouseY: number) => {
     }
   }
 
-  // 更新目标行ID和位置标记
   if (targetRowId) {
     state.targetRowId = targetRowId;
     state.targetIndex = state.dataSource.findIndex(
@@ -886,41 +814,28 @@ const updateDragTarget = (mouseY: number) => {
   }
 };
 
-// 获取指示器样式
 const getIndicatorStyle = () => {
-  // 如果未拖拽或目标索引无效，则隐藏指示器
   if (
     !state.isDragging ||
     !state.targetRowId ||
     state.dragRowId === state.targetRowId
   ) {
-    // 不使用opacity: 0，因为这可能导致位置不同步
     return `
       display: none;
       transform: translateY(0);
     `;
   }
-
-  // 获取目标行的位置信息
   const targetPosition = state.trPositionsMap[state.targetRowId];
   if (!targetPosition) return "display: none;";
-
-  // 根据鼠标在目标行的位置决定指示器放在上方还是下方
   const top = state.isAboveTarget ? targetPosition.top : targetPosition.bottom;
-
-  // 计算tableRef的相对位置，因为指示器是相对于table-wrapper的
   const tableRect = tableRef.value?.getBoundingClientRect();
   const offsetTop = tableRect ? top - tableRect.top : 0;
-
-  // 返回指示器样式
   return `
     display: block;
     transform: translateY(${offsetTop}px);
     opacity: 1;
   `;
 };
-
-// 添加唯一ID到数据源
 const addUniqueIdToDataSource = (dataSource: any[]) => {
   return dataSource.map((row) => {
     if (!row._lew_table_tr_id) {
@@ -929,14 +844,10 @@ const addUniqueIdToDataSource = (dataSource: any[]) => {
     return row;
   });
 };
-
-// 获取行高的方法
 const getRowHeight = (row: any) => {
   if (!row || !row._lew_table_tr_id) return "auto";
   return (state.trHeightMap[row._lew_table_tr_id] || 0) + "px";
 };
-
-// 设置tr引用的方法
 const setTrRef = (el: HTMLElement | null, row: any) => {
   if (row && row._lew_table_tr_id) {
     trRefMap.value[row._lew_table_tr_id] = el;
@@ -999,7 +910,6 @@ const setTrRef = (el: HTMLElement | null, row: any) => {
           class="lew-table-fixed-left"
         >
           <div class="lew-table-tr">
-            <!-- 拖拽排序列 -->
             <lew-flex
               v-if="sortable"
               class="lew-table-td"

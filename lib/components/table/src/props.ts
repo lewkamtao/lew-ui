@@ -85,7 +85,7 @@ export const tableProps = {
     description: '是否启用行拖拽排序功能'
   },
   sortTooltipCustomRender: {
-    type: Function as PropType<(row: Record<string, any>) => string>,
+    type: Function as PropType<(row: Record<string, any>) => any>,
     default: undefined,
     description: '自定义行拖拽排序的提示'
   },

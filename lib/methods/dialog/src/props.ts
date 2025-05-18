@@ -25,12 +25,12 @@ export const dialogProps = {
   },
   okText: {
     type: String,
-    default: '确定',
+    defaultLocale: true,
     description: '确认按钮文本'
   },
   cancelText: {
     type: String,
-    default: '取消',
+    defaultLocale: true,
     description: '取消按钮文本'
   },
   ok: {
@@ -42,21 +42,6 @@ export const dialogProps = {
     type: Function,
     default: () => true,
     description: '点击取消按钮时的回调函数'
-  },
-  layout: {
-    type: String,
-    default: 'normal',
-    description: '对话框布局方式',
-    validator: (value: string) => {
-      const validLayouts = ['normal', 'mini']
-      if (!validLayouts.includes(value)) {
-        console.warn(
-          `[LewDialog] 无效的布局: ${value}。请使用 ${validLayouts.join(', ')} 中的一个。`
-        )
-        return false
-      }
-      return true
-    }
   },
   closeOnClickOverlay: {
     type: Boolean,

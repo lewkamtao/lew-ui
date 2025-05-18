@@ -22,9 +22,14 @@ export default {
     placeholder: 'Please select'
   },
   cascader: {
-    placeholder: 'Please select'
+    placeholder: 'Please select',
+    close: 'Close',
+    ok: 'OK'
   },
   textarea: {
+    placeholder: 'Please input'
+  },
+  inputNumber: {
     placeholder: 'Please input'
   },
   datePicker: {
@@ -41,6 +46,27 @@ export default {
     placeholderStart: 'Start date',
     placeholderEnd: 'End date'
   },
+  inputTable: {
+    addText: 'Add',
+    deleteConfirm: 'Delete Confirmation',
+    delete: 'Delete',
+    cancel: 'Cancel',
+    deleteConfirmContent: 'Are you sure you want to delete this data? This operation will take effect immediately, please proceed with caution!',
+    minRows: 'Minimum row limit reached, cannot delete',
+    maxRows: 'Maximum row limit reached, cannot add',
+    uniqueFieldExist: 'This {label} already exists. Please enter a unique {label}.',
+    save: 'Save',
+    modelTitle: 'Add Data',
+    editTitle: 'Edit Data'
+  },
+  drawer: {
+    close: 'Close',
+    ok: 'OK'
+  },
+  modal: {
+    close: 'Close',
+    ok: 'OK'
+  },
   upload: {
     dropActive: 'Release to start uploading',
     click: 'Click to upload, ',
@@ -52,5 +78,13 @@ export default {
   },
   pagination: {
     pageSize: '{pageSize} items/page'
+  },
+  dialog: {
+    cancel: 'Cancel',
+    ok: 'OK'
+  },
+  popok: {
+    cancel: 'Cancel',
+    ok: 'OK'
   }
 }

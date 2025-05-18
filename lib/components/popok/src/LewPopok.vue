@@ -65,17 +65,19 @@ onMounted(() => {
           <div v-if="content" class="lew-popok-content">{{ content }}</div>
           <div class="lew-popok-footer">
             <lew-button
-              :text="cancelText || locale.t('dialog.cancel')"
+              :text="cancelText || locale.t('popok.cancelText')"
               color="gray"
-              type="text"
+              type="light"
+              size="small"
               :loading="cancelLoading"
               @click.stop="cancel"
             />
             <lew-button
               ref="okRef"
-              :text="okText || locale.t('dialog.ok')"
+              :text="okText || locale.t('popok.okText')"
               type="fill"
               :color="type as LewColor"
+              size="small"
               :loading="okLoading"
               @click.stop="ok"
             />
@@ -97,7 +99,7 @@ onMounted(() => {
 
   .lew-popok-left {
     width: 30px;
-    margin-right: 12px;
+    margin-right: 5px;
 
     .lew-popok-icon-success {
       color: var(--lew-color-success);

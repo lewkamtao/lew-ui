@@ -26,7 +26,6 @@ const cancel = () => {
     content="This action cannot be undone. Are you sure you want to delete this project?"
     placement="bottom-start"
     okText="Delete"
-    cancelText="Cancel"
     :ok="ok"
     :cancel="cancel"
   >

@@ -22,9 +22,14 @@ export default {
     placeholder: '選択してください'
   },
   cascader: {
-    placeholder: '選択してください'
+    placeholder: '選択してください',
+    close: '閉じる',
+    ok: '確定'
   },
   textarea: {
+    placeholder: '入力してください'
+  },
+  inputNumber: {
     placeholder: '入力してください'
   },
   datePicker: {
@@ -40,6 +45,35 @@ export default {
   dateRangePicker: {
     placeholderStart: '開始日',
     placeholderEnd: '終了日'
+  },
+  inputTable: {
+    addText: '追加',
+    deleteConfirm: '削除確認',
+    delete: '削除',
+    cancel: 'キャンセル',
+    deleteConfirmContent: 'このデータを削除してもよろしいですか？この操作は即時に反映されます。ご注意ください。',
+    minRows: '最小行数に達しているため、削除できません',
+    maxRows: '最大行数に達しているため、追加できません',
+    uniqueFieldExist: 'この{label}は既に存在します。重複しない{label}を入力してください。',
+    save: '保存',
+    modelTitle: 'データ追加',
+    editTitle: 'データ編集'
+  },
+  drawer: {
+    close: '閉じる',
+    ok: '確定'
+  },
+  modal: {
+    close: '閉じる',
+    ok: '確定'
+  },
+  dialog: {
+    cancel: 'キャンセル',
+    ok: '確定'
+  },
+  popok: {
+    cancel: 'キャンセル',
+    ok: '確定'
   },
   upload: {
     dropActive: 'ドロップしてアップロードを開始',
