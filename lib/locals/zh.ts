@@ -84,6 +84,7 @@ export default {
     maxFileSize: '单个文件不超过 {maxFileSize}'
   },
   pagination: {
-    pageSize: '{pageSize} 条/页'
+    pageSize: '{pageSize} 条/页',
+    jumpTo: '跳转至'
   }
 }

@@ -1232,16 +1232,17 @@ export default {
         size: 'Größe',
         width: 'Breite',
         rowKey: 'Zeilenschlüssel',
-        batchDeletable: 'Stapellöschung unterstützen',
-        addable: 'Hinzufügbar',
+        batchDeletable: 'Stapellöschung erlauben',
+        addable: 'Hinzufügen erlauben',
         defaultForm: 'Standardformular',
-        deletable: 'Löschbar',
+        deletable: 'Löschen erlauben',
         maxRows: 'Maximale Zeilenanzahl',
         minRows: 'Minimale Zeilenanzahl',
-        clearable: 'Löschbar',
-        sortable: 'Sortierbar',
+        clearable: 'Löschen erlauben',
+        sortable: 'Sortieren erlauben',
         autoUniqueId: 'Automatische eindeutige ID',
-        uniqueField: 'Eindeutiges Feld'
+        uniqueField: 'Eindeutiges Feld',
+        sortTooltipCustomRender: 'Benutzerdefinierte Sortier-Tooltip-Darstellung'
       }
     },
     switch: {
@@ -1496,7 +1497,9 @@ export default {
         checkable: 'Auswählbar',
         maxHeight: 'Maximale Höhe',
         multiple: 'Mehrfachauswahl',
-        rowKey: 'Zeilenschlüssel'
+        rowKey: 'Zeilenschlüssel',
+        sortTooltipCustomRender: 'Benutzerdefinierte Sortier-Tooltip-Darstellung',
+        sortable: 'Sortierbar'
       },
       tableColumns: {
         field: 'Feld',
@@ -1758,7 +1761,7 @@ export default {
         closeByEsc: 'Durch ESC-Taste schließen',
         hideFooter: 'Fußbereich ausblenden',
         okButtonProps: 'Eigenschaften der Bestätigungsschaltfläche',
-        cancelButtonProps: 'Eigenschaften der Abbruchschaltfläche',
+        closeButtonProps: 'Eigenschaften der Schließen-Schaltfläche',
         zIndex: 'Z-Index'
       }
     },
@@ -1780,7 +1783,6 @@ export default {
         cancelText: 'Abbruchtext',
         ok: 'Bestätigungscallback',
         cancel: 'Abbruchcallback',
-        layout: 'Layout',
         closeOnClickOverlay: 'Durch Klick auf Overlay schließen',
         closeByEsc: 'Durch ESC-Taste schließen',
         transformOrigin: 'Animationsursprung'
@@ -1816,9 +1818,7 @@ export default {
         hideFooter: 'Fußbereich ausblenden',
         closeByEsc: 'Durch ESC-Taste schließen',
         okButtonProps: 'Eigenschaften der Bestätigungsschaltfläche',
-        cancelButtonProps: 'Eigenschaften der Abbruchschaltfläche',
-        hideOkButton: 'Bestätigungsschaltfläche ausblenden',
-        hideCancelButton: 'Abbruchschaltfläche ausblenden',
+        closeButtonProps: 'Eigenschaften der Schließen-Schaltfläche',
         closeOnClickOverlay: 'Durch Klick auf Overlay schließen',
         zIndex: 'Z-Index'
       }
@@ -1838,10 +1838,12 @@ export default {
         width: 'Breite',
         trigger: 'Auslösemethode',
         title: 'Titel',
-        okButtonProps: 'Eigenschaften der Bestätigungsschaltfläche',
-        cancelButtonProps: 'Eigenschaften der Abbruchschaltfläche',
         content: 'Inhalt',
-        placement: 'Position'
+        placement: 'Position',
+        okText: 'Bestätigungstext',
+        cancelText: 'Abbruchtext',
+        ok: 'Bestätigungscallback',
+        cancel: 'Abbruchcallback'
       }
     },
     popover: {
@@ -1949,7 +1951,8 @@ export default {
         dropdownThreshold: 'Dropdown-Menü-Schwellenwert',
         dropdownLabel: 'Dropdown-Menü-Text',
         dropdownIcon: 'Dropdown-Menü-Symbol',
-        divider: 'Trennlinie anzeigen'
+        divider: 'Trennlinie anzeigen',
+        iconOnly: 'Nur Symbol anzeigen'
       },
       options: {
         label: 'Aktionsschaltflächen-Text',

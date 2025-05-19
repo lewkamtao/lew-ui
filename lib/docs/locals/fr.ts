@@ -1247,21 +1247,22 @@ export default {
         title: 'Options avancées'
       },
       props: {
-        columns: 'Configuration des colonnes',
+        columns: 'Colonnes',
         size: 'Taille',
         width: 'Largeur',
         rowKey: 'Clé de ligne',
-        batchDeletable: 'Suppression par lots possible',
-        addable: 'Ajout possible',
+        batchDeletable: 'Suppression par lot',
+        addable: 'Ajoutable',
         defaultForm: 'Formulaire par défaut',
-        deletable: 'Suppression possible',
-        maxRows: 'Nombre maximum de lignes',
-        minRows: 'Nombre minimum de lignes',
+        deletable: 'Supprimable',
+        maxRows: 'Nombre maximal de lignes',
+        minRows: 'Nombre minimal de lignes',
         clearable: 'Effaçable',
-        sortable: 'Tri possible',
-        autoUniqueId: "Génération automatique d'ID unique",
-        uniqueField: 'Champ unique'
-      }
+        sortable: 'Triable',
+        autoUniqueId: 'Générer un ID unique automatiquement',
+        uniqueField: 'Champ unique',
+        sortTooltipCustomRender: `Rendu personnalisé de l'info-bulle de tri`
+      } 
     },
     switch: {
       name: 'Interrupteur',
@@ -1521,7 +1522,9 @@ export default {
         checkable: 'Sélectionnable',
         maxHeight: 'Hauteur maximale',
         multiple: 'Sélection multiple',
-        rowKey: 'Clé de ligne'
+        rowKey: 'Clé de ligne',
+        sortTooltipCustomRender: `Rendu personnalisé de l'info-bulle de tri`,
+        sortable: 'Triable'
       },
       tableColumns: {
         field: 'Champ',
@@ -1786,7 +1789,7 @@ export default {
         closeByEsc: 'Fermeture par touche ESC',
         hideFooter: 'Masquer le pied',
         okButtonProps: 'Propriétés du bouton de confirmation',
-        cancelButtonProps: "Propriétés du bouton d'annulation",
+        closeButtonProps: 'Propriétés du bouton de fermeture',
         zIndex: 'Niveau de couche'
       }
     },
@@ -1809,7 +1812,6 @@ export default {
         cancelText: "Texte du bouton d'annulation",
         ok: 'Callback de confirmation',
         cancel: "Callback d'annulation",
-        layout: 'Type de mise en page',
         closeOnClickOverlay: 'Fermeture au clic sur le masque',
         closeByEsc: 'Fermeture par touche ESC',
         transformOrigin: "Origine de l'animation"
@@ -1845,9 +1847,7 @@ export default {
         hideFooter: 'Masquer le pied',
         closeByEsc: 'Fermeture par touche ESC',
         okButtonProps: 'Propriétés du bouton de confirmation',
-        cancelButtonProps: "Propriétés du bouton d'annulation",
-        hideOkButton: 'Masquer le bouton de confirmation',
-        hideCancelButton: "Masquer le bouton d'annulation",
+        closeButtonProps: 'Propriétés du bouton de fermeture',
         closeOnClickOverlay: 'Fermeture au clic sur le masque',
         zIndex: 'Niveau de couche'
       }
@@ -1867,10 +1867,12 @@ export default {
         width: 'Largeur',
         trigger: 'Mode de déclenchement',
         title: 'Titre',
-        okButtonProps: 'Propriétés du bouton de confirmation',
-        cancelButtonProps: "Propriétés du bouton d'annulation",
         content: 'Contenu',
-        placement: 'Position'
+        placement: 'Position',
+        ok: 'Callback de confirmation',
+        cancel: "Callback d'annulation",
+        okText: 'Texte du bouton de confirmation',
+        cancelText: "Texte du bouton d'annulation"
       }
     },
     popover: {
@@ -1979,7 +1981,8 @@ export default {
         dropdownThreshold: 'Seuil du menu déroulant',
         dropdownLabel: 'Texte du menu déroulant',
         dropdownIcon: 'Icône du menu déroulant',
-        divider: 'Afficher le séparateur'
+        divider: 'Afficher le séparateur',
+        iconOnly: 'Icône uniquement'
       },
       options: {
         label: "Texte du bouton d'action",

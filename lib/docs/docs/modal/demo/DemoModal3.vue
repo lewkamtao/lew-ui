@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const visible = ref(false)
+const edit = ref(false)
+const notify = ref(false)
 const ok = () => {
   return new Promise<void>(() => {
     setTimeout(() => {
@@ -15,32 +17,48 @@ const close = () => {
 
 <template>
   <lew-flex x="start">
-    <lew-button @click="visible = true">自定义</lew-button>
+    <lew-button type="ghost" @click="visible = true">Share Document</lew-button>
   </lew-flex>
   <lew-modal
     v-model:visible="visible"
     closeOnClickOverlay
-    width="450px"
+    width="550px"
     :okButtonProps="{ request: ok }"
     :closeButtonProps="{ request: close }"
   >
     <template #header>
       <lew-flex x="start" class="lew-modal-header">
-        <lew-tag>New</lew-tag>
-        这是自定义的头部
+        <lew-tag color="blue">Share</lew-tag>
+        Share Document
       </lew-flex>
     </template>
     <div class="lew-modal-body">
-      <div>点击提交，对话框将在1秒后关闭。</div>
+      <div class="share-content">
+        <p class="description">
+          Share this document with your team members. They will receive an email
+          notification with access to the document.
+        </p>
+        <div class="share-options">
+          <div class="option">
+            <lew-checkbox label="Allow editing" v-model="edit"> </lew-checkbox>
+          </div>
+          <div class="option">
+            <lew-checkbox label="Send email notification" v-model="notify">
+            </lew-checkbox>
+          </div>
+        </div>
+      </div>
     </div>
     <template #footer>
       <lew-flex x="end" y="center" class="lew-modal-footer">
         <lew-flex x="start" gap="5" class="lew-modal-footer-tips">
-          提交后立即生效
+          Changes will be applied immediately
         </lew-flex>
-        <lew-flex x="end" y="center">
-          <lew-button type="text" color="gray" :request="ok">取消</lew-button>
-          <lew-button :request="ok">提交</lew-button>
+        <lew-flex x="end" y="center" gap="8">
+          <lew-button type="text" color="gray" :request="close" size="small"
+            >Cancel</lew-button
+          >
+          <lew-button :request="ok" size="small">Share</lew-button>
         </lew-flex>
       </lew-flex>
     </template>
@@ -55,30 +73,67 @@ const close = () => {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  padding: 40px;
+  padding: 24px;
   box-sizing: border-box;
 }
 
 .lew-modal-header {
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 50px;
-  font-size: 18px;
-  font-weight: bolder;
-  padding: 0px 10px;
+  gap: 8px;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 0 24px;
+  color: var(--lew-text-color-0);
 }
+
+.share-content {
+  .description {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--lew-text-color-2);
+    margin-bottom: 24px;
+  }
+
+  .share-options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      input[type='checkbox'] {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        border: 1px solid var(--lew-border-color);
+        cursor: pointer;
+      }
+
+      label {
+        font-size: 14px;
+        color: var(--lew-text-color-1);
+        cursor: pointer;
+      }
+    }
+  }
+}
+
 .lew-modal-footer {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  font-weight: bolder;
-  padding: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--lew-border-color);
 }
+
 .lew-modal-footer-tips {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: normal;
-  color: var(--lew-text-color-5);
-  padding-left: 10px;
+  color: var(--lew-text-color-3);
 }
 </style>

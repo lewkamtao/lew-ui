@@ -1225,20 +1225,21 @@ export default {
         title: 'More Rich'
       },
       props: {
-        columns: 'Column Configuration',
-        size: 'Size',
-        width: 'Width',
-        rowKey: 'Row Key',
-        batchDeletable: 'Batch Deletable',
-        addable: 'Addable',
-        defaultForm: 'Default Form',
-        deletable: 'Deletable',
-        maxRows: 'Maximum Rows',
-        minRows: 'Minimum Rows',
-        clearable: 'Clearable',
-        sortable: 'Sortable',
-        autoUniqueId: 'Auto Generate Unique ID',
-        uniqueField: 'Unique Field'
+        columns: 'Configuración de columnas',
+        size: 'Tamaño',
+        width: 'Ancho',
+        rowKey: 'Clave de fila',
+        batchDeletable: 'Permite eliminación por lotes',
+        addable: 'Permite agregar',
+        defaultForm: 'Formulario predeterminado',
+        deletable: 'Permite eliminar',
+        maxRows: 'Máximo de filas',
+        minRows: 'Mínimo de filas',
+        clearable: 'Permite limpiar',
+        sortable: 'Permite ordenar',
+        autoUniqueId: 'ID único automático',
+        uniqueField: 'Campo único',
+        sortTooltipCustomRender: 'Renderizado personalizado del tooltip de ordenamiento'
       }
     },
     switch: {
@@ -1492,12 +1493,14 @@ export default {
       props: {
         columns: 'Columnas',
         dataSource: 'Fuente de datos',
-        bordered: 'Con bordes',
+        bordered: 'Bordes',
         size: 'Tamaño',
         checkable: 'Seleccionable',
         maxHeight: 'Altura máxima',
         multiple: 'Selección múltiple',
-        rowKey: 'Clave de fila'
+        rowKey: 'Clave de fila',
+        sortTooltipCustomRender: 'Renderizado personalizado del tooltip de ordenamiento',
+        sortable: 'Permite ordenar'
       },
       tableColumns: {
         field: 'Campo',
@@ -1754,16 +1757,16 @@ export default {
         visible: 'Visible'
       },
       props: {
-        title: 'Title',
-        width: 'Width',
-        position: 'Position',
-        height: 'Height',
-        closeOnClickOverlay: 'Close on Click Overlay',
-        closeByEsc: 'Close by ESC',
-        hideFooter: 'Hide Footer',
-        okButtonProps: 'OK Button Props',
-        cancelButtonProps: 'Cancel Button Props',
-        zIndex: 'Z Index'
+        title: 'Título',
+        width: 'Ancho',
+        position: 'Posición',
+        height: 'Altura',
+        closeOnClickOverlay: 'Cerrar al hacer clic en la superposición',
+        closeByEsc: 'Cerrar con ESC',
+        hideFooter: 'Ocultar pie',
+        okButtonProps: 'Propiedades del botón OK',
+        closeButtonProps: 'Propiedades del botón Cerrar',
+        zIndex: 'Índice Z'
       }
     },
     dialog: {
@@ -1777,18 +1780,17 @@ export default {
         title: 'Simple'
       },
       props: {
-        type: 'Type',
-        width: 'Width',
-        trigger: 'Trigger',
-        title: 'Title',
-        okText: 'OK Text',
-        cancelText: 'Cancel Text',
-        ok: 'OK Callback',
-        cancel: 'Cancel Callback',
-        layout: 'Layout',
-        closeOnClickOverlay: 'Close on Click Overlay',
-        closeByEsc: 'Close by ESC',
-        transformOrigin: 'Transform Origin'
+        type: 'Tipo',
+        width: 'Ancho',
+        trigger: 'Disparador',
+        title: 'Título',
+        okText: 'Texto OK',
+        cancelText: 'Texto Cancelar',
+        ok: 'Callback OK',
+        cancel: 'Callback Cancelar',
+        closeOnClickOverlay: 'Cerrar al hacer clic en la superposición',
+        closeByEsc: 'Cerrar con ESC',
+        transformOrigin: 'Origen de transformación'
       },
       events: {
         ok: 'Triggered when OK button is clicked',
@@ -1815,17 +1817,15 @@ export default {
         visible: 'Visible'
       },
       props: {
-        title: 'Title',
-        width: 'Width',
-        top: 'Top',
-        hideFooter: 'Hide Footer',
-        closeByEsc: 'Close by ESC',
-        okButtonProps: 'OK Button Props',
-        cancelButtonProps: 'Cancel Button Props',
-        hideOkButton: 'Hide OK Button',
-        hideCancelButton: 'Hide Cancel Button',
-        closeOnClickOverlay: 'Close on Click Overlay',
-        zIndex: 'Z Index'
+        title: 'Título',
+        width: 'Ancho',
+        top: 'Superior',
+        hideFooter: 'Ocultar pie',
+        closeByEsc: 'Cerrar con ESC',
+        okButtonProps: 'Propiedades del botón OK',
+        closeButtonProps: 'Propiedades del botón Cerrar',
+        closeOnClickOverlay: 'Cerrar al hacer clic en la superposición',
+        zIndex: 'Índice Z'
       }
     },
     popok: {
@@ -1839,14 +1839,16 @@ export default {
         title: 'Trigger Method'
       },
       props: {
-        type: 'Type',
-        width: 'Width',
-        trigger: 'Trigger',
-        title: 'Title',
-        okButtonProps: 'OK Button Props',
-        cancelButtonProps: 'Cancel Button Props',
-        content: 'Content',
-        placement: 'Placement'
+        type: 'Tipo',
+        width: 'Ancho',
+        trigger: 'Disparador',
+        title: 'Título',
+        content: 'Contenido',
+        placement: 'Posición',
+        okText: 'Texto OK',
+        cancelText: 'Texto Cancelar',
+        ok: 'Callback OK',
+        cancel: 'Callback Cancelar'
       }
     },
     popover: {
@@ -1952,7 +1954,8 @@ export default {
         dropdownThreshold: 'Umbral del menú desplegable',
         dropdownLabel: 'Texto del menú desplegable',
         dropdownIcon: 'Icono del menú desplegable',
-        divider: 'Mostrar divisor'
+        divider: 'Mostrar divisor',
+        iconOnly: 'Mostrar solo icono'
       },
       options: {
         label: 'Texto del botón de acción',

@@ -23,8 +23,8 @@ export default {
   },
   cascader: {
     placeholder: 'Seleziona',
-    close: 'Chiudi',
-    ok: 'OK'
+    closeText: 'Chiudi',
+    okText: 'OK'
   },
   textarea: {
     placeholder: 'Inserisci'
@@ -60,20 +60,20 @@ export default {
     editTitle: 'Modifica dati'
   },
   drawer: {
-    close: 'Chiudi',
-    ok: 'OK'
+    closeText: 'Chiudi',
+    okText: 'OK'
   },
   modal: {
-    close: 'Chiudi',
-    ok: 'OK'
+    closeText: 'Chiudi',
+    okText: 'OK'
   },
   dialog: {
-    cancel: 'Annulla',
-    ok: 'OK'
+    cancelText: 'Annulla',
+    okText: 'OK'
   },
   popok: {
-    cancel: 'Annulla',
-    ok: 'OK'
+    cancelText: 'Annulla',
+    okText: 'OK'
   },
   upload: {
     dropActive: 'Rilascia per iniziare il caricamento',
@@ -85,6 +85,7 @@ export default {
     maxFileSize: 'Ogni file non deve superare {maxFileSize}'
   },
   pagination: {
-    pageSize: '{pageSize} per pagina'
+    pageSize: '{pageSize} per pagina',
+    jumpTo: 'Vai a'
   }
 }

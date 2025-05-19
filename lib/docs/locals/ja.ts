@@ -1210,7 +1210,8 @@ export default {
         clearable: 'クリア可能',
         sortable: 'ソート可能',
         autoUniqueId: '自動ID生成',
-        uniqueField: 'ユニークフィールド'
+        uniqueField: 'ユニークフィールド',
+        sortTooltipCustomRender: 'ソートツールチップのカスタムレンダリング'
       }
     },
     switch: {
@@ -1460,12 +1461,14 @@ export default {
       props: {
         columns: '列',
         dataSource: 'データソース',
-        bordered: '境界線',
+        bordered: 'ボーダーの有無',
         size: 'サイズ',
-        checkable: '選択可能',
+        checkable: 'チェック可能',
         maxHeight: '最大高さ',
         multiple: '複数選択',
-        rowKey: '行キー'
+        rowKey: '行キー',
+        sortTooltipCustomRender: 'ソートツールチップのカスタムレンダリング',
+        sortable: 'ソート可能'
       },
       tableColumns: {
         field: 'フィールド',
@@ -1729,7 +1732,7 @@ export default {
         position: '位置',
         hideFooter: 'フッターを非表示にするかどうか',
         okButtonProps: '確認ボタンのプロパティ',
-        cancelButtonProps: 'キャンセルボタンのプロパティ'
+        closeButtonProps: '閉じるボタンのプロパティ'
       }
     },
     dialog: {
@@ -1751,7 +1754,6 @@ export default {
         cancelText: 'キャンセルボタンのテキスト',
         ok: '確認時のコールバック',
         cancel: 'キャンセル時のコールバック',
-        layout: 'レイアウト方式',
         closeOnClickOverlay: 'オーバーレイクリックによる閉じる',
         closeByEsc: 'ESCキーによる閉じる',
         transformOrigin: 'アニメーション原点'
@@ -1787,9 +1789,7 @@ export default {
         hideFooter: 'フッターを非表示にするかどうか',
         closeByEsc: 'ESCキーでの閉じる可否',
         okButtonProps: '確認ボタンのプロパティ',
-        cancelButtonProps: 'キャンセルボタンのプロパティ',
-        hideOkButton: '確認ボタンを非表示にするかどうか',
-        hideCancelButton: 'キャンセルボタンを非表示にするかどうか',
+        closeButtonProps: '閉じるボタンのプロパティ',
         closeOnClickOverlay: 'オーバーレイクリックでの閉じる可否',
         zIndex: '重なり順序'
       }
@@ -1808,10 +1808,12 @@ export default {
         width: '幅',
         trigger: 'トリガー方式',
         title: 'タイトル',
-        okButtonProps: '確認ボタンのプロパティ',
-        cancelButtonProps: 'キャンセルボタンのプロパティ',
         content: '内容',
-        placement: '表示位置'
+        placement: '表示位置',
+        ok: '確認時のコールバック',
+        cancel: 'キャンセル時のコールバック',
+        okText: '確認ボタンのテキスト',
+        cancelText: 'キャンセルボタンのテキスト'
       }
     },
     popover: {
@@ -1915,7 +1917,8 @@ export default {
         dropdownThreshold: 'ドロップダウンメニューのしきい値',
         dropdownLabel: 'ドロップダウンメニューのテキスト',
         dropdownIcon: 'ドロップダウンメニューのアイコン',
-        divider: '区切り線の表示'
+        divider: '区切り線の表示',
+        iconOnly: 'アイコンのみ'
       },
       options: {
         label: 'アクションボタンのテキスト',

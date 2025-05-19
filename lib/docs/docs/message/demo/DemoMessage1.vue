@@ -1,35 +1,35 @@
 <script lang="ts" setup>
 const showErrorMessage = () => {
   LewMessage.error({
-    content: '错误：订单支付失败，请检查您的支付方式并重试。',
+    content: 'Payment failed. Please check your payment method and try again.',
     duration: 3000
   })
 }
 
 const showSuccessMessage = () => {
   LewMessage.success({
-    content: '恭喜！您的订单已成功提交，我们将尽快为您发货。',
+    content: 'Your order has been successfully placed. We will ship it soon.',
     duration: 3000
   })
 }
 
 const showNormalMessage = () => {
   LewMessage.normal({
-    content: '您的订单正在处理中，预计1-3个工作日内发货。',
+    content: 'Your order is being processed. Estimated shipping time: 1-3 business days.',
     duration: 3000
   })
 }
 
 const showInfoMessage = () => {
   LewMessage.info({
-    content: '新品上架提醒：限量版商品已经开始预售，先到先得！',
+    content: 'New arrival alert: Limited edition items are now available for pre-order!',
     duration: 3000
   })
 }
 
 const showWarningMessage = () => {
   LewMessage.warning({
-    content: '注意：您的购物车中有商品库存不足，请及时调整。',
+    content: 'Warning: Some items in your cart have low stock. Please check soon.',
     duration: 3000
   })
 }
@@ -38,35 +38,35 @@ const showWarningMessage = () => {
 <template>
   <lew-flex wrap x="start" gap="20">
     <lew-button
-      text="支付失败"
+      text="Payment Failed"
       round
       type="light"
       color="red"
       @click="showErrorMessage"
     />
     <lew-button
-      text="订单成功"
+      text="Order Success"
       round
       type="light"
       color="green"
       @click="showSuccessMessage"
     />
     <lew-button
-      text="订单处理"
+      text="Processing"
       round
       type="light"
       color="normal"
       @click="showNormalMessage"
     />
     <lew-button
-      text="新品提醒"
+      text="New Arrival"
       round
       type="light"
       color="blue"
       @click="showInfoMessage"
     />
     <lew-button
-      text="库存提示"
+      text="Low Stock"
       round
       type="light"
       color="warning"

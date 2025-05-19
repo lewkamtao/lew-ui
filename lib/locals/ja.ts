@@ -23,8 +23,8 @@ export default {
   },
   cascader: {
     placeholder: '選択してください',
-    close: '閉じる',
-    ok: '確定'
+    closeText: '閉じる',
+    okText: '確定'
   },
   textarea: {
     placeholder: '入力してください'
@@ -60,20 +60,20 @@ export default {
     editTitle: 'データ編集'
   },
   drawer: {
-    close: '閉じる',
-    ok: '確定'
+    closeText: '閉じる',
+    okText: '確定'
   },
   modal: {
-    close: '閉じる',
-    ok: '確定'
+    closeText: '閉じる',
+    okText: '確定'
   },
   dialog: {
-    cancel: 'キャンセル',
-    ok: '確定'
+    cancelText: 'キャンセル',
+    okText: '確定'
   },
   popok: {
-    cancel: 'キャンセル',
-    ok: '確定'
+    cancelText: 'キャンセル',
+    okText: '確定'
   },
   upload: {
     dropActive: 'ドロップしてアップロードを開始',
@@ -85,6 +85,7 @@ export default {
     maxFileSize: '1ファイルあたり{maxFileSize}まで'
   },
   pagination: {
-    pageSize: '表示件数：{pageSize}件'
+    pageSize: '表示件数：{pageSize}件',
+    jumpTo: '移動'
   }
 }

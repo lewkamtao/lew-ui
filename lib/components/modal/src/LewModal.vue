@@ -1,67 +1,67 @@
 <script lang="ts" setup name="Modal">
-import { useMagicKeys, onClickOutside } from "@vueuse/core";
-import { any2px, getUniqueId } from "lew-ui/utils";
-import { LewFlex, LewButton, LewTextTrim } from "lew-ui";
-import { useDOMCreate } from "lew-ui/hooks";
-import { modalProps } from "./props";
-import Icon from "lew-ui/utils/Icon.vue";
-import { locale } from "lew-ui";
-const { Escape } = useMagicKeys();
+import { useMagicKeys, onClickOutside } from '@vueuse/core'
+import { any2px, getUniqueId } from 'lew-ui/utils'
+import { LewFlex, LewButton, LewTextTrim } from 'lew-ui'
+import { useDOMCreate } from 'lew-ui/hooks'
+import { modalProps } from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { locale } from 'lew-ui'
+const { Escape } = useMagicKeys()
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(['close'])
 
-useDOMCreate("lew-modal");
+useDOMCreate('lew-modal')
 
-const props = defineProps(modalProps);
+const props = defineProps(modalProps)
 
-const visible: Ref<boolean | undefined> = defineModel("visible");
+const visible: Ref<boolean | undefined> = defineModel('visible')
 
-const modalBodyRef = ref(null);
-const modalId = `lew-modal-${getUniqueId()}`;
+const modalBodyRef = ref(null)
+const modalId = `lew-modal-${getUniqueId()}`
 
 onClickOutside(modalBodyRef, (e) => {
   if (visible.value && props.closeOnClickOverlay) {
-    const { parentElement } = e?.target as Element;
+    const { parentElement } = e?.target as Element
     if (parentElement?.id === modalId) {
-      visible.value = false;
+      visible.value = false
     }
   }
-});
+})
 
 const getModalStyle = computed(() => {
-  const { width, top } = props;
+  const { width, top } = props
   return {
     width: any2px(width),
-    top: any2px(top),
-  };
-});
+    top: any2px(top)
+  }
+})
 
 const close = () => {
-  visible.value = false;
-  emit("close");
-};
+  visible.value = false
+  emit('close')
+}
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
     if (!visible.value || !v) {
-      return;
+      return
     }
 
-    const dialogEl = document.getElementById("lew-dialog");
-    const modalEl = document.getElementById(modalId);
-    const hasDialog = dialogEl && dialogEl.children.length > 0;
+    const dialogEl = document.getElementById('lew-dialog')
+    const modalEl = document.getElementById(modalId)
+    const hasDialog = dialogEl && dialogEl.children.length > 0
 
     const isOpenModal = Array.from(modalEl?.parentElement?.childNodes ?? [])
       .filter((e): e is Element => e instanceof Element)
-      .filter((e) => e.children.length > 0);
+      .filter((e) => e.children.length > 0)
 
     const topModal =
-      isOpenModal[isOpenModal.length - 1]?.id === modalId && modalEl;
+      isOpenModal[isOpenModal.length - 1]?.id === modalId && modalEl
 
     if (!hasDialog && topModal) {
-      visible.value = false;
+      visible.value = false
     }
-  });
+  })
 }
 </script>
 
@@ -109,7 +109,6 @@ if (props.closeByEsc) {
               class="lew-modal-footer"
             >
               <lew-button
-                v-if="!hideCancelButton"
                 v-bind="{
                   size: 'small',
                   type: 'light',
@@ -120,7 +119,6 @@ if (props.closeByEsc) {
                 }"
               />
               <lew-button
-                v-if="!hideOkButton"
                 v-bind="{
                   size: 'small',
                   text: locale.t('modal.okText'),
@@ -215,6 +213,6 @@ if (props.closeByEsc) {
 .lew-modal-leave-to,
 .lew-modal-enter-from {
   opacity: 0;
-  transform: translateY(120px);
+  transform: translateY(30px);
 }
 </style>

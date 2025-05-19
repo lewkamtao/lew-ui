@@ -480,7 +480,8 @@ export default {
         dropdownThreshold: 'Limite do menu suspenso',
         dropdownLabel: 'Texto do menu suspenso',
         dropdownIcon: 'Ícone do menu suspenso',
-        divider: 'Mostrar divisor'
+        divider: 'Exibir divisor',
+        iconOnly: 'Apenas ícone'
       },
       options: {
         label: 'Texto do botão de ação',
@@ -1249,7 +1250,8 @@ export default {
         clearable: 'Permite limpar',
         sortable: 'Permite ordenar',
         autoUniqueId: 'Gera ID único automaticamente',
-        uniqueField: 'Campo único'
+        uniqueField: 'Campo único',
+        sortTooltipCustomRender: 'Renderização personalizada da dica de ordenação'
       }
     },
     switch: {
@@ -1509,7 +1511,9 @@ export default {
         checkable: 'Selecionável',
         maxHeight: 'Altura máxima',
         multiple: 'Múltipla seleção',
-        rowKey: 'Chave da linha'
+        rowKey: 'Chave da linha',
+        sortTooltipCustomRender: 'Renderização personalizada da dica de ordenação',
+        sortable: 'Permite ordenar'
       },
       tableColumns: {
         field: 'Campo',
@@ -1775,8 +1779,8 @@ export default {
         closeByEsc: 'Fechar com tecla ESC',
         hideFooter: 'Ocultar rodapé',
         okButtonProps: 'Propriedades do botão OK',
-        cancelButtonProps: 'Propriedades do botão Cancelar',
-        zIndex: 'Índice Z'
+        zIndex: 'Índice Z',
+        closeButtonProps: 'Propriedades do botão Fechar'
       }
     },
     dialog: {
@@ -1798,7 +1802,6 @@ export default {
         cancelText: 'Texto do botão Cancelar',
         ok: 'Callback de confirmação',
         cancel: 'Callback de cancelamento',
-        layout: 'Layout',
         closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
         closeByEsc: 'Fechar com tecla ESC',
         transformOrigin: 'Origem da transformação'
@@ -1833,11 +1836,9 @@ export default {
         hideFooter: 'Ocultar rodapé',
         closeByEsc: 'Fechar com tecla ESC',
         okButtonProps: 'Propriedades do botão OK',
-        cancelButtonProps: 'Propriedades do botão Cancelar',
-        hideOkButton: 'Ocultar botão OK',
-        hideCancelButton: 'Ocultar botão Cancelar',
         closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
-        zIndex: 'Índice Z'
+        zIndex: 'Índice Z',
+        closeButtonProps: 'Propriedades do botão Fechar'
       }
     },
     popok: {
@@ -1855,10 +1856,12 @@ export default {
         width: 'Largura',
         trigger: 'Modo de acionamento',
         title: 'Título',
-        okButtonProps: 'Propriedades do botão OK',
-        cancelButtonProps: 'Propriedades do botão Cancelar',
         content: 'Conteúdo',
-        placement: 'Posicionamento'
+        placement: 'Posicionamento',
+        okText: 'Texto do botão OK',
+        cancelText: 'Texto do botão Cancelar',
+        ok: 'Callback de confirmação',
+        cancel: 'Callback de cancelamento'
       }
     },
     popover: {

@@ -1216,7 +1216,8 @@ export default {
         clearable: 'Cancellabile',
         sortable: 'Ordinabile',
         autoUniqueId: 'ID unico automatico',
-        uniqueField: 'Campo univoco'
+        uniqueField: 'Campo univoco',
+        sortTooltipCustomRender: 'Rendering personalizzato tooltip ordinamento'
       }
     },
     switch: {
@@ -1470,7 +1471,9 @@ export default {
         maxHeight: 'Altezza massima',
         multiple: 'Selezione multipla',
         rowKey: 'Chiave riga',
-        bordered: 'Bordi'
+        bordered: 'Bordi',
+        sortTooltipCustomRender: 'Rendering personalizzato tooltip ordinamento',
+        sortable: 'Ordinabile'
       },
       tableColumns: {
         field: 'Campo',
@@ -1732,8 +1735,8 @@ export default {
         closeByEsc: 'Chiudi con ESC',
         hideFooter: 'Nascondi footer',
         okButtonProps: 'Proprietà pulsante OK',
-        cancelButtonProps: 'Proprietà pulsante Annulla',
-        zIndex: 'Z-index'
+        zIndex: 'Z-index',
+        closeButtonProps: 'Proprietà pulsante Chiudi'
       }
     },
     dialog: {
@@ -1755,7 +1758,6 @@ export default {
         cancelText: 'Testo Annulla',
         ok: 'Callback OK',
         cancel: 'Callback Annulla',
-        layout: 'Layout',
         closeOnClickOverlay: 'Chiudi al click overlay',
         closeByEsc: 'Chiudi con ESC',
         transformOrigin: 'Origine trasformazione'
@@ -1791,11 +1793,9 @@ export default {
         hideFooter: 'Nascondi footer',
         closeByEsc: 'Chiudi con ESC',
         okButtonProps: 'Proprietà OK',
-        cancelButtonProps: 'Proprietà Annulla',
-        hideOkButton: 'Nascondi pulsante OK',
-        hideCancelButton: 'Nascondi pulsante Annulla',
         closeOnClickOverlay: 'Chiudi al click overlay',
-        zIndex: 'Z-index'
+        zIndex: 'Z-index',
+        closeButtonProps: 'Proprietà pulsante Chiudi'
       }
     },
     popok: {
@@ -1813,10 +1813,12 @@ export default {
         width: 'Larghezza',
         trigger: 'Trigger',
         title: 'Titolo',
-        okButtonProps: 'Proprietà OK',
-        cancelButtonProps: 'Proprietà Annulla',
         content: 'Contenuto',
-        placement: 'Posizione'
+        placement: 'Posizione',
+        okText: 'Testo OK',
+        cancelText: 'Testo Annulla',
+        ok: 'Callback OK',
+        cancel: 'Callback Annulla'
       }
     },
     popover: {
@@ -1923,7 +1925,8 @@ export default {
         dropdownThreshold: 'Soglia menu a discesa',
         dropdownLabel: 'Testo menu a discesa',
         dropdownIcon: 'Icona menu a discesa',
-        divider: 'Mostra divisore'
+        divider: 'Mostra divisore',
+        iconOnly: 'Mostra solo icona'
       },
       options: {
         label: 'Testo pulsante azione',

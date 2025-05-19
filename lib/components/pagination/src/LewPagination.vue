@@ -227,7 +227,7 @@ const getIconSize = computed(() => {
         v-model="state.toPage"
         :size="size"
         align="center"
-        placeholder="跳转至"
+        :placeholder="locale.t('pagination.jumpTo')"
         autoWidth
         @change="checkPageNum"
       />

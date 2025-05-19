@@ -3,20 +3,20 @@
 const ok = () => {
   return new Promise((resolve: any) => {
     setTimeout(() => {
-      resolve(true);
-      LewMessage.success("Task completed successfully");
-    }, 1000);
-  });
-};
+      resolve(true)
+      LewMessage.success('Task completed successfully')
+    }, 1000)
+  })
+}
 // Cancel
 const cancel = () => {
   return new Promise((resolve: any) => {
     setTimeout(() => {
-      resolve(true);
-      LewMessage.warning("Operation cancelled");
-    }, 1000);
-  });
-};
+      resolve(true)
+      LewMessage.warning('Operation cancelled')
+    }, 1000)
+  })
+}
 </script>
 
 <template>
@@ -25,7 +25,8 @@ const cancel = () => {
     title="Delete Project"
     content="This action cannot be undone. Are you sure you want to delete this project?"
     placement="bottom-start"
-    okText="Delete"
+    cancel-text="Cancel"
+    ok-text="Delete"
     :ok="ok"
     :cancel="cancel"
   >

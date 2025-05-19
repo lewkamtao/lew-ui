@@ -380,7 +380,7 @@ function getDiffItemClass(diff: string): string {
 
   .diff-results {
     overflow-y: auto;
-    max-height: calc(100vh - 240px);
+    max-height: calc(100vh - 320px);
     border-radius: var(--lew-border-radius-large);
     box-shadow: var(--lew-box-shadow);
     background-color: var(--lew-bgcolor-0);

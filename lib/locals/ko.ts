@@ -23,8 +23,8 @@ export default {
   },
   cascader: {
     placeholder: '선택해주세요',
-    close: '닫기',
-    ok: '확인'
+    closeText: '닫기',
+    okText: '확인'
   },
   textarea: {
     placeholder: '입력해주세요'
@@ -60,20 +60,20 @@ export default {
     editTitle: '데이터 편집'
   },
   drawer: {
-    close: '닫기',
-    ok: '확인'
+    closeText: '닫기',
+    okText: '확인'
   },
   modal: {
-    close: '닫기',
-    ok: '확인'
+    closeText: '닫기',
+    okText: '확인'
   },
   dialog: {
-    cancel: '취소',
-    ok: '확인'
+    cancelText: '취소',
+    okText: '확인'
   },
   popok: {
-    cancel: '취소',
-    ok: '확인'
+    cancelText: '취소',
+    okText: '확인'
   },
   upload: {
     dropActive: '파일을 놓으면 업로드가 시작됩니다',
@@ -85,6 +85,7 @@ export default {
     maxFileSize: '파일당 {maxFileSize} 이하여야 합니다'
   },
   pagination: {
-    pageSize: '페이지당 {pageSize}개'
+    pageSize: '페이지당 {pageSize}개',
+    jumpTo: '이동'
   }
 }

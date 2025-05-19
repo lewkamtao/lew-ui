@@ -473,7 +473,8 @@ export default {
         dropdownThreshold: '下拉菜单的阈值',
         dropdownLabel: '下拉菜单的文本',
         dropdownIcon: '下拉菜单的图标',
-        divider: '是否显示分割线'
+        divider: '是否显示分割线',
+        iconOnly: '是否只显示图标'
       },
       options: {
         label: '操作按钮的文本',
@@ -534,7 +535,7 @@ export default {
       events: {
         mounted: '表单项挂载时触发'
       },
-     
+
       methods: {
         getForm: '获取表单',
         setForm: '设置表单'
@@ -1218,7 +1219,8 @@ export default {
         clearable: '是否可清空',
         sortable: '是否可排序',
         autoUniqueId: '是否自动生成唯一ID',
-        uniqueField: '唯一字段'
+        uniqueField: '唯一字段',
+        sortTooltipCustomRender: '排序提示自定义渲染'
       }
     },
     switch: {
@@ -1472,7 +1474,9 @@ export default {
         checkable: '可选',
         maxHeight: '最大高度',
         multiple: '多选',
-        rowKey: '行键'
+        rowKey: '行键',
+        sortTooltipCustomRender: '排序提示自定义渲染',
+        sortable: '可排序'
       },
       tableColumns: {
         field: '字段',
@@ -1729,7 +1733,7 @@ export default {
         closeByEsc: '是否可通过按下 ESC 关闭',
         hideFooter: '是否隐藏底部',
         okButtonProps: '确认按钮的属性',
-        cancelButtonProps: '取消按钮的属性',
+        closeButtonProps: '取消按钮的属性',
         zIndex: '层级'
       }
     },
@@ -1751,7 +1755,6 @@ export default {
         cancelText: '取消按钮文本',
         ok: '确认回调',
         cancel: '取消回调',
-        layout: '布局方式',
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
         closeByEsc: '是否可通过按下 ESC 关闭',
         transformOrigin: '动画原点'
@@ -1786,9 +1789,7 @@ export default {
         hideFooter: '是否隐藏底部',
         closeByEsc: '是否可通过按下 ESC 关闭',
         okButtonProps: '确认按钮属性',
-        cancelButtonProps: '取消按钮属性',
-        hideOkButton: '是否隐藏确认按钮',
-        hideCancelButton: '是否隐藏取消按钮',
+        closeButtonProps: '取消按钮属性',
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
         zIndex: '层级'
       }
@@ -1807,8 +1808,6 @@ export default {
         width: '宽度',
         trigger: '触发方式',
         title: '标题',
-        okButtonProps: '确认按钮属性',
-        cancelButtonProps: '取消按钮属性',
         content: '内容',
         placement: '位置',
         okText: '确认按钮文本',

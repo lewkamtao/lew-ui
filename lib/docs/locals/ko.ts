@@ -480,11 +480,12 @@ export default {
         title: '사용자 정의 스타일'
       },
       props: {
-        options: '작업 버튼 설정',
-        dropdownThreshold: '드롭다운 메뉴 임계값',
-        dropdownLabel: '드롭다운 메뉴 텍스트',
-        dropdownIcon: '드롭다운 메뉴 아이콘',
-        divider: '구분선 표시'
+        options: '액션 버튼 구성',
+        dropdownThreshold: '드롭다운 임계값',
+        dropdownLabel: '드롭다운 텍스트',
+        dropdownIcon: '드롭다운 아이콘',
+        divider: '구분선 표시',
+        iconOnly: '아이콘만 표시'
       },
       options: {
         label: '작업 버튼 텍스트',
@@ -1247,7 +1248,8 @@ export default {
         clearable: '모두 지우기 가능 여부',
         sortable: '정렬 가능 여부',
         autoUniqueId: '자동 고유 ID 생성 여부',
-        uniqueField: '고유 필드'
+        uniqueField: '고유 필드',
+        sortTooltipCustomRender: '정렬 툴팁 커스텀 렌더링'
       }
     },
     switch: {
@@ -1505,7 +1507,9 @@ export default {
         checkable: '선택 가능',
         maxHeight: '최대 높이',
         multiple: '다중 선택',
-        rowKey: '행 키'
+        rowKey: '행 키',
+        sortTooltipCustomRender: '정렬 툴팁 커스텀 렌더링',
+        sortable: '정렬 가능 여부'
       },
       tableColumns: {
         field: '필드',
@@ -1767,7 +1771,7 @@ export default {
         closeByEsc: 'ESC 키로 닫기 가능 여부',
         hideFooter: '푸터 숨김 여부',
         okButtonProps: '확인 버튼 속성',
-        cancelButtonProps: '취소 버튼 속성',
+        closeButtonProps: '닫기 버튼 속성',
         zIndex: '층 레벨'
       }
     },
@@ -1790,7 +1794,6 @@ export default {
         cancelText: '취소 버튼 텍스트',
         ok: '확인 콜백',
         cancel: '취소 콜백',
-        layout: '레이아웃 방식',
         closeOnClickOverlay: '오버레이 클릭으로 닫기 가능 여부',
         closeByEsc: 'ESC 키로 닫기 가능 여부',
         transformOrigin: '애니메이션 원점'
@@ -1826,9 +1829,7 @@ export default {
         hideFooter: '푸터 숨김 여부',
         closeByEsc: 'ESC 키로 닫기 가능 여부',
         okButtonProps: '확인 버튼 속성',
-        cancelButtonProps: '취소 버튼 속성',
-        hideOkButton: '확인 버튼 숨김 여부',
-        hideCancelButton: '취소 버튼 숨김 여부',
+        closeButtonProps: '닫기 버튼 속성',
         closeOnClickOverlay: '오버레이 클릭으로 닫기 가능 여부',
         zIndex: '층 레벨'
       }
@@ -1847,10 +1848,12 @@ export default {
         width: '너비',
         trigger: '트리거 방식',
         title: '제목',
-        okButtonProps: '확인 버튼 속성',
-        cancelButtonProps: '취소 버튼 속성',
         content: '내용',
-        placement: '위치'
+        placement: '위치',
+        ok: '확인 콜백',
+        cancel: '취소 콜백',
+        okText: '확인 버튼 텍스트',
+        cancelText: '취소 버튼 텍스트'
       }
     },
     popover: {

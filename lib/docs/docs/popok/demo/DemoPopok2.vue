@@ -1,9 +1,7 @@
 <script setup lang="ts">
-// Confirm
 const ok = () => {
   LewMessage.success('Confirmed')
 }
-// Cancel
 const cancel = () => {
   LewMessage.info('Cancelled')
 }
@@ -16,8 +14,8 @@ const cancel = () => {
     type="error"
     content="This action cannot be undone. Please confirm!"
     placement="bottom-start"
-    okText="Delete"
-    cancelText="Cancel"
+    ok-text="Delete"
+    cancel-text="Cancel"
     :ok="ok"
     :cancel="cancel"
     trigger="hover"

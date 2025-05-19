@@ -23,8 +23,8 @@ export default {
   },
   cascader: {
     placeholder: 'Please select',
-    close: 'Close',
-    ok: 'OK'
+    closeText: 'Close',
+    okText: 'OK'
   },
   textarea: {
     placeholder: 'Please input'
@@ -60,12 +60,12 @@ export default {
     editTitle: 'Edit Data'
   },
   drawer: {
-    close: 'Close',
-    ok: 'OK'
+    closeText: 'Close',
+    okText: 'OK'
   },
   modal: {
-    close: 'Close',
-    ok: 'OK'
+    closeText: 'Close',
+    okText: 'OK'
   },
   upload: {
     dropActive: 'Release to start uploading',
@@ -77,14 +77,15 @@ export default {
     maxFileSize: 'Single file should not exceed {maxFileSize}'
   },
   pagination: {
-    pageSize: '{pageSize} items/page'
+    pageSize: '{pageSize} items/page',
+    jumpTo: 'Jump to'
   },
   dialog: {
-    cancel: 'Cancel',
-    ok: 'OK'
+    cancelText: 'Cancel',
+    okText: 'OK'
   },
   popok: {
-    cancel: 'Cancel',
-    ok: 'OK'
+    cancelText: 'Cancel',
+    okText: 'OK'
   }
 }

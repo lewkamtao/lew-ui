@@ -1,21 +1,24 @@
 <script setup lang="ts">
 const open = () => {
   LewDialog.info({
-    content: 'Are you sure you want to publish this app to the App Store?',
+    okText: 'Submit',
+    cancelText: 'Cancel',
+    title: 'Submit for Review',
+    content: 'Are you sure you want to submit this app for review?',
     closeOnClickOverlay: true,
-    layout: 'mini',
+    closeByEsc: true,
     ok: () => {
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve(true)
           LewMessage.success({
-            content: 'App has been successfully submitted for review'
+            content: 'Your app has been submitted for review'
           })
         }, 1000)
       })
     },
     cancel: () => {
-      // Cancel publishing
+      // Cancel submission
     }
   })
 }

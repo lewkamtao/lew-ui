@@ -1237,7 +1237,8 @@ export default {
         clearable: 'Clearable',
         sortable: 'Sortable',
         autoUniqueId: 'Auto Generate Unique ID',
-        uniqueField: 'Unique Field'
+        uniqueField: 'Unique Field',
+        sortTooltipCustomRender: 'Sort Tooltip Custom Render'
       }
     },
     switch: {
@@ -1493,9 +1494,11 @@ export default {
         bordered: 'Bordered',
         size: 'Size',
         checkable: 'Checkable',
-        maxHeight: 'Maximum Height',
-        multiple: 'Multiple Selection',
-        rowKey: 'Row Key'
+        maxHeight: 'Max Height',
+        multiple: 'Multiple',
+        rowKey: 'Row Key',
+        sortTooltipCustomRender: 'Sort Tooltip Custom Render',
+        sortable: 'Sortable'
       },
       tableColumns: {
         field: 'Field',
@@ -1760,7 +1763,7 @@ export default {
         closeByEsc: 'Close by ESC',
         hideFooter: 'Hide Footer',
         okButtonProps: 'OK Button Props',
-        cancelButtonProps: 'Cancel Button Props',
+        closeButtonProps: 'Close Button Props',
         zIndex: 'Z Index'
       }
     },
@@ -1783,7 +1786,6 @@ export default {
         cancelText: 'Cancel Text',
         ok: 'OK Callback',
         cancel: 'Cancel Callback',
-        layout: 'Layout',
         closeOnClickOverlay: 'Close on Click Overlay',
         closeByEsc: 'Close by ESC',
         transformOrigin: 'Transform Origin'
@@ -1819,9 +1821,7 @@ export default {
         hideFooter: 'Hide Footer',
         closeByEsc: 'Close by ESC',
         okButtonProps: 'OK Button Props',
-        cancelButtonProps: 'Cancel Button Props',
-        hideOkButton: 'Hide OK Button',
-        hideCancelButton: 'Hide Cancel Button',
+        closeButtonProps: 'Close Button Props',
         closeOnClickOverlay: 'Close on Click Overlay',
         zIndex: 'Z Index'
       }
@@ -1841,10 +1841,12 @@ export default {
         width: 'Width',
         trigger: 'Trigger',
         title: 'Title',
-        okButtonProps: 'OK Button Props',
-        cancelButtonProps: 'Cancel Button Props',
         content: 'Content',
-        placement: 'Placement'
+        placement: 'Placement',
+        ok: 'OK Callback',
+        cancel: 'Cancel Callback',
+        okText: 'OK Text',
+        cancelText: 'Cancel Text'
       }
     },
     popover: {
@@ -1950,7 +1952,8 @@ export default {
         dropdownThreshold: 'Dropdown menu threshold',
         dropdownLabel: 'Dropdown menu text',
         dropdownIcon: 'Dropdown menu icon',
-        divider: 'Show divider'
+        divider: 'Show divider',
+        iconOnly: 'Icon Only'
       },
       options: {
         label: 'Action button text',
