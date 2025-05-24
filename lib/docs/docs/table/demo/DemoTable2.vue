@@ -196,9 +196,10 @@ const columns = [
   },
   {
     title: 'Brand',
-    width: 120,
+    width: 80,
     field: 'brand',
-    x: 'start'
+    x: 'start',
+    fixed: 'left'
   },
   {
     title: 'Model',
@@ -296,7 +297,6 @@ const getSortTooltipComponent = (row: any) => {
 <template>
   <lew-table
     :data-source="dataSource"
-    :sortable="true"
     :columns="columns"
     :sort-tooltip-custom-render="getSortTooltipComponent"
   >
