@@ -1,194 +1,278 @@
 <script lang="ts" setup>
-import type { MenuTreeItem } from 'lew-ui'
-import {
-  FileText,
-  Users,
-  MessageSquare,
-  Tag,
-  BarChart2,
-  Settings
-} from 'lucide-vue-next'
-import { h } from 'vue'
+import type { MenuTreeItem } from "lew-ui";
+import { FileText, Users, MessageSquare, Tag } from "lucide-vue-next";
+import { h } from "vue";
 
-const value = ref('')
+const value = ref("");
 const expandKeys = ref([
-  '1',
-  '1-1',
-  '1-1-1',
-  '1-1-2',
-  '1-1-3',
-  '1-2',
-  '1-2-1',
-  '1-2-2',
-  '1-2-3',
-  '2',
-  '2-1',
-  '2-1-1',
-  '2-1-2'
-])
-
+  "1",
+  "1-1",
+  "1-1-1",
+  "1-1-2",
+  "1-1-3",
+  "1-2",
+  "1-2-1",
+  "1-2-2",
+  "1-2-3",
+  "2",
+  "2-1",
+  "2-1-1",
+  "2-1-2",
+]);
 const options = [
   {
-    value: '1',
-    label: 'Article Mgmt',
+    value: "1",
+    label: "Article Mgmt",
     icon: () => h(FileText, { size: 14 }),
+    tagProps: {
+      text: "Core",
+      color: "success",
+    },
     children: [
       {
-        value: '1-1',
-        label: 'Article List',
+        value: "1-1",
+        label: "Article List",
         children: [
           {
-            value: '1-1-1',
-            label: 'Published'
+            value: "1-1-1",
+            label: "Published",
+            tagProps: {
+              text: "12",
+              color: "info",
+            },
           },
-          { value: '1-1-2', label: 'Drafts' },
-          { value: '1-1-3', label: 'Recycle Bin' }
-        ]
+          {
+            value: "1-1-2",
+            label: "Drafts",
+            tagProps: {
+              text: "3",
+              color: "warning",
+            },
+          },
+          {
+            value: "1-1-3",
+            label: "Recycle Bin",
+            tagProps: {
+              text: "0",
+              color: "info",
+            },
+          },
+        ],
       },
       {
-        value: '1-2',
-        label: 'Write Article',
+        value: "1-2",
+        label: "Write Article",
+        tagProps: {
+          text: "New",
+          color: "success",
+        },
         children: [
-          { value: '1-2-1', label: 'New Article' },
-          { value: '1-2-2', label: 'Import Article' },
-          { value: '1-2-3', label: 'Batch Actions' }
-        ]
-      }
-    ]
+          {
+            value: "1-2-1",
+            label: "New Article",
+          },
+          {
+            value: "1-2-2",
+            label: "Import Article",
+            tagProps: {
+              text: "Beta",
+              color: "warning",
+            },
+          },
+          {
+            value: "1-2-3",
+            label: "Batch Actions",
+          },
+        ],
+      },
+    ],
   },
   {
-    value: '2',
-    label: 'User Mgmt',
+    value: "2",
+    label: "User Mgmt",
     icon: () => h(Users, { size: 14 }),
+    tagProps: {
+      text: "Admin",
+      color: "warning",
+    },
     children: [
       {
-        value: '2-1',
-        label: 'User List',
+        value: "2-1",
+        label: "User List",
         children: [
-          { value: '2-1-1', label: 'Regular Users' },
-          { value: '2-1-2', label: 'Admins' },
-          { value: '2-1-3', label: 'Blacklist' }
-        ]
+          {
+            value: "2-1-1",
+            label: "Regular Users",
+            tagProps: {
+              text: "1.2k",
+              color: "success",
+            },
+          },
+          {
+            value: "2-1-2",
+            label: "Admins",
+            tagProps: {
+              text: "12",
+              color: "warning",
+            },
+          },
+          {
+            value: "2-1-3",
+            label: "Blacklist",
+            tagProps: {
+              text: "5",
+              color: "error",
+            },
+          },
+        ],
       },
       {
-        value: '2-2',
-        label: 'User Permissions',
+        value: "2-2",
+        label: "User Permissions",
         children: [
-          { value: '2-2-1', label: 'Role Mgmt' },
-          { value: '2-2-2', label: 'Permission Assign' },
-          { value: '2-2-3', label: 'Access Control' }
-        ]
-      }
-    ]
+          {
+            value: "2-2-1",
+            label: "Role Mgmt",
+            tagProps: {
+              text: "Admin Only",
+              color: "error",
+            },
+          },
+          {
+            value: "2-2-2",
+            label: "Permission Assign",
+          },
+          {
+            value: "2-2-3",
+            label: "Access Control",
+          },
+        ],
+      },
+    ],
   },
   {
-    value: '3',
-    label: 'Comment Mgmt',
+    value: "3",
+    label: "Comment Mgmt",
     icon: () => h(MessageSquare, { size: 14 }),
     children: [
       {
-        value: '3-1',
-        label: 'Comment List',
+        value: "3-1",
+        label: "Comment List",
         children: [
           {
-            value: '3-1-1',
-            label: 'Pending Review'
+            value: "3-1-1",
+            label: "Pending Review",
+            tagProps: {
+              text: "23",
+              color: "error",
+            },
           },
-          { value: '3-1-2', label: 'Approved' },
-          { value: '3-1-3', label: 'Rejected' }
-        ]
+          {
+            value: "3-1-2",
+            label: "Approved",
+            tagProps: {
+              text: "156",
+              color: "success",
+            },
+          },
+          {
+            value: "3-1-3",
+            label: "Rejected",
+            tagProps: {
+              text: "8",
+              color: "warning",
+            },
+          },
+        ],
       },
       {
-        value: '3-2',
-        label: 'Comment Settings',
+        value: "3-2",
+        label: "Comment Settings",
         children: [
-          { value: '3-2-1', label: 'Review Rules' },
-          { value: '3-2-2', label: 'Sensitive Word Filter' },
-          { value: '3-2-3', label: 'Comment Switch' }
-        ]
-      }
-    ]
+          {
+            value: "3-2-1",
+            label: "Review Rules",
+          },
+          {
+            value: "3-2-2",
+            label: "Sensitive Word Filter",
+          },
+          {
+            value: "3-2-3",
+            label: "Comment Switch",
+            tagProps: {
+              text: "Enabled",
+              color: "success",
+            },
+          },
+        ],
+      },
+    ],
   },
   {
-    value: '4',
-    label: 'Tag Mgmt',
+    value: "4",
+    label: "Tag Mgmt",
     icon: () => h(Tag, { size: 14 }),
     children: [
       {
-        value: '4-1',
-        label: 'Tag List',
+        value: "4-1",
+        label: "Tag List",
         children: [
-          { value: '4-1-1', label: 'Popular Tags' },
-          { value: '4-1-2', label: 'Latest Tags' },
-          { value: '4-1-3', label: 'Tag Review' }
-        ]
+          {
+            value: "4-1-1",
+            label: "Popular Tags",
+            tagProps: {
+              text: "45",
+              color: "success",
+            },
+          },
+          {
+            value: "4-1-2",
+            label: "Latest Tags",
+            tagProps: {
+              text: "12",
+              color: "info",
+            },
+          },
+          {
+            value: "4-1-3",
+            label: "Tag Review",
+            tagProps: {
+              text: "3",
+              color: "warning",
+            },
+          },
+        ],
       },
       {
-        value: '4-2',
-        label: 'Category Mgmt',
+        value: "4-2",
+        label: "Category Mgmt",
         children: [
-          { value: '4-2-1', label: 'Category List' },
-          { value: '4-2-2', label: 'Add Category' },
-          { value: '4-2-3', label: 'Category Sort' }
-        ]
-      }
-    ]
+          {
+            value: "4-2-1",
+            label: "Category List",
+            tagProps: {
+              text: "8",
+              color: "info",
+            },
+          },
+          {
+            value: "4-2-2",
+            label: "Add Category",
+          },
+          {
+            value: "4-2-3",
+            label: "Category Sort",
+          },
+        ],
+      },
+    ],
   },
-  {
-    value: '5',
-    label: 'Data Stats',
-    icon: () => h(BarChart2, { size: 14 }),
-    children: [
-      {
-        value: '5-1',
-        label: 'Visit Stats',
-        children: [
-          { value: '5-1-1', label: 'Visit Trends' },
-          { value: '5-1-2', label: 'Source Analysis' },
-          { value: '5-1-3', label: 'Visit Details' }
-        ]
-      },
-      {
-        value: '5-2',
-        label: 'Content Stats',
-        children: [
-          { value: '5-2-1', label: 'Popular Articles' },
-          { value: '5-2-2', label: 'Author Ranking' },
-          { value: '5-2-3', label: 'Engagement Data' }
-        ]
-      }
-    ]
-  },
-  {
-    value: '6',
-    label: 'System Settings',
-    icon: () => h(Settings, { size: 14 }),
-    children: [
-      {
-        value: '6-1',
-        label: 'Basic Settings',
-        children: [
-          { value: '6-1-1', label: 'Site Info' },
-          { value: '6-1-2', label: 'Theme Settings' },
-          { value: '6-1-3', label: 'Email Config' }
-        ]
-      },
-      {
-        value: '6-2',
-        label: 'Security Settings',
-        children: [
-          { value: '6-2-1', label: 'Login Settings' },
-          { value: '6-2-2', label: 'Backup & Restore' },
-          { value: '6-2-3', label: 'Action Logs' }
-        ]
-      }
-    ]
-  }
-]
+];
 
 const change = (item: MenuTreeItem) => {
-  console.log(item)
-}
+  console.log(item);
+};
 </script>
 
 <template>

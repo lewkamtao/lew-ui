@@ -110,7 +110,7 @@ const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
           ]
         ]
       : []
-  const { disabled, icon, label, value } = item
+  const { disabled, icon, label, value, tagProps } = item
   // 渲染菜单项组件
   return withDirectives(
     h(
@@ -122,6 +122,7 @@ const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
         isLeaf: !item.children?.length,
         disabled,
         icon,
+        tagProps,
         onChange: () => emit('change', item)
       },
       () =>

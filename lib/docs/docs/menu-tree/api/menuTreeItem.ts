@@ -33,19 +33,9 @@ export default {
       default: '1'
     },
     {
-      name: 'tagText',
-      type: 'string',
-      default: "''"
-    },
-    {
-      name: 'tagType',
-      type: 'string',
-      default: "'light'"
-    },
-    {
-      name: 'tagColor',
-      type: 'string',
-      default: "'error'"
+      name: 'tagProps',
+      type: 'TagProps',
+      default: '() => ({})'
     }
   ]
 }

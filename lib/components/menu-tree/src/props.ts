@@ -1,6 +1,6 @@
 import type { ExtractPropTypes } from 'vue'
 import { isValidCssValue } from 'lew-ui/utils'
-
+import type { TagProps } from 'lew-ui'
 export type MenuTreeItem = {
   label: string | (() => any)
   value: string | number
@@ -8,6 +8,7 @@ export type MenuTreeItem = {
   disabled?: boolean
   children?: MenuTreeItem[]
   icon?: () => any
+  tagProps?: TagProps
 }
 
 export const menuTreeModel = {
@@ -93,6 +94,11 @@ export const menuTreeItemProps = {
     type: Boolean,
     default: false,
     description: '是否为叶子节点。'
+  },
+  tagProps: {
+    type: Object as PropType<TagProps>,
+    default: () => ({}),
+    description: '菜单树项的标签属性。'
   }
 }
 
