@@ -1697,7 +1697,16 @@ export default {
         title: '基础用法'
       },
       demo2: {
-        title: '自定义展示时间'
+        title: '延迟时间'
+      },
+      demo3: {
+        title: '自定义宽度'
+      },
+      demo4: {
+        title: '展示进度条'
+      },
+      demo5: {
+        title: '主动关闭'
       },
       props: {
         type: '类型',

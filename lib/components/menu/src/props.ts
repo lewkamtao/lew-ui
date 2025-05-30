@@ -6,7 +6,7 @@ export type MenuOptions = {
   value?: string // 值
   children?: MenuOptions[] // 子菜单
   disabled?: boolean // 是否禁用
-  icon?: string // 图标
+  icon?: () => any
   tagProps?: TagProps
 }
 

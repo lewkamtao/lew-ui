@@ -1,14 +1,17 @@
-import '../styles/index.scss'
-import { useTimeoutFn } from '@vueuse/core'
-import { getIconInnerHTML } from 'lew-ui/utils'
+import { h, render } from 'vue'
+import NotificationContainer from './components/NotificationContainer.vue'
 
 export type NotificationParamsTyped = {
   title: string
   content: string
   delay?: number
+  showProgress?: boolean
+  width?: number | string
 }
 
-export type NotificationFn = (options: NotificationParamsTyped) => void
+export type NotificationFn = (options: NotificationParamsTyped) => {
+  close: () => void
+}
 
 export interface NotificationInstance {
   name: string
@@ -19,124 +22,44 @@ export interface NotificationInstance {
   error: NotificationFn
 }
 
-const warning = ({ title, content, delay = 3000 }: NotificationParamsTyped) => {
-  notification('warning', title, content, delay)
-}
+let containerInstance: any = null
 
-const error = ({ title, content, delay = 3000 }: NotificationParamsTyped) => {
-  notification('error', title, content, delay)
-}
-
-const info = ({ title, content, delay = 3000 }: NotificationParamsTyped) => {
-  notification('info', title, content, delay)
-}
-
-const normal = ({ title, content, delay = 3000 }: NotificationParamsTyped) => {
-  notification('normal', title, content, delay)
-}
-
-const success = ({ title, content, delay = 3000 }: NotificationParamsTyped) => {
-  notification('success', title, content, delay)
-}
-
-const createMessageList = () => {
-  const div: HTMLDivElement = document.createElement('div')
-  div.setAttribute('id', 'lew-notification')
-  document.body.appendChild(div)
-}
-
-const notification = (
-  type: string,
-  title: string,
-  content: string,
-  delay: number
-) => {
-  if (!document.getElementById('lew-notification')) {
-    createMessageList()
-    notification(type, title, content, delay)
-  } else {
-    add(type, title, content, delay)
+const createContainer = () => {
+  if (!containerInstance) {
+    const container = document.createElement('div')
+    document.body.appendChild(container)
+    const vnode = h(NotificationContainer)
+    render(vnode, container)
+    containerInstance = vnode.component?.exposed
   }
+  return containerInstance
 }
 
-const add = (type: string, title: string, content: string, delay: number) => {
-  const LewMessageDom = document.getElementById('lew-notification')
-  const newMessage = document.createElement('div')
-  newMessage.innerHTML = `
-                <div class="lew-notification-box"> 
-                    <div class="lew-notification-icon">
-                          ${getIconInnerHTML({ type, size: 18 })}
-                    </div>
-                    <div class="lew-notification-body">
-                      <div class="lew-notification-title">${title}</div>
-                     	 ${content ? `<div class="lew-notification-content">${content}</div>` : ''}
-                    </div> 
-                    <div class="lew-notification-close-icon">
-						${getIconInnerHTML({ type: 'close', size: 16 })}
-                    </div>
-      </div>
-    `
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  LewMessageDom?.insertBefore(newMessage, LewMessageDom?.childNodes[0])
-
-  newMessage.setAttribute('class', `lew-notification lew-notification-${type}`)
-
-  let timer: (() => void) | undefined
-  let lock = false // 加上锁 避免 点击关闭和鼠标移出事件重叠 bug
-
-  function startTimer() {
-    if (delay > 0) {
-      ;({ stop: timer } = useTimeoutFn(() => {
-        handleClose()
-      }, delay))
-    }
-  }
-
-  function clearTimer() {
-    timer?.()
-  }
-
-  function handleClose() {
-    if (lock) {
-      return
-    }
-    lock = true
-
-    newMessage.setAttribute(
-      'class',
-      `lew-notification lew-notification-${type} lew-notification-hidden`
-    )
-    if (newMessage) {
-      if (LewMessageDom) {
-        setTimeout(() => {
-          LewMessageDom.removeChild(newMessage)
-        }, 250)
+const createNotification = (type: string) => {
+  return ({
+    title,
+    content,
+    delay = 3000,
+    showProgress = false,
+    width = 320
+  }: NotificationParamsTyped) => {
+    const container = createContainer()
+    const id = container?.add(type, title, content, delay, showProgress, width)
+    return {
+      close: () => {
+        container?.handleClose(id)
       }
     }
   }
-
-  newMessage.children[0].children[2].addEventListener('click', handleClose)
-  newMessage.addEventListener('mouseenter', clearTimer)
-  newMessage.addEventListener('mouseleave', startTimer)
-
-  setTimeout(() => {
-    lock = false
-    newMessage.setAttribute(
-      'class',
-      `lew-notification lew-notification-${type} lew-notification-show`
-    )
-    delay > 0 && startTimer()
-  }, 10)
 }
 
 export const LewNotification = {
   name: 'LewNotification',
-  warning,
-  info,
-  normal,
-  success,
-  error
+  warning: createNotification('warning'),
+  info: createNotification('info'),
+  normal: createNotification('normal'),
+  success: createNotification('success'),
+  error: createNotification('error')
 }
 
 export type LewNotification = {
