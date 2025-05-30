@@ -1,4 +1,4 @@
-import { cloneDeep, isFunction, uniqueId } from 'lodash-es'
+import { cloneDeep, isFunction } from 'lodash-es'
 import Icon from './Icon.vue'
 /**
  * 获取颜色类型。
@@ -139,14 +139,15 @@ export const isValidCssValue = ({
 }
 
 /**
- * 生成唯一ID。
- * @returns {string} 生成的唯一ID。
+ * 生成6位不重复的唯一ID。
+ * 使用 UUID v4 的前6位，确保唯一性。
+ * @returns {string} 生成的6位唯一ID。
  */
 export const getUniqueId = () => {
-  // 生成一个随机字符串作为UUID的前缀
-  const randomString = Math.random().toString(16).substring(2, 8)
-  // 使用Lodash的uniqueId()方法生成UUID
-  return uniqueId(randomString)
+  // 生成 UUID v4
+  const uuid = crypto.randomUUID()
+  // 取前6位
+  return uuid.substring(0, 8)
 }
 
 /**

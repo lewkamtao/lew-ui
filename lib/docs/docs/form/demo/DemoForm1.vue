@@ -77,7 +77,7 @@ const options = ref([
     field: 'input',
     label: '文本框',
     as: 'input',
-    rule: Yup.string().required(),
+    rule: Yup.string().required('此项必填'),
     props: {
       showCount: true,
       maxLength: 30

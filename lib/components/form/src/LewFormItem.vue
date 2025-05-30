@@ -79,6 +79,7 @@ const modelValue: Ref<any> = defineModel({
 watch(
   () => modelValue.value,
   () => {
+    console.log(123)
     if (!ignoreValidate.value) {
       validateField()
     } else {
