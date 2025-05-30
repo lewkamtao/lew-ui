@@ -18,10 +18,10 @@ const openWithoutDelay = () => {
 
 <template>
   <lew-flex wrap x="start" gap="20">
-    <lew-button text="Auto" type="light" color="blue" @click="openWithDelay" />
+    <lew-button text="Auto" type="ghost" color="blue" @click="openWithDelay" />
     <lew-button
       text="Manual"
-      type="light"
+      type="ghost"
       color="orange"
       @click="openWithoutDelay"
     />
