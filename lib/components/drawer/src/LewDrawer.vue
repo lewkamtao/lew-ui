@@ -165,7 +165,7 @@ const close = () => {
 
 .lew-drawer-body {
   position: fixed;
-  transition: all 0.25s ease;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.35, 1);
   background: var(--lew-modal-body-bgcolor);
   display: flex;
   flex-direction: column;

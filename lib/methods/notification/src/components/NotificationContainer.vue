@@ -1,5 +1,5 @@
 <template>
-  <div id="lew-notification">
+  <div id="lew-notification" class="lew-scrollbar">
     <TransitionGroup name="notification">
       <div
         v-for="item in notifications"
@@ -21,21 +21,21 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import NotificationItem from './NotificationItem.vue'
-import { getUniqueId } from 'lew-ui/utils'
+import { ref } from "vue";
+import NotificationItem from "./NotificationItem.vue";
+import { getUniqueId } from "lew-ui/utils";
 
 interface NotificationItem {
-  id: string
-  type: string
-  title: string
-  content: string
-  delay: number
-  showProgress: boolean
-  width: number | string
+  id: string;
+  type: string;
+  title: string;
+  content: string;
+  delay: number;
+  showProgress: boolean;
+  width: number | string;
 }
 
-const notifications = ref<NotificationItem[]>([])
+const notifications = ref<NotificationItem[]>([]);
 
 const add = (
   type: string,
@@ -45,7 +45,7 @@ const add = (
   showProgress: boolean,
   width: number | string
 ) => {
-  const id = getUniqueId()
+  const id = getUniqueId();
   notifications.value.unshift({
     id,
     type,
@@ -53,59 +53,57 @@ const add = (
     content,
     delay,
     showProgress,
-    width
-  })
+    width,
+  });
 
   if (delay > 0) {
     setTimeout(() => {
-      handleClose(id)
-    }, delay)
+      handleClose(id);
+    }, delay);
   }
-  
-  return id
-}
+
+  return id;
+};
 
 const handleClose = (id: string) => {
-  const index = notifications.value.findIndex((item) => item.id === id)
+  const index = notifications.value.findIndex((item) => item.id === id);
   if (index > -1) {
-    notifications.value.splice(index, 1)
+    notifications.value.splice(index, 1);
   }
-}
+};
 
 defineExpose({
   add,
-  handleClose
-})
+  handleClose,
+});
 </script>
 
 <style lang="scss">
 #lew-notification {
   position: fixed;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  flex-direction: column;
-  right: 30px;
-  top: 20px;
+  gap: 12px;
+  right: 0px;
+  top: 0px;
   z-index: 99999;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100vh;
+  padding: 20px 15px;
+  box-sizing: border-box;
 }
-
+.notification-move,
 .notification-enter-active,
 .notification-leave-active {
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all var(--lew-form-transition-bezier);
 }
 
-.notification-enter-from {
-  opacity: 0;
-  transform: translateX(30px);
-}
-
+.notification-enter-from,
 .notification-leave-to {
   opacity: 0;
   transform: translateX(30px);
 }
 
-.notification-move {
-  transition: transform 0.3s ease;
+.notification-leave-active {
+  position: absolute;
 }
 </style>
