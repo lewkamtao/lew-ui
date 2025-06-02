@@ -95,7 +95,7 @@ const dropdownOptions: any = computed(() => {
     &:active {
       background-color: var(--lew-form-bgcolor-active);
     }
-    .lew-action-box-icon {
+    :deep(.lew-action-box-icon) {
       display: flex;
       align-items: center;
       justify-content: center;

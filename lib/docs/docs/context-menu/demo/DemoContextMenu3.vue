@@ -4,11 +4,11 @@ import dayjs from 'dayjs'
 
 const options = ref<ContextMenus[]>([
   {
-    label: '新建文件',
+    label: 'New File',
     value: 'new-file'
   },
   {
-    label: '保存文件',
+    label: 'Save File',
     value: 'save-file'
   }
 ])
@@ -28,7 +28,7 @@ setInterval(() => {
       }"
       class="box"
     >
-      右键点击此处
+      Right click here
     </div>
   </lew-flex>
 </template>

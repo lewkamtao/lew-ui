@@ -1,24 +1,25 @@
 <script setup lang="ts">
-import { h } from 'vue'
-import { treeProps, TreeDataSource } from './props'
-import LewTreeItem from './LewTreeItem.vue'
-import { LewFlex } from 'lew-ui'
-import { cloneDeep } from 'lodash-es'
-import transformTree from './transformTree'
-import { any2px, numFormat } from 'lew-ui/utils'
+import { h } from "vue";
+import { treeProps, TreeDataSource } from "./props";
+import LewTreeItem from "./LewTreeItem.vue";
+import { LewFlex } from "lew-ui";
+import { cloneDeep } from "lodash-es";
+import transformTree from "./transformTree";
+import { any2px, numFormat } from "lew-ui/utils";
+import { locale } from "lew-ui";
 
-const props = defineProps(treeProps)
-const modelValue = defineModel()
-const expandKeys = defineModel('expandKeys', { required: false, default: [] })
-const _dataSource: any = ref<TreeDataSource[]>([])
-const loading = ref<boolean>(false)
-const keyword = ref<string>('')
-const lastSearchKeyword = ref<string>('')
-const searchTimer = ref<NodeJS.Timeout | null>(null)
-const DEBOUNCE_TIME = 250
-const cacheDataSource = ref<TreeDataSource[]>([])
+const props = defineProps(treeProps);
+const modelValue = defineModel();
+const expandKeys = defineModel("expandKeys", { required: false, default: [] });
+const _dataSource: any = ref<TreeDataSource[]>([]);
+const loading = ref<boolean>(false);
+const keyword = ref<string>("");
+const lastSearchKeyword = ref<string>("");
+const searchTimer = ref<NodeJS.Timeout | null>(null);
+const DEBOUNCE_TIME = 250;
+const cacheDataSource = ref<TreeDataSource[]>([]);
 
-provide('lew-tree', {
+provide("lew-tree", {
   modelValue,
   expandKeys,
   multiple: props.multiple,
@@ -30,11 +31,11 @@ provide('lew-tree', {
   keyField: props.keyField,
   labelField: props.labelField,
   cacheDataSource: cacheDataSource,
-  _dataSource: _dataSource
-})
+  _dataSource: _dataSource,
+});
 
 const renderMenuTreeItem = (item: TreeDataSource, level: number = 0): any => {
-  const { disabled, label, key, isLeaf, children } = item
+  const { disabled, label, key, isLeaf, children } = item;
   return h(
     LewTreeItem,
     {
@@ -46,104 +47,104 @@ const renderMenuTreeItem = (item: TreeDataSource, level: number = 0): any => {
       disabled,
       extend: item,
       onChange: () =>
-        emit('change', cloneDeep({ extend: item, key, value: key })),
+        emit("change", cloneDeep({ extend: item, key, value: key })),
       onExpand: () =>
-        emit('expand', cloneDeep({ extend: item, key, value: key }))
+        emit("expand", cloneDeep({ extend: item, key, value: key })),
     },
     () =>
       (item.children || []).map((child: TreeDataSource) =>
         renderMenuTreeItem(child, level + 1)
       )
-  )
-}
+  );
+};
 
-const emit = defineEmits(['change', 'expand', 'loadStart', 'loadEnd'])
+const emit = defineEmits(["change", "expand", "loadStart", "loadEnd"]);
 
-const init = async (searchKeyword = '') => {
-  if (searchKeyword === '' && cacheDataSource.value.length > 0) {
-    _dataSource.value = cacheDataSource.value
-    emit('loadEnd', getResultText.value)
-    return
+const init = async (searchKeyword = "") => {
+  if (searchKeyword === "" && cacheDataSource.value.length > 0) {
+    _dataSource.value = cacheDataSource.value;
+    emit("loadEnd", getResultText.value);
+    return;
   }
 
   if (!props.isSelect) {
-    loading.value = true
+    loading.value = true;
   }
-  emit('loadStart')
+  emit("loadStart");
 
   // 记录当前搜索的关键词
-  lastSearchKeyword.value = searchKeyword
+  lastSearchKeyword.value = searchKeyword;
 
-  const { dataSource, initTree, keyField, labelField, free } = props
+  const { dataSource, initTree, keyField, labelField, free } = props;
   const { status, result, error } = (await transformTree({
     initTree,
     dataSource,
     keyField,
     labelField,
     free,
-    keyword: searchKeyword
-  })) as any
+    keyword: searchKeyword,
+  })) as any;
 
   // 如果在请求过程中关键词已经改变，则放弃这次结果
   if (lastSearchKeyword.value !== searchKeyword) {
-    loading.value = false
-    return
+    loading.value = false;
+    return;
   }
 
-  if (status === 'success') {
-    _dataSource.value = result
-    if (searchKeyword === '' && cacheDataSource.value.length === 0) {
-      cacheDataSource.value = cloneDeep(result)
+  if (status === "success") {
+    _dataSource.value = result;
+    if (searchKeyword === "" && cacheDataSource.value.length === 0) {
+      cacheDataSource.value = cloneDeep(result);
     }
   } else {
-    LewMessage.error(error.message)
+    LewMessage.error(error.message);
   }
-  expandKeys.value = cloneDeep(expandKeys.value)
-  modelValue.value = cloneDeep(modelValue.value)
-  loading.value = false
-  emit('loadEnd', getResultText.value)
-}
+  expandKeys.value = cloneDeep(expandKeys.value);
+  modelValue.value = cloneDeep(modelValue.value);
+  loading.value = false;
+  emit("loadEnd", getResultText.value);
+};
 
 const reset = () => {
-  _dataSource.value = cloneDeep(cacheDataSource.value)
-  emit('loadEnd', getResultText.value)
-}
+  _dataSource.value = cloneDeep(cacheDataSource.value);
+  emit("loadEnd", getResultText.value);
+};
 
 const search = (keyword: string) => {
   // 清除之前的定时器
   if (searchTimer.value !== null) {
-    clearTimeout(searchTimer.value)
+    clearTimeout(searchTimer.value);
   }
 
   // 设置新的定时器
   searchTimer.value = setTimeout(() => {
-    init(keyword)
-    searchTimer.value = null
-  }, DEBOUNCE_TIME)
-}
+    init(keyword);
+    searchTimer.value = null;
+  }, DEBOUNCE_TIME);
+};
 
 const getResultText = computed(() => {
   return _dataSource.value.length > 0
-    ? `共 ${numFormat(_dataSource.value.length)} 条结果`
-    : ''
-})
+    ? locale.t("tree.resultCount", { num: numFormat(_dataSource.value.length) })
+    : "";
+});
 
 defineExpose({
   search,
   reset,
-  getTree: () => _dataSource.value
-})
+  getTree: () => _dataSource.value,
+});
 
 onMounted(() => {
-  init()
-})
+  init();
+});
 </script>
 
 <template>
   <lew-flex
     v-loading="{
       visible: loading,
-      text: '加载中...'
+      text: '加载中...',
     }"
     direction="y"
     gap="0"
@@ -159,7 +160,7 @@ onMounted(() => {
         width="100%"
         v-model="keyword"
         size="small"
-        placeholder="搜索"
+        :placeholder="locale.t('tree.searchPlaceholder')"
         @input="search(keyword)"
       />
 
@@ -170,10 +171,11 @@ onMounted(() => {
     <template v-if="_dataSource && _dataSource.length === 0">
       <slot v-if="$slots.empty" name="empty"></slot>
       <lew-flex v-else direction="y" x="center" class="lew-not-found">
-        <lew-empty title="暂无结果" />
+        <lew-empty :title="locale.t('tree.noResult')" />
       </lew-flex>
     </template>
     <lew-flex
+      v-else
       direction="y"
       y="start"
       gap="0"
@@ -200,7 +202,7 @@ onMounted(() => {
 .lew-result-count {
   padding: 5px 12px;
   font-size: 13px;
-  opacity: 0.4;
+  opacity: 0.7;
 }
 .lew-tree-line {
   :deep(.lew-tree-item-main) {

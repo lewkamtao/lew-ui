@@ -40,11 +40,12 @@ const textStyleObject = computed(() => {
 
 const altText = computed(() => {
   if (!props.alt) return ''
-  return props.alt
+  const result = props.alt
     .split(' ')
     .map((word) => word.charAt(0))
     .join('')
     .toUpperCase()
+  return result.length > 2 ? result.charAt(0) : result
 })
 
 // 状态点位置配置

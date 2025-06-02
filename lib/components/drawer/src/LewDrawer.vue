@@ -105,7 +105,7 @@ const close = () => {
           y="center"
           class="lew-drawer-header"
         >
-          <lew-text-trim class="lew-drawer-title" :text="title" />
+          <div class="lew-drawer-title">{{ title }}</div>
           <lew-button
             type="light"
             color="gray"
@@ -165,7 +165,7 @@ const close = () => {
 
 .lew-drawer-body {
   position: fixed;
-  transition: all 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: all 0.3s;
   background: var(--lew-modal-body-bgcolor);
   display: flex;
   flex-direction: column;
@@ -175,6 +175,7 @@ const close = () => {
     flex: 0;
 
     .lew-drawer-title {
+      width: calc(100% - 30px);
       font-size: 16px;
       font-weight: bold;
     }

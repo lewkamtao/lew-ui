@@ -1,5 +1,8 @@
 <template>
-  <div :class="['lew-notification', `lew-notification-${type}`]" :style="{ width: any2px(width) }">
+  <div
+    :class="['lew-notification', `lew-notification-${type}`]"
+    :style="{ width: any2px(width) }"
+  >
     <div class="lew-notification-box">
       <div class="lew-notification-icon">
         <Icon :type="type" :size="18" />
@@ -21,30 +24,31 @@
 </template>
 
 <script lang="ts" setup>
-import Icon from 'lew-ui/utils/Icon.vue'
-import { any2px } from 'lew-ui/utils'
+import Icon from "lew-ui/utils/Icon.vue";
+import { any2px } from "lew-ui/utils";
 
 defineProps<{
-  type: string
-  title: string
-  content: string
-  delay: number
-  showProgress: boolean
-  width: number | string
-}>()
+  type: string;
+  title: string;
+  content: string;
+  delay: number;
+  showProgress: boolean;
+  width: number | string;
+}>();
 
 const emit = defineEmits<{
-  (e: 'close'): void
-}>()
+  (e: "close"): void;
+}>();
 
 const onClose = () => {
-  emit('close')
-}
+  emit("close");
+};
 </script>
 
 <style lang="scss" scoped>
 .lew-notification {
   position: relative;
+  right: 0;
   width: auto;
   display: flex;
   flex-shrink: 0;
@@ -58,6 +62,7 @@ const onClose = () => {
   overflow: hidden;
   background-color: var(--lew-pop-bgcolor) !important;
   border: var(--lew-pop-border);
+  text-align: left;
 
   .lew-notification-box {
     display: flex;
@@ -79,7 +84,6 @@ const onClose = () => {
         font-size: 14px;
         font-weight: bold;
         color: var(--lew-text-color-0);
-        margin-top: -1px;
         white-space: pre-wrap;
         word-wrap: break-word;
       }
@@ -90,7 +94,6 @@ const onClose = () => {
         color: var(--lew-text-color-2);
         white-space: pre-wrap;
         word-wrap: break-word;
-        margin-top: -1px;
       }
     }
 

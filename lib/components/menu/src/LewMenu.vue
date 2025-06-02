@@ -39,7 +39,6 @@ const select = (item: MenuOptions) => {
             v-if="isVueComponent(cItem.icon)"
             class="lew-menu-icon"
             :is="formatComponent(cItem.icon)"
-            :size="14"
           />
           <lew-text-trim :text="cItem.label" />
           <lew-tag
@@ -86,7 +85,7 @@ const select = (item: MenuOptions) => {
     border-radius: var(--lew-border-radius-small);
     transition: background-color 0.25s, color 0.25s;
   }
-  .lew-menu-icon {
+  :deep(.lew-menu-icon) {
     flex-shrink: 0;
   }
   .lew-menu-item-child:hover {

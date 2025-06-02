@@ -15,15 +15,27 @@ export default {
     duplicate: '已存在相同标签，请输入新的标签'
   },
   select: {
-    placeholder: '请选择'
+    placeholder: '请选择',
+    resultCount: '共 {num} 条结果',
+    noResult: '暂无结果',
+    searchPlaceholder: '输入搜索关键词'
   },
   selectMultiple: {
-    placeholder: '请选择'
+    placeholder: '请选择',
+    resultCount: '共 {num} 条结果',
+    noResult: '暂无结果',
+    searchPlaceholder: '输入搜索关键词'
   },
   cascader: {
     placeholder: '请选择',
     closeText: '关闭',
-    okText: '确定'
+    okText: '确定',
+    noResult: '暂无结果'
+  },
+  tree: {
+    resultCount: '共 {num} 条结果',
+    noResult: '暂无结果',
+    searchPlaceholder: '输入搜索关键词'
   },
   textarea: {
     placeholder: '请输入'

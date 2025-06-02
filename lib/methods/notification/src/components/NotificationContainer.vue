@@ -1,10 +1,15 @@
 <template>
-  <div id="lew-notification" class="lew-scrollbar">
+  <div
+    id="lew-notification"
+    class="lew-scrollbar"
+    :style="{ minWidth: `${width}px` }"
+  >
     <TransitionGroup name="notification">
       <div
         v-for="item in notifications"
         :key="item.id"
         class="notification-wrapper"
+        :class="{ 'notification-wrapper-blank': item.id === '__blank' }"
       >
         <NotificationItem
           :type="item.type"
@@ -36,6 +41,13 @@ interface NotificationItem {
 }
 
 const notifications = ref<NotificationItem[]>([]);
+const width = ref(0);
+
+const updateWidth = () => {
+  width.value = notifications.value.reduce((max, item: NotificationItem) => {
+    return Math.max(max, Number(item.width));
+  }, 0);
+};
 
 const add = (
   type: string,
@@ -61,14 +73,29 @@ const add = (
       handleClose(id);
     }, delay);
   }
-
+  if (timer) {
+    clearTimeout(timer);
+  }
+  updateWidth();
   return id;
 };
+
+let timer: NodeJS.Timeout | null = null;
 
 const handleClose = (id: string) => {
   const index = notifications.value.findIndex((item) => item.id === id);
   if (index > -1) {
     notifications.value.splice(index, 1);
+  }
+  if (timer) {
+    clearTimeout(timer);
+  }
+  if (notifications.value.length === 0) {
+    timer = setTimeout(() => {
+      updateWidth();
+    }, 350);
+  } else {
+    updateWidth();
   }
 };
 
@@ -87,10 +114,17 @@ defineExpose({
   z-index: 99999;
   overflow-y: auto;
   overflow-x: hidden;
+  width: auto;
   height: 100vh;
   padding: 20px 15px;
   box-sizing: border-box;
 }
+
+.notification-wrapper {
+  position: relative;
+  width: 100%;
+}
+
 .notification-move,
 .notification-enter-active,
 .notification-leave-active {
@@ -105,5 +139,7 @@ defineExpose({
 
 .notification-leave-active {
   position: absolute;
+  width: 100%;
+  right: 0;
 }
 </style>

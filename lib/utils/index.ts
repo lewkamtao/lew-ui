@@ -555,6 +555,7 @@ export const findNodeByKey = (key: string | number, tree: any) => {
 export const isVueComponent = (value: any): boolean => {
   try {
     // 检查是否为函数类型
+    console.log(typeof value)
     if (typeof value !== 'function' && typeof value !== 'object') {
       return false
     }

@@ -152,25 +152,9 @@ if (props.closeByEsc) {
     width: 450px;
     height: auto;
     padding: 20px;
-    border-radius: var(--lew-border-radius-medium);
+    border-radius: var(--lew-border-radius-large);
     background-color: var(--lew-modal-body-bgcolor);
-
     font-size: 0;
-
-    .lew-dialog-icon:deep() {
-      width: 36px;
-      height: 36px;
-      svg {
-        width: 36px;
-        height: 36px;
-      }
-    }
-
-    @each $type in (success, warning, normal, info, error) {
-      .lew-dialog-icon-#{$type} {
-        color: var(--lew-color-#{$type});
-      }
-    }
 
     header {
       width: 100%;
@@ -189,33 +173,6 @@ if (props.closeByEsc) {
       justify-content: flex-end;
       gap: 10px;
       width: 100%;
-    }
-
-    .btn-close {
-      position: absolute;
-      top: 8px;
-      right: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 25px;
-      height: 25px;
-      border-radius: var(--lew-border-radius-small);
-      box-sizing: border-box;
-      cursor: pointer;
-      user-select: none;
-      z-index: 2051;
-      color: var(--lew-text-color-5);
-
-      &:hover {
-        background: rgba(0, 0, 0, 0.05);
-        color: var(--lew-text-color-1);
-      }
-
-      &:active {
-        background: rgba(0, 0, 0, 0.15);
-        color: var(--lew-text-color-0);
-      }
     }
   }
 

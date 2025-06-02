@@ -435,7 +435,6 @@ defineExpose({ show, hide });
         <slot name="header"></slot>
         <transition name="fade">
           <div
-            v-if="state.visible"
             class="lew-cascader-options-box"
             :style="{ height: free ? 'calc(100% - 48px)' : '100%' }"
           >

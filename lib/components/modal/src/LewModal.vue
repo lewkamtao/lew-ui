@@ -96,7 +96,7 @@ if (props.closeByEsc) {
                 <Icon :size="14" type="close" />
               </lew-button>
             </lew-flex>
-            <div class="lew-modal-body-main lew-scrollbar">
+            <div class="lew-modal-body-main lew-scrollbar" :style="{ maxHeight: maxHeight }">
               <slot></slot>
             </div>
             <div v-if="$slots.footer" class="lew-modal-footer-slot">
@@ -160,7 +160,6 @@ if (props.closeByEsc) {
     background-color: var(--lew-modal-body-bgcolor);
     overflow: hidden;
     .lew-modal-body-main {
-      max-height: 80vh;
       overflow-y: auto;
     }
     .lew-modal-header {

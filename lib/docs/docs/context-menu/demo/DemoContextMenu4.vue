@@ -1,18 +1,18 @@
 <script lang="ts" setup>
 const options = ref<any[]>([
   {
-    label: '语言',
+    label: 'Language',
     value: 'language',
     children: [
       {
-        label: '中文（Chinese',
+        label: 'Chinese',
         value: 'chinese',
         checked: true,
         checkable: true,
         onClick: (item: any) => setTheme(item, 'language')
       },
       {
-        label: '英语（English）',
+        label: 'English',
         value: 'english',
         checkable: true,
         onClick: (item: any) => setTheme(item, 'language')
@@ -20,7 +20,7 @@ const options = ref<any[]>([
     ]
   },
   {
-    label: '主题',
+    label: 'Theme',
     value: 'theme',
     children: [
       {
@@ -41,22 +41,22 @@ const options = ref<any[]>([
     ]
   },
   {
-    label: '字体样式（编译器）',
+    label: 'Font Style (Editor)',
     value: 'font'
   },
   {
-    label: '关于',
+    label: 'About',
     value: 'about'
   },
   {
     isDividerLine: true
   },
   {
-    label: '帮助',
+    label: 'Help',
     value: 'help'
   },
   {
-    label: '是否为最新',
+    label: 'Check for Updates',
     checkable: true,
     checked: true,
     value: 'check-update',
@@ -65,10 +65,10 @@ const options = ref<any[]>([
 ])
 
 const setTheme = (item: any, type = 'theme') => {
-  // 找到label Theme 的item的索引
+  // Find the index of the Theme item
   const themeIndex = options.value.findIndex((item: any) => item.value === type)
   if (themeIndex !== -1 && options.value[themeIndex].children) {
-    // 创建新的children数组以保持响应式
+    // Create new children array to maintain reactivity
     const newChildren = options.value[themeIndex].children!.map(
       (child: any) => {
         if (child.checkable) {
@@ -81,7 +81,7 @@ const setTheme = (item: any, type = 'theme') => {
       }
     )
 
-    // 更新整个options数组以触发响应式更新
+    // Update the entire options array to trigger reactive update
     let newOptions = options.value.map((item: any, index: number) => {
       if (index === themeIndex) {
         return {
@@ -107,7 +107,7 @@ const setUpdate = (item: any) => {
       }"
       class="box"
     >
-      右键点击此处
+      Right-click here
     </div>
   </lew-flex>
 </template>

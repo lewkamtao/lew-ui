@@ -13,89 +13,89 @@ import {
 } from 'lucide-vue-next'
 const options1: ContextMenus = [
   {
-    label: '返回',
+    label: 'Back',
     value: 1,
     icon: h(Home, { size: 14 }),
     onClick: (e: ContextMenus) => {
-      LewMessage.info('返回')
+      LewMessage.info('Back')
     }
   },
   {
-    label: '前进',
+    label: 'Forward',
     value: 2,
     icon: h(CornerUpRight, { size: 14 }),
     onClick: () => {
-      LewMessage.info('前进')
+      LewMessage.info('Forward')
     }
   },
   {
-    label: '重新加载',
+    label: 'Reload',
     value: 3,
     icon: h(RotateCw, { size: 14 }),
     onClick: () => {
-      LewMessage.info('重新加载')
+      LewMessage.info('Reload')
     }
   },
   {
     isDividerLine: true
   },
   {
-    label: '另存为',
+    label: 'Save As',
     value: 4,
     icon: h(DownloadCloud, { size: 14 }),
     onClick: () => {
-      LewMessage.info('另存为')
+      LewMessage.info('Save As')
     }
   },
   {
-    label: '打印',
+    label: 'Print',
     value: 4,
     disabled: true,
     icon: h(File, { size: 14 }),
     onClick: () => {
-      LewMessage.info('打印')
+      LewMessage.info('Print')
     }
   },
   {
-    label: '投放',
+    label: 'Cast',
     value: 4,
     icon: h(Navigation, { size: 14 }),
     onClick: () => {
-      LewMessage.info('投放')
+      LewMessage.info('Cast')
     }
   },
   {
-    label: '使用 Google 搜索图片',
+    label: 'Search image with Google',
     value: 4,
     icon: h(Search, { size: 14 }),
     onClick: () => {
-      LewMessage.info('使用 Google 搜索图片')
+      LewMessage.info('Search image with Google')
     }
   },
   {
-    label: '在阅读模式下打开',
+    label: 'Open in Reader Mode',
     value: 4,
     icon: h(Eye, { size: 14 }),
     onClick: () => {
-      LewMessage.info('在阅读模式下打开')
+      LewMessage.info('Open in Reader Mode')
     }
   }
 ]
 
 const options2 = [
   {
-    label: '翻译成中文',
+    label: 'Translate to English',
     value: 1
   },
   {
     isDividerLine: true
   },
   {
-    label: '查看源代码',
+    label: 'View Source',
     value: 2
   },
   {
-    label: '检查',
+    label: 'Inspect',
     value: 3
   }
 ]
@@ -108,9 +108,9 @@ const options2 = [
       }"
       class="box"
     >
-      右键点击此处
+      Right click here
     </div>
-    <div v-context-menu="{ options: options2 }" class="box">右键点击此处</div>
+    <div v-context-menu="{ options: options2 }" class="box">Right click here</div>
   </lew-flex>
 </template>
 

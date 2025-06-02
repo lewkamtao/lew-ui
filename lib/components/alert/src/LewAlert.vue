@@ -60,7 +60,6 @@ const alertClassName = computed(() => {
   .lew-alert-message {
     width: calc(100% - 30px);
     margin-left: 12px;
-    margin-top: -1px;
     .lew-alert-title {
       font-size: 14px;
       width: 100%;

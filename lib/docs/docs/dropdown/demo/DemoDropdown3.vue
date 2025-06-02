@@ -100,7 +100,7 @@ const colorMap: Record<string, string> = {
     </lew-dropdown>
 
     <lew-dropdown placement="bottom-start" :options="productOptions">
-      <div>更多产品</div>
+      <div>More Products</div>
     </lew-dropdown>
   </lew-flex>
 </template>

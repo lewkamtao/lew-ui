@@ -33,6 +33,11 @@ export const modalProps = {
       return true
     }
   },
+  maxHeight: {
+    type: [String, Number],
+    default: 'auto',
+    description: '模态框最大高度，支持计算属性（如：calc(100vh - 240px))'
+  },
   top: {
     type: [String, Number],
     default: 120,

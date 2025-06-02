@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { object2class, getColorType } from 'lew-ui/utils'
+import { object2class, getColorType, any2px } from 'lew-ui/utils'
 import { buttonProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
 
@@ -62,7 +62,7 @@ const getIconSize = computed(() => {
 })
 
 const getStyle = computed(() => {
-  const { round, type, color, dashed } = props
+  const { round, type, color, dashed, width } = props
   const styleObj: Record<string, string> = {}
   const _color = getColorType(color) || 'primary'
 
@@ -99,6 +99,10 @@ const getStyle = computed(() => {
 
   // 圆角样式
   styleObj.borderRadius = round ? '50px' : 'none'
+
+  if (width) {
+    styleObj.width = any2px(width)
+  }
 
   return styleObj
 })

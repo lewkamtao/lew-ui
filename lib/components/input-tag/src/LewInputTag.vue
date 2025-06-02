@@ -371,7 +371,6 @@ const onBlur = () => {
     outline: none !important;
     background: none !important;
     box-shadow: none !important;
-    margin-left: 2px;
     overflow: hidden;
     width: auto;
     :deep() {
