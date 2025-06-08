@@ -3,7 +3,7 @@ const openWithDelay = () => {
   LewNotification.info({
     title: 'Notice',
     content: 'This notification will close in 5 seconds',
-    delay: 5000,
+    duration: 5000,
     showProgress: true
   })
 }
@@ -11,7 +11,7 @@ const openWithoutDelay = () => {
   LewNotification.warning({
     title: 'Notice',
     content: 'This notification will not close automatically',
-    delay: 0
+    duration: 0
   })
 }
 </script>

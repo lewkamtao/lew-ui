@@ -306,10 +306,6 @@ const options: MenuOptions[] = [
         value: "/Loading",
       },
       {
-        label: "Result",
-        value: "/Result",
-      },
-      {
         label: "Empty",
         value: "/Empty",
       },

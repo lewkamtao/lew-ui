@@ -18,31 +18,31 @@
     <div
       v-if="showProgress"
       class="lew-notification-progress"
-      :style="{ animationDuration: `${delay}ms` }"
+      :style="{ animationDuration: `${duration}ms` }"
     ></div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import Icon from "lew-ui/utils/Icon.vue";
-import { any2px } from "lew-ui/utils";
+import Icon from 'lew-ui/utils/Icon.vue'
+import { any2px } from 'lew-ui/utils'
 
 defineProps<{
-  type: string;
-  title: string;
-  content: string;
-  delay: number;
-  showProgress: boolean;
-  width: number | string;
-}>();
+  type: string
+  title: string
+  content: string
+  duration: number
+  showProgress: boolean
+  width: number | string
+}>()
 
 const emit = defineEmits<{
-  (e: "close"): void;
-}>();
+  (e: 'close'): void
+}>()
 
 const onClose = () => {
-  emit("close");
-};
+  emit('close')
+}
 </script>
 
 <style lang="scss" scoped>

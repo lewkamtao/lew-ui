@@ -8,7 +8,7 @@ const open = () => {
     width: 400,
     content:
       "A new system update is ready to install. Please update within 1 minute.",
-    delay: 0,
+    duration: 0,
   });
 };
 const close = (id: string) => {

@@ -4,7 +4,7 @@ import NotificationContainer from './components/NotificationContainer.vue'
 export type NotificationParamsTyped = {
   title: string
   content: string
-  delay?: number
+  duration?: number
   showProgress?: boolean
   width?: number | string
 }
@@ -39,12 +39,12 @@ const createNotification = (type: string) => {
   return ({
     title,
     content,
-    delay = 3000,
+    duration = 3000,
     showProgress = false,
     width = 320
   }: NotificationParamsTyped) => {
     const container = createContainer()
-    const id = container?.add(type, title, content, delay, showProgress, width)
+    const id = container?.add(type, title, content, duration, showProgress, width)
     return {
       close: () => {
         container?.handleClose(id)

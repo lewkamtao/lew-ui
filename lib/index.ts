@@ -38,8 +38,8 @@ const install = (Vue: App): void => {
 
   Object.keys(methods).forEach((key) => {
     const methodInstance = methods[key as keyof typeof methods]
-    if (methodInstance.name) {
-      window[methodInstance.name] = methodInstance
+    if ('name' in methodInstance) {
+      (window as any)[methodInstance.name] = methodInstance
     }
   })
 }

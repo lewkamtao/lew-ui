@@ -4,7 +4,7 @@ const open = () => {
     title: 'New IKEA Collection Available',
     content:
       'Our new summer collection is now in stores. Visit us to discover the latest home inspiration.',
-    delay: 3500,
+    duration: 3500,
     width: 400,
     showProgress: true
   })
