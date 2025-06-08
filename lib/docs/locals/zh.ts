@@ -73,7 +73,9 @@ export default {
         title: '默认头像'
       },
       demo4: {
-        title: '形状'
+        title: '形状',
+        description:
+          '通过 shape 控制头像的形状, 可选值为 ```circle``` ```square``` ```sharp```。'
       },
       props: {
         size: '尺寸',
@@ -1831,12 +1833,24 @@ export default {
       demo1: {
         title: '基础用法'
       },
+      demo2: {
+        title: '触发方式'
+      },
+      demo3: {
+        title: '自定义触发器'
+      },
+      demo4: {
+        title: '点击气泡区域外是否自动关闭'
+      },
+      demo5: {
+        title: '加载状态'
+      },
       props: {
         trigger: '触发方式',
         placement: '位置',
         disabled: '禁用状态',
         loading: '加载状态',
-        hideOnClick: '点击时隐藏',
+        hideOnClick: '点击气泡区域外是否自动关闭',
         offset: '偏移量',
         popoverBodyClassName: '气泡内容类名',
         triggerTarget: '触发目标'
@@ -1855,6 +1869,12 @@ export default {
       demo2: {
         title: '点击触发'
       },
+      demo3: {
+        title: '延迟时间'
+      },
+      demo4: {
+        title: '支持HTML'
+      },
       props: {
         tips: '提示内容',
         placement: '位置',
@@ -1869,11 +1889,16 @@ export default {
       demo1: {
         title: '基础用法'
       },
+      demo2: {
+        title: '自定义图标大小'
+      },
+      demo3: {
+        title: '自定义提示信息'
+      },
       props: {
         tip: '提示信息',
-        placement: '提示位置',
-        trigger: '触发方式',
-        allowHTML: '允许 HTML'
+        iconSize: '图标大小',
+        visible: '是否显示'
       }
     },
     result: {

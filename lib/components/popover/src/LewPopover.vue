@@ -15,6 +15,36 @@ const triggerRef = ref();
 const bodyRef = ref();
 let instance: any;
 const watchOptions = { debounce: 250, maxWait: 1000 };
+let observer: MutationObserver | null = null;
+
+// 检查元素是否存在并销毁实例
+const checkAndDestroyInstance = () => {
+  if (instance && !document.contains(triggerRef.value)) {
+    instance.hide();
+    instance.destroy();
+    instance = null;
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+    }
+  }
+};
+
+// 初始化观察器
+const initObserver = () => {
+  if (observer) {
+    observer.disconnect();
+  }
+
+  observer = new MutationObserver(() => {
+    checkAndDestroyInstance();
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+};
 
 // 方向
 watchDebounced(
@@ -57,7 +87,8 @@ watchDebounced(
 watchDebounced(
   () => props.triggerTarget,
   (value: Element | string) => {
-    if (instance) {
+    console.log(value, 123);
+    if (instance && value) {
       instance.setProps({
         triggerTarget: value,
       });
@@ -85,6 +116,12 @@ const initTippy = () => {
   if (!trigger) {
     trigger = "mouseenter";
   }
+
+  // 确保元素存在
+  if (!triggerRef.value) {
+    return;
+  }
+
   instance = tippy(triggerRef.value, {
     theme: "light",
     trigger,
@@ -114,11 +151,10 @@ const initTippy = () => {
   if (disabled && instance) {
     instance.disable();
   }
-};
 
-onMounted(() => {
-  initTippy();
-});
+  // 初始化观察器
+  initObserver();
+};
 
 const emit = defineEmits(["show", "hide"]);
 
@@ -135,8 +171,17 @@ const refresh = () => {
 };
 
 onUnmounted(() => {
-  instance.hide();
-  instance.destroy();
+  if (instance) {
+    instance.hide();
+    instance.destroy();
+  }
+  if (observer) {
+    observer.disconnect();
+  }
+});
+
+onActivated(() => {
+  initTippy();
 });
 
 defineExpose({ show, hide, refresh });
@@ -168,7 +213,7 @@ defineExpose({ show, hide, refresh });
 <style lang="scss">
 .lew-popover {
   .lew-popover-trigger {
-    display: flex;
+    display: inline-flex;
   }
 }
 .lew-popover-body {

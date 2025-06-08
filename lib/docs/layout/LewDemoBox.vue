@@ -1,46 +1,46 @@
 <script setup lang="ts">
-import { LewCollapseTransition } from 'lew-ui'
-import { ChevronDown, ChevronUp } from 'lucide-vue-next'
-import docsLocale from '@/locals'
-
+import { LewCollapseTransition } from "lew-ui";
+import { ChevronDown, ChevronUp } from "lucide-vue-next";
+import docsLocale from "@/locals";
+import { renderDescription } from "@/lib/utils";
 defineProps({
   title: {
     type: String,
-    default: ''
+    default: "",
   },
   tag: {
     type: String,
-    default: ''
+    default: "",
   },
   tipsContent: {
     type: String,
-    default: ''
+    default: "",
   },
   tipsType: {
     type: String,
-    default: 'info'
+    default: "info",
   },
   tipsTitle: {
     type: String,
-    default: ''
+    default: "",
   },
   description: {
     type: String,
-    default: ''
+    default: "",
   },
   code: {
     type: String,
-    default: ''
-  }
-})
+    default: "",
+  },
+});
 
-const isShowCode = ref(false)
+const isShowCode = ref(false);
 const checkHasContent = computed(() => (text: string) => {
-  if (text && text.indexOf('components.') !== 0) {
-    return true
+  if (text && text.indexOf("components.") !== 0) {
+    return true;
   }
-  return false
-})
+  return false;
+});
 </script>
 
 <template>
@@ -62,9 +62,11 @@ const checkHasContent = computed(() => (text: string) => {
       :title="tipsTitle"
       :content="tipsContent"
     />
-    <div v-if="checkHasContent(description)" class="desc">
-      {{ description }}
-    </div>
+    <div
+      v-if="checkHasContent(description)"
+      class="desc"
+      v-html="renderDescription(description)"
+    ></div>
     <div class="demo-item">
       <div class="demo-cp lew-scrollbar">
         <slot></slot>
@@ -83,15 +85,15 @@ const checkHasContent = computed(() => (text: string) => {
         </div>
         {{
           isShowCode
-            ? docsLocale.t('base.close')
-            : docsLocale.t('base.showCode')
+            ? docsLocale.t("base.close")
+            : docsLocale.t("base.showCode")
         }}
       </div>
     </div>
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .demo-box {
   margin: 50px 0px 50px 0px;
   .desc {

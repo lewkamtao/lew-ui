@@ -4,12 +4,13 @@
       v-tooltip="{
         content:
           'Husky generally refers to the Siberian Husky. Husky generally refers to the Siberian Husky. Husky generally refers to the Siberian Husky.',
-        trigger: 'click',
+        delay: [500, 1000],
       }"
       oversize
-      color="green"
+      color="blue"
       round
-      text="Click to show"
+      type="ghost"
+      text="Delay 500ms show, 1000ms hide"
     />
   </lew-flex>
 </template>

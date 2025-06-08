@@ -1,25 +1,18 @@
 <script setup lang="ts">
-const visible = ref(false)
+const visible = ref(false);
 
 const openLoading = () => {
-  visible.value = true
+  visible.value = true;
   setTimeout(() => {
-    visible.value = false
-    LewMessage.success('Loading complete.')
-  }, 2000)
-}
+    visible.value = false;
+    LewMessage.success("Loading complete.");
+  }, 2000);
+};
 </script>
 
 <template>
-  <lew-flex
-    v-loading="{ visible, tip: 'Data loading...' }"
-    class="demo-card"
-    y="start"
-    x="start"
-  >
-    <lew-button type="ghost" @click="openLoading"
-      >Click to open loading</lew-button
-    >
+  <lew-flex v-loading="{ visible }" class="demo-card" y="start" x="start">
+    <lew-button @click="openLoading">Click to open loading</lew-button>
   </lew-flex>
 </template>
 

@@ -2,7 +2,7 @@ import type { ExtractPropTypes, PropType } from 'vue'
 import type { ObjectFit } from 'lew-ui/components/image/src/props'
 type AvatarPlacement = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 type AvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy'
-type AvatarShape = 'circle' | 'square'
+type AvatarShape = 'circle' | 'square' | 'sharp'
 type AvatarSize = number | string
 
 export const avatarProps = {
@@ -28,8 +28,8 @@ export const avatarProps = {
     default: 'square',
     description: '头像形状',
     validator(value: AvatarShape): boolean {
-      if (!['circle', 'square'].includes(value)) {
-        console.warn(`[LewAvatar] shape 必须是 'circle' 或 'square'`)
+      if (!['circle', 'square', 'sharp'].includes(value)) {
+        console.warn(`[LewAvatar] shape 必须是 'circle'、'square' 或 'sharp'`)
         return false
       }
       return true

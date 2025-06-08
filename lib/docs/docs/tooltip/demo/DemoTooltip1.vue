@@ -1,123 +1,128 @@
+<script setup lang="ts">
+const content = ref(
+  "People are busy every day, pursuing money and status, indulging in trivial matters and worldly affairs. These things fill up life. In the end, how many people with such a life without blank spaces have won others but lost themselves?"
+);
+</script>
+
 <template>
   <lew-flex direction="y" x="center" gap="30">
     <lew-flex width="400" mode="between">
       <lew-button
         v-tooltip="{
-          content:
-            '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
+          content,
           placement: 'top-start',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
+        type="ghost"
         text="top-start"
       />
       <lew-button
         v-tooltip="{
-          content:
-            '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
+          content,
           placement: 'top',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
+        type="ghost"
         text="top"
       />
       <lew-button
         v-tooltip="{
-          content:
-            '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
+          content,
           placement: 'top-end',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
+        type="ghost"
         text="top-end"
       />
     </lew-flex>
     <lew-flex width="400" mode="between">
       <lew-button
         v-tooltip="{
-          content:
-            '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
+          content,
           placement: 'left-start',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
+        type="ghost"
         text="left-start"
       />
 
       <lew-button
         v-tooltip="{
-          content:
-            '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
+          content,
           placement: 'right-start',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
+        type="ghost"
         text="right-start"
       />
     </lew-flex>
     <lew-flex width="400" mode="between">
       <lew-button
         v-tooltip="{
-          content:
-            '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
+          content,
           placement: 'left',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
+        type="ghost"
         text="left"
       />
-
       <lew-button
         v-tooltip="{
-          content:
-            '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
+          content,
           placement: 'right',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
+        type="ghost"
         text="right"
       />
     </lew-flex>
     <lew-flex width="400" mode="between">
       <lew-button
         v-tooltip="{
-          content:
-            '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
+          content,
           placement: 'left-end',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
+        type="ghost"
         text="left-end"
       />
 
       <lew-button
         v-tooltip="{
-          content:
-            '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
+          content,
           placement: 'right-end',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
+        type="ghost"
         text="right-end"
       />
     </lew-flex>
     <lew-flex width="400" mode="between">
       <lew-button
         v-tooltip="{
-          content:
-            '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
+          content,
           placement: 'bottom-start',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
+        type="ghost"
         text="bottom-start"
       />
       <lew-button
         v-tooltip="{
-          content:
-            '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
+          content,
           placement: 'bottom',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
+        type="ghost"
         text="bottom"
       />
       <lew-button
         v-tooltip="{
-          content:
-            '人们每天忙忙碌碌，争取金钱和地位，沉溺于琐事和俗务，这些事物充斥着人生。这种没有空白的生命，最终有几个不是赢了别人，输了自己。',
+          content,
           placement: 'bottom-end',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
+        type="ghost"
         text="bottom-end"
       />
     </lew-flex>

@@ -1,24 +1,40 @@
 <script setup lang="ts">
-const data = ref({
-  name: "Steve Jobs",
-  title: "Co-founder of Apple Inc.",
-  birth: "February 24, 1955",
-  death: "October 5, 2011",
-  achievements: [
-    "Founded Apple Inc.",
-    "Launched Macintosh computer",
-    "Founded NeXT",
-    "Acquired Pixar",
-    "Returned to Apple and launched iPod, iPhone, iPad",
-  ],
-  quote: "Stay hungry, stay foolish.",
-});
+const data = ref<any>({});
+
+const loading = ref(false);
+
+const show = () => {
+  loading.value = true;
+  setTimeout(() => {
+    loading.value = false;
+    data.value = {
+      name: "Steve Jobs",
+      title: "Co-founder of Apple Inc.",
+      birth: "February 24, 1955",
+      death: "October 5, 2011",
+      achievements: [
+        "Founded Apple Inc.",
+        "Launched Macintosh computer",
+        "Founded NeXT",
+        "Acquired Pixar",
+        "Returned to Apple and launched iPod, iPhone, iPad",
+      ],
+      quote: "Stay hungry, stay foolish.",
+    };
+  }, 1000);
+};
 </script>
 
 <template>
-  <lew-popover trigger="hover" placement="bottom-start">
+  <lew-popover
+    trigger="click"
+    placement="bottom-start"
+    :loading="loading"
+    @show="show"
+  >
     <template #trigger>
       <lew-avatar
+        style="cursor: pointer"
         shape="circle"
         src="https://cdn.jsdelivr.net/gh/lewkamtao/LewCloud@master/lew/146d572968e09c8bdc4f45ef58ca110_cn9qli_.jpeg"
       />

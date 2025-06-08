@@ -71,3 +71,7 @@ export const getAssetsFile = ({
 export const getComponentIcon = (name: string) => {
   return getAssetsFile({ name: `${name}.svg`, type: 'icon' })
 }
+
+export const renderDescription = (text: string) => {
+  return text.replace(/```(\w+)```/g, '<span class="lew-docs-tag">$1</span>')
+}
