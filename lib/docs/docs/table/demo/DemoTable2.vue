@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { cloneDeep } from 'lodash-es'
+
 const dataSource: any = ref([
   {
     id: 1,
@@ -292,33 +294,53 @@ const formatPerformance = (performance: number) => {
 const getSortTooltipComponent = (row: any) => {
   return h('div', {}, `${row.brand} ${row.name} ${row.memory}`)
 }
+
+const loading = ref(false)
+
+const update = () => {
+  loading.value = true
+  setTimeout(() => {
+    dataSource.value = cloneDeep(
+      [...dataSource.value]
+        .map((item, index) => ({
+          ...item,
+          id: index + 1
+        }))
+        .sort(() => Math.random() - 0.5)
+    )
+    loading.value = false
+  }, 1000)
+}
 </script>
 
 <template>
-  <lew-table
-    :data-source="dataSource"
-    :columns="columns"
-    :sort-tooltip-custom-render="getSortTooltipComponent"
-  >
-    <template #performance="{ row }">
-      {{ formatPerformance(row.performance) }}
-    </template>
-    <template #features="{ row }">
-      <lew-flex :gap="5" x="start" wrap>
-        <lew-tag
-          v-for="(item, index) in row.features"
-          :key="index"
-          size="small"
-          type="light"
-          color="blue"
-          >{{ item }}</lew-tag
-        >
-      </lew-flex>
-    </template>
-    <template #price="{ row }"> ¥{{ row.price }} </template>
-    <template #tdp="{ row }"> {{ row.tdp }}W </template>
-    <template #manufacturingProcess="{ row }">
-      {{ row.manufacturingProcess }}
-    </template>
-  </lew-table>
+  <lew-button @click="update">Update</lew-button>
+  <lew-flex v-loading="{ visible: loading }">
+    <lew-table
+      :data-source="dataSource"
+      :columns="columns"
+      :sort-tooltip-custom-render="getSortTooltipComponent"
+    >
+      <template #performance="{ row }">
+        {{ formatPerformance(row.performance) }}
+      </template>
+      <template #features="{ row }">
+        <lew-flex :gap="5" x="start" wrap>
+          <lew-tag
+            v-for="(item, index) in row.features"
+            :key="index"
+            size="small"
+            type="light"
+            color="blue"
+            >{{ item }}</lew-tag
+          >
+        </lew-flex>
+      </template>
+      <template #price="{ row }"> ¥{{ row.price }} </template>
+      <template #tdp="{ row }"> {{ row.tdp }}W </template>
+      <template #manufacturingProcess="{ row }">
+        {{ row.manufacturingProcess }}
+      </template>
+    </lew-table>
+  </lew-flex>
 </template>

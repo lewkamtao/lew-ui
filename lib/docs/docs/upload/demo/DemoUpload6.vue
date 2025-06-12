@@ -6,6 +6,6 @@ const fileList = ref<UploadFileItem[]>([])
 
 <template>
   <lew-flex width="500px" x="start">
-    <lew-upload v-model="fileList" limit="3" />
+    <lew-upload v-model="fileList" :limit="3" />
   </lew-flex>
 </template>

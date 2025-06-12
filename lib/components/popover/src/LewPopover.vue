@@ -1,74 +1,44 @@
 <script setup lang="ts">
-import tippy from "tippy.js";
-import { watchDebounced } from "@vueuse/core";
-import { LewLoading } from "lew-ui";
-import { popoverProps } from "./props";
+import tippy from 'tippy.js'
+import { watchDebounced } from '@vueuse/core'
+import { LewLoading } from 'lew-ui'
+import { popoverProps } from './props'
 
 // 获取app
-const app = getCurrentInstance()?.appContext.app;
-if (app && !app.directive("loading")) {
-  app.use(LewLoading);
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('loading')) {
+  app.use(LewLoading)
 }
 
-const props = defineProps(popoverProps);
-const triggerRef = ref();
-const bodyRef = ref();
-let instance: any;
-const watchOptions = { debounce: 250, maxWait: 1000 };
-let observer: MutationObserver | null = null;
-
-// 检查元素是否存在并销毁实例
-const checkAndDestroyInstance = () => {
-  if (instance && !document.contains(triggerRef.value)) {
-    instance.hide();
-    instance.destroy();
-    instance = null;
-    if (observer) {
-      observer.disconnect();
-      observer = null;
-    }
-  }
-};
-
-// 初始化观察器
-const initObserver = () => {
-  if (observer) {
-    observer.disconnect();
-  }
-
-  observer = new MutationObserver(() => {
-    checkAndDestroyInstance();
-  });
-
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true,
-  });
-};
+const props = defineProps(popoverProps)
+const triggerRef = ref()
+const bodyRef = ref()
+let instance: any
+const watchOptions = { debounce: 250, maxWait: 1000 }
 
 // 方向
 watchDebounced(
   () => props.placement,
   (value: string) => {
     instance.setProps({
-      placement: value,
-    });
+      placement: value
+    })
   },
   watchOptions
-);
+)
 
 // 禁用
 watchDebounced(
   () => props.disabled,
   (value: boolean) => {
     if (value) {
-      instance.disable();
+      instance.disable()
     } else {
-      instance.enable();
+      instance.enable()
     }
   },
   watchOptions
-);
+)
 
 // trigger
 watchDebounced(
@@ -76,115 +46,114 @@ watchDebounced(
   (value: string) => {
     if (instance) {
       instance.setProps({
-        trigger: value,
-      });
+        trigger: value
+      })
     }
   },
   watchOptions
-);
+)
 
 // trigger
 watchDebounced(
   () => props.triggerTarget,
   (value: Element | string) => {
-    console.log(value, 123);
-    if (instance && value) {
+    if (instance) {
       instance.setProps({
-        triggerTarget: value,
-      });
+        triggerTarget: value
+      })
     }
   },
   watchOptions
-);
+)
 // offset
 watchDebounced(
   () => props.offset,
   (value: number[]) => {
     if (instance) {
       instance.setProps({
-        offset: value,
-      });
+        offset: value
+      })
     }
   },
   watchOptions
-);
+)
 const initTippy = () => {
-  let { placement, triggerTarget, offset, trigger, disabled }: any = props;
-  if (trigger === "hover") {
-    trigger = "mouseenter";
+  if (instance) {
+    return
+  }
+
+  let { placement, triggerTarget, offset, trigger, disabled }: any = props
+  if (trigger === 'hover') {
+    trigger = 'mouseenter'
   }
   if (!trigger) {
-    trigger = "mouseenter";
+    trigger = 'mouseenter'
   }
-
-  // 确保元素存在
-  if (!triggerRef.value) {
-    return;
-  }
-
   instance = tippy(triggerRef.value, {
-    theme: "light",
+    theme: 'light',
     trigger,
     triggerTarget,
     content: bodyRef.value,
-    animation: "shift-away-subtle",
+    animation: 'shift-away-subtle',
     interactive: true,
-    hideOnClick: trigger !== "mouseenter" ? props.hideOnClick : (false as any),
+    hideOnClick: trigger !== 'mouseenter' ? props.hideOnClick : (false as any),
     placement,
     duration: [250, 250],
     arrow: false,
     offset,
-    delay: trigger === "mouseenter" ? [120, 120] : undefined,
+    delay: trigger === 'mouseenter' ? [120, 120] : undefined,
     appendTo: () => document.body,
     allowHTML: true,
-    maxWidth: "none",
+    maxWidth: 'none',
     onShow() {
-      emit("show");
+      emit('show')
     },
     onHide() {
-      emit("hide");
-    },
-  });
-  instance.popper.children[0].setAttribute("data-lew", "popover");
+      emit('hide')
+    }
+  })
+  instance.popper.children[0].setAttribute('data-lew', 'popover')
 
   // 判断入参
   if (disabled && instance) {
-    instance.disable();
+    instance.disable()
   }
-
-  // 初始化观察器
-  initObserver();
-};
-
-const emit = defineEmits(["show", "hide"]);
-
-const show = () => {
-  instance.show();
-};
-
-const hide = () => {
-  instance.hide();
-};
-
-const refresh = () => {
-  instance.setProps({});
-};
-
-onUnmounted(() => {
-  if (instance) {
-    instance.hide();
-    instance.destroy();
-  }
-  if (observer) {
-    observer.disconnect();
-  }
-});
+}
 
 onActivated(() => {
-  initTippy();
-});
+  initTippy()
+})
 
-defineExpose({ show, hide, refresh });
+onMounted(() => {
+  initTippy()
+})
+
+onDeactivated(() => {
+  instance.hide()
+  instance.destroy()
+  instance = null
+})
+
+const emit = defineEmits(['show', 'hide'])
+
+const show = () => {
+  instance.show()
+}
+
+const hide = () => {
+  instance.hide()
+}
+
+const refresh = () => {
+  instance.setProps({})
+}
+
+onUnmounted(() => {
+  instance.hide()
+  instance.destroy()
+})
+
+defineExpose({ show, hide, refresh })
 </script>
 
 <template>
@@ -197,12 +166,12 @@ defineExpose({ show, hide, refresh });
       class="lew-popover-body"
       v-loading="{
         visible: loading,
-        iconSize: 16,
+        iconSize: 16
       }"
       :class="popoverBodyClassName"
       :style="{
         borderRadius: 'var(--lew-border-radius-small)',
-        overflow: loading ? 'hidden' : '',
+        overflow: loading ? 'hidden' : ''
       }"
     >
       <slot name="popover-body" :show="show" :hide="hide"></slot>
@@ -213,7 +182,7 @@ defineExpose({ show, hide, refresh });
 <style lang="scss">
 .lew-popover {
   .lew-popover-trigger {
-    display: inline-flex;
+    display: flex;
   }
 }
 .lew-popover-body {

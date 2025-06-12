@@ -52,7 +52,7 @@ const columns = [
   },
   {
     title: "Brand",
-    width: 100,
+    width: 120,
     field: "brand",
   },
   {
