@@ -976,7 +976,10 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
       :class="{
         'lew-table-bordered': bordered,
         'lew-table-scroll': state.isScroll,
-        'lew-table-dragging': state.isDragging
+        'lew-table-dragging': state.isDragging,
+        'lew-table-has-fixed-left':
+          getFixedColumns('left').length > 0 || checkable || sortable,
+        'lew-table-has-fixed-right': getFixedColumns('right').length > 0
       }"
       :style="`max-height: ${any2px(maxHeight)}`"
       @scroll="updateScrollState"
@@ -1426,7 +1429,7 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
   }
 
   .lew-table-tr:last-child {
-    border-bottom: 1px var(--lew-form-border-color) solid;
+    border-bottom: none;
   }
 
   .lew-table-head {
@@ -1616,5 +1619,67 @@ const nonFixedHeaderColumns = computed(() => headerColumns.value.nonFixed)
   left: 0px;
   width: 100%;
   height: 100%;
+}
+
+// 修改边框控制规则
+.lew-table {
+  box-sizing: border-box;
+  &.lew-table-bordered {
+    .lew-table-main {
+      border-left: var(--lew-table-border);
+      border-right: var(--lew-table-border);
+    }
+
+    &:not(.lew-table-has-fixed-left) {
+      .lew-table-main {
+        border-left: none;
+      }
+    }
+
+    &:not(.lew-table-has-fixed-right) {
+      .lew-table-main {
+        border-right: none;
+      }
+    }
+
+    .lew-table-td {
+      border-right: var(--lew-table-border);
+    }
+
+    .lew-table-main {
+      .lew-table-td:last-child {
+        border-right: none;
+      }
+    }
+  }
+
+  &.lew-table-head-bordered {
+    .lew-table-main {
+      border-left: var(--lew-table-border);
+      border-right: var(--lew-table-border);
+    }
+
+    &:not(.lew-table-has-fixed-left) {
+      .lew-table-main {
+        border-left: none;
+      }
+    }
+
+    &:not(.lew-table-has-fixed-right) {
+      .lew-table-main {
+        border-right: none;
+      }
+    }
+
+    .lew-table-td {
+      border-right: var(--lew-table-border);
+    }
+
+    .lew-table-main {
+      .lew-table-td:last-child {
+        border-right: none;
+      }
+    }
+  }
 }
 </style>

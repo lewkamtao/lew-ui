@@ -23,7 +23,7 @@ const dropdownOptions: any = computed(() => {
 </script>
 
 <template>
-  <lew-flex class="lew-action-box" :gap="5">
+  <lew-flex class="lew-action-box" :gap="5" :x="x">
     <template v-for="(option, index) in visibleOptions">
       <component
         @click="option.onClick?.()"
@@ -38,7 +38,6 @@ const dropdownOptions: any = computed(() => {
         />
         <component
           v-if="isVueComponent(option.label) && !iconOnly"
-          @click="option.onClick?.()"
           :is="formatComponent(option.label)"
         />
         <template v-else-if="!iconOnly">
