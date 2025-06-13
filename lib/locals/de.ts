@@ -11,8 +11,10 @@ export default {
   },
   inputTag: {
     placeholder: 'Tag eingeben und Enter drücken zum Hinzufügen',
-    maxLength: 'Sie haben das Limit von {maxLength} Tags erreicht, löschen Sie einige, um weitere hinzuzufügen',
-    duplicate: 'Dieser Tag existiert bereits, bitte geben Sie einen neuen Tag ein'
+    maxLength:
+      'Sie haben das Limit von {maxLength} Tags erreicht, löschen Sie einige, um weitere hinzuzufügen',
+    duplicate:
+      'Dieser Tag existiert bereits, bitte geben Sie einen neuen Tag ein'
   },
   select: {
     placeholder: 'Bitte auswählen'
@@ -21,9 +23,14 @@ export default {
     placeholder: 'Bitte auswählen'
   },
   cascader: {
-    placeholder: 'Bitte auswählen'
+    placeholder: 'Bitte auswählen',
+    closeText: 'Schließen',
+    okText: 'OK'
   },
   textarea: {
+    placeholder: 'Bitte eingeben'
+  },
+  inputNumber: {
     placeholder: 'Bitte eingeben'
   },
   datePicker: {
@@ -40,6 +47,35 @@ export default {
     placeholderStart: 'Startdatum',
     placeholderEnd: 'Enddatum'
   },
+  inputTable: {
+    addText: 'Hinzufügen',
+    deleteConfirm: 'Löschen bestätigen',
+    delete: 'Löschen',
+    cancel: 'Abbrechen',
+    deleteConfirmContent: 'Sind Sie sicher, dass Sie diese Daten löschen möchten? Diese Aktion wird sofort wirksam, bitte seien Sie vorsichtig!',
+    minRows: 'Minimale Zeilenanzahl erreicht, Löschen nicht möglich',
+    maxRows: 'Maximale Zeilenanzahl erreicht, Hinzufügen nicht möglich',
+    uniqueFieldExist: 'Dieses {label} existiert bereits. Bitte geben Sie ein eindeutiges {label} ein.',
+    save: 'Speichern',
+    modelTitle: 'Daten hinzufügen',
+    editTitle: 'Daten bearbeiten'
+  },
+  drawer: {
+    closeText: 'Schließen',
+    okText: 'OK'
+  },
+  modal: {
+    closeText: 'Schließen',
+    okText: 'OK'
+  },
+  dialog: {
+    cancelText: 'Abbrechen',
+    okText: 'OK'
+  },
+  popok: {
+    cancelText: 'Abbrechen',
+    okText: 'OK'
+  },
   upload: {
     dropActive: 'Loslassen, um mit dem Upload zu beginnen',
     click: 'Klicken zum Hochladen, ',
@@ -50,6 +86,7 @@ export default {
     maxFileSize: 'Einzelne Datei nicht größer als {maxFileSize}'
   },
   pagination: {
-    pageSize: '{pageSize} pro Seite'
+    pageSize: '{pageSize} pro Seite',
+    jumpTo: 'Springen zu'
   }
 }

@@ -427,15 +427,6 @@ onUnmounted(() => {
           {{ $t('home.getStarted') }}
           <Icon type="chevron-right" />
         </lew-button>
-        <a href="/#/form-engine" target="_blank">
-          <lew-button
-            round
-            :text="$t('home.formEngine')"
-            style="margin-top: 20px"
-            color="primary"
-            type="light"
-          />
-        </a>
       </lew-flex>
     </div>
     <div class="home">
@@ -629,7 +620,11 @@ onUnmounted(() => {
               </template>
               <template #popover-body>
                 <div class="popover-body" style="width: 240px">
-                  <lew-input v-model="v" placeholder="Enter password" />
+                  <lew-input
+                    width="100%"
+                    v-model="v"
+                    placeholder="Enter password"
+                  />
                   <lew-flex x="end" style="margin-top: 15px">
                     <lew-button
                       text="Cancel"

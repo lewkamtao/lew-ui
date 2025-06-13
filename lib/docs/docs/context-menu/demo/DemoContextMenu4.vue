@@ -1,89 +1,113 @@
 <script lang="ts" setup>
-const options = ref([
+const options = ref<any[]>([
   {
-    label: '设置',
-    value: 'setting',
+    label: 'Language',
+    value: 'language',
     children: [
       {
-        label: '语言',
-        value: 'language',
-        children: [
-          {
-            label: '中文（Chinese',
-            value: 'chinese',
-            checked: true,
-            checkbox: true
-          },
-          {
-            label: '英语（English）',
-            value: 'english',
-            checkbox: true
-          }
-        ]
-      },
-
-      {
-        label: '主题',
-        value: 'theme',
-        children: [
-          {
-            label: 'Light',
-            value: 'light',
-            type: 'radio',
-            checked: true,
-            checkbox: true
-          },
-          {
-            label: 'Dark',
-            type: 'radio',
-            value: 'dark',
-            checkbox: true
-          }
-        ]
+        label: 'Chinese',
+        value: 'chinese',
+        checked: true,
+        checkable: true,
+        onClick: (item: any) => setTheme(item, 'language')
       },
       {
-        label: '字体样式（编译器）',
-        value: 'font'
+        label: 'English',
+        value: 'english',
+        checkable: true,
+        onClick: (item: any) => setTheme(item, 'language')
       }
     ]
   },
   {
-    label: '关于',
+    label: 'Theme',
+    value: 'theme',
+    children: [
+      {
+        label: 'Light',
+        value: 'light',
+        type: 'radio',
+        checked: true,
+        checkable: true,
+        onClick: (item: any) => setTheme(item, 'theme')
+      },
+      {
+        label: 'Dark',
+        type: 'radio',
+        value: 'dark',
+        checkable: true,
+        onClick: (item: any) => setTheme(item, 'theme')
+      }
+    ]
+  },
+  {
+    label: 'Font Style (Editor)',
+    value: 'font'
+  },
+  {
+    label: 'About',
     value: 'about'
   },
   {
     isDividerLine: true
   },
   {
-    label: '帮助',
+    label: 'Help',
     value: 'help'
   },
   {
-    label: '是否为最新',
-    checkbox: true,
+    label: 'Check for Updates',
+    checkable: true,
     checked: true,
-    value: 'check-update'
+    value: 'check-update',
+    onClick: (item: any) => setUpdate(item)
   }
 ])
-const selectHandler = (e: any) => {
-  const { item, parent } = e
-  parent.forEach((item: any) => {
-    item.checked = false
-  })
-  item.checked = true
-  LewMessage.info(`你点击了：${item.value} `)
+
+const setTheme = (item: any, type = 'theme') => {
+  // Find the index of the Theme item
+  const themeIndex = options.value.findIndex((item: any) => item.value === type)
+  if (themeIndex !== -1 && options.value[themeIndex].children) {
+    // Create new children array to maintain reactivity
+    const newChildren = options.value[themeIndex].children!.map(
+      (child: any) => {
+        if (child.checkable) {
+          return {
+            ...child,
+            checked: child.label === item.label
+          }
+        }
+        return child
+      }
+    )
+
+    // Update the entire options array to trigger reactive update
+    let newOptions = options.value.map((item: any, index: number) => {
+      if (index === themeIndex) {
+        return {
+          ...item,
+          children: newChildren
+        }
+      }
+      return item
+    })
+    options.value = newOptions
+  }
+}
+
+const setUpdate = (item: any) => {
+  item.checked = !item.checked
 }
 </script>
 <template>
   <lew-flex>
     <div
       v-context-menu="{
-        options,
-        selectHandler
+        options
       }"
       class="box"
     >
-      右键点击此处
+      Right-click here
     </div>
   </lew-flex>
 </template>
@@ -98,6 +122,6 @@ const selectHandler = (e: any) => {
   background-color: var(--lew-bgcolor-2);
   border-radius: var(--lew-border-radius-small);
   font-size: 16px;
-  color: var(--lew-text-color-7);
+  color: var(--lew-text-color-5);
 }
 </style>

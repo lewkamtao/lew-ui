@@ -11,7 +11,8 @@ export default {
   },
   inputTag: {
     placeholder: 'Escriba y presione Enter para añadir una etiqueta',
-    maxLength: 'Ha alcanzado el límite de {maxLength} etiquetas, elimine algunas para continuar añadiendo',
+    maxLength:
+      'Ha alcanzado el límite de {maxLength} etiquetas, elimine algunas para continuar añadiendo',
     duplicate: 'Esta etiqueta ya existe, por favor introduzca una nueva'
   },
   select: {
@@ -21,9 +22,14 @@ export default {
     placeholder: 'Por favor, seleccione'
   },
   cascader: {
-    placeholder: 'Por favor, seleccione'
+    placeholder: 'Por favor, seleccione',
+    closeText: 'Cerrar',
+    okText: 'Aceptar'
   },
   textarea: {
+    placeholder: 'Por favor, introduzca'
+  },
+  inputNumber: {
     placeholder: 'Por favor, introduzca'
   },
   datePicker: {
@@ -40,6 +46,35 @@ export default {
     placeholderStart: 'Fecha de inicio',
     placeholderEnd: 'Fecha de fin'
   },
+  inputTable: {
+    addText: 'Añadir',
+    deleteConfirm: 'Confirmar eliminación',
+    delete: 'Eliminar',
+    cancel: 'Cancelar',
+    deleteConfirmContent: '¿Está seguro de que desea eliminar estos datos? Esta operación se aplicará inmediatamente, ¡por favor tenga cuidado!',
+    minRows: 'Se ha alcanzado el límite mínimo de filas, no se puede eliminar',
+    maxRows: 'Se ha alcanzado el límite máximo de filas, no se puede añadir',
+    uniqueFieldExist: 'Este {label} ya existe. Por favor, introduzca un {label} único.',
+    save: 'Guardar',
+    modelTitle: 'Añadir datos',
+    editTitle: 'Editar datos'
+  },
+  drawer: {
+    closeText: 'Cerrar',
+    okText: 'Aceptar'
+  },
+  modal: {
+    closeText: 'Cerrar',
+    okText: 'Aceptar'
+  },
+  dialog: {
+    cancelText: 'Cancelar',
+    okText: 'Aceptar'
+  },
+  popok: {
+    cancelText: 'Cancelar',
+    okText: 'Aceptar'
+  },
   upload: {
     dropActive: 'Suelte para comenzar la carga',
     click: 'Haga clic para cargar, ',
@@ -50,6 +85,7 @@ export default {
     maxFileSize: 'Cada archivo no debe exceder {maxFileSize}'
   },
   pagination: {
-    pageSize: '{pageSize} por página'
+    pageSize: '{pageSize} por página',
+    jumpTo: 'Ir a'
   }
 }

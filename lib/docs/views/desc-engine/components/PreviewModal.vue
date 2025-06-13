@@ -23,12 +23,12 @@ defineExpose({ open })
     v-model:visible="visible"
     closeOnClickOverlay
     closeByEsc
-    :cancelProps="{
-      text: '关闭'
+    :closeButtonProps="{
+      request: () => {
+        visible = false
+      }
     }"
     hideOkButton
-    @ok="ok"
-    @cancel="visible = false"
     title="预览效果"
   >
     <div class="preview-modal-content lew-scrollbar">

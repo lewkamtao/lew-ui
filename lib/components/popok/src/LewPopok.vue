@@ -1,34 +1,43 @@
-<!-- filename: Popover.vue -->
 <script setup lang="ts">
-import { LewButton, LewPopover } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { popokProps } from './props'
+import { LewButton, LewPopover } from "lew-ui";
+import { any2px } from "lew-ui/utils";
+import Icon from "lew-ui/utils/Icon.vue";
+import { popokButtonProps } from "./props";
+import { LewColor } from "lew-ui";
+import { locale } from "lew-ui";
+const props = defineProps(popokButtonProps);
 
-const props = defineProps(popokProps)
+const lewPopoverRef = ref();
+const okLoading = ref(false);
+const cancelLoading = ref(false);
+const okRef = ref();
 
-const lewPopoverRef = ref()
+const handleAction = async (action: "ok" | "cancel") => {
+  const actionFunction = props[action];
+  const loadingRef = action === "ok" ? okLoading : cancelLoading;
 
-const ok = () => {
-  if (!props.okProps.request) {
-    hide()
+  if (typeof actionFunction === "function") {
+    loadingRef.value = true;
+    const result = await actionFunction();
+    if (result !== false) {
+      hide();
+    }
+    loadingRef.value = false;
   }
-  emit('ok')
-}
+};
 
-const cancel = () => {
-  if (!props.cancelProps.request) {
-    hide()
-  }
-  emit('cancel')
-}
+const ok = () => handleAction("ok");
+const cancel = () => handleAction("cancel");
 
 const hide = () => {
-  lewPopoverRef.value.hide()
-}
-defineExpose({ hide })
+  lewPopoverRef.value.hide();
+};
 
-const emit = defineEmits(['show', 'ok', 'cancel'])
+onMounted(() => {
+  nextTick(() => {
+    if (okRef.value) okRef.value.focus();
+  });
+});
 </script>
 
 <template>
@@ -37,7 +46,6 @@ const emit = defineEmits(['show', 'ok', 'cancel'])
     class="lew-popok"
     :trigger="trigger"
     :placement="placement"
-    @show="emit('show')"
   >
     <template #trigger>
       <slot></slot>
@@ -46,7 +54,7 @@ const emit = defineEmits(['show', 'ok', 'cancel'])
       <div
         class="lew-popok-body"
         :style="{
-          width: any2px(width)
+          width: any2px(width),
         }"
       >
         <div class="lew-popok-left">
@@ -57,23 +65,21 @@ const emit = defineEmits(['show', 'ok', 'cancel'])
           <div v-if="content" class="lew-popok-content">{{ content }}</div>
           <div class="lew-popok-footer">
             <lew-button
-              v-bind="{
-                text: '取消',
-                size: 'small',
-                type: 'text',
-                color: 'normal',
-                ...(cancelProps as any)
-              }"
-              @click="cancel"
+              :text="cancelText || locale.t('popok.cancelText')"
+              color="gray"
+              type="light"
+              size="small"
+              :loading="cancelLoading"
+              @click.stop="cancel"
             />
             <lew-button
-              v-bind="{
-                text: '确定',
-                color: type,
-                size: 'small',
-                ...(okProps as any)
-              }"
-              @click="ok"
+              ref="okRef"
+              :text="okText || locale.t('popok.okText')"
+              type="fill"
+              :color="type as LewColor"
+              size="small"
+              :loading="okLoading"
+              @click.stop="ok"
             />
           </div>
         </div>
@@ -93,7 +99,7 @@ const emit = defineEmits(['show', 'ok', 'cancel'])
 
   .lew-popok-left {
     width: 30px;
-    margin-right: 12px;
+    margin-right: 5px;
 
     .lew-popok-icon-success {
       color: var(--lew-color-success);

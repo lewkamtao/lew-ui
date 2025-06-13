@@ -1,21 +1,46 @@
-import type { ButtonProps } from '../../button/index'
+import { LewColor } from 'lew-ui'
 import type { PopoverPlacement, PopoverTrigger } from '../../popover/index'
-
-export const popokProps = {
+export const popokButtonProps = {
   type: {
     type: String,
-    default: 'warning',
-    description: '弹出框类型',
+    default: 'error',
+    description: '对话框类型',
     validator: (value: string) => {
-      const validTypes = ['success', 'warning', 'error', 'info']
-      if (!validTypes.includes(value)) {
+      const validTypes: LewColor[] = [
+        'primary',
+        'success',
+        'warning',
+        'error',
+        'info'
+      ]
+      if (!validTypes.includes(value as LewColor)) {
         console.warn(
-          `[LewPopok] 类型 "${value}" 无效。请使用 ${validTypes.join(', ')} 中的一个。`
+          `[LewPopok] 无效的类型: ${value}。请使用 ${validTypes.join(', ')} 中的一个。`
         )
         return false
       }
       return true
     }
+  },
+  okText: {
+    type: String,
+    defaultLocale: true,
+    description: '确认按钮文本'
+  },
+  cancelText: {
+    type: String,
+    defaultLocale: true,
+    description: '取消按钮文本'
+  },
+  ok: {
+    type: Function,
+    default: () => true,
+    description: '点击确认按钮时的回调函数'
+  },
+  cancel: {
+    type: Function,
+    default: () => true,
+    description: '点击取消按钮时的回调函数'
   },
   width: {
     type: [String, Number],
@@ -50,16 +75,6 @@ export const popokProps = {
     type: String,
     default: '',
     description: '弹出框标题'
-  },
-  okProps: {
-    type: Object as PropType<ButtonProps>,
-    default: () => ({}),
-    description: '确定按钮的属性'
-  },
-  cancelProps: {
-    type: Object as PropType<ButtonProps>,
-    default: () => ({}),
-    description: '取消按钮的属性'
   },
   content: {
     type: String,

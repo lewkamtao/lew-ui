@@ -1,6 +1,7 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 import type { ButtonProps } from '../../button/index'
 
+
 export const drawerModel = {
   visible: {
     type: Boolean,
@@ -55,21 +56,14 @@ export const drawerProps = {
     default: false,
     description: '是否隐藏抽屉底部的操作区域'
   },
-  okProps: {
+  okButtonProps: {
     type: Object as PropType<ButtonProps>,
-    default: () => ({
-      text: '确定',
-      color: 'primary'
-    }),
+    default: () => ({}),
     description: '确定按钮的属性配置'
   },
-  cancelProps: {
+  closeButtonProps: {
     type: Object as PropType<ButtonProps>,
-    default: () => ({
-      type: 'text',
-      text: '取消',
-      color: 'normal'
-    }),
+    default: () => ({}),
     description: '取消按钮的属性配置'
   },
   zIndex: {

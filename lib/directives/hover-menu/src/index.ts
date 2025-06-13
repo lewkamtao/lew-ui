@@ -2,7 +2,6 @@
 import tippy from 'tippy.js'
 import type { App, DirectiveBinding } from 'vue'
 import { getUniqueId } from 'lew-ui/utils'
-import { isFunction } from 'lodash-es'
 import _LewContextMenu from '../../context-menu/src/LewContextMenu.vue'
 
 /**
@@ -106,18 +105,7 @@ export const LewVHoverMenu = {
             createApp({
               render() {
                 return h(_LewContextMenu, {
-                  options,
-                  onSelect: (item: HoverMenus) => {
-                    // 处理选择事件
-                    const { selectHandler } = binding.value
-                    if (isFunction(selectHandler)) {
-                      selectHandler(item)
-                    }
-                    // 无子菜单时隐藏
-                    if (!(item.children || []).length) {
-                      instance.hide()
-                    }
-                  }
+                  options
                 })
               }
             }).mount(menuDom)
@@ -200,10 +188,5 @@ export const hoverMenuProps = {
     type: Boolean,
     default: false,
     description: '是否禁用悬浮菜单'
-  },
-  selectHandler: {
-    type: Function,
-    default: () => {},
-    description: '选中菜单项时的回调函数'
   }
 }

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-const visible = ref(false)
+const visible = ref(false);
 
 const open = () => {
-  visible.value = true
-}
+  visible.value = true;
+};
 
-defineExpose({ open })
+defineExpose({ open });
 </script>
 
 <template>
@@ -19,8 +19,16 @@ defineExpose({ open })
       closeByEsc
       width="550px"
       title="设置选项"
-      @ok="visible = false"
-      @cancel="visible = false"
+      :closeButtonProps="{
+        request: () => {
+          visible = false;
+        },
+      }"
+      :okButtonProps="{
+        request: () => {
+          visible = false;
+        },
+      }"
     >
       <div class="modal-body">
         <div>A beautiful component library based on vue3</div>

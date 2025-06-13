@@ -1,61 +1,46 @@
 <script setup lang="ts">
-import { LewCollapseTransition } from 'lew-ui'
-import { ChevronDown, ChevronUp } from 'lucide-vue-next'
-import docsLocale from '@/locals'
-
+import { LewCollapseTransition } from "lew-ui";
+import { ChevronDown, ChevronUp } from "lucide-vue-next";
+import docsLocale from "@/locals";
+import { renderDescription } from "@/lib/utils";
 defineProps({
   title: {
     type: String,
-    default() {
-      return ''
-    }
+    default: "",
   },
   tag: {
     type: String,
-    default() {
-      return ''
-    }
+    default: "",
   },
   tipsContent: {
     type: String,
-    default() {
-      return ''
-    }
+    default: "",
   },
   tipsType: {
     type: String,
-    default() {
-      return 'info'
-    }
+    default: "info",
   },
   tipsTitle: {
     type: String,
-    default() {
-      return ''
-    }
+    default: "",
   },
   description: {
     type: String,
-    default() {
-      return ''
-    }
+    default: "",
   },
   code: {
     type: String,
-    default() {
-      return ''
-    }
-  }
-})
+    default: "",
+  },
+});
 
-const isShowCode = ref(false)
+const isShowCode = ref(false);
 const checkHasContent = computed(() => (text: string) => {
-  const pattern = /^components\.[a-zA-Z-]+\.demo\d+\.[a-z]+$/
-  if (text && !pattern.test(text)) {
-    return true
+  if (text && text.indexOf("components.") !== 0) {
+    return true;
   }
-  return false
-})
+  return false;
+});
 </script>
 
 <template>
@@ -71,9 +56,17 @@ const checkHasContent = computed(() => (text: string) => {
         {{ tag }}
       </lew-tag>
     </lew-title>
-    <div v-if="checkHasContent(description)" class="desc">
-      {{ description }}
-    </div>
+    <lew-alert
+      v-if="checkHasContent(tipsContent)"
+      :type="checkHasContent(tipsType) ? tipsType : 'info'"
+      :title="tipsTitle"
+      :content="tipsContent"
+    />
+    <div
+      v-if="checkHasContent(description)"
+      class="desc"
+      v-html="renderDescription(description)"
+    ></div>
     <div class="demo-item">
       <div class="demo-cp lew-scrollbar">
         <slot></slot>
@@ -92,21 +85,15 @@ const checkHasContent = computed(() => (text: string) => {
         </div>
         {{
           isShowCode
-            ? docsLocale.t('base.close')
-            : docsLocale.t('base.showCode')
+            ? docsLocale.t("base.close")
+            : docsLocale.t("base.showCode")
         }}
       </div>
     </div>
-    <lew-alert
-      v-if="tipsType && tipsContent"
-      :type="tipsType"
-      :title="tipsTitle"
-      :content="tipsContent"
-    />
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .demo-box {
   margin: 50px 0px 50px 0px;
   .desc {

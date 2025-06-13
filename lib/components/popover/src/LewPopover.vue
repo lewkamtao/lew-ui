@@ -78,6 +78,10 @@ watchDebounced(
   watchOptions
 )
 const initTippy = () => {
+  if (instance) {
+    return
+  }
+
   let { placement, triggerTarget, offset, trigger, disabled }: any = props
   if (trigger === 'hover') {
     trigger = 'mouseenter'
@@ -116,8 +120,18 @@ const initTippy = () => {
   }
 }
 
+onActivated(() => {
+  initTippy()
+})
+
 onMounted(() => {
   initTippy()
+})
+
+onDeactivated(() => {
+  instance.hide()
+  instance.destroy()
+  instance = null
 })
 
 const emit = defineEmits(['show', 'hide'])

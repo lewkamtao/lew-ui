@@ -22,9 +22,14 @@ export default {
     placeholder: '選択してください'
   },
   cascader: {
-    placeholder: '選択してください'
+    placeholder: '選択してください',
+    closeText: '閉じる',
+    okText: '確定'
   },
   textarea: {
+    placeholder: '入力してください'
+  },
+  inputNumber: {
     placeholder: '入力してください'
   },
   datePicker: {
@@ -41,6 +46,35 @@ export default {
     placeholderStart: '開始日',
     placeholderEnd: '終了日'
   },
+  inputTable: {
+    addText: '追加',
+    deleteConfirm: '削除確認',
+    delete: '削除',
+    cancel: 'キャンセル',
+    deleteConfirmContent: 'このデータを削除してもよろしいですか？この操作は即時に反映されます。ご注意ください。',
+    minRows: '最小行数に達しているため、削除できません',
+    maxRows: '最大行数に達しているため、追加できません',
+    uniqueFieldExist: 'この{label}は既に存在します。重複しない{label}を入力してください。',
+    save: '保存',
+    modelTitle: 'データ追加',
+    editTitle: 'データ編集'
+  },
+  drawer: {
+    closeText: '閉じる',
+    okText: '確定'
+  },
+  modal: {
+    closeText: '閉じる',
+    okText: '確定'
+  },
+  dialog: {
+    cancelText: 'キャンセル',
+    okText: '確定'
+  },
+  popok: {
+    cancelText: 'キャンセル',
+    okText: '確定'
+  },
   upload: {
     dropActive: 'ドロップしてアップロードを開始',
     click: 'クリックして、',
@@ -51,6 +85,7 @@ export default {
     maxFileSize: '1ファイルあたり{maxFileSize}まで'
   },
   pagination: {
-    pageSize: '表示件数：{pageSize}件'
+    pageSize: '表示件数：{pageSize}件',
+    jumpTo: '移動'
   }
 }

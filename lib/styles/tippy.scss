@@ -12,16 +12,17 @@
 }
 
 .tippy-box[data-lew~='popover'] {
+  color: var(--lew-color-text-0) !important;
   background-color: var(--lew-pop-bgcolor) !important;
+  box-shadow: var(--lew-pop-shadow) !important;
   border: var(--lew-pop-border) !important;
-  box-shadow: var(--lew-pop-box-shadow) !important;
 }
 
 .tippy-box[data-lew~='tooltip'] {
-  color: var(--lew-tooltip-color) !important;
-  background-color: var(--lew-tooltip-bg) !important;
+  color: var(--lew-color-text-0) !important;
+  background-color: var(--lew-tooltip-bgcolor) !important;
   box-shadow: none !important;
-  filter: drop-shadow(var(--lew-tooltip-shadow));
+  filter: var(--lew-tooltip-box-shadow) !important;
 
   .tippy-content {
     max-height: 300px;
@@ -55,7 +56,7 @@
   }
 
   .tippy-svg-arrow {
-    fill: var(--lew-tooltip-bg) !important;
+    fill: var(--lew-tooltip-bgcolor) !important;
   }
 }
 

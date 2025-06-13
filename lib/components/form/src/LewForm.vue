@@ -50,6 +50,8 @@ const setForm = (value: any = {}) => {
       if (item.inputFormat) {
         v = item.inputFormat({ item, value: v })
       }
+      // 重置 ignoreValidate
+      formItemRefMap.value[item.field]?.setIgnoreValidate(true)
       // 重置error
       formItemRefMap.value[item.field]?.setError('')
       // 如果有值，就把值给 formMap
@@ -62,6 +64,9 @@ const resetError = () => {
   componentOptions.forEach((item: any) => {
     // 重置error
     if (item.field) {
+      // 重置 ignoreValidate
+      formItemRefMap.value[item.field]?.setIgnoreValidate(false)
+      // 重置error
       formItemRefMap.value[item.field]?.setError('')
     }
   })
@@ -79,7 +84,11 @@ const validate = () => {
       if (formItemRefMap.value[key].curRule) {
         schemaMap[key] = formItemRefMap.value[key].curRule
       }
-      formItemRefMap.value[key].setError('')
+
+      // 重置 ignoreValidate
+      formItemRefMap.value[key]?.setIgnoreValidate(false)
+      // 重置error
+      formItemRefMap.value[key]?.setError('')
     })
 
     const schema = Yup.object().shape(schemaMap)
@@ -121,15 +130,24 @@ watch(
   }
 )
 
+const getFormStyle = computed(() => {
+  const gapMap = {
+    small: '24px',
+    medium: '26px',
+    large: '28px'
+  }
+  return {
+    width: any2px(props.width),
+    minWidth: 320,
+    gap: gapMap[props.size]
+  }
+})
+
 defineExpose({ getForm, setForm, resetError, validate })
 </script>
 
 <template>
-  <div
-    class="lew-form"
-    :style="{ width: any2px(width), minWidth: 320 }"
-    :class="getFormClassNames"
-  >
+  <div class="lew-form" :style="getFormStyle" :class="getFormClassNames">
     <lew-get-label-width
       ref="formLabelRef"
       :size="size"
@@ -163,7 +181,6 @@ defineExpose({ getForm, setForm, resetError, validate })
   width: 100%;
   display: grid;
   flex-shrink: 0;
-  gap: 30px;
 }
 
 .lew-form-columns-1 {

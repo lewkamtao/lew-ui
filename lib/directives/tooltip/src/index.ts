@@ -19,7 +19,7 @@ export const LewTooltip = {
           theme: 'light',
           trigger: _trigger,
           content: content,
-          animation: 'scale',
+          animation: 'scale-subtle',
           interactive: true,
           appendTo: () => document.body,
           placement,

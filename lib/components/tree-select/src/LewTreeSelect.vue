@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
 import { LewPopover, LewTree, LewTooltip } from 'lew-ui'
-import type { TreeDataSource } from '../../tree'
-import { object2class, numFormat } from 'lew-ui/utils'
+import { object2class } from 'lew-ui/utils'
 import { treeSelectProps } from './props'
 import { cloneDeep, isString } from 'lodash-es'
 import Icon from 'lew-ui/utils/Icon.vue'
-
+import { findNodeByKey } from 'lew-ui/utils'
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -31,10 +30,10 @@ const state = reactive({
   visible: false, // 弹出框是否显示
   searchLoading: false, // 树加载
   initLoading: true, // 初始化 loading
-  treeList: [], // 树列表
-  hideBySelect: false, // 记录是否通过选择隐藏
+  valueIsChange: false, // 记录
   keyword: props.defaultValue || (treeSelectValue.value as any), // 搜索关键字
-  keywordBackup: props.defaultValue as any // 搜索关键字备份
+  keywordBackup: props.defaultValue as any, // 搜索关键字备份
+  resultText: ''
 })
 
 const getSelectWidth = () => {
@@ -56,21 +55,16 @@ const searchDebounce = useDebounceFn(async (e: any) => {
 const search = async (e: any) => {
   const keyword = e.target.value
   if (props.searchable) {
-    state.searchLoading = true
-    await lewTreeRef.value.init(keyword)
-    state.treeList = lewTreeRef.value.getTreeList()
-    state.searchLoading = false
+    await lewTreeRef.value.search(keyword)
   }
 }
 
-const change = ({ item }: { item: TreeDataSource }) => {
-  if (item.disabled) {
-    return
-  }
-
-  state.hideBySelect = true
-  // @ts-ignore
-  emit('change', item[props.keyField])
+const change = (e: any) => {
+  const { value } = e
+  treeSelectValue.value = value
+  state.valueIsChange = true
+  getKeywordLabel(value)
+  emit('change', e)
   setTimeout(() => {
     hide()
   }, 100)
@@ -87,29 +81,6 @@ const clearHandle = () => {
 const getValueStyle = computed(() => {
   return state.visible ? 'opacity:0.6' : ''
 })
-
-const findKeyword = () => {
-  if (lewTreeRef.value && treeSelectValue.value) {
-    state.treeList = lewTreeRef.value.getTreeList()
-    const treeItem: any = state.treeList.find((e: TreeDataSource) => {
-      // @ts-ignore
-      return e[props.keyField] === treeSelectValue.value
-    })
-    if (treeItem !== undefined) {
-      if (
-        props.showAllLevels &&
-        treeItem.labelPaths &&
-        treeItem.labelPaths.length > 0
-      ) {
-        state.keyword = treeItem.labelPaths.join(' / ')
-      } else {
-        state.keyword = treeItem.label[0]
-      }
-    }
-  }
-}
-
-findKeyword()
 
 const getSelectClassName = computed(() => {
   let { clearable, size, align, disabled, readonly, searchable } = props
@@ -141,43 +112,55 @@ const getIconSize = computed(() => {
   return size[props.size]
 })
 
+// 重新找回关键字
+const getKeywordLabel = (value: any) => {
+  if (lewTreeRef.value && value) {
+    let tree = lewTreeRef.value.getTree()
+    const treeItem: any = findNodeByKey(value, tree)
+    if (treeItem !== undefined) {
+      const { labelPaths, label } = treeItem
+      if (props.showAllLevels && labelPaths && labelPaths.length > 0) {
+        state.keyword = labelPaths.join(' / ')
+      } else {
+        state.keyword = label[0]
+      }
+    }
+  }
+}
+
+getKeywordLabel(treeSelectValue.value)
+
 const showHandle = () => {
   state.visible = true
   state.keywordBackup = cloneDeep(state.keyword)
+  state.valueIsChange = false // 重置
   if (props.searchable) {
     state.keyword = ''
   }
-  state.hideBySelect = false // 重置
   getSelectWidth()
-  if (props.searchable && state.treeList.length === 0) {
+  if (props.searchable) {
     search({ target: { value: '' } })
   }
 }
 
 const hideHandle = () => {
   state.visible = false
-  if (!state.hideBySelect && treeSelectValue.value) {
-    findKeyword()
+  if (!state.valueIsChange && treeSelectValue.value) {
+    state.keywordBackup
+      ? (state.keyword = state.keywordBackup)
+      : getKeywordLabel(treeSelectValue.value)
   }
   if (!treeSelectValue.value && state.keyword) {
     state.keyword = ''
     state.keywordBackup = ''
   }
   inputRef.value.blur()
+  lewTreeRef.value.reset()
   emit('blur')
 }
 
-watch(
-  () => treeSelectValue.value,
-  () => {
-    findKeyword()
-  }
-)
-
-const searchCount = computed(() => {
-  return state.treeList.filter((e: TreeDataSource) => {
-    return e.level === 0
-  }).length
+const getPlaceholder = computed(() => {
+  return state.keywordBackup || props.placeholder
 })
 
 defineExpose({ show, hide })
@@ -230,7 +213,7 @@ defineExpose({ show, hide })
           class="value"
           :style="getValueStyle"
           :readonly="!searchable"
-          :placeholder="state.keywordBackup || props.placeholder"
+          :placeholder="getPlaceholder"
           @input="searchDebounce"
         />
       </div>
@@ -244,13 +227,8 @@ defineExpose({ show, hide })
         <slot name="header"></slot>
 
         <div class="lew-select-options-box">
-          <div
-            v-if="searchable && (state.treeList || []).length > 0"
-            class="result-count"
-          >
-            共
-            {{ numFormat(searchCount) }}
-            条结果
+          <div v-if="searchable && state.resultText" class="result-count">
+            {{ state.resultText }}
           </div>
           <div class="tree-select-wrapper lew-scrollbar">
             <lew-tree
@@ -261,14 +239,20 @@ defineExpose({ show, hide })
                 labelField,
                 disabledField,
                 showLine,
-                showCheckbox,
+                checkable,
+                searchable,
                 dataSource,
                 loadMethod,
                 initTree,
                 expandAll
               }"
               :is-select="true"
-              @init-end="state.initLoading = false"
+              @load-start="state.searchLoading = true"
+              @load-end="
+                (state.searchLoading = false),
+                  (state.initLoading = false),
+                  (state.resultText = $event)
+              "
               @change="change"
             >
               <template v-if="$slots.empty" #empty>

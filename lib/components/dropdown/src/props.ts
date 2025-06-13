@@ -82,7 +82,7 @@ export const dropdownProps = {
       return true
     }
   },
-  checkbox: {
+  checkable: {
     type: Boolean,
     default: false,
     description: '是否开启checkbox模式'

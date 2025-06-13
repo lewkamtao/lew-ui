@@ -36,8 +36,9 @@ const getBadgeStyle = computed(() => {
 const displayValue = computed(() => {
   const { value, max } = props
   const numberValue = Number(value)
-  if (!isNaN(numberValue) && numberValue > max) {
-    return `${max}+`
+  const maxValue = Number(max)
+  if (!isNaN(numberValue) && !isNaN(maxValue) && numberValue > maxValue) {
+    return `${maxValue}+`
   }
   return value
 })

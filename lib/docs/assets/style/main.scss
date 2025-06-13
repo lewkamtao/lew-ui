@@ -7,6 +7,7 @@ body {
 
 :root {
   --lew-siderbar-width: 220px;
+  --lew-component-nav-width: 220px;
 }
 
 a {
@@ -49,4 +50,12 @@ a {
     white-space: pre-wrap;
     letter-spacing: 0.05em;
   }
+}
+
+.lew-docs-tag {
+  background-color: var(--lew-color-primary-light);
+  padding: 3px 6px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: var(--lew-text-color-1);
 }

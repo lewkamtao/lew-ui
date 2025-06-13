@@ -1,4 +1,17 @@
 <script lang="ts" setup>
+import {
+  Edit,
+  Trash,
+  Copy,
+  Download,
+  Share,
+  View,
+  Archive,
+  Settings,
+  MoreHorizontal
+} from 'lucide-vue-next'
+import { h } from 'vue'
+import { LewMessage } from 'lew-ui'
 const data: any = [
   {
     id: 1,
@@ -86,32 +99,32 @@ const columns = [
     fixed: 'left'
   },
   {
-    title: '处理器名称',
+    title: 'Processor Name',
     width: 180,
     field: 'name',
     x: 'start',
     fixed: 'left'
   },
   {
-    title: '核心数',
+    title: 'Cores',
     width: 130,
     field: 'cores',
     x: 'center'
   },
   {
-    title: '线程数',
+    title: 'Threads',
     width: 100,
     field: 'threads',
     x: 'center'
   },
   {
-    title: '基础频率',
+    title: 'Base Frequency',
     width: 120,
     field: 'baseFrequency',
     x: 'center'
   },
   {
-    title: '加速频率',
+    title: 'Boost Frequency',
     width: 120,
     field: 'boostFrequency',
     x: 'center'
@@ -123,40 +136,93 @@ const columns = [
     x: 'center'
   },
   {
-    title: '架构',
+    title: 'Architecture',
     width: 120,
     field: 'architecture',
     x: 'center'
   },
   {
-    title: '插槽',
+    title: 'Socket',
     width: 120,
     field: 'socket',
     x: 'center'
   },
   {
-    title: '特性',
+    title: 'Features',
     width: 400,
     field: 'features'
   },
   {
-    title: '操作',
-    width: 140,
+    title: 'Actions',
+    width: 110,
     field: 'action',
     fixed: 'right',
     x: 'center'
   }
 ]
 
-const viewDetails = (row: any, column: any) => {
-  LewMessage.info(`查看处理器详情：${row.name}`)
-  console.log(row, column)
-}
+const options = computed(() => (row: any, column: any) => {
+  return [
+    {
+      label: 'Edit',
+      icon: h(Edit, { size: 14 }),
+      onClick: () => {
+        LewMessage.info(`Edit: ${row.name}`)
+      }
+    },
+    {
+      label: 'Delete',
+      icon: h(Trash, { size: 14 }),
+      onClick: () => {
+        LewMessage.info(`Delete: ${row.name}`)
+      }
+    },
+    {
+      label: 'Copy',
+      icon: h(Copy, { size: 14 }),
+      onClick: () => {
+        LewMessage.info(`Copy: ${row.name}`)
+      }
+    },
+    {
+      label: 'Download',
+      icon: h(Download, { size: 14 }),
+      onClick: () => {
+        LewMessage.info(`Download: ${row.name}`)
+      }
+    },
+    {
+      label: 'Share',
+      icon: h(Share, { size: 14 }),
+      onClick: () => {
+        LewMessage.info(`Share: ${row.name}`)
+      }
+    },
+    {
+      label: 'View',
+      icon: h(View, { size: 14 }),
+      onClick: () => {
+        LewMessage.info(`View: ${row.name}`)
+      }
+    },
+    {
+      label: 'Archive',
+      icon: h(Archive, { size: 14 }),
+      onClick: () => {
+        LewMessage.info(`Archive: ${row.name}`)
+      }
+    },
+    {
+      label: 'Settings',
+      icon: h(Settings, { size: 14 }),
+      onClick: () => {
+        LewMessage.info(`Settings: ${row.name}`)
+      }
+    }
+  ]
+})
 
-const compare = (row: any, column: any) => {
-  LewMessage.info(`添加到对比：${row.name}`)
-  console.log(row, column)
-}
+const dropdownIcon = h(MoreHorizontal, { size: 14 })
 </script>
 
 <template>
@@ -174,20 +240,15 @@ const compare = (row: any, column: any) => {
       </lew-flex>
     </template>
     <template #action="{ row, column }">
-      <lew-flex gap="5">
-        <lew-button
-          text="详情"
-          size="small"
-          type="text"
-          @click="viewDetails(row, column)"
-        />
-        <lew-button
-          text="对比"
-          size="small"
-          type="text"
-          @click="compare(row, column)"
-        />
-      </lew-flex>
+      <lew-action-box
+        :key="row.id"
+        :options="options(row, column)"
+        dropdown-threshold="2"
+        dropdown-label=""
+        :dropdown-icon="dropdownIcon"
+        icon-only
+      >
+      </lew-action-box>
     </template>
   </lew-table>
 </template>

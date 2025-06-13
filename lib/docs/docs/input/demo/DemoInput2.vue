@@ -65,7 +65,7 @@ const getPrefixesTooltip = () => {
     />
     <lew-input
       v-model="inputValues.website"
-      v-model:prefixesValue="selectValues.protocol"
+      v-model:prefixValue="selectValues.protocol"
       v-model:suffixValue="selectValues.domain"
       prefixes="select"
       :prefixesOptions="options.protocols"
@@ -78,7 +78,7 @@ const getPrefixesTooltip = () => {
     />
     <lew-input
       v-model="inputValues.address"
-      v-model:prefixesValue="selectValues.city"
+      v-model:prefixValue="selectValues.city"
       prefixes="select"
       width="500px"
       :prefixesOptions="options.cities"

@@ -1,30 +1,28 @@
 <template>
   <lew-flex direction="y">
     <lew-alert type="error">
-      <template #title>登录失败</template>
-      <template #content>您的登录尝试失败，请检查用户名和密码。</template>
+      <template #title>Sign In Failed</template>
+      <template #content>Your sign-in attempt failed. Please check your username and password.</template>
     </lew-alert>
 
     <lew-alert type="success">
-      <template #title>注册成功</template>
-      <template #content>您已成功注册 Google 服务。</template>
+      <template #title>Registration Complete</template>
+      <template #content>You have successfully registered for Google services.</template>
     </lew-alert>
 
     <lew-alert type="warning">
-      <template #title>系统维护</template>
-      <template #content>系统将在今晚进行维护，请提前完成您的工作。</template>
+      <template #title>System Maintenance</template>
+      <template #content>The system will be under maintenance tonight. Please complete your work in advance.</template>
     </lew-alert>
 
     <lew-alert type="info">
-      <template #title>新功能</template>
-      <template #content
-        >Google Photos 现已推出，提供更多照片管理功能。</template
-      >
+      <template #title>New Feature Available</template>
+      <template #content>Google Photos is now available with enhanced photo management features.</template>
     </lew-alert>
 
     <lew-alert type="normal">
-      <template #title>系统提示</template>
-      <template #content>您的系统需要更新，请尽快完成更新以确保安全。</template>
+      <template #title>System Update Required</template>
+      <template #content>Your system needs to be updated. Please update as soon as possible to ensure security.</template>
     </lew-alert>
   </lew-flex>
 </template>

@@ -8,6 +8,10 @@ const ok = () => {
     }, 1000)
   })
 }
+
+const close = () => {
+  visible.value = false
+}
 </script>
 
 <template>
@@ -18,8 +22,8 @@ const ok = () => {
     v-model:visible="visible"
     closeOnClickOverlay
     width="750px"
-    :okProps="{ request: ok }"
-    @cancel="visible = false"
+    :okButtonProps="{ request: ok }"
+    :closeButtonProps="{ request: close }"
   >
     <template #header>
       <lew-flex x="start" class="lew-drawer-header">
@@ -74,7 +78,7 @@ const ok = () => {
 .lew-drawer-footer-tips {
   font-size: 14px;
   font-weight: normal;
-  color: var(--lew-text-color-8);
+  color: var(--lew-text-color-5);
   padding-left: 10px;
 }
 

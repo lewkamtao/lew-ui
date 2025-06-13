@@ -72,7 +72,7 @@ export const inputNumberProps = {
   },
   placeholder: {
     type: String,
-    default: '请输入',
+    defaultLocale: true,
     description: '占位文本'
   },
   readonly: {

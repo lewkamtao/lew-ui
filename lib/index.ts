@@ -2,7 +2,7 @@ import type { App } from 'vue'
 // tippy 样式
 import 'tippy.js/dist/tippy.css' // optional for styling
 import 'tippy.js/animations/shift-away-subtle.css'
-import 'tippy.js/animations/scale.css'
+import 'tippy.js/animations/scale-subtle.css'
 import 'tippy.js/themes/light.css'
 
 // 引入样式
@@ -38,8 +38,8 @@ const install = (Vue: App): void => {
 
   Object.keys(methods).forEach((key) => {
     const methodInstance = methods[key as keyof typeof methods]
-    if (methodInstance.name) {
-      window[methodInstance.name] = methodInstance
+    if ('name' in methodInstance) {
+      (window as any)[methodInstance.name] = methodInstance
     }
   })
 }

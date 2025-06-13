@@ -3,19 +3,19 @@ import type { ContextMenus } from 'lew-ui/directives'
 
 const options: ContextMenus = [
   {
-    label: '新建文件',
+    label: 'New File',
     value: 'new-file'
   },
   {
-    label: '新建窗口',
+    label: 'New Window',
     value: 'new-window',
     children: [
       {
-        label: '新建窗口',
+        label: 'New Window',
         value: 'new-window1'
       },
       {
-        label: '使用配置文件新建窗口',
+        label: 'New Window with Config',
         value: 'new-window2'
       }
     ]
@@ -24,59 +24,58 @@ const options: ContextMenus = [
     isDividerLine: true
   },
   {
-    label: '保存文件',
+    label: 'Save File',
     value: 'save-file'
   },
   {
-    label: '另存为',
+    label: 'Save As',
     value: 'save-as',
     children: [
       {
-        label: '另存为图片',
+        label: 'Save as Image',
         value: 'image'
       },
       {
-        label: '另存为文本',
+        label: 'Save as Text',
         value: 'text'
       }
     ]
   },
   {
-    label: '保存',
+    label: 'Save',
     value: 'save'
   },
   {
-    label: '全部保存',
+    label: 'Save All',
     value: 'save-all'
   },
   {
     isDividerLine: true
   },
   {
-    label: '首选项',
+    label: 'Preferences',
     value: 'preference',
     children: [
       {
-        label: '设置',
+        label: 'Settings',
         value: 'setting',
         children: [
           {
-            label: '语言',
+            label: 'Language',
             value: 'language',
             children: [
               {
-                label: '中文（Chinese',
+                label: 'Chinese',
                 value: 'chinese'
               },
               {
-                label: '英语（English）',
+                label: 'English',
                 value: 'english'
               }
             ]
           },
-
           {
-            label: '主题',
+            label: 'Theme',
             value: 'theme',
             children: [
               {
@@ -90,56 +89,51 @@ const options: ContextMenus = [
             ]
           },
           {
-            label: '字体样式（编译器）',
+            label: 'Font Style (Editor)',
             value: 'font'
           }
         ]
       },
       {
-        label: '关于',
+        label: 'About',
         value: 'about'
       },
       {
         isDividerLine: true
       },
       {
-        label: '帮助',
+        label: 'Help',
         value: 'help'
       },
       {
-        label: '检查更新',
+        label: 'Check for Updates',
         value: 'check-update'
       }
     ]
   },
   {
-    label: '在文件中查找',
+    label: 'Find in Files',
     value: 'find'
   },
   {
-    label: '关闭窗口',
+    label: 'Close Window',
     value: 'close-window'
   },
   {
-    label: '退出',
+    label: 'Exit',
     value: 'exit'
   }
 ]
-
-const selectHandler = (item: ContextMenus) => {
-  LewMessage.info(`你点击了：${item.value} `)
-}
 </script>
 <template>
   <lew-flex>
     <div
       v-context-menu="{
-        options,
-        selectHandler
+        options
       }"
       class="box"
     >
-      右键点击此处
+      Right click here
     </div>
   </lew-flex>
 </template>
@@ -154,6 +148,6 @@ const selectHandler = (item: ContextMenus) => {
   background-color: var(--lew-bgcolor-2);
   border-radius: var(--lew-border-radius-small);
   font-size: 16px;
-  color: var(--lew-text-color-7);
+  color: var(--lew-text-color-5);
 }
 </style>

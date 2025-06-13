@@ -28,7 +28,7 @@ const change = (e: any) => {
     multiple
     free
     :data-source="options"
-    showCheckbox
+    checkable
     @change="change"
   />
 </template>

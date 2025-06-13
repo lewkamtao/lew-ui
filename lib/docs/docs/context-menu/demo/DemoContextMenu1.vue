@@ -13,85 +13,104 @@ import {
 } from 'lucide-vue-next'
 const options1: ContextMenus = [
   {
-    label: '返回',
+    label: 'Back',
     value: 1,
-    renderIcon: () => h(Home, { size: 14 })
+    icon: h(Home, { size: 14 }),
+    onClick: (e: ContextMenus) => {
+      LewMessage.info('Back')
+    }
   },
   {
-    label: '前进',
+    label: 'Forward',
     value: 2,
-    renderIcon: () => h(CornerUpRight, { size: 14 })
+    icon: h(CornerUpRight, { size: 14 }),
+    onClick: () => {
+      LewMessage.info('Forward')
+    }
   },
   {
-    label: '重新加载',
+    label: 'Reload',
     value: 3,
-    renderIcon: () => h(RotateCw, { size: 14 })
+    icon: h(RotateCw, { size: 14 }),
+    onClick: () => {
+      LewMessage.info('Reload')
+    }
   },
   {
     isDividerLine: true
   },
   {
-    label: '另存为',
+    label: 'Save As',
     value: 4,
-    renderIcon: () => h(DownloadCloud, { size: 14 })
+    icon: h(DownloadCloud, { size: 14 }),
+    onClick: () => {
+      LewMessage.info('Save As')
+    }
   },
   {
-    label: '打印',
+    label: 'Print',
     value: 4,
     disabled: true,
-    renderIcon: () => h(File, { size: 14 })
+    icon: h(File, { size: 14 }),
+    onClick: () => {
+      LewMessage.info('Print')
+    }
   },
   {
-    label: '投放',
+    label: 'Cast',
     value: 4,
-    renderIcon: () => h(Navigation, { size: 14 })
+    icon: h(Navigation, { size: 14 }),
+    onClick: () => {
+      LewMessage.info('Cast')
+    }
   },
   {
-    label: '使用 Google 搜索图片',
+    label: 'Search image with Google',
     value: 4,
-    renderIcon: () => h(Search, { size: 14 })
+    icon: h(Search, { size: 14 }),
+    onClick: () => {
+      LewMessage.info('Search image with Google')
+    }
   },
   {
-    label: '在阅读模式下打开',
+    label: 'Open in Reader Mode',
     value: 4,
-    renderIcon: () => h(Eye, { size: 14 })
+    icon: h(Eye, { size: 14 }),
+    onClick: () => {
+      LewMessage.info('Open in Reader Mode')
+    }
   }
 ]
 
 const options2 = [
   {
-    label: '翻译成中文',
+    label: 'Translate to English',
     value: 1
   },
   {
     isDividerLine: true
   },
   {
-    label: '查看源代码',
+    label: 'View Source',
     value: 2
   },
   {
-    label: '检查',
+    label: 'Inspect',
     value: 3
   }
 ]
-
-const selectHandler = (item: ContextMenus) => {
-  LewMessage.info(`你点击了：${item.value} `)
-}
 </script>
 <template>
   <lew-flex>
     <div
       v-context-menu="{
-        options: options1,
-        selectHandler
+        options: options1
       }"
       class="box"
     >
-      右键点击此处
+      Right click here
     </div>
-    <div v-context-menu="{ options: options2 }" class="box">右键点击此处</div>
+    <div v-context-menu="{ options: options2 }" class="box">Right click here</div>
   </lew-flex>
 </template>
 
@@ -105,6 +124,6 @@ const selectHandler = (item: ContextMenus) => {
   background-color: var(--lew-bgcolor-2);
   border-radius: var(--lew-border-radius-small);
   font-size: 16px;
-  color: var(--lew-text-color-7);
+  color: var(--lew-text-color-5);
 }
 </style>

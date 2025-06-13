@@ -6,10 +6,11 @@ import * as API from './api'
 import LewComponentInfo from '@/layout/LewComponentInfo.vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
-// 转小写
+
 const componentName: string = (route.name as string)
   .replace('R-Lew', '')
-  .replace(/^[A-Z]/, (match) => match.toLowerCase())
+  .replace(/^[A-Z]/, (match) => match.toLowerCase()) // 修正:第一个字母转小写
+
 const options = ref(
   Object.keys(API).map((key: any) => {
     // @ts-ignore

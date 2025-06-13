@@ -8,6 +8,8 @@ import DemoTable7 from './DemoTable7.vue'
 import DemoTable8 from './DemoTable8.vue'
 import DemoTable9 from './DemoTable9.vue'
 import DemoTable10 from './DemoTable10.vue'
+import DemoTable11 from './DemoTable11.vue'
+import DemoTable12 from './DemoTable12.vue'
 
 import DemoTable1Code from './DemoTable1.vue?raw'
 import DemoTable2Code from './DemoTable2.vue?raw'
@@ -19,7 +21,8 @@ import DemoTable7Code from './DemoTable7.vue?raw'
 import DemoTable8Code from './DemoTable8.vue?raw'
 import DemoTable9Code from './DemoTable9.vue?raw'
 import DemoTable10Code from './DemoTable10.vue?raw'
-
+import DemoTable11Code from './DemoTable11.vue?raw'
+import DemoTable12Code from './DemoTable12.vue?raw'
 export const demoGroup = [
   DemoTable1,
   DemoTable2,
@@ -30,7 +33,9 @@ export const demoGroup = [
   DemoTable7,
   DemoTable8,
   DemoTable9,
-  DemoTable10
+  DemoTable10,
+  DemoTable11,
+  DemoTable12
 ]
 
 export const codeGroup = [
@@ -43,5 +48,7 @@ export const codeGroup = [
   DemoTable7Code,
   DemoTable8Code,
   DemoTable9Code,
-  DemoTable10Code
+  DemoTable10Code,
+  DemoTable11Code,
+  DemoTable12Code
 ]

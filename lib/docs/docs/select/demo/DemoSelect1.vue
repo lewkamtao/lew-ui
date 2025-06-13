@@ -12,7 +12,6 @@ const value = ref('')
 
 <template>
   <lew-select
-    style="width: 320px"
     v-model="value"
     clearable
     placeholder="Select delivery method"

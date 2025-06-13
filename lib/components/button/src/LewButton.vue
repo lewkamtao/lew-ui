@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { object2class, getColorType } from 'lew-ui/utils'
+import { object2class, getColorType, any2px } from 'lew-ui/utils'
 import { buttonProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
 
@@ -62,7 +62,7 @@ const getIconSize = computed(() => {
 })
 
 const getStyle = computed(() => {
-  const { round, type, color, dashed } = props
+  const { round, type, color, dashed, width } = props
   const styleObj: Record<string, string> = {}
   const _color = getColorType(color) || 'primary'
 
@@ -99,6 +99,10 @@ const getStyle = computed(() => {
 
   // 圆角样式
   styleObj.borderRadius = round ? '50px' : 'none'
+
+  if (width) {
+    styleObj.width = any2px(width)
+  }
 
   return styleObj
 })
@@ -246,7 +250,7 @@ defineExpose({ focus })
   line-height: calc(var(--lew-form-item-height-mini));
   font-size: var(--lew-form-font-size-mini);
   gap: 2px;
-  padding: 0px 10px;
+  padding: 0px 14px;
   .lew-button-text {
     font-size: var(--lew-form-font-size-mini);
     gap: 2px;
@@ -261,7 +265,7 @@ defineExpose({ focus })
   height: calc(var(--lew-form-item-height-small));
   line-height: calc(var(--lew-form-item-height-small));
   gap: 3px;
-  padding: 0px 14px;
+  padding: 0px 16px;
   .lew-button-text {
     font-size: var(--lew-form-font-size-small);
     gap: 3px;
@@ -276,7 +280,7 @@ defineExpose({ focus })
   height: calc(var(--lew-form-item-height-medium));
   line-height: calc(var(--lew-form-item-height-medium));
   gap: 4px;
-  padding: 0px 16px;
+  padding: 0px 18px;
   .lew-button-text {
     font-size: var(--lew-form-font-size-medium);
     gap: 4px;
@@ -356,7 +360,7 @@ defineExpose({ focus })
 }
 
 .lew-button-size-mini.lew-button-loading {
-  padding-left: 23px;
+  padding-left: 24px;
 }
 
 .lew-button-size-small.lew-button-loading {
@@ -385,7 +389,7 @@ defineExpose({ focus })
 }
 
 .lew-button-type-ghost:active {
-  background-color: var(--lew-color-normal-light) !important;
+  background-color: var(--lew-bgcolor-3) !important;
 }
 </style>
 <style lang="scss">

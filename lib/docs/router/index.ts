@@ -46,6 +46,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/desc-engine',
     name: 'DescEngine',
     component: () => import('../views/desc-engine/index.vue')
+  },
+  {
+    path: '/check-lang',
+    name: 'CheckLang',
+    component: () => import('../views/check-lang/index.vue')
   }
 ]
 const router = createRouter({

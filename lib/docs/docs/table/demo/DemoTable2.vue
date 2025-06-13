@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-const data: any = [
+import { cloneDeep } from 'lodash-es'
+
+const dataSource: any = ref([
   {
     id: 1,
     name: 'GeForce RTX 4090',
@@ -53,8 +55,138 @@ const data: any = [
     boostClock: '2.51 GHz',
     tdp: 320,
     manufacturingProcess: '4nm'
+  },
+  {
+    id: 4,
+    name: 'Radeon RX 7900 XT',
+    brand: 'AMD',
+    memory: '20GB GDDR6',
+    performance: 7.5,
+    price: 7499,
+    features: [
+      'FSR 3',
+      'Ray Tracing',
+      '4K Gaming',
+      'PCIe 4.0',
+      'DisplayPort 2.1'
+    ],
+    releaseDate: '2022-12-13',
+    powerConsumption: '315W',
+    architecture: 'RDNA 3',
+    coreCount: 10752,
+    boostClock: '2.4 GHz',
+    tdp: 315,
+    manufacturingProcess: '5nm'
+  },
+  {
+    id: 5,
+    name: 'GeForce RTX 4070 Ti',
+    brand: 'NVIDIA',
+    memory: '12GB GDDR6X',
+    performance: 7,
+    price: 5999,
+    features: ['DLSS 3', 'Ray Tracing', '4K Gaming', 'PCIe 4.0', 'HDMI 2.1'],
+    releaseDate: '2023-01-05',
+    powerConsumption: '285W',
+    architecture: 'Ada Lovelace',
+    coreCount: 7680,
+    boostClock: '2.61 GHz',
+    tdp: 285,
+    manufacturingProcess: '4nm'
+  },
+  {
+    id: 6,
+    name: 'GeForce RTX 4070',
+    brand: 'NVIDIA',
+    memory: '12GB GDDR6X',
+    performance: 6.5,
+    price: 4999,
+    features: ['DLSS 3', 'Ray Tracing', '4K Gaming', 'PCIe 4.0', 'HDMI 2.1'],
+    releaseDate: '2023-04-13',
+    powerConsumption: '200W',
+    architecture: 'Ada Lovelace',
+    coreCount: 5888,
+    boostClock: '2.48 GHz',
+    tdp: 200,
+    manufacturingProcess: '4nm'
+  },
+  {
+    id: 7,
+    name: 'Radeon RX 7800 XT',
+    brand: 'AMD',
+    memory: '16GB GDDR6',
+    performance: 6,
+    price: 4499,
+    features: [
+      'FSR 3',
+      'Ray Tracing',
+      '1440p Gaming',
+      'PCIe 4.0',
+      'DisplayPort 2.1'
+    ],
+    releaseDate: '2023-09-06',
+    powerConsumption: '263W',
+    architecture: 'RDNA 3',
+    coreCount: 3840,
+    boostClock: '2.43 GHz',
+    tdp: 263,
+    manufacturingProcess: '5nm'
+  },
+  {
+    id: 8,
+    name: 'Radeon RX 7700 XT',
+    brand: 'AMD',
+    memory: '12GB GDDR6',
+    performance: 5.5,
+    price: 3999,
+    features: [
+      'FSR 3',
+      'Ray Tracing',
+      '1440p Gaming',
+      'PCIe 4.0',
+      'DisplayPort 2.1'
+    ],
+    releaseDate: '2023-09-06',
+    powerConsumption: '245W',
+    architecture: 'RDNA 3',
+    coreCount: 3456,
+    boostClock: '2.54 GHz',
+    tdp: 245,
+    manufacturingProcess: '5nm'
+  },
+  {
+    id: 9,
+    name: 'GeForce RTX 4060 Ti',
+    brand: 'NVIDIA',
+    memory: '8GB GDDR6',
+    performance: 5,
+    price: 3499,
+    features: ['DLSS 3', 'Ray Tracing', '1440p Gaming', 'PCIe 4.0', 'HDMI 2.1'],
+    releaseDate: '2023-05-24',
+    powerConsumption: '160W',
+    architecture: 'Ada Lovelace',
+    coreCount: 4352,
+    boostClock: '2.54 GHz',
+    tdp: 160,
+    manufacturingProcess: '4nm'
+  },
+  {
+    id: 10,
+    name: 'GeForce RTX 4060',
+    brand: 'NVIDIA',
+    memory: '8GB GDDR6',
+    performance: 4.5,
+    price: 2999,
+    features: ['DLSS 3', 'Ray Tracing', '1080p Gaming', 'PCIe 4.0', 'HDMI 2.1'],
+    releaseDate: '2023-06-29',
+    powerConsumption: '115W',
+    architecture: 'Ada Lovelace',
+    coreCount: 3072,
+    boostClock: '2.46 GHz',
+    tdp: 115,
+    manufacturingProcess: '4nm'
   }
-]
+])
 
 const columns = [
   {
@@ -65,61 +197,62 @@ const columns = [
     fixed: 'left'
   },
   {
-    title: '品牌',
-    width: 120,
+    title: 'Brand',
+    width: 80,
     field: 'brand',
-    x: 'start'
+    x: 'start',
+    fixed: 'left'
   },
   {
-    title: '型号',
+    title: 'Model',
     width: 180,
     field: 'name',
     x: 'start'
   },
   {
-    title: '显存',
+    title: 'Memory',
     width: 140,
     field: 'memory',
     x: 'start'
   },
   {
-    title: '性能评分',
+    title: 'Performance',
     width: 120,
     field: 'performance',
     x: 'center'
   },
   {
-    title: '特性',
+    title: 'Features',
     width: 420,
     field: 'features',
     x: 'start'
   },
   {
-    title: '发布日期',
+    title: 'Release Date',
     width: 140,
     field: 'releaseDate',
     x: 'center'
   },
   {
-    title: '功耗',
+    title: 'Power',
     width: 100,
     field: 'powerConsumption',
     x: 'center'
   },
   {
-    title: '架构',
+    title: 'Architecture',
     width: 140,
     field: 'architecture',
     x: 'start'
   },
   {
-    title: '核心数量',
+    title: 'Core Count',
     width: 120,
     field: 'coreCount',
     x: 'center'
   },
   {
-    title: '加速频率',
+    title: 'Boost Clock',
     width: 120,
     field: 'boostClock',
     x: 'center'
@@ -131,13 +264,13 @@ const columns = [
     x: 'center'
   },
   {
-    title: '制程',
+    title: 'Process',
     width: 100,
     field: 'manufacturingProcess',
     x: 'center'
   },
   {
-    title: '价格',
+    title: 'Price',
     width: 120,
     fixed: 'right',
     field: 'price',
@@ -148,38 +281,66 @@ const columns = [
 const formatPerformance = (performance: number) => {
   switch (true) {
     case performance >= 9:
-      return '顶级'
+      return 'Top-tier'
     case performance >= 7:
-      return '高端'
+      return 'High-end'
     case performance >= 5:
-      return '中端'
+      return 'Mid-range'
     default:
-      return '入门'
+      return 'Entry-level'
   }
+}
+
+const getSortTooltipComponent = (row: any) => {
+  return h('div', {}, `${row.brand} ${row.name} ${row.memory}`)
+}
+
+const loading = ref(false)
+
+const update = () => {
+  loading.value = true
+  setTimeout(() => {
+    dataSource.value = cloneDeep(
+      [...dataSource.value]
+        .map((item, index) => ({
+          ...item,
+          id: index + 1
+        }))
+        .sort(() => Math.random() - 0.5)
+    )
+    loading.value = false
+  }, 1000)
 }
 </script>
 
 <template>
-  <lew-table :data-source="data" :max-height="300" :columns="columns">
-    <template #performance="{ row }">
-      {{ formatPerformance(row.performance) }}
-    </template>
-    <template #features="{ row }">
-      <lew-flex :gap="5" x="start" wrap>
-        <lew-tag
-          v-for="(item, index) in row.features"
-          :key="index"
-          size="small"
-          type="light"
-          color="blue"
-          >{{ item }}</lew-tag
-        >
-      </lew-flex>
-    </template>
-    <template #price="{ row }"> ¥{{ row.price }} </template>
-    <template #tdp="{ row }"> {{ row.tdp }}W </template>
-    <template #manufacturingProcess="{ row }">
-      {{ row.manufacturingProcess }}
-    </template>
-  </lew-table>
+  <lew-button @click="update">Update</lew-button>
+  <lew-flex v-loading="{ visible: loading }">
+    <lew-table
+      :data-source="dataSource"
+      :columns="columns"
+      :sort-tooltip-custom-render="getSortTooltipComponent"
+    >
+      <template #performance="{ row }">
+        {{ formatPerformance(row.performance) }}
+      </template>
+      <template #features="{ row }">
+        <lew-flex :gap="5" x="start" wrap>
+          <lew-tag
+            v-for="(item, index) in row.features"
+            :key="index"
+            size="small"
+            type="light"
+            color="blue"
+            >{{ item }}</lew-tag
+          >
+        </lew-flex>
+      </template>
+      <template #price="{ row }"> ¥{{ row.price }} </template>
+      <template #tdp="{ row }"> {{ row.tdp }}W </template>
+      <template #manufacturingProcess="{ row }">
+        {{ row.manufacturingProcess }}
+      </template>
+    </lew-table>
+  </lew-flex>
 </template>

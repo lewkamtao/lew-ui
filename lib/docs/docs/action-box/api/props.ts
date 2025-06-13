@@ -1,9 +1,8 @@
-import { resultProps } from 'lew-ui'
+import { actionBoxProps } from 'lew-ui'
 import { convertProps } from '@/lib/utils'
 
 export default {
   title: 'Props',
   columnsKey: 'props',
-  orderNum: 10,
-  data: convertProps(resultProps)
+  data: convertProps(actionBoxProps)
 }

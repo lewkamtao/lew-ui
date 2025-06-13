@@ -33,16 +33,10 @@ export default {
       default: "''"
     },
     {
-      name: 'tagText',
-      description: '菜单项的标签文本',
-      type: 'string',
-      default: "''"
-    },
-    {
-      name: 'tagColor',
-      description: '菜单项标签的颜色',
-      type: 'LewColor',
-      default: "''"
+      name: 'tagProps',
+      description: '菜单项的标签属性',
+      type: 'TagProps',
+      default: '() => ({})'
     }
   ]
 }

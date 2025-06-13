@@ -56,7 +56,8 @@ const companies = [
           mode="between"
         >
           <div class="title">
-            {{ item.name }} <lew-tag v-if="item.id === '1'">全球领先</lew-tag>
+            {{ item.name }}
+            <lew-tag color="red" size="small" round v-if="item.id === '1'">HOT</lew-tag>
           </div>
           <ChevronLeft class="icon" :size="16" />
         </lew-flex>

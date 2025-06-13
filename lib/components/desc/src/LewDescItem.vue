@@ -147,10 +147,11 @@ const getLabelBoxWidth = computed(() => {
       color: var(--lew-text-color-6);
       width: 100%;
       height: 100%;
+      box-sizing: border-box;
 
       .lew-label-tips-icon {
         cursor: pointer;
-        margin-top: 3px;
+        margin-top: 4px;
         flex-shrink: 0;
       }
     }

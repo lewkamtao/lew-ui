@@ -1,12 +1,13 @@
 const contextMenu = {
   label: 'Etichetta',
   value: 'Valore',
-  renderIcon: 'Funzione di rendering icona',
+  icon: 'Funzione di rendering icona',
   children: 'Elementi figlio',
   disabled: 'Disabilitato',
   isDividerLine: 'Linea divisoria',
-  checkbox: 'Casella di controllo',
-  checked: 'Selezionato'
+  checkable: 'Casella di controllo',
+  checked: 'Selezionato',
+  onClick: 'Evento click'
 }
 
 export default {
@@ -155,7 +156,8 @@ export default {
         color: 'Tema colore',
         closable: 'Chiudibile',
         disabled: 'Disabilitato',
-        round: 'Bordi arrotondati'
+        round: 'Bordi arrotondati',
+        oversize: 'Dimensione più ampia'
       }
     },
     badge: {
@@ -297,8 +299,9 @@ export default {
       }
     },
     steps: {
-      name: 'Step',
-      description: 'Mostra chiaramente il progresso del processo',
+      name: 'Passi',
+      description:
+        "Mostra chiaramente il processo di operazione, permettendo all'utente di sapere dove si trova",
       demo1: {
         title: 'Uso base'
       },
@@ -309,12 +312,16 @@ export default {
         title: 'Caricamento'
       },
       model: {
-        modelValue: 'Indice step attivo'
+        modelValue: 'Indice del passo attualmente attivo'
       },
       props: {
-        options: 'Array configurazione step',
-        status: 'Stato corrente',
-        minWidth: 'Larghezza minima step'
+        options: 'Array di configurazione dei passi',
+        status: 'Stato attuale dei passi',
+        minWidth: 'Larghezza minima del passo'
+      },
+      options: {
+        title: 'Titolo del passo',
+        description: 'Descrizione del passo'
       }
     },
     menu: {
@@ -371,8 +378,7 @@ export default {
         label: 'Titolo voce (personalizzabile con slot "label")',
         value: 'Identificatore univoco voce',
         level: 'Livello gerarchico (da 1)',
-        renderIcon: 'Funzione rendering icona',
-        renderLabel: 'Funzione rendering etichetta',
+        icon: 'Funzione rendering icona',
         tagText: 'Testo badge',
         tagType: 'Tipo badge',
         tagColor: 'Colore badge',
@@ -396,7 +402,8 @@ export default {
       props: {
         options: 'Configurazione menu',
         trigger: 'Modalità attivazione',
-        placement: 'Posizione menu'
+        placement: 'Posizione menu',
+        checkable: 'Selezionabile'
       },
       'options(ContextMenus)': contextMenu,
       events: {
@@ -447,8 +454,7 @@ export default {
       },
       props: {
         options: 'Configurazione menu',
-        disabled: 'Menu disabilitato',
-        selectHandler: 'Callback selezione voce'
+        disabled: 'Menu disabilitato'
       },
       'options(ContextMenus)': contextMenu
     },
@@ -548,6 +554,7 @@ export default {
       props: {
         type: 'Tipo input',
         size: 'Dimensione',
+        width: 'Larghezza input',
         placeholder: 'Testo segnaposto',
         disabled: 'Disabilitato',
         readonly: 'Sola lettura',
@@ -575,6 +582,11 @@ export default {
         input: 'Callback input',
         clear: 'Callback cancellazione',
         ok: 'Callback conferma'
+      },
+      model: {
+        modelValue: 'Valore legato',
+        prefixValue: 'Valore prefisso',
+        suffixValue: 'Valore suffisso'
       }
     },
     inputNumber: {
@@ -897,6 +909,8 @@ export default {
         defaultValue: 'Valore predefinito',
         options: 'Opzioni',
         width: 'Larghezza',
+        autoWidth: 'Larghezza automatica',
+        popoverWidth: 'Larghezza popover',
         trigger: 'Attivazione',
         placeholder: 'Testo segnaposto',
         size: 'Dimensione',
@@ -1148,13 +1162,13 @@ export default {
         modelValue: 'Valore legato'
       },
       props: {
-        dataSource: 'Sorgente dati albero',
+        dataSource: 'Sorgente dati',
         defaultValue: 'Valore predefinito',
         placeholder: 'Testo segnaposto',
         size: 'Dimensione componente',
         disabled: 'Disabilitato',
         clearable: 'Cancellabile',
-        showCheckbox: 'Mostra checkbox',
+        checkable: 'Mostra checkbox',
         showAllLevels: 'Mostra tutti i livelli',
         showCheckIcon: 'Mostra icona selezione',
         showLine: 'Mostra linee connessione',
@@ -1202,7 +1216,8 @@ export default {
         clearable: 'Cancellabile',
         sortable: 'Ordinabile',
         autoUniqueId: 'ID unico automatico',
-        uniqueField: 'Campo univoco'
+        uniqueField: 'Campo univoco',
+        sortTooltipCustomRender: 'Rendering personalizzato tooltip ordinamento'
       }
     },
     switch: {
@@ -1409,7 +1424,8 @@ export default {
       description: 'Potente componente tabella per visualizzazione dati',
       model: {
         modelValue: 'Nome parametro',
-        selectedKeys: 'Chiavi selezionate'
+        selectedKeys: 'Chiavi selezionate',
+        sortValue: 'Valore ordinamento'
       },
       demo1: {
         title: 'Base'
@@ -1441,6 +1457,12 @@ export default {
       demo10: {
         title: 'Nessun dato'
       },
+      demo11: {
+        title: 'Intestazioni raggruppate',
+        tipsTitle: 'Avviso limitazione',
+        tipsContent:
+          'Se desideri che le intestazioni raggruppate abbiano colonne fisse, devi impostare la larghezza per tutte le colonne fisse, inclusi tutti i nodi padre, altrimenti potrebbero verificarsi disallineamenti.'
+      },
       props: {
         columns: 'Colonne',
         dataSource: 'Sorgente dati',
@@ -1448,7 +1470,10 @@ export default {
         checkable: 'Selezionabile',
         maxHeight: 'Altezza massima',
         multiple: 'Selezione multipla',
-        rowKey: 'Chiave riga'
+        rowKey: 'Chiave riga',
+        bordered: 'Bordi',
+        sortTooltipCustomRender: 'Rendering personalizzato tooltip ordinamento',
+        sortable: 'Ordinabile'
       },
       tableColumns: {
         field: 'Campo',
@@ -1524,8 +1549,10 @@ export default {
       props: {
         dataSource: 'Sorgente dati',
         multiple: 'Selezione multipla',
-        showCheckbox: 'Mostra checkbox',
-        expandAll: 'Espandi tutto di default',
+        checkable: 'Mostra checkbox',
+        height: 'Altezza',
+        searchable: 'Ricercabile',
+        expandAll: 'Espandi tutti i nodi di default',
         free: 'Selezione libera',
         showLine: 'Mostra linee connessione',
         trigger: 'Modalità attivazione',
@@ -1707,9 +1734,9 @@ export default {
         closeOnClickOverlay: 'Chiudi al click overlay',
         closeByEsc: 'Chiudi con ESC',
         hideFooter: 'Nascondi footer',
-        okProps: 'Proprietà pulsante OK',
-        cancelProps: 'Proprietà pulsante Annulla',
-        zIndex: 'Z-index'
+        okButtonProps: 'Proprietà pulsante OK',
+        zIndex: 'Z-index',
+        closeButtonProps: 'Proprietà pulsante Chiudi'
       }
     },
     dialog: {
@@ -1731,7 +1758,6 @@ export default {
         cancelText: 'Testo Annulla',
         ok: 'Callback OK',
         cancel: 'Callback Annulla',
-        layout: 'Layout',
         closeOnClickOverlay: 'Chiudi al click overlay',
         closeByEsc: 'Chiudi con ESC',
         transformOrigin: 'Origine trasformazione'
@@ -1766,12 +1792,10 @@ export default {
         top: "Distanza dall'alto",
         hideFooter: 'Nascondi footer',
         closeByEsc: 'Chiudi con ESC',
-        okProps: 'Proprietà OK',
-        cancelProps: 'Proprietà Annulla',
-        hideOkButton: 'Nascondi pulsante OK',
-        hideCancelButton: 'Nascondi pulsante Annulla',
+        okButtonProps: 'Proprietà OK',
         closeOnClickOverlay: 'Chiudi al click overlay',
-        zIndex: 'Z-index'
+        zIndex: 'Z-index',
+        closeButtonProps: 'Proprietà pulsante Chiudi'
       }
     },
     popok: {
@@ -1789,10 +1813,12 @@ export default {
         width: 'Larghezza',
         trigger: 'Trigger',
         title: 'Titolo',
-        okProps: 'Proprietà OK',
-        cancelProps: 'Proprietà Annulla',
         content: 'Contenuto',
-        placement: 'Posizione'
+        placement: 'Posizione',
+        okText: 'Testo OK',
+        cancelText: 'Testo Annulla',
+        ok: 'Callback OK',
+        cancel: 'Callback Annulla'
       }
     },
     popover: {
@@ -1877,6 +1903,36 @@ export default {
         padding: 'Padding',
         width: 'Larghezza',
         height: 'Altezza'
+      }
+    },
+    actionBox: {
+      name: 'Box azioni',
+      description: 'Pulsanti di azione flessibili per operazioni rapide',
+      demo1: {
+        title: 'Utilizzo base'
+      },
+      demo2: {
+        title: 'Menu a discesa'
+      },
+      demo3: {
+        title: 'Icone personalizzate'
+      },
+      demo4: {
+        title: 'Stili personalizzati'
+      },
+      props: {
+        options: 'Configurazione pulsanti azione',
+        dropdownThreshold: 'Soglia menu a discesa',
+        dropdownLabel: 'Testo menu a discesa',
+        dropdownIcon: 'Icona menu a discesa',
+        divider: 'Mostra divisore',
+        iconOnly: 'Mostra solo icona'
+      },
+      options: {
+        label: 'Testo pulsante azione',
+        icon: 'Icona pulsante azione',
+        onClick: 'Evento click pulsante azione',
+        customRender: 'Contenuto rendering personalizzato'
       }
     }
   }

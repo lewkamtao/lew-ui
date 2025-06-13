@@ -52,7 +52,7 @@ export const selectMultipleProps = {
   },
   valueTextSplit: {
     type: String,
-    default: '、',
+    default: ',',
     description: '文本模式下选中值的分隔符'
   },
   placeholder: {

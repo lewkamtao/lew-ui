@@ -33,6 +33,8 @@ export const useI18n = () => {
       legacy: false,
       locale: currentLocale,
       fallbackLocale: currentLocale,
+      fallbackWarn: false,
+      missingWarn: false,
       messages: {
         en,
         zh,

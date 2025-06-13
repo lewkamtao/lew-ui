@@ -1,48 +1,35 @@
 <script setup lang="ts">
-import { menuTreeItemProps } from './props'
-import { LewCollapseTransition } from 'lew-ui'
-import { LewFlex } from 'lew-ui'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { cloneDeep } from 'lodash-es'
+import { menuTreeItemProps } from "./props";
+import { LewCollapseTransition } from "lew-ui";
+import { LewFlex } from "lew-ui";
+import Icon from "lew-ui/utils/Icon.vue";
+import { cloneDeep } from "lodash-es";
+import { isVueComponent, formatComponent } from "lew-ui/utils";
+const props = defineProps(menuTreeItemProps);
 
-const props = defineProps({
-  ...menuTreeItemProps,
-  renderLabel: {
-    type: Function,
-    default: () => {},
-    description: '自定义渲染标签内容的函数。'
-  }
-})
-
-const { modelValue, expandKeys, modelValueKeyPath, collapsed }: any =
-  inject('menu-tree')
-const emit = defineEmits(['change'])
-
-const tagRef = ref()
-const tagWidth = ref(0)
-
-onMounted(() => {
-  tagWidth.value = tagRef.value?.$el?.offsetWidth
-})
+const { modelValue, expandKeys, modelValueKeyPath, collapsed }: any = inject(
+  "lew-menu-tree"
+);
+const emit = defineEmits(["change"]);
 
 const change = () => {
-  if (props.disabled) return
+  if (props.disabled) return;
 
   if (!props.isLeaf) {
-    const index = expandKeys.value.indexOf(props.value)
+    const index = expandKeys.value.indexOf(props.value);
     if (index > -1) {
-      expandKeys.value.splice(index, 1)
+      expandKeys.value.splice(index, 1);
     } else {
-      expandKeys.value.push(props.value)
+      expandKeys.value.push(props.value);
     }
   } else {
     if (modelValue.value !== props.value) {
-      modelValue.value = props.value
+      modelValue.value = props.value;
     }
   }
-  expandKeys.value = cloneDeep(expandKeys.value)
-  emit('change')
-}
+  expandKeys.value = cloneDeep(expandKeys.value);
+  emit("change");
+};
 </script>
 
 <template>
@@ -61,16 +48,24 @@ const change = () => {
         'lew-menu-tree-item-label-collapsed': collapsed
       }"
       :style="{
-        paddingLeft: collapsed ? '0px' : renderIcon() ? '36px' : '15px'
+        paddingLeft: collapsed
+          ? '0px'
+          : isVueComponent(icon)
+          ? '36px'
+          : '11.5px',
       }"
       @click.stop="change"
     >
       <slot v-if="$slots.label" name="label" :props="props" />
       <template v-else>
-        <component class="lew-menu-tree-item-icon" :is="renderIcon()" />
         <component
-          v-if="renderLabel()"
-          :is="renderLabel()"
+          v-if="isVueComponent(icon)"
+          class="lew-menu-tree-item-icon"
+          :is="formatComponent(icon)"
+        />
+        <component
+          v-if="isVueComponent(label)"
+          :is="formatComponent(label)"
           class="lew-menu-tree-item-text"
         />
         <lew-text-trim
@@ -78,28 +73,22 @@ const change = () => {
           class="lew-menu-tree-item-text"
           placement="right"
           :style="{
-            maxWidth: `calc(100% - ${renderIcon() || tagText ? tagWidth + 30 - (isLeaf ? 30 : 0) : 0}px)`
+            maxWidth: `calc(100% - ${isVueComponent(icon) ? 30 : 0}px)`,
           }"
           :text="label"
           :delay="[250, 250]"
         />
         <lew-tag
-          ref="tagRef"
-          v-if="tagText"
-          :color="tagColor"
-          :type="tagType"
-          round
-          size="small"
-        >
-          {{ tagText }}
-        </lew-tag>
+          v-if="tagProps?.text"
+          v-bind="{ ...tagProps, size: tagProps.size || 'small' }"
+        />
         <Icon
-          v-if="!isLeaf"
+          v-if="!isLeaf && !collapsed"
           class="lew-menu-tree-item-chevron-right"
           :size="14"
           :style="{
             transform: `rotate(${expandKeys.includes(value) ? 270 : 90}deg)`,
-            transition: 'all 0.2s'
+            transition: 'all 0.2s',
           }"
           type="chevron-right"
         />
@@ -109,7 +98,7 @@ const change = () => {
       <div
         v-if="expandKeys.includes(value) && !collapsed"
         :style="{
-          marginTop: level === 1 ? '5px' : 0
+          marginTop: level === 1 ? '5px' : 0,
         }"
         class="lew-menu-tree-item-main"
       >
@@ -122,22 +111,21 @@ const change = () => {
 .lew-menu-tree-item {
   position: relative;
   user-select: none;
-
+  font-size: 14px;
+  color: var(--lew-text-color-1);
   .lew-menu-tree-item-label {
     display: flex;
     align-items: center;
     cursor: pointer;
-    padding: 0px 15px;
+    padding: 0px 11.5px;
     height: 36px;
     box-sizing: border-box;
-    transition:
-      background-color 0.25s,
-      color 0.25s;
+    transition: background-color 0.25s, color 0.25s;
     border-radius: var(--lew-border-radius-small);
     overflow: hidden;
   }
   .lew-menu-tree-item-label:hover {
-    background-color: var(--lew-bgcolor-3);
+    background-color: var(--lew-form-bgcolor-hover);
   }
   .lew-menu-tree-item-label-active {
     background-color: var(--lew-color-primary-light);
@@ -158,15 +146,13 @@ const change = () => {
   .lew-menu-tree-item-main {
     box-sizing: border-box;
   }
-  .lew-menu-tree-item-icon {
+  :deep(.lew-menu-tree-item-icon) {
     position: absolute;
     left: 11px;
     top: 11px;
   }
   .lew-menu-tree-item-chevron-right {
-    position: absolute;
-    right: 15px;
-    top: 12px;
+    flex-shrink: 0;
   }
   .lew-menu-tree-item-label-disabled {
     cursor: not-allowed;
@@ -179,10 +165,7 @@ const change = () => {
     padding: 0px;
     width: 36px;
 
-    .lew-menu-tree-item-chevron-right {
-      opacity: 0;
-    }
-    .lew-menu-tree-item-text {
+    :deep(.lew-menu-tree-item-text) {
       opacity: 0;
     }
   }

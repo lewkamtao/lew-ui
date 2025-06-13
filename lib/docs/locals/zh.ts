@@ -1,12 +1,13 @@
 const contextMenu = {
   label: '显示文本',
   value: '值',
-  renderIcon: '渲染图标函数',
+  icon: '渲染图标函数',
   children: '子节点集合',
   disabled: '禁用选项',
   isDividerLine: '是否是分割线',
-  checkbox: '是否是复选框',
-  checked: '是否选中'
+  checkable: '是否是复选框',
+  checked: '是否选中',
+  onClick: '点击事件'
 }
 
 export default {
@@ -72,7 +73,9 @@ export default {
         title: '默认头像'
       },
       demo4: {
-        title: '形状'
+        title: '形状',
+        description:
+          '通过 shape 控制头像的形状, 可选值为 ```circle``` ```square``` ```sharp```。'
       },
       props: {
         size: '尺寸',
@@ -151,7 +154,8 @@ export default {
         color: '颜色主题',
         closable: '是否可关闭',
         disabled: '是否禁用',
-        round: '是否圆角'
+        round: '是否圆角',
+        oversize: '更宽松的尺寸'
       }
     },
     badge: {
@@ -310,6 +314,10 @@ export default {
         options: '步骤配置项数组',
         status: '步骤条的当前状态',
         minWidth: '最小步骤宽度'
+      },
+      options: {
+        title: '步骤标题',
+        description: '步骤描述'
       }
     },
     menu: {
@@ -367,8 +375,7 @@ export default {
           '菜单树项的标题文本。也可以使用具名插槽 "label" 自定义标题内容。',
         value: '菜单项的值，用于标识菜单项的唯一性。',
         level: '菜单树项的层级，从 1 开始。',
-        renderIcon: '图标渲染函数',
-        renderLabel: '标签渲染函数',
+        icon: '图标渲染函数',
         tagText: '菜单项的徽章文本',
         tagType: '菜单项的徽章类型',
         tagColor: '菜单项的徽章颜色',
@@ -392,7 +399,8 @@ export default {
       props: {
         options: '菜单选项配置',
         trigger: '触发方式',
-        placement: '菜单弹出位置'
+        placement: '菜单弹出位置',
+        checkable: '是否可选择'
       },
       'options(ContextMenus)': contextMenu,
       events: {
@@ -443,10 +451,39 @@ export default {
       },
       props: {
         options: '右键菜单配置',
-        disabled: '是否禁用右键菜单',
-        selectHandler: '选中菜单项时的回调函数'
+        disabled: '是否禁用右键菜单'
       },
       'options(ContextMenus)': contextMenu
+    },
+    actionBox: {
+      name: '操作按钮 ActionBox',
+      description: '灵活的操作按钮，让用户可以快速进行操作',
+      demo1: {
+        title: '基础用法'
+      },
+      demo2: {
+        title: '下拉菜单'
+      },
+      demo3: {
+        title: '自定义图标'
+      },
+      demo4: {
+        title: '自定义样式'
+      },
+      props: {
+        options: '操作按钮配置',
+        dropdownThreshold: '下拉菜单的阈值',
+        dropdownLabel: '下拉菜单的文本',
+        dropdownIcon: '下拉菜单的图标',
+        divider: '是否显示分割线',
+        iconOnly: '是否只显示图标'
+      },
+      options: {
+        label: '操作按钮的文本',
+        icon: '操作按钮的图标',
+        onClick: '操作按钮的点击事件',
+        customRender: '自定义渲染内容'
+      }
     },
     form: {
       name: '表单 Form',
@@ -500,6 +537,7 @@ export default {
       events: {
         mounted: '表单项挂载时触发'
       },
+
       methods: {
         getForm: '获取表单',
         setForm: '设置表单'
@@ -544,6 +582,7 @@ export default {
       props: {
         type: '输入框类型',
         size: '输入框尺寸',
+        width: '输入框宽度',
         placeholder: '输入框占位文本',
         disabled: '是否禁用输入框',
         readonly: '是否将输入框设为只读',
@@ -572,6 +611,11 @@ export default {
         input: '输入框输入内容时触发',
         clear: '输入框清空时触发',
         ok: '输入框确认时触发'
+      },
+      model: {
+        modelValue: '输入框的绑定值',
+        prefixValue: '输入框前缀的绑定值',
+        suffixValue: '输入框后缀的绑定值'
       }
     },
     inputNumber: {
@@ -889,7 +933,9 @@ export default {
       props: {
         defaultValue: '默认值',
         options: '选项',
+        autoWidth: '是否自动宽度',
         width: '宽度',
+        popoverWidth: '弹窗宽度',
         trigger: '触发方式',
         placeholder: '占位提示文本',
         size: '尺寸大小',
@@ -1128,7 +1174,7 @@ export default {
         size: '组件尺寸大小',
         disabled: '是否禁用',
         clearable: '是否可清空',
-        showCheckbox: '是否显示复选框',
+        checkable: '是否显示复选框',
         showAllLevels: '是否显示所有层级',
         showCheckIcon: '是否显示选择图标',
         showLine: '是否显示连接线',
@@ -1175,7 +1221,8 @@ export default {
         clearable: '是否可清空',
         sortable: '是否可排序',
         autoUniqueId: '是否自动生成唯一ID',
-        uniqueField: '唯一字段'
+        uniqueField: '唯一字段',
+        sortTooltipCustomRender: '排序提示自定义渲染'
       }
     },
     switch: {
@@ -1382,7 +1429,8 @@ export default {
       description: '功能强大的表格组件，让数据展示更加清晰',
       model: {
         modelValue: '参数名称',
-        selectedKeys: '选中的键'
+        selectedKeys: '选中的键',
+        sortValue: '排序值'
       },
       demo1: {
         title: '常规'
@@ -1414,14 +1462,23 @@ export default {
       demo10: {
         title: '暂无数据'
       },
+      demo11: {
+        title: '分组表头',
+        tipsTitle: '受限提示',
+        tipsContent:
+          '如果你希望分组的表头拥有固定列的效果，你需要给所有固定列表头都设定好宽度，包括所有的父级节点，否则可能产生错位。'
+      },
       props: {
         columns: '列',
         dataSource: '数据源',
+        bordered: '边框',
         size: '尺寸',
         checkable: '可选',
         maxHeight: '最大高度',
         multiple: '多选',
-        rowKey: '行键'
+        rowKey: '行键',
+        sortTooltipCustomRender: '排序提示自定义渲染',
+        sortable: '可排序'
       },
       tableColumns: {
         field: '字段',
@@ -1497,7 +1554,9 @@ export default {
       props: {
         dataSource: '数据源',
         multiple: '多选',
-        showCheckbox: '显示复选框',
+        height: '高度',
+        searchable: '是否可搜索',
+        checkable: '显示复选框',
         expandAll: '默认全部展开',
         free: '自由选择',
         showLine: '显示连接线',
@@ -1640,7 +1699,16 @@ export default {
         title: '基础用法'
       },
       demo2: {
-        title: '自定义展示时间'
+        title: '延迟时间'
+      },
+      demo3: {
+        title: '自定义宽度'
+      },
+      demo4: {
+        title: '展示进度条'
+      },
+      demo5: {
+        title: '主动关闭'
       },
       props: {
         type: '类型',
@@ -1675,8 +1743,8 @@ export default {
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
         closeByEsc: '是否可通过按下 ESC 关闭',
         hideFooter: '是否隐藏底部',
-        okProps: '确认按钮的属性',
-        cancelProps: '取消按钮的属性',
+        okButtonProps: '确认按钮的属性',
+        closeButtonProps: '取消按钮的属性',
         zIndex: '层级'
       }
     },
@@ -1698,7 +1766,6 @@ export default {
         cancelText: '取消按钮文本',
         ok: '确认回调',
         cancel: '取消回调',
-        layout: '布局方式',
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
         closeByEsc: '是否可通过按下 ESC 关闭',
         transformOrigin: '动画原点'
@@ -1732,10 +1799,8 @@ export default {
         top: '距离顶部的距离',
         hideFooter: '是否隐藏底部',
         closeByEsc: '是否可通过按下 ESC 关闭',
-        okProps: '确认按钮属性',
-        cancelProps: '取消按钮属性',
-        hideOkButton: '是否隐藏确认按钮',
-        hideCancelButton: '是否隐藏取消按钮',
+        okButtonProps: '确认按钮属性',
+        closeButtonProps: '取消按钮属性',
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
         zIndex: '层级'
       }
@@ -1754,10 +1819,12 @@ export default {
         width: '宽度',
         trigger: '触发方式',
         title: '标题',
-        okProps: '确认按钮属性',
-        cancelProps: '取消按钮属性',
         content: '内容',
-        placement: '位置'
+        placement: '位置',
+        okText: '确认按钮文本',
+        cancelText: '取消按钮文本',
+        ok: '确认回调',
+        cancel: '取消回调'
       }
     },
     popover: {
@@ -1766,12 +1833,24 @@ export default {
       demo1: {
         title: '基础用法'
       },
+      demo2: {
+        title: '触发方式'
+      },
+      demo3: {
+        title: '自定义触发器'
+      },
+      demo4: {
+        title: '点击气泡区域外是否自动关闭'
+      },
+      demo5: {
+        title: '加载状态'
+      },
       props: {
         trigger: '触发方式',
         placement: '位置',
         disabled: '禁用状态',
         loading: '加载状态',
-        hideOnClick: '点击时隐藏',
+        hideOnClick: '点击气泡区域外是否自动关闭',
         offset: '偏移量',
         popoverBodyClassName: '气泡内容类名',
         triggerTarget: '触发目标'
@@ -1790,6 +1869,12 @@ export default {
       demo2: {
         title: '点击触发'
       },
+      demo3: {
+        title: '延迟时间'
+      },
+      demo4: {
+        title: '支持HTML'
+      },
       props: {
         tips: '提示内容',
         placement: '位置',
@@ -1804,11 +1889,16 @@ export default {
       demo1: {
         title: '基础用法'
       },
+      demo2: {
+        title: '自定义图标大小'
+      },
+      demo3: {
+        title: '自定义提示信息'
+      },
       props: {
         tip: '提示信息',
-        placement: '提示位置',
-        trigger: '触发方式',
-        allowHTML: '允许 HTML'
+        iconSize: '图标大小',
+        visible: '是否显示'
       }
     },
     result: {

@@ -269,6 +269,8 @@ onUnmounted(() => {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: hidden;
   .lew-tabs-main {
     position: relative;
     display: inline-flex;

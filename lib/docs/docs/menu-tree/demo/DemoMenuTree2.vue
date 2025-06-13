@@ -13,7 +13,7 @@ const options = [
   {
     value: '1',
     label: 'Pet Mgmt',
-    renderIcon: () => h(Home, { size: 14 }),
+    icon: () => h(Home, { size: 14 }),
     children: [
       {
         value: '1-1',
@@ -38,7 +38,7 @@ const options = [
   {
     value: '2',
     label: 'Med Services',
-    renderIcon: () => h(ShoppingCart, { size: 14 }),
+    icon: () => h(ShoppingCart, { size: 14 }),
     children: [
       {
         value: '2-1',
@@ -63,7 +63,7 @@ const options = [
   {
     value: '3',
     label: 'Client Mgmt',
-    renderIcon: () => h(Users, { size: 14 }),
+    icon: () => h(Users, { size: 14 }),
     children: [
       {
         value: '3-1',
@@ -88,7 +88,7 @@ const options = [
   {
     value: '4',
     label: 'Product Mgmt',
-    renderIcon: () => h(Target, { size: 14 }),
+    icon: () => h(Target, { size: 14 }),
     children: [
       {
         value: '4-1',
@@ -113,7 +113,7 @@ const options = [
   {
     value: '5',
     label: 'Data Analysis',
-    renderIcon: () => h(BarChart2, { size: 14 }),
+    icon: () => h(BarChart2, { size: 14 }),
     children: [
       {
         value: '5-1',
@@ -138,7 +138,7 @@ const options = [
   {
     value: '6',
     label: 'System Settings',
-    renderIcon: () => h(Settings, { size: 14 }),
+    icon: () => h(Settings, { size: 14 }),
     children: [
       {
         value: '6-1',

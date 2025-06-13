@@ -19,6 +19,11 @@ export const buttonProps = {
       return true
     }
   },
+  width: {
+    type: [String, Number],
+    default: undefined,
+    description: '按钮宽度，支持数字（单位：像素）或带单位的字符串'
+  },
   type: {
     type: String as PropType<ButtonType>,
     default: 'fill',

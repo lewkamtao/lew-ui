@@ -13,7 +13,7 @@ export const inputModel = {
     default: undefined,
     description: '输入框的值，支持 v-model 双向绑定'
   },
-  prefixesValue: {
+  prefixValue: {
     type: [String, Number],
     default: undefined,
     description: '输入框前缀的值'

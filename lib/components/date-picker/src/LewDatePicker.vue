@@ -253,7 +253,7 @@ defineExpose({ show, hide })
 
 :deep() {
   .lew-date-picker-date-panel {
-    width: 273px;
+    width: 260px;
     flex-shrink: 0;
   }
 

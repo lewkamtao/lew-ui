@@ -16,10 +16,6 @@ defineProps({
 })
 
 const toPath = (item: MenuOptions) => {
-  if (item.tagText === 'Coming soon') {
-    LewMessage.info('敬请期待！')
-    return
-  }
   router.push(item.value as string)
   active.value = item.value as string
 }

@@ -1,7 +1,7 @@
 import { useMouse } from '@vueuse/core'
 import _LewDialog from './LewDialog.vue'
 import type { LewColor } from 'lew-ui'
-
+import { locale } from 'lew-ui'
 const { x, y } = useMouse()
 
 type Options = {
@@ -66,7 +66,7 @@ const dialog = (type: LewColor, options: Options) => {
           cancel
         },
         {
-          title: () => title,
+          title: () => title || locale.t('dialog.title'),
           content: () => content
         }
       )

@@ -1,4 +1,4 @@
-import { uniqueId } from 'lodash-es'
+import { cloneDeep, isFunction } from 'lodash-es'
 import Icon from './Icon.vue'
 /**
  * 获取颜色类型。
@@ -139,14 +139,15 @@ export const isValidCssValue = ({
 }
 
 /**
- * 生成唯一ID。
- * @returns {string} 生成的唯一ID。
+ * 生成6位不重复的唯一ID。
+ * 使用 UUID v4 的前6位，确保唯一性。
+ * @returns {string} 生成的6位唯一ID。
  */
 export const getUniqueId = () => {
-  // 生成一个随机字符串作为UUID的前缀
-  const randomString = Math.random().toString(16).substring(2, 8)
-  // 使用Lodash的uniqueId()方法生成UUID
-  return uniqueId(randomString)
+  // 生成 UUID v4
+  const uuid = crypto.randomUUID()
+  // 取前6位
+  return uuid.substring(0, 8)
 }
 
 /**
@@ -498,4 +499,106 @@ export const poll = ({
   }
 
   execute()
+}
+
+export const insertChildByKey = (
+  tree: any,
+  key: string | number,
+  newChild: any
+): boolean => {
+  for (let i = 0; i < tree.length; i++) {
+    if (tree[i].key === key) {
+      tree[i].children = newChild
+      return true
+    }
+    if (tree[i].children?.length) {
+      if (insertChildByKey(tree[i].children, key, newChild)) {
+        return true
+      }
+    }
+  }
+  return false
+}
+
+export const findAllChildrenKeys = (node: any) => {
+  const keys: (string | number)[] = []
+
+  const traverse = (item: any) => {
+    if (item.key !== undefined) keys.push(item.key)
+    item.children?.forEach(traverse)
+  }
+
+  node.children?.forEach(traverse)
+
+  return keys
+}
+
+export const findNodeByKey = (key: string | number, tree: any) => {
+  const queue: any = cloneDeep(tree)
+
+  while (queue.length > 0) {
+    const node = queue.shift()!
+    if (node.key === key) return node
+    if (node.children?.length) {
+      queue.push(...node.children)
+    }
+  }
+
+  return null
+}
+
+/**
+ * 判断是否为 Vue 组件
+ * @param {any} value - 要判断的值
+ * @returns {boolean} 如果值是 Vue 组件则返回 true，否则返回 false
+ */
+export const isVueComponent = (value: any): boolean => {
+  try {
+    // 检查是否为函数类型
+    if (typeof value !== 'function' && typeof value !== 'object') {
+      return false
+    }
+
+    // 检查函数式组件 (返回 VNode 的函数)
+    if (typeof value === 'function') {
+      return true
+    }
+
+    // 检查对象类型组件
+    if (value && typeof value === 'object') {
+      // 检查是否有组件特有属性
+      if (
+        value.__file ||
+        value.__name ||
+        value.setup ||
+        value.render ||
+        value.template
+      )
+        return true
+
+      // 检查是否为 Vue 定义的组件对象
+      if (value.component || value.__v_isVNode || value.__v_isComponent)
+        return true
+    }
+
+    // 检查是否为 defineComponent 创建的组件
+    if (value && value.__esModule && value.default) {
+      return isVueComponent(value.default)
+    }
+    return false
+  } catch {
+    return false
+  }
+}
+
+/**
+ * 格式化组件
+ * @param {any} value - 要格式化的值
+ * @returns {any} 格式化后的值
+ */
+export const formatComponent = (value: any) => {
+  if (isFunction(value)) {
+    return value()
+  }
+  return value
 }

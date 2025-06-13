@@ -159,24 +159,17 @@ export const uploadByCardProps = {
   }
 }
 
-export const statusMap: Record<UploadStatus, string> = {
-  pending: '待上传',
-  success: '上传成功',
-  fail: '上传失败',
-  uploading: '上传中',
-  complete: '已上传',
-  wrong_type: '非法格式',
-  wrong_size: '文件大小超出限制'
-}
-
-export const statusColorMap: Record<UploadStatus, string> = {
-  pending: 'gray',
-  success: 'green',
-  fail: 'red',
-  uploading: 'blue',
-  complete: 'gray',
-  wrong_type: 'red',
-  wrong_size: 'red'
+export const statusConfig: Record<
+  UploadStatus,
+  { text: string; color: string }
+> = {
+  pending: { text: '待上传', color: 'gray' },
+  success: { text: '上传成功', color: 'green' },
+  fail: { text: '上传失败', color: 'red' },
+  uploading: { text: '上传中', color: 'blue' },
+  complete: { text: '已上传', color: 'gray' },
+  wrong_type: { text: '非法格式', color: 'red' },
+  wrong_size: { text: '文件大小超出限制', color: 'red' }
 }
 
 export type UploadProps = ExtractPropTypes<typeof uploadProps>

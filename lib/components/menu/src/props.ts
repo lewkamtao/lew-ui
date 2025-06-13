@@ -1,15 +1,13 @@
 import type { ExtractPropTypes } from 'vue'
-import type { LewColor, TagType } from 'lew-ui'
+import type { TagProps } from 'lew-ui'
 
 export type MenuOptions = {
   label: string // 标题
   value?: string // 值
   children?: MenuOptions[] // 子菜单
   disabled?: boolean // 是否禁用
-  renderIcon?: string // 图标
-  tagText?: string // 标签文本
-  tagColor?: LewColor // 标签颜色
-  tagType?: TagType // 标签类型
+  icon?: () => any
+  tagProps?: TagProps
 }
 
 export const menuModel = {

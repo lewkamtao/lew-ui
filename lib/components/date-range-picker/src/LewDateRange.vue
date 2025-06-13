@@ -516,9 +516,9 @@ const headDate = computed(() => {
 }
 
 .lew-date {
-  width: 273px;
+  width: 260px;
   user-select: none;
-  padding: 15px;
+  padding: 10px;
   box-sizing: border-box;
 
   .lew-date-control {
@@ -563,7 +563,6 @@ const headDate = computed(() => {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
 
     .lew-date-item {
       position: relative;

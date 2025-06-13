@@ -1,7 +1,7 @@
 <script setup lang="ts">
 function createTree(path = '0', level = 2) {
   const list = []
-  for (let i = 0; i < 5; i += 1) {
+  for (let i = 0; i < 2; i += 1) {
     const key = `${path}-${i}`
     const treeNode: any = {
       label: key,
@@ -26,6 +26,9 @@ const change = (e: any) => {
     style="width: 300px"
     v-model="v"
     multiple
+    checkable
+    searchable
+    :free="false"
     :data-source="options"
     @change="change"
   />

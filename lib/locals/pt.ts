@@ -11,7 +11,8 @@ export default {
   },
   inputTag: {
     placeholder: 'Digite e pressione Enter para adicionar uma tag',
-    maxLength: 'Atingiu o limite de {maxLength} tags, remova algumas para continuar adicionando',
+    maxLength:
+      'Atingiu o limite de {maxLength} tags, remova algumas para continuar adicionando',
     duplicate: 'Esta tag já existe, por favor digite uma nova tag'
   },
   select: {
@@ -21,9 +22,14 @@ export default {
     placeholder: 'Por favor, selecione'
   },
   cascader: {
-    placeholder: 'Por favor, selecione'
+    placeholder: 'Por favor, selecione',
+    closeText: 'Fechar',
+    okText: 'OK'
   },
   textarea: {
+    placeholder: 'Por favor, digite'
+  },
+  inputNumber: {
     placeholder: 'Por favor, digite'
   },
   datePicker: {
@@ -40,6 +46,35 @@ export default {
     placeholderStart: 'Data inicial',
     placeholderEnd: 'Data final'
   },
+  inputTable: {
+    addText: 'Adicionar',
+    deleteConfirm: 'Confirmar exclusão',
+    delete: 'Excluir',
+    cancel: 'Cancelar',
+    deleteConfirmContent: 'Tem certeza que deseja excluir estes dados? Esta operação será aplicada imediatamente, por favor tenha cuidado!',
+    minRows: 'Limite mínimo de linhas atingido, não é possível excluir',
+    maxRows: 'Limite máximo de linhas atingido, não é possível adicionar',
+    uniqueFieldExist: 'Este {label} já existe. Por favor, digite um {label} único.',
+    save: 'Salvar',
+    modelTitle: 'Adicionar dados',
+    editTitle: 'Editar dados'
+  },
+  drawer: {
+    closeText: 'Fechar',
+    okText: 'OK'
+  },
+  modal: {
+    closeText: 'Fechar',
+    okText: 'OK'
+  },
+  dialog: {
+    cancelText: 'Cancelar',
+    okText: 'OK'
+  },
+  popok: {
+    cancelText: 'Cancelar',
+    okText: 'OK'
+  },
   upload: {
     dropActive: 'Solte para iniciar o upload',
     click: 'Clique para fazer upload, ',
@@ -50,6 +85,7 @@ export default {
     maxFileSize: 'Cada arquivo não deve exceder {maxFileSize}'
   },
   pagination: {
-    pageSize: '{pageSize} por página'
+    pageSize: '{pageSize} por página',
+    jumpTo: 'Ir para'
   }
 }

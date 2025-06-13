@@ -19,6 +19,7 @@ const value = ref([])
   <lew-select-multiple
     width="320px"
     v-model="value"
+    valueLayout="tag"
     :options="options"
     placeholder="Please select a brand"
     clearable

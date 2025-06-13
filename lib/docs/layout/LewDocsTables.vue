@@ -33,7 +33,8 @@ const getColumns = computed(
         {
           title: nameMap[columnsKey],
           width: 120,
-          field: 'name'
+          field: 'name',
+          type: 'text-trim'
         }
       ]
 
@@ -57,7 +58,9 @@ const getColumns = computed(
                       color: 'pink',
                       size: 'small'
                     },
-                    text.trim()
+                    {
+                      default: () => text.trim()
+                    }
                   )
                 })
               return h(
@@ -68,7 +71,9 @@ const getColumns = computed(
                   gap: 5,
                   wrap: true
                 },
-                tags
+                {
+                  default: () => tags
+                }
               )
             }
           },
@@ -94,7 +99,10 @@ const getColumns = computed(
           customRender: ({ row }: any) => {
             const { name } = row
             return docsLocale.t(
-              `components.${getComponentName()}.${title.replace(/^[A-Z]/, (match) => match.toLowerCase())}.${name}`
+              `components.${getComponentName()}.${title.replace(
+                /^[A-Z]/,
+                (match) => match.toLowerCase()
+              )}.${name}`
             )
           }
         }

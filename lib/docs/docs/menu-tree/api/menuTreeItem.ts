@@ -4,7 +4,7 @@ export default {
   data: [
     {
       name: 'label',
-      type: 'string',
+      type: 'string | Function',
       default: "''"
     },
     {
@@ -23,12 +23,7 @@ export default {
       default: 'false'
     },
     {
-      name: 'renderIcon',
-      type: 'Function',
-      default: '() => {}'
-    },
-    {
-      name: 'renderLabel',
+      name: 'icon',
       type: 'Function',
       default: '() => {}'
     },
@@ -38,19 +33,9 @@ export default {
       default: '1'
     },
     {
-      name: 'tagText',
-      type: 'string',
-      default: "''"
-    },
-    {
-      name: 'tagType',
-      type: 'string',
-      default: "'light'"
-    },
-    {
-      name: 'tagColor',
-      type: 'string',
-      default: "'error'"
+      name: 'tagProps',
+      type: 'TagProps',
+      default: '() => ({})'
     }
   ]
 }

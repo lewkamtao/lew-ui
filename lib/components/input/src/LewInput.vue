@@ -14,7 +14,7 @@ if (app && !app.directive('tooltip')) {
 const emit = defineEmits(['clear', 'blur', 'focus', 'change', 'input', 'ok'])
 const props = defineProps(inputProps)
 const modelValue = defineModel({ required: true })
-const prefixesValue = defineModel('prefixesValue')
+const prefixValue = defineModel('prefixValue')
 const suffixValue: any = defineModel('suffixValue')
 
 const lewInputRef = ref()
@@ -44,6 +44,7 @@ const clear = () => {
 }
 
 const toFocus = () => lewInputRef.value?.focus()
+const toBlur = () => lewInputRef.value?.blur()
 
 const showPasswordFn = () => {
   _type.value = _type.value === 'text' ? 'password' : 'text'
@@ -75,7 +76,9 @@ const getInputStyle = computed(() => {
   const { clearable, showCount } = props
   const countWidth = lewInputCountRef.value?.offsetWidth || 0
   return {
-    width: `calc(100% - ${clearable ? 20 + countWidth + (showCount ? 12 : 0) : 0}px)`
+    width: `calc(100% - ${
+      clearable ? 20 + countWidth + (showCount ? 12 : 0) : 0
+    }px)`
   }
 })
 
@@ -95,7 +98,7 @@ const getInputClassNames = computed(() => {
 })
 
 const prefixesChange = (item: { value: string }) => {
-  prefixesValue.value = item.value
+  prefixValue.value = item.value
 }
 
 const suffixChange = (item: { value: string }) => {
@@ -104,7 +107,7 @@ const suffixChange = (item: { value: string }) => {
 
 const getPrefixesLabel = computed(() => {
   return (
-    props.prefixesOptions.find((e) => e.value === prefixesValue.value)?.label ||
+    props.prefixesOptions.find((e) => e.value === prefixValue.value)?.label ||
     ''
   )
 })
@@ -146,11 +149,33 @@ if (props.okByEnter) {
   })
 }
 
+const computedPrefixesOptions = computed(() => {
+  return props.prefixesOptions.map((e) => {
+    return {
+      ...e,
+      onClick: () => {
+        prefixValue.value = e.value
+      }
+    }
+  })
+})
+
+const computedSuffixOptions = computed(() => {
+  return props.suffixOptions.map((e) => {
+    return {
+      ...e,
+      onClick: () => {
+        suffixValue.value = e.value
+      }
+    }
+  })
+})
+
 onUnmounted(() => {
   if (timer) clearTimeout(timer)
 })
 
-defineExpose({ toFocus })
+defineExpose({ toFocus, toBlur })
 </script>
 
 <template>
@@ -168,16 +193,16 @@ defineExpose({ toFocus })
       class="lew-input-prefixes"
     >
       <div v-if="prefixes === 'text'">
-        {{ prefixesValue }}
+        {{ prefixValue }}
       </div>
       <div v-if="prefixes === 'icon'" class="lew-input-prefixes-icon">
-        <Icon :size="getIconSize" :type="prefixesValue as string" />
+        <Icon :size="getIconSize" :type="prefixValue as string" />
       </div>
       <div v-if="prefixes === 'select'" class="lew-input-prefixes-select">
         <lew-dropdown
           placement="bottom"
           trigger="click"
-          :options="prefixesOptions"
+          :options="computedPrefixesOptions"
           @change="prefixesChange"
           @show="state.prefixesDropdown = 'show'"
           @hide="state.prefixesDropdown = 'hide'"
@@ -280,7 +305,6 @@ defineExpose({ toFocus })
         </transition>
       </div>
     </div>
-
     <div
       v-if="suffix"
       v-tooltip="{
@@ -297,7 +321,7 @@ defineExpose({ toFocus })
         <lew-dropdown
           placement="bottom"
           trigger="click"
-          :options="suffixOptions"
+          :options="computedSuffixOptions"
           @change="suffixChange"
           @show="state.suffixDropdown = 'show'"
           @hide="state.suffixDropdown = 'hide'"

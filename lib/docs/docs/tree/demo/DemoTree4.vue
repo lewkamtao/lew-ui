@@ -26,7 +26,7 @@ const change = (e: any) => {
     style="width: 300px"
     v-model="v"
     multiple
-    showCheckbox
+    checkable
     :free="false"
     :data-source="tree"
     @change="change"

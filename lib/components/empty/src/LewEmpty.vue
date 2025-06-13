@@ -43,7 +43,7 @@ const emptyStyleObject = computed(() => {
     height: auto;
   }
   .lew-empty-title {
-    color: var(--lew-text-color-8);
+    color: var(--lew-text-color-5);
   }
 }
 .lew-dark {

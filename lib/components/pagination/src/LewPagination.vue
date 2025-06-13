@@ -118,20 +118,6 @@ const getPaginationClassName = computed(() => {
   })
 })
 
-const getSelectWidth = computed(() => {
-  const { size } = props
-  switch (size) {
-    case 'small':
-      return '120px'
-    case 'medium':
-      return '140px'
-    case 'large':
-      return '160px'
-    default:
-      return '140px'
-  }
-})
-
 const getIconSize = computed(() => {
   const { size } = props
   switch (size) {
@@ -230,9 +216,8 @@ const getIconSize = computed(() => {
       </lew-flex>
       <lew-select
         v-model="state.pageSize"
-        :style="{
-          width: getSelectWidth
-        }"
+        auto-width
+        :popover-width="150"
         :size="size"
         :showCheckIcon="false"
         :options="getPageSizeOptions as PaginationOptions[]"
@@ -242,7 +227,7 @@ const getIconSize = computed(() => {
         v-model="state.toPage"
         :size="size"
         align="center"
-        placeholder="跳转至"
+        :placeholder="locale.t('pagination.jumpTo')"
         autoWidth
         @change="checkPageNum"
       />

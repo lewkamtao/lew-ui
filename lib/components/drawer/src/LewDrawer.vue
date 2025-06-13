@@ -1,60 +1,54 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
-import { object2class, any2px, getUniqueId } from 'lew-ui/utils'
-import { useDOMCreate } from 'lew-ui/hooks'
-import { LewButton, LewFlex } from 'lew-ui'
-import { drawerProps } from './props'
-import { useMagicKeys, onClickOutside } from '@vueuse/core'
-import Icon from 'lew-ui/utils/Icon.vue'
-const { Escape } = useMagicKeys()
+import { ref, watch } from "vue";
+import { object2class, any2px, getUniqueId } from "lew-ui/utils";
+import { useDOMCreate } from "lew-ui/hooks";
+import { LewButton, LewFlex } from "lew-ui";
+import { drawerProps } from "./props";
+import { useMagicKeys, onClickOutside } from "@vueuse/core";
+import Icon from "lew-ui/utils/Icon.vue";
+import { locale } from "lew-ui";
+const { Escape } = useMagicKeys();
 
-useDOMCreate('lew-drawer')
-const emit = defineEmits(['ok', 'cancel'])
+useDOMCreate("lew-drawer");
 
-const visible: Ref<boolean | undefined> = defineModel('visible')
+const emit = defineEmits(["close"]);
 
-const props = defineProps(drawerProps)
-const drawerBodyRef = ref(null)
-const drawerId = `lew-drawer-${getUniqueId()}`
+const visible: Ref<boolean | undefined> = defineModel("visible");
+
+const props = defineProps(drawerProps);
+const drawerBodyRef = ref(null);
+const drawerId = `lew-drawer-${getUniqueId()}`;
 
 onClickOutside(drawerBodyRef, (e) => {
   if (visible.value && props.closeOnClickOverlay) {
-    const { parentElement } = e?.target as Element
+    const { parentElement } = e?.target as Element;
     if (parentElement?.id === drawerId) {
-      visible.value = false
+      visible.value = false;
     }
   }
-})
-
-const ok = () => {
-  emit('ok')
-}
-
-const cancel = () => {
-  emit('cancel')
-}
+});
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
     if (!visible.value || !v) {
-      return
+      return;
     }
 
-    const dialogEl = document.getElementById('lew-dialog')
-    const drawerEl = document.getElementById(drawerId)
-    const hasDialog = dialogEl && dialogEl.children.length > 0
+    const dialogEl = document.getElementById("lew-dialog");
+    const drawerEl = document.getElementById(drawerId);
+    const hasDialog = dialogEl && dialogEl.children.length > 0;
 
     const isOpenDrawer = Array.from(drawerEl?.parentElement?.childNodes ?? [])
       .filter((e): e is Element => e instanceof Element)
-      .filter((e) => e.children.length > 0)
+      .filter((e) => e.children.length > 0);
 
     const topDrawer =
-      isOpenDrawer[isOpenDrawer.length - 1]?.id === drawerId && drawerEl
+      isOpenDrawer[isOpenDrawer.length - 1]?.id === drawerId && drawerEl;
 
     if (!hasDialog && topDrawer) {
-      visible.value = false
+      visible.value = false;
     }
-  })
+  });
 }
 
 const getStyle = (
@@ -64,24 +58,29 @@ const getStyle = (
 ) => {
   switch (true) {
     case !position:
-      return 'width:30%;height:100%'
+      return "width:30%;height:100%";
 
-    case position === 'left':
-      return `width:${any2px(width)};height:100vh`
+    case position === "left":
+      return `width:${any2px(width)};height:100vh`;
 
-    case position === 'right':
-      return `width:${any2px(width)};height:100vh`
+    case position === "right":
+      return `width:${any2px(width)};height:100vh`;
 
-    case position === 'top':
-      return `width:100vw;height:${any2px(height)}`
+    case position === "top":
+      return `width:100vw;height:${any2px(height)}`;
 
-    case position === 'bottom':
-      return `width:100vw;height:${any2px(height)}`
+    case position === "bottom":
+      return `width:100vw;height:${any2px(height)}`;
 
     default:
-      break
+      break;
   }
-}
+};
+
+const close = () => {
+  visible.value = false;
+  emit("close");
+};
 </script>
 <template>
   <teleport to="#lew-drawer">
@@ -93,7 +92,9 @@ const getStyle = (
         ref="drawerBodyRef"
         :style="`${getStyle(position, width, height)}; z-index:${zIndex}`"
         class="lew-drawer-body"
-        :class="`${object2class('lew-drawer-body', { position })} ${visible ? 'lew-drawer-body-show' : ''}`"
+        :class="`${object2class('lew-drawer-body', { position })} ${
+          visible ? 'lew-drawer-body-show' : ''
+        }`"
       >
         <div v-if="$slots.header" class="lew-drawer-header-slot">
           <slot name="header"></slot>
@@ -104,13 +105,18 @@ const getStyle = (
           y="center"
           class="lew-drawer-header"
         >
-          <lew-text-trim class="lew-drawer-title" :text="title" />
-          <Icon
-            :size="18"
-            class="lew-form-icon-close lew-drawer-icon-close"
-            type="close"
-            @click="visible = false"
-          />
+          <div class="lew-drawer-title">{{ title }}</div>
+          <lew-button
+            type="light"
+            color="gray"
+            round
+            single-icon
+            size="small"
+            class="lew-drawer-icon-close"
+            @click="close"
+          >
+            <Icon :size="14" type="close" />
+          </lew-button>
         </lew-flex>
         <div class="lew-drawer-body-slot">
           <slot></slot>
@@ -126,22 +132,21 @@ const getStyle = (
         >
           <lew-button
             v-bind="{
-              type: 'text',
-              text: '取消',
-              round: true,
+              size: 'small',
+              text: locale.t('drawer.closeText'),
+              type: 'light',
               color: 'normal',
-              ...(cancelProps as any)
+              request: close,
+              ...(closeButtonProps as any)
             }"
-            @click="cancel"
           />
           <lew-button
             v-bind="{
-              text: '确定',
+              size: 'small',
+              text: locale.t('drawer.okText'),
               color: 'primary',
-              round: true,
-              ...(okProps as any)
+              ...(okButtonProps as any)
             }"
-            @click="ok"
           />
         </lew-flex>
       </div>
@@ -160,10 +165,30 @@ const getStyle = (
 
 .lew-drawer-body {
   position: fixed;
-  transition: all 0.25s ease;
+  transition: all 0.3s;
   background: var(--lew-modal-body-bgcolor);
   display: flex;
   flex-direction: column;
+  .lew-drawer-header {
+    position: relative;
+    padding: 15px 20px;
+    flex: 0;
+
+    .lew-drawer-title {
+      width: calc(100% - 30px);
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .lew-drawer-icon-close {
+      position: absolute;
+      width: auto;
+      height: auto;
+      padding: 5px;
+      top: 10px;
+      right: 10px;
+    }
+  }
 }
 
 .lew-drawer-body-slot {
@@ -171,30 +196,8 @@ const getStyle = (
   overflow: hidden;
 }
 
-.lew-drawer-header {
-  position: relative;
-  height: 50px;
-  padding: 10px 20px;
-  border-bottom: var(--lew-modal-header-border);
-  flex: 0;
-
-  .lew-drawer-title {
-    font-size: 16px;
-    font-weight: bold;
-  }
-
-  .lew-drawer-icon-close {
-    right: 15px;
-  }
-
-  .lew-drawer-icon-close:hover {
-    background-color: var(--lew-bgcolor-5);
-  }
-}
-
 .lew-drawer-footer {
-  padding: 10px 20px;
-  border-top: var(--lew-modal-footer-border);
+  padding: 20px;
   flex: 0;
 }
 

@@ -1,210 +1,278 @@
 <script lang="ts" setup>
-import type { MenuTreeItem } from 'lew-ui'
-import {
-  FileText,
-  Users,
-  MessageSquare,
-  Tag,
-  BarChart2,
-  Settings
-} from 'lucide-vue-next'
-import { h } from 'vue'
+import type { MenuTreeItem } from "lew-ui";
+import { FileText, Users, MessageSquare, Tag } from "lucide-vue-next";
+import { h } from "vue";
 
-const value = ref('')
+const value = ref("");
 const expandKeys = ref([
-  '1',
-  '1-1',
-  '1-1-1',
-  '1-1-2',
-  '1-1-3',
-  '1-2',
-  '1-2-1',
-  '1-2-2',
-  '1-2-3',
-  '2',
-  '2-1',
-  '2-1-1',
-  '2-1-2'
-])
-
+  "1",
+  "1-1",
+  "1-1-1",
+  "1-1-2",
+  "1-1-3",
+  "1-2",
+  "1-2-1",
+  "1-2-2",
+  "1-2-3",
+  "2",
+  "2-1",
+  "2-1-1",
+  "2-1-2",
+]);
 const options = [
   {
-    value: '1',
-    label: 'Article Mgmt',
-    renderIcon: () => h(FileText, { size: 14 }),
-    tagText: '10',
-    tagType: 'light',
+    value: "1",
+    label: "Article Mgmt",
+    icon: () => h(FileText, { size: 14 }),
+    tagProps: {
+      text: "Core",
+      color: "success",
+    },
     children: [
       {
-        value: '1-1',
-        label: 'Article List',
-        tagText: 'New',
-        tagType: 'ghost',
-        tagColor: 'green',
+        value: "1-1",
+        label: "Article List",
         children: [
           {
-            value: '1-1-1',
-            label: 'Published',
-            tagText: '8',
-            tagType: 'light'
+            value: "1-1-1",
+            label: "Published",
+            tagProps: {
+              text: "12",
+              color: "info",
+            },
           },
-          { value: '1-1-2', label: 'Drafts', tagText: '3', tagType: 'light' },
-          { value: '1-1-3', label: 'Recycle Bin' }
-        ]
+          {
+            value: "1-1-2",
+            label: "Drafts",
+            tagProps: {
+              text: "3",
+              color: "warning",
+            },
+          },
+          {
+            value: "1-1-3",
+            label: "Recycle Bin",
+            tagProps: {
+              text: "0",
+              color: "info",
+            },
+          },
+        ],
       },
       {
-        value: '1-2',
-        label: 'Write Article',
-        children: [
-          { value: '1-2-1', label: 'New Article' },
-          { value: '1-2-2', label: 'Import Article' },
-          { value: '1-2-3', label: 'Batch Actions' }
-        ]
-      }
-    ]
-  },
-  {
-    value: '2',
-    label: 'User Mgmt',
-    renderIcon: () => h(Users, { size: 14 }),
-    tagText: '5',
-    tagType: 'light',
-    children: [
-      {
-        value: '2-1',
-        label: 'User List',
-        tagText: 'New',
-        tagType: 'ghost',
-        tagColor: 'green',
-        children: [
-          { value: '2-1-1', label: 'Regular Users' },
-          { value: '2-1-2', label: 'Admins', tagText: '2', tagType: 'light' },
-          { value: '2-1-3', label: 'Blacklist', tagText: '3', tagType: 'light' }
-        ]
-      },
-      {
-        value: '2-2',
-        label: 'User Permissions',
-        children: [
-          { value: '2-2-1', label: 'Role Mgmt' },
-          { value: '2-2-2', label: 'Permission Assign' },
-          { value: '2-2-3', label: 'Access Control' }
-        ]
-      }
-    ]
-  },
-  {
-    value: '3',
-    label: 'Comment Mgmt',
-    renderIcon: () => h(MessageSquare, { size: 14 }),
-    tagText: '12',
-    tagType: 'light',
-    children: [
-      {
-        value: '3-1',
-        label: 'Comment List',
+        value: "1-2",
+        label: "Write Article",
+        tagProps: {
+          text: "New",
+          color: "success",
+        },
         children: [
           {
-            value: '3-1-1',
-            label: 'Pending Review',
-            tagText: '7',
-            tagType: 'light'
+            value: "1-2-1",
+            label: "New Article",
           },
-          { value: '3-1-2', label: 'Approved' },
-          { value: '3-1-3', label: 'Rejected', tagText: '5', tagType: 'light' }
-        ]
+          {
+            value: "1-2-2",
+            label: "Import Article",
+            tagProps: {
+              text: "Beta",
+              color: "warning",
+            },
+          },
+          {
+            value: "1-2-3",
+            label: "Batch Actions",
+          },
+        ],
       },
-      {
-        value: '3-2',
-        label: 'Comment Settings',
-        children: [
-          { value: '3-2-1', label: 'Review Rules' },
-          { value: '3-2-2', label: 'Sensitive Word Filter' },
-          { value: '3-2-3', label: 'Comment Switch' }
-        ]
-      }
-    ]
+    ],
   },
   {
-    value: '4',
-    label: 'Tag Mgmt',
-    renderIcon: () => h(Tag, { size: 14 }),
+    value: "2",
+    label: "User Mgmt",
+    icon: () => h(Users, { size: 14 }),
+    tagProps: {
+      text: "Admin",
+      color: "warning",
+    },
     children: [
       {
-        value: '4-1',
-        label: 'Tag List',
+        value: "2-1",
+        label: "User List",
         children: [
-          { value: '4-1-1', label: 'Popular Tags' },
-          { value: '4-1-2', label: 'Latest Tags' },
-          { value: '4-1-3', label: 'Tag Review' }
-        ]
+          {
+            value: "2-1-1",
+            label: "Regular Users",
+            tagProps: {
+              text: "1.2k",
+              color: "success",
+            },
+          },
+          {
+            value: "2-1-2",
+            label: "Admins",
+            tagProps: {
+              text: "12",
+              color: "warning",
+            },
+          },
+          {
+            value: "2-1-3",
+            label: "Blacklist",
+            tagProps: {
+              text: "5",
+              color: "error",
+            },
+          },
+        ],
       },
       {
-        value: '4-2',
-        label: 'Category Mgmt',
+        value: "2-2",
+        label: "User Permissions",
         children: [
-          { value: '4-2-1', label: 'Category List' },
-          { value: '4-2-2', label: 'Add Category' },
-          { value: '4-2-3', label: 'Category Sort' }
-        ]
-      }
-    ]
+          {
+            value: "2-2-1",
+            label: "Role Mgmt",
+            tagProps: {
+              text: "Admin Only",
+              color: "error",
+            },
+          },
+          {
+            value: "2-2-2",
+            label: "Permission Assign",
+          },
+          {
+            value: "2-2-3",
+            label: "Access Control",
+          },
+        ],
+      },
+    ],
   },
   {
-    value: '5',
-    label: 'Data Stats',
-    renderIcon: () => h(BarChart2, { size: 14 }),
+    value: "3",
+    label: "Comment Mgmt",
+    icon: () => h(MessageSquare, { size: 14 }),
     children: [
       {
-        value: '5-1',
-        label: 'Visit Stats',
+        value: "3-1",
+        label: "Comment List",
         children: [
-          { value: '5-1-1', label: 'Visit Trends' },
-          { value: '5-1-2', label: 'Source Analysis' },
-          { value: '5-1-3', label: 'Visit Details' }
-        ]
+          {
+            value: "3-1-1",
+            label: "Pending Review",
+            tagProps: {
+              text: "23",
+              color: "error",
+            },
+          },
+          {
+            value: "3-1-2",
+            label: "Approved",
+            tagProps: {
+              text: "156",
+              color: "success",
+            },
+          },
+          {
+            value: "3-1-3",
+            label: "Rejected",
+            tagProps: {
+              text: "8",
+              color: "warning",
+            },
+          },
+        ],
       },
       {
-        value: '5-2',
-        label: 'Content Stats',
+        value: "3-2",
+        label: "Comment Settings",
         children: [
-          { value: '5-2-1', label: 'Popular Articles' },
-          { value: '5-2-2', label: 'Author Ranking' },
-          { value: '5-2-3', label: 'Engagement Data' }
-        ]
-      }
-    ]
+          {
+            value: "3-2-1",
+            label: "Review Rules",
+          },
+          {
+            value: "3-2-2",
+            label: "Sensitive Word Filter",
+          },
+          {
+            value: "3-2-3",
+            label: "Comment Switch",
+            tagProps: {
+              text: "Enabled",
+              color: "success",
+            },
+          },
+        ],
+      },
+    ],
   },
   {
-    value: '6',
-    label: 'System Settings',
-    renderIcon: () => h(Settings, { size: 14 }),
+    value: "4",
+    label: "Tag Mgmt",
+    icon: () => h(Tag, { size: 14 }),
     children: [
       {
-        value: '6-1',
-        label: 'Basic Settings',
+        value: "4-1",
+        label: "Tag List",
         children: [
-          { value: '6-1-1', label: 'Site Info' },
-          { value: '6-1-2', label: 'Theme Settings' },
-          { value: '6-1-3', label: 'Email Config' }
-        ]
+          {
+            value: "4-1-1",
+            label: "Popular Tags",
+            tagProps: {
+              text: "45",
+              color: "success",
+            },
+          },
+          {
+            value: "4-1-2",
+            label: "Latest Tags",
+            tagProps: {
+              text: "12",
+              color: "info",
+            },
+          },
+          {
+            value: "4-1-3",
+            label: "Tag Review",
+            tagProps: {
+              text: "3",
+              color: "warning",
+            },
+          },
+        ],
       },
       {
-        value: '6-2',
-        label: 'Security Settings',
+        value: "4-2",
+        label: "Category Mgmt",
         children: [
-          { value: '6-2-1', label: 'Login Settings' },
-          { value: '6-2-2', label: 'Backup & Restore' },
-          { value: '6-2-3', label: 'Action Logs' }
-        ]
-      }
-    ]
-  }
-]
+          {
+            value: "4-2-1",
+            label: "Category List",
+            tagProps: {
+              text: "8",
+              color: "info",
+            },
+          },
+          {
+            value: "4-2-2",
+            label: "Add Category",
+          },
+          {
+            value: "4-2-3",
+            label: "Category Sort",
+          },
+        ],
+      },
+    ],
+  },
+];
 
 const change = (item: MenuTreeItem) => {
-  console.log(item)
-}
+  console.log(item);
+};
 </script>
 
 <template>

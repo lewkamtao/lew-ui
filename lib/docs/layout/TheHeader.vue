@@ -4,8 +4,9 @@ import { useDark } from '@vueuse/core'
 import { Sun, Moon, Github, Languages } from 'lucide-vue-next'
 import { setLocale } from 'lew-ui'
 import docsLocale, { getInitialLocale } from '@/locals'
+import packageJson from '../../../package.json'
 
-const version = ref('v2.6.0')
+const version = ref(packageJson.version)
 
 const isDark = useDark({
   selector: 'html',
@@ -37,123 +38,153 @@ const goToGithub = () => {
   window.open('https://github.com/lewkamtao/Lew-UI', '_blank')
 }
 
+const getLocaleIcon = (locale: string) => {
+  return new URL(`../assets/images/local/${locale}.svg`, import.meta.url).href
+}
 const localeOptions = ref([
   {
     label: '简体中文',
     value: 'zh',
-    checkbox: true,
-    renderIcon: () => {
+    checkable: true,
+    icon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/zh.svg',
+        src: getLocaleIcon('zh'),
         alt: '简体中文',
         width: 16,
         height: 16
       })
+    },
+    onClick: (e: any) => {
+      changeLanguage(e)
     }
   },
   {
     label: 'English',
     value: 'en',
-    checkbox: true,
-    renderIcon: () => {
+    checkable: true,
+    icon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/us.svg',
+        src: getLocaleIcon('us'),
         alt: 'English',
         width: 16,
         height: 16
       })
+    },
+    onClick: (e: any) => {
+      changeLanguage(e)
     }
   },
 
   {
     label: '日本語',
     value: 'ja',
-    checkbox: true,
-    renderIcon: () => {
+    checkable: true,
+    icon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/ja.svg',
+        src: getLocaleIcon('ja'),
         alt: '日本語',
         width: 16,
         height: 16
       })
+    },
+    onClick: (e: any) => {
+      changeLanguage(e)
     }
   },
   {
     label: '한국어',
     value: 'ko',
-    checkbox: true,
-    renderIcon: () => {
+    checkable: true,
+    icon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/ko.svg',
+        src: getLocaleIcon('ko'),
         alt: '한국어',
         width: 16,
         height: 16
       })
+    },
+    onClick: (e: any) => {
+      changeLanguage(e)
     }
   },
   {
     label: 'Español',
     value: 'es',
-    checkbox: true,
-    renderIcon: () => {
+    checkable: true,
+    icon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/es.svg',
+        src: getLocaleIcon('es'),
         alt: 'Español',
         width: 16,
         height: 16
       })
+    },
+    onClick: (e: any) => {
+      changeLanguage(e)
     }
   },
   {
     label: 'Français',
     value: 'fr',
-    checkbox: true,
-    renderIcon: () => {
+    checkable: true,
+    icon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/fr.svg',
+        src: getLocaleIcon('fr'),
         alt: 'Français',
         width: 16,
         height: 16
       })
+    },
+    onClick: (e: any) => {
+      changeLanguage(e)
     }
   },
   {
     label: 'Deutsch',
     value: 'de',
-    checkbox: true,
-    renderIcon: () => {
+    checkable: true,
+    icon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/de.svg',
+        src: getLocaleIcon('de'),
         alt: 'Deutsch',
         width: 16,
         height: 16
       })
+    },
+    onClick: (e: any) => {
+      changeLanguage(e)
     }
   },
   {
     label: 'Português',
     value: 'pt',
-    checkbox: true,
-    renderIcon: () => {
+    checkable: true,
+    icon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/br.svg',
+        src: getLocaleIcon('br'),
         alt: 'Português',
         width: 16,
         height: 16
       })
+    },
+    onClick: (e: any) => {
+      changeLanguage(e)
     }
   },
   {
     label: 'Italiano',
     value: 'it',
-    checkbox: true,
-    renderIcon: () => {
+    checkable: true,
+    icon: () => {
       return h('img', {
-        src: 'https://goodies.icons8.com/web/common/header/flags/it.svg',
+        src: getLocaleIcon('it'),
         alt: 'Italiano',
         width: 16,
         height: 16
       })
+    },
+    onClick: (e: any) => {
+      changeLanguage(e)
     }
   }
 ])
@@ -216,7 +247,7 @@ getInitialLocale().then((locale) => {
         <Sun class="icon-mode-sunny" :size="18" />
         <Moon class="icon-mode-moon" :size="18" />
       </div>
-      <lew-dropdown :options="localeOptions" @change="changeLanguage">
+      <lew-dropdown :options="localeOptions">
         <div class="menu-item menu-item-icon">
           <Languages :size="18" />
         </div>

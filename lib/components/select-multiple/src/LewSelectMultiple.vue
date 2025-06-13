@@ -244,6 +244,10 @@ const getVirtualHeight = computed(() => {
   return height
 })
 
+const isShowScrollBar = computed(() => {
+  return getVirtualHeight.value >= 280
+})
+
 const hideHandle = () => {
   state.visible = false
   emit('blur')
@@ -264,8 +268,12 @@ watch(
   }
 )
 
-const getResultNum = computed(() => {
-  return numFormat(state.options.filter((e: any) => !e.isGroup).length)
+const getResultText = computed(() => {
+  return state.options.length > 0
+    ? locale.t('selectMultiple.resultCount', {
+        num: numFormat(state.options.filter((e: any) => !e.isGroup).length)
+      })
+    : ''
 })
 </script>
 
@@ -405,35 +413,31 @@ const getResultNum = computed(() => {
           <input
             ref="searchInputRef"
             v-model="state.keyword"
-            placeholder="输入搜索关键词"
+            :placeholder="locale.t('selectMultiple.searchPlaceholder')"
             @input="searchDebounce"
           />
         </div>
         <div class="lew-select-options-box">
           <template v-if="state.options && state.options.length === 0">
             <slot v-if="$slots.empty" name="empty"></slot>
-            <lew-flex v-else direction="y" class="lew-not-found">
-              <lew-empty title="暂无结果" />
+            <lew-flex v-else direction="y" x="center" class="lew-not-found">
+              <lew-empty :title="locale.t('selectMultiple.noResult')" />
             </lew-flex>
           </template>
-          <div
-            v-if="searchable && state.options && state.options.length > 0"
-            class="lew-result-count"
-          >
-            共
-            {{ getResultNum }}
-            条结果
-          </div>
-          <transition name="fade">
+
+          <template v-else>
+            <div v-show="searchable" class="lew-result-count">
+              {{ getResultText }}
+            </div>
             <virt-list
-              v-if="state.options.length > 0 && state.visible"
               ref="virtListRef"
               :list="state.options"
               :minSize="itemHeight"
               :buffer="5"
               itemKey="value"
               :style="{
-                height: `${getVirtualHeight}px`
+                height: `${getVirtualHeight}px`,
+                paddingRight: isShowScrollBar ? '5px' : '0px'
               }"
               class="lew-select-options-list lew-scrollbar"
             >
@@ -475,7 +479,7 @@ const getResultNum = computed(() => {
                 </div>
               </template>
             </virt-list>
-          </transition>
+          </template>
         </div>
         <slot name="footer"></slot>
       </div>
@@ -546,7 +550,11 @@ const getResultNum = computed(() => {
       }
     }
 
-    .lew-placeholder,
+    .lew-placeholder {
+      width: calc(100% - 24px);
+      transition: all 0.2s;
+      height: 100%;
+    }
     .lew-value {
       display: flex;
       align-items: center;
@@ -555,10 +563,12 @@ const getResultNum = computed(() => {
       height: 100%;
     }
 
+    .lew-placeholder,
     .lew-select-multiple-text-value {
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+      box-sizing: border-box;
     }
 
     &:hover {
@@ -578,9 +588,6 @@ const getResultNum = computed(() => {
       .lew-select-multiple-text-value {
         font-size: var(--lew-form-font-size-small);
         margin-left: 10px;
-      }
-
-      .lew-select-multiple-text-value {
         padding-right: 26px;
         line-height: calc(
           var(--lew-form-item-height-small) - (var(--lew-form-border-width) * 2)
@@ -595,9 +602,6 @@ const getResultNum = computed(() => {
       .lew-select-multiple-text-value {
         font-size: var(--lew-form-font-size-medium);
         margin-left: 12px;
-      }
-
-      .lew-select-multiple-text-value {
         padding-right: 28px;
         line-height: calc(
           var(--lew-form-item-height-medium) -
@@ -613,9 +617,6 @@ const getResultNum = computed(() => {
       .lew-select-multiple-text-value {
         font-size: var(--lew-form-font-size-large);
         margin-left: 14px;
-      }
-
-      .lew-select-multiple-text-value {
         padding-right: 30px;
         line-height: calc(
           var(--lew-form-item-height-large) - (var(--lew-form-border-width) * 2)
@@ -671,15 +672,23 @@ const getResultNum = computed(() => {
 }
 
 .list {
+  &-move,
   &-enter-active,
   &-leave-active {
-    transition: all 0.08s ease-in-out;
+    transition: all var(--lew-form-transition-bezier);
   }
 
-  &-enter-from,
-  &-leave-to {
+  &-enter-from {
     opacity: 0;
     transform: translateX(-5px);
+  }
+  &-leave-to {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  &-leave-active {
+    position: absolute;
   }
 }
 </style>
@@ -704,22 +713,27 @@ const getResultNum = computed(() => {
 
   .lew-search-input {
     margin-bottom: 5px;
+    padding: 0px 5px;
 
     input {
       outline: none;
       border: none;
-      background-color: var(--lew-bgcolor-2);
+      background-color: transparent;
       width: 100%;
       height: 32px;
-      border-radius: var(--lew-border-radius-small);
-      padding: 0px 10px;
+      padding: 0px 7px;
       box-sizing: border-box;
-      color: var(--lew-form-color);
       transition: all var(--lew-form-transition-bezier);
-
+      border-bottom: var(--lew-form-border-width) var(--lew-form-bgcolor-hover)
+        solid;
+      color: var(--lew-text-color-2);
       &:focus {
-        background-color: var(--lew-bgcolor-3);
+        border-bottom: var(--lew-form-border-width)
+          var(--lew-form-border-color-focus) solid;
       }
+    }
+    input:placeholder {
+      color: rgb(165, 165, 165);
     }
   }
 
@@ -780,7 +794,7 @@ const getResultNum = computed(() => {
 
       &:hover {
         color: var(--lew-text-color-0);
-        background-color: var(--lew-pop-bgcolor-active);
+        background-color: var(--lew-pop-bgcolor-hover);
 
         .lew-checkbox {
           .lew-checkbox-icon-box {
@@ -794,7 +808,7 @@ const getResultNum = computed(() => {
       &-active {
         color: var(--lew-checkbox-color);
         font-weight: bold;
-        background-color: var(--lew-pop-bgcolor-active);
+        background-color: var(--lew-pop-bgcolor-hover);
 
         .icon-check {
           margin-right: 10px;
@@ -803,7 +817,7 @@ const getResultNum = computed(() => {
         &:hover {
           color: var(--lew-checkbox-color);
           font-weight: bold;
-          background-color: var(--lew-pop-bgcolor-active);
+          background-color: var(--lew-pop-bgcolor-hover);
 
           .lew-checkbox {
             .lew-checkbox-icon-box {
@@ -825,8 +839,7 @@ const getResultNum = computed(() => {
   .lew-result-count {
     padding: 5px 12px;
     font-size: 13px;
-    opacity: 0.4;
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+    opacity: 0.7;
   }
 }
 </style>

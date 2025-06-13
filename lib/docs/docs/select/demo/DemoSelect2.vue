@@ -50,6 +50,7 @@ const searchFn = (event: any) => {
     <lew-select
       v-model="value"
       searchable
+      auto-width
       :defaultValue="value"
       :searchMethod="searchFn"
       placeholder="Simulated Request"

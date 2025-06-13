@@ -1,20 +1,40 @@
 <script setup lang="ts">
-import { LewFlex, LewEmpty } from 'lew-ui/components'
+import { LewFlex, LewEmpty } from 'lew-ui'
 import tippy from 'tippy.js'
 import LewContextMenu from './LewContextMenu.vue'
-import { getUniqueId } from 'lew-ui/utils'
+import { getUniqueId, isVueComponent, formatComponent } from 'lew-ui/utils'
 import { ContextMenus, contextMenuProps, initLewContextMenu } from './index'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { isFunction } from 'lodash-es'
 const props = defineProps(contextMenuProps)
 
 const emit = defineEmits(['select'])
 
-const clickItem = (item: ContextMenus, options: ContextMenus[]) => {
-  emit('select', {
-    item,
-    parent: options,
-    value: item.value
-  })
+const clickItem = (item: ContextMenus) => {
+  if (isFunction(item.onClick)) {
+    // 创建一个item的代理
+    const proxy = new Proxy(item, {
+      get(target, prop, receiver) {
+        return Reflect.get(target, prop, receiver)
+      }
+    })
+    item.onClick(proxy)
+  }
+  if (window.LewContextMenu) {
+    const { instance } = window.LewContextMenu
+    if (instance) {
+      instance.hide()
+    }
+  }
+
+  if (window.LewHoverMenu) {
+    const { instance } = window.LewHoverMenu
+    if (instance) {
+      instance.hide()
+    }
+  }
+
+  emit('select', item)
 }
 
 const uniqueId = getUniqueId()
@@ -22,17 +42,20 @@ const uniqueId = getUniqueId()
 let itemRefs = ref<(Element | globalThis.ComponentPublicInstance | null)[]>([])
 const initTippy = () => {
   itemRefs.value.forEach((el: any, index: number) => {
-    const item = props.options[index]
-    if (!el || item.disabled || (item.children || []).length === 0) {
+    if (
+      !el ||
+      props.options[index].disabled ||
+      (props.options[index].children || []).length === 0
+    ) {
       return
     }
     const menuDom = document.createElement('div')
     createApp({
       render() {
         return h(LewContextMenu, {
-          options: item.children,
-          onSelect: (e: any) => {
-            emit('select', e)
+          options: props.options[index].children,
+          onSelect: (item: any) => {
+            emit('select', item)
           }
         })
       }
@@ -57,15 +80,11 @@ const initTippy = () => {
       zIndex: 2001,
       content: menuDom
     })
+
     window.LewContextMenu.menuInstance[
       uniqueId
     ].popper.children[0].setAttribute('data-lew', 'popover')
   })
-}
-
-const renderIcon = ({ renderIcon }: any) => {
-  if (renderIcon) return renderIcon()
-  return ''
 }
 
 onMounted(() => {
@@ -92,17 +111,17 @@ onUnmounted(() => {
         }"
       >
         <div
-          :ref="(el) => itemRefs.push(el)"
-          @click="clickItem(item, options)"
+          :ref="(el: any) => itemRefs.push(el)"
+          @click="clickItem(item)"
           class="lew-context-menu-item"
-          :style="{ 'animation-delay': index * 15 + 'ms' }"
+          :style="{ 'animation-delay': index * 10 + 'ms' }"
           :class="{
             'lew-context-menu-item-active': item.active
           }"
         >
           <div
-            v-if="options.filter((e) => e.checkbox).length > 0"
-            class="lew-context-menu-checkbox"
+            v-if="options.filter((e: any) => e.checkable).length > 0"
+            class="lew-context-menu-checkable"
           >
             <Icon
               v-if="item.checked"
@@ -112,13 +131,16 @@ onUnmounted(() => {
             />
           </div>
           <div class="lew-context-menu-label">
-            <renderIcon v-if="item.renderIcon" :renderIcon="item.renderIcon" />
+            <component
+              v-if="isVueComponent(item.icon)"
+              :is="formatComponent(item.icon)"
+            />
             <div class="lew-context-menu-label-text">
               {{ item.label }}
             </div>
           </div>
           <Icon
-            v-if="options.filter((e) => e.children).length > 0"
+            v-if="options.filter((e: any) => e.children).length > 0"
             class="lew-context-menu-item-chevron"
             :style="{
               opacity: (item.children || []).length > 0 ? 1 : 0
@@ -165,9 +187,9 @@ onUnmounted(() => {
       cursor: pointer;
       color: var(--lew-text-color-1);
       box-sizing: border-box;
-      border-radius: var(--lew-border-radius-small);
+      border-radius: calc(var(--lew-border-radius-small) - 1px);
       padding: 0px 5px;
-      animation: enterAni 0.2s ease forwards;
+      animation: enterAni 0.3s cubic-bezier(0.3, 1.3, 0.3, 1) forwards;
       opacity: 0;
       @keyframes enterAni {
         0% {
@@ -179,7 +201,7 @@ onUnmounted(() => {
           opacity: 1;
         }
       }
-      .lew-context-menu-checkbox {
+      .lew-context-menu-checkable {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -219,7 +241,7 @@ onUnmounted(() => {
 
     .lew-context-menu-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bgcolor-active);
+      background-color: var(--lew-pop-bgcolor-hover);
     }
   }
 
@@ -242,8 +264,8 @@ onUnmounted(() => {
   .lew-context-menu-box-divider-line::after {
     content: '';
     width: calc(100% - 20px);
-    height: 1px;
-    background-color: var(--lew-bgcolor-3);
+    height: 0px;
+    border-bottom: var(--lew-pop-border);
   }
 }
 .lew-context-menu-item-active {

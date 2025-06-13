@@ -4,11 +4,11 @@ import dayjs from 'dayjs'
 
 const options = ref<ContextMenus[]>([
   {
-    label: '新建文件',
+    label: 'New File',
     value: 'new-file'
   },
   {
-    label: '保存文件',
+    label: 'Save File',
     value: 'save-file'
   }
 ])
@@ -19,21 +19,16 @@ setInterval(() => {
     label: dayjs().format('YYYY-MM-DD HH:mm:ss')
   }
 }, 1000)
-
-const selectHandler = (item: ContextMenus) => {
-  LewMessage.info(`你点击了：${item.value} `)
-}
 </script>
 <template>
   <lew-flex>
     <div
       v-context-menu="{
-        options,
-        selectHandler
+        options
       }"
       class="box"
     >
-      右键点击此处
+      Right click here
     </div>
   </lew-flex>
 </template>
@@ -48,6 +43,6 @@ const selectHandler = (item: ContextMenus) => {
   background-color: var(--lew-bgcolor-2);
   border-radius: var(--lew-border-radius-small);
   font-size: 16px;
-  color: var(--lew-text-color-7);
+  color: var(--lew-text-color-5);
 }
 </style>

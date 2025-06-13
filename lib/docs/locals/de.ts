@@ -1,12 +1,13 @@
 const contextMenu = {
   label: 'Angezeigter Text',
   value: 'Wert',
-  renderIcon: 'Icon-Renderfunktion',
+  icon: 'Icon-Renderfunktion',
   children: 'Unterknoten-Sammlung',
   disabled: 'Deaktivierte Option',
   isDividerLine: 'Ist Trennlinie',
-  checkbox: 'Ist Kontrollkästchen',
-  checked: 'Ist ausgewählt'
+  checkable: 'Ist Kontrollkästchen',
+  checked: 'Ist ausgewählt',
+  onClick: 'Klick-Ereignis'
 }
 
 export default {
@@ -157,7 +158,8 @@ export default {
         color: 'Farbthema',
         closable: 'Schließbar',
         disabled: 'Deaktiviert',
-        round: 'Abgerundet'
+        round: 'Abgerundet',
+        oversize: 'Großzügigere Größe'
       }
     },
     badge: {
@@ -271,15 +273,9 @@ export default {
       demo1: {
         title: 'Grundlegende Verwendung'
       },
-      demo2: {
-        title: 'Farbe'
-      },
-      demo3: {
-        title: 'Grundlegende Verwendung'
-      },
       props: {
         color: 'Farbthema',
-        round: 'Abgerundete Ecken aktivieren',
+        round: 'Abgerundet',
         bold: 'Fettschrift aktivieren',
         cursor: 'Mauszeiger-Stil beim Hover'
       }
@@ -315,8 +311,9 @@ export default {
       }
     },
     steps: {
-      name: 'Schrittanzeige',
-      description: 'Zeigt Prozessabläufe klar an und orientiert den Benutzer',
+      name: 'Schritte',
+      description:
+        'Zeigt den Betriebsablauf klar an und lässt den Benutzer wissen, wo er sich befindet',
       demo1: {
         title: 'Grundlegende Verwendung'
       },
@@ -324,15 +321,19 @@ export default {
         title: 'Status'
       },
       demo3: {
-        title: 'Laden'
+        title: 'Wird geladen'
       },
       model: {
-        modelValue: 'Index des aktiven Schritts'
+        modelValue: 'Index des aktuell aktiven Schritts'
       },
       props: {
-        options: 'Array der Schritt-Konfigurationen',
-        status: 'Aktueller Status der Schrittanzeige',
+        options: 'Array der Schrittkonfigurationen',
+        status: 'Aktueller Status der Schritte',
         minWidth: 'Minimale Schrittbreite'
+      },
+      options: {
+        title: 'Schritttitel',
+        description: 'Schrittbeschreibung'
       }
     },
     menu: {
@@ -394,8 +395,7 @@ export default {
           'Titel des Menübaum-Elements. Kann auch über den benannten Slot "label" angepasst werden',
         value: 'Wert des Menüpunkts zur eindeutigen Identifizierung',
         level: 'Ebene des Menübaum-Elements, beginnt bei 1',
-        renderIcon: 'Icon-Renderfunktion',
-        renderLabel: 'Label-Renderfunktion',
+        icon: 'Icon-Renderfunktion',
         tagText: 'Badge-Text des Menüpunkts',
         tagType: 'Badge-Typ des Menüpunkts',
         tagColor: 'Badge-Farbe des Menüpunkts',
@@ -418,7 +418,8 @@ export default {
       props: {
         options: 'Menüoptionen-Konfiguration',
         trigger: 'Auslösemethode',
-        placement: 'Position des Menüs'
+        placement: 'Position',
+        checkable: 'Ist auswählbar'
       },
       'options(ContextMenus)': contextMenu,
       events: {
@@ -470,8 +471,7 @@ export default {
       },
       props: {
         options: 'Kontextmenü-Konfiguration',
-        disabled: 'Kontextmenü deaktivieren',
-        selectHandler: 'Callback-Funktion bei Menüpunkt-Auswahl'
+        disabled: 'Kontextmenü deaktivieren'
       },
       'options(ContextMenus)': contextMenu
     },
@@ -582,6 +582,7 @@ export default {
       props: {
         type: 'Eingabefeld-Typ',
         size: 'Eingabefeld-Größe',
+        width: 'Eingabefeld-Breite',
         placeholder: 'Platzhaltertext',
         disabled: 'Deaktiviert',
         readonly: 'Schreibgeschützt',
@@ -609,6 +610,11 @@ export default {
         input: 'Wird bei Eingabe ausgelöst',
         clear: 'Wird beim Löschen ausgelöst',
         ok: 'Wird bei Bestätigung ausgelöst'
+      },
+      model: {
+        modelValue: 'Eingabefeld-Wert',
+        prefixValue: 'Präfix-Wert',
+        suffixValue: 'Suffix-Wert'
       }
     },
     inputNumber: {
@@ -929,6 +935,8 @@ export default {
         defaultValue: 'Standardwert',
         options: 'Optionen',
         width: 'Breite',
+        autoWidth: 'Auto Width',
+        popoverWidth: 'Popover Width',
         trigger: 'Auslösemethode',
         placeholder: 'Platzhaltertext',
         size: 'Größe',
@@ -1179,13 +1187,13 @@ export default {
         modelValue: 'Gebundener Wert'
       },
       props: {
-        dataSource: 'Baumdatenquelle',
+        dataSource: 'Datenquelle',
         defaultValue: 'Standardwert',
         placeholder: 'Platzhaltertext',
         size: 'Komponentengröße',
         disabled: 'Deaktiviert',
         clearable: 'Löschbar',
-        showCheckbox: 'Kontrollkästchen anzeigen',
+        checkable: 'Kontrollkästchen anzeigen',
         showAllLevels: 'Alle Ebenen anzeigen',
         showCheckIcon: 'Häkchen-Icon anzeigen',
         showLine: 'Verbindungslinien anzeigen',
@@ -1224,16 +1232,17 @@ export default {
         size: 'Größe',
         width: 'Breite',
         rowKey: 'Zeilenschlüssel',
-        batchDeletable: 'Stapellöschung unterstützen',
-        addable: 'Hinzufügbar',
+        batchDeletable: 'Stapellöschung erlauben',
+        addable: 'Hinzufügen erlauben',
         defaultForm: 'Standardformular',
-        deletable: 'Löschbar',
+        deletable: 'Löschen erlauben',
         maxRows: 'Maximale Zeilenanzahl',
         minRows: 'Minimale Zeilenanzahl',
-        clearable: 'Löschbar',
-        sortable: 'Sortierbar',
+        clearable: 'Löschen erlauben',
+        sortable: 'Sortieren erlauben',
         autoUniqueId: 'Automatische eindeutige ID',
-        uniqueField: 'Eindeutiges Feld'
+        uniqueField: 'Eindeutiges Feld',
+        sortTooltipCustomRender: 'Benutzerdefinierte Sortier-Tooltip-Darstellung'
       }
     },
     switch: {
@@ -1441,7 +1450,8 @@ export default {
         'Leistungsstarke Tabellenkomponente für übersichtliche Datenanzeige',
       model: {
         modelValue: 'Parametername',
-        selectedKeys: 'Ausgewählte Schlüssel'
+        selectedKeys: 'Ausgewählte Schlüssel',
+        sortValue: 'Sortierwert'
       },
       demo1: {
         title: 'Standard'
@@ -1473,14 +1483,23 @@ export default {
       demo10: {
         title: 'Keine Daten'
       },
+      demo11: {
+        title: 'Gruppierte Kopfzeilen',
+        tipsTitle: 'Einschränkungshinweis',
+        tipsContent:
+          'Wenn Sie fixierte Spalten in gruppierten Kopfzeilen verwenden möchten, müssen Sie allen fixierten Spaltenköpfen eine Breite zuweisen, einschließlich aller übergeordneten Knoten, sonst können Positionierungsprobleme auftreten.'
+      },
       props: {
         columns: 'Spalten',
         dataSource: 'Datenquelle',
+        bordered: 'Umrandet',
         size: 'Größe',
         checkable: 'Auswählbar',
         maxHeight: 'Maximale Höhe',
         multiple: 'Mehrfachauswahl',
-        rowKey: 'Zeilenschlüssel'
+        rowKey: 'Zeilenschlüssel',
+        sortTooltipCustomRender: 'Benutzerdefinierte Sortier-Tooltip-Darstellung',
+        sortable: 'Sortierbar'
       },
       tableColumns: {
         field: 'Feld',
@@ -1558,7 +1577,9 @@ export default {
       props: {
         dataSource: 'Datenquelle',
         multiple: 'Mehrfachauswahl',
-        showCheckbox: 'Kontrollkästchen anzeigen',
+        height: 'Höhe',
+        searchable: 'Ist durchsuchbar',
+        checkable: 'Kontrollkästchen anzeigen',
         expandAll: 'Standardmäßig alle ausgeklappt',
         free: 'Freie Auswahl',
         showLine: 'Verbindungslinien anzeigen',
@@ -1739,8 +1760,8 @@ export default {
         closeOnClickOverlay: 'Durch Klick auf Overlay schließen',
         closeByEsc: 'Durch ESC-Taste schließen',
         hideFooter: 'Fußbereich ausblenden',
-        okProps: 'Eigenschaften der Bestätigungsschaltfläche',
-        cancelProps: 'Eigenschaften der Abbruchschaltfläche',
+        okButtonProps: 'Eigenschaften der Bestätigungsschaltfläche',
+        closeButtonProps: 'Eigenschaften der Schließen-Schaltfläche',
         zIndex: 'Z-Index'
       }
     },
@@ -1762,7 +1783,6 @@ export default {
         cancelText: 'Abbruchtext',
         ok: 'Bestätigungscallback',
         cancel: 'Abbruchcallback',
-        layout: 'Layout',
         closeOnClickOverlay: 'Durch Klick auf Overlay schließen',
         closeByEsc: 'Durch ESC-Taste schließen',
         transformOrigin: 'Animationsursprung'
@@ -1797,10 +1817,8 @@ export default {
         top: 'Abstand zum oberen Rand',
         hideFooter: 'Fußbereich ausblenden',
         closeByEsc: 'Durch ESC-Taste schließen',
-        okProps: 'Eigenschaften der Bestätigungsschaltfläche',
-        cancelProps: 'Eigenschaften der Abbruchschaltfläche',
-        hideOkButton: 'Bestätigungsschaltfläche ausblenden',
-        hideCancelButton: 'Abbruchschaltfläche ausblenden',
+        okButtonProps: 'Eigenschaften der Bestätigungsschaltfläche',
+        closeButtonProps: 'Eigenschaften der Schließen-Schaltfläche',
         closeOnClickOverlay: 'Durch Klick auf Overlay schließen',
         zIndex: 'Z-Index'
       }
@@ -1820,10 +1838,12 @@ export default {
         width: 'Breite',
         trigger: 'Auslösemethode',
         title: 'Titel',
-        okProps: 'Eigenschaften der Bestätigungsschaltfläche',
-        cancelProps: 'Eigenschaften der Abbruchschaltfläche',
         content: 'Inhalt',
-        placement: 'Position'
+        placement: 'Position',
+        okText: 'Bestätigungstext',
+        cancelText: 'Abbruchtext',
+        ok: 'Bestätigungscallback',
+        cancel: 'Abbruchcallback'
       }
     },
     popover: {
@@ -1908,6 +1928,37 @@ export default {
         padding: 'Innenabstand',
         width: 'Breite',
         height: 'Höhe'
+      }
+    },
+    actionBox: {
+      name: 'Aktionsbox',
+      description:
+        'Flexible Aktionsschaltflächen für schnelle Benutzeroperationen',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Dropdown-Menü'
+      },
+      demo3: {
+        title: 'Benutzerdefinierte Symbole'
+      },
+      demo4: {
+        title: 'Benutzerdefinierte Stile'
+      },
+      props: {
+        options: 'Aktionsschaltflächen-Konfiguration',
+        dropdownThreshold: 'Dropdown-Menü-Schwellenwert',
+        dropdownLabel: 'Dropdown-Menü-Text',
+        dropdownIcon: 'Dropdown-Menü-Symbol',
+        divider: 'Trennlinie anzeigen',
+        iconOnly: 'Nur Symbol anzeigen'
+      },
+      options: {
+        label: 'Aktionsschaltflächen-Text',
+        icon: 'Aktionsschaltflächen-Symbol',
+        onClick: 'Aktionsschaltflächen-Klickereignis',
+        customRender: 'Benutzerdefinierter Renderinhalt'
       }
     }
   }

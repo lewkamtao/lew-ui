@@ -1,21 +1,21 @@
 <script setup lang="ts">
-const visible = ref(false)
-const bindOptions = ref({})
-const formRef = ref()
+const visible = ref(false);
+const bindOptions = ref({});
+const formRef = ref();
 const open = (options: any) => {
-  visible.value = true
-  bindOptions.value = options
-}
+  visible.value = true;
+  bindOptions.value = options;
+};
 const ok = () => {
   formRef.value.validate().then((res: boolean) => {
     if (res) {
-      LewMessage.success('校验成功')
+      LewMessage.success("校验成功");
     } else {
-      LewMessage.error('校验失败')
+      LewMessage.error("校验失败");
     }
-  })
-}
-defineExpose({ open })
+  });
+};
+defineExpose({ open });
 </script>
 
 <template>
@@ -23,14 +23,16 @@ defineExpose({ open })
     v-model:visible="visible"
     closeOnClickOverlay
     closeByEsc
-    :cancelProps="{
-      text: '关闭'
+    maxHeight="calc(100vh - 240px - 50px - 72px)"
+    :closeButtonProps="{
+      request: () => {
+        visible = false;
+      },
     }"
-    :okProps="{
-      text: '校验表单'
+    :okButtonProps="{
+      text: '校验表单',
+      request: ok,
     }"
-    @ok="ok"
-    @cancel="visible = false"
     title="预览表单"
   >
     <div class="preview-modal-content lew-scrollbar">
@@ -42,7 +44,5 @@ defineExpose({ open })
 .preview-modal-content {
   padding: 20px;
   box-sizing: border-box;
-  overflow-y: auto;
-  max-height: 80vh;
 }
 </style>

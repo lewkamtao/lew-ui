@@ -1,248 +1,318 @@
 <script setup lang="ts">
-import { useDebounceFn } from '@vueuse/core'
-import { LewPopover, LewFlex, LewTextTrim, LewEmpty } from 'lew-ui'
-import { object2class, numFormat } from 'lew-ui/utils'
-import { VirtList } from 'vue-virt-list'
-import type { SelectOptions } from './props'
-import { selectProps } from './props'
-import { cloneDeep, isFunction } from 'lodash-es'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { flattenOptions, defaultSearchMethod } from './util'
-import { poll } from 'lew-ui/utils'
-import { locale } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
-const props = defineProps(selectProps)
-const emit = defineEmits(['change', 'blur', 'clear', 'focus'])
-const selectValue: Ref<string | number | undefined> = defineModel()
+import { useDebounceFn } from "@vueuse/core";
+import { LewPopover, LewFlex, LewTextTrim, LewEmpty } from "lew-ui";
+import { object2class, numFormat } from "lew-ui/utils";
+import { VirtList } from "vue-virt-list";
+import type { SelectOptions } from "./props";
+import { selectProps } from "./props";
+import { cloneDeep, isFunction } from "lodash-es";
+import Icon from "lew-ui/utils/Icon.vue";
+import { flattenOptions, defaultSearchMethod } from "./util";
+import { poll } from "lew-ui/utils";
+import { locale } from "lew-ui";
+import { any2px } from "lew-ui/utils";
+const props = defineProps(selectProps);
+const emit = defineEmits(["change", "blur", "clear", "focus"]);
+const selectValue: Ref<string | number | undefined> = defineModel();
 
-const lewSelectRef = ref()
-const inputRef = ref()
-const lewPopoverRef = ref()
-const formMethods: any = inject('formMethods', {})
+const lewSelectRef = ref();
+const inputRef = ref();
+const lewPopoverRef = ref();
+const formMethods: any = inject("formMethods", {});
 
 let _searchMethod = computed(() => {
   if (isFunction(props.searchMethod)) {
-    return props.searchMethod
+    return props.searchMethod;
   } else if (props.searchMethodId) {
-    return formMethods[props.searchMethodId]
+    return formMethods[props.searchMethodId];
   } else {
-    return defaultSearchMethod
+    return defaultSearchMethod;
   }
-})
+});
 
 watch(
   () => props.options,
   () => {
     state.keyword = props.options.find(
       (e: any) => e.value === selectValue.value
-    )?.label
+    )?.label;
   },
   {
-    deep: true
+    deep: true,
   }
-)
+);
 
-const virtListRef = ref()
+const virtListRef = ref();
 
 const state = reactive({
-  selectWidth: 0,
   visible: false,
   loading: false,
   options: flattenOptions(props.options),
   hideBySelect: false, // 记录是否通过选择隐藏
   keyword: props.defaultValue || (selectValue.value as any),
-  keywordBackup: props.defaultValue as any
-})
+  keywordBackup: props.defaultValue as any,
+  autoWidth: 0, // 新增自动宽度
+});
 
 watch(
   () => props.defaultValue,
   () => {
-    state.keyword = props.defaultValue
+    state.keyword = props.defaultValue;
   }
-)
+);
 
-const getSelectWidth = () => {
-  state.selectWidth = lewSelectRef.value?.clientWidth - 12
-}
+// 计算选择框的宽度
+const computedWidth = computed(() => {
+  if (props.autoWidth && state.autoWidth > 0) {
+    // 确保最小宽度不小于300px
+
+    return Number(state.autoWidth);
+  }
+  return Number(props.width);
+});
+
+// 在组件挂载后初始化自动宽度
+onMounted(() => {
+  if (props.autoWidth) {
+    calculateAutoWidth();
+  }
+});
+
+// 选择器宽容度宽度
+const SELECT_WIDTH_TOLERANCE = 26;
+
+// 计算自动宽度
+const calculateAutoWidth = () => {
+  if (!props.autoWidth) return;
+
+  const tempDiv = document.createElement("div");
+  tempDiv.style.position = "absolute";
+  tempDiv.style.visibility = "hidden";
+  tempDiv.style.whiteSpace = "nowrap";
+  tempDiv.style.fontSize = getComputedStyle(document.body).fontSize;
+  // 如果inputRef已经挂载，使用实际样式
+  if (inputRef.value) {
+    tempDiv.style.fontSize = getComputedStyle(inputRef.value).fontSize;
+    tempDiv.style.padding = getComputedStyle(inputRef.value).padding;
+
+    tempDiv.style.fontFamily = getComputedStyle(inputRef.value).fontFamily;
+    tempDiv.style.fontWeight = getComputedStyle(inputRef.value).fontWeight;
+  }
+  // 如果没有关键词，则使用placeholder的文本
+  let textContent = state.keyword;
+  if (!textContent || textContent.trim() === "") {
+    textContent = props.placeholder || locale.t("select.placeholder");
+  }
+  tempDiv.innerText = textContent;
+  document.body.appendChild(tempDiv);
+
+  // 文本宽度加上边距和图标空间
+  const textWidth = tempDiv.clientWidth;
+  state.autoWidth = textWidth + SELECT_WIDTH_TOLERANCE;
+
+  document.body.removeChild(tempDiv);
+};
+
+// 监听keyword变化以更新自动宽度
+watch(
+  () => state.keyword,
+  () => {
+    if (props.autoWidth) {
+      calculateAutoWidth();
+    }
+  }
+);
 
 const show = () => {
-  lewPopoverRef.value.show()
-}
+  lewPopoverRef.value.show();
+};
 
 const hide = () => {
-  lewPopoverRef.value.hide()
-}
+  lewPopoverRef.value.hide();
+};
 
 const searchDebounce = useDebounceFn(async (e: any) => {
-  search(e)
-}, props.searchDelay)
+  search(e);
+}, props.searchDelay);
 
 const search = async (e: any) => {
-  state.loading = true
-  const keyword = e.target.value
+  state.loading = true;
+  const keyword = e.target.value;
   if (props.searchable) {
-    let result: SelectOptions[] = []
+    let result: SelectOptions[] = [];
     // 如果没输入关键词
     if (!keyword && props.options.length > 0) {
-      result = flattenOptions(props.options)
+      result = flattenOptions(props.options);
     } else {
       result = await _searchMethod.value({
         options: flattenOptions(props.options),
-        keyword
-      })
+        keyword,
+      });
     }
-    state.options = result
+    state.options = result;
   }
-  state.loading = false
-}
+  state.loading = false;
+};
 
 const clearHandle = () => {
-  selectValue.value = undefined
-  state.keywordBackup = undefined
-  state.keyword = ''
-  emit('clear')
-  emit('change')
-}
+  selectValue.value = undefined;
+  state.keywordBackup = undefined;
+  state.keyword = "";
+  emit("clear");
+  emit("change");
+};
 
 const selectHandle = (item: SelectOptions) => {
   if (item.disabled || item.isGroup) {
-    return
+    return;
   }
-  state.hideBySelect = true
-  state.keyword = item.label
-  selectValue.value = item.value
-  emit('change', item.value)
-  hide()
-}
+  state.hideBySelect = true;
+  state.keyword = item.label;
+  selectValue.value = item.value;
+  emit("change", item.value);
+  hide();
+};
 
 const getChecked = computed(() => (value: string | number) => {
-  return selectValue.value === value
-})
+  return selectValue.value === value;
+});
 
 const getValueStyle = computed(() => {
-  return state.visible ? 'opacity:0.6' : ''
-})
+  return state.visible ? "opacity:0.6" : "";
+});
 
 const findKeyword = () => {
   if (state.options) {
     const option = state.options.find((e: any) => {
       if (e) {
-        return e.value === selectValue.value
+        return e.value === selectValue.value;
       }
-    })
+    });
 
-    if (option && JSON.stringify(option) !== '{}') {
-      return (state.keyword = option.label)
+    if (option && JSON.stringify(option) !== "{}") {
+      return (state.keyword = option.label);
     }
   }
-  return (state.keyword = props.defaultValue)
-}
-findKeyword()
+  return (state.keyword = props.defaultValue);
+};
+findKeyword();
 
 const getSelectClassName = computed(() => {
-  let { clearable, size, disabled, readonly, searchable } = props
-  clearable = clearable ? !!selectValue.value : false
-  const focus = state.visible
-  return object2class('lew-select', {
+  let { clearable, size, disabled, readonly, searchable } = props;
+  clearable = clearable ? !!selectValue.value : false;
+  const focus = state.visible;
+  return object2class("lew-select", {
     clearable,
     size,
     disabled,
     readonly,
     searchable,
-    focus
-  })
-})
+    focus,
+  });
+});
 
 const getBodyClassName = computed(() => {
-  const { size, disabled } = props
-  return object2class('lew-select-body', { size, disabled })
-})
+  const { size, disabled } = props;
+  return object2class("lew-select-body", { size, disabled });
+});
 
 const getSelectItemClassName = (e: any) => {
-  const { disabled, isGroup } = e
-  const active = getChecked.value(e.value)
+  const { disabled, isGroup } = e;
+  const active = getChecked.value(e.value);
 
-  return object2class('lew-select-item', {
+  return object2class("lew-select-item", {
     disabled,
     active,
-    'is-group': isGroup
-  })
-}
+    "is-group": isGroup,
+  });
+};
 
 const getIconSize = computed(() => {
   const size: any = {
     small: 14,
     medium: 15,
-    large: 16
-  }
-  return size[props.size]
-})
+    large: 16,
+  };
+  return size[props.size];
+});
 
 const getVirtualHeight = computed(() => {
-  let height = state.options.length * props.itemHeight
-  height = height >= 280 ? 280 : height
-  return height
-})
+  let height = state.options.length * props.itemHeight;
+  height = height >= 280 ? 280 : height;
+  return height;
+});
 
 const showHandle = () => {
-  state.visible = true
-  state.keywordBackup = cloneDeep(state.keyword)
-  emit('focus')
+  state.visible = true;
+  state.keywordBackup = cloneDeep(state.keyword);
+  if (props.searchable) {
+    inputRef.value.focus();
+  }
+  emit("focus");
 
   if (props.searchable) {
-    state.keyword = ''
+    state.keyword = "";
   }
-  state.hideBySelect = false // 重置
-  getSelectWidth()
+  state.hideBySelect = false; // 重置
   if (props.searchable) {
-    search({ target: { value: '' } })
+    search({ target: { value: "" } });
   }
   const index = state.options.findIndex(
     (e: any) => e.value === selectValue.value
-  )
+  );
   if (index > -1) {
     poll({
       callback: () => {
-        virtListRef.value.scrollToIndex(index)
+        virtListRef.value.scrollToIndex(index);
       },
       vail: () => {
-        return !!virtListRef.value
-      }
-    })
+        return !!virtListRef.value;
+      },
+    });
   }
-}
+};
 
 const hideHandle = () => {
-  state.visible = false
+  state.visible = false;
   if (!state.hideBySelect) {
-    findKeyword()
+    findKeyword();
   }
-  inputRef.value.blur()
-  emit('blur')
-}
+  inputRef.value.blur();
+  emit("blur");
+};
+
+// 判断是否出现滚动条
+const isShowScrollBar = computed(() => {
+  return getVirtualHeight.value >= 280;
+});
 
 watch(
   () => selectValue.value,
   () => {
-    findKeyword()
+    findKeyword();
+    if (props.autoWidth) {
+      calculateAutoWidth();
+    }
   }
-)
+);
 
 watch(
   () => props.options,
   () => {
-    state.options = flattenOptions(props.options)
+    state.options = flattenOptions(props.options);
   },
   {
-    deep: true
+    deep: true,
   }
-)
-
-const getResultNum = computed(() => {
-  return numFormat(state.options.filter((e: any) => !e.isGroup).length)
-})
-
-defineExpose({ show, hide })
+);
+const getResultText = computed(() => {
+  return state.options.length > 0
+    ? locale.t("select.resultCount", {
+        num: numFormat(state.options.filter((e: any) => !e.isGroup).length),
+      })
+    : "";
+});
+defineExpose({ show, hide });
 </script>
 
 <template>
@@ -250,16 +320,21 @@ defineExpose({ show, hide })
     ref="lewPopoverRef"
     popoverBodyClassName="lew-select-popover-body"
     class="lew-select-view"
+    :style="{ width: autoWidth ? 'auto' : any2px(width) }"
     :trigger="trigger"
     :disabled="disabled || readonly"
     placement="bottom-start"
-    :style="{ width: any2px(width) }"
     :loading="state.loading"
     @show="showHandle"
     @hide="hideHandle"
   >
     <template #trigger>
-      <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
+      <div
+        ref="lewSelectRef"
+        class="lew-select"
+        :style="{ width: any2px(computedWidth) }"
+        :class="getSelectClassName"
+      >
         <Icon
           :size="getIconSize"
           type="chevron-down"
@@ -273,7 +348,7 @@ defineExpose({ show, hide })
             type="close"
             class="lew-form-icon-close"
             :class="{
-              'lew-form-icon-close-focus': state.visible
+              'lew-form-icon-close-focus': state.visible,
             }"
             @click.stop="clearHandle"
           />
@@ -297,81 +372,72 @@ defineExpose({ show, hide })
       <div
         class="lew-select-body"
         :class="getBodyClassName"
-        :style="`width:${state.selectWidth}px`"
+        :style="{ width: `calc(${any2px(popoverWidth)} - 14px)` }"
       >
         <slot name="header"></slot>
 
         <div class="lew-select-options-box">
           <template v-if="state.options && state.options.length === 0">
             <slot v-if="$slots.empty" name="empty"></slot>
-            <lew-flex v-else direction="y" class="lew-not-found">
-              <lew-empty title="暂无结果" />
+            <lew-flex v-else direction="y" x="center" class="lew-not-found">
+              <lew-empty :title="locale.t('select.noResult')" />
             </lew-flex>
           </template>
-          <div
-            v-if="searchable && state.options && state.options.length > 0"
-            class="lew-result-count"
-          >
-            共
-            {{ getResultNum }}
-            条结果
-          </div>
-          <div
-            class="lew-select-options-list"
-            :style="{
-              height: `${getVirtualHeight}px`
-            }"
-          >
-            <transition name="fade">
-              <virt-list
-                ref="virtListRef"
-                v-if="state.options.length > 0 && state.visible"
-                :list="state.options"
-                :minSize="itemHeight"
-                :buffer="5"
-                item-key="value"
-                class="lew-scrollbar"
-              >
-                <template #default="{ itemData: templateProps }">
+          <template v-else>
+            <div v-if="searchable" class="lew-result-count">
+              {{ getResultText }}
+            </div>
+            <virt-list
+              ref="virtListRef"
+              :list="state.options"
+              :minSize="itemHeight"
+              :buffer="5"
+              item-key="value"
+              class="lew-select-options-list lew-scrollbar"
+              :style="{
+                height: `${getVirtualHeight}px`,
+                paddingRight: isShowScrollBar ? '5px' : '0px',
+              }"
+            >
+              <template #default="{ itemData: templateProps }">
+                <div
+                  :style="{ height: itemHeight + 'px' }"
+                  @click="selectHandle(templateProps)"
+                >
+                  <slot
+                    v-if="$slots.item"
+                    name="item"
+                    :props="{
+                      ...templateProps,
+                      checked: getChecked(templateProps.value),
+                    }"
+                  ></slot>
                   <div
-                    :style="{ height: itemHeight + 'px' }"
-                    @click="selectHandle(templateProps)"
+                    v-else
+                    class="lew-select-item"
+                    :class="getSelectItemClassName(templateProps)"
                   >
-                    <slot
-                      v-if="$slots.item"
-                      name="item"
-                      :props="{
-                        ...templateProps,
-                        checked: getChecked(templateProps.value)
-                      }"
-                    ></slot>
-                    <div
-                      v-else
-                      class="lew-select-item"
-                      :class="getSelectItemClassName(templateProps)"
-                    >
-                      <lew-text-trim
-                        :text="
-                          templateProps.isGroup
-                            ? `${templateProps.label} (${templateProps.total})`
-                            : templateProps.label
-                        "
-                        :delay="[500, 0]"
-                        class="lew-select-label"
-                      />
-                      <Icon
-                        v-if="getChecked(templateProps.value) && showCheckIcon"
-                        class="lew-icon-check"
-                        :size="16"
-                        :strokeWidth="3"
-                        type="check"
-                      />
-                    </div>
+                    <lew-text-trim
+                      :text="
+                        templateProps.isGroup
+                          ? `${templateProps.label} (${templateProps.total})`
+                          : templateProps.label
+                      "
+                      :delay="[500, 0]"
+                      class="lew-select-label"
+                    />
+                    <Icon
+                      v-if="getChecked(templateProps.value) && showCheckIcon"
+                      class="lew-icon-check"
+                      :size="16"
+                      :strokeWidth="3"
+                      type="check"
+                    />
                   </div>
-                </template>
-              </virt-list>
-            </transition>
-          </div>
+                </div>
+              </template>
+            </virt-list>
+          </template>
         </div>
         <slot name="footer"></slot>
       </div>
@@ -381,8 +447,6 @@ defineExpose({ show, hide })
 
 <style lang="scss" scoped>
 .lew-select-view {
-  width: 100%;
-
   > div {
     width: 100%;
   }
@@ -401,7 +465,7 @@ defineExpose({ show, hide })
     box-shadow: var(--lew-form-box-shadow);
     background-color: var(--lew-form-bgcolor);
     box-sizing: border-box;
-    transition: all var(--lew-form-transition-ease);
+    transition: all var(--lew-form-transition-ease), width 0s ease;
 
     .lew-icon-select {
       position: absolute;
@@ -534,13 +598,13 @@ defineExpose({ show, hide })
   .lew-select-options-list {
     width: 100%;
     overflow: hidden;
+    box-sizing: border-box;
   }
 
   .lew-result-count {
     padding: 5px 12px;
     font-size: 13px;
-    opacity: 0.4;
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+    opacity: 0.7;
   }
 
   .lew-select-options-box {
@@ -560,7 +624,7 @@ defineExpose({ show, hide })
       margin-top: 2px;
       align-items: center;
       box-sizing: border-box;
-      border-radius: var(--lew-border-radius-small);
+      border-radius: calc(var(--lew-border-radius-small) - 1px);
       color: var(--lew-text-color-1);
       font-size: 14px;
       overflow: hidden;
@@ -587,22 +651,22 @@ defineExpose({ show, hide })
 
     .lew-select-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bgcolor-active);
+      background-color: var(--lew-pop-bgcolor-hover);
     }
 
     .lew-select-slot-item {
       width: 100%;
-      border-radius: var(--lew-border-radius-small);
+      border-radius: calc(var(--lew-border-radius-small) - 1px);
     }
 
     .lew-select-slot-item:hover {
       color: var(--lew-text-color-0);
-      background-color: var(--lew-pop-bgcolor-active);
+      background-color: var(--lew-pop-bgcolor-hover);
     }
 
     .lew-select-item-active {
       color: var(--lew-checkbox-color);
-      background-color: var(--lew-pop-bgcolor-active);
+      background-color: var(--lew-pop-bgcolor-hover);
       font-weight: bold;
 
       .lew-icon-check {
@@ -612,7 +676,7 @@ defineExpose({ show, hide })
 
     .lew-select-item-active:hover {
       color: var(--lew-checkbox-color);
-      background-color: var(--lew-pop-bgcolor-active);
+      background-color: var(--lew-pop-bgcolor-hover);
       font-weight: bold;
     }
 

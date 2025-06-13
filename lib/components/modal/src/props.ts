@@ -1,6 +1,5 @@
 import type { ExtractPropTypes } from 'vue'
 import type { ButtonProps } from '../../button/index'
-
 export const modalModel = {
   visible: {
     type: Boolean,
@@ -34,9 +33,14 @@ export const modalProps = {
       return true
     }
   },
+  maxHeight: {
+    type: [String, Number],
+    default: 'auto',
+    description: '模态框最大高度，支持计算属性（如：calc(100vh - 240px))'
+  },
   top: {
     type: [String, Number],
-    default: 250,
+    default: 120,
     description:
       '模态框距离顶部的距离，可以是数字（单位：像素）或字符串（如 "50%"）'
   },
@@ -50,32 +54,15 @@ export const modalProps = {
     default: false,
     description: '是否允许通过按下 ESC 键关闭模态框'
   },
-  okProps: {
+  okButtonProps: {
     type: Object as PropType<ButtonProps>,
-    default: () => ({
-      text: '确定',
-      color: 'primary'
-    }),
+    default: () => ({}),
     description: '确定按钮的属性配置'
   },
-  cancelProps: {
+  closeButtonProps: {
     type: Object as PropType<ButtonProps>,
-    default: () => ({
-      type: 'text',
-      text: '取消',
-      color: 'normal'
-    }),
-    description: '取消按钮的属性配置'
-  },
-  hideOkButton: {
-    type: Boolean,
-    default: false,
-    description: '是否隐藏确定按钮'
-  },
-  hideCancelButton: {
-    type: Boolean,
-    default: false,
-    description: '是否隐藏取消按钮'
+    default: () => ({}),
+    description: '关闭按钮的属性配置'
   },
   closeOnClickOverlay: {
     type: Boolean,

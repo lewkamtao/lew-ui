@@ -25,7 +25,7 @@ const change = (e: any) => {
   <lew-tree
     style="width: 300px"
     v-model="v"
-    showCheckbox
+    checkable
     showLine
     multiple
     :data-source="options"
