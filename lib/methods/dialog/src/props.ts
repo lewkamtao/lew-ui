@@ -56,6 +56,7 @@ export const dialogProps = {
   transformOrigin: {
     type: String,
     default: '0 0',
+    hidden: true,
     description: '对话框变换原点（内部使用，无需手动设置）'
   }
 }

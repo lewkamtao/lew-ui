@@ -1,54 +1,150 @@
 <script lang="ts" setup>
-import { ref, watch } from "vue";
-import { object2class, any2px, getUniqueId } from "lew-ui/utils";
-import { useDOMCreate } from "lew-ui/hooks";
-import { LewButton, LewFlex } from "lew-ui";
-import { drawerProps } from "./props";
-import { useMagicKeys, onClickOutside } from "@vueuse/core";
-import Icon from "lew-ui/utils/Icon.vue";
-import { locale } from "lew-ui";
-const { Escape } = useMagicKeys();
+import { ref, watch, computed, nextTick, onMounted, onUnmounted } from 'vue'
+import { object2class, any2px, getUniqueId } from 'lew-ui/utils'
+import { useDOMCreate } from 'lew-ui/hooks'
+import { LewButton, LewFlex } from 'lew-ui'
+import { drawerProps } from './props'
+import { useMagicKeys, onClickOutside } from '@vueuse/core'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { locale } from 'lew-ui'
+const { Escape } = useMagicKeys()
 
-useDOMCreate("lew-drawer");
+useDOMCreate('lew-drawer')
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(['close'])
 
-const visible: Ref<boolean | undefined> = defineModel("visible");
+const visible: Ref<boolean | undefined> = defineModel('visible')
 
-const props = defineProps(drawerProps);
-const drawerBodyRef = ref(null);
-const drawerId = `lew-drawer-${getUniqueId()}`;
+const props = defineProps(drawerProps)
+const drawerBodyRef = ref(null)
+const drawerId = `lew-drawer-${getUniqueId()}`
+
+// 用于强制重新计算顶层状态的响应式变量
+const recomputeTrigger = ref(0)
+
+// 计算当前 drawer 是否在顶层
+const isTopDrawer = computed(() => {
+  // 添加 recomputeTrigger 作为依赖，确保能够触发重新计算
+  recomputeTrigger.value
+
+  if (!visible.value) {
+    return false
+  }
+
+  const drawerEl = document.getElementById(drawerId)
+  if (!drawerEl) {
+    return false
+  }
+
+  // 检查是否有 dialog 在顶层
+  const dialogEl = document.getElementById('lew-dialog')
+  const hasDialog = dialogEl && dialogEl.children.length > 0
+  if (hasDialog) {
+    return false
+  }
+
+  // 获取所有 drawer 元素
+  const drawerContainer = drawerEl?.parentElement
+  if (!drawerContainer) {
+    return false
+  }
+
+  const openDrawers = Array.from(drawerContainer.childNodes)
+    .filter((e): e is Element => e instanceof Element)
+    .filter((e) => e.children.length > 0)
+    .filter((e) => {
+      // 只考虑可见的 drawer
+      const drawerBody = e.querySelector('.lew-drawer-body')
+      return drawerBody && drawerBody.classList.contains('lew-drawer-body-show')
+    })
+
+  // 检查当前 drawer 是否是最后一个（顶层）
+  return (
+    openDrawers.length > 0 &&
+    openDrawers[openDrawers.length - 1]?.id === drawerId
+  )
+})
+
+// 强制重新计算顶层状态的函数
+const forceRecomputeTopDrawer = () => {
+  recomputeTrigger.value++
+}
+
+// 监听 drawerBodyRef 变化，确保在 DOM 更新后重新计算顶层状态
+watch(
+  drawerBodyRef,
+  async (newVal) => {
+    if (newVal && visible.value) {
+      await nextTick()
+      forceRecomputeTopDrawer()
+    }
+  },
+  { immediate: true }
+)
+
+// 监听 visible 变化，确保状态正确更新
+watch(visible, async (newVal) => {
+  await nextTick()
+  // drawer 状态变化时，强制重新计算
+  forceRecomputeTopDrawer()
+
+  // 控制全局检查定时器
+  if (newVal) {
+    startGlobalCheck()
+  } else {
+    stopGlobalCheck()
+  }
+})
+
+// 监听全局 drawer 状态变化（通过定时器检查）
+let globalCheckTimer: ReturnType<typeof setInterval> | null = null
+
+const startGlobalCheck = () => {
+  if (globalCheckTimer) {
+    clearInterval(globalCheckTimer)
+  }
+
+  globalCheckTimer = setInterval(() => {
+    if (visible.value) {
+      forceRecomputeTopDrawer()
+    }
+  }, 100) // 每100ms检查一次
+}
+
+const stopGlobalCheck = () => {
+  if (globalCheckTimer) {
+    clearInterval(globalCheckTimer)
+    globalCheckTimer = null
+  }
+}
+
+onMounted(() => {
+  if (visible.value) {
+    startGlobalCheck()
+  }
+})
+
+onUnmounted(() => {
+  stopGlobalCheck()
+})
 
 onClickOutside(drawerBodyRef, (e) => {
   if (visible.value && props.closeOnClickOverlay) {
-    const { parentElement } = e?.target as Element;
+    const { parentElement } = e?.target as Element
     if (parentElement?.id === drawerId) {
-      visible.value = false;
+      visible.value = false
     }
   }
-});
+})
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
-    if (!visible.value || !v) {
-      return;
+    if (!visible.value || !v || !isTopDrawer.value) {
+      return
     }
 
-    const dialogEl = document.getElementById("lew-dialog");
-    const drawerEl = document.getElementById(drawerId);
-    const hasDialog = dialogEl && dialogEl.children.length > 0;
-
-    const isOpenDrawer = Array.from(drawerEl?.parentElement?.childNodes ?? [])
-      .filter((e): e is Element => e instanceof Element)
-      .filter((e) => e.children.length > 0);
-
-    const topDrawer =
-      isOpenDrawer[isOpenDrawer.length - 1]?.id === drawerId && drawerEl;
-
-    if (!hasDialog && topDrawer) {
-      visible.value = false;
-    }
-  });
+    visible.value = false
+  })
 }
 
 const getStyle = (
@@ -58,33 +154,33 @@ const getStyle = (
 ) => {
   switch (true) {
     case !position:
-      return "width:30%;height:100%";
+      return 'width:30%;height:100%'
 
-    case position === "left":
-      return `width:${any2px(width)};height:100vh`;
+    case position === 'left':
+      return `width:${any2px(width)};height:100vh`
 
-    case position === "right":
-      return `width:${any2px(width)};height:100vh`;
+    case position === 'right':
+      return `width:${any2px(width)};height:100vh`
 
-    case position === "top":
-      return `width:100vw;height:${any2px(height)}`;
+    case position === 'top':
+      return `width:100vw;height:${any2px(height)}`
 
-    case position === "bottom":
-      return `width:100vw;height:${any2px(height)}`;
+    case position === 'bottom':
+      return `width:100vw;height:${any2px(height)}`
 
     default:
-      break;
+      break
   }
-};
+}
 
 const close = () => {
-  visible.value = false;
-  emit("close");
-};
+  visible.value = false
+  emit('close')
+}
 </script>
 <template>
   <teleport to="#lew-drawer">
-    <div class="lew-modal-container" :id="drawerId">
+    <div class="lew-drawer-container" :id="drawerId">
       <transition name="lew-drawer-mask">
         <div :style="{ zIndex }" v-if="visible" class="lew-drawer-mask"></div>
       </transition>
@@ -160,13 +256,13 @@ const close = () => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: var(--lew-modal-bgcolor);
+  background-color: var(--lew-drawer-bgcolor);
 }
 
 .lew-drawer-body {
   position: fixed;
   transition: all 0.3s;
-  background: var(--lew-modal-body-bgcolor);
+  background: var(--lew-drawer-body-bgcolor);
   display: flex;
   flex-direction: column;
   .lew-drawer-header {

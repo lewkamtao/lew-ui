@@ -16,18 +16,17 @@ const close = () => {
 
 <template>
   <lew-flex x="start">
-    <lew-button @click="visible = true">异步关闭</lew-button>
+    <lew-button @click="visible = true">Async Close</lew-button>
   </lew-flex>
   <lew-drawer
     v-model:visible="visible"
-    closeOnClickOverlay
     width="350px"
-    title="模拟异步请求"
+    title="Simulate Async Request"
     :okButtonProps="{ request: ok }"
     :closeButtonProps="{ request: close }"
   >
     <div class="drawer-body">
-      <div>点击确定，对话框将在1秒后关闭。</div>
+      <div>Click confirm, the drawer will close after 1 second.</div>
     </div>
   </lew-drawer>
 </template>

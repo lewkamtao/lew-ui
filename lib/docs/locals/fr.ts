@@ -77,7 +77,9 @@ export default {
         title: 'Avatar par défaut'
       },
       demo4: {
-        title: 'Forme'
+        title: 'Forme',
+        description:
+          "Contrôlez la forme de l'avatar via `shape`, les valeurs possibles sont `circle`, `square`, `sharp`."
       },
       props: {
         size: 'Taille',
@@ -1747,82 +1749,101 @@ export default {
     },
     notification: {
       name: 'Notification',
-      description: 'Notification élégante pour des alertes plus conviviales',
+      description: 'Notification élégante pour un envoi de messages plus convivial.',
       demo1: {
-        title: 'Usage de base'
+        title: 'Utilisation de base'
       },
       demo2: {
-        title: "Durée d'affichage personnalisée"
+        title: 'Délai'
+      },
+      demo3: {
+        title: 'Largeur personnalisée'
+      },
+      demo4: {
+        title: 'Afficher la barre de progression'
+      },
+      demo5: {
+        title: 'Fermeture manuelle'
       },
       props: {
         type: 'Type',
         title: 'Titre',
-        content: 'Contenu',
+        content: 'Contenu de la notification',
         delay: 'Délai'
       }
     },
     drawer: {
-      name: 'Tiroir',
-      description:
-        "Panneau coulissant depuis le bord de l'écran pour des opérations temporaires plus fluides",
+      name: 'Tiroir (Drawer)',
+      description: "Panneau coulissant depuis le bord de l'écran pour des opérations temporaires plus fluides.",
       demo1: {
-        title: 'Usage de base'
+        title: 'Utilisation de base'
       },
       demo2: {
         title: 'Fermeture asynchrone'
       },
       demo3: {
-        title: 'En-tête et pied personnalisés'
+        title: 'En-tête et pied de page personnalisés'
       },
       demo4: {
-        title: 'Fermeture par touche ESC'
+        title: 'Autoriser la fermeture avec Echap'
+      },
+      demo5: {
+        title: 'Fermer en cliquant sur le masque'
+      },
+      demo6: {
+        title: 'Imbrication'
       },
       model: {
-        visible: 'Visibilité'
+        visible: 'Visible'
       },
       props: {
         title: 'Titre',
         width: 'Largeur',
         position: 'Position',
         height: 'Hauteur',
-        closeOnClickOverlay: 'Fermeture au clic sur le masque',
-        closeByEsc: 'Fermeture par touche ESC',
-        hideFooter: 'Masquer le pied',
-        okButtonProps: 'Propriétés du bouton de confirmation',
+        closeOnClickOverlay: 'Fermer en cliquant sur le masque',
+        closeByEsc: 'Fermer avec la touche Echap',
+        hideFooter: 'Masquer le pied de page',
+        okButtonProps: 'Propriétés du bouton OK',
         closeButtonProps: 'Propriétés du bouton de fermeture',
-        zIndex: 'Niveau de couche'
+        zIndex: 'Index Z'
       }
     },
     dialog: {
-      name: 'Boîte de Dialogue',
-      description:
-        'Dialogue modal pour mettre en évidence les interactions importantes',
+      name: 'Dialogue (Dialog)',
+      description: "Dialogue modal pour mettre en évidence les interactions importantes.",
       demo1: {
-        title: 'Usage de base'
+        title: 'Utilisation de base'
       },
       demo2: {
-        title: 'Version simple'
+        title: 'Fermeture asynchrone'
+      },
+      demo3: {
+        title: 'Fermer en cliquant sur le masque'
+      },
+      demo4: {
+        title: 'Fermer avec Echap'
       },
       props: {
         type: 'Type',
         width: 'Largeur',
-        trigger: 'Mode de déclenchement',
+        trigger: 'Déclencheur',
         title: 'Titre',
-        okText: 'Texte du bouton de confirmation',
-        cancelText: "Texte du bouton d'annulation",
-        ok: 'Callback de confirmation',
-        cancel: "Callback d'annulation",
-        closeOnClickOverlay: 'Fermeture au clic sur le masque',
-        closeByEsc: 'Fermeture par touche ESC',
-        transformOrigin: "Origine de l'animation"
+        okText: 'Texte du bouton OK',
+        cancelText: 'Texte du bouton Annuler',
+        ok: 'Rappel de confirmation',
+        cancel: 'Rappel d\'annulation',
+        closeOnClickOverlay: 'Fermer en cliquant sur le masque',
+        closeByEsc: 'Fermer avec la touche Echap',
+        transformOrigin: 'Origine de la transformation'
       },
       events: {
-        ok: 'Déclenché au clic sur le bouton de confirmation',
-        cancel: "Déclenché au clic sur le bouton d'annulation"
+        ok: 'Déclenché lors du clic sur le bouton OK',
+        cancel: 'Déclenché lors du clic sur le bouton Annuler'
       }
     },
     modal: {
-      name: 'Fenêtre Modale',
+      name: 'Modale (Modal)',
       description:
         'Fenêtre modale plus flexible pour des interactions popup plus riches',
       demo1: {
@@ -1877,60 +1898,80 @@ export default {
     },
     popover: {
       name: 'Popover',
-      description:
-        "Carte d'information au survol de la souris, pour des indications plus élégantes",
-      demo1: {
-        title: 'Utilisation de base'
-      },
-      props: {
-        trigger: 'Mode de déclenchement',
-        placement: 'Position',
-        disabled: 'Désactivé',
-        loading: 'Chargement',
-        hideOnClick: 'Masquer au clic',
-        offset: 'Décalage',
-        popoverBodyClassName: 'Classe CSS du contenu',
-        triggerTarget: 'Cible de déclenchement'
-      },
-      slots: {
-        trigger: 'Slot de déclenchement',
-        'popover-body': 'Slot du contenu'
-      }
-    },
-    tooltip: {
-      name: 'Infobulle',
-      description:
-        "Bulle d'aide textuelle simple, pour des indications plus légères",
+      description: 'Carte contextuelle qui apparaît au clic ou au survol, contenant des informations et des actions plus riches.',
       demo1: {
         title: 'Utilisation de base'
       },
       demo2: {
-        title: 'Déclenchement au clic'
+        title: 'Déclencheur'
+      },
+      demo3: {
+        title: 'Déclencheur personnalisé'
+      },
+      demo4: {
+        title: 'Fermeture automatique en cliquant à l\'extérieur'
+      },
+      demo5: {
+        title: 'État de chargement'
       },
       props: {
-        tips: "Contenu de l'infobulle",
+        trigger: 'Déclencheur',
         placement: 'Position',
-        trigger: 'Mode de déclenchement',
-        allowHTML: 'Autoriser le HTML',
-        delay: "Délai d'affichage"
+        disabled: 'Désactivé',
+        loading: 'Chargement',
+        hideOnClick: 'Masquer en cliquant',
+        offset: 'Décalage',
+        popoverBodyClassName: 'Nom de classe du corps du popover',
+        triggerTarget: 'Cible du déclencheur'
+      },
+      slots: {
+        trigger: 'Slot de déclenchement',
+        'popover-body': 'Slot du corps du popover'
       }
     },
-    loading: {
-      name: 'Chargement',
-      description:
-        "Effet de chargement élégant, pour rendre l'attente plus agréable",
+    tooltip: {
+      name: 'Info-bulle (Tooltip)',
+      description: "Bulle d'aide textuelle simple pour des indications plus légères.",
       demo1: {
         title: 'Utilisation de base'
       },
+      demo2: {
+        title: 'Déclencher par clic'
+      },
+      demo3: {
+        title: 'Délai'
+      },
+      demo4: {
+        title: 'Support HTML'
+      },
       props: {
-        tip: "Message d'indication",
-        placement: "Position de l'indication",
-        trigger: 'Mode de déclenchement',
-        allowHTML: 'Autoriser le HTML'
+        tips: 'Contenu de l\'info-bulle',
+        placement: 'Position',
+        trigger: 'Déclencheur',
+        allowHTML: 'Autoriser le HTML',
+        delay: 'Délai'
+      }
+    },
+    loading: {
+      name: 'Chargement (Loading)',
+      description: "Effet de chargement élégant pour rendre l'attente plus agréable.",
+      demo1: {
+        title: 'Utilisation de base'
+      },
+      demo2: {
+        title: 'Taille d\'icône personnalisée'
+      },
+      demo3: {
+        title: 'Message d\'information personnalisé'
+      },
+      props: {
+        tip: 'Message d\'information',
+        iconSize: 'Taille de l\'icône',
+        visible: 'Visible'
       }
     },
     result: {
-      name: 'Résultat',
+      name: 'Résultat (Result)',
       description:
         "Utilisé pour présenter les résultats d'opérations, pour un retour plus complet",
       demo1: {

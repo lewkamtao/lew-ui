@@ -5,14 +5,14 @@ const fileList = ref<UploadFileItem[]>([
   {
     key: '50357524',
     size: 71808,
-    name: '滴滴出行行程报销单.pdf',
+    name: 'Didi Travel Expense Report.pdf',
     lastModifiedDate: '2024-09-05T12:48:41.363Z',
     lastModified: 1725540521363
   },
   {
     key: 'f7d20623',
     size: 74499,
-    name: '滴滴电子发票.pdf',
+    name: 'Didi Electronic Invoice.pdf',
     lastModifiedDate: '2024-09-05T12:48:35.593Z',
     lastModified: 1725540515593
   },

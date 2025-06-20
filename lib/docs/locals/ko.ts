@@ -76,7 +76,9 @@ export default {
         title: '기본 아바타'
       },
       demo4: {
-        title: '모양'
+        title: '모양',
+        description:
+          '`shape`을 통해 아바타의 모양을 제어합니다. 선택 가능한 값은 `circle`, `square`, `sharp`입니다.'
       },
       props: {
         size: '크기',
@@ -1728,13 +1730,22 @@ export default {
       }
     },
     notification: {
-      name: '알림 상자 Notification',
-      description: '우아한 알림 메시지로, 메시지 푸시를 더 친화적으로 만듭니다',
+      name: '알림 Notification',
+      description: '우아한 알림 메시지로 메시지 푸시를 더욱 친근하게 만듭니다.',
       demo1: {
         title: '기본 사용법'
       },
       demo2: {
-        title: '사용자 정의 표시 시간'
+        title: '지연 시간'
+      },
+      demo3: {
+        title: '사용자 정의 너비'
+      },
+      demo4: {
+        title: '진행률 표시줄 표시'
+      },
+      demo5: {
+        title: '수동 닫기'
       },
       props: {
         type: '유형',
@@ -1745,8 +1756,7 @@ export default {
     },
     drawer: {
       name: '서랍 Drawer',
-      description:
-        '화면 가장자리에서 슬라이드되는 패널로, 임시 작업을 더 원활하게 만듭니다',
+      description: '화면 가장자리에서 슬라이드되는 패널로 임시 작업을 더 원활하게 합니다.',
       demo1: {
         title: '기본 사용법'
       },
@@ -1759,6 +1769,12 @@ export default {
       demo4: {
         title: 'ESC로 닫기 허용 여부'
       },
+      demo5: {
+        title: '마스크 클릭 시 닫기'
+      },
+      demo6: {
+        title: '중첩'
+      },
       model: {
         visible: '표시 여부'
       },
@@ -1767,23 +1783,28 @@ export default {
         width: '너비',
         position: '위치',
         height: '높이',
-        closeOnClickOverlay: '오버레이 클릭으로 닫기 가능 여부',
-        closeByEsc: 'ESC 키로 닫기 가능 여부',
-        hideFooter: '푸터 숨김 여부',
+        closeOnClickOverlay: '마스크 클릭 시 닫을지 여부',
+        closeByEsc: 'ESC 키를 눌러 닫을지 여부',
+        hideFooter: '푸터 숨기기 여부',
         okButtonProps: '확인 버튼 속성',
         closeButtonProps: '닫기 버튼 속성',
-        zIndex: '층 레벨'
+        zIndex: '계층'
       }
     },
     dialog: {
-      name: '대화 상자 Dialog',
-      description:
-        '모달 대화 상자로, 중요한 정보 상호작용을 더 두드러지게 만듭니다',
+      name: '다이얼로그 Dialog',
+      description: '모달 대화 상자로 중요한 정보 상호 작용을 더 돋보이게 합니다.',
       demo1: {
         title: '기본 사용법'
       },
       demo2: {
-        title: '간단한 사용법'
+        title: '비동기 닫기'
+      },
+      demo3: {
+        title: '마스크 클릭 시 닫기'
+      },
+      demo4: {
+        title: 'ESC로 닫기'
       },
       props: {
         type: '유형',
@@ -1794,8 +1815,8 @@ export default {
         cancelText: '취소 버튼 텍스트',
         ok: '확인 콜백',
         cancel: '취소 콜백',
-        closeOnClickOverlay: '오버레이 클릭으로 닫기 가능 여부',
-        closeByEsc: 'ESC 키로 닫기 가능 여부',
+        closeOnClickOverlay: '마스크 클릭 시 닫을지 여부',
+        closeByEsc: 'ESC 키를 눌러 닫을지 여부',
         transformOrigin: '애니메이션 원점'
       },
       events: {
@@ -1858,36 +1879,54 @@ export default {
     },
     popover: {
       name: '팝오버 Popover',
-      description: '마우스 호버 시 정보 카드로, 더 우아한 힌트를 제공합니다',
-      demo1: {
-        title: '기본 사용법'
-      },
-      props: {
-        trigger: '트리거 방식',
-        placement: '위치',
-        disabled: '비활성화 상태',
-        loading: '로딩 상태',
-        hideOnClick: '클릭 시 숨김',
-        offset: '오프셋',
-        popoverBodyClassName: '팝오버 본문 클래스명',
-        triggerTarget: '트리거 대상'
-      },
-      slots: {
-        trigger: '트리거 슬롯',
-        'popover-body': '팝오버 본문 슬롯'
-      }
-    },
-    tooltip: {
-      name: '툴팁 Tooltip',
-      description: '간단한 텍스트 툴팁으로, 더 가벼운 힌트를 제공합니다',
+      description: '클릭 또는 호버 시 나타나는 카드로, 더 풍부한 내용과 작업을 담고 있습니다.',
       demo1: {
         title: '기본 사용법'
       },
       demo2: {
-        title: '클릭으로 트리거'
+        title: '트리거 방식'
+      },
+      demo3: {
+        title: '사용자 정의 트리거'
+      },
+      demo4: {
+        title: '팝오버 영역 밖 클릭 시 자동 닫기'
+      },
+      demo5: {
+        title: '로딩 상태'
       },
       props: {
-        tips: '툴팁 내용',
+        trigger: '트리거 방식',
+        placement: '위치',
+        disabled: '비활성화 여부',
+        loading: '로딩 중 여부',
+        hideOnClick: '팝오버 영역 밖 클릭 시 자동 닫기',
+        offset: '오프셋',
+        popoverBodyClassName: '팝오버 내용 클래스 이름',
+        triggerTarget: '트리거 대상'
+      },
+      slots: {
+        trigger: '트리거 슬롯',
+        'popover-body': '팝오버 내용 슬롯'
+      }
+    },
+    tooltip: {
+      name: '툴팁 Tooltip',
+      description: '간단한 텍스트 팁 버블로, 팁을 더 가볍게 만듭니다.',
+      demo1: {
+        title: '기본 사용법'
+      },
+      demo2: {
+        title: '클릭하여 트리거'
+      },
+      demo3: {
+        title: '지연 시간'
+      },
+      demo4: {
+        title: 'HTML 지원'
+      },
+      props: {
+        tips: '팁 내용',
         placement: '위치',
         trigger: '트리거 방식',
         allowHTML: 'HTML 지원 여부',
@@ -1896,15 +1935,20 @@ export default {
     },
     loading: {
       name: '로딩 Loading',
-      description: '우아한 로딩 효과로, 대기 시간을 더 편안하게 만듭니다',
+      description: '우아한 로딩 효과로 기다림을 더 편안하게 만듭니다.',
       demo1: {
         title: '기본 사용법'
       },
+      demo2: {
+        title: '사용자 정의 아이콘 크기'
+      },
+      demo3: {
+        title: '사용자 정의 팁 정보'
+      },
       props: {
-        tip: '힌트 메시지',
-        placement: '힌트 위치',
-        trigger: '트리거 방식',
-        allowHTML: 'HTML 허용 여부'
+        tip: '팁 정보',
+        iconSize: '아이콘 크기',
+        visible: '표시 여부'
       }
     },
     result: {

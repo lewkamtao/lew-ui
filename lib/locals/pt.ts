@@ -16,15 +16,27 @@ export default {
     duplicate: 'Esta tag já existe, por favor digite uma nova tag'
   },
   select: {
-    placeholder: 'Por favor, selecione'
+    placeholder: 'Por favor, selecione',
+    resultCount: '{num} resultados',
+    noResult: 'Sem resultados',
+    searchPlaceholder: 'Digite os termos de pesquisa'
   },
   selectMultiple: {
-    placeholder: 'Por favor, selecione'
+    placeholder: 'Por favor, selecione',
+    resultCount: '{num} resultados',
+    noResult: 'Sem resultados',
+    searchPlaceholder: 'Digite os termos de pesquisa'
   },
   cascader: {
     placeholder: 'Por favor, selecione',
     closeText: 'Fechar',
-    okText: 'OK'
+    okText: 'OK',
+    noResult: 'Sem resultados'
+  },
+  tree: {
+    resultCount: '{num} resultados',
+    noResult: 'Sem resultados',
+    searchPlaceholder: 'Digite os termos de pesquisa'
   },
   textarea: {
     placeholder: 'Por favor, digite'

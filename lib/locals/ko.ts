@@ -16,15 +16,27 @@ export default {
     duplicate: '동일한 태그가 이미 존재합니다. 다른 태그를 입력해주세요'
   },
   select: {
-    placeholder: '선택해주세요'
+    placeholder: '선택해주세요',
+    resultCount: '총 {num}개의 결과',
+    noResult: '결과 없음',
+    searchPlaceholder: '검색 키워드 입력'
   },
   selectMultiple: {
-    placeholder: '선택해주세요'
+    placeholder: '선택해주세요',
+    resultCount: '총 {num}개의 결과',
+    noResult: '결과 없음',
+    searchPlaceholder: '검색 키워드 입력'
   },
   cascader: {
     placeholder: '선택해주세요',
     closeText: '닫기',
-    okText: '확인'
+    okText: '확인',
+    noResult: '결과 없음'
+  },
+  tree: {
+    resultCount: '총 {num}개의 결과',
+    noResult: '결과 없음',
+    searchPlaceholder: '검색 키워드 입력'
   },
   textarea: {
     placeholder: '입력해주세요'

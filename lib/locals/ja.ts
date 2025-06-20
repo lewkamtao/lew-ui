@@ -16,15 +16,27 @@ export default {
     duplicate: '同じタグが既に存在します。別のタグを入力してください'
   },
   select: {
-    placeholder: '選択してください'
+    placeholder: '選択してください',
+    resultCount: '合計{num}件の結果',
+    noResult: '結果なし',
+    searchPlaceholder: '検索キーワードを入力'
   },
   selectMultiple: {
-    placeholder: '選択してください'
+    placeholder: '選択してください',
+    resultCount: '合計{num}件の結果',
+    noResult: '結果なし',
+    searchPlaceholder: '検索キーワードを入力'
   },
   cascader: {
     placeholder: '選択してください',
     closeText: '閉じる',
-    okText: '確定'
+    okText: '確定',
+    noResult: '結果なし'
+  },
+  tree: {
+    resultCount: '合計{num}件の結果',
+    noResult: '結果なし',
+    searchPlaceholder: '検索キーワードを入力'
   },
   textarea: {
     placeholder: '入力してください'

@@ -1732,6 +1732,12 @@ export default {
       demo4: {
         title: '是否允许esc关闭'
       },
+      demo5: {
+        title: '点击遮罩关闭'
+      },
+      demo6: {
+        title: '嵌套'
+      },
       model: {
         visible: '是否显示'
       },
@@ -1755,7 +1761,13 @@ export default {
         title: '基础用法'
       },
       demo2: {
-        title: '简单的'
+        title: '异步关闭'
+      },
+      demo3: {
+        title: '点击遮罩关闭'
+      },
+      demo4: {
+        title: 'ESC 关闭'
       },
       props: {
         type: '类型',

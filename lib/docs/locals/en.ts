@@ -76,7 +76,9 @@ export default {
         title: 'Default Avatar'
       },
       demo4: {
-        title: 'Shape'
+        title: 'Shape',
+        description:
+          'Control the shape of the avatar through `shape`, optional values are `circle`, `square`, `sharp`.'
       },
       props: {
         size: 'Size',
@@ -1728,6 +1730,15 @@ export default {
       demo2: {
         title: 'Custom Display Time'
       },
+      demo3: {
+        title: 'Async close'
+      },
+      demo4: {
+        title: 'Customized content'
+      },
+      demo5: {
+        title: 'Manual close'
+      },
       props: {
         type: 'Type',
         title: 'Title',
@@ -1746,10 +1757,16 @@ export default {
         title: 'Asynchronous Close'
       },
       demo3: {
-        title: 'Custom Header and Footer'
+        title: 'Async close'
       },
       demo4: {
-        title: 'Allow ESC to Close'
+        title: 'Listen for open and close'
+      },
+      demo5: {
+        title: 'Custom header and footer'
+      },
+      demo6: {
+        title: 'Customized position'
       },
       model: {
         visible: 'Visible'
@@ -1776,6 +1793,12 @@ export default {
       },
       demo2: {
         title: 'Simple'
+      },
+      demo3: {
+        title: 'Async close'
+      },
+      demo4: {
+        title: 'Customized content'
       },
       props: {
         type: 'Type',
@@ -1851,14 +1874,25 @@ export default {
     },
     popover: {
       name: 'Popover',
-      description:
-        'Information card when mouse hovers, making prompts more elegant',
+      description: 'A pop-up card that provides additional information or actions',
       demo1: {
         title: 'Basic Usage'
       },
+      demo2: {
+        title: 'Placement'
+      },
+      demo3: {
+        title: 'Trigger method'
+      },
+      demo4: {
+        title: 'With arrow'
+      },
+      demo5: {
+        title: 'Disabled'
+      },
       props: {
-        trigger: 'Trigger',
-        placement: 'Placement',
+        placement: 'Popover display position',
+        trigger: 'Trigger method',
         disabled: 'Disabled',
         loading: 'Loading',
         hideOnClick: 'Hide on Click',
@@ -1878,7 +1912,13 @@ export default {
         title: 'Basic Usage'
       },
       demo2: {
-        title: 'Click to Trigger'
+        title: 'With arrow'
+      },
+      demo3: {
+        title: 'Placement'
+      },
+      demo4: {
+        title: 'Dark mode'
       },
       props: {
         tips: 'Tips',
@@ -1894,11 +1934,16 @@ export default {
       demo1: {
         title: 'Basic Usage'
       },
+      demo2: {
+        title: 'Custom icon and text'
+      },
+      demo3: {
+        title: 'Full screen loading'
+      },
       props: {
         tip: 'Tip',
-        placement: 'Placement',
-        trigger: 'Trigger',
-        allowHTML: 'Allow HTML'
+        iconSize: 'Icon size',
+        visible: 'Is it visible'
       }
     },
     result: {

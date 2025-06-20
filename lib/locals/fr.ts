@@ -16,15 +16,27 @@ export default {
     duplicate: 'Cette étiquette existe déjà, veuillez en saisir une nouvelle'
   },
   select: {
-    placeholder: 'Veuillez sélectionner'
+    placeholder: 'Veuillez sélectionner',
+    resultCount: '{num} résultats',
+    noResult: 'Aucun résultat',
+    searchPlaceholder: 'Entrez les mots-clés de recherche'
   },
   selectMultiple: {
-    placeholder: 'Veuillez sélectionner'
+    placeholder: 'Veuillez sélectionner',
+    resultCount: '{num} résultats',
+    noResult: 'Aucun résultat',
+    searchPlaceholder: 'Entrez les mots-clés de recherche'
   },
   cascader: {
     placeholder: 'Veuillez sélectionner',
     closeText: 'Fermer',
-    okText: 'OK'
+    okText: 'OK',
+    noResult: 'Aucun résultat'
+  },
+  tree: {
+    resultCount: '{num} résultats',
+    noResult: 'Aucun résultat',
+    searchPlaceholder: 'Entrez les mots-clés de recherche'
   },
   textarea: {
     placeholder: 'Veuillez saisir'
