@@ -76,7 +76,9 @@ export default {
         title: 'Avatar padrão'
       },
       demo4: {
-        title: 'Forma'
+        title: 'Forma',
+        description:
+          'Controle a forma do avatar através da propriedade `shape`, que aceita os valores `circle`, `square` e `sharp`.'
       },
       props: {
         size: 'Tamanho',
@@ -1735,14 +1737,22 @@ export default {
       }
     },
     notification: {
-      name: 'Notificação (Notification)',
-      description:
-        'Notificações elegantes, tornando as mensagens push mais amigáveis',
+      name: 'Notificação',
+      description: 'Notificações elegantes para um feedback mais amigável.',
       demo1: {
         title: 'Uso básico'
       },
       demo2: {
-        title: 'Tempo de exibição personalizado'
+        title: 'Tempo de atraso'
+      },
+      demo3: {
+        title: 'Largura personalizada'
+      },
+      demo4: {
+        title: 'Exibir barra de progresso'
+      },
+      demo5: {
+        title: 'Fechamento manual'
       },
       props: {
         type: 'Tipo',
@@ -1754,7 +1764,7 @@ export default {
     drawer: {
       name: 'Gaveta (Drawer)',
       description:
-        'Painel deslizante que surge das bordas da tela, tornando operações temporárias mais fluidas',
+        'Um painel que desliza da lateral para operações temporárias suaves.',
       demo1: {
         title: 'Uso básico'
       },
@@ -1765,10 +1775,16 @@ export default {
         title: 'Cabeçalho e rodapé personalizados'
       },
       demo4: {
-        title: 'Permitir fechamento com ESC'
+        title: 'Permitir fechar com a tecla ESC'
+      },
+      demo5: {
+        title: 'Fechar ao clicar na sobreposição'
+      },
+      demo6: {
+        title: 'Aninhamento'
       },
       model: {
-        visible: 'Visibilidade'
+        visible: 'Visível'
       },
       props: {
         title: 'Título',
@@ -1776,39 +1792,45 @@ export default {
         position: 'Posição',
         height: 'Altura',
         closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
-        closeByEsc: 'Fechar com tecla ESC',
+        closeByEsc: 'Fechar com a tecla ESC',
         hideFooter: 'Ocultar rodapé',
         okButtonProps: 'Propriedades do botão OK',
-        zIndex: 'Índice Z',
-        closeButtonProps: 'Propriedades do botão Fechar'
+        closeButtonProps: 'Propriedades do botão de fechar',
+        zIndex: 'Índice Z'
       }
     },
     dialog: {
-      name: 'Diálogo (Dialog)',
+      name: 'Diálogo',
       description:
-        'Caixa de diálogo modal para interações importantes mais destacadas',
+        'Uma caixa de diálogo modal para destacar interações importantes.',
       demo1: {
         title: 'Uso básico'
       },
       demo2: {
-        title: 'Simples'
+        title: 'Fechamento assíncrono'
+      },
+      demo3: {
+        title: 'Fechar ao clicar na sobreposição'
+      },
+      demo4: {
+        title: 'Fechar com ESC'
       },
       props: {
         type: 'Tipo',
         width: 'Largura',
-        trigger: 'Modo de acionamento',
+        trigger: 'Gatilho',
         title: 'Título',
         okText: 'Texto do botão OK',
         cancelText: 'Texto do botão Cancelar',
         ok: 'Callback de confirmação',
         cancel: 'Callback de cancelamento',
         closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
-        closeByEsc: 'Fechar com tecla ESC',
+        closeByEsc: 'Fechar com a tecla ESC',
         transformOrigin: 'Origem da transformação'
       },
       events: {
-        ok: 'Disparado ao clicar no botão OK',
-        cancel: 'Disparado ao clicar no botão Cancelar'
+        ok: 'Disparado quando o botão OK é clicado',
+        cancel: 'Disparado quando o botão Cancelar é clicado'
       }
     },
     modal: {
@@ -1865,61 +1887,82 @@ export default {
       }
     },
     popover: {
-      name: 'Cartão Popover (Popover)',
+      name: 'Popover',
       description:
-        'Cartão de informações ao passar o mouse, tornando as dicas mais elegantes',
+        'Um cartão pop-up que fornece informações ou ações adicionais.',
       demo1: {
         title: 'Uso básico'
       },
+      demo2: {
+        title: 'Gatilho'
+      },
+      demo3: {
+        title: 'Gatilho personalizado'
+      },
+      demo4: {
+        title: 'Fechar automaticamente ao clicar fora'
+      },
+      demo5: {
+        title: 'Estado de carregamento'
+      },
       props: {
-        trigger: 'Modo de acionamento',
+        trigger: 'Gatilho',
         placement: 'Posicionamento',
         disabled: 'Desabilitado',
         loading: 'Carregando',
         hideOnClick: 'Ocultar ao clicar',
         offset: 'Deslocamento',
-        popoverBodyClassName: 'Classe do corpo do popover',
-        triggerTarget: 'Alvo do acionamento'
+        popoverBodyClassName: 'Nome da classe do corpo do popover',
+        triggerTarget: 'Alvo do gatilho'
       },
       slots: {
-        trigger: 'Slot de acionamento',
+        trigger: 'Slot do gatilho',
         'popover-body': 'Slot do corpo do popover'
       }
     },
     tooltip: {
-      name: 'Dica de Texto (Tooltip)',
-      description:
-        'Balão de dica de texto simples, tornando as dicas mais leves',
+      name: 'Dica (Tooltip)',
+      description: 'Uma bolha de texto simples para dicas mais leves.',
       demo1: {
         title: 'Uso básico'
       },
       demo2: {
-        title: 'Acionamento por clique'
+        title: 'Disparar com clique'
+      },
+      demo3: {
+        title: 'Tempo de atraso'
+      },
+      demo4: {
+        title: 'Suporte a HTML'
       },
       props: {
         tips: 'Conteúdo da dica',
         placement: 'Posicionamento',
-        trigger: 'Modo de acionamento',
+        trigger: 'Gatilho',
         allowHTML: 'Permitir HTML',
-        delay: 'Atraso'
+        delay: 'Tempo de atraso'
       }
     },
     loading: {
-      name: 'Carregamento (Loading)',
-      description:
-        'Efeito de carregamento elegante, tornando a espera mais agradável',
+      name: 'Carregando (Loading)',
+      description: 'Um efeito de carregamento elegante para tornar a espera mais agradável.',
       demo1: {
         title: 'Uso básico'
       },
+      demo2: {
+        title: 'Tamanho do ícone personalizado'
+      },
+      demo3: {
+        title: 'Informação de dica personalizada'
+      },
       props: {
-        tip: 'Dica',
-        placement: 'Posicionamento da dica',
-        trigger: 'Modo de acionamento',
-        allowHTML: 'Permitir HTML'
+        tip: 'Informação da dica',
+        iconSize: 'Tamanho do ícone',
+        visible: 'Visível'
       }
     },
     result: {
-      name: 'Resultado (Result)',
+      name: 'Resultado',
       description:
         'Usado para feedback de resultados de operações, tornando a exibição mais completa',
       demo1: {

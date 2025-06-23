@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
 import { useDark } from '@vueuse/core'
-import { Sun, Moon, Github, Languages } from 'lucide-vue-next'
+import { Sun, Moon, Github, Languages, Settings } from 'lucide-vue-next'
 import { setLocale } from 'lew-ui'
 import docsLocale, { getInitialLocale } from '@/locals'
 import packageJson from '../../../package.json'
@@ -202,6 +202,12 @@ const changeLanguage = (e: any) => {
   })
 }
 
+const goToSettings = () => {
+  router.push('/check-lang')
+}
+
+const isDev = window.location.hostname === 'localhost'
+
 // 初始化语言（异步）
 getInitialLocale().then((locale) => {
   changeLanguage({ value: locale })
@@ -243,6 +249,9 @@ getInitialLocale().then((locale) => {
       </div>
     </lew-flex>
     <lew-flex gap="15" x="end" class="menu">
+      <div v-if="isDev" class="menu-item menu-item-icon" @click="goToSettings">
+        <Settings :size="18" />
+      </div>
       <div class="menu-item menu-item-icon" @click="isDark = !isDark">
         <Sun class="icon-mode-sunny" :size="18" />
         <Moon class="icon-mode-moon" :size="18" />

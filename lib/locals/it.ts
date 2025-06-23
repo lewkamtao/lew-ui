@@ -16,15 +16,27 @@ export default {
     duplicate: 'Questo tag esiste già, inserisci un nuovo tag'
   },
   select: {
-    placeholder: 'Seleziona'
+    placeholder: 'Seleziona',
+    resultCount: '{num} risultati',
+    noResult: 'Nessun risultato',
+    searchPlaceholder: 'Inserisci parole chiave'
   },
   selectMultiple: {
-    placeholder: 'Seleziona'
+    placeholder: 'Seleziona',
+    resultCount: '{num} risultati',
+    noResult: 'Nessun risultato',
+    searchPlaceholder: 'Inserisci parole chiave'
   },
   cascader: {
     placeholder: 'Seleziona',
     closeText: 'Chiudi',
-    okText: 'OK'
+    okText: 'OK',
+    noResult: 'Nessun risultato'
+  },
+  tree: {
+    resultCount: '{num} risultati',
+    noResult: 'Nessun risultato',
+    searchPlaceholder: 'Inserisci parole chiave'
   },
   textarea: {
     placeholder: 'Inserisci'

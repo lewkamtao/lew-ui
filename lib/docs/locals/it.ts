@@ -76,7 +76,8 @@ export default {
         title: 'Avatar predefinito'
       },
       demo4: {
-        title: 'Forma'
+        title: 'Forma',
+        description: "Controlla la forma dell'avatar tramite `shape`, i valori possibili sono `circle`, `square`, `sharp`."
       },
       props: {
         size: 'Dimensione',
@@ -1692,25 +1693,33 @@ export default {
       }
     },
     notification: {
-      name: 'Notifica Notification',
-      description: 'Notifiche eleganti, per messaggi push più amichevoli',
+      name: 'Notifica',
+      description: 'Notifiche eleganti per un feedback più intuitivo.',
       demo1: {
         title: 'Uso base'
       },
       demo2: {
-        title: 'Tempo di visualizzazione personalizzato'
+        title: 'Durata'
+      },
+      demo3: {
+        title: 'Larghezza personalizzata'
+      },
+      demo4: {
+        title: 'Mostra barra di avanzamento'
+      },
+      demo5: {
+        title: 'Chiusura manuale'
       },
       props: {
         type: 'Tipo',
         title: 'Titolo',
         content: 'Contenuto notifica',
-        delay: 'Ritardo'
+        delay: 'Durata'
       }
     },
     drawer: {
       name: 'Drawer',
-      description:
-        'Pannello che scorre dai bordi dello schermo, per operazioni temporanee più fluide',
+      description: 'Pannello a scorrimento laterale per operazioni temporanee.',
       demo1: {
         title: 'Uso base'
       },
@@ -1718,57 +1727,68 @@ export default {
         title: 'Chiusura asincrona'
       },
       demo3: {
-        title: 'Header e footer personalizzati'
+        title: 'Intestazione e piè di pagina personalizzati'
       },
       demo4: {
-        title: 'Chiusura con ESC abilitata'
+        title: 'Chiudi con ESC'
+      },
+      demo5: {
+        title: 'Chiudi cliccando sul overlay'
+      },
+      demo6: {
+        title: 'Annidato'
       },
       model: {
-        visible: 'Visibilità'
+        visible: 'Visibile'
       },
       props: {
         title: 'Titolo',
         width: 'Larghezza',
         position: 'Posizione',
         height: 'Altezza',
-        closeOnClickOverlay: 'Chiudi al click overlay',
-        closeByEsc: 'Chiudi con ESC',
-        hideFooter: 'Nascondi footer',
+        closeOnClickOverlay: 'Chiudi cliccando sul overlay',
+        closeByEsc: 'Chiudi con tasto ESC',
+        hideFooter: 'Nascondi piè di pagina',
         okButtonProps: 'Proprietà pulsante OK',
-        zIndex: 'Z-index',
-        closeButtonProps: 'Proprietà pulsante Chiudi'
+        closeButtonProps: 'Proprietà pulsante Chiudi',
+        zIndex: 'z-index'
       }
     },
     dialog: {
-      name: 'Finestra di dialogo Dialog',
-      description:
-        'Finestra di dialogo modale, per interazioni importanti più evidenti',
+      name: 'Dialogo',
+      description: 'Finestra di dialogo modale per evidenziare interazioni importanti.',
       demo1: {
         title: 'Uso base'
       },
       demo2: {
-        title: 'Semplice'
+        title: 'Chiusura asincrona'
+      },
+      demo3: {
+        title: 'Chiudi cliccando sul overlay'
+      },
+      demo4: {
+        title: 'Chiudi con ESC'
       },
       props: {
         type: 'Tipo',
         width: 'Larghezza',
         trigger: 'Trigger',
         title: 'Titolo',
-        okText: 'Testo OK',
-        cancelText: 'Testo Annulla',
-        ok: 'Callback OK',
-        cancel: 'Callback Annulla',
-        closeOnClickOverlay: 'Chiudi al click overlay',
-        closeByEsc: 'Chiudi con ESC',
+        okText: 'Testo pulsante OK',
+        cancelText: 'Testo pulsante Annulla',
+        ok: 'Callback conferma',
+        cancel: 'Callback annullamento',
+        closeOnClickOverlay: 'Chiudi cliccando sul overlay',
+        closeByEsc: 'Chiudi con tasto ESC',
         transformOrigin: 'Origine trasformazione'
       },
       events: {
-        ok: 'Click su OK',
-        cancel: 'Click su Annulla'
+        ok: 'Scatta al click su OK',
+        cancel: 'Scatta al click su Annulla'
       }
     },
     modal: {
-      name: 'Modale Modal',
+      name: 'Modale',
       description:
         'Finestra modale flessibile, per interazioni popup più ricche',
       demo1: {
@@ -1822,11 +1842,22 @@ export default {
       }
     },
     popover: {
-      name: 'Card popup Popover',
-      description:
-        'Card informativa al passaggio del mouse, per suggerimenti più eleganti',
+      name: 'Popover',
+      description: 'Una scheda a comparsa che fornisce informazioni o azioni aggiuntive.',
       demo1: {
         title: 'Uso base'
+      },
+      demo2: {
+        title: 'Trigger'
+      },
+      demo3: {
+        title: 'Trigger personalizzato'
+      },
+      demo4: {
+        title: 'Chiudi cliccando all\'esterno'
+      },
+      demo5: {
+        title: 'Stato di caricamento'
       },
       props: {
         trigger: 'Trigger',
@@ -1835,46 +1866,57 @@ export default {
         loading: 'Caricamento',
         hideOnClick: 'Nascondi al click',
         offset: 'Offset',
-        popoverBodyClassName: 'Classe contenuto popover',
+        popoverBodyClassName: 'Classe corpo popover',
         triggerTarget: 'Target trigger'
       },
       slots: {
         trigger: 'Slot trigger',
-        'popover-body': 'Slot contenuto popover'
+        'popover-body': 'Slot corpo popover'
       }
     },
     tooltip: {
-      name: 'Suggerimento Tooltip',
-      description: 'Semplice popup di testo, per suggerimenti più leggeri',
+      name: 'Tooltip',
+      description: 'Semplice fumetto di testo per suggerimenti leggeri.',
       demo1: {
         title: 'Uso base'
       },
       demo2: {
-        title: 'Trigger al click'
+        title: 'Attivazione al click'
+      },
+      demo3: {
+        title: 'Ritardo'
+      },
+      demo4: {
+        title: 'Supporto HTML'
       },
       props: {
-        tips: 'Contenuto suggerimento',
+        tips: 'Contenuto tooltip',
         placement: 'Posizione',
         trigger: 'Trigger',
-        allowHTML: 'Permetti HTML',
+        allowHTML: 'Consenti HTML',
         delay: 'Ritardo'
       }
     },
     loading: {
-      name: 'Caricamento Loading',
-      description: 'Effetto di caricamento elegante, per attese più piacevoli',
+      name: 'Caricamento',
+      description: 'Un elegante effetto di caricamento per rendere l\'attesa più piacevole.',
       demo1: {
         title: 'Uso base'
       },
+      demo2: {
+        title: 'Dimensione icona personalizzata'
+      },
+      demo3: {
+        title: 'Messaggio personalizzato'
+      },
       props: {
-        tip: 'Suggerimento',
-        placement: 'Posizione suggerimento',
-        trigger: 'Trigger',
-        allowHTML: 'Permetti HTML'
+        tip: 'Messaggio',
+        iconSize: 'Dimensione icona',
+        visible: 'Visibile'
       }
     },
     result: {
-      name: 'Risultato Result',
+      name: 'Risultato',
       description:
         'Per mostrare risultati di operazioni, per feedback più completi',
       demo1: {

@@ -16,11 +16,10 @@ const close = () => {
 
 <template>
   <lew-flex x="start">
-    <lew-button @click="visible = true">自定义</lew-button>
+    <lew-button @click="visible = true">Custom</lew-button>
   </lew-flex>
   <lew-drawer
     v-model:visible="visible"
-    closeOnClickOverlay
     width="750px"
     :okButtonProps="{ request: ok }"
     :closeButtonProps="{ request: close }"
@@ -28,20 +27,20 @@ const close = () => {
     <template #header>
       <lew-flex x="start" class="lew-drawer-header">
         <lew-tag>New</lew-tag>
-        这是自定义的头部
+        Custom Header
       </lew-flex>
     </template>
     <div class="lew-drawer-body lew-scrollbar">
-      <div>这是中间的内容</div>
+      <div>This is the main content</div>
     </div>
     <template #footer>
       <lew-flex x="end" y="center" class="lew-drawer-footer">
         <lew-flex x="start" gap="5" class="lew-drawer-footer-tips">
-          提交后立即生效
+          Takes effect immediately after submission
         </lew-flex>
         <lew-flex x="end" y="center">
-          <lew-button type="text" color="gray" :request="ok">取消</lew-button>
-          <lew-button :request="ok">提交</lew-button>
+          <lew-button type="text" color="gray" :request="ok">Cancel</lew-button>
+          <lew-button :request="ok">Submit</lew-button>
         </lew-flex>
       </lew-flex>
     </template>

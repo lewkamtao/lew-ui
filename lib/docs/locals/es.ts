@@ -76,7 +76,8 @@ export default {
         title: 'Avatar predeterminado'
       },
       demo4: {
-        title: 'Forma'
+        title: 'Forma',
+        description: "Controla la forma del avatar a través de `shape`, los valores posibles son `circle`, `square`, `sharp`."
       },
       props: {
         size: 'Tamaño',
@@ -1721,37 +1722,50 @@ export default {
       }
     },
     notification: {
-      name: 'Notification',
-      description:
-        'Elegant notification reminder, making message pushing more friendly',
+      name: 'Notificación',
+      description: 'Notificaciones elegantes para un feedback más amigable.',
       demo1: {
-        title: 'Basic Usage'
+        title: 'Uso básico'
       },
       demo2: {
-        title: 'Custom Display Time'
+        title: 'Tiempo de retraso'
+      },
+      demo3: {
+        title: 'Ancho personalizado'
+      },
+      demo4: {
+        title: 'Mostrar barra de progreso'
+      },
+      demo5: {
+        title: 'Cierre manual'
       },
       props: {
-        type: 'Type',
-        title: 'Title',
-        content: 'Content',
-        delay: 'Delay'
+        type: 'Tipo',
+        title: 'Título',
+        content: 'Contenido de la notificación',
+        delay: 'Tiempo de retraso'
       }
     },
     drawer: {
-      name: 'Drawer',
-      description:
-        'Panel sliding out from the edge of the screen, making temporary operations smoother',
+      name: 'Cajón (Drawer)',
+      description: 'Panel que se desliza desde el borde de la pantalla para operaciones temporales más fluidas.',
       demo1: {
-        title: 'Basic Usage'
+        title: 'Uso básico'
       },
       demo2: {
-        title: 'Asynchronous Close'
+        title: 'Cierre asíncrono'
       },
       demo3: {
-        title: 'Custom Header and Footer'
+        title: 'Encabezado y pie de página personalizados'
       },
       demo4: {
-        title: 'Allow ESC to Close'
+        title: 'Permitir cerrar con ESC'
+      },
+      demo5: {
+        title: 'Cerrar al hacer clic en la máscara'
+      },
+      demo6: {
+        title: 'Anidamiento'
       },
       model: {
         visible: 'Visible'
@@ -1760,41 +1774,46 @@ export default {
         title: 'Título',
         width: 'Ancho',
         position: 'Posición',
-        height: 'Altura',
-        closeOnClickOverlay: 'Cerrar al hacer clic en la superposición',
-        closeByEsc: 'Cerrar con ESC',
-        hideFooter: 'Ocultar pie',
+        height: 'Alto',
+        closeOnClickOverlay: 'Cerrar al hacer clic en la máscara',
+        closeByEsc: 'Cerrar con la tecla ESC',
+        hideFooter: 'Ocultar pie de página',
         okButtonProps: 'Propiedades del botón OK',
-        closeButtonProps: 'Propiedades del botón Cerrar',
+        closeButtonProps: 'Propiedades del botón de cierre',
         zIndex: 'Índice Z'
       }
     },
     dialog: {
-      name: 'Dialog',
-      description:
-        'Modal dialog box, making important information interaction more prominent',
+      name: 'Diálogo (Dialog)',
+      description: 'Diálogo modal para resaltar interacciones importantes.',
       demo1: {
-        title: 'Basic Usage'
+        title: 'Uso básico'
       },
       demo2: {
-        title: 'Simple'
+        title: 'Cierre asíncrono'
+      },
+      demo3: {
+        title: 'Cerrar al hacer clic en la máscara'
+      },
+      demo4: {
+        title: 'Cerrar con ESC'
       },
       props: {
         type: 'Tipo',
         width: 'Ancho',
         trigger: 'Disparador',
         title: 'Título',
-        okText: 'Texto OK',
-        cancelText: 'Texto Cancelar',
-        ok: 'Callback OK',
-        cancel: 'Callback Cancelar',
-        closeOnClickOverlay: 'Cerrar al hacer clic en la superposición',
-        closeByEsc: 'Cerrar con ESC',
-        transformOrigin: 'Origen de transformación'
+        okText: 'Texto del botón OK',
+        cancelText: 'Texto del botón Cancelar',
+        ok: 'Callback de confirmación',
+        cancel: 'Callback de cancelación',
+        closeOnClickOverlay: 'Cerrar al hacer clic en la máscara',
+        closeByEsc: 'Cerrar con la tecla ESC',
+        transformOrigin: 'Origen de la transformación'
       },
       events: {
-        ok: 'Triggered when OK button is clicked',
-        cancel: 'Triggered when Cancel button is clicked'
+        ok: 'Se activa al hacer clic en el botón OK',
+        cancel: 'Se activa al hacer clic en el botón Cancelar'
       }
     },
     modal: {
@@ -1853,58 +1872,80 @@ export default {
     },
     popover: {
       name: 'Popover',
-      description:
-        'Information card when mouse hovers, making prompts more elegant',
+      description: 'Una tarjeta emergente que proporciona información o acciones adicionales.',
       demo1: {
-        title: 'Basic Usage'
+        title: 'Uso básico'
+      },
+      demo2: {
+        title: 'Disparador'
+      },
+      demo3: {
+        title: 'Disparador personalizado'
+      },
+      demo4: {
+        title: 'Cierre automático al hacer clic fuera'
+      },
+      demo5: {
+        title: 'Estado de carga'
       },
       props: {
-        trigger: 'Trigger',
-        placement: 'Placement',
-        disabled: 'Disabled',
-        loading: 'Loading',
-        hideOnClick: 'Hide on Click',
-        offset: 'Offset',
-        popoverBodyClassName: 'Popover Body Class Name',
-        triggerTarget: 'Trigger Target'
+        trigger: 'Disparador',
+        placement: 'Posición',
+        disabled: 'Deshabilitado',
+        loading: 'Cargando',
+        hideOnClick: 'Ocultar al hacer clic',
+        offset: 'Desplazamiento',
+        popoverBodyClassName: 'Nombre de clase del cuerpo del popover',
+        triggerTarget: 'Objetivo del disparador'
       },
       slots: {
-        trigger: 'Trigger Slot',
-        'popover-body': 'Popover Body Slot'
+        trigger: 'Slot del disparador',
+        'popover-body': 'Slot del cuerpo del popover'
       }
     },
     tooltip: {
       name: 'Tooltip',
-      description: 'Simple text prompt bubble, making prompts lighter',
+      description: 'Burbuja de texto simple para indicaciones más ligeras.',
       demo1: {
-        title: 'Basic Usage'
+        title: 'Uso básico'
       },
       demo2: {
-        title: 'Click to Trigger'
+        title: 'Activar con clic'
+      },
+      demo3: {
+        title: 'Tiempo de retraso'
+      },
+      demo4: {
+        title: 'Soporte HTML'
       },
       props: {
-        tips: 'Tips',
-        placement: 'Placement',
-        trigger: 'Trigger',
-        allowHTML: 'Allow HTML',
-        delay: 'Delay'
+        tips: 'Contenido del tooltip',
+        placement: 'Posición',
+        trigger: 'Disparador',
+        allowHTML: 'Permitir HTML',
+        delay: 'Tiempo de retraso'
       }
     },
     loading: {
-      name: 'Loading',
-      description: 'Elegant loading effect, making waiting easier',
+      name: 'Cargando (Loading)',
+      description: 'Elegante efecto de carga para que la espera sea más agradable.',
       demo1: {
-        title: 'Basic Usage'
+        title: 'Uso básico'
+      },
+      demo2: {
+        title: 'Tamaño de icono personalizado'
+      },
+      demo3: {
+        title: 'Mensaje de información personalizado'
       },
       props: {
-        tip: 'Tip',
-        placement: 'Placement',
-        trigger: 'Trigger',
-        allowHTML: 'Allow HTML'
+        tip: 'Mensaje de información',
+        iconSize: 'Tamaño del icono',
+        visible: 'Visible'
       }
     },
     result: {
-      name: 'Result',
+      name: 'Resultado (Result)',
       description:
         'Used to feedback operation results, making result display more complete',
       demo1: {

@@ -6,6 +6,7 @@ import { useDOMCreate } from "lew-ui/hooks";
 import { modalProps } from "./props";
 import Icon from "lew-ui/utils/Icon.vue";
 import { locale } from "lew-ui";
+import { ref, watch, computed, nextTick, onMounted, onUnmounted } from 'vue'
 const { Escape } = useMagicKeys();
 
 const emit = defineEmits(["close"]);
@@ -18,6 +19,115 @@ const visible: Ref<boolean | undefined> = defineModel("visible");
 
 const modalBodyRef = ref(null);
 const modalId = `lew-modal-${getUniqueId()}`;
+
+// 用于强制重新计算顶层状态的响应式变量
+const recomputeTrigger = ref(0)
+
+// 计算当前 modal 是否在顶层
+const isTopModal = computed(() => {
+  // 添加 recomputeTrigger 作为依赖，确保能够触发重新计算
+  recomputeTrigger.value
+  
+  if (!visible.value) {
+    return false
+  }
+  
+  const modalEl = document.getElementById(modalId)
+  if (!modalEl) {
+    return false
+  }
+  
+  // 检查是否有 dialog 在顶层
+  const dialogEl = document.getElementById('lew-dialog')
+  const hasDialog = dialogEl && dialogEl.children.length > 0
+  if (hasDialog) {
+    return false
+  }
+  
+  // 获取所有 modal 元素
+  const modalContainer = modalEl?.parentElement
+  if (!modalContainer) {
+    return false
+  }
+  
+  const openModals = Array.from(modalContainer.childNodes)
+    .filter((e): e is Element => e instanceof Element)
+    .filter((e) => e.children.length > 0)
+    .filter((e) => {
+      // 只考虑可见的 modal
+      const modalBody = e.querySelector('.lew-modal') as HTMLElement
+      return modalBody && modalBody.style.display !== 'none'
+    })
+  
+  // 检查当前 modal 是否是最后一个（顶层）
+  return (
+    openModals.length > 0 &&
+    openModals[openModals.length - 1]?.id === modalId
+  )
+})
+
+// 强制重新计算顶层状态的函数
+const forceRecomputeTopModal = () => {
+  recomputeTrigger.value++
+}
+
+// 监听 modalBodyRef 变化，确保在 DOM 更新后重新计算顶层状态
+watch(
+  modalBodyRef,
+  async (newVal) => {
+    if (newVal && visible.value) {
+      await nextTick()
+      forceRecomputeTopModal()
+    }
+  },
+  { immediate: true }
+)
+
+// 监听 visible 变化，确保状态正确更新
+watch(visible, async (newVal) => {
+  await nextTick()
+  // modal 状态变化时，强制重新计算
+  forceRecomputeTopModal()
+  
+  // 控制全局检查定时器
+  if (newVal) {
+    startGlobalCheck()
+  } else {
+    stopGlobalCheck()
+  }
+})
+
+// 监听全局 modal 状态变化（通过定时器检查）
+let globalCheckTimer: ReturnType<typeof setInterval> | null = null
+
+const startGlobalCheck = () => {
+  if (globalCheckTimer) {
+    clearInterval(globalCheckTimer)
+  }
+  
+  globalCheckTimer = setInterval(() => {
+    if (visible.value) {
+      forceRecomputeTopModal()
+    }
+  }, 100) // 每100ms检查一次
+}
+
+const stopGlobalCheck = () => {
+  if (globalCheckTimer) {
+    clearInterval(globalCheckTimer)
+    globalCheckTimer = null
+  }
+}
+
+onMounted(() => {
+  if (visible.value) {
+    startGlobalCheck()
+  }
+})
+
+onUnmounted(() => {
+  stopGlobalCheck()
+})
 
 onClickOutside(modalBodyRef, (e) => {
   if (visible.value && props.closeOnClickOverlay) {
@@ -43,24 +153,11 @@ const close = () => {
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
-    if (!visible.value || !v) {
+    if (!visible.value || !v || !isTopModal.value) {
       return;
     }
-
-    const dialogEl = document.getElementById("lew-dialog");
-    const modalEl = document.getElementById(modalId);
-    const hasDialog = dialogEl && dialogEl.children.length > 0;
-
-    const isOpenModal = Array.from(modalEl?.parentElement?.childNodes ?? [])
-      .filter((e): e is Element => e instanceof Element)
-      .filter((e) => e.children.length > 0);
-
-    const topModal =
-      isOpenModal[isOpenModal.length - 1]?.id === modalId && modalEl;
-
-    if (!hasDialog && topModal) {
-      visible.value = false;
-    }
+    
+    visible.value = false;
   });
 }
 </script>

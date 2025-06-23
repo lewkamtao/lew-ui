@@ -17,15 +17,27 @@ export default {
       'Dieser Tag existiert bereits, bitte geben Sie einen neuen Tag ein'
   },
   select: {
-    placeholder: 'Bitte auswählen'
+    placeholder: 'Bitte auswählen',
+    resultCount: '{num} Ergebnisse',
+    noResult: 'Keine Ergebnisse',
+    searchPlaceholder: 'Suchbegriffe eingeben'
   },
   selectMultiple: {
-    placeholder: 'Bitte auswählen'
+    placeholder: 'Bitte auswählen',
+    resultCount: '{num} Ergebnisse',
+    noResult: 'Keine Ergebnisse',
+    searchPlaceholder: 'Suchbegriffe eingeben'
   },
   cascader: {
     placeholder: 'Bitte auswählen',
     closeText: 'Schließen',
-    okText: 'OK'
+    okText: 'OK',
+    noResult: 'Keine Ergebnisse'
+  },
+  tree: {
+    resultCount: '{num} Ergebnisse',
+    noResult: 'Keine Ergebnisse',
+    searchPlaceholder: 'Suchbegriffe eingeben'
   },
   textarea: {
     placeholder: 'Bitte eingeben'

@@ -76,7 +76,9 @@ export default {
         title: 'デフォルトアバター'
       },
       demo4: {
-        title: '形状'
+        title: '形状',
+        description:
+          '`shape` でアバターの形状を制御します。オプション値は `circle`、`square`、`sharp` です。'
       },
       props: {
         size: 'サイズ',
@@ -1696,6 +1698,15 @@ export default {
       demo2: {
         title: 'タイプ'
       },
+      demo3: {
+        title: 'カスタム幅'
+      },
+      demo4: {
+        title: 'プログレスバーの表示'
+      },
+      demo5: {
+        title: '手動で閉じる'
+      },
       props: {
         type: '通知タイプ',
         title: 'タイトル',
@@ -1711,13 +1722,19 @@ export default {
         title: '基本的な使い方'
       },
       demo2: {
-        title: '位置'
+        title: '非同期で閉じる'
       },
       demo3: {
-        title: 'ヘッダーレス'
+        title: 'カスタムヘッダーとフッター'
       },
       demo4: {
         title: 'ESCキーで閉じる設定'
+      },
+      demo5: {
+        title: 'オーバーレイクリックで閉じる'
+      },
+      demo6: {
+        title: 'ネスト'
       },
       model: {
         visible: '表示状態'
@@ -1725,14 +1742,14 @@ export default {
       props: {
         title: 'タイトル',
         width: '幅',
+        position: '位置',
         height: '高さ',
         closeOnClickOverlay: 'オーバーレイクリックで閉じるかどうか',
         closeByEsc: 'ESCキーで閉じるかどうか',
-        zIndex: '重なり順序',
-        position: '位置',
         hideFooter: 'フッターを非表示にするかどうか',
         okButtonProps: '確認ボタンのプロパティ',
-        closeButtonProps: '閉じるボタンのプロパティ'
+        closeButtonProps: '閉じるボタンのプロパティ',
+        zIndex: '重なり順序'
       }
     },
     dialog: {
@@ -1744,6 +1761,12 @@ export default {
       },
       demo2: {
         title: 'シンプルな例'
+      },
+      demo3: {
+        title: '非同期で閉じる'
+      },
+      demo4: {
+        title: 'ESCキーで閉じる'
       },
       props: {
         type: 'タイプ',
@@ -1822,6 +1845,18 @@ export default {
       demo1: {
         title: '基本的な使い方'
       },
+      demo2: {
+        title: 'トリガー方式'
+      },
+      demo3: {
+        title: 'カスタムトリガー'
+      },
+      demo4: {
+        title: 'ポップオーバー領域外クリックで自動閉じる'
+      },
+      demo5: {
+        title: '読み込み状態'
+      },
       props: {
         trigger: 'トリガー方式',
         placement: '表示位置',
@@ -1846,6 +1881,12 @@ export default {
       demo2: {
         title: 'クリックでトリガー'
       },
+      demo3: {
+        title: '遅延時間'
+      },
+      demo4: {
+        title: 'HTMLサポート'
+      },
       props: {
         tips: 'ヒント内容',
         placement: '表示位置',
@@ -1860,11 +1901,16 @@ export default {
       demo1: {
         title: '基本的な使い方'
       },
+      demo2: {
+        title: 'カスタムアイコンサイズ'
+      },
+      demo3: {
+        title: 'カスタムヒントメッセージ'
+      },
       props: {
         tip: 'ヒントメッセージ',
-        placement: 'ヒントの位置',
-        trigger: 'トリガー方式',
-        allowHTML: 'HTMLを許可'
+        iconSize: 'アイコンサイズ',
+        visible: '表示状態'
       }
     },
     result: {

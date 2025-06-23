@@ -1,4 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue'
+import type { FlexXAlignment } from 'lew-ui'
 export interface ActionBoxOption {
   label: string | (() => any)
   icon?: string | (() => any)
@@ -10,6 +11,20 @@ export const actionBoxProps = {
   options: {
     type: Array as PropType<ActionBoxOption[]>,
     default: () => []
+  },
+  x: {
+    type: String as PropType<FlexXAlignment>,
+    default: 'start',
+    typeDesc: 'start | center | end',
+    validator(value: FlexXAlignment): boolean {
+      if (!['start', 'center', 'end', 'left', 'right'].includes(value)) {
+        console.warn(
+          `[LewFlex] 无效的水平对齐值: ${value}。请使用 'start'、'center'、'end'、'left' 或 'right'。`
+        )
+        return false
+      }
+      return true
+    }
   },
   dropdownThreshold: {
     type: [Number, String],

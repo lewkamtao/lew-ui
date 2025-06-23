@@ -16,15 +16,27 @@ export default {
     duplicate: 'Tag already exists, please input a new tag'
   },
   select: {
-    placeholder: 'Please select'
+    placeholder: 'Please select',
+    resultCount: '{num} results',
+    noResult: 'No results',
+    searchPlaceholder: 'Enter search keywords'
   },
   selectMultiple: {
-    placeholder: 'Please select'
+    placeholder: 'Please select',
+    resultCount: '{num} results',
+    noResult: 'No results',
+    searchPlaceholder: 'Enter search keywords'
   },
   cascader: {
     placeholder: 'Please select',
     closeText: 'Close',
-    okText: 'OK'
+    okText: 'OK',
+    noResult: 'No results'
+  },
+  tree: {
+    resultCount: '{num} results',
+    noResult: 'No results',
+    searchPlaceholder: 'Enter search keywords'
   },
   textarea: {
     placeholder: 'Please input'

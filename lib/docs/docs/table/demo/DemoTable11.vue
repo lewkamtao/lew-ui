@@ -9,7 +9,8 @@ const data: any = ref([
     rating: 95,
     brand: 'Apple',
     category: 'Smartphone',
-    intro: 'Equipped with A20 Bionic chip, supports 8G network, features Super Retina XDR display.',
+    intro:
+      'Equipped with A20 Bionic chip, supports 8G network, features Super Retina XDR display.',
     price: 999,
     stock: 1000,
     color: 'Space Black',
@@ -25,7 +26,8 @@ const data: any = ref([
     rating: 92,
     brand: 'Samsung',
     category: 'Smartphone',
-    intro: 'Powered by Exynos 2100 processor, supports 8K video recording, features Dynamic AMOLED 2X display.',
+    intro:
+      'Powered by Exynos 2100 processor, supports 8K video recording, features Dynamic AMOLED 2X display.',
     price: 799,
     stock: 800,
     color: 'Phantom Silver',
@@ -91,8 +93,7 @@ const columns = [
     title: 'ID',
     field: 'id',
     width: 60,
-    x: 'center',
-    fixed: 'left'
+    x: 'center'
   },
   {
     title: 'Product Info',
@@ -145,27 +146,24 @@ const columns = [
   },
   {
     title: 'Specifications',
-    fixed: 'right',
     x: 'center',
     children: [
       {
         title: 'Storage',
         field: 'storage',
-        fixed: 'right',
         width: 80,
         x: 'center'
       },
       {
         title: 'Color',
         field: 'color',
-        fixed: 'right',
         width: 80,
         x: 'center'
       },
       {
         title: 'Stock',
         field: 'stock',
-        fixed: 'right',
+
         width: 80,
         x: 'center'
       }
@@ -175,8 +173,7 @@ const columns = [
     title: 'Rating',
     width: 80,
     field: 'rating',
-    x: 'center',
-    fixed: 'right'
+    x: 'center'
   },
   {
     title: 'Description',
@@ -219,9 +216,15 @@ const sortChange = () => {
         <lew-badge v-if="row.rating >= 90" round color="green" />
         <lew-badge v-else-if="row.rating >= 80" round color="blue" />
         <lew-badge v-else round color="orange" />
-        <span>{{
-          row.rating >= 90 ? 'Excellent' : row.rating >= 80 ? 'Good' : 'Average'
-        }}</span>
+        <span>
+          {{
+            row.rating >= 90
+              ? 'Excellent'
+              : row.rating >= 80
+                ? 'Good'
+                : 'Average'
+          }}
+        </span>
       </lew-flex>
     </template>
   </lew-table>

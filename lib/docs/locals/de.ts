@@ -77,7 +77,8 @@ export default {
         title: 'Standard-Avatar'
       },
       demo4: {
-        title: 'Form'
+        title: 'Form',
+        description: "Steuern Sie die Form des Avatars über `shape`. Mögliche Werte sind `circle`, `square`, `sharp`."
       },
       props: {
         size: 'Größe',
@@ -1718,25 +1719,33 @@ export default {
       }
     },
     notification: {
-      name: 'Benachrichtigungsfeld',
-      description: 'Elegante Benachrichtigungen für freundlichere Mitteilungen',
+      name: 'Benachrichtigung',
+      description: 'Elegante Benachrichtigungen für ein freundlicheres Feedback.',
       demo1: {
         title: 'Grundlegende Verwendung'
       },
       demo2: {
-        title: 'Benutzerdefinierte Anzeigezeit'
+        title: 'Verzögerungszeit'
+      },
+      demo3: {
+        title: 'Benutzerdefinierte Breite'
+      },
+      demo4: {
+        title: 'Fortschrittsbalken anzeigen'
+      },
+      demo5: {
+        title: 'Manuelles Schließen'
       },
       props: {
         type: 'Typ',
         title: 'Titel',
-        content: 'Hinweisinhalt',
+        content: 'Benachrichtigungsinhalt',
         delay: 'Verzögerungszeit'
       }
     },
     drawer: {
-      name: 'Schublade',
-      description:
-        'Panel, das vom Bildschirmrand eingeblendet wird, für flüssigere temporäre Operationen',
+      name: 'Schublade (Drawer)',
+      description: 'Ein seitlich ausfahrbares Panel für reibungslose temporäre Operationen.',
       demo1: {
         title: 'Grundlegende Verwendung'
       },
@@ -1747,49 +1756,61 @@ export default {
         title: 'Benutzerdefinierter Kopf- und Fußbereich'
       },
       demo4: {
-        title: 'ESC zum Schließen erlauben'
+        title: 'Schließen mit ESC erlauben'
+      },
+      demo5: {
+        title: 'Beim Klick auf die Maske schließen'
+      },
+      demo6: {
+        title: 'Verschachtelung'
       },
       model: {
-        visible: 'Sichtbarkeit'
+        visible: 'Sichtbar'
       },
       props: {
         title: 'Titel',
         width: 'Breite',
         position: 'Position',
         height: 'Höhe',
-        closeOnClickOverlay: 'Durch Klick auf Overlay schließen',
-        closeByEsc: 'Durch ESC-Taste schließen',
+        closeOnClickOverlay: 'Beim Klick auf die Maske schließen',
+        closeByEsc: 'Mit ESC-Taste schließen',
         hideFooter: 'Fußbereich ausblenden',
-        okButtonProps: 'Eigenschaften der Bestätigungsschaltfläche',
-        closeButtonProps: 'Eigenschaften der Schließen-Schaltfläche',
+        okButtonProps: 'Eigenschaften des OK-Buttons',
+        closeButtonProps: 'Eigenschaften des Schließen-Buttons',
         zIndex: 'Z-Index'
       }
     },
     dialog: {
-      name: 'Dialogfeld',
-      description: 'Modaler Dialog für hervorgehobene wichtige Interaktionen',
+      name: 'Dialog',
+      description: 'Ein modales Dialogfeld, um wichtige Interaktionen hervorzuheben.',
       demo1: {
         title: 'Grundlegende Verwendung'
       },
       demo2: {
-        title: 'Einfach'
+        title: 'Asynchrones Schließen'
+      },
+      demo3: {
+        title: 'Beim Klick auf die Maske schließen'
+      },
+      demo4: {
+        title: 'Mit ESC schließen'
       },
       props: {
         type: 'Typ',
         width: 'Breite',
-        trigger: 'Auslösemethode',
+        trigger: 'Auslöser',
         title: 'Titel',
-        okText: 'Bestätigungstext',
-        cancelText: 'Abbruchtext',
-        ok: 'Bestätigungscallback',
-        cancel: 'Abbruchcallback',
-        closeOnClickOverlay: 'Durch Klick auf Overlay schließen',
-        closeByEsc: 'Durch ESC-Taste schließen',
-        transformOrigin: 'Animationsursprung'
+        okText: 'OK-Button-Text',
+        cancelText: 'Abbrechen-Button-Text',
+        ok: 'Bestätigungs-Callback',
+        cancel: 'Abbruch-Callback',
+        closeOnClickOverlay: 'Beim Klick auf die Maske schließen',
+        closeByEsc: 'Mit ESC-Taste schließen',
+        transformOrigin: 'Transformationsursprung'
       },
       events: {
-        ok: 'Wird beim Klick auf die Bestätigungsschaltfläche ausgelöst',
-        cancel: 'Wird beim Klick auf die Abbruchschaltfläche ausgelöst'
+        ok: 'Wird ausgelöst, wenn der OK-Button geklickt wird',
+        cancel: 'Wird ausgelöst, wenn der Abbrechen-Button geklickt wird'
       }
     },
     modal: {
@@ -1847,59 +1868,81 @@ export default {
       }
     },
     popover: {
-      name: 'Popup-Karte',
-      description:
-        'Informationskarte bei Mauszeigerhalt für elegantere Hinweise',
-      demo1: {
-        title: 'Grundlegende Verwendung'
-      },
-      props: {
-        trigger: 'Auslösemethode',
-        placement: 'Position',
-        disabled: 'Deaktiviert',
-        loading: 'Ladezustand',
-        hideOnClick: 'Bei Klick ausblenden',
-        offset: 'Versatz',
-        popoverBodyClassName: 'Klassenname für Popup-Inhalt',
-        triggerTarget: 'Auslöseziel'
-      },
-      slots: {
-        trigger: 'Auslöse-Slot',
-        'popover-body': 'Popup-Inhalts-Slot'
-      }
-    },
-    tooltip: {
-      name: 'Texthinweis',
-      description: 'Einfache Texthinweis-Popups für leichtere Hinweise',
+      name: 'Popover',
+      description: 'Eine Pop-up-Karte, die zusätzliche Informationen oder Aktionen bereitstellt.',
       demo1: {
         title: 'Grundlegende Verwendung'
       },
       demo2: {
-        title: 'Klick-Auslösung'
+        title: 'Auslöser'
+      },
+      demo3: {
+        title: 'Benutzerdefinierter Auslöser'
+      },
+      demo4: {
+        title: 'Automatisches Schließen bei Klick außerhalb'
+      },
+      demo5: {
+        title: 'Ladezustand'
       },
       props: {
-        tips: 'Hinweisinhalt',
+        trigger: 'Auslöser',
         placement: 'Position',
-        trigger: 'Auslösemethode',
-        allowHTML: 'HTML unterstützen',
+        disabled: 'Deaktiviert',
+        loading: 'Laden',
+        hideOnClick: 'Bei Klick ausblenden',
+        offset: 'Versatz',
+        popoverBodyClassName: 'Klassenname des Popover-Körpers',
+        triggerTarget: 'Auslöserziel'
+      },
+      slots: {
+        trigger: 'Auslöser-Slot',
+        'popover-body': 'Popover-Körper-Slot'
+      }
+    },
+    tooltip: {
+      name: 'Tooltip',
+      description: 'Eine einfache Textblase für leichtere Hinweise.',
+      demo1: {
+        title: 'Grundlegende Verwendung'
+      },
+      demo2: {
+        title: 'Per Klick auslösen'
+      },
+      demo3: {
+        title: 'Verzögerungszeit'
+      },
+      demo4: {
+        title: 'HTML-Unterstützung'
+      },
+      props: {
+        tips: 'Tooltip-Inhalt',
+        placement: 'Position',
+        trigger: 'Auslöser',
+        allowHTML: 'HTML erlauben',
         delay: 'Verzögerungszeit'
       }
     },
     loading: {
-      name: 'Laden',
-      description: 'Elegante Ladeeffekte für entspannteres Warten',
+      name: 'Laden (Loading)',
+      description: 'Ein eleganter Ladeeffekt, um das Warten angenehmer zu gestalten.',
       demo1: {
         title: 'Grundlegende Verwendung'
       },
+      demo2: {
+        title: 'Benutzerdefinierte Icon-Größe'
+      },
+      demo3: {
+        title: 'Benutzerdefinierte Tipp-Information'
+      },
       props: {
-        tip: 'Hinweistext',
-        placement: 'Hinweisposition',
-        trigger: 'Auslösemethode',
-        allowHTML: 'HTML erlauben'
+        tip: 'Tipp-Information',
+        iconSize: 'Icon-Größe',
+        visible: 'Sichtbar'
       }
     },
     result: {
-      name: 'Ergebnis',
+      name: 'Ergebnis (Result)',
       description:
         'Zur Rückmeldung von Operationsergebnissen für vollständigere Ergebnisdarstellung',
       demo1: {
