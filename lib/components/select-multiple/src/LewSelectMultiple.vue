@@ -9,7 +9,7 @@ import {
   LewEmpty
 } from 'lew-ui'
 import { object2class, numFormat } from 'lew-ui/utils'
-import type { SelectMultipleOptions } from './props'
+import type { SelectMultipleOptions, SelectMultipleOptionsGroup } from './props'
 import { selectMultipleProps } from './props'
 import { VirtList } from 'vue-virt-list'
 import Icon from 'lew-ui/utils/Icon.vue'
@@ -31,8 +31,14 @@ const state = reactive({
   selectWidth: 0,
   visible: false,
   loading: false,
+  initLoading: true,
+  sourceOptions: props.options as (
+    | SelectMultipleOptions
+    | SelectMultipleOptionsGroup
+  )[],
   options: flattenOptions(props.options),
-  keyword: ''
+  keyword: '',
+  searchCache: new Map<string, SelectMultipleOptions[]>()
 })
 
 const formMethods: any = inject('formMethods', {})
@@ -73,14 +79,21 @@ const search = async (e?: any) => {
   const keyword = e?.target.value
   if (props.searchable) {
     let result: any = []
-    // 如果没输入关键词
-    if (!keyword && props.options.length > 0) {
-      result = flattenOptions(props.options)
+    if (props.enableSearchCache && state.searchCache.has(keyword)) {
+      result = state.searchCache.get(keyword)!
     } else {
-      result = await _searchMethod.value({
-        options: flattenOptions(props.options),
-        keyword
-      })
+      const optionsToSearch = flattenOptions(state.sourceOptions)
+      if (!keyword && optionsToSearch.length > 0) {
+        result = optionsToSearch
+      } else {
+        result = await _searchMethod.value({
+          options: optionsToSearch,
+          keyword
+        })
+      }
+      if (props.enableSearchCache) {
+        state.searchCache.set(keyword, result)
+      }
     }
     state.options = result
   }
@@ -90,11 +103,12 @@ const search = async (e?: any) => {
 const clearHandle = () => {
   selectValue.value = []
   emit('clear')
-  // 刷新位置
   setTimeout(() => {
     lewPopoverRef.value && lewPopoverRef.value.refresh()
   }, 100)
   emit('change', selectValue.value)
+  state.visible = false
+  emit('blur')
 }
 
 const deleteTag = ({ value }: { value: any }) => {
@@ -108,7 +122,6 @@ const deleteTag = ({ value }: { value: any }) => {
     console.log(selectValue.value)
     emit('delete', { item, value: selectValue.value })
 
-    // 刷新位置
     if (selectValue.value.length === 0) {
       lewPopoverValueRef.value && lewPopoverValueRef.value.hide()
     }
@@ -136,7 +149,6 @@ const selectHandle = (item: SelectMultipleOptions) => {
 
   selectValue.value = _value
   emit('select', item)
-  // 刷新位置
   setTimeout(() => {
     lewPopoverRef.value && lewPopoverRef.value.refresh()
   }, 100)
@@ -185,7 +197,8 @@ const getSelectClassName = computed(() => {
     size,
     disabled,
     readonly,
-    focus
+    focus,
+    'init-loading': state.initLoading
   })
 })
 
@@ -216,26 +229,25 @@ const showHandle = () => {
   if (state.options && state.options.length === 0 && props.searchable) {
     search({ target: { value: '' } })
   }
-  // 找到所有选中值的index，取最小的
-  if ((selectValue.value || []).length > 0) {
-    const indexes = selectValue.value
-      .map((value: any) =>
-        state.options.findIndex((e: any) => e.value === value)
-      )
-      .filter((index: number) => index > -1)
 
-    if (indexes.length > 0) {
-      const minIndex = Math.min(...indexes)
-      poll({
-        callback: () => {
-          virtListRef.value.scrollToIndex(minIndex)
-        },
-        vail: () => {
-          return !!virtListRef.value
-        }
-      })
+  const indexes = (selectValue.value || [])
+    .map((value: any) => state.options.findIndex((e: any) => e.value === value))
+    .filter((index: number) => index > -1)
+
+  const minIndex = Math.min(...indexes)
+  console.log(minIndex)
+  poll({
+    callback: () => {
+      if (minIndex > 0 && minIndex !== Infinity) {
+        virtListRef.value.scrollToIndex(minIndex)
+      } else {
+        virtListRef.value.reset()
+      }
+    },
+    vail: () => {
+      return !!virtListRef.value
     }
-  }
+  })
 }
 
 const getVirtualHeight = computed(() => {
@@ -252,16 +264,46 @@ const hideHandle = () => {
   state.visible = false
   emit('blur')
 }
+
+const init = async () => {
+  if (isFunction(props.initOptionsMethod)) {
+    try {
+      const newOptions = await props.initOptionsMethod()
+      state.sourceOptions = newOptions
+      state.options = flattenOptions(newOptions)
+    } catch (error) {
+      console.error('[LewSelectMultiple] initOptionsMethod failed', error)
+    }
+  }
+  if (props.enableSearchCache) {
+    state.searchCache.set('', state.options)
+  }
+  state.initLoading = false
+}
+
 onMounted(() => {
   getSelectWidth()
+  init()
 })
 
-defineExpose({ show, hide })
+defineExpose({
+  show,
+  hide,
+  clearSearchCache: () => {
+    if (props.enableSearchCache) {
+      state.searchCache.clear()
+    }
+  }
+})
 
 watch(
   () => props.options,
-  () => {
-    state.options = flattenOptions(props.options)
+  (newOptions) => {
+    state.sourceOptions = newOptions
+    state.options = flattenOptions(newOptions)
+    if (props.enableSearchCache) {
+      state.searchCache.clear()
+    }
   },
   {
     deep: true
@@ -283,7 +325,7 @@ const getResultText = computed(() => {
     popoverBodyClassName="lew-select-multiple-popover-body"
     class="lew-select-view"
     :trigger="trigger"
-    :disabled="disabled || readonly"
+    :disabled="disabled || readonly || state.initLoading"
     placement="bottom-start"
     :style="{ width: any2px(width) }"
     :loading="state.loading"
@@ -292,7 +334,15 @@ const getResultText = computed(() => {
   >
     <template #trigger>
       <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
+        <div v-if="state.initLoading" class="lew-icon-loading-box">
+          <Icon
+            :size="getIconSize"
+            :loading="state.initLoading"
+            type="loading"
+          />
+        </div>
         <Icon
+          v-else
           :size="getIconSize"
           type="chevron-down"
           class="lew-icon-select"
@@ -509,6 +559,16 @@ const getResultText = computed(() => {
     transition: all var(--lew-form-transition-ease);
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     box-shadow: var(--lew-form-box-shadow);
+    .lew-icon-loading-box {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 50%;
+      right: 9px;
+      padding: 2px;
+      box-sizing: border-box;
+      transform: translateY(-50%);
+    }
     .lew-icon-select {
       position: absolute;
       top: 50%;
@@ -667,6 +727,16 @@ const getResultText = computed(() => {
       border-radius: var(--lew-border-radius-small);
       background-color: var(--lew-form-bgcolor);
       border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+    }
+  }
+
+  .lew-select-init-loading {
+    pointer-events: none;
+    cursor: wait;
+
+    .lew-placeholder,
+    .lew-select-multiple-text-value {
+      cursor: wait;
     }
   }
 }

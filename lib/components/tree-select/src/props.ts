@@ -170,7 +170,7 @@ export const treeSelectProps = {
     default: 'disabled',
     description: '节点禁用状态字段名'
   },
-  initTree: {
+  initTreeMethod: {
     type: Function as PropType<() => void>,
     default: undefined,
     description: '初始化树数据的方法'

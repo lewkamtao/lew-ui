@@ -243,7 +243,7 @@ defineExpose({ show, hide })
                 searchable,
                 dataSource,
                 loadMethod,
-                initTree,
+                initTreeMethod,
                 expandAll
               }"
               :is-select="true"

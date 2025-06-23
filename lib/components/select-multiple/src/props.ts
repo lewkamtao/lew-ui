@@ -96,6 +96,15 @@ export const selectMultipleProps = {
     default: undefined,
     description: '自定义搜索方法，接收搜索参数并返回过滤后的选项列表'
   },
+  initOptionsMethod: {
+    type: Function as PropType<
+      () =>
+        | (SelectMultipleOptions[] | SelectMultipleOptionsGroup[])
+        | Promise<SelectMultipleOptions[] | SelectMultipleOptionsGroup[]>
+    >,
+    default: undefined,
+    description: '初始化选项的方法，用于异步加载选项'
+  },
   searchMethodId: {
     type: String,
     default: '',
@@ -111,6 +120,10 @@ export const selectMultipleProps = {
     type: Boolean,
     default: false,
     description: '是否显示清空按钮'
+  },
+  enableSearchCache: {
+    type: Boolean,
+    default: false
   },
   readonly: {
     type: Boolean,

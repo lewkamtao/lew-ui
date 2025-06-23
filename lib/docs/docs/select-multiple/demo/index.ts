@@ -6,6 +6,8 @@ import DemoSelectMultiple5 from './DemoSelectMultiple5.vue'
 import DemoSelectMultiple6 from './DemoSelectMultiple6.vue'
 import DemoSelectMultiple7 from './DemoSelectMultiple7.vue'
 import DemoSelectMultiple8 from './DemoSelectMultiple8.vue'
+import DemoSelectMultiple9 from './DemoSelectMultiple9.vue'
+import DemoSelectMultiple10 from './DemoSelectMultiple10.vue'
 
 import DemoSelectMultiple1Code from './DemoSelectMultiple1.vue?raw'
 import DemoSelectMultiple2Code from './DemoSelectMultiple2.vue?raw'
@@ -15,6 +17,8 @@ import DemoSelectMultiple5Code from './DemoSelectMultiple5.vue?raw'
 import DemoSelectMultiple6Code from './DemoSelectMultiple6.vue?raw'
 import DemoSelectMultiple7Code from './DemoSelectMultiple7.vue?raw'
 import DemoSelectMultiple8Code from './DemoSelectMultiple8.vue?raw'
+import DemoSelectMultiple9Code from './DemoSelectMultiple9.vue?raw'
+import DemoSelectMultiple10Code from './DemoSelectMultiple10.vue?raw'
 
 export const demoGroup = [
   DemoSelectMultiple1,
@@ -24,7 +28,9 @@ export const demoGroup = [
   DemoSelectMultiple5,
   DemoSelectMultiple6,
   DemoSelectMultiple7,
-  DemoSelectMultiple8
+  DemoSelectMultiple8,
+  DemoSelectMultiple9,
+  DemoSelectMultiple10
 ]
 
 export const codeGroup = [
@@ -35,5 +41,7 @@ export const codeGroup = [
   DemoSelectMultiple5Code,
   DemoSelectMultiple6Code,
   DemoSelectMultiple7Code,
-  DemoSelectMultiple8Code
+  DemoSelectMultiple8Code,
+  DemoSelectMultiple9Code,
+  DemoSelectMultiple10Code
 ]

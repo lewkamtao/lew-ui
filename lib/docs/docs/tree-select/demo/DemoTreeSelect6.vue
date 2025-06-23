@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import axios from '@/axios/http'
 
-const initTree = () => {
+const initTreeMethod = () => {
   return new Promise<any[]>((resolve) => {
     // item 不存在的时候 是第一层加载
     axios
@@ -69,7 +69,7 @@ const v = ref<string>('')
       labelField="label"
       searchable
       :loadMethod="loadMethod"
-      :initTree="initTree"
+      :initTreeMethod="initTreeMethod"
       @change="change"
     />
   </lew-flex>

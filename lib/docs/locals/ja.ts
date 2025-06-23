@@ -1179,7 +1179,7 @@ export default {
         keyField: 'ノード識別フィールド',
         labelField: 'ノードラベルフィールド',
         disabledField: 'ノード無効化フィールド',
-        initTree: 'ツリーノード初期化メソッド',
+        initTreeMethod: 'ツリーノード初期化メソッド',
         loadMethod: '子ノードデータの非同期読み込みメソッド'
       },
       slots: {
@@ -1559,7 +1559,7 @@ export default {
         keyField: 'ノード識別フィールド',
         labelField: 'ノードラベルフィールド',
         disabledField: '無効ノードフィールド',
-        initTree: 'ツリーノード初期化メソッド',
+        initTreeMethod: 'ツリーノード初期化メソッド',
         loadMethod: '子ノードデータ非同期読み込みメソッド',
         isSelect: '選択状態'
       },

@@ -98,6 +98,15 @@ export const selectProps = {
     default: undefined,
     description: '自定义搜索方法，接收搜索参数并返回过滤后的选项列表'
   },
+  initOptionsMethod: {
+    type: Function as PropType<
+      () =>
+        | (SelectOptions[] | SelectOptionsGroup[])
+        | Promise<SelectOptions[] | SelectOptionsGroup[]>
+    >,
+    default: undefined,
+    description: '初始化选项的方法，用于异步加载选项'
+  },
   searchMethodId: {
     type: String,
     default: '',
@@ -128,5 +137,10 @@ export const selectProps = {
     type: Boolean,
     default: true,
     description: '是否在选中项旁显示勾选图标'
+  },
+  enableSearchCache: {
+    type: Boolean,
+    default: true,
+    description: '是否启用搜索缓存功能，开启后可避免重复搜索相同关键词'
   }
 }

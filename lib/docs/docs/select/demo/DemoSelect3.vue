@@ -16,6 +16,7 @@ const value = ref('')
     :itemHeight="48"
     :options="schoolsOptions"
     placeholder="Support slots"
+    popoverWidth="320px"
   >
     <template #item="{ props }">
       <div
@@ -23,11 +24,7 @@ const value = ref('')
         :class="{ 'custom-select-checked': props.checked }"
       >
         <div class="custom-select-content">
-          <img
-            width="28"
-            height="28"
-            :src="`https://api.lew.kamtao.com/manage/common/avatar/350/4B78CA/${props.label}`"
-          />
+          <lew-avatar size="32" shape="circle" :alt="props.label" />
           <div class="info">
             <div class="label">{{ props.label }}</div>
             <div class="desc">
@@ -63,8 +60,13 @@ const value = ref('')
       flex-direction: column;
       justify-content: center;
       .label {
+        display: inline-block;
         color: var(--lew-text-color-1);
         font-size: 14px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 220px;
       }
       .desc {
         color: var(--lew-text-color-5);

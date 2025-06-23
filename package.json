@@ -48,7 +48,7 @@
     "tippy.js": "^6.3.7",
     "vue-i18n": "^11.1.0",
     "vue-router": "^4.0.13",
-    "vue-virt-list": "^1.5.9",
+    "vue-virt-list": "^1.5.11",
     "vuedraggable": "^4.1.0",
     "yup": "^1.2.0"
   },

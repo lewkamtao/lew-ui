@@ -1228,7 +1228,7 @@ export default {
         keyField: "Champ d'identification du nœud",
         labelField: "Champ d'étiquette du nœud",
         disabledField: 'Champ de désactivation du nœud',
-        initTree: "Méthode d'initialisation des nœuds",
+        initTreeMethod: "Méthode d'initialisation des nœuds",
         loadMethod: 'Méthode de chargement asynchrone des nœuds enfants'
       },
       slots: {
@@ -1616,7 +1616,7 @@ export default {
         keyField: "Champ d'identification du nœud",
         labelField: "Champ d'étiquette du nœud",
         disabledField: 'Champ de désactivation du nœud',
-        initTree: "Méthode d'initialisation des nœuds",
+        initTreeMethod: "Méthode d'initialisation des nœuds",
         loadMethod: 'Méthode de chargement asynchrone des nœuds enfants',
         isSelect: 'Est sélectionné'
       },

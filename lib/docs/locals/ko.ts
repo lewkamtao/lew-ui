@@ -1216,7 +1216,7 @@ export default {
         keyField: '노드 식별 필드',
         labelField: '노드 라벨 필드',
         disabledField: '노드 비활성화 필드',
-        initTree: '트리 노드 초기화 메서드',
+        initTreeMethod: '트리 노드 초기화 메서드',
         loadMethod: '자식 노드 비동기 로딩 메서드'
       },
       slots: {
@@ -1600,7 +1600,7 @@ export default {
         keyField: '노드 식별 필드',
         labelField: '노드 레이블 필드',
         disabledField: '비활성화 노드 필드',
-        initTree: '트리 노드 초기화 메서드',
+        initTreeMethod: '트리 노드 초기화 메서드',
         loadMethod: '자식 노드 데이터 비동기 로드 메서드',
         isSelect: '선택 여부'
       },
