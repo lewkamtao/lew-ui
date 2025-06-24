@@ -38,6 +38,9 @@ export default {
     noResult: 'No results',
     searchPlaceholder: 'Enter search keywords',
   },
+  treeSelect: {
+    placeholder: 'Please select',
+  },
   textarea: {
     placeholder: 'Please input',
   },

@@ -47,6 +47,11 @@ export const treeSelectProps = {
       return true;
     },
   },
+  width: {
+    type: [String, Number],
+    default: '240px',
+    description: '选择器宽度，支持数字（单位：像素）或带单位的字符串',
+  },
   defaultValue: {
     type: [String, Number],
     default: '',
@@ -54,7 +59,7 @@ export const treeSelectProps = {
   },
   placeholder: {
     type: String,
-    default: '请选择',
+    defaultLocale: true,
     description: '占位文本',
   },
   size: {

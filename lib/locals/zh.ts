@@ -37,6 +37,9 @@ export default {
     noResult: '暂无结果',
     searchPlaceholder: '输入搜索关键词',
   },
+  treeSelect: {
+    placeholder: '请选择',
+  },
   textarea: {
     placeholder: '请输入',
   },

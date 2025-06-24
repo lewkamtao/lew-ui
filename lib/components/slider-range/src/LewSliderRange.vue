@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { sliderRangeProps } from './props';
-import { dragmove } from 'lew-ui/utils';
+import { sliderRangeProps } from "./props";
+import { dragmove } from "lew-ui/utils";
+import { throttle } from "lodash-es";
 
 const props = defineProps(sliderRangeProps);
+const emit = defineEmits(["change"]);
 
-// @ts-ignore
-const modelValue: Ref<number[] | undefined> = defineModel('modelValue', {
+const modelValue = defineModel<number[]>("modelValue", {
   get(val) {
     if (val) return val;
     return [getMin.value, getMax.value]; // 初始值设置为可选范围内的最小值和最大值
@@ -16,6 +17,19 @@ const dotRef1 = ref<HTMLElement | null>(null); // 左侧滑块
 const dotRef2 = ref<HTMLElement | null>(null); // 右侧滑块
 const trackRef = ref<HTMLElement | null>(null);
 const dotX = ref(0);
+
+// 创建节流函数，用于更新modelValue
+const throttledUpdateModelValue = throttle(
+  (leftValue: number, rightValue: number) => {
+    if (!modelValue.value) {
+      modelValue.value = [0, 0];
+    }
+    // 保持原始位置，不进行自动排序
+    modelValue.value = [leftValue, rightValue];
+    emit("change", modelValue.value);
+  },
+  16
+); // 约60fps的更新频率
 
 // 获取滑块轨道的最大值
 const getTrackMax = computed(() => {
@@ -59,7 +73,7 @@ const calculateValue = (position: number) => {
     percentage * (Number(getTrackMax.value) - Number(getTrackMin.value)) +
     Number(getTrackMin.value);
   const step = Number(props.step);
-  const decimalPlaces = (step.toString().split('.')[1] || '').length;
+  const decimalPlaces = (step.toString().split(".")[1] || "").length;
   return Number(value.toFixed(decimalPlaces)) || 0;
 };
 
@@ -89,6 +103,18 @@ const setDotByValue = (value: number, isLeft: boolean) => {
   }
 };
 
+// 根据modelValue更新两个滑块的位置
+const updateDotsByModelValue = (values: number[]) => {
+  if (!values || values.length !== 2) return;
+  
+  const [leftValue, rightValue] = values;
+  
+  // 直接使用传入的值，不进行排序
+  // 左侧滑块对应第一个值，右侧滑块对应第二个值
+  setDotByValue(leftValue, true);
+  setDotByValue(rightValue, false);
+};
+
 let _dragmove = () => {};
 
 const init = () => {
@@ -100,42 +126,45 @@ const init = () => {
     _dragmove = dragmove({
       el: el1,
       parentEl,
-      direction: 'horizontal',
+      direction: "horizontal",
       step: () => Number(step),
-      max: () =>
-        Math.min(
-          getMax.value,
-          modelValue.value ? modelValue.value[1] : getMax.value
-        ), // 动态最大值
+      max: () => getMax.value,
       min: () => getMin.value,
       trackMax: () => getTrackMax.value,
       trackMin: () => getTrackMin.value,
       callback: (e: any) => {
-        modelValue.value = modelValue.value || [0, 0];
-        modelValue.value[0] = calculateValue(e.x);
+        const newValue = [
+          modelValue.value?.[0] || getMin.value,
+          modelValue.value?.[1] || getMax.value,
+        ];
+        newValue[0] = calculateValue(e.x);
+        throttledUpdateModelValue(newValue[0], newValue[1]);
+        // 实时更新点的位置，不进行节流
+        updateDotsByModelValue([newValue[0], newValue[1]]);
       },
     });
     _dragmove = dragmove({
       el: el2,
       parentEl,
-      direction: 'horizontal',
+      direction: "horizontal",
       step: () => Number(step),
       max: () => getMax.value,
-      min: () =>
-        Math.max(
-          getMin.value,
-          modelValue.value ? modelValue.value[0] : getMin.value
-        ), // 动态最小值
+      min: () => getMin.value,
       trackMax: () => getTrackMax.value,
       trackMin: () => getTrackMin.value,
       callback: (e: any) => {
-        modelValue.value = modelValue.value || [0, 0];
-        modelValue.value[1] = calculateValue(e.x);
+        const newValue = [
+          modelValue.value?.[0] || getMin.value,
+          modelValue.value?.[1] || getMax.value,
+        ];
+        newValue[1] = calculateValue(e.x);
+        throttledUpdateModelValue(newValue[0], newValue[1]);
+        // 实时更新点的位置，不进行节流
+        updateDotsByModelValue([newValue[0], newValue[1]]);
       },
     });
   }
-  setDotByValue(modelValue.value ? modelValue.value[0] : 0, true);
-  setDotByValue(modelValue.value ? modelValue.value[1] : 0, false);
+  updateDotsByModelValue(modelValue.value || [getMin.value, getMax.value]);
 };
 
 // 监听 max、min、step、readonly、disabled 的变化，重新初始化
@@ -158,14 +187,15 @@ onMounted(() => {
 
 onUnmounted(() => {
   _dragmove();
+  // 取消节流函数
+  throttledUpdateModelValue.cancel();
 });
 
 // 监听 modelValue 的变化，实时更新 dot 的位置
 watch(
   modelValue,
   (newValue) => {
-    setDotByValue(newValue ? newValue[0] : 0, true);
-    setDotByValue(newValue ? newValue[1] : 0, false);
+    updateDotsByModelValue(newValue || [getMin.value, getMax.value]);
   },
   {
     deep: true,
@@ -176,41 +206,41 @@ const getStyle = computed(() => {
   const { size } = props;
   let objStyle = {};
   switch (size) {
-    case 'small':
+    case "small":
       objStyle = {
-        '--lew-slider-track-dot-size': '12px',
-        '--lew-slider-track-line-height': '3px',
-        '--lew-slider-track-step-mark-size': '6px',
-        '--lew-slider-track-step-label-size': '12px',
+        "--lew-slider-track-dot-size": "12px",
+        "--lew-slider-track-line-height": "3px",
+        "--lew-slider-track-step-mark-size": "6px",
+        "--lew-slider-track-step-label-size": "12px",
       };
       break;
-    case 'medium':
+    case "medium":
       objStyle = {
-        '--lew-slider-track-dot-size': '16px',
-        '--lew-slider-track-line-height': '4px',
-        '--lew-slider-track-step-mark-size': '7px',
-        '--lew-slider-track-step-label-size': '14px',
+        "--lew-slider-track-dot-size": "16px",
+        "--lew-slider-track-line-height": "4px",
+        "--lew-slider-track-step-mark-size": "7px",
+        "--lew-slider-track-step-label-size": "14px",
       };
       break;
-    case 'large':
+    case "large":
       objStyle = {
-        '--lew-slider-track-dot-size': '20px',
-        '--lew-slider-track-line-height': '5px',
-        '--lew-slider-track-step-mark-size': '8px',
-        '--lew-slider-track-step-label-size': '16px',
+        "--lew-slider-track-dot-size": "20px",
+        "--lew-slider-track-line-height": "5px",
+        "--lew-slider-track-step-mark-size": "8px",
+        "--lew-slider-track-step-label-size": "16px",
       };
       break;
     default:
       objStyle = {
-        '--lew-slider-track-dot-size': '16px',
-        '--lew-slider-track-line-height': '4px',
-        '--lew-slider-track-step-mark-size': '10px',
+        "--lew-slider-track-dot-size": "16px",
+        "--lew-slider-track-line-height": "4px",
+        "--lew-slider-track-step-mark-size": "10px",
       };
       break;
   }
   return {
     ...objStyle,
-    '--lew-slider-height': `var(--lew-form-item-height-${size})`,
+    "--lew-slider-height": `var(--lew-form-item-height-${size})`,
   };
 });
 </script>
@@ -244,15 +274,29 @@ const getStyle = computed(() => {
         <div
           class="lew-slider-track-line-range"
           :style="{
-            width: `${Math.max(0, Math.min(100, ((getMax - getMin) / (getTrackMax - getTrackMin)) * 100))}%`,
+            width: `${Math.max(
+              0,
+              Math.min(
+                100,
+                ((getMax - getMin) / (getTrackMax - getTrackMin)) * 100
+              )
+            )}%`,
             left: `${getMarkPosition(getMin)}%`,
           }"
         ></div>
         <div
           class="lew-slider-track-line-selected"
           :style="{
-            width: `${Math.max(0, Math.min(100, (((modelValue?.[1] ?? 0) - (modelValue?.[0] ?? 0)) / (getTrackMax - getTrackMin)) * 100))}%`,
-            left: `${getMarkPosition(modelValue?.[0] ?? 0)}%`,
+            width: `${Math.max(
+              0,
+              Math.min(
+                100,
+                Math.abs((modelValue?.[1] ?? getMax) - (modelValue?.[0] ?? getMin)) /
+                  (getTrackMax - getTrackMin) *
+                  100
+              )
+            )}%`,
+            left: `${getMarkPosition(Math.min(modelValue?.[0] ?? getMin, modelValue?.[1] ?? getMax))}%`,
           }"
         ></div>
 
@@ -262,8 +306,8 @@ const getStyle = computed(() => {
           class="lew-slider-track-step-mark"
           :class="{
             'lew-slider-track-step-mark-selected':
-              Number(item.value) <= Number(modelValue?.[1] ?? 0) &&
-              Number(item.value) >= Number(modelValue?.[0] ?? 0),
+              Number(item.value) >= Math.min(Number(modelValue?.[0] ?? getMin), Number(modelValue?.[1] ?? getMax)) &&
+              Number(item.value) <= Math.max(Number(modelValue?.[0] ?? getMin), Number(modelValue?.[1] ?? getMax)),
           }"
           :style="{
             left: `${getMarkPosition(item.value)}%`,
@@ -293,7 +337,7 @@ const getStyle = computed(() => {
       <div
         ref="dotRef1"
         v-tooltip="{
-          content: formatTooltip(modelValue?.[0] ?? 0),
+          content: formatTooltip(modelValue?.[0] ?? getMin),
           placement: 'top',
           trigger: 'mouseenter',
           delay: [0, 1000],
@@ -307,7 +351,7 @@ const getStyle = computed(() => {
       <div
         ref="dotRef2"
         v-tooltip="{
-          content: formatTooltip(modelValue?.[1] ?? 0),
+          content: formatTooltip(modelValue?.[1] ?? getMax),
           placement: 'top',
           trigger: 'mouseenter',
           delay: [0, 1000],
@@ -384,9 +428,8 @@ const getStyle = computed(() => {
         calc(var(--lew-slider-track-step-mark-size) / 2 * -1),
         calc(
           (
-              var(--lew-slider-track-step-mark-size) - var(
-                  --lew-slider-track-line-height
-                )
+              var(--lew-slider-track-step-mark-size) -
+                var(--lew-slider-track-line-height)
             ) / 2 * -1
         )
       );
@@ -426,8 +469,7 @@ const getStyle = computed(() => {
     border-radius: 50%;
     border: var(--lew-color-blue) solid 2px;
     background: var(--lew-bgcolor-0);
-    transition:
-      transform var(--lew-form-transition-ease),
+    transition: transform var(--lew-form-transition-ease),
       border-width 0.1s ease;
     cursor: pointer;
     box-sizing: border-box;
@@ -445,7 +487,7 @@ const getStyle = computed(() => {
 }
 .lew-slider::before,
 .lew-slider::after {
-  content: '';
+  content: "";
   width: calc(var(--lew-slider-track-dot-size) / 2);
   height: var(--lew-slider-track-line-height);
   background-color: var(--lew-form-bgcolor);
