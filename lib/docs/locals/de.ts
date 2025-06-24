@@ -78,7 +78,8 @@ export default {
       },
       demo4: {
         title: 'Form',
-        description: "Steuern Sie die Form des Avatars über `shape`. Mögliche Werte sind `circle`, `square`, `sharp`."
+        description:
+          'Steuern Sie die Form des Avatars über `shape`. Mögliche Werte sind `circle`, `square`, `sharp`.'
       },
       props: {
         size: 'Größe',
@@ -1243,7 +1244,8 @@ export default {
         sortable: 'Sortieren erlauben',
         autoUniqueId: 'Automatische eindeutige ID',
         uniqueField: 'Eindeutiges Feld',
-        sortTooltipCustomRender: 'Benutzerdefinierte Sortier-Tooltip-Darstellung'
+        sortTooltipCustomRender:
+          'Benutzerdefinierte Sortier-Tooltip-Darstellung'
       }
     },
     switch: {
@@ -1499,7 +1501,8 @@ export default {
         maxHeight: 'Maximale Höhe',
         multiple: 'Mehrfachauswahl',
         rowKey: 'Zeilenschlüssel',
-        sortTooltipCustomRender: 'Benutzerdefinierte Sortier-Tooltip-Darstellung',
+        sortTooltipCustomRender:
+          'Benutzerdefinierte Sortier-Tooltip-Darstellung',
         sortable: 'Sortierbar'
       },
       tableColumns: {
@@ -1720,7 +1723,8 @@ export default {
     },
     notification: {
       name: 'Benachrichtigung',
-      description: 'Elegante Benachrichtigungen für ein freundlicheres Feedback.',
+      description:
+        'Elegante Benachrichtigungen für ein freundlicheres Feedback.',
       demo1: {
         title: 'Grundlegende Verwendung'
       },
@@ -1745,7 +1749,8 @@ export default {
     },
     drawer: {
       name: 'Schublade (Drawer)',
-      description: 'Ein seitlich ausfahrbares Panel für reibungslose temporäre Operationen.',
+      description:
+        'Ein seitlich ausfahrbares Panel für reibungslose temporäre Operationen.',
       demo1: {
         title: 'Grundlegende Verwendung'
       },
@@ -1782,7 +1787,8 @@ export default {
     },
     dialog: {
       name: 'Dialog',
-      description: 'Ein modales Dialogfeld, um wichtige Interaktionen hervorzuheben.',
+      description:
+        'Ein modales Dialogfeld, um wichtige Interaktionen hervorzuheben.',
       demo1: {
         title: 'Grundlegende Verwendung'
       },
@@ -1869,7 +1875,8 @@ export default {
     },
     popover: {
       name: 'Popover',
-      description: 'Eine Pop-up-Karte, die zusätzliche Informationen oder Aktionen bereitstellt.',
+      description:
+        'Eine Pop-up-Karte, die zusätzliche Informationen oder Aktionen bereitstellt.',
       demo1: {
         title: 'Grundlegende Verwendung'
       },
@@ -1925,7 +1932,8 @@ export default {
     },
     loading: {
       name: 'Laden (Loading)',
-      description: 'Ein eleganter Ladeeffekt, um das Warten angenehmer zu gestalten.',
+      description:
+        'Ein eleganter Ladeeffekt, um das Warten angenehmer zu gestalten.',
       demo1: {
         title: 'Grundlegende Verwendung'
       },

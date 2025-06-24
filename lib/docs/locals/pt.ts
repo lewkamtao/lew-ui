@@ -1253,7 +1253,8 @@ export default {
         sortable: 'Permite ordenar',
         autoUniqueId: 'Gera ID único automaticamente',
         uniqueField: 'Campo único',
-        sortTooltipCustomRender: 'Renderização personalizada da dica de ordenação'
+        sortTooltipCustomRender:
+          'Renderização personalizada da dica de ordenação'
       }
     },
     switch: {
@@ -1514,7 +1515,8 @@ export default {
         maxHeight: 'Altura máxima',
         multiple: 'Múltipla seleção',
         rowKey: 'Chave da linha',
-        sortTooltipCustomRender: 'Renderização personalizada da dica de ordenação',
+        sortTooltipCustomRender:
+          'Renderização personalizada da dica de ordenação',
         sortable: 'Permite ordenar'
       },
       tableColumns: {
@@ -1945,7 +1947,8 @@ export default {
     },
     loading: {
       name: 'Carregando (Loading)',
-      description: 'Um efeito de carregamento elegante para tornar a espera mais agradável.',
+      description:
+        'Um efeito de carregamento elegante para tornar a espera mais agradável.',
       demo1: {
         title: 'Uso básico'
       },

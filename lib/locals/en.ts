@@ -63,10 +63,12 @@ export default {
     deleteConfirm: 'Delete Confirmation',
     delete: 'Delete',
     cancel: 'Cancel',
-    deleteConfirmContent: 'Are you sure you want to delete this data? This operation will take effect immediately, please proceed with caution!',
+    deleteConfirmContent:
+      'Are you sure you want to delete this data? This operation will take effect immediately, please proceed with caution!',
     minRows: 'Minimum row limit reached, cannot delete',
     maxRows: 'Maximum row limit reached, cannot add',
-    uniqueFieldExist: 'This {label} already exists. Please enter a unique {label}.',
+    uniqueFieldExist:
+      'This {label} already exists. Please enter a unique {label}.',
     save: 'Save',
     modelTitle: 'Add Data',
     editTitle: 'Edit Data'

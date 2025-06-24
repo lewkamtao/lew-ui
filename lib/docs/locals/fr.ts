@@ -1264,7 +1264,7 @@ export default {
         autoUniqueId: 'Générer un ID unique automatiquement',
         uniqueField: 'Champ unique',
         sortTooltipCustomRender: `Rendu personnalisé de l'info-bulle de tri`
-      } 
+      }
     },
     switch: {
       name: 'Interrupteur',
@@ -1749,7 +1749,8 @@ export default {
     },
     notification: {
       name: 'Notification',
-      description: 'Notification élégante pour un envoi de messages plus convivial.',
+      description:
+        'Notification élégante pour un envoi de messages plus convivial.',
       demo1: {
         title: 'Utilisation de base'
       },
@@ -1774,7 +1775,8 @@ export default {
     },
     drawer: {
       name: 'Tiroir (Drawer)',
-      description: "Panneau coulissant depuis le bord de l'écran pour des opérations temporaires plus fluides.",
+      description:
+        "Panneau coulissant depuis le bord de l'écran pour des opérations temporaires plus fluides.",
       demo1: {
         title: 'Utilisation de base'
       },
@@ -1811,7 +1813,8 @@ export default {
     },
     dialog: {
       name: 'Dialogue (Dialog)',
-      description: "Dialogue modal pour mettre en évidence les interactions importantes.",
+      description:
+        'Dialogue modal pour mettre en évidence les interactions importantes.',
       demo1: {
         title: 'Utilisation de base'
       },
@@ -1832,7 +1835,7 @@ export default {
         okText: 'Texte du bouton OK',
         cancelText: 'Texte du bouton Annuler',
         ok: 'Rappel de confirmation',
-        cancel: 'Rappel d\'annulation',
+        cancel: "Rappel d'annulation",
         closeOnClickOverlay: 'Fermer en cliquant sur le masque',
         closeByEsc: 'Fermer avec la touche Echap',
         transformOrigin: 'Origine de la transformation'
@@ -1898,7 +1901,8 @@ export default {
     },
     popover: {
       name: 'Popover',
-      description: 'Carte contextuelle qui apparaît au clic ou au survol, contenant des informations et des actions plus riches.',
+      description:
+        'Carte contextuelle qui apparaît au clic ou au survol, contenant des informations et des actions plus riches.',
       demo1: {
         title: 'Utilisation de base'
       },
@@ -1909,7 +1913,7 @@ export default {
         title: 'Déclencheur personnalisé'
       },
       demo4: {
-        title: 'Fermeture automatique en cliquant à l\'extérieur'
+        title: "Fermeture automatique en cliquant à l'extérieur"
       },
       demo5: {
         title: 'État de chargement'
@@ -1931,7 +1935,8 @@ export default {
     },
     tooltip: {
       name: 'Info-bulle (Tooltip)',
-      description: "Bulle d'aide textuelle simple pour des indications plus légères.",
+      description:
+        "Bulle d'aide textuelle simple pour des indications plus légères.",
       demo1: {
         title: 'Utilisation de base'
       },
@@ -1945,7 +1950,7 @@ export default {
         title: 'Support HTML'
       },
       props: {
-        tips: 'Contenu de l\'info-bulle',
+        tips: "Contenu de l'info-bulle",
         placement: 'Position',
         trigger: 'Déclencheur',
         allowHTML: 'Autoriser le HTML',
@@ -1954,19 +1959,20 @@ export default {
     },
     loading: {
       name: 'Chargement (Loading)',
-      description: "Effet de chargement élégant pour rendre l'attente plus agréable.",
+      description:
+        "Effet de chargement élégant pour rendre l'attente plus agréable.",
       demo1: {
         title: 'Utilisation de base'
       },
       demo2: {
-        title: 'Taille d\'icône personnalisée'
+        title: "Taille d'icône personnalisée"
       },
       demo3: {
-        title: 'Message d\'information personnalisé'
+        title: "Message d'information personnalisé"
       },
       props: {
-        tip: 'Message d\'information',
-        iconSize: 'Taille de l\'icône',
+        tip: "Message d'information",
+        iconSize: "Taille de l'icône",
         visible: 'Visible'
       }
     },

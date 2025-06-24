@@ -77,7 +77,8 @@ export default {
       },
       demo4: {
         title: 'Forma',
-        description: "Controla la forma del avatar a través de `shape`, los valores posibles son `circle`, `square`, `sharp`."
+        description:
+          'Controla la forma del avatar a través de `shape`, los valores posibles son `circle`, `square`, `sharp`.'
       },
       props: {
         size: 'Tamaño',
@@ -613,7 +614,7 @@ export default {
         clear: 'Triggered when the input box is cleared',
         ok: 'Triggered when confirming the input box'
       },
-      model: { 
+      model: {
         modelValue: 'Input Box Bound Value',
         prefixValue: 'Input Box Prefix Value',
         suffixValue: 'Input Box Suffix Value'
@@ -1240,7 +1241,8 @@ export default {
         sortable: 'Permite ordenar',
         autoUniqueId: 'ID único automático',
         uniqueField: 'Campo único',
-        sortTooltipCustomRender: 'Renderizado personalizado del tooltip de ordenamiento'
+        sortTooltipCustomRender:
+          'Renderizado personalizado del tooltip de ordenamiento'
       }
     },
     switch: {
@@ -1500,7 +1502,8 @@ export default {
         maxHeight: 'Altura máxima',
         multiple: 'Selección múltiple',
         rowKey: 'Clave de fila',
-        sortTooltipCustomRender: 'Renderizado personalizado del tooltip de ordenamiento',
+        sortTooltipCustomRender:
+          'Renderizado personalizado del tooltip de ordenamiento',
         sortable: 'Permite ordenar'
       },
       tableColumns: {
@@ -1748,7 +1751,8 @@ export default {
     },
     drawer: {
       name: 'Cajón (Drawer)',
-      description: 'Panel que se desliza desde el borde de la pantalla para operaciones temporales más fluidas.',
+      description:
+        'Panel que se desliza desde el borde de la pantalla para operaciones temporales más fluidas.',
       demo1: {
         title: 'Uso básico'
       },
@@ -1872,7 +1876,8 @@ export default {
     },
     popover: {
       name: 'Popover',
-      description: 'Una tarjeta emergente que proporciona información o acciones adicionales.',
+      description:
+        'Una tarjeta emergente que proporciona información o acciones adicionales.',
       demo1: {
         title: 'Uso básico'
       },
@@ -1928,7 +1933,8 @@ export default {
     },
     loading: {
       name: 'Cargando (Loading)',
-      description: 'Elegante efecto de carga para que la espera sea más agradable.',
+      description:
+        'Elegante efecto de carga para que la espera sea más agradable.',
       demo1: {
         title: 'Uso básico'
       },

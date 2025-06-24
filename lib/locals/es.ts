@@ -63,10 +63,12 @@ export default {
     deleteConfirm: 'Confirmar eliminación',
     delete: 'Eliminar',
     cancel: 'Cancelar',
-    deleteConfirmContent: '¿Está seguro de que desea eliminar estos datos? Esta operación se aplicará inmediatamente, ¡por favor tenga cuidado!',
+    deleteConfirmContent:
+      '¿Está seguro de que desea eliminar estos datos? Esta operación se aplicará inmediatamente, ¡por favor tenga cuidado!',
     minRows: 'Se ha alcanzado el límite mínimo de filas, no se puede eliminar',
     maxRows: 'Se ha alcanzado el límite máximo de filas, no se puede añadir',
-    uniqueFieldExist: 'Este {label} ya existe. Por favor, introduzca un {label} único.',
+    uniqueFieldExist:
+      'Este {label} ya existe. Por favor, introduzca un {label} único.',
     save: 'Guardar',
     modelTitle: 'Añadir datos',
     editTitle: 'Editar datos'

@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-import { LewTextTrim, LewTag } from "lew-ui";
-import type { MenuOptions } from "./props";
-import { menuProps } from "./props";
-import { isVueComponent, formatComponent } from "lew-ui/utils";
-defineProps(menuProps);
+import { LewTextTrim, LewTag } from 'lew-ui'
+import type { MenuOptions } from './props'
+import { menuProps } from './props'
+import { isVueComponent, formatComponent } from 'lew-ui/utils'
+defineProps(menuProps)
 
-const modelValue = defineModel();
+const modelValue = defineModel()
 
-const emit = defineEmits(["change"]);
+const emit = defineEmits(['change'])
 
 const select = (item: MenuOptions) => {
-  modelValue.value = item.value;
-  emit("change", item);
-};
+  modelValue.value = item.value
+  emit('change', item)
+}
 </script>
 
 <template>
@@ -31,7 +31,7 @@ const select = (item: MenuOptions) => {
           :class="{
             'lew-menu-item-last':
               item.children && index === item.children.length - 1,
-            'lew-menu-item-active': cItem.value === modelValue,
+            'lew-menu-item-active': cItem.value === modelValue
           }"
           @click="select(cItem)"
         >
@@ -83,7 +83,9 @@ const select = (item: MenuOptions) => {
     line-height: 36px;
     cursor: pointer;
     border-radius: var(--lew-border-radius-small);
-    transition: background-color 0.25s, color 0.25s;
+    transition:
+      background-color 0.25s,
+      color 0.25s;
   }
   :deep(.lew-menu-icon) {
     flex-shrink: 0;

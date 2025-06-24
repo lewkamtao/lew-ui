@@ -1756,7 +1756,8 @@ export default {
     },
     drawer: {
       name: '서랍 Drawer',
-      description: '화면 가장자리에서 슬라이드되는 패널로 임시 작업을 더 원활하게 합니다.',
+      description:
+        '화면 가장자리에서 슬라이드되는 패널로 임시 작업을 더 원활하게 합니다.',
       demo1: {
         title: '기본 사용법'
       },
@@ -1793,7 +1794,8 @@ export default {
     },
     dialog: {
       name: '다이얼로그 Dialog',
-      description: '모달 대화 상자로 중요한 정보 상호 작용을 더 돋보이게 합니다.',
+      description:
+        '모달 대화 상자로 중요한 정보 상호 작용을 더 돋보이게 합니다.',
       demo1: {
         title: '기본 사용법'
       },
@@ -1879,7 +1881,8 @@ export default {
     },
     popover: {
       name: '팝오버 Popover',
-      description: '클릭 또는 호버 시 나타나는 카드로, 더 풍부한 내용과 작업을 담고 있습니다.',
+      description:
+        '클릭 또는 호버 시 나타나는 카드로, 더 풍부한 내용과 작업을 담고 있습니다.',
       demo1: {
         title: '기본 사용법'
       },

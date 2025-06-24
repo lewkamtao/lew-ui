@@ -7,7 +7,10 @@ let visibleInfo = ref(true)
   <lew-flex style="width: 500px" direction="y">
     <lew-alert type="error">
       <template #title>Sign In Failed</template>
-      <template #content>Your sign-in attempt failed. Please check your username and password.</template>
+      <template #content
+        >Your sign-in attempt failed. Please check your username and
+        password.</template
+      >
       <template #footer>
         <lew-flex x="end">
           <lew-button round type="text" color="gray" size="small"
@@ -22,7 +25,9 @@ let visibleInfo = ref(true)
 
     <lew-alert type="success">
       <template #title>Registration Complete</template>
-      <template #content>You have successfully registered for Google services.</template>
+      <template #content
+        >You have successfully registered for Google services.</template
+      >
       <template #footer>
         <lew-flex x="end">
           <lew-button type="text" color="gray" size="small"
@@ -40,7 +45,10 @@ let visibleInfo = ref(true)
       @close="visibleWarning = false"
     >
       <template #title>System Maintenance</template>
-      <template #content>The system will be under maintenance tonight. Please complete your work in advance.</template>
+      <template #content
+        >The system will be under maintenance tonight. Please complete your work
+        in advance.</template
+      >
       <template #footer>
         <lew-flex x="end">
           <lew-button type="text" color="gray" size="small"
@@ -59,7 +67,8 @@ let visibleInfo = ref(true)
     >
       <template #title>New Feature Available</template>
       <template #content
-        >Google Photos is now available with enhanced photo management features.</template
+        >Google Photos is now available with enhanced photo management
+        features.</template
       >
       <template #footer>
         <lew-flex x="end">

@@ -1,110 +1,110 @@
 <script setup lang="ts">
 const tableData = ref([
   {
-    name: "John",
+    name: 'John',
     age: 18,
-    gender: "Male",
+    gender: 'Male'
   },
   {
-    name: "Mary",
+    name: 'Mary',
     age: 20,
-    gender: "Female",
+    gender: 'Female'
   },
   {
-    name: "David",
+    name: 'David',
     age: 25,
-    gender: "Male",
+    gender: 'Male'
   },
   {
-    name: "Sarah",
+    name: 'Sarah',
     age: 22,
-    gender: "Female",
+    gender: 'Female'
   },
   {
-    name: "Michael",
+    name: 'Michael',
     age: 30,
-    gender: "Male",
+    gender: 'Male'
   },
   {
-    name: "Emma",
+    name: 'Emma',
     age: 19,
-    gender: "Female",
+    gender: 'Female'
   },
   {
-    name: "James",
+    name: 'James',
     age: 27,
-    gender: "Male",
+    gender: 'Male'
   },
   {
-    name: "Lisa",
+    name: 'Lisa',
     age: 24,
-    gender: "Female",
+    gender: 'Female'
   },
   {
-    name: "Robert",
+    name: 'Robert',
     age: 32,
-    gender: "Male",
+    gender: 'Male'
   },
   {
-    name: "Anna",
+    name: 'Anna',
     age: 21,
-    gender: "Female",
-  },
-]);
+    gender: 'Female'
+  }
+])
 const columns = ref([
   {
-    title: "Name",
-    field: "name",
+    title: 'Name',
+    field: 'name',
     required: true,
-    width: 100,
+    width: 100
   },
   {
-    title: "Age",
-    field: "age",
+    title: 'Age',
+    field: 'age',
     required: true,
-    as: "input-number",
-    width: 100,
+    as: 'input-number',
+    width: 100
   },
   {
-    title: "Gender",
-    field: "gender",
-    as: "tabs",
+    title: 'Gender',
+    field: 'gender',
+    as: 'tabs',
     required: true,
     props: {
       itemWidth: 80,
       options: [
         {
-          label: "Male",
-          value: "Male",
+          label: 'Male',
+          value: 'Male'
         },
         {
-          label: "Female",
-          value: "Female",
-        },
-      ],
+          label: 'Female',
+          value: 'Female'
+        }
+      ]
     },
-    width: 100,
-  },
-]);
+    width: 100
+  }
+])
 
-const size = ref("medium");
+const size = ref('medium')
 const sizeOptions = ref([
   {
-    label: "Small",
-    value: "small",
+    label: 'Small',
+    value: 'small'
   },
   {
-    label: "Medium",
-    value: "medium",
+    label: 'Medium',
+    value: 'medium'
   },
   {
-    label: "Large",
-    value: "large",
-  },
-]);
+    label: 'Large',
+    value: 'large'
+  }
+])
 const sortTooltipCustomRender = (row: Record<string, any>) => {
-  return h("div", {}, `${row.name} ${row.age} ${row.gender}`);
-};
+  return h('div', {}, `${row.name} ${row.age} ${row.gender}`)
+}
 </script>
 <template>
   <lew-flex direction="y" x="start">

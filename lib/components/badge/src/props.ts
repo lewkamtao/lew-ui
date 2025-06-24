@@ -47,7 +47,9 @@ export const badgeProps = {
     validator: (value: string | number) => {
       const numberValue = Number(value)
       if (isNaN(numberValue)) {
-        console.warn('[LewBadge] max 属性必须是有效的数字或可转换为数字的字符串。')
+        console.warn(
+          '[LewBadge] max 属性必须是有效的数字或可转换为数字的字符串。'
+        )
         return false
       }
       return true

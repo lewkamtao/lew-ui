@@ -77,7 +77,8 @@ export default {
       },
       demo4: {
         title: 'Forma',
-        description: "Controlla la forma dell'avatar tramite `shape`, i valori possibili sono `circle`, `square`, `sharp`."
+        description:
+          "Controlla la forma dell'avatar tramite `shape`, i valori possibili sono `circle`, `square`, `sharp`."
       },
       props: {
         size: 'Dimensione',
@@ -1756,7 +1757,8 @@ export default {
     },
     dialog: {
       name: 'Dialogo',
-      description: 'Finestra di dialogo modale per evidenziare interazioni importanti.',
+      description:
+        'Finestra di dialogo modale per evidenziare interazioni importanti.',
       demo1: {
         title: 'Uso base'
       },
@@ -1843,7 +1845,8 @@ export default {
     },
     popover: {
       name: 'Popover',
-      description: 'Una scheda a comparsa che fornisce informazioni o azioni aggiuntive.',
+      description:
+        'Una scheda a comparsa che fornisce informazioni o azioni aggiuntive.',
       demo1: {
         title: 'Uso base'
       },
@@ -1854,7 +1857,7 @@ export default {
         title: 'Trigger personalizzato'
       },
       demo4: {
-        title: 'Chiudi cliccando all\'esterno'
+        title: "Chiudi cliccando all'esterno"
       },
       demo5: {
         title: 'Stato di caricamento'
@@ -1899,7 +1902,8 @@ export default {
     },
     loading: {
       name: 'Caricamento',
-      description: 'Un elegante effetto di caricamento per rendere l\'attesa più piacevole.',
+      description:
+        "Un elegante effetto di caricamento per rendere l'attesa più piacevole.",
       demo1: {
         title: 'Uso base'
       },

@@ -15,21 +15,24 @@ const showSuccessMessage = () => {
 
 const showNormalMessage = () => {
   LewMessage.normal({
-    content: 'Your order is being processed. Estimated shipping time: 1-3 business days.',
+    content:
+      'Your order is being processed. Estimated shipping time: 1-3 business days.',
     duration: 3000
   })
 }
 
 const showInfoMessage = () => {
   LewMessage.info({
-    content: 'New arrival alert: Limited edition items are now available for pre-order!',
+    content:
+      'New arrival alert: Limited edition items are now available for pre-order!',
     duration: 3000
   })
 }
 
 const showWarningMessage = () => {
   LewMessage.warning({
-    content: 'Warning: Some items in your cart have low stock. Please check soon.',
+    content:
+      'Warning: Some items in your cart have low stock. Please check soon.',
     duration: 3000
   })
 }

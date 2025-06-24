@@ -12,7 +12,14 @@ import DemoDrawer4Code from './DemoDrawer4.vue?raw'
 import DemoDrawer5Code from './DemoDrawer5.vue?raw'
 import DemoDrawer6Code from './DemoDrawer6.vue?raw'
 
-export const demoGroup = [DemoDrawer1, DemoDrawer2, DemoDrawer3, DemoDrawer4, DemoDrawer5, DemoDrawer6]
+export const demoGroup = [
+  DemoDrawer1,
+  DemoDrawer2,
+  DemoDrawer3,
+  DemoDrawer4,
+  DemoDrawer5,
+  DemoDrawer6
+]
 
 export const codeGroup = [
   DemoDrawer1Code,

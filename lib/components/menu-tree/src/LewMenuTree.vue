@@ -85,7 +85,6 @@ const transformTree = (tree: MenuTreeItem[]): MenuTreeItem[] => {
   }))
 }
 
-
 // 渲染菜单树项
 const renderMenuTreeItem = (item: MenuTreeItem, level: number = 1): any => {
   // 构建悬浮菜单选项
@@ -141,7 +140,6 @@ onMounted(() => {
   expandKeys.value = cloneDeep(expandKeys.value)
   modelValue.value = cloneDeep(modelValue.value)
 })
-
 </script>
 
 <template>

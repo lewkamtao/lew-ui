@@ -4,7 +4,8 @@ const open = () => {
     okText: 'Confirm',
     cancelText: 'Cancel',
     title: 'Confirm Action',
-    content: 'This action will permanently delete your data. Are you sure you want to continue?',
+    content:
+      'This action will permanently delete your data. Are you sure you want to continue?',
     closeByEsc: true,
     ok: () => {
       return new Promise((resolve) => {

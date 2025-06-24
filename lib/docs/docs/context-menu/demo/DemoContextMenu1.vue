@@ -110,7 +110,9 @@ const options2 = [
     >
       Right click here
     </div>
-    <div v-context-menu="{ options: options2 }" class="box">Right click here</div>
+    <div v-context-menu="{ options: options2 }" class="box">
+      Right click here
+    </div>
   </lew-flex>
 </template>
 

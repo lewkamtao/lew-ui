@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const content = ref(`
   <div style="padding:8px;max-width:260px;font-family:system-ui">
     <h2 style="color:#1d1d1f;margin:0 0 8px;font-size:16px;font-weight:600">
@@ -36,7 +35,7 @@ const content = ref(`
       </div>
     </div>
   </div>
-`);
+`)
 </script>
 
 <template>
@@ -44,7 +43,7 @@ const content = ref(`
     <lew-tag
       v-tooltip="{
         content,
-        allowHTML: true,
+        allowHTML: true
       }"
       oversize
       color="red"

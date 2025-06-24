@@ -9,4 +9,9 @@ import DemoDialog4Code from './DemoDialog4.vue?raw'
 
 export const demoGroup = [DemoDialog1, DemoDialog2, DemoDialog3, DemoDialog4]
 
-export const codeGroup = [DemoDialog1Code, DemoDialog2Code, DemoDialog3Code, DemoDialog4Code]
+export const codeGroup = [
+  DemoDialog1Code,
+  DemoDialog2Code,
+  DemoDialog3Code,
+  DemoDialog4Code
+]

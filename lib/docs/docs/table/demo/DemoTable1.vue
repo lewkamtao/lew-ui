@@ -2,102 +2,102 @@
 const data: any = ref([
   {
     id: 1,
-    name: "iPhone 20",
+    name: 'iPhone 20',
     releaseYear: 2030,
     rating: 95,
-    brand: "Apple",
-    category: "Smartphone",
+    brand: 'Apple',
+    category: 'Smartphone'
   },
   {
     id: 2,
-    name: "Galaxy S21",
+    name: 'Galaxy S21',
     releaseYear: 2020,
     rating: 92,
-    brand: "Samsung",
-    category: "Smartphone",
+    brand: 'Samsung',
+    category: 'Smartphone'
   },
   {
     id: 3,
-    name: "MacBook Pro",
+    name: 'MacBook Pro',
     releaseYear: 2025,
     rating: 88,
-    brand: "Apple",
-    category: "Laptop",
+    brand: 'Apple',
+    category: 'Laptop'
   },
   {
     id: 4,
-    name: "Surface Laptop 4",
+    name: 'Surface Laptop 4',
     releaseYear: 2024,
     rating: 85,
-    brand: "Microsoft",
-    category: "Laptop",
+    brand: 'Microsoft',
+    category: 'Laptop'
   },
   {
     id: 5,
-    name: "iPad Pro",
+    name: 'iPad Pro',
     releaseYear: 2021,
     rating: 90,
-    brand: "Apple",
-    category: "Tablet",
-  },
-]);
+    brand: 'Apple',
+    category: 'Tablet'
+  }
+])
 
 const columns = [
   {
-    title: "ID",
-    field: "id",
+    title: 'ID',
+    field: 'id',
     width: 80,
-    x: "center",
-    fixed: "left",
+    x: 'center',
+    fixed: 'left'
   },
   {
-    title: "Brand",
+    title: 'Brand',
     width: 120,
-    field: "brand",
+    field: 'brand'
   },
   {
-    title: "Product Name",
+    title: 'Product Name',
     width: 120,
-    field: "name",
+    field: 'name'
   },
   {
-    title: "Release Year",
-    field: "releaseYear",
+    title: 'Release Year',
+    field: 'releaseYear',
     width: 100,
-    x: "center",
+    x: 'center',
     customRender: ({ row }: any) => {
-      return row.releaseYear;
-    },
+      return row.releaseYear
+    }
   },
   {
-    title: "Category",
-    field: "category",
+    title: 'Category',
+    field: 'category',
     width: 140,
-    x: "center",
+    x: 'center'
   },
   {
-    title: "Rating",
+    title: 'Rating',
     width: 100,
-    field: "rating",
-    x: "center",
-    fixed: "right",
-  },
-];
-const tableSize = ref("medium");
+    field: 'rating',
+    x: 'center',
+    fixed: 'right'
+  }
+]
+const tableSize = ref('medium')
 const tableSizeOptions = [
   {
-    label: "小",
-    value: "small",
+    label: '小',
+    value: 'small'
   },
   {
-    label: "中",
-    value: "medium",
+    label: '中',
+    value: 'medium'
   },
   {
-    label: "大",
-    value: "large",
-  },
-];
+    label: '大',
+    value: 'large'
+  }
+]
 </script>
 
 <template>
@@ -117,7 +117,7 @@ const tableSizeOptions = [
         <lew-badge v-else round color="orange" />
         <span>
           {{
-            row.rating >= 90 ? "Excellent" : row.rating >= 80 ? "Good" : "Fair"
+            row.rating >= 90 ? 'Excellent' : row.rating >= 80 ? 'Good' : 'Fair'
           }}
         </span>
       </lew-flex>

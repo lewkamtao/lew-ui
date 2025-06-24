@@ -1,7 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 import type { ButtonProps } from '../../button/index'
 
-
 export const drawerModel = {
   visible: {
     type: Boolean,

@@ -28,9 +28,17 @@ const open4 = (): void => {
       />
     </lew-drawer>
     <lew-button text="Right" @click="open1" />
-    <lew-drawer title="New Product" v-model:visible="visible2" position="bottom" />
+    <lew-drawer
+      title="New Product"
+      v-model:visible="visible2"
+      position="bottom"
+    />
     <lew-button text="Bottom" @click="open2" />
-    <lew-drawer title="New Product" v-model:visible="visible3" position="left" />
+    <lew-drawer
+      title="New Product"
+      v-model:visible="visible3"
+      position="left"
+    />
     <lew-button text="Left" @click="open3" />
     <lew-drawer title="New Product" v-model:visible="visible4" position="top" />
     <lew-button text="Top" @click="open4" />

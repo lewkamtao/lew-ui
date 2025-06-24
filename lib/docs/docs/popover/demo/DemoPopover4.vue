@@ -1,14 +1,14 @@
 <script setup lang="ts">
 const data = ref({
-  name: "Steve Jobs",
-  title: "Co-founder of Apple Inc.",
-  quote: "Stay hungry, stay foolish.",
-});
+  name: 'Steve Jobs',
+  title: 'Co-founder of Apple Inc.',
+  quote: 'Stay hungry, stay foolish.'
+})
 
-const popoverRef = ref<any>(null);
+const popoverRef = ref<any>(null)
 const close = () => {
-  popoverRef.value?.hide();
-};
+  popoverRef.value?.hide()
+}
 </script>
 
 <template>

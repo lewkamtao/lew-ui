@@ -1,24 +1,27 @@
 <script lang="ts" setup>
 const request = (type: string) => {
-  LewMessage.request({ loadingMessage: 'Processing your order...' }, async () => {
-    return new Promise<any>((resolve) => {
-      setTimeout(() => {
-        if (type === 'success') {
-          resolve({
-            content: 'Order completed successfully!',
-            duration: 1000,
-            type: 'success'
-          })
-        } else {
-          resolve({
-            content: 'Unable to complete your order. Please try again later.',
-            duration: 1000,
-            type: 'error'
-          })
-        }
-      }, 1000)
-    })
-  })
+  LewMessage.request(
+    { loadingMessage: 'Processing your order...' },
+    async () => {
+      return new Promise<any>((resolve) => {
+        setTimeout(() => {
+          if (type === 'success') {
+            resolve({
+              content: 'Order completed successfully!',
+              duration: 1000,
+              type: 'success'
+            })
+          } else {
+            resolve({
+              content: 'Unable to complete your order. Please try again later.',
+              duration: 1000,
+              type: 'error'
+            })
+          }
+        }, 1000)
+      })
+    }
+  )
 }
 </script>
 

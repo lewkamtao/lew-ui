@@ -1,24 +1,24 @@
 <script lang="ts" setup name="Modal">
-import { useMagicKeys, onClickOutside } from "@vueuse/core";
-import { any2px, getUniqueId } from "lew-ui/utils";
-import { LewFlex, LewButton, LewTextTrim } from "lew-ui";
-import { useDOMCreate } from "lew-ui/hooks";
-import { modalProps } from "./props";
-import Icon from "lew-ui/utils/Icon.vue";
-import { locale } from "lew-ui";
+import { useMagicKeys, onClickOutside } from '@vueuse/core'
+import { any2px, getUniqueId } from 'lew-ui/utils'
+import { LewFlex, LewButton, LewTextTrim } from 'lew-ui'
+import { useDOMCreate } from 'lew-ui/hooks'
+import { modalProps } from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { locale } from 'lew-ui'
 import { ref, watch, computed, nextTick, onMounted, onUnmounted } from 'vue'
-const { Escape } = useMagicKeys();
+const { Escape } = useMagicKeys()
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(['close'])
 
-useDOMCreate("lew-modal");
+useDOMCreate('lew-modal')
 
-const props = defineProps(modalProps);
+const props = defineProps(modalProps)
 
-const visible: Ref<boolean | undefined> = defineModel("visible");
+const visible: Ref<boolean | undefined> = defineModel('visible')
 
-const modalBodyRef = ref(null);
-const modalId = `lew-modal-${getUniqueId()}`;
+const modalBodyRef = ref(null)
+const modalId = `lew-modal-${getUniqueId()}`
 
 // 用于强制重新计算顶层状态的响应式变量
 const recomputeTrigger = ref(0)
@@ -27,29 +27,29 @@ const recomputeTrigger = ref(0)
 const isTopModal = computed(() => {
   // 添加 recomputeTrigger 作为依赖，确保能够触发重新计算
   recomputeTrigger.value
-  
+
   if (!visible.value) {
     return false
   }
-  
+
   const modalEl = document.getElementById(modalId)
   if (!modalEl) {
     return false
   }
-  
+
   // 检查是否有 dialog 在顶层
   const dialogEl = document.getElementById('lew-dialog')
   const hasDialog = dialogEl && dialogEl.children.length > 0
   if (hasDialog) {
     return false
   }
-  
+
   // 获取所有 modal 元素
   const modalContainer = modalEl?.parentElement
   if (!modalContainer) {
     return false
   }
-  
+
   const openModals = Array.from(modalContainer.childNodes)
     .filter((e): e is Element => e instanceof Element)
     .filter((e) => e.children.length > 0)
@@ -58,11 +58,10 @@ const isTopModal = computed(() => {
       const modalBody = e.querySelector('.lew-modal') as HTMLElement
       return modalBody && modalBody.style.display !== 'none'
     })
-  
+
   // 检查当前 modal 是否是最后一个（顶层）
   return (
-    openModals.length > 0 &&
-    openModals[openModals.length - 1]?.id === modalId
+    openModals.length > 0 && openModals[openModals.length - 1]?.id === modalId
   )
 })
 
@@ -88,7 +87,7 @@ watch(visible, async (newVal) => {
   await nextTick()
   // modal 状态变化时，强制重新计算
   forceRecomputeTopModal()
-  
+
   // 控制全局检查定时器
   if (newVal) {
     startGlobalCheck()
@@ -104,7 +103,7 @@ const startGlobalCheck = () => {
   if (globalCheckTimer) {
     clearInterval(globalCheckTimer)
   }
-  
+
   globalCheckTimer = setInterval(() => {
     if (visible.value) {
       forceRecomputeTopModal()
@@ -131,34 +130,34 @@ onUnmounted(() => {
 
 onClickOutside(modalBodyRef, (e) => {
   if (visible.value && props.closeOnClickOverlay) {
-    const { parentElement } = e?.target as Element;
+    const { parentElement } = e?.target as Element
     if (parentElement?.id === modalId) {
-      visible.value = false;
+      visible.value = false
     }
   }
-});
+})
 
 const getModalStyle = computed(() => {
-  const { width, top } = props;
+  const { width, top } = props
   return {
     width: any2px(width),
-    top: any2px(top),
-  };
-});
+    top: any2px(top)
+  }
+})
 
 const close = () => {
-  visible.value = false;
-  emit("close");
-};
+  visible.value = false
+  emit('close')
+}
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
     if (!visible.value || !v || !isTopModal.value) {
-      return;
+      return
     }
-    
-    visible.value = false;
-  });
+
+    visible.value = false
+  })
 }
 </script>
 
@@ -193,7 +192,10 @@ if (props.closeByEsc) {
                 <Icon :size="14" type="close" />
               </lew-button>
             </lew-flex>
-            <div class="lew-modal-body-main lew-scrollbar" :style="{ maxHeight: maxHeight }">
+            <div
+              class="lew-modal-body-main lew-scrollbar"
+              :style="{ maxHeight: maxHeight }"
+            >
               <slot></slot>
             </div>
             <div v-if="$slots.footer" class="lew-modal-footer-slot">

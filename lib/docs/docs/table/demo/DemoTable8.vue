@@ -11,7 +11,8 @@ const data: any = ref([
     stock: 50,
     sales: 1200,
     rating: 4.8,
-    intro: 'Classic Box Logo design, made with premium cotton, comfortable and warm, a must-have for street fashion.',
+    intro:
+      'Classic Box Logo design, made with premium cotton, comfortable and warm, a must-have for street fashion.',
     material: '100% Cotton',
     size: 'M/L/XL',
     color: 'Black/White/Red',
@@ -29,7 +30,8 @@ const data: any = ref([
     stock: 100,
     sales: 800,
     rating: 4.6,
-    intro: 'Signature industrial style design, made of nylon material, adjustable length, showcasing personality.',
+    intro:
+      'Signature industrial style design, made of nylon material, adjustable length, showcasing personality.',
     material: 'Nylon',
     size: 'One Size',
     color: 'Black/Yellow',
@@ -47,7 +49,8 @@ const data: any = ref([
     stock: 75,
     sales: 950,
     rating: 4.7,
-    intro: 'Classic shark head design, featuring camo print, zipper extends to the top to form a shark mouth shape.',
+    intro:
+      'Classic shark head design, featuring camo print, zipper extends to the top to form a shark mouth shape.',
     material: '80% Cotton 20% Polyester',
     size: 'S/M/L/XL',
     color: 'Camo Green/Camo Blue',
@@ -65,7 +68,8 @@ const data: any = ref([
     stock: 60,
     sales: 1500,
     rating: 4.9,
-    intro: 'Designed by Kanye West, featuring Boost cushioning technology, knitted upper, comfortable and stylish.',
+    intro:
+      'Designed by Kanye West, featuring Boost cushioning technology, knitted upper, comfortable and stylish.',
     material: 'Primeknit Fabric',
     size: '36-45',
     color: 'Zebra/Black Red/Ice Blue',
@@ -83,7 +87,8 @@ const data: any = ref([
     stock: 120,
     sales: 700,
     rating: 4.5,
-    intro: 'Iconic triangle logo design, made with premium cotton, simple and versatile, a street fashion essential.',
+    intro:
+      'Iconic triangle logo design, made with premium cotton, simple and versatile, a street fashion essential.',
     material: '100% Cotton',
     size: 'S/M/L/XL',
     color: 'White/Black/Gray',

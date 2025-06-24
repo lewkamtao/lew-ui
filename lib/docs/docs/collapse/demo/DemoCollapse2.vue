@@ -57,7 +57,9 @@ const companies = [
         >
           <div class="title">
             {{ item.name }}
-            <lew-tag color="red" size="small" round v-if="item.id === '1'">HOT</lew-tag>
+            <lew-tag color="red" size="small" round v-if="item.id === '1'"
+              >HOT</lew-tag
+            >
           </div>
           <ChevronLeft class="icon" :size="16" />
         </lew-flex>

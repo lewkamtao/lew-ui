@@ -1874,7 +1874,8 @@ export default {
     },
     popover: {
       name: 'Popover',
-      description: 'A pop-up card that provides additional information or actions',
+      description:
+        'A pop-up card that provides additional information or actions',
       demo1: {
         title: 'Basic Usage'
       },

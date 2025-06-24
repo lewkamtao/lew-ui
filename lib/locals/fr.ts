@@ -63,10 +63,12 @@ export default {
     deleteConfirm: 'Confirmer la suppression',
     delete: 'Supprimer',
     cancel: 'Annuler',
-    deleteConfirmContent: 'Êtes-vous sûr de vouloir supprimer ces données ? Cette opération sera appliquée immédiatement, veuillez faire attention !',
+    deleteConfirmContent:
+      'Êtes-vous sûr de vouloir supprimer ces données ? Cette opération sera appliquée immédiatement, veuillez faire attention !',
     minRows: 'Limite minimale de lignes atteinte, impossible de supprimer',
-    maxRows: 'Limite maximale de lignes atteinte, impossible d\'ajouter',
-    uniqueFieldExist: 'Ce {label} existe déjà. Veuillez saisir un {label} unique.',
+    maxRows: "Limite maximale de lignes atteinte, impossible d'ajouter",
+    uniqueFieldExist:
+      'Ce {label} existe déjà. Veuillez saisir un {label} unique.',
     save: 'Enregistrer',
     modelTitle: 'Ajouter des données',
     editTitle: 'Modifier les données'

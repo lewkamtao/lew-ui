@@ -7,7 +7,8 @@ const data: any = [
     origin: 'USA',
     style: 'Streetwear',
     popularItems: ['Box Logo T-shirt', 'Hoodie', 'Skateboard'],
-    description: 'Known for its iconic red box logo and limited release strategy.'
+    description:
+      'Known for its iconic red box logo and limited release strategy.'
   },
   {
     id: 2,
@@ -16,7 +17,8 @@ const data: any = [
     origin: 'Italy',
     style: 'High-end Streetwear',
     popularItems: ['Industrial Belt', 'Arrow T-shirt', 'Quotation Mark Shoes'],
-    description: 'Combines high fashion with street culture, known for unique quotation designs and diagonal stripe logo.'
+    description:
+      'Combines high fashion with street culture, known for unique quotation designs and diagonal stripe logo.'
   },
   {
     id: 3,
@@ -25,7 +27,8 @@ const data: any = [
     origin: 'Japan',
     style: 'Japanese Streetwear',
     popularItems: ['Shark Hoodie', 'Camo Pattern', 'Bapesta Sneakers'],
-    description: 'Famous for its unique camouflage patterns and cartoon ape head logo.'
+    description:
+      'Famous for its unique camouflage patterns and cartoon ape head logo.'
   },
   {
     id: 4,
@@ -33,8 +36,13 @@ const data: any = [
     founded: '2009',
     origin: 'UK',
     style: 'Skate Culture',
-    popularItems: ['Tri-Ferg Logo T-shirt', 'Track Jacket', 'Skateboard Accessories'],
-    description: 'Originated from London skate culture, famous for its triangular logo and humorous designs.'
+    popularItems: [
+      'Tri-Ferg Logo T-shirt',
+      'Track Jacket',
+      'Skateboard Accessories'
+    ],
+    description:
+      'Originated from London skate culture, famous for its triangular logo and humorous designs.'
   }
 ]
 

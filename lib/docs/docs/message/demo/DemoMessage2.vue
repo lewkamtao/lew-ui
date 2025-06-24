@@ -15,6 +15,8 @@ const close = () => {
 <template>
   <lew-flex wrap x="start" gap="20">
     <lew-button round @click="open()">Show Ticket Alert</lew-button>
-    <lew-button round color="warning" @click="close()">Dismiss Alert</lew-button>
+    <lew-button round color="warning" @click="close()"
+      >Dismiss Alert</lew-button
+    >
   </lew-flex>
 </template>

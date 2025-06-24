@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { object2class } from "lew-ui/utils";
-import { alertProps } from "./props";
-import Icon from "lew-ui/utils/Icon.vue";
+import { object2class } from 'lew-ui/utils'
+import { alertProps } from './props'
+import Icon from 'lew-ui/utils/Icon.vue'
 
-const props = defineProps(alertProps);
+const props = defineProps(alertProps)
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(['close'])
 
 const alertClassName = computed(() => {
-  const { type } = props;
-  return object2class("lew-alert", { type });
-});
+  const { type } = props
+  return object2class('lew-alert', { type })
+})
 </script>
 
 <template>

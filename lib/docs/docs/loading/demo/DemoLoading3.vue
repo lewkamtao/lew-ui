@@ -1,13 +1,13 @@
 <script setup lang="ts">
-const visible = ref(false);
+const visible = ref(false)
 
 const openLoading = () => {
-  visible.value = true;
+  visible.value = true
   setTimeout(() => {
-    visible.value = false;
-    LewMessage.success("Loading complete.");
-  }, 2000);
-};
+    visible.value = false
+    LewMessage.success('Loading complete.')
+  }, 2000)
+}
 </script>
 
 <template>
