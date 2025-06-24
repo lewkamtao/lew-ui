@@ -1,13 +1,13 @@
 <script setup lang="ts">
-const visible = ref(false)
+const visible = ref(false);
 
 const handleOk = () => {
-  visible.value = false
-}
+  visible.value = false;
+};
 
 const handleClose = () => {
-  visible.value = false
-}
+  visible.value = false;
+};
 </script>
 
 <template>
@@ -21,10 +21,10 @@ const handleClose = () => {
     width="500px"
     title="User Profile"
     :closeButtonProps="{
-      request: handleClose
+      request: handleClose,
     }"
     :okButtonProps="{
-      request: handleOk
+      request: handleOk,
     }"
   >
     <div class="modal-body">

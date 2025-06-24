@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const v = ref([])
+const v = ref([]);
 </script>
 <template>
   <lew-flex style="width: 320px" direction="y" x="start" gap="10px">

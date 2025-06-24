@@ -1,34 +1,34 @@
 <script setup lang="ts">
-import { cloneDeep } from 'lodash-es'
-import FormModal from './FormModal.vue'
-import { inputTableProps } from './props'
-import type { InputTableColumn } from './props'
-import { any2px, getUniqueId } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { LewTable, LewButton, LewFlex, LewEmpty, LewMessage } from 'lew-ui'
-import { locale } from 'lew-ui'
+import { cloneDeep } from 'lodash-es';
+import FormModal from './FormModal.vue';
+import { inputTableProps } from './props';
+import type { InputTableColumn } from './props';
+import { any2px, getUniqueId } from 'lew-ui/utils';
+import Icon from 'lew-ui/utils/Icon.vue';
+import { LewTable, LewButton, LewFlex, LewEmpty, LewMessage } from 'lew-ui';
+import { locale } from 'lew-ui';
 
 // 获取app
-const app = getCurrentInstance()?.appContext.app
+const app = getCurrentInstance()?.appContext.app;
 if (app && !app.directive('tooltip')) {
-  app.use(LewMessage)
+  app.use(LewMessage);
 }
-const modelValue: Ref<Array<any>> = defineModel({ required: true })
+const modelValue: Ref<Array<any>> = defineModel({ required: true });
 
 const setUseId = () => {
-  ;(modelValue.value || []).forEach((e: any) => {
+  (modelValue.value || []).forEach((e: any) => {
     if (!e.id) {
-      e.id = getUniqueId()
+      e.id = getUniqueId();
     }
-  })
-}
+  });
+};
 
-setUseId()
+setUseId();
 watch(modelValue.value, () => {
-  setUseId()
-})
+  setUseId();
+});
 
-const props = defineProps(inputTableProps)
+const props = defineProps(inputTableProps);
 
 const inputTableColumns = computed(() => {
   return [
@@ -40,34 +40,34 @@ const inputTableColumns = computed(() => {
             width: 90,
             field: 'action',
             x: 'center',
-            fixed: 'right'
-          }
+            fixed: 'right',
+          },
         ]
-      : [])
-  ]
-})
+      : []),
+  ];
+});
 
 const formOptions = computed(() => {
   return (props.columns || []).map((e: any) => {
-    const { as, title, field, props, required } = e
+    const { as, title, field, props, required } = e;
     return {
       label: title,
       field,
       as: as || 'input',
       required,
-      props
-    }
-  })
-})
+      props,
+    };
+  });
+});
 
-const formModalRef = ref()
+const formModalRef = ref();
 const edit = ({ row, index }: { row: any; index: number }) => {
-  formModalRef.value.open({ row, index })
-}
+  formModalRef.value.open({ row, index });
+};
 const del = ({ index }: { index: number }) => {
   if ((modelValue.value || []).length <= props.minRows) {
-    LewMessage.warning(locale.t('inputTable.minRows'))
-    return
+    LewMessage.warning(locale.t('inputTable.minRows'));
+    return;
   }
   LewDialog.error({
     title: locale.t('inputTable.deleteConfirm'),
@@ -77,95 +77,95 @@ const del = ({ index }: { index: number }) => {
     closeOnClickOverlay: true,
     closeByEsc: true,
     ok: () => {
-      modelValue.value.splice(index, 1)
-    }
-  })
-}
+      modelValue.value.splice(index, 1);
+    },
+  });
+};
 const add = () => {
   if ((modelValue.value || []).length >= props.maxRows) {
-    LewMessage.warning(locale.t('inputTable.maxRows'))
-    return
+    LewMessage.warning(locale.t('inputTable.maxRows'));
+    return;
   }
-  let row: any = cloneDeep(props.defaultForm)
+  let row: any = cloneDeep(props.defaultForm);
   if (props.autoUniqueId) {
-    row['id'] = getUniqueId()
+    row['id'] = getUniqueId();
   }
-  formModalRef.value.open({ row })
-}
+  formModalRef.value.open({ row });
+};
 
 const addSuccess = ({ row }: { row: any }) => {
   if (!Array.isArray(modelValue.value)) {
-    modelValue.value = [row]
+    modelValue.value = [row];
   } else {
-    modelValue.value.push(row)
+    modelValue.value.push(row);
   }
-}
+};
 
 const editSuccess = ({ row, index }: { row: any; index: number }) => {
-  modelValue.value.splice(index, 1, row)
-}
+  modelValue.value.splice(index, 1, row);
+};
 
-const selectedKeys = ref<string[]>([])
+const selectedKeys = ref<string[]>([]);
 
 const checkUniqueFieldFn = (form: any) => {
   if (!props.uniqueField) {
-    return true
+    return true;
   }
-  const fieldValue = form[props.uniqueField]
+  const fieldValue = form[props.uniqueField];
   const vail = !modelValue.value.some(
     (item) => item[props.uniqueField] === fieldValue
-  )
+  );
   if (!vail) {
     const label = formOptions.value.find(
       (e: any) => e.field === props.uniqueField
-    )?.label
-    LewMessage.warning(locale.t('inputTable.uniqueFieldExist', { label }))
-    return false
+    )?.label;
+    LewMessage.warning(locale.t('inputTable.uniqueFieldExist', { label }));
+    return false;
   }
-  return true
-}
+  return true;
+};
 
 const isMaxRowsReached = computed(
   () => (modelValue.value || []).length >= props.maxRows
-)
+);
 
 const getAddButtonStyle = computed(() => {
   const paddingMap = {
     small: '8px',
     medium: '10px',
-    large: '12px'
-  }
+    large: '12px',
+  };
   const fontSizeMap = {
     small: 13,
     medium: 14,
-    large: 16
-  }
+    large: 16,
+  };
   return {
     padding: paddingMap[props.size],
-    fontSize: fontSizeMap[props.size] + 'px'
-  }
-})
+    fontSize: fontSizeMap[props.size] + 'px',
+  };
+});
 
 const getIconStyle = computed(() => {
   const sizeMap = {
     small: '24px',
     medium: '26px',
-    large: '28px'
-  }
+    large: '28px',
+  };
   return {
     width: sizeMap[props.size],
-    height: sizeMap[props.size]
-  }
-})
+    height: sizeMap[props.size],
+  };
+});
 
 const getIconSize = computed(() => {
   const sizeMap = {
     small: 13,
     medium: 14,
-    large: 16
-  }
-  return sizeMap[props.size]
-})
+    large: 16,
+  };
+  return sizeMap[props.size];
+});
 </script>
 
 <template>
@@ -174,7 +174,7 @@ const getIconSize = computed(() => {
     y="start"
     direction="y"
     :style="{
-      width: any2px(width)
+      width: any2px(width),
     }"
   >
     <lew-table

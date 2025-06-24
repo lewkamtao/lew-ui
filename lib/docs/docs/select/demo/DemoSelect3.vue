@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { schools } from '@/lib/data'
-import { padStart } from 'lodash-es'
+import { schools } from '@/lib/data';
+import { padStart } from 'lodash-es';
 
 const schoolsOptions = schools.map((e, i) => {
-  return { label: e, value: padStart(String(i), 8, '0') }
-})
+  return { label: e, value: padStart(String(i), 8, '0') };
+});
 
-const value = ref('')
+const value = ref('');
 </script>
 
 <template>

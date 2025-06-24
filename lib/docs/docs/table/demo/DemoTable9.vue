@@ -1,21 +1,21 @@
 <script lang="ts" setup>
-import mvJson from './movie_hot_gaia.json'
+import mvJson from './movie_hot_gaia.json';
 
-const data: any = ref(mvJson)
-const tableRef = ref()
+const data: any = ref(mvJson);
+const tableRef = ref();
 const columns = [
   {
     type: 'text',
     title: 'ID',
     field: 'id',
     width: 100,
-    x: 'center'
+    x: 'center',
   },
   {
     type: 'text',
     title: 'Title',
     field: 'title',
-    width: 180
+    width: 180,
   },
 
   {
@@ -23,44 +23,44 @@ const columns = [
     title: 'Release Date',
     field: 'release_date',
     width: 150,
-    x: 'center'
+    x: 'center',
   },
   {
     type: 'template',
     title: 'Available Online',
     field: 'has_linewatch',
     width: 150,
-    x: 'center'
+    x: 'center',
   },
   {
     type: 'text',
     title: 'Directors',
     field: 'directors',
-    width: 150
+    width: 150,
   },
   {
     type: 'text',
     title: 'Synopsis',
     field: 'info',
-    width: 320
+    width: 320,
   },
   {
     type: 'template',
     title: 'Category',
     field: 'type',
     width: 100,
-    x: 'center'
+    x: 'center',
   },
   {
     type: 'template',
     title: 'Cast',
     align: 'start',
     field: 'actors',
-    width: 450
-  }
-]
+    width: 450,
+  },
+];
 
-const selectedKeys = ref('35503077')
+const selectedKeys = ref('35503077');
 </script>
 
 <template>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 const ok = () => {
-  LewMessage.success('Confirmed')
-}
+  LewMessage.success('Confirmed');
+};
 const cancel = () => {
-  LewMessage.info('Cancelled')
-}
+  LewMessage.info('Cancelled');
+};
 </script>
 
 <template>

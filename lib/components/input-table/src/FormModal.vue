@@ -1,36 +1,36 @@
 <script setup lang="ts">
-import { cloneDeep } from 'lodash-es'
-import { LewModal, LewForm } from 'lew-ui'
-import type { ButtonProps, LewSize } from 'lew-ui'
-import { locale } from 'lew-ui'
-const visible = ref(false)
-const formRef = ref()
-const form = ref({})
-const editIndex = ref(-1)
-const id = ref('')
+import { cloneDeep } from 'lodash-es';
+import { LewModal, LewForm } from 'lew-ui';
+import type { ButtonProps, LewSize } from 'lew-ui';
+import { locale } from 'lew-ui';
+const visible = ref(false);
+const formRef = ref();
+const form = ref({});
+const editIndex = ref(-1);
+const id = ref('');
 
 const props = defineProps({
   options: {
-    type: Object
+    type: Object,
   },
   size: {
     type: String,
-    default: ''
+    default: '',
   },
   checkUniqueFieldFn: {
     type: Function,
-    default: () => true
-  }
-})
+    default: () => true,
+  },
+});
 
-const emit = defineEmits(['addSuccess', 'editSuccess'])
+const emit = defineEmits(['addSuccess', 'editSuccess']);
 
 const open = ({ row = {}, index = -1 }: { row: any; index: number }) => {
-  visible.value = true
-  editIndex.value = index
-  id.value = row.id
-  form.value = cloneDeep(row)
-}
+  visible.value = true;
+  editIndex.value = index;
+  id.value = row.id;
+  form.value = cloneDeep(row);
+};
 
 const ok = () => {
   formRef.value.validate().then((res: boolean) => {
@@ -38,29 +38,29 @@ const ok = () => {
       if (editIndex.value >= 0) {
         emit('editSuccess', {
           row: { ...formRef.value.getForm(), id: id.value },
-          index: editIndex.value
-        })
+          index: editIndex.value,
+        });
       } else {
-        const _form = formRef.value.getForm()
+        const _form = formRef.value.getForm();
 
         if (!props.checkUniqueFieldFn(_form)) {
-          return
+          return;
         }
 
-        emit('addSuccess', { row: { ..._form, id: id.value } })
+        emit('addSuccess', { row: { ..._form, id: id.value } });
       }
-      visible.value = false
+      visible.value = false;
     } else {
-      LewMessage.warning('请根据提示填写表单')
+      LewMessage.warning('请根据提示填写表单');
     }
-  })
-}
+  });
+};
 
 const formMounted = () => {
-  formRef.value.setForm(form.value)
-}
+  formRef.value.setForm(form.value);
+};
 
-defineExpose({ open })
+defineExpose({ open });
 </script>
 
 <template>
@@ -69,13 +69,13 @@ defineExpose({ open })
     :closeButtonProps="
       {
         request: () => {
-          visible = false
-        }
+          visible = false;
+        },
       } as any
     "
     :okButtonProps="
       {
-        request: ok
+        request: ok,
       } as any
     "
     :title="`${editIndex >= 0 ? locale.t('inputTable.editTitle') : locale.t('inputTable.modelTitle')}`"

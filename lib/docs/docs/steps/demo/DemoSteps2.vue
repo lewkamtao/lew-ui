@@ -2,20 +2,20 @@
 const options = [
   {
     title: 'Fill in Basic Information',
-    description: 'Please enter your name and contact information'
+    description: 'Please enter your name and contact information',
   },
   {
     title: 'Select Service Type',
-    description: 'Please select the service type you need'
+    description: 'Please select the service type you need',
   },
   {
     title: 'Confirm Submission',
-    description: 'Please confirm and submit your information'
-  }
-]
+    description: 'Please confirm and submit your information',
+  },
+];
 
-const status = ref('error')
-const currentStep = ref(2)
+const status = ref('error');
+const currentStep = ref(2);
 </script>
 
 <template>

@@ -3,39 +3,39 @@ const openError = () => {
   LewNotification.error({
     title: 'Payment Failed',
     content:
-      'Your payment could not be processed. Please try again or contact customer support.'
-  })
-}
+      'Your payment could not be processed. Please try again or contact customer support.',
+  });
+};
 
 const openSuccess = () => {
   LewNotification.success({
     title: 'Order Confirmed',
-    content: 'Your order has been successfully placed and is being processed.'
-  })
-}
+    content: 'Your order has been successfully placed and is being processed.',
+  });
+};
 
 const openNormal = () => {
   LewNotification.normal({
     title: 'Scheduled Maintenance',
     content:
-      'Our platform will be undergoing maintenance tonight from 2-4 AM EST.'
-  })
-}
+      'Our platform will be undergoing maintenance tonight from 2-4 AM EST.',
+  });
+};
 
 const openInfo = () => {
   LewNotification.info({
     title: 'New Feature Available',
-    content: 'Check out our new AI-powered search feature. Try it now!'
-  })
-}
+    content: 'Check out our new AI-powered search feature. Try it now!',
+  });
+};
 
 const openWarning = () => {
   LewNotification.warning({
     title: 'Low Battery',
     content:
-      'Your device battery is running low. Please connect to a power source.'
-  })
-}
+      'Your device battery is running low. Please connect to a power source.',
+  });
+};
 </script>
 
 <template>

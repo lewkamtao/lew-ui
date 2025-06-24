@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import type { MenuOptions } from 'lew-ui'
+import type { PropType } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import type { MenuOptions } from 'lew-ui';
 
-const route = useRoute()
-const router = useRouter()
+const route = useRoute();
+const router = useRouter();
 
 defineProps({
   options: {
     type: Array as PropType<MenuOptions[]>,
     default() {
-      return []
-    }
-  }
-})
+      return [];
+    },
+  },
+});
 
 const toPath = (item: MenuOptions) => {
-  router.push(item.value as string)
-  active.value = item.value as string
-}
+  router.push(item.value as string);
+  active.value = item.value as string;
+};
 
-let active = ref(route.path)
+let active = ref(route.path);
 </script>
 
 <template>

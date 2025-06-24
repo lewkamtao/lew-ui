@@ -3,20 +3,20 @@
 const ok = () => {
   return new Promise((resolve: any) => {
     setTimeout(() => {
-      resolve(true)
-      LewMessage.success('Task completed successfully')
-    }, 1000)
-  })
-}
+      resolve(true);
+      LewMessage.success('Task completed successfully');
+    }, 1000);
+  });
+};
 // Cancel
 const cancel = () => {
   return new Promise((resolve: any) => {
     setTimeout(() => {
-      resolve(true)
-      LewMessage.warning('Operation cancelled')
-    }, 1000)
-  })
-}
+      resolve(true);
+      LewMessage.warning('Operation cancelled');
+    }, 1000);
+  });
+};
 </script>
 
 <template>

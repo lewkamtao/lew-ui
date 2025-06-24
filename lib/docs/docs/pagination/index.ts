@@ -1,3 +1,3 @@
-import DemoPagination from './DemoPagination.vue'
+import DemoPagination from './DemoPagination.vue';
 
-export default DemoPagination
+export default DemoPagination;

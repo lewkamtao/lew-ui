@@ -1,68 +1,68 @@
 <script setup lang="ts">
-import draggable from 'vuedraggable'
-import dayjs from 'dayjs'
-import PreviewModal from './components/PreviewModal.vue'
-import { formatFormByMap } from 'lew-ui/utils'
-import { getUniqueId } from 'lew-ui/utils'
-import { downloadObjectAsFile, getComponentIcon } from 'lew-ui/docs/lib/utils'
-import { useDark } from '@vueuse/core'
-import SetForm from './components/SetForm.vue'
-import { baseSchema, componentsMenusSchema, globalSchema } from './schema'
-import LewGetLabelWidth from 'lew-ui/components/form/src/LewGetLabelWidth.vue'
-import { debounce, cloneDeep, has } from 'lodash-es'
-import { LewSize } from 'lew-ui/types'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { Sun, Moon, Monitor, Upload } from 'lucide-vue-next'
+import draggable from 'vuedraggable';
+import dayjs from 'dayjs';
+import PreviewModal from './components/PreviewModal.vue';
+import { formatFormByMap } from 'lew-ui/utils';
+import { getUniqueId } from 'lew-ui/utils';
+import { downloadObjectAsFile, getComponentIcon } from 'lew-ui/docs/lib/utils';
+import { useDark } from '@vueuse/core';
+import SetForm from './components/SetForm.vue';
+import { baseSchema, componentsMenusSchema, globalSchema } from './schema';
+import LewGetLabelWidth from 'lew-ui/components/form/src/LewGetLabelWidth.vue';
+import { debounce, cloneDeep, has } from 'lodash-es';
+import { LewSize } from 'lew-ui/types';
+import Icon from 'lew-ui/utils/Icon.vue';
+import { Sun, Moon, Monitor, Upload } from 'lucide-vue-next';
 
 const isDark = useDark({
   selector: 'html',
   valueDark: 'lew-dark',
-  valueLight: 'lew-light'
-})
+  valueLight: 'lew-light',
+});
 
-const previewModalRef = ref()
-const menuOptions = componentsMenusSchema
-const options = ref<any>([])
-const formMap = ref<Record<string, any>>({})
-const itemRefMap = ref<Record<string, any>>({})
-const formMainRef = ref()
+const previewModalRef = ref();
+const menuOptions = componentsMenusSchema;
+const options = ref<any>([]);
+const formMap = ref<Record<string, any>>({});
+const itemRefMap = ref<Record<string, any>>({});
+const formMainRef = ref();
 
-const settingTab = ref('options')
-const activeId = ref('')
-const formLabelRef = ref()
-const autoLabelWidth = ref(0)
+const settingTab = ref('options');
+const activeId = ref('');
+const formLabelRef = ref();
+const autoLabelWidth = ref(0);
 
 const formGlobal = ref({
   direction: 'x',
   columns: 1,
-  size: 'medium'
-})
+  size: 'medium',
+});
 
 const formWidth = computed(() => {
   return formGlobal.value.direction === 'x'
     ? (320 + autoLabelWidth.value) * formGlobal.value.columns
-    : 320 * formGlobal.value.columns
-})
+    : 320 * formGlobal.value.columns;
+});
 
 const refreshForm = debounce(() => {
   nextTick(() => {
     if (formLabelRef.value) {
-      autoLabelWidth.value = formLabelRef.value.$el.offsetWidth
+      autoLabelWidth.value = formLabelRef.value.$el.offsetWidth;
     }
-  })
-  formatFormMap()
-}, 100)
+  });
+  formatFormMap();
+}, 100);
 
 const formModel = computed(() => {
-  return formatFormByMap(cloneDeep(formMap.value))
-})
+  return formatFormByMap(cloneDeep(formMap.value));
+});
 
 const colOptions = ref([
   { label: '单栏', value: 1 },
   { label: '两栏', value: 2 },
   { label: '三栏', value: 3 },
-  { label: '四栏', value: 4 }
-])
+  { label: '四栏', value: 4 },
+]);
 
 const cloneDog = (item: any) => {
   return cloneDeep({
@@ -72,75 +72,75 @@ const cloneDog = (item: any) => {
       1: 1,
       2: 1,
       3: 1,
-      4: 1
+      4: 1,
     },
-    field: `${getUniqueId()}`
-  })
-}
+    field: `${getUniqueId()}`,
+  });
+};
 
 const formatFormMap = () => {
-  let _formMap: Record<string, any> = {}
+  let _formMap: Record<string, any> = {};
   cloneDeep(options.value).forEach((item: any) => {
     if (!has(_formMap, item.field) && item.field) {
-      _formMap[item.field] = item.fieldType
+      _formMap[item.field] = item.fieldType;
     }
-  })
-  formMap.value = _formMap
-}
+  });
+  formMap.value = _formMap;
+};
 
 const minimize = (item: any) => {
-  item.spanMap[formGlobal.value.columns] -= 1
-}
+  item.spanMap[formGlobal.value.columns] -= 1;
+};
 
 const maximize = (item: any) => {
-  item.spanMap[formGlobal.value.columns] += 1
-}
+  item.spanMap[formGlobal.value.columns] += 1;
+};
 
 const getModel = () => {
   if (options.value.length === 0) {
-    LewMessage.warning('请先添加组件')
-    return false
+    LewMessage.warning('请先添加组件');
+    return false;
   }
-  const width = formMainRef.value.offsetWidth / formGlobal.value.columns
+  const width = formMainRef.value.offsetWidth / formGlobal.value.columns;
 
-  const _options = cloneDeep(options.value)
+  const _options = cloneDeep(options.value);
   _options.forEach((item: any) => {
     const rowStart =
-      Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1
-    const rowEnd = rowStart + item.spanMap[formGlobal.value.columns]
-    item.gridArea = `auto  / ${rowStart} / auto  / ${rowEnd}`
-    delete item.spanMap
-    delete item.fieldType
-    delete item.schema
-  })
+      Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1;
+    const rowEnd = rowStart + item.spanMap[formGlobal.value.columns];
+    item.gridArea = `auto  / ${rowStart} / auto  / ${rowEnd}`;
+    delete item.spanMap;
+    delete item.fieldType;
+    delete item.schema;
+  });
   const componentModel = {
     ...formGlobal.value,
     columns: formGlobal.value.columns,
     width: formWidth.value,
     id: `form_${dayjs().format('YYYYMMDD')}_${getUniqueId()}`,
-    options: _options
-  }
-  return componentModel
-}
+    options: _options,
+  };
+  return componentModel;
+};
 
 watch(
   () => options.value,
   () => {
-    refreshForm()
+    refreshForm();
   },
   {
-    deep: true
+    deep: true,
   }
-)
+);
 watch(
   () => formGlobal.value,
   () => {
-    refreshForm()
+    refreshForm();
   },
   {
-    deep: true
+    deep: true,
   }
-)
+);
 
 const deleteItem = (item: any) => {
   LewDialog.error({
@@ -148,26 +148,26 @@ const deleteItem = (item: any) => {
     content: '删除后无法恢复，请谨慎操作',
     cancelText: '手滑了',
     ok: () => {
-      options.value = options.value.filter((e: any) => e.id !== item.id)
-    }
-  })
-}
+      options.value = options.value.filter((e: any) => e.id !== item.id);
+    },
+  });
+};
 
 const exportFile = () => {
-  const model = getModel()
+  const model = getModel();
   if (model) {
-    downloadObjectAsFile(model, `${model.id}.json`)
+    downloadObjectAsFile(model, `${model.id}.json`);
   }
-}
+};
 
 const preview = () => {
-  const model = getModel()
+  const model = getModel();
   if (model) {
-    previewModalRef.value && previewModalRef.value.open(model)
+    previewModalRef.value && previewModalRef.value.open(model);
   }
-}
+};
 
-const isInfo = localStorage.getItem('isAlertByFormEngine')
+const isInfo = localStorage.getItem('isAlertByFormEngine');
 if (!isInfo) {
   LewDialog.warning({
     title: '温馨提示',
@@ -176,9 +176,9 @@ if (!isInfo) {
     cancelText: '',
     okText: '知道了',
     ok: () => {
-      localStorage.setItem('isAlertByFormEngine', '1')
-    }
-  })
+      localStorage.setItem('isAlertByFormEngine', '1');
+    },
+  });
 }
 
 const addComponent = (item: any) => {
@@ -190,12 +190,12 @@ const addComponent = (item: any) => {
         1: 1,
         2: 1,
         3: 1,
-        4: 1
+        4: 1,
       },
-      field: `${getUniqueId()}`
+      field: `${getUniqueId()}`,
     })
-  )
-}
+  );
+};
 </script>
 
 <template>
@@ -215,7 +215,7 @@ const addComponent = (item: any) => {
         item-key="field"
         v-bind="{
           animation: 200,
-          chosenClass: 'chosen'
+          chosenClass: 'chosen',
         }"
       >
         <template #item="{ element }">
@@ -264,7 +264,7 @@ const addComponent = (item: any) => {
         ref="formMainRef"
         class="form-main"
         :style="{
-          'max-width': `${formWidth + 40}px`
+          'max-width': `${formWidth + 40}px`,
         }"
       >
         <draggable
@@ -274,14 +274,14 @@ const addComponent = (item: any) => {
             'lew-form-wrapper-draggable-1': formGlobal.columns === 1,
             'lew-form-wrapper-draggable-2': formGlobal.columns === 2,
             'lew-form-wrapper-draggable-3': formGlobal.columns === 3,
-            'lew-form-wrapper-draggable-4': formGlobal.columns === 4
+            'lew-form-wrapper-draggable-4': formGlobal.columns === 4,
           }"
           class="lew-form-wrapper-draggable lew-scrollbar"
           v-model="options"
           item-key="id"
           v-bind="{
             animation: 200,
-            chosenClass: 'chosen'
+            chosenClass: 'chosen',
           }"
         >
           <template #item="{ element }">
@@ -290,7 +290,7 @@ const addComponent = (item: any) => {
               class="lew-form-wrapper-draggable-item"
               :class="{
                 'lew-form-wrapper-draggable-item-active':
-                  activeId === element.id
+                  activeId === element.id,
               }"
               @click.stop="
                 activeId === element.id || element.as === ''
@@ -299,7 +299,7 @@ const addComponent = (item: any) => {
                   (settingTab = 'options')
               "
               :style="{
-                'grid-column-end': `span ${element.spanMap[formGlobal.columns]}`
+                'grid-column-end': `span ${element.spanMap[formGlobal.columns]}`,
               }"
             >
               <lew-flex x="end" y="center" class="handle-box">
@@ -331,7 +331,7 @@ const addComponent = (item: any) => {
               <Icon
                 v-tooltip="{
                   content: '未绑定字段',
-                  trigger: 'mouseenter'
+                  trigger: 'mouseenter',
                 }"
                 v-if="!element.field"
                 class="tips-icon"
@@ -351,7 +351,7 @@ const addComponent = (item: any) => {
                   size: formGlobal.size,
                   direction: formGlobal.direction,
                   labelWidth: autoLabelWidth,
-                  ...element
+                  ...element,
                 }"
                 readonly
               />
@@ -385,7 +385,7 @@ const addComponent = (item: any) => {
           item-width="auto"
           :options="[
             { label: '属性', value: 'options' },
-            { label: '模型', value: 'model' }
+            { label: '模型', value: 'model' },
           ]"
         />
       </lew-flex>

@@ -1,3 +1,3 @@
-import DemoPopok from './DemoPopok.vue'
+import DemoPopok from './DemoPopok.vue';
 
-export default DemoPopok
+export default DemoPopok;

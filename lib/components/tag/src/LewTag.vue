@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { getColorType } from 'lew-ui/utils'
-import { tagProps } from './props'
-import Icon from 'lew-ui/utils/Icon.vue'
+import { getColorType } from 'lew-ui/utils';
+import { tagProps } from './props';
+import Icon from 'lew-ui/utils/Icon.vue';
 
 // Props & Emits
-const props = defineProps(tagProps)
-const emit = defineEmits(['close'])
+const props = defineProps(tagProps);
+const emit = defineEmits(['close']);
 
 // Constants
 const SIZE_CONFIG = {
@@ -18,7 +18,7 @@ const SIZE_CONFIG = {
     padding: '0px 4px',
     oversizePadding: '4px 10px',
     gap: '2px',
-    closeIconSize: 12
+    closeIconSize: 12,
   },
   medium: {
     minHeight: '24px',
@@ -29,7 +29,7 @@ const SIZE_CONFIG = {
     padding: '0px 6px',
     oversizePadding: '5px 12px',
     closeIconSize: 14,
-    gap: '3px'
+    gap: '3px',
   },
   large: {
     minHeight: '28px',
@@ -40,42 +40,42 @@ const SIZE_CONFIG = {
     padding: '0px 8px',
     oversizePadding: '6px 14px',
     closeIconSize: 16,
-    gap: '4px'
-  }
-}
+    gap: '4px',
+  },
+};
 
 const TYPE_STYLES = {
   fill: (color: string) => ({
     backgroundColor: `var(--lew-color-${color})`,
-    color: 'var(--lew-color-white)'
+    color: 'var(--lew-color-white)',
   }),
   light: (color: string) => ({
     backgroundColor: `var(--lew-color-${color}-light)`,
-    color: `var(--lew-color-${color}-dark)`
+    color: `var(--lew-color-${color}-dark)`,
   }),
   ghost: (color: string) => ({
     backgroundColor: 'transparent',
     border: `var(--lew-form-border-width) solid var(--lew-color-${color}-dark)`,
     color: `var(--lew-color-${color}-dark)`,
-    boxShadow: 'none'
+    boxShadow: 'none',
   }),
   default: (color: string) => ({
     backgroundColor: `var(--lew-color-${color})`,
-    color: 'var(--lew-color-white)'
-  })
-}
+    color: 'var(--lew-color-white)',
+  }),
+};
 
 // Methods
 const close = () => {
-  if (props.disabled) return
-  emit('close')
-}
+  if (props.disabled) return;
+  emit('close');
+};
 
 // Computed
 const tagStyle: any = computed(() => {
-  const { round, type, color, size, disabled } = props
-  const _color = getColorType(color) || 'primary'
-  const sizeConfig = SIZE_CONFIG[size] || SIZE_CONFIG.medium
+  const { round, type, color, size, disabled } = props;
+  const _color = getColorType(color) || 'primary';
+  const sizeConfig = SIZE_CONFIG[size] || SIZE_CONFIG.medium;
 
   return {
     ...(TYPE_STYLES[type] || TYPE_STYLES.default)(_color),
@@ -83,11 +83,11 @@ const tagStyle: any = computed(() => {
     padding: props.oversize ? sizeConfig.oversizePadding : sizeConfig.padding,
     borderRadius: round ? '20px' : sizeConfig.borderRadius,
     opacity: disabled ? 'var(--lew-disabled-opacity)' : undefined,
-    pointerEvents: disabled ? 'none' : undefined
-  }
-})
+    pointerEvents: disabled ? 'none' : undefined,
+  };
+});
 
-const slots: any = useSlots()
+const slots: any = useSlots();
 </script>
 
 <template>

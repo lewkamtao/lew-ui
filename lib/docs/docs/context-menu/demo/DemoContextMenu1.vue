@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { h } from 'vue'
-import type { ContextMenus } from 'lew-ui/directives'
+import { h } from 'vue';
+import type { ContextMenus } from 'lew-ui/directives';
 import {
   Home,
   CornerUpRight,
@@ -9,43 +9,43 @@ import {
   File,
   Navigation,
   Search,
-  Eye
-} from 'lucide-vue-next'
+  Eye,
+} from 'lucide-vue-next';
 const options1: ContextMenus = [
   {
     label: 'Back',
     value: 1,
     icon: h(Home, { size: 14 }),
     onClick: (e: ContextMenus) => {
-      LewMessage.info('Back')
-    }
+      LewMessage.info('Back');
+    },
   },
   {
     label: 'Forward',
     value: 2,
     icon: h(CornerUpRight, { size: 14 }),
     onClick: () => {
-      LewMessage.info('Forward')
-    }
+      LewMessage.info('Forward');
+    },
   },
   {
     label: 'Reload',
     value: 3,
     icon: h(RotateCw, { size: 14 }),
     onClick: () => {
-      LewMessage.info('Reload')
-    }
+      LewMessage.info('Reload');
+    },
   },
   {
-    isDividerLine: true
+    isDividerLine: true,
   },
   {
     label: 'Save As',
     value: 4,
     icon: h(DownloadCloud, { size: 14 }),
     onClick: () => {
-      LewMessage.info('Save As')
-    }
+      LewMessage.info('Save As');
+    },
   },
   {
     label: 'Print',
@@ -53,58 +53,58 @@ const options1: ContextMenus = [
     disabled: true,
     icon: h(File, { size: 14 }),
     onClick: () => {
-      LewMessage.info('Print')
-    }
+      LewMessage.info('Print');
+    },
   },
   {
     label: 'Cast',
     value: 4,
     icon: h(Navigation, { size: 14 }),
     onClick: () => {
-      LewMessage.info('Cast')
-    }
+      LewMessage.info('Cast');
+    },
   },
   {
     label: 'Search image with Google',
     value: 4,
     icon: h(Search, { size: 14 }),
     onClick: () => {
-      LewMessage.info('Search image with Google')
-    }
+      LewMessage.info('Search image with Google');
+    },
   },
   {
     label: 'Open in Reader Mode',
     value: 4,
     icon: h(Eye, { size: 14 }),
     onClick: () => {
-      LewMessage.info('Open in Reader Mode')
-    }
-  }
-]
+      LewMessage.info('Open in Reader Mode');
+    },
+  },
+];
 
 const options2 = [
   {
     label: 'Translate to English',
-    value: 1
+    value: 1,
   },
   {
-    isDividerLine: true
+    isDividerLine: true,
   },
   {
     label: 'View Source',
-    value: 2
+    value: 2,
   },
   {
     label: 'Inspect',
-    value: 3
-  }
-]
+    value: 3,
+  },
+];
 </script>
 <template>
   <lew-flex>
     <div
       v-context-menu="{
-        options: options1
+        options: options1,
       }"
       class="box"
     >

@@ -5,17 +5,17 @@ export default {
   data: [
     {
       name: 'label',
-      type: 'String'
+      type: 'String',
     },
     {
       name: 'value',
-      type: 'String'
+      type: 'String',
     },
     {
       name: 'active',
       description: '是否是选中状态',
       type: 'Boolean',
-      default: 'false'
-    }
-  ]
-}
+      default: 'false',
+    },
+  ],
+};

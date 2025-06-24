@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import * as Yup from 'yup'
+import * as Yup from 'yup';
 
-const form = ref({} as any)
+const form = ref({} as any);
 
-const formRef = ref()
+const formRef = ref();
 
 const submit = () => {
   formRef.value.validate().then((res: any) => {
-    console.log(res)
-  })
-}
+    console.log(res);
+  });
+};
 
 onMounted(() => {
   // 设置表单
   formRef.value.setForm({
-    size: 'medium'
-  })
-})
+    size: 'medium',
+  });
+});
 const options = ref([
   {
     label: '表单大小',
@@ -28,18 +28,18 @@ const options = ref([
       options: [
         {
           label: 'small',
-          value: 'small'
+          value: 'small',
         },
         {
           label: 'medium',
-          value: 'medium'
+          value: 'medium',
         },
         {
           label: 'large',
-          value: 'large'
-        }
-      ]
-    }
+          value: 'large',
+        },
+      ],
+    },
   },
   {
     field: 'name',
@@ -52,8 +52,8 @@ const options = ref([
       .required('不能为空'),
 
     props: {
-      clearable: true
-    }
+      clearable: true,
+    },
   },
   {
     field: 'remark',
@@ -66,8 +66,8 @@ const options = ref([
       .required('不能为空'),
 
     props: {
-      clearable: true
-    }
+      clearable: true,
+    },
   },
   {
     field: 'intro',
@@ -79,8 +79,8 @@ const options = ref([
       .max(300, '长度不能超过8')
       .required('不能为空'),
     props: {
-      clearable: true
-    }
+      clearable: true,
+    },
   },
   {
     field: 'birth',
@@ -89,8 +89,8 @@ const options = ref([
     rule: Yup.string().required('不能为空'),
 
     props: {
-      clearable: true
-    }
+      clearable: true,
+    },
   },
   {
     field: 'date.birth',
@@ -99,8 +99,8 @@ const options = ref([
     rule: Yup.object().required('不能为空'),
 
     props: {
-      clearable: true
-    }
+      clearable: true,
+    },
   },
   {
     field: 'user.city',
@@ -110,32 +110,32 @@ const options = ref([
     rule: Yup.string().required('此项必填'),
     props: {
       change: (e: any) => {
-        console.log(e)
+        console.log(e);
       },
       clearable: true,
       options: [
         {
           label: '广东',
-          value: '1'
+          value: '1',
         },
         {
           label: '深圳',
-          value: '2'
+          value: '2',
         },
         {
           label: '杭州',
-          value: '3'
+          value: '3',
         },
         {
           label: '上海',
-          value: '4'
+          value: '4',
         },
         {
           label: '北京',
-          value: '5'
-        }
-      ]
-    }
+          value: '5',
+        },
+      ],
+    },
   },
   {
     field: 'user.agree',
@@ -143,17 +143,17 @@ const options = ref([
     as: 'checkbox',
     rule: Yup.boolean().oneOf([true], '请同意').required('请同意'),
     props: {
-      label: '是否同意'
-    }
+      label: '是否同意',
+    },
   },
   {
     as: 'button',
     props: {
       text: '提交',
-      request: submit
-    }
-  }
-])
+      request: submit,
+    },
+  },
+]);
 </script>
 
 <template>
@@ -166,7 +166,7 @@ const options = ref([
       :options="options"
       @change="
         (e: any) => {
-          form = e
+          form = e;
         }
       "
     />

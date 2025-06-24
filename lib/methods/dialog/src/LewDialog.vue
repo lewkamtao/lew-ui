@@ -1,68 +1,68 @@
 <script lang="ts" setup name="dialog">
-import { ref, watch, onMounted, nextTick } from 'vue'
-import { LewButton, LewFlex } from 'lew-ui'
-import { useMagicKeys } from '@vueuse/core'
-import { dialogProps } from './props'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { useDOMCreate } from 'lew-ui/hooks'
-import type { LewColor } from 'lew-ui'
-import { locale } from 'lew-ui'
+import { ref, watch, onMounted, nextTick } from 'vue';
+import { LewButton, LewFlex } from 'lew-ui';
+import { useMagicKeys } from '@vueuse/core';
+import { dialogProps } from './props';
+import Icon from 'lew-ui/utils/Icon.vue';
+import { useDOMCreate } from 'lew-ui/hooks';
+import type { LewColor } from 'lew-ui';
+import { locale } from 'lew-ui';
 
-const { Escape } = useMagicKeys()
-useDOMCreate('lew-dialog')
+const { Escape } = useMagicKeys();
+useDOMCreate('lew-dialog');
 
-const props = defineProps(dialogProps)
-const emit = defineEmits(['close'])
+const props = defineProps(dialogProps);
+const emit = defineEmits(['close']);
 
-const visible = ref(false)
-const okLoading = ref(false)
-const cancelLoading = ref(false)
-const okRef1 = ref()
-const okRef2 = ref()
+const visible = ref(false);
+const okLoading = ref(false);
+const cancelLoading = ref(false);
+const okRef1 = ref();
+const okRef2 = ref();
 
 const maskClick = () => {
   if (props.closeOnClickOverlay) {
-    visible.value = false
+    visible.value = false;
   }
-}
+};
 
 onMounted(() => {
-  visible.value = true
+  visible.value = true;
   nextTick(() => {
-    if (okRef1.value) okRef1.value.focus()
-    if (okRef2.value) okRef2.value.focus()
-  })
-})
+    if (okRef1.value) okRef1.value.focus();
+    if (okRef2.value) okRef2.value.focus();
+  });
+});
 
 watch(visible, (newVal) => {
   if (!newVal) {
-    setTimeout(() => emit('close'), 500)
+    setTimeout(() => emit('close'), 500);
   }
-})
+});
 
 const handleAction = async (action: 'ok' | 'cancel') => {
-  const actionFunction = props[action]
-  const loadingRef = action === 'ok' ? okLoading : cancelLoading
+  const actionFunction = props[action];
+  const loadingRef = action === 'ok' ? okLoading : cancelLoading;
 
   if (typeof actionFunction === 'function') {
-    loadingRef.value = true
-    const result = await actionFunction()
+    loadingRef.value = true;
+    const result = await actionFunction();
     if (result !== false) {
-      visible.value = false
+      visible.value = false;
     }
-    loadingRef.value = false
+    loadingRef.value = false;
   }
-}
+};
 
-const ok = () => handleAction('ok')
-const cancel = () => handleAction('cancel')
+const ok = () => handleAction('ok');
+const cancel = () => handleAction('cancel');
 
 if (props.closeByEsc) {
   watch(Escape, (v) => {
     if (v && visible.value) {
-      visible.value = false
+      visible.value = false;
     }
-  })
+  });
 }
 </script>
 
@@ -71,7 +71,7 @@ if (props.closeByEsc) {
     <div
       class="lew-dialog-container"
       :style="{
-        '--lew-dialog-transform-origin': transformOrigin
+        '--lew-dialog-transform-origin': transformOrigin,
       }"
     >
       <transition name="lew-dialog-mask">

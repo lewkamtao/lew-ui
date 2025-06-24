@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Box } from 'lucide-vue-next'
-const options = ref([])
-const value = ref([])
+import { Box } from 'lucide-vue-next';
+const options = ref([]);
+const value = ref([]);
 </script>
 
 <template>

@@ -1,21 +1,21 @@
 <script setup lang="ts">
-const visible = ref(false)
-const bindOptions = ref({})
-const formRef = ref()
+const visible = ref(false);
+const bindOptions = ref({});
+const formRef = ref();
 const open = (options: any) => {
-  visible.value = true
-  bindOptions.value = options
-}
+  visible.value = true;
+  bindOptions.value = options;
+};
 const ok = () => {
   formRef.value.validate().then((res: boolean) => {
     if (res) {
-      LewMessage.success('校验成功')
+      LewMessage.success('校验成功');
     } else {
-      LewMessage.error('校验失败')
+      LewMessage.error('校验失败');
     }
-  })
-}
-defineExpose({ open })
+  });
+};
+defineExpose({ open });
 </script>
 
 <template>
@@ -26,12 +26,12 @@ defineExpose({ open })
     maxHeight="calc(100vh - 240px - 50px - 72px)"
     :closeButtonProps="{
       request: () => {
-        visible = false
-      }
+        visible = false;
+      },
     }"
     :okButtonProps="{
       text: '校验表单',
-      request: ok
+      request: ok,
     }"
     title="预览表单"
   >

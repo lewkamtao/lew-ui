@@ -1,35 +1,35 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import type { PropType } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 
-const route = useRoute()
-const router = useRouter()
+const route = useRoute();
+const router = useRouter();
 
 type Item = {
-  name: string
-  cname: string
-  path: string
-  label: string
-  type: string
-}
+  name: string;
+  cname: string;
+  path: string;
+  label: string;
+  type: string;
+};
 
 type Group = {
-  title: string
-  items: Item[]
-}
+  title: string;
+  items: Item[];
+};
 
 defineProps({
   group: {
     type: Array as PropType<Group[]>,
     default() {
-      return []
-    }
-  }
-})
+      return [];
+    },
+  },
+});
 
 const toPath = (item: Item) => {
-  router.push(item.path)
-}
+  router.push(item.path);
+};
 </script>
 
 <template>

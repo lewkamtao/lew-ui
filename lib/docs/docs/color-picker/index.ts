@@ -1,3 +1,3 @@
-import DemoCollapse from './DemoCollapse.vue'
+import DemoCollapse from './DemoCollapse.vue';
 
-export default DemoCollapse
+export default DemoCollapse;

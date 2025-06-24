@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const visible = ref(false)
+const visible = ref(false);
 </script>
 <template>
   <lew-flex gap="20" x="start">

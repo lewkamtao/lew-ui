@@ -4,17 +4,17 @@ export default {
   data: [
     // 'remove', 'change', 'clear', 'add'
     {
-      name: 'change'
+      name: 'change',
     },
     {
-      name: 'remove'
+      name: 'remove',
     },
 
     {
-      name: 'clear'
+      name: 'clear',
     },
     {
-      name: 'add'
-    }
-  ]
-}
+      name: 'add',
+    },
+  ],
+};

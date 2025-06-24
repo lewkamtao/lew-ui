@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import * as Yup from 'yup'
+import * as Yup from 'yup';
 
 const options = ref([
   {
@@ -7,7 +7,7 @@ const options = ref([
     label: '用户名',
 
     as: 'input',
-    rule: Yup.string().required()
+    rule: Yup.string().required(),
   },
   {
     field: 'password',
@@ -16,18 +16,18 @@ const options = ref([
 
     rule: Yup.string().min(6).required(),
     props: {
-      type: 'password'
-    }
+      type: 'password',
+    },
   },
   {
     field: 'phone',
 
     label: '手机',
-    as: 'input'
-  }
-])
+    as: 'input',
+  },
+]);
 
-const formRef = ref()
+const formRef = ref();
 </script>
 
 <template>

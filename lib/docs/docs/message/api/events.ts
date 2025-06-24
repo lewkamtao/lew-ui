@@ -7,7 +7,7 @@ export default {
       name: 'close',
       description: '关闭触发',
       type: 'function',
-      default: '() => {}'
-    }
-  ]
-}
+      default: '() => {}',
+    },
+  ],
+};

@@ -1,3 +1,3 @@
-import DemoTitle from './DemoTitle.vue'
+import DemoTitle from './DemoTitle.vue';
 
-export default DemoTitle
+export default DemoTitle;

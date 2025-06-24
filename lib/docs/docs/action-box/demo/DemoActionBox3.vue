@@ -8,69 +8,69 @@ import {
   Share,
   View,
   Archive,
-  Settings
-} from 'lucide-vue-next'
+  Settings,
+} from 'lucide-vue-next';
 
 const options = ref([
   {
     label: 'Edit',
     icon: () => h(Edit, { size: 14 }),
     onClick: () => {
-      LewMessage.info('Edit')
-    }
+      LewMessage.info('Edit');
+    },
   },
   {
     label: 'Delete',
     icon: () => h(Trash, { size: 14 }),
     onClick: () => {
-      LewMessage.info('Delete')
-    }
+      LewMessage.info('Delete');
+    },
   },
   {
     label: 'Copy',
     icon: () => h(Copy, { size: 14 }),
     onClick: () => {
-      LewMessage.info('Copy')
-    }
+      LewMessage.info('Copy');
+    },
   },
   {
     label: 'Download',
     icon: () => h(Download, { size: 14 }),
     onClick: () => {
-      LewMessage.info('Download')
-    }
+      LewMessage.info('Download');
+    },
   },
   {
     label: 'Share',
     icon: () => h(Share, { size: 14 }),
     onClick: () => {
-      LewMessage.info('Share')
-    }
+      LewMessage.info('Share');
+    },
   },
   {
     label: 'View',
     icon: () => h(View, { size: 14 }),
     onClick: () => {
-      LewMessage.info('View')
-    }
+      LewMessage.info('View');
+    },
   },
   {
     label: 'Archive',
     icon: () => h(Archive, { size: 14 }),
     onClick: () => {
-      LewMessage.info('Archive')
-    }
+      LewMessage.info('Archive');
+    },
   },
   {
     label: 'Settings',
     icon: () => h(Settings, { size: 14 }),
     onClick: () => {
-      LewMessage.info('Settings')
-    }
-  }
-])
+      LewMessage.info('Settings');
+    },
+  },
+]);
 
-const dropdownIcon = h(MoreHorizontal, { size: 14 })
+const dropdownIcon = h(MoreHorizontal, { size: 14 });
 </script>
 <template>
   <lew-action-box

@@ -1,3 +1,3 @@
-import DemoContextMenu from './DemoContextMenu.vue'
+import DemoContextMenu from './DemoContextMenu.vue';
 
-export default DemoContextMenu
+export default DemoContextMenu;

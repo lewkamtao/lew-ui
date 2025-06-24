@@ -9,9 +9,9 @@ const options = [
   { label: 'Art', value: 'art' },
   { label: 'Economics', value: 'economics' },
   { label: 'Psychology', value: 'psychology' },
-  { label: 'Politics', value: 'politics', disabled: true }
-]
-const value = ref(['novel', 'poetry', 'biography'])
+  { label: 'Politics', value: 'politics', disabled: true },
+];
+const value = ref(['novel', 'poetry', 'biography']);
 </script>
 
 <template>

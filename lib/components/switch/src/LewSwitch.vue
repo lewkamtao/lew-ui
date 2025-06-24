@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import { switchProps } from './props'
-import { object2class } from 'lew-ui/utils'
+import { switchProps } from './props';
+import { object2class } from 'lew-ui/utils';
 
-const props = defineProps(switchProps)
-const _loading = ref(false)
+const props = defineProps(switchProps);
+const _loading = ref(false);
 
-const modelValue: Ref<boolean | undefined> = defineModel()
-const emit = defineEmits(['click', 'change'])
+const modelValue: Ref<boolean | undefined> = defineModel();
+const emit = defineEmits(['click', 'change']);
 
 const handleClick = async (e: any) => {
-  if (props.disabled || _loading.value || props.loading) return
-  emit('click', e)
+  if (props.disabled || _loading.value || props.loading) return;
+  emit('click', e);
   if (typeof props.request === 'function') {
     if (_loading.value) {
-      return
+      return;
     }
-    _loading.value = true
-    const isSuccess = await props.request(!modelValue.value)
+    _loading.value = true;
+    const isSuccess = await props.request(!modelValue.value);
     if (isSuccess) {
-      modelValue.value = !modelValue.value
-      _loading.value = false
+      modelValue.value = !modelValue.value;
+      _loading.value = false;
     }
-    _loading.value = false
+    _loading.value = false;
   } else {
-    modelValue.value = !modelValue.value
+    modelValue.value = !modelValue.value;
   }
-  emit('change', modelValue.value)
-}
+  emit('change', modelValue.value);
+};
 
 const getSwitchClassName = computed(() => {
-  const { round, request, disabled, readonly } = props
+  const { round, request, disabled, readonly } = props;
 
-  let loading = props.loading || _loading.value
+  let loading = props.loading || _loading.value;
 
   return object2class('lew-switch', {
     checked: modelValue.value,
@@ -39,11 +39,11 @@ const getSwitchClassName = computed(() => {
     request: !!request,
     loading: loading,
     disabled: disabled,
-    readonly: readonly
-  })
-})
+    readonly: readonly,
+  });
+});
 const getSwitchStyle = computed(() => {
-  const { size } = props
+  const { size } = props;
   switch (size) {
     case 'small':
       return {
@@ -53,8 +53,8 @@ const getSwitchStyle = computed(() => {
         '--lew-switch-dot-height': '18px',
         '--lew-switch-dot-width-active': '22px',
         '--lew-switch-dot-transform': 'translate(4px, 4px)',
-        '--lew-switch-dot-transform-active': 'translate(15px, 4px)'
-      }
+        '--lew-switch-dot-transform-active': 'translate(15px, 4px)',
+      };
     case 'medium':
       return {
         '--lew-switch-width': '44px',
@@ -63,8 +63,8 @@ const getSwitchStyle = computed(() => {
         '--lew-switch-dot-height': '20px',
         '--lew-switch-dot-width-active': '24px',
         '--lew-switch-dot-transform': 'translate(4px, 4px)',
-        '--lew-switch-dot-transform-active': 'translate(15px, 4px)'
-      }
+        '--lew-switch-dot-transform-active': 'translate(15px, 4px)',
+      };
     case 'large':
       return {
         '--lew-switch-width': '46px',
@@ -73,8 +73,8 @@ const getSwitchStyle = computed(() => {
         '--lew-switch-dot-height': '22px',
         '--lew-switch-dot-width-active': '26px',
         '--lew-switch-dot-transform': 'translate(4px, 4px)',
-        '--lew-switch-dot-transform-active': 'translate(15px, 4px)'
-      }
+        '--lew-switch-dot-transform-active': 'translate(15px, 4px)',
+      };
     default:
       return {
         '--lew-switch-width': '44px',
@@ -83,10 +83,10 @@ const getSwitchStyle = computed(() => {
         '--lew-switch-dot-height': '20px',
         '--lew-switch-dot-width-active': '24px',
         '--lew-switch-dot-transform': 'translate(4px, 4px)',
-        '--lew-switch-dot-transform-active': 'translate(15px, 4px)'
-      }
+        '--lew-switch-dot-transform-active': 'translate(15px, 4px)',
+      };
   }
-})
+});
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const v = ref('This is a disabled state')
+const v = ref('This is a disabled state');
 </script>
 
 <template>

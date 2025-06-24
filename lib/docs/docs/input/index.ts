@@ -1,3 +1,3 @@
-import DemoInput from './DemoInput.vue'
+import DemoInput from './DemoInput.vue';
 
-export default DemoInput
+export default DemoInput;

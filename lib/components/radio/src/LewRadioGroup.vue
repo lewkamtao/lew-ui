@@ -1,30 +1,30 @@
 <script lang="ts" setup>
-import { radioGroupProps } from './props'
-import type { RadioOptions } from './props'
-import { object2class } from 'lew-ui/utils'
-import { LewFlex } from 'lew-ui'
-import LewRadio from './LewRadio.vue'
+import { radioGroupProps } from './props';
+import type { RadioOptions } from './props';
+import { object2class } from 'lew-ui/utils';
+import { LewFlex } from 'lew-ui';
+import LewRadio from './LewRadio.vue';
 
-const emit = defineEmits(['change'])
-const props = defineProps(radioGroupProps)
-const modelValue: Ref<string | number | undefined> = defineModel()
+const emit = defineEmits(['change']);
+const props = defineProps(radioGroupProps);
+const modelValue: Ref<string | number | undefined> = defineModel();
 
 const change = ({ item }: { item: RadioOptions }) => {
-  modelValue.value = item.value
+  modelValue.value = item.value;
   emit('change', {
     value: item.value,
-    item: toRaw(item)
-  })
-}
+    item: toRaw(item),
+  });
+};
 
 const getRadioGroupClassName = computed(() => {
-  const { size, disabled, readonly } = props
+  const { size, disabled, readonly } = props;
   return object2class('lew-radio-group', {
     size,
     disabled,
-    readonly
-  })
-})
+    readonly,
+  });
+});
 </script>
 
 <template>

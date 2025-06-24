@@ -1,86 +1,86 @@
 <script setup lang="ts">
-import { uploadProps } from './props'
-import type { UploadFileItem, UploadStatus } from './props'
-import LewUploadByList from './LewUploadByList.vue'
-import LewUploadByCard from './LewUploadByCard.vue'
-import { LewFlex, LewTooltip, LewDialog } from 'lew-ui'
-import { any2px, getUniqueId, formatBytes, object2class } from 'lew-ui/utils'
-import { useClipboardItems } from '@vueuse/core'
-import { cloneDeep, isFunction } from 'lodash-es'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
+import { uploadProps } from './props';
+import type { UploadFileItem, UploadStatus } from './props';
+import LewUploadByList from './LewUploadByList.vue';
+import LewUploadByCard from './LewUploadByCard.vue';
+import { LewFlex, LewTooltip, LewDialog } from 'lew-ui';
+import { any2px, getUniqueId, formatBytes, object2class } from 'lew-ui/utils';
+import { useClipboardItems } from '@vueuse/core';
+import { cloneDeep, isFunction } from 'lodash-es';
+import Icon from 'lew-ui/utils/Icon.vue';
+import { locale } from 'lew-ui';
 
-const props = defineProps(uploadProps)
+const props = defineProps(uploadProps);
 
 // 获取app
-const app = getCurrentInstance()?.appContext.app
+const app = getCurrentInstance()?.appContext.app;
 if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
+  app.use(LewTooltip);
 }
 
-const { isSupported } = useClipboardItems({ read: true })
+const { isSupported } = useClipboardItems({ read: true });
 
 const tipFontSizeMap: Record<string, number> = {
   small: 14,
   medium: 14,
-  large: 16
-}
+  large: 16,
+};
 const maxSizeFontSizeMap: Record<string, number> = {
   small: 12,
   medium: 12,
-  large: 14
-}
+  large: 14,
+};
 const uploadIconFontSizeMap: ComputedRef<Record<string, number>> = computed(
   () => {
     return {
       small: props.viewMode === 'list' ? 28 : 22,
       medium: props.viewMode === 'list' ? 30 : 24,
-      large: props.viewMode === 'list' ? 32 : 26
-    }
+      large: props.viewMode === 'list' ? 32 : 26,
+    };
   }
-)
+);
 const uploadPaddingMap: ComputedRef<Record<string, string>> = computed(() => {
   return {
     small: props.viewMode === 'list' ? '10px 8px' : '14px',
     medium: props.viewMode === 'list' ? '14px 10px' : '16px',
-    large: props.viewMode === 'list' ? '18px 12px' : '20px'
-  }
-})
+    large: props.viewMode === 'list' ? '18px 12px' : '20px',
+  };
+});
 const getCardSize: Record<string, number> = {
   small: 72,
   medium: 80,
-  large: 88
-}
+  large: 88,
+};
 
-const emit = defineEmits(['change', 'delete'])
-const inputClickRef = ref<HTMLInputElement | null>(null)
-const inputPasteRef = ref<HTMLInputElement | null>(null)
-const dropActive = ref(false)
-const modelValue = defineModel<UploadFileItem[]>()
-const isFocus = ref(false)
+const emit = defineEmits(['change', 'delete']);
+const inputClickRef = ref<HTMLInputElement | null>(null);
+const inputPasteRef = ref<HTMLInputElement | null>(null);
+const dropActive = ref(false);
+const modelValue = defineModel<UploadFileItem[]>();
+const isFocus = ref(false);
 
-const formMethods: any = inject('formMethods', {})
+const formMethods: any = inject('formMethods', {});
 
 let _uploadHelper = computed(() => {
   if (isFunction(props.uploadHelper)) {
-    return props.uploadHelper
+    return props.uploadHelper;
   } else if (props.uploadHelperId) {
-    return formMethods[props.uploadHelperId]
+    return formMethods[props.uploadHelperId];
   }
-  return false
-})
+  return false;
+});
 
 const addImageToList = (files: any) => {
   if ((files || []).length > 0) {
-    const item = files.pop()
-    const { size, type, name, lastModifiedDate, lastModified } = item
-    let status: UploadStatus = 'pending'
+    const item = files.pop();
+    const { size, type, name, lastModifiedDate, lastModified } = item;
+    let status: UploadStatus = 'pending';
 
     if (!checkFileAccept({ ...item, file: item })) {
-      status = 'wrong_type'
+      status = 'wrong_type';
     }
     if (size && size > props.maxFileSize) {
-      status = 'wrong_size'
+      status = 'wrong_size';
     }
 
     const fileItem = {
@@ -91,35 +91,37 @@ const addImageToList = (files: any) => {
       name,
       lastModifiedDate,
       lastModified,
-      file: item
-    }
+      file: item,
+    };
 
-    modelValue.value = [fileItem, ...cloneDeep(modelValue.value || [])]
-    emit('change', modelValue.value)
+    modelValue.value = [fileItem, ...cloneDeep(modelValue.value || [])];
+    emit('change', modelValue.value);
 
     nextTick(() => {
       // 如果配置了uploadHelper且文件格式和大小都符合要求，则开始上传
       if (status === 'pending' && isFunction(_uploadHelper.value)) {
-        setFileItem({ key: fileItem.key, status: 'uploading', percent: 0 })
-        _uploadHelper.value({ fileItem: cloneDeep(fileItem), setFileItem })
+        setFileItem({ key: fileItem.key, status: 'uploading', percent: 0 });
+        _uploadHelper.value({ fileItem: cloneDeep(fileItem), setFileItem });
       }
       setTimeout(() => {
         if ((modelValue.value || []).length < props.limit) {
-          addImageToList(files)
+          addImageToList(files);
         }
-      }, 250)
-    })
+      }, 250);
+    });
   }
-}
+};
 
 const deleteFile = (key: string) => {
-  let fileList = cloneDeep(modelValue.value) || []
-  const index = (fileList || []).findIndex((e: UploadFileItem) => e.key === key)
+  let fileList = cloneDeep(modelValue.value) || [];
+  const index = (fileList || []).findIndex(
+    (e: UploadFileItem) => e.key === key
+  );
   if (index >= 0) {
-    const { status } = fileList[index]
+    const { status } = fileList[index];
     if (['wrong_type', 'wrong_size', 'pending'].includes(status || '')) {
-      fileList.splice(index, 1)
-      modelValue.value = fileList
+      fileList.splice(index, 1);
+      modelValue.value = fileList;
     } else {
       LewDialog.error({
         title: '移除文件',
@@ -128,157 +130,159 @@ const deleteFile = (key: string) => {
         closeOnClickOverlay: true,
         closeByEsc: true,
         ok: () => {
-          fileList.splice(index, 1)
-          modelValue.value = fileList
-          emit('delete', key)
-          return true
-        }
-      })
+          fileList.splice(index, 1);
+          modelValue.value = fileList;
+          emit('delete', key);
+          return true;
+        },
+      });
     }
   }
-}
+};
 
 const reUpload = (key: string) => {
-  const index = (modelValue.value || []).findIndex((e) => e.key === key)
+  const index = (modelValue.value || []).findIndex((e) => e.key === key);
   if (index >= 0) {
-    const item = (modelValue.value || [])[index]
+    const item = (modelValue.value || [])[index];
     if (isFunction(_uploadHelper.value)) {
-      setFileItem({ key, percent: 0, status: 'uploading' })
-      _uploadHelper.value({ fileItem: cloneDeep(item), setFileItem })
+      setFileItem({ key, percent: 0, status: 'uploading' });
+      _uploadHelper.value({ fileItem: cloneDeep(item), setFileItem });
     }
   } else {
-    LewMessage.error('文件不存在')
+    LewMessage.error('文件不存在');
   }
-}
+};
 
 const clickUpload = (e: any) => {
-  const files = e.target.files
-  addImageToList(Array.from(files))
+  const files = e.target.files;
+  addImageToList(Array.from(files));
   // 清空
   nextTick(() => {
     if (inputClickRef.value) {
-      inputClickRef.value.value = ''
+      inputClickRef.value.value = '';
     }
-  })
-}
+  });
+};
 // 拖拽上传
 const dropUpload = (e: any) => {
-  let files = e.dataTransfer.files
-  dropActive.value = false
-  e.stopPropagation()
-  e.preventDefault()
-  addImageToList(Array.from(files))
-}
+  let files = e.dataTransfer.files;
+  dropActive.value = false;
+  e.stopPropagation();
+  e.preventDefault();
+  addImageToList(Array.from(files));
+};
 
 // 监听粘贴操作
 const pasteUpload = (e: any) => {
-  const items = e.clipboardData.items //  获取剪贴板中的数据
+  const items = e.clipboardData.items; //  获取剪贴板中的数据
   if (items.length > 0) {
     //  判断剪贴板中是否是文件
     let files = Array.from(items)
       .filter((item: any) => {
-        return item.kind === 'file'
+        return item.kind === 'file';
       })
       .map((e: any) => {
-        return e.getAsFile()
-      })
-    addImageToList(files)
+        return e.getAsFile();
+      });
+    addImageToList(files);
   }
-}
+};
 
 // 定义判断文件是否符合accept规则的方法
 const checkFileAccept = (fileItem: UploadFileItem) => {
-  const acceptedFiles = props.accept
-  const file = fileItem.file
+  const acceptedFiles = props.accept;
+  const file = fileItem.file;
   if (file && acceptedFiles) {
     const acceptedFilesArray = Array.isArray(acceptedFiles)
       ? acceptedFiles
-      : acceptedFiles.split(',')
-    const fileName = file.name || ''
-    const mimeType = (file.type || '').toLowerCase()
-    const baseMimeType = mimeType.replace(/\/.*$/, '')
+      : acceptedFiles.split(',');
+    const fileName = file.name || '';
+    const mimeType = (file.type || '').toLowerCase();
+    const baseMimeType = mimeType.replace(/\/.*$/, '');
     return acceptedFilesArray.some((type) => {
-      const validType = type.trim().toLowerCase()
+      const validType = type.trim().toLowerCase();
       if (validType.charAt(0) === '.') {
-        return fileName.toLowerCase().endsWith(validType)
+        return fileName.toLowerCase().endsWith(validType);
       } else if (validType.endsWith('/*')) {
         // This is something like a image/* mime type
-        return baseMimeType === validType.replace(/\/.*$/, '')
+        return baseMimeType === validType.replace(/\/.*$/, '');
       }
-      return mimeType === validType
-    })
+      return mimeType === validType;
+    });
   }
-  return true
-}
+  return true;
+};
 
-let dropRef = ref()
+let dropRef = ref();
 
 onMounted(() => {
   // 拖拽接听
-  const drop = dropRef.value.$el
-  drop.addEventListener('drop', dropUpload, false)
-  let timer: any = ''
+  const drop = dropRef.value.$el;
+  drop.addEventListener('drop', dropUpload, false);
+  let timer: any = '';
   drop.addEventListener('dragleave', (e: any) => {
-    clearTimeout(timer)
+    clearTimeout(timer);
     timer = setTimeout(() => {
-      e.stopPropagation()
-      e.preventDefault()
-      dropActive.value = false
-    }, 0)
-  })
+      e.stopPropagation();
+      e.preventDefault();
+      dropActive.value = false;
+    }, 0);
+  });
 
   drop.addEventListener('dragover', (e: any) => {
-    e.stopPropagation()
-    e.preventDefault()
-    dropActive.value = true
-  })
-})
+    e.stopPropagation();
+    e.preventDefault();
+    dropActive.value = true;
+  });
+});
 
 const setFileItem = (item: UploadFileItem) => {
-  const { key, percent } = item
-  let fileList = cloneDeep(modelValue.value) || []
-  const index = (fileList || []).findIndex((e: UploadFileItem) => e.key === key)
-  let _percent = percent || 0
+  const { key, percent } = item;
+  let fileList = cloneDeep(modelValue.value) || [];
+  const index = (fileList || []).findIndex(
+    (e: UploadFileItem) => e.key === key
+  );
+  let _percent = percent || 0;
   if (index >= 0) {
     if (percent) {
-      if (_percent > 100) _percent = 100
-      if (_percent < 0) _percent = 0
-      fileList[index].percent = _percent
+      if (_percent > 100) _percent = 100;
+      if (_percent < 0) _percent = 0;
+      fileList[index].percent = _percent;
     } else {
-      _percent = fileList[index].percent as number
+      _percent = fileList[index].percent as number;
     }
-    fileList[index] = { ...fileList[index], ...item, percent: _percent }
+    fileList[index] = { ...fileList[index], ...item, percent: _percent };
   }
-  modelValue.value = fileList
-}
+  modelValue.value = fileList;
+};
 
 const getUploadLabelClass = computed(() => {
-  const { disabled, readonly, viewMode } = props
-  return object2class('lew-upload-label', { disabled, readonly, viewMode })
-})
+  const { disabled, readonly, viewMode } = props;
+  return object2class('lew-upload-label', { disabled, readonly, viewMode });
+});
 
 const getTips = computed(() => {
-  const { tips, maxFileSize, accept, limit } = props
+  const { tips, maxFileSize, accept, limit } = props;
   if (tips) {
-    return tips
+    return tips;
   } else {
-    let tips = []
+    let tips = [];
     if (accept) {
-      tips.push(locale.t('upload.accept', { accept }))
+      tips.push(locale.t('upload.accept', { accept }));
     }
     if (limit) {
-      tips.push(locale.t('upload.limit', { limit }))
+      tips.push(locale.t('upload.limit', { limit }));
     }
     if (maxFileSize) {
       tips.push(
         locale.t('upload.maxFileSize', {
-          maxFileSize: formatBytes(maxFileSize)
+          maxFileSize: formatBytes(maxFileSize),
         })
-      )
+      );
     }
-    return tips.join('，') + '。'
+    return tips.join('，') + '。';
   }
-})
+});
 </script>
 
 <template>
@@ -287,7 +291,7 @@ const getTips = computed(() => {
     :direction="viewMode === 'list' ? 'y' : 'x'"
     gap="10"
     :style="{
-      width: viewMode === 'list' ? '100%' : 'auto'
+      width: viewMode === 'list' ? '100%' : 'auto',
     }"
   >
     <lew-upload-by-card
@@ -305,7 +309,7 @@ const getTips = computed(() => {
       :class="getUploadLabelClass"
       :style="{
         width: viewMode === 'list' ? '100%' : `${any2px(getCardSize[size])}`,
-        height: viewMode === 'list' ? 'auto' : `${any2px(getCardSize[size])}`
+        height: viewMode === 'list' ? 'auto' : `${any2px(getCardSize[size])}`,
       }"
     >
       <lew-flex
@@ -316,7 +320,7 @@ const getTips = computed(() => {
         class="lew-upload"
         :class="{ 'lew-upload-drop-active': dropActive }"
         :style="{
-          padding: uploadPaddingMap[size]
+          padding: uploadPaddingMap[size],
         }"
         gap="5"
       >
@@ -329,7 +333,7 @@ const getTips = computed(() => {
         <div
           v-if="viewMode === 'list'"
           :style="{
-            fontSize: `${any2px(tipFontSizeMap[size])}`
+            fontSize: `${any2px(tipFontSizeMap[size])}`,
           }"
           class="lew-upload-tip"
         >
@@ -344,7 +348,7 @@ const getTips = computed(() => {
         <div
           v-if="viewMode === 'list'"
           :style="{
-            fontSize: `${any2px(maxSizeFontSizeMap[size])}`
+            fontSize: `${any2px(maxSizeFontSizeMap[size])}`,
           }"
           class="lew-upload-max-size"
         >

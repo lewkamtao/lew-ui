@@ -7,8 +7,8 @@ const contextMenu = {
   isDividerLine: 'Est une ligne de séparation',
   checkable: 'Est une case à cocher',
   checked: 'Est coché',
-  onClick: 'Événement de clic'
-}
+  onClick: 'Événement de clic',
+};
 
 export default {
   name: 'fr',
@@ -23,7 +23,7 @@ export default {
     install: 'Installation',
     components: 'Composants',
     formEngine: 'Moteur de formulaires',
-    descEngine: 'Moteur de description'
+    descEngine: 'Moteur de description',
   },
   base: {
     base: 'Base',
@@ -32,7 +32,7 @@ export default {
     data: 'Composants de données',
     feedback: 'Retour',
     close: 'Fermer',
-    showCode: 'Afficher le code'
+    showCode: 'Afficher le code',
   },
   components: {
     image: {
@@ -40,16 +40,16 @@ export default {
       description:
         "Affichage élégant d'images avec support du chargement différé, des états de chargement et de la gestion des erreurs",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
         title: 'État de chargement',
         tipsTitle: 'Conseils',
         tipsContent:
-          'Vous devez définir la largeur et la hauteur pour avoir un effet de chargement avec placeholder.'
+          'Vous devez définir la largeur et la hauteur pour avoir un effet de chargement avec placeholder.',
       },
       demo3: {
-        title: 'Échec de chargement'
+        title: 'Échec de chargement',
       },
       props: {
         src: "URL de l'image",
@@ -60,26 +60,26 @@ export default {
         objectPosition: "Position de l'image",
         lazy: 'Activer le chargement différé',
         loading: "Afficher l'état de chargement",
-        title: "Titre de l'image"
-      }
+        title: "Titre de l'image",
+      },
     },
     avatar: {
       name: 'Avatar',
       description:
         "Un composant d'avatar élégant supportant les formats image, icône et texte",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'État'
+        title: 'État',
       },
       demo3: {
-        title: 'Avatar par défaut'
+        title: 'Avatar par défaut',
       },
       demo4: {
         title: 'Forme',
         description:
-          "Contrôlez la forme de l'avatar via `shape`, les valeurs possibles sont `circle`, `square`, `sharp`."
+          "Contrôlez la forme de l'avatar via `shape`, les valeurs possibles sont `circle`, `square`, `sharp`.",
       },
       props: {
         size: 'Taille',
@@ -90,29 +90,29 @@ export default {
         status: 'État',
         objectFit: 'Mode de remplissage',
         objectPosition: "Position de l'image",
-        statusPlacement: "Position de l'état"
-      }
+        statusPlacement: "Position de l'état",
+      },
     },
     button: {
       name: 'Bouton',
       description: 'Rendez vos interactions plus fluides avec un simple clic',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Couleur'
+        title: 'Couleur',
       },
       demo3: {
-        title: 'Icône'
+        title: 'Icône',
       },
       demo4: {
-        title: 'État de chargement'
+        title: 'État de chargement',
       },
       demo5: {
-        title: 'État désactivé'
+        title: 'État désactivé',
       },
       demo6: {
-        title: 'Support des Promesses'
+        title: 'Support des Promesses',
       },
       props: {
         text: 'Texte du bouton',
@@ -124,33 +124,33 @@ export default {
         dashed: 'En pointillés',
         loading: "Afficher l'état de chargement",
         disabled: 'État désactivé',
-        request: 'Requête'
-      }
+        request: 'Requête',
+      },
     },
     tag: {
       name: 'Étiquette',
       description:
         'Un outil de marquage petit mais puissant qui ajoute de la couleur à la classification du contenu',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Type'
+        title: 'Type',
       },
       demo3: {
-        title: 'Taille'
+        title: 'Taille',
       },
       demo4: {
-        title: 'Couleur'
+        title: 'Couleur',
       },
       demo5: {
-        title: 'Désactivé'
+        title: 'Désactivé',
       },
       demo6: {
-        title: 'Fermable'
+        title: 'Fermable',
       },
       demo7: {
-        title: 'Slot'
+        title: 'Slot',
       },
       props: {
         text: "Texte de l'étiquette, prioritaire sur le slot, l'effet text-trim sera déclenché en cas de dépassement de la largeur",
@@ -160,27 +160,27 @@ export default {
         closable: 'Peut être fermé',
         disabled: 'Désactivé',
         round: 'Coins arrondis',
-        oversize: 'Taille plus relâchée'
-      }
+        oversize: 'Taille plus relâchée',
+      },
     },
     badge: {
       name: 'Badge',
       description:
         "Un petit point rouge qui s'épanouit dans le coin supérieur droit, rendant les notifications plus visibles",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Point'
+        title: 'Point',
       },
       demo3: {
-        title: 'Utilisation directe'
+        title: 'Utilisation directe',
       },
       demo4: {
-        title: 'Texte'
+        title: 'Texte',
       },
       demo5: {
-        title: 'En cours'
+        title: 'En cours',
       },
       props: {
         text: 'Texte du badge',
@@ -189,45 +189,45 @@ export default {
         max: 'Valeur maximale, affichera max+ si dépassée',
         color: 'Couleur du badge',
         disabled: 'Désactivé',
-        value: 'Valeur du badge (affichera un point si vide)'
-      }
+        value: 'Valeur du badge (affichera un point si vide)',
+      },
     },
     title: {
       name: 'Titre',
       description:
         "Plus qu'un simple titre, une essence qui donne vie au contenu",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Gras'
+        title: 'Gras',
       },
       demo3: {
-        title: 'Couleur'
+        title: 'Couleur',
       },
       props: {
         text: 'Contenu du texte',
         size: 'Taille du texte du titre, peut être un nombre (unité : pixels) ou une chaîne (ex : "1.5em")',
         bold: 'Épaisseur du texte du titre, les valeurs possibles sont des nombres entiers entre 100 et 900',
         color:
-          'Couleur du texte du titre, les valeurs possibles incluent des noms de couleurs prédéfinis ou des valeurs de couleur personnalisées'
-      }
+          'Couleur du texte du titre, les valeurs possibles incluent des noms de couleurs prédéfinis ou des valeurs de couleur personnalisées',
+      },
     },
     textTrim: {
       name: 'Découpe de Texte',
       description:
         "Gérer élégamment les textes longs sans compromettre l'esthétique de la mise en page",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Points de suspension multiligne'
+        title: 'Points de suspension multiligne',
       },
       demo3: {
-        title: 'Texte final'
+        title: 'Texte final',
       },
       demo4: {
-        title: 'Alignement'
+        title: 'Alignement',
       },
       props: {
         text: 'Contenu du texte',
@@ -241,21 +241,21 @@ export default {
         delay:
           "Délai d'affichage et de masquage de l'infobulle [délai d'affichage, délai de masquage] (unité : millisecondes)",
         reserveEnd:
-          'Nombre de caractères à conserver à la fin, affichera des points de suspension au milieu lorsque le texte déborde, en conservant le début et le nombre spécifié de caractères finaux'
-      }
+          'Nombre de caractères à conserver à la fin, affichera des points de suspension au milieu lorsque le texte déborde, en conservant le début et le nombre spécifié de caractères finaux',
+      },
     },
     flex: {
       name: 'Flex',
       description:
         'Solution de mise en page flexible, pour une disposition des éléments intuitive',
       demo1: {
-        title: 'Rangée'
+        title: 'Rangée',
       },
       demo2: {
-        title: 'Colonne'
+        title: 'Colonne',
       },
       demo3: {
-        title: 'Mode'
+        title: 'Mode',
       },
       props: {
         direction: "Direction d'arrangement des éléments enfants",
@@ -264,40 +264,40 @@ export default {
         mode: "Mode de distribution des éléments enfants, remplace les paramètres d'alignement x ou y, l'effet dépend de la valeur de direction",
         wrap: "Autoriser le retour à la ligne des éléments enfants lorsque l'espace est insuffisant",
         gap: 'Espacement entre les éléments enfants (unité : pixels)',
-        width: 'Largeur du conteneur Flex (unité : pixels ou pourcentage)'
-      }
+        width: 'Largeur du conteneur Flex (unité : pixels ou pourcentage)',
+      },
     },
     mark: {
       name: 'Marqueur',
       description:
         'Ajoute une mise en évidence au texte, rendant le contenu important immédiatement visible',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       props: {
         color: 'Thème de couleur',
         round: 'Coins arrondis',
         bold: 'Texte en gras',
-        cursor: 'Style du curseur au survol'
-      }
+        cursor: 'Style du curseur au survol',
+      },
     },
     icon: {
       name: 'Icône',
       description:
-        "Collection d'icônes élégantes, enrichissant le langage visuel de l'interface"
+        "Collection d'icônes élégantes, enrichissant le langage visuel de l'interface",
     },
     backTop: {
       name: 'Retour en haut',
       description:
         'Retour en haut de page en un clic, facilitant la navigation sur les longues pages',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Contenu personnalisé'
+        title: 'Contenu personnalisé',
       },
       demo3: {
-        title: 'Déclenchement par directive'
+        title: 'Déclenchement par directive',
       },
       props: {
         target:
@@ -306,50 +306,50 @@ export default {
           'Distance entre le composant et le bord droit de la page, en pixels.',
         bottom: 'Distance entre le composant et le bas de la page, en pixels.',
         valveHeight:
-          "Hauteur de seuil de défilement de la page, le bouton de retour en haut s'affiche lorsque le défilement dépasse cette valeur, en pixels."
+          "Hauteur de seuil de défilement de la page, le bouton de retour en haut s'affiche lorsque le défilement dépasse cette valeur, en pixels.",
       },
       events: {
-        click: "Callback de l'événement de retour en haut"
-      }
+        click: "Callback de l'événement de retour en haut",
+      },
     },
     steps: {
       name: 'Étapes',
       description:
         "Affiche clairement le processus d'opération, permettant à l'utilisateur de savoir où il se trouve",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'État'
+        title: 'État',
       },
       demo3: {
-        title: 'Chargement'
+        title: 'Chargement',
       },
       model: {
-        modelValue: "Index de l'étape actuellement active"
+        modelValue: "Index de l'étape actuellement active",
       },
       props: {
         options: 'Tableau de configuration des étapes',
         status: 'État actuel des étapes',
-        minWidth: "Largeur minimale de l'étape"
+        minWidth: "Largeur minimale de l'étape",
       },
       options: {
         title: "Titre de l'étape",
-        description: "Description de l'étape"
-      }
+        description: "Description de l'étape",
+      },
     },
     menu: {
       name: 'Menu',
       description:
         'Menu vertical élégant, rendant la navigation claire et structurée',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       model: {
-        modelValue: 'Valeur liée au menu actif actuel'
+        modelValue: 'Valeur liée au menu actif actuel',
       },
       props: {
-        options: 'Tableau de configuration des options de menu'
+        options: 'Tableau de configuration des options de menu',
       },
       menuOptions: {
         label: "Texte de l'élément de menu",
@@ -358,41 +358,41 @@ export default {
         disabled: "Désactiver l'élément de menu",
         icon: "Icône de l'élément de menu",
         tagText: "Texte du badge de l'élément de menu",
-        tagColor: "Couleur du badge de l'élément de menu"
-      }
+        tagColor: "Couleur du badge de l'élément de menu",
+      },
     },
     menuTree: {
       name: 'Arborescence de menu',
       description:
         'Menu arborescent hiérarchique, affichant facilement des relations structurelles complexes',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Icônes personnalisées'
+        title: 'Icônes personnalisées',
       },
       demo3: {
         title: 'Expansion par défaut',
         description:
-          'Contrôlez les éléments de menu développés par défaut via v-model.'
+          'Contrôlez les éléments de menu développés par défaut via v-model.',
       },
       demo4: {
-        title: 'Badges'
+        title: 'Badges',
       },
       demo5: {
-        title: 'Style personnalisé'
+        title: 'Style personnalisé',
       },
       model: {
         modelValue: 'Valeur liée au menu actif actuel',
         expandKeys:
           'Tableau des clés des éléments de menu développés par défaut',
-        collapsed: 'Si le menu est réduit'
+        collapsed: 'Si le menu est réduit',
       },
       props: {
         options:
           "Source de données de l'arborescence de menu, prend en charge les structures imbriquées.",
         width:
-          "Largeur de l'arborescence de menu, prend en charge les valeurs de largeur CSS."
+          "Largeur de l'arborescence de menu, prend en charge les valeurs de largeur CSS.",
       },
       menuTreeItem: {
         label:
@@ -405,102 +405,102 @@ export default {
         tagType: "Type du badge de l'élément de menu",
         tagColor: "Couleur du badge de l'élément de menu",
         disabled: "Désactiver l'élément de menu",
-        isLeaf: "Si c'est un nœud feuille"
-      }
+        isLeaf: "Si c'est un nœud feuille",
+      },
     },
     dropdown: {
       name: 'Menu déroulant',
       description:
         'Menu flottant déclenché par un clic, rendant les opérations plus pratiques',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Pas seulement des boutons'
+        title: 'Pas seulement des boutons',
       },
       demo3: {
-        title: 'Éléments désactivés'
+        title: 'Éléments désactivés',
       },
 
       props: {
         options: 'Configuration des options de menu',
         trigger: 'Mode de déclenchement',
         placement: "Position d'apparition du menu",
-        checkable: 'Permet la sélection'
+        checkable: 'Permet la sélection',
       },
       'options(ContextMenus)': contextMenu,
       events: {
         show: "Callback d'affichage du menu",
         hide: 'Callback de masquage du menu',
-        change: "Callback de sélection d'élément de menu"
-      }
+        change: "Callback de sélection d'élément de menu",
+      },
     },
     breadcrumb: {
       name: "Fil d'Ariane",
       description:
         'Navigation claire des chemins, empêchant les utilisateurs de se perdre',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Sélection personnalisée'
+        title: 'Sélection personnalisée',
       },
       demo3: {
-        title: "Types d'icônes séparateurs"
+        title: "Types d'icônes séparateurs",
       },
       props: {
         options: "Tableau de configuration du fil d'Ariane",
-        separator: "Type d'icône séparateur"
+        separator: "Type d'icône séparateur",
       },
       breadcrumbOptions: {
         label: "Texte de l'élément du fil d'Ariane",
         value: "Valeur de l'élément du fil d'Ariane",
-        active: "Si c'est l'élément actuellement sélectionné"
+        active: "Si c'est l'élément actuellement sélectionné",
       },
       events: {
-        change: "Déclenché lorsque l'élément du fil d'Ariane change"
-      }
+        change: "Déclenché lorsque l'élément du fil d'Ariane change",
+      },
     },
     contextMenu: {
       name: 'Menu contextuel',
       description:
         'Menu contextuel élégant, rendant les opérations plus naturelles',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Supporte plusieurs niveaux'
+        title: 'Supporte plusieurs niveaux',
       },
       demo3: {
-        title: 'Supporte les mises à jour dynamiques'
+        title: 'Supporte les mises à jour dynamiques',
       },
       demo4: {
-        title: 'Cases à cocher'
+        title: 'Cases à cocher',
       },
       props: {
         options: 'Configuration du menu contextuel',
-        disabled: 'Désactiver le menu contextuel'
+        disabled: 'Désactiver le menu contextuel',
       },
-      'options(ContextMenus)': contextMenu
+      'options(ContextMenus)': contextMenu,
     },
     form: {
       name: 'Formulaire',
       description:
         'Capacité puissante de traitement des formulaires, facilitant la collecte de données',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Direction'
+        title: 'Direction',
       },
       demo3: {
-        title: 'Validation personnalisée'
+        title: 'Validation personnalisée',
       },
       demo4: {
-        title: 'Supporte la disposition en grille'
+        title: 'Supporte la disposition en grille',
       },
       demo5: {
-        title: 'Avec configuration du moteur de formulaire'
+        title: 'Avec configuration du moteur de formulaire',
       },
       props: {
         options:
@@ -516,7 +516,7 @@ export default {
         direction:
           'Direction d\'arrangement des éléments de formulaire, "x" pour horizontal, "y" pour vertical',
         formMethods:
-          'Collection de méthodes de formulaire, contenant des fonctions pour contrôler le formulaire'
+          'Collection de méthodes de formulaire, contenant des fonctions pour contrôler le formulaire',
       },
       formItemProps: {
         label: "Texte de l'étiquette de l'élément de formulaire",
@@ -543,52 +543,52 @@ export default {
           'Ajouter un espacement entre les éléments de formulaire en disposition horizontale',
         gridArea: 'Position dans la disposition en grille',
         outputFormat: 'Méthode de formatage pour la sortie des paramètres',
-        inputFormat: "Méthode de formatage pour l'entrée des paramètres"
+        inputFormat: "Méthode de formatage pour l'entrée des paramètres",
       },
       events: {
-        mounted: "Déclenché lors du montage de l'élément de formulaire"
+        mounted: "Déclenché lors du montage de l'élément de formulaire",
       },
       methods: {
         getForm: 'Obtenir le formulaire',
-        setForm: 'Définir le formulaire'
-      }
+        setForm: 'Définir le formulaire',
+      },
     },
     input: {
       name: 'Champ de saisie',
       description:
         'Champ de saisie riche en fonctionnalités, facilitant la saisie de données',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Préfixes et suffixes'
+        title: 'Préfixes et suffixes',
       },
       demo3: {
-        title: 'Limite de caractères'
+        title: 'Limite de caractères',
       },
       demo4: {
-        title: 'Alignement'
+        title: 'Alignement',
       },
       demo5: {
-        title: 'Visibilité du mot de passe'
+        title: 'Visibilité du mot de passe',
       },
       demo6: {
-        title: 'Largeur adaptative'
+        title: 'Largeur adaptative',
       },
       demo7: {
-        title: 'Sélection du texte entier au focus'
+        title: 'Sélection du texte entier au focus',
       },
       demo8: {
-        title: 'Effaçable'
+        title: 'Effaçable',
       },
       demo9: {
-        title: 'Lecture seule'
+        title: 'Lecture seule',
       },
       demo10: {
-        title: 'Désactivé'
+        title: 'Désactivé',
       },
       demo11: {
-        title: 'Événement déclenché par la touche Entrée'
+        title: 'Événement déclenché par la touche Entrée',
       },
       props: {
         type: 'Type de champ de saisie',
@@ -618,7 +618,7 @@ export default {
         suffixOptions:
           'Liste des options de suffixe, utilisée lorsque suffix est select',
         suffixTooltip: "Texte d'info-bulle pour le suffixe du champ de saisie",
-        okByEnter: 'Autoriser la confirmation par la touche Entrée'
+        okByEnter: 'Autoriser la confirmation par la touche Entrée',
       },
       events: {
         change: 'Déclenché lorsque la valeur du champ de saisie change',
@@ -626,32 +626,32 @@ export default {
         blur: 'Déclenché lorsque le champ de saisie perd le focus',
         input: 'Déclenché lors de la saisie dans le champ',
         clear: "Déclenché lors de l'effacement du champ de saisie",
-        ok: 'Déclenché lors de la confirmation du champ de saisie'
+        ok: 'Déclenché lors de la confirmation du champ de saisie',
       },
       model: {
         modelValue: 'Valeur liée',
         prefixValue: 'Valeur du préfixe',
-        suffixValue: 'Valeur du suffixe'
-      }
+        suffixValue: 'Valeur du suffixe',
+      },
     },
     inputNumber: {
       name: 'Champ numérique',
       description:
         'Champ spécialement conçu pour la saisie de nombres, permettant un traitement numérique précis',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Sélection complète au focus'
+        title: 'Sélection complète au focus',
       },
       demo3: {
-        title: 'Limites de plage'
+        title: 'Limites de plage',
       },
       demo4: {
-        title: 'Valeurs précises'
+        title: 'Valeurs précises',
       },
       demo5: {
-        title: 'Désactivé et lecture seule'
+        title: 'Désactivé et lecture seule',
       },
       props: {
         min: 'Valeur minimale',
@@ -664,11 +664,11 @@ export default {
         width:
           'Largeur, supporte les nombres (unité : pixels) ou les chaînes avec unités',
         align: 'Alignement',
-        selectByFocus: 'Sélection de tout le texte au focus'
+        selectByFocus: 'Sélection de tout le texte au focus',
       },
       model: {
-        modelValue: 'Valeur liée'
-      }
+        modelValue: 'Valeur liée',
+      },
     },
     textarea: {
       name: 'Zone de texte',
@@ -676,31 +676,31 @@ export default {
         'Champ de saisie multiligne, rendant la saisie de texte long plus confortable',
 
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Limite de caractères'
+        title: 'Limite de caractères',
       },
       demo3: {
-        title: 'Sélection de tout le texte au focus'
+        title: 'Sélection de tout le texte au focus',
       },
       demo4: {
-        title: 'Effaçable'
+        title: 'Effaçable',
       },
       demo5: {
-        title: 'Lecture seule'
+        title: 'Lecture seule',
       },
       demo6: {
-        title: 'Désactivé'
+        title: 'Désactivé',
       },
       demo7: {
-        title: 'Événement déclenché par la touche Entrée'
+        title: 'Événement déclenché par la touche Entrée',
       },
       demo8: {
-        title: 'Redimensionnable'
+        title: 'Redimensionnable',
       },
       model: {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       props: {
         placeholder: "Texte d'espace réservé",
@@ -719,7 +719,7 @@ export default {
         maxHeight: 'Hauteur maximale',
         selectByFocus: 'Sélection de tout le texte au focus',
         okByEnter:
-          'Activer la confirmation par la touche Entrée (lorsque activé, Shift+Entrée permet le saut de ligne)'
+          'Activer la confirmation par la touche Entrée (lorsque activé, Shift+Entrée permet le saut de ligne)',
       },
       events: {
         change: 'Déclenché lorsque la valeur change',
@@ -727,39 +727,39 @@ export default {
         blur: 'Déclenché lors de la perte du focus',
         input: 'Déclenché lors de la saisie',
         clear: "Déclenché lors de l'effacement",
-        ok: 'Déclenché lors de la confirmation'
-      }
+        ok: 'Déclenché lors de la confirmation',
+      },
     },
     inputTag: {
       name: 'Champ de tags',
       description:
         "Saisie et gestion faciles de plusieurs tags, rendant l'organisation des données plus claire",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Taille'
+        title: 'Taille',
       },
       demo3: {
-        title: 'Autoriser les doublons'
+        title: 'Autoriser les doublons',
       },
       demo4: {
-        title: 'Valeur par défaut contrôlée'
+        title: 'Valeur par défaut contrôlée',
       },
       demo5: {
-        title: 'Effaçable'
+        title: 'Effaçable',
       },
       demo6: {
-        title: 'Lecture seule'
+        title: 'Lecture seule',
       },
       demo7: {
-        title: 'Désactivé'
+        title: 'Désactivé',
       },
       demo8: {
-        title: 'Longueur maximale'
+        title: 'Longueur maximale',
       },
       model: {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       props: {
         size: 'Taille',
@@ -769,45 +769,45 @@ export default {
         readonly: 'Lecture seule',
         allowDuplicates: 'Autoriser les doublons',
         maxLength: 'Nombre maximum de tags autorisés',
-        width: 'Largeur'
+        width: 'Largeur',
       },
       events: {
         change: 'Déclenché lorsque la valeur change',
         clear: "Déclenché lors de l'effacement",
         add: "Déclenché lors de l'ajout d'un tag",
-        remove: "Déclenché lors de la suppression d'un tag"
-      }
+        remove: "Déclenché lors de la suppression d'un tag",
+      },
     },
     checkbox: {
       name: 'Case à cocher',
       description:
         'Sélecteur supportant la sélection multiple, rendant les choix multiples plus intuitifs',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Distribution verticale'
+        title: 'Distribution verticale',
       },
       demo3: {
-        title: 'Style bloc'
+        title: 'Style bloc',
       },
       demo4: {
-        title: 'Style arrondi'
+        title: 'Style arrondi',
       },
       demo5: {
-        title: 'Lecture seule'
+        title: 'Lecture seule',
       },
       demo6: {
-        title: 'Désactivé'
+        title: 'Désactivé',
       },
       demo7: {
-        title: 'Mode unique'
+        title: 'Mode unique',
       },
       'model(CheckboxGroup)': {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       'model(Checkbox)': {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       'props(CheckboxGroup)': {
         options: 'Options',
@@ -817,7 +817,7 @@ export default {
         direction: "Direction d'arrangement",
         block: 'Affichage en bloc',
         round: 'Style arrondi',
-        iconable: "Autoriser l'utilisation d'icônes"
+        iconable: "Autoriser l'utilisation d'icônes",
       },
       'props(Checkbox)': {
         label: 'Titre',
@@ -829,44 +829,44 @@ export default {
         block: 'Affichage en bloc',
         round: 'Style arrondi',
         iconable: "Autoriser l'utilisation d'icônes",
-        certain: 'État certain'
+        certain: 'État certain',
       },
       'events(Checkbox)': {
-        change: 'Déclenché lorsque la valeur change'
+        change: 'Déclenché lorsque la valeur change',
       },
       'events(CheckboxGroup)': {
-        change: 'Déclenché lorsque la valeur change'
+        change: 'Déclenché lorsque la valeur change',
       },
       options: {
         label: 'Titre',
         value: 'Valeur',
-        disabled: 'Désactivé'
-      }
+        disabled: 'Désactivé',
+      },
     },
     radio: {
       name: 'Bouton radio',
       description:
         "Sélecteur ne permettant qu'un seul choix, rendant la sélection unique plus claire",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Distribution verticale'
+        title: 'Distribution verticale',
       },
       demo3: {
-        title: 'Style bloc'
+        title: 'Style bloc',
       },
       demo4: {
-        title: 'Forme'
+        title: 'Forme',
       },
       demo5: {
-        title: 'Lecture seule'
+        title: 'Lecture seule',
       },
       demo6: {
-        title: 'Désactivé'
+        title: 'Désactivé',
       },
       model: {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       'props(RadioGroup)': {
         size: 'Taille',
@@ -876,38 +876,38 @@ export default {
         iconable: "Autoriser l'utilisation d'icônes",
         options: 'Options',
         readonly: 'Lecture seule',
-        round: 'Style arrondi'
+        round: 'Style arrondi',
       },
       options: {
         label: 'Titre',
         value: 'Valeur',
-        disabled: 'Désactivé'
+        disabled: 'Désactivé',
       },
       events: {
-        change: 'Déclenché lorsque la valeur change'
-      }
+        change: 'Déclenché lorsque la valeur change',
+      },
     },
     tabs: {
       name: 'Onglets',
       description:
         'Présentation claire du contenu par catégories, avec une transition fluide',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Largeur adaptative'
+        title: 'Largeur adaptative',
       },
       demo3: {
-        title: 'Largeur personnalisée des éléments'
+        title: 'Largeur personnalisée des éléments',
       },
       demo4: {
-        title: 'Ligne'
+        title: 'Ligne',
       },
       demo5: {
-        title: 'Style arrondi'
+        title: 'Style arrondi',
       },
       model: {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       props: {
         options: 'Options',
@@ -917,43 +917,43 @@ export default {
         itemWidth: 'Largeur des éléments',
         round: 'Style arrondi',
         disabled: 'Désactivé',
-        readonly: 'Lecture seule'
+        readonly: 'Lecture seule',
       },
       options: {
         label: 'Titre',
-        value: 'Valeur'
-      }
+        value: 'Valeur',
+      },
     },
     select: {
       name: 'Sélecteur',
       description:
         'Liste déroulante de sélection, rendant les choix plus pratiques',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Recherche'
+        title: 'Recherche',
       },
       demo3: {
-        title: 'Support des slots'
+        title: 'Support des slots',
       },
       demo4: {
-        title: 'Options désactivées'
+        title: 'Options désactivées',
       },
       demo5: {
-        title: 'Lecture seule'
+        title: 'Lecture seule',
       },
       demo6: {
-        title: 'Désactivé'
+        title: 'Désactivé',
       },
       demo7: {
-        title: 'État vide personnalisé'
+        title: 'État vide personnalisé',
       },
       demo8: {
-        title: 'Groupement'
+        title: 'Groupement',
       },
       model: {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       props: {
         defaultValue: 'Valeur par défaut',
@@ -971,47 +971,47 @@ export default {
         clearable: 'Effaçable',
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
-        showCheckIcon: "Afficher l'icône de vérification"
+        showCheckIcon: "Afficher l'icône de vérification",
       },
       events: {
         change: 'Déclenché lorsque la valeur change',
         clear: "Déclenché lors de l'effacement",
         blur: 'Déclenché lors de la perte du focus',
-        focus: "Déclenché lors de l'obtention du focus"
+        focus: "Déclenché lors de l'obtention du focus",
       },
       options: { label: 'Titre', value: 'Valeur', disabled: 'Désactivé' },
       slots: {
         item: 'Contenu personnalisé des options',
-        empty: "Contenu personnalisé de l'état vide"
-      }
+        empty: "Contenu personnalisé de l'état vide",
+      },
     },
     selectMultiple: {
       name: 'Sélecteur multiple',
       description:
         'Liste déroulante supportant la sélection multiple, rendant les choix multiples plus flexibles',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Méthode de filtrage personnalisée'
+        title: 'Méthode de filtrage personnalisée',
       },
       demo3: {
-        title: 'Support des slots'
+        title: 'Support des slots',
       },
       demo4: {
-        title: 'Options désactivées'
+        title: 'Options désactivées',
       },
       demo5: {
-        title: 'Lecture seule'
+        title: 'Lecture seule',
       },
       demo6: {
-        title: 'Désactivé'
+        title: 'Désactivé',
       },
       demo7: {
-        title: "Slot d'état vide"
+        title: "Slot d'état vide",
       },
       demo8: {
-        title: 'Groupement'
+        title: 'Groupement',
       },
       props: {
         options: 'Options',
@@ -1030,46 +1030,46 @@ export default {
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
         showCheckIcon: "Afficher l'icône de vérification",
-        defaultValue: 'Valeur par défaut'
+        defaultValue: 'Valeur par défaut',
       },
       model: {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       events: {
         change: 'Changement de valeur',
         blur: 'Perte de focus',
-        focus: 'Obtention du focus'
+        focus: 'Obtention du focus',
       },
       options: { label: 'Étiquette', value: 'Valeur', disabled: 'Désactivé' },
       slots: {
         item: 'Contenu personnalisé des options',
-        empty: "Contenu personnalisé de l'état vide"
-      }
+        empty: "Contenu personnalisé de l'état vide",
+      },
     },
     datePicker: {
       name: 'Sélecteur de date',
       description:
         'Outil de sélection de date simple et intuitif, pour une sélection temporelle précise',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Effaçable'
+        title: 'Effaçable',
       },
       demo3: {
-        title: 'Format personnalisé'
+        title: 'Format personnalisé',
       },
       demo4: {
-        title: 'Préréglages'
+        title: 'Préréglages',
       },
       demo5: {
-        title: 'Lecture seule'
+        title: 'Lecture seule',
       },
       demo6: {
-        title: 'Désactivé'
+        title: 'Désactivé',
       },
       model: {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       props: {
         valueFormat: 'Format de la valeur',
@@ -1079,30 +1079,30 @@ export default {
         clearable: 'Effaçable',
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
-        presets: 'Valeurs prédéfinies'
+        presets: 'Valeurs prédéfinies',
       },
       events: {
         change: 'Changement de valeur',
         focus: 'Obtention du focus',
         blur: 'Perte de focus',
-        clear: 'Effacement'
-      }
+        clear: 'Effacement',
+      },
     },
     dateRangePicker: {
       name: 'Sélecteur de plage de dates',
       description:
         "Outil pour sélectionner une plage temporelle, rendant la sélection d'intervalles plus pratique",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Effaçable'
+        title: 'Effaçable',
       },
       demo3: {
-        title: 'Autres options'
+        title: 'Autres options',
       },
       model: {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       props: {
         startKey: 'Clé de début',
@@ -1114,45 +1114,45 @@ export default {
         placeholderEnd: "Texte d'espace réservé pour la fin",
         clearable: 'Effaçable',
         readonly: 'Lecture seule',
-        disabled: 'Désactivé'
+        disabled: 'Désactivé',
       },
       events: {
         change: 'Changement de valeur',
         focus: 'Obtention du focus',
         blur: 'Perte de focus',
-        clear: 'Effacement'
-      }
+        clear: 'Effacement',
+      },
     },
     cascader: {
       name: 'Sélecteur en cascade',
       description:
         'Sélecteur pour gérer des données multi-niveaux, rendant les choix hiérarchiques plus clairs',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Mode libre'
+        title: 'Mode libre',
       },
       demo3: {
-        title: 'Afficher uniquement le dernier niveau'
+        title: 'Afficher uniquement le dernier niveau',
       },
       demo4: {
-        title: 'Chargement asynchrone'
+        title: 'Chargement asynchrone',
       },
       demo5: {
-        title: 'Effaçable'
+        title: 'Effaçable',
       },
       demo6: {
-        title: 'Lecture seule'
+        title: 'Lecture seule',
       },
       demo7: {
-        title: 'Désactivé'
+        title: 'Désactivé',
       },
       demo8: {
-        title: 'Options désactivées'
+        title: 'Options désactivées',
       },
       model: {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       props: {
         width: 'Largeur',
@@ -1166,46 +1166,46 @@ export default {
         size: 'Taille',
         trigger: 'Mode de déclenchement',
         loadMethod: 'Méthode de chargement',
-        readonly: 'Lecture seule'
+        readonly: 'Lecture seule',
       },
       options: {
         label: 'Étiquette',
         value: 'Valeur',
         isLeaf: 'Est une feuille',
         children: 'Enfants',
-        disabled: 'Désactivé'
-      }
+        disabled: 'Désactivé',
+      },
     },
     treeSelect: {
       name: 'Sélecteur arborescent',
       description:
         'Sélecteur avec structure en arbre, rendant la sélection hiérarchique plus intuitive',
       demo1: {
-        title: 'Utilisation standard'
+        title: 'Utilisation standard',
       },
       demo2: {
-        title: 'Chargement asynchrone des données'
+        title: 'Chargement asynchrone des données',
       },
       demo3: {
-        title: 'Slots personnalisés'
+        title: 'Slots personnalisés',
       },
       demo4: {
-        title: 'Éléments désactivés'
+        title: 'Éléments désactivés',
       },
       demo5: {
-        title: 'Tout déplier par défaut'
+        title: 'Tout déplier par défaut',
       },
       demo6: {
-        title: 'Recherche possible'
+        title: 'Recherche possible',
       },
       demo7: {
-        title: "Slot d'état vide"
+        title: "Slot d'état vide",
       },
       demo8: {
-        title: 'Autres options'
+        title: 'Autres options',
       },
       model: {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       props: {
         dataSource: 'Source de données',
@@ -1229,24 +1229,24 @@ export default {
         labelField: "Champ d'étiquette du nœud",
         disabledField: 'Champ de désactivation du nœud',
         initOptionsMethod: "Méthode d'initialisation des nœuds",
-        loadMethod: 'Méthode de chargement asynchrone des nœuds enfants'
+        loadMethod: 'Méthode de chargement asynchrone des nœuds enfants',
       },
       slots: {
-        handle: 'Nom du slot'
-      }
+        handle: 'Nom du slot',
+      },
     },
     inputTable: {
       name: "Table d'entrée",
       description:
         'Saisie rapide de données dans un tableau, rendant le traitement par lots plus efficace',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Valeurs par défaut'
+        title: 'Valeurs par défaut',
       },
       demo3: {
-        title: 'Options avancées'
+        title: 'Options avancées',
       },
       props: {
         columns: 'Colonnes',
@@ -1263,30 +1263,30 @@ export default {
         sortable: 'Triable',
         autoUniqueId: 'Générer un ID unique automatiquement',
         uniqueField: 'Champ unique',
-        sortTooltipCustomRender: `Rendu personnalisé de l'info-bulle de tri`
-      }
+        sortTooltipCustomRender: `Rendu personnalisé de l'info-bulle de tri`,
+      },
     },
     switch: {
       name: 'Interrupteur',
       description:
         "Sélecteur d'interrupteur simple, rendant les changements d'état plus clairs",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Carré'
+        title: 'Carré',
       },
       demo3: {
-        title: 'Simulation de requête'
+        title: 'Simulation de requête',
       },
       demo4: {
-        title: 'Lecture seule'
+        title: 'Lecture seule',
       },
       demo5: {
-        title: 'Désactivé'
+        title: 'Désactivé',
       },
       model: {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       props: {
         size: 'Taille',
@@ -1294,36 +1294,36 @@ export default {
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
         request: 'Requête',
-        loading: 'Chargement'
+        loading: 'Chargement',
       },
       events: {
-        change: 'Changement de valeur'
-      }
+        change: 'Changement de valeur',
+      },
     },
     slider: {
       name: 'Curseur',
       description:
         'Sélection de valeurs par glissement, rendant le choix de valeurs plus intuitif',
       demo1: {
-        title: 'Taille'
+        title: 'Taille',
       },
       demo2: {
-        title: 'Pas différents'
+        title: 'Pas différents',
       },
       demo3: {
-        title: 'Plage limitée'
+        title: 'Plage limitée',
       },
       demo4: {
-        title: 'Lecture seule'
+        title: 'Lecture seule',
       },
       demo5: {
-        title: 'Désactivé'
+        title: 'Désactivé',
       },
       demo6: {
-        title: 'Options de configuration'
+        title: 'Options de configuration',
       },
       model: {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       props: {
         size: 'Taille',
@@ -1333,33 +1333,33 @@ export default {
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
         options: 'Options',
-        formatTooltip: "Formatage de l'infobulle"
-      }
+        formatTooltip: "Formatage de l'infobulle",
+      },
     },
     sliderRange: {
       name: 'Curseur de plage',
       description:
         'Curseur pour sélectionner une plage de valeurs, rendant la sélection de plages plus flexible',
       demo1: {
-        title: 'Taille'
+        title: 'Taille',
       },
       demo2: {
-        title: 'Pas différents'
+        title: 'Pas différents',
       },
       demo3: {
-        title: 'Plage limitée'
+        title: 'Plage limitée',
       },
       demo4: {
-        title: 'Lecture seule'
+        title: 'Lecture seule',
       },
       demo5: {
-        title: 'Désactivé'
+        title: 'Désactivé',
       },
       demo6: {
-        title: 'Options de configuration'
+        title: 'Options de configuration',
       },
       model: {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       props: {
         size: 'Taille',
@@ -1369,93 +1369,93 @@ export default {
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
         options: 'Options',
-        formatTooltip: "Formatage de l'infobulle"
-      }
+        formatTooltip: "Formatage de l'infobulle",
+      },
     },
     rate: {
       name: 'Évaluation',
       description:
         "Composant d'évaluation par étoiles, rendant la notation plus vivante et amusante",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Lecture seule'
+        title: 'Lecture seule',
       },
       demo3: {
-        title: 'Désactivé'
+        title: 'Désactivé',
       },
       demo4: {
-        title: 'Infobulles'
+        title: 'Infobulles',
       },
       model: {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       props: {
         size: 'Taille',
         count: "Nombre d'étoiles",
         tips: 'Infobulles',
         readonly: 'Lecture seule',
-        disabled: 'Désactivé'
-      }
+        disabled: 'Désactivé',
+      },
     },
     colorPicker: {
       name: 'Sélecteur de couleur',
       description:
         'Outil riche de sélection de couleurs, pour des choix de couleurs plus précis',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Différentes tailles'
+        title: 'Différentes tailles',
       },
       demo3: {
-        title: 'Largeur personnalisée'
+        title: 'Largeur personnalisée',
       },
       demo4: {
-        title: 'État désactivé'
+        title: 'État désactivé',
       },
       demo5: {
-        title: 'État lecture seule'
+        title: 'État lecture seule',
       },
       model: {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       props: {
         size: 'Taille',
         width: 'Largeur',
         placeholder: "Texte d'espace réservé",
         disabled: 'Désactivé',
-        readonly: 'Lecture seule'
-      }
+        readonly: 'Lecture seule',
+      },
     },
     upload: {
       name: 'Téléchargement',
       description:
         'Composant de téléchargement de fichiers, simplifiant la gestion des fichiers',
       demo1: {
-        title: 'Standard'
+        title: 'Standard',
       },
       demo2: {
-        title: 'Limites de format et de taille'
+        title: 'Limites de format et de taille',
       },
       demo3: {
-        title: "Téléchargement d'images"
+        title: "Téléchargement d'images",
       },
       demo4: {
-        title: 'Conseils personnalisés'
+        title: 'Conseils personnalisés',
       },
       demo5: {
-        title: 'Mur de photos'
+        title: 'Mur de photos',
       },
       demo6: {
-        title: 'Sans téléchargement'
+        title: 'Sans téléchargement',
       },
       demo7: {
-        title: 'Prévisualisation'
+        title: 'Prévisualisation',
       },
       model: {
-        modelValue: 'Valeur liée'
+        modelValue: 'Valeur liée',
       },
       props: {
         accept: 'Types de fichiers acceptés',
@@ -1468,8 +1468,8 @@ export default {
         size: 'Taille',
         tips: 'Conseils',
         uploadHelper: 'Assistant de téléchargement',
-        viewMode: "Mode d'affichage"
-      }
+        viewMode: "Mode d'affichage",
+      },
     },
     table: {
       name: 'Tableau',
@@ -1478,43 +1478,43 @@ export default {
       model: {
         modelValue: 'Nom du paramètre',
         selectedKeys: 'Clés sélectionnées',
-        sortValue: 'Valeur de tri'
+        sortValue: 'Valeur de tri',
       },
       demo1: {
-        title: 'Standard'
+        title: 'Standard',
       },
       demo2: {
-        title: 'Lignes et colonnes fixes'
+        title: 'Lignes et colonnes fixes',
       },
       demo3: {
-        title: 'Actions personnalisées'
+        title: 'Actions personnalisées',
       },
       demo4: {
-        title: 'Slots'
+        title: 'Slots',
       },
       demo5: {
-        title: 'Style personnalisé'
+        title: 'Style personnalisé',
       },
       demo6: {
-        title: 'Sélection'
+        title: 'Sélection',
       },
       demo7: {
-        title: 'Tri'
+        title: 'Tri',
       },
       demo8: {
-        title: 'Rendu personnalisé'
+        title: 'Rendu personnalisé',
       },
       demo9: {
-        title: 'Fonctionnalités complètes'
+        title: 'Fonctionnalités complètes',
       },
       demo10: {
-        title: 'Aucune donnée'
+        title: 'Aucune donnée',
       },
       demo11: {
         title: 'En-têtes groupés',
         tipsTitle: 'Note de limitation',
         tipsContent:
-          'Si vous souhaitez que les en-têtes groupés aient un effet de colonne fixe, vous devez définir la largeur pour tous les en-têtes de colonnes fixes, y compris tous les nœuds parents, sinon un désalignement peut se produire.'
+          'Si vous souhaitez que les en-têtes groupés aient un effet de colonne fixe, vous devez définir la largeur pour tous les en-têtes de colonnes fixes, y compris tous les nœuds parents, sinon un désalignement peut se produire.',
       },
       props: {
         columns: 'Colonnes',
@@ -1526,7 +1526,7 @@ export default {
         multiple: 'Sélection multiple',
         rowKey: 'Clé de ligne',
         sortTooltipCustomRender: `Rendu personnalisé de l'info-bulle de tri`,
-        sortable: 'Triable'
+        sortable: 'Triable',
       },
       tableColumns: {
         field: 'Champ',
@@ -1535,72 +1535,72 @@ export default {
         type: 'Type',
         width: 'Largeur',
         x: 'Axe X',
-        customRender: 'Rendu personnalisé'
-      }
+        customRender: 'Rendu personnalisé',
+      },
     },
     pagination: {
       name: 'Pagination',
       description:
         'Navigation de pagination claire, facilitant la navigation dans les données',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Grand volume'
+        title: 'Grand volume',
       },
       demo3: {
-        title: 'Simulation asynchrone'
+        title: 'Simulation asynchrone',
       },
       model: {
         total: 'Total',
         currentPage: 'Page actuelle',
-        pageSize: 'Taille de page'
+        pageSize: 'Taille de page',
       },
       props: {
         size: 'Taille',
         pageSizeOptions: 'Options de taille de page',
-        visiblePagesCount: 'Nombre de pages visibles'
+        visiblePagesCount: 'Nombre de pages visibles',
       },
       events: {
-        change: 'Changement'
-      }
+        change: 'Changement',
+      },
     },
     magicNumber: {
       name: 'Nombre Magique',
       description:
-        "Composant d'animation qui rend l'affichage des nombres plus vivant et intéressant"
+        "Composant d'animation qui rend l'affichage des nombres plus vivant et intéressant",
     },
     tree: {
       name: 'Arborescence',
       description:
         'Outil puissant pour afficher des structures de données hiérarchiques avec clarté',
       demo1: {
-        title: 'Usage standard'
+        title: 'Usage standard',
       },
       demo2: {
-        title: 'Affichage des cases à cocher'
+        title: 'Affichage des cases à cocher',
       },
       demo3: {
-        title: 'Sélection multiple'
+        title: 'Sélection multiple',
       },
       demo4: {
-        title: 'Mode de liaison parent-enfant'
+        title: 'Mode de liaison parent-enfant',
       },
       demo5: {
-        title: 'Chargement asynchrone'
+        title: 'Chargement asynchrone',
       },
       demo6: {
-        title: 'Tout déplier par défaut'
+        title: 'Tout déplier par défaut',
       },
       demo7: {
-        title: 'Affichage des lignes de connexion'
+        title: 'Affichage des lignes de connexion',
       },
       demo8: {
-        title: 'Utilisation des slots'
+        title: 'Utilisation des slots',
       },
       model: {
         modelValue: 'Nom du paramètre',
-        expandedKeys: 'Clés des nœuds déployés'
+        expandedKeys: 'Clés des nœuds déployés',
       },
       props: {
         dataSource: 'Source de données',
@@ -1618,62 +1618,62 @@ export default {
         disabledField: 'Champ de désactivation du nœud',
         initOptionsMethod: "Méthode d'initialisation des nœuds",
         loadMethod: 'Méthode de chargement asynchrone des nœuds enfants',
-        isSelect: 'Est sélectionné'
+        isSelect: 'Est sélectionné',
       },
       slots: {
-        handle: 'Nom du slot'
+        handle: 'Nom du slot',
       },
       treeDataSource: {
         label: 'Étiquette',
         key: 'Clé',
         isLeaf: 'Est une feuille',
         children: 'Enfants',
-        disabled: 'Désactivé'
-      }
+        disabled: 'Désactivé',
+      },
     },
     collapse: {
       name: 'Panneau Accordéon',
       description:
         'Zone de contenu pliable et dépliable pour une présentation plus organisée des informations',
       demo1: {
-        title: 'Usage de base'
+        title: 'Usage de base',
       },
       demo2: {
-        title: 'Slot de titre'
+        title: 'Slot de titre',
       },
       demo3: {
-        title: 'Mode accordéon'
+        title: 'Mode accordéon',
       },
       model: {
-        modelValue: 'Nom du paramètre'
+        modelValue: 'Nom du paramètre',
       },
       'model(CollapseItem)': {
-        modelValue: 'Nom du paramètre'
+        modelValue: 'Nom du paramètre',
       },
       props: {
-        width: 'Largeur'
+        width: 'Largeur',
       },
       'props(CollapseItem)': {
         collapseKey: 'Clé de pliage',
         title: 'Titre',
-        radius: 'Rayon'
-      }
+        radius: 'Rayon',
+      },
     },
     desc: {
       name: 'Liste Descriptive',
       description:
         "Présentation ordonnée de multiples champs pour un affichage d'informations plus structuré",
       demo1: {
-        title: 'Usage de base'
+        title: 'Usage de base',
       },
       demo2: {
-        title: 'Direction'
+        title: 'Direction',
       },
       demo3: {
-        title: 'Version enrichie'
+        title: 'Version enrichie',
       },
       demo4: {
-        title: 'Configuration en ligne'
+        title: 'Configuration en ligne',
       },
       props: {
         options: 'Options',
@@ -1686,7 +1686,7 @@ export default {
         columns: 'Colonnes',
         labelWidth: 'Largeur du label',
         direction: 'Direction',
-        bordered: 'Avec bordure'
+        bordered: 'Avec bordure',
       },
       descItemProps: {
         label: 'Label',
@@ -1701,102 +1701,102 @@ export default {
         labelX: 'Label X',
         valueX: 'Valeur X',
         gridArea: 'Zone de grille',
-        customRender: 'Rendu personnalisé'
-      }
+        customRender: 'Rendu personnalisé',
+      },
     },
     alert: {
       name: 'Alerte',
       description:
         "Boîte d'information visible pour des avertissements plus doux",
       demo1: {
-        title: 'Usage de base'
+        title: 'Usage de base',
       },
       demo2: {
-        title: 'Support des slots'
+        title: 'Support des slots',
       },
       demo3: {
-        title: 'Plus de scénarios'
+        title: 'Plus de scénarios',
       },
       props: {
         type: 'Type',
         title: 'Titre',
         content: 'Contenu',
         closeable: 'Peut être fermé',
-        footer: 'Contenu du pied'
-      }
+        footer: 'Contenu du pied',
+      },
     },
     message: {
       name: 'Message',
       description:
         "Retour d'information léger pour des notifications plus concises",
       demo1: {
-        title: 'Usage de base'
+        title: 'Usage de base',
       },
       demo2: {
-        title: 'Contrôlable'
+        title: 'Contrôlable',
       },
       demo3: {
-        title: 'Simulation de requête'
+        title: 'Simulation de requête',
       },
       events: {
-        close: 'Déclenché à la fermeture'
+        close: 'Déclenché à la fermeture',
       },
       props: {
         type: 'Type',
         content: 'Contenu',
-        duration: 'Durée'
-      }
+        duration: 'Durée',
+      },
     },
     notification: {
       name: 'Notification',
       description:
         'Notification élégante pour un envoi de messages plus convivial.',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Délai'
+        title: 'Délai',
       },
       demo3: {
-        title: 'Largeur personnalisée'
+        title: 'Largeur personnalisée',
       },
       demo4: {
-        title: 'Afficher la barre de progression'
+        title: 'Afficher la barre de progression',
       },
       demo5: {
-        title: 'Fermeture manuelle'
+        title: 'Fermeture manuelle',
       },
       props: {
         type: 'Type',
         title: 'Titre',
         content: 'Contenu de la notification',
-        delay: 'Délai'
-      }
+        delay: 'Délai',
+      },
     },
     drawer: {
       name: 'Tiroir (Drawer)',
       description:
         "Panneau coulissant depuis le bord de l'écran pour des opérations temporaires plus fluides.",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Fermeture asynchrone'
+        title: 'Fermeture asynchrone',
       },
       demo3: {
-        title: 'En-tête et pied de page personnalisés'
+        title: 'En-tête et pied de page personnalisés',
       },
       demo4: {
-        title: 'Autoriser la fermeture avec Echap'
+        title: 'Autoriser la fermeture avec Echap',
       },
       demo5: {
-        title: 'Fermer en cliquant sur le masque'
+        title: 'Fermer en cliquant sur le masque',
       },
       demo6: {
-        title: 'Imbrication'
+        title: 'Imbrication',
       },
       model: {
-        visible: 'Visible'
+        visible: 'Visible',
       },
       props: {
         title: 'Titre',
@@ -1808,24 +1808,24 @@ export default {
         hideFooter: 'Masquer le pied de page',
         okButtonProps: 'Propriétés du bouton OK',
         closeButtonProps: 'Propriétés du bouton de fermeture',
-        zIndex: 'Index Z'
-      }
+        zIndex: 'Index Z',
+      },
     },
     dialog: {
       name: 'Dialogue (Dialog)',
       description:
         'Dialogue modal pour mettre en évidence les interactions importantes.',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Fermeture asynchrone'
+        title: 'Fermeture asynchrone',
       },
       demo3: {
-        title: 'Fermer en cliquant sur le masque'
+        title: 'Fermer en cliquant sur le masque',
       },
       demo4: {
-        title: 'Fermer avec Echap'
+        title: 'Fermer avec Echap',
       },
       props: {
         type: 'Type',
@@ -1838,31 +1838,31 @@ export default {
         cancel: "Rappel d'annulation",
         closeOnClickOverlay: 'Fermer en cliquant sur le masque',
         closeByEsc: 'Fermer avec la touche Echap',
-        transformOrigin: 'Origine de la transformation'
+        transformOrigin: 'Origine de la transformation',
       },
       events: {
         ok: 'Déclenché lors du clic sur le bouton OK',
-        cancel: 'Déclenché lors du clic sur le bouton Annuler'
-      }
+        cancel: 'Déclenché lors du clic sur le bouton Annuler',
+      },
     },
     modal: {
       name: 'Modale (Modal)',
       description:
         'Fenêtre modale plus flexible pour des interactions popup plus riches',
       demo1: {
-        title: 'Usage de base'
+        title: 'Usage de base',
       },
       demo2: {
-        title: 'Fermeture asynchrone'
+        title: 'Fermeture asynchrone',
       },
       demo3: {
-        title: 'En-tête et pied personnalisés'
+        title: 'En-tête et pied personnalisés',
       },
       demo4: {
-        title: 'Fermeture par touche ESC'
+        title: 'Fermeture par touche ESC',
       },
       model: {
-        visible: 'Visibilité'
+        visible: 'Visibilité',
       },
       props: {
         title: 'Titre',
@@ -1873,18 +1873,18 @@ export default {
         okButtonProps: 'Propriétés du bouton de confirmation',
         closeButtonProps: 'Propriétés du bouton de fermeture',
         closeOnClickOverlay: 'Fermeture au clic sur le masque',
-        zIndex: 'Niveau de couche'
-      }
+        zIndex: 'Niveau de couche',
+      },
     },
     popok: {
       name: 'Confirmation Popup',
       description:
         "Confirmation légère pour rendre les validations d'actions plus pratiques",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Modes de déclenchement'
+        title: 'Modes de déclenchement',
       },
       props: {
         type: 'Type',
@@ -1896,27 +1896,27 @@ export default {
         ok: 'Callback de confirmation',
         cancel: "Callback d'annulation",
         okText: 'Texte du bouton de confirmation',
-        cancelText: "Texte du bouton d'annulation"
-      }
+        cancelText: "Texte du bouton d'annulation",
+      },
     },
     popover: {
       name: 'Popover',
       description:
         'Carte contextuelle qui apparaît au clic ou au survol, contenant des informations et des actions plus riches.',
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Déclencheur'
+        title: 'Déclencheur',
       },
       demo3: {
-        title: 'Déclencheur personnalisé'
+        title: 'Déclencheur personnalisé',
       },
       demo4: {
-        title: "Fermeture automatique en cliquant à l'extérieur"
+        title: "Fermeture automatique en cliquant à l'extérieur",
       },
       demo5: {
-        title: 'État de chargement'
+        title: 'État de chargement',
       },
       props: {
         trigger: 'Déclencheur',
@@ -1926,78 +1926,78 @@ export default {
         hideOnClick: 'Masquer en cliquant',
         offset: 'Décalage',
         popoverBodyClassName: 'Nom de classe du corps du popover',
-        triggerTarget: 'Cible du déclencheur'
+        triggerTarget: 'Cible du déclencheur',
       },
       slots: {
         trigger: 'Slot de déclenchement',
-        'popover-body': 'Slot du corps du popover'
-      }
+        'popover-body': 'Slot du corps du popover',
+      },
     },
     tooltip: {
       name: 'Info-bulle (Tooltip)',
       description:
         "Bulle d'aide textuelle simple pour des indications plus légères.",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Déclencher par clic'
+        title: 'Déclencher par clic',
       },
       demo3: {
-        title: 'Délai'
+        title: 'Délai',
       },
       demo4: {
-        title: 'Support HTML'
+        title: 'Support HTML',
       },
       props: {
         tips: "Contenu de l'info-bulle",
         placement: 'Position',
         trigger: 'Déclencheur',
         allowHTML: 'Autoriser le HTML',
-        delay: 'Délai'
-      }
+        delay: 'Délai',
+      },
     },
     loading: {
       name: 'Chargement (Loading)',
       description:
         "Effet de chargement élégant pour rendre l'attente plus agréable.",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: "Taille d'icône personnalisée"
+        title: "Taille d'icône personnalisée",
       },
       demo3: {
-        title: "Message d'information personnalisé"
+        title: "Message d'information personnalisé",
       },
       props: {
         tip: "Message d'information",
         iconSize: "Taille de l'icône",
-        visible: 'Visible'
-      }
+        visible: 'Visible',
+      },
     },
     result: {
       name: 'Résultat (Result)',
       description:
         "Utilisé pour présenter les résultats d'opérations, pour un retour plus complet",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       props: {
         type: 'Type',
         title: 'Titre',
-        content: 'Contenu'
+        content: 'Contenu',
       },
       slots: {
-        handle: 'Slot de gestion'
-      }
+        handle: 'Slot de gestion',
+      },
     },
     empty: {
       name: 'État vide',
       description:
         "Affichage d'état sans données, pour des pages vides plus conviviales",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       props: {
         type: 'Type',
@@ -2005,23 +2005,23 @@ export default {
         fontSize: 'Taille de police',
         padding: 'Marge intérieure',
         width: 'Largeur',
-        height: 'Hauteur'
-      }
+        height: 'Hauteur',
+      },
     },
     actionBox: {
       name: "Boîte d'action",
       description: "Boutons d'action flexibles pour des opérations rapides",
       demo1: {
-        title: 'Utilisation de base'
+        title: 'Utilisation de base',
       },
       demo2: {
-        title: 'Menu déroulant'
+        title: 'Menu déroulant',
       },
       demo3: {
-        title: 'Icônes personnalisées'
+        title: 'Icônes personnalisées',
       },
       demo4: {
-        title: 'Styles personnalisés'
+        title: 'Styles personnalisés',
       },
       props: {
         options: "Configuration des boutons d'action",
@@ -2029,14 +2029,14 @@ export default {
         dropdownLabel: 'Texte du menu déroulant',
         dropdownIcon: 'Icône du menu déroulant',
         divider: 'Afficher le séparateur',
-        iconOnly: 'Icône uniquement'
+        iconOnly: 'Icône uniquement',
       },
       options: {
         label: "Texte du bouton d'action",
         icon: "Icône du bouton d'action",
         onClick: "Événement de clic du bouton d'action",
-        customRender: 'Contenu de rendu personnalisé'
-      }
-    }
-  }
-}
+        customRender: 'Contenu de rendu personnalisé',
+      },
+    },
+  },
+};

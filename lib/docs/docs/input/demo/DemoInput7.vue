@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const v = ref('聚集后选中文本')
+const v = ref('聚集后选中文本');
 </script>
 
 <template>

@@ -1,19 +1,19 @@
 <script lang="ts" setup>
-import { emptyProps } from './props'
-import { any2px } from 'lew-ui/utils'
+import { emptyProps } from './props';
+import { any2px } from 'lew-ui/utils';
 
-const props = defineProps(emptyProps)
+const props = defineProps(emptyProps);
 
-let src = new URL(`../icon/icon_${props.type}.svg`, import.meta.url).href
+let src = new URL(`../icon/icon_${props.type}.svg`, import.meta.url).href;
 
 const emptyStyleObject = computed(() => {
-  const { width, height, padding } = props
+  const { width, height, padding } = props;
   return {
     width: any2px(width),
     height: any2px(height),
-    padding: padding
-  }
-})
+    padding: padding,
+  };
+});
 </script>
 
 <template>
@@ -21,7 +21,7 @@ const emptyStyleObject = computed(() => {
     <img :src="src" alt="" srcset="" class="lew-empty-icon" />
     <div
       :style="{
-        fontSize: any2px(fontSize)
+        fontSize: any2px(fontSize),
       }"
       class="lew-empty-title"
     >

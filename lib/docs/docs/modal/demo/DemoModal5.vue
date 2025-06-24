@@ -1,41 +1,41 @@
 <script setup lang="ts">
-const visible1 = ref(false)
-const visible2 = ref(false)
+const visible1 = ref(false);
+const visible2 = ref(false);
 
 const ok1 = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      visible1.value = false
-      resolve(true)
-    }, 1000)
-  })
-}
+      visible1.value = false;
+      resolve(true);
+    }, 1000);
+  });
+};
 
 const ok2 = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      visible2.value = false
-      resolve(true)
-    }, 1000)
-  })
-}
+      visible2.value = false;
+      resolve(true);
+    }, 1000);
+  });
+};
 const close1 = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      visible1.value = false
-      resolve(true)
-    }, 1000)
-  })
-}
+      visible1.value = false;
+      resolve(true);
+    }, 1000);
+  });
+};
 
 const close2 = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      visible2.value = false
-      resolve(true)
-    }, 1000)
-  })
-}
+      visible2.value = false;
+      resolve(true);
+    }, 1000);
+  });
+};
 </script>
 
 <template>
@@ -49,10 +49,10 @@ const close2 = () => {
     width="1000px"
     title="BILLY Bookcase"
     :closeButtonProps="{
-      request: close1
+      request: close1,
     }"
     :okButtonProps="{
-      request: ok1
+      request: ok1,
     }"
   >
     <div class="modal-body">
@@ -96,10 +96,10 @@ const close2 = () => {
     width="400px"
     title="Assembly Guide"
     :okButtonProps="{
-      request: ok2
+      request: ok2,
     }"
     :closeButtonProps="{
-      request: close2
+      request: close2,
     }"
   >
     <div class="modal-body">

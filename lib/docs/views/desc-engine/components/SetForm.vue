@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import SetFormItem from './SetFormItem.vue'
+import SetFormItem from './SetFormItem.vue';
 
 defineProps({
   options: {
     type: Array as PropType<any>,
-    default: () => []
+    default: () => [],
   },
   collapseHeight: {
     type: Number,
-    default: 0
-  }
-})
+    default: 0,
+  },
+});
 
-const form: any = defineModel({ default: {} })
+const form: any = defineModel({ default: {} });
 </script>
 
 <template>

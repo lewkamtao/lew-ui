@@ -1,9 +1,9 @@
-import { inputProps } from 'lew-ui'
-import { convertProps } from '@/lib/utils'
+import { inputProps } from 'lew-ui';
+import { convertProps } from '@/lib/utils';
 
 export default {
   title: 'Props',
   columnsKey: 'props',
   orderNum: 10,
-  data: convertProps(inputProps)
-}
+  data: convertProps(inputProps),
+};

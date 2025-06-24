@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const leftAlignedText = ref('这是左对齐文本')
-const centeredText = ref('这是居中对齐文本')
-const rightAlignedText = ref('这是右对齐文本')
+const leftAlignedText = ref('这是左对齐文本');
+const centeredText = ref('这是居中对齐文本');
+const rightAlignedText = ref('这是右对齐文本');
 </script>
 
 <template>

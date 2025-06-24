@@ -2,14 +2,14 @@
 const inputValues = reactive({
   email: '',
   website: '',
-  address: ''
-})
+  address: '',
+});
 
 const selectValues = reactive({
   protocol: 'https://',
   domain: '.com',
-  city: 'New York'
-})
+  city: 'New York',
+});
 
 const options = {
   cities: [
@@ -17,39 +17,39 @@ const options = {
     { label: 'London', value: 'London' },
     { label: 'Tokyo', value: 'Tokyo' },
     { label: 'Berlin', value: 'Berlin' },
-    { label: 'Canberra', value: 'Canberra' }
+    { label: 'Canberra', value: 'Canberra' },
   ],
   protocols: [
     { label: 'http://', value: 'http://' },
-    { label: 'https://', value: 'https://' }
+    { label: 'https://', value: 'https://' },
   ],
   domains: [
     { label: '.com', value: '.com' },
     { label: '.cn', value: '.cn' },
     { label: '.org', value: '.org' },
-    { label: '.net', value: '.net' }
-  ]
-}
+    { label: '.net', value: '.net' },
+  ],
+};
 
 const getSuffixTooltip = () => {
   const domainDesc = {
     '.com': 'The common top-level domain for commercial websites',
     '.cn': 'The national top-level domain for China',
     '.org': 'Domain for non-profit organizations',
-    '.net': 'Domain for network service providers'
-  }[selectValues.domain]
+    '.net': 'Domain for network service providers',
+  }[selectValues.domain];
 
-  return domainDesc
-}
+  return domainDesc;
+};
 
 const getPrefixesTooltip = () => {
   const protocolDesc =
     selectValues.protocol === 'https://'
       ? 'Secure encrypted hypertext transfer protocol'
-      : 'Standard hypertext transfer protocol'
+      : 'Standard hypertext transfer protocol';
 
-  return protocolDesc
-}
+  return protocolDesc;
+};
 </script>
 
 <template>

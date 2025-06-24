@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const v = ref('This is a read-only state')
+const v = ref('This is a read-only state');
 </script>
 
 <template>

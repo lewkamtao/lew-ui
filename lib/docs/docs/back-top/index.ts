@@ -1,3 +1,3 @@
-import DemoBackTop from './DemoBackTop.vue'
+import DemoBackTop from './DemoBackTop.vue';
 
-export default DemoBackTop
+export default DemoBackTop;

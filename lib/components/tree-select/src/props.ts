@@ -1,38 +1,38 @@
-import type { PropType } from 'vue'
-import type { TreeDataSource } from '../../tree'
-import type { LewSize } from 'lew-ui'
-import { validSizes } from 'lew-ui/constants'
+import type { PropType } from 'vue';
+import type { TreeDataSource } from '../../tree';
+import type { LewSize } from 'lew-ui';
+import { validSizes } from 'lew-ui/constants';
 
 export type TreeSelectOptions = {
-  label: string
-  value: string | number
-  labelPaths?: string[]
-  keysPaths?: string[]
-  level: number
-  isLeaf?: boolean
-  loading?: boolean
-  disabled?: boolean
-  parentLabelPaths?: string[]
-  parentKeysPaths?: string[]
-  parentChildren?: TreeSelectOptions[]
-  children?: TreeSelectOptions[]
-}
+  label: string;
+  value: string | number;
+  labelPaths?: string[];
+  keysPaths?: string[];
+  level: number;
+  isLeaf?: boolean;
+  loading?: boolean;
+  disabled?: boolean;
+  parentLabelPaths?: string[];
+  parentKeysPaths?: string[];
+  parentChildren?: TreeSelectOptions[];
+  children?: TreeSelectOptions[];
+};
 
-export type TreeSelectTriggerType = 'click' | 'hover'
-export type TreeSelectAlign = 'left' | 'center' | 'right'
+export type TreeSelectTriggerType = 'click' | 'hover';
+export type TreeSelectAlign = 'left' | 'center' | 'right';
 
 export const treeSelectModel = {
   modelValue: {
     type: [String, Number],
     default: undefined,
-    description: '当前选中的值'
-  }
-}
+    description: '当前选中的值',
+  },
+};
 
 export type TreeSelectSearchMethodParams = {
-  item?: TreeDataSource
-  keyword?: string
-}
+  item?: TreeDataSource;
+  keyword?: string;
+};
 
 export const treeSelectProps = {
   dataSource: {
@@ -41,21 +41,21 @@ export const treeSelectProps = {
     description: '树形数据源',
     validator: (value: TreeDataSource[]) => {
       if (!Array.isArray(value)) {
-        console.warn('[LewTreeSelect] dataSource 必须是一个数组')
-        return false
+        console.warn('[LewTreeSelect] dataSource 必须是一个数组');
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   defaultValue: {
     type: [String, Number],
     default: '',
-    description: '默认选中值'
+    description: '默认选中值',
   },
   placeholder: {
     type: String,
     default: '请选择',
-    description: '占位文本'
+    description: '占位文本',
   },
   size: {
     type: String as PropType<LewSize>,
@@ -63,51 +63,51 @@ export const treeSelectProps = {
     description: '组件尺寸',
     validator: (value: LewSize) => {
       if (!validSizes.includes(value)) {
-        console.warn('[LewTreeSelect] size 必须是 small、medium 或 large')
-        return false
+        console.warn('[LewTreeSelect] size 必须是 small、medium 或 large');
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   disabled: {
     type: Boolean,
     default: false,
-    description: '是否禁用'
+    description: '是否禁用',
   },
   clearable: {
     type: Boolean,
     default: false,
-    description: '是否可清空'
+    description: '是否可清空',
   },
   checkable: {
     type: Boolean,
     default: false,
-    description: '是否显示复选框'
+    description: '是否显示复选框',
   },
   showAllLevels: {
     type: Boolean,
     default: true,
-    description: '是否显示完整路径'
+    description: '是否显示完整路径',
   },
   showCheckIcon: {
     type: Boolean,
     default: true,
-    description: '是否显示选中图标'
+    description: '是否显示选中图标',
   },
   showLine: {
     type: Boolean,
     default: false,
-    description: '是否显示连接线'
+    description: '是否显示连接线',
   },
   expandAll: {
     type: Boolean,
     default: false,
-    description: '是否默认展开所有节点'
+    description: '是否默认展开所有节点',
   },
   searchable: {
     type: Boolean,
     default: false,
-    description: '是否可搜索'
+    description: '是否可搜索',
   },
   searchDelay: {
     type: Number,
@@ -115,21 +115,21 @@ export const treeSelectProps = {
     description: '搜索防抖延迟（毫秒）',
     validator: (value: number) => {
       if (value < 0) {
-        console.warn('[LewTreeSelect] searchDelay 必须大于或等于 0')
-        return false
+        console.warn('[LewTreeSelect] searchDelay 必须大于或等于 0');
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   readonly: {
     type: Boolean,
     default: false,
-    description: '是否只读'
+    description: '是否只读',
   },
   free: {
     type: Boolean,
     default: true,
-    description: '是否为自由模式（父子节点选中状态不关联）'
+    description: '是否为自由模式（父子节点选中状态不关联）',
   },
   align: {
     type: String as PropType<TreeSelectAlign>,
@@ -137,11 +137,11 @@ export const treeSelectProps = {
     description: '文本对齐方式',
     validator: (value: TreeSelectAlign) => {
       if (!['left', 'center', 'right'].includes(value)) {
-        console.warn('[LewTreeSelect] align 必须是 left、center 或 right')
-        return false
+        console.warn('[LewTreeSelect] align 必须是 left、center 或 right');
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   trigger: {
     type: String as PropType<TreeSelectTriggerType>,
@@ -149,41 +149,41 @@ export const treeSelectProps = {
     description: '子菜单触发方式',
     validator: (value: TreeSelectTriggerType) => {
       if (!['click', 'hover'].includes(value)) {
-        console.warn('[LewTreeSelect] trigger 必须是 click 或 hover')
-        return false
+        console.warn('[LewTreeSelect] trigger 必须是 click 或 hover');
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   keyField: {
     type: String,
     default: 'key',
-    description: '节点标识字段名'
+    description: '节点标识字段名',
   },
   labelField: {
     type: String,
     default: 'label',
-    description: '节点标签字段名'
+    description: '节点标签字段名',
   },
   disabledField: {
     type: String,
     default: 'disabled',
-    description: '节点禁用状态字段名'
+    description: '节点禁用状态字段名',
   },
   initOptionsMethod: {
     type: Function as PropType<() => void>,
     default: undefined,
-    description: '初始化树数据的方法'
+    description: '初始化树数据的方法',
   },
   initOptionsMethodId: {
     type: String,
     default: '',
     hidden: true,
-    description: '初始化选项方法函数的标识'
+    description: '初始化选项方法函数的标识',
   },
   loadMethod: {
     type: Function as PropType<() => void>,
     default: undefined,
-    description: '异步加载子节点数据的方法'
-  }
-}
+    description: '异步加载子节点数据的方法',
+  },
+};

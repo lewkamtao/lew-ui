@@ -1,42 +1,42 @@
 <script lang="ts" setup>
-import { object2class } from 'lew-ui/utils'
-import { checkboxProps } from './props'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { cloneDeep } from 'lodash-es'
+import { object2class } from 'lew-ui/utils';
+import { checkboxProps } from './props';
+import Icon from 'lew-ui/utils/Icon.vue';
+import { cloneDeep } from 'lodash-es';
 
-const props = defineProps(checkboxProps)
+const props = defineProps(checkboxProps);
 
-const emit = defineEmits(['change'])
+const emit = defineEmits(['change']);
 const modelValue: Ref<boolean | undefined> = defineModel({
-  default: false
-})
+  default: false,
+});
 
 const setChecked = () => {
-  if (props.disabled || props.readonly) return
+  if (props.disabled || props.readonly) return;
 
-  const newValue = !modelValue.value
-  modelValue.value = newValue
-  emit('change', cloneDeep(newValue))
-}
+  const newValue = !modelValue.value;
+  modelValue.value = newValue;
+  emit('change', cloneDeep(newValue));
+};
 
 const getIconSize = computed(() => {
-  const { size, block } = props
+  const { size, block } = props;
   switch (size) {
     case 'small':
-      return block ? 14 : 12
+      return block ? 14 : 12;
     case 'medium':
-      return block ? 16 : 14
+      return block ? 16 : 14;
     case 'large':
-      return block ? 18 : 16
+      return block ? 18 : 16;
     default:
-      return block ? 16 : 14
+      return block ? 16 : 14;
   }
-})
+});
 
 const getCheckboxClassName = computed(() => {
-  const { block, round, iconable, size, disabled, certain, readonly } = props
-  const checked = modelValue.value || props.checked
-  const unicon = !iconable && block
+  const { block, round, iconable, size, disabled, certain, readonly } = props;
+  const checked = modelValue.value || props.checked;
+  const unicon = !iconable && block;
 
   return object2class('lew-checkbox', {
     block,
@@ -46,9 +46,9 @@ const getCheckboxClassName = computed(() => {
     unicon,
     disabled,
     certain,
-    readonly
-  })
-})
+    readonly,
+  });
+});
 </script>
 <template>
   <div

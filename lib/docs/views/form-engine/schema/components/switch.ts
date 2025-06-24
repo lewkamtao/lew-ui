@@ -8,13 +8,13 @@ export default [
       options: [
         {
           label: '圆角',
-          value: 1
+          value: 1,
         },
         {
           label: '方形',
-          value: 0
-        }
-      ]
-    }
-  }
-]
+          value: 0,
+        },
+      ],
+    },
+  },
+];

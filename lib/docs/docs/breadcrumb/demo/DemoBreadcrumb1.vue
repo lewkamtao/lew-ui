@@ -3,27 +3,27 @@
 const options = ref([
   {
     label: 'Product Mgmt',
-    value: '/products'
+    value: '/products',
   },
   {
     label: 'Electronics',
-    value: '/products/electronics'
+    value: '/products/electronics',
   },
   {
     label: 'Phones',
-    value: '/products/electronics/phones'
+    value: '/products/electronics/phones',
   },
   {
     label: 'iPhone 13',
     value: '',
-    active: true
-  }
-])
+    active: true,
+  },
+]);
 
 // Simulate breadcrumb click event
 const handleBreadcrumbClick = (item: any) => {
-  LewMessage.success('Clicked breadcrumb item: ' + item.label)
-}
+  LewMessage.success('Clicked breadcrumb item: ' + item.label);
+};
 </script>
 
 <template>

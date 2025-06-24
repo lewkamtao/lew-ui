@@ -1,13 +1,13 @@
 <script setup lang="ts">
-const pre1 = ref("import { LewButton } from 'lew-ui'")
+const pre1 = ref("import { LewButton } from 'lew-ui'");
 
-const pre2 = ref('import "lew-ui/style";')
+const pre2 = ref('import "lew-ui/style";');
 const pre3 = ref(`import { createApp } from 'vue'
 import Lew from "lew-ui";
 import "lew-ui/style";
 
 const app = createApp(App); 
-app.use(Lew);`)
+app.use(Lew);`);
 </script>
 
 <template>

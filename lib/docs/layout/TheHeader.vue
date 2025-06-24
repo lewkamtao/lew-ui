@@ -1,46 +1,46 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
-import { useDark } from '@vueuse/core'
-import { Sun, Moon, Github, Languages, Settings } from 'lucide-vue-next'
-import { setLocale } from 'lew-ui'
-import docsLocale, { getInitialLocale } from '@/locals'
-import packageJson from '../../../package.json'
+import { useRoute, useRouter } from 'vue-router';
+import { useDark } from '@vueuse/core';
+import { Sun, Moon, Github, Languages, Settings } from 'lucide-vue-next';
+import { setLocale } from 'lew-ui';
+import docsLocale, { getInitialLocale } from '@/locals';
+import packageJson from '../../../package.json';
 
-const version = ref(packageJson.version)
+const version = ref(packageJson.version);
 
 const isDark = useDark({
   selector: 'html',
   valueDark: 'lew-dark',
-  valueLight: 'lew-light'
-})
+  valueLight: 'lew-light',
+});
 
-const router = useRouter()
-const route = useRoute()
+const router = useRouter();
+const route = useRoute();
 
 const goHome = () => {
   if (route.name === 'R-LewHome') {
-    LewMessage.warning('你已经在首页了！')
+    LewMessage.warning('你已经在首页了！');
   } else {
-    router.push('/')
+    router.push('/');
   }
-}
+};
 
 const goToPage = (path: string, isNewTab = false) => {
   if (isNewTab) {
-    const URL = router.resolve(path).href
-    window.open(URL, '_blank')
+    const URL = router.resolve(path).href;
+    window.open(URL, '_blank');
   } else {
-    router.push(path)
+    router.push(path);
   }
-}
+};
 
 const goToGithub = () => {
-  window.open('https://github.com/lewkamtao/Lew-UI', '_blank')
-}
+  window.open('https://github.com/lewkamtao/Lew-UI', '_blank');
+};
 
 const getLocaleIcon = (locale: string) => {
-  return new URL(`../assets/images/local/${locale}.svg`, import.meta.url).href
-}
+  return new URL(`../assets/images/local/${locale}.svg`, import.meta.url).href;
+};
 const localeOptions = ref([
   {
     label: '简体中文',
@@ -51,12 +51,12 @@ const localeOptions = ref([
         src: getLocaleIcon('zh'),
         alt: '简体中文',
         width: 16,
-        height: 16
-      })
+        height: 16,
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
-    }
+      changeLanguage(e);
+    },
   },
   {
     label: 'English',
@@ -67,12 +67,12 @@ const localeOptions = ref([
         src: getLocaleIcon('us'),
         alt: 'English',
         width: 16,
-        height: 16
-      })
+        height: 16,
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
-    }
+      changeLanguage(e);
+    },
   },
 
   {
@@ -84,12 +84,12 @@ const localeOptions = ref([
         src: getLocaleIcon('ja'),
         alt: '日本語',
         width: 16,
-        height: 16
-      })
+        height: 16,
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
-    }
+      changeLanguage(e);
+    },
   },
   {
     label: '한국어',
@@ -100,12 +100,12 @@ const localeOptions = ref([
         src: getLocaleIcon('ko'),
         alt: '한국어',
         width: 16,
-        height: 16
-      })
+        height: 16,
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
-    }
+      changeLanguage(e);
+    },
   },
   {
     label: 'Español',
@@ -116,12 +116,12 @@ const localeOptions = ref([
         src: getLocaleIcon('es'),
         alt: 'Español',
         width: 16,
-        height: 16
-      })
+        height: 16,
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
-    }
+      changeLanguage(e);
+    },
   },
   {
     label: 'Français',
@@ -132,12 +132,12 @@ const localeOptions = ref([
         src: getLocaleIcon('fr'),
         alt: 'Français',
         width: 16,
-        height: 16
-      })
+        height: 16,
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
-    }
+      changeLanguage(e);
+    },
   },
   {
     label: 'Deutsch',
@@ -148,12 +148,12 @@ const localeOptions = ref([
         src: getLocaleIcon('de'),
         alt: 'Deutsch',
         width: 16,
-        height: 16
-      })
+        height: 16,
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
-    }
+      changeLanguage(e);
+    },
   },
   {
     label: 'Português',
@@ -164,12 +164,12 @@ const localeOptions = ref([
         src: getLocaleIcon('br'),
         alt: 'Português',
         width: 16,
-        height: 16
-      })
+        height: 16,
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
-    }
+      changeLanguage(e);
+    },
   },
   {
     label: 'Italiano',
@@ -180,38 +180,38 @@ const localeOptions = ref([
         src: getLocaleIcon('it'),
         alt: 'Italiano',
         width: 16,
-        height: 16
-      })
+        height: 16,
+      });
     },
     onClick: (e: any) => {
-      changeLanguage(e)
-    }
-  }
-])
+      changeLanguage(e);
+    },
+  },
+]);
 
 const changeLanguage = (e: any) => {
-  const { value } = e
-  setLocale(value)
-  docsLocale.use(value)
+  const { value } = e;
+  setLocale(value);
+  docsLocale.use(value);
   localeOptions.value.map((item: any) => {
     if (item.value === e.value) {
-      item.checked = true
+      item.checked = true;
     } else {
-      item.checked = false
+      item.checked = false;
     }
-  })
-}
+  });
+};
 
 const goToSettings = () => {
-  router.push('/check-lang')
-}
+  router.push('/check-lang');
+};
 
-const isDev = window.location.hostname === 'localhost'
+const isDev = window.location.hostname === 'localhost';
 
 // 初始化语言（异步）
 getInitialLocale().then((locale) => {
-  changeLanguage({ value: locale })
-})
+  changeLanguage({ value: locale });
+});
 </script>
 
 <template>

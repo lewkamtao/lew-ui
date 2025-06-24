@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { tabsProps } from './props'
-import type { TabsOptions } from './props'
-import { object2class, any2px } from 'lew-ui/utils'
+import { tabsProps } from './props';
+import type { TabsOptions } from './props';
+import { object2class, any2px } from 'lew-ui/utils';
 
-const emit = defineEmits(['change'])
-const props = defineProps(tabsProps)
+const emit = defineEmits(['change']);
+const props = defineProps(tabsProps);
 const tabsValue: Ref<string | number | undefined> = defineModel({
-  required: true
-})
+  required: true,
+});
 
-const tabsRef = ref()
-const itemRef = ref([] as any)
+const tabsRef = ref();
+const itemRef = ref([] as any);
 
 const state = reactive({
   activeItemStyle: {} as any,
@@ -18,22 +18,22 @@ const state = reactive({
     (e: TabsOptions) => tabsValue.value === e.value
   ),
   hidLine: 'all',
-  isInit: false
-})
+  isInit: false,
+});
 
 watch(
   () => tabsValue.value,
   (v: string | number | undefined) => {
     nextTick(() => {
-      selectItem(v, 'watch')
-      init()
-    })
+      selectItem(v, 'watch');
+      init();
+    });
   },
   { deep: true }
-)
+);
 
 const initActiveItemStyle = (index: number) => {
-  const activeRef = itemRef.value[index]
+  const activeRef = itemRef.value[index];
 
   if (
     tabsRef.value.scrollWidth > tabsRef.value.clientWidth &&
@@ -42,15 +42,15 @@ const initActiveItemStyle = (index: number) => {
     tabsRef.value.scrollLeft =
       activeRef?.offsetLeft -
       tabsRef.value.clientWidth / 2 +
-      activeRef?.offsetWidth / 2
+      activeRef?.offsetWidth / 2;
   }
 
   state.activeItemStyle = {
     width: `${activeRef?.offsetWidth}px`,
     height: props.type === 'line' ? '' : `${activeRef?.offsetHeight}px`,
-    transform: `translate(${activeRef?.offsetLeft}px,-50%)`
-  }
-}
+    transform: `translate(${activeRef?.offsetLeft}px,-50%)`,
+  };
+};
 
 watch(
   () => props.size,
@@ -59,70 +59,70 @@ watch(
       setTimeout(() => {
         const index = props.options.findIndex(
           (e) => tabsValue.value === e.value
-        )
-        initActiveItemStyle(index)
-      }, 250)
-    })
+        );
+        initActiveItemStyle(index);
+      }, 250);
+    });
   }
-)
+);
 
 const init = () => {
-  let index = props.options.findIndex((e) => e.value === tabsValue.value)
+  let index = props.options.findIndex((e) => e.value === tabsValue.value);
   if (index >= 0) {
-    initActiveItemStyle(index)
+    initActiveItemStyle(index);
   }
-  tabsScroll()
+  tabsScroll();
   setTimeout(() => {
-    state.isInit = true
-  }, 100)
-}
+    state.isInit = true;
+  }, 100);
+};
 
 const selectItem = (value: string | number | undefined, type?: string) => {
-  let index = props.options.findIndex((e) => value === e.value)
+  let index = props.options.findIndex((e) => value === e.value);
   if (index >= 0) {
-    const _item = props.options[index]
+    const _item = props.options[index];
     if (tabsValue.value != _item.value) {
-      tabsValue.value = _item.value
+      tabsValue.value = _item.value;
     }
-    initActiveItemStyle(index)
+    initActiveItemStyle(index);
     if (type !== 'watch' && value !== tabsValue.value) {
       emit('change', {
         label: _item.label,
-        value: _item.value
-      })
+        value: _item.value,
+      });
     }
-    state.curIndex = index
+    state.curIndex = index;
   }
-}
+};
 
-let timer: ReturnType<typeof setTimeout> | undefined
+let timer: ReturnType<typeof setTimeout> | undefined;
 
 const debounce = () => {
-  clearTimeout(timer)
+  clearTimeout(timer);
   timer = setTimeout(() => {
-    init()
-  }, 250)
-}
+    init();
+  }, 250);
+};
 
 const getTabsWrapperClassName = computed(() => {
-  const { type, round, disabled, readonly } = props
+  const { type, round, disabled, readonly } = props;
   return object2class('lew-tabs-wrapper', {
     type,
     round,
     hidLine: state.hidLine || !state.isInit,
     disabled,
-    readonly
-  })
-})
+    readonly,
+  });
+});
 
 const getTabsClassName = computed(() => {
-  const { type, round, size } = props
+  const { type, round, size } = props;
   return object2class('lew-tabs', {
     type,
     round,
-    size
-  })
-})
+    size,
+  });
+});
 
 const tabsScroll = () => {
   if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
@@ -131,41 +131,41 @@ const tabsScroll = () => {
         tabsRef.value.scrollLeft >=
         tabsRef.value.scrollWidth - tabsRef.value.clientWidth - 5
       ) {
-        state.hidLine = 'right'
+        state.hidLine = 'right';
       } else {
-        state.hidLine = ''
+        state.hidLine = '';
       }
     } else {
-      state.hidLine = 'left'
+      state.hidLine = 'left';
     }
   } else {
-    state.hidLine = 'all'
+    state.hidLine = 'all';
   }
-}
+};
 
 onMounted(() => {
   nextTick(() => {
-    init()
-  })
-  window.addEventListener('resize', debounce, false)
-})
+    init();
+  });
+  window.addEventListener('resize', debounce, false);
+});
 
 const getItemStyle = computed(() => {
-  let width = any2px(props.itemWidth)
+  let width = any2px(props.itemWidth);
   if (props.itemWidth === 'auto') {
-    return 'flex:1'
+    return 'flex:1';
   }
-  return `width:${width}`
-})
+  return `width:${width}`;
+});
 
 const getTabsStyle = computed(() => {
-  let width = any2px(props.width)
-  return `width:${width}`
-})
+  let width = any2px(props.width);
+  return `width:${width}`;
+});
 
 onUnmounted(() => {
-  window.removeEventListener('resize', debounce)
-})
+  window.removeEventListener('resize', debounce);
+});
 </script>
 
 <template>

@@ -9,20 +9,20 @@ const request = (type: string) => {
             resolve({
               content: 'Order completed successfully!',
               duration: 1000,
-              type: 'success'
-            })
+              type: 'success',
+            });
           } else {
             resolve({
               content: 'Unable to complete your order. Please try again later.',
               duration: 1000,
-              type: 'error'
-            })
+              type: 'error',
+            });
           }
-        }, 1000)
-      })
+        }, 1000);
+      });
     }
-  )
-}
+  );
+};
 </script>
 
 <template>

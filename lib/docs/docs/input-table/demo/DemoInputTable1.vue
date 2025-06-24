@@ -3,67 +3,67 @@ const tableData = ref([
   {
     name: 'John',
     age: 18,
-    gender: 'Male'
+    gender: 'Male',
   },
   {
     name: 'Mary',
     age: 20,
-    gender: 'Female'
+    gender: 'Female',
   },
   {
     name: 'David',
     age: 25,
-    gender: 'Male'
+    gender: 'Male',
   },
   {
     name: 'Sarah',
     age: 22,
-    gender: 'Female'
+    gender: 'Female',
   },
   {
     name: 'Michael',
     age: 30,
-    gender: 'Male'
+    gender: 'Male',
   },
   {
     name: 'Emma',
     age: 19,
-    gender: 'Female'
+    gender: 'Female',
   },
   {
     name: 'James',
     age: 27,
-    gender: 'Male'
+    gender: 'Male',
   },
   {
     name: 'Lisa',
     age: 24,
-    gender: 'Female'
+    gender: 'Female',
   },
   {
     name: 'Robert',
     age: 32,
-    gender: 'Male'
+    gender: 'Male',
   },
   {
     name: 'Anna',
     age: 21,
-    gender: 'Female'
-  }
-])
+    gender: 'Female',
+  },
+]);
 const columns = ref([
   {
     title: 'Name',
     field: 'name',
     required: true,
-    width: 100
+    width: 100,
   },
   {
     title: 'Age',
     field: 'age',
     required: true,
     as: 'input-number',
-    width: 100
+    width: 100,
   },
   {
     title: 'Gender',
@@ -75,36 +75,36 @@ const columns = ref([
       options: [
         {
           label: 'Male',
-          value: 'Male'
+          value: 'Male',
         },
         {
           label: 'Female',
-          value: 'Female'
-        }
-      ]
+          value: 'Female',
+        },
+      ],
     },
-    width: 100
-  }
-])
+    width: 100,
+  },
+]);
 
-const size = ref('medium')
+const size = ref('medium');
 const sizeOptions = ref([
   {
     label: 'Small',
-    value: 'small'
+    value: 'small',
   },
   {
     label: 'Medium',
-    value: 'medium'
+    value: 'medium',
   },
   {
     label: 'Large',
-    value: 'large'
-  }
-])
+    value: 'large',
+  },
+]);
 const sortTooltipCustomRender = (row: Record<string, any>) => {
-  return h('div', {}, `${row.name} ${row.age} ${row.gender}`)
-}
+  return h('div', {}, `${row.name} ${row.age} ${row.gender}`);
+};
 </script>
 <template>
   <lew-flex direction="y" x="start">

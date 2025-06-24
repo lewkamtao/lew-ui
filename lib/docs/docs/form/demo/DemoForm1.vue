@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import * as Yup from 'yup'
-import { schools } from '@/lib/data'
-import uploadHelper from 'lew-ui/docs/docs/upload/uploadHelper'
+import * as Yup from 'yup';
+import { schools } from '@/lib/data';
+import uploadHelper from 'lew-ui/docs/docs/upload/uploadHelper';
 
 const schoolsOptions = schools.map((e, i) => {
-  return { label: e, value: i + 1 }
-})
+  return { label: e, value: i + 1 };
+});
 
-const formRef = ref()
+const formRef = ref();
 
 const submit = () => {
   LewMessage.request({ loadingMessage: '处理中···' }, () => {
@@ -16,18 +16,18 @@ const submit = () => {
         .validate()
         .then((vail: boolean) => {
           if (vail) {
-            form.value = formRef.value.getForm()
-            resolve({ content: '加载成功！', duration: 1000, type: 'success' })
+            form.value = formRef.value.getForm();
+            resolve({ content: '加载成功！', duration: 1000, type: 'success' });
           } else {
-            resolve({ content: '请完善表单', duration: 1000, type: 'warning' })
+            resolve({ content: '请完善表单', duration: 1000, type: 'warning' });
           }
         })
         .catch((err: any) => {
-          reject(err)
-        })
-    })
-  })
-}
+          reject(err);
+        });
+    });
+  });
+};
 const options = ref([
   {
     label: '表单大小',
@@ -39,18 +39,18 @@ const options = ref([
       options: [
         {
           label: 'small',
-          value: 'small'
+          value: 'small',
         },
         {
           label: 'medium',
-          value: 'medium'
+          value: 'medium',
         },
         {
           label: 'large',
-          value: 'large'
-        }
-      ]
-    }
+          value: 'large',
+        },
+      ],
+    },
   },
   {
     field: 'upload',
@@ -59,7 +59,7 @@ const options = ref([
     rule: Yup.array()
       .of(
         Yup.object({
-          status: Yup.string().oneOf(['success'], '请等待上传完成')
+          status: Yup.string().oneOf(['success'], '请等待上传完成'),
         })
       )
       .min(3, '至少包含3个元素')
@@ -70,8 +70,8 @@ const options = ref([
       viewMode: 'card',
       limit: 3,
       accept: 'image/jpeg,image/png',
-      tips: '只能上传jpg/png文件，且不超过500kb，最多上传3个文件'
-    }
+      tips: '只能上传jpg/png文件，且不超过500kb，最多上传3个文件',
+    },
   },
   {
     field: 'input',
@@ -80,8 +80,8 @@ const options = ref([
     rule: Yup.string().required('此项必填'),
     props: {
       showCount: true,
-      maxLength: 30
-    }
+      maxLength: 30,
+    },
   },
   {
     field: 'input-number',
@@ -92,7 +92,7 @@ const options = ref([
       .max(100)
       .typeError('请输入数字')
       .required('此项必填'),
-    props: {}
+    props: {},
   },
   {
     field: 'textarea',
@@ -102,8 +102,8 @@ const options = ref([
     props: {
       clearable: true,
       showCount: true,
-      maxLength: 300
-    }
+      maxLength: 300,
+    },
   },
   {
     field: 'select',
@@ -115,26 +115,26 @@ const options = ref([
       options: [
         {
           label: '广东',
-          value: '1'
+          value: '1',
         },
         {
           label: '深圳',
-          value: '2'
+          value: '2',
         },
         {
           label: '杭州',
-          value: '3'
+          value: '3',
         },
         {
           label: '上海',
-          value: '4'
+          value: '4',
         },
         {
           label: '北京',
-          value: '5'
-        }
-      ]
-    }
+          value: '5',
+        },
+      ],
+    },
   },
   {
     field: 'select_multiple',
@@ -143,8 +143,8 @@ const options = ref([
     rule: Yup.array().min(2, '至少选择2个').required('此项必填'),
     props: {
       clearable: true,
-      options: schoolsOptions
-    }
+      options: schoolsOptions,
+    },
   },
   {
     field: 'radio_group',
@@ -156,18 +156,18 @@ const options = ref([
       options: [
         {
           label: '男',
-          value: '1'
+          value: '1',
         },
         {
           label: '女',
-          value: '2'
+          value: '2',
         },
         {
           label: '不公开',
-          value: '3'
-        }
-      ]
-    }
+          value: '3',
+        },
+      ],
+    },
   },
   {
     field: 'checkbox_group',
@@ -180,22 +180,22 @@ const options = ref([
       options: [
         {
           label: '唱歌',
-          value: '1'
+          value: '1',
         },
         {
           label: '跳舞',
-          value: '2'
+          value: '2',
         },
         {
           label: 'Rap',
-          value: '3'
+          value: '3',
         },
         {
           label: '上海',
-          value: '4'
-        }
-      ]
-    }
+          value: '4',
+        },
+      ],
+    },
   },
   {
     field: 'rate',
@@ -203,8 +203,8 @@ const options = ref([
     as: 'rate',
     rule: Yup.number().required('此项必填'),
     props: {
-      max: 10
-    }
+      max: 10,
+    },
   },
   {
     field: 'tabs',
@@ -215,22 +215,22 @@ const options = ref([
       options: [
         {
           label: 'Beijing',
-          value: '1'
+          value: '1',
         },
         {
           label: 'Shanghai',
-          value: '2'
+          value: '2',
         },
         {
           label: 'Guangzhou',
-          value: '3'
+          value: '3',
         },
         {
           label: 'Shenzhen',
-          value: '4'
-        }
-      ]
-    }
+          value: '4',
+        },
+      ],
+    },
   },
   {
     field: 'user.address',
@@ -251,8 +251,8 @@ const options = ref([
               children: [
                 { value: 3, label: 'Beijing' },
                 { value: 4, label: 'Shanghai' },
-                { value: 5, label: 'Hangzhou' }
-              ]
+                { value: 5, label: 'Hangzhou' },
+              ],
             },
             {
               value: 6,
@@ -260,8 +260,8 @@ const options = ref([
               children: [
                 { value: 7, label: 'Tokyo' },
                 { value: 8, label: 'Osaka' },
-                { value: 9, label: 'Kyoto' }
-              ]
+                { value: 9, label: 'Kyoto' },
+              ],
             },
             {
               value: 10,
@@ -269,10 +269,10 @@ const options = ref([
               children: [
                 { value: 11, label: 'Seoul' },
                 { value: 12, label: 'Busan' },
-                { value: 13, label: 'Taegu' }
-              ]
-            }
-          ]
+                { value: 13, label: 'Taegu' },
+              ],
+            },
+          ],
         },
         {
           value: 14,
@@ -284,8 +284,8 @@ const options = ref([
               children: [
                 { value: 16, label: 'Paris' },
                 { value: 17, label: 'Marseille' },
-                { value: 18, label: 'Lyon' }
-              ]
+                { value: 18, label: 'Lyon' },
+              ],
             },
             {
               value: 19,
@@ -293,10 +293,10 @@ const options = ref([
               children: [
                 { value: 20, label: 'London' },
                 { value: 21, label: 'Birmingham' },
-                { value: 22, label: 'Manchester' }
-              ]
-            }
-          ]
+                { value: 22, label: 'Manchester' },
+              ],
+            },
+          ],
         },
         {
           value: 23,
@@ -308,8 +308,8 @@ const options = ref([
               children: [
                 { value: 25, label: 'New York' },
                 { value: 26, label: 'Los Angeles' },
-                { value: 27, label: 'Washington' }
-              ]
+                { value: 27, label: 'Washington' },
+              ],
             },
             {
               value: 28,
@@ -317,13 +317,13 @@ const options = ref([
               children: [
                 { value: 29, label: 'Toronto' },
                 { value: 30, label: 'Montreal' },
-                { value: 31, label: 'Ottawa' }
-              ]
-            }
-          ]
-        }
-      ]
-    }
+                { value: 31, label: 'Ottawa' },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   },
   {
     field: 'user.addd',
@@ -331,52 +331,52 @@ const options = ref([
     as: 'checkbox',
     rule: Yup.boolean().oneOf([true], '请同意').required('请同意'),
     props: {
-      label: '是否同意'
-    }
+      label: '是否同意',
+    },
   },
   {
     field: 'info.a.b.c.slider',
     label: '滑块',
     as: 'slider',
-    rule: Yup.number().required('不能为空')
+    rule: Yup.number().required('不能为空'),
   },
   {
     field: 'info.a.b.c.input_tag',
     label: '标签输入框',
     as: 'input-tag',
-    rule: Yup.array().min(1, '至少选择一个').required('不能为空')
+    rule: Yup.array().min(1, '至少选择一个').required('不能为空'),
   },
   {
     as: 'button',
     props: {
       text: '提交',
-      request: submit
-    }
-  }
-])
+      request: submit,
+    },
+  },
+]);
 
-const form = ref({} as any)
+const form = ref({} as any);
 
 const setForm = () => {
   // 设置表单
   formRef.value.setForm({
-    size: 'medium'
-  })
-}
+    size: 'medium',
+  });
+};
 
 const resetForm = () => {
   // 重置表单
-  formRef.value.setForm({ size: 'medium' })
-}
+  formRef.value.setForm({ size: 'medium' });
+};
 
 const change = () => {
   // 获取表单
-  form.value = formRef.value.getForm()
-}
+  form.value = formRef.value.getForm();
+};
 
 onMounted(() => {
-  setForm()
-})
+  setForm();
+});
 </script>
 
 <template>
@@ -385,7 +385,7 @@ onMounted(() => {
       ref="formRef"
       :size="form.size"
       :formMethods="{
-        uploadHelper
+        uploadHelper,
       }"
       class="form-box"
       :options="options"

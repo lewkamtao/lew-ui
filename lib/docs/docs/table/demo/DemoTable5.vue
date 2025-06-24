@@ -13,19 +13,19 @@ const data: any = [
       'Auto Recharge',
       'APP Control',
       'Voice Control',
-      'Anti-fall'
+      'Anti-fall',
     ],
     tdStyle: {
       price:
         'background:var(--lew-color-primary-light);color:var(--lew-color-primary-dark)',
       suction: 'font-weight: bold; color: var(--lew-color-success)',
-      batteryLife: 'font-style: italic; color: var(--lew-color-info)'
+      batteryLife: 'font-style: italic; color: var(--lew-color-info)',
     },
     weight: '3.5kg',
     dustBinCapacity: '600ml',
     waterTankCapacity: '300ml',
     filterType: 'HEPA',
-    warranty: '2 years'
+    warranty: '2 years',
   },
   {
     id: 2,
@@ -41,17 +41,17 @@ const data: any = [
       'APP Control',
       'Voice Control',
       'Anti-fall',
-      'Auto Empty'
+      'Auto Empty',
     ],
     tdStyle: {
       name: 'background: var(--lew-color-success-light); font-weight: bold',
-      cleanArea: 'text-decoration: underline; color: var(--lew-color-primary)'
+      cleanArea: 'text-decoration: underline; color: var(--lew-color-primary)',
     },
     weight: '3.8kg',
     dustBinCapacity: '700ml',
     waterTankCapacity: '350ml',
     filterType: 'HEPA',
-    warranty: '3 years'
+    warranty: '3 years',
   },
   {
     id: 3,
@@ -65,13 +65,13 @@ const data: any = [
     tdStyle: {
       batteryLife: 'color:var(--lew-color-warning-dark);',
       noiseLevel: 'background:var(--lew-color-warning);color:#fff',
-      features: 'font-size: 12px; font-style: italic'
+      features: 'font-size: 12px; font-style: italic',
     },
     weight: '3.2kg',
     dustBinCapacity: '550ml',
     waterTankCapacity: '250ml',
     filterType: 'Regular',
-    warranty: '1 year'
+    warranty: '1 year',
   },
   {
     id: 4,
@@ -88,20 +88,20 @@ const data: any = [
       'Voice Control',
       'Anti-fall',
       'Auto Empty',
-      'Mopping Function'
+      'Mopping Function',
     ],
     tdStyle: {
       suction: 'background:var(--lew-color-error);color:#fff',
       price:
         'font-weight: bold; font-size: 16px; color: var(--lew-color-error)',
       batteryLife:
-        'background: var(--lew-color-success-light); border-radius: 4px; padding: 2px 4px'
+        'background: var(--lew-color-success-light); border-radius: 4px; padding: 2px 4px',
     },
     weight: '4.2kg',
     dustBinCapacity: '800ml',
     waterTankCapacity: '400ml',
     filterType: 'HEPA',
-    warranty: '3 years'
+    warranty: '3 years',
   },
   {
     id: 5,
@@ -115,20 +115,20 @@ const data: any = [
       'Collision Sensing',
       'Auto Recharge',
       'APP Control',
-      'Anti-fall'
+      'Anti-fall',
     ],
     tdStyle: {
       price: 'color: var(--lew-color-success); font-weight: bold',
       noiseLevel:
-        'background: var(--lew-color-error-light); border: 1px solid var(--lew-color-error)'
+        'background: var(--lew-color-error-light); border: 1px solid var(--lew-color-error)',
     },
     weight: '3.0kg',
     dustBinCapacity: '500ml',
     waterTankCapacity: '200ml',
     filterType: 'Regular',
-    warranty: '1 year'
-  }
-]
+    warranty: '1 year',
+  },
+];
 
 const columns = [
   {
@@ -136,110 +136,110 @@ const columns = [
     width: 50,
     field: 'id',
     x: 'center',
-    fixed: 'left'
+    fixed: 'left',
   },
   {
     title: 'Model',
     width: 150,
     field: 'name',
     x: 'start',
-    fixed: 'left'
+    fixed: 'left',
   },
   {
     title: 'Price ($)',
     width: 120,
     field: 'price',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Suction (Pa)',
     width: 120,
     field: 'suction',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Battery Life',
     width: 120,
     field: 'batteryLife',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Noise Level',
     width: 120,
     field: 'noiseLevel',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Cleaning Area',
     width: 120,
     field: 'cleanArea',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Features',
     width: 550,
     field: 'features',
-    x: 'start'
+    x: 'start',
   },
   {
     title: 'Value for Money',
     width: 120,
     field: 'valueForMoney',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Weight',
     width: 100,
     field: 'weight',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Dust Bin Capacity',
     width: 220,
     field: 'dustBinCapacity',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Water Tank Capacity',
     width: 120,
     field: 'waterTankCapacity',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Filter Type',
     width: 120,
     field: 'filterType',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Warranty',
     width: 100,
     field: 'warranty',
-    x: 'center'
-  }
-]
+    x: 'center',
+  },
+];
 
 const formatNoiseLevel = (level: string) => {
-  const noise = parseInt(level)
-  if (noise <= 62) return 'Quiet'
-  if (noise <= 66) return 'Moderate'
-  return 'Loud'
-}
+  const noise = parseInt(level);
+  if (noise <= 62) return 'Quiet';
+  if (noise <= 66) return 'Moderate';
+  return 'Loud';
+};
 
 const calculateValueForMoney = (
   price: string,
   suction: number,
   batteryLife: string
 ) => {
-  const priceNum = parseInt(price)
-  const batteryMinutes = parseInt(batteryLife)
-  const score = (suction * batteryMinutes) / priceNum
-  if (score > 400) return 'Excellent'
-  if (score > 300) return 'Very High'
-  if (score > 200) return 'High'
-  if (score > 100) return 'Average'
-  return 'Low'
-}
+  const priceNum = parseInt(price);
+  const batteryMinutes = parseInt(batteryLife);
+  const score = (suction * batteryMinutes) / priceNum;
+  if (score > 400) return 'Excellent';
+  if (score > 300) return 'Very High';
+  if (score > 200) return 'High';
+  if (score > 100) return 'Average';
+  return 'Low';
+};
 </script>
 
 <template>

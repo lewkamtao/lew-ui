@@ -1,83 +1,83 @@
 <script setup lang="ts">
-import { useMagicKeys, useDebounceFn } from '@vueuse/core'
-import { object2class, any2px } from 'lew-ui/utils'
-import { LewTooltip } from 'lew-ui'
-import { textareaProps } from './props'
-import { useResizeObserver } from '@vueuse/core'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
+import { useMagicKeys, useDebounceFn } from '@vueuse/core';
+import { object2class, any2px } from 'lew-ui/utils';
+import { LewTooltip } from 'lew-ui';
+import { textareaProps } from './props';
+import { useResizeObserver } from '@vueuse/core';
+import Icon from 'lew-ui/utils/Icon.vue';
+import { locale } from 'lew-ui';
 
-const { shift, enter } = useMagicKeys()
+const { shift, enter } = useMagicKeys();
 // 获取app
-const app = getCurrentInstance()?.appContext.app
+const app = getCurrentInstance()?.appContext.app;
 if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
+  app.use(LewTooltip);
 }
-const lewTextareaRef = ref()
-const lewTextareaViewRef = ref()
+const lewTextareaRef = ref();
+const lewTextareaViewRef = ref();
 
 let resizeObj = ref({
   height: 0,
-  width: 0
-})
+  width: 0,
+});
 
 useResizeObserver(lewTextareaViewRef, () => {
   if (props.resize !== 'none') {
-    const { width, height } = lewTextareaViewRef.value.getBoundingClientRect()
+    const { width, height } = lewTextareaViewRef.value.getBoundingClientRect();
     resizeObj.value = {
       width,
-      height
-    }
+      height,
+    };
   }
-})
+});
 
-const emit = defineEmits(['clear', 'blur', 'input', 'focus', 'change', 'ok'])
+const emit = defineEmits(['clear', 'blur', 'input', 'focus', 'change', 'ok']);
 
-const props = defineProps(textareaProps)
-const modelValue: Ref<string | undefined> = defineModel()
+const props = defineProps(textareaProps);
+const modelValue: Ref<string | undefined> = defineModel();
 const state = reactive({
-  isFocus: false
-})
+  isFocus: false,
+});
 
 const clear = (): void => {
-  modelValue.value = undefined
-  emit('clear')
-}
+  modelValue.value = undefined;
+  emit('clear');
+};
 
 const toFocus = () => {
-  lewTextareaRef.value?.focus()
-}
+  lewTextareaRef.value?.focus();
+};
 
 const getTextareaClassNames = computed(() => {
-  const { size, readonly, disabled } = props
+  const { size, readonly, disabled } = props;
   return object2class('lew-textarea-view', {
     size,
     readonly,
-    disabled
-  })
-})
+    disabled,
+  });
+});
 
 const focus = (e: any) => {
   if (props.selectByFocus) {
-    e?.currentTarget?.select()
+    e?.currentTarget?.select();
   }
-  state.isFocus = true
-  emit('focus')
-}
+  state.isFocus = true;
+  emit('focus');
+};
 
 const blur = () => {
-  emit('blur', modelValue)
-  state.isFocus = false
-}
+  emit('blur', modelValue);
+  state.isFocus = false;
+};
 
 const getIconSize = computed(() => {
   const size: Record<string, number> = {
     small: 12,
     medium: 14,
-    large: 16
-  }
-  return size[props.size]
-})
+    large: 16,
+  };
+  return size[props.size];
+});
 
 const getTextareaStyle: any = computed(() => {
   const {
@@ -88,13 +88,13 @@ const getTextareaStyle: any = computed(() => {
     maxHeight,
     minHeight,
     maxWidth,
-    minWidth
-  } = props
+    minWidth,
+  } = props;
   const heightMap: Record<string, number> = {
     small: 60,
     medium: 75,
-    large: 90
-  }
+    large: 90,
+  };
   const obj = {
     resize: resize as string,
     minWidth: any2px(minWidth || width),
@@ -102,31 +102,31 @@ const getTextareaStyle: any = computed(() => {
     maxWidth: any2px(maxWidth),
     maxHeight: any2px(maxHeight),
     width: any2px(width),
-    height: any2px(height ? height : heightMap[size])
-  }
+    height: any2px(height ? height : heightMap[size]),
+  };
   if (resizeObj.value.width > 0) {
-    obj.width = resizeObj.value.width + 'px'
-    obj.height = resizeObj.value.height + 'px'
+    obj.width = resizeObj.value.width + 'px';
+    obj.height = resizeObj.value.height + 'px';
   }
-  return obj
-})
+  return obj;
+});
 
 if (props.okByEnter) {
   watchEffect(() => {
     if (shift.value && enter.value) {
-      return
+      return;
     } else if (enter.value && state.isFocus) {
-      lewTextareaRef.value?.blur()
-      ok()
+      lewTextareaRef.value?.blur();
+      ok();
     }
-  })
+  });
 }
 
 const ok = useDebounceFn(() => {
-  emit('ok', modelValue.value)
-}, 250)
+  emit('ok', modelValue.value);
+}, 250);
 
-defineExpose({ toFocus })
+defineExpose({ toFocus });
 </script>
 
 <template>
@@ -162,7 +162,7 @@ defineExpose({ toFocus })
         type="close"
         class="lew-form-icon-close"
         :class="{
-          'lew-form-icon-close-focus': state.isFocus
+          'lew-form-icon-close-focus': state.isFocus,
         }"
         style="top: 14px"
         @click="clear"

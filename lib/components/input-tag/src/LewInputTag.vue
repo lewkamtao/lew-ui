@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import { inputTagProps } from './props'
-import { LewInput, LewTag, LewMessage } from 'lew-ui'
-import { cloneDeep } from 'lodash-es'
-import { object2class } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
+import { inputTagProps } from './props';
+import { LewInput, LewTag, LewMessage } from 'lew-ui';
+import { cloneDeep } from 'lodash-es';
+import { object2class } from 'lew-ui/utils';
+import Icon from 'lew-ui/utils/Icon.vue';
+import { locale } from 'lew-ui';
+import { any2px } from 'lew-ui/utils';
 
 // 获取app实例
-const app = getCurrentInstance()?.appContext.app
+const app = getCurrentInstance()?.appContext.app;
 if (app && !app.directive('tooltip')) {
   try {
-    app.use(LewMessage)
+    app.use(LewMessage);
   } catch (error) {
-    console.error('注册LewMessage失败:', error)
+    console.error('注册LewMessage失败:', error);
   }
 }
 
-const emit = defineEmits(['remove', 'change', 'clear', 'add'])
-const props = defineProps(inputTagProps)
-const modelValue = defineModel<string[] | undefined>()
-const inputValue = ref<string>('')
-const lewInputRef = ref<any>(null)
-const isInputActive = ref<boolean>(false)
-const isTagMarkedForDeletion = ref<boolean>(false)
-const autoWidthDelay = ref<boolean>(false)
+const emit = defineEmits(['remove', 'change', 'clear', 'add']);
+const props = defineProps(inputTagProps);
+const modelValue = defineModel<string[] | undefined>();
+const inputValue = ref<string>('');
+const lewInputRef = ref<any>(null);
+const isInputActive = ref<boolean>(false);
+const isTagMarkedForDeletion = ref<boolean>(false);
+const autoWidthDelay = ref<boolean>(false);
 
 // 存储原始的键盘事件处理函数
-let originalKeydownHandler: ((event: KeyboardEvent) => void) | null = null
+let originalKeydownHandler: ((event: KeyboardEvent) => void) | null = null;
 
 const openInput = () => {
   // 如果输入框已激活或组件被禁用或只读，直接返回
-  if (isInputActive.value || props.disabled || props.readonly) return
+  if (isInputActive.value || props.disabled || props.readonly) return;
 
   try {
     // 检查是否达到最大标签数量限制
@@ -42,12 +42,12 @@ const openInput = () => {
     ) {
       LewMessage.warning(
         locale.t('inputTag.maxLength', { maxLength: props.maxLength })
-      )
-      return
+      );
+      return;
     }
 
     // 激活输入框
-    isInputActive.value = true
+    isInputActive.value = true;
 
     // 在下一个渲染周期聚焦输入框
     nextTick(() => {
@@ -55,46 +55,46 @@ const openInput = () => {
         lewInputRef.value &&
         typeof lewInputRef.value.toFocus === 'function'
       ) {
-        lewInputRef.value.toFocus()
+        lewInputRef.value.toFocus();
       }
-    })
+    });
 
     // 保存原始的键盘事件处理函数
-    originalKeydownHandler = document.onkeydown
+    originalKeydownHandler = document.onkeydown;
 
     // 设置键盘事件处理
     document.onkeydown = function (event: KeyboardEvent) {
       try {
         // 使用更现代的事件属性
-        const keyCode = event.key || event.code
+        const keyCode = event.key || event.code;
 
         // 输入框有值的情况
         if (inputValue.value) {
           if (keyCode === 'Enter' || keyCode === 'NumpadEnter') {
             // 处理回车键
-            isTagMarkedForDeletion.value = false
+            isTagMarkedForDeletion.value = false;
 
             // 清除键盘事件处理器并恢复原始处理器
-            document.onkeydown = originalKeydownHandler
-            isInputActive.value = false
+            document.onkeydown = originalKeydownHandler;
+            isInputActive.value = false;
 
             // 处理添加标签
             if (inputValue.value) {
               if (props.allowDuplicates) {
-                addTag()
+                addTag();
               } else {
                 // 检查是否有重复标签
                 if (
                   !Array.isArray(modelValue.value) ||
                   !modelValue.value.includes(inputValue.value)
                 ) {
-                  addTag()
+                  addTag();
                 } else {
-                  LewMessage.warning(locale.t('inputTag.duplicate'))
+                  LewMessage.warning(locale.t('inputTag.duplicate'));
                 }
               }
               // 重新打开输入框
-              openInput()
+              openInput();
             }
           }
         } else {
@@ -108,17 +108,17 @@ const openInput = () => {
             ) {
               // 第二次按删除键，确认删除最后一个标签
               try {
-                const newValue = [...(modelValue.value || [])]
-                newValue.splice(newValue.length - 1, 1)
-                modelValue.value = newValue
-                emit('change', cloneDeep(newValue))
+                const newValue = [...(modelValue.value || [])];
+                newValue.splice(newValue.length - 1, 1);
+                modelValue.value = newValue;
+                emit('change', cloneDeep(newValue));
               } catch (error) {
-                console.error('删除标签时出错:', error)
+                console.error('删除标签时出错:', error);
               }
-              isTagMarkedForDeletion.value = false
+              isTagMarkedForDeletion.value = false;
             } else {
               // 第一次按删除键，标记最后一个标签为待删除状态
-              isTagMarkedForDeletion.value = true
+              isTagMarkedForDeletion.value = true;
             }
           }
 
@@ -128,60 +128,60 @@ const openInput = () => {
               lewInputRef.value &&
               typeof lewInputRef.value.toBlur === 'function'
             ) {
-              lewInputRef.value.toBlur()
+              lewInputRef.value.toBlur();
             }
           }
         }
       } catch (error) {
-        console.error('键盘事件处理出错:', error)
+        console.error('键盘事件处理出错:', error);
         // 恢复原始键盘事件处理器
-        document.onkeydown = originalKeydownHandler
+        document.onkeydown = originalKeydownHandler;
       }
-    }
+    };
   } catch (error) {
-    console.error('打开输入框时出错:', error)
-    isInputActive.value = false
+    console.error('打开输入框时出错:', error);
+    isInputActive.value = false;
   }
-}
+};
 
 // 组件卸载时清除键盘事件处理器
 onUnmounted(() => {
   try {
     if (document.onkeydown && document.onkeydown !== originalKeydownHandler) {
-      document.onkeydown = originalKeydownHandler
+      document.onkeydown = originalKeydownHandler;
     }
   } catch (error) {
-    console.error('卸载组件时清除键盘事件处理器出错:', error)
+    console.error('卸载组件时清除键盘事件处理器出错:', error);
   }
-})
+});
 
 const addTag = () => {
   try {
-    let _value = Array.isArray(modelValue.value) ? [...modelValue.value] : []
+    let _value = Array.isArray(modelValue.value) ? [...modelValue.value] : [];
 
     if (!inputValue.value || inputValue.value.trim() === '') {
-      return
+      return;
     }
 
     if (props.maxLength > 0 && _value.length >= props.maxLength) {
-      inputValue.value = ''
-      isInputActive.value = false
+      inputValue.value = '';
+      isInputActive.value = false;
       LewMessage.warning(
         locale.t('inputTag.maxLength', { maxLength: props.maxLength })
-      )
-      return
+      );
+      return;
     }
 
-    _value.push(inputValue.value)
-    const addedValue = inputValue.value
-    inputValue.value = ''
-    modelValue.value = _value
-    emit('change', cloneDeep(_value))
-    emit('add', addedValue)
+    _value.push(inputValue.value);
+    const addedValue = inputValue.value;
+    inputValue.value = '';
+    modelValue.value = _value;
+    emit('change', cloneDeep(_value));
+    emit('add', addedValue);
   } catch (error) {
-    console.error('添加标签时出错:', error)
+    console.error('添加标签时出错:', error);
   }
-}
+};
 
 const delTag = (index: number) => {
   try {
@@ -190,74 +190,74 @@ const delTag = (index: number) => {
       index < 0 ||
       index >= modelValue.value.length
     ) {
-      return
+      return;
     }
 
-    const removedTag = modelValue.value[index]
-    const newValue = [...modelValue.value]
-    newValue.splice(index, 1)
-    modelValue.value = newValue
+    const removedTag = modelValue.value[index];
+    const newValue = [...modelValue.value];
+    newValue.splice(index, 1);
+    modelValue.value = newValue;
 
     if (newValue.length === 0) {
-      autoWidthDelay.value = true
+      autoWidthDelay.value = true;
       setTimeout(() => {
-        autoWidthDelay.value = false
-      }, 550)
+        autoWidthDelay.value = false;
+      }, 550);
     }
 
-    emit('change', cloneDeep(newValue))
-    emit('remove', removedTag)
+    emit('change', cloneDeep(newValue));
+    emit('remove', removedTag);
   } catch (error) {
-    console.error('删除标签时出错:', error)
+    console.error('删除标签时出错:', error);
   }
-}
+};
 
 const getInputClassNames = computed(() => {
   try {
-    const { size, readonly, disabled, clearable } = props
+    const { size, readonly, disabled, clearable } = props;
     return object2class('lew-input-tag-view', {
       size,
       readonly,
       disabled,
-      clearable
-    })
+      clearable,
+    });
   } catch (error) {
-    console.error('计算输入框类名时出错:', error)
-    return 'lew-input-tag-view'
+    console.error('计算输入框类名时出错:', error);
+    return 'lew-input-tag-view';
   }
-})
+});
 
 const getIconSize = computed(() => {
   try {
     const size: Record<string, number> = {
       small: 13,
       medium: 14,
-      large: 16
-    }
-    return size[props.size] || 14
+      large: 16,
+    };
+    return size[props.size] || 14;
   } catch (error) {
-    console.error('计算图标大小时出错:', error)
-    return 14
+    console.error('计算图标大小时出错:', error);
+    return 14;
   }
-})
+});
 
 const clear = () => {
   try {
-    modelValue.value = []
-    inputValue.value = ''
-    emit('change', [])
-    emit('clear')
+    modelValue.value = [];
+    inputValue.value = '';
+    emit('change', []);
+    emit('clear');
   } catch (error) {
-    console.error('清空标签时出错:', error)
+    console.error('清空标签时出错:', error);
   }
-}
+};
 
 const onBlur = () => {
-  isInputActive.value = false
+  isInputActive.value = false;
   if (inputValue.value) {
-    addTag()
+    addTag();
   }
-}
+};
 </script>
 
 <template>
@@ -285,7 +285,7 @@ const onBlur = () => {
             color:
               isTagMarkedForDeletion && index === (modelValue || []).length - 1
                 ? 'var(--lew-color-red-dark)'
-                : 'var(--lew-color-blue-dark)'
+                : 'var(--lew-color-blue-dark)',
           }"
           :size="size"
           :closable="!readonly && !disabled"
@@ -319,7 +319,7 @@ const onBlur = () => {
           "
           class="lew-form-icon-close"
           :class="{
-            'lew-form-icon-close-focus': isInputActive
+            'lew-form-icon-close-focus': isInputActive,
           }"
           :size="getIconSize"
           type="close"

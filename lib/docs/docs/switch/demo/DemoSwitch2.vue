@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const value = ref(false)
+const value = ref(false);
 
 const change = (e: unknown) => {
-  console.log(e)
-  console.log(value.value)
-}
+  console.log(e);
+  console.log(value.value);
+};
 </script>
 
 <template>

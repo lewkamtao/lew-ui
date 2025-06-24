@@ -1,3 +1,3 @@
-import DemoImage from './DemoImage.vue'
+import DemoImage from './DemoImage.vue';
 
-export default DemoImage
+export default DemoImage;

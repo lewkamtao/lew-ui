@@ -1,32 +1,32 @@
 <script setup lang="ts">
-import tippy, { roundArrow } from 'tippy.js'
-import { textTrimProps } from './props'
-import { escape } from 'lodash-es'
-import { useMouse, useDebounceFn } from '@vueuse/core'
-import { getDisplayText, clearMeasureCache } from './text-trim'
+import tippy, { roundArrow } from 'tippy.js';
+import { textTrimProps } from './props';
+import { escape } from 'lodash-es';
+import { useMouse, useDebounceFn } from '@vueuse/core';
+import { getDisplayText, clearMeasureCache } from './text-trim';
 
-const props = defineProps(textTrimProps)
+const props = defineProps(textTrimProps);
 
-const lewTextTrimRef = ref()
-const lewTextTrimPopRef = ref()
+const lewTextTrimRef = ref();
+const lewTextTrimPopRef = ref();
 
-let instance: any
+let instance: any;
 
 const initTippy = () => {
-  const element = lewTextTrimRef.value
+  const element = lewTextTrimRef.value;
   if (!element) {
-    return
+    return;
   }
-  const { placement, allowHTML, text, offset }: any = props
-  let isEllipsis = false
+  const { placement, allowHTML, text, offset }: any = props;
+  let isEllipsis = false;
   if (props.lineClamp) {
-    isEllipsis = element.offsetHeight < element.scrollHeight
+    isEllipsis = element.offsetHeight < element.scrollHeight;
   } else {
-    isEllipsis = element.offsetWidth < element.scrollWidth
+    isEllipsis = element.offsetWidth < element.scrollWidth;
   }
   // 如果溢出
   if (isEllipsis || isEllipsisByTextTrim.value) {
-    element.style.cursor = 'pointer'
+    element.style.cursor = 'pointer';
     // 如果没有init
     if (!instance) {
       instance = tippy(element, {
@@ -42,28 +42,28 @@ const initTippy = () => {
         offset,
         allowHTML: allowHTML,
         arrow: roundArrow,
-        maxWidth: 250
-      })
-      instance.popper.children[0].setAttribute('data-lew', 'tooltip')
-      showTippy()
+        maxWidth: 250,
+      });
+      instance.popper.children[0].setAttribute('data-lew', 'tooltip');
+      showTippy();
     }
   } else {
-    element.style.cursor = ''
+    element.style.cursor = '';
     // 如果没溢出
-    destroyTippy()
+    destroyTippy();
   }
-}
+};
 
 const showTippy = () => {
-  const { x, y } = useMouse()
+  const { x, y } = useMouse();
   if (props.delay && Array.isArray(props.delay) && props.delay[0] > 0) {
     setTimeout(() => {
       try {
         // 判断当前鼠标是否在元素范围内
-        const element = lewTextTrimRef.value
-        if (!element) return
+        const element = lewTextTrimRef.value;
+        if (!element) return;
 
-        const rect = element.getBoundingClientRect()
+        const rect = element.getBoundingClientRect();
         // 检查鼠标坐标是否在元素矩形区域内
         if (
           x.value >= rect.left &&
@@ -71,101 +71,101 @@ const showTippy = () => {
           y.value >= rect.top &&
           y.value <= rect.bottom
         ) {
-          instance?.show()
+          instance?.show();
         }
       } catch (error) {
-        console.error('显示提示时发生错误:', error)
+        console.error('显示提示时发生错误:', error);
       }
-    }, props.delay[0])
+    }, props.delay[0]);
   } else {
     try {
-      instance?.show()
+      instance?.show();
     } catch (error) {
-      console.error('显示提示时发生错误:', error)
+      console.error('显示提示时发生错误:', error);
     }
   }
-}
+};
 
 const sanitizeHtml = (html: string) => {
-  return escape(html)
-}
+  return escape(html);
+};
 
 const getTextTrimStyleObject = computed(() => {
   if (props.lineClamp) {
-    return `display: -webkit-box;-webkit-line-clamp: ${props.lineClamp};-webkit-box-orient: vertical;`
+    return `display: -webkit-box;-webkit-line-clamp: ${props.lineClamp};-webkit-box-orient: vertical;`;
   }
   return {
     'text-overflow': props.reserveEnd > 0 ? '' : 'ellipsis',
     'white-space': 'nowrap',
-    'text-align': props.textAlign
-  }
-})
+    'text-align': props.textAlign,
+  };
+});
 
 const destroyTippy = () => {
-  instance && instance.destroy()
-  instance = null
-}
+  instance && instance.destroy();
+  instance = null;
+};
 
-const displayText = ref('')
-const isEllipsisByTextTrim = ref(false)
+const displayText = ref('');
+const isEllipsisByTextTrim = ref(false);
 
 // 计算显示文本
 const calculateDisplayText = () => {
-  const { text, reserveEnd } = props
+  const { text, reserveEnd } = props;
   if (lewTextTrimRef.value) {
     const result = getDisplayText({
       text: String(text),
       reserveEnd,
-      target: lewTextTrimRef.value
-    })
-    displayText.value = result.text
-    isEllipsisByTextTrim.value = result.isEllipsis
+      target: lewTextTrimRef.value,
+    });
+    displayText.value = result.text;
+    isEllipsisByTextTrim.value = result.isEllipsis;
   }
-}
+};
 
 // 使用 requestAnimationFrame 优化初始化计算
 const initCalculateDisplayText = () => {
   requestAnimationFrame(() => {
-    calculateDisplayText()
-  })
-}
+    calculateDisplayText();
+  });
+};
 
 // 使用 VueUse 的防抖函数处理后续更新
-const debouncedCalculate = useDebounceFn(calculateDisplayText, 150)
+const debouncedCalculate = useDebounceFn(calculateDisplayText, 150);
 
 // 监听窗口大小变化
 const setupResizeObserver = () => {
-  if (!lewTextTrimRef.value) return
+  if (!lewTextTrimRef.value) return;
 
   const resizeObserver = new ResizeObserver(() => {
-    debouncedCalculate()
-  })
+    debouncedCalculate();
+  });
 
-  resizeObserver.observe(lewTextTrimRef.value)
+  resizeObserver.observe(lewTextTrimRef.value);
 
   // 在组件卸载时清理
   onBeforeUnmount(() => {
-    resizeObserver.disconnect()
-  })
-}
+    resizeObserver.disconnect();
+  });
+};
 
 onMounted(() => {
-  initCalculateDisplayText()
-  setupResizeObserver()
-})
+  initCalculateDisplayText();
+  setupResizeObserver();
+});
 
 onUnmounted(() => {
-  destroyTippy()
-  clearMeasureCache()
-})
+  destroyTippy();
+  clearMeasureCache();
+});
 
 // 监听 text 和 reserveEnd 的变化
 watch(
   () => [props.text, props.reserveEnd],
   () => {
-    calculateDisplayText()
+    calculateDisplayText();
   }
-)
+);
 </script>
 
 <template>

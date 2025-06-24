@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const v = ref('Selecting text after gathering')
+const v = ref('Selecting text after gathering');
 </script>
 
 <template>

@@ -1,17 +1,17 @@
 <script setup lang="ts">
-const visible = ref(false)
+const visible = ref(false);
 const ok = () => {
   return new Promise<void>((resolve: any) => {
     setTimeout(() => {
-      resolve(true)
-      visible.value = false
-    }, 3000)
-  })
-}
+      resolve(true);
+      visible.value = false;
+    }, 3000);
+  });
+};
 
 const close = () => {
-  visible.value = false
-}
+  visible.value = false;
+};
 </script>
 
 <template>
@@ -28,11 +28,11 @@ const close = () => {
     :okButtonProps="{
       request: ok,
       color: 'danger',
-      text: 'Delete'
+      text: 'Delete',
     }"
     :closeButtonProps="{
       request: close,
-      text: 'Cancel'
+      text: 'Cancel',
     }"
   >
     <div class="modal-body">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-let v = ref(40)
+let v = ref(40);
 </script>
 
 <template>
@@ -12,16 +12,16 @@ let v = ref(40)
     :options="[
       {
         label: '低',
-        value: 0
+        value: 0,
       },
       {
         label: '中',
-        value: 50
+        value: 50,
       },
       {
         label: '高',
-        value: 100
-      }
+        value: 100,
+      },
     ]"
   />
 </template>

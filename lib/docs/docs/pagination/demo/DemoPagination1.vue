@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-const pageNum = ref(2)
-const pageSize = ref(20)
+const pageNum = ref(2);
+const pageSize = ref(20);
 const change = (e: any) => {
-  console.log(e)
-}
-const total = ref(100)
+  console.log(e);
+};
+const total = ref(100);
 </script>
 
 <template>

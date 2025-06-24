@@ -1,3 +1,3 @@
-import DemoSlider from './DemoSlider.vue'
+import DemoSlider from './DemoSlider.vue';
 
-export default DemoSlider
+export default DemoSlider;

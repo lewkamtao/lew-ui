@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import v1_0_24 from './log/v1_0_24.vue'
-import v1_0_34 from './log/v1_0_34.vue'
+import v1_0_24 from './log/v1_0_24.vue';
+import v1_0_34 from './log/v1_0_34.vue';
 </script>
 
 <template>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-const visible = ref(false)
+const visible = ref(false);
 
 const open = () => {
-  visible.value = true
-}
+  visible.value = true;
+};
 
-defineExpose({ open })
+defineExpose({ open });
 </script>
 
 <template>
@@ -21,13 +21,13 @@ defineExpose({ open })
       title="设置选项"
       :closeButtonProps="{
         request: () => {
-          visible = false
-        }
+          visible = false;
+        },
       }"
       :okButtonProps="{
         request: () => {
-          visible = false
-        }
+          visible = false;
+        },
       }"
     >
       <div class="modal-body">

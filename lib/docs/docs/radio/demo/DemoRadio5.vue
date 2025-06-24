@@ -4,10 +4,10 @@ const carBrandOptions = ref([
   { label: 'Lamborghini', value: 'lamborghini' },
   { label: 'Porsche', value: 'porsche' },
   { label: 'McLaren', value: 'mclaren' },
-  { label: 'Bugatti', value: 'bugatti' }
-])
+  { label: 'Bugatti', value: 'bugatti' },
+]);
 
-const selectedBrand = ref('porsche')
+const selectedBrand = ref('porsche');
 </script>
 
 <template>

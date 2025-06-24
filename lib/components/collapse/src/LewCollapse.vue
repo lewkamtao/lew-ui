@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { any2px } from 'lew-ui/utils'
-import { collapseProps } from './props'
+import { computed } from 'vue';
+import { any2px } from 'lew-ui/utils';
+import { collapseProps } from './props';
 
-const props = defineProps(collapseProps)
-const modelValue = defineModel()
+const props = defineProps(collapseProps);
+const modelValue = defineModel();
 
-provide('expandKeys', modelValue)
+provide('expandKeys', modelValue);
 
 const collapseStyle = computed(() => ({
-  width: any2px(props.width)
-}))
+  width: any2px(props.width),
+}));
 </script>
 
 <template>

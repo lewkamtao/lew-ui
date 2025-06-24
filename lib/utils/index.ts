@@ -1,5 +1,5 @@
-import { cloneDeep, isFunction } from 'lodash-es'
-import Icon from './Icon.vue'
+import { cloneDeep, isFunction } from 'lodash-es';
+import Icon from './Icon.vue';
 /**
  * 获取颜色类型。
  * @param {string | undefined} type - 消息类型。
@@ -14,13 +14,13 @@ export const iconColorType: Record<string, string> = {
   danger: 'red',
   info: 'blue',
   primary: 'blue',
-  tips: 'blue'
-}
+  tips: 'blue',
+};
 
 export const getColorType = (type: string): string => {
-  const typeMap: Record<string, string> = iconColorType
-  return typeMap[type as string] || type
-}
+  const typeMap: Record<string, string> = iconColorType;
+  return typeMap[type as string] || type;
+};
 
 /**
  * 将对象转换为类名字符串。
@@ -29,16 +29,16 @@ export const getColorType = (type: string): string => {
  * @returns {string} 生成的类名字符串。
  */
 export const object2class = (prefix: string, props: Object) => {
-  let className = ''
+  let className = '';
   for (const [key, value] of Object.entries(props)) {
     if (typeof value === 'boolean' && value) {
-      className += ` ${prefix}-${key}`
+      className += ` ${prefix}-${key}`;
     } else if (typeof value === 'string' || typeof value === 'number') {
-      className += ` ${prefix}-${key}-${value}`
+      className += ` ${prefix}-${key}-${value}`;
     }
   }
-  return className
-}
+  return className;
+};
 
 /**
  * 格式化数字，添加千位分隔符。
@@ -46,15 +46,15 @@ export const object2class = (prefix: string, props: Object) => {
  * @returns {string} 格式化后的字符串。
  */
 export const numFormat = (num: number) => {
-  const str = num.toString().split('.')
-  let integerPart = str[0]
-  const decimalPart = str[1] ? `.${str[1]}` : ''
-  const reg = /(\d+)(\d{3})/
+  const str = num.toString().split('.');
+  let integerPart = str[0];
+  const decimalPart = str[1] ? `.${str[1]}` : '';
+  const reg = /(\d+)(\d{3})/;
   while (reg.test(integerPart)) {
-    integerPart = integerPart.replace(reg, '$1' + ',' + '$2')
+    integerPart = integerPart.replace(reg, '$1' + ',' + '$2');
   }
-  return integerPart + decimalPart
-}
+  return integerPart + decimalPart;
+};
 
 /**
  * 将任意值转换为像素值。
@@ -63,43 +63,43 @@ export const numFormat = (num: number) => {
  */
 export const any2px = (value: number | string | undefined): string => {
   if (!value) {
-    return ''
+    return '';
   }
 
-  const autoRegex = /^auto$/i
-  const calcRegex = /^calc\((.+)\)$/
-  const percentRegex = /^-?\d+(\.\d+)?%$/
-  const pixelRegex = /^-?\d+(\.\d+)?(px)?$/
-  const numericRegex = /^-?\d+(\.\d+)?$/
+  const autoRegex = /^auto$/i;
+  const calcRegex = /^calc\((.+)\)$/;
+  const percentRegex = /^-?\d+(\.\d+)?%$/;
+  const pixelRegex = /^-?\d+(\.\d+)?(px)?$/;
+  const numericRegex = /^-?\d+(\.\d+)?$/;
 
-  const _value = String(value)
+  const _value = String(value);
 
   if (_value.startsWith('calc')) {
-    return _value
+    return _value;
   }
 
   if (numericRegex.test(_value)) {
-    return `${value}px`
+    return `${value}px`;
   }
   if (autoRegex.test(_value)) {
-    return _value
+    return _value;
   }
   if (percentRegex.test(_value)) {
-    return _value
+    return _value;
   }
   if (calcRegex.test(_value)) {
-    return _value
+    return _value;
   }
   if (pixelRegex.test(_value)) {
-    return `${_value}`
+    return `${_value}`;
   }
-  const numValue = parseFloat(_value)
+  const numValue = parseFloat(_value);
   if (!isNaN(numValue)) {
-    return `${numValue}px`
+    return `${numValue}px`;
   }
 
-  return ''
-}
+  return '';
+};
 
 /**
  * 针对上面的 any2px 写一个类型校验方法，确保输入的值是有效的 CSS 值，可以是百分比或者 calc 计算。
@@ -109,22 +109,22 @@ export const any2px = (value: number | string | undefined): string => {
 export const isValidCssValue = ({
   name,
   field,
-  value
+  value,
 }: {
-  name: string
-  field: string
-  value: number | string | undefined
+  name: string;
+  field: string;
+  value: number | string | undefined;
 }): boolean => {
   if (!value) {
-    return false
+    return false;
   }
-  const autoRegex = /^auto$/i
-  const calcRegex = /^calc\((.+)\)$/
-  const percentRegex = /^-?\d+(\.\d+)?%$/
-  const pixelRegex = /^-?\d+(\.\d+)?(px)?$/
-  const numericRegex = /^-?\d+(\.\d+)?$/
+  const autoRegex = /^auto$/i;
+  const calcRegex = /^calc\((.+)\)$/;
+  const percentRegex = /^-?\d+(\.\d+)?%$/;
+  const pixelRegex = /^-?\d+(\.\d+)?(px)?$/;
+  const numericRegex = /^-?\d+(\.\d+)?$/;
 
-  const _value = String(value)
+  const _value = String(value);
   if (
     autoRegex.test(_value) ||
     calcRegex.test(_value) ||
@@ -132,11 +132,11 @@ export const isValidCssValue = ({
     pixelRegex.test(_value) ||
     numericRegex.test(_value)
   ) {
-    return true
+    return true;
   }
-  console.warn(`[${name}] ${field} 属性的值 ${_value} 不是有效的 CSS 值。`)
-  return false
-}
+  console.warn(`[${name}] ${field} 属性的值 ${_value} 不是有效的 CSS 值。`);
+  return false;
+};
 
 /**
  * 生成6位不重复的唯一ID。
@@ -145,10 +145,10 @@ export const isValidCssValue = ({
  */
 export const getUniqueId = () => {
   // 生成 UUID v4
-  const uuid = crypto.randomUUID()
+  const uuid = crypto.randomUUID();
   // 取前6位
-  return uuid.substring(0, 8)
-}
+  return uuid.substring(0, 8);
+};
 
 /**
  * 根据映射格式化表单数据。
@@ -156,45 +156,45 @@ export const getUniqueId = () => {
  * @returns {Object} 格式化后的表单数据。
  */
 export const formatFormByMap = (formMap: any) => {
-  const form = {}
+  const form = {};
   Object.keys(formMap).forEach((key) => {
-    const value = formMap[key]
-    const keys = key.split('.')
-    let obj: any = form
+    const value = formMap[key];
+    const keys = key.split('.');
+    let obj: any = form;
     for (let i = 0; i < keys.length - 1; i++) {
-      const k = keys[i]
+      const k = keys[i];
       if (!obj[k]) {
-        obj[k] = {}
+        obj[k] = {};
       }
-      obj = obj[k]
+      obj = obj[k];
     }
-    obj[keys[keys.length - 1]] = value
-  })
-  return form
-}
+    obj[keys[keys.length - 1]] = value;
+  });
+  return form;
+};
 /**
  * 将嵌套对象转换为以 a.b.c.d 形式表示的扁平对象。
  * @param {Object} form - 嵌套的表单数据。
  * @returns {any} 转换后的扁平对象映射。
  */
 export const flattenNestedObject = (form: any) => {
-  const formMap: Record<string, any> = {}
+  const formMap: Record<string, any> = {};
 
   const buildMap = (obj: any, prefix: string = '') => {
     for (const key in obj) {
-      const value = obj[key]
-      const newKey = prefix ? `${prefix}.${key}` : key
+      const value = obj[key];
+      const newKey = prefix ? `${prefix}.${key}` : key;
       if (typeof value === 'object' && value !== null) {
-        buildMap(value, newKey)
+        buildMap(value, newKey);
       } else {
-        formMap[newKey] = value
+        formMap[newKey] = value;
       }
     }
-  }
+  };
 
-  buildMap(form)
-  return formMap
-}
+  buildMap(form);
+  return formMap;
+};
 /**
  * 获取嵌套对象中指定字段的值。
  * @param {Object} obj - 要查询的对象。
@@ -203,19 +203,19 @@ export const flattenNestedObject = (form: any) => {
  */
 export const retrieveNestedFieldValue = (obj: any, field: string) => {
   if (!field) {
-    return undefined
+    return undefined;
   }
-  const keys = field.split('.') // 将字符串的嵌套字段按照 '.' 分割成数组
-  let value = obj
+  const keys = field.split('.'); // 将字符串的嵌套字段按照 '.' 分割成数组
+  let value = obj;
   for (const key of keys) {
     if (value && Object.prototype.hasOwnProperty.call(value, key)) {
-      value = value[key]
+      value = value[key];
     } else {
-      return undefined // 如果找不到字段，返回 undefined
+      return undefined; // 如果找不到字段，返回 undefined
     }
   }
-  return value // 返回目标字段的值
-}
+  return value; // 返回目标字段的值
+};
 
 /**
  * 格式化字节数。
@@ -224,13 +224,13 @@ export const retrieveNestedFieldValue = (obj: any, field: string) => {
  * @returns {string} 格式化后的字符串。
  */
 export const formatBytes = (bytes: number, decimals: number = 2) => {
-  if (bytes === 0) return '0 Bytes'
-  const k = 1024
-  const dm = decimals < 0 ? 0 : decimals
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
-}
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+};
 
 /**
  * 获取静态资源文件。
@@ -241,13 +241,13 @@ export const formatBytes = (bytes: number, decimals: number = 2) => {
  */
 export const getAssetsFile = ({
   name,
-  type
+  type,
 }: {
-  name: string
-  type: string
+  name: string;
+  type: string;
 }) => {
-  return new URL(`../assets/${type}/${name}`, import.meta.url).href
-}
+  return new URL(`../assets/${type}/${name}`, import.meta.url).href;
+};
 
 /**
  * 根据文件名获取对应的文件图标。
@@ -256,44 +256,44 @@ export const getAssetsFile = ({
  */
 export const getFileIcon = (fileName: string = '') => {
   // 根据文件名获取后缀名
-  const suffix = fileName.split('.').pop()
+  const suffix = fileName.split('.').pop();
 
   switch (suffix) {
     case 'doc':
     case 'docx':
     case 'wps':
-      return getAssetsFile({ name: 'file_word.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_word.svg', type: 'icon' });
     case 'pdf':
     case 'PDF':
-      return getAssetsFile({ name: 'file_pdf.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_pdf.svg', type: 'icon' });
     case 'ppt':
     case 'pptx':
-      return getAssetsFile({ name: 'file_ppt.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_ppt.svg', type: 'icon' });
     case 'txt':
-      return getAssetsFile({ name: 'file_txt.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_txt.svg', type: 'icon' });
     case 'xls':
     case 'xlsx':
     case 'et':
     case 'etx':
     case 'ett':
-      return getAssetsFile({ name: 'file_excel.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_excel.svg', type: 'icon' });
     case 'csv':
-      return getAssetsFile({ name: 'file_csv.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_csv.svg', type: 'icon' });
     case 'zip':
     case 'rar':
     case '7z':
     case 'gz':
-      return getAssetsFile({ name: 'file_rar.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_rar.svg', type: 'icon' });
     case 'mp3':
     case 'wma':
     case 'm4a':
     case 'mp3x':
-      return getAssetsFile({ name: 'file_audio.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_audio.svg', type: 'icon' });
     case 'mp4':
     case 'avi':
     case 'mkv':
     case 'flv':
-      return getAssetsFile({ name: 'file_mp4.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_mp4.svg', type: 'icon' });
     case 'png':
     case 'jpg':
     case 'jpeg':
@@ -302,43 +302,43 @@ export const getFileIcon = (fileName: string = '') => {
     case 'svg':
     case 'bmp':
     case 'ico':
-      return getAssetsFile({ name: 'file_img.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_img.svg', type: 'icon' });
     case 'psd':
-      return getAssetsFile({ name: 'file_psd.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_psd.svg', type: 'icon' });
     case 'ai':
     case 'cdr':
-      return getAssetsFile({ name: 'file_ai.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_ai.svg', type: 'icon' });
     case 'cad':
-      return getAssetsFile({ name: 'file_cad.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_cad.svg', type: 'icon' });
     case 'html':
     case 'htm':
     case 'xhtml':
-      return getAssetsFile({ name: 'file_html.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_html.svg', type: 'icon' });
     case 'project':
-      return getAssetsFile({ name: 'file_project.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_project.svg', type: 'icon' });
     case 'vsdx':
-      return getAssetsFile({ name: 'file_visio.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_visio.svg', type: 'icon' });
     default:
-      return getAssetsFile({ name: 'file_default.svg', type: 'icon' })
+      return getAssetsFile({ name: 'file_default.svg', type: 'icon' });
   }
-}
+};
 
 export const getIconInnerHTML = (e: any = {}) => {
-  const el: Element = document.createElement('div')
+  const el: Element = document.createElement('div');
   const icon = createApp({
     render() {
-      return h(Icon, { ...e })
-    }
-  })
-  icon.mount(el)
-  return el.innerHTML
-}
+      return h(Icon, { ...e });
+    },
+  });
+  icon.mount(el);
+  return el.innerHTML;
+};
 
 export const checkUrlIsImage = (url: string = ''): boolean => {
   const imageRegex =
-    /\.(jpg|jpeg|png|webp|bmp|gif|svg|tiff|ico|heif|jfif|pjpeg|pjp|avif)$/i
-  return imageRegex.test(url)
-}
+    /\.(jpg|jpeg|png|webp|bmp|gif|svg|tiff|ico|heif|jfif|pjpeg|pjp|avif)$/i;
+  return imageRegex.test(url);
+};
 
 export const dragmove = ({
   el,
@@ -349,81 +349,81 @@ export const dragmove = ({
   min,
   step = () => 1,
   trackMax,
-  trackMin
+  trackMin,
 }: {
-  el: HTMLElement
-  parentEl: HTMLElement
-  direction?: 'horizontal' | 'vertical' | 'both'
+  el: HTMLElement;
+  parentEl: HTMLElement;
+  direction?: 'horizontal' | 'vertical' | 'both';
   callback?: (position: {
-    x: number
-    y: number
-    percentX: number
-    percentY: number
-  }) => void
-  max: () => number
-  min: () => number
-  step?: () => number
-  trackMax: () => number
-  trackMin: () => number
+    x: number;
+    y: number;
+    percentX: number;
+    percentY: number;
+  }) => void;
+  max: () => number;
+  min: () => number;
+  step?: () => number;
+  trackMax: () => number;
+  trackMin: () => number;
 }) => {
-  let isDragging = false
-  let startX: number, startY: number
-  let parentRect: DOMRect
+  let isDragging = false;
+  let startX: number, startY: number;
+  let parentRect: DOMRect;
 
   const getClampedValues = () => {
-    const clampedMinValue = Math.max(min(), trackMin())
-    const clampedMaxValue = Math.min(max(), trackMax())
-    return { clampedMinValue, clampedMaxValue }
-  }
+    const clampedMinValue = Math.max(min(), trackMin());
+    const clampedMaxValue = Math.min(max(), trackMax());
+    return { clampedMinValue, clampedMaxValue };
+  };
 
   const snapToGrid = (value: number, gridSize: number) => {
-    return Math.round(value / gridSize) * gridSize
-  }
+    return Math.round(value / gridSize) * gridSize;
+  };
 
   const onMouseDown = (e: MouseEvent) => {
-    isDragging = true
-    startX = e.clientX - el.offsetLeft
-    startY = e.clientY - el.offsetTop
+    isDragging = true;
+    startX = e.clientX - el.offsetLeft;
+    startY = e.clientY - el.offsetTop;
 
-    parentRect = parentEl.getBoundingClientRect()
-    document.body.style.userSelect = 'none'
-    document.addEventListener('mousemove', onMouseMove)
-    document.addEventListener('mouseup', onMouseUp)
-  }
+    parentRect = parentEl.getBoundingClientRect();
+    document.body.style.userSelect = 'none';
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  };
 
   const onMouseMove = (e: MouseEvent) => {
-    if (!isDragging) return
+    if (!isDragging) return;
 
-    let newX = e.clientX - startX
-    let newY = e.clientY - startY
-    const { clampedMinValue, clampedMaxValue } = getClampedValues()
+    let newX = e.clientX - startX;
+    let newY = e.clientY - startY;
+    const { clampedMinValue, clampedMaxValue } = getClampedValues();
 
     if (direction === 'horizontal' || direction === 'both') {
-      const trackWidth = parentRect.width
+      const trackWidth = parentRect.width;
       const minX =
         ((clampedMinValue - trackMin()) / (trackMax() - trackMin())) *
-        trackWidth
+        trackWidth;
       const maxX =
         ((clampedMaxValue - trackMin()) / (trackMax() - trackMin())) *
-        trackWidth
-      newX = Math.max(minX, Math.min(newX, maxX))
-      const stepSize = trackWidth / ((trackMax() - trackMin()) / step())
-      newX = snapToGrid(newX, stepSize)
-      el.style.left = `${newX}px`
+        trackWidth;
+      newX = Math.max(minX, Math.min(newX, maxX));
+      const stepSize = trackWidth / ((trackMax() - trackMin()) / step());
+      newX = snapToGrid(newX, stepSize);
+      el.style.left = `${newX}px`;
     }
 
     if (direction === 'vertical' || direction === 'both') {
-      const trackHeight = parentRect.height
+      const trackHeight = parentRect.height;
       const minY =
         ((clampedMinValue - trackMin()) / (trackMax() - trackMin())) *
-        trackHeight
+        trackHeight;
       const maxY =
         ((clampedMaxValue - trackMin()) / (trackMax() - trackMin())) *
-        trackHeight
-      newY = Math.max(minY, Math.min(newY, maxY))
-      const stepSize = trackHeight / ((trackMax() - trackMin()) / step())
-      newY = snapToGrid(newY, stepSize)
-      el.style.top = `${newY}px`
+        trackHeight;
+      newY = Math.max(minY, Math.min(newY, maxY));
+      const stepSize = trackHeight / ((trackMax() - trackMin()) / step());
+      newY = snapToGrid(newY, stepSize);
+      el.style.top = `${newY}px`;
     }
 
     if (callback) {
@@ -431,24 +431,24 @@ export const dragmove = ({
         x: Number(newX.toFixed(2)),
         y: Number(newY.toFixed(2)),
         percentX: Number((newX / parentRect.width).toFixed(2)),
-        percentY: Number((newY / parentRect.height).toFixed(2))
-      })
+        percentY: Number((newY / parentRect.height).toFixed(2)),
+      });
     }
-  }
+  };
 
   const onMouseUp = () => {
-    isDragging = false
-    document.body.style.userSelect = 'auto'
-    document.removeEventListener('mousemove', onMouseMove)
-    document.removeEventListener('mouseup', onMouseUp)
-  }
+    isDragging = false;
+    document.body.style.userSelect = 'auto';
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
 
-  el.addEventListener('mousedown', onMouseDown)
+  el.addEventListener('mousedown', onMouseDown);
 
   return () => {
-    el.removeEventListener('mousedown', onMouseDown)
-  }
-}
+    el.removeEventListener('mousedown', onMouseDown);
+  };
+};
 /**
  * 将字符串转换为标准的 JSON 格式。
  * 兼容单引号、双引号以及无引号的字段名。
@@ -458,9 +458,9 @@ export const dragmove = ({
 export const parseToStandardJSON = (str: string) => {
   const modifiedStr = str
     .replace(/'/g, '"') // 替换单引号为双引号
-    .replace(/({|,)\s*([a-zA-Z0-9_]+)\s*:/g, '$1"$2":') // 给没有引号的字段名加上双引号
-  return JSON.parse(modifiedStr)
-}
+    .replace(/({|,)\s*([a-zA-Z0-9_]+)\s*:/g, '$1"$2":'); // 给没有引号的字段名加上双引号
+  return JSON.parse(modifiedStr);
+};
 
 /**
  * 轮询方法
@@ -473,33 +473,33 @@ export const poll = ({
   interval = 10,
   timeout = 1000 * 3,
   callback,
-  vail
+  vail,
 }: {
-  interval?: number
-  timeout?: number
-  callback: () => void
-  vail: () => boolean
+  interval?: number;
+  timeout?: number;
+  callback: () => void;
+  vail: () => boolean;
 }) => {
-  const startTime = Date.now()
-  let timer: NodeJS.Timeout | null = null
+  const startTime = Date.now();
+  let timer: NodeJS.Timeout | null = null;
 
   const execute = () => {
     if (Date.now() - startTime > timeout) {
-      if (timer) clearTimeout(timer)
-      return
+      if (timer) clearTimeout(timer);
+      return;
     }
 
     if (vail()) {
-      if (timer) clearTimeout(timer)
-      callback()
-      return
+      if (timer) clearTimeout(timer);
+      callback();
+      return;
     }
 
-    timer = setTimeout(execute, interval)
-  }
+    timer = setTimeout(execute, interval);
+  };
 
-  execute()
-}
+  execute();
+};
 
 export const insertChildByKey = (
   tree: any,
@@ -508,44 +508,44 @@ export const insertChildByKey = (
 ): boolean => {
   for (let i = 0; i < tree.length; i++) {
     if (tree[i].key === key) {
-      tree[i].children = newChild
-      return true
+      tree[i].children = newChild;
+      return true;
     }
     if (tree[i].children?.length) {
       if (insertChildByKey(tree[i].children, key, newChild)) {
-        return true
+        return true;
       }
     }
   }
-  return false
-}
+  return false;
+};
 
 export const findAllChildrenKeys = (node: any) => {
-  const keys: (string | number)[] = []
+  const keys: (string | number)[] = [];
 
   const traverse = (item: any) => {
-    if (item.key !== undefined) keys.push(item.key)
-    item.children?.forEach(traverse)
-  }
+    if (item.key !== undefined) keys.push(item.key);
+    item.children?.forEach(traverse);
+  };
 
-  node.children?.forEach(traverse)
+  node.children?.forEach(traverse);
 
-  return keys
-}
+  return keys;
+};
 
 export const findNodeByKey = (key: string | number, tree: any) => {
-  const queue: any = cloneDeep(tree)
+  const queue: any = cloneDeep(tree);
 
   while (queue.length > 0) {
-    const node = queue.shift()!
-    if (node.key === key) return node
+    const node = queue.shift()!;
+    if (node.key === key) return node;
     if (node.children?.length) {
-      queue.push(...node.children)
+      queue.push(...node.children);
     }
   }
 
-  return null
-}
+  return null;
+};
 
 /**
  * 判断是否为 Vue 组件
@@ -556,12 +556,12 @@ export const isVueComponent = (value: any): boolean => {
   try {
     // 检查是否为函数类型
     if (typeof value !== 'function' && typeof value !== 'object') {
-      return false
+      return false;
     }
 
     // 检查函数式组件 (返回 VNode 的函数)
     if (typeof value === 'function') {
-      return true
+      return true;
     }
 
     // 检查对象类型组件
@@ -574,22 +574,22 @@ export const isVueComponent = (value: any): boolean => {
         value.render ||
         value.template
       )
-        return true
+        return true;
 
       // 检查是否为 Vue 定义的组件对象
       if (value.component || value.__v_isVNode || value.__v_isComponent)
-        return true
+        return true;
     }
 
     // 检查是否为 defineComponent 创建的组件
     if (value && value.__esModule && value.default) {
-      return isVueComponent(value.default)
+      return isVueComponent(value.default);
     }
-    return false
+    return false;
   } catch {
-    return false
+    return false;
   }
-}
+};
 
 /**
  * 格式化组件
@@ -598,7 +598,7 @@ export const isVueComponent = (value: any): boolean => {
  */
 export const formatComponent = (value: any) => {
   if (isFunction(value)) {
-    return value()
+    return value();
   }
-  return value
-}
+  return value;
+};

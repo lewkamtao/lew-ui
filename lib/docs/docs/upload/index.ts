@@ -1,3 +1,3 @@
-import DemoUpload from './DemoUpload.vue'
+import DemoUpload from './DemoUpload.vue';
 
-export default DemoUpload
+export default DemoUpload;

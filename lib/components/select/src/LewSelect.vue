@@ -1,82 +1,82 @@
 <script setup lang="ts">
-import { useDebounceFn } from '@vueuse/core'
-import { LewPopover, LewFlex, LewTextTrim, LewEmpty } from 'lew-ui'
-import { object2class, numFormat } from 'lew-ui/utils'
-import { VirtList } from 'vue-virt-list'
-import type { SelectOptions } from './props'
-import { selectProps } from './props'
-import { cloneDeep, isFunction } from 'lodash-es'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { flattenOptions, defaultSearchMethod } from './util'
-import { poll } from 'lew-ui/utils'
-import { locale } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
-const props = defineProps(selectProps)
-const emit = defineEmits(['change', 'blur', 'clear', 'focus'])
-const selectValue: Ref<string | number | undefined> = defineModel()
+import { useDebounceFn } from '@vueuse/core';
+import { LewPopover, LewFlex, LewTextTrim, LewEmpty } from 'lew-ui';
+import { object2class, numFormat } from 'lew-ui/utils';
+import { VirtList } from 'vue-virt-list';
+import type { SelectOptions } from './props';
+import { selectProps } from './props';
+import { cloneDeep, isFunction } from 'lodash-es';
+import Icon from 'lew-ui/utils/Icon.vue';
+import { flattenOptions, defaultSearchMethod } from './util';
+import { poll } from 'lew-ui/utils';
+import { locale } from 'lew-ui';
+import { any2px } from 'lew-ui/utils';
+const props = defineProps(selectProps);
+const emit = defineEmits(['change', 'blur', 'clear', 'focus']);
+const selectValue: Ref<string | number | undefined> = defineModel();
 
-const lewSelectRef = ref()
-const inputRef = ref()
-const lewPopoverRef = ref()
-const formMethods: any = inject('formMethods', {})
+const lewSelectRef = ref();
+const inputRef = ref();
+const lewPopoverRef = ref();
+const formMethods: any = inject('formMethods', {});
 
 let _searchMethod = computed(() => {
   if (isFunction(props.searchMethod)) {
-    return props.searchMethod
+    return props.searchMethod;
   } else if (props.searchMethodId) {
-    return formMethods[props.searchMethodId]
+    return formMethods[props.searchMethodId];
   } else {
-    return defaultSearchMethod
+    return defaultSearchMethod;
   }
-})
+});
 
 let _initOptionsMethod = computed(() => {
   if (isFunction(props.initOptionsMethod)) {
-    return props.initOptionsMethod
+    return props.initOptionsMethod;
   } else if (props.initOptionsMethodId) {
-    return formMethods[props.initOptionsMethodId]
+    return formMethods[props.initOptionsMethodId];
   }
-  return false
-})
+  return false;
+});
 
 const init = async () => {
   if (_initOptionsMethod.value) {
     try {
-      const newOptions = await _initOptionsMethod.value()
-      state.sourceOptions = newOptions
-      state.options = flattenOptions(newOptions)
-      findKeyword() // Update keyword based on new options and modelValue
+      const newOptions = await _initOptionsMethod.value();
+      state.sourceOptions = newOptions;
+      state.options = flattenOptions(newOptions);
+      findKeyword(); // Update keyword based on new options and modelValue
     } catch (error) {
-      console.error('[LewSelect] initOptionsMethod failed', error)
+      console.error('[LewSelect] initOptionsMethod failed', error);
     }
   }
   if (props.enableSearchCache) {
-    state.searchCache.set('', state.options)
+    state.searchCache.set('', state.options);
   }
-  state.initLoading = false
-}
+  state.initLoading = false;
+};
 
 watch(
   () => props.options,
   (newOptions) => {
     if (!_initOptionsMethod.value) {
       // 只有在没有使用 initOptionsMethod 时才响应 options 的变化
-      state.sourceOptions = newOptions
-      state.options = flattenOptions(newOptions)
+      state.sourceOptions = newOptions;
+      state.options = flattenOptions(newOptions);
       state.keyword =
-        newOptions.find((e: any) => e.value === selectValue.value)?.label || ''
+        newOptions.find((e: any) => e.value === selectValue.value)?.label || '';
       // 如果启用搜索缓存，清除搜索缓存，因为数据源已经更新
       if (props.enableSearchCache) {
-        state.searchCache.clear()
+        state.searchCache.clear();
       }
     }
   },
   {
-    deep: true
+    deep: true,
   }
-)
+);
 
-const virtListRef = ref()
+const virtListRef = ref();
 
 const state = reactive({
   visible: false,
@@ -88,169 +88,169 @@ const state = reactive({
   keyword: props.defaultValue || (selectValue.value as any),
   keywordBackup: props.defaultValue as any,
   autoWidth: 0, // 新增自动宽度
-  searchCache: new Map<string, SelectOptions[]>() // 新增搜索结果缓存
-})
+  searchCache: new Map<string, SelectOptions[]>(), // 新增搜索结果缓存
+});
 
 watch(
   () => props.defaultValue,
   () => {
-    state.keyword = props.defaultValue
+    state.keyword = props.defaultValue;
   }
-)
+);
 
 // 计算选择框的宽度
 const computedWidth = computed(() => {
   if (props.autoWidth && state.autoWidth > 0) {
     // 确保最小宽度不小于300px
 
-    return Number(state.autoWidth)
+    return Number(state.autoWidth);
   }
-  return Number(props.width)
-})
+  return Number(props.width);
+});
 
 // 在组件挂载后初始化自动宽度
 onMounted(() => {
   if (props.autoWidth) {
-    calculateAutoWidth()
+    calculateAutoWidth();
   }
-  init()
-})
+  init();
+});
 
 // 选择器宽容度宽度
-const SELECT_WIDTH_TOLERANCE = 26
+const SELECT_WIDTH_TOLERANCE = 26;
 
 // 计算自动宽度
 const calculateAutoWidth = () => {
-  if (!props.autoWidth) return
+  if (!props.autoWidth) return;
 
-  const tempDiv = document.createElement('div')
-  tempDiv.style.position = 'absolute'
-  tempDiv.style.visibility = 'hidden'
-  tempDiv.style.whiteSpace = 'nowrap'
-  tempDiv.style.fontSize = getComputedStyle(document.body).fontSize
+  const tempDiv = document.createElement('div');
+  tempDiv.style.position = 'absolute';
+  tempDiv.style.visibility = 'hidden';
+  tempDiv.style.whiteSpace = 'nowrap';
+  tempDiv.style.fontSize = getComputedStyle(document.body).fontSize;
   // 如果inputRef已经挂载，使用实际样式
   if (inputRef.value) {
-    tempDiv.style.fontSize = getComputedStyle(inputRef.value).fontSize
-    tempDiv.style.padding = getComputedStyle(inputRef.value).padding
+    tempDiv.style.fontSize = getComputedStyle(inputRef.value).fontSize;
+    tempDiv.style.padding = getComputedStyle(inputRef.value).padding;
 
-    tempDiv.style.fontFamily = getComputedStyle(inputRef.value).fontFamily
-    tempDiv.style.fontWeight = getComputedStyle(inputRef.value).fontWeight
+    tempDiv.style.fontFamily = getComputedStyle(inputRef.value).fontFamily;
+    tempDiv.style.fontWeight = getComputedStyle(inputRef.value).fontWeight;
   }
   // 如果没有关键词，则使用placeholder的文本
-  let textContent = state.keyword
+  let textContent = state.keyword;
   if (!textContent || textContent.trim() === '') {
-    textContent = props.placeholder || locale.t('select.placeholder')
+    textContent = props.placeholder || locale.t('select.placeholder');
   }
-  tempDiv.innerText = textContent
-  document.body.appendChild(tempDiv)
+  tempDiv.innerText = textContent;
+  document.body.appendChild(tempDiv);
 
   // 文本宽度加上边距和图标空间
-  const textWidth = tempDiv.clientWidth
-  state.autoWidth = textWidth + SELECT_WIDTH_TOLERANCE
+  const textWidth = tempDiv.clientWidth;
+  state.autoWidth = textWidth + SELECT_WIDTH_TOLERANCE;
 
-  document.body.removeChild(tempDiv)
-}
+  document.body.removeChild(tempDiv);
+};
 
 // 监听keyword变化以更新自动宽度
 watch(
   () => state.keyword,
   () => {
     if (props.autoWidth) {
-      calculateAutoWidth()
+      calculateAutoWidth();
     }
   }
-)
+);
 
 const show = () => {
-  lewPopoverRef.value.show()
-}
+  lewPopoverRef.value.show();
+};
 
 const hide = () => {
-  lewPopoverRef.value.hide()
-}
+  lewPopoverRef.value.hide();
+};
 
 const searchDebounce = useDebounceFn(async (e: any) => {
-  search(e)
-}, props.searchDelay)
+  search(e);
+}, props.searchDelay);
 
 const search = async (e: any) => {
-  state.loading = true
-  const keyword = e.target.value
+  state.loading = true;
+  const keyword = e.target.value;
   if (props.searchable) {
-    let result: SelectOptions[] = []
+    let result: SelectOptions[] = [];
 
     // 检查是否启用搜索缓存，以及缓存中是否已有该关键词的搜索结果
     if (props.enableSearchCache && state.searchCache.has(keyword)) {
-      result = state.searchCache.get(keyword)!
+      result = state.searchCache.get(keyword)!;
     } else {
       // 如果没输入关键词
-      const optionsToSearch = flattenOptions(state.sourceOptions)
+      const optionsToSearch = flattenOptions(state.sourceOptions);
       if (!keyword && optionsToSearch.length > 0) {
-        result = optionsToSearch
+        result = optionsToSearch;
       } else {
         result = await _searchMethod.value({
           options: optionsToSearch,
-          keyword
-        })
+          keyword,
+        });
       }
       // 如果启用搜索缓存，将搜索结果缓存起来
       if (props.enableSearchCache) {
-        state.searchCache.set(keyword, result)
+        state.searchCache.set(keyword, result);
       }
     }
 
-    state.options = result
+    state.options = result;
   }
-  state.loading = false
-}
+  state.loading = false;
+};
 
 const clearHandle = () => {
-  selectValue.value = undefined
-  state.keywordBackup = undefined
-  state.keyword = ''
-  emit('clear')
-  emit('change')
-}
+  selectValue.value = undefined;
+  state.keywordBackup = undefined;
+  state.keyword = '';
+  emit('clear');
+  emit('change');
+};
 
 const selectHandle = (item: SelectOptions) => {
   if (item.disabled || item.isGroup) {
-    return
+    return;
   }
-  state.hideBySelect = true
-  state.keyword = item.label
-  selectValue.value = item.value
-  emit('change', item.value)
-  hide()
-}
+  state.hideBySelect = true;
+  state.keyword = item.label;
+  selectValue.value = item.value;
+  emit('change', item.value);
+  hide();
+};
 
 const getChecked = computed(() => (value: string | number) => {
-  return selectValue.value === value
-})
+  return selectValue.value === value;
+});
 
 const getValueStyle = computed(() => {
-  return state.visible ? 'opacity:0.6' : ''
-})
+  return state.visible ? 'opacity:0.6' : '';
+});
 
 const findKeyword = () => {
   if (state.options) {
     const option = state.options.find((e: any) => {
       if (e) {
-        return e.value === selectValue.value
+        return e.value === selectValue.value;
       }
-    })
+    });
 
     if (option && JSON.stringify(option) !== '{}') {
-      return (state.keyword = option.label)
+      return (state.keyword = option.label);
     }
   }
-  return (state.keyword = props.defaultValue)
-}
-findKeyword()
+  return (state.keyword = props.defaultValue);
+};
+findKeyword();
 
 const getSelectClassName = computed(() => {
-  let { clearable, size, disabled, readonly, searchable } = props
-  clearable = clearable ? !!selectValue.value : false
-  const focus = state.visible
+  let { clearable, size, disabled, readonly, searchable } = props;
+  clearable = clearable ? !!selectValue.value : false;
+  const focus = state.visible;
   return object2class('lew-select', {
     clearable,
     size,
@@ -258,114 +258,114 @@ const getSelectClassName = computed(() => {
     readonly,
     searchable,
     focus,
-    'init-loading': state.initLoading
-  })
-})
+    'init-loading': state.initLoading,
+  });
+});
 
 const getBodyClassName = computed(() => {
-  const { size, disabled } = props
-  return object2class('lew-select-body', { size, disabled })
-})
+  const { size, disabled } = props;
+  return object2class('lew-select-body', { size, disabled });
+});
 
 const getSelectItemClassName = (e: any) => {
-  const { disabled, isGroup } = e
-  const active = getChecked.value(e.value)
+  const { disabled, isGroup } = e;
+  const active = getChecked.value(e.value);
 
   return object2class('lew-select-item', {
     disabled,
     active,
-    'is-group': isGroup
-  })
-}
+    'is-group': isGroup,
+  });
+};
 
 const getIconSize = computed(() => {
   const size: any = {
     small: 14,
     medium: 15,
-    large: 16
-  }
-  return size[props.size]
-})
+    large: 16,
+  };
+  return size[props.size];
+});
 
 const getVirtualHeight = computed(() => {
-  let height = state.options.length * props.itemHeight
-  height = height >= 280 ? 280 : height
-  return height
-})
+  let height = state.options.length * props.itemHeight;
+  height = height >= 280 ? 280 : height;
+  return height;
+});
 
 const showHandle = async () => {
-  state.visible = true
-  state.keywordBackup = cloneDeep(state.keyword)
+  state.visible = true;
+  state.keywordBackup = cloneDeep(state.keyword);
   if (props.searchable) {
-    inputRef.value.focus()
+    inputRef.value.focus();
   }
-  emit('focus')
+  emit('focus');
 
   if (props.searchable) {
-    state.keyword = ''
+    state.keyword = '';
   }
-  state.hideBySelect = false // 重置
+  state.hideBySelect = false; // 重置
   if (props.searchable) {
-    await search({ target: { value: '' } })
+    await search({ target: { value: '' } });
   }
   const index = state.options.findIndex(
     (e: any) => e.value === selectValue.value
-  )
+  );
   poll({
     callback: () => {
-      const i = index > -1 ? index : 0
+      const i = index > -1 ? index : 0;
       if (i > 0 && i !== Infinity) {
-        virtListRef.value.scrollToIndex(i)
+        virtListRef.value.scrollToIndex(i);
       } else {
-        virtListRef.value.reset()
+        virtListRef.value.reset();
       }
     },
     vail: () => {
-      return !!virtListRef.value
-    }
-  })
-}
+      return !!virtListRef.value;
+    },
+  });
+};
 
 const hideHandle = () => {
-  state.visible = false
+  state.visible = false;
   if (!state.hideBySelect) {
-    findKeyword()
+    findKeyword();
   }
-  inputRef.value.blur()
-  emit('blur')
-}
+  inputRef.value.blur();
+  emit('blur');
+};
 
 // 判断是否出现滚动条
 const isShowScrollBar = computed(() => {
-  return getVirtualHeight.value >= 280
-})
+  return getVirtualHeight.value >= 280;
+});
 
 watch(
   () => selectValue.value,
   () => {
-    findKeyword()
+    findKeyword();
     if (props.autoWidth) {
-      calculateAutoWidth()
+      calculateAutoWidth();
     }
   }
-)
+);
 
 const getResultText = computed(() => {
   return state.options.length > 0
     ? locale.t('select.resultCount', {
-        num: numFormat(state.options.filter((e: any) => !e.isGroup).length)
+        num: numFormat(state.options.filter((e: any) => !e.isGroup).length),
       })
-    : ''
-})
+    : '';
+});
 defineExpose({
   show,
   hide,
   clearSearchCache: () => {
     if (props.enableSearchCache) {
-      state.searchCache.clear()
+      state.searchCache.clear();
     }
-  }
-})
+  },
+});
 </script>
 
 <template>
@@ -410,7 +410,7 @@ defineExpose({
             type="close"
             class="lew-form-icon-close"
             :class="{
-              'lew-form-icon-close-focus': state.visible
+              'lew-form-icon-close-focus': state.visible,
             }"
             @click.stop="clearHandle"
           />
@@ -458,7 +458,7 @@ defineExpose({
               class="lew-select-options-list lew-scrollbar"
               :style="{
                 height: `${getVirtualHeight}px`,
-                paddingRight: isShowScrollBar ? '5px' : '0px'
+                paddingRight: isShowScrollBar ? '5px' : '0px',
               }"
             >
               <template #default="{ itemData: templateProps }">
@@ -471,7 +471,7 @@ defineExpose({
                     name="item"
                     :props="{
                       ...templateProps,
-                      checked: getChecked(templateProps.value)
+                      checked: getChecked(templateProps.value),
                     }"
                   ></slot>
                   <div

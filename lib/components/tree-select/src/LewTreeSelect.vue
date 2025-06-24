@@ -1,35 +1,35 @@
 <script setup lang="ts">
-import { useDebounceFn } from '@vueuse/core'
-import { LewPopover, LewTree, LewTooltip } from 'lew-ui'
-import { object2class } from 'lew-ui/utils'
-import { treeSelectProps } from './props'
-import { cloneDeep, isString, isFunction } from 'lodash-es'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { findNodeByKey } from 'lew-ui/utils'
+import { useDebounceFn } from '@vueuse/core';
+import { LewPopover, LewTree, LewTooltip } from 'lew-ui';
+import { object2class } from 'lew-ui/utils';
+import { treeSelectProps } from './props';
+import { cloneDeep, isString, isFunction } from 'lodash-es';
+import Icon from 'lew-ui/utils/Icon.vue';
+import { findNodeByKey } from 'lew-ui/utils';
 // 获取app
-const app = getCurrentInstance()?.appContext.app
+const app = getCurrentInstance()?.appContext.app;
 if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
+  app.use(LewTooltip);
 }
-const props = defineProps(treeSelectProps)
-const emit = defineEmits(['change', 'blur', 'clear'])
-const treeSelectValue: Ref<any> = defineModel()
+const props = defineProps(treeSelectProps);
+const emit = defineEmits(['change', 'blur', 'clear']);
+const treeSelectValue: Ref<any> = defineModel();
 
-const lewSelectRef = ref()
-const inputRef = ref()
-const lewPopoverRef = ref()
-const lewTreeRef = ref()
+const lewSelectRef = ref();
+const inputRef = ref();
+const lewPopoverRef = ref();
+const lewTreeRef = ref();
 
-const formMethods: any = inject('formMethods', {})
+const formMethods: any = inject('formMethods', {});
 
 let _initOptionsMethod = computed(() => {
   if (isFunction(props.initOptionsMethod)) {
-    return props.initOptionsMethod
+    return props.initOptionsMethod;
   } else if (props.initOptionsMethodId) {
-    return formMethods[props.initOptionsMethodId]
+    return formMethods[props.initOptionsMethodId];
   }
-  return false
-})
+  return false;
+});
 
 const state = reactive({
   selectWidth: 0, // 选择框宽度
@@ -39,59 +39,59 @@ const state = reactive({
   valueIsChange: false, // 记录
   keyword: props.defaultValue || (treeSelectValue.value as any), // 搜索关键字
   keywordBackup: props.defaultValue as any, // 搜索关键字备份
-  resultText: ''
-})
+  resultText: '',
+});
 
 const getSelectWidth = () => {
-  state.selectWidth = lewSelectRef.value?.clientWidth - 12
-}
+  state.selectWidth = lewSelectRef.value?.clientWidth - 12;
+};
 
 const show = () => {
-  lewPopoverRef.value.show()
-}
+  lewPopoverRef.value.show();
+};
 
 const hide = () => {
-  lewPopoverRef.value.hide()
-}
+  lewPopoverRef.value.hide();
+};
 
 const searchDebounce = useDebounceFn(async (e: any) => {
-  search(e)
-}, props.searchDelay)
+  search(e);
+}, props.searchDelay);
 
 const search = async (e: any) => {
-  const keyword = e.target.value
+  const keyword = e.target.value;
   if (props.searchable) {
-    await lewTreeRef.value.search(keyword)
+    await lewTreeRef.value.search(keyword);
   }
-}
+};
 
 const change = (e: any) => {
-  const { value } = e
-  treeSelectValue.value = value
-  state.valueIsChange = true
-  getKeywordLabel(value)
-  emit('change', e)
+  const { value } = e;
+  treeSelectValue.value = value;
+  state.valueIsChange = true;
+  getKeywordLabel(value);
+  emit('change', e);
   setTimeout(() => {
-    hide()
-  }, 100)
-}
+    hide();
+  }, 100);
+};
 
 const clearHandle = () => {
-  treeSelectValue.value = undefined
-  state.keyword = ''
-  state.keywordBackup = ''
-  emit('clear')
-  emit('change')
-}
+  treeSelectValue.value = undefined;
+  state.keyword = '';
+  state.keywordBackup = '';
+  emit('clear');
+  emit('change');
+};
 
 const getValueStyle = computed(() => {
-  return state.visible ? 'opacity:0.6' : ''
-})
+  return state.visible ? 'opacity:0.6' : '';
+});
 
 const getSelectClassName = computed(() => {
-  let { clearable, size, align, disabled, readonly, searchable } = props
-  clearable = clearable ? !!treeSelectValue.value : false
-  const focus = state.visible
+  let { clearable, size, align, disabled, readonly, searchable } = props;
+  clearable = clearable ? !!treeSelectValue.value : false;
+  const focus = state.visible;
 
   return object2class('lew-select', {
     clearable,
@@ -101,76 +101,76 @@ const getSelectClassName = computed(() => {
     readonly,
     searchable,
     focus,
-    'init-loading': state.initLoading
-  })
-})
+    'init-loading': state.initLoading,
+  });
+});
 
 const getBodyClassName = computed(() => {
-  const { size, disabled } = props
-  return object2class('lew-select-body', { size, disabled })
-})
+  const { size, disabled } = props;
+  return object2class('lew-select-body', { size, disabled });
+});
 
 const getIconSize = computed(() => {
   const size: any = {
     small: 14,
     medium: 15,
-    large: 16
-  }
-  return size[props.size]
-})
+    large: 16,
+  };
+  return size[props.size];
+});
 
 // 重新找回关键字
 const getKeywordLabel = (value: any) => {
   if (lewTreeRef.value && value) {
-    let tree = lewTreeRef.value.getTree()
-    const treeItem: any = findNodeByKey(value, tree)
+    let tree = lewTreeRef.value.getTree();
+    const treeItem: any = findNodeByKey(value, tree);
     if (treeItem !== undefined) {
-      const { labelPaths, label } = treeItem
+      const { labelPaths, label } = treeItem;
       if (props.showAllLevels && labelPaths && labelPaths.length > 0) {
-        state.keyword = labelPaths.join(' / ')
+        state.keyword = labelPaths.join(' / ');
       } else {
-        state.keyword = label[0]
+        state.keyword = label[0];
       }
     }
   }
-}
+};
 
-getKeywordLabel(treeSelectValue.value)
+getKeywordLabel(treeSelectValue.value);
 
 const showHandle = () => {
-  state.visible = true
-  state.keywordBackup = cloneDeep(state.keyword)
-  state.valueIsChange = false // 重置
+  state.visible = true;
+  state.keywordBackup = cloneDeep(state.keyword);
+  state.valueIsChange = false; // 重置
   if (props.searchable) {
-    state.keyword = ''
+    state.keyword = '';
   }
-  getSelectWidth()
+  getSelectWidth();
   if (props.searchable) {
-    search({ target: { value: '' } })
+    search({ target: { value: '' } });
   }
-}
+};
 
 const hideHandle = () => {
-  state.visible = false
+  state.visible = false;
   if (!state.valueIsChange && treeSelectValue.value) {
     state.keywordBackup
       ? (state.keyword = state.keywordBackup)
-      : getKeywordLabel(treeSelectValue.value)
+      : getKeywordLabel(treeSelectValue.value);
   }
   if (!treeSelectValue.value && state.keyword) {
-    state.keyword = ''
-    state.keywordBackup = ''
+    state.keyword = '';
+    state.keywordBackup = '';
   }
-  inputRef.value.blur()
-  lewTreeRef.value.reset()
-  emit('blur')
-}
+  inputRef.value.blur();
+  lewTreeRef.value.reset();
+  emit('blur');
+};
 
 const getPlaceholder = computed(() => {
-  return state.keywordBackup || props.placeholder
-})
+  return state.keywordBackup || props.placeholder;
+});
 
-defineExpose({ show, hide })
+defineExpose({ show, hide });
 </script>
 
 <template>
@@ -210,7 +210,7 @@ defineExpose({ show, hide })
             type="close"
             class="lew-form-icon-close"
             :class="{
-              'lew-form-icon-close-focus': state.visible
+              'lew-form-icon-close-focus': state.visible,
             }"
             @click.stop="clearHandle"
           />
@@ -252,7 +252,7 @@ defineExpose({ show, hide })
                 dataSource,
                 loadMethod,
                 initOptionsMethod: _initOptionsMethod,
-                expandAll
+                expandAll,
               }"
               :is-select="true"
               @load-start="state.searchLoading = true"

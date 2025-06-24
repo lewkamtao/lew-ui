@@ -4,11 +4,11 @@ export default {
   data: [
     {
       name: 'item',
-      params: 'Options'
+      params: 'Options',
     },
     {
       name: 'empty',
-      params: 'Options'
-    }
-  ]
-}
+      params: 'Options',
+    },
+  ],
+};

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
-const selectedProduct = ref()
+const selectedProduct = ref();
 
 const productCategories = [
   {
@@ -14,8 +14,8 @@ const productCategories = [
         children: [
           { value: 'foam', label: 'Foam Cleanser' },
           { value: 'gel', label: 'Gel Cleanser' },
-          { value: 'oil', label: 'Cleansing Oil' }
-        ]
+          { value: 'oil', label: 'Cleansing Oil' },
+        ],
       },
       {
         value: 'moisturizer',
@@ -23,10 +23,10 @@ const productCategories = [
         children: [
           { value: 'cream', label: 'Cream' },
           { value: 'lotion', label: 'Lotion' },
-          { value: 'essence', label: 'Essence' }
-        ]
-      }
-    ]
+          { value: 'essence', label: 'Essence' },
+        ],
+      },
+    ],
   },
   {
     value: 'makeup',
@@ -38,8 +38,8 @@ const productCategories = [
         children: [
           { value: 'foundation', label: 'Foundation' },
           { value: 'concealer', label: 'Concealer' },
-          { value: 'powder', label: 'Powder' }
-        ]
+          { value: 'powder', label: 'Powder' },
+        ],
       },
       {
         value: 'eye',
@@ -47,16 +47,16 @@ const productCategories = [
         children: [
           { value: 'eyeshadow', label: 'Eyeshadow' },
           { value: 'eyeliner', label: 'Eyeliner' },
-          { value: 'mascara', label: 'Mascara' }
-        ]
-      }
-    ]
-  }
-]
+          { value: 'mascara', label: 'Mascara' },
+        ],
+      },
+    ],
+  },
+];
 
 const handleChange = (value: string[]) => {
-  console.log('Selected product categories:', value)
-}
+  console.log('Selected product categories:', value);
+};
 </script>
 
 <template>

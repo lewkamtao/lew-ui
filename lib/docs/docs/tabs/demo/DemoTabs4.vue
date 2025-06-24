@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const selectedLang = ref('go')
+const selectedLang = ref('go');
 
 interface LangOption {
-  label: string
-  value: string
+  label: string;
+  value: string;
 }
 
 const langOptions: LangOption[] = [
@@ -21,13 +21,13 @@ const langOptions: LangOption[] = [
   { label: 'C#', value: 'cs' },
   { label: 'Scala', value: 'scala' },
   { label: 'R', value: 'r' },
-  { label: 'Dart', value: 'dart' }
-]
+  { label: 'Dart', value: 'dart' },
+];
 
 const handleLangChange = (option: LangOption) => {
-  console.log(option)
-  LewMessage.info(`您选择了: ${option.label}`)
-}
+  console.log(option);
+  LewMessage.info(`您选择了: ${option.label}`);
+};
 </script>
 
 <template>

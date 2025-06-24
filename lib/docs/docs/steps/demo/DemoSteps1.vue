@@ -2,23 +2,23 @@
 const options = [
   {
     title: 'Register Account',
-    description: 'Fill in personal information to create a new user account'
+    description: 'Fill in personal information to create a new user account',
   },
   {
     title: 'Verify Email',
-    description: 'Verify your email address through the link in the email'
+    description: 'Verify your email address through the link in the email',
   },
   {
     title: 'Set Password',
-    description: 'Set a secure password for your account'
+    description: 'Set a secure password for your account',
   },
   {
     title: 'Complete',
-    description: 'Account registration is complete, you can now log in'
-  }
-]
+    description: 'Account registration is complete, you can now log in',
+  },
+];
 
-const currentStep = ref(1)
+const currentStep = ref(1);
 </script>
 
 <template>

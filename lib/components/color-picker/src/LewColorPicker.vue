@@ -1,106 +1,106 @@
 <script setup lang="ts">
-import { any2px, object2class } from 'lew-ui/utils'
-import { colorPickerProps } from './props'
-const props = defineProps(colorPickerProps)
+import { any2px, object2class } from 'lew-ui/utils';
+import { colorPickerProps } from './props';
+const props = defineProps(colorPickerProps);
 
-const modelValue = defineModel()
-const emit = defineEmits(['change'])
+const modelValue = defineModel();
+const emit = defineEmits(['change']);
 
-const isFocus = ref(false)
+const isFocus = ref(false);
 
 const getPickerClassName = computed(() => {
-  const { disabled, readonly } = props
+  const { disabled, readonly } = props;
   return object2class('lew-color-picker', {
     disabled,
     readonly,
-    focus: isFocus.value
-  })
-})
+    focus: isFocus.value,
+  });
+});
 
 const getPickerViewStyle = computed(() => {
-  const { size, width } = props
+  const { size, width } = props;
   const _width = {
     small: 110,
     medium: 117,
-    large: 130
-  }
+    large: 130,
+  };
   return {
-    width: width === 'auto' || !width ? any2px(_width[size]) : any2px(width)
-  }
-})
+    width: width === 'auto' || !width ? any2px(_width[size]) : any2px(width),
+  };
+});
 
 const getPickerStyle = computed(() => {
-  const { size } = props
+  const { size } = props;
   return {
     height: `var(--lew-form-item-height-${size})`,
     padding: `var(--lew-form-input-padding-${size})`,
     fontSize: `var(--lew-form-font-size-${size})`,
-    lineHeight: `var(--lew-form-input-line-height-${size})`
-  }
-})
+    lineHeight: `var(--lew-form-input-line-height-${size})`,
+  };
+});
 
 const getPickerInputStyle = computed(() => {
-  const { size } = props
+  const { size } = props;
   return {
     width: `calc(var(--lew-form-item-height-${size}) - 12px)`,
-    height: `calc(var(--lew-form-item-height-${size}) - 12px)`
-  }
-})
+    height: `calc(var(--lew-form-item-height-${size}) - 12px)`,
+  };
+});
 
 const getPickerValueInputStyle = computed(() => {
-  const { size } = props
+  const { size } = props;
   return {
-    fontSize: `var(--lew-form-font-size-${size})`
-  }
-})
-let pickerValueInputRef = ref()
+    fontSize: `var(--lew-form-font-size-${size})`,
+  };
+});
+let pickerValueInputRef = ref();
 const focus = () => {
-  isFocus.value = true
+  isFocus.value = true;
   // 全选选中值
-  pickerValueInputRef.value.select()
-}
+  pickerValueInputRef.value.select();
+};
 
 const blur = () => {
-  isFocus.value = false
+  isFocus.value = false;
   // 转化成有效的色值
-  modelValue.value = convertToHex(modelValue.value as string)
-  emit('change', modelValue.value)
-}
+  modelValue.value = convertToHex(modelValue.value as string);
+  emit('change', modelValue.value);
+};
 
 // 将任意格式的颜色值转换为标准的hex格式
 const convertToHex = (color: string): string => {
   // 去除空格
-  color = color.trim()
+  color = color.trim();
 
   // 如果已经是6位hex格式,直接返回(添加#号)
   if (/^#?[0-9a-fA-F]{6}$/.test(color)) {
-    return color.startsWith('#') ? color : `#${color}`
+    return color.startsWith('#') ? color : `#${color}`;
   }
 
   // 处理3位hex缩写,例如#f93
   if (/^#?[0-9a-fA-F]{3}$/.test(color)) {
-    const hex = color.replace('#', '')
-    return `#${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`
+    const hex = color.replace('#', '');
+    return `#${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
   }
 
   // 处理rgb/rgba格式
   const rgbMatch = color.match(
     /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*\d+(?:\.\d+)?)?\)$/
-  )
+  );
   if (rgbMatch) {
-    const r = parseInt(rgbMatch[1]).toString(16).padStart(2, '0')
-    const g = parseInt(rgbMatch[2]).toString(16).padStart(2, '0')
-    const b = parseInt(rgbMatch[3]).toString(16).padStart(2, '0')
-    return `#${r}${g}${b}`
+    const r = parseInt(rgbMatch[1]).toString(16).padStart(2, '0');
+    const g = parseInt(rgbMatch[2]).toString(16).padStart(2, '0');
+    const b = parseInt(rgbMatch[3]).toString(16).padStart(2, '0');
+    return `#${r}${g}${b}`;
   }
 
   // 无效的颜色值返回黑色
-  return ''
-}
+  return '';
+};
 
 const change = () => {
-  emit('change', modelValue.value)
-}
+  emit('change', modelValue.value);
+};
 </script>
 
 <template>

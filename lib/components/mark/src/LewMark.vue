@@ -1,22 +1,22 @@
 <script lang="ts" setup>
-import { getColorType } from 'lew-ui/utils'
-import { markProps } from './props'
+import { getColorType } from 'lew-ui/utils';
+import { markProps } from './props';
 
-const props = defineProps(markProps)
+const props = defineProps(markProps);
 
 const getStyle = computed(() => {
-  const { color, round, bold, cursor } = props
-  let _color = getColorType(color)
+  const { color, round, bold, cursor } = props;
+  let _color = getColorType(color);
   return {
     borderRadius: round ? '20px' : 'var(--lew-border-radius-mini)',
     fontWeight: bold || '',
     color: `var(--lew-color-${_color}-dark)`,
     backgroundColor: `var(--lew-color-${_color}-light)`,
-    cursor: cursor || ''
-  }
-})
+    cursor: cursor || '',
+  };
+});
 
-const emit = defineEmits(['click'])
+const emit = defineEmits(['click']);
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const page = ref(1)
+const page = ref(1);
 </script>
 
 <template>

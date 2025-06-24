@@ -4,7 +4,7 @@
       v-tooltip="{
         content:
           'Husky generally refers to the Siberian Husky. Husky generally refers to the Siberian Husky. Husky generally refers to the Siberian Husky.',
-        trigger: 'click'
+        trigger: 'click',
       }"
       oversize
       color="green"

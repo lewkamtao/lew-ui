@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { LewTreeSelect } from 'lew-ui'
+import { LewTreeSelect } from 'lew-ui';
 
-const treeSelectValue = ref()
+const treeSelectValue = ref();
 
 // 模拟表单方法
 const formMethods = {
   async loadTreeData() {
     // 模拟网络请求延迟
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     return [
       {
         key: '1',
@@ -19,18 +19,18 @@ const formMethods = {
             label: 'Team 1-1',
             children: [
               { key: '1-1-1', label: 'Member 1-1-1' },
-              { key: '1-1-2', label: 'Member 1-1-2' }
-            ]
+              { key: '1-1-2', label: 'Member 1-1-2' },
+            ],
           },
           {
             key: '1-2',
             label: 'Team 1-2',
             children: [
               { key: '1-2-1', label: 'Member 1-2-1' },
-              { key: '1-2-2', label: 'Member 1-2-2' }
-            ]
-          }
-        ]
+              { key: '1-2-2', label: 'Member 1-2-2' },
+            ],
+          },
+        ],
       },
       {
         key: '2',
@@ -41,25 +41,25 @@ const formMethods = {
             label: 'Team 2-1',
             children: [
               { key: '2-1-1', label: 'Member 2-1-1' },
-              { key: '2-1-2', label: 'Member 2-1-2' }
-            ]
+              { key: '2-1-2', label: 'Member 2-1-2' },
+            ],
           },
           {
             key: '2-2',
             label: 'Team 2-2',
             children: [
               { key: '2-2-1', label: 'Member 2-2-1' },
-              { key: '2-2-2', label: 'Member 2-2-2' }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-}
+              { key: '2-2-2', label: 'Member 2-2-2' },
+            ],
+          },
+        ],
+      },
+    ];
+  },
+};
 
 // 提供表单方法给子组件
-provide('formMethods', formMethods)
+provide('formMethods', formMethods);
 </script>
 
 <template>
@@ -72,9 +72,7 @@ provide('formMethods', formMethods)
       searchable
       show-line
     />
-    <div class="demo-result">
-      Selected value: {{ treeSelectValue }}
-    </div>
+    <div class="demo-result">Selected value: {{ treeSelectValue }}</div>
     <div class="demo-description">
       <p>Note:</p>
       <ul>
@@ -115,4 +113,4 @@ provide('formMethods', formMethods)
 .demo-description li {
   margin: 4px 0;
 }
-</style> 
+</style>

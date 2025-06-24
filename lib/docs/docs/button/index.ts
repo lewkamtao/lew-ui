@@ -1,3 +1,3 @@
-import DemoButton from './DemoButton.vue'
+import DemoButton from './DemoButton.vue';
 
-export default DemoButton
+export default DemoButton;

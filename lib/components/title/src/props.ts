@@ -1,6 +1,6 @@
-import type { ExtractPropTypes } from 'vue'
+import type { ExtractPropTypes } from 'vue';
 
-type BoldType = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
+type BoldType = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 type TitleColor =
   | 'red'
   | 'orange'
@@ -20,13 +20,13 @@ type TitleColor =
   | 'success'
   | 'normal'
   | 'primary'
-  | 'info'
+  | 'info';
 
 export const titleProps = {
   text: {
     type: String,
     default: '',
-    description: '标题文字'
+    description: '标题文字',
   },
   size: {
     type: [Number, String],
@@ -34,11 +34,11 @@ export const titleProps = {
     description: '标题文字大小，可以是数字（单位：像素）或字符串（如 "1.5em"）',
     validator: (value: number | string) => {
       if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewTitle] size 必须大于 0')
-        return false
+        console.warn('[LewTitle] size 必须大于 0');
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   color: {
     type: String,
@@ -64,8 +64,8 @@ export const titleProps = {
         'success',
         'normal',
         'primary',
-        'info'
-      ]
+        'info',
+      ];
       if (
         value &&
         !validColors.includes(value as TitleColor) &&
@@ -73,11 +73,11 @@ export const titleProps = {
       ) {
         console.warn(
           `[LewTitle] color 必须是预定义的颜色名称之一或有效的十六进制颜色值`
-        )
-        return false
+        );
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   bold: {
     type: Number,
@@ -89,12 +89,12 @@ export const titleProps = {
           value as BoldType
         )
       ) {
-        console.warn('[LewTitle] bold 必须是 100 到 900 之间的整百数')
-        return false
+        console.warn('[LewTitle] bold 必须是 100 到 900 之间的整百数');
+        return false;
       }
-      return true
-    }
-  }
-}
+      return true;
+    },
+  },
+};
 
-export type TitleProps = ExtractPropTypes<typeof titleProps>
+export type TitleProps = ExtractPropTypes<typeof titleProps>;

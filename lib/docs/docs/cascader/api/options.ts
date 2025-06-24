@@ -6,31 +6,31 @@ export default {
       name: 'label',
       description: '选项组的标签',
       type: 'string',
-      default: '-'
+      default: '-',
     },
     {
       name: 'value',
       description: '值',
       type: 'string',
-      default: '-'
+      default: '-',
     },
     {
       name: 'isLeaf',
       description: '是否是叶子节点',
       type: 'boolean',
-      default: '-'
+      default: '-',
     },
     {
       name: 'children',
       description: '值',
       type: 'CascaderOptions',
-      default: '-'
+      default: '-',
     },
     {
       name: 'disabled',
       description: '禁用',
       type: 'boolean',
-      default: '-'
-    }
-  ]
-}
+      default: '-',
+    },
+  ],
+};

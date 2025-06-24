@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Settings } from 'lucide-vue-next'
-const visible = ref(false)
+import { Settings } from 'lucide-vue-next';
+const visible = ref(false);
 </script>
 
 <template>
@@ -18,13 +18,13 @@ const visible = ref(false)
     title="System Preferences"
     :closeButtonProps="{
       request: () => {
-        visible = false
-      }
+        visible = false;
+      },
     }"
     :okButtonProps="{
       request: () => {
-        visible = false
-      }
+        visible = false;
+      },
     }"
   >
     <div class="modal-body">

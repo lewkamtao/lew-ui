@@ -10,18 +10,18 @@ const open = () => {
     ok: () => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve(true)
+          resolve(true);
           LewMessage.success({
-            content: 'Action completed successfully'
-          })
-        }, 1000)
-      })
+            content: 'Action completed successfully',
+          });
+        }, 1000);
+      });
     },
     cancel: () => {
       // Cancel action
-    }
-  })
-}
+    },
+  });
+};
 </script>
 <template>
   <lew-button text="Confirm Action" round type="light" @click="open()" />

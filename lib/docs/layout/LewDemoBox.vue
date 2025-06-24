@@ -1,46 +1,46 @@
 <script setup lang="ts">
-import { LewCollapseTransition } from 'lew-ui'
-import { ChevronDown, ChevronUp } from 'lucide-vue-next'
-import docsLocale from '@/locals'
-import { renderDescription } from '@/lib/utils'
+import { LewCollapseTransition } from 'lew-ui';
+import { ChevronDown, ChevronUp } from 'lucide-vue-next';
+import docsLocale from '@/locals';
+import { renderDescription } from '@/lib/utils';
 defineProps({
   title: {
     type: String,
-    default: ''
+    default: '',
   },
   tag: {
     type: String,
-    default: ''
+    default: '',
   },
   tipsContent: {
     type: String,
-    default: ''
+    default: '',
   },
   tipsType: {
     type: String,
-    default: 'info'
+    default: 'info',
   },
   tipsTitle: {
     type: String,
-    default: ''
+    default: '',
   },
   description: {
     type: String,
-    default: ''
+    default: '',
   },
   code: {
     type: String,
-    default: ''
-  }
-})
+    default: '',
+  },
+});
 
-const isShowCode = ref(false)
+const isShowCode = ref(false);
 const checkHasContent = computed(() => (text: string) => {
   if (text && text.indexOf('components.') !== 0) {
-    return true
+    return true;
   }
-  return false
-})
+  return false;
+});
 </script>
 
 <template>

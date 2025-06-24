@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import options from './desc_20241128_380ff83.json'
+import options from './desc_20241128_380ff83.json';
 // 定义数据源
 // Start of Selection
 const dataSource = ref({
@@ -23,8 +23,8 @@ const dataSource = ref({
   deliveryTime: '快速交付与定制服务',
   electricRange: '无',
   userInterface: '直观的用户界面设计',
-  afterSalesService: '优质的售后服务'
-})
+  afterSalesService: '优质的售后服务',
+});
 </script>
 <template>
   <lew-flex x="start" y="start" :gap="50">

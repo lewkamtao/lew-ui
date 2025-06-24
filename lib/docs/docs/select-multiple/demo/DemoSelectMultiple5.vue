@@ -9,9 +9,9 @@ const options = [
   { label: 'Burberry', value: 'burberry' },
   { label: 'Versace', value: 'versace' },
   { label: 'Balenciaga', value: 'balenciaga' },
-  { label: 'Fendi', value: 'fendi', disabled: true }
-]
-const value = ref(['chanel', 'gucci', 'louis_vuitton'])
+  { label: 'Fendi', value: 'fendi', disabled: true },
+];
+const value = ref(['chanel', 'gucci', 'louis_vuitton']);
 </script>
 
 <template>

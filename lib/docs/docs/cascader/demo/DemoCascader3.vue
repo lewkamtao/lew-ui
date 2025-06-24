@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const v = ref()
+const v = ref();
 
 const techProductOptions = [
   {
@@ -12,8 +12,8 @@ const techProductOptions = [
         children: [
           { value: 'iphone13', label: 'iPhone 13' },
           { value: 'iphone12', label: 'iPhone 12' },
-          { value: 'iphoneSE', label: 'iPhone SE', disabled: true }
-        ]
+          { value: 'iphoneSE', label: 'iPhone SE', disabled: true },
+        ],
       },
       {
         value: 'android',
@@ -21,10 +21,10 @@ const techProductOptions = [
         children: [
           { value: 'samsung', label: 'Samsung Galaxy' },
           { value: 'huawei', label: 'Huawei Mate' },
-          { value: 'xiaomi', label: 'Xiaomi', disabled: true }
-        ]
-      }
-    ]
+          { value: 'xiaomi', label: 'Xiaomi', disabled: true },
+        ],
+      },
+    ],
   },
   {
     value: 'laptops',
@@ -35,8 +35,8 @@ const techProductOptions = [
         label: 'MacBook',
         children: [
           { value: 'macbookAir', label: 'MacBook Air' },
-          { value: 'macbookPro', label: 'MacBook Pro' }
-        ]
+          { value: 'macbookPro', label: 'MacBook Pro' },
+        ],
       },
       {
         value: 'windows',
@@ -44,10 +44,10 @@ const techProductOptions = [
         children: [
           { value: 'dell', label: 'Dell XPS' },
           { value: 'lenovo', label: 'Lenovo ThinkPad' },
-          { value: 'hp', label: 'HP Spectre', disabled: true }
-        ]
-      }
-    ]
+          { value: 'hp', label: 'HP Spectre', disabled: true },
+        ],
+      },
+    ],
   },
   {
     value: 'wearables',
@@ -55,10 +55,10 @@ const techProductOptions = [
     children: [
       { value: 'smartwatch', label: 'Smartwatch' },
       { value: 'fitnesstracker', label: 'Fitness Tracker' },
-      { value: 'vr', label: 'VR Headset', disabled: true }
-    ]
-  }
-]
+      { value: 'vr', label: 'VR Headset', disabled: true },
+    ],
+  },
+];
 </script>
 
 <template>

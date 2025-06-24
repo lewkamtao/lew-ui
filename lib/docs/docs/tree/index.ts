@@ -1,3 +1,3 @@
-import DemoTree from './DemoTree.vue'
+import DemoTree from './DemoTree.vue';
 
-export default DemoTree
+export default DemoTree;

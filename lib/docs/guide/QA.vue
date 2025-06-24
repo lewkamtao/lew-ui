@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const pre1 = ref(`import { LewTooltip } from 'lew-ui';
 
-app.use(LewTooltip);`)
+app.use(LewTooltip);`);
 const pre2 = ref(`import { LewDialog, LewMessage } from 'lew-ui';
 
 const open = () => {
@@ -15,7 +15,7 @@ const open = () => {
             LewMessage.info('已取消'); 
         },
     });
-};`)
+};`);
 </script>
 
 <template>

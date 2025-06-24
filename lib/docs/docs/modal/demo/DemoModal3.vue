@@ -1,18 +1,18 @@
 <script setup lang="ts">
-const visible = ref(false)
-const edit = ref(false)
-const notify = ref(false)
+const visible = ref(false);
+const edit = ref(false);
+const notify = ref(false);
 const ok = () => {
   return new Promise<void>(() => {
     setTimeout(() => {
-      visible.value = false
-    }, 1000)
-  })
-}
+      visible.value = false;
+    }, 1000);
+  });
+};
 
 const close = () => {
-  visible.value = false
-}
+  visible.value = false;
+};
 </script>
 
 <template>

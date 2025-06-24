@@ -9,10 +9,10 @@ const clothingBrandOptions = [
   { label: 'Zara', value: 7 },
   { label: 'Uniqlo', value: 8 },
   { label: "Levi's", value: 9 },
-  { label: 'Gucci', value: 10 }
-]
-const options = ref(clothingBrandOptions)
-const value = ref([])
+  { label: 'Gucci', value: 10 },
+];
+const options = ref(clothingBrandOptions);
+const value = ref([]);
 </script>
 
 <template>

@@ -1,20 +1,20 @@
 <script lang="ts" setup>
-import { getUniqueId } from 'lew-ui/utils'
-let notificationMap: Record<string, any> = reactive({})
+import { getUniqueId } from 'lew-ui/utils';
+let notificationMap: Record<string, any> = reactive({});
 const open = () => {
-  let id = getUniqueId()
+  let id = getUniqueId();
   notificationMap[id] = LewNotification.info({
     title: `Notification ${id}`,
     width: 400,
     content:
       'A new system update is ready to install. Please update within 1 minute.',
-    duration: 0
-  })
-}
+    duration: 0,
+  });
+};
 const close = (id: string) => {
-  notificationMap[id].close()
-  delete notificationMap[id]
-}
+  notificationMap[id].close();
+  delete notificationMap[id];
+};
 </script>
 
 <template>

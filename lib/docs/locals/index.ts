@@ -1,13 +1,13 @@
-import { createI18n } from 'vue-i18n'
-import en from './en'
-import zh from './zh'
-import ja from './ja'
-import ko from './ko'
-import fr from './fr'
-import it from './it'
-import es from './es'
-import de from './de'
-import pt from './pt'
+import { createI18n } from 'vue-i18n';
+import en from './en';
+import zh from './zh';
+import ja from './ja';
+import ko from './ko';
+import fr from './fr';
+import it from './it';
+import es from './es';
+import de from './de';
+import pt from './pt';
 
 // TODO: 国际化优化任务
 // 1. 以中文(zh.ts)为基准文件:
@@ -46,10 +46,10 @@ export type Language =
   | 'it'
   | 'es'
   | 'de'
-  | 'pt'
+  | 'pt';
 
 // 本地存储键名
-const LOCALE_STORAGE_KEY = 'lew-ui-locale'
+const LOCALE_STORAGE_KEY = 'lew-ui-locale';
 
 // 先定义消息对象，避免循环引用
 export const messages = {
@@ -61,22 +61,22 @@ export const messages = {
   it,
   es,
   de,
-  pt
-}
+  pt,
+};
 
 // 获取初始语言
 export const getInitialLocale = async (): Promise<Language> => {
   // 优先从本地存储获取用户上次选择的语言
-  const savedLocale = localStorage.getItem(LOCALE_STORAGE_KEY) as Language
+  const savedLocale = localStorage.getItem(LOCALE_STORAGE_KEY) as Language;
   if (savedLocale && Object.keys(messages).includes(savedLocale)) {
-    return savedLocale
+    return savedLocale;
   }
 
   // 尝试通过IP获取用户所在地区对应的语言
   try {
-    const response = await fetch('https://ipapi.co/json/')
-    const data = await response.json()
-    const countryCode = data.country_code?.toLowerCase()
+    const response = await fetch('https://ipapi.co/json/');
+    const data = await response.json();
+    const countryCode = data.country_code?.toLowerCase();
     // 根据国家/地区代码映射到对应语言
     const countryToLocale: Record<string, Language> = {
       // 中文区域
@@ -133,23 +133,23 @@ export const getInitialLocale = async (): Promise<Language> => {
       nz: 'en', // 新西兰
       ie: 'en', // 爱尔兰
       za: 'en', // 南非
-      in: 'en' // 印度（官方语言之一）
-    }
+      in: 'en', // 印度（官方语言之一）
+    };
 
     if (countryCode && countryToLocale[countryCode]) {
-      return countryToLocale[countryCode]
+      return countryToLocale[countryCode];
     }
   } catch (error) {
-    console.warn('获取用户IP信息失败，将使用默认语言', error)
+    console.warn('获取用户IP信息失败，将使用默认语言', error);
   }
 
   // 如果以上方法都失败，则使用浏览器语言或默认语言
-  const browserLang = navigator.language.split('-')[0] as Language
-  return Object.keys(messages).includes(browserLang) ? browserLang : 'zh'
-}
+  const browserLang = navigator.language.split('-')[0] as Language;
+  return Object.keys(messages).includes(browserLang) ? browserLang : 'zh';
+};
 
 // 默认使用中文，后续异步更新
-let currentLocale: Language = 'en'
+let currentLocale: Language = 'en';
 
 const i18n = createI18n({
   globalInjection: true,
@@ -158,27 +158,27 @@ const i18n = createI18n({
   fallbackLocale: 'zh',
   fallbackWarn: false,
   missingWarn: false,
-  messages
-})
+  messages,
+});
 
 export const useLocale = () => {
   return {
     use: (locale: Language) => {
       // 更新当前语言
-      i18n.global.locale.value = locale
+      i18n.global.locale.value = locale;
       // 保存用户语言偏好到本地存储
-      localStorage.setItem(LOCALE_STORAGE_KEY, locale)
+      localStorage.setItem(LOCALE_STORAGE_KEY, locale);
     },
     t: (key: string, params: Record<string, any> = {}) => {
-      return i18n.global.t(key, params)
+      return i18n.global.t(key, params);
     },
     getLocale: (): Language => {
-      return i18n.global.locale.value as Language
-    }
-  }
-}
+      return i18n.global.locale.value as Language;
+    },
+  };
+};
 
-export { i18n, en, zh }
+export { i18n, en, zh };
 
-const docsLocale = useLocale()
-export default docsLocale
+const docsLocale = useLocale();
+export default docsLocale;

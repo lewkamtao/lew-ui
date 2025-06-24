@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const content = ref(
   'People are busy every day, pursuing money and status, indulging in trivial matters and worldly affairs. These things fill up life. In the end, how many people with such a life without blank spaces have won others but lost themselves?'
-)
+);
 </script>
 
 <template>
@@ -11,7 +11,7 @@ const content = ref(
         v-tooltip="{
           content,
           placement: 'top-start',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
         type="ghost"
         text="top-start"
@@ -20,7 +20,7 @@ const content = ref(
         v-tooltip="{
           content,
           placement: 'top',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
         type="ghost"
         text="top"
@@ -29,7 +29,7 @@ const content = ref(
         v-tooltip="{
           content,
           placement: 'top-end',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
         type="ghost"
         text="top-end"
@@ -40,7 +40,7 @@ const content = ref(
         v-tooltip="{
           content,
           placement: 'left-start',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
         type="ghost"
         text="left-start"
@@ -50,7 +50,7 @@ const content = ref(
         v-tooltip="{
           content,
           placement: 'right-start',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
         type="ghost"
         text="right-start"
@@ -61,7 +61,7 @@ const content = ref(
         v-tooltip="{
           content,
           placement: 'left',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
         type="ghost"
         text="left"
@@ -70,7 +70,7 @@ const content = ref(
         v-tooltip="{
           content,
           placement: 'right',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
         type="ghost"
         text="right"
@@ -81,7 +81,7 @@ const content = ref(
         v-tooltip="{
           content,
           placement: 'left-end',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
         type="ghost"
         text="left-end"
@@ -91,7 +91,7 @@ const content = ref(
         v-tooltip="{
           content,
           placement: 'right-end',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
         type="ghost"
         text="right-end"
@@ -102,7 +102,7 @@ const content = ref(
         v-tooltip="{
           content,
           placement: 'bottom-start',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
         type="ghost"
         text="bottom-start"
@@ -111,7 +111,7 @@ const content = ref(
         v-tooltip="{
           content,
           placement: 'bottom',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
         type="ghost"
         text="bottom"
@@ -120,7 +120,7 @@ const content = ref(
         v-tooltip="{
           content,
           placement: 'bottom-end',
-          trigger: 'mouseenter'
+          trigger: 'mouseenter',
         }"
         type="ghost"
         text="bottom-end"

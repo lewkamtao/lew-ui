@@ -1,3 +1,3 @@
-import DemoDesc from './DemoDesc.vue'
+import DemoDesc from './DemoDesc.vue';
 
-export default DemoDesc
+export default DemoDesc;

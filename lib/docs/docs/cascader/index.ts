@@ -1,3 +1,3 @@
-import DemoCascader from './DemoCascader.vue'
+import DemoCascader from './DemoCascader.vue';
 
-export default DemoCascader
+export default DemoCascader;

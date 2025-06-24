@@ -1,29 +1,29 @@
 <script setup lang="ts">
-import { object2class, any2px } from 'lew-ui/utils'
-import LewGetLabelWidth from '../../form/src/LewGetLabelWidth.vue'
-import { descProps, lewDescSizePaddingMap } from './props'
-import { cloneDeep } from 'lodash-es'
-import LewDescItem from './LewDescItem.vue'
+import { object2class, any2px } from 'lew-ui/utils';
+import LewGetLabelWidth from '../../form/src/LewGetLabelWidth.vue';
+import { descProps, lewDescSizePaddingMap } from './props';
+import { cloneDeep } from 'lodash-es';
+import LewDescItem from './LewDescItem.vue';
 
-const props = defineProps(descProps)
-const emit = defineEmits(['change', 'mounted'])
-const descLabelRef = ref()
-const autoLabelWidth = ref(0)
+const props = defineProps(descProps);
+const emit = defineEmits(['change', 'mounted']);
+const descLabelRef = ref();
+const autoLabelWidth = ref(0);
 
-let componentOptions: any[] = cloneDeep(props.options) || []
+let componentOptions: any[] = cloneDeep(props.options) || [];
 
 const getDescClassNames = computed(() => {
-  const { columns, bordered } = props
-  return object2class('lew-desc', { columns, bordered })
-})
+  const { columns, bordered } = props;
+  return object2class('lew-desc', { columns, bordered });
+});
 
 onMounted(() => {
   // 计算 label 的宽度
   autoLabelWidth.value =
     descLabelRef.value?.getWidth() +
-    (props.bordered ? lewDescSizePaddingMap[props.size] * 2 : 0)
-  emit('mounted')
-})
+    (props.bordered ? lewDescSizePaddingMap[props.size] * 2 : 0);
+  emit('mounted');
+});
 
 watch(
   () => props.size,
@@ -31,22 +31,22 @@ watch(
     nextTick(() => {
       autoLabelWidth.value =
         descLabelRef.value?.getWidth() +
-        (props.bordered ? lewDescSizePaddingMap[props.size] * 2 : 0)
-    })
+        (props.bordered ? lewDescSizePaddingMap[props.size] * 2 : 0);
+    });
   }
-)
+);
 
 const getDescStyle = computed(() => {
-  const { width, gap, bordered } = props
+  const { width, gap, bordered } = props;
   return {
     width: any2px(width),
     minWidth: 320,
-    gap: bordered ? 0 : any2px(gap)
-  }
-})
+    gap: bordered ? 0 : any2px(gap),
+  };
+});
 
 const getBind = computed(() => (item: any) => {
-  const { direction, size, labelX, valueX, bordered, labelWidth } = props
+  const { direction, size, labelX, valueX, bordered, labelWidth } = props;
   return {
     direction,
     size,
@@ -55,9 +55,9 @@ const getBind = computed(() => (item: any) => {
     bordered,
     labelWidth:
       labelWidth === 'auto' ? autoLabelWidth.value || labelWidth : labelWidth,
-    ...item
-  }
-})
+    ...item,
+  };
+});
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 // 定义数据源
 const dataSource = ref({
@@ -67,305 +67,305 @@ const dataSource = ref({
   chargingInfrastructure: '推动充电基础设施建设',
   energyEfficiency: '高能效标准',
   productCustomization: '个性化定制选项',
-  afterSalesService: '优质的售后服务'
-})
+  afterSalesService: '优质的售后服务',
+});
 // 定义选项
 const options = ref([
   {
     field: 'companyName',
     gridArea: '1 / 1 / 1 / 2',
-    label: '公司名称'
+    label: '公司名称',
   },
   {
     field: 'establishedYear',
     gridArea: '1 / 2 / 1 / 3',
-    label: '成立年份'
+    label: '成立年份',
   },
   {
     field: 'industry',
     gridArea: '1 / 3 / 1 / 4',
-    label: '行业'
+    label: '行业',
   },
   {
     field: 'headquarters',
     gridArea: '1 / 4 / 1 / 5',
-    label: '总部'
+    label: '总部',
   },
   {
     field: 'numberOfEmployees',
     gridArea: '2 / 1 / 2 / 2',
-    label: '员工人数'
+    label: '员工人数',
   },
   {
     field: 'revenue',
     gridArea: '2 / 2 / 2 / 3',
-    label: '收入'
+    label: '收入',
   },
   {
     field: 'netIncome',
     gridArea: '2 / 3 / 2 / 4',
-    label: '净收入'
+    label: '净收入',
   },
   {
     field: 'marketCap',
     gridArea: '2 / 4 / 2 / 5',
-    label: '市值'
+    label: '市值',
   },
   {
     field: 'ceo',
     gridArea: '3 / 1 / 3 / 2',
-    label: '首席执行官'
+    label: '首席执行官',
   },
   {
     field: 'products',
     gridArea: '3 / 2 / 3 / 3',
-    label: '产品'
+    label: '产品',
   },
   {
     field: 'rAndDInvestment',
     gridArea: '3 / 3 / 3 / 4',
     label: '研发投资',
-    tips: '公司每年投入大量资金用于研发。'
+    tips: '公司每年投入大量资金用于研发。',
   },
   {
     field: 'patents',
     gridArea: '3 / 4 / 3 / 5',
-    label: '专利数量'
+    label: '专利数量',
   },
   {
     field: 'globalPresence',
     gridArea: '4 / 1 / 4 / 2',
     label: '全球业务覆盖',
-    tips: '公司在多个国家和地区设有分支机构。'
+    tips: '公司在多个国家和地区设有分支机构。',
   },
   {
     field: 'majorCompetitors',
     gridArea: '4 / 2 / 4 / 3',
-    label: '主要竞争对手'
+    label: '主要竞争对手',
   },
   {
     field: 'corporateCulture',
     gridArea: '4 / 3 / 4 / 4',
     label: '企业文化',
-    tips: '公司倡导创新与可持续发展的文化。'
+    tips: '公司倡导创新与可持续发展的文化。',
   },
   {
     field: 'sustainabilityInitiatives',
     gridArea: '4 / 4 / 4 / 5',
-    label: '可持续发展举措'
+    label: '可持续发展举措',
   },
   {
     field: 'awards',
     gridArea: '5 / 1 / 5 / 2',
-    label: '获奖情况'
+    label: '获奖情况',
   },
   {
     field: 'partnerships',
     gridArea: '5 / 2 / 5 / 3',
-    label: '合作伙伴'
+    label: '合作伙伴',
   },
   {
     field: 'socialResponsibility',
     gridArea: '5 / 3 / 5 / 4',
     label: '社会责任',
-    tips: '公司积极参与社会公益活动。'
+    tips: '公司积极参与社会公益活动。',
   },
   {
     field: 'employeeTraining',
     gridArea: '5 / 4 / 5 / 5',
-    label: '员工培训'
+    label: '员工培训',
   },
   {
     field: 'customerSatisfaction',
     gridArea: '6 / 1 / 6 / 2',
-    label: '客户满意度'
+    label: '客户满意度',
   },
   {
     field: 'supplyChain',
     gridArea: '6 / 2 / 6 / 3',
-    label: '供应链管理'
+    label: '供应链管理',
   },
   {
     field: 'logistics',
     gridArea: '6 / 3 / 6 / 4',
-    label: '物流系统'
+    label: '物流系统',
   },
   {
     field: 'productQuality',
     gridArea: '6 / 4 / 6 / 5',
-    label: '产品质量'
+    label: '产品质量',
   },
   {
     field: 'innovationStrategy',
     gridArea: '7 / 1 / 7 / 2',
-    label: '创新战略'
+    label: '创新战略',
   },
   {
     field: 'marketShare',
     gridArea: '7 / 2 / 7 / 3',
-    label: '市场份额'
+    label: '市场份额',
   },
   {
     field: 'customerSupport',
     gridArea: '7 / 3 / 7 / 4',
-    label: '客户支持'
+    label: '客户支持',
   },
   {
     field: 'vehicleModels',
     gridArea: '7 / 4 / 7 / 5',
-    label: '车型'
+    label: '车型',
   },
   {
     field: 'batteryTechnology',
     gridArea: '8 / 1 / 8 / 2',
-    label: '电池技术'
+    label: '电池技术',
   },
   {
     field: 'autopilotFeatures',
     gridArea: '8 / 2 / 8 / 3',
-    label: '自动驾驶功能'
+    label: '自动驾驶功能',
   },
   {
     field: 'superchargerNetwork',
     gridArea: '8 / 3 / 8 / 4',
-    label: '超级充电网络'
+    label: '超级充电网络',
   },
   {
     field: 'energyProducts',
     gridArea: '8 / 4 / 8 / 5',
-    label: '能源产品'
+    label: '能源产品',
   },
   {
     field: 'safetyRatings',
     gridArea: '9 / 1 / 9 / 2',
-    label: '安全评级'
+    label: '安全评级',
   },
   {
     field: 'manufacturingPlants',
     gridArea: '9 / 2 / 9 / 3',
-    label: '制造工厂'
+    label: '制造工厂',
   },
   {
     field: 'deliveryTime',
     gridArea: '9 / 3 / 9 / 4',
-    label: '交付时间'
+    label: '交付时间',
   },
   {
     field: 'customerFeedback',
     gridArea: '9 / 4 / 9 / 5',
-    label: '客户反馈'
+    label: '客户反馈',
   },
   {
     field: 'environmentalImpact',
     gridArea: '10 / 1 / 10 / 2',
-    label: '环境影响'
+    label: '环境影响',
   },
   {
     field: 'researchFacilities',
     gridArea: '10 / 2 / 10 / 3',
-    label: '研究设施'
+    label: '研究设施',
   },
   {
     field: 'electricRange',
     gridArea: '10 / 3 / 10 / 4',
-    label: '电动续航'
+    label: '电动续航',
   },
   {
     field: 'performanceMetrics',
     gridArea: '10 / 4 / 10 / 5',
-    label: '性能指标'
+    label: '性能指标',
   },
   {
     field: 'softwareUpdates',
     gridArea: '11 / 1 / 11 / 2',
-    label: '软件更新'
+    label: '软件更新',
   },
   {
     field: 'resaleValue',
     gridArea: '11 / 2 / 11 / 3',
-    label: '转售价值'
+    label: '转售价值',
   },
   {
     field: 'chargingOptions',
     gridArea: '11 / 3 / 11 / 4',
-    label: '充电选项'
+    label: '充电选项',
   },
   {
     field: 'warranty',
     gridArea: '11 / 4 / 11 / 5',
-    label: '保修服务'
+    label: '保修服务',
   },
   {
     field: 'insurancePartnerships',
     gridArea: '12 / 1 / 12 / 2',
-    label: '保险合作'
+    label: '保险合作',
   },
   {
     field: 'fleetSales',
     gridArea: '12 / 2 / 12 / 3',
-    label: '车队销售'
+    label: '车队销售',
   },
   {
     field: 'marketExpansion',
     gridArea: '12 / 3 / 12 / 4',
-    label: '市场扩展'
+    label: '市场扩展',
   },
   {
     field: 'customerLoyalty',
     gridArea: '12 / 4 / 12 / 5',
-    label: '客户忠诚度'
+    label: '客户忠诚度',
   },
   {
     field: 'technologyIntegration',
     gridArea: '13 / 1 / 13 / 2',
-    label: '技术整合'
+    label: '技术整合',
   },
   {
     field: 'userInterface',
     gridArea: '13 / 2 / 13 / 3',
-    label: '用户界面'
+    label: '用户界面',
   },
   {
     field: 'mobileApp',
     gridArea: '13 / 3 / 13 / 4',
-    label: '手机应用'
+    label: '手机应用',
   },
   {
     field: 'communityEvents',
     gridArea: '13 / 4 / 13 / 5',
-    label: '社区活动'
+    label: '社区活动',
   },
   {
     field: 'sustainabilityReports',
     gridArea: '14 / 1 / 14 / 2',
-    label: '可持续发展报告'
+    label: '可持续发展报告',
   },
   {
     field: 'electricVehicleIncentives',
     gridArea: '14 / 2 / 14 / 3',
-    label: '电动车激励政策'
+    label: '电动车激励政策',
   },
   {
     field: 'chargingInfrastructure',
     gridArea: '14 / 3 / 14 / 4',
-    label: '充电基础设施'
+    label: '充电基础设施',
   },
   {
     field: 'energyEfficiency',
     gridArea: '14 / 4 / 14 / 5',
-    label: '能效标准'
+    label: '能效标准',
   },
   {
     field: 'productCustomization',
     gridArea: '15 / 1 / 15 / 2',
-    label: '产品定制'
+    label: '产品定制',
   },
   {
     field: 'afterSalesService',
     gridArea: '15 / 2 / 15 / 3',
-    label: '售后服务'
-  }
-])
+    label: '售后服务',
+  },
+]);
 </script>
 <template>
   <lew-flex x="start" y="start" :gap="50">

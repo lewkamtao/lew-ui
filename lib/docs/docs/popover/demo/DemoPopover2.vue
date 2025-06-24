@@ -2,8 +2,8 @@
 const data = ref({
   name: 'Steve Jobs',
   title: 'Co-founder of Apple Inc.',
-  quote: 'Stay hungry, stay foolish.'
-})
+  quote: 'Stay hungry, stay foolish.',
+});
 </script>
 
 <template>

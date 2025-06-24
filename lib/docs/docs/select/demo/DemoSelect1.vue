@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { SelectOptions } from 'lew-ui'
+import { SelectOptions } from 'lew-ui';
 const options = ref<SelectOptions[]>([
   { label: 'Standard Delivery', value: 'standard' },
   { label: 'Express Delivery', value: 'express' },
   { label: 'Next Day Delivery', value: 'nextDay' },
-  { label: 'Same Day Delivery', value: 'sameDay' }
-])
+  { label: 'Same Day Delivery', value: 'sameDay' },
+]);
 
-const value = ref('')
+const value = ref('');
 </script>
 
 <template>

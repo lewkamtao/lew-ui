@@ -4,7 +4,7 @@ export default {
   orderNum: 10,
   data: [
     {
-      name: 'change'
-    }
-  ]
-}
+      name: 'change',
+    },
+  ],
+};

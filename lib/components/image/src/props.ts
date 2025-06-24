@@ -1,49 +1,49 @@
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue';
 
-export type ObjectFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down'
+export type ObjectFit = 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
 
 export const imageProps = {
   src: {
     type: String,
     validator: (value: string) => {
       if (!value) {
-        console.warn('[LewImage] src 不能为空')
-        return false
+        console.warn('[LewImage] src 不能为空');
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   alt: {
     type: String,
     validator: (value: string) => {
       if (value.length > 100) {
-        console.warn('[LewImage] alt 文本不应超过100个字符')
-        return false
+        console.warn('[LewImage] alt 文本不应超过100个字符');
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   width: {
     type: [Number, String],
     default: 200,
     validator: (value: number | string) => {
       if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewImage] width 必须大于0')
-        return false
+        console.warn('[LewImage] width 必须大于0');
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   height: {
     type: [Number, String],
     default: 200,
     validator: (value: number | string) => {
       if (typeof value === 'number' && value <= 0) {
-        console.warn('[LewImage] height 必须大于0')
-        return false
+        console.warn('[LewImage] height 必须大于0');
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   objectFit: {
     type: String as PropType<ObjectFit>,
@@ -55,16 +55,16 @@ export const imageProps = {
         'contain',
         'cover',
         'none',
-        'scale-down'
-      ]
+        'scale-down',
+      ];
       if (!validValues.includes(value)) {
         console.warn(
           `[LewImage] objectFit 必须是以下值之一: ${validValues.join(', ')}`
-        )
-        return false
+        );
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   objectPosition: {
     type: String,
@@ -80,37 +80,37 @@ export const imageProps = {
         'top left',
         'top right',
         'bottom left',
-        'bottom right'
-      ]
+        'bottom right',
+      ];
       if (
         !validPositions.includes(value) &&
         !/^\d+(%|px|em|rem)(\s+\d+(%|px|em|rem))?$/.test(value)
       ) {
-        console.warn('[LewImage] objectPosition 格式不正确')
-        return false
+        console.warn('[LewImage] objectPosition 格式不正确');
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   lazy: {
     type: Boolean,
-    default: false
+    default: false,
   },
   loading: {
     type: Boolean,
-    default: false
+    default: false,
   },
   title: {
     type: String,
     default: '',
     validator: (value: string) => {
       if (value.length > 50) {
-        console.warn('[LewImage] title 不应超过50个字符')
-        return false
+        console.warn('[LewImage] title 不应超过50个字符');
+        return false;
       }
-      return true
-    }
-  }
-}
+      return true;
+    },
+  },
+};
 
-export type ImageProps = ExtractPropTypes<typeof imageProps>
+export type ImageProps = ExtractPropTypes<typeof imageProps>;

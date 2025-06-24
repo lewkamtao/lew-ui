@@ -2,18 +2,18 @@ export const baseSchema = [
   {
     label: '字段标识',
     as: 'input',
-    field: 'field'
+    field: 'field',
   },
   {
     label: '标题',
     as: 'input',
-    field: 'label'
+    field: 'label',
   },
   {
     label: '提示信息',
     as: 'textarea',
     direction: 'y',
-    field: 'tips'
+    field: 'tips',
   },
   {
     label: '方向',
@@ -24,8 +24,8 @@ export const baseSchema = [
       itemWidth: '50px',
       options: [
         { label: '水平', value: 'x' },
-        { label: '垂直', value: 'y' }
-      ]
-    }
-  }
-]
+        { label: '垂直', value: 'y' },
+      ],
+    },
+  },
+];

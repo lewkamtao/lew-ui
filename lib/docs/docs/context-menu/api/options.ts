@@ -6,47 +6,47 @@ export default {
     {
       name: 'label',
       type: 'String',
-      default: '-'
+      default: '-',
     },
     {
       name: 'value',
       type: 'String | Number',
-      default: '-'
+      default: '-',
     },
     {
       name: 'icon',
       type: 'Function',
-      default: '-'
+      default: '-',
     },
     {
       name: 'onClick',
       type: 'Function',
-      default: '-'
+      default: '-',
     },
     {
       name: 'children',
       type: 'ContextMenus[]',
-      default: '-'
+      default: '-',
     },
     {
       name: 'disabled',
       type: 'Boolean',
-      default: 'false'
+      default: 'false',
     },
     {
       name: 'isDividerLine',
       type: 'Boolean',
-      default: 'false'
+      default: 'false',
     },
     {
       name: 'checkable',
       type: 'Boolean',
-      default: 'false'
+      default: 'false',
     },
     {
       name: 'checked',
       type: 'Boolean',
-      default: 'false'
-    }
-  ]
-}
+      default: 'false',
+    },
+  ],
+};

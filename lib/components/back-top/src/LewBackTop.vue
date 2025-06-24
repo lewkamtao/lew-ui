@@ -1,48 +1,48 @@
 <script lang="ts" setup>
-import { throttle } from 'lodash-es'
-import { backTopProps } from './props'
-import { useEventListener } from '../../../hooks'
-import Icon from 'lew-ui/utils/Icon.vue'
+import { throttle } from 'lodash-es';
+import { backTopProps } from './props';
+import { useEventListener } from '../../../hooks';
+import Icon from 'lew-ui/utils/Icon.vue';
 
-const props = defineProps(backTopProps)
+const props = defineProps(backTopProps);
 
-const emit = defineEmits(['click'])
+const emit = defineEmits(['click']);
 
-const dom = shallowRef<HTMLElement>()
+const dom = shallowRef<HTMLElement>();
 
-const showBackTop = ref(false)
+const showBackTop = ref(false);
 
 const backTopStyle = computed(() => ({
   right: `${props.right}px`,
-  bottom: `${props.bottom}px`
-}))
+  bottom: `${props.bottom}px`,
+}));
 
 const toBackUp = () => {
-  if (!dom.value) return
-  const scrollDom = dom.value as HTMLElement
-  scrollDom.scrollTop = 0
+  if (!dom.value) return;
+  const scrollDom = dom.value as HTMLElement;
+  scrollDom.scrollTop = 0;
 
-  emit('click')
-}
+  emit('click');
+};
 
 const handleScroll = () => {
-  if (dom.value) showBackTop.value = dom.value.scrollTop >= props.valveHeight
-}
+  if (dom.value) showBackTop.value = dom.value.scrollTop >= props.valveHeight;
+};
 
-const throttledScrollHandler = throttle(handleScroll, 250)
+const throttledScrollHandler = throttle(handleScroll, 250);
 
-useEventListener(window, 'scroll', throttledScrollHandler)
+useEventListener(window, 'scroll', throttledScrollHandler);
 
 onMounted(() => {
-  dom.value = document.documentElement
+  dom.value = document.documentElement;
   if (props.target) {
     dom.value =
-      document.querySelector<HTMLElement>(`.${props.target}`) ?? undefined
+      document.querySelector<HTMLElement>(`.${props.target}`) ?? undefined;
     if (!dom.value) {
-      throw new Error(`target is not existed: ${props.target}`)
+      throw new Error(`target is not existed: ${props.target}`);
     }
   }
-})
+});
 </script>
 
 <template>

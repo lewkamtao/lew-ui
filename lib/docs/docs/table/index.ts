@@ -1,3 +1,3 @@
-import DemoTable from './DemoTable.vue'
+import DemoTable from './DemoTable.vue';
 
-export default DemoTable
+export default DemoTable;

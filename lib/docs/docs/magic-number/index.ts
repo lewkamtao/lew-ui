@@ -1,3 +1,3 @@
-import DemoMagicNumber from './DemoMagicNumber.vue'
+import DemoMagicNumber from './DemoMagicNumber.vue';
 
-export default DemoMagicNumber
+export default DemoMagicNumber;

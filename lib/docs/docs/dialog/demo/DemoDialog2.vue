@@ -10,18 +10,18 @@ const open = () => {
     ok: () => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve(true)
+          resolve(true);
           LewMessage.success({
-            content: 'Your app has been submitted for review'
-          })
-        }, 1000)
-      })
+            content: 'Your app has been submitted for review',
+          });
+        }, 1000);
+      });
     },
     cancel: () => {
       // Cancel submission
-    }
-  })
-}
+    },
+  });
+};
 </script>
 <template>
   <lew-button text="Submit for Review" round type="light" @click="open()" />

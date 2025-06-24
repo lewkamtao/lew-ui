@@ -1,3 +1,3 @@
-import DemoTooltip from './DemoTooltip.vue'
+import DemoTooltip from './DemoTooltip.vue';
 
-export default DemoTooltip
+export default DemoTooltip;

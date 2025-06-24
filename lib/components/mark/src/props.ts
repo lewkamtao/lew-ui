@@ -1,4 +1,4 @@
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue';
 
 type MarkColor =
   | 'red'
@@ -13,11 +13,11 @@ type MarkColor =
   | 'purple'
   | 'pink'
   | 'gray'
-  | 'brown'
+  | 'brown';
 
-type CursorStyle = 'pointer' | 'default' | 'text' | 'move' | 'not-allowed'
+type CursorStyle = 'pointer' | 'default' | 'text' | 'move' | 'not-allowed';
 
-type BoldValue = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
+type BoldValue = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 
 export const markProps = {
   color: {
@@ -37,22 +37,22 @@ export const markProps = {
         'purple',
         'pink',
         'gray',
-        'brown'
-      ]
+        'brown',
+      ];
       if (!validColors.includes(value)) {
         console.warn(
           `[LewMark] 无效的颜色值: ${value}。请使用以下有效颜色之一: ${validColors.join(', ')}`
-        )
-        return false
+        );
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   bold: {
     type: [Number, String] as PropType<BoldValue | string>,
     default: 400,
     validator: (value: BoldValue | string): boolean => {
-      const numValue = typeof value === 'string' ? parseInt(value, 10) : value
+      const numValue = typeof value === 'string' ? parseInt(value, 10) : value;
       if (
         isNaN(numValue) ||
         numValue < 100 ||
@@ -61,15 +61,15 @@ export const markProps = {
       ) {
         console.warn(
           `[LewMark] 无效的加粗值: ${value}。请使用 100 到 900 之间的 100 的倍数`
-        )
-        return false
+        );
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   round: {
     type: Boolean,
-    default: false
+    default: false,
   },
   cursor: {
     type: String as PropType<CursorStyle>,
@@ -80,18 +80,18 @@ export const markProps = {
         'default',
         'text',
         'move',
-        'not-allowed'
-      ]
+        'not-allowed',
+      ];
       if (!validCursors.includes(value)) {
         console.warn(
           `[LewMark] 无效的鼠标样式: ${value}。请使用以下有效样式之一: ${validCursors.join(', ')}`
-        )
-        return false
+        );
+        return false;
       }
-      return true
+      return true;
     },
-    typeDesc: `pointer | default | text | move | not-allowed`
-  }
-}
+    typeDesc: `pointer | default | text | move | not-allowed`,
+  },
+};
 
-export type MarkProps = ExtractPropTypes<typeof markProps>
+export type MarkProps = ExtractPropTypes<typeof markProps>;

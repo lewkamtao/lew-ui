@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { MenuTreeItem } from 'lew-ui'
-import { FileText, Users, MessageSquare, Tag } from 'lucide-vue-next'
-import { h } from 'vue'
+import type { MenuTreeItem } from 'lew-ui';
+import { FileText, Users, MessageSquare, Tag } from 'lucide-vue-next';
+import { h } from 'vue';
 
-const value = ref('')
+const value = ref('');
 const expandKeys = ref([
   '1',
   '1-1',
@@ -17,8 +17,8 @@ const expandKeys = ref([
   '2',
   '2-1',
   '2-1-1',
-  '2-1-2'
-])
+  '2-1-2',
+]);
 const options = [
   {
     value: '1',
@@ -26,7 +26,7 @@ const options = [
     icon: () => h(FileText, { size: 14 }),
     tagProps: {
       text: 'Core',
-      color: 'success'
+      color: 'success',
     },
     children: [
       {
@@ -38,54 +38,54 @@ const options = [
             label: 'Published',
             tagProps: {
               text: '12',
-              color: 'info'
-            }
+              color: 'info',
+            },
           },
           {
             value: '1-1-2',
             label: 'Drafts',
             tagProps: {
               text: '3',
-              color: 'warning'
-            }
+              color: 'warning',
+            },
           },
           {
             value: '1-1-3',
             label: 'Recycle Bin',
             tagProps: {
               text: '0',
-              color: 'info'
-            }
-          }
-        ]
+              color: 'info',
+            },
+          },
+        ],
       },
       {
         value: '1-2',
         label: 'Write Article',
         tagProps: {
           text: 'New',
-          color: 'success'
+          color: 'success',
         },
         children: [
           {
             value: '1-2-1',
-            label: 'New Article'
+            label: 'New Article',
           },
           {
             value: '1-2-2',
             label: 'Import Article',
             tagProps: {
               text: 'Beta',
-              color: 'warning'
-            }
+              color: 'warning',
+            },
           },
           {
             value: '1-2-3',
-            label: 'Batch Actions'
-          }
-        ]
-      }
-    ]
+            label: 'Batch Actions',
+          },
+        ],
+      },
+    ],
   },
   {
     value: '2',
@@ -93,7 +93,7 @@ const options = [
     icon: () => h(Users, { size: 14 }),
     tagProps: {
       text: 'Admin',
-      color: 'warning'
+      color: 'warning',
     },
     children: [
       {
@@ -105,26 +105,26 @@ const options = [
             label: 'Regular Users',
             tagProps: {
               text: '1.2k',
-              color: 'success'
-            }
+              color: 'success',
+            },
           },
           {
             value: '2-1-2',
             label: 'Admins',
             tagProps: {
               text: '12',
-              color: 'warning'
-            }
+              color: 'warning',
+            },
           },
           {
             value: '2-1-3',
             label: 'Blacklist',
             tagProps: {
               text: '5',
-              color: 'error'
-            }
-          }
-        ]
+              color: 'error',
+            },
+          },
+        ],
       },
       {
         value: '2-2',
@@ -135,20 +135,20 @@ const options = [
             label: 'Role Mgmt',
             tagProps: {
               text: 'Admin Only',
-              color: 'error'
-            }
+              color: 'error',
+            },
           },
           {
             value: '2-2-2',
-            label: 'Permission Assign'
+            label: 'Permission Assign',
           },
           {
             value: '2-2-3',
-            label: 'Access Control'
-          }
-        ]
-      }
-    ]
+            label: 'Access Control',
+          },
+        ],
+      },
+    ],
   },
   {
     value: '3',
@@ -164,26 +164,26 @@ const options = [
             label: 'Pending Review',
             tagProps: {
               text: '23',
-              color: 'error'
-            }
+              color: 'error',
+            },
           },
           {
             value: '3-1-2',
             label: 'Approved',
             tagProps: {
               text: '156',
-              color: 'success'
-            }
+              color: 'success',
+            },
           },
           {
             value: '3-1-3',
             label: 'Rejected',
             tagProps: {
               text: '8',
-              color: 'warning'
-            }
-          }
-        ]
+              color: 'warning',
+            },
+          },
+        ],
       },
       {
         value: '3-2',
@@ -191,23 +191,23 @@ const options = [
         children: [
           {
             value: '3-2-1',
-            label: 'Review Rules'
+            label: 'Review Rules',
           },
           {
             value: '3-2-2',
-            label: 'Sensitive Word Filter'
+            label: 'Sensitive Word Filter',
           },
           {
             value: '3-2-3',
             label: 'Comment Switch',
             tagProps: {
               text: 'Enabled',
-              color: 'success'
-            }
-          }
-        ]
-      }
-    ]
+              color: 'success',
+            },
+          },
+        ],
+      },
+    ],
   },
   {
     value: '4',
@@ -223,26 +223,26 @@ const options = [
             label: 'Popular Tags',
             tagProps: {
               text: '45',
-              color: 'success'
-            }
+              color: 'success',
+            },
           },
           {
             value: '4-1-2',
             label: 'Latest Tags',
             tagProps: {
               text: '12',
-              color: 'info'
-            }
+              color: 'info',
+            },
           },
           {
             value: '4-1-3',
             label: 'Tag Review',
             tagProps: {
               text: '3',
-              color: 'warning'
-            }
-          }
-        ]
+              color: 'warning',
+            },
+          },
+        ],
       },
       {
         value: '4-2',
@@ -253,26 +253,26 @@ const options = [
             label: 'Category List',
             tagProps: {
               text: '8',
-              color: 'info'
-            }
+              color: 'info',
+            },
           },
           {
             value: '4-2-2',
-            label: 'Add Category'
+            label: 'Add Category',
           },
           {
             value: '4-2-3',
-            label: 'Category Sort'
-          }
-        ]
-      }
-    ]
-  }
-]
+            label: 'Category Sort',
+          },
+        ],
+      },
+    ],
+  },
+];
 
 const change = (item: MenuTreeItem) => {
-  console.log(item)
-}
+  console.log(item);
+};
 </script>
 
 <template>

@@ -1,45 +1,45 @@
 <script setup lang="ts">
-import { LewFlex, LewEmpty } from 'lew-ui'
-import tippy from 'tippy.js'
-import LewContextMenu from './LewContextMenu.vue'
-import { getUniqueId, isVueComponent, formatComponent } from 'lew-ui/utils'
-import { ContextMenus, contextMenuProps, initLewContextMenu } from './index'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { isFunction } from 'lodash-es'
-const props = defineProps(contextMenuProps)
+import { LewFlex, LewEmpty } from 'lew-ui';
+import tippy from 'tippy.js';
+import LewContextMenu from './LewContextMenu.vue';
+import { getUniqueId, isVueComponent, formatComponent } from 'lew-ui/utils';
+import { ContextMenus, contextMenuProps, initLewContextMenu } from './index';
+import Icon from 'lew-ui/utils/Icon.vue';
+import { isFunction } from 'lodash-es';
+const props = defineProps(contextMenuProps);
 
-const emit = defineEmits(['select'])
+const emit = defineEmits(['select']);
 
 const clickItem = (item: ContextMenus) => {
   if (isFunction(item.onClick)) {
     // 创建一个item的代理
     const proxy = new Proxy(item, {
       get(target, prop, receiver) {
-        return Reflect.get(target, prop, receiver)
-      }
-    })
-    item.onClick(proxy)
+        return Reflect.get(target, prop, receiver);
+      },
+    });
+    item.onClick(proxy);
   }
   if (window.LewContextMenu) {
-    const { instance } = window.LewContextMenu
+    const { instance } = window.LewContextMenu;
     if (instance) {
-      instance.hide()
+      instance.hide();
     }
   }
 
   if (window.LewHoverMenu) {
-    const { instance } = window.LewHoverMenu
+    const { instance } = window.LewHoverMenu;
     if (instance) {
-      instance.hide()
+      instance.hide();
     }
   }
 
-  emit('select', item)
-}
+  emit('select', item);
+};
 
-const uniqueId = getUniqueId()
+const uniqueId = getUniqueId();
 
-let itemRefs = ref<(Element | globalThis.ComponentPublicInstance | null)[]>([])
+let itemRefs = ref<(Element | globalThis.ComponentPublicInstance | null)[]>([]);
 const initTippy = () => {
   itemRefs.value.forEach((el: any, index: number) => {
     if (
@@ -47,22 +47,22 @@ const initTippy = () => {
       props.options[index].disabled ||
       (props.options[index].children || []).length === 0
     ) {
-      return
+      return;
     }
-    const menuDom = document.createElement('div')
+    const menuDom = document.createElement('div');
     createApp({
       render() {
         return h(LewContextMenu, {
           options: props.options[index].children,
           onSelect: (item: any) => {
-            emit('select', item)
-          }
-        })
-      }
-    }).mount(menuDom)
+            emit('select', item);
+          },
+        });
+      },
+    }).mount(menuDom);
     // 创建右键索引
     if (!window.LewContextMenu) {
-      initLewContextMenu()
+      initLewContextMenu();
     }
 
     window.LewContextMenu.menuInstance[uniqueId] = tippy(el, {
@@ -78,24 +78,24 @@ const initTippy = () => {
       allowHTML: true,
       hideOnClick: false,
       zIndex: 2001,
-      content: menuDom
-    })
+      content: menuDom,
+    });
 
     window.LewContextMenu.menuInstance[
       uniqueId
-    ].popper.children[0].setAttribute('data-lew', 'popover')
-  })
-}
+    ].popper.children[0].setAttribute('data-lew', 'popover');
+  });
+};
 
 onMounted(() => {
-  initTippy()
-})
+  initTippy();
+});
 onUnmounted(() => {
   if (window.LewContextMenu?.menuInstance[uniqueId]?.destroy) {
-    window.LewContextMenu.menuInstance[uniqueId].destroy()
-    delete window.LewContextMenu.menuInstance[uniqueId]
+    window.LewContextMenu.menuInstance[uniqueId].destroy();
+    delete window.LewContextMenu.menuInstance[uniqueId];
   }
-})
+});
 </script>
 
 <template>
@@ -107,7 +107,7 @@ onUnmounted(() => {
         class="lew-context-menu-box"
         :class="{
           'lew-context-menu-box-disabled': item.disabled,
-          'lew-context-menu-box-divider-line': item.isDividerLine
+          'lew-context-menu-box-divider-line': item.isDividerLine,
         }"
       >
         <div
@@ -116,7 +116,7 @@ onUnmounted(() => {
           class="lew-context-menu-item"
           :style="{ 'animation-delay': index * 10 + 'ms' }"
           :class="{
-            'lew-context-menu-item-active': item.active
+            'lew-context-menu-item-active': item.active,
           }"
         >
           <div
@@ -143,7 +143,7 @@ onUnmounted(() => {
             v-if="options.filter((e: any) => e.children).length > 0"
             class="lew-context-menu-item-chevron"
             :style="{
-              opacity: (item.children || []).length > 0 ? 1 : 0
+              opacity: (item.children || []).length > 0 ? 1 : 0,
             }"
             :size="14"
             type="chevron-right"

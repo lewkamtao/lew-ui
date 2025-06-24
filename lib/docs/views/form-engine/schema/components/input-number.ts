@@ -2,7 +2,7 @@ export default [
   {
     label: '占位提示',
     as: 'input',
-    field: 'placeholder'
+    field: 'placeholder',
   },
   {
     label: '对齐方式',
@@ -14,50 +14,50 @@ export default [
       options: [
         {
           label: '居左',
-          value: 'left'
+          value: 'left',
         },
         {
           label: '居中',
-          value: 'center'
+          value: 'center',
         },
         {
           label: '居右',
-          value: 'right'
-        }
-      ]
-    }
+          value: 'right',
+        },
+      ],
+    },
   },
   {
     label: '是否聚焦时选中内容',
     as: 'switch',
-    field: 'selectByFocus'
+    field: 'selectByFocus',
   },
   {
     label: '最小值',
     as: 'input-number',
     componentWidth: 100,
-    field: 'min'
+    field: 'min',
   },
   {
     label: '最大值',
     as: 'input-number',
     componentWidth: 100,
-    field: 'max'
+    field: 'max',
   },
   {
     label: '步长',
     as: 'input-number',
     componentWidth: 100,
     props: {
-      align: 'center'
+      align: 'center',
     },
-    field: 'step'
+    field: 'step',
   },
   {
     label: '宽度',
     as: 'input-number',
     componentWidth: 100,
     props: { min: 80, max: 500, align: 'center', placeholder: '宽度' },
-    field: 'width'
-  }
-]
+    field: 'width',
+  },
+];

@@ -6,13 +6,13 @@ export default {
       name: 'title',
       description: '步骤标题',
       type: 'string',
-      default: '-'
+      default: '-',
     },
     {
       name: 'description',
       description: '步骤描述',
       type: 'string',
-      default: '-'
-    }
-  ]
-}
+      default: '-',
+    },
+  ],
+};

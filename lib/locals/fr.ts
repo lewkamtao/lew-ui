@@ -1,48 +1,48 @@
 export default {
   name: 'fr',
   image: {
-    fail: "Impossible de charger l'image pour le moment, veuillez réessayer plus tard"
+    fail: "Impossible de charger l'image pour le moment, veuillez réessayer plus tard",
   },
   input: {
     placeholder: 'Veuillez saisir',
     copy: 'Copier',
     copySuccess: 'Copié dans le presse-papiers',
-    copyFailed: 'La copie a échoué, veuillez réessayer'
+    copyFailed: 'La copie a échoué, veuillez réessayer',
   },
   inputTag: {
     placeholder: "Saisissez une étiquette et appuyez sur Entrée pour l'ajouter",
     maxLength:
       'Vous avez atteint la limite de {maxLength} étiquettes, supprimez-en quelques-unes pour continuer',
-    duplicate: 'Cette étiquette existe déjà, veuillez en saisir une nouvelle'
+    duplicate: 'Cette étiquette existe déjà, veuillez en saisir une nouvelle',
   },
   select: {
     placeholder: 'Veuillez sélectionner',
     resultCount: '{num} résultats',
     noResult: 'Aucun résultat',
-    searchPlaceholder: 'Entrez les mots-clés de recherche'
+    searchPlaceholder: 'Entrez les mots-clés de recherche',
   },
   selectMultiple: {
     placeholder: 'Veuillez sélectionner',
     resultCount: '{num} résultats',
     noResult: 'Aucun résultat',
-    searchPlaceholder: 'Entrez les mots-clés de recherche'
+    searchPlaceholder: 'Entrez les mots-clés de recherche',
   },
   cascader: {
     placeholder: 'Veuillez sélectionner',
     closeText: 'Fermer',
     okText: 'OK',
-    noResult: 'Aucun résultat'
+    noResult: 'Aucun résultat',
   },
   tree: {
     resultCount: '{num} résultats',
     noResult: 'Aucun résultat',
-    searchPlaceholder: 'Entrez les mots-clés de recherche'
+    searchPlaceholder: 'Entrez les mots-clés de recherche',
   },
   textarea: {
-    placeholder: 'Veuillez saisir'
+    placeholder: 'Veuillez saisir',
   },
   inputNumber: {
-    placeholder: 'Veuillez saisir'
+    placeholder: 'Veuillez saisir',
   },
   datePicker: {
     Mon: 'Lun',
@@ -52,11 +52,11 @@ export default {
     Fri: 'Ven',
     Sat: 'Sam',
     Sun: 'Dim',
-    placeholder: 'Sélectionner une date'
+    placeholder: 'Sélectionner une date',
   },
   dateRangePicker: {
     placeholderStart: 'Date de début',
-    placeholderEnd: 'Date de fin'
+    placeholderEnd: 'Date de fin',
   },
   inputTable: {
     addText: 'Ajouter',
@@ -71,23 +71,23 @@ export default {
       'Ce {label} existe déjà. Veuillez saisir un {label} unique.',
     save: 'Enregistrer',
     modelTitle: 'Ajouter des données',
-    editTitle: 'Modifier les données'
+    editTitle: 'Modifier les données',
   },
   drawer: {
     closeText: 'Fermer',
-    okText: 'OK'
+    okText: 'OK',
   },
   modal: {
     closeText: 'Fermer',
-    okText: 'OK'
+    okText: 'OK',
   },
   dialog: {
     cancelText: 'Annuler',
-    okText: 'OK'
+    okText: 'OK',
   },
   popok: {
     cancelText: 'Annuler',
-    okText: 'OK'
+    okText: 'OK',
   },
   upload: {
     dropActive: 'Relâchez pour commencer le téléchargement',
@@ -96,10 +96,10 @@ export default {
     drag: 'ou faites glisser les fichiers ici',
     accept: 'Prend en charge le téléchargement de {accept}',
     limit: "Vous pouvez télécharger jusqu'à {limit} fichiers",
-    maxFileSize: 'Chaque fichier ne doit pas dépasser {maxFileSize}'
+    maxFileSize: 'Chaque fichier ne doit pas dépasser {maxFileSize}',
   },
   pagination: {
     pageSize: '{pageSize} par page',
-    jumpTo: 'Aller à'
-  }
-}
+    jumpTo: 'Aller à',
+  },
+};

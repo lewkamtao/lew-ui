@@ -1,5 +1,5 @@
-import type { TreeDataSource } from './props'
-import { has, isArray } from 'lodash-es'
+import type { TreeDataSource } from './props';
+import { has, isArray } from 'lodash-es';
 
 /**
  * 查找树中所有节点的值
@@ -9,21 +9,21 @@ import { has, isArray } from 'lodash-es'
  */
 const findAllNodes = (tree: TreeDataSource[] = [], keyField = 'key') => {
   // 使用Set避免重复值
-  const nodes = new Set()
+  const nodes = new Set();
 
   // 使用递归方式遍历树
   const traverse = (node: any) => {
-    nodes.add(node[keyField])
+    nodes.add(node[keyField]);
     if (node.children?.length > 0) {
-      node.children.forEach((child: any) => traverse(child))
+      node.children.forEach((child: any) => traverse(child));
     }
-  }
+  };
 
   // 遍历每个根节点
-  tree.forEach((node) => traverse(node))
+  tree.forEach((node) => traverse(node));
 
-  return Array.from(nodes)
-}
+  return Array.from(nodes);
+};
 
 /**
  * 查找树中所有叶子节点的值
@@ -32,20 +32,20 @@ const findAllNodes = (tree: TreeDataSource[] = [], keyField = 'key') => {
  * @returns 所有叶子节点值的数组
  */
 const findLeafNodes = (tree: TreeDataSource[] = [], keyField = 'key') => {
-  const leafNodes = new Set()
+  const leafNodes = new Set();
 
   const traverse = (node: any) => {
     if (!node.children?.length) {
-      leafNodes.add(node[keyField])
+      leafNodes.add(node[keyField]);
     } else {
-      node.children.forEach((child: any) => traverse(child))
+      node.children.forEach((child: any) => traverse(child));
     }
-  }
+  };
 
-  tree.forEach((node) => traverse(node))
+  tree.forEach((node) => traverse(node));
 
-  return Array.from(leafNodes)
-}
+  return Array.from(leafNodes);
+};
 
 /**
  * 格式化树结构，添加路径信息
@@ -59,27 +59,27 @@ export const formatTree = ({
   parentLabelPaths = [],
   keyField = 'key',
   labelField = 'label',
-  free = false
+  free = false,
 }: {
-  dataSource: TreeDataSource[]
-  parent?: any
-  parentKeyPaths?: String[]
-  parentLabelPaths?: String[]
-  keyField?: string
-  labelField?: string
-  free?: boolean
+  dataSource: TreeDataSource[];
+  parent?: any;
+  parentKeyPaths?: String[];
+  parentLabelPaths?: String[];
+  keyField?: string;
+  labelField?: string;
+  free?: boolean;
 }): TreeDataSource[] => {
   return dataSource.map((node: TreeDataSource, index: number) => {
-    const { children, ...rest }: any = node
-    const key = rest[keyField]
-    const label = rest[labelField]
+    const { children, ...rest }: any = node;
+    const key = rest[keyField];
+    const label = rest[labelField];
 
     // 优化：使用扩展运算符创建新数组，避免修改原数组
-    const keyPaths = [...parentKeyPaths, key]
-    const labelPaths = [...parentLabelPaths, label]
+    const keyPaths = [...parentKeyPaths, key];
+    const labelPaths = [...parentLabelPaths, label];
 
     // 使用可选链简化判断
-    const isLeaf = has(rest, 'isLeaf') ? rest.isLeaf : !children?.length
+    const isLeaf = has(rest, 'isLeaf') ? rest.isLeaf : !children?.length;
 
     // 创建当前节点对象
     const currentNode = {
@@ -93,17 +93,17 @@ export const formatTree = ({
       level: parentKeyPaths.length,
       parentKeyPaths,
       parentLabelPaths,
-      treeIndex: index
-    }
+      treeIndex: index,
+    };
 
     // 仅在需要时计算叶子节点值，避免不必要的计算
     if (!free && children?.length > 0) {
       // 性能优化：可以考虑使用记忆化来缓存计算结果
-      currentNode.leafNodeValues = findLeafNodes(children, keyField)
-      currentNode.allNodeValues = findAllNodes(children, keyField)
+      currentNode.leafNodeValues = findLeafNodes(children, keyField);
+      currentNode.allNodeValues = findAllNodes(children, keyField);
     } else if (!free) {
-      currentNode.leafNodeValues = []
-      currentNode.allNodeValues = []
+      currentNode.leafNodeValues = [];
+      currentNode.allNodeValues = [];
     }
 
     // 递归处理子节点
@@ -118,12 +118,12 @@ export const formatTree = ({
               parentLabelPaths: labelPaths,
               keyField,
               labelField,
-              free
+              free,
             })
-          : []
-    }
-  })
-}
+          : [],
+    };
+  });
+};
 
 /**
  * 转换树结构，支持初始化、过滤等功能
@@ -136,23 +136,23 @@ const transformTree = async ({
   keyField = 'key',
   labelField = 'label',
   free = false,
-  keyword = ''
+  keyword = '',
 }: {
-  initOptionsMethod?: any
-  dataSource?: TreeDataSource[]
-  keyField?: string
-  labelField?: string
-  free?: boolean
-  keyword?: string
+  initOptionsMethod?: any;
+  dataSource?: TreeDataSource[];
+  keyField?: string;
+  labelField?: string;
+  free?: boolean;
+  keyword?: string;
 }) => {
-  let tree: TreeDataSource[] = []
-  const status = 'success'
+  let tree: TreeDataSource[] = [];
+  const status = 'success';
 
   try {
     // 处理初始化树或使用提供的数据源
     if (initOptionsMethod) {
       try {
-        const _tree: TreeDataSource[] = await initOptionsMethod()
+        const _tree: TreeDataSource[] = await initOptionsMethod();
         if (isArray(_tree)) {
           tree = formatTree({
             dataSource: _tree,
@@ -160,23 +160,23 @@ const transformTree = async ({
             parentLabelPaths: [],
             keyField,
             labelField,
-            free
-          })
+            free,
+          });
         } else {
           return {
             status: 'error',
             result: [],
             error: new Error(
               'The initOptionsMethod function should return a Promise that resolves to an array'
-            )
-          }
+            ),
+          };
         }
       } catch (error) {
         return {
           status: 'error',
           result: [],
-          error: error instanceof Error ? error : new Error(String(error))
-        }
+          error: error instanceof Error ? error : new Error(String(error)),
+        };
       }
     } else if (dataSource?.length > 0) {
       tree = formatTree({
@@ -185,18 +185,18 @@ const transformTree = async ({
         parentLabelPaths: [],
         keyField,
         labelField,
-        free
-      })
+        free,
+      });
     }
 
     // 关键词过滤
     if (keyword) {
-      const _tree: TreeDataSource[] = []
+      const _tree: TreeDataSource[] = [];
 
       // 优化：使用更高效的过滤算法
       const filterTree = (nodes: TreeDataSource[]) => {
         nodes.forEach((node) => {
-          const { labelPaths, children } = node
+          const { labelPaths, children } = node;
 
           // 检查当前节点是否匹配关键词
           if (
@@ -204,14 +204,14 @@ const transformTree = async ({
               String(label).toLowerCase().includes(keyword.toLowerCase())
             )
           ) {
-            _tree.push(node)
+            _tree.push(node);
           } else if (children && children.length > 0) {
-            filterTree(children)
+            filterTree(children);
           }
-        })
-      }
+        });
+      };
 
-      filterTree(tree)
+      filterTree(tree);
 
       // 重新格式化过滤后的树
       if (_tree.length > 0) {
@@ -221,21 +221,21 @@ const transformTree = async ({
           parentLabelPaths: [],
           keyField,
           labelField,
-          free
-        })
+          free,
+        });
       } else {
-        tree = []
+        tree = [];
       }
     }
 
-    return { status, result: tree }
+    return { status, result: tree };
   } catch (error) {
     return {
       status: 'error',
       result: [],
-      error: error instanceof Error ? error : new Error(String(error))
-    }
+      error: error instanceof Error ? error : new Error(String(error)),
+    };
   }
-}
+};
 
-export default transformTree
+export default transformTree;

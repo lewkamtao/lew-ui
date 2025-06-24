@@ -1,103 +1,103 @@
 <script lang="ts" setup>
-import dayjs from 'dayjs'
-import { cloneDeep } from 'lodash-es'
-import { getMonthDate } from '../../date-picker/src/date'
-import type { RetItemType } from '../../date-picker/src/date'
-import { dateRangeProps } from './props'
-import { LewFlex, LewButton } from 'lew-ui'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
+import dayjs from 'dayjs';
+import { cloneDeep } from 'lodash-es';
+import { getMonthDate } from '../../date-picker/src/date';
+import type { RetItemType } from '../../date-picker/src/date';
+import { dateRangeProps } from './props';
+import { LewFlex, LewButton } from 'lew-ui';
+import Icon from 'lew-ui/utils/Icon.vue';
+import { locale } from 'lew-ui';
 // Props
-const props = defineProps(dateRangeProps)
+const props = defineProps(dateRangeProps);
 
 // Emits
-const emit = defineEmits(['change'])
+const emit = defineEmits(['change']);
 
 // Model
 const modelValue = defineModel<
   | {
-      [key: string]: string
+      [key: string]: string;
     }
   | undefined
->()
+>();
 
 // Refs
 const hoverValue = ref<{
-  [key: string]: string
-}>({})
+  [key: string]: string;
+}>({});
 
 // Destructuring
-const { startKey, endKey } = props
+const { startKey, endKey } = props;
 
 // Constants
-const today = new Date()
-const curYear = today.getFullYear()
-const curMonth = today.getMonth() + 1
-const curDay = today.getDate()
-const _curDate = dayjs(`${curYear}-${curMonth}-${curDay}`)
+const today = new Date();
+const curYear = today.getFullYear();
+const curMonth = today.getMonth() + 1;
+const curDay = today.getDate();
+const _curDate = dayjs(`${curYear}-${curMonth}-${curDay}`);
 
 // Reactive state
 const dateState = reactive({
   year1: 0,
   year2: 0,
   month1: 0,
-  month2: 0
-})
+  month2: 0,
+});
 
 const state = reactive({
   leftPanel: getMonthDate(1),
-  rightPanel: getMonthDate(2)
-})
+  rightPanel: getMonthDate(2),
+});
 
 // Computed
 const object2class = computed(() => (type: string, item: RetItemType) => {
   if (!item.year || !item.month || !item.showDate) {
-    return
+    return;
   }
 
-  const _date = dayjs(`${item.year}-${item.month}-${item.showDate}`)
-  const hoverStart = dayjs(hoverValue.value[startKey])
-  const hoverEnd = dayjs(hoverValue.value[endKey])
+  const _date = dayjs(`${item.year}-${item.month}-${item.showDate}`);
+  const hoverStart = dayjs(hoverValue.value[startKey]);
+  const hoverEnd = dayjs(hoverValue.value[endKey]);
 
   switch (type) {
     case 'today':
       if (_curDate.isSame(_date) && item.date === item.showDate) {
-        return true
+        return true;
       }
-      break
+      break;
     case 'rangeMonth':
       if (item.date === item.showDate) {
-        return 'lew-date-item-curMonth'
+        return 'lew-date-item-curMonth';
       }
-      break
+      break;
     case 'notRangeMonth':
       if (item.date !== item.showDate) {
-        return ''
+        return '';
       }
-      break
+      break;
     case 'selected':
       if (
         (hoverStart.isSame(_date) || hoverEnd.isSame(_date)) &&
         item.date === item.showDate
       ) {
-        return 'lew-date-value-selected'
+        return 'lew-date-value-selected';
       }
-      break
+      break;
     case 'rangeSelected':
       if (item.date !== item.showDate) {
-        return
+        return;
       }
       if (hoverStart.isSame(_date)) {
         if (hoverStart.isAfter(hoverEnd)) {
-          return 'lew-date-label-selected-end'
+          return 'lew-date-label-selected-end';
         }
-        return 'lew-date-label-selected-start'
+        return 'lew-date-label-selected-start';
       }
       if (hoverEnd.isSame(_date)) {
         if (hoverStart.isAfter(hoverEnd)) {
-          return 'lew-date-label-selected-start'
+          return 'lew-date-label-selected-start';
         }
-        return 'lew-date-label-selected-end'
+        return 'lew-date-label-selected-end';
       }
       if (hoverStart.isBefore(hoverEnd)) {
         if (
@@ -105,229 +105,229 @@ const object2class = computed(() => (type: string, item: RetItemType) => {
           hoverEnd.isAfter(_date) &&
           item.date === item.showDate
         ) {
-          return 'lew-date-label-selected'
+          return 'lew-date-label-selected';
         }
       } else if (hoverEnd.isBefore(_date) && hoverStart.isAfter(_date)) {
-        return 'lew-date-label-selected'
+        return 'lew-date-label-selected';
       }
-      break
+      break;
     default:
-      return ''
+      return '';
   }
-})
+});
 
 // Methods
 const setMonthDate = (type: string) => {
   if (type === 'left') {
-    state.leftPanel = getMonthDate(dateState.year1, dateState.month1)
+    state.leftPanel = getMonthDate(dateState.year1, dateState.month1);
   } else {
-    state.rightPanel = getMonthDate(dateState.year2, dateState.month2)
+    state.rightPanel = getMonthDate(dateState.year2, dateState.month2);
   }
-}
+};
 
 const prveMonth1 = () => {
   if (dateState.month1 > 1) {
-    dateState.month1 -= 1
+    dateState.month1 -= 1;
   } else {
-    dateState.year1 -= 1
-    dateState.month1 = 12
+    dateState.year1 -= 1;
+    dateState.month1 = 12;
   }
-  setMonthDate('left')
-}
+  setMonthDate('left');
+};
 
 const nextMonth1 = () => {
   if (dateState.month1 < 12) {
-    dateState.month1 += 1
+    dateState.month1 += 1;
   } else {
-    dateState.year1 += 1
-    dateState.month1 = 1
+    dateState.year1 += 1;
+    dateState.month1 = 1;
   }
   if (dateState.year1 > dateState.year2) {
-    dateState.year2 = dateState.year1
+    dateState.year2 = dateState.year1;
   }
   if (
     dateState.year1 === dateState.year2 &&
     dateState.month1 >= dateState.month2
   ) {
     if (dateState.month1 === 12) {
-      dateState.month2 = 1
-      dateState.year2 += 1
+      dateState.month2 = 1;
+      dateState.year2 += 1;
     } else {
-      dateState.month2 = dateState.month1 + 1
+      dateState.month2 = dateState.month1 + 1;
     }
   }
-  setMonthDate('left')
-  setMonthDate('right')
-}
+  setMonthDate('left');
+  setMonthDate('right');
+};
 
 const prveMonth2 = () => {
   if (dateState.month2 > 1) {
-    dateState.month2 -= 1
+    dateState.month2 -= 1;
   } else {
-    dateState.year2 -= 1
-    dateState.month2 = 12
+    dateState.year2 -= 1;
+    dateState.month2 = 12;
   }
   if (dateState.year2 < dateState.year1) {
-    dateState.year1 = dateState.year2
+    dateState.year1 = dateState.year2;
   }
   if (
     dateState.year1 === dateState.year2 &&
     dateState.month2 <= dateState.month1
   ) {
     if (dateState.month2 === 1) {
-      dateState.month1 = 12
-      dateState.year1 -= 1
+      dateState.month1 = 12;
+      dateState.year1 -= 1;
     } else {
-      dateState.month1 = dateState.month2 - 1
+      dateState.month1 = dateState.month2 - 1;
     }
   }
-  setMonthDate('left')
-  setMonthDate('right')
-}
+  setMonthDate('left');
+  setMonthDate('right');
+};
 
 const nextMonth2 = () => {
   if (dateState.month2 < 12) {
-    dateState.month2 += 1
+    dateState.month2 += 1;
   } else {
-    dateState.year2 += 1
-    dateState.month2 = 1
+    dateState.year2 += 1;
+    dateState.month2 = 1;
   }
-  setMonthDate('right')
-}
+  setMonthDate('right');
+};
 
 const prveYear1 = () => {
-  dateState.year1 -= 1
-  setMonthDate('left')
-}
+  dateState.year1 -= 1;
+  setMonthDate('left');
+};
 
 const nextYear1 = () => {
-  dateState.year1 += 1
+  dateState.year1 += 1;
   if (dateState.year1 > dateState.year2) {
-    dateState.year2 = dateState.year1
+    dateState.year2 = dateState.year1;
   }
   if (
     dateState.year1 === dateState.year2 &&
     dateState.month1 >= dateState.month2
   ) {
     if (dateState.month1 === 12) {
-      dateState.month2 = 1
-      dateState.year2 += 1
+      dateState.month2 = 1;
+      dateState.year2 += 1;
     } else {
-      dateState.month2 = dateState.month1 + 1
+      dateState.month2 = dateState.month1 + 1;
     }
   }
 
-  setMonthDate('left')
-  setMonthDate('right')
-}
+  setMonthDate('left');
+  setMonthDate('right');
+};
 
 const prveYear2 = () => {
-  dateState.year2 -= 1
+  dateState.year2 -= 1;
   if (dateState.year2 < dateState.year1) {
-    dateState.year1 = dateState.year2
+    dateState.year1 = dateState.year2;
   }
   if (
     dateState.year1 === dateState.year2 &&
     dateState.month2 <= dateState.month1
   ) {
     if (dateState.month2 === 1) {
-      dateState.month1 = 12
-      dateState.year1 -= 1
+      dateState.month1 = 12;
+      dateState.year1 -= 1;
     } else {
-      dateState.month1 = dateState.month2 - 1
+      dateState.month1 = dateState.month2 - 1;
     }
   }
-  setMonthDate('left')
-  setMonthDate('right')
-}
+  setMonthDate('left');
+  setMonthDate('right');
+};
 
 const nextYear2 = () => {
-  dateState.year2 += 1
-  setMonthDate('right')
-}
+  dateState.year2 += 1;
+  setMonthDate('right');
+};
 
-let i = 0
-let startBackup = ''
+let i = 0;
+let startBackup = '';
 
 const hoverValueFn = (item: RetItemType) => {
   if (item.date != item.showDate || i % 2 === 0) {
-    return
+    return;
   }
-  const end = `${item.year}-${item.month}-${item.showDate}`
+  const end = `${item.year}-${item.month}-${item.showDate}`;
   hoverValue.value = {
     [startKey]: startBackup,
-    [endKey]: end
-  }
-}
+    [endKey]: end,
+  };
+};
 
 const setValue = (item: RetItemType) => {
-  i += 1
+  i += 1;
 
   if (item.date != item.showDate) {
-    return
+    return;
   }
-  const __dateStr = `${item.year}-${item.month}-${item.showDate}`
-  const __date = dayjs(__dateStr)
+  const __dateStr = `${item.year}-${item.month}-${item.showDate}`;
+  const __date = dayjs(__dateStr);
   if (i % 2 === 0) {
     if (__date.isBefore(dayjs(hoverValue.value[startKey]))) {
-      hoverValue.value[startKey] = dayjs(__dateStr).format(props.valueFormat)
-      hoverValue.value[endKey] = dayjs(startBackup).format(props.valueFormat)
+      hoverValue.value[startKey] = dayjs(__dateStr).format(props.valueFormat);
+      hoverValue.value[endKey] = dayjs(startBackup).format(props.valueFormat);
     } else {
-      hoverValue.value[startKey] = dayjs(startBackup).format(props.valueFormat)
-      hoverValue.value[endKey] = dayjs(__dateStr).format(props.valueFormat)
+      hoverValue.value[startKey] = dayjs(startBackup).format(props.valueFormat);
+      hoverValue.value[endKey] = dayjs(__dateStr).format(props.valueFormat);
     }
-    modelValue.value = cloneDeep(hoverValue.value)
-    emit('change', hoverValue.value)
+    modelValue.value = cloneDeep(hoverValue.value);
+    emit('change', hoverValue.value);
   } else {
-    hoverValue.value[startKey] = __dateStr
-    hoverValue.value[endKey] = ''
-    startBackup = __dateStr
+    hoverValue.value[startKey] = __dateStr;
+    hoverValue.value[endKey] = '';
+    startBackup = __dateStr;
   }
-}
+};
 
 const init = () => {
-  let _value = cloneDeep(modelValue.value)
+  let _value = cloneDeep(modelValue.value);
 
   if (!_value) {
     _value = {
       [startKey]: '',
-      [endKey]: ''
-    }
+      [endKey]: '',
+    };
   }
 
-  hoverValue.value = _value
+  hoverValue.value = _value;
 
   // 年
-  dateState.year1 = _value[startKey] ? dayjs(_value[startKey]).year() : curYear
+  dateState.year1 = _value[startKey] ? dayjs(_value[startKey]).year() : curYear;
   // 月
   dateState.month1 = _value[startKey]
     ? dayjs(_value[startKey]).month() + 1
-    : curMonth
+    : curMonth;
   // 年
-  dateState.year2 = _value[endKey] ? dayjs(_value[endKey]).year() : curYear
+  dateState.year2 = _value[endKey] ? dayjs(_value[endKey]).year() : curYear;
   // 月
   dateState.month2 = _value[endKey]
     ? dayjs(_value[endKey]).month() + 1
-    : curMonth + 1
+    : curMonth + 1;
   if (
     dateState.year1 === dateState.year2 &&
     dateState.month1 === dateState.month2
   ) {
-    dateState.month2 += 1
+    dateState.month2 += 1;
   }
   if (dateState.month2 > 12) {
-    dateState.year2 += 1
-    dateState.month2 = 1
+    dateState.year2 += 1;
+    dateState.month2 = 1;
   }
-  setMonthDate('left')
-  setMonthDate('right')
-}
+  setMonthDate('left');
+  setMonthDate('right');
+};
 
 // Lifecycle hooks
-init()
+init();
 
 // Expose
-defineExpose({ init })
+defineExpose({ init });
 
 const headDate = computed(() => {
   return [
@@ -337,9 +337,9 @@ const headDate = computed(() => {
     locale.t('datePicker.Thu'),
     locale.t('datePicker.Fri'),
     locale.t('datePicker.Sat'),
-    locale.t('datePicker.Sun')
-  ]
-})
+    locale.t('datePicker.Sun'),
+  ];
+});
 </script>
 <template>
   <div class="lew-date-range">

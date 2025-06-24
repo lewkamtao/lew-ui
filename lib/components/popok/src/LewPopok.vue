@@ -1,43 +1,43 @@
 <script setup lang="ts">
-import { LewButton, LewPopover } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { popokButtonProps } from './props'
-import { LewColor } from 'lew-ui'
-import { locale } from 'lew-ui'
-const props = defineProps(popokButtonProps)
+import { LewButton, LewPopover } from 'lew-ui';
+import { any2px } from 'lew-ui/utils';
+import Icon from 'lew-ui/utils/Icon.vue';
+import { popokButtonProps } from './props';
+import { LewColor } from 'lew-ui';
+import { locale } from 'lew-ui';
+const props = defineProps(popokButtonProps);
 
-const lewPopoverRef = ref()
-const okLoading = ref(false)
-const cancelLoading = ref(false)
-const okRef = ref()
+const lewPopoverRef = ref();
+const okLoading = ref(false);
+const cancelLoading = ref(false);
+const okRef = ref();
 
 const handleAction = async (action: 'ok' | 'cancel') => {
-  const actionFunction = props[action]
-  const loadingRef = action === 'ok' ? okLoading : cancelLoading
+  const actionFunction = props[action];
+  const loadingRef = action === 'ok' ? okLoading : cancelLoading;
 
   if (typeof actionFunction === 'function') {
-    loadingRef.value = true
-    const result = await actionFunction()
+    loadingRef.value = true;
+    const result = await actionFunction();
     if (result !== false) {
-      hide()
+      hide();
     }
-    loadingRef.value = false
+    loadingRef.value = false;
   }
-}
+};
 
-const ok = () => handleAction('ok')
-const cancel = () => handleAction('cancel')
+const ok = () => handleAction('ok');
+const cancel = () => handleAction('cancel');
 
 const hide = () => {
-  lewPopoverRef.value.hide()
-}
+  lewPopoverRef.value.hide();
+};
 
 onMounted(() => {
   nextTick(() => {
-    if (okRef.value) okRef.value.focus()
-  })
-})
+    if (okRef.value) okRef.value.focus();
+  });
+});
 </script>
 
 <template>
@@ -54,7 +54,7 @@ onMounted(() => {
       <div
         class="lew-popok-body"
         :style="{
-          width: any2px(width)
+          width: any2px(width),
         }"
       >
         <div class="lew-popok-left">

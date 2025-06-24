@@ -1,7 +1,7 @@
 <script setup lang="ts">
 interface TabOption {
-  label: string
-  value: string
+  label: string;
+  value: string;
 }
 
 // Start of Selection
@@ -15,9 +15,9 @@ const options: TabOption[] = [
   { label: 'Legal', value: 'legal' },
   { label: 'Procurement', value: 'procurement' },
   { label: 'Production', value: 'production' },
-  { label: 'Quality', value: 'quality_control' }
-]
-const modelValue = ref('hr')
+  { label: 'Quality', value: 'quality_control' },
+];
+const modelValue = ref('hr');
 </script>
 
 <template>

@@ -1,3 +1,3 @@
-import DemoTextarea from './DemoTextarea.vue'
+import DemoTextarea from './DemoTextarea.vue';
 
-export default DemoTextarea
+export default DemoTextarea;

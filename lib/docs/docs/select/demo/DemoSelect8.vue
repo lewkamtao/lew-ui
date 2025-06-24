@@ -5,148 +5,148 @@ const options = ref([
     children: [
       {
         label: 'KIVIK Sofa',
-        value: 'kivik'
+        value: 'kivik',
       },
       {
         label: 'BILLY Bookcase',
-        value: 'billy'
+        value: 'billy',
       },
       {
         label: 'KALLAX Shelf Unit',
-        value: 'kallax'
+        value: 'kallax',
       },
       {
         label: 'POÄNG Armchair',
-        value: 'poang'
+        value: 'poang',
       },
       {
         label: 'LACK Coffee Table',
-        value: 'lack'
+        value: 'lack',
       },
       {
         label: 'EKTORP Sofa',
-        value: 'ektorp'
+        value: 'ektorp',
       },
       {
         label: 'VITTSJÖ TV Unit',
-        value: 'vittsjo'
+        value: 'vittsjo',
       },
       {
         label: 'BESTÅ TV Storage Combination',
-        value: 'besta'
-      }
-    ]
+        value: 'besta',
+      },
+    ],
   },
   {
     label: 'Bedroom Furniture',
     children: [
       {
         label: 'MALM Bed',
-        value: 'malm'
+        value: 'malm',
       },
       {
         label: 'PAX Wardrobe',
-        value: 'pax'
+        value: 'pax',
       },
       {
         label: 'HEMNES Bedside Table',
-        value: 'hemnes'
+        value: 'hemnes',
       },
       {
         label: 'BRIMNES Bed Frame',
-        value: 'brimnes'
+        value: 'brimnes',
       },
       {
         label: 'SONGESAND Wardrobe',
-        value: 'songesand'
+        value: 'songesand',
       },
       {
         label: 'TRYSIL Bed Frame',
-        value: 'trysil'
+        value: 'trysil',
       },
       {
         label: 'NORDLI Bedside Table',
-        value: 'nordli'
+        value: 'nordli',
       },
       {
         label: 'KULLEN 5-drawer Chest',
-        value: 'kullen'
-      }
-    ]
+        value: 'kullen',
+      },
+    ],
   },
   {
     label: 'Kitchen Items',
     children: [
       {
         label: 'METOD Cabinet',
-        value: 'metod'
+        value: 'metod',
       },
       {
         label: 'KNOXHULT Kitchen Base Cabinet',
-        value: 'knoxhult'
+        value: 'knoxhult',
       },
       {
         label: 'SUNNERSTA Mini-kitchen',
-        value: 'sunnersta'
+        value: 'sunnersta',
       },
       {
         label: 'TORNVIKEN Kitchen Island',
-        value: 'tornviken'
+        value: 'tornviken',
       },
       {
         label: 'ENHET Kitchen Storage Combination',
-        value: 'enhet'
+        value: 'enhet',
       },
       {
         label: 'RÅSKOG Kitchen Cart',
-        value: 'raskog'
+        value: 'raskog',
       },
       {
         label: 'KUNGSFORS Kitchen Rail',
-        value: 'kungsfors'
-      }
-    ]
+        value: 'kungsfors',
+      },
+    ],
   },
   {
     label: 'Office Furniture',
     children: [
       {
         label: 'MICKE Desk',
-        value: 'micke'
+        value: 'micke',
       },
       {
         label: 'MARKUS Office Chair',
-        value: 'markus'
+        value: 'markus',
       },
       {
         label: 'ALEX Drawer Unit',
-        value: 'alex'
+        value: 'alex',
       },
       {
         label: 'BEKANT Sit/Stand Desk',
-        value: 'bekant'
+        value: 'bekant',
       },
       {
         label: 'MILLBERGET Swivel Chair',
-        value: 'millberget'
+        value: 'millberget',
       },
       {
         label: 'FLINTAN Office Chair',
-        value: 'flintan'
+        value: 'flintan',
       },
       {
         label: 'GALANT Filing Cabinet',
-        value: 'galant'
+        value: 'galant',
       },
       {
         label: 'LÅNGFJÄLL Office Chair',
-        value: 'langfjall'
-      }
-    ]
-  }
-])
+        value: 'langfjall',
+      },
+    ],
+  },
+]);
 
-const value = ref('')
+const value = ref('');
 </script>
 
 <template>

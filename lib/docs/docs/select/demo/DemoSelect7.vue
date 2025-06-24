@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const options = ref([])
-const value = ref('')
+const options = ref([]);
+const value = ref('');
 </script>
 
 <template>

@@ -1,95 +1,95 @@
 <script lang="ts" setup>
-import type { Ref } from 'vue'
-import { getMonthDate } from './date'
-import type { RetType, RetItemType } from './date'
-import { dateProps } from './props'
-import dayjs from 'dayjs'
-import { object2class } from 'lew-ui/utils'
-import { LewFlex, LewButton } from 'lew-ui'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
+import type { Ref } from 'vue';
+import { getMonthDate } from './date';
+import type { RetType, RetItemType } from './date';
+import { dateProps } from './props';
+import dayjs from 'dayjs';
+import { object2class } from 'lew-ui/utils';
+import { LewFlex, LewButton } from 'lew-ui';
+import Icon from 'lew-ui/utils/Icon.vue';
+import { locale } from 'lew-ui';
 
-const emit = defineEmits(['change'])
-const props = defineProps(dateProps)
-const modelValue: Ref<string | undefined> = defineModel()
+const emit = defineEmits(['change']);
+const props = defineProps(dateProps);
+const modelValue: Ref<string | undefined> = defineModel();
 
 // 获取当前年份
-const _year = dayjs().year()
+const _year = dayjs().year();
 // 获取当前月份
-const _month = dayjs().month() + 1
+const _month = dayjs().month() + 1;
 
-const dateData: Ref<RetType> = ref(getMonthDate())
+const dateData: Ref<RetType> = ref(getMonthDate());
 
 const dateState = reactive({
   year: _year,
-  month: _month
-})
+  month: _month,
+});
 
 const setMonthDate = () => {
-  dateData.value = getMonthDate(dateState.year, dateState.month)
-}
+  dateData.value = getMonthDate(dateState.year, dateState.month);
+};
 
 const init = (date: string | undefined = '') => {
-  dateState.year = dayjs(date || undefined).year()
-  dateState.month = dayjs(date || undefined).month() + 1
-  setMonthDate()
-}
+  dateState.year = dayjs(date || undefined).year();
+  dateState.month = dayjs(date || undefined).month() + 1;
+  setMonthDate();
+};
 
-init(modelValue.value)
+init(modelValue.value);
 
-defineExpose({ init })
+defineExpose({ init });
 
 const prveMonth = () => {
   if (dateState.month > 1) {
-    dateState.month -= 1
+    dateState.month -= 1;
   } else {
-    dateState.year -= 1
-    dateState.month = 12
+    dateState.year -= 1;
+    dateState.month = 12;
   }
-  setMonthDate()
-}
+  setMonthDate();
+};
 
 const nextMonth = () => {
   if (dateState.month < 12) {
-    dateState.month += 1
+    dateState.month += 1;
   } else {
-    dateState.year += 1
-    dateState.month = 1
+    dateState.year += 1;
+    dateState.month = 1;
   }
-  setMonthDate()
-}
+  setMonthDate();
+};
 
 const prveYear = () => {
-  dateState.year -= 1
-  setMonthDate()
-}
+  dateState.year -= 1;
+  setMonthDate();
+};
 
 const nextYear = () => {
-  dateState.year += 1
-  setMonthDate()
-}
+  dateState.year += 1;
+  setMonthDate();
+};
 
 const selectDateFn = (item: RetItemType) => {
-  const v = `${item.year}-${item.month}-${item.showDate}`
-  let _v = dayjs(v).format(props.valueFormat)
-  modelValue.value = _v
-  emit('change', _v)
-}
+  const v = `${item.year}-${item.month}-${item.showDate}`;
+  let _v = dayjs(v).format(props.valueFormat);
+  modelValue.value = _v;
+  emit('change', _v);
+};
 
 const checkToday = computed(() => (item: RetItemType) => {
-  const today = dayjs()
-  return today.isSame(dayjs(`${item.year}-${item.month}-${item.date}`), 'day')
-})
+  const today = dayjs();
+  return today.isSame(dayjs(`${item.year}-${item.month}-${item.date}`), 'day');
+});
 
 const lewDateItemClassNames = computed(() => (item: RetItemType) => {
-  let e = item.date === item.showDate
-  let selected = false
+  let e = item.date === item.showDate;
+  let selected = false;
   if (item.date > 0 && item.date <= item.showDate) {
-    const v = `${dateState.year}-${dateState.month}-${item.showDate}`
-    selected = dayjs(v).isSame(dayjs(modelValue.value))
+    const v = `${dateState.year}-${dateState.month}-${item.showDate}`;
+    selected = dayjs(v).isSame(dayjs(modelValue.value));
   }
-  return object2class('lew-date-item', { e, selected })
-})
+  return object2class('lew-date-item', { e, selected });
+});
 
 const headDate = computed(() => {
   return [
@@ -99,9 +99,9 @@ const headDate = computed(() => {
     locale.t('datePicker.Thu'),
     locale.t('datePicker.Fri'),
     locale.t('datePicker.Sat'),
-    locale.t('datePicker.Sun')
-  ]
-})
+    locale.t('datePicker.Sun'),
+  ];
+});
 </script>
 <template>
   <div class="lew-date">

@@ -6,7 +6,7 @@ const data: any = ref([
     releaseYear: 2030,
     rating: 95,
     brand: 'Apple',
-    category: 'Smartphone'
+    category: 'Smartphone',
   },
   {
     id: 2,
@@ -14,7 +14,7 @@ const data: any = ref([
     releaseYear: 2020,
     rating: 92,
     brand: 'Samsung',
-    category: 'Smartphone'
+    category: 'Smartphone',
   },
   {
     id: 3,
@@ -22,7 +22,7 @@ const data: any = ref([
     releaseYear: 2025,
     rating: 88,
     brand: 'Apple',
-    category: 'Laptop'
+    category: 'Laptop',
   },
   {
     id: 4,
@@ -30,7 +30,7 @@ const data: any = ref([
     releaseYear: 2024,
     rating: 85,
     brand: 'Microsoft',
-    category: 'Laptop'
+    category: 'Laptop',
   },
   {
     id: 5,
@@ -38,9 +38,9 @@ const data: any = ref([
     releaseYear: 2021,
     rating: 90,
     brand: 'Apple',
-    category: 'Tablet'
-  }
-])
+    category: 'Tablet',
+  },
+]);
 
 const columns = [
   {
@@ -48,17 +48,17 @@ const columns = [
     field: 'id',
     width: 80,
     x: 'center',
-    fixed: 'left'
+    fixed: 'left',
   },
   {
     title: 'Brand',
     width: 120,
-    field: 'brand'
+    field: 'brand',
   },
   {
     title: 'Product Name',
     width: 120,
-    field: 'name'
+    field: 'name',
   },
   {
     title: 'Release Year',
@@ -66,38 +66,38 @@ const columns = [
     width: 100,
     x: 'center',
     customRender: ({ row }: any) => {
-      return row.releaseYear
-    }
+      return row.releaseYear;
+    },
   },
   {
     title: 'Category',
     field: 'category',
     width: 140,
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Rating',
     width: 100,
     field: 'rating',
     x: 'center',
-    fixed: 'right'
-  }
-]
-const tableSize = ref('medium')
+    fixed: 'right',
+  },
+];
+const tableSize = ref('medium');
 const tableSizeOptions = [
   {
     label: '小',
-    value: 'small'
+    value: 'small',
   },
   {
     label: '中',
-    value: 'medium'
+    value: 'medium',
   },
   {
     label: '大',
-    value: 'large'
-  }
-]
+    value: 'large',
+  },
+];
 </script>
 
 <template>

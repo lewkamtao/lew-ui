@@ -1,3 +1,3 @@
-import DemoRate from './DemoRate.vue'
+import DemoRate from './DemoRate.vue';
 
-export default DemoRate
+export default DemoRate;

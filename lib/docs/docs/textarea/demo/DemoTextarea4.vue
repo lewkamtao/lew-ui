@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const v = ref('This is a textarea')
+const v = ref('This is a textarea');
 </script>
 
 <template>

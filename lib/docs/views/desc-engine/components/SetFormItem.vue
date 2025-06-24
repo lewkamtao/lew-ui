@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { any2px } from 'lew-ui/utils'
+import { any2px } from 'lew-ui/utils';
 import {
   LewInput,
   LewSelect,
@@ -8,40 +8,40 @@ import {
   LewSwitch,
   LewTextarea,
   LewInputNumber,
-  LewInputTable
-} from 'lew-ui'
-import SetOptionModal from './SetOptionModal.vue'
-import Icon from 'lew-ui/utils/Icon.vue'
+  LewInputTable,
+} from 'lew-ui';
+import SetOptionModal from './SetOptionModal.vue';
+import Icon from 'lew-ui/utils/Icon.vue';
 
 const props = defineProps({
   as: {
     type: String,
-    default: 'input'
+    default: 'input',
   },
   label: {
     type: String,
-    default: ''
+    default: '',
   },
   field: {
     type: String,
-    default: ''
+    default: '',
   },
   componentWidth: {
-    type: [String, Number]
+    type: [String, Number],
   },
   direction: {
     type: String,
-    default: 'x'
+    default: 'x',
   },
   props: {
-    type: Object
+    type: Object,
   },
   tips: {
-    type: String
-  }
-})
+    type: String,
+  },
+});
 
-const modelValue = defineModel()
+const modelValue = defineModel();
 
 const asMap: Record<string, any> = {
   input: LewInput,
@@ -52,8 +52,8 @@ const asMap: Record<string, any> = {
   switch: LewSwitch,
   'input-number': LewInputNumber,
   'set-option-modal': SetOptionModal,
-  'input-table': LewInputTable
-}
+  'input-table': LewInputTable,
+};
 </script>
 
 <template>

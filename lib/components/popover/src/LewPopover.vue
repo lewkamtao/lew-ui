@@ -1,44 +1,44 @@
 <script setup lang="ts">
-import tippy from 'tippy.js'
-import { watchDebounced } from '@vueuse/core'
-import { LewLoading } from 'lew-ui'
-import { popoverProps } from './props'
+import tippy from 'tippy.js';
+import { watchDebounced } from '@vueuse/core';
+import { LewLoading } from 'lew-ui';
+import { popoverProps } from './props';
 
 // 获取app
-const app = getCurrentInstance()?.appContext.app
+const app = getCurrentInstance()?.appContext.app;
 if (app && !app.directive('loading')) {
-  app.use(LewLoading)
+  app.use(LewLoading);
 }
 
-const props = defineProps(popoverProps)
-const triggerRef = ref()
-const bodyRef = ref()
-let instance: any
-const watchOptions = { debounce: 250, maxWait: 1000 }
+const props = defineProps(popoverProps);
+const triggerRef = ref();
+const bodyRef = ref();
+let instance: any;
+const watchOptions = { debounce: 250, maxWait: 1000 };
 
 // 方向
 watchDebounced(
   () => props.placement,
   (value: string) => {
     instance.setProps({
-      placement: value
-    })
+      placement: value,
+    });
   },
   watchOptions
-)
+);
 
 // 禁用
 watchDebounced(
   () => props.disabled,
   (value: boolean) => {
     if (value) {
-      instance.disable()
+      instance.disable();
     } else {
-      instance.enable()
+      instance.enable();
     }
   },
   watchOptions
-)
+);
 
 // trigger
 watchDebounced(
@@ -46,12 +46,12 @@ watchDebounced(
   (value: string) => {
     if (instance) {
       instance.setProps({
-        trigger: value
-      })
+        trigger: value,
+      });
     }
   },
   watchOptions
-)
+);
 
 // trigger
 watchDebounced(
@@ -59,35 +59,35 @@ watchDebounced(
   (value: Element | string) => {
     if (instance) {
       instance.setProps({
-        triggerTarget: value
-      })
+        triggerTarget: value,
+      });
     }
   },
   watchOptions
-)
+);
 // offset
 watchDebounced(
   () => props.offset,
   (value: number[]) => {
     if (instance) {
       instance.setProps({
-        offset: value
-      })
+        offset: value,
+      });
     }
   },
   watchOptions
-)
+);
 const initTippy = () => {
   if (instance) {
-    return
+    return;
   }
 
-  let { placement, triggerTarget, offset, trigger, disabled }: any = props
+  let { placement, triggerTarget, offset, trigger, disabled }: any = props;
   if (trigger === 'hover') {
-    trigger = 'mouseenter'
+    trigger = 'mouseenter';
   }
   if (!trigger) {
-    trigger = 'mouseenter'
+    trigger = 'mouseenter';
   }
   instance = tippy(triggerRef.value, {
     theme: 'light',
@@ -106,54 +106,54 @@ const initTippy = () => {
     allowHTML: true,
     maxWidth: 'none',
     onShow() {
-      emit('show')
+      emit('show');
     },
     onHide() {
-      emit('hide')
-    }
-  })
-  instance.popper.children[0].setAttribute('data-lew', 'popover')
+      emit('hide');
+    },
+  });
+  instance.popper.children[0].setAttribute('data-lew', 'popover');
 
   // 判断入参
   if (disabled && instance) {
-    instance.disable()
+    instance.disable();
   }
-}
+};
 
 onActivated(() => {
-  initTippy()
-})
+  initTippy();
+});
 
 onMounted(() => {
-  initTippy()
-})
+  initTippy();
+});
 
 onDeactivated(() => {
-  instance.hide()
-  instance.destroy()
-  instance = null
-})
+  instance.hide();
+  instance.destroy();
+  instance = null;
+});
 
-const emit = defineEmits(['show', 'hide'])
+const emit = defineEmits(['show', 'hide']);
 
 const show = () => {
-  instance.show()
-}
+  instance.show();
+};
 
 const hide = () => {
-  instance.hide()
-}
+  instance.hide();
+};
 
 const refresh = () => {
-  instance.setProps({})
-}
+  instance.setProps({});
+};
 
 onUnmounted(() => {
-  instance.hide()
-  instance.destroy()
-})
+  instance.hide();
+  instance.destroy();
+});
 
-defineExpose({ show, hide, refresh })
+defineExpose({ show, hide, refresh });
 </script>
 
 <template>
@@ -166,12 +166,12 @@ defineExpose({ show, hide, refresh })
       class="lew-popover-body"
       v-loading="{
         visible: loading,
-        iconSize: 16
+        iconSize: 16,
       }"
       :class="popoverBodyClassName"
       :style="{
         borderRadius: 'var(--lew-border-radius-small)',
-        overflow: loading ? 'hidden' : ''
+        overflow: loading ? 'hidden' : '',
       }"
     >
       <slot name="popover-body" :show="show" :hide="hide"></slot>

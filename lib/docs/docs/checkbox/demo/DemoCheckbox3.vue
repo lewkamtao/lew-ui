@@ -4,14 +4,14 @@ const socialMediaFeatures = ref([
   { label: 'Live', value: 'live' },
   { label: 'Short Video', value: 'shortVideo', disabled: true },
   { label: 'Group Chat', value: 'groupChat' },
-  { label: 'Video Call', value: 'videoCall' }
-])
+  { label: 'Video Call', value: 'videoCall' },
+]);
 
-const selectedFeatures = ref(['moments', 'live'])
+const selectedFeatures = ref(['moments', 'live']);
 
 const handleFeatureChange = (selectedValues: string[]) => {
-  console.log('Selected social media features:', selectedValues)
-}
+  console.log('Selected social media features:', selectedValues);
+};
 </script>
 
 <template>

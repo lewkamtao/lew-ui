@@ -1,55 +1,60 @@
 <script setup lang="ts">
-import { uploadByCardProps, statusConfig } from './props'
-import type { UploadFileItem } from './props'
-import { LewFlex, LewImage, LewTooltip, LewColor } from 'lew-ui'
-import { any2px, getUniqueId, getFileIcon, checkUrlIsImage } from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+import { uploadByCardProps, statusConfig } from './props';
+import type { UploadFileItem } from './props';
+import { LewFlex, LewImage, LewTooltip, LewColor } from 'lew-ui';
+import {
+  any2px,
+  getUniqueId,
+  getFileIcon,
+  checkUrlIsImage,
+} from 'lew-ui/utils';
+import Icon from 'lew-ui/utils/Icon.vue';
 
 // 获取app
-const app = getCurrentInstance()?.appContext.app
+const app = getCurrentInstance()?.appContext.app;
 if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
+  app.use(LewTooltip);
 }
 
-const previewGroupKey = getUniqueId()
+const previewGroupKey = getUniqueId();
 
 const fileIconSizeMap: Record<string, number> = {
   small: 30,
   medium: 36,
-  large: 44
-}
+  large: 44,
+};
 
 const rightTopBtnSizeMap: Record<string, number> = {
   small: 16,
   medium: 18,
-  large: 20
-}
+  large: 20,
+};
 
 const rightTopBtnIconSizeMap: Record<string, number> = {
   small: 10,
   medium: 12,
-  large: 14
-}
+  large: 14,
+};
 
 const rightTopBorderRadiusMap: Record<string, number> = {
   small: 7,
   medium: 7.8,
-  large: 8.5
-}
+  large: 8.5,
+};
 const getCardSize: Record<string, number> = {
   small: 72,
   medium: 80,
-  large: 88
-}
+  large: 88,
+};
 
 const getStatus = computed(() => (item: UploadFileItem) => {
-  return statusConfig[item.status || 'complete']
-})
+  return statusConfig[item.status || 'complete'];
+});
 
-defineProps(uploadByCardProps)
+defineProps(uploadByCardProps);
 
-const emit = defineEmits(['reUpload', 'deleteFile'])
-const modelValue = defineModel<UploadFileItem[]>()
+const emit = defineEmits(['reUpload', 'deleteFile']);
+const modelValue = defineModel<UploadFileItem[]>();
 </script>
 
 <template>
@@ -68,7 +73,7 @@ const modelValue = defineModel<UploadFileItem[]>()
         gap="8"
         :style="{
           width: `${any2px(getCardSize[size])}`,
-          height: `${any2px(getCardSize[size])}`
+          height: `${any2px(getCardSize[size])}`,
         }"
       >
         <lew-flex
@@ -79,7 +84,7 @@ const modelValue = defineModel<UploadFileItem[]>()
           :style="{
             width: rightTopBtnSizeMap[size] + 'px',
             height: rightTopBtnSizeMap[size] + 'px',
-            borderRadius: rightTopBorderRadiusMap[size] + 'px'
+            borderRadius: rightTopBorderRadiusMap[size] + 'px',
           }"
           class="lew-upload-reupload-btn"
         >
@@ -95,14 +100,14 @@ const modelValue = defineModel<UploadFileItem[]>()
           "
           v-tooltip="{
             content: getStatus(item).text,
-            trigger: 'mouseenter'
+            trigger: 'mouseenter',
           }"
           x="center"
           y="center"
           :style="{
             width: rightTopBtnSizeMap[size] + 'px',
             height: rightTopBtnSizeMap[size] + 'px',
-            borderRadius: rightTopBorderRadiusMap[size] + 'px'
+            borderRadius: rightTopBorderRadiusMap[size] + 'px',
           }"
           class="lew-upload-tips-tag"
         >
@@ -120,7 +125,7 @@ const modelValue = defineModel<UploadFileItem[]>()
           :style="{
             width: rightTopBtnSizeMap[size] + 'px',
             height: rightTopBtnSizeMap[size] + 'px',
-            borderRadius: rightTopBorderRadiusMap[size] + 'px'
+            borderRadius: rightTopBorderRadiusMap[size] + 'px',
           }"
           class="lew-upload-delete-btn"
         >
@@ -132,7 +137,7 @@ const modelValue = defineModel<UploadFileItem[]>()
             x="center"
             y="center"
             :style="{
-              transform: item.status === 'uploading' ? 'translateY(-7px)' : ''
+              transform: item.status === 'uploading' ? 'translateY(-7px)' : '',
             }"
           >
             <lew-image
@@ -147,7 +152,7 @@ const modelValue = defineModel<UploadFileItem[]>()
             <img
               :style="{
                 width: `${fileIconSizeMap[size]}px`,
-                height: `${fileIconSizeMap[size]}px`
+                height: `${fileIconSizeMap[size]}px`,
               }"
               v-else
               class="lew-upload-file-icon"
@@ -165,7 +170,7 @@ const modelValue = defineModel<UploadFileItem[]>()
               class="lew-upload-progress-line"
               :style="{
                 width: `${(item.percent || 0) > 100 ? 100 : item.percent}%`,
-                background: 'var(--lew-color-blue)'
+                background: 'var(--lew-color-blue)',
               }"
             >
             </lew-flex>

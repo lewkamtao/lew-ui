@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const data = ref<any>({})
+const data = ref<any>({});
 
-const loading = ref(false)
+const loading = ref(false);
 
 const show = () => {
-  loading.value = true
+  loading.value = true;
   setTimeout(() => {
-    loading.value = false
+    loading.value = false;
     data.value = {
       name: 'Steve Jobs',
       title: 'Co-founder of Apple Inc.',
@@ -17,12 +17,12 @@ const show = () => {
         'Launched Macintosh computer',
         'Founded NeXT',
         'Acquired Pixar',
-        'Returned to Apple and launched iPod, iPhone, iPad'
+        'Returned to Apple and launched iPod, iPhone, iPad',
       ],
-      quote: 'Stay hungry, stay foolish.'
-    }
-  }, 1000)
-}
+      quote: 'Stay hungry, stay foolish.',
+    };
+  }, 1000);
+};
 </script>
 
 <template>

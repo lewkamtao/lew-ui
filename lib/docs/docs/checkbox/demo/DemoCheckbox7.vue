@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const hasReadPrivacyPolicy = ref(false)
+const hasReadPrivacyPolicy = ref(false);
 </script>
 
 <template>

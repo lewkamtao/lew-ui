@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const v = ref('')
+const v = ref('');
 const ok = (v: string) => {
-  LewMessage.success(`输入的内容为：${v}`)
-}
+  LewMessage.success(`输入的内容为：${v}`);
+};
 </script>
 
 <template>

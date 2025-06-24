@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import docsLocale from '@/locals'
-import { locale, LewTag, LewFlex } from 'lew-ui'
+import docsLocale from '@/locals';
+import { locale, LewTag, LewFlex } from 'lew-ui';
 
 const props = defineProps({
   options: {
     type: Object,
     default() {
-      return {}
-    }
-  }
-})
+      return {};
+    },
+  },
+});
 
 const getComponentName = () => {
-  const { path } = useRoute()
+  const { path } = useRoute();
   return path
     .replace('/', '')
     .replace(/-(\w)/g, (_, letter) => letter.toUpperCase())
-    .replace(/^[A-Z]/, (letter) => letter.toLowerCase())
-}
+    .replace(/^[A-Z]/, (letter) => letter.toLowerCase());
+};
 
 const getColumns = computed(
   () =>
@@ -27,16 +27,16 @@ const getColumns = computed(
         props: '参数名称',
         slots: '插槽名称',
         events: '事件名称',
-        methods: '方法名称'
-      }
+        methods: '方法名称',
+      };
       let columns: any = [
         {
           title: nameMap[columnsKey],
           width: 120,
           field: 'name',
-          type: 'text-trim'
-        }
-      ]
+          type: 'text-trim',
+        },
+      ];
 
       if (!['events', 'methods', 'slots'].includes(columnsKey)) {
         columns = [
@@ -46,7 +46,7 @@ const getColumns = computed(
             width: 120,
             field: 'type',
             customRender: ({ row }: any) => {
-              const { typeDesc, type } = row
+              const { typeDesc, type } = row;
               const tags = (typeDesc || type || '')
                 .split('|')
                 .map((text: any) => {
@@ -56,39 +56,39 @@ const getColumns = computed(
                     {
                       type: 'light',
                       color: 'pink',
-                      size: 'small'
+                      size: 'small',
                     },
                     {
-                      default: () => text.trim()
+                      default: () => text.trim(),
                     }
-                  )
-                })
+                  );
+                });
               return h(
                 LewFlex,
                 {
                   x: 'start',
                   y: 'center',
                   gap: 5,
-                  wrap: true
+                  wrap: true,
                 },
                 {
-                  default: () => tags
+                  default: () => tags,
                 }
-              )
-            }
+              );
+            },
           },
           {
             title: '默认值',
             width: 120,
             field: 'default',
             customRender: ({ text, row }: any) => {
-              const { name, defaultLocale } = row
+              const { name, defaultLocale } = row;
               return defaultLocale
                 ? locale.t(`${getComponentName()}.${name}`)
-                : text || '-'
-            }
-          }
-        ]
+                : text || '-';
+            },
+          },
+        ];
       }
       columns = [
         ...columns,
@@ -97,40 +97,40 @@ const getColumns = computed(
           width: ['events', 'methods'].includes(columnsKey) ? 400 : 200,
           field: 'description',
           customRender: ({ row }: any) => {
-            const { name } = row
+            const { name } = row;
             return docsLocale.t(
               `components.${getComponentName()}.${title.replace(
                 /^[A-Z]/,
                 (match) => match.toLowerCase()
               )}.${name}`
-            )
-          }
-        }
-      ]
-      return columns
+            );
+          },
+        },
+      ];
+      return columns;
     }
-)
+);
 const sortValue = computed(() => {
   return props.options
     .map((e: any) => {
       return {
         orderNum: e.orderNum || 99999,
-        ...e
-      }
+        ...e,
+      };
     })
-    .sort((a: any, b: any) => a.orderNum - b.orderNum)
-})
+    .sort((a: any, b: any) => a.orderNum - b.orderNum);
+});
 
 const getTag = (title: string) => {
   // 获取用括号包裹的内容
-  const match = title.match(/\((.*?)\)/)
-  return match ? match[1] : ''
-}
+  const match = title.match(/\((.*?)\)/);
+  return match ? match[1] : '';
+};
 
 const getTitle = (title: string) => {
   // 过滤掉括号
-  return title.replace(/\((.*?)\)/, '')
-}
+  return title.replace(/\((.*?)\)/, '');
+};
 </script>
 
 <template>

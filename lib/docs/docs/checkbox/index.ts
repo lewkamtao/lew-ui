@@ -1,3 +1,3 @@
-import DemoCheckbox from './DemoCheckbox.vue'
+import DemoCheckbox from './DemoCheckbox.vue';
 
-export default DemoCheckbox
+export default DemoCheckbox;

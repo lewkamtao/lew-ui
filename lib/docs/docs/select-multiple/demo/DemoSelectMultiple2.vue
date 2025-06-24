@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { schools } from '@/lib/data'
+import { schools } from '@/lib/data';
 
 const schoolsOptions = schools.map((e) => {
-  return { label: e, value: e }
-})
+  return { label: e, value: e };
+});
 
-const value = ref(['浙江大学', '中山大学'])
+const value = ref(['浙江大学', '中山大学']);
 </script>
 <template>
   <lew-select-multiple

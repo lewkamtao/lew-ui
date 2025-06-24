@@ -5,37 +5,37 @@ export default {
     {
       name: 'label',
       type: 'string | Function',
-      default: "''"
+      default: "''",
     },
     {
       name: 'value',
       type: 'string | number',
-      required: true
+      required: true,
     },
     {
       name: 'disabled',
       type: 'boolean',
-      default: 'false'
+      default: 'false',
     },
     {
       name: 'isLeaf',
       type: 'boolean',
-      default: 'false'
+      default: 'false',
     },
     {
       name: 'icon',
       type: 'Function',
-      default: '() => {}'
+      default: '() => {}',
     },
     {
       name: 'level',
       type: 'number',
-      default: '1'
+      default: '1',
     },
     {
       name: 'tagProps',
       type: 'TagProps',
-      default: '() => ({})'
-    }
-  ]
-}
+      default: '() => ({})',
+    },
+  ],
+};

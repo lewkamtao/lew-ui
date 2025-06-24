@@ -9,10 +9,10 @@ const data = ref({
     'Launched Macintosh computer',
     'Founded NeXT',
     'Acquired Pixar',
-    'Returned to Apple and launched iPod, iPhone, iPad'
+    'Returned to Apple and launched iPod, iPhone, iPad',
   ],
-  quote: 'Stay hungry, stay foolish.'
-})
+  quote: 'Stay hungry, stay foolish.',
+});
 </script>
 
 <template>

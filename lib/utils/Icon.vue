@@ -35,44 +35,44 @@ import {
   EyeOff,
   Star,
   SquareMousePointer,
-  GripVertical
-} from 'lucide-vue-next'
-import { getColorType, iconColorType } from './index'
+  GripVertical,
+} from 'lucide-vue-next';
+import { getColorType, iconColorType } from './index';
 
 const props = defineProps({
   type: {
     type: String,
-    default: 'info'
+    default: 'info',
   },
   dark: {
     type: Boolean,
-    default: false
+    default: false,
   },
   color: {
     type: String,
-    default: ''
+    default: '',
   },
   strokeWidth: {
     type: Number,
-    default: 2
+    default: 2,
   },
   size: {
     type: Number,
-    default: 16
+    default: 16,
   },
   loading: {
     type: Boolean,
-    default: false
+    default: false,
   },
   speed: {
     type: Number,
-    default: 1
+    default: 1,
   },
   fill: {
     type: String,
-    default: 'transparent'
-  }
-})
+    default: 'transparent',
+  },
+});
 
 const iconMap: any = {
   'arrow-down': ArrowDown,
@@ -115,21 +115,21 @@ const iconMap: any = {
   eye_off: EyeOff,
   star: Star,
   'square-mouse-pointer': SquareMousePointer,
-  'grip-vertical': GripVertical
-}
+  'grip-vertical': GripVertical,
+};
 </script>
 
 <template>
   <component
     class="lew-icon"
     :class="{
-      'lew-icon-loading': loading
+      'lew-icon-loading': loading,
     }"
     :style="{
       'animation-duration': speed + 's',
       color: iconColorType[type]
         ? `var(--lew-color-${color ? color : getColorType(type)}${dark ? '-dark' : ''})`
-        : ''
+        : '',
     }"
     :strokeWidth
     :size

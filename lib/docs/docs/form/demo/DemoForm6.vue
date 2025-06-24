@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import * as Yup from 'yup'
+import * as Yup from 'yup';
 
 const options = ref([
   {
@@ -9,8 +9,8 @@ const options = ref([
     rule: Yup.string().required('Please select a category'),
     props: {
       clearable: true,
-      initOptionsMethodId: 'categoryMethod'
-    }
+      initOptionsMethodId: 'categoryMethod',
+    },
   },
   {
     field: 'tags',
@@ -21,8 +21,8 @@ const options = ref([
       .required('Please select tags'),
     props: {
       clearable: true,
-      initOptionsMethodId: 'tagsMethod'
-    }
+      initOptionsMethodId: 'tagsMethod',
+    },
   },
   {
     field: 'department',
@@ -31,8 +31,8 @@ const options = ref([
     rule: Yup.string().required('Please select a department'),
     props: {
       clearable: true,
-      initOptionsMethodId: 'departmentMethod'
-    }
+      initOptionsMethodId: 'departmentMethod',
+    },
   },
   {
     field: 'location',
@@ -42,10 +42,10 @@ const options = ref([
     props: {
       clearable: true,
       initOptionsMethodId: 'locationMethod',
-      free: true
-    }
-  }
-])
+      free: true,
+    },
+  },
+]);
 
 const formMethods = {
   categoryMethod: () =>
@@ -59,9 +59,9 @@ const formMethods = {
           { label: 'Books & Media', value: 'books' },
           { label: 'Automotive', value: 'automotive' },
           { label: 'Health & Beauty', value: 'health_beauty' },
-          { label: 'Toys & Games', value: 'toys_games' }
-        ])
-      }, 3000)
+          { label: 'Toys & Games', value: 'toys_games' },
+        ]);
+      }, 3000);
     }),
 
   tagsMethod: () =>
@@ -75,9 +75,9 @@ const formMethods = {
           { label: 'Free Shipping', value: 'free_shipping' },
           { label: 'Premium Quality', value: 'premium_quality' },
           { label: 'Eco Friendly', value: 'eco_friendly' },
-          { label: 'Customer Favorite', value: 'customer_favorite' }
-        ])
-      }, 3000)
+          { label: 'Customer Favorite', value: 'customer_favorite' },
+        ]);
+      }, 3000);
     }),
 
   departmentMethod: () =>
@@ -93,18 +93,18 @@ const formMethods = {
                 label: 'Online Sales',
                 children: [
                   { key: 'sales_online_retail', label: 'Retail Sales' },
-                  { key: 'sales_online_wholesale', label: 'Wholesale Sales' }
-                ]
+                  { key: 'sales_online_wholesale', label: 'Wholesale Sales' },
+                ],
               },
               {
                 key: 'sales_offline',
                 label: 'Offline Sales',
                 children: [
                   { key: 'sales_offline_store', label: 'Store Sales' },
-                  { key: 'sales_offline_partner', label: 'Partner Sales' }
-                ]
-              }
-            ]
+                  { key: 'sales_offline_partner', label: 'Partner Sales' },
+                ],
+              },
+            ],
           },
           {
             key: 'marketing',
@@ -115,18 +115,18 @@ const formMethods = {
                 label: 'Digital Marketing',
                 children: [
                   { key: 'marketing_digital_social', label: 'Social Media' },
-                  { key: 'marketing_digital_seo', label: 'SEO & SEM' }
-                ]
+                  { key: 'marketing_digital_seo', label: 'SEO & SEM' },
+                ],
               },
               {
                 key: 'marketing_traditional',
                 label: 'Traditional Marketing',
                 children: [
                   { key: 'marketing_traditional_print', label: 'Print Media' },
-                  { key: 'marketing_traditional_tv', label: 'TV & Radio' }
-                ]
-              }
-            ]
+                  { key: 'marketing_traditional_tv', label: 'TV & Radio' },
+                ],
+              },
+            ],
           },
           {
             key: 'operations',
@@ -138,13 +138,13 @@ const formMethods = {
                 children: [
                   {
                     key: 'operations_logistics_warehouse',
-                    label: 'Warehouse Management'
+                    label: 'Warehouse Management',
                   },
                   {
                     key: 'operations_logistics_shipping',
-                    label: 'Shipping & Delivery'
-                  }
-                ]
+                    label: 'Shipping & Delivery',
+                  },
+                ],
               },
               {
                 key: 'operations_customer',
@@ -153,14 +153,14 @@ const formMethods = {
                   { key: 'operations_customer_support', label: 'Support Team' },
                   {
                     key: 'operations_customer_returns',
-                    label: 'Returns & Refunds'
-                  }
-                ]
-              }
-            ]
-          }
-        ])
-      }, 3000)
+                    label: 'Returns & Refunds',
+                  },
+                ],
+              },
+            ],
+          },
+        ]);
+      }, 3000);
     }),
 
   locationMethod: () =>
@@ -178,8 +178,8 @@ const formMethods = {
                   { label: 'New York', value: 'ny' },
                   { label: 'Los Angeles', value: 'la' },
                   { label: 'Chicago', value: 'chicago' },
-                  { label: 'Houston', value: 'houston' }
-                ]
+                  { label: 'Houston', value: 'houston' },
+                ],
               },
               {
                 label: 'Canada',
@@ -187,10 +187,10 @@ const formMethods = {
                 children: [
                   { label: 'Toronto', value: 'toronto' },
                   { label: 'Vancouver', value: 'vancouver' },
-                  { label: 'Montreal', value: 'montreal' }
-                ]
-              }
-            ]
+                  { label: 'Montreal', value: 'montreal' },
+                ],
+              },
+            ],
           },
           {
             label: 'Europe',
@@ -202,8 +202,8 @@ const formMethods = {
                 children: [
                   { label: 'London', value: 'london' },
                   { label: 'Manchester', value: 'manchester' },
-                  { label: 'Birmingham', value: 'birmingham' }
-                ]
+                  { label: 'Birmingham', value: 'birmingham' },
+                ],
               },
               {
                 label: 'Germany',
@@ -211,10 +211,10 @@ const formMethods = {
                 children: [
                   { label: 'Berlin', value: 'berlin' },
                   { label: 'Munich', value: 'munich' },
-                  { label: 'Hamburg', value: 'hamburg' }
-                ]
-              }
-            ]
+                  { label: 'Hamburg', value: 'hamburg' },
+                ],
+              },
+            ],
           },
           {
             label: 'Asia Pacific',
@@ -226,8 +226,8 @@ const formMethods = {
                 children: [
                   { label: 'Shanghai', value: 'shanghai' },
                   { label: 'Beijing', value: 'beijing' },
-                  { label: 'Shenzhen', value: 'shenzhen' }
-                ]
+                  { label: 'Shenzhen', value: 'shenzhen' },
+                ],
               },
               {
                 label: 'Japan',
@@ -235,21 +235,21 @@ const formMethods = {
                 children: [
                   { label: 'Tokyo', value: 'tokyo' },
                   { label: 'Osaka', value: 'osaka' },
-                  { label: 'Yokohama', value: 'yokohama' }
-                ]
-              }
-            ]
-          }
-        ])
-      }, 3000)
-    })
-}
+                  { label: 'Yokohama', value: 'yokohama' },
+                ],
+              },
+            ],
+          },
+        ]);
+      }, 3000);
+    }),
+};
 
-const updateKey = ref(0)
+const updateKey = ref(0);
 
 const loadAgain = () => {
-  updateKey.value++
-}
+  updateKey.value++;
+};
 </script>
 
 <template>

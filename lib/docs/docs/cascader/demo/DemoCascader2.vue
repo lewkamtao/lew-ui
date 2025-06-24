@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { cityTree } from '@/lib/data'
+import { cityTree } from '@/lib/data';
 const change = (e: any) => {
-  console.log(e)
-}
-const v = ref()
+  console.log(e);
+};
+const v = ref();
 </script>
 
 <template>

@@ -1,48 +1,48 @@
 export default {
   name: 'en',
   image: {
-    fail: 'Unable to load image, please try again later'
+    fail: 'Unable to load image, please try again later',
   },
   input: {
     placeholder: 'Please input',
     copy: 'Copy',
     copySuccess: 'Copied to clipboard',
-    copyFailed: 'Copy failed, please try again'
+    copyFailed: 'Copy failed, please try again',
   },
   inputTag: {
     placeholder: 'Press Enter after input to add tag',
     maxLength:
       'Reached the limit of {maxLength} tags, delete some tags to continue adding',
-    duplicate: 'Tag already exists, please input a new tag'
+    duplicate: 'Tag already exists, please input a new tag',
   },
   select: {
     placeholder: 'Please select',
     resultCount: '{num} results',
     noResult: 'No results',
-    searchPlaceholder: 'Enter search keywords'
+    searchPlaceholder: 'Enter search keywords',
   },
   selectMultiple: {
     placeholder: 'Please select',
     resultCount: '{num} results',
     noResult: 'No results',
-    searchPlaceholder: 'Enter search keywords'
+    searchPlaceholder: 'Enter search keywords',
   },
   cascader: {
     placeholder: 'Please select',
     closeText: 'Close',
     okText: 'OK',
-    noResult: 'No results'
+    noResult: 'No results',
   },
   tree: {
     resultCount: '{num} results',
     noResult: 'No results',
-    searchPlaceholder: 'Enter search keywords'
+    searchPlaceholder: 'Enter search keywords',
   },
   textarea: {
-    placeholder: 'Please input'
+    placeholder: 'Please input',
   },
   inputNumber: {
-    placeholder: 'Please input'
+    placeholder: 'Please input',
   },
   datePicker: {
     Mon: 'Mon',
@@ -52,11 +52,11 @@ export default {
     Fri: 'Fri',
     Sat: 'Sat',
     Sun: 'Sun',
-    placeholder: 'Select date'
+    placeholder: 'Select date',
   },
   dateRangePicker: {
     placeholderStart: 'Start date',
-    placeholderEnd: 'End date'
+    placeholderEnd: 'End date',
   },
   inputTable: {
     addText: 'Add',
@@ -71,15 +71,15 @@ export default {
       'This {label} already exists. Please enter a unique {label}.',
     save: 'Save',
     modelTitle: 'Add Data',
-    editTitle: 'Edit Data'
+    editTitle: 'Edit Data',
   },
   drawer: {
     closeText: 'Close',
-    okText: 'OK'
+    okText: 'OK',
   },
   modal: {
     closeText: 'Close',
-    okText: 'OK'
+    okText: 'OK',
   },
   upload: {
     dropActive: 'Release to start uploading',
@@ -88,18 +88,18 @@ export default {
     drag: 'or drag files here',
     accept: 'Support uploading {accept}',
     limit: 'Maximum {limit} files can be uploaded',
-    maxFileSize: 'Single file should not exceed {maxFileSize}'
+    maxFileSize: 'Single file should not exceed {maxFileSize}',
   },
   pagination: {
     pageSize: '{pageSize} items/page',
-    jumpTo: 'Jump to'
+    jumpTo: 'Jump to',
   },
   dialog: {
     cancelText: 'Cancel',
-    okText: 'OK'
+    okText: 'OK',
   },
   popok: {
     cancelText: 'Cancel',
-    okText: 'OK'
-  }
-}
+    okText: 'OK',
+  },
+};

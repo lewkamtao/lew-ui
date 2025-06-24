@@ -1,25 +1,25 @@
 <script setup lang="ts">
-import { actionBoxProps } from './props'
-import { computed } from 'vue'
-import { isVueComponent, formatComponent } from 'lew-ui/utils'
-import { LewDropdown, LewFlex } from 'lew-ui'
-const props = defineProps(actionBoxProps)
+import { actionBoxProps } from './props';
+import { computed } from 'vue';
+import { isVueComponent, formatComponent } from 'lew-ui/utils';
+import { LewDropdown, LewFlex } from 'lew-ui';
+const props = defineProps(actionBoxProps);
 
-const threshold = computed(() => Number(props.dropdownThreshold))
+const threshold = computed(() => Number(props.dropdownThreshold));
 
 const visibleOptions = computed(() => {
   if (threshold.value <= 0) {
-    return props.options
+    return props.options;
   }
-  return props.options.slice(0, threshold.value)
-})
+  return props.options.slice(0, threshold.value);
+});
 
 const dropdownOptions: any = computed(() => {
   if (threshold.value <= 0) {
-    return []
+    return [];
   }
-  return props.options.slice(threshold.value)
-})
+  return props.options.slice(threshold.value);
+});
 </script>
 
 <template>

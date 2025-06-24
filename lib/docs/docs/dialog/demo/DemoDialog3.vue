@@ -8,14 +8,14 @@ const open = () => {
     closeOnClickOverlay: true,
     ok: () => {
       LewMessage.success({
-        content: 'Profile updated successfully'
-      })
+        content: 'Profile updated successfully',
+      });
     },
     cancel: () => {
       // Cancel update
-    }
-  })
-}
+    },
+  });
+};
 </script>
 <template>
   <lew-button text="Update Profile" round type="light" @click="open()" />

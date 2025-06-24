@@ -1,3 +1,3 @@
-import DemoLoading from './DemoLoading.vue'
+import DemoLoading from './DemoLoading.vue';
 
-export default DemoLoading
+export default DemoLoading;

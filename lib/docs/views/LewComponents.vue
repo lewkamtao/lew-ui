@@ -1,39 +1,39 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
-import TheSiderbar from '../layout/TheSiderbar.vue'
-import LewRightNav from '../layout/LewRightNav.vue'
-import type { MenuOptions } from 'lew-ui'
-import { Menu } from 'lucide-vue-next'
+import { useRoute } from 'vue-router';
+import TheSiderbar from '../layout/TheSiderbar.vue';
+import LewRightNav from '../layout/LewRightNav.vue';
+import type { MenuOptions } from 'lew-ui';
+import { Menu } from 'lucide-vue-next';
 
-const isShowSider = ref(false)
-const route = useRoute()
+const isShowSider = ref(false);
+const route = useRoute();
 
 onMounted(() => {
-  const isComplete: string[] = []
+  const isComplete: string[] = [];
 
   setTimeout(() => {
-    const menuItems = document.getElementsByClassName('lew-menu-item')
+    const menuItems = document.getElementsByClassName('lew-menu-item');
     for (let i = 0; i < menuItems.length; i++) {
       // 寻找lew-text-trim-wrapper
-      const dom = menuItems[i].querySelector('.lew-text-trim-wrapper')
+      const dom = menuItems[i].querySelector('.lew-text-trim-wrapper');
       if (dom) {
         if (isComplete.includes(dom.textContent as string)) {
-          ;(dom as HTMLElement).style.opacity = '0.2'
+          (dom as HTMLElement).style.opacity = '0.2';
         }
       }
     }
-  }, 500)
-})
+  }, 500);
+});
 
 watch(route, () => {
   nextTick(() => {
-    const componentMain = document.getElementById('component-main')
+    const componentMain = document.getElementById('component-main');
     if (componentMain) {
-      componentMain.scrollTop = 0
+      componentMain.scrollTop = 0;
     }
-  })
-  isShowSider.value = false
-})
+  });
+  isShowSider.value = false;
+});
 
 const options: MenuOptions[] = [
   {
@@ -42,42 +42,42 @@ const options: MenuOptions[] = [
     children: [
       {
         label: 'Image',
-        value: '/Image'
+        value: '/Image',
       },
       {
         label: 'Avatar',
-        value: '/Avatar'
+        value: '/Avatar',
       },
       {
         label: 'Button',
-        value: '/Button'
+        value: '/Button',
       },
 
       {
         label: 'Tag',
-        value: '/Tag'
+        value: '/Tag',
       },
       {
         label: 'Badge',
-        value: '/Badge'
+        value: '/Badge',
       },
       {
         label: 'Title',
-        value: '/Title'
+        value: '/Title',
       },
       {
         label: 'TextTrim',
-        value: '/TextTrim'
+        value: '/TextTrim',
       },
       {
         label: 'Flex',
-        value: '/Flex'
+        value: '/Flex',
       },
       {
         label: 'Mark',
-        value: '/Mark'
-      }
-    ]
+        value: '/Mark',
+      },
+    ],
   },
 
   {
@@ -86,27 +86,27 @@ const options: MenuOptions[] = [
     children: [
       {
         label: 'BackTop',
-        value: '/BackTop'
+        value: '/BackTop',
       },
       {
         label: 'Steps',
-        value: '/Steps'
+        value: '/Steps',
       },
       {
         label: 'Menu',
-        value: '/Menu'
+        value: '/Menu',
       },
       {
         label: 'MenuTree',
-        value: '/MenuTree'
+        value: '/MenuTree',
       },
       {
         label: 'Dropdown',
-        value: '/Dropdown'
+        value: '/Dropdown',
       },
       {
         label: 'Breadcrumb',
-        value: '/Breadcrumb'
+        value: '/Breadcrumb',
       },
       {
         label: 'ContextMenu',
@@ -115,8 +115,8 @@ const options: MenuOptions[] = [
           text: 'Pro',
           color: 'red',
           type: 'ghost',
-          round: true
-        }
+          round: true,
+        },
       },
       {
         label: 'ActionBox',
@@ -125,10 +125,10 @@ const options: MenuOptions[] = [
           text: 'New',
           color: 'green',
           type: 'ghost',
-          round: true
-        }
-      }
-    ]
+          round: true,
+        },
+      },
+    ],
   },
   {
     label: '表单',
@@ -136,59 +136,59 @@ const options: MenuOptions[] = [
     children: [
       {
         label: 'Form',
-        value: '/Form'
+        value: '/Form',
       },
       {
         label: 'Input',
-        value: '/Input'
+        value: '/Input',
       },
       {
         label: 'InputNumber',
-        value: '/InputNumber'
+        value: '/InputNumber',
       },
       {
         label: 'Textarea',
-        value: '/Textarea'
+        value: '/Textarea',
       },
       {
         label: 'InputTag',
-        value: '/InputTag'
+        value: '/InputTag',
       },
       {
         label: 'Checkbox',
-        value: '/Checkbox'
+        value: '/Checkbox',
       },
       {
         label: 'Radio',
-        value: '/Radio'
+        value: '/Radio',
       },
       {
         label: 'Tabs',
-        value: '/Tabs'
+        value: '/Tabs',
       },
       {
         label: 'Select',
-        value: '/Select'
+        value: '/Select',
       },
       {
         label: 'SelectMultiple',
-        value: '/SelectMultiple'
+        value: '/SelectMultiple',
       },
       {
         label: 'DatePicker',
-        value: '/DatePicker'
+        value: '/DatePicker',
       },
       {
         label: 'DateRangePicker',
-        value: '/DateRangePicker'
+        value: '/DateRangePicker',
       },
       {
         label: 'Cascader',
-        value: '/Cascader'
+        value: '/Cascader',
       },
       {
         label: 'TreeSelect',
-        value: '/TreeSelect'
+        value: '/TreeSelect',
       },
       {
         label: 'InputTable',
@@ -197,21 +197,21 @@ const options: MenuOptions[] = [
           text: 'Dev',
           type: 'ghost',
           round: true,
-          color: 'blue'
-        }
+          color: 'blue',
+        },
       },
       {
         label: 'Switch',
-        value: '/Switch'
+        value: '/Switch',
       },
 
       {
         label: 'Slider',
-        value: '/Slider'
+        value: '/Slider',
       },
       {
         label: 'SliderRange',
-        value: '/SliderRange'
+        value: '/SliderRange',
       },
       {
         label: 'Rate',
@@ -220,18 +220,18 @@ const options: MenuOptions[] = [
           text: 'New',
           type: 'ghost',
           round: true,
-          color: 'green'
-        }
+          color: 'green',
+        },
       },
       {
         label: 'ColorPicker',
-        value: '/ColorPicker'
+        value: '/ColorPicker',
       },
       {
         label: 'Upload',
-        value: '/Upload'
-      }
-    ]
+        value: '/Upload',
+      },
+    ],
   },
   {
     label: '数据展示',
@@ -239,26 +239,26 @@ const options: MenuOptions[] = [
     children: [
       {
         label: 'Table',
-        value: '/Table'
+        value: '/Table',
       },
       {
         label: 'Pagination',
-        value: '/Pagination'
+        value: '/Pagination',
       },
       {
         label: 'Tree',
-        value: '/Tree'
+        value: '/Tree',
       },
 
       {
         label: 'Collapse',
-        value: '/Collapse'
+        value: '/Collapse',
       },
       {
         label: 'Desc',
-        value: '/Desc'
-      }
-    ]
+        value: '/Desc',
+      },
+    ],
   },
   {
     label: '反馈',
@@ -266,57 +266,57 @@ const options: MenuOptions[] = [
     children: [
       {
         label: 'Alert',
-        value: '/Alert'
+        value: '/Alert',
       },
       {
         label: 'Message',
-        value: '/Message'
+        value: '/Message',
       },
       {
         label: 'Notification',
-        value: '/Notification'
+        value: '/Notification',
       },
       {
         label: 'Drawer',
-        value: '/Drawer'
+        value: '/Drawer',
       },
       {
         label: 'Dialog',
-        value: '/Dialog'
+        value: '/Dialog',
       },
       {
         label: 'Modal',
-        value: '/Modal'
+        value: '/Modal',
       },
       {
         label: 'Popok',
-        value: '/Popok'
+        value: '/Popok',
       },
       {
         label: 'Popover',
-        value: '/Popover'
+        value: '/Popover',
       },
 
       {
         label: 'Tooltip',
-        value: '/Tooltip'
+        value: '/Tooltip',
       },
       {
         label: 'Loading',
-        value: '/Loading'
+        value: '/Loading',
       },
       {
         label: 'Empty',
-        value: '/Empty'
-      }
-    ]
-  }
+        value: '/Empty',
+      },
+    ],
+  },
 ].map((item: any) => {
   return {
     ...item,
-    label: item.label + '（' + (item?.children || []).length + '）'
-  }
-})
+    label: item.label + '（' + (item?.children || []).length + '）',
+  };
+});
 </script>
 
 <template>

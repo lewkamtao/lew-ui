@@ -1,8 +1,8 @@
-import type { SelectOptions } from 'lew-ui'
-import type { LewSize } from 'lew-ui'
-import { validSizes } from 'lew-ui/constants'
+import type { SelectOptions } from 'lew-ui';
+import type { LewSize } from 'lew-ui';
+import { validSizes } from 'lew-ui/constants';
 
-export type PaginationOptions = SelectOptions
+export type PaginationOptions = SelectOptions;
 
 export const paginationModel = {
   total: {
@@ -11,11 +11,11 @@ export const paginationModel = {
     description: '数据总条数',
     validator: (value: number) => {
       if (value < 0) {
-        console.warn('[LewPagination] total 必须是非负数')
-        return false
+        console.warn('[LewPagination] total 必须是非负数');
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   currentPage: {
     type: Number,
@@ -23,11 +23,11 @@ export const paginationModel = {
     description: '当前页码',
     validator: (value: number) => {
       if (value < 1) {
-        console.warn('[LewPagination] currentPage 必须大于等于 1')
-        return false
+        console.warn('[LewPagination] currentPage 必须大于等于 1');
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   pageSize: {
     type: Number,
@@ -36,13 +36,13 @@ export const paginationModel = {
     description: '每页显示的条目数',
     validator: (value: number) => {
       if (value < 1) {
-        console.warn('[LewPagination] pageSize 必须大于等于 1')
-        return false
+        console.warn('[LewPagination] pageSize 必须大于等于 1');
+        return false;
       }
-      return true
-    }
-  }
-}
+      return true;
+    },
+  },
+};
 
 export const paginationProps = {
   size: {
@@ -53,11 +53,11 @@ export const paginationProps = {
       if (!validSizes.includes(value)) {
         console.warn(
           `[LewPagination] size 必须是 ${validSizes.join(', ')} 之一`
-        )
-        return false
+        );
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   pageSizeOptions: {
     type: Array as PropType<number[] | SelectOptions[]>,
@@ -65,11 +65,11 @@ export const paginationProps = {
     description: '每页显示条目数的选项列表',
     validator: (value: number[] | SelectOptions[]) => {
       if (!Array.isArray(value) || value.length === 0) {
-        console.warn('[LewPagination] pageSizeOptions 必须是非空数组')
-        return false
+        console.warn('[LewPagination] pageSizeOptions 必须是非空数组');
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
   visiblePagesCount: {
     type: Number,
@@ -77,10 +77,10 @@ export const paginationProps = {
     description: '可见页码按钮的数量',
     validator: (value: number) => {
       if (value < 1 || value > 21) {
-        console.warn('[LewPagination] visiblePagesCount 必须在 1 到 21 之间')
-        return false
+        console.warn('[LewPagination] visiblePagesCount 必须在 1 到 21 之间');
+        return false;
       }
-      return true
-    }
-  }
-}
+      return true;
+    },
+  },
+};

@@ -5,10 +5,10 @@ const productFeatures = ref([
   { label: 'Rabbit', value: 'rabbit' },
   { label: 'Bird', value: 'bird' },
   { label: 'Fish', value: 'fish' },
-  { label: 'Hamster', value: 'hamster' }
-])
+  { label: 'Hamster', value: 'hamster' },
+]);
 
-const selectedFeatures = ref([])
+const selectedFeatures = ref([]);
 </script>
 
 <template>

@@ -7,32 +7,32 @@ export default {
     {
       name: 'change',
       description: '值变化',
-      params: '() => void'
+      params: '() => void',
     },
     {
       name: 'blur',
       description: '失焦',
-      params: '() => void'
+      params: '() => void',
     },
     {
       name: 'focus',
       description: '聚焦',
-      params: '() => void'
+      params: '() => void',
     },
     {
       name: 'input',
       description: '输入内容',
-      params: '() => void'
+      params: '() => void',
     },
     {
       name: 'ok',
       description: '按下回车键触发事件',
-      params: '() => void'
+      params: '() => void',
     },
     {
       name: 'clear',
       description: '清空文本域',
-      params: '() => void'
-    }
-  ]
-}
+      params: '() => void',
+    },
+  ],
+};

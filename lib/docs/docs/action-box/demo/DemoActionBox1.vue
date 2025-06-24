@@ -3,28 +3,28 @@ const options = ref([
   {
     label: 'Edit',
     onClick: () => {
-      LewMessage.info('Edit')
-    }
+      LewMessage.info('Edit');
+    },
   },
   {
     label: 'Delete',
     onClick: () => {
-      LewMessage.info('Delete')
-    }
+      LewMessage.info('Delete');
+    },
   },
   {
     label: 'Copy',
     onClick: () => {
-      LewMessage.info('Copy')
-    }
+      LewMessage.info('Copy');
+    },
   },
   {
     label: 'Download',
     onClick: () => {
-      LewMessage.info('Download')
-    }
-  }
-])
+      LewMessage.info('Download');
+    },
+  },
+]);
 </script>
 <template>
   <lew-action-box :options="options" />

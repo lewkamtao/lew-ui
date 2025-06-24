@@ -1,28 +1,28 @@
 <script lang="ts" setup>
-import Icon from 'lew-ui/utils/Icon.vue'
+import Icon from 'lew-ui/utils/Icon.vue';
 
 const props = defineProps({
   sortValue: {
-    type: String
+    type: String,
   },
   size: {
     type: String,
-    default: 'medium'
-  }
-})
+    default: 'medium',
+  },
+});
 
 const getSize = computed(() => {
   switch (props.size) {
     case 'small':
-      return 12
+      return 12;
     case 'medium':
-      return 14
+      return 14;
     case 'large':
-      return 16
+      return 16;
     default:
-      return 14
+      return 14;
   }
-})
+});
 </script>
 
 <template>
@@ -32,7 +32,7 @@ const getSize = computed(() => {
       :style="{
         opacity: sortValue === 'asc' ? 1 : 0.2,
         transform: 'rotate(180deg) translateY(-2px)',
-        color: sortValue === 'asc' ? 'var(--lew-color-primary-dark)' : ''
+        color: sortValue === 'asc' ? 'var(--lew-color-primary-dark)' : '',
       }"
       :size="getSize"
       :stroke-width="2.5"
@@ -43,7 +43,7 @@ const getSize = computed(() => {
       :style="{
         opacity: sortValue === 'desc' ? 1 : 0.2,
         transform: 'translateY(-2px)',
-        color: sortValue === 'desc' ? 'var(--lew-color-primary-dark)' : ''
+        color: sortValue === 'desc' ? 'var(--lew-color-primary-dark)' : '',
       }"
       :size="getSize"
       :stroke-width="2.5"

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { SelectOptions } from 'lew-ui'
+import { SelectOptions } from 'lew-ui';
 const options = ref<SelectOptions[]>([
   { label: 'Facial Cleanser', value: 'cleanser' },
   { label: 'Moisturizer', value: 'moisturizer' },
   { label: 'Sunscreen', value: 'sunscreen' },
   { label: 'Face Mask', value: 'mask' },
   { label: 'Eye Cream', value: 'eyeCream' },
-  { label: 'Serum', value: 'serum' }
-])
-const value = ref('mask')
+  { label: 'Serum', value: 'serum' },
+]);
+const value = ref('mask');
 </script>
 
 <template>

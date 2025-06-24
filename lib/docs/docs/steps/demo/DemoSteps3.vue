@@ -2,20 +2,20 @@
 const options = [
   {
     title: 'Choose Product',
-    description: 'Please select the product you want to purchase'
+    description: 'Please select the product you want to purchase',
   },
   {
     title: 'Enter Shipping Info',
-    description: 'Please enter your shipping address and contact information'
+    description: 'Please enter your shipping address and contact information',
   },
   {
     title: 'Review Order',
-    description: 'Please confirm your order information'
-  }
-]
+    description: 'Please confirm your order information',
+  },
+];
 
-const status = ref('loading')
-const currentStep = ref(2)
+const status = ref('loading');
+const currentStep = ref(2);
 </script>
 
 <template>

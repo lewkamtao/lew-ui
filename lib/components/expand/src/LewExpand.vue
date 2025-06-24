@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { any2px } from 'lew-ui/utils'
-import { LewFlex } from 'lew-ui'
-import { expandProps } from './props'
-import Icon from 'lew-ui/utils/Icon.vue'
+import { any2px } from 'lew-ui/utils';
+import { LewFlex } from 'lew-ui';
+import { expandProps } from './props';
+import Icon from 'lew-ui/utils/Icon.vue';
 
-const props = defineProps(expandProps)
+const props = defineProps(expandProps);
 
 // 收起高度
-const expandRef = ref()
-let collapseHeight = ref(props.collapseHeight)
-let collapse = ref(false)
-let expandHeight = ref(0)
+const expandRef = ref();
+let collapseHeight = ref(props.collapseHeight);
+let collapse = ref(false);
+let expandHeight = ref(0);
 
 onMounted(() => {
   if (expandRef.value) {
-    expandHeight.value = expandRef.value.offsetHeight - 40
-    collapse.value = true
+    expandHeight.value = expandRef.value.offsetHeight - 40;
+    collapse.value = true;
   }
-})
+});
 </script>
 
 <template>
@@ -26,7 +26,7 @@ onMounted(() => {
     class="lew-expand-wrapper"
     :style="{
       height: collapse ? any2px(collapseHeight) : any2px(expandHeight),
-      paddingBottom: collapse ? '0px' : '40px'
+      paddingBottom: collapse ? '0px' : '40px',
     }"
   >
     <slot />

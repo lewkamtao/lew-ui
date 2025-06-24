@@ -1,60 +1,60 @@
 <script setup lang="ts">
-import { messages, Language } from '../../locals/index'
-import { en, zh, de, pt, fr, it, es, ko, ja } from '../../../locals/index'
-import { ref, computed } from 'vue'
-import { useDark } from '@vueuse/core'
+import { messages, Language } from '../../locals/index';
+import { en, zh, de, pt, fr, it, es, ko, ja } from '../../../locals/index';
+import { ref, computed } from 'vue';
+import { useDark } from '@vueuse/core';
 useDark({
   selector: 'html',
   valueDark: 'lew-dark',
-  valueLight: 'lew-light'
-})
-const docs_langs = messages
-const component_langs = { en, zh, de, pt, fr, it, es, ko, ja }
+  valueLight: 'lew-light',
+});
+const docs_langs = messages;
+const component_langs = { en, zh, de, pt, fr, it, es, ko, ja };
 
 // 配置文件来源类型
-type ConfigSource = 'docs' | 'component'
+type ConfigSource = 'docs' | 'component';
 
 // 当前选择的配置文件来源
-const currentSource = ref<ConfigSource>('docs')
+const currentSource = ref<ConfigSource>('docs');
 
 // 根据当前来源获取语言配置
 const currentLangs = computed(() => {
-  return currentSource.value === 'docs' ? docs_langs : component_langs
-})
+  return currentSource.value === 'docs' ? docs_langs : component_langs;
+});
 
 // 以中文为基准语言
-const baseLanguage = 'zh'
-const baseMessages = computed(() => currentLangs.value[baseLanguage])
+const baseLanguage = 'zh';
+const baseMessages = computed(() => currentLangs.value[baseLanguage]);
 
 // 存储所有差异结果
-const diffResults = ref<Record<string, string[]>>({})
+const diffResults = ref<Record<string, string[]>>({});
 
 // 可选语言列表，按差异数量从多到少排序
 const languages = computed(() => {
   const langs = Object.keys(currentLangs.value).filter(
     (lang) => lang !== baseLanguage
-  ) as Language[]
+  ) as Language[];
 
   // 按差异数量从多到少排序
   return langs.sort((a, b) => {
-    const countA = diffResults.value[a]?.length || 0
-    const countB = diffResults.value[b]?.length || 0
-    return countB - countA
-  })
-})
+    const countA = diffResults.value[a]?.length || 0;
+    const countB = diffResults.value[b]?.length || 0;
+    return countB - countA;
+  });
+});
 
 // 递归比较对象差异，检查键是否存在，并标记多余的键
 function compareObjects(base: any, target: any, path = ''): string[] {
-  const differences: string[] = []
+  const differences: string[] = [];
 
   // 检查基准对象中的所有键
   for (const key in base) {
-    const currentPath = path ? `${path}.${key}` : key
+    const currentPath = path ? `${path}.${key}` : key;
 
     // 目标对象中不存在该键
     if (!(key in target)) {
-      differences.push(`缺失: ${currentPath}`)
-      continue
+      differences.push(`缺失: ${currentPath}`);
+      continue;
     }
 
     // 如果是对象，递归比较
@@ -64,70 +64,70 @@ function compareObjects(base: any, target: any, path = ''): string[] {
       typeof target[key] === 'object' &&
       target[key] !== null
     ) {
-      differences.push(...compareObjects(base[key], target[key], currentPath))
+      differences.push(...compareObjects(base[key], target[key], currentPath));
     }
   }
 
   // 检查目标对象中多余的键
   for (const key in target) {
-    const currentPath = path ? `${path}.${key}` : key
+    const currentPath = path ? `${path}.${key}` : key;
 
     // 基准对象中不存在该键
     if (!(key in base)) {
-      differences.push(`多余: ${currentPath}`)
+      differences.push(`多余: ${currentPath}`);
     }
   }
 
-  return differences
+  return differences;
 }
 
 // 执行比较并生成结果
 function generateDiff() {
-  diffResults.value = {}
+  diffResults.value = {};
 
   Object.keys(currentLangs.value)
     .filter((lang) => lang !== baseLanguage)
     .forEach((lang) => {
-      const targetMessages = currentLangs.value[lang as Language]
-      const differences = compareObjects(baseMessages.value, targetMessages)
-      diffResults.value[lang as Language] = differences
-    })
+      const targetMessages = currentLangs.value[lang as Language];
+      const differences = compareObjects(baseMessages.value, targetMessages);
+      diffResults.value[lang as Language] = differences;
+    });
 }
 
 // 切换配置文件来源
 function changeSource(source: ConfigSource) {
-  currentSource.value = source
-  generateDiff()
+  currentSource.value = source;
+  generateDiff();
   // 重置当前选择的语言为第一个语言
   if (languages.value.length > 0) {
-    currentLang.value = languages.value[0]
+    currentLang.value = languages.value[0];
   }
 }
 
 // 初始化时生成差异
-generateDiff()
+generateDiff();
 
 // 当前选择的语言，初始化为第一个语言
-const currentLang = ref<Language>(languages.value[0] || 'en')
+const currentLang = ref<Language>(languages.value[0] || 'en');
 
 // 切换语言
 function changeLang(lang: Language) {
-  currentLang.value = lang
+  currentLang.value = lang;
 }
 
 // 获取当前语言的差异数量
 const currentDiffCount = computed(() => {
-  return diffResults.value[currentLang.value]?.length || 0
-})
+  return diffResults.value[currentLang.value]?.length || 0;
+});
 
 // 获取差异类型的样式
 function getDiffItemClass(diff: string): string {
   if (diff.startsWith('缺失:')) {
-    return 'missing'
+    return 'missing';
   } else if (diff.startsWith('多余:')) {
-    return 'extra'
+    return 'extra';
   }
-  return ''
+  return '';
 }
 </script>
 
@@ -172,7 +172,7 @@ function getDiffItemClass(diff: string): string {
             <span
               :class="[
                 'badge',
-                { 'badge-success': !diffResults[lang]?.length }
+                { 'badge-success': !diffResults[lang]?.length },
               ]"
               v-if="diffResults[lang]?.length !== undefined"
             >

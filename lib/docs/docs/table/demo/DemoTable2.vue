@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep } from 'lodash-es';
 
 const dataSource: any = ref([
   {
@@ -16,7 +16,7 @@ const dataSource: any = ref([
     coreCount: 16384,
     boostClock: '2.52 GHz',
     tdp: 450,
-    manufacturingProcess: '4nm'
+    manufacturingProcess: '4nm',
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ const dataSource: any = ref([
       'Ray Tracing',
       '4K Gaming',
       'PCIe 4.0',
-      'DisplayPort 2.1'
+      'DisplayPort 2.1',
     ],
     releaseDate: '2022-12-13',
     powerConsumption: '355W',
@@ -38,7 +38,7 @@ const dataSource: any = ref([
     coreCount: 12288,
     boostClock: '2.5 GHz',
     tdp: 355,
-    manufacturingProcess: '5nm'
+    manufacturingProcess: '5nm',
   },
   {
     id: 3,
@@ -54,7 +54,7 @@ const dataSource: any = ref([
     coreCount: 9728,
     boostClock: '2.51 GHz',
     tdp: 320,
-    manufacturingProcess: '4nm'
+    manufacturingProcess: '4nm',
   },
   {
     id: 4,
@@ -68,7 +68,7 @@ const dataSource: any = ref([
       'Ray Tracing',
       '4K Gaming',
       'PCIe 4.0',
-      'DisplayPort 2.1'
+      'DisplayPort 2.1',
     ],
     releaseDate: '2022-12-13',
     powerConsumption: '315W',
@@ -76,7 +76,7 @@ const dataSource: any = ref([
     coreCount: 10752,
     boostClock: '2.4 GHz',
     tdp: 315,
-    manufacturingProcess: '5nm'
+    manufacturingProcess: '5nm',
   },
   {
     id: 5,
@@ -92,7 +92,7 @@ const dataSource: any = ref([
     coreCount: 7680,
     boostClock: '2.61 GHz',
     tdp: 285,
-    manufacturingProcess: '4nm'
+    manufacturingProcess: '4nm',
   },
   {
     id: 6,
@@ -108,7 +108,7 @@ const dataSource: any = ref([
     coreCount: 5888,
     boostClock: '2.48 GHz',
     tdp: 200,
-    manufacturingProcess: '4nm'
+    manufacturingProcess: '4nm',
   },
   {
     id: 7,
@@ -122,7 +122,7 @@ const dataSource: any = ref([
       'Ray Tracing',
       '1440p Gaming',
       'PCIe 4.0',
-      'DisplayPort 2.1'
+      'DisplayPort 2.1',
     ],
     releaseDate: '2023-09-06',
     powerConsumption: '263W',
@@ -130,7 +130,7 @@ const dataSource: any = ref([
     coreCount: 3840,
     boostClock: '2.43 GHz',
     tdp: 263,
-    manufacturingProcess: '5nm'
+    manufacturingProcess: '5nm',
   },
   {
     id: 8,
@@ -144,7 +144,7 @@ const dataSource: any = ref([
       'Ray Tracing',
       '1440p Gaming',
       'PCIe 4.0',
-      'DisplayPort 2.1'
+      'DisplayPort 2.1',
     ],
     releaseDate: '2023-09-06',
     powerConsumption: '245W',
@@ -152,7 +152,7 @@ const dataSource: any = ref([
     coreCount: 3456,
     boostClock: '2.54 GHz',
     tdp: 245,
-    manufacturingProcess: '5nm'
+    manufacturingProcess: '5nm',
   },
   {
     id: 9,
@@ -168,7 +168,7 @@ const dataSource: any = ref([
     coreCount: 4352,
     boostClock: '2.54 GHz',
     tdp: 160,
-    manufacturingProcess: '4nm'
+    manufacturingProcess: '4nm',
   },
   {
     id: 10,
@@ -184,9 +184,9 @@ const dataSource: any = ref([
     coreCount: 3072,
     boostClock: '2.46 GHz',
     tdp: 115,
-    manufacturingProcess: '4nm'
-  }
-])
+    manufacturingProcess: '4nm',
+  },
+]);
 
 const columns = [
   {
@@ -194,123 +194,123 @@ const columns = [
     width: 80,
     field: 'id',
     x: 'center',
-    fixed: 'left'
+    fixed: 'left',
   },
   {
     title: 'Brand',
     width: 80,
     field: 'brand',
     x: 'start',
-    fixed: 'left'
+    fixed: 'left',
   },
   {
     title: 'Model',
     width: 180,
     field: 'name',
-    x: 'start'
+    x: 'start',
   },
   {
     title: 'Memory',
     width: 140,
     field: 'memory',
-    x: 'start'
+    x: 'start',
   },
   {
     title: 'Performance',
     width: 120,
     field: 'performance',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Features',
     width: 420,
     field: 'features',
-    x: 'start'
+    x: 'start',
   },
   {
     title: 'Release Date',
     width: 140,
     field: 'releaseDate',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Power',
     width: 100,
     field: 'powerConsumption',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Architecture',
     width: 140,
     field: 'architecture',
-    x: 'start'
+    x: 'start',
   },
   {
     title: 'Core Count',
     width: 120,
     field: 'coreCount',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Boost Clock',
     width: 120,
     field: 'boostClock',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'TDP',
     width: 100,
     field: 'tdp',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Process',
     width: 100,
     field: 'manufacturingProcess',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Price',
     width: 120,
     fixed: 'right',
     field: 'price',
-    x: 'center'
-  }
-]
+    x: 'center',
+  },
+];
 
 const formatPerformance = (performance: number) => {
   switch (true) {
     case performance >= 9:
-      return 'Top-tier'
+      return 'Top-tier';
     case performance >= 7:
-      return 'High-end'
+      return 'High-end';
     case performance >= 5:
-      return 'Mid-range'
+      return 'Mid-range';
     default:
-      return 'Entry-level'
+      return 'Entry-level';
   }
-}
+};
 
 const getSortTooltipComponent = (row: any) => {
-  return h('div', {}, `${row.brand} ${row.name} ${row.memory}`)
-}
+  return h('div', {}, `${row.brand} ${row.name} ${row.memory}`);
+};
 
-const loading = ref(false)
+const loading = ref(false);
 
 const update = () => {
-  loading.value = true
+  loading.value = true;
   setTimeout(() => {
     dataSource.value = cloneDeep(
       [...dataSource.value]
         .map((item, index) => ({
           ...item,
-          id: index + 1
+          id: index + 1,
         }))
         .sort(() => Math.random() - 0.5)
-    )
-    loading.value = false
-  }, 1000)
-}
+    );
+    loading.value = false;
+  }, 1000);
+};
 </script>
 
 <template>

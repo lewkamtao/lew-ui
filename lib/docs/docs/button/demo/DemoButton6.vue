@@ -2,11 +2,11 @@
 const handleRequest = () => {
   return new Promise<void>((resolve) => {
     setTimeout(() => {
-      resolve()
-      LewMessage.success('Submit success')
-    }, 1000)
-  })
-}
+      resolve();
+      LewMessage.success('Submit success');
+    }, 1000);
+  });
+};
 </script>
 
 <template>

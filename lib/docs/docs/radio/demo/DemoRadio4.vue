@@ -4,10 +4,10 @@ const sportsOptions = ref([
   { label: 'Soccer', value: 'soccer' },
   { label: 'Tennis', value: 'tennis' },
   { label: 'Baseball', value: 'baseball' },
-  { label: 'Swimming', value: 'swimming' }
-])
+  { label: 'Swimming', value: 'swimming' },
+]);
 
-const selectedSport = ref('')
+const selectedSport = ref('');
 </script>
 
 <template>

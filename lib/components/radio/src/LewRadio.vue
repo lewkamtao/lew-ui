@@ -1,33 +1,33 @@
 <script lang="ts" setup>
-import { object2class } from 'lew-ui/utils'
-import { radioProps } from './props'
-import Icon from 'lew-ui/utils/Icon.vue'
+import { object2class } from 'lew-ui/utils';
+import { radioProps } from './props';
+import Icon from 'lew-ui/utils/Icon.vue';
 
-const props = defineProps(radioProps)
+const props = defineProps(radioProps);
 
-const emit = defineEmits(['change'])
+const emit = defineEmits(['change']);
 
 const setChecked = () => {
-  emit('change')
-}
+  emit('change');
+};
 
 const getIconSize = computed(() => {
-  const { size, block } = props
+  const { size, block } = props;
   switch (size) {
     case 'small':
-      return block ? 14 : 12
+      return block ? 14 : 12;
     case 'medium':
-      return block ? 16 : 14
+      return block ? 16 : 14;
     case 'large':
-      return block ? 18 : 16
+      return block ? 18 : 16;
     default:
-      return block ? 16 : 14
+      return block ? 16 : 14;
   }
-})
+});
 
 const getRadioClassName = computed(() => {
-  const { block, checked, iconable, size, disabled, round, readonly } = props
-  const unicon = !iconable && block
+  const { block, checked, iconable, size, disabled, round, readonly } = props;
+  const unicon = !iconable && block;
   return object2class('lew-radio', {
     block,
     checked,
@@ -35,9 +35,9 @@ const getRadioClassName = computed(() => {
     size,
     disabled,
     round,
-    readonly
-  })
-})
+    readonly,
+  });
+});
 </script>
 
 <template>

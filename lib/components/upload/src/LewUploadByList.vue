@@ -1,84 +1,84 @@
 <script setup lang="ts">
-import { uploadByListProps, statusConfig } from './props'
-import type { UploadFileItem } from './props'
-import { LewFlex, LewTag, LewImage, LewTextTrim, LewTooltip } from 'lew-ui'
-import type { LewColor } from 'lew-ui'
+import { uploadByListProps, statusConfig } from './props';
+import type { UploadFileItem } from './props';
+import { LewFlex, LewTag, LewImage, LewTextTrim, LewTooltip } from 'lew-ui';
+import type { LewColor } from 'lew-ui';
 import {
   any2px,
   getUniqueId,
   formatBytes,
   getFileIcon,
-  checkUrlIsImage
-} from 'lew-ui/utils'
-import Icon from 'lew-ui/utils/Icon.vue'
+  checkUrlIsImage,
+} from 'lew-ui/utils';
+import Icon from 'lew-ui/utils/Icon.vue';
 
 // 获取app
-const app = getCurrentInstance()?.appContext.app
+const app = getCurrentInstance()?.appContext.app;
 if (app && !app.directive('tooltip')) {
-  app.use(LewTooltip)
+  app.use(LewTooltip);
 }
 
-const previewGroupKey = getUniqueId()
+const previewGroupKey = getUniqueId();
 
 const fileIconSizeMap: Record<string, number> = {
   small: 30,
   medium: 36,
-  large: 44
-}
+  large: 44,
+};
 
 const uploadItemPaddingMap: Record<string, number> = {
   small: 8,
   medium: 10,
-  large: 12
-}
+  large: 12,
+};
 
 const footerFontSizeMap: Record<string, number> = {
   small: 11,
   medium: 12,
-  large: 14
-}
+  large: 14,
+};
 const fileNameFontSizeMap: Record<string, number> = {
   small: 13,
   medium: 14,
-  large: 16
-}
+  large: 16,
+};
 
 const rightTopBtnSizeMap: Record<string, number> = {
   small: 16,
   medium: 18,
-  large: 20
-}
+  large: 20,
+};
 
 const rightTopBtnIconSizeMap: Record<string, number> = {
   small: 10,
   medium: 12,
-  large: 14
-}
+  large: 14,
+};
 
 const rightTopBorderRadiusMap: Record<string, number> = {
   small: 7,
   medium: 7.8,
-  large: 8.5
-}
+  large: 8.5,
+};
 
-defineProps(uploadByListProps)
+defineProps(uploadByListProps);
 
-const emit = defineEmits(['reUpload', 'deleteFile'])
-const modelValue = defineModel<UploadFileItem[]>()
+const emit = defineEmits(['reUpload', 'deleteFile']);
+const modelValue = defineModel<UploadFileItem[]>();
 
 const getFileName = computed(() => (item: UploadFileItem) => {
-  return item.name || getLastValueAfterSlash(item.url)
-})
+  return item.name || getLastValueAfterSlash(item.url);
+});
 
 // 定义提取最后一个/后面的所有值方法
 const getLastValueAfterSlash = (url: string = '') => {
-  const urlParts = url.split('/')
-  return urlParts[urlParts.length - 1]
-}
+  const urlParts = url.split('/');
+  return urlParts[urlParts.length - 1];
+};
 
 const getStatus = computed(() => (item: UploadFileItem) => {
-  return statusConfig[item.status || 'complete']
-})
+  return statusConfig[item.status || 'complete'];
+});
 </script>
 
 <template>
@@ -96,13 +96,13 @@ const getStatus = computed(() => (item: UploadFileItem) => {
         mode="between"
         gap="8"
         :style="{
-          padding: uploadItemPaddingMap[size] + 'px'
+          padding: uploadItemPaddingMap[size] + 'px',
         }"
       >
         <lew-flex
           :style="{
             width: `${fileIconSizeMap[size]}px`,
-            height: `${fileIconSizeMap[size]}px`
+            height: `${fileIconSizeMap[size]}px`,
           }"
           class="lew-upload-icon-wrapper"
         >
@@ -134,7 +134,7 @@ const getStatus = computed(() => (item: UploadFileItem) => {
             :style="{
               width: rightTopBtnSizeMap[size] + 'px',
               height: rightTopBtnSizeMap[size] + 'px',
-              borderRadius: rightTopBorderRadiusMap[size] + 'px'
+              borderRadius: rightTopBorderRadiusMap[size] + 'px',
             }"
             class="lew-upload-reupload-btn"
           >
@@ -148,7 +148,7 @@ const getStatus = computed(() => (item: UploadFileItem) => {
             :style="{
               width: rightTopBtnSizeMap[size] + 'px',
               height: rightTopBtnSizeMap[size] + 'px',
-              borderRadius: rightTopBorderRadiusMap[size] + 'px'
+              borderRadius: rightTopBorderRadiusMap[size] + 'px',
             }"
             class="lew-upload-delete-btn"
           >
@@ -160,7 +160,7 @@ const getStatus = computed(() => (item: UploadFileItem) => {
                 :text="getFileName(item)"
                 :style="{
                   width: `calc(100% - 30px)`,
-                  fontSize: `${any2px(fileNameFontSizeMap[size])}`
+                  fontSize: `${any2px(fileNameFontSizeMap[size])}`,
                 }"
                 class="lew-upload-file-name"
               />
@@ -175,7 +175,7 @@ const getStatus = computed(() => (item: UploadFileItem) => {
               <span class="lew-upload-progress-bar"></span>
               <span
                 :style="{
-                  width: `${item.percent > 100 ? 100 : item.percent}%`
+                  width: `${item.percent > 100 ? 100 : item.percent}%`,
                 }"
                 class="lew-upload-progress-bar-upload"
               >
@@ -185,7 +185,7 @@ const getStatus = computed(() => (item: UploadFileItem) => {
           <lew-flex mode="between" y="center" class="lew-upload-footer">
             <span
               :style="{
-                fontSize: `${any2px(footerFontSizeMap[size])}`
+                fontSize: `${any2px(footerFontSizeMap[size])}`,
               }"
             >
               <template

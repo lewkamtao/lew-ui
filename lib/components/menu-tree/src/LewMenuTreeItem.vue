@@ -1,34 +1,34 @@
 <script setup lang="ts">
-import { menuTreeItemProps } from './props'
-import { LewCollapseTransition } from 'lew-ui'
-import { LewFlex } from 'lew-ui'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { cloneDeep } from 'lodash-es'
-import { isVueComponent, formatComponent } from 'lew-ui/utils'
-const props = defineProps(menuTreeItemProps)
+import { menuTreeItemProps } from './props';
+import { LewCollapseTransition } from 'lew-ui';
+import { LewFlex } from 'lew-ui';
+import Icon from 'lew-ui/utils/Icon.vue';
+import { cloneDeep } from 'lodash-es';
+import { isVueComponent, formatComponent } from 'lew-ui/utils';
+const props = defineProps(menuTreeItemProps);
 
 const { modelValue, expandKeys, modelValueKeyPath, collapsed }: any =
-  inject('lew-menu-tree')
-const emit = defineEmits(['change'])
+  inject('lew-menu-tree');
+const emit = defineEmits(['change']);
 
 const change = () => {
-  if (props.disabled) return
+  if (props.disabled) return;
 
   if (!props.isLeaf) {
-    const index = expandKeys.value.indexOf(props.value)
+    const index = expandKeys.value.indexOf(props.value);
     if (index > -1) {
-      expandKeys.value.splice(index, 1)
+      expandKeys.value.splice(index, 1);
     } else {
-      expandKeys.value.push(props.value)
+      expandKeys.value.push(props.value);
     }
   } else {
     if (modelValue.value !== props.value) {
-      modelValue.value = props.value
+      modelValue.value = props.value;
     }
   }
-  expandKeys.value = cloneDeep(expandKeys.value)
-  emit('change')
-}
+  expandKeys.value = cloneDeep(expandKeys.value);
+  emit('change');
+};
 </script>
 
 <template>
@@ -44,14 +44,14 @@ const change = () => {
         ),
         'lew-menu-tree-item-label-leaf': isLeaf,
         'lew-menu-tree-item-label-disabled': disabled,
-        'lew-menu-tree-item-label-collapsed': collapsed
+        'lew-menu-tree-item-label-collapsed': collapsed,
       }"
       :style="{
         paddingLeft: collapsed
           ? '0px'
           : isVueComponent(icon)
             ? '36px'
-            : '11.5px'
+            : '11.5px',
       }"
       @click.stop="change"
     >
@@ -72,7 +72,7 @@ const change = () => {
           class="lew-menu-tree-item-text"
           placement="right"
           :style="{
-            maxWidth: `calc(100% - ${isVueComponent(icon) ? 30 : 0}px)`
+            maxWidth: `calc(100% - ${isVueComponent(icon) ? 30 : 0}px)`,
           }"
           :text="label"
           :delay="[250, 250]"
@@ -87,7 +87,7 @@ const change = () => {
           :size="14"
           :style="{
             transform: `rotate(${expandKeys.includes(value) ? 270 : 90}deg)`,
-            transition: 'all 0.2s'
+            transition: 'all 0.2s',
           }"
           type="chevron-right"
         />
@@ -97,7 +97,7 @@ const change = () => {
       <div
         v-if="expandKeys.includes(value) && !collapsed"
         :style="{
-          marginTop: level === 1 ? '5px' : 0
+          marginTop: level === 1 ? '5px' : 0,
         }"
         class="lew-menu-tree-item-main"
       >

@@ -4,12 +4,12 @@ const open = () => {
     id: 'concert-ticket-alert',
     content:
       'Concert tickets are about to go on sale! Stay tuned to the official ticketing platform to secure your spot.',
-    duration: 300000
-  })
-}
+    duration: 300000,
+  });
+};
 const close = () => {
-  LewMessage.close({ id: 'concert-ticket-alert' })
-}
+  LewMessage.close({ id: 'concert-ticket-alert' });
+};
 </script>
 
 <template>

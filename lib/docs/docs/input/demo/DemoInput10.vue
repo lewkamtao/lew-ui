@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const v = ref('这是禁用状态')
+const v = ref('这是禁用状态');
 </script>
 
 <template>

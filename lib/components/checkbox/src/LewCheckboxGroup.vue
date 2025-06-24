@@ -1,51 +1,51 @@
 <script lang="ts" setup>
-import { checkboxGroupProps } from './props'
-import type { CheckboxOptions } from './props'
-import { object2class } from 'lew-ui/utils'
-import { LewCheckbox, LewFlex } from 'lew-ui'
-import { cloneDeep } from 'lodash-es'
+import { checkboxGroupProps } from './props';
+import type { CheckboxOptions } from './props';
+import { object2class } from 'lew-ui/utils';
+import { LewCheckbox, LewFlex } from 'lew-ui';
+import { cloneDeep } from 'lodash-es';
 
-const props = defineProps(checkboxGroupProps)
-const emit = defineEmits(['change'])
+const props = defineProps(checkboxGroupProps);
+const emit = defineEmits(['change']);
 const modelValue: Ref<String[] | Number[] | undefined> = defineModel({
   default: () => [],
-  required: true
-})
+  required: true,
+});
 
-const checkList = ref([] as boolean[])
+const checkList = ref([] as boolean[]);
 
 watch(
   () => modelValue.value,
   () => {
-    initCheckbox()
+    initCheckbox();
   },
   {
-    deep: true // 开启深度监听
+    deep: true, // 开启深度监听
   }
-)
+);
 
 const change = ({
   item,
-  checked
+  checked,
 }: {
-  item: CheckboxOptions
-  checked: boolean
+  item: CheckboxOptions;
+  checked: boolean;
 }) => {
-  let _value = modelValue.value || []
+  let _value = modelValue.value || [];
   if (checked) {
-    _value.push(item.value as string & number)
+    _value.push(item.value as string & number);
   } else {
-    const index = _value.findIndex((e: any) => e === item.value)
+    const index = _value.findIndex((e: any) => e === item.value);
     if (index >= 0) {
-      _value.splice(index, 1)
+      _value.splice(index, 1);
     }
   }
   emit('change', {
     value: cloneDeep(_value),
-    item
-  })
-  modelValue.value = cloneDeep(_value)
-}
+    item,
+  });
+  modelValue.value = cloneDeep(_value);
+};
 
 const initCheckbox = () => {
   checkList.value = props.options.map((item: CheckboxOptions) => {
@@ -53,22 +53,22 @@ const initCheckbox = () => {
       modelValue.value &&
       modelValue.value.includes(item.value as string & number)
     ) {
-      return true
+      return true;
     }
-    return false
-  })
-}
+    return false;
+  });
+};
 
 const getCheckboxGroupClassName = computed(() => {
-  const { size, readonly, disabled } = props as any
+  const { size, readonly, disabled } = props as any;
   return object2class('lew-checkbox-group', {
     size,
     readonly,
-    disabled
-  })
-})
+    disabled,
+  });
+});
 
-initCheckbox()
+initCheckbox();
 </script>
 <template>
   <lew-flex

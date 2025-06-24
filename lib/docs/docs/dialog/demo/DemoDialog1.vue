@@ -10,18 +10,18 @@ const open = () => {
     ok: () => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          resolve(true)
+          resolve(true);
           LewMessage.success({
-            content: 'Repository has been successfully deleted'
-          })
-        }, 1000)
-      })
+            content: 'Repository has been successfully deleted',
+          });
+        }, 1000);
+      });
     },
     cancel: () => {
       // Cancel deletion
-    }
-  })
-}
+    },
+  });
+};
 </script>
 
 <template>

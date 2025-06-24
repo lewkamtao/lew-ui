@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { flexProps } from './props'
-import { any2px } from 'lew-ui/utils'
-import { CSSProperties } from 'vue'
+import { flexProps } from './props';
+import { any2px } from 'lew-ui/utils';
+import { CSSProperties } from 'vue';
 
-const props = defineProps(flexProps)
+const props = defineProps(flexProps);
 
 const styleObject = computed((): CSSProperties => {
-  const gap = any2px(props.gap)
-  const width = any2px(props.width)
+  const gap = any2px(props.gap);
+  const width = any2px(props.width);
   return {
     display: 'flex',
     flexDirection: props.direction === 'x' ? 'row' : 'column',
@@ -16,9 +16,9 @@ const styleObject = computed((): CSSProperties => {
     alignItems: getAlignItems(),
     gap: `${gap}`,
     width,
-    boxSizing: 'border-box'
-  }
-})
+    boxSizing: 'border-box',
+  };
+});
 const alignmentMap = {
   start: 'flex-start',
   left: 'flex-start',
@@ -26,18 +26,18 @@ const alignmentMap = {
   right: 'flex-end',
   center: 'center',
   top: 'flex-start',
-  bottom: 'flex-end'
-}
+  bottom: 'flex-end',
+};
 
 function getJustifyContent() {
-  if (props.mode) return `space-${props.mode}`
-  const mainAxis = props.direction === 'x' ? props.x : props.y
-  return alignmentMap[mainAxis] || 'center'
+  if (props.mode) return `space-${props.mode}`;
+  const mainAxis = props.direction === 'x' ? props.x : props.y;
+  return alignmentMap[mainAxis] || 'center';
 }
 
 function getAlignItems() {
-  const crossAxis = props.direction === 'x' ? props.y : props.x
-  return alignmentMap[crossAxis] || 'center'
+  const crossAxis = props.direction === 'x' ? props.y : props.x;
+  return alignmentMap[crossAxis] || 'center';
 }
 </script>
 

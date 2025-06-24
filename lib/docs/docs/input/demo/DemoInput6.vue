@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const username = ref('')
+const username = ref('');
 </script>
 
 <template>

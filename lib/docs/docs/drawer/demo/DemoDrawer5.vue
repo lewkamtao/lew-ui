@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const visible = ref(false)
+const visible = ref(false);
 const productData = ref({
   name: 'iPhone 15 Pro',
   price: '$999',
@@ -12,24 +12,24 @@ const productData = ref({
   storage: '256GB',
   condition: 'New',
   warranty: '1 Year',
-  stock: 15
-})
+  stock: 15,
+});
 
 const categories = [
   { label: 'Electronics', value: 'electronics' },
   { label: 'Clothing', value: 'clothing' },
   { label: 'Home', value: 'home' },
-  { label: 'Sports', value: 'sports' }
-]
+  { label: 'Sports', value: 'sports' },
+];
 
 const handleEdit = () => {
-  console.log('Edit product data:', productData.value)
-  visible.value = false
-}
+  console.log('Edit product data:', productData.value);
+  visible.value = false;
+};
 
 const handleCancel = () => {
-  visible.value = false
-}
+  visible.value = false;
+};
 </script>
 <template>
   <lew-flex gap="20" x="start">

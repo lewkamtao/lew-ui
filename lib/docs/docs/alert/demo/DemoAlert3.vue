@@ -1,6 +1,6 @@
 <script setup lang="ts">
-let visibleWarning = ref(true)
-let visibleInfo = ref(true)
+let visibleWarning = ref(true);
+let visibleInfo = ref(true);
 </script>
 
 <template>

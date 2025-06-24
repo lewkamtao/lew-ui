@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { cloneDeep } from 'lodash-es'
-import { parseToStandardJSON } from 'lew-ui/utils'
-const visible = ref(false)
-const fieldOptions = ref('')
+import { cloneDeep } from 'lodash-es';
+import { parseToStandardJSON } from 'lew-ui/utils';
+const visible = ref(false);
+const fieldOptions = ref('');
 
 const defaultOptions = `{
   companyName: '公司名称',
@@ -26,38 +26,38 @@ const defaultOptions = `{
   electricRange: '电动续航里程',
   userInterface: '用户界面',
   afterSalesService: '售后服务'
-}`
+}`;
 
 const open = () => {
-  fieldOptions.value = ''
-  visible.value = true
-}
-const emit = defineEmits(['import'])
+  fieldOptions.value = '';
+  visible.value = true;
+};
+const emit = defineEmits(['import']);
 // Start of Selection
 const ok = () => {
   if (!fieldOptions.value) {
-    emit('import', parseToStandardJSON(defaultOptions))
-    visible.value = false
-    return
+    emit('import', parseToStandardJSON(defaultOptions));
+    visible.value = false;
+    return;
   }
 
   try {
-    const parsedData = parseToStandardJSON(fieldOptions.value)
+    const parsedData = parseToStandardJSON(fieldOptions.value);
     if (typeof parsedData === 'object' && parsedData !== null) {
-      emit('import', cloneDeep(parsedData))
-      visible.value = false
+      emit('import', cloneDeep(parsedData));
+      visible.value = false;
     } else {
       LewMessage.warning(
         '输入的内容不符合对象格式，请输入一个有效的 JSON 对象字符串！'
-      )
+      );
     }
   } catch (error) {
     LewMessage.warning(
       '输入的内容不符合对象格式，请输入一个有效的 JSON 对象字符串！'
-    )
+    );
   }
-}
-defineExpose({ open })
+};
+defineExpose({ open });
 </script>
 
 <template>
@@ -66,11 +66,11 @@ defineExpose({ open })
     width="500"
     :closeButtonProps="{
       request: () => {
-        visible = false
-      }
+        visible = false;
+      },
     }"
     :okButtonProps="{
-      request: ok
+      request: ok,
     }"
     title="导入字段"
   >

@@ -3,26 +3,26 @@ export default [
     label: '选项配置',
     as: 'input-table',
     field: 'options',
-    direction: 'y'
+    direction: 'y',
   },
   {
     label: '宽度',
     as: 'input-number',
     componentWidth: 100,
     props: { min: 80, max: 500, align: 'center', placeholder: '宽度' },
-    field: 'width'
+    field: 'width',
   },
   {
     label: '选项宽度',
     as: 'input-number',
     componentWidth: 100,
     props: { min: 30, max: 500, align: 'center', placeholder: '宽度' },
-    field: 'itemWidth'
+    field: 'itemWidth',
   },
   {
     label: '是否圆角',
     as: 'switch',
-    field: 'round'
+    field: 'round',
   },
   {
     label: '样式类型',
@@ -33,13 +33,13 @@ export default [
       options: [
         {
           label: '块状',
-          value: 'block'
+          value: 'block',
         },
         {
           label: '线形',
-          value: 'line'
-        }
-      ]
-    }
-  }
-]
+          value: 'line',
+        },
+      ],
+    },
+  },
+];

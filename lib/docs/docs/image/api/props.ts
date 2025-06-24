@@ -1,8 +1,8 @@
-import { imageProps } from 'lew-ui'
-import { convertProps } from '@/lib/utils'
+import { imageProps } from 'lew-ui';
+import { convertProps } from '@/lib/utils';
 
 export default {
   title: 'Props',
   columnsKey: 'props',
-  data: convertProps(imageProps)
-}
+  data: convertProps(imageProps),
+};

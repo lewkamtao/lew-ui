@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { CSSProperties } from 'vue'
-import { badgeProps } from './props'
-import { getColorType } from 'lew-ui/utils'
+import type { CSSProperties } from 'vue';
+import { badgeProps } from './props';
+import { getColorType } from 'lew-ui/utils';
 
-const props = defineProps(badgeProps)
+const props = defineProps(badgeProps);
 const getStyle = computed<CSSProperties>(() => {
-  const { color, offset, text } = props
-  const _color = getColorType(color)
+  const { color, offset, text } = props;
+  const _color = getColorType(color);
 
   if (text) {
     return {
@@ -14,34 +14,34 @@ const getStyle = computed<CSSProperties>(() => {
       position: 'absolute',
       left: '0',
       top: '50%',
-      transform: 'translateY(-50%)'
-    }
+      transform: 'translateY(-50%)',
+    };
   }
 
   return {
     backgroundColor: `var(--lew-color-${_color})`,
     ...(offset?.length === 2 && {
-      transform: `translate(calc(-50% + ${offset[0]}px), ${offset[1]}px)`
-    })
-  }
-})
+      transform: `translate(calc(-50% + ${offset[0]}px), ${offset[1]}px)`,
+    }),
+  };
+});
 
 const getBadgeStyle = computed(() => {
-  const { text } = props
+  const { text } = props;
   return {
-    paddingLeft: text ? '15px' : '0px'
-  }
-})
+    paddingLeft: text ? '15px' : '0px',
+  };
+});
 
 const displayValue = computed(() => {
-  const { value, max } = props
-  const numberValue = Number(value)
-  const maxValue = Number(max)
+  const { value, max } = props;
+  const numberValue = Number(value);
+  const maxValue = Number(max);
   if (!isNaN(numberValue) && !isNaN(maxValue) && numberValue > maxValue) {
-    return `${maxValue}+`
+    return `${maxValue}+`;
   }
-  return value
-})
+  return value;
+});
 </script>
 
 <template>

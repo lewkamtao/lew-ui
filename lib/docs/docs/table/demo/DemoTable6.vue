@@ -8,7 +8,7 @@ const data: any = [
     style: 'Streetwear',
     popularItems: ['Box Logo T-shirt', 'Hoodie', 'Skateboard'],
     description:
-      'Known for its iconic red box logo and limited release strategy.'
+      'Known for its iconic red box logo and limited release strategy.',
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ const data: any = [
     style: 'High-end Streetwear',
     popularItems: ['Industrial Belt', 'Arrow T-shirt', 'Quotation Mark Shoes'],
     description:
-      'Combines high fashion with street culture, known for unique quotation designs and diagonal stripe logo.'
+      'Combines high fashion with street culture, known for unique quotation designs and diagonal stripe logo.',
   },
   {
     id: 3,
@@ -28,7 +28,7 @@ const data: any = [
     style: 'Japanese Streetwear',
     popularItems: ['Shark Hoodie', 'Camo Pattern', 'Bapesta Sneakers'],
     description:
-      'Famous for its unique camouflage patterns and cartoon ape head logo.'
+      'Famous for its unique camouflage patterns and cartoon ape head logo.',
   },
   {
     id: 4,
@@ -39,65 +39,65 @@ const data: any = [
     popularItems: [
       'Tri-Ferg Logo T-shirt',
       'Track Jacket',
-      'Skateboard Accessories'
+      'Skateboard Accessories',
     ],
     description:
-      'Originated from London skate culture, famous for its triangular logo and humorous designs.'
-  }
-]
+      'Originated from London skate culture, famous for its triangular logo and humorous designs.',
+  },
+];
 
 const columns = [
   {
     title: 'ID',
     width: 50,
     field: 'id',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Brand',
     width: 100,
     field: 'brand',
-    x: 'start'
+    x: 'start',
   },
   {
     title: 'Founded',
     width: 100,
     field: 'founded',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Origin',
     width: 80,
     field: 'origin',
-    x: 'center'
+    x: 'center',
   },
   {
     title: 'Style',
     width: 100,
     field: 'style',
-    x: 'start'
+    x: 'start',
   },
   {
     title: 'Popular Items',
     width: 500,
     field: 'popularItems',
-    x: 'start'
+    x: 'start',
   },
   {
     title: 'Description',
     width: 350,
     field: 'description',
-    x: 'start'
-  }
-]
+    x: 'start',
+  },
+];
 
-const selectedKeys = ref<number[]>([])
+const selectedKeys = ref<number[]>([]);
 
-const tableRef = ref()
+const tableRef = ref();
 
 const setSelectedBrands = () => {
-  selectedKeys.value = [2, 3]
-}
+  selectedKeys.value = [2, 3];
+};
 </script>
 
 <template>

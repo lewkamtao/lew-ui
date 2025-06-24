@@ -1,3 +1,3 @@
-import DemoForm from './DemoForm.vue'
+import DemoForm from './DemoForm.vue';
 
-export default DemoForm
+export default DemoForm;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const v = ref('这是一段文本')
+const v = ref('这是一段文本');
 </script>
 
 <template>

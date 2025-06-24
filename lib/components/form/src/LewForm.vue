@@ -3,147 +3,147 @@ import {
   object2class,
   any2px,
   formatFormByMap,
-  retrieveNestedFieldValue
-} from 'lew-ui/utils'
-import LewGetLabelWidth from './LewGetLabelWidth.vue'
-import { formProps } from './props'
-import { cloneDeep } from 'lodash-es'
-import LewFormItem from './LewFormItem.vue'
-import * as Yup from 'yup'
+  retrieveNestedFieldValue,
+} from 'lew-ui/utils';
+import LewGetLabelWidth from './LewGetLabelWidth.vue';
+import { formProps } from './props';
+import { cloneDeep } from 'lodash-es';
+import LewFormItem from './LewFormItem.vue';
+import * as Yup from 'yup';
 
-const props = defineProps(formProps)
-const emit = defineEmits(['change', 'mounted'])
-const formMap = ref<Record<string, any>>({})
-const formLabelRef = ref()
-const autoLabelWidth = ref(0)
+const props = defineProps(formProps);
+const emit = defineEmits(['change', 'mounted']);
+const formMap = ref<Record<string, any>>({});
+const formLabelRef = ref();
+const autoLabelWidth = ref(0);
 
-let componentOptions: any[] = cloneDeep(props.options) || []
+let componentOptions: any[] = cloneDeep(props.options) || [];
 
 const getFormClassNames = computed(() => {
-  const { columns } = cloneDeep(props)
-  return object2class('lew-form', { columns })
-})
+  const { columns } = cloneDeep(props);
+  return object2class('lew-form', { columns });
+});
 
 // 将 formMap.value 中 xx.xx.xx 形式的字段，转换成嵌套对象
 const getForm = () => {
   const formData: Record<string, any> = formatFormByMap(
     cloneDeep(formMap.value)
-  )
+  );
   // 应用 outputFormat
   componentOptions.forEach((item) => {
     if (item.outputFormat && item.field && formData[item.field]) {
       formData[item.field] = item.outputFormat({
         item,
-        value: formData[item.field]
-      })
+        value: formData[item.field],
+      });
     }
-  })
-  return formData
-}
+  });
+  return formData;
+};
 
 const setForm = (value: any = {}) => {
   // 把对象的值给 formMap
   componentOptions.forEach((item: any) => {
-    let v = retrieveNestedFieldValue(value, item.field)
+    let v = retrieveNestedFieldValue(value, item.field);
     if (value !== undefined && item.field) {
       // 应用 inputFormat
       if (item.inputFormat) {
-        v = item.inputFormat({ item, value: v })
+        v = item.inputFormat({ item, value: v });
       }
       // 重置 ignoreValidate
-      formItemRefMap.value[item.field]?.setIgnoreValidate(true)
+      formItemRefMap.value[item.field]?.setIgnoreValidate(true);
       // 重置error
-      formItemRefMap.value[item.field]?.setError('')
+      formItemRefMap.value[item.field]?.setError('');
       // 如果有值，就把值给 formMap
-      formMap.value[item.field] = v
+      formMap.value[item.field] = v;
     }
-  })
-}
+  });
+};
 
 const resetError = () => {
   componentOptions.forEach((item: any) => {
     // 重置error
     if (item.field) {
       // 重置 ignoreValidate
-      formItemRefMap.value[item.field]?.setIgnoreValidate(false)
+      formItemRefMap.value[item.field]?.setIgnoreValidate(false);
       // 重置error
-      formItemRefMap.value[item.field]?.setError('')
+      formItemRefMap.value[item.field]?.setError('');
     }
-  })
-}
+  });
+};
 
-const formItemRefMap = ref<Record<string, any>>({})
+const formItemRefMap = ref<Record<string, any>>({});
 
 const validate = () => {
   return new Promise<boolean>((resolve) => {
     // 定义校验规则
-    const schemaMap: Record<string, any> = {}
+    const schemaMap: Record<string, any> = {};
 
     // 清除错误信息
     Object.keys(formItemRefMap.value).forEach((key) => {
       if (formItemRefMap.value[key].curRule) {
-        schemaMap[key] = formItemRefMap.value[key].curRule
+        schemaMap[key] = formItemRefMap.value[key].curRule;
       }
 
       // 重置 ignoreValidate
-      formItemRefMap.value[key]?.setIgnoreValidate(false)
+      formItemRefMap.value[key]?.setIgnoreValidate(false);
       // 重置error
-      formItemRefMap.value[key]?.setError('')
-    })
+      formItemRefMap.value[key]?.setError('');
+    });
 
-    const schema = Yup.object().shape(schemaMap)
+    const schema = Yup.object().shape(schemaMap);
 
     // 校验对象
     schema
       .validate(formMap.value, { abortEarly: false })
       .then(() => {
-        resolve(true)
+        resolve(true);
       })
       .catch((error: any) => {
-        ;(error?.inner || []).forEach((item: any) => {
-          const path = item.path.replace(`["`, '').replace(`"]`, '')
-          const ref = formItemRefMap.value[path]
+        (error?.inner || []).forEach((item: any) => {
+          const path = item.path.replace(`["`, '').replace(`"]`, '');
+          const ref = formItemRefMap.value[path];
           if (ref) {
-            ref.setError(item.message)
+            ref.setError(item.message);
           }
-        })
+        });
         // 校验失败，将错误信息赋值给 formItemRef
-        resolve(false)
-      })
-  })
-}
+        resolve(false);
+      });
+  });
+};
 
 onMounted(() => {
   // 计算 label 的宽度
-  autoLabelWidth.value = formLabelRef.value?.getWidth()
-  emit('mounted')
-})
+  autoLabelWidth.value = formLabelRef.value?.getWidth();
+  emit('mounted');
+});
 
-provide('formMethods', props.formMethods)
+provide('formMethods', props.formMethods);
 
 watch(
   () => props.size,
   () => {
     nextTick(() => {
-      autoLabelWidth.value = formLabelRef.value?.getWidth()
-    })
+      autoLabelWidth.value = formLabelRef.value?.getWidth();
+    });
   }
-)
+);
 
 const getFormStyle = computed(() => {
   const gapMap = {
     small: '24px',
     medium: '26px',
-    large: '28px'
-  }
+    large: '28px',
+  };
   return {
     width: any2px(props.width),
     minWidth: 320,
-    gap: gapMap[props.size]
-  }
-})
+    gap: gapMap[props.size],
+  };
+});
 
-defineExpose({ getForm, setForm, resetError, validate })
+defineExpose({ getForm, setForm, resetError, validate });
 </script>
 
 <template>
@@ -165,11 +165,11 @@ defineExpose({ getForm, setForm, resetError, validate })
           labelWidth === 'auto' ? autoLabelWidth || labelWidth : labelWidth,
         disabled,
         readonly,
-        ...item
+        ...item,
       }"
       @change="
         () => {
-          emit('change', getForm())
+          emit('change', getForm());
         }
       "
     />

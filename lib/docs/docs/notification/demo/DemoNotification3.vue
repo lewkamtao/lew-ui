@@ -4,9 +4,9 @@ const openWithDelay = () => {
     title: 'HSBC Account Update',
     content:
       'Your HSBC account has been successfully updated. Please check your email for more details.',
-    width: 500
-  })
-}
+    width: 500,
+  });
+};
 </script>
 
 <template>

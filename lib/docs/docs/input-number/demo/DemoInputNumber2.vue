@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const n = ref(123)
+const n = ref(123);
 </script>
 <template>
   <lew-flex x="start">

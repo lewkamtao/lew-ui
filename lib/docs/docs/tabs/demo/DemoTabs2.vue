@@ -1,7 +1,7 @@
 <script setup lang="ts">
 interface TabOption {
-  label: string
-  value: string
+  label: string;
+  value: string;
 }
 const options: TabOption[] = [
   { label: 'Fresh Fruits', value: 'fresh_fruit' },
@@ -42,10 +42,10 @@ const options: TabOption[] = [
   { label: 'Electronics', value: 'electronics' },
   { label: 'Garden Supplies', value: 'garden_supplies' },
   { label: 'Holiday Gifts', value: 'holiday_gifts' },
-  { label: 'Bags', value: 'bags' }
-]
+  { label: 'Bags', value: 'bags' },
+];
 
-const modelValue = ref('meat')
+const modelValue = ref('meat');
 </script>
 
 <template>

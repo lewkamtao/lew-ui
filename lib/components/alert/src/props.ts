@@ -1,6 +1,6 @@
-import type { ExtractPropTypes } from 'vue'
-import type { LewStatusColor } from 'lew-ui'
-import { validStatusColors } from 'lew-ui/constants'
+import type { ExtractPropTypes } from 'vue';
+import type { LewStatusColor } from 'lew-ui';
+import { validStatusColors } from 'lew-ui/constants';
 
 export const alertProps = {
   type: {
@@ -11,39 +11,39 @@ export const alertProps = {
       if (!validStatusColors.includes(value)) {
         console.warn(
           `[LewAlert] 无效的类型值: ${value}. 请使用预定义的类型之一。`
-        )
-        return false
+        );
+        return false;
       }
-      return true
-    }
+      return true;
+    },
   },
 
   title: {
     type: String,
     typeGhost: 'String | Slot',
     default: '',
-    description: '提示信息'
+    description: '提示信息',
   },
 
   content: {
     type: String,
     typeGhost: 'String | Slot',
     default: '',
-    description: '描述信息'
+    description: '描述信息',
   },
 
   closeable: {
     type: Boolean,
     default: false,
-    description: '关闭按钮'
+    description: '关闭按钮',
   },
 
   footer: {
     type: String,
     typeGhost: 'slot',
     default: '',
-    description: '底部插槽'
-  }
-}
+    description: '底部插槽',
+  },
+};
 
-export type AlertProps = ExtractPropTypes<typeof alertProps>
+export type AlertProps = ExtractPropTypes<typeof alertProps>;

@@ -6,9 +6,9 @@ const open = () => {
       'Our new summer collection is now in stores. Visit us to discover the latest home inspiration.',
     duration: 3500,
     width: 400,
-    showProgress: true
-  })
-}
+    showProgress: true,
+  });
+};
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const color = ref('')
+const color = ref('');
 </script>
 
 <template>

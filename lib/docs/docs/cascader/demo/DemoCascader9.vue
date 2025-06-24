@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { LewCascader } from 'lew-ui'
+import { LewCascader } from 'lew-ui';
 
-const cascaderValue = ref()
+const cascaderValue = ref();
 
 // Simulate async initialization data
 const initOptionsMethod = async () => {
   // Simulate network request delay, increase delay time to better demonstrate initLoading effect
-  await new Promise((resolve) => setTimeout(resolve, 2000))
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 
   return [
     {
@@ -18,18 +18,18 @@ const initOptionsMethod = async () => {
           value: 'chaoyang',
           children: [
             { label: 'Sanlitun', value: 'sanlitun' },
-            { label: 'Guomao', value: 'guomao' }
-          ]
+            { label: 'Guomao', value: 'guomao' },
+          ],
         },
         {
           label: 'Haidian District',
           value: 'haidian',
           children: [
             { label: 'Zhongguancun', value: 'zhongguancun' },
-            { label: 'Wudaokou', value: 'wudaokou' }
-          ]
-        }
-      ]
+            { label: 'Wudaokou', value: 'wudaokou' },
+          ],
+        },
+      ],
     },
     {
       label: 'Shanghai',
@@ -40,27 +40,27 @@ const initOptionsMethod = async () => {
           value: 'pudong',
           children: [
             { label: 'Lujiazui', value: 'lujiazui' },
-            { label: 'Zhangjiang', value: 'zhangjiang' }
-          ]
+            { label: 'Zhangjiang', value: 'zhangjiang' },
+          ],
         },
         {
           label: 'Huangpu District',
           value: 'huangpu',
           children: [
             { label: 'The Bund', value: 'waitan' },
-            { label: 'Nanjing Road', value: 'nanjinglu' }
-          ]
-        }
-      ]
-    }
-  ]
-}
+            { label: 'Nanjing Road', value: 'nanjinglu' },
+          ],
+        },
+      ],
+    },
+  ];
+};
 
-const updateKey = ref(0)
+const updateKey = ref(0);
 
 const load = () => {
-  updateKey.value++
-}
+  updateKey.value++;
+};
 </script>
 
 <template>

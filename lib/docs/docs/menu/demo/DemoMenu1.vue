@@ -7,8 +7,8 @@ import {
   CheckSquare,
   Smile,
   Users,
-  Palette
-} from 'lucide-vue-next'
+  Palette,
+} from 'lucide-vue-next';
 
 const options = ref([
   {
@@ -18,14 +18,14 @@ const options = ref([
       {
         label: 'Dashboard',
         value: 'Dashboard',
-        icon: () => h(PieChart, { size: 14 })
+        icon: () => h(PieChart, { size: 14 }),
       },
       {
         label: 'Performance',
         value: 'Performance Monitoring',
-        icon: () => h(BarChart, { size: 14 })
-      }
-    ]
+        icon: () => h(BarChart, { size: 14 }),
+      },
+    ],
   },
   {
     label: 'Content Management',
@@ -39,8 +39,8 @@ const options = ref([
           text: 'Beta',
           color: 'green',
           type: 'ghost',
-          round: true
-        }
+          round: true,
+        },
       },
       {
         label: 'Hotspot Mgmt',
@@ -50,13 +50,13 @@ const options = ref([
           text: 'Beta',
           color: 'green',
           type: 'ghost',
-          round: true
-        }
+          round: true,
+        },
       },
       {
         label: 'Checklist',
         value: 'Checklist',
-        icon: () => h(CheckSquare, { size: 14 })
+        icon: () => h(CheckSquare, { size: 14 }),
       },
       {
         label: 'Satisfaction Survey',
@@ -66,10 +66,10 @@ const options = ref([
           text: 'HOT',
           color: 'red',
           type: 'ghost',
-          round: true
-        }
-      }
-    ]
+          round: true,
+        },
+      },
+    ],
   },
   {
     label: 'Settings',
@@ -78,22 +78,22 @@ const options = ref([
       {
         label: 'Group Mgmt',
         value: 'Group Management',
-        icon: () => h(Users, { size: 14 })
+        icon: () => h(Users, { size: 14 }),
       },
       {
         label: 'Theme Settings',
         value: 'Theme Settings',
-        icon: () => h(Palette, { size: 14 })
-      }
-    ]
-  }
-])
+        icon: () => h(Palette, { size: 14 }),
+      },
+    ],
+  },
+]);
 
-let modelValue = ref('User Guide')
+let modelValue = ref('User Guide');
 
 const change = (item: any) => {
-  console.log(item)
-}
+  console.log(item);
+};
 </script>
 <template>
   <div class="menu lew-scrollbar">

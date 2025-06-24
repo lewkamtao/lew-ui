@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const value = ref('')
+const value = ref('');
 
 const change = (e: any) => {
-  LewMessage.info(e.date)
-}
+  LewMessage.info(e.date);
+};
 </script>
 
 <template>

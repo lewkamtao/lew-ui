@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { UploadFileItem } from 'lew-ui'
-import uploadHelper from '../uploadHelper'
+import type { UploadFileItem } from 'lew-ui';
+import uploadHelper from '../uploadHelper';
 
-const fileList = ref<UploadFileItem[]>([])
+const fileList = ref<UploadFileItem[]>([]);
 </script>
 
 <template>

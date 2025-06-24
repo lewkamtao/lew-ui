@@ -35,7 +35,7 @@ const content = ref(`
       </div>
     </div>
   </div>
-`)
+`);
 </script>
 
 <template>
@@ -43,7 +43,7 @@ const content = ref(`
     <lew-tag
       v-tooltip="{
         content,
-        allowHTML: true
+        allowHTML: true,
       }"
       oversize
       color="red"

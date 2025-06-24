@@ -5,7 +5,7 @@ export default {
     {
       name: 'change',
       description: '值变化',
-      params: '() => void'
-    }
-  ]
-}
+      params: '() => void',
+    },
+  ],
+};
