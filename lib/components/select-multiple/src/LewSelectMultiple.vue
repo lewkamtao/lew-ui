@@ -53,6 +53,15 @@ let _searchMethod = computed(() => {
   }
 })
 
+let _initOptionsMethod = computed(() => {
+  if (isFunction(props.initOptionsMethod)) {
+    return props.initOptionsMethod
+  } else if (props.initOptionsMethodId) {
+    return formMethods[props.initOptionsMethodId]
+  }
+  return false
+})
+
 const getSelectWidth = () => {
   state.selectWidth = lewSelectRef.value?.clientWidth - 12
   if (props.searchable) {
@@ -266,9 +275,9 @@ const hideHandle = () => {
 }
 
 const init = async () => {
-  if (isFunction(props.initOptionsMethod)) {
+  if (_initOptionsMethod.value) {
     try {
-      const newOptions = await props.initOptionsMethod()
+      const newOptions = await _initOptionsMethod.value()
       state.sourceOptions = newOptions
       state.options = flattenOptions(newOptions)
     } catch (error) {
@@ -299,10 +308,12 @@ defineExpose({
 watch(
   () => props.options,
   (newOptions) => {
-    state.sourceOptions = newOptions
-    state.options = flattenOptions(newOptions)
-    if (props.enableSearchCache) {
-      state.searchCache.clear()
+    if (!_initOptionsMethod.value) {
+      state.sourceOptions = newOptions
+      state.options = flattenOptions(newOptions)
+      if (props.enableSearchCache) {
+        state.searchCache.clear()
+      }
     }
   },
   {

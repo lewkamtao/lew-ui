@@ -1205,7 +1205,7 @@ export default {
         keyField: 'Node Key Field',
         labelField: 'Node Label Field',
         disabledField: 'Disabled Node Field',
-        initTreeMethod: 'Initialize Tree Nodes Method',
+        initOptionsMethod: 'Initialize Tree Nodes Method',
         loadMethod: 'Asynchronous Load Child Nodes Method'
       },
       slots: {
@@ -1589,7 +1589,7 @@ export default {
         keyField: 'Node Key Field',
         labelField: 'Node Label Field',
         disabledField: 'Disabled Node Field',
-        initTreeMethod: 'Initialize Tree Nodes Method',
+        initOptionsMethod: 'Initialize Tree Nodes Method',
         loadMethod: 'Asynchronous Load Child Nodes Method',
         isSelect: 'Is Selected'
       },

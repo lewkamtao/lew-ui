@@ -1188,7 +1188,7 @@ export default {
         keyField: '节点标识字段',
         labelField: '节点标签字段',
         disabledField: '禁用节点字段',
-        initTreeMethod: '初始化树节点的方法',
+        initOptionsMethod: '初始化树节点的方法',
         loadMethod: '异步加载子节点数据的方法'
       },
       slots: {
@@ -1565,7 +1565,7 @@ export default {
         keyField: '节点标识字段',
         labelField: '节点标签字段',
         disabledField: '禁用节点字段',
-        initTreeMethod: '初始化树节点的方法',
+        initOptionsMethod: '初始化树节点的方法',
         loadMethod: '异步加载子节点数据的方法',
         isSelect: '是否选中'
       },

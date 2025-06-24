@@ -63,6 +63,7 @@ const lewPopoverRef = ref()
 const state = reactive({
   visible: false,
   loading: false,
+  initLoading: true,
   okLoading: false,
   optionsGroup: [] as CascaderOptions[][], // 分组
   optionsTree: [] as any, // 树
@@ -79,6 +80,15 @@ let _loadMethod = computed(() => {
     return props.loadMethod
   } else if (props.loadMethodId) {
     return formMethods[props.loadMethodId]
+  }
+  return false
+})
+
+let _initOptionsMethod = computed(() => {
+  if (isFunction(props.initOptionsMethod)) {
+    return props.initOptionsMethod
+  } else if (props.initOptionsMethodId) {
+    return formMethods[props.initOptionsMethodId]
   }
   return false
 })
@@ -152,7 +162,17 @@ function findChildrenByValue(
 // 初始化
 const init = async () => {
   let _tree: CascaderOptions[] = []
-  if (_loadMethod.value && !state.loading) {
+  
+  // 如果有初始化方法，优先使用
+  if (_initOptionsMethod.value) {
+    try {
+      const newOptions = await _initOptionsMethod.value()
+      _tree = newOptions || []
+    } catch (error) {
+      console.error('[LewCascader] initOptionsMethod failed', error)
+      _tree = []
+    }
+  } else if (_loadMethod.value && !state.loading) {
     state.loading = true
     _tree = (await _loadMethod.value()) || []
     state.loading = false
@@ -169,9 +189,33 @@ const init = async () => {
   const __tree: CascaderOptions[] = formatTree(_tree)
   state.optionsGroup = [__tree]
   state.optionsTree = __tree
+  state.initLoading = false
 }
 
 init()
+
+// 监听 options 变化
+watch(
+  () => props.options,
+  (newOptions) => {
+    if (!_initOptionsMethod.value) {
+      // 只有在没有使用 initOptionsMethod 时才响应 options 的变化
+      const _tree = ((newOptions &&
+        newOptions.map((e: CascaderOptions) => {
+          return {
+            ...e,
+            isLeaf: !e.children || (e.children && e.children.length === 0)
+          }
+        })) as CascaderOptions[]) || []
+      const __tree: CascaderOptions[] = formatTree(_tree)
+      state.optionsGroup = [__tree]
+      state.optionsTree = __tree
+    }
+  },
+  {
+    deep: true
+  }
+)
 
 const virtListRefs = ref<any[]>([])
 
@@ -291,7 +335,8 @@ const getCascaderClassName = computed(() => {
     clearable,
     disabled,
     readonly,
-    focus
+    focus,
+    'init-loading': state.initLoading
   })
 })
 
@@ -368,7 +413,7 @@ defineExpose({ show, hide })
     ref="lewPopoverRef"
     class="lew-cascader-view"
     :trigger="trigger"
-    :disabled="disabled || readonly"
+    :disabled="disabled || readonly || state.initLoading"
     placement="bottom-start"
     :loading="state.loading"
     :style="{ width: any2px(width) }"
@@ -382,7 +427,15 @@ defineExpose({ show, hide })
         :class="getCascaderClassName"
         :style="getCascaderStyle"
       >
-        <transition name="lew-form-icon-ani">
+        <div v-if="state.initLoading" class="lew-icon-loading-box">
+          <Icon
+            :size="getIconSize"
+            :loading="state.initLoading"
+            type="loading"
+          />
+        </div>
+
+        <transition v-else name="lew-form-icon-ani">
           <Icon
             v-if="!(clearable && getLabel && getLabel.length > 0)"
             :size="getIconSize"
@@ -578,6 +631,17 @@ defineExpose({ show, hide })
       padding: 2px;
     }
 
+    .lew-icon-loading-box {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 50%;
+      right: 9px;
+      padding: 2px;
+      box-sizing: border-box;
+      transform: translateY(-50%);
+    }
+
     .icon-select {
       opacity: var(--lew-form-icon-opacity);
     }
@@ -673,6 +737,16 @@ defineExpose({ show, hide })
   .lew-cascader-disabled:hover {
     background-color: var(--lew-form-bgcolor);
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
+  }
+
+  .lew-cascader-init-loading {
+    pointer-events: none;
+    cursor: wait;
+
+    .lew-cascader-placeholder,
+    .lew-cascader-value {
+      cursor: wait;
+    }
   }
 }
 

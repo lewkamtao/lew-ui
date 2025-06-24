@@ -1209,7 +1209,7 @@ export default {
         keyField: 'Knotenschlüsselfeld',
         labelField: 'Knotenbeschriftungsfeld',
         disabledField: 'Deaktiviertes Knotenfeld',
-        initTreeMethod: 'Methode zur Initialisierung von Baumknoten',
+        initOptionsMethod: 'Methode zur Initialisierung von Baumknoten',
         loadMethod: 'Methode zum asynchronen Laden von Unterknoten'
       },
       slots: {
@@ -1592,7 +1592,7 @@ export default {
         keyField: 'Knotenschlüsselfeld',
         labelField: 'Knotenbeschriftungsfeld',
         disabledField: 'Deaktiviertes Knotenfeld',
-        initTreeMethod: 'Methode zur Initialisierung von Baumknoten',
+        initOptionsMethod: 'Methode zur Initialisierung von Baumknoten',
         loadMethod: 'Methode zum asynchronen Laden von Unterknoten',
         isSelect: 'Ist ausgewählt'
       },

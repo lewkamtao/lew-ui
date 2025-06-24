@@ -1218,7 +1218,7 @@ export default {
         keyField: 'Campo identificador do nó',
         labelField: 'Campo rótulo do nó',
         disabledField: 'Campo de desabilitação do nó',
-        initTreeMethod: 'Método de inicialização dos nós',
+        initOptionsMethod: 'Método de inicialização dos nós',
         loadMethod: 'Método de carregamento assíncrono dos filhos'
       },
       slots: {
@@ -1607,7 +1607,7 @@ export default {
         keyField: 'Campo identificador do nó',
         labelField: 'Campo rótulo do nó',
         disabledField: 'Campo de desabilitação do nó',
-        initTreeMethod: 'Método de inicialização da árvore',
+        initOptionsMethod: 'Método de inicialização da árvore',
         loadMethod: 'Método de carregamento assíncrono',
         isSelect: 'Está selecionado'
       },

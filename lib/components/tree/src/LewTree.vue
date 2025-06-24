@@ -75,9 +75,9 @@ const init = async (searchKeyword = '') => {
   // 记录当前搜索的关键词
   lastSearchKeyword.value = searchKeyword
 
-  const { dataSource, initTreeMethod, keyField, labelField, free } = props
+  const { dataSource, initOptionsMethod, keyField, labelField, free } = props
   const { status, result, error } = (await transformTree({
-    initTreeMethod,
+    initOptionsMethod,
     dataSource,
     keyField,
     labelField,

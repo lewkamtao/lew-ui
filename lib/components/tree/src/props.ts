@@ -96,7 +96,7 @@ export const treeProps = {
     default: 'disabled',
     description: '指定作为禁用状态的字段名'
   },
-  initTreeMethod: {
+  initOptionsMethod: {
     type: Function as PropType<() => void>,
     default: undefined,
     description: '初始化树形数据的方法'

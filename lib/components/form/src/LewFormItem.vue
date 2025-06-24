@@ -23,7 +23,8 @@ import {
   LewSlider,
   LewSliderRange,
   LewColorPicker,
-  LewRate
+  LewRate,
+  LewTreeSelect
 } from 'lew-ui'
 import { debounce, cloneDeep, isString, merge } from 'lodash-es'
 import * as Yup from 'yup'
@@ -55,7 +56,8 @@ const asMap: Record<string, any> = {
   slider: LewSlider,
   'slider-range': LewSliderRange,
   'color-picker': LewColorPicker,
-  rate: LewRate
+  rate: LewRate,
+  'tree-select': LewTreeSelect
 }
 // 获取app
 const app = getCurrentInstance()?.appContext.app

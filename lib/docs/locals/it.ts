@@ -1184,7 +1184,7 @@ export default {
         keyField: 'Campo chiave nodo',
         labelField: 'Campo etichetta nodo',
         disabledField: 'Campo disabilitazione nodo',
-        initTreeMethod: 'Metodo inizializzazione albero',
+        initOptionsMethod: 'Metodo inizializzazione albero',
         loadMethod: 'Metodo caricamento asincrono'
       },
       slots: {
@@ -1562,7 +1562,7 @@ export default {
         keyField: 'Campo chiave nodo',
         labelField: 'Campo etichetta nodo',
         disabledField: 'Campo disabilitazione nodo',
-        initTreeMethod: 'Metodo inizializzazione albero',
+        initOptionsMethod: 'Metodo inizializzazione albero',
         loadMethod: 'Metodo caricamento asincrono nodi',
         isSelect: 'È selezionato'
       },

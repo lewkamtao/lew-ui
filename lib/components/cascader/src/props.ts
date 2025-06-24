@@ -99,6 +99,16 @@ export const cascaderProps = {
     hidden: true,
     description: '动态加载子节点数据函数的标识'
   },
+  initOptionsMethod: {
+    type: Function,
+    description: '初始化选项数据的函数'
+  },
+  initOptionsMethodId: {
+    type: String,
+    default: '',
+    hidden: true,
+    description: '初始化选项数据函数的标识'
+  },
   readonly: {
     type: Boolean,
     default: false,

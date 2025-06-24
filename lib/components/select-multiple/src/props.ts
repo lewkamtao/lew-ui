@@ -105,6 +105,12 @@ export const selectMultipleProps = {
     default: undefined,
     description: '初始化选项的方法，用于异步加载选项'
   },
+  initOptionsMethodId: {
+    type: String,
+    default: '',
+    hidden: true,
+    description: '初始化选项方法函数的标识'
+  },
   searchMethodId: {
     type: String,
     default: '',

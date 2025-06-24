@@ -2,7 +2,7 @@
 import axios from '@/axios/http'
 import { Box } from 'lucide-vue-next'
 
-const initTreeMethod = () => {
+const initOptionsMethod = () => {
   return new Promise<any[]>((resolve) => {
     // item 不存在的时候 是第一层加载
     axios
@@ -70,7 +70,7 @@ const v = ref<string>('')
       labelField="label"
       searchable
       :loadMethod="loadMethod"
-      :initTreeMethod="initTreeMethod"
+      :initOptionsMethod="initOptionsMethod"
       @change="change"
     >
       <template #empty>

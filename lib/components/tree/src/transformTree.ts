@@ -131,14 +131,14 @@ export const formatTree = ({
  * @returns 处理结果，包含状态和数据
  */
 const transformTree = async ({
-  initTreeMethod = null,
+  initOptionsMethod = null,
   dataSource = [],
   keyField = 'key',
   labelField = 'label',
   free = false,
   keyword = ''
 }: {
-  initTreeMethod?: any
+  initOptionsMethod?: any
   dataSource?: TreeDataSource[]
   keyField?: string
   labelField?: string
@@ -150,9 +150,9 @@ const transformTree = async ({
 
   try {
     // 处理初始化树或使用提供的数据源
-    if (initTreeMethod) {
+    if (initOptionsMethod) {
       try {
-        const _tree: TreeDataSource[] = await initTreeMethod()
+        const _tree: TreeDataSource[] = await initOptionsMethod()
         if (isArray(_tree)) {
           tree = formatTree({
             dataSource: _tree,
@@ -167,7 +167,7 @@ const transformTree = async ({
             status: 'error',
             result: [],
             error: new Error(
-              'The initTreeMethod function should return a Promise that resolves to an array'
+              'The initOptionsMethod function should return a Promise that resolves to an array'
             )
           }
         }

@@ -3,7 +3,7 @@ import { useDebounceFn } from '@vueuse/core'
 import { LewPopover, LewTree, LewTooltip } from 'lew-ui'
 import { object2class } from 'lew-ui/utils'
 import { treeSelectProps } from './props'
-import { cloneDeep, isString } from 'lodash-es'
+import { cloneDeep, isString, isFunction } from 'lodash-es'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { findNodeByKey } from 'lew-ui/utils'
 // 获取app
@@ -15,15 +15,21 @@ const props = defineProps(treeSelectProps)
 const emit = defineEmits(['change', 'blur', 'clear'])
 const treeSelectValue: Ref<any> = defineModel()
 
-// 校验 Model
-if (!isString(treeSelectValue.value)) {
-  throw new Error('tree-select modelValue must be a string')
-}
-
 const lewSelectRef = ref()
 const inputRef = ref()
 const lewPopoverRef = ref()
 const lewTreeRef = ref()
+
+const formMethods: any = inject('formMethods', {})
+
+let _initOptionsMethod = computed(() => {
+  if (isFunction(props.initOptionsMethod)) {
+    return props.initOptionsMethod
+  } else if (props.initOptionsMethodId) {
+    return formMethods[props.initOptionsMethodId]
+  }
+  return false
+})
 
 const state = reactive({
   selectWidth: 0, // 选择框宽度
@@ -94,7 +100,8 @@ const getSelectClassName = computed(() => {
     disabled,
     readonly,
     searchable,
-    focus
+    focus,
+    'init-loading': state.initLoading
   })
 })
 
@@ -172,7 +179,7 @@ defineExpose({ show, hide })
     popoverBodyClassName="lew-select-popover-body"
     class="lew-select-view"
     :trigger="trigger"
-    :disabled="disabled || readonly"
+    :disabled="disabled || readonly || state.initLoading"
     placement="bottom-start"
     style="width: 100%"
     :loading="state.searchLoading"
@@ -181,19 +188,20 @@ defineExpose({ show, hide })
   >
     <template #trigger>
       <div ref="lewSelectRef" class="lew-select" :class="getSelectClassName">
+        <div v-if="state.initLoading" class="lew-icon-loading-box">
+          <Icon
+            :size="getIconSize"
+            :loading="state.initLoading"
+            type="loading"
+          />
+        </div>
+
         <Icon
-          v-if="!readonly && !state.initLoading"
+          v-else
           :size="getIconSize"
           type="chevron-down"
-          class="icon-select"
-          :class="{ 'icon-select-hide': clearable && state.keyword }"
-        />
-        <Icon
-          v-else-if="state.initLoading"
-          loading
-          type="loader"
-          :size="getIconSize"
-          class="icon-loader"
+          class="lew-icon-select"
+          :class="{ 'lew-icon-select-hide': clearable && state.keyword }"
         />
         <transition name="lew-form-icon-ani">
           <Icon
@@ -210,7 +218,7 @@ defineExpose({ show, hide })
         <input
           ref="inputRef"
           v-model="state.keyword"
-          class="value"
+          class="lew-value"
           :style="getValueStyle"
           :readonly="!searchable"
           :placeholder="getPlaceholder"
@@ -243,7 +251,7 @@ defineExpose({ show, hide })
                 searchable,
                 dataSource,
                 loadMethod,
-                initTreeMethod,
+                initOptionsMethod: _initOptionsMethod,
                 expandAll
               }"
               :is-select="true"
@@ -296,7 +304,18 @@ defineExpose({ show, hide })
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
     box-shadow: var(--lew-form-box-shadow);
 
-    .icon-select {
+    .lew-icon-loading-box {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 50%;
+      right: 9px;
+      padding: 2px;
+      box-sizing: border-box;
+      transform: translateY(-50%);
+    }
+
+    .lew-icon-select {
       position: absolute;
       top: 50%;
       right: 9px;
@@ -305,31 +324,16 @@ defineExpose({ show, hide })
       padding: 2px;
     }
 
-    .icon-loader {
-      position: absolute;
-      top: 50%;
-      right: 9px;
-      animation: icon-spin 1s infinite linear;
-    }
-    @keyframes icon-spin {
-      0% {
-        transform: translateY(-50%) rotate(0deg);
-      }
-      100% {
-        transform: translateY(-50%) rotate(360deg);
-      }
-    }
-
-    .icon-select {
+    .lew-icon-select {
       opacity: var(--lew-form-icon-opacity);
     }
 
-    .icon-select-hide {
+    .lew-icon-select-hide {
       opacity: 0;
       transform: translate(100%, -50%);
     }
 
-    .value {
+    .lew-value {
       width: calc(100% - 24px);
       display: inline-flex;
       align-items: center;
@@ -344,7 +348,7 @@ defineExpose({ show, hide })
       color: var(--lew-text-color-1);
     }
 
-    .value::placeholder {
+    .lew-value::placeholder {
       color: rgb(165, 165, 165);
     }
   }
@@ -377,12 +381,12 @@ defineExpose({ show, hide })
     border: var(--lew-form-border-width) var(--lew-form-border-color-focus)
       solid;
 
-    .icon-select {
+    .lew-icon-select {
       transform: translateY(-50%) rotate(180deg);
       color: var(--lew-text-color-1);
     }
 
-    .icon-select-hide {
+    .lew-icon-select-hide {
       opacity: 0;
       transform: translate(100%, -50%) rotate(180deg);
     }
@@ -406,7 +410,7 @@ defineExpose({ show, hide })
   }
   .lew-select-searchable {
     .lew-select {
-      .value {
+      .lew-value {
         cursor: text;
       }
     }
@@ -415,10 +419,18 @@ defineExpose({ show, hide })
     background-color: var(--lew-form-bgcolor);
     border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
   }
+  .lew-select-init-loading {
+    pointer-events: none;
+    cursor: wait;
+
+    .lew-value {
+      cursor: wait;
+    }
+  }
   .lew-select-size-small {
     height: var(--lew-form-item-height-small);
     line-height: var(--lew-form-input-line-height-small);
-    .value {
+    .lew-value {
       padding: var(--lew-form-input-padding-small);
       font-size: var(--lew-form-font-size-small);
     }
@@ -427,7 +439,7 @@ defineExpose({ show, hide })
   .lew-select-size-medium {
     height: var(--lew-form-item-height-medium);
     line-height: var(--lew-form-input-line-height-medium);
-    .value {
+    .lew-value {
       padding: var(--lew-form-input-padding-medium);
 
       font-size: var(--lew-form-font-size-medium);
@@ -437,7 +449,7 @@ defineExpose({ show, hide })
   .lew-select-size-large {
     height: var(--lew-form-item-height-large);
     line-height: var(--lew-form-input-line-height-large);
-    .value {
+    .lew-value {
       padding: var(--lew-form-input-padding-large);
 
       font-size: var(--lew-form-font-size-large);

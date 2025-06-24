@@ -1,161 +1,51 @@
 <script setup lang="ts">
-const options = ref([
-  {
-    label: 'Living Room Furniture',
-    children: [
-      {
-        label: 'KIVIK Sofa',
-        value: 'kivik'
-      },
-      {
-        label: 'BILLY Bookcase',
-        value: 'billy'
-      },
-      {
-        label: 'KALLAX Shelf Unit',
-        value: 'kallax'
-      },
-      {
-        label: 'POÄNG Armchair',
-        value: 'poang'
-      },
-      {
-        label: 'LACK Coffee Table',
-        value: 'lack'
-      },
-      {
-        label: 'EKTORP Sofa',
-        value: 'ektorp'
-      },
-      {
-        label: 'VITTSJÖ TV Unit',
-        value: 'vittsjo'
-      },
-      {
-        label: 'BESTÅ TV Storage Combination',
-        value: 'besta'
-      }
-    ]
-  },
-  {
-    label: 'Bedroom Furniture',
-    children: [
-      {
-        label: 'MALM Bed',
-        value: 'malm'
-      },
-      {
-        label: 'PAX Wardrobe',
-        value: 'pax'
-      },
-      {
-        label: 'HEMNES Bedside Table',
-        value: 'hemnes'
-      },
-      {
-        label: 'BRIMNES Bed Frame',
-        value: 'brimnes'
-      },
-      {
-        label: 'SONGESAND Wardrobe',
-        value: 'songesand'
-      },
-      {
-        label: 'TRYSIL Bed Frame',
-        value: 'trysil'
-      },
-      {
-        label: 'NORDLI Bedside Table',
-        value: 'nordli'
-      },
-      {
-        label: 'KULLEN 5-drawer Chest',
-        value: 'kullen'
-      }
-    ]
-  },
-  {
-    label: 'Kitchen Items',
-    children: [
-      {
-        label: 'METOD Cabinet',
-        value: 'metod'
-      },
-      {
-        label: 'KNOXHULT Kitchen Base Cabinet',
-        value: 'knoxhult'
-      },
-      {
-        label: 'SUNNERSTA Mini-kitchen',
-        value: 'sunnersta'
-      },
-      {
-        label: 'TORNVIKEN Kitchen Island',
-        value: 'tornviken'
-      },
-      {
-        label: 'ENHET Kitchen Storage Combination',
-        value: 'enhet'
-      },
-      {
-        label: 'RÅSKOG Kitchen Cart',
-        value: 'raskog'
-      },
-      {
-        label: 'KUNGSFORS Kitchen Rail',
-        value: 'kungsfors'
-      }
-    ]
-  },
-  {
-    label: 'Office Furniture',
-    children: [
-      {
-        label: 'MICKE Desk',
-        value: 'micke'
-      },
-      {
-        label: 'MARKUS Office Chair',
-        value: 'markus'
-      },
-      {
-        label: 'ALEX Drawer Unit',
-        value: 'alex'
-      },
-      {
-        label: 'BEKANT Sit/Stand Desk',
-        value: 'bekant'
-      },
-      {
-        label: 'MILLBERGET Swivel Chair',
-        value: 'millberget'
-      },
-      {
-        label: 'FLINTAN Office Chair',
-        value: 'flintan'
-      },
-      {
-        label: 'GALANT Filing Cabinet',
-        value: 'galant'
-      },
-      {
-        label: 'LÅNGFJÄLL Office Chair',
-        value: 'langfjall'
-      }
+import { LewSelect } from 'lew-ui'
+
+const selectValue = ref()
+
+// 模拟表单方法
+const formMethods = {
+  async loadUserOptions() {
+    // 模拟网络请求延迟
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    
+    return [
+      { label: '张三', value: 'zhangsan' },
+      { label: '李四', value: 'lisi' },
+      { label: '王五', value: 'wangwu' },
+      { label: '赵六', value: 'zhaoliu' }
     ]
   }
-])
+}
 
-const value = ref('')
+// 提供表单方法给子组件
+provide('formMethods', formMethods)
 </script>
 
 <template>
-  <lew-flex style="width: 320px" direction="y" gap="10px">
+  <div class="demo-select">
     <lew-select
-      v-model="value"
-      :options="options"
-      placeholder="Select IKEA Product"
+      v-model="selectValue"
+      init-options-method-id="loadUserOptions"
+      placeholder="请选择用户"
+      width="300px"
       searchable
     />
-  </lew-flex>
+    <div class="demo-result">
+      选中值: {{ selectValue }}
+    </div>
+  </div>
 </template>
+
+<style scoped>
+.demo-select {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.demo-result {
+  font-size: 14px;
+  color: #666;
+}
+</style>

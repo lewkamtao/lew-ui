@@ -30,10 +30,19 @@ let _searchMethod = computed(() => {
   }
 })
 
-const init = async () => {
+let _initOptionsMethod = computed(() => {
   if (isFunction(props.initOptionsMethod)) {
+    return props.initOptionsMethod
+  } else if (props.initOptionsMethodId) {
+    return formMethods[props.initOptionsMethodId]
+  }
+  return false
+})
+
+const init = async () => {
+  if (_initOptionsMethod.value) {
     try {
-      const newOptions = await props.initOptionsMethod()
+      const newOptions = await _initOptionsMethod.value()
       state.sourceOptions = newOptions
       state.options = flattenOptions(newOptions)
       findKeyword() // Update keyword based on new options and modelValue
@@ -50,13 +59,16 @@ const init = async () => {
 watch(
   () => props.options,
   (newOptions) => {
-    state.sourceOptions = newOptions
-    state.options = flattenOptions(newOptions)
-    state.keyword =
-      newOptions.find((e: any) => e.value === selectValue.value)?.label || ''
-    // 如果启用搜索缓存，清除搜索缓存，因为数据源已经更新
-    if (props.enableSearchCache) {
-      state.searchCache.clear()
+    if (!_initOptionsMethod.value) {
+      // 只有在没有使用 initOptionsMethod 时才响应 options 的变化
+      state.sourceOptions = newOptions
+      state.options = flattenOptions(newOptions)
+      state.keyword =
+        newOptions.find((e: any) => e.value === selectValue.value)?.label || ''
+      // 如果启用搜索缓存，清除搜索缓存，因为数据源已经更新
+      if (props.enableSearchCache) {
+        state.searchCache.clear()
+      }
     }
   },
   {
