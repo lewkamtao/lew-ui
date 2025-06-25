@@ -6,45 +6,45 @@ const initOptionsMethod = () => {
     setTimeout(() => {
       const res = [
         {
-          key: "1",
-          label: "Department 1",
+          key: '1',
+          label: 'Department 1',
           children: [
             {
-              key: "1-1",
-              label: "Team 1-1",
+              key: '1-1',
+              label: 'Team 1-1',
               children: [
-                { key: "1-1-1", label: "Member 1-1-1" },
-                { key: "1-1-2", label: "Member 1-1-2" },
+                { key: '1-1-1', label: 'Member 1-1-1' },
+                { key: '1-1-2', label: 'Member 1-1-2' },
               ],
             },
             {
-              key: "1-2",
-              label: "Team 1-2",
+              key: '1-2',
+              label: 'Team 1-2',
               children: [
-                { key: "1-2-1", label: "Member 1-2-1" },
-                { key: "1-2-2", label: "Member 1-2-2" },
+                { key: '1-2-1', label: 'Member 1-2-1' },
+                { key: '1-2-2', label: 'Member 1-2-2' },
               ],
             },
           ],
         },
         {
-          key: "2",
-          label: "Department 2",
+          key: '2',
+          label: 'Department 2',
           children: [
             {
-              key: "2-1",
-              label: "Team 2-1",
+              key: '2-1',
+              label: 'Team 2-1',
               children: [
-                { key: "2-1-1", label: "Member 2-1-1" },
-                { key: "2-1-2", label: "Member 2-1-2" },
+                { key: '2-1-1', label: 'Member 2-1-1' },
+                { key: '2-1-2', label: 'Member 2-1-2' },
               ],
             },
             {
-              key: "2-2",
-              label: "Team 2-2",
+              key: '2-2',
+              label: 'Team 2-2',
               children: [
-                { key: "2-2-1", label: "Member 2-2-1" },
-                { key: "2-2-2", label: "Member 2-2-2" },
+                { key: '2-2-1', label: 'Member 2-2-1' },
+                { key: '2-2-2', label: 'Member 2-2-2' },
               ],
             },
           ],

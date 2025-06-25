@@ -8,7 +8,14 @@ const emit = defineEmits(['change']);
 
 const modelValue = defineModel<number[]>('modelValue', {
   get(val) {
-    if (val) return val;
+    // 确保返回有效的数组，避免 null、undefined 或空数组
+    if (
+      Array.isArray(val) &&
+      val.length === 2 &&
+      val.every((v) => v !== null && v !== undefined)
+    ) {
+      return val;
+    }
     return [getMin.value, getMax.value]; // 初始值设置为可选范围内的最小值和最大值
   },
 });
@@ -18,6 +25,33 @@ const _modelValue = ref<number[]>([0, 0]);
 
 // 添加拖拽标志，用于过滤拖拽过程中的更新
 const isDragging = ref(false);
+
+// 安全的数组访问函数
+const safeGetArrayValue = (
+  arr: number[] | null | undefined,
+  index: number,
+  defaultValue: number
+): number => {
+  if (
+    !Array.isArray(arr) ||
+    arr.length <= index ||
+    arr[index] === null ||
+    arr[index] === undefined
+  ) {
+    return defaultValue;
+  }
+  return arr[index];
+};
+
+// 安全的 modelValue 访问
+const getModelValueAt = (index: number, defaultValue: number): number => {
+  return safeGetArrayValue(modelValue.value, index, defaultValue);
+};
+
+// 安全的 _modelValue 访问
+const getInternalValueAt = (index: number, defaultValue: number): number => {
+  return safeGetArrayValue(_modelValue.value, index, defaultValue);
+};
 
 // 修改为数组以支持范围
 const dotRef1 = ref<HTMLElement | null>(null); // 左侧滑块
@@ -113,7 +147,14 @@ const setDotByValue = (value: number, isLeft: boolean) => {
 
 // 根据modelValue更新两个滑块的位置
 const updateDotsByModelValue = (values: number[]) => {
-  if (!values || values.length !== 2) return;
+  // 确保 values 是有效的数组
+  if (
+    !Array.isArray(values) ||
+    values.length !== 2 ||
+    values.some((v) => v === null || v === undefined)
+  ) {
+    return;
+  }
 
   const [leftValue, rightValue] = values;
 
@@ -142,8 +183,8 @@ const init = () => {
       trackMin: () => getTrackMin.value,
       callback: (e: any) => {
         const newValue = [
-          _modelValue.value[0] || getMin.value,
-          _modelValue.value[1] || getMax.value,
+          getInternalValueAt(0, getMin.value),
+          getInternalValueAt(1, getMax.value),
         ];
         newValue[0] = calculateValue(e.x);
         _modelValue.value = [newValue[0], newValue[1]];
@@ -163,8 +204,8 @@ const init = () => {
       trackMin: () => getTrackMin.value,
       callback: (e: any) => {
         const newValue = [
-          _modelValue.value[0] || getMin.value,
-          _modelValue.value[1] || getMax.value,
+          getInternalValueAt(0, getMin.value),
+          getInternalValueAt(1, getMax.value),
         ];
         newValue[1] = calculateValue(e.x);
         _modelValue.value = [newValue[0], newValue[1]];
@@ -199,7 +240,12 @@ watch(
     if (isDragging.value) {
       return;
     }
-    if (newValue && newValue.length === 2) {
+    // 确保 newValue 是有效的数组
+    if (
+      Array.isArray(newValue) &&
+      newValue.length === 2 &&
+      newValue.every((v) => v !== null && v !== undefined)
+    ) {
       _modelValue.value = [...newValue];
       updateDotsByModelValue(_modelValue.value);
     }
@@ -211,9 +257,14 @@ watch(
 );
 
 onMounted(() => {
-  // 初始化 _modelValue
-  if (modelValue.value && modelValue.value.length === 2) {
-    _modelValue.value = [...modelValue.value];
+  // 初始化 _modelValue，确保有有效的值
+  const currentModelValue = modelValue.value;
+  if (
+    Array.isArray(currentModelValue) &&
+    currentModelValue.length === 2 &&
+    currentModelValue.every((v) => v !== null && v !== undefined)
+  ) {
+    _modelValue.value = [...currentModelValue];
   } else {
     _modelValue.value = [getMin.value, getMax.value];
   }
@@ -267,6 +318,115 @@ const getStyle = computed(() => {
     '--lew-slider-height': `var(--lew-form-item-height-${size})`,
   };
 });
+
+// 计算选中区域的样式
+const selectedAreaStyle = computed(() => {
+  const leftValue = getInternalValueAt(0, getMin.value);
+  const rightValue = getInternalValueAt(1, getMax.value);
+  const minValue = Math.min(leftValue, rightValue);
+
+  const width = Math.max(
+    0,
+    Math.min(
+      100,
+      (Math.abs(rightValue - leftValue) /
+        (getTrackMax.value - getTrackMin.value)) *
+        100
+    )
+  );
+
+  const left = getMarkPosition(minValue);
+
+  return {
+    width: `${width}%`,
+    left: `${left}%`,
+  };
+});
+
+// 计算范围区域的样式
+const rangeAreaStyle = computed(() => {
+  const width = Math.max(
+    0,
+    Math.min(
+      100,
+      ((getMax.value - getMin.value) /
+        (getTrackMax.value - getTrackMin.value)) *
+        100
+    )
+  );
+
+  return {
+    width: `${width}%`,
+    left: `${getMarkPosition(getMin.value)}%`,
+  };
+});
+
+// 判断步进标记是否被选中
+const isStepMarkSelected = (value: number | string) => {
+  const leftValue = getInternalValueAt(0, getMin.value);
+  const rightValue = getInternalValueAt(1, getMax.value);
+  const minValue = Math.min(leftValue, rightValue);
+  const maxValue = Math.max(leftValue, rightValue);
+
+  return Number(value) >= minValue && Number(value) <= maxValue;
+};
+
+// 判断步进标签是否被禁用
+const isStepLabelDisabled = (value: number | string) => {
+  return (
+    Number(value) < Number(getMin.value) || Number(value) > Number(getMax.value)
+  );
+};
+
+// 创建 tooltip 配置
+const createTooltipConfig = (value: number) => ({
+  content: props.formatTooltip(value),
+  placement: 'top' as const,
+  trigger: 'mouseenter' as const,
+  delay: [0, 1000] as [number, number],
+  key: dotX.value,
+});
+
+// 左侧滑块的 tooltip 配置
+const leftDotTooltip = computed(() =>
+  createTooltipConfig(getInternalValueAt(0, getMin.value))
+);
+
+// 右侧滑块的 tooltip 配置
+const rightDotTooltip = computed(() =>
+  createTooltipConfig(getInternalValueAt(1, getMax.value))
+);
+
+// 左侧禁用区域样式
+const leftDisabledAreaStyle = computed(() => ({
+  width: `${getMarkPosition(getMin.value)}%`,
+}));
+
+// 右侧禁用区域样式
+const rightDisabledAreaStyle = computed(() => ({
+  width: `${100 - getMarkPosition(getMax.value)}%`,
+}));
+
+// 步进标签样式
+const createStepLabelStyle = (value: number | string) => ({
+  left: `${getMarkPosition(value)}%`,
+  top: `calc(var(--lew-slider-height) - 20px)`,
+});
+
+// 步进标记样式
+const createStepMarkStyle = (value: number | string) => ({
+  left: `${getMarkPosition(value)}%`,
+});
+
+// 左侧滑块的样式
+const leftDotStyle = computed(() => ({
+  opacity: getInternalValueAt(0, getMin.value) !== undefined ? '1' : '0',
+}));
+
+// 右侧滑块的样式
+const rightDotStyle = computed(() => ({
+  opacity: getInternalValueAt(1, getMax.value) !== undefined ? '1' : '0',
+}));
 </script>
 
 <template>
@@ -280,50 +440,21 @@ const getStyle = computed(() => {
   >
     <div ref="trackRef" class="lew-slider-track">
       <div
-        :style="{
-          width: `${getMarkPosition(getMin)}%`,
-        }"
+        :style="leftDisabledAreaStyle"
         class="lew-slider-track-disabled-area lew-slider-track-disabled-area-left"
         @click.stop
       ></div>
       <div
-        :style="{
-          width: `${100 - getMarkPosition(getMax)}%`,
-        }"
+        :style="rightDisabledAreaStyle"
         class="lew-slider-track-disabled-area lew-slider-track-disabled-area-right"
         @click.stop
       ></div>
 
       <div class="lew-slider-track-line">
-        <div
-          class="lew-slider-track-line-range"
-          :style="{
-            width: `${Math.max(
-              0,
-              Math.min(
-                100,
-                ((getMax - getMin) / (getTrackMax - getTrackMin)) * 100
-              )
-            )}%`,
-            left: `${getMarkPosition(getMin)}%`,
-          }"
-        ></div>
+        <div class="lew-slider-track-line-range" :style="rangeAreaStyle"></div>
         <div
           class="lew-slider-track-line-selected"
-          :style="{
-            width: `${Math.max(
-              0,
-              Math.min(
-                100,
-                (Math.abs(
-                  (_modelValue[1] ?? getMax) - (_modelValue[0] ?? getMin)
-                ) /
-                  (getTrackMax - getTrackMin)) *
-                  100
-              )
-            )}%`,
-            left: `${getMarkPosition(Math.min(_modelValue[0] ?? getMin, _modelValue[1] ?? getMax))}%`,
-          }"
+          :style="selectedAreaStyle"
         ></div>
 
         <div
@@ -331,37 +462,24 @@ const getStyle = computed(() => {
           :key="index"
           class="lew-slider-track-step-mark"
           :class="{
-            'lew-slider-track-step-mark-selected':
-              Number(item.value) >=
-                Math.min(
-                  Number(_modelValue[0] ?? getMin),
-                  Number(_modelValue[1] ?? getMax)
-                ) &&
-              Number(item.value) <=
-                Math.max(
-                  Number(_modelValue[0] ?? getMin),
-                  Number(_modelValue[1] ?? getMax)
-                ),
+            'lew-slider-track-step-mark-selected': isStepMarkSelected(
+              item.value
+            ),
           }"
-          :style="{
-            left: `${getMarkPosition(item.value)}%`,
-          }"
+          :style="createStepMarkStyle(item.value)"
         ></div>
         <div
           v-for="(item, index) in options"
           :key="index"
           class="lew-slider-track-step-label"
-          :style="{
-            left: `${getMarkPosition(item.value)}%`,
-            top: `calc(var(--lew-slider-height) - 20px)`,
-          }"
+          :style="createStepLabelStyle(item.value)"
         >
           <div
             class="lew-slider-track-step-label-text"
             :class="{
-              'lew-slider-track-step-label-text-disabled':
-                Number(item.value) < Number(getMin) ||
-                Number(item.value) > Number(getMax),
+              'lew-slider-track-step-label-text-disabled': isStepLabelDisabled(
+                item.value
+              ),
             }"
           >
             {{ item.label }}
@@ -370,32 +488,16 @@ const getStyle = computed(() => {
       </div>
       <div
         ref="dotRef1"
-        v-tooltip="{
-          content: formatTooltip(_modelValue[0] ?? getMin),
-          placement: 'top',
-          trigger: 'mouseenter',
-          delay: [0, 1000],
-          key: dotX,
-        }"
-        :style="{
-          opacity: _modelValue[0] !== undefined ? '1' : '0',
-        }"
+        v-tooltip="leftDotTooltip"
+        :style="leftDotStyle"
         class="lew-slider-track-dot"
         @mousedown="isDragging = true"
         @mouseup="isDragging = false"
       ></div>
       <div
         ref="dotRef2"
-        v-tooltip="{
-          content: formatTooltip(_modelValue[1] ?? getMax),
-          placement: 'top',
-          trigger: 'mouseenter',
-          delay: [0, 1000],
-          key: dotX,
-        }"
-        :style="{
-          opacity: _modelValue[1] !== undefined ? '1' : '0',
-        }"
+        v-tooltip="rightDotTooltip"
+        :style="rightDotStyle"
         @mousedown="isDragging = true"
         @mouseup="isDragging = false"
         class="lew-slider-track-dot"
