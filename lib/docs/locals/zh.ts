@@ -338,8 +338,7 @@ export default {
         children: '子菜单项数组',
         disabled: '是否禁用菜单项',
         icon: '菜单项的图标',
-        tagText: '菜单项的徽章文本',
-        tagColor: '菜单项的徽章颜色',
+        tagProps: '菜单项标签 Props',
       },
     },
     menuTree: {
@@ -376,9 +375,7 @@ export default {
         value: '菜单项的值，用于标识菜单项的唯一性。',
         level: '菜单树项的层级，从 1 开始。',
         icon: '图标渲染函数',
-        tagText: '菜单项的徽章文本',
-        tagType: '菜单项的徽章类型',
-        tagColor: '菜单项的徽章颜色',
+        tagProps: '菜单项标签 Props',
         disabled: '是否禁用菜单项',
         isLeaf: '是否为叶子节点',
       },
@@ -477,6 +474,7 @@ export default {
         dropdownIcon: '下拉菜单的图标',
         divider: '是否显示分割线',
         iconOnly: '是否只显示图标',
+        x: '水平方向上的对齐方式',
       },
       options: {
         label: '操作按钮的文本',
@@ -502,6 +500,9 @@ export default {
       },
       demo5: {
         title: '搭配表单引擎配置',
+      },
+      demo6: {
+        title: '表单项异步加载',
       },
       props: {
         options: '定义表单结构和内容的配置选项数组',
@@ -927,6 +928,12 @@ export default {
       demo8: {
         title: '分组',
       },
+      demo9: {
+        title: '初始化选项方法',
+      },
+      demo10: {
+        title: '启用搜索缓存',
+      },
       model: {
         modelValue: '绑定值',
       },
@@ -947,6 +954,8 @@ export default {
         readonly: '只读状态',
         disabled: '禁用状态',
         showCheckIcon: '显示勾选图标',
+        initOptionsMethod: '初始化选项方法',
+        enableSearchCache: '是否启用搜索缓存',
       },
       events: {
         change: '值发生变化时触发',
