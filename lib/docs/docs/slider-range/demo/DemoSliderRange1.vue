@@ -3,6 +3,7 @@ let v = ref([25, 75]);
 </script>
 
 <template>
+  <pre>{{ v }}</pre>
   <lew-flex direction="y" x="start">
     <lew-slider-range
       style="width: 500px"
