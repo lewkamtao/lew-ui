@@ -356,8 +356,7 @@ export default {
         children: 'Array der Untermenüpunkte',
         disabled: 'Menüpunkt deaktivieren',
         icon: 'Icon des Menüpunkts',
-        tagText: 'Badge-Text des Menüpunkts',
-        tagColor: 'Badge-Farbe des Menüpunkts',
+        tagProps: 'Badge-Props des Menüpunkts',
       },
     },
     menuTree: {
@@ -398,9 +397,7 @@ export default {
         value: 'Wert des Menüpunkts zur eindeutigen Identifizierung',
         level: 'Ebene des Menübaum-Elements, beginnt bei 1',
         icon: 'Icon-Renderfunktion',
-        tagText: 'Badge-Text des Menüpunkts',
-        tagType: 'Badge-Typ des Menüpunkts',
-        tagColor: 'Badge-Farbe des Menüpunkts',
+        tagProps: 'Badge-Props des Menüpunkts',
         disabled: 'Ist der Menüpunkt deaktiviert',
         isLeaf: 'Ist es ein Blattknoten',
       },
@@ -495,6 +492,9 @@ export default {
       },
       demo5: {
         title: 'Mit Formular-Engine-Konfiguration',
+      },
+      demo6: {
+        title: 'Asynchrone Formularelement-Ladung',
       },
       props: {
         options:
@@ -931,6 +931,12 @@ export default {
       demo8: {
         title: 'Gruppierung',
       },
+      demo9: {
+        title: 'Optionsinitialisierungsmethode',
+      },
+      demo10: {
+        title: 'Suchcache aktivieren',
+      },
       model: {
         modelValue: 'Gebundener Wert',
       },
@@ -951,6 +957,8 @@ export default {
         readonly: 'Schreibgeschützt',
         disabled: 'Deaktiviert',
         showCheckIcon: 'Häkchen-Icon anzeigen',
+        initOptionsMethod: 'Optionsinitialisierungsmethode',
+        enableSearchCache: 'Suchcache aktivieren',
       },
       events: {
         change: 'Wird bei Wertänderung ausgelöst',
@@ -996,6 +1004,11 @@ export default {
       demo8: {
         title: 'Gruppierung',
       },
+      demo9: {
+        title: 'Optionsinitialisierungsmethode',
+        description:
+          'Verwenden Sie die ```initOptionsMethod```, um Mehrfachauswahldaten zu initialisieren und ein ```Promise```-Objekt zurückzugeben',
+      },
       props: {
         options: 'Optionen',
         trigger: 'Auslösemethode',
@@ -1014,6 +1027,8 @@ export default {
         disabled: 'Deaktiviert',
         showCheckIcon: 'Häkchen-Icon anzeigen',
         defaultValue: 'Standardwert',
+        initOptionsMethod: 'Optionsinitialisierungsmethode',
+        enableSearchCache: 'Suchcache aktivieren',
       },
       model: {
         modelValue: 'Gebundener Wert',
@@ -1133,6 +1148,11 @@ export default {
       demo8: {
         title: 'Deaktivierte Optionen',
       },
+      demo9: {
+        title: 'Optionsinitialisierungsmethode',
+        description:
+          'Verwenden Sie die ```initOptionsMethod```, um Kaskadendaten zu initialisieren und ein ```Promise```-Objekt zurückzugeben',
+      },
       model: {
         modelValue: 'Gebundener Wert',
       },
@@ -1149,6 +1169,7 @@ export default {
         trigger: 'Auslösemethode',
         loadMethod: 'Lademethode',
         readonly: 'Schreibgeschützt',
+        initOptionsMethod: 'Optionsinitialisierungsmethode',
       },
       options: {
         label: 'Beschriftung',
@@ -1186,6 +1207,17 @@ export default {
       demo8: {
         title: 'Weitere',
       },
+      demo9: {
+        title: 'Schreibgeschützt',
+      },
+      demo10: {
+        title: 'Deaktiviert',
+      },
+      demo11: {
+        title: 'Daten initialisieren',
+        description:
+          'Verwenden Sie die ```initOptionsMethod```, um Baumdaten zu initialisieren und ein ```Promise```-Objekt zurückzugeben',
+      },
       model: {
         modelValue: 'Gebundener Wert',
       },
@@ -1193,6 +1225,7 @@ export default {
         dataSource: 'Datenquelle',
         defaultValue: 'Standardwert',
         placeholder: 'Platzhaltertext',
+        width: 'Breite',
         size: 'Komponentengröße',
         disabled: 'Deaktiviert',
         clearable: 'Löschbar',
@@ -1493,6 +1526,9 @@ export default {
         tipsContent:
           'Wenn Sie fixierte Spalten in gruppierten Kopfzeilen verwenden möchten, müssen Sie allen fixierten Spaltenköpfen eine Breite zuweisen, einschließlich aller übergeordneten Knoten, sonst können Positionierungsprobleme auftreten.',
       },
+      demo12: {
+        title: 'Drag & Drop Sortierung',
+      },
       props: {
         columns: 'Spalten',
         dataSource: 'Datenquelle',
@@ -1742,10 +1778,11 @@ export default {
         title: 'Manuelles Schließen',
       },
       props: {
-        type: 'Typ',
         title: 'Titel',
         content: 'Benachrichtigungsinhalt',
         delay: 'Verzögerungszeit',
+        width: 'Breite',
+        showProgress: 'Fortschrittsbalken anzeigen',
       },
     },
     drawer: {
@@ -1849,6 +1886,7 @@ export default {
         closeButtonProps: 'Eigenschaften der Schließen-Schaltfläche',
         closeOnClickOverlay: 'Durch Klick auf Overlay schließen',
         zIndex: 'Z-Index',
+        maxHeight: 'Maximale Höhe',
       },
     },
     popok: {
@@ -2005,6 +2043,7 @@ export default {
         dropdownIcon: 'Dropdown-Menü-Symbol',
         divider: 'Trennlinie anzeigen',
         iconOnly: 'Nur Symbol anzeigen',
+        x: 'Horizontale Ausrichtung',
       },
       options: {
         label: 'Aktionsschaltflächen-Text',

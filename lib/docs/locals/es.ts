@@ -356,8 +356,7 @@ export default {
         children: 'Array of sub-menu items',
         disabled: 'Disable the menu item',
         icon: 'Icon of the menu item',
-        tagText: 'Badge text of the menu item',
-        tagColor: 'Badge color of the menu item',
+        tagProps: 'Badge Props of the menu item',
       },
     },
     menuTree: {
@@ -396,9 +395,7 @@ export default {
           'Value of the menu item, used to identify the uniqueness of the menu item.',
         level: 'Level of the menu tree item, starting from 1.',
         icon: 'Icon rendering function',
-        tagText: 'Badge text of the menu item',
-        tagType: 'Badge type of the menu item',
-        tagColor: 'Badge color of the menu item',
+        tagProps: 'Badge Props of the menu item',
         disabled: 'Disable the menu item',
         isLeaf: 'Is it a leaf node',
       },
@@ -493,6 +490,9 @@ export default {
       },
       demo5: {
         title: 'Configure with Form Engine',
+      },
+      demo6: {
+        title: 'Asynchronous Form Item Loading',
       },
       props: {
         options:
@@ -934,6 +934,12 @@ export default {
       demo8: {
         title: 'Group',
       },
+      demo9: {
+        title: 'Initialize Options Method',
+      },
+      demo10: {
+        title: 'Enable Search Cache',
+      },
       model: {
         modelValue: 'Bound Value',
       },
@@ -954,6 +960,8 @@ export default {
         readonly: 'Read-only',
         disabled: 'Disabled',
         showCheckIcon: 'Show Check Icon',
+        initOptionsMethod: 'Initialize Options Method',
+        enableSearchCache: 'Enable Search Cache',
       },
       events: {
         change: 'Triggered when the value changes',
@@ -995,6 +1003,11 @@ export default {
       demo8: {
         title: 'Group',
       },
+      demo9: {
+        title: 'Initialize Options Method',
+        description:
+          'Use the ```initOptionsMethod``` to initialize multiple selection data and return a ```Promise``` object',
+      },
       props: {
         options: 'Options',
         trigger: 'Trigger Method',
@@ -1013,6 +1026,8 @@ export default {
         disabled: 'Disabled',
         showCheckIcon: 'Show Check Icon',
         defaultValue: 'Default Value',
+        initOptionsMethod: 'Initialize Options Method',
+        enableSearchCache: 'Enable Search Cache',
       },
       model: {
         modelValue: 'Bound Value',
@@ -1129,6 +1144,11 @@ export default {
       demo8: {
         title: 'Disabled Options',
       },
+      demo9: {
+        title: 'Initialize Options Method',
+        description:
+          'Use the ```initOptionsMethod``` to initialize cascader data and return a ```Promise``` object',
+      },
       model: {
         modelValue: 'Bound Value',
       },
@@ -1145,6 +1165,7 @@ export default {
         trigger: 'Trigger Method',
         loadMethod: 'Load Method',
         readonly: 'Read-only',
+        initOptionsMethod: 'Initialize Options Method',
       },
       options: {
         label: 'Label',
@@ -1182,6 +1203,17 @@ export default {
       demo8: {
         title: 'Others',
       },
+      demo9: {
+        title: 'Read-only',
+      },
+      demo10: {
+        title: 'Disabled',
+      },
+      demo11: {
+        title: 'Initialize Data',
+        description:
+          'Use the ```initOptionsMethod``` to initialize tree data and return a ```Promise``` object',
+      },
       model: {
         modelValue: 'Bound Value',
       },
@@ -1189,6 +1221,7 @@ export default {
         dataSource: 'Data Source',
         defaultValue: 'Default Selected Value',
         placeholder: 'Placeholder Text',
+        width: 'Width',
         size: 'Component Size',
         disabled: 'Disabled',
         clearable: 'Clearable',
@@ -1493,6 +1526,9 @@ export default {
         tipsContent:
           'Si desea que los encabezados agrupados tengan columnas fijas, debe establecer el ancho para todos los encabezados de columnas fijas, incluidos todos los nodos padre, de lo contrario puede producirse un desalineamiento.',
       },
+      demo12: {
+        title: 'Ordenación por arrastrar y soltar',
+      },
       props: {
         columns: 'Columnas',
         dataSource: 'Fuente de datos',
@@ -1582,8 +1618,8 @@ export default {
       props: {
         dataSource: 'Data source',
         multiple: 'Multiple selection',
-        height: 'Altura del árbol',
-        searchable: 'Permite búsqueda en el árbol',
+        height: 'Tree height',
+        searchable: 'Allow tree search',
         checkable: 'Show checkbox',
         expandAll: 'Default expand all',
         free: 'Free Selection',
@@ -1743,10 +1779,11 @@ export default {
         title: 'Cierre manual',
       },
       props: {
-        type: 'Tipo',
         title: 'Título',
         content: 'Contenido de la notificación',
         delay: 'Tiempo de retraso',
+        width: 'Ancho',
+        showProgress: 'Mostrar barra de progreso',
       },
     },
     drawer: {
@@ -1843,6 +1880,7 @@ export default {
         title: 'Título',
         width: 'Ancho',
         top: 'Superior',
+        maxHeight: 'Altura máxima',
         hideFooter: 'Ocultar pie',
         closeByEsc: 'Cerrar con ESC',
         okButtonProps: 'Propiedades del botón OK',
@@ -2003,6 +2041,7 @@ export default {
         dropdownIcon: 'Icono del menú desplegable',
         divider: 'Mostrar divisor',
         iconOnly: 'Mostrar solo icono',
+        x: 'Alineación horizontal',
       },
       options: {
         label: 'Texto del botón de acción',

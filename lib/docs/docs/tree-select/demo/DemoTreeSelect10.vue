@@ -9,7 +9,7 @@ const v = ref<string>('');
     key-field="value"
     label-field="label"
     v-model="v"
-    readonly
+    disabled
     :data-source="cityTree"
   />
 </template>

@@ -129,6 +129,49 @@ function getDiffItemClass(diff: string): string {
   }
   return '';
 }
+
+// 复制所有差异信息
+async function copyAllDifferences() {
+  let copyText = ``;
+
+  // 只复制当前激活语言的差异信息
+  const differences = diffResults.value[currentLang.value];
+  if (differences && differences.length > 0) {
+    copyText += `发现 ${currentLang.value} 与 ${baseLanguage} 有 ${differences.length} 处差异, 请深度分析这两个文件的差异，并且以 ${baseLanguage} 为基准帮我调整成结构一模一样的。\n\n`;
+    copyText += `${currentLang.value} 语言差异详情:\n`;
+    differences.forEach((diff, index) => {
+      copyText += `${index + 1}. ${diff}\n`;
+    });
+  } else {
+    copyText += `${currentLang.value} 语言: 无差异 ✓\n`;
+  }
+
+  try {
+    await navigator.clipboard.writeText(copyText);
+
+    // 显示成功提示
+    const copyButton = document.querySelector('.copy-button') as HTMLElement;
+    if (copyButton) {
+      const originalText = copyButton.textContent;
+      copyButton.textContent = '复制成功!';
+      copyButton.classList.add('copied');
+
+      setTimeout(() => {
+        copyButton.textContent = originalText;
+        copyButton.classList.remove('copied');
+      }, 2000);
+    }
+  } catch (error) {
+    console.error('复制失败:', error);
+    // 降级方案：使用传统的复制方法
+    const textArea = document.createElement('textarea');
+    textArea.value = copyText;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+  }
+}
 </script>
 
 <template>
@@ -184,11 +227,36 @@ function getDiffItemClass(diff: string): string {
     </div>
 
     <div class="diff-results">
-      <div v-if="currentDiffCount > 0" class="diff-summary">
-        发现 {{ currentLang }} 与 {{ baseLanguage }} 有
-        {{ currentDiffCount }} 处差异, 请以 {{ baseLanguage }} 为基准帮我修复
+      <div class="diff-header">
+        <div v-if="currentDiffCount > 0" class="diff-summary">
+          发现 {{ currentLang }} 与 {{ baseLanguage }} 有
+          {{ currentDiffCount }} 处差异, 请以 {{ baseLanguage }} 为基准帮我修复
+        </div>
+        <div v-else class="diff-summary complete">恭喜！没有发现差异</div>
+
+        <button
+          class="copy-button"
+          @click="copyAllDifferences"
+          title="复制所有差异信息"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path
+              d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+            ></path>
+          </svg>
+          复制报告
+        </button>
       </div>
-      <div v-else class="diff-summary complete">恭喜！没有发现差异</div>
 
       <div class="diff-list">
         <div
@@ -386,21 +454,77 @@ function getDiffItemClass(diff: string): string {
     background-color: var(--lew-bgcolor-0);
     backdrop-filter: blur(20px);
 
-    .diff-summary {
+    .diff-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: 18px 20px;
       background-color: var(--lew-color-danger-light);
       border-radius: var(--lew-border-radius-large)
         var(--lew-border-radius-large) 0 0;
       margin-bottom: 0;
-      color: var(--lew-color-danger);
-      font-weight: 500;
-      font-size: 15px;
       border-bottom: var(--lew-border-1);
-      letter-spacing: -0.01em;
 
-      &.complete {
-        background-color: var(--lew-color-success-light);
-        color: var(--lew-color-success);
+      .diff-summary {
+        color: var(--lew-color-danger);
+        font-weight: 500;
+        font-size: 15px;
+        letter-spacing: -0.01em;
+        flex: 1;
+
+        &.complete {
+          color: var(--lew-color-success);
+        }
+      }
+
+      .copy-button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background-color: var(--lew-bgcolor-0);
+        border: 1px solid var(--lew-border-color);
+        border-radius: var(--lew-border-radius-small);
+        color: var(--lew-text-color-2);
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        outline: none;
+        user-select: none;
+
+        svg {
+          width: 16px;
+          height: 16px;
+        }
+
+        &:hover {
+          background-color: var(--lew-bgcolor-1);
+          border-color: var(--lew-color-primary);
+          color: var(--lew-color-primary);
+          transform: translateY(-1px);
+          box-shadow: var(--lew-box-shadow);
+        }
+
+        &:focus-visible {
+          box-shadow: 0 0 0 2px var(--lew-color-primary-light);
+          border-color: var(--lew-color-primary);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+
+        &.copied {
+          background-color: var(--lew-color-success);
+          color: var(--lew-color-white-text);
+          border-color: var(--lew-color-success);
+
+          &:hover {
+            background-color: var(--lew-color-success-dark);
+            color: var(--lew-color-white-text);
+          }
+        }
       }
     }
 
@@ -475,6 +599,19 @@ function getDiffItemClass(diff: string): string {
       .source-tabs,
       .lang-tabs {
         width: 100%;
+      }
+    }
+
+    .diff-results {
+      .diff-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+
+        .copy-button {
+          align-self: stretch;
+          justify-content: center;
+        }
       }
     }
   }

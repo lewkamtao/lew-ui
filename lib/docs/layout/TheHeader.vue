@@ -203,10 +203,11 @@ const changeLanguage = (e: any) => {
 };
 
 const goToSettings = () => {
-  router.push('/check-lang');
+  const link = router.resolve('/check-lang').href;
+  window.open(link, '_blank');
 };
 
-const isDev = window.location.hostname === 'localhost';
+const isDev = ['localhost', '127.0.0.1'].includes(window.location.hostname);
 
 // 初始化语言（异步）
 getInitialLocale().then((locale) => {

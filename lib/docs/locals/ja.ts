@@ -346,8 +346,7 @@ export default {
         children: 'サブメニュー項目の配列',
         disabled: 'メニュー項目の無効化',
         icon: 'メニュー項目のアイコン',
-        tagText: 'メニュー項目のバッジテキスト',
-        tagColor: 'メニュー項目のバッジカラー',
+        tagProps: 'メニュー項目タグ Props',
       },
     },
     menuTree: {
@@ -384,9 +383,7 @@ export default {
         value: 'メニュー項目の値（一意性を識別）',
         level: 'メニューツリー項目のレベル（1から開始）',
         icon: 'アイコン描画関数',
-        tagText: 'メニュー項目のバッジテキスト',
-        tagType: 'メニュー項目のバッジタイプ',
-        tagColor: 'メニュー項目のバッジカラー',
+        tagProps: 'メニュー項目タグ Props',
         disabled: 'メニュー項目の無効化',
         isLeaf: 'リーフノードかどうか',
       },
@@ -481,6 +478,9 @@ export default {
       },
       demo5: {
         title: 'フォームエンジン設定との組み合わせ',
+      },
+      demo6: {
+        title: 'フォーム項目の非同期読み込み',
       },
       props: {
         options: 'フォームの構造とコンテンツを定義する設定オプション配列',
@@ -907,6 +907,12 @@ export default {
       demo8: {
         title: 'グループ化',
       },
+      demo9: {
+        title: '初期化オプション方法',
+      },
+      demo10: {
+        title: '検索キャッシュを有効化',
+      },
       model: {
         modelValue: 'バインド値',
       },
@@ -927,6 +933,8 @@ export default {
         readonly: '読み取り専用状態',
         disabled: '無効状態',
         showCheckIcon: 'チェックアイコンを表示',
+        initOptionsMethod: 'オプション初期化メソッド',
+        enableSearchCache: '検索キャッシュを有効化するかどうか',
       },
       events: {
         change: '値が変更された時に発火',
@@ -968,6 +976,11 @@ export default {
       demo8: {
         title: 'グループ化',
       },
+      demo9: {
+        title: '初期化オプション方法',
+        description:
+          '```initOptionsMethod``` メソッドを使用して、複数選択データを初期化し、```Promise``` オブジェクトを返す',
+      },
       props: {
         options: 'オプション',
         trigger: 'トリガー方式',
@@ -986,6 +999,8 @@ export default {
         disabled: '無効化',
         showCheckIcon: 'チェックアイコンを表示',
         defaultValue: 'デフォルト値',
+        initOptionsMethod: 'オプション初期化メソッド',
+        enableSearchCache: '検索キャッシュを有効化するかどうか',
       },
       model: {
         modelValue: 'バインド値',
@@ -1103,6 +1118,11 @@ export default {
       demo8: {
         title: 'オプション無効化',
       },
+      demo9: {
+        title: '初期化オプション方法',
+        description:
+          '```initOptionsMethod``` メソッドを使用して、カスケードデータを初期化し、```Promise``` オブジェクトを返す',
+      },
       model: {
         modelValue: 'バインド値',
       },
@@ -1119,6 +1139,7 @@ export default {
         trigger: 'トリガー方式',
         loadMethod: '読み込みメソッド',
         readonly: '読み取り専用',
+        initOptionsMethod: 'オプション初期化メソッド',
       },
       options: {
         label: 'ラベル',
@@ -1155,6 +1176,17 @@ export default {
       demo8: {
         title: 'その他',
       },
+      demo9: {
+        title: '初期化オプション方法',
+      },
+      demo10: {
+        title: '幅の設定',
+      },
+      demo11: {
+        title: '高度な設定',
+        description:
+          '```initOptionsMethod``` メソッドを使用して、ツリーデータを初期化し、```Promise``` オブジェクトを返す',
+      },
       model: {
         modelValue: 'バインド値',
       },
@@ -1162,6 +1194,7 @@ export default {
         dataSource: 'ツリーデータソース',
         defaultValue: 'デフォルト選択値',
         placeholder: 'プレースホルダーテキスト',
+        width: '幅',
         size: 'コンポーネントサイズ',
         disabled: '無効化するかどうか',
         clearable: 'クリア可能にするかどうか',
@@ -1460,6 +1493,9 @@ export default {
         tipsContent:
           'グループヘッダーで固定列の効果を得たい場合、すべての固定列ヘッダーに幅を設定する必要があります。すべての親ノードを含め、そうしないと位置ずれが発生する可能性があります。',
       },
+      demo12: {
+        title: '詳細オプション',
+      },
       props: {
         columns: '列',
         dataSource: 'データソース',
@@ -1708,10 +1744,11 @@ export default {
         title: '手動で閉じる',
       },
       props: {
-        type: '通知タイプ',
         title: 'タイトル',
         content: '通知内容',
         delay: '遅延時間',
+        width: '幅',
+        showProgress: 'プログレスバーを表示するかどうか',
       },
     },
     drawer: {
@@ -1815,6 +1852,7 @@ export default {
         closeButtonProps: '閉じるボタンのプロパティ',
         closeOnClickOverlay: 'オーバーレイクリックでの閉じる可否',
         zIndex: '重なり順序',
+        maxHeight: '最大高さ',
       },
     },
     popok: {
@@ -1965,6 +2003,7 @@ export default {
         dropdownIcon: 'ドロップダウンメニューのアイコン',
         divider: '区切り線の表示',
         iconOnly: 'アイコンのみ',
+        x: '水平方向の配置',
       },
       options: {
         label: 'アクションボタンのテキスト',

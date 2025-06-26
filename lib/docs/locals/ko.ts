@@ -348,8 +348,7 @@ export default {
         children: '하위 메뉴 항목 배열',
         disabled: '메뉴 항목 비활성화 여부',
         icon: '메뉴 항목 아이콘',
-        tagText: '메뉴 항목 배지 텍스트',
-        tagColor: '메뉴 항목 배지 색상',
+        tagProps: '메뉴 항목 태그 Props',
       },
     },
     menuTree: {
@@ -386,9 +385,7 @@ export default {
         value: '메뉴 항목의 값, 메뉴 항목의 고유성을 식별하는 데 사용됩니다.',
         level: '메뉴 트리 항목의 레벨, 1부터 시작.',
         icon: '아이콘 렌더링 함수',
-        tagText: '메뉴 항목의 배지 텍스트',
-        tagType: '메뉴 항목의 배지 유형',
-        tagColor: '메뉴 항목의 배지 색상',
+        tagProps: '메뉴 항목 태그 Props',
         disabled: '메뉴 항목 비활성화 여부',
         isLeaf: '리프 노드 여부',
       },
@@ -488,6 +485,7 @@ export default {
         dropdownIcon: '드롭다운 아이콘',
         divider: '구분선 표시',
         iconOnly: '아이콘만 표시',
+        x: '수평 방향 정렬 방식',
       },
       options: {
         label: '작업 버튼 텍스트',
@@ -513,6 +511,9 @@ export default {
       },
       demo5: {
         title: '폼 엔진 구성과 함께 사용',
+      },
+      demo6: {
+        title: '폼 항목 비동기 로딩',
       },
       props: {
         options: '폼 구조와 내용을 정의하는 구성 옵션 배열',
@@ -945,6 +946,12 @@ export default {
       demo8: {
         title: '그룹화',
       },
+      demo9: {
+        title: '옵션 초기화 방법',
+      },
+      demo10: {
+        title: '검색 캐시 활성화',
+      },
       model: {
         modelValue: '바인딩 값',
       },
@@ -965,6 +972,8 @@ export default {
         readonly: '읽기 전용 상태',
         disabled: '비활성화 상태',
         showCheckIcon: '체크 아이콘 표시 여부',
+        initOptionsMethod: '옵션 초기화 방법',
+        enableSearchCache: '검색 캐시 활성화 여부',
       },
       events: {
         change: '값 변경 시 트리거',
@@ -1006,6 +1015,11 @@ export default {
       demo8: {
         title: '그룹화',
       },
+      demo9: {
+        title: '옵션 초기화 방법',
+        description:
+          '```initOptionsMethod``` 방법을 사용하여 다중 선택 데이터를 초기화하고 ```Promise``` 객체를 반환합니다',
+      },
       props: {
         options: '옵션',
         trigger: '트리거 방식',
@@ -1024,6 +1038,8 @@ export default {
         disabled: '비활성화',
         showCheckIcon: '체크 아이콘 표시 여부',
         defaultValue: '기본값',
+        initOptionsMethod: '옵션 초기화 방법',
+        enableSearchCache: '검색 캐시 활성화 여부',
       },
       model: {
         modelValue: '바인딩 값',
@@ -1139,6 +1155,11 @@ export default {
       demo8: {
         title: '옵션 비활성화',
       },
+      demo9: {
+        title: '옵션 초기화 방법',
+        description:
+          '```initOptionsMethod``` 방법을 사용하여 계층형 데이터를 초기화하고 ```Promise``` 객체를 반환합니다',
+      },
       model: {
         modelValue: '바인딩 값',
       },
@@ -1155,6 +1176,7 @@ export default {
         trigger: '트리거 방식',
         loadMethod: '로딩 방법',
         readonly: '읽기 전용',
+        initOptionsMethod: '옵션 초기화 방법',
       },
       options: {
         label: '라벨',
@@ -1192,6 +1214,17 @@ export default {
       demo8: {
         title: '기타',
       },
+      demo9: {
+        title: '읽기 전용',
+      },
+      demo10: {
+        title: '비활성화',
+      },
+      demo11: {
+        title: '데이터 초기화',
+        description:
+          '```initOptionsMethod``` 방법을 사용하여 트리 데이터를 초기화하고 ```Promise``` 객체를 반환합니다',
+      },
       model: {
         modelValue: '바인딩 값',
       },
@@ -1217,7 +1250,8 @@ export default {
         labelField: '노드 라벨 필드',
         disabledField: '노드 비활성화 필드',
         initOptionsMethod: '트리 노드 초기화 메서드',
-        loadMethod: '자식 노드 비동기 로딩 메서드',
+        loadMethod: '자식 노드 데이터 비동기 로드 메서드',
+        width: '너비',
       },
       slots: {
         handle: '슬롯 이름',
@@ -1501,6 +1535,9 @@ export default {
         tipsContent:
           '그룹 헤더에서 고정 열 효과를 원하는 경우, 모든 고정 열 헤더에 너비를 설정해야 합니다. 모든 부모 노드를 포함하지 않으면 위치가 어긋날 수 있습니다.',
       },
+      demo12: {
+        title: '드래그 앤 드롭 정렬',
+      },
       props: {
         columns: '열',
         dataSource: '데이터 소스',
@@ -1748,10 +1785,11 @@ export default {
         title: '수동 닫기',
       },
       props: {
-        type: '유형',
         title: '제목',
         content: '알림 내용',
+        width: '너비',
         delay: '지연 시간',
+        showProgress: '진행률 표시줄 표시',
       },
     },
     drawer: {
@@ -1855,6 +1893,7 @@ export default {
         closeButtonProps: '닫기 버튼 속성',
         closeOnClickOverlay: '오버레이 클릭으로 닫기 가능 여부',
         zIndex: '층 레벨',
+        maxHeight: '최대 높이',
       },
     },
     popok: {

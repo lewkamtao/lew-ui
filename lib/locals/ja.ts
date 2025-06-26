@@ -38,6 +38,9 @@ export default {
     noResult: '結果なし',
     searchPlaceholder: '検索キーワードを入力',
   },
+  treeSelect: {
+    placeholder: '選択してください',
+  },
   textarea: {
     placeholder: '入力してください',
   },

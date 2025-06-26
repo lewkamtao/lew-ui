@@ -344,8 +344,7 @@ export default {
         children: 'Voci sottomenu',
         disabled: 'Voce disabilitata',
         icon: 'Icona voce menu',
-        tagText: 'Testo badge',
-        tagColor: 'Colore badge',
+        tagProps: 'Proprietà badge',
       },
     },
     menuTree: {
@@ -381,9 +380,7 @@ export default {
         value: 'Identificatore univoco voce',
         level: 'Livello gerarchico (da 1)',
         icon: 'Funzione rendering icona',
-        tagText: 'Testo badge',
-        tagType: 'Tipo badge',
-        tagColor: 'Colore badge',
+        tagProps: 'Proprietà badge',
         disabled: 'Voce disabilitata',
         isLeaf: 'Nodo foglia',
       },
@@ -477,6 +474,9 @@ export default {
       },
       demo5: {
         title: 'Configurazione Form Engine',
+      },
+      demo6: {
+        title: 'Validazione asincrona',
       },
       props: {
         options: 'Array configurazione struttura form',
@@ -904,6 +904,12 @@ export default {
       demo8: {
         title: 'Gruppi',
       },
+      demo9: {
+        title: 'Metodo inizializzazione opzioni',
+      },
+      demo10: {
+        title: 'Cache ricerca',
+      },
       model: {
         modelValue: 'Valore legato',
       },
@@ -924,6 +930,8 @@ export default {
         readonly: 'Sola lettura',
         disabled: 'Disabilitato',
         showCheckIcon: 'Mostra icona spunta',
+        initOptionsMethod: 'Metodo inizializzazione opzioni',
+        enableSearchCache: 'Abilita cache ricerca',
       },
       events: {
         change: 'Callback cambio valore',
@@ -968,6 +976,11 @@ export default {
       demo8: {
         title: 'Gruppi',
       },
+      demo9: {
+        title: 'Metodo inizializzazione opzioni',
+        description:
+          'Utilizza ```initOptionsMethod``` per inizializzare i dati di selezione multipla e restituire un oggetto ```Promise```',
+      },
       props: {
         options: 'Opzioni',
         trigger: 'Attivazione',
@@ -986,6 +999,8 @@ export default {
         disabled: 'Disabilitato',
         showCheckIcon: 'Mostra icona spunta',
         defaultValue: 'Valore predefinito',
+        initOptionsMethod: 'Metodo inizializzazione opzioni',
+        enableSearchCache: 'Abilita cache ricerca',
       },
       model: {
         modelValue: 'Valore legato',
@@ -1108,6 +1123,11 @@ export default {
       demo8: {
         title: 'Opzioni disabilitate',
       },
+      demo9: {
+        title: 'Metodo inizializzazione opzioni',
+        description:
+          'Utilizza ```initOptionsMethod``` per inizializzare i dati a cascata e restituire un oggetto ```Promise```',
+      },
       model: {
         modelValue: 'Valore legato',
       },
@@ -1124,6 +1144,7 @@ export default {
         trigger: 'Modalità attivazione',
         loadMethod: 'Metodo caricamento',
         readonly: 'Sola lettura',
+        initOptionsMethod: 'Metodo inizializzazione opzioni',
       },
       options: {
         label: 'Etichetta',
@@ -1160,6 +1181,17 @@ export default {
       demo8: {
         title: 'Altro',
       },
+      demo9: {
+        title: 'Sola lettura',
+      },
+      demo10: {
+        title: 'Disabilitato',
+      },
+      demo11: {
+        title: 'Inizializza dati',
+        description:
+          'Utilizza ```initOptionsMethod``` per inizializzare i dati ad albero e restituire un oggetto ```Promise```',
+      },
       model: {
         modelValue: 'Valore legato',
       },
@@ -1167,6 +1199,7 @@ export default {
         dataSource: 'Sorgente dati',
         defaultValue: 'Valore predefinito',
         placeholder: 'Testo segnaposto',
+        width: 'Larghezza',
         size: 'Dimensione componente',
         disabled: 'Disabilitato',
         clearable: 'Cancellabile',
@@ -1465,6 +1498,9 @@ export default {
         tipsContent:
           'Se desideri che le intestazioni raggruppate abbiano colonne fisse, devi impostare la larghezza per tutte le colonne fisse, inclusi tutti i nodi padre, altrimenti potrebbero verificarsi disallineamenti.',
       },
+      demo12: {
+        title: 'Ordinamento drag & drop',
+      },
       props: {
         columns: 'Colonne',
         dataSource: 'Sorgente dati',
@@ -1712,10 +1748,11 @@ export default {
         title: 'Chiusura manuale',
       },
       props: {
-        type: 'Tipo',
         title: 'Titolo',
         content: 'Contenuto notifica',
         delay: 'Durata',
+        width: 'Larghezza',
+        showProgress: 'Mostra barra di avanzamento',
       },
     },
     drawer: {
@@ -1812,6 +1849,7 @@ export default {
         title: 'Titolo',
         width: 'Larghezza',
         top: "Distanza dall'alto",
+        maxHeight: 'Altezza massima',
         hideFooter: 'Nascondi footer',
         closeByEsc: 'Chiudi con ESC',
         okButtonProps: 'Proprietà OK',
@@ -1973,6 +2011,7 @@ export default {
         dropdownIcon: 'Icona menu a discesa',
         divider: 'Mostra divisore',
         iconOnly: 'Mostra solo icona',
+        x: 'Posizione X',
       },
       options: {
         label: 'Testo pulsante azione',

@@ -401,5 +401,6 @@ const isNodePartiallySelected = computed(() => {
   flex-direction: column;
   margin-left: 15.5px;
   width: calc(100% - 15.5px);
+  box-sizing: border-box;
 }
 </style>

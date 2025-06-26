@@ -38,6 +38,9 @@ export default {
     noResult: '결과 없음',
     searchPlaceholder: '검색 키워드 입력',
   },
+  treeSelect: {
+    placeholder: '선택해주세요',
+  },
   textarea: {
     placeholder: '입력해주세요',
   },

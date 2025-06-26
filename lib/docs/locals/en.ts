@@ -355,8 +355,7 @@ export default {
         children: 'Array of sub-menu items',
         disabled: 'Disable the menu item',
         icon: 'Icon of the menu item',
-        tagText: 'Badge text of the menu item',
-        tagColor: 'Badge color of the menu item',
+        tagProps: 'Menu item tag Props',
       },
     },
     menuTree: {
@@ -395,9 +394,7 @@ export default {
           'Value of the menu item, used to identify the uniqueness of the menu item.',
         level: 'Level of the menu tree item, starting from 1.',
         icon: 'Icon rendering function',
-        tagText: 'Badge text of the menu item',
-        tagType: 'Badge type of the menu item',
-        tagColor: 'Badge color of the menu item',
+        tagProps: 'Menu item tag Props',
         disabled: 'Disable the menu item',
         isLeaf: 'Is it a leaf node',
       },
@@ -492,6 +489,9 @@ export default {
       },
       demo5: {
         title: 'Configure with Form Engine',
+      },
+      demo6: {
+        title: 'Form Item Async Loading',
       },
       props: {
         options:
@@ -933,6 +933,12 @@ export default {
       demo8: {
         title: 'Group',
       },
+      demo9: {
+        title: 'Initialize Options Method',
+      },
+      demo10: {
+        title: 'Enable Search Cache',
+      },
       model: {
         modelValue: 'Bound Value',
       },
@@ -953,6 +959,8 @@ export default {
         readonly: 'Read-only',
         disabled: 'Disabled',
         showCheckIcon: 'Show Check Icon',
+        initOptionsMethod: 'Initialize Options Method',
+        enableSearchCache: 'Enable Search Cache',
       },
       events: {
         change: 'Triggered when the value changes',
@@ -994,6 +1002,11 @@ export default {
       demo8: {
         title: 'Group',
       },
+      demo9: {
+        title: 'Initialize Options Method',
+        description:
+          'Use the ```initOptionsMethod``` method to initialize multiple selection data and return a ```Promise``` object',
+      },
       props: {
         options: 'Options',
         trigger: 'Trigger Method',
@@ -1012,6 +1025,8 @@ export default {
         disabled: 'Disabled',
         showCheckIcon: 'Show Check Icon',
         defaultValue: 'Default Value',
+        initOptionsMethod: 'Initialize Options Method',
+        enableSearchCache: 'Enable Search Cache',
       },
       model: {
         modelValue: 'Bound Value',
@@ -1128,6 +1143,11 @@ export default {
       demo8: {
         title: 'Disabled Options',
       },
+      demo9: {
+        title: 'Initialize Options Method',
+        description:
+          'Use the ```initOptionsMethod``` method to initialize cascader data and return a ```Promise``` object',
+      },
       model: {
         modelValue: 'Bound Value',
       },
@@ -1144,6 +1164,7 @@ export default {
         trigger: 'Trigger Method',
         loadMethod: 'Load Method',
         readonly: 'Read-only',
+        initOptionsMethod: 'Initialize Options Method',
       },
       options: {
         label: 'Label',
@@ -1181,6 +1202,17 @@ export default {
       demo8: {
         title: 'Others',
       },
+      demo9: {
+        title: 'Read-only',
+      },
+      demo10: {
+        title: 'Disabled',
+      },
+      demo11: {
+        title: 'Initialize Data',
+        description:
+          'Use the ```initOptionsMethod``` method to initialize tree data and return a ```Promise``` object',
+      },
       model: {
         modelValue: 'Bound Value',
       },
@@ -1188,6 +1220,7 @@ export default {
         dataSource: 'Tree Data Source',
         defaultValue: 'Default Selected Value',
         placeholder: 'Placeholder Text',
+        width: 'Width',
         size: 'Component Size',
         disabled: 'Disabled',
         clearable: 'Clearable',
@@ -1490,6 +1523,9 @@ export default {
         tipsContent:
           'If you want the grouped headers to have fixed columns, you need to set the width for all fixed column headers, including all parent nodes, otherwise misalignment may occur.',
       },
+      demo12: {
+        title: 'Drag Sort',
+      },
       props: {
         columns: 'Columns',
         dataSource: 'Data Source',
@@ -1740,10 +1776,11 @@ export default {
         title: 'Manual close',
       },
       props: {
-        type: 'Type',
         title: 'Title',
         content: 'Content',
         delay: 'Delay',
+        width: 'Width',
+        showProgress: 'Show Progress Bar',
       },
     },
     drawer: {
@@ -1847,6 +1884,7 @@ export default {
         closeButtonProps: 'Close Button Props',
         closeOnClickOverlay: 'Close on Click Overlay',
         zIndex: 'Z Index',
+        maxHeight: 'Max Height',
       },
     },
     popok: {
@@ -2000,6 +2038,7 @@ export default {
         dropdownIcon: 'Dropdown menu icon',
         divider: 'Show divider',
         iconOnly: 'Icon Only',
+        x: 'Horizontal alignment',
       },
       options: {
         label: 'Action button text',

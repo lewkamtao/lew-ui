@@ -151,27 +151,27 @@ const columns = [
       {
         title: 'Storage',
         field: 'storage',
-        width: 80,
+        width: 120,
         x: 'center',
       },
       {
         title: 'Color',
         field: 'color',
-        width: 80,
+        width: 120,
         x: 'center',
       },
       {
         title: 'Stock',
         field: 'stock',
 
-        width: 80,
+        width: 120,
         x: 'center',
       },
     ],
   },
   {
     title: 'Rating',
-    width: 80,
+    width: 120,
     field: 'rating',
     x: 'center',
   },

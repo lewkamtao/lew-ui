@@ -347,8 +347,7 @@ export default {
         children: 'Array de subitens',
         disabled: 'Desabilita o item',
         icon: 'Ícone do item',
-        tagText: 'Texto do badge',
-        tagColor: 'Cor do badge',
+        tagProps: 'Props da tag do item',
       },
     },
     menuTree: {
@@ -384,9 +383,7 @@ export default {
         value: 'Valor único do item',
         level: 'Nível do item, começa em 1',
         icon: 'Função de renderização do ícone',
-        tagText: 'Texto do badge',
-        tagType: 'Tipo do badge',
-        tagColor: 'Cor do badge',
+        tagProps: 'Props da tag do item',
         disabled: 'Desabilita o item',
         isLeaf: 'É um nó folha',
       },
@@ -484,6 +481,7 @@ export default {
         dropdownIcon: 'Ícone do menu suspenso',
         divider: 'Exibir divisor',
         iconOnly: 'Apenas ícone',
+        x: 'Alinhamento horizontal',
       },
       options: {
         label: 'Texto do botão de ação',
@@ -510,6 +508,9 @@ export default {
       },
       demo5: {
         title: 'Configuração com motor de formulário',
+      },
+      demo6: {
+        title: 'Carregamento assíncrono de itens',
       },
       props: {
         options:
@@ -937,6 +938,12 @@ export default {
       demo8: {
         title: 'Agrupamento',
       },
+      demo9: {
+        title: 'Método de inicialização de opções',
+      },
+      demo10: {
+        title: 'Habilitar cache de pesquisa',
+      },
       model: {
         modelValue: 'Valor vinculado',
       },
@@ -957,6 +964,8 @@ export default {
         readonly: 'Somente leitura',
         disabled: 'Desabilitado',
         showCheckIcon: 'Exibir ícone de seleção',
+        initOptionsMethod: 'Método de inicialização de opções',
+        enableSearchCache: 'Habilitar cache de pesquisa',
       },
       events: {
         change: 'Ao alterar valor',
@@ -1001,6 +1010,11 @@ export default {
       demo8: {
         title: 'Agrupamento',
       },
+      demo9: {
+        title: 'Método de inicialização de opções',
+        description:
+          'Use o método ```initOptionsMethod``` para inicializar dados de seleção múltipla e retornar um objeto ```Promise```',
+      },
       props: {
         options: 'Opções',
         trigger: 'Modo de acionamento',
@@ -1019,6 +1033,8 @@ export default {
         disabled: 'Desabilitado',
         showCheckIcon: 'Exibir ícone de seleção',
         defaultValue: 'Valor padrão',
+        initOptionsMethod: 'Método de inicialização de opções',
+        enableSearchCache: 'Habilitar cache de pesquisa',
       },
       model: {
         modelValue: 'Valor vinculado',
@@ -1141,6 +1157,11 @@ export default {
       demo8: {
         title: 'Opções desabilitadas',
       },
+      demo9: {
+        title: 'Método de inicialização de opções',
+        description:
+          'Use o método ```initOptionsMethod``` para inicializar dados em cascata e retornar um objeto ```Promise```',
+      },
       model: {
         modelValue: 'Valor vinculado',
       },
@@ -1157,6 +1178,7 @@ export default {
         trigger: 'Modo de acionamento',
         loadMethod: 'Método de carregamento',
         readonly: 'Somente leitura',
+        initOptionsMethod: 'Método de inicialização de opções',
       },
       options: {
         label: 'Rótulo',
@@ -1194,6 +1216,17 @@ export default {
       demo8: {
         title: 'Outros',
       },
+      demo9: {
+        title: 'Somente leitura',
+      },
+      demo10: {
+        title: 'Desabilitado',
+      },
+      demo11: {
+        title: 'Inicializar dados',
+        description:
+          'Use o método ```initOptionsMethod``` para inicializar dados em árvore e retornar um objeto ```Promise```',
+      },
       model: {
         modelValue: 'Valor vinculado',
       },
@@ -1201,6 +1234,7 @@ export default {
         dataSource: 'Fonte de dados em árvore',
         defaultValue: 'Valor padrão selecionado',
         placeholder: 'Texto de placeholder',
+        width: 'Largura',
         size: 'Tamanho do componente',
         disabled: 'Desabilitado',
         clearable: 'Permite limpar',
@@ -1506,6 +1540,9 @@ export default {
         tipsContent:
           'Se você quiser que os cabeçalhos agrupados tenham colunas fixas, precisa definir a largura para todos os cabeçalhos de colunas fixas, incluindo todos os nós pais, caso contrário pode ocorrer desalinhamento.',
       },
+      demo12: {
+        title: 'Ordenação por arrastar',
+      },
       props: {
         columns: 'Colunas',
         dataSource: 'Fonte de dados',
@@ -1757,10 +1794,11 @@ export default {
         title: 'Fechamento manual',
       },
       props: {
-        type: 'Tipo',
         title: 'Título',
         content: 'Conteúdo da notificação',
         delay: 'Tempo de atraso',
+        width: 'Largura',
+        showProgress: 'Exibir barra de progresso',
       },
     },
     drawer: {
@@ -1863,6 +1901,7 @@ export default {
         closeOnClickOverlay: 'Fechar ao clicar na sobreposição',
         zIndex: 'Índice Z',
         closeButtonProps: 'Propriedades do botão Fechar',
+        maxHeight: 'Altura máxima',
       },
     },
     popok: {

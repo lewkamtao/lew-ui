@@ -29,7 +29,7 @@ export const demoGroup = [
   DemoSelect7,
   DemoSelect8,
   DemoSelect9,
-  DemoSelect10,
+  //   DemoSelect10,
 ];
 
 export const codeGroup = [
@@ -42,5 +42,5 @@ export const codeGroup = [
   DemoSelect7Code,
   DemoSelect8Code,
   DemoSelect9Code,
-  DemoSelect10Code,
+  //   DemoSelect10Code,
 ];

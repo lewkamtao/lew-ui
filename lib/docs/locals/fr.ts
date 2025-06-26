@@ -357,8 +357,7 @@ export default {
         children: 'Tableau des éléments de sous-menu',
         disabled: "Désactiver l'élément de menu",
         icon: "Icône de l'élément de menu",
-        tagText: "Texte du badge de l'élément de menu",
-        tagColor: "Couleur du badge de l'élément de menu",
+        tagProps: "Propriétés du badge",
       },
     },
     menuTree: {
@@ -401,9 +400,7 @@ export default {
           "Valeur de l'élément de menu, utilisée pour identifier l'unicité de l'élément de menu.",
         level: "Niveau de l'élément d'arborescence de menu, commençant à 1.",
         icon: "Fonction de rendu d'icône",
-        tagText: "Texte du badge de l'élément de menu",
-        tagType: "Type du badge de l'élément de menu",
-        tagColor: "Couleur du badge de l'élément de menu",
+        tagProps: "Propriétés du badge",
         disabled: "Désactiver l'élément de menu",
         isLeaf: "Si c'est un nœud feuille",
       },
@@ -501,6 +498,9 @@ export default {
       },
       demo5: {
         title: 'Avec configuration du moteur de formulaire',
+      },
+      demo6: {
+        title: 'Validation asynchrone',
       },
       props: {
         options:
@@ -952,6 +952,12 @@ export default {
       demo8: {
         title: 'Groupement',
       },
+      demo9: {
+        title: 'Méthode d\'initialisation des options',
+      },
+      demo10: {
+        title: 'Cache de recherche',
+      },
       model: {
         modelValue: 'Valeur liée',
       },
@@ -972,6 +978,8 @@ export default {
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
         showCheckIcon: "Afficher l'icône de vérification",
+        initOptionsMethod: 'Méthode d\'initialisation des options',
+        enableSearchCache: 'Activer le cache de recherche',
       },
       events: {
         change: 'Déclenché lorsque la valeur change',
@@ -1013,6 +1021,11 @@ export default {
       demo8: {
         title: 'Groupement',
       },
+      demo9: {
+        title: 'Méthode d\'initialisation des options',
+        description:
+          'Utilisez ```initOptionsMethod``` pour initialiser les données de sélection multiple et retourner un objet ```Promise```',
+      },
       props: {
         options: 'Options',
         trigger: 'Mode de déclenchement',
@@ -1031,6 +1044,8 @@ export default {
         disabled: 'Désactivé',
         showCheckIcon: "Afficher l'icône de vérification",
         defaultValue: 'Valeur par défaut',
+        initOptionsMethod: 'Méthode d\'initialisation des options',
+        enableSearchCache: 'Activer le cache de recherche',
       },
       model: {
         modelValue: 'Valeur liée',
@@ -1151,6 +1166,11 @@ export default {
       demo8: {
         title: 'Options désactivées',
       },
+      demo9: {
+        title: 'Méthode d\'initialisation des options',
+        description:
+          'Utilisez ```initOptionsMethod``` pour initialiser les données en cascade et retourner un objet ```Promise```',
+      },
       model: {
         modelValue: 'Valeur liée',
       },
@@ -1167,6 +1187,7 @@ export default {
         trigger: 'Mode de déclenchement',
         loadMethod: 'Méthode de chargement',
         readonly: 'Lecture seule',
+        initOptionsMethod: 'Méthode d\'initialisation des options',
       },
       options: {
         label: 'Étiquette',
@@ -1204,6 +1225,17 @@ export default {
       demo8: {
         title: 'Autres options',
       },
+      demo9: {
+        title: 'Lecture seule',
+      },
+      demo10: {
+        title: 'Désactivé',
+      },
+      demo11: {
+        title: 'Initialiser les données',
+        description:
+          'Utilisez ```initOptionsMethod``` pour initialiser les données d\'arbre et retourner un objet ```Promise```',
+      },
       model: {
         modelValue: 'Valeur liée',
       },
@@ -1211,6 +1243,7 @@ export default {
         dataSource: 'Source de données',
         defaultValue: 'Valeur par défaut',
         placeholder: "Texte d'espace réservé",
+        width: 'Largeur',
         size: 'Taille du composant',
         disabled: 'Désactivé',
         clearable: 'Effaçable',
@@ -1516,6 +1549,9 @@ export default {
         tipsContent:
           'Si vous souhaitez que les en-têtes groupés aient un effet de colonne fixe, vous devez définir la largeur pour tous les en-têtes de colonnes fixes, y compris tous les nœuds parents, sinon un désalignement peut se produire.',
       },
+      demo12: {
+        title: 'Tri par glisser-déposer',
+      },
       props: {
         columns: 'Colonnes',
         dataSource: 'Source de données',
@@ -1767,10 +1803,11 @@ export default {
         title: 'Fermeture manuelle',
       },
       props: {
-        type: 'Type',
         title: 'Titre',
         content: 'Contenu de la notification',
         delay: 'Délai',
+        width: 'Largeur',
+        showProgress: 'Afficher la barre de progression',
       },
     },
     drawer: {
@@ -1868,6 +1905,7 @@ export default {
         title: 'Titre',
         width: 'Largeur',
         top: 'Distance du haut',
+        maxHeight: 'Hauteur maximale',
         hideFooter: 'Masquer le pied',
         closeByEsc: 'Fermeture par touche ESC',
         okButtonProps: 'Propriétés du bouton de confirmation',
@@ -2030,6 +2068,7 @@ export default {
         dropdownIcon: 'Icône du menu déroulant',
         divider: 'Afficher le séparateur',
         iconOnly: 'Icône uniquement',
+        x: 'Position X',
       },
       options: {
         label: "Texte du bouton d'action",

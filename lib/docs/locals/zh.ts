@@ -1,3 +1,5 @@
+import de from './de';
+
 const contextMenu = {
   label: '显示文本',
   value: '值',
@@ -993,6 +995,11 @@ export default {
       demo8: {
         title: '分组',
       },
+      demo9: {
+        title: '初始化选项方法',
+        description:
+          '使用 ```initOptionsMethod``` 方法，初始化多选数据，并返回一个 ```Promise``` 对象',
+      },
       props: {
         options: '选项',
         trigger: '触发方式',
@@ -1011,6 +1018,8 @@ export default {
         disabled: '禁用',
         showCheckIcon: '显示勾选图标',
         defaultValue: '默认值',
+        initOptionsMethod: '初始化选项方法',
+        enableSearchCache: '是否启用搜索缓存',
       },
       model: {
         modelValue: '绑定值',
@@ -1121,6 +1130,11 @@ export default {
       demo8: {
         title: '选项禁用',
       },
+      demo9: {
+        title: '初始化选项方法',
+        description:
+          '使用 ```initOptionsMethod``` 方法，初始化级联数据，并返回一个 ```Promise``` 对象',
+      },
       model: {
         modelValue: '绑定值',
       },
@@ -1137,6 +1151,7 @@ export default {
         trigger: '触发方式',
         loadMethod: '加载方法',
         readonly: '只读',
+        initOptionsMethod: '初始化选项方法',
       },
       options: {
         label: '标签',
@@ -1171,7 +1186,18 @@ export default {
         title: '空状态插槽',
       },
       demo8: {
-        title: '其他',
+        title: '可清空',
+      },
+      demo9: {
+        title: '只读',
+      },
+      demo10: {
+        title: '禁用',
+      },
+      demo11: {
+        title: '初始化数据',
+        description:
+          '使用 ```initOptionsMethod``` 方法，初始化树形数据，并返回一个 ```Promise``` 对象',
       },
       model: {
         modelValue: '绑定值',
@@ -1199,6 +1225,7 @@ export default {
         disabledField: '禁用节点字段',
         initOptionsMethod: '初始化树节点的方法',
         loadMethod: '异步加载子节点数据的方法',
+        width: '宽度',
       },
       slots: {
         handle: '插槽名',
@@ -1477,6 +1504,10 @@ export default {
         tipsContent:
           '如果你希望分组的表头拥有固定列的效果，你需要给所有固定列表头都设定好宽度，包括所有的父级节点，否则可能产生错位。',
       },
+      demo12: {
+        title: '拖拽排序',
+      },
+
       props: {
         columns: '列',
         dataSource: '数据源',
@@ -1720,10 +1751,11 @@ export default {
         title: '主动关闭',
       },
       props: {
-        type: '类型',
         title: '标题',
         content: '提示内容',
+        width: '宽度',
         delay: '延迟时间',
+        showProgress: '展示进度条',
       },
     },
     drawer: {
@@ -1824,6 +1856,7 @@ export default {
         closeButtonProps: '取消按钮属性',
         closeOnClickOverlay: '是否可通过点击遮罩关闭',
         zIndex: '层级',
+        maxHeight: '最大高度',
       },
     },
     popok: {
