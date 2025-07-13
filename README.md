@@ -2,8 +2,6 @@
 
 A Component Library for Vue3. Doc address: https://lew.kamtao.com
 
-English | [中文](./README.zh-CN.md)
-
 ## Install
 
 ```bash
@@ -24,7 +22,7 @@ import { LewButton } from 'lew-ui'
 </script>
 
 <template>
-  <lew-button text="Submit" />
+    <lew-button text="Submit" />
 </template>
 ```
 

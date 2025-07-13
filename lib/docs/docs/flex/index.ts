@@ -1,3 +1,3 @@
-import DemoFlex from './DemoFlex.vue';
+import DemoFlex from './DemoFlex.vue'
 
-export default DemoFlex;
+export default DemoFlex

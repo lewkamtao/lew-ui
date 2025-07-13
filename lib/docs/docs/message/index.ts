@@ -1,3 +1,3 @@
-import DemoMessage from './DemoMessage.vue';
+import DemoMessage from './DemoMessage.vue'
 
-export default DemoMessage;
+export default DemoMessage

@@ -1,3 +1,3 @@
-import DemoInputTag from './DemoInputTag.vue';
+import DemoInputTag from './DemoInputTag.vue'
 
-export default DemoInputTag;
+export default DemoInputTag

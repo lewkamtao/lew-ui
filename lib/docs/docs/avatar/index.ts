@@ -1,3 +1,3 @@
-import DemoAvatar from './DemoAvatar.vue';
+import DemoAvatar from './DemoAvatar.vue'
 
-export default DemoAvatar;
+export default DemoAvatar

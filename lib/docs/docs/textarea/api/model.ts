@@ -1,9 +1,9 @@
-import { textareaModel } from 'lew-ui';
-import { convertProps } from '@/lib/utils';
+import { textareaModel } from 'lew-ui'
+import { convertProps } from '@/lib/utils'
 
 export default {
-  title: 'Model',
-  columnsKey: 'model',
-  orderNum: 1,
-  data: convertProps(textareaModel),
-};
+    title: 'Model',
+    columnsKey: 'model',
+    orderNum: 1,
+    data: convertProps(textareaModel),
+}

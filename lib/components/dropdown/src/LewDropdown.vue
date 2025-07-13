@@ -1,41 +1,41 @@
 <script setup lang="ts">
-import { LewPopover, LewContextMenu } from 'lew-ui';
-import { dropdownProps } from './props';
+import { LewPopover, LewContextMenu } from 'lew-ui'
+import { dropdownProps } from './props'
 
-defineProps(dropdownProps);
+defineProps(dropdownProps)
 
-const lewPopoverRef = ref();
+const lewPopoverRef = ref()
 
 const show = () => {
-  lewPopoverRef.value.show();
-};
+    lewPopoverRef.value.show()
+}
 
 const hide = () => {
-  lewPopoverRef.value.hide();
-};
+    lewPopoverRef.value.hide()
+}
 
 defineExpose({
-  show,
-  hide,
-});
+    show,
+    hide,
+})
 </script>
 
 <template>
-  <lew-popover
-    ref="lewPopoverRef"
-    popover-body-class-name="lew-dropdown-popover-body"
-    :trigger="trigger"
-    :placement="placement"
-  >
-    <template #trigger>
-      <slot />
-    </template>
-    <template #popover-body>
-      <lew-context-menu
-        :checkable="checkable"
-        :options="options"
-        @select="hide"
-      />
-    </template>
-  </lew-popover>
+    <lew-popover
+        ref="lewPopoverRef"
+        popover-body-class-name="lew-dropdown-popover-body"
+        :trigger="trigger"
+        :placement="placement"
+    >
+        <template #trigger>
+            <slot />
+        </template>
+        <template #popover-body>
+            <lew-context-menu
+                :checkable="checkable"
+                :options="options"
+                @select="hide"
+            />
+        </template>
+    </lew-popover>
 </template>

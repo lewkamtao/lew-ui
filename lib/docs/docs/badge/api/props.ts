@@ -1,8 +1,8 @@
-import { badgeProps } from 'lew-ui';
-import { convertProps } from '@/lib/utils';
+import { badgeProps } from 'lew-ui'
+import { convertProps } from '@/lib/utils'
 
 export default {
-  title: 'Props',
-  columnsKey: 'props',
-  data: convertProps(badgeProps),
-};
+    title: 'Props',
+    columnsKey: 'props',
+    data: convertProps(badgeProps),
+}

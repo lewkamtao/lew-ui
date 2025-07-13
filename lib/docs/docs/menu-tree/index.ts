@@ -1,3 +1,3 @@
-import DemoMenuTree from './DemoMenuTree.vue';
+import DemoMenuTree from './DemoMenuTree.vue'
 
-export default DemoMenuTree;
+export default DemoMenuTree

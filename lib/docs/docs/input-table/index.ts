@@ -1,3 +1,3 @@
-import DemoInputTable from './DemoInputTable.vue';
+import DemoInputTable from './DemoInputTable.vue'
 
-export default DemoInputTable;
+export default DemoInputTable

@@ -1,3 +1,3 @@
-import DemoMark from './DemoMark.vue';
+import DemoMark from './DemoMark.vue'
 
-export default DemoMark;
+export default DemoMark

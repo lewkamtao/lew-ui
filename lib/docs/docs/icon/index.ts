@@ -1,3 +1,3 @@
-import DemoIcon from './DemoIcon.vue';
+import DemoIcon from './DemoIcon.vue'
 
-export default DemoIcon;
+export default DemoIcon

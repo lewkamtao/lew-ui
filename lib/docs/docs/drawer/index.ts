@@ -1,3 +1,3 @@
-import DemoDrawer from './DemoDrawer.vue';
+import DemoDrawer from './DemoDrawer.vue'
 
-export default DemoDrawer;
+export default DemoDrawer

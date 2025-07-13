@@ -1,3 +1,3 @@
-import DemoDateRangePicker from './DemoDateRangePicker.vue';
+import DemoDateRangePicker from './DemoDateRangePicker.vue'
 
-export default DemoDateRangePicker;
+export default DemoDateRangePicker

@@ -1,3 +1,3 @@
-import DemoSelectMultiple from './DemoSelectMultiple.vue';
+import DemoSelectMultiple from './DemoSelectMultiple.vue'
 
-export default DemoSelectMultiple;
+export default DemoSelectMultiple

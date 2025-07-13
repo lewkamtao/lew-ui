@@ -1,1 +1,1 @@
-export { default as LewMessage } from './src';
+export { default as LewMessage } from './src'

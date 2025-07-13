@@ -1,3 +1,3 @@
-import DemoModal from './DemoModal.vue';
+import DemoModal from './DemoModal.vue'
 
-export default DemoModal;
+export default DemoModal

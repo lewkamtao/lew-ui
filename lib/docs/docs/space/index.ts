@@ -1,3 +1,3 @@
-import DemoSpace from './DemoSpace.vue';
+import DemoSpace from './DemoSpace.vue'
 
-export default DemoSpace;
+export default DemoSpace

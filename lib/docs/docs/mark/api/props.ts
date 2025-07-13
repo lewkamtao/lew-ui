@@ -1,9 +1,9 @@
-import { markProps } from 'lew-ui';
-import { convertProps } from '@/lib/utils';
+import { markProps } from 'lew-ui'
+import { convertProps } from '@/lib/utils'
 
 export default {
-  title: 'Props',
-  columnsKey: 'props',
-  orderNum: 10,
-  data: convertProps(markProps),
-};
+    title: 'Props',
+    columnsKey: 'props',
+    orderNum: 10,
+    data: convertProps(markProps),
+}

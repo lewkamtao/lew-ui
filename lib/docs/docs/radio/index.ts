@@ -1,3 +1,3 @@
-import DemoRadio from './DemoRadio.vue';
+import DemoRadio from './DemoRadio.vue'
 
-export default DemoRadio;
+export default DemoRadio

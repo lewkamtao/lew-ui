@@ -1,9 +1,9 @@
-import { datePickerModel } from 'lew-ui';
-import { convertProps } from '@/lib/utils';
+import { datePickerModel } from 'lew-ui'
+import { convertProps } from '@/lib/utils'
 
 export default {
-  title: 'Model',
-  columnsKey: 'model',
-  orderNum: 1,
-  data: convertProps(datePickerModel),
-};
+    title: 'Model',
+    columnsKey: 'model',
+    orderNum: 1,
+    data: convertProps(datePickerModel),
+}

@@ -1,3 +1,3 @@
-import DemoActionBox from './DemoActionBox.vue';
+import DemoActionBox from './DemoActionBox.vue'
 
-export default DemoActionBox;
+export default DemoActionBox

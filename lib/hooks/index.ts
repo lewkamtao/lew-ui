@@ -1,2 +1,2 @@
-export { useDOMCreate } from './src/useDOMCreate';
-export { useEventListener } from './src/useEventListener';
+export { useDOMCreate } from './src/useDOMCreate'
+export { useEventListener } from './src/useEventListener'

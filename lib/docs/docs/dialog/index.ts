@@ -1,3 +1,3 @@
-import DemoDialog from './DemoDialog.vue';
+import DemoDialog from './DemoDialog.vue'
 
-export default DemoDialog;
+export default DemoDialog

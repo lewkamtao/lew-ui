@@ -1,3 +1,3 @@
-import DemoDropdown from './DemoDropdown.vue';
+import DemoDropdown from './DemoDropdown.vue'
 
-export default DemoDropdown;
+export default DemoDropdown

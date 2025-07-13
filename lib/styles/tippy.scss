@@ -1,114 +1,114 @@
 .tippy-box {
-  box-sizing: border-box !important;
-  color: var(--lew-text-color-0) !important;
-  border-radius: var(--lew-border-radius-small) !important;
-  transition-timing-function: cubic-bezier(0.1, -0.2, 0.1, 1.5) !important;
-
-  .tippy-content {
     box-sizing: border-box !important;
-    padding: 0;
-    word-wrap: break-word;
-  }
+    color: var(--lew-text-color-0) !important;
+    border-radius: var(--lew-border-radius-small) !important;
+    transition-timing-function: cubic-bezier(0.1, -0.2, 0.1, 1.5) !important;
+
+    .tippy-content {
+        box-sizing: border-box !important;
+        padding: 0;
+        word-wrap: break-word;
+    }
 }
 
 .tippy-box[data-lew~='popover'] {
-  color: var(--lew-color-text-0) !important;
-  background-color: var(--lew-pop-bgcolor) !important;
-  box-shadow: var(--lew-pop-shadow) !important;
-  border: var(--lew-pop-border) !important;
+    color: var(--lew-color-text-0) !important;
+    background-color: var(--lew-pop-bgcolor) !important;
+    box-shadow: var(--lew-pop-shadow) !important;
+    border: var(--lew-pop-border) !important;
 }
 
 .tippy-box[data-lew~='tooltip'] {
-  color: var(--lew-color-text-0) !important;
-  background-color: var(--lew-tooltip-bgcolor) !important;
-  box-shadow: none !important;
-  filter: var(--lew-tooltip-box-shadow) !important;
+    color: var(--lew-color-text-0) !important;
+    background-color: var(--lew-tooltip-bgcolor) !important;
+    box-shadow: none !important;
+    filter: var(--lew-tooltip-box-shadow) !important;
 
-  .tippy-content {
-    max-height: 300px;
-    padding: 6px 10px;
-    overflow-y: auto;
-    font-size: 14px;
+    .tippy-content {
+        max-height: 300px;
+        padding: 6px 10px;
+        overflow-y: auto;
+        font-size: 14px;
 
-    &::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-      background-color: var(--lew-bgcolor-2);
-      border-radius: 4px;
+        &::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+            background-color: var(--lew-bgcolor-2);
+            border-radius: 4px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: var(--lew-bgcolor-4);
+            border-radius: 4px;
+
+            &:hover {
+                background-color: var(--lew-bgcolor-6);
+            }
+        }
+
+        &::-webkit-scrollbar-corner {
+            background-color: var(--lew-bgcolor-0);
+        }
+
+        .scrollbar-corner {
+            background-color: var(--lew-bgcolor-0);
+        }
     }
 
-    &::-webkit-scrollbar-thumb {
-      background-color: var(--lew-bgcolor-4);
-      border-radius: 4px;
-
-      &:hover {
-        background-color: var(--lew-bgcolor-6);
-      }
+    .tippy-svg-arrow {
+        fill: var(--lew-tooltip-bgcolor) !important;
     }
-
-    &::-webkit-scrollbar-corner {
-      background-color: var(--lew-bgcolor-0);
-    }
-
-    .scrollbar-corner {
-      background-color: var(--lew-bgcolor-0);
-    }
-  }
-
-  .tippy-svg-arrow {
-    fill: var(--lew-tooltip-bgcolor) !important;
-  }
 }
 
 .tippy-box[data-placement^='top'] > .tippy-svg-arrow {
-  bottom: 0;
+    bottom: 0;
 
-  &::after,
-  & > svg {
-    top: 16px;
-    transform: scale(1.1) rotate(180deg);
-  }
+    &::after,
+    & > svg {
+        top: 16px;
+        transform: scale(1.1) rotate(180deg);
+    }
 }
 
 .tippy-box[data-placement^='bottom'] > .tippy-svg-arrow {
-  top: 0;
+    top: 0;
 
-  & > svg {
-    bottom: 16px;
-    transform: scale(1.1);
-  }
+    & > svg {
+        bottom: 16px;
+        transform: scale(1.1);
+    }
 }
 
 .tippy-box[data-placement^='left'] > .tippy-svg-arrow {
-  right: 0;
+    right: 0;
 
-  &::after,
-  & > svg {
-    top: calc(50% - 3px);
-    left: 11px;
-    transform: scale(1.1) rotate(90deg);
-  }
+    &::after,
+    & > svg {
+        top: calc(50% - 3px);
+        left: 11px;
+        transform: scale(1.1) rotate(90deg);
+    }
 }
 
 .tippy-box[data-placement^='right'] > .tippy-svg-arrow {
-  left: 0;
+    left: 0;
 
-  &::after,
-  & > svg {
-    top: calc(50% - 3px);
-    right: 11px;
-    transform: scale(1.1) rotate(-90deg);
-  }
+    &::after,
+    & > svg {
+        top: calc(50% - 3px);
+        right: 11px;
+        transform: scale(1.1) rotate(-90deg);
+    }
 }
 
 .tippy-svg-arrow {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  fill: #333;
-  text-align: initial;
-
-  & > svg {
     position: absolute;
-  }
+    width: 16px;
+    height: 16px;
+    fill: #333;
+    text-align: initial;
+
+    & > svg {
+        position: absolute;
+    }
 }

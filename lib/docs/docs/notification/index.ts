@@ -1,3 +1,3 @@
-import DemoNotification from './DemoNotification.vue';
+import DemoNotification from './DemoNotification.vue'
 
-export default DemoNotification;
+export default DemoNotification

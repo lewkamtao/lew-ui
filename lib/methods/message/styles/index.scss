@@ -1,76 +1,76 @@
 #lew-message {
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  z-index: 99999;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 80px;
-  .lew-message {
-    width: auto;
+    position: fixed;
     display: flex;
-    flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
-    padding: 12px 20px 12px 14px;
-    transition: all 0.25s ease;
-    opacity: 0;
-    margin-top: 0px;
-    margin-bottom: 12px;
-    transform: translateY(-10px);
-    box-shadow: var(--lew-pop-shadow);
-    border: var(--lew-pop-border);
-    font-size: 14px;
-    border-radius: 12px;
-    background-color: var(--lew-pop-bgcolor) !important;
+    flex-direction: column;
+    z-index: 99999;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 80px;
+    .lew-message {
+        width: auto;
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        padding: 12px 20px 12px 14px;
+        transition: all 0.25s ease;
+        opacity: 0;
+        margin-top: 0px;
+        margin-bottom: 12px;
+        transform: translateY(-10px);
+        box-shadow: var(--lew-pop-shadow);
+        border: var(--lew-pop-border);
+        font-size: 14px;
+        border-radius: 12px;
+        background-color: var(--lew-pop-bgcolor) !important;
 
-    .lew-message-content {
-      max-width: 350px;
-      overflow: hidden;
-      color: var(--lew-text-color-1);
-      font-weight: 400;
+        .lew-message-content {
+            max-width: 350px;
+            overflow: hidden;
+            color: var(--lew-text-color-1);
+            font-weight: 400;
+        }
+        svg {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        .vue-feather--spin {
+            width: 16px;
+            height: 16px;
+        }
     }
-    svg {
-      width: 18px;
-      height: 18px;
-      margin-right: 10px;
-      flex-shrink: 0;
+    .lew-message-normal {
+        color: var(--lew-color-normal);
     }
-    .vue-feather--spin {
-      width: 16px;
-      height: 16px;
+    .lew-message-error {
+        color: var(--lew-color-error);
     }
-  }
-  .lew-message-normal {
-    color: var(--lew-color-normal);
-  }
-  .lew-message-error {
-    color: var(--lew-color-error);
-  }
-  .lew-message-success {
-    color: var(--lew-color-success);
-  }
-  .lew-message-info {
-    color: var(--lew-color-info);
-  }
-  .lew-message-warning {
-    color: var(--lew-color-warning);
-  }
-  .lew-message-loading {
-    color: var(--lew-color-normal);
-  }
-  .lew-message-icon {
-    display: flex;
-  }
-  .lew-message-show {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-  .lew-message-hidden {
-    opacity: 0;
-    margin-top: -50px;
-  }
+    .lew-message-success {
+        color: var(--lew-color-success);
+    }
+    .lew-message-info {
+        color: var(--lew-color-info);
+    }
+    .lew-message-warning {
+        color: var(--lew-color-warning);
+    }
+    .lew-message-loading {
+        color: var(--lew-color-normal);
+    }
+    .lew-message-icon {
+        display: flex;
+    }
+    .lew-message-show {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    .lew-message-hidden {
+        opacity: 0;
+        margin-top: -50px;
+    }
 }

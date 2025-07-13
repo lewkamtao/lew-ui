@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { sliderRangeProps } from './props';
-import { dragmove } from 'lew-ui/utils';
-import { throttle } from 'lodash-es';
+import { sliderRangeProps } from "./props";
+import { dragmove } from "lew-ui/utils";
+import { throttle } from "lodash-es";
 
 const props = defineProps(sliderRangeProps);
-const emit = defineEmits(['change']);
+const emit = defineEmits(["change"]);
 
-const modelValue = defineModel<number[]>('modelValue', {
+const modelValue = defineModel<number[]>("modelValue", {
   get(val) {
     // 确保返回有效的数组，避免 null、undefined 或空数组
     if (
@@ -43,11 +43,6 @@ const safeGetArrayValue = (
   return arr[index];
 };
 
-// 安全的 modelValue 访问
-const getModelValueAt = (index: number, defaultValue: number): number => {
-  return safeGetArrayValue(modelValue.value, index, defaultValue);
-};
-
 // 安全的 _modelValue 访问
 const getInternalValueAt = (index: number, defaultValue: number): number => {
   return safeGetArrayValue(_modelValue.value, index, defaultValue);
@@ -68,7 +63,7 @@ const throttledUpdateModelValue = throttle(
     // 在最后节流赋值时进行排序，从小到大
     const sortedValues = [leftValue, rightValue].sort((a, b) => a - b);
     modelValue.value = sortedValues;
-    emit('change', modelValue.value);
+    emit("change", modelValue.value);
   },
   16
 ); // 约60fps的更新频率
@@ -115,7 +110,7 @@ const calculateValue = (position: number) => {
     percentage * (Number(getTrackMax.value) - Number(getTrackMin.value)) +
     Number(getTrackMin.value);
   const step = Number(props.step);
-  const decimalPlaces = (step.toString().split('.')[1] || '').length;
+  const decimalPlaces = (step.toString().split(".")[1] || "").length;
   return Number(value.toFixed(decimalPlaces)) || 0;
 };
 
@@ -175,7 +170,7 @@ const init = () => {
     _dragmove = dragmove({
       el: el1,
       parentEl,
-      direction: 'horizontal',
+      direction: "horizontal",
       step: () => Number(step),
       max: () => getMax.value,
       min: () => getMin.value,
@@ -196,7 +191,7 @@ const init = () => {
     _dragmove = dragmove({
       el: el2,
       parentEl,
-      direction: 'horizontal',
+      direction: "horizontal",
       step: () => Number(step),
       max: () => getMax.value,
       min: () => getMin.value,
@@ -281,41 +276,41 @@ const getStyle = computed(() => {
   const { size } = props;
   let objStyle = {};
   switch (size) {
-    case 'small':
+    case "small":
       objStyle = {
-        '--lew-slider-track-dot-size': '12px',
-        '--lew-slider-track-line-height': '3px',
-        '--lew-slider-track-step-mark-size': '6px',
-        '--lew-slider-track-step-label-size': '12px',
+        "--lew-slider-track-dot-size": "12px",
+        "--lew-slider-track-line-height": "3px",
+        "--lew-slider-track-step-mark-size": "6px",
+        "--lew-slider-track-step-label-size": "12px",
       };
       break;
-    case 'medium':
+    case "medium":
       objStyle = {
-        '--lew-slider-track-dot-size': '16px',
-        '--lew-slider-track-line-height': '4px',
-        '--lew-slider-track-step-mark-size': '7px',
-        '--lew-slider-track-step-label-size': '14px',
+        "--lew-slider-track-dot-size": "16px",
+        "--lew-slider-track-line-height": "4px",
+        "--lew-slider-track-step-mark-size": "7px",
+        "--lew-slider-track-step-label-size": "14px",
       };
       break;
-    case 'large':
+    case "large":
       objStyle = {
-        '--lew-slider-track-dot-size': '20px',
-        '--lew-slider-track-line-height': '5px',
-        '--lew-slider-track-step-mark-size': '8px',
-        '--lew-slider-track-step-label-size': '16px',
+        "--lew-slider-track-dot-size": "20px",
+        "--lew-slider-track-line-height": "5px",
+        "--lew-slider-track-step-mark-size": "8px",
+        "--lew-slider-track-step-label-size": "16px",
       };
       break;
     default:
       objStyle = {
-        '--lew-slider-track-dot-size': '16px',
-        '--lew-slider-track-line-height': '4px',
-        '--lew-slider-track-step-mark-size': '10px',
+        "--lew-slider-track-dot-size": "16px",
+        "--lew-slider-track-line-height": "4px",
+        "--lew-slider-track-step-mark-size": "10px",
       };
       break;
   }
   return {
     ...objStyle,
-    '--lew-slider-height': `var(--lew-form-item-height-${size})`,
+    "--lew-slider-height": `var(--lew-form-item-height-${size})`,
   };
 });
 
@@ -381,8 +376,8 @@ const isStepLabelDisabled = (value: number | string) => {
 // 创建 tooltip 配置
 const createTooltipConfig = (value: number) => ({
   content: props.formatTooltip(value),
-  placement: 'top' as const,
-  trigger: 'mouseenter' as const,
+  placement: "top" as const,
+  trigger: "mouseenter" as const,
   delay: [0, 1000] as [number, number],
   key: dotX.value,
 });
@@ -420,12 +415,12 @@ const createStepMarkStyle = (value: number | string) => ({
 
 // 左侧滑块的样式
 const leftDotStyle = computed(() => ({
-  opacity: getInternalValueAt(0, getMin.value) !== undefined ? '1' : '0',
+  opacity: getInternalValueAt(0, getMin.value) !== undefined ? "1" : "0",
 }));
 
 // 右侧滑块的样式
 const rightDotStyle = computed(() => ({
-  opacity: getInternalValueAt(1, getMax.value) !== undefined ? '1' : '0',
+  opacity: getInternalValueAt(1, getMax.value) !== undefined ? "1" : "0",
 }));
 </script>
 
@@ -568,9 +563,8 @@ const rightDotStyle = computed(() => ({
         calc(var(--lew-slider-track-step-mark-size) / 2 * -1),
         calc(
           (
-              var(--lew-slider-track-step-mark-size) - var(
-                  --lew-slider-track-line-height
-                )
+              var(--lew-slider-track-step-mark-size) -
+                var(--lew-slider-track-line-height)
             ) / 2 * -1
         )
       );
@@ -610,8 +604,7 @@ const rightDotStyle = computed(() => ({
     border-radius: 50%;
     border: var(--lew-color-blue) solid 2px;
     background: var(--lew-bgcolor-0);
-    transition:
-      transform var(--lew-form-transition-ease),
+    transition: transform var(--lew-form-transition-ease),
       border-width 0.1s ease;
     cursor: pointer;
     box-sizing: border-box;
@@ -629,7 +622,7 @@ const rightDotStyle = computed(() => ({
 }
 .lew-slider::before,
 .lew-slider::after {
-  content: '';
+  content: "";
   width: calc(var(--lew-slider-track-dot-size) / 2);
   height: var(--lew-slider-track-line-height);
   background-color: var(--lew-form-bgcolor);

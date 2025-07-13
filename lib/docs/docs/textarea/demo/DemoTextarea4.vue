@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const v = ref('This is a textarea');
+const v = ref('This is a textarea')
 </script>
 
 <template>
-  <lew-textarea width="300px" v-model="v" clearable />
+    <lew-textarea width="300px" v-model="v" clearable />
 </template>

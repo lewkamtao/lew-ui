@@ -1,3 +1,3 @@
-import DemoMenu from './DemoMenu.vue';
+import DemoMenu from './DemoMenu.vue'
 
-export default DemoMenu;
+export default DemoMenu

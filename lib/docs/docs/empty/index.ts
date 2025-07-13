@@ -1,3 +1,3 @@
-import DemoEmpty from './DemoEmpty.vue';
+import DemoEmpty from './DemoEmpty.vue'
 
-export default DemoEmpty;
+export default DemoEmpty

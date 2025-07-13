@@ -1,8 +1,8 @@
-import { actionBoxProps } from 'lew-ui';
-import { convertProps } from '@/lib/utils';
+import { actionBoxProps } from 'lew-ui'
+import { convertProps } from '@/lib/utils'
 
 export default {
-  title: 'Props',
-  columnsKey: 'props',
-  data: convertProps(actionBoxProps),
-};
+    title: 'Props',
+    columnsKey: 'props',
+    data: convertProps(actionBoxProps),
+}

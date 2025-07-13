@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const modelValue = ref('');
+const modelValue = ref('')
 </script>
 
 <template>
-  <lew-input v-model="modelValue" clearable />
+    <lew-input v-model="modelValue" clearable />
 </template>

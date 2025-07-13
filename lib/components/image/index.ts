@@ -1,2 +1,2 @@
-export { default as LewImage } from './src/LewImage.vue';
-export * from './src/props';
+export { default as LewImage } from './src/LewImage.vue'
+export * from './src/props'

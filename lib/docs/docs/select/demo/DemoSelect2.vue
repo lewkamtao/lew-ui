@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { schools } from '@/lib/data';
+import { schools } from '@/lib/data'
 
 const schoolsOptions = schools.map((e) => {
-  return { label: e, value: e };
-});
+    return { label: e, value: e }
+})
 
-const value = ref('浙江大学');
+const value = ref('浙江大学')
 </script>
 
 <template>
-  <lew-select
-    v-model="value"
-    searchable
-    :defaultValue="value"
-    :options="schoolsOptions"
-    clearable
-    placeholder="Default Filter"
-  />
+    <lew-select
+        v-model="value"
+        searchable
+        :defaultValue="value"
+        :options="schoolsOptions"
+        clearable
+        placeholder="Default Filter"
+    />
 </template>

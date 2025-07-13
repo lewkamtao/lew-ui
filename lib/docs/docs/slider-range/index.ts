@@ -1,3 +1,3 @@
-import DemoSliderRange from './DemoSliderRange.vue';
+import DemoSliderRange from './DemoSliderRange.vue'
 
-export default DemoSliderRange;
+export default DemoSliderRange
