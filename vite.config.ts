@@ -7,6 +7,10 @@ import checker from 'vite-plugin-checker'
 import zipPack from 'vite-plugin-zip-pack'
 import { fileURLToPath, URL } from 'node:url'
 import type { UserConfig, ConfigEnv } from 'vite'
+import { visualizer } from 'rollup-plugin-visualizer'
+
+// 路径工具函数
+const resolve = (path: string) => fileURLToPath(new URL(path, import.meta.url))
 
 export default defineConfig((configEnv: ConfigEnv): UserConfig => {
     const { mode } = configEnv
@@ -33,7 +37,7 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
     // 构建配置
     const libBuildOptions = {
         lib: {
-            entry: fileURLToPath(new URL('./lib/index.ts', import.meta.url)),
+            entry: resolve('./lib/index.ts'),
             name: 'lew-ui',
             fileName: 'index',
         },
@@ -63,51 +67,58 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
         },
     }
 
+    // 开发服务器配置
+    const serverConfig = {
+        open: true,
+        port: 3000,
+        hmr: true,
+        proxy: {
+            '/api_admin': {
+                target: 'https://app.tngeek.com/api_admin',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api_admin/, ''),
+            },
+            '/api_sso': {
+                target: 'https://app.tngeek.com/api_sso',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api_sso/, ''),
+            },
+        },
+    }
+
+    // 路径别名配置
+    const aliasConfig = {
+        'lew-ui': resolve('./lib'),
+        '@': resolve('./lib/docs'),
+    }
+
+    // 构建优化配置
+    const buildConfig = {
+        ...(isLibMode ? libBuildOptions : docsBuildOptions),
+        minify: 'terser' as const,
+        emptyOutDir: true,
+        terserOptions: {
+            compress: {
+                drop_console: true,
+                drop_debugger: true,
+            },
+        },
+    }
+
     return {
-        root: './lib/docs',
         base: '',
-
-        // 开发服务器配置
-        server: {
-            open: true,
-            port: 3000,
-            hmr: true,
-            proxy: {
-                '/api_admin': {
-                    target: 'https://app.tngeek.com/api_admin',
-                    changeOrigin: true,
-                    rewrite: (path) => path.replace(/^\/api_admin/, ''),
-                },
-                '/api_sso': {
-                    target: 'https://app.tngeek.com/api_sso',
-                    changeOrigin: true,
-                    rewrite: (path) => path.replace(/^\/api_sso/, ''),
-                },
-            },
-        },
-
-        // 路径解析配置
-        resolve: {
-            alias: {
-                'lew-ui': fileURLToPath(new URL('./lib', import.meta.url)),
-                '@': fileURLToPath(new URL('./lib/docs', import.meta.url)),
-            },
-        },
-
-        // 插件配置
-        plugins: [...commonPlugins, ...libPlugins],
-
-        // 构建配置
-        build: {
-            ...(isLibMode ? libBuildOptions : docsBuildOptions),
-            minify: 'terser',
-            emptyOutDir: true,
-            terserOptions: {
-                compress: {
-                    drop_console: true,
-                    drop_debugger: true,
-                },
-            },
-        },
+        server: serverConfig,
+        resolve: { alias: aliasConfig },
+        plugins: [
+            ...commonPlugins,
+            ...libPlugins,
+            visualizer({
+                open: false,
+                filename: 'stats.html',
+                gzipSize: true,
+                brotliSize: true,
+            }),
+        ],
+        build: buildConfig,
     }
 })
