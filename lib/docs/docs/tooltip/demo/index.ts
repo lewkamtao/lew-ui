@@ -9,15 +9,15 @@ import DemoTooltip3Code from './DemoTooltip3.vue?raw'
 import DemoTooltip4Code from './DemoTooltip4.vue?raw'
 
 export const demoGroup = [
-    DemoTooltip1,
-    DemoTooltip2,
-    DemoTooltip3,
-    DemoTooltip4,
+  DemoTooltip1,
+  DemoTooltip2,
+  DemoTooltip3,
+  DemoTooltip4,
 ]
 
 export const codeGroup = [
-    DemoTooltip1Code,
-    DemoTooltip2Code,
-    DemoTooltip3Code,
-    DemoTooltip4Code,
+  DemoTooltip1Code,
+  DemoTooltip2Code,
+  DemoTooltip3Code,
+  DemoTooltip4Code,
 ]

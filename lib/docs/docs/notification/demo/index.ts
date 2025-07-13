@@ -10,17 +10,17 @@ import DemoNotification5 from './DemoNotification5.vue'
 import DemoNotification5Code from './DemoNotification5.vue?raw'
 
 export const demoGroup = [
-    DemoNotification1,
-    DemoNotification2,
-    DemoNotification3,
-    DemoNotification4,
-    DemoNotification5,
+  DemoNotification1,
+  DemoNotification2,
+  DemoNotification3,
+  DemoNotification4,
+  DemoNotification5,
 ]
 
 export const codeGroup = [
-    DemoNotification1Code,
-    DemoNotification2Code,
-    DemoNotification3Code,
-    DemoNotification4Code,
-    DemoNotification5Code,
+  DemoNotification1Code,
+  DemoNotification2Code,
+  DemoNotification3Code,
+  DemoNotification4Code,
+  DemoNotification5Code,
 ]

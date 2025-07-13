@@ -11,17 +11,17 @@ import DemoInputNumber4Code from './DemoInputNumber4.vue?raw'
 import DemoInputNumber5Code from './DemoInputNumber5.vue?raw'
 
 export const demoGroup = [
-    DemoInputNumber1,
-    DemoInputNumber2,
-    DemoInputNumber3,
-    DemoInputNumber4,
-    DemoInputNumber5,
+  DemoInputNumber1,
+  DemoInputNumber2,
+  DemoInputNumber3,
+  DemoInputNumber4,
+  DemoInputNumber5,
 ]
 
 export const codeGroup = [
-    DemoInputNumber1Code,
-    DemoInputNumber2Code,
-    DemoInputNumber3Code,
-    DemoInputNumber4Code,
-    DemoInputNumber5Code,
+  DemoInputNumber1Code,
+  DemoInputNumber2Code,
+  DemoInputNumber3Code,
+  DemoInputNumber4Code,
+  DemoInputNumber5Code,
 ]

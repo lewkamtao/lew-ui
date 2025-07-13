@@ -11,17 +11,17 @@ import DemoModal4Code from './DemoModal4.vue?raw'
 import DemoModal5Code from './DemoModal5.vue?raw'
 
 export const demoGroup = [
-    DemoModal1,
-    DemoModal2,
-    DemoModal3,
-    DemoModal4,
-    DemoModal5,
+  DemoModal1,
+  DemoModal2,
+  DemoModal3,
+  DemoModal4,
+  DemoModal5,
 ]
 
 export const codeGroup = [
-    DemoModal1Code,
-    DemoModal2Code,
-    DemoModal3Code,
-    DemoModal4Code,
-    DemoModal5Code,
+  DemoModal1Code,
+  DemoModal2Code,
+  DemoModal3Code,
+  DemoModal4Code,
+  DemoModal5Code,
 ]

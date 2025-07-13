@@ -15,21 +15,21 @@ import DemoUpload6Code from './DemoUpload6.vue?raw'
 import DemoUpload7Code from './DemoUpload7.vue?raw'
 
 export const demoGroup = [
-    DemoUpload1,
-    DemoUpload2,
-    DemoUpload3,
-    DemoUpload4,
-    DemoUpload5,
-    DemoUpload6,
-    DemoUpload7,
+  DemoUpload1,
+  DemoUpload2,
+  DemoUpload3,
+  DemoUpload4,
+  DemoUpload5,
+  DemoUpload6,
+  DemoUpload7,
 ]
 
 export const codeGroup = [
-    DemoUpload1Code,
-    DemoUpload2Code,
-    DemoUpload3Code,
-    DemoUpload4Code,
-    DemoUpload5Code,
-    DemoUpload6Code,
-    DemoUpload7Code,
+  DemoUpload1Code,
+  DemoUpload2Code,
+  DemoUpload3Code,
+  DemoUpload4Code,
+  DemoUpload5Code,
+  DemoUpload6Code,
+  DemoUpload7Code,
 ]

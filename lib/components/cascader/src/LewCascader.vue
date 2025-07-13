@@ -6,26 +6,26 @@ import {
   LewTooltip,
   LewTextTrim,
   LewCheckbox,
-} from "lew-ui";
-import { object2class } from "lew-ui/utils";
-import type { CascaderOptions } from "./props";
-import { cascaderProps } from "./props";
-import { VirtList } from "vue-virt-list";
-import { cloneDeep, isFunction } from "lodash-es";
-import Icon from "lew-ui/utils/Icon.vue";
-import { any2px } from "lew-ui/utils";
-import { locale } from "lew-ui";
+} from 'lew-ui'
+import { object2class } from 'lew-ui/utils'
+import type { CascaderOptions } from './props'
+import { cascaderProps } from './props'
+import { VirtList } from 'vue-virt-list'
+import { cloneDeep, isFunction } from 'lodash-es'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { any2px } from 'lew-ui/utils'
+import { locale } from 'lew-ui'
 // 格式化 获取 path
 const formatTree = (
   tree: CascaderOptions[],
   parentValuePaths: String[] = [],
-  parentLabelPaths: String[] = []
+  parentLabelPaths: String[] = [],
 ): CascaderOptions[] => {
   return tree.map((node: CascaderOptions) => {
-    const { value, label, children = [] } = node;
-    const valuePaths: String[] = [...parentValuePaths, value];
-    const labelPaths: String[] = [...parentLabelPaths, label];
-    const level = valuePaths.length - 1;
+    const { value, label, children = [] } = node
+    const valuePaths: String[] = [...parentValuePaths, value]
+    const labelPaths: String[] = [...parentLabelPaths, label]
+    const level = valuePaths.length - 1
     const _node = {
       ...node,
       valuePaths,
@@ -33,32 +33,32 @@ const formatTree = (
       level,
       parentValuePaths,
       parentLabelPaths,
-    };
+    }
     if ((children || []).length > 0) {
       return {
         ..._node,
         children: formatTree(children, valuePaths, labelPaths),
-      };
+      }
     }
-    return _node;
-  }) as CascaderOptions[];
-};
-
-// 获取app
-const app = getCurrentInstance()?.appContext.app;
-if (app && !app.directive("tooltip")) {
-  app.use(LewTooltip);
+    return _node
+  }) as CascaderOptions[]
 }
 
-const props = defineProps(cascaderProps);
-const emit = defineEmits(["change", "blur", "clear"]);
+// 获取app
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
+}
+
+const props = defineProps(cascaderProps)
+const emit = defineEmits(['change', 'blur', 'clear'])
 
 const cascaderValue: Ref<string | number | undefined> = defineModel({
   default: undefined,
-});
+})
 
-const lewCascaderRef = ref();
-const lewPopoverRef = ref();
+const lewCascaderRef = ref()
+const lewPopoverRef = ref()
 
 const state = reactive({
   visible: false,
@@ -70,112 +70,112 @@ const state = reactive({
   activeLabels: [] as string[], // 激活
   tobeLabels: [] as string[], // 待确认
   tobeItem: {} as CascaderOptions,
-  keyword: "",
-});
+  keyword: '',
+})
 
-const formMethods: any = inject("formMethods", {});
+const formMethods: any = inject('formMethods', {})
 
 let _loadMethod = computed(() => {
   if (isFunction(props.loadMethod)) {
-    return props.loadMethod;
+    return props.loadMethod
   } else if (props.loadMethodId) {
-    return formMethods[props.loadMethodId];
+    return formMethods[props.loadMethodId]
   }
-  return false;
-});
+  return false
+})
 
 let _initOptionsMethod = computed(() => {
   if (isFunction(props.initOptionsMethod)) {
-    return props.initOptionsMethod;
+    return props.initOptionsMethod
   } else if (props.initOptionsMethodId) {
-    return formMethods[props.initOptionsMethodId];
+    return formMethods[props.initOptionsMethodId]
   }
-  return false;
-});
+  return false
+})
 
 // 创建一个对象来存储已加载的数据
-const loadedData = reactive<Record<string, CascaderOptions[]>>({});
+const loadedData = reactive<Record<string, CascaderOptions[]>>({})
 
 // 通过值获取对象
 const findObjectByValue = (treeList: CascaderOptions[], value: string) => {
   for (let i = 0; i < treeList.length; i++) {
-    const tree = treeList[i];
+    const tree = treeList[i]
     if (tree.value === value) {
-      return tree;
+      return tree
     }
     if (tree.children) {
       const foundObject: CascaderOptions = findObjectByValue(
         tree.children,
-        value
-      ) as CascaderOptions;
+        value,
+      ) as CascaderOptions
       if (foundObject) {
-        return foundObject;
+        return foundObject
       }
     }
   }
-  return null;
-};
+  return null
+}
 // 通过值添加子集
 function findAndAddChildrenByValue(
   tree: CascaderOptions[],
   value: string,
-  children: CascaderOptions[]
+  children: CascaderOptions[],
 ): CascaderOptions[] {
   for (const node of tree) {
     if (node.value === value) {
       if (!node.children) {
-        node.children = [];
+        node.children = []
       }
-      node.children = children;
-      return tree;
+      node.children = children
+      return tree
     }
     if (node.children && node.children.length > 0) {
-      const result = findAndAddChildrenByValue(node.children, value, children);
+      const result = findAndAddChildrenByValue(node.children, value, children)
       if (result && result.length > 0) {
-        return tree;
+        return tree
       }
     }
   }
-  return [];
+  return []
 }
 // 通过值查找子集
 function findChildrenByValue(
   tree: CascaderOptions[],
-  value: string
+  value: string,
 ): CascaderOptions[] {
   for (const node of tree) {
     if (node.value === value) {
-      return node.children || [];
+      return node.children || []
     }
 
     if (node.children && node.children.length > 0) {
-      const result = findChildrenByValue(node.children, value);
+      const result = findChildrenByValue(node.children, value)
       if (result && result.length > 0) {
-        return result;
+        return result
       }
     }
   }
 
-  return [];
+  return []
 }
 
 // 初始化
 const init = async () => {
-  let _tree: CascaderOptions[] = [];
+  let _tree: CascaderOptions[] = []
 
   // 如果有初始化方法，优先使用
   if (_initOptionsMethod.value) {
     try {
-      const newOptions = await _initOptionsMethod.value();
-      _tree = newOptions || [];
+      const newOptions = await _initOptionsMethod.value()
+      _tree = newOptions || []
     } catch (error) {
-      console.error("[LewCascader] initOptionsMethod failed", error);
-      _tree = [];
+      console.error('[LewCascader] initOptionsMethod failed', error)
+      _tree = []
     }
   } else if (_loadMethod.value && !state.loading) {
-    state.loading = true;
-    _tree = (await _loadMethod.value()) || [];
-    state.loading = false;
+    state.loading = true
+    _tree = (await _loadMethod.value()) || []
+    state.loading = false
   } else if (props.options && props.options.length > 0) {
     _tree =
       ((props.options &&
@@ -183,16 +183,16 @@ const init = async () => {
           return {
             ...e,
             isLeaf: !e.children || (e.children && e.children.length === 0), // 没有孩子
-          };
-        })) as CascaderOptions[]) || [];
+          }
+        })) as CascaderOptions[]) || []
   }
-  const __tree: CascaderOptions[] = formatTree(_tree);
-  state.optionsGroup = [__tree];
-  state.optionsTree = __tree;
-  state.initLoading = false;
-};
+  const __tree: CascaderOptions[] = formatTree(_tree)
+  state.optionsGroup = [__tree]
+  state.optionsTree = __tree
+  state.initLoading = false
+}
 
-init();
+init()
 
 // 监听 options 变化
 watch(
@@ -206,46 +206,46 @@ watch(
             return {
               ...e,
               isLeaf: !e.children || (e.children && e.children.length === 0),
-            };
-          })) as CascaderOptions[]) || [];
-      const __tree: CascaderOptions[] = formatTree(_tree);
-      state.optionsGroup = [__tree];
-      state.optionsTree = __tree;
+            }
+          })) as CascaderOptions[]) || []
+      const __tree: CascaderOptions[] = formatTree(_tree)
+      state.optionsGroup = [__tree]
+      state.optionsTree = __tree
     }
   },
   {
     deep: true,
-  }
-);
+  },
+)
 
-const virtListRefs = ref<any[]>([]);
+const virtListRefs = ref<any[]>([])
 
 // 选择
 const selectItem = async (item: CascaderOptions, level: number) => {
   if (!item.isLeaf && item.labelPaths !== state.activeLabels) {
-    state.optionsGroup = state.optionsGroup.slice(0, level + 1);
+    state.optionsGroup = state.optionsGroup.slice(0, level + 1)
     if (_loadMethod.value && !item.isLeaf) {
       if (loadedData[item.value]) {
         // 如果数据已经加载过，直接使用缓存的数据
-        const _options = loadedData[item.value];
-        state.optionsGroup.push(_options);
+        const _options = loadedData[item.value]
+        state.optionsGroup.push(_options)
       } else {
-        item.loading = true;
-        state.okLoading = true;
+        item.loading = true
+        state.okLoading = true
         const new_options =
-          (await _loadMethod.value(cloneDeep({ ...item, level }))) || [];
+          (await _loadMethod.value(cloneDeep({ ...item, level }))) || []
         let _tree = findAndAddChildrenByValue(
           cloneDeep(state.optionsTree),
           cloneDeep(item.value),
-          new_options
-        );
-        state.optionsTree = formatTree(_tree);
-        const _options = findChildrenByValue(state.optionsTree, item.value);
-        state.optionsGroup.push(_options);
+          new_options,
+        )
+        state.optionsTree = formatTree(_tree)
+        const _options = findChildrenByValue(state.optionsTree, item.value)
+        state.optionsGroup.push(_options)
         // 将新加载的数据存储到对象中
-        loadedData[item.value] = _options;
-        item.loading = false;
-        state.okLoading = false;
+        loadedData[item.value] = _options
+        item.loading = false
+        state.okLoading = false
       }
     } else if (!item.isLeaf) {
       const _options =
@@ -254,97 +254,97 @@ const selectItem = async (item: CascaderOptions, level: number) => {
             return {
               ...e,
               isLeaf: !e.children || (e.children && e.children.length === 0), // 没有孩子
-            };
+            }
           })) ||
-        [];
-      state.optionsGroup.push(_options);
+        []
+      state.optionsGroup.push(_options)
     }
   }
   if (item.labelPaths === state.activeLabels) {
-    state.activeLabels = item.parentLabelPaths as string[];
+    state.activeLabels = item.parentLabelPaths as string[]
     if (level < state.optionsGroup.length - 1) {
-      state.optionsGroup.pop();
+      state.optionsGroup.pop()
     }
   } else {
-    state.activeLabels = item.labelPaths as string[];
+    state.activeLabels = item.labelPaths as string[]
   }
-  state.tobeItem = { ...item, children: undefined };
+  state.tobeItem = { ...item, children: undefined }
   if (props.free) {
-    checkItem(item);
+    checkItem(item)
   } else if (item.isLeaf) {
-    checkItem(item);
-    ok();
+    checkItem(item)
+    ok()
   }
-};
+}
 
 // 检查Item
 const checkItem = (item: CascaderOptions) => {
   if (props.showAllLevels) {
     if (state.tobeLabels === item.labelPaths) {
-      state.tobeLabels = item.parentLabelPaths as string[];
+      state.tobeLabels = item.parentLabelPaths as string[]
     } else {
-      state.tobeLabels = item.labelPaths as string[];
+      state.tobeLabels = item.labelPaths as string[]
     }
   } else if (state.tobeLabels[0] === (item.label as string)) {
-    state.tobeLabels = [] as string[];
+    state.tobeLabels = [] as string[]
   } else {
-    state.tobeLabels = [item.label] as any;
+    state.tobeLabels = [item.label] as any
   }
-};
+}
 
 const show = async () => {
-  lewPopoverRef.value.show();
-};
+  lewPopoverRef.value.show()
+}
 
 const hide = () => {
-  lewPopoverRef.value.hide();
-};
+  lewPopoverRef.value.hide()
+}
 
 const clearHandle = () => {
-  cascaderValue.value = undefined as any;
-  state.tobeLabels = [];
-  state.activeLabels = [];
-  hide();
-  init();
-  emit("clear");
-  emit("change");
-};
+  cascaderValue.value = undefined as any
+  state.tobeLabels = []
+  state.activeLabels = []
+  hide()
+  init()
+  emit('clear')
+  emit('change')
+}
 
 const getValueStyle = computed(() => {
-  const { size } = props;
+  const { size } = props
 
   const widthMap = {
-    small: "calc(100% - 24px)",
-    medium: "calc(100% - 24px)",
-    large: "calc(100% - 24px)",
-  };
+    small: 'calc(100% - 24px)',
+    medium: 'calc(100% - 24px)',
+    large: 'calc(100% - 24px)',
+  }
   return {
     width: widthMap[size],
     padding: `var(--lew-form-input-padding-${size})`,
     fontSize: `var(--lew-form-font-size-${size})`,
     lineHeight: `calc(var(--lew-form-item-height-${size}) - (var(--lew-form-border-width) * 2))`,
     opacity: state.visible ? 0.4 : 1,
-  };
-});
+  }
+})
 
 const getCascaderClassName = computed(() => {
-  let { clearable, disabled, readonly } = props;
-  clearable = clearable ? !!cascaderValue.value : false;
-  const focus = state.visible;
+  let { clearable, disabled, readonly } = props
+  clearable = clearable ? !!cascaderValue.value : false
+  const focus = state.visible
 
-  return object2class("lew-cascader", {
+  return object2class('lew-cascader', {
     clearable,
     disabled,
     readonly,
     focus,
-    "init-loading": state.initLoading,
-  });
-});
+    'init-loading': state.initLoading,
+  })
+})
 
 const getBodyClassName = computed(() => {
-  const { size, disabled } = props;
-  return object2class("lew-cascader-body", { size, disabled });
-});
+  const { size, disabled } = props
+  return object2class('lew-cascader-body', { size, disabled })
+})
 
 // 获取图标大小
 const getIconSize = computed(() => {
@@ -352,60 +352,61 @@ const getIconSize = computed(() => {
     small: 14,
     medium: 15,
     large: 16,
-  };
-  return size[props.size];
-});
+  }
+  return size[props.size]
+})
 
 // 展示
 const showHandle = () => {
-  state.visible = true;
-};
+  state.visible = true
+}
 
 // 隐藏
 const hideHandle = () => {
-  state.visible = false;
-  emit("blur");
-};
+  state.visible = false
+  emit('blur')
+}
 
 // 获取宽度
 const getCascaderWidth = computed(() => {
-  const _hasChildOptions = state.optionsGroup.filter((e) => e && e.length > 0)
-    .length;
+  const _hasChildOptions = state.optionsGroup.filter(
+    (e) => e && e.length > 0,
+  ).length
   if (_hasChildOptions > 1) {
-    return _hasChildOptions * 200;
+    return _hasChildOptions * 200
   }
-  return _hasChildOptions * 200;
-});
+  return _hasChildOptions * 200
+})
 
 const getCascaderStyle = computed(() => {
-  const { size } = props;
+  const { size } = props
 
   return {
     height: `var(--lew-form-item-height-${size})`,
-  };
-});
+  }
+})
 
 const getLabel = computed(() => {
   const item = findObjectByValue(
     state.optionsTree,
-    cascaderValue.value as string
-  );
-  return item?.labelPaths || [];
-});
+    cascaderValue.value as string,
+  )
+  return item?.labelPaths || []
+})
 
 const ok = () => {
-  const item = findObjectByValue(state.optionsTree, state.tobeItem.value);
-  cascaderValue.value = state.tobeItem.value;
-  emit("change", cloneDeep(item));
+  const item = findObjectByValue(state.optionsTree, state.tobeItem.value)
+  cascaderValue.value = state.tobeItem.value
+  emit('change', cloneDeep(item))
 
-  hide();
-};
+  hide()
+}
 
 const close = () => {
-  hide();
-};
+  hide()
+}
 
-defineExpose({ show, hide });
+defineExpose({ show, hide })
 </script>
 
 <template>
@@ -474,7 +475,7 @@ defineExpose({ show, hide });
           class="lew-cascader-placeholder"
           :style="getValueStyle"
         >
-          {{ placeholder ? placeholder : locale.t("cascader.placeholder") }}
+          {{ placeholder ? placeholder : locale.t('cascader.placeholder') }}
         </div>
       </div>
     </template>
@@ -511,9 +512,7 @@ defineExpose({ show, hide });
               >
                 <virt-list
                   :key="oItem[0]?.parentValuePaths?.join('-') || 'root'"
-                  :ref="
-                                        (el: any) => (virtListRefs[oIndex] = el)
-                                    "
+                  :ref="(el: any) => (virtListRefs[oIndex] = el)"
                   class="lew-scrollbar-hover"
                   :list="oItem"
                   :minSize="38"
@@ -533,17 +532,16 @@ defineExpose({ show, hide });
                         class="lew-cascader-item"
                         :class="{
                           'lew-cascader-item-disabled': templateProps.disabled,
-                          'lew-cascader-item-hover': state.activeLabels.includes(
-                            templateProps.label
-                          ),
+                          'lew-cascader-item-hover':
+                            state.activeLabels.includes(templateProps.label),
                           'lew-cascader-item-active': free
                             ? state.activeLabels.includes(
-                                templateProps.label
+                                templateProps.label,
                               ) &&
                               state.tobeLabels.includes(templateProps.label)
                             : state.activeLabels.includes(templateProps.label),
                           'lew-cascader-item-tobe': state.tobeLabels.includes(
-                            templateProps.label
+                            templateProps.label,
                           ),
                           'lew-cascader-item-selected':
                             getLabel &&
@@ -591,10 +589,10 @@ defineExpose({ show, hide });
 
         <lew-flex v-if="free" x="end" gap="5" class="lew-cascader-control">
           <lew-button color="gray" type="text" size="small" @click="close">
-            {{ locale.t("cascader.closeText") }}
+            {{ locale.t('cascader.closeText') }}
           </lew-button>
           <lew-button :disabled="state.okLoading" size="small" @click="ok()">
-            {{ locale.t("cascader.okText") }}
+            {{ locale.t('cascader.okText') }}
           </lew-button>
         </lew-flex>
       </div>

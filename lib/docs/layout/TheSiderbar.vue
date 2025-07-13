@@ -7,37 +7,37 @@ const route = useRoute()
 const router = useRouter()
 
 defineProps({
-    options: {
-        type: Array as PropType<MenuOptions[]>,
-        default() {
-            return []
-        },
+  options: {
+    type: Array as PropType<MenuOptions[]>,
+    default() {
+      return []
     },
+  },
 })
 
 const toPath = (item: MenuOptions) => {
-    router.push(item.value as string)
-    active.value = item.value as string
+  router.push(item.value as string)
+  active.value = item.value as string
 }
 
 let active = ref(route.path)
 </script>
 
 <template>
-    <div class="siderbar lew-scrollbar">
-        <lew-menu :options="options" v-model="active" @change="toPath" />
-    </div>
+  <div class="siderbar lew-scrollbar">
+    <lew-menu :options="options" v-model="active" @change="toPath" />
+  </div>
 </template>
 
 <style lang="scss" scoped>
 .siderbar {
-    width: var(--lew-siderbar-width);
-    height: calc(100vh - 60px);
-    min-height: calc(100vh - 60px);
-    overflow-y: auto;
-    border-right: var(--lew-border-1);
-    user-select: none;
-    padding: 30px 10px;
-    box-sizing: border-box;
+  width: var(--lew-siderbar-width);
+  height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px);
+  overflow-y: auto;
+  border-right: var(--lew-border-1);
+  user-select: none;
+  padding: 30px 10px;
+  box-sizing: border-box;
 }
 </style>

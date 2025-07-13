@@ -9,7 +9,7 @@ import DemoBreadcrumb3Code from './DemoBreadcrumb3.vue?raw'
 export const demoGroup = [DemoBreadcrumb1, DemoBreadcrumb2, DemoBreadcrumb3]
 
 export const codeGroup = [
-    DemoBreadcrumb1Code,
-    DemoBreadcrumb2Code,
-    DemoBreadcrumb3Code,
+  DemoBreadcrumb1Code,
+  DemoBreadcrumb2Code,
+  DemoBreadcrumb3Code,
 ]

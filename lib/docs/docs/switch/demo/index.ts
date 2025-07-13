@@ -9,17 +9,17 @@ import DemoSwitch3Code from './DemoSwitch3.vue?raw'
 import DemoSwitch4Code from './DemoSwitch4.vue?raw'
 import DemoSwitch5Code from './DemoSwitch5.vue?raw'
 export const demoGroup = [
-    DemoSwitch1,
-    DemoSwitch2,
-    DemoSwitch3,
-    DemoSwitch4,
-    DemoSwitch5,
+  DemoSwitch1,
+  DemoSwitch2,
+  DemoSwitch3,
+  DemoSwitch4,
+  DemoSwitch5,
 ]
 
 export const codeGroup = [
-    DemoSwitch1Code,
-    DemoSwitch2Code,
-    DemoSwitch3Code,
-    DemoSwitch4Code,
-    DemoSwitch5Code,
+  DemoSwitch1Code,
+  DemoSwitch2Code,
+  DemoSwitch3Code,
+  DemoSwitch4Code,
+  DemoSwitch5Code,
 ]

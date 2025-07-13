@@ -8,15 +8,15 @@ import DemoContextMenu3Code from './DemoContextMenu3.vue?raw'
 import DemoContextMenu4Code from './DemoContextMenu4.vue?raw'
 
 export const demoGroup = [
-    DemoContextMenu1,
-    DemoContextMenu2,
-    DemoContextMenu3,
-    DemoContextMenu4,
+  DemoContextMenu1,
+  DemoContextMenu2,
+  DemoContextMenu3,
+  DemoContextMenu4,
 ]
 
 export const codeGroup = [
-    DemoContextMenu1Code,
-    DemoContextMenu2Code,
-    DemoContextMenu3Code,
-    DemoContextMenu4Code,
+  DemoContextMenu1Code,
+  DemoContextMenu2Code,
+  DemoContextMenu3Code,
+  DemoContextMenu4Code,
 ]

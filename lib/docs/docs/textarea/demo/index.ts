@@ -15,23 +15,23 @@ import DemoTextarea6Code from './DemoTextarea6.vue?raw'
 import DemoTextarea7Code from './DemoTextarea7.vue?raw'
 import DemoTextarea8Code from './DemoTextarea8.vue?raw'
 export const demoGroup = [
-    DemoTextarea1,
-    DemoTextarea2,
-    DemoTextarea3,
-    DemoTextarea4,
-    DemoTextarea5,
-    DemoTextarea6,
-    DemoTextarea7,
-    DemoTextarea8,
+  DemoTextarea1,
+  DemoTextarea2,
+  DemoTextarea3,
+  DemoTextarea4,
+  DemoTextarea5,
+  DemoTextarea6,
+  DemoTextarea7,
+  DemoTextarea8,
 ]
 
 export const codeGroup = [
-    DemoTextarea1Code,
-    DemoTextarea2Code,
-    DemoTextarea3Code,
-    DemoTextarea4Code,
-    DemoTextarea5Code,
-    DemoTextarea6Code,
-    DemoTextarea7Code,
-    DemoTextarea8Code,
+  DemoTextarea1Code,
+  DemoTextarea2Code,
+  DemoTextarea3Code,
+  DemoTextarea4Code,
+  DemoTextarea5Code,
+  DemoTextarea6Code,
+  DemoTextarea7Code,
+  DemoTextarea8Code,
 ]

@@ -11,17 +11,17 @@ import DemoPopover4Code from './DemoPopover4.vue?raw'
 import DemoPopover5Code from './DemoPopover5.vue?raw'
 
 export const demoGroup = [
-    DemoPopover1,
-    DemoPopover2,
-    DemoPopover3,
-    DemoPopover4,
-    DemoPopover5,
+  DemoPopover1,
+  DemoPopover2,
+  DemoPopover3,
+  DemoPopover4,
+  DemoPopover5,
 ]
 
 export const codeGroup = [
-    DemoPopover1Code,
-    DemoPopover2Code,
-    DemoPopover3Code,
-    DemoPopover4Code,
-    DemoPopover5Code,
+  DemoPopover1Code,
+  DemoPopover2Code,
+  DemoPopover3Code,
+  DemoPopover4Code,
+  DemoPopover5Code,
 ]

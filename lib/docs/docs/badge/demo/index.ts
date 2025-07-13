@@ -10,17 +10,17 @@ import DemoBadge4Code from './DemoBadge4.vue?raw'
 import DemoBadge5Code from './DemoBadge5.vue?raw'
 
 export const demoGroup = [
-    DemoBadge1,
-    DemoBadge2,
-    DemoBadge3,
-    DemoBadge4,
-    DemoBadge5,
+  DemoBadge1,
+  DemoBadge2,
+  DemoBadge3,
+  DemoBadge4,
+  DemoBadge5,
 ]
 
 export const codeGroup = [
-    DemoBadge1Code,
-    DemoBadge2Code,
-    DemoBadge3Code,
-    DemoBadge4Code,
-    DemoBadge5Code,
+  DemoBadge1Code,
+  DemoBadge2Code,
+  DemoBadge3Code,
+  DemoBadge4Code,
+  DemoBadge5Code,
 ]

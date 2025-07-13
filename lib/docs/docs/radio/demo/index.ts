@@ -12,19 +12,19 @@ import DemoRadio5Code from './DemoRadio5.vue?raw'
 import DemoRadio6Code from './DemoRadio6.vue?raw'
 
 export const demoGroup = [
-    DemoRadio1,
-    DemoRadio2,
-    DemoRadio3,
-    DemoRadio4,
-    DemoRadio5,
-    DemoRadio6,
+  DemoRadio1,
+  DemoRadio2,
+  DemoRadio3,
+  DemoRadio4,
+  DemoRadio5,
+  DemoRadio6,
 ]
 
 export const codeGroup = [
-    DemoRadio1Code,
-    DemoRadio2Code,
-    DemoRadio3Code,
-    DemoRadio4Code,
-    DemoRadio5Code,
-    DemoRadio6Code,
+  DemoRadio1Code,
+  DemoRadio2Code,
+  DemoRadio3Code,
+  DemoRadio4Code,
+  DemoRadio5Code,
+  DemoRadio6Code,
 ]

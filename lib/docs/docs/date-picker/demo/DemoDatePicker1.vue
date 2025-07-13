@@ -3,5 +3,5 @@ const value = ref('')
 </script>
 
 <template>
-    <lew-date-picker v-model="value" />
+  <lew-date-picker v-model="value" />
 </template>

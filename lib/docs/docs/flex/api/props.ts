@@ -2,8 +2,8 @@ import { flexProps } from 'lew-ui'
 import { convertProps } from '@/lib/utils'
 
 export default {
-    title: 'Props',
-    columnsKey: 'props',
-    orderNum: 10,
-    data: convertProps(flexProps),
+  title: 'Props',
+  columnsKey: 'props',
+  orderNum: 10,
+  data: convertProps(flexProps),
 }

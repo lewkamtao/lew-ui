@@ -1,28 +1,28 @@
 {
-    "compilerOptions": {
-        "target": "esnext",
-        "lib": ["es2023", "dom", "dom.iterable"],
-        "moduleDetection": "force",
-        "module": "esnext",
-        "moduleResolution": "node",
-        "resolveJsonModule": true,
-        "types": ["node"],
-        "strict": true,
-        "noUnusedLocals": true,
-        "declaration": true,
-        "emitDeclarationOnly": true,
-        "esModuleInterop": true,
-        "isolatedModules": true,
-        "verbatimModuleSyntax": true,
-        "skipLibCheck": true,
-        "baseUrl": "./",
-        "paths": {
-            "lew-ui": ["./lib"],
-            "lew-ui/*": ["./lib/*"],
-            "lew-ui/utils": ["./lib/utils"],
-            "lew-ui/utils/*": ["./lib/utils/*"],
-            "@/*": ["./lib/docs/*"]
-        }
-    },
-    "include": ["lib", "public"]
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["es2023", "dom", "dom.iterable"],
+    "moduleDetection": "force",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "types": ["node"],
+    "strict": true,
+    "noUnusedLocals": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "lew-ui": ["./lib"],
+      "lew-ui/*": ["./lib/*"],
+      "lew-ui/utils": ["./lib/utils"],
+      "lew-ui/utils/*": ["./lib/utils/*"],
+      "@/*": ["./lib/docs/*"]
+    }
+  },
+  "include": ["lib", "public"]
 }

@@ -7,24 +7,24 @@ const value = ref()
 </script>
 
 <template>
-    <div>
-        <lew-form-item as="input" v-model="value" />
-    </div>
+  <div>
+    <lew-form-item as="input" v-model="value" />
+  </div>
 </template>
 <style scoped>
 .form-box {
-    width: 450px;
-    flex-shrink: 0;
+  width: 450px;
+  flex-shrink: 0;
 }
 pre {
-    width: 350px;
-    background-color: var(--lew-bgcolor-2);
-    padding: 30px;
-    flex-shrink: 0;
+  width: 350px;
+  background-color: var(--lew-bgcolor-2);
+  padding: 30px;
+  flex-shrink: 0;
 }
 @media (max-width: 767px) {
-    .form-box {
-        width: 100%;
-    }
+  .form-box {
+    width: 100%;
+  }
 }
 </style>

@@ -9,7 +9,7 @@ import DemoCollapse3Code from './DemoCollapse3.vue?raw'
 export const demoGroup = [DemoCollapse1, DemoCollapse2, DemoCollapse3]
 
 export const codeGroup = [
-    DemoCollapse1Code,
-    DemoCollapse2Code,
-    DemoCollapse3Code,
+  DemoCollapse1Code,
+  DemoCollapse2Code,
+  DemoCollapse3Code,
 ]

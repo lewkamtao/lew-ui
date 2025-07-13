@@ -39,16 +39,16 @@ const content = ref(`
 </script>
 
 <template>
-    <lew-flex x="center" gap="50">
-        <lew-tag
-            v-tooltip="{
-                content,
-                allowHTML: true,
-            }"
-            oversize
-            color="red"
-            round
-            text="Allow HTML"
-        />
-    </lew-flex>
+  <lew-flex x="center" gap="50">
+    <lew-tag
+      v-tooltip="{
+        content,
+        allowHTML: true,
+      }"
+      oversize
+      color="red"
+      round
+      text="Allow HTML"
+    />
+  </lew-flex>
 </template>

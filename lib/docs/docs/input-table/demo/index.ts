@@ -9,7 +9,7 @@ import DemoInputTable3Code from './DemoInputTable3.vue?raw'
 export const demoGroup = [DemoInputTable1, DemoInputTable2, DemoInputTable3]
 
 export const codeGroup = [
-    DemoInputTable1Code,
-    DemoInputTable2Code,
-    DemoInputTable3Code,
+  DemoInputTable1Code,
+  DemoInputTable2Code,
+  DemoInputTable3Code,
 ]

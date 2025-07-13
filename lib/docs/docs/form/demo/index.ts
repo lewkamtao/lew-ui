@@ -13,19 +13,19 @@ import DemoForm5Code from './DemoForm5.vue?raw'
 import DemoForm6Code from './DemoForm6.vue?raw'
 
 export const demoGroup = [
-    DemoForm1,
-    DemoForm2,
-    DemoForm3,
-    DemoForm4,
-    DemoForm5,
-    DemoForm6,
+  DemoForm1,
+  DemoForm2,
+  DemoForm3,
+  DemoForm4,
+  DemoForm5,
+  DemoForm6,
 ]
 
 export const codeGroup = [
-    DemoForm1Code,
-    DemoForm2Code,
-    DemoForm3Code,
-    DemoForm4Code,
-    DemoForm5Code,
-    DemoForm6Code,
+  DemoForm1Code,
+  DemoForm2Code,
+  DemoForm3Code,
+  DemoForm4Code,
+  DemoForm5Code,
+  DemoForm6Code,
 ]

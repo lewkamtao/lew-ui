@@ -8,15 +8,15 @@ import DemoTextTrim4 from './DemoTextTrim4.vue'
 import DemoTextTrim4Code from './DemoTextTrim4.vue?raw'
 
 export const demoGroup = [
-    DemoTextTrim1,
-    DemoTextTrim2,
-    DemoTextTrim3,
-    DemoTextTrim4,
+  DemoTextTrim1,
+  DemoTextTrim2,
+  DemoTextTrim3,
+  DemoTextTrim4,
 ]
 
 export const codeGroup = [
-    DemoTextTrim1Code,
-    DemoTextTrim2Code,
-    DemoTextTrim3Code,
-    DemoTextTrim4Code,
+  DemoTextTrim1Code,
+  DemoTextTrim2Code,
+  DemoTextTrim3Code,
+  DemoTextTrim4Code,
 ]

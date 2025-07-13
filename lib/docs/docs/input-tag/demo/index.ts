@@ -17,23 +17,23 @@ import DemoInputTag7Code from './DemoInputTag7.vue?raw'
 import DemoInputTag8Code from './DemoInputTag8.vue?raw'
 
 export const demoGroup = [
-    DemoInputTag1,
-    DemoInputTag2,
-    DemoInputTag3,
-    DemoInputTag4,
-    DemoInputTag5,
-    DemoInputTag6,
-    DemoInputTag7,
-    DemoInputTag8,
+  DemoInputTag1,
+  DemoInputTag2,
+  DemoInputTag3,
+  DemoInputTag4,
+  DemoInputTag5,
+  DemoInputTag6,
+  DemoInputTag7,
+  DemoInputTag8,
 ]
 
 export const codeGroup = [
-    DemoInputTag1Code,
-    DemoInputTag2Code,
-    DemoInputTag3Code,
-    DemoInputTag4Code,
-    DemoInputTag5Code,
-    DemoInputTag6Code,
-    DemoInputTag7Code,
-    DemoInputTag8Code,
+  DemoInputTag1Code,
+  DemoInputTag2Code,
+  DemoInputTag3Code,
+  DemoInputTag4Code,
+  DemoInputTag5Code,
+  DemoInputTag6Code,
+  DemoInputTag7Code,
+  DemoInputTag8Code,
 ]

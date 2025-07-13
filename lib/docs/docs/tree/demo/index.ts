@@ -17,23 +17,23 @@ import DemoTree7Code from './DemoTree7.vue?raw'
 import DemoTree8Code from './DemoTree8.vue?raw'
 
 export const demoGroup = [
-    DemoTree1,
-    DemoTree2,
-    DemoTree3,
-    DemoTree4,
-    DemoTree5,
-    DemoTree6,
-    DemoTree7,
-    DemoTree8,
+  DemoTree1,
+  DemoTree2,
+  DemoTree3,
+  DemoTree4,
+  DemoTree5,
+  DemoTree6,
+  DemoTree7,
+  DemoTree8,
 ]
 
 export const codeGroup = [
-    DemoTree1Code,
-    DemoTree2Code,
-    DemoTree3Code,
-    DemoTree4Code,
-    DemoTree5Code,
-    DemoTree6Code,
-    DemoTree7Code,
-    DemoTree8Code,
+  DemoTree1Code,
+  DemoTree2Code,
+  DemoTree3Code,
+  DemoTree4Code,
+  DemoTree5Code,
+  DemoTree6Code,
+  DemoTree7Code,
+  DemoTree8Code,
 ]

@@ -17,12 +17,12 @@ const app = createApp(AppVue)
 
 // 自定义一个代码高亮指令
 app.directive('highlight', {
-    mounted(el: any) {
-        const blocks = el.querySelectorAll('pre code')
-        blocks.forEach((block: unknown) => {
-            hljs.highlightBlock(block)
-        })
-    },
+  mounted(el: any) {
+    const blocks = el.querySelectorAll('pre code')
+    blocks.forEach((block: unknown) => {
+      hljs.highlightBlock(block)
+    })
+  },
 })
 
 app.use(lew).use(i18n).use(HljsVuePlugin).use(router).mount('#app')

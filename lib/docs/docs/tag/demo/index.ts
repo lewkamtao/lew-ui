@@ -14,21 +14,21 @@ import DemoTag6Code from './DemoTag6.vue?raw'
 import DemoTag7Code from './DemoTag7.vue?raw'
 
 export const demoGroup = [
-    DemoTag1,
-    DemoTag2,
-    DemoTag3,
-    DemoTag4,
-    DemoTag5,
-    DemoTag6,
-    DemoTag7,
+  DemoTag1,
+  DemoTag2,
+  DemoTag3,
+  DemoTag4,
+  DemoTag5,
+  DemoTag6,
+  DemoTag7,
 ]
 
 export const codeGroup = [
-    DemoTag1Code,
-    DemoTag2Code,
-    DemoTag3Code,
-    DemoTag4Code,
-    DemoTag5Code,
-    DemoTag6Code,
-    DemoTag7Code,
+  DemoTag1Code,
+  DemoTag2Code,
+  DemoTag3Code,
+  DemoTag4Code,
+  DemoTag5Code,
+  DemoTag6Code,
+  DemoTag7Code,
 ]

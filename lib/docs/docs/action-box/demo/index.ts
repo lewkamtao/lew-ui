@@ -9,15 +9,15 @@ import DemoActionBox3Code from './DemoActionBox3.vue?raw'
 import DemoActionBox4Code from './DemoActionBox4.vue?raw'
 
 export const demoGroup = [
-    DemoActionBox1,
-    DemoActionBox2,
-    DemoActionBox3,
-    DemoActionBox4,
+  DemoActionBox1,
+  DemoActionBox2,
+  DemoActionBox3,
+  DemoActionBox4,
 ]
 
 export const codeGroup = [
-    DemoActionBox1Code,
-    DemoActionBox2Code,
-    DemoActionBox3Code,
-    DemoActionBox4Code,
+  DemoActionBox1Code,
+  DemoActionBox2Code,
+  DemoActionBox3Code,
+  DemoActionBox4Code,
 ]

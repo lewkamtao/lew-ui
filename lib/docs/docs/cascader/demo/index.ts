@@ -19,25 +19,25 @@ import DemoCascader8Code from './DemoCascader8.vue?raw'
 import DemoCascader9Code from './DemoCascader9.vue?raw'
 
 export const demoGroup = [
-    DemoCascader1,
-    DemoCascader2,
-    DemoCascader3,
-    DemoCascader4,
-    DemoCascader5,
-    DemoCascader6,
-    DemoCascader7,
-    DemoCascader8,
-    DemoCascader9,
+  DemoCascader1,
+  DemoCascader2,
+  DemoCascader3,
+  DemoCascader4,
+  DemoCascader5,
+  DemoCascader6,
+  DemoCascader7,
+  DemoCascader8,
+  DemoCascader9,
 ]
 
 export const codeGroup = [
-    DemoCascader1Code,
-    DemoCascader2Code,
-    DemoCascader3Code,
-    DemoCascader4Code,
-    DemoCascader5Code,
-    DemoCascader6Code,
-    DemoCascader7Code,
-    DemoCascader8Code,
-    DemoCascader9Code,
+  DemoCascader1Code,
+  DemoCascader2Code,
+  DemoCascader3Code,
+  DemoCascader4Code,
+  DemoCascader5Code,
+  DemoCascader6Code,
+  DemoCascader7Code,
+  DemoCascader8Code,
+  DemoCascader9Code,
 ]

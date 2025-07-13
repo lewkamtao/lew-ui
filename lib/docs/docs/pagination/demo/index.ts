@@ -9,7 +9,7 @@ import DemoPagination3Code from './DemoPagination3.vue?raw'
 export const demoGroup = [DemoPagination1, DemoPagination2, DemoPagination3]
 
 export const codeGroup = [
-    DemoPagination1Code,
-    DemoPagination2Code,
-    DemoPagination3Code,
+  DemoPagination1Code,
+  DemoPagination2Code,
+  DemoPagination3Code,
 ]

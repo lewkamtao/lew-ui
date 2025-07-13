@@ -6,15 +6,15 @@ const routes: RouteRecordRaw[] = []
 let tempName = ''
 
 for (const [path, module] of Object.entries(modules)) {
-    tempName = path.replace(/^\.\/(.*)\/index.ts$/, '$1')
-    tempName = tempName
-        .replace(capitalizeRegex, (match) => match.toUpperCase())
-        .replaceAll('-', '')
-    routes.push({
-        name: 'R-Lew' + tempName,
-        path: '/' + tempName,
-        component: module,
-    })
+  tempName = path.replace(/^\.\/(.*)\/index.ts$/, '$1')
+  tempName = tempName
+    .replace(capitalizeRegex, (match) => match.toUpperCase())
+    .replaceAll('-', '')
+  routes.push({
+    name: 'R-Lew' + tempName,
+    path: '/' + tempName,
+    component: module,
+  })
 }
 
 export default routes

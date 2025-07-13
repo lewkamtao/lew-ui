@@ -10,17 +10,17 @@ import DemoMenuTree4Code from './DemoMenuTree4.vue?raw'
 import DemoMenuTree5Code from './DemoMenuTree5.vue?raw'
 
 export const demoGroup = [
-    DemoMenuTree1,
-    DemoMenuTree2,
-    DemoMenuTree3,
-    DemoMenuTree4,
-    DemoMenuTree5,
+  DemoMenuTree1,
+  DemoMenuTree2,
+  DemoMenuTree3,
+  DemoMenuTree4,
+  DemoMenuTree5,
 ]
 
 export const codeGroup = [
-    DemoMenuTree1Code,
-    DemoMenuTree2Code,
-    DemoMenuTree3Code,
-    DemoMenuTree4Code,
-    DemoMenuTree5Code,
+  DemoMenuTree1Code,
+  DemoMenuTree2Code,
+  DemoMenuTree3Code,
+  DemoMenuTree4Code,
+  DemoMenuTree5Code,
 ]

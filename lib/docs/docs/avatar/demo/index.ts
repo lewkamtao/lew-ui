@@ -11,8 +11,8 @@ import DemoAvatar4Code from './DemoAvatar4.vue?raw'
 export const demoGroup = [DemoAvatar1, DemoAvatar2, DemoAvatar3, DemoAvatar4]
 
 export const codeGroup = [
-    DemoAvatar1Code,
-    DemoAvatar2Code,
-    DemoAvatar3Code,
-    DemoAvatar4Code,
+  DemoAvatar1Code,
+  DemoAvatar2Code,
+  DemoAvatar3Code,
+  DemoAvatar4Code,
 ]

@@ -13,9 +13,9 @@ import DemoTabs5Code from './DemoTabs5.vue?raw'
 export const demoGroup = [DemoTabs1, DemoTabs2, DemoTabs3, DemoTabs4, DemoTabs5]
 
 export const codeGroup = [
-    DemoTabs1Code,
-    DemoTabs2Code,
-    DemoTabs3Code,
-    DemoTabs4Code,
-    DemoTabs5Code,
+  DemoTabs1Code,
+  DemoTabs2Code,
+  DemoTabs3Code,
+  DemoTabs4Code,
+  DemoTabs5Code,
 ]

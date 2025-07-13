@@ -3,7 +3,7 @@ const color = ref('#409EFF')
 </script>
 
 <template>
-    <div style="width: 300px">
-        <lew-color-picker v-model="color" readonly />
-    </div>
+  <div style="width: 300px">
+    <lew-color-picker v-model="color" readonly />
+  </div>
 </template>

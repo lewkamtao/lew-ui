@@ -22,7 +22,7 @@ import { LewButton } from 'lew-ui'
 </script>
 
 <template>
-    <lew-button text="Submit" />
+  <lew-button text="Submit" />
 </template>
 ```
 

@@ -29,65 +29,65 @@ const defaultOptions = `{
 }`
 
 const open = () => {
-    fieldOptions.value = ''
-    visible.value = true
+  fieldOptions.value = ''
+  visible.value = true
 }
 const emit = defineEmits(['import'])
 // Start of Selection
 const ok = () => {
-    if (!fieldOptions.value) {
-        emit('import', parseToStandardJSON(defaultOptions))
-        visible.value = false
-        return
-    }
+  if (!fieldOptions.value) {
+    emit('import', parseToStandardJSON(defaultOptions))
+    visible.value = false
+    return
+  }
 
-    try {
-        const parsedData = parseToStandardJSON(fieldOptions.value)
-        if (typeof parsedData === 'object' && parsedData !== null) {
-            emit('import', cloneDeep(parsedData))
-            visible.value = false
-        } else {
-            LewMessage.warning(
-                '输入的内容不符合对象格式，请输入一个有效的 JSON 对象字符串！',
-            )
-        }
-    } catch (error) {
-        LewMessage.warning(
-            '输入的内容不符合对象格式，请输入一个有效的 JSON 对象字符串！',
-        )
+  try {
+    const parsedData = parseToStandardJSON(fieldOptions.value)
+    if (typeof parsedData === 'object' && parsedData !== null) {
+      emit('import', cloneDeep(parsedData))
+      visible.value = false
+    } else {
+      LewMessage.warning(
+        '输入的内容不符合对象格式，请输入一个有效的 JSON 对象字符串！',
+      )
     }
+  } catch (error) {
+    LewMessage.warning(
+      '输入的内容不符合对象格式，请输入一个有效的 JSON 对象字符串！',
+    )
+  }
 }
 defineExpose({ open })
 </script>
 
 <template>
-    <lew-modal
-        v-model:visible="visible"
-        width="500"
-        :closeButtonProps="{
-            request: () => {
-                visible = false
-            },
-        }"
-        :okButtonProps="{
-            request: ok,
-        }"
-        title="导入字段"
-    >
-        <div class="import-modal-content lew-scrollbar">
-            <lew-textarea
-                height="400"
-                :placeholder="defaultOptions"
-                v-model="fieldOptions"
-            />
-        </div>
-    </lew-modal>
+  <lew-modal
+    v-model:visible="visible"
+    width="500"
+    :closeButtonProps="{
+      request: () => {
+        visible = false
+      },
+    }"
+    :okButtonProps="{
+      request: ok,
+    }"
+    title="导入字段"
+  >
+    <div class="import-modal-content lew-scrollbar">
+      <lew-textarea
+        height="400"
+        :placeholder="defaultOptions"
+        v-model="fieldOptions"
+      />
+    </div>
+  </lew-modal>
 </template>
 <style lang="scss" scoped>
 .import-modal-content {
-    padding: 20px;
-    box-sizing: border-box;
-    overflow-y: auto;
-    max-height: 80vh;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  max-height: 80vh;
 }
 </style>

@@ -1,182 +1,182 @@
 body,
 html {
-    color: var(--lew-text-color-1);
-    background: var(--lew-bgcolor-4);
-    overflow: hidden;
-    font-size: 14px;
-    font-family:
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        'Segoe UI',
-        sans-serif,
-        'Apple Color Emoji',
-        'Segoe UI Emoji',
-        'Segoe UI Symbol';
+  color: var(--lew-text-color-1);
+  background: var(--lew-bgcolor-4);
+  overflow: hidden;
+  font-size: 14px;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol';
 }
 
 input,
 textarea,
 button {
-    font-family: inherit;
+  font-family: inherit;
 }
 
 /* 隐藏滚动条 */
 .hidden-scrollbar {
-    overflow-x: hidden;
-    overflow-y: auto;
-    -ms-overflow-style: none; /* IE 10+ */
-    scrollbar-width: none; /* Firefox */
+  overflow-x: hidden;
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none; /* Firefox */
 
-    &::-webkit-scrollbar {
-        display: none; /* Chrome, Safari */
-    }
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
 }
 
 /* 骨架屏加载动画 */
 .skeletons {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        120deg,
-        hsl(210, 15%, 88%),
-        hsl(210, 15%, 95%),
-        hsl(210, 15%, 88%)
-    );
-    background-size: 200%;
-    animation: loader 1s infinite reverse;
-    opacity: 0.6;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    hsl(210, 15%, 88%),
+    hsl(210, 15%, 95%),
+    hsl(210, 15%, 88%)
+  );
+  background-size: 200%;
+  animation: loader 1s infinite reverse;
+  opacity: 0.6;
 }
 
 .lew-dark .skeletons {
-    background: linear-gradient(
-        90deg,
-        hsl(240, 14%, 15%),
-        hsl(240, 16%, 20%),
-        hsl(240, 15%, 15%)
-    );
-    background-size: 200%;
+  background: linear-gradient(
+    90deg,
+    hsl(240, 14%, 15%),
+    hsl(240, 16%, 20%),
+    hsl(240, 15%, 15%)
+  );
+  background-size: 200%;
 }
 
 @keyframes loader {
-    from {
-        background-position: -100% 0;
-    }
-    to {
-        background-position: 100% 0;
-    }
+  from {
+    background-position: -100% 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
 }
 
 /* 自定义滚动条样式 */
 .lew-scrollbar {
-    &::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-        background-color: var(--lew-bgcolor-2);
-        border-radius: 4px;
-    }
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: var(--lew-bgcolor-2);
+    border-radius: 4px;
+  }
 
-    &::-webkit-scrollbar-thumb {
-        background-color: var(--lew-bgcolor-4);
-        border-radius: 4px;
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--lew-bgcolor-4);
+    border-radius: 4px;
 
-        &:hover {
-            background-color: var(--lew-bgcolor-6);
-        }
+    &:hover {
+      background-color: var(--lew-bgcolor-6);
     }
+  }
 
-    &::-webkit-scrollbar-corner {
-        background-color: var(--lew-bgcolor-0);
-    }
+  &::-webkit-scrollbar-corner {
+    background-color: var(--lew-bgcolor-0);
+  }
 
-    .scrollbar-corner {
-        background-color: var(--lew-bgcolor-0);
-    }
+  .scrollbar-corner {
+    background-color: var(--lew-bgcolor-0);
+  }
 }
 
 /* 悬停显示滚动条 */
 .lew-scrollbar-hover {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: transparent;
+  }
+
+  &:hover {
     &::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-        background-color: transparent;
+      background-color: var(--lew-bgcolor-2);
     }
 
-    &:hover {
-        &::-webkit-scrollbar {
-            background-color: var(--lew-bgcolor-2);
-        }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--lew-bgcolor-4);
 
-        &::-webkit-scrollbar-thumb {
-            background-color: var(--lew-bgcolor-4);
-
-            &:hover {
-                background-color: var(--lew-bgcolor-6);
-            }
-        }
-
-        &::-webkit-scrollbar-corner {
-            background-color: var(--lew-bgcolor-0);
-        }
-
-        .scrollbar-corner {
-            background-color: var(--lew-bgcolor-0);
-        }
+      &:hover {
+        background-color: var(--lew-bgcolor-6);
+      }
     }
+
+    &::-webkit-scrollbar-corner {
+      background-color: var(--lew-bgcolor-0);
+    }
+
+    .scrollbar-corner {
+      background-color: var(--lew-bgcolor-0);
+    }
+  }
 }
 
 /* 表单图标动画 */
 .lew-form-icon-ani-enter-from,
 .lew-form-icon-ani-leave-to {
-    opacity: 0 !important;
-    margin-right: -10px;
+  opacity: 0 !important;
+  margin-right: -10px;
 }
 
 .lew-form-icon-ani-enter-active,
 .lew-form-icon-ani-leave-active {
-    transition: all var(--lew-form-transition-bezier);
+  transition: all var(--lew-form-transition-bezier);
 }
 
 /* 表单清除图标 */
 .lew-form-icon-close {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    z-index: 9;
-    padding: 2px;
-    opacity: var(--lew-form-icon-opacity);
-    cursor: pointer;
-    border-radius: 50%;
-    transform: translate(0, -50%);
-    transition: all 0.2s;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  z-index: 9;
+  padding: 2px;
+  opacity: var(--lew-form-icon-opacity);
+  cursor: pointer;
+  border-radius: 50%;
+  transform: translate(0, -50%);
+  transition: all 0.2s;
 
-    &:hover {
-        opacity: var(--lew-form-icon-opacity-hover);
-        background-color: var(--lew-bgcolor-0);
-    }
+  &:hover {
+    opacity: var(--lew-form-icon-opacity-hover);
+    background-color: var(--lew-bgcolor-0);
+  }
 
-    &:active {
-        opacity: var(--lew-form-icon-opacity-active);
-    }
+  &:active {
+    opacity: var(--lew-form-icon-opacity-active);
+  }
 }
 
 .lew-form-icon-close-focus {
-    &:hover {
-        opacity: var(--lew-form-icon-opacity-hover);
-        background-color: var(--lew-bgcolor-4);
-    }
+  &:hover {
+    opacity: var(--lew-form-icon-opacity-hover);
+    background-color: var(--lew-bgcolor-4);
+  }
 
-    &:active {
-        opacity: var(--lew-form-icon-opacity-active);
-    }
+  &:active {
+    opacity: var(--lew-form-icon-opacity-active);
+  }
 }
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
-    opacity: 0;
+  opacity: 0;
 }

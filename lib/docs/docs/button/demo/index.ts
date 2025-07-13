@@ -13,19 +13,19 @@ import DemoButton5Code from './DemoButton5.vue?raw'
 import DemoButton6Code from './DemoButton6.vue?raw'
 
 export const demoGroup = [
-    DemoButton1,
-    DemoButton2,
-    DemoButton3,
-    DemoButton4,
-    DemoButton5,
-    DemoButton6,
+  DemoButton1,
+  DemoButton2,
+  DemoButton3,
+  DemoButton4,
+  DemoButton5,
+  DemoButton6,
 ]
 
 export const codeGroup = [
-    DemoButton1Code,
-    DemoButton2Code,
-    DemoButton3Code,
-    DemoButton4Code,
-    DemoButton5Code,
-    DemoButton6Code,
+  DemoButton1Code,
+  DemoButton2Code,
+  DemoButton3Code,
+  DemoButton4Code,
+  DemoButton5Code,
+  DemoButton6Code,
 ]

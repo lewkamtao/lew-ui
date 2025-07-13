@@ -8,30 +8,30 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 // 转小写
 const componentName: string = (route.name as string)
-    .replace('R-Lew', '')
-    .replace(/^[A-Z]/, (match) => match.toLowerCase())
+  .replace('R-Lew', '')
+  .replace(/^[A-Z]/, (match) => match.toLowerCase())
 const options = ref(
-    Object.keys(API).map((key: any) => {
-        // @ts-ignore
-        return API[key]
-    }),
+  Object.keys(API).map((key: any) => {
+    // @ts-ignore
+    return API[key]
+  }),
 )
 </script>
 
 <template>
-    <div class="demo-wrapper">
-        <lew-component-info />
-        <lew-demo-box
-            v-for="(item, index) in demoGroup"
-            :key="index"
-            :title="$t(`components.${componentName}.demo${index + 1}.title`)"
-            :description="
-                $t(`components.${componentName}.demo${index + 1}.description`)
-            "
-            :code="codeGroup[index]"
-        >
-            <component :is="item" />
-        </lew-demo-box>
-        <lew-docs-tables :options="options" />
-    </div>
+  <div class="demo-wrapper">
+    <lew-component-info />
+    <lew-demo-box
+      v-for="(item, index) in demoGroup"
+      :key="index"
+      :title="$t(`components.${componentName}.demo${index + 1}.title`)"
+      :description="
+        $t(`components.${componentName}.demo${index + 1}.description`)
+      "
+      :code="codeGroup[index]"
+    >
+      <component :is="item" />
+    </lew-demo-box>
+    <lew-docs-tables :options="options" />
+  </div>
 </template>
