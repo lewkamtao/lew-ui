@@ -17,6 +17,7 @@ watch(route, () => {
 
 const options = ref<MenuOptions[]>([])
 options.value = [
+<<<<<<< Updated upstream
     {
         label: '快速上手',
         value: '快速上手',
@@ -40,6 +41,35 @@ options.value = [
         ],
     },
 ]
+=======
+  {
+    label: '快速上手',
+    value: '快速上手',
+    children: [
+      {
+        label: '安装',
+        value: '/Install',
+      },
+      {
+        label: '如何使用',
+        value: '/Start',
+      },
+      {
+        label: '国际化',
+        value: '/Locale',
+      },
+      {
+        label: '常见问题',
+        value: '/QA',
+      },
+      {
+        label: '未来计划',
+        value: '/TodoList',
+      },
+    ],
+  },
+];
+>>>>>>> Stashed changes
 </script>
 
 <template>
