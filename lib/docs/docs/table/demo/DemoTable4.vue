@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-
-
 const data: any = [
     {
         id: 1,

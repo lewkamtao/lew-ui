@@ -88,8 +88,6 @@ const tagStyle: any = computed(() => {
         pointerEvents: disabled ? 'none' : undefined,
     }
 })
-
-
 </script>
 
 <template>

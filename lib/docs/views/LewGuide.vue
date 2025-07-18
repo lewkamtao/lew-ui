@@ -1,33 +1,33 @@
 <script setup lang="ts">
-import { useRoute } from "vue-router";
-import TheSiderbar from "../layout/TheSiderbar.vue";
-import type { MenuOptions } from "lew-ui";
-import { Menu } from "lucide-vue-next";
+import { useRoute } from 'vue-router'
+import TheSiderbar from '../layout/TheSiderbar.vue'
+import type { MenuOptions } from 'lew-ui'
+import { Menu } from 'lucide-vue-next'
 
-const route = useRoute();
-const mainRef: any = ref(null);
-const isShowSider = ref(false);
+const route = useRoute()
+const mainRef: any = ref(null)
+const isShowSider = ref(false)
 
 watch(route, () => {
     setTimeout(() => {
-        if (mainRef.value) mainRef.value.scrollTop = 0;
-    }, 250);
-    isShowSider.value = false;
-});
+        if (mainRef.value) mainRef.value.scrollTop = 0
+    }, 250)
+    isShowSider.value = false
+})
 
 const options = ref<MenuOptions[]>([
     {
-        label: "快速上手",
-        value: "快速上手",
+        label: '快速上手',
+        value: '快速上手',
         children: [
-            { label: "安装", value: "/Install" },
-            { label: "如何使用", value: "/Start" },
-            { label: "国际化", value: "/Locale" },
-            { label: "常见问题", value: "/QA" },
-            { label: "未来计划", value: "/TodoList" },
+            { label: '安装', value: '/Install' },
+            { label: '如何使用', value: '/Start' },
+            { label: '国际化', value: '/Locale' },
+            { label: '常见问题', value: '/QA' },
+            { label: '未来计划', value: '/TodoList' },
         ],
     },
-]);
+])
 </script>
 
 <template>

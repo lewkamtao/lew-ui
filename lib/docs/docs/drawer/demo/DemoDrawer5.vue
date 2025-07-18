@@ -15,8 +15,6 @@ const productData = ref({
     stock: 15,
 })
 
-
-
 const handleEdit = () => {
     console.log('Edit product data:', productData.value)
     visible.value = false

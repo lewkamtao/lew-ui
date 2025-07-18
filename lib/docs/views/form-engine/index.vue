@@ -758,10 +758,9 @@ const addComponent = (item: any) => {
     }
 
     .lew-form-wrapper-draggable-4 {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(
-                0,
-                1fr
-            ) minmax(0, 1fr);
+        grid-template-columns:
+            minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr)
+            minmax(0, 1fr);
     }
 }
 
