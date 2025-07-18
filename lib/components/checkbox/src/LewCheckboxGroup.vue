@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { checkboxGroupProps } from './props'
 import type { CheckboxOptions } from './props'
-import { object2class } from 'lew-ui/utils'
 import { LewCheckbox, LewFlex } from 'lew-ui'
+import { object2class } from 'lew-ui/utils'
 import { cloneDeep } from 'lodash-es'
+import { checkboxGroupProps } from './props'
 
 const props = defineProps(checkboxGroupProps)
 const emit = defineEmits(['change'])
-const modelValue: Ref<String[] | Number[] | undefined> = defineModel({
+const modelValue: Ref<string[] | number[] | undefined> = defineModel({
   default: () => [],
   required: true,
 })
@@ -24,17 +24,18 @@ watch(
   },
 )
 
-const change = ({
+function change({
   item,
   checked,
 }: {
   item: CheckboxOptions
   checked: boolean
-}) => {
-  let _value = modelValue.value || []
+}) {
+  const _value = modelValue.value || []
   if (checked) {
     _value.push(item.value as string & number)
-  } else {
+  }
+  else {
     const index = _value.findIndex((e: any) => e === item.value)
     if (index >= 0) {
       _value.splice(index, 1)
@@ -47,11 +48,11 @@ const change = ({
   modelValue.value = cloneDeep(_value)
 }
 
-const initCheckbox = () => {
+function initCheckbox() {
   checkList.value = props.options.map((item: CheckboxOptions) => {
     if (
-      modelValue.value &&
-      modelValue.value.includes(item.value as string & number)
+      modelValue.value
+      && modelValue.value.includes(item.value as string & number)
     ) {
       return true
     }
@@ -70,8 +71,9 @@ const getCheckboxGroupClassName = computed(() => {
 
 initCheckbox()
 </script>
+
 <template>
-  <lew-flex
+  <LewFlex
     x="start"
     gap="10"
     wrap
@@ -79,7 +81,7 @@ initCheckbox()
     class="lew-checkbox-group"
     :class="getCheckboxGroupClassName"
   >
-    <lew-checkbox
+    <LewCheckbox
       v-for="(item, index) in options"
       :key="item.value"
       v-model="checkList[index]"
@@ -91,7 +93,7 @@ initCheckbox()
       :disabled="item.disabled || disabled"
       @change="change({ item, checked: $event })"
     />
-  </lew-flex>
+  </LewFlex>
 </template>
 
 <style lang="scss" scoped>

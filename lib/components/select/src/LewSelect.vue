@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { useDebounceFn } from '@vueuse/core'
-import { LewPopover, LewFlex, LewTextTrim, LewEmpty } from 'lew-ui'
-import { object2class, numFormat } from 'lew-ui/utils'
-import { VirtList } from 'vue-virt-list'
 import type { SelectOptions } from './props'
-import { selectProps } from './props'
-import { cloneDeep, isFunction } from 'lodash-es'
+import { useDebounceFn } from '@vueuse/core'
+import { LewEmpty, LewFlex, LewPopover, LewTextTrim, locale } from 'lew-ui'
+import { any2px, numFormat, object2class, poll } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { flattenOptions, defaultSearchMethod } from './util'
-import { poll } from 'lew-ui/utils'
-import { locale } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
+import { cloneDeep, isFunction } from 'lodash-es'
+import { VirtList } from 'vue-virt-list'
+import { selectProps } from './props'
+import { defaultSearchMethod, flattenOptions } from './util'
+
 const props = defineProps(selectProps)
 const emit = defineEmits(['change', 'blur', 'clear', 'focus'])
 const selectValue: Ref<string | number | undefined> = defineModel()
@@ -20,33 +18,37 @@ const inputRef = ref()
 const lewPopoverRef = ref()
 const formMethods: any = inject('formMethods', {})
 
-let _searchMethod = computed(() => {
+const _searchMethod = computed(() => {
   if (isFunction(props.searchMethod)) {
     return props.searchMethod
-  } else if (props.searchMethodId) {
+  }
+  else if (props.searchMethodId) {
     return formMethods[props.searchMethodId]
-  } else {
+  }
+  else {
     return defaultSearchMethod
   }
 })
 
-let _initOptionsMethod = computed(() => {
+const _initOptionsMethod = computed(() => {
   if (isFunction(props.initOptionsMethod)) {
     return props.initOptionsMethod
-  } else if (props.initOptionsMethodId) {
+  }
+  else if (props.initOptionsMethodId) {
     return formMethods[props.initOptionsMethodId]
   }
   return false
 })
 
-const init = async () => {
+async function init() {
   if (_initOptionsMethod.value) {
     try {
       const newOptions = await _initOptionsMethod.value()
       state.sourceOptions = newOptions
       state.options = flattenOptions(newOptions)
       findKeyword() // Update keyword based on new options and modelValue
-    } catch (error) {
+    }
+    catch (error) {
       console.error('[LewSelect] initOptionsMethod failed', error)
     }
   }
@@ -63,8 +65,8 @@ watch(
       // 只有在没有使用 initOptionsMethod 时才响应 options 的变化
       state.sourceOptions = newOptions
       state.options = flattenOptions(newOptions)
-      state.keyword =
-        newOptions.find((e: any) => e.value === selectValue.value)?.label || ''
+      state.keyword
+        = newOptions.find((e: any) => e.value === selectValue.value)?.label || ''
       // 如果启用搜索缓存，清除搜索缓存，因为数据源已经更新
       if (props.enableSearchCache) {
         state.searchCache.clear()
@@ -120,8 +122,9 @@ onMounted(() => {
 const SELECT_WIDTH_TOLERANCE = 26
 
 // 计算自动宽度
-const calculateAutoWidth = () => {
-  if (!props.autoWidth) return
+function calculateAutoWidth() {
+  if (!props.autoWidth)
+    return
 
   const tempDiv = document.createElement('div')
   tempDiv.style.position = 'absolute'
@@ -161,11 +164,11 @@ watch(
   },
 )
 
-const show = () => {
+function show() {
   lewPopoverRef.value.show()
 }
 
-const hide = () => {
+function hide() {
   lewPopoverRef.value.hide()
 }
 
@@ -173,7 +176,7 @@ const searchDebounce = useDebounceFn(async (e: any) => {
   search(e)
 }, props.searchDelay)
 
-const search = async (e: any) => {
+async function search(e: any) {
   state.loading = true
   const keyword = e.target.value
   if (props.searchable) {
@@ -182,12 +185,14 @@ const search = async (e: any) => {
     // 检查是否启用搜索缓存，以及缓存中是否已有该关键词的搜索结果
     if (props.enableSearchCache && state.searchCache.has(keyword)) {
       result = state.searchCache.get(keyword)!
-    } else {
+    }
+    else {
       // 如果没输入关键词
       const optionsToSearch = flattenOptions(state.sourceOptions)
       if (!keyword && optionsToSearch.length > 0) {
         result = optionsToSearch
-      } else {
+      }
+      else {
         result = await _searchMethod.value({
           options: optionsToSearch,
           keyword,
@@ -204,7 +209,7 @@ const search = async (e: any) => {
   state.loading = false
 }
 
-const clearHandle = () => {
+function clearHandle() {
   selectValue.value = undefined
   state.keywordBackup = undefined
   state.keyword = ''
@@ -212,7 +217,7 @@ const clearHandle = () => {
   emit('change')
 }
 
-const selectHandle = (item: SelectOptions) => {
+function selectHandle(item: SelectOptions) {
   if (item.disabled || item.isGroup) {
     return
   }
@@ -231,7 +236,7 @@ const getValueStyle = computed(() => {
   return state.visible ? 'opacity:0.6' : ''
 })
 
-const findKeyword = () => {
+function findKeyword() {
   if (state.options) {
     const option = state.options.find((e: any) => {
       if (e) {
@@ -267,7 +272,7 @@ const getBodyClassName = computed(() => {
   return object2class('lew-select-body', { size, disabled })
 })
 
-const getSelectItemClassName = (e: any) => {
+function getSelectItemClassName(e: any) {
   const { disabled, isGroup } = e
   const active = getChecked.value(e.value)
 
@@ -293,7 +298,7 @@ const getVirtualHeight = computed(() => {
   return height
 })
 
-const showHandle = async () => {
+async function showHandle() {
   state.visible = true
   state.keywordBackup = cloneDeep(state.keyword)
   if (props.searchable) {
@@ -316,7 +321,8 @@ const showHandle = async () => {
       const i = index > -1 ? index : 0
       if (i > 0 && i !== Infinity) {
         virtListRef.value.scrollToIndex(i)
-      } else {
+      }
+      else {
         virtListRef.value.reset()
       }
     },
@@ -326,7 +332,7 @@ const showHandle = async () => {
   })
 }
 
-const hideHandle = () => {
+function hideHandle() {
   state.visible = false
   if (!state.hideBySelect) {
     findKeyword()
@@ -369,9 +375,9 @@ defineExpose({
 </script>
 
 <template>
-  <lew-popover
+  <LewPopover
     ref="lewPopoverRef"
-    popoverBodyClassName="lew-select-popover-body"
+    popover-body-class-name="lew-select-popover-body"
     class="lew-select-view"
     :style="{ width: autoWidth ? 'auto' : any2px(width) }"
     :trigger="trigger"
@@ -429,7 +435,7 @@ defineExpose({
               : locale.t('select.placeholder')
           "
           @input="searchDebounce"
-        />
+        >
       </div>
     </template>
     <template #popover-body>
@@ -438,23 +444,23 @@ defineExpose({
         :class="getBodyClassName"
         :style="{ width: `calc(${any2px(popoverWidth)} - 14px)` }"
       >
-        <slot name="header"></slot>
+        <slot name="header" />
 
         <div class="lew-select-options-box">
           <template v-if="state.options && state.options.length === 0">
-            <slot v-if="$slots.empty" name="empty"></slot>
-            <lew-flex v-else direction="y" x="center" class="lew-not-found">
-              <lew-empty :title="locale.t('select.noResult')" />
-            </lew-flex>
+            <slot v-if="$slots.empty" name="empty" />
+            <LewFlex v-else direction="y" x="center" class="lew-not-found">
+              <LewEmpty :title="locale.t('select.noResult')" />
+            </LewFlex>
           </template>
           <template v-else>
             <div v-if="searchable" class="lew-result-count">
               {{ getResultText }}
             </div>
-            <virt-list
+            <VirtList
               ref="virtListRef"
               :list="state.options"
-              :minSize="itemHeight"
+              :min-size="itemHeight"
               :buffer="5"
               item-key="value"
               class="lew-select-options-list lew-scrollbar"
@@ -465,7 +471,7 @@ defineExpose({
             >
               <template #default="{ itemData: templateProps }">
                 <div
-                  :style="{ height: itemHeight + 'px' }"
+                  :style="{ height: `${itemHeight}px` }"
                   @click="selectHandle(templateProps)"
                 >
                   <slot
@@ -475,13 +481,13 @@ defineExpose({
                       ...templateProps,
                       checked: getChecked(templateProps.value),
                     }"
-                  ></slot>
+                  />
                   <div
                     v-else
                     class="lew-select-item"
                     :class="getSelectItemClassName(templateProps)"
                   >
-                    <lew-text-trim
+                    <LewTextTrim
                       :text="
                         templateProps.isGroup
                           ? `${templateProps.label} (${templateProps.total})`
@@ -494,19 +500,19 @@ defineExpose({
                       v-if="getChecked(templateProps.value) && showCheckIcon"
                       class="lew-icon-check"
                       :size="16"
-                      :strokeWidth="3"
+                      :stroke-width="3"
                       type="check"
                     />
                   </div>
                 </div>
               </template>
-            </virt-list>
+            </VirtList>
           </template>
         </div>
-        <slot name="footer"></slot>
+        <slot name="footer" />
       </div>
     </template>
-  </lew-popover>
+  </LewPopover>
 </template>
 
 <style lang="scss" scoped>
@@ -672,6 +678,7 @@ defineExpose({
   }
 }
 </style>
+
 <style lang="scss">
 .lew-select-popover-body {
   padding: 6px;

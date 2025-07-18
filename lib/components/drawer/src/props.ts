@@ -26,7 +26,7 @@ export const drawerProps = {
     type: [Number, String],
     default: 500,
     validator: (value: number | string) => {
-      const numValue = typeof value === 'string' ? parseFloat(value) : value
+      const numValue = typeof value === 'string' ? Number.parseFloat(value) : value
       return !Number.isNaN(numValue) && numValue > 0
     },
     description: '抽屉的宽度，单位为像素或百分比',
@@ -35,7 +35,7 @@ export const drawerProps = {
     type: [Number, String],
     default: 500,
     validator: (value: number | string) => {
-      const numValue = typeof value === 'string' ? parseFloat(value) : value
+      const numValue = typeof value === 'string' ? Number.parseFloat(value) : value
       return !Number.isNaN(numValue) && numValue > 0
     },
     description: '抽屉的高度，单位为像素或百分比',

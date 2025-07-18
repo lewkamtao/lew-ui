@@ -3,7 +3,7 @@ import { schools } from '@/lib/data'
 
 const value = ref([])
 
-const initOptionsMethod = () => {
+function initOptionsMethod() {
   return new Promise((resolve) => {
     setTimeout(() => {
       const res = schools.map((e) => {
@@ -16,16 +16,17 @@ const initOptionsMethod = () => {
 
 const updateKey = ref(0)
 
-const load = () => {
+function load() {
   updateKey.value++
 }
 </script>
+
 <template>
   <lew-select-multiple
-    v-model="value"
     :key="updateKey"
+    v-model="value"
     searchable
-    :initOptionsMethod="initOptionsMethod"
+    :init-options-method="initOptionsMethod"
     placeholder="load options"
   />
   <lew-button type="ghost" style="margin-top: 20px" @click="load">

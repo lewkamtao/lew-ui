@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
 import type { MenuOptions } from 'lew-ui'
-
-const route = useRoute()
-const router = useRouter()
+import type { PropType } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 defineProps({
   options: {
@@ -14,8 +11,10 @@ defineProps({
     },
   },
 })
+const route = useRoute()
+const router = useRouter()
 
-const toPath = (item: MenuOptions) => {
+function toPath(item: MenuOptions) {
   router.push(item.value as string)
   active.value = item.value as string
 }
@@ -25,7 +24,7 @@ let active = ref(route.path)
 
 <template>
   <div class="siderbar lew-scrollbar">
-    <lew-menu :options="options" v-model="active" @change="toPath" />
+    <lew-menu v-model="active" :options="options" @change="toPath" />
   </div>
 </template>
 

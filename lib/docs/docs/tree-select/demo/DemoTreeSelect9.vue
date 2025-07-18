@@ -6,9 +6,9 @@ const v = ref<string>('')
 
 <template>
   <lew-tree-select
+    v-model="v"
     key-field="value"
     label-field="label"
-    v-model="v"
     readonly
     :data-source="cityTree"
   />

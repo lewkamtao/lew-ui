@@ -1,19 +1,19 @@
 <script lang="ts" setup name="Modal">
-import { useMagicKeys, onClickOutside } from '@vueuse/core'
-import { any2px, getUniqueId } from 'lew-ui/utils'
-import { LewFlex, LewButton, LewTextTrim } from 'lew-ui'
+import { onClickOutside, useMagicKeys } from '@vueuse/core'
+import { LewButton, LewFlex, LewTextTrim, locale } from 'lew-ui'
 import { useDOMCreate } from 'lew-ui/hooks'
-import { modalProps } from './props'
+import { any2px, getUniqueId } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
-import { ref, watch, computed, nextTick, onMounted, onUnmounted } from 'vue'
-const { Escape } = useMagicKeys()
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { modalProps } from './props'
+
+const props = defineProps(modalProps)
 
 const emit = defineEmits(['close'])
 
-useDOMCreate('lew-modal')
+const { Escape } = useMagicKeys()
 
-const props = defineProps(modalProps)
+useDOMCreate('lew-modal')
 
 const visible: Ref<boolean | undefined> = defineModel('visible')
 
@@ -52,7 +52,7 @@ const isTopModal = computed(() => {
 
   const openModals = Array.from(modalContainer.childNodes)
     .filter((e): e is Element => e instanceof Element)
-    .filter((e) => e.children.length > 0)
+    .filter(e => e.children.length > 0)
     .filter((e) => {
       // 只考虑可见的 modal
       const modalBody = e.querySelector('.lew-modal') as HTMLElement
@@ -66,7 +66,7 @@ const isTopModal = computed(() => {
 })
 
 // 强制重新计算顶层状态的函数
-const forceRecomputeTopModal = () => {
+function forceRecomputeTopModal() {
   recomputeTrigger.value++
 }
 
@@ -91,7 +91,8 @@ watch(visible, async (newVal) => {
   // 控制全局检查定时器
   if (newVal) {
     startGlobalCheck()
-  } else {
+  }
+  else {
     stopGlobalCheck()
   }
 })
@@ -99,7 +100,7 @@ watch(visible, async (newVal) => {
 // 监听全局 modal 状态变化（通过定时器检查）
 let globalCheckTimer: ReturnType<typeof setInterval> | null = null
 
-const startGlobalCheck = () => {
+function startGlobalCheck() {
   if (globalCheckTimer) {
     clearInterval(globalCheckTimer)
   }
@@ -111,7 +112,7 @@ const startGlobalCheck = () => {
   }, 100) // 每100ms检查一次
 }
 
-const stopGlobalCheck = () => {
+function stopGlobalCheck() {
   if (globalCheckTimer) {
     clearInterval(globalCheckTimer)
     globalCheckTimer = null
@@ -145,7 +146,7 @@ const getModalStyle = computed(() => {
   }
 })
 
-const close = () => {
+function close() {
   visible.value = false
   emit('close')
 }
@@ -163,24 +164,24 @@ if (props.closeByEsc) {
 
 <template>
   <teleport to="#lew-modal">
-    <div class="lew-modal-container" :id="modalId">
+    <div :id="modalId" class="lew-modal-container">
       <transition name="lew-modal-mask">
-        <div :style="{ zIndex }" v-if="visible" class="lew-modal-mask"></div>
+        <div v-if="visible" :style="{ zIndex }" class="lew-modal-mask" />
       </transition>
       <transition name="lew-modal">
         <div v-if="visible" :style="{ zIndex }" class="lew-modal">
           <div ref="modalBodyRef" :style="getModalStyle" class="lew-modal-body">
             <div v-if="$slots.header" class="lew-modal-header-slot">
-              <slot name="header"></slot>
+              <slot name="header" />
             </div>
-            <lew-flex
+            <LewFlex
               v-else-if="title"
               mode="between"
               y="center"
               class="lew-modal-header"
             >
-              <lew-text-trim class="lew-modal-title" :text="title" />
-              <lew-button
+              <LewTextTrim class="lew-modal-title" :text="title" />
+              <LewButton
                 type="light"
                 color="gray"
                 round
@@ -190,24 +191,24 @@ if (props.closeByEsc) {
                 @click="close"
               >
                 <Icon :size="14" type="close" />
-              </lew-button>
-            </lew-flex>
+              </LewButton>
+            </LewFlex>
             <div
               class="lew-modal-body-main lew-scrollbar"
-              :style="{ maxHeight: maxHeight }"
+              :style="{ maxHeight }"
             >
-              <slot></slot>
+              <slot />
             </div>
             <div v-if="$slots.footer" class="lew-modal-footer-slot">
-              <slot name="footer"></slot>
+              <slot name="footer" />
             </div>
-            <lew-flex
+            <LewFlex
               v-else-if="!hideFooter"
               x="end"
               y="center"
               class="lew-modal-footer"
             >
-              <lew-button
+              <LewButton
                 v-bind="{
                   size: 'small',
                   type: 'light',
@@ -217,7 +218,7 @@ if (props.closeByEsc) {
                   ...(closeButtonProps as any),
                 }"
               />
-              <lew-button
+              <LewButton
                 v-bind="{
                   size: 'small',
                   text: locale.t('modal.okText'),
@@ -225,7 +226,7 @@ if (props.closeByEsc) {
                   ...(okButtonProps as any),
                 }"
               />
-            </lew-flex>
+            </LewFlex>
           </div>
         </div>
       </transition>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { schools } from '@/lib/data'
 import { padStart } from 'lodash-es'
+import { schools } from '@/lib/data'
 
 const schoolsOptions = schools.map((e, i) => {
   return { label: e, value: padStart(String(i), 8, '0') }
@@ -13,7 +13,7 @@ const value = ref()
   <lew-select-multiple
     v-model="value"
     style="width: 320px"
-    :itemHeight="48"
+    :item-height="48"
     clearable
     :options="schoolsOptions"
     placeholder="Please select a school"

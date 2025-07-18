@@ -43,9 +43,9 @@ const options = ref([
       width="250"
       :columns="1"
       direction="x"
-      labelX="start"
-      valueX="end"
-      :dataSource="dataSource"
+      label-x="start"
+      value-x="end"
+      :data-source="dataSource"
       :options="options"
     />
   </lew-flex>

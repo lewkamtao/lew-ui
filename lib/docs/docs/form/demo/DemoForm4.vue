@@ -280,11 +280,12 @@ const options = ref([
 
 const formRef = ref()
 
-const submit = async () => {
+async function submit() {
   const vail = await formRef.value.validate()
   if (vail) {
     LewMessage.success('已提交')
-  } else {
+  }
+  else {
     LewMessage.warning('请完善表单')
   }
 }

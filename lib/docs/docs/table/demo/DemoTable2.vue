@@ -278,7 +278,7 @@ const columns = [
   },
 ]
 
-const formatPerformance = (performance: number) => {
+function formatPerformance(performance: number) {
   switch (true) {
     case performance >= 9:
       return 'Top-tier'
@@ -291,13 +291,13 @@ const formatPerformance = (performance: number) => {
   }
 }
 
-const getSortTooltipComponent = (row: any) => {
+function getSortTooltipComponent(row: any) {
   return h('div', {}, `${row.brand} ${row.name} ${row.memory}`)
 }
 
 const loading = ref(false)
 
-const update = () => {
+function update() {
   loading.value = true
   setTimeout(() => {
     dataSource.value = cloneDeep(
@@ -314,7 +314,9 @@ const update = () => {
 </script>
 
 <template>
-  <lew-button @click="update">Update</lew-button>
+  <lew-button @click="update">
+    Update
+  </lew-button>
   <lew-flex v-loading="{ visible: loading }">
     <lew-table
       :data-source="dataSource"
@@ -332,12 +334,17 @@ const update = () => {
             size="small"
             type="light"
             color="blue"
-            >{{ item }}</lew-tag
           >
+            {{ item }}
+          </lew-tag>
         </lew-flex>
       </template>
-      <template #price="{ row }"> ¥{{ row.price }} </template>
-      <template #tdp="{ row }"> {{ row.tdp }}W </template>
+      <template #price="{ row }">
+        ¥{{ row.price }}
+      </template>
+      <template #tdp="{ row }">
+        {{ row.tdp }}W
+      </template>
       <template #manufacturingProcess="{ row }">
         {{ row.manufacturingProcess }}
       </template>

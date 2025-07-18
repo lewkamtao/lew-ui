@@ -21,9 +21,11 @@ const open = () => {
 <template>
   <div class="guide-wrapper">
     <lew-title>Q&A</lew-title>
-    <br />
-    <br />
-    <lew-title :size="16">如何使用 Tooltips </lew-title>
+    <br>
+    <br>
+    <lew-title :size="16">
+      如何使用 Tooltips
+    </lew-title>
     <p>
       tooltips 是一个自定义指令，你需要在
       <lew-mark>main.ts</lew-mark> 注册该指令
@@ -34,9 +36,11 @@ const open = () => {
         <highlightjs autodetect :code="pre1" />
       </div>
     </div>
-    <br />
-    <br />
-    <lew-title :size="16">关于 Dialog 和 Message 的用法</lew-title>
+    <br>
+    <br>
+    <lew-title :size="16">
+      关于 Dialog 和 Message 的用法
+    </lew-title>
     <p>如果你使用的方式不是全局引入，你需要引入它们才能使用</p>
     <div class="hl-pre lew-scrollbar">
       <div class="pre-box">

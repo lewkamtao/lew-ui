@@ -280,20 +280,20 @@ const formMethods = {
 
 const updateKey = ref(0)
 
-const loadAgain = () => {
+function loadAgain() {
   updateKey.value++
 }
 </script>
 
 <template>
   <lew-form
-    :formMethods="formMethods"
     :key="updateKey"
+    :form-methods="formMethods"
     direction="y"
     :options="options"
     :width="320"
   />
-  <lew-button style="margin-top: 20px" @click="loadAgain"
-    >Load again</lew-button
-  >
+  <lew-button style="margin-top: 20px" @click="loadAgain">
+    Load again
+  </lew-button>
 </template>

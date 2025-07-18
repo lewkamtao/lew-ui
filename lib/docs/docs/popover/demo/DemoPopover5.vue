@@ -3,7 +3,7 @@ const data = ref<any>({})
 
 const loading = ref(false)
 
-const show = () => {
+function show() {
   loading.value = true
   setTimeout(() => {
     loading.value = false
@@ -42,7 +42,9 @@ const show = () => {
     <template #popover-body>
       <div class="popover-body">
         <div class="header">
-          <h3 class="name">{{ data.name }}</h3>
+          <h3 class="name">
+            {{ data.name }}
+          </h3>
           <span class="title">{{ data.title }}</span>
         </div>
 

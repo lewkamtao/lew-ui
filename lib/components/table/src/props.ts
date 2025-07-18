@@ -1,5 +1,5 @@
-import type { PropType } from 'vue'
 import type { LewSize } from 'lew-ui'
+import type { PropType } from 'vue'
 import { validSizes } from 'lew-ui/constants'
 
 export interface TableColumn {

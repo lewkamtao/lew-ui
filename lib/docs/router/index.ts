@@ -1,14 +1,14 @@
 import type { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
-import LewMain from '../layout/LewMain.vue'
+import docs from '../docs'
 
-import LewHome from '../views/LewHome.vue'
-import LewGuide from '../views/LewGuide.vue'
+import guide from '../guide'
+import LewMain from '../layout/LewMain.vue'
 import LewComponents from '../views/LewComponents.vue'
 
-import docs from '../docs'
-import guide from '../guide'
+import LewGuide from '../views/LewGuide.vue'
+import LewHome from '../views/LewHome.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {

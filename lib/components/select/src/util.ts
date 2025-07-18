@@ -1,13 +1,13 @@
-import type { SelectOptions, SelectOptionsGroup } from './props'
 import type {
   SelectMultipleOptions,
   SelectMultipleOptionsGroup,
 } from 'lew-ui/components/select-multiple/src/props'
+import type { SelectOptions, SelectOptionsGroup } from './props'
 
 type Options = SelectOptions | SelectMultipleOptions
 type OptionsGroup = SelectOptionsGroup | SelectMultipleOptionsGroup
 
-export const flattenOptions = (options: (Options | OptionsGroup)[]) => {
+export function flattenOptions(options: (Options | OptionsGroup)[]) {
   const result: Options[] = []
   options.forEach((option: any) => {
     if (option.children && option.children.length > 0) {
@@ -28,21 +28,22 @@ export const flattenOptions = (options: (Options | OptionsGroup)[]) => {
           isGroup: false,
         })
       })
-    } else {
+    }
+    else {
       result.push(option)
     }
   })
   return result
 }
 
-export const defaultSearchMethod = (params: any) => {
+export function defaultSearchMethod(params: any) {
   const { options, keyword } = params
   if (!keyword) {
     return options
   }
   const result: any = options.filter((e: any) => {
     return (
-      e.label.toLowerCase().indexOf(keyword.toLowerCase()) >= 0 && !e.isGroup
+      e.label.toLowerCase().includes(keyword.toLowerCase()) && !e.isGroup
     )
   })
   const group: any = []
@@ -56,9 +57,11 @@ export const defaultSearchMethod = (params: any) => {
         children: [e],
       }
       group.push(groupItem)
-    } else if (index >= 0) {
+    }
+    else if (index >= 0) {
       group[index]?.children.push(e)
-    } else {
+    }
+    else {
       group.push(e)
     }
   })

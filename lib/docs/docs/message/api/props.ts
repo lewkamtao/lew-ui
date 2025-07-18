@@ -7,7 +7,7 @@ export default {
       name: 'type',
       description: '消息类型',
       type: 'success | warning | error | info | normal',
-      default: "'normal'",
+      default: '\'normal\'',
     },
     {
       name: 'content',

@@ -83,8 +83,8 @@ export const imageProps = {
         'bottom right',
       ]
       if (
-        !validPositions.includes(value) &&
-        !/^\d+(%|px|em|rem)(\s+\d+(%|px|em|rem))?$/.test(value)
+        !validPositions.includes(value)
+        && !/^\d+(%|px|em|rem)(\s+\d+(%|px|em|rem))?$/.test(value)
       ) {
         console.warn('[LewImage] objectPosition 格式不正确')
         return false

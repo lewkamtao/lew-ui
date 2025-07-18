@@ -1,17 +1,22 @@
 <script setup lang="ts">
-let v = ref(0)
-const formatTooltip = (v: number) => {
+const v = ref(0)
+function formatTooltip(v: number) {
   if (v < 0) {
     return `${v}°C，哇，好冷！`
-  } else if (v < 10) {
+  }
+  else if (v < 10) {
     return `${v}°C，有点儿冷`
-  } else if (v < 20) {
+  }
+  else if (v < 20) {
     return `${v}°C，舒适的温度`
-  } else if (v < 30) {
+  }
+  else if (v < 30) {
     return `${v}°C，温暖的日子`
-  } else if (v < 40) {
+  }
+  else if (v < 40) {
     return `${v}°C，热热的夏天`
-  } else {
+  }
+  else {
     return `${v}°C，哇，好热！`
   }
 }
@@ -19,11 +24,11 @@ const formatTooltip = (v: number) => {
 
 <template>
   <lew-slider
-    style="width: 500px"
     v-model="v"
+    style="width: 500px"
     max="100"
     min="-30"
-    :formatTooltip="formatTooltip"
+    :format-tooltip="formatTooltip"
     :options="[
       {
         label: '极冷',

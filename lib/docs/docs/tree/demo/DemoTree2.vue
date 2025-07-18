@@ -16,15 +16,15 @@ function createTree(path = '0', level = 4) {
 }
 const options = createTree()
 const v = ref([])
-const change = (e: any) => {
+function change(e: any) {
   console.log(e)
 }
 </script>
 
 <template>
   <lew-tree
-    style="width: 300px"
     v-model="v"
+    style="width: 300px"
     checkable
     :data-source="options"
     @change="change"

@@ -1,5 +1,5 @@
-import type { ExtractPropTypes } from 'vue'
 import type { LewStatusColor } from 'lew-ui'
+import type { ExtractPropTypes } from 'vue'
 import { validStatusColors } from 'lew-ui/constants'
 
 export const alertProps = {

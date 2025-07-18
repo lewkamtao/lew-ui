@@ -1,5 +1,6 @@
-import type { ExtractPropTypes, PropType } from 'vue'
 import type { ObjectFit } from 'lew-ui/components/image/src/props'
+import type { ExtractPropTypes, PropType } from 'vue'
+
 type AvatarPlacement = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 type AvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy'
 type AvatarShape = 'circle' | 'square' | 'sharp'
@@ -103,8 +104,8 @@ export const avatarProps = {
         'bottom right',
       ]
       if (
-        !validPositions.includes(value) &&
-        !/^\d+(%|px|em|rem)(\s+\d+(%|px|em|rem))?$/.test(value)
+        !validPositions.includes(value)
+        && !/^\d+(%|px|em|rem)(\s+\d+(%|px|em|rem))?$/.test(value)
       ) {
         console.warn('[LewImage] objectPosition 格式不正确')
         return false

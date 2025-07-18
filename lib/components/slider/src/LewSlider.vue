@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { sliderProps } from './props'
 import { dragmove } from 'lew-ui/utils'
 import { throttle } from 'lodash-es'
+import { sliderProps } from './props'
 
 const props = defineProps(sliderProps)
 const emit = defineEmits<{
@@ -9,7 +9,7 @@ const emit = defineEmits<{
 }>()
 
 // 安全的数值转换函数
-const safeNumber = (value: unknown, defaultValue: number = 0): number => {
+function safeNumber(value: unknown, defaultValue: number = 0): number {
   if (value === null || value === undefined || value === '') {
     return defaultValue
   }
@@ -18,15 +18,12 @@ const safeNumber = (value: unknown, defaultValue: number = 0): number => {
 }
 
 // 安全的数组检查函数
-const safeArray = <T,>(value: unknown, defaultValue: T[] = []): T[] => {
+function safeArray<T>(value: unknown, defaultValue: T[] = []): T[] {
   return Array.isArray(value) ? value : defaultValue
 }
 
 // 安全的函数检查
-const safeFunction = (
-  value: unknown,
-  defaultValue: (val: number) => string,
-): ((val: number) => string) => {
+function safeFunction(value: unknown, defaultValue: (val: number) => string): ((val: number) => string) {
   return typeof value === 'function'
     ? (value as (val: number) => string)
     : defaultValue
@@ -85,23 +82,26 @@ const getMin = computed(() => {
 })
 
 // 获取 mark 位置，确保在 0-100 范围内
-const getMarkPosition = (value: number | string): number => {
+function getMarkPosition(value: number | string): number {
   const trackMax = getTrackMax.value
   const trackMin = getTrackMin.value
   const range = trackMax - trackMin
 
-  if (range <= 0) return 0
+  if (range <= 0)
+    return 0
 
   const safeValue = safeNumber(value, trackMin)
   const percentage = ((safeValue - trackMin) / range) * 100
   return Math.max(0, Math.min(100, percentage))
 }
 
-const calculateValue = (position: number): number => {
-  if (!trackRef.value) return getMin.value
+function calculateValue(position: number): number {
+  if (!trackRef.value)
+    return getMin.value
 
   const trackWidth = trackRef.value.clientWidth
-  if (trackWidth <= 0) return getMin.value
+  if (trackWidth <= 0)
+    return getMin.value
 
   const percentage = Math.max(0, Math.min(1, position / trackWidth))
   dotX.value = position
@@ -113,13 +113,14 @@ const calculateValue = (position: number): number => {
   const value = percentage * range + trackMin
   const step = safeNumber(props.step, 1)
 
-  if (step <= 0) return value
+  if (step <= 0)
+    return value
 
   const decimalPlaces = (step.toString().split('.')[1] || '').length
   return Number(value.toFixed(decimalPlaces))
 }
 
-const setDot = (e: MouseEvent): void => {
+function setDot(e: MouseEvent): void {
   if (props.readonly || props.disabled || !trackRef.value || !dotRef.value) {
     return
   }
@@ -132,14 +133,16 @@ const setDot = (e: MouseEvent): void => {
     )
 
     const step = safeNumber(props.step, 1)
-    if (step <= 0) return
+    if (step <= 0)
+      return
 
     // 计算刻度大小
     const trackMax = getTrackMax.value
     const trackMin = getTrackMin.value
     const range = trackMax - trackMin
 
-    if (range <= 0) return
+    if (range <= 0)
+      return
 
     const stepSize = trackRect.width / (range / step)
 
@@ -157,26 +160,29 @@ const setDot = (e: MouseEvent): void => {
       throttledUpdateModelValue(clampedValue)
       setDotByValue(clampedValue)
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.warn('[LewSlider] setDot error:', error)
   }
 }
 
 // 根据当前值计算最近的刻度位置的百分比
-const calculateNearestStep = (value: number): number => {
+function calculateNearestStep(value: number): number {
   const trackMax = getTrackMax.value
   const trackMin = getTrackMin.value
   const range = trackMax - trackMin
   const step = safeNumber(props.step, 1)
 
-  if (range <= 0 || step <= 0) return 0
+  if (range <= 0 || step <= 0)
+    return 0
 
   const steps = Math.round((value - trackMin) / step)
   return ((steps * step) / range) * 100
 }
 
-const setDotByClick = (value: number): void => {
-  if (props.readonly || props.disabled) return
+function setDotByClick(value: number): void {
+  if (props.readonly || props.disabled)
+    return
 
   const safeValue = safeNumber(value, getMin.value)
   const clampedValue = Math.max(getMin.value, Math.min(getMax.value, safeValue))
@@ -187,8 +193,9 @@ const setDotByClick = (value: number): void => {
   }
 }
 
-const setDotByValue = (value: number): void => {
-  if (!dotRef.value) return
+function setDotByValue(value: number): void {
+  if (!dotRef.value)
+    return
 
   try {
     const safeValue = safeNumber(value, getMin.value)
@@ -200,14 +207,15 @@ const setDotByValue = (value: number): void => {
     const clampedStep = Math.max(0, Math.min(100, nearestStep))
 
     dotRef.value.style.left = `${clampedStep}%`
-  } catch (error) {
+  }
+  catch (error) {
     console.warn('[LewSlider] setDotByValue error:', error)
   }
 }
 
 let _dragmove = (): void => {}
 
-const init = (): void => {
+function init(): void {
   try {
     const el = dotRef.value
     const parentEl = trackRef.value
@@ -232,7 +240,8 @@ const init = (): void => {
             )
             throttledUpdateModelValue(clampedValue)
             setDotByValue(clampedValue)
-          } catch (error) {
+          }
+          catch (error) {
             console.warn('[LewSlider] drag callback error:', error)
           }
         },
@@ -241,7 +250,8 @@ const init = (): void => {
 
     const currentValue = modelValue.value || getMin.value
     setDotByValue(currentValue)
-  } catch (error) {
+  }
+  catch (error) {
     console.warn('[LewSlider] init error:', error)
   }
 }
@@ -274,7 +284,8 @@ onUnmounted(() => {
   try {
     _dragmove()
     throttledUpdateModelValue.cancel()
-  } catch (error) {
+  }
+  catch (error) {
     console.warn('[LewSlider] cleanup error:', error)
   }
 })
@@ -337,27 +348,27 @@ const getStyle = computed(() => {
 })
 
 // 安全的格式化工具提示函数
-const safeFormatTooltip = (value: number): string => {
+function safeFormatTooltip(value: number): string {
   try {
     const formatFn = safeFunction(props.formatTooltip, (val: number) =>
-      val.toString(),
-    )
+      val.toString())
     return formatFn(value)
-  } catch (error) {
+  }
+  catch (error) {
     console.warn('[LewSlider] formatTooltip error:', error)
     return value.toString()
   }
 }
 
 // 检查选项是否有效
-const isValidOption = (option: any): boolean => {
+function isValidOption(option: any): boolean {
   return (
-    option &&
-    typeof option === 'object' &&
-    'label' in option &&
-    'value' in option &&
-    typeof option.label === 'string' &&
-    !isNaN(safeNumber(option.value))
+    option
+    && typeof option === 'object'
+    && 'label' in option
+    && 'value' in option
+    && typeof option.label === 'string'
+    && !isNaN(safeNumber(option.value))
   )
 }
 
@@ -423,8 +434,8 @@ const selectedTrackStyles = computed(() => {
 // 计算滑块点的样式
 const dotStyles = computed(() => {
   const currentValue = modelValue.value
-  const opacity =
-    currentValue !== undefined && currentValue !== null ? '1' : '0'
+  const opacity
+    = currentValue !== undefined && currentValue !== null ? '1' : '0'
 
   return {
     opacity,
@@ -495,27 +506,27 @@ const optionLabelStyles = computed(() => {
       'lew-slider-readonly': readonly,
     }"
   >
-    <div ref="trackRef" @click="setDot" class="lew-slider-track">
+    <div ref="trackRef" class="lew-slider-track" @click="setDot">
       <div
         :style="disabledAreaStyles.left"
         class="lew-slider-track-disabled-area lew-slider-track-disabled-area-left"
         @click.stop
-      ></div>
+      />
       <div
         :style="disabledAreaStyles.right"
         class="lew-slider-track-disabled-area lew-slider-track-disabled-area-right"
         @click.stop
-      ></div>
+      />
 
       <div class="lew-slider-track-line">
         <div
           class="lew-slider-track-line-range"
           :style="trackRangeStyles"
-        ></div>
+        />
         <div
           class="lew-slider-track-line-selected"
           :style="selectedTrackStyles"
-        ></div>
+        />
 
         <div
           v-for="markStyle in optionMarkStyles"
@@ -523,7 +534,7 @@ const optionLabelStyles = computed(() => {
           class="lew-slider-track-step-mark"
           :class="markStyle.class"
           :style="markStyle.style"
-        ></div>
+        />
         <div
           v-for="labelStyle in optionLabelStyles"
           :key="labelStyle.key"
@@ -531,21 +542,21 @@ const optionLabelStyles = computed(() => {
           :style="labelStyle.style"
         >
           <div
-            @click.stop="setDotByClick(labelStyle.value)"
             class="lew-slider-track-step-label-text"
             :class="labelStyle.textClass"
+            @click.stop="setDotByClick(labelStyle.value)"
           >
             {{ labelStyle.displayText }}
           </div>
         </div>
       </div>
       <div
-        @click.stop
         ref="dotRef"
         v-tooltip="tooltipConfig"
         :style="dotStyles"
         class="lew-slider-track-dot"
-      ></div>
+        @click.stop
+      />
     </div>
   </div>
 </template>

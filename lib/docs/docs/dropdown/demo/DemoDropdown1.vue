@@ -31,6 +31,7 @@ const options = ref<DropdownOptions[]>([
   },
 ])
 </script>
+
 <template>
   <lew-flex gap="30" x="start">
     <lew-dropdown :options="options">

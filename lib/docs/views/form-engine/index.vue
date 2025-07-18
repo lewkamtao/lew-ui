@@ -1,73 +1,72 @@
 <script setup lang="ts">
-import draggable from "vuedraggable";
-import dayjs from "dayjs";
-import PreviewModal from "./components/PreviewModal.vue";
-import { formatFormByMap } from "lew-ui/utils";
-import { getUniqueId } from "lew-ui/utils";
-import { downloadObjectAsFile, getComponentIcon } from "lew-ui/docs/lib/utils";
-import { useDark } from "@vueuse/core";
-import SetForm from "./components/SetForm.vue";
-import { baseSchema, componentsMenusSchema, globalSchema } from "./schema";
-import LewGetLabelWidth from "lew-ui/components/form/src/LewGetLabelWidth.vue";
-import { debounce, cloneDeep, has } from "lodash-es";
-import type { LewSize } from "lew-ui/types";
-import Icon from "lew-ui/utils/Icon.vue";
-import { Sun, Moon, Monitor, Upload } from "lucide-vue-next";
+import type { LewSize } from 'lew-ui/types'
+import { useDark } from '@vueuse/core'
+import dayjs from 'dayjs'
+import LewGetLabelWidth from 'lew-ui/components/form/src/LewGetLabelWidth.vue'
+import { downloadObjectAsFile, getComponentIcon } from 'lew-ui/docs/lib/utils'
+import { formatFormByMap, getUniqueId } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { cloneDeep, debounce, has } from 'lodash-es'
+import { Monitor, Moon, Sun, Upload } from 'lucide-vue-next'
+import draggable from 'vuedraggable'
+import PreviewModal from './components/PreviewModal.vue'
+import SetForm from './components/SetForm.vue'
+import { baseSchema, componentsMenusSchema, globalSchema } from './schema'
 
 const isDark = useDark({
-  selector: "html",
-  valueDark: "lew-dark",
-  valueLight: "lew-light",
-});
+  selector: 'html',
+  valueDark: 'lew-dark',
+  valueLight: 'lew-light',
+})
 
-const previewModalRef = ref();
-const menuOptions = componentsMenusSchema;
-const options = ref<any>([]);
-const formMap = ref<Record<string, any>>({});
-const itemRefMap = ref<Record<string, any>>({});
-const formMainRef = ref();
+const previewModalRef = ref()
+const menuOptions = componentsMenusSchema
+const options = ref<any>([])
+const formMap = ref<Record<string, any>>({})
+const itemRefMap = ref<Record<string, any>>({})
+const formMainRef = ref()
 
-const settingTab = ref("options");
-const activeId = ref("");
-const formLabelRef = ref();
-const autoLabelWidth = ref(0);
+const settingTab = ref('options')
+const activeId = ref('')
+const formLabelRef = ref()
+const autoLabelWidth = ref(0)
 
 const formGlobal = ref({
-  direction: "x",
+  direction: 'x',
   columns: 1,
-  size: "medium",
-});
+  size: 'medium',
+})
 
 const formWidth = computed(() => {
-  return formGlobal.value.direction === "x"
+  return formGlobal.value.direction === 'x'
     ? (320 + autoLabelWidth.value) * formGlobal.value.columns
-    : 320 * formGlobal.value.columns;
-});
+    : 320 * formGlobal.value.columns
+})
 
 const refreshForm = debounce(() => {
   nextTick(() => {
     if (formLabelRef.value) {
-      autoLabelWidth.value = formLabelRef.value.$el.offsetWidth;
+      autoLabelWidth.value = formLabelRef.value.$el.offsetWidth
     }
-  });
-  formatFormMap();
-}, 100);
+  })
+  formatFormMap()
+}, 100)
 
 const formModel = computed(() => {
-  return formatFormByMap(cloneDeep(formMap.value));
-});
+  return formatFormByMap(cloneDeep(formMap.value))
+})
 
 const colOptions = ref([
-  { label: "单栏", value: 1 },
-  { label: "两栏", value: 2 },
-  { label: "三栏", value: 3 },
-  { label: "四栏", value: 4 },
-]);
+  { label: '单栏', value: 1 },
+  { label: '两栏', value: 2 },
+  { label: '三栏', value: 3 },
+  { label: '四栏', value: 4 },
+])
 
-const cloneDog = (item: any) => {
+function cloneDog(item: any) {
   return cloneDeep({
     ...item,
-    id: `${item.as}_${dayjs().format("YYYYMMDD")}_${getUniqueId()}`,
+    id: `${item.as}_${dayjs().format('YYYYMMDD')}_${getUniqueId()}`,
     spanMap: {
       1: 1,
       2: 1,
@@ -75,117 +74,117 @@ const cloneDog = (item: any) => {
       4: 1,
     },
     field: `${getUniqueId()}`,
-  });
-};
+  })
+}
 
-const formatFormMap = () => {
-  let _formMap: Record<string, any> = {};
+function formatFormMap() {
+  const _formMap: Record<string, any> = {}
   cloneDeep(options.value).forEach((item: any) => {
     if (!has(_formMap, item.field) && item.field) {
-      _formMap[item.field] = item.fieldType;
+      _formMap[item.field] = item.fieldType
     }
-  });
-  formMap.value = _formMap;
-};
+  })
+  formMap.value = _formMap
+}
 
-const minimize = (item: any) => {
-  item.spanMap[formGlobal.value.columns] -= 1;
-};
+function minimize(item: any) {
+  item.spanMap[formGlobal.value.columns] -= 1
+}
 
-const maximize = (item: any) => {
-  item.spanMap[formGlobal.value.columns] += 1;
-};
+function maximize(item: any) {
+  item.spanMap[formGlobal.value.columns] += 1
+}
 
-const getModel = () => {
+function getModel() {
   if (options.value.length === 0) {
-    LewMessage.warning("请先添加组件");
-    return false;
+    LewMessage.warning('请先添加组件')
+    return false
   }
-  const width = formMainRef.value.offsetWidth / formGlobal.value.columns;
+  const width = formMainRef.value.offsetWidth / formGlobal.value.columns
 
-  const _options = cloneDeep(options.value);
+  const _options = cloneDeep(options.value)
   _options.forEach((item: any) => {
-    const rowStart =
-      Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1;
-    const rowEnd = rowStart + item.spanMap[formGlobal.value.columns];
-    item.gridArea = `auto  / ${rowStart} / auto  / ${rowEnd}`;
-    delete item.spanMap;
-    delete item.fieldType;
-    delete item.schema;
-  });
+    const rowStart
+      = Math.round(itemRefMap.value[item.id].offsetLeft / width) + 1
+    const rowEnd = rowStart + item.spanMap[formGlobal.value.columns]
+    item.gridArea = `auto  / ${rowStart} / auto  / ${rowEnd}`
+    delete item.spanMap
+    delete item.fieldType
+    delete item.schema
+  })
   const componentModel = {
     ...formGlobal.value,
     columns: formGlobal.value.columns,
     width: formWidth.value,
-    id: `form_${dayjs().format("YYYYMMDD")}_${getUniqueId()}`,
+    id: `form_${dayjs().format('YYYYMMDD')}_${getUniqueId()}`,
     options: _options,
-  };
-  return componentModel;
-};
+  }
+  return componentModel
+}
 
 watch(
   () => options.value,
   () => {
-    refreshForm();
+    refreshForm()
   },
   {
     deep: true,
-  }
-);
+  },
+)
 watch(
   () => formGlobal.value,
   () => {
-    refreshForm();
+    refreshForm()
   },
   {
     deep: true,
-  }
-);
+  },
+)
 
-const deleteItem = (item: any) => {
+function deleteItem(item: any) {
   LewDialog.error({
-    title: "确认删除",
-    content: "删除后无法恢复，请谨慎操作",
-    cancelText: "手滑了",
+    title: '确认删除',
+    content: '删除后无法恢复，请谨慎操作',
+    cancelText: '手滑了',
     ok: () => {
-      options.value = options.value.filter((e: any) => e.id !== item.id);
+      options.value = options.value.filter((e: any) => e.id !== item.id)
     },
-  });
-};
-
-const exportFile = () => {
-  const model = getModel();
-  if (model) {
-    downloadObjectAsFile(model, `${model.id}.json`);
-  }
-};
-
-const preview = () => {
-  const model = getModel();
-  if (model) {
-    previewModalRef.value && previewModalRef.value.open(model);
-  }
-};
-
-const isInfo = localStorage.getItem("isAlertByFormEngine");
-if (!isInfo) {
-  LewDialog.warning({
-    title: "温馨提示",
-    content:
-      "当前表单引擎仍处于开发测试状态，请勿用于生产环境，当前配置项仍未完善，持续更新中，敬请期待。",
-    cancelText: "",
-    okText: "知道了",
-    ok: () => {
-      localStorage.setItem("isAlertByFormEngine", "1");
-    },
-  });
+  })
 }
 
-const addComponent = (item: any) => {
+function exportFile() {
+  const model = getModel()
+  if (model) {
+    downloadObjectAsFile(model, `${model.id}.json`)
+  }
+}
+
+function preview() {
+  const model = getModel()
+  if (model) {
+    previewModalRef.value && previewModalRef.value.open(model)
+  }
+}
+
+const isInfo = localStorage.getItem('isAlertByFormEngine')
+if (!isInfo) {
+  LewDialog.warning({
+    title: '温馨提示',
+    content:
+      '当前表单引擎仍处于开发测试状态，请勿用于生产环境，当前配置项仍未完善，持续更新中，敬请期待。',
+    cancelText: '',
+    okText: '知道了',
+    ok: () => {
+      localStorage.setItem('isAlertByFormEngine', '1')
+    },
+  })
+}
+
+function addComponent(item: any) {
   options.value.push(
     cloneDeep({
       ...item,
-      id: `${item.as}_${dayjs().format("YYYYMMDD")}_${getUniqueId()}`,
+      id: `${item.as}_${dayjs().format('YYYYMMDD')}_${getUniqueId()}`,
       spanMap: {
         1: 1,
         2: 1,
@@ -193,9 +192,9 @@ const addComponent = (item: any) => {
         4: 1,
       },
       field: `${getUniqueId()}`,
-    })
-  );
-};
+    }),
+  )
+}
 </script>
 
 <template>
@@ -209,7 +208,7 @@ const addComponent = (item: any) => {
       <draggable
         :group="{ name: 'form', pull: 'clone', put: false }"
         :sort="false"
-        :class="['lew-form-component-draggable']"
+        class="lew-form-component-draggable"
         :list="menuOptions"
         :clone="cloneDog"
         item-key="field"
@@ -220,17 +219,17 @@ const addComponent = (item: any) => {
       >
         <template #item="{ element }">
           <lew-flex
-            @click="addComponent(element)"
             x="center"
             direction="y"
             gap="5"
             class="lew-form-component-box"
+            @click="addComponent(element)"
           >
             <img
               :src="getComponentIcon(element.as || 'blank')"
               alt=""
               srcset=""
-            />
+            >
             {{ element.label }}
           </lew-flex>
         </template>
@@ -242,10 +241,10 @@ const addComponent = (item: any) => {
     >
       <lew-flex x="center" y="center" class="lew-form-select-columns">
         <lew-tabs
+          v-model="formGlobal.columns"
           width="320px"
           item-width="auto"
           :options="colOptions"
-          v-model="formGlobal.columns"
         />
         <lew-button
           class="set-theme-btn"
@@ -256,8 +255,8 @@ const addComponent = (item: any) => {
           single-icon
           @click="isDark = !isDark"
         >
-          <Sun :size="16" v-if="!isDark" />
-          <Moon :size="16" v-else />
+          <Sun v-if="!isDark" :size="16" />
+          <Moon v-else :size="16" />
         </lew-button>
       </lew-flex>
       <div
@@ -268,6 +267,7 @@ const addComponent = (item: any) => {
         }"
       >
         <draggable
+          v-model="options"
           group="form"
           :class="{
             'lew-form-wrapper-draggable-empty': options.length === 0,
@@ -277,7 +277,6 @@ const addComponent = (item: any) => {
             'lew-form-wrapper-draggable-4': formGlobal.columns === 4,
           }"
           class="lew-form-wrapper-draggable lew-scrollbar"
-          v-model="options"
           item-key="id"
           v-bind="{
             animation: 200,
@@ -292,61 +291,62 @@ const addComponent = (item: any) => {
                 'lew-form-wrapper-draggable-item-active':
                   activeId === element.id,
               }"
-              @click.stop="
-                activeId === element.id || element.as === ''
-                  ? (activeId = '')
-                  : (activeId = element.id),
-                  (settingTab = 'options')
-              "
               :style="{
                 'grid-column-end': `span ${
                   element.spanMap[formGlobal.columns]
                 }`,
               }"
+              @click.stop="
+                activeId === element.id || element.as === ''
+                  ? (activeId = '')
+                  : (activeId = element.id),
+                (settingTab = 'options')
+              "
             >
               <lew-flex x="end" y="center" class="handle-box">
                 <lew-flex x="end" gap="5" y="center">
                   <Icon
                     v-if="element.spanMap[formGlobal.columns] > 1"
-                    @click="minimize(element)"
                     class="handle-icon handle-resize"
                     :size="14"
                     type="minimize-2"
-                  ></Icon>
+                    @click="minimize(element)"
+                  />
                   <Icon
                     v-if="
                       element.spanMap[formGlobal.columns] < formGlobal.columns
                     "
-                    @click="maximize(element)"
                     class="handle-icon handle-resize"
                     :size="14"
                     type="maximize-2"
-                  ></Icon>
+                    @click="maximize(element)"
+                  />
                   <Icon
-                    @click="deleteItem(element)"
                     class="handle-icon"
                     :size="14"
                     type="trash"
-                  ></Icon>
+                    @click="deleteItem(element)"
+                  />
                 </lew-flex>
               </lew-flex>
               <Icon
+                v-if="!element.field"
                 v-tooltip="{
                   content: '未绑定字段',
                   trigger: 'mouseenter',
                 }"
-                v-if="!element.field"
                 class="tips-icon"
                 :size="14"
                 type="error"
               />
               <lew-flex
+                v-if="element.as === ''"
                 x="center"
                 y="center"
                 class="blank-box"
-                v-if="element.as === ''"
-                >占位盒子</lew-flex
               >
+                占位盒子
+              </lew-flex>
               <lew-form-item
                 v-else
                 v-bind="{
@@ -395,25 +395,29 @@ const addComponent = (item: any) => {
         <div v-show="settingTab === 'options'" class="lew-form-options-panel">
           <lew-flex direction="y" gap="0">
             <lew-flex direction="y" x="start" gap="0">
-              <div class="title">全局属性</div>
-              <set-form v-model="formGlobal" :options="globalSchema" />
+              <div class="title">
+                全局属性
+              </div>
+              <SetForm v-model="formGlobal" :options="globalSchema" />
             </lew-flex>
             <lew-flex v-if="activeId" direction="y" x="start" gap="0">
-              <div class="title">基础属性</div>
-              <set-form
-                :collapse-height="200"
+              <div class="title">
+                基础属性
+              </div>
+              <SetForm
                 v-model="
                   options[options.findIndex((e: any) => e.id === activeId)]
                 "
+                :collapse-height="200"
                 :options="baseSchema"
               />
             </lew-flex>
             <lew-flex
               v-if="
-                activeId &&
-                options.findIndex((e: any) => e.id === activeId) >= 0 &&
-                options[options.findIndex((e: any) => e.id === activeId)].as !==
-                  ''
+                activeId
+                  && options.findIndex((e: any) => e.id === activeId) >= 0
+                  && options[options.findIndex((e: any) => e.id === activeId)].as
+                    !== ''
               "
               direction="y"
               x="start"
@@ -422,7 +426,7 @@ const addComponent = (item: any) => {
               <lew-flex class="title" mode="between">
                 <span>组件属性</span>
               </lew-flex>
-              <set-form
+              <SetForm
                 v-if="
                   (
                     options[options.findIndex((e: any) => e.id === activeId)]
@@ -440,7 +444,7 @@ const addComponent = (item: any) => {
                 "
               />
               <lew-flex v-else>
-                <lew-empty title="开发中，敬请期待"></lew-empty>
+                <lew-empty title="开发中，敬请期待" />
               </lew-flex>
             </lew-flex>
           </lew-flex>
@@ -450,9 +454,10 @@ const addComponent = (item: any) => {
         </div>
       </div>
     </lew-flex>
-    <preview-modal ref="previewModalRef" />
+    <PreviewModal ref="previewModalRef" />
   </div>
 </template>
+
 <style scoped lang="scss">
 .playground {
   display: flex;

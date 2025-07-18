@@ -391,27 +391,27 @@ export default {
       },
     },
     dropdown: {
-      name: '드롭다운 메뉴 Dropdown',
-      description:
+      'name': '드롭다운 메뉴 Dropdown',
+      'description':
         '클릭으로 트리거되는 플로팅 메뉴, 작업을 더 편리하게 만듭니다',
-      demo1: {
+      'demo1': {
         title: '기본 사용법',
       },
-      demo2: {
+      'demo2': {
         title: '버튼만이 아닌',
       },
-      demo3: {
+      'demo3': {
         title: '비활성화 항목',
       },
 
-      props: {
+      'props': {
         options: '메뉴 옵션 구성',
         trigger: '트리거 방식',
         placement: '메뉴 팝업 위치',
         checkable: '선택 가능 여부',
       },
       'options(ContextMenus)': contextMenu,
-      events: {
+      'events': {
         show: '메뉴 표시 이벤트 콜백',
         hide: '메뉴 숨김 이벤트 콜백',
         change: '메뉴 항목 선택 이벤트 콜백',
@@ -443,21 +443,21 @@ export default {
       },
     },
     contextMenu: {
-      name: '컨텍스트 메뉴 ContextMenu',
-      description: '우아한 우클릭 메뉴, 작업을 더 자연스럽게 만듭니다',
-      demo1: {
+      'name': '컨텍스트 메뉴 ContextMenu',
+      'description': '우아한 우클릭 메뉴, 작업을 더 자연스럽게 만듭니다',
+      'demo1': {
         title: '기본 사용법',
       },
-      demo2: {
+      'demo2': {
         title: '다중 레벨 중첩 지원',
       },
-      demo3: {
+      'demo3': {
         title: '동적 업데이트 지원',
       },
-      demo4: {
+      'demo4': {
         title: '체크박스',
       },
-      props: {
+      'props': {
         options: '우클릭 메뉴 구성',
         disabled: '우클릭 메뉴 비활성화 여부',
       },
@@ -774,28 +774,28 @@ export default {
       },
     },
     checkbox: {
-      name: '체크박스 Checkbox',
-      description:
+      'name': '체크박스 Checkbox',
+      'description':
         '다중 선택을 지원하는 선택기로 여러 항목 선택을 더 직관적으로 만듭니다',
-      demo1: {
+      'demo1': {
         title: '기본 사용법',
       },
-      demo2: {
+      'demo2': {
         title: '수직 배치',
       },
-      demo3: {
+      'demo3': {
         title: '블록 형태',
       },
-      demo4: {
+      'demo4': {
         title: '둥근 모양',
       },
-      demo5: {
+      'demo5': {
         title: '읽기 전용 상태',
       },
-      demo6: {
+      'demo6': {
         title: '비활성화 상태',
       },
-      demo7: {
+      'demo7': {
         title: '단일 모드',
       },
       'model(CheckboxGroup)': {
@@ -832,35 +832,35 @@ export default {
       'events(CheckboxGroup)': {
         change: '값 변경 시 트리거',
       },
-      options: {
+      'options': {
         label: '제목',
         value: '값',
         disabled: '비활성화',
       },
     },
     radio: {
-      name: '라디오 버튼 Radio',
-      description:
+      'name': '라디오 버튼 Radio',
+      'description':
         '하나의 항목만 선택할 수 있는 선택기로 단일 선택을 더 명확하게 합니다',
-      demo1: {
+      'demo1': {
         title: '기본 사용법',
       },
-      demo2: {
+      'demo2': {
         title: '수직 배치',
       },
-      demo3: {
+      'demo3': {
         title: '블록 형태',
       },
-      demo4: {
+      'demo4': {
         title: '모양',
       },
-      demo5: {
+      'demo5': {
         title: '읽기 전용 상태',
       },
-      demo6: {
+      'demo6': {
         title: '비활성화 상태',
       },
-      model: {
+      'model': {
         modelValue: '바인딩 값',
       },
       'props(RadioGroup)': {
@@ -873,12 +873,12 @@ export default {
         readonly: '읽기 전용 여부',
         round: '둥근 스타일 여부',
       },
-      options: {
+      'options': {
         label: '제목',
         value: '값',
         disabled: '비활성화',
       },
-      events: {
+      'events': {
         change: '값 변경 시 트리거',
       },
     },
@@ -1657,25 +1657,25 @@ export default {
       },
     },
     collapse: {
-      name: '접이식 패널 Collapse',
-      description:
+      'name': '접이식 패널 Collapse',
+      'description':
         '접고 펼칠 수 있는 콘텐츠 영역으로, 정보 표시를 더 깔끔하게 만듭니다',
-      demo1: {
+      'demo1': {
         title: '기본 사용법',
       },
-      demo2: {
+      'demo2': {
         title: '제목 슬롯',
       },
-      demo3: {
+      'demo3': {
         title: '아코디언 모드',
       },
-      model: {
+      'model': {
         modelValue: '매개변수 이름',
       },
       'model(CollapseItem)': {
         modelValue: '매개변수 이름',
       },
-      props: {
+      'props': {
         width: '너비',
       },
       'props(CollapseItem)': {
@@ -1952,7 +1952,7 @@ export default {
         triggerTarget: '트리거 대상',
       },
       slots: {
-        trigger: '트리거 슬롯',
+        'trigger': '트리거 슬롯',
         'popover-body': '팝오버 내용 슬롯',
       },
     },

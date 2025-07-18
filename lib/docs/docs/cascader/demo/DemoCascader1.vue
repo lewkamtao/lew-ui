@@ -114,8 +114,8 @@ const options = [
 
 <template>
   <lew-cascader
-    width="300px"
     v-model="v"
+    width="300px"
     :options="options"
     placeholder="Explore high-end tech products"
   />

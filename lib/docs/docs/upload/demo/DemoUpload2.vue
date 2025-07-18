@@ -8,10 +8,10 @@ const fileList = ref<UploadFileItem[]>([])
 <template>
   <lew-flex width="500px">
     <lew-upload
-      :maxFileSize="1024 * 1024 * 2"
-      :limit="3"
       v-model="fileList"
-      :uploadHelper="uploadHelper"
+      :max-file-size="1024 * 1024 * 2"
+      :limit="3"
+      :upload-helper="uploadHelper"
     />
   </lew-flex>
 </template>

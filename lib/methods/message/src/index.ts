@@ -1,25 +1,25 @@
-import '../styles/index.scss'
 import { getIconInnerHTML } from 'lew-ui/utils'
+import '../styles/index.scss'
 
-type MessageFnOptions = {
+interface MessageFnOptions {
   id: string
   content: string
   duration: number
   onClose: Function
 }
 
-type MessageOptions = {
+interface MessageOptions {
   type: string
   e: MessageFnOptions
 }
 
-const createMessageList = () => {
+function createMessageList() {
   const messageContainer = document.createElement('div')
   messageContainer.setAttribute('id', 'lew-message')
   document.body.appendChild(messageContainer)
 }
 
-const showMessage = ({ type, e }: MessageOptions) => {
+function showMessage({ type, e }: MessageOptions) {
   const { id, content, duration } = e
 
   const messageContainer: any = document.getElementById('lew-message')
@@ -38,7 +38,8 @@ const showMessage = ({ type, e }: MessageOptions) => {
       messageElement,
       messageContainer?.childNodes[0],
     )
-  } else {
+  }
+  else {
     clearTimeout(LewMessage.timer[id])
   }
 
@@ -60,7 +61,8 @@ const showMessage = ({ type, e }: MessageOptions) => {
             `lew-message lew-message-${type} lew-message-hidden`,
           )
           setTimeout(() => {
-            if (messageElement) messageContainer?.removeChild(messageElement)
+            if (messageElement)
+              messageContainer?.removeChild(messageElement)
           }, 250)
         },
         duration === 0 ? 31536000000 : duration || 3000,
@@ -68,10 +70,10 @@ const showMessage = ({ type, e }: MessageOptions) => {
     })
   }, 10)
 }
-const removeClass = (element: any, className: any) => {
+function removeClass(element: any, className: any) {
   element.classList.remove(className)
 }
-const addClass = (element: any, className: any) => {
+function addClass(element: any, className: any) {
   element.classList.add(className)
 }
 
@@ -82,7 +84,8 @@ const LewMessage: any = {
     if (!document.getElementById('lew-message')) {
       createMessageList()
       LewMessage.message({ type, e })
-    } else {
+    }
+    else {
       showMessage({ type, e })
     }
   },
@@ -130,7 +133,7 @@ const LewMessage: any = {
             const endTime = new Date().getTime()
             const delay = 250
             if (endTime - startTime < delay) {
-              await new Promise((resolve) =>
+              await new Promise(resolve =>
                 setTimeout(resolve, delay - (endTime - startTime)),
               )
             }
@@ -160,7 +163,8 @@ const LewMessage: any = {
             })
           },
         )
-    } catch (error) {
+    }
+    catch (error) {
       // 处理异步方法执行出错的情况
       LewMessage.error({
         id: 'lew-request-loading',

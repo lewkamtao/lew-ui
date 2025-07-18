@@ -1,9 +1,9 @@
+import type { LewSize } from 'lew-ui'
 import type { PropType } from 'vue'
 import type { TreeDataSource } from '../../tree'
-import type { LewSize } from 'lew-ui'
 import { validSizes } from 'lew-ui/constants'
 
-export type TreeSelectOptions = {
+export interface TreeSelectOptions {
   label: string
   value: string | number
   labelPaths?: string[]
@@ -29,7 +29,7 @@ export const treeSelectModel = {
   },
 }
 
-export type TreeSelectSearchMethodParams = {
+export interface TreeSelectSearchMethodParams {
   item?: TreeDataSource
   keyword?: string
 }

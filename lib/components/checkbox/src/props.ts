@@ -1,10 +1,10 @@
+import type { LewDirection, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import type { LewSize, LewDirection } from 'lew-ui'
-import { validSizes, validDirection } from 'lew-ui/constants'
+import { validDirection, validSizes } from 'lew-ui/constants'
 
 export type CheckboxGroupDirectionType = 'x' | 'y'
 export type CheckboxValue = string | number
-export type CheckboxOptions = {
+export interface CheckboxOptions {
   label: string
   value: CheckboxValue
   disabled?: boolean
@@ -92,8 +92,8 @@ export const checkboxGroupProps = {
     description: '复选框组的选项配置数组',
     validator: (value: CheckboxOptions[]) => {
       if (
-        !Array.isArray(value) ||
-        value.some((item) => typeof item !== 'object')
+        !Array.isArray(value)
+        || value.some(item => typeof item !== 'object')
       ) {
         console.warn('[LewCheckboxGroup] options 必须是一个对象数组')
         return false

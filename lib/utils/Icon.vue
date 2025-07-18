@@ -7,16 +7,19 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  ChevronUp,
   ChevronsLeft,
   ChevronsRight,
   ChevronsUpDown,
+  ChevronUp,
   CircleAlert,
   CircleCheck,
   ClockArrowUp,
   Copy,
   Edit2,
+  Eye,
+  EyeOff,
   FileCheck,
+  GripVertical,
   Image,
   Info,
   Loader,
@@ -26,16 +29,13 @@ import {
   MoreHorizontal,
   Plus,
   RotateCw,
+  SquareMousePointer,
+  Star,
   Trash,
   TriangleAlert,
   UploadCloud,
-  X,
   UserRound,
-  Eye,
-  EyeOff,
-  Star,
-  SquareMousePointer,
-  GripVertical,
+  X,
 } from 'lucide-vue-next'
 import { getColorType, iconColorType } from './index'
 
@@ -89,31 +89,31 @@ const iconMap: any = {
   'more-horizontal': MoreHorizontal,
   'rotate-cw': RotateCw,
   'upload-cloud': UploadCloud,
-  calendar: Calendar,
-  check: Check,
-  close: X,
-  complete: FileCheck,
-  copy: Copy,
-  error: CircleAlert,
-  image: Image,
-  info: BellRing,
-  loader: Loader,
-  loading: Loader,
-  minus: Minus,
-  normal: Info,
-  pending: ClockArrowUp,
-  plus: Plus,
-  success: CircleCheck,
-  tips: Info,
-  trash: Trash,
-  uploading: Loader,
-  warning: TriangleAlert,
-  wrong_size: CircleAlert,
-  wrong_type: CircleAlert,
-  user: UserRound,
-  eye: Eye,
-  eye_off: EyeOff,
-  star: Star,
+  'calendar': Calendar,
+  'check': Check,
+  'close': X,
+  'complete': FileCheck,
+  'copy': Copy,
+  'error': CircleAlert,
+  'image': Image,
+  'info': BellRing,
+  'loader': Loader,
+  'loading': Loader,
+  'minus': Minus,
+  'normal': Info,
+  'pending': ClockArrowUp,
+  'plus': Plus,
+  'success': CircleCheck,
+  'tips': Info,
+  'trash': Trash,
+  'uploading': Loader,
+  'warning': TriangleAlert,
+  'wrong_size': CircleAlert,
+  'wrong_type': CircleAlert,
+  'user': UserRound,
+  'eye': Eye,
+  'eye_off': EyeOff,
+  'star': Star,
   'square-mouse-pointer': SquareMousePointer,
   'grip-vertical': GripVertical,
 }
@@ -121,21 +121,21 @@ const iconMap: any = {
 
 <template>
   <component
+    :is="iconMap[props.type]"
     class="lew-icon"
     :class="{
       'lew-icon-loading': loading,
     }"
     :style="{
-      'animation-duration': speed + 's',
-      color: iconColorType[type]
+      'animation-duration': `${speed}s`,
+      'color': iconColorType[type]
         ? `var(--lew-color-${color ? color : getColorType(type)}${dark ? '-dark' : ''})`
         : '',
     }"
-    :strokeWidth
+    :stroke-width
     :size
     :fill
-    :is="iconMap[props.type]"
-  ></component>
+  />
 </template>
 
 <style lang="scss" scoped>

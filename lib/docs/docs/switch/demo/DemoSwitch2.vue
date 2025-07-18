@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const value = ref(false)
 
-const change = (e: unknown) => {
+function change(e: unknown) {
   console.log(e)
   console.log(value.value)
 }

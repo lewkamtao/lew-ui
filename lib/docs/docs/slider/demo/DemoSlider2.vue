@@ -1,11 +1,11 @@
 <script setup lang="ts">
-let v = ref(25)
+const v = ref(25)
 </script>
 
 <template>
   <lew-slider
-    style="width: 500px"
     v-model="v"
+    style="width: 500px"
     step="5"
     min="20"
     max="50"

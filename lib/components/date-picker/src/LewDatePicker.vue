@@ -1,20 +1,18 @@
 <script lang="ts" setup>
-import { object2class } from 'lew-ui/utils'
-import { LewPopover, LewDate, LewTooltip } from 'lew-ui'
-import { datePickerProps } from './props'
 import dayjs from 'dayjs'
-import { cloneDeep } from 'lodash-es'
+import { LewDate, LewPopover, LewTooltip, locale } from 'lew-ui'
+import { any2px, object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
+import { cloneDeep } from 'lodash-es'
+import { datePickerProps } from './props'
 
+const props = defineProps(datePickerProps)
+const emit = defineEmits(['change', 'clear'])
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
-const emit = defineEmits(['change', 'clear'])
-const props = defineProps(datePickerProps)
 const modelValue: Ref<string | undefined> = defineModel()
 
 const visible = ref(false)
@@ -23,20 +21,20 @@ const lewPopoverRef = ref()
 
 const lewDateRef = ref()
 
-const show = () => {
+function show() {
   lewPopoverRef.value.show()
 }
 
-const hide = () => {
+function hide() {
   lewPopoverRef.value.hide()
 }
 
-const change = (date: string | undefined) => {
+function change(date: string | undefined) {
   emit('change', { date, value: cloneDeep(modelValue.value) })
   hide()
 }
 
-const selectPresets = (item: { label: string; value: string }) => {
+function selectPresets(item: { label: string, value: string }) {
   modelValue.value = dayjs(item.value).format(props.valueFormat)
   lewDateRef.value && lewDateRef.value.init(item.value)
   setTimeout(() => {
@@ -75,24 +73,25 @@ const getDatePickerInputStyle = computed(() => {
   }
 })
 
-const clearHandle = () => {
+function clearHandle() {
   modelValue.value = undefined
   change(modelValue.value)
   emit('clear')
 }
 
-const showHandle = () => {
+function showHandle() {
   visible.value = true
   lewDateRef.value && lewDateRef.value.init(modelValue.value)
 }
-const hideHandle = () => {
+function hideHandle() {
   visible.value = false
 }
 
 defineExpose({ show, hide })
 </script>
+
 <template>
-  <lew-popover
+  <LewPopover
     ref="lewPopoverRef"
     trigger="click"
     placement="bottom-start"
@@ -159,25 +158,25 @@ defineExpose({ show, hide })
         >
           <div
             v-for="(item, index) in presets"
-            @click="selectPresets(item)"
             :key="index"
-            class="lew-date-picker-presets-item"
             v-tooltip="{
               content: dayjs(item.value).format(valueFormat),
               placement: 'right',
               delay: [500, 80],
             }"
+            class="lew-date-picker-presets-item"
             :class="[
               dayjs(modelValue).isSame(item.value, 'day')
                 ? 'lew-date-picker-presets-item-active'
                 : '',
             ]"
+            @click="selectPresets(item)"
           >
             {{ item.label }}
           </div>
         </lew-flex>
         <lew-flex class="lew-date-picker-date-panel">
-          <lew-date
+          <LewDate
             ref="lewDateRef"
             v-model="modelValue"
             v-bind="props"
@@ -186,7 +185,7 @@ defineExpose({ show, hide })
         </lew-flex>
       </lew-flex>
     </template>
-  </lew-popover>
+  </LewPopover>
 </template>
 
 <style lang="scss" scoped>

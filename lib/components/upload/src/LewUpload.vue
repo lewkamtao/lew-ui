@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { uploadProps } from './props'
 import type { UploadFileItem, UploadStatus } from './props'
-import LewUploadByList from './LewUploadByList.vue'
-import LewUploadByCard from './LewUploadByCard.vue'
-import { LewFlex, LewTooltip, LewDialog, LewMessage } from 'lew-ui'
-import { any2px, getUniqueId, formatBytes, object2class } from 'lew-ui/utils'
 import { useClipboardItems } from '@vueuse/core'
-import { cloneDeep, isFunction } from 'lodash-es'
+import { LewDialog, LewFlex, LewMessage, LewTooltip, locale } from 'lew-ui'
+import { any2px, formatBytes, getUniqueId, object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
+import { cloneDeep, isFunction } from 'lodash-es'
+import LewUploadByCard from './LewUploadByCard.vue'
+import LewUploadByList from './LewUploadByList.vue'
+import { uploadProps } from './props'
 
 const props = defineProps(uploadProps)
 
+const emit = defineEmits(['change', 'delete'])
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
@@ -52,7 +52,6 @@ const getCardSize: Record<string, number> = {
   large: 88,
 }
 
-const emit = defineEmits(['change', 'delete'])
 const inputClickRef = ref<HTMLInputElement | null>(null)
 const inputPasteRef = ref<HTMLInputElement | null>(null)
 const dropActive = ref(false)
@@ -61,16 +60,17 @@ const isFocus = ref(false)
 
 const formMethods: any = inject('formMethods', {})
 
-let _uploadHelper = computed(() => {
+const _uploadHelper = computed(() => {
   if (isFunction(props.uploadHelper)) {
     return props.uploadHelper
-  } else if (props.uploadHelperId) {
+  }
+  else if (props.uploadHelperId) {
     return formMethods[props.uploadHelperId]
   }
   return false
 })
 
-const addImageToList = (files: any) => {
+function addImageToList(files: any) {
   if ((files || []).length > 0) {
     const item = files.pop()
     const { size, type, name, lastModifiedDate, lastModified } = item
@@ -119,15 +119,16 @@ const addImageToList = (files: any) => {
   }
 }
 
-const deleteFile = (key: string) => {
-  let fileList = cloneDeep(modelValue.value) || []
+function deleteFile(key: string) {
+  const fileList = cloneDeep(modelValue.value) || []
   const index = (fileList || []).findIndex((e: UploadFileItem) => e.key === key)
   if (index >= 0) {
     const { status } = fileList[index]
     if (['wrong_type', 'wrong_size', 'pending'].includes(status || '')) {
       fileList.splice(index, 1)
       modelValue.value = fileList
-    } else {
+    }
+    else {
       LewDialog.error({
         title: '移除文件',
         okText: '移除',
@@ -145,20 +146,21 @@ const deleteFile = (key: string) => {
   }
 }
 
-const reUpload = (key: string) => {
-  const index = (modelValue.value || []).findIndex((e) => e.key === key)
+function reUpload(key: string) {
+  const index = (modelValue.value || []).findIndex(e => e.key === key)
   if (index >= 0) {
     const item = (modelValue.value || [])[index]
     if (isFunction(_uploadHelper.value)) {
       setFileItem({ key, percent: 0, status: 'uploading' })
       _uploadHelper.value({ fileItem: cloneDeep(item), setFileItem })
     }
-  } else {
+  }
+  else {
     LewMessage.error('文件不存在')
   }
 }
 
-const clickUpload = (e: any) => {
+function clickUpload(e: any) {
   const files = e.target.files
   addImageToList(Array.from(files))
   // 清空
@@ -169,8 +171,8 @@ const clickUpload = (e: any) => {
   })
 }
 // 拖拽上传
-const dropUpload = (e: any) => {
-  let files = e.dataTransfer.files
+function dropUpload(e: any) {
+  const files = e.dataTransfer.files
   dropActive.value = false
   e.stopPropagation()
   e.preventDefault()
@@ -178,11 +180,11 @@ const dropUpload = (e: any) => {
 }
 
 // 监听粘贴操作
-const pasteUpload = (e: any) => {
+function pasteUpload(e: any) {
   const items = e.clipboardData.items //  获取剪贴板中的数据
   if (items.length > 0) {
     //  判断剪贴板中是否是文件
-    let files = Array.from(items)
+    const files = Array.from(items)
       .filter((item: any) => {
         return item.kind === 'file'
       })
@@ -194,7 +196,7 @@ const pasteUpload = (e: any) => {
 }
 
 // 定义判断文件是否符合accept规则的方法
-const checkFileAccept = (fileItem: UploadFileItem) => {
+function checkFileAccept(fileItem: UploadFileItem) {
   const acceptedFiles = props.accept
   const file = fileItem.file
   if (file && acceptedFiles) {
@@ -208,7 +210,8 @@ const checkFileAccept = (fileItem: UploadFileItem) => {
       const validType = type.trim().toLowerCase()
       if (validType.charAt(0) === '.') {
         return fileName.toLowerCase().endsWith(validType)
-      } else if (validType.endsWith('/*')) {
+      }
+      else if (validType.endsWith('/*')) {
         // This is something like a image/* mime type
         return baseMimeType === validType.replace(/\/.*$/, '')
       }
@@ -218,7 +221,7 @@ const checkFileAccept = (fileItem: UploadFileItem) => {
   return true
 }
 
-let dropRef = ref()
+const dropRef = ref()
 
 onMounted(() => {
   // 拖拽接听
@@ -241,17 +244,20 @@ onMounted(() => {
   })
 })
 
-const setFileItem = (item: UploadFileItem) => {
+function setFileItem(item: UploadFileItem) {
   const { key, percent } = item
-  let fileList = cloneDeep(modelValue.value) || []
+  const fileList = cloneDeep(modelValue.value) || []
   const index = (fileList || []).findIndex((e: UploadFileItem) => e.key === key)
   let _percent = percent || 0
   if (index >= 0) {
     if (percent) {
-      if (_percent > 100) _percent = 100
-      if (_percent < 0) _percent = 0
+      if (_percent > 100)
+        _percent = 100
+      if (_percent < 0)
+        _percent = 0
       fileList[index].percent = _percent
-    } else {
+    }
+    else {
       _percent = fileList[index].percent as number
     }
     fileList[index] = { ...fileList[index], ...item, percent: _percent }
@@ -268,8 +274,9 @@ const getTips = computed(() => {
   const { tips, maxFileSize, accept, limit } = props
   if (tips) {
     return tips
-  } else {
-    let tips = []
+  }
+  else {
+    const tips = []
     if (accept) {
       tips.push(locale.t('upload.accept', { accept }))
     }
@@ -283,13 +290,13 @@ const getTips = computed(() => {
         }),
       )
     }
-    return tips.join('，') + '。'
+    return `${tips.join('，')}。`
   }
 })
 </script>
 
 <template>
-  <lew-flex
+  <LewFlex
     class="lew-upload-wrapper"
     :direction="viewMode === 'list' ? 'y' : 'x'"
     gap="10"
@@ -297,25 +304,25 @@ const getTips = computed(() => {
       width: viewMode === 'list' ? '100%' : 'auto',
     }"
   >
-    <lew-upload-by-card
+    <LewUploadByCard
       v-if="viewMode === 'card'"
-      :size
       v-model="modelValue"
+      :size
       @re-upload="reUpload"
       @delete-file="deleteFile"
     />
     <label
       v-show="(modelValue || []).length < limit"
-      @mouseenter="inputPasteRef?.focus()"
-      @mouseleave="inputPasteRef?.blur()"
       class="lew-upload-label"
       :class="getUploadLabelClass"
       :style="{
         width: viewMode === 'list' ? '100%' : `${any2px(getCardSize[size])}`,
         height: viewMode === 'list' ? 'auto' : `${any2px(getCardSize[size])}`,
       }"
+      @mouseenter="inputPasteRef?.focus()"
+      @mouseleave="inputPasteRef?.blur()"
     >
-      <lew-flex
+      <LewFlex
         ref="dropRef"
         direction="y"
         x="center"
@@ -331,7 +338,8 @@ const getTips = computed(() => {
           :stroke-width="1.5"
           class="lew-upload-icon"
           :size="uploadIconFontSizeMap[size]"
-          type="upload-cloud" />
+          type="upload-cloud"
+        />
 
         <div
           v-if="viewMode === 'list'"
@@ -344,8 +352,8 @@ const getTips = computed(() => {
             dropActive
               ? locale.t('upload.dropActive')
               : `${locale.t('upload.click')}${isSupported && isFocus ? locale.t('upload.paste') : ''}${locale.t(
-                  'upload.drag',
-                )}`
+                'upload.drag',
+              )}`
           }}
         </div>
         <div
@@ -358,29 +366,30 @@ const getTips = computed(() => {
           {{ getTips }}
         </div>
         <input
-          class="lew-upload-input"
           ref="inputClickRef"
+          class="lew-upload-input"
           type="file"
           :multiple="multiple"
           :accept="accept"
-          @change.stop="clickUpload" />
+          @change.stop="clickUpload"
+        >
         <input
-          class="lew-upload-input"
           ref="inputPasteRef"
+          class="lew-upload-input"
+          type="text"
           @paste="pasteUpload"
           @focus="isFocus = true"
           @blur="isFocus = false"
-          type="text"
-      /></lew-flex>
+        ></LewFlex>
     </label>
-    <lew-upload-by-list
+    <LewUploadByList
       v-if="viewMode === 'list'"
-      :size
       v-model="modelValue"
+      :size
       @re-upload="reUpload"
       @delete-file="deleteFile"
     />
-  </lew-flex>
+  </LewFlex>
 </template>
 
 <style lang="scss" scoped>

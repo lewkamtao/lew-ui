@@ -3,7 +3,7 @@ import { cityTree } from '@/lib/data'
 
 const v = ref<string>('')
 
-const change = (e: any) => {
+function change(e: any) {
   console.log(e)
 }
 </script>
@@ -12,8 +12,8 @@ const change = (e: any) => {
   <lew-flex direction="y" gap="20px" style="width: 300px">
     <lew-tree-select
       v-model="v"
-      keyField="value"
-      labelField="label"
+      key-field="value"
+      label-field="label"
       :data-source="cityTree"
       @change="change"
     >

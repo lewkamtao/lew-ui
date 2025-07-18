@@ -1,13 +1,13 @@
 import { createI18n } from 'vue-i18n'
+import de from './de'
 import en from './en'
-import zh from './zh'
-import ja from './ja'
-import ko from './ko'
+import es from './es'
 import fr from './fr'
 import it from './it'
-import es from './es'
-import de from './de'
+import ja from './ja'
+import ko from './ko'
 import pt from './pt'
+import zh from './zh'
 
 // TODO: 国际化优化任务
 // 1. 以中文(zh.ts)为基准文件:
@@ -37,16 +37,16 @@ import pt from './pt'
 //    - 母语者审校
 //    - 术语表一致性检查
 
-export type Language =
-  | 'en'
-  | 'zh'
-  | 'ja'
-  | 'ko'
-  | 'fr'
-  | 'it'
-  | 'es'
-  | 'de'
-  | 'pt'
+export type Language
+  = | 'en'
+    | 'zh'
+    | 'ja'
+    | 'ko'
+    | 'fr'
+    | 'it'
+    | 'es'
+    | 'de'
+    | 'pt'
 
 // 本地存储键名
 const LOCALE_STORAGE_KEY = 'lew-ui-locale'
@@ -65,7 +65,7 @@ export const messages = {
 }
 
 // 获取初始语言
-export const getInitialLocale = async (): Promise<Language> => {
+export async function getInitialLocale(): Promise<Language> {
   // 优先从本地存储获取用户上次选择的语言
   const savedLocale = localStorage.getItem(LOCALE_STORAGE_KEY) as Language
   if (savedLocale && Object.keys(messages).includes(savedLocale)) {
@@ -139,7 +139,8 @@ export const getInitialLocale = async (): Promise<Language> => {
     if (countryCode && countryToLocale[countryCode]) {
       return countryToLocale[countryCode]
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.warn('获取用户IP信息失败，将使用默认语言', error)
   }
 
@@ -149,7 +150,7 @@ export const getInitialLocale = async (): Promise<Language> => {
 }
 
 // 默认使用中文，后续异步更新
-let currentLocale: Language = 'en'
+const currentLocale: Language = 'en'
 
 const i18n = createI18n({
   globalInjection: true,
@@ -161,7 +162,7 @@ const i18n = createI18n({
   messages,
 })
 
-export const useLocale = () => {
+export function useLocale() {
   return {
     use: (locale: Language) => {
       // 更新当前语言
@@ -178,7 +179,7 @@ export const useLocale = () => {
   }
 }
 
-export { i18n, en, zh }
+export { en, i18n, zh }
 
 const docsLocale = useLocale()
 export default docsLocale

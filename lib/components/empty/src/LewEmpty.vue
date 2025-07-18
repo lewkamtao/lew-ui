@@ -1,24 +1,24 @@
 <script lang="ts" setup>
-import { emptyProps } from './props'
 import { any2px } from 'lew-ui/utils'
+import { emptyProps } from './props'
 
 const props = defineProps(emptyProps)
 
-let src = new URL(`../icon/icon_${props.type}.svg`, import.meta.url).href
+const src = new URL(`../icon/icon_${props.type}.svg`, import.meta.url).href
 
 const emptyStyleObject = computed(() => {
   const { width, height, padding } = props
   return {
     width: any2px(width),
     height: any2px(height),
-    padding: padding,
+    padding,
   }
 })
 </script>
 
 <template>
   <div class="lew-empty-container" :style="emptyStyleObject">
-    <img :src="src" alt="" srcset="" class="lew-empty-icon" />
+    <img :src="src" alt="" srcset="" class="lew-empty-icon">
     <div
       :style="{
         fontSize: any2px(fontSize),

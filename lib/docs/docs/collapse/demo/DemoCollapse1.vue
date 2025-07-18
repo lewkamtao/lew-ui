@@ -29,13 +29,13 @@ const companies = [
     id: '5',
     name: 'Amazon',
     description:
-      "Amazon.com, Inc. is an American multinational technology company founded by Jeff Bezos in 1994. Amazon is the world's largest online retailer and cloud computing company, known for its e-commerce platform, Amazon Prime subscription service, and Amazon Web Services (AWS) cloud computing platform.",
+      'Amazon.com, Inc. is an American multinational technology company founded by Jeff Bezos in 1994. Amazon is the world\'s largest online retailer and cloud computing company, known for its e-commerce platform, Amazon Prime subscription service, and Amazon Web Services (AWS) cloud computing platform.',
   },
   {
     id: '6',
     name: 'Tesla',
     description:
-      "Tesla, Inc. is an American electric vehicle and clean energy company founded by Elon Musk, Martin Eberhard, Marc Tarpenning, JB Straubel, and Ian Wright in 2003. Tesla is known for its electric vehicles, energy storage solutions, and solar products, aiming to accelerate the world's transition to sustainable energy.",
+      'Tesla, Inc. is an American electric vehicle and clean energy company founded by Elon Musk, Martin Eberhard, Marc Tarpenning, JB Straubel, and Ian Wright in 2003. Tesla is known for its electric vehicles, energy storage solutions, and solar products, aiming to accelerate the world\'s transition to sustainable energy.',
   },
 ]
 
@@ -56,20 +56,20 @@ const companies1 = [
 </script>
 
 <template>
-  <lew-collapse width="400" v-model="value">
+  <lew-collapse v-model="value" width="400">
     <lew-collapse-item
-      :title="item.name"
-      :collapse-key="item.id"
       v-for="item in companies"
       :key="item.id"
+      :title="item.name"
+      :collapse-key="item.id"
     >
       <template v-if="item.name === 'Apple'">
-        <lew-collapse width="100%" style="padding-left: 20px" v-model="value">
+        <lew-collapse v-model="value" width="100%" style="padding-left: 20px">
           <lew-collapse-item
-            :title="item.name"
-            :collapse-key="item.id"
             v-for="item in companies1"
             :key="item.id"
+            :title="item.name"
+            :collapse-key="item.id"
           >
             <div>
               {{ item.description }}

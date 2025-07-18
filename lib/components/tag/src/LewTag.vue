@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { getColorType } from 'lew-ui/utils'
-import { tagProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { tagProps } from './props'
 
 // Props & Emits
 const props = defineProps(tagProps)
@@ -66,8 +66,9 @@ const TYPE_STYLES = {
 }
 
 // Methods
-const close = () => {
-  if (props.disabled) return
+function close() {
+  if (props.disabled)
+    return
   emit('close')
 }
 
@@ -96,7 +97,9 @@ const tagStyle: any = computed(() => {
 
     <div class="lew-tag-value">
       <slot v-if="!text" />
-      <template v-else>{{ text }}</template>
+      <template v-else>
+        {{ text }}
+      </template>
     </div>
 
     <div v-if="$slots.right" class="lew-tag-right">

@@ -64,7 +64,7 @@ const options = ref<any[]>([
   },
 ])
 
-const setTheme = (item: any, type = 'theme') => {
+function setTheme(item: any, type = 'theme') {
   // Find the index of the Theme item
   const themeIndex = options.value.findIndex((item: any) => item.value === type)
   if (themeIndex !== -1 && options.value[themeIndex].children) {
@@ -82,7 +82,7 @@ const setTheme = (item: any, type = 'theme') => {
     )
 
     // Update the entire options array to trigger reactive update
-    let newOptions = options.value.map((item: any, index: number) => {
+    const newOptions = options.value.map((item: any, index: number) => {
       if (index === themeIndex) {
         return {
           ...item,
@@ -95,10 +95,11 @@ const setTheme = (item: any, type = 'theme') => {
   }
 }
 
-const setUpdate = (item: any) => {
+function setUpdate(item: any) {
   item.checked = !item.checked
 }
 </script>
+
 <template>
   <lew-flex>
     <div

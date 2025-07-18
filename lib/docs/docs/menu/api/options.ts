@@ -6,13 +6,13 @@ export default {
       name: 'label',
       description: '菜单项的显示文本',
       type: 'string',
-      default: "''",
+      default: '\'\'',
     },
     {
       name: 'value',
       description: '菜单项的唯一标识',
       type: 'string',
-      default: "''",
+      default: '\'\'',
     },
     {
       name: 'children',
@@ -30,7 +30,7 @@ export default {
       name: 'icon',
       description: '菜单项的图标',
       type: 'string',
-      default: "''",
+      default: '\'\'',
     },
     {
       name: 'tagProps',

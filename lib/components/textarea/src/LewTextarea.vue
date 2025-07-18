@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { useMagicKeys, useDebounceFn } from '@vueuse/core'
-import { object2class, any2px } from 'lew-ui/utils'
-import { LewTooltip } from 'lew-ui'
-import { textareaProps } from './props'
-import { useResizeObserver } from '@vueuse/core'
+import { useDebounceFn, useMagicKeys, useResizeObserver } from '@vueuse/core'
+import { LewTooltip, locale } from 'lew-ui'
+import { any2px, object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
+import { textareaProps } from './props'
 
+const props = defineProps(textareaProps)
+const emit = defineEmits(['clear', 'blur', 'input', 'focus', 'change', 'ok'])
 const { shift, enter } = useMagicKeys()
 // 获取app
 const app = getCurrentInstance()?.appContext.app
@@ -16,7 +16,7 @@ if (app && !app.directive('tooltip')) {
 const lewTextareaRef = ref()
 const lewTextareaViewRef = ref()
 
-let resizeObj = ref({
+const resizeObj = ref({
   height: 0,
   width: 0,
 })
@@ -31,20 +31,17 @@ useResizeObserver(lewTextareaViewRef, () => {
   }
 })
 
-const emit = defineEmits(['clear', 'blur', 'input', 'focus', 'change', 'ok'])
-
-const props = defineProps(textareaProps)
 const modelValue: Ref<string | undefined> = defineModel()
 const state = reactive({
   isFocus: false,
 })
 
-const clear = (): void => {
+function clear(): void {
   modelValue.value = undefined
   emit('clear')
 }
 
-const toFocus = () => {
+function toFocus() {
   lewTextareaRef.value?.focus()
 }
 
@@ -57,7 +54,7 @@ const getTextareaClassNames = computed(() => {
   })
 })
 
-const focus = (e: any) => {
+function focus(e: any) {
   if (props.selectByFocus) {
     e?.currentTarget?.select()
   }
@@ -65,8 +62,8 @@ const focus = (e: any) => {
   emit('focus')
 }
 
-const blur = () => {
-  emit('blur', modelValue)
+function blur() {
+  emit('blur', modelValue.value)
   state.isFocus = false
 }
 
@@ -98,15 +95,15 @@ const getTextareaStyle: any = computed(() => {
   const obj = {
     resize: resize as string,
     minWidth: any2px(minWidth || width),
-    minHeight: any2px(minHeight || (height ? height : heightMap[size])),
+    minHeight: any2px(minHeight || (height || heightMap[size])),
     maxWidth: any2px(maxWidth),
     maxHeight: any2px(maxHeight),
     width: any2px(width),
-    height: any2px(height ? height : heightMap[size]),
+    height: any2px(height || heightMap[size]),
   }
   if (resizeObj.value.width > 0) {
-    obj.width = resizeObj.value.width + 'px'
-    obj.height = resizeObj.value.height + 'px'
+    obj.width = `${resizeObj.value.width}px`
+    obj.height = `${resizeObj.value.height}px`
   }
   return obj
 })
@@ -114,8 +111,9 @@ const getTextareaStyle: any = computed(() => {
 if (props.okByEnter) {
   watchEffect(() => {
     if (shift.value && enter.value) {
-      return
-    } else if (enter.value && state.isFocus) {
+
+    }
+    else if (enter.value && state.isFocus) {
       lewTextareaRef.value?.blur()
       ok()
     }
@@ -150,10 +148,10 @@ defineExpose({ toFocus })
       @blur="blur"
       @input="emit('input', modelValue)"
       @change="emit('change', modelValue)"
-    ></textarea>
+    />
 
     <div v-if="modelValue && showCount" class="lew-textarea-count">
-      {{ modelValue.length }}{{ maxLength ? ' / ' + maxLength : '' }}
+      {{ modelValue.length }}{{ maxLength ? ` / ${maxLength}` : '' }}
     </div>
     <transition name="lew-form-icon-ani">
       <Icon

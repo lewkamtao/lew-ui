@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import Icon from 'lew-ui/utils/Icon.vue'
+import { random } from 'lodash-es'
 import { useRouter } from 'vue-router'
 import * as Yup from 'yup'
-import { random } from 'lodash-es'
 import LewBg from '../layout/LewBg.vue'
-import Icon from 'lew-ui/utils/Icon.vue'
 
 const viewTotal = ref(1000000000)
 
@@ -77,9 +77,6 @@ const options = ref([
       .min(1, 'Please select at least one core feature')
       .required('Please select the main features'),
     props: {
-      change: (e: any) => {
-        console.log(e)
-      },
       clearable: true,
       options: [
         { label: 'Responsive Design', value: '1' },
@@ -193,7 +190,7 @@ const options = ref([
   },
 ])
 
-let formRef = ref()
+const formRef = ref()
 
 onMounted(() => {
   setTimeout(() => {
@@ -219,8 +216,10 @@ onMounted(() => {
     },
   })
 })
-
-const sprs = () => {
+function randomInRange(min: number, max: number) {
+  return Math.random() * (max - min) + min
+}
+function sprs() {
   const duration = 5 * 1000
   const animationEnd = Date.now() + duration
   const defaults = {
@@ -230,10 +229,7 @@ const sprs = () => {
     zIndex: 999,
   }
 
-  function randomInRange(min: number, max: number) {
-    return Math.random() * (max - min) + min
-  }
-  const interval: any = setInterval(function () {
+  const interval: any = setInterval(() => {
     const timeLeft = animationEnd - Date.now()
 
     if (timeLeft <= 0) {
@@ -242,7 +238,6 @@ const sprs = () => {
 
     const particleCount = 50 * (timeLeft / duration)
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     confetti({
       ...defaults,
@@ -252,7 +247,7 @@ const sprs = () => {
         y: Math.random() - 0.2,
       },
     })
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
     // @ts-ignore
     confetti({
       ...defaults,
@@ -268,20 +263,14 @@ const sprs = () => {
 const router = useRouter()
 const v = ref('')
 const lewPopoverRef = ref()
-const submit = () => {
+function submit() {
   LewMessage.error(v.value || 'Password cannot be empty')
   lewPopoverRef.value.hide()
 }
-const open = (type: string) => {
+function open(type: string) {
   LewDialog[type]({
     title: 'Confirm Action',
     content: 'This action cannot be undone. Are you sure you want to continue?',
-    ok: () => {
-      console.log('Confirmed')
-    },
-    cancel: () => {
-      console.log('Cancelled')
-    },
   })
 }
 
@@ -348,7 +337,7 @@ const dropdown_options = ref([
   },
 ])
 
-const message = (type: string) => {
+function message(type: string) {
   const messages = {
     info: 'New Feature: Explore iOS 17 with enhanced iPhone intelligence.',
     success: 'Update Complete: Your device has been successfully updated.',
@@ -360,7 +349,7 @@ const message = (type: string) => {
   )
 }
 
-const notification = (type: string) => {
+function notification(type: string) {
   const notifications = {
     info: {
       title: 'iOS Update Available',
@@ -395,11 +384,11 @@ const notification = (type: string) => {
 
 const logoLeft = ref('')
 
-const getLogoLeft = () => {
-  const logoElement = document.getElementById('logo')
+function getLogoLeft() {
+  const logoElement = document.querySelector('#logo')
   if (logoElement) {
     const rect = logoElement.getBoundingClientRect()
-    logoLeft.value = rect.left + window.scrollX + 'px'
+    logoLeft.value = `${rect.left + window.scrollX}px`
   }
 }
 
@@ -416,7 +405,9 @@ onUnmounted(() => {
   <div class="home-wrapper">
     <LewBg />
     <div :style="{ left: logoLeft }" class="startbox">
-      <div class="slogan">{{ $t('home.sloganTitle') }}</div>
+      <div class="slogan">
+        {{ $t('home.sloganTitle') }}
+      </div>
       <p>{{ $t('home.slogan') }}</p>
       <lew-flex x="start">
         <lew-button
@@ -433,10 +424,18 @@ onUnmounted(() => {
       <lew-flex direction="x" gap="40">
         <lew-flex class="item" direction="y" x="end" gap="40">
           <lew-flex direction="y" x="end" gap="0px">
-            <lew-title :size="16" :bold="200"> Lew Design 16px </lew-title>
-            <lew-title :size="24" :bold="400"> Lew Design 24px </lew-title>
-            <lew-title :size="32" :bold="600"> Lew Design 32px </lew-title>
-            <lew-title :size="40" :bold="800"> Lew Design 40px </lew-title>
+            <lew-title :size="16" :bold="200">
+              Lew Design 16px
+            </lew-title>
+            <lew-title :size="24" :bold="400">
+              Lew Design 24px
+            </lew-title>
+            <lew-title :size="32" :bold="600">
+              Lew Design 32px
+            </lew-title>
+            <lew-title :size="40" :bold="800">
+              Lew Design 40px
+            </lew-title>
           </lew-flex>
           <lew-flex style="width: 500px" x="end" gap="20">
             <lew-avatar size="40" shape="circle" />
@@ -468,12 +467,24 @@ onUnmounted(() => {
             />
           </lew-flex>
           <lew-flex x="end" gap="10">
-            <lew-tag type="light">MacBook</lew-tag>
-            <lew-tag type="light" color="green">iPad</lew-tag>
-            <lew-tag type="light" color="red">iPhone</lew-tag>
-            <lew-tag type="light" color="warning">Watch</lew-tag>
-            <lew-tag type="light" color="normal">AirPods</lew-tag>
-            <lew-tag type="light" color="blue">Vision Pro</lew-tag>
+            <lew-tag type="light">
+              MacBook
+            </lew-tag>
+            <lew-tag type="light" color="green">
+              iPad
+            </lew-tag>
+            <lew-tag type="light" color="red">
+              iPhone
+            </lew-tag>
+            <lew-tag type="light" color="warning">
+              Watch
+            </lew-tag>
+            <lew-tag type="light" color="normal">
+              AirPods
+            </lew-tag>
+            <lew-tag type="light" color="blue">
+              Vision Pro
+            </lew-tag>
           </lew-flex>
 
           <lew-flex x="end" gap="20">
@@ -499,16 +510,18 @@ onUnmounted(() => {
           </lew-flex>
         </lew-flex>
         <lew-flex style="width: 450px; margin-top: 0px" class="item">
-          <lew-form row-gap="30" ref="formRef" :options="options" />
+          <lew-form ref="formRef" row-gap="30" :options="options" />
         </lew-flex>
         <lew-flex class="item" direction="y" gap="20">
           <lew-alert type="warning" title="Please confirm deletion" />
           <lew-alert type="info">
-            <template #title>New Feature</template>
-            <template #content
-              >Google Photos now offers enhanced photo management
-              features.</template
-            >
+            <template #title>
+              New Feature
+            </template>
+            <template #content>
+              Google Photos now offers enhanced photo management
+              features.
+            </template>
           </lew-alert>
 
           <lew-alert
@@ -518,10 +531,12 @@ onUnmounted(() => {
           />
 
           <lew-alert type="success">
-            <template #title>Update Complete</template>
-            <template #content
-              >Your device has been successfully updated</template
-            >
+            <template #title>
+              Update Complete
+            </template>
+            <template #content>
+              Your device has been successfully updated
+            </template>
           </lew-alert>
           <lew-flex wrap x="start" gap="10">
             <lew-button
@@ -621,8 +636,8 @@ onUnmounted(() => {
               <template #popover-body>
                 <div class="popover-body" style="width: 240px">
                   <lew-input
-                    width="100%"
                     v-model="v"
+                    width="100%"
                     placeholder="Enter password"
                   />
                   <lew-flex x="end" style="margin-top: 15px">

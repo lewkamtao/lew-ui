@@ -403,25 +403,25 @@ export default {
       },
     },
     dropdown: {
-      name: 'Dropdown-Menü',
-      description: 'Klickaktiviertes Schwebendes Menü für bequemere Bedienung',
-      demo1: {
+      'name': 'Dropdown-Menü',
+      'description': 'Klickaktiviertes Schwebendes Menü für bequemere Bedienung',
+      'demo1': {
         title: 'Grundlegende Verwendung',
       },
-      demo2: {
+      'demo2': {
         title: 'Nicht nur Buttons',
       },
-      demo3: {
+      'demo3': {
         title: 'Deaktivierte Einträge',
       },
-      props: {
+      'props': {
         options: 'Menüoptionen-Konfiguration',
         trigger: 'Auslösemethode',
         placement: 'Position',
         checkable: 'Ist auswählbar',
       },
       'options(ContextMenus)': contextMenu,
-      events: {
+      'events': {
         show: 'Callback beim Anzeigen des Menüs',
         hide: 'Callback beim Ausblenden des Menüs',
         change: 'Callback bei Auswahl eines Menüpunkts',
@@ -454,21 +454,21 @@ export default {
       },
     },
     contextMenu: {
-      name: 'Kontextmenü',
-      description: 'Elegantes Rechtsklickmenü für natürlichere Bedienung',
-      demo1: {
+      'name': 'Kontextmenü',
+      'description': 'Elegantes Rechtsklickmenü für natürlichere Bedienung',
+      'demo1': {
         title: 'Grundlegende Verwendung',
       },
-      demo2: {
+      'demo2': {
         title: 'Unterstützt mehrere Ebenen',
       },
-      demo3: {
+      'demo3': {
         title: 'Unterstützt dynamische Aktualisierung',
       },
-      demo4: {
+      'demo4': {
         title: 'Kontrollkästchen',
       },
-      props: {
+      'props': {
         options: 'Kontextmenü-Konfiguration',
         disabled: 'Kontextmenü deaktivieren',
       },
@@ -760,28 +760,28 @@ export default {
       },
     },
     checkbox: {
-      name: 'Kontrollkästchen',
-      description:
+      'name': 'Kontrollkästchen',
+      'description':
         'Mehrfachauswahl-Komponente für intuitive Auswahlmöglichkeiten',
-      demo1: {
+      'demo1': {
         title: 'Grundlegende Verwendung',
       },
-      demo2: {
+      'demo2': {
         title: 'Vertikale Anordnung',
       },
-      demo3: {
+      'demo3': {
         title: 'Block-Darstellung',
       },
-      demo4: {
+      'demo4': {
         title: 'Abgerundet',
       },
-      demo5: {
+      'demo5': {
         title: 'Schreibgeschützt',
       },
-      demo6: {
+      'demo6': {
         title: 'Deaktiviert',
       },
-      demo7: {
+      'demo7': {
         title: 'Einzelmodus',
       },
       'model(CheckboxGroup)': {
@@ -818,34 +818,34 @@ export default {
       'events(CheckboxGroup)': {
         change: 'Wird bei Wertänderung ausgelöst',
       },
-      options: {
+      'options': {
         label: 'Beschriftung',
         value: 'Wert',
         disabled: 'Deaktiviert',
       },
     },
     radio: {
-      name: 'Optionsfeld',
-      description: 'Einzelauswahl-Komponente für klare Auswahlmöglichkeiten',
-      demo1: {
+      'name': 'Optionsfeld',
+      'description': 'Einzelauswahl-Komponente für klare Auswahlmöglichkeiten',
+      'demo1': {
         title: 'Grundlegende Verwendung',
       },
-      demo2: {
+      'demo2': {
         title: 'Vertikale Anordnung',
       },
-      demo3: {
+      'demo3': {
         title: 'Block-Darstellung',
       },
-      demo4: {
+      'demo4': {
         title: 'Form',
       },
-      demo5: {
+      'demo5': {
         title: 'Schreibgeschützt',
       },
-      demo6: {
+      'demo6': {
         title: 'Deaktiviert',
       },
-      model: {
+      'model': {
         modelValue: 'Gebundener Wert',
       },
       'props(RadioGroup)': {
@@ -858,12 +858,12 @@ export default {
         readonly: 'Schreibgeschützt',
         round: 'Abgerundet',
       },
-      options: {
+      'options': {
         label: 'Beschriftung',
         value: 'Wert',
         disabled: 'Deaktiviert',
       },
-      events: {
+      'events': {
         change: 'Wird bei Wertänderung ausgelöst',
       },
     },
@@ -1649,25 +1649,25 @@ export default {
       },
     },
     collapse: {
-      name: 'Akkordeon',
-      description:
+      'name': 'Akkordeon',
+      'description':
         'Zusammenklappbare und erweiterbare Inhaltsbereiche, um Informationen übersichtlicher darzustellen',
-      demo1: {
+      'demo1': {
         title: 'Grundlegende Verwendung',
       },
-      demo2: {
+      'demo2': {
         title: 'Titel-Slot',
       },
-      demo3: {
+      'demo3': {
         title: 'Akkordeon-Modus',
       },
-      model: {
+      'model': {
         modelValue: 'Parametername',
       },
       'model(CollapseItem)': {
         modelValue: 'Parametername',
       },
-      props: {
+      'props': {
         width: 'Breite',
       },
       'props(CollapseItem)': {
@@ -1946,7 +1946,7 @@ export default {
         triggerTarget: 'Auslöserziel',
       },
       slots: {
-        trigger: 'Auslöser-Slot',
+        'trigger': 'Auslöser-Slot',
         'popover-body': 'Popover-Körper-Slot',
       },
     },

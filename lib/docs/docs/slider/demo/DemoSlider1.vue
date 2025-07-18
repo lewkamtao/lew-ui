@@ -1,12 +1,12 @@
 <script setup lang="ts">
-let v = ref()
+const v = ref()
 </script>
 
 <template>
   <lew-flex direction="y" x="start">
     <lew-slider
-      style="width: 500px"
       v-model="v"
+      style="width: 500px"
       size="small"
       :options="[
         {
@@ -21,11 +21,12 @@ let v = ref()
           label: '高',
           value: 100,
         },
-      ]" />
+      ]"
+    />
 
     <lew-slider
-      style="width: 500px"
       v-model="v"
+      style="width: 500px"
       :options="[
         {
           label: '低',
@@ -39,11 +40,12 @@ let v = ref()
           label: '高',
           value: 100,
         },
-      ]" />
+      ]"
+    />
 
     <lew-slider
-      style="width: 500px"
       v-model="v"
+      style="width: 500px"
       size="large"
       :options="[
         {
@@ -59,5 +61,6 @@ let v = ref()
           value: 100,
         },
       ]"
-  /></lew-flex>
+    />
+  </lew-flex>
 </template>

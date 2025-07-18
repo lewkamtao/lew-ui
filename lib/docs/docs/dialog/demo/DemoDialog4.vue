@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const open = () => {
+function open() {
   LewDialog.warning({
     okText: 'Confirm',
     cancelText: 'Cancel',
@@ -23,6 +23,7 @@ const open = () => {
   })
 }
 </script>
+
 <template>
   <lew-button text="Confirm Action" round type="light" @click="open()" />
 </template>

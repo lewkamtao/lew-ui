@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { orderBy } from 'lodash-es'
+
 const data: any = ref([
   {
     id: 1,
@@ -139,7 +140,7 @@ const columns = [
         x: 'center',
         sortable: true,
         customRender: ({ row }: any) => {
-          return '$' + row.price
+          return `$${row.price}`
         },
       },
     ],
@@ -187,11 +188,12 @@ const sortValue = ref<any>({
   price: 'desc',
 })
 
-const sortChange = () => {
+function sortChange() {
   console.log(sortValue.value)
-  if (sortValue.value['price']) {
-    data.value = orderBy(data.value, 'price', sortValue.value['price'])
-  } else {
+  if (sortValue.value.price) {
+    data.value = orderBy(data.value, 'price', sortValue.value.price)
+  }
+  else {
     data.value = orderBy(data.value, 'id', 'asc')
   }
 }
@@ -199,16 +201,20 @@ const sortChange = () => {
 
 <template>
   <lew-table
+    v-model:sort-value="sortValue"
     bordered
     :data-source="data"
     :columns="columns"
-    v-model:sortValue="sortValue"
     @sort-change="sortChange"
   >
     <template #info="{ row }">
       <lew-flex direction="y" x="start" gap="0px" class="info">
-        <div class="name">{{ row.name }}</div>
-        <div class="brand">{{ row.brand }}</div>
+        <div class="name">
+          {{ row.name }}
+        </div>
+        <div class="brand">
+          {{ row.brand }}
+        </div>
       </lew-flex>
     </template>
     <template #rating="{ row }">

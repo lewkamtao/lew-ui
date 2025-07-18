@@ -1,40 +1,38 @@
 <script setup lang="ts">
-import { object2class, any2px } from 'lew-ui/utils'
-import { LewTooltip, LewFlex } from 'lew-ui'
-import { inputNumberProps } from './props'
+import { LewFlex, LewTooltip, locale } from 'lew-ui'
+import { any2px, object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
+import { inputNumberProps } from './props'
 
+const props = defineProps(inputNumberProps)
+const emit = defineEmits(['blur', 'focus', 'change', 'input'])
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
-const emit = defineEmits(['blur', 'focus', 'change', 'input'])
-
-const props = defineProps(inputNumberProps)
 const modelValue: Ref<number | undefined> = defineModel({ required: true })
 const lewInputRef = ref()
 const isFocus = ref(false)
 
 const validationMessage = ref('')
 
-const toFocus = () => {
+function toFocus() {
   lewInputRef.value?.focus()
 }
 
-const focus = (e: any) => {
+function focus(e: any) {
   if (props.selectByFocus) {
     e?.currentTarget?.select()
   }
   emit('focus')
 }
 
-const blur = () => {
-  emit('blur', modelValue)
+function blur() {
+  emit('blur', modelValue.value)
 }
 
-const inputFn = (e: any) => {
+function inputFn(e: any) {
   validationMessage.value = lewInputRef.value.validationMessage
   emit('input', modelValue.value, e)
 }
@@ -50,7 +48,7 @@ const getInputClassNames = computed(() => {
   })
 })
 
-const changeFn = () => {
+function changeFn() {
   emit('change', modelValue.value)
 }
 
@@ -89,13 +87,13 @@ const getControlStyle = computed(() => {
   }
 })
 
-let longClickTimer = ref()
+const longClickTimer = ref()
 
-const clearTimer = () => {
+function clearTimer() {
   clearInterval(longClickTimer.value)
 }
 
-const plus = () => {
+function plus() {
   lewInputRef.value.stepUp()
   modelValue.value = lewInputRef.value.value
   longClickTimer.value = setTimeout(() => {
@@ -104,15 +102,15 @@ const plus = () => {
       modelValue.value = lewInputRef.value.value
       emit('change', modelValue.value)
       if (
-        props.max !== '' &&
-        lewInputRef.value.value >= Number(props.max || 0)
+        props.max !== ''
+        && lewInputRef.value.value >= Number(props.max || 0)
       ) {
         clearTimer()
       }
     }, 80)
   }, 250)
 }
-const minus = () => {
+function minus() {
   lewInputRef.value.stepDown()
   modelValue.value = lewInputRef.value.value
   longClickTimer.value = setTimeout(() => {
@@ -121,8 +119,8 @@ const minus = () => {
       modelValue.value = lewInputRef.value.value
       emit('change', modelValue.value)
       if (
-        props.min !== '' &&
-        lewInputRef.value.value <= Number(props.min || 0)
+        props.min !== ''
+        && lewInputRef.value.value <= Number(props.min || 0)
       ) {
         clearTimer()
       }
@@ -130,13 +128,13 @@ const minus = () => {
   }, 250)
 }
 
-const checkValidationMessage = () => {
-  validationMessage.value =
-    lewInputRef.value && lewInputRef.value.validationMessage
+function checkValidationMessage() {
+  validationMessage.value
+    = lewInputRef.value && lewInputRef.value.validationMessage
   return (validationMessage.value || '').length === 0
 }
 
-const validCheck = () => {
+function validCheck() {
   return (
     ((lewInputRef.value && lewInputRef.value.validationMessage) || '')
       .length === 0
@@ -148,22 +146,22 @@ defineExpose({ toFocus, validCheck })
 
 <template>
   <div
-    @wheel="(e: any) => e.preventDefault()"
-    @mouseenter="checkValidationMessage"
-    @mouseleave="validationMessage = ''"
     class="lew-input-number-view"
     :class="getInputClassNames"
     :style="getInputNumberViewStyle"
+    @wheel="(e: any) => e.preventDefault()"
+    @mouseenter="checkValidationMessage"
+    @mouseleave="validationMessage = ''"
   >
     <input
+      ref="lewInputRef"
+      v-model="modelValue"
       v-tooltip="{
         content: validationMessage,
         triggerFrom: 'input-number',
       }"
       title=""
       type="number"
-      ref="lewInputRef"
-      v-model="modelValue"
       class="lew-input-number"
       :placeholder="
         placeholder ? placeholder : locale.t('inputNumber.placeholder')
@@ -176,33 +174,33 @@ defineExpose({ toFocus, validCheck })
       @change="changeFn"
       @blur="blur"
       @focus="focus"
-    />
-    <lew-flex
-      @mouseenter="isFocus = true"
-      @mouseleave="isFocus = false"
+    >
+    <LewFlex
       :style="getControlStyle"
       direction="y"
       x="end"
       gap="2px"
       class="lew-input-number-control"
+      @mouseenter="isFocus = true"
+      @mouseleave="isFocus = false"
     >
       <Icon
-        @mousedown="plus"
-        @mouseup="clearTimer"
-        @mouseleave="clearTimer"
         class="lew-input-number-icon"
         :size="getIconSize"
         type="chevron-up"
-      ></Icon>
-      <Icon
-        @mousedown="minus"
+        @mousedown="plus"
         @mouseup="clearTimer"
         @mouseleave="clearTimer"
+      />
+      <Icon
         class="lew-input-number-icon"
         :size="getIconSize"
         type="chevron-down"
-      ></Icon>
-    </lew-flex>
+        @mousedown="minus"
+        @mouseup="clearTimer"
+        @mouseleave="clearTimer"
+      />
+    </LewFlex>
   </div>
 </template>
 

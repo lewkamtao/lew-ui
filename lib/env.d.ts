@@ -9,28 +9,24 @@ declare module '*.vue' {
 
 declare module 'lib/components/collapse/src/LewCollapseTransition.vue' {
   import type { DefineComponent } from 'vue'
+
   const component: DefineComponent<{}, {}, any>
   export default component
 }
 
 declare module './src/LewCollapseTransition.vue' {
   import type { DefineComponent } from 'vue'
+
   const component: DefineComponent<{}, {}, any>
   export default component
 }
 
 declare module './LewCollapseTransition.vue' {
   import type { DefineComponent } from 'vue'
+
   const component: DefineComponent<{}, {}, any>
   export default component
 }
-import {
-  LewNotification,
-  LewDialog,
-  LewMessage,
-  LewContextMenu,
-  LewHoverMenu,
-} from '../directives'
 
 declare module 'highlight.js'
 declare const hljs

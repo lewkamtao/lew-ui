@@ -1,13 +1,13 @@
 <script setup lang="ts">
-let v = ref([25, 75])
+const v = ref([25, 75])
 </script>
 
 <template>
   <pre>{{ v }}</pre>
   <lew-flex direction="y" x="start">
     <lew-slider-range
-      style="width: 500px"
       v-model="v"
+      style="width: 500px"
       size="small"
       :options="[
         {
@@ -22,11 +22,12 @@ let v = ref([25, 75])
           label: '高',
           value: 100,
         },
-      ]" />
+      ]"
+    />
 
     <lew-slider-range
-      style="width: 500px"
       v-model="v"
+      style="width: 500px"
       :options="[
         {
           label: '低',
@@ -40,11 +41,12 @@ let v = ref([25, 75])
           label: '高',
           value: 100,
         },
-      ]" />
+      ]"
+    />
 
     <lew-slider-range
-      style="width: 500px"
       v-model="v"
+      style="width: 500px"
       size="large"
       :options="[
         {
@@ -60,5 +62,6 @@ let v = ref([25, 75])
           value: 100,
         },
       ]"
-  /></lew-flex>
+    />
+  </lew-flex>
 </template>

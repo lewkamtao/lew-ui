@@ -102,8 +102,8 @@ const tableSizeOptions = [
 
 <template>
   <lew-tabs
-    style="margin-bottom: 20px"
     v-model="tableSize"
+    style="margin-bottom: 20px"
     item-width="50px"
     round
     :options="tableSizeOptions"

@@ -1,13 +1,13 @@
-import { defineConfig } from 'vite'
+import type { ConfigEnv, UserConfig } from 'vite'
+import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import AutoImport from 'unplugin-auto-import/vite'
-import dts from 'vite-plugin-dts'
-import checker from 'vite-plugin-checker'
-import zipPack from 'vite-plugin-zip-pack'
-import { fileURLToPath, URL } from 'node:url'
-import type { UserConfig, ConfigEnv } from 'vite'
 import { visualizer } from 'rollup-plugin-visualizer'
+import AutoImport from 'unplugin-auto-import/vite'
+import { defineConfig } from 'vite'
+import checker from 'vite-plugin-checker'
+import dts from 'vite-plugin-dts'
+import zipPack from 'vite-plugin-zip-pack'
 
 // 路径工具函数
 const resolve = (path: string) => fileURLToPath(new URL(path, import.meta.url))
@@ -76,12 +76,12 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
       '/api_admin': {
         target: 'https://app.tngeek.com/api_admin',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api_admin/, ''),
+        rewrite: path => path.replace(/^\/api_admin/, ''),
       },
       '/api_sso': {
         target: 'https://app.tngeek.com/api_sso',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api_sso/, ''),
+        rewrite: path => path.replace(/^\/api_sso/, ''),
       },
     },
   }

@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import { LewFlex, LewEmpty } from 'lew-ui'
-import tippy from 'tippy.js'
-import LewContextMenu from './LewContextMenu.vue'
-import { getUniqueId, isVueComponent, formatComponent } from 'lew-ui/utils'
-import { contextMenuProps, initLewContextMenu } from './index'
 import type { ContextMenus } from './index'
+import { LewEmpty, LewFlex } from 'lew-ui'
+import { formatComponent, getUniqueId, isVueComponent } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { isFunction } from 'lodash-es'
+import tippy from 'tippy.js'
+import { contextMenuProps, initLewContextMenu } from './index'
+import LewContextMenu from './LewContextMenu.vue'
+
 const props = defineProps(contextMenuProps)
 
 const emit = defineEmits(['select'])
 
-const clickItem = (item: ContextMenus) => {
+function clickItem(item: ContextMenus) {
   if (isFunction(item.onClick)) {
     // 创建一个item的代理
     const proxy = new Proxy(item, {
@@ -40,13 +41,13 @@ const clickItem = (item: ContextMenus) => {
 
 const uniqueId = getUniqueId()
 
-let itemRefs = ref<(Element | globalThis.ComponentPublicInstance | null)[]>([])
-const initTippy = () => {
+const itemRefs = ref<(Element | globalThis.ComponentPublicInstance | null)[]>([])
+function initTippy() {
   itemRefs.value.forEach((el: any, index: number) => {
     if (
-      !el ||
-      props.options[index].disabled ||
-      (props.options[index].children || []).length === 0
+      !el
+      || props.options[index].disabled
+      || (props.options[index].children || []).length === 0
     ) {
       return
     }
@@ -100,7 +101,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <lew-flex direction="y" gap="0" class="lew-context-menu">
+  <LewFlex direction="y" gap="0" class="lew-context-menu">
     <template v-if="(options || []).length > 0">
       <div
         v-for="(item, index) in options"
@@ -113,12 +114,12 @@ onUnmounted(() => {
       >
         <div
           :ref="(el: any) => itemRefs.push(el)"
-          @click="clickItem(item)"
           class="lew-context-menu-item"
-          :style="{ 'animation-delay': index * 10 + 'ms' }"
+          :style="{ 'animation-delay': `${index * 10}ms` }"
           :class="{
             'lew-context-menu-item-active': item.active,
           }"
+          @click="clickItem(item)"
         >
           <div
             v-if="options.filter((e: any) => e.checkable).length > 0"
@@ -133,8 +134,8 @@ onUnmounted(() => {
           </div>
           <div class="lew-context-menu-label">
             <component
-              v-if="isVueComponent(item.icon)"
               :is="formatComponent(item.icon)"
+              v-if="isVueComponent(item.icon)"
             />
             <div class="lew-context-menu-label-text">
               {{ item.label }}
@@ -148,19 +149,19 @@ onUnmounted(() => {
             }"
             :size="14"
             type="chevron-right"
-          ></Icon>
+          />
         </div>
       </div>
     </template>
-    <lew-empty
+    <LewEmpty
+      v-else
       width="120px"
       padding="5px"
       font-size="12px"
-      v-else
       type="search"
       title="暂无操作"
     />
-  </lew-flex>
+  </LewFlex>
 </template>
 
 <style lang="scss" scoped>

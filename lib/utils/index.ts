@@ -17,7 +17,7 @@ export const iconColorType: Record<string, string> = {
   tips: 'blue',
 }
 
-export const getColorType = (type: string): string => {
+export function getColorType(type: string): string {
   const typeMap: Record<string, string> = iconColorType
   return typeMap[type as string] || type
 }
@@ -25,15 +25,16 @@ export const getColorType = (type: string): string => {
 /**
  * 将对象转换为类名字符串。
  * @param {string} prefix - 类名前缀。
- * @param {Object} props - 要转换的属性对象。
+ * @param {object} props - 要转换的属性对象。
  * @returns {string} 生成的类名字符串。
  */
-export const object2class = (prefix: string, props: Object) => {
+export function object2class(prefix: string, props: object) {
   let className = ''
   for (const [key, value] of Object.entries(props)) {
     if (typeof value === 'boolean' && value) {
       className += ` ${prefix}-${key}`
-    } else if (typeof value === 'string' || typeof value === 'number') {
+    }
+    else if (typeof value === 'string' || typeof value === 'number') {
       className += ` ${prefix}-${key}-${value}`
     }
   }
@@ -45,7 +46,7 @@ export const object2class = (prefix: string, props: Object) => {
  * @param {number} num - 要格式化的数字。
  * @returns {string} 格式化后的字符串。
  */
-export const numFormat = (num: number) => {
+export function numFormat(num: number) {
   const str = num.toString().split('.')
   let integerPart = str[0]
   const decimalPart = str[1] ? `.${str[1]}` : ''
@@ -61,7 +62,7 @@ export const numFormat = (num: number) => {
  * @param {number | string | undefined} value - 要转换的值。
  * @returns {string} 转换后的像素值字符串。
  */
-export const any2px = (value: number | string | undefined): string => {
+export function any2px(value: number | string | undefined): string {
   if (!value) {
     return ''
   }
@@ -93,7 +94,7 @@ export const any2px = (value: number | string | undefined): string => {
   if (pixelRegex.test(_value)) {
     return `${_value}`
   }
-  const numValue = parseFloat(_value)
+  const numValue = Number.parseFloat(_value)
   if (!isNaN(numValue)) {
     return `${numValue}px`
   }
@@ -106,7 +107,7 @@ export const any2px = (value: number | string | undefined): string => {
  * @param {number | string | undefined} value - 要校验的值。
  * @returns {boolean} 如果输入的值是有效的 CSS 值，则返回 true，否则返回 false。
  */
-export const isValidCssValue = ({
+export function isValidCssValue({
   name,
   field,
   value,
@@ -114,7 +115,7 @@ export const isValidCssValue = ({
   name: string
   field: string
   value: number | string | undefined
-}): boolean => {
+}): boolean {
   if (!value) {
     return false
   }
@@ -126,11 +127,11 @@ export const isValidCssValue = ({
 
   const _value = String(value)
   if (
-    autoRegex.test(_value) ||
-    calcRegex.test(_value) ||
-    percentRegex.test(_value) ||
-    pixelRegex.test(_value) ||
-    numericRegex.test(_value)
+    autoRegex.test(_value)
+    || calcRegex.test(_value)
+    || percentRegex.test(_value)
+    || pixelRegex.test(_value)
+    || numericRegex.test(_value)
   ) {
     return true
   }
@@ -143,7 +144,7 @@ export const isValidCssValue = ({
  * 使用 UUID v4 的前6位，确保唯一性。
  * @returns {string} 生成的6位唯一ID。
  */
-export const getUniqueId = () => {
+export function getUniqueId() {
   // 生成 UUID v4
   const uuid = crypto.randomUUID()
   // 取前6位
@@ -153,9 +154,9 @@ export const getUniqueId = () => {
 /**
  * 根据映射格式化表单数据。
  * @param {any} formMap - 表单映射。
- * @returns {Object} 格式化后的表单数据。
+ * @returns {object} 格式化后的表单数据。
  */
-export const formatFormByMap = (formMap: any) => {
+export function formatFormByMap(formMap: any) {
   const form = {}
   Object.keys(formMap).forEach((key) => {
     const value = formMap[key]
@@ -174,10 +175,10 @@ export const formatFormByMap = (formMap: any) => {
 }
 /**
  * 将嵌套对象转换为以 a.b.c.d 形式表示的扁平对象。
- * @param {Object} form - 嵌套的表单数据。
+ * @param {object} form - 嵌套的表单数据。
  * @returns {any} 转换后的扁平对象映射。
  */
-export const flattenNestedObject = (form: any) => {
+export function flattenNestedObject(form: any) {
   const formMap: Record<string, any> = {}
 
   const buildMap = (obj: any, prefix: string = '') => {
@@ -186,7 +187,8 @@ export const flattenNestedObject = (form: any) => {
       const newKey = prefix ? `${prefix}.${key}` : key
       if (typeof value === 'object' && value !== null) {
         buildMap(value, newKey)
-      } else {
+      }
+      else {
         formMap[newKey] = value
       }
     }
@@ -197,11 +199,11 @@ export const flattenNestedObject = (form: any) => {
 }
 /**
  * 获取嵌套对象中指定字段的值。
- * @param {Object} obj - 要查询的对象。
+ * @param {object} obj - 要查询的对象。
  * @param {string} field - 嵌套字段的字符串表示，使用 '.' 分隔。
  * @returns {any} 返回目标字段的值，如果字段不存在则返回 undefined。
  */
-export const retrieveNestedFieldValue = (obj: any, field: string) => {
+export function retrieveNestedFieldValue(obj: any, field: string) {
   if (!field) {
     return undefined
   }
@@ -210,7 +212,8 @@ export const retrieveNestedFieldValue = (obj: any, field: string) => {
   for (const key of keys) {
     if (value && Object.prototype.hasOwnProperty.call(value, key)) {
       value = value[key]
-    } else {
+    }
+    else {
       return undefined // 如果找不到字段，返回 undefined
     }
   }
@@ -220,41 +223,42 @@ export const retrieveNestedFieldValue = (obj: any, field: string) => {
 /**
  * 格式化字节数。
  * @param {number} bytes - 字节数。
- * @param {number} [decimals=2] - 小数位数。
+ * @param {number} [decimals] - 小数位数。
  * @returns {string} 格式化后的字符串。
  */
-export const formatBytes = (bytes: number, decimals: number = 2) => {
-  if (bytes === 0) return '0 Bytes'
+export function formatBytes(bytes: number, decimals: number = 2) {
+  if (bytes === 0)
+    return '0 Bytes'
   const k = 1024
   const dm = decimals < 0 ? 0 : decimals
   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
   const i = Math.floor(Math.log(bytes) / Math.log(k))
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
+  return `${Number.parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`
 }
 
 /**
  * 获取静态资源文件。
- * @param {Object} options - 配置选项。
+ * @param {object} options - 配置选项。
  * @param {string} options.name - 文件名。
  * @param {string} options.type - 资源类型。
  * @returns {string} 静态资源文件的URL。
  */
-export const getAssetsFile = ({
+export function getAssetsFile({
   name,
   type,
 }: {
   name: string
   type: string
-}) => {
+}) {
   return new URL(`../assets/${type}/${name}`, import.meta.url).href
 }
 
 /**
  * 根据文件名获取对应的文件图标。
- * @param {string} [fileName=''] - 文件名。
+ * @param {string} [fileName] - 文件名。
  * @returns {string} 文件图标的URL。
  */
-export const getFileIcon = (fileName: string = '') => {
+export function getFileIcon(fileName: string = '') {
   // 根据文件名获取后缀名
   const suffix = fileName.split('.').pop()
 
@@ -323,7 +327,7 @@ export const getFileIcon = (fileName: string = '') => {
   }
 }
 
-export const getIconInnerHTML = (e: any = {}) => {
+export function getIconInnerHTML(e: any = {}) {
   const el: Element = document.createElement('div')
   const icon = createApp({
     render() {
@@ -334,13 +338,13 @@ export const getIconInnerHTML = (e: any = {}) => {
   return el.innerHTML
 }
 
-export const checkUrlIsImage = (url: string = ''): boolean => {
-  const imageRegex =
-    /\.(jpg|jpeg|png|webp|bmp|gif|svg|tiff|ico|heif|jfif|pjpeg|pjp|avif)$/i
+export function checkUrlIsImage(url: string = ''): boolean {
+  const imageRegex
+    = /\.(jpg|jpeg|png|webp|bmp|gif|svg|tiff|ico|heif|jfif|pjpeg|pjp|avif)$/i
   return imageRegex.test(url)
 }
 
-export const dragmove = ({
+export function dragmove({
   el,
   parentEl,
   direction = 'both',
@@ -365,7 +369,7 @@ export const dragmove = ({
   step?: () => number
   trackMax: () => number
   trackMin: () => number
-}) => {
+}) {
   let isDragging = false
   let startX: number, startY: number
   let parentRect: DOMRect
@@ -392,7 +396,8 @@ export const dragmove = ({
   }
 
   const onMouseMove = (e: MouseEvent) => {
-    if (!isDragging) return
+    if (!isDragging)
+      return
 
     let newX = e.clientX - startX
     let newY = e.clientY - startY
@@ -400,12 +405,12 @@ export const dragmove = ({
 
     if (direction === 'horizontal' || direction === 'both') {
       const trackWidth = parentRect.width
-      const minX =
-        ((clampedMinValue - trackMin()) / (trackMax() - trackMin())) *
-        trackWidth
-      const maxX =
-        ((clampedMaxValue - trackMin()) / (trackMax() - trackMin())) *
-        trackWidth
+      const minX
+        = ((clampedMinValue - trackMin()) / (trackMax() - trackMin()))
+          * trackWidth
+      const maxX
+        = ((clampedMaxValue - trackMin()) / (trackMax() - trackMin()))
+          * trackWidth
       newX = Math.max(minX, Math.min(newX, maxX))
       const stepSize = trackWidth / ((trackMax() - trackMin()) / step())
       newX = snapToGrid(newX, stepSize)
@@ -414,12 +419,12 @@ export const dragmove = ({
 
     if (direction === 'vertical' || direction === 'both') {
       const trackHeight = parentRect.height
-      const minY =
-        ((clampedMinValue - trackMin()) / (trackMax() - trackMin())) *
-        trackHeight
-      const maxY =
-        ((clampedMaxValue - trackMin()) / (trackMax() - trackMin())) *
-        trackHeight
+      const minY
+        = ((clampedMinValue - trackMin()) / (trackMax() - trackMin()))
+          * trackHeight
+      const maxY
+        = ((clampedMaxValue - trackMin()) / (trackMax() - trackMin()))
+          * trackHeight
       newY = Math.max(minY, Math.min(newY, maxY))
       const stepSize = trackHeight / ((trackMax() - trackMin()) / step())
       newY = snapToGrid(newY, stepSize)
@@ -455,10 +460,10 @@ export const dragmove = ({
  * @param {string} str - 要转换的字符串。
  * @returns {any} 解析后的 JSON 对象。
  */
-export const parseToStandardJSON = (str: string) => {
+export function parseToStandardJSON(str: string) {
   const modifiedStr = str
     .replace(/'/g, '"') // 替换单引号为双引号
-    .replace(/({|,)\s*([a-zA-Z0-9_]+)\s*:/g, '$1"$2":') // 给没有引号的字段名加上双引号
+    .replace(/(\{|,)\s*(\w+)\s*:/g, '$1"$2":') // 给没有引号的字段名加上双引号
   return JSON.parse(modifiedStr)
 }
 
@@ -469,7 +474,7 @@ export const parseToStandardJSON = (str: string) => {
  * @param {Function} callback - 轮询回调函数
  * @param {Function} vail - 判断依据 如果 true 停止轮询
  */
-export const poll = ({
+export function poll({
   interval = 10,
   timeout = 1000 * 3,
   callback,
@@ -479,18 +484,20 @@ export const poll = ({
   timeout?: number
   callback: () => void
   vail: () => boolean
-}) => {
+}) {
   const startTime = Date.now()
   let timer: NodeJS.Timeout | null = null
 
   const execute = () => {
     if (Date.now() - startTime > timeout) {
-      if (timer) clearTimeout(timer)
+      if (timer)
+        clearTimeout(timer)
       return
     }
 
     if (vail()) {
-      if (timer) clearTimeout(timer)
+      if (timer)
+        clearTimeout(timer)
       callback()
       return
     }
@@ -501,11 +508,7 @@ export const poll = ({
   execute()
 }
 
-export const insertChildByKey = (
-  tree: any,
-  key: string | number,
-  newChild: any,
-): boolean => {
+export function insertChildByKey(tree: any, key: string | number, newChild: any): boolean {
   for (let i = 0; i < tree.length; i++) {
     if (tree[i].key === key) {
       tree[i].children = newChild
@@ -520,11 +523,12 @@ export const insertChildByKey = (
   return false
 }
 
-export const findAllChildrenKeys = (node: any) => {
+export function findAllChildrenKeys(node: any) {
   const keys: (string | number)[] = []
 
   const traverse = (item: any) => {
-    if (item.key !== undefined) keys.push(item.key)
+    if (item.key !== undefined)
+      keys.push(item.key)
     item.children?.forEach(traverse)
   }
 
@@ -533,12 +537,13 @@ export const findAllChildrenKeys = (node: any) => {
   return keys
 }
 
-export const findNodeByKey = (key: string | number, tree: any) => {
+export function findNodeByKey(key: string | number, tree: any) {
   const queue: any = cloneDeep(tree)
 
   while (queue.length > 0) {
     const node = queue.shift()!
-    if (node.key === key) return node
+    if (node.key === key)
+      return node
     if (node.children?.length) {
       queue.push(...node.children)
     }
@@ -552,7 +557,7 @@ export const findNodeByKey = (key: string | number, tree: any) => {
  * @param {any} value - 要判断的值
  * @returns {boolean} 如果值是 Vue 组件则返回 true，否则返回 false
  */
-export const isVueComponent = (value: any): boolean => {
+export function isVueComponent(value: any): boolean {
   try {
     // 检查是否为函数类型
     if (typeof value !== 'function' && typeof value !== 'object') {
@@ -568,13 +573,14 @@ export const isVueComponent = (value: any): boolean => {
     if (value && typeof value === 'object') {
       // 检查是否有组件特有属性
       if (
-        value.__file ||
-        value.__name ||
-        value.setup ||
-        value.render ||
-        value.template
-      )
+        value.__file
+        || value.__name
+        || value.setup
+        || value.render
+        || value.template
+      ) {
         return true
+      }
 
       // 检查是否为 Vue 定义的组件对象
       if (value.component || value.__v_isVNode || value.__v_isComponent)
@@ -586,7 +592,8 @@ export const isVueComponent = (value: any): boolean => {
       return isVueComponent(value.default)
     }
     return false
-  } catch {
+  }
+  catch {
     return false
   }
 }
@@ -596,7 +603,7 @@ export const isVueComponent = (value: any): boolean => {
  * @param {any} value - 要格式化的值
  * @returns {any} 格式化后的值
  */
-export const formatComponent = (value: any) => {
+export function formatComponent(value: any) {
   if (isFunction(value)) {
     return value()
   }

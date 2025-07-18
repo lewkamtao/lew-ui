@@ -1,8 +1,9 @@
-import type { ExtractPropTypes } from 'vue'
 import type { LewSize } from 'lew-ui'
+import type { ExtractPropTypes } from 'vue'
 import { validSizes } from 'lew-ui/constants'
+
 export type DatePickerValueFormat = string
-export type DatePickerPresetsOption = {
+export interface DatePickerPresetsOption {
   label: string
   value: string
 }
@@ -64,9 +65,9 @@ export const datePickerProps = {
     description: '预设日期选项',
     validator(value: DatePickerPresetsOption[]): boolean {
       if (
-        !Array.isArray(value) ||
-        !value.every(
-          (item) =>
+        !Array.isArray(value)
+        || !value.every(
+          item =>
             typeof item.label === 'string' && typeof item.value === 'string',
         )
       ) {

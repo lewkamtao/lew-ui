@@ -1,44 +1,45 @@
 <script setup lang="ts">
-import { actionBoxProps } from './props'
-import { computed } from 'vue'
-import { isVueComponent, formatComponent } from 'lew-ui/utils'
-import { LewDropdown, LewFlex } from 'lew-ui'
-const props = defineProps(actionBoxProps)
+import { LewDropdown, LewFlex } from "lew-ui";
+import { formatComponent, isVueComponent } from "lew-ui/utils";
+import { computed } from "vue";
+import { actionBoxProps } from "./props";
 
-const threshold = computed(() => Number(props.dropdownThreshold))
+const props = defineProps(actionBoxProps);
+
+const threshold = computed(() => Number(props.dropdownThreshold));
 
 const visibleOptions = computed(() => {
   if (threshold.value <= 0) {
-    return props.options
+    return props.options;
   }
-  return props.options.slice(0, threshold.value)
-})
+  return props.options.slice(0, threshold.value);
+});
 
 const dropdownOptions: any = computed(() => {
   if (threshold.value <= 0) {
-    return []
+    return [];
   }
-  return props.options.slice(threshold.value)
-})
+  return props.options.slice(threshold.value);
+});
 </script>
 
 <template>
-  <lew-flex class="lew-action-box" :gap="5" :x="x">
+  <LewFlex class="lew-action-box" :gap="5" :x="x">
     <template v-for="(option, index) in visibleOptions">
       <component
-        @click="option.onClick?.()"
-        v-if="isVueComponent(option.customRender)"
         :is="formatComponent(option.customRender)"
+        v-if="isVueComponent(option.customRender)"
+        @click="option.onClick?.()"
       />
-      <div v-else @click="option.onClick?.()" class="lew-action-box-item">
+      <div v-else class="lew-action-box-item" @click="option.onClick?.()">
         <component
-          v-if="isVueComponent(option.icon)"
           :is="formatComponent(option.icon)"
+          v-if="isVueComponent(option.icon)"
           class="lew-action-box-icon"
         />
         <component
-          v-if="isVueComponent(option.label) && !iconOnly"
           :is="formatComponent(option.label)"
+          v-if="isVueComponent(option.label) && !iconOnly"
         />
         <template v-else-if="!iconOnly">
           {{ option.label }}
@@ -54,23 +55,23 @@ const dropdownOptions: any = computed(() => {
         class="lew-action-box-divider"
       />
     </template>
-    <lew-dropdown v-if="dropdownOptions.length > 0" :options="dropdownOptions">
+    <LewDropdown v-if="dropdownOptions.length > 0" :options="dropdownOptions">
       <div class="lew-action-box-item">
         <component
-          v-if="isVueComponent(dropdownIcon)"
           :is="formatComponent(dropdownIcon)"
+          v-if="isVueComponent(dropdownIcon)"
           class="lew-action-box-icon"
         />
         <component
-          v-if="isVueComponent(dropdownLabel)"
           :is="formatComponent(dropdownLabel)"
+          v-if="isVueComponent(dropdownLabel)"
         />
         <template v-else>
           {{ dropdownLabel }}
         </template>
       </div>
-    </lew-dropdown>
-  </lew-flex>
+    </LewDropdown>
+  </LewFlex>
 </template>
 
 <style lang="scss" scoped>

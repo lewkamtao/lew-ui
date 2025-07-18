@@ -51,15 +51,15 @@ const options = ref([
 
 const value = ref('')
 
-const handleChange = (val: string) => {
+function handleChange(val: string) {
   console.log('Selected position:', val)
 }
 </script>
 
 <template>
   <lew-select
-    style="width: 320px"
     v-model="value"
+    style="width: 320px"
     :options="options"
     placeholder="Select position"
     @change="handleChange"

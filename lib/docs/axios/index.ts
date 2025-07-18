@@ -35,13 +35,15 @@ class xwlRequest {
             window.location.replace(
               `http://app.tngeek.com/sso?redirectUrl=${redirectUrl}`,
             )
-          } else if (res.code === 403) {
+          }
+          else if (res.code === 403) {
             LewNotification.warning({
               title: '通知',
               content: '无权限，请联系管理员，微信：15818934279',
               delay: 0,
             })
-          } else {
+          }
+          else {
             LewMessage.error(res.message || '网络繁忙，请稍后重试！')
           }
         }
@@ -53,6 +55,7 @@ class xwlRequest {
       },
     )
   }
+
   request<T>(config: AxiosRequestConfig): Promise<T> {
     // 再次封装request方法
     return new Promise((resolve, reject) => {
@@ -67,18 +70,23 @@ class xwlRequest {
         })
     })
   }
+
   get<T>(config: AxiosRequestConfig): Promise<T> {
     return this.request<T>({ ...config, method: 'GET' })
   }
+
   post<T>(config: AxiosRequestConfig): Promise<T> {
     return this.request<T>({ ...config, method: 'POST' })
   }
+
   put<T>(config: AxiosRequestConfig): Promise<T> {
     return this.request<T>({ ...config, method: 'PUT' })
   }
+
   delete<T>(config: AxiosRequestConfig): Promise<T> {
     return this.request<T>({ ...config, method: 'DELETE' })
   }
+
   patch<T>(config: AxiosRequestConfig): Promise<T> {
     return this.request<T>({ ...config, method: 'PATCH' })
   }

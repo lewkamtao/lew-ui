@@ -26,7 +26,9 @@ const data = ref({
     <template #popover-body>
       <div class="popover-body">
         <div class="header">
-          <h3 class="name">{{ data.name }}</h3>
+          <h3 class="name">
+            {{ data.name }}
+          </h3>
           <span class="title">{{ data.title }}</span>
         </div>
 

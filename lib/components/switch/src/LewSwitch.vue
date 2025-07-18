@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { switchProps } from './props'
 import { object2class } from 'lew-ui/utils'
+import { switchProps } from './props'
 
 const props = defineProps(switchProps)
+const emit = defineEmits(['click', 'change'])
+
 const _loading = ref(false)
 
 const modelValue: Ref<boolean | undefined> = defineModel()
-const emit = defineEmits(['click', 'change'])
-
-const handleClick = async (e: any) => {
-  if (props.disabled || _loading.value || props.loading) return
+async function handleClick(e: any) {
+  if (props.disabled || _loading.value || props.loading)
+    return
   emit('click', e)
   if (typeof props.request === 'function') {
     if (_loading.value) {
@@ -22,7 +23,8 @@ const handleClick = async (e: any) => {
       _loading.value = false
     }
     _loading.value = false
-  } else {
+  }
+  else {
     modelValue.value = !modelValue.value
   }
   emit('change', modelValue.value)
@@ -31,15 +33,15 @@ const handleClick = async (e: any) => {
 const getSwitchClassName = computed(() => {
   const { round, request, disabled, readonly } = props
 
-  let loading = props.loading || _loading.value
+  const loading = props.loading || _loading.value
 
   return object2class('lew-switch', {
     checked: modelValue.value,
     round: !!round,
     request: !!request,
-    loading: loading,
-    disabled: disabled,
-    readonly: readonly,
+    loading,
+    disabled,
+    readonly,
   })
 })
 const getSwitchStyle = computed(() => {
@@ -101,8 +103,8 @@ const getSwitchStyle = computed(() => {
       v-model="modelValue"
       type="checkbox"
       :disabled="disabled"
-    />
-    <div class="lew-switch-dot"></div>
+    >
+    <div class="lew-switch-dot" />
   </div>
 </template>
 

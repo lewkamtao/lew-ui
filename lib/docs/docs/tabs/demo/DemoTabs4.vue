@@ -24,7 +24,7 @@ const langOptions: LangOption[] = [
   { label: 'Dart', value: 'dart' },
 ]
 
-const handleLangChange = (option: LangOption) => {
+function handleLangChange(option: LangOption) {
   console.log(option)
   LewMessage.info(`您选择了: ${option.label}`)
 }

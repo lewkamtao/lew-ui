@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import {
-  LewPopover,
-  LewFlex,
-  LewButton,
-  LewTooltip,
-  LewTextTrim,
-  LewCheckbox,
-} from 'lew-ui'
-import { object2class } from 'lew-ui/utils'
 import type { CascaderOptions } from './props'
-import { cascaderProps } from './props'
-import { VirtList } from 'vue-virt-list'
-import { cloneDeep, isFunction } from 'lodash-es'
+import {
+  LewButton,
+  LewCheckbox,
+  LewFlex,
+  LewPopover,
+  LewTextTrim,
+  LewTooltip,
+  locale,
+} from 'lew-ui'
+import { any2px, object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { any2px } from 'lew-ui/utils'
-import { locale } from 'lew-ui'
+import { cloneDeep, isFunction } from 'lodash-es'
+import { VirtList } from 'vue-virt-list'
+import { cascaderProps } from './props'
+
+const props = defineProps(cascaderProps)
+
+const emit = defineEmits(['change', 'blur', 'clear'])
+
 // 格式化 获取 path
-const formatTree = (
-  tree: CascaderOptions[],
-  parentValuePaths: String[] = [],
-  parentLabelPaths: String[] = [],
-): CascaderOptions[] => {
+function formatTree(tree: CascaderOptions[], parentValuePaths: string[] = [], parentLabelPaths: string[] = []): CascaderOptions[] {
   return tree.map((node: CascaderOptions) => {
     const { value, label, children = [] } = node
-    const valuePaths: String[] = [...parentValuePaths, value]
-    const labelPaths: String[] = [...parentLabelPaths, label]
+    const valuePaths: string[] = [...parentValuePaths, value]
+    const labelPaths: string[] = [...parentLabelPaths, label]
     const level = valuePaths.length - 1
     const _node = {
       ...node,
@@ -50,9 +50,6 @@ if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
 
-const props = defineProps(cascaderProps)
-const emit = defineEmits(['change', 'blur', 'clear'])
-
 const cascaderValue: Ref<string | number | undefined> = defineModel({
   default: undefined,
 })
@@ -75,19 +72,21 @@ const state = reactive({
 
 const formMethods: any = inject('formMethods', {})
 
-let _loadMethod = computed(() => {
+const _loadMethod = computed(() => {
   if (isFunction(props.loadMethod)) {
     return props.loadMethod
-  } else if (props.loadMethodId) {
+  }
+  else if (props.loadMethodId) {
     return formMethods[props.loadMethodId]
   }
   return false
 })
 
-let _initOptionsMethod = computed(() => {
+const _initOptionsMethod = computed(() => {
   if (isFunction(props.initOptionsMethod)) {
     return props.initOptionsMethod
-  } else if (props.initOptionsMethodId) {
+  }
+  else if (props.initOptionsMethodId) {
     return formMethods[props.initOptionsMethodId]
   }
   return false
@@ -97,7 +96,7 @@ let _initOptionsMethod = computed(() => {
 const loadedData = reactive<Record<string, CascaderOptions[]>>({})
 
 // 通过值获取对象
-const findObjectByValue = (treeList: CascaderOptions[], value: string) => {
+function findObjectByValue(treeList: CascaderOptions[], value: string) {
   for (let i = 0; i < treeList.length; i++) {
     const tree = treeList[i]
     if (tree.value === value) {
@@ -160,7 +159,7 @@ function findChildrenByValue(
 }
 
 // 初始化
-const init = async () => {
+async function init() {
   let _tree: CascaderOptions[] = []
 
   // 如果有初始化方法，优先使用
@@ -168,18 +167,21 @@ const init = async () => {
     try {
       const newOptions = await _initOptionsMethod.value()
       _tree = newOptions || []
-    } catch (error) {
+    }
+    catch (error) {
       console.error('[LewCascader] initOptionsMethod failed', error)
       _tree = []
     }
-  } else if (_loadMethod.value && !state.loading) {
+  }
+  else if (_loadMethod.value && !state.loading) {
     state.loading = true
     _tree = (await _loadMethod.value()) || []
     state.loading = false
-  } else if (props.options && props.options.length > 0) {
-    _tree =
-      ((props.options &&
-        props.options.map((e: CascaderOptions) => {
+  }
+  else if (props.options && props.options.length > 0) {
+    _tree
+      = ((props.options
+        && props.options.map((e: CascaderOptions) => {
           return {
             ...e,
             isLeaf: !e.children || (e.children && e.children.length === 0), // 没有孩子
@@ -200,9 +202,9 @@ watch(
   (newOptions) => {
     if (!_initOptionsMethod.value) {
       // 只有在没有使用 initOptionsMethod 时才响应 options 的变化
-      const _tree =
-        ((newOptions &&
-          newOptions.map((e: CascaderOptions) => {
+      const _tree
+        = ((newOptions
+          && newOptions.map((e: CascaderOptions) => {
             return {
               ...e,
               isLeaf: !e.children || (e.children && e.children.length === 0),
@@ -221,7 +223,7 @@ watch(
 const virtListRefs = ref<any[]>([])
 
 // 选择
-const selectItem = async (item: CascaderOptions, level: number) => {
+async function selectItem(item: CascaderOptions, level: number) {
   if (!item.isLeaf && item.labelPaths !== state.activeLabels) {
     state.optionsGroup = state.optionsGroup.slice(0, level + 1)
     if (_loadMethod.value && !item.isLeaf) {
@@ -229,12 +231,13 @@ const selectItem = async (item: CascaderOptions, level: number) => {
         // 如果数据已经加载过，直接使用缓存的数据
         const _options = loadedData[item.value]
         state.optionsGroup.push(_options)
-      } else {
+      }
+      else {
         item.loading = true
         state.okLoading = true
-        const new_options =
-          (await _loadMethod.value(cloneDeep({ ...item, level }))) || []
-        let _tree = findAndAddChildrenByValue(
+        const new_options
+          = (await _loadMethod.value(cloneDeep({ ...item, level }))) || []
+        const _tree = findAndAddChildrenByValue(
           cloneDeep(state.optionsTree),
           cloneDeep(item.value),
           new_options,
@@ -247,16 +250,17 @@ const selectItem = async (item: CascaderOptions, level: number) => {
         item.loading = false
         state.okLoading = false
       }
-    } else if (!item.isLeaf) {
-      const _options =
-        (item.children &&
-          item.children.map((e) => {
+    }
+    else if (!item.isLeaf) {
+      const _options
+        = (item.children
+          && item.children.map((e) => {
             return {
               ...e,
               isLeaf: !e.children || (e.children && e.children.length === 0), // 没有孩子
             }
-          })) ||
-        []
+          }))
+          || []
       state.optionsGroup.push(_options)
     }
   }
@@ -265,42 +269,47 @@ const selectItem = async (item: CascaderOptions, level: number) => {
     if (level < state.optionsGroup.length - 1) {
       state.optionsGroup.pop()
     }
-  } else {
+  }
+  else {
     state.activeLabels = item.labelPaths as string[]
   }
   state.tobeItem = { ...item, children: undefined }
   if (props.free) {
     checkItem(item)
-  } else if (item.isLeaf) {
+  }
+  else if (item.isLeaf) {
     checkItem(item)
     ok()
   }
 }
 
 // 检查Item
-const checkItem = (item: CascaderOptions) => {
+function checkItem(item: CascaderOptions) {
   if (props.showAllLevels) {
     if (state.tobeLabels === item.labelPaths) {
       state.tobeLabels = item.parentLabelPaths as string[]
-    } else {
+    }
+    else {
       state.tobeLabels = item.labelPaths as string[]
     }
-  } else if (state.tobeLabels[0] === (item.label as string)) {
+  }
+  else if (state.tobeLabels[0] === (item.label as string)) {
     state.tobeLabels = [] as string[]
-  } else {
+  }
+  else {
     state.tobeLabels = [item.label] as any
   }
 }
 
-const show = async () => {
+async function show() {
   lewPopoverRef.value.show()
 }
 
-const hide = () => {
+function hide() {
   lewPopoverRef.value.hide()
 }
 
-const clearHandle = () => {
+function clearHandle() {
   cascaderValue.value = undefined as any
   state.tobeLabels = []
   state.activeLabels = []
@@ -357,12 +366,12 @@ const getIconSize = computed(() => {
 })
 
 // 展示
-const showHandle = () => {
+function showHandle() {
   state.visible = true
 }
 
 // 隐藏
-const hideHandle = () => {
+function hideHandle() {
   state.visible = false
   emit('blur')
 }
@@ -370,7 +379,7 @@ const hideHandle = () => {
 // 获取宽度
 const getCascaderWidth = computed(() => {
   const _hasChildOptions = state.optionsGroup.filter(
-    (e) => e && e.length > 0,
+    e => e && e.length > 0,
   ).length
   if (_hasChildOptions > 1) {
     return _hasChildOptions * 200
@@ -394,7 +403,7 @@ const getLabel = computed(() => {
   return item?.labelPaths || []
 })
 
-const ok = () => {
+function ok() {
   const item = findObjectByValue(state.optionsTree, state.tobeItem.value)
   cascaderValue.value = state.tobeItem.value
   emit('change', cloneDeep(item))
@@ -402,7 +411,7 @@ const ok = () => {
   hide()
 }
 
-const close = () => {
+function close() {
   hide()
 }
 
@@ -410,7 +419,7 @@ defineExpose({ show, hide })
 </script>
 
 <template>
-  <lew-popover
+  <LewPopover
     ref="lewPopoverRef"
     class="lew-cascader-view"
     :trigger="trigger"
@@ -459,12 +468,12 @@ defineExpose({ show, hide })
         </transition>
 
         <div
-          class="lew-cascader-value"
           v-show="getLabel && getLabel.length > 0"
+          class="lew-cascader-value"
           :style="getValueStyle"
         >
           <template v-if="showAllLevels">
-            <lew-text-trim :text="getLabel.join(' / ')" />
+            <LewTextTrim :text="getLabel.join(' / ')" />
           </template>
           <template v-else-if="getLabel">
             <span>{{ getLabel[getLabel.length - 1] }}</span>
@@ -487,7 +496,7 @@ defineExpose({ show, hide })
         }"
         :class="getBodyClassName"
       >
-        <slot name="header"></slot>
+        <slot name="header" />
         <transition name="fade">
           <div
             class="lew-cascader-options-box"
@@ -497,156 +506,161 @@ defineExpose({ show, hide })
               v-for="(oItem, oIndex) in state.optionsGroup"
               :key="oIndex"
             >
-                <div v-if="state.initLoading" class="lew-icon-loading-box">
-                    <Icon
-                        :size="getIconSize"
-                        :loading="state.initLoading"
-                        type="loading"
-                    />
-                </div>
+              <div v-if="state.initLoading" class="lew-icon-loading-box">
+                <Icon
+                  :size="getIconSize"
+                  :loading="state.initLoading"
+                  type="loading"
+                />
+              </div>
 
-                <transition v-else name="lew-form-icon-ani">
-                    <Icon
-                        v-if="!(clearable && getLabel && getLabel.length > 0)"
-                        :size="getIconSize"
-                        type="chevron-down"
-                        class="icon-select"
-                    />
-                </transition>
+              <transition v-else name="lew-form-icon-ani">
+                <Icon
+                  v-if="!(clearable && getLabel && getLabel.length > 0)"
+                  :size="getIconSize"
+                  type="chevron-down"
+                  class="icon-select"
+                />
+              </transition>
 
-                <transition name="lew-form-icon-ani">
-                    <Icon
-                        v-if="
-                            clearable &&
-                            getLabel &&
-                            getLabel.length > 0 &&
-                            !readonly
-                        "
-                        :size="getIconSize"
-                        type="close"
-                        class="lew-form-icon-close"
-                        :class="{
-                            'lew-form-icon-close-focus': state.visible,
-                        }"
-                        @click.stop="clearHandle"
-                    />
-                </transition>
-
-                <div
-                    class="lew-cascader-value"
-                    v-show="getLabel && getLabel.length > 0"
-                    :style="getValueStyle"
-                >
-                    <template v-if="showAllLevels">
-                        <lew-text-trim :text="getLabel.join(' / ')" />
-                    </template>
-                    <template v-else-if="getLabel">
-                        <span>{{ getLabel[getLabel.length - 1] }}</span>
-                    </template>
-                </div>
-                <div
-                    v-show="!getLabel || (getLabel && getLabel.length === 0)"
-                    class="lew-cascader-placeholder"
-                    :style="getValueStyle"
-                >
-                    {{
-                        placeholder
-                            ? placeholder
-                            : locale.t('cascader.placeholder')
-                    }}
-                </div>
-            </div>
-        </template>
-        <template #popover-body>
-            <div
-                class="lew-cascader-body"
-                :style="{
-                    width: `${getCascaderWidth}px`,
-                }"
-              >
-                <virt-list
-                  :key="oItem[0]?.parentValuePaths?.join('-') || 'root'"
-                  :ref="(el: any) => (virtListRefs[oIndex] = el)"
-                  class="lew-scrollbar-hover"
-                  :list="oItem"
-                  :minSize="38"
-                  :buffer="5"
-                  itemKey="value"
-                  :style="{
-                    padding: `6px 6px 2px 6px`,
-                    boxSizing: 'border-box',
+              <transition name="lew-form-icon-ani">
+                <Icon
+                  v-if="
+                    clearable
+                      && getLabel
+                      && getLabel.length > 0
+                      && !readonly
+                  "
+                  :size="getIconSize"
+                  type="close"
+                  class="lew-form-icon-close"
+                  :class="{
+                    'lew-form-icon-close-focus': state.visible,
                   }"
-                >
-                  <template #default="{ itemData: templateProps }">
-                    <div
-                      class="lew-cascader-item-padding"
-                      :style="{ height: 38 + 'px' }"
-                    >
-                      <div
-                        class="lew-cascader-item"
-                        :class="{
-                          'lew-cascader-item-disabled': templateProps.disabled,
-                          'lew-cascader-item-hover':
-                            state.activeLabels.includes(templateProps.label),
-                          'lew-cascader-item-active': free
-                            ? state.activeLabels.includes(
-                                templateProps.label,
-                              ) &&
-                              state.tobeLabels.includes(templateProps.label)
-                            : state.activeLabels.includes(templateProps.label),
-                          'lew-cascader-item-tobe': state.tobeLabels.includes(
-                            templateProps.label,
-                          ),
-                          'lew-cascader-item-selected':
-                            getLabel &&
-                            getLabel.includes(templateProps.label) &&
-                            state.tobeLabels.includes(templateProps.label),
-                        }"
-                        @click="selectItem(templateProps, oIndex)"
-                      >
-                        <lew-checkbox
-                          v-if="free"
-                          class="lew-cascader-checkbox"
-                          :checked="
-                            state.tobeLabels.includes(templateProps.label)
-                          "
-                        />
-                        <lew-text-trim
-                          class="lew-cascader-label"
-                          :class="{
-                            'lew-cascader-label-free': free,
-                          }"
-                          :text="templateProps.label"
-                          :delay="[500, 0]"
-                        />
-                        <Icon
-                          v-if="templateProps.loading"
-                          :size="14"
-                          loading
-                          class="lew-cascader-loading-icon"
-                          type="loader"
-                        />
-                        <Icon
-                          v-else-if="!templateProps.isLeaf"
-                          :size="16"
-                          class="lew-cascader-icon"
-                          type="chevron-right"
-                        />
-                      </div>
-                    </div>
-                </transition>
+                  @click.stop="clearHandle"
+                />
+              </transition>
 
-        <lew-flex v-if="free" x="end" gap="5" class="lew-cascader-control">
-          <lew-button color="gray" type="text" size="small" @click="close">
-            {{ locale.t('cascader.closeText') }}
-          </lew-button>
-          <lew-button :disabled="state.okLoading" size="small" @click="ok()">
-            {{ locale.t('cascader.okText') }}
-          </lew-button>
-        </lew-flex>
+              <div
+                v-show="getLabel && getLabel.length > 0"
+                class="lew-cascader-value"
+                :style="getValueStyle"
+              >
+                <template v-if="showAllLevels">
+                  <LewTextTrim :text="getLabel.join(' / ')" />
+                </template>
+                <template v-else-if="getLabel">
+                  <span>{{ getLabel[getLabel.length - 1] }}</span>
+                </template>
+              </div>
+              <div
+                v-show="!getLabel || (getLabel && getLabel.length === 0)"
+                class="lew-cascader-placeholder"
+                :style="getValueStyle"
+              >
+                {{
+                  placeholder
+                    ? placeholder
+                    : locale.t('cascader.placeholder')
+                }}
+              </div>
+            </template>
+          </div>
+        </transition>
       </div>
-    </template> 
-  </lew-popover>
+    </template>
+    <template #popover-body>
+      <div
+        class="lew-cascader-body"
+        :style="{
+          width: `${getCascaderWidth}px`,
+        }"
+      >
+        <VirtList
+          :key="oItem[0]?.parentValuePaths?.join('-') || 'root'"
+          :ref="(el: any) => (virtListRefs[oIndex] = el)"
+          class="lew-scrollbar-hover"
+          :list="oItem"
+          :min-size="38"
+          :buffer="5"
+          item-key="value"
+          :style="{
+            padding: `6px 6px 2px 6px`,
+            boxSizing: 'border-box',
+          }"
+        >
+          <template #default="{ itemData: templateProps }">
+            <div
+              class="lew-cascader-item-padding"
+              :style="{ height: `${38}px` }"
+            >
+              <div
+                class="lew-cascader-item"
+                :class="{
+                  'lew-cascader-item-disabled': templateProps.disabled,
+                  'lew-cascader-item-hover':
+                    state.activeLabels.includes(templateProps.label),
+                  'lew-cascader-item-active': free
+                    ? state.activeLabels.includes(
+                      templateProps.label,
+                    )
+                      && state.tobeLabels.includes(templateProps.label)
+                    : state.activeLabels.includes(templateProps.label),
+                  'lew-cascader-item-tobe': state.tobeLabels.includes(
+                    templateProps.label,
+                  ),
+                  'lew-cascader-item-selected':
+                    getLabel
+                    && getLabel.includes(templateProps.label)
+                    && state.tobeLabels.includes(templateProps.label),
+                }"
+                @click="selectItem(templateProps, oIndex)"
+              >
+                <LewCheckbox
+                  v-if="free"
+                  class="lew-cascader-checkbox"
+                  :checked="
+                    state.tobeLabels.includes(templateProps.label)
+                  "
+                />
+                <LewTextTrim
+                  class="lew-cascader-label"
+                  :class="{
+                    'lew-cascader-label-free': free,
+                  }"
+                  :text="templateProps.label"
+                  :delay="[500, 0]"
+                />
+                <Icon
+                  v-if="templateProps.loading"
+                  :size="14"
+                  loading
+                  class="lew-cascader-loading-icon"
+                  type="loader"
+                />
+                <Icon
+                  v-else-if="!templateProps.isLeaf"
+                  :size="16"
+                  class="lew-cascader-icon"
+                  type="chevron-right"
+                />
+              </div>
+            </div>
+            </transition>
+
+            <LewFlex v-if="free" x="end" gap="5" class="lew-cascader-control">
+              <LewButton color="gray" type="text" size="small" @click="close">
+                {{ locale.t('cascader.closeText') }}
+              </LewButton>
+              <LewButton :disabled="state.okLoading" size="small" @click="ok()">
+                {{ locale.t('cascader.okText') }}
+              </LewButton>
+            </LewFlex>
+          </template>
+        </VirtList>
+      </div>
+    </template>
+  </LewPopover>
 </template>
 
 <style lang="scss" scoped>
@@ -833,6 +847,7 @@ defineExpose({ show, hide })
     }
 }
 </style>
+
 <style lang="scss">
 .lew-cascader-body {
     width: 100%;

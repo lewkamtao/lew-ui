@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import tippy from 'tippy.js'
 import { watchDebounced } from '@vueuse/core'
 import { LewLoading } from 'lew-ui'
+import tippy from 'tippy.js'
 import { popoverProps } from './props'
 
+const props = defineProps(popoverProps)
+const emit = defineEmits(['show', 'hide'])
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('loading')) {
   app.use(LewLoading)
 }
 
-const props = defineProps(popoverProps)
 const triggerRef = ref()
 const bodyRef = ref()
 let instance: any
@@ -33,7 +34,8 @@ watchDebounced(
   (value: boolean) => {
     if (value) {
       instance && instance.disable()
-    } else {
+    }
+    else {
       instance && instance.enable()
     }
   },
@@ -77,7 +79,7 @@ watchDebounced(
   },
   watchOptions,
 )
-const initTippy = () => {
+function initTippy() {
   if (instance) {
     return
   }
@@ -134,17 +136,15 @@ onDeactivated(() => {
   instance = null
 })
 
-const emit = defineEmits(['show', 'hide'])
-
-const show = () => {
+function show() {
   instance.show()
 }
 
-const hide = () => {
+function hide() {
   instance.hide()
 }
 
-const refresh = () => {
+function refresh() {
   instance.setProps({})
 }
 
@@ -159,22 +159,22 @@ defineExpose({ show, hide, refresh })
 <template>
   <div class="lew-popover">
     <div ref="triggerRef" class="lew-popover-trigger">
-      <slot name="trigger"></slot>
+      <slot name="trigger" />
     </div>
     <div
       ref="bodyRef"
-      class="lew-popover-body"
       v-loading="{
         visible: loading,
         iconSize: 16,
       }"
+      class="lew-popover-body"
       :class="popoverBodyClassName"
       :style="{
         borderRadius: 'var(--lew-border-radius-small)',
         overflow: loading ? 'hidden' : '',
       }"
     >
-      <slot name="popover-body" :show="show" :hide="hide"></slot>
+      <slot name="popover-body" :show="show" :hide="hide" />
     </div>
   </div>
 </template>

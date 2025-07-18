@@ -9,7 +9,7 @@ const socialMediaFeatures = ref([
 
 const selectedFeatures = ref(['moments', 'live'])
 
-const handleFeatureChange = (selectedValues: string[]) => {
+function handleFeatureChange(selectedValues: string[]) {
   console.log('Selected social media features:', selectedValues)
 }
 </script>

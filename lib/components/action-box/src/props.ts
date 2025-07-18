@@ -1,5 +1,6 @@
-import type { ExtractPropTypes, PropType } from 'vue'
 import type { FlexXAlignment } from 'lew-ui'
+import type { ExtractPropTypes, PropType } from 'vue'
+
 export interface ActionBoxOption {
   label: string | (() => any)
   icon?: string | (() => any)

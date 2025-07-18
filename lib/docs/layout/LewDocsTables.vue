@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { LewFlex, LewTag, locale } from 'lew-ui'
 import docsLocale from '@/locals'
-import { locale, LewTag, LewFlex } from 'lew-ui'
 
 const props = defineProps({
   options: {
@@ -11,17 +11,17 @@ const props = defineProps({
   },
 })
 
-const getComponentName = () => {
+function getComponentName() {
   const { path } = useRoute()
   return path
     .replace('/', '')
     .replace(/-(\w)/g, (_, letter) => letter.toUpperCase())
-    .replace(/^[A-Z]/, (letter) => letter.toLowerCase())
+    .replace(/^[A-Z]/, letter => letter.toLowerCase())
 }
 
 const getColumns = computed(
   () =>
-    ({ columnsKey, title }: { columnsKey: string; title: string }) => {
+    ({ columnsKey, title }: { columnsKey: string, title: string }) => {
       const nameMap: Record<string, string> = {
         model: '参数名称',
         props: '参数名称',
@@ -101,7 +101,7 @@ const getColumns = computed(
             return docsLocale.t(
               `components.${getComponentName()}.${title.replace(
                 /^[A-Z]/,
-                (match) => match.toLowerCase(),
+                match => match.toLowerCase(),
               )}.${name}`,
             )
           },
@@ -121,21 +121,21 @@ const sortValue = computed(() => {
     .sort((a: any, b: any) => a.orderNum - b.orderNum)
 })
 
-const getTag = (title: string) => {
+function getTag(title: string) {
   // 获取用括号包裹的内容
   const match = title.match(/\((.*?)\)/)
   return match ? match[1] : ''
 }
 
-const getTitle = (title: string) => {
+function getTitle(title: string) {
   // 过滤掉括号
   return title.replace(/\((.*?)\)/, '')
 }
 </script>
 
 <template>
-  <lew-flex direction="y" gap="70px" class="docs-wrapper">
-    <lew-flex
+  <LewFlex direction="y" gap="70px" class="docs-wrapper">
+    <LewFlex
       v-for="(item, index) in sortValue"
       :key="index"
       direction="y"
@@ -143,18 +143,18 @@ const getTitle = (title: string) => {
     >
       <lew-title :id="item.title" :size="18" class="demo-docs-title">
         {{ getTitle(item.title) }}
-        <lew-tag
-          style="margin-left: 5px"
+        <LewTag
           v-if="getTag(item.title)"
+          style="margin-left: 5px"
           type="light"
           color="orange"
         >
           {{ getTag(item.title) }}
-        </lew-tag>
+        </LewTag>
       </lew-title>
       <lew-table :data-source="item.data" :columns="getColumns(item)" />
-    </lew-flex>
-  </lew-flex>
+    </LewFlex>
+  </LewFlex>
 </template>
 
 <style lang="scss" scoped>

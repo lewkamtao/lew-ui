@@ -1,4 +1,4 @@
-export const convertProps = (json: any) => {
+export function convertProps(json: any) {
   const props = []
   for (const key in json) {
     if (Object.prototype.hasOwnProperty.call(json, key)) {
@@ -10,9 +10,10 @@ export const convertProps = (json: any) => {
           )
           .filter((item: any) => item !== '')
           .join(' | ')
-      } else {
-        type =
-          json[key].type !== null
+      }
+      else {
+        type
+          = json[key].type !== null
             ? json[key].type.toString().match(/function\s+(\w+)/)[1]
             : ''
       }
@@ -36,7 +37,7 @@ export const convertProps = (json: any) => {
  * @param {object} data - 要转成文件的对象数据
  * @param {string} filename - 下载的文件名
  */
-export const downloadObjectAsFile = (data: any, filename: string) => {
+export function downloadObjectAsFile(data: any, filename: string) {
   // 创建一个Blob对象，Blob表示一个不可变的原始数据的类文件对象，将对象转成JSON字符串
   const blob = new Blob([JSON.stringify(data)], { type: 'application/json' })
 
@@ -58,20 +59,20 @@ export const downloadObjectAsFile = (data: any, filename: string) => {
 }
 
 // 获取assets静态资源
-export const getAssetsFile = ({
+export function getAssetsFile({
   name,
   type,
 }: {
   name: string
   type: string
-}) => {
+}) {
   return new URL(`../assets/images/${type}/${name}`, import.meta.url).href
 }
 
-export const getComponentIcon = (name: string) => {
+export function getComponentIcon(name: string) {
   return getAssetsFile({ name: `${name}.svg`, type: 'icon' })
 }
 
-export const renderDescription = (text: string) => {
+export function renderDescription(text: string) {
   return text.replace(/```(\w+)```/g, '<span class="lew-docs-tag">$1</span>')
 }

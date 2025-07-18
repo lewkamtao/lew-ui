@@ -1,5 +1,5 @@
-import { defineConfig } from 'tsdown'
 import scss from 'rollup-plugin-scss'
+import { defineConfig } from 'tsdown'
 
 export default defineConfig([
   {

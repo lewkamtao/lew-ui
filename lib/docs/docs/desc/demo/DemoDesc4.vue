@@ -26,8 +26,9 @@ const dataSource = ref({
   afterSalesService: '优质的售后服务',
 })
 </script>
+
 <template>
   <lew-flex x="start" y="start" :gap="50">
-    <lew-desc bordered v-bind="options" :dataSource="dataSource" />
+    <lew-desc bordered v-bind="options" :data-source="dataSource" />
   </lew-flex>
 </template>

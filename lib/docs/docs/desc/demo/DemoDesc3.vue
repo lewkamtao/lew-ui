@@ -367,14 +367,15 @@ const options = ref([
   },
 ])
 </script>
+
 <template>
   <lew-flex x="start" y="start" :gap="50">
     <lew-desc
       width="1200"
       direction="x"
-      labelX="end"
+      label-x="end"
       :columns="4"
-      :dataSource="dataSource"
+      :data-source="dataSource"
       :options="options"
     />
   </lew-flex>

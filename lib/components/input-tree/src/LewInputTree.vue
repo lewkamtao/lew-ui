@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { inputTreeProps } from './props'
 import { LewFlex } from 'lew-ui'
+import { inputTreeProps } from './props'
 
 defineProps(inputTreeProps)
 </script>
 
 <template>
-  <lew-flex direction="y" class="lew-result"> 123 </lew-flex>
+  <LewFlex direction="y" class="lew-result">
+    123
+  </LewFlex>
 </template>
 
 <style lang="scss" scoped>

@@ -1,16 +1,17 @@
-import type { ExtractPropTypes } from 'vue'
 import type { LewSize } from 'lew-ui'
+import type { ExtractPropTypes } from 'vue'
 import { validSizes } from 'lew-ui/constants'
-export type UploadStatus =
-  | 'success'
-  | 'fail'
-  | 'uploading'
-  | 'complete'
-  | 'wrong_type'
-  | 'wrong_size'
-  | 'pending'
 
-export type UploadFileItem = {
+export type UploadStatus
+  = | 'success'
+    | 'fail'
+    | 'uploading'
+    | 'complete'
+    | 'wrong_type'
+    | 'wrong_size'
+    | 'pending'
+
+export interface UploadFileItem {
   key: string
   name?: string
   url?: string
@@ -161,7 +162,7 @@ export const uploadByCardProps = {
 
 export const statusConfig: Record<
   UploadStatus,
-  { text: string; color: string }
+  { text: string, color: string }
 > = {
   pending: { text: '待上传', color: 'gray' },
   success: { text: '上传成功', color: 'green' },

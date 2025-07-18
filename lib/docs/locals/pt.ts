@@ -389,25 +389,25 @@ export default {
       },
     },
     dropdown: {
-      name: 'Menu suspenso Dropdown',
-      description: 'Menu flutuante acionado por clique',
-      demo1: {
+      'name': 'Menu suspenso Dropdown',
+      'description': 'Menu flutuante acionado por clique',
+      'demo1': {
         title: 'Uso básico',
       },
-      demo2: {
+      'demo2': {
         title: 'Além de botões',
       },
-      demo3: {
+      'demo3': {
         title: 'Itens desabilitados',
       },
-      props: {
+      'props': {
         options: 'Configuração das opções',
         trigger: 'Modo de acionamento',
         placement: 'Posição do menu',
         checkable: 'Permite seleção',
       },
       'options(ContextMenus)': contextMenu,
-      events: {
+      'events': {
         show: 'Callback ao mostrar menu',
         hide: 'Callback ao ocultar menu',
         change: 'Callback ao selecionar item',
@@ -439,21 +439,21 @@ export default {
       },
     },
     contextMenu: {
-      name: 'Menu de contexto ContextMenu',
-      description: 'Menu elegante do botão direito',
-      demo1: {
+      'name': 'Menu de contexto ContextMenu',
+      'description': 'Menu elegante do botão direito',
+      'demo1': {
         title: 'Uso básico',
       },
-      demo2: {
+      'demo2': {
         title: 'Suporta múltiplos níveis',
       },
-      demo3: {
+      'demo3': {
         title: 'Atualização dinâmica',
       },
-      demo4: {
+      'demo4': {
         title: 'Checkbox',
       },
-      props: {
+      'props': {
         options: 'Configuração do menu',
         disabled: 'Desabilita o menu',
       },
@@ -768,27 +768,27 @@ export default {
       },
     },
     checkbox: {
-      name: 'Caixa de seleção Checkbox',
-      description: 'Seletor que suporta múltipla escolha',
-      demo1: {
+      'name': 'Caixa de seleção Checkbox',
+      'description': 'Seletor que suporta múltipla escolha',
+      'demo1': {
         title: 'Uso básico',
       },
-      demo2: {
+      'demo2': {
         title: 'Distribuição vertical',
       },
-      demo3: {
+      'demo3': {
         title: 'Em bloco',
       },
-      demo4: {
+      'demo4': {
         title: 'Arredondado',
       },
-      demo5: {
+      'demo5': {
         title: 'Somente leitura',
       },
-      demo6: {
+      'demo6': {
         title: 'Desabilitado',
       },
-      demo7: {
+      'demo7': {
         title: 'Modo único',
       },
       'model(CheckboxGroup)': {
@@ -825,34 +825,34 @@ export default {
       'events(CheckboxGroup)': {
         change: 'Ao alterar valor',
       },
-      options: {
+      'options': {
         label: 'Rótulo',
         value: 'Valor',
         disabled: 'Desabilitado',
       },
     },
     radio: {
-      name: 'Botão de opção Radio',
-      description: 'Seletor que permite apenas uma escolha',
-      demo1: {
+      'name': 'Botão de opção Radio',
+      'description': 'Seletor que permite apenas uma escolha',
+      'demo1': {
         title: 'Uso básico',
       },
-      demo2: {
+      'demo2': {
         title: 'Distribuição vertical',
       },
-      demo3: {
+      'demo3': {
         title: 'Em bloco',
       },
-      demo4: {
+      'demo4': {
         title: 'Forma',
       },
-      demo5: {
+      'demo5': {
         title: 'Somente leitura',
       },
-      demo6: {
+      'demo6': {
         title: 'Desabilitado',
       },
-      model: {
+      'model': {
         modelValue: 'Valor vinculado',
       },
       'props(RadioGroup)': {
@@ -865,12 +865,12 @@ export default {
         readonly: 'Somente leitura',
         round: 'Arredondado',
       },
-      options: {
+      'options': {
         label: 'Rótulo',
         value: 'Valor',
         disabled: 'Desabilitado',
       },
-      events: {
+      'events': {
         change: 'Ao alterar valor',
       },
     },
@@ -1660,25 +1660,25 @@ export default {
       },
     },
     collapse: {
-      name: 'Painel Expansível (Collapse)',
-      description:
+      'name': 'Painel Expansível (Collapse)',
+      'description':
         'Área de conteúdo que pode ser expandida e recolhida, tornando a exibição de informações mais organizada',
-      demo1: {
+      'demo1': {
         title: 'Uso básico',
       },
-      demo2: {
+      'demo2': {
         title: 'Slot de título',
       },
-      demo3: {
+      'demo3': {
         title: 'Modo acordeão',
       },
-      model: {
+      'model': {
         modelValue: 'Nome do parâmetro',
       },
       'model(CollapseItem)': {
         modelValue: 'Nome do parâmetro',
       },
-      props: {
+      'props': {
         width: 'Largura',
       },
       'props(CollapseItem)': {
@@ -1957,7 +1957,7 @@ export default {
         triggerTarget: 'Alvo do gatilho',
       },
       slots: {
-        trigger: 'Slot do gatilho',
+        'trigger': 'Slot do gatilho',
         'popover-body': 'Slot do corpo do popover',
       },
     },

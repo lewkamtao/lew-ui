@@ -1,7 +1,7 @@
-import type { PropType } from 'vue'
 import type { LewSize } from 'lew-ui'
+import type { PropType } from 'vue'
 
-export type CascaderOptions = {
+export interface CascaderOptions {
   label: string
   value: string
   labelPaths?: string[]

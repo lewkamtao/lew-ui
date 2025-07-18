@@ -7,15 +7,17 @@ const schoolsOptions = schools.map((e) => {
 
 const value = ref(['浙江大学', '中山大学'])
 </script>
+
 <template>
   <lew-select-multiple
     v-model="value"
     searchable
-    :defaultValue="value"
+    :default-value="value"
     :options="schoolsOptions"
     placeholder="Default Filter"
   />
 </template>
+
 <style lang="scss" scoped>
 .empty {
   display: flex;

@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import {
-  MoreHorizontal,
-  Edit,
-  Trash,
+  Archive,
   Copy,
   Download,
-  Share,
-  View,
-  Archive,
+  Edit,
+  MoreHorizontal,
   Settings,
+  Share,
+  Trash,
+  View,
 } from 'lucide-vue-next'
 
 const options = ref([
@@ -72,6 +72,7 @@ const options = ref([
 
 const dropdownIcon = h(MoreHorizontal, { size: 14 })
 </script>
+
 <template>
   <lew-action-box
     :options="options"

@@ -1,5 +1,5 @@
-import type { ExtractPropTypes } from 'vue'
 import type { LewColor } from 'lew-ui'
+import type { ExtractPropTypes } from 'vue'
 
 export const dialogProps = {
   type: {

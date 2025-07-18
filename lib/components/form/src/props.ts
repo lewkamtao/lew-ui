@@ -1,5 +1,5 @@
-import type { ExtractPropTypes, PropType } from 'vue'
 import type { LewSize } from 'lew-ui'
+import type { ExtractPropTypes, PropType } from 'vue'
 import { validSizes } from 'lew-ui/constants'
 
 export type FormDirection = 'x' | 'y'
@@ -71,9 +71,9 @@ export const formProps = {
         return false
       }
       if (
-        typeof value === 'string' &&
-        value !== 'auto' &&
-        !/^\d+px$/.test(value)
+        typeof value === 'string'
+        && value !== 'auto'
+        && !/^\d+px$/.test(value)
       ) {
         console.warn('[LewForm] labelWidth 字符串必须是 "auto" 或有效的像素值')
         return false
@@ -179,9 +179,9 @@ export const formItemProps = {
         return false
       }
       if (
-        typeof value === 'string' &&
-        value !== 'auto' &&
-        !/^\d+px$/.test(value)
+        typeof value === 'string'
+        && value !== 'auto'
+        && !/^\d+px$/.test(value)
       ) {
         console.warn(
           '[LewFormItem] labelWidth 字符串必须是 "auto" 或有效的像素值',
@@ -278,20 +278,20 @@ export type FormProps = ExtractPropTypes<typeof formProps>
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>
 
 export const formTypeAsMap: Record<string, any> = {
-  input: 'string',
-  textarea: 'string',
+  'input': 'string',
+  'textarea': 'string',
   'input-tag': 'array',
   'checkbox-group': 'array',
   'radio-group': 'string',
-  checkbox: 'boolean',
-  select: 'string',
+  'checkbox': 'boolean',
+  'select': 'string',
   'select-multiple': 'array',
   'date-picker': 'date',
   'date-range-picker': 'array',
-  tabs: 'string',
-  cascader: 'string',
-  switch: 'boolean',
-  button: 'void',
-  upload: 'array',
+  'tabs': 'string',
+  'cascader': 'string',
+  'switch': 'boolean',
+  'button': 'void',
+  'upload': 'array',
   'input-number': 'number',
 }

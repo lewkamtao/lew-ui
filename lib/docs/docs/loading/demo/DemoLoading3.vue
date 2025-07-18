@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const visible = ref(false)
 
-const openLoading = () => {
+function openLoading() {
   visible.value = true
   setTimeout(() => {
     visible.value = false
@@ -17,7 +17,9 @@ const openLoading = () => {
     y="start"
     x="start"
   >
-    <lew-button @click="openLoading">Click to open loading</lew-button>
+    <lew-button @click="openLoading">
+      Click to open loading
+    </lew-button>
   </lew-flex>
 </template>
 

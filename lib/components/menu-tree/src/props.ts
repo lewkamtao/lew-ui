@@ -1,7 +1,8 @@
+import type { TagProps } from 'lew-ui'
 import type { ExtractPropTypes } from 'vue'
 import { isValidCssValue } from 'lew-ui/utils'
-import type { TagProps } from 'lew-ui'
-export type MenuTreeItem = {
+
+export interface MenuTreeItem {
   label: string | (() => any)
   value: string | number
   active?: boolean

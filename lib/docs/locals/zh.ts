@@ -381,26 +381,26 @@ export default {
       },
     },
     dropdown: {
-      name: '下拉菜单 Dropdown',
-      description: '点击触发的悬浮菜单，让操作更加便捷',
-      demo1: {
+      'name': '下拉菜单 Dropdown',
+      'description': '点击触发的悬浮菜单，让操作更加便捷',
+      'demo1': {
         title: '基础用法',
       },
-      demo2: {
+      'demo2': {
         title: '不仅仅是按钮',
       },
-      demo3: {
+      'demo3': {
         title: '禁用项',
       },
 
-      props: {
+      'props': {
         options: '菜单选项配置',
         trigger: '触发方式',
         placement: '菜单弹出位置',
         checkable: '是否可选择',
       },
       'options(ContextMenus)': contextMenu,
-      events: {
+      'events': {
         show: '菜单显示事件回调',
         hide: '菜单隐藏事件回调',
         change: '菜单项选择事件回调',
@@ -432,21 +432,21 @@ export default {
       },
     },
     contextMenu: {
-      name: '上下文菜单 ContextMenu',
-      description: '优雅的右键菜单，让操作更加自然',
-      demo1: {
+      'name': '上下文菜单 ContextMenu',
+      'description': '优雅的右键菜单，让操作更加自然',
+      'demo1': {
         title: '基础用法',
       },
-      demo2: {
+      'demo2': {
         title: '支持多级嵌套',
       },
-      demo3: {
+      'demo3': {
         title: '支持动态更新',
       },
-      demo4: {
+      'demo4': {
         title: 'Checkbox',
       },
-      props: {
+      'props': {
         options: '右键菜单配置',
         disabled: '是否禁用右键菜单',
       },
@@ -759,27 +759,27 @@ export default {
       },
     },
     checkbox: {
-      name: '复选框 Checkbox',
-      description: '支持多选的选择器，让多项选择更加直观',
-      demo1: {
+      'name': '复选框 Checkbox',
+      'description': '支持多选的选择器，让多项选择更加直观',
+      'demo1': {
         title: '基础用法',
       },
-      demo2: {
+      'demo2': {
         title: '垂直分布',
       },
-      demo3: {
+      'demo3': {
         title: '块状',
       },
-      demo4: {
+      'demo4': {
         title: '圆形',
       },
-      demo5: {
+      'demo5': {
         title: '只读状态',
       },
-      demo6: {
+      'demo6': {
         title: '禁用状态',
       },
-      demo7: {
+      'demo7': {
         title: '单个模式',
       },
       'model(CheckboxGroup)': {
@@ -816,34 +816,34 @@ export default {
       'events(CheckboxGroup)': {
         change: '值发生变化时触发',
       },
-      options: {
+      'options': {
         label: '标题',
         value: '值',
         disabled: '禁用',
       },
     },
     radio: {
-      name: '单选框 Radio',
-      description: '只能选择一项的选择器，让单项选择更加明确',
-      demo1: {
+      'name': '单选框 Radio',
+      'description': '只能选择一项的选择器，让单项选择更加明确',
+      'demo1': {
         title: '基础用法',
       },
-      demo2: {
+      'demo2': {
         title: '垂直分布',
       },
-      demo3: {
+      'demo3': {
         title: '块状',
       },
-      demo4: {
+      'demo4': {
         title: '形状',
       },
-      demo5: {
+      'demo5': {
         title: '只读状态',
       },
-      demo6: {
+      'demo6': {
         title: '禁用状态',
       },
-      model: {
+      'model': {
         modelValue: '绑定值',
       },
       'props(RadioGroup)': {
@@ -856,12 +856,12 @@ export default {
         readonly: '是否只读',
         round: '圆角样式',
       },
-      options: {
+      'options': {
         label: '标题',
         value: '值',
         disabled: '禁用',
       },
-      events: {
+      'events': {
         change: '值发生变化时触发',
       },
     },
@@ -1619,24 +1619,24 @@ export default {
       },
     },
     collapse: {
-      name: '折叠面板 Collapse',
-      description: '可折叠和展开的内容区域，让信息展示更加整洁',
-      demo1: {
+      'name': '折叠面板 Collapse',
+      'description': '可折叠和展开的内容区域，让信息展示更加整洁',
+      'demo1': {
         title: '基础用法',
       },
-      demo2: {
+      'demo2': {
         title: '标题插槽',
       },
-      demo3: {
+      'demo3': {
         title: '手风琴',
       },
-      model: {
+      'model': {
         modelValue: '参数名称',
       },
       'model(CollapseItem)': {
         modelValue: '参数名称',
       },
-      props: {
+      'props': {
         width: '宽度',
       },
       'props(CollapseItem)': {
@@ -1908,7 +1908,7 @@ export default {
         triggerTarget: '触发目标',
       },
       slots: {
-        trigger: '触发插槽',
+        'trigger': '触发插槽',
         'popover-body': '气泡内容插槽',
       },
     },

@@ -68,7 +68,7 @@ export const flexProps = {
     type: [String, Number],
     default: 10,
     validator(value: string | number): boolean {
-      const numValue = typeof value === 'string' ? parseInt(value, 10) : value
+      const numValue = typeof value === 'string' ? Number.parseInt(value, 10) : value
       if (isNaN(numValue) || numValue < 0) {
         console.warn(`[LewFlex] gap 值必须是非负数或可转换为非负数的字符串。`)
         return false
@@ -85,9 +85,9 @@ export const flexProps = {
         return false
       }
       if (
-        value &&
-        typeof value === 'string' &&
-        !/^(\d+(\.\d+)?(px|%)?|\d+)$/.test(value)
+        value
+        && typeof value === 'string'
+        && !/^(\d+(\.\d+)?(px|%)?|\d+)$/.test(value)
       ) {
         console.warn(
           `[LewFlex] width 字符串值必须是有效的 CSS 宽度值（如 '100px' 或 '50%'）。`,

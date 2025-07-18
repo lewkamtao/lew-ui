@@ -1,5 +1,5 @@
-import type { PropType } from 'vue'
 import type { LewSize } from 'lew-ui/types'
+import type { PropType } from 'vue'
 import { validSizes } from 'lew-ui/constants'
 
 export const switchModel = {

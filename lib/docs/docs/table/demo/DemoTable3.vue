@@ -1,17 +1,18 @@
 <script lang="ts" setup>
+import { LewMessage } from 'lew-ui'
 import {
-  Edit,
-  Trash,
+  Archive,
   Copy,
   Download,
-  Share,
-  View,
-  Archive,
-  Settings,
+  Edit,
   MoreHorizontal,
+  Settings,
+  Share,
+  Trash,
+  View,
 } from 'lucide-vue-next'
 import { h } from 'vue'
-import { LewMessage } from 'lew-ui'
+
 const data: any = [
   {
     id: 1,
@@ -235,7 +236,8 @@ const dropdownIcon = h(MoreHorizontal, { size: 14 })
           type="light"
           color="blue"
           size="small"
-          >{{ item }}
+        >
+          {{ item }}
         </lew-tag>
       </lew-flex>
     </template>
@@ -247,8 +249,7 @@ const dropdownIcon = h(MoreHorizontal, { size: 14 })
         dropdown-label=""
         :dropdown-icon="dropdownIcon"
         icon-only
-      >
-      </lew-action-box>
+      />
     </template>
   </lew-table>
 </template>

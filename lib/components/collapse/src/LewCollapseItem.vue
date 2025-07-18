@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { collapseItemProps } from './props'
-import LewCollapseTransition from './LewCollapseTransition.vue'
-import { isArray } from 'lodash-es'
 import { LewFlex } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { isArray } from 'lodash-es'
+import LewCollapseTransition from './LewCollapseTransition.vue'
+import { collapseItemProps } from './props'
 
 const props = defineProps(collapseItemProps)
 const modelValue = defineModel()
 
 const expandKeys: any = inject('expandKeys')
 
-const setModelValue = () => {
+function setModelValue() {
   modelValue.value = isArray(expandKeys.value)
     ? expandKeys.value.includes(props.collapseKey)
     : props.collapseKey === expandKeys.value
@@ -21,14 +21,15 @@ watch(() => expandKeys.value, setModelValue, { deep: true })
 
 setModelValue()
 
-const change = () => {
+function change() {
   modelValue.value = !modelValue.value
 
   if (isArray(expandKeys.value)) {
     expandKeys.value = modelValue.value
       ? [...expandKeys.value, props.collapseKey]
       : expandKeys.value.filter((item: string) => item !== props.collapseKey)
-  } else {
+  }
+  else {
     expandKeys.value = modelValue.value ? props.collapseKey : null
   }
 }
@@ -36,7 +37,7 @@ const change = () => {
 
 <template>
   <div class="lew-collapse-item">
-    <lew-flex
+    <LewFlex
       x="start"
       y="center"
       class="lew-collapse-item-title"
@@ -56,14 +57,15 @@ const change = () => {
         />
         <lew-text-trim :style="{ width: 'calc(100% - 50px)' }" :text="title" />
       </template>
-    </lew-flex>
-    <lew-collapse-transition>
+    </LewFlex>
+    <LewCollapseTransition>
       <div v-if="modelValue" class="lew-collapse-item-main">
         <slot />
       </div>
-    </lew-collapse-transition>
+    </LewCollapseTransition>
   </div>
 </template>
+
 <style scoped lang="scss">
 .lew-collapse-item {
   border-bottom: 1px solid var(--lew-bgcolor-4);

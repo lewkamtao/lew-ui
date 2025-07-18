@@ -11,7 +11,7 @@ export const collapseModel = {
       if (Array.isArray(value)) {
         if (
           !value.every(
-            (item) => typeof item === 'string' || typeof item === 'number',
+            item => typeof item === 'string' || typeof item === 'number',
           )
         ) {
           console.warn(
@@ -19,7 +19,8 @@ export const collapseModel = {
           )
           return false
         }
-      } else if (typeof value !== 'string') {
+      }
+      else if (typeof value !== 'string') {
         console.warn('[LewCollapse] modelValue 必须是数组或字符串类型。')
         return false
       }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-type TabOption = {
+interface TabOption {
   label: string
   value: string
 }

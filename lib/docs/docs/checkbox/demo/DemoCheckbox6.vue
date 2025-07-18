@@ -9,7 +9,7 @@ const applianceFeatures = ref([
 
 const selectedFeatures = ref(['refrigerator', 'washingMachine'])
 
-const handleFeatureChange = (selectedValues: string[]) => {
+function handleFeatureChange(selectedValues: string[]) {
   console.log('Selected appliances:', selectedValues)
 }
 </script>

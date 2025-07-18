@@ -7,7 +7,7 @@ const selectValue = ref()
 const formMethods = {
   async loadUserOptions() {
     // 模拟网络请求延迟
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await new Promise(resolve => setTimeout(resolve, 1000))
 
     return [
       { label: '张三', value: 'zhangsan' },
@@ -24,14 +24,16 @@ provide('formMethods', formMethods)
 
 <template>
   <div class="demo-select">
-    <lew-select
+    <LewSelect
       v-model="selectValue"
       init-options-method-id="loadUserOptions"
       placeholder="请选择用户"
       width="300px"
       searchable
     />
-    <div class="demo-result">选中值: {{ selectValue }}</div>
+    <div class="demo-result">
+      选中值: {{ selectValue }}
+    </div>
   </div>
 </template>
 

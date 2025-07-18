@@ -48,7 +48,7 @@ const options = ref([
 const value = ref<string[]>([])
 const maxSelection = 3
 
-const handleChange = (newValue: string[]) => {
+function handleChange(newValue: string[]) {
   if (newValue.length > maxSelection) {
     value.value = newValue.slice(0, maxSelection)
     LewMessage.warning('Maximum of 3 items can be selected')

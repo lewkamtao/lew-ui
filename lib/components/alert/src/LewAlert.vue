@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { object2class } from 'lew-ui/utils'
-import { alertProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { alertProps } from './props'
 
 const props = defineProps(alertProps)
 
@@ -15,7 +15,7 @@ const alertClassName = computed(() => {
 
 <template>
   <div class="lew-alert" :class="alertClassName">
-    <Icon dark :size="18" :type></Icon>
+    <Icon dark :size="18" :type />
     <div class="lew-alert-message">
       <div v-if="$slots.title" class="lew-alert-title">
         <slot name="title" />
@@ -37,10 +37,10 @@ const alertClassName = computed(() => {
     </div>
     <Icon
       v-if="closeable"
-      @click="emit('close')"
       class="lew-form-icon-close lew-alert-close-icon"
       type="close"
-    ></Icon>
+      @click="emit('close')"
+    />
   </div>
 </template>
 

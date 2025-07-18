@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 
-export type TabsOptions = {
+export interface TabsOptions {
   label: string
   value: string | number
 }
@@ -36,9 +36,9 @@ export const tabsProps = {
       }
       if (
         value.some(
-          (item) =>
-            typeof item.label !== 'string' ||
-            (typeof item.value !== 'string' && typeof item.value !== 'number'),
+          item =>
+            typeof item.label !== 'string'
+            || (typeof item.value !== 'string' && typeof item.value !== 'number'),
         )
       ) {
         console.warn(

@@ -2,15 +2,16 @@
 const visible = ref(false)
 const bindOptions = ref({})
 const formRef = ref()
-const open = (options: any) => {
+function open(options: any) {
   visible.value = true
   bindOptions.value = options
 }
-const ok = () => {
+function ok() {
   formRef.value.validate().then((res: boolean) => {
     if (res) {
       LewMessage.success('校验成功')
-    } else {
+    }
+    else {
       LewMessage.error('校验失败')
     }
   })
@@ -21,15 +22,15 @@ defineExpose({ open })
 <template>
   <lew-modal
     v-model:visible="visible"
-    closeOnClickOverlay
-    closeByEsc
-    maxHeight="calc(100vh - 240px - 50px - 72px)"
-    :closeButtonProps="{
+    close-on-click-overlay
+    close-by-esc
+    max-height="calc(100vh - 240px - 50px - 72px)"
+    :close-button-props="{
       request: () => {
         visible = false
       },
     }"
-    :okButtonProps="{
+    :ok-button-props="{
       text: '校验表单',
       request: ok,
     }"
@@ -40,6 +41,7 @@ defineExpose({ open })
     </div>
   </lew-modal>
 </template>
+
 <style lang="scss" scoped>
 .preview-modal-content {
   padding: 20px;

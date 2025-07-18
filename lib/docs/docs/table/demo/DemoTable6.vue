@@ -95,7 +95,7 @@ const selectedKeys = ref<number[]>([])
 
 const tableRef = ref()
 
-const setSelectedBrands = () => {
+function setSelectedBrands() {
   selectedKeys.value = [2, 3]
 }
 </script>
@@ -108,12 +108,12 @@ const setSelectedBrands = () => {
     <div>Selected: {{ selectedKeys }}</div>
     <lew-table
       ref="tableRef"
+      v-model:selected-keys="selectedKeys"
       :data-source="data"
       :columns="columns"
       checkable
       multiple
-      v-model:selectedKeys="selectedKeys"
-      rowKey="id"
+      row-key="id"
     >
       <template #popularItems="{ row }">
         <lew-flex gap="5" x="start">

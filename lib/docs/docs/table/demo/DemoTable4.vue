@@ -116,11 +116,11 @@ const columns = [
   },
 ]
 
-const formatPrice = (price: number) => {
+function formatPrice(price: number) {
   return `$${price.toFixed(2)}`
 }
 
-const options = (row: any, column: any) => {
+function options(row: any, column: any) {
   return [
     {
       label: 'Edit',
@@ -152,12 +152,18 @@ const options = (row: any, column: any) => {
 
 <template>
   <lew-table :data-source="data" :columns="columns">
-    <template #price="{ row }"> {{ formatPrice(row.price) }} </template>
+    <template #price="{ row }">
+      {{ formatPrice(row.price) }}
+    </template>
     <template #industry="{ row }">
-      <lew-tag type="light" color="blue" size="small">{{ row.sector }}</lew-tag>
-      <lew-tag type="light" color="green" size="small">{{
-        row.industry
-      }}</lew-tag>
+      <lew-tag type="light" color="blue" size="small">
+        {{ row.sector }}
+      </lew-tag>
+      <lew-tag type="light" color="green" size="small">
+        {{
+          row.industry
+        }}
+      </lew-tag>
     </template>
     <template #action="{ row, column }">
       <lew-action-box
@@ -165,11 +171,11 @@ const options = (row: any, column: any) => {
         :options="options(row, column)"
         dropdown-threshold="1"
         dropdown-label="More"
-      >
-      </lew-action-box>
+      />
     </template>
   </lew-table>
 </template>
+
 <style lang="scss" scoped>
 .popover-body {
   padding: 15px;

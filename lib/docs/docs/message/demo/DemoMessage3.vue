@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const request = (type: string) => {
+function request(type: string) {
   LewMessage.request(
     { loadingMessage: 'Processing your order...' },
     async () => {
@@ -11,7 +11,8 @@ const request = (type: string) => {
               duration: 1000,
               type: 'success',
             })
-          } else {
+          }
+          else {
             resolve({
               content: 'Unable to complete your order. Please try again later.',
               duration: 1000,
@@ -27,11 +28,11 @@ const request = (type: string) => {
 
 <template>
   <lew-flex wrap x="start" gap="20">
-    <lew-button round color="green" @click="request('success')"
-      >Simulate Success</lew-button
-    >
-    <lew-button round color="red" @click="request('fail')"
-      >Simulate Failure</lew-button
-    >
+    <lew-button round color="green" @click="request('success')">
+      Simulate Success
+    </lew-button>
+    <lew-button round color="red" @click="request('fail')">
+      Simulate Failure
+    </lew-button>
   </lew-flex>
 </template>

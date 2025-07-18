@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import uploadHelper from 'lew-ui/docs/docs/upload/uploadHelper'
 import * as Yup from 'yup'
 import { schools } from '@/lib/data'
-import uploadHelper from 'lew-ui/docs/docs/upload/uploadHelper'
 
 const schoolsOptions = schools.map((e, i) => {
   return { label: e, value: i + 1 }
@@ -9,7 +9,7 @@ const schoolsOptions = schools.map((e, i) => {
 
 const formRef = ref()
 
-const submit = () => {
+function submit() {
   LewMessage.request({ loadingMessage: '处理中···' }, () => {
     return new Promise<any>((resolve, reject) => {
       formRef.value
@@ -22,7 +22,8 @@ const submit = () => {
               duration: 1000,
               type: 'success',
             })
-          } else {
+          }
+          else {
             resolve({
               content: '请完善表单',
               duration: 1000,
@@ -365,19 +366,19 @@ const options = ref([
 
 const form = ref({} as any)
 
-const setForm = () => {
+function setForm() {
   // 设置表单
   formRef.value.setForm({
     size: 'medium',
   })
 }
 
-const resetForm = () => {
+function resetForm() {
   // 重置表单
   formRef.value.setForm({ size: 'medium' })
 }
 
-const change = () => {
+function change() {
   // 获取表单
   form.value = formRef.value.getForm()
 }
@@ -392,25 +393,32 @@ onMounted(() => {
     <lew-form
       ref="formRef"
       :size="form.size"
-      :formMethods="{
+      :form-methods="{
         uploadHelper,
       }"
       class="form-box"
       :options="options"
+      :width="450"
       @mounted="setForm"
       @change="change"
-      :width="450"
     />
     <lew-flex direction="y" x="start">
       <lew-flex x="start">
-        <lew-button type="light" round @click="submit">submit</lew-button>
-        <lew-button type="light" round @click="setForm">setForm</lew-button>
-        <lew-button type="light" round @click="resetForm"> reset </lew-button>
+        <lew-button type="light" round @click="submit">
+          submit
+        </lew-button>
+        <lew-button type="light" round @click="setForm">
+          setForm
+        </lew-button>
+        <lew-button type="light" round @click="resetForm">
+          reset
+        </lew-button>
       </lew-flex>
       <pre>{{ form }}</pre>
     </lew-flex>
   </lew-flex>
 </template>
+
 <style scoped lang="scss">
 .form-box {
   width: 450px;

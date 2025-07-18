@@ -16,15 +16,15 @@ function createTree(path = '0', level = 2) {
 }
 const options = createTree()
 const v = ref([])
-const change = (e: any) => {
+function change(e: any) {
   console.log(e)
 }
 </script>
 
 <template>
   <lew-tree
-    style="width: 300px"
     v-model="v"
+    style="width: 300px"
     multiple
     free
     :data-source="options"

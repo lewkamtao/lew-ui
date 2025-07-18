@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue'
-import { badgeProps } from './props'
 import { getColorType } from 'lew-ui/utils'
+import { badgeProps } from './props'
 
 const props = defineProps(badgeProps)
 const getStyle = computed<CSSProperties>(() => {
@@ -54,9 +54,9 @@ const displayValue = computed(() => {
       class="lew-badge-dot"
       :class="{ 'is-processing': processing }"
       :style="getStyle"
-    ></i>
+    />
     <span v-if="text" class="lew-badge-text">{{ text }}</span>
-    <slot v-else></slot>
+    <slot v-else />
   </div>
 </template>
 

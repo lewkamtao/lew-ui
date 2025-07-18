@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const open = () => {
+function open() {
   LewDialog.error({
     title: 'Delete GitHub Repository',
     cancelText: 'Cancel',

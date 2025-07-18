@@ -1,12 +1,11 @@
 <script lang="ts" setup>
+import type { RetItemType } from '../../date-picker/src/date'
 import dayjs from 'dayjs'
+import { LewButton, LewFlex, locale } from 'lew-ui'
+import Icon from 'lew-ui/utils/Icon.vue'
 import { cloneDeep } from 'lodash-es'
 import { getMonthDate } from '../../date-picker/src/date'
-import type { RetItemType } from '../../date-picker/src/date'
 import { dateRangeProps } from './props'
-import { LewFlex, LewButton } from 'lew-ui'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
 // Props
 const props = defineProps(dateRangeProps)
 
@@ -16,8 +15,8 @@ const emit = defineEmits(['change'])
 // Model
 const modelValue = defineModel<
   | {
-      [key: string]: string
-    }
+    [key: string]: string
+  }
   | undefined
 >()
 
@@ -77,8 +76,8 @@ const object2class = computed(() => (type: string, item: RetItemType) => {
       break
     case 'selected':
       if (
-        (hoverStart.isSame(_date) || hoverEnd.isSame(_date)) &&
-        item.date === item.showDate
+        (hoverStart.isSame(_date) || hoverEnd.isSame(_date))
+        && item.date === item.showDate
       ) {
         return 'lew-date-value-selected'
       }
@@ -101,13 +100,14 @@ const object2class = computed(() => (type: string, item: RetItemType) => {
       }
       if (hoverStart.isBefore(hoverEnd)) {
         if (
-          hoverStart.isBefore(_date) &&
-          hoverEnd.isAfter(_date) &&
-          item.date === item.showDate
+          hoverStart.isBefore(_date)
+          && hoverEnd.isAfter(_date)
+          && item.date === item.showDate
         ) {
           return 'lew-date-label-selected'
         }
-      } else if (hoverEnd.isBefore(_date) && hoverStart.isAfter(_date)) {
+      }
+      else if (hoverEnd.isBefore(_date) && hoverStart.isAfter(_date)) {
         return 'lew-date-label-selected'
       }
       break
@@ -117,28 +117,31 @@ const object2class = computed(() => (type: string, item: RetItemType) => {
 })
 
 // Methods
-const setMonthDate = (type: string) => {
+function setMonthDate(type: string) {
   if (type === 'left') {
     state.leftPanel = getMonthDate(dateState.year1, dateState.month1)
-  } else {
+  }
+  else {
     state.rightPanel = getMonthDate(dateState.year2, dateState.month2)
   }
 }
 
-const prveMonth1 = () => {
+function prveMonth1() {
   if (dateState.month1 > 1) {
     dateState.month1 -= 1
-  } else {
+  }
+  else {
     dateState.year1 -= 1
     dateState.month1 = 12
   }
   setMonthDate('left')
 }
 
-const nextMonth1 = () => {
+function nextMonth1() {
   if (dateState.month1 < 12) {
     dateState.month1 += 1
-  } else {
+  }
+  else {
     dateState.year1 += 1
     dateState.month1 = 1
   }
@@ -146,13 +149,14 @@ const nextMonth1 = () => {
     dateState.year2 = dateState.year1
   }
   if (
-    dateState.year1 === dateState.year2 &&
-    dateState.month1 >= dateState.month2
+    dateState.year1 === dateState.year2
+    && dateState.month1 >= dateState.month2
   ) {
     if (dateState.month1 === 12) {
       dateState.month2 = 1
       dateState.year2 += 1
-    } else {
+    }
+    else {
       dateState.month2 = dateState.month1 + 1
     }
   }
@@ -160,10 +164,11 @@ const nextMonth1 = () => {
   setMonthDate('right')
 }
 
-const prveMonth2 = () => {
+function prveMonth2() {
   if (dateState.month2 > 1) {
     dateState.month2 -= 1
-  } else {
+  }
+  else {
     dateState.year2 -= 1
     dateState.month2 = 12
   }
@@ -171,13 +176,14 @@ const prveMonth2 = () => {
     dateState.year1 = dateState.year2
   }
   if (
-    dateState.year1 === dateState.year2 &&
-    dateState.month2 <= dateState.month1
+    dateState.year1 === dateState.year2
+    && dateState.month2 <= dateState.month1
   ) {
     if (dateState.month2 === 1) {
       dateState.month1 = 12
       dateState.year1 -= 1
-    } else {
+    }
+    else {
       dateState.month1 = dateState.month2 - 1
     }
   }
@@ -185,34 +191,36 @@ const prveMonth2 = () => {
   setMonthDate('right')
 }
 
-const nextMonth2 = () => {
+function nextMonth2() {
   if (dateState.month2 < 12) {
     dateState.month2 += 1
-  } else {
+  }
+  else {
     dateState.year2 += 1
     dateState.month2 = 1
   }
   setMonthDate('right')
 }
 
-const prveYear1 = () => {
+function prveYear1() {
   dateState.year1 -= 1
   setMonthDate('left')
 }
 
-const nextYear1 = () => {
+function nextYear1() {
   dateState.year1 += 1
   if (dateState.year1 > dateState.year2) {
     dateState.year2 = dateState.year1
   }
   if (
-    dateState.year1 === dateState.year2 &&
-    dateState.month1 >= dateState.month2
+    dateState.year1 === dateState.year2
+    && dateState.month1 >= dateState.month2
   ) {
     if (dateState.month1 === 12) {
       dateState.month2 = 1
       dateState.year2 += 1
-    } else {
+    }
+    else {
       dateState.month2 = dateState.month1 + 1
     }
   }
@@ -221,19 +229,20 @@ const nextYear1 = () => {
   setMonthDate('right')
 }
 
-const prveYear2 = () => {
+function prveYear2() {
   dateState.year2 -= 1
   if (dateState.year2 < dateState.year1) {
     dateState.year1 = dateState.year2
   }
   if (
-    dateState.year1 === dateState.year2 &&
-    dateState.month2 <= dateState.month1
+    dateState.year1 === dateState.year2
+    && dateState.month2 <= dateState.month1
   ) {
     if (dateState.month2 === 1) {
       dateState.month1 = 12
       dateState.year1 -= 1
-    } else {
+    }
+    else {
       dateState.month1 = dateState.month2 - 1
     }
   }
@@ -241,7 +250,7 @@ const prveYear2 = () => {
   setMonthDate('right')
 }
 
-const nextYear2 = () => {
+function nextYear2() {
   dateState.year2 += 1
   setMonthDate('right')
 }
@@ -249,7 +258,7 @@ const nextYear2 = () => {
 let i = 0
 let startBackup = ''
 
-const hoverValueFn = (item: RetItemType) => {
+function hoverValueFn(item: RetItemType) {
   if (item.date != item.showDate || i % 2 === 0) {
     return
   }
@@ -260,7 +269,7 @@ const hoverValueFn = (item: RetItemType) => {
   }
 }
 
-const setValue = (item: RetItemType) => {
+function setValue(item: RetItemType) {
   i += 1
 
   if (item.date != item.showDate) {
@@ -272,20 +281,22 @@ const setValue = (item: RetItemType) => {
     if (__date.isBefore(dayjs(hoverValue.value[startKey]))) {
       hoverValue.value[startKey] = dayjs(__dateStr).format(props.valueFormat)
       hoverValue.value[endKey] = dayjs(startBackup).format(props.valueFormat)
-    } else {
+    }
+    else {
       hoverValue.value[startKey] = dayjs(startBackup).format(props.valueFormat)
       hoverValue.value[endKey] = dayjs(__dateStr).format(props.valueFormat)
     }
     modelValue.value = cloneDeep(hoverValue.value)
     emit('change', hoverValue.value)
-  } else {
+  }
+  else {
     hoverValue.value[startKey] = __dateStr
     hoverValue.value[endKey] = ''
     startBackup = __dateStr
   }
 }
 
-const init = () => {
+function init() {
   let _value = cloneDeep(modelValue.value)
 
   if (!_value) {
@@ -310,8 +321,8 @@ const init = () => {
     ? dayjs(_value[endKey]).month() + 1
     : curMonth + 1
   if (
-    dateState.year1 === dateState.year2 &&
-    dateState.month1 === dateState.month2
+    dateState.year1 === dateState.year2
+    && dateState.month1 === dateState.month2
   ) {
     dateState.month2 += 1
   }
@@ -341,12 +352,13 @@ const headDate = computed(() => {
   ]
 })
 </script>
+
 <template>
   <div class="lew-date-range">
     <div class="lew-date">
-      <lew-flex x="start" mode="between" class="lew-date-control">
+      <LewFlex x="start" mode="between" class="lew-date-control">
         <div class="lew-date-control-left">
-          <lew-button
+          <LewButton
             type="light"
             color="gray"
             size="small"
@@ -354,8 +366,8 @@ const headDate = computed(() => {
             @click="prveYear1"
           >
             <Icon type="chevrons-left" />
-          </lew-button>
-          <lew-button
+          </LewButton>
+          <LewButton
             type="light"
             color="gray"
             size="small"
@@ -363,7 +375,7 @@ const headDate = computed(() => {
             @click="prveMonth1"
           >
             <Icon type="chevron-left" />
-          </lew-button>
+          </LewButton>
         </div>
         <!-- 日期 -->
         <div class="cur-date">
@@ -373,7 +385,7 @@ const headDate = computed(() => {
         </div>
         <div class="lew-date-control-right">
           <!-- 下一月 -->
-          <lew-button
+          <LewButton
             type="light"
             color="gray"
             size="small"
@@ -381,8 +393,8 @@ const headDate = computed(() => {
             @click="nextMonth1"
           >
             <Icon type="chevron-right" />
-          </lew-button>
-          <lew-button
+          </LewButton>
+          <LewButton
             type="light"
             color="gray"
             size="small"
@@ -390,9 +402,9 @@ const headDate = computed(() => {
             @click="nextYear1"
           >
             <Icon type="chevrons-right" />
-          </lew-button>
+          </LewButton>
         </div>
-      </lew-flex>
+      </LewFlex>
       <div class="lew-date-box">
         <!-- 表头 周 -->
         <div
@@ -400,7 +412,9 @@ const headDate = computed(() => {
           :key="`h${index}`"
           class="lew-date-item"
         >
-          <div class="lew-date-num">{{ item }}</div>
+          <div class="lew-date-num">
+            {{ item }}
+          </div>
         </div>
 
         <!-- 表格 -->
@@ -419,7 +433,7 @@ const headDate = computed(() => {
             <div
               v-if="object2class('today', item)"
               class="lew-date-item-today"
-            ></div>
+            />
             <div class="lew-date-value" :class="object2class('selected', item)">
               {{ item.showDate }}
             </div>
@@ -428,9 +442,9 @@ const headDate = computed(() => {
       </div>
     </div>
     <div class="lew-date">
-      <lew-flex x="start" mode="between" class="lew-date-control">
+      <LewFlex x="start" mode="between" class="lew-date-control">
         <div class="lew-date-control-left">
-          <lew-button
+          <LewButton
             type="light"
             color="gray"
             size="small"
@@ -438,8 +452,8 @@ const headDate = computed(() => {
             @click="prveYear2"
           >
             <Icon type="chevrons-left" />
-          </lew-button>
-          <lew-button
+          </LewButton>
+          <LewButton
             type="light"
             color="gray"
             size="small"
@@ -447,7 +461,7 @@ const headDate = computed(() => {
             @click="prveMonth2"
           >
             <Icon type="chevron-left" />
-          </lew-button>
+          </LewButton>
         </div>
         <div class="cur-date">
           {{
@@ -455,7 +469,7 @@ const headDate = computed(() => {
           }}
         </div>
         <div class="lew-date-control-right">
-          <lew-button
+          <LewButton
             type="light"
             color="gray"
             size="small"
@@ -463,9 +477,9 @@ const headDate = computed(() => {
             @click="nextMonth2"
           >
             <Icon type="chevron-right" />
-          </lew-button>
+          </LewButton>
           <!-- 下一年 -->
-          <lew-button
+          <LewButton
             type="light"
             color="gray"
             size="small"
@@ -473,16 +487,18 @@ const headDate = computed(() => {
             @click="nextYear2"
           >
             <Icon type="chevrons-right" />
-          </lew-button>
+          </LewButton>
         </div>
-      </lew-flex>
+      </LewFlex>
       <div class="lew-date-box">
         <div
           v-for="(item, index) in headDate"
           :key="`h${index}`"
           class="lew-date-item"
         >
-          <div class="lew-date-num">{{ item }}</div>
+          <div class="lew-date-num">
+            {{ item }}
+          </div>
         </div>
         <div
           v-for="(item, index) in state.rightPanel"
@@ -499,7 +515,7 @@ const headDate = computed(() => {
             <div
               v-if="object2class('today', item)"
               class="lew-date-item-today"
-            ></div>
+            />
             <div class="lew-date-value" :class="object2class('selected', item)">
               {{ item.showDate }}
             </div>

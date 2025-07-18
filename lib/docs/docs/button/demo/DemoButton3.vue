@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { Activity, Send, Search } from 'lucide-vue-next'
+import { Activity, Search, Send } from 'lucide-vue-next'
 </script>
 
 <template>
   <lew-flex x="start" y="end">
-    <lew-button type="fill" singleIcon size="small" round>
+    <lew-button type="fill" single-icon size="small" round>
       <Activity :size="16" />
     </lew-button>
-    <lew-button type="light" round singleIcon>
+    <lew-button type="light" round single-icon>
       <Send :size="16" />
     </lew-button>
-    <lew-button type="ghost" round singleIcon>
+    <lew-button type="ghost" round single-icon>
       <Search :size="16" />
     </lew-button>
   </lew-flex>

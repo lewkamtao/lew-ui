@@ -1,16 +1,17 @@
 <script lang="ts" setup>
-import { h } from 'vue'
 import type { ContextMenus } from 'lew-ui/directives'
 import {
-  Home,
   CornerUpRight,
-  RotateCw,
   DownloadCloud,
-  File,
-  Navigation,
-  Search,
   Eye,
+  File,
+  Home,
+  Navigation,
+  RotateCw,
+  Search,
 } from 'lucide-vue-next'
+import { h } from 'vue'
+
 const options1: ContextMenus = [
   {
     label: 'Back',
@@ -100,6 +101,7 @@ const options2 = [
   },
 ]
 </script>
+
 <template>
   <lew-flex>
     <div

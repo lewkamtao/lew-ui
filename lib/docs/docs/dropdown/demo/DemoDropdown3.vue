@@ -93,12 +93,15 @@ const colorMap: Record<string, string> = {
   Processing: 'blue',
 }
 </script>
+
 <template>
   <lew-flex gap="50" x="start">
     <lew-dropdown :options="statusOptions" trigger="click">
-      <lew-tag style="cursor: pointer" oversize :color="colorMap[status]">{{
-        status
-      }}</lew-tag>
+      <lew-tag style="cursor: pointer" oversize :color="colorMap[status]">
+        {{
+          status
+        }}
+      </lew-tag>
     </lew-dropdown>
 
     <lew-dropdown placement="bottom-start" :options="productOptions">

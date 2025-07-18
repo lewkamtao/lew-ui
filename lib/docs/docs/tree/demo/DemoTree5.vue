@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import axios from '@/axios/http'
 
-const initOptionsMethod = () => {
+function initOptionsMethod() {
   return new Promise<any[]>((resolve) => {
     // item 不存在的时候 是第一层加载
     axios
@@ -24,7 +24,7 @@ const initOptionsMethod = () => {
   })
 }
 
-const loadMethod = (item?: any) => {
+function loadMethod(item?: any) {
   const levelMap: any = {
     0: 'province',
     1: 'city',
@@ -55,7 +55,7 @@ const loadMethod = (item?: any) => {
       })
   })
 }
-const change = (item: any) => {
+function change(item: any) {
   console.log(item)
 }
 const v = ref([])
@@ -68,13 +68,14 @@ const v = ref([])
       multiple
       checkable
       height="500px"
-      keyField="value"
-      :initOptionsMethod="initOptionsMethod"
-      :loadMethod="loadMethod"
+      key-field="value"
+      :init-options-method="initOptionsMethod"
+      :load-method="loadMethod"
       @change="change"
     />
   </div>
 </template>
+
 <style lang="scss" scoped>
 .tree {
   width: 300px;

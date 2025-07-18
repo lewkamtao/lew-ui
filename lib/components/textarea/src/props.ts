@@ -1,5 +1,5 @@
-import type { ExtractPropTypes } from 'vue'
 import type { LewSize } from 'lew-ui'
+import type { ExtractPropTypes } from 'vue'
 import { validSizes } from 'lew-ui/constants'
 
 export const textareaModel = {

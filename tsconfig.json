@@ -3,8 +3,16 @@
     "target": "esnext",
     "lib": ["es2023", "dom", "dom.iterable"],
     "moduleDetection": "force",
+    "baseUrl": "./",
     "module": "esnext",
     "moduleResolution": "node",
+    "paths": {
+      "lew-ui": ["./lib"],
+      "lew-ui/*": ["./lib/*"],
+      "lew-ui/utils": ["./lib/utils"],
+      "lew-ui/utils/*": ["./lib/utils/*"],
+      "@/*": ["./lib/docs/*"]
+    },
     "resolveJsonModule": true,
     "types": ["node"],
     "strict": true,
@@ -14,15 +22,7 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
-    "skipLibCheck": true,
-    "baseUrl": "./",
-    "paths": {
-      "lew-ui": ["./lib"],
-      "lew-ui/*": ["./lib/*"],
-      "lew-ui/utils": ["./lib/utils"],
-      "lew-ui/utils/*": ["./lib/utils/*"],
-      "@/*": ["./lib/docs/*"]
-    }
+    "skipLibCheck": true
   },
   "include": ["lib", "public"]
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const value = ref()
 
-const initOptionsMethod = () => {
+function initOptionsMethod() {
   return new Promise((resolve) => {
     setTimeout(() => {
       const res = [
@@ -120,16 +120,16 @@ const initOptionsMethod = () => {
 
 const updateKey = ref(0)
 
-const load = () => {
+function load() {
   updateKey.value++
 }
 </script>
 
 <template>
   <lew-tree-select
-    v-model="value"
     :key="updateKey"
-    :initOptionsMethod="initOptionsMethod"
+    v-model="value"
+    :init-options-method="initOptionsMethod"
     placeholder="Please select department"
     width="300px"
     searchable

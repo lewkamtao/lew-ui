@@ -1,5 +1,5 @@
-import axios from '@/axios/http'
 import type { UploadFileItem } from 'lew-ui'
+import axios from '@/axios/http'
 
 export default ({
   fileItem,
@@ -30,7 +30,8 @@ export default ({
           url: `https://app.tngeek.com/api_sso/open/file/${fileName}`,
           percent: 100,
         })
-      } else {
+      }
+      else {
         setFileItem({ key, status: 'fail' })
       }
     })

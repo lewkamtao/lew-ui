@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { schools } from '@/lib/data'
 import { padStart } from 'lodash-es'
+import { schools } from '@/lib/data'
 
 const schoolsOptions = schools.map((e, i) => {
   return { label: e, value: padStart(String(i), 8, '0') }
@@ -13,10 +13,10 @@ const value = ref('')
   <lew-select
     v-model="value"
     style="width: 320px"
-    :itemHeight="48"
+    :item-height="48"
     :options="schoolsOptions"
     placeholder="Support slots"
-    popoverWidth="320px"
+    popover-width="320px"
   >
     <template #item="{ props }">
       <div
@@ -26,7 +26,9 @@ const value = ref('')
         <div class="custom-select-content">
           <lew-avatar size="32" shape="circle" :alt="props.label" />
           <div class="info">
-            <div class="label">{{ props.label }}</div>
+            <div class="label">
+              {{ props.label }}
+            </div>
             <div class="desc">
               {{ props.value }}
             </div>

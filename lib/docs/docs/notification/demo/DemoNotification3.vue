@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const openWithDelay = () => {
+function openWithDelay() {
   LewNotification.info({
     title: 'HSBC Account Update',
     content:

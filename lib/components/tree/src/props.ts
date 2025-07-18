@@ -1,6 +1,6 @@
 import type { PropType } from 'vue'
 
-export type TreeDataSource = {
+export interface TreeDataSource {
   label: string
   key: string
   level: number

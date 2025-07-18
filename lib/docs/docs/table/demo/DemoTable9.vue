@@ -64,17 +64,21 @@ const selectedKeys = ref('35503077')
 </script>
 
 <template>
-  <div style="margin-bottom: 10px">Selected: {{ selectedKeys }}</div>
+  <div style="margin-bottom: 10px">
+    Selected: {{ selectedKeys }}
+  </div>
   <lew-table
     ref="tableRef"
+    v-model:selected-keys="selectedKeys"
     checkable
-    v-model:selectedKeys="selectedKeys"
     :data-source="data"
     :columns="columns"
     :max-height="400"
-    rowKey="id"
+    row-key="id"
   >
-    <template #release_date="{ row }"> {{ row.release_date }} </template>
+    <template #release_date="{ row }">
+      {{ row.release_date }}
+    </template>
     <template #directors="{ row }">
       <lew-tag
         v-for="(item, index) in row.directors"
@@ -108,7 +112,8 @@ const selectedKeys = ref('35503077')
           type="light"
           color="blue"
           size="small"
-          >{{ actor }}
+        >
+          {{ actor }}
         </lew-tag>
       </lew-flex>
     </template>

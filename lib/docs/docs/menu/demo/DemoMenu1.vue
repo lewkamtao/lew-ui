@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import {
-  PieChart,
   BarChart,
   Book,
-  Flame,
   CheckSquare,
+  Flame,
+  Palette,
+  PieChart,
   Smile,
   Users,
-  Palette,
 } from 'lucide-vue-next'
 
 const options = ref([
@@ -89,15 +89,16 @@ const options = ref([
   },
 ])
 
-let modelValue = ref('User Guide')
+const modelValue = ref('User Guide')
 
-const change = (item: any) => {
+function change(item: any) {
   console.log(item)
 }
 </script>
+
 <template>
   <div class="menu lew-scrollbar">
-    <lew-menu :options="options" v-model="modelValue" @change="change" />
+    <lew-menu v-model="modelValue" :options="options" @change="change" />
   </div>
 </template>
 

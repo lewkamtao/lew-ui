@@ -1,7 +1,7 @@
 import { h, render } from 'vue'
 import NotificationContainer from './components/NotificationContainer.vue'
 
-export type NotificationParamsTyped = {
+export interface NotificationParamsTyped {
   title: string
   content: string
   duration?: number
@@ -24,7 +24,7 @@ export interface NotificationInstance {
 
 let containerInstance: any = null
 
-const createContainer = () => {
+function createContainer() {
   if (!containerInstance) {
     const container = document.createElement('div')
     document.body.appendChild(container)
@@ -35,7 +35,7 @@ const createContainer = () => {
   return containerInstance
 }
 
-const createNotification = (type: string) => {
+function createNotification(type: string) {
   return ({
     title,
     content,
@@ -69,7 +69,7 @@ export const LewNotification = {
   error: createNotification('error'),
 }
 
-export type LewNotification = {
+export interface LewNotification {
   name: string
   warning: NotificationFn
   info: NotificationFn

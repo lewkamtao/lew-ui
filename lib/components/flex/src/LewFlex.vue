@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { flexProps } from './props'
-import { any2px } from 'lew-ui/utils'
 import type { CSSProperties } from 'vue'
+import { any2px } from 'lew-ui/utils'
+import { flexProps } from './props'
 
 const props = defineProps(flexProps)
 
@@ -30,7 +30,8 @@ const alignmentMap = {
 }
 
 function getJustifyContent() {
-  if (props.mode) return `space-${props.mode}`
+  if (props.mode)
+    return `space-${props.mode}`
   const mainAxis = props.direction === 'x' ? props.x : props.y
   return alignmentMap[mainAxis] || 'center'
 }
@@ -43,7 +44,7 @@ function getAlignItems() {
 
 <template>
   <div class="lew-flex" :style="styleObject">
-    <slot></slot>
+    <slot />
   </div>
 </template>
 

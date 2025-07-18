@@ -1,115 +1,115 @@
 <script setup lang="ts">
-import { object2class, getColorType, any2px } from "lew-ui/utils";
-import { buttonProps } from "./props";
-import Icon from "lew-ui/utils/Icon.vue";
+import { any2px, getColorType, object2class } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { buttonProps } from './props'
 
-const emit = defineEmits(["click"]);
-const props = defineProps(buttonProps);
+const props = defineProps(buttonProps)
+const emit = defineEmits(['click'])
+const _loading = ref(false)
 
-const _loading = ref(false);
+const buttonRef = ref()
 
-const buttonRef = ref();
+function focus() {
+  buttonRef.value?.focus()
+}
 
-const focus = () => {
-  buttonRef.value?.focus();
-};
-
-const handleClick = async (e: MouseEvent) => {
-  if (props.disabled || _loading.value || props.loading) return;
-  emit("click", e);
-  if (typeof props.request === "function") {
+async function handleClick(e: MouseEvent) {
+  if (props.disabled || _loading.value || props.loading)
+    return
+  emit('click', e)
+  if (typeof props.request === 'function') {
     if (_loading.value) {
-      return;
+      return
     }
-    _loading.value = true;
-    await props.request();
-    _loading.value = false;
+    _loading.value = true
+    await props.request()
+    _loading.value = false
   }
-};
-const instance = getCurrentInstance();
-const hasDefaultSlot = ref(false);
+}
+const instance = getCurrentInstance()
+const hasDefaultSlot = ref(false)
 
 if (instance?.slots.default) {
-  hasDefaultSlot.value = true;
+  hasDefaultSlot.value = true
 }
 
 const getButtonClass = computed(() => {
-  const { size, type, color, singleIcon } = props;
-  const loading = _loading.value || props.loading;
-  return object2class("lew-button", {
+  const { size, type, color, singleIcon } = props
+  const loading = _loading.value || props.loading
+  return object2class('lew-button', {
     size,
     type,
     loading,
     singleIcon,
     color,
-  });
-});
+  })
+})
 
 const getIconSize = computed(() => {
-  const { size } = props;
+  const { size } = props
   switch (size) {
-    case "mini":
-      return 12;
-    case "small":
-      return 14;
-    case "medium":
-      return 16;
-    case "large":
-      return 18;
+    case 'mini':
+      return 12
+    case 'small':
+      return 14
+    case 'medium':
+      return 16
+    case 'large':
+      return 18
     default:
-      return 16;
+      return 16
   }
-});
+})
 
 const getStyle = computed(() => {
-  const { round, type, color, dashed, width } = props;
-  const styleObj: Record<string, string> = {};
-  const _color = getColorType(color) || "primary";
+  const { round, type, color, dashed, width } = props
+  const styleObj: Record<string, string> = {}
+  const _color = getColorType(color) || 'primary'
 
   // 基础样式
   const baseStyle = {
     fill: {
       backgroundColor: `var(--lew-color-${_color})`,
-      color: "var(--lew-color-white)",
+      color: 'var(--lew-color-white)',
     },
     light: {
       backgroundColor: `var(--lew-color-${_color}-light)`,
       color: `var(--lew-color-${_color}-dark)`,
     },
     ghost: {
-      backgroundColor: "transparent",
+      backgroundColor: 'transparent',
       border: `var(--lew-form-border-width) ${
-        dashed ? "dashed" : "solid"
+        dashed ? 'dashed' : 'solid'
       } var(--lew-color-${_color}-dark)`,
       color: `var(--lew-color-${_color}-dark)`,
-      boxShadow: "none",
+      boxShadow: 'none',
     },
     text: {
-      backgroundColor: "transparent",
+      backgroundColor: 'transparent',
       color: `var(--lew-color-${_color}-dark)`,
-      boxShadow: "none",
+      boxShadow: 'none',
     },
-  };
+  }
 
   // 合并样式
   Object.assign(
     styleObj,
     baseStyle[type as keyof typeof baseStyle] || {
       backgroundColor: `var(--lew-color-${_color})`,
-    }
-  );
+    },
+  )
 
   // 圆角样式
-  styleObj.borderRadius = round ? "50px" : "none";
+  styleObj.borderRadius = round ? '50px' : 'none'
 
   if (width) {
-    styleObj.width = any2px(width);
+    styleObj.width = any2px(width)
   }
 
-  return styleObj;
-});
+  return styleObj
+})
 
-defineExpose({ focus });
+defineExpose({ focus })
 </script>
 
 <template>
@@ -132,7 +132,7 @@ defineExpose({ focus });
     <div v-if="$slots.default || text" class="lew-button-content">
       <span class="lew-button-text">
         <template v-if="$slots.default">
-          <slot></slot>
+          <slot />
         </template>
         <template v-else>
           {{ text }}
@@ -394,6 +394,7 @@ defineExpose({ focus });
   background-color: var(--lew-bgcolor-3) !important;
 }
 </style>
+
 <style lang="scss">
 .lew-dark .lew-button-color-black.lew-button-type-fill {
   color: #000 !important;

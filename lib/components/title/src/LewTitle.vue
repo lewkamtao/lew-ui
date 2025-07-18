@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { titleProps } from './props'
 import { any2px } from 'lew-ui/utils'
+import { titleProps } from './props'
 
 const props = defineProps(titleProps)
 
@@ -20,8 +20,10 @@ const titleStyle = computed(() => {
 
 <template>
   <div class="lew-title" :style="titleStyle">
-    <template v-if="text">{{ text }}</template>
-    <slot v-else></slot>
+    <template v-if="text">
+      {{ text }}
+    </template>
+    <slot v-else />
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import axios from '@/axios/http'
 
-const initOptionsMethod = () => {
+function initOptionsMethod() {
   return new Promise<any[]>((resolve) => {
     // item 不存在的时候 是第一层加载
     axios
@@ -24,7 +24,7 @@ const initOptionsMethod = () => {
   })
 }
 
-const loadMethod = (item?: any) => {
+function loadMethod(item?: any) {
   const levelMap: any = {
     0: 'province',
     1: 'city',
@@ -55,7 +55,7 @@ const loadMethod = (item?: any) => {
       })
   })
 }
-const change = (item: any) => {
+function change(item: any) {
   console.log(item)
 }
 const v = ref<string>('')
@@ -65,11 +65,11 @@ const v = ref<string>('')
   <lew-flex direction="y" gap="20px" style="width: 300px">
     <lew-tree-select
       v-model="v"
-      keyField="value"
-      labelField="label"
+      key-field="value"
+      label-field="label"
       searchable
-      :loadMethod="loadMethod"
-      :initOptionsMethod="initOptionsMethod"
+      :load-method="loadMethod"
+      :init-options-method="initOptionsMethod"
       @change="change"
     />
   </lew-flex>

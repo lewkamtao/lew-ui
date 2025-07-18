@@ -1,8 +1,8 @@
-import type { PropType, ExtractPropTypes } from 'vue'
 import type { LewSize } from 'lew-ui'
+import type { ExtractPropTypes, PropType } from 'vue'
 import { validSizes } from 'lew-ui/constants'
 
-export type InputTableColumn = {
+export interface InputTableColumn {
   title: string
   width?: number
   field: string

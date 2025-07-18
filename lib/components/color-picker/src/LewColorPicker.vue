@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { any2px, object2class } from 'lew-ui/utils'
 import { colorPickerProps } from './props'
+
 const props = defineProps(colorPickerProps)
 
-const modelValue = defineModel()
 const emit = defineEmits(['change'])
-
+const modelValue = defineModel()
 const isFocus = ref(false)
 
 const getPickerClassName = computed(() => {
@@ -53,14 +53,14 @@ const getPickerValueInputStyle = computed(() => {
     fontSize: `var(--lew-form-font-size-${size})`,
   }
 })
-let pickerValueInputRef = ref()
-const focus = () => {
+const pickerValueInputRef = ref()
+function focus() {
   isFocus.value = true
   // 全选选中值
   pickerValueInputRef.value.select()
 }
 
-const blur = () => {
+function blur() {
   isFocus.value = false
   // 转化成有效的色值
   modelValue.value = convertToHex(modelValue.value as string)
@@ -68,17 +68,17 @@ const blur = () => {
 }
 
 // 将任意格式的颜色值转换为标准的hex格式
-const convertToHex = (color: string): string => {
+function convertToHex(color: string): string {
   // 去除空格
   color = color.trim()
 
   // 如果已经是6位hex格式,直接返回(添加#号)
-  if (/^#?[0-9a-fA-F]{6}$/.test(color)) {
+  if (/^#?[0-9a-f]{6}$/i.test(color)) {
     return color.startsWith('#') ? color : `#${color}`
   }
 
   // 处理3位hex缩写,例如#f93
-  if (/^#?[0-9a-fA-F]{3}$/.test(color)) {
+  if (/^#?[0-9a-f]{3}$/i.test(color)) {
     const hex = color.replace('#', '')
     return `#${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`
   }
@@ -88,9 +88,9 @@ const convertToHex = (color: string): string => {
     /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*\d+(?:\.\d+)?)?\)$/,
   )
   if (rgbMatch) {
-    const r = parseInt(rgbMatch[1]).toString(16).padStart(2, '0')
-    const g = parseInt(rgbMatch[2]).toString(16).padStart(2, '0')
-    const b = parseInt(rgbMatch[3]).toString(16).padStart(2, '0')
+    const r = Number.parseInt(rgbMatch[1]).toString(16).padStart(2, '0')
+    const g = Number.parseInt(rgbMatch[2]).toString(16).padStart(2, '0')
+    const b = Number.parseInt(rgbMatch[3]).toString(16).padStart(2, '0')
     return `#${r}${g}${b}`
   }
 
@@ -98,7 +98,7 @@ const convertToHex = (color: string): string => {
   return ''
 }
 
-const change = () => {
+function change() {
   emit('change', modelValue.value)
 }
 </script>
@@ -111,22 +111,22 @@ const change = () => {
       :class="getPickerClassName"
     >
       <input
+        v-model="modelValue"
         class="lew-color-picker-input"
         :style="getPickerInputStyle"
         type="color"
-        v-model="modelValue"
         @change="change"
-      />
+      >
       <input
         ref="pickerValueInputRef"
+        v-model="modelValue"
         :style="getPickerValueInputStyle"
         class="lew-color-value-input"
         type="text"
         :placeholder="placeholder"
         @focus="focus"
         @blur="blur"
-        v-model="modelValue"
-      />
+      >
     </div>
   </div>
 </template>

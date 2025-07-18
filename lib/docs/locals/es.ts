@@ -401,26 +401,26 @@ export default {
       },
     },
     dropdown: {
-      name: 'Dropdown Menu',
-      description:
+      'name': 'Dropdown Menu',
+      'description':
         'Hover-triggered floating menu, making operations more convenient',
-      demo1: {
+      'demo1': {
         title: 'Basic Usage',
       },
-      demo2: {
+      'demo2': {
         title: 'Not Just a Button',
       },
-      demo3: {
+      'demo3': {
         title: 'Disabled Item',
       },
-      props: {
+      'props': {
         options: 'Menú options configuration',
         trigger: 'Trigger method',
         placement: 'Menu pop-up position',
         checkable: 'Permite selección',
       },
       'options(ContextMenus)': contextMenu,
-      events: {
+      'events': {
         show: 'Menu show event callback',
         hide: 'Menu hide event callback',
         change: 'Menu item selection event callback',
@@ -452,21 +452,21 @@ export default {
       },
     },
     contextMenu: {
-      name: 'Context Menu',
-      description: 'Elegant right-click menu, making operations more natural',
-      demo1: {
+      'name': 'Context Menu',
+      'description': 'Elegant right-click menu, making operations more natural',
+      'demo1': {
         title: 'Basic Usage',
       },
-      demo2: {
+      'demo2': {
         title: 'Support Multi-level Nesting',
       },
-      demo3: {
+      'demo3': {
         title: 'Support Dynamic Update',
       },
-      demo4: {
+      'demo4': {
         title: 'Checkbox',
       },
-      props: {
+      'props': {
         options: 'Right-click menu configuration',
         disabled: 'Disable right-click menu',
       },
@@ -763,28 +763,28 @@ export default {
       },
     },
     checkbox: {
-      name: 'Checkbox',
-      description:
+      'name': 'Checkbox',
+      'description':
         'Multi-select selector, making multiple choices more intuitive',
-      demo1: {
+      'demo1': {
         title: 'Basic Usage',
       },
-      demo2: {
+      'demo2': {
         title: 'Vertical Distribution',
       },
-      demo3: {
+      'demo3': {
         title: 'Block',
       },
-      demo4: {
+      'demo4': {
         title: 'Round',
       },
-      demo5: {
+      'demo5': {
         title: 'Read-only Status',
       },
-      demo6: {
+      'demo6': {
         title: 'Disabled Status',
       },
-      demo7: {
+      'demo7': {
         title: 'Single Mode',
       },
       'model(CheckboxGroup)': {
@@ -821,34 +821,34 @@ export default {
       'events(CheckboxGroup)': {
         change: 'Triggered when the value changes',
       },
-      options: {
+      'options': {
         label: 'Title',
         value: 'Value',
         disabled: 'Disable',
       },
     },
     radio: {
-      name: 'Radio',
-      description: 'Single-select selector, making single choice more clear',
-      demo1: {
+      'name': 'Radio',
+      'description': 'Single-select selector, making single choice more clear',
+      'demo1': {
         title: 'Basic Usage',
       },
-      demo2: {
+      'demo2': {
         title: 'Vertical Distribution',
       },
-      demo3: {
+      'demo3': {
         title: 'Block',
       },
-      demo4: {
+      'demo4': {
         title: 'Shape',
       },
-      demo5: {
+      'demo5': {
         title: 'Read-only Status',
       },
-      demo6: {
+      'demo6': {
         title: 'Disabled Status',
       },
-      model: {
+      'model': {
         modelValue: 'Bound Value',
       },
       'props(RadioGroup)': {
@@ -861,12 +861,12 @@ export default {
         readonly: 'Read-only',
         round: 'Round Style',
       },
-      options: {
+      'options': {
         label: 'Title',
         value: 'Value',
         disabled: 'Disable',
       },
-      events: {
+      'events': {
         change: 'Triggered when the value changes',
       },
     },
@@ -1645,25 +1645,25 @@ export default {
       },
     },
     collapse: {
-      name: 'Collapse',
-      description:
+      'name': 'Collapse',
+      'description':
         'Collapsible and expandable content area, making information display more organized',
-      demo1: {
+      'demo1': {
         title: 'Basic Usage',
       },
-      demo2: {
+      'demo2': {
         title: 'Title Slot',
       },
-      demo3: {
+      'demo3': {
         title: 'Accordion',
       },
-      model: {
+      'model': {
         modelValue: 'Parameter Name',
       },
       'model(CollapseItem)': {
         modelValue: 'Parameter Name',
       },
-      props: {
+      'props': {
         width: 'Width',
       },
       'props(CollapseItem)': {
@@ -1942,7 +1942,7 @@ export default {
         triggerTarget: 'Objetivo del disparador',
       },
       slots: {
-        trigger: 'Slot del disparador',
+        'trigger': 'Slot del disparador',
         'popover-body': 'Slot del cuerpo del popover',
       },
     },

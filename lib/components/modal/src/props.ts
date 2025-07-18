@@ -1,5 +1,6 @@
 import type { ExtractPropTypes } from 'vue'
 import type { ButtonProps } from '../../button/index'
+
 export const modalModel = {
   visible: {
     type: Boolean,

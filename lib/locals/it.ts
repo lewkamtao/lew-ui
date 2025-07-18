@@ -1,7 +1,7 @@
 export default {
   name: 'it',
   image: {
-    fail: "Impossibile caricare l'immagine, si prega di riprovare più tardi",
+    fail: 'Impossibile caricare l\'immagine, si prega di riprovare più tardi',
   },
   input: {
     placeholder: 'Inserisci',

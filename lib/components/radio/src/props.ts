@@ -1,6 +1,6 @@
+import type { LewDirection, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import type { LewSize, LewDirection } from 'lew-ui'
-import { validSizes, validDirection } from 'lew-ui/constants'
+import { validDirection, validSizes } from 'lew-ui/constants'
 
 export type RadioDirection = 'x' | 'y'
 

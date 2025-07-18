@@ -43,9 +43,9 @@ export const backTopProps = {
     default: '',
     validator(value: string): boolean {
       if (
-        value &&
-        typeof document !== 'undefined' &&
-        !document.querySelector(value)
+        value
+        && typeof document !== 'undefined'
+        && !document.querySelector(value)
       ) {
         console.warn(
           `[LewBackTop] 未找到目标元素：${value}。请确保提供了有效的 CSS 选择器。`,

@@ -1,7 +1,7 @@
 const contextMenu = {
   label: 'Texte affiché',
   value: 'Valeur',
-  icon: "Fonction de rendu d'icône",
+  icon: 'Fonction de rendu d\'icône',
   children: 'Collection de nœuds enfants',
   disabled: 'Option désactivée',
   isDividerLine: 'Est une ligne de séparation',
@@ -38,7 +38,7 @@ export default {
     image: {
       name: 'Image',
       description:
-        "Affichage élégant d'images avec support du chargement différé, des états de chargement et de la gestion des erreurs",
+        'Affichage élégant d\'images avec support du chargement différé, des états de chargement et de la gestion des erreurs',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -52,21 +52,21 @@ export default {
         title: 'Échec de chargement',
       },
       props: {
-        src: "URL de l'image",
-        alt: "Description de l'image",
+        src: 'URL de l\'image',
+        alt: 'Description de l\'image',
         width: 'Largeur',
         height: 'Hauteur',
         objectFit: 'Mode de remplissage',
-        objectPosition: "Position de l'image",
+        objectPosition: 'Position de l\'image',
         lazy: 'Activer le chargement différé',
-        loading: "Afficher l'état de chargement",
-        title: "Titre de l'image",
+        loading: 'Afficher l\'état de chargement',
+        title: 'Titre de l\'image',
       },
     },
     avatar: {
       name: 'Avatar',
       description:
-        "Un composant d'avatar élégant supportant les formats image, icône et texte",
+        'Un composant d\'avatar élégant supportant les formats image, icône et texte',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -79,18 +79,18 @@ export default {
       demo4: {
         title: 'Forme',
         description:
-          "Contrôlez la forme de l'avatar via `shape`, les valeurs possibles sont `circle`, `square`, `sharp`.",
+          'Contrôlez la forme de l\'avatar via `shape`, les valeurs possibles sont `circle`, `square`, `sharp`.',
       },
       props: {
         size: 'Taille',
-        loading: "Afficher l'état de chargement",
+        loading: 'Afficher l\'état de chargement',
         shape: 'Forme',
-        src: "URL de l'image",
-        alt: "Description de l'image",
+        src: 'URL de l\'image',
+        alt: 'Description de l\'image',
         status: 'État',
         objectFit: 'Mode de remplissage',
-        objectPosition: "Position de l'image",
-        statusPlacement: "Position de l'état",
+        objectPosition: 'Position de l\'image',
+        statusPlacement: 'Position de l\'état',
       },
     },
     button: {
@@ -118,11 +118,11 @@ export default {
         text: 'Texte du bouton',
         type: 'Type',
         size: 'Taille',
-        singleIcon: "Afficher uniquement l'icône",
+        singleIcon: 'Afficher uniquement l\'icône',
         color: 'Couleur',
         round: 'Arrondi',
         dashed: 'En pointillés',
-        loading: "Afficher l'état de chargement",
+        loading: 'Afficher l\'état de chargement',
         disabled: 'État désactivé',
         request: 'Requête',
       },
@@ -153,7 +153,7 @@ export default {
         title: 'Slot',
       },
       props: {
-        text: "Texte de l'étiquette, prioritaire sur le slot, l'effet text-trim sera déclenché en cas de dépassement de la largeur",
+        text: 'Texte de l\'étiquette, prioritaire sur le slot, l\'effet text-trim sera déclenché en cas de dépassement de la largeur',
         type: 'Type de style',
         size: 'Taille',
         color: 'Thème de couleur',
@@ -166,7 +166,7 @@ export default {
     badge: {
       name: 'Badge',
       description:
-        "Un petit point rouge qui s'épanouit dans le coin supérieur droit, rendant les notifications plus visibles",
+        'Un petit point rouge qui s\'épanouit dans le coin supérieur droit, rendant les notifications plus visibles',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -195,7 +195,7 @@ export default {
     title: {
       name: 'Titre',
       description:
-        "Plus qu'un simple titre, une essence qui donne vie au contenu",
+        'Plus qu\'un simple titre, une essence qui donne vie au contenu',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -216,7 +216,7 @@ export default {
     textTrim: {
       name: 'Découpe de Texte',
       description:
-        "Gérer élégamment les textes longs sans compromettre l'esthétique de la mise en page",
+        'Gérer élégamment les textes longs sans compromettre l\'esthétique de la mise en page',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -231,15 +231,15 @@ export default {
       },
       props: {
         text: 'Contenu du texte',
-        lineClamp: "Nombre maximum de lignes à afficher, l'excès sera tronqué",
+        lineClamp: 'Nombre maximum de lignes à afficher, l\'excès sera tronqué',
         allowHTML: 'Autoriser le rendu des balises HTML',
-        placement: "Position d'affichage de l'infobulle",
+        placement: 'Position d\'affichage de l\'infobulle',
         offset:
-          "Décalage de l'infobulle par rapport à l'élément cible [x, y] (unité : pixels)",
+          'Décalage de l\'infobulle par rapport à l\'élément cible [x, y] (unité : pixels)',
         textAlign:
-          "Direction d'alignement horizontal (lorsque la largeur est inférieure à la largeur du conteneur)",
+          'Direction d\'alignement horizontal (lorsque la largeur est inférieure à la largeur du conteneur)',
         delay:
-          "Délai d'affichage et de masquage de l'infobulle [délai d'affichage, délai de masquage] (unité : millisecondes)",
+          'Délai d\'affichage et de masquage de l\'infobulle [délai d\'affichage, délai de masquage] (unité : millisecondes)',
         reserveEnd:
           'Nombre de caractères à conserver à la fin, affichera des points de suspension au milieu lorsque le texte déborde, en conservant le début et le nombre spécifié de caractères finaux',
       },
@@ -258,11 +258,11 @@ export default {
         title: 'Mode',
       },
       props: {
-        direction: "Direction d'arrangement des éléments enfants",
+        direction: 'Direction d\'arrangement des éléments enfants',
         x: 'Alignement horizontal des éléments enfants',
         y: 'Alignement vertical des éléments enfants',
-        mode: "Mode de distribution des éléments enfants, remplace les paramètres d'alignement x ou y, l'effet dépend de la valeur de direction",
-        wrap: "Autoriser le retour à la ligne des éléments enfants lorsque l'espace est insuffisant",
+        mode: 'Mode de distribution des éléments enfants, remplace les paramètres d\'alignement x ou y, l\'effet dépend de la valeur de direction',
+        wrap: 'Autoriser le retour à la ligne des éléments enfants lorsque l\'espace est insuffisant',
         gap: 'Espacement entre les éléments enfants (unité : pixels)',
         width: 'Largeur du conteneur Flex (unité : pixels ou pourcentage)',
       },
@@ -284,7 +284,7 @@ export default {
     icon: {
       name: 'Icône',
       description:
-        "Collection d'icônes élégantes, enrichissant le langage visuel de l'interface",
+        'Collection d\'icônes élégantes, enrichissant le langage visuel de l\'interface',
     },
     backTop: {
       name: 'Retour en haut',
@@ -301,21 +301,21 @@ export default {
       },
       props: {
         target:
-          "Spécifie l'élément cible qui déclenche l'événement de défilement, utilisant un sélecteur CSS. Si vide, la fenêtre entière est utilisée par défaut.",
+          'Spécifie l\'élément cible qui déclenche l\'événement de défilement, utilisant un sélecteur CSS. Si vide, la fenêtre entière est utilisée par défaut.',
         right:
           'Distance entre le composant et le bord droit de la page, en pixels.',
         bottom: 'Distance entre le composant et le bas de la page, en pixels.',
         valveHeight:
-          "Hauteur de seuil de défilement de la page, le bouton de retour en haut s'affiche lorsque le défilement dépasse cette valeur, en pixels.",
+          'Hauteur de seuil de défilement de la page, le bouton de retour en haut s\'affiche lorsque le défilement dépasse cette valeur, en pixels.',
       },
       events: {
-        click: "Callback de l'événement de retour en haut",
+        click: 'Callback de l\'événement de retour en haut',
       },
     },
     steps: {
       name: 'Étapes',
       description:
-        "Affiche clairement le processus d'opération, permettant à l'utilisateur de savoir où il se trouve",
+        'Affiche clairement le processus d\'opération, permettant à l\'utilisateur de savoir où il se trouve',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -326,16 +326,16 @@ export default {
         title: 'Chargement',
       },
       model: {
-        modelValue: "Index de l'étape actuellement active",
+        modelValue: 'Index de l\'étape actuellement active',
       },
       props: {
         options: 'Tableau de configuration des étapes',
         status: 'État actuel des étapes',
-        minWidth: "Largeur minimale de l'étape",
+        minWidth: 'Largeur minimale de l\'étape',
       },
       options: {
-        title: "Titre de l'étape",
-        description: "Description de l'étape",
+        title: 'Titre de l\'étape',
+        description: 'Description de l\'étape',
       },
     },
     menu: {
@@ -352,11 +352,11 @@ export default {
         options: 'Tableau de configuration des options de menu',
       },
       menuOptions: {
-        label: "Texte de l'élément de menu",
-        value: "Valeur de l'élément de menu",
+        label: 'Texte de l\'élément de menu',
+        value: 'Valeur de l\'élément de menu',
         children: 'Tableau des éléments de sous-menu',
-        disabled: "Désactiver l'élément de menu",
-        icon: "Icône de l'élément de menu",
+        disabled: 'Désactiver l\'élément de menu',
+        icon: 'Icône de l\'élément de menu',
         tagProps: 'Propriétés du badge',
       },
     },
@@ -389,51 +389,51 @@ export default {
       },
       props: {
         options:
-          "Source de données de l'arborescence de menu, prend en charge les structures imbriquées.",
+          'Source de données de l\'arborescence de menu, prend en charge les structures imbriquées.',
         width:
-          "Largeur de l'arborescence de menu, prend en charge les valeurs de largeur CSS.",
+          'Largeur de l\'arborescence de menu, prend en charge les valeurs de largeur CSS.',
       },
       menuTreeItem: {
         label:
           'Texte du titre de l\'élément d\'arborescence de menu. Vous pouvez également utiliser le slot nommé "label" pour personnaliser le contenu du titre.',
         value:
-          "Valeur de l'élément de menu, utilisée pour identifier l'unicité de l'élément de menu.",
-        level: "Niveau de l'élément d'arborescence de menu, commençant à 1.",
-        icon: "Fonction de rendu d'icône",
+          'Valeur de l\'élément de menu, utilisée pour identifier l\'unicité de l\'élément de menu.',
+        level: 'Niveau de l\'élément d\'arborescence de menu, commençant à 1.',
+        icon: 'Fonction de rendu d\'icône',
         tagProps: 'Propriétés du badge',
-        disabled: "Désactiver l'élément de menu",
-        isLeaf: "Si c'est un nœud feuille",
+        disabled: 'Désactiver l\'élément de menu',
+        isLeaf: 'Si c\'est un nœud feuille',
       },
     },
     dropdown: {
-      name: 'Menu déroulant',
-      description:
+      'name': 'Menu déroulant',
+      'description':
         'Menu flottant déclenché par un clic, rendant les opérations plus pratiques',
-      demo1: {
+      'demo1': {
         title: 'Utilisation de base',
       },
-      demo2: {
+      'demo2': {
         title: 'Pas seulement des boutons',
       },
-      demo3: {
+      'demo3': {
         title: 'Éléments désactivés',
       },
 
-      props: {
+      'props': {
         options: 'Configuration des options de menu',
         trigger: 'Mode de déclenchement',
-        placement: "Position d'apparition du menu",
+        placement: 'Position d\'apparition du menu',
         checkable: 'Permet la sélection',
       },
       'options(ContextMenus)': contextMenu,
-      events: {
-        show: "Callback d'affichage du menu",
+      'events': {
+        show: 'Callback d\'affichage du menu',
         hide: 'Callback de masquage du menu',
-        change: "Callback de sélection d'élément de menu",
+        change: 'Callback de sélection d\'élément de menu',
       },
     },
     breadcrumb: {
-      name: "Fil d'Ariane",
+      name: 'Fil d\'Ariane',
       description:
         'Navigation claire des chemins, empêchant les utilisateurs de se perdre',
       demo1: {
@@ -443,38 +443,38 @@ export default {
         title: 'Sélection personnalisée',
       },
       demo3: {
-        title: "Types d'icônes séparateurs",
+        title: 'Types d\'icônes séparateurs',
       },
       props: {
-        options: "Tableau de configuration du fil d'Ariane",
-        separator: "Type d'icône séparateur",
+        options: 'Tableau de configuration du fil d\'Ariane',
+        separator: 'Type d\'icône séparateur',
       },
       breadcrumbOptions: {
-        label: "Texte de l'élément du fil d'Ariane",
-        value: "Valeur de l'élément du fil d'Ariane",
-        active: "Si c'est l'élément actuellement sélectionné",
+        label: 'Texte de l\'élément du fil d\'Ariane',
+        value: 'Valeur de l\'élément du fil d\'Ariane',
+        active: 'Si c\'est l\'élément actuellement sélectionné',
       },
       events: {
-        change: "Déclenché lorsque l'élément du fil d'Ariane change",
+        change: 'Déclenché lorsque l\'élément du fil d\'Ariane change',
       },
     },
     contextMenu: {
-      name: 'Menu contextuel',
-      description:
+      'name': 'Menu contextuel',
+      'description':
         'Menu contextuel élégant, rendant les opérations plus naturelles',
-      demo1: {
+      'demo1': {
         title: 'Utilisation de base',
       },
-      demo2: {
+      'demo2': {
         title: 'Supporte plusieurs niveaux',
       },
-      demo3: {
+      'demo3': {
         title: 'Supporte les mises à jour dynamiques',
       },
-      demo4: {
+      'demo4': {
         title: 'Cases à cocher',
       },
-      props: {
+      'props': {
         options: 'Configuration du menu contextuel',
         disabled: 'Désactiver le menu contextuel',
       },
@@ -504,49 +504,49 @@ export default {
       },
       props: {
         options:
-          "Tableau d'options définissant la structure et le contenu du formulaire",
+          'Tableau d\'options définissant la structure et le contenu du formulaire',
         size: 'Taille globale du formulaire, affecte tous les éléments du formulaire',
         width:
           'Largeur globale du formulaire, supporte les nombres (pixels) ou les pourcentages',
-        columns: "Nombre d'éléments de formulaire par ligne, maximum 4",
+        columns: 'Nombre d\'éléments de formulaire par ligne, maximum 4',
         labelWidth:
           'Largeur des étiquettes des éléments de formulaire, supporte les nombres (pixels) ou "auto"',
-        disabled: "Désactiver l'ensemble du formulaire",
-        readonly: "Mettre l'ensemble du formulaire en lecture seule",
+        disabled: 'Désactiver l\'ensemble du formulaire',
+        readonly: 'Mettre l\'ensemble du formulaire en lecture seule',
         direction:
           'Direction d\'arrangement des éléments de formulaire, "x" pour horizontal, "y" pour vertical',
         formMethods:
           'Collection de méthodes de formulaire, contenant des fonctions pour contrôler le formulaire',
       },
       formItemProps: {
-        label: "Texte de l'étiquette de l'élément de formulaire",
+        label: 'Texte de l\'étiquette de l\'élément de formulaire',
         field:
-          "Nom du champ de l'élément de formulaire pour la liaison de données et la validation",
-        required: "Si c'est un champ obligatoire",
+          'Nom du champ de l\'élément de formulaire pour la liaison de données et la validation',
+        required: 'Si c\'est un champ obligatoire',
         as: 'Type de l\'élément de formulaire, comme "input", "select", etc.',
-        size: "Taille de l'élément de formulaire individuel, peut remplacer le paramètre global",
+        size: 'Taille de l\'élément de formulaire individuel, peut remplacer le paramètre global',
         width:
-          "Largeur de l'élément de formulaire individuel, supporte les nombres (pixels) ou les pourcentages",
+          'Largeur de l\'élément de formulaire individuel, supporte les nombres (pixels) ou les pourcentages',
         labelWidth:
           'Largeur de l\'étiquette de l\'élément de formulaire individuel, supporte les nombres (pixels) ou "auto"',
         direction:
           'Direction de l\'élément de formulaire individuel, "x" pour horizontal, "y" pour vertical',
         disabled: 'Désactiver cet élément de formulaire',
         readonly: 'Mettre cet élément de formulaire en lecture seule',
-        tips: "Texte d'aide pour l'élément de formulaire",
+        tips: 'Texte d\'aide pour l\'élément de formulaire',
         errMessage:
-          "Message d'erreur personnalisé en cas d'échec de validation",
-        rule: "Règle de validation pour l'élément de formulaire",
+          'Message d\'erreur personnalisé en cas d\'échec de validation',
+        rule: 'Règle de validation pour l\'élément de formulaire',
         props:
-          "Propriétés supplémentaires à passer au composant de l'élément de formulaire",
+          'Propriétés supplémentaires à passer au composant de l\'élément de formulaire',
         between:
           'Ajouter un espacement entre les éléments de formulaire en disposition horizontale',
         gridArea: 'Position dans la disposition en grille',
         outputFormat: 'Méthode de formatage pour la sortie des paramètres',
-        inputFormat: "Méthode de formatage pour l'entrée des paramètres",
+        inputFormat: 'Méthode de formatage pour l\'entrée des paramètres',
       },
       events: {
-        mounted: "Déclenché lors du montage de l'élément de formulaire",
+        mounted: 'Déclenché lors du montage de l\'élément de formulaire',
       },
       methods: {
         getForm: 'Obtenir le formulaire',
@@ -594,10 +594,10 @@ export default {
         type: 'Type de champ de saisie',
         size: 'Taille du champ de saisie',
         width: 'Largeur du champ de saisie',
-        placeholder: "Texte d'espace réservé",
+        placeholder: 'Texte d\'espace réservé',
         disabled: 'Désactiver le champ de saisie',
         readonly: 'Mettre le champ de saisie en lecture seule',
-        clearable: "Activer le bouton d'effacement",
+        clearable: 'Activer le bouton d\'effacement',
         showPassword: 'Activer la visibilité du mot de passe',
         maxLength: 'Longueur maximale de saisie',
         showCount:
@@ -613,11 +613,11 @@ export default {
         prefixesOptions:
           'Liste des options de préfixe, utilisée lorsque prefixes est select',
         prefixesTooltip:
-          "Texte d'info-bulle pour le préfixe du champ de saisie",
+          'Texte d\'info-bulle pour le préfixe du champ de saisie',
         suffix: 'Type de suffixe du champ de saisie',
         suffixOptions:
           'Liste des options de suffixe, utilisée lorsque suffix est select',
-        suffixTooltip: "Texte d'info-bulle pour le suffixe du champ de saisie",
+        suffixTooltip: 'Texte d\'info-bulle pour le suffixe du champ de saisie',
         okByEnter: 'Autoriser la confirmation par la touche Entrée',
       },
       events: {
@@ -625,7 +625,7 @@ export default {
         focus: 'Déclenché lorsque le champ de saisie obtient le focus',
         blur: 'Déclenché lorsque le champ de saisie perd le focus',
         input: 'Déclenché lors de la saisie dans le champ',
-        clear: "Déclenché lors de l'effacement du champ de saisie",
+        clear: 'Déclenché lors de l\'effacement du champ de saisie',
         ok: 'Déclenché lors de la confirmation du champ de saisie',
       },
       model: {
@@ -656,10 +656,10 @@ export default {
       props: {
         min: 'Valeur minimale',
         max: 'Valeur maximale',
-        step: "Pas d'incrémentation",
+        step: 'Pas d\'incrémentation',
         disabled: 'Précision',
         size: 'Taille, valeurs possibles : small, medium, large',
-        placeholder: "Texte d'espace réservé",
+        placeholder: 'Texte d\'espace réservé',
         readonly: 'Lecture seule',
         width:
           'Largeur, supporte les nombres (unité : pixels) ou les chaînes avec unités',
@@ -703,10 +703,10 @@ export default {
         modelValue: 'Valeur liée',
       },
       props: {
-        placeholder: "Texte d'espace réservé",
+        placeholder: 'Texte d\'espace réservé',
         disabled: 'Désactiver la zone de texte',
         readonly: 'Mettre en lecture seule',
-        clearable: "Afficher le bouton d'effacement",
+        clearable: 'Afficher le bouton d\'effacement',
         showCount: 'Afficher le compteur de caractères',
         maxLength: 'Nombre maximum de caractères',
         size: 'Taille de la zone de texte',
@@ -723,17 +723,17 @@ export default {
       },
       events: {
         change: 'Déclenché lorsque la valeur change',
-        focus: "Déclenché lors de l'obtention du focus",
+        focus: 'Déclenché lors de l\'obtention du focus',
         blur: 'Déclenché lors de la perte du focus',
         input: 'Déclenché lors de la saisie',
-        clear: "Déclenché lors de l'effacement",
+        clear: 'Déclenché lors de l\'effacement',
         ok: 'Déclenché lors de la confirmation',
       },
     },
     inputTag: {
       name: 'Champ de tags',
       description:
-        "Saisie et gestion faciles de plusieurs tags, rendant l'organisation des données plus claire",
+        'Saisie et gestion faciles de plusieurs tags, rendant l\'organisation des données plus claire',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -765,7 +765,7 @@ export default {
         size: 'Taille',
         disabled: 'Désactivé',
         clearable: 'Effaçable',
-        placeholder: "Texte d'espace réservé",
+        placeholder: 'Texte d\'espace réservé',
         readonly: 'Lecture seule',
         allowDuplicates: 'Autoriser les doublons',
         maxLength: 'Nombre maximum de tags autorisés',
@@ -773,34 +773,34 @@ export default {
       },
       events: {
         change: 'Déclenché lorsque la valeur change',
-        clear: "Déclenché lors de l'effacement",
-        add: "Déclenché lors de l'ajout d'un tag",
-        remove: "Déclenché lors de la suppression d'un tag",
+        clear: 'Déclenché lors de l\'effacement',
+        add: 'Déclenché lors de l\'ajout d\'un tag',
+        remove: 'Déclenché lors de la suppression d\'un tag',
       },
     },
     checkbox: {
-      name: 'Case à cocher',
-      description:
+      'name': 'Case à cocher',
+      'description':
         'Sélecteur supportant la sélection multiple, rendant les choix multiples plus intuitifs',
-      demo1: {
+      'demo1': {
         title: 'Utilisation de base',
       },
-      demo2: {
+      'demo2': {
         title: 'Distribution verticale',
       },
-      demo3: {
+      'demo3': {
         title: 'Style bloc',
       },
-      demo4: {
+      'demo4': {
         title: 'Style arrondi',
       },
-      demo5: {
+      'demo5': {
         title: 'Lecture seule',
       },
-      demo6: {
+      'demo6': {
         title: 'Désactivé',
       },
-      demo7: {
+      'demo7': {
         title: 'Mode unique',
       },
       'model(CheckboxGroup)': {
@@ -814,10 +814,10 @@ export default {
         disabled: 'Désactivé',
         readonly: 'Lecture seule',
         size: 'Taille',
-        direction: "Direction d'arrangement",
+        direction: 'Direction d\'arrangement',
         block: 'Affichage en bloc',
         round: 'Style arrondi',
-        iconable: "Autoriser l'utilisation d'icônes",
+        iconable: 'Autoriser l\'utilisation d\'icônes',
       },
       'props(Checkbox)': {
         label: 'Titre',
@@ -828,7 +828,7 @@ export default {
         size: 'Taille',
         block: 'Affichage en bloc',
         round: 'Style arrondi',
-        iconable: "Autoriser l'utilisation d'icônes",
+        iconable: 'Autoriser l\'utilisation d\'icônes',
         certain: 'État certain',
       },
       'events(Checkbox)': {
@@ -837,53 +837,53 @@ export default {
       'events(CheckboxGroup)': {
         change: 'Déclenché lorsque la valeur change',
       },
-      options: {
+      'options': {
         label: 'Titre',
         value: 'Valeur',
         disabled: 'Désactivé',
       },
     },
     radio: {
-      name: 'Bouton radio',
-      description:
-        "Sélecteur ne permettant qu'un seul choix, rendant la sélection unique plus claire",
-      demo1: {
+      'name': 'Bouton radio',
+      'description':
+        'Sélecteur ne permettant qu\'un seul choix, rendant la sélection unique plus claire',
+      'demo1': {
         title: 'Utilisation de base',
       },
-      demo2: {
+      'demo2': {
         title: 'Distribution verticale',
       },
-      demo3: {
+      'demo3': {
         title: 'Style bloc',
       },
-      demo4: {
+      'demo4': {
         title: 'Forme',
       },
-      demo5: {
+      'demo5': {
         title: 'Lecture seule',
       },
-      demo6: {
+      'demo6': {
         title: 'Désactivé',
       },
-      model: {
+      'model': {
         modelValue: 'Valeur liée',
       },
       'props(RadioGroup)': {
         size: 'Taille',
         block: 'Affichage en bloc',
-        direction: "Direction d'arrangement",
+        direction: 'Direction d\'arrangement',
         disabled: 'Désactivé',
-        iconable: "Autoriser l'utilisation d'icônes",
+        iconable: 'Autoriser l\'utilisation d\'icônes',
         options: 'Options',
         readonly: 'Lecture seule',
         round: 'Style arrondi',
       },
-      options: {
+      'options': {
         label: 'Titre',
         value: 'Valeur',
         disabled: 'Désactivé',
       },
-      events: {
+      'events': {
         change: 'Déclenché lorsque la valeur change',
       },
     },
@@ -953,7 +953,7 @@ export default {
         title: 'Groupement',
       },
       demo9: {
-        title: "Méthode d'initialisation des options",
+        title: 'Méthode d\'initialisation des options',
       },
       demo10: {
         title: 'Cache de recherche',
@@ -968,7 +968,7 @@ export default {
         autoWidth: 'Largeur automatique',
         popoverWidth: 'Largeur du popover',
         trigger: 'Mode de déclenchement',
-        placeholder: "Texte d'espace réservé",
+        placeholder: 'Texte d\'espace réservé',
         size: 'Taille',
         itemHeight: 'Hauteur des éléments',
         searchable: 'Recherche possible',
@@ -977,20 +977,20 @@ export default {
         clearable: 'Effaçable',
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
-        showCheckIcon: "Afficher l'icône de vérification",
-        initOptionsMethod: "Méthode d'initialisation des options",
+        showCheckIcon: 'Afficher l\'icône de vérification',
+        initOptionsMethod: 'Méthode d\'initialisation des options',
         enableSearchCache: 'Activer le cache de recherche',
       },
       events: {
         change: 'Déclenché lorsque la valeur change',
-        clear: "Déclenché lors de l'effacement",
+        clear: 'Déclenché lors de l\'effacement',
         blur: 'Déclenché lors de la perte du focus',
-        focus: "Déclenché lors de l'obtention du focus",
+        focus: 'Déclenché lors de l\'obtention du focus',
       },
       options: { label: 'Titre', value: 'Valeur', disabled: 'Désactivé' },
       slots: {
         item: 'Contenu personnalisé des options',
-        empty: "Contenu personnalisé de l'état vide",
+        empty: 'Contenu personnalisé de l\'état vide',
       },
     },
     selectMultiple: {
@@ -1016,13 +1016,13 @@ export default {
         title: 'Désactivé',
       },
       demo7: {
-        title: "Slot d'état vide",
+        title: 'Slot d\'état vide',
       },
       demo8: {
         title: 'Groupement',
       },
       demo9: {
-        title: "Méthode d'initialisation des options",
+        title: 'Méthode d\'initialisation des options',
         description:
           'Utilisez ```initOptionsMethod``` pour initialiser les données de sélection multiple et retourner un objet ```Promise```',
       },
@@ -1032,19 +1032,19 @@ export default {
         width: 'Largeur',
         valueLayout: 'Disposition des valeurs',
         valueTextSplit: 'Séparateur de texte des valeurs',
-        placeholder: "Texte d'espace réservé",
+        placeholder: 'Texte d\'espace réservé',
         size: 'Taille',
         itemHeight: 'Hauteur des éléments',
         searchable: 'Recherche possible',
-        searchPlaceholder: "Texte d'espace réservé pour la recherche",
+        searchPlaceholder: 'Texte d\'espace réservé pour la recherche',
         searchMethod: 'Méthode de recherche',
         searchDelay: 'Délai de recherche',
         clearable: 'Effaçable',
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
-        showCheckIcon: "Afficher l'icône de vérification",
+        showCheckIcon: 'Afficher l\'icône de vérification',
         defaultValue: 'Valeur par défaut',
-        initOptionsMethod: "Méthode d'initialisation des options",
+        initOptionsMethod: 'Méthode d\'initialisation des options',
         enableSearchCache: 'Activer le cache de recherche',
       },
       model: {
@@ -1062,7 +1062,7 @@ export default {
       },
       slots: {
         item: 'Contenu personnalisé des options',
-        empty: "Contenu personnalisé de l'état vide",
+        empty: 'Contenu personnalisé de l\'état vide',
       },
     },
     datePicker: {
@@ -1094,7 +1094,7 @@ export default {
         valueFormat: 'Format de la valeur',
         size: 'Taille',
         width: 'Largeur',
-        placeholder: "Texte d'espace réservé",
+        placeholder: 'Texte d\'espace réservé',
         clearable: 'Effaçable',
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
@@ -1110,7 +1110,7 @@ export default {
     dateRangePicker: {
       name: 'Sélecteur de plage de dates',
       description:
-        "Outil pour sélectionner une plage temporelle, rendant la sélection d'intervalles plus pratique",
+        'Outil pour sélectionner une plage temporelle, rendant la sélection d\'intervalles plus pratique',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -1129,8 +1129,8 @@ export default {
         valueFormat: 'Format de la valeur',
         size: 'Taille',
         width: 'Largeur',
-        placeholderStart: "Texte d'espace réservé pour le début",
-        placeholderEnd: "Texte d'espace réservé pour la fin",
+        placeholderStart: 'Texte d\'espace réservé pour le début',
+        placeholderEnd: 'Texte d\'espace réservé pour la fin',
         clearable: 'Effaçable',
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
@@ -1171,7 +1171,7 @@ export default {
         title: 'Options désactivées',
       },
       demo9: {
-        title: "Méthode d'initialisation des options",
+        title: 'Méthode d\'initialisation des options',
         description:
           'Utilisez ```initOptionsMethod``` pour initialiser les données en cascade et retourner un objet ```Promise```',
       },
@@ -1181,7 +1181,7 @@ export default {
       props: {
         width: 'Largeur',
         options: 'Options',
-        placeholder: "Texte d'espace réservé",
+        placeholder: 'Texte d\'espace réservé',
         disabled: 'Désactivé',
         clearable: 'Effaçable',
         showAllLevels: 'Afficher tous les niveaux',
@@ -1191,7 +1191,7 @@ export default {
         trigger: 'Mode de déclenchement',
         loadMethod: 'Méthode de chargement',
         readonly: 'Lecture seule',
-        initOptionsMethod: "Méthode d'initialisation des options",
+        initOptionsMethod: 'Méthode d\'initialisation des options',
       },
       options: {
         label: 'Étiquette',
@@ -1224,7 +1224,7 @@ export default {
         title: 'Recherche possible',
       },
       demo7: {
-        title: "Slot d'état vide",
+        title: 'Slot d\'état vide',
       },
       demo8: {
         title: 'Autres options',
@@ -1238,7 +1238,7 @@ export default {
       demo11: {
         title: 'Initialiser les données',
         description:
-          "Utilisez ```initOptionsMethod``` pour initialiser les données d'arbre et retourner un objet ```Promise```",
+          'Utilisez ```initOptionsMethod``` pour initialiser les données d\'arbre et retourner un objet ```Promise```',
       },
       model: {
         modelValue: 'Valeur liée',
@@ -1246,14 +1246,14 @@ export default {
       props: {
         dataSource: 'Source de données',
         defaultValue: 'Valeur par défaut',
-        placeholder: "Texte d'espace réservé",
+        placeholder: 'Texte d\'espace réservé',
         width: 'Largeur',
         size: 'Taille du composant',
         disabled: 'Désactivé',
         clearable: 'Effaçable',
         checkable: 'Afficher les cases à cocher',
         showAllLevels: 'Afficher tous les niveaux',
-        showCheckIcon: "Afficher l'icône de sélection",
+        showCheckIcon: 'Afficher l\'icône de sélection',
         showLine: 'Afficher les lignes de connexion',
         expandAll: 'Déplier tous les nœuds',
         searchable: 'Recherche possible',
@@ -1262,10 +1262,10 @@ export default {
         free: 'Mode libre (état de sélection parent-enfant non lié)',
         align: 'Alignement du texte',
         trigger: 'Mode de déclenchement des nœuds enfants',
-        keyField: "Champ d'identification du nœud",
-        labelField: "Champ d'étiquette du nœud",
+        keyField: 'Champ d\'identification du nœud',
+        labelField: 'Champ d\'étiquette du nœud',
         disabledField: 'Champ de désactivation du nœud',
-        initOptionsMethod: "Méthode d'initialisation des nœuds",
+        initOptionsMethod: 'Méthode d\'initialisation des nœuds',
         loadMethod: 'Méthode de chargement asynchrone des nœuds enfants',
       },
       slots: {
@@ -1273,7 +1273,7 @@ export default {
       },
     },
     inputTable: {
-      name: "Table d'entrée",
+      name: 'Table d\'entrée',
       description:
         'Saisie rapide de données dans un tableau, rendant le traitement par lots plus efficace',
       demo1: {
@@ -1306,7 +1306,7 @@ export default {
     switch: {
       name: 'Interrupteur',
       description:
-        "Sélecteur d'interrupteur simple, rendant les changements d'état plus clairs",
+        'Sélecteur d\'interrupteur simple, rendant les changements d\'état plus clairs',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -1370,7 +1370,7 @@ export default {
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
         options: 'Options',
-        formatTooltip: "Formatage de l'infobulle",
+        formatTooltip: 'Formatage de l\'infobulle',
       },
     },
     sliderRange: {
@@ -1406,13 +1406,13 @@ export default {
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
         options: 'Options',
-        formatTooltip: "Formatage de l'infobulle",
+        formatTooltip: 'Formatage de l\'infobulle',
       },
     },
     rate: {
       name: 'Évaluation',
       description:
-        "Composant d'évaluation par étoiles, rendant la notation plus vivante et amusante",
+        'Composant d\'évaluation par étoiles, rendant la notation plus vivante et amusante',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -1430,7 +1430,7 @@ export default {
       },
       props: {
         size: 'Taille',
-        count: "Nombre d'étoiles",
+        count: 'Nombre d\'étoiles',
         tips: 'Infobulles',
         readonly: 'Lecture seule',
         disabled: 'Désactivé',
@@ -1461,7 +1461,7 @@ export default {
       props: {
         size: 'Taille',
         width: 'Largeur',
-        placeholder: "Texte d'espace réservé",
+        placeholder: 'Texte d\'espace réservé',
         disabled: 'Désactivé',
         readonly: 'Lecture seule',
       },
@@ -1477,7 +1477,7 @@ export default {
         title: 'Limites de format et de taille',
       },
       demo3: {
-        title: "Téléchargement d'images",
+        title: 'Téléchargement d\'images',
       },
       demo4: {
         title: 'Conseils personnalisés',
@@ -1505,13 +1505,13 @@ export default {
         size: 'Taille',
         tips: 'Conseils',
         uploadHelper: 'Assistant de téléchargement',
-        viewMode: "Mode d'affichage",
+        viewMode: 'Mode d\'affichage',
       },
     },
     table: {
       name: 'Tableau',
       description:
-        "Composant de tableau puissant, rendant l'affichage des données plus clair",
+        'Composant de tableau puissant, rendant l\'affichage des données plus clair',
       model: {
         modelValue: 'Nom du paramètre',
         selectedKeys: 'Clés sélectionnées',
@@ -1608,7 +1608,7 @@ export default {
     magicNumber: {
       name: 'Nombre Magique',
       description:
-        "Composant d'animation qui rend l'affichage des nombres plus vivant et intéressant",
+        'Composant d\'animation qui rend l\'affichage des nombres plus vivant et intéressant',
     },
     tree: {
       name: 'Arborescence',
@@ -1645,18 +1645,18 @@ export default {
       props: {
         dataSource: 'Source de données',
         multiple: 'Sélection multiple',
-        height: "Hauteur de l'arbre",
-        searchable: "Permet la recherche dans l'arbre",
+        height: 'Hauteur de l\'arbre',
+        searchable: 'Permet la recherche dans l\'arbre',
         checkable: 'Afficher les cases à cocher',
         expandAll: 'Tout déplier par défaut',
         free: 'Sélection libre',
         showLine: 'Afficher les lignes de connexion',
         trigger: 'Mode de déclenchement',
-        placeholder: "Texte d'indication",
-        keyField: "Champ d'identification du nœud",
-        labelField: "Champ d'étiquette du nœud",
+        placeholder: 'Texte d\'indication',
+        keyField: 'Champ d\'identification du nœud',
+        labelField: 'Champ d\'étiquette du nœud',
         disabledField: 'Champ de désactivation du nœud',
-        initOptionsMethod: "Méthode d'initialisation des nœuds",
+        initOptionsMethod: 'Méthode d\'initialisation des nœuds',
         loadMethod: 'Méthode de chargement asynchrone des nœuds enfants',
         isSelect: 'Est sélectionné',
       },
@@ -1672,25 +1672,25 @@ export default {
       },
     },
     collapse: {
-      name: 'Panneau Accordéon',
-      description:
+      'name': 'Panneau Accordéon',
+      'description':
         'Zone de contenu pliable et dépliable pour une présentation plus organisée des informations',
-      demo1: {
+      'demo1': {
         title: 'Usage de base',
       },
-      demo2: {
+      'demo2': {
         title: 'Slot de titre',
       },
-      demo3: {
+      'demo3': {
         title: 'Mode accordéon',
       },
-      model: {
+      'model': {
         modelValue: 'Nom du paramètre',
       },
       'model(CollapseItem)': {
         modelValue: 'Nom du paramètre',
       },
-      props: {
+      'props': {
         width: 'Largeur',
       },
       'props(CollapseItem)': {
@@ -1702,7 +1702,7 @@ export default {
     desc: {
       name: 'Liste Descriptive',
       description:
-        "Présentation ordonnée de multiples champs pour un affichage d'informations plus structuré",
+        'Présentation ordonnée de multiples champs pour un affichage d\'informations plus structuré',
       demo1: {
         title: 'Usage de base',
       },
@@ -1747,7 +1747,7 @@ export default {
     alert: {
       name: 'Alerte',
       description:
-        "Boîte d'information visible pour des avertissements plus doux",
+        'Boîte d\'information visible pour des avertissements plus doux',
       demo1: {
         title: 'Usage de base',
       },
@@ -1768,7 +1768,7 @@ export default {
     message: {
       name: 'Message',
       description:
-        "Retour d'information léger pour des notifications plus concises",
+        'Retour d\'information léger pour des notifications plus concises',
       demo1: {
         title: 'Usage de base',
       },
@@ -1817,7 +1817,7 @@ export default {
     drawer: {
       name: 'Tiroir (Drawer)',
       description:
-        "Panneau coulissant depuis le bord de l'écran pour des opérations temporaires plus fluides.",
+        'Panneau coulissant depuis le bord de l\'écran pour des opérations temporaires plus fluides.',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -1876,7 +1876,7 @@ export default {
         okText: 'Texte du bouton OK',
         cancelText: 'Texte du bouton Annuler',
         ok: 'Rappel de confirmation',
-        cancel: "Rappel d'annulation",
+        cancel: 'Rappel d\'annulation',
         closeOnClickOverlay: 'Fermer en cliquant sur le masque',
         closeByEsc: 'Fermer avec la touche Echap',
         transformOrigin: 'Origine de la transformation',
@@ -1921,7 +1921,7 @@ export default {
     popok: {
       name: 'Confirmation Popup',
       description:
-        "Confirmation légère pour rendre les validations d'actions plus pratiques",
+        'Confirmation légère pour rendre les validations d\'actions plus pratiques',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -1936,9 +1936,9 @@ export default {
         content: 'Contenu',
         placement: 'Position',
         ok: 'Callback de confirmation',
-        cancel: "Callback d'annulation",
+        cancel: 'Callback d\'annulation',
         okText: 'Texte du bouton de confirmation',
-        cancelText: "Texte du bouton d'annulation",
+        cancelText: 'Texte du bouton d\'annulation',
       },
     },
     popover: {
@@ -1955,7 +1955,7 @@ export default {
         title: 'Déclencheur personnalisé',
       },
       demo4: {
-        title: "Fermeture automatique en cliquant à l'extérieur",
+        title: 'Fermeture automatique en cliquant à l\'extérieur',
       },
       demo5: {
         title: 'État de chargement',
@@ -1971,14 +1971,14 @@ export default {
         triggerTarget: 'Cible du déclencheur',
       },
       slots: {
-        trigger: 'Slot de déclenchement',
+        'trigger': 'Slot de déclenchement',
         'popover-body': 'Slot du corps du popover',
       },
     },
     tooltip: {
       name: 'Info-bulle (Tooltip)',
       description:
-        "Bulle d'aide textuelle simple pour des indications plus légères.",
+        'Bulle d\'aide textuelle simple pour des indications plus légères.',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -1992,7 +1992,7 @@ export default {
         title: 'Support HTML',
       },
       props: {
-        tips: "Contenu de l'info-bulle",
+        tips: 'Contenu de l\'info-bulle',
         placement: 'Position',
         trigger: 'Déclencheur',
         allowHTML: 'Autoriser le HTML',
@@ -2002,26 +2002,26 @@ export default {
     loading: {
       name: 'Chargement (Loading)',
       description:
-        "Effet de chargement élégant pour rendre l'attente plus agréable.",
+        'Effet de chargement élégant pour rendre l\'attente plus agréable.',
       demo1: {
         title: 'Utilisation de base',
       },
       demo2: {
-        title: "Taille d'icône personnalisée",
+        title: 'Taille d\'icône personnalisée',
       },
       demo3: {
-        title: "Message d'information personnalisé",
+        title: 'Message d\'information personnalisé',
       },
       props: {
-        tip: "Message d'information",
-        iconSize: "Taille de l'icône",
+        tip: 'Message d\'information',
+        iconSize: 'Taille de l\'icône',
         visible: 'Visible',
       },
     },
     result: {
       name: 'Résultat (Result)',
       description:
-        "Utilisé pour présenter les résultats d'opérations, pour un retour plus complet",
+        'Utilisé pour présenter les résultats d\'opérations, pour un retour plus complet',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -2037,7 +2037,7 @@ export default {
     empty: {
       name: 'État vide',
       description:
-        "Affichage d'état sans données, pour des pages vides plus conviviales",
+        'Affichage d\'état sans données, pour des pages vides plus conviviales',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -2051,8 +2051,8 @@ export default {
       },
     },
     actionBox: {
-      name: "Boîte d'action",
-      description: "Boutons d'action flexibles pour des opérations rapides",
+      name: 'Boîte d\'action',
+      description: 'Boutons d\'action flexibles pour des opérations rapides',
       demo1: {
         title: 'Utilisation de base',
       },
@@ -2066,7 +2066,7 @@ export default {
         title: 'Styles personnalisés',
       },
       props: {
-        options: "Configuration des boutons d'action",
+        options: 'Configuration des boutons d\'action',
         dropdownThreshold: 'Seuil du menu déroulant',
         dropdownLabel: 'Texte du menu déroulant',
         dropdownIcon: 'Icône du menu déroulant',
@@ -2075,9 +2075,9 @@ export default {
         x: 'Position X',
       },
       options: {
-        label: "Texte du bouton d'action",
-        icon: "Icône du bouton d'action",
-        onClick: "Événement de clic du bouton d'action",
+        label: 'Texte du bouton d\'action',
+        icon: 'Icône du bouton d\'action',
+        onClick: 'Événement de clic du bouton d\'action',
         customRender: 'Contenu de rendu personnalisé',
       },
     },

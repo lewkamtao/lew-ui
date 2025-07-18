@@ -1,23 +1,25 @@
 <script setup lang="ts">
-import { treeItemProps } from './props'
 import {
-  LewCollapseTransition,
-  LewTextTrim,
   LewCheckbox,
+  LewCollapseTransition,
   LewMessage,
+  LewTextTrim,
 } from 'lew-ui'
-import Icon from 'lew-ui/utils/Icon.vue'
-import { cloneDeep } from 'lodash-es'
-import transformTree, { formatTree } from './transformTree'
 import {
   findAllChildrenKeys,
   findNodeByKey,
+  formatComponent,
   insertChildByKey,
   isVueComponent,
-  formatComponent,
 } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { cloneDeep } from 'lodash-es'
+import { treeItemProps } from './props'
+import transformTree, { formatTree } from './transformTree'
 
 const props = defineProps(treeItemProps)
+
+const emit = defineEmits(['change', 'expand'])
 
 const {
   modelValue,
@@ -33,23 +35,23 @@ const {
   cacheDataSource,
 }: any = inject('lew-tree')
 
-const emit = defineEmits(['change', 'expand'])
-
 const loading = ref(false)
 const loaded = ref(false)
 
-const areSomeChildrenSelected = (node: any): boolean => {
-  if (!node.children || node.children.length === 0) return false
+function areSomeChildrenSelected(node: any): boolean {
+  if (!node.children || node.children.length === 0)
+    return false
 
   const childKeys = findAllChildrenKeys(node)
   return (
-    childKeys.some((key) => modelValue.value.includes(key)) &&
-    !childKeys.every((key) => modelValue.value.includes(key))
+    childKeys.some(key => modelValue.value.includes(key))
+    && !childKeys.every(key => modelValue.value.includes(key))
   )
 }
 
-const select = () => {
-  if (props.disabled) return
+function select() {
+  if (props.disabled)
+    return
   // 创建一个变量来存储最终的绑定值
   let newModelValue = cloneDeep(modelValue.value)
 
@@ -58,16 +60,18 @@ const select = () => {
     if (free) {
       if (index > -1) {
         newModelValue.splice(index, 1)
-      } else {
+      }
+      else {
         newModelValue.push(props.__key)
       }
-    } else {
+    }
+    else {
       if (index > -1) {
         newModelValue.splice(index, 1)
         if (
-          props.extend &&
-          props.extend.children &&
-          props.extend.children.length > 0
+          props.extend
+          && props.extend.children
+          && props.extend.children.length > 0
         ) {
           const childKeys = findAllChildrenKeys(props.extend)
           newModelValue = newModelValue.filter(
@@ -75,9 +79,9 @@ const select = () => {
           )
         }
         if (
-          props.extend &&
-          props.extend.parentKeyPaths &&
-          props.extend.parentKeyPaths.length > 0
+          props.extend
+          && props.extend.parentKeyPaths
+          && props.extend.parentKeyPaths.length > 0
         ) {
           props.extend.parentKeyPaths.forEach((parentKey: string | number) => {
             const parentIndex = newModelValue.indexOf(parentKey)
@@ -86,12 +90,13 @@ const select = () => {
             }
           })
         }
-      } else {
+      }
+      else {
         newModelValue.push(props.__key)
         if (
-          props.extend &&
-          props.extend.children &&
-          props.extend.children.length > 0
+          props.extend
+          && props.extend.children
+          && props.extend.children.length > 0
         ) {
           const childKeys = findAllChildrenKeys(props.extend)
           childKeys.forEach((key: string | number) => {
@@ -102,30 +107,32 @@ const select = () => {
         }
       }
       if (
-        props.extend &&
-        props.extend.parentKey &&
-        props.extend.parentKeyPaths
+        props.extend
+        && props.extend.parentKey
+        && props.extend.parentKeyPaths
       ) {
         const parentKey = props.extend.parentKey
         const parentNode = findNodeByKey(parentKey, _dataSource.value)
         const siblingKeys = (parentNode?.children || []).map((e: any) => e.key)
         if (
-          siblingKeys.length > 0 &&
-          siblingKeys.every((key: string | number) =>
+          siblingKeys.length > 0
+          && siblingKeys.every((key: string | number) =>
             newModelValue.includes(key),
           )
         ) {
           if (!newModelValue.includes(parentKey)) {
             newModelValue.push(parentKey)
           }
-        } else {
+        }
+        else {
           newModelValue = newModelValue.filter(
             (key: string | number) => key !== parentKey,
           )
         }
       }
     }
-  } else {
+  }
+  else {
     newModelValue = props.__key
   }
 
@@ -134,15 +141,16 @@ const select = () => {
   emit('change')
 }
 
-const expand = async () => {
+async function expand() {
   if (!props.isLeaf) {
     const index = expandKeys.value.indexOf(props.__key)
     if (index > -1) {
       expandKeys.value.splice(index, 1)
-    } else if (loadMethod && !loading.value && !loaded.value) {
+    }
+    else if (loadMethod && !loading.value && !loaded.value) {
       loading.value = true
-      let _tree =
-        ((await loadMethod(
+      const _tree
+        = ((await loadMethod(
           cloneDeep({
             ...props,
             key: props.__key,
@@ -179,12 +187,14 @@ const expand = async () => {
           ...(expandKeys.value as (string | number)[]),
           props.__key,
         ]
-      } else {
+      }
+      else {
         loaded.value = false
         LewMessage.error(error.message)
       }
       loading.value = false
-    } else {
+    }
+    else {
       expandKeys.value.push(props.__key)
     }
   }
@@ -196,14 +206,16 @@ const expand = async () => {
 const isNodeSelected = computed(() => {
   if (multiple) {
     return modelValue.value.includes(props.__key)
-  } else {
+  }
+  else {
     return modelValue.value === props.__key
   }
 })
 
 // 计算节点的部分选中状态
 const isNodePartiallySelected = computed(() => {
-  if (!multiple || free) return false
+  if (!multiple || free)
+    return false
 
   return props.extend && areSomeChildrenSelected(props.extend)
 })
@@ -221,7 +233,7 @@ const isNodePartiallySelected = computed(() => {
       'lew-tree-item-disabled': disabled,
     }"
   >
-    <div @click.stop="expand" class="lew-tree-chevron-right">
+    <div class="lew-tree-chevron-right" @click.stop="expand">
       <Icon
         v-if="loading"
         :size="14"
@@ -237,7 +249,7 @@ const isNodePartiallySelected = computed(() => {
       />
     </div>
     <div class="lew-tree-item-label" @click="select">
-      <lew-checkbox
+      <LewCheckbox
         v-if="checkable"
         :certain="isNodePartiallySelected"
         :checked="isNodeSelected"
@@ -251,10 +263,10 @@ const isNodePartiallySelected = computed(() => {
           checked: isNodeSelected,
           certain: isNodePartiallySelected,
         }"
-      ></slot>
+      />
       <template v-else>
-        <component v-if="isVueComponent(icon)" :is="formatComponent(icon)" />
-        <lew-text-trim
+        <component :is="formatComponent(icon)" v-if="isVueComponent(icon)" />
+        <LewTextTrim
           v-else
           placement="right"
           :text="label"
@@ -263,18 +275,19 @@ const isNodePartiallySelected = computed(() => {
       </template>
     </div>
   </div>
-  <lew-collapse-transition v-if="!isLeaf">
+  <LewCollapseTransition v-if="!isLeaf">
     <div
       v-if="
-        ((expandKeys || []).length > 0 && expandKeys.includes(__key)) ||
-        expandAll
+        ((expandKeys || []).length > 0 && expandKeys.includes(__key))
+          || expandAll
       "
       class="lew-tree-item-main"
     >
       <slot />
     </div>
-  </lew-collapse-transition>
+  </LewCollapseTransition>
 </template>
+
 <style lang="scss" scoped>
 .lew-tree-item {
   display: inline-flex;

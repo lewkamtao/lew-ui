@@ -389,27 +389,27 @@ export default {
       },
     },
     dropdown: {
-      name: 'ドロップダウン Dropdown',
-      description:
+      'name': 'ドロップダウン Dropdown',
+      'description':
         'クリックでトリガーされるフローティングメニュー、操作をより便利に',
-      demo1: {
+      'demo1': {
         title: '基本的な使い方',
       },
-      demo2: {
+      'demo2': {
         title: 'ボタン以外にも',
       },
-      demo3: {
+      'demo3': {
         title: '無効項目',
       },
 
-      props: {
+      'props': {
         options: 'メニューオプション設定',
         trigger: 'トリガー方式',
         placement: 'メニューの表示位置',
         checkable: '選択可能',
       },
       'options(ContextMenus)': contextMenu,
-      events: {
+      'events': {
         show: 'メニュー表示イベントコールバック',
         hide: 'メニュー非表示イベントコールバック',
         change: 'メニュー項目選択イベントコールバック',
@@ -441,21 +441,21 @@ export default {
       },
     },
     contextMenu: {
-      name: 'コンテキストメニュー ContextMenu',
-      description: 'エレガントな右クリックメニューで、より自然な操作を実現',
-      demo1: {
+      'name': 'コンテキストメニュー ContextMenu',
+      'description': 'エレガントな右クリックメニューで、より自然な操作を実現',
+      'demo1': {
         title: '基本的な使い方',
       },
-      demo2: {
+      'demo2': {
         title: '多階層のネストをサポート',
       },
-      demo3: {
+      'demo3': {
         title: '動的更新をサポート',
       },
-      demo4: {
+      'demo4': {
         title: 'Checkbox',
       },
-      props: {
+      'props': {
         options: '右クリックメニューの設定',
         disabled: '右クリックメニューを無効化するかどうか',
       },
@@ -738,27 +738,27 @@ export default {
       },
     },
     checkbox: {
-      name: 'チェックボックス Checkbox',
-      description: '複数選択可能なセレクター、より直感的な複数選択を実現',
-      demo1: {
+      'name': 'チェックボックス Checkbox',
+      'description': '複数選択可能なセレクター、より直感的な複数選択を実現',
+      'demo1': {
         title: '基本的な使い方',
       },
-      demo2: {
+      'demo2': {
         title: '垂直配置',
       },
-      demo3: {
+      'demo3': {
         title: 'ブロック表示',
       },
-      demo4: {
+      'demo4': {
         title: '丸形',
       },
-      demo5: {
+      'demo5': {
         title: '読み取り専用',
       },
-      demo6: {
+      'demo6': {
         title: '無効状態',
       },
-      demo7: {
+      'demo7': {
         title: '単一モード',
       },
       'model(CheckboxGroup)': {
@@ -795,34 +795,34 @@ export default {
       'events(CheckboxGroup)': {
         change: '値が変更された時に発火',
       },
-      options: {
+      'options': {
         label: 'ラベル',
         value: '値',
         disabled: '無効化',
       },
     },
     radio: {
-      name: 'ラジオボタン Radio',
-      description: '単一選択のセレクター、より明確な選択を実現',
-      demo1: {
+      'name': 'ラジオボタン Radio',
+      'description': '単一選択のセレクター、より明確な選択を実現',
+      'demo1': {
         title: '基本的な使い方',
       },
-      demo2: {
+      'demo2': {
         title: '垂直配置',
       },
-      demo3: {
+      'demo3': {
         title: 'ブロック表示',
       },
-      demo4: {
+      'demo4': {
         title: '形状',
       },
-      demo5: {
+      'demo5': {
         title: '読み取り専用',
       },
-      demo6: {
+      'demo6': {
         title: '無効状態',
       },
-      model: {
+      'model': {
         modelValue: 'バインド値',
       },
       'props(RadioGroup)': {
@@ -835,12 +835,12 @@ export default {
         readonly: '読み取り専用かどうか',
         round: '丸形スタイル',
       },
-      options: {
+      'options': {
         label: 'ラベル',
         value: '値',
         disabled: '無効化',
       },
-      events: {
+      'events': {
         change: '値が変更された時に発火',
       },
     },
@@ -1611,25 +1611,25 @@ export default {
       },
     },
     collapse: {
-      name: 'コラプス Collapse',
-      description:
+      'name': 'コラプス Collapse',
+      'description':
         '折りたたみ可能なコンテンツ領域で、情報をより整理された形で表示',
-      demo1: {
+      'demo1': {
         title: '基本的な使い方',
       },
-      demo2: {
+      'demo2': {
         title: 'タイトルスロット',
       },
-      demo3: {
+      'demo3': {
         title: 'アコーディオン',
       },
-      model: {
+      'model': {
         modelValue: 'パラメータ名',
       },
       'model(CollapseItem)': {
         modelValue: 'パラメータ名',
       },
-      props: {
+      'props': {
         width: '幅',
       },
       'props(CollapseItem)': {
@@ -1906,7 +1906,7 @@ export default {
         triggerTarget: 'トリガー対象',
       },
       slots: {
-        trigger: 'トリガースロット',
+        'trigger': 'トリガースロット',
         'popover-body': 'ポップオーバー本体スロット',
       },
     },

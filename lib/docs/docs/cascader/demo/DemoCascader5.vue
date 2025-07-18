@@ -54,7 +54,7 @@ const productCategories = [
   },
 ]
 
-const handleChange = (value: string[]) => {
+function handleChange(value: string[]) {
   console.log('Selected product categories:', value)
 }
 </script>

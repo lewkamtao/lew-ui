@@ -1,6 +1,28 @@
+<script lang="ts" setup>
+import { any2px } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
+
+defineProps<{
+  type: string
+  title: string
+  content: string
+  duration: number
+  showProgress: boolean
+  width: number | string
+}>()
+
+const emit = defineEmits<{
+  (e: 'close'): void
+}>()
+
+function onClose() {
+  emit('close')
+}
+</script>
+
 <template>
   <div
-    :class="['lew-notification', `lew-notification-${type}`]"
+    class="lew-notification" :class="[`lew-notification-${type}`]"
     :style="{ width: any2px(width) }"
   >
     <div class="lew-notification-box">
@@ -23,31 +45,9 @@
       v-if="showProgress"
       class="lew-notification-progress"
       :style="{ animationDuration: `${duration}ms` }"
-    ></div>
+    />
   </div>
 </template>
-
-<script lang="ts" setup>
-import Icon from 'lew-ui/utils/Icon.vue'
-import { any2px } from 'lew-ui/utils'
-
-defineProps<{
-  type: string
-  title: string
-  content: string
-  duration: number
-  showProgress: boolean
-  width: number | string
-}>()
-
-const emit = defineEmits<{
-  (e: 'close'): void
-}>()
-
-const onClose = () => {
-  emit('close')
-}
-</script>
 
 <style lang="scss" scoped>
 .lew-notification {

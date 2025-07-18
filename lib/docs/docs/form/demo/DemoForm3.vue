@@ -35,6 +35,7 @@ const formRef = ref()
     <lew-form ref="formRef" class="form-box" :options="options" />
   </lew-flex>
 </template>
+
 <style scoped lang="scss">
 .form-box {
   width: 380px;

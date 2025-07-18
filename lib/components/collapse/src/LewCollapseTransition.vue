@@ -1,23 +1,3 @@
-<template>
-  <transition
-    :name="name"
-    @before-appear="beforeAppear"
-    @appear="appear"
-    @after-appear="afterAppear"
-    @appear-cancelled="appearCancelled"
-    @before-enter="beforeEnter"
-    @enter="enter"
-    @after-enter="afterEnter"
-    @enter-cancelled="enterCancelled"
-    @before-leave="beforeLeave"
-    @leave="leave"
-    @after-leave="afterLeave"
-    @leave-cancelled="leaveCancelled"
-  >
-    <slot></slot>
-  </transition>
-</template>
-
 <script>
 export default {
   props: {
@@ -46,12 +26,6 @@ export default {
     },
   },
 
-  watch: {
-    dimension() {
-      this.clearCachedDimensions()
-    },
-  },
-
   data() {
     return {
       cachedStyles: null,
@@ -60,7 +34,7 @@ export default {
 
   computed: {
     transition() {
-      let transitions = []
+      const transitions = []
 
       Object.keys(this.cachedStyles).forEach((key) => {
         transitions.push(
@@ -69,6 +43,12 @@ export default {
       })
 
       return transitions.join(', ')
+    },
+  },
+
+  watch: {
+    dimension() {
+      this.clearCachedDimensions()
     },
   },
 
@@ -192,7 +172,8 @@ export default {
       // Cache actual dimensions
       // only once to void invalid values when
       // triggering during a transition
-      if (this.cachedStyles) return
+      if (this.cachedStyles)
+        return
 
       const visibility = el.style.visibility
       const display = el.style.display
@@ -217,7 +198,7 @@ export default {
       // These properties will be transitioned
       if (this.dimension === 'height') {
         return {
-          height: el.offsetHeight + 'px',
+          height: `${el.offsetHeight}px`,
           opacity: 1,
           paddingTop:
             el.style.paddingTop || this.getCssValue(el, 'padding-top'),
@@ -228,7 +209,7 @@ export default {
 
       if (this.dimension === 'width') {
         return {
-          width: el.offsetWidth + 'px',
+          width: `${el.offsetWidth}px`,
           opacity: 1,
           paddingLeft:
             el.style.paddingLeft || this.getCssValue(el, 'padding-left'),
@@ -296,7 +277,7 @@ export default {
       for (let i = 0, n = upperChars.length; i < n; i++) {
         style = style.replace(
           new RegExp(upperChars[i]),
-          '-' + upperChars[i].toLowerCase(),
+          `-${upperChars[i].toLowerCase()}`,
         )
       }
 
@@ -309,3 +290,23 @@ export default {
   },
 }
 </script>
+
+<template>
+  <transition
+    :name="name"
+    @before-appear="beforeAppear"
+    @appear="appear"
+    @after-appear="afterAppear"
+    @appear-cancelled="appearCancelled"
+    @before-enter="beforeEnter"
+    @enter="enter"
+    @after-enter="afterEnter"
+    @enter-cancelled="enterCancelled"
+    @before-leave="beforeLeave"
+    @leave="leave"
+    @after-leave="afterLeave"
+    @leave-cancelled="leaveCancelled"
+  >
+    <slot />
+  </transition>
+</template>

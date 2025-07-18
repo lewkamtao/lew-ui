@@ -1,8 +1,8 @@
+import type { LewSize } from 'lew-ui/types'
 import type { ExtractPropTypes } from 'vue'
 import { validSizes } from 'lew-ui/constants'
-import type { LewSize } from 'lew-ui/types'
 
-export type SliderRangeOptions = {
+export interface SliderRangeOptions {
   label: string
   value: string | number
 }

@@ -1,26 +1,26 @@
 import type { ExtractPropTypes } from 'vue'
 
 type BoldType = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
-type TitleColor =
-  | 'red'
-  | 'orange'
-  | 'yellow'
-  | 'green'
-  | 'mint'
-  | 'teal'
-  | 'cyan'
-  | 'blue'
-  | 'indigo'
-  | 'purple'
-  | 'pink'
-  | 'gray'
-  | 'brown'
-  | 'warning'
-  | 'error'
-  | 'success'
-  | 'normal'
-  | 'primary'
-  | 'info'
+type TitleColor
+  = | 'red'
+    | 'orange'
+    | 'yellow'
+    | 'green'
+    | 'mint'
+    | 'teal'
+    | 'cyan'
+    | 'blue'
+    | 'indigo'
+    | 'purple'
+    | 'pink'
+    | 'gray'
+    | 'brown'
+    | 'warning'
+    | 'error'
+    | 'success'
+    | 'normal'
+    | 'primary'
+    | 'info'
 
 export const titleProps = {
   text: {
@@ -67,9 +67,9 @@ export const titleProps = {
         'info',
       ]
       if (
-        value &&
-        !validColors.includes(value as TitleColor) &&
-        !/^#([0-9A-Fa-f]{3}){1,2}$/.test(value)
+        value
+        && !validColors.includes(value as TitleColor)
+        && !/^#([0-9A-F]{3}){1,2}$/i.test(value)
       ) {
         console.warn(
           `[LewTitle] color 必须是预定义的颜色名称之一或有效的十六进制颜色值`,

@@ -4,7 +4,7 @@ const n = ref(6732)
 
 <template>
   <lew-flex direction="y" x="start">
-    <lew-input-number v-model="n" disabled></lew-input-number>
-    <lew-input-number v-model="n" readonly></lew-input-number>
+    <lew-input-number v-model="n" disabled />
+    <lew-input-number v-model="n" readonly />
   </lew-flex>
 </template>

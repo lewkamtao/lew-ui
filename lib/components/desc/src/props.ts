@@ -1,10 +1,10 @@
-import type { ExtractPropTypes, PropType } from 'vue'
 import type { LewSize, TextTrimAlignment } from 'lew-ui'
+import type { ExtractPropTypes, PropType } from 'vue'
 import { validSizes } from 'lew-ui/constants'
 
 export type DescDirection = 'x' | 'y'
 
-export type DescOptions = {
+export interface DescOptions {
   label: string
   field: string
   gridArea: string
@@ -60,7 +60,7 @@ export const descProps = {
     default: 30,
     description: '描述项之间的间距，单位为像素',
     validator(value: string | number): boolean {
-      const numValue = typeof value === 'string' ? parseInt(value, 10) : value
+      const numValue = typeof value === 'string' ? Number.parseInt(value, 10) : value
       if (isNaN(numValue) || numValue < 0) {
         console.warn(`[LewFlex] gap 值必须是非负数或可转换为非负数的字符串。`)
         return false
@@ -107,9 +107,9 @@ export const descProps = {
         return false
       }
       if (
-        typeof value === 'string' &&
-        value !== 'auto' &&
-        !/^\d+px$/.test(value)
+        typeof value === 'string'
+        && value !== 'auto'
+        && !/^\d+px$/.test(value)
       ) {
         console.warn('[LewDesc] labelWidth 字符串必须是 "auto" 或有效的像素值')
         return false
@@ -200,9 +200,9 @@ export const descItemProps = {
         return false
       }
       if (
-        typeof value === 'string' &&
-        value !== 'auto' &&
-        !/^\d+px$/.test(value)
+        typeof value === 'string'
+        && value !== 'auto'
+        && !/^\d+px$/.test(value)
       ) {
         console.warn(
           '[LewDescItem] labelWidth 字符串必须是 "auto" 或有效的像素值',

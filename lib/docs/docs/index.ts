@@ -8,11 +8,11 @@ let tempName = ''
 for (const [path, module] of Object.entries(modules)) {
   tempName = path.replace(/^\.\/(.*)\/index.ts$/, '$1')
   tempName = tempName
-    .replace(capitalizeRegex, (match) => match.toUpperCase())
+    .replace(capitalizeRegex, match => match.toUpperCase())
     .replaceAll('-', '')
   routes.push({
-    name: 'R-Lew' + tempName,
-    path: '/' + tempName,
+    name: `R-Lew${tempName}`,
+    path: `/${tempName}`,
     component: module,
   })
 }

@@ -1,7 +1,7 @@
-// 导入所需的依赖
-import tippy from 'tippy.js'
 import type { App, DirectiveBinding } from 'vue'
 import { getUniqueId } from 'lew-ui/utils'
+// 导入所需的依赖
+import tippy from 'tippy.js'
 import _LewContextMenu from '../../context-menu/src/LewContextMenu.vue'
 
 interface LewHoverMenuConfig {
@@ -23,7 +23,7 @@ declare global {
  * 初始化悬浮菜单
  * 创建全局悬浮菜单实例和相关配置
  */
-export const initLewHoverMenu = () => {
+export function initLewHoverMenu() {
   window.LewHoverMenu = {
     menu: {}, // 存储菜单配置
     disabledIds: [], // 禁用悬浮菜单的元素ID
@@ -57,12 +57,14 @@ export const initLewHoverMenu = () => {
  * @param el - 目标HTML元素
  * @returns 元素的悬浮菜单ID
  */
-const findHoverMenuId = (el: HTMLElement): string => {
+function findHoverMenuId(el: HTMLElement): string {
   try {
     const id = el.getAttribute('lew-hover-menu-id')
-    if (id) return id
+    if (id)
+      return id
     return el.parentNode ? findHoverMenuId(el.parentNode as HTMLElement) : ''
-  } catch {
+  }
+  catch {
     return ''
   }
 }
@@ -103,11 +105,14 @@ export const LewVHoverMenu = {
           window.LewHoverMenu.hoverMenu = (e: MouseEvent) => {
             const id = findHoverMenuId(e.target as HTMLElement)
             // 处理禁用和重复触发
-            if (window.LewHoverMenu.disabledIds.includes(id)) return
-            if (window.LewHoverMenu.prevId === id) return
+            if (window.LewHoverMenu.disabledIds.includes(id))
+              return
+            if (window.LewHoverMenu.prevId === id)
+              return
 
             window.LewHoverMenu.prevId = id
-            if (!id) return
+            if (!id)
+              return
 
             const options = window.LewHoverMenu.menu[id]
             const { instance } = window.LewHoverMenu
@@ -161,13 +166,15 @@ export const LewVHoverMenu = {
           // 更新禁用状态
           if (disabled) {
             window.LewHoverMenu.disabledIds.push(id)
-          } else {
-            window.LewHoverMenu.disabledIds =
-              window.LewHoverMenu.disabledIds.filter(
+          }
+          else {
+            window.LewHoverMenu.disabledIds
+              = window.LewHoverMenu.disabledIds.filter(
                 (item: string) => item !== id,
               )
           }
-        } else {
+        }
+        else {
           console.error('发生未知错误！找不到 lew-hover-menu-id。')
         }
       },

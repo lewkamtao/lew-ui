@@ -66,7 +66,7 @@ const techProductOptions = [
     v-model="v"
     free
     width="300px"
-    :showAllLevels="false"
+    :show-all-levels="false"
     :options="techProductOptions"
     placeholder="Select Tech Products"
   />

@@ -8,7 +8,7 @@ const clothingBrandOptions = [
   { label: 'H&M', value: 6 },
   { label: 'Zara', value: 7 },
   { label: 'Uniqlo', value: 8 },
-  { label: "Levi's", value: 9 },
+  { label: 'Levi\'s', value: 9 },
   { label: 'Gucci', value: 10 },
 ]
 const options = ref(clothingBrandOptions)
@@ -17,9 +17,9 @@ const value = ref([])
 
 <template>
   <lew-select-multiple
-    width="320px"
     v-model="value"
-    valueLayout="tag"
+    width="320px"
+    value-layout="tag"
     :options="options"
     placeholder="Please select a brand"
     clearable

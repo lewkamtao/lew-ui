@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
-import TheSiderbar from '../layout/TheSiderbar.vue'
-import LewRightNav from '../layout/LewRightNav.vue'
 import type { MenuOptions } from 'lew-ui'
 import { Menu } from 'lucide-vue-next'
+import { useRoute } from 'vue-router'
+import LewRightNav from '../layout/LewRightNav.vue'
+import TheSiderbar from '../layout/TheSiderbar.vue'
 
 const isShowSider = ref(false)
 const route = useRoute()
@@ -314,7 +314,7 @@ const options: MenuOptions[] = [
 ].map((item: any) => {
   return {
     ...item,
-    label: item.label + '（' + (item?.children || []).length + '）',
+    label: `${item.label}（${(item?.children || []).length}）`,
   }
 })
 </script>
@@ -329,7 +329,7 @@ const options: MenuOptions[] = [
       <Menu :size="24" />
     </div>
     <div class="sider" :class="{ 'sider-open': isShowSider }">
-      <the-siderbar :options="options" />
+      <TheSiderbar :options="options" />
     </div>
     <div class="app-main lew-scrollbar">
       <div id="component-main" class="component-main lew-scrollbar">
@@ -339,7 +339,9 @@ const options: MenuOptions[] = [
           </keep-alive>
         </router-view>
       </div>
-      <div class="component-nav"><lew-right-nav /></div>
+      <div class="component-nav">
+        <LewRightNav />
+      </div>
     </div>
   </div>
 </template>

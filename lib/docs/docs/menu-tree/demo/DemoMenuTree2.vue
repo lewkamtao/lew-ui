@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import type { MenuTreeItem } from 'lew-ui'
 import {
-  Home,
-  ShoppingCart,
-  Users,
-  Target,
   BarChart2,
+  Home,
   Settings,
+  ShoppingCart,
+  Target,
+  Users,
 } from 'lucide-vue-next'
+
 const value = ref(['1', '1-1', '1-1-1'])
 const options = [
   {
@@ -162,15 +163,15 @@ const options = [
   },
 ]
 
-const change = (item: MenuTreeItem) => {
+function change(item: MenuTreeItem) {
   console.log(item)
 }
 </script>
 
 <template>
   <lew-menu-tree
-    width="300"
     v-model="value"
+    width="300"
     :options="options"
     @change="change"
   />

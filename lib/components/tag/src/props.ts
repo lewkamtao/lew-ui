@@ -1,6 +1,6 @@
+import type { LewColor, LewSize } from 'lew-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import { validColors, validSizes } from 'lew-ui/constants'
-import type { LewColor, LewSize } from 'lew-ui'
 
 export type TagType = 'fill' | 'light' | 'ghost'
 

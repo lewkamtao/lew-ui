@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 import LewButton from '../src/LewButton.vue'
 
-describe('Button', () => {
+describe('button', () => {
   it('default', () => {
     const text = '添加'
     const buttonComponent = shallowMount(LewButton, {

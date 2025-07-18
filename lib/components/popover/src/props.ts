@@ -1,19 +1,19 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 
 export type PopoverTrigger = 'click' | 'hover' | 'focus'
-export type PopoverPlacement =
-  | 'top'
-  | 'top-start'
-  | 'top-end'
-  | 'bottom'
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'left'
-  | 'left-start'
-  | 'left-end'
-  | 'right'
-  | 'right-start'
-  | 'right-end'
+export type PopoverPlacement
+  = | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
 
 export const popoverProps = {
   trigger: {
@@ -86,9 +86,9 @@ export const popoverProps = {
     description: '弹出框的偏移量 [水平, 垂直]',
     validator(value: [number, number]): boolean {
       if (
-        !Array.isArray(value) ||
-        value.length !== 2 ||
-        !value.every((item) => typeof item === 'number')
+        !Array.isArray(value)
+        || value.length !== 2
+        || !value.every(item => typeof item === 'number')
       ) {
         console.warn(`[LewPopover] offset 必须是包含两个数字的数组。`)
         return false

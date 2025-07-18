@@ -1,15 +1,16 @@
 <script lang="ts" setup>
-import { LewTextTrim, LewTag } from 'lew-ui'
 import type { MenuOptions } from './props'
+import { LewTag, LewTextTrim } from 'lew-ui'
+import { formatComponent, isVueComponent } from 'lew-ui/utils'
 import { menuProps } from './props'
-import { isVueComponent, formatComponent } from 'lew-ui/utils'
-defineProps(menuProps)
 
-const modelValue = defineModel()
+defineProps(menuProps)
 
 const emit = defineEmits(['change'])
 
-const select = (item: MenuOptions) => {
+const modelValue = defineModel()
+
+function select(item: MenuOptions) {
   modelValue.value = item.value
   emit('change', item)
 }
@@ -19,14 +20,14 @@ const select = (item: MenuOptions) => {
   <div class="lew-menu">
     <template v-for="item in options" :key="item.label">
       <div class="lew-menu-item">
-        <lew-text-trim :text="item.label" />
-        <lew-tag
+        <LewTextTrim :text="item.label" />
+        <LewTag
           v-if="item.tagProps?.text"
           v-bind="{
             ...item.tagProps,
             size: item.tagProps.size || 'small',
           }"
-        ></lew-tag>
+        />
       </div>
       <template v-for="(cItem, index) in item.children" :key="cItem.label">
         <div
@@ -39,12 +40,12 @@ const select = (item: MenuOptions) => {
           @click="select(cItem)"
         >
           <component
+            :is="formatComponent(cItem.icon)"
             v-if="isVueComponent(cItem.icon)"
             class="lew-menu-icon"
-            :is="formatComponent(cItem.icon)"
           />
-          <lew-text-trim :text="cItem.label" />
-          <lew-tag
+          <LewTextTrim :text="cItem.label" />
+          <LewTag
             v-if="cItem.tagProps?.text"
             v-bind="{
               ...cItem.tagProps,

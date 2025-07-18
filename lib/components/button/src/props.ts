@@ -1,5 +1,5 @@
-import type { ExtractPropTypes } from 'vue'
 import type { LewColor, LewSize } from 'lew-ui'
+import type { ExtractPropTypes } from 'vue'
 import { validColors, validSizes } from 'lew-ui/constants'
 
 export type ButtonSize = 'mini' | LewSize

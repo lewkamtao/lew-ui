@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
 import { useDark } from '@vueuse/core'
-import { Sun, Moon, Github, Languages, Settings } from 'lucide-vue-next'
 import { setLocale } from 'lew-ui'
+import { Github, Languages, Moon, Settings, Sun } from 'lucide-vue-next'
+import { useRoute, useRouter } from 'vue-router'
 import docsLocale, { getInitialLocale } from '@/locals'
 import packageJson from '../../../package.json'
 
@@ -17,28 +17,30 @@ const isDark = useDark({
 const router = useRouter()
 const route = useRoute()
 
-const goHome = () => {
+function goHome() {
   if (route.name === 'R-LewHome') {
     LewMessage.warning('你已经在首页了！')
-  } else {
+  }
+  else {
     router.push('/')
   }
 }
 
-const goToPage = (path: string, isNewTab = false) => {
+function goToPage(path: string, isNewTab = false) {
   if (isNewTab) {
     const URL = router.resolve(path).href
     window.open(URL, '_blank')
-  } else {
+  }
+  else {
     router.push(path)
   }
 }
 
-const goToGithub = () => {
+function goToGithub() {
   window.open('https://github.com/lewkamtao/Lew-UI', '_blank')
 }
 
-const getLocaleIcon = (locale: string) => {
+function getLocaleIcon(locale: string) {
   return new URL(`../assets/images/local/${locale}.svg`, import.meta.url).href
 }
 const localeOptions = ref([
@@ -189,20 +191,21 @@ const localeOptions = ref([
   },
 ])
 
-const changeLanguage = (e: any) => {
+function changeLanguage(e: any) {
   const { value } = e
   setLocale(value)
   docsLocale.use(value)
   localeOptions.value.map((item: any) => {
     if (item.value === e.value) {
       item.checked = true
-    } else {
+    }
+    else {
       item.checked = false
     }
   })
 }
 
-const goToSettings = () => {
+function goToSettings() {
   const link = router.resolve('/check-lang').href
   window.open(link, '_blank')
 }
@@ -217,14 +220,14 @@ getInitialLocale().then((locale) => {
 
 <template>
   <lew-flex mode="between" class="Header">
-    <lew-flex class="logo" id="logo" x="start" @click="goHome">
+    <lew-flex id="logo" class="logo" x="start" @click="goHome">
       <img
         src="../assets/images/logo.png"
         alt="logo"
         srcset=""
         width="30"
         height="30"
-      />
+      >
       <span style="margin-left: 10px"> Lew UI</span>
       <lew-tag type="light" size="small" style="margin-left: 10px">
         Beta {{ version }}
@@ -366,6 +369,7 @@ getInitialLocale().then((locale) => {
   }
 }
 </style>
+
 <style lang="scss">
 .icon-mode-sunny {
   display: none !important;

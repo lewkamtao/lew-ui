@@ -1,23 +1,22 @@
 <script setup lang="ts">
+import type { SelectMultipleOptions, SelectMultipleOptionsGroup } from './props'
 import { useDebounceFn } from '@vueuse/core'
 import {
-  LewPopover,
   LewCheckbox,
+  LewEmpty,
   LewFlex,
+  LewPopover,
   LewTag,
   LewTextTrim,
-  LewEmpty,
+  locale,
 } from 'lew-ui'
-import { object2class, numFormat } from 'lew-ui/utils'
-import type { SelectMultipleOptions, SelectMultipleOptionsGroup } from './props'
-import { selectMultipleProps } from './props'
-import { VirtList } from 'vue-virt-list'
+import { any2px, numFormat, object2class, poll } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { isFunction } from 'lodash-es'
-import { flattenOptions, defaultSearchMethod } from '../../select/src/util'
-import { poll } from 'lew-ui/utils'
-import { locale } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
+import { VirtList } from 'vue-virt-list'
+import { defaultSearchMethod, flattenOptions } from '../../select/src/util'
+import { selectMultipleProps } from './props'
+
 const props = defineProps(selectMultipleProps)
 const emit = defineEmits(['change', 'select', 'clear', 'delete', 'blur'])
 const selectValue: any = defineModel()
@@ -43,26 +42,29 @@ const state = reactive({
 
 const formMethods: any = inject('formMethods', {})
 
-let _searchMethod = computed(() => {
+const _searchMethod = computed(() => {
   if (isFunction(props.searchMethod)) {
     return props.searchMethod
-  } else if (props.searchMethodId) {
+  }
+  else if (props.searchMethodId) {
     return formMethods[props.searchMethodId]
-  } else {
+  }
+  else {
     return defaultSearchMethod
   }
 })
 
-let _initOptionsMethod = computed(() => {
+const _initOptionsMethod = computed(() => {
   if (isFunction(props.initOptionsMethod)) {
     return props.initOptionsMethod
-  } else if (props.initOptionsMethodId) {
+  }
+  else if (props.initOptionsMethodId) {
     return formMethods[props.initOptionsMethodId]
   }
   return false
 })
 
-const getSelectWidth = () => {
+function getSelectWidth() {
   state.selectWidth = lewSelectRef.value?.clientWidth - 12
   if (props.searchable) {
     setTimeout(() => {
@@ -71,11 +73,11 @@ const getSelectWidth = () => {
   }
 }
 
-const show = () => {
+function show() {
   lewPopoverRef.value && lewPopoverRef.value.show()
 }
 
-const hide = () => {
+function hide() {
   lewPopoverRef.value && lewPopoverRef.value.hide()
 }
 
@@ -83,18 +85,20 @@ const searchDebounce = useDebounceFn(async (e: any) => {
   search(e)
 }, props.searchDelay)
 
-const search = async (e?: any) => {
+async function search(e?: any) {
   state.loading = true
   const keyword = e?.target.value
   if (props.searchable) {
     let result: any = []
     if (props.enableSearchCache && state.searchCache.has(keyword)) {
       result = state.searchCache.get(keyword)!
-    } else {
+    }
+    else {
       const optionsToSearch = flattenOptions(state.sourceOptions)
       if (!keyword && optionsToSearch.length > 0) {
         result = optionsToSearch
-      } else {
+      }
+      else {
         result = await _searchMethod.value({
           options: optionsToSearch,
           keyword,
@@ -109,7 +113,7 @@ const search = async (e?: any) => {
   state.loading = false
 }
 
-const clearHandle = () => {
+function clearHandle() {
   selectValue.value = []
   emit('clear')
   setTimeout(() => {
@@ -120,7 +124,7 @@ const clearHandle = () => {
   emit('blur')
 }
 
-const deleteTag = ({ value }: { value: any }) => {
+function deleteTag({ value }: { value: any }) {
   const valueIndex = selectValue.value.findIndex(
     (_value: any) => value === _value,
   )
@@ -141,7 +145,7 @@ const deleteTag = ({ value }: { value: any }) => {
   }
 }
 
-const selectHandle = (item: SelectMultipleOptions) => {
+function selectHandle(item: SelectMultipleOptions) {
   if (item.disabled || item.isGroup) {
     return
   }
@@ -152,7 +156,8 @@ const selectHandle = (item: SelectMultipleOptions) => {
 
   if (index >= 0) {
     _value.splice(index, 1)
-  } else {
+  }
+  else {
     _value.push(item.value)
   }
 
@@ -172,18 +177,18 @@ const getChecked = computed(() => (value: string | number) => {
 })
 
 const getSelectedRows = computed(() => {
-  let _defaultValue = (props.defaultValue || []).map((e: any) => {
+  const _defaultValue = (props.defaultValue || []).map((e: any) => {
     return {
       label: e,
       value: e,
     }
   })
   if (state.options.length > 0) {
-    const selectedRows =
-      selectValue.value &&
-      selectValue.value.map((v: number | string) => {
-        return state.options.find((e: SelectMultipleOptions) => v === e.value)
-      })
+    const selectedRows
+      = selectValue.value
+        && selectValue.value.map((v: number | string) => {
+          return state.options.find((e: SelectMultipleOptions) => v === e.value)
+        })
     if (!selectedRows || selectedRows.length === 0) {
       return _defaultValue
     }
@@ -211,7 +216,7 @@ const getSelectClassName = computed(() => {
   })
 })
 
-const getSelectItemClassName = (e: any) => {
+function getSelectItemClassName(e: any) {
   const { disabled, isGroup } = e
   const active = getChecked.value(e.value)
 
@@ -231,7 +236,7 @@ const getIconSize = computed(() => {
   return size[props.size]
 })
 
-const showHandle = () => {
+function showHandle() {
   state.visible = true
 
   getSelectWidth()
@@ -249,7 +254,8 @@ const showHandle = () => {
     callback: () => {
       if (minIndex > 0 && minIndex !== Infinity) {
         virtListRef.value.scrollToIndex(minIndex)
-      } else {
+      }
+      else {
         virtListRef.value.reset()
       }
     },
@@ -269,18 +275,19 @@ const isShowScrollBar = computed(() => {
   return getVirtualHeight.value >= 280
 })
 
-const hideHandle = () => {
+function hideHandle() {
   state.visible = false
   emit('blur')
 }
 
-const init = async () => {
+async function init() {
   if (_initOptionsMethod.value) {
     try {
       const newOptions = await _initOptionsMethod.value()
       state.sourceOptions = newOptions
       state.options = flattenOptions(newOptions)
-    } catch (error) {
+    }
+    catch (error) {
       console.error('[LewSelectMultiple] initOptionsMethod failed', error)
     }
   }
@@ -331,9 +338,9 @@ const getResultText = computed(() => {
 </script>
 
 <template>
-  <lew-popover
+  <LewPopover
     ref="lewPopoverRef"
-    popoverBodyClassName="lew-select-multiple-popover-body"
+    popover-body-class-name="lew-select-multiple-popover-body"
     class="lew-select-view"
     :trigger="trigger"
     :disabled="disabled || readonly || state.initLoading"
@@ -365,10 +372,10 @@ const getResultText = computed(() => {
         <transition name="lew-form-icon-ani">
           <Icon
             v-if="
-              clearable &&
-              getSelectedRows &&
-              getSelectedRows.length > 0 &&
-              !readonly
+              clearable
+                && getSelectedRows
+                && getSelectedRows.length > 0
+                && !readonly
             "
             :size="getIconSize"
             type="close"
@@ -380,7 +387,7 @@ const getResultText = computed(() => {
           />
         </transition>
         <template v-if="getSelectedRows && getSelectedRows.length > 0">
-          <lew-flex
+          <LewFlex
             v-if="valueLayout === 'tag'"
             :style="{ padding: '4px' }"
             x="start"
@@ -390,7 +397,7 @@ const getResultText = computed(() => {
             class="lew-value"
           >
             <transition-group name="list">
-              <lew-tag
+              <LewTag
                 v-for="item in getSelectedRows"
                 :key="item.value"
                 type="light"
@@ -399,14 +406,14 @@ const getResultText = computed(() => {
                 @close="deleteTag(item)"
               >
                 {{ item.label }}
-              </lew-tag>
+              </LewTag>
             </transition-group>
-          </lew-flex>
+          </LewFlex>
           <template v-else>
-            <lew-popover
+            <LewPopover
               ref="lewPopoverValueRef"
               trigger="hover"
-              popoverBodyClassName="lew-select-multiple-popover-tag"
+              popover-body-class-name="lew-select-multiple-popover-tag"
               placement="top-start"
               style="width: 100%"
             >
@@ -425,7 +432,7 @@ const getResultText = computed(() => {
                 </div>
               </template>
               <template #popover-body>
-                <lew-flex
+                <LewFlex
                   x="start"
                   y="center"
                   :gap="5"
@@ -435,7 +442,7 @@ const getResultText = computed(() => {
                   }"
                   class="lew-select-multiple-tag-value"
                 >
-                  <lew-tag
+                  <LewTag
                     v-for="item in getSelectedRows"
                     :key="item.value"
                     type="light"
@@ -444,10 +451,10 @@ const getResultText = computed(() => {
                     @close="deleteTag(item)"
                   >
                     {{ item.label }}
-                  </lew-tag>
-                </lew-flex>
+                  </LewTag>
+                </LewFlex>
               </template>
-            </lew-popover>
+            </LewPopover>
           </template>
         </template>
         <div
@@ -469,33 +476,33 @@ const getResultText = computed(() => {
         :class="getBodyClassName"
         :style="`width:${state.selectWidth}px`"
       >
-        <slot name="header"></slot>
+        <slot name="header" />
         <div v-if="searchable" class="lew-search-input">
           <input
             ref="searchInputRef"
             v-model="state.keyword"
             :placeholder="locale.t('selectMultiple.searchPlaceholder')"
             @input="searchDebounce"
-          />
+          >
         </div>
         <div class="lew-select-options-box">
           <template v-if="state.options && state.options.length === 0">
-            <slot v-if="$slots.empty" name="empty"></slot>
-            <lew-flex v-else direction="y" x="center" class="lew-not-found">
-              <lew-empty :title="locale.t('selectMultiple.noResult')" />
-            </lew-flex>
+            <slot v-if="$slots.empty" name="empty" />
+            <LewFlex v-else direction="y" x="center" class="lew-not-found">
+              <LewEmpty :title="locale.t('selectMultiple.noResult')" />
+            </LewFlex>
           </template>
 
           <template v-else>
             <div v-show="searchable" class="lew-result-count">
               {{ getResultText }}
             </div>
-            <virt-list
+            <VirtList
               ref="virtListRef"
               :list="state.options"
-              :minSize="itemHeight"
+              :min-size="itemHeight"
               :buffer="5"
-              itemKey="value"
+              item-key="value"
               :style="{
                 height: `${getVirtualHeight}px`,
                 paddingRight: isShowScrollBar ? '5px' : '0px',
@@ -504,7 +511,7 @@ const getResultText = computed(() => {
             >
               <template #default="{ itemData: templateProps }">
                 <div
-                  :style="{ height: itemHeight + 'px' }"
+                  :style="{ height: `${itemHeight}px` }"
                   @click="selectHandle(templateProps)"
                 >
                   <slot
@@ -514,19 +521,19 @@ const getResultText = computed(() => {
                       ...templateProps,
                       checked: getChecked(templateProps.value),
                     }"
-                  ></slot>
+                  />
                   <div
                     v-else
                     class="lew-select-item lew-select-item-mul"
                     :class="getSelectItemClassName(templateProps)"
                   >
-                    <lew-checkbox
+                    <LewCheckbox
                       v-if="!templateProps.isGroup"
                       :key="templateProps.value"
                       class="lew-select-checkbox"
                       :checked="getChecked(templateProps.value)"
                     />
-                    <lew-text-trim
+                    <LewTextTrim
                       :text="
                         templateProps.isGroup
                           ? `${templateProps.label} (${templateProps.total})`
@@ -541,13 +548,13 @@ const getResultText = computed(() => {
                   </div>
                 </div>
               </template>
-            </virt-list>
+            </VirtList>
           </template>
         </div>
-        <slot name="footer"></slot>
+        <slot name="footer" />
       </div>
     </template>
-  </lew-popover>
+  </LewPopover>
 </template>
 
 <style lang="scss" scoped>

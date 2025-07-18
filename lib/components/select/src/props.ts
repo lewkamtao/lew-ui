@@ -1,8 +1,8 @@
-import type { PropType } from 'vue'
 import type { LewSize } from 'lew-ui'
+import type { PropType } from 'vue'
 import { validSizes } from 'lew-ui/constants'
 
-export type SelectOptions = {
+export interface SelectOptions {
   label: string
   value: string | number
   disabled?: boolean
@@ -16,7 +16,7 @@ export interface SelectOptionsGroup {
   children: SelectOptions[]
 }
 
-export type SelectSearchMethodParams = {
+export interface SelectSearchMethodParams {
   options?: SelectOptions[]
   keyword?: string
 }

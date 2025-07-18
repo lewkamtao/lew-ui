@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { cloneDeep } from 'lodash-es'
 import { parseToStandardJSON } from 'lew-ui/utils'
+import { cloneDeep } from 'lodash-es'
+
+const emit = defineEmits(['import'])
 const visible = ref(false)
 const fieldOptions = ref('')
 
@@ -28,13 +30,12 @@ const defaultOptions = `{
   afterSalesService: '售后服务'
 }`
 
-const open = () => {
+function open() {
   fieldOptions.value = ''
   visible.value = true
 }
-const emit = defineEmits(['import'])
 // Start of Selection
-const ok = () => {
+function ok() {
   if (!fieldOptions.value) {
     emit('import', parseToStandardJSON(defaultOptions))
     visible.value = false
@@ -46,12 +47,14 @@ const ok = () => {
     if (typeof parsedData === 'object' && parsedData !== null) {
       emit('import', cloneDeep(parsedData))
       visible.value = false
-    } else {
+    }
+    else {
       LewMessage.warning(
         '输入的内容不符合对象格式，请输入一个有效的 JSON 对象字符串！',
       )
     }
-  } catch (error) {
+  }
+  catch (error) {
     LewMessage.warning(
       '输入的内容不符合对象格式，请输入一个有效的 JSON 对象字符串！',
     )
@@ -64,25 +67,26 @@ defineExpose({ open })
   <lew-modal
     v-model:visible="visible"
     width="500"
-    :closeButtonProps="{
+    :close-button-props="{
       request: () => {
         visible = false
       },
     }"
-    :okButtonProps="{
+    :ok-button-props="{
       request: ok,
     }"
     title="导入字段"
   >
     <div class="import-modal-content lew-scrollbar">
       <lew-textarea
+        v-model="fieldOptions"
         height="400"
         :placeholder="defaultOptions"
-        v-model="fieldOptions"
       />
     </div>
   </lew-modal>
 </template>
+
 <style lang="scss" scoped>
 .import-modal-content {
   padding: 20px;

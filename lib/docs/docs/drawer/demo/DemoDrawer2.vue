@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const visible = ref(false)
-const ok = () => {
+function ok() {
   return new Promise<void>((resolve: any) => {
     setTimeout(() => {
       visible.value = false
@@ -9,21 +9,23 @@ const ok = () => {
   })
 }
 
-const close = () => {
+function close() {
   visible.value = false
 }
 </script>
 
 <template>
   <lew-flex x="start">
-    <lew-button @click="visible = true">Async Close</lew-button>
+    <lew-button @click="visible = true">
+      Async Close
+    </lew-button>
   </lew-flex>
   <lew-drawer
     v-model:visible="visible"
     width="350px"
     title="Simulate Async Request"
-    :okButtonProps="{ request: ok }"
-    :closeButtonProps="{ request: close }"
+    :ok-button-props="{ request: ok }"
+    :close-button-props="{ request: close }"
   >
     <div class="drawer-body">
       <div>Click confirm, the drawer will close after 1 second.</div>

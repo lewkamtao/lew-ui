@@ -48,9 +48,9 @@ export const textTrimProps = {
     default: [0, 15],
     validator(value: [number, number]): boolean {
       if (
-        !Array.isArray(value) ||
-        value.length !== 2 ||
-        !value.every((item) => typeof item === 'number')
+        !Array.isArray(value)
+        || value.length !== 2
+        || !value.every(item => typeof item === 'number')
       ) {
         console.warn('[LewTextTrim] offset 属性必须是包含两个数字的数组')
         return false
@@ -78,9 +78,9 @@ export const textTrimProps = {
     default: [120, 120],
     validator(value: [number, number]): boolean {
       if (
-        !Array.isArray(value) ||
-        value.length !== 2 ||
-        !value.every((item) => typeof item === 'number' && item >= 0)
+        !Array.isArray(value)
+        || value.length !== 2
+        || !value.every(item => typeof item === 'number' && item >= 0)
       ) {
         console.warn('[LewTextTrim] delay 属性必须是包含两个非负数的数组')
         return false

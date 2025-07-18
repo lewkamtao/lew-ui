@@ -1,14 +1,15 @@
 <script lang="ts" setup>
 import type { MenuTreeItem } from 'lew-ui'
+import { LewFlex, LewTag } from 'lew-ui'
 import {
-  FileText,
-  Users,
-  MessageSquare,
-  Tag,
   BarChart2,
+  FileText,
+  MessageSquare,
   Settings,
+  Tag,
+  Users,
 } from 'lucide-vue-next'
-import { LewTag, LewFlex } from 'lew-ui'
+
 const value = ref('')
 const expandKeys = ref([])
 
@@ -207,17 +208,17 @@ const options = [
   },
 ]
 
-const change = (item: MenuTreeItem) => {
+function change(item: MenuTreeItem) {
   console.log(item)
 }
 </script>
 
 <template>
   <lew-menu-tree
-    width="300"
     v-model="value"
-    :options="options"
     v-model:expand-keys="expandKeys"
+    width="300"
+    :options="options"
     @change="change"
   />
 </template>

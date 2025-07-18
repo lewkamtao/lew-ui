@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useImage } from '@vueuse/core'
 import { any2px } from 'lew-ui/utils'
-import { avatarProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
+import { avatarProps } from './props'
+
 const props = defineProps(avatarProps)
 
 const avatarBoxStyleObject = computed(() => {
@@ -34,8 +35,8 @@ const imageStyleObject = computed(() => {
 })
 
 const textStyleObject = computed(() => {
-  const size =
-    typeof props.size === 'number' ? props.size : parseInt(props.size)
+  const size
+    = typeof props.size === 'number' ? props.size : Number.parseInt(props.size)
   return {
     fontSize: `${size * 0.45}px`,
     lineHeight: `${size}px`,
@@ -46,10 +47,11 @@ const textStyleObject = computed(() => {
 })
 
 const altText = computed(() => {
-  if (!props.alt) return ''
+  if (!props.alt)
+    return ''
   const result = props.alt
     .split(' ')
-    .map((word) => word.charAt(0))
+    .map(word => word.charAt(0))
     .join('')
     .toUpperCase()
   return result.length > 2 ? result.charAt(0) : result
@@ -121,8 +123,8 @@ const STATUS_COLOR_CONFIG = {
 
 const dotStyleObject: any = computed(() => {
   const { status, statusPlacement, size } = props
-  const STATUS_PLACEMENT_CONFIG =
-    props.shape === 'circle'
+  const STATUS_PLACEMENT_CONFIG
+    = props.shape === 'circle'
       ? STATUS_PLACEMENT_CONFIG_CIRCLE
       : STATUS_PLACEMENT_CONFIG_SQUARE
 
@@ -139,20 +141,20 @@ const dotStyleObject: any = computed(() => {
   }
 })
 
-let _loading = ref()
-let _error = ref()
+const _loading = ref()
+const _error = ref()
 
-const init = () => {
+function init() {
   const { isLoading, error } = useImage({
     src: props.src as string,
   })
-  _loading = isLoading
-  _error = error
+  _loading.value = isLoading
+  _error.value = error
 }
 
 const getIconSize = computed(() => {
   const { size } = props
-  return typeof size === 'number' ? size * 0.5 : parseInt(size) * 0.5
+  return typeof size === 'number' ? size * 0.5 : Number.parseInt(size) * 0.5
 })
 
 init()
@@ -163,8 +165,8 @@ watch(
     const { isLoading, error } = useImage({
       src: props.src as string,
     })
-    _loading = isLoading
-    _error = error
+    _loading.value = isLoading
+    _error.value = error
   },
 )
 </script>
@@ -178,7 +180,7 @@ watch(
         </div>
       </template>
       <template v-else>
-        <div class="skeletons" v-if="_loading || loading"></div>
+        <div v-if="_loading || loading" class="skeletons" />
         <Icon v-else-if="_error || !src" :size="getIconSize" type="user" />
         <img
           v-else-if="src"
@@ -186,10 +188,10 @@ watch(
           :alt="alt"
           lazy
           :style="imageStyleObject"
-        />
+        >
       </template>
     </div>
-    <i v-if="status" :style="dotStyleObject"> </i>
+    <i v-if="status" :style="dotStyleObject" />
   </div>
 </template>
 

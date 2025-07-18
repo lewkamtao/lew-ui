@@ -219,25 +219,27 @@ const columns = [
   },
 ]
 
-const formatNoiseLevel = (level: string) => {
-  const noise = parseInt(level)
-  if (noise <= 62) return 'Quiet'
-  if (noise <= 66) return 'Moderate'
+function formatNoiseLevel(level: string) {
+  const noise = Number.parseInt(level)
+  if (noise <= 62)
+    return 'Quiet'
+  if (noise <= 66)
+    return 'Moderate'
   return 'Loud'
 }
 
-const calculateValueForMoney = (
-  price: string,
-  suction: number,
-  batteryLife: string,
-) => {
-  const priceNum = parseInt(price)
-  const batteryMinutes = parseInt(batteryLife)
+function calculateValueForMoney(price: string, suction: number, batteryLife: string) {
+  const priceNum = Number.parseInt(price)
+  const batteryMinutes = Number.parseInt(batteryLife)
   const score = (suction * batteryMinutes) / priceNum
-  if (score > 400) return 'Excellent'
-  if (score > 300) return 'Very High'
-  if (score > 200) return 'High'
-  if (score > 100) return 'Average'
+  if (score > 400)
+    return 'Excellent'
+  if (score > 300)
+    return 'Very High'
+  if (score > 200)
+    return 'High'
+  if (score > 100)
+    return 'Average'
   return 'Low'
 }
 </script>
@@ -255,7 +257,8 @@ const calculateValueForMoney = (
           type="light"
           color="blue"
           size="small"
-          >{{ item }}
+        >
+          {{ item }}
         </lew-tag>
       </lew-flex>
     </template>

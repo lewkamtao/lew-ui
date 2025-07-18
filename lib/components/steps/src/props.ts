@@ -1,6 +1,6 @@
 import type { ExtractPropTypes } from 'vue'
 
-export type StepsOptions = {
+export interface StepsOptions {
   title: string
   description: string
 }
@@ -34,9 +34,9 @@ export const stepsProps = {
       }
       if (
         value.some(
-          (item) =>
-            typeof item.title !== 'string' ||
-            typeof item.description !== 'string',
+          item =>
+            typeof item.title !== 'string'
+            || typeof item.description !== 'string',
         )
       ) {
         console.warn(

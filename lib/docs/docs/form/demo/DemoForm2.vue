@@ -5,7 +5,7 @@ const form = ref({} as any)
 
 const formRef = ref()
 
-const submit = () => {
+function submit() {
   formRef.value.validate().then((res: any) => {
     console.log(res)
   })
@@ -46,7 +46,7 @@ const options = ref([
     label: '姓名',
     as: 'input',
     rule: Yup.string()
-      .matches(/^[a-zA-Z]+$/, '必须为纯英文字母')
+      .matches(/^[a-z]+$/i, '必须为纯英文字母')
       .min(4, '长度必须至少为4')
       .max(16, '长度不能超过16')
       .required('不能为空'),
@@ -60,7 +60,7 @@ const options = ref([
     label: '备注',
     as: 'input',
     rule: Yup.string()
-      .matches(/^[a-zA-Z]+$/, '必须为纯英文字母')
+      .matches(/^[a-z]+$/i, '必须为纯英文字母')
       .min(4, '长度必须至少为4')
       .max(16, '长度不能超过16')
       .required('不能为空'),
@@ -74,7 +74,7 @@ const options = ref([
     label: '介绍',
     as: 'textarea',
     rule: Yup.string()
-      .matches(/^[\u4e00-\u9fa5]+$/, '必须为纯中文')
+      .matches(/^[\u4E00-\u9FA5]+$/, '必须为纯中文')
       .min(30, '长度必须至少为30')
       .max(300, '长度不能超过8')
       .required('不能为空'),
@@ -173,6 +173,7 @@ const options = ref([
     <pre>{{ form }}</pre>
   </lew-flex>
 </template>
+
 <style scoped lang="scss">
 .form-box {
   width: 380px;

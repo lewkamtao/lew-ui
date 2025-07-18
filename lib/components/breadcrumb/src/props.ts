@@ -28,9 +28,9 @@ export const breadcrumbProps = {
           return false
         }
         if (
-          item.value !== undefined &&
-          typeof item.value !== 'string' &&
-          typeof item.value !== 'number'
+          item.value !== undefined
+          && typeof item.value !== 'string'
+          && typeof item.value !== 'number'
         ) {
           console.warn(
             '[LewBreadcrumb] options 中的 value 必须是字符串或数字类型',

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const open = () => {
+function open() {
   LewMessage.warning({
     id: 'concert-ticket-alert',
     content:
@@ -7,16 +7,18 @@ const open = () => {
     duration: 300000,
   })
 }
-const close = () => {
+function close() {
   LewMessage.close({ id: 'concert-ticket-alert' })
 }
 </script>
 
 <template>
   <lew-flex wrap x="start" gap="20">
-    <lew-button round @click="open()">Show Ticket Alert</lew-button>
-    <lew-button round color="warning" @click="close()"
-      >Dismiss Alert</lew-button
-    >
+    <lew-button round @click="open()">
+      Show Ticket Alert
+    </lew-button>
+    <lew-button round color="warning" @click="close()">
+      Dismiss Alert
+    </lew-button>
   </lew-flex>
 </template>

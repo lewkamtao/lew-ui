@@ -1,5 +1,4 @@
-import type { SelectOptions } from 'lew-ui'
-import type { LewSize } from 'lew-ui'
+import type { LewSize, SelectOptions } from 'lew-ui'
 import { validSizes } from 'lew-ui/constants'
 
 export type PaginationOptions = SelectOptions

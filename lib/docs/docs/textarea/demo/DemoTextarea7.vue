@@ -1,10 +1,10 @@
 <script setup lang="ts">
 const v = ref('')
-const ok = (v: string) => {
+function ok(v: string) {
   LewMessage.success(`The input content is: ${v}`)
 }
 </script>
 
 <template>
-  <lew-textarea width="300px" v-model="v" ok-by-enter @ok="ok" clearable />
+  <lew-textarea v-model="v" width="300px" ok-by-enter clearable @ok="ok" />
 </template>

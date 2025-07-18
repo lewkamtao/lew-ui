@@ -7,7 +7,7 @@ import { has, isArray } from 'lodash-es'
  * @param keyField 键字段名
  * @returns 所有节点值的数组
  */
-const findAllNodes = (tree: TreeDataSource[] = [], keyField = 'key') => {
+function findAllNodes(tree: TreeDataSource[] = [], keyField = 'key') {
   // 使用Set避免重复值
   const nodes = new Set()
 
@@ -20,7 +20,7 @@ const findAllNodes = (tree: TreeDataSource[] = [], keyField = 'key') => {
   }
 
   // 遍历每个根节点
-  tree.forEach((node) => traverse(node))
+  tree.forEach(node => traverse(node))
 
   return Array.from(nodes)
 }
@@ -31,18 +31,19 @@ const findAllNodes = (tree: TreeDataSource[] = [], keyField = 'key') => {
  * @param keyField 键字段名
  * @returns 所有叶子节点值的数组
  */
-const findLeafNodes = (tree: TreeDataSource[] = [], keyField = 'key') => {
+function findLeafNodes(tree: TreeDataSource[] = [], keyField = 'key') {
   const leafNodes = new Set()
 
   const traverse = (node: any) => {
     if (!node.children?.length) {
       leafNodes.add(node[keyField])
-    } else {
+    }
+    else {
       node.children.forEach((child: any) => traverse(child))
     }
   }
 
-  tree.forEach((node) => traverse(node))
+  tree.forEach(node => traverse(node))
 
   return Array.from(leafNodes)
 }
@@ -52,7 +53,7 @@ const findLeafNodes = (tree: TreeDataSource[] = [], keyField = 'key') => {
  * @param options 格式化选项
  * @returns 格式化后的树结构
  */
-export const formatTree = ({
+export function formatTree({
   dataSource,
   parent = null,
   parentKeyPaths = [],
@@ -63,12 +64,12 @@ export const formatTree = ({
 }: {
   dataSource: TreeDataSource[]
   parent?: any
-  parentKeyPaths?: String[]
-  parentLabelPaths?: String[]
+  parentKeyPaths?: string[]
+  parentLabelPaths?: string[]
   keyField?: string
   labelField?: string
   free?: boolean
-}): TreeDataSource[] => {
+}): TreeDataSource[] {
   return dataSource.map((node: TreeDataSource, index: number) => {
     const { children, ...rest }: any = node
     const key = rest[keyField]
@@ -101,7 +102,8 @@ export const formatTree = ({
       // 性能优化：可以考虑使用记忆化来缓存计算结果
       currentNode.leafNodeValues = findLeafNodes(children, keyField)
       currentNode.allNodeValues = findAllNodes(children, keyField)
-    } else if (!free) {
+    }
+    else if (!free) {
       currentNode.leafNodeValues = []
       currentNode.allNodeValues = []
     }
@@ -130,7 +132,7 @@ export const formatTree = ({
  * @param options 转换选项
  * @returns 处理结果，包含状态和数据
  */
-const transformTree = async ({
+async function transformTree({
   initOptionsMethod = null,
   dataSource = [],
   keyField = 'key',
@@ -144,7 +146,7 @@ const transformTree = async ({
   labelField?: string
   free?: boolean
   keyword?: string
-}) => {
+}) {
   let tree: TreeDataSource[] = []
   const status = 'success'
 
@@ -162,7 +164,8 @@ const transformTree = async ({
             labelField,
             free,
           })
-        } else {
+        }
+        else {
           return {
             status: 'error',
             result: [],
@@ -171,14 +174,16 @@ const transformTree = async ({
             ),
           }
         }
-      } catch (error) {
+      }
+      catch (error) {
         return {
           status: 'error',
           result: [],
           error: error instanceof Error ? error : new Error(String(error)),
         }
       }
-    } else if (dataSource?.length > 0) {
+    }
+    else if (dataSource?.length > 0) {
       tree = formatTree({
         dataSource,
         parentKeyPaths: [],
@@ -205,7 +210,8 @@ const transformTree = async ({
             )
           ) {
             _tree.push(node)
-          } else if (children && children.length > 0) {
+          }
+          else if (children && children.length > 0) {
             filterTree(children)
           }
         })
@@ -223,13 +229,15 @@ const transformTree = async ({
           labelField,
           free,
         })
-      } else {
+      }
+      else {
         tree = []
       }
     }
 
     return { status, result: tree }
-  } catch (error) {
+  }
+  catch (error) {
     return {
       status: 'error',
       result: [],

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { SelectOptions } from 'lew-ui'
+
 const options = ref<SelectOptions[]>([
   { label: 'BMW', value: 'bmw' },
   { label: 'Mercedes-Benz', value: 'mercedes' },
@@ -13,8 +14,8 @@ const value = ref('porsche')
 
 <template>
   <lew-select
-    style="width: 320px"
     v-model="value"
+    style="width: 320px"
     disabled
     placeholder="Select brand"
     :options="options"

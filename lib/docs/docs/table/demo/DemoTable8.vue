@@ -123,7 +123,7 @@ const columns = [
     align: 'center',
     customRender: ({ row }: any) => {
       const currentYear = new Date().getFullYear()
-      const age = currentYear - parseInt(row.releaseYear)
+      const age = currentYear - Number.parseInt(row.releaseYear)
       return h('div', [
         h('div', row.releaseYear),
         h(
@@ -139,8 +139,8 @@ const columns = [
     width: 140,
     align: 'center',
     customRender: ({ row }: any) => {
-      const popularityColor =
-        row.popularity >= 95
+      const popularityColor
+        = row.popularity >= 95
           ? '#ff4d4f'
           : row.popularity >= 90
             ? '#faad14'
@@ -230,7 +230,7 @@ const columns = [
 </script>
 
 <template>
-  <lew-table :data-source="data" :columns="columns"> </lew-table>
+  <lew-table :data-source="data" :columns="columns" />
 </template>
 
 <style lang="scss" scoped>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { useDebounceFn, useMouse } from '@vueuse/core'
+import { escape } from 'lodash-es'
 import tippy, { roundArrow } from 'tippy.js'
 import { textTrimProps } from './props'
-import { escape } from 'lodash-es'
-import { useMouse, useDebounceFn } from '@vueuse/core'
-import { getDisplayText, clearMeasureCache } from './text-trim'
+import { clearMeasureCache, getDisplayText } from './text-trim'
 
 const props = defineProps(textTrimProps)
 
@@ -12,7 +12,7 @@ const lewTextTrimPopRef = ref()
 
 let instance: any
 
-const initTippy = () => {
+function initTippy() {
   const element = lewTextTrimRef.value
   if (!element) {
     return
@@ -21,7 +21,8 @@ const initTippy = () => {
   let isEllipsis = false
   if (props.lineClamp) {
     isEllipsis = element.offsetHeight < element.scrollHeight
-  } else {
+  }
+  else {
     isEllipsis = element.offsetWidth < element.scrollWidth
   }
   // 如果溢出
@@ -40,53 +41,58 @@ const initTippy = () => {
         appendTo: () => document.body,
         placement,
         offset,
-        allowHTML: allowHTML,
+        allowHTML,
         arrow: roundArrow,
         maxWidth: 250,
       })
       instance.popper.children[0].setAttribute('data-lew', 'tooltip')
       showTippy()
     }
-  } else {
+  }
+  else {
     element.style.cursor = ''
     // 如果没溢出
     destroyTippy()
   }
 }
 
-const showTippy = () => {
+function showTippy() {
   const { x, y } = useMouse()
   if (props.delay && Array.isArray(props.delay) && props.delay[0] > 0) {
     setTimeout(() => {
       try {
         // 判断当前鼠标是否在元素范围内
         const element = lewTextTrimRef.value
-        if (!element) return
+        if (!element)
+          return
 
         const rect = element.getBoundingClientRect()
         // 检查鼠标坐标是否在元素矩形区域内
         if (
-          x.value >= rect.left &&
-          x.value <= rect.right &&
-          y.value >= rect.top &&
-          y.value <= rect.bottom
+          x.value >= rect.left
+          && x.value <= rect.right
+          && y.value >= rect.top
+          && y.value <= rect.bottom
         ) {
           instance?.show()
         }
-      } catch (error) {
+      }
+      catch (error) {
         console.error('显示提示时发生错误:', error)
       }
     }, props.delay[0])
-  } else {
+  }
+  else {
     try {
       instance?.show()
-    } catch (error) {
+    }
+    catch (error) {
       console.error('显示提示时发生错误:', error)
     }
   }
 }
 
-const sanitizeHtml = (html: string) => {
+function sanitizeHtml(html: string) {
   return escape(html)
 }
 
@@ -101,7 +107,7 @@ const getTextTrimStyleObject = computed(() => {
   }
 })
 
-const destroyTippy = () => {
+function destroyTippy() {
   instance && instance.destroy()
   instance = null
 }
@@ -110,7 +116,7 @@ const displayText = ref('')
 const isEllipsisByTextTrim = ref(false)
 
 // 计算显示文本
-const calculateDisplayText = () => {
+function calculateDisplayText() {
   const { text, reserveEnd } = props
   if (lewTextTrimRef.value) {
     const result = getDisplayText({
@@ -124,7 +130,7 @@ const calculateDisplayText = () => {
 }
 
 // 使用 requestAnimationFrame 优化初始化计算
-const initCalculateDisplayText = () => {
+function initCalculateDisplayText() {
   requestAnimationFrame(() => {
     calculateDisplayText()
   })
@@ -134,8 +140,9 @@ const initCalculateDisplayText = () => {
 const debouncedCalculate = useDebounceFn(calculateDisplayText, 150)
 
 // 监听窗口大小变化
-const setupResizeObserver = () => {
-  if (!lewTextTrimRef.value) return
+function setupResizeObserver() {
+  if (!lewTextTrimRef.value)
+    return
 
   const resizeObserver = new ResizeObserver(() => {
     debouncedCalculate()

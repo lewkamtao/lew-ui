@@ -12,7 +12,7 @@ const value = ref('浙江大学')
   <lew-select
     v-model="value"
     searchable
-    :defaultValue="value"
+    :default-value="value"
     :options="schoolsOptions"
     clearable
     placeholder="Default Filter"

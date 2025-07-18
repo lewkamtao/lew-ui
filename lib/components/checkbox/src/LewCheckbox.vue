@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { object2class } from 'lew-ui/utils'
-import { checkboxProps } from './props'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { cloneDeep } from 'lodash-es'
+import { checkboxProps } from './props'
 
 const props = defineProps(checkboxProps)
 
@@ -11,8 +11,9 @@ const modelValue: Ref<boolean | undefined> = defineModel({
   default: false,
 })
 
-const setChecked = () => {
-  if (props.disabled || props.readonly) return
+function setChecked() {
+  if (props.disabled || props.readonly)
+    return
 
   const newValue = !modelValue.value
   modelValue.value = newValue
@@ -50,6 +51,7 @@ const getCheckboxClassName = computed(() => {
   })
 })
 </script>
+
 <template>
   <div
     class="lew-checkbox"
@@ -57,7 +59,7 @@ const getCheckboxClassName = computed(() => {
     @click.stop="setChecked"
   >
     <div v-if="iconable || (!iconable && !block)" class="lew-checkbox-icon-box">
-      <i v-show="certain" class="lew-checkbox-icon-certain"></i>
+      <i v-show="certain" class="lew-checkbox-icon-certain" />
       <Icon
         :stroke-width="4"
         class="lew-checkbox-icon"

@@ -185,7 +185,7 @@ const columns = [
   },
 ]
 
-const getSortTooltipComponent = (row: any) => {
+function getSortTooltipComponent(row: any) {
   return h('div', {}, `${row.brand} ${row.name} ${row.processor}`)
 }
 </script>
@@ -205,10 +205,13 @@ const getSortTooltipComponent = (row: any) => {
           size="small"
           type="light"
           color="blue"
-          >{{ item }}</lew-tag
         >
+          {{ item }}
+        </lew-tag>
       </lew-flex>
     </template>
-    <template #price="{ row }"> ${{ row.price }} </template>
+    <template #price="{ row }">
+      ${{ row.price }}
+    </template>
   </lew-table>
 </template>

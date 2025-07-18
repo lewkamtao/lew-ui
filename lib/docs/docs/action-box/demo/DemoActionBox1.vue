@@ -26,6 +26,7 @@ const options = ref([
   },
 ])
 </script>
+
 <template>
   <lew-action-box :options="options" />
 </template>

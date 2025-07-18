@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { sliderRangeProps } from './props'
 import { dragmove } from 'lew-ui/utils'
 import { throttle } from 'lodash-es'
+import { sliderRangeProps } from './props'
 
 const props = defineProps(sliderRangeProps)
 const emit = defineEmits(['change'])
@@ -10,9 +10,9 @@ const modelValue = defineModel<number[]>('modelValue', {
   get(val) {
     // 确保返回有效的数组，避免 null、undefined 或空数组
     if (
-      Array.isArray(val) &&
-      val.length === 2 &&
-      val.every((v) => v !== null && v !== undefined)
+      Array.isArray(val)
+      && val.length === 2
+      && val.every(v => v !== null && v !== undefined)
     ) {
       return val
     }
@@ -27,16 +27,12 @@ const _modelValue = ref<number[]>([0, 0])
 const isDragging = ref(false)
 
 // 安全的数组访问函数
-const safeGetArrayValue = (
-  arr: number[] | null | undefined,
-  index: number,
-  defaultValue: number,
-): number => {
+function safeGetArrayValue(arr: number[] | null | undefined, index: number, defaultValue: number): number {
   if (
-    !Array.isArray(arr) ||
-    arr.length <= index ||
-    arr[index] === null ||
-    arr[index] === undefined
+    !Array.isArray(arr)
+    || arr.length <= index
+    || arr[index] === null
+    || arr[index] === undefined
   ) {
     return defaultValue
   }
@@ -44,7 +40,7 @@ const safeGetArrayValue = (
 }
 
 // 安全的 _modelValue 访问
-const getInternalValueAt = (index: number, defaultValue: number): number => {
+function getInternalValueAt(index: number, defaultValue: number): number {
   return safeGetArrayValue(_modelValue.value, index, defaultValue)
 }
 
@@ -72,7 +68,7 @@ const throttledUpdateModelValue = throttle(
 const getTrackMax = computed(() => {
   const { options, max } = props
   if (options && options.length > 0) {
-    return Math.max(...options.map((option) => Number(option.value)))
+    return Math.max(...options.map(option => Number(option.value)))
   }
   return Number(max)
 })
@@ -81,7 +77,7 @@ const getTrackMax = computed(() => {
 const getTrackMin = computed(() => {
   const { options, min } = props
   if (options && options.length > 0) {
-    return Math.min(...options.map((option) => Number(option.value)))
+    return Math.min(...options.map(option => Number(option.value)))
   }
   return Number(min)
 })
@@ -95,58 +91,62 @@ const getMin = computed(() => {
 })
 
 // 获取 mark 位置
-const getMarkPosition = (value: number | string) => {
+function getMarkPosition(value: number | string) {
   const range = getTrackMax.value - getTrackMin.value
   const percentage = ((Number(value) - getTrackMin.value) / range) * 100
   return Math.max(0, Math.min(100, percentage))
 }
 
-const calculateValue = (position: number) => {
-  if (!trackRef.value) return 0
+function calculateValue(position: number) {
+  if (!trackRef.value)
+    return 0
   const trackWidth = trackRef.value.clientWidth
   const percentage = position / trackWidth
   dotX.value = position
-  const value =
-    percentage * (Number(getTrackMax.value) - Number(getTrackMin.value)) +
-    Number(getTrackMin.value)
+  const value
+    = percentage * (Number(getTrackMax.value) - Number(getTrackMin.value))
+      + Number(getTrackMin.value)
   const step = Number(props.step)
   const decimalPlaces = (step.toString().split('.')[1] || '').length
   return Number(value.toFixed(decimalPlaces)) || 0
 }
 
 // 根据当前值计算最近的刻度位置
-const calculateNearestStep = (value: number) => {
+function calculateNearestStep(value: number) {
   const steps = Math.round(
     (value - Number(getTrackMin.value)) / Number(props.step),
   )
   return (
-    ((steps * Number(props.step) +
-      Number(getTrackMin.value) -
-      Number(getTrackMin.value)) /
-      (Number(getTrackMax.value) - Number(getTrackMin.value))) *
-    100
+    ((steps * Number(props.step)
+      + Number(getTrackMin.value)
+      - Number(getTrackMin.value))
+    / (Number(getTrackMax.value) - Number(getTrackMin.value)))
+  * 100
   )
 }
 
-const setDotByValue = (value: number, isLeft: boolean) => {
+function setDotByValue(value: number, isLeft: boolean) {
   if (isLeft) {
-    if (!dotRef1.value) return
+    if (!dotRef1.value)
+      return
     const nearestStepPercentage = calculateNearestStep(value)
     dotRef1.value.style.left = `${nearestStepPercentage}%`
-  } else {
-    if (!dotRef2.value) return
+  }
+  else {
+    if (!dotRef2.value)
+      return
     const nearestStepPercentage = calculateNearestStep(value)
     dotRef2.value.style.left = `${nearestStepPercentage}%`
   }
 }
 
 // 根据modelValue更新两个滑块的位置
-const updateDotsByModelValue = (values: number[]) => {
+function updateDotsByModelValue(values: number[]) {
   // 确保 values 是有效的数组
   if (
-    !Array.isArray(values) ||
-    values.length !== 2 ||
-    values.some((v) => v === null || v === undefined)
+    !Array.isArray(values)
+    || values.length !== 2
+    || values.some(v => v === null || v === undefined)
   ) {
     return
   }
@@ -161,7 +161,7 @@ const updateDotsByModelValue = (values: number[]) => {
 
 let _dragmove = () => {}
 
-const init = () => {
+function init() {
   const el1 = dotRef1.value
   const el2 = dotRef2.value
   const parentEl = trackRef.value
@@ -237,9 +237,9 @@ watch(
     }
     // 确保 newValue 是有效的数组
     if (
-      Array.isArray(newValue) &&
-      newValue.length === 2 &&
-      newValue.every((v) => v !== null && v !== undefined)
+      Array.isArray(newValue)
+      && newValue.length === 2
+      && newValue.every(v => v !== null && v !== undefined)
     ) {
       _modelValue.value = [...newValue]
       updateDotsByModelValue(_modelValue.value)
@@ -255,12 +255,13 @@ onMounted(() => {
   // 初始化 _modelValue，确保有有效的值
   const currentModelValue = modelValue.value
   if (
-    Array.isArray(currentModelValue) &&
-    currentModelValue.length === 2 &&
-    currentModelValue.every((v) => v !== null && v !== undefined)
+    Array.isArray(currentModelValue)
+    && currentModelValue.length === 2
+    && currentModelValue.every(v => v !== null && v !== undefined)
   ) {
     _modelValue.value = [...currentModelValue]
-  } else {
+  }
+  else {
     _modelValue.value = [getMin.value, getMax.value]
   }
   init()
@@ -324,9 +325,9 @@ const selectedAreaStyle = computed(() => {
     0,
     Math.min(
       100,
-      (Math.abs(rightValue - leftValue) /
-        (getTrackMax.value - getTrackMin.value)) *
-        100,
+      (Math.abs(rightValue - leftValue)
+        / (getTrackMax.value - getTrackMin.value))
+      * 100,
     ),
   )
 
@@ -344,9 +345,9 @@ const rangeAreaStyle = computed(() => {
     0,
     Math.min(
       100,
-      ((getMax.value - getMin.value) /
-        (getTrackMax.value - getTrackMin.value)) *
-        100,
+      ((getMax.value - getMin.value)
+        / (getTrackMax.value - getTrackMin.value))
+      * 100,
     ),
   )
 
@@ -357,7 +358,7 @@ const rangeAreaStyle = computed(() => {
 })
 
 // 判断步进标记是否被选中
-const isStepMarkSelected = (value: number | string) => {
+function isStepMarkSelected(value: number | string) {
   const leftValue = getInternalValueAt(0, getMin.value)
   const rightValue = getInternalValueAt(1, getMax.value)
   const minValue = Math.min(leftValue, rightValue)
@@ -367,20 +368,22 @@ const isStepMarkSelected = (value: number | string) => {
 }
 
 // 判断步进标签是否被禁用
-const isStepLabelDisabled = (value: number | string) => {
+function isStepLabelDisabled(value: number | string) {
   return (
     Number(value) < Number(getMin.value) || Number(value) > Number(getMax.value)
   )
 }
 
 // 创建 tooltip 配置
-const createTooltipConfig = (value: number) => ({
-  content: props.formatTooltip(value),
-  placement: 'top' as const,
-  trigger: 'mouseenter' as const,
-  delay: [0, 1000] as [number, number],
-  key: dotX.value,
-})
+function createTooltipConfig(value: number) {
+  return {
+    content: props.formatTooltip(value),
+    placement: 'top' as const,
+    trigger: 'mouseenter' as const,
+    delay: [0, 1000] as [number, number],
+    key: dotX.value,
+  }
+}
 
 // 左侧滑块的 tooltip 配置
 const leftDotTooltip = computed(() =>
@@ -403,15 +406,19 @@ const rightDisabledAreaStyle = computed(() => ({
 }))
 
 // 步进标签样式
-const createStepLabelStyle = (value: number | string) => ({
-  left: `${getMarkPosition(value)}%`,
-  top: `calc(var(--lew-slider-height) - 20px)`,
-})
+function createStepLabelStyle(value: number | string) {
+  return {
+    left: `${getMarkPosition(value)}%`,
+    top: `calc(var(--lew-slider-height) - 20px)`,
+  }
+}
 
 // 步进标记样式
-const createStepMarkStyle = (value: number | string) => ({
-  left: `${getMarkPosition(value)}%`,
-})
+function createStepMarkStyle(value: number | string) {
+  return {
+    left: `${getMarkPosition(value)}%`,
+  }
+}
 
 // 左侧滑块的样式
 const leftDotStyle = computed(() => ({
@@ -425,35 +432,35 @@ const rightDotStyle = computed(() => ({
 </script>
 
 <template>
-    <div
-        class="lew-slider"
-        :style="getStyle"
-        :class="{
-            'lew-slider-disabled': disabled,
-            'lew-slider-readonly': readonly,
-        }"
-    >
-        <div ref="trackRef" class="lew-slider-track">
-            <div
-                :style="leftDisabledAreaStyle"
-                class="lew-slider-track-disabled-area lew-slider-track-disabled-area-left"
-                @click.stop
-            ></div>
-            <div
-                :style="rightDisabledAreaStyle"
-                class="lew-slider-track-disabled-area lew-slider-track-disabled-area-right"
-                @click.stop
-            ></div>
+  <div
+    class="lew-slider"
+    :style="getStyle"
+    :class="{
+      'lew-slider-disabled': disabled,
+      'lew-slider-readonly': readonly,
+    }"
+  >
+    <div ref="trackRef" class="lew-slider-track">
+      <div
+        :style="leftDisabledAreaStyle"
+        class="lew-slider-track-disabled-area lew-slider-track-disabled-area-left"
+        @click.stop
+      />
+      <div
+        :style="rightDisabledAreaStyle"
+        class="lew-slider-track-disabled-area lew-slider-track-disabled-area-right"
+        @click.stop
+      />
 
-            <div class="lew-slider-track-line">
-                <div
-                    class="lew-slider-track-line-range"
-                    :style="rangeAreaStyle"
-                ></div>
-                <div
-                    class="lew-slider-track-line-selected"
-                    :style="selectedAreaStyle"
-                ></div>
+      <div class="lew-slider-track-line">
+        <div
+          class="lew-slider-track-line-range"
+          :style="rangeAreaStyle"
+        />
+        <div
+          class="lew-slider-track-line-selected"
+          :style="selectedAreaStyle"
+        />
 
         <div
           v-for="(item, index) in options"
@@ -465,7 +472,7 @@ const rightDotStyle = computed(() => ({
             ),
           }"
           :style="createStepMarkStyle(item.value)"
-        ></div>
+        />
         <div
           v-for="(item, index) in options"
           :key="index"
@@ -483,7 +490,9 @@ const rightDotStyle = computed(() => ({
             {{ item.label }}
           </div>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>

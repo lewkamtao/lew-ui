@@ -23,8 +23,8 @@ const options = ref([
   },
 ])
 // Simulate breadcrumb click event
-const handleBreadcrumbClick = (item: any) => {
-  LewMessage.success('Clicked breadcrumb item: ' + item.label)
+function handleBreadcrumbClick(item: any) {
+  LewMessage.success(`Clicked breadcrumb item: ${item.label}`)
 }
 </script>
 

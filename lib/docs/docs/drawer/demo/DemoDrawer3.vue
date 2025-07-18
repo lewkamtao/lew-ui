@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const visible = ref(false)
-const ok = () => {
+function ok() {
   return new Promise<void>((resolve) => {
     setTimeout(() => {
       visible.value = false
@@ -9,20 +9,22 @@ const ok = () => {
   })
 }
 
-const close = () => {
+function close() {
   visible.value = false
 }
 </script>
 
 <template>
   <lew-flex x="start">
-    <lew-button @click="visible = true">Custom</lew-button>
+    <lew-button @click="visible = true">
+      Custom
+    </lew-button>
   </lew-flex>
   <lew-drawer
     v-model:visible="visible"
     width="750px"
-    :okButtonProps="{ request: ok }"
-    :closeButtonProps="{ request: close }"
+    :ok-button-props="{ request: ok }"
+    :close-button-props="{ request: close }"
   >
     <template #header>
       <lew-flex x="start" class="lew-drawer-header">
@@ -39,8 +41,12 @@ const close = () => {
           Takes effect immediately after submission
         </lew-flex>
         <lew-flex x="end" y="center">
-          <lew-button type="text" color="gray" :request="ok">Cancel</lew-button>
-          <lew-button :request="ok">Submit</lew-button>
+          <lew-button type="text" color="gray" :request="ok">
+            Cancel
+          </lew-button>
+          <lew-button :request="ok">
+            Submit
+          </lew-button>
         </lew-flex>
       </lew-flex>
     </template>

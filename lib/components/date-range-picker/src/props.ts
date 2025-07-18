@@ -1,6 +1,7 @@
-import type { ExtractPropTypes, PropType } from 'vue'
 import type { LewSize } from 'lew-ui'
+import type { ExtractPropTypes, PropType } from 'vue'
 import { validSizes } from 'lew-ui/constants'
+
 export const dateRangePickerModel = {
   modelValue: {
     type: Object as () => Record<string, Date | undefined>,

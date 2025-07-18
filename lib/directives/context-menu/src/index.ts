@@ -1,7 +1,7 @@
-// 导入所需的依赖
-import tippy from 'tippy.js'
 import type { App, DirectiveBinding } from 'vue'
 import { getUniqueId } from 'lew-ui/utils'
+// 导入所需的依赖
+import tippy from 'tippy.js'
 import _LewContextMenu from './LewContextMenu.vue'
 
 /**
@@ -29,7 +29,7 @@ declare global {
 /**
  * 初始化右键菜单配置
  */
-export const initLewContextMenu = (): void => {
+export function initLewContextMenu(): void {
   window.LewContextMenu = {
     menu: {},
     contextMenu: null,
@@ -58,12 +58,14 @@ export const initLewContextMenu = (): void => {
 /**
  * 递归查找元素的右键菜单ID
  */
-const findContextMenuId = (el: HTMLElement): string => {
+function findContextMenuId(el: HTMLElement): string {
   try {
     const id = el.getAttribute('lew-context-menu-id')
-    if (id) return id
+    if (id)
+      return id
     return el.parentNode ? findContextMenuId(el.parentNode as HTMLElement) : ''
-  } catch {
+  }
+  catch {
     return ''
   }
 }
@@ -71,7 +73,7 @@ const findContextMenuId = (el: HTMLElement): string => {
 /**
  * 创建右键菜单组件实例
  */
-const createContextMenu = (options: ContextMenus[]) => {
+function createContextMenu(options: ContextMenus[]) {
   const menuDom = document.createElement('div')
   createApp({
     render() {
@@ -103,7 +105,8 @@ export const LewVContextMenu = {
             const id = findContextMenuId(e.target as HTMLElement)
             const menuConfig = window.LewContextMenu.menu[id]
 
-            if (!id || menuConfig?.disabled) return
+            if (!id || menuConfig?.disabled)
+              return
 
             e.preventDefault()
 
@@ -139,7 +142,8 @@ export const LewVContextMenu = {
         if (id) {
           const { options = [], disabled = false } = binding.value
           window.LewContextMenu.menu[id] = { options, disabled }
-        } else {
+        }
+        else {
           console.error('发生未知错误！找不到 lew-context-menu-id。')
         }
       },

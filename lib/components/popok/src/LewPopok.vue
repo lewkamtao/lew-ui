@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { LewButton, LewPopover } from 'lew-ui'
+import type { LewColor } from 'lew-ui'
+import { LewButton, LewPopover, locale } from 'lew-ui'
 import { any2px } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
 import { popokButtonProps } from './props'
-import type { LewColor } from 'lew-ui'
-import { locale } from 'lew-ui'
+
 const props = defineProps(popokButtonProps)
 
 const lewPopoverRef = ref()
@@ -12,7 +12,7 @@ const okLoading = ref(false)
 const cancelLoading = ref(false)
 const okRef = ref()
 
-const handleAction = async (action: 'ok' | 'cancel') => {
+async function handleAction(action: 'ok' | 'cancel') {
   const actionFunction = props[action]
   const loadingRef = action === 'ok' ? okLoading : cancelLoading
 
@@ -29,26 +29,27 @@ const handleAction = async (action: 'ok' | 'cancel') => {
 const ok = () => handleAction('ok')
 const cancel = () => handleAction('cancel')
 
-const hide = () => {
+function hide() {
   lewPopoverRef.value.hide()
 }
 
 onMounted(() => {
   nextTick(() => {
-    if (okRef.value) okRef.value.focus()
+    if (okRef.value)
+      okRef.value.focus()
   })
 })
 </script>
 
 <template>
-  <lew-popover
+  <LewPopover
     ref="lewPopoverRef"
     class="lew-popok"
     :trigger="trigger"
     :placement="placement"
   >
     <template #trigger>
-      <slot></slot>
+      <slot />
     </template>
     <template #popover-body>
       <div
@@ -61,12 +62,14 @@ onMounted(() => {
           <Icon :size="24" :type />
         </div>
         <div class="lew-popok-right">
-          <div v-if="title" class="lew-popok-title">{{ title }}</div>
+          <div v-if="title" class="lew-popok-title">
+            {{ title }}
+          </div>
           <div v-if="content" class="lew-popok-content">
             {{ content }}
           </div>
           <div class="lew-popok-footer">
-            <lew-button
+            <LewButton
               :text="cancelText || locale.t('popok.cancelText')"
               color="gray"
               type="light"
@@ -74,7 +77,7 @@ onMounted(() => {
               :loading="cancelLoading"
               @click.stop="cancel"
             />
-            <lew-button
+            <LewButton
               ref="okRef"
               :text="okText || locale.t('popok.okText')"
               type="fill"
@@ -87,7 +90,7 @@ onMounted(() => {
         </div>
       </div>
     </template>
-  </lew-popover>
+  </LewPopover>
 </template>
 
 <style lang="scss" scoped>

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ChevronLeft } from 'lucide-vue-next'
+
 const value = ref<string[]>(['1'])
 const companies = [
   {
@@ -30,24 +31,24 @@ const companies = [
     id: '5',
     name: 'Amazon',
     description:
-      "Amazon.com, Inc. is an American multinational technology company founded by Jeff Bezos in 1994. Amazon is the world's largest online retailer and cloud computing company, known for its e-commerce platform, Amazon Prime subscription service, and Amazon Web Services (AWS) cloud computing platform.",
+      'Amazon.com, Inc. is an American multinational technology company founded by Jeff Bezos in 1994. Amazon is the world\'s largest online retailer and cloud computing company, known for its e-commerce platform, Amazon Prime subscription service, and Amazon Web Services (AWS) cloud computing platform.',
   },
   {
     id: '6',
     name: 'Tesla',
     description:
-      "Tesla, Inc. is an American electric vehicle and clean energy company founded by Elon Musk, Martin Eberhard, Marc Tarpenning, JB Straubel, and Ian Wright in 2003. Tesla is known for its electric vehicles, energy storage solutions, and solar products, aiming to accelerate the world's transition to sustainable energy.",
+      'Tesla, Inc. is an American electric vehicle and clean energy company founded by Elon Musk, Martin Eberhard, Marc Tarpenning, JB Straubel, and Ian Wright in 2003. Tesla is known for its electric vehicles, energy storage solutions, and solar products, aiming to accelerate the world\'s transition to sustainable energy.',
   },
 ]
 </script>
 
 <template>
-  <lew-collapse width="400" v-model="value">
+  <lew-collapse v-model="value" width="400">
     <lew-collapse-item
-      :title="item.name"
-      :collapse-key="item.id"
       v-for="item in companies"
       :key="item.id"
+      :title="item.name"
+      :collapse-key="item.id"
     >
       <template #title>
         <lew-flex
@@ -57,9 +58,9 @@ const companies = [
         >
           <div class="title">
             {{ item.name }}
-            <lew-tag color="red" size="small" round v-if="item.id === '1'"
-              >HOT</lew-tag
-            >
+            <lew-tag v-if="item.id === '1'" color="red" size="small" round>
+              HOT
+            </lew-tag>
           </div>
           <ChevronLeft class="icon" :size="16" />
         </lew-flex>
@@ -70,6 +71,7 @@ const companies = [
     </lew-collapse-item>
   </lew-collapse>
 </template>
+
 <style scoped lang="scss">
 .icon {
   transition: all 0.3s;

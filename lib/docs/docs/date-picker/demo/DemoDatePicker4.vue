@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const value = ref('')
 
-const change = (e: any) => {
+function change(e: any) {
   LewMessage.info(e.date)
 }
 
@@ -24,6 +24,6 @@ const presets = [
 
 <template>
   <lew-flex style="width: 275px" direction="y" x="start">
-    <lew-date-picker :presets="presets" v-model="value" @change="change" />
+    <lew-date-picker v-model="value" :presets="presets" @change="change" />
   </lew-flex>
 </template>

@@ -1,24 +1,23 @@
 <script setup lang="ts">
-import { inputTagProps } from './props'
-import { LewInput, LewTag, LewMessage } from 'lew-ui'
-import { cloneDeep } from 'lodash-es'
-import { object2class } from 'lew-ui/utils'
+import { LewInput, LewMessage, LewTag, locale } from 'lew-ui'
+import { any2px, object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { locale } from 'lew-ui'
-import { any2px } from 'lew-ui/utils'
+import { cloneDeep } from 'lodash-es'
+import { inputTagProps } from './props'
 
+const props = defineProps(inputTagProps)
+const emit = defineEmits(['remove', 'change', 'clear', 'add'])
 // 获取app实例
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   try {
     app.use(LewMessage)
-  } catch (error) {
+  }
+  catch (error) {
     console.error('注册LewMessage失败:', error)
   }
 }
 
-const emit = defineEmits(['remove', 'change', 'clear', 'add'])
-const props = defineProps(inputTagProps)
 const modelValue = defineModel<string[] | undefined>()
 const inputValue = ref<string>('')
 const lewInputRef = ref<any>(null)
@@ -29,16 +28,17 @@ const autoWidthDelay = ref<boolean>(false)
 // 存储原始的键盘事件处理函数
 let originalKeydownHandler: ((event: KeyboardEvent) => void) | null = null
 
-const openInput = () => {
+function openInput() {
   // 如果输入框已激活或组件被禁用或只读，直接返回
-  if (isInputActive.value || props.disabled || props.readonly) return
+  if (isInputActive.value || props.disabled || props.readonly)
+    return
 
   try {
     // 检查是否达到最大标签数量限制
     if (
-      props.maxLength > 0 &&
-      Array.isArray(modelValue.value) &&
-      modelValue.value.length >= props.maxLength
+      props.maxLength > 0
+      && Array.isArray(modelValue.value)
+      && modelValue.value.length >= props.maxLength
     ) {
       LewMessage.warning(
         locale.t('inputTag.maxLength', { maxLength: props.maxLength }),
@@ -52,8 +52,8 @@ const openInput = () => {
     // 在下一个渲染周期聚焦输入框
     nextTick(() => {
       if (
-        lewInputRef.value &&
-        typeof lewInputRef.value.toFocus === 'function'
+        lewInputRef.value
+        && typeof lewInputRef.value.toFocus === 'function'
       ) {
         lewInputRef.value.toFocus()
       }
@@ -82,14 +82,16 @@ const openInput = () => {
             if (inputValue.value) {
               if (props.allowDuplicates) {
                 addTag()
-              } else {
+              }
+              else {
                 // 检查是否有重复标签
                 if (
-                  !Array.isArray(modelValue.value) ||
-                  !modelValue.value.includes(inputValue.value)
+                  !Array.isArray(modelValue.value)
+                  || !modelValue.value.includes(inputValue.value)
                 ) {
                   addTag()
-                } else {
+                }
+                else {
                   LewMessage.warning(locale.t('inputTag.duplicate'))
                 }
               }
@@ -97,14 +99,15 @@ const openInput = () => {
               openInput()
             }
           }
-        } else {
+        }
+        else {
           // 输入框为空的情况
           // 处理删除键（Backspace或Delete）
           if (keyCode === 'Backspace' || keyCode === 'Delete') {
             if (
-              Array.isArray(modelValue.value) &&
-              modelValue.value.length > 0 &&
-              isTagMarkedForDeletion.value
+              Array.isArray(modelValue.value)
+              && modelValue.value.length > 0
+              && isTagMarkedForDeletion.value
             ) {
               // 第二次按删除键，确认删除最后一个标签
               try {
@@ -112,11 +115,13 @@ const openInput = () => {
                 newValue.splice(newValue.length - 1, 1)
                 modelValue.value = newValue
                 emit('change', cloneDeep(newValue))
-              } catch (error) {
+              }
+              catch (error) {
                 console.error('删除标签时出错:', error)
               }
               isTagMarkedForDeletion.value = false
-            } else {
+            }
+            else {
               // 第一次按删除键，标记最后一个标签为待删除状态
               isTagMarkedForDeletion.value = true
             }
@@ -125,20 +130,22 @@ const openInput = () => {
           if (keyCode === 'Enter' || keyCode === 'NumpadEnter') {
             // 当输入框为空且按下回车键时，失焦
             if (
-              lewInputRef.value &&
-              typeof lewInputRef.value.toBlur === 'function'
+              lewInputRef.value
+              && typeof lewInputRef.value.toBlur === 'function'
             ) {
               lewInputRef.value.toBlur()
             }
           }
         }
-      } catch (error) {
+      }
+      catch (error) {
         console.error('键盘事件处理出错:', error)
         // 恢复原始键盘事件处理器
         document.onkeydown = originalKeydownHandler
       }
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error('打开输入框时出错:', error)
     isInputActive.value = false
   }
@@ -150,14 +157,15 @@ onUnmounted(() => {
     if (document.onkeydown && document.onkeydown !== originalKeydownHandler) {
       document.onkeydown = originalKeydownHandler
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error('卸载组件时清除键盘事件处理器出错:', error)
   }
 })
 
-const addTag = () => {
+function addTag() {
   try {
-    let _value = Array.isArray(modelValue.value) ? [...modelValue.value] : []
+    const _value = Array.isArray(modelValue.value) ? [...modelValue.value] : []
 
     if (!inputValue.value || inputValue.value.trim() === '') {
       return
@@ -178,17 +186,18 @@ const addTag = () => {
     modelValue.value = _value
     emit('change', cloneDeep(_value))
     emit('add', addedValue)
-  } catch (error) {
+  }
+  catch (error) {
     console.error('添加标签时出错:', error)
   }
 }
 
-const delTag = (index: number) => {
+function delTag(index: number) {
   try {
     if (
-      !Array.isArray(modelValue.value) ||
-      index < 0 ||
-      index >= modelValue.value.length
+      !Array.isArray(modelValue.value)
+      || index < 0
+      || index >= modelValue.value.length
     ) {
       return
     }
@@ -207,7 +216,8 @@ const delTag = (index: number) => {
 
     emit('change', cloneDeep(newValue))
     emit('remove', removedTag)
-  } catch (error) {
+  }
+  catch (error) {
     console.error('删除标签时出错:', error)
   }
 }
@@ -221,7 +231,8 @@ const getInputClassNames = computed(() => {
       disabled,
       clearable,
     })
-  } catch (error) {
+  }
+  catch (error) {
     console.error('计算输入框类名时出错:', error)
     return 'lew-input-tag-view'
   }
@@ -235,24 +246,26 @@ const getIconSize = computed(() => {
       large: 16,
     }
     return size[props.size] || 14
-  } catch (error) {
+  }
+  catch (error) {
     console.error('计算图标大小时出错:', error)
     return 14
   }
 })
 
-const clear = () => {
+function clear() {
   try {
     modelValue.value = []
     inputValue.value = ''
     emit('change', [])
     emit('clear')
-  } catch (error) {
+  }
+  catch (error) {
     console.error('清空标签时出错:', error)
   }
 }
 
-const onBlur = () => {
+function onBlur() {
   isInputActive.value = false
   if (inputValue.value) {
     addTag()
@@ -263,16 +276,16 @@ const onBlur = () => {
 <template>
   <div
     class="lew-input-tag-view"
-    @click="openInput"
     :class="getInputClassNames"
     :style="{ width: any2px(width) }"
+    @click="openInput"
   >
     <div
       :style="{ padding: (modelValue || []).length > 0 ? '4px' : '' }"
       class="lew-input-tag-box"
     >
       <transition-group name="tag-list">
-        <lew-tag
+        <LewTag
           v-for="(item, index) in modelValue"
           :key="index"
           type="light"
@@ -293,12 +306,12 @@ const onBlur = () => {
           @close="delTag(index)"
         >
           {{ item }}
-        </lew-tag>
-        <lew-input
+        </LewTag>
+        <LewInput
           v-if="isInputActive || (modelValue || []).length === 0"
           ref="lewInputRef"
-          :auto-width="(modelValue || []).length > 0"
           v-model="inputValue"
+          :auto-width="(modelValue || []).length > 0"
           class="lew-input-tag"
           :size="size"
           :readonly="!isInputActive"

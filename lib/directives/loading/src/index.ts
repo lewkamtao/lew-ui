@@ -40,7 +40,8 @@ export const LewLoading = {
         loadingBox && loadingBox.setAttribute('data-after', tip || '')
         if (visible) {
           el.classList.add('lew-loading-show')
-        } else {
+        }
+        else {
           el.classList.remove('lew-loading-show')
         }
       },

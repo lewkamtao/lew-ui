@@ -125,6 +125,7 @@ const options: ContextMenus = [
   },
 ]
 </script>
+
 <template>
   <lew-flex>
     <div

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { LewCollapseTransition } from 'lew-ui'
 import { ChevronDown, ChevronUp } from 'lucide-vue-next'
-import docsLocale from '@/locals'
 import { renderDescription } from '@/lib/utils'
+import docsLocale from '@/locals'
+
 defineProps({
   title: {
     type: String,
@@ -45,8 +46,8 @@ const checkHasContent = computed(() => (text: string) => {
 
 <template>
   <div class="demo-box">
-    <lew-title :id="title" :size="18" class="demo-docs-title"
-      >{{ title }}
+    <lew-title :id="title" :size="18" class="demo-docs-title">
+      {{ title }}
       <lew-tag
         v-if="checkHasContent(tag)"
         type="light"
@@ -66,10 +67,10 @@ const checkHasContent = computed(() => (text: string) => {
       v-if="checkHasContent(description)"
       class="desc"
       v-html="renderDescription(description)"
-    ></div>
+    />
     <div class="demo-item">
       <div class="demo-cp lew-scrollbar">
-        <slot></slot>
+        <slot />
       </div>
       <LewCollapseTransition>
         <div v-if="isShowCode && code" class="hl-pre lew-scrollbar">

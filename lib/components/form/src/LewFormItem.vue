@@ -1,203 +1,207 @@
 <script setup lang="ts">
-import { any2px, object2class } from "lew-ui/utils";
-import RequiredIcon from "./RequiredIcon.vue";
 import {
-  LewInput,
-  LewTextTrim,
-  LewTextarea,
-  LewInputTag,
-  LewCheckboxGroup,
-  LewRadioGroup,
+  LewButton,
+  LewCascader,
   LewCheckbox,
-  LewSelect,
-  LewSelectMultiple,
+  LewCheckboxGroup,
+  LewColorPicker,
   LewDatePicker,
   LewDateRangePicker,
-  LewTabs,
-  LewCascader,
-  LewSwitch,
-  LewButton,
-  LewUpload,
+  LewInput,
   LewInputNumber,
-  LewTooltip,
+  LewInputTag,
+  LewRadioGroup,
+  LewRate,
+  LewSelect,
+  LewSelectMultiple,
   LewSlider,
   LewSliderRange,
-  LewColorPicker,
-  LewRate,
+  LewSwitch,
+  LewTabs,
+  LewTextarea,
+  LewTextTrim,
+  LewTooltip,
   LewTreeSelect,
-} from "lew-ui";
-import { debounce, cloneDeep, isString, merge } from "lodash-es";
-import * as Yup from "yup";
+  LewUpload,
+} from 'lew-ui'
+import { any2px, object2class } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { cloneDeep, debounce, isString, merge } from 'lodash-es'
+import * as Yup from 'yup'
 import {
   formItemProps,
-  requiredIconSizeMap,
   formTypeAsMap,
+  requiredIconSizeMap,
   tipsIconSizeMap,
-} from "./props";
-import Icon from "lew-ui/utils/Icon.vue";
+} from './props'
+import RequiredIcon from './RequiredIcon.vue'
 
+const props = defineProps(formItemProps)
+const emit = defineEmits(['change'])
 const asMap: Record<string, any> = {
-  input: LewInput,
-  textarea: LewTextarea,
-  "input-tag": LewInputTag,
-  "checkbox-group": LewCheckboxGroup,
-  "radio-group": LewRadioGroup,
-  checkbox: LewCheckbox,
-  select: LewSelect,
-  "select-multiple": LewSelectMultiple,
-  "date-picker": LewDatePicker,
-  "date-range-picker": LewDateRangePicker,
-  tabs: LewTabs,
-  cascader: LewCascader,
-  switch: LewSwitch,
-  button: LewButton,
-  upload: LewUpload,
-  "input-number": LewInputNumber,
-  slider: LewSlider,
-  "slider-range": LewSliderRange,
-  "color-picker": LewColorPicker,
-  rate: LewRate,
-  "tree-select": LewTreeSelect,
-};
+  'input': LewInput,
+  'textarea': LewTextarea,
+  'input-tag': LewInputTag,
+  'checkbox-group': LewCheckboxGroup,
+  'radio-group': LewRadioGroup,
+  'checkbox': LewCheckbox,
+  'select': LewSelect,
+  'select-multiple': LewSelectMultiple,
+  'date-picker': LewDatePicker,
+  'date-range-picker': LewDateRangePicker,
+  'tabs': LewTabs,
+  'cascader': LewCascader,
+  'switch': LewSwitch,
+  'button': LewButton,
+  'upload': LewUpload,
+  'input-number': LewInputNumber,
+  'slider': LewSlider,
+  'slider-range': LewSliderRange,
+  'color-picker': LewColorPicker,
+  'rate': LewRate,
+  'tree-select': LewTreeSelect,
+}
 // 获取app
-const app = getCurrentInstance()?.appContext.app;
-if (app && !app.directive("tooltip")) {
-  app.use(LewTooltip);
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
 }
 
 const getFormItemClassNames = computed(() => {
-  const { direction, size } = cloneDeep(props);
-  return object2class("lew-form-item", { direction, size });
-});
+  const { direction, size } = cloneDeep(props)
+  return object2class('lew-form-item', { direction, size })
+})
 
-const formItemRef = ref();
-
-const props = defineProps(formItemProps);
+const formItemRef = ref()
 
 const modelValue: Ref<any> = defineModel({
   default: undefined,
-});
+})
 
 watch(
   () => modelValue.value,
   () => {
     if (!ignoreValidate.value) {
-      validateField();
-    } else {
-      ignoreValidate.value = false;
+      validateField()
+    }
+    else {
+      ignoreValidate.value = false
     }
   },
   {
     deep: true,
-  }
-);
+  },
+)
 
-const ignoreValidate = ref(false);
+const ignoreValidate = ref(false)
 
-const setIgnoreValidate = (value: boolean) => {
-  ignoreValidate.value = value;
-};
+function setIgnoreValidate(value: boolean) {
+  ignoreValidate.value = value
+}
 
 const validateField = debounce(() => {
-  validate();
-}, 120);
+  validate()
+}, 120)
 
-const errMsg = ref("");
+const errMsg = ref('')
 
-const validate = () => {
+function validate() {
   if (!curRequired.value && !modelValue.value) {
-    errMsg.value = "";
-    return;
+    errMsg.value = ''
+    return
   }
   if (curRule.value) {
     curRule.value
       .validate(modelValue.value)
       .then(() => {
-        errMsg.value = "";
+        errMsg.value = ''
       })
       .catch((error: any) => {
-        errMsg.value = error.message;
-      });
+        errMsg.value = error.message
+      })
   }
-};
+}
 
-const setError = (message: any) => {
-  errMsg.value = message;
-};
+function setError(message: any) {
+  errMsg.value = message
+}
 
-const emit = defineEmits(["change"]);
+function change() {
+  const { field, label } = props
+  emit('change', cloneDeep({ value: modelValue.value, field, label }))
+}
 
-const change = () => {
-  const { field, label } = props;
-  emit("change", cloneDeep({ value: modelValue.value, field, label }));
-};
-
-const getRequiredRuleByMap = (as: string) => {
-  const type = formTypeAsMap[as];
+function getRequiredRuleByMap(as: string) {
+  const type = formTypeAsMap[as]
   switch (type) {
-    case "string":
-      return Yup.string().required("此项必填");
-    case "array":
-      return Yup.array().min(1, "至少选择一个").required("此项必填");
-    case "number":
-      return Yup.number().required("此项必填");
-    case "boolean":
-      return Yup.boolean().oneOf([true], "此项必填").required("此项必填");
+    case 'string':
+      return Yup.string().required('此项必填')
+    case 'array':
+      return Yup.array().min(1, '至少选择一个').required('此项必填')
+    case 'number':
+      return Yup.number().required('此项必填')
+    case 'boolean':
+      return Yup.boolean().oneOf([true], '此项必填').required('此项必填')
     default:
-      return Yup.mixed().required("此项必填");
+      return Yup.mixed().required('此项必填')
   }
-};
+}
 
 const curRule = computed(() => {
-  const { rule, required, as } = props;
-  let _rule;
+  const { rule, required, as } = props
+  let _rule
   try {
-    _rule = isString(rule) ? eval(rule) : rule;
-  } catch {
-    _rule = null;
+    _rule = isString(rule) ? eval(rule) : rule
+  }
+  catch {
+    _rule = null
   }
   if (required) {
     if (!_rule) {
-      return getRequiredRuleByMap(as);
-    } else if (_rule?.spec?.optional === true) {
-      return merge(_rule, getRequiredRuleByMap(as));
+      return getRequiredRuleByMap(as)
+    }
+    else if (_rule?.spec?.optional === true) {
+      return merge(_rule, getRequiredRuleByMap(as))
     }
   }
-  return _rule;
-});
+  return _rule
+})
 
 const curRequired = computed(() => {
-  const { rule, required } = props;
-  let _rule;
+  const { rule, required } = props
+  let _rule
   try {
-    _rule = isString(rule) ? eval(rule) : rule;
-  } catch {
-    _rule = null;
+    _rule = isString(rule) ? eval(rule) : rule
   }
-  if (!required) return _rule?.spec?.optional === false;
-  return required;
-});
+  catch {
+    _rule = null
+  }
+  if (!required)
+    return _rule?.spec?.optional === false
+  return required
+})
 
 const getFormItemMainStyle = computed(() => {
-  if (!formItemRef.value) return {};
-  const { direction, labelWidth, between } = props;
-  const { offsetWidth } = formItemRef.value;
+  if (!formItemRef.value)
+    return {}
+  const { direction, labelWidth, between } = props
+  const { offsetWidth } = formItemRef.value
   return {
     width:
-      direction === "x"
+      direction === 'x'
         ? `calc(${offsetWidth}px - ${any2px(labelWidth)} - 10px)`
-        : "100%",
-    justifyContent: direction === "x" && between ? "flex-end" : "flex-start",
-  };
-});
+        : '100%',
+    justifyContent: direction === 'x' && between ? 'flex-end' : 'flex-start',
+  }
+})
 
-defineExpose({ validate, setError, curRule, setIgnoreValidate });
+defineExpose({ validate, setError, curRule, setIgnoreValidate })
 </script>
 
 <template>
   <div
-    class="lew-form-item"
     ref="formItemRef"
+    class="lew-form-item"
     :class="getFormItemClassNames"
     :style="{
       'grid-area': gridArea,
@@ -207,22 +211,22 @@ defineExpose({ validate, setError, curRule, setIgnoreValidate });
       :style="direction === 'x' ? `width:${any2px(labelWidth)}` : ''"
       class="lew-label-box-wrapper"
     >
-      <div class="lew-label-box" v-if="as">
+      <div v-if="as" class="lew-label-box">
         <RequiredIcon
-          :size="requiredIconSizeMap[size]"
           v-if="curRequired && label"
+          :size="requiredIconSizeMap[size]"
         />
         {{ label }}
         <Icon
-          style="margin-top: 1px"
           v-if="tips"
           v-tooltip="{
             content: tips,
           }"
+          style="margin-top: 1px"
           :size="tipsIconSizeMap[size]"
           type="normal"
           color="black"
-        ></Icon>
+        />
       </div>
     </div>
     <div
@@ -243,13 +247,12 @@ defineExpose({ validate, setError, curRule, setIgnoreValidate });
         @change="change"
       />
       <transition name="lew-slide-fade">
-        <lew-text-trim
+        <LewTextTrim
           v-if="errMsg"
           style="width: 100%"
           :text="errMsg"
           class="lew-error-message"
-        >
-        </lew-text-trim>
+        />
       </transition>
     </div>
   </div>

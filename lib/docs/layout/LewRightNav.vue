@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { throttle } from 'lodash-es'
-const initNav = (titleDoms: any = []) => {
+
+function initNav(titleDoms: any = []) {
   navMenus.value = Array.from(titleDoms).map((e: any) => {
     return {
       label: e.textContent,
@@ -35,7 +36,7 @@ const checkActive = throttle(() => {
 const navMenus = ref([] as any)
 const activeItem = ref('')
 
-const init = () => {
+function init() {
   // 选取需要监听的DOM元素
   const titleDoms = document.getElementsByClassName('demo-docs-title')
   if (titleDoms.length > 0) {
@@ -43,7 +44,7 @@ const init = () => {
   }
 }
 
-const toScroll = (item: any) => {
+function toScroll(item: any) {
   const mainDom: any = document.getElementById('component-main')
   if (mainDom) {
     mainDom.scrollTop = item.top - 100
@@ -71,7 +72,9 @@ onUnmounted(() => {
 
 <template>
   <div class="right-nav">
-    <lew-title class="item title" size="14px">目录</lew-title>
+    <lew-title class="item title" size="14px">
+      目录
+    </lew-title>
     <div
       v-for="(item, index) in navMenus"
       :key="index"

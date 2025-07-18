@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const openError = () => {
+function openError() {
   LewNotification.error({
     title: 'Payment Failed',
     content:
@@ -7,14 +7,14 @@ const openError = () => {
   })
 }
 
-const openSuccess = () => {
+function openSuccess() {
   LewNotification.success({
     title: 'Order Confirmed',
     content: 'Your order has been successfully placed and is being processed.',
   })
 }
 
-const openNormal = () => {
+function openNormal() {
   LewNotification.normal({
     title: 'Scheduled Maintenance',
     content:
@@ -22,14 +22,14 @@ const openNormal = () => {
   })
 }
 
-const openInfo = () => {
+function openInfo() {
   LewNotification.info({
     title: 'New Feature Available',
     content: 'Check out our new AI-powered search feature. Try it now!',
   })
 }
 
-const openWarning = () => {
+function openWarning() {
   LewNotification.warning({
     title: 'Low Battery',
     content:

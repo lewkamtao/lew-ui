@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { SelectOptions } from 'lew-ui'
+
 const options = ref<SelectOptions[]>([
   { label: 'Facial Cleanser', value: 'cleanser' },
   { label: 'Moisturizer', value: 'moisturizer' },
@@ -13,8 +14,8 @@ const value = ref('mask')
 
 <template>
   <lew-select
-    style="width: 320px"
     v-model="value"
+    style="width: 320px"
     readonly
     placeholder="Select product"
     :options="options"

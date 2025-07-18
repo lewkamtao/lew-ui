@@ -7,22 +7,22 @@ const page = ref(1)
     <lew-pagination
       v-model:current-page="page"
       :total="1000"
-      :visiblePagesCount="5"
+      :visible-pages-count="5"
     />
     <lew-pagination
       v-model:current-page="page"
       :total="10000"
-      :visiblePagesCount="7"
+      :visible-pages-count="7"
     />
     <lew-pagination
       v-model:current-page="page"
       :total="100000"
-      :visiblePagesCount="9"
+      :visible-pages-count="9"
     />
     <lew-pagination
       v-model:current-page="page"
       :total="15000000"
-      :visiblePagesCount="11"
+      :visible-pages-count="11"
     />
   </lew-flex>
 </template>

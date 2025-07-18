@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { tabsProps } from './props'
 import type { TabsOptions } from './props'
-import { object2class, any2px } from 'lew-ui/utils'
+import { any2px, object2class } from 'lew-ui/utils'
+import { tabsProps } from './props'
 
-const emit = defineEmits(['change'])
 const props = defineProps(tabsProps)
+const emit = defineEmits(['change'])
 const tabsValue: Ref<string | number | undefined> = defineModel({
   required: true,
 })
@@ -32,7 +32,7 @@ watch(
   { deep: true },
 )
 
-const initActiveItemStyle = (index: number) => {
+function initActiveItemStyle(index: number) {
   const activeRef = itemRef.value[index]
 
   // 确保 tabsRef 存在，避免访问 null 的属性
@@ -41,13 +41,13 @@ const initActiveItemStyle = (index: number) => {
   }
 
   if (
-    tabsRef.value.scrollWidth > tabsRef.value.clientWidth &&
-    activeRef?.offsetLeft >= 0
+    tabsRef.value.scrollWidth > tabsRef.value.clientWidth
+    && activeRef?.offsetLeft >= 0
   ) {
-    tabsRef.value.scrollLeft =
-      activeRef?.offsetLeft -
-      tabsRef.value.clientWidth / 2 +
-      activeRef?.offsetWidth / 2
+    tabsRef.value.scrollLeft
+      = activeRef?.offsetLeft
+        - tabsRef.value.clientWidth / 2
+        + activeRef?.offsetWidth / 2
   }
 
   state.activeItemStyle = {
@@ -63,7 +63,7 @@ watch(
     nextTick(() => {
       setTimeout(() => {
         const index = props.options.findIndex(
-          (e) => tabsValue.value === e.value,
+          e => tabsValue.value === e.value,
         )
         initActiveItemStyle(index)
       }, 250)
@@ -71,8 +71,8 @@ watch(
   },
 )
 
-const init = () => {
-  let index = props.options.findIndex((e) => e.value === tabsValue.value)
+function init() {
+  const index = props.options.findIndex(e => e.value === tabsValue.value)
   if (index >= 0) {
     initActiveItemStyle(index)
   }
@@ -82,8 +82,8 @@ const init = () => {
   }, 100)
 }
 
-const selectItem = (value: string | number | undefined, type?: string) => {
-  let index = props.options.findIndex((e) => value === e.value)
+function selectItem(value: string | number | undefined, type?: string) {
+  const index = props.options.findIndex(e => value === e.value)
   if (index >= 0) {
     const _item = props.options[index]
     if (tabsValue.value != _item.value) {
@@ -102,7 +102,7 @@ const selectItem = (value: string | number | undefined, type?: string) => {
 
 let timer: ReturnType<typeof setTimeout> | undefined
 
-const debounce = () => {
+function debounce() {
   clearTimeout(timer)
   timer = setTimeout(() => {
     init()
@@ -129,7 +129,7 @@ const getTabsClassName = computed(() => {
   })
 })
 
-const tabsScroll = () => {
+function tabsScroll() {
   // 确保 tabsRef 存在，避免访问 null 的属性
   if (!tabsRef.value) {
     return
@@ -138,17 +138,20 @@ const tabsScroll = () => {
   if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
     if (tabsRef.value.scrollLeft > 5) {
       if (
-        tabsRef.value.scrollLeft >=
-        tabsRef.value.scrollWidth - tabsRef.value.clientWidth - 5
+        tabsRef.value.scrollLeft
+        >= tabsRef.value.scrollWidth - tabsRef.value.clientWidth - 5
       ) {
         state.hidLine = 'right'
-      } else {
+      }
+      else {
         state.hidLine = ''
       }
-    } else {
+    }
+    else {
       state.hidLine = 'left'
     }
-  } else {
+  }
+  else {
     state.hidLine = 'all'
   }
 }
@@ -161,7 +164,7 @@ onMounted(() => {
 })
 
 const getItemStyle = computed(() => {
-  let width = any2px(props.itemWidth)
+  const width = any2px(props.itemWidth)
   if (props.itemWidth === 'auto') {
     return 'flex:1'
   }
@@ -169,7 +172,7 @@ const getItemStyle = computed(() => {
 })
 
 const getTabsStyle = computed(() => {
-  let width = any2px(props.width)
+  const width = any2px(props.width)
   return `width:${width}`
 })
 
@@ -187,15 +190,15 @@ onUnmounted(() => {
     <div :style="getTabsStyle" class="lew-tabs" :class="getTabsClassName">
       <div
         ref="tabsRef"
-        @scroll="tabsScroll"
         class="lew-tabs-main hidden-scrollbar"
+        @scroll="tabsScroll"
       >
         <div
           v-if="tabsValue || tabsValue === 0"
           :style="state.activeItemStyle"
           class="lew-tabs-item-animation-active"
           :class="{ 'lew-tabs-item-isInit': state.isInit }"
-        ></div>
+        />
         <div
           v-for="item in props.options"
           :key="String(item.value)"

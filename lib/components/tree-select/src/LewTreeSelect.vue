@@ -1,20 +1,18 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
-import { LewPopover, LewTree, LewTooltip } from 'lew-ui'
-import { object2class } from 'lew-ui/utils'
-import { any2px } from 'lew-ui/utils'
-import { treeSelectProps } from './props'
-import { cloneDeep, isFunction } from 'lodash-es'
+import { LewPopover, LewTooltip, LewTree, locale } from 'lew-ui'
+import { any2px, findNodeByKey, object2class } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
-import { findNodeByKey } from 'lew-ui/utils'
-import { locale } from 'lew-ui'
+import { cloneDeep, isFunction } from 'lodash-es'
+import { treeSelectProps } from './props'
+
+const props = defineProps(treeSelectProps)
+const emit = defineEmits(['change', 'blur', 'clear'])
 // 获取app
 const app = getCurrentInstance()?.appContext.app
 if (app && !app.directive('tooltip')) {
   app.use(LewTooltip)
 }
-const props = defineProps(treeSelectProps)
-const emit = defineEmits(['change', 'blur', 'clear'])
 const treeSelectValue: Ref<any> = defineModel()
 
 const lewSelectRef = ref()
@@ -24,10 +22,11 @@ const lewTreeRef = ref()
 
 const formMethods: any = inject('formMethods', {})
 
-let _initOptionsMethod = computed(() => {
+const _initOptionsMethod = computed(() => {
   if (isFunction(props.initOptionsMethod)) {
     return props.initOptionsMethod
-  } else if (props.initOptionsMethodId) {
+  }
+  else if (props.initOptionsMethodId) {
     return formMethods[props.initOptionsMethodId]
   }
   return false
@@ -44,15 +43,15 @@ const state = reactive({
   resultText: '',
 })
 
-const getSelectWidth = () => {
+function getSelectWidth() {
   state.selectWidth = lewSelectRef.value?.clientWidth - 12
 }
 
-const show = () => {
+function show() {
   lewPopoverRef.value.show()
 }
 
-const hide = () => {
+function hide() {
   lewPopoverRef.value.hide()
 }
 
@@ -60,14 +59,14 @@ const searchDebounce = useDebounceFn(async (e: any) => {
   search(e)
 }, props.searchDelay)
 
-const search = async (e: any) => {
+async function search(e: any) {
   const keyword = e.target.value
   if (props.searchable) {
     await lewTreeRef.value.search(keyword)
   }
 }
 
-const change = (e: any) => {
+function change(e: any) {
   const { value } = e
   treeSelectValue.value = value
   state.valueIsChange = true
@@ -78,7 +77,7 @@ const change = (e: any) => {
   }, 100)
 }
 
-const clearHandle = () => {
+function clearHandle() {
   treeSelectValue.value = undefined
   state.keyword = ''
   state.keywordBackup = ''
@@ -122,15 +121,16 @@ const getIconSize = computed(() => {
 })
 
 // 重新找回关键字
-const getKeywordLabel = (value: any) => {
+function getKeywordLabel(value: any) {
   if (lewTreeRef.value && value) {
-    let tree = lewTreeRef.value.getTree()
+    const tree = lewTreeRef.value.getTree()
     const treeItem: any = findNodeByKey(value, tree)
     if (treeItem !== undefined) {
       const { labelPaths, label } = treeItem
       if (props.showAllLevels && labelPaths && labelPaths.length > 0) {
         state.keyword = labelPaths.join(' / ')
-      } else {
+      }
+      else {
         state.keyword = label[0]
       }
     }
@@ -139,7 +139,7 @@ const getKeywordLabel = (value: any) => {
 
 getKeywordLabel(treeSelectValue.value)
 
-const showHandle = () => {
+function showHandle() {
   state.visible = true
   state.keywordBackup = cloneDeep(state.keyword)
   state.valueIsChange = false // 重置
@@ -152,7 +152,7 @@ const showHandle = () => {
   }
 }
 
-const hideHandle = () => {
+function hideHandle() {
   state.visible = false
   if (!state.valueIsChange && treeSelectValue.value) {
     state.keywordBackup
@@ -170,9 +170,9 @@ const hideHandle = () => {
 
 const getPlaceholder = computed(() => {
   return (
-    state.keywordBackup ||
-    props.placeholder ||
-    locale.t('treeSelect.placeholder')
+    state.keywordBackup
+    || props.placeholder
+    || locale.t('treeSelect.placeholder')
   )
 })
 
@@ -180,9 +180,9 @@ defineExpose({ show, hide })
 </script>
 
 <template>
-  <lew-popover
+  <LewPopover
     ref="lewPopoverRef"
-    popoverBodyClassName="lew-select-popover-body"
+    popover-body-class-name="lew-select-popover-body"
     class="lew-select-view"
     :style="{ width: any2px(width) }"
     :trigger="trigger"
@@ -231,7 +231,7 @@ defineExpose({ show, hide })
           :readonly="!searchable"
           :placeholder="getPlaceholder"
           @input="searchDebounce"
-        />
+        >
       </div>
     </template>
     <template #popover-body>
@@ -240,14 +240,14 @@ defineExpose({ show, hide })
         :class="getBodyClassName"
         :style="`width:${state.selectWidth}px`"
       >
-        <slot name="header"></slot>
+        <slot name="header" />
 
         <div class="lew-select-options-box">
           <div v-if="searchable && state.resultText" class="result-count">
             {{ state.resultText }}
           </div>
           <div class="tree-select-wrapper lew-scrollbar">
-            <lew-tree
+            <LewTree
               ref="lewTreeRef"
               v-model="treeSelectValue"
               v-bind="{
@@ -266,24 +266,24 @@ defineExpose({ show, hide })
               @load-start="state.searchLoading = true"
               @load-end="
                 ((state.searchLoading = false),
-                (state.initLoading = false),
-                (state.resultText = $event))
+                 (state.initLoading = false),
+                 (state.resultText = $event))
               "
               @change="change"
             >
               <template v-if="$slots.empty" #empty>
-                <slot name="empty"></slot>
+                <slot name="empty" />
               </template>
               <template v-if="$slots.item" #item="{ props }">
-                <slot name="item" :props="props"></slot>
+                <slot name="item" :props="props" />
               </template>
-            </lew-tree>
+            </LewTree>
           </div>
         </div>
-        <slot name="footer"></slot>
+        <slot name="footer" />
       </div>
     </template>
-  </lew-popover>
+  </LewPopover>
 </template>
 
 <style lang="scss" scoped>
@@ -463,6 +463,7 @@ defineExpose({ show, hide })
   }
 }
 </style>
+
 <style lang="scss">
 .lew-select-popover-body {
   padding: 6px;

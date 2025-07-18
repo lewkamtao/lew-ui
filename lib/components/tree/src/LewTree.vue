@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { h } from 'vue'
-import { treeProps } from './props'
 import type { TreeDataSource } from './props'
-import LewTreeItem from './LewTreeItem.vue'
-import { LewFlex, LewMessage } from 'lew-ui'
-import { cloneDeep } from 'lodash-es'
-import transformTree from './transformTree'
+import { LewFlex, LewMessage, locale } from 'lew-ui'
 import { any2px, numFormat } from 'lew-ui/utils'
-import { locale } from 'lew-ui'
+import { cloneDeep } from 'lodash-es'
+import { h } from 'vue'
+import LewTreeItem from './LewTreeItem.vue'
+import { treeProps } from './props'
+import transformTree from './transformTree'
 
 const props = defineProps(treeProps)
+const emit = defineEmits(['change', 'expand', 'loadStart', 'loadEnd'])
 const modelValue = defineModel()
 const expandKeys = defineModel('expandKeys', { required: false, default: [] })
 const _dataSource: any = ref<TreeDataSource[]>([])
@@ -31,11 +31,11 @@ provide('lew-tree', {
   loadMethod: props.loadMethod,
   keyField: props.keyField,
   labelField: props.labelField,
-  cacheDataSource: cacheDataSource,
-  _dataSource: _dataSource,
+  cacheDataSource,
+  _dataSource,
 })
 
-const renderMenuTreeItem = (item: TreeDataSource, level: number = 0): any => {
+function renderMenuTreeItem(item: TreeDataSource, level: number = 0): any {
   const { disabled, label, key, isLeaf, children } = item
   return h(
     LewTreeItem,
@@ -59,9 +59,7 @@ const renderMenuTreeItem = (item: TreeDataSource, level: number = 0): any => {
   )
 }
 
-const emit = defineEmits(['change', 'expand', 'loadStart', 'loadEnd'])
-
-const init = async (searchKeyword = '') => {
+async function init(searchKeyword = '') {
   if (searchKeyword === '' && cacheDataSource.value.length > 0) {
     _dataSource.value = cacheDataSource.value
     emit('loadEnd', getResultText.value)
@@ -97,7 +95,8 @@ const init = async (searchKeyword = '') => {
     if (searchKeyword === '' && cacheDataSource.value.length === 0) {
       cacheDataSource.value = cloneDeep(result)
     }
-  } else {
+  }
+  else {
     LewMessage.error(error.message)
   }
   expandKeys.value = cloneDeep(expandKeys.value)
@@ -106,12 +105,12 @@ const init = async (searchKeyword = '') => {
   emit('loadEnd', getResultText.value)
 }
 
-const reset = () => {
+function reset() {
   _dataSource.value = cloneDeep(cacheDataSource.value)
   emit('loadEnd', getResultText.value)
 }
 
-const search = (keyword: string) => {
+function search(keyword: string) {
   // 清除之前的定时器
   if (searchTimer.value !== null) {
     clearTimeout(searchTimer.value)
@@ -144,7 +143,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <lew-flex
+  <LewFlex
     v-loading="{
       visible: loading,
       text: '加载中...',
@@ -153,15 +152,15 @@ onMounted(() => {
     gap="0"
     class="lew-tree-wrapper"
   >
-    <lew-flex
+    <LewFlex
       v-if="searchable && !isSelect"
       direction="y"
       gap="0"
       class="lew-tree-header"
     >
       <lew-input
-        width="100%"
         v-model="keyword"
+        width="100%"
         size="small"
         :placeholder="locale.t('tree.searchPlaceholder')"
         @input="search(keyword)"
@@ -170,14 +169,14 @@ onMounted(() => {
       <div v-if="searchable && getResultText" class="lew-result-count">
         {{ getResultText }}
       </div>
-    </lew-flex>
+    </LewFlex>
     <template v-if="_dataSource && _dataSource.length === 0">
-      <slot v-if="$slots.empty" name="empty"></slot>
-      <lew-flex v-else direction="y" x="center" class="lew-not-found">
+      <slot v-if="$slots.empty" name="empty" />
+      <LewFlex v-else direction="y" x="center" class="lew-not-found">
         <lew-empty :title="locale.t('tree.noResult')" />
-      </lew-flex>
+      </LewFlex>
     </template>
-    <lew-flex
+    <LewFlex
       v-else
       direction="y"
       y="start"
@@ -189,8 +188,8 @@ onMounted(() => {
       <template v-for="item in _dataSource" :key="item.key">
         <component :is="renderMenuTreeItem(item)" />
       </template>
-    </lew-flex>
-  </lew-flex>
+    </LewFlex>
+  </LewFlex>
 </template>
 
 <style scoped lang="scss">

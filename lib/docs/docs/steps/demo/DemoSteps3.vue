@@ -21,16 +21,16 @@ const currentStep = ref(2)
 <template>
   <lew-flex direction="y">
     <lew-steps
-      minWidth="350px"
-      :options="options"
       v-model="currentStep"
+      min-width="350px"
+      :options="options"
       :status="status"
     />
     <lew-flex x="center" y="center">
       <lew-button
         :disabled="currentStep === 1"
-        @click="currentStep -= 1"
         type="light"
+        @click="currentStep -= 1"
       >
         Previous
       </lew-button>

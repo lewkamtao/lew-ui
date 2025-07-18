@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { any2px } from 'lew-ui/utils'
 import {
-  LewInput,
-  LewSelect,
   LewDatePicker,
-  LewTabs,
-  LewSwitch,
-  LewTextarea,
+  LewInput,
   LewInputNumber,
   LewInputTable,
+  LewSelect,
+  LewSwitch,
+  LewTabs,
+  LewTextarea,
 } from 'lew-ui'
-import SetOptionModal from './SetOptionModal.vue'
+import { any2px } from 'lew-ui/utils'
 import Icon from 'lew-ui/utils/Icon.vue'
+import SetOptionModal from './SetOptionModal.vue'
 
 const props = defineProps({
   as: {
@@ -44,12 +44,12 @@ const props = defineProps({
 const modelValue = defineModel()
 
 const asMap: Record<string, any> = {
-  input: LewInput,
-  textarea: LewTextarea,
-  select: LewSelect,
+  'input': LewInput,
+  'textarea': LewTextarea,
+  'select': LewSelect,
   'date-picker': LewDatePicker,
-  tabs: LewTabs,
-  switch: LewSwitch,
+  'tabs': LewTabs,
+  'switch': LewSwitch,
   'input-number': LewInputNumber,
   'set-option-modal': SetOptionModal,
   'input-table': LewInputTable,
@@ -58,24 +58,24 @@ const asMap: Record<string, any> = {
 
 <template>
   <div x="start" class="set-form-item" :class="[`set-form-item-${direction}`]">
-    <lew-flex x="start" gap="5" class="set-form-item-label" v-if="as">
+    <lew-flex v-if="as" x="start" gap="5" class="set-form-item-label">
       {{ label || '标签' }}
       <Icon
-        class="set-form-item-tips"
         v-if="props?.tips"
+        v-tooltip="{ content: props?.tips }"
+        class="set-form-item-tips"
         :size="14"
         type="tips"
         color="black"
-        v-tooltip="{ content: props?.tips }"
-      ></Icon>
+      />
     </lew-flex>
     <div
       :style="{ width: any2px(props?.componentWidth) }"
       class="lew-form-item-main"
     >
       <component
-        v-model="modelValue"
         :is="asMap[as]"
+        v-model="modelValue"
         v-bind="{ ...props.props, size: 'small' }"
       />
     </div>

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { breadcrumbProps } from './props'
-const emit = defineEmits(['change'])
 
 defineProps(breadcrumbProps)
+
+const emit = defineEmits(['change'])
 </script>
 
 <template>

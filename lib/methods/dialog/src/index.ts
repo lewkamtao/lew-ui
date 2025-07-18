@@ -1,10 +1,11 @@
-import { useMouse } from '@vueuse/core'
-import _LewDialog from './LewDialog.vue'
 import type { LewColor } from 'lew-ui'
+import { useMouse } from '@vueuse/core'
 import { locale } from 'lew-ui'
+import _LewDialog from './LewDialog.vue'
+
 const { x, y } = useMouse()
 
-type Options = {
+interface Options {
   title: string
   content: string
   ok?: () => boolean | Promise<boolean>
@@ -18,8 +19,10 @@ type Options = {
 
 type DialogType = 'warning' | 'error' | 'info' | 'normal' | 'success'
 
-const createDialog = (type: DialogType) => (options: Options) =>
-  dialog(type as LewColor, options)
+function createDialog(type: DialogType) {
+  return (options: Options) =>
+    dialog(type as LewColor, options)
+}
 
 const dialogTypes: Record<DialogType, (options: Options) => void> = {
   warning: createDialog('warning'),
@@ -29,7 +32,7 @@ const dialogTypes: Record<DialogType, (options: Options) => void> = {
   success: createDialog('success'),
 }
 
-const dialog = (type: LewColor, options: Options) => {
+function dialog(type: LewColor, options: Options) {
   const {
     title,
     content,

@@ -25,6 +25,6 @@ const modelValue = ref('hr')
     v-model="modelValue"
     style="width: 100%"
     :options="options"
-    :itemWidth="120"
+    :item-width="120"
   />
 </template>

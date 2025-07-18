@@ -5,7 +5,7 @@ export default {
     {
       name: 'label',
       type: 'string | Function',
-      default: "''",
+      default: '\'\'',
     },
     {
       name: 'value',

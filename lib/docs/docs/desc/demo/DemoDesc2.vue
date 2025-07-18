@@ -140,7 +140,7 @@ const options = ref([
       width="600"
       direction="y"
       :columns="3"
-      :dataSource="dataSource"
+      :data-source="dataSource"
       :options="options"
     />
   </lew-flex>

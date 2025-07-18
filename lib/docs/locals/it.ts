@@ -78,7 +78,7 @@ export default {
       demo4: {
         title: 'Forma',
         description:
-          "Controlla la forma dell'avatar tramite `shape`, i valori possibili sono `circle`, `square`, `sharp`.",
+          'Controlla la forma dell\'avatar tramite `shape`, i valori possibili sono `circle`, `square`, `sharp`.',
       },
       props: {
         size: 'Dimensione',
@@ -94,7 +94,7 @@ export default {
     },
     button: {
       name: 'Pulsante',
-      description: "Cliccalo per un'interazione fluida e scorrevole",
+      description: 'Cliccalo per un\'interazione fluida e scorrevole',
       demo1: {
         title: 'Uso base',
       },
@@ -165,7 +165,7 @@ export default {
     badge: {
       name: 'Badge',
       description:
-        "Un punto rosso nell'angolo superiore destro per notifiche evidenti",
+        'Un punto rosso nell\'angolo superiore destro per notifiche evidenti',
       demo1: {
         title: 'Uso base',
       },
@@ -193,7 +193,7 @@ export default {
     },
     title: {
       name: 'Titolo',
-      description: "Non solo un titolo, ma l'essenza del contenuto",
+      description: 'Non solo un titolo, ma l\'essenza del contenuto',
       demo1: {
         title: 'Uso base',
       },
@@ -276,11 +276,11 @@ export default {
     icon: {
       name: 'Icona',
       description:
-        "Una collezione di icone eleganti per arricchire l'interfaccia",
+        'Una collezione di icone eleganti per arricchire l\'interfaccia',
     },
     backTop: {
       name: 'Torna su',
-      description: "Torna all'inizio della pagina con un click",
+      description: 'Torna all\'inizio della pagina con un click',
       demo1: {
         title: 'Uso base',
       },
@@ -303,7 +303,7 @@ export default {
     steps: {
       name: 'Passi',
       description:
-        "Mostra chiaramente il processo di operazione, permettendo all'utente di sapere dove si trova",
+        'Mostra chiaramente il processo di operazione, permettendo all\'utente di sapere dove si trova',
       demo1: {
         title: 'Uso base',
       },
@@ -358,7 +358,7 @@ export default {
       },
       demo3: {
         title: 'Espansione predefinita',
-        description: "Controlla l'espansione tramite v-model.",
+        description: 'Controlla l\'espansione tramite v-model.',
       },
       demo4: {
         title: 'Badge',
@@ -386,26 +386,26 @@ export default {
       },
     },
     dropdown: {
-      name: 'Menu a discesa',
-      description: 'Menu contestuale a comparsa per azioni rapide',
-      demo1: {
+      'name': 'Menu a discesa',
+      'description': 'Menu contestuale a comparsa per azioni rapide',
+      'demo1': {
         title: 'Uso base',
       },
-      demo2: {
+      'demo2': {
         title: 'Non solo pulsanti',
       },
-      demo3: {
+      'demo3': {
         title: 'Voci disabilitate',
       },
 
-      props: {
+      'props': {
         options: 'Configurazione menu',
         trigger: 'Modalità attivazione',
         placement: 'Posizione menu',
         checkable: 'Selezionabile',
       },
       'options(ContextMenus)': contextMenu,
-      events: {
+      'events': {
         show: 'Callback apertura menu',
         hide: 'Callback chiusura menu',
         change: 'Callback selezione voce',
@@ -437,21 +437,21 @@ export default {
       },
     },
     contextMenu: {
-      name: 'Menu contestuale',
-      description: 'Menu tasto destro elegante per azioni contestuali',
-      demo1: {
+      'name': 'Menu contestuale',
+      'description': 'Menu tasto destro elegante per azioni contestuali',
+      'demo1': {
         title: 'Uso base',
       },
-      demo2: {
+      'demo2': {
         title: 'Menu multilivello',
       },
-      demo3: {
+      'demo3': {
         title: 'Aggiornamento dinamico',
       },
-      demo4: {
+      'demo4': {
         title: 'Checkbox',
       },
-      props: {
+      'props': {
         options: 'Configurazione menu',
         disabled: 'Menu disabilitato',
       },
@@ -732,28 +732,28 @@ export default {
       },
     },
     checkbox: {
-      name: 'Checkbox',
-      description:
+      'name': 'Checkbox',
+      'description':
         'Selettore per scelte multiple, rende le selezioni più intuitive',
-      demo1: {
+      'demo1': {
         title: 'Uso base',
       },
-      demo2: {
+      'demo2': {
         title: 'Distribuzione verticale',
       },
-      demo3: {
+      'demo3': {
         title: 'A blocco',
       },
-      demo4: {
+      'demo4': {
         title: 'Rotondo',
       },
-      demo5: {
+      'demo5': {
         title: 'Sola lettura',
       },
-      demo6: {
+      'demo6': {
         title: 'Disabilitato',
       },
-      demo7: {
+      'demo7': {
         title: 'Modalità singola',
       },
       'model(CheckboxGroup)': {
@@ -790,35 +790,35 @@ export default {
       'events(CheckboxGroup)': {
         change: 'Callback cambio valore',
       },
-      options: {
+      'options': {
         label: 'Etichetta',
         value: 'Valore',
         disabled: 'Disabilitato',
       },
     },
     radio: {
-      name: 'Radio',
-      description:
+      'name': 'Radio',
+      'description':
         'Selettore per scelta singola, rende le selezioni più chiare',
-      demo1: {
+      'demo1': {
         title: 'Uso base',
       },
-      demo2: {
+      'demo2': {
         title: 'Distribuzione verticale',
       },
-      demo3: {
+      'demo3': {
         title: 'A blocco',
       },
-      demo4: {
+      'demo4': {
         title: 'Forma',
       },
-      demo5: {
+      'demo5': {
         title: 'Sola lettura',
       },
-      demo6: {
+      'demo6': {
         title: 'Disabilitato',
       },
-      model: {
+      'model': {
         modelValue: 'Valore legato',
       },
       'props(RadioGroup)': {
@@ -831,12 +831,12 @@ export default {
         readonly: 'Sola lettura',
         round: 'Stile arrotondato',
       },
-      options: {
+      'options': {
         label: 'Etichetta',
         value: 'Valore',
         disabled: 'Disabilitato',
       },
-      events: {
+      'events': {
         change: 'Callback cambio valore',
       },
     },
@@ -1614,25 +1614,25 @@ export default {
       },
     },
     collapse: {
-      name: 'Pannello pieghevole Collapse',
-      description:
+      'name': 'Pannello pieghevole Collapse',
+      'description':
         'Area di contenuto che può essere espansa e compressa, per una visualizzazione più ordinata delle informazioni',
-      demo1: {
+      'demo1': {
         title: 'Utilizzo base',
       },
-      demo2: {
+      'demo2': {
         title: 'Slot titolo',
       },
-      demo3: {
+      'demo3': {
         title: 'Modalità fisarmonica',
       },
-      model: {
+      'model': {
         modelValue: 'Nome parametro',
       },
       'model(CollapseItem)': {
         modelValue: 'Nome parametro',
       },
-      props: {
+      'props': {
         width: 'Larghezza',
       },
       'props(CollapseItem)': {
@@ -1848,7 +1848,7 @@ export default {
       props: {
         title: 'Titolo',
         width: 'Larghezza',
-        top: "Distanza dall'alto",
+        top: 'Distanza dall\'alto',
         maxHeight: 'Altezza massima',
         hideFooter: 'Nascondi footer',
         closeByEsc: 'Chiudi con ESC',
@@ -1895,7 +1895,7 @@ export default {
         title: 'Trigger personalizzato',
       },
       demo4: {
-        title: "Chiudi cliccando all'esterno",
+        title: 'Chiudi cliccando all\'esterno',
       },
       demo5: {
         title: 'Stato di caricamento',
@@ -1911,7 +1911,7 @@ export default {
         triggerTarget: 'Target trigger',
       },
       slots: {
-        trigger: 'Slot trigger',
+        'trigger': 'Slot trigger',
         'popover-body': 'Slot corpo popover',
       },
     },
@@ -1941,7 +1941,7 @@ export default {
     loading: {
       name: 'Caricamento',
       description:
-        "Un elegante effetto di caricamento per rendere l'attesa più piacevole.",
+        'Un elegante effetto di caricamento per rendere l\'attesa più piacevole.',
       demo1: {
         title: 'Uso base',
       },

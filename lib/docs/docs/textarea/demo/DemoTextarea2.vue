@@ -4,8 +4,8 @@ const value = ref('')
 
 <template>
   <lew-textarea
-    width="300px"
     v-model="value"
+    width="300px"
     placeholder="Limit the number of characters"
     show-count
     :max-length="300"

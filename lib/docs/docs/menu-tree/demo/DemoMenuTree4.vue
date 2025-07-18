@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { MenuTreeItem } from 'lew-ui'
-import { FileText, Users, MessageSquare, Tag } from 'lucide-vue-next'
+import { FileText, MessageSquare, Tag, Users } from 'lucide-vue-next'
 import { h } from 'vue'
 
 const value = ref('')
@@ -270,17 +270,17 @@ const options = [
   },
 ]
 
-const change = (item: MenuTreeItem) => {
+function change(item: MenuTreeItem) {
   console.log(item)
 }
 </script>
 
 <template>
   <lew-menu-tree
-    width="300"
     v-model="value"
-    :options="options"
     v-model:expand-keys="expandKeys"
+    width="300"
+    :options="options"
     @change="change"
   />
 </template>

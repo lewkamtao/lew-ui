@@ -1,19 +1,19 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 
-type MarkColor =
-  | 'red'
-  | 'orange'
-  | 'yellow'
-  | 'green'
-  | 'mint'
-  | 'teal'
-  | 'cyan'
-  | 'blue'
-  | 'indigo'
-  | 'purple'
-  | 'pink'
-  | 'gray'
-  | 'brown'
+type MarkColor
+  = | 'red'
+    | 'orange'
+    | 'yellow'
+    | 'green'
+    | 'mint'
+    | 'teal'
+    | 'cyan'
+    | 'blue'
+    | 'indigo'
+    | 'purple'
+    | 'pink'
+    | 'gray'
+    | 'brown'
 
 type CursorStyle = 'pointer' | 'default' | 'text' | 'move' | 'not-allowed'
 
@@ -52,12 +52,12 @@ export const markProps = {
     type: [Number, String] as PropType<BoldValue | string>,
     default: 400,
     validator: (value: BoldValue | string): boolean => {
-      const numValue = typeof value === 'string' ? parseInt(value, 10) : value
+      const numValue = typeof value === 'string' ? Number.parseInt(value, 10) : value
       if (
-        isNaN(numValue) ||
-        numValue < 100 ||
-        numValue > 900 ||
-        numValue % 100 !== 0
+        isNaN(numValue)
+        || numValue < 100
+        || numValue > 900
+        || numValue % 100 !== 0
       ) {
         console.warn(
           `[LewMark] 无效的加粗值: ${value}。请使用 100 到 900 之间的 100 的倍数`,

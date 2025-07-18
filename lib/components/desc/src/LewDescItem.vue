@@ -1,119 +1,119 @@
 <script setup lang="ts">
-import { any2px, object2class, retrieveNestedFieldValue } from "lew-ui/utils";
-import { LewTooltip, LewTextTrim } from "lew-ui";
-import type { TextTrimAlignment } from "lew-ui";
-import { isString } from "lodash-es";
-import { descItemProps, lewDescSizePaddingMap } from "./props";
-import Icon from "lew-ui/utils/Icon.vue";
-import { tipsIconSizeMap } from "lew-ui/components/form/src/props";
+import type { TextTrimAlignment } from 'lew-ui'
+import { LewTextTrim, LewTooltip } from 'lew-ui'
+import { tipsIconSizeMap } from 'lew-ui/components/form/src/props'
+import { any2px, object2class, retrieveNestedFieldValue } from 'lew-ui/utils'
+import Icon from 'lew-ui/utils/Icon.vue'
+import { isString } from 'lodash-es'
+import { descItemProps, lewDescSizePaddingMap } from './props'
 
+const props = defineProps(descItemProps)
 // 获取app实例并注册tooltip指令
-const app = getCurrentInstance()?.appContext.app;
-if (app && !app.directive("tooltip")) {
-  app.use(LewTooltip);
+const app = getCurrentInstance()?.appContext.app
+if (app && !app.directive('tooltip')) {
+  app.use(LewTooltip)
 }
 
-const props = defineProps(descItemProps);
-const descItemRef = ref();
+const descItemRef = ref()
 
 // 计算class名称
 const getDescItemClassNames = computed(() => {
-  const { direction, size, bordered } = props;
-  return object2class("lew-desc-item", { direction, size, bordered });
-});
+  const { direction, size, bordered } = props
+  return object2class('lew-desc-item', { direction, size, bordered })
+})
 
 // 处理显示文本和空值
-const showTextAndEmpty = () => {
-  const text = retrieveNestedFieldValue(props.dataSource, props.field);
-  if (text === null || text === undefined || text === "") {
-    return "-";
+function showTextAndEmpty() {
+  const text = retrieveNestedFieldValue(props.dataSource, props.field)
+  if (text === null || text === undefined || text === '') {
+    return '-'
   }
-  return isString(text) ? text : JSON.stringify(text);
-};
+  return isString(text) ? text : JSON.stringify(text)
+}
 
 // 渲染内容
-const renderItem = () => {
+function renderItem() {
   if (props.customRender) {
-    const { field, label } = props;
+    const { field, label } = props
     return props.customRender({
       field,
       label,
       dataSource: props.dataSource,
-    });
+    })
   }
-  return props.type === "text-trim"
+  return props.type === 'text-trim'
     ? h(LewTextTrim, {
         x: props.valueX as TextTrimAlignment,
-        style: "width: 100%",
+        style: 'width: 100%',
         text: showTextAndEmpty(),
       })
-    : showTextAndEmpty();
-};
+    : showTextAndEmpty()
+}
 
 const getGap = computed(() => {
-  const { size, direction } = props;
+  const { size, direction } = props
   const gapXMap = {
     small: 10,
     medium: 14,
     large: 16,
-  };
+  }
   const gapYMap = {
     small: 8,
     medium: 10,
     large: 12,
-  };
-  return direction === "x" ? gapXMap[size] : gapYMap[size];
-});
+  }
+  return direction === 'x' ? gapXMap[size] : gapYMap[size]
+})
 
 const getPadding = computed(() => {
-  const { bordered, size } = props;
+  const { bordered, size } = props
   return bordered
     ? `${any2px(lewDescSizePaddingMap[size] - 10)} ${any2px(
-        lewDescSizePaddingMap[size]
-      )}`
-    : 0;
-});
+      lewDescSizePaddingMap[size],
+    )}`
+    : 0
+})
 
 const getDescItemStyle = computed(() => {
-  const { bordered, gridArea } = props;
+  const { bordered, gridArea } = props
   return {
-    gap: bordered ? 0 : any2px(getGap.value),
-    "grid-area": gridArea || "",
-  };
-});
+    'gap': bordered ? 0 : any2px(getGap.value),
+    'grid-area': gridArea || '',
+  }
+})
 
 const getLabelBoxStyle = computed(() => {
-  const { labelX } = props;
+  const { labelX } = props
   return {
-    "justify-content": labelX === "center" ? labelX : `flex-${labelX}`,
-    padding: getPadding.value,
-  };
-});
+    'justify-content': labelX === 'center' ? labelX : `flex-${labelX}`,
+    'padding': getPadding.value,
+  }
+})
 
 const getDescItemMainStyle = computed(() => {
-  const { direction, labelWidth, valueX } = props;
+  const { direction, labelWidth, valueX } = props
   return {
-    width:
-      direction === "x"
+    'width':
+      direction === 'x'
         ? `calc(${descItemRef.value?.offsetWidth}px - ${any2px(
-            labelWidth
-          )} - 10px)`
-        : "100%",
-    "justify-content": valueX === "center" ? valueX : `flex-${valueX}`,
-    padding: getPadding.value,
-  };
-});
+          labelWidth,
+        )} - 10px)`
+        : '100%',
+    'justify-content': valueX === 'center' ? valueX : `flex-${valueX}`,
+    'padding': getPadding.value,
+  }
+})
 
 const getLabelBoxWidth = computed(() => {
-  const { direction, labelWidth } = props;
-  return direction === "x" ? any2px(labelWidth) : "100%";
-});
+  const { direction, labelWidth } = props
+  return direction === 'x' ? any2px(labelWidth) : '100%'
+})
 </script>
 
 <template>
   <div
-    class="lew-desc-item"
     ref="descItemRef"
+    class="lew-desc-item"
     :class="getDescItemClassNames"
     :style="getDescItemStyle"
   >
@@ -121,14 +121,14 @@ const getLabelBoxWidth = computed(() => {
       <div class="lew-label-box" :style="getLabelBoxStyle">
         {{ label }}
         <Icon
-          class="lew-label-tips-icon"
           v-if="tips"
           v-tooltip="{
             content: tips,
           }"
+          class="lew-label-tips-icon"
           :size="tipsIconSizeMap[size]"
           type="normal"
-        ></Icon>
+        />
       </div>
     </div>
     <div class="lew-desc-item-main" :style="getDescItemMainStyle">

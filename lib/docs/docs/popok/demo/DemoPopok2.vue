@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const ok = () => {
+function ok() {
   LewMessage.success('Confirmed')
 }
-const cancel = () => {
+function cancel() {
   LewMessage.info('Cancelled')
 }
 </script>

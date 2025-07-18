@@ -1,20 +1,20 @@
-import type { ExtractPropTypes, PropType } from 'vue'
 import type { ContextMenus } from 'lew-ui'
+import type { ExtractPropTypes, PropType } from 'vue'
 
 export type DropdownTrigger = 'hover' | 'click'
-export type DropdownPlacement =
-  | 'top'
-  | 'top-start'
-  | 'top-end'
-  | 'bottom'
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'left'
-  | 'left-start'
-  | 'left-end'
-  | 'right'
-  | 'right-start'
-  | 'right-end'
+export type DropdownPlacement
+  = | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
 
 export type DropdownOptions = ContextMenus
 

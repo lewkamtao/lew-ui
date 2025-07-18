@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { LewTag } from 'lew-ui'
+
 const tableData = ref([])
 const columns = ref([
   {
@@ -47,21 +48,22 @@ const columns = ref([
   },
 ])
 </script>
+
 <template>
   <lew-flex direction="y" x="start">
     <lew-input-table
+      v-model="tableData"
       width="800px"
       :batch-deletable="false"
       :clearable="false"
       :sortable="false"
       :columns="columns"
-      v-model="tableData"
-      uniqueField="productName"
+      unique-field="productName"
       :default-form="{
         stockQuantity: 1000,
         supplier: '某某供应商',
         isOnSale: true,
       }"
-    ></lew-input-table>
+    />
   </lew-flex>
 </template>

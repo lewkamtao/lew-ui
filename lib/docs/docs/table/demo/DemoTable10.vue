@@ -69,7 +69,7 @@ const columns = [
 </script>
 
 <template>
-  <lew-table checkable :columns="columns" :max-height="400" rowKey="id" />
+  <lew-table checkable :columns="columns" :max-height="400" row-key="id" />
 </template>
 
 <style lang="scss" scoped>

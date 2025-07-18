@@ -102,21 +102,22 @@ const sizeOptions = ref([
     value: 'large',
   },
 ])
-const sortTooltipCustomRender = (row: Record<string, any>) => {
+function sortTooltipCustomRender(row: Record<string, any>) {
   return h('div', {}, `${row.name} ${row.age} ${row.gender}`)
 }
 </script>
+
 <template>
   <lew-flex direction="y" x="start">
     <lew-tabs v-model="size" item-width="80px" round :options="sizeOptions" />
     <lew-input-table
+      v-model="tableData"
       sortable
-      :sortTooltipCustomRender="sortTooltipCustomRender"
+      :sort-tooltip-custom-render="sortTooltipCustomRender"
       :size="size"
       width="500px"
-      uniqueField="name"
+      unique-field="name"
       :columns="columns"
-      v-model="tableData"
-    ></lew-input-table>
+    />
   </lew-flex>
 </template>

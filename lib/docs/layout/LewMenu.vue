@@ -1,22 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-
-const route = useRoute()
-const router = useRouter()
-
-type Item = {
-  name: string
-  cname: string
-  path: string
-  label: string
-  type: string
-}
-
-type Group = {
-  title: string
-  items: Item[]
-}
+import { useRoute, useRouter } from 'vue-router'
 
 defineProps({
   group: {
@@ -26,8 +10,23 @@ defineProps({
     },
   },
 })
+const route = useRoute()
+const router = useRouter()
 
-const toPath = (item: Item) => {
+interface Item {
+  name: string
+  cname: string
+  path: string
+  label: string
+  type: string
+}
+
+interface Group {
+  title: string
+  items: Item[]
+}
+
+function toPath(item: Item) {
   router.push(item.path)
 }
 </script>

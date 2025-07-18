@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { messages } from '../../locals/index'
 import type { Language } from '../../locals/index'
-import { en, zh, de, pt, fr, it, es, ko, ja } from '../../../locals/index'
-import { ref, computed } from 'vue'
 import { useDark } from '@vueuse/core'
+import { computed, ref } from 'vue'
+import { de, en, es, fr, it, ja, ko, pt, zh } from '../../../locals/index'
+import { messages } from '../../locals/index'
+
 useDark({
   selector: 'html',
   valueDark: 'lew-dark',
@@ -33,7 +34,7 @@ const diffResults = ref<Record<string, string[]>>({})
 // 可选语言列表，按差异数量从多到少排序
 const languages = computed(() => {
   const langs = Object.keys(currentLangs.value).filter(
-    (lang) => lang !== baseLanguage,
+    lang => lang !== baseLanguage,
   ) as Language[]
 
   // 按差异数量从多到少排序
@@ -60,10 +61,10 @@ function compareObjects(base: any, target: any, path = ''): string[] {
 
     // 如果是对象，递归比较
     if (
-      typeof base[key] === 'object' &&
-      base[key] !== null &&
-      typeof target[key] === 'object' &&
-      target[key] !== null
+      typeof base[key] === 'object'
+      && base[key] !== null
+      && typeof target[key] === 'object'
+      && target[key] !== null
     ) {
       differences.push(...compareObjects(base[key], target[key], currentPath))
     }
@@ -87,7 +88,7 @@ function generateDiff() {
   diffResults.value = {}
 
   Object.keys(currentLangs.value)
-    .filter((lang) => lang !== baseLanguage)
+    .filter(lang => lang !== baseLanguage)
     .forEach((lang) => {
       const targetMessages = currentLangs.value[lang as Language]
       const differences = compareObjects(baseMessages.value, targetMessages)
@@ -125,7 +126,8 @@ const currentDiffCount = computed(() => {
 function getDiffItemClass(diff: string): string {
   if (diff.startsWith('缺失:')) {
     return 'missing'
-  } else if (diff.startsWith('多余:')) {
+  }
+  else if (diff.startsWith('多余:')) {
     return 'extra'
   }
   return ''
@@ -143,7 +145,8 @@ async function copyAllDifferences() {
     differences.forEach((diff, index) => {
       copyText += `${index + 1}. ${diff}\n`
     })
-  } else {
+  }
+  else {
     copyText += `${currentLang.value} 语言: 无差异 ✓\n`
   }
 
@@ -162,7 +165,8 @@ async function copyAllDifferences() {
         copyButton.classList.remove('copied')
       }, 2000)
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error('复制失败:', error)
     // 降级方案：使用传统的复制方法
     const textArea = document.createElement('textarea')
@@ -186,11 +190,11 @@ async function copyAllDifferences() {
           <div
             v-for="source in ['docs', 'component']"
             :key="source"
-            :class="['source-tab', { active: currentSource === source }]"
-            @click="changeSource(source as ConfigSource)"
+            class="source-tab" :class="[{ active: currentSource === source }]"
             tabindex="0"
             role="button"
             :aria-pressed="currentSource === source"
+            @click="changeSource(source as ConfigSource)"
             @keydown.enter="changeSource(source as ConfigSource)"
             @keydown.space.prevent="changeSource(source as ConfigSource)"
           >
@@ -204,21 +208,20 @@ async function copyAllDifferences() {
           <div
             v-for="lang in languages"
             :key="lang"
-            :class="['lang-tab', { active: currentLang === lang }]"
-            @click="changeLang(lang)"
+            class="lang-tab" :class="[{ active: currentLang === lang }]"
             tabindex="0"
             role="button"
             :aria-pressed="currentLang === lang"
+            @click="changeLang(lang)"
             @keydown.enter="changeLang(lang)"
             @keydown.space.prevent="changeLang(lang)"
           >
             {{ lang }}
             <span
+              v-if="diffResults[lang]?.length !== undefined" class="badge"
               :class="[
-                'badge',
                 { 'badge-success': !diffResults[lang]?.length },
               ]"
-              v-if="diffResults[lang]?.length !== undefined"
             >
               {{ diffResults[lang]?.length }}
             </span>
@@ -233,12 +236,14 @@ async function copyAllDifferences() {
           发现 {{ currentLang }} 与 {{ baseLanguage }} 有
           {{ currentDiffCount }} 处差异, 请以 {{ baseLanguage }} 为基准帮我修复
         </div>
-        <div v-else class="diff-summary complete">恭喜！没有发现差异</div>
+        <div v-else class="diff-summary complete">
+          恭喜！没有发现差异
+        </div>
 
         <button
           class="copy-button"
-          @click="copyAllDifferences"
           title="复制所有差异信息"
+          @click="copyAllDifferences"
         >
           <svg
             width="16"
@@ -250,10 +255,10 @@ async function copyAllDifferences() {
             stroke-linecap="round"
             stroke-linejoin="round"
           >
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
             <path
               d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
-            ></path>
+            />
           </svg>
           复制报告
         </button>
@@ -263,7 +268,7 @@ async function copyAllDifferences() {
         <div
           v-for="(diff, index) in diffResults[currentLang]"
           :key="index"
-          :class="['diff-item', getDiffItemClass(diff)]"
+          class="diff-item" :class="[getDiffItemClass(diff)]"
         >
           {{ diff }}
         </div>

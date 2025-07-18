@@ -1,16 +1,16 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 
-type EmptyType =
-  | '404'
-  | 'address'
-  | 'article'
-  | 'goods'
-  | 'likes'
-  | 'car'
-  | 'comment'
-  | 'network'
-  | 'order'
-  | 'search'
+type EmptyType
+  = | '404'
+    | 'address'
+    | 'article'
+    | 'goods'
+    | 'likes'
+    | 'car'
+    | 'comment'
+    | 'network'
+    | 'order'
+    | 'search'
 
 export const emptyProps = {
   type: {
