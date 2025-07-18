@@ -1,4 +1,14 @@
 {
-  "nuxt.isNuxtApp": false,
-  "vue3snippets.enable-compile-vue-file-on-did-save-code": true
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "editor.formatOnSave": false, // 禁用默认格式化
+  "editor.defaultFormatter": null,
+  "nuxt.isNuxtApp": false
 }
