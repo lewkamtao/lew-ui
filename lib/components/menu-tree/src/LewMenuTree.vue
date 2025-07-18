@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, h, resolveDirective, withDirectives } from 'vue'
 import { any2px } from 'lew-ui/utils'
+import { computed, h, resolveDirective, withDirectives } from 'vue'
 import { menuTreeProps } from './props'
 import type { MenuTreeItem } from './props'
 import LewMenuTreeItem from './LewMenuTreeItem.vue'

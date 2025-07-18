@@ -1,113 +1,115 @@
 <script setup lang="ts">
-import { object2class, getColorType, any2px } from 'lew-ui/utils'
-import { buttonProps } from './props'
-import Icon from 'lew-ui/utils/Icon.vue'
+import { object2class, getColorType, any2px } from "lew-ui/utils";
+import { buttonProps } from "./props";
+import Icon from "lew-ui/utils/Icon.vue";
 
-const emit = defineEmits(['click'])
-const props = defineProps(buttonProps)
+const emit = defineEmits(["click"]);
+const props = defineProps(buttonProps);
 
-const _loading = ref(false)
+const _loading = ref(false);
 
-const buttonRef = ref()
+const buttonRef = ref();
 
 const focus = () => {
-  buttonRef.value?.focus()
-}
+  buttonRef.value?.focus();
+};
 
 const handleClick = async (e: MouseEvent) => {
-  if (props.disabled || _loading.value || props.loading) return
-  emit('click', e)
-  if (typeof props.request === 'function') {
+  if (props.disabled || _loading.value || props.loading) return;
+  emit("click", e);
+  if (typeof props.request === "function") {
     if (_loading.value) {
-      return
+      return;
     }
-    _loading.value = true
-    await props.request()
-    _loading.value = false
+    _loading.value = true;
+    await props.request();
+    _loading.value = false;
   }
-}
-const instance = getCurrentInstance()
-const hasDefaultSlot = ref(false)
+};
+const instance = getCurrentInstance();
+const hasDefaultSlot = ref(false);
 
 if (instance?.slots.default) {
-  hasDefaultSlot.value = true
+  hasDefaultSlot.value = true;
 }
 
 const getButtonClass = computed(() => {
-  const { size, type, color, singleIcon } = props
-  const loading = _loading.value || props.loading
-  return object2class('lew-button', {
+  const { size, type, color, singleIcon } = props;
+  const loading = _loading.value || props.loading;
+  return object2class("lew-button", {
     size,
     type,
     loading,
     singleIcon,
     color,
-  })
-})
+  });
+});
 
 const getIconSize = computed(() => {
-  const { size } = props
+  const { size } = props;
   switch (size) {
-    case 'mini':
-      return 12
-    case 'small':
-      return 14
-    case 'medium':
-      return 16
-    case 'large':
-      return 18
+    case "mini":
+      return 12;
+    case "small":
+      return 14;
+    case "medium":
+      return 16;
+    case "large":
+      return 18;
     default:
-      return 16
+      return 16;
   }
-})
+});
 
 const getStyle = computed(() => {
-  const { round, type, color, dashed, width } = props
-  const styleObj: Record<string, string> = {}
-  const _color = getColorType(color) || 'primary'
+  const { round, type, color, dashed, width } = props;
+  const styleObj: Record<string, string> = {};
+  const _color = getColorType(color) || "primary";
 
   // 基础样式
   const baseStyle = {
     fill: {
       backgroundColor: `var(--lew-color-${_color})`,
-      color: 'var(--lew-color-white)',
+      color: "var(--lew-color-white)",
     },
     light: {
       backgroundColor: `var(--lew-color-${_color}-light)`,
       color: `var(--lew-color-${_color}-dark)`,
     },
     ghost: {
-      backgroundColor: 'transparent',
-      border: `var(--lew-form-border-width) ${dashed ? 'dashed' : 'solid'} var(--lew-color-${_color}-dark)`,
+      backgroundColor: "transparent",
+      border: `var(--lew-form-border-width) ${
+        dashed ? "dashed" : "solid"
+      } var(--lew-color-${_color}-dark)`,
       color: `var(--lew-color-${_color}-dark)`,
-      boxShadow: 'none',
+      boxShadow: "none",
     },
     text: {
-      backgroundColor: 'transparent',
+      backgroundColor: "transparent",
       color: `var(--lew-color-${_color}-dark)`,
-      boxShadow: 'none',
+      boxShadow: "none",
     },
-  }
+  };
 
   // 合并样式
   Object.assign(
     styleObj,
     baseStyle[type as keyof typeof baseStyle] || {
       backgroundColor: `var(--lew-color-${_color})`,
-    },
-  )
+    }
+  );
 
   // 圆角样式
-  styleObj.borderRadius = round ? '50px' : 'none'
+  styleObj.borderRadius = round ? "50px" : "none";
 
   if (width) {
-    styleObj.width = any2px(width)
+    styleObj.width = any2px(width);
   }
 
-  return styleObj
-})
+  return styleObj;
+});
 
-defineExpose({ focus })
+defineExpose({ focus });
 </script>
 
 <template>
@@ -201,7 +203,7 @@ defineExpose({ focus })
   background-color: rgba($color: #000, $alpha: 0.2);
   transition: all var(--lew-form-transition-ease);
   opacity: 0;
-  content: '';
+  content: "";
 }
 
 .lew-button-color-black::after {
@@ -213,7 +215,7 @@ defineExpose({ focus })
   background-color: rgba($color: #fff, $alpha: 0.2);
   transition: 0.1s all;
   opacity: 0;
-  content: '';
+  content: "";
 }
 
 .lew-button-type-text.lew-button-color-black::after {
@@ -225,7 +227,7 @@ defineExpose({ focus })
   background-color: rgba($color: #000, $alpha: 0.2);
   transition: 0.1s all;
   opacity: 0;
-  content: '';
+  content: "";
 }
 
 .lew-button-type-ghost::after {

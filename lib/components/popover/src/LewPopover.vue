@@ -32,9 +32,9 @@ watchDebounced(
   () => props.disabled,
   (value: boolean) => {
     if (value) {
-      instance.disable()
+      instance && instance.disable()
     } else {
-      instance.enable()
+      instance && instance.enable()
     }
   },
   watchOptions,
@@ -149,8 +149,8 @@ const refresh = () => {
 }
 
 onUnmounted(() => {
-  instance.hide()
-  instance.destroy()
+  instance && instance.hide()
+  instance && instance.destroy()
 })
 
 defineExpose({ show, hide, refresh })

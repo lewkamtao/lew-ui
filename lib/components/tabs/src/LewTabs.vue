@@ -35,6 +35,11 @@ watch(
 const initActiveItemStyle = (index: number) => {
   const activeRef = itemRef.value[index]
 
+  // 确保 tabsRef 存在，避免访问 null 的属性
+  if (!tabsRef.value || !activeRef) {
+    return
+  }
+
   if (
     tabsRef.value.scrollWidth > tabsRef.value.clientWidth &&
     activeRef?.offsetLeft >= 0
@@ -125,6 +130,11 @@ const getTabsClassName = computed(() => {
 })
 
 const tabsScroll = () => {
+  // 确保 tabsRef 存在，避免访问 null 的属性
+  if (!tabsRef.value) {
+    return
+  }
+
   if (tabsRef.value.scrollWidth > tabsRef.value.clientWidth) {
     if (tabsRef.value.scrollLeft > 5) {
       if (
