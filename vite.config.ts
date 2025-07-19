@@ -1,7 +1,6 @@
 import type { ConfigEnv, UserConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
 import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig } from 'vite'
 import checker from 'vite-plugin-checker'
@@ -18,7 +17,6 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
   // 插件配置
   const commonPlugins = [
     vue(),
-    vueJsx(),
     AutoImport({ imports: ['vue', 'vue-router'] }),
     checker({ typescript: true }),
   ]
