@@ -49,12 +49,7 @@ onMounted(() => {
 
 <template>
   <transition name="fade">
-    <div
-      v-if="showBackTop"
-      class="lew-back-top"
-      :style="backTopStyle"
-      @click="toBackUp"
-    >
+    <div v-if="showBackTop" class="lew-back-top" :style="backTopStyle" @click="toBackUp">
       <slot>
         <Icon :size="20" type="chevron-up" />
       </slot>

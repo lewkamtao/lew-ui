@@ -63,7 +63,7 @@
     "@antfu/eslint-config": "^4.17.0",
     "@types/node": "^22.16.0",
     "@vitejs/plugin-vue": "^6.0.0",
-    "eslint": "^9.30.1",
+    "eslint": "^9.31.0",
     "eslint-plugin-format": "^1.0.1",
     "sass": "^1.89.2",
     "tsdown": "^0.12.9",

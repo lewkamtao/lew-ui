@@ -8,11 +8,14 @@ button {
 .hidden-scrollbar {
   overflow-x: hidden;
   overflow-y: auto;
-  -ms-overflow-style: none; /* IE 10+ */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
+  scrollbar-width: none;
+  /* Firefox */
 
   &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
+    display: none;
+    /* Chrome, Safari */
   }
 }
 
@@ -35,6 +38,7 @@ button {
   from {
     background-position: -100% 0;
   }
+
   to {
     background-position: 100% 0;
   }

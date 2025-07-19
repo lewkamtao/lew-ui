@@ -110,23 +110,11 @@ const headDate = computed(() => {
     <LewFlex x="start" mode="between" class="lew-date-control">
       <div class="lew-date-control-left">
         <!-- 上一年 -->
-        <LewButton
-          type="light"
-          color="gray"
-          size="small"
-          single-icon
-          @click="prveYear"
-        >
+        <LewButton type="light" color="gray" size="small" single-icon @click="prveYear">
           <Icon type="chevrons-left" />
         </LewButton>
         <!-- 上一月 -->
-        <LewButton
-          type="light"
-          color="gray"
-          size="small"
-          single-icon
-          @click="prveMonth"
-        >
+        <LewButton type="light" color="gray" size="small" single-icon @click="prveMonth">
           <Icon type="chevron-left" />
         </LewButton>
       </div>
@@ -136,34 +124,18 @@ const headDate = computed(() => {
       </div>
       <div class="lew-date-control-right">
         <!-- 下一月 -->
-        <LewButton
-          type="light"
-          color="gray"
-          size="small"
-          single-icon
-          @click="nextMonth"
-        >
+        <LewButton type="light" color="gray" size="small" single-icon @click="nextMonth">
           <Icon type="chevron-right" />
         </LewButton>
         <!-- 下一年 -->
-        <LewButton
-          type="light"
-          color="gray"
-          size="small"
-          single-icon
-          @click="nextYear"
-        >
+        <LewButton type="light" color="gray" size="small" single-icon @click="nextYear">
           <Icon type="chevrons-right" />
         </LewButton>
       </div>
     </LewFlex>
     <div class="lew-date-box">
       <!-- 表头 周 -->
-      <div
-        v-for="(item, index) in headDate"
-        :key="`h${index}`"
-        class="lew-date-item"
-      >
+      <div v-for="(item, index) in headDate" :key="`h${index}`" class="lew-date-item">
         <div class="lew-date-num">
           {{ item }}
         </div>
@@ -171,11 +143,8 @@ const headDate = computed(() => {
 
       <!-- 表格 -->
       <div
-        v-for="(item, index) in dateData"
-        :key="`d${index}`"
-        class="lew-date-item"
-        :class="lewDateItemClassNames(item)"
-        @click="selectDateFn(item)"
+        v-for="(item, index) in dateData" :key="`d${index}`" class="lew-date-item"
+        :class="lewDateItemClassNames(item)" @click="selectDateFn(item)"
       >
         <div class="lew-date-label">
           <i v-if="checkToday(item)" class="lew-date-item-today" />
@@ -269,6 +238,7 @@ const headDate = computed(() => {
           transition: all 0.1s ease;
           border: var(--lew-form-border-width) var(--lew-form-border-color) solid;
         }
+
         .lew-date-value:active {
           transform: scale(0.9);
         }
@@ -323,6 +293,7 @@ const headDate = computed(() => {
         }
       }
     }
+
     .lew-date-item-selected:active {
       .lew-date-label {
         .lew-date-value {
@@ -332,6 +303,7 @@ const headDate = computed(() => {
         }
       }
     }
+
     .lew-date-item-selected:hover {
       .lew-date-label {
         .lew-date-value {
