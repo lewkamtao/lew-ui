@@ -129,7 +129,7 @@ const dotStyleObject: any = computed(() => {
       : STATUS_PLACEMENT_CONFIG_SQUARE
 
   return {
-    ...(STATUS_PLACEMENT_CONFIG[statusPlacement] || {}),
+    ...STATUS_PLACEMENT_CONFIG[statusPlacement],
     backgroundColor: status ? STATUS_COLOR_CONFIG[status] : '',
     position: 'absolute',
     content: '',
@@ -141,54 +141,39 @@ const dotStyleObject: any = computed(() => {
   }
 })
 
-const _loading = ref()
-const _error = ref()
-
-function init() {
-  const { isLoading, error } = useImage({
-    src: props.src as string,
-  })
-  _loading.value = isLoading
-  _error.value = error
-}
+// 修复响应性问题：直接使用 useImage 返回的响应式引用
+const { isLoading, error } = useImage({ src: props.src })
 
 const getIconSize = computed(() => {
   const { size } = props
   return typeof size === 'number' ? size * 0.5 : Number.parseInt(size) * 0.5
 })
-
-init()
-
-watch(
-  () => props.src,
-  () => {
-    const { isLoading, error } = useImage({
-      src: props.src as string,
-    })
-    _loading.value = isLoading
-    _error.value = error
-  },
-)
 </script>
 
 <template>
   <div class="lew-avatar" :style="avatarStyleObject">
     <div class="lew-avatar-box" :style="avatarBoxStyleObject">
-      <template v-if="alt && (!src || _error)">
-        <div class="lew-avatar-text" :style="textStyleObject">
-          {{ altText }}
-        </div>
-      </template>
-      <template v-else>
-        <div v-if="_loading || loading" class="skeletons" />
-        <Icon v-else-if="_error || !src" :size="getIconSize" type="user" />
+      <template v-if="src">
+        <div v-if="isLoading || loading" class="skeleton" />
         <img
-          v-else-if="src"
+          v-else-if="!error"
           :src="src"
           :alt="alt"
           lazy
           :style="imageStyleObject"
         >
+        <div v-else-if="alt" class="lew-avatar-text" :style="textStyleObject">
+          {{ altText }}
+        </div>
+        <Icon v-else :size="getIconSize" type="user" />
+      </template>
+      <template v-else-if="alt">
+        <div class="lew-avatar-text" :style="textStyleObject">
+          {{ altText }}
+        </div>
+      </template>
+      <template v-else>
+        <Icon :size="getIconSize" type="user" />
       </template>
     </div>
     <i v-if="status" :style="dotStyleObject" />
@@ -216,6 +201,28 @@ watch(
     width: 100%;
     height: 100%;
     background-color: var(--lew-bgcolor-2);
+  }
+
+  // 添加 skeleton 样式
+  .skeleton {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+      var(--lew-bgcolor-3) 25%,
+      var(--lew-bgcolor-2) 50%,
+      var(--lew-bgcolor-3) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+  }
+
+  @keyframes skeleton-loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
   }
 
   img {

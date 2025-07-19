@@ -2,7 +2,7 @@ import type { App, DirectiveBinding, PropType } from 'vue'
 import { getUniqueId } from 'lew-ui/utils'
 // 导入所需的依赖
 import tippy from 'tippy.js'
-import { createApp, h, defineAsyncComponent } from 'vue'
+import { createApp, defineAsyncComponent, h } from 'vue'
 
 /**
  * 右键菜单项目接口定义
@@ -36,8 +36,6 @@ export const contextMenuProps = {
     description: '是否禁用右键菜单',
   },
 }
-
-
 
 /**
  * 全局右键菜单配置接口

@@ -1,7 +1,7 @@
 {
   "name": "lew-ui",
   "type": "module",
-  "version": "2.7.3",
+  "version": "2.7.4",
   "description": "A Component Library for Vue3.js.",
   "author": "lewkamtao",
   "license": "MIT",
@@ -45,7 +45,7 @@
   "dependencies": {
     "@highlightjs/vue-plugin": "^2.1.0",
     "@types/lodash-es": "^4.17.12",
-    "@vueuse/core": "^10.11.0",
+    "@vueuse/core": "^13.5.0",
     "axios": "^1.6.7",
     "dayjs": "^1.11.7",
     "highlight.js": "^11.9.0",
