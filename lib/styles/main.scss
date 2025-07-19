@@ -1,4 +1,12 @@
-/* 隐藏滚动条 */
+
+
+input,
+textarea,
+button {
+  font-family: inherit; 
+} 
+
+/* 隐藏滚动条 */ 
 .hidden-scrollbar {
   overflow-x: hidden;
   overflow-y: auto;
