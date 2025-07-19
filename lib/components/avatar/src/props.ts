@@ -1,7 +1,11 @@
 import type { ObjectFit } from 'lew-ui/components/image/src/props'
 import type { ExtractPropTypes, PropType } from 'vue'
 
-type AvatarPlacement = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+type AvatarPlacement
+  = | 'top-left'
+    | 'top-right'
+    | 'bottom-left'
+    | 'bottom-right'
 type AvatarStatus = 'online' | 'processing' | 'away' | 'offline' | 'busy'
 type AvatarShape = 'circle' | 'square' | 'sharp'
 type AvatarSize = number | string
@@ -60,7 +64,9 @@ export const avatarProps = {
     validator(value: AvatarStatus): boolean {
       const validStatus = ['online', 'processing', 'away', 'offline', 'busy']
       if (!validStatus.includes(value)) {
-        console.warn(`[LewAvatar] status 必须是 ${validStatus.join(', ')} 之一`)
+        console.warn(
+          `[LewAvatar] status 必须是 ${validStatus.join(', ')} 之一`,
+        )
         return false
       }
       return true
@@ -126,7 +132,9 @@ export const avatarProps = {
       ]
       if (!validPlacements.includes(value)) {
         console.warn(
-          `[LewAvatar] statusPlacement 必须是 ${validPlacements.join(', ')} 之一`,
+          `[LewAvatar] statusPlacement 必须是 ${validPlacements.join(
+            ', ',
+          )} 之一`,
         )
         return false
       }
