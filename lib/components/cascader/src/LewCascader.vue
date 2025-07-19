@@ -20,11 +20,7 @@ const props = defineProps(cascaderProps)
 const emit = defineEmits(['change', 'blur', 'clear'])
 
 // 格式化 获取 path
-function formatTree(
-  tree: CascaderOptions[],
-  parentValuePaths: string[] = [],
-  parentLabelPaths: string[] = [],
-): CascaderOptions[] {
+function formatTree(tree: CascaderOptions[], parentValuePaths: string[] = [], parentLabelPaths: string[] = []): CascaderOptions[] {
   return tree.map((node: CascaderOptions) => {
     const { value, label, children = [] } = node
     const valuePaths: string[] = [...parentValuePaths, value]
@@ -354,6 +350,11 @@ const getCascaderClassName = computed(() => {
   })
 })
 
+const getBodyClassName = computed(() => {
+  const { size, disabled } = props
+  return object2class('lew-cascader-body', { size, disabled })
+})
+
 // 获取图标大小
 const getIconSize = computed(() => {
   const size: Record<string, number> = {
@@ -492,6 +493,7 @@ defineExpose({ show, hide })
         :style="{
           width: `${getCascaderWidth}px`,
         }"
+        :class="getBodyClassName"
       >
         <slot name="header" />
         <transition name="fade">
@@ -504,102 +506,107 @@ defineExpose({ show, hide })
               v-for="(oItem, oIndex) in state.optionsGroup"
               :key="oIndex"
             >
-              <VirtList
-                :ref="(el: any) => (virtListRefs[oIndex] = el)"
-                class="lew-scrollbar-hover"
-                :list="oItem"
-                :min-size="38"
-                :buffer="5"
-                item-key="value"
+              <div
+                class="lew-cascader-item-wrapper"
                 :style="{
-                  padding: `6px 6px 2px 6px`,
-                  boxSizing: 'border-box',
+                  zIndex: 20 - oIndex,
+                  borderRadius: `0 ${
+                    oIndex === state.optionsGroup.length - 1
+                      ? 'var(--lew-border-radius-small)'
+                      : '0'
+                  } 0 0`,
+                  transform:
+                    oItem.length > 0 ? `translateX(${200 * oIndex}px)` : '',
                 }"
               >
-                <template #default="{ itemData: templateProps }">
-                  <div
-                    class="lew-cascader-item-padding"
-                    :style="{ height: `${38}px` }"
-                  >
+                <VirtList
+                  :key="oItem[0]?.parentValuePaths?.join('-') || 'root'"
+                  :ref="
+                    (el: any) => (virtListRefs[oIndex] = el)
+                  "
+                  class="lew-scrollbar-hover"
+                  :list="oItem"
+                  :min-size="38"
+                  :buffer="5"
+                  item-key="value"
+                  :style="{
+                    padding: `6px 6px 2px 6px`,
+                    boxSizing: 'border-box',
+                  }"
+                >
+                  <template #default="{ itemData: templateProps }">
                     <div
-                      class="lew-cascader-item"
-                      :class="{
-                        'lew-cascader-item-disabled': templateProps.disabled,
-                        'lew-cascader-item-hover': state.activeLabels.includes(
-                          templateProps.label,
-                        ),
-                        'lew-cascader-item-active': free
-                          ? state.activeLabels.includes(templateProps.label)
-                            && state.tobeLabels.includes(templateProps.label)
-                          : state.activeLabels.includes(templateProps.label),
-                        'lew-cascader-item-tobe': state.tobeLabels.includes(
-                          templateProps.label,
-                        ),
-                        'lew-cascader-item-selected':
-                          getLabel
-                          && getLabel.includes(templateProps.label)
-                          && state.tobeLabels.includes(templateProps.label),
-                      }"
-                      @click="selectItem(templateProps, oIndex)"
+                      class="lew-cascader-item-padding"
+                      :style="{ height: `${38}px` }"
                     >
-                      <LewCheckbox
-                        v-if="free"
-                        class="lew-cascader-checkbox"
-                        :checked="
-                          state.tobeLabels.includes(templateProps.label)
-                        "
-                      />
-                      <LewTextTrim
-                        class="lew-cascader-label"
+                      <div
+                        class="lew-cascader-item"
                         :class="{
-                          'lew-cascader-label-free': free,
+                          'lew-cascader-item-disabled': templateProps.disabled,
+                          'lew-cascader-item-hover': state.activeLabels.includes(
+                            templateProps.label,
+                          ),
+                          'lew-cascader-item-active': free
+                            ? state.activeLabels.includes(
+                              templateProps.label,
+                            )
+                              && state.tobeLabels.includes(templateProps.label)
+                            : state.activeLabels.includes(templateProps.label),
+                          'lew-cascader-item-tobe': state.tobeLabels.includes(
+                            templateProps.label,
+                          ),
+                          'lew-cascader-item-selected':
+                            getLabel
+                            && getLabel.includes(templateProps.label)
+                            && state.tobeLabels.includes(templateProps.label),
                         }"
-                        :text="templateProps.label"
-                        :delay="[500, 0]"
-                      />
-                      <Icon
-                        v-if="templateProps.loading"
-                        :size="14"
-                        loading
-                        class="lew-cascader-loading-icon"
-                        type="loader"
-                      />
-                      <Icon
-                        v-else-if="!templateProps.isLeaf"
-                        :size="16"
-                        class="lew-cascader-icon"
-                        type="chevron-right"
-                      />
+                        @click="selectItem(templateProps, oIndex)"
+                      >
+                        <LewCheckbox
+                          v-if="free"
+                          class="lew-cascader-checkbox"
+                          :checked="
+                            state.tobeLabels.includes(templateProps.label)
+                          "
+                        />
+                        <LewTextTrim
+                          class="lew-cascader-label"
+                          :class="{
+                            'lew-cascader-label-free': free,
+                          }"
+                          :text="templateProps.label"
+                          :delay="[500, 0]"
+                        />
+                        <Icon
+                          v-if="templateProps.loading"
+                          :size="14"
+                          loading
+                          class="lew-cascader-loading-icon"
+                          type="loader"
+                        />
+                        <Icon
+                          v-else-if="!templateProps.isLeaf"
+                          :size="16"
+                          class="lew-cascader-icon"
+                          type="chevron-right"
+                        />
+                      </div>
                     </div>
-                  </div>
-
-                  <LewFlex
-                    v-if="free"
-                    x="end"
-                    gap="5"
-                    class="lew-cascader-control"
-                  >
-                    <LewButton
-                      color="gray"
-                      type="text"
-                      size="small"
-                      @click="close"
-                    >
-                      {{ locale.t("cascader.closeText") }}
-                    </LewButton>
-                    <LewButton
-                      :disabled="state.okLoading"
-                      size="small"
-                      @click="ok()"
-                    >
-                      {{ locale.t("cascader.okText") }}
-                    </LewButton>
-                  </LewFlex>
-                </template>
-              </VirtList>
+                  </template>
+                </VirtList>
+              </div>
             </template>
           </div>
         </transition>
+
+        <LewFlex v-if="free" x="end" gap="5" class="lew-cascader-control">
+          <LewButton color="gray" type="text" size="small" @click="close">
+            {{ locale.t("cascader.closeText") }}
+          </LewButton>
+          <LewButton :disabled="state.okLoading" size="small" @click="ok()">
+            {{ locale.t("cascader.okText") }}
+          </LewButton>
+        </LewFlex>
       </div>
     </template>
   </LewPopover>

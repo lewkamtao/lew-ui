@@ -2,7 +2,6 @@ import type { ConfigEnv, UserConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import { visualizer } from 'rollup-plugin-visualizer'
 import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig } from 'vite'
 import checker from 'vite-plugin-checker'
@@ -112,12 +111,6 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
     plugins: [
       ...commonPlugins,
       ...libPlugins,
-      visualizer({
-        open: false,
-        filename: 'stats.html',
-        gzipSize: true,
-        brotliSize: true,
-      }),
     ],
     build: buildConfig,
   }

@@ -1,8 +1,43 @@
-import type { App, DirectiveBinding } from 'vue'
+import type { App, DirectiveBinding, PropType } from 'vue'
 import { getUniqueId } from 'lew-ui/utils'
 // 导入所需的依赖
 import tippy from 'tippy.js'
-import _LewContextMenu from './LewContextMenu.vue'
+import { createApp, h, defineAsyncComponent } from 'vue'
+
+/**
+ * 右键菜单项目接口定义
+ */
+export interface ContextMenus {
+  label?: string
+  value?: string
+  icon?: string
+  children?: ContextMenus[]
+  disabled?: boolean
+  level?: number
+  isDividerLine?: boolean
+  checkable?: boolean
+  checked?: boolean
+  onClick?: (item: ContextMenus) => void
+  [key: string]: any
+}
+
+/**
+ * 右键菜单组件属性定义
+ */
+export const contextMenuProps = {
+  options: {
+    type: Array as PropType<ContextMenus[]>,
+    default: () => [],
+    description: '右键菜单配置',
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+    description: '是否禁用右键菜单',
+  },
+}
+
+
 
 /**
  * 全局右键菜单配置接口
@@ -74,6 +109,8 @@ function findContextMenuId(el: HTMLElement): string {
  * 创建右键菜单组件实例
  */
 function createContextMenu(options: ContextMenus[]) {
+  // 使用异步组件避免循环依赖
+  const _LewContextMenu = defineAsyncComponent(() => import('./LewContextMenu.vue'))
   const menuDom = document.createElement('div')
   createApp({
     render() {
@@ -155,38 +192,5 @@ export const LewVContextMenu = {
         }
       },
     })
-  },
-}
-
-/**
- * 右键菜单项目接口定义
- */
-export interface ContextMenus {
-  label?: string
-  value?: string
-  icon?: string
-  children?: ContextMenus[]
-  disabled?: boolean
-  level?: number
-  isDividerLine?: boolean
-  checkable?: boolean
-  checked?: boolean
-  onClick?: (item: ContextMenus) => void
-  [key: string]: any
-}
-
-/**
- * 右键菜单组件属性定义
- */
-export const contextMenuProps = {
-  options: {
-    type: Array as PropType<ContextMenus[]>,
-    default: () => [],
-    description: '右键菜单配置',
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-    description: '是否禁用右键菜单',
   },
 }
